@@ -103,10 +103,11 @@ export class PfePrimaryDetail extends LitElement {
 
   private get root(): Document|ShadowRoot|null {
     const root = this.getRootNode();
-    if (!isQueryable(root))
+    if (!isQueryable(root)) {
       return null;
-    else
+    } else {
       return root;
+    }
   }
 
   private slots = new SlotController(this, {
@@ -172,13 +173,15 @@ export class PfePrimaryDetail extends LitElement {
   }
 
   disconnectedCallback() {
-    if (this._debouncedSetBreakpoint)
+    if (this._debouncedSetBreakpoint) {
       window.removeEventListener('resize', this._debouncedSetBreakpoint);
+    }
 
     const navs = this.slots.getSlotted('nav', 'details-nav');
     if (navs) {
-      for (let index = 0; index < navs.length; index++)
+      for (let index = 0; index < navs.length; index++) {
         navs[index]?.removeEventListener('click', this._handleHideShow);
+      }
     }
 
     // Remove keydown event listener if component disconnects
@@ -205,11 +208,13 @@ export class PfePrimaryDetail extends LitElement {
     toggle.dataset.index = index.toString();
 
     // Store a reference to our new detailsNav item
-    if (this.slots.getSlotted('nav', 'details-nav'))
+    if (this.slots.getSlotted('nav', 'details-nav')) {
       this.slots.getSlotted('nav', 'details-nav')[index] = toggle;
+    }
 
-    if (createToggleButton)
+    if (createToggleButton) {
       slotted.parentElement?.replaceChild(toggle, slotted);
+    }
   }
 
   private _createToggleButton(detailNavElement: HTMLElement) {
@@ -224,8 +229,9 @@ export class PfePrimaryDetail extends LitElement {
 
     // Copy over attributes from original element that aren't in denyList
     [...attr].forEach(detailNavElement => {
-      if (!denyListAttributes.includes(detailNavElement.name))
+      if (!denyListAttributes.includes(detailNavElement.name)) {
         button?.setAttribute(detailNavElement.name, detailNavElement.value);
+      }
     });
 
     // Keeping track of tagName which is used in mobile layout to maintain heading order
@@ -245,8 +251,9 @@ export class PfePrimaryDetail extends LitElement {
     const navs = this.slots.getSlotted('nav', 'details-nav');
 
     // If the toggle does not have a ID, set a unique ID
-    if (!detail.hasAttribute('id'))
+    if (!detail.hasAttribute('id')) {
       detail.setAttribute('id', getRandomId('pfe-detail'));
+    }
 
     detail.setAttribute('role', 'tabpanel');
     // Set initial tabindex state for detail panel, -1 one when panel is inactive
@@ -254,12 +261,14 @@ export class PfePrimaryDetail extends LitElement {
 
     const toggleId = navs[index].getAttribute('id');
 
-    if (!detail.hasAttribute('aria-labelledby') && toggleId)
+    if (!detail.hasAttribute('aria-labelledby') && toggleId) {
       detail.setAttribute('aria-labelledby', toggleId);
+    }
 
     // Swing back to detailsNav to add aria-controls, now that details have an Id
-    if (!navs[index].hasAttribute('aria-controls') && detail.id)
+    if (!navs[index].hasAttribute('aria-controls') && detail.id) {
       navs[index].setAttribute('aria-controls', detail.id);
+    }
 
     // Leave a reliable indicator that this has been initialized so we don't do it again
     detail.dataset.processed = 'true';
@@ -273,8 +282,9 @@ export class PfePrimaryDetail extends LitElement {
    */
   @bound private _setBreakpoint() {
     // We don't need to do anything if the page width is unchanged
-    if (this._windowInnerWidth === window.innerWidth)
+    if (this._windowInnerWidth === window.innerWidth) {
       return;
+    }
 
     const breakpointWas = this.breakpoint;
     const breakpointIs = this.offsetWidth < this.breakpointWidth ? 'compact' : 'desktop';
@@ -285,28 +295,32 @@ export class PfePrimaryDetail extends LitElement {
     // not the item that was opened by default so the desktop design would work
     if (this.pristine && breakpointIs === 'compact') {
       const activeToggle = this.active ? this.root?.getElementById(this.active) : false;
-      if (activeToggle)
+      if (activeToggle) {
         this.active = null;
+      }
     }
 
     // If we've switched breakpoints or one wasn't set
     if (breakpointWas !== 'desktop' && breakpointIs === 'desktop') {
       const [target = null] = this.slots.getSlotted('nav', 'details-nav') || [];
       // Desktop should never have nothing selected, default to first item if nothing is selected
-      if (!this.active)
+      if (!this.active) {
         this._handleHideShow({ target });
+      }
 
 
       // Make sure the left column items are visible
       this._setDetailsNavVisibility(true);
     } else if (breakpointWas !== 'compact' && breakpointIs === 'compact') {
       // Hide the left column if it is out of view
-      if (this.active)
+      if (this.active) {
         this._setDetailsNavVisibility(false);
+      }
     }
 
-    for (const toggle of this.querySelectorAll('[slot$="nav"]'))
+    for (const toggle of this.querySelectorAll('[slot$="nav"]')) {
       this._setActiveOnToggle(toggle.id);
+    }
 
 
     this._windowInnerWidth = window.innerWidth;
@@ -325,8 +339,9 @@ export class PfePrimaryDetail extends LitElement {
 
     for (const slotNames of SELECTORS) {
       for (const detailNavItem of this.slots.getSlotted<HTMLElement>(...slotNames)) {
-        if (detailNavItem)
+        if (detailNavItem) {
           detailNavItem.hidden = !visible;
+        }
       }
     }
   }
@@ -358,25 +373,29 @@ export class PfePrimaryDetail extends LitElement {
   }
 
   private _setActiveOnToggle(toggleId?: string|null) {
-    if (toggleId == null)
+    if (toggleId == null) {
       return;
+    }
 
     const toggle = this.root?.getElementById(toggleId);
 
-    if (!(toggle instanceof HTMLElement))
+    if (!(toggle instanceof HTMLElement)) {
       return;
+    }
 
 
     const active = this.active === toggle.id;
     const detailId = toggle.getAttribute('aria-controls');
 
-    if (!detailId)
+    if (!detailId) {
       throw new Error(`Toggle ${toggle.id} has no associated detail panel`);
+    }
 
     const detail = this.root?.getElementById(detailId);
 
-    if (!detail)
+    if (!detail) {
       throw new Error(`Toggle ${toggle.id} has no associated detail panel`);
+    }
 
     detail.hidden = !active;
     detail.setAttribute('aria-hidden', String(!active));
@@ -396,10 +415,11 @@ export class PfePrimaryDetail extends LitElement {
      * so that only the active tab (selected tab) is in the tab sequence.
      * @see https://www.w3.org/TR/wai-aria-practices/examples/primary-detail/primary-detail-2/primary-detail.html
      */
-    if (active)
+    if (active) {
       detail.removeAttribute('tabindex');
-    else
+    } else {
       detail.setAttribute('tabindex', '-1');
+    }
   }
 
   private _renderDetailsWrapperHeading(): TemplateResult {
@@ -430,18 +450,21 @@ export class PfePrimaryDetail extends LitElement {
   @bound private async _handleHideShow(e: { target: EventTarget|null }) {
     // Detect if handleHideShow was called by an event listener or manually in code
     // If the user has interacted with the component remove the pristine attribute
-    if (e instanceof Event)
+    if (e instanceof Event) {
       this.pristine = false;
+    }
 
-    if (!(e.target instanceof HTMLElement))
+    if (!(e.target instanceof HTMLElement)) {
       return;
+    }
 
     // If the clicked toggle is already open, no need to do anything
     if (
       e.target.getAttribute('aria-selected') === 'true' &&
       e.target.id === this.active
-    )
+    ) {
       return;
+    }
 
     const previousToggle = this.active ? this.root?.getElementById(this.active) : false;
     const previousDetails =
@@ -478,8 +501,9 @@ export class PfePrimaryDetail extends LitElement {
         this._detailsBackButton?.focus();
       } else {
         this._setDetailsNavVisibility(true);
-        if (previousToggle)
+        if (previousToggle) {
           previousToggle.focus();
+        }
       }
     }
 
@@ -534,8 +558,9 @@ export class PfePrimaryDetail extends LitElement {
     const toggles = this.slots.getSlotted('nav', 'details-nav');
     const newIndex = toggles?.findIndex(toggle => toggle === document.activeElement);
 
-    if (newIndex == null)
+    if (newIndex == null) {
       return null;
+    }
     return toggles[newIndex % toggles.length].nextElementSibling as HTMLElement;
   }
 
@@ -579,8 +604,9 @@ export class PfePrimaryDetail extends LitElement {
     switch (event.key) {
       case 'Escape':
         // Only closing all at compact sizes since something should always be selected at non-compact
-        if (this.getAttribute('breakpoint') === 'compact')
+        if (this.getAttribute('breakpoint') === 'compact') {
           this.closeAll();
+        }
 
         break;
         // case "Tab":
@@ -593,10 +619,12 @@ export class PfePrimaryDetail extends LitElement {
       case 'Up':
       case 'ArrowLeft':
       case 'Left':
-        if (!(currentElement instanceof HTMLElement))
+        if (!(currentElement instanceof HTMLElement)) {
           return;
-        if (!this._isToggle(currentElement))
+        }
+        if (!this._isToggle(currentElement)) {
           return;
+        }
 
         event.preventDefault(); // Prevent scrolling
         // Up Arrow/Left Arrow
@@ -610,8 +638,9 @@ export class PfePrimaryDetail extends LitElement {
       case 'Down':
       case 'ArrowRight':
       case 'Right':
-        if (!this._isToggle(currentElement))
+        if (!this._isToggle(currentElement)) {
           return;
+        }
 
         event.preventDefault(); // Prevent scrolling
         // Down Arrow/Right Arrow
@@ -624,8 +653,9 @@ export class PfePrimaryDetail extends LitElement {
         break;
 
       case 'Home':
-        if (!this._isToggle(currentElement))
+        if (!this._isToggle(currentElement)) {
           return;
+        }
 
         event.preventDefault(); // Prevent scrolling
         // Home
@@ -635,8 +665,9 @@ export class PfePrimaryDetail extends LitElement {
         break;
 
       case 'End': {
-        if (!this._isToggle(currentElement))
+        if (!this._isToggle(currentElement)) {
           return;
+        }
 
         event.preventDefault(); // Prevent scrolling
         // End
@@ -650,8 +681,9 @@ export class PfePrimaryDetail extends LitElement {
         return;
     }
 
-    if (newToggle instanceof HTMLElement)
+    if (newToggle instanceof HTMLElement) {
       newToggle.focus();
+    }
   }
 }
 

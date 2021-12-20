@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { bound, initializer, observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
@@ -10,9 +11,12 @@ import style from './pfe-select.scss';
 const isSelected = (el: { selected?: boolean }): boolean =>
   !!el.selected;
 
-export class SelectChangeEvent extends Event {
-  constructor(/** The selected value */ public value?: string) {
-    super('select', { bubbles: true });
+export class SelectChangeEvent extends ComposedEvent {
+  constructor(
+    /** The selected value */
+    public value?: string
+  ) {
+    super('select');
   }
 }
 

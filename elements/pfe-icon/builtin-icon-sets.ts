@@ -48,8 +48,9 @@ export function addBuiltIns({ PfeIcon, config = window.PfeConfig }: Options) {
 
   // If the user wants to completely opt out of default icon sets,
   // allow them to.
-  if (!config.IconSets?.length)
+  if (!config.IconSets?.length) {
     return;
+  }
 
   // If the user provides their own icon sets, use them. If not, use our defaults.
   // @TODO: Switch from access.redhat.com to another icon set.

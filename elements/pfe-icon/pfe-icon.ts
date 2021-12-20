@@ -41,8 +41,9 @@ function register(klass: typeof PfeIcon) {
   // Attach a listener for the registration of an icon set
   // Leaving this attached allows for the registered set to be updated
   document.body.addEventListener(`pfe-icon:add-icon-set`, () => {
-    for (const el of INSTANCES)
+    for (const el of INSTANCES) {
       el.updateIcon();
+    }
   });
 }
 
@@ -72,12 +73,13 @@ export class PfeIcon extends LitElement {
 
     const existingSet = this._iconSets.get(name);
 
-    if (!resolveFunction && existingSet && typeof existingSet?.resolver === 'function')
+    if (!resolveFunction && existingSet && typeof existingSet?.resolver === 'function') {
       resolveFunction = existingSet.resolver;
-    else if (resolveFunction && typeof resolveFunction !== 'function')
+    } else if (resolveFunction && typeof resolveFunction !== 'function') {
       return Logger.warn(`[${'pfe-icon'}]: The third input to addIconSet should be a function that parses and returns the icon's filename.`);
-    else if (!resolveFunction)
+    } else if (!resolveFunction) {
       return Logger.warn(`[${'pfe-icon'}]: The set ${name} needs a resolve function for the icon names.`);
+    }
 
 
     // Register the icon set and set up the event indicating the change
@@ -195,7 +197,9 @@ export class PfeIcon extends LitElement {
     ));
   }
 
-  protected _iconChanged() { this.updateIcon(); }
+  protected _iconChanged() {
+    this.updateIcon();
+  }
 
   @bound public updateIcon() {
     const { set } = PfeIcon.getIconSet(this.icon);

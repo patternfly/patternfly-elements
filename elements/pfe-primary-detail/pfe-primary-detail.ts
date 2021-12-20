@@ -6,6 +6,7 @@ import { html as statichtml, unsafeStatic } from 'lit/static-html.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed, initializer } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
@@ -20,7 +21,7 @@ function isQueryable(x: Node): x is Document|ShadowRoot {
   return x instanceof Document || x instanceof ShadowRoot;
 }
 
-export class PrimaryDetailChangeEvent extends Event {
+export class PrimaryDetailChangeEvent extends ComposedEvent {
   declare tab: HTMLElement;
   declare details: HTMLElement;
 
@@ -33,7 +34,7 @@ export class PrimaryDetailChangeEvent extends Event {
     tab: HTMLElement,
     details: HTMLElement,
   }) {
-    super('change', { bubbles: true });
+    super('change');
     this.previousTab = config.previousTab;
     this.previousDetails = config.previousDetails;
     this.tab = config.tab;

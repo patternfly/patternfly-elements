@@ -189,13 +189,17 @@ export class PfeTabs extends LitElement {
     this.removeEventListener('keydown', this._onKeyDown);
     this._allTabs().forEach(tab => tab.removeEventListener('click', this._onClick));
 
-    if (this.tabHistory)
+    if (this.tabHistory) {
       window.removeEventListener('popstate', this._popstateEventHandler);
+    }
   }
 
   protected _verticalChanged() {
-    if (this.vertical) this.orientation = 'vertical';
-    else this.orientation = 'horizontal';
+    if (this.vertical) {
+      this.orientation = 'vertical';
+    } else {
+      this.orientation = 'horizontal';
+    }
   }
 
   protected async _selectedIndexChanged(oldVal?: number, newVal?: number) {
@@ -209,10 +213,11 @@ export class PfeTabs extends LitElement {
   }
 
   protected _tabHistoryChanged() {
-    if (!this.tabHistory)
+    if (!this.tabHistory) {
       window.removeEventListener('popstate', this._popstateEventHandler);
-    else
+    } else {
       window.addEventListener('popstate', this._popstateEventHandler);
+    }
   }
 
   @initializer({ observe: {
@@ -233,7 +238,9 @@ export class PfeTabs extends LitElement {
   }
 
   @bound private _linkPanels() {
-    if (this._linked) return;
+    if (this._linked) {
+      return;
+    }
 
     this.updateAccessibility();
 
@@ -249,13 +256,16 @@ export class PfeTabs extends LitElement {
   }
 
   private _panelForTab(tab: PfeTab): PfeTabPanel|null {
-    if (!tab || !tab.controls) return null;
+    if (!tab || !tab.controls) {
+      return null;
+    }
 
     const panel = this.querySelector(`#${tab.controls}`);
-    if (panel instanceof PfeTabPanel)
+    if (panel instanceof PfeTabPanel) {
       return panel;
-    else
+    } else {
       return null;
+    }
   }
 
   private _prevTab() {
@@ -291,14 +301,18 @@ export class PfeTabs extends LitElement {
   }
 
   private _selectTab(newTab?: PfeTab) {
-    if (!newTab) return;
+    if (!newTab) {
+      return;
+    }
 
     this.reset();
 
     const newPanel = this._panelForTab(newTab);
     let newTabSelected = false;
 
-    if (!newPanel) this.logger.warn(`No panel was found for the selected tab${newTab.id ? `: pfe-tab#${newTab.id}` : ''}`);
+    if (!newPanel) {
+      this.logger.warn(`No panel was found for the selected tab${newTab.id ? `: pfe-tab#${newTab.id}` : ''}`);
+    }
 
     // this.selected on tabs contains a pointer to the selected tab element
     if (this.selected && this.selected !== newTab) {
@@ -308,14 +322,17 @@ export class PfeTabs extends LitElement {
     }
 
     newTab.selected = 'true';
-    if (newPanel)
+    if (newPanel) {
       newPanel.hidden = false;
+    }
 
     // Update the value of the selected pointer to the new tab
     this.selected = newTab;
 
     if (newTabSelected) {
-      if (this._setFocus) newTab.focus();
+      if (this._setFocus) {
+        newTab.focus();
+      }
 
       this.dispatchEvent(pfeEvent('pfe-tabs:shown-tab', { tab: this.selected }));
     }
@@ -327,11 +344,13 @@ export class PfeTabs extends LitElement {
     const tabs = this._allTabs();
     const foundTab = tabs.find(tab => tab === event.target);
 
-    if (!foundTab)
+    if (!foundTab) {
       return;
+    }
 
-    if (event.altKey)
+    if (event.altKey) {
       return;
+    }
 
     let newTab;
 
@@ -363,8 +382,9 @@ export class PfeTabs extends LitElement {
     if (newTab) {
       this.selectedIndex = this._getTabIndex(newTab);
       this._setFocus = true;
-    } else
+    } else {
       this.logger.warn(`No new tab could be found.`);
+    }
   }
 
   @bound private _onClick(event: MouseEvent) {
@@ -372,7 +392,9 @@ export class PfeTabs extends LitElement {
     const foundTab = this._allTabs().find(tab => tab === event.currentTarget);
 
     // If the tab wasn't found in the markup, exit the handler
-    if (!foundTab) return;
+    if (!foundTab) {
+      return;
+    }
 
     // Update the selected index to the clicked tab
     this.selectedIndex = this._getTabIndex(event.currentTarget);
@@ -395,8 +417,9 @@ export class PfeTabs extends LitElement {
     const tabIndexFromURL = this._getTabIndexFromURL();
 
     this._updateHistory = false;
-    if (tabIndexFromURL > -1)
+    if (tabIndexFromURL > -1) {
       this.selectedIndex = tabIndexFromURL;
+    }
   }
 
   select(newTab: Element) {
@@ -409,7 +432,9 @@ export class PfeTabs extends LitElement {
   }
 
   selectIndex(_index: number|string) {
-    if (_index == null) return;
+    if (_index == null) {
+      return;
+    }
 
     const index = typeof _index === 'string' ? parseInt(_index, 10) : _index;
     const tabs = this._allTabs();

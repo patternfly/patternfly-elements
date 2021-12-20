@@ -486,10 +486,12 @@ describe('<pfe-tabs>', function() {
     tabs.removeAttribute('vertical');
     await tabs.updateComplete;
 
-    for (const tab of allTabs!)
+    for (const tab of allTabs!) {
       expect(tab.hasAttribute('vertical')).to.be.false;
-    for (const panel of allPanels)
+    }
+    for (const panel of allPanels) {
       expect(panel.hasAttribute('vertical')).to.be.false;
+    }
   });
 
   it('should open to the correct tab specified by the selected-index attribute', async function() {

@@ -52,8 +52,9 @@ export class PfeProgressIndicator extends LitElement {
   @initializer({ observe: false }) protected _init() {
     const [firstChild] = this.children;
 
-    if (!firstChild)
+    if (!firstChild) {
       this.logger.warn(`You do not have a backup loading message.`);
+    }
   }
 }
 

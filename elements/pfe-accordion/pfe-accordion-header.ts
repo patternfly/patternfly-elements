@@ -85,8 +85,9 @@ export class PfeAccordionHeader extends LitElement {
     const header = await this._getHeaderElement();
 
     // prevent double-logging
-    if (header !== this._generatedHtag)
+    if (header !== this._generatedHtag) {
       this._generatedHtag = undefined;
+    }
 
     this.headingTag = header?.tagName.toLowerCase() ?? 'h3';
     this.headingText = header?.textContent?.trim() ?? '';
@@ -131,31 +132,34 @@ export class PfeAccordionHeader extends LitElement {
   @bound private async _getHeaderElement(): Promise<HTMLElement|undefined> {
     await this.updateComplete;
     // Check if there is no nested element or nested textNodes
-    if (!this.firstElementChild && !this.firstChild)
+    if (!this.firstElementChild && !this.firstChild) {
       return void this.logger.warn('No header content provided');
-    else if (this.firstElementChild) {
+    } else if (this.firstElementChild) {
       const htags = this.slots.getSlotted().filter(isPorHeader);
 
       // If there is no content inside the slot, return empty with a warning
-      if (htags.length === 0)
+      // else, if there is more than 1 element in the slot, capture the first h-tag
+      if (htags.length === 0) {
         return void this.logger.warn('No heading information was provided.');
-
-      // If there is more than 1 element in the slot, capture the first h-tag
-      else if (htags.length > 1) {
+      } else if (htags.length > 1) {
         this.logger.warn('Heading currently only supports 1 tag; extra tags will be ignored.');
         return htags[0];
-      } else return htags[0];
+      } else {
+        return htags[0];
+      }
     } else {
-      if (!this._generatedHtag)
+      if (!this._generatedHtag) {
         this.logger.warn('Header should contain at least 1 heading tag for correct semantics.');
+      }
       this._generatedHtag = document.createElement('h3');
 
       // If a text node was provided but no semantics, default to an h3
       // otherwise, incorrect semantics were used, create an H3 and try to capture the content
-      if (this.firstChild?.nodeType === Node.TEXT_NODE)
+      if (this.firstChild?.nodeType === Node.TEXT_NODE) {
         this._generatedHtag.textContent = this.firstChild.textContent;
-      else
+      } else {
         this._generatedHtag.textContent = this.textContent;
+      }
 
       return this._generatedHtag;
     }
@@ -168,8 +172,7 @@ export class PfeAccordionHeader extends LitElement {
   }
 
   protected _expandedChanged() {
-    if (this.button)
-      this.button.setAttribute('aria-expanded', this.expanded ? 'true' : 'false');
+    this.button?.setAttribute?.('aria-expanded', this.expanded ? 'true' : 'false');
   }
 }
 

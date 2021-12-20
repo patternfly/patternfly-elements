@@ -261,8 +261,9 @@ describe('<pfe-accordion>', function() {
       expect(header.hasAttribute('expanded')).to.be.true;
 
       const panel = header.nextElementSibling;
-      if (!(panel instanceof PfeAccordionPanel))
+      if (!(panel instanceof PfeAccordionPanel)) {
         return expect.fail('panel was not a <pfe-accordion-panel>');
+      }
       expect(panel.expanded).to.be.true;
       expect(panel.hasAttribute('expanded')).to.be.true;
     });

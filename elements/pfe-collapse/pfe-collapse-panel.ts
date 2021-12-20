@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
@@ -9,25 +10,25 @@ import style from './pfe-collapse-panel.scss';
 
 export { style };
 
-export class AnimationStartEvent extends Event {
+export class AnimationStartEvent extends ComposedEvent {
   constructor(
     /** @summary A reference to the panel which started animating */
     public panel: PfeCollapsePanel,
     /** @summary The state of the panel which started animating */
     public state: 'opening'|'closing'
   ) {
-    super('animation-start', { bubbles: true });
+    super('animation-start');
   }
 }
 
-export class AnimationEndEvent extends Event {
+export class AnimationEndEvent extends ComposedEvent {
   constructor(
     /** @summary A reference to the panel which finished animating */
     public panel: PfeCollapsePanel,
     /** @summary Whether the panel is open */
     public expanded: boolean
   ) {
-    super('animation-end', { bubbles: true });
+    super('animation-end');
   }
 }
 

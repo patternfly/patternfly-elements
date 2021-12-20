@@ -2,6 +2,8 @@ import type { PfeCollapsePanel } from './pfe-collapse-panel';
 
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
@@ -10,7 +12,7 @@ import { observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 
 import style from './pfe-collapse-toggle.scss';
 
-export class CollapseChangeEvent extends Event {
+export class CollapseChangeEvent extends ComposedEvent {
   constructor(
     /** @summary The toggle element which triggered the change */
     public toggle: PfeCollapseToggle,
@@ -19,7 +21,7 @@ export class CollapseChangeEvent extends Event {
     /** @summary Whether the panel expanded (`true`) or collapsed (`false`) */
     public expanded: boolean
   ) {
-    super('change', { bubbles: true });
+    super('change');
   }
 }
 
@@ -36,9 +38,11 @@ export class PfeCollapseToggle extends LitElement {
 
   private logger = new Logger(this);
 
-  @observed @property({ type: Boolean, attribute: 'expanded' }) expanded = false;
+  @observed
+  @property({ type: Boolean, attribute: 'expanded' }) expanded = false;
 
-  @observed @property({ attribute: 'aria-controls', reflect: true }) ariaControls = ''
+  @observed
+  @property({ attribute: 'aria-controls', reflect: true }) ariaControls = ''
 
   @property({ type: Boolean, reflect: true }) disabled = false;
 

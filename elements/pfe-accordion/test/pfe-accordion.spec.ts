@@ -1,6 +1,7 @@
-import { expect, oneEvent, html, aTimeout } from '@open-wc/testing';
+import { expect, oneEvent, html, aTimeout, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { spy, SinonSpy } from 'sinon';
+import { sendKeys } from '@web/test-runner-commands';
 
 // Import the element we're testing.
 import { PfeAccordion } from '@patternfly/pfe-accordion';
@@ -13,25 +14,28 @@ import { PfeAccordionHeader } from '@patternfly/pfe-accordion/pfe-accordion-head
 // in multiple tests. It's torn down and recreated each time.
 const testElement = html`
   <pfe-accordion>
-    <pfe-accordion-header id="header1">
+    <pfe-accordion-header id="header1" data-header="1">
       <h3>Consetetur sadipscing elitr?</h3>
     </pfe-accordion-header>
-    <pfe-accordion-panel id="panel1">
+    <pfe-accordion-panel id="panel1" data-panel="1">
       <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
     </pfe-accordion-panel>
-    <pfe-accordion-header>
+
+    <pfe-accordion-header data-header="2">
       <h3>Labore et dolore magna aliquyam erat?</h3>
     </pfe-accordion-header>
-    <pfe-accordion-panel>
+    <pfe-accordion-panel data-panel="2">
       <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
     </pfe-accordion-panel>
-    <pfe-accordion-header>
+
+    <pfe-accordion-header data-header="3">
       <h3>Incididunt in Lorem voluptate eiusmod dolor?</h3>
     </pfe-accordion-header>
-    <pfe-accordion-panel>
+    <pfe-accordion-panel data-panel="3">
       <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
     </pfe-accordion-panel>
-  </pfe-accordion>`;
+  </pfe-accordion>
+`;
 
 describe('<pfe-accordion>', function() {
   beforeEach(function() {
@@ -441,6 +445,517 @@ describe('<pfe-accordion>', function() {
   // Validate that the is-direct-link attribute on an accordion header acts like a link on click
   // Validate that the is-direct-link attribute throws a warning if it doesn't contain a link
   // -> pfe-accordion-header: This component expects to find a link in the light DOM due to the "is-direct-link" attribute
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria-practices/examples/accordion/accordion.html
+   */
+  describe('keyboard accessibility', function() {
+    let element: PfeAccordion;
+
+    let header1: PfeAccordionHeader;
+    let header2: PfeAccordionHeader;
+    let header3: PfeAccordionHeader;
+
+    let panel1: PfeAccordionPanel;
+    let panel2: PfeAccordionPanel;
+    let panel3: PfeAccordionPanel;
+
+    beforeEach(async function() {
+      element = await createFixture<PfeAccordion>(testElement);
+      [header1, header2, header3] = element.querySelectorAll('pfe-accordion-header');
+      [panel1, panel2, panel3] = element.querySelectorAll('pfe-accordion-panel');
+    });
+
+    describe('when focus is on the first header', function() {
+      beforeEach(async function() {
+        header1.focus();
+        await nextFrame();
+      });
+
+      describe('Space', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Space' });
+          await nextFrame();
+        });
+
+        it('expands the first panel', function() {
+          expect(panel1.expanded).to.be.true;
+          expect(panel2.expanded).to.be.false;
+          expect(panel3.expanded).to.be.false;
+        });
+      });
+
+      describe('Enter', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Enter' });
+          await nextFrame();
+        });
+
+        it('expands the first panel', function() {
+          expect(panel1.expanded).to.be.true;
+          expect(panel2.expanded).to.be.false;
+          expect(panel3.expanded).to.be.false;
+        });
+      });
+
+      describe('Tab', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Tab' });
+          await nextFrame();
+        });
+
+        it('moves focus to the second header', function() {
+          expect(document.activeElement).to.equal(header2);
+        });
+      });
+
+      describe('Shift+Tab', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Shift+Tab' });
+          await nextFrame();
+        });
+
+        it('moves focus to the body', function() {
+          expect(document.activeElement).to.equal(document.body);
+        });
+      });
+
+      describe('ArrowDown', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'ArrowDown' });
+          await nextFrame();
+        });
+
+        it('moves focus to the second header', function() {
+          expect(document.activeElement).to.equal(header2);
+        });
+      });
+
+      describe('ArrowUp', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'ArrowUp' });
+          await nextFrame();
+        });
+
+        it('moves focus to the last header', function() {
+          expect(document.activeElement).to.equal(header3);
+        });
+      });
+
+      describe('Home', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Home' });
+          await nextFrame();
+        });
+
+        it('moves focus to the first header', function() {
+          expect(document.activeElement).to.equal(header1);
+        });
+      });
+
+      describe('End', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'End' });
+          await nextFrame();
+        });
+
+        it('moves focus to the last header', function() {
+          expect(document.activeElement).to.equal(header3);
+        });
+      });
+
+      describe('and the first panel is expanded', function() {
+        beforeEach(async function() {
+          header1.click();
+          await nextFrame();
+          expect(panel1.expanded).to.be.true;
+        });
+
+        describe('Space', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Space' });
+            await nextFrame();
+          });
+
+          it('collapses the first panel', function() {
+            expect(panel1.expanded).to.be.false;
+            expect(panel2.expanded).to.be.false;
+            expect(panel3.expanded).to.be.false;
+          });
+        });
+
+        describe('Enter', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Enter' });
+            await nextFrame();
+          });
+
+          it('collapses the first panel', function() {
+            expect(panel1.expanded).to.be.false;
+            expect(panel2.expanded).to.be.false;
+            expect(panel3.expanded).to.be.false;
+          });
+        });
+
+        describe('Tab', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Tab' });
+            await nextFrame();
+          });
+
+          it('moves focus to the link in the first panel', function() {
+            expect(document.activeElement).to.equal(panel1.querySelector('a'));
+          });
+        });
+
+        describe('Shift+Tab', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Shift+Tab' });
+            await nextFrame();
+          });
+
+          it('moves focus to the body', function() {
+            expect(document.activeElement).to.equal(document.body);
+          });
+        });
+      });
+    });
+
+    describe('when focus is on the middle header', function() {
+      beforeEach(async function() {
+        header2.focus();
+        await nextFrame();
+      });
+
+      describe('Space', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Space' });
+          await nextFrame();
+        });
+
+        it('expands the middle panel', function() {
+          expect(panel1.expanded).to.be.false;
+          expect(panel2.expanded).to.be.true;
+          expect(panel3.expanded).to.be.false;
+        });
+      });
+
+      describe('Enter', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Enter' });
+          await nextFrame();
+        });
+
+        it('expands the middle panel', function() {
+          expect(panel1.expanded).to.be.false;
+          expect(panel2.expanded).to.be.true;
+          expect(panel3.expanded).to.be.false;
+        });
+      });
+
+      describe('Tab', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Tab' });
+          await nextFrame();
+        });
+
+        it('moves focus to the last header', function() {
+          expect(document.activeElement).to.equal(header3);
+        });
+      });
+
+      describe('ArrowDown', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'ArrowDown' });
+          await nextFrame();
+        });
+
+        it('moves focus to the last header', function() {
+          expect(document.activeElement).to.equal(header3);
+        });
+      });
+
+      describe('ArrowUp', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'ArrowUp' });
+          await nextFrame();
+        });
+
+        it('moves focus to the first header', function() {
+          expect(document.activeElement).to.equal(header1);
+        });
+      });
+
+      describe('Home', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Home' });
+          await nextFrame();
+        });
+
+        it('moves focus to the first header', function() {
+          expect(document.activeElement).to.equal(header1);
+        });
+      });
+
+      describe('End', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'End' });
+          await nextFrame();
+        });
+
+        it('moves focus to the last header', function() {
+          expect(document.activeElement).to.equal(header3);
+        });
+      });
+
+    });
+
+    describe('when focus is on the last header', function() {
+      beforeEach(async function() {
+        header3.focus();
+        await nextFrame();
+      });
+
+      describe('Space', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Space' });
+          await nextFrame();
+        });
+
+        it('expands the last panel', function() {
+          expect(panel1.expanded).to.be.false;
+          expect(panel2.expanded).to.be.false;
+          expect(panel3.expanded).to.be.true;
+        });
+
+        describe('then Space', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Space' });
+            await nextFrame();
+          });
+
+          it('collapses the last panel', function() {
+            expect(panel1.expanded).to.be.false;
+            expect(panel2.expanded).to.be.false;
+            expect(panel3.expanded).to.be.false;
+          });
+        });
+      });
+
+      describe('Enter', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Enter' });
+          await nextFrame();
+        });
+
+        it('expands the last panel', function() {
+          expect(panel1.expanded).to.be.false;
+          expect(panel2.expanded).to.be.false;
+          expect(panel3.expanded).to.be.true;
+        });
+
+        describe('then Enter', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Enter' });
+            await nextFrame();
+          });
+
+          it('collapses the last panel', function() {
+            expect(panel1.expanded).to.be.false;
+            expect(panel2.expanded).to.be.false;
+            expect(panel3.expanded).to.be.false;
+          });
+        });
+      });
+
+      describe('Shift+Tab', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Shift+Tab' });
+          await nextFrame();
+        });
+
+        it('moves focus to the link in middle header', function() {
+          expect(document.activeElement).to.equal(header2);
+        });
+      });
+
+      describe('ArrowDown', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'ArrowDown' });
+          await nextFrame();
+        });
+
+        it('moves focus to the first header', function() {
+          expect(document.activeElement).to.equal(header1);
+        });
+      });
+
+      describe('ArrowUp', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'ArrowUp' });
+          await nextFrame();
+        });
+
+        it('moves focus to the middle header', function() {
+          expect(document.activeElement).to.equal(header2);
+        });
+      });
+
+      describe('Home', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Home' });
+          await nextFrame();
+        });
+
+        it('moves focus to the first header', function() {
+          expect(document.activeElement).to.equal(header1);
+        });
+      });
+
+      describe('End', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'End' });
+          await nextFrame();
+        });
+
+        it('moves focus to the last header', function() {
+          expect(document.activeElement).to.equal(header3);
+        });
+      });
+    });
+
+    describe('when the first panel is expanded', function() {
+      beforeEach(async function() {
+        element.expand(0);
+        await aTimeout(500);
+      });
+
+      describe('and focus is on the middle header', function() {
+        beforeEach(async function() {
+          header2.focus();
+          await nextFrame();
+        })
+
+        describe('Shift+Tab', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Shift+Tab' });
+            await aTimeout(500);
+          });
+
+          it('moves focus to the link in first panel', async function() {
+            expect(document.activeElement).to.equal(panel1.querySelector('a'));
+          });
+        });
+      });
+    });
+
+    describe('when the middle panel is expanded', function() {
+      beforeEach(async function() {
+        element.expand(1);
+        await nextFrame();
+        expect(panel2.expanded).to.be.true;
+      });
+
+      describe('and focus is on the middle header', function() {
+        beforeEach(async function() {
+          header2.focus();
+          await nextFrame();
+        });
+
+        describe('Space', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Space' });
+            await nextFrame();
+          });
+
+          it('collapses the second panel', function() {
+            expect(panel1.expanded).to.be.false;
+            expect(panel2.expanded).to.be.false;
+            expect(panel3.expanded).to.be.false;
+          });
+        });
+
+        describe('Enter', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Enter' });
+            await nextFrame();
+          });
+
+          it('collapses the second panel', function() {
+            expect(panel1.expanded).to.be.false;
+            expect(panel2.expanded).to.be.false;
+            expect(panel3.expanded).to.be.false;
+          });
+        });
+
+        describe('Tab', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Tab' });
+            await nextFrame();
+          });
+
+          it('moves focus to the link in the second panel', function() {
+            expect(document.activeElement).to.equal(panel2.querySelector('a'));
+          });
+        });
+
+        describe('Shift+Tab', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Shift+Tab' });
+            await nextFrame();
+          });
+
+          it('moves focus to the first header', function() {
+            expect(document.activeElement).to.equal(header1);
+          });
+        });
+      });
+
+      describe('and focus is on the last header', function() {
+        beforeEach(async function() {
+          header3.focus();
+          await nextFrame();
+        });
+
+        describe('Shift+Tab', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Shift+Tab' });
+            await nextFrame();
+          });
+
+          it('moves focus to the link in middle panel', function() {
+            expect(document.activeElement).to.equal(panel2.querySelector('a'));
+          });
+        });
+      });
+    });
+
+    describe('when the last panel is expanded', function() {
+      beforeEach(async function() {
+        element.expand(2);
+        await nextFrame();
+        expect(panel3.expanded).to.be.true;
+      });
+
+      describe('when focus is on the last header', function() {
+        beforeEach(async function() {
+          header3.focus();
+          await nextFrame();
+        });
+
+        describe('Tab', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Tab' });
+            await nextFrame();
+          });
+
+          it('moves focus to the link in last panel', function() {
+            expect(document.activeElement).to.equal(panel3.querySelector('a'));
+          });
+        });
+      });
+    });
+  });
 });
 
 describe('<pfe-accordion-header>', function() {

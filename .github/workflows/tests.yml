@@ -65,7 +65,7 @@ jobs:
         run: npm ci --prefer-offline
 
       - name: Lint
-        run: npm lint
+        run: npm run lint
         continue-on-error: true
 
       - name: Run tests

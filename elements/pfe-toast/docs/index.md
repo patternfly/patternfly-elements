@@ -24,7 +24,7 @@ tags:
   </pfe-button>
 
   <pfe-toast id="overview-toast">
-    <h2 class="opt-out">Do you feel toasted?</h2>
+    <h2 class="no-header-styles">Do you feel toasted?</h2>
     <p>Biodiesel wolf franzen, jean shorts pabst lomo cloud bread gentrify cronut af migas vinyl four dollar toast scenester twee. Twee synth hammock hella activated charcoal keffiyeh, farm-to-table cray try-hard tofu fixie truffaut leggings actually. Tote bag poutine kale chips intelligentsia health goth, thundercats affogato tofu literally vegan umami slow-carb VHS chillwave.</p>
   </pfe-toast>
 

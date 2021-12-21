@@ -51,6 +51,8 @@ export class AccordionHeaderChangeEvent extends ComposedEvent {
 export class PfeAccordionHeader extends LitElement {
   static readonly styles = [style];
 
+  static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+
   @property({ attribute: 'aria-controls', reflect: true }) ariaControls?: string;
 
   /** Disclosure */

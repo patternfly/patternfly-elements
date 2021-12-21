@@ -1,4 +1,4 @@
-import { TemplateResult } from 'lit';
+import type { TemplateResult } from 'lit';
 
 type TestHelpers = {
   fixture: <T extends Element = HTMLElement>(testCase: string|TemplateResult) => Promise<T>;

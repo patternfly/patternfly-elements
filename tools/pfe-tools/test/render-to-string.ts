@@ -1,4 +1,5 @@
-import { TemplateResult, render } from 'lit';
+import type { TemplateResult } from 'lit';
+import { render } from 'lit';
 
 export function renderToString(tpl: TemplateResult): string {
   const frag = new DocumentFragment();

@@ -78,6 +78,10 @@ permalink: "demo/{{ element }}/index.html"
       {%- endif -%}
     </template>
     <script type="module" src="{{ demoConfig.module }}"></script>
+    {% if element not 'pfe-band' %}
+    {% set src = (elements["pfe-band"]).module %}
+    <script type="module" src="{{ src }}"></script>
+    {% endif %}
     <script type="module">
       const container = document.getElementById("shadow-root");
       const shadowRoot = container.attachShadow({ mode: 'open' });

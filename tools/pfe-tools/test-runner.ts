@@ -7,13 +7,15 @@ import { junitReporter } from '@web/test-runner-junit-reporter';
 
 import { pfeDevServerConfig } from './dev-server.js';
 
-export type PfeTestRunnerConfigOptions = PfeDevServerConfigOptions
+export interface PfeTestRunnerConfigOptions extends PfeDevServerConfigOptions {
+  files?: string[];
+}
 
 export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunnerConfig {
   const { open, ...devServerConfig } = pfeDevServerConfig(opts);
   return {
     ...devServerConfig,
-    files: 'elements/*/test/*.spec.ts',
+    files: ['**/*.spec.ts', '!**/*.e2e.spec.ts', '!**/node_modules/**/*', ...opts.files ?? []],
     browsers: [
       playwrightLauncher({
         createBrowserContext: async ({ browser }) => {
@@ -74,7 +76,7 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
     reporters: [
       defaultReporter({ reportTestProgress: true }),
       junitReporter({
-        outputPath: './test-results.xml',
+        outputPath: './test-results/test-results.xml',
         reportLogs: true,
       }),
     ]

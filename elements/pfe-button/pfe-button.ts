@@ -60,7 +60,7 @@ export class PfeButton extends LitElement {
 
   /** Disables the button */
   @observed
-  @property({ type: Boolean }) disabled = false;
+  @property({ reflect: true, type: Boolean }) disabled = false;
 
   // TODO: describe these states ccccvklectlddctgknkhrntlgikugccdebeduhigfh
   /**

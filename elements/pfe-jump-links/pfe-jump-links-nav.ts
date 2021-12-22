@@ -38,13 +38,16 @@ function isQueryable(x: Node): x is Document|ShadowRoot {
 
 /**
  * @fires pfe-jump-links-panel:active-navItem
+ *        Active navigation element has changed.
  * @fires pfe-jump-links-nav:change
+ *        Panel content has changed.
  * @fires pfe-jump-links-nav:stuck
+ *        When the nav panel stucks and unsticks from its container.
  *
- * @slot heading - The label displayed above the navigation element describing it's function.  Defaults to "Jump to section".
  * @slot - The component creates a mirror shadowRoot based on the light DOM markup provided in the default slot.
- * @slot logo -
- * @slot cta -
+ * @slot heading - The label displayed above the navigation element describing it's function.  Defaults to "Jump to section".
+ * @slot logo - Optionally add a logo that can appear in the horizontal layout mode.
+ * @slot cta - Optionally add a call-to-action element at the bottom of the nav.
  */
 @customElement('pfe-jump-links-nav') @pfelement()
 export class PfeJumpLinksNav extends LitElement {

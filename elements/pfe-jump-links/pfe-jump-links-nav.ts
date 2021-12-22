@@ -333,7 +333,7 @@ export class PfeJumpLinksNav extends LitElement {
   // @TODO It seems like the offset is 0 when non-horizontal jumps links are mobile
   get offsetValue(): number {
     // If the offset attribute has been set, use that (no calculations)
-    if (this.offset) {
+    if (typeof this.offset !== 'undefined' && this.offset !== null) {
       return parseInt(this.offset.toString(), 10);
     }
 

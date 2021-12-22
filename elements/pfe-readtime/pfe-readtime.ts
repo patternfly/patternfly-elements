@@ -87,11 +87,21 @@ export class PfeReadtime extends LitElement {
   @observed
   @property({ type: String, reflect: true }) for?: string;
 
-  @property({ type: Number, reflect: true }) readtime = 0;
-
   @state() private content?: Node;
 
   @state() private readString = '';
+
+  private _readtime: Number = 0;
+
+  /** @readonly */
+  public get readtime(): Number {
+    return this._readtime;
+  }
+
+  protected set readtime (readtime: Number) {
+    this.setAttribute('readtime', `${readtime}`);
+    this._readtime = readtime;
+  }
 
   connectedCallback() {
     super.connectedCallback();

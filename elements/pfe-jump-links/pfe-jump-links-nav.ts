@@ -470,7 +470,9 @@ export class PfeJumpLinksNav extends LitElement {
 
 
     window.addEventListener('resize', this._resizeHandler);
-    window.addEventListener('scroll', this._scrollHandler);
+    // set the `useCapture` to true for scroll events to capture
+    // scroll events in nested scrollable containers.
+    window.addEventListener('scroll', this._scrollHandler, true);
     // window.addEventListener(events.keyup, this._keyboardHandler);
 
     // If the stickiness changes, update the sticky navigation offset

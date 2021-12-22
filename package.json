@@ -7,9 +7,7 @@
     "type": "git",
     "url": "github:patternfly/patternfly-elements"
   },
-  "engines": {
-    "node": ">=14 <=17"
-  },
+  "engines": { "node": ">=14 <=17" },
   "scripts": {
     "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
     "start": "run-p dev:* docs:analyze",
@@ -46,8 +44,18 @@
     "test:performance:build": "esbuild test/performance.spec.ts --tsconfig=tsconfig.e2e.json --outdir=test",
     "test:performance:test": "playwright test -c playwright.performance.config.ts",
     "e2e": "run-s e2e:*",
-    "e2e:compile": "esbuild ./*/*/test/*.e2e.spec.ts --tsconfig=tsconfig.e2e.json --outdir=test",
+    "e2e:compile": "esbuild ./*/*/test/*.e2e.spec.ts --tsconfig=tsconfig.e2e.json --outdir=. --entry-names=[dir]/[name]",
+    "e2e:build": "run-s e2e:build:*",
+    "e2e:build:tools": "npm run build:tools",
+    "e2e:build:analyze": "npm run build:analyze",
+    "e2e:build:styles": "npm run build:styles",
+    "e2e:build:core": "npm run build:core",
+    "e2e:build:docs": "npm run build:docs",
+    "e2e:build:elements": "npm run build:elements",
     "e2e:test": "playwright test",
+    "browserstack": "run-s browserstack:*",
+    "browserstack:compile": "esbuild ./*/*/test/*.e2e.spec.ts --tsconfig=tsconfig.e2e.json --outdir=test",
+    "browserstack:test": "playwright test -c playwright.browserstack.config.ts",
     "🚚-----DIST-------🚚": "❓ Publish packages",
     "license-update": "node scripts/license-update.js",
     "leftover-check": "bash scripts/leftover-check.sh",

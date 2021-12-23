@@ -1,6 +1,7 @@
 import type { Config } from '@custom-elements-manifest/analyzer';
 
 import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
+import { readonlyPlugin } from 'cem-plugin-readonly';
 import { cssCustomPropertiesDefaultPlugin } from './custom-elements-manifest/cssCustomPropertiesDefaultPlugin.js';
 import { dedentDescriptionsPlugin } from './custom-elements-manifest/dedent-descriptions.js';
 import { deprecatedDescriptionInlineTagPlugin } from './custom-elements-manifest/deprecated-description-inline-tag.js';
@@ -20,6 +21,7 @@ export function pfeCustomElementsManifestConfig(options?: Config): Config {
     ],
     litelement: true,
     plugins: [
+      readonlyPlugin(),
       cssCustomPropertiesDefaultPlugin(),
       moduleFileExtensionsPlugin(),
       moduleFileExtensionsPlugin({ from: 'src/', to: '' }),

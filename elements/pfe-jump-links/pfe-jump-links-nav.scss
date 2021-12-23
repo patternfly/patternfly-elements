@@ -137,7 +137,6 @@ li {
     height: calc(100% - 0px);
     width: calc(var(--pfe-theme--surface--border-width--heavy,4px) - 0px);
     background-color: transparent;
-    background-color: transparent;
   }
 
   &:not([active],[expand]):hover::before,

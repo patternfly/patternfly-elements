@@ -20,7 +20,7 @@ project.conf.json
 
 *.LEGAL.txt
 *.tsbuildinfo
-test-results.xml
+test-results
 
 elements/**/_temp
 core/**/_temp

@@ -75,7 +75,7 @@ jobs:
         uses: mikepenz/action-junit-report@v2.8.2
         if: always() # run always, even if tests fail, so we get reports in github UI
         with:
-          report_paths: test-results.xml
+          report_paths: test-results/test-results.xml
           fail_on_failure: true # fail the actions run if the tests failed
 
   build:

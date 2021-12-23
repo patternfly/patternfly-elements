@@ -1,0 +1,21 @@
+diff --git a/node_modules/cem-plugin-readonly/index.d.ts b/node_modules/cem-plugin-readonly/index.d.ts
+new file mode 100644
+index 0000000..7df30d1
+--- /dev/null
++++ b/node_modules/cem-plugin-readonly/index.d.ts
+@@ -0,0 +1,2 @@
++import type { Plugin } from '@custom-elements-manifest/analyzer';
++export declare function readonlyPlugin(): Plugin;
+diff --git a/node_modules/cem-plugin-readonly/index.js b/node_modules/cem-plugin-readonly/index.js
+index 132e6ee..9f5d7ee 100644
+--- a/node_modules/cem-plugin-readonly/index.js
++++ b/node_modules/cem-plugin-readonly/index.js
+@@ -65,6 +65,8 @@ export function readonlyPlugin() {
+ 
+       if (!memberDoc) return;
+ 
++      console.log(name, isReadonlyGetter(node, name, ts))
++
+       if (isReadonlyGetter(node, name, ts) || isReadonlyClassProperty(node, ts))
+         // @ts-expect-error: adding a non-standard field to ClassField
+         memberDoc.readonly = true;

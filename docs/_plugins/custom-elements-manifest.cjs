@@ -30,7 +30,7 @@ module.exports = {
     eleventyConfig.addGlobalData('manifests', async () =>
       glob.sync('{elements,core}/*/custom-elements.json')
         .reduce(async (manifests, path) => Object.assign(await manifests, {
-          [getComponentName(path)]: JSON.parse(await readFile(path, 'utf-8').catch(() => 'null')),
+          [getComponentName(path)]: JSON.parse(await readFile(path, 'utf-8').catch(() => '{}')),
         }), Promise.resolve({})));
 
     // add `renderTemplate` filter
@@ -42,10 +42,11 @@ module.exports = {
       async getManifest(slug) {
         const manifests = await eleventyConfig.globalData.manifests();
         const manifest = manifests[slug];
-        if (!manifest)
+        if (!manifest) {
           throw new Error(`Could not find manifest for package pfe-${slug}`);
-        else
+        } else {
           return manifest;
+        }
       },
 
       /**
@@ -401,14 +402,30 @@ module.exports = {
     });
 
     /* eslint-disable max-len */
-    eleventyConfig.addPairedAsyncShortcode('renderAttributes', /** @this {*} */function(content, kwargs) { return options.renderAttributes.call(this, options, content, kwargs); });
-    eleventyConfig.addPairedAsyncShortcode('renderCssCustomProperties', /** @this {*} */function(content, kwargs) { return options.renderCssCustomProperties.call(this, options, content, kwargs); });
-    eleventyConfig.addPairedAsyncShortcode('renderCssParts', /** @this {*} */function(content, kwargs) { return options.renderCssParts.call(this, options, content, kwargs); });
-    eleventyConfig.addPairedAsyncShortcode('renderEvents', /** @this {*} */function(content, kwargs) { return options.renderEvents.call(this, options, content, kwargs); });
-    eleventyConfig.addPairedAsyncShortcode('renderMethods', /** @this {*} */function(content, kwargs) { return options.renderMethods.call(this, options, content, kwargs); });
-    eleventyConfig.addPairedAsyncShortcode('renderOverview', /** @this {*} */function(content, kwargs) { return options.renderOverview.call(this, options, content, kwargs); });
-    eleventyConfig.addPairedAsyncShortcode('renderProperties', /** @this {*} */function(content, kwargs) { return options.renderProperties.call(this, options, content, kwargs); });
-    eleventyConfig.addPairedAsyncShortcode('renderSlots', /** @this {*} */function(content, kwargs) { return options.renderSlots.call(this, options, content, kwargs); });
+    eleventyConfig.addPairedAsyncShortcode('renderAttributes', /** @this {*} */function(content, kwargs) {
+      return options.renderAttributes.call(this, options, content, kwargs);
+    });
+    eleventyConfig.addPairedAsyncShortcode('renderCssCustomProperties', /** @this {*} */function(content, kwargs) {
+      return options.renderCssCustomProperties.call(this, options, content, kwargs);
+    });
+    eleventyConfig.addPairedAsyncShortcode('renderCssParts', /** @this {*} */function(content, kwargs) {
+      return options.renderCssParts.call(this, options, content, kwargs);
+    });
+    eleventyConfig.addPairedAsyncShortcode('renderEvents', /** @this {*} */function(content, kwargs) {
+      return options.renderEvents.call(this, options, content, kwargs);
+    });
+    eleventyConfig.addPairedAsyncShortcode('renderMethods', /** @this {*} */function(content, kwargs) {
+      return options.renderMethods.call(this, options, content, kwargs);
+    });
+    eleventyConfig.addPairedAsyncShortcode('renderOverview', /** @this {*} */function(content, kwargs) {
+      return options.renderOverview.call(this, options, content, kwargs);
+    });
+    eleventyConfig.addPairedAsyncShortcode('renderProperties', /** @this {*} */function(content, kwargs) {
+      return options.renderProperties.call(this, options, content, kwargs);
+    });
+    eleventyConfig.addPairedAsyncShortcode('renderSlots', /** @this {*} */function(content, kwargs) {
+      return options.renderSlots.call(this, options, content, kwargs);
+    });
     /* eslint-enable max-len */
   },
 };

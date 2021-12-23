@@ -6,7 +6,7 @@ const config: PlaywrightTestConfig = {
   timeout: 6000,
 
   webServer: {
-    command: 'cd _site && npx http-server -p 8080',
+    command: 'npx @web/dev-server -p 8080 --app-root _site',
     port: 8080,
     timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,

@@ -91,16 +91,14 @@ export class PfeReadtime extends LitElement {
 
   @state() private readString = '';
 
-  private _readtime: Number = 0;
+  private _readtime = 0;
 
-  /** @readonly */
-  public get readtime(): Number {
+  /**
+   * Number of minutes readtime, estimated
+   * @attr {number} readtime
+   */
+  get readtime() {
     return this._readtime;
-  }
-
-  protected set readtime (readtime: Number) {
-    this.setAttribute('readtime', `${readtime}`);
-    this._readtime = readtime;
   }
 
   connectedCallback() {
@@ -154,9 +152,11 @@ export class PfeReadtime extends LitElement {
   }
 
   private _updateReadtime() {
-    this.readtime =
+    this._readtime =
         !this.wpm ? 0
       : Math.floor(this.wordCount / this.wpm) || 0;
+
+    this.setAttribute('readtime', this._readtime.toString());
 
     this.readString =
         this.readtime <= 0 ? ''

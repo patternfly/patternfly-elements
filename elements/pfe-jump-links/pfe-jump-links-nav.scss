@@ -130,7 +130,12 @@ li {
 
   // Active state bar; uses pseudo-element, not border, to prevent angled top/bottom
   &::before {
-    @include accent-bar(vertical);
+    position: absolute;
+    content: "";
+    top: 0px;
+    left: 0px;
+    height: calc(100% - 0px);
+    width: calc(var(--pfe-theme--surface--border-width--heavy,4px) - 0px);
     background-color: transparent;
   }
 

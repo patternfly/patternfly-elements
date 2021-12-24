@@ -10,6 +10,8 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 /**
  * @fires pfe-jump-links-panel:change
+ *
+ * @slot - Panel content
  */
 @customElement('pfe-jump-links-panel') @pfelement()
 export class PfeJumpLinksPanel extends LitElement {

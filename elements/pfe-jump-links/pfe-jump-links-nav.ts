@@ -4,6 +4,7 @@ import { LitElement, html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { customElement, property, query, state } from 'lit/decorators.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
@@ -13,7 +14,7 @@ import { CssVariableController } from '@patternfly/pfe-core/controllers/css-vari
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
-import { PfeJumpLinksPanel } from './pfe-jump-links-panel.js';
+import { PfeJumpLinksPanel, PanelContentChangeEvent } from './pfe-jump-links-panel.js';
 
 import style from './pfe-jump-links-nav.scss';
 
@@ -33,16 +34,31 @@ function isQueryable(x: Node): x is Document|ShadowRoot {
   return x instanceof Document || x instanceof ShadowRoot;
 }
 
+export class NavStuckEvent extends ComposedEvent {
+  constructor(
+    public stuck: Boolean,
+  ) {
+    super('stuck');
+  }
+}
+
+export class ChangeEvent extends ComposedEvent {
+  constructor(
+    public index: number,
+  ) {
+    super('change');
+  }
+}
+
 // @TODO This needs a click handler for if the accordion is stuck to the top
 // and the user clicks outside the accordion element (should close accordion).
 
 /**
- * @fires pfe-jump-links-panel:active-navItem
- *        Active navigation element has changed.
- * @fires pfe-jump-links-nav:change
- *        Panel content has changed.
- * @fires pfe-jump-links-nav:stuck
- *        When the nav panel stucks and unsticks from its container.
+ * @fires {ChangeEvent} change - when the current active item changes.
+ * @fires {NavStuckEvent} stuck - when the nav sticks or un-sticks from the top of its container.
+ *
+ * @fires {CustomEvent<{ activeNavItem: number }>} pfe-jump-links-panel:active-navItem - when the current active item changes. {@deprecated Use `change`}
+ * @fires {CustomEvent<{ stuck: boolean }>} pfe-jump-links-nav:stuck - when the nav sticks or un-sticks from the top of its container. {@deprecated Use `stuck`}
  *
  * @slot - The component creates a mirror shadowRoot based on the light DOM markup provided in the default slot.
  * @slot heading - The label displayed above the navigation element describing it's function.  Defaults to "Jump to section".
@@ -54,6 +70,7 @@ export class PfeJumpLinksNav extends LitElement {
   static readonly styles = [style];
 
   /**
+   * @deprecated
    * List of all events in the component
    */
   static get events() {
@@ -208,8 +225,9 @@ export class PfeJumpLinksNav extends LitElement {
         this._panel.setAttribute('scrolltarget', this.id);
       }
 
-
       // Emit an event to indicate a change in the panel
+      this.dispatchEvent(new PanelContentChangeEvent())
+      // @deprecated event
       this.dispatchEvent(pfeEvent(PfeJumpLinksNav.events.change));
     }
   }
@@ -336,7 +354,7 @@ export class PfeJumpLinksNav extends LitElement {
   // @TODO It seems like the offset is 0 when non-horizontal jumps links are mobile
   get offsetValue(): number {
     // If the offset attribute has been set, use that (no calculations)
-    if (typeof this.offset !== 'undefined' && this.offset !== null) {
+    if (this.offset != null) {
       return parseInt(this.offset.toString(), 10);
     }
 
@@ -688,6 +706,7 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
 
     this._reportHeight();
 
+    this.dispatchEvent(new NavStuckEvent(!!stuck));
     this.dispatchEvent(pfeEvent(PfeJumpLinksNav.events.stuck, { stuck }));
   }
 
@@ -1032,6 +1051,7 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
       }
     }
     // Emit event for tracking
+    this.dispatchEvent(new ChangeEvent(idx))
     this.dispatchEvent(pfeEvent(PfeJumpLinksNav.events.activeNavItem, { activeNavItem: idx }));
   }
 

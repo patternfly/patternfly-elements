@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed, initializer } from '@patternfly/pfe-core/decorators.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
@@ -8,8 +9,16 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 // @TODO This needs a click handler for if the accordion is stuck to the top
 // and the user clicks outside the accordion element (should close accordion).
 
+export class PanelContentChangeEvent extends ComposedEvent {
+  constructor() {
+    super('content-change');
+  }
+}
+
 /**
- * @fires pfe-jump-links-panel:change
+ * @fires {PanelContentChangeEvent} content-change - when panel contents changes.
+ *
+ * @fires {CustomEvent<{}>} pfe-jump-links-panel:change - when panel contents changes. {@deprecated Use `content-change`}
  *
  * @slot - Panel content
  */
@@ -88,6 +97,7 @@ export class PfeJumpLinksPanel extends LitElement {
     // When called by the mutation observer from `@initializer`
     // Emit an event indicating a change to the panel
     if (records) {
+      this.dispatchEvent(new PanelContentChangeEvent());
       this.dispatchEvent(pfeEvent('pfe-jump-links-panel:change'));
     }
 

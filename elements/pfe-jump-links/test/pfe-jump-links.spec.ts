@@ -1,6 +1,6 @@
 import type { LitElement } from 'lit';
 
-import { expect, html } from '@open-wc/testing';
+import { expect, html, oneEvent } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 
 import { PfeJumpLinks, PfeJumpLinksPanel } from '@patternfly/pfe-jump-links';
@@ -501,26 +501,42 @@ describe('<pfe-jump-links>', function() {
     expect(nav.offsetValue).to.equal(0);
   });
 
-  it(`should fire a pfe-jump-links-panel:active-navItem when makeActive() is called`, async function() {
+  it(`should fire a change when makeActive() is called`, async function() {
     const el = element.querySelector('pfe-jump-links-nav')!;
-    const handlerSpy = spy();
-
-    el.addEventListener('pfe-jump-links-panel:active-navItem', handlerSpy);
 
     // Make the first item active
     await customElements.whenDefined('pfe-jump-links-nav');
 
     el.active(1);
 
-    await element.updateComplete;
-    const [event] = handlerSpy.getCall(0).args;
-    expect(handlerSpy).to.have.been.calledOnce;
+    // Ensure 'change' event happened
+    const { index } = await oneEvent(element, 'change');
+    expect(index).to.be.ok;
 
-    // Assert that the event sends activeNavItem
-    expect(event.detail.activeNavItem).to.be.ok;
+    // Ensure deprecated event happened
+    const { detail } = await oneEvent(element, 'pfe-jump-links-panel:active-navItem');
+    expect(detail.activeNavItem).to.be.ok;
+  });
 
-    // reset
-    el.removeEventListener('pfe-jump-links-panel:active-navItem', handlerSpy);
+  it(`should fire a content-change when panel contents change`, async function() {
+    const panel = element.querySelector('pfe-jump-links-panel')!;
+
+    await customElements.whenDefined('pfe-jump-links-panel');
+
+    const addChildNode = () => {
+      const childNode = document.createElement('div')
+      childNode.innerHTML = `<p>new Content...</p>`;
+      panel.appendChild(childNode)
+    }
+
+    // Ensure 'change' event fires
+    addChildNode();
+    let event = await oneEvent(panel, 'content-change');
+
+    // Ensure @deprecated `pfe-jump-links-panel:change` fires
+    addChildNode();
+    let event2 = await oneEvent(panel, 'pfe-jump-links-panel:change');
+    expect(event2).to.be.ok;
   });
 
   it('should make the appropriate nav item active when scrolled', async function() {

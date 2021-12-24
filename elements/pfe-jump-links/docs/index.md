@@ -92,6 +92,8 @@ tags:
 {% endband %}
 
 {% renderSlots for=package %}{% endrenderSlots %}
+{% renderSlots for="pfe-jump-links-nav", level=3, header="Slots on `pfe-jump-links-nav`" %}{% endrenderSlots %}
+{% renderSlots for="pfe-jump-links-panel", level=3, header="Slots on `pfe-jump-links-panel`" %}{% endrenderSlots %}
 
 {% renderAttributes for=package %}{% endrenderAttributes %}
 
@@ -99,13 +101,8 @@ tags:
 
 {% renderMethods for=package %}{% endrenderMethods %}
 
-{% renderEvents for=package %}
-  This component fires an event when a link is made active.
-{% endrenderEvents %}
+{% renderEvents for=package %}{% endrenderEvents %}
 
-{% renderCssCustomProperties for=package %}
-  ### style="--pfe-jump-links-panel--offset: {integer};"
-  You can control offset in your styling layer as well. This value can be set directly on the component inside a style attribute, e.g. `style="--pfe-jump-links-panel--offset: 100;"` or using the appropriate selector in another file. Please note that adding an attribute will take precedence over a css value. At the moment only integer values passed to this key are valid. No other values are supported. This means that passing "300px", "2rem","calc(100% - 12px)" will all result in JavaScript errors. You should pass a number that correlates to pixels. To read about the `offset` attribute, see above.
-{% endrenderCssCustomProperties %}
+{% renderCssCustomProperties for=package %}{% endrenderCssCustomProperties %}
 
 {% renderCssParts for=package %}{% endrenderCssParts %}

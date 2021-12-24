@@ -38,13 +38,16 @@ function isQueryable(x: Node): x is Document|ShadowRoot {
 
 /**
  * @fires pfe-jump-links-panel:active-navItem
+ *        Active navigation element has changed.
  * @fires pfe-jump-links-nav:change
+ *        Panel content has changed.
  * @fires pfe-jump-links-nav:stuck
+ *        When the nav panel stucks and unsticks from its container.
  *
- * @slot heading - The label displayed above the navigation element describing it's function.  Defaults to "Jump to section".
  * @slot - The component creates a mirror shadowRoot based on the light DOM markup provided in the default slot.
- * @slot logo -
- * @slot cta -
+ * @slot heading - The label displayed above the navigation element describing it's function.  Defaults to "Jump to section".
+ * @slot logo - Optionally add a logo that can appear in the horizontal layout mode.
+ * @slot cta - Optionally add a call-to-action element at the bottom of the nav.
  */
 @customElement('pfe-jump-links-nav') @pfelement()
 export class PfeJumpLinksNav extends LitElement {
@@ -333,7 +336,7 @@ export class PfeJumpLinksNav extends LitElement {
   // @TODO It seems like the offset is 0 when non-horizontal jumps links are mobile
   get offsetValue(): number {
     // If the offset attribute has been set, use that (no calculations)
-    if (this.offset) {
+    if (typeof this.offset !== 'undefined' && this.offset !== null) {
       return parseInt(this.offset.toString(), 10);
     }
 
@@ -470,7 +473,9 @@ export class PfeJumpLinksNav extends LitElement {
 
 
     window.addEventListener('resize', this._resizeHandler);
-    window.addEventListener('scroll', this._scrollHandler);
+    // set the `useCapture` to true for scroll events to capture
+    // scroll events in nested scrollable containers.
+    window.addEventListener('scroll', this._scrollHandler, true);
     // window.addEventListener(events.keyup, this._keyboardHandler);
 
     // If the stickiness changes, update the sticky navigation offset

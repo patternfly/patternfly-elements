@@ -135,8 +135,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: compiled-assets
-          path: ./{elements,core}/**/*
           if-no-files-found: error
+          path: |
+            core/
+            elements/
+            tools/
 
   # E2E command can run concurrent with test so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.

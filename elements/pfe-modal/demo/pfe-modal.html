@@ -6,12 +6,12 @@
 <link rel="stylesheet" href="/elements/pfe-modal/demo/demo.css">
 
 <pfe-band color="lightest">
-  <h2 slot="pfe-band--header">Modal: Standard modal</h2>
+  <h2 slot="header">Modal: Standard modal</h2>
   <pfe-modal>
-    <pfe-cta slot="pfe-modal--trigger">
+    <pfe-cta slot="trigger">
       <button id="first-modal">Open modal</button>
     </pfe-cta>
-    <h2 slot="pfe-modal--header">Modal with a header</h2>
+    <h2 slot="header">Modal with a header</h2>
     <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
       ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
       aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
@@ -24,9 +24,9 @@
 </pfe-band>
 
 <pfe-band color="darkest" id="test-dark">
-  <h2 slot="pfe-band--header">Modal: No header region</h2>
+  <h2 slot="header">Modal: No header region</h2>
   <pfe-modal>
-    <pfe-cta priority="secondary" slot="pfe-modal--trigger">
+    <pfe-cta priority="secondary" slot="trigger">
       <button>Open modal</button>
     </pfe-cta>
     <h3>This has no header region</h3>
@@ -44,7 +44,7 @@
 <pfe-band color="complement">
   <h2>Modal: No headings</h2>
   <pfe-modal>
-    <pfe-cta priority="secondary" slot="pfe-modal--trigger">
+    <pfe-cta priority="secondary" slot="trigger">
       <button>Open modal</button>
     </pfe-cta>
     <p>This modal doesn't have any headings. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -64,7 +64,7 @@
       <h2 slot="pfe-card--header">Modal: External trigger</h2>
       <pfe-cta><button id="custom-trigger">Custom open modal</button></pfe-cta>
       <pfe-modal id="custom-modal">
-        <h2 slot="pfe-modal--header">Custom open modal</h2>
+        <h2 slot="header">Custom open modal</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
           dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
           ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
@@ -79,8 +79,8 @@
     <pfe-card color="complement">
       <h2 slot="pfe-card--header">Modal: a lot of content</h2>
       <pfe-modal context="dark" id="testit">
-        <pfe-cta slot="pfe-modal--trigger"><button>Open modal</button></pfe-cta>
-        <h2 slot="pfe-modal--header">Modal with a header with a super duper long title and a lot of content</h2>
+        <pfe-cta slot="trigger"><button>Open modal</button></pfe-cta>
+        <h2 slot="header">Modal with a header with a super duper long title and a lot of content</h2>
         <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
           incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
           laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit

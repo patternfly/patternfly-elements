@@ -1,6 +1,6 @@
-const root = document.querySelector('[data-demo="pfe-autocomplete"]').shadowRoot;
+const { shadowRoot } = document.querySelector('[data-demo="pfe-autocomplete"]');
 
-const searchAutocomplete = root.querySelector('#search-lazy-loading');
+const searchAutocomplete = shadowRoot.querySelector('#search-lazy-loading');
 
 const items = [
   'Item 1',
@@ -37,16 +37,16 @@ function ajaxCallback(params, callback) {
     .then(() => searchAutocomplete.loading = false);
 }
 
-function onSearchEvent(event) {
+function onSearch(event) {
   const output = event.target.closest('pfe-band').querySelector('output');
   if (output)
-    output.textContent = event.detail.searchValue;
+    output.textContent = event.value;
 }
 
-for (const element of root.querySelectorAll('pfe-autocomplete'))
-  element.addEventListener('pfe-autocomplete:search-event', onSearchEvent);
+for (const element of shadowRoot.querySelectorAll('pfe-autocomplete'))
+  element.addEventListener('search', onSearch);
 
-for (const element of root.querySelectorAll('.static'))
+for (const element of shadowRoot.querySelectorAll('.static'))
   element.autocompleteRequest = staticCallback;
 
 // autocomplete call

@@ -99,6 +99,8 @@ let throttle = false;
 export class PfeAutocomplete extends LitElement {
   static readonly styles = [style];
 
+  static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+
   /**
    * Set this attribute when you want to set a value in input box when web component is added to page.
    */

@@ -93,6 +93,9 @@ export class PfePrimaryDetail extends LitElement {
   /** Read only: Displays what breakpoint is currently being used */
   @property({ type: String, reflect: true }) breakpoint?: 'compact'|'desktop';
 
+  /** Used to set text of back button **/
+  @property({ type: String }) expandedSectionTitle?: string;
+
   @state() private pristine = true;
   @state() private controlsId?: string;
   @state() private nextToggle: HTMLElement|null = null;
@@ -159,7 +162,7 @@ export class PfePrimaryDetail extends LitElement {
                 aria-controls="${ifDefined(this.controlsId)}"
                 aria-expanded="${ifDefined(detailsBackButtonExpanded)}"
                 @click="${this.closeAll}">
-              ${this._renderDetailsWrapperHeading()}
+              ${this.expandedSectionTitle}
             </button>
           </div>
           <slot name="details"></slot>
@@ -422,28 +425,6 @@ export class PfePrimaryDetail extends LitElement {
     }
   }
 
-  private _renderDetailsWrapperHeading(): TemplateResult {
-    const desktop = (this.breakpoint === 'desktop') || undefined;
-    const notDesktop = (this.breakpoint !== 'desktop') || undefined;
-
-    if (!this.nextToggle) {
-      return html`
-        <div id="details-wrapper__heading"
-            aria-selected="${ifDefined(desktop && 'true')}"
-            aria-expanded="${ifDefined(notDesktop && 'true')}"
-        ></div> `;
-    } else {
-      const { wasTag } = this.nextToggle.dataset;
-      const tag = unsafeStatic(wasTag?.match(/^H/i) ? wasTag : 'strong');
-      return statichtml`
-        <${tag} id="details-wrapper__heading"
-            aria-selected="${ifDefined(desktop && 'true')}"
-            aria-expanded="${ifDefined(notDesktop && 'true')}"
-        >${this.nextToggle.innerText}</${tag}>
-      `;
-    }
-  }
-
   /**
    * Handles changes in state
    */
@@ -485,6 +466,9 @@ export class PfePrimaryDetail extends LitElement {
 
     // Make sure the aria-controls attribute is set to the details wrapper
     this.controlsId = nextDetails?.id;
+
+    // Set the back button text
+    this.expandedSectionTitle = this.nextToggle.innerText;
 
     // Shut previously active detail
     if (currentToggle) {
@@ -545,26 +529,6 @@ export class PfePrimaryDetail extends LitElement {
   }
 
   /**
-   * Check if active element is a tab panel
-   */
-  private _isPanel(element: EventTarget|null): element is HTMLElement {
-    return element instanceof HTMLElement && element.getAttribute('slot') === 'details';
-  }
-
-  /**
-   * Get the corresponding active tab panel for the active tab toggle
-   */
-  private _getFocusedPanel(): HTMLElement|null {
-    const toggles = this.slots.getSlotted('nav', 'details-nav');
-    const newIndex = toggles?.findIndex(toggle => toggle === document.activeElement);
-
-    if (newIndex == null) {
-      return null;
-    }
-    return toggles[newIndex % toggles.length].nextElementSibling as HTMLElement;
-  }
-
-  /**
    * Get previous toggle in relation to the active toggle
    * @return  DOM Element for toggle before the active one
    */
@@ -573,14 +537,6 @@ export class PfePrimaryDetail extends LitElement {
     const newIndex = (toggles?.findIndex(toggle => toggle === document.activeElement) ?? -1) - 1;
 
     return toggles?.[(newIndex + toggles.length) % toggles.length] ?? null;
-  }
-
-  /**
-   * Get currently active toggle
-   * @return {object} DOM Element for active toggle
-   */
-  private _getFocusedToggle(): HTMLElement|null {
-    return this.root?.getElementById(this.active ?? '') ?? null;
   }
 
   /**

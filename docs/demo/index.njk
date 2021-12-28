@@ -25,9 +25,16 @@ permalink: "demo/{{ element }}/index.html"
       "imports": {
         "lit": "https://unpkg.com/lit?module",
         "lit/decorators.js": "https://unpkg.com/lit/decorators.js?module",
+        "lit/directive.js": "https://unpkg.com/lit/directive.js?module",
         "lit/static-html.js": "https://unpkg.com/lit/static-html.js?module",
+        "lit/directives/repeat.js": "https://unpkg.com/lit/directives/repeat.js?module",
         "lit/directives/style-map.js": "https://unpkg.com/lit/directives/style-map.js?module",
+        "lit/directives/class-map.js": "https://unpkg.com/lit/directives/class-map.js?module",
         "lit/directives/if-defined.js": "https://unpkg.com/lit/directives/if-defined.js?module",
+        "lit/directives/unsafe-html.js": "https://unpkg.com/lit/directives/unsafe-html.js?module",
+
+        "prismjs": "https://unpkg.com/prismjs",
+        "marked": "https://unpkg.com/marked?module",
 
         "@patternfly/pfe-core": "/core/pfe-core/core.js",
         "@patternfly/pfe-core/decorators.js": "/core/pfe-core/decorators.js",
@@ -73,14 +80,16 @@ permalink: "demo/{{ element }}/index.html"
     <script type="module" src="{{ demoConfig.module }}"></script>
     <script type="module">
       const container = document.getElementById("shadow-root");
-      const shadowRoot = container.attachShadow({ mode: 'open' });
+      const shadowRoot = container.attachShadow({ mode: 'open', delegatesFocus: true });
       const template = document.getElementById('template');
       shadowRoot.appendChild(template.content.cloneNode(true));
-      {%- if demoConfig.script -%}
-      // Load the demo's JavaScript
-        {%- include demoConfig.script -%}
-      {%- endif -%}
     </script>
+    {%- if demoConfig.script -%}
+    <!-- Load the demo's JavaScript -->
+    <script type="module">
+      {%- include demoConfig.script -%}
+    </script>
+    {%- endif -%}
   </head>
   <body>
     <main id="shadow-root" data-demo="{{ element }}"></main>

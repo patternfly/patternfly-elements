@@ -195,7 +195,7 @@ jobs:
         run: npm run build
 
       - name: Visual regression tests
-        run: npm run browserstack -- --verbose
+        run: npm run test:browserstack
 
       # Upload assets even if the e2e fails
       - name: Archive baseline images

@@ -4,7 +4,7 @@ const config: PlaywrightTestConfig = {
   testDir: 'elements',
   testMatch: '*.e2e.spec.js',
   timeout: 120 * 1000,
-
+  workers: process.env.CI ? 2 : 8,
   webServer: {
     command: 'npx @web/dev-server --config ./docs/demo/web-dev-server.demo.config.js',
     port: 8080,

@@ -9,7 +9,7 @@
   <div style="margin: 30px auto 60px; max-width:1140px;" class="pfe-l-grid pfe-m-gutters">
     <div class="pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg">
       <pfe-jump-links-nav id="jumplinks1">
-        <h4 slot="pfe-jump-links-nav--heading">Standard section</h4>
+        <h4 slot="heading">Standard section</h4>
         <ul>
           <li> <a href="#section1">Section 1</a> </li>
           <li> <a href="#section2">Section 2</a> </li>
@@ -151,9 +151,9 @@
   </div>
 
   <pfe-band color="darkest" aside-height="full" aside-mobile="top">
-    <h2 style="text-align: center; margin: 60px auto;" id="subsections" slot="pfe-band--header">Sub sections + offset attribute</h2>
-    <pfe-jump-links-nav slot="pfe-band--aside" style="margin-right: 30px;" id="jumplinks2" color="darkest" sr-text="Page navigation" offset="200">
-      <h4 slot="pfe-jump-links-nav--heading">Jump to section</h4>
+    <h2 style="text-align: center; margin: 60px auto;" id="subsections" slot="header">Sub sections + offset attribute</h2>
+    <pfe-jump-links-nav slot="aside" style="margin-right: 30px;" id="jumplinks2" color="darkest" sr-text="Page navigation" offset="200">
+      <h4 slot="heading">Jump to section</h4>
       <ul>
         <li> <a href="#section10">Section 1</a> </li>
         <li> <a href="#section20">Section 2</a> </li>
@@ -162,7 +162,6 @@
             <li class="sub-section"> <a href="#section3.10">Section 3.1</a> </li>
             <li class="sub-section"> <a href="#section3.20">Section 3.2</a> </li>
           </ul>
-        </li>
         </li>
         <li> <a href="#section40">Section 4</a> </li>
         <li> <a href="#section50">Section 5</a> </li>
@@ -853,8 +852,8 @@
   </div>
 
   <pfe-band color="lightest" aside-height="full" aside-mobile="top" id="pfeband">
-    <h2 style="text-align: center;" slot="pfe-band--header">Inside a pfe-band aside</h2>
-    <pfe-jump-links-nav id="jumplinks-band" sr-text="Page navigation" autobuild slot="pfe-band--aside" style="position:sticky;">
+    <h2 style="text-align: center;" slot="header">Inside a pfe-band aside</h2>
+    <pfe-jump-links-nav id="jumplinks-band" sr-text="Page navigation" autobuild slot="aside" style="position:sticky;">
     </pfe-jump-links-nav>
     <div class="pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-lg">
       <pfe-jump-links-panel class="special" pfe-c-scrolltarget="jumplinks-band">
@@ -983,10 +982,10 @@
   </pfe-band>
 
   <pfe-band aside-height="full" aside-desktop="left" aside-mobile="top" id="themable">
-    <h2 slot="pfe-band--header" style="text-align: center;">PFE Jump Links - with theming</h2>
+    <h2 slot="header" style="text-align: center;">PFE Jump Links - with theming</h2>
 
-    <pfe-jump-links-nav id="jumplinks1000" slot="pfe-band--aside">
-      <h4 slot="pfe-jump-links-nav--heading">Jump to section</h4>
+    <pfe-jump-links-nav id="jumplinks1000" slot="aside">
+      <h4 slot="heading">Jump to section</h4>
       <ul>
         <li> <a href="#section10000">What's a Linux container?</a> </li>
         <li> <a href="#section20000">Container uses</a> </li>

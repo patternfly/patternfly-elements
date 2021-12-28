@@ -129,7 +129,9 @@ jobs:
 
       - name: Build
         id: build
-        run: npm run build
+        run: |
+          npm run build
+          npm run test:e2e:compile
 
       # Upload compiled assets to make them available for downstream jobs
       - name: Upload artifacts

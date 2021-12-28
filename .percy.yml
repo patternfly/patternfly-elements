@@ -7,7 +7,7 @@ snapshot:
   percyCSS: ""
 discovery:
   allowedHostnames:
-    localhost:8080
+    - localhost:8080
   networkIdleTimeout: 100
 static:
   cleanUrls: false

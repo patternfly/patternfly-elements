@@ -185,7 +185,9 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci --prefer-offline
+        run: |
+          npm ci --prefer-offline
+          npx playwright install
 
       - name: Access compiled assets
         uses: actions/download-artifact@v2

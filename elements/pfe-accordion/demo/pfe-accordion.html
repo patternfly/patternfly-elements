@@ -1,4 +1,6 @@
 <link href="/elements/pfe-accordion/demo/demo.css" rel="stylesheet">
+<!-- Script tag doesn't work, consider removing dynamic demo -->
+<script src="/elements/pfe-accordion/demo/demo.js"></script>
 
 <pfe-band id="context-band" class="contextual" color="lightest" use-grid full-width aside-height="full" aside-mobile="top">
   <pfe-jump-links-nav slot="pfe-band--aside" autobuild id="context" style="position: sticky; top: 0;">
@@ -44,21 +46,23 @@
           </pfe-accordion>
         </pfe-accordion-panel>
         <pfe-accordion-header>
-          <h3>Panel with links & floating cards</h3>
+          <h3>Panel with links & 2 column card layout</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel full-width>
-          <pfe-card class="floating-card">
-            <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum.</p>
-            <pfe-cta><a href="#">Call to action</a></pfe-cta>
-          </pfe-card>
-          <pfe-card class="floating-card">
-            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </pfe-card>
+          <div class="card-wrapper">
+            <pfe-card>
+              <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+              <pfe-cta><a href="#">Call to action</a></pfe-cta>
+            </pfe-card>
+            <pfe-card>
+              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </pfe-card>
+          </div>
         </pfe-accordion-panel>
         <pfe-accordion-header>
           <h3>Panel with CTA</h3>

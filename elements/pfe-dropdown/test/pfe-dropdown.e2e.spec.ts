@@ -24,7 +24,7 @@ test.describe(tagName, () => {
       await page.$eval(tagName, async (el: LitElement) => el.updateComplete);
       await page.waitForTimeout(100);
 
-      await page.$eval(tagName, el => el.shadowRoot?.querySelector('button').focus());
+      await page.$eval(tagName, el => el.shadowRoot?.querySelector('button')?.focus());
       await page.$eval(tagName, async (el: LitElement) => el.updateComplete);
       await page.waitForTimeout(100);
 

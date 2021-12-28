@@ -1,6 +1,4 @@
 <link href="/elements/pfe-accordion/demo/demo.css" rel="stylesheet">
-<!-- Script tag doesn't work, consider removing dynamic demo -->
-<script src="/elements/pfe-accordion/demo/demo.js"></script>
 
 <pfe-band id="context-band" class="contextual" color="lightest" use-grid full-width aside-height="full" aside-mobile="top">
   <pfe-jump-links-nav slot="pfe-band--aside" autobuild id="context" style="position: sticky; top: 0;">
@@ -185,7 +183,7 @@
 
     <article class="pfe-l-grid pfe-m-gutters" style="--pfe-grid--gap--vertical: initial" class="pfe-jump-links-panel__section" nav-label="Disclosures" id="disclosures">
       <h2 class="pfe-title--4xl">Disclosure</h2>
-      <pfe-accordion>
+      <pfe-accordion disclosure="true">
         <pfe-accordion-header>
           <h3>This is a disclosure</h3>
         </pfe-accordion-header>

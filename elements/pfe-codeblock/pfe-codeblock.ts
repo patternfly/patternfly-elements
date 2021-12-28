@@ -11,7 +11,10 @@ import { observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 // @ts-expect-error: https://github.com/PrismJS/prism/pull/1087
 window.Prism ??= {}; window.Prism.manual = true;
 
-import Prism from 'prismjs';
+declare global {
+  namespace Prism {}
+}
+
 import 'prismjs';
 
 import { styleMap } from 'lit/directives/style-map.js';

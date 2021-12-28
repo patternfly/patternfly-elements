@@ -18,7 +18,7 @@ project.conf.json
 ## except files which we want to commit,
 ## like demo js and config files
 
-*.LEGAL.txt
+**/*.LEGAL.txt
 *.tsbuildinfo
 test-results
 

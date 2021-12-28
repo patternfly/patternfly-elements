@@ -39,6 +39,7 @@ enum FileKey {
   readme = 'readme',
   style = 'style',
   test = 'test',
+  e2e = 'e2e',
   tsconfig = 'tsconfig',
 }
 
@@ -73,6 +74,7 @@ const TEMPLATE_FILE_PATHS: Record<FileKey, string> = {
   readme: 'README.md',
   style: 'element.scss',
   test: 'test/element.spec.ts',
+  e2e: 'test/element.e2e.spec.ts',
   tsconfig: 'tsconfig.json',
 };
 
@@ -88,6 +90,7 @@ const getFilePathsRelativeToPackageDir =
     readme: 'README.md',
     style: `${options.tagName}.scss`,
     test: `test/${options.tagName}.spec.ts`,
+    e2e: `test/${options.tagName}.e2e.spec.ts`,
     tsconfig: 'tsconfig.json',
   }));
 

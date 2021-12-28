@@ -1,3 +1,4 @@
+import '@patternfly/pfe-jump-links';
 const { shadowRoot } = document.querySelector('[data-demo="pfe-accordion"]');
 
 /** @type {HTMLTemplateElement} */

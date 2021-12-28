@@ -16,7 +16,7 @@ test.describe(tagName, () => {
 
   /** Remove the real-time item from e2e snapshot */
   test.beforeEach(async ({ page }) => {
-    await page.$eval('#realtime', el => el.closest('pfe-band').remove());
+    await page.$eval('#realtime', el => el.closest('pfe-band')?.remove());
   });
 
   test('snapshot', async ({ page }) => {

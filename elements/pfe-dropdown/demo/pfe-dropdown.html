@@ -8,10 +8,13 @@
 :host {
   position: relative;
 }
+
+#expandable-dropdown-band {
+  --pfe-band__body--layout: repeat(auto-fill, minmax(300px, 1fr));
+}
 </style>
 
-<pfe-band color="lightest" size="small" use-grid
-  style="--pfe-band__body--layout: repeat(auto-fill, minmax(300px, 1fr));">
+<pfe-band id="expandable-dropdown-band" color="lightest" size="small" use-grid>
   <pfe-card color="lightest" style="overflow: unset;">
     <h2>Expandable dropdown</h2>
 

@@ -15,7 +15,7 @@ test.describe(tagName, () => {
   });
 
   test.beforeEach(async ({ page }) => {
-    await page.$eval(`${tagName} button`, el => el.click());
+    await page.$eval(`${tagName} button`, (el: HTMLElement) => el.click());
     await page.$eval(tagName, async (el: LitElement) => el.updateComplete);
     await page.waitForTimeout(100);
   });

@@ -51,37 +51,6 @@ describe('<pfe-card>', function() {
       .to.be.an.instanceof(PfeCard);
   });
 
-  it(`should add or remove deprecated has_body, has_header, has_footer attributes if the slots exist`, async function() {
-    const element = await createFixture<PfeCard>(TEMPLATES.card4);
-
-    expect(element.hasAttribute('has_header')).to.be.true;
-    expect(element.hasAttribute('has_body')).to.be.true;
-    expect(element.hasAttribute('has_footer')).to.be.true;
-
-    element.querySelector('h2')!.remove();
-    element.querySelector('div')!.remove();
-
-    await nextFrame();
-
-    expect(element.hasAttribute('has_header')).to.be.false;
-    expect(element.hasAttribute('has_footer')).to.be.false;
-  });
-
-  it(`should add or remove has-body, has-header, has-footer attributes if the slots exist`, async function() {
-    const element = await createFixture<PfeCard>(TEMPLATES.card4);
-    expect(element.hasAttribute('has-header')).to.be.true;
-    expect(element.hasAttribute('has-body')).to.be.true;
-    expect(element.hasAttribute('has-footer')).to.be.true;
-
-    element.querySelector('h2')!.remove();
-    element.querySelector('div')!.remove();
-
-    await nextFrame();
-
-    expect(element.hasAttribute('has-header')).to.be.false;
-    expect(element.hasAttribute('has-footer')).to.be.false;
-  });
-
   it(`should render a header and footer when content for those slots are added dynamically`, async function() {
     const element = await createFixture<PfeCard>(dynamicHeaderFooter);
 

@@ -107,7 +107,7 @@ $size-small: (
       z-index: 1;
       margin-top: -2rem; //IE11 fallback
       margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
-      :host([has_header]) & {
+      :host(.has-header) & {
         padding-top: pfe-local(spacing);
       }
     }
@@ -187,7 +187,7 @@ $size-small: (
     padding-left:   pfe-local(PaddingLeft);
     padding-bottom: pfe-local(spacing--vertical);
 
-    :host(:not([has_body],[has_footer])) & {
+    &:not(.has-body,.has-footer) {
       margin-bottom: pfe-local(PaddingBottom);
     }
 
@@ -196,16 +196,14 @@ $size-small: (
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
-    :host(:not([has_header])) & {
+    &:not(.has-header) {
       display: none;
     }
 
-    :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]),
-    :host([has_body],[has_footer]) & ::slotted([overflow~="bottom"]) {
+    &.has-body,&.has-footer ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
-    ::slotted([pfe-overflow~="bottom"]),
     ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
@@ -217,8 +215,8 @@ $size-small: (
     }
   }
   &__body {
-    :host(:not([has_header])) & ::slotted([pfe-overflow~="top"]),
-    :host(:not([has_header])) & ::slotted([overflow~="top"]) {
+    &:not(.has-header) ::slotted([pfe-overflow~="top"]),
+    &:not(.has-header) ::slotted([overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
@@ -233,12 +231,11 @@ $size-small: (
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
-    :host([has_footer]) & ::slotted([pfe-overflow~="bottom"]),
-    :host([has_footer]) & ::slotted([overflow~="bottom"]) {
+    &.has-footer ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
-    :host(:not([has_footer])) & {
+    &:not(.has-footer) {
       margin-bottom: 0;
     }
   }
@@ -256,7 +253,7 @@ $size-small: (
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
-    :host(:not([has_footer])) & {
+    &:not(.has-footer) {
       display: none;
     }
   }

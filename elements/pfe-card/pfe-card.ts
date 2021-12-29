@@ -1,6 +1,7 @@
-import { customElement, property } from 'lit/decorators.js';
-
 import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
+
 import { observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
@@ -63,16 +64,22 @@ export class PfeCard extends LitElement {
   });
 
   render() {
+    const classes = {
+      'has-header': this.slots.hasSlotted('header', 'pfe-card--header'),
+      'has-footer': this.slots.hasSlotted('footer', 'pfe-card--footer'),
+      'has-body': this.slots.hasSlotted(),
+    }
+
     return html`
       <!-- pfe-card -->
-      <div class="pfe-card__header">
+      <div class="pfe-card__header ${classMap(classes)}">
         <slot name="header"></slot>
         <slot name="pfe-card--header"></slot>
       </div>
-      <div class="pfe-card__body">
+      <div class="pfe-card__body ${classMap(classes)}">
         <slot></slot>
       </div>
-      <div class="pfe-card__footer">
+      <div class="pfe-card__footer ${classMap(classes)}">
         <slot name="footer"></slot>
         <slot name="pfe-card--footer"></slot>
       </div>

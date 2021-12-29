@@ -192,8 +192,12 @@ export class PfePrimaryDetail extends LitElement {
   }
 
   protected _activeChanged(oldVal?: string|null, newVal?: string|null) {
-    this._setActiveOnToggle(oldVal);
-    this._setActiveOnToggle(newVal);
+    try {
+      this._setActiveOnToggle(oldVal);
+      this._setActiveOnToggle(newVal);
+    } catch(error) {
+      this.logger.warn((error as Error).message);
+    }
   }
 
   /**
@@ -276,7 +280,11 @@ export class PfePrimaryDetail extends LitElement {
     // Leave a reliable indicator that this has been initialized so we don't do it again
     detail.dataset.processed = 'true';
 
-    this._setActiveOnToggle(toggleId);
+    try {
+      this._setActiveOnToggle(toggleId);
+    } catch(error) {
+      this.logger.warn((error as Error).message);
+    }
   }
 
   /**
@@ -322,9 +330,12 @@ export class PfePrimaryDetail extends LitElement {
     }
 
     for (const toggle of this.querySelectorAll('[slot$="nav"]')) {
-      this._setActiveOnToggle(toggle.id);
+      try {
+        this._setActiveOnToggle(toggle.id);
+      } catch(error) {
+        this.logger.warn((error as Error).message);
+      }
     }
-
 
     this._windowInnerWidth = window.innerWidth;
   }

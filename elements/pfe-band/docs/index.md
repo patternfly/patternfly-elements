@@ -14,10 +14,10 @@ tags:
 {% renderOverview for=package, title=title %}
   <div class="faux-band">
     <pfe-band>
-      <h2 slot="header">Header Slot</h2>
+      <h2 slot="header" class="no-header-styles">Header Slot</h2>
       <p>This content is in the main slot. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata dolor sit amet.</p>
       <pfe-card slot="aside" color="lightest">
-        <h3 slot="header">Aside slot</h3>
+        <h3 slot="header" class="no-header-styles">Aside slot</h3>
         <p>Content for a card that is in the aside slot.</p>
       </pfe-card>
       <div slot="footer">

@@ -31,8 +31,10 @@ import style from './pfe-band.scss';
  * @slot {@deprecated} pfe-band--footer - (deprecated) same as `footer`
  * @slot {@deprecated} pfe-band--aside - (deprecated) same as `aside`
  *
+ * @csspart base Container for all elements in shadowroot.
  * @csspart header Container for the slotted header elements.
  * @csspart body Container for the slotted content.
+ * @csspart wrapper Container for header and body elements (only available when `asideHeight = "full"`).
  * @csspart aside Container for the slotted aside elements.
  * @csspart footer Container for the slotted footer elements.
  *
@@ -61,9 +63,6 @@ export class PfeBand extends LitElement {
 
   /**
    * This influences where the aside is rendered at the desktop view and are indicated relative to the body content.
-   *
-   * Options are `right` or `left`.
-   * **Right is the default.**
    */
   @property({ attribute: 'aside-desktop', reflect: true }) asideDesktop: 'right'|'left' = 'right';
 
@@ -71,25 +70,19 @@ export class PfeBand extends LitElement {
    * This influences the position of the aside in the mobile view as well as where in the DOM the aside markup is rendered.
    *
    * These names are relative to the body content.
-   * Options are `top` or `bottom`.
-   * **Bottom is the default.**
    */
   @property({ attribute: 'aside-mobile', reflect: true }) asideMobile: 'top'|'bottom' = 'bottom';
 
   /**
    * This influences the height of the aside region relative to the body content.
    *
-   * Options are `full` or `body`.
    * A `full` height starts at the top of the band and spans the header, body, and footer regions.
    * A `body` height spans the body and footer regions only with the header region sitting above it in the rendered view.
-   * **Body is the default.**
    */
   @property({ attribute: 'aside-height', reflect: true }) asideHeight: 'full'|'body' = 'body';
 
   /**
    * Optionally adjusts the padding on the container.
-   *
-   * Accepts: `small`
    */
   @property({ reflect: true }) size?: 'small';
 
@@ -159,7 +152,7 @@ export class PfeBand extends LitElement {
 
     const maybeWrapped =
         this.asideHeight !== 'full' ? content
-      : html`<div class="pfe-band__wrapper">${content}</div>`;
+      : html`<div class="pfe-band__wrapper" part="wrapper">${content}</div>`;
 
     return html`
       <section class="pfe-band__container ${classMap({
@@ -167,7 +160,7 @@ export class PfeBand extends LitElement {
         'has-body': hasSlottedBody,
         'has-aside': hasSlottedAside,
         'has-footer': hasSlottedFooter,
-      })}">
+      })}" part="base">
         ${!showTopAside ? '' : slotTemplate}
         ${maybeWrapped}
         ${!showFullBottomAside ? '' : slotTemplate}

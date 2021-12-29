@@ -1,3 +1,5 @@
+import type { PropertyValues } from 'lit';
+
 import { LitElement, html, svg } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
@@ -77,6 +79,11 @@ export class PfeProgressStepsItem extends LitElement {
     super();
     this.addEventListener('click', this._clickHandler);
     this.addEventListener('keydown', this._keydownHandler);
+  }
+
+  update(changed: PropertyValues<this>) {
+    this.classList.toggle('has-description', this.slots.hasSlotted('description'))
+    super.update(changed);
   }
 
   render() {

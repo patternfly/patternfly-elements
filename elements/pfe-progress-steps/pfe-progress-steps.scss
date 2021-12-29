@@ -79,3 +79,8 @@
     }
   }
 }
+
+// This negates the 1em margin for items for the vertical description on the height of the bar
+::slotted(pfe-progress-steps-item[vertical]:not(.has-description):last-child) {
+  margin-bottom: 1em;
+}

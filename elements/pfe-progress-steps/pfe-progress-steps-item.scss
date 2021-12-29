@@ -63,11 +63,6 @@
   cursor: pointer;
 }
 
-// This negates the 1em for the vertical description on the height of the bar
-:host([vertical]:not([has_description]):last-child) {
-  margin-bottom: 1em;
-}
-
 .pfe-progress-steps-item {
   &__circle {
     box-sizing: border-box;

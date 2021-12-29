@@ -204,17 +204,17 @@ $regions-grid: (
     //-- Grid template area styles --//
     @each $selectors, $layout in $regions-grid {
       $sets: ();
-      $has_aside: str-index($selectors, "aside");
+      $has-aside: str-index($selectors, "aside");
 
       @each $region in str-split($selectors, "-") {
-        $sets: append($sets, "[has_#{$region}]");
+        $sets: append($sets, ".has-#{$region}");
       }
 
       // Combine the sets into a selector
       $regions: to-string($sets, "");
 
       // Declare the mobile-first layouts
-      :host(#{$regions}) & {
+      &#{$regions} {
         grid-template-areas: $layout;
       }
 
@@ -223,30 +223,30 @@ $regions-grid: (
       //   2. desktop left positioning
       //   3. full height layout
 
-      @if ($has_aside) {
+      @if ($has-aside) {
         // 0-MD breakpoint
         @media (max-width: pfe-breakpoint(md, $max: true)) {
-          :host(#{$regions}[aside-mobile="top"]) & {
+          &#{$regions}[aside-mobile="top"] {
             grid-template-areas: aside-grid($layout);
           }
         }
 
         // MD+ breakpoint
         @media (min-width: pfe-breakpoint(md)) {
-          :host(#{$regions}) & {
+          &#{$regions} {
             grid-template-areas: aside-grid($layout, $bp: desktop);
           }
 
-          :host(#{$regions}[aside-desktop="left"]) & {
+          &#{$regions}[aside-desktop="left"] {
             grid-template-areas: aside-grid($layout, $position: left, $bp: desktop);
           }
 
           @if length($layout) > 2 {
-            :host(#{$regions}[aside-height="full"]) & {
+            &#{$regions}[aside-height="full"] {
               grid-template-areas: aside-grid($layout, $full: true, $bp: desktop);
             }
 
-            :host(#{$regions}[aside-desktop="left"][aside-height="full"]) & {
+            &#{$regions}[aside-desktop="left"][aside-height="full"] {
               grid-template-areas: aside-grid($layout, $full: true, $position: left, $bp: desktop);
             }
           }
@@ -260,23 +260,23 @@ $regions-grid: (
       grid-template-rows: auto;
       grid-template-columns: 1fr;
 
-      :host([has_aside]) & {
+      &.has-aside {
         grid-template-rows: auto;
         grid-template-columns: 1fr pfe-local(Width__aside--sm);
       }
 
-      :host([has_aside][aside-desktop="left"]) & {
+      &.has-aside[aside-desktop="left"] {
         grid-template-rows: auto;
         grid-template-columns: pfe-local(Width__aside--sm) 1fr;
       }
     }
 
     @media (min-width: pfe-breakpoint(lg)) {
-      :host([has_aside]) & {
+      &.has-aside {
         grid-template-rows: auto;
         grid-template-columns: pfe-local(layout, $fallback: 1fr pfe-local(Width__aside--lg));
       }
-      :host([has_aside][aside-desktop="left"]) & {
+      &.has-aside[aside-desktop="left"] {
         grid-template-rows: auto;
         grid-template-columns: pfe-local(layout, $fallback: pfe-local(Width__aside--lg) 1fr);
       }

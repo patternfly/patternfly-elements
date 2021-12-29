@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
@@ -115,6 +116,7 @@ export class PfeBand extends LitElement {
   render() {
     const { asideHeight, asidePosition } = this;
 
+    const hasSlottedBody = this.slots.hasSlotted();
     const hasSlottedHeader = this.slots.hasSlotted('header', 'pfe-band--header');
     const hasSlottedAside = this.slots.hasSlotted('aside', 'pfe-band--aside');
     const hasSlottedFooter = this.slots.hasSlotted('footer', 'pfe-band--footer');
@@ -152,14 +154,20 @@ export class PfeBand extends LitElement {
       <footer class="pfe-band__footer" part="footer">
         <slot name="footer"></slot>
         <slot name="pfe-band--footer"></slot>
-      </footer>`}`;
+      </footer>`}
+    `;
 
     const maybeWrapped =
         this.asideHeight !== 'full' ? content
       : html`<div class="pfe-band__wrapper">${content}</div>`;
 
     return html`
-      <section class="pfe-band__container">
+      <section class="pfe-band__container ${classMap({
+        'has-header': hasSlottedHeader,
+        'has-body': hasSlottedBody,
+        'has-aside': hasSlottedAside,
+        'has-footer': hasSlottedFooter,
+      })}">
         ${!showTopAside ? '' : slotTemplate}
         ${maybeWrapped}
         ${!showFullBottomAside ? '' : slotTemplate}

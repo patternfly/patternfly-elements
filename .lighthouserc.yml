@@ -3,3 +3,5 @@ ci:
     preset: lighthouse:no-pwa
     assertions:
       categories:seo: off
+      csp-xss: off
+      is-crawlable: off

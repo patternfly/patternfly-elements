@@ -1,9 +1,64 @@
 name: Visual Regression Tests
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      deployPrimeUrl:
+        description: Origin to test, e.g. https://deploy-preview-1804--patternfly-elements.netlify.app/
+        required: true
 
 jobs:
   e2e:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "dummy workflow. see feat/pfe-tools branch"
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: npm
+      - run: npm ci --prefer-offline
+      - name: Visual Regression Tests
+        run: |
+          npm run test:e2e:compile
+          npm run test:e2e:percy
+        env:
+          VISUAL_REGRESSION_ORIGIN: ${{ github.event.inputs.deployPrimeUrl }}
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Lighthouse CI Action
+        uses: treosh/lighthouse-ci-action@v8
+        with:
+          configPath: .lighthouserc.yml
+          uploadArtifacts: true # save results as an action artifacts
+          deployPrimeUrls: |
+            ${{ github.event.inputs.deployPrimeUrl }}/components/accordion/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/autocomplete/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/avatar/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/badge/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/band/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/button/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/card/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/clipboard/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/codeblock/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/collapse/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/content-set/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/cta/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/datetime/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/dropdown/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/health-index/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/icon/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/icon-panel/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/jump-links/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/markdown/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/modal/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/number/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/page-status/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/primary-detail/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/progress-indicator/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/progress-steps/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/readtime/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/select/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/tabs/demo/
+            ${{ github.event.inputs.deployPrimeUrl }}/components/toast/demo/

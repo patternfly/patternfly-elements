@@ -107,7 +107,7 @@ $pfe-modal--breakpoint--medium: 640px;
 			padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 3) pfe-var(container-padding) pfe-var(container-padding));
 		}
 
-		:host(:not([has_header])) & {
+		&:not(.has-header) {
 			// Remove margin-top on the first slotted element that is not the header.
 			::slotted(*:nth-child(2)),
 			::slotted(*:nth-child(1)) {

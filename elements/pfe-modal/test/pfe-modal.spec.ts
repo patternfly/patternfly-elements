@@ -66,9 +66,6 @@ describe('<pfe-modal>', function() {
 
     await nextFrame();
 
-    expect(el.hasAttribute('has_trigger'), 'has_trigger').to.be.true;
-    expect(el.hasAttribute('has_header'), 'has_header').to.be.true;
-    expect(el.hasAttribute('has_body'), 'has_body').to.be.true;
     expect(modalWindow.getAttribute('tabindex'), 'modal__window tabindex').to.equal('0');
     expect(modalWindow.hasAttribute('hidden'), 'hidden').to.be.true;
     expect(button.getAttribute('aria-label'), 'button aria-label').to.equal('Close dialog');
@@ -90,9 +87,6 @@ describe('<pfe-modal>', function() {
 
     await nextFrame();
 
-    expect(el.hasAttribute('has_trigger'), 'has_trigger').to.be.true;
-    expect(el.hasAttribute('has_header'), 'has_header').to.be.true;
-    expect(el.hasAttribute('has_body'), 'has_body').to.be.true;
     expect(modalWindow.getAttribute('tabindex'), 'modal__window tabindex').to.equal('0');
     expect(modalWindow.hasAttribute('hidden'), 'hidden').to.be.true;
     expect(button.getAttribute('aria-label'), 'button aria-label').to.equal('Close dialog');

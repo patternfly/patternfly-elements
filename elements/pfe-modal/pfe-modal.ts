@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { bound, initializer, pfelement } from '@patternfly/pfe-core/decorators.js';
@@ -107,7 +108,7 @@ export class PfeModal extends LitElement {
             aria-labelledby="${ifDefined(headerId)}"
             aria-label="${ifDefined(headerLabel)}">
           <div class="pfe-modal__container">
-            <div class="pfe-modal__content">
+            <div class="pfe-modal__content ${classMap({ 'has-header': this.slots.hasSlotted('header', 'pfe-modal--header')})}">
               <slot name="header"></slot>
               <slot name="pfe-modal--header"></slot>
               <slot></slot>

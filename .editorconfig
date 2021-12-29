@@ -3,12 +3,15 @@
 # Top-most EditorConfig file
 root = true
 
-[*.{js,py,json,sh,html,scss}]
+[*.{js,ts,py,json,sh,html,scss}]
 indent_style = space
 indent_size = 2
+
 # No trailing spaces
 trim_trailing_whitespace = true
+
 # Unix-style newlines
 end_of_line = lf
+
 # Newline ending every file
 insert_final_newline = true

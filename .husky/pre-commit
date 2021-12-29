@@ -1,0 +1,3 @@
+#!/bin/sh
+npm run lint -- --fix $1
+run-p todos polyfills

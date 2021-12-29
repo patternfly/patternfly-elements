@@ -87,21 +87,6 @@ export class SlotController implements ReactiveController {
     this.init();
   }
 
-  hostUpdate() {
-    // If the slot exists, attach an attribute to the parent to indicate that
-    // @TODO: these should be specified per-component. See PFE Proposals
-    // @TODO: remove this logic for deprecated slots in 3.0
-    for (const slotName of this.slotNames) {
-      const nameForAttr = slotName || 'body';
-      const hasContent = this.nodes.get(slotName || SlotController.anonymous)?.hasContent ?? false;
-      const deprecatedName = this.deprecations[slotName as string];
-      const hasDeprecatedContent = this.nodes.get(deprecatedName)?.hasContent ?? false;
-      const setAttr = hasContent || hasDeprecatedContent;
-      this.host.toggleAttribute(`has_${nameForAttr}`, setAttr);
-      this.host.toggleAttribute(`has-${nameForAttr}`, setAttr);
-    }
-  }
-
   hostUpdated() {
     if (!this.firstUpdated) {
       this.slotNames.forEach(this.initSlot);

@@ -44,21 +44,23 @@
           </pfe-accordion>
         </pfe-accordion-panel>
         <pfe-accordion-header>
-          <h3>Panel with links & floating cards</h3>
+          <h3>Panel with links & 2 column card layout</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel full-width>
-          <pfe-card class="floating-card">
-            <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum.</p>
-            <pfe-cta><a href="#">Call to action</a></pfe-cta>
-          </pfe-card>
-          <pfe-card class="floating-card">
-            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </pfe-card>
+          <div class="card-wrapper">
+            <pfe-card>
+              <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+              <pfe-cta><a href="#">Call to action</a></pfe-cta>
+            </pfe-card>
+            <pfe-card>
+              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </pfe-card>
+          </div>
         </pfe-accordion-panel>
         <pfe-accordion-header>
           <h3>Panel with CTA</h3>
@@ -181,7 +183,7 @@
 
     <article class="pfe-l-grid pfe-m-gutters" style="--pfe-grid--gap--vertical: initial" class="pfe-jump-links-panel__section" nav-label="Disclosures" id="disclosures">
       <h2 class="pfe-title--4xl">Disclosure</h2>
-      <pfe-accordion>
+      <pfe-accordion disclosure="true">
         <pfe-accordion-header>
           <h3>This is a disclosure</h3>
         </pfe-accordion-header>

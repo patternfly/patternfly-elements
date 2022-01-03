@@ -1,0 +1,5 @@
+ci:
+  assert:
+    preset: lighthouse:no-pwa
+    assertions:
+      categories:seo: off

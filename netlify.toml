@@ -1,0 +1,10 @@
+[build]
+  command = "npm run site"
+
+[[plugins]]
+  package = "/tools/netlify-plugin-github-actions"
+
+  [plugins.inputs]
+    owner = "patternfly"
+    repository = "patternfly-elements"
+    workflowId = "visual-regression.yml"

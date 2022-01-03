@@ -1,10 +1,9 @@
 {
   "lerna": "2.5.1",
-  "packages": [
-    "elements/*"
-  ],
   "version": "1.12.2",
-  "ignoreChanges": [
-    "elements/*/dist/**/*"
+  "packages": [
+    "core/*",
+    "elements/*",
+    "tools/*"
   ]
 }

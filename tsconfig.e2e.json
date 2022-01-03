@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "core/*/test/*.e2e.spec.js",
+    "elements/*/test/*.e2e.spec.js",
+    "test/*.spec.js"
+  ],
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "emitDeclarationOnly": false,
+    "sourceMap": true
+  }
+}

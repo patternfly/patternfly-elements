@@ -1,7 +1,7 @@
 const { Octokit } = require("@octokit/core");
 
 module.exports = {
-  onSuccess: async ({ netlifyConfig, inputs }) => {
+  async onSuccess({ netlifyConfig, inputs, utils }) {
     const {
       BRANCH: branch,
       BUILD_ID: netlifyBuildId,

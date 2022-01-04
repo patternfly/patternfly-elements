@@ -48,7 +48,7 @@ export const core = ${JSON.stringify(await readdir(join(cwd, 'core')))};
     write: true,
     treeShaking: true,
     sourcemap: true,
-    minify: false,
+    minify: !!process.env.CI,
 
     logLevel: 'info',
 

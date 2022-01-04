@@ -529,6 +529,12 @@ describe('<pfe-accordion>', function() {
         it('moves focus to the second header', function() {
           expect(document.activeElement).to.equal(header2);
         });
+
+        it('does not open panels', function() {
+          expect(panel1.expanded).to.be.false;
+          expect(panel2.expanded).to.be.false;
+          expect(panel3.expanded).to.be.false;
+        });
       });
 
       describe('ArrowUp', function() {
@@ -539,6 +545,12 @@ describe('<pfe-accordion>', function() {
 
         it('moves focus to the last header', function() {
           expect(document.activeElement).to.equal(header3);
+        });
+
+        it('does not open panels', function() {
+          expect(panel1.expanded).to.be.false;
+          expect(panel2.expanded).to.be.false;
+          expect(panel3.expanded).to.be.false;
         });
       });
 
@@ -551,6 +563,12 @@ describe('<pfe-accordion>', function() {
         it('moves focus to the first header', function() {
           expect(document.activeElement).to.equal(header1);
         });
+
+        it('does not open panels', function() {
+          expect(panel1.expanded).to.be.false;
+          expect(panel2.expanded).to.be.false;
+          expect(panel3.expanded).to.be.false;
+        });
       });
 
       describe('End', function() {
@@ -561,6 +579,12 @@ describe('<pfe-accordion>', function() {
 
         it('moves focus to the last header', function() {
           expect(document.activeElement).to.equal(header3);
+        });
+
+        it('does not open panels', function() {
+          expect(panel1.expanded).to.be.false;
+          expect(panel2.expanded).to.be.false;
+          expect(panel3.expanded).to.be.false;
         });
       });
 
@@ -618,6 +642,75 @@ describe('<pfe-accordion>', function() {
             expect(document.activeElement).to.equal(document.body);
           });
         });
+
+        describe('ArrowDown', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'ArrowDown' });
+            await nextFrame();
+          });
+
+          it('moves focus to the second header', function() {
+            expect(document.activeElement).to.equal(header2);
+          });
+
+          it('does not open other panels', function() {
+            expect(panel1.expanded).to.be.true;
+            expect(panel2.expanded).to.be.false;
+            expect(panel3.expanded).to.be.false;
+          });
+        });
+
+        describe('ArrowUp', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'ArrowUp' });
+            await nextFrame();
+          });
+
+          it('moves focus to the last header', function() {
+            expect(document.activeElement).to.equal(header3);
+          });
+
+          it('does not open other panels', function() {
+            expect(panel1.expanded).to.be.true;
+            expect(panel2.expanded).to.be.false;
+            expect(panel3.expanded).to.be.false;
+          });
+        });
+
+        describe('Home', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'Home' });
+            await nextFrame();
+          });
+
+          it('moves focus to the first header', function() {
+            expect(document.activeElement).to.equal(header1);
+          });
+
+          it('does not open other panels', function() {
+            expect(panel1.expanded).to.be.true;
+            expect(panel2.expanded).to.be.false;
+            expect(panel3.expanded).to.be.false;
+          });
+        });
+
+        describe('End', function() {
+          beforeEach(async function() {
+            await sendKeys({ press: 'End' });
+            await nextFrame();
+          });
+
+          it('moves focus to the last header', function() {
+            expect(document.activeElement).to.equal(header3);
+          });
+
+          it('does not open other panels', function() {
+            expect(panel1.expanded).to.be.true;
+            expect(panel2.expanded).to.be.false;
+            expect(panel3.expanded).to.be.false;
+          });
+        });
+
       });
     });
 

@@ -201,9 +201,9 @@ export class PfeAccordion extends LitElement {
    */
   declare context: 'light'|'dark'|'saturated';
 
-  @state() expandedSets: number[] = [];
-
   @state() private _updateHistory = true;
+
+  private expandedSets = new Set<number>();
 
   private _manualDisclosure?: 'true'|'false';
 
@@ -234,9 +234,10 @@ export class PfeAccordion extends LitElement {
    * state if not set by the author; and check the URL for default
    * open
    */
-  @initializer() protected _init() {
+  @initializer() protected async _init() {
     if (!this.initialized) {
       this._manualDisclosure = this.getAttribute('disclosure') as 'true'|'false';
+      await this.updateComplete;
       this.initialized = true;
     }
 
@@ -266,9 +267,7 @@ export class PfeAccordion extends LitElement {
     const index = this._getIndex(header);
 
     // If this index is not already listed in the expandedSets array, add it
-    if (!this.expandedSets.includes(index) && index > -1) {
-      this.expandedSets.push(index);
-    }
+    this.expandedSets.add(index);
 
     header.expanded = true;
   }
@@ -296,10 +295,7 @@ export class PfeAccordion extends LitElement {
     const index = this._getIndex(header);
 
     // If this index is exists in the expanded array, remove it
-    const idx = this.expandedSets.indexOf(index);
-    if (idx >= 0) {
-      this.expandedSets.splice(idx, 1);
-    }
+    this.expandedSets.delete(index);
 
     header.expanded = false;
   }
@@ -345,7 +341,10 @@ export class PfeAccordion extends LitElement {
     }
   }
 
-  private _keydownHandler(evt: KeyboardEvent) {
+  /**
+   * @see https://www.w3.org/TR/wai-aria-practices/#accordion
+   */
+  private async _keydownHandler(evt: KeyboardEvent) {
     const currentHeader = evt.target as Element;
 
     if (!PfeAccordion.isHeader(currentHeader)) {
@@ -356,34 +355,26 @@ export class PfeAccordion extends LitElement {
 
     switch (evt.key) {
       case 'ArrowDown':
-      case 'Down':
-      case 'ArrowRight':
-      case 'Right':
+        evt.preventDefault();
         newHeader = this._nextHeader();
         break;
       case 'ArrowUp':
-      case 'Up':
-      case 'ArrowLeft':
-      case 'Left':
+        evt.preventDefault();
         newHeader = this._previousHeader();
         break;
       case 'Home':
+        evt.preventDefault();
         newHeader = this._firstHeader();
         break;
       case 'End':
+        evt.preventDefault();
         newHeader = this._lastHeader();
         break;
       default:
         return;
     }
 
-    // QUESTION: await newHeader.updateComplete here?
-    if (newHeader) {
-      newHeader.shadowRoot?.querySelector('button')?.focus?.();
-
-      const index = this._getIndex(newHeader);
-      this.expand(index);
-    }
+    newHeader?.focus?.();
   }
 
   @bound private _transitionEndHandler(evt: TransitionEvent) {
@@ -421,13 +412,13 @@ export class PfeAccordion extends LitElement {
 
   private _previousHeader() {
     const headers = this._allHeaders();
-    const newIndex = headers.findIndex(header => header === document.activeElement) - 1;
+    const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) - 1;
     return headers[(newIndex + headers.length) % headers.length];
   }
 
   private _nextHeader() {
     const headers = this._allHeaders();
-    const newIndex = headers.findIndex(header => header === document.activeElement) + 1;
+    const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) + 1;
     return headers[newIndex % headers.length];
   }
 
@@ -499,8 +490,7 @@ export class PfeAccordion extends LitElement {
 
     // Iterate the expanded array by 1 to convert to human-readable vs. array notation;
     // sort values numerically and connect them using a dash
-    const openIndexes = this.expandedSets
-      .map(item => item + 1)
+    const openIndexes = Array.from(this.expandedSets,item => item + 1)
       .sort((a, b) => a - b)
       .join('-');
 
@@ -509,7 +499,7 @@ export class PfeAccordion extends LitElement {
 
     // If values exist in the array, add them to the parameter string
     // Otherwise delete the set entirely
-    if (this.expandedSets.length > 0) {
+    if (this.expandedSets.size > 0) {
       url.searchParams.set(this.id, openIndexes);
     } else {
       url.searchParams.delete(this.id);

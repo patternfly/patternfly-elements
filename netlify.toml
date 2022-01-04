@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm run site"
 
 [[plugins]]
   package = "/tools/netlify-plugin-github-actions"

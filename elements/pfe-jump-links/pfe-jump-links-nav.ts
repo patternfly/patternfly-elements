@@ -110,7 +110,8 @@ export class PfeJumpLinksNav extends LitElement {
   // Reflects if the nav is stuck in place
   // @TODO note this in the documentation as a readonly property
   /** Stickiness state */
-  @observed @property({ type: Boolean, reflect: true }) stuck = false;
+  @observed
+  @property({ type: Boolean, reflect: true }) stuck = false;
 
   /** Opt-out of the header region */
   @property({ type: Boolean, reflect: true, attribute: 'no-header' }) noHeader = false;
@@ -323,13 +324,17 @@ export class PfeJumpLinksNav extends LitElement {
     // If this is not autobuilt, use the IDs from the light DOM
     if (!this.autobuild) {
       const links = [...this.querySelectorAll<HTMLAnchorElement>('ul > li > a[href]')];
-      // Parse the links for the anchor tag and create a selector from it
-      const ids = links.map(link => `[id="${link.href.split('#').pop()}"]`);
-      // Capture these from the panel or if nothing is returned, check the document
-      return (
-        panel?.querySelectorAll(ids.join(',')) ||
-        (this.getRootNode() as Document|ShadowRoot).querySelectorAll(ids.join(','))
-      );
+      if (!links.length) {
+        return null;
+      } else {
+        // Parse the links for the anchor tag and create a selector from it
+        const ids = links.map(link => `[id="${link.href.split('#').pop()}"]`);
+        // Capture these from the panel or if nothing is returned, check the document
+        return (
+          panel?.querySelectorAll(ids.join(',')) ||
+          (this.getRootNode() as Document|ShadowRoot).querySelectorAll(ids.join(','))
+        );
+      }
     }
 
     // NOTE: since the panel element is not necessarily pfe-jump-links-panel

@@ -116,15 +116,17 @@ module.exports = {
       }
     });
 
-    chokidar.watch(MONOREPO_ASSETS, {
-      awaitWriteFinish: {
-        stabilityThreshold: 2000,
-        pollInterval: 100
-      }
-    }).on('change', path => {
-      console.log('File Queued: ', path);
-      paths.add(path);
-      copyPaths();
-    });
+    if(process.argv.some(x => x === '--serve')) {
+      chokidar.watch(MONOREPO_ASSETS, {
+        awaitWriteFinish: {
+          stabilityThreshold: 2000,
+          pollInterval: 100
+        }
+      }).on('change', path => {
+        console.log('File Queued: ', path);
+        paths.add(path);
+        copyPaths();
+      });
+    }
   },
 };

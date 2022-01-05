@@ -6,14 +6,6 @@
 
 /* THIS FILE HAS GLOBAL VARIABLES SET IN PIXEL UNITS */
 :root {
-  --pfe-theme--container-spacer: 16px;
-  --pfe-theme--container-padding: 16px;
-  --pfe-theme--content-spacer: 24px;
-  --pfe-theme--content-spacer--heading--lg: 32px;
-  --pfe-theme--content-spacer--heading--md: 24px;
-  --pfe-theme--content-spacer--heading--sm: 16px;
-  --pfe-theme--content-spacer--body--md: 16px;
-  --pfe-theme--content-spacer--body--sm: 8px;
   --pf-global--FontSize--6xl: 48px;
   --pf-global--FontSize--5xl: 40px;
   --pf-global--FontSize--4xl: 36px;
@@ -45,46 +37,15 @@
   --pf-c-text--m-md--FontSize: 16px;
   --pf-c-text--m-sm--FontSize: 14px;
   --pf-c-text--m-xs--FontSize: 12px;
-  /*  DEPRECATED */
-  --pfe-theme--base--text: 18px;
-  --pfe-theme--base--heading: 20px;
-  --pfe-theme--base--heading-lg: 25px;
-  --pfe-theme--font-size--xxl: calc(1.92  * var(--pfe-theme--base--heading-lg));
-  --pfe-theme--font-size--xl: calc(1.6  * var(--pfe-theme--base--heading-lg ));
-  --pfe-theme--font-size--alpha: calc(1.44 * var(--pfe-theme--base--heading-lg ));
-  --pfe-theme--font-size--beta: calc(1.4 * var(--pfe-theme--base--heading ));
-  --pfe-theme--font-size--gamma: calc(1.2 * var(--pfe-theme--base--heading ));
-  --pfe-theme--font-size--delta: var(--pfe-theme--base--heading);
-  --pfe-theme--font-size--epsilon: calc(0.9  * var(--pfe-theme--base--heading ));
-  --pfe-theme--font-size--zeta: calc(0.8  * var(--pfe-theme--base--heading ));
-  --pfe-theme--font-size--default-lg: calc(1.11 * var(--pfe-theme--base--text ));
-  --pfe-theme--font-size: var(--pfe-theme--base--text);
-  --pfe-theme--font-size--default-sm: calc(.8889 * var(--pfe-theme--base--text ));
-  --pfe-theme--font-size--default-xs: calc(.7778 * var(--pfe-theme--base--text ));
-  --pfe-theme--line-height--xxl: 1.2;
-  --pfe-theme--line-height--xl: 1.2;
-  --pfe-theme--line-height--alpha: 1.3;
-  --pfe-theme--line-height--beta: 1.3;
-  --pfe-theme--line-height--gamma: 1.3;
-  --pfe-theme--line-height--delta: 1.5;
-  --pfe-theme--line-height--epsilon: 1.5;
-  --pfe-theme--line-height--zeta: 1.5;
-  --pfe-theme--line-height--eta: 1.5;
-  --pfe-theme--line-height: 1.5;
-  --pfe-theme--font-weight--xxl: 300;
-  --pfe-theme--font-weight--xl: 300;
-  --pfe-theme--font-weight--alpha: 400;
-  --pfe-theme--font-weight--beta: 400;
-  --pfe-theme--font-weight--gamma: 400;
-  --pfe-theme--font-weight--delta: 400;
-  --pfe-theme--font-weight--epsilon: 400;
-  --pfe-theme--font-weight--zeta: 400;
-  --pfe-theme--font-weight--eta: 400;
-  --pfe-theme--font-weight: 400;
+  
   --pfe-theme--container-spacer: 16px;
   --pfe-theme--container-padding: 16px;
-  --pfe-theme--content-spacer: 30px;
-  /* END DEPRECATED */
+  --pfe-theme--content-spacer: 24px;
+  --pfe-theme--content-spacer--heading--lg: 32px;
+  --pfe-theme--content-spacer--heading--md: 24px;
+  --pfe-theme--content-spacer--heading--sm: 16px;
+  --pfe-theme--content-spacer--body--md: 16px;
+  --pfe-theme--content-spacer--body--sm: 8px;
   --pfe-theme--line-height: 1.5;
   --pfe-theme--line-height--heading: 1.3;
   --pfe-theme--line-height--heading-mega: 1.2;
@@ -194,58 +155,58 @@
   --pfe-theme--link-decoration--on-saturated: underline;
   --pfe-theme--link-decoration--hover--on-saturated: underline;
   --pfe-theme--link-decoration--focus--on-saturated: underline;
-  --pfe-theme--link-decoration--visited--on-saturated: underline; }
-  @media screen and (max-width: 767px) {
-    :root {
-      --pf-c-content--h1--FontSize: 26px;
-      --pf-c-content--h2--FontSize: 24px;
-      --pf-c-content--h3--FontSize: 20px;
-      --pf-c-content--h4--FontSize: 20px;
-      --pf-c-content--h5--FontSize: 18px;
-      --pf-c-content--h6--FontSize: 16px;
-      --pf-c-content--lg--FontSize: 18px;
-      --pf-c-content--FontSize: 16px;
-      --pf-c-content--small--FontSize: 14px;
-      --pf-c-title--m-6xl--FontSize: 35px;
-      --pf-c-title--m-5xl--FontSize: 29px;
-      --pf-c-title--m-4xl--FontSize: 26px;
-      --pf-c-title--m-3xl--FontSize: 24px;
-      --pf-c-title--m-2xl--FontSize: 20px;
-      --pf-c-title--m-xl--FontSize: 18px;
-      --pf-c-title--m-lg--FontSize: 16px;
-      --pf-c-title--m-md--FontSize: 14px;
-      --pf-c-text--m-xl--FontSize: 18px;
-      --pf-c-text--m-lg--FontSize: 16px;
-      --pf-c-text--m-md--FontSize: 16px;
-      --pf-c-text--m-sm--FontSize: 14px;
-      --pf-c-text--m-xs--FontSize: 12px; } }
-  @media screen and (max-width: 767px) {
-    :root {
-      /*  DEPRECATED */
-      --pfe-theme--base--text: 16px;
-      --pfe-theme--base--heading: 17px;
-      --pfe-theme--base--heading-lg: 18px;
-      /*  END DEPRECATED */ } }
+  --pfe-theme--link-decoration--visited--on-saturated: underline;
 
-:root {
-  --pfe-tabs__tab--FontSize: 16px; }
+  --pfe-tabs__tab--FontSize: 16px;
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    --pf-c-content--h1--FontSize: 26px;
+    --pf-c-content--h2--FontSize: 24px;
+    --pf-c-content--h3--FontSize: 20px;
+    --pf-c-content--h4--FontSize: 20px;
+    --pf-c-content--h5--FontSize: 18px;
+    --pf-c-content--h6--FontSize: 16px;
+    --pf-c-content--lg--FontSize: 18px;
+    --pf-c-content--FontSize: 16px;
+    --pf-c-content--small--FontSize: 14px;
+    --pf-c-title--m-6xl--FontSize: 35px;
+    --pf-c-title--m-5xl--FontSize: 29px;
+    --pf-c-title--m-4xl--FontSize: 26px;
+    --pf-c-title--m-3xl--FontSize: 24px;
+    --pf-c-title--m-2xl--FontSize: 20px;
+    --pf-c-title--m-xl--FontSize: 18px;
+    --pf-c-title--m-lg--FontSize: 16px;
+    --pf-c-title--m-md--FontSize: 14px;
+    --pf-c-text--m-xl--FontSize: 18px;
+    --pf-c-text--m-lg--FontSize: 16px;
+    --pf-c-text--m-md--FontSize: 16px;
+    --pf-c-text--m-sm--FontSize: 14px;
+    --pf-c-text--m-xs--FontSize: 12px;
+  }
+}
 
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
   pfe-cta[pfe-priority="primary"] {
     background-color: #e00;
-    border-color: #e00; } }
+    border-color: #e00;
+  }
+}
 
 pfe-navigation {
   --pfe-theme--color--surface--accent: var(--pfe-theme--color--ui-accent, #e00);
-  --pfe-theme--container-padding: 14px; }
+  --pfe-theme--container-padding: 14px;
+}
 
 pfe-navigation-item {
-  --pfe-theme--color--ui-base: var(--pfe-theme--color--ui-accent, #e00); }
+  --pfe-theme--color--ui-base: var(--pfe-theme--color--ui-accent, #e00);
+}
 
 pfe-jump-links-nav {
-  --pfe-jump-links--BorderColor: var(--pfe-theme--color--ui-accent, #e00); }
+  --pfe-jump-links--BorderColor: var(--pfe-theme--color--ui-accent, #e00);
+}
 
 pfe-clipboard {
-  --pfe-clipboard--FontSize: 16px; }
-
-/*# sourceMappingURL=advanced-theme.css.map */
+  --pfe-clipboard--FontSize: 16px;
+}

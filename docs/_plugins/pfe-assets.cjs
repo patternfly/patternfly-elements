@@ -1,9 +1,8 @@
 const fs = require('fs');
 const glob = require('glob');
 const chokidar = require('chokidar');
-const { join } = require('path');
-
-const { dirname } = require('path');
+const { join, dirname } = require('path');
+const { buildDemo } = require('./build-demo.cjs');
 
 /**
  * Debounce helper function
@@ -95,6 +94,7 @@ module.exports = {
     });
 
     eleventyConfig.on('beforeBuild', () => {
+      buildDemo();
       if (!didFirstBuild) {
         for (const path of glob.sync(MONOREPO_ASSETS)) {
           if (fs.lstatSync(path).isFile()) {

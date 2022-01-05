@@ -190,6 +190,12 @@
 ///   // ...as well as all the values for :host([on="saturated"])  and  :host([on="light"])
 @mixin pfe-contexts($contexts: $CONTEXTS) {
   // Helper attributes to aid in theming
+
+  :host([context="dark"]) { --context: dark; }
+  :host([context="light"]) { --context: light; }
+  :host([context="accent"]) { --context: saturated; }
+  :host([context="saturated"]) { --context: saturated; }
+
   @each $context in $contexts {
     :host([on="#{$context}"]) {
       @include pfe-set-broadcast-context($context);

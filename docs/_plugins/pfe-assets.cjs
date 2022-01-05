@@ -2,7 +2,7 @@ const fs = require('fs');
 const glob = require('glob');
 const chokidar = require('chokidar');
 const { join, dirname } = require('path');
-const { buildDemo } = require('./build-demo.cjs');
+const { bundle } = require('./bundle.cjs');
 
 /**
  * Debounce helper function
@@ -93,15 +93,14 @@ module.exports = {
       }
     });
 
-    eleventyConfig.on('beforeBuild', () => {
-      buildDemo();
+    eleventyConfig.on('beforeBuild', async () => {
       if (!didFirstBuild) {
         for (const path of glob.sync(MONOREPO_ASSETS)) {
           if (fs.lstatSync(path).isFile()) {
             doCopy(path);
           }
         }
-
+        await bundle();
         didFirstBuild = true;
       }
     });
@@ -127,6 +126,9 @@ module.exports = {
         console.log('File Queued: ', path);
         paths.add(path);
         copyPaths();
+        if (path.match(/elements|core/)) {
+          bundle();
+        }
       });
     }
   },

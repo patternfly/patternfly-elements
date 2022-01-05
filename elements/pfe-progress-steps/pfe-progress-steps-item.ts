@@ -82,7 +82,7 @@ export class PfeProgressStepsItem extends LitElement {
   }
 
   update(changed: PropertyValues<this>) {
-    this.classList.toggle('has-description', this.slots.hasSlotted('description'))
+    this.classList.toggle('has-description', this.slots.hasSlotted('description'));
     super.update(changed);
   }
 

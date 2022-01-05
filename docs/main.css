@@ -493,8 +493,8 @@ footer ul {
 }
 
 .PFElement {
-  font-family: "RedHatText", "Overpass", Overpass, Helvetica, Arial, sans-serif;
-  font-family: var(--pfe-theme--font-family, "RedHatText", "Overpass", Overpass, Helvetica, Arial, sans-serif);
+  font-family: "Red Hat Text", RedHatText, "Overpass", Overpass, Helvetica, Arial, sans-serif;
+  font-family: var(--pfe-theme--font-family, "Red Hat Text", RedHatText, Overpass, Helvetica, Arial, sans-serif);
   color: var(--pfe-broadcasted--text);
 }
 

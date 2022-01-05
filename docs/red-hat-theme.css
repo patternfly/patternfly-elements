@@ -92,8 +92,8 @@
   --pfe-theme--font-weight--normal: 400;
   --pfe-theme--font-weight--semi-bold: 600;
   --pfe-theme--font-weight--bold: 700;
-  --pfe-theme--font-family: "RedHatText", "Overpass", Overpass, Helvetica, Arial, sans-serif;
-  --pfe-theme--font-family--heading: "RedHatDisplay", "Overpass", Overpass, Helvetica, Arial, sans-serif;
+  --pfe-theme--font-family: "Red Hat Text", RedHatText, Overpass, Helvetica, Arial, sans-serif;
+  --pfe-theme--font-family--heading: "Red Hat Display", RedHatDisplay, Overpass, Overpass, Helvetica, Arial, sans-serif;
   --pfe-theme--font-family--code: "Overpass Mono", Consolas, Monaco, Andale Mono, monospace;
   --pfe-theme--color--ui-base: #6a6e73;
   --pfe-theme--color--ui-base--hover: #151515;

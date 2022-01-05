@@ -17,15 +17,21 @@
 *.toml
 *.tsbuildinfo
 *.txt
+*.yml
+*.yaml
 
 custom-elements.json
 package-lock.json
 
 _site
 docs/_data/todos.json
-docs/demo
+docs/demo.js
+docs/bundle.js
+docs/core
+docs/components
 node_modules
 
+core/pfe-sass/docs/index.html
 core/**/*.js
 elements/**/*.js
 tools/**/*.js

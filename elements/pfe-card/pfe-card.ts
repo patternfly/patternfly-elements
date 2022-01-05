@@ -68,7 +68,7 @@ export class PfeCard extends LitElement {
       'has-header': this.slots.hasSlotted('header', 'pfe-card--header'),
       'has-footer': this.slots.hasSlotted('footer', 'pfe-card--footer'),
       'has-body': this.slots.hasSlotted(),
-    }
+    };
 
     return html`
       <!-- pfe-card -->

@@ -1,4 +1,4 @@
-import { expect, html, aTimeout, nextFrame } from '@open-wc/testing';
+import { expect, html, aTimeout } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { hexToRgb, getColor } from '@patternfly/pfe-tools/test/hex-to-rgb.js';
 

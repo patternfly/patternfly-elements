@@ -16,7 +16,7 @@ export class PfeDemoPage {
 
   async navigate(selectorOverride?: string|null) {
     const url = `${this.origin}/${this.workspace}/${this.tagName.replace('pfe-', '')}/demo`.replace(/\/\//g, '/');
-    console.log(`NAVIGATING to ${url}`)
+    console.log(`NAVIGATING to ${url}`);
     await this.page.goto(url, { waitUntil: 'networkidle' });
     await this.page.waitForLoadState('domcontentloaded');
     await this.page.$$eval('[pfelement]', async els =>
@@ -50,9 +50,10 @@ export class PfeDemoPage {
   /** Take a snapshot. When running in CI, send it to Percy, otherwise, save it to disk */
   async snapshot(name?: string) {
     const snapshotName = `${this.tagName}${name ? `-${name}` : ''}`;
-    if (process.env.CI)
+    if (process.env.CI) {
       await percySnapshot(this.page, snapshotName, { enableJavaScript: true });
-    else
+    } else {
       expect(await this.page.screenshot({ fullPage: true })).toMatchSnapshot(`${snapshotName}.png`);
+    }
   }
 }

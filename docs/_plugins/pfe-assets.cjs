@@ -27,10 +27,33 @@ function doCopy(path) {
 
 let didFirstBuild = false;
 
+const WATCH_EXTENSIONS = [
+  'cjs',
+  'css',
+  'html',
+  'js',
+  'json',
+  'map',
+  'md',
+  'mjs',
+  'png',
+  'scss',
+  'svg',
+  'ts',
+].join(',');
+const MONOREPO_ASSETS = `{elements,core}/**/*.{${WATCH_EXTENSIONS}}`;
+
 module.exports = {
   configFunction(eleventyConfig) {
     eleventyConfig.addPassthroughCopy('docs/{bundle,demo}.js*');
     eleventyConfig.addPassthroughCopy('docs/core');
+    eleventyConfig.addPassthroughCopy('brand');
+    eleventyConfig.addPassthroughCopy('docs/main.mjs');
+
+    eleventyConfig.addWatchTarget('docs/{bundle,demo}.js*');
+    eleventyConfig.addWatchTarget(`docs/**/*.{${WATCH_EXTENSIONS}}`);
+    eleventyConfig.addWatchTarget(MONOREPO_ASSETS);
+
     eleventyConfig.addTransform('demo-paths', function(content) {
       if (this.outputPath.match(/(components|core)\/.*\/demo\/index\.html$/)) {
         return content.replace(/href="\/(?<workspace>elements|core)\/pfe-(?<unprefixed>.*)\/(?<filename>.*).css"/g, (...args) => {
@@ -46,7 +69,7 @@ module.exports = {
 
       if (!didFirstBuild) {
 
-        for (const path of glob.sync('{core,elements}/**/*.{md,html,js,js.map,css,scss,ts,png,svg,png}')) {
+        for (const path of glob.sync(MONOREPO_ASSETS)) {
           if (fs.lstatSync(path).isFile()) {
             doCopy(path);
           }
@@ -57,6 +80,7 @@ module.exports = {
     });
 
     eleventyConfig.on('beforeWatch', changed => {
+      console.log(changed)
       for (const path of changed) {
         doCopy(path);
       }

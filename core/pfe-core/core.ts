@@ -1,4 +1,4 @@
-import type { LitElement, ComplexAttributeConverter } from 'lit';
+import type { ComplexAttributeConverter } from 'lit';
 
 export interface PfeConfig {
   /** Set to false to disable client-side page load performance tracking */

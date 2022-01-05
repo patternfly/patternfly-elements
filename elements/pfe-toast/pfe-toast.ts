@@ -46,7 +46,7 @@ export class PfeToast extends LitElement {
   public static async toast(messageOrContent: string|Node): Promise<PfeToast> {
     const toast = document.createElement('pfe-toast');
     toast.append(messageOrContent);
-    toast.addEventListener('close', () => toast.remove(), { once: true })
+    toast.addEventListener('close', () => toast.remove(), { once: true });
     document.body.append(toast);
     toast.open();
     await toast.updateComplete;

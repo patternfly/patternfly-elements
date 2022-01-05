@@ -7,7 +7,7 @@ const cwd = process.cwd();
 
 function toConfig(workspace) {
   return async function(acc, packageName) {
-    const unprefixed = packageName.replace('pfe-', '')
+    const unprefixed = packageName.replace('pfe-', '');
     const docsPath = workspace === 'elements' ? 'components' : workspace;
     const docsScriptPath = join(cwd, 'docs', docsPath, unprefixed, 'demo', `${packageName}.js`);
     const docsDemoPath = join(cwd, 'docs', docsPath, unprefixed, 'demo', `${packageName}.html`);

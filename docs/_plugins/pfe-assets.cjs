@@ -16,7 +16,7 @@ const { dirname } = require('path');
 function debounce(delay, func) {
   let timeout;
   return function(...args) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    // eslint-disable-next-line no-invalid-this
     const context = this;
     const later = function() {
       timeout = null;
@@ -83,20 +83,19 @@ module.exports = {
     // eleventyConfig.addWatchTarget(MONOREPO_ASSETS);
 
     eleventyConfig.addTransform('demo-paths', function(content) {
+      // eslint-disable-next-line no-invalid-this
       if (this.outputPath.match(/(components|core)\/.*\/demo\/index\.html$/)) {
         return content.replace(/href="\/(?<workspace>elements|core)\/pfe-(?<unprefixed>.*)\/(?<filename>.*).css"/g, (...args) => {
-          const [{workspace, unprefixed, filename}] = args.reverse();
+          const [{ workspace, unprefixed, filename }] = args.reverse();
           return `href="/${workspace === 'elements' ? 'components' : workspace}/${unprefixed}/${filename}.css"`;
-        })
+        });
       } else {
-        return content
+        return content;
       }
     });
 
     eleventyConfig.on('beforeBuild', () => {
-
       if (!didFirstBuild) {
-
         for (const path of glob.sync(MONOREPO_ASSETS)) {
           if (fs.lstatSync(path).isFile()) {
             doCopy(path);
@@ -116,13 +115,15 @@ module.exports = {
       }
     });
 
-    if(process.argv.some(x => x === '--serve')) {
+    if (process.argv.includes('--serve')) {
       chokidar.watch(MONOREPO_ASSETS, {
         awaitWriteFinish: {
           stabilityThreshold: 2000,
           pollInterval: 100
         }
       }).on('change', path => {
+        // We'd like to know about this
+        // eslint-disable-next-line no-console
         console.log('File Queued: ', path);
         paths.add(path);
         copyPaths();

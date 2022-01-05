@@ -108,7 +108,7 @@ export class PfeModal extends LitElement {
             aria-labelledby="${ifDefined(headerId)}"
             aria-label="${ifDefined(headerLabel)}">
           <div class="pfe-modal__container">
-            <div class="pfe-modal__content ${classMap({ 'has-header': this.slots.hasSlotted('header', 'pfe-modal--header')})}">
+            <div class="pfe-modal__content ${classMap({ 'has-header': this.slots.hasSlotted('header', 'pfe-modal--header') })}">
               <slot name="header"></slot>
               <slot name="pfe-modal--header"></slot>
               <slot></slot>

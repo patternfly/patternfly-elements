@@ -8,7 +8,7 @@ test.describe(tagName, () => {
     const componentPage = new PfeDemoPage(page, tagName);
     await componentPage.navigate();
 
-    await componentPage.click(`${tagName} button`)
+    await componentPage.click(`${tagName} button`);
     await page.waitForTimeout(100);
 
     await componentPage.snapshot();

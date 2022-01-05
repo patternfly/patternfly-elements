@@ -195,7 +195,7 @@ export class PfePrimaryDetail extends LitElement {
     try {
       this._setActiveOnToggle(oldVal);
       this._setActiveOnToggle(newVal);
-    } catch(error) {
+    } catch (error) {
       this.logger.warn((error as Error).message);
     }
   }
@@ -282,7 +282,7 @@ export class PfePrimaryDetail extends LitElement {
 
     try {
       this._setActiveOnToggle(toggleId);
-    } catch(error) {
+    } catch (error) {
       this.logger.warn((error as Error).message);
     }
   }
@@ -332,7 +332,7 @@ export class PfePrimaryDetail extends LitElement {
     for (const toggle of this.querySelectorAll('[slot$="nav"]')) {
       try {
         this._setActiveOnToggle(toggle.id);
-      } catch(error) {
+      } catch (error) {
         this.logger.warn((error as Error).message);
       }
     }

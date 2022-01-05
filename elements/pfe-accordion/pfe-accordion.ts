@@ -490,7 +490,7 @@ export class PfeAccordion extends LitElement {
 
     // Iterate the expanded array by 1 to convert to human-readable vs. array notation;
     // sort values numerically and connect them using a dash
-    const openIndexes = Array.from(this.expandedSets,item => item + 1)
+    const openIndexes = Array.from(this.expandedSets, item => item + 1)
       .sort((a, b) => a - b)
       .join('-');
 

@@ -710,7 +710,6 @@ describe('<pfe-accordion>', function() {
             expect(panel3.expanded).to.be.false;
           });
         });
-
       });
     });
 

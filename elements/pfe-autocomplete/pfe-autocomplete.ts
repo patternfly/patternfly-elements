@@ -119,7 +119,11 @@ export class PfeAutocomplete extends LitElement {
    * By adding this attribute input box and buttons become disabled.
    */
   @observed
-  @property({ attribute: 'is-disabled', type: Boolean, reflect: true }) isDisabled = false;
+  @property({ type: Boolean, reflect: true }) disabled = false;
+
+  /** @deprecated use `disabled` */
+  @observed
+  @property({ attribute: 'is-disabled', type: Boolean }) isDisabled?: boolean;
 
   /**
    * Users may type very fast. We allow to input box value changes trigger the
@@ -181,7 +185,7 @@ export class PfeAutocomplete extends LitElement {
 
   render() {
     const searchButtonsDisabled =
-      this.isDisabled || !(this._input?.value !== '' && !this._input?.hasAttribute?.('disabled'));
+      this.disabled || !(this._input?.value !== '' && !this._input?.hasAttribute?.('disabled'));
     const iconHidden = !this.loading || this._input?.value === '';
     return html`
       <div id="wrapper" part="container">
@@ -209,7 +213,7 @@ export class PfeAutocomplete extends LitElement {
               type="button"
               part="clear-button"
               aria-label="clear search query"
-              ?disabled="${this.isDisabled}"
+              ?disabled="${this.disabled}"
               ?hidden="${!this._input?.value}"
               @click="${this._clear}">
             <svg viewBox="0 0 40 40" enable-background="new 0 0 40 40">
@@ -223,7 +227,7 @@ export class PfeAutocomplete extends LitElement {
               type="button"
               part="search-button"
               aria-label="Search"
-              ?disabled="${!this._input?.value || this.isDisabled}"
+              ?disabled="${!this._input?.value || this.disabled}"
               ?hidden="${this.showTextualSearch}"
               @click="${this._search}">
             <svg viewBox="0 0 512 512">
@@ -301,6 +305,7 @@ export class PfeAutocomplete extends LitElement {
     this._input.setAttribute('autocapitalize', 'off');
     this._input.setAttribute('spellcheck', 'false');
     this._isDisabledChanged();
+    this._disabledChanged();
   }
 
   protected _initValueChanged(_oldVal: string|undefined, newVal: string) {
@@ -311,8 +316,15 @@ export class PfeAutocomplete extends LitElement {
   }
 
   protected _isDisabledChanged() {
-    this._input?.toggleAttribute('disabled', this.isDisabled);
+    if (this.isDisabled != null && this.disabled !== this.isDisabled) {
+      this.disabled = !!this.isDisabled;
+    }
   }
+
+  protected _disabledChanged() {
+    this._input?.toggleAttribute?.('disabled', this.disabled);
+  }
+
 
   protected _buttonTextChanged(oldVal: string, newVal: string) {
     if (oldVal === null) {

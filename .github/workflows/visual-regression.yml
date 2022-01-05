@@ -5,6 +5,16 @@ on:
       deployPrimeUrl:
         description: Origin to test, e.g. https://deploy-preview-1804--patternfly-elements.netlify.app/
         required: true
+      branch:
+        required: false
+      issueNumber:
+        required: false
+      netlifyBuildContext:
+        required: false
+      deployUrl:
+        required: false
+      url:
+        required: false
 
 jobs:
   e2e:

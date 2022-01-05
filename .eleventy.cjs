@@ -7,22 +7,14 @@ const customElementsManifestPlugin = require('./docs/_plugins/custom-elements-ma
 const orderTagsPlugin = require('./docs/_plugins/order-tags.cjs');
 
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addPlugin(syntaxHighlight, {
-    alwaysWrapLineHighlights: true,
-    lineSeparator: '\n',
-  });
-
-  eleventyConfig.addPlugin(pfeAssetsPlugin);
-  eleventyConfig.addPlugin(customElementsManifestPlugin);
-
   eleventyConfig.setQuietMode(process.env.npm_config_quiet);
   eleventyConfig.setWatchThrottleWaitTime(500);
 
-  eleventyConfig.addWatchTarget('docs/**/*.{cjs,js,mjs,css,md,svg,png}');
-  eleventyConfig.addWatchTarget('{elements,core}/*/{*.js,*.css,demo,docs,*.json}');
+  /** Copy and manage site assets from the monorepo */
+  eleventyConfig.addPlugin(pfeAssetsPlugin);
 
-  eleventyConfig.addPassthroughCopy('brand');
-  eleventyConfig.addPassthroughCopy('docs/main.mjs');
+  /** Generate and consume custom elements manifests */
+  eleventyConfig.addPlugin(customElementsManifestPlugin);
 
   /** Collections to organize alphabetically instead of by date */
   eleventyConfig.addPlugin(orderTagsPlugin, { tags: ['component'], order: 'alphabetically' });
@@ -45,6 +37,11 @@ module.exports = function(eleventyConfig) {
           .replace(/[&,+()$~%.'":*?!<>{}]/g, '');
       }
     },
+  });
+
+  eleventyConfig.addPlugin(syntaxHighlight, {
+    alwaysWrapLineHighlights: true,
+    lineSeparator: '\n',
   });
 
   eleventyConfig.setBrowserSyncConfig({

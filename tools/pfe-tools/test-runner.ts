@@ -1,16 +1,17 @@
 import type { PfeDevServerConfigOptions } from './dev-server';
 import type { TestRunnerConfig } from '@web/test-runner';
 
-import { defaultReporter } from '@web/test-runner';
 import { playwrightLauncher } from '@web/test-runner-playwright';
+import { summaryReporter, defaultReporter } from '@web/test-runner';
 import { junitReporter } from '@web/test-runner-junit-reporter';
 
 import { pfeDevServerConfig } from './dev-server.js';
-import { summaryReporter } from './test/summary-reporter.js';
 
 export interface PfeTestRunnerConfigOptions extends PfeDevServerConfigOptions {
   files?: string[];
 }
+
+const isWatchMode = process.argv.some(x => x.match(/-w|--watch/));
 
 export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunnerConfig {
   const { open, ...devServerConfig } = pfeDevServerConfig(opts);
@@ -77,11 +78,16 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
       },
     ],
     reporters: [
-      process.argv.some(x => x.match(/-w|--watch/)) ? defaultReporter({ reportTestProgress: true }) : summaryReporter({ flatten: false }),
-      junitReporter({
-        outputPath: './test-results/test-results.xml',
-        reportLogs: true,
-      }),
+      ...isWatchMode ? [
+        summaryReporter({ flatten: false }),
+        defaultReporter({ reportTestResults: false, reportTestProgress: true }),
+      ] : [
+        summaryReporter({ flatten: false }),
+        junitReporter({
+          outputPath: './test-results/test-results.xml',
+          reportLogs: true,
+        }),
+      ],
     ]
   };
 }

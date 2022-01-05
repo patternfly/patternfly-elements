@@ -6,7 +6,7 @@ module.exports = {
       BRANCH: branch,
       BUILD_ID: netlifyBuildId,
       CACHED_COMMIT_REF,
-      COMMIT_REF: ref = CACHED_COMMIT_REF,
+      COMMIT_REF: ref = CACHED_COMMIT_REF ?? branch,
       CONTEXT: netlifyBuildContext,
       DEPLOY_PRIME_URL: deployPrimeUrl,
       DEPLOY_URL: deployUrl,

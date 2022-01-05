@@ -1,19 +1,11 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { bound, initializer, observed, pfelement } from '@patternfly/pfe-core/decorators.js';
+import { bound, observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import styles from './pfe-button.scss';
-
-const BUTTON_TYPE_RE = /button|submit|reset|menu/;
-
-function ensureButtonType(type?: string|null): 'button'|'submit'|'reset'|'menu'|undefined {
-  return type?.match(BUTTON_TYPE_RE) ? type as 'button'|'submit'|'reset'|'menu' : undefined;
-}
 
 /**
  * Buttons allow users to perform an action when triggered. They feature a text label, a background or a border, and icons.
@@ -66,8 +58,7 @@ export class PfeButton extends LitElement {
 
   /** Disables the button */
   @observed
-  @property({ reflect: true, type: Boolean })
-    disabled = false;
+  @property({ reflect: true, type: Boolean }) disabled = false;
 
   // TODO: describe these states
   /**
@@ -79,120 +70,75 @@ export class PfeButton extends LitElement {
    * - danger
    * - control
    */
-  @property({ reflect: true })
-    variant: 'primary'|'secondary'|'tertiary'|'danger'|'control' = 'primary';
+  @property({ reflect: true }) variant: 'primary'|'secondary'|'tertiary'|'danger'|'control' = 'primary';
 
   /** Changes the size of the button. */
-  @property({ reflect: true })
-    size: 'medium'|'large' = 'medium';
+  @property({ reflect: true }) size: 'medium'|'large' = 'medium';
 
-  /** Changes the type of the button. */
   @observed
-  @property({ reflect: true })
-    type?: 'button'|'menu'|'submit'|'reset';
+  @property() type?: 'button'|'submit'|'reset';
 
   private logger = new Logger(this);
 
-  private get _slottedButton() {
+  private mo = new MutationObserver(this.onMutation);
+
+  private get button() {
     return this.querySelector('button');
   }
 
   connectedCallback() {
-    if (this._slottedButton) {
-      this.disabled = this._slottedButton.hasAttribute('disabled');
-    }
+    this.onSlotChange();
+    this.onMutation();
     super.connectedCallback();
+    this.addEventListener('click', this.onClick);
   }
 
   render() {
     return html`
-      <span id="internalBtn" part="container">
-        <button id="${ifDefined(this._slottedButton?.id)}"
-                part="button"
-                class="${ifDefined(this._slottedButton?.getAttribute('class') ?? undefined)}"
-                type="${ifDefined(this.type)}"
-                ?disabled="${this.disabled}"
-                @click="${this.onClick}">${unsafeHTML(this._slottedButton?.innerHTML)}</button>
+      <span part="container" @slotchange="${this.onSlotChange}">
+        <slot></slot>
       </span>
     `;
   }
 
-  @initializer({ observe: {
-    attributes: true,
-    characterData: true,
-    childList: true,
-    subtree: true,
-  } })
-  protected _init(records?: MutationRecord[]) {
-    if (!this._isValidLightDom() || !this._slottedButton) {
-      return;
-    }
-
-    if (records) {
-      for (const { addedNodes, removedNodes, type } of records) {
-        if (type === 'childList') {
-          this.requestUpdate();
-        } else if (type === 'attributes') {
-          this.disabled = this._slottedButton?.hasAttribute('disabled');
-        }
-
-        for (const node of addedNodes) {
-          if (node instanceof HTMLButtonElement) {
-            node.addEventListener('click', this.onClickSlottedButton);
-          }
-        }
-
-        for (const node of removedNodes) {
-          if (node instanceof HTMLButtonElement) {
-            node.removeEventListener('click', this.onClickSlottedButton);
-          }
-        }
-      }
-    } else {
-      this._slottedButton?.addEventListener('click', this.onClickSlottedButton);
-    }
-
-    if (this._slottedButton.hasAttribute('disabled')) {
-      this.disabled = true;
-    }
-
-    const incomingType = this._slottedButton.getAttribute('type');
-    if (incomingType && this.type !== incomingType) {
-      this.type = ensureButtonType(incomingType);
-    }
-  }
-
   protected _typeChanged() {
-    const type = ensureButtonType(this.type);
-    if (type && this._slottedButton && this._slottedButton.type !== type) {
-      this._slottedButton.setAttribute('type', type);
+    if (this.button && this.button.type !== this.type) {
+      if (this.type) {
+        this.button.type = this.type;
+      } else {
+        this.button.removeAttribute('type');
+      }
     }
   }
 
   protected _disabledChanged() {
-    this._slottedButton?.toggleAttribute('disabled', this.disabled);
-  }
-
-  private _isValidLightDom() {
-    if (!this._slottedButton) {
-      return !!(void this.logger.warn(`You must have a button in the light DOM`));
-    } else if (this.firstElementChild?.tagName !== 'BUTTON') {
-      return !!(void this.logger.warn(`The only child in the light DOM must be a button tag`));
-    } else {
-      return true;
+    if (this.button && this.button.disabled !== this.disabled) {
+      this.button.disabled = this.disabled;
     }
   }
 
-  /**
-   * programmatically clicking the _slottedButton is what makes
-   * this web component button work in a form as you'd expect
-   */
-  @bound private onClick() {
-    this._slottedButton?.click?.();
+  private onSlotChange() {
+    this.mo.disconnect();
+    if (this.button) {
+      this.mo.observe(this.button, { attributes: true, attributeFilter: ['type', 'disabled'] });
+    }
   }
 
-  @bound private onClickSlottedButton() {
-    this.dispatchEvent(pfeEvent('pfe-button:click'));
+  @bound private onClick(event: Event) {
+    if (event.target === this.button) {
+      this.dispatchEvent(pfeEvent('pfe-button:click'));
+    }
+  }
+
+  @bound private onMutation() {
+    if (this.querySelector(':not(button)')) {
+      this.logger.warn('The only child in the light DOM must be a button tag');
+    } else if (!this.button) {
+      this.logger.warn('You must have a button in the light DOM');
+    } else {
+      this.disabled = this.button.hasAttribute('disabled');
+      this.type = this.button.getAttribute('type') as this['type'] ?? undefined;
+    }
   }
 }
 

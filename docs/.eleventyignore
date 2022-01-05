@@ -2,3 +2,4 @@ prism.js
 _plugins
 components/*/demo/pfe-*.html
 core/*/demo/pfe-*.html
+!{elements,core}/**/*.{css,cjs,js,mjs,html}

@@ -18,17 +18,17 @@
     <link rel="image_src" href="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/red-hat-social-share.jpg"/>
     <link rel="canonical" href="https://www.redhat.com/en/test-web-components"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    {# <link rel="preconnect" href="https://static.redhat.com"> #}
+    <link rel="preconnect" href="https://static.redhat.com">
     {# <link rel="preload" href="/sites/all/libraries/rh_iconfont/dist/fonts/web_icon/rh-web-iconfont.woff" as="font" type="font/woff" crossorigin="crossorigin"> #}
-    {# <link rel="preload" href="https://static.redhat.com/libs/redhat/redhat-font/4/webfonts/modified/RedHatTextVFModified.woff2" as="font" type="font/woff2" crossorigin="crossorigin"> #}
-    {# <link rel="preload" href="https://static.redhat.com/libs/redhat/redhat-font/4/webfonts/modified/RedHatDisplayVFModified.woff2" as="font" type="font/woff2" crossorigin="crossorigin"> #}
+    <link rel="preload" href="https://static.redhat.com/libs/redhat/redhat-font/4/webfonts/modified/RedHatTextVFModified.woff2" as="font" type="font/woff2" crossorigin="crossorigin">
+    <link rel="preload" href="https://static.redhat.com/libs/redhat/redhat-font/4/webfonts/modified/RedHatDisplayVFModified.woff2" as="font" type="font/woff2" crossorigin="crossorigin">
     {# <link type="text/css" rel="stylesheet" href="/sites/default/files/advagg_css/css__k9aoxkMyjUtSX9AXGCPExPgTYjM0Xv5OYNfbFGDRafY__N9sjJtGj85lXtvOptw2e_YZ01FXbTXcJywP8EaKBijU__uaCwYofnUZLAnB7x3Q6WyVKHfqU6f9iB6Wi31ydea6c.css" media="all"/> #}
     {# <link type="text/css" rel="stylesheet" href="/sites/all/libraries/webrh/dist/css/webrh.webcomponents.min.css?r47io2" media="all"/> #}
     {# <link type="text/css" rel="stylesheet" href="/sites/all/libraries/webrh/dist/css/webrh.min.css?r47io2" media="all"/> #}
     {# <link type="text/css" rel="stylesheet" href="/sites/default/files/advagg_css/css__5trK3EQ2P7Rg11AAFuMiGD9XvjoohTGY1ipUkpkcQJM__x8BWm4ReAWva9dhl36BNDhBVZ2gxaBSOteeWP4zlCqo__uaCwYofnUZLAnB7x3Q6WyVKHfqU6f9iB6Wi31ydea6c.css" media="all"/> #}
     {# <link type="text/css" rel="stylesheet" href="/sites/default/files/advagg_css/css__wpajrf8pWA19ifT2xQXPB3J1TByoCXqZVtt6kXfl4Ow__PFQbFxxWsZl0yTnfrpPiA-o5Pvtu-CXh7nICx08JW0c__uaCwYofnUZLAnB7x3Q6WyVKHfqU6f9iB6Wi31ydea6c.css" media="print"/> #}
     {# <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/marketing/latest/trustarc/trustecm/css/trustecm.css" media="all"/> #}
-    {# <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/4/webfonts/red-hat-font.min.css" media="all"/> #}
+    <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/4/webfonts/red-hat-font.min.css" media="all"/>
     {# <script type="text/javascript" src="/sites/default/files/advagg_js/js__B6wED6l5P_XUdxVmb7Nvh5d9zn074QukFqJa2HLXS6c__VzWs8XZBHHsPW77egi-W-FQw2mAEr5F-GgCJU0wn3Nc__uaCwYofnUZLAnB7x3Q6WyVKHfqU6f9iB6Wi31ydea6c.js"></script> #}
     {# <script type="text/javascript" src="/sites/all/libraries/webrh/dist/js/webrh.vendor.min.js?r47io2"></script> #}
     {# <script type="text/javascript" src="/sites/all/libraries/webrh/dist/js/webrh.webcomponents.min.js?r47io2"></script> #}
@@ -39,12 +39,25 @@
     <link type="text/css" rel="stylesheet" href="/red-hat-theme.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="/core/core/pfe.min.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="/core/styles/pfe-base.min.css" media="all"/>
-    <link type="text/css" rel="stylesheet" href="/core/styles/pfe-context.min.css" media="all"/>
-    <link type="text/css" rel="stylesheet" href="/core/styles/pfe-layouts.min.css" media="all"/>
-    <link type="text/css" rel="stylesheet" href="/core/styles/pfe-typography-classes.min.css" media="all"/>
-    <link type="text/css" rel="stylesheet" href="/core/styles/pfe-vars-as-px.min.css" media="all"/>
-    <link type="text/css" rel="stylesheet" href="/core/styles/pfe-vars.min.css" media="all"/>
+    {# <link type="text/css" rel="stylesheet" href="/core/styles/pfe-context.min.css" media="all"/> #}
+    {# <link type="text/css" rel="stylesheet" href="/core/styles/pfe-layouts.min.css" media="all"/> #}
+    {# <link type="text/css" rel="stylesheet" href="/core/styles/pfe-typography-classes.min.css" media="all"/> #}
+    {# <link type="text/css" rel="stylesheet" href="/core/styles/pfe-vars-as-px.min.css" media="all"/> #}
+    {# <link type="text/css" rel="stylesheet" href="/core/styles/pfe-vars.min.css" media="all"/> #}
     <link type="text/css" rel="stylesheet" href="/core/styles/red-hat-font.min.css" media="all"/>
+    <style>
+      /* Replicate styles from /sites/ and static.redhat.com */
+      :root :is(h1, h2, h3) {
+        line-height: 1.1;
+        margin-top: 22px;
+        margin-bottom: 11px;
+      }
+      
+      p{
+        margin:0 0 11px;
+        margin-bottom:1.8rem
+      }
+    </style>
     <script type="module" src="/bundle.js"></script>
     <noscript><link href="/core/core/pfe--noscript.min.css" rel="stylesheet"></noscript>
   </head>
@@ -710,11 +723,11 @@
                   </pfe-tabs>
                 </pfe-band>
 
-                <pfe-band context="dark" style="background-color: #444">
+                <pfe-band id="tabs-theme-hook-band" context="dark" style="background-color: #444">
                   <header slot="header">
-                    <h2>Tab component: pfe-theme hook</h2>
+                    <h2>Tab component: context hook</h2>
                   </header>
-                  <pfe-tabs>
+                  <pfe-tabs id="tabs-theme-hook">
                     <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
                     <pfe-tab-panel role="region" slot="panel">
                       <h2>Content 1</h2>
@@ -1186,13 +1199,13 @@
                 }
               </style>
 
-              <pfe-band pfe-color="lightest">
+              <pfe-band color="lightest">
                 <header slot="header">
                   <h2>Band component</h2>
                 </header>
                 <article style="display: grid; grid-gap: 20px; grid-template-columns: repeat(3, 1fr);">
-                  <pfe-card pfe-color="lightest" class="border-card">
-                    <img src="" pfe-overflow="top right left" style="max-height: 200px;"/>
+                  <pfe-card color="lightest" class="border-card">
+                    <img src="" overflow="top right left" style="max-height: 200px;"/>
                     <h3 class="pfe-headline-3">Card component</h3>
                     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.</p>
                     <pfe-cta slot="footer">
@@ -1200,21 +1213,21 @@
                     </pfe-cta>
                   </pfe-card>
 
-                  <pfe-card pfe-color="complement" pfe-size="small" class="resource-card">
+                  <pfe-card color="complement" size="small" class="resource-card">
                     <h3 slot="header">
                       <span>Card heading</span>
                     </h3>
                     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
                       takimata sanctus est Lorem ipsum dolor sit amet.</p>
                     <div slot="footer">
-                      <pfe-cta pfe-priority="secondary" pfe-variant="wind">
+                      <pfe-cta priority="secondary" variant="wind">
                         <a href="#">Learn more</a>
                       </pfe-cta>
                     </div>
                   </pfe-card>
 
-                  <pfe-card pfe-color="accent" pfe-img-src="" class="custom-styles">
-                    <pfe-icon icon="rh-atom" pfe-circled="lightest" circled="lightest" pfe-size="lg" size="lg"></pfe-icon>
+                  <pfe-card color="accent" img-src="" class="custom-styles">
+                    <pfe-icon icon="rh-atom" circled="lightest" circled="lightest" size="lg"></pfe-icon>
                     <h3 class="pfe-headline-3">Card heading</h3>
                     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
                       takimata sanctus est Lorem ipsum dolor sit amet.</p>
@@ -1237,7 +1250,7 @@
                   <pfe-card>
                     <h3>Modal on default</h3>
                     <pfe-modal id="test-modal-1">
-                      <pfe-cta pfe-priority="secondary" slot="trigger">
+                      <pfe-cta priority="secondary" slot="trigger">
                         <button>Open modal</button>
                       </pfe-cta>
                       <h2 slot="header">Modal with a header</h2>
@@ -1251,10 +1264,10 @@
                     </pfe-modal>
                   </pfe-card>
 
-                  <pfe-card pfe-color="lightest">
+                  <pfe-card color="lightest">
                     <h3>Modal on lightest</h3>
                     <pfe-modal id="test-modal-2">
-                      <pfe-cta pfe-priority="secondary" slot="trigger">
+                      <pfe-cta priority="secondary" slot="trigger">
                         <button>Open modal</button>
                       </pfe-cta>
                       <h2 slot="header">Modal with a header</h2>
@@ -1268,10 +1281,10 @@
                     </pfe-modal>
                   </pfe-card>
 
-                  <pfe-card pfe-color="complement">
+                  <pfe-card color="complement">
                     <h3>Modal on complement</h3>
                     <pfe-modal id="test-modal-3">
-                      <pfe-cta pfe-priority="secondary" slot="trigger">
+                      <pfe-cta priority="secondary" slot="trigger">
                         <button>Open modal</button>
                       </pfe-cta>
                       <h2 slot="header">Modal with a header</h2>
@@ -1288,7 +1301,7 @@
                   <pfe-card class="custom-background">
                     <h3>Modal on custom, class-based, --context</h3>
                     <pfe-modal id="test-modal-4">
-                      <pfe-cta pfe-priority="secondary" slot="trigger">
+                      <pfe-cta priority="secondary" slot="trigger">
                         <button>Open modal</button>
                       </pfe-cta>
                       <h2 slot="header">Modal with a header</h2>
@@ -1302,10 +1315,10 @@
                     </pfe-modal>
                   </pfe-card>
 
-                  <pfe-card pfe-theme="dark" style="background-color: #444">
-                    <h3>Modal with pfe-theme hook</h3>
+                  <pfe-card context="dark" style="background-color: #444">
+                    <h3>Modal with context hook</h3>
                     <pfe-modal id="test-modal-5">
-                      <pfe-cta pfe-priority="secondary" slot="trigger">
+                      <pfe-cta priority="secondary" slot="trigger">
                         <button>Open modal</button>
                       </pfe-cta>
                       <h2 slot="header">Modal with a header</h2>
@@ -1467,12 +1480,12 @@
               </div>
               <!-- Pattern | raw_html -->
 
-              <pfe-band pfe-color="lightest" pfe-aside-desktop="left" pfe-aside-mobile="top" style="border-top: 1px solid #eee">
+              <pfe-band color="lightest" aside-desktop="left" aside-mobile="top" style="border-top: 1px solid #eee">
                 <header slot="header">
                   <h2>Jump links</h2>
                 </header>
-                <pfe-jump-links-nav pfe-c-autobuild="pfe-c-autobuild" id="jumplinks" slot="aside"></pfe-jump-links-nav>
-                <pfe-jump-links-panel pfe-c-offset="100" pfe-c-scrolltarget="jumplinks">
+                <pfe-jump-links-nav c-autobuild="pfe-c-autobuild" id="jumplinks" slot="aside"></pfe-jump-links-nav>
+                <pfe-jump-links-panel c-offset="100" c-scrolltarget="jumplinks">
                   <article>
                     <h1 class="pfe-jump-links-panel__section" id="section1">Section 1</h1>
                     <p>Lorem ipsum dolor amet umami vaporware actually church-key keytar, hell of roof party unicorn helvetica lomo pop-up fam taxidermy food truck dolore. Crucifix quinoa af eiusmod try-hard velit aesthetic freegan seitan readymade vinyl snackwave four

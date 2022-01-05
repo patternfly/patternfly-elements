@@ -1,8 +1,35 @@
 const fs = require('fs');
 const glob = require('glob');
+const chokidar = require('chokidar');
 const { join } = require('path');
 
 const { dirname } = require('path');
+
+/**
+ * Debounce helper function
+ * @see https://davidwalsh.name/javascript-debounce-function
+ *
+ * @param  func Function to be debounced
+ * @param  delay How long until it will be run
+ * @param  immediate Whether it should be run at the start instead of the end of the debounce
+ */
+function debounce(delay, func) {
+  let timeout;
+  return function(...args) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const context = this;
+    const later = function() {
+      timeout = null;
+      func.apply(context, args);
+    };
+    const callNow = !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, delay);
+    if (callNow) {
+      func.apply(context, args);
+    }
+  };
+}
 
 const getComponentName = path => {
   const [, , component] = path.match(/(core|elements)\/pfe-([-\w]+)\//) ?? [];
@@ -41,18 +68,19 @@ const WATCH_EXTENSIONS = [
   'svg',
   'ts',
 ].join(',');
-const MONOREPO_ASSETS = `{elements,core}/**/*.{${WATCH_EXTENSIONS}}`;
+const MONOREPO_ASSETS = `./{elements,core}/**/*.{${WATCH_EXTENSIONS}}`;
 
 module.exports = {
   configFunction(eleventyConfig) {
-    eleventyConfig.addPassthroughCopy('docs/{bundle,demo}.js*');
-    eleventyConfig.addPassthroughCopy('docs/core');
+    eleventyConfig.addPassthroughCopy('docs/bundle.{js,map,ts}');
+    eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');
+    eleventyConfig.addPassthroughCopy(`docs/core/**/*.{${WATCH_EXTENSIONS}}`);
     eleventyConfig.addPassthroughCopy('brand');
     eleventyConfig.addPassthroughCopy('docs/main.mjs');
 
     eleventyConfig.addWatchTarget('docs/{bundle,demo}.js*');
-    eleventyConfig.addWatchTarget(`docs/**/*.{${WATCH_EXTENSIONS}}`);
-    eleventyConfig.addWatchTarget(MONOREPO_ASSETS);
+    eleventyConfig.addWatchTarget(`docs/!(core)/*.{${WATCH_EXTENSIONS}}`);
+    // eleventyConfig.addWatchTarget(MONOREPO_ASSETS);
 
     eleventyConfig.addTransform('demo-paths', function(content) {
       if (this.outputPath.match(/(components|core)\/.*\/demo\/index\.html$/)) {
@@ -79,11 +107,24 @@ module.exports = {
       }
     });
 
-    eleventyConfig.on('beforeWatch', changed => {
-      console.log(changed)
-      for (const path of changed) {
+    const paths = new Set();
+
+    const copyPaths = debounce(2000, function copyPaths() {
+      for (const path of paths) {
         doCopy(path);
+        paths.delete(path);
       }
+    });
+
+    chokidar.watch(MONOREPO_ASSETS, {
+      awaitWriteFinish: {
+        stabilityThreshold: 2000,
+        pollInterval: 100
+      }
+    }).on('change', path => {
+      console.log('File Queued: ', path);
+      paths.add(path);
+      copyPaths();
     });
   },
 };

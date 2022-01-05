@@ -2,13 +2,12 @@
 import { fileURLToPath } from 'url';
 import { join } from 'path';
 import { pfeBuild } from '@patternfly/pfe-tools/esbuild.js';
-import { buildDemo } from './build-demo.js';
 
 import glob from 'glob';
 import Yargs from 'yargs';
 
 
-const { argv: { demo, exclude, include, outdir, production, watch, workspace } } = Yargs(process.argv)
+const { argv: { exclude, include, outdir, production, watch, workspace } } = Yargs(process.argv)
   .options({
     production: {
       default: !!process.env.CI,
@@ -19,10 +18,6 @@ const { argv: { demo, exclude, include, outdir, production, watch, workspace } }
     include: { type: 'array' },
     workspace: { type: 'string' },
     outdir: { type: 'string' },
-    demo: {
-      type: 'boolean',
-      conflicts: ['include', 'exclude']
-    },
     watch: {
       type: 'boolean',
     }
@@ -34,8 +29,4 @@ const mode = production ? 'production' : 'development';
 
 const cwd = join(fileURLToPath(import.meta.url), '..', '..');
 
-if (!demo) {
-  await pfeBuild({ cwd, entryPointFilesExcludes, include, mode, outdir, watch, workspace });
-} else {
-  await buildDemo({ cwd, watch });
-}
+await pfeBuild({ cwd, entryPointFilesExcludes, include, mode, outdir, watch, workspace });

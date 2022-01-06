@@ -26,6 +26,8 @@ const isValidGradeScore = (x: unknown): x is 'A'|'B'|'C'|'D'|'E'|'F' =>
 
 /**
  * Health index shows a health grade in either a default, mini, or large variation.
+ *
+ * @summary Shows a health grade
  */
 @customElement('pfe-health-index') @pfelement()
 export class PfeHealthIndex extends LitElement {

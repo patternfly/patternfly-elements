@@ -116,8 +116,6 @@ core/pfe-core/demo/*
 
 # Documentation
 /_site
-/docs/core/**/*
-/docs/components/*/
 /docs/demo.js
 /docs/demo.js.map
 /docs/bundle.js

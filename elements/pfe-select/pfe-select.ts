@@ -65,6 +65,17 @@ export class PfeSelect extends LitElement {
   @observed
   @property({ attribute: false }) options?: PfeOption[]|null;
 
+  /** The selected value */
+  get value() {
+    return this._input?.value ?? '';
+  }
+
+  set value(value: string) {
+    if (this._input) {
+      this._input.value = value;
+    }
+  }
+
   /**
    * @deprecated Use `options`
    */
@@ -92,7 +103,9 @@ export class PfeSelect extends LitElement {
   }
 
   render() {
-    return html`<slot></slot>`;
+    return html`
+      <slot></slot>
+    `;
   }
 
   protected _optionsChanged(_: null, options: PfeOption[]|null) {

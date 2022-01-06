@@ -95,7 +95,7 @@ export class PfeButton extends LitElement {
 
   render() {
     return html`
-      <span part="container" @slotchange="${this.onSlotChange}">
+      <span id="container" part="container" @slotchange="${this.onSlotChange}">
         <slot></slot>
       </span>
     `;

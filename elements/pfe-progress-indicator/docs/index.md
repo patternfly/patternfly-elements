@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Progress indicator
-description: Indicates that the user is waiting on a process
-package: pfe-progress-indicator
-packages:
-  - pfe-progress-indicator
-tags:
-  - component
----
-
 <style>
 .overview-demo pfe-progress-indicator {
   margin-right: 8px;

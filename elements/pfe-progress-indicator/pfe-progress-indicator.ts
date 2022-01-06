@@ -15,6 +15,8 @@ export type Size = (
 /**
  * Progress indicator indicates that the user is waiting on a process: page load, HTTP request, image loading, etc.
  *
+ * @summary Indicates that the user is waiting on a process
+ *
  * @slot - The provided element should contain a fallback loading message if JavaScript should fail for any reason. When the element is connected, the loading message is visually hidden, and replaced by an animated "spinner".
  *       ```html
  *       <!--The web component that upgrades to a "loader"-->

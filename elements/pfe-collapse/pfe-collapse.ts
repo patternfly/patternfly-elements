@@ -14,6 +14,8 @@ import style from './pfe-collapse.scss';
 /**
  * Collapse is used to hide and show content.
  *
+ * @summary Hide and show content
+ *
  * @slot - Place the `pfe-collapse-toggle` and `pfe-collapse-panel` elements here.
  */
 @customElement('pfe-collapse') @pfelement()

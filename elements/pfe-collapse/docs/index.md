@@ -1,15 +1,3 @@
----
-layout: layout-basic.njk
-title: Collapse
-description: Hide and show content
-package: pfe-collapse
-packages:
-  - pfe-collapse
-  - pfe-cta
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-collapse>
     <pfe-collapse-toggle>

@@ -1,16 +1,3 @@
----
-layout: layout-basic.njk
-title: Modal
-description: Displays information or helps a user focus on a task
-package: pfe-modal
-packages:
-  - pfe-modal
-  - pfe-cta
-  - pfe-button
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-modal>
     <pfe-button slot="trigger">

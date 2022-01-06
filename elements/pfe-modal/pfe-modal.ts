@@ -31,6 +31,8 @@ export class ModalOpenEvent extends ComposedEvent {
  * Modals display information in a window or help a user focus on a task without navigating them away from the page.
  * A user can’t perform other actions until the modal is dismissed.
  *
+ * @summary Displays information or helps a user focus on a task
+ *
  * @fires {ModalOpenEvent} open - Fires when a user clicks on the trigger or manually opens a modal.
  * @fires {ModalCloseEvent} close - Fires when either a user clicks on either the close button or the overlay or manually closes a modal.
  *

@@ -43,6 +43,8 @@ export class CtaSelectEvent extends ComposedEvent {
 /**
  * Call to action stands out from regular hypertext links, and is used for linking users to webpages.
  *
+ * @summary Directs a user to other pages or displays extra content
+ * 
  * @slot - We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe-cta` element. Less preferred but allowed for specific use-cases include: `<button>` (note however that the `button` tag is not supported for the default CTA styles).
  *
  * @fires {CtaSelectEvent} select - This event is fired when a link is clicked and serves as a way to capture click events if necessary.

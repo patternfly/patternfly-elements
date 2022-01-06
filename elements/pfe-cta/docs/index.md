@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Call to action
-description: Directs a user to other pages or displays extra content
-package: pfe-cta
-packages:
-  - pfe-cta
-tags:
-  - component
----
-
 <style>
   .cta-overview pfe-cta {
     margin-right: 16px;

@@ -28,7 +28,8 @@
   ),
 ));
 
-@include pfe-contexts;
+// TODO: context support
+// @include pfe-contexts;
 
 :host {
   display: inline-block;

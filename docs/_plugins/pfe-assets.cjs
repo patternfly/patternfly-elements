@@ -75,7 +75,7 @@ module.exports = {
   configFunction(eleventyConfig) {
     eleventyConfig.addPassthroughCopy('docs/bundle.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');
-    eleventyConfig.addPassthroughCopy(`docs/core/**/*.{${WATCH_EXTENSIONS}}`);
+    eleventyConfig.addPassthroughCopy(`docs/{core,components}/**/*.{${WATCH_EXTENSIONS}}`);
     eleventyConfig.addPassthroughCopy('brand');
     eleventyConfig.addPassthroughCopy('docs/main.mjs');
 

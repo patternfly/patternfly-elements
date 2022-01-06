@@ -21,6 +21,8 @@ export type PageStatus = (
 /**
  * Page Status creates a flag/banner on the right side of the page denoting the status of the page or document the author is viewing.
  *
+ * @summary Creates a flag/banner on the right side of the page
+ *
  * @slot - Content in the default slot will be used as the text for the banner on the right side of the page.
  *
  * @cssprop --pfe-theme--color--feedback--default - Color for default state

@@ -22,7 +22,7 @@
   </pfe-button>
 </pfe-band>
 
-<pfe-band size="small" class="contextual">
+<pfe-band size="small" color="lightest">
   <h2 slot="header">Large size</h2>
   <pfe-button size="large">
     <button>Primary</button>
@@ -44,34 +44,47 @@
   </pfe-button>
 </pfe-band>
 
-<pfe-band size="small" class="contextual">
-  <h2 slot="header">Button types (slotted)</h2>
-  <pfe-button>
-    <button type="submit">Primary [Submit]</button>
-  </pfe-button>
-  <pfe-button variant="secondary">
-    <button type="reset">Secondary [Reset]</button>
-  </pfe-button>
-  <pfe-button variant="tertiary">
-    <button type="button">Tertiary [Button]</button>
-  </pfe-button>
-  <pfe-button variant="danger">
-    <button type="menu">Tertiary [Menu]</button>
-  </pfe-button>
-</pfe-band>
+<pfe-band id="light-dom-styles" size="small" color="lightest">
+  <h2 slot="header">Style Encapsulation</h2>
 
-<pfe-band size="small" class="contextual">
-  <h2 slot="header">Button types (by attribute)</h2>
-  <pfe-button type="submit">
-    <button>Primary [Submit]</button>
-  </pfe-button>
-  <pfe-button type="reset" variant="secondary">
-    <button>Secondary [Reset]</button>
-  </pfe-button>
-  <pfe-button type="button" variant="tertiary">
-    <button>Tertiary [Button]</button>
-  </pfe-button>
-  <pfe-button type="menu" variant="danger">
-    <button>Tertiary [Menu]</button>
-  </pfe-button>
+  <p>Light DOM styles targetting the slotted <code>&lt;button&gt;</code> will not affect it.</p>
+
+  <div>
+    <pfe-button>
+      <button>Primary</button>
+    </pfe-button>
+    <pfe-button variant="secondary">
+      <button>Secondary</button>
+    </pfe-button>
+    <pfe-button variant="tertiary">
+      <button>Tertiary</button>
+    </pfe-button>
+    <pfe-button variant="danger">
+      <button>Danger</button>
+    </pfe-button>
+    <pfe-button variant="control">
+      <button>Control</button>
+    </pfe-button>
+    <pfe-button disabled>
+      <button>Disabled</button>
+    </pfe-button>
+  </div>
+
+  <p>Users wishing to customize the button can still do so by setting CSS Custom Properties.</p>
+
+  <form>
+    <label for="bg">Background Color</label>
+    <pfe-select id="bg">
+      <select>
+        <option disabled>Please select a colour</option>
+        <option value="red">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+      </select>
+    </pfe-select>
+    <pfe-button style="--pfe-button--BackgroundColor: red">
+      <button>Custom Styles</button>
+    </pfe-button>
+  </form>
+
 </pfe-band>

@@ -28,6 +28,8 @@
   ),
 ));
 
+@include pfe-contexts;
+
 :host {
   display: inline-block;
 }
@@ -36,124 +38,140 @@
   display: none;
 }
 
-::slotted(button) {
-  background-color: pfe-local(BackgroundColor);
-  color: pfe-local(Color);
-  font-size: pfe-local(FontSize);
-  font-family: pfe-var(font-family, $fallback: inherit);
-  font-weight: pfe-local(FontWeight);
-  padding: pfe-local(Padding);
-  cursor: pointer;
-  border-radius: pfe-local(BorderRadius);
-  border: pfe-local(Border);
-  position: relative;
-  line-height: pfe-local(LineHeight);
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    content: "";
-    border: pfe-local(Border, $region: after);
-    border-radius: pfe-local(BorderRadius);
-  }
-}
-
-:host([variant="danger"]) {
+#container {
   ::slotted(button) {
-    background-color: pfe-local(BackgroundColor, pfe-var(feedback--critical--lighter));
+    all: unset !important;
+    background-color: pfe-local(BackgroundColor) !important;
+    color: pfe-local(Color) !important;
+    font-size: pfe-local(FontSize) !important;
+    font-family: pfe-var(font-family, $fallback: inherit) !important;
+    font-weight: pfe-local(FontWeight) !important;
+    padding: pfe-local(Padding) !important;
+    cursor: pointer !important;
+    border-radius: pfe-local(BorderRadius) !important;
+    border: pfe-local(Border) !important;
+    position: relative !important;
+    line-height: pfe-local(LineHeight) !important;
+    &::after {
+      position: absolute !important;
+      inset: 0 0 0 0 !important;
+      content: "" !important;
+      border: pfe-local(Border, $region: after) !important;
+      border-radius: pfe-local(BorderRadius) !important;
+    }
   }
 
   ::slotted(button:hover),
   ::slotted(button:focus) {
-    --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover, pfe-var(feedback--critical))};
+    --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover)};
+    --pfe-button__after--Border: #{pfe-local(Border--hover, $region: after)};
+  }
+}
+
+:host([variant="danger"]) {
+  #container {
+    ::slotted(button) {
+      background-color: pfe-local(BackgroundColor, pfe-var(feedback--critical--lighter)) !important;
+    }
+
+    ::slotted(button:hover),
+    ::slotted(button:focus) {
+      --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover, pfe-var(feedback--critical))};
+    }
   }
 }
 
 :host([variant="secondary"]),
 :host([variant="tertiary"]),
 :host([variant="control"]) {
-  ::slotted(button) {
-    background-color: pfe-local(BackgroundColor, transparent);
-  }
+  #container {
+    ::slotted(button) {
+      background-color: pfe-local(BackgroundColor, transparent) !important;
+    }
 
-  ::slotted(button:hover),
-  ::slotted(button:focus) {
-    --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover, transparent)};
-    --pfe-button__after--Border: #{pfe-local(Border--hover, $region: after, $fallback: pfe-var(ui--border-width--md) pfe-var(ui--border-style) pfe-local(BorderColor, $region: after))};
+    ::slotted(button:hover),
+    ::slotted(button:focus) {
+      --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover, transparent)};
+      --pfe-button__after--Border: #{pfe-local(Border--hover, $region: after, $fallback: pfe-var(ui--border-width--md) pfe-var(ui--border-style) pfe-local(BorderColor, $region: after))};
+    }
   }
 }
 
 :host([variant="secondary"]) {
-  ::slotted(button) {
-    color: pfe-local(Color, pfe-var(ui-accent));
-    &::after {
-      border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(ui-accent));
+  #container {
+    ::slotted(button) {
+      color: pfe-local(Color, pfe-var(ui-accent)) !important;
+      &::after {
+        border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(ui-accent)) !important;
+      }
     }
   }
 }
 
 :host([variant="tertiary"]) {
-  ::slotted(button) {
-    color: pfe-local(Color, pfe-var(text));
-    &::after {
-      border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(text));
+  #container {
+    ::slotted(button) {
+      color: pfe-local(Color, pfe-var(text)) !important;
+      &::after {
+        border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(text)) !important;
+      }
     }
   }
 }
 
 :host([variant="control"]) {
-  ::slotted(button) {
-    color: pfe-local(Color, pfe-var(text));
-    border-radius: pfe-local(BorderRadius, 0);
-    &::after {
-      border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(ui--border--lightest));
-      border-bottom-color: pfe-var(ui--border);
+  #container {
+    ::slotted(button) {
+      color: pfe-local(Color, pfe-var(text)) !important;
+      border-radius: pfe-local(BorderRadius, 0) !important;
+      &::after {
+        border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(ui--border--lightest)) !important;
+        border-bottom-color: pfe-var(ui--border) !important;
+      }
     }
-  }
 
-  ::slotted(button:hover),
-  ::slotted(button:focus) {
-    --pfe-button__after--BorderColor: #{pfe-local(BorderColor--hover, pfe-var(ui--border--lightest))};
-    &::after {
-      border-bottom-width: pfe-var(ui--border-width--md);
-      border-bottom-color: pfe-var(ui-accent);
+    ::slotted(button:hover),
+    ::slotted(button:focus) {
+      --pfe-button__after--BorderColor: #{pfe-local(BorderColor--hover, pfe-var(ui--border--lightest))};
+      &::after {
+        border-bottom-width: pfe-var(ui--border-width--md) !important;
+        border-bottom-color: pfe-var(ui-accent) !important;
+      }
     }
   }
 }
 
 :host([variant="control"][disabled]) {
-  ::slotted(button) {
-    background-color: pfe-local(BackgroundColor, pfe-var(surface--lighter));
+  #container {
+    ::slotted(button) {
+      background-color: pfe-local(BackgroundColor, pfe-var(surface--lighter)) !important;
+    }
   }
 }
 
 :host([size="large"]) {
-  ::slotted(button) {
-    --pfe-button--FontWeight: #{pfe-local(FontWeight--large, $fallback: pfe-var(font-weight--semi-bold))};
-    --pfe-button--Padding: #{pfe-local(Padding--large, $fallback: 12px 24px)};
+  #container {
+    ::slotted(button) {
+      --pfe-button--FontWeight: #{pfe-local(FontWeight--large, $fallback: pfe-var(font-weight--semi-bold))};
+      --pfe-button--Padding: #{pfe-local(Padding--large, $fallback: 12px 24px)};
+    }
   }
 }
 
 :host([disabled]) {
-  ::slotted(button) {
-    background-color: pfe-local(BackgroundColor, pfe-var(ui-disabled));
-    color: pfe-local(Color, pfe-var(ui-disabled--text));
-    pointer-events: none;
-    &::after {
-      border: pfe-local(Border, $region: after, $fallback: 0);
+  #container {
+    ::slotted(button) {
+      background-color: pfe-local(BackgroundColor, pfe-var(ui-disabled)) !important;
+      color: pfe-local(Color, pfe-var(ui-disabled--text)) !important;
+      pointer-events: none !important;
+      &::after {
+        border: pfe-local(Border, $region: after, $fallback: 0) !important;
+      }
+    }
+    ::slotted(button:hover),
+    ::slotted(button:focus) {
+      --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover, pfe-var(ui-disabled))};
+      --pfe-button__after--Border: #{pfe-local(Border--hover, $region: after, $fallback: 0)};
     }
   }
-  ::slotted(button:hover),
-  ::slotted(button:focus) {
-    --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover, pfe-var(ui-disabled))};
-    --pfe-button__after--Border: #{pfe-local(Border--hover, $region: after, $fallback: 0)};
-  }
-}
-
-::slotted(button:hover),
-::slotted(button:focus) {
-  --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover)};
-  --pfe-button__after--Border: #{pfe-local(Border--hover, $region: after)};
 }

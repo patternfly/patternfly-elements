@@ -45,6 +45,8 @@ export class DropdownChangeEvent extends ComposedEvent {
 /**
  * Dropdown provides a dropdown menu of links and/or actions.
  *
+ * @summary Provides a dropdown menu of links and/or actions
+ *
  * @slot - The default slot should contain at least one link or action `pfe-dropdown-item`.
  * @fires {DropdownChangeEvent} change When an item is selected, this event is fired. It includes the inner text of the item that was selected.
  * @fires pfe-dropdown:change {@deprecated Use `change`}

@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Dropdown
-description: Provides a dropdown menu of links and/or actions
-package: pfe-dropdown
-packages:
-  - pfe-dropdown
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-dropdown label="Dropdown">
     <pfe-dropdown-item item-type="link">

@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Autocomplete
-description: Provides options in a dropdown list as user types in an input box
-package: pfe-autocomplete
-packages:
-  - pfe-autocomplete
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-autocomplete id="static" debounce="300">
     <input placeholder="Enter your search term"/>

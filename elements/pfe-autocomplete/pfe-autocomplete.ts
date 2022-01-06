@@ -55,6 +55,8 @@ let throttle = false;
  * Autocomplete provides options in a dropdown list as user types in an input box by
  * showing result from an API call or a static list.
  *
+ * @summary Provides options in a dropdown list as user types in an input box
+ *
  * @fires {AutocompleteShowEvent} show - When the search dropdown is shown
  * @fires {Event} pfe-autocomplete:options-shown - When the search dropdown is shown {@deprecated Use `show`}
  *

@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Badge
-description: Provides a way to have small numerical descriptors for UI elements
-package: pfe-badge
-packages:
-  - pfe-badge
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-badge number="17">17</pfe-badge>
   <pfe-badge number="900" threshold="100">900</pfe-badge>

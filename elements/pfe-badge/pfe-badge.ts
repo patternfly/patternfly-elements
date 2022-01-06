@@ -7,6 +7,8 @@ import style from './pfe-badge.scss';
 
 /**
  * The badge component provides a way to have small numerical descriptors for UI elements.
+ *
+ * @summary Provides a way to have small numerical descriptors for UI elements
  */
 @customElement('pfe-badge') @pfelement()
 export class PfeBadge extends LitElement {

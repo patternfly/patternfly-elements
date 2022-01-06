@@ -1,16 +1,3 @@
----
-layout: layout-basic.njk
-title: Accordion
-description: Toggle the visibility of sections of content
-package: pfe-accordion
-packages:
-  - pfe-accordion
-  - pfe-cta
-  - pfe-badge
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-accordion>
     <pfe-accordion-header>

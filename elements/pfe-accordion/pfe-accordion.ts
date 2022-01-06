@@ -43,9 +43,10 @@ export class AccordionCollapseEvent extends ComposedEvent {
 }
 
 /**
- * Accordion
  * Accordions toggle the visibility of sections of content.
  * They feature panels that consist of a section text label and a caret icon that collapses or expands to reveal more information.
+ *
+ * @summary Toggle the visibility of sections of content
  *
  * @fires {AccordionExpandEvent} expand - when a panel expands
  * @fires {AccordionCollapseEvent} collapse - when a panel collapses

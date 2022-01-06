@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Button
-description: Allows users to perform an action when triggered
-package: pfe-button
-packages:
-  - pfe-button
-tags:
-  - component
----
-
 <style>
 .overview-buttons pfe-button {
   margin-right: 16px;

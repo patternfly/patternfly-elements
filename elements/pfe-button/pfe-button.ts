@@ -10,6 +10,8 @@ import styles from './pfe-button.scss';
 /**
  * Buttons allow users to perform an action when triggered. They feature a text label, a background or a border, and icons.
  *
+ * @summary Allows users to perform an action when triggered
+ * 
  * @fires {Event} pfe-button:click {@deprecated use native click event instead}
  *
  * @cssprop {<color>} --pfe-button--BackgroundColor

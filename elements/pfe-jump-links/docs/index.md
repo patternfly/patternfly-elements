@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Jump links
-description: Moves a user to content when a link is selected
-package: pfe-jump-links
-packages:
-  - pfe-jump-links
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <div class="pfe-l-grid pfe-m-gutters">
     <section class="pfe-l-grid__item pfe-m-3-col">

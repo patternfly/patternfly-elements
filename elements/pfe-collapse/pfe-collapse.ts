@@ -29,7 +29,7 @@ export class PfeCollapse extends LitElement {
    * `pfe-collapse-panel`.
    *
    * ```html
-   * <pfe-collasible animation="false">
+   * <pfe-collapse animation="false">
    *   ...
    * </pfe-collapse>
    * ```

@@ -95,6 +95,7 @@
                header="Slots on `pfe-collapse-panel`" %}{% endrenderSlots %}
 
 {% renderAttributes for=package %}
+  <!-- FIXME: this isn't working either -->
   {% renderAttributes for="pfe-collapse-panel", level=3, header="Attributes on `pfe-collapse-panel`" %}{% endrenderAttributes %}
 {% endrenderAttributes %}
 

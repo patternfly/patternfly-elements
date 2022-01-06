@@ -94,15 +94,15 @@ Animation of the panel defaults to true. Adding `animation` to the
 `pfe-collapse-panel`.
 
 ```
-<pfe-collasible animation="false">
+<pfe-collapse animation="false">
   ...
 </pfe-collapse>
 ```
 
-`animation` can also be added to a `pfe-collasible-panel`.
+`animation` can also be added to a `pfe-collapse-panel`.
 
 ```
-<pfe-collasible-panel animation="false">
+<pfe-collapse-panel animation="false">
   ...
 </pfe-collapse-panel>
 ```
@@ -111,7 +111,7 @@ Animation of the panel defaults to true. Adding `animation` to the
 
 ### pfe-collapse:change
 
-Fired when `pfe-collasible` is either expanded or collapsed.
+Fired when `pfe-collapse` is either expanded or collapsed.
 
 ```
 detail: {

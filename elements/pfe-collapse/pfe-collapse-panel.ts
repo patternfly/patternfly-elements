@@ -50,10 +50,10 @@ export class PfeCollapsePanel extends LitElement {
     expanded = false;
 
   /**
-   * `animation` can also be added to a `pfe-collasible-panel`.
+   * `animation` can also be added to a `pfe-collapse-panel`.
    *
    * ```html
-   * <pfe-collasible-panel animation="false">
+   * <pfe-collapse-panel animation="false">
    *   ...
    * </pfe-collapse-panel>
    * ```

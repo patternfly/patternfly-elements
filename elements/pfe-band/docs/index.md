@@ -1,16 +1,3 @@
----
-layout: layout-basic.njk
-title: Band
-description: Provides a set of slots in which to render banded content
-package: pfe-band
-packages:
-  - pfe-band
-  - pfe-card
-  - pfe-cta
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <div class="faux-band">
     <pfe-band>

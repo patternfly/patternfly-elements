@@ -10,6 +10,8 @@ import style from './pfe-band.scss';
 /**
  * Band is a container component that provides a set of slots in which to render banded content.
  *
+ * @summary Provides a set of slots in which to render banded content
+ *
  * @slot header
  *       This slot renders at the top of the container and generally contains the title, headline, and/or subheadline content.
  *       Other possible candidates include a set of social sharing links or tags that describe the content below.

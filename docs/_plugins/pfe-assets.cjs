@@ -57,6 +57,8 @@ const WATCH_EXTENSIONS = [
   'cjs',
   'css',
   'html',
+  'jpeg',
+  'jpg',
   'js',
   'json',
   'map',

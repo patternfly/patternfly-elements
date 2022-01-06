@@ -84,9 +84,9 @@ module.exports = {
     eleventyConfig.addTransform('demo-paths', function(content) {
       // eslint-disable-next-line no-invalid-this
       if (this.outputPath.match(/(components|core)\/.*\/demo\/index\.html$/)) {
-        return content.replace(/href="\/(?<workspace>elements|core)\/pfe-(?<unprefixed>.*)\/(?<filename>.*).css"/g, (...args) => {
-          const [{ workspace, unprefixed, filename }] = args.reverse();
-          return `href="/${workspace === 'elements' ? 'components' : workspace}/${unprefixed}/${filename}.css"`;
+        return content.replace(/(?<attr>href|src)="\/(?<workspace>elements|core)\/pfe-(?<unprefixed>.*)\/(?<filename>.*).css"/g, (...args) => {
+          const [{ attr, workspace, unprefixed, filename }] = args.reverse();
+          return `${attr}="/${workspace === 'elements' ? 'components' : workspace}/${unprefixed}/${filename}.css"`;
         });
       } else {
         return content;

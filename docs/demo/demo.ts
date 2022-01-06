@@ -18,6 +18,14 @@ const contextToColor = new Map(Object.entries({
   light: 'lightest',
 }));
 
+function titleCase(str: string): string {
+  return str.toLowerCase().replace(/(?:^|[\s-/])\w/g, x => x.toUpperCase()).replace(/-/g, ' ');
+}
+
+function pretty(tagName: string): string {
+  return titleCase(tagName.replace('pfe-', ''))
+}
+
 /**
  * Load demo scripts and scroll to element with id in the URL hash.
  * @this {HTMLElement}
@@ -48,7 +56,7 @@ async function go(location = window.location) {
     include.src = `/${base}/${element}/demo/${element}.html`;
     viewer.src = `/${base}/${element}/custom-elements.json`;
     viewer.hidden = false;
-    document.title = `${element} | PatternFly Elements`;
+    document.title = `${pretty(element)} | PatternFly Elements`;
     document.querySelector('h1').textContent = `<${element}>`;
     github.href = `https://github.com/patternfly/patternfly-elements/tree/master/${base}/${element}`;
   } else {
@@ -65,13 +73,9 @@ function onContextChange() {
   }
 }
 
-function titleCase(str: string): string {
-  return str.toLowerCase().replace(/(?:^|[\s-/])\w/g, x => x.toUpperCase()).replace(/-/g, ' ');
-}
-
 const li = (element: string) => html`
   <li class="site-navigation__item">
-    <a class="site-navigation__link" href="/demo/${element}/">${titleCase(element.replace('pfe-', ''))}</a>
+    <a class="site-navigation__link" href="/demo/${element}/">${pretty(element)}</a>
   </li>
 `;
 

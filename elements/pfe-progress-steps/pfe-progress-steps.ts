@@ -9,6 +9,9 @@ import './pfe-progress-steps-item.js';
 
 /**
  * A component that gives the user a visual representation of the current state of their progress through an application (typically a multistep form).
+ *
+ * @summary Guides a user through a task with multiple sequential steps
+ *
  * @cssprop --pfe-progress-steps__item--Width {@default var(--pfe-theme--ui--element--size--lg, 75px)} item
  * @cssprop --pfe-progress-steps__circle--Size {@default var(--pfe-theme--ui--element--size--md, 32px)} circle
  * @cssprop --pfe-progress-steps__progress-bar--Color {@default var(--pfe-theme--color--ui--border--lighter, #d2d2d2)} progress

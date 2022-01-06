@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Progress steps
-description: Guides a user through a task with multiple sequential steps
-package: pfe-progress-steps
-packages:
-  - pfe-progress-steps
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-progress-steps>
     <pfe-progress-steps-item state="active" current>

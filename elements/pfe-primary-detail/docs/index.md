@@ -1,15 +1,3 @@
----
-layout: layout-basic.njk
-title: Primary detail
-description: A primary-detail layout is an interface that shows a list of items and the corresponding details of the selected item.
-package: pfe-primary-detail
-packages:
-  - pfe-primary-detail
-  - pfe-cta
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-primary-detail>
     <h3 slot="nav">Section 1: Infrastructure and Management</h3>

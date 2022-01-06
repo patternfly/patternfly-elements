@@ -46,6 +46,8 @@ export class PrimaryDetailChangeEvent extends ComposedEvent {
  * A primary-detail layout is an interface that shows a list of items and the corresponding details of the selected item. This component is an implementation of one of the "Primary detail simple list in card" from [Patternfly React](https://www.patternfly.org/v4/demos/primary-detail).
  * Reworks title/description content into a vertical-primary-detail like interface.
  *
+ * @summary A primary-detail layout is an interface that shows a list of items and the corresponding details of the selected item.
+ *
  * @slot header - In case content needs to be added at the top of the navigation area; this will not be matched up with `details` content.
  * @slot nav - Added to each heading; builds the navigation that shows the related content.
  * @slot footer - In case content needs to be added at the bottom of the navigation; will not be matched up with `details` content.

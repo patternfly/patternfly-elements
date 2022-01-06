@@ -17,6 +17,25 @@ import style from './pfe-card.scss';
  * @slot - Any content that is not designated for the header or footer slot, will go to this slot.
  * @slot footer
  *       Use this slot for anything that you want to be stuck to the base of the card. This region is bottom-aligned.
+ *
+ * @cssproperty --pfe-band--BackgroundColor
+ *              Though using the `color` attribute is strongly recommended when setting the background color for the band, you can also use completely custom colors by updating the `--pfe-band--BackgroundColor` variable.  If you update this value manually, you should also update the `--theme` context variable to invoke the right theme on it and it's child elements.  Supported themes include: `light`, `dark`, and `saturated`.
+ * @cssproperty --pfe-card--BackgroundPosition
+ *              This is designed for use with the `img-src` attribute to allow you to align your background image.  Default value is `center center`.
+ *              {@default `center center`}
+ * @cssproperty --pfe-card--Border
+ *              This allows the customization of a border around the entire container.
+ *              {@default `center center`}
+ * @cssproperty --pfe-card--Border
+ *              This allows the customization of a border around the entire container.
+ * @cssproperty --pfe-card--BorderRadius
+ *              This allows the customization of a border radius around the entire container.
+ * @cssproperty --pfe-card--BorderWeight
+ *              This allows the customization of a border weight around the entire container.
+ * @cssproperty --pfe-card--BorderStyle
+ *              This allows the customization of a border style around the entire container.
+ * @cssproperty --pfe-card--BorderColor
+ *              This allows the customization of a border color around the entire container.
  */
 @customElement('pfe-card') @pfelement()
 export class PfeCard extends LitElement {

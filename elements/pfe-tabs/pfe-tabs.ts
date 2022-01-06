@@ -19,6 +19,8 @@ import style from './pfe-tabs.scss';
 /**
  * Tabs are used to organize and navigate between sections of content. They feature a horizontal or a vertical list of section text labels with a content panel below or to the right of the component.
  *
+ * @summary Organizes content in a contained view on the same page
+ * 
  * @attr {'light'|'dark'|'saturated'} context - Changes the context of the call-to-action to one of 3 possible options:
  *       This will override any context being passed from a parent component and will add a style attribute setting the `--context` variable.
  *       {@default 'light'}

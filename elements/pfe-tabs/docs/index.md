@@ -1,15 +1,3 @@
----
-layout: layout-basic.njk
-title: Tabs
-description: Organizes content in a contained view on the same page
-package: pfe-tabs
-packages:
-  - pfe-tabs
-  - pfe-cta
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   ### Horizontal tabs
   <pfe-tabs>

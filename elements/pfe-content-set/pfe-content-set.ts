@@ -37,6 +37,8 @@ TABS_TEMPLATE.innerHTML = `
  * If the width of pfe-content-set is less than or equal to 700px, the component will
  * render the content within the `<pfe-accordion>` component. If it is larger than this
  * value, the content will be rendered within the `<pfe-tabs>` component.
+ *
+ * @summary Display content as tabs or an accordion based on screen size
  */
 @customElement('pfe-content-set') @pfelement()
 export class PfeContentSet extends LitElement {

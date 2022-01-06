@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Content set
-description: Display content as tabs or an accordion based on screen size
-package: pfe-content-set
-packages:
-  - pfe-content-set
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   ### Large screens
   On large screens the content will display as tabs.

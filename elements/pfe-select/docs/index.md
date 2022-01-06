@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Select
-description: Provides a way to create a stylized list of options for a form
-package: pfe-select
-packages:
-  - pfe-select
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-select>
     <select>

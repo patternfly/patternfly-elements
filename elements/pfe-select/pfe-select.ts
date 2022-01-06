@@ -29,6 +29,8 @@ export interface PfeOption {
 /**
  * Select provides a way to create a stylized list of options for a form.
  *
+ * @summary Organizes content in a contained view on the same page
+ *
  * @slot - Place a `<select>` element with or without `<option>`s' here.
  *
  * @fires {SelectChangeEvent} select - When an item is selected.

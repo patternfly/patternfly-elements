@@ -47,7 +47,7 @@ export class PfeCard extends LitElement {
    * variable which is set to `center center` by default.
    */
   @observed
-  @property({ attribute: 'img-src', reflect: true }) imgSrc = '';
+  @property({ attribute: 'img-src', reflect: true }) imgSrc?: string;
 
   /**
    * Your theme will influence these colors so check there first if you are seeing inconsistencies.
@@ -62,8 +62,7 @@ export class PfeCard extends LitElement {
    * | accent     | <span class="color-preview" style="--bg:#ee0000"></span> #ee0000 |
    * | complement | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
    */
-  @property({ reflect: true })
-    color: 'lightest'|'lighter'|'default'|'darker'|'darkest'|'accent'|'complement' = 'default';
+  @property({ reflect: true }) color: 'lightest'|'lighter'|'default'|'darker'|'darkest'|'accent'|'complement' = 'default';
 
   /** Optionally adjusts the padding on the container. Accepts: `small`. */
   @property({ reflect: true }) size?: 'small';
@@ -106,9 +105,11 @@ export class PfeCard extends LitElement {
   }
 
   /** Update the background image */
-  protected _imgSrcChanged(_oldValue: string, newValue: string) {
-    // Set the image as the background image
-    this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
+  protected _imgSrcChanged(_oldValue: unknown, newValue: unknown) {
+    if (typeof this.imgSrc === 'string') {
+      // Set the image as the background image
+      this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
+    }
   }
 }
 

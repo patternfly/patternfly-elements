@@ -1,15 +1,3 @@
----
-layout: layout-basic.njk
-title: Toast
-description: An alert hidden on page load and slides in/out of the view
-package: pfe-toast
-packages:
-  - pfe-toast
-  - pfe-button
-tags:
-  - component
----
-
 <style>
   pfe-toast#overview-toast {
     z-index: 999;

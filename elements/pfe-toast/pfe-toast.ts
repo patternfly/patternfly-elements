@@ -23,6 +23,8 @@ export class ToastCloseEvent extends ComposedEvent {
 /**
  * Toast is a self-contained alert that is hidden on page load and slides in/out of the view when programmatically opened/closed.
  *
+ * @summary An alert hidden on page load and slides in/out of the view
+ *
  * @slot - The default slot can contain any type of content.
  *
  * @fires open - Fires when a toast is manually openned.

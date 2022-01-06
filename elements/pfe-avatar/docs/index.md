@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Avatar
-description: For displaying a user's avatar image
-package: pfe-avatar
-packages:
-  - pfe-avatar
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-avatar name="Libbie Koscinski" shape="rounded" pattern="squares"></pfe-avatar>
 {% endrenderOverview %}

@@ -29,6 +29,8 @@ function register(klass: typeof PfeAvatar) {
  * A specific name will always generate the same pattern, so users' avatars will stay static
  * without the need for storing their generated image.
  *
+ * @summary For displaying a user's avatar image
+ *
  * @fires {Event} pfe-avatar:connected - When the element connects to the DOM {@deprecated Use `await pfeAvatar.updateComplete` instead}
  *
  * @csspart {HTMLCanvasElement} canvas - The canvas element for when an image is not provided

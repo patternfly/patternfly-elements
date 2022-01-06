@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Datetime
-description: Display dates and times in a consistent format
-package: pfe-datetime
-packages:
-  - pfe-datetime
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   Datetime enables developers to get a lot of the features from the [Intl Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) just by using attributes to set the format of the date and time they'd like to display.
 

@@ -48,6 +48,8 @@ const INTL_CONFIGS = Object.entries({
 }) as [keyof Required<Intl.DateTimeFormatOptions>, object][];
 
 /**
+ * @summary Display dates and times in a consistent format
+ * 
  * @attr {'narrow'|'short'|'long'} weekday
  * @attr {'numeric'|'2-digit'|'narrow'|'short'|'long'} month
  * @attr {'numeric'|'2-digit'} day

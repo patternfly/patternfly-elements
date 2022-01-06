@@ -88,6 +88,17 @@ function getDescription(tagName, manifest) {
  * @this {EleventyContext}
  * @param  {string} tagName custom element tagName
  * @param  {import('custom-elements-manifest/schema').Package} manifest
+ * @return {string}
+ */
+function getSummary(tagName, manifest) {
+  const decl = getDeclaration.call(this, tagName, manifest);
+  return decl?.summary ?? '';
+}
+
+/**
+ * @this {EleventyContext}
+ * @param  {string} tagName custom element tagName
+ * @param  {import('custom-elements-manifest/schema').Package} manifest
  * @return {import('custom-elements-manifest/schema').Event}
  */
 function getEvents(tagName, manifest) {
@@ -118,6 +129,18 @@ function getMethods(tagName, manifest) {
     .filter(all(isMethod, not(isStatic), isPublic));
 }
 
+/**
+ * @this {EleventyContext}
+ * @param  {import('custom-elements-manifest/schema').Package} manifest
+ * @return {string[]}
+ */
+function getTagNames(manifest) {
+  return (manifest.modules ?? [])
+    .flatMap(m => (m.exports ?? [])
+      .filter(x => x.kind === 'custom-element-definition')
+      .map(x => x.name))
+}
+
 module.exports = {
   getAttributes,
   getCssCustomProperties,
@@ -128,4 +151,6 @@ module.exports = {
   getMethods,
   getProperties,
   getSlots,
+  getSummary,
+  getTagNames,
 };

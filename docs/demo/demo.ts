@@ -18,12 +18,12 @@ const contextToColor = new Map(Object.entries({
   light: 'lightest',
 }));
 
-function titleCase(str: string): string {
-  return str.toLowerCase().replace(/(?:^|[\s-/])\w/g, x => x.toUpperCase()).replace(/-/g, ' ');
-}
-
 function pretty(tagName: string): string {
-  return titleCase(tagName.replace('pfe-', ''))
+  return tagName
+    .replace('pfe-','' )
+    .toLowerCase()
+    .replace(/(?:^|[\s-/])\w/g, x => x.toUpperCase())
+    .replace(/-/g, ' ');
 }
 
 /**

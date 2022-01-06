@@ -13,12 +13,8 @@ const {
   getEvents,
   getMethods,
   getSlots,
+  getTagNames,
 } = require('./filters/cem.cjs');
-
-const getComponentName = path => {
-  const [, , component] = path.match(/(elements|core)\/pfe-([-\w]+)\//);
-  return component;
-};
 
 module.exports = {
   configFunction(eleventyConfig, options) {
@@ -29,9 +25,14 @@ module.exports = {
      */
     eleventyConfig.addGlobalData('manifests', async () =>
       glob.sync('{elements,core}/*/custom-elements.json')
-        .reduce(async (manifests, path) => Object.assign(await manifests, {
-          [getComponentName(path)]: JSON.parse(await readFile(path, 'utf-8').catch(() => '{}')),
-        }), Promise.resolve({})));
+        .reduce(async (manifests, path) => {
+          const manifest = JSON.parse(await readFile(path, 'utf-8').catch(() => '{}'));
+          const acc = await manifests;
+          for (const tagName of getTagNames(manifest)) {
+            Object.assign(acc, { [tagName]: manifest })
+          }
+          return acc;
+        }, Promise.resolve({})));
 
     // add `renderTemplate` filter
     eleventyConfig.addPlugin(EleventyRenderPlugin);
@@ -39,11 +40,11 @@ module.exports = {
     options = {
       renderTemplate: eleventyConfig.getFilter('renderTemplate'),
 
-      async getManifest(slug) {
+      async getManifest(pkg) {
         const manifests = await eleventyConfig.globalData.manifests();
-        const manifest = manifests[slug];
+        const manifest = manifests[pkg];
         if (!manifest) {
-          throw new Error(`Could not find manifest for package pfe-${slug}`);
+          throw new Error(`Could not find manifest for package ${pkg}`);
         } else {
           return manifest;
         }
@@ -79,7 +80,7 @@ module.exports = {
         const { fromMarkdown } = await import('mdast-util-from-markdown');
 
         const description =
-          getDescription(kwargs?.for, await options.getManifest(this.page.fileSlug));
+          getDescription(kwargs?.for, await options.getManifest(kwargs?.for));
 
         return toMarkdown(M.root([
           M.html(dedent`
@@ -113,7 +114,7 @@ module.exports = {
         const { toMarkdown } = await import('mdast-util-to-markdown');
         const { fromMarkdown } = await import('mdast-util-from-markdown');
 
-        const attrs = getAttributes(kwargs?.for, await options.getManifest(this.page.fileSlug));
+        const attrs = getAttributes(kwargs?.for, await options.getManifest(kwargs?.for));
 
         kwargs.header ??= 'Attributes';
         kwargs.level ??= 2;
@@ -163,7 +164,7 @@ module.exports = {
         const { fromMarkdown } = await import('mdast-util-from-markdown');
 
         const properties =
-          getProperties(kwargs?.for, await options.getManifest(this.page.fileSlug));
+          getProperties(kwargs?.for, await options.getManifest(kwargs?.for));
 
         kwargs.header ??= 'DOM Properties';
         kwargs.level ??= 2;
@@ -211,7 +212,7 @@ module.exports = {
         const { gfmTableToMarkdown } = await import('mdast-util-gfm-table');
 
         const props =
-          getCssCustomProperties(kwargs?.for, await options.getManifest(this.page.fileSlug));
+          getCssCustomProperties(kwargs?.for, await options.getManifest(kwargs?.for));
 
         kwargs.header ??= 'CSS Custom Properties';
         kwargs.level ??= 2;
@@ -258,7 +259,7 @@ module.exports = {
         const { toMarkdown } = await import('mdast-util-to-markdown');
         const { fromMarkdown } = await import('mdast-util-from-markdown');
 
-        const parts = getCssParts(kwargs?.for, await options.getManifest(this.page.fileSlug));
+        const parts = getCssParts(kwargs?.for, await options.getManifest(kwargs?.for));
 
         kwargs.header ??= 'CSS Shadow Parts';
         kwargs.level ??= 2;
@@ -291,7 +292,7 @@ module.exports = {
         const { toMarkdown } = await import('mdast-util-to-markdown');
         const { fromMarkdown } = await import('mdast-util-from-markdown');
 
-        const manifest = await options.getManifest(this.page.fileSlug);
+        const manifest = await options.getManifest(kwargs?.for);
         const events = getEvents(kwargs?.for, manifest);
 
         kwargs.header ??= 'Events';
@@ -326,7 +327,7 @@ module.exports = {
         const { toMarkdown } = await import('mdast-util-to-markdown');
         const { fromMarkdown } = await import('mdast-util-from-markdown');
 
-        const methods = getMethods(kwargs?.for, await options.getManifest(this.page.fileSlug));
+        const methods = getMethods(kwargs?.for, await options.getManifest(kwargs?.for));
 
         kwargs.header ??= 'Methods';
         kwargs.level ??= 2;
@@ -366,7 +367,7 @@ module.exports = {
         const { fromMarkdown } = await import('mdast-util-from-markdown');
 
         const slots =
-          getSlots(kwargs?.for, await options.getManifest(this.page.fileSlug));
+          getSlots(kwargs?.for, await options.getManifest(kwargs?.for));
 
         kwargs.header ??= 'Slots';
         kwargs.level ??= 2;

@@ -1,13 +1,3 @@
----
-layout: layout-basic.njk
-title: Icon
-description: Delivers icon elements that can be sized, colored, and circled
-package: pfe-icon
-packages:
-  - pfe-icon
-tags:
-  - component
----
 <style>
   main.basic pfe-icon[circled] {
     margin-right: 8px;

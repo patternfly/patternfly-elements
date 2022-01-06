@@ -50,6 +50,8 @@ function register(klass: typeof PfeIcon) {
 /**
  * Icon delivers icon elements that can be sized, colored, and circled.
  * Other icon sets can also be registered and added for use.
+ *
+ * @summary Delivers icon elements that can be sized, colored, and circled
  */
 @customElement('pfe-icon') @register @pfelement()
 export class PfeIcon extends LitElement {

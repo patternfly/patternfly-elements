@@ -6,6 +6,7 @@ import { cssCustomPropertiesDefaultPlugin } from './custom-elements-manifest/css
 import { dedentDescriptionsPlugin } from './custom-elements-manifest/dedent-descriptions.js';
 import { deprecatedDescriptionInlineTagPlugin } from './custom-elements-manifest/deprecated-description-inline-tag.js';
 import { sanitizeEventsPlugin } from './custom-elements-manifest/sanitize-events.js';
+import { summaryPlugin } from './custom-elements-manifest/summary.js';
 
 /**
  * PFE Default custom-elements-manifest analyzer config
@@ -28,6 +29,7 @@ export function pfeCustomElementsManifestConfig(options?: Config): Config {
       sanitizeEventsPlugin(),
       deprecatedDescriptionInlineTagPlugin(),
       dedentDescriptionsPlugin(),
+      summaryPlugin(),
 
       ...options?.plugins ?? [],
     ],

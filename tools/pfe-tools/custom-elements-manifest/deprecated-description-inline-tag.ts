@@ -22,7 +22,7 @@ export function deprecatedDescriptionInlineTagPlugin(): Plugin {
     moduleLinkPhase({ moduleDoc }) {
       moduleDoc.description &&= dedent(moduleDoc.description);
       for (const decl of moduleDoc.declarations ?? []) {
-        decl.description &&= dedent(moduleDoc.description ?? '');
+        decl.description &&= dedent(decl.description);
         switch (decl.kind) {
           case 'class':
           case 'mixin':

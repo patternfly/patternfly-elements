@@ -6,9 +6,12 @@ import { marked } from 'marked';
 
 import style from './pfe-markdown.scss';
 
+
 /**
  * Markdown takes markdown as input and displays it as HTML.
  * This element uses the [marked.js library](https://marked.js.org/#/README.md#README.md) to convert the markdown to HTML.
+ *
+ * @summary Takes markdown as input and displays it as HTML
  */
 @customElement('pfe-markdown') @pfelement()
 export class PfeMarkdown extends LitElement {

@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Markdown
-description: Takes markdown as input and displays it as HTML
-package: pfe-markdown
-packages:
-  - pfe-markdown
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
 <pfe-markdown>
   <div pfe-markdown-container># Heading Level 1

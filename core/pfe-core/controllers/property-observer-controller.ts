@@ -14,6 +14,7 @@ export type PropertyObserverHost<T> = T & Record<ChangeCallbackName, ChangeCallb
   [observedController]: PropertyObserverController;
 }
 
+/** This controller holds a cache of observed property values which were set before the element updated */
 export class PropertyObserverController implements ReactiveController {
   private static hosts: WeakMap<HTMLElement, PropertyObserverController> = new WeakMap();
 
@@ -32,12 +33,17 @@ export class PropertyObserverController implements ReactiveController {
   }
 
   /** Set any cached valued accumulated between constructor and connectedCallback */
-  hostConnected() {
+  hostUpdate() {
     for (const [key, [methodName, [oldVal, newVal]]] of this.values) {
       // @ts-expect-error: be cool, typescript
       this.host[methodName as keyof ReactiveElement]?.(oldVal, newVal);
       this.delete(key);
     }
+  }
+
+  /** Once the element has updated, we no longer need this controller, so we remove it */
+  hostUpdated() {
+    this.host.removeController(this);
   }
 
   cache(key: string, methodName: string, ...vals: [unknown, unknown]) {

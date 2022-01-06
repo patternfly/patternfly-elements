@@ -85,7 +85,7 @@ export function observeProperty<T extends ReactiveElement>(
         // if the component has already connected to the DOM, run the callback
         // otherwise, If the component has not yet connected to the DOM,
         // cache the old and new values. See PropertyObserverController above
-        if (this.isConnected) {
+        if (this.hasUpdated) {
           this[actualMethodName as ChangeCallbackName]?.(oldVal, newVal);
         } else {
           this[observedController].cache(key as string, actualMethodName, oldVal, newVal);

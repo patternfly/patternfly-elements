@@ -92,6 +92,7 @@ $size-small: (
   @include pfe-print-local($size-small);
 }
 
+// TODO: pfe-border is deprecated
 :host([pfe-border]:not([pfe-border="false"])),
 :host([border]:not([border="false"])) {
   --pfe-card--BorderWidth:   #{pfe-fetch(surface--border-width)};

@@ -1,5 +1,3 @@
-{% set demoConfig = elements[element] %}
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -7,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="PatternFly Elements: A set of community-created web components based on PatternFly design.">
     <link href="/brand/logo/svg/pfe-icon-blue.svg" rel="shortcut icon">
-    <title>{{ element }} | PatternFly Elements</title>
+    <title>{{ element.title }} | PatternFly Elements</title>
     <link rel="preconnect" href="https://ga.jspm.io">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/css-tag.js"/>
@@ -70,16 +68,16 @@
     <noscript><link href="/core/core/pfe--noscript.min.css" rel="stylesheet"></noscript>
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.4.1/dist/es-module-shims.js"></script>
     <script type="importmap">{% include "../import-map.json" %}</script>
-    {%- if demoConfig.script -%}
+    {%- if element.script -%}
     <!-- Load the demo's JavaScript, a module which at the least imports the component definition -->
     <script type="module">
-      {%- include demoConfig.script -%}
+      {%- include element.script -%}
     </script>
     {%- endif -%}
   </head>
   <body unresolved>
-    {%- if demoConfig.demo -%}
-      {%- include demoConfig.demo -%}
+    {%- if element.demo -%}
+      {%- include element.demo -%}
     {%- endif -%}
   </body>
 </html>

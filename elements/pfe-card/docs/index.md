@@ -1,15 +1,3 @@
----
-layout: layout-basic.njk
-title: Card
-description: Gives a preview of information in a small layout
-package: pfe-card
-packages:
-  - pfe-card
-  - pfe-cta
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
 
   Cards are flexible surfaces used to group information in a small layout. They give small previews of information or provide secondary content in relation to the content it's near. Several cards can be used together to group related information.

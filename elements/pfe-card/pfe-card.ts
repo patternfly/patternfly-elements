@@ -11,6 +11,8 @@ import style from './pfe-card.scss';
  * This element creates a header, body, and footer region in which to place
  * content or other components.
  *
+ * @summary Gives a preview of information in a small layout
+ * 
  * @slot header
  *       If this slot is used, we expect a heading level tag (h1, h2, h3, h4, h5, h6).
  *       An icon, svg, or use of the icon component are also valid in this region.

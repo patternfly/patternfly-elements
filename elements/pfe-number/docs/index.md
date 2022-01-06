@@ -1,15 +1,3 @@
----
-layout: layout-basic.njk
-title: Number
-description: Display numbers in a consistent type and format
-package: pfe-number
-packages:
-  - pfe-number
-  - pfe-card
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
     <pfe-card>

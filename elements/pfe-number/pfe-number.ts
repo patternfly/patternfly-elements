@@ -22,6 +22,8 @@ numeral.locales.en.delimiters.thousands = ' ';
 
 /**
  * Number helps display numbers in a consistent type and format.
+ *
+ * @summary Display numbers in a consistent type and format
  */
 @customElement('pfe-number') @pfelement()
 export class PfeNumber extends LitElement {

@@ -48,8 +48,9 @@ function getEstimatedWPM(language: string): number {
 }
 
 /**
- *
  * This component takes in the word count of a given section and does a calculation on that number to return an estimated read time based on language. The words-per-minute values were sourced from [this article](https://irisreading.com/average-reading-speed-in-various-languages) with the data originating from [this research](https://iovs.arvojournals.org/article.aspx?articleid=2166061). For more information, see the [Readtime calculation information](#readtime-calculation).
+ *
+ * @summary Takes in the word count of a section and calculates the estimated read time based on language
  */
 @customElement('pfe-readtime') @pfelement()
 export class PfeReadtime extends LitElement {

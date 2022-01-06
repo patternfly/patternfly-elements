@@ -1,15 +1,3 @@
----
-layout: layout-basic.njk
-title: Readtime
-description: Takes in the word count of a section and calculates the estimated read time based on language
-package: pfe-readtime
-packages:
-  - pfe-readtime
-  - pfe-card
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-card border>
     <pfe-readtime word-count="500" hidden>%t-minute readtime</pfe-readtime>

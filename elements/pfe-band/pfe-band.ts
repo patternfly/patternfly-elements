@@ -58,8 +58,7 @@ export class PfeBand extends LitElement {
   /**
    * Your theme will influence these colors so check there first if you are seeing inconsistencies.
    */
-  @property({ reflect: true })
-    color: 'accent'|'base'|'complement'|'darker'|'darkest'|'lightest' = 'base';
+  @property({ reflect: true }) color: 'accent'|'base'|'complement'|'darker'|'darkest'|'lightest' = 'base';
 
   /**
    * This influences where the aside is rendered at the desktop view and are indicated relative to the body content.

@@ -1,16 +1,3 @@
----
-layout: layout-basic.njk
-title: Clipboard
-description: Gives a preview of information in a small layout
-package: pfe-clipboard
-packages:
-  - pfe-clipboard
-  - pfe-cta
-  - pfe-icon
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
 {% endrenderOverview %}

@@ -24,6 +24,8 @@ export class CopiedEvent extends ComposedEvent {
  * By default it will copy the current URL, but it can also copy the text of an element,
  * or arbitrary content set as a property on the component.
  *
+ * @summary A button to copy the text to the system clipboard.
+ *
  * @fires {CustomEvent<{ component: PfeClipboard }>} pfe-clipboard:connected
  *        Let's you know when the component has run connectedCallback,
  *        useful for knowing when you can set the `contentToCopy` property

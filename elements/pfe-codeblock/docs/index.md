@@ -1,14 +1,3 @@
----
-layout: layout-basic.njk
-title: Codeblock
-description: Render code in a styled and formatted way
-package: pfe-codeblock
-packages:
-  - pfe-codeblock
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   ### Default
   <pfe-codeblock code-language="html">

@@ -24,7 +24,9 @@ import { styleMap } from 'lit/directives/style-map.js';
 import style from './pfe-codeblock.scss';
 
 /**
- * Render code in a styled and formatted way.
+ * Render code in a styled and formatted way. `<pfe-codeblock>` highlights code snippets on the page.
+ *
+ * @summary Render code in a styled and formatted way.
  * @slot - Used to pass in the `<pre codeblock-container>` and `<code>` elements.
  */
 @customElement('pfe-codeblock') @pfelement()

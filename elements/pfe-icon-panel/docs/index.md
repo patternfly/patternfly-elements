@@ -1,15 +1,3 @@
----
-layout: layout-basic.njk
-title: Icon panel
-description: Provides a way to present text with an accompanying icon
-package: pfe-icon-panel
-packages:
-  - pfe-icon-panel
-  - pfe-cta
-tags:
-  - component
----
-
 {% renderOverview for=package, title=title %}
   <pfe-icon-panel icon="rh-server-stack">
     <h3 slot="header">This is icon panel</h3>

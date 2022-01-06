@@ -12,6 +12,8 @@ import style from './pfe-icon-panel.scss';
 /**
  * Icon panel provides a way to present text with an accompanying icon.
  *
+ * @summary Provides a way to present text with an accompanying icon
+ *
  * @slot header - The header of the icon panel. Assign content to this region using `slot="header`.
  * @slot - Any content that is not designated for the header or footer slot, will go to this slot.
  * @slot footer - Use this slot for anything that you want in the footer of the icon panel.  Assign content to this region using `slot="footer`.

@@ -59,7 +59,7 @@ export class PfeCollapseToggle extends LitElement {
   /**
    * Explicitly specify the id of the corresponding panel to sync aria states.
    * The toggle needs an aria-controls attribute that links to the id of the panel.
-   * If no aria-controls are specified, a unique ID will be generated and applied
+   * If no aria-controls id is specified, a unique ID will be generated and applied
    * to the panel.
    */
   @observed

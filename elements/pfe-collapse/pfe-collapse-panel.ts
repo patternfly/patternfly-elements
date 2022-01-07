@@ -46,8 +46,7 @@ export class PfeCollapsePanel extends LitElement {
   static readonly styles = [style];
 
   /**
-   * @readonly
-   * Use the toggle method available on pfe-collapse and pfe-collapse-toggle to manually trigger expand.
+   * Sets and reflects the expanded state of the panel.
    */
   @observed
   @property({ type: Boolean, reflect: true })

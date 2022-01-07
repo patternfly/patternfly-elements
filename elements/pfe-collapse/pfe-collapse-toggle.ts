@@ -51,8 +51,7 @@ export class PfeCollapseToggle extends LitElement {
   private logger = new Logger(this);
 
   /**
-   * @readonly
-   * Use the toggle method to manually trigger expand.
+   * Sets and reflects the expanded state of the panel.
    */
   @observed
   @property({ type: Boolean, attribute: 'expanded' }) expanded = false;

@@ -7,7 +7,8 @@ updates:
   open-pull-requests-limit: 3
   versioning-strategy: increase-if-necessary
   reviewers: 
-    - castastrophe
+    - heyMP
+    - bennypowers
   labels:
     - "ready: code review"
     - run e2e

@@ -45,6 +45,10 @@ export class AnimationEndEvent extends ComposedEvent {
 export class PfeCollapsePanel extends LitElement {
   static readonly styles = [style];
 
+  /**
+   * @readonly
+   * Use the toggle method available on pfe-collapse and pfe-collapse-toggle to manually trigger expand.
+   */
   @observed
   @property({ type: Boolean, reflect: true })
     expanded = false;

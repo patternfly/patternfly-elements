@@ -50,12 +50,23 @@ export class PfeCollapseToggle extends LitElement {
 
   private logger = new Logger(this);
 
+  /**
+   * @readonly
+   * Use the toggle method to manually trigger expand.
+   */
   @observed
   @property({ type: Boolean, attribute: 'expanded' }) expanded = false;
 
+  /**
+   * Explicitly specify the id of the corresponding panel to sync aria states.
+   * The toggle needs an aria-controls attribute that links to the id of the panel.
+   * If no aria-controls are specified, a unique ID will be generated and applied
+   * to the panel.
+   */
   @observed
   @property({ attribute: 'aria-controls', reflect: true }) ariaControls = '';
 
+  /** Disable the toggle from expanding the panel. */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
   private controlledPanel: PfeCollapsePanel|null = null;

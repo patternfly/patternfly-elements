@@ -316,6 +316,8 @@ describe('<pfe-collapse>', function() {
       </div>`);
 
     const toggle = element.querySelector('pfe-collapse-toggle')!;
+    await toggle.updateComplete;
+
     const panel = document.createElement('pfe-collapse-panel');
 
     panel.id = 'latePanel1';
@@ -329,6 +331,7 @@ describe('<pfe-collapse>', function() {
     await panel.updateComplete;
 
     expect(toggle.getAttribute('aria-expanded')).to.equal('true');
+    console.log(panel.expanded)
     expect(panel.hasAttribute('expanded')).to.be.true;
   });
 });

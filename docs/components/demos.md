@@ -5,5 +5,5 @@ pagination:
   size: 1
   alias: element
   before: xs => xs.filter(x => !!x.docsPath)
-permalink: /{{ element.category }}/{{ element.slug }}/demo/index.html
+permalink: /components/{{ element.slug }}/demo/index.html
 ---

@@ -162,23 +162,17 @@ export class DocsPage implements DocsPageRenderer {
   declare summary?: string|null;
   declare manifest?: Manifest;
   declare packageJson?: PackageJSON;
-  declare category: 'components'|'core'|'tools';
 
   declare slug: string;
   declare tagName: string;
   declare title: string;
   declare package: string;
 
-  constructor(
-    pkg: string,
-    private packagePath: string
-  ) {
+  constructor(pkg: string, private packagePath: string) {
     this.package = pkg;
     this.tagName = this.package.replace('@patternfly/', '');
     this.slug = this.tagName.replace('pfe-', '');
     this.title = pretty(this.slug);
-    const [, category] = this.packagePath.match(/patternfly-elements\/(\w+)/) ?? [];
-    this.category = category === 'elements' ? 'components' : category as 'core';
   }
 
   async init() {
@@ -205,7 +199,7 @@ export class DocsPage implements DocsPageRenderer {
   }
 
   private packageTagName(kwargs: RenderKwargs = {}): string {
-    if (kwargs.for && !kwargs.for?.match?.(/@/)) {
+    if (kwargs.for && !kwargs.for.match(/@/)) {
       return kwargs.for;
     } else {
       const [, tagName = this.tagName] = (kwargs?.for ?? '').match(/@patternfly\/(.*)/) ?? [];
@@ -285,7 +279,7 @@ export class DocsPage implements DocsPageRenderer {
    *
    *   ## Attributes
    *
-   *   Paired shortcode content goes here
+   *   ${content}
    *
    *   ### an-attribute
    *   An element attribute
@@ -306,7 +300,7 @@ export class DocsPage implements DocsPageRenderer {
       ...(!attrs.length && !content) ? [M.text('None') as Node] : attrs.flatMap(attr => this.renderAttribute(attr)),
       ...(!deprecated.length) ? [] : DocsPage.details('Deprecated Attributes', deprecated.flatMap(attr =>
         this.renderAttribute(attr, DocsPage.incLevel(kwargs)))),
-    ], kwargs) as Node, );
+    ], kwargs) as Node);
   }
 
   private renderProperty(prop: ClassField, kwargs: RenderKwargs = {}): Node[] {

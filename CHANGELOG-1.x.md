@@ -1,5 +1,9 @@
+# TBD
+- [](https://github.com/patternfly/patternfly-elements/commit/) chore: remove Storybook links for homepage and footer include
+
 # 1.12.2 (2021-11-16)
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: fixing broken 1.12.1 release.
+- [a6cf64](https://github.com/patternfly/patternfly-elements/commit/a6cf64f2680780cd1d50ed302f677dbd5024cf85) fix: fixing broken 1.12.1 release.
+
 # 1.12.1 (2021-11-16)
 - [bf2088](https://github.com/patternfly/patternfly-elements/commit/bf2088ad92a455ca36b9f12141e273abb360e4a3) fix: added border-box to panel to fix border offset
 

@@ -33,12 +33,6 @@
             </li>{% if page.url == component.url %}
             <li>
               <a href="/elements/{{ component.data.package }}/demo">Demo page</a>
-            </li>
-            <li>
-              <a href="/storybook/?path=/story/{{ component.data.title | downcase }}--{{ component.data.package }}">Storybook</a>
-            </li>{% else %}
-            <li>
-              <a href="/storybook">Storybook</a>
             </li>{% endif %}
             <li>
               <a href="https://medium.com/patternfly-elements">Medium</a>

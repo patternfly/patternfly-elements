@@ -9,6 +9,7 @@ module.exports = {
     eleventyConfig.addPassthroughCopy('docs/bundle.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/main.mjs');
+    eleventyConfig.addPassthroughCopy('docs/assets/**');
     eleventyConfig.addPassthroughCopy('brand/**/*');
 
     const repoRoot = join(__dirname, '..', '..');

@@ -101,10 +101,13 @@
 {% endband %}
 
 {% renderSlots %}{% endrenderSlots %}
+{% renderSlots for="pfe-dropdown-item", level=3, header="Slots on `pfe-dropdown-item`" %}{% endrenderSlots %}
 
 {% renderAttributes %}{% endrenderAttributes %}
+{% renderSlots for="pfe-dropdown-item", level=3, header="Attributes on `pfe-dropdown-item`" %}{% endrenderSlots %}
 
 {% renderProperties %}{% endrenderProperties %}
+{% renderProperties for="pfe-dropdown-item", level=3, header="Properties on `pfe-dropdown-item`" %}{% endrenderProperties %}
 
 {% renderMethods %}{% endrenderMethods %}
 

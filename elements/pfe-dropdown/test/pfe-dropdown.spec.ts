@@ -1,7 +1,7 @@
-import { expect, html } from '@open-wc/testing';
+import { expect, html, oneEvent} from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 
-import { PfeDropdown, PfeDropdownOption } from '@patternfly/pfe-dropdown';
+import { PfeDropdown, PfeDropdownOption, DropdownChangeEvent } from '@patternfly/pfe-dropdown';
 import { PfeDropdownItem } from '@patternfly/pfe-dropdown/pfe-dropdown-item.js';
 
 describe('<pfe-dropdown>', function() {
@@ -18,6 +18,14 @@ describe('<pfe-dropdown>', function() {
     let toggleText: string;
     let toggle: HTMLButtonElement;
     let list: HTMLUListElement;
+    let options: PfeDropdownOption[] = [
+      { href: 'https://bit.ly/3b9wvWg', text: 'Dynamic 1', type: 'link', disabled: false },
+      { href: 'https://bit.ly/3b9wvWg', text: 'Dynamic 2', type: 'link', disabled: false },
+      { href: 'https://bit.ly/3b9wvWg', text: 'Dynamic 3', type: 'link', disabled: true },
+      { type: 'separator' },
+      { text: 'Action 1', type: 'action', disabled: false },
+      { text: 'Action 2', type: 'action', disabled: true },
+    ];
 
     afterEach(function() {
       // @ts-expect-error: cleanup. it's fine in a test file
@@ -128,6 +136,30 @@ describe('<pfe-dropdown>', function() {
       expect(checkbox.checked).to.be.true;
       checkbox.remove();
     });
+
+    it('should create dropdown options through the options property', async function() {
+      element.options = options;
+      await element.updateComplete;
+      expect(element.children.length).to.equal(options.length);
+    });
+
+    it('should add dropdown options through addDropdownOptions API, this should be additive', async function() {
+      const childrenLength = element.children.length;
+      element.addDropdownOptions(options);
+      await element.updateComplete;
+      expect(element.children.length).to.equal(options.length + childrenLength);
+    });
+
+    it('should fire the change event when an item is selected', async function() {
+      setTimeout(() => element.querySelector('button')?.click());
+      const event = await oneEvent(element, 'change') as unknown as DropdownactionChangeEvent;
+      expect(event.action).to.not.be.empty;
+
+      /** @deprecated */
+      setTimeout(() => element.querySelector('button')?.click());
+      const depEvent = await oneEvent(element, 'pfe-dropdown:change') as unknown as DropdownactionChangeEvent;
+      expect(depEvent.detail.action).to.not.be.empty;
+    });
   });
 
   it(`should set a11y attributes when the disabled attribute is present on the dropdown`, async function() {
@@ -144,27 +176,5 @@ describe('<pfe-dropdown>', function() {
     await element.updateComplete;
 
     expect(element.getAttribute('aria-disabled')).to.equal('false');
-  });
-
-  it('should create dropdown options through addDropdownOptions API', async function() {
-    const element = await createFixture<PfeDropdown>(html`
-      <pfe-dropdown label="Test dropdown with custom options" id="customDropdown">
-      </pfe-dropdown>`);
-
-    const options: PfeDropdownOption[] = [
-      { href: 'https://bit.ly/3b9wvWg', text: 'Link 1', type: 'link', disabled: false },
-      { href: 'https://bit.ly/3b9wvWg', text: 'Link 2', type: 'link', disabled: false },
-      { href: 'https://bit.ly/3b9wvWg', text: 'Link 3', type: 'link', disabled: true },
-      { type: 'separator' },
-      { text: 'Action 1', type: 'action', disabled: false },
-      { text: 'Action 2', type: 'action', disabled: true },
-    ];
-
-    // setting JS options using addDropdownOptions API
-    element.addDropdownOptions(options);
-
-    await element.updateComplete;
-
-    expect(element.children.length).to.equal(options.length);
   });
 });

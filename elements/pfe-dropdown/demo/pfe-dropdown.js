@@ -17,7 +17,7 @@ const dropdownWithCustomOptions = root.querySelector("#dropdown-with-custom-opti
 
 customElements.whenDefined("pfe-dropdown").then(function () {
   // Default Options
-  dropdownWithCustomOptions.pfeDropdownOptions = [{
+  dropdownWithCustomOptions.options = [{
       href: "https://bit.ly/3b9wvWg",
       text: "Link 1",
       type: "link",

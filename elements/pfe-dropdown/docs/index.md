@@ -41,11 +41,11 @@
   let dropdown = document.querySelector("pfe-dropdown");
   ```
 
-  When `pfe-dropdown` is defined, via the `whenDefined` method. Pass an array of `pfe-dropdown-item` objects to `pfeDropdownOptions`.
+  When `pfe-dropdown` is defined, via the `whenDefined` method. Pass an array of `pfe-dropdown-item` objects to `options`.
 
   ```javascript
   await customElements.whenDefined("pfe-dropdown");
-  dropdown.pfeDropdownOptions = [
+  dropdown.options = [
     {
       href: "https://patternflyelements.org",
       text: "Link 1",
@@ -104,7 +104,7 @@
 {% renderSlots for="pfe-dropdown-item", level=3, header="Slots on `pfe-dropdown-item`" %}{% endrenderSlots %}
 
 {% renderAttributes %}{% endrenderAttributes %}
-{% renderSlots for="pfe-dropdown-item", level=3, header="Attributes on `pfe-dropdown-item`" %}{% endrenderSlots %}
+{% renderAttributes for="pfe-dropdown-item", level=3, header="Attributes on `pfe-dropdown-item`" %}{% endrenderAttributes %}
 
 {% renderProperties %}{% endrenderProperties %}
 {% renderProperties for="pfe-dropdown-item", level=3, header="Properties on `pfe-dropdown-item`" %}{% endrenderProperties %}

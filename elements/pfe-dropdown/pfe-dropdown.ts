@@ -55,6 +55,7 @@ export class DropdownChangeEvent extends ComposedEvent {
 export class PfeDropdown extends LitElement {
   static readonly styles = [style];
 
+  /** Use 'delegatesFocus' to forward focus to the first pfe-dropdown-item when this container is clicked or focused. */
   static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
@@ -69,7 +70,8 @@ export class PfeDropdown extends LitElement {
   @observed
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  @state() private isOpen = false;
+  @observed
+  @property({ type: Boolean, reflect: true }) expanded = false;
 
   connectedCallback() {
     super.connectedCallback();
@@ -77,6 +79,7 @@ export class PfeDropdown extends LitElement {
     document.addEventListener('click', this._outsideClickHandler);
   }
 
+  /** Add dropdown items dynamically */
   @observed options?: PfeDropdownOption[];
 
   /**
@@ -99,7 +102,7 @@ export class PfeDropdown extends LitElement {
             type="button"
             aria-haspopup="true"
             aria-controls="pfe-dropdown-menu"
-            aria-expanded="${String(!!this.isOpen) as 'true'|'false'}"
+            aria-expanded="${String(!!this.expanded) as 'true'|'false'}"
             @click="${this.toggle}"
             @keydown="${this._toggleKeydownHandler}">
           <span class="pfe-dropdown__toggle-text">${this.label}</span>
@@ -111,7 +114,7 @@ export class PfeDropdown extends LitElement {
         </button>
         <!-- dropdown menu -->
         <ul id="pfe-dropdown-menu"
-            class="pfe-dropdown__menu ${classMap({ open: this.isOpen })}"
+            class="pfe-dropdown__menu ${classMap({ open: this.expanded })}"
             role="menu"
             aria-labelledby="pfe-dropdown-toggle">
           <slot></slot>
@@ -156,7 +159,7 @@ export class PfeDropdown extends LitElement {
         .parentElement
         ?.getAttribute('item-type') as 'action' ?? undefined;
 
-    if (event.target instanceof PfeDropdownItem) {
+    if ((event.target as HTMLElement).parentElement instanceof PfeDropdownItem) {
       this._selectItem(event.target, itemType);
     }
 
@@ -231,7 +234,7 @@ export class PfeDropdown extends LitElement {
         if (this._allDisabled()) {
           // toggle the dropdown if all items disabled
           this.toggle();
-        } else if (!this.isOpen) {
+        } else if (!this.expanded) {
           // otherwise, get the next enabled item
           this.open();
           const item = this._itemContainer(this._nextItem(-1, 1));
@@ -249,7 +252,11 @@ export class PfeDropdown extends LitElement {
   }
 
   /** modify DOM if custom options are passed in an array */
-  private async _modifyDOM(options: PfeDropdownOption[]) {
+  private async _modifyDOM(options: PfeDropdownOption[], clean?: Boolean = true) {
+    // remove all dropdown items and separators
+    if (clean) {
+      this.innerHTML = '';
+    }
     for (const el of options) {
       this.appendChild(this._createItem(el));
     }
@@ -328,8 +335,25 @@ export class PfeDropdown extends LitElement {
     return item.shadowRoot?.querySelector(`.pfe-dropdown-item__container`) ?? null;
   }
 
+  /**
+   * Add dropdown items dynamically
+   * ```js
+   * customElements.whenDefined("pfe-dropdown").then(function() {
+   *   dropdown.addDropdownOptions(
+   *     [
+   *       {
+   *         href: "https://patternflyelements.org",
+   *         text: "Link 4",
+   *         type: "link",
+   *         disabled: false
+   *       }
+   *     ]
+   *   );
+   * });
+   * ```
+   * */
   @bound addDropdownOptions(options: PfeDropdownOption[]) {
-    this._modifyDOM(options);
+    this._modifyDOM(options, false);
   }
 
   /**
@@ -340,7 +364,7 @@ export class PfeDropdown extends LitElement {
    * ```
    */
   @bound open() {
-    this.isOpen = true;
+    this.expanded = true;
   }
 
   /**
@@ -351,7 +375,7 @@ export class PfeDropdown extends LitElement {
    * ```
    */
   @bound close() {
-    this.isOpen = false;
+    this.expanded = false;
   }
 
   /**
@@ -362,7 +386,7 @@ export class PfeDropdown extends LitElement {
    * ```
    */
   @bound toggle() {
-    this.isOpen = !this.isOpen;
+    this.expanded = !this.expanded;
   }
 }
 

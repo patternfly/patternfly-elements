@@ -156,18 +156,18 @@ describe('<pfe-dropdown>', function() {
 
     it('should fire the change event when an item is selected', async function() {
       setTimeout(() => element.querySelector('button')?.click());
-      const event = await oneEvent(element, 'change') as unknown as DropdownactionChangeEvent;
+      const event = await oneEvent(element, 'change') as unknown as DropdownChangeEvent;
       expect(event.action).to.not.be.empty;
 
       /** @deprecated */
       setTimeout(() => element.querySelector('button')?.click());
-      const depEvent = await oneEvent(element, 'pfe-dropdown:change') as unknown as DropdownactionChangeEvent;
+      const depEvent = await oneEvent(element, 'pfe-dropdown:change') as unknown as CustomEvent;
       expect(depEvent.detail.action).to.not.be.empty;
     });
 
     /** https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.html */
     describe(`keyboard accessibility`, function() {
-      let menu: HTMLElement;
+      let menu: HTMLElement | null | undefined;
       beforeEach(async function() {
         menu = element.shadowRoot?.querySelector('#pfe-dropdown-menu');
         element.focus();

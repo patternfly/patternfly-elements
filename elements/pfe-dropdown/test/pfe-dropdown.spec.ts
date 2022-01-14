@@ -1,5 +1,6 @@
-import { expect, html, oneEvent} from '@open-wc/testing';
+import { expect, html, oneEvent, nextFrame} from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
+import { sendKeys } from '@web/test-runner-commands';
 
 import { PfeDropdown, PfeDropdownOption, DropdownChangeEvent } from '@patternfly/pfe-dropdown';
 import { PfeDropdownItem } from '@patternfly/pfe-dropdown/pfe-dropdown-item.js';
@@ -159,6 +160,41 @@ describe('<pfe-dropdown>', function() {
       setTimeout(() => element.querySelector('button')?.click());
       const depEvent = await oneEvent(element, 'pfe-dropdown:change') as unknown as DropdownactionChangeEvent;
       expect(depEvent.detail.action).to.not.be.empty;
+    });
+
+    /** https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.html */
+    describe(`keyboard accessibility`, function() {
+      let menu: HTMLElement;
+      beforeEach(async function() {
+        menu = element.shadowRoot?.querySelector('#pfe-dropdown-menu');
+        element.focus();
+        await element.updateComplete;
+      });
+
+      it(`ArrowDown should open dialog and focuse first item.`, async function() {
+        await sendKeys({ press: 'ArrowDown' });
+        await element.updateComplete;
+        expect(element.querySelector('pfe-dropdown-item:focus')).to.be.visible;
+      });
+
+      it(`Space should open dialog and focuse first item.`, async function() {
+        await sendKeys({ press: ' ' });
+        await element.updateComplete;
+        expect(element.querySelector('pfe-dropdown-item:focus')).to.be.visible;
+      });
+
+      it(`Enter should open dialog and focuse first item.`, async function() {
+        await sendKeys({ press: 'Enter' });
+        await element.updateComplete;
+        expect(element.querySelector('pfe-dropdown-item:focus') ?? null).to.be.visible;
+      });
+
+      it(`Escape should exit open dialog and return focus to the dropdown.`, async function() {
+        await sendKeys({ press: 'Escape' });
+        await element.updateComplete;
+        expect(element.querySelector('pfe-dropdown-item:focus')).to.be.null;
+        expect(element.matches(':focus')).to.be.true;
+      });
     });
   });
 

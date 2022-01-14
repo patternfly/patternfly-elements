@@ -167,7 +167,7 @@ export class PfeDropdown extends LitElement {
   }
 
   /** Event handler for keydown events on Dropdown Menu */
-  @bound private _itemKeydownHandler(event: KeyboardEvent) {
+  @bound private async _itemKeydownHandler(event: KeyboardEvent) {
     let newItem;
     const itemType =
         !(event.target instanceof HTMLElement) ? undefined
@@ -179,26 +179,29 @@ export class PfeDropdown extends LitElement {
       item.matches(':focus')
     );
 
+
     switch (event.key) {
+      case ' ':
       case 'Enter': {
-        const [item] = (event.target as HTMLElement)?.children ?? [];
-        if (item instanceof PfeDropdownItem) {
-          this._selectItem(item, (itemType ?? undefined) as PfeDropdownOption['type']);
+        if ((event.target as HTMLElement) instanceof PfeDropdownItem) {
+          this._selectItem(event.target, (itemType ?? undefined) as PfeDropdownOption['type']);
         }
       } break;
-      case 'Esc':
+      case 'Escape':
+        this.focus();
+        await this.updateComplete;
+        this.close();
+        break;
       case 'Tab':
         this.close();
         break;
       case 'ArrowRight':
       case 'ArrowDown':
-        event.preventDefault();
         // get the following item
         newItem = this._itemContainer(this._nextItem(currentIndex, 1));
         break;
       case 'ArrowLeft':
       case 'ArrowUp':
-        event.preventDefault();
         // get the previous item
         newItem = this._itemContainer(this._nextItem(currentIndex, -1));
         break;
@@ -227,22 +230,27 @@ export class PfeDropdown extends LitElement {
   }
 
   /** Event handler for keydown event on Dropdown */
-  @bound private _toggleKeydownHandler(event: KeyboardEvent) {
+  @bound private async _toggleKeydownHandler(event: KeyboardEvent) {
     switch (event.key) {
+      case ' ':
       case 'Enter':
       case 'ArrowDown':
+        event.preventDefault();
+        event.stopPropagation();
         if (this._allDisabled()) {
           // toggle the dropdown if all items disabled
           this.toggle();
         } else if (!this.expanded) {
           // otherwise, get the next enabled item
           this.open();
+          await this.updateComplete;
           const item = this._itemContainer(this._nextItem(-1, 1));
           item?.setAttribute('tabindex', '-1');
           item?.focus();
         }
         break;
       case 'Tab':
+        // return focus to dropdown
         this.close();
         break;
       default:
@@ -319,12 +327,15 @@ export class PfeDropdown extends LitElement {
     return items[items.length - 1];
   }
 
-  private _selectItem(item: PfeDropdownItem, type?: PfeDropdownOption['type']) {
+  private async _selectItem(item: PfeDropdownItem, type?: PfeDropdownOption['type']) {
     if (type === 'action') {
       const action = item.innerText;
       this.dispatchEvent(new DropdownChangeEvent(action));
       this.dispatchEvent(pfeEvent('pfe-dropdown:change', { action }));
+      // return focus back to button
       this.close();
+      await this.updateComplete;
+      this.focus();
     } else {
       item.click();
     }
@@ -354,6 +365,13 @@ export class PfeDropdown extends LitElement {
    * */
   @bound addDropdownOptions(options: PfeDropdownOption[]) {
     this._modifyDOM(options, false);
+  }
+
+  /**
+   * Override the default focus method to give focus to the internal button
+   */
+  @bound focus() {
+    this.shadowRoot?.querySelector('button')?.focus();
   }
 
   /**

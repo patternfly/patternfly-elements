@@ -10,6 +10,9 @@ import style from './pfe-dropdown-item.scss';
 export class PfeDropdownItem extends LitElement {
   static readonly styles = [style];
 
+  /** Use 'delegatesFocus' to forward focus to the first pfe-dropdown-item when this container is clicked or focused. */
+  static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+
   /**
    * This is an optional attribute string that you should provide to indicate the type of dropdown item. This drives the appropriate assignment of accessibility attributes for each type of item.
    * - `link` : an HTML link

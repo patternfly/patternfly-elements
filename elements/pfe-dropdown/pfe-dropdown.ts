@@ -160,7 +160,7 @@ export class PfeDropdown extends LitElement {
         ?.getAttribute('item-type') as 'action' ?? undefined;
 
     if ((event.target as HTMLElement).parentElement instanceof PfeDropdownItem) {
-      this._selectItem(event.target, itemType);
+      this._selectItem(event.target as PfeDropdownItem, itemType);
     }
 
     return this;
@@ -185,7 +185,7 @@ export class PfeDropdown extends LitElement {
         event.preventDefault();
         event.stopPropagation();
         if ((event.target as HTMLElement) instanceof PfeDropdownItem) {
-          this._selectItem(event.target, (itemType ?? undefined) as PfeDropdownOption['type']);
+          this._selectItem(event.target as PfeDropdownItem, (itemType ?? undefined) as PfeDropdownOption['type']);
         }
       } break;
       case 'Escape':
@@ -265,7 +265,7 @@ export class PfeDropdown extends LitElement {
   }
 
   /** modify DOM if custom options are passed in an array */
-  private async _modifyDOM(options: PfeDropdownOption[], clean?: Boolean = true) {
+  private async _modifyDOM(options: PfeDropdownOption[], clean: Boolean = true) {
     // remove all dropdown items and separators
     if (clean) {
       this.innerHTML = '';

@@ -45,8 +45,11 @@ describe('<pfe-dropdown>', function() {
           <pfe-dropdown-item item-type="link">
             <a href="#">Link 1</a>
           </pfe-dropdown-item>
-          <pfe-dropdown-item item-type="link">
+          <pfe-dropdown-item item-type="link" disabled>
             <a href="#">Link 2</a>
+          </pfe-dropdown-item>
+          <pfe-dropdown-item item-type="link">
+            <a href="#">Link 3</a>
           </pfe-dropdown-item>
           <pfe-dropdown-item item-type="separator"></pfe-dropdown-item>
           <pfe-dropdown-item item-type="action">
@@ -171,7 +174,7 @@ describe('<pfe-dropdown>', function() {
         await element.updateComplete;
       });
 
-      it(`ArrowDown should open dialog and focuse first item.`, async function() {
+      it(`ArrowDown should open dialog and focus first item.`, async function() {
         await sendKeys({ press: 'ArrowDown' });
         await element.updateComplete;
         expect(element.querySelector('pfe-dropdown-item:focus')).to.be.visible;
@@ -186,31 +189,80 @@ describe('<pfe-dropdown>', function() {
       it(`Enter should open dialog and focuse first item.`, async function() {
         await sendKeys({ press: 'Enter' });
         await element.updateComplete;
-        expect(element.querySelector('pfe-dropdown-item:focus') ?? null).to.be.visible;
+        expect(element.querySelector('pfe-dropdown-item:focus')).to.be.visible;
       });
 
-      it(`Escape should exit open dialog and return focus to the dropdown.`, async function() {
-        await sendKeys({ press: 'Escape' });
+      it(`should set a11y attributes when the disabled attribute is present on the dropdown`, async function() {
+        const element = await createFixture<PfeDropdown>(html`
+          <pfe-dropdown label="Test disabled dropdown" id="disabledDropdown" disabled>
+            <pfe-dropdown-item item-type="link">
+              <a href="#">Link 1</a>
+            </pfe-dropdown-item>
+          </pfe-dropdown>`);
+
+        expect(element.getAttribute('aria-disabled')).to.equal('true');
+
+        element.removeAttribute('disabled');
         await element.updateComplete;
-        expect(element.querySelector('pfe-dropdown-item:focus')).to.be.null;
-        expect(element.matches(':focus')).to.be.true;
+
+        expect(element.getAttribute('aria-disabled')).to.equal('false');
+      });
+
+      describe(`keyboard accessibility for dropdown items.`, async function() {
+        const childIsActive = function(nthChild: number | string): boolean {
+          return document.activeElement === element.querySelector(`pfe-dropdown-item:nth-of-type(${nthChild})`);
+        }
+
+        beforeEach(async function() {
+          await sendKeys({ press: 'Enter' });
+          await element.updateComplete;
+        });
+
+        it(`Enter should exit open dialog and move to the dropdown.`, async function() {
+          await sendKeys({ press: 'ArrowUp' });
+          await sendKeys({ press: 'Enter' });
+          await element.updateComplete;
+          expect(element.querySelector('pfe-dropdown-item:focus')).to.be.null;
+          expect(element.matches(':focus')).to.be.true;
+        });
+
+        it(`Tab should exit open dialog and move focus elsewhere.`, async function() {
+          await sendKeys({ press: 'Tab' });
+          await element.updateComplete;
+          expect(element.querySelector('pfe-dropdown-item:focus')).to.be.null;
+          expect(element.matches(':focus')).to.be.false;
+        });
+
+        it(`Escape should exit open dialog and return focus to the dropdown.`, async function() {
+          await sendKeys({ press: 'Escape' });
+          await element.updateComplete;
+          expect(element.querySelector('pfe-dropdown-item:focus')).to.be.null;
+          expect(element.matches(':focus')).to.be.true;
+        });
+
+        it(`ArrowDown should travel to the next available item in the list.`, async function() {
+          await sendKeys({ press: 'ArrowDown' });
+          await element.updateComplete;
+          expect(childIsActive(3)).to.be.true;
+          expect(menu).to.be.visible;
+        });
+
+        it(`ArrowDown / ArrowUp should travel to the prev/next available item in the list.`, async function() {
+          expect(menu).to.be.visible;
+          expect(childIsActive(1)).to.be.true;
+          await sendKeys({ press: 'ArrowDown' });
+          await sendKeys({ press: 'ArrowDown' });
+          // it should skip the second disabled link and the separator
+          expect(childIsActive(5)).to.be.true;
+          await sendKeys({ press: 'ArrowUp' });
+          // it should skip the separator and go back to the third link
+          expect(childIsActive(3)).to.be.true;
+          await sendKeys({ press: 'ArrowUp' });
+          await sendKeys({ press: 'ArrowUp' });
+          // it should go to the bottom of the list, skip the disabled action return the 5th
+          expect(childIsActive(5)).to.be.true;
+        });
       });
     });
-  });
-
-  it(`should set a11y attributes when the disabled attribute is present on the dropdown`, async function() {
-    const element = await createFixture<PfeDropdown>(html`
-      <pfe-dropdown label="Test disabled dropdown" id="disabledDropdown" disabled>
-        <pfe-dropdown-item item-type="link">
-          <a href="#">Link 1</a>
-        </pfe-dropdown-item>
-      </pfe-dropdown>`);
-
-    expect(element.getAttribute('aria-disabled')).to.equal('true');
-
-    element.removeAttribute('disabled');
-    await element.updateComplete;
-
-    expect(element.getAttribute('aria-disabled')).to.equal('false');
   });
 });

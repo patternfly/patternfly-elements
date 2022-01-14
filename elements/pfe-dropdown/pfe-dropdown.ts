@@ -179,15 +179,18 @@ export class PfeDropdown extends LitElement {
       item.matches(':focus')
     );
 
-
     switch (event.key) {
       case ' ':
       case 'Enter': {
+        event.preventDefault();
+        event.stopPropagation();
         if ((event.target as HTMLElement) instanceof PfeDropdownItem) {
           this._selectItem(event.target, (itemType ?? undefined) as PfeDropdownOption['type']);
         }
       } break;
       case 'Escape':
+        event.preventDefault();
+        event.stopPropagation();
         this.focus();
         await this.updateComplete;
         this.close();
@@ -197,6 +200,8 @@ export class PfeDropdown extends LitElement {
         break;
       case 'ArrowRight':
       case 'ArrowDown':
+        event.preventDefault();
+        event.stopPropagation();
         // get the following item
         newItem = this._itemContainer(this._nextItem(currentIndex, 1));
         break;

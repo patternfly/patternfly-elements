@@ -28,6 +28,11 @@ export class PfeDropdownItem extends LitElement {
 
   @state() containerRole?: 'none'|'menuitem'|'separator';
 
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('click', this._clickHandler);
+  }
+
   render() {
     return html`
       <li class="pfe-dropdown-item__container" role="${ifDefined(this.containerRole)}">
@@ -65,6 +70,12 @@ export class PfeDropdownItem extends LitElement {
     } else {
       this.setAttribute('tabindex', '0');
     }
+  }
+
+  protected _clickHandler() {
+    // Forward all click events to the elements in the lightdom.
+    // This fixes <a> tags from not being selected with keyboard events.
+    this.firstElementChild?.click();
   }
 }
 

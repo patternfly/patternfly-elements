@@ -19,7 +19,7 @@
   },
   "scripts": {
     "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
-    "clean": "git clean -fx -e node_modules -e tsconfig.tsbuildinfo .",
+    "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
     "🚚-----DIST-------🚚": "❓ Publish packages",
     "prepublishOnly": "npm run build",
     "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",

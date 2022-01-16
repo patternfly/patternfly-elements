@@ -6,7 +6,7 @@
   "type": "module",
   "main": "./pfe-layouts.css",
   "scripts": {
-    "clean": "git clean -fx -e node_modules -e tsconfig.tsbuildinfo .",
+    "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
     "build": "run-s build:**",
     "build:clean": "npm run clean",
     "build:compressed": "sass --load-path=../../node_modules src:. --style compressed",

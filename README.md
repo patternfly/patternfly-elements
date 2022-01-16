@@ -52,43 +52,38 @@ Many commands have an optional argument of space-separated component name(s), if
 npm run build
 
 # Build one or more components
-npm run build [component-name(s)]
+npm run build -w @patternfly/pfe-band -w @patternfly/pfe-bard
 ```
-
-The build command can accept a few flags; for more details, use `npm run build -- --help`.
 
 ### Preview
 
+Runs server process to preview files (does not build)
 ```shell
-# Runs server process to preview files (does not build)
 npm start
-
-# Runs dev server
-npm run dev
 ```
 
 ### Testing
 
-#### ✨ New tests ([Web Test Runner](https://modern-web.dev/docs/test-runner/overview/))
+#### ✨ Test using ([Web Test Runner](https://modern-web.dev/docs/test-runner/overview/))
 
 ```shell
-# Run all tests in watch mode.
+# Run default test group in watch mode.
 npm run test:watch
 
 # Run a single test in watch mode.
-npm run test -w @patternfly/pfe-accordion -- --watch
+npm run test:watch -- --files elements/pfe-accordion/test/pfe-accordion.spec.ts
 
 # Or multiple:
-npm run test:watch -- --files 'elements/{pfe-select,pfe-card}/test/*.spec.ts'
+npm run test:watch -- --files 'elements/pfe-{select,card}/test/*.spec.ts'
 
 # Run all tests excluding react and vue tests.
-npm run test:watch -- --group default
+npm run test:watch
 
 # Run all tests using a React wrapper in watch mode.
-npm run test:watch -- --group with-react
+npm run test:react
 
 # Run all tests using a Vue wrapper in watch mode.
-npm run test:watch -- --group with-vue
+npm run test:vue
 
 # Run all tests with and without React and Vue wrappers.
 # This is run on pull request within CI.

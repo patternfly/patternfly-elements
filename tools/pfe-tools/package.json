@@ -44,7 +44,7 @@
   "scripts": {
     "build": "tsc -b .",
     "rebuild": "rm tsconfig.tsbuildinfo && tsc -b .",
-    "clean": "git clean -fx -e node_modules -e tsconfig.tsbuildinfo .",
+    "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
     "dev": "node _scripts/dev.js",
     "prepublishOnly": "npm run rebuild"
   },

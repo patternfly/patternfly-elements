@@ -72,10 +72,12 @@ export class PfeDropdownItem extends LitElement {
     }
   }
 
-  protected _clickHandler() {
+  protected _clickHandler(event) {
     // Forward all click events to the elements in the lightdom.
     // This fixes <a> tags from not being selected with keyboard events.
-    (this.firstElementChild as HTMLElement)?.click();
+    if (event.target === this) {
+      (this.firstElementChild as HTMLElement)?.click();
+    }
   }
 }
 

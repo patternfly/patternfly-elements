@@ -353,6 +353,7 @@ export class PfeDropdown extends LitElement {
 
   /**
    * Add dropdown items dynamically
+   * @example adding a single option
    * ```js
    * customElements.whenDefined("pfe-dropdown").then(function() {
    *   dropdown.addDropdownOptions(

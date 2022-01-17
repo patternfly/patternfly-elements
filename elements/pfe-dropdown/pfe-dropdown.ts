@@ -265,7 +265,7 @@ export class PfeDropdown extends LitElement {
   }
 
   /** modify DOM if custom options are passed in an array */
-  private async _modifyDOM(options: PfeDropdownOption[], clean: Boolean = true) {
+  private async _modifyDOM(options: PfeDropdownOption[], clean = true) {
     // @todo evaluate how expensive it is to use innerHTML in this manor
     // remove all dropdown items and separators
     if (clean) {

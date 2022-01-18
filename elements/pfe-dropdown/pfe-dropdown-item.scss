@@ -38,7 +38,7 @@
 
 .pfe-dropdown-item__container {
   &:hover,
-  &:focus,
+  &:focus-within,
   &:active {
     background-color: pfe-local(BackgroundColor--hover);
     color: pfe-local(Color--hover);

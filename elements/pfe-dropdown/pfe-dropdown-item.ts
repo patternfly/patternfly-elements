@@ -19,12 +19,14 @@ export class PfeDropdownItem extends LitElement {
    * - `action` : a button that triggers some sort of action
    * - `separator` : a visual separator for items in the list
    */
-  @observed @property({ reflect: true, attribute: 'item-type' })
-    itemType?: 'link'|'action'|'separator';
+  @observed
+  @property({ reflect: true, attribute: 'item-type' })
+  itemType?: 'link'|'action'|'separator';
 
   /** Disabled item */
-  @observed @property({ type: Boolean, reflect: true })
-    disabled = false;
+  @observed
+  @property({ type: Boolean, reflect: true })
+  disabled = false;
 
   @state() containerRole?: 'none'|'menuitem'|'separator';
 

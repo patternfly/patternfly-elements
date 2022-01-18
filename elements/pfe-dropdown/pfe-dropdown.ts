@@ -375,13 +375,6 @@ export class PfeDropdown extends LitElement {
   }
 
   /**
-   * Override the default focus method to give focus to the internal button
-   */
-  @bound focus() {
-    this.shadowRoot?.querySelector('button')?.focus();
-  }
-
-  /**
    * Manually opens the dropdown menu.
    *
    * ```js

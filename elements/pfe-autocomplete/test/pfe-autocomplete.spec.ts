@@ -221,40 +221,51 @@ describe('<pfe-autocomplete>', function() {
   })
 
 
-  it(`should fire a pfe-autocomplete:options-shown event when the droplist is shown to the user`, async function() {
-    const items = ['option 1', 'option 2'];
+  describe(`should fire a pfe-autocomplete:options-shown event when the droplist is shown to the user`, async function() {
+    beforeEach(function() {
+      const items = ['option 1', 'option 2'];
+      autocompleteElem.autocompleteRequest = function(_, callback) {
+        callback(items);
+      };
+      input.focus();
+      setTimeout(() => sendKeys({ type: 'op' }));
+    });
 
-    autocompleteElem.autocompleteRequest = function(_, callback) {
-      callback(items);
-    };
+    it(`should fire a shown event`, async function() {
+      await oneEvent(autocompleteElem, 'show') as unknown as AutocompleteShowEvent;
+      expect(droplistElem.hasAttribute('open')).to.be.true;
+    });
 
-    input.focus();
-    setTimeout(() => sendKeys({ type: 'op' }));
-
-    await oneEvent(autocompleteElem, 'pfe-autocomplete:options-shown');
-
-    expect(droplistElem.hasAttribute('open')).to.be.true;
+    /** @deprecated */
+    it(`should fire a pfe-autocomplete:options-shown event`, async function() {
+      await oneEvent(autocompleteElem, 'pfe-autocomplete:options-shown');
+      expect(droplistElem.hasAttribute('open')).to.be.true;
+    });
   });
 
-  it(`should fire a pfe-autocomplete:option-cleared event when the input is cleared`, async function() {
-    const items = ['option 1', 'option 2'];
+  describe(`should fire a clear event when the input is cleared`, async function() {
+    beforeEach(async function() {
+      const items = ['option 1', 'option 2'];
+      autocompleteElem.autocompleteRequest = function(params, callback) {
+        const regx = new RegExp(`^${params.query}`, 'i');
+        callback(items.filter(function(item) {
+          return regx.test(item);
+        }));
+      };
+      input.focus();
+      await sendKeys({ type: 'op' });
+      await nextFrame();
+      setTimeout(() => clearButton.click());
+    });
 
-    autocompleteElem.autocompleteRequest = function(params, callback) {
-      const regx = new RegExp(`^${params.query}`, 'i');
-      callback(items.filter(function(item) {
-        return regx.test(item);
-      }));
-    };
+    it(`should fire a clear event`, async function() {
+      await oneEvent(autocompleteElem, 'pfe-autocomplete:option-cleared') as unknown as AutocompleteClearEvent;
+    });
 
-    input.focus();
-
-    await sendKeys({ type: 'op' });
-
-    await nextFrame();
-
-    setTimeout(() => clearButton.click());
-
-    await oneEvent(autocompleteElem, 'pfe-autocomplete:option-cleared');
+    /** @deprecated */
+    it(`should fire a pfe-autocomplete:option-cleared event`, async function() {
+      await oneEvent(autocompleteElem, 'pfe-autocomplete:option-cleared');
+    });
   });
 
   it('should set selected-value attribute after user click on an option', async function() {

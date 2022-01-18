@@ -105,40 +105,50 @@ describe('<pfe-autocomplete>', function() {
     expect(droplistElem.open).to.be.false;
   });
 
-  it('should fire search event after click on search icon', async function () {
-    input.value = 'test';
-    autocompleteElem.requestUpdate();
-    await droplistElem.updateComplete;
-    await autocompleteElem.updateComplete;
+  describe('should fire search event', function() {
+    describe('should fire search event after click on search icon', function() {
+      beforeEach(async function() {
+        input.value = 'test';
+        autocompleteElem.requestUpdate();
+        await droplistElem.updateComplete;
+        await autocompleteElem.updateComplete;
+        setTimeout(() => searchButton.click());
+      });
 
-    setTimeout(() => searchButton.click());
-    const event = await oneEvent(autocompleteElem, 'search') as unknown as AutocompleteSearchEvent;
-    expect(event.value).to.equal('test');
+      it('should fire search event', async function () {
+        const event = await oneEvent(autocompleteElem, 'search') as unknown as AutocompleteSearchEvent;
+        expect(event.value).to.equal('test');
+      });
 
-    /** @deprecated */
-    setTimeout(() => searchButton.click());
-    const eventDep = await oneEvent(autocompleteElem, 'pfe-autocomplete:search-event');
-    expect(eventDep.detail.searchValue).to.equal('test');
-  });
+      /** @deprecated */
+      it('should fire pfe-autocomplete:search-event event', async function () {
+        const eventDep = await oneEvent(autocompleteElem, 'pfe-autocomplete:search-event');
+        expect(eventDep.detail.searchValue).to.equal('test');
+      });
+    });
 
-  it('should fire pfe-autocomplete:search-event after click on search button', async function() {
-    const textualButton = await createFixture<PfeAutocomplete>(TEMPLATES.textualButton);
+    describe('should fire search event after click on search button', async function() {
+      let textualButton: PfeAutocomplete;
+      beforeEach(async function() {
+        textualButton = await createFixture(TEMPLATES.textualButton);
+        const input = textualButton.querySelector('input')!;
+        input.value = 'test';
+        await textualButton.updateComplete;
+        setTimeout(() =>
+          textualButton.shadowRoot?.querySelector<HTMLElement>('.search-button--textual')!.click());
+      });
 
-    const input = textualButton.querySelector('input')!;
+      it('should fire search event', async function() {
+        const event = await oneEvent(textualButton, 'search') as unknown as AutocompleteSearchEvent;
+        expect(event.value).to.equal('test');
+      });
 
-    input.value = 'test';
-    await textualButton.updateComplete;
-
-    setTimeout(() =>
-      textualButton.shadowRoot?.querySelector<HTMLElement>('.search-button--textual')!.click());
-    const event = await oneEvent(textualButton, 'search') as unknown as AutocompleteSearchEvent;
-    expect(event.value).to.equal('test');
-
-    /** @deprecated */
-    setTimeout(() =>
-      textualButton.shadowRoot?.querySelector<HTMLElement>('.search-button--textual')!.click());
-    const eventDep = await oneEvent(textualButton, 'pfe-autocomplete:search-event');
-    expect(eventDep.detail.searchValue).to.equal('test');
+      /** @deprecated */
+      it('should fire pfe-autocomplete:search-event', async function() {
+        const event = await oneEvent(textualButton, 'pfe-autocomplete:search-event');
+        expect(event.detail.searchValue).to.equal('test');
+      });
+    });
   });
 
   it('should set selected-value attribute after after click on search icon', async function() {
@@ -185,32 +195,31 @@ describe('<pfe-autocomplete>', function() {
     });
   })
 
-  it(`should fire a pfe-autocomplete:option-selected event when a user selects an option in the droplist with the enter key`, async function() {
-    autocompleteElem.data = ['option 1', 'option 2'];
-    droplistElem.reflow = true;
-    droplistElem.open = true;
+  describe('should fire a select event', function() {
+    beforeEach(async function () {
+      autocompleteElem.data = ['option 1', 'option 2'];
+      droplistElem.reflow = true;
+      droplistElem.open = true;
+      await nextFrame();
+    });
 
-    await nextFrame();
-    input.focus();
-    await sendKeys({ up: 'ArrowDown' });
-    await nextFrame();
+    it(`should fire when a user selects an option in the droplist with the enter key`, async function() {
+      input.focus();
+      await sendKeys({ up: 'ArrowDown' });
+      await nextFrame();
+      setTimeout(() => sendKeys({ up: 'Enter' }));
+      const event = await oneEvent(autocompleteElem, 'select') as unknown as AutocompleteSelectEvent;
+      expect(event.value).to.equal('option 1');
+    });
 
-    setTimeout(() => sendKeys({ up: 'Enter' }));
+    it(`should fire a pfe-autocomplete:option-selected event when a user selects an option in the droplist with the mouse`, async function() {
+      const option = droplistElem.shadowRoot!.querySelector<HTMLElement>('li:nth-child(2)')!;
+      setTimeout(() => option.click());
+      const event = await oneEvent(autocompleteElem, 'pfe-autocomplete:option-selected');
+      expect(event.detail.optionValue).to.equal('option 2');
+    });
+  })
 
-    const event = await oneEvent(autocompleteElem, 'pfe-autocomplete:option-selected');
-    expect(event.detail.optionValue).to.equal('option 1');
-  });
-
-  it(`should fire a pfe-autocomplete:option-selected event when a user selects an option in the droplist with the mouse`, async function() {
-    autocompleteElem.data = ['option 1', 'option 2'];
-    droplistElem.reflow = true;
-    droplistElem.open = true;
-    await nextFrame();
-    const option = droplistElem.shadowRoot!.querySelector<HTMLElement>('li:nth-child(2)')!;
-    setTimeout(() => option.click());
-    const event = await oneEvent(autocompleteElem, 'pfe-autocomplete:option-selected');
-    expect(event.detail.optionValue).to.equal('option 2');
-  });
 
   it(`should fire a pfe-autocomplete:options-shown event when the droplist is shown to the user`, async function() {
     const items = ['option 1', 'option 2'];

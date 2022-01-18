@@ -170,7 +170,7 @@ describe('<pfe-dropdown>', function() {
       let menu: HTMLElement | null | undefined;
       beforeEach(async function() {
         menu = element.shadowRoot?.querySelector('#pfe-dropdown-menu');
-        element.focus();
+        await sendKeys({ press: 'Tab' });
         await element.updateComplete;
       });
 
@@ -218,7 +218,7 @@ describe('<pfe-dropdown>', function() {
           await element.updateComplete;
         });
 
-        it(`Enter should exit open dialog and move to the dropdown.`, async function() {
+        it(`Enter should exit open dialog and move focus to the dropdown.`, async function() {
           await sendKeys({ press: 'ArrowUp' });
           await sendKeys({ press: 'Enter' });
           await element.updateComplete;

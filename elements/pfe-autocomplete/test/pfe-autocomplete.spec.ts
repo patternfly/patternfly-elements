@@ -5,6 +5,11 @@ import * as sinon from 'sinon';
 
 // Import the element we're testing.
 import { PfeAutocomplete } from '@patternfly/pfe-autocomplete';
+import type {
+  AutocompleteShowEvent,
+  AutocompleteClearEvent,
+  AutocompleteSearchEvent,
+  AutocompleteSelectEvent } from '@patternfly/pfe-autocomplete';
 import { PfeSearchDroplist } from '@patternfly/pfe-autocomplete/pfe-search-droplist.js';
 
 const TEMPLATES = {
@@ -100,14 +105,20 @@ describe('<pfe-autocomplete>', function() {
     expect(droplistElem.open).to.be.false;
   });
 
-  it('should fire pfe-autocomplete:search-event after click on search icon', async function() {
+  it('should fire search event after click on search icon', async function () {
     input.value = 'test';
     autocompleteElem.requestUpdate();
     await droplistElem.updateComplete;
     await autocompleteElem.updateComplete;
+
     setTimeout(() => searchButton.click());
-    const event = await oneEvent(autocompleteElem, 'pfe-autocomplete:search-event');
-    expect(event.detail.searchValue).to.equal('test');
+    const event = await oneEvent(autocompleteElem, 'search') as unknown as AutocompleteSearchEvent;
+    expect(event.value).to.equal('test');
+
+    /** @deprecated */
+    setTimeout(() => searchButton.click());
+    const eventDep = await oneEvent(autocompleteElem, 'pfe-autocomplete:search-event');
+    expect(eventDep.detail.searchValue).to.equal('test');
   });
 
   it('should fire pfe-autocomplete:search-event after click on search button', async function() {
@@ -120,9 +131,14 @@ describe('<pfe-autocomplete>', function() {
 
     setTimeout(() =>
       textualButton.shadowRoot?.querySelector<HTMLElement>('.search-button--textual')!.click());
+    const event = await oneEvent(textualButton, 'search') as unknown as AutocompleteSearchEvent;
+    expect(event.value).to.equal('test');
 
-    const event = await oneEvent(textualButton, 'pfe-autocomplete:search-event');
-    expect(event.detail.searchValue).to.equal('test');
+    /** @deprecated */
+    setTimeout(() =>
+      textualButton.shadowRoot?.querySelector<HTMLElement>('.search-button--textual')!.click());
+    const eventDep = await oneEvent(textualButton, 'pfe-autocomplete:search-event');
+    expect(eventDep.detail.searchValue).to.equal('test');
   });
 
   it('should set selected-value attribute after after click on search icon', async function() {
@@ -147,16 +163,27 @@ describe('<pfe-autocomplete>', function() {
     expect(textualButton.getAttribute('selected-value')).to.eql('test');
   });
 
-  it('should fire pfe-autocomplete:search-event after user click on an option', async function() {
-    autocompleteElem.data = ['option 1', 'option 2'];
-    droplistElem.reflow = true;
-    droplistElem.open = true;
-    await droplistElem.updateComplete;
-    const option = droplistElem.shadowRoot!.querySelector<HTMLElement>('li:nth-child(2)')!;
-    setTimeout(()=> option.click());
-    const event = await oneEvent(autocompleteElem, 'pfe-autocomplete:search-event');
-    expect(event.detail.searchValue).to.equal('option 2');
-  });
+  describe('should fire search after user click on an option', async function() {
+    beforeEach(async function() {
+      autocompleteElem.data = ['option 1', 'option 2'];
+      droplistElem.reflow = true;
+      droplistElem.open = true;
+      await droplistElem.updateComplete;
+    });
+    it('should fire search after user click on an option', async function() {
+      const option = droplistElem.shadowRoot!.querySelector<HTMLElement>('li:nth-child(2)')!;
+      setTimeout(()=> option.click());
+      const event = await oneEvent(autocompleteElem, 'search') as unknown as AutocompleteSearchEvent;
+      expect(event.value).to.equal('option 2');
+    });
+    /** @deprecated */
+    it('should fire pfe-autocomplete:search-event after user click on an option', async function() {
+      const option = droplistElem.shadowRoot!.querySelector<HTMLElement>('li:nth-child(2)')!;
+      setTimeout(()=> option.click());
+      const eventDep = await oneEvent(autocompleteElem, 'pfe-autocomplete:search-event');
+      expect(eventDep.detail.searchValue).to.equal('option 2');
+    });
+  })
 
   it(`should fire a pfe-autocomplete:option-selected event when a user selects an option in the droplist with the enter key`, async function() {
     autocompleteElem.data = ['option 1', 'option 2'];

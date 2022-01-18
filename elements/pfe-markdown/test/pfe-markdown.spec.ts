@@ -23,8 +23,8 @@ const TEMPLATES = {
 
 describe('<pfe-markdown>', function() {
   it('should upgrade pfe-markdown', async function() {
-    const pfeAccordion = await createFixture<PfeMarkdown>(html`<pfe-markdown></pfe-markdown>`);
-    expect(pfeAccordion, 'pfe-markdown should be an instance of PfeMarkdown')
+    const element = await createFixture<PfeMarkdown>(html`<pfe-markdown></pfe-markdown>`);
+    expect(element, 'pfe-markdown should be an instance of PfeMarkdown')
       .to.be.an.instanceof(customElements.get('pfe-markdown'))
       .and
       .to.be.an.instanceof(PfeMarkdown);

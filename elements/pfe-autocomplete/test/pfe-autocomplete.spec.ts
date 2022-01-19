@@ -50,6 +50,7 @@ describe('<pfe-autocomplete>', function() {
   let input: HTMLInputElement;
   let clearButton: HTMLButtonElement;
   let searchButton: HTMLButtonElement;
+  let loadingIndicator: HTMLSpanElement;
   let droplistElem: PfeSearchDroplist;
 
   // function to run before each test within this suite.
@@ -58,6 +59,7 @@ describe('<pfe-autocomplete>', function() {
     clearButton = autocompleteElem.shadowRoot!.querySelector('.clear-search')!;
     searchButton = autocompleteElem.shadowRoot!.querySelector('.search-button')!;
     droplistElem = autocompleteElem.shadowRoot!.getElementById('dropdown') as PfeSearchDroplist;
+    loadingIndicator = autocompleteElem.shadowRoot!.querySelector('.loading')!;
     input = autocompleteElem.querySelector('input')!;
   });
 
@@ -434,5 +436,51 @@ describe('<pfe-autocomplete>', function() {
       textualButton.shadowRoot!.querySelector('.search-button--textual')!.textContent!.trim();
 
     expect(text).to.eql('Search');
+  });
+
+  describe('loading indicator', function() {
+    it('should display the loading indicator when open is true', async function() {
+      await sendKeys({ press: 'Tab' });
+      await sendKeys({ type: 'web components' });
+      autocompleteElem.loading = true;
+      await autocompleteElem.updateComplete;
+      expect(loadingIndicator.hasAttribute('hidden')).to.be.false;
+    });
+
+    it('should not display the loading indicator if the user has not typed in the input', async function() {
+      await sendKeys({ press: 'Tab' });
+      autocompleteElem.loading = true;
+      await autocompleteElem.updateComplete;
+      expect(loadingIndicator.hasAttribute('hidden')).to.be.true;
+    });
+  })
+
+  it('should call autocompleteRequest when the user types in the input', async function() {
+    const mockResults = ['web', 'components', 'web components', 'web development'];
+    autocompleteElem.autocompleteRequest = function(params, callback) {
+      autocompleteElem.loading = true;
+      setTimeout(() => {
+        callback(mockResults);
+        autocompleteElem.loading = false;
+      }, 300);
+    };
+    await sendKeys({ press: 'Tab' });
+    await sendKeys({ type: 'web components' });
+    // This is needed to account for the debounce delay in executing
+    // the autocompleteRequest callback.
+    await new Promise(resolve => setTimeout(resolve, 500));
+    // Expect that the loading indicator is present and dropdown
+    // list has not yet been opened
+    expect(autocompleteElem.loading).to.be.true;
+    expect(droplistElem.open).to.be.false;
+
+    // Now wait for the mockResults callback to execute
+    await new Promise(resolve => setTimeout(resolve, 100));
+    // Expect that the loading indicator is gone and dropdown
+    // list has been opened and populated with the correct data.
+    expect(autocompleteElem.loading).to.be.false;
+    expect(droplistElem.open).to.be.true;
+    // compare that the array values are equal.
+    expect(droplistElem.data.join('')).to.equal(mockResults.join(''));
   });
 });

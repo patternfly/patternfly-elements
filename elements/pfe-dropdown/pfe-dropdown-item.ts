@@ -21,12 +21,12 @@ export class PfeDropdownItem extends LitElement {
    */
   @observed
   @property({ reflect: true, attribute: 'item-type' })
-  itemType?: 'link'|'action'|'separator';
+    itemType?: 'link'|'action'|'separator';
 
   /** Disabled item */
   @observed
   @property({ type: Boolean, reflect: true })
-  disabled = false;
+    disabled = false;
 
   @state() containerRole?: 'none'|'menuitem'|'separator';
 

@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
@@ -92,6 +92,8 @@ export class PfeDropdown extends LitElement {
   set pfeDropdownOptions(options: PfeDropdownOption[]|undefined) {
     this.options = options;
   }
+
+  @query('#pfe-dropdown-toggle') private button?: HTMLButtonElement;
 
   render() {
     return html`
@@ -352,27 +354,25 @@ export class PfeDropdown extends LitElement {
     return item.shadowRoot?.querySelector(`.pfe-dropdown-item__container`) ?? null;
   }
 
-  // move focus to the button
+  /** Move focus back to the button after selecting an item or closing the dropdown */
   private _focus():void {
-    this.shadowRoot?.querySelector<HTMLButtonElement>('#pfe-dropdown-toggle')?.focus();
+    this.button?.focus();
   }
 
   /**
    * Add dropdown items dynamically
    * @example adding a single option
    * ```js
-   * customElements.whenDefined("pfe-dropdown").then(function() {
-   *   dropdown.addDropdownOptions(
-   *     [
-   *       {
-   *         href: "https://patternflyelements.org",
-   *         text: "Link 4",
-   *         type: "link",
-   *         disabled: false
-   *       }
-   *     ]
-   *   );
-   * });
+   * document.querySelector('pfe-dropdown').addDropdownOptions(
+   *   [
+   *     {
+   *       href: 'https://patternflyelements.org',
+   *       text: 'Link 4',
+   *       type: 'link',
+   *       disabled: false
+   *     }
+   *   ]
+   * );
    * ```
    * */
   @bound addDropdownOptions(options: PfeDropdownOption[]) {
@@ -405,7 +405,7 @@ export class PfeDropdown extends LitElement {
    * Manually toggles the dropdown menu.
    *
    * ```js
-   * document.querySelector("pfe-dropdown").toggle();
+   * document.querySelector('pfe-dropdown').toggle();
    * ```
    */
   @bound toggle() {

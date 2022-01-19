@@ -191,7 +191,7 @@ export class PfeDropdown extends LitElement {
       case 'Escape':
         event.preventDefault();
         event.stopPropagation();
-        this.focus();
+        this._focus();
         await this.updateComplete;
         this.close();
         break;
@@ -341,7 +341,7 @@ export class PfeDropdown extends LitElement {
       // return focus back to button
       this.close();
       await this.updateComplete;
-      this.focus();
+      this._focus();
     } else {
       item.click();
     }
@@ -350,6 +350,11 @@ export class PfeDropdown extends LitElement {
   private _itemContainer(item: PfeDropdownItem): HTMLElement|null {
     // used to apply the focus state to the item's container
     return item.shadowRoot?.querySelector(`.pfe-dropdown-item__container`) ?? null;
+  }
+
+  // move focus to the button
+  private _focus():void {
+    this.shadowRoot?.querySelector<HTMLButtonElement>('#pfe-dropdown-toggle')?.focus();
   }
 
   /**

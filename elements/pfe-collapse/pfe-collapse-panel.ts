@@ -8,8 +8,6 @@ import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 
 import style from './pfe-collapse-panel.scss';
 
-export { style };
-
 export class AnimationStartEvent extends ComposedEvent {
   constructor(
     /** @summary A reference to the panel which started animating */

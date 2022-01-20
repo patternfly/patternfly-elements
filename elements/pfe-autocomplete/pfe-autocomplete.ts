@@ -28,7 +28,7 @@ export class AutocompleteShowEvent extends ComposedEvent {
 
 export class AutocompleteSearchEvent extends ComposedEvent {
   constructor(
-    /** The search query */
+    // The search query
     public value: string
   ) {
     super('search');
@@ -37,7 +37,7 @@ export class AutocompleteSearchEvent extends ComposedEvent {
 
 export class AutocompleteSelectEvent extends ComposedEvent {
   constructor(
-    /** The selected value */
+    // The selected value
     public value: string
   ) {
     super('select');

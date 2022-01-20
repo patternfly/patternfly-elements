@@ -462,13 +462,13 @@ describe('<pfe-autocomplete>', function() {
       setTimeout(() => {
         callback(mockResults);
         autocompleteElem.loading = false;
-      }, 300);
+      }, 100);
     };
     await sendKeys({ press: 'Tab' });
     await sendKeys({ type: 'web components' });
     // This is needed to account for the debounce delay in executing
     // the autocompleteRequest callback.
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 300));
     // Expect that the loading indicator is present and dropdown
     // list has not yet been opened
     expect(autocompleteElem.loading).to.be.true;

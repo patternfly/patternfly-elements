@@ -28,7 +28,7 @@ describe('<pfe-dropdown>', function() {
       return async function() {
         await sendKeys({ press });
         await element.updateComplete;
-      }
+      };
     }
 
     const options: PfeDropdownOption[] = [
@@ -141,7 +141,7 @@ describe('<pfe-dropdown>', function() {
     });
 
     describe('when clicked', function() {
-      beforeEach(async function(){
+      beforeEach(async function() {
         toggle.click();
         await element.updateComplete;
       });
@@ -201,7 +201,7 @@ describe('<pfe-dropdown>', function() {
       it('should preserve existing items', function() {
         expect(element.children.length).to.equal(initialChildrenLength + options.length);
       });
-    })
+    });
 
     /** https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.html */
     describe('when focused', function() {
@@ -215,7 +215,7 @@ describe('<pfe-dropdown>', function() {
       it('focuses the button', function() {
         expect(document.activeElement, 'from light DOM').to.equal(element);
         expect(element.shadowRoot?.activeElement, 'from shadow DOM').to.equal(element.shadowRoot?.querySelector('button'));
-      })
+      });
 
       describe('ArrowDown', function() {
         beforeEach(press('ArrowDown'));
@@ -236,7 +236,7 @@ describe('<pfe-dropdown>', function() {
 
         it('opens the menu', function() {
           expect(menu).to.be.visible;
-        })
+        });
 
         it('should focus the first item', function() {
           expect(element.querySelector('pfe-dropdown-item:focus')).to.be.visible;
@@ -316,7 +316,6 @@ describe('<pfe-dropdown>', function() {
               });
             });
           });
-
         });
       });
     });

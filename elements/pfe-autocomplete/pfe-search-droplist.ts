@@ -15,7 +15,7 @@ function isLi(target?: EventTarget|null): target is HTMLLIElement {
 
 export class DroplistSelectEvent extends ComposedEvent {
   constructor(
-    /** The selected value */
+    // The selected value
     public value: string
   ) {
     super('select');

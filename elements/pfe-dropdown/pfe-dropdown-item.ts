@@ -10,20 +10,30 @@ import style from './pfe-dropdown-item.scss';
 export class PfeDropdownItem extends LitElement {
   static readonly styles = [style];
 
+  /** Use 'delegatesFocus' to forward focus to the first pfe-dropdown-item when this container is clicked or focused. */
+  static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+
   /**
    * This is an optional attribute string that you should provide to indicate the type of dropdown item. This drives the appropriate assignment of accessibility attributes for each type of item.
    * - `link` : an HTML link
    * - `action` : a button that triggers some sort of action
    * - `separator` : a visual separator for items in the list
    */
-  @observed @property({ reflect: true, attribute: 'item-type' })
+  @observed
+  @property({ reflect: true, attribute: 'item-type' })
     itemType?: 'link'|'action'|'separator';
 
   /** Disabled item */
-  @observed @property({ type: Boolean, reflect: true })
+  @observed
+  @property({ type: Boolean, reflect: true })
     disabled = false;
 
   @state() containerRole?: 'none'|'menuitem'|'separator';
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('click', this._clickHandler);
+  }
 
   render() {
     return html`
@@ -61,6 +71,14 @@ export class PfeDropdownItem extends LitElement {
       this.removeAttribute('tabindex');
     } else {
       this.setAttribute('tabindex', '0');
+    }
+  }
+
+  protected _clickHandler(event: MouseEvent) {
+    // Forward all click events to the elements in the lightdom.
+    // This fixes <a> tags from not being selected with keyboard events.
+    if (event.target === this) {
+      (this.firstElementChild as HTMLElement)?.click();
     }
   }
 }

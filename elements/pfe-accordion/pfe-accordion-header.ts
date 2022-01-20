@@ -73,6 +73,10 @@ export class PfeAccordionHeader extends LitElement {
 
   private logger = new Logger(this);
 
+  private get ariaExpandedState(): 'true'|'false' {
+    return String(!!this.expanded) as 'true'|'false';
+  }
+
   constructor() {
     super();
     this.addEventListener('click', this._clickHandler);
@@ -103,7 +107,9 @@ export class PfeAccordionHeader extends LitElement {
     const tag = unsafeStatic(this.headingTag);
     return html`
       <${tag} id="heading">
-        <button aria-expanded="${String(this.expanded)}" id="button" class="pf-c-accordion__toggle">
+        <button id="button"
+          aria-expanded="${this.ariaExpandedState}"
+          class="pf-c-accordion__toggle">
           <span class="pf-c-accordion__toggle-wrapper">
             <span class="pf-c-accordion__toggle-text" part="text">
               ${this.headingText || html`
@@ -138,18 +144,16 @@ export class PfeAccordionHeader extends LitElement {
     if (!this.firstElementChild && !this.firstChild) {
       return void this.logger.warn('No header content provided');
     } else if (this.firstElementChild) {
-      const htags = this.slots.getSlotted().filter(isPorHeader);
+      const [heading, ...otherContent] = this.slots.getSlotted().filter(isPorHeader);
 
       // If there is no content inside the slot, return empty with a warning
       // else, if there is more than 1 element in the slot, capture the first h-tag
-      if (htags.length === 0) {
+      if (!heading) {
         return void this.logger.warn('No heading information was provided.');
-      } else if (htags.length > 1) {
+      } else if (otherContent.length) {
         this.logger.warn('Heading currently only supports 1 tag; extra tags will be ignored.');
-        return htags[0];
-      } else {
-        return htags[0];
       }
+      return heading;
     } else {
       if (!this._generatedHtag) {
         this.logger.warn('Header should contain at least 1 heading tag for correct semantics.');
@@ -175,7 +179,7 @@ export class PfeAccordionHeader extends LitElement {
   }
 
   protected _expandedChanged() {
-    this.button?.setAttribute?.('aria-expanded', this.expanded ? 'true' : 'false');
+    this.button?.setAttribute('aria-expanded', this.ariaExpandedState);
   }
 }
 

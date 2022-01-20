@@ -1,10 +1,11 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { pfelement } from '@patternfly/pfe-core/decorators.js';
+import { observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
-import { style as collapsePanelStyle } from '@patternfly/pfe-collapse/pfe-collapse-panel.js';
+import { PfeCollapsePanel } from '@patternfly/pfe-collapse/pfe-collapse-panel.js';
+
 import style from './pfe-accordion-panel.scss';
 
 /**
@@ -14,11 +15,15 @@ import style from './pfe-accordion-panel.scss';
  */
 @customElement('pfe-accordion-panel') @pfelement()
 export class PfeAccordionPanel extends LitElement {
-  static readonly styles = [collapsePanelStyle, style];
+  static readonly styles = [
+    ...PfeCollapsePanel.styles,
+    style
+  ];
 
   /** Disclosure */
   @property({ type: String, reflect: true }) disclosure?: 'true'|'false';
 
+  @observed
   @property({ type: Boolean, reflect: true }) expanded = false;
 
   @property({ attribute: 'aria-labelledby', reflect: true }) ariaLabelledby?: string;
@@ -37,6 +42,10 @@ export class PfeAccordionPanel extends LitElement {
         </div>
       </div>
     `;
+  }
+
+  protected _expandedChanged() {
+    this.setAttribute('aria-hidden', String(!this.expanded) as 'true'|'false');
   }
 }
 

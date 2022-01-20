@@ -13,7 +13,6 @@ function getTagName(url) {
 /* eslint-disable no-invalid-this */
 
 async function getDocsPage(tagName) {
-
   // NB: I think this is new with 11ty 1.0.0. Maybe it's the pagination value? Not sure how bad of an abuse this is
   if (this.ctx._?.constructor?.name === 'DocsPage') {
     return this.ctx._;

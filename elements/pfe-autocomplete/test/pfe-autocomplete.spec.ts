@@ -223,7 +223,7 @@ describe('<pfe-autocomplete>', function() {
   })
 
 
-  describe(`should fire a pfe-autocomplete:options-shown event when the droplist is shown to the user`, async function() {
+  describe(`should fire a show event when the droplist is shown to the user`, async function() {
     beforeEach(function() {
       const items = ['option 1', 'option 2'];
       autocompleteElem.autocompleteRequest = function(_, callback) {

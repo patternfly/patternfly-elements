@@ -366,7 +366,7 @@ index 60e0513..243d0b2 100644
  export function classPlugin() {
    return {
 diff --git a/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/createClass.js b/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/createClass.js
-index 4b4ba0b..5f04cec 100644
+index 4b4ba0b..18a4672 100644
 --- a/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/createClass.js
 +++ b/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/createClass.js
 @@ -144,7 +144,7 @@ export function createClass(node, moduleDoc, context) {
@@ -378,7 +378,54 @@ index 4b4ba0b..5f04cec 100644
  
    classTemplate.members = classTemplate?.members?.filter(mem => !mem.ignore);
  
-@@ -196,21 +196,79 @@ function eventsVisitor(source, classTemplate) {
+@@ -167,24 +167,28 @@ function eventsVisitor(source, classTemplate) {
+         if (isDispatchEvent(node) && !hasIgnoreJSDoc(node.parent)) {
+           node?.arguments?.forEach((arg) => {
+             if (arg.kind === ts.SyntaxKind.NewExpression) {
+-              /** e.g. `selected-changed` */
+-              const eventName = arg?.arguments?.[0]?.text;
+-              /**
+-               * Check if event already exists
+-               */
+-              const eventExists = classTemplate?.events?.some(event => event.name === eventName);
+-
+-              if (!eventExists) {
+-                let eventDoc = {
+-                  ...(eventName ? { name: eventName } : {}),
+-                  type: {
+-                    text: arg.expression.text,
+-                  },
+-                };
+-
+-                eventDoc = handleJsDoc(eventDoc, node?.parent);
+-                delete eventDoc.privacy;
+-                classTemplate.events.push(eventDoc);
++              const eventArg = arg?.arguments?.[0];
++              if (eventArg && ts.isStringLiteral(eventArg)) {
++                /** e.g. `selected-changed` */
++                const eventName = eventArg.text;
++
++                /**
++                 * Check if event already exists
++                 */
++                const eventExists = classTemplate?.events?.some(event => event.name === eventName);
++
++                if (!eventExists) {
++                  let eventDoc = {
++                    ...(eventName ? { name: eventName } : {}),
++                    type: {
++                      text: arg.expression.text,
++                    },
++                  };
++
++                  eventDoc = handleJsDoc(eventDoc, node?.parent);
++                  delete eventDoc.privacy;
++                  classTemplate.events.push(eventDoc);
++                }
+               }
+             }
+           });
+@@ -196,21 +200,79 @@ function eventsVisitor(source, classTemplate) {
    }
  }
  

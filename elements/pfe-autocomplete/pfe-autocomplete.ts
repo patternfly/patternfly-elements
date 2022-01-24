@@ -26,18 +26,20 @@ export class AutocompleteShowEvent extends ComposedEvent {
   }
 }
 
+/** Fired when the user submits the autocomplete input */
 export class AutocompleteSearchEvent extends ComposedEvent {
   constructor(
-    // The search query
+    /** The search query */
     public value: string
   ) {
     super('search');
   }
 }
 
+/** Fired when the user selects an option from the dropdown */
 export class AutocompleteSelectEvent extends ComposedEvent {
   constructor(
-    // The selected value
+    /** The selected value */
     public value: string
   ) {
     super('select');
@@ -196,7 +198,7 @@ export class PfeAutocomplete extends LitElement {
           <slot @slotchange="${this._inputInit}"></slot>
 
           <!-- loading icon -->
-          <span class="loading" aria-hidden="${String(iconHidden)}" ?hidden="${iconHidden}">
+          <span class="loading" aria-hidden="${String(iconHidden) as 'true'|'false'}" ?hidden="${iconHidden}">
             <svg viewBox="0 0 40 40" enable-background="new 0 0 40 40" part="icon">
               <path opacity="0.2" fill="#000"
                 d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
@@ -399,11 +401,6 @@ export class PfeAutocomplete extends LitElement {
   }
 
   @bound private async _doSearch(searchValue = '') {
-    /**
-     * @deprecated
-     * @fires {Event} pfe-autocomplete:search-event -
-     *                When a search option is selected
-     */
     this.dispatchEvent(pfeEvent('pfe-autocomplete:search-event', { searchValue }));
     this.dispatchEvent(new AutocompleteSearchEvent(searchValue));
     await this._reset();

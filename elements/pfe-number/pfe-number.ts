@@ -27,6 +27,8 @@ numeral.locales.en.delimiters.thousands = ' ';
  */
 @customElement('pfe-number') @pfelement()
 export class PfeNumber extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   static get types(): Record<Format, string|undefined> {

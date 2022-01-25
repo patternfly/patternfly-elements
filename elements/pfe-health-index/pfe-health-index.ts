@@ -31,6 +31,8 @@ const isValidGradeScore = (x: unknown): x is 'A'|'B'|'C'|'D'|'E'|'F' =>
  */
 @customElement('pfe-health-index') @pfelement()
 export class PfeHealthIndex extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   private logger = new Logger(this);

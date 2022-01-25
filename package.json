@@ -20,7 +20,7 @@
     "watch:docs": "npm-run-all build:tools build:styles --parallel watch:docs:*",
     "watch:docs:analyze": "lerna run watch:analyze --parallel",
     "watch:docs:core": "npm run build:core --watch",
-    "watch:docs:eleventy": "eleventy --serve --incremental --config=.eleventy.cjs",
+    "watch:docs:eleventy": "eleventy --serve --config=.eleventy.cjs",
     "watch:types": "tsc -b --watch",
     "new": "./tools/create-element/bin/main.js",
     "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",

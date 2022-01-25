@@ -35,6 +35,8 @@ import styles from './pfe-cool-element.scss';
  */
 @customElement('pfe-cool-element') @pfelement()
 export class PfeCoolElement extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [styles];
 
   render() {

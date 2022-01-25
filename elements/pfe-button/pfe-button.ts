@@ -56,6 +56,8 @@ import styles from './pfe-button.scss';
  */
 @customElement('pfe-button') @pfelement()
 export class PfeButton extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = styles;
 
   /** Disables the button */

@@ -60,6 +60,8 @@ const INTL_CONFIGS = Object.entries({
  */
 @customElement('pfe-datetime') @pfelement()
 export class PfeDatetime extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

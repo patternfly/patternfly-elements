@@ -55,6 +55,8 @@ function register(klass: typeof PfeIcon) {
  */
 @customElement('pfe-icon') @register @pfelement()
 export class PfeIcon extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

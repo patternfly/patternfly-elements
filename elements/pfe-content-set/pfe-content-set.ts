@@ -42,6 +42,8 @@ TABS_TEMPLATE.innerHTML = `
  */
 @customElement('pfe-content-set') @pfelement()
 export class PfeContentSet extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   @query('#container') private container?: HTMLElement;

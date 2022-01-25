@@ -38,6 +38,8 @@ export type PageStatus = (
  */
 @customElement('pfe-page-status') @pfelement()
 export class PfePageStatus extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

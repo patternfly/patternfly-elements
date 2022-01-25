@@ -23,6 +23,8 @@ import style from './pfe-icon-panel.scss';
  */
 @customElement('pfe-icon-panel') @pfelement()
 export class PfeIconPanel extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

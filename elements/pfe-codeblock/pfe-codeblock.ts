@@ -31,6 +31,8 @@ import style from './pfe-codeblock.scss';
  */
 @customElement('pfe-codeblock') @pfelement()
 export class PfeCodeblock extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

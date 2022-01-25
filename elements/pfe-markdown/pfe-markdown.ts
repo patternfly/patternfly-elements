@@ -15,6 +15,8 @@ import style from './pfe-markdown.scss';
  */
 @customElement('pfe-markdown') @pfelement()
 export class PfeMarkdown extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /** Set to render markdown */

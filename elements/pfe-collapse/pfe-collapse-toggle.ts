@@ -46,6 +46,8 @@ function disablable(_: PfeCollapseToggle, __: string, descriptor: PropertyDescri
  */
 @customElement('pfe-collapse-toggle') @pfelement()
 export class PfeCollapseToggle extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   private logger = new Logger(this);

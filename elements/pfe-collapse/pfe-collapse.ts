@@ -20,6 +20,8 @@ import style from './pfe-collapse.scss';
  */
 @customElement('pfe-collapse') @pfelement()
 export class PfeCollapse extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

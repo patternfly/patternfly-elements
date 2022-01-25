@@ -41,6 +41,8 @@ export class AnimationEndEvent extends ComposedEvent {
  */
 @customElement('pfe-collapse-panel') @pfelement()
 export class PfeCollapsePanel extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   @observed

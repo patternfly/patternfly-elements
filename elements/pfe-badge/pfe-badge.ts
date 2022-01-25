@@ -12,6 +12,8 @@ import style from './pfe-badge.scss';
  */
 @customElement('pfe-badge') @pfelement()
 export class PfeBadge extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

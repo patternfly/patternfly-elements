@@ -16,6 +16,8 @@ function isSlotElement(el?: Node|null): el is HTMLSlotElement {
  */
 @customElement('pfe-tab') @pfelement()
 export class PfeTab extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /** If the tab is selected */

@@ -45,6 +45,8 @@ import style from './pfe-tabs.scss';
  */
 @customElement('pfe-tabs') @pfelement()
 export class PfeTabs extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   private logger = new Logger(this);

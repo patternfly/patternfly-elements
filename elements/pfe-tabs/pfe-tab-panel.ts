@@ -13,6 +13,8 @@ import { PfeTab } from './pfe-tab.js';
  */
 @customElement('pfe-tab-panel') @pfelement()
 export class PfeTabPanel extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /** Selected tab */

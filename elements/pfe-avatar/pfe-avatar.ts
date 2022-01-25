@@ -38,6 +38,8 @@ function register(klass: typeof PfeAvatar) {
  */
 @customElement('pfe-avatar') @pfelement() @register
 export class PfeAvatar extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = styles;
 
   private static readonly defaultSize = 128;

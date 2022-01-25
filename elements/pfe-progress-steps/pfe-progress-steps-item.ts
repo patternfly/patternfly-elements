@@ -46,6 +46,8 @@ const ICONS = new Map(Object.entries({
  */
 @customElement('pfe-progress-steps-item') @pfelement()
 export class PfeProgressStepsItem extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   get icon() {

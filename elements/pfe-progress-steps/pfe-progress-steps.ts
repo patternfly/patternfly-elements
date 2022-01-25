@@ -20,6 +20,8 @@ import './pfe-progress-steps-item.js';
  */
 @customElement('pfe-progress-steps') @pfelement()
 export class PfeProgressSteps extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   @cascades('pfe-progress-steps-item')

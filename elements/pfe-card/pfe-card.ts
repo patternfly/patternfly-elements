@@ -45,6 +45,8 @@ import style from './pfe-card.scss';
  */
 @customElement('pfe-card') @pfelement()
 export class PfeCard extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

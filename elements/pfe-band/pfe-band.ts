@@ -48,6 +48,8 @@ import style from './pfe-band.scss';
  */
 @customElement('pfe-band') @pfelement()
 export class PfeBand extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

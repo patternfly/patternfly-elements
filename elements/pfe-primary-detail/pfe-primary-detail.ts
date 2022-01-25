@@ -77,6 +77,8 @@ export class PrimaryDetailChangeEvent extends ComposedEvent {
  */
 @customElement('pfe-primary-detail') @pfelement()
 export class PfePrimaryDetail extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

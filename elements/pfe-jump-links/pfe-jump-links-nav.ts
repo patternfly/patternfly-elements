@@ -1,5 +1,3 @@
-import type { Breakpoints } from '@patternfly/pfe-core';
-
 import { LitElement, html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { customElement, property, query, state } from 'lit/decorators.js';
@@ -19,6 +17,21 @@ import { PfeJumpLinksPanel, PanelContentChangeEvent } from './pfe-jump-links-pan
 import style from './pfe-jump-links-nav.scss';
 
 import '@patternfly/pfe-accordion';
+
+export interface Breakpoints {
+  /** $pf-global--breakpoint--xs: 0 !default; */
+  'xs': '0px',
+  /** $pf-global--breakpoint--sm: 576px !default; */
+  'sm': '576px',
+  /** $pf-global--breakpoint--md: 768px !default; */
+  'md': '768px',
+  /** $pf-global--breakpoint--lg: 992px !default; */
+  'lg': '992px',
+  /** $pf-global--breakpoint--xl: 1200px !default; */
+  'xl': '1200px',
+  /** $pf-global--breakpoint--2xl: 1450px !default; */
+  '2xl': '1450px',
+}
 
 interface ItemData {
   target: string;

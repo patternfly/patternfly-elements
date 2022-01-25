@@ -75,6 +75,8 @@ export class CtaSelectEvent extends ComposedEvent {
  */
 @customElement('pfe-cta') @pfelement()
 export class PfeCta extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

@@ -44,11 +44,6 @@ export function pfelement(): ClassDecorator {
       throw new Error(`@pfelement may only decorate ReactiveElements. ${klass.name} is does not implement ReactiveElement.`);
     }
 
-    // add `PFElement.version` as debugging aid
-    Object.defineProperty(klass, 'version', { get() {
-      return '{{version}}';
-    } });
-
     klass.addInitializer(instance => {
       if (window.PfeConfig.autoReveal) {
         enqueue(instance);

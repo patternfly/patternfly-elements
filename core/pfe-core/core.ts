@@ -9,21 +9,6 @@ export interface PfeConfig {
   autoReveal?: boolean;
 }
 
-export interface Breakpoints {
-  /** $pf-global--breakpoint--xs: 0 !default; */
-  'xs': '0px',
-  /** $pf-global--breakpoint--sm: 576px !default; */
-  'sm': '576px',
-  /** $pf-global--breakpoint--md: 768px !default; */
-  'md': '768px',
-  /** $pf-global--breakpoint--lg: 992px !default; */
-  'lg': '992px',
-  /** $pf-global--breakpoint--xl: 1200px !default; */
-  'xl': '1200px',
-  /** $pf-global--breakpoint--2xl: 1450px !default; */
-  '2xl': '1450px',
-}
-
 export type ContextTheme = (
   | 'dark'
   | 'light'

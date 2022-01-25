@@ -11,6 +11,8 @@ import styles from './<%= tagName %>.scss';
  */
 @customElement('<%= tagName %>') @pfelement()
 export class <%= className %> extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [styles];
 
   render() {

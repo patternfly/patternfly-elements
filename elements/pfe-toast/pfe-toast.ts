@@ -39,6 +39,8 @@ export class ToastCloseEvent extends ComposedEvent {
  */
 @customElement('pfe-toast') @pfelement()
 export class PfeToast extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

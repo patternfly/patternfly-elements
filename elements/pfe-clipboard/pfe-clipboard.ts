@@ -72,6 +72,8 @@ export class CopiedEvent extends ComposedEvent {
  */
 @customElement('pfe-clipboard') @pfelement()
 export class PfeClipboard extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

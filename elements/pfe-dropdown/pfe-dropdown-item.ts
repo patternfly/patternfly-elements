@@ -8,6 +8,8 @@ import style from './pfe-dropdown-item.scss';
 
 @customElement('pfe-dropdown-item') @pfelement()
 export class PfeDropdownItem extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /** Use 'delegatesFocus' to forward focus to the first pfe-dropdown-item when this container is clicked or focused. */

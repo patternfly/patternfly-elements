@@ -53,6 +53,8 @@ export class DropdownChangeEvent extends ComposedEvent {
  */
 @customElement('pfe-dropdown') @pfelement()
 export class PfeDropdown extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /** Use 'delegatesFocus' to forward focus to the first pfe-dropdown-item when this container is clicked or focused. */

@@ -53,6 +53,8 @@ export interface PfeOption {
  */
 @customElement('pfe-select') @pfelement()
 export class PfeSelect extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

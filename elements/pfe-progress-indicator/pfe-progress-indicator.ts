@@ -35,6 +35,8 @@ export type Size = (
  */
 @customElement('pfe-progress-indicator') @pfelement()
 export class PfeProgressIndicator extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   private logger = new Logger(this);

@@ -54,6 +54,8 @@ function getEstimatedWPM(language: string): number {
  */
 @customElement('pfe-readtime') @pfelement()
 export class PfeReadtime extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

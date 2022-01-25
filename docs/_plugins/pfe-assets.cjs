@@ -14,7 +14,7 @@ module.exports = {
     const repoRoot = join(__dirname, '..', '..');
 
     // Copy all component and core files to _site
-    eleventyConfig.addPassthroughCopy(Object.fromEntries([
+    const files = Object.fromEntries([
       ...fs.readdirSync(join(repoRoot, 'elements')).map(dir => [
         `elements/${dir}`,
         `components/${dir.replace('pfe-', '')}`,
@@ -23,7 +23,9 @@ module.exports = {
         `core/${dir}`,
         `core/${dir.replace('pfe-', '')}`,
       ]),
-    ]));
+    ]);
+
+    eleventyConfig.addPassthroughCopy(files);
 
     // The demo files are written primarily for the dev SPA (`npm start`),
     // so here we transform the paths found in those files to match the docs site's file structure
@@ -41,6 +43,7 @@ module.exports = {
 
     eleventyConfig.on('beforeBuild', async () => {
       if (!didFirstBuild) {
+        // create /docs/bundle.js
         await bundle();
         didFirstBuild = true;
       }

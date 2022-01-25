@@ -6,6 +6,7 @@ import glob from 'glob';
 import Sass from 'sass';
 
 import { externalSubComponents } from './esbuild-plugins/external-sub-components.js';
+import { packageVersion } from './esbuild-plugins/package-version.js';
 import { litCssPlugin } from 'esbuild-plugin-lit-css';
 
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
@@ -108,6 +109,8 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
       plugins: [
         // import scss files as LitElement CSSResult objects
         litCssPlugin({ filter: /.scss$/, transform }),
+        // replace `{{version}}` with each package's version
+        packageVersion(),
         // ignore sub components bundling like "pfe-progress-steps-item"
         externalSubComponents(),
         // don't bundle node_module dependencies

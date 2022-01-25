@@ -24,6 +24,8 @@ export class PanelContentChangeEvent extends ComposedEvent {
  */
 @customElement('pfe-jump-links-panel') @pfelement()
 export class PfeJumpLinksPanel extends LitElement {
+  static readonly version = '{{version}}';
+
   static instances = new Set<PfeJumpLinksPanel>();
 
   private logger = new Logger(this);

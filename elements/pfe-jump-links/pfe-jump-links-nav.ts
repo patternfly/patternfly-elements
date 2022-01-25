@@ -80,6 +80,8 @@ export class ChangeEvent extends ComposedEvent {
  */
 @customElement('pfe-jump-links-nav') @pfelement()
 export class PfeJumpLinksNav extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /**

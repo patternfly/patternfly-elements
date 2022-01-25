@@ -101,6 +101,8 @@ let throttle = false;
  */
 @customElement('pfe-autocomplete') @pfelement()
 export class PfeAutocomplete extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };

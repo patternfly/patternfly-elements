@@ -32,6 +32,8 @@ export class DroplistSelectEvent extends ComposedEvent {
  */
 @customElement('pfe-search-droplist') @pfelement()
 export class PfeSearchDroplist extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   /** Set when the combo box dropdown is open */
@@ -76,7 +78,7 @@ export class PfeSearchDroplist extends LitElement {
           <li id="option-${index}"
             part="option item-index-${index}"
             class="${classMap({ active: index === this.activeIndex })}"
-            aria-selected="${String(index === this.activeIndex)}"
+            aria-selected="${String(index === this.activeIndex) as 'true'|'false'}"
             role="option"
             tabindex="-1"
             value="${item}"

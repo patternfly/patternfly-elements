@@ -49,6 +49,8 @@ export class AccordionHeaderChangeEvent extends ComposedEvent {
  */
 @customElement('pfe-accordion-header') @pfelement()
 export class PfeAccordionHeader extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };

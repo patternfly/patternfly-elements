@@ -15,6 +15,8 @@ import style from './pfe-accordion-panel.scss';
  */
 @customElement('pfe-accordion-panel') @pfelement()
 export class PfeAccordionPanel extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [
     ...PfeCollapsePanel.styles,
     style

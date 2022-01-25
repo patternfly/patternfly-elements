@@ -123,6 +123,8 @@ export class AccordionCollapseEvent extends ComposedEvent {
  */
 @customElement('pfe-accordion') @pfelement()
 export class PfeAccordion extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   static isHeader(element: Element|null): element is PfeAccordionHeader {

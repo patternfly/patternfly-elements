@@ -36,6 +36,8 @@ export const core = ${JSON.stringify(await readdir(join(cwd, 'core')))};
       };
     }
 
+    const { packageVersion } = await import('@patternfly/pfe-tools/esbuild-plugins/package-version.js');
+
     await esbuild.build({
       entryPoints: ['docs/demo/bundle.ts'],
       outdir: 'docs',
@@ -60,6 +62,8 @@ export const core = ${JSON.stringify(await readdir(join(cwd, 'core')))};
         // import scss files as LitElement CSSResult objects
         litCssPlugin({ filter: /.scss$/, transform }),
         pfeEnvPlugin({ cwd }),
+        // replace `{{version}}` with each package's version
+        packageVersion(),
       ],
     }).catch(() => void 0);
   },

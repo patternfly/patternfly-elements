@@ -46,6 +46,8 @@ export class ModalOpenEvent extends ComposedEvent {
  */
 @customElement('pfe-modal') @pfelement()
 export class PfeModal extends LitElement {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style];
 
   static get events() {

@@ -346,7 +346,7 @@ class PfeAccordion extends PFElement {
   _keydownHandler(evt) {
     const currentHeader = evt.target;
 
-    if (!this._isHeader(currentHeader)) {
+    if (!(currentHeader instanceof customElements.get(PfeAccordionHeader.tag))) {
       return;
     }
 
@@ -377,10 +377,6 @@ class PfeAccordion extends PFElement {
 
     if (newHeader) {
       newHeader.shadowRoot.querySelector("button").focus();
-
-      const index = this._getIndex(newHeader);
-      this.expand(index);
-      this._setFocus = true;
     }
   }
 

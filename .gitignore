@@ -55,8 +55,6 @@ core/**/*.css.map
 tools/**/*.css.map
 
 !elements/**/*--noscript.css
-!core/**/*--noscript.css
-!tools/**/*--noscript.css
 
 elements/*/package-lock.json
 core/*/package-lock.json

@@ -28,7 +28,7 @@ function getMeta(name: string): string|undefined {
  * For use in a JS file or script tag; can also be added in the constructor of a component during development.
  * @example trackPerformance(true);
  */
-export function trackPerformance(preference = noPref) {
+export function trackPerformance(preference: Boolean | Symbol | undefined = noPref) {
   if (preference !== noPref) {
     window.PfeConfig.trackPerformance = !!preference;
   }

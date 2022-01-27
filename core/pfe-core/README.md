@@ -2,14 +2,6 @@
 
 Utilities for building PatternFly elements.
 
-## Styles
-
-Include `pfe.min.css` and `pfe--noscript.min.css` to enable the auto-reveal functionality.
-
-```html
-<link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-core/pfe.min.css">
-```
-
 ## Controllers
 
 - `CascadeController` - cascades configured properties/attributes to child elements

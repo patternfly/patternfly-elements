@@ -23,7 +23,7 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="PatternFly Elements - Quick start">
   <title>PatternFly Elements - Quick start</title>
-  <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-core/pfe.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles/pfe.min.css">
   <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles/pfe-layouts.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text&display=swap" rel="stylesheet">
   <style>

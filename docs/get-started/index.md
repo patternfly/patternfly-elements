@@ -185,7 +185,7 @@ title: Get started
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PatternFly Elements - Avoiding the FOUC</title>
     <!-- Add PFE core styles to the head -->
-    <link rel="stylesheet" href="https://jspm.dev/@patternfly/pfe-core@2.0.0/pfe.min.css">
+    <link rel="stylesheet" href="https://jspm.dev/@patternfly/pfe-styles@2.0.0/pfe.min.css">
     <style>
       :root {
         /* Optional: customize the delay until the body is revealed regardless */
@@ -196,7 +196,7 @@ title: Get started
     </style>
     <!-- Add noscript styles to immediately reveal content when JavaScript is disabled -->
     <noscript>
-      <link rel="stylesheet" href="https://jspm.dev/@patternfly/pfe-core@2.0.0/pfe--noscript.min.css">
+      <link rel="stylesheet" href="https://jspm.dev/@patternfly/pfe-styles@2.0.0/pfe--noscript.min.css">
     </noscript>
     <script type="module" src="https://jspm.dev/@patternfly/pfe-band@2.0.0"></script>
   </head>

@@ -23,20 +23,20 @@ Alternatively,
 \t- Like this
 \t- And this`.trimStart();
 
-const firstMarkdownSample = "# First Markdown Sample";
-const secondMarkdownSample = "## Second Markdown Sample";
+const firstMarkdownSample = '# First Markdown Sample';
+const secondMarkdownSample = '## Second Markdown Sample';
 
-root.getElementById('update-dynamic').addEventListener('click', function () {
-  root.querySelector("#markdownTag").innerHTML = markdownSample;
+root.getElementById('update-dynamic').addEventListener('click', function() {
+  root.querySelector('#markdownTag').innerHTML = markdownSample;
 });
 
-root.querySelector("#markdownTagSecondTime").innerHTML = firstMarkdownSample;
+root.querySelector('#markdownTagSecondTime').innerHTML = firstMarkdownSample;
 
-root.getElementById('update-dynamic-twice').addEventListener('click', function () {
-  root.querySelector("#markdownTagSecondTime").innerHTML = secondMarkdownSample;
+root.getElementById('update-dynamic-twice').addEventListener('click', function() {
+  root.querySelector('#markdownTagSecondTime').innerHTML = secondMarkdownSample;
 });
 
-root.getElementById('update-light-dom').addEventListener('click', function () {
-  const element = root.querySelector("#markdownTagUpdatedLightDom");
-  element.innerHTML += "\n### This is a heading level 3";
+root.getElementById('update-light-dom').addEventListener('click', function() {
+  const element = root.querySelector('#markdownTagUpdatedLightDom');
+  element.innerHTML += '\n### This is a heading level 3';
 });

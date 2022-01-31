@@ -14,4 +14,4 @@ for (const button of root.querySelectorAll('[data-toast]')) {
 
 jsToastButton.addEventListener('click', () => {
   PfeToast.toast(contentInput.value);
-})
+});

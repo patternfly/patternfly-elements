@@ -12,4 +12,4 @@ root.addEventListener('change', event => {
     console.log(event);
     // PfeToast.toast(`${event.tab.textContent} opened. ${event.previousTab?.textContent ?? 'nothing'} closed.`);
   }
-})
+});

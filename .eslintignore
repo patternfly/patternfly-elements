@@ -35,4 +35,8 @@ core/pfe-sass/docs/index.html
 core/**/*.js
 elements/**/*.js
 tools/**/*.js
+
+!core/*/demo/*.js
+!elements/*/demo/*.js
+
 tools/create-element/templates/**/*

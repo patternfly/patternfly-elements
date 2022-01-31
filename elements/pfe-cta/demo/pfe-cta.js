@@ -10,8 +10,9 @@ function onSelect(event) {
   // since we're listening on the root itself,
   // which doesn't change from demo to demo, we need
   // to ensure we're viewing the cta demo
-  if (!root.host.dataset.demo !== 'pfe-cta')
+  if (!root.host.dataset.demo !== 'pfe-cta') {
     return;
+  }
 
   const { originEvent } = event.detail;
 
@@ -24,7 +25,9 @@ function onSelect(event) {
   // Register the event in the card
   const registry = event.target.closest('pfe-card').querySelector('.event-registry');
   if (registry) {
-    if (activeRegistry) activeRegistry.innerHTML = '';
+    if (activeRegistry) {
+      activeRegistry.innerHTML = '';
+    }
     activeRegistry = registry;
     registry.innerHTML = `
       <pfe-icon icon="rh-safety-warning-alert" size="lg"></pfe-icon>

@@ -14,6 +14,7 @@
 {% band header="Usage" %}
   ### With a trigger
   The `trigger` slot can be used with a trigger element, like a button, to provide a mechanism to open a modal without any additional JavaScript.
+
   ```html
   <pfe-modal>
     <button slot="trigger">Open modal</button>
@@ -37,6 +38,7 @@
     </pfe-cta>
   </pfe-modal>
   ```
+
 {% endband %}
 
 {% renderSlots %}{% endrenderSlots %}

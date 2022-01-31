@@ -9,8 +9,8 @@
 ### With a trigger
 ```html
 <pfe-modal>
-  <button slot="pfe-modal--trigger">Open modal</button>
-  <h2 slot="pfe-modal--header">Modal with a header</h2>
+  <button slot="trigger">Open modal</button>
+  <h2 slot="header">Modal with a header</h2>
   <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
   <pfe-cta>
     <a href="#bar">Learn more</a>
@@ -21,7 +21,7 @@
 ### Without a trigger
 ```html
 <pfe-modal>
-  <h2 slot="pfe-modal--header">Modal with a header</h2>
+  <h2 slot="header">Modal with a header</h2>
   <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
   <pfe-cta>
     <a href="#bar">Learn more</a>
@@ -34,8 +34,8 @@ The `width` attribute controls the width of the modal window. There are three op
 
 ```html
 <pfe-modal width="small">
-  <button slot="pfe-modal--trigger">Open a small modal</button>
-  <h2 slot="pfe-modal--header">Modal with a header</h2>
+  <button slot="trigger">Open a small modal</button>
+  <h2 slot="header">Modal with a header</h2>
   <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
   <pfe-cta>
     <a href="#bar">Learn more</a>
@@ -113,10 +113,3 @@ From the PFElements root directory, run:
 
     npm start
 
-## Code style
-
-Modal (and all PFElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
-
-[prettier]: https://github.com/prettier/prettier/
-[prettier-ed]: https://github.com/prettier/prettier/#editor-integration
-[web-component-tester]: https://github.com/Polymer/web-component-tester

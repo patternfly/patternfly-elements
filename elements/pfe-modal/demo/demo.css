@@ -3,3 +3,8 @@
   --pfe-modal--MaxWidth: 800px;
   --pfe-modal--MaxHeight: 800px;
 }
+
+#external-lots::part(body) {
+  display: flex;
+  gap: 24px;
+}

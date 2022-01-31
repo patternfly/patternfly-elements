@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { classMap } from 'lit/directives/class-map.js';
 
@@ -12,6 +12,12 @@ import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller
 
 import style from './pfe-modal.scss';
 
+export class ModalCancelEvent extends ComposedEvent {
+  constructor() {
+    super('cancel');
+  }
+}
+
 export class ModalCloseEvent extends ComposedEvent {
   constructor() {
     super('close');
@@ -21,7 +27,7 @@ export class ModalCloseEvent extends ComposedEvent {
 export class ModalOpenEvent extends ComposedEvent {
   constructor(
     /** The trigger element which triggered the modal to open */
-    public trigger: HTMLElement|null
+    public trigger: HTMLElement | null
   ) {
     super('open');
   }
@@ -51,33 +57,39 @@ export class ModalOpenEvent extends ComposedEvent {
  */
 @customElement('pfe-modal') @pfelement()
 export class PfeModal extends LitElement {
+  static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+
   static readonly version = '{{version}}';
 
   static readonly styles = [style];
-
-  static get events() {
-    return {
-      open: `pfe-modal:open`,
-      close: `pfe-modal:close`,
-    };
-  }
 
   /**
    * The `width` controls the width of the modal.
    * There are three options: `small`, `medium` and `large`. The default is `large`.
    */
-  @property({ reflect: true }) width: 'small'|'medium'|'large' = 'large';
+  @property({ reflect: true }) width: 'small' | 'medium' | 'large' = 'large';
 
   @observed('_openChanged')
-  @state() private isOpen = false;
+  @property({ type: Boolean }) open = false;
+
+  /** Optional ID of the trigger element */
+  @observed
+  @property() trigger?: string;
+
+  public returnValue?: string;
+
+  @query('#overlay') private overlay?: HTMLElement;
+  @query('#dialog') private dialog?: HTMLElement;
+  @query('.pfe-modal__close') private _modalCloseButton?: HTMLElement | null;
 
   private headerId = getRandomId();
-  private trigger: HTMLElement|null = null;
-  private header: HTMLElement|null = null;
+  private triggerElement: HTMLElement | null = null;
+  private header: HTMLElement | null = null;
   private body: Element[] = [];
   private headings: Element[] = [];
+  private cancelling = false;
 
-  protected slots = new SlotController(this, {
+  private slots = new SlotController(this, {
     slots: [null, 'trigger', 'header'],
     deprecations: {
       'trigger': 'pfe-modal--trigger',
@@ -85,45 +97,45 @@ export class PfeModal extends LitElement {
     }
   });
 
-  @query(`.pfe-modal__window`) private _modalWindow?: HTMLElement|null;
-  @query(`.pfe-modal__close`) private _modalCloseButton?: HTMLElement|null;
-
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('keydown', this._keydownHandler);
+    this.addEventListener('click', this.onClick);
   }
 
   render() {
-    const headerId =
-        this.header ? this.headerId
-      : this.headings.length ? this.headerId
-      : this.trigger ? undefined
-      : undefined;
-
-    const headerLabel =
-        this.trigger ? this.trigger.innerText
-      : undefined;
+    const headerId = (this.header || this.headings.length) ? this.headerId : undefined;
+    const headerLabel = this.triggerElement ? this.triggerElement.innerText : undefined;
+    const hasHeader = this.slots.hasSlotted('header', 'pfe-modal--header');
 
     return html`
       <slot name="trigger"></slot>
       <slot name="pfe-modal--trigger"></slot>
-      <section class="pfe-modal__outer" ?hidden="${!this.isOpen}">
-        <div class="pfe-modal__overlay" part="overlay"
-            @click="${this.close}"
-            ?hidden="${!this.isOpen}"></div>
-        <div class="pfe-modal__window" part="dialog"
+      <section class="pfe-modal__outer" ?hidden="${!this.open}">
+        <div id="overlay"
+            part="overlay"
+            class="pfe-modal__overlay" 
+            ?hidden="${!this.open}"></div>
+        <div id="dialog"
+            part="dialog"
+            class="pfe-modal__window"
             tabindex="0"
             role="dialog"
-            ?hidden="${!this.isOpen}"
             aria-labelledby="${ifDefined(headerId)}"
-            aria-label="${ifDefined(headerLabel)}">
+            aria-label="${ifDefined(headerLabel)}"
+            ?hidden="${!this.open}">
           <div class="pfe-modal__container">
-            <div part="content" class="pfe-modal__content ${classMap({ 'has-header': this.slots.hasSlotted('header', 'pfe-modal--header') })}">
+            <div part="content" class="pfe-modal__content ${classMap({ 'has-header': hasHeader })}">
               <slot name="header"></slot>
               <slot name="pfe-modal--header"></slot>
               <slot></slot>
             </div>
-            <button part="close-button" class="pfe-modal__close" aria-label="Close dialog" @keydown="${this._keydownHandler}" @click="${this.close}">
+            <button
+                part="close-button"
+                class="pfe-modal__close"
+                aria-label="Close dialog"
+                @keydown="${this._keydownHandler}"
+                @click="${this.close}">
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="-11 11 22 23">
                 <path d="M30 16.669v-1.331c0-0.363-0.131-0.675-0.394-0.938s-0.575-0.394-0.938-0.394h-10.669v-10.65c0-0.362-0.131-0.675-0.394-0.938s-0.575-0.394-0.938-0.394h-1.331c-0.363 0-0.675 0.131-0.938 0.394s-0.394 0.575-0.394 0.938v10.644h-10.675c-0.362 0-0.675 0.131-0.938 0.394s-0.394 0.575-0.394 0.938v1.331c0 0.363 0.131 0.675 0.394 0.938s0.575 0.394 0.938 0.394h10.669v10.644c0 0.363 0.131 0.675 0.394 0.938 0.262 0.262 0.575 0.394 0.938 0.394h1.331c0.363 0 0.675-0.131 0.938-0.394s0.394-0.575 0.394-0.938v-10.637h10.669c0.363 0 0.675-0.131 0.938-0.394 0.269-0.262 0.4-0.575 0.4-0.938z" transform="rotate(45)"/>
               </svg>
@@ -139,21 +151,19 @@ export class PfeModal extends LitElement {
 
     this.removeEventListener('keydown', this._keydownHandler);
 
-    if (this.trigger) {
-      this.trigger.removeEventListener('click', this.open);
-    }
+    this.triggerElement?.removeEventListener('click', this.onExternalTriggerClick);
   }
 
   @initializer()
   protected async _init() {
     await this.updateComplete;
-    this.trigger = this.querySelector(`[slot$="trigger"]`);
+    this.triggerElement ??= this.querySelector(`[slot$="trigger"]`);
     this.header = this.querySelector(`[slot$="header"]`);
     this.body = [...this.querySelectorAll(`*:not([slot])`)];
     this.headings = this.body.filter(el => el.tagName.slice(0, 1) === 'H');
 
-    if (this.trigger) {
-      this.trigger.addEventListener('click', this.open);
+    if (this.triggerElement) {
+      this.triggerElement.addEventListener('click', this.onExternalTriggerClick);
       this.removeAttribute('hidden');
     }
 
@@ -165,102 +175,132 @@ export class PfeModal extends LitElement {
     }
   }
 
+  protected _triggerChanged() {
+    if (this.trigger) {
+      this.triggerElement = (this.getRootNode() as Document | ShadowRoot).getElementById(this.trigger);
+      this.triggerElement?.addEventListener('click', this.onExternalTriggerClick);
+    }
+  }
+
+  @bound private onExternalTriggerClick(event: MouseEvent) {
+    event.preventDefault();
+    // TODO: in non-modal case, toggle the dialog
+    this.showModal();
+  }
+
+  @bound private onClick(event: MouseEvent) {
+    if (this.open) {
+      const path = event.composedPath();
+      if (this.overlay && this.dialog && path.includes(this.overlay) && !path.includes(this.dialog)) {
+        event.preventDefault();
+        this.cancel();
+      }
+    }
+  }
+
   @bound private _keydownHandler(event: KeyboardEvent) {
-    const target = event.target as HTMLElement;
-    const { key } = event;
-    switch (key) {
+    switch (event.key) {
       case 'Tab':
-        if (target === this._modalCloseButton) {
+        if (event.target === this._modalCloseButton) {
           event.preventDefault();
-          this._modalWindow?.focus();
+          this.dialog?.focus();
         }
         return;
       case 'Escape':
       case 'Esc':
-        this.close(event);
+        event.preventDefault();
+        this.cancel();
         return;
       case 'Enter':
-        if (target === this.trigger) {
-          this.open(event);
+        if (event.target === this.triggerElement) {
+          event.preventDefault();
+          this.showModal();
         }
         return;
     }
   }
 
-  protected _openChanged(oldValue?: boolean, newValue?: boolean) {
+  private async cancel() {
+    this.cancelling = true;
+    this.open = false;
+    await this.updateComplete;
+    this.cancelling = false;
+  }
+
+  protected async _openChanged(oldValue?: boolean, newValue?: boolean) {
     // loosening types to prevent running these effects in unexpected circumstances
     // eslint-disable-next-line eqeqeq
     if (oldValue == null || newValue == null || oldValue == newValue) {
       return;
-    } else if (this.isOpen) {
+    } else if (this.open) {
       // This prevents background scroll
       document.body.style.overflow = 'hidden';
+      await this.updateComplete;
       // Set the focus to the container
-      this._modalWindow?.focus();
-
-      this.dispatchEvent(new ModalOpenEvent(this.trigger));
+      this.dialog?.focus();
+      this.dispatchEvent(new ModalOpenEvent(this.triggerElement));
       this.dispatchEvent(deprecatedCustomEvent('pfe-modal:open', {
         open: true,
-        ...(this.trigger) ? { trigger: this.trigger } : {},
+        ...(this.triggerElement) ? { trigger: this.triggerElement } : {},
       }));
     } else {
       // Return scrollability
       document.body.style.overflow = 'auto';
 
-      if (this.trigger) {
-        // Move focus back to the trigger element
-        this.trigger.focus();
-        this.trigger = null;
+      const { cancelling } = this;
+
+      await this.updateComplete;
+
+      if (this.triggerElement) {
+        this.triggerElement.focus();
       }
 
-      this.dispatchEvent(new ModalCloseEvent());
+      this.dispatchEvent(cancelling ? new ModalCancelEvent() : new ModalCloseEvent());
       this.dispatchEvent(deprecatedCustomEvent('pfe-modal:close', { open: false }));
     }
   }
 
-  /**
-   * Manually toggles a modal. Returns the modal that has been toggled.
-   * ```javascript
-   * document.querySelector("pfe-modal").toggle();
-   * ```
-   */
-  @bound toggle(event?: Event) {
-    this.isOpen ? this.close(event) : this.open(event);
-    return this;
+  setTrigger(element: HTMLElement) {
+    this.triggerElement = element;
+    this.triggerElement.addEventListener('click', this.onExternalTriggerClick);
   }
 
   /**
-   * Manually opens a modal. Return the modal that has been opened.
+   * Manually toggles a modal.
    * ```javascript
-   * document.querySelector("pfe-modal").open();
+   * document.querySelector('pfe-modal').toggle();
    * ```
    */
-  @bound open(event?: Event) {
-    if (event?.target instanceof HTMLElement) {
-      event.preventDefault();
-      this.trigger = event.target;
-    }
-
-    // Reveal the container and overlay
-    this.isOpen = true;
-
-    return this;
+  @bound toggle() {
+    this.open = !this.open;
   }
 
   /**
-   * Manually closes a modal. Returns the modal that has been closed.
+   * Manually opens a modal.
    * ```javascript
-   * document.querySelector("pfe-modal").close();
+   * document.querySelector('pfe-modal').open();
    * ```
    */
-  @bound close(event?: Event) {
-    if (event) {
-      event.preventDefault();
+  @bound show() {
+    this.open = true;
+  }
+
+  @bound showModal() {
+    this.show();
+  }
+
+  /**
+   * Manually closes a modal.
+   * ```javascript
+   * document.querySelector('pfe-modal').close();
+   * ```
+   */
+  @bound close(returnValue?: string) {
+    if (typeof returnValue === 'string') {
+      this.returnValue = returnValue;
     }
 
-    // Hide the container and overlay
-    this.isOpen = false;
-    return this;
+    this.open = false;
   }
 }
 

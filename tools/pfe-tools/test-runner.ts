@@ -17,7 +17,7 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
   const { open, ...devServerConfig } = pfeDevServerConfig(opts);
   return {
     ...devServerConfig,
-    files: ['**/*.spec.ts', '!**/*.e2e.spec.ts', '!**/node_modules/**/*', ...opts.files ?? []],
+    files: ['**/*.spec.ts', '!**/*.e2e.spec.ts', ...opts.files ?? [], '!**/node_modules/**/*', '!**/_site/**/*'],
     browsers: [
       playwrightLauncher({
         createBrowserContext: async ({ browser }) => {

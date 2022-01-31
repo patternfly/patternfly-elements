@@ -43,15 +43,18 @@ function ajaxCallback(params, callback) {
 
 function onSearch(event) {
   const output = event.target.closest('pfe-band').querySelector('output');
-  if (output)
+  if (output) {
     output.textContent = event.value;
+  }
 }
 
-for (const element of root.querySelectorAll('pfe-autocomplete'))
+for (const element of root.querySelectorAll('pfe-autocomplete')) {
   element.addEventListener('search', onSearch);
+}
 
-for (const element of root.querySelectorAll('.static'))
+for (const element of root.querySelectorAll('.static')) {
   element.autocompleteRequest = staticCallback;
+}
 
 // autocomplete call
 searchAutocomplete.autocompleteRequest = ajaxCallback;

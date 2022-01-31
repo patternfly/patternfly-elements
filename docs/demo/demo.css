@@ -80,6 +80,37 @@ aside {
   grid-area: menu;
 }
 
+@media(max-width: 640px) {
+  #main-nav {
+    grid-area: body;
+    position: fixed;
+    min-width: 50vw;
+    top: 64px;
+    z-index: 2;
+  }
+
+  #main-nav:not(.expanded) {
+    display: none;
+  }
+
+  html {
+    grid-template-areas: 'head' 'body';
+    grid-template-columns: 1fr;
+  }
+}
+
+#hamburger {
+  border: 0;
+  background: transparent;
+  color: white;
+}
+
+@media(min-width: 641px) {
+  #hamburger {
+    display: none;
+  }
+}
+
 api-viewer {
   background-color: #fff;
   max-width: 100%;

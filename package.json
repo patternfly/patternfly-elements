@@ -82,6 +82,9 @@
     "renamer": "^4.0.0",
     "sassdoc": "^2.7.3"
   },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --fix"
+  },
   "workspaces": [
     "./core/*",
     "./elements/*",

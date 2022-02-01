@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Button",
+  "description": "",
+  "type": "object",
+  "tag": "pfe-button",
+  "class": "PfeButton",
+  "category": "content",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "default": {
+          "title": "Default slot",
+          "type": "array",
+          "namedSlot": false,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "button"
+              }
+            ]
+          }
+        }
+      },
+      "required": ["default"]
+    },
+    "events": {
+      "title": "Events",
+      "description": "Definition of the supported events",
+      "type": "object",
+      "properties": {
+        "click": {
+          "title": "Click",
+          "type": "string",
+          "default": "pfe-button:click"
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes", "events"],
+  "additionalProperties": false
+}

@@ -1,5 +1,6 @@
 # TBD
-- [](https://github.com/patternfly/patternfly-elements/commit/) chore: remove Storybook links for homepage and footer include
+- [0677854](https://github.com/patternfly/patternfly-elements/commit/0677854cca0c76f66a43ac39de7b3a7be7060a95) chore: remove Storybook links for homepage and footer include
+- [](https://github.com/patternfly/patternfly-elements/commit/) bug: pfe-accordion - fixing issues with accessibility when opening and closing panels (#1813)
 
 # 1.12.2 (2021-11-16)
 - [a6cf64](https://github.com/patternfly/patternfly-elements/commit/a6cf64f2680780cd1d50ed302f677dbd5024cf85) fix: fixing broken 1.12.1 release.

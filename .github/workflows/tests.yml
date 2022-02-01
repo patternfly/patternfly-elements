@@ -81,7 +81,7 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 12.x
 
       # Caching speeds up the npm install step
       - name: Cache node modules
@@ -126,7 +126,7 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 12.x
 
       # Caching speeds up the npm install step
       - name: Access cached node modules
@@ -172,7 +172,7 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 12.x
 
       # Set up cross-browser testing on Chromium, WebKit and Firefox with Playwright.
       - name: Set up Playwright
@@ -244,7 +244,7 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 12.x
 
       # Caching speeds up the npm install step
       - name: Access cached node modules

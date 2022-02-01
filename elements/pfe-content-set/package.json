@@ -5,7 +5,7 @@
     "elementName": "pfe-content-set",
     "preview": "content-set.svg"
   },
-  "version": "1.12.2",
+  "version": "1.12.3",
   "description": "This PatternFly Element dynamically hides and shows content; the style is determined by the available space.",
   "keywords": [
     "web-components",
@@ -56,9 +56,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-accordion": "^1.12.2",
-    "@patternfly/pfe-tabs": "^1.12.2",
-    "@patternfly/pfelement": "^1.12.2"
+    "@patternfly/pfe-accordion": "^1.12.3",
+    "@patternfly/pfe-tabs": "^1.12.3",
+    "@patternfly/pfelement": "^1.12.3"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

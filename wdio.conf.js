@@ -29,15 +29,6 @@ exports.config = {
       resolution: "1920x1080",
       "browserstack.local": "true",
       "browserstack.selenium_version": "3.5.2"
-    },
-    {
-      os: "Windows",
-      os_version: "10",
-      browserName: "IE",
-      browser_version: "11.0",
-      resolution: "1920x1080",
-      "browserstack.local": "true",
-      "browserstack.selenium_version": "3.5.2"
     }
   ],
   services: [

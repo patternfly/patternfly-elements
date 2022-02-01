@@ -52,6 +52,8 @@ describe("<pfe-accordion>", () => {
     assert.equal(true, header.expanded);
     assert.isTrue(panel.hasAttribute('expanded'));
     assert.isTrue(panel.expanded);
+    assert.isTrue(panel.hasAttribute('expanded'));
+    assert.isTrue(panel.expanded);
   });
 
   it('should collapse a panel when an already expanded header is selected', async () => {
@@ -69,6 +71,8 @@ describe("<pfe-accordion>", () => {
     assert.equal(false, header.expanded);
     assert.isFalse(panel.hasAttribute('expanded'));
     assert.isFalse(panel.expanded);
+    assert.isTrue(panel.getAttribute("aria-hidden") == "true");
+    assert.isTrue(panel.getAttribute("tabindex") == "-1");
   });
 
   it('should randomly generate ids for aria use', async () => {
@@ -101,6 +105,8 @@ describe("<pfe-accordion>", () => {
     assert.equal(true, secondHeader.expanded);
     assert.isTrue(secondPanel.hasAttribute('expanded'));
     assert.isTrue(secondPanel.expanded);
+    assert.isFalse(secondPanel.hasAttribute("aria-hidden"));
+    assert.isFalse(secondPanel.hasAttribute("tabindex"));
 
     pfeAccordion.toggle(1);
 
@@ -108,6 +114,8 @@ describe("<pfe-accordion>", () => {
     assert.equal(false, secondHeader.expanded);
     assert.isFalse(secondPanel.hasAttribute('expanded'));
     assert.isFalse(secondPanel.expanded);
+    assert.isTrue(secondPanel.getAttribute("aria-hidden") == "true");
+    assert.isTrue(secondPanel.getAttribute("tabindex") == "-1");
   });
 
   it('should expand a panel when expand is called', async () => {
@@ -121,6 +129,8 @@ describe("<pfe-accordion>", () => {
     assert.equal(true, secondHeader.expanded);
     assert.isTrue(secondPanel.hasAttribute('expanded'));
     assert.isTrue(secondPanel.expanded);
+    assert.isFalse(secondPanel.hasAttribute("aria-hidden"));
+    assert.isFalse(secondPanel.hasAttribute("tabindex"));
   });
 
   it('should collapse a panel when collapse is called', async () => {
@@ -135,6 +145,8 @@ describe("<pfe-accordion>", () => {
     assert.equal(false, secondHeader.expanded);
     assert.isFalse(secondPanel.hasAttribute('expanded'));
     assert.isFalse(secondPanel.expanded);
+    assert.isTrue(secondPanel.getAttribute("aria-hidden") == "true");
+    assert.isTrue(secondPanel.getAttribute("tabindex") == "-1");
   });
 
   it('should expand all panels when expandAll is called', async () => {
@@ -152,6 +164,8 @@ describe("<pfe-accordion>", () => {
     panels.forEach(panel => {
       assert.isTrue(panel.hasAttribute('expanded'));
       assert.isTrue(panel.expanded);
+      assert.isFalse(panel.hasAttribute("aria-hidden"));
+      assert.isFalse(panel.hasAttribute("tabindex"));
     });
   });
 
@@ -171,6 +185,8 @@ describe("<pfe-accordion>", () => {
     panels.forEach(panel => {
       assert.isFalse(panel.hasAttribute('expanded'));
       assert.isFalse(panel.expanded);
+      assert.isTrue(panel.getAttribute("aria-hidden") == "true");
+      assert.isTrue(panel.getAttribute("tabindex") == "-1");
     });
   });
 
@@ -224,6 +240,8 @@ describe("<pfe-accordion>", () => {
       const panel = pfeAccordion._panelForHeader(header);
       assert.isTrue(panel.expanded);
       assert.isTrue(panel.hasAttribute("expanded"));
+      assert.isFalse(panel.hasAttribute("aria-hidden"));
+      assert.isFalse(panel.hasAttribute("tabindex"));
     });
   });
 
@@ -402,5 +420,22 @@ describe("<pfe-accordion-panel>", () => {
     assert.isTrue(panel.hasAttribute('aria-labelledby'));
     assert.equal(panel.getAttribute('role'), 'region');
     assert.equal(panel.id, header.getAttribute('aria-controls'));
+    assert.isFalse(panel.hasAttribute("expanded"));
+    assert.isTrue(panel.getAttribute("aria-hidden") == "true");
+    assert.isTrue(panel.getAttribute("tabindex") == "-1");
   });
+
+  it("should add the proper attributes when a panel's expanded property is toggled", async () => {
+    const pfeAccordion = await createFixture(testElement);
+    const panel = pfeAccordion.querySelector("pfe-accordion-panel");
+    
+    
+    assert.isFalse(panel.hasAttribute("expanded"));
+    assert.isTrue(panel.getAttribute("aria-hidden") == "true");
+    assert.isTrue(panel.getAttribute("tabindex") == "-1");
+
+    panel.expanded = true;
+    assert.isFalse(panel.hasAttribute("aria-hidden"));
+    assert.isFalse(panel.hasAttribute("tabindex"));
+  })
 });

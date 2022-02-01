@@ -1,0 +1,120 @@
+# This workflow will validate the title of a PR to ensure it meets conventional commit standards
+name: Validate conventional commit syntax
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - labeled
+      - auto_merge_enabled
+      - synchronize
+      - reopened
+      - ready_for_review
+
+  pull_request_review:
+    types:
+      - submitted
+
+env:
+  TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+# Separate jobs can run concurrently
+jobs:
+  prTitle:
+    name: Validate conventional commit format for title
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: wagoid/commitlint-github-action@v4
+        id: commitlint
+        continue-on-error: true
+        with:
+          configFile: .commitlintrc.cjs
+
+      - name: Validate conventional commit format for title
+        id: prTitle
+        if: ${{ steps.commitlint.outcome == 'failure' }}
+        uses: aslafy-z/conventional-pr-title-action@v2.2.0
+        continue-on-error: true
+        with:
+          success-state: Title follows the conventional commit format.
+          failure-state: Please update the title to use conventional commit format.
+          context-name: conventional-pr-title
+          preset: '@commitlint/config-conventional@latest'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Format commitlint messages
+        id: format
+        if: ${{ steps.commitlint.outcome == 'failure' }}
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const results = ${{ steps.commitlint.outputs.results }};
+            const titleGood = ${{ steps.prTitle.outcome == 'success' }};
+
+            const totalErrors = results.reduce((a, r) => a + r.errors.length, 0);
+            const totalWarnings = results.reduce((a, r) => a + r.warnings.length, 0);
+
+            const header = `
+            ## 👕 Commitlint Problems for this PR: ${!titleGood ? '' : `
+
+            **The PR title conforms to conventional commit style**
+
+            👉 **Make sure the PR is squashed into a single commit using the PR title** 👈`}
+
+            🔎   found ${totalErrors} errors, ${totalWarnings} warnings
+            ℹ️   Get help: https://github.com/conventional-changelog/commitlint/#what-is-commitlint
+            `;
+
+            const comment = results.reduce((acc, result) => {
+              if (!result.errors.length && !result.warnings.length) {
+                return acc;
+              }
+
+              const [firstLine, ...rest] = result.message.split('\n');
+
+              const body = rest.join('\n').trim();
+              const icon = result.errors.length ? '❌' : '⚠️';
+              const hash = result.hash.substring(0, 8);
+
+              return `${acc} ${!body.length ? '\n\n' : `
+
+            <details><summary>`}
+            ${hash} - ${firstLine} ${!body.length ? '\n\n' : `\
+            </summary>
+
+            ${body}
+
+            </details>
+
+            `}${result.errors.map(error => `
+            - ❌ ${error}`).join('')} ${result.warnings.map(warn => `
+            - ⚠️ ${warn}`).join('')}`;
+            }, header);
+
+            core.setOutput('comment', comment);
+
+      - name: Notify PR
+        if: ${{ steps.commitlint.outcome == 'failure' && steps.prTitle.outcome == 'failure' }}
+        id: comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          header: commitlint
+          message: |
+            ${{ steps.format.outputs.comment }}
+
+      - name: Fail Job on Error
+        if: ${{ steps.commitlint.outcome == 'failure' && steps.prTitle.outcome == 'failure' }}
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed("There were problems with this PR's commit messages")

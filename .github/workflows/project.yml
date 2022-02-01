@@ -4,7 +4,12 @@ name: Move issue cards on project board
 
 on:
   issues:
-    types: [opened, labeled, closed, assigned, connected]
+    types:
+      - opened
+      - labeled
+      - closed
+      - assigned
+      - connected
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

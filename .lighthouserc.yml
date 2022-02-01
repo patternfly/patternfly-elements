@@ -1,0 +1,17 @@
+ci:
+  collect:
+    settings:
+      onlyCategories:
+        - performance
+        - accessibility
+        - best-practices
+        - seo
+      skipAudits:
+        - is-crawlable
+        - csp-xss
+  assert:
+    preset: lighthouse:no-pwa
+    assertions:
+      categories:seo: off
+      csp-xss: off
+      is-crawlable: off

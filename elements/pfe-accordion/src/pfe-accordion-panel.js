@@ -35,6 +35,7 @@ class PfeAccordionPanel extends PFElement {
         title: "Expanded",
         type: Boolean,
         default: false,
+        observer: "_expandedChanged"
       },
       ariaLabelledby: {
         type: String,
@@ -49,6 +50,17 @@ class PfeAccordionPanel extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+    this._expandedChanged();
+  }
+
+  _expandedChanged() {
+    if (this.expanded) {
+      this.removeAttribute("aria-hidden");
+      this.removeAttribute("tabindex");
+    } else {
+      this.setAttribute("aria-hidden", "true");
+      this.setAttribute("tabindex", "-1");
+    }
   }
 }
 

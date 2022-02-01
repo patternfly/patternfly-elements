@@ -11,7 +11,7 @@
     "title": "Tabs",
     "preview": "tabs.svg"
   },
-  "version": "1.12.2",
+  "version": "1.12.3",
   "publishConfig": {
     "access": "public"
   },
@@ -55,10 +55,10 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.12.2"
+    "@patternfly/pfe-sass": "^1.12.3"
   },
   "dependencies": {
-    "@patternfly/pfelement": "^1.12.2"
+    "@patternfly/pfelement": "^1.12.3"
   },
   "generator-pfelement-version": "0.5.4",
   "bugs": {

@@ -103,9 +103,15 @@ export class ColorContextController implements ReactiveController {
     const incoming = this.contextVariable || fallback;
     const current = this.host.getAttribute('on');
     if (incoming !== current) {
-      const next = `${incoming ?? null}`;
+      const next = incoming;
       this.logger.log(`Resetting context from ${current} to ${next}`);
-      this.host.setAttribute('on', next);
+
+      if (next != null) {
+        this.host.setAttribute('on', next);
+      } else {
+        this.host.removeAttribute('on');
+      }
+
       for (const cb of this.callbacks) {
         cb(incoming);
       }

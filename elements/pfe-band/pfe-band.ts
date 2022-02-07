@@ -1,3 +1,5 @@
+import type { ColorTheme } from '@patternfly/pfe-core';
+
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -62,7 +64,7 @@ export class PfeBand extends LitElement {
   /**
    * Your theme will influence these colors so check there first if you are seeing inconsistencies.
    */
-  @property({ reflect: true }) color: 'accent'|'base'|'complement'|'darker'|'darkest'|'lightest' = 'base';
+  @property({ reflect: true }) color: ColorTheme = 'base';
 
   /**
    * This influences where the aside is rendered at the desktop view and are indicated relative to the body content.

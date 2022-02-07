@@ -1,3 +1,5 @@
+import type { ColorTheme } from '@patternfly/pfe-core';
+
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -74,7 +76,7 @@ export class PfeCard extends LitElement {
    * | accent     | <span class="color-preview" style="--bg:#ee0000"></span> #ee0000 |
    * | complement | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
    */
-  @property({ reflect: true }) color: 'lightest'|'lighter'|'default'|'darker'|'darkest'|'accent'|'complement' = 'default';
+  @property({ reflect: true }) color: ColorTheme = 'base';
 
   /** Optionally adjusts the padding on the container. Accepts: `small`. */
   @property({ reflect: true }) size?: 'small';

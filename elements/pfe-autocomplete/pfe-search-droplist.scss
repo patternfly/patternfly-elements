@@ -42,7 +42,7 @@
 
 .droplist,
 :host([on="light"]) .droplist,
-:host([on="null"]) .droplist {
+:host(:not([on])) .droplist {
   background-color: pfe-var('surface--lighter');
   color: pfe-broadcasted('text');
   li.active {

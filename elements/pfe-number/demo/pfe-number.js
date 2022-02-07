@@ -8,10 +8,10 @@ function pretty(el) {
   return (el.outerHTML
     .replace(' pfelement=""', '')
     .replace(' class="PFElement"', '')
-    .replace(' on="null"', '')
     .replace(' on="light"', '')
   );
 }
+
 for (const el of root.querySelectorAll('pfe-number')) {
   const tr = el.closest('tr');
   tr.querySelector('[codeblock-container] code').textContent = pretty(el);

@@ -10,6 +10,16 @@ export interface PfeConfig {
   autoReveal?: boolean;
 }
 
+export type ColorTheme = (
+  | 'base'
+  | 'accent'
+  | 'complement'
+  | 'lighter'
+  | 'lightest'
+  | 'darker'
+  | 'darkest'
+);
+
 export type ContextTheme = (
   | 'dark'
   | 'light'

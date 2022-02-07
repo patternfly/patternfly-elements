@@ -338,8 +338,9 @@ export class PfeAutocomplete extends LitElement {
   }
 
   protected _isDisabledChanged() {
-    if (this.isDisabled != null && this.disabled !== this.isDisabled) {
-      this.disabled = !!this.isDisabled;
+    const deprecated = this.isDisabled;
+    if (deprecated != null && this.disabled !== deprecated) {
+      this.disabled = !!deprecated;
     }
   }
 

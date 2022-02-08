@@ -123,10 +123,6 @@
 // - Fallback values should match whats above
 
 
-// The value of broadcasted variables is provided by the layouts so this seems uneeded?
-// @include pfe-contexts;
-
-
 :host([priority="primary"]) {
   @include pfe-print-local($primary);
 }

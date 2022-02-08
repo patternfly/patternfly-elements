@@ -5,8 +5,6 @@
   $name: 'health-index',
 );
 
-@include pfe-contexts; // imports on="light" etc support
-
 $colors: (
   a: #3f9c35,
   b: #92d400,

@@ -1,12 +1,17 @@
-import type { ReactiveController, ReactiveElement } from 'lit';
+import { ReactiveController, ReactiveElement } from 'lit';
 import type { ContextTheme } from '../core.js';
 import type { Context, UnknownContext } from '../context.js';
 
 import { ContextEvent, createContext } from '../context.js';
 import { bound } from '../decorators/bound.js';
 import { Logger } from './logger.js';
+import { StyleController } from './styling-controller.js';
+
+import CONTEXT_BASE_STYLES from './color-context-controller.scss';
 
 export class ColorContextController implements ReactiveController {
+  // static styles = CONTEXT_BASE_STYLES;
+
   private callbacks = new Set<ColorContextController['update']>();
 
   private context: Context<ContextTheme|null>;
@@ -17,10 +22,11 @@ export class ColorContextController implements ReactiveController {
 
   private dispose?: () => void;
 
-  constructor(private host: ReactiveElement, private prefix = 'pfe') {
+  constructor(protected host: ReactiveElement, private prefix = 'pfe') {
     this.style = window.getComputedStyle(host);
     this.context = createContext(`${this.prefix}-color-context`, this.contextVariable);
     this.logger = new Logger(host);
+    new StyleController(host, CONTEXT_BASE_STYLES);
     host.addController(this);
   }
 

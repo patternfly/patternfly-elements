@@ -61,8 +61,6 @@ $pfe-modal--breakpoint--medium: 640px;
 	}
 	&__window {
 		--context: #{pfe-local(context)};
-		@include pfe-set-broadcast-context(#{pfe-fetch(context)});
-
 		position: relative;
 		max-width: pfe-local(MaxWidth--mobile);
 		min-width: pfe-local(MinWidth);

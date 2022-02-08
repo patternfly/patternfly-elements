@@ -1,8 +1,5 @@
 @use "@patternfly/pfe-sass" as *;
 
-/** imports on="light" etc support */
-@include pfe-contexts;
-
 :host {
   display: block;
   color: pfe-broadcasted(text);

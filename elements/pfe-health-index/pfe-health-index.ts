@@ -3,7 +3,6 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { pfelement } from '@patternfly/pfe-core/decorators.js';
-import { when } from '@patternfly/pfe-core/directives/when.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import style from './pfe-health-index.scss';
@@ -49,8 +48,8 @@ export class PfeHealthIndex extends LitElement {
 
   render() {
     const healthIndex = (this.healthIndex ?? '').toLowerCase();
-    return html`
-      <div id="healthIndex" ${when(!this.size)}>${healthIndex.toUpperCase()}</div>
+    return html`${this.size ? '' : html`
+      <div id="healthIndex">${healthIndex.toUpperCase()}</div>`}
       <div class="box-container" part="container">${this.size === 'mini' ? html`
         <div class="box ${classMap({ [healthIndex]: true, active: true })}" part="box">
           <div class="grade" id="healthIndex">${healthIndex.toUpperCase()}</div>

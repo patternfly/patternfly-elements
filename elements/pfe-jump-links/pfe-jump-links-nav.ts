@@ -6,7 +6,6 @@ import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
-import { when } from '@patternfly/pfe-core/directives/when.js';
 
 import { CssVariableController } from '@patternfly/pfe-core/controllers/css-variable-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
@@ -83,18 +82,6 @@ export class PfeJumpLinksNav extends LitElement {
   static readonly version = '{{version}}';
 
   static readonly styles = [style];
-
-  /**
-   * @deprecated
-   * List of all events in the component
-   */
-  static get events() {
-    return {
-      activeNavItem: `pfe-jump-links-panel:active-navItem`,
-      change: `pfe-jump-links-panel:change`,
-      stuck: `pfe-jump-links-nav:stuck`,
-    };
-  }
 
   /**
    * Breakpoint object mapping human-readable size names to viewport sizes
@@ -244,7 +231,7 @@ export class PfeJumpLinksNav extends LitElement {
       // Emit an event to indicate a change in the panel
       this.dispatchEvent(new PanelContentChangeEvent());
       // @deprecated event
-      this.dispatchEvent(deprecatedCustomEvent(PfeJumpLinksNav.events.change));
+      this.dispatchEvent(deprecatedCustomEvent('pfe-jump-links-panel:change'));
     }
   }
 
@@ -316,7 +303,7 @@ export class PfeJumpLinksNav extends LitElement {
     this._sections = nodeList;
 
     // Emit an event to indicate a change in the sections
-    this.dispatchEvent(deprecatedCustomEvent(PfeJumpLinksNav.events.change));
+    this.dispatchEvent(deprecatedCustomEvent(''));
   }
 
   /**
@@ -443,13 +430,13 @@ export class PfeJumpLinksNav extends LitElement {
 
   render() {
     const content = html`
-      <nav part="nav">
-        <slot name="heading" ${when(!this.isMobile)} class="pfe-jump-links-nav__heading" ?sr-only=${this.noHeader}>
+      <nav part="nav">${this.isMobile ? '' : html`
+        <slot name="heading" class="pfe-jump-links-nav__heading" ?sr-only=${this.noHeader}>
           <h3>${this.srText || 'Jump to section'}</h3>
-        </slot>
-        <slot name="logo" ${when(this.horizontal)} class="pfe-jump-links-nav__logo"></slot>
-        <div id="container" part="content">${unsafeHTML(this.containerInnerHTML)}</div>
-        <slot name="cta" ${when(this.horizontal)} class="pfe-jump-links-nav__cta"></slot>
+        </slot>`}${!this.horizontal ? '' : html`
+        <slot name="logo" class="pfe-jump-links-nav__logo"></slot>`}
+        <div id="container" part="content">${unsafeHTML(this.containerInnerHTML)}</div>${!this.horizontal ? '' : html`
+        <slot name="cta" class="pfe-jump-links-nav__cta"></slot>`}
       </nav>
     `;
 
@@ -502,11 +489,10 @@ export class PfeJumpLinksNav extends LitElement {
    * @param {Object} Definition of available events
    */
   @bound private _attachListeners() {
-    const { events } = PfeJumpLinksNav;
     // Listen for a change in the panel content if the navigation is autobuilt
     // need to reflect changes in the navigation markup
     if (this.autobuild) {
-      document.addEventListener(PfeJumpLinksNav.events.change, this._panelChangedHandler);
+      document.addEventListener('', this._panelChangedHandler);
     }
 
 
@@ -517,7 +503,7 @@ export class PfeJumpLinksNav extends LitElement {
     // window.addEventListener(events.keyup, this._keyboardHandler);
 
     // If the stickiness changes, update the sticky navigation offset
-    window.addEventListener(events.stuck, this._updateOffset);
+    window.addEventListener('pfe-jump-links-nav:stuck', this._updateOffset);
 
     // @TODO respond to URL change? Ensure anchor link alignment accounts for sticky nav(s)
     // window.addEventListener("locationchange", (evt) => console.log("locationchange", evt));
@@ -529,17 +515,16 @@ export class PfeJumpLinksNav extends LitElement {
    * @param {Object} Definition of available events
    */
   @bound private _detachListeners() {
-    const { events } = PfeJumpLinksNav;
     this._observer.disconnect();
 
-    document.removeEventListener(events.change, this._panelChangedHandler);
+    document.removeEventListener('pfe-jump-links-panel:change', this._panelChangedHandler);
 
     window.removeEventListener('resize', this._resizeHandler);
     window.removeEventListener('scroll', this._scrollHandler);
     window.removeEventListener('keyup', this._keyboardHandler);
 
     // If the stickiness changes, update the sticky navigation offset
-    window.removeEventListener(events.stuck, this._updateOffset);
+    window.removeEventListener('pfe-jump-links-nav:stuck', this._updateOffset);
 
     // @TODO respond to URL change? Ensure anchor link alignment accounts for sticky nav(s)
     // window.removeEventListener("locationchange", (evt) => console.log("locationchange", evt));
@@ -727,7 +712,7 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
     this._reportHeight();
 
     this.dispatchEvent(new NavStuckEvent(!!stuck));
-    this.dispatchEvent(deprecatedCustomEvent(PfeJumpLinksNav.events.stuck, { stuck }));
+    this.dispatchEvent(deprecatedCustomEvent('pfe-jump-links-nav:stuck', { stuck }));
   }
 
   /**
@@ -1072,7 +1057,7 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
     }
     // Emit event for tracking
     this.dispatchEvent(new ChangeEvent(idx));
-    this.dispatchEvent(deprecatedCustomEvent(PfeJumpLinksNav.events.activeNavItem, { activeNavItem: idx }));
+    this.dispatchEvent(deprecatedCustomEvent('pfe-jump-links-panel:active-navItem', { activeNavItem: idx }));
   }
 
   @bound getActive() {

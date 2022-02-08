@@ -164,9 +164,6 @@ $regions-grid: (
   }
 }
 
-// Use-case for transparent backgrounds
-@include pfe-contexts; // imports on="light" etc support
-
 // Pull in pfe-var settings for all supported surface colors
 @include pfe-surfaces;
 

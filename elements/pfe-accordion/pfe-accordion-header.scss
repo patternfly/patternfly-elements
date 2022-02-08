@@ -18,6 +18,8 @@
 
   box-sizing: border-box;
 
+  --context-dark-background-color: black;
+
   background-color: pfe-local(BackgroundColor); // transparent
   color:            pfe-local(Color); // broadcasted text
 

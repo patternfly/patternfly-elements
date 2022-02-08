@@ -11,8 +11,6 @@
   ),
 );
 
-@include pfe-contexts; // imports on="light" etc support
-
 :host {
   display: block;
   position: relative;

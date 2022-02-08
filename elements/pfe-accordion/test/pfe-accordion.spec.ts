@@ -249,14 +249,14 @@ describe('<pfe-accordion>', function() {
 
   /* ATTRIBUTE TESTS */
   it('should open the items listed in the expanded-index attribute', async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(testElement);
-    const headers = Array.from(pfeAccordion.children).filter(PfeAccordion.isHeader);
-    pfeAccordion.setAttribute('expanded-index', '2,3');
+    const element = await createFixture<PfeAccordion>(testElement);
+    const headers = Array.from(element.children).filter(PfeAccordion.isHeader);
+    element.setAttribute('expanded-index', '2,3');
 
     // Wait until the animation is complete
-    await oneEvent(pfeAccordion, 'transitionend');
+    await oneEvent(element, 'transitionend');
 
-    await pfeAccordion.updateComplete;
+    await element.updateComplete;
     await Promise.all(headers.map(x => x.updateComplete));
 
     [2, 3].forEach(idx => {

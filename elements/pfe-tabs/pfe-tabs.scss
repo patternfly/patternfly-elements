@@ -92,8 +92,6 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
   --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
 }
 
-@include pfe-contexts; // imports on="light" etc support
-
 /// ===========================================================================
 /// INSET NOTCH
 /// ===========================================================================

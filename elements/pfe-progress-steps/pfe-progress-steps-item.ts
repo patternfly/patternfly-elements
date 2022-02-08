@@ -61,7 +61,7 @@ export class PfeProgressStepsItem extends LitElement {
 
   /** Describes the state of the current item; allows "inactive", "done", or "error". */
   @observed
-  @property({ reflect: true }) state: 'inactive'|'done'|'error' = 'inactive';
+  @property({ reflect: true }) state: 'active'|'inactive'|'done'|'error' = 'inactive';
 
   @property({ type: Boolean, reflect: true }) vertical = false;
 

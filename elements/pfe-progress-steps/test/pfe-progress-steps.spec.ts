@@ -1,4 +1,5 @@
-import { html, expect, aTimeout } from '@open-wc/testing';
+import { html, expect, aTimeout, nextFrame } from '@open-wc/testing';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 // Import our custom fixture wrapper. This allows us to run tests
 // in React and Vue as well as a normal fixture.
@@ -6,9 +7,15 @@ import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 
 // Import the element we're testing.
 import { PfeProgressSteps } from '@patternfly/pfe-progress-steps';
+import { PfeProgressStepsItem } from '@patternfly/pfe-progress-steps/pfe-progress-steps-item';
 
-const itemTemplate = (title = '', description = '', state = '', current = false) => html`
-   <pfe-progress-steps-item state="${state}" ?current=${current}>
+const itemTemplate = (
+  title = '',
+  description = '',
+  state?: PfeProgressStepsItem['state'],
+  current = false
+) => html`
+   <pfe-progress-steps-item state="${ifDefined(state)}" ?current=${current}>
    ${title ? html`<span slot="title">${title}</span>` : ''}
    ${description ? html`<span slot="description">${description}</span>` : ''}
    </pfe-progress-steps-item>`;
@@ -117,15 +124,17 @@ describe('<pfe-progress-steps>', function() {
 
   describe('progress bar', function() {
     it(`should have a length that spans from the middle of the first item to the middle of the last item`, async function() {
-      const el = await createFixture<PfeProgressSteps>(TEMPLATE);
-      const stepItems = [...el.querySelectorAll('pfe-progress-steps-item')];
+      const element = await createFixture<PfeProgressSteps>(TEMPLATE);
+      const stepItems = [...element.querySelectorAll('pfe-progress-steps-item')];
+      await Promise.all(stepItems.map(x => x.updateComplete));
+      await nextFrame();
       // get the centerpoint of the items
       const firstItemMidpoint = stepItems[0].offsetLeft + stepItems[0].offsetWidth / 2;
       const lastItemMidpoint =
         stepItems[stepItems.length - 1].offsetLeft +
         (stepItems[stepItems.length - 2].offsetWidth / 2);
       const { offsetWidth } =
-        el.shadowRoot!.querySelector<HTMLElement>('.pfe-progress-steps__progress-bar')!;
+        element.shadowRoot!.querySelector<HTMLElement>('.pfe-progress-steps__progress-bar')!;
       expect(offsetWidth)
         .to.equal(lastItemMidpoint - firstItemMidpoint);
     });

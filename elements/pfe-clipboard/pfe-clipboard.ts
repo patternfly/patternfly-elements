@@ -76,6 +76,8 @@ export class PfeClipboard extends LitElement {
 
   static readonly styles = [style];
 
+  private static secure = window.isSecureContext;
+
   /**
    * Optional boolean attribute that, when present, removes the icon from the template.
    */
@@ -120,8 +122,13 @@ export class PfeClipboard extends LitElement {
     }
   });
 
+  private copyType: 'navigator'|'querycommand'| null = null;
+
   connectedCallback() {
     super.connectedCallback();
+
+    this._setCopyType();
+
     this.setAttribute('role', 'button');
     this.setAttribute('tabindex', '0');
 
@@ -148,6 +155,11 @@ export class PfeClipboard extends LitElement {
     const useNewSuccessSlot = this.slots.hasSlotted('success') || !this.slots.hasSlotted('text--success');
     // TODO: Remove deprecated `text` slot and associated logic in 3.0
     const useNewLabelSlot = this.slots.hasSlotted('label') || !this.slots.hasSlotted('text');
+
+    if (!PfeClipboard.secure && this.copyType === 'navigator') {
+      return html`<!-- Browser supports navigator.clipboard API but current website is not behind [https] required by the specification. https://developer.mozilla.org/en-US/docs/Web/API/Clipboard -->`;
+    }
+
     return html`
       <!-- icon slot -->
       ${this.noIcon ? '' : html`
@@ -181,6 +193,23 @@ export class PfeClipboard extends LitElement {
         `}
       </div>
     `;
+  }
+
+  private _setCopyType() {
+    if (navigator.clipboard) {
+      // navigator.clipboard requires a secure website
+      if (PfeClipboard.secure) {
+        this.copyType = 'navigator';
+      } else {
+        this.setAttribute('hidden', '');
+        throw new Error('Browser supports navigator.clipboard API but current website is not behind [https] required by the specification. https://developer.mozilla.org/en-US/docs/Web/API/Clipboard');
+      }
+    } else if (document.queryCommandEnabled('copy')) {
+      this.copyType = 'querycommand';
+    } else {
+      this.setAttribute('hidden', '');
+      throw new Error('Browser does not support copying to the clipboard.');
+    }
   }
 
   /**
@@ -328,22 +357,22 @@ export class PfeClipboard extends LitElement {
     if (!text) {
       this.logger.error('Copy function called, but no text was given to copy.');
     }
-    if (navigator.clipboard) {
-      // If the Clipboard API is available then use that
-      await navigator.clipboard.writeText(text);
-      return text;
-    } else if (document.queryCommandEnabled('copy')) {
-      // If execCommand("copy") exists then use that method
-      const dummy = document.createElement('input');
-      document.body.appendChild(dummy);
-      dummy.value = text;
-      dummy.select();
-      document.execCommand('copy');
-      document.body.removeChild(dummy);
-      return text;
-    } else {
-      throw new Error('Current browser does not support copying to the clipboard.');
+
+    switch (this.copyType) {
+      case 'navigator':
+        await navigator.clipboard.writeText(text);
+        break;
+      case 'querycommand': {
+        const dummy = document.createElement('input');
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+        break;
+      }
     }
+    return text;
   }
 }
 

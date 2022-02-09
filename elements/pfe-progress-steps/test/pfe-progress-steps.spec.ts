@@ -27,8 +27,8 @@ const TEMPLATE = html`
     ${itemTemplate('First', 'View first step', 'done')}
     ${itemTemplate('Current', 'View current step', 'active', true)}
     ${itemTemplate('Last', 'View last step')}
-   </pfe-progress-steps>
-   `;
+  </pfe-progress-steps>
+  `;
 
 // @TODO pfe-progress-steps needs more tests written
 describe('<pfe-progress-steps>', function() {
@@ -91,7 +91,7 @@ describe('<pfe-progress-steps>', function() {
         .map(i => i.offsetTop);
         // see if these positions are stacked on top of one another
         // we use every so we can exit early.
-      const isEven = items.every((i, index) => {
+      const isEven = items.every((_, index) => {
         // if there is a next item to work with
         if (typeof items[index + 1] === 'undefined') {
           return true;
@@ -110,7 +110,7 @@ describe('<pfe-progress-steps>', function() {
         .map(i => i.offsetTop);
         // see if these positions are stacked on top of one another
         // we use every so we can exit early.
-      const isStacked = items.every((i, index) => {
+      const isStacked = items.every((_, index) => {
         // if there is a next item to work with
         if (typeof items[index + 1] === 'undefined') {
           return true;
@@ -125,18 +125,17 @@ describe('<pfe-progress-steps>', function() {
   describe('progress bar', function() {
     it(`should have a length that spans from the middle of the first item to the middle of the last item`, async function() {
       const element = await createFixture<PfeProgressSteps>(TEMPLATE);
-      const stepItems = [...element.querySelectorAll('pfe-progress-steps-item')];
-      await Promise.all(stepItems.map(x => x.updateComplete));
+      const [firstItem, middleItem, lastItem] = [...element.querySelectorAll('pfe-progress-steps-item')];
+
+      await Promise.all([firstItem.updateComplete, middleItem.updateComplete, lastItem.updateComplete]);
       await nextFrame();
+
       // get the centerpoint of the items
-      const firstItemMidpoint = stepItems[0].offsetLeft + stepItems[0].offsetWidth / 2;
-      const lastItemMidpoint =
-        stepItems[stepItems.length - 1].offsetLeft +
-        (stepItems[stepItems.length - 2].offsetWidth / 2);
-      const { offsetWidth } =
-        element.shadowRoot!.querySelector<HTMLElement>('.pfe-progress-steps__progress-bar')!;
-      expect(offsetWidth)
-        .to.equal(lastItemMidpoint - firstItemMidpoint);
+      const firstItemMidpoint = firstItem.offsetLeft + firstItem.offsetWidth / 2;
+      const lastItemMidpoint = lastItem.offsetLeft + (middleItem.offsetWidth / 2);
+      const { offsetWidth } = element.shadowRoot!.querySelector<HTMLElement>('.pfe-progress-steps__progress-bar')!;
+
+      expect(offsetWidth).to.equal(lastItemMidpoint - firstItemMidpoint);
     });
   });
 });

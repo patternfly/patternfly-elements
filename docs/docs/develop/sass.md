@@ -123,9 +123,6 @@ Now we can update our styles, like so:
     // This sets the `on=` attribute on the component
     --context: #{pfe-local(context, $region: profile)};
 
-    // Invoke the broadcasted default typography styles
-    @include pfe-contexts;
-
     // The above mixins outputs:
     // :host([on="dark"]) {
     //   --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);

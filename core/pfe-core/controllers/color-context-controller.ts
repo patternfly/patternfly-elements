@@ -5,7 +5,7 @@ import type { Context, UnknownContext } from '../context.js';
 import { ContextEvent, createContext } from '../context.js';
 import { bound } from '../decorators/bound.js';
 import { Logger } from './logger.js';
-import { StyleController } from './styling-controller.js';
+import { StyleController } from './style-controller.js';
 
 import CONTEXT_BASE_STYLES from './color-context-controller.scss';
 

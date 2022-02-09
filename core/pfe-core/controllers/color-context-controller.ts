@@ -10,8 +10,6 @@ import { StyleController } from './style-controller.js';
 import CONTEXT_BASE_STYLES from './color-context-controller.scss';
 
 export class ColorContextController implements ReactiveController {
-  // static styles = CONTEXT_BASE_STYLES;
-
   private callbacks = new Set<ColorContextController['update']>();
 
   private context: Context<ContextTheme|null>;

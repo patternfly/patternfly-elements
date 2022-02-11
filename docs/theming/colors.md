@@ -80,13 +80,13 @@ tags:
   --pfe-theme--color--link--visited--on-saturated: #ffffff;
   ```
 
-  Often components will make decisions about how to best utilize those colors, which is “baked in”. For example, a standard CTA, or [call-to-action component](/components/call-to-action), uses the standard link color in its default state. But, if you set the `priority` attribute value to `primary`, the CTA will make use of the accent color from the palette. Note the correlation here between the priority level of the CTA and the color choice. Because the priority level of primary means that this is the most prominent call-to-action in the viewport, it uses the bright, attention-grabbing accent color. The CTA type "secondary" and the default CTA command less attention.
+  Often components will make decisions about how to best utilize those colors, which is “baked in”. For example, a standard CTA, or [call-to-action component](/components/cta), uses the standard link color in its default state. But, if you set the `priority` attribute value to `primary`, the CTA will make use of the accent color from the palette. Note the correlation here between the priority level of the CTA and the color choice. Because the priority level of primary means that this is the most prominent call-to-action in the viewport, it uses the bright, attention-grabbing accent color. The CTA type "secondary" and the default CTA command less attention.
 
   <pfe-cta>
     <a href="#">Call to action link</a>
   </pfe-cta>
 
-  <pfe-cta pfe-priority="primary">
+  <pfe-cta priority="primary">
     <a href="#">Call to action link (Type: Primary)</a>
   </pfe-cta>
 
@@ -95,7 +95,7 @@ tags:
     <a href="#">Call to action link</a>
   </pfe-cta>
 
-  <pfe-cta pfe-priority="primary">
+  <pfe-cta priority="primary">
     <a href="#">Call to action link (Type: Primary)</a>
   </pfe-cta>
   ```

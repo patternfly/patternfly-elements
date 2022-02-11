@@ -11,7 +11,7 @@ title: Quick start
 <pfe-band class="header" size="small" color="lightest" use-grid>
 
 ## Quick start template
-Use the markup below to start exploring PatternFly Elements. The template below includes the [card](/components/card), [band](/components/band), [call-to-action](/components/call-to-action), [accordion](/components/accordion), and [tabs](/components/tabs) components as well the grid system and alignment helpers included with PatternFly Elements.
+Use the markup below to start exploring PatternFly Elements. The template below includes the [card](/components/card), [band](/components/band), [call-to-action](/components/cta), [accordion](/components/accordion), and [tabs](/components/tabs) components as well the grid system and alignment helpers included with PatternFly Elements.
 
 The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly Elements to the page. This is fine for development and exploration, but it's highly recommended that you install PatternFly Elements from npm for use in production.
 

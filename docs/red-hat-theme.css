@@ -188,7 +188,7 @@
 }
 
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-  pfe-cta[pfe-priority="primary"] {
+  pfe-cta[priority="primary"] {
     background-color: #e00;
     border-color: #e00;
   }

@@ -53,7 +53,7 @@ title: Get started
 {% endband %}
 
 {% band header="Add PatternFly Elements markup" %}
-  Add a [call-to-action component](/components/call-to-action).
+  Add a [call-to-action component](/components/cta).
   ```html
   <pfe-cta>
     <a href="https://patternflyelements.org">PatternFly Elements</a>
@@ -88,7 +88,7 @@ title: Get started
 {% band header="Add attributes" %}
   Attributes can be used to adjust a theme, a palette color, a priority, set default values, etc. Be sure to check out the "Attributes" section for each component to see which attributes are available.
 
-  Change the priority of a [call-to-action component](/components/call-to-action) using the [priority attribute](http://localhost:8080/components/call-to-action/#priority).
+  Change the priority of a [call-to-action component](/components/cta) using the [priority attribute](http://localhost:8080/components/cta/#priority).
   ```html
   <pfe-cta priority="primary">
     <a href="https://patternflyelements.org">PatternFly Elements</a>

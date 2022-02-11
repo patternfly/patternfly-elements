@@ -198,6 +198,7 @@ Text alignment helper classes can also be applied to any block-level element.
   <div class="pfe-l--text-align--center example">
     <div>Center aligned text</div>
   </div>
+  ```
 {% endband %}
 
 {% band level=3, header="Right aligned text" %}

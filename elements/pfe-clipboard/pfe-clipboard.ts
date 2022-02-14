@@ -122,8 +122,9 @@ export class PfeClipboard extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('role', 'button');
-    this.setAttribute('tabindex', '0');
+    // TODO: remove this code, a real button has been added within pfe-clipboard. this is much more robust than role button and tabindex 0
+    // this.setAttribute('role', 'button');
+    // this.setAttribute('tabindex', '0');
 
     // Since this element as the role of button we are going to listen
     // for click and as well as 'enter' and 'space' commands to trigger
@@ -149,22 +150,24 @@ export class PfeClipboard extends LitElement {
     // TODO: Remove deprecated `text` slot and associated logic in 3.0
     const useNewLabelSlot = this.slots.hasSlotted('label') || !this.slots.hasSlotted('text');
     return html`
-      <!-- icon slot -->
-      ${this.noIcon ? '' : html`
-      <div class="pfe-clipboard__icon">
-        <slot name="icon" id="icon">
-          <svg id="icon--url" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 15.277 16">
-            <g transform="translate(-2.077 -1.807)">
-              <path class="a" d="M15.34,2.879a3.86,3.86,0,0,0-5.339,0L6.347,6.545a3.769,3.769,0,0,0,0,5.339.81.81,0,0,0,1.132,0,.823.823,0,0,0,0-1.145A2.144,2.144,0,0,1,7.5,7.677l3.641-3.654a2.161,2.161,0,1,1,3.049,3.062l-.8.8a.811.811,0,1,0,1.145,1.132l.8-.8a3.769,3.769,0,0,0,0-5.339Z" transform="translate(0.906 0)"/>
-              <path class="a" d="M10.482,6.822a.823.823,0,0,0,0,1.145,2.161,2.161,0,0,1,0,3.049L7.343,14.155a2.161,2.161,0,0,1-3.062,0,2.187,2.187,0,0,1,0-3.062l.193-.116a.823.823,0,0,0,0-1.145.811.811,0,0,0-1.132,0l-.193.193a3.86,3.86,0,0,0,0,5.339,3.86,3.86,0,0,0,5.339,0l3.126-3.139A3.731,3.731,0,0,0,12.72,9.562a3.769,3.769,0,0,0-1.094-2.74A.823.823,0,0,0,10.482,6.822Z" transform="translate(0 1.37)"/>
-            </g>
-          </svg>
-          <svg id="icon--copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
-            <g></g>
-            <path d="M30.286 6.857q0.714 0 1.214 0.5t0.5 1.214v21.714q0 0.714-0.5 1.214t-1.214 0.5h-17.143q-0.714 0-1.214-0.5t-0.5-1.214v-5.143h-9.714q-0.714 0-1.214-0.5t-0.5-1.214v-12q0-0.714 0.357-1.571t0.857-1.357l7.286-7.286q0.5-0.5 1.357-0.857t1.571-0.357h7.429q0.714 0 1.214 0.5t0.5 1.214v5.857q1.214-0.714 2.286-0.714h7.429zM20.571 10.661l-5.339 5.339h5.339v-5.339zM9.143 3.804l-5.339 5.339h5.339v-5.339zM12.643 15.357l5.643-5.643v-7.429h-6.857v7.429q0 0.714-0.5 1.214t-1.214 0.5h-7.429v11.429h9.143v-4.571q0-0.714 0.357-1.571t0.857-1.357zM29.714 29.714v-20.571h-6.857v7.429q0 0.714-0.5 1.214t-1.214 0.5h-7.429v11.429h16z"/>
-          </svg>
-        </slot>
-      </div>
+      <button class="pfe-clipboard__button" aria-busy="true">
+          <!-- icon slot -->
+          ${this.noIcon ? '' : html`
+          <div class="pfe-clipboard__icon" aria-hidden="true">
+            <slot name="icon" id="icon">
+              <svg id="icon--url" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 15.277 16">
+                <g transform="translate(-2.077 -1.807)">
+                  <path class="a" d="M15.34,2.879a3.86,3.86,0,0,0-5.339,0L6.347,6.545a3.769,3.769,0,0,0,0,5.339.81.81,0,0,0,1.132,0,.823.823,0,0,0,0-1.145A2.144,2.144,0,0,1,7.5,7.677l3.641-3.654a2.161,2.161,0,1,1,3.049,3.062l-.8.8a.811.811,0,1,0,1.145,1.132l.8-.8a3.769,3.769,0,0,0,0-5.339Z" transform="translate(0.906 0)"/>
+                  <path class="a" d="M10.482,6.822a.823.823,0,0,0,0,1.145,2.161,2.161,0,0,1,0,3.049L7.343,14.155a2.161,2.161,0,0,1-3.062,0,2.187,2.187,0,0,1,0-3.062l.193-.116a.823.823,0,0,0,0-1.145.811.811,0,0,0-1.132,0l-.193.193a3.86,3.86,0,0,0,0,5.339,3.86,3.86,0,0,0,5.339,0l3.126-3.139A3.731,3.731,0,0,0,12.72,9.562a3.769,3.769,0,0,0-1.094-2.74A.823.823,0,0,0,10.482,6.822Z" transform="translate(0 1.37)"/>
+                </g>
+              </svg>
+              <svg id="icon--copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
+                <g></g>
+                <path d="M30.286 6.857q0.714 0 1.214 0.5t0.5 1.214v21.714q0 0.714-0.5 1.214t-1.214 0.5h-17.143q-0.714 0-1.214-0.5t-0.5-1.214v-5.143h-9.714q-0.714 0-1.214-0.5t-0.5-1.214v-12q0-0.714 0.357-1.571t0.857-1.357l7.286-7.286q0.5-0.5 1.357-0.857t1.571-0.357h7.429q0.714 0 1.214 0.5t0.5 1.214v5.857q1.214-0.714 2.286-0.714h7.429zM20.571 10.661l-5.339 5.339h5.339v-5.339zM9.143 3.804l-5.339 5.339h5.339v-5.339zM12.643 15.357l5.643-5.643v-7.429h-6.857v7.429q0 0.714-0.5 1.214t-1.214 0.5h-7.429v11.429h9.143v-4.571q0-0.714 0.357-1.571t0.857-1.357zM29.714 29.714v-20.571h-6.857v7.429q0 0.714-0.5 1.214t-1.214 0.5h-7.429v11.429h16z"/>
+              </svg>
+            </slot>
+          </div>
+        </button>
       `}
       <div class="pfe-clipboard__text">
         ${useNewLabelSlot ? html`
@@ -173,7 +176,7 @@ export class PfeClipboard extends LitElement {
         <slot name="text" id="text">${this.labelDefault}</slot>
         `}
       </div>
-      <div class="pfe-clipboard__text--success" role="alert">
+      <div class="pfe-clipboard__text--success" aria-live="polite">
         ${useNewSuccessSlot ? html`
         <slot name="success" id="success">Copied</slot>
         ` : html`
@@ -187,8 +190,10 @@ export class PfeClipboard extends LitElement {
    * Checks to make sure the thing we may copy exists
    */
   @bound private _checkForCopyTarget() {
+    const button = this.shadowRoot?.querySelector('button');
     if (this.copyFrom === 'property') {
       if (!this.contentToCopy) {
+        button?.setAttribute('aria-busy', 'true');
         this.setAttribute('disabled', '');
       } else if (this.hasAttribute('disabled')) {
         this.removeAttribute('disabled');
@@ -203,7 +208,9 @@ export class PfeClipboard extends LitElement {
    * Event handler for any activation of the copy button
    */
   @bound private async _clickHandler() {
+    const button = this.shadowRoot?.querySelector('button');
     let text;
+
     switch (this.copyFrom) {
       // Copy current URL
       case 'url':
@@ -214,6 +221,7 @@ export class PfeClipboard extends LitElement {
         if (this.contentToCopy) {
           text = this.contentToCopy;
         } else {
+          button?.setAttribute('aria-busy', 'true');
           this.setAttribute('disabled', '');
           this.logger.error('Set to copy property, but this.contentToCopy is not set');
           return;
@@ -241,6 +249,7 @@ export class PfeClipboard extends LitElement {
     }
 
     if (!text || (typeof text === 'string' && !text.length)) {
+      button?.setAttribute('aria-busy', 'true');
       this.logger.error('Couldn\'t find text to copy.');
       this.setAttribute('disabled', '');
       return;
@@ -260,8 +269,10 @@ export class PfeClipboard extends LitElement {
       // Toggle the copied state. Use the this._formattedCopiedTimeout function
       // to an appropraite setTimout length.
       this.setAttribute('copied', '');
+      button?.setAttribute('aria-busy', 'false');
       setTimeout(() => {
         this.removeAttribute('copied');
+        button?.setAttribute('aria-busy', 'true');
       }, this._formattedCopiedTimeout());
     } catch (error) {
       this.logger.warn(error as string);

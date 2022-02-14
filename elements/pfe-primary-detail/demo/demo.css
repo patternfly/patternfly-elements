@@ -16,7 +16,7 @@ li {
   margin: 0 0 0.75em;
 }
 
-.ansible-styles [slot="details-nav"] {
+.ansible-styles [slot="nav"] {
   min-width: 250px;
 }
 

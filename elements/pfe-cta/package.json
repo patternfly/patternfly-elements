@@ -28,6 +28,7 @@
     "build": "run-s build:*",
     "build:clean": "npm run clean",
     "build:esbuild": "node ../../scripts/build.js --include pfe-cta",
+    "build:lightdom": "sass pfe-cta--lightdom.scss pfe-cta--lightdom.css --load-path=../../node_modules",
     "build:analyze": "npm run analyze",
     "build:types": "tsc -b .",
     "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",

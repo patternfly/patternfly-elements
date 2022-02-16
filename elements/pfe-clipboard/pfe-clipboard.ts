@@ -175,7 +175,7 @@ export class PfeClipboard extends LitElement {
         <slot name="text" id="text">${this.labelDefault}</slot>
         `}
       </div>
-      <div class="pfe-clipboard__text--success" role="alert" aria-live="polite">
+      <div class="pfe-clipboard__text--success" aria-hidden="true" hidden>
         ${useNewSuccessSlot ? html`
         <slot name="success" id="success">Copied</slot>
         ` : html`
@@ -224,6 +224,10 @@ export class PfeClipboard extends LitElement {
    */
   @bound private async _clickHandler() {
     // const button = this.shadowRoot?.querySelector('button');
+    const clipBoardText = this.shadowRoot?.querySelector('.pfe-clipboard__text');
+    const textSuccess = this.shadowRoot?.querySelector('.pfe-clipboard__text--success');
+    const textAlert = this.shadowRoot?.querySelector('.pfe-clipboard__text-alert');
+
     let text;
 
     switch (this.copyFrom) {
@@ -237,6 +241,9 @@ export class PfeClipboard extends LitElement {
           text = this.contentToCopy;
         } else {
           // button?.setAttribute('aria-busy', 'true');
+          // clipBoardText?.removeAttribute("hidden");
+          textSuccess?.setAttribute('hidden', '');
+          textAlert?.setAttribute('hidden', '');
           this.setAttribute('disabled', '');
           this.logger.error('Set to copy property, but this.contentToCopy is not set');
           return;
@@ -265,6 +272,8 @@ export class PfeClipboard extends LitElement {
 
     if (!text || (typeof text === 'string' && !text.length)) {
     //  button?.setAttribute('aria-busy', 'true');
+      textSuccess?.setAttribute('hidden', '');
+      textAlert?.setAttribute('hidden', '');
       this.logger.error('Couldn\'t find text to copy.');
       this.setAttribute('disabled', '');
       return;
@@ -285,9 +294,18 @@ export class PfeClipboard extends LitElement {
       // to set an appropriate setTimout length.
       this.setAttribute('copied', '');
       // button?.setAttribute('aria-busy', 'false');
+      clipBoardText?.setAttribute('hidden', '');
+      textSuccess?.removeAttribute('hidden');
+      textAlert?.removeAttribute('hidden');
+      // TODO: figure out how to get the focus functionality to work
+      // textAlert?.focus();
       setTimeout(() => {
         this.removeAttribute('copied');
         // button?.setAttribute('aria-busy', 'true');
+        clipBoardText?.removeAttribute('hidden');
+        textSuccess?.setAttribute('hidden', '');
+        textAlert?.setAttribute('hidden', '');
+        // button.focus();
       }, this._formattedCopiedTimeout());
     } catch (error) {
       this.logger.warn(error as string);

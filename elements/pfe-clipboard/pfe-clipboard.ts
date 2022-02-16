@@ -84,7 +84,7 @@ export class PfeClipboard extends LitElement {
   /**
    * Specify the amount of time in seconds the copy success text should be visible.
    */
-  @property({ type: Number, reflect: true, attribute: 'copied-duration' }) copiedDuration = 3;
+  @property({ type: Number, reflect: true, attribute: 'copied-duration' }) copiedDuration = 4;
 
   /**
    * Defaults to `url`, decides what should be copied. Possible values are:
@@ -150,7 +150,7 @@ export class PfeClipboard extends LitElement {
     // TODO: Remove deprecated `text` slot and associated logic in 3.0
     const useNewLabelSlot = this.slots.hasSlotted('label') || !this.slots.hasSlotted('text');
     return html`
-      <button class="pfe-clipboard__button" aria-busy="true">
+      <button class="pfe-clipboard__button">
           <!-- icon slot -->
           ${this.noIcon ? '' : html`
           <div class="pfe-clipboard__icon" aria-hidden="true">
@@ -167,7 +167,6 @@ export class PfeClipboard extends LitElement {
               </svg>
             </slot>
           </div>
-        </button>
       `}
       <div class="pfe-clipboard__text">
         ${useNewLabelSlot ? html`
@@ -176,11 +175,19 @@ export class PfeClipboard extends LitElement {
         <slot name="text" id="text">${this.labelDefault}</slot>
         `}
       </div>
-      <div class="pfe-clipboard__text--success" aria-live="polite">
+      <div class="pfe-clipboard__text--success" aria-hidden="true" hidden>
         ${useNewSuccessSlot ? html`
         <slot name="success" id="success">Copied</slot>
         ` : html`
         <slot name="text--success" id="text--success">Copied</slot>
+        `}
+      </div>
+      </button>
+      <div class="pfe-clipboard__text-alert sr-only" role="alert" tabindex="0" aria-live="polite" hidden>
+        ${useNewSuccessSlot ? html`
+        <slot name="success" id="success-alert">Copied.</slot>
+        ` : html`
+        <slot name="text--success" id="text-alert--success">Copied.</slot>
         `}
       </div>
     `;
@@ -190,15 +197,26 @@ export class PfeClipboard extends LitElement {
    * Checks to make sure the thing we may copy exists
    */
   @bound private _checkForCopyTarget() {
-    const button = this.shadowRoot?.querySelector('button');
+    // const button = this.shadowRoot?.querySelector('button');
+    // const clipBoardText = this.shadowRoot?.querySelector('.pfe-clipboard__text');
+    const textSuccess = this.shadowRoot?.querySelector('.pfe-clipboard__text--success');
+    const textAlert = this.shadowRoot?.querySelector('.pfe-clipboard__text-alert');
+
     if (this.copyFrom === 'property') {
       if (!this.contentToCopy) {
-        button?.setAttribute('aria-busy', 'true');
+        // button?.setAttribute('aria-busy', 'true');
+        // clipBoardText?.removeAttribute("hidden");
+        textSuccess?.setAttribute('hidden', '');
+        textAlert?.setAttribute('hidden', '');
         this.setAttribute('disabled', '');
       } else if (this.hasAttribute('disabled')) {
+        // clipBoardText?.removeAttribute("hidden");
         this.removeAttribute('disabled');
       }
     } else if (this.copyFrom.length) {
+      // clipBoardText?.removeAttribute("hidden");
+    //  textSuccess?.removeAttribute("hidden");
+    //  textAlert?.removeAttribute("hidden");
       // If target is set to anything else, we're not doing checks for it
       this.removeAttribute('disabled');
     }
@@ -209,6 +227,10 @@ export class PfeClipboard extends LitElement {
    */
   @bound private async _clickHandler() {
     const button = this.shadowRoot?.querySelector('button');
+    const clipBoardText = this.shadowRoot?.querySelector('.pfe-clipboard__text');
+    const textSuccess = this.shadowRoot?.querySelector('.pfe-clipboard__text--success');
+    const textAlert = this.shadowRoot?.querySelector('.pfe-clipboard__text-alert');
+
     let text;
 
     switch (this.copyFrom) {
@@ -221,7 +243,9 @@ export class PfeClipboard extends LitElement {
         if (this.contentToCopy) {
           text = this.contentToCopy;
         } else {
-          button?.setAttribute('aria-busy', 'true');
+          // clipBoardText?.removeAttribute("hidden");
+          textSuccess?.setAttribute('hidden', '');
+          textAlert?.setAttribute('hidden', '');
           this.setAttribute('disabled', '');
           this.logger.error('Set to copy property, but this.contentToCopy is not set');
           return;
@@ -249,7 +273,9 @@ export class PfeClipboard extends LitElement {
     }
 
     if (!text || (typeof text === 'string' && !text.length)) {
-      button?.setAttribute('aria-busy', 'true');
+    //  button?.setAttribute('aria-busy', 'true');
+      textSuccess?.setAttribute('hidden', '');
+      textAlert?.setAttribute('hidden', '');
       this.logger.error('Couldn\'t find text to copy.');
       this.setAttribute('disabled', '');
       return;
@@ -267,12 +293,21 @@ export class PfeClipboard extends LitElement {
         copiedText,
       }));
       // Toggle the copied state. Use the this._formattedCopiedTimeout function
-      // to an appropraite setTimout length.
+      // to set an appropriate setTimout length.
       this.setAttribute('copied', '');
-      button?.setAttribute('aria-busy', 'false');
+      // button?.setAttribute('aria-busy', 'false');
+      clipBoardText?.setAttribute('hidden', '');
+      textSuccess?.removeAttribute('hidden');
+      textAlert?.removeAttribute('hidden');
+      // TODO: figure out how to get the focus functionality to work
+      // textAlert?.focus();
       setTimeout(() => {
         this.removeAttribute('copied');
-        button?.setAttribute('aria-busy', 'true');
+        // button?.setAttribute('aria-busy', 'true');
+        clipBoardText?.removeAttribute('hidden');
+        textSuccess?.setAttribute('hidden', '');
+        textAlert?.setAttribute('hidden', '');
+        // button.focus();
       }, this._formattedCopiedTimeout());
     } catch (error) {
       this.logger.warn(error as string);
@@ -292,10 +327,14 @@ export class PfeClipboard extends LitElement {
    */
   private _formattedCopiedTimeout() {
     const copiedDuration = Number(this.copiedDuration * 1000);
-    if (!(copiedDuration > -1)) {
-      this.logger.warn(`copied-duration must be a valid number. Defaulting to 3 seconds.`);
-      // default to 3 seconds
-      return 3000;
+    if ((copiedDuration < -1)) {
+      this.logger.warn(`copied-duration must be a valid number. Defaulting to 4 seconds.`);
+      // default to 4 seconds
+      // accessibility note: ensure that the user has enough time to read and also hear the text changes, for longer amounts of text increase the duration time to at least 6 seconds
+      return 4000;
+    } else if ((copiedDuration < 4000)) {
+      this.logger.warn(`copied-duration must be 4 seconds or more. Defaulting to 4 seconds.`);
+      return 4000;
     } else {
       return copiedDuration;
     }

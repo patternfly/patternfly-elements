@@ -149,6 +149,7 @@ export class PfeClipboard extends LitElement {
     }
   }
 
+  // TODO: convert divs with role button to be real buttons
   // All DOM changes go inside the render function
   render() {
     // TODO: Remove deprecated `text--success` slot and associated logic in 3.0

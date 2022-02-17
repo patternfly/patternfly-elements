@@ -87,7 +87,7 @@ export class PfeClipboard extends LitElement {
   @property({ type: Number, reflect: true, attribute: 'copied-duration' }) copiedDuration = 4;
 
   /**
-   *
+   * Specify when the button slot needs to be aria-disabled or not, coincides with button disabled * states.
    */
   @state() private _ariaDisabled = false;
 

@@ -127,9 +127,6 @@ export class PfeClipboard extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    // TODO: remove this code, a real button has been added within pfe-clipboard. this is much more robust than role button and tabindex 0
-    //  this.setAttribute('role', 'button');
-    //  this.setAttribute('tabindex', '0');
 
     // Since this element as the role of button we are going to listen
     // for click and as well as 'enter' and 'space' commands to trigger
@@ -149,7 +146,6 @@ export class PfeClipboard extends LitElement {
     }
   }
 
-  // TODO: convert divs with role button to be real buttons
   // All DOM changes go inside the render function
   render() {
     // TODO: Remove deprecated `text--success` slot and associated logic in 3.0

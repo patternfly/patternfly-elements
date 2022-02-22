@@ -15,9 +15,9 @@ root.addEventListener('change', event => {
 
 root.addEventListener('pfe-primary-detail:hidden-tab', event => {
   // eslint-disable-next-line no-console
-  console.log(`Depreciated event: ${event.detail.tab.textContent} tab is closing. ID: ${event.detail.tab.id}`);
+  console.log(`Deprecated event: ${event.detail.tab.textContent} tab is closing. ID: ${event.detail.tab.id}`);
 });
 root.addEventListener('pfe-primary-detail:shown-tab', event => {
   // eslint-disable-next-line no-console
-  console.log(`Depreciated event: ${event.detail.tab.textContent} tab is opening. ID: ${event.detail.tab.id}`);
+  console.log(`Deprecated event: ${event.detail.tab.textContent} tab is opening. ID: ${event.detail.tab.id}`);
 });

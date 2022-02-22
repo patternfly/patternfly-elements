@@ -94,21 +94,18 @@ export class PfePrimaryDetail extends LitElement {
   /** The min-width of the _component_ where it has a desktop layout */
   @property({ attribute: 'breakpoint-width', type: Number, reflect: true }) breakpointWidth = 800;
 
-  /** Read only: Displays the id of an open 'detailNav' element */
+  /** The id of the active nav element, or null */
   @observed
   @property({ type: String, reflect: true }) active: string|null = null;
-
-  /** Read only: Displays what breakpoint is currently being used */
-  @property({ type: String, reflect: true }) breakpoint?: 'compact'|'desktop';
 
   /** Used to set text of back button **/
   @property({ type: String }) expandedSectionTitle?: string;
 
-  @state() private pristine = true;
-  @state() private controlsId?: string;
-  @state() private nextToggle: HTMLElement|null = null;
+  @observed
+  @state() private breakpoint?: 'compact'|'desktop';
 
   @query('#details-wrapper__back') private _detailsBackButton?: HTMLElement|null;
+  @query('#wrapper') private _wrapperDiv?: HTMLElement|null;
 
   private logger = new Logger(this);
 
@@ -130,318 +127,478 @@ export class PfePrimaryDetail extends LitElement {
     }
   });
 
-  private _debouncedSetBreakpoint:ReturnType<typeof debounce>|null = null;
+  private controlsId?: string;
+  private pristine = true;
+  private navs: HTMLElement[] = [];
+  private details: HTMLElement[] = [];
+  private upgradedNavigation: HTMLElement[] = [];
+  private upgradedDetails: HTMLElement[] = [];
+
+  private _debouncedWindowWidthCheck:ReturnType<typeof debounce>|null = null;
 
   private _windowInnerWidth?: number;
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    this.setAttribute('aria-orientation', 'vertical');
-    this.setAttribute('role', 'tablist');
-
-    // Lower debounce delay for automated testing
-    const debounceDelay = this.hasAttribute('automated-testing') ? 0 : 100;
-
-    this._debouncedSetBreakpoint = debounce(this._setBreakpoint, debounceDelay);
-
-    window.addEventListener('resize', this._debouncedSetBreakpoint);
-
-    // A11y: add keydown event listener to activate keyboard controls
-    this.addEventListener('keydown', this._keyboardControls);
-  }
 
   render() {
     const detailsBackButtonExpanded = (this.breakpoint === 'compact' && this.active) ? 'true' : undefined;
     return html`
       <div id="wrapper"
           part="container"
-          class="${classMap({ active: !!this.active })}"
-          ?data-pristine="${this.pristine}">
+          class="${classMap({ active: !!this.active, compact: this.breakpoint === 'compact' })}">
         <div id="details-nav" part="nav">
           <slot name="header"></slot>
           <slot name="details-nav--header"></slot>
           <slot name="nav"></slot>
           <slot name="details-nav"></slot>
+          <div id="details-nav__footer" part="footer">
+            <slot name="footer"></slot>
+            <slot name="details-nav--footer"></slot>
+          </div>
         </div>
         <div id="details-wrapper" part="details">
           <div id="details-wrapper__header">
             <button
-                id="details-wrapper__back"
-                aria-controls="${ifDefined(this.controlsId)}"
-                aria-expanded="${ifDefined(detailsBackButtonExpanded)}"
-                @click="${this.closeAll}">
-              ${this.expandedSectionTitle}
+              id="details-wrapper__back"
+              aria-controls="${ifDefined(this.controlsId)}"
+              aria-expanded="${ifDefined(detailsBackButtonExpanded)}"
+              @click="${this._back}">
+              ${this._renderDetailsWrapperHeading()}
             </button>
           </div>
           <slot name="details"></slot>
-        </div>
-        <div id="details-nav__footer" part="footer">
-          <slot name="footer"></slot>
-          <slot name="details-nav--footer"></slot>
         </div>
       </div>
     `;
   }
 
-  disconnectedCallback() {
-    if (this._debouncedSetBreakpoint) {
-      window.removeEventListener('resize', this._debouncedSetBreakpoint);
-    }
+  /**
+   * Initalizes component when light DOM is updated
+   * @returns {void}
+   */
+  @initializer({ observe: { childList: true, subtree: false } }) protected async _init() {
+    await this.updateComplete;
+    this.navs = this.slots.getSlotted<HTMLElement>('nav', 'details-nav');
+    this.details = this.slots.getSlotted<HTMLElement>('details');
 
-    const navs = this.slots.getSlotted('nav', 'details-nav');
-    if (navs) {
-      for (const nav of navs) {
-        nav?.removeEventListener('click', this._handleHideShow);
-      }
-    }
-
-    // Remove keydown event listener if component disconnects
-    this.removeEventListener('keydown', this._keyboardControls);
-  }
-
-  protected _activeChanged(oldVal?: string|null, newVal?: string|null) {
-    try {
-      this._setActiveOnToggle(oldVal);
-      this._setActiveOnToggle(newVal);
-    } catch (error) {
-      this.logger.warn((error as Error).message);
+    if (this._validLightDOM()) {
+      Promise.all([
+        this._upgradeNavigation(),
+        this._upgradeDetails(),
+        this._setAriaControls()
+      ]).then(async () => {
+        if (this.pristine) {
+          this._setBreakPointState();
+          this._setHostEventListeners();
+          this._setAriaFeaturesOnHost();
+          await this._setFirstItemSelected();
+          this.pristine = false;
+        }
+      });
     }
   }
 
   /**
-   * Updates markup of details-nav elements to be toggle buttons
-   * @param  toggle Slotted element (probably a headline, unless it's been initialized already)
-   * @param  index The index of the item in the details-nav slot
+   * Upgrade navigation slot light DOM to include button element
+   * attributes and event listeners
+   * @return {Promise}
    */
-  @bound private _initDetailsNav(slotted: HTMLElement, index: number) {
-    const createToggleButton = slotted.tagName !== 'BUTTON';
-    const toggle = createToggleButton ? this._createToggleButton(slotted) : slotted;
+  private _upgradeNavigation() {
+    this.upgradedNavigation = [];
+    return new Promise<boolean>(resolve => {
+      this.navs.forEach((el: HTMLElement, index: number) => {
+        const createButton = el.tagName !== 'BUTTON';
+        const navButton = createButton ? this._createNavigationButton(el) : el;
+        navButton.id ||= getRandomId('pfe-detail-toggle');
+        navButton.addEventListener('click', this._navButtonClicked);
+        navButton.dataset.index = index.toString();
+        if (createButton) {
+          el.parentElement?.replaceChild(navButton, el);
+        }
+        this.upgradedNavigation.push(navButton);
+      });
+      resolve(true);
+    });
+  }
 
-    // If the detailNavElement does not have a ID, set a unique ID
-    toggle.id ||= getRandomId('pfe-detail-toggle');
-    toggle.addEventListener('click', this._handleHideShow);
-    toggle.dataset.index = index.toString();
-
-    // Store a reference to our new detailsNav item
-    if (this.slots.getSlotted('nav', 'details-nav')) {
-      this.slots.getSlotted('nav', 'details-nav')[index] = toggle;
+  /**
+   * Mutation observer callback for navigation button click
+   * @return {void}
+   */
+  @bound private _navButtonClicked(e: { target: EventTarget|null }) {
+    if (!(e.target instanceof HTMLElement)) {
+      return;
     }
+    // If the current target is already active return
+    if (e.target.getAttribute('aria-selected') === 'true' && e.target.id === this.active) {
+      return;
+    }
+    this.active = e.target.id;
+  }
 
-    if (createToggleButton) {
-      slotted.parentElement?.replaceChild(toggle, slotted);
+  /**
+   * Mutation observer callback for active property
+   * @return {void}
+   */
+  private async _activeChanged(oldVal?: string|null, newVal?: string|null) {
+    if (newVal !== oldVal) {
+      const selectedNav = this.upgradedNavigation.find(nav => nav.id === newVal);
+      const selectedDetail = this.upgradedDetails.find(detail => detail.getAttribute('aria-labelledby') === newVal);
+
+      if (selectedNav && selectedDetail) {
+        await this._setNavItemAriaSelected(selectedNav, 'true');
+        this.upgradedNavigation.filter(nav => nav.id !== newVal).forEach(async nav => {
+          await this._setNavItemAriaSelected(nav, 'false');
+        });
+
+        await this._setDetailShown(selectedDetail);
+        this.upgradedDetails.filter(detail => detail.getAttribute('aria-labelledby') !== newVal).forEach(async detail => {
+          await this._setDetailHidden(detail);
+        });
+
+        this._setExpandedSectionTitle();
+        this._setBackButtonFocus();
+      }
+      this._dispatchEvents(oldVal, newVal);
     }
   }
 
-  private _createToggleButton(detailNavElement: HTMLElement) {
-    const attr = detailNavElement.attributes;
-    const button = document.createElement('button');
+  /**
+   * Dispatches a synthetic events to communicate tab changes
+   * @param {string} oldVal - previous active id string
+   * @param {string} newVal - new active id string
+   * @return {void}
+   */
+  private _dispatchEvents(oldVal?: string|null, newVal?: string|null) {
+    const oldNavItem = oldVal ? this._getNavItemById(oldVal) : undefined;
+    const oldDetailItem = oldVal ? this._getDetailItem(oldVal) : undefined;
 
-    button.innerHTML = detailNavElement.innerHTML;
-    button.setAttribute('role', 'tab');
-
-    // list of attributes that we DO NOT want to pass to our shadow DOM.
-    const denyListAttributes = ['style', 'role'];
-
-    // Copy over attributes from original element that aren't in denyList
-    [...attr].forEach(detailNavElement => {
-      if (!denyListAttributes.includes(detailNavElement.name)) {
-        button?.setAttribute(detailNavElement.name, detailNavElement.value);
+    if (oldVal) {
+      if (oldNavItem && oldDetailItem) {
+        this.dispatchEvent(deprecatedCustomEvent('pfe-primary-detail:hidden-tab', {
+          tab: oldNavItem,
+          details: oldDetailItem,
+        }));
       }
+    }
+
+    if (newVal) {
+      const newNavItem = this._getNavItemById(newVal);
+      const newDetailItem = this._getDetailItem(newVal);
+
+      if (newNavItem && newDetailItem) {
+        this.dispatchEvent(deprecatedCustomEvent('pfe-primary-detail:shown-tab', {
+          tab: newNavItem,
+          details: newDetailItem,
+        }));
+
+        this.dispatchEvent(new PrimaryDetailChangeEvent({
+          previousTab: oldNavItem,
+          previousDetails: oldDetailItem,
+          tab: newNavItem,
+          details: newDetailItem,
+        }));
+      }
+    }
+  }
+
+  /**
+   * Mutation observer callback for breakpoint property
+   * @param {string} oldVal - previous active id string
+   * @param {string} newVal - new active id string
+   */
+  private async _breakpointChanged(oldVal:string, newVal:string) {
+    await this.updateComplete;
+    if (newVal === 'desktop') {
+      if (!this.active) {
+        await this._setFirstItemSelected();
+      }
+    } else if (newVal === 'compact') {
+      if (document.activeElement) {
+        if (this.upgradedNavigation.includes(document.activeElement as HTMLElement)) {
+          this._setBackButtonFocus();
+        }
+      }
+      if (!this.active) {
+        this._setNavigationAriaExpanded('false');
+        this._setAllDetailsHidden();
+      }
+    }
+    this._toggleNavAriaSelected();
+  }
+
+  /**
+   * Converts a DOM element to navigation button
+   * @param {HTMLElement} el - Element to convert
+   * @returns {HTMLElement<Button>}
+   */
+  private _createNavigationButton(el: HTMLElement) {
+    const allowedAttributes = this._filterAllowedAttributes(el.attributes);
+    const button = document.createElement('button');
+    button.innerHTML = el.innerHTML;
+    button.setAttribute('role', 'tab');
+    allowedAttributes.forEach(attr => {
+      button.setAttribute(attr.name, attr.value);
     });
-
-    // Keeping track of tagName which is used in mobile layout to maintain heading order
-    button.dataset.wasTag = detailNavElement.tagName;
-
+    button.dataset.wasTag = el.tagName;
     return button;
   }
 
   /**
-   * Process detail wrapper elements
-   * @param  detail DOM Object of detail wrapper
-   * @param  index The index of the item when detail wrappers are queried
+   * Remove attributes from attribute list
+   * @param {NamedNodeMap} attributes - attribute list to filter
+   * @returns {Array<Attr>} - filtered array of attributes
    */
-  @bound private _initDetail(detail: HTMLElement, index: number) {
-    detail.dataset.index = index.toString();
-
-    const navs = this.slots.getSlotted('nav', 'details-nav');
-
-    // If the toggle does not have a ID, set a unique ID
-    if (!detail.hasAttribute('id')) {
-      detail.setAttribute('id', getRandomId('pfe-detail'));
-    }
-
-    detail.setAttribute('role', 'tabpanel');
-    // Set initial tabindex state for detail panel, -1 one when panel is inactive
-    detail.setAttribute('tabindex', '-1');
-
-    const toggleId = navs[index].getAttribute('id');
-
-    if (!detail.hasAttribute('aria-labelledby') && toggleId) {
-      detail.setAttribute('aria-labelledby', toggleId);
-    }
-
-    // Swing back to detailsNav to add aria-controls, now that details have an Id
-    if (!navs[index].hasAttribute('aria-controls') && detail.id) {
-      navs[index].setAttribute('aria-controls', detail.id);
-    }
-
-    // Leave a reliable indicator that this has been initialized so we don't do it again
-    detail.dataset.processed = 'true';
-
-    try {
-      this._setActiveOnToggle(toggleId);
-    } catch (error) {
-      this.logger.warn((error as Error).message);
-    }
+  private _filterAllowedAttributes(attributes: NamedNodeMap) {
+    const denyAttributes = ['style', 'role'];
+    const filtered: Array<Attr> = [];
+    [...attributes].forEach(attr => {
+      if (!denyAttributes.includes(attr.name)) {
+        filtered.push(attr);
+      }
+    });
+    return filtered;
   }
 
   /**
-   * Evaluate whether component is smaller than breakpoint
-   * Then manage state of component and manage active/inactive elements
+   * Upgrade details slot light DOM adding attributes and data
+   * @returns {Promise}
    */
-  @bound private _setBreakpoint() {
-    // We don't need to do anything if the page width is unchanged
-    if (this._windowInnerWidth === window.innerWidth) {
-      return;
-    }
-
-    const breakpointWas = this.breakpoint;
-    const breakpointIs = this.offsetWidth < this.breakpointWidth ? 'compact' : 'desktop';
-
-    this.breakpoint = breakpointIs;
-
-    // If nothing has been touched and we move to mobile, the details nav should be shown,
-    // not the item that was opened by default so the desktop design would work
-    if (this.pristine && breakpointIs === 'compact') {
-      const activeToggle = this.active ? this.root?.getElementById(this.active) : false;
-      if (activeToggle) {
-        this.active = null;
-      }
-    }
-
-    // If we've switched breakpoints or one wasn't set
-    if (breakpointWas !== 'desktop' && breakpointIs === 'desktop') {
-      const [target = null] = this.slots.getSlotted('nav', 'details-nav') || [];
-      // Desktop should never have nothing selected, default to first item if nothing is selected
-      if (!this.active) {
-        this._handleHideShow({ target });
-      }
-
-
-      // Make sure the left column items are visible
-      this._setDetailsNavVisibility(true);
-    } else if (breakpointWas !== 'compact' && breakpointIs === 'compact') {
-      // Hide the left column if it is out of view
-      if (this.active) {
-        this._setDetailsNavVisibility(false);
-      }
-    }
-
-    for (const toggle of this.querySelectorAll('[slot$="nav"]')) {
-      try {
-        this._setActiveOnToggle(toggle.id);
-      } catch (error) {
-        this.logger.warn((error as Error).message);
-      }
-    }
-
-    this._windowInnerWidth = window.innerWidth;
-  }
-
-  /**
-   * Utility function to hide elements in details nav
-   * @param  visible True to show nav elements, false to hide
-   */
-  @bound private _setDetailsNavVisibility(visible: boolean) {
-    const SELECTORS = [
-      ['nav', 'details-nav'],
-      ['header', 'details-nav--header'],
-      ['footer', 'details-nav--footer'],
-    ];
-
-    for (const slotNames of SELECTORS) {
-      for (const detailNavItem of this.slots.getSlotted<HTMLElement>(...slotNames)) {
-        if (detailNavItem) {
-          detailNavItem.hidden = !visible;
+  private _upgradeDetails() {
+    this.upgradedDetails = [];
+    return new Promise<boolean>(resolve => {
+      this.details.forEach((detail: HTMLElement, index: number) => {
+        if (!detail.hasAttribute('id')) {
+          detail.setAttribute('id', getRandomId('pfe-detail'));
         }
-      }
-    }
+        detail.setAttribute('role', 'tabpanel');
+        detail.setAttribute('tabindex', '-1');
+        detail.setAttribute('aria-hidden', 'true');
+        detail.setAttribute('hidden', '');
+        detail.dataset.processed = 'true';
+        detail.dataset.index = index.toString();
+        this.upgradedDetails.push(detail);
+      });
+      resolve(true);
+    });
   }
 
   /**
-   * Adds nav functionality and adds additional HTML/attributes to markup
+   * Set the first item in both navigation and detail to the selected state
+   * @returns {Promise}
    */
-  @initializer() protected async _init() {
-    await this.updateComplete;
-    const navs = this.slots.getSlotted<HTMLElement>('nav', 'details-nav');
-    const details = this.slots.getSlotted<HTMLElement>('details');
-    if (navs?.length !== details?.length) {
-      this.logger.error(`The number of item headings does not match the number of item details. Found ${navs?.length} item headings & ${details?.length} item details.`);
-      return;
-    }
-
-    for (const [i, nav] of navs.entries()) {
-      this._initDetailsNav(nav, i);
-      this._initDetail(details[i], i);
-    }
-
-    this._setBreakpoint();
-
-    // Desktop layout requires that something is active, if nothing is active make first item active
-    if (!this.active && this.breakpoint === 'desktop') {
-      const [target = null] = navs ?? [];
-      this._handleHideShow({ target });
-    }
+  private _setFirstItemSelected() {
+    return new Promise<boolean>(resolve => {
+      this._setFirstNavItemSelected();
+      this._setFirstDetailItemShown();
+      resolve(true);
+    });
   }
 
-  private _setActiveOnToggle(toggleId?: string|null) {
-    if (toggleId == null) {
-      return;
-    }
+  /**
+   * Returns the first navigation item
+   * @returns {HTMLElment}
+   */
+  private _getFirstNavItem() {
+    return this.upgradedNavigation[0];
+  }
 
-    const toggle = this.root?.getElementById(toggleId);
+  /**
+   * Get a navigation item by id
+   * @param {string} id - id attribute of nav item
+   * @returns {HTMLElement}
+   */
+  private _getNavItemById(id: string) {
+    return this.upgradedNavigation.find(nav => nav.id === id);
+  }
 
-    if (!(toggle instanceof HTMLElement)) {
-      return;
-    }
+  /**
+   * Toggles the aria-selected and aria-expanded attributes
+   * retaining previous value
+   * @returns {void}
+   */
+  private _toggleNavAriaSelected() {
+    let previousValue: string | null;
+    this.upgradedNavigation.forEach(nav => {
+      if (nav.hasAttribute('aria-selected')) {
+        previousValue = nav.getAttribute('aria-selected');
+      } else {
+        previousValue = nav.getAttribute('aria-expanded');
+      }
+      if (nav.id === this.active) {
+        previousValue = 'true';
+      }
+      this._setNavItemAriaSelected(nav, previousValue);
+    });
+  }
 
+  /**
+   * Set aria-selected or aria-expanded attribute on navigation item
+   * depending on the current breakpoint value
+   * @param {HTMLElemnt} nav - nav item to set aria attributes
+   * @param {string} val - value to set on the aria attribute
+   * @returns {Promise}
+   */
+  private _setNavItemAriaSelected(nav: HTMLElement, val: string|null) {
+    return new Promise<boolean>(resolve => {
+      if (!val) {
+        val = 'false';
+      }
+      if (this.breakpoint === 'desktop') {
+        nav.setAttribute('aria-selected', val);
+        nav.removeAttribute('aria-expanded');
+      } else if (this.breakpoint === 'compact') {
+        nav.setAttribute('aria-expanded', val);
+        nav.removeAttribute('aria-selected');
+      }
+      resolve(true);
+    });
+  }
 
-    const active = this.active === toggle.id;
-    const detailId = toggle.getAttribute('aria-controls');
+  /**
+   * Set aria-expanded on all navigation items,
+   * removes aria-selected
+   * @param {string} value - value to set on aria-expanded
+   */
+  private _setNavigationAriaExpanded(value: string) {
+    this.upgradedNavigation.forEach(nav => {
+      nav.removeAttribute('aria-selected');
+      nav.setAttribute('aria-expanded', value);
+    });
+  }
 
-    if (!detailId) {
-      throw new Error(`Toggle ${toggle.id} has no associated detail panel`);
-    }
+  /**
+   * Set the first navigation item to selected state
+   * @return {void}
+   */
+  private _setFirstNavItemSelected() {
+    const firstNavItem = this._getFirstNavItem();
+    this._setNavItemAriaSelected(firstNavItem, 'true');
+    const notFirstNavs = this._getAllButFirstNavItems();
+    notFirstNavs.forEach(nav => {
+      this._setNavItemAriaSelected(nav, 'false');
+    });
+  }
 
-    const detail = this.root?.getElementById(detailId);
+  /**
+   * Get all navigation items except the first
+   * @returns {Array<HTMLElement>}
+   */
+  private _getAllButFirstNavItems() {
+    return this.upgradedNavigation.filter((nav, index) => index !== 0);
+  }
 
-    if (!detail) {
-      throw new Error(`Toggle ${toggle.id} has no associated detail panel`);
-    }
+  /**
+   * Get current active navigation item
+   * @returns {HTMLElement|undefined}
+   */
+  private _getActiveNavItem() {
+    return this.upgradedNavigation.find(nav => nav.id === this.active);
+  }
 
-    detail.hidden = !active;
-    detail.setAttribute('aria-hidden', String(!active));
+  /**
+   * Get the first detail item
+   * @returns {HTMLElement}
+   */
+  private _getFirstDetailsItem() {
+    return this.upgradedDetails[0];
+  }
 
-    // Ideal toggle markup at desktop
-    // [aria-selected=true]:not([aria-expanded])
-    //
-    // Ideal toggle markup at mobile
-    // [aria-expanded=true]:not([aria-selected])
-    const ariaAttr = this.breakpoint === 'desktop' ? 'aria-selected' : 'aria-expanded';
+  /**
+   * Get all detail items except the first
+   * @returns {Array<HTMLElement>}
+   */
+  private _getAllButFirstDetailItems() {
+    return this.upgradedDetails.filter((detail, index) => index !== 0);
+  }
 
-    toggle.setAttribute(ariaAttr, String(active));
+  /**
+   * Get the detail item by aria-labelleby value
+   * @param {string} id - value of the aria-labelledby on the detail item
+   * @returns {HTMLElement|undefined}
+   */
+  private _getDetailItem(id: string) {
+    return this.upgradedDetails.find(detail => detail.getAttribute('aria-labelledby') === id);
+  }
 
-    /**
-     * A11y note:
-     * tabindex = -1 removes element from the tab sequence, set when tab is not selected
-     * so that only the active tab (selected tab) is in the tab sequence.
-     * @see https://www.w3.org/TR/wai-aria-practices/examples/primary-detail/primary-detail-2/primary-detail.html
-     */
-    if (active) {
+  /**
+   * Set the first detail item to shown state, sets reminder
+   * of the details to hidden state.
+   * @returns {void}
+   */
+  private _setFirstDetailItemShown() {
+    this._setDetailShown(this._getFirstDetailsItem());
+    const notFirstDetails = this._getAllButFirstDetailItems();
+    notFirstDetails.forEach(detail => {
+      this._setDetailHidden(detail);
+    });
+  }
+
+  /**
+   * Set detail item to shown state
+   * @param {HTMLElement} detail - detail item to show
+   * @returns {Promise}
+   */
+  private _setDetailShown(detail: HTMLElement) {
+    return new Promise<boolean>(resolve => {
+      detail.setAttribute('aria-hidden', 'false');
+      detail.removeAttribute('hidden');
       detail.removeAttribute('tabindex');
-    } else {
+      resolve(true);
+    });
+  }
+
+  /**
+   * Set all detail items hidden
+   * @returns {void}
+   */
+  private _setAllDetailsHidden() {
+    this.upgradedDetails.forEach(detail => {
+      this._setDetailHidden(detail);
+    });
+  }
+
+  /**
+   * Set detail item to hidden state
+   * @param {HTMLElement} detail - detail item to set to hidden state
+   * @returns {Promise}
+   */
+  private _setDetailHidden(detail: HTMLElement) {
+    return new Promise<boolean>(resolve => {
+      detail.setAttribute('aria-hidden', 'true');
+      detail.setAttribute('hidden', '');
       detail.setAttribute('tabindex', '-1');
+      resolve(true);
+    });
+  }
+
+  /**
+   * Set aria-controls on navigation and aria-labelledby on details
+   * @returns {Promise}
+   */
+  private _setAriaControls() {
+    return new Promise<boolean>(resolve => {
+      this.upgradedNavigation.forEach((nav, index) => {
+        // Set aria-controls on nav from details.id
+        if (!nav.hasAttribute('aria-controls')) {
+          nav.setAttribute('aria-controls', this.upgradedDetails[index].id);
+        }
+        // Set aria-labbelledby on details from nav.id
+        if (!this.upgradedDetails[index].hasAttribute('aria-labelledby')) {
+          this.upgradedDetails[index].setAttribute('aria-labelledby', nav.id);
+        }
+      });
+      resolve(true);
+    });
+  }
+
+  /**
+   * Set expanded section title from active nav item
+   * @returns {void}
+   */
+  private _setExpandedSectionTitle() {
+    const activeNavItem = this._getActiveNavItem();
+    if (activeNavItem) {
+      this.expandedSectionTitle = activeNavItem.textContent || undefined;
+      this.controlsId = activeNavItem.id;
     }
   }
 
@@ -449,7 +606,7 @@ export class PfePrimaryDetail extends LitElement {
     if (!this.expandedSectionTitle) {
       return html`<strong id="details-wrapper__heading"></strong>`;
     } else {
-      const { wasTag } = this.nextToggle?.dataset ?? {};
+      const { wasTag } = this._getActiveNavItem()?.dataset ?? {};
       // If wasTag isn't a headline, use strong
       const tag = unsafeStatic(wasTag?.match(/^H/i) ? wasTag : 'strong');
 
@@ -461,132 +618,168 @@ export class PfePrimaryDetail extends LitElement {
   }
 
   /**
-   * Handles changes in state
+   * Set focus on a nav item
+   * @param {string} id - nav item to focus id
    */
-  @bound private async _handleHideShow(e: { target: EventTarget|null }) {
-    // Detect if handleHideShow was called by an event listener or manually in code
-    // If the user has interacted with the component remove the pristine attribute
-    if (e instanceof Event) {
-      this.pristine = false;
-    }
+  private _setFocustNavItemById(id: string) {
+    const nav = this._getNavItemById(id);
+    nav?.focus();
+  }
 
-    if (!(e.target instanceof HTMLElement)) {
-      return;
-    }
-
-    // If the clicked toggle is already open, no need to do anything
-    if (
-      e.target.getAttribute('aria-selected') === 'true' &&
-      e.target.id === this.active
-    ) {
-      return;
-    }
-
-    const previousToggle = this.active ? this.root?.getElementById(this.active) : false;
-    const previousDetails =
-        !previousToggle ? null
-      : this.root?.getElementById(previousToggle.getAttribute('aria-controls') as string);
-
-    this.nextToggle = e.target;
-
-    // Update attribute to show which toggle is active
-    this.active = this.nextToggle.id;
-
-    const nextDetails =
-      this.slots.getSlotted('details')?.[parseInt(this.nextToggle.dataset.index ?? '')] ?? null;
-
-    await this.updateComplete;
-
-    const currentToggle = this.active ? this.root?.getElementById(this.active) : null;
-
-    // Make sure the aria-controls attribute is set to the details wrapper
-    this.controlsId = nextDetails?.id;
-
-    // Set the back button text
-    this.expandedSectionTitle = this.nextToggle.innerText;
-
-    // Shut previously active detail
-    if (currentToggle) {
-      this.dispatchEvent(deprecatedCustomEvent('pfe-primary-detail:hidden-tab', {
-        tab: previousToggle,
-        details: previousDetails,
-      }));
-    }
-
-    // At compact make sure elements in left sidebar are hidden, otherwise make sure they're shown
-    if (this.breakpoint === 'compact') {
-      if (this.active) {
-        this._setDetailsNavVisibility(false);
-        this._detailsBackButton?.focus();
-      } else {
-        this._setDetailsNavVisibility(true);
-        if (previousToggle) {
-          previousToggle.focus();
+  /**
+   * Set focus on back button after animation completes
+   * @returns {void}
+   */
+  private _setBackButtonFocus() {
+    const wrapper = this._wrapperDiv;
+    if (wrapper) {
+      Promise.all(
+        wrapper.getAnimations().map(
+          animation => {
+            return animation.finished;
+          }
+        )
+      ).then(
+        () => {
+          this._detailsBackButton?.focus();
         }
-      }
-    }
-
-    this.dispatchEvent(deprecatedCustomEvent('pfe-primary-detail:shown-tab', {
-      tab: this.nextToggle,
-      details: nextDetails,
-    }));
-
-    this.dispatchEvent(new PrimaryDetailChangeEvent({
-      previousTab: previousToggle || undefined,
-      previousDetails: previousDetails ?? undefined,
-      tab: this.nextToggle,
-      details: nextDetails as HTMLElement,
-    }));
-  }
-
-  /**
-   * Closes the open toggle and details
-   */
-  @bound closeAll() {
-    this._setDetailsNavVisibility(true);
-
-    if (this.active) {
-      const tab = this.root?.getElementById(this.active) as HTMLElement;
-      const details = this.root?.getElementById(this.controlsId ?? '');
-      // Set focus back to toggle that was activated
-      this.active = null;
-      this._detailsBackButton?.removeAttribute('aria-expanded');
-      this.dispatchEvent(deprecatedCustomEvent('pfe-primary-detail:hidden-tab', { tab, details }));
-      tab.focus();
+      );
     }
   }
 
   /**
-   * Check if active element is a tab toggle
+   * Return navigation and detail state back to unselected/inactive
+   * returns focus to last selected navigation
+   * @returns {void}
    */
-  private _isToggle(element: EventTarget|null): element is HTMLElement {
-    return element instanceof HTMLElement && element.getAttribute('slot') === 'details-nav';
+  private _back() {
+    this.active = null;
+    this._setNavigationAriaExpanded('false');
+    this._setAllDetailsHidden();
+    if (this.controlsId) {
+      this._setFocustNavItemById(this.controlsId);
+    }
   }
 
   /**
-   * Get previous toggle in relation to the active toggle
-   * @return  DOM Element for toggle before the active one
+   * Validity check to ensure light DOM for navs and details is equal in length
+   * for proper paring of navigation tab buttons and details
+   * @returns {true}
    */
-  private _getPrevToggle(): HTMLElement|null {
-    const toggles = this.slots.getSlotted<HTMLElement>('nav', 'details-nav');
-    const newIndex = (toggles?.findIndex(toggle => toggle === document.activeElement) ?? -1) - 1;
-
-    return toggles?.[(newIndex + toggles.length) % toggles.length] ?? null;
+  private _validLightDOM() {
+    if (this.navs.length !== this.details.length) {
+      throw new Error(`The number of item headings does not match the number of item details.`);
+    }
+    return true;
   }
 
   /**
-   * Get next toggle in list order from currently focused
-   * @return {object} DOM Element for element after active toggle
+   * Set Event Listeners on host element, resize and keydown
+   * @returns {void}
    */
-  private _getNextToggle(): HTMLElement|null {
-    const toggles = this.slots.getSlotted('nav', 'details-nav');
-    const newIndex = (toggles?.findIndex(toggle => toggle === document.activeElement) ?? -1) + 1;
+  private _setHostEventListeners() {
+    // Lower debounce delay for automated testing
+    const debounceDelay = this.hasAttribute('automated-testing') ? 0 : 100;
 
-    return toggles?.[newIndex % toggles.length] as HTMLElement ?? null;
+    this._debouncedWindowWidthCheck = debounce(this._windowWidthCheck, debounceDelay);
+
+    window.addEventListener('resize', this._debouncedWindowWidthCheck);
+
+    // A11y: add keydown event listener to activate keyboard controls
+    this.addEventListener('keydown', this._keyboardControls);
   }
 
   /**
-   * Manual user activation vertical tab
+   * Remove event listeners from host
+   * @returns {void}
+   */
+  private _removeHostEventListeners() {
+    if (this._debouncedWindowWidthCheck) {
+      window.removeEventListener('resize', this._debouncedWindowWidthCheck);
+    }
+  }
+
+  /**
+   * Mutation observer callback for window size change
+   * calls breakpoint state if size has changed
+   * @returns {void}
+   */
+  @bound private _windowWidthCheck() {
+    // We don't need to do anything if the page width is unchanged
+    if (this._windowInnerWidth === window.innerWidth) {
+      return;
+    }
+    // Otherwise we set the breakpoint state
+    this._setBreakPointState();
+    this._windowInnerWidth = window.innerWidth;
+  }
+
+  /**
+   * Set breakpoint property if the offset is less than the breakpointWidth property
+   * @returns {void}
+   */
+  private _setBreakPointState() {
+    const newBreakPoint = this.offsetWidth < this.breakpointWidth ? 'compact' : 'desktop';
+    // _setBreakPointState is triggered often on resize, only trigger the
+    // mutation observer when the breakpoint value actually changes.
+    if (this.breakpoint !== newBreakPoint) {
+      this.breakpoint = newBreakPoint;
+    }
+  }
+
+  /**
+   * Set aria-controls and role on host
+   * @returns {void}
+   */
+  private _setAriaFeaturesOnHost() {
+    this.setAttribute('aria-orientation', 'vertical');
+    this.setAttribute('role', 'tablist');
+  }
+
+  /**
+   * Check if element is a navigation element
+   * @param {HTMLElement} element - element to check if its a navigation toggle
+   * @returns
+   */
+  private _isToggle(element: EventTarget|null) {
+    return this.upgradedNavigation.includes(element as HTMLElement);
+  }
+
+  /**
+   * Get previous navigation item from focused navigation item
+   * @returns {HTMLElement|null}
+   */
+  private _getPrevNav(): HTMLElement|null {
+    const prevNavIndex = (this._getFocusedNavIndex() ?? -1) - 1;
+    return this.upgradedNavigation?.[(prevNavIndex + this.upgradedNavigation.length) % this.upgradedNavigation.length] ?? null;
+  }
+
+  /**
+   * Get next navigation item from focused navigation item
+   * @returns {HTMLElement|null}
+   */
+  private _getNextNav(): HTMLElement|null {
+    const nextNavIndex = (this._getFocusedNavIndex() ?? -1) + 1;
+    return this.upgradedNavigation?.[nextNavIndex % this.upgradedNavigation.length] as HTMLElement ?? null;
+  }
+
+  /**
+   * Get current index value of focused navigation item
+   * @returns {number}
+   */
+  private _getFocusedNavIndex(): number {
+    const index = this.upgradedNavigation.findIndex(nav =>
+      nav === document.activeElement ||
+      nav.matches(':focus')
+    );
+    return index;
+  }
+
+  /**
+   * Mutation observer callback for keydown event, sets focus on
+   * navigation item after event
+   * @param {KeyboardEvent} event - keyboard keydown event
+   * @returns {void}
    */
   @bound private _keyboardControls(event: KeyboardEvent) {
     const currentElement = event.target;
@@ -595,10 +788,9 @@ export class PfePrimaryDetail extends LitElement {
     switch (event.key) {
       case 'Escape':
         // Only closing all at compact sizes since something should always be selected at non-compact
-        if (this.getAttribute('breakpoint') === 'compact') {
-          this.closeAll();
+        if (this.breakpoint === 'compact') {
+          this._back();
         }
-
         break;
         // case "Tab":
         // Tab (Default tab behavior)
@@ -616,13 +808,13 @@ export class PfePrimaryDetail extends LitElement {
         if (!this._isToggle(currentElement)) {
           return;
         }
-
         event.preventDefault(); // Prevent scrolling
+
         // Up Arrow/Left Arrow
         /// When tab has focus:
         /// Moves focus to the next tab
         /// If focus is on the last tab, moves focus to the first tab
-        newToggle = this._getPrevToggle();
+        newToggle = this._getPrevNav();
         break;
 
       case 'ArrowDown':
@@ -632,39 +824,33 @@ export class PfePrimaryDetail extends LitElement {
         if (!this._isToggle(currentElement)) {
           return;
         }
-
         event.preventDefault(); // Prevent scrolling
         // Down Arrow/Right Arrow
         /// When tab has focus:
         /// Moves focus to previous tab
         /// If focus is on the first tab, moves to the last tab
         /// Activates the newly focused tab
-
-        newToggle = this._getNextToggle();
+        newToggle = this._getNextNav();
         break;
 
       case 'Home':
         if (!this._isToggle(currentElement)) {
           return;
         }
-
         event.preventDefault(); // Prevent scrolling
         // Home
         /// / When a tab has focus, moves focus to the first tab
-
-        [newToggle] = this.slots.getSlotted('nav', 'details-nav') ?? [];
+        [newToggle] = this.upgradedNavigation ?? [];
         break;
 
       case 'End': {
         if (!this._isToggle(currentElement)) {
           return;
         }
-
         event.preventDefault(); // Prevent scrolling
         // End
         /// When a tab has focus, moves focus to the last tab
-
-        const nodes = this.slots.getSlotted('nav', 'details-nav');
+        const nodes = this.upgradedNavigation;
         newToggle = nodes?.[nodes.length - 1];
         break;
       }
@@ -683,3 +869,4 @@ declare global {
     'pfe-primary-detail': PfePrimaryDetail;
   }
 }
+

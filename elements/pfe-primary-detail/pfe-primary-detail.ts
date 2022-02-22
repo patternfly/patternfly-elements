@@ -94,9 +94,11 @@ export class PfePrimaryDetail extends LitElement {
   /** The min-width of the _component_ where it has a desktop layout */
   @property({ attribute: 'breakpoint-width', type: Number, reflect: true }) breakpointWidth = 800;
 
+  /** The id of the active nav element, or null */
   @observed
   @property({ type: String, reflect: true }) active: string|null = null;
 
+  /** Used to set text of back button **/
   @property({ type: String }) expandedSectionTitle?: string;
 
   @observed

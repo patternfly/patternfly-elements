@@ -78,76 +78,38 @@ const testComponent = html`
 `;
 
 // - Begin Utility Functions ---------------------------------------------------------------------
-/**
- * Get the aria attribute that toggles use to show active/inactive state
- * @param  breakpoint Current value of breakpoint attribute
- * @returns  Attribute name that should be set to 'true' if it's active
- */
-function getActiveToggleAttribute(breakpoint?: string): string {
-  return breakpoint === 'desktop' ? 'aria-selected' : 'aria-expanded';
-}
 
 /**
  * Make sure active toggle and detail have the correct attributes
- * @param object toggle DOM Object of a toggle element
+ * @param  wrapper Component wrapper DOM object
  */
-function checkActiveElementAttributes(toggle: HTMLElement) {
-  const { breakpoint } = toggle.parentElement as PfePrimaryDetail;
-  // Correct toggle active attribute depends on breakpoint
-  const activeToggleAttribute = getActiveToggleAttribute(breakpoint);
-  expect(
-    toggle.getAttribute(activeToggleAttribute),
-    `Active toggle element doesn't have ${activeToggleAttribute} set to true`
-  ).to.equal('true');
-
-  expect(
-    toggle.hasAttribute('tabindex'),
-    'The toggle should not have a tabindex attribute when it is active'
-  ).to.be.false;
-
-  const controlledActiveElement = document.getElementById(toggle.getAttribute('aria-controls')!)!;
-  expect(
-    controlledActiveElement.hasAttribute('hidden'),
-    'Active detail wrapper should not have hidden attribute'
-  ).to.be.false;
-
-  expect(
-    controlledActiveElement.getAttribute('aria-hidden'),
-    'Active detail wrapper should not have the aria-hidden attribute'
-  ).to.equal('false');
+function checkActiveElementAttributes(wrapper: HTMLElement) {
+  const activeId = wrapper.getAttribute('active');
+  const activeDetails = Array.from(wrapper.querySelectorAll<HTMLElement>(`[slot="details"]`)).filter(details =>
+    activeId === details.getAttribute('aria-labelledby'));
+  activeDetails.forEach(detail => {
+    const hiddenAttr = detail.hasAttribute('hidden');
+    const ariaHidden = detail.getAttribute('aria-hidden');
+    expect(hiddenAttr, `Element should not have the hidden attribute if active`).to.be.false;
+    expect(ariaHidden, `Element should have attribute aria-hidden="false" if active`).to.equal('false');
+  });
 }
 
 /**
  * Make sure active toggle and detail have the correct attributes
  * @param  wrapper Component wrapper DOM object
- * @param  activeToggleId ID of the active toggle
  */
-function checkInactiveElementsAttributes(wrapper: HTMLElement, activeToggleId: string) {
-  const toggles = wrapper.querySelectorAll('[slot="details-nav"]');
-  const { breakpoint } = toggles[0].parentElement as PfePrimaryDetail;
-  // Correct toggle active attribute depends on breakpoint
-  const activeToggleAttribute = getActiveToggleAttribute(breakpoint);
+function checkInactiveElementsAttributes(wrapper: HTMLElement) {
+  const activeId = wrapper.getAttribute('active');
+  const inactiveDetails = Array.from(wrapper.querySelectorAll<HTMLElement>(`[slot="details"]`)).filter(details =>
+    activeId !== details.getAttribute('aria-labelledby'));
 
-  for (const toggle of toggles) {
-    // Don't check active toggle
-    if (toggle.id !== activeToggleId) {
-      if (breakpoint === 'desktop') {
-        expect(toggle.getAttribute(activeToggleAttribute), `Inactive toggle should not have ${activeToggleAttribute}`)
-          .to.equal('false');
-      } else {
-        expect(toggle.getAttribute(activeToggleAttribute), `Inactive toggle should have ${activeToggleAttribute}='false'`)
-          .to.be.null;
-      }
-
-      // Check detail wrapper for state attribute
-      const controlledElement = document.getElementById(toggle.getAttribute('aria-controls')!)!;
-      expect(controlledElement!.hasAttribute('hidden'), `Inactive detail element should have the hidden attribute`)
-        .to.equal(true);
-
-      expect(controlledElement!.getAttribute('aria-hidden'), `Inactive detail element should have aria-hidden set to true`)
-        .to.equal('true');
-    }
-  }
+  inactiveDetails.forEach(detail => {
+    const hiddenAttr = detail.hasAttribute('hidden');
+    const ariaHidden = detail.getAttribute('aria-hidden');
+    expect(ariaHidden, `Element should have attribute aria-hidden="true" if inactive`).to.equal('true');
+    expect(hiddenAttr, `Element ${activeId} ${detail.outerHTML} should have the hidden attribute if inactive`).to.be.true;
+  });
 }
 
 /**
@@ -268,42 +230,45 @@ describe('<pfe-primary-detail>', function() {
     }
   });
 
-  it('First element should be active by default', async function() {
+  it('First element should be selected by default', async function() {
     await nextFrame();
-    const activeToggleAttribute = getActiveToggleAttribute(primaryDetail!.breakpoint);
-    const activeToggle = primaryDetail!.querySelector<HTMLElement>(`[${activeToggleAttribute}='true']`)!;
 
-    expect(activeToggle, 'Could not find active toggle').to.not.be.null;
-    expect(
-      activeToggle.dataset.index === '0',
-      'Default active Toggle does appear to be the first'
-    ).to.be.true;
-    // Make sure the toggle and detail both have the correct attributes
-    checkActiveElementAttributes(activeToggle);
+    const firstNavItem = primaryDetail!.querySelector<HTMLElement>(`[slot="details-nav"][data-index="0"]`);
+    const firstDetailItem = primaryDetail!.querySelector<HTMLElement>(`[slot="details"][data-index="0"]`);
+
+    expect(firstNavItem!.hasAttribute('aria-selected'), `First Navigation Element should have aria-selected by defailt`).to.be.true;
+    expect(firstDetailItem!.getAttribute('aria-hidden'), `First Detail Element should have aria-hidden="false" by default`).to.equal('false');
+    expect(firstDetailItem!.hasAttribute('hidden'), `First Detail Element should have not have hidden attribute`).to.be.false;
+
+    expect(primaryDetail!.active, 'Active property should be null by defaul').to.be.null;
   });
 
   it('Active and inactive toggles & details should have proper attributes', async function() {
-    await nextFrame();
-    const activeToggleAttribute = getActiveToggleAttribute(primaryDetail!.breakpoint);
-    const activeToggles = primaryDetail!.querySelectorAll<HTMLElement>(`[slot="details-nav"][${activeToggleAttribute}="true"]`)!;
-    // Only one active element at a time
-    expect(activeToggles.length).to.equal(1);
-
-    checkActiveElementAttributes(activeToggles[0]);
-    checkInactiveElementsAttributes(primaryDetail!, activeToggles[0].id);
-  });
-
-  it(`When an inactive toggle is clicked, it should become active and all others inactive`, async function() {
-    const activeToggleAttribute = getActiveToggleAttribute(primaryDetail!.breakpoint);
-    const inactiveToggles = primaryDetail!.querySelectorAll<HTMLElement>(`[slot="details-nav"][${activeToggleAttribute}="false"]`);
+    const inactiveToggles = primaryDetail!.querySelectorAll<HTMLElement>(`[slot="details-nav"][aria-selected="false"]`);
     const randomToggleToActivate =
       inactiveToggles[Math.floor(Math.random() * inactiveToggles.length)];
 
     randomToggleToActivate.click();
-    await primaryDetail!.updateComplete;
+    await nextFrame();
 
-    checkActiveElementAttributes(randomToggleToActivate);
-    checkInactiveElementsAttributes(primaryDetail!, randomToggleToActivate.id);
+    const activeToggles = primaryDetail!.querySelectorAll<HTMLElement>(`[slot="details-nav"][aria-selected="true"]`);
+    expect(activeToggles!.length).to.equal(1);
+
+    checkActiveElementAttributes(primaryDetail!);
+    checkInactiveElementsAttributes(primaryDetail!);
+  });
+
+  it(`When an inactive toggle is clicked, it should become active and all others inactive`, async function() {
+    const inactiveToggles = primaryDetail!.querySelectorAll<HTMLElement>(`[slot="details-nav"][aria-selected="false"]`);
+    const randomToggleToActivate =
+      inactiveToggles[Math.floor(Math.random() * inactiveToggles.length)];
+
+    randomToggleToActivate.click();
+
+    await nextFrame();
+
+    checkActiveElementAttributes(primaryDetail!);
+    checkInactiveElementsAttributes(primaryDetail!);
   });
 
   it('Specified ids should not be overridden', async function() {
@@ -322,9 +287,17 @@ describe('<pfe-primary-detail>', function() {
   });
 
   it(`Dynamically added content should be processed, have correct attributes, and update when selected`, async function() {
-    const activeToggleAttribute = getActiveToggleAttribute(primaryDetail!.breakpoint);
-    // Test prepended dynamic content
-    let activeToggle = primaryDetail!.querySelector(`[${activeToggleAttribute}="true"]`)!;
+    const inactiveToggles = primaryDetail!.querySelectorAll<HTMLElement>(`[slot="details-nav"][aria-selected="false"]`);
+    const randomToggleToActivate =
+      inactiveToggles[Math.floor(Math.random() * inactiveToggles.length)];
+
+    randomToggleToActivate.click();
+
+    await nextFrame();
+
+    const activeToggleAttribute = primaryDetail!.getAttribute('active');
+    const activeToggle = primaryDetail!.querySelector(`[slot="details-nav"][aria-selected="true"]`);
+
     const [prependedNavItem, prependedDetail] =
       addPrimaryDetailsElementContent(primaryDetail!, 'prepend');
 
@@ -362,14 +335,11 @@ describe('<pfe-primary-detail>', function() {
     );
 
     assert.strictEqual(
-      activeToggle.getAttribute(activeToggleAttribute),
-      'true',
+      activeToggle!.id,
+      activeToggleAttribute,
       'Active toggle should not change when new content is added to the component'
     );
 
-
-    // Set the currently active element before we append anything
-    activeToggle = primaryDetail!.querySelector(`[${activeToggleAttribute}="true"]`)!;
     // Append a new nav item and detail and set them to vars for testing
     const [appendedNavItem, appendedDetail] =
       addPrimaryDetailsElementContent(primaryDetail!, 'append');
@@ -408,30 +378,30 @@ describe('<pfe-primary-detail>', function() {
     );
   });
 
-  it(`Component should go down to mobile at the size in the breakpoint attribute`, async function() {
-    let activeToggleAttribute = getActiveToggleAttribute(primaryDetail!.breakpoint);
-    const inactiveToggles = primaryDetail!.querySelectorAll<HTMLElement>(`[slot="details-nav"][${activeToggleAttribute}="false"]`);
-    const randomToggleToActivate =
-      inactiveToggles[Math.floor(Math.random() * inactiveToggles.length)];
+  it(`Component should go down to compact when the compact class is added`, async function() {
+    let breakpointClass = primaryDetail!.shadowRoot?.querySelector('#wrapper')?.classList.contains('compact');
+    const breakPointWidth = primaryDetail!.breakpointWidth;
+    expect(breakpointClass, `Component should be in desktop state above ${breakPointWidth}`).to.be.false;
 
+    const inactiveToggles = primaryDetail!.querySelectorAll<HTMLElement>(`[slot="details-nav"][aria-selected="false"]`);
+    const randomToggleToActivate = inactiveToggles[Math.floor(Math.random() * inactiveToggles.length)];
     randomToggleToActivate.click();
     await primaryDetail!.updateComplete;
-
-    const activeToggle = randomToggleToActivate;
-
-    expect(primaryDetail!.getAttribute('breakpoint'), `Component should say it's at desktop breakpoint at ${testBreakpoints.desktop.width}x ${testBreakpoints.desktop.height}`)
-      .to.equal('desktop');
 
     await setViewport(testBreakpoints.mobile);
     await aTimeout(debounceDelay + 100);
     await primaryDetail!.updateComplete;
 
-    activeToggleAttribute = getActiveToggleAttribute(primaryDetail!.breakpoint);
+    breakpointClass = primaryDetail!.shadowRoot?.querySelector('#wrapper')?.classList.contains('compact');
+    expect(breakpointClass, `Component should be compact state below ${breakPointWidth}`).to.be.true;
 
-    expect(primaryDetail!.getAttribute('breakpoint'), `Component should say it's at compact breakpoint at ${testBreakpoints.mobile.width}x ${testBreakpoints.mobile.height}`)
-      .to.equal('compact');
+    let currentActiveToggle = primaryDetail!.querySelector(`[slot="details-nav"][aria-expanded="true"]`);
 
-    const postResizeActiveToggle = primaryDetail!.querySelector(`[${activeToggleAttribute}="true"]`);
+    assert.strictEqual(randomToggleToActivate.id, currentActiveToggle!.id);
+
+    let postResizeActiveToggle = primaryDetail!.getAttribute('active');
+
+    assert.strictEqual(postResizeActiveToggle, currentActiveToggle!.id);
 
     expect(
       Array.from(primaryDetail!.shadowRoot!.querySelectorAll('[aria-expanded]'),
@@ -439,56 +409,56 @@ describe('<pfe-primary-detail>', function() {
       'aria-expanded attributes in shadow DOM should either be `"true"` or `"false"`'
     ).to.be.true;
 
-    expect(postResizeActiveToggle, `After breakpoint was changed to mobile, there should still be an active toggle` )
-      .to.not.be.null;
+    await setViewport(testBreakpoints.desktop);
+    await aTimeout(debounceDelay + 100);
+    await primaryDetail!.updateComplete;
 
-    expect(activeToggle.id, `The toggle that was active at desktop should still be active at mobile`)
-      .to.equal(postResizeActiveToggle!.id);
+    breakpointClass = primaryDetail!.classList.contains('compact');
+
+    expect(breakpointClass, `Component should be in desktop state above ${breakPointWidth}`).to.be.false;
+
+    currentActiveToggle = primaryDetail!.querySelector(`[slot="details-nav"][aria-selected="true"]`);
+
+    postResizeActiveToggle = primaryDetail!.getAttribute('active');
+
+    assert.strictEqual(postResizeActiveToggle, currentActiveToggle!.id);
   });
 
   it('it should fire a pfe-primary:hidden-tab event when a tab is closed', async function() {
-    let activeToggleAttribute = getActiveToggleAttribute(primaryDetail!.breakpoint);
-    const detailNavs = primaryDetail!.querySelectorAll<HTMLElement>('[slot="details-nav"]');
-    const activeDetailNav = primaryDetail!.querySelector<HTMLElement>(`[${activeToggleAttribute}="true"]`);
-    const activeDetails = document.getElementById(activeDetailNav!.getAttribute('aria-controls')!)!;
-    const [, secondDetailNav] = detailNavs;
-    const secondDetails = document.getElementById(secondDetailNav.getAttribute('aria-controls')!)!;
+    const eventListener = oneEvent(primaryDetail!, 'pfe-primary-detail:hidden-tab');
+    const toggles = primaryDetail!.querySelectorAll<HTMLElement>(`[slot="details-nav"]`);
+    const activatedToggle = toggles[Math.floor(Math.random() * toggles.length)];
+    activatedToggle.click();
 
-    // Click on secondDetailNav which will close the activeDetailNav
-    setTimeout(secondDetailNav.click.bind(secondDetailNav));
+    expect(activatedToggle.getAttribute('aria-selected'), `First activated toggle should be selected`).to.equal('true');
 
-    const desktopEvent = await oneEvent(primaryDetail!, 'pfe-primary-detail:hidden-tab');
+    let activeToggleIndex: number;
+    if (activatedToggle.dataset.index) {
+      activeToggleIndex = parseInt(activatedToggle.dataset.index);
+    }
 
-    expect(desktopEvent.detail.tab.id, `Since "${activeDetailNav!.innerText}" detailNav was closed the pfe-primary-detail:hidden-tab's event.detail.tab should point to that detailNav`)
-      .to.equal(activeDetailNav!.id);
+    const secondActivatedToggle = Array.from(toggles).find(toggle => {
+      if (toggle.dataset.index) {
+        return parseInt(toggle.dataset.index) !== activeToggleIndex;
+      }
+    });
 
-    expect(desktopEvent.detail.details.id, `Since "${activeDetailNav!.innerText}" detailNav was closed the pfe-primary-detail:hidden-tab's event.detail.details should point to the detail pane corresponding to the closed detailNav`)
-      .to.equal(activeDetails.id);
+    secondActivatedToggle!.click();
 
-    const secondActiveDetailNav = [];
-    secondActiveDetailNav.push(primaryDetail!.querySelector(`[${activeToggleAttribute}="true"]`));
+    expect(secondActivatedToggle!.getAttribute('aria-selected'), `Second activated toggle should be selected`).to.equal('true');
 
-    await setViewport(testBreakpoints.mobile);
-    await aTimeout(debounceDelay);
-    activeToggleAttribute = getActiveToggleAttribute(primaryDetail!.breakpoint);
-    const mobileEventListener = oneEvent(primaryDetail!, 'pfe-primary-detail:hidden-tab');
-
-    // Test mobile back button and event firing
-    const backButton = primaryDetail!.shadowRoot!.getElementById('details-wrapper__back');
-    backButton!.click();
-    const mobileEvent = await mobileEventListener;
-    secondActiveDetailNav.push(primaryDetail!.querySelector(`[${activeToggleAttribute}="true"]`));
+    const { detail } = await eventListener;
 
     assert.strictEqual(
-      mobileEvent.detail.tab.id,
-      secondDetailNav.id,
-      `Since "${secondDetailNav.innerText}" detailNav was closed the pfe-primary-detail:hidden-tab's event.detail.tab should point to that detailNav`
+      detail.tab.id,
+      activatedToggle.id,
+      `Since "${activatedToggle.innerText}" detailNav was closed the pfe-primary-detail:hidden-tab's event.detail.tab should point to that detailNav`
     );
 
     assert.strictEqual(
-      mobileEvent.detail.details.id,
-      secondDetails.id,
-      `Since "${secondDetailNav.innerText}" detailNav was closed the pfe-primary-detail:hidden-tab's event.detail.details should point to the detail pane corresponding to the closed detailNav`
+      detail.details.getAttribute('aria-labelledby'),
+      activatedToggle.id,
+      `Since "${activatedToggle.innerText}" detailNav was closed the pfe-primary-detail:hidden-tab's event.detail.details should point to the detail pane corresponding to the closed detailNav`
     );
   });
 

@@ -28,7 +28,7 @@
     "build": "run-s build:*",
     "build:clean": "npm run clean",
     "build:esbuild": "node ../../scripts/build.js --include pfe-primary-detail",
-    "build:sass": "sass src/pfe-primary-detail--lightdom.scss dist/pfe-primary-detail--lightdom.css",
+    "build:lightdom": "sass pfe-primary-detail--lightdom.scss pfe-primary-detail--lightdom.css --load-path=../../node_modules",
     "build:analyze": "npm run analyze",
     "build:types": "tsc -b .",
     "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",

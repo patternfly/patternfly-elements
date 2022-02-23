@@ -21,7 +21,7 @@ The items below represent in-code `// @TODO` notes we have left for ourselves to
     <tr>
       <td>{{ item.text }}</td>
       <td>
-        <a href="https://github.com/patternfly/patternfly-elements/blob/master/{{ item.file }}#L{{ item.line }}" target="_blank">{{ item.file }}:{{ item.line }}</a>
+        <a href="https://github.com/patternfly/patternfly-elements/blob/main/{{ item.file }}#L{{ item.line }}" target="_blank">{{ item.file }}:{{ item.line }}</a>
       </td>
     </tr> {%- endfor -%}
   </tbody>

@@ -4,7 +4,14 @@ name: Move PR cards on project board
 
 on:
   pull_request:
-    types: [opened, closed, labeled, unlabeled, converted_to_draft, ready_for_review, review_requested]
+    types:
+      - opened
+      - closed
+      - labeled
+      - unlabeled
+      - converted_to_draft
+      - ready_for_review
+      - review_requested
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

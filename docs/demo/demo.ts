@@ -60,7 +60,7 @@ async function go(location = window.location) {
     viewer.hidden = false;
     document.title = `${pretty(element)} | PatternFly Elements`;
     document.querySelector('h1').textContent = `<${element}>`;
-    github.href = `https://github.com/patternfly/patternfly-elements/tree/master/${base}/${element}`;
+    github.href = `https://github.com/patternfly/patternfly-elements/tree/main/${base}/${element}`;
     toggleNav(false);
   } else {
     viewer.src = '';

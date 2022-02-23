@@ -391,10 +391,10 @@ export default function App() {
               <a href="https://github.com/patternfly/patternfly-elements">GitHub</a>
             </li>
             <li>
-              <a href="https://github.com/patternfly/patternfly-elements/blob/master/CONTRIBUTING.md">Contributing</a>
+              <a href="https://github.com/patternfly/patternfly-elements/blob/main/CONTRIBUTING.md">Contributing</a>
             </li>
             <li>
-              <a href="https://github.com/patternfly/patternfly-elements/blob/master/CODE_OF_CONDUCT.md">Code of
+              <a href="https://github.com/patternfly/patternfly-elements/blob/main/CODE_OF_CONDUCT.md">Code of
                 conduct</a>
             </li>
             <li>

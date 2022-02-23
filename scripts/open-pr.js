@@ -54,7 +54,7 @@ inquirer
       type: 'input',
       name: 'base_branch',
       message: 'Base branch:',
-      default: 'master',
+      default: 'main',
       when: answers => answers.advanced_questions
     },
     {
@@ -70,5 +70,5 @@ inquirer
     const labels = getLabels(`./.github/PULL_REQUEST_TEMPLATE/${answers.template}`) || [];
 
     open(`https://github.com/patternfly/patternfly-elements/compare/${answers.base_branch ||
-    'master'}...${answers.pr_branch || branch.sync()}?template=${answers.template}&labels=${encodeURIComponent(labels.join(','))}`);
+    'main'}...${answers.pr_branch || branch.sync()}?template=${answers.template}&labels=${encodeURIComponent(labels.join(','))}`);
   });

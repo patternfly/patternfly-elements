@@ -42,10 +42,10 @@ cleanWorkspace() {
   [[ "$(git status --untracked-files=no --porcelain | wc -l | sed 's/ //g')" == 0 ]] || ( log "error: Release cannot continue because you have local changes.  Please commit or stash your changes and try again." && exit 1 )
 }
 
-checkoutMaster() {
-  log "checkout master branch & pull"
-  git checkout master || exit 1
-  git pull origin master || exit 1
+checkoutMain() {
+  log "checkout main branch & pull"
+  git checkout main || exit 1
+  git pull origin main || exit 1
 }
 
 bumpVersion() {
@@ -98,10 +98,10 @@ pushToOrigin() {
   git push --tags || exit 1
 }
 
-resetMaster() {
-  log "resetting master branch to origin/master"
-  git checkout master || exit 1
-  git reset --hard origin/master || exit 1
+resetMain() {
+  log "resetting main branch to origin/main"
+  git checkout main || exit 1
+  git reset --hard origin/main || exit 1
 }
 
 npmPublish() {
@@ -119,7 +119,7 @@ handlePR() {
   else
     log
     log "FINAL STEP:"
-    log "Follow this link to create a pull request, merging the release branch ($RELEASE_BRANCH) into master."
+    log "Follow this link to create a pull request, merging the release branch ($RELEASE_BRANCH) into main."
     log
     log "  https://github.com/patternfly/patternfly-elements/compare/$RELEASE_BRANCH?expand=1"
     log
@@ -128,16 +128,16 @@ handlePR() {
 }
 
 goodbye() {
-  log "Returning you to the master branch."
-  git checkout master
+  log "Returning you to the main branch."
+  git checkout main
 }
 
 # Only let user run this from repo root
 checkDir
 # Fail for uncommitted changes
 cleanWorkspace
-# check out the master branch
-checkoutMaster
+# check out the main branch
+checkoutMain
 # Set a lerna version, without tagging or pushing, using a prerelease id
 bumpVersion
 # Create a new "release branch" based on the changes made (versions) in last step
@@ -158,12 +158,12 @@ removeIgnoredFiles
 # and the tags (has build artifacts)
 # to the origin
 pushToOrigin
-# reset hard to master
-resetMaster
+# reset hard to main
+resetMain
 # checkout TAG_NAME and run lerna publish
 npmPublish
-# Open a PR to merge release branch into master
+# Open a PR to merge release branch into main
 # Even though the packages are already published
 handlePR
-# Checkout master
+# Checkout main
 goodbye

@@ -9,7 +9,6 @@ on:
       - labeled
       - closed
       - assigned
-      - connected
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

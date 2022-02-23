@@ -131,9 +131,9 @@ jobs:
             elements/
             tools/
 
-  # Validate the build to master was successful; open an issue if not
+  # Validate the build to main was successful; open an issue if not
   validate:
-    name: Validate successful build on master
+    name: Validate successful build on main
     needs:
       - build
       - test
@@ -182,8 +182,8 @@ jobs:
           project: 2  # The project-number from organization project
           column: Prioritized
           close-previous: true
-          title: "❌ Build is failing on master"
-          body: "It looks like the build is currently failing on the master branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."
+          title: "❌ Build is failing on main"
+          body: "It looks like the build is currently failing on the main branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."
       - name: Open issue if tests fail
         if: |
           github.event_name == 'push'
@@ -195,5 +195,7 @@ jobs:
           project: 2  # The project-number from organization project
           column: Prioritized
           close-previous: true
-          title: "🧪 Tests are failing on master"
-          body: "It looks like the build is currently failing on the master branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."
+          title: "🧪 Tests are failing on main"
+          body: "It looks like the build is currently failing on the main branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."
+
+

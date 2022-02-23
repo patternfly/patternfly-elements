@@ -5,6 +5,10 @@
   "description": "Helper classes for PatternFly Elements",
   "type": "module",
   "main": "./pfe-layouts.css",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
     "build": "run-s build:**",

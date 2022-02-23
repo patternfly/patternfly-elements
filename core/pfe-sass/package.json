@@ -4,6 +4,10 @@
   "license": "MIT",
   "description": "Sass variables and mixins for PatternFly Elements",
   "main": "./index.scss",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "analyze": "sassdoc {extends,functions,maps,mixins,variables}/_*.scss index.scss"
   },

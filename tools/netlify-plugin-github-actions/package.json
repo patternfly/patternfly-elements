@@ -2,7 +2,10 @@
   "name": "netlify-plugin-github-actions",
   "version": "0.0.1",
   "type": "commonjs",
-  "private": true,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
     "@octokit/core": "^3.5.1"
   }

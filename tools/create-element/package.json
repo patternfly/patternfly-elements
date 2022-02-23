@@ -20,6 +20,10 @@
     "web components",
     "web-components"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "prepublishOnly": "tsc -b .",
     "clean": "rimraf './main.{js,d.ts}' './generator/*.{js,d.ts}' bin/main.d.ts",

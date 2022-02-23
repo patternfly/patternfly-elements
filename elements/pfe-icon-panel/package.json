@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-icon-panel",
   "license": "MIT",
-  "version": "1.12.3",
+  "version": "2.0.0-next.0",
   "description": "Icon panel for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -67,8 +67,8 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^1.12.3",
-    "@patternfly/pfe-icon": "^1.12.3",
+    "@patternfly/pfe-core": "^2.0.0-next.0",
+    "@patternfly/pfe-icon": "^2.0.0-next.0",
     "lit": "^2.1.2"
   }
 }

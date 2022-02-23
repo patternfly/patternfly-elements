@@ -39,5 +39,35 @@
     "netlify-plugin-github-actions": "0.0.1",
     "@patternfly/pfe-tools": "0.0.1"
   },
-  "changesets": []
+  "changesets": [
+    "accordion",
+    "autocomplete",
+    "avatar",
+    "badge",
+    "band",
+    "button",
+    "card",
+    "clipboard",
+    "codeblock",
+    "collapse",
+    "core",
+    "cta",
+    "datetime",
+    "dropdown",
+    "health-index",
+    "icon-panel",
+    "icon",
+    "jump-links",
+    "markdown",
+    "modal",
+    "number",
+    "page-status",
+    "primary-detail",
+    "progress-indicator",
+    "progress-steps",
+    "readtime",
+    "select",
+    "tabs",
+    "toast"
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/eslint-config-elements",
-  "version": "0.0.1",
+  "version": "0.0.2-next.0",
   "description": "JavaScript Code Standards for PatternFly Elements",
   "author": "Benny Powers <bennyp@redhat.com>",
   "license": "MIT",
@@ -30,4 +30,3 @@
     "eslint-plugin-unicorn": "^40.1.0"
   }
 }
-

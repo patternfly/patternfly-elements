@@ -2,7 +2,7 @@
   "name": "@patternfly/eslint-config-elements",
   "version": "0.0.1",
   "description": "JavaScript Code Standards for PatternFly Elements",
-  "author": "Benny Powers <beowers@redhat.com>",
+  "author": "Benny Powers <bennyp@redhat.com>",
   "license": "MIT",
   "main": "index.js",
   "keywords": [

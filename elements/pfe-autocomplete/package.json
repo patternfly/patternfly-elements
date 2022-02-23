@@ -22,6 +22,10 @@
       "default": "./*.js"
     }
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
     "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",

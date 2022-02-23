@@ -8,6 +8,10 @@
   "keywords": [
     "eslint"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bennypowers/eslint-config.git"
@@ -26,3 +30,4 @@
     "eslint-plugin-unicorn": "^40.1.0"
   }
 }
+

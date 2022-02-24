@@ -172,6 +172,17 @@ export class PfeJumpLinksNav extends LitElement {
 
   private slots = new SlotController(this, 'heading', 'logo', 'cta');
 
+  /** Sets aria-labelledby on incoming ul and ol nodes */
+  private ariaMO = new MutationObserver(records => {
+    for (const record of records) {
+      for (const node of record.addedNodes) {
+        if (node instanceof HTMLOListElement || node instanceof HTMLUListElement) {
+          node.setAttribute('aria-labelledby', 'heading');
+        }
+      }
+    }
+  });
+
   /**
    * @requires {this.mobileBreakpoint || LitElement.breakpoint}
    * @returns true if this is at or below the mobile breakpoint
@@ -431,9 +442,11 @@ export class PfeJumpLinksNav extends LitElement {
   render() {
     const content = html`
       <nav part="nav">${this.isMobile ? '' : html`
-        <slot name="heading" class="pfe-jump-links-nav__heading" ?sr-only=${this.noHeader}>
-          <h3>${this.srText || 'Jump to section'}</h3>
-        </slot>`}${!this.horizontal ? '' : html`
+        <header id="heading">
+          <slot name="heading" class="pfe-jump-links-nav__heading" ?sr-only=${this.noHeader}>
+            <h3>${this.srText || 'Jump to section'}</h3>
+          </slot>
+        </header>`}${!this.horizontal ? '' : html`
         <slot name="logo" class="pfe-jump-links-nav__logo"></slot>`}
         <div id="container" part="content">${unsafeHTML(this.containerInnerHTML)}</div>${!this.horizontal ? '' : html`
         <slot name="cta" class="pfe-jump-links-nav__cta"></slot>`}
@@ -442,7 +455,7 @@ export class PfeJumpLinksNav extends LitElement {
 
     return !this.isMobile ? content : html`
       <pfe-accordion>
-        <pfe-accordion-header>
+        <pfe-accordion-header id="heading">
           <slot name="heading" class="pfe-jump-links-nav__heading">
             <h3>${this.srText || 'Jump to section'}</h3>
           </slot>
@@ -453,6 +466,9 @@ export class PfeJumpLinksNav extends LitElement {
   }
 
   firstUpdated() {
+    if (this.container) {
+      this.ariaMO.observe(this.container, { childList: true });
+    }
     this._scrollHandler();
     // Capture the updated UL tag
     const menu = this.querySelector<HTMLElement>('ul, ol');

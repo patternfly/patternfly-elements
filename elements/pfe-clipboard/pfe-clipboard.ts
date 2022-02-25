@@ -84,7 +84,12 @@ export class PfeClipboard extends LitElement {
   /**
    * Specify the amount of time in seconds the copy success text should be visible.
    */
-  @property({ type: Number, reflect: true, attribute: 'copied-duration' }) copiedDuration = 3;
+  @property({ type: Number, reflect: true, attribute: 'copied-duration' }) copiedDuration = 4;
+
+  /**
+   * Specify when the button slot needs to be aria-disabled or not, coincides with button disabled * states.
+   */
+  @state() private _ariaDisabled = false;
 
   /**
    * Defaults to `url`, decides what should be copied. Possible values are:
@@ -122,12 +127,8 @@ export class PfeClipboard extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('role', 'button');
-    this.setAttribute('tabindex', '0');
 
-    // Since this element as the role of button we are going to listen
-    // for click and as well as 'enter' and 'space' commands to trigger
-    // the copy functionality
+    // the copy functionality for mouse and keyboard
     this.addEventListener('click', this._clickHandler.bind(this));
     this.addEventListener('keydown', this._keydownHandler.bind(this));
 
@@ -143,43 +144,69 @@ export class PfeClipboard extends LitElement {
     }
   }
 
+  // All DOM changes go inside the render function
   render() {
     // TODO: Remove deprecated `text--success` slot and associated logic in 3.0
     const useNewSuccessSlot = this.slots.hasSlotted('success') || !this.slots.hasSlotted('text--success');
     // TODO: Remove deprecated `text` slot and associated logic in 3.0
     const useNewLabelSlot = this.slots.hasSlotted('label') || !this.slots.hasSlotted('text');
     return html`
-      <!-- icon slot -->
-      ${this.noIcon ? '' : html`
-      <div class="pfe-clipboard__icon">
-        <slot name="icon" id="icon">
-          <svg id="icon--url" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 15.277 16">
-            <g transform="translate(-2.077 -1.807)">
-              <path class="a" d="M15.34,2.879a3.86,3.86,0,0,0-5.339,0L6.347,6.545a3.769,3.769,0,0,0,0,5.339.81.81,0,0,0,1.132,0,.823.823,0,0,0,0-1.145A2.144,2.144,0,0,1,7.5,7.677l3.641-3.654a2.161,2.161,0,1,1,3.049,3.062l-.8.8a.811.811,0,1,0,1.145,1.132l.8-.8a3.769,3.769,0,0,0,0-5.339Z" transform="translate(0.906 0)"/>
-              <path class="a" d="M10.482,6.822a.823.823,0,0,0,0,1.145,2.161,2.161,0,0,1,0,3.049L7.343,14.155a2.161,2.161,0,0,1-3.062,0,2.187,2.187,0,0,1,0-3.062l.193-.116a.823.823,0,0,0,0-1.145.811.811,0,0,0-1.132,0l-.193.193a3.86,3.86,0,0,0,0,5.339,3.86,3.86,0,0,0,5.339,0l3.126-3.139A3.731,3.731,0,0,0,12.72,9.562a3.769,3.769,0,0,0-1.094-2.74A.823.823,0,0,0,10.482,6.822Z" transform="translate(0 1.37)"/>
-            </g>
-          </svg>
-          <svg id="icon--copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
-            <g></g>
-            <path d="M30.286 6.857q0.714 0 1.214 0.5t0.5 1.214v21.714q0 0.714-0.5 1.214t-1.214 0.5h-17.143q-0.714 0-1.214-0.5t-0.5-1.214v-5.143h-9.714q-0.714 0-1.214-0.5t-0.5-1.214v-12q0-0.714 0.357-1.571t0.857-1.357l7.286-7.286q0.5-0.5 1.357-0.857t1.571-0.357h7.429q0.714 0 1.214 0.5t0.5 1.214v5.857q1.214-0.714 2.286-0.714h7.429zM20.571 10.661l-5.339 5.339h5.339v-5.339zM9.143 3.804l-5.339 5.339h5.339v-5.339zM12.643 15.357l5.643-5.643v-7.429h-6.857v7.429q0 0.714-0.5 1.214t-1.214 0.5h-7.429v11.429h9.143v-4.571q0-0.714 0.357-1.571t0.857-1.357zM29.714 29.714v-20.571h-6.857v7.429q0 0.714-0.5 1.214t-1.214 0.5h-7.429v11.429h16z"/>
-          </svg>
-        </slot>
-      </div>
-      `}
+    <button class="pfe-clipboard__button" aria-disabled=${this._ariaDisabled}>
       <div class="pfe-clipboard__text">
-        ${useNewLabelSlot ? html`
-        <slot name="label" id="label">${this.labelDefault}</slot>
-        ` : html`
-        <slot name="text" id="text">${this.labelDefault}</slot>
+        <!-- icon slot -->
+        ${this.noIcon ? '' : html`
+        <div class="pfe-clipboard__icon" aria-hidden="true">
+          <slot name="icon" id="icon">
+            <svg class="icon--url" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 15.277 16">
+              <g transform="translate(-2.077 -1.807)">
+                <path class="a" d="M15.34,2.879a3.86,3.86,0,0,0-5.339,0L6.347,6.545a3.769,3.769,0,0,0,0,5.339.81.81,0,0,0,1.132,0,.823.823,0,0,0,0-1.145A2.144,2.144,0,0,1,7.5,7.677l3.641-3.654a2.161,2.161,0,1,1,3.049,3.062l-.8.8a.811.811,0,1,0,1.145,1.132l.8-.8a3.769,3.769,0,0,0,0-5.339Z" transform="translate(0.906 0)"/>
+                <path class="a" d="M10.482,6.822a.823.823,0,0,0,0,1.145,2.161,2.161,0,0,1,0,3.049L7.343,14.155a2.161,2.161,0,0,1-3.062,0,2.187,2.187,0,0,1,0-3.062l.193-.116a.823.823,0,0,0,0-1.145.811.811,0,0,0-1.132,0l-.193.193a3.86,3.86,0,0,0,0,5.339,3.86,3.86,0,0,0,5.339,0l3.126-3.139A3.731,3.731,0,0,0,12.72,9.562a3.769,3.769,0,0,0-1.094-2.74A.823.823,0,0,0,10.482,6.822Z" transform="translate(0 1.37)"/>
+              </g>
+            </svg>
+            <svg class="icon--copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
+              <g></g>
+              <path d="M30.286 6.857q0.714 0 1.214 0.5t0.5 1.214v21.714q0 0.714-0.5 1.214t-1.214 0.5h-17.143q-0.714 0-1.214-0.5t-0.5-1.214v-5.143h-9.714q-0.714 0-1.214-0.5t-0.5-1.214v-12q0-0.714 0.357-1.571t0.857-1.357l7.286-7.286q0.5-0.5 1.357-0.857t1.571-0.357h7.429q0.714 0 1.214 0.5t0.5 1.214v5.857q1.214-0.714 2.286-0.714h7.429zM20.571 10.661l-5.339 5.339h5.339v-5.339zM9.143 3.804l-5.339 5.339h5.339v-5.339zM12.643 15.357l5.643-5.643v-7.429h-6.857v7.429q0 0.714-0.5 1.214t-1.214 0.5h-7.429v11.429h9.143v-4.571q0-0.714 0.357-1.571t0.857-1.357zM29.714 29.714v-20.571h-6.857v7.429q0 0.714-0.5 1.214t-1.214 0.5h-7.429v11.429h16z"/>
+            </svg>
+          </slot>
+        </div>
         `}
+          ${useNewLabelSlot ? html`
+          <slot name="label" id="label">${this.labelDefault}</slot>
+          ` : html`
+          <slot name="text" id="text">${this.labelDefault}</slot>
+          `}
       </div>
-      <div class="pfe-clipboard__text--success" role="alert">
-        ${useNewSuccessSlot ? html`
-        <slot name="success" id="success">Copied</slot>
-        ` : html`
-        <slot name="text--success" id="text--success">Copied</slot>
+
+      <!-- success message -->
+      <div class="pfe-clipboard__text--success" role="alert" tabindex="0">
+        <!-- icon slot -->
+        ${this.noIcon ? '' : html`
+        <div class="pfe-clipboard__icon" aria-hidden="true">
+          <slot name="icon" id="icon">
+            <svg class="icon--url" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 15.277 16">
+              <g transform="translate(-2.077 -1.807)">
+                <path class="a" d="M15.34,2.879a3.86,3.86,0,0,0-5.339,0L6.347,6.545a3.769,3.769,0,0,0,0,5.339.81.81,0,0,0,1.132,0,.823.823,0,0,0,0-1.145A2.144,2.144,0,0,1,7.5,7.677l3.641-3.654a2.161,2.161,0,1,1,3.049,3.062l-.8.8a.811.811,0,1,0,1.145,1.132l.8-.8a3.769,3.769,0,0,0,0-5.339Z" transform="translate(0.906 0)"/>
+                <path class="a" d="M10.482,6.822a.823.823,0,0,0,0,1.145,2.161,2.161,0,0,1,0,3.049L7.343,14.155a2.161,2.161,0,0,1-3.062,0,2.187,2.187,0,0,1,0-3.062l.193-.116a.823.823,0,0,0,0-1.145.811.811,0,0,0-1.132,0l-.193.193a3.86,3.86,0,0,0,0,5.339,3.86,3.86,0,0,0,5.339,0l3.126-3.139A3.731,3.731,0,0,0,12.72,9.562a3.769,3.769,0,0,0-1.094-2.74A.823.823,0,0,0,10.482,6.822Z" transform="translate(0 1.37)"/>
+              </g>
+            </svg>
+            <svg class="icon--copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
+              <g></g>
+              <path d="M30.286 6.857q0.714 0 1.214 0.5t0.5 1.214v21.714q0 0.714-0.5 1.214t-1.214 0.5h-17.143q-0.714 0-1.214-0.5t-0.5-1.214v-5.143h-9.714q-0.714 0-1.214-0.5t-0.5-1.214v-12q0-0.714 0.357-1.571t0.857-1.357l7.286-7.286q0.5-0.5 1.357-0.857t1.571-0.357h7.429q0.714 0 1.214 0.5t0.5 1.214v5.857q1.214-0.714 2.286-0.714h7.429zM20.571 10.661l-5.339 5.339h5.339v-5.339zM9.143 3.804l-5.339 5.339h5.339v-5.339zM12.643 15.357l5.643-5.643v-7.429h-6.857v7.429q0 0.714-0.5 1.214t-1.214 0.5h-7.429v11.429h9.143v-4.571q0-0.714 0.357-1.571t0.857-1.357zM29.714 29.714v-20.571h-6.857v7.429q0 0.714-0.5 1.214t-1.214 0.5h-7.429v11.429h16z"/>
+            </svg>
+          </slot>
+        </div>
         `}
+          ${useNewSuccessSlot ? html`
+          <slot name="success" id="success">
+            Copied <span class="sr-only">successful.</span>
+          </slot>
+          ` : html`
+          <slot name="text--success" id="text--success">
+            Copied <span class="sr-only">successful.</span>
+          </slot>
+          `}
       </div>
+    </button>
     `;
   }
 
@@ -190,12 +217,15 @@ export class PfeClipboard extends LitElement {
     if (this.copyFrom === 'property') {
       if (!this.contentToCopy) {
         this.setAttribute('disabled', '');
+        this._ariaDisabled = true;
       } else if (this.hasAttribute('disabled')) {
         this.removeAttribute('disabled');
+        this._ariaDisabled = false;
       }
     } else if (this.copyFrom.length) {
       // If target is set to anything else, we're not doing checks for it
       this.removeAttribute('disabled');
+      this._ariaDisabled = false;
     }
   }
 
@@ -203,7 +233,11 @@ export class PfeClipboard extends LitElement {
    * Event handler for any activation of the copy button
    */
   @bound private async _clickHandler() {
+    // UI focus management variable
+    const textSuccess = this.shadowRoot?.querySelector<HTMLElement>('.pfe-clipboard__text--success');
+
     let text;
+
     switch (this.copyFrom) {
       // Copy current URL
       case 'url':
@@ -215,6 +249,7 @@ export class PfeClipboard extends LitElement {
           text = this.contentToCopy;
         } else {
           this.setAttribute('disabled', '');
+          this._ariaDisabled = true;
           this.logger.error('Set to copy property, but this.contentToCopy is not set');
           return;
         }
@@ -243,6 +278,7 @@ export class PfeClipboard extends LitElement {
     if (!text || (typeof text === 'string' && !text.length)) {
       this.logger.error('Couldn\'t find text to copy.');
       this.setAttribute('disabled', '');
+      this._ariaDisabled = true;
       return;
     }
 
@@ -258,20 +294,26 @@ export class PfeClipboard extends LitElement {
         copiedText,
       }));
       // Toggle the copied state. Use the this._formattedCopiedTimeout function
-      // to an appropraite setTimout length.
+      // to set an appropriate setTimout length.
       this.setAttribute('copied', '');
+
+      // Programmatically set focus to success message to alert the user that the copy was successful
+      textSuccess?.focus();
+
       setTimeout(() => {
         this.removeAttribute('copied');
       }, this._formattedCopiedTimeout());
     } catch (error) {
       this.logger.warn(error as string);
       this._checkForCopyTarget();
+      return;
     }
   }
 
   protected _contentToCopyChanged() {
     if (this.contentToCopy) {
       this.removeAttribute('disabled');
+      this.removeAttribute('aria-disabled');
     }
   }
 
@@ -281,10 +323,14 @@ export class PfeClipboard extends LitElement {
    */
   private _formattedCopiedTimeout() {
     const copiedDuration = Number(this.copiedDuration * 1000);
-    if (!(copiedDuration > -1)) {
-      this.logger.warn(`copied-duration must be a valid number. Defaulting to 3 seconds.`);
-      // default to 3 seconds
-      return 3000;
+    if ((copiedDuration < -1)) {
+      this.logger.warn(`copied-duration must be a valid number. Defaulting to 4 seconds.`);
+      // default to 4 seconds
+      // accessibility note: ensure that the user has enough time to read and also hear the text changes, for longer amounts of text increase the duration time to at least 6 seconds
+      return 4000;
+    } else if ((copiedDuration < 4000)) {
+      this.logger.warn(`copied-duration must be 4 seconds or more. Defaulting to 4 seconds.`);
+      return 4000;
     } else {
       return copiedDuration;
     }

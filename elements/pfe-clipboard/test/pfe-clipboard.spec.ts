@@ -30,10 +30,10 @@ describe('<pfe-clipboard>', async function() {
     const el = await createFixture<PfeClipboard>(element);
     // strip icon text and whitespace
     const normalizedTextContent = el.shadowRoot!.textContent!.replace(/Copy URL|\s+/g, ' ').trim();
-    expect(normalizedTextContent).to.equal('Copied');
+    expect(normalizedTextContent).to.equal('Copied successful.');
     expect(el.shadowRoot!.querySelector<HTMLSlotElement>(`#icon`)!.assignedElements().length).to.equal(0);
-    expect(el.shadowRoot!.querySelectorAll('[role="alert"] slot').length).to.equal(1);
-    expect(el.shadowRoot!.querySelector<HTMLSlotElement>('[role="alert"] slot')!.assignedElements().length).to.equal(0);
+    expect(el.shadowRoot!.querySelector<HTMLSlotElement>(`.pfe-clipboard__text--success`)!.getAttribute('role')).to.equal('alert');
+    expect(el.shadowRoot!.querySelector<HTMLSlotElement>(`.pfe-clipboard__text--success`)!.getAttribute('tabindex')).to.equal('0');
     expect(el.shadowRoot!.querySelector<HTMLSlotElement>(`#success--text`)!).to.not.be.ok;
   });
 
@@ -128,9 +128,21 @@ describe('<pfe-clipboard>', async function() {
 
   it(`should have the correct accessibility attributes`, async function() {
     const el = await createFixture<PfeClipboard>(element);
-    // Add global event listener for the copy event
-    expect(el.getAttribute('role')).to.equal('button');
-    expect(el.getAttribute('tabindex')).to.equal('0');
+    // manually set the contentToCopy property
+    const copyText = `<div>Copy this text</div>`;
+
+
+    expect(el.shadowRoot!.querySelector<HTMLSlotElement>(`.pfe-clipboard__icon`)!.getAttribute('aria-hidden')).to.equal('true');
+
+    el.copyFrom = 'property';
+    await el.updateComplete;
+    expect(
+      el.shadowRoot!.querySelector(`.pfe-clipboard__button`)!.hasAttribute('aria-disabled'),
+      'pfe-clipboard button should be aria-disabled when target=property'
+    ).to.be.true;
+    el.contentToCopy = copyText;
+    el.click();
+    expect(navigator.clipboard.writeText).to.have.been.calledWith(copyText);
   });
 
   it(`should support copying the url by default`, async function() {
@@ -182,8 +194,8 @@ describe('<pfe-clipboard>', async function() {
     expect(navigator.clipboard.writeText).to.have.been.calledWith(copyText);
   });
 
-  it(`it should display the success state for 3 seconds`, async function(this: Mocha.Context) {
-    this.timeout(3500);
+  it(`it should display the success state for 4 seconds`, async function(this: Mocha.Context) {
+    this.timeout(4500);
     const el = await createFixture<PfeClipboard>(element);
     const textStyle = getComputedStyle(el.shadowRoot!.querySelector('.pfe-clipboard__text')!);
     const successStyle =
@@ -200,14 +212,14 @@ describe('<pfe-clipboard>', async function() {
       successStyle
         .getPropertyValue('display'),
       'success style'
-    ).to.equal('block');
-    // after 3 seconds it should return to normal
+    ).to.equal('flex');
+    // after 4 seconds it should return to normal
     // increase the timeout for this test
-    await aTimeout(3001);
+    await aTimeout(4001);
     // There should be a copied attribute on the host
     expect(el.hasAttribute('copied')).equal(false);
     // The text should be hidden
-    expect(textStyle.getPropertyValue('display'), 'text style').to.equal('block');
+    expect(textStyle.getPropertyValue('display'), 'text style').to.equal('flex');
     // The text--success should be visible
     expect(successStyle.getPropertyValue('display'), 'success style').to.equal('none');
   });
@@ -215,7 +227,7 @@ describe('<pfe-clipboard>', async function() {
   it('should use the deprecated text--success slot if specified', async function() {
     const el = await createFixture<PfeClipboard>(html`
       <pfe-clipboard>
-        <span slot="text--success">Corpied</span>
+        <span slot="text--success">Copied successful.</span>
       </pfe-clipboard>
     `);
 
@@ -226,14 +238,14 @@ describe('<pfe-clipboard>', async function() {
     const $slot = (name: string) => el.shadowRoot!.querySelector(`slot[name="${name}"]`) as HTMLSlotElement;
     const slottedText = (s: string) => $slot(s).assignedNodes({ flatten: true }).map(i => i.textContent!.trim()).join(' ');
 
-    expect(getComposedText(el).trim()).to.equal('Corpied');
+    expect(getComposedText(el).trim()).to.equal('Copied successful.');
     expect($slot('success')).to.be.null;
-    expect(slottedText('text--success')).to.equal('Corpied');
+    expect(slottedText('text--success')).to.equal('Copied successful.');
   });
 
   it('should use the deprecated text--success slot if added via innerHTML', async function() {
     const el = await createFixture<PfeClipboard>(element);
-    el.innerHTML = `<span slot="text--success">Corpied</span>`;
+    el.innerHTML = `<span slot="text--success">Copied successful.</span>`;
     await el.updateComplete;
     await aTimeout(1);
     el.click();
@@ -243,23 +255,28 @@ describe('<pfe-clipboard>', async function() {
 
     await aTimeout(50);
 
-    expect(getComposedText(el).trim()).to.equal('Corpied');
+    expect(getComposedText(el).trim()).to.equal('Copied successful.');
     expect($slot('success')).to.be.null;
-    expect(slottedText('text--success')).to.equal('Corpied');
+    expect(slottedText('text--success')).to.equal('Copied successful.');
   });
 
-  it(`should have a customizable copied state duration.`, async function() {
+  it(`should have a customizable copied state duration.`, async function(this: Mocha.Context) {
+    // increase timeout max for this test
+    this.timeout(5500);
+
     const el = await createFixture<PfeClipboard>(element);
-    // Set the copied state duration to 1 second
-    el.setAttribute('copied-duration', '1');
+    // Set the copied state duration to 5 seconds
+    el.setAttribute('copied-duration', '5');
     await el.updateComplete;
     el.click();
     // wait for the copy promise to resolve
     await aTimeout(50);
     // the success message should be immediately showing
     const success = el.shadowRoot!.querySelector('.pfe-clipboard__text--success')!;
-    expect(getComputedStyle(success).getPropertyValue('display')).to.equal('block');
-    await aTimeout(1001);
+    expect(getComputedStyle(success).getPropertyValue('display')).to.equal('flex');
+
+    // wait for copy state to be set back to the default state
+    await aTimeout(5001);
     // After the second duration the success message should be hidden
     expect(getComputedStyle(success).getPropertyValue('display')).to.equal('none');
   });

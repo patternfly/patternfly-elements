@@ -29,13 +29,24 @@
   max-width: fit-content;
   color: pfe-local(Color) !important;
   cursor: pointer;
-  padding: pfe-local(Padding);
   font-weight: pfe-local(FontWeight);
   @include pfe-c-typography($type: text, $sizing: md);
 }
 
 :host([hidden]) {
-  display: none;
+  display: none !important;
+}
+
+// Screen reader only text
+.sr-only {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
 }
 
 //-- Custom styles applied to slot's shadow element
@@ -67,6 +78,19 @@
 
   &__text--success {
     color: pfe-local(text--success--Color) !important;
+  }
+
+  &__text,
+  &__text--success {
+    display: flex;
+    align-items: center;
+    padding: pfe-local(Padding);
+  }
+  &__button {
+    background-color: transparent;
+    border: 0;
+    font-size: inherit;
+    cursor: pointer;
   }
 }
 
@@ -107,7 +131,7 @@
   --pfe-icon--size: #{pfe-local(icon--Width)};
 }
 
-#icon--url {
+.icon--url {
   display: none;
 
   :host([copy-from="url"]) & {
@@ -115,7 +139,7 @@
   }
 }
 
-#icon--copy {
+.icon--copy {
   :host([copy-from="url"]) & {
     display: none;
   }

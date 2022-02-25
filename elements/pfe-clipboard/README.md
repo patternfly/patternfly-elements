@@ -28,7 +28,7 @@ import '@patternfly/pfe-clipboard';
 
 ### Default
 ```html
-<pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
+<pfe-clipboard></pfe-clipboard>
 ```
 
 ### Copy text from an element on the page
@@ -38,10 +38,10 @@ Add a valid HTML selector to the target attribute, component will use `document.
 We recommend using ID's.
 
 ```html
-<pfe-clipboard role="button" tabindex="0" copy-from="#copy-me"></pfe-clipboard>
+<pfe-clipboard copy-from="#copy-me"></pfe-clipboard>
 <div id="copy-me">This text will get copied</div>
 
-<pfe-clipboard role="button" tabindex="0" copy-from="body .copy-me"></pfe-clipboard>
+<pfe-clipboard copy-from="body .copy-me"></pfe-clipboard>
 <div class="copy-me">This text will get copied</div>
 ```
 
@@ -49,7 +49,7 @@ We recommend using ID's.
 Set the attribute `copy-from="property"` and set the property `contentToCopy` on the component with what should be copied.
 ```html
 <!-- Markup on the page -->
-<pfe-clipboard role="button" tabindex="0" copy-from="property" id="copyButton"></pfe-clipboard>
+<pfe-clipboard copy-from="property" id="copyButton"></pfe-clipboard>
 ```
 ```js
 document.getElementById('copyButton').contentToCopy('Wakka wakka!');
@@ -57,32 +57,32 @@ document.getElementById('copyButton').contentToCopy('Wakka wakka!');
 
 ### Optionally hide the icon
 ```html
-<pfe-clipboard no-icon role="button" tabindex="0"></pfe-clipboard>
+<pfe-clipboard no-icon></pfe-clipboard>
 ```
 
 ### Override the link text
 ```html
-<pfe-clipboard role="button" tabindex="0">
+<pfe-clipboard>
   <span slot="label">hey you, copy this url!</span>
 </pfe-clipboard>
 ```
 
 ### Override the copied notification text
 ```html
-<pfe-clipboard role="button" tabindex="0">
+<pfe-clipboard>
     <span slot="success">URL Copied to clipboard</span>
 </pfe-clipboard>
 ```
 ### Override the icon
 ```html
-<pfe-clipboard role="button" tabindex="0">
+<pfe-clipboard>
     <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
 </pfe-clipboard>
 ```
 
 ## Override all slots
 ```html
-<pfe-clipboard role="button" tabindex="0">
+<pfe-clipboard>
   <span slot="label">Copy this article URL</span>
   <span slot="success">URL Copied to clipboard</span>
   <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
@@ -91,7 +91,7 @@ document.getElementById('copyButton').contentToCopy('Wakka wakka!');
 
 ## Specify the amount of seconds the copy success text should be visible
 ```html
-<pfe-clipboard role="button" tabindex="0" copied-duration="5"></pfe-clipboard>
+<pfe-clipboard copied-duration="5"></pfe-clipboard>
 ```
 
 ### Accessibility

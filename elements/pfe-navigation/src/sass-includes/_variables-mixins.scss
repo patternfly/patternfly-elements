@@ -12,6 +12,11 @@ $LOCAL-VARIABLES: (
   ZIndex: pfe-zindex(navigation),
   overlay--Background: rgba(21, 21, 21, 0.5),
 
+  logo: (
+    // maxWidth: // Is calculated by JS and never used in component's SCSS
+    height: auto,
+  ),
+
   nav-bar: (
     Height: 72px,
     Background: #151515,
@@ -41,6 +46,8 @@ $LOCAL-VARIABLES: (
     single-column--spacing: 16px,
     full-width--spacing--mobile: 24px,
     full-width--spacing--desktop: 64px,
+    pfe-cta--BackgroundColor: #e00,
+    pfe-cta--hover--BackgroundColor: #c00,
   ),
 
   mobile-dropdown: (
@@ -244,7 +251,7 @@ $breakpoints: (
   @include breakpoint(sm) {
     width: auto;
     // If this value changes, it needs to be updated in JS this.logoHeights
-    height: 40px;
+    height: pfe-local(height, $region: logo, $fallback: 40px);
   }
 
   @media print {
@@ -261,7 +268,7 @@ $breakpoints: (
     // it can force the burger and avatar off the side of the page
     @include breakpoint(sm) {
       // If this value changes, it needs to be updated in JS this.logoHeights
-      height: 32px;
+      height: pfe-local(height, $region: logo, $fallback: 32px);
     }
   }
 
@@ -567,13 +574,13 @@ $breakpoints: (
 
     &[priority='primary'],
     &[pfe-priority='primary'] {
-      --pfe-cta--BackgroundColor: #e00;
-      --pfe-cta--BackgroundColor--hover: #c00;
+      --pfe-cta--BackgroundColor: #{pfe-local(pfe-cta--BackgroundColor, $region: dropdown)};
+      --pfe-cta--BackgroundColor--hover: #{pfe-local(pfe-cta--hover--BackgroundColor, $region: dropdown)};
       --pfe-theme--ui--border-width: 0;
 
       &:hover,
       &:focus {
-        --pfe-cta--BackgroundColor: #c00;
+        --pfe-cta--BackgroundColor: #{pfe-local(pfe-cta--hover--BackgroundColor, $region: dropdown)};
       }
     }
 

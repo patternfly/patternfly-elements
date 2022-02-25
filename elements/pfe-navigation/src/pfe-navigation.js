@@ -1385,7 +1385,7 @@ class PfeNavigation extends PFElement {
       // Need to apply the max-width to the image because the wrappers have padding
       const shadowLogo = this._logoWrapper.querySelector(logoSelector);
       if (shadowLogo) {
-        shadowLogo.style.maxWidth = `${maxWidth}px`;
+        shadowLogo.style.maxWidth = `var(--pfe-navigation--logo--maxWidth, ${maxWidth}px)`;
       } else {
         this.error("Couldn't find logo image for ");
       }

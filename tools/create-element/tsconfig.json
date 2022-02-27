@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.settings.json",
-  "include": ["src"],
-  "exclude": ["node_modules", "templates", "**/node_modules/**"],
+  "exclude": ["bin", "node_modules", "templates", "**/node_modules/**", "*.tsbuildinfo"],
+  "include": ["."],
   "compilerOptions": {
     "module": "es2020",
     "target": "es2020",

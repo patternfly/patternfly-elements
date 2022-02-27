@@ -81,16 +81,20 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const getComment = require('./scripts/format-lighthouse.cjs');
+            try {
+              const getComment = require('./scripts/format-lighthouse.cjs');
 
-            const resultsPath = '${{ steps.lighthouse.outputs.resultsPath }}';
-            const links = ${{ steps.lighthouse.outputs.links || '{}' }};
-            const assertionResults = ${{ steps.lighthouse.outputs.assertionResults }};
-            const manifest = ${{ steps.lighthouse.outputs.manifest }};
+              const resultsPath = '${{ steps.lighthouse.outputs.resultsPath }}';
+              const links = ${{ steps.lighthouse.outputs.links || '{}' }};
+              const assertionResults = ${{ steps.lighthouse.outputs.assertionResults }};
+              const manifest = ${{ steps.lighthouse.outputs.manifest }};
 
-            const comment = manifest.reduce(getComment({ links, assertionResults, resultsPath }), '## 🏮 Lighthouse report for the changes in this PR:');
+              const comment = manifest.reduce(getComment({ links, assertionResults, resultsPath }), '## 🏮 Lighthouse report for the changes in this PR:');
 
-            core.setOutput('comment', comment);
+              core.setOutput('comment', comment);
+            } catch (error) {
+              core.setFailed(error);
+            }
 
       - name: Add comment to PR
         if: ${{ steps.format.outputs.comment }}

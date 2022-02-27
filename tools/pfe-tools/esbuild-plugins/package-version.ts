@@ -1,11 +1,11 @@
 import type { Plugin } from 'esbuild';
 
 import { join, dirname } from 'path';
-import { readFileSync } from 'fs';
+import { readFile } from 'fs/promises';
 
-function getPackage(path: string): { version: string } {
+async function getPackage(path: string): Promise<{ version: string }> {
   try {
-    const json = readFileSync(join(dirname(path), 'package.json'), 'utf8');
+    const json = await readFile(join(dirname(path), 'package.json'), 'utf8');
     return JSON.parse(json);
   } catch (e) {
     if ((e as Error & { code: string }).code === 'ENOENT') {
@@ -23,10 +23,10 @@ export function packageVersion({ filter = /pfe-(.*)\.[j|t]s$/ } = {}): Plugin {
   return {
     name: 'packageVersion',
     setup(build) {
-      build.onLoad({ filter }, ({ path }) => {
-        const source = readFileSync(path, 'utf8');
-        const { version } = getPackage(path);
-        const contents = source.replace(/{{(\s+)?version(\s+)?}}/g, version);
+      build.onLoad({ filter }, async ({ path }) => {
+        const source = await readFile(path, 'utf8');
+        const { version } = await getPackage(path);
+        const contents = source.replace(/{\{(\s+)?version(\s+)?}}/g, version);
         return {
           contents,
           loader: path.endsWith('ts') ? 'ts' : 'js',

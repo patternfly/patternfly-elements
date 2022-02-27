@@ -117,7 +117,7 @@ const normalizeScope = (scope: string): string =>
 const getInterpolations =
   memoize((options: GenerateElementOptions): Interpolations => {
     const { tagName } = options;
-    const [, tagPrefix, cssName] = tagName.match(/^(\w+)-(.*)/);
+    const [, tagPrefix, cssName] = tagName.match(/^(\w+)-(.*)/) ?? [];
     const className = Case.pascal(options.tagName);
     const readmeName = Case.title(options.tagName.replace(/^\w+-(.*)/, '$1'));
     const scope = !options.scope ? '' : normalizeScope(options.scope);
@@ -216,6 +216,9 @@ async function updateTsconfig(options: GenerateElementOptions): Promise<void> {
   const configPath = join(process.cwd(), 'tsconfig.settings.json');
   const { packageName, tagName } = getInterpolations(options);
   const config = await readJson<Tsconfig>(configPath);
+  if (!config?.compilerOptions?.paths) {
+    return;
+  }
   config.compilerOptions.paths[packageName] = [join(`./elements/${tagName}/${tagName}.ts`)];
   if (!config.references.some(x => x.path === `./elements/${tagName}`)) {
     config.references.push({ 'path': `./elements/${tagName}` });

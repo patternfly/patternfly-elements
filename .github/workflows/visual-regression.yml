@@ -97,7 +97,7 @@ jobs:
             }
 
       - name: Add comment to PR
-        if: ${{ steps.format.outputs.comment }}
+        if: ${{ always() && steps.format.outputs.comment }}
         id: comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:

@@ -1,9 +1,10 @@
 /* eslint-env node */
 import branch from 'git-branch';
-import inquirer from 'inquirer';
+import prompts from 'prompts';
 import fs from 'fs';
 import path from 'path';
 import open from 'open';
+import { URL } from 'url';
 
 // Capture the available PR templates
 const getTemplates = loc =>
@@ -36,39 +37,42 @@ const getLabels = filename => {
   return [];
 };
 
-inquirer
-  .prompt([
-    {
-      type: 'list',
-      name: 'template',
-      message: 'Choose your template:',
-      choices: prTemplates,
-      filter: response => `${response.replace(' ', '_')}.md`
-    },
-    {
-      type: 'confirm',
-      name: 'advanced_questions',
-      message: 'Additional information?'
-    },
-    {
-      type: 'input',
-      name: 'base_branch',
-      message: 'Base branch:',
-      default: 'main',
-      when: answers => answers.advanced_questions
-    },
-    {
-      type: 'input',
-      name: 'pr_branch',
-      message: 'PR branch:',
-      default: branch.sync(),
-      when: answers => answers.advanced_questions
-    }
-  ])
-  .then(answers => {
-    // Get the labels from the template
-    const labels = getLabels(`./.github/PULL_REQUEST_TEMPLATE/${answers.template}`) || [];
+const answers = await prompts([
+  {
+    type: 'list',
+    name: 'template',
+    message: 'Choose your template:',
+    choices: prTemplates,
+    filter: response => `${response.replace(' ', '_')}.md`
+  },
+  {
+    type: 'confirm',
+    name: 'advancedQuestions',
+    message: 'Additional information?'
+  },
+  {
+    type: (_, { advancedQuestions }) => !!advancedQuestions && 'input',
+    name: 'baseBranch',
+    message: 'Base branch:',
+    default: 'main',
+  },
+  {
+    type: (_, { advancedQuestions }) => !!advancedQuestions && 'input',
+    name: 'prBranch',
+    message: 'PR branch:',
+    default: branch.sync(),
+  }
+]);
 
-    open(`https://github.com/patternfly/patternfly-elements/compare/${answers.base_branch ||
-    'main'}...${answers.pr_branch || branch.sync()}?template=${answers.template}&labels=${encodeURIComponent(labels.join(','))}`);
-  });
+// Get the labels from the template
+const labels = getLabels(`./.github/PULL_REQUEST_TEMPLATE/${answers.template}`) || [];
+
+const url = new URL(
+  `/patternfly/patternfly-elements/compare/${answers.baseBranch || 'main'}...${answers.prBranch || branch.sync()}`,
+  'https://github.com'
+);
+
+url.searchParams.set('template', answers.template);
+url.searchParams.set('labels', labels.join(','));
+
+open(url.toString());

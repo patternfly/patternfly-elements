@@ -381,49 +381,6 @@ export default function App() {
       </pfe-band>
     </section>
   </main>
-  <footer>
-    <pfe-band color="darkest">
-      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
-        <div>
-          <h3>Community</h3>
-          <ul>
-            <li>
-              <a href="https://github.com/patternfly/patternfly-elements">GitHub</a>
-            </li>
-            <li>
-              <a href="https://github.com/patternfly/patternfly-elements/blob/main/CONTRIBUTING.md">Contributing</a>
-            </li>
-            <li>
-              <a href="https://github.com/patternfly/patternfly-elements/blob/main/CODE_OF_CONDUCT.md">Code of
-                conduct</a>
-            </li>
-            <li>
-              <a href="https://www.redhat.com/mailman/listinfo/patternfly-elements-contribute">Contributors email
-                list</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h3>Resources</h3>
-          <ul>
-            <li>
-              <a href="/get-started">Documentation</a>
-            </li>
-            <li>
-              <a href="/examples">Demos</a>
-            </li>
-            <li>
-              <a href="https://medium.com/patternfly-elements">Medium</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <a href="https://www.netlify.com">
-            <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify">
-          </a>
-        </div>
-      </div>
-    </pfe-band>
-  </footer>
+  {% include '_foot.njk' %}
 
   <script type="module" src="/main.mjs"></script>

@@ -38,6 +38,10 @@ module.exports = function(eleventyConfig) {
   /** Collections to organize by order instead of date */
   eleventyConfig.addPlugin(orderTagsPlugin, { tags: ['develop'] });
 
+  eleventyConfig.addFilter('prettyDate', function(dateStr) {
+    return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(dateStr));
+  });
+
   /** Add IDs to heading elements */
   eleventyConfig.addPlugin(anchorsPlugin, {
     formatter(element, existingids) {

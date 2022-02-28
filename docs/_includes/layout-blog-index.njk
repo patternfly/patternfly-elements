@@ -2,12 +2,43 @@
 layout: layout-base.njk
 ---
 {% include '_nav.njk' %}
+
+
 <main class="basic">
-  {% for post in collections.blog %}
-    <article>
-      <h2>{{ post.data.title }}</h2>
-      <a href="{{ post.data.page.url }}">Read</a>
-    </article>
-  {% endfor %}
+  <pfe-band>
+    <h1 slot="header">{{ title }}</h1>
+  </pfe-band>
+  <pfe-band color="lightest">
+    {% if content.trim().length %}
+      <div id="content">{{ content | safe }}</div>
+    {% endif %}
+    {% for post in collections.blog %}
+      <pfe-card>
+        <h2 slot="header">{{ post.data.title }}</h2>
+        {{ post.data | log }}
+        {% if post.data.tagline %}<p class="tagline">{{ post.data.tagline }}</p>{% endif %}
+        {% if post.data.description %}
+          {{ post.data.description }}
+        {% endif %}
+        <pfe-cta slot="footer">
+          <a href="{{ post.data.page.url }}">Read Post</a>
+        </pfe-cta>
+      </pfe-card>
+    {% endfor %}
+  </pfe-band>
 </main>
+
 {% include '_foot.njk' %} 
+
+<style>
+pfe-band::part(body) { 
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+h1,
+#content {
+  grid-column: -1/1;
+}
+</style>
+

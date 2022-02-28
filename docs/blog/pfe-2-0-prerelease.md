@@ -2,6 +2,7 @@
 layout: layout-blog.njk
 title: PatternFly Elements 2.0 Preview
 tagline: Migrating PFE to LitElement
+description: How and why Red Hat ported the PatternFly Elements design system to Lit web components, and what we learned along the way.
 tags:
   - blog
 ---

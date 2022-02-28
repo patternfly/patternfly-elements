@@ -595,9 +595,11 @@ blockquote {
 
   main.basic,
   main.blog,
-  footer.basic {
+  body:not(.layout-base) footer.basic {
     padding-left: 17.5rem;
   }
+
+  
 
   .site-navigation {
     visibility: visible;

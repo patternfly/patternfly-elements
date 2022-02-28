@@ -2,7 +2,7 @@ import { generateElement } from './generator/element.js';
 
 import Chalk from 'chalk';
 import Yargs from 'yargs';
-import inquirer from 'inquirer';
+import prompts from 'prompts';
 
 export interface BaseOptions {
   silent: boolean;
@@ -65,16 +65,18 @@ export async function promptForElementGeneratorOptions(
 
   return {
     ...options,
-    ...await inquirer.prompt([{
-      type: 'input',
+    ...await prompts([{
+      type: () => !options?.tagName && 'text',
       name: 'tagName',
       message: 'What is the element\'s tag name?',
+      initial: options?.tagName ?? '',
       validate: name => name.includes('-') || ERR_BAD_CE_TAG_NAME,
     }, {
-      type: 'input',
+      type: () => !options?.scope && 'text',
       name: 'scope',
       message: 'What is the package\'s NPM scope?',
-    }], options),
+      initial: options?.scope ?? ''
+    }]),
   } as GenerateElementOptions;
 }
 

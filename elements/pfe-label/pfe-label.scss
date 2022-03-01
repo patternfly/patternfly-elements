@@ -1,0 +1,119 @@
+@use "@patternfly/pfe-sass" as *;
+@use "@patternfly/patternfly/sass-utilities/colors" as *;
+
+@include configure(
+  $name: 'label',
+  $variables: (
+    BorderRadius: calc(#{pfe-var(ui--border-radius)} * 30),
+    FontSize: pfe-var(FontSize--sm),
+    LineHeight: calc(#{pfe-var(line-height)} * 0.75),
+    Padding: 4px 8px,
+    BackgroundColor: #FFFFFF,
+  ),
+);
+
+$label-colors: (
+  "grey": (
+    Default: true,
+    BackgroundColor: $pf-color-black-200,   // #F0F0F0
+    BorderColor: $pf-color-black-300,       // #D2D2D2
+    TextColor: $pf-color-black-900          // #151515
+  ),
+  "blue": (
+    BackgroundColor: $pf-color-blue-50,     // #E7F1FA
+    BorderColor: $pf-color-blue-100,        // #BEE1F4
+    TextColor: $pf-color-blue-600           // #002952
+  ),
+  "green": (
+    BackgroundColor: $pf-color-green-50,    // #F3FAF2
+    BorderColor: $pf-color-green-100,       // #BDE5B8
+    TextColor: $pf-color-green-700          // #0F280D
+  ),
+  "orange": (
+    BackgroundColor: $pf-color-gold-50,     // #FDF7E7
+    BorderColor: $pf-color-gold-100,        // #F9E0A2
+    TextColor: $pf-color-gold-700           // #3D2C00
+  ),
+  "red": (
+    BackgroundColor: $pf-color-red-50,      // #FAEAE8
+    BorderColor: $pf-color-red-100,         // #C9190B
+    TextColor: $pf-color-red-300            // #7D1007
+  ),
+  "purple": (
+    BackgroundColor: $pf-color-purple-50,   // #F2F0FC
+    BorderColor: $pf-color-purple-100,      // #CBC1FF
+    TextColor: $pf-color-purple-700         // #1F0066
+  ),
+  "cyan": (
+    BackgroundColor: $pf-color-cyan-50,     // #F2F9F9
+    BorderColor: $pf-color-cyan-100,        // #A2D9D9
+    TextColor: $pf-color-cyan-500           // #003737
+  )
+);
+
+/*
+* Map deep get
+* https://css-tricks.com/snippets/sass/deep-getset-maps/
+* @author Kitty Giraudel
+*/
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+  @return $map;
+}
+
+:host {
+  display: inline-block;
+  text-rendering: optimizelegibility;
+}
+
+.pfe-label {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: pfe-local(FontSize);
+  font-weight: normal;
+  line-height: pfe-local(LineHeight);
+  padding: pfe-local(Padding);
+  border-radius: pfe-local(BorderRadius);
+}
+
+@each $item, $color in $label-colors {
+  $default: map-deep-get($label-colors, $item, "Default");
+  $text-color: map-deep-get($label-colors, $item, "TextColor");
+  $background-color: map-deep-get($label-colors, $item, "BackgroundColor");
+  $border-color: map-deep-get($label-colors, $item, "BorderColor");
+
+  @if ($default == true){
+    .pfe-label {
+      color: $text-color;
+      background-color: $background-color;
+      border: 1px solid $background-color;
+      --pfe-icon--color: #{$text-color};
+    }
+
+    :host([outline]) .pfe-label {
+      color: $text-color;
+      background-color: pfe-local(BackgroundColor);
+      border: 1px solid $border-color;
+      --pfe-icon--color: #{$text-color};
+    }
+  }
+  @else {
+    :host([color=#{$item}]) .pfe-label {
+      color: $text-color;
+      background-color: $background-color;
+      border: 1px solid $background-color;
+      --pfe-icon--color: #{$text-color};
+    }
+
+    :host([color=#{$item}][outline]) .pfe-label {
+      color: $text-color;
+      background-color: pfe-local(BackgroundColor);
+      border: 1px solid $border-color;
+      --pfe-icon--color: #{$text-color};
+    }
+  }
+}
+

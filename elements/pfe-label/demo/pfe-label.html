@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="/elements/pfe-label/demo/demo.css"/>
+
+<pfe-band color="lightest" size="small">
+    <h2 slot="pfe-band--header">Default</h2>
+    <pfe-label>Default</pfe-label>
+    <div class="example">
+        Example:
+        <pfe-codeblock><div codeblock-container code-language="html"><code>&lt;pfe-label&gt;Default&lt;/pfe-label&gt;</code></div></pfe-codeblock>
+    </div>
+</pfe-band>
+
+<pfe-band color="lightest" size="small">
+    <h2 slot="pfe-band--header">Color Options</h2>
+    <pfe-label color="blue">Blue</pfe-label>
+    <pfe-label color="green">Green</pfe-label>
+    <pfe-label color="orange">Orange</pfe-label>
+    <pfe-label color="red">
+    Red <span class="visually-hidden-class">Hat</span>
+    </pfe-label>
+    <pfe-label color="purple">Purple</pfe-label>
+    <pfe-label color="cyan">Cyan</pfe-label>
+    <pfe-label color="grey">Grey</pfe-label>
+    <div class="example">
+        Example:
+        <pfe-codeblock><div codeblock-container code-language="html"><code>&lt;pfe-label color="blue"&gt;Blue&lt;/pfe-label&gt;</code></div></pfe-codeblock>
+    </div>
+</pfe-band>
+
+<pfe-band color="lightest" size="small">
+    <h2 slot="pfe-band--header">Outline versions </h2>
+    <pfe-label outline>Default</pfe-label>
+    <pfe-label color="blue" outline>Blue</pfe-label>
+    <pfe-label color="green" outline>Green</pfe-label>
+    <pfe-label color="orange" outline>Orange</pfe-label>
+    <pfe-label color="red" outline>Red</pfe-label>
+    <pfe-label color="purple" outline>Purple</pfe-label>
+    <pfe-label color="cyan" outline>Cyan</pfe-label>
+    <pfe-label color="grey" outline>Grey</pfe-label>
+    <div class="example">
+        Example:
+        <pfe-codeblock><div codeblock-container code-language="html"><code>&lt;pfe-label color="red" outline&gt;Red&lt;/pfe-label&gt;</code></div></pfe-codeblock>
+    </div>
+</pfe-band>
+
+<pfe-band color="lightest" size="small">
+    <h2 slot="pfe-band--header">With Icon</h2>
+    <pfe-label icon="web-icon-alert-danger" outline>Default</pfe-label>
+    <pfe-label color="blue" icon="web-icon-alert-success">Blue</pfe-label>
+    <pfe-label color="green" icon="rh-icon-virtual-storage-stack" outline>Green</pfe-label>
+    <pfe-label color="orange" icon="web-icon-globe">Orange</pfe-label>
+    <pfe-label color="red" icon="rh-icon-gear" outline>Red</pfe-label>
+    <pfe-label color="purple" icon="rh-icon-hand-thumbs-up">Purple</pfe-label>
+    <pfe-label color="cyan" icon="web-icon-close" outline>Cyan</pfe-label>
+    <pfe-label color="grey" icon="web-icon-github">Grey</pfe-label>
+    <div class="example">
+        Example:
+        <pfe-codeblock><div codeblock-container code-language="html"><code>&lt;pfe-label color="green" icon="rh-icon-virtual-storage-stack" outline&gt;Green&lt;/pfe-label&gt;</code></div></pfe-codeblock>
+    </div>
+
+    Empty Icon Attribute Example:
+    <pfe-label color="red" icon="">No Icon</pfe-label>
+    <div class="example">
+        <pfe-codeblock><div codeblock-container code-language="html"><code>&lt;pfe-label color="red" icon="" &gt;No Icon&lt;/pfe-label&gt;</code></div></pfe-codeblock>
+    </div>
+
+</pfe-band>
+
+<pfe-band color="lightest" size="small">
+  <h2 slot="header">Labels are inline-block and will wrap will max width of parent element</h2>
+  <p class="inline-example"><pfe-label outline>Default</pfe-label>
+    <pfe-label color="blue">Blue</pfe-label>
+    <pfe-label color="green" outline>Green</pfe-label>
+    <pfe-label color="orange">Orange</pfe-label>
+    <pfe-label color="red" outline>Red</pfe-label>
+    Some intertwined text
+    <pfe-label color="orange" icon="web-icon-globe">Orange</pfe-label>
+    <pfe-label color="red" icon="rh-icon-gear">Red</pfe-label>
+    <pfe-label color="purple" icon="rh-icon-hand-thumbs-up">Purple</pfe-label>
+    amongst the labels
+    <pfe-label color="cyan" icon="web-icon-close" outline>Cyan</pfe-label>
+    <pfe-label color="grey" icon="web-icon-github">Grey</pfe-label>
+  </p>
+
+  <h1>In a h1 header <pfe-label color="red" icon="web-icon-open">Red</pfe-label></h1>
+  <pfe-codeblock><div codeblock-container code-language="html"><code>&lt;h1&gt;Header Text &lt;pfe-label color="red" ...&gt;Label Text&lt;/pfe-label&gt;&lt;/h1&gt;</code></div></pfe-codeblock>
+  <h2>In a h2 header <pfe-label color="cyan" icon="web-icon-close" outline>Cyan</pfe-label></h2>
+  <h3>In a h3 header <pfe-label color="purple" icon="web-icon-globe">Purple</pfe-label></h3>
+</pfe-band>
+

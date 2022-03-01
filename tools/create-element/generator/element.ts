@@ -3,8 +3,8 @@ import type { CompilerOptions, ProjectReference } from 'typescript';
 
 import Case from 'case';
 import Chalk from 'chalk';
-import inquirer from 'inquirer';
-import execa from 'execa';
+import prompts from 'prompts';
+import { execa, execaCommand } from 'execa';
 
 import { fileURLToPath } from 'url';
 import { dirname, join, relative } from 'path';
@@ -22,13 +22,13 @@ const { green, greenBright } = Chalk;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
- * Available filenames.
- *
- * To add a new file to the element template,
- * 1. Add a key to this enum
- * 2. Add the template file's path to `TEMPLATE_FILE_PATHS`
- * 3. Add the output path to `getFilePathsRelativeToPackageDir`, interpolating as needed.
- */
+* Available filenames.
+*
+* To add a new file to the element template,
+* 1. Add a key to this enum
+* 2. Add the template file's path to `TEMPLATE_FILE_PATHS`
+* 3. Add the output path to `getFilePathsRelativeToPackageDir`, interpolating as needed.
+*/
 enum FileKey {
   cemConfig = 'cemConfig',
   component = 'component',
@@ -141,13 +141,16 @@ const getOutputFilePath =
 async function shouldWriteToDir(options: GenerateElementOptions): Promise<boolean> {
   if (options.overwrite || !await exists(getComponentAbsPath(options))) {
     return true;
+  } else if (!options?.directory) {
+    return false;
   } else {
-    return await inquirer.prompt([{
+    const { overwrite = false } = await prompts([{
       type: 'confirm',
       name: 'overwrite',
-      default: false,
+      initial: options.overwrite,
       message: `Directory ${getComponentPathFromDirectoryOption(options)} exists. Overwrite?`,
-    }]).then(({ overwrite = false }) => overwrite);
+    }]);
+    return overwrite;
   }
 }
 
@@ -224,16 +227,17 @@ async function updateTsconfig(options: GenerateElementOptions): Promise<void> {
     config.references.push({ 'path': `./elements/${tagName}` });
   }
   await writeFile(configPath, JSON.stringify(config, null, 2), 'utf8');
-  await execa.command(`npx eslint --fix ${configPath}`);
+  await execaCommand(`npx eslint --fix ${configPath}`);
 }
 
 /**
  * Generate an Element
  */
 export async function generateElement(options: GenerateElementOptions): Promise<void> {
-  if (!options) {
+  // ctrl-c
+  if (!options || !options.tagName) {
     return;
-  } // ctrl-c
+  }
 
   // Quit if trying to scaffold an element in an uninitialized non-monorepo
   if (!await exists(join(options.directory, 'package.json'))) {

@@ -49,9 +49,9 @@
   "dependencies": {
     "case": "^1.6.3",
     "chalk": "^4.1.2",
-    "execa": "^5.1.1",
-    "inquirer": "^8.2.0",
+    "execa": "^6.1.0",
     "ncp": "^2.0.0",
+    "prompts": "^2.4.2",
     "tslib": "^2.3.1",
     "yargs": "^17.2.1"
   },

@@ -42,6 +42,16 @@
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"
   },
+  "files": [
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.md",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map"
+  ],
   "scripts": {
     "build": "tsc -b .",
     "rebuild": "rm tsconfig.tsbuildinfo && tsc -b .",
@@ -61,7 +71,6 @@
     "@playwright/test": "^1.18.1",
     "@types/estree": "^0.0.50",
     "@types/glob": "7.2.0",
-    "@types/inquirer": "^8.2.0",
     "@types/mkdirp": "^1.0.2",
     "@types/mocha": "^9.1.0",
     "@types/nunjucks": "^3.2.1",

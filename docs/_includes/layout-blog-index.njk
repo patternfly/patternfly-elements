@@ -15,7 +15,6 @@ layout: layout-base.njk
     {% for post in collections.blog %}
       <pfe-card>
         <h2 slot="header">{{ post.data.title }}</h2>
-        {{ post.data | log }}
         {% if post.data.tagline %}<p class="tagline">{{ post.data.tagline }}</p>{% endif %}
         {% if post.data.description %}
           {{ post.data.description }}

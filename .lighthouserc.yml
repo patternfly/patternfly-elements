@@ -15,3 +15,6 @@ ci:
       categories:seo: off
       csp-xss: off
       is-crawlable: off
+      categories:accessibility:
+        - error
+        - minScore: 1

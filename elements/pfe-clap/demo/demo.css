@@ -1,0 +1,8 @@
+/* :host is the html-include element hosting this demo */
+:host {
+  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,17 @@
+@use "@patternfly/pfe-sass" as *;
+
+@include configure(
+  $name: 'clap',
+  $variables: (),
+);
+
+
+:host {
+  display: block;
+}
+
+:host .base {
+  font-size: var(--font-size, 150px);
+  background: transparent;
+  border: none;
+}

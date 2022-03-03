@@ -44,7 +44,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const { URL, fileURLToPath } = require('url');
-            const { readFile } = require('fs/promises');
+            const { readFile } = require('fs').promises;
             const { pfeBuild } = await import('${{ github.workspace }}/tools/pfe-tools/esbuild.js');
             const { execaCommand } = await import('execa');
 

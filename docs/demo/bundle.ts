@@ -1,3 +1,5 @@
+export * from '@patternfly/pfe-icon';
+
 import 'html-include-element';
 import 'api-viewer-element';
 
@@ -31,5 +33,3 @@ import '@patternfly/pfe-progress-steps';
 import '@patternfly/pfe-readtime';
 import '@patternfly/pfe-select';
 import '@patternfly/pfe-toast';
-
-export * from '@patternfly/pfe-icon';

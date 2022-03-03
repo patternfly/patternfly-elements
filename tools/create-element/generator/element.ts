@@ -111,7 +111,7 @@ const getComponentAbsPath =
  * If no scope is provided, returns the empty string.
  */
 const normalizeScope = (scope: string): string =>
-  scope ? `@${scope.replace(/^@(.*)\/$/, '$1')}/` : '';
+  scope ? `@${scope.replace(/^(@+)(.*)\/$/, '$2')}/` : '';
 
 /** Get template interpolation data from options */
 const getInterpolations =
@@ -121,7 +121,7 @@ const getInterpolations =
     const className = Case.pascal(options.tagName);
     const readmeName = Case.title(options.tagName.replace(/^\w+-(.*)/, '$1'));
     const scope = !options.scope ? '' : normalizeScope(options.scope);
-    const packageName = `${scope}${tagName}`;
+    const packageName = `${scope}${tagName}`.replace(/^@+/, '@');
     return {
       className,
       cssName,
@@ -219,15 +219,25 @@ async function updateTsconfig(options: GenerateElementOptions): Promise<void> {
   const configPath = join(process.cwd(), 'tsconfig.settings.json');
   const { packageName, tagName } = getInterpolations(options);
   const config = await readJson<Tsconfig>(configPath);
-  if (!config?.compilerOptions?.paths) {
-    return;
+
+  if (config?.compilerOptions?.paths) {
+    config.compilerOptions.paths[packageName] = [join(`./elements/${tagName}/${tagName}.ts`)];
   }
-  config.compilerOptions.paths[packageName] = [join(`./elements/${tagName}/${tagName}.ts`)];
-  if (!config.references.some(x => x.path === `./elements/${tagName}`)) {
+
+  if (!config.references?.some(x => x.path === `./elements/${tagName}`)) {
     config.references.push({ 'path': `./elements/${tagName}` });
   }
+
   await writeFile(configPath, JSON.stringify(config, null, 2), 'utf8');
   await execaCommand(`npx eslint --fix ${configPath}`);
+}
+
+async function updateDocsBundle(options: GenerateElementOptions): Promise<void> {
+  const pathname = join(process.cwd(), 'docs', 'demo', 'bundle.ts');
+  const content = await readFile(pathname, 'utf8');
+
+  await writeFile(pathname, `${content}\nimport '@patternfly/${options.tagName}';`, 'utf8');
+  await execaCommand(`npx eslint --fix ${pathname}`);
 }
 
 /**
@@ -246,5 +256,7 @@ export async function generateElement(options: GenerateElementOptions): Promise<
     await writeElementFiles(options);
     await analyzeElement(options);
     await updateTsconfig(options);
+    await updateDocsBundle(options);
+    await execaCommand('npm install');
   }
 }

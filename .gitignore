@@ -18,6 +18,8 @@ project.conf.json
 ## except files which we want to commit,
 ## like demo js and config files
 
+pfe.min.js
+
 **/*.LEGAL.txt
 *.tsbuildinfo
 test-results

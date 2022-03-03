@@ -111,7 +111,7 @@ const getComponentAbsPath =
  * If no scope is provided, returns the empty string.
  */
 const normalizeScope = (scope: string): string =>
-  scope ? `@${scope.replace(/^(@+)(.*)\/$/, '$2')}/` : '';
+  scope ? `@${scope.replace(/^(@+)([-.\w]+)\/?$/, '$2')}/` : '';
 
 /** Get template interpolation data from options */
 const getInterpolations =
@@ -121,7 +121,7 @@ const getInterpolations =
     const className = Case.pascal(options.tagName);
     const readmeName = Case.title(options.tagName.replace(/^\w+-(.*)/, '$1'));
     const scope = !options.scope ? '' : normalizeScope(options.scope);
-    const packageName = `${scope}${tagName}`.replace(/^@+/, '@');
+    const packageName = `${scope}${tagName}`;
     return {
       className,
       cssName,

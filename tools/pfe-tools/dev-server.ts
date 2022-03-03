@@ -1,18 +1,17 @@
 import type { Plugin } from '@web/dev-server-core';
 import type { DevServerConfig } from '@web/dev-server';
 import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsPlugin';
-import type { Meta as LitCSSModuleMeta } from '@pwrs/lit-css';
 
 import { readdir } from 'fs/promises';
-import { join, dirname } from 'path';
+import { join } from 'path';
 import { fileURLToPath } from 'url';
 
-import Sass from 'sass';
 import litcssRollup from 'rollup-plugin-lit-css';
 
 import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { importMapsPlugin } from '@web/dev-server-import-maps';
+import { transformSass } from './esbuild.js';
 
 export interface PfeDevServerConfigOptions {
   /** Extra dev server plugins */
@@ -26,9 +25,6 @@ export interface PfeDevServerConfigOptions {
 const litcss = fromRollup(litcssRollup);
 
 const rootDir = fileURLToPath(new URL('../..', import.meta.url));
-
-// allow for imports in scss from node_modules
-const NODE_MODULES = join(rootDir, 'node_modules');
 
 function appendLines(body: string, ...lines: string[]): string {
   return [body, ...lines].join('\n');
@@ -67,15 +63,6 @@ function scssMimeType(): Plugin {
       }
     },
   };
-}
-
-/** Transform `.scss` sources on-the-fly */
-function transform(source: string, { filePath }: LitCSSModuleMeta): string {
-  const result = Sass.compileString(source, {
-    loadPaths: [dirname(filePath), NODE_MODULES],
-  });
-  // TODO: forward sourcemaps by returning an object
-  return result.css;
 }
 
 /**
@@ -125,7 +112,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       // so that we can list the elements by name
       bindNodeDataToBrowser({ cwd }),
       // load .scss files as lit CSSResult modules
-      litcss({ include: ['**/*.scss'], transform }),
+      litcss({ include: ['**/*.scss'], transform: transformSass }),
     ],
   };
 }

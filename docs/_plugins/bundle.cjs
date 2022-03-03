@@ -1,6 +1,5 @@
 /* eslint-env node */
 const esbuild = require('esbuild');
-const Sass = require('sass');
 
 const { join } = require('path');
 const { readdir } = require('fs/promises');
@@ -9,14 +8,6 @@ const { litCssPlugin } = require('esbuild-plugin-lit-css');
 module.exports = {
   async bundle() {
     const cwd = process.cwd();
-    const transform = (data, { filePath }) => Sass.renderSync({
-      data,
-      file: filePath,
-      includePaths: [
-        join(cwd, 'node_modules'),
-      ],
-    }).css.toString();
-
     function pfeEnvPlugin() {
       return {
         name: 'pfe-env',
@@ -37,6 +28,7 @@ export const core = ${JSON.stringify(await readdir(join(cwd, 'core')))};
     }
 
     const { packageVersion } = await import('@patternfly/pfe-tools/esbuild-plugins/package-version.js');
+    const { transformSass } = await import('@patternfly/pfe-tools/esbuild.js');
 
     await esbuild.build({
       entryPoints: ['docs/demo/bundle.ts'],
@@ -60,7 +52,7 @@ export const core = ${JSON.stringify(await readdir(join(cwd, 'core')))};
 
       plugins: [
         // import scss files as LitElement CSSResult objects
-        litCssPlugin({ filter: /.scss$/, transform }),
+        litCssPlugin({ filter: /.scss$/, transform: transformSass }),
         pfeEnvPlugin({ cwd }),
         // replace `{{version}}` with each package's version
         packageVersion(),

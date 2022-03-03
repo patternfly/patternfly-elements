@@ -1,5 +1,5 @@
 import type { Plugin } from '@web/dev-server-core';
-import type { LitCSSOptions } from 'esbuild-plugin-lit-css';
+import type { Meta as LitCSSModuleMeta } from '@pwrs/lit-css';
 
 import esbuild from 'esbuild';
 import glob from 'glob';
@@ -11,15 +11,16 @@ import { litCssPlugin } from 'esbuild-plugin-lit-css';
 
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
 import { readdirSync } from 'fs';
-import { resolve, join } from 'path';
-
-type Transformer = LitCSSOptions['transform'];
+import { resolve, join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 export interface PfeEsbuildOptions {
   /** Extra esbuild plugins */
   plugins?: Plugin[];
+  /** Whether to bundle the components and all their dependencies */
+  bundle?: boolean;
   /** repository root (default: process.cwd()) */
-  cwd?: string
+  cwd?: string;
   /** exclude these directories (under the workspace) from the build */
   entryPointFilesExcludes?: string[];
   /** packages to include */
@@ -28,9 +29,23 @@ export interface PfeEsbuildOptions {
   workspace?: string;
   /** production bundles are minified */
   mode?: 'development'|'production';
+  /** file to bundle to */
+  outfile?: string;
   /** Packages to treat as external, i.e. not to bundle */
   external: string[];
 }
+
+/** lit-css transform plugin to process `.scss` files on-the-fly */
+export function transformSass(source: string, { filePath }: LitCSSModuleMeta): string {
+  const result = Sass.compileString(source, {
+    loadPaths: [dirname(filePath), NODE_MODULES],
+  });
+  // TODO: forward sourcemaps by returning an object
+  return result.css;
+}
+
+/** abs-path to root node_modules */
+const NODE_MODULES = fileURLToPath(new URL('../../node_modules', import.meta.url));
 
 /**
  * Exclude SASS-only packages because there are no ts sources there
@@ -79,36 +94,41 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
   const packagePath = packageDirs.flatMap(dir =>
     glob.sync(`${workspace}/${dir}/package.json`, { absolute: true, cwd }));
 
-  const transform: Transformer = (data, { filePath }) => Sass.renderSync({
-    data,
-    file: filePath,
-    includePaths: [
-      join(options?.cwd ?? process.cwd(), 'node_modules'),
-    ],
-  }).css.toString();
-
   try {
     const result = await esbuild.build({
       entryPoints,
       entryNames,
       absWorkingDir: cwd,
-      outdir: workspace,
       format: 'esm',
       allowOverwrite: true,
-      bundle: true,
-      external: ['@patternfly*', 'lit', 'tslib', ...options?.external ?? []],
       treeShaking: true,
       legalComments: 'linked',
       watch: Boolean(process.env.WATCH) || false,
       logLevel: 'info',
       sourcemap: true,
+      bundle: options?.bundle ?? true,
 
       minify: mode === 'production',
       minifyWhitespace: mode === 'production',
 
+      ...options?.outfile ? {
+        outfile: options.outfile
+      } : {
+        outdir: workspace,
+      },
+
+      external: [
+        ...options?.bundle ? [] : [
+          '@patternfly*',
+          'lit',
+          'tslib',
+        ],
+        ...options?.external ?? []
+      ],
+
       plugins: [
         // import scss files as LitElement CSSResult objects
-        litCssPlugin({ filter: /.scss$/, transform }),
+        litCssPlugin({ filter: /.scss$/, transform: transformSass }),
         // replace `{{version}}` with each package's version
         packageVersion(),
         // ignore sub components bundling like "pfe-progress-steps-item"
@@ -118,6 +138,7 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
       ],
     });
     result.stop?.();
+    return result.outputFiles?.map(x => x.path) ?? [];
   } catch (error) {
     console.log(error);
     process.exit(1);

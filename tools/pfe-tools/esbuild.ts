@@ -9,6 +9,7 @@ import { externalSubComponents } from './esbuild-plugins/external-sub-components
 import { packageVersion } from './esbuild-plugins/package-version.js';
 import { litCssPlugin } from 'esbuild-plugin-lit-css';
 
+import { minifyHTMLLiteralsPlugin } from 'esbuild-plugin-minify-html-literals';
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
 import { readdirSync } from 'fs';
 import { resolve, join, dirname } from 'path';
@@ -62,6 +63,8 @@ const basePlugins = () => [
   litCssPlugin({ filter: /.scss$/, transform: transformSass }),
   // replace `{{version}}` with each package's version
   packageVersion(),
+  // minify lit-html templates
+  minifyHTMLLiteralsPlugin(),
 ];
 
 /** Create a single-file production bundle of all element */

@@ -96,6 +96,7 @@
     "esbuild": "^0.14.24",
     "esbuild-node-externals": "^1.4.1",
     "esbuild-plugin-lit-css": "^1.2.3",
+    "esbuild-plugin-minify-html-literals": "^1.0.0",
     "eslint": "^8.10.0",
     "glob": "^7.2.0",
     "html-include-element": "^0.2.0",

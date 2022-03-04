@@ -1,6 +1,6 @@
 module.exports = async function({ github, workspace }) {
   const { readFile } = require('fs').promises;
-  const { pfeBuild } = await import(`${workspace}/tools/pfe-tools/esbuild.js`);
+  const { pfeBuild } = await import('../tools/pfe-tools/esbuild.js');
   const { execaCommand } = await import('execa');
 
   // https://github.com/patternfly/patternfly-elements

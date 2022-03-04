@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 0.0.2-next.3
+
+### Patch Changes
+
+- 317115f8: Update generator config file templates
+
 ## 0.0.2-next.2
 
 ### Patch Changes

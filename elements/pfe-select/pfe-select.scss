@@ -45,16 +45,16 @@
   color:            pfe-local(Color);
 
   &::after {
-    @include pfe-arrow(
-      $type: down,
-      $color: $pf-color-black-800,
-      $width: 6px,
-      $height: 6px,
-      $pseudo: true) {
-        position: absolute;
-        top: calc(#{pfe-var(container-padding)} * 0.875);
-        right: calc(#{pfe-var(container-padding)} * 0.75);
-    }
+    border-style: pfe-var(surface--border-style);
+    border-width: 6px 6px 0;
+    border-color: transparent;
+    border-top-color: $pf-color-black-800;
+    display: inline-block;
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    top: calc(#{pfe-var(container-padding)} * 0.875);
+    right: calc(#{pfe-var(container-padding)} * 0.75);
   }
 
   @at-root #{&}([hidden]) {

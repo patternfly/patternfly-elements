@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 @mixin browser-query($browser-list) {
   @each $browser in $browser-list {
     @if $browser == edge12 {
@@ -29,26 +31,6 @@
     }
   }
   transition: $return;
-}
-
-// Make a CSS arrow
-@mixin pfe-arrow($type, $color, $width: 8px, $height: 5px, $pseudo: false) {
-  $direction: (
-    up: 180deg,
-    down: 0deg,
-    right: -90deg,
-    left: 90deg,
-  );
-  border-style: pfe-var(surface--border-style);
-  border-width: $width $height 0;
-  border-color: transparent;
-  border-top-color: $color;
-  transform: rotate(map-get($direction, $type));
-  @if $pseudo {
-    display: inline-block;
-    content: "";
-    @content;
-  }
 }
 
 @mixin pfe-arrow-color($color) {

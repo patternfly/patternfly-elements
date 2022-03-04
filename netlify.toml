@@ -1,5 +1,5 @@
 [build]
-  command = "npm run site"
+  command = "npm i nunjucks -w @patternfly/pfe-tools && npm run site"
 
 [[plugins]]
   package = "/tools/netlify-plugin-github-actions"

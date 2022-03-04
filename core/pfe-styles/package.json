@@ -28,13 +28,17 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-styles"
   },
-  "bugs": { "url": "https://github.com/patternfly/patternfly-elements/issues" },
-  "files": ["dist"],
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
+  "files": [
+    "dist"
+  ],
   "contributors": [
     "Mark Caron <mark@redhat.com> (https://github.com/markcaron)",
     "Benny Powers <bennyp@redhat.com>"
   ],
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.12.3"
+    "@patternfly/pfe-sass": "^2.0.0-next.0"
   }
 }

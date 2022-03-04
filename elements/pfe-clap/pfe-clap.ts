@@ -15,7 +15,7 @@ export class PfeClap extends LitElement {
 
   static readonly styles = [styles];
 
-  @property({ type: Boolean, reflect: true }) public isCapping = false;
+@property({ type: Boolean, reflect: true }) public isClapping = false;
 
   render() {
     return html`

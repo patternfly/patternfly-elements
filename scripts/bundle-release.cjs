@@ -18,21 +18,33 @@ module.exports = async function({ github, workspace, publishedPackages }) {
     const tag = `${packageName}@${version}`;
     const { id } = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
 
-    // make a tarball for the package
-    // this was already published to npm in the changesets action
-    const { stdout } = await execaCommand(`npm run pack -w ${name}`);
-    const [name] = stdout.match(/^[\w-.]+\.tgz$/g);
-
-    const params = { name, owner, release_id: id, repo };
+    const params = { owner, release_id: id, repo };
 
     // upload the bundle to each release
-    await github.rest.repos.uploadReleaseAsset({ ...params, data: await readFile(outfile) });
+    await github.rest.repos.uploadReleaseAsset({
+      ...params,
+      name: 'pfe.min.js',
+      data: await readFile(outfile),
+    });
+
+    await github.rest.repos.uploadReleaseAsset({
+      ...params,
+      name: 'pfe.min.js.map',
+      data: await readFile(`${outfile}.map`),
+    });
+
+    // make a tarball for the package
+    // this was already published to npm in the changesets action
+    const { stdout } = await execaCommand(`npm run pack -w ${packageName}`);
+    const match = stdout.match(/^[\w-.]+\.tgz$/g);
 
     // upload the package tarball to the release
-    if (name) {
+    if (match) {
+      const [name] = match;
       await github.rest.repos.uploadReleaseAsset({
         ...params,
-        data: await readFile(`${cwd}/${name}`)
+        name,
+        data: await readFile(`${cwd}/${name}`),
       });
     }
   }

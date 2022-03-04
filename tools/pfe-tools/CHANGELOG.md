@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 0.1.0-next.3
+
+### Minor Changes
+
+- cfd010ff: add `singleFileBuild` to esbuild helpers
+
 ## 0.1.0-next.2
 
 ### Patch Changes

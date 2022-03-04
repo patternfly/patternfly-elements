@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 0.0.2-next.4
+
+### Patch Changes
+
+- 8c4011d4: Adds docs folder and index.md file on initial creation of a new element
+
 ## 0.0.2-next.3
 
 ### Patch Changes

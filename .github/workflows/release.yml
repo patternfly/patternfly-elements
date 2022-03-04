@@ -43,45 +43,5 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const { URL, fileURLToPath } = require('url');
-            const { readFile } = require('fs').promises;
-            const { pfeBuild } = await import('${{ github.workspace }}/tools/pfe-tools/esbuild.js');
-            const { execaCommand } = await import('execa');
-
-            // https://github.com/patternfly/patternfly-elements
-            const owner = 'patternfly';
-            const repo = 'patternfly-elements';
-
-            // repo root
-            const cwd = '${{ github.workspace }}';
-            const outfile = `${cwd}/pfe.min.js`;
-            const mode = 'production';
-
-            const result = await pfeBuild({ cwd, mode, outfile });
-
-            // list of published packages from changesets
-            const publishedPackages = JSON.parse('${{ steps.changesets.outputs.publishedPackages }}');
-
-            for (const { name: packageName, version } of publishedPackages) {
-              // get the tag for the release for this package
-              const tag = `${packageName}@${version}`;
-              const { id } = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
-
-              // make a tarball for the package
-              // this was already published to npm in the changesets action
-              const { stdout } = await execaCommand(`npm run pack -w ${name}`);
-              const [name] = stdout.match(/^[\w-\.]+\.tgz$/g);
-
-              const params = { name, owner, release_id: id, repo };
-
-              // upload the bundle to each release
-              await github.rest.repos.uploadReleaseAsset({ ...params, data: await readFile(outfile) });
-
-              // upload the package tarball to the release
-              if (name) {
-                await github.rest.repos.uploadReleaseAsset({
-                  ...params,
-                  data: await readFile(`${cwd}/${name}`)
-                });
-              }
-            }
+            const bundle = require('./scripts/bundle-release.cjs');
+            await bundle({ github, workspace: '${{ github.workspace }}' });

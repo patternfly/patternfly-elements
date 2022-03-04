@@ -1,6 +1,6 @@
-module.exports = async function({ github, workspace }) {
+module.exports = async function({ github, workspace, publishedPackages }) {
   const { readFile } = require('fs').promises;
-  const { pfeBuild } = await import('../tools/pfe-tools/esbuild.js');
+  const { singleFileBuild } = await import('../tools/pfe-tools/esbuild.js');
   const { execaCommand } = await import('execa');
 
   // https://github.com/patternfly/patternfly-elements
@@ -10,12 +10,8 @@ module.exports = async function({ github, workspace }) {
   // repo root
   const cwd = `${workspace}`;
   const outfile = `${cwd}/pfe.min.js`;
-  const mode = 'production';
 
-  await pfeBuild({ cwd, mode, outfile, bundle: true });
-
-  // list of published packages from changesets
-  const publishedPackages = JSON.parse('${{ steps.changesets.outputs.publishedPackages }}');
+  await singleFileBuild({ outfile });
 
   for (const { name: packageName, version } of publishedPackages) {
     // get the tag for the release for this package

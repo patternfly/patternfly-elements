@@ -20,6 +20,7 @@ project.conf.json
 
 pfe.min.js
 
+*.js.map
 **/*.LEGAL.txt
 *.tsbuildinfo
 test-results

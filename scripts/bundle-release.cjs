@@ -12,7 +12,7 @@ module.exports = async function({ github, workspace }) {
   const outfile = `${cwd}/pfe.min.js`;
   const mode = 'production';
 
-  await pfeBuild({ cwd, mode, outfile });
+  await pfeBuild({ cwd, mode, outfile, bundle: true });
 
   // list of published packages from changesets
   const publishedPackages = JSON.parse('${{ steps.changesets.outputs.publishedPackages }}');

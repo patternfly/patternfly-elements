@@ -29,10 +29,12 @@ export interface PfeEsbuildOptions {
   workspace?: string;
   /** production bundles are minified */
   mode?: 'development'|'production';
-  /** file to bundle to */
-  outfile?: string;
   /** Packages to treat as external, i.e. not to bundle */
   external: string[];
+}
+
+export interface PfeEsbuildSingleFileOptions {
+  outfile?: string;
 }
 
 /** lit-css transform plugin to process `.scss` files on-the-fly */
@@ -54,6 +56,44 @@ const ALWAYS_EXCLUDE = [
   'pfe-sass',
   'pfe-styles',
 ];
+
+const basePlugins = () => [
+  // import scss files as LitElement CSSResult objects
+  litCssPlugin({ filter: /.scss$/, transform: transformSass }),
+  // replace `{{version}}` with each package's version
+  packageVersion(),
+];
+
+/** Create a single-file production bundle of all element */
+export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
+  const cwd = fileURLToPath(new URL('../..', import.meta.url));
+  try {
+    const result = await esbuild.build({
+      absWorkingDir: cwd,
+      allowOverwrite: true,
+      bundle: true,
+      entryPoints: [join(cwd, 'docs', 'demo', 'bundle.ts')],
+      format: 'esm',
+      legalComments: 'linked',
+      logLevel: 'info',
+      minify: true,
+      minifyWhitespace: true,
+      outfile: options?.outfile ?? 'pfe.min.js',
+      sourcemap: true,
+      treeShaking: true,
+      watch: false,
+      plugins: [
+        ...basePlugins(),
+      ],
+    });
+    console.log(result);
+    result.stop?.();
+    return result.outputFiles?.map(x => x.path) ?? [];
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
 
 /**
  * Build all components in a monorepo
@@ -111,11 +151,7 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
       minify: mode === 'production',
       minifyWhitespace: mode === 'production',
 
-      ...options?.outfile ? {
-        outfile: options.outfile
-      } : {
-        outdir: workspace,
-      },
+      outdir: workspace,
 
       external: [
         ...options?.bundle ? [] : [
@@ -127,10 +163,7 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
       ],
 
       plugins: [
-        // import scss files as LitElement CSSResult objects
-        litCssPlugin({ filter: /.scss$/, transform: transformSass }),
-        // replace `{{version}}` with each package's version
-        packageVersion(),
+        ...basePlugins(),
         // ignore sub components bundling like "pfe-progress-steps-item"
         externalSubComponents(),
         // don't bundle node_module dependencies

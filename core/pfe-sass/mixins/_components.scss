@@ -1,6 +1,7 @@
 @use "../variables/4-sizes" as *;
 @use "../functions/custom-properties" as *;
 @use "../functions/general" as *;
+@use "../maps/typography" as *;
 @use "../mixins/copy-mixins" as *;
 @use "../mixins/custom-properties" as *;
 @use "sass:map";
@@ -285,11 +286,46 @@
     // of the line height of the number inside of the circle
     padding-top: calc((#{pfe-local(size, $region: circle, $fallback: $size)} / 2) - ((#{pfe-local(FontSize, $region: circle, $fallback: $number-font-size)} / 2)));
   }
+
   & > ul {
     list-style-type: disc;
   }
+
   & > li:before {
-    @include pfe-typography(2xl, $type: "title");
+    // Capture the values of properties to use directly or wrapped in the pfe-local function below
+    // Initialize variables at the $pf-title-set--tiny size
+    // $sizing == "lg" or "md" or "sm" or "xs"
+    $line-height: pfe-var(line-height);
+    $font-weight: pfe-var(font-weight--normal);
+    $margin-bottom: pfe-var(content-spacer--heading--sm);
+
+    @if index($pf-title-set--mega, "2xl") != null {
+        $line-height: pfe-var(line-height--heading-mega);
+        $font-weight: pfe-var(font-weight--light);
+        $margin-bottom: pfe-var(content-spacer--heading--md);
+    }
+
+    // $sizing == "4xl" or "3xl" or "2xl"
+    @else if index($pf-title-set--regular, "2xl") != null {
+        $line-height: pfe-var(line-height--heading);
+        $font-weight: pfe-var(font-weight--normal);
+        $margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
+
+    // If this value was not found in the tiny set, it's likely not supported
+    @else if index($pf-title-set--tiny, "2xl") == null {
+        @warn "#{$sizing} was not found in $pf-title-set--mega, $pf-title-set--regular, or $pf-title-set--tiny.";
+    }
+
+    font-family: pfe-var(font-family--heading);
+    line-height: $line-height;
+    font-weight: $font-weight;
+    font-size: pfe-local(FontSize, $region: circle, $fallback: $number-font-size);
+
+    &:not(:last-child) {
+        margin-bottom: $margin-bottom;
+    }
+
     // we need to make sure that if the size of the number in the circle changes
     // that doesn't affect the size or shape of the circle. since we don't have
     // any more psuedo elements to work with, we need to use the flexbox technique
@@ -310,7 +346,6 @@
     height: pfe-local(size, $region: circle, $fallback: $size);
     // set the contents of the circle
     content: counter(pfe-list);
-    font-size: pfe-local(FontSize, $region: circle, $fallback: $number-font-size);
     color: rgba(#{pfe-local(color, $region: circle, $fallback: $color)}, 1);
     // generate a background color based on the circle text color
     // provide an override for BackgroundColor if the user needs to specify

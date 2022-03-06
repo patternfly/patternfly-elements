@@ -2,16 +2,15 @@
 @use "sass:map";
 
 @include configure(
-  // QUESTION: should this be 'tab'?
   $name: 'tabs',
   $variables: (
     BackgroundColor:           transparent,
+    BorderColor--hover:        $pf-color-black-400,
     BackgroundColor--inactive: pfe-var(surface--lighter),
     Color:                     pfe-var(text--muted),
-    BorderColor--hover:        $pf-color-black-400,
-    BorderColor: pfe-var(ui-accent),
+    BorderColor:               pfe-var(ui-accent),
     BorderWidth:               pfe-var(ui--border-width--active),
-    tab: ( // to avoid collisions with panel
+    tab: ( 
       FontSize:                pfe-var(font-size),
       Margin:                  0 0 calc( #{pfe-var(ui--border-width)} * -1),
       PaddingTop:              pfe-var(container-padding),
@@ -42,10 +41,16 @@
   border-bottom-width: pfe-local(BorderWidth);
   // Inner style
   background-color: pfe-local(BackgroundColor--inactive, $fallback: none); // TODO update to use opacity
-  text-align: pfe-local(TextAlign, center, $region: tab);
-  text-transform: pfe-local(TextTransform, $region: tab);
+  text-align: pfe-local(TextAlign, center, $region: 'tab');
+  text-transform: pfe-local(TextTransform, $region: 'tab');
   color: pfe-local(Color);
-  @include pfe-c-typography($type: text, $sizing: md, $base: true, $region: tab, $light-dom-heading: true);
+
+  font-size: pfe-local(FontSize, pfe-var(FontSize--md), $region: 'tab');
+  font-family: pfe-local(LineHeight, pfe-var(font-family), $region: 'tab');
+  line-height: pfe-local(LineHeight, pfe-var(line-height), $region: 'tab');
+  font-weight: pfe-local(FontWeight, pfe-var(font-weight--normal), $region: 'tab');
+
+  --pf-c--FontSize: #{pfe-local(FontSize)};
 
   #tab {
     display: inline-flex;

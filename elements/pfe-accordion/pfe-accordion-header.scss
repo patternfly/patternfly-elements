@@ -40,12 +40,31 @@
 .pf-c-accordion__toggle {
   cursor: pointer;
 
-  // This is handled by the ::before pseudo element
-  @include focus-ring(
-    $offset: -2px,
-    $pseudo: before,
-    $color: #6b9ff0 // @TODO: Where should this live in our kit?
-  );
+  outline: none;
+  position: relative;
+
+  // Focus uses a pseudo-element because it needs to overflow the container, outline also does not support border-radius settings
+  &::before {
+    position: absolute;
+    content: "";
+    top: -2px;
+    left: -2px;
+    width: calc(100% + #{pfe-var(ui--border-width--active)});
+    height: calc(100% + #{pfe-var(ui--border-width--active)});
+    border-radius: pfe-var(ui--border-radius);
+    border: pfe-var(ui--border-width--md) pfe-var(ui--border-style) transparent;
+  }
+
+  &:focus::before{
+    // TODO: parameterize
+    border-color: #6b9ff0;
+  }
+
+  // Remove the focus indicator on mouse-focus for browsers
+  // that do support :focus-visible
+  &:focus:not(:focus-visible)::before {
+    border: unset;
+  }
 
   width:  100%;
   margin: 0;

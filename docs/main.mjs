@@ -1,4 +1,4 @@
-import { PfeIcon } from '/bundle.js';
+import { PfeIcon } from '/pfe.min.js';
 
 PfeIcon.addIconSet(
   'fas',

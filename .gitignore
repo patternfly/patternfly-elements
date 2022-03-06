@@ -128,6 +128,7 @@ core/pfe-core/demo/*
 /docs/demo/**/*.js.map
 /docs/demo/demo.js.LEGAL.txt
 !/docs/demo/demo.css
+!/docs/demo/components.ts
 !/docs/core/styles/demo.njk
 
 

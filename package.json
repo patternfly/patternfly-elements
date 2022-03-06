@@ -33,6 +33,7 @@
     "build:types": "tsc -b",
     "build:docs": "run-s build:docs:*",
     "build:docs:eleventy": "eleventy --config=.eleventy.cjs",
+    "bundle": "node --input-type module -e \"await import('./tools/pfe-tools/esbuild.js').then(x => x.singleFileBuild())\"",
     "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
     "test": "wtr --group default",
     "🧑‍🔬--TEST---ALL FRAMEWORKS--🧑‍🔬": "❓ Test packages - all frameworks",

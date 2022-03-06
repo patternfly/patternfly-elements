@@ -4,6 +4,7 @@ import type { Meta as LitCSSModuleMeta } from '@pwrs/lit-css';
 import esbuild from 'esbuild';
 import glob from 'glob';
 import Sass from 'sass';
+import CleanCSS from 'clean-css';
 
 import { externalSubComponents } from './esbuild-plugins/external-sub-components.js';
 import { packageVersion } from './esbuild-plugins/package-version.js';
@@ -38,13 +39,22 @@ export interface PfeEsbuildSingleFileOptions {
   outfile?: string;
 }
 
+const cleanCSS = new CleanCSS({
+  sourceMap: true,
+  returnPromise: true,
+});
+
 /** lit-css transform plugin to process `.scss` files on-the-fly */
-export function transformSass(source: string, { filePath }: LitCSSModuleMeta): string {
-  const result = Sass.compileString(source, {
-    loadPaths: [dirname(filePath), NODE_MODULES],
-  });
-  // TODO: forward sourcemaps by returning an object
-  return result.css;
+export async function transformSass(source: string, { filePath, minify }: LitCSSModuleMeta & { minify?: boolean }): Promise<string> {
+  const loadPaths = [dirname(filePath), NODE_MODULES];
+  const result = Sass.compileString(source, { loadPaths });
+  // TODO: forward sourcemaps by returning an object, would probably need a PR to lit-css
+  if (!minify) {
+    return result.css;
+  } else {
+    const { styles } = await cleanCSS.minify(result.css/* , result.sourceMap */);
+    return styles;
+  }
 }
 
 /** abs-path to root node_modules */
@@ -58,13 +68,15 @@ const ALWAYS_EXCLUDE = [
   'pfe-styles',
 ];
 
-const basePlugins = () => [
+const basePlugins = ({ minify }: { minify?: boolean } = {}) => [
   // import scss files as LitElement CSSResult objects
-  litCssPlugin({ filter: /.scss$/, transform: transformSass }),
+  litCssPlugin({ filter: /\.scss$/, transform: (source, { filePath }) => transformSass(source, { filePath, minify }) }),
+  ...!minify ? [] : [
+    // minify lit-html templates
+    minifyHTMLLiteralsPlugin(),
+  ],
   // replace `{{version}}` with each package's version
   packageVersion(),
-  // minify lit-html templates
-  minifyHTMLLiteralsPlugin(),
 ];
 
 /** Create a single-file production bundle of all element */
@@ -75,8 +87,9 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
       absWorkingDir: cwd,
       allowOverwrite: true,
       bundle: true,
-      entryPoints: [join(cwd, 'docs', 'demo', 'bundle.ts')],
+      entryPoints: [join(cwd, 'docs', 'demo', 'components.ts')],
       format: 'esm',
+      keepNames: true,
       legalComments: 'linked',
       logLevel: 'info',
       minify: true,
@@ -86,14 +99,12 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
       treeShaking: true,
       watch: false,
       plugins: [
-        ...basePlugins(),
+        ...basePlugins({ minify: true }),
       ],
     });
-    console.log(result);
     result.stop?.();
     return result.outputFiles?.map(x => x.path) ?? [];
-  } catch (error) {
-    console.log(error);
+  } catch {
     process.exit(1);
   }
 }
@@ -166,7 +177,7 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
       ],
 
       plugins: [
-        ...basePlugins(),
+        ...basePlugins({ minify: mode === 'production' }),
         // ignore sub components bundling like "pfe-progress-steps-item"
         externalSubComponents(),
         // don't bundle node_module dependencies

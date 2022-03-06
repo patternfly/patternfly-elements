@@ -30,7 +30,7 @@
   color: pfe-local(Color) !important;
   cursor: pointer;
   font-weight: pfe-local(FontWeight);
-  @include pfe-c-typography($type: text, $sizing: md);
+  font-size: pfe-local(FontSize, pfe-var(FontSize--md));
 }
 
 :host([hidden]) {

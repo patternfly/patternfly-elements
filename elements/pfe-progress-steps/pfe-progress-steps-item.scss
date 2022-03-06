@@ -173,8 +173,6 @@
     &--description {
       color: pfe-local(Color, $region: description);
       font-size: pfe-var(FontSize--sm);
-      // @TODO Use the new typography mixin
-      // @include pfe-typography(sm, $type: "title", $base: false, $region: title);
       text-align: center;
 
       :host([state="error"]) & {

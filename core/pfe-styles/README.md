@@ -172,10 +172,6 @@ Worth mentioning, there are a variety of mixins, extends, and variables availabl
 .custom-title--foo  {
   @include pfe-title(5xl); 
 }
-
-.custom-text--bar  {
-   @include pfe-typography(xl, $type: text); 
-}
 ```
  
 # Overrides 

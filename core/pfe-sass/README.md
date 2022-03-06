@@ -54,7 +54,7 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
 
 There are a variety of mixins, extends, and variables available in pfe-sass. We recommend checking out the sass doc for extensive information about how to use these tools.
 
-There are already utility / modifier classes available within pfe-typography-classes.css for use within long form content. However if you need custom classes, you can utilize either the placeholders, or the `pfe-typography` mixin.
+There are already utility / modifier classes available within pfe-typography-classes.css for use within long form content. However if you need custom classes, you can utilize the placeholders.
 
 ## Text class examples
 
@@ -62,13 +62,6 @@ There are already utility / modifier classes available within pfe-typography-cla
 .custom-text--foo {
   @extend %pfe-text--lg;
 }
-.custom-text--bar {
- @include pfe-typography(lg, $type: "text");
-}
-.custom-text--baz {
- @include pfe-typography(lg, $type: "text", $base: true);
-}
-
 ```
 
 
@@ -130,12 +123,6 @@ Note that you can opt in or out out of properties beyond the font-family and fon
 .custom-title--foo {
   @extend %pfe-title--lg;
 }
-.custom-title--bar {
- @include pfe-typography(lg, $type: "title");
-}
-.custom-title--baz {
- @include pfe-typography(lg, $type: "title", $base: false);
-}
 ```
 
 ```css
@@ -186,15 +173,6 @@ Note that you can opt in or out out of properties beyond the font-family and fon
 :host[foo] {
   font-size: pfe-local(FontSize);
 }
-
-:host[bar] {
-  @include pfe-c-typography($type: text, $sizing: md);
-}
-
-:host[baz] {
-  @include pfe-c-typography($type: text, $sizing: md, $base: true, $spacing: true, $light-dom-heading:true);
-}
-
 ```
 
 ```css

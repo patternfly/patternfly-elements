@@ -202,7 +202,30 @@ a {
 
   // Creating the custom focus state
   &:focus:focus-visible {
-    @include focus-ring;
+    outline: none;
+    position: relative;
+
+    // Focus uses a pseudo-element because it needs to overflow the container, outline also does not support border-radius settings
+    &::after {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: calc(100% + #{pfe-var(ui--border-width--active)});
+      height: calc(100% + #{pfe-var(ui--border-width--active)});
+      border-radius: pfe-var(ui--border-radius);
+      border: pfe-var(ui--border-width--md) pfe-var(ui--border-style) transparent;
+    }
+
+    &:focus::after {
+      border-color: pfe-var(link);
+    }
+
+    // Remove the focus indicator on mouse-focus for browsers
+    // that do support :focus-visible
+    &:focus:not(:focus-visible)::after {
+      border: unset;
+    }
   }
 }
 

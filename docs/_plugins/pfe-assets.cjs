@@ -28,7 +28,7 @@ async function bundle() {
     const { pfeEnvPlugin } = await import('@patternfly/pfe-tools/esbuild-plugins/pfe-env.js');
 
     await singleFileBuild({
-      minify: process.env.NODE_ENV === 'production',
+      minify: process.env.NODE_ENV === 'production' || process.env.ELEVENTY_ENV?.startsWith?.('prod'),
       outfile: 'docs/pfe.min.js',
       conditions: ['esbuild'],
       plugins: [

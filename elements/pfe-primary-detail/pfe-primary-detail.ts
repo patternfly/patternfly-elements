@@ -2,7 +2,7 @@ import type { TemplateResult } from 'lit';
 
 import { LitElement, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
-import { html as statichtml, unsafeStatic } from 'lit/static-html.js';
+import { html as staticH, unsafeStatic } from 'lit/static-html.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -610,7 +610,7 @@ export class PfePrimaryDetail extends LitElement {
       // If wasTag isn't a headline, use strong
       const tag = unsafeStatic(wasTag?.match(/^H/i) ? wasTag : 'strong');
 
-      return statichtml`
+      return staticH`
         <${tag} id="details-wrapper__heading">
           ${this.expandedSectionTitle}
         </${tag}>`;

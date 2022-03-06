@@ -236,7 +236,7 @@ async function updateTsconfig(options: GenerateElementOptions): Promise<void> {
 }
 
 async function updateDocsBundle(options: GenerateElementOptions): Promise<void> {
-  const pathname = join(process.cwd(), 'docs', 'demo', 'bundle.ts');
+  const pathname = join(process.cwd(), 'docs', 'demo', 'components.ts');
   const content = await readFile(pathname, 'utf8');
 
   await writeFile(pathname, `${content}\nimport '@patternfly/${options.tagName}';`, 'utf8');

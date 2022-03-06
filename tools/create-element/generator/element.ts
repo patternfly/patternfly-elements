@@ -235,14 +235,6 @@ async function updateTsconfig(options: GenerateElementOptions): Promise<void> {
   await execaCommand(`npx eslint --fix ${configPath}`);
 }
 
-async function updateDocsBundle(options: GenerateElementOptions): Promise<void> {
-  const pathname = join(process.cwd(), 'docs', 'demo', 'components.ts');
-  const content = await readFile(pathname, 'utf8');
-
-  await writeFile(pathname, `${content}\nimport '@patternfly/${options.tagName}';`, 'utf8');
-  await execaCommand(`npx eslint --fix ${pathname}`);
-}
-
 /**
  * Generate an Element
  */
@@ -259,7 +251,6 @@ export async function generateElement(options: GenerateElementOptions): Promise<
     await writeElementFiles(options);
     await analyzeElement(options);
     await updateTsconfig(options);
-    await updateDocsBundle(options);
     await execaCommand('npm install');
   }
 }

@@ -26,6 +26,7 @@ package-lock.json
 _site
 docs/_data/todos.json
 docs/demo.js
+docs/pfe.min.js
 docs/bundle.js
 docs/core
 docs/components

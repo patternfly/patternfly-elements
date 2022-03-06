@@ -1,6 +1,6 @@
-import { LitElement, html as _html } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { withStatic, unsafeStatic } from 'lit/static-html.js';
+import { unsafeStatic, html as staticH } from 'lit/static-html.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed, initializer } from '@patternfly/pfe-core/decorators.js';
@@ -12,8 +12,6 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import style from './pfe-accordion-header.scss';
 
 import '@patternfly/pfe-icon';
-
-const html = withStatic(_html);
 
 const isPorHeader =
   (el: Node): el is HTMLElement =>
@@ -111,8 +109,8 @@ export class PfeAccordionHeader extends LitElement {
 
   override render() {
     const tag = unsafeStatic(this.headingTag);
-    return html`
-      <${tag} id="heading">
+    return staticH`
+      <${tag} id="heading">${html`
         <button id="button"
           aria-expanded="${this.ariaExpandedState}"
           class="pf-c-accordion__toggle">
@@ -134,7 +132,7 @@ export class PfeAccordionHeader extends LitElement {
               part="icon"
               class="pf-c-accordion__toggle-icon"
           ></pfe-icon>
-        </button>
+        </button>`}
       </${tag}>
     `;
   }

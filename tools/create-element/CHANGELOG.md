@@ -1,5 +1,12 @@
 # @patternfly/create-element
 
+## 0.0.2-next.5
+
+### Patch Changes
+
+- 56baa0ec: update components entrypoint filename
+- a6253d3c: Generate the single-file bundle entrypoint at runtime
+
 ## 0.0.2-next.4
 
 ### Patch Changes

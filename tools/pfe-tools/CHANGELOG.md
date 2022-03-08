@@ -1,5 +1,15 @@
 # @patternfly/pfe-tools
 
+## 0.1.0-next.4
+
+### Minor Changes
+
+- cd6ca2f0: minify lit-html template literals in builds
+
+### Patch Changes
+
+- a6253d3c: Generate the single-file bundle entrypoint at runtime
+
 ## 0.1.0-next.3
 
 ### Minor Changes

@@ -89,7 +89,7 @@
     "api-viewer-element": "^0.6.4",
     "cem-plugin-module-file-extensions": "^0.0.2",
     "cem-plugin-readonly": "^0.0.2",
-    "clean-css": "^4.2.1",
+    "clean-css": "^5.2.4",
     "compression": "^1.7.4",
     "dedent": "^0.7.0",
     "dotenv": "^16.0.0",

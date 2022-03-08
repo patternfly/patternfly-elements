@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-primary-detail",
   "license": "MIT",
-  "version": "2.0.0-next.0",
+  "version": "2.0.0-next.1",
   "description": "Primary detail element for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -72,7 +72,7 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.0",
+    "@patternfly/pfe-core": "^2.0.0-next.1",
     "lit": "^2.1.2"
   }
 }

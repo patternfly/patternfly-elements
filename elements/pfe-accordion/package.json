@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-accordion",
-  "version": "2.0.0-next.0",
+  "version": "2.0.0-next.1",
   "license": "MIT",
   "description": "Accordion for PatternFly Elements",
   "customElements": "custom-elements.json",
@@ -76,7 +76,7 @@
   ],
   "dependencies": {
     "@patternfly/pfe-collapse": "^2.0.0-next.0",
-    "@patternfly/pfe-core": "^2.0.0-next.0",
+    "@patternfly/pfe-core": "^2.0.0-next.1",
     "@patternfly/pfe-icon": "^2.0.0-next.0",
     "lit": "^2.1.2"
   }

@@ -1,5 +1,13 @@
 ## 1.0.0 ( TBD )
 
+## 2.0.0-next.1
+
+### Patch Changes
+
+- b6f89a8f: allow HTML literals to be optimized by aliasing static html tag
+- Updated dependencies [999cdfdd]
+  - @patternfly/pfe-core@2.0.0-next.1
+
 ## 2.0.0-next.0
 
 ### Major Changes

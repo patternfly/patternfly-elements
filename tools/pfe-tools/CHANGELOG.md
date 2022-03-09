@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 0.1.0-next.5
+
+### Patch Changes
+
+- 049aaca6: Update dependencies
+
 ## 0.1.0-next.4
 
 ### Minor Changes

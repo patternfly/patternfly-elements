@@ -44,13 +44,19 @@ export interface PfeEsbuildSingleFileOptions {
   minify?: boolean;
 }
 
+/** abs-path to repo root */
+const REPO_ROOT = fileURLToPath(new URL('../..', import.meta.url));
+
+/** abs-path to root node_modules */
+const NODE_MODULES = fileURLToPath(new URL('../../node_modules', import.meta.url));
+
+/** memoization cache for temporary component entrypoint files */
+const COMPONENT_ENTRYPOINTS_CACHE = new Map();
+
 const cleanCSS = new CleanCSS({
   sourceMap: true,
   returnPromise: true,
 });
-
-/** abs-path to root node_modules */
-const NODE_MODULES = fileURLToPath(new URL('../../node_modules', import.meta.url));
 
 /**
  * Exclude SASS-only packages because there are no ts sources there
@@ -99,15 +105,11 @@ export function getBasePlugins({ minify }: { minify?: boolean } = {}) {
   ];
 }
 
-const REPO_ROOT = fileURLToPath(new URL('../..', import.meta.url));
-
-const cache = new Map();
-
 /** Generate a temporary file containing namespace exports of all pfe components */
 export async function componentsEntryPoint(options?: { prefix: string }) {
   const componentDirs = await readdir(join(REPO_ROOT, 'elements'));
   const cacheKey = componentDirs.join('--');
-  if (!cache.get(cacheKey)) {
+  if (!COMPONENT_ENTRYPOINTS_CACHE.get(cacheKey)) {
     try {
       const outdir =
           options?.prefix ? join(REPO_ROOT, options?.prefix)
@@ -116,20 +118,20 @@ export async function componentsEntryPoint(options?: { prefix: string }) {
       const imports = await Promise.all(componentDirs.reduce((acc, dir) =>
         `${acc}\nexport * from '@patternfly/${dir}';`, ''));
       await writeFile(tmpfile, imports, 'utf8');
-      cache.set(cacheKey, tmpfile);
+      COMPONENT_ENTRYPOINTS_CACHE.set(cacheKey, tmpfile);
       return tmpfile;
     } catch (error) {
       console.error(error);
     }
   }
-  return cache.get(cacheKey);
+  return COMPONENT_ENTRYPOINTS_CACHE.get(cacheKey);
 }
+
 /** Create a single-file production bundle of all elements */
 export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
-  const cwd = fileURLToPath(new URL('../..', import.meta.url));
   try {
     const result = await esbuild.build({
-      absWorkingDir: cwd,
+      absWorkingDir: REPO_ROOT,
       allowOverwrite: true,
       bundle: true,
       entryPoints: [await componentsEntryPoint({ prefix: 'docs/demo' })],
@@ -164,6 +166,7 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
   const mode = options?.mode ?? 'development';
   const cwd = options?.cwd ?? process.cwd();
 
+  /** List of dir names of all packages which should be included in the build */
   const packageDirs = (
       // includes specified as an array
       Array.isArray(options?.include) ? options?.include as Array<string>
@@ -187,10 +190,14 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
       ignore: ['**/*.d.ts', '**/*.spec.ts'],
     }));
 
-  /** if we're only `--include`ing a single element, prefix the entryNames, so tot build into that element's package */
+  /**
+   * if we're only `--include`ing a single element, prefix the entryNames,
+   * in order to build into that element's package
+   */
   const entryNames =
     join(...options?.include?.length === 1 ? [options.include[0]] : [], '[dir]', '[name]');
 
+  /** list of paths to package.json files */
   const packagePath = packageDirs.flatMap(dir =>
     glob.sync(`${workspace}/${dir}/package.json`, { absolute: true, cwd }));
 

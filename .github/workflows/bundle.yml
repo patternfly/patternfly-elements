@@ -4,6 +4,9 @@ on:
   release:
     types:
       - published
+      - created
+      - prereleased
+      - released
 
 jobs:
   release:
@@ -27,5 +30,6 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+            console.log(context.payload.action);
             const bundle = require('./scripts/bundle-release.cjs');
             await bundle({ context, github, glob, workspace: '${{ github.workspace }}' });

@@ -1,5 +1,23 @@
-module.exports = async function({ github, workspace, publishedPackages }) {
-  const { readFile } = require('fs').promises;
+const sleep = ms => new Promise(res => setTimeout(res, ms));
+
+/** exponential back-off function to await results while avoiding rate limits */
+async function backoff(fn, depth = 0) {
+  try {
+    return await fn();
+  } catch (e) {
+    if (depth > 7) {
+      throw e;
+    } else {
+      await sleep(2 ** depth * 10);
+      return backoff(fn, depth + 1);
+    }
+  }
+}
+
+module.exports = async function({ github, glob, workspace, publishedPackages }) {
+  const tar = require('tar');
+  const { readFile, copyFile } = require('fs').promises;
+
   const { singleFileBuild } = await import('../tools/pfe-tools/esbuild.js');
   const { execaCommand } = await import('execa');
 
@@ -13,34 +31,40 @@ module.exports = async function({ github, workspace, publishedPackages }) {
 
   await singleFileBuild({ outfile });
 
+  async function getRelease({ owner, repo, tag }) {
+    const release = await github.request(`GET /repos/{owner}/{repo}/releases/tags/{tag}`, { owner, repo, tag });
+    if (!release.id) {
+      throw new Error(`Could not find release for tag: ${tag}`);
+    }
+  }
+
   for (const { name: packageName, version } of publishedPackages) {
     // get the tag for the release for this package
     const tag = `${packageName}@${version}`;
 
-    // const release = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
-    const release =
-      await github.request(`GET /repos/{owner}/{repo}/releases/tags/{tag}`, { owner, repo, tag });
+    // wait until the release is created
+    const release = await backoff(() => getRelease({ owner, repo, tag }));
 
-    if (!release.id) {
-      throw new Error(`Could not find release for tag: ${tag}`);
-    }
+    const params = {
+      owner,
+      release_id: release.id,
+      repo
+    };
 
-    const params = { owner, release_id: release.id, repo };
+    await copyFile(`${cwd}/core/pfe-styles/pfe.min.css`, `${cwd}/pfe.min.css`);
 
-    // eslint-disable-next-line
-    console.log({ tag, ...params });
+    const globber = await glob.create('pfe.min.*');
+    const files = await globber.glob();
+
+    console.log('creating tarball for', files);
+
+    await tar.c({ gzip: true, file: 'pfe.min.tgz' }, files);
 
     // upload the bundle to each release
     await github.rest.repos.uploadReleaseAsset({
       ...params,
-      name: 'pfe.min.js',
-      data: await readFile(outfile),
-    });
-
-    await github.rest.repos.uploadReleaseAsset({
-      ...params,
-      name: 'pfe.min.js.map',
-      data: await readFile(`${outfile}.map`),
+      name: 'pfe.min.tgz',
+      data: await readFile(`${cwd}/pfe.min.tgz`),
     });
 
     // make a tarball for the package

@@ -46,6 +46,7 @@ jobs:
             const bundle = require('./scripts/bundle-release.cjs');
             await bundle({
               github,
+              glob,
               workspace: '${{ github.workspace }}',
               publishedPackages: JSON.parse('${{ steps.changesets.outputs.publishedPackages }}'),
             });

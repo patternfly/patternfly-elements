@@ -30,20 +30,6 @@
   }
 }
 
-@mixin pfe-collapsible($state: closed) {
-  @if $state != closed {
-    display: block;
-    position: relative;
-    opacity: 1;
-  } @else {
-    display: none;
-    overflow: hidden;
-    will-change: height;
-    border-color: transparent;
-    opacity: 0;
-  }
-}
-
 /// Accent bar styles
 @mixin accent-bar(
   $direction: horizontal,

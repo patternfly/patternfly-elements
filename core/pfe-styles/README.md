@@ -38,15 +38,6 @@ Since PatternFly Elements Styles are not web components, their classes can be ap
 
 If you are starting a new project, you will likely want to load all the stylesheets to get you up and running quickly.   
 
-### Existing project without a design system
-
-@todo Extend the placeholders...
-
-### Existing project with a design system
-
-@todo  - extend the typography mixin...
-
-
 ----
 
 
@@ -69,7 +60,7 @@ When it comes to typography modifier classes, please note:
 
  - All HTML typographical elements are wrapped in the class `.pfe-c-content` to avoid collisions and add specificity.
  - HTML Headings come with all the styles by default
- - Text classes come with font size only, because text is inheriting the default line-height, font-weight and font-family from the body tag. If you want to include these properties, there's an extra argument you can invoke in the typograph mixin (see below).
+ - Text classes come with font size only, because text is inheriting the default line-height, font-weight and font-family from the body tag.
 
 
 ### Separation of concerns
@@ -161,8 +152,6 @@ This ensures that developers will not need to override using the component name,
 --pfe-accordion--FontSize--header: 21px;
 }
 ```
-
-
 
 ## pfe-sass: mixins, extends
 

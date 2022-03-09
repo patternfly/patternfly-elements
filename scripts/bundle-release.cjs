@@ -18,45 +18,24 @@ module.exports = async function({ github, glob, workspace, context }) {
   const cwd = `${workspace}`;
   const outfile = `${cwd}/pfe.min.js`;
 
+  const params = { owner, release_id: release.id, repo };
+
+  // Create or fetch artifacts
   await singleFileBuild({ outfile });
-
-  const params = {
-    owner,
-    release_id: release.id,
-    repo
-  };
-
   await copyFile(`${cwd}/core/pfe-styles/pfe.min.css`, `${cwd}/pfe.min.css`);
 
   const globber = await glob.create('pfe.min.*');
-  const files = await globber.glob();
+  const files = await globber.glob() ?? [];
 
-  // eslint-disable-next-line
-  console.log('creating tarball for', files);
-
+  console.log('Creating tarball for', files.join(', ')); // eslint-disable-line
   await tar.c({ gzip: true, file: 'pfe.min.tgz' }, files);
 
-  // upload the bundle to each release
-  await github.rest.repos.uploadReleaseAsset({
-    ...params,
-    name: 'pfe.min.tgz',
-    data: await readFile(`${cwd}/pfe.min.tgz`),
-  });
+  // download the tarball that was published to NPM
+  const { stdout } = await execaCommand(`npm pack ${tag}`);
 
-  const { packageName } = tag.match(/^(?<packageName>@[-\w]+[/]{1}[-\w]+)@(.*)$/)?.groups ?? {};
-
-  if (!packageName) {
-    // eslint-disable-next-line
-    console.log(release);
-    throw new Error('No Package found');
-  }
-
-  // make a tarball for the package
-  // this was already published to npm in the changesets action
-  const { stdout } = await execaCommand(`npm run pack -w ${packageName}`);
   const match = stdout.match(/^[\w-.]+\.tgz$/g);
 
-  // upload the package tarball to the release
+  // Upload the NPM tarball to the release
   if (match) {
     const [name] = match;
     await github.rest.repos.uploadReleaseAsset({
@@ -65,4 +44,11 @@ module.exports = async function({ github, glob, workspace, context }) {
       data: await readFile(`${cwd}/${name}`),
     });
   }
+
+  // Upload the all-repo bundle to the release
+  await github.rest.repos.uploadReleaseAsset({
+    ...params,
+    name: 'pfe.min.tgz',
+    data: await readFile(`${cwd}/pfe.min.tgz`),
+  });
 };

@@ -17,9 +17,15 @@ module.exports = async function({ github, workspace, publishedPackages }) {
     // get the tag for the release for this package
     const tag = `${packageName}@${version}`;
 
-    const { id } = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
+    // const release = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
+    const release =
+      await github.request(`GET /repos/{owner}/{repo}/releases/tags/{tag}`, { owner, repo, tag });
 
-    const params = { owner, release_id: id, repo };
+    if (!release.id) {
+      throw new Error(`Could not find release for tag: ${tag}`);
+    }
+
+    const params = { owner, release_id: release.id, repo };
 
     // eslint-disable-next-line
     console.log({ tag, ...params });

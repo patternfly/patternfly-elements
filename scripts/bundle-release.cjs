@@ -56,6 +56,7 @@ module.exports = async function({ github, glob, workspace, publishedPackages }) 
     const globber = await glob.create('pfe.min.*');
     const files = await globber.glob();
 
+    // eslint-disable-next-line
     console.log('creating tarball for', files);
 
     await tar.c({ gzip: true, file: 'pfe.min.tgz' }, files);

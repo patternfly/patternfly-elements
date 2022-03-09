@@ -7,7 +7,6 @@
 @use "../functions/custom-properties" as *;
 
 /// Base typography typically set on a body or html tag to cascade down to all typographical elements.
-/// @see {mixin} pfe-typography
 /// @requires {function} pfe-var
 %pfe-content-base {
     font-family: pfe-var(font-family);
@@ -16,7 +15,6 @@
 }
 
 /// List items
-/// @see {mixin} pfe-typography
 /// @requires {function} pfe-var
 %pfe-content--list {
     padding-left: calc(#{pfe-var(ui--indent)} * 2);
@@ -25,7 +23,6 @@
     }
 }
 
-/// @see {mixin} pfe-typography
 /// @requires {function} pfe-var
 %pfe-content--list-item {
   &:not(:last-child):not(:empty) {
@@ -34,7 +31,6 @@
 }
 
 /// Adds extra space above nested ordered or unordered lists, within other lists. `UL + UL` or `OL + OL`
-/// @see {mixin} pfe-typography
 /// @requires {function} pfe-var
 %pfe-content--nested-list {
       margin-top: pfe-var(content-spacer--body--sm); // 8px

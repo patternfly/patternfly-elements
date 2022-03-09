@@ -9,6 +9,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "npm run analyze",
     "analyze": "sassdoc {extends,functions,maps,mixins,variables}/_*.scss index.scss"
   },
   "keywords": [

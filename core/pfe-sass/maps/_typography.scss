@@ -81,17 +81,14 @@ $pfe-type-sizing--content: (
 );
 
 /// Sets of Titles: Mega
-/// @see {mixin} pfe-typography
 // TODO: rename to pfe-title-set
 $pf-title-set--mega: ("6xl", "5xl");
 
 /// Sets of Titles: Regular
-/// @see {mixin} pfe-typography
 // TODO: rename to pfe-title-set
 $pf-title-set--regular: ("4xl", "3xl", "2xl");
 
 /// Sets of Titles: Small
-/// @see {mixin} pfe-typography
 // TODO: rename to pfe-title-set
 $pf-title-set--tiny: (xl, lg, md, sm, xs);
 

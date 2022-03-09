@@ -3,13 +3,13 @@ name: Bundle
 on:
   release:
     types:
-      - published
       - created
+      - published
       - prereleased
       - released
 
 jobs:
-  release:
+  bundle:
     # Prevents changesets action from creating a PR on forks
     if: github.repository == 'patternfly/patternfly-elements'
     runs-on: ubuntu-latest
@@ -23,6 +23,11 @@ jobs:
       - name: Install packages
         run: npm i --prefer-offline
 
+      - name: Dump GitHub Context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
       - name: Bundle
         id: bundle
         if: ${{ steps.changesets.outputs.published }}
@@ -30,6 +35,6 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log(context.payload.action);
+            const workspace = '${{ github.workspace }}';
             const bundle = require('./scripts/bundle-release.cjs');
-            await bundle({ context, github, glob, workspace: '${{ github.workspace }}' });
+            await bundle({ context, github, glob, workspace });

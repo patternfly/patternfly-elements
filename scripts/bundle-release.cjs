@@ -16,9 +16,13 @@ module.exports = async function({ github, workspace, publishedPackages }) {
   for (const { name: packageName, version } of publishedPackages) {
     // get the tag for the release for this package
     const tag = `${packageName}@${version}`;
+
     const { id } = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
 
     const params = { owner, release_id: id, repo };
+
+    // eslint-disable-next-line
+    console.log({ tag, ...params });
 
     // upload the bundle to each release
     await github.rest.repos.uploadReleaseAsset({

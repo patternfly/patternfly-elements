@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 0.1.0-next.6
+
+### Patch Changes
+
+- 0f235f7e: Update documentation
+
 ## 0.1.0-next.5
 
 ### Patch Changes

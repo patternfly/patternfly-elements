@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-styles",
-  "version": "1.12.3",
+  "version": "1.12.4-next.0",
   "license": "MIT",
   "description": "Helper classes for PatternFly Elements",
   "type": "module",

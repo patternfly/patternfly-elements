@@ -1,5 +1,11 @@
 ## 1.0.0-prerelease.50 ( TBD )
 
+## 2.0.0-next.1
+
+### Patch Changes
+
+- 63f45224: Applies aria-label to nav links (#1765)
+
 ## 2.0.0-next.0
 
 ### Major Changes

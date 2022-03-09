@@ -16,8 +16,12 @@
 
 :host {
   @include pfe-box-sizing;
-  @include pfe-collapsible($state: closed);
-
+  display: none;
+  overflow: hidden;
+  will-change: height;
+  border-color: transparent;
+  opacity: 0;
+    
   // relative prevents the left border overflow
   position: relative;
   box-sizing: border-box;
@@ -108,11 +112,17 @@
   opacity: 1;
 }
 
+:host(.animating[hidden]),
 :host([expanded]:not(.animating)) {
-  overflow: visible;
   margin-bottom: 0;
   border-bottom-width: pfe-local(BorderWidth);
-  @include pfe-collapsible($state: open);
+  display: block !important;
+  position: relative;
+  opacity: 1;
+}
+
+:host([expanded]:not(.animating)) {
+  overflow: visible;
 }
 
 @include pfe-accordion--expanded();

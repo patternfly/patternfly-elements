@@ -42,6 +42,8 @@ export class AccordionCollapseEvent extends ComposedEvent {
   }
 }
 
+const CSS_TIMING_UNITS_RE = /(?<value>[0-9.]+)(?<unit>[a-zA-Z]+)/g;
+
 /**
  * Accordions toggle the visibility of sections of content.
  * They feature panels that consist of a section text label and a caret icon that collapses or expands to reveal more information.
@@ -214,6 +216,10 @@ export class PfeAccordion extends LitElement {
 
   private logger = new Logger(this);
 
+  private styles = getComputedStyle(this);
+
+  private transitionDuration = this.getAnimationDuration();
+
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('change', this._changeHandler as EventListener);
@@ -286,6 +292,7 @@ export class PfeAccordion extends LitElement {
     }
 
     panel.expanded = true;
+    panel.hidden = false;
 
     await panel.updateComplete;
 
@@ -318,29 +325,49 @@ export class PfeAccordion extends LitElement {
     const rect = panel.getBoundingClientRect();
 
     panel.expanded = false;
+    panel.hidden = true;
 
     this._animate(panel, rect.height, 0);
+  }
+
+  private getAnimationDuration() {
+    if ('computedStyleMap' in this) {
+      // @ts-expect-error: https://caniuse.com/?search=computedStyleMap
+      return this.computedStyleMap().get('transition-duration')?.to('ms').value;
+    } else {
+      const { transitionDuration } = this.styles;
+      const groups = CSS_TIMING_UNITS_RE.exec(transitionDuration)?.groups;
+      if (!groups) {
+        return null;
+      }
+      const factor = groups.unit === 's' ? 1000 : 1;
+      return parseFloat(groups.value) * factor;
+    }
   }
 
   private async _animate(panel: PfeAccordionPanel, start: number, end: number) {
     if (panel) {
       const header = panel.previousElementSibling;
-      if (header) {
-        header.classList.add('animating');
+
+      const transitionDuration = this.getAnimationDuration();
+      if (transitionDuration) {
+        this.transitionDuration = transitionDuration;
       }
 
+      const duration = this.transitionDuration;
+
+      header?.classList.add('animating');
       panel.classList.add('animating');
-      panel.style.height = `${start}px`;
 
-      // panel.animate({ height: [`${start}px`, `${end}px`] }).play();
+      const animation = panel.animate({ height: [`${start}px`, `${end}px`] }, { duration });
+      animation.play();
+      await animation.finished;
 
-      // TODO: use Element#animate
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          panel.style.height = `${end}px`;
-          panel.addEventListener('transitionend', this._transitionEndHandler, { once: true });
-        });
-      });
+      header?.classList.remove('animating');
+      panel.classList.remove('animating');
+
+      panel.style.removeProperty('height');
+      panel.hidden = !panel.expanded;
     }
   }
 
@@ -378,16 +405,6 @@ export class PfeAccordion extends LitElement {
     }
 
     newHeader?.focus?.();
-  }
-
-  @bound private _transitionEndHandler(evt: TransitionEvent) {
-    const panel = evt.target as PfeAccordionPanel;
-    const header = panel.previousElementSibling;
-    if (header) {
-      header.classList.remove('animating');
-    }
-    panel.style.removeProperty('height');
-    panel.classList.remove('animating');
   }
 
   private _allHeaders(): PfeAccordionHeader[] {
@@ -532,6 +549,7 @@ export class PfeAccordion extends LitElement {
       if (panel) {
         header.setAttribute('aria-controls', panel.id);
         panel.setAttribute('aria-labelledby', header.id);
+        panel.hidden = !panel.expanded;
       }
     });
 

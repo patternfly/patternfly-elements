@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { observed, pfelement } from '@patternfly/pfe-core/decorators.js';
+import { pfelement } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { PfeCollapsePanel } from '@patternfly/pfe-collapse/pfe-collapse-panel.js';
@@ -26,7 +26,6 @@ export class PfeAccordionPanel extends LitElement {
   /** Disclosure */
   @property({ type: String, reflect: true }) disclosure?: 'true'|'false';
 
-  @observed
   @property({ type: Boolean, reflect: true }) expanded = false;
 
   @property({ attribute: 'aria-labelledby', reflect: true }) ariaLabelledby?: string;
@@ -45,10 +44,6 @@ export class PfeAccordionPanel extends LitElement {
         </div>
       </div>
     `;
-  }
-
-  protected _expandedChanged() {
-    this.hidden = !this.expanded;
   }
 }
 

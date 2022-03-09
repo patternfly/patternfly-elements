@@ -11,6 +11,7 @@
   },
   "scripts": {
     "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
+    "prepublishOnly": "npm run build",
     "build": "run-s build:**",
     "build:clean": "npm run clean",
     "build:compressed": "sass --load-path=../../node_modules src:. --style compressed",
@@ -32,7 +33,8 @@
     "url": "https://github.com/patternfly/patternfly-elements/issues"
   },
   "files": [
-    "dist"
+    "*.css",
+    "*.css.map"
   ],
   "contributors": [
     "Mark Caron <mark@redhat.com> (https://github.com/markcaron)",

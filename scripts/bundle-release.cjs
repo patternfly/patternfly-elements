@@ -16,66 +16,75 @@ async function backoff(fn, retries = 0, max = 10) {
   }
 }
 
-module.exports = async function({ github, glob, tag, workspace }) {
+async function getBundle({ glob, workspace }) {
   const tar = require('tar');
-  const { readFile, copyFile } = require('fs').promises;
-
+  const { copyFile } = require('fs').promises;
   const { singleFileBuild } = await import('../tools/pfe-tools/esbuild.js');
+
+  // Create or fetch artifacts
+  await singleFileBuild({ outfile: `${workspace}/pfe.min.js` });
+  await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
+
+  const globber = await glob.create('pfe.min.*');
+  const files = (await globber.glob() ?? []).map(path => path.replace(workspace, ''));
+
+  const file = 'pfe.min.tgz';
+
+  const onentry = x => console.log(x.header.path);
+
+  console.log(`Creating ${file} with`, files.join('\n'), '\n');
+
+  await tar.c({ gzip: true, file }, files);
+
+  console.log('Tarball contents:');
+
+  await Promise.resolve(tar.t({ file, onentry }));
+
+  return file;
+}
+
+module.exports = async function({ github, glob, tags, workspace }) {
+  const { readFile } = require('fs').promises;
+
   const { execaCommand } = await import('execa');
+
+  const bundleFileName = await getBundle({ github, glob, workspace });
 
   // https://github.com/patternfly/patternfly-elements
   const owner = 'patternfly';
   const repo = 'patternfly-elements';
 
-  console.log({ owner, repo, tag });
+  for (const tag of tags.split(',').map(x => x.trim())) {
+    const response = await backoff(() =>
+      github.rest.repos.getReleaseByTag({ owner, repo, tag }));
 
-  const response = await backoff(() => github.rest.repos.getReleaseByTag({ owner, repo, tag }));
+    const release = response.data;
 
-  const release = response.data;
-
-  console.log(release);
-
-  const params = { owner, release_id: release.id, repo };
-
-  if (!release.assets?.some(x => x.name === 'pfe.min.tgz')) {
-    // Create or fetch artifacts
-    await singleFileBuild({ outfile: `${workspace}/pfe.min.js` });
-    await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
-
-    const globber = await glob.create('pfe.min.*');
-    const files = await globber.glob() ?? [];
-
-    const name = 'pfe.min.tgz';
-
-    console.log('Creating tarball for', files.join(', '));
-    await tar.c({ gzip: true, file: name }, files);
-
-    const data = await readFile(`${workspace}/${name}`);
+    const params = { owner, release_id: release.id, repo };
 
     // Upload the all-repo bundle to the release
-    console.log(`Uploading ${name}`);
-    await github.rest.repos.uploadReleaseAsset({ ...params, name, data });
-  }
+    if (!release.assets?.some(x => x.name === bundleFileName)) {
+      const data = await readFile(`${workspace}/${bundleFileName}`);
+      console.log(`Uploading ${bundleFileName}`);
+      await github.rest.repos.uploadReleaseAsset({ ...params, name: bundleFileName, data });
+    }
 
-  // download the tarball that was published to NPM
-  const { all } = await execaCommand(`npm pack ${tag}`, { all: true });
+    // Download the package tarball from NPM
+    const { all } = await execaCommand(`npm pack ${tag}`, { all: true });
+    const [name] = all.match(/^(?:npm )?[\w-.]+\.tgz$/mg) ?? [];
 
-  console.log(all);
-
-  let match = all.match(/^[\w-.]+\.tgz$/mg);
-
-  match ||= all.match(/^npm [\w-.]+\.tgz$/mg);
-
-  console.log(match);
-
-  // Upload the NPM tarball to the release
-  if (match) {
-    const [name] = match;
-    console.log(name);
-    if (!release.assets?.some(x => x.name === name)) {
-      const data = await readFile(`${workspace}/${name}`);
+    if (name) {
+      // Upload the NPM tarball to the release
       console.log(`Uploading ${name}`);
-      await github.rest.repos.uploadReleaseAsset({ ...params, name, data });
+      if (!release.assets?.some(x => x.name === name)) {
+        const data = await readFile(`${workspace}/${name}`);
+        console.log(`Uploading ${name}`);
+        await github.rest.repos.uploadReleaseAsset({ ...params, name, data });
+      }
+    } else {
+      console.log(all);
+      throw new Error(`Could not get NPM tarball for ${tag}`);
     }
   }
 };
+

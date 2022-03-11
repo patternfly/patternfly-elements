@@ -11,8 +11,8 @@ name: Bundle
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        description: 'Release tag'
+      tags:
+        description: 'Comma separated list of release tags'
         required: true 
         type: string
 
@@ -38,6 +38,6 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const bundle = require('./scripts/bundle-release.cjs');
-            const tag = '${{ github.event.inputs.tag }}';
+            const tags = '${{ github.event.inputs.tags }}';
             const workspace = '${{ github.workspace }}';
-            await bundle({ github, glob, tag, workspace });
+            await bundle({ github, glob, tags, workspace });

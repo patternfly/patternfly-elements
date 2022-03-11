@@ -15,14 +15,14 @@ async function backoff(fn, retries = 0, max = 10) {
   }
 }
 
-async function getBundle({ core, glob, workspace, ref }) {
+async function checkoutRef(ref) {
   const { execaCommand } = await import('execa');
-
   await execaCommand('git config advice.detachedHead false');
-  const { stderr } = await execaCommand(`git checkout ${ref}`);
-  if (stderr) {
-    throw new Error(stderr);
-  }
+  const { stdout } = await execaCommand(`git checkout ${ref}`);
+  return stdout;
+}
+
+async function getBundle({ core, glob, workspace }) {
   const tar = require('tar');
   const { copyFile } = require('fs').promises;
   const { singleFileBuild } = await import('../tools/pfe-tools/esbuild.js');
@@ -64,7 +64,8 @@ module.exports = async function({ core, github, glob, tags, workspace }) {
 
     const params = { owner, release_id: release.id, repo };
 
-    const bundleFileName = await getBundle({ core, github, glob, workspace, ref: tag });
+    await checkoutRef(tag);
+    const bundleFileName = await getBundle({ core, github, glob, workspace });
 
     // Delete any existing asset with that name
     for (const { id, name } of release.assets ?? []) {

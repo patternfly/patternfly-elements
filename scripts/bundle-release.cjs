@@ -59,13 +59,17 @@ module.exports = async function({ github, glob, tag, workspace }) {
 
   // download the tarball that was published to NPM
   const { all } = await execaCommand(`npm pack ${tag}`, { all: true });
+
   console.log(all);
 
-  const match = all.match(/^[\w-.]+\.tgz$/g);
+  const match = all.match(/^[\w-.]+\.tgz$/mg);
+
+  console.log(match);
 
   // Upload the NPM tarball to the release
   if (match) {
     const [name] = match;
+    console.log(name);
     if (!release.assets?.some(x => x.name === name)) {
       const data = await readFile(`${workspace}/${name}`);
       console.log(`Uploading ${name}`);

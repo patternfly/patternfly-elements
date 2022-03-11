@@ -37,11 +37,11 @@ async function backoff(fn, retries = 0, max = 10) {
 }
 
 async function getBundle({ core, glob, workspace }) {
-  await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
-
   const tar = require('tar');
   const { copyFile } = require('fs').promises;
   const { singleFileBuild } = await import('../tools/pfe-tools/esbuild.js');
+
+  await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
 
   // Create or fetch artifacts
   await singleFileBuild({ outfile: `${workspace}/pfe.min.js` });

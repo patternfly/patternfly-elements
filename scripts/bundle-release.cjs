@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 /** Wait exponentially longer, by seconds, each time we fail to fetch the release */
@@ -16,7 +15,13 @@ async function backoff(fn, retries = 0, max = 10) {
   }
 }
 
-async function getBundle({ glob, workspace }) {
+async function getBundle({ core, glob, workspace, ref }) {
+  const { execaCommand } = await import('execa');
+
+  const { stderr } = await execaCommand(`git checkout ${ref}`);
+  if (stderr) {
+    throw new Error(stderr);
+  }
   const tar = require('tar');
   const { copyFile } = require('fs').promises;
   const { singleFileBuild } = await import('../tools/pfe-tools/esbuild.js');
@@ -30,25 +35,21 @@ async function getBundle({ glob, workspace }) {
 
   const file = 'pfe.min.tgz';
 
-  const onentry = x => console.log(x.header.path);
-
-  console.log(`Creating ${file} with`, files.join('\n'), '\n');
+  core.debug(`Creating ${file} with`, files.join('\n'), '\n');
 
   await tar.c({ gzip: true, file }, files);
 
-  console.log('Tarball contents:');
+  core.debug('Tarball contents:');
 
-  await Promise.resolve(tar.t({ file, onentry }));
+  await Promise.resolve(tar.t({ file, onentry: x => core.debug(x.header.path) }));
 
   return file;
 }
 
-module.exports = async function({ github, glob, tags, workspace }) {
+module.exports = async function({ core, github, glob, tags, workspace }) {
   const { readFile } = require('fs').promises;
 
   const { execaCommand } = await import('execa');
-
-  const bundleFileName = await getBundle({ github, glob, workspace });
 
   // https://github.com/patternfly/patternfly-elements
   const owner = 'patternfly';
@@ -62,12 +63,19 @@ module.exports = async function({ github, glob, tags, workspace }) {
 
     const params = { owner, release_id: release.id, repo };
 
-    // Upload the all-repo bundle to the release
-    if (!release.assets?.some(x => x.name === bundleFileName)) {
-      const data = await readFile(`${workspace}/${bundleFileName}`);
-      console.log(`Uploading ${bundleFileName}`);
-      await github.rest.repos.uploadReleaseAsset({ ...params, name: bundleFileName, data });
+    const bundleFileName = await getBundle({ core, github, glob, workspace, ref: tag });
+
+    // Delete any existing asset with that name
+    for (const { id, name } of release.assets ?? []) {
+      if (name === bundleFileName) {
+        await github.rest.repos.deleteReleaseAsset({ owner, repo, asset_id: id });
+      }
     }
+
+    // Upload the all-repo bundle to the release
+    const data = await readFile(`${workspace}/${bundleFileName}`);
+    core.info(`Uploading ${bundleFileName}`);
+    await github.rest.repos.uploadReleaseAsset({ ...params, name: bundleFileName, data });
 
     // Download the package tarball from NPM
     const { all } = await execaCommand(`npm pack ${tag}`, { all: true });
@@ -75,14 +83,14 @@ module.exports = async function({ github, glob, tags, workspace }) {
 
     if (name) {
       // Upload the NPM tarball to the release
-      console.log(`Uploading ${name}`);
+      core.info(`Uploading ${name}`);
       if (!release.assets?.some(x => x.name === name)) {
         const data = await readFile(`${workspace}/${name}`);
-        console.log(`Uploading ${name}`);
+        core.info(`Uploading ${name}`);
         await github.rest.repos.uploadReleaseAsset({ ...params, name, data });
       }
     } else {
-      console.log(all);
+      core.error(all);
       throw new Error(`Could not get NPM tarball for ${tag}`);
     }
   }

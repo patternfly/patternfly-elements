@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
           node-version: 16
@@ -40,4 +42,4 @@ jobs:
             const bundle = require('./scripts/bundle-release.cjs');
             const tags = '${{ github.event.inputs.tags }}';
             const workspace = '${{ github.workspace }}';
-            await bundle({ github, glob, tags, workspace });
+            await bundle({ core, github, glob, tags, workspace });

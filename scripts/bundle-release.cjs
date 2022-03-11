@@ -55,13 +55,16 @@ async function getBundle({ core, glob, workspace }) {
 
   const file = 'pfe.min.tgz';
 
-  core.info(`Creating ${file} with ${files.join('\n')}\n`);
+  core.info(`Creating ${file} with ${files.join(', ')}`);
 
   await tar.c({ gzip: true, file }, files);
 
-  core.info('Tarball contents:');
-
-  await Promise.resolve(tar.t({ file, onentry: x => core.info(x.header.path) }));
+  try {
+    core.info('Tarball contents:');
+    await Promise.resolve(tar.t({ file, onentry: x => core.info(x.header.path) }));
+  } catch {
+    null;
+  }
 
   return file;
 }

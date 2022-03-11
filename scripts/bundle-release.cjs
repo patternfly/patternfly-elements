@@ -59,7 +59,7 @@ async function getBundle({ core, exec, glob, workspace }) {
   console.log(await execCommand(exec, 'pwd'));
   console.log(await execCommand(exec, 'ls -1'));
 
-  core.info(await execCommand(exec, `tar -czf ${files.join(' ')}`));
+  core.info(await execCommand(exec, `tar -czf ${file} ${files.join(' ')}`));
 
   try {
     core.info('Tarball contents:');

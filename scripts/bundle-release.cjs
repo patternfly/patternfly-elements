@@ -55,13 +55,13 @@ async function getBundle({ core, glob, workspace }) {
 
   const file = 'pfe.min.tgz';
 
-  core.info(`Creating ${file} with`, files.join('\n'), '\n');
+  core.info(`Creating ${file} with ${files.join('\n')}\n`);
 
   await tar.c({ gzip: true, file }, files);
 
   core.info('Tarball contents:');
 
-  await Promise.resolve(tar.t({ file, onentry: x => core.nfo(x.header.path) }));
+  await Promise.resolve(tar.t({ file, onentry: x => core.info(x.header.path) }));
 
   return file;
 }
@@ -95,7 +95,7 @@ module.exports = async function bundle({ core, exec, github, glob, tags = '', wo
 
     core.info(`Installing dependencies for ${tag}`);
     await execCommand(exec, `npm ci --prefer-offline`);
-    await execCommand(exec, 'ls');
+    await execCommand(exec, 'ls -1');
     core.info(`Bundling Packages for ${tag}`);
     const bundleFileName = await getBundle({ core, github, glob, workspace });
 

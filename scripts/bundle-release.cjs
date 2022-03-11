@@ -56,7 +56,7 @@ async function getBundle({ core, exec, glob, workspace }) {
 
   core.info(`Creating ${file} with ${files.join(', ')}`);
 
-  core.info(await execCommand(exec, `tar -czf pfe.min.*`));
+  core.info(await execCommand(exec, `tar -czf './pfe.min.*'`));
 
   try {
     core.info('Tarball contents:');

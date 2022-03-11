@@ -59,7 +59,7 @@ async function getBundle({ core, exec, glob, workspace }) {
   console.log(await execCommand(exec, 'pwd'));
   console.log(await execCommand(exec, 'ls -1'));
 
-  core.info(await execCommand(exec, `tar -czf './pfe.min.*'`));
+  core.info(await execCommand(exec, `tar -czf ${files.join(' ')}`));
 
   try {
     core.info('Tarball contents:');
@@ -86,12 +86,12 @@ module.exports = async function bundle({ core, exec, github, glob, tags = '', wo
     core.info(`Bundling tag ${tag}`);
 
     core.info('Fetching release');
-    const response = await backoff(() =>
-      github.rest.repos.getReleaseByTag({ owner, repo, tag }));
+    const response = await backoff(async () =>
+      await github.rest.repos.getReleaseByTag({ owner, repo, tag }));
 
     const release = response.data;
 
-    core.info(release);
+    core.info(await release);
 
     const params = { owner, release_id: release.id, repo };
 

@@ -33,7 +33,6 @@ jobs:
 
       - name: Bundle
         id: bundle
-        if: ${{ steps.changesets.outputs.published }}
         uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}

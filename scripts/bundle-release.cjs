@@ -23,13 +23,17 @@ async function checkoutRef(ref) {
 }
 
 async function getBundle({ core, glob, workspace }) {
+  const { execaCommand } = await import('execa');
+  await execaCommand(`npm i --prefer-offline --no-scripts`);
+  await execaCommand(`npm run build -w @patternfly/pfe-tools -w @patternfly/pfe-styles`);
+  await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
+
   const tar = require('tar');
   const { copyFile } = require('fs').promises;
   const { singleFileBuild } = await import('../tools/pfe-tools/esbuild.js');
 
   // Create or fetch artifacts
   await singleFileBuild({ outfile: `${workspace}/pfe.min.js` });
-  await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
 
   const globber = await glob.create('pfe.min.*');
   const files = (await globber.glob() ?? []).map(path => path.replace(workspace, ''));
@@ -47,22 +51,25 @@ async function getBundle({ core, glob, workspace }) {
   return file;
 }
 
-module.exports = async function({ core, github, glob, tags, workspace }) {
+module.exports = async function({ core, github, glob, tags = '', workspace }) {
   const { readFile } = require('fs').promises;
-
   const { execaCommand } = await import('execa');
+
+  tags = tags.split(',').map(x => x.trim());
 
   // https://github.com/patternfly/patternfly-elements
   const owner = 'patternfly';
   const repo = 'patternfly-elements';
 
-  for (const tag of tags.split(',').map(x => x.trim())) {
+  const results = await Promise.allSettled(tags.map(async tag => {
     const response = await backoff(() =>
       github.rest.repos.getReleaseByTag({ owner, repo, tag }));
 
     const release = response.data;
 
     const params = { owner, release_id: release.id, repo };
+
+    core.info(`Checking out ${tag}`);
 
     await checkoutRef(tag);
     const bundleFileName = await getBundle({ core, github, glob, workspace });
@@ -94,6 +101,12 @@ module.exports = async function({ core, github, glob, tags, workspace }) {
     } else {
       core.error(all);
       throw new Error(`Could not get NPM tarball for ${tag}`);
+    }
+  }));
+
+  for (const { status, reason } of results) {
+    if (status === 'rejected') {
+      core.error(reason);
     }
   }
 };

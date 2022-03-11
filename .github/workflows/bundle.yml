@@ -30,9 +30,6 @@ jobs:
           node-version: 16
           cache: npm
 
-      - name: Install packages
-        run: npm i --prefer-offline
-
       - name: Bundle
         id: bundle
         uses: actions/github-script@v6

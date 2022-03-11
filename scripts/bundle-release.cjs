@@ -56,6 +56,9 @@ async function getBundle({ core, exec, glob, workspace }) {
 
   core.info(`Creating ${file} with ${files.join(', ')}`);
 
+  console.log(await execCommand(exec, 'pwd'));
+  console.log(await execCommand(exec, 'ls -1'));
+
   core.info(await execCommand(exec, `tar -czf './pfe.min.*'`));
 
   try {

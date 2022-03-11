@@ -43,10 +43,9 @@ async function getBundle({ core, glob, workspace }) {
   const { copyFile } = require('fs').promises;
   const { singleFileBuild } = await import('../tools/pfe-tools/esbuild.js');
 
-  await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
-
   // Create or fetch artifacts
   await singleFileBuild({ outfile: `${workspace}/pfe.min.js` });
+  await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
 
   const globber = await glob.create('pfe.min.*');
   const files = (await globber.glob() ?? []).map(path =>
@@ -54,13 +53,13 @@ async function getBundle({ core, glob, workspace }) {
 
   const file = 'pfe.min.tgz';
 
-  core.debug(`Creating ${file} with`, files.join('\n'), '\n');
+  core.info(`Creating ${file} with`, files.join('\n'), '\n');
 
   await tar.c({ gzip: true, file }, files);
 
-  core.debug('Tarball contents:');
+  core.info('Tarball contents:');
 
-  await Promise.resolve(tar.t({ file, onentry: x => core.debug(x.header.path) }));
+  await Promise.resolve(tar.t({ file, onentry: x => core.nfo(x.header.path) }));
 
   return file;
 }
@@ -79,13 +78,13 @@ module.exports = async function bundle({ core, exec, github, glob, tags = '', wo
   for (const tag of tags) {
     core.info(`Bundling tag ${tag}`);
 
-    core.debug('Fetching release');
+    core.info('Fetching release');
     const response = await backoff(() =>
       github.rest.repos.getReleaseByTag({ owner, repo, tag }));
 
     const release = response.data;
 
-    core.debug(release);
+    core.info(release);
 
     const params = { owner, release_id: release.id, repo };
 

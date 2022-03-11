@@ -62,7 +62,9 @@ module.exports = async function({ github, glob, tag, workspace }) {
 
   console.log(all);
 
-  const match = all.match(/^[\w-.]+\.tgz$/mg);
+  let match = all.match(/^[\w-.]+\.tgz$/mg);
+
+  match ||= all.match(/^npm [\w-.]+\.tgz$/mg);
 
   console.log(match);
 

@@ -1,5 +1,7 @@
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+const NPM_OUTPUT_FILENAME_RE = /^[\s]+?(?:npm )?(?<name>[\w-.]+\.tgz)$/mg;
+
 async function execCommand(exec, command) {
   const [cmd, ...args] = command.split(' ');
 
@@ -112,7 +114,7 @@ module.exports = async function bundle({ core, exec, github, glob, tags = '', wo
 
     // Download the package tarball from NPM
     const stdout = await execCommand(exec, `npm pack ${tag}`);
-    const [name] = stdout.match(/^(?:npm )?[\w-.]+\.tgz$/mg) ?? [];
+    const { name } = NPM_OUTPUT_FILENAME_RE.exec(stdout)?.groups ?? {};
 
     if (name) {
       for (const { id, name: existing } of release.assets ?? []) {

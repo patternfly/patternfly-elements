@@ -1,6 +1,6 @@
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-const NPM_OUTPUT_FILENAME_RE = /^[\s]+?(?:npm )?(?<name>[\w-.]+\.tgz)$/mg;
+const NPM_OUTPUT_FILENAME_RE = /^(?:[\s]+)?(?:npm )?(?<name>[-\w.]+\.tgz)$/mg;
 
 async function execCommand(exec, command) {
   const [cmd, ...args] = command.split(' ');

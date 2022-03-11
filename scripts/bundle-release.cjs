@@ -1,58 +1,69 @@
-module.exports = async function({ github, glob, workspace, context }) {
+/* eslint-disable no-console */
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+/** Wait exponentially longer, by seconds, each time we fail to fetch the release */
+async function backoff(fn, retries = 0, max = 10) {
+  try {
+    return await fn();
+  } catch (e) {
+    if (retries > max) {
+      throw e;
+    }
+
+    await sleep(2 ** retries * 1000);
+
+    return backoff(fn, retries + 1);
+  }
+}
+
+module.exports = async function({ github, glob, tag, workspace }) {
   const tar = require('tar');
   const { readFile, copyFile } = require('fs').promises;
 
   const { singleFileBuild } = await import('../tools/pfe-tools/esbuild.js');
   const { execaCommand } = await import('execa');
 
-  const { payload } = context;
-  const { release } = payload;
-
   // https://github.com/patternfly/patternfly-elements
   const owner = 'patternfly';
   const repo = 'patternfly-elements';
 
-  const tag = release.tag_name;
-
-  // repo root
-  const cwd = `${workspace}`;
-  const outfile = `${cwd}/pfe.min.js`;
+  const release = await backoff(() => github.rest.repos.getRelease({ owner, repo, tag }));
 
   const params = { owner, release_id: release.id, repo };
 
   if (!release.assets.some(x => x.name === 'pfe.min.tgz')) {
     // Create or fetch artifacts
-    await singleFileBuild({ outfile });
-    await copyFile(`${cwd}/core/pfe-styles/pfe.min.css`, `${cwd}/pfe.min.css`);
+    await singleFileBuild({ outfile: `${workspace}/pfe.min.js` });
+    await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
 
     const globber = await glob.create('pfe.min.*');
     const files = await globber.glob() ?? [];
 
-    console.log('Creating tarball for', files.join(', ')); // eslint-disable-line
-    await tar.c({ gzip: true, file: 'pfe.min.tgz' }, files);
+    const name = 'pfe.min.tgz';
+
+    console.log('Creating tarball for', files.join(', '));
+    await tar.c({ gzip: true, file: name }, files);
+
+    const data = await readFile(`${workspace}/${name}`);
 
     // Upload the all-repo bundle to the release
-    await github.rest.repos.uploadReleaseAsset({
-      ...params,
-      name: 'pfe.min.tgz',
-      data: await readFile(`${cwd}/pfe.min.tgz`),
-    });
+    console.log(`Uploading ${name}`);
+    await github.rest.repos.uploadReleaseAsset({ ...params, name, data });
   }
 
   // download the tarball that was published to NPM
-  const { stdout } = await execaCommand(`npm pack ${tag}`);
+  const { all } = await execaCommand(`npm pack ${tag}`, { all: true });
+  console.log(all);
 
-  const match = stdout.match(/^[\w-.]+\.tgz$/g);
+  const match = all.match(/^[\w-.]+\.tgz$/g);
 
   // Upload the NPM tarball to the release
   if (match) {
     const [name] = match;
     if (!release.assets.some(x => x.name === name)) {
-      await github.rest.repos.uploadReleaseAsset({
-        ...params,
-        name,
-        data: await readFile(`${cwd}/${name}`),
-      });
+      const data = await readFile(`${workspace}/${name}`);
+      console.log(`Uploading ${name}`);
+      await github.rest.repos.uploadReleaseAsset({ ...params, name, data });
     }
   }
 };

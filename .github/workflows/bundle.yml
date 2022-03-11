@@ -1,12 +1,20 @@
 name: Bundle
 
+# on:
+#   release:
+#     types:
+#       - created
+#       - published
+#       - prereleased
+#       - released
+
 on:
-  release:
-    types:
-      - created
-      - published
-      - prereleased
-      - released
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag'
+        required: true 
+        type: string
 
 jobs:
   bundle:
@@ -23,11 +31,6 @@ jobs:
       - name: Install packages
         run: npm i --prefer-offline
 
-      - name: Dump GitHub Context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
       - name: Bundle
         id: bundle
         if: ${{ steps.changesets.outputs.published }}
@@ -35,6 +38,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const workspace = '${{ github.workspace }}';
             const bundle = require('./scripts/bundle-release.cjs');
-            await bundle({ context, github, glob, workspace });
+            const tag = '${{ github.event.inputs.tag }}';
+            const workspace = '${{ github.workspace }}';
+            await bundle({ github, glob, tag, workspace });

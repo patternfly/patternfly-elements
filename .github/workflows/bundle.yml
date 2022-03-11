@@ -39,4 +39,4 @@ jobs:
             const bundle = require('./scripts/bundle-release.cjs');
             const tags = '${{ github.event.inputs.tags }}';
             const workspace = '${{ github.workspace }}';
-            await bundle({ core, github, glob, tags, workspace });
+            await bundle({ core, exec, github, glob, tags, workspace });

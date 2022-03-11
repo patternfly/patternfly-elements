@@ -1,5 +1,26 @@
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+async function execCommand(exec, command) {
+  const [cmd, ...args] = command.split(' ');
+
+  let stdout = '';
+  let stderr = '';
+
+  const code = await exec.exec(cmd, args, {
+    stdout: data => {
+      stdout += data.toString();
+    },
+    stderr: data => {
+      stderr += data.toString();
+    },
+  });
+
+  if (code !== 0) {
+    throw new Error(stderr);
+  } else {
+    return stdout;
+  }
+}
 /** Wait exponentially longer, by seconds, each time we fail to fetch the release */
 async function backoff(fn, retries = 0, max = 10) {
   try {
@@ -15,17 +36,15 @@ async function backoff(fn, retries = 0, max = 10) {
   }
 }
 
-async function checkoutRef(ref) {
-  const { execaCommand } = await import('execa');
-  await execaCommand('git config advice.detachedHead false');
-  const { stdout } = await execaCommand(`git checkout ${ref}`);
-  return stdout;
+async function checkoutRef(exec, ref) {
+  await execCommand(exec, 'git config advice.detachedHead false');
+  const out = await execCommand(exec, `git checkout ${ref}`);
+  return out;
 }
 
-async function getBundle({ core, glob, workspace }) {
-  const { execaCommand } = await import('execa');
-  await execaCommand(`npm i --prefer-offline --no-scripts`);
-  await execaCommand(`npm run build -w @patternfly/pfe-tools -w @patternfly/pfe-styles`);
+async function getBundle({ core, exec, glob, workspace }) {
+  await execCommand(exec, `npm ci --prefer-offline`);
+  await execCommand(exec, `npm run build -w @patternfly/pfe-tools -w @patternfly/pfe-styles`);
   await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
 
   const tar = require('tar');
@@ -51,9 +70,8 @@ async function getBundle({ core, glob, workspace }) {
   return file;
 }
 
-module.exports = async function({ core, github, glob, tags = '', workspace }) {
+module.exports = async function({ core, exec, github, glob, tags = '', workspace }) {
   const { readFile } = require('fs').promises;
-  const { execaCommand } = await import('execa');
 
   tags = tags.split(',').map(x => x.trim());
 
@@ -87,8 +105,8 @@ module.exports = async function({ core, github, glob, tags = '', workspace }) {
     await github.rest.repos.uploadReleaseAsset({ ...params, name: bundleFileName, data });
 
     // Download the package tarball from NPM
-    const { all } = await execaCommand(`npm pack ${tag}`, { all: true });
-    const [name] = all.match(/^(?:npm )?[\w-.]+\.tgz$/mg) ?? [];
+    const stdout = await execCommand(exec, `npm pack ${tag}`);
+    const [name] = stdout.match(/^(?:npm )?[\w-.]+\.tgz$/mg) ?? [];
 
     if (name) {
       // Upload the NPM tarball to the release
@@ -99,7 +117,7 @@ module.exports = async function({ core, github, glob, tags = '', workspace }) {
         await github.rest.repos.uploadReleaseAsset({ ...params, name, data });
       }
     } else {
-      core.error(all);
+      core.info(stdout);
       throw new Error(`Could not get NPM tarball for ${tag}`);
     }
   }));

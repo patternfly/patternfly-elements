@@ -38,8 +38,7 @@ async function backoff(fn, retries = 0, max = 10) {
   }
 }
 
-async function getBundle({ core, glob, workspace }) {
-  const tar = require('tar');
+async function getBundle({ core, exec, glob, workspace }) {
   const { basename } = require('path');
   const { copyFile } = require('fs').promises;
   const { singleFileBuild } = await import('../tools/pfe-tools/esbuild.js');
@@ -57,11 +56,11 @@ async function getBundle({ core, glob, workspace }) {
 
   core.info(`Creating ${file} with ${files.join(', ')}`);
 
-  await tar.c({ gzip: true, file }, files);
+  core.info(await execCommand(exec, `tar -czf pfe.min.*`));
 
   try {
     core.info('Tarball contents:');
-    await Promise.resolve(tar.t({ file, onentry: x => core.info(x.header.path) }));
+    core.info(await execCommand(exec, `tar -tf pfe.min.tgz`));
   } catch {
     null;
   }
@@ -100,7 +99,7 @@ module.exports = async function bundle({ core, exec, github, glob, tags = '', wo
     await execCommand(exec, `npm ci --prefer-offline`);
     await execCommand(exec, 'ls -1');
     core.info(`Bundling Packages for ${tag}`);
-    const bundleFileName = await getBundle({ core, github, glob, workspace });
+    const bundleFileName = await getBundle({ core, exec, github, glob, workspace });
 
     // Delete any existing asset with that name
     for (const { id, name } of release.assets ?? []) {

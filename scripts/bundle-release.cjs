@@ -27,7 +27,8 @@ module.exports = async function({ github, glob, tag, workspace }) {
   const owner = 'patternfly';
   const repo = 'patternfly-elements';
 
-  const release = await backoff(() => github.rest.repos.getRelease({ owner, repo, tag }));
+  console.log({ owner, repo, tag });
+  const release = await backoff(() => github.rest.repos.getReleaseByTag({ owner, repo, tag }));
 
   const params = { owner, release_id: release.id, repo };
 

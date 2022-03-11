@@ -36,15 +36,7 @@ async function backoff(fn, retries = 0, max = 10) {
   }
 }
 
-async function checkoutRef(exec, ref) {
-  await execCommand(exec, 'git config advice.detachedHead false');
-  const out = await execCommand(exec, `git checkout ${ref}`);
-  return out;
-}
-
-async function getBundle({ core, exec, glob, workspace }) {
-  await execCommand(exec, `npm ci --prefer-offline`);
-  await execCommand(exec, `npm run build -w @patternfly/pfe-tools -w @patternfly/pfe-styles`);
+async function getBundle({ core, glob, workspace }) {
   await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
 
   const tar = require('tar');
@@ -89,8 +81,13 @@ module.exports = async function({ core, exec, github, glob, tags = '', workspace
 
     core.info(`Checking out ${tag}`);
 
-    await checkoutRef(tag);
-    const bundleFileName = await getBundle({ core, exec, github, glob, workspace });
+    await execCommand(exec, 'git config advice.detachedHead false');
+    await execCommand(exec, `git checkout ${tag}`);
+
+    await execCommand(exec, `npm ci --prefer-offline`);
+    await execCommand(exec, `npm run build -w @patternfly/pfe-tools -w @patternfly/pfe-styles`);
+
+    const bundleFileName = await getBundle({ core, github, glob, workspace });
 
     // Delete any existing asset with that name
     for (const { id, name } of release.assets ?? []) {
@@ -125,6 +122,7 @@ module.exports = async function({ core, exec, github, glob, tags = '', workspace
   for (const { status, reason } of results) {
     if (status === 'rejected') {
       core.error(reason);
+      core.setFailes(reason);
     }
   }
 };

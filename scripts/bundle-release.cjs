@@ -90,7 +90,7 @@ module.exports = async function({ core, exec, github, glob, tags = '', workspace
     core.info(`Checking out ${tag}`);
 
     await checkoutRef(tag);
-    const bundleFileName = await getBundle({ core, github, glob, workspace });
+    const bundleFileName = await getBundle({ core, exec, github, glob, workspace });
 
     // Delete any existing asset with that name
     for (const { id, name } of release.assets ?? []) {

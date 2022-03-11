@@ -6,7 +6,7 @@ async function execCommand(exec, command) {
   let stdout = '';
   let stderr = '';
 
-  const code = await exec(cmd, args, {
+  const code = await exec.exec(cmd, args, {
     stdout: data => {
       stdout += data.toString();
     },
@@ -122,7 +122,7 @@ module.exports = async function({ core, exec, github, glob, tags = '', workspace
   for (const { status, reason } of results) {
     if (status === 'rejected') {
       core.error(reason);
-      core.setFailes(reason);
+      core.setFailed(reason);
     }
   }
 };

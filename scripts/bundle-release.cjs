@@ -114,7 +114,9 @@ module.exports = async function bundle({ core, exec, github, glob, tags = '', wo
 
     // Download the package tarball from NPM
     const stdout = await execCommand(exec, `npm pack ${tag}`);
-    const { name = stdout.split('\n').pop().replace(/^npm /, '') } =
+    const {
+      name = stdout.split('\n').pop().replace(/^npm /, '') || `${tag.replace(/[@/]/g, '-')}.tgz`
+    } =
       NPM_OUTPUT_FILENAME_RE.exec(stdout)?.groups ?? {};
 
     if (name) {

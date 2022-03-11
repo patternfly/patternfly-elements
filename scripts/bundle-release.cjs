@@ -71,7 +71,7 @@ module.exports = async function({ core, exec, github, glob, tags = '', workspace
   const owner = 'patternfly';
   const repo = 'patternfly-elements';
 
-  const results = await Promise.allSettled(tags.map(async tag => {
+  for (const tag of tags) {
     const response = await backoff(() =>
       github.rest.repos.getReleaseByTag({ owner, repo, tag }));
 
@@ -114,15 +114,8 @@ module.exports = async function({ core, exec, github, glob, tags = '', workspace
         await github.rest.repos.uploadReleaseAsset({ ...params, name, data });
       }
     } else {
-      core.info(stdout);
-      throw new Error(`Could not get NPM tarball for ${tag}`);
-    }
-  }));
-
-  for (const { status, reason } of results) {
-    if (status === 'rejected') {
-      core.error(reason);
-      core.setFailed(reason);
+      core.error(stdout);
+      core.setFailed(`Could not get NPM tarball for ${tag}`);
     }
   }
 };

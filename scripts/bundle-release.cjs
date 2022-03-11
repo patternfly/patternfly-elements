@@ -6,7 +6,7 @@ async function execCommand(exec, command) {
   let stdout = '';
   let stderr = '';
 
-  const code = await exec.exec(cmd, args, {
+  const code = await exec(cmd, args, {
     stdout: data => {
       stdout += data.toString();
     },

@@ -47,7 +47,8 @@ async function getBundle({ core, glob, workspace }) {
   await singleFileBuild({ outfile: `${workspace}/pfe.min.js` });
 
   const globber = await glob.create('pfe.min.*');
-  const files = (await globber.glob() ?? []).map(path => path.replace(workspace, ''));
+  const files = (await globber.glob() ?? []).map(path =>
+    path.replace(workspace, '').replace(/^\//, ''));
 
   const file = 'pfe.min.tgz';
 
@@ -62,7 +63,9 @@ async function getBundle({ core, glob, workspace }) {
   return file;
 }
 
-module.exports = async function({ core, exec, github, glob, tags = '', workspace }) {
+module.exports = async function bundle({ core, exec, github, glob, tags = '', workspace }) {
+  await execCommand(exec, 'git config advice.detachedHead false');
+
   const { readFile } = require('fs').promises;
 
   tags = tags.split(',').map(x => x.trim());
@@ -72,33 +75,39 @@ module.exports = async function({ core, exec, github, glob, tags = '', workspace
   const repo = 'patternfly-elements';
 
   for (const tag of tags) {
+    core.info(`Bundling tag ${tag}`);
+
+    core.debug('Fetching release');
     const response = await backoff(() =>
       github.rest.repos.getReleaseByTag({ owner, repo, tag }));
 
     const release = response.data;
 
+    core.debug(release);
+
     const params = { owner, release_id: release.id, repo };
 
     core.info(`Checking out ${tag}`);
-
-    await execCommand(exec, 'git config advice.detachedHead false');
     await execCommand(exec, `git checkout ${tag}`);
 
+    core.info('Installing dependencies');
     await execCommand(exec, `npm ci --prefer-offline`);
+    core.info('Building tools');
     await execCommand(exec, `npm run build -w @patternfly/pfe-tools -w @patternfly/pfe-styles`);
-
+    core.info('Bundling Packages');
     const bundleFileName = await getBundle({ core, github, glob, workspace });
 
     // Delete any existing asset with that name
     for (const { id, name } of release.assets ?? []) {
       if (name === bundleFileName) {
+        core.info(`${name} exists for ${tag}, deleting`);
         await github.rest.repos.deleteReleaseAsset({ owner, repo, asset_id: id });
       }
     }
 
     // Upload the all-repo bundle to the release
     const data = await readFile(`${workspace}/${bundleFileName}`);
-    core.info(`Uploading ${bundleFileName}`);
+    core.info(`Uploading ${bundleFileName} to ${tag}`);
     await github.rest.repos.uploadReleaseAsset({ ...params, name: bundleFileName, data });
 
     // Download the package tarball from NPM
@@ -106,13 +115,16 @@ module.exports = async function({ core, exec, github, glob, tags = '', workspace
     const [name] = stdout.match(/^(?:npm )?[\w-.]+\.tgz$/mg) ?? [];
 
     if (name) {
-      // Upload the NPM tarball to the release
-      core.info(`Uploading ${name}`);
-      if (!release.assets?.some(x => x.name === name)) {
-        const data = await readFile(`${workspace}/${name}`);
-        core.info(`Uploading ${name}`);
-        await github.rest.repos.uploadReleaseAsset({ ...params, name, data });
+      for (const { id, name: existing } of release.assets ?? []) {
+        if (existing === name) {
+          core.info(`${name} exists for ${tag}, deleting`);
+          await github.rest.repos.deleteReleaseAsset({ owner, repo, asset_id: id });
+        }
       }
+      // Upload the NPM tarball to the release
+      const data = await readFile(`${workspace}/${name}`);
+      core.info(`Uploading ${name} to ${tag}`);
+      await github.rest.repos.uploadReleaseAsset({ ...params, name, data });
     } else {
       core.error(stdout);
       core.setFailed(`Could not get NPM tarball for ${tag}`);

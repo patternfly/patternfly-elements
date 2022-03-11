@@ -18,6 +18,7 @@ async function backoff(fn, retries = 0, max = 10) {
 async function getBundle({ core, glob, workspace, ref }) {
   const { execaCommand } = await import('execa');
 
+  await execaCommand('git config advice.detachedHead false');
   const { stderr } = await execaCommand(`git checkout ${ref}`);
   if (stderr) {
     throw new Error(stderr);

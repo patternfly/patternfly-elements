@@ -28,11 +28,14 @@ module.exports = async function({ github, glob, tag, workspace }) {
   const repo = 'patternfly-elements';
 
   console.log({ owner, repo, tag });
+
   const release = await backoff(() => github.rest.repos.getReleaseByTag({ owner, repo, tag }));
+
+  console.log(release);
 
   const params = { owner, release_id: release.id, repo };
 
-  if (!release.assets.some(x => x.name === 'pfe.min.tgz')) {
+  if (!release?.assets.some(x => x.name === 'pfe.min.tgz')) {
     // Create or fetch artifacts
     await singleFileBuild({ outfile: `${workspace}/pfe.min.js` });
     await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
@@ -61,7 +64,7 @@ module.exports = async function({ github, glob, tag, workspace }) {
   // Upload the NPM tarball to the release
   if (match) {
     const [name] = match;
-    if (!release.assets.some(x => x.name === name)) {
+    if (!release?.assets.some(x => x.name === name)) {
       const data = await readFile(`${workspace}/${name}`);
       console.log(`Uploading ${name}`);
       await github.rest.repos.uploadReleaseAsset({ ...params, name, data });

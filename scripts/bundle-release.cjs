@@ -114,7 +114,8 @@ module.exports = async function bundle({ core, exec, github, glob, tags = '', wo
 
     // Download the package tarball from NPM
     const stdout = await execCommand(exec, `npm pack ${tag}`);
-    const { name } = NPM_OUTPUT_FILENAME_RE.exec(stdout)?.groups ?? {};
+    const { name = stdout.split('\n').pop().replace(/^npm /, '') } =
+      NPM_OUTPUT_FILENAME_RE.exec(stdout)?.groups ?? {};
 
     if (name) {
       for (const { id, name: existing } of release.assets ?? []) {

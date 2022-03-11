@@ -92,11 +92,11 @@ module.exports = async function bundle({ core, exec, github, glob, tags = '', wo
     core.info(`Checking out ${tag}`);
     await execCommand(exec, `git checkout ${tag}`);
 
-    core.info('Installing dependencies');
+    core.info(`Installing dependencies for ${tag}`);
     await execCommand(exec, `npm ci --prefer-offline`);
-    core.info('Building tools');
+    core.info(`Building tools for ${tag}`);
     await execCommand(exec, `npm run build -w @patternfly/pfe-tools -w @patternfly/pfe-styles`);
-    core.info('Bundling Packages');
+    core.info(`Bundling Packages for ${tag}`);
     const bundleFileName = await getBundle({ core, github, glob, workspace });
 
     // Delete any existing asset with that name

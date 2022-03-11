@@ -34,6 +34,7 @@ jobs:
         id: bundle
         uses: actions/github-script@v6
         with:
+          debug: ${{secrets.ACTIONS_RUNNER_DEBUG}}
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const bundle = require('./scripts/bundle-release.cjs');

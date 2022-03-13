@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - master
 
 jobs:
   release:
@@ -18,12 +17,8 @@ jobs:
           node-version: 16
           cache: npm
 
-      - name: Install packages
-        run: npm i --prefer-offline
-
-      - name: Build
-        id: build
-        run: npm run build
+      - run: npm i --prefer-offline
+      - run: npm run build
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
@@ -36,17 +31,31 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      # changesets action outputs `publishedPackages` in the format
+      # [{"name": "@xx/xx", "version": "1.2.0"}, {"name": "@xx/xy", "version": "0.8.9"}]
+      # The following step converts that list of objects to a list of strings (git tags for github releases)
+      # ["@xx/xx@1.2.0", "@xx/xy@0.8.9"]
       - id: get-tags
         run: |
           tags=$( echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -c 'map([.name,.version]) | map(join("@"))' )
           echo "::set-output name=tags::$tags"
 
-      - run: echo ${{ steps.get-token.outputs.auth_token }}
 
-      - name: Trigger Bundle
-        id: trigger_bundle
-        uses: mathze/workflow-dispatch-action@v1.1.0
+      - name: Bundle
+        id: bundle
+        uses: actions/github-script@v6
         with:
-          workflow-name: bundle.yml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          payload: '{ "inputs": { "tags": ${{ steps.get-tags.outputs.tags }} } }'
+          debug: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.actions.createWorkflowDispatch({
+              owner: 'patternfly',
+              repo: 'patternfly-elements',
+              workflow_id: 'bundle.yml',
+              ref: 'main',
+              inputs: {
+                tags: '${{ steps.get-tags.outputs.tags }}'
+              },
+            });
+
+

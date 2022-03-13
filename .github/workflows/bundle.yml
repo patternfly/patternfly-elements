@@ -37,7 +37,9 @@ jobs:
           debug: ${{secrets.ACTIONS_RUNNER_DEBUG}}
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const bundle = require('./scripts/bundle-release.cjs');
+            // APIs provided by github-script action. See README
+            const api = { core, exec, github, glob };
             const tags = '${{ github.event.inputs.tags }}';
             const workspace = '${{ github.workspace }}';
-            await bundle({ core, exec, github, glob, tags, workspace });
+            const bundle = require('./scripts/bundle-release.cjs');
+            await bundle({ ...api, tags, workspace });

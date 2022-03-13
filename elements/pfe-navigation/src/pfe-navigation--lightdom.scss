@@ -206,19 +206,26 @@ pfe-navigation {
       }
     }
 
-    [slot="account"] > a[href] {
+    [slot="account"] > a[href],
+    .pfe-navigation__account-toggle {
       @include top-level-button('account');
       @include top-level-button--in-top-bar;
 
-      &[href]:focus,
-      &[href]:hover {
-        box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
+      @media print {
+        display: none;
       }
 
       pfe-icon {
         @include secondary-links-icon;
         @include secondary-links-icon--in-black-bar;
       }
+    }
+
+    [slot="account"] > a[href][href]:focus,
+    [slot="account"] > a[href][href]:hover,
+    .pfe-navigation__account-toggle:focus,
+    .pfe-navigation__account-toggle:hover {
+      box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
     }
 
     .pfe-navigation__menu,
@@ -695,6 +702,22 @@ pfe-navigation {
   }
 } // @end main pfe-navigation styles
 
+[id='pfe-navigation__account-dropdown'] {
+  // Out specifying JS breakpoint selectors
+  &[class][class] {
+    position: absolute;
+    top: pfe-local(Height, $region: nav-bar);
+    left: 0;
+    width: 100%;
+    display: block;
+    padding: 0;
+    height: auto;
+  }
+
+  &.pfe-navigation__dropdown-wrapper--invisible[class] {
+    display: none;
+  }
+}
 
 .pfe-navigation__dropdown-wrapper {
   overflow: hidden; // @note: Should not be set to visible

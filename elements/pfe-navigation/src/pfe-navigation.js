@@ -496,7 +496,11 @@ class PfeNavigation extends PFElement {
   getToggleElement(toggleId) {
     if (stringStartsWith(toggleId, "pfe-navigation__secondary-link--")) {
       return this.querySelector(`#${toggleId}`);
-    } else {
+    }
+    else if (toggleId === 'pfe-navigation__account-toggle' && this.classList.contains('pfe-navigation--has-custom-account-dropdown')) {
+      return this.querySelector(`#${ toggleId }`);
+    }
+    else {
       return this.shadowRoot.getElementById(toggleId);
     }
   }
@@ -509,7 +513,10 @@ class PfeNavigation extends PFElement {
   getDropdownElement(dropdownId) {
     if (stringStartsWith(dropdownId, "pfe-navigation__custom-dropdown--")) {
       return this.querySelector(`#${dropdownId}`);
-    } else {
+    } else if (dropdownId === 'pfe-navigation__account-dropdown' && this.classList.contains('pfe-navigation--has-custom-account-dropdown')) {
+      return this.querySelector(`#${dropdownId}`);
+    }
+     else {
       return this.shadowRoot.getElementById(dropdownId);
     }
   }
@@ -521,20 +528,24 @@ class PfeNavigation extends PFElement {
    */
   isOpen(toggleId) {
     const openToggleId = this.openToggle;
-    if (openToggleId) {
+    if (openToggleId) { // Is anything open
       if (typeof toggleId === "undefined") {
         // Something is open, and a toggleId wasn't set
         return true;
       }
-      if (stringStartsWith(openToggleId, "main-menu") && toggleId === "mobile__button") {
-        return true;
-      }
-      if (toggleId === "mobile__button" && this.isSecondaryLinksSectionCollapsed()) {
-        return true;
+      // Figure out if the mobile menu is open due to it's children, account toggle is not a child dropdown
+      if (toggleId === "mobile__button" && openToggleId !== 'pfe-navigation__account-toggle') {
+        // If the link is main menu, they're all children of the mobile toggle, the mobile toggle should be open
+        if (stringStartsWith(openToggleId, "main-menu")) {
+          return true;
+        }
+        // If we're at mobile, and any link other than account toggle is open, the mobile toggle should be open
+        if (this.isSecondaryLinksSectionCollapsed()) {
+          return true;
+        }
       }
 
-      // Only checks for prefix so if main-menu is queried and main-menu__dropdown--Link-Name is open it still evaluates as true
-      // This prevents the main-menu toggle shutting at mobile when a sub-section is opened
+      // If there isn't a parent/child dropdown situation, then see if the requested toggle is currently open
       return toggleId === openToggleId;
     }
 
@@ -1182,19 +1193,27 @@ class PfeNavigation extends PFElement {
     if (_isCrustyBrowser()) {
       this._observer.disconnect();
     }
+
     for (let index = 0; index < pfeNavigationDropdowns.length; index++) {
       const pfeNavigationDropdown = pfeNavigationDropdowns[index];
+      const isSecondaryLink = pfeNavigationDropdown.parentElement.getAttribute("slot") === "secondary-links";
+      const isAccountDropdown = pfeNavigationDropdown.parentElement.getAttribute("slot") === "account";
+
       /**
        * Validate the custom dropdowns
        */
       if (
-        pfeNavigationDropdown.parentElement.getAttribute("slot") === "secondary-links" &&
+        isSecondaryLink || isAccountDropdown &&
+        // Check to make sure this wasn't processed already
         !pfeNavigationDropdown.classList.contains("pfe-navigation__dropdown")
       ) {
         const toggleAndDropdownWrapper = pfeNavigationDropdown.parentElement;
-        let buttonText = "";
+        if (isAccountDropdown) {
+          this.classList.add('pfe-navigation--has-custom-account-dropdown');
+        }
+
         // Check for provided toggle element
-        let toggle = toggleAndDropdownWrapper.querySelector(".pfe-navigation__secondary-link");
+        let toggle = toggleAndDropdownWrapper.querySelector(".pfe-navigation__secondary-link, .pfe-navigation__account-toggle");
         const attributeValues = {};
         let toggleMachineName = pfeNavigationDropdown.dataset.idSuffix;
 
@@ -1233,7 +1252,13 @@ class PfeNavigation extends PFElement {
          * Process the custom dropdown markup
          */
         const dropdownWrapper = document.createElement("div");
-        const dropdownId = `pfe-navigation__custom-dropdown--${toggleMachineName}`;
+        let dropdownId;
+        if (isSecondaryLink) {
+          dropdownId = `pfe-navigation__custom-dropdown--${toggleMachineName}`;
+        }
+        else if (isAccountDropdown) {
+          dropdownId = `pfe-navigation__account-dropdown`;
+        }
 
         // Set the id suffix in case it's needed later
         if (!pfeNavigationDropdown.dataset.idSuffix) {
@@ -1258,7 +1283,13 @@ class PfeNavigation extends PFElement {
           }
         }
 
-        toggle.id = `pfe-navigation__secondary-link--${toggleMachineName}`;
+        if (isSecondaryLink) {
+          toggle.id = `pfe-navigation__secondary-link--${toggleMachineName}`;
+        }
+        else if (isAccountDropdown) {
+          toggle.id = 'pfe-navigation__account-toggle';
+        }
+
         toggle.addEventListener("click", this._dropdownItemToggle);
 
         // Add Dropdown attributes
@@ -1298,7 +1329,9 @@ class PfeNavigation extends PFElement {
         toggleAndDropdownWrapper.appendChild(dropdownWrapper);
 
         // Deal with alerts on dropdown
-        this._updateAlerts(pfeNavigationDropdown);
+        if (isSecondaryLink) {
+          this._updateAlerts(pfeNavigationDropdown);
+        }
 
         // No alerts for IE11
         if (!window.ShadyCSS || window.ShadyCSS.nativeShadow) {
@@ -2274,7 +2307,6 @@ class PfeNavigation extends PFElement {
         // Mobile button doesn't exist on desktop, so we need to clear the state if that's the only thing that's open
         if (this.openToggle === "mobile__button") {
           this._changeNavigationState("mobile__button", "close");
-          this._overlay.hidden = true;
         }
 
         // At desktop the mobile dropdown is just a wrapper
@@ -2296,7 +2328,7 @@ class PfeNavigation extends PFElement {
       ///
       // Manage overlay state
       ///
-      if (this.isOpen() && (breakpointIs === "desktop" || breakpointIs === "tablet")) {
+      if (this.isOpen()) {
         this._overlay.hidden = false;
       } else {
         this._overlay.hidden = true;
@@ -2663,6 +2695,7 @@ class PfeNavigation extends PFElement {
    */
   _processAccountSlotChange() {
     const slottedElements = this.getSlot("account");
+    let customAccountDropdown;
     if (slottedElements) {
       // Check for an account component
       for (let index = 0; index < slottedElements.length; index++) {
@@ -2678,6 +2711,9 @@ class PfeNavigation extends PFElement {
           this._processAccountDropdownChange();
           this._accountOuterWrapper.hidden = false;
         }
+        if (slottedElements[index].tagName.toUpperCase() === "PFE-NAVIGATION-DROPDOWN") {
+          customAccountDropdown = slottedElements[index];
+        }
       }
       // If we don't have an account dropdown, move the slot so it can behave as a top level link
       if (!this._accountComponent) {
@@ -2685,6 +2721,11 @@ class PfeNavigation extends PFElement {
         if (this._accountSlot.parentElement.id !== this._shadowDomOuterWrapper.id) {
           this._shadowDomOuterWrapper.appendChild(this._accountSlot);
         }
+      }
+
+      // Add dropdown functionlity to pfe-navigation-dropdown
+      if (customAccountDropdown) {
+        this._processCustomDropdowns([customAccountDropdown]);
       }
     }
     // If we don't have slotted elements we can hide the dropdown wrapper

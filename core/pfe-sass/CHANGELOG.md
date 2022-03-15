@@ -1,5 +1,11 @@
 # @patternfly/pfe-sass
 
+## 2.0.0-next.3
+
+### Major Changes
+
+- 87b7cd59: Removed `pfe-collapsible` mixin. See `pfe-accordion-panel.scss` for implementation.
+
 ## 2.0.0-next.2
 
 ### Patch Changes

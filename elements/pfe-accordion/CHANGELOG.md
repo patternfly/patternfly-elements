@@ -1,5 +1,11 @@
 # @patternfly/pfe-accordion
 
+## 2.0.0-next.2
+
+### Patch Changes
+
+- 87b7cd59: Fix #1914: `<pfe-accordion>` on a page with CSS normalize
+
 ## 2.0.0-next.1
 
 ### Patch Changes

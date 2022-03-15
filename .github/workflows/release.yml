@@ -55,7 +55,7 @@ jobs:
               workflow_id: 'bundle.yml',
               ref: 'main',
               inputs: {
-                tags: '${{ steps.get-tags.outputs.tags }}'
+                tags: '${{ join(steps.get-tags.outputs.tags, ', ') }}'
               },
             });
 

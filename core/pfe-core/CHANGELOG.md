@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 2.0.0-next.2
+
+### Patch Changes
+
+- c84a4366: Explicitly adds each module to the export map
+
 ## 2.0.0-next.1
 
 ### Patch Changes

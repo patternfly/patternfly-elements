@@ -49,7 +49,7 @@ jobs:
           debug: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            await github.actions.createWorkflowDispatch({
+            await github.rest.actions.createWorkflowDispatch({
               owner: 'patternfly',
               repo: 'patternfly-elements',
               workflow_id: 'bundle.yml',

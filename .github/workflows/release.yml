@@ -38,7 +38,7 @@ jobs:
       - id: get-tags
         if: ${{ steps.changesets.outputs.published == 'true' }}
         run: |
-          tags=$( echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -c 'map([.name,.version]) | map(join("@"))' )
+          tags=$( echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -c 'map([.name,.version]) | map(join("@")) | join(", ")' )
           echo "::set-output name=tags::$tags"
 
       - name: Bundle
@@ -55,7 +55,7 @@ jobs:
               workflow_id: 'bundle.yml',
               ref: 'main',
               inputs: {
-                tags: '${{ join(steps.get-tags.outputs.tags, ', ') }}'
+                tags: '${{ steps.get-tags.outputs.tags }}'
               },
             });
 

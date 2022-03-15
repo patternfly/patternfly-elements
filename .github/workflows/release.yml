@@ -36,13 +36,14 @@ jobs:
       # The following step converts that list of objects to a list of strings (git tags for github releases)
       # ["@xx/xx@1.2.0", "@xx/xy@0.8.9"]
       - id: get-tags
+        if: ${{ steps.changesets.outputs.published == 'true' }}
         run: |
           tags=$( echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -c 'map([.name,.version]) | map(join("@"))' )
           echo "::set-output name=tags::$tags"
 
-
       - name: Bundle
         id: bundle
+        if: ${{ steps.changesets.outputs.published == 'true' }}
         uses: actions/github-script@v6
         with:
           debug: ${{ secrets.ACTIONS_RUNNER_DEBUG }}

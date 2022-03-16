@@ -37,7 +37,8 @@
     "@patternfly/create-element": "0.0.1",
     "@patternfly/eslint-config-elements": "0.0.1",
     "netlify-plugin-github-actions": "0.0.1",
-    "@patternfly/pfe-tools": "0.0.1"
+    "@patternfly/pfe-tools": "0.0.1",
+    "@patternfly/pfe-label": "0.0.0"
   },
   "changesets": [
     "accordion",
@@ -87,6 +88,7 @@
     "real-tips-relax",
     "select",
     "seven-bears-exercise",
+    "shiny-dots-rescue",
     "slimy-rockets-fail",
     "small-moose-flow",
     "soft-radios-hear",

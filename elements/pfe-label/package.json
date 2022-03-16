@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-label",
-  "version": "0.0.0",
+  "version": "1.0.0-next.0",
   "description": "PatternFly Elements | Label",
   "customElements": "custom-elements.json",
   "license": "MIT",

@@ -1,5 +1,11 @@
 # @patternfly/pfe-sass
 
+## 2.0.0-next.4
+
+### Patch Changes
+
+- 8816849f: update dependencies
+
 ## 2.0.0-next.3
 
 ### Major Changes

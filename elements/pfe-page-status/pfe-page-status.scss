@@ -1,19 +1,9 @@
 @use "@patternfly/pfe-sass" as *;
 
-@include configure(
-  $name: 'status',
-  $variables: (
-    Color: pfe-var(text--on-dark),
-    BackgroundColor: pfe-var(feedback--default),
-    TextTransform: uppercase,
-    Right: 0
-	),
-);
-
 :host {
-  background-color: pfe-local(BackgroundColor);
+  background-color: var(--pfe-status--BackgroundColor, var(--pfe-theme--color--feedback--default, #4f5255));
   position: fixed;
-  right: pfe-local(Right);
+  right: var(--pfe-status--Right, 0);
   top: 0;
   height: 100vh;
   display: flex;
@@ -29,40 +19,53 @@
 
 #flag {
   transform: rotateZ(90deg);
-  > span {
-    color:          pfe-local(Color);
-    display:        inline-block;
-    text-transform: pfe-local(TextTransform);
-    font-size:      0.875rem;
-    font-family:    pfe-var(font-family);
-    font-size:      pfe-var(font-size);
-    font-weight: bold;
-    line-height: 1em;
-    white-space: nowrap;
-    // writing-mode: vertical-rl;
-    // text-orientation: mixed;
-  }
 }
 
-@each $state in (important, critical, success, info) {
-  :host([status="#{$state}"]) {
-    --pfe-status--BackgroundColor:  #{pfe-var(feedback--#{$state})};
-    --pfe-status--Color: #{pfe-var(text--on-dark)};
-  }
+#flag > span {
+  color: var(--pfe-status--Color, var(--pfe-theme--color--text--on-dark, #fff));
+  display: inline-block;
+  text-transform: var(--pfe-status--TextTransform, uppercase);
+  font-size: 0.875rem;
+  font-family: var(--pfe-theme--font-family, "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif);
+  font-size: var(--pfe-theme--font-size, 1rem);
+  font-weight: bold;
+  line-height: 1em;
+  white-space: nowrap;
 }
 
-:host([status="moderate"]),
-:host([status="warning"]) {
-  --pfe-status--BackgroundColor:  #{pfe-var(feedback--moderate)};
-  --pfe-status--Color: #{pfe-var(text)};
+:host([status=important]) {
+  --pfe-status--BackgroundColor: var(--pfe-theme--color--feedback--important, #c9190b);
+  --pfe-status--Color: var(--pfe-theme--color--text--on-dark, #fff);
 }
 
-:host([status="normal"]) {
-  --pfe-status--BackgroundColor: #{pfe-var(ui-accent)};
-  --pfe-status--Color: #{pfe-var(ui-accent--text)};
+:host([status=critical]) {
+  --pfe-status--BackgroundColor: var(--pfe-theme--color--feedback--critical, #a30000);
+  --pfe-status--Color: var(--pfe-theme--color--text--on-dark, #fff);
 }
 
-:host([status="accent"]) {
-  --pfe-status--BackgroundColor: #{pfe-var(ui-accent)};
-  --pfe-status--Color: #{pfe-var(ui-accent--text)};
+:host([status=success]) {
+  --pfe-status--BackgroundColor: var(--pfe-theme--color--feedback--success, #3e8635);
+  --pfe-status--Color: var(--pfe-theme--color--text--on-dark, #fff);
 }
+
+:host([status=info]) {
+  --pfe-status--BackgroundColor: var(--pfe-theme--color--feedback--info, #06c);
+  --pfe-status--Color: var(--pfe-theme--color--text--on-dark, #fff);
+}
+
+:host([status=moderate]),
+:host([status=warning]) {
+  --pfe-status--BackgroundColor: var(--pfe-theme--color--feedback--moderate, #f0ab00);
+  --pfe-status--Color: var(--pfe-theme--color--text, #151515);
+}
+
+:host([status=normal]) {
+  --pfe-status--BackgroundColor: var(--pfe-theme--color--ui-accent, #06c);
+  --pfe-status--Color: var(--pfe-theme--color--ui-accent--text, #fff);
+}
+
+:host([status=accent]) {
+  --pfe-status--BackgroundColor: var(--pfe-theme--color--ui-accent, #06c);
+  --pfe-status--Color: var(--pfe-theme--color--ui-accent--text, #fff);
+}
+

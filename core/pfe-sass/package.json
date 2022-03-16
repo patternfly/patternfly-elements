@@ -36,6 +36,6 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/patternfly": "^4.153.0"
+    "@patternfly/patternfly": "^4.183.1"
   }
 }

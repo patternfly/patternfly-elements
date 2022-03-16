@@ -53,13 +53,14 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             try {
+              const tags = ${{ steps.get-tags.outputs.tags }};
               const result = await github.rest.actions.createWorkflowDispatch({
                 owner: 'patternfly',
                 repo: 'patternfly-elements',
                 workflow_id: 'bundle.yml',
                 ref: 'main',
                 inputs: {
-                  tags: '${{ steps.get-tags.outputs.tags }}'
+                  tags 
                 },
               })
               console.log(result);

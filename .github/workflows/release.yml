@@ -32,13 +32,16 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # changesets action outputs `publishedPackages` in the format
-      # [{"name": "@xx/xx", "version": "1.2.0"}, {"name": "@xx/xy", "version": "0.8.9"}]
+      #   [{"name": "@xx/xx", "version": "1.2.0"}, {"name": "@xx/xy", "version": "0.8.9"}]
       # The following step converts that list of objects to a list of strings (git tags for github releases)
-      # ["@xx/xx@1.2.0", "@xx/xy@0.8.9"]
-      - id: get-tags
+      # and joins them with commas, for consumption in the next step
+      #   "@xx/xx@1.2.0, @xx/xy@0.8.9"
+      - name: Transform Tags
+        id: get-tags
         if: ${{ steps.changesets.outputs.published == 'true' }}
         run: |
           tags=$( echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -c 'map([.name,.version]) | map(join("@")) | join(", ")' )
+          echo "$tags"
           echo "::set-output name=tags::$tags"
 
       - name: Bundle
@@ -49,14 +52,20 @@ jobs:
           debug: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            await github.rest.actions.createWorkflowDispatch({
-              owner: 'patternfly',
-              repo: 'patternfly-elements',
-              workflow_id: 'bundle.yml',
-              ref: 'main',
-              inputs: {
-                tags: '${{ steps.get-tags.outputs.tags }}'
-              },
-            });
+            try {
+              const result = await github.rest.actions.createWorkflowDispatch({
+                owner: 'patternfly',
+                repo: 'patternfly-elements',
+                workflow_id: 'bundle.yml',
+                ref: 'main',
+                inputs: {
+                  tags: '${{ steps.get-tags.outputs.tags }}'
+                },
+              })
+              console.log(result);
+            } catch(error) {
+              console.error(error);
+              core.setFailed(error);
+            }
 
 

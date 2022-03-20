@@ -50,7 +50,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           debug: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.WORKFLOWS_PAT }}
           script: |
             try {
               const tags = ${{ steps.get-tags.outputs.tags }};

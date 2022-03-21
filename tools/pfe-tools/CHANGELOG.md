@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 0.1.0-next.8
+
+### Minor Changes
+
+- f726d147: Add `reporter` option to test runner config factory
+
 ## 0.1.0-next.7
 
 ### Patch Changes

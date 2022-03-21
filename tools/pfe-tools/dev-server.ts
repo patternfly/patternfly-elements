@@ -26,6 +26,10 @@ function appendLines(body: string, ...lines: string[]): string {
   return [body, ...lines].join('\n');
 }
 
+async function tryRead(pathname: string) {
+  return readdir(pathname).catch(() => []);
+}
+
 /**
  * Binds data from the node context to the dev-server's browser context.
  * exposed data is available by importing `@patternfly/pfe-tools/environment.js`.
@@ -38,12 +42,12 @@ function bindNodeDataToBrowser(options?: PfeDevServerConfigOptions): Plugin {
       if (context.path.endsWith('pfe-tools/environment.js')) {
         // TODO: calculate export names from npm workspaces
         //       for now, `elements` is the only conventionally-supported workspace
-        const elements = await readdir(join(rootDir, 'elements'));
-        const core = await readdir(join(rootDir, 'core'));
+        const elements = await tryRead(join(rootDir, 'elements'));
+        const core = await tryRead(join(rootDir, 'core'));
         const transformed = appendLines(
           context.body as string,
           `export const elements = ${JSON.stringify(elements)};`,
-          `export const core = ${JSON.stringify(core)};`
+          `export const core     = ${JSON.stringify(core)};`
         );
         return transformed;
       }

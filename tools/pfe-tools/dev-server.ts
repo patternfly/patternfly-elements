@@ -13,18 +13,14 @@ import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { importMapsPlugin } from '@web/dev-server-import-maps';
 import { transformSass } from './esbuild.js';
 
-export interface PfeDevServerConfigOptions {
+export interface PfeDevServerConfigOptions extends DevServerConfig {
   /** Extra dev server plugins */
   plugins?: Plugin[];
-  /** repository root (default: process.cwd()) */
-  cwd?: string;
   importMap?: InjectSetting['importMap'];
   hostname?: string;
 }
 
 const litcss = fromRollup(litcssRollup);
-
-const rootDir = fileURLToPath(new URL('../..', import.meta.url));
 
 function appendLines(body: string, ...lines: string[]): string {
   return [body, ...lines].join('\n');
@@ -35,13 +31,15 @@ function appendLines(body: string, ...lines: string[]): string {
  * exposed data is available by importing `@patternfly/pfe-tools/environment.js`.
  */
 function bindNodeDataToBrowser(options?: PfeDevServerConfigOptions): Plugin {
-  const { cwd = process.cwd() } = options ?? {};
+  const { rootDir = process.cwd() } = options ?? {};
   return {
     name: 'bind-node-data-to-browser',
     async transform(context) {
       if (context.path.endsWith('pfe-tools/environment.js')) {
-        const elements = await readdir(join(cwd, 'elements'));
-        const core = await readdir(join(cwd, 'core'));
+        // TODO: calculate export names from npm workspaces
+        //       for now, `elements` is the only conventionally-supported workspace
+        const elements = await readdir(join(rootDir, 'elements'));
+        const core = await readdir(join(rootDir, 'core'));
         const transformed = appendLines(
           context.body as string,
           `export const elements = ${JSON.stringify(elements)};`,
@@ -69,7 +67,16 @@ function scssMimeType(): Plugin {
  * Creates a default config for PFE's dev server.
  */
 export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServerConfig {
-  const cwd = options?.cwd ?? process.cwd();
+  /**
+   * Plain case: this file is running from `/node_modules/@patternfly/pfe-tools`.
+   *             two dirs up from here is `node_modules`, so we just shear it clean off the path string
+   * Other case: this file is running in the `patternfly/patternfly-elements` monorepo
+   *             two dirs up from here is the project root. There is no `/node_modules$` to replace,
+   *             so we get the correct path
+   * Edge/Corner cases: all other cases must set the `rootDir` option themselves so as to avoid 404s
+   */
+  const rootDir = options?.rootDir ?? fileURLToPath(new URL('../..', import.meta.url))
+    .replace(/\/node_modules$/, '');
 
   /** Default set of import maps */
   const imports = {
@@ -87,20 +94,25 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
   };
 
   return {
-    ...options?.hostname && { hostname: options?.hostname },
+    appIndex: 'index.html',
+
     nodeResolve: {
       exportConditions: ['esbuild', 'import', 'default'],
       extensions: ['.ts', '.mjs', '.js', '.scss'],
     },
+
     rootDir,
-    appIndex: 'index.html',
+
     ...options ?? {},
+
     middleware: [
-      function rewriteIndex(context, next) {
+      function cors(context, next) {
         context.set('Access-Control-Allow-Origin', '*');
         return next();
       },
+      ...options?.middleware ?? [],
     ],
+
     plugins: [
       ...options?.plugins ?? [],
       scssMimeType(),
@@ -110,7 +122,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       // bind data from node to the browser
       // e.g. the file listing of the `elements/` dir
       // so that we can list the elements by name
-      bindNodeDataToBrowser({ cwd }),
+      bindNodeDataToBrowser({ rootDir }),
       // load .scss files as lit CSSResult modules
       litcss({ include: ['**/*.scss'], transform: transformSass }),
     ],

@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 1.0.0-next.7
+
+### Patch Changes
+
+- 7e5591c0: ship _all_ javascript files with create-element
+
 ## 1.0.0-next.6
 
 ### Major Changes

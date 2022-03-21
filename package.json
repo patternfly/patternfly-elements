@@ -71,7 +71,6 @@
     "@commitlint/config-lerna-scopes": "^16.0.0",
     "@patternfly/eslint-config-elements": "^0.0.2-next.1",
     "@patternfly/pfe-tools": "^0.1.0-next.4",
-    "@rollup/plugin-replace": "^4.0.0",
     "@types/numeral": "^2.0.2",
     "@types/prismjs": "^1.26.0",
     "@types/prompts": "^2.0.14",

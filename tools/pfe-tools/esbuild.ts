@@ -145,6 +145,9 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
       sourcemap: true,
       treeShaking: true,
       watch: false,
+      define: {
+        'process.env.NODE_ENV': 'production',
+      },
       plugins: [
         ...getBasePlugins({ minify: options?.minify ?? true }),
         ...options?.plugins ?? []

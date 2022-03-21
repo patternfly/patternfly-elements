@@ -129,7 +129,7 @@ main.blog {
   width: 200px;
 }
 
-.logo-bar {
+.masthead {
   --pfe-navigation--Height--actual: 60px;
   position: fixed;
   top: 0;
@@ -156,6 +156,22 @@ main.blog {
 
 .logo-bar a img {
   display: none;
+}
+
+.api-version {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  color: white;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.api-version:visited,
+.api-version:hover {
+  color: white;
+  text-decoration: var(--pfe-broadcasted--link-decoration);
 }
 
 .component-preview {

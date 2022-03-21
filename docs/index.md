@@ -9,6 +9,7 @@ templateEngineOverride: njk,md
 <body unresolved>
   <header>
     <pfe-band class="pfe-l--text-align--center" color="accent" context="accent">
+      <a class="api-version" href="{{api.v1Link}}" >{{api.v1Description}}</a>
       <div class="pfe-l-bullseye">
         <div class="pfe-l-bullseye__item">
           <h1 id="home-title">

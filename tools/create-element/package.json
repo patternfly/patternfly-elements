@@ -24,6 +24,12 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
+  "files": [
+    "bin/**/*",
+    "**/*.js",
+    "**/*.d.ts",
+    "templates/**/*"
+  ],
   "scripts": {
     "prepublishOnly": "npm run build",
     "clean": "rimraf './main.{js,d.ts}' './generator/*.{js,d.ts}' bin/main.d.ts",

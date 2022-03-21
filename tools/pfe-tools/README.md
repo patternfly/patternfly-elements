@@ -23,3 +23,23 @@ Helpers for testing web components using [web test runner](https://modern-web.de
 ## dev-server
 
 Preset [web-dev-server](https://modern-web.dev/docs/dev-server/overview/) configuration.
+
+### Troubleshooting
+
+> I ran `npm start` but get `404 not found` when the dev server launches the browser
+
+The dev server config in pfe-tools tries its best to find the root directory of your project,
+but there are cases where this may not work. If you get a 404 error to index.html, 
+
+1. Confirm that you have an `index.html` file in your repository root
+2. Set the `rootDir` option to `pfeDevServerConfig`, e.g.
+    ```js
+    // web-dev-server.config.js
+    import { pfeDevServerConfig } from '@patternfly/pfe-tools/dev-server.js';
+
+    export default pfeDevServerConfig({
+      rootDir: '.',
+    });
+    ```
+
+Make sure to do the same in `web-test-runner.config.js` as well, for your unit tests

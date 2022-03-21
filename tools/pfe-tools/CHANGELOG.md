@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 0.1.0-next.9
+
+### Patch Changes
+
+- b5d40799: try to guess repository root dir when computing dev server config
+
 ## 0.1.0-next.8
 
 ### Minor Changes

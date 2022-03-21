@@ -3,6 +3,8 @@ import { resolvePFEMonorepoPlugin, fakePrismModule } from './web-dev-server.conf
 
 export default pfeTestRunnerConfig({
   files: ['!tools/create-element/templates/**/*'],
+  // uncomment to get default wtr reporter
+  // reporter: 'default',
   plugins: [
     resolvePFEMonorepoPlugin(),
     fakePrismModule(),

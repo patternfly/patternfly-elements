@@ -2,6 +2,7 @@ import { expect, html, oneEvent } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfeLabel } from '@patternfly/pfe-label';
 import { getColor, hexToRgb } from '@patternfly/pfe-tools/test/hex-to-rgb.js';
+import { PfeIcon } from '@patternfly/pfe-icon';
 
 const example = html`
   <pfe-label></pfe-label>
@@ -29,6 +30,15 @@ const exampleWithIconAttributeEmpty = html`
 
 
 describe('<pfe-label>', function() {
+  before(function() {
+    // replace the default built-in icon set resolveIconName function
+    // with one that loads local icons.  we don't want tests dependent on
+    // prod servers.
+    PfeIcon.addIconSet('rh', '', function(name: string) {
+      return `/elements/pfe-icon/test/${name.replace('rh', 'rh-icon')}.svg`;
+    });
+  });
+
   it('should upgrade', async function() {
     const el = await createFixture<PfeLabel>(example);
     const klass = customElements.get('pfe-label');

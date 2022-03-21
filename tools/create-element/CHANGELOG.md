@@ -1,5 +1,12 @@
 # @patternfly/create-element
 
+## 1.0.0-next.6
+
+### Major Changes
+
+- 1c99aa06: - fix build script (ship .js to npm)
+  - bump version to 1.0.0
+
 ## 0.0.2-next.5
 
 ### Patch Changes

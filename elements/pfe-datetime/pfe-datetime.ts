@@ -50,13 +50,14 @@ const INTL_CONFIGS = Object.entries({
 /**
  * @summary Display dates and times in a consistent format
  *
- * @attr {'narrow'|'short'|'long'} weekday
+ * @attr {'narrow'|'short'|'long'}                     weekday
  * @attr {'numeric'|'2-digit'|'narrow'|'short'|'long'} month
- * @attr {'numeric'|'2-digit'} day
- * @attr {'numeric'|'2-digit'} year
- * @attr {'numeric'|'2-digit'} hour
- * @attr {'numeric'|'2-digit'} minute
- * @attr {'numeric'|'2-digit'} second
+ * @attr {'numeric'|'2-digit'}                         day
+ * @attr {'numeric'|'2-digit'}                         year
+ * @attr {'numeric'|'2-digit'}                         hour
+ * @attr {'numeric'|'2-digit'}                         minute
+ * @attr {'numeric'|'2-digit'}                         second
+ * @attr {'short'|'long'}                              time-zone-name
  */
 @customElement('pfe-datetime') @pfelement()
 export class PfeDatetime extends LitElement {

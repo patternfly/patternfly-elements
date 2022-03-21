@@ -1,4 +1,4 @@
-import { expect, oneEvent, nextFrame, html } from '@open-wc/testing';
+import { aTimeout, expect, oneEvent, nextFrame, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 import * as sinon from 'sinon';
@@ -46,7 +46,7 @@ const TEMPLATES = {
 };
 
 describe('<pfe-autocomplete>', function() {
-  let autocompleteElem: PfeAutocomplete;
+  let element: PfeAutocomplete;
   let input: HTMLInputElement;
   let clearButton: HTMLButtonElement;
   let searchButton: HTMLButtonElement;
@@ -55,12 +55,12 @@ describe('<pfe-autocomplete>', function() {
 
   // function to run before each test within this suite.
   beforeEach(async function() {
-    autocompleteElem = await createFixture<PfeAutocomplete>(TEMPLATES.autocomplete);
-    clearButton = autocompleteElem.shadowRoot!.querySelector('.clear-search')!;
-    searchButton = autocompleteElem.shadowRoot!.querySelector('.search-button')!;
-    droplistElem = autocompleteElem.shadowRoot!.getElementById('dropdown') as PfeSearchDroplist;
-    loadingIndicator = autocompleteElem.shadowRoot!.querySelector('.loading')!;
-    input = autocompleteElem.querySelector('input')!;
+    element = await createFixture<PfeAutocomplete>(TEMPLATES.autocomplete);
+    clearButton = element.shadowRoot!.querySelector('.clear-search')!;
+    searchButton = element.shadowRoot!.querySelector('.search-button')!;
+    droplistElem = element.shadowRoot!.getElementById('dropdown') as PfeSearchDroplist;
+    loadingIndicator = element.shadowRoot!.querySelector('.loading')!;
+    input = element.querySelector('input')!;
   });
 
   it('should upgrade pfe-autocomplete', async function() {
@@ -76,33 +76,33 @@ describe('<pfe-autocomplete>', function() {
 
   it('should clear search when user press x button', async function() {
     input.value = 'search-term';
-    autocompleteElem.clear();
+    element.clear();
     expect(clearButton.hidden).to.be.true;
   });
 
   // it('should close the overlay when user press x button', async function() { });
 
   it('should close the overlay when user selects an option', async function() {
-    autocompleteElem.data = ['option 1', 'option 2'];
+    element.data = ['option 1', 'option 2'];
     droplistElem.reflow = true;
     droplistElem.open = true;
 
     await droplistElem.updateComplete;
-    await autocompleteElem.updateComplete;
+    await element.updateComplete;
 
     const option = droplistElem.shadowRoot?.querySelector<HTMLLIElement>('li:nth-child(2)');
     option?.click();
 
     await droplistElem.updateComplete;
-    await autocompleteElem.updateComplete;
+    await element.updateComplete;
     await nextFrame();
 
     expect(input.value).to.equal('option 2');
 
-    await autocompleteElem.clear();
+    await element.clear();
 
     await droplistElem.updateComplete;
-    await autocompleteElem.updateComplete;
+    await element.updateComplete;
 
     expect(droplistElem.open).to.be.false;
   });
@@ -111,20 +111,20 @@ describe('<pfe-autocomplete>', function() {
     describe('should fire search event after click on search icon', function() {
       beforeEach(async function() {
         input.value = 'test';
-        autocompleteElem.requestUpdate();
+        element.requestUpdate();
         await droplistElem.updateComplete;
-        await autocompleteElem.updateComplete;
+        await element.updateComplete;
         setTimeout(() => searchButton.click());
       });
 
       it('should fire search event', async function() {
-        const event = await oneEvent(autocompleteElem, 'search') as unknown as AutocompleteSearchEvent;
+        const event = await oneEvent(element, 'search') as unknown as AutocompleteSearchEvent;
         expect(event.value).to.equal('test');
       });
 
       /** @deprecated */
       it('should fire pfe-autocomplete:search-event event', async function() {
-        const eventDep = await oneEvent(autocompleteElem, 'pfe-autocomplete:search-event');
+        const eventDep = await oneEvent(element, 'pfe-autocomplete:search-event');
         expect(eventDep.detail.searchValue).to.equal('test');
       });
     });
@@ -155,12 +155,12 @@ describe('<pfe-autocomplete>', function() {
 
   it('should set selected-value attribute after after click on search icon', async function() {
     input.value = 'test';
-    autocompleteElem.requestUpdate();
-    await autocompleteElem.updateComplete;
+    element.requestUpdate();
+    await element.updateComplete;
     searchButton.click();
-    await autocompleteElem.updateComplete;
+    await element.updateComplete;
     await nextFrame();
-    expect(autocompleteElem.getAttribute('selected-value')).to.eql('test');
+    expect(element.getAttribute('selected-value')).to.eql('test');
   });
 
   it('should set selected-value attribute after after click on search button', async function() {
@@ -177,7 +177,7 @@ describe('<pfe-autocomplete>', function() {
 
   describe('should fire search after user click on an option', async function() {
     beforeEach(async function() {
-      autocompleteElem.data = ['option 1', 'option 2'];
+      element.data = ['option 1', 'option 2'];
       droplistElem.reflow = true;
       droplistElem.open = true;
       await droplistElem.updateComplete;
@@ -185,21 +185,21 @@ describe('<pfe-autocomplete>', function() {
     it('should fire search after user click on an option', async function() {
       const option = droplistElem.shadowRoot!.querySelector<HTMLElement>('li:nth-child(2)')!;
       setTimeout(()=> option.click());
-      const event = await oneEvent(autocompleteElem, 'search') as unknown as AutocompleteSearchEvent;
+      const event = await oneEvent(element, 'search') as unknown as AutocompleteSearchEvent;
       expect(event.value).to.equal('option 2');
     });
     /** @deprecated */
     it('should fire pfe-autocomplete:search-event after user click on an option', async function() {
       const option = droplistElem.shadowRoot!.querySelector<HTMLElement>('li:nth-child(2)')!;
       setTimeout(()=> option.click());
-      const eventDep = await oneEvent(autocompleteElem, 'pfe-autocomplete:search-event');
+      const eventDep = await oneEvent(element, 'pfe-autocomplete:search-event');
       expect(eventDep.detail.searchValue).to.equal('option 2');
     });
   });
 
   describe('should fire a select event', function() {
     beforeEach(async function() {
-      autocompleteElem.data = ['option 1', 'option 2'];
+      element.data = ['option 1', 'option 2'];
       droplistElem.reflow = true;
       droplistElem.open = true;
       await nextFrame();
@@ -210,14 +210,14 @@ describe('<pfe-autocomplete>', function() {
       await sendKeys({ up: 'ArrowDown' });
       await nextFrame();
       setTimeout(() => sendKeys({ up: 'Enter' }));
-      const event = await oneEvent(autocompleteElem, 'select') as unknown as AutocompleteSelectEvent;
+      const event = await oneEvent(element, 'select') as unknown as AutocompleteSelectEvent;
       expect(event.value).to.equal('option 1');
     });
 
     it(`should fire a pfe-autocomplete:option-selected event when a user selects an option in the droplist with the mouse`, async function() {
       const option = droplistElem.shadowRoot!.querySelector<HTMLElement>('li:nth-child(2)')!;
       setTimeout(() => option.click());
-      const event = await oneEvent(autocompleteElem, 'pfe-autocomplete:option-selected');
+      const event = await oneEvent(element, 'pfe-autocomplete:option-selected');
       expect(event.detail.optionValue).to.equal('option 2');
     });
   });
@@ -226,7 +226,7 @@ describe('<pfe-autocomplete>', function() {
   describe(`should fire a show event when the droplist is shown to the user`, async function() {
     beforeEach(function() {
       const items = ['option 1', 'option 2'];
-      autocompleteElem.autocompleteRequest = function(_, callback) {
+      element.autocompleteRequest = function(_, callback) {
         callback(items);
       };
       input.focus();
@@ -234,13 +234,13 @@ describe('<pfe-autocomplete>', function() {
     });
 
     it(`should fire a shown event`, async function() {
-      await oneEvent(autocompleteElem, 'show') as unknown as AutocompleteShowEvent;
+      await oneEvent(element, 'show') as unknown as AutocompleteShowEvent;
       expect(droplistElem.hasAttribute('open')).to.be.true;
     });
 
     /** @deprecated */
     it(`should fire a pfe-autocomplete:options-shown event`, async function() {
-      await oneEvent(autocompleteElem, 'pfe-autocomplete:options-shown');
+      await oneEvent(element, 'pfe-autocomplete:options-shown');
       expect(droplistElem.hasAttribute('open')).to.be.true;
     });
   });
@@ -248,7 +248,7 @@ describe('<pfe-autocomplete>', function() {
   describe(`should fire a clear event when the input is cleared`, async function() {
     beforeEach(async function() {
       const items = ['option 1', 'option 2'];
-      autocompleteElem.autocompleteRequest = function(params, callback) {
+      element.autocompleteRequest = function(params, callback) {
         const regx = new RegExp(`^${params.query}`, 'i');
         callback(items.filter(function(item) {
           return regx.test(item);
@@ -261,17 +261,17 @@ describe('<pfe-autocomplete>', function() {
     });
 
     it(`should fire a clear event`, async function() {
-      await oneEvent(autocompleteElem, 'pfe-autocomplete:option-cleared') as unknown as AutocompleteClearEvent;
+      await oneEvent(element, 'pfe-autocomplete:option-cleared') as unknown as AutocompleteClearEvent;
     });
 
     /** @deprecated */
     it(`should fire a pfe-autocomplete:option-cleared event`, async function() {
-      await oneEvent(autocompleteElem, 'pfe-autocomplete:option-cleared');
+      await oneEvent(element, 'pfe-autocomplete:option-cleared');
     });
   });
 
   it('should set selected-value attribute after user click on an option', async function() {
-    autocompleteElem.data = ['option 1', 'option 2'];
+    element.data = ['option 1', 'option 2'];
     droplistElem.reflow = true;
     droplistElem.open = true;
     await nextFrame();
@@ -279,28 +279,28 @@ describe('<pfe-autocomplete>', function() {
 
     option.click();
     await nextFrame();
-    expect(autocompleteElem.getAttribute('selected-value')).to.eql('option 2');
+    expect(element.getAttribute('selected-value')).to.eql('option 2');
   });
 
   it('should update inputbox value when setting the init-value', async function() {
-    autocompleteElem.initValue = 'foo';
+    element.initValue = 'foo';
     await nextFrame();
     expect(input.value).to.be.equal('foo');
   });
 
   it('should add active class on first element on keydown when dropdown is open', async function() {
-    autocompleteElem.data = ['option 1', 'option 2'];
+    element.data = ['option 1', 'option 2'];
     droplistElem.reflow = true;
     droplistElem.open = true;
 
-    await autocompleteElem.updateComplete;
+    await element.updateComplete;
     await droplistElem.updateComplete;
     await nextFrame();
 
     input.focus();
     await sendKeys({ up: 'ArrowDown' });
 
-    await autocompleteElem.updateComplete;
+    await element.updateComplete;
     await droplistElem.updateComplete;
     await nextFrame();
 
@@ -310,7 +310,7 @@ describe('<pfe-autocomplete>', function() {
   });
 
   it(`should add aria-selected true on first element on keydown when dropdown is open`, async function() {
-    autocompleteElem.data = ['option 1', 'option 2'];
+    element.data = ['option 1', 'option 2'];
     droplistElem.reflow = true;
     droplistElem.open = true;
 
@@ -324,7 +324,7 @@ describe('<pfe-autocomplete>', function() {
   });
 
   it('should set aria-expanded to true when dropdown is open', async function() {
-    autocompleteElem.data = ['option 1', 'option 2'];
+    element.data = ['option 1', 'option 2'];
     droplistElem.reflow = true;
     droplistElem.open = true;
 
@@ -337,7 +337,7 @@ describe('<pfe-autocomplete>', function() {
   });
 
   it('should update items list on mutation', async function() {
-    autocompleteElem.data = ['option 1', 'option 2'];
+    element.data = ['option 1', 'option 2'];
     droplistElem.reflow = true;
     droplistElem.open = true;
     await nextFrame();
@@ -346,7 +346,7 @@ describe('<pfe-autocomplete>', function() {
   });
 
   it('hides dropdown content when an option is selected', async function() {
-    autocompleteElem.data = ['option 1', 'option 2'];
+    element.data = ['option 1', 'option 2'];
     droplistElem.reflow = true;
     droplistElem.open = true;
 
@@ -360,7 +360,7 @@ describe('<pfe-autocomplete>', function() {
   });
 
   it('hides dropdown content when an option is clicked', async function() {
-    autocompleteElem.data = ['option 1', 'option 2'];
+    element.data = ['option 1', 'option 2'];
     droplistElem.reflow = true;
     droplistElem.open = true;
     await nextFrame();
@@ -451,44 +451,48 @@ describe('<pfe-autocomplete>', function() {
     it('should display the loading indicator when open is true', async function() {
       await sendKeys({ press: 'Tab' });
       await sendKeys({ type: 'web components' });
-      autocompleteElem.loading = true;
-      await autocompleteElem.updateComplete;
+      element.loading = true;
+      await element.updateComplete;
       expect(loadingIndicator.hasAttribute('hidden')).to.be.false;
     });
 
     it('should not display the loading indicator if the user has not typed in the input', async function() {
       await sendKeys({ press: 'Tab' });
-      autocompleteElem.loading = true;
-      await autocompleteElem.updateComplete;
+      element.loading = true;
+      await element.updateComplete;
       expect(loadingIndicator.hasAttribute('hidden')).to.be.true;
     });
   });
 
   it('should call autocompleteRequest when the user types in the input', async function() {
+    const TEST_EVENT_CB_CALLED = 'TEST_EVENT_CB_CALLED';
     const mockResults = ['web', 'components', 'web components', 'web development'];
-    autocompleteElem.autocompleteRequest = function(_, callback) {
-      autocompleteElem.loading = true;
+    element.autocompleteRequest = function(_, callback) {
+      element.loading = true;
       setTimeout(() => {
         callback(mockResults);
-        autocompleteElem.loading = false;
+        element.loading = false;
       }, 100);
+      // fire an event that  we'll listen for a few lines down in order to test the element state
+      element.dispatchEvent(new Event(TEST_EVENT_CB_CALLED));
     };
     await sendKeys({ press: 'Tab' });
     await sendKeys({ type: 'web components' });
     // This is needed to account for the debounce delay in executing
     // the autocompleteRequest callback.
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await oneEvent(element, TEST_EVENT_CB_CALLED);
     // Expect that the loading indicator is present and dropdown
     // list has not yet been opened
-    expect(autocompleteElem.loading).to.be.true;
-    expect(droplistElem.open).to.be.false;
+    expect(element.loading, 'element is loading').to.be.true;
+    await element.updateComplete;
+    expect(droplistElem.open, 'droplist is closed').to.be.false;
 
     // Now wait for the mockResults callback to execute
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await aTimeout(100);
     // Expect that the loading indicator is gone and dropdown
     // list has been opened and populated with the correct data.
-    expect(autocompleteElem.loading).to.be.false;
-    expect(droplistElem.open).to.be.true;
+    expect(element.loading, 'element is not loading').to.be.false;
+    expect(droplistElem.open, 'droplist is open').to.be.true;
     // compare that the array values are equal.
     expect(droplistElem.data.join('')).to.equal(mockResults.join(''));
   });

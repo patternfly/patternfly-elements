@@ -8,14 +8,8 @@
   "main": "./pfe-health-index.js",
   "module": "./pfe-health-index.js",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-health-index.ts",
-      "default": "./pfe-health-index.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-health-index.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

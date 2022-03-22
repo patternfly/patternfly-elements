@@ -44,11 +44,11 @@ export interface PfeEsbuildSingleFileOptions {
   minify?: boolean;
 }
 
-/** abs-path to repo root */
-const REPO_ROOT = fileURLToPath(new URL('../..', import.meta.url));
+/** best guess at abs-path to repo root */
+const REPO_ROOT = fileURLToPath(new URL('../..', import.meta.url)).replace(/node_modules\/$/, '');
 
 /** abs-path to root node_modules */
-const NODE_MODULES = fileURLToPath(new URL('../../node_modules', import.meta.url));
+const NODE_MODULES = join(REPO_ROOT, 'node_modules/');
 
 /** memoization cache for temporary component entrypoint files */
 const COMPONENT_ENTRYPOINTS_CACHE = new Map();

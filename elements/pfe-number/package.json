@@ -9,14 +9,8 @@
   "module": "./pfe-number.js",
   "types": "./pfe-number.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-number.ts",
-      "default": "./pfe-number.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-number.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

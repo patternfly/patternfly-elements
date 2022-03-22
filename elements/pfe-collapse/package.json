@@ -8,14 +8,8 @@
   "main": "./pfe-collapse.js",
   "module": "./pfe-collapse.js",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-collapse.ts",
-      "default": "./pfe-collapse.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-collapse.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

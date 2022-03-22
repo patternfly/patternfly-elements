@@ -12,14 +12,8 @@
     "test": "tests"
   },
   "exports": {
-    ".": {
-      "esbuild": "./pfe-label.ts",
-      "default": "./pfe-label.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-label.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

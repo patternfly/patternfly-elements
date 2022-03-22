@@ -21,18 +21,8 @@
   },
   "exports": {
     "./11ty": "./11ty/index.js",
-    "./*.js": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    },
-    "./environment.js": {
-      "esbuild": "./environment.ts",
-      "default": "./environment.js"
-    }
+    "./*.js": "./*.js",
+    "./*": "./*.js"
   },
   "contributors": [
     "Kyle Buchanan <kylebuch8@gmail.com>, (https://github.com/kylebuch8)",

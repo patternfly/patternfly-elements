@@ -9,14 +9,8 @@
   "module": "./pfe-toast.js",
   "types": "./pfe-toast.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-toast.ts",
-      "default": "./pfe-toast.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-toast.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

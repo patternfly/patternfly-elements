@@ -9,14 +9,8 @@
   "module": "./pfe-button.js",
   "types": "./pfe-button.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-button.ts",
-      "default": "./pfe-button.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-button.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

@@ -9,14 +9,8 @@
   "module": "./pfe-clipboard.js",
   "types": "./pfe-clipboard.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-clipboard.ts",
-      "default": "./pfe-clipboard.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-clipboard.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

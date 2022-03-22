@@ -9,14 +9,8 @@
   "module": "./pfe-progress-indicator.js",
   "types": "./pfe-progress-indicator.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-progress-indicator.ts",
-      "default": "./pfe-progress-indicator.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-progress-indicator.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

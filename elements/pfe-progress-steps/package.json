@@ -9,14 +9,8 @@
   "module": "./pfe-progress-steps.js",
   "types": "./pfe-progress-steps.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-progress-steps.ts",
-      "default": "./pfe-progress-steps.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-progress-steps.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

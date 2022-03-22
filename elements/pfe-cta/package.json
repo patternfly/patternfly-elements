@@ -9,14 +9,8 @@
   "module": "./pfe-cta.js",
   "types": "./pfe-cta.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-cta.ts",
-      "default": "./pfe-cta.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-cta.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

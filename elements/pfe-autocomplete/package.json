@@ -9,18 +9,9 @@
   "module": "./pfe-autocomplete.js",
   "types": "./pfe-autocomplete.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-autocomplete.ts",
-      "default": "./pfe-autocomplete.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    },
-    "./*.js": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-autocomplete.js",
+    "./*": "./*.js",
+    "./*.js": "./*.js"
   },
   "publishConfig": {
     "access": "public",

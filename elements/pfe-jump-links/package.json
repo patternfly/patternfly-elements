@@ -9,14 +9,8 @@
   "module": "./pfe-jump-links.js",
   "types": "./pfe-jump-links.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-jump-links.ts",
-      "default": "./pfe-jump-links.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-jump-links.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

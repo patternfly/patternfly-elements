@@ -41,3 +41,5 @@ tools/**/*.js
 !elements/*/demo/*.js
 
 tools/create-element/templates/**/*
+node_modules
+node_modules/**/*

@@ -9,12 +9,49 @@ import { pfeDevServerConfig } from './dev-server.js';
 
 export interface PfeTestRunnerConfigOptions extends PfeDevServerConfigOptions {
   files?: string[];
+  reporter?: 'summary'|'default';
 }
 
 const isWatchMode = process.argv.some(x => x.match(/-w|--watch/));
 
+const testRunnerHtml: TestRunnerConfig['testRunnerHtml'] = testFramework => `
+  <html>
+    <head>
+      <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    </head>
+    <body>
+      <script type="module" src="${testFramework}"></script>
+    </body>
+  </html>
+`;
+
 export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunnerConfig {
   const { open, ...devServerConfig } = pfeDevServerConfig(opts);
+
+  const configuredReporter = opts.reporter ?? 'summary';
+
+  const reporters = [];
+  if (isWatchMode) {
+    if (configuredReporter === 'summary') {
+      reporters.push(
+        summaryReporter({ flatten: false }),
+        defaultReporter({ reportTestResults: false, reportTestProgress: true }),
+      );
+    } else {
+      reporters.push(
+        defaultReporter(),
+      );
+    }
+  } else {
+    reporters.push(
+      defaultReporter(),
+      junitReporter({
+        outputPath: './test-results/test-results.xml',
+        reportLogs: true,
+      }),
+    );
+  }
+
   return {
     ...devServerConfig,
     files: ['**/*.spec.ts', '!**/*.e2e.spec.ts', ...opts.files ?? [], '!**/node_modules/**/*', '!**/_site/**/*'],
@@ -33,16 +70,7 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
         ui: 'bdd',
       },
     },
-    testRunnerHtml: testFramework => `
-      <html>
-        <head>
-          <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-        </head>
-        <body>
-          <script type="module" src="${testFramework}"></script>
-        </body>
-      </html>
-    `,
+    testRunnerHtml,
     groups: [
       {
         name: 'with-vue',
@@ -77,17 +105,6 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
         `,
       },
     ],
-    reporters: [
-      ...isWatchMode ? [
-        summaryReporter({ flatten: false }),
-        defaultReporter({ reportTestResults: false, reportTestProgress: true }),
-      ] : [
-        summaryReporter({ flatten: false }),
-        junitReporter({
-          outputPath: './test-results/test-results.xml',
-          reportLogs: true,
-        }),
-      ],
-    ]
+    reporters,
   };
 }

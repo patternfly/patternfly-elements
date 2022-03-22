@@ -64,9 +64,9 @@
   },
   "devDependencies": {
     "@actions/core": "^1.6.0",
-    "@actions/exec": "^1.1.0",
-    "@actions/glob": "^0.2.0",
-    "@commitlint/cli": "^16.1.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/glob": "^0.2.1",
+    "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.0.0",
     "@commitlint/config-lerna-scopes": "^16.0.0",
     "@patternfly/eslint-config-elements": "^0.0.2-next.1",
@@ -74,12 +74,11 @@
     "@types/numeral": "^2.0.2",
     "@types/prismjs": "^1.26.0",
     "@types/prompts": "^2.0.14",
-    "commitlint": "^16.1.0",
+    "commitlint": "^16.2.3",
     "cpx": "^1.5.0",
-    "custom-elements-manifest": "^1.0.0",
     "git-branch": "^2.0.1",
     "husky": "^7.0.4",
-    "leasot": "^12.0.0",
+    "leasot": "^12.2.0",
     "lerna": "^4.0.0",
     "npm-merge-driver": "^2.3.6",
     "open": "^8.0.4",
@@ -94,5 +93,8 @@
     "./core/*",
     "./elements/*",
     "./tools/*"
-  ]
+  ],
+  "dependencies": {
+    "@octokit/core": "^3.6.0"
+  }
 }

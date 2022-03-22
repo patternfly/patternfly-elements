@@ -9,98 +9,29 @@
   "module": "./core.js",
   "types": "./core.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./core.ts",
-      "default": "./core.js"
-    },
-    "./core.js": {
-      "esbuild": "./core.ts",
-      "default": "./core.js"
-    },
-    "./context.js": {
-      "esbuild": "./context.ts",
-      "default": "./context.js"
-    },
-    "./decorators.js": {
-      "esbuild": "./decorators.ts",
-      "default": "./decorators.js"
-    },
-    "./controllers/cascade-controller.js": {
-      "esbuild": "./controllers/cascade-controller.ts",
-      "default": "./controllers/cascade-controller.js"
-    },
-    "./controllers/color-context-controller.js": {
-      "esbuild": "./controllers/color-context-controller.ts",
-      "default": "./controllers/color-context-controller.js"
-    },
-    "./controllers/css-variable-controller.js": {
-      "esbuild": "./controllers/css-variable-controller.ts",
-      "default": "./controllers/css-variable-controller.js"
-    },
-    "./controllers/light-dom-controller.js": {
-      "esbuild": "./controllers/light-dom-controller.ts",
-      "default": "./controllers/light-dom-controller.js"
-    },
-    "./controllers/logger.js": {
-      "esbuild": "./controllers/logger.ts",
-      "default": "./controllers/logger.js"
-    },
-    "./controllers/perf-controller.js": {
-      "esbuild": "./controllers/perf-controller.ts",
-      "default": "./controllers/perf-controller.js"
-    },
-    "./controllers/property-observer-controller.js": {
-      "esbuild": "./controllers/property-observer-controller.ts",
-      "default": "./controllers/property-observer-controller.js"
-    },
-    "./controllers/slot-controller.js": {
-      "esbuild": "./controllers/slot-controller.ts",
-      "default": "./controllers/slot-controller.js"
-    },
-    "./controllers/style-controller.js": {
-      "esbuild": "./controllers/style-controller.ts",
-      "default": "./controllers/style-controller.js"
-    },
-    "./decorators/bound.js": {
-      "esbuild": "./decorators/bound.ts",
-      "default": "./decorators/bound.js"
-    },
-    "./decorators/cascades.js": {
-      "esbuild": "./decorators/cascades.ts",
-      "default": "./decorators/cascades.js"
-    },
-    "./decorators/initializer.js": {
-      "esbuild": "./decorators/initializer.ts",
-      "default": "./decorators/initializer.js"
-    },
-    "./decorators/observed.js": {
-      "esbuild": "./decorators/observed.ts",
-      "default": "./decorators/observed.js"
-    },
-    "./decorators/pfelement.js": {
-      "esbuild": "./decorators/pfelement.ts",
-      "default": "./decorators/pfelement.js"
-    },
-    "./decorators/time.js": {
-      "esbuild": "./decorators/time.ts",
-      "default": "./decorators/time.js"
-    },
-    "./decorators/trace.js": {
-      "esbuild": "./decorators/trace.ts",
-      "default": "./decorators/trace.js"
-    },
-    "./functions/debounce.js": {
-      "esbuild": "./functions/debounce.ts",
-      "default": "./functions/debounce.js"
-    },
-    "./functions/deprecateCustomEvent.js": {
-      "esbuild": "./functions/deprecateCustomEvent.ts",
-      "default": "./functions/deprecateCustomEvent.js"
-    },
-    "./functions/random.js": {
-      "esbuild": "./functions/random.ts",
-      "default": "./functions/random.js"
-    }
+    ".": "./core.js",
+    "./core.js": "./core.js",
+    "./context.js": "./context.js",
+    "./decorators.js": "./decorators.js",
+    "./controllers/cascade-controller.js": "./controllers/cascade-controller.js",
+    "./controllers/color-context-controller.js": "./controllers/color-context-controller.js",
+    "./controllers/css-variable-controller.js": "./controllers/css-variable-controller.js",
+    "./controllers/light-dom-controller.js": "./controllers/light-dom-controller.js",
+    "./controllers/logger.js": "./controllers/logger.js",
+    "./controllers/perf-controller.js": "./controllers/perf-controller.js",
+    "./controllers/property-observer-controller.js": "./controllers/property-observer-controller.js",
+    "./controllers/slot-controller.js": "./controllers/slot-controller.js",
+    "./controllers/style-controller.js": "./controllers/style-controller.js",
+    "./decorators/bound.js": "./decorators/bound.js",
+    "./decorators/cascades.js": "./decorators/cascades.js",
+    "./decorators/initializer.js": "./decorators/initializer.js",
+    "./decorators/observed.js": "./decorators/observed.js",
+    "./decorators/pfelement.js": "./decorators/pfelement.js",
+    "./decorators/time.js": "./decorators/time.js",
+    "./decorators/trace.js": "./decorators/trace.js",
+    "./functions/debounce.js": "./functions/debounce.js",
+    "./functions/deprecatedCustomEvent.js": "./functions/deprecatedCustomEvent.js",
+    "./functions/random.js": "./functions/random.js"
   },
   "publishConfig": {
     "access": "public",

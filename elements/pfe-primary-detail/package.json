@@ -9,14 +9,8 @@
   "module": "./pfe-primary-detail.js",
   "types": "./pfe-primary-detail.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-primary-detail.ts",
-      "default": "./pfe-primary-detail.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-primary-detail.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

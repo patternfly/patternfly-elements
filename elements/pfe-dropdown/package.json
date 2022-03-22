@@ -9,14 +9,8 @@
   "module": "./pfe-dropdown.js",
   "types": "./pfe-dropdown.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-dropdown.ts",
-      "default": "./pfe-dropdown.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-dropdown.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

@@ -9,14 +9,8 @@
   "module": "./pfe-badge.js",
   "types": "./pfe-badge.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-badge.ts",
-      "default": "./pfe-badge.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-badge.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

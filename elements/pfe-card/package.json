@@ -9,14 +9,8 @@
   "module": "./pfe-card.js",
   "types": "./pfe-card.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-card.ts",
-      "default": "./pfe-card.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-card.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

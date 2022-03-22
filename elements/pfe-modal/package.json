@@ -9,14 +9,8 @@
   "module": "./pfe-modal.js",
   "types": "./pfe-modal.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-modal.ts",
-      "default": "./pfe-modal.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-modal.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

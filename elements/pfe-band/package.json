@@ -9,14 +9,8 @@
   "module": "./pfe-band.js",
   "types": "./pfe-band.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-band.ts",
-      "default": "./pfe-band.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-band.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

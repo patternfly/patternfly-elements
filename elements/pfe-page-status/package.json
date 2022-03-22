@@ -9,14 +9,8 @@
   "module": "./pfe-page-status.js",
   "types": "./pfe-page-status.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-page-status.ts",
-      "default": "./pfe-page-status.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-page-status.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

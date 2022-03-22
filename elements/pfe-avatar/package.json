@@ -8,14 +8,8 @@
   "module": "./pfe-avatar.js",
   "types": "./pfe-avatar.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-avatar.ts",
-      "default": "./pfe-avatar.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-avatar.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

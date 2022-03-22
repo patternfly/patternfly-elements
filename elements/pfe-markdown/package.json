@@ -9,14 +9,8 @@
   "module": "./pfe-markdown.js",
   "types": "./pfe-markdown.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-markdown.ts",
-      "default": "./pfe-markdown.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-markdown.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

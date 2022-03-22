@@ -2,4 +2,4 @@
 "@patternfly/pfe-tools": minor
 ---
 
-Adding @rollup/plugin-replace to dev server to fix issue with undefined process.env.NODE_ENV
+Configures dev server to automatically replace instances of `process.env.NODE_ENV` with `production` in library code.

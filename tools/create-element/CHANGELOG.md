@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 1.0.0-next.8
+
+### Patch Changes
+
+- 447b2d75: Remove `esbuild` export condition, as this anyways was a runtime error
+
 ## 1.0.0-next.7
 
 ### Patch Changes

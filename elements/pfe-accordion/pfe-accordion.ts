@@ -227,6 +227,8 @@ export class PfeAccordion extends LitElement {
   }
 
   render(): TemplateResult {
+    // eslint-disable-next-line no-console
+    console.log(process.env.NODE_ENV);
     return html`
       <slot></slot>
     `;

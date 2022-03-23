@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-progress-steps",
   "license": "MIT",
-  "version": "2.0.0-next.0",
+  "version": "2.0.0-next.1",
   "description": "Progress stepper element for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -9,14 +9,8 @@
   "module": "./pfe-progress-steps.js",
   "types": "./pfe-progress-steps.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-progress-steps.ts",
-      "default": "./pfe-progress-steps.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-progress-steps.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",
@@ -71,7 +65,7 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.0",
+    "@patternfly/pfe-core": "^2.0.0-next.3",
     "lit": "^2.1.2"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-jump-links",
   "license": "MIT",
-  "version": "2.0.0-next.1",
+  "version": "2.0.0-next.2",
   "description": "Jump links element for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -9,14 +9,8 @@
   "module": "./pfe-jump-links.js",
   "types": "./pfe-jump-links.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-jump-links.ts",
-      "default": "./pfe-jump-links.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-jump-links.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",
@@ -72,8 +66,8 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-accordion": "^2.0.0-next.0",
-    "@patternfly/pfe-core": "^2.0.0-next.0",
+    "@patternfly/pfe-accordion": "^2.0.0-next.3",
+    "@patternfly/pfe-core": "^2.0.0-next.3",
     "lit": "^2.1.2"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-badge",
   "license": "MIT",
-  "version": "2.0.0-next.0",
+  "version": "2.0.0-next.1",
   "description": "Badge element for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -9,14 +9,8 @@
   "module": "./pfe-badge.js",
   "types": "./pfe-badge.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-badge.ts",
-      "default": "./pfe-badge.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-badge.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",
@@ -74,7 +68,7 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.0",
+    "@patternfly/pfe-core": "^2.0.0-next.3",
     "lit": "^2.1.2"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-icon-panel",
   "license": "MIT",
-  "version": "2.0.0-next.0",
+  "version": "2.0.0-next.1",
   "description": "Icon panel for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -9,14 +9,8 @@
   "module": "./pfe-icon-panel.js",
   "types": "./pfe-icon-panel.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-icon-panel.ts",
-      "default": "./pfe-icon-panel.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-icon-panel.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",
@@ -71,8 +65,8 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.0",
-    "@patternfly/pfe-icon": "^2.0.0-next.0",
+    "@patternfly/pfe-core": "^2.0.0-next.3",
+    "@patternfly/pfe-icon": "^2.0.0-next.1",
     "lit": "^2.1.2"
   }
 }

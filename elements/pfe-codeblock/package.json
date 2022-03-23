@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-codeblock",
   "license": "MIT",
-  "version": "2.0.0-next.0",
+  "version": "2.0.0-next.1",
   "description": "Codeblock element for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -9,14 +9,8 @@
   "module": "./pfe-codeblock.js",
   "types": "./pfe-codeblock.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-codeblock.ts",
-      "default": "./pfe-codeblock.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-codeblock.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",
@@ -73,7 +67,7 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.0",
+    "@patternfly/pfe-core": "^2.0.0-next.3",
     "lit": "^2.1.2",
     "prismjs": "^1.25.0"
   }

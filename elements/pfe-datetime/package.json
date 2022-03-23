@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-datetime",
   "license": "MIT",
-  "version": "2.0.0-next.1",
+  "version": "2.0.0-next.2",
   "description": "Datetime element for PFElements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -9,14 +9,8 @@
   "module": "./pfe-datetime.js",
   "types": "./pfe-datetime.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-datetime.ts",
-      "default": "./pfe-datetime.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-datetime.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",
@@ -73,7 +67,7 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.0",
+    "@patternfly/pfe-core": "^2.0.0-next.3",
     "lit": "^2.1.2"
   }
 }

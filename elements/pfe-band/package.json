@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-band",
   "license": "MIT",
-  "version": "2.0.0-next.0",
+  "version": "2.0.0-next.1",
   "description": "Band container for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -9,14 +9,8 @@
   "module": "./pfe-band.js",
   "types": "./pfe-band.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-band.ts",
-      "default": "./pfe-band.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-band.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",
@@ -71,7 +65,7 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.0",
+    "@patternfly/pfe-core": "^2.0.0-next.3",
     "lit": "^2.1.2"
   }
 }

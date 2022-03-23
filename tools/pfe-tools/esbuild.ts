@@ -142,6 +142,9 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
       minify: options?.minify ?? true,
       minifyWhitespace: options?.minify ?? true,
       outfile: options?.outfile ?? 'pfe.min.js',
+      define: {
+        'process.env.NODE_ENV': 'production',
+      },
       sourcemap: true,
       treeShaking: true,
       watch: false,

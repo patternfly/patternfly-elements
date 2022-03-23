@@ -158,6 +158,9 @@
       "@patternfly/pfe-tools/*": [
         "./tools/pfe-tools/*"
       ],
+      "@patternfly/pfe-tooltip": [
+        "elements/pfe-tooltip/pfe-tooltip.ts"
+      ],
       "marked": [
         "@types/marked"
       ]
@@ -253,6 +256,9 @@
     },
     {
       "path": "./elements/pfe-label"
+    },
+    {
+      "path": "./elements/pfe-tooltip"
     }
   ]
 }

@@ -69,6 +69,7 @@
     "@percy/cli": "^1.0.0-beta.71",
     "@percy/playwright": "^1.0.1",
     "@playwright/test": "^1.20.0",
+    "@rollup/plugin-replace": "^4.0.0",
     "@types/estree": "^0.0.51",
     "@types/glob": "7.2.0",
     "@types/mkdirp": "^1.0.2",

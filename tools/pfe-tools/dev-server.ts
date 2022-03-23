@@ -7,6 +7,7 @@ import { join } from 'path';
 import { fileURLToPath } from 'url';
 
 import litcssRollup from 'rollup-plugin-lit-css';
+import rollupReplace from '@rollup/plugin-replace';
 
 import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
@@ -21,6 +22,7 @@ export interface PfeDevServerConfigOptions extends DevServerConfig {
 }
 
 const litcss = fromRollup(litcssRollup);
+const replace = fromRollup(rollupReplace);
 
 function appendLines(body: string, ...lines: string[]): string {
   return [body, ...lines].join('\n');
@@ -125,6 +127,10 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       bindNodeDataToBrowser({ rootDir }),
       // load .scss files as lit CSSResult modules
       litcss({ include: ['**/*.scss'], transform: transformSass }),
+      replace({
+        'preventAssignment': true,
+        'process.env.NODE_ENV': JSON.stringify( 'production' )
+      })
     ],
   };
 }

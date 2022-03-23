@@ -9,14 +9,8 @@
   "module": "./pfe-icon-panel.js",
   "types": "./pfe-icon-panel.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-icon-panel.ts",
-      "default": "./pfe-icon-panel.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-icon-panel.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

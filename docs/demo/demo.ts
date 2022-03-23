@@ -1,3 +1,7 @@
+import 'html-include-element';
+import 'api-viewer-element';
+import '@vaadin/split-layout';
+
 import { html, render } from 'lit';
 import { core, elements } from '@patternfly/pfe-tools/environment.js';
 import { URLPattern } from 'urlpattern-polyfill';

@@ -9,14 +9,8 @@
   "module": "./pfe-codeblock.js",
   "types": "./pfe-codeblock.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-codeblock.ts",
-      "default": "./pfe-codeblock.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-codeblock.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

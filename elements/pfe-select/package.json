@@ -9,14 +9,8 @@
   "module": "./pfe-select.js",
   "types": "./pfe-select.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-select.ts",
-      "default": "./pfe-select.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-select.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

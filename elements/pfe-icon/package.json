@@ -9,14 +9,8 @@
   "module": "./pfe-icon.js",
   "types": "./pfe-icon.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-icon.ts",
-      "default": "./pfe-icon.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-icon.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

@@ -9,14 +9,8 @@
   "module": "./pfe-datetime.js",
   "types": "./pfe-datetime.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-datetime.ts",
-      "default": "./pfe-datetime.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-datetime.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

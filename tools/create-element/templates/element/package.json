@@ -12,14 +12,8 @@
     "test": "tests"
   },
   "exports": {
-    ".": {
-      "esbuild": "./<%= tagName %>.ts",
-      "default": "./<%= tagName %>.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./<%= tagName %>.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

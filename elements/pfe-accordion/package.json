@@ -9,14 +9,8 @@
   "module": "./pfe-accordion.js",
   "types": "./pfe-accordion.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-accordion.ts",
-      "default": "./pfe-accordion.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-accordion.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

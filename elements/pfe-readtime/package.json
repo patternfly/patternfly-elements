@@ -9,14 +9,8 @@
   "module": "./pfe-readtime.js",
   "types": "./pfe-readtime.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-readtime.ts",
-      "default": "./pfe-readtime.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-readtime.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

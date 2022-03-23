@@ -9,14 +9,8 @@
   "module": "./pfe-tabs.js",
   "types": "./pfe-tabs.d.ts",
   "exports": {
-    ".": {
-      "esbuild": "./pfe-tabs.ts",
-      "default": "./pfe-tabs.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-tabs.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",

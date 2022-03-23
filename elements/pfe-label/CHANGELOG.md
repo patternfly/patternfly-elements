@@ -1,5 +1,14 @@
 # @patternfly/pfe-label
 
+## 1.0.0-next.1
+
+### Patch Changes
+
+- 447b2d75: Remove `esbuild` export condition, as this anyways was a runtime error
+- Updated dependencies [447b2d75]
+  - @patternfly/pfe-core@2.0.0-next.3
+  - @patternfly/pfe-icon@2.0.0-next.1
+
 ## 1.0.0-next.0
 
 ### Major Changes

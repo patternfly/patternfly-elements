@@ -1,5 +1,13 @@
 # @patternfly/pfe-select
 
+## 2.0.0-next.2
+
+### Patch Changes
+
+- 447b2d75: Remove `esbuild` export condition, as this anyways was a runtime error
+- Updated dependencies [447b2d75]
+  - @patternfly/pfe-core@2.0.0-next.3
+
 ## 2.0.0-next.1
 
 ### Patch Changes

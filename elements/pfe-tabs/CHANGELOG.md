@@ -1,20 +1,31 @@
 # @patternfly/pfe-tabs
 
+## 2.0.0-next.1
+
+### Patch Changes
+
+- 447b2d75: Remove `esbuild` export condition, as this anyways was a runtime error
+- Updated dependencies [447b2d75]
+  - @patternfly/pfe-core@2.0.0-next.3
+
 ## 2.0.0-next.0
+
 ### Major Changes
 
 - 23b2ef3f: ## 🔥 Migrate to Lit
-  
+
   This release migrates `<pfe-tabs>` to LitElement.
-  
+
   ### NEW: CSS Shadow Parts!
+
   - Adds `tabs` and `panels` CSS parts to `<pfe-tabs>`
   - Adds `container` CSS part to `<pfe-tab-panel>`
-  
+
   ### Breaking Changes
+
   - Initial render is now [asynchronous](https://lit.dev/docs/components/lifecycle/#reactive-update-cycle).
     If your code assumes that shadow DOM is ready once the element is constructed, update it to `await element.updateComplete`
-  
+
   See [docs](https://patternflyelements.org/components/tabs/) for more info
 
 ### Patch Changes

@@ -2,4 +2,4 @@
 "@patternfly/pfe-tools": minor
 ---
 
-Configures dev server to automatically replace instances of `process.env.NODE_ENV` with `production` in library code.
+Automatically replaces `process.env.NODE_ENV` with `production` both in the development server and in the production bundles.

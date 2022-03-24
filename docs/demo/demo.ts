@@ -9,6 +9,8 @@ if (!HTMLIncludeElement.prototype.attributeChangedCallback.toString().includes('
   console.info('No need to patch <html-include>');
 } else {
   console.info('Patching <html-include>');
+  // @ts-expect-error: tla is available
+  await customElements.whenDefined('html-include');
   const isLinkAlreadyLoaded = (link: HTMLLinkElement) => {
     try {
       return !!(link.sheet && link.sheet.cssRules);

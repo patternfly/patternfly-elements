@@ -29,6 +29,7 @@
     "build:analyze": "lerna run analyze --parallel",
     "build:styles": "npm run build --workspace @patternfly/pfe-styles",
     "build:core": "npm run build --workspace @patternfly/pfe-core",
+    "build:lightdom": "npm run build:lightdom --workspaces --if-present",
     "build:elements": "scripts/build.js",
     "build:types": "tsc -b",
     "build:docs": "run-s build:docs:*",

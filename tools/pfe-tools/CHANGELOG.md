@@ -1,5 +1,15 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.11
+
+### Minor Changes
+
+- 6c39715c: Automatically replaces `process.env.NODE_ENV` with `production` both in the development server and in the production bundles.
+
+### Patch Changes
+
+- f1e4d5a9: Correctly resolve all node_modules sources in dev server
+
 ## 1.0.0-next.10
 
 ### Major Changes

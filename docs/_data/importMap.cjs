@@ -35,6 +35,7 @@ module.exports = {
 
     'marked': 'https://ga.jspm.io/npm:marked@4.0.8/lib/marked.esm.js',
     'prismjs': 'https://ga.jspm.io/npm:prismjs@1.25.0/prism.js',
+    '@popperjs/core': 'https://ga.jspm.io/npm:@popperjs/core@2.9.3/lib/index.js',
 
     '@patternfly/pfe-core': '/core/core/core.js',
     '@patternfly/pfe-core/decorators.js': '/core/core/decorators.js',

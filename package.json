@@ -58,6 +58,7 @@
     "postinstall": "run-s postinstall:**",
     "postinstall:patch": "patch-package",
     "postinstall:husky": "npx husky install",
+    "postinstall:build:create": "npm run build --workspace @patternfly/create-element",
     "postinstall:build:tools": "npm run build --workspace @patternfly/pfe-tools",
     "postinstall:build:styles": "npm run build --workspace @patternfly/pfe-styles",
     "pr": "node scripts/open-pr.js"

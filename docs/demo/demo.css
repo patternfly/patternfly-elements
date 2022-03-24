@@ -10,12 +10,15 @@ body {
 html {
   min-height: 100%;
   display: grid;
-  column-gap: 1em;
   grid-template-rows: var(--pfe-demo-header-height) 1fr;
   grid-template-columns: var(--pfe-demo-menu-width) 1fr;
   grid-template-areas:
     'head head'
     'menu body';
+}
+
+#main-nav .site-navigation {
+  width: 100%;
 }
 
 header {

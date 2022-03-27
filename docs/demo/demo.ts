@@ -1,90 +1,4 @@
 import { HTMLIncludeElement } from 'html-include-element';
-
-/* eslint-disable no-console */
-/**
- * quick hack to avoid page load errors if subresources are missing from demo files
- * @see https://github.com/justinfagnani/html-include-element/pull/21
- */
-if (!HTMLIncludeElement.prototype.attributeChangedCallback.toString().includes('await Promise.all([...this.shadowRoot.querySelectorAll')) {
-  console.info('No need to patch <html-include>');
-} else {
-  console.info('Patching <html-include>');
-  // @ts-expect-error: tla is available
-  await customElements.whenDefined('html-include');
-  const isLinkAlreadyLoaded = (link: HTMLLinkElement) => {
-    try {
-      return !!(link.sheet && link.sheet.cssRules);
-    } catch (error) {
-      if (error.name === 'InvalidAccessError' || error.name === 'SecurityError') {
-        return false;
-      } else {
-        throw error;
-      }
-    }
-  };
-
-  const linkLoaded = async function linkLoaded(link: HTMLLinkElement) {
-    return new Promise((resolve, reject) => {
-      if (!('onload' in HTMLLinkElement.prototype)) {
-        resolve(null);
-      } else if (isLinkAlreadyLoaded(link)) {
-        resolve(link.sheet);
-      } else {
-        link.addEventListener('load', () => resolve(link.sheet), { once: true });
-        link.addEventListener('error', () => reject({ link }), { once: true });
-      }
-    });
-  };
-
-  HTMLIncludeElement.prototype.attributeChangedCallback = async function attributeChangedCallback(name: string, _: string, newValue: string) {
-    if (name === 'src') {
-      let text = '';
-      try {
-        const mode = this.mode || 'cors';
-        const response = await fetch(newValue, { mode });
-        if (!response.ok) {
-          throw new Error(`html-include fetch failed: ${response.statusText}`);
-        }
-        text = await response.text();
-        if (this.src !== newValue) {
-          // the src attribute was changed before we got the response, so bail
-          return;
-        }
-      } catch (e) {
-        console.error(e);
-      }
-      // Don't destroy the light DOM if we're using shadow DOM, so that slotted content is respected
-      if (this.noShadow) {
-        this.innerHTML = text;
-      }
-      this.shadowRoot.innerHTML = `
-        <style>
-          :host {
-            display: block;
-          }
-        </style>
-        ${this.noShadow ? '<slot></slot>' : text}
-      `;
-
-      // If we're not using shadow DOM, then the consuming root
-      // is responsible to load its own resources
-      if (!this.noShadow) {
-        const results = await Promise.allSettled([...this.shadowRoot.querySelectorAll('link')].map(linkLoaded));
-        for (const result of results) {
-          if (result.status === 'rejected') {
-            const { link } = result.reason;
-            const message = `Could not load ${link.href}`;
-            console.error(message);
-          }
-        }
-      }
-
-      this.dispatchEvent(new Event('load'));
-    }
-  };
-}
-/* eslint-enable no-console */
-
 import 'api-viewer-element';
 import '@vaadin/split-layout';
 
@@ -135,8 +49,95 @@ async function onLoad(element: string, base: 'core' | 'elements', location: Loca
   onContextChange();
 }
 
+async function patchHTMLIncludes() {
+  /* eslint-disable no-console */
+  /**
+   * quick hack to avoid page load errors if subresources are missing from demo files
+   * @see https://github.com/justinfagnani/html-include-element/pull/21
+   */
+  if (!HTMLIncludeElement.prototype.attributeChangedCallback.toString().includes('await Promise.all([...this.shadowRoot.querySelectorAll')) {
+    console.info('No need to patch <html-include>');
+  } else {
+    console.info('Patching <html-include>');
+    await customElements.whenDefined('html-include');
+    const isLinkAlreadyLoaded = (link: HTMLLinkElement) => {
+      try {
+        return !!(link.sheet && link.sheet.cssRules);
+      } catch (error) {
+        if (error.name === 'InvalidAccessError' || error.name === 'SecurityError') {
+          return false;
+        } else {
+          throw error;
+        }
+      }
+    };
+
+    const linkLoaded = async function linkLoaded(link: HTMLLinkElement) {
+      return new Promise((resolve, reject) => {
+        if (!('onload' in HTMLLinkElement.prototype)) {
+          resolve(null);
+        } else if (isLinkAlreadyLoaded(link)) {
+          resolve(link.sheet);
+        } else {
+          link.addEventListener('load', () => resolve(link.sheet), { once: true });
+          link.addEventListener('error', () => reject({ link }), { once: true });
+        }
+      });
+    };
+
+    HTMLIncludeElement.prototype.attributeChangedCallback = async function attributeChangedCallback(name: string, _: string, newValue: string) {
+      if (name === 'src') {
+        let text = '';
+        try {
+          const mode = this.mode || 'cors';
+          const response = await fetch(newValue, { mode });
+          if (!response.ok) {
+            throw new Error(`html-include fetch failed: ${response.statusText}`);
+          }
+          text = await response.text();
+          if (this.src !== newValue) {
+            // the src attribute was changed before we got the response, so bail
+            return;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+        // Don't destroy the light DOM if we're using shadow DOM, so that slotted content is respected
+        if (this.noShadow) {
+          this.innerHTML = text;
+        }
+        this.shadowRoot.innerHTML = `
+          <style>
+            :host {
+              display: block;
+            }
+          </style>
+          ${this.noShadow ? '<slot></slot>' : text}
+        `;
+
+        // If we're not using shadow DOM, then the consuming root
+        // is responsible to load its own resources
+        if (!this.noShadow) {
+          const results = await Promise.allSettled([...this.shadowRoot.querySelectorAll('link')].map(linkLoaded));
+          for (const result of results) {
+            if (result.status === 'rejected') {
+              const { link } = result.reason;
+              const message = `Could not load ${link.href}`;
+              console.error(message);
+            }
+          }
+        }
+
+        this.dispatchEvent(new Event('load'));
+      }
+    };
+  }
+  /* eslint-enable no-console */
+}
+
 /** Load up the requested element's demo in a separate shadow root */
 async function go(location = window.location) {
+  await patchHTMLIncludes();
   const { element } = pattern.exec(location.href)?.pathname?.groups ?? {};
 
   if (element) {

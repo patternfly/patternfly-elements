@@ -1,12 +1,14 @@
+import type { Instance } from '@popperjs/core';
+
 /* eslint-disable no-console */
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 
 import { pfelement } from '@patternfly/pfe-core/decorators.js';
 
 import styles from './pfe-tooltip.scss';
+import { createPopper } from '@popperjs/core';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-import { createPopper } from './lib/createPopper';
 
 
 /**
@@ -15,7 +17,6 @@ import { createPopper } from './lib/createPopper';
  * @summary Organizes content in a contained view on the same page
  *
  */
-
 @customElement('pfe-tooltip') @pfelement()
 export class PfeTooltip extends LitElement {
   static readonly version = '{{version}}';
@@ -28,12 +29,12 @@ export class PfeTooltip extends LitElement {
 
   @property({ type: Array, reflect: true }) offset = [0, 18];
 
+  @query('#invoke-id') private _invoker?: HTMLElement|null;
+  @query('.pf-c-tooltip') private _tooltip?: HTMLElement|null;
+
   private _id = `${PfeTooltip.name}-${getRandomId()}`;
 
-  private _invoker?: HTMLElement | null = this.shadowRoot?.querySelector<HTMLElement>('#invoker');
-  private _tooltip?: HTMLElement | null = this.shadowRoot?.querySelector<HTMLElement>('.pf-c-tooltip');
-
-  private _popper?: any;
+  private _popper?: Instance;
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -99,8 +100,6 @@ export class PfeTooltip extends LitElement {
   }
 
   _setupPopper() {
-    this._invoker = this.shadowRoot?.querySelector<HTMLElement>(`#invoker-id`);
-    this._tooltip = this.shadowRoot?.querySelector<HTMLElement>('.pf-c-tooltip');
     if (this._invoker && this._tooltip) {
       this._popper = createPopper(this._invoker, this._tooltip, {
         placement: this.position,

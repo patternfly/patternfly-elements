@@ -1,3 +1,5 @@
+import type { HTMLIncludeElement } from 'html-include-element';
+
 import 'html-include-element';
 import 'api-viewer-element';
 import '@vaadin/split-layout';
@@ -84,8 +86,7 @@ const linkLoaded = async function linkLoaded(link: HTMLLinkElement) {
   });
 };
 
-/** @this {import('html-include-element').HTMLIncludeElement} */
-async function loadPartial() {
+async function loadPartial(this: HTMLIncludeElement) {
   let text = '';
   try {
     const mode = this.mode || 'cors';

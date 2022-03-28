@@ -4,26 +4,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description"
-    content="PatternFly Elements: A set of community-created web components based on PatternFly design.">
+  <meta name="description" content="{{ description }}">
   <meta name="pfe-track-performance" content="true">
   <link href="/brand/logo/svg/pfe-icon-blue.svg" rel="shortcut icon">
-  <title>PatternFly Elements</title>
-  <link rel="stylesheet" href="/docs/demo/demo.css">
-  <link rel="stylesheet" href="/docs/main.css" />
-  <link rel="stylesheet" href="/core/pfe-styles/pfe.min.css">
-  <link rel="stylesheet" href="/core/pfe-styles/pfe-layouts.min.css">
-  <link rel="stylesheet" href="/core/pfe-styles/red-hat-font.min.css">
-  <script type="module">
-    import '/docs/demo/demo.ts';
-  </script>
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/node_modules/@patternfly/pfe-styles/pfe.min.css">
+  <link rel="stylesheet" href="/node_modules/@patternfly/pfe-styles/pfe-layouts.min.css">
+  <link rel="stylesheet" href="/node_modules/@patternfly/pfe-styles/red-hat-font.min.css">
+  <link rel="stylesheet" href="/node_modules/@patternfly/pfe-tools/demo/demo.css">
+  <link rel="stylesheet" href="/docs/main.css">
+  <script type="module" src="/node_modules/@patternfly/pfe-tools/demo/demo.ts"></script>
 </head>
 
 <body>
   <header class="logo-bar">
     <button id="hamburger" aria-label="Expand Main Navigation">&#9776;</button>
-    <a href="/"><img src="/brand/logo/svg/pfe-icon-white-shaded.svg" alt="" />PatternFly Elements</a>
-    <a id="github-link" href="https://github.com/patternfly/patternfly-elements/">
+    <a href="/"><img src="{{ logoUrl }}" alt="" />{{ title }}</a>
+    <a id="github-link" href="{{ githubUrl }}">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
         <title>GitHub</title>
         <!-- Font Awesome Free 5.15.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) -->

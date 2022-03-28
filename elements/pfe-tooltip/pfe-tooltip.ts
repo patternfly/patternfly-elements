@@ -5,14 +5,17 @@ import { customElement, property } from 'lit/decorators.js';
 import { pfelement } from '@patternfly/pfe-core/decorators.js';
 
 import styles from './pfe-tooltip.scss';
-import { createPopper } from '@popperjs/core';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+import { createPopper } from './lib/createPopper';
 
 
 /**
- * Tooltip
- * @slot - Place element content here
+ * Tooltips are used.
+ *
+ * @summary Organizes content in a contained view on the same page
+ *
  */
+
 @customElement('pfe-tooltip') @pfelement()
 export class PfeTooltip extends LitElement {
   static readonly version = '{{version}}';
@@ -65,7 +68,7 @@ export class PfeTooltip extends LitElement {
 
   render() {
     return html`
-      <div id="invoker-id" role="tooltip" tabindex="0" aria-labelledby="${this.id}">
+      <div id="invoker-id" class="pf-c-invoker" role="tooltip" tabindex="0" aria-labelledby="${this.id}">
         <slot name="invoker"></slot>
       </div>
       <div id="${this.id}" class="pf-c-tooltip hidden" aria-hidden=${this.isOpen ? 'false' : 'true'}>
@@ -99,8 +102,6 @@ export class PfeTooltip extends LitElement {
     this._invoker = this.shadowRoot?.querySelector<HTMLElement>(`#invoker-id`);
     this._tooltip = this.shadowRoot?.querySelector<HTMLElement>('.pf-c-tooltip');
     if (this._invoker && this._tooltip) {
-      console.log('process.env.NODE_ENV');
-      console.log(process.env.NODE_ENV);
       this._popper = createPopper(this._invoker, this._tooltip, {
         placement: this.position,
         modifiers: [

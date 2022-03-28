@@ -26,9 +26,7 @@ slot[name='tooltip']::slotted(*[header]) {
 pfe-tooltip {
   display: inline-flex;
   --pfe-tooltip__content--TextAlign: left;
-  padding-left: 200px;
-  padding-top: 75px;
-  padding-bottom: 75px;
+  width: fit-content;
 }
 /* remove the margin on the top or bottom of the tooltip */
 pfe-tooltip [slot="content"] > *:first-child {

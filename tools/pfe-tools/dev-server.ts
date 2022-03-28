@@ -1,6 +1,7 @@
 import type { Plugin } from '@web/dev-server-core';
 import type { DevServerConfig } from '@web/dev-server';
 import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsPlugin';
+import type { Context, Middleware, Next } from 'koa';
 
 import { readdir, stat } from 'fs/promises';
 import { join, dirname } from 'path';
@@ -8,6 +9,7 @@ import { fileURLToPath } from 'url';
 
 import litcssRollup from 'rollup-plugin-lit-css';
 import rollupReplace from '@rollup/plugin-replace';
+import nunjucks from 'nunjucks';
 
 import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
@@ -15,18 +17,31 @@ import { importMapsPlugin } from '@web/dev-server-import-maps';
 import { transformSass } from './esbuild.js';
 import { createRequire } from 'module';
 
-const require = createRequire(import.meta.url);
-const exists = (x: string) => stat(x).then(() => true, () => false);
-
 export interface PfeDevServerConfigOptions extends DevServerConfig {
   /** Extra dev server plugins */
   plugins?: Plugin[];
   importMap?: InjectSetting['importMap'];
   hostname?: string;
+  site?: {
+    title: string;
+    logoUrl: string;
+    githubUrl: string;
+    description: string;
+  };
 }
 
+const require = createRequire(import.meta.url);
+const exists = (x: string) => stat(x).then(() => true, () => false);
 const litcss = fromRollup(litcssRollup);
 const replace = fromRollup(rollupReplace);
+const env = nunjucks.configure(fileURLToPath(new URL('./demo', import.meta.url)));
+
+const SITE_DEFAULTS = {
+  title: 'PatternFly Elements',
+  logoUrl: '/brand/logo/svg/pfe-icon-white-shaded.svg',
+  githubUrl: 'https://github.com/patternfly/patternfly-elements/',
+  description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
+};
 
 function appendLines(body: string, ...lines: string[]): string {
   return [body, ...lines].join('\n');
@@ -127,6 +142,24 @@ export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerConf
   };
 }
 
+function nunjucksSPAMiddleware(options: PfeDevServerConfigOptions): Middleware {
+  return function(ctx, next) {
+    if (ctx.method !== 'HEAD' && ctx.method !== 'GET' || ctx.path.match(/\./)) {
+      return next();
+    } else {
+      const transformed = env.render('index.html', { ...SITE_DEFAULTS, ...options?.site });
+      ctx.body = transformed;
+      ctx.type = 'html';
+      ctx.status = 200;
+    }
+  };
+}
+
+function cors(context: Context, next: Next) {
+  context.set('Access-Control-Allow-Origin', '*');
+  return next();
+}
+
 /**
  * Creates a default config for PFE's dev server.
  */
@@ -147,19 +180,15 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
     .replace('//', '/');
 
   return {
-    appIndex: 'index.html',
+    rootDir,
 
     nodeResolve: true,
-
-    rootDir,
 
     ...options ?? {},
 
     middleware: [
-      function cors(context, next) {
-        context.set('Access-Control-Allow-Origin', '*');
-        return next();
-      },
+      nunjucksSPAMiddleware(options),
+      cors,
       ...options?.middleware ?? [],
     ],
 
@@ -187,7 +216,7 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
       litcss({ include: ['**/*.scss'], transform: transformSass }),
       replace({
         'preventAssignment': true,
-        'process.env.NODE_ENV': JSON.stringify( 'production' )
+        'process.env.NODE_ENV': JSON.stringify('production'),
       }),
       // Ensure .scss files are loaded as js modules, as `litcss` plugin transforms them to such
       scssMimeType(),

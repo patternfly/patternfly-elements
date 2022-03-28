@@ -143,7 +143,8 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
       minifyWhitespace: options?.minify ?? true,
       outfile: options?.outfile ?? 'pfe.min.js',
       define: {
-        'process.env.NODE_ENV': 'production',
+        // eslint-disable-next-line no-useless-escape
+        'process.env.NODE_ENV': JSON.stringify( 'production' ),
       },
       sourcemap: true,
       treeShaking: true,
@@ -217,7 +218,7 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
       logLevel: 'info',
       sourcemap: true,
       define: {
-        'process.env.NODE_ENV': 'production'
+        'process.env.NODE_ENV': JSON.stringify( 'production' )
       },
       bundle: options?.bundle ?? true,
 

@@ -12,14 +12,8 @@
     "test": "tests"
   },
   "exports": {
-    ".": {
-      "esbuild": "./pfe-tooltip.ts",
-      "default": "./pfe-tooltip.js"
-    },
-    "./*": {
-      "esbuild": "./*.ts",
-      "default": "./*.js"
-    }
+    ".": "./pfe-tooltip.js",
+    "./*": "./*.js"
   },
   "publishConfig": {
     "access": "public",
@@ -49,9 +43,22 @@
     "design systems",
     "web components"
   ],
+  "files": [
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "!custom-elements-manifest.config.js",
+    "!demo/*",
+    "!docs/*",
+    "!test/*"
+  ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0 || ^2.0.0-next.0",
+    "@patternfly/pfe-core": "^2.0.0-next.3",
     "@popperjs/core": "^2.9.3",
-    "lit": "^2.0.0"
+    "lit": "^2.1.2"
   }
 }

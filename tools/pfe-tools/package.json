@@ -36,6 +36,8 @@
     "!*.ts",
     "custom-elements.json",
     "**/*.LEGAL.txt",
+    "**/*.LEGAL.txt",
+    "demo/**/*",
     "**/*.css",
     "**/*.md",
     "**/*.d.ts",

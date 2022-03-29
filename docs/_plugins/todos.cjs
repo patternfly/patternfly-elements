@@ -1,5 +1,4 @@
 const fs = require('fs/promises');
-const leasot = require('leasot');
 const path = require('path');
 const { promisify } = require('util');
 const glob = promisify(require('glob'));
@@ -8,6 +7,7 @@ const cache = new Map();
 
 module.exports = function(eleventyConfig) {
   eleventyConfig.addGlobalData('todos', async function generateTodos() {
+    const { parse, report } = await import('leasot');
     const start = performance.now();
 
     const todos = [];
@@ -26,8 +26,8 @@ module.exports = function(eleventyConfig) {
     for (const filename of files) {
       const contents = await fs.readFile(filename, 'utf8');
       const extension = path.extname(filename);
-      const parsed = leasot.parse(contents, { extension, filename });
-      const output = leasot.report(parsed, 'raw');
+      const parsed = await parse(contents, { extension, filename });
+      const output = await report(parsed, 'raw');
       todos.push(...output);
     }
 

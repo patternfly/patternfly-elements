@@ -19,6 +19,7 @@ import { createRequire } from 'module';
 
 export interface PfeDevServerConfigOptions extends DevServerConfig {
   /** Extra dev server plugins */
+  loadDemo?: boolean;
   plugins?: Plugin[];
   importMap?: InjectSetting['importMap'];
   hostname?: string;
@@ -164,7 +165,7 @@ function cors(context: Context, next: Next) {
  * Creates a default config for PFE's dev server.
  */
 export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevServerConfig {
-  const { importMap, ...options } = _options ?? {};
+  const { importMap, site, loadDemo = true, ...options } = _options ?? {};
 
   /**
    * Plain case: this file is running from `/node_modules/@patternfly/pfe-tools`.
@@ -187,7 +188,9 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
     ...options ?? {},
 
     middleware: [
-      nunjucksSPAMiddleware(options),
+      ...loadDemo ? [
+        nunjucksSPAMiddleware(options),
+      ] : [],
       cors,
       ...options?.middleware ?? [],
     ],

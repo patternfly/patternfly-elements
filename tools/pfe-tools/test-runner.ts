@@ -26,7 +26,7 @@ const testRunnerHtml: TestRunnerConfig['testRunnerHtml'] = testFramework => `
 `;
 
 export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunnerConfig {
-  const { open, ...devServerConfig } = pfeDevServerConfig(opts);
+  const { open, ...devServerConfig } = pfeDevServerConfig({ ...opts, loadDemo: false });
 
   const configuredReporter = opts.reporter ?? 'summary';
 

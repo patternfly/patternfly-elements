@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.13
+
+### Patch Changes
+
+- dd9b1128: Include dev server assets in the package bundle
+
 ## 1.0.0-next.12
 
 ### Minor Changes

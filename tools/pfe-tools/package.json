@@ -21,6 +21,7 @@
   },
   "exports": {
     "./11ty": "./11ty/index.js",
+    "./11ty/plugins/*.cjs": "./11ty/plugins/*.cjs",
     "./*.js": "./*.js",
     "./*": "./*.js"
   },

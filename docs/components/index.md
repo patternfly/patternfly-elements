@@ -24,7 +24,7 @@ permalink: /components/index.html
   {%- if element.docsPath -%}
     <div class="component-preview">
       <div class="component-preview--container">
-        {%- if meta.env == "prod" -%}
+        {%- if env.ELEVENTY_ENV == "prod" -%}
         <a href="/components/{{ element.slug }}/" aria-label="{{ element.title }}">
           <div class="preview-image" style="background-image: url(/components/{{ element.slug }}/docs/preview.png);"></div>
         </a>
@@ -39,7 +39,7 @@ permalink: /components/index.html
         <a href="/components/{{ element.slug }}/">{{ element.title }}</a>
       </h3>
       {% renderTemplate "njk,md", element=element %}{{ element.summary }}{% endrenderTemplate %}
-      {%- if meta.env != "prod" -%}
+      {%- if env.ELEVENTY_ENV != "prod" -%}
       <pfe-cta><a href="/components/{{ element.slug }}/">Component overview</a></pfe-cta>
       {%- endif -%}
     </div>

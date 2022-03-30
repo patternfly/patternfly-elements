@@ -1,5 +1,3 @@
-const elementsPackages = require('../_data/elementsPackages.cjs');
-
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
 
 let elements;
@@ -9,6 +7,16 @@ function getTagName(url) {
   return `pfe-${tagName}`;
 }
 
+async function elementsPackages() {
+  const { getPackageData } = await import('@patternfly/pfe-tools/11ty');
+  return getPackageData('elements', 'components');
+}
+
+async function corePackages() {
+  const { getPackageData } = await import('@patternfly/pfe-tools/11ty');
+  return getPackageData('core');
+}
+
 // it's an 11ty api
 /* eslint-disable no-invalid-this */
 
@@ -16,10 +24,11 @@ async function getDocsPage(tagName) {
   // NB: I think this is new with 11ty 1.0.0. Maybe it's the pagination value? Not sure how bad of an abuse this is
   if (this.ctx._?.constructor?.name === 'DocsPage') {
     return this.ctx._;
+  } else {
+    elements ??= await elementsPackages();
+    tagName ??= getTagName(this.page.url);
+    return elements.get(tagName);
   }
-  elements ??= await elementsPackages();
-  tagName ??= getTagName(this.page.url);
-  return elements.get(tagName);
 }
 
 // TODO: programmable package scopes, etc
@@ -27,7 +36,21 @@ module.exports = function configFunction(eleventyConfig) {
   // add `renderTemplate` filter
   eleventyConfig.addPlugin(EleventyRenderPlugin);
 
-  eleventyConfig.addWatchTarget('tools/pfe-tools/11ty/*.js');
+  eleventyConfig.addGlobalData('env', () => process.env);
+
+  eleventyConfig.addGlobalData('elementsPackages', elementsPackages);
+  eleventyConfig.addGlobalData('corePackages', corePackages);
+  eleventyConfig.addGlobalData('core', async function core() {
+    return [...new Set((await corePackages()).values())]
+      .sort((a, b) => a.package.name > b.package.name ? 1 : -1);
+  });
+  eleventyConfig.addGlobalData('elements', async function elements() {
+    return [...new Set((await elementsPackages()).values())]
+      .sort((a, b) => a.tagName > b.tagName ? 1 : -1);
+  });
+
+  const toolsFiles = require.resolve('@patternfly/pfe-tools/11ty').replace('index.js', '**/*.{js,njk}');
+  eleventyConfig.addWatchTarget(toolsFiles);
 
   // copied from DocsPage
   eleventyConfig.addPairedAsyncShortcode('band', async function(content, kwargs) {

@@ -61,7 +61,6 @@ function demoPaths(content) {
 
 module.exports = {
   configFunction(eleventyConfig) {
-    eleventyConfig.addWatchTarget('tools/pfe-tools/11ty/**/*.{js,njk}');
     eleventyConfig.addPassthroughCopy('docs/bundle.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/pfe.min.{map,css}');
     eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');

@@ -4,9 +4,10 @@ const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const directoryOutputPlugin = require('@11ty/eleventy-plugin-directory-output');
 
 const pfeAssetsPlugin = require('./docs/_plugins/pfe-assets.cjs');
-const customElementsManifestPlugin = require('./docs/_plugins/custom-elements-manifest.cjs');
-const orderTagsPlugin = require('./docs/_plugins/order-tags.cjs');
-const todosPlugin = require('./docs/_plugins/todos.cjs');
+
+const customElementsManifestPlugin = require('@patternfly/pfe-tools/11ty/plugins/custom-elements-manifest.cjs');
+const orderTagsPlugin = require('@patternfly/pfe-tools/11ty/plugins/order-tags.cjs');
+const todosPlugin = require('@patternfly/pfe-tools/11ty/plugins/todos.cjs');
 
 const markdownIt = require('markdown-it');
 const markdownItAnchor = require('markdown-it-anchor');

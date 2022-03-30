@@ -24,6 +24,7 @@
     "./controllers/style-controller.js": "./controllers/style-controller.js",
     "./decorators/bound.js": "./decorators/bound.js",
     "./decorators/cascades.js": "./decorators/cascades.js",
+    "./decorators/color-context.js": "./decorators/color-context.js",
     "./decorators/initializer.js": "./decorators/initializer.js",
     "./decorators/observed.js": "./decorators/observed.js",
     "./decorators/pfelement.js": "./decorators/pfelement.js",

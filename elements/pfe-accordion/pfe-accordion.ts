@@ -42,7 +42,7 @@ export class AccordionCollapseEvent extends ComposedEvent {
   }
 }
 
-const CSS_TIMING_UNITS_RE = /(?<value>[0-9.]+)(?<unit>[a-zA-Z]+)/g;
+const CSS_TIMING_UNITS_RE = /^[0-9.]+(?<unit>[a-zA-Z]+)/g;
 
 /**
  * Accordions toggle the visibility of sections of content.
@@ -330,18 +330,26 @@ export class PfeAccordion extends LitElement {
     this._animate(panel, rect.height, 0);
   }
 
-  private getAnimationDuration() {
+  private getAnimationDuration(): number {
     if ('computedStyleMap' in this) {
       // @ts-expect-error: https://caniuse.com/?search=computedStyleMap
       return this.computedStyleMap().get('transition-duration')?.to('ms').value;
     } else {
       const { transitionDuration } = this.styles;
+
       const groups = CSS_TIMING_UNITS_RE.exec(transitionDuration)?.groups;
+
       if (!groups) {
-        return null;
+        return 0;
       }
-      const factor = groups.unit === 's' ? 1000 : 1;
-      return parseFloat(groups.value) * factor;
+
+      const parsed = parseFloat(transitionDuration);
+
+      if (groups.unit === 's') {
+        return parsed * 1000;
+      } else {
+        return parsed;
+      }
     }
   }
 
@@ -354,7 +362,7 @@ export class PfeAccordion extends LitElement {
         this.transitionDuration = transitionDuration;
       }
 
-      const duration = this.transitionDuration;
+      const duration = this.transitionDuration ?? 0;
 
       header?.classList.add('animating');
       panel.classList.add('animating');

@@ -1,10 +1,10 @@
-import type { ColorTheme } from '@patternfly/pfe-core';
+import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core';
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { observed, pfelement } from '@patternfly/pfe-core/decorators.js';
+import { colorContextConsumer, colorContextProvider, observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import style from './pfe-card.scss';
@@ -76,7 +76,11 @@ export class PfeCard extends LitElement {
    * | accent     | <span class="color-preview" style="--bg:#ee0000"></span> #ee0000 |
    * | complement | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
    */
-  @property({ reflect: true }) color: ColorTheme = 'base';
+  @colorContextProvider()
+  @property({ reflect: true, attribute: 'color-palette' }) colorPalette: ColorPalette = 'base';
+
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
 
   /** Optionally adjusts the padding on the container. Accepts: `small`. */
   @property({ reflect: true }) size?: 'small';

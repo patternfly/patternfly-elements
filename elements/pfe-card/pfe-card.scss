@@ -69,7 +69,7 @@ $size-small: (
   overflow: hidden;
 
   // Base colors
-  background-color:    pfe-local(BackgroundColor);
+  // background-color:    pfe-local(BackgroundColor);
   background-position: pfe-local(BackgroundPosition);
   color: pfe-broadcasted(text);
 
@@ -83,15 +83,10 @@ $size-small: (
   }
 }
 
-// Pull in pfe-var settings for all supported surface colors
-@include pfe-surfaces;
-
 :host([size="small"]) {
   @include pfe-print-local($size-small);
 }
 
-// TODO: pfe-border is deprecated
-:host([pfe-border]:not([pfe-border="false"])),
 :host([border]:not([border="false"])) {
   --pfe-card--BorderWidth:   #{pfe-fetch(surface--border-width)};
 }
@@ -101,7 +96,6 @@ $size-small: (
   &__header,
   &__body,
   &__footer {
-    ::slotted([pfe-overflow~="top"]),
     ::slotted([overflow~="top"]) {
       z-index: 1;
       margin-top: -2rem; //IE11 fallback
@@ -111,20 +105,17 @@ $size-small: (
       }
     }
 
-    ::slotted([pfe-overflow~="right"]),
     ::slotted([overflow~="right"]) {
       margin-right: -2rem; //IE11 fallback
       margin-right: calc(-1 * #{pfe-local(PaddingRight)});
     }
 
-    ::slotted([pfe-overflow~="bottom"]),
     ::slotted([overflow~="bottom"]) {
       margin-bottom: -2rem; //IE11 fallback
       margin-bottom: calc(-1 * calc(#{pfe-local(PaddingBottom)} + #{pfe-local(BorderRadius)}));
       align-self: flex-end;
     }
 
-    ::slotted([pfe-overflow~="left"]),
     ::slotted([overflow~="left"]) {
       margin-left: -2rem; //IE11 fallback
       margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
@@ -136,29 +127,24 @@ $size-small: (
       object-fit: cover; // Fix distortion
     }
 
-    ::slotted(img:not[pfe-overflow]),
     ::slotted(img:not[overflow]) {
       align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
     }
 
-    ::slotted(img[pfe-overflow]),
     ::slotted(img[overflow]) {
       max-width: unset !important;
     }
 
-    ::slotted(img[pfe-overflow~="right"]),
     ::slotted(img[overflow~="right"]) {
       width: calc(100% + 2rem) !important; //IE11 fallback
       width: calc(100% + #{pfe-local(PaddingRight)}) !important;
     }
 
-    ::slotted(img[pfe-overflow~="left"]),
     ::slotted(img[overflow~="left"]) {
       width: calc(100% + 2rem) !important; //IE11 fallback
       width: calc(100% + #{pfe-local(PaddingLeft)}) !important;
     }
 
-    ::slotted(img[pfe-overflow~="right"][pfe-overflow~="left"]),
     ::slotted(img[overflow~="right"][overflow~="left"]) {
       width: calc(100% + 4rem) !important; //IE11 fallback
       width: calc(100% + #{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)}) !important;
@@ -190,7 +176,6 @@ $size-small: (
       margin-bottom: pfe-local(PaddingBottom);
     }
 
-    ::slotted([pfe-overflow~="top"]),
     ::slotted([overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
@@ -214,18 +199,15 @@ $size-small: (
     }
   }
   &__body {
-    &:not(.has-header) ::slotted([pfe-overflow~="top"]),
     &:not(.has-header) ::slotted([overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
-    ::slotted([pfe-overflow~="top"]),
     ::slotted([overflow~="top"]) {
       z-index: 1;
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
-    ::slotted([pfe-overflow~="bottom"]),
     ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
@@ -247,7 +229,6 @@ $size-small: (
     // Aligns buttons and CTAs
     align-items: pfe-local(AlignItems, baseline, $region: footer);
 
-    ::slotted([pfe-overflow~="bottom"]),
     ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }

@@ -1,11 +1,17 @@
-import type { ColorTheme } from '@patternfly/pfe-core';
+import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core';
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
+
+import {
+  observed,
+  pfelement,
+  colorContextConsumer,
+  colorContextProvider,
+} from '@patternfly/pfe-core/decorators.js';
 
 import style from './pfe-band.scss';
 
@@ -48,7 +54,7 @@ import style from './pfe-band.scss';
  * @cssprop --pfe-band_footer--layout - Applied to `.pfe-band__footer`
  * @cssprop --pfe-band_aside--layout - Applied to `.pfe-band__aside`
  */
-@customElement('pfe-band') @pfelement()
+@customElement('pfe-band') @pfelement({ context: 'none' })
 export class PfeBand extends LitElement {
   static readonly version = '{{version}}';
 
@@ -64,7 +70,14 @@ export class PfeBand extends LitElement {
   /**
    * Your theme will influence these colors so check there first if you are seeing inconsistencies.
    */
-  @property({ reflect: true }) color: ColorTheme = 'base';
+  @colorContextProvider()
+  @property({ reflect: true, attribute: 'color-palette' }) colorPalette: ColorPalette = 'base';
+
+  /**
+   * Your theme will influence these colors so check there first if you are seeing inconsistencies.
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on: ColorTheme = 'light';
 
   /**
    * This influences where the aside is rendered at the desktop view and are indicated relative to the body content.

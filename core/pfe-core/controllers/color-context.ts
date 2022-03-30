@@ -6,7 +6,7 @@ import { bound } from '../decorators/bound.js';
 import { Logger } from './logger.js';
 import { StyleController } from './style-controller.js';
 
-import CONTEXT_BASE_STYLES from './color-context.scss';
+import CONTEXT_BASE_STYLES from './color-context-controller.scss';
 
 /**
  * A `ColorPalette` is a collection of specific color values

@@ -8,7 +8,7 @@ templateEngineOverride: njk,md
 
 <body unresolved>
   <header>
-    <pfe-band class="pfe-l--text-align--center" color="accent" context="accent">
+    <pfe-band class="pfe-l--text-align--center" color="accent">
       <div class="pfe-l-bullseye">
         <div class="pfe-l-bullseye__item">
           <h1 id="home-title">

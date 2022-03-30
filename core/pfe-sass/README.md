@@ -42,7 +42,7 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
     }
 
     // 4. Override broadcasted last
-    :host([color="accent"]) {
+    :host([color-palette="accent"]) {
       --pfe-cta--BackgroundColor: var(theme--surface--accent);
       --pfe-cta--Color: var(theme--surface-accent--link);
     }

@@ -1,0 +1,83 @@
+:host([on=dark]) { --context: dark; }
+:host([on=light]) { --context: light; }
+:host([on=saturated]) { --context: saturated; }
+
+/**
+ * It's important for `color-palette` to take precedence over `on`
+ * when setting `--context`, because a `dark` card that's on a `light`
+ * background must create a new `dark` context for its descendents
+ */
+
+:host([color-palette^=dark]) {
+  --context: dark;
+  --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
+  --pfe-broadcasted--text--muted: var(--pfe-theme--color--text--muted--on-dark, #d2d2d2);
+  --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #73bcf7);
+  --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #bee1f4);
+  --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #bee1f4);
+  --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #bee1f4);
+  --pfe-broadcasted--link-decoration: var(--pfe-theme--link-decoration--on-dark, none);
+  --pfe-broadcasted--link-decoration--hover: var(--pfe-theme--link-decoration--hover--on-dark, underline);
+  --pfe-broadcasted--link-decoration--focus: var(--pfe-theme--link-decoration--focus--on-dark,  underline);
+  --pfe-broadcasted--link-decoration--visited: var(--pfe-theme--link-decoration--visited--on-dark, none);
+}
+
+:host([color-palette^=light]),
+:host([color-palette=base]) {
+  --context: light;
+  --pfe-broadcasted--text: var(--pfe-theme--color--text, #151515);
+  --pfe-broadcasted--text--muted: var(--pfe-theme--color--text--muted, #6a6e73);
+  --pfe-broadcasted--link: var(--pfe-theme--color--link, #06c);
+  --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover, #004080);
+  --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus, #004080);
+  --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited, #6753ac);
+  --pfe-broadcasted--link-decoration: var(--pfe-theme--link-decoration, none);
+  --pfe-broadcasted--link-decoration--hover: var(--pfe-theme--link-decoration--hover, underline);
+  --pfe-broadcasted--link-decoration--focus: var(--pfe-theme--link-decoration--focus, underline);
+  --pfe-broadcasted--link-decoration--visited: var(--pfe-theme--link-decoration--visited, none);
+}
+
+:host([color-palette=accent]),
+:host([color-palette=complement]),
+:host([color-palette=saturated]) {
+  --context: saturated;
+  --pfe-broadcasted--text: var(--pfe-theme--color--text--on-saturated, #fff);
+  --pfe-broadcasted--text--muted: var(--pfe-theme--color--text--muted--on-saturated, #d2d2d2);
+  --pfe-broadcasted--link: var(--pfe-theme--color--link--on-saturated, #fff);
+  --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-saturated, #fafafa);
+  --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-saturated, #fafafa);
+  --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-saturated, #d2d2d2);
+  --pfe-broadcasted--link-decoration: var(--pfe-theme--link-decoration--on-saturated, underline);
+  --pfe-broadcasted--link-decoration--hover: var(--pfe-theme--link-decoration--hover--on-saturated, underline);
+  --pfe-broadcasted--link-decoration--focus: var(--pfe-theme--link-decoration--focus--on-saturated, underline);
+  --pfe-broadcasted--link-decoration--visited: var(--pfe-theme--link-decoration--visited--on-saturated, underline);
+}
+
+:host([color-palette="darker"]) {
+  background-color: var(--pfe-theme--color--surface--darker, #464646);
+}
+
+:host([color-palette="darkest"]) {
+  background-color: var(--pfe-theme--color--surface--darkest, #131313);
+}
+
+:host([color-palette="base"]) {
+  background-color: var(--pfe-theme--color--surface--base, #dfdfdf);
+}
+
+:host([color-palette="lighter"]) {
+  background-color: var(--pfe-theme--color--surface--lighter, #ececec);
+}
+
+:host([color-palette="lightest"]) {
+  background-color: var(--pfe-theme--color--surface--lightest, #fff);
+}
+
+:host([color-palette="accent"]) {
+  background-color: var(--pfe-theme--color--surface--accent, #004080);
+}
+
+:host([color-palette="complement"]) {
+  background-color: var(--pfe-theme--color--surface--complement, #002952);
+}
+

@@ -93,7 +93,7 @@
 
   <pfe-card color="complement">
     <h2 slot="header">Modal: a lot of content</h2>
-    <pfe-modal context="dark" id="testit">
+    <pfe-modal color="darkest" id="testit">
       <pfe-cta slot="trigger"><button>Open modal</button></pfe-cta>
       <h2 slot="header">Modal with a header with a super duper long title and a lot of content</h2>
       <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
@@ -111,6 +111,7 @@
         odio dui. Maecenas faucibus mollis interdum. Fusce dapibus, tellus ac cursus commodo, tortor mauris
         condimentum nibh, ut fermentum massa justo sit amet risus.</p>
       <pfe-cta>
+        <!-- TODO: find out why this gets on=light, should be on=dark b/c closest modal is color=darkest -->
         <a href="#bar">Learn more</a>
       </pfe-cta>
     </pfe-modal>

@@ -2,8 +2,18 @@ import type { ReactiveElement } from 'lit';
 
 import { trackPerformance } from '../core.js';
 
-import { ColorContextController } from '../controllers/color-context-controller.js';
 import { PerfController } from '../controllers/perf-controller.js';
+
+import {
+  ColorContextConsumer,
+  ColorContextProvider,
+} from '../controllers/color-context-controller.js';
+
+export interface PfelementOptions {
+  context: 'provider'|'consumer'|'both'|'none';
+  className: string;
+  attribute: string;
+}
 
 function isReactiveElementClass(
   klass: Function // eslint-disable-line @typescript-eslint/ban-types
@@ -38,7 +48,10 @@ async function enqueue(instance: ReactiveElement) {
  * 1. Adds readonly `version` field to the element constructor (class)
  * 2. Adds `[pfelement]` attr and `.PFElement` class in connectedCallback
  */
-export function pfelement(): ClassDecorator {
+export function pfelement(options?: PfelementOptions): ClassDecorator {
+  const context = options?.context ?? 'both';
+  const attribute = options?.attribute ?? 'pfelement';
+  const className = options?.className ?? 'PFElement';
   return function(klass) {
     if (!isReactiveElementClass(klass)) {
       throw new Error(`@pfelement may only decorate ReactiveElements. ${klass.name} is does not implement ReactiveElement.`);
@@ -53,13 +66,24 @@ export function pfelement(): ClassDecorator {
       // by way of an ad-hoc controller
       instance.addController({
         hostConnected() {
-          instance.setAttribute('pfelement', '');
-          instance.classList.add('PFElement');
+          instance.setAttribute(attribute, '');
+          instance.classList.add(className);
         },
       });
 
-      // look mah, no instance property
-      new ColorContextController(instance);
+      if (context !== 'none') {
+        // look mah, no instance property
+        if (context === 'both' || context === 'provider') {
+          // @ts-expect-error: this is strictly for debugging purposes
+          instance.__colorContextProvider =
+            new ColorContextProvider(instance);
+        }
+        if (context === 'both' || context === 'consumer') {
+          // @ts-expect-error: this is strictly for debugging purposes
+          instance.__colorContextConsumer =
+            new ColorContextConsumer(instance);
+        }
+      }
 
       if (trackPerformance()) {
         new PerfController(instance);

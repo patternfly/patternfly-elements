@@ -18,7 +18,6 @@
 
   box-sizing: border-box;
 
-  background-color: pfe-local(BackgroundColor); // transparent
   color:            pfe-local(Color); // broadcasted text
 
   box-shadow: pfe-local(BoxShadow); // default is none
@@ -148,7 +147,7 @@
   &:hover,
   &:active,
   :host(:not([expanded])) &:focus {
-    --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active)};
+    background-color: #{pfe-local(BackgroundColor--active)};
     --pfe-accordion--Color:           #{pfe-local(Color--active)};
   }
 
@@ -169,7 +168,7 @@
     :host([on="#{$context}"]) &:hover,
     :host([on="#{$context}"]:not([expanded])) &:focus,
     :host([on="#{$context}"]) &:active {
-      --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active, $overlay)};
+      background-color: #{pfe-local(BackgroundColor--active, $overlay)};
       --pfe-accordion--Color:           #{pfe-local(Color--active)};
     }
 

@@ -137,7 +137,7 @@ $regions-grid: (
   border: pfe-local(Border);
 
   // Base colors
-  background-color:      pfe-local(BackgroundColor);
+  // background-color:      pfe-local(BackgroundColor);
   background-position:   pfe-local(BackgroundPosition);
   color:                 pfe-broadcasted(text);
 
@@ -163,9 +163,6 @@ $regions-grid: (
     padding: #{pfe-fetch(container-spacer) * 2} pfe-fetch(container-spacer);
   }
 }
-
-// Pull in pfe-var settings for all supported surface colors
-@include pfe-surfaces;
 
 // thinner padding on top & bottom
 :host([size="small"]) {

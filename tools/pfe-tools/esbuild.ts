@@ -130,11 +130,12 @@ export async function componentsEntryPoint(options?: { prefix: string }) {
 /** Create a single-file production bundle of all elements */
 export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
   try {
+    const prefix = fileURLToPath(new URL('./demo', import.meta.url)).replace(REPO_ROOT, '');
     const result = await esbuild.build({
       absWorkingDir: REPO_ROOT,
       allowOverwrite: true,
       bundle: true,
-      entryPoints: [await componentsEntryPoint({ prefix: 'docs/demo' })],
+      entryPoints: [await componentsEntryPoint({ prefix })],
       format: 'esm',
       keepNames: true,
       legalComments: 'linked',

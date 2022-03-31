@@ -1,5 +1,11 @@
 # @patternfly/pfe-card
 
+## 2.0.0-next.2
+
+### Patch Changes
+
+- 70bfd93f: build pfe-card and pfe-cta's light dom CSS during the `build` command
+
 ## 2.0.0-next.1
 
 ### Patch Changes

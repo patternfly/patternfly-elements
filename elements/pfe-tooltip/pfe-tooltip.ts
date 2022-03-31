@@ -7,8 +7,8 @@ import { customElement, property, query } from 'lit/decorators.js';
 import { pfelement } from '@patternfly/pfe-core/decorators.js';
 
 import styles from './pfe-tooltip.scss';
-import { createPopper } from '@popperjs/core';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+import { createPopper } from './lib/createPopper';
 
 
 /**
@@ -17,6 +17,7 @@ import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
  * @summary Organizes content in a contained view on the same page
  *
  */
+
 @customElement('pfe-tooltip') @pfelement()
 export class PfeTooltip extends LitElement {
   static readonly version = '{{version}}';
@@ -29,10 +30,10 @@ export class PfeTooltip extends LitElement {
 
   @property({ type: Array, reflect: true }) offset = [0, 18];
 
-  @query('#invoke-id') private _invoker?: HTMLElement|null;
-  @query('.pf-c-tooltip') private _tooltip?: HTMLElement|null;
-
   private _id = `${PfeTooltip.name}-${getRandomId()}`;
+
+  @query('.pf-c-invoker') _invoker?: HTMLElement|null;
+  @query('.pf-c-tooltip') _tooltip?: HTMLElement|null;
 
   private _popper?: Instance;
 

@@ -1,5 +1,17 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.13
+
+### Patch Changes
+
+- dd9b1128: Include dev server assets in the package bundle
+
+## 1.0.0-next.12
+
+### Minor Changes
+
+- 9a957683: Moves development server wholly into pfe-tools, and exposes some customization properties so daughter repos can customize the page
+
 ## 1.0.0-next.11
 
 ### Minor Changes

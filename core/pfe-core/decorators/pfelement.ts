@@ -7,7 +7,7 @@ import { PerfController } from '../controllers/perf-controller.js';
 import {
   ColorContextConsumer,
   ColorContextProvider,
-} from '../controllers/color-context-controller.js';
+} from '../controllers/color-context.js';
 
 export interface PfelementOptions {
   context: 'provider'|'consumer'|'both'|'none';

@@ -1,4 +1,4 @@
-import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core';
+import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core/controllers/color-context.js';
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';

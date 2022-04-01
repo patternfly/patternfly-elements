@@ -116,11 +116,11 @@ describe('<pfe-card>', function() {
       complement: '#002952',
       lightest: '#ffffff',
     }).forEach(([colorName, colorValue]) => {
-      it(`it should have a background color of ${colorValue} when color is ${colorName}`, async function() {
+      it(`it should have a background color of ${colorValue} when color-palette is ${colorName}`, async function() {
         const element = await createFixture<PfeCard>(TEMPLATES.card1);
         // If this is not the default color, update the color attribute
         if (colorName !== 'default') {
-          element.setAttribute('color', colorName);
+          element.setAttribute('color-palette', colorName);
         }
 
         // Get the background color value

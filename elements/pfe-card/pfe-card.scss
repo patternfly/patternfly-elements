@@ -53,6 +53,14 @@ $size-small: (
 :host {
   --context: #{pfe-local(context)};
 
+  --pfe-theme--color--surface--darker: #3c3f42;
+  --pfe-theme--color--surface--darkest: #151515;
+  --pfe-theme--color--surface--base: #f0f0f0;
+  --pfe-theme--color--surface--lighter: #ececec;
+  --pfe-theme--color--surface--lightest: #ffffff;
+  --pfe-theme--color--surface--accent: #004080;
+  --pfe-theme--color--surface--complement: #002952;
+
   // Start of style declarations for host element
   display: flex;
   flex-direction: column;
@@ -69,7 +77,7 @@ $size-small: (
   overflow: hidden;
 
   // Base colors
-  // background-color:    pfe-local(BackgroundColor);
+  background-color:    var(--pfe-card--BackgroundColor, var(--pfe-context-background-color));
   background-position: pfe-local(BackgroundPosition);
   color: pfe-broadcasted(text);
 
@@ -81,6 +89,10 @@ $size-small: (
     border-radius: pfe-fetch(surface--border-radius);
     border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
   }
+}
+
+:host([color-palette]), :host([on]) {
+  background-color:    var(--pfe-card--BackgroundColor, var(--pfe-context-background-color));
 }
 
 :host([size="small"]) {

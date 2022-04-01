@@ -204,7 +204,7 @@ form.querySelector('button').addEventListener('click', () => {
   localStorage.setItem('pfe-demo-maximized', document.documentElement.hasAttribute('maximized').toString());
 });
 
-context.addEventListener('change', onContextChange);
+context.addEventListener('select', onContextChange);
 hamburger.addEventListener('click', toggleNav);
 document.addEventListener('click', event => {
   if (hamburger.getAttribute('aria-expanded') === 'true') {

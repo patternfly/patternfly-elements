@@ -8,7 +8,7 @@ layout: layout-base.njk
   <pfe-band>
     <h1 slot="header">{{ title }}</h1>
   </pfe-band>
-  <pfe-band color="lightest">
+  <pfe-band color-palette="lightest">
     {% if content.trim().length %}
       <div id="content">{{ content | safe }}</div>
     {% endif %}

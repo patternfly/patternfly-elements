@@ -67,7 +67,7 @@ tags:
   <template>
     <div>
       <h1>PatternFly Elements with Vue</h1>
-      <pfe-card color="lightest" border>
+      <pfe-card color-palette="lightest" border>
         <img
           alt="From https://picsum.photos/"
           overflow="left right top"

@@ -8,7 +8,7 @@ title: Quick start
 # {{ title }}
 </pfe-band>
 
-<pfe-band class="header" size="small" color="lightest" use-grid>
+<pfe-band class="header" size="small" color-palette="lightest" use-grid>
 
 ## Quick start template
 Use the markup below to start exploring PatternFly Elements. The template below includes the [card](/components/card), [band](/components/band), [call-to-action](/components/cta), [accordion](/components/accordion), and [tabs](/components/tabs) components as well the grid system and alignment helpers included with PatternFly Elements.
@@ -47,12 +47,12 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
 </head>
 <body unresolved>
   <header>
-    <pfe-band color="accent">
+    <pfe-band color-palette="accent">
       <h1>PatternFly Elements</h1>
     </pfe-band>
   </header>
   <main>
-    <pfe-band color="lightest">
+    <pfe-band color-palette="lightest">
       <h2 slot="pfe-band--header">Card components</h2>
       <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
         <pfe-card>
@@ -126,7 +126,7 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
         </pfe-accordion-panel>
       </pfe-accordion>
     </pfe-band>
-    <pfe-band color="darkest">
+    <pfe-band color-palette="darkest">
       <h2 slot="pfe-band--header">Tabs component</h2>
       <pfe-tabs>
         <pfe-tab role="heading" slot="tab" id="tab1">

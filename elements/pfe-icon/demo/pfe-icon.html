@@ -34,9 +34,9 @@
   .greenish { --pfe-icon--color: #75a117; }
 </style>
 
-<pfe-band id="builtin-icons" color="lightest">
+<pfe-band id="builtin-icons" color-palette="lightest">
   <h2 slot="header">Built-in Icons</h2>
-  <pfe-card id="rh-icons" color="lightest" border>
+  <pfe-card id="rh-icons" color-palette="lightest" border>
     <h3 slot="header">RH icons</h3>
     <pfe-icon color="complement" size="3x" icon="rh-icon-aed"></pfe-icon>
     <pfe-icon color="accent" size="3x" icon="rh-icon-agile-integration"></pfe-icon>
@@ -461,7 +461,7 @@
     <pfe-icon color="critical" size="3x" icon="rh-icon-wrench-mechanical"></pfe-icon>
   </pfe-card>
 
-  <pfe-card id="web-icons" color="lightest" border>
+  <pfe-card id="web-icons" color-palette="lightest" border>
     <h3 slot="header">Web icons</h3>
     <pfe-icon color="complement" size="2x" icon="web-icon-alert-danger"></pfe-icon>
     <pfe-icon color="accent" size="2x" icon="web-icon-alert-default"></pfe-icon>
@@ -519,7 +519,7 @@
     <pfe-icon color="accent" size="2x" icon="web-icon-youtube2"></pfe-icon>
   </pfe-card>
 
-  <pfe-card id="circled-icons" color="lightest" border>
+  <pfe-card id="circled-icons" color-palette="lightest" border>
     <h2 slot="header">Circled icons</h2>
     <pfe-icon color="complement" size="lg" circled icon="rh-icon-aed"></pfe-icon>
     <pfe-icon color="accent" size="lg" circled icon="rh-icon-agile-integration"></pfe-icon>
@@ -536,8 +536,8 @@
   </pfe-card>
 </pfe-band>
 
-<pfe-band color="lightest">
-  <pfe-card id="forced-stretch-icons" color="lightest" border>
+<pfe-band color-palette="lightest">
+  <pfe-card id="forced-stretch-icons" color-palette="lightest" border>
     <h3 slot="header">Forced stretch</h3>
     <pfe-icon color="complement" size="lg" circled icon="rh-icon-aed"></pfe-icon>
     <pfe-icon color="accent" size="lg" circled icon="rh-icon-agile-integration"></pfe-icon>
@@ -553,33 +553,33 @@
     <pfe-icon color="darker" size="lg" circled icon="rh-icon-app-unsecured"></pfe-icon>
   </pfe-card>
 
-  <pfe-card id="locally-hosted-icons" color="lightest" border>
+  <pfe-card id="locally-hosted-icons" color-palette="lightest" border>
     <h3 slot="header">Locally hosted icons</h3>
     <pfe-icon size="xl" icon="local-square">Icon failed to load.</pfe-icon>
     <pfe-icon size="xl" color="complement" icon="local-rh-icon-api">Icon failed to load.</pfe-icon>
   </pfe-card>
 </pfe-band>
 
-<pfe-band id="fail" color="lightest">
+<pfe-band id="fail" color-palette="lightest">
   <h2 slot="header">Fail to load tests</h2>
-  <pfe-card color="lighter">
+  <pfe-card color-palette="lighter">
     <h3 slot="header">Fail with fallback text, no tags</h3>
     <pfe-icon size="xl" icon="rh-foo-bar">Icon failed to load.</pfe-icon>
   </pfe-card>
 
-  <pfe-card color="lighter">
+  <pfe-card color-palette="lighter">
     <h3 slot="header">Fail with fallback text, p tag</h3>
     <pfe-icon size="xl" icon="rh-foo-bat">
       <p>Icon failed to load.</p>
     </pfe-icon>
   </pfe-card>
 
-  <pfe-card color="lighter">
+  <pfe-card color-palette="lighter">
     <h3 slot="header">Fail with preserve space on</h3>
     <pfe-icon size="xl" icon="foo-bar" class="pink-border"></pfe-icon>
   </pfe-card>
 
-  <pfe-card color="lighter">
+  <pfe-card color-palette="lighter">
     <h3 slot="header">Fail with collapse blank space</h3>
     <pfe-icon size="xl" icon="foo-bar" class="pink-border" on-fail="collapse"></pfe-icon>
   </pfe-card>

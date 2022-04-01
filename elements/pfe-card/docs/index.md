@@ -6,56 +6,49 @@
     <pfe-card>
       <h3 slot="header">Default card</h3>
       <p>This is the default card</p>
-      <div slot="footer">
-        <pfe-cta>
-          <a href="#">Link in the footer</a>
-        </pfe-cta>
-      </div>
+      <pfe-cta slot="footer">
+        <a href="#">Link in the footer</a>
+      </pfe-cta>
     </pfe-card>
-    <pfe-card color="lightest" border>
+
+    <pfe-card color-palette="lightest" border>
       <h3 slot="header">Lightest card</h3>
       <p>This is the lightest card with a border</p>
-      <div slot="footer">
-        <pfe-cta>
-          <a href="#">Link in the footer</a>
-        </pfe-cta>
-      </div>
+      <pfe-cta slot="footer">
+        <a href="#">Link in the footer</a>
+      </pfe-cta>
     </pfe-card>
-    <pfe-card color="darker">
+
+    <pfe-card color-palette="darker">
       <h3 slot="header">Darker card</h3>
       <p>This is the darker card</p>
-      <div slot="footer">
-        <pfe-cta>
-          <a href="#">Link in the footer</a>
-        </pfe-cta>
-      </div>
+      <pfe-cta slot="footer">
+        <a href="#">Link in the footer</a>
+      </pfe-cta>
     </pfe-card>
-    <pfe-card color="darkest">
+
+    <pfe-card color-palette="darkest">
       <h3 slot="header">Darkest card</h3>
       <p>This is the darkest card</p>
-      <div slot="footer">
-        <pfe-cta>
-          <a href="#">Link in the footer</a>
-        </pfe-cta>
-      </div>
+      <pfe-cta slot="footer">
+        <a href="#">Link in the footer</a>
+      </pfe-cta>
     </pfe-card>
-    <pfe-card color="complement">
+
+    <pfe-card color-palette="complement">
       <h3 slot="header">Complement card</h3>
       <p>This is the complement card</p>
-      <div slot="footer">
-        <pfe-cta>
-          <a href="#">Link in the footer</a>
-        </pfe-cta>
-      </div>
+      <pfe-cta slot="footer">
+        <a href="#">Link in the footer</a>
+      </pfe-cta>
     </pfe-card>
-    <pfe-card color="accent">
+
+    <pfe-card color-palette="accent">
       <h3 slot="header">Accent card</h3>
       <p>This is the accent card</p>
-      <div slot="footer">
-        <pfe-cta>
-          <a href="#">Link in the footer</a>
-        </pfe-cta>
-      </div>
+      <pfe-cta slot="footer">
+        <a href="#">Link in the footer</a>
+      </pfe-cta>
     </pfe-card>
   </div>
 {% endrenderOverview %}
@@ -65,9 +58,7 @@
   <pfe-card>
     <h2 slot="header">Card header</h2>
     <p>This is the pfe-card body.</p>
-    <div slot="footer">
-      <p>This is the footer</p>
-    </div>
+    <p slot="footer">This is the footer</p>
   </pfe-card>
   ```
 {% endband %}

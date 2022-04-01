@@ -9,7 +9,7 @@ title: Framework integration
 
 {% band %}
   <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
-    <pfe-card color="lightest" border>
+    <pfe-card color-palette="lightest" border>
       <h3 slot="header" class="push-bottom">
         <a href="https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-react-app-fe079be262ed">Using
           PatternFly Elements in your React App</a>
@@ -21,7 +21,7 @@ title: Framework integration
           on Medium</a>
       </pfe-cta>
     </pfe-card>
-    <pfe-card color="lightest" border>
+    <pfe-card color-palette="lightest" border>
       <h3 slot="header" class="push-bottom">
         <a href="https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-vue-app-340fc9a9d7e5">Using
           PatternFly Elements in your Vue App</a>
@@ -33,7 +33,7 @@ title: Framework integration
           on Medium</a>
       </pfe-cta>
     </pfe-card>
-    <pfe-card color="lightest" border>
+    <pfe-card color-palette="lightest" border>
       <h3 slot="header" class="push-bottom">
         <a href="https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-angular-app-4b18b1c9c363">Using
           PatternFly Elements in your Angular App</a>

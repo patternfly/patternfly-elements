@@ -3,16 +3,14 @@
     <pfe-band>
       <h2 slot="header" class="no-header-styles">Header Slot</h2>
       <p>This content is in the main slot. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata dolor sit amet.</p>
-      <pfe-card slot="aside" color="lightest">
+      <pfe-card slot="aside" color-palette="lightest">
         <h3 slot="header" class="no-header-styles">Aside slot</h3>
         <p>Content for a card that is in the aside slot.</p>
       </pfe-card>
-      <div slot="footer">
-        <p>This is the footer slot.</p>
-        <pfe-cta>
-          <a href="#">Learn more</a>
-        </pfe-cta>
-      </div>
+      <p slot="footer">This is the footer slot.</p>
+      <pfe-cta slot="footer">
+        <a href="#">Learn more</a>
+      </pfe-cta>
     </pfe-band>
   </div>
 {% endrenderOverview %}
@@ -22,16 +20,14 @@
   <pfe-band>
     <h2 slot="header">Header Slot</h2>
     <p>This content is in the main slot. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata dolor sit amet.</p>
-    <pfe-card slot="aside" color="lightest">
+    <pfe-card slot="aside" color-palette="lightest">
       <h3 slot="header">Aside slot</h3>
       <p>Content for a card that is in the aside slot.</p>
     </pfe-card>
-    <div slot="footer">
-      <p>This is the footer slot.</p>
-      <pfe-cta>
-        <a href="#">Learn more</a>
-      </pfe-cta>
-    </div>
+    <p slot="footer">This is the footer slot.</p>
+    <pfe-cta slot="footer">
+      <a href="#">Learn more</a>
+    </pfe-cta>
   </pfe-band>
   ```
 {% endband %}

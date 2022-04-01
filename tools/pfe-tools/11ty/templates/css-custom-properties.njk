@@ -9,7 +9,7 @@
   </tr>
 {%- endmacro -%}
 
-<pfe-band size="small" color="lightest" use-grid>
+<pfe-band size="small" color-palette="lightest" use-grid>
   <a id="styling-hooks"></a>
   <h{{level}} slot="header">{{ header | innerMD | safe }}</h{{level}}> {% if not content and not cssProperties.length %}
   <em>None</em> {%- else -%}

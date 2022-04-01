@@ -76,6 +76,7 @@ export class PfeClipboard extends LitElement {
 
   static readonly styles = [style];
 
+
   /**
    * Optional boolean attribute that, when present, removes the icon from the template.
    */
@@ -103,6 +104,17 @@ export class PfeClipboard extends LitElement {
   @observed('_checkForCopyTarget')
   @property({ type: String, reflect: true, attribute: 'copy-from' })
     copyFrom: string|'url'|'property' = 'url';
+
+  /**
+   * Specify if current site is behind [https]
+   */
+  @state() private _secure = window.isSecureContext; // is there a way to test this without manually setting this var to false?
+
+  /**
+   * Specify the copy type to be used depending on security and browser support
+   */
+  @property({ type: String || null }) copyType: 'navigator'|'queryCommand'| null = null;
+
 
   /**
    * A setter to set the content you would like to copy.
@@ -136,6 +148,8 @@ export class PfeClipboard extends LitElement {
     this._checkForCopyTarget();
 
     this.dispatchEvent(deprecatedCustomEvent('pfe-clipboard:connected', { component: this }));
+
+    this._setCopyType();
 
     // This prevents a regression, default text used to be "Copy URL".
     // Now that component can copy _anything_ that's not ideal default text
@@ -226,6 +240,25 @@ export class PfeClipboard extends LitElement {
       // If target is set to anything else, we're not doing checks for it
       this.removeAttribute('disabled');
       this._ariaDisabled = false;
+    }
+  }
+
+  /**
+   * Sets copy type depending on whether or not the current site is secure
+   */
+  @bound private _setCopyType() {
+    if (navigator.clipboard) {
+      if (this._secure) {
+        this.copyType = 'navigator';
+      } else {
+        this.setAttribute('hidden', '');
+        throw new Error('Browser supports navigator.clipboard API but current website is not behind [https] required by the specification. https://developer.mozilla.org/en-US/docs/Web/API/Clipboard');
+      }
+    } else if (document.queryCommandEnabled('copy')) {
+      this.copyType = 'queryCommand';
+    } else {
+      this.setAttribute('hidden', '');
+      throw new Error('Browser does not support copying to the clipboard.');
     }
   }
 
@@ -374,22 +407,22 @@ export class PfeClipboard extends LitElement {
     if (!text) {
       this.logger.error('Copy function called, but no text was given to copy.');
     }
-    if (navigator.clipboard) {
-      // If the Clipboard API is available then use that
-      await navigator.clipboard.writeText(text);
-      return text;
-    } else if (document.queryCommandEnabled('copy')) {
-      // If execCommand("copy") exists then use that method
-      const dummy = document.createElement('input');
-      document.body.appendChild(dummy);
-      dummy.value = text;
-      dummy.select();
-      document.execCommand('copy');
-      document.body.removeChild(dummy);
-      return text;
-    } else {
-      throw new Error('Current browser does not support copying to the clipboard.');
+
+    switch (this.copyType) {
+      case 'navigator':
+        await navigator.clipboard.writeText(text);
+        break;
+      case 'queryCommand': {
+        const dummy = document.createElement('input');
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+        break;
+      }
     }
+    return text;
   }
 }
 

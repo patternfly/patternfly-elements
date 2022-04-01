@@ -10,11 +10,25 @@ body {
 html {
   min-height: 100%;
   display: grid;
-  grid-template-rows: var(--pfe-demo-header-height) 1fr;
+  grid-template-rows: var(--pfe-demo-header-height, 60px) auto;
   grid-template-columns: var(--pfe-demo-menu-width) 1fr;
   grid-template-areas:
     'head head'
     'menu body';
+}
+
+html[maximized] {
+  grid-template: 'body' auto / auto;
+  --pfe-demo-header-height: 0;
+}
+
+html[maximized] header,
+html[maximized] aside {
+  display: none;
+}
+
+html[maximized] api-viewer {
+  max-height: 0px;
 }
 
 #main-nav .site-navigation {
@@ -29,6 +43,32 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between
+}
+
+[slot=header] {
+  display: flex;
+  align-items: end;
+  gap: 16px;
+}
+
+[slot=header] fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+[slot=header] button {
+  vertical-align: bottom;
+  background: none;
+  border: none;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 :is(html-include, #component-header) {
@@ -63,6 +103,7 @@ h1[slot="header"] {
   display: flex;
   gap: 1em;
   justify-content: space-between;
+  align-items: center;
 }
 
 main {

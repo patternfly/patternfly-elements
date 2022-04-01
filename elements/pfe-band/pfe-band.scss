@@ -136,8 +136,18 @@ $regions-grid: (
   // Border styles
   border: pfe-local(Border);
 
+  --pfe-theme--color--surface--darker: #3c3f42;
+  --pfe-theme--color--surface--darkest: #151515;
+  --pfe-theme--color--surface--base: #f0f0f0;
+  --pfe-theme--color--surface--lightest: #ffffff;
+  --pfe-theme--color--surface--accent: #004080;
+  --pfe-theme--color--surface--complement: #002952;
+
+  --pfe-band--Padding--vertical:    calc(#{pfe-var(container-spacer)} * 4);
+  --pfe-band--Padding--horizontal:  calc(#{pfe-var(container-spacer)} * 1);
+
   // Base colors
-  // background-color:      pfe-local(BackgroundColor);
+  background-color:    var(--pfe-band--BackgroundColor, var(--pfe-context-background-color));
   background-position:   pfe-local(BackgroundPosition);
   color:                 pfe-broadcasted(text);
 
@@ -166,7 +176,17 @@ $regions-grid: (
 
 // thinner padding on top & bottom
 :host([size="small"]) {
-  padding: calc(#{pfe-local(Padding--vertical)} / 4) #{pfe-local(Padding--horizontal)};
+  // Custom padding on mobile
+  padding: calc(var(--pfe-band--Padding--vertical) / 2) var(--pfe-band--Padding--horizontal);
+
+  // Variable padding on desktop
+  @media (min-width: pfe-breakpoint(sm)) {
+    padding: calc(#{pfe-local(Padding--vertical)} / 1)  pfe-local(Padding--horizontal);
+  }
+}
+
+:host([color-palette]), :host([on]) {
+  background-color:    var(--pfe-band--BackgroundColor, var(--pfe-context-background-color));
 }
 
 .pfe-band__container {

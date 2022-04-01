@@ -49,10 +49,10 @@ describe('<pfe-band>', function() {
 
   // Iterate over the colors object to test expected background color results
   for (const [name, color] of Object.entries(colors)) {
-    it(`it should have a background color of ${color} when color is ${name}`, async function() {
+    it(`it should have a background color of ${color} when color-palette is ${name}`, async function() {
       // If this is not the default background, update the variable
       if (name !== 'default') {
-        band.setAttribute('color', name);
+        band.setAttribute('color-palette', name);
       }
 
       await band.updateComplete;
@@ -65,30 +65,23 @@ describe('<pfe-band>', function() {
   // Test that the default padding is correct
   it('should have default padding when no size attribute is set', async function() {
     // Test that the color is rendering as expected
-    // @TODO need a way to adjust the viewport
+    const style = getComputedStyle(band);
     await setViewport({ width: 500, height: 800 });
-    await band.updateComplete;
-    expect(getComputedStyle(band, null).getPropertyValue('padding'))
-      .to.equal('32px 16px');
+    expect(style.getPropertyValue('padding')).to.equal('32px 16px');
     await setViewport({ width: 600, height: 800 });
-    await band.updateComplete;
-    expect(getComputedStyle(band, null).getPropertyValue('padding'))
-      .to.equal('64px 16px');
+    expect(style.getPropertyValue('padding')).to.equal('64px 16px');
   });
 
   // Test that the padding is reduced if the size is set to small
   it('should have reduced padding when the size attribute is small', async function() {
     // Update the color attribute
-    band.setAttribute('pfe-size', 'small');
+    band.setAttribute('size', 'small');
     await band.updateComplete;
+    const style = getComputedStyle(band);
     await setViewport({ width: 500, height: 800 });
-    await band.updateComplete;
-    expect(getComputedStyle(band, null).getPropertyValue('padding'))
-      .to.equal('32px 16px');
+    expect(style.getPropertyValue('padding'), 'narrow screen').to.equal('32px 16px');
     await setViewport({ width: 600, height: 800 });
-    await band.updateComplete;
-    expect(getComputedStyle(band, null).getPropertyValue('padding'))
-      .to.equal('64px 16px');
+    expect(style.getPropertyValue('padding'), 'wider screen').to.equal('64px 16px');
   });
 
   // Test the default positions of the aside region in the DOM

@@ -1,6 +1,6 @@
-:host([on=dark]) { --context: dark; }
-:host([on=light]) { --context: light; }
-:host([on=saturated]) { --context: saturated; }
+:host(:is([on=dark])) { --context: dark; }
+:host(:is([on=light])) { --context: light; }
+:host(:is([on=saturated])) { --context: saturated; }
 
 /**
  * It's important for `color-palette` to take precedence over `on`
@@ -8,7 +8,7 @@
  * background must create a new `dark` context for its descendents
  */
 
-:host([color-palette^=dark]) {
+:host(:is([color-palette^=dark])) {
   --context: dark;
   --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
   --pfe-broadcasted--text--muted: var(--pfe-theme--color--text--muted--on-dark, #d2d2d2);
@@ -22,8 +22,8 @@
   --pfe-broadcasted--link-decoration--visited: var(--pfe-theme--link-decoration--visited--on-dark, none);
 }
 
-:host([color-palette^=light]),
-:host([color-palette=base]) {
+:host(:is([color-palette^=light])),
+:host(:is([color-palette=base])) {
   --context: light;
   --pfe-broadcasted--text: var(--pfe-theme--color--text, #151515);
   --pfe-broadcasted--text--muted: var(--pfe-theme--color--text--muted, #6a6e73);
@@ -37,9 +37,9 @@
   --pfe-broadcasted--link-decoration--visited: var(--pfe-theme--link-decoration--visited, none);
 }
 
-:host([color-palette=accent]),
-:host([color-palette=complement]),
-:host([color-palette=saturated]) {
+:host(:is([color-palette=accent])),
+:host(:is([color-palette=complement])),
+:host(:is([color-palette=saturated])) {
   --context: saturated;
   --pfe-broadcasted--text: var(--pfe-theme--color--text--on-saturated, #fff);
   --pfe-broadcasted--text--muted: var(--pfe-theme--color--text--muted--on-saturated, #d2d2d2);
@@ -53,31 +53,35 @@
   --pfe-broadcasted--link-decoration--visited: var(--pfe-theme--link-decoration--visited--on-saturated, underline);
 }
 
-:host([color-palette="darker"]) {
-  background-color: var(--pfe-theme--color--surface--darker, #464646);
+:host(:is([color-palette="lightest"])) {
+  --pfe-context-background-color: var(--pfe-theme--color--surface--lightest, #fff);
 }
 
-:host([color-palette="darkest"]) {
-  background-color: var(--pfe-theme--color--surface--darkest, #131313);
+:host(:is([color-palette="lighter"])) {
+  --pfe-context-background-color: var(--pfe-theme--color--surface--lighter, #ededed);
 }
 
-:host([color-palette="base"]) {
-  background-color: var(--pfe-theme--color--surface--base, #dfdfdf);
+:host(:is([color-palette="base"])) {
+  --pfe-context-background-color: var(--pfe-theme--color--surface--base, #ededed);
 }
 
-:host([color-palette="lighter"]) {
-  background-color: var(--pfe-theme--color--surface--lighter, #ececec);
+:host(:is([color-palette="darker"])) {
+  --pfe-context-background-color: var(--pfe-theme--color--surface--darker, #393f44);
 }
 
-:host([color-palette="lightest"]) {
-  background-color: var(--pfe-theme--color--surface--lightest, #fff);
+:host(:is([color-palette="darkest"])) {
+  --pfe-context-background-color: var(--pfe-theme--color--surface--darkest, #292e34);
 }
 
-:host([color-palette="accent"]) {
-  background-color: var(--pfe-theme--color--surface--accent, #004080);
+:host(:is([color-palette="complement"])) {
+  --pfe-context-background-color: var(--pfe-theme--color--surface--complement, #004368);
 }
 
-:host([color-palette="complement"]) {
-  background-color: var(--pfe-theme--color--surface--complement, #002952);
+:host(:is([color-palette="accent"])) {
+  --pfe-context-background-color: var(--pfe-theme--color--surface--accent, #00659c);
+}
+
+:host(:is([color-palette])) {
+  background-color: var(--pfe-context-background-color, var(--pfe-theme--color--surface--base));
 }
 

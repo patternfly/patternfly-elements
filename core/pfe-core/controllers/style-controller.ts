@@ -32,8 +32,8 @@ export class StyleController implements ReactiveController {
 
     if (supportsAdoptingStyleSheets) {
       this.host.renderRoot.adoptedStyleSheets = [
-        ...this.host.renderRoot.adoptedStyleSheets ?? [],
         ...styles.map(x => x instanceof CSSStyleSheet ? x : x.styleSheet as CSSStyleSheet),
+        ...this.host.renderRoot.adoptedStyleSheets ?? [],
       ];
     } else {
       styles.forEach(s => {

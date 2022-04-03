@@ -156,6 +156,7 @@ async function go(location = window.location) {
     viewer.src = '';
     viewer.hidden = true;
     document.querySelector('h1').textContent = 'Select a demo from the Menu';
+    onMaximize(false);
   }
 }
 
@@ -179,6 +180,14 @@ function toggleNav(force?: boolean | Event) {
   }
 }
 
+function onMaximize(force?: boolean) {
+  for (const svg of form.querySelectorAll('svg')) {
+    svg.toggleAttribute('hidden');
+  }
+  document.documentElement.toggleAttribute('maximized', force);
+  localStorage.setItem('pfe-demo-maximized', document.documentElement.hasAttribute('maximized').toString());
+}
+
 const li = (element: string) => html`
   <li class="site-navigation__item">
     <a class="site-navigation__link" href="/demo/${element}/">${pretty(element)}</a>
@@ -196,13 +205,7 @@ installRouter(go);
 go();
 
 form.addEventListener('submit', e => e.preventDefault());
-form.querySelector('button').addEventListener('click', () => {
-  for (const svg of form.querySelectorAll('svg')) {
-    svg.toggleAttribute('hidden');
-  }
-  document.documentElement.toggleAttribute('maximized');
-  localStorage.setItem('pfe-demo-maximized', document.documentElement.hasAttribute('maximized').toString());
-});
+form.querySelector('button').addEventListener('click', () => onMaximize());
 
 context.addEventListener('select', onContextChange);
 hamburger.addEventListener('click', toggleNav);

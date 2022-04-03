@@ -136,10 +136,10 @@ $regions-grid: (
   // Border styles
   border: pfe-local(Border);
 
+  --pfe-theme--color--surface--lightest: #ffffff;
+  --pfe-theme--color--surface--base: #f0f0f0;
   --pfe-theme--color--surface--darker: #3c3f42;
   --pfe-theme--color--surface--darkest: #151515;
-  --pfe-theme--color--surface--base: #f0f0f0;
-  --pfe-theme--color--surface--lightest: #ffffff;
   --pfe-theme--color--surface--accent: #004080;
   --pfe-theme--color--surface--complement: #002952;
 

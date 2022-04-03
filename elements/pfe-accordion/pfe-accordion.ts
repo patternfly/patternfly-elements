@@ -6,12 +6,15 @@ import { customElement, property, state } from 'lit/decorators.js';
 import {
   bound,
   cascades,
+  colorContextConsumer,
+  colorContextProvider,
+  deprecation,
   initializer,
   observed,
   pfelement,
 } from '@patternfly/pfe-core/decorators.js';
 
-import { NumberListConverter, ComposedEvent } from '@patternfly/pfe-core';
+import { NumberListConverter, ComposedEvent, ColorPalette, ColorTheme } from '@patternfly/pfe-core';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -136,6 +139,24 @@ export class PfeAccordion extends LitElement {
   static isPanel(element: Element|null): element is PfeAccordionPanel {
     return element instanceof PfeAccordionPanel;
   }
+
+  /**
+   * Sets color palette, which affects the element's styles as well as descendants' color theme.
+   * Overrides parent color context.
+   * Your theme will influence these colors so check there first if you are seeing inconsistencies.
+   * See [Color](https://patternflyelements.org/theming/colors/) for default values
+   */
+  @colorContextProvider()
+  @property({ reflect: true, attribute: 'color-palette' }) colorPalette?: ColorPalette;
+
+  /** @deprecated use `color-palette` */
+  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color?: ColorPalette;
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on: ColorTheme = 'light';
 
   /**
    * If the element has one `pfe-accordion-header`, it will get tagged with

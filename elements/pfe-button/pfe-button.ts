@@ -1,11 +1,12 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, PropertyValueMap } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { bound, observed, pfelement } from '@patternfly/pfe-core/decorators.js';
+import { bound, colorContextConsumer, observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import styles from './pfe-button.scss';
+import { ColorTheme } from '@patternfly/pfe-core';
 
 /**
  * Buttons allow users to perform an action when triggered. They feature a text label, a background or a border, and icons.
@@ -81,6 +82,12 @@ export class PfeButton extends LitElement {
   @observed
   @property() type?: 'button'|'submit'|'reset';
 
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
+
   private logger = new Logger(this);
 
   private mo = new MutationObserver(this.onMutation);
@@ -91,7 +98,6 @@ export class PfeButton extends LitElement {
 
   connectedCallback() {
     this.onSlotChange();
-    this.onMutation();
     super.connectedCallback();
     this.addEventListener('click', this.onClick);
   }
@@ -102,6 +108,11 @@ export class PfeButton extends LitElement {
         <slot></slot>
       </span>
     `;
+  }
+
+  protected firstUpdated(): void {
+    this._disabledChanged();
+    this.onMutation();
   }
 
   protected _typeChanged() {

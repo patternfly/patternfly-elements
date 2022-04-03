@@ -106,7 +106,7 @@ describe('<pfe-card>', function() {
   });
 
   // Iterate over the colors object to test expected background color results
-  describe('color values', function() {
+  describe('color palettes', function() {
     // Themes and their expected hex values
     Object.entries({
       default: '#f0f0f0',
@@ -122,6 +122,27 @@ describe('<pfe-card>', function() {
         if (colorName !== 'default') {
           element.setAttribute('color-palette', colorName);
         }
+
+        // Get the background color value
+        const [r, g, b] = getColor(element, 'background-color');
+        // Test that the color is rendering as expected
+        expect([r, g, b]).to.deep.equal(hexToRgb(colorValue));
+        // Test that the color is working
+        if (['dark', 'darker', 'darkest', 'complement', 'accent'].includes(colorName)) {
+          expect(luminance(r, g, b)).to.be.lessThan(0.5);
+        } else {
+          expect(luminance(r, g, b)).to.be.greaterThan(0.5);
+        }
+      });
+
+      it(`it should have a background color of ${colorValue} when deprecated color attribute is ${colorName}`, async function() {
+        const element = await createFixture<PfeCard>(TEMPLATES.card1);
+        // If this is not the default color, update the color attribute
+        if (colorName !== 'default') {
+          element.setAttribute('color', colorName);
+        }
+
+        await element.updateComplete;
 
         // Get the background color value
         const [r, g, b] = getColor(element, 'background-color');

@@ -60,6 +60,18 @@ describe('<pfe-band>', function() {
       expect(getColor(band, 'background-color'))
         .to.deep.equal(hexToRgb(color));
     });
+
+    it(`it should have a background color of ${color} when deprecated color attr is ${name}`, async function() {
+      // If this is not the default background, update the variable
+      if (name !== 'default') {
+        band.setAttribute('color', name);
+      }
+
+      await band.updateComplete;
+      // Test that the color is rendering as expected
+      expect(getColor(band, 'background-color'))
+        .to.deep.equal(hexToRgb(color));
+    });
   }
 
   // Test that the default padding is correct

@@ -1,12 +1,13 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { pfelement } from '@patternfly/pfe-core/decorators.js';
+import { colorContextConsumer, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { PfeCollapsePanel } from '@patternfly/pfe-collapse/pfe-collapse-panel.js';
 
 import style from './pfe-accordion-panel.scss';
+import { ColorTheme } from '@patternfly/pfe-core';
 
 /**
  * Accordion Panel
@@ -29,6 +30,12 @@ export class PfeAccordionPanel extends LitElement {
   @property({ type: Boolean, reflect: true }) expanded = false;
 
   @property({ attribute: 'aria-labelledby', reflect: true }) ariaLabelledby?: string;
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
 
   connectedCallback() {
     super.connectedCallback();

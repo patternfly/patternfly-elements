@@ -2,8 +2,8 @@ import { LitElement, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { unsafeStatic, html as staticH } from 'lit/static-html.js';
 
-import { ComposedEvent } from '@patternfly/pfe-core';
-import { pfelement, bound, observed, initializer } from '@patternfly/pfe-core/decorators.js';
+import { ColorTheme, ComposedEvent } from '@patternfly/pfe-core';
+import { pfelement, bound, observed, initializer, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
@@ -68,6 +68,12 @@ export class PfeAccordionHeader extends LitElement {
   @property({ reflect: true, attribute: 'heading-text' }) headingText = '';
 
   @property({ reflect: true, attribute: 'heading-tag' }) headingTag = 'h3';
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
 
   @query('.pf-c-accordion__toggle') button?: HTMLButtonElement;
 

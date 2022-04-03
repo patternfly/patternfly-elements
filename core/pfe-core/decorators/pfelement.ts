@@ -4,13 +4,7 @@ import { trackPerformance } from '../core.js';
 
 import { PerfController } from '../controllers/perf-controller.js';
 
-import {
-  ColorContextConsumer,
-  ColorContextProvider,
-} from '../controllers/color-context.js';
-
 export interface PfelementOptions {
-  context: 'provider'|'consumer'|'both'|'none';
   className: string;
   attribute: string;
 }
@@ -49,7 +43,6 @@ async function enqueue(instance: ReactiveElement) {
  * 2. Adds `[pfelement]` attr and `.PFElement` class in connectedCallback
  */
 export function pfelement(options?: PfelementOptions): ClassDecorator {
-  const context = options?.context ?? 'both';
   const attribute = options?.attribute ?? 'pfelement';
   const className = options?.className ?? 'PFElement';
   return function(klass) {
@@ -70,20 +63,6 @@ export function pfelement(options?: PfelementOptions): ClassDecorator {
           instance.classList.add(className);
         },
       });
-
-      if (context !== 'none') {
-        // look mah, no instance property
-        if (context === 'both' || context === 'provider') {
-          // @ts-expect-error: this is strictly for debugging purposes
-          instance.__colorContextProvider =
-            new ColorContextProvider(instance);
-        }
-        if (context === 'both' || context === 'consumer') {
-          // @ts-expect-error: this is strictly for debugging purposes
-          instance.__colorContextConsumer =
-            new ColorContextConsumer(instance);
-        }
-      }
 
       if (trackPerformance()) {
         new PerfController(instance);

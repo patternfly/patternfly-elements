@@ -27,20 +27,16 @@
 "@patternfly/pfe-toast": patch
 ---
 
-### Fixes
-- Fixes animation timings in pfe-accordion on browsers which don't support `computedStyleMap`
-- Fixes context styles for slotted CTAs (provided `pfe.min.css` is loaded)
-- Restores reload-on-save function to dev server
-
 ### BREAKING CHANGES:
 - Renames `ContextTheme` type to `ColorTheme`
 - Renames `ColorTheme` type to `ColorPalette`
 - Moves both of the above from `core.ts` to `controllers/color-context.ts`
 - Moves `controllers/color-context-controller.ts` to `controllers/color-context.ts`
 - Removes `ColorContextController` (see below)
-- Renames `color` attribute to `color-palette`
+- Deprecates `color` attribute in favour of `color-palette`
   affects `pfe-band`, `pfe-card`, `pfe-jump-links`, and `pfe-modal` explicitly, all others implicitly (see below)
   use `color-palette` instead or set `--context` css custom property
+  `color` will still be supported in `pfe-card` and `pfe-band`, but they are deprecated
 - Removes `pfe-contexts` mixin from `pfe-sass`, use controllers or decorators instead
 - Removes `pfe-accordion--expanded` mixin from `pfe-sass` and inlines it
 - Deprecates `context` attribute,
@@ -62,12 +58,17 @@
     </pfe-modal>
     ```
 
+### Fixes
+- Fixes animation timings in pfe-accordion on browsers which don't support `computedStyleMap`
+- Fixes context styles for slotted CTAs (provided `pfe.min.css` is loaded)
+- Restores reload-on-save function to dev server
+
 ### New Features:
 
 - Adds `ColorContextProvider` and `ColorContextConsumer` controllers
 - Adds `@colorContextProvider` and `@colorContextConsumer` decorators
-- Adds `context` option to `@pfelement` decorator
+- Adds `@deprecation` decorator
 - Adds `className` and `attribute` options to `@pfelement` decorator
-- Adds `color-palette` to all PFElements which don't explicitly opt-out
 - Adds global (light DOM) link styling to `pfe.min.css`
 - Adds `color-palette` support to `<pfe-modal>`
+- Adds preliminary color context support to `<pfe-button>`

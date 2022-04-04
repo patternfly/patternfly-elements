@@ -443,7 +443,7 @@ $breakpoints: (
 @mixin single-column-dropdown($menu-name: nav) {
   // Desired padding plus negative margin on columns
   padding: 0 calc(#{pfe-local('full-width--spacing--mobile', $region: 'dropdown')} + #{pfe-local('single-column--spacing', $region: 'dropdown')});
-  @include breakpoint(#{$menu-name'-expand'}) {
+  @include breakpoint("#{$menu-name}-expand") {
     position: absolute;
     top: 100%;
     max-width: 100%;

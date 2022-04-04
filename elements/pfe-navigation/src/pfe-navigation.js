@@ -292,6 +292,7 @@ class PfeNavigation extends PFElement {
       "_getLastFocusableItemInMobileSlider",
       "_updateAlerts",
       "_postProcessLogo",
+      "updateOpenDropdownHeight",
     ];
 
     for (let index = 0; index < functionsToBind.length; index++) {
@@ -496,11 +497,12 @@ class PfeNavigation extends PFElement {
   getToggleElement(toggleId) {
     if (stringStartsWith(toggleId, "pfe-navigation__secondary-link--")) {
       return this.querySelector(`#${toggleId}`);
-    }
-    else if (toggleId === 'pfe-navigation__account-toggle' && this.classList.contains('pfe-navigation--has-custom-account-dropdown')) {
-      return this.querySelector(`#${ toggleId }`);
-    }
-    else {
+    } else if (
+      toggleId === "pfe-navigation__account-toggle" &&
+      this.classList.contains("pfe-navigation--has-custom-account-dropdown")
+    ) {
+      return this.querySelector(`#${toggleId}`);
+    } else {
       return this.shadowRoot.getElementById(toggleId);
     }
   }
@@ -513,10 +515,12 @@ class PfeNavigation extends PFElement {
   getDropdownElement(dropdownId) {
     if (stringStartsWith(dropdownId, "pfe-navigation__custom-dropdown--")) {
       return this.querySelector(`#${dropdownId}`);
-    } else if (dropdownId === 'pfe-navigation__account-dropdown' && this.classList.contains('pfe-navigation--has-custom-account-dropdown')) {
+    } else if (
+      dropdownId === "pfe-navigation__account-dropdown" &&
+      this.classList.contains("pfe-navigation--has-custom-account-dropdown")
+    ) {
       return this.querySelector(`#${dropdownId}`);
-    }
-     else {
+    } else {
       return this.shadowRoot.getElementById(dropdownId);
     }
   }
@@ -528,13 +532,14 @@ class PfeNavigation extends PFElement {
    */
   isOpen(toggleId) {
     const openToggleId = this.openToggle;
-    if (openToggleId) { // Is anything open
+    // Is anything open
+    if (openToggleId) {
       if (typeof toggleId === "undefined") {
         // Something is open, and a toggleId wasn't set
         return true;
       }
       // Figure out if the mobile menu is open due to it's children, account toggle is not a child dropdown
-      if (toggleId === "mobile__button" && openToggleId !== 'pfe-navigation__account-toggle') {
+      if (toggleId === "mobile__button" && openToggleId !== "pfe-navigation__account-toggle") {
         // If the link is main menu, they're all children of the mobile toggle, the mobile toggle should be open
         if (stringStartsWith(openToggleId, "main-menu")) {
           return true;
@@ -592,6 +597,37 @@ class PfeNavigation extends PFElement {
       dropdownWrapper.style.setProperty("height", `${dropdownHeight}px`);
     } else {
       dropdownWrapper.style.setProperty("height", "auto");
+    }
+  }
+
+  /**
+   * Finds the current dropdown and sets the height
+   * assuming that the the nav state is at a point where a dropdown height is set with JS
+   */
+  updateOpenDropdownHeight() {
+    // Quick exit if it's open
+    if (!this.isOpen()) {
+      this.warn("There doesn't seem to be an open dropdown.");
+      return;
+    }
+    // Quick exit if we're on desktop
+    if (this.breakpoint === "desktop") {
+      this.warn("Dropdown height is not set for desktop breakpoint.");
+    }
+
+    // Do what we came to
+    const openToggleId = this.openToggle;
+    const dropdownId = this._getDropdownId(openToggleId);
+    if (!dropdownId) {
+      this.warn(`Couldn't find dropdown for the open toggle: ${openToggleId}`);
+      return;
+    }
+
+    const dropdown = this.getDropdownElement(dropdownId);
+    if (dropdown) {
+      this._setDropdownHeight(dropdown);
+    } else {
+      this.warn(`Couldn't get dropdown element with the id: ${dropdownId}`);
     }
   }
 
@@ -1203,17 +1239,22 @@ class PfeNavigation extends PFElement {
        * Validate the custom dropdowns
        */
       if (
-        isSecondaryLink || isAccountDropdown &&
-        // Check to make sure this wasn't processed already
-        !pfeNavigationDropdown.classList.contains("pfe-navigation__dropdown")
+        isSecondaryLink ||
+        // Is it an unprocessed account dropdown
+        (
+          isAccountDropdown &&
+          !pfeNavigationDropdown.classList.contains("pfe-navigation__dropdown")
+        )
       ) {
         const toggleAndDropdownWrapper = pfeNavigationDropdown.parentElement;
         if (isAccountDropdown) {
-          this.classList.add('pfe-navigation--has-custom-account-dropdown');
+          this.classList.add("pfe-navigation--has-custom-account-dropdown");
         }
 
         // Check for provided toggle element
-        let toggle = toggleAndDropdownWrapper.querySelector(".pfe-navigation__secondary-link, .pfe-navigation__account-toggle");
+        let toggle = toggleAndDropdownWrapper.querySelector(
+          ".pfe-navigation__secondary-link, .pfe-navigation__account-toggle"
+        );
         const attributeValues = {};
         let toggleMachineName = pfeNavigationDropdown.dataset.idSuffix;
 
@@ -1255,8 +1296,7 @@ class PfeNavigation extends PFElement {
         let dropdownId;
         if (isSecondaryLink) {
           dropdownId = `pfe-navigation__custom-dropdown--${toggleMachineName}`;
-        }
-        else if (isAccountDropdown) {
+        } else if (isAccountDropdown) {
           dropdownId = `pfe-navigation__account-dropdown`;
         }
 
@@ -1285,9 +1325,8 @@ class PfeNavigation extends PFElement {
 
         if (isSecondaryLink) {
           toggle.id = `pfe-navigation__secondary-link--${toggleMachineName}`;
-        }
-        else if (isAccountDropdown) {
-          toggle.id = 'pfe-navigation__account-toggle';
+        } else if (isAccountDropdown) {
+          toggle.id = "pfe-navigation__account-toggle";
         }
 
         toggle.addEventListener("click", this._dropdownItemToggle);

@@ -22,6 +22,7 @@ The parent DOM can also call some methods like:
 * `isOpen()` - With no params returns true if _anything_ is open, otherwise specific section names can be provided to see if a specific section is open.
 * `isMobileMenuButtonVisible()` - Returns true if the menu hamburger is visible, this happens around a 'tablet size' viewport.
 * `isSecondaryLinksSectionCollapsed()` - Returns true if search and other secondary links get moved to the mobile dropdown menu, which is the layout for the 'mobile phone sized' screens.
+* `updateOpenDropdownHeight()` - On mobile/tablet update the height inline style for the currently open dropdown
 
 
 Example markup:
@@ -301,11 +302,11 @@ Navigation (and all PFElements) use [Prettier][prettier] to auto-format JS and J
 
 
 ## Events
-- `pfe-navigation-expanded-item`: Fires when any dropdown is opened, in `event.detail` it will have a reference to:
+- `pfe-navigation:expanded-item`: Fires when any dropdown is opened, in `event.detail` it will have a reference to:
   - `toggle` element, the button that opens the dropdown
   - `pane` the dropdown element
   - `parent` the `pfe-navigation` element
-- `pfe-navigation-collapsed-item`: Fires when any dropdown is closed which may be because another one was open. It will have the same references as `pfe-navigation-expanded-item`.
+- `pfe-navigation:collapsed-item`: Fires when any dropdown is closed which may be because another one was open. It will have the same references as `pfe-navigation:expanded-item`.
 - `pfe-shadow-dom-event`: Fires when an element is clicked inside of a dropdown in the shadow root. This is for analytics to properly categorize and report the event. `event.detail` has:
   - `target` Element clicked
   - `parent` the `pfe-navigation` element

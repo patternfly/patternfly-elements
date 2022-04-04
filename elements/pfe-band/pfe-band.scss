@@ -6,7 +6,7 @@
   $name: 'band',
   $variables: (
     // Default spacing values
-    Padding--vertical:    calc( #{pfe-var(container-spacer)} * 4),
+    Padding--vertical:    calc((#{pfe-var(container-spacer)} * 4) / var(--pfe-band-padding-vertical-divisor)),
     Padding--horizontal:  calc( #{pfe-var(container-spacer)} * 1),
 
     // Surface colors
@@ -57,8 +57,8 @@
 // Bring them together for ease of use below
 @include merge-local-variables((
   Padding:
-    pfe-local(Padding--vertical)
-    pfe-local(Padding--horizontal)
+    pfe-local('Padding--vertical')
+    pfe-local('Padding--horizontal')
 ));
 
 $regions-grid: (
@@ -143,8 +143,7 @@ $regions-grid: (
   --pfe-theme--color--surface--accent: #004080;
   --pfe-theme--color--surface--complement: #002952;
 
-  --pfe-band--Padding--vertical:    calc(#{pfe-var(container-spacer)} * 4);
-  --pfe-band--Padding--horizontal:  calc(#{pfe-var(container-spacer)} * 1);
+  --pfe-band-padding-vertical-divisor: 2;
 
   // Base colors
   background-color:    var(--pfe-band--BackgroundColor, var(--pfe-context-background-color));
@@ -152,11 +151,11 @@ $regions-grid: (
   color:                 pfe-broadcasted(text);
 
   // Custom padding on mobile
-  padding: calc(#{pfe-local(Padding--vertical)} / 2)  pfe-local(Padding--horizontal);
+  padding: pfe-local('Padding');
 
   // Variable padding on desktop
   @media (min-width: pfe-breakpoint(sm)) {
-    padding: pfe-local(Padding);
+    --pfe-band-padding-vertical-divisor: 1;
   }
 
   // Apply box-sizing styles
@@ -175,13 +174,12 @@ $regions-grid: (
 }
 
 // thinner padding on top & bottom
+// Custom padding on mobile
+// Variable padding on desktop
 :host([size="small"]) {
-  // Custom padding on mobile
-  padding: calc(var(--pfe-band--Padding--vertical) / 2) var(--pfe-band--Padding--horizontal);
-
-  // Variable padding on desktop
+  --pfe-band-padding-vertical-divisor: 4;
   @media (min-width: pfe-breakpoint(sm)) {
-    padding: calc(#{pfe-local(Padding--vertical)} / 1)  pfe-local(Padding--horizontal);
+    --pfe-band-padding-vertical-divisor: 4;
   }
 }
 

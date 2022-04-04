@@ -108,7 +108,7 @@ export class PfeClipboard extends LitElement {
   /**
    * Specify if current site is behind [https]
    */
-  @state() private _secure = window.isSecureContext; // is there a way to test this without manually setting this var to false?
+  @state() private _secure = window.isSecureContext;
 
   /**
    * Specify the copy type to be used depending on security and browser support
@@ -252,12 +252,14 @@ export class PfeClipboard extends LitElement {
         this.copyType = 'navigator';
       } else {
         this.setAttribute('hidden', '');
+        this._ariaDisabled = true;
         throw new Error('Browser supports navigator.clipboard API but current website is not behind [https] required by the specification. https://developer.mozilla.org/en-US/docs/Web/API/Clipboard');
       }
     } else if (document.queryCommandEnabled('copy')) {
       this.copyType = 'queryCommand';
     } else {
       this.setAttribute('hidden', '');
+      this._ariaDisabled = true;
       throw new Error('Browser does not support copying to the clipboard.');
     }
   }

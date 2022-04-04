@@ -162,5 +162,6 @@
     "yo": "^4.1.0",
     "yosay": "^2.0.2"
   },
-  "private": true
+  "private": true,
+  "version": "0.0.1"
 }

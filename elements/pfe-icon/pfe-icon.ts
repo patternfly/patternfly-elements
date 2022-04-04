@@ -4,7 +4,7 @@ import { LitElement, html, svg } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
+import { pfelement, bound, observed, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -13,6 +13,7 @@ import { PfeIconSet } from './icon-set.js';
 import { addBuiltIns } from './builtin-icon-sets.js';
 
 import style from './pfe-icon.scss';
+import { ColorTheme } from '@patternfly/pfe-core';
 
 export type IconColor = (
   | 'accent'
@@ -140,6 +141,12 @@ export class PfeIcon extends LitElement {
   @property({ type: Boolean, reflect: true }) circled = false;
 
   @property({ type: Boolean, reflect: true }) block = false;
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
 
   @state() private _iconHref = '';
 

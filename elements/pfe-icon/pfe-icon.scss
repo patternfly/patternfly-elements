@@ -150,6 +150,10 @@ $sizing: (
     }
   }
 
+  :host([color="#{$color}"][circled]) {
+    --pfe-icon--color: white;
+  }
+
 
   /* Override circled items with color set to named property */
   :host([color=#{$color}][circled]:not([circled="false"])) {

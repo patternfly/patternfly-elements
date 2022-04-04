@@ -87,10 +87,10 @@ export class PfeCard extends LitElement {
    * Card always resets its context to `base`, unless explicitly provided with a `color-palette`.
    */
   @colorContextProvider()
-  @property({ reflect: true, attribute: 'color-palette' }) colorPalette?: ColorPalette;
+  @property({ reflect: true, attribute: 'color-palette' }) colorPalette?: ColorPalette = 'base';
 
   /** @deprecated use `color-palette` */
-  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color: ColorPalette = 'base';
+  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color?: ColorPalette;
 
   /**
    * Sets color theme based on parent context

@@ -48,8 +48,8 @@
     <pfe-band color-palette="darkest">...</pfe-band>
     ```
 - Removes `pfe-contexts` mixin from `pfe-sass`, use controllers or decorators instead
-- Removes `pfe-accordion--expanded` mixin from `pfe-sass` and inlines it
-- Deprecates `context` attribute,
+- Removes `pfe-accordion--expanded` mixin from `pfe-sass`, and inlines it
+- Removes `context` attribute,
     Before;
     ```html
     <pfe-modal context="dark">

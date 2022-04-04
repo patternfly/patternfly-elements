@@ -34,19 +34,19 @@ class Deprecation<T extends ReactiveElement, K extends PropertyKey> implements R
 
   private logged = false;
 
-  constructor(private host: T, private options: DeprecationDeclaration<K>, private key: keyof T) {
+  constructor(private host: T, private options: DeprecationDeclaration<K>, private deprecatedKey: keyof T) {
     this.logger = new Logger(host);
   }
 
   hostUpdate() {
-    const { key, options: { alias } } = this;
-    if (this.host[key]) {
-      if (this.host[alias as keyof T] !== this.host[key]) {
+    const { deprecatedKey, options: { alias } } = this;
+    if (this.host[deprecatedKey]) {
+      if (this.host[alias as keyof T] !== this.host[deprecatedKey]) {
         if (!this.logged) {
-          this.logger.warn(`${key} is deprecated, use ${alias} instead`);
+          this.logger.warn(`${deprecatedKey} is deprecated, use ${alias} instead`);
           this.logged = true;
         }
-        this.host[alias as keyof T] = this.host[key];
+        this.host[alias as keyof T] = this.host[deprecatedKey];
       }
     }
   }

@@ -62,6 +62,7 @@
 - Fixes animation timings in pfe-accordion on browsers which don't support `computedStyleMap`
 - Fixes context styles for slotted CTAs (provided `pfe.min.css` is loaded)
 - Restores reload-on-save function to dev server
+- Makes `pfe-clipboard` strictly a colour context consumer
 
 ### New Features:
 

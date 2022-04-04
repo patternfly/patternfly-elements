@@ -638,7 +638,7 @@ nav.pfe-navigation {
 .pfe-navigation__dropdown-wrapper {
   @include pfe-navigation__dropdown-wrapper--mobile;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   width: 100%;
   height: 0;

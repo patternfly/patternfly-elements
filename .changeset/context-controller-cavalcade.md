@@ -33,10 +33,20 @@
 - Moves both of the above from `core.ts` to `controllers/color-context.ts`
 - Moves `controllers/color-context-controller.ts` to `controllers/color-context.ts`
 - Removes `ColorContextController` (see below)
-- Deprecates `color` attribute in favour of `color-palette`
-  affects `pfe-band`, `pfe-card`, `pfe-jump-links`, and `pfe-modal` explicitly, all others implicitly (see below)
-  use `color-palette` instead or set `--context` css custom property
-  `color` will still be supported in `pfe-card` and `pfe-band`, but they are deprecated
+- Deprecates `color` attribute in favour of `color-palette`.
+    use `color-palette` instead or set `--context` css custom property
+    `color` will still be supported in `pfe-card` and `pfe-band`, but they are deprecated,
+    and a warning will print to the console when `color` is used.
+    Explicitly affects `pfe-band`, `pfe-card`, `pfe-jump-links`, and `pfe-modal` (see below)  
+    Before:
+    ```html
+    <pfe-band color="darkest">...</pfe-band>
+    ```
+
+    After:
+    ```html
+    <pfe-band color-palette="darkest">...</pfe-band>
+    ```
 - Removes `pfe-contexts` mixin from `pfe-sass`, use controllers or decorators instead
 - Removes `pfe-accordion--expanded` mixin from `pfe-sass` and inlines it
 - Deprecates `context` attribute,
@@ -61,8 +71,12 @@
 ### Fixes
 - Fixes animation timings in pfe-accordion on browsers which don't support `computedStyleMap`
 - Fixes context styles for slotted CTAs (provided `pfe.min.css` is loaded)
+- Fixes padding in `pfe-band` and simplifies the CSS
 - Restores reload-on-save function to dev server
 - Makes `pfe-clipboard` strictly a colour context consumer
+- Makes `pfe-button` strictly a colour context consumer
+- Makes `pfe-accordion` both a colour context consumer and provider,
+    but makes `pfe-accordion-header` and `pfe-accordion-panel` strictly consumers
 
 ### New Features:
 

@@ -74,26 +74,56 @@ describe('<pfe-band>', function() {
     });
   }
 
-  // Test that the default padding is correct
-  it('should have default padding when no size attribute is set', async function() {
-    // Test that the color is rendering as expected
-    const style = getComputedStyle(band);
-    await setViewport({ width: 500, height: 800 });
-    expect(style.getPropertyValue('padding')).to.equal('32px 16px');
-    await setViewport({ width: 600, height: 800 });
-    expect(style.getPropertyValue('padding')).to.equal('64px 16px');
+  describe('with viewport 500px wide', function() {
+    beforeEach(async function() {
+      await setViewport({ width: 500, height: 800 });
+    });
+
+    describe('when no size attribute is set', function() {
+      it('should have default padding', async function() {
+        const style = getComputedStyle(band);
+        expect(style.getPropertyValue('padding')).to.equal('32px 16px');
+      });
+    });
+    describe('when size attribute is "small"', function() {
+      beforeEach(async function() {
+        band.setAttribute('size', 'small');
+        await band.updateComplete;
+      });
+
+      it('should have default padding', async function() {
+        const style = getComputedStyle(band);
+        expect(style.getPropertyValue('padding')).to.equal('16px');
+      });
+    });
   });
 
-  // Test that the padding is reduced if the size is set to small
-  it('should have reduced padding when the size attribute is small', async function() {
-    // Update the color attribute
-    band.setAttribute('size', 'small');
-    await band.updateComplete;
-    const style = getComputedStyle(band);
-    await setViewport({ width: 500, height: 800 });
-    expect(style.getPropertyValue('padding'), 'narrow screen').to.equal('32px 16px');
-    await setViewport({ width: 600, height: 800 });
-    expect(style.getPropertyValue('padding'), 'wider screen').to.equal('64px 16px');
+  describe('with viewport 600px wide', function() {
+    beforeEach(async function() {
+      await setViewport({ width: 600, height: 800 });
+    });
+    describe('when no size attribute is set', function() {
+      it('should have default padding', async function() {
+        const style = getComputedStyle(band);
+        expect(style.getPropertyValue('padding')).to.equal('64px 16px');
+      });
+    });
+    describe('when no size attribute is set', function() {
+      it('should have default padding', async function() {
+        const style = getComputedStyle(band);
+        expect(style.getPropertyValue('padding')).to.equal('64px 16px');
+      });
+    });
+    describe('when size attribute is "small"', function() {
+      beforeEach(async function() {
+        band.setAttribute('size', 'small');
+        await band.updateComplete;
+      });
+      it('should have default padding', async function() {
+        const style = getComputedStyle(band);
+        expect(style.getPropertyValue('padding')).to.equal('16px');
+      });
+    });
   });
 
   // Test the default positions of the aside region in the DOM

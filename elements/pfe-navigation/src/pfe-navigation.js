@@ -1241,10 +1241,7 @@ class PfeNavigation extends PFElement {
       if (
         isSecondaryLink ||
         // Is it an unprocessed account dropdown
-        (
-          isAccountDropdown &&
-          !pfeNavigationDropdown.classList.contains("pfe-navigation__dropdown")
-        )
+        (isAccountDropdown && !pfeNavigationDropdown.classList.contains("pfe-navigation__dropdown"))
       ) {
         const toggleAndDropdownWrapper = pfeNavigationDropdown.parentElement;
         if (isAccountDropdown) {

@@ -2,55 +2,55 @@
 
   Cards are flexible surfaces used to group information in a small layout. They give small previews of information or provide secondary content in relation to the content it's near. Several cards can be used together to group related information.
 
-  <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-4-col-on-md">
-    <pfe-card>
-      <h3 slot="header">Default card</h3>
-      <p>This is the default card</p>
-      <pfe-cta slot="footer">
-        <a href="#">Link in the footer</a>
-      </pfe-cta>
-    </pfe-card>
+<div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-4-col-on-md">
+  <pfe-card>
+    <h3 slot="header">Default card</h3>
+    <p>This is the default card</p>
+    <pfe-cta slot="footer">
+      <a href="#">Link in the footer</a>
+    </pfe-cta>
+  </pfe-card>
 
-    <pfe-card color-palette="lightest" border>
-      <h3 slot="header">Lightest card</h3>
-      <p>This is the lightest card with a border</p>
-      <pfe-cta slot="footer">
-        <a href="#">Link in the footer</a>
-      </pfe-cta>
-    </pfe-card>
+  <pfe-card color-palette="lightest" border>
+    <h3 slot="header">Lightest card</h3>
+    <p>This is the lightest card with a border</p>
+    <pfe-cta slot="footer">
+      <a href="#">Link in the footer</a>
+    </pfe-cta>
+  </pfe-card>
 
-    <pfe-card color-palette="darker">
-      <h3 slot="header">Darker card</h3>
-      <p>This is the darker card</p>
-      <pfe-cta slot="footer">
-        <a href="#">Link in the footer</a>
-      </pfe-cta>
-    </pfe-card>
+  <pfe-card color-palette="darker">
+    <h3 slot="header">Darker card</h3>
+    <p>This is the darker card</p>
+    <pfe-cta slot="footer">
+      <a href="#">Link in the footer</a>
+    </pfe-cta>
+  </pfe-card>
 
-    <pfe-card color-palette="darkest">
-      <h3 slot="header">Darkest card</h3>
-      <p>This is the darkest card</p>
-      <pfe-cta slot="footer">
-        <a href="#">Link in the footer</a>
-      </pfe-cta>
-    </pfe-card>
+  <pfe-card color-palette="darkest">
+    <h3 slot="header">Darkest card</h3>
+    <p>This is the darkest card</p>
+    <pfe-cta slot="footer">
+      <a href="#">Link in the footer</a>
+    </pfe-cta>
+  </pfe-card>
 
-    <pfe-card color-palette="complement">
-      <h3 slot="header">Complement card</h3>
-      <p>This is the complement card</p>
-      <pfe-cta slot="footer">
-        <a href="#">Link in the footer</a>
-      </pfe-cta>
-    </pfe-card>
+  <pfe-card color-palette="complement">
+    <h3 slot="header">Complement card</h3>
+    <p>This is the complement card</p>
+    <pfe-cta slot="footer">
+      <a href="#">Link in the footer</a>
+    </pfe-cta>
+  </pfe-card>
 
-    <pfe-card color-palette="accent">
-      <h3 slot="header">Accent card</h3>
-      <p>This is the accent card</p>
-      <pfe-cta slot="footer">
-        <a href="#">Link in the footer</a>
-      </pfe-cta>
-    </pfe-card>
-  </div>
+  <pfe-card color-palette="accent">
+    <h3 slot="header">Accent card</h3>
+    <p>This is the accent card</p>
+    <pfe-cta slot="footer">
+      <a href="#">Link in the footer</a>
+    </pfe-cta>
+  </pfe-card>
+</div>
 {% endrenderOverview %}
 
 {% band header="Usage" %}

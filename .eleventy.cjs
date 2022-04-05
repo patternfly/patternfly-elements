@@ -3,7 +3,7 @@ const anchorsPlugin = require('@orchidjs/eleventy-plugin-ids');
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const directoryOutputPlugin = require('@11ty/eleventy-plugin-directory-output');
 
-const pfeAssetsPlugin = require('./docs/_plugins/pfe-assets.cjs');
+const pfeAssetsPlugin = require('@patternfly/pfe-tools/11ty/plugins/pfe-assets.cjs');
 
 const customElementsManifestPlugin = require('@patternfly/pfe-tools/11ty/plugins/custom-elements-manifest.cjs');
 const orderTagsPlugin = require('@patternfly/pfe-tools/11ty/plugins/order-tags.cjs');

@@ -2,5 +2,6 @@
 *.js
 *.js.map
 
+!11ty/types.d.ts
 !custom-elements-manifest/declaration.d.ts
 !_scripts/dev.js

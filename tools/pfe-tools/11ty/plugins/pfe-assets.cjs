@@ -1,21 +1,32 @@
 const fs = require('fs');
-const { join } = require('path');
+const path = require('path');
+
+function exists(x) {
+  try {
+    fs.statSync(x);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 /** Generate a map of files per package which should be copied to the site dir */
 function getFilesToCopy() {
-  const repoRoot = join(__dirname, '..', '..');
+  /** best guess at abs-path to repo root */
+  const repoRoot = path.join(__dirname, '..', '..', '..', '..').replace(/node_modules\/$/, '');
 
   // Copy all component and core files to _site
-  const files = Object.fromEntries([
-    ...fs.readdirSync(join(repoRoot, 'elements')).map(dir => [
-      `elements/${dir}`,
-      `components/${dir.replace('pfe-', '')}`,
-    ]),
-    ...fs.readdirSync(join(repoRoot, 'core')).map(dir => [
+  const files = Object.fromEntries(fs.readdirSync(path.join(repoRoot, 'elements')).map(dir => [
+    `elements/${dir}`,
+    `components/${dir.replace('pfe-', '')}`,
+  ]));
+
+  if (exists(path.join(repoRoot, 'core'))) {
+    Object.assign(files, Object.fromEntries(fs.readdirSync(path.join(repoRoot, 'core')).map(dir => [
       `core/${dir}`,
       `core/${dir.replace('pfe-', '')}`,
-    ]),
-  ]);
+    ])));
+  }
 
   return files;
 }

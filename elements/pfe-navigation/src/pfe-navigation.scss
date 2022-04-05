@@ -348,6 +348,20 @@ nav.pfe-navigation {
       display: flex;
     }
   }
+
+  :host([pfe-sticky]) & {
+    max-height: calc(100vh - #{pfe-local(Height, $region: nav-bar)});
+    overflow-y: auto;
+    @include breakpoint('nav-expand') {
+      max-height: 9999em;
+      overflow: visible;
+    }
+    @include collapse('nav') {
+      max-height: calc(100vh - #{pfe-local(Height, $region: nav-bar)});
+      overflow-y: auto;
+    }
+  }
+
 }
 
 

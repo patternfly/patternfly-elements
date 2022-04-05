@@ -228,6 +228,19 @@ pfe-navigation {
       box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
     }
 
+    .pfe-navigation__account-toggle[aria-expanded='true'] {
+      $font-color: pfe-local(Color--active, $region: nav-bar);
+      --pfe-icon--color: #{$font-color};
+
+      color: $font-color;
+      background: pfe-local(toggle--BackgroundColor--active, $region: 'nav-bar');
+      box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
+
+      &:focus {
+        @include alt-focus-styles(pfe-local(Color--active, $region: 'nav-bar'));
+      }
+    }
+
     .pfe-navigation__menu,
     .pfe-navigation__fallback-links {
       margin: 0;

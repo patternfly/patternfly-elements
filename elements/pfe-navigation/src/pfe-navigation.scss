@@ -701,6 +701,12 @@ nav.pfe-navigation {
   @include collapse('secondary-links') {
     @include pfe-navigation__dropdown-layout--mobile;
   }
+  // @todo this is a workaround
+  // Issue is on redhat.com Services, where breakpoint says mobile,
+  // but collapse-secondary-links class doesn't fire
+  [breakpoint='mobile'] & {
+    @include pfe-navigation__dropdown-layout--mobile;
+  }
 
   .pfe-navigation__menu-item--open & {
     visibility: visible;
@@ -723,6 +729,9 @@ nav.pfe-navigation {
 .pfe-navigation__dropdown--3-column {
   @include breakpoint('nav-expand') {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @include collapse('nav') {
+    @include pfe-navigation__dropdown-layout--tablet;
   }
 }
 

@@ -457,6 +457,10 @@ pfe-navigation {
       }
     }
 
+    .pfe-navigation-grid { // @note v1.x support
+      max-width: 100%;
+    }
+
     .pfe-navigation__dropdown--1-x {
       display: block;
     }

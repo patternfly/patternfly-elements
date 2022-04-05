@@ -1565,6 +1565,11 @@ class PfeNavigation extends PFElement {
             }
           }
 
+          // Don't worry about site switcher content updates
+          if (mutationItem.target.tagName.toLowerCase() === "site-switcher") {
+            ignoreThisMutation = true;
+          }
+
           if (!ignoreThisMutation) {
             const customDropdownsToProcess = [];
             if (mutationItem && mutationItem.addedNodes) {

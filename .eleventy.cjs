@@ -12,7 +12,7 @@ const todosPlugin = require('@patternfly/pfe-tools/11ty/plugins/todos.cjs');
 const markdownIt = require('markdown-it');
 const markdownItAnchor = require('markdown-it-anchor');
 
-const pluginToc = require('eleventy-plugin-toc');
+const pluginToc = require('@patternfly/pfe-tools/11ty/plugins/table-of-contents.cjs');
 
 const markdownLib = markdownIt({ html: true })
   .use(markdownItAnchor);

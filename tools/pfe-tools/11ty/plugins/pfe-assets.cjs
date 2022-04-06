@@ -13,7 +13,7 @@ function exists(x) {
 /** Generate a map of files per package which should be copied to the site dir */
 function getFilesToCopy() {
   /** best guess at abs-path to repo root */
-  const repoRoot = path.join(__dirname, '..', '..', '..', '..').replace(/node_modules\/$/, '');
+  const repoRoot = path.join(__dirname, '..', '..', '..', '..').replace(/node_modules\/?$/g, '');
 
   // Copy all component and core files to _site
   const files = Object.fromEntries(fs.readdirSync(path.join(repoRoot, 'elements')).map(dir => [

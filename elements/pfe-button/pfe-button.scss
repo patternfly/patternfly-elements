@@ -98,7 +98,7 @@
 :host([variant="secondary"]) {
   #container {
     ::slotted(button) {
-      color: var(--pfe-button--Color, var(--pfe-theme--color--text)) !important;
+      color: var(--pfe-button--Color, var(--pfe-theme--color--ui-accent,#06c)) !important;
       &::after {
         border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(ui-accent)) !important;
       }

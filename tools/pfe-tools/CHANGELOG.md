@@ -1,5 +1,13 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.14
+
+### Minor Changes
+
+- 621fcb38: Adds table-of-contents 11ty plugin
+  Fixes bugs in 11ty plugins
+- cd04ae82: Adds 11ty plugins to pfe-tools
+
 ## 1.0.0-next.13
 
 ### Patch Changes

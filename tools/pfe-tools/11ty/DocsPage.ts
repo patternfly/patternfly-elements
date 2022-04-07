@@ -14,6 +14,8 @@ import nunjucks, { Environment } from 'nunjucks';
 interface PackageJSON {
   customElements?: string;
   name: string;
+  version: string;
+  workspaces?: string;
 }
 
 export interface RenderKwargs {

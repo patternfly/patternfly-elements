@@ -88,7 +88,6 @@
     "Linux",
     "Red Hat Enterprise Linux"
   ];
-
   staticAutocomplete.autocompleteRequest = function(params, callback) {
     const regx = new RegExp("\^" + params.query, "i");
     callback(items.filter(function (item) {

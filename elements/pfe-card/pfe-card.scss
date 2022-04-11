@@ -170,7 +170,7 @@ $size-small: (
     // Declare the header background color
     background-color: pfe-local(BackgroundColor, $region: header);
     color:            pfe-local($cssvar: Color, $region: header);
-    :host([on="dark"]) & {
+    :host([color-palette^="dark"]) & {
         // Declare the header background color
       background-color: pfe-local(BackgroundColor--dark, $region: header);
     }

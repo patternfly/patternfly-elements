@@ -3,11 +3,15 @@ import type { DroplistSelectEvent, PfeSearchDroplist } from './pfe-search-dropli
 import { LitElement, html } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 
+import { ColorPalette, ColorTheme } from '@patternfly/pfe-core';
+
 import { ComposedEvent } from '@patternfly/pfe-core';
-import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
+import { pfelement, bound, observed, colorContextConsumer, colorContextProvider, deprecation, } from '@patternfly/pfe-core/decorators.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 
+
 import './pfe-search-droplist';
+
 
 import style from './pfe-autocomplete.scss';
 
@@ -108,6 +112,25 @@ export class PfeAutocomplete extends LitElement {
   static readonly styles = [style];
 
   static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+
+  /**
+   * Sets color palette, which affects the element's styles as well as descendants' color theme.
+   * Overrides parent color context.
+   * Your theme will influence these colors so check there first if you are seeing inconsistencies.
+   * See [Color](https://patternflyelements.org/theming/colors/) for default values
+   */
+  @colorContextProvider()
+  @property({ reflect: true, attribute: 'color-palette' }) colorPalette?: ColorPalette;
+
+  /** @deprecated use `color-palette` */
+  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color?: ColorPalette;
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on: ColorTheme = 'light';
+
 
   /**
    * Set this attribute when you want to set a value in input box when web component is added to page.

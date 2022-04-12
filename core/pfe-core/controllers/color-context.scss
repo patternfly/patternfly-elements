@@ -8,7 +8,7 @@
  * background must create a new `dark` context for its descendents
  */
 
-:host(:is([color-palette^=dark])) {
+ :host(:is([color-palette=darker],[color-palette=darkest])) {
   --context: dark;
   --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
   --pfe-broadcasted--text--muted: var(--pfe-theme--color--text--muted--on-dark, #d2d2d2);
@@ -22,8 +22,7 @@
   --pfe-broadcasted--link-decoration--visited: var(--pfe-theme--link-decoration--visited--on-dark, none);
 }
 
-:host(:is([color-palette^=light])),
-:host(:is([color-palette=base])) {
+:host(:is([color-palette=lighter],[color-palette=lightest],[color-palette=base])) {
   --context: light;
   --pfe-broadcasted--text: var(--pfe-theme--color--text, #151515);
   --pfe-broadcasted--text--muted: var(--pfe-theme--color--text--muted, #6a6e73);
@@ -37,9 +36,7 @@
   --pfe-broadcasted--link-decoration--visited: var(--pfe-theme--link-decoration--visited, none);
 }
 
-:host(:is([color-palette=accent])),
-:host(:is([color-palette=complement])),
-:host(:is([color-palette=saturated])) {
+:host(:is([color-palette=accent],[color-palette=complement],[color-palette=saturated])) {
   --context: saturated;
   --pfe-broadcasted--text: var(--pfe-theme--color--text--on-saturated, #fff);
   --pfe-broadcasted--text--muted: var(--pfe-theme--color--text--muted--on-saturated, #d2d2d2);

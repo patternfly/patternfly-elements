@@ -190,6 +190,17 @@ $regions-grid: (
 .pfe-band__container {
   margin: 0 auto;
 
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto;
+
+  grid-template-areas: "body";
+
+  grid-row-gap: pfe-local(gutter--vertical);
+  row-gap:      pfe-local(gutter--vertical);
+  grid-column-gap:  pfe-local(gutter--horizontal);
+  column-gap:       pfe-local(gutter--horizontal);
+
   :host(:not([full-width])) & {
     max-width: pfe-local(Width);
     // Loop through the other breakpoints
@@ -200,98 +211,85 @@ $regions-grid: (
     }
   }
 
-  @supports (display: grid) {
-    display: grid;
+  // Styles for the different combination of regions
+  //-- Grid template area styles --//
+  @each $selectors, $layout in $regions-grid {
+    $sets: ();
+    $has-aside: str-index($selectors, "aside");
+
+    @each $region in str-split($selectors, "-") {
+      $sets: append($sets, ".has-#{$region}");
+    }
+
+    // Combine the sets into a selector
+    $regions: to-string($sets, "");
+
+    // Declare the mobile-first layouts
+    &#{$regions} {
+      grid-template-areas: $layout;
+    }
+
+    // If there is an aside region, create variants for
+    //   1. mobile top placement
+    //   2. desktop left positioning
+    //   3. full height layout
+
+    @if ($has-aside) {
+      // 0-MD breakpoint
+      @media (max-width: pfe-breakpoint(md, $max: true)) {
+        &#{$regions}[aside-mobile="top"] {
+          grid-template-areas: aside-grid($layout);
+        }
+      }
+
+      // MD+ breakpoint
+      @media (min-width: pfe-breakpoint(md)) {
+        &#{$regions} {
+          grid-template-areas: aside-grid($layout, $bp: desktop);
+        }
+
+        &#{$regions}[aside-desktop="left"] {
+          grid-template-areas: aside-grid($layout, $position: left, $bp: desktop);
+        }
+
+        @if length($layout) > 2 {
+          &#{$regions}[aside-height="full"] {
+            grid-template-areas: aside-grid($layout, $full: true, $bp: desktop);
+          }
+
+          &#{$regions}[aside-desktop="left"][aside-height="full"] {
+            grid-template-areas: aside-grid($layout, $full: true, $position: left, $bp: desktop);
+          }
+        }
+      }
+    }
+
+  }
+  //-- END grid template area styles --//
+
+  @media (min-width: pfe-breakpoint(md)) {
     grid-template-rows: auto;
-    grid-template-columns: auto;
+    grid-template-columns: 1fr;
 
-    grid-template-areas: "body";
-
-    grid-row-gap: pfe-local(gutter--vertical);
-    row-gap:      pfe-local(gutter--vertical);
-    grid-column-gap:  pfe-local(gutter--horizontal);
-    column-gap:       pfe-local(gutter--horizontal);
-
-    // Styles for the different combination of regions
-    //-- Grid template area styles --//
-    @each $selectors, $layout in $regions-grid {
-      $sets: ();
-      $has-aside: str-index($selectors, "aside");
-
-      @each $region in str-split($selectors, "-") {
-        $sets: append($sets, ".has-#{$region}");
-      }
-
-      // Combine the sets into a selector
-      $regions: to-string($sets, "");
-
-      // Declare the mobile-first layouts
-      &#{$regions} {
-        grid-template-areas: $layout;
-      }
-
-      // If there is an aside region, create variants for
-      //   1. mobile top placement
-      //   2. desktop left positioning
-      //   3. full height layout
-
-      @if ($has-aside) {
-        // 0-MD breakpoint
-        @media (max-width: pfe-breakpoint(md, $max: true)) {
-          &#{$regions}[aside-mobile="top"] {
-            grid-template-areas: aside-grid($layout);
-          }
-        }
-
-        // MD+ breakpoint
-        @media (min-width: pfe-breakpoint(md)) {
-          &#{$regions} {
-            grid-template-areas: aside-grid($layout, $bp: desktop);
-          }
-
-          &#{$regions}[aside-desktop="left"] {
-            grid-template-areas: aside-grid($layout, $position: left, $bp: desktop);
-          }
-
-          @if length($layout) > 2 {
-            &#{$regions}[aside-height="full"] {
-              grid-template-areas: aside-grid($layout, $full: true, $bp: desktop);
-            }
-
-            &#{$regions}[aside-desktop="left"][aside-height="full"] {
-              grid-template-areas: aside-grid($layout, $full: true, $position: left, $bp: desktop);
-            }
-          }
-        }
-      }
-
-    }
-    //-- END grid template area styles --//
-
-    @media (min-width: pfe-breakpoint(md)) {
+    &.has-aside {
       grid-template-rows: auto;
-      grid-template-columns: 1fr;
-
-      &.has-aside {
-        grid-template-rows: auto;
-        grid-template-columns: 1fr pfe-local(Width__aside--sm);
-      }
-
-      &.has-aside[aside-desktop="left"] {
-        grid-template-rows: auto;
-        grid-template-columns: pfe-local(Width__aside--sm) 1fr;
-      }
+      grid-template-columns: 1fr pfe-local(Width__aside--sm);
     }
 
-    @media (min-width: pfe-breakpoint(lg)) {
-      &.has-aside {
-        grid-template-rows: auto;
-        grid-template-columns: pfe-local(layout, $fallback: 1fr pfe-local(Width__aside--lg));
-      }
-      &.has-aside[aside-desktop="left"] {
-        grid-template-rows: auto;
-        grid-template-columns: pfe-local(layout, $fallback: pfe-local(Width__aside--lg) 1fr);
-      }
+    &.has-aside[aside-desktop="left"] {
+      grid-template-rows: auto;
+      grid-template-columns: pfe-local(Width__aside--sm) 1fr;
+    }
+  }
+
+  @media (min-width: pfe-breakpoint(lg)) {
+    &.has-aside {
+      grid-template-rows: auto;
+      grid-template-columns: pfe-local(layout, $fallback: 1fr pfe-local(Width__aside--lg));
+    }
+    &.has-aside[aside-desktop="left"] {
+      grid-template-rows: auto;
+      grid-template-columns: pfe-local(layout, $fallback: pfe-local(Width__aside--lg) 1fr);
     }
   }
 
@@ -361,5 +359,11 @@ slot[name="pfe-band--aside"] {
         column-gap:       pfe-local(gutter--horizontal, $region: $section);
       }
     }
+  }
+}
+
+@media (min-width: 768px) {
+  :host([aside-height="full"]) #container.has-header.has-aside {
+    grid-template-areas: "header aside" "body aside";
   }
 }

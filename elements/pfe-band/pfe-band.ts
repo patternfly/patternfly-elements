@@ -190,7 +190,7 @@ export class PfeBand extends LitElement {
       : html`<div class="pfe-band__wrapper" part="wrapper">${content}</div>`;
 
     return html`
-      <section class="pfe-band__container ${classMap({
+      <section id="container" class="pfe-band__container ${classMap({
         'has-header': hasSlottedHeader,
         'has-body': hasSlottedBody,
         'has-aside': hasSlottedAside,

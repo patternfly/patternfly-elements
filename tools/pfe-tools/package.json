@@ -43,7 +43,8 @@
     "**/*.md",
     "**/*.d.ts",
     "**/*.js",
-    "**/*.js.map"
+    "**/*.js.map",
+    "11ty/plugins/*.cjs"
   ],
   "scripts": {
     "build": "tsc -b .",

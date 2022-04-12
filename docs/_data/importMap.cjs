@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
+// TODO: use https://github.com/jspm/generator to generate the import map from semver ranges
 module.exports = {
   'imports': {
     'lit': 'https://ga.jspm.io/npm:lit@2.0.2/index.js',
@@ -35,6 +36,8 @@ module.exports = {
 
     'marked': 'https://ga.jspm.io/npm:marked@4.0.8/lib/marked.esm.js',
     'prismjs': 'https://ga.jspm.io/npm:prismjs@1.25.0/prism.js',
+    'pwa-helpers': 'https://ga.jspm.io/npm:pwa-helpers@0.9.1/pwa-helpers.js',
+    'pwa-helpers/router.js': 'https://ga.jspm.io/npm:pwa-helpers@0.9.1/router.js',
 
     '@patternfly/pfe-core': '/core/core/core.js',
     '@patternfly/pfe-core/decorators.js': '/core/core/decorators.js',

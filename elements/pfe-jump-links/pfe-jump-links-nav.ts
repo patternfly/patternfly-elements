@@ -2,8 +2,8 @@ import { LitElement, html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { customElement, property, query, state } from 'lit/decorators.js';
 
-import { ComposedEvent } from '@patternfly/pfe-core';
-import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
+import { ColorPalette, ColorTheme, ComposedEvent } from '@patternfly/pfe-core';
+import { pfelement, bound, observed, colorContextConsumer, deprecation, colorContextProvider } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 
@@ -125,9 +125,25 @@ export class PfeJumpLinksNav extends LitElement {
    */
   @property({ type: String, reflect: true, attribute: 'sr-text' }) srText = 'Jump to section';
 
-  // Supports only lightest and darkest background colors
-  /** Color */
-  @property({ type: String, reflect: true }) color: 'lightest'|'darkest' = 'lightest';
+  /**
+   * Sets color palette, which affects the element's styles as well as descendants' color theme.
+   * Overrides parent color context.
+   * Your theme will influence these colors so check there first if you are seeing inconsistencies.
+   * See [CSS Custom Properties](#css-custom-properties) for default values
+   *
+   * Card always resets its context to `base`, unless explicitly provided with a `color-palette`.
+   */
+  @colorContextProvider()
+  @property({ reflect: true, attribute: 'color-palette' }) colorPalette?: ColorPalette;
+
+  /** @deprecated use `color-palette` */
+  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color?: ColorPalette;
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
 
   // @TODO Need to incorporate support for breakpoint customizations i.e., offset="@500px: 200, @800px: 150"
   /**

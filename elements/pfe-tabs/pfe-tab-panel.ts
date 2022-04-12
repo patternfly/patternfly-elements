@@ -1,7 +1,9 @@
+import type { ColorTheme } from '@patternfly/pfe-core';
+
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { pfelement, initializer } from '@patternfly/pfe-core/decorators.js';
+import { pfelement, initializer, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import style from './pfe-tab-panel.scss';
@@ -17,6 +19,12 @@ export class PfeTabPanel extends LitElement {
   static readonly version = '{{version}}';
 
   static readonly styles = [style];
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
 
   /** Selected tab */
   @property({ type: Boolean, reflect: true, attribute: 'aria-selected' }) selected = false;

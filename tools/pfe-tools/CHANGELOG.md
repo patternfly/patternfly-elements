@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.15
+
+### Patch Changes
+
+- c10f6783: Publish 11ty plugin files
+
 ## 1.0.0-next.14
 
 ### Minor Changes

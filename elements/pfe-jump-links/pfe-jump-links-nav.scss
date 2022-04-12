@@ -175,13 +175,6 @@ a {
     color: pfe-broadcasted(text);
   }
 
-  // Note: there is no ui-disabled--text--on-dark to pull from
-  @each $context in (dark, saturated) {
-    :host([on="#{$context}"]) & {
-      color: pfe-var(text--muted--on-#{$context});
-    }
-  }
-
   .has-sub-section & {
     padding-bottom: pfe-local(vertical-spacer, $region: link);
   }
@@ -376,3 +369,11 @@ pfe-accordion-panel.animating {
 :host([hidden]) {
   display: none !important;
 }
+
+// Note: there is no ui-disabled--text--on-dark to pull from
+@each $context in (dark, saturated) {
+  :host([on="#{$context}"]) a {
+    color: pfe-var(text--muted--on-#{$context});
+  }
+}
+

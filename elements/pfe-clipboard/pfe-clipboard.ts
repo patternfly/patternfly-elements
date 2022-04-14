@@ -107,13 +107,12 @@ export class PfeClipboard extends LitElement {
   /**
    * Specify if current site is behind [https]
    */
-  @state() private _secure = window.isSecureContext;
+  private _secure = window.isSecureContext;
 
   /**
    * Specify the copy type to be used depending on security and browser support
    */
-  @property({ type: String }) copyType: 'navigator' | 'queryCommand' | null = null;
-
+  private _copyType: 'navigator' | 'queryCommand' | null = null;
 
   /**
    * A setter to set the content you would like to copy.
@@ -226,7 +225,7 @@ export class PfeClipboard extends LitElement {
   /**
    * Checks to make sure the thing we may copy exists
    */
-  @bound private _checkForCopyTarget() {
+  private _checkForCopyTarget() {
     if (this.copyFrom === 'property') {
       if (!this.contentToCopy) {
         this.setAttribute('disabled', '');
@@ -245,21 +244,11 @@ export class PfeClipboard extends LitElement {
   /**
    * Sets copy type depending on whether or not the current site is secure
    */
-  @bound private _setCopyType() {
-    if (navigator.clipboard) {
-      if (this._secure) {
-        this.copyType = 'navigator';
-      } else {
-        this.setAttribute('hidden', '');
-        this._ariaDisabled = true;
-        throw new Error('Browser supports navigator.clipboard API but current website is not behind [https] required by the specification. https://developer.mozilla.org/en-US/docs/Web/API/Clipboard');
-      }
-    } else if (document.queryCommandEnabled('copy')) {
-      this.copyType = 'queryCommand';
+  private _setCopyType() {
+    if (this._secure && navigator.clipboard) {
+      this._copyType = 'navigator';
     } else {
-      this.setAttribute('hidden', '');
-      this._ariaDisabled = true;
-      throw new Error('Browser does not support copying to the clipboard.');
+      this._copyType = 'queryCommand';
     }
   }
 
@@ -409,7 +398,7 @@ export class PfeClipboard extends LitElement {
       this.logger.error('Copy function called, but no text was given to copy.');
     }
 
-    switch (this.copyType) {
+    switch (this._copyType) {
       case 'navigator':
         await navigator.clipboard.writeText(text);
         break;

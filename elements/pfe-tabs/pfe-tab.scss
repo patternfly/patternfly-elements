@@ -233,12 +233,24 @@
 }
 
 // SATURATED
+:host([variant="earth"][on="saturated"]) {
+  --pfe-tabs--BackgroundColor: #{pfe-var(surface--accent)};
+  --pfe-tabs--BackgroundColor--inactive: #{pfe-var(surface--complement)};
+  border-right-color: pfe-var(surface--border--darker);
+  border-left-color: pfe-var(surface--border--darker);
+}
+
 :host([variant="earth"][on="saturated"][aria-selected="false"]) {
-  --pfe-tabs--BackgroundColor: #{pfe-var(surface--lighter)};
+  --pfe-tabs--Color: #6a6e73 // !important;
 }
 
 :host([variant="earth"][on="saturated"][aria-selected="true"]) {
-  --pfe-tabs--BackgroundColor: #{pfe-var(surface--lightest)};
+  --pfe-tabs--Color: #151515; // !important;
+}
+
+:host([variant="earth"][on="saturated"][aria-selected="false"]:hover) {
+  --pfe-tabs--BackgroundColor: #{pfe-var(surface--complement)};
+  --pfe-tabs--Color: #6a6e73 // !important;
 }
 
 
@@ -264,6 +276,8 @@
 :host([on="saturated"]:not([variant="earth"])[aria-selected="false"]:hover) {
   --pfe-tabs--BorderColor: #{pfe-var(surface--border)};
 }
+
+// DARK
 
 :host([on="dark"]:not([variant="earth"])) {
   --pfe-tabs--Color: #{pfe-var(text--on-dark)};

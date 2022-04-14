@@ -1,7 +1,7 @@
 {% set level = level or 2 %}
 {% set header = header or 'Events' %}
 
-<pfe-band size="small" color="lightest" use-grid>
+<pfe-band size="small" color-palette="lightest" use-grid>
   <h{{level}} slot="header">{{ header | innerMD | safe }}</h{{level}}> {% if not content and not events.length %}
   <em>None</em> {% else %}
   {{ content | innerMD | safe }}

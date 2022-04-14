@@ -36,19 +36,28 @@
     </nav>
   </aside>
   <main>
-    <pfe-band id="component-header" color="base" size="small" full-width>
+    <pfe-band id="component-header" color-palette="base" size="small" full-width>
       <h1 slot="header">Select a Demo from the Menu</h1>
 
-      <form slot="header" hidden>
-        <label for="theme-select">Select a context</label>
-        <pfe-select id="context-selector">
-          <select>
-            <option disabled>Select a context</option>
-            <option value="light" selected>Light</option>
-            <option value="dark">Dark</option>
-            <option value="saturated">Saturated</option>
-          </select>
-        </pfe-select>
+      <form slot="header">
+        <fieldset hidden>
+          <label for="theme-select">Select a context</label>
+          <pfe-select id="context-selector">
+            <select>
+              <option disabled>Select a context</option>
+              <option value="base" selected>Default</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+              <option value="saturated">Saturated</option>
+            </select>
+          </pfe-select>
+        </fieldset>
+        <fieldset>
+          <button id="toggle-max" aria-label="toggle maximize">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384.97 384.97" style="enable-background:new 0 0 384.97 384.97" xml:space="preserve"><path d="M384.97 12.03c0-6.713-5.317-12.03-12.03-12.03H264.847c-6.833 0-11.922 5.39-11.934 12.223 0 6.821 5.101 11.838 11.934 11.838h96.062l-.193 96.519c0 6.833 5.197 12.03 12.03 12.03 6.833-.012 12.03-5.197 12.03-12.03l.193-108.369c0-.036-.012-.06-.012-.084.001-.037.013-.061.013-.097zM120.496 0H12.403c-.036 0-.06.012-.096.012-.024 0-.06-.012-.084-.012C5.51 0 .192 5.317.192 12.03L0 120.399c0 6.833 5.39 11.934 12.223 11.934 6.821 0 11.838-5.101 11.838-11.934l.192-96.339h96.242c6.833 0 12.03-5.197 12.03-12.03C132.514 5.197 127.317 0 120.496 0zM120.123 360.909H24.061v-96.242c0-6.833-5.197-12.03-12.03-12.03S0 257.833 0 264.667v108.092c0 .036.012.06.012.084 0 .036-.012.06-.012.096 0 6.713 5.317 12.03 12.03 12.03h108.092c6.833 0 11.922-5.39 11.934-12.223.001-6.82-5.1-11.837-11.933-11.837zM372.747 252.913c-6.833 0-11.85 5.101-11.838 11.934v96.062h-96.242c-6.833 0-12.03 5.197-12.03 12.03s5.197 12.03 12.03 12.03h108.092c.036 0 .06-.012.084-.012.036-.012.06.012.096.012 6.713 0 12.03-5.317 12.03-12.03V264.847c.001-6.833-5.389-11.934-12.222-11.934z"/></svg>
+            <svg hidden xmlns="http://www.w3.org/2000/svg" viewBox="0 0 385.331 385.331" style="enable-background:new 0 0 385.331 385.331" xml:space="preserve"><path d="M264.943 156.665h108.273c6.833 0 11.934-5.39 11.934-12.211 0-6.833-5.101-11.85-11.934-11.838h-96.242V36.181c0-6.833-5.197-12.03-12.03-12.03s-12.03 5.197-12.03 12.03v108.273c0 .036.012.06.012.084 0 .036-.012.06-.012.096-.001 6.713 5.316 12.043 12.029 12.031zM120.291 24.247c-6.821 0-11.838 5.113-11.838 11.934v96.242H12.03c-6.833 0-12.03 5.197-12.03 12.03 0 6.833 5.197 12.03 12.03 12.03h108.273c.036 0 .06-.012.084-.012.036 0 .06.012.096.012 6.713 0 12.03-5.317 12.03-12.03V36.181c.001-6.821-5.389-11.922-12.222-11.934zM120.387 228.666H12.115c-6.833.012-11.934 5.39-11.934 12.223 0 6.833 5.101 11.85 11.934 11.838h96.242v96.423c0 6.833 5.197 12.03 12.03 12.03 6.833 0 12.03-5.197 12.03-12.03V240.877c0-.036-.012-.06-.012-.084 0-.036.012-.06.012-.096.001-6.714-5.317-12.031-12.03-12.031zM373.3 228.666H265.028c-.036 0-.06.012-.084.012-.036 0-.06-.012-.096-.012-6.713 0-12.03 5.317-12.03 12.03v108.273c0 6.833 5.39 11.922 12.223 11.934 6.821.012 11.838-5.101 11.838-11.922v-96.242H373.3c6.833 0 12.03-5.197 12.03-12.03s-5.196-12.031-12.03-12.043z"/></svg>
+          </button>
+        </fieldset>
       </form>
     </pfe-band>
 

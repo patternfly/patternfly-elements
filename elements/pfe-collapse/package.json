@@ -9,6 +9,7 @@
   "module": "./pfe-collapse.js",
   "exports": {
     ".": "./pfe-collapse.js",
+    "./pfe-collapse-panel.js": "./pfe-collapse-panel.js",
     "./*": "./*.js"
   },
   "publishConfig": {

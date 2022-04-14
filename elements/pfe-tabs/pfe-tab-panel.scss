@@ -126,8 +126,8 @@
 }
 
 :host([on="saturated"][variant="earth"]) {
-  background-color: pfe-local(BackgroundColor, $region: panel, $fallback: pfe-var(surface--lightest));
-  @include pfe-set-broadcast-context(light);
+  background-color: pfe-local(BackgroundColor, $region: panel, $fallback: pfe-var(surface--accent));
+  @include pfe-set-broadcast-context(saturated);
 }
 
 :host([on="saturated"]:not([variant="earth"])) {

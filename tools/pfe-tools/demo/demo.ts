@@ -1,5 +1,7 @@
 import type { HTMLIncludeElement } from 'html-include-element';
 
+document.documentElement.toggleAttribute('maximized', localStorage.getItem('pfe-demo-maximized') === 'true');
+
 import 'html-include-element';
 import 'api-viewer-element';
 import '@vaadin/split-layout';
@@ -45,7 +47,7 @@ async function onLoad(element: string, base: 'core' | 'elements', location: Loca
   if (location.hash) {
     include.shadowRoot?.querySelector(location.hash)?.scrollIntoView({ behavior: 'smooth' });
   }
-  form.hidden = include.shadowRoot.querySelectorAll('.contextual').length < 1;
+  form.querySelector('fieldset').hidden = include.shadowRoot.querySelectorAll('.contextual').length < 1;
   include.classList.remove('loading');
   componentHeader.classList.remove('loading');
   onContextChange();
@@ -154,13 +156,14 @@ async function go(location = window.location) {
     viewer.src = '';
     viewer.hidden = true;
     document.querySelector('h1').textContent = 'Select a demo from the Menu';
+    onMaximize(false);
   }
 }
 
 /** Change the context of the accordions */
 function onContextChange() {
   for (const element of include.shadowRoot.querySelectorAll('.contextual')) {
-    element.setAttribute('color', contextToColor.get(contextSelect.value) ?? 'lightest');
+    element.setAttribute('color-palette', contextToColor.get(contextSelect.value) ?? 'lightest');
   }
 }
 
@@ -175,6 +178,14 @@ function toggleNav(force?: boolean | Event) {
       link.focus();
     }
   }
+}
+
+function onMaximize(force?: boolean) {
+  for (const svg of form.querySelectorAll('svg')) {
+    svg.toggleAttribute('hidden');
+  }
+  document.documentElement.toggleAttribute('maximized', force);
+  localStorage.setItem('pfe-demo-maximized', document.documentElement.hasAttribute('maximized').toString());
 }
 
 const li = (element: string) => html`
@@ -194,8 +205,9 @@ installRouter(go);
 go();
 
 form.addEventListener('submit', e => e.preventDefault());
+form.querySelector('button').addEventListener('click', () => onMaximize());
 
-context.addEventListener('pfe-select:change', onContextChange);
+context.addEventListener('select', onContextChange);
 hamburger.addEventListener('click', toggleNav);
 document.addEventListener('click', event => {
   if (hamburger.getAttribute('aria-expanded') === 'true') {

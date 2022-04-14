@@ -8,7 +8,7 @@ permalink: /components/index.html
   <h1 slot="header">Components</h1>
 </pfe-band>
 
-<pfe-band class="header" size="small" color="lightest" use-grid>
+<pfe-band class="header" size="small" color-palette="lightest" use-grid>
   <h2 slot="header">Overview</h2>
   <p>
     Components are interactive building blocks of our design system.
@@ -17,14 +17,14 @@ permalink: /components/index.html
   </p>
 </pfe-band>
 
-<pfe-band class="header" size="small" color="lightest" use-grid>
+<pfe-band class="header" size="small" color-palette="lightest" use-grid>
 
 <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col">
   {%- for element in elements -%}
   {%- if element.docsPath -%}
     <div class="component-preview">
       <div class="component-preview--container">
-        {%- if meta.env == "prod" -%}
+        {%- if env.ELEVENTY_ENV == "prod" -%}
         <a href="/components/{{ element.slug }}/" aria-label="{{ element.title }}">
           <div class="preview-image" style="background-image: url(/components/{{ element.slug }}/docs/preview.png);"></div>
         </a>
@@ -39,7 +39,7 @@ permalink: /components/index.html
         <a href="/components/{{ element.slug }}/">{{ element.title }}</a>
       </h3>
       {% renderTemplate "njk,md", element=element %}{{ element.summary }}{% endrenderTemplate %}
-      {%- if meta.env != "prod" -%}
+      {%- if env.ELEVENTY_ENV != "prod" -%}
       <pfe-cta><a href="/components/{{ element.slug }}/">Component overview</a></pfe-cta>
       {%- endif -%}
     </div>

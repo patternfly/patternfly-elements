@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/core/pfe-styles/pfe.css">
 <link rel="stylesheet" href="/elements/pfe-autocomplete/demo/demo.css">
 
-<pfe-band color="lightest" class="contextual" size="small">
+<pfe-band color-palette="lightest" class="contextual" size="small">
   <h2 slot="header">Textual Button</h2>
   <pfe-autocomplete class="static" debounce="300" button-text="Search">
     <input placeholder="Enter Your Search Term" />
@@ -16,7 +16,7 @@
   </dl>
 </pfe-band>
 
-<pfe-band color="lightest">
+<pfe-band color-palette="lightest">
   <h2 slot="header">Static Data</h2>
   <p>Uses an array of strings.</p>
   <pfe-autocomplete class="static" debounce="300">
@@ -28,7 +28,7 @@
   </dl>
 </pfe-band>
 
-<pfe-band color="darker">
+<pfe-band color-palette="darker">
   <h2 slot="header">Lazy Loading with init-value</h2>
   <p>Makes an ajax call, filters the response and sends the filtered data to the component.</p>
   <p>Search for book titles in the above input.</p>
@@ -41,14 +41,14 @@
   </dl>
 </pfe-band>
 
-<pfe-band color="lightest">
+<pfe-band color-palette="lightest">
   <h2 slot="header">Disabled</h2>
   <pfe-autocomplete disabled init-value="uni">
     <input placeholder="Enter Your Search Term" />
   </pfe-autocomplete>
 </pfe-band>
 
-<pfe-band color="lightest">
+<pfe-band color-palette="lightest">
   <h2 slot="header">Deprecated is-disabled</h2>
   <pfe-autocomplete is-disabled init-value="uni">
     <input placeholder="Enter Your Search Term" />

@@ -3,11 +3,14 @@ import { generateElement } from './generator/element.js';
 import Chalk from 'chalk';
 import Yargs from 'yargs';
 import prompts from 'prompts';
+import { readJson } from './generator/files.js';
+import { join } from 'node:path';
 
 export interface BaseOptions {
   silent: boolean;
   directory: string;
   overwrite: boolean;
+  monorepo: boolean;
 }
 
 export interface AppOptions extends BaseOptions {
@@ -29,6 +32,18 @@ const ERR_BAD_CE_TAG_NAME =
   'Custom element tag names must contain a hyphen (-)';
 
 const b = Chalk.cyanBright;
+
+interface PackageJSON {
+  customElements?: string;
+  name: string;
+  version: string;
+  workspaces?: string;
+}
+
+async function isMonorepo() {
+  const { workspaces } = await readJson<PackageJSON>(join(process.cwd(), 'package.json'));
+  return !!workspaces;
+}
 
 function banner() {
   console.log(`${Chalk.cyan(`
@@ -72,7 +87,7 @@ export async function promptForElementGeneratorOptions(
       initial: options?.tagName ?? '',
       validate: name => name.includes('-') || ERR_BAD_CE_TAG_NAME,
     }, {
-      type: () => !options?.scope && 'text',
+      type: () => (!options?.scope && options?.monorepo) ? 'text' : false,
       name: 'scope',
       message: 'What is the package\'s NPM scope?',
       initial: options?.scope ?? ''
@@ -110,6 +125,11 @@ export async function main(): Promise<void> {
         type: 'boolean',
         default: false,
         description: 'Overwrite files without prompting',
+      })
+      .option('monorepo', {
+        type: 'boolean',
+        default: await isMonorepo(),
+        description: 'Generate an npm package for the element'
       })
       .help()
       .check(({ name }) => {

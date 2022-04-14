@@ -3,8 +3,9 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 
-import { ComposedEvent } from '@patternfly/pfe-core';
-import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
+import { ComposedEvent, ColorTheme } from '@patternfly/pfe-core';
+
+import { pfelement, bound, observed, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 
 import style from './pfe-search-droplist.scss';
@@ -37,6 +38,12 @@ export class PfeSearchDroplist extends LitElement {
   static readonly version = '{{version}}';
 
   static readonly styles = [style];
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on: ColorTheme = 'light';
 
   /** Set when the combo box dropdown is open */
   @property({ type: Boolean, reflect: true }) open = false;

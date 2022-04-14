@@ -1,11 +1,18 @@
-import type { ColorTheme } from '@patternfly/pfe-core';
+import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core/controllers/color-context.js';
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
+
+import {
+  observed,
+  pfelement,
+  colorContextConsumer,
+  colorContextProvider,
+  deprecation,
+} from '@patternfly/pfe-core/decorators.js';
 
 import style from './pfe-band.scss';
 
@@ -31,22 +38,30 @@ import style from './pfe-band.scss';
  *       Asides often contain `pfe-card` or interest forms which provide users a little more information or context for the band.
  *       The template is automatically wrapping this slot in an `aside` tag.
  *
- * @slot pfe-band--header - {@deprecated use `header`} same as `header`
- * @slot pfe-band--footer - {@deprecated use `footer`} same as `footer`
- * @slot pfe-band--aside - {@deprecated use `aside`} same as `aside`
+ * @slot pfe-band--header - {@deprecated use `header`}
+ * @slot pfe-band--footer - {@deprecated use `footer`}
+ * @slot pfe-band--aside  - {@deprecated use `aside`}
  *
- * @csspart base Container for all elements in shadowroot.
- * @csspart header Container for the slotted header elements.
- * @csspart body Container for the slotted content.
- * @csspart wrapper Container for header and body elements (only available when `asideHeight = "full"`).
- * @csspart aside Container for the slotted aside elements.
- * @csspart footer Container for the slotted footer elements.
+ * @csspart base    - Container for all elements in shadowroot.
+ * @csspart header  - Container for the slotted header elements.
+ * @csspart body    - Container for the slotted content.
+ * @csspart wrapper - Container for header and body elements (only available when `asideHeight = "full"`).
+ * @csspart aside   - Container for the slotted aside elements.
+ * @csspart footer  - Container for the slotted footer elements.
  *
- * @cssprop --pfe-band--layout - Applied to `.pfe-band__container`
- * @cssprop --pfe-band_header--layout - Applied to `.pfe-band__header`
- * @cssprop --pfe-band_body--layout - Applied to `.pfe-band__body`
- * @cssprop --pfe-band_footer--layout - Applied to `.pfe-band__footer`
- * @cssprop --pfe-band_aside--layout - Applied to `.pfe-band__aside`
+ * @cssproperty {<color>} --pfe-theme--color--surface--lightest   {@default `#ffffff`}
+ * @cssproperty {<color>} --pfe-theme--color--surface--lighter    {@default `#ececec`}
+ * @cssproperty {<color>} --pfe-theme--color--surface--base       {@default `#f0f0f0`}
+ * @cssproperty {<color>} --pfe-theme--color--surface--darker     {@default `#3c3f42`}
+ * @cssproperty {<color>} --pfe-theme--color--surface--darkest    {@default `#151515`}
+ * @cssproperty {<color>} --pfe-theme--color--surface--accent     {@default `#004080`}
+ * @cssproperty {<color>} --pfe-theme--color--surface--complement {@default `#002952`}
+ *
+ * @cssproperty --pfe-band--layout        - Applied to the wrapper element
+ * @cssproperty --pfe-band_header--layout - Applied to the header
+ * @cssproperty --pfe-band_body--layout   - Applied to the body
+ * @cssproperty --pfe-band_footer--layout - Applied to the footer
+ * @cssproperty --pfe-band_aside--layout  - Applied to the aside
  */
 @customElement('pfe-band') @pfelement()
 export class PfeBand extends LitElement {
@@ -62,9 +77,24 @@ export class PfeBand extends LitElement {
   @property({ attribute: 'img-src', reflect: true }) imgSrc = '';
 
   /**
+   * Sets color palette, which affects the element's styles as well as descendants' color theme.
+   * Overrides parent color context.
    * Your theme will influence these colors so check there first if you are seeing inconsistencies.
+   * See [CSS Custom Properties](#css-custom-properties) for default values
+   *
+   * Band always resets its context to `base`, unless explicitly provided with a `color-palette`.
    */
-  @property({ reflect: true }) color: ColorTheme = 'base';
+  @colorContextProvider()
+  @property({ reflect: true, attribute: 'color-palette' }) colorPalette: ColorPalette = 'base';
+
+  /** @deprecated use `color-palette` */
+  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color?: ColorPalette;
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
 
   /**
    * This influences where the aside is rendered at the desktop view and are indicated relative to the body content.
@@ -160,7 +190,7 @@ export class PfeBand extends LitElement {
       : html`<div class="pfe-band__wrapper" part="wrapper">${content}</div>`;
 
     return html`
-      <section class="pfe-band__container ${classMap({
+      <section id="container" class="pfe-band__container ${classMap({
         'has-header': hasSlottedHeader,
         'has-body': hasSlottedBody,
         'has-aside': hasSlottedAside,

@@ -8,8 +8,8 @@ pfe-band {
   --pfe-band--Width: 100%;
 }
 
-pfe-band[color="lightest"] pfe-card[color="lightest"],
-pfe-band[color="lightest"] pfe-card[color="lightest"] {
+pfe-band[color-palette="lightest"] pfe-card[color-palette="lightest"],
+pfe-band[color-palette="lightest"] pfe-card[color-palette="lightest"] {
   --pfe-card--Border: 1px solid rgba(45, 45, 45, 0.3);
 }
 

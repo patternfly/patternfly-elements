@@ -1,9 +1,14 @@
+import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core';
+
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import {
   bound,
   cascades,
+  colorContextConsumer,
+  colorContextProvider,
+  deprecation,
   initializer,
   observed,
   pfelement,
@@ -59,6 +64,26 @@ export class PfeTabs extends LitElement {
   private _updateHistory = true;
 
   private _setFocus = false;
+
+  /**
+   * Sets color palette, which affects the element's styles as well as descendants' color theme.
+   * Overrides parent color context.
+   * Your theme will influence these colors so check there first if you are seeing inconsistencies.
+   * See [CSS Custom Properties](#css-custom-properties) for default values
+   *
+   * Card always resets its context to `base`, unless explicitly provided with a `color-palette`.
+   */
+  @colorContextProvider()
+  @property({ reflect: true, attribute: 'color-palette' }) colorPalette?: ColorPalette;
+
+  /** @deprecated use `color-palette` */
+  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color?: ColorPalette;
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
 
    /**
     * Values:

@@ -6,12 +6,15 @@ import { customElement, property, state } from 'lit/decorators.js';
 import {
   bound,
   cascades,
+  colorContextConsumer,
+  colorContextProvider,
+  deprecation,
   initializer,
   observed,
   pfelement,
 } from '@patternfly/pfe-core/decorators.js';
 
-import { NumberListConverter, ComposedEvent } from '@patternfly/pfe-core';
+import { NumberListConverter, ComposedEvent, ColorPalette, ColorTheme } from '@patternfly/pfe-core';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -42,7 +45,7 @@ export class AccordionCollapseEvent extends ComposedEvent {
   }
 }
 
-const CSS_TIMING_UNITS_RE = /(?<value>[0-9.]+)(?<unit>[a-zA-Z]+)/g;
+const CSS_TIMING_UNITS_RE = /^[0-9.]+(?<unit>[a-zA-Z]+)/g;
 
 /**
  * Accordions toggle the visibility of sections of content.
@@ -136,6 +139,24 @@ export class PfeAccordion extends LitElement {
   static isPanel(element: Element|null): element is PfeAccordionPanel {
     return element instanceof PfeAccordionPanel;
   }
+
+  /**
+   * Sets color palette, which affects the element's styles as well as descendants' color theme.
+   * Overrides parent color context.
+   * Your theme will influence these colors so check there first if you are seeing inconsistencies.
+   * See [Color](https://patternflyelements.org/theming/colors/) for default values
+   */
+  @colorContextProvider()
+  @property({ reflect: true, attribute: 'color-palette' }) colorPalette?: ColorPalette;
+
+  /** @deprecated use `color-palette` */
+  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color?: ColorPalette;
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on: ColorTheme = 'light';
 
   /**
    * If the element has one `pfe-accordion-header`, it will get tagged with
@@ -330,18 +351,26 @@ export class PfeAccordion extends LitElement {
     this._animate(panel, rect.height, 0);
   }
 
-  private getAnimationDuration() {
+  private getAnimationDuration(): number {
     if ('computedStyleMap' in this) {
       // @ts-expect-error: https://caniuse.com/?search=computedStyleMap
       return this.computedStyleMap().get('transition-duration')?.to('ms').value;
     } else {
       const { transitionDuration } = this.styles;
+
       const groups = CSS_TIMING_UNITS_RE.exec(transitionDuration)?.groups;
+
       if (!groups) {
-        return null;
+        return 0;
       }
-      const factor = groups.unit === 's' ? 1000 : 1;
-      return parseFloat(groups.value) * factor;
+
+      const parsed = parseFloat(transitionDuration);
+
+      if (groups.unit === 's') {
+        return parsed * 1000;
+      } else {
+        return parsed;
+      }
     }
   }
 
@@ -354,7 +383,7 @@ export class PfeAccordion extends LitElement {
         this.transitionDuration = transitionDuration;
       }
 
-      const duration = this.transitionDuration;
+      const duration = this.transitionDuration ?? 0;
 
       header?.classList.add('animating');
       panel.classList.add('animating');

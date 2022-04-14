@@ -49,7 +49,19 @@ describe('<pfe-band>', function() {
 
   // Iterate over the colors object to test expected background color results
   for (const [name, color] of Object.entries(colors)) {
-    it(`it should have a background color of ${color} when color is ${name}`, async function() {
+    it(`it should have a background color of ${color} when color-palette is ${name}`, async function() {
+      // If this is not the default background, update the variable
+      if (name !== 'default') {
+        band.setAttribute('color-palette', name);
+      }
+
+      await band.updateComplete;
+      // Test that the color is rendering as expected
+      expect(getColor(band, 'background-color'))
+        .to.deep.equal(hexToRgb(color));
+    });
+
+    it(`it should have a background color of ${color} when deprecated color attr is ${name}`, async function() {
       // If this is not the default background, update the variable
       if (name !== 'default') {
         band.setAttribute('color', name);
@@ -62,33 +74,56 @@ describe('<pfe-band>', function() {
     });
   }
 
-  // Test that the default padding is correct
-  it('should have default padding when no size attribute is set', async function() {
-    // Test that the color is rendering as expected
-    // @TODO need a way to adjust the viewport
-    await setViewport({ width: 500, height: 800 });
-    await band.updateComplete;
-    expect(getComputedStyle(band, null).getPropertyValue('padding'))
-      .to.equal('32px 16px');
-    await setViewport({ width: 600, height: 800 });
-    await band.updateComplete;
-    expect(getComputedStyle(band, null).getPropertyValue('padding'))
-      .to.equal('64px 16px');
+  describe('with viewport 500px wide', function() {
+    beforeEach(async function() {
+      await setViewport({ width: 500, height: 800 });
+    });
+
+    describe('when no size attribute is set', function() {
+      it('should have default padding', async function() {
+        const style = getComputedStyle(band);
+        expect(style.getPropertyValue('padding')).to.equal('32px 16px');
+      });
+    });
+    describe('when size attribute is "small"', function() {
+      beforeEach(async function() {
+        band.setAttribute('size', 'small');
+        await band.updateComplete;
+      });
+
+      it('should have default padding', async function() {
+        const style = getComputedStyle(band);
+        expect(style.getPropertyValue('padding')).to.equal('16px');
+      });
+    });
   });
 
-  // Test that the padding is reduced if the size is set to small
-  it('should have reduced padding when the size attribute is small', async function() {
-    // Update the color attribute
-    band.setAttribute('pfe-size', 'small');
-    await band.updateComplete;
-    await setViewport({ width: 500, height: 800 });
-    await band.updateComplete;
-    expect(getComputedStyle(band, null).getPropertyValue('padding'))
-      .to.equal('32px 16px');
-    await setViewport({ width: 600, height: 800 });
-    await band.updateComplete;
-    expect(getComputedStyle(band, null).getPropertyValue('padding'))
-      .to.equal('64px 16px');
+  describe('with viewport 600px wide', function() {
+    beforeEach(async function() {
+      await setViewport({ width: 600, height: 800 });
+    });
+    describe('when no size attribute is set', function() {
+      it('should have default padding', async function() {
+        const style = getComputedStyle(band);
+        expect(style.getPropertyValue('padding')).to.equal('64px 16px');
+      });
+    });
+    describe('when no size attribute is set', function() {
+      it('should have default padding', async function() {
+        const style = getComputedStyle(band);
+        expect(style.getPropertyValue('padding')).to.equal('64px 16px');
+      });
+    });
+    describe('when size attribute is "small"', function() {
+      beforeEach(async function() {
+        band.setAttribute('size', 'small');
+        await band.updateComplete;
+      });
+      it('should have default padding', async function() {
+        const style = getComputedStyle(band);
+        expect(style.getPropertyValue('padding')).to.equal('16px');
+      });
+    });
   });
 
   // Test the default positions of the aside region in the DOM

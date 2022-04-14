@@ -80,6 +80,17 @@ const TEMPLATE_FILE_PATHS: Record<FileKey, string> = {
   tsconfig: 'tsconfig.json',
 };
 
+function isMonorepoFileKey(key: FileKey): boolean {
+  switch (key) {
+    case FileKey.package:
+    case FileKey.cemConfig:
+    case FileKey.tsconfig:
+      return true;
+    default:
+      return false;
+  }
+}
+
 /** Get output files */
 const getFilePathsRelativeToPackageDir =
   memoize((options: GenerateElementOptions): Record<FileKey, string> => ({
@@ -163,6 +174,10 @@ async function getTemplate(key: FileKey): Promise<string> {
 }
 
 async function writeComponentFile(key: FileKey, options: GenerateElementOptions) {
+  if (!options.monorepo && isMonorepoFileKey(key)) {
+    return;
+  }
+
   const PATH = getOutputFilePath(key, options);
   const TEMPLATE = await getTemplate(key);
   const DATA = getInterpolations(options);
@@ -204,8 +219,10 @@ async function analyzeElement(options: GenerateElementOptions): Promise<void> {
     console.log(`\nAnalyzing ${greenBright(options.tagName)}`);
   }
 
+  const monorepoArgs = !options.monorepo ? [] : ['--prefix', getComponentAbsPath(options)];
+
   const { stderr, stdout } =
-    await execa('npm', ['run', 'analyze', '--prefix', getComponentAbsPath(options)], {
+    await execa('npm', ['run', 'analyze', ...monorepoArgs], {
       all: true,
       cwd: options.directory,
     });
@@ -250,7 +267,9 @@ export async function generateElement(options: GenerateElementOptions): Promise<
   } else {
     await writeElementFiles(options);
     await analyzeElement(options);
-    await updateTsconfig(options);
-    await execaCommand('npm install');
+    if (options.monorepo) {
+      await updateTsconfig(options);
+      await execaCommand('npm install');
+    }
   }
 }

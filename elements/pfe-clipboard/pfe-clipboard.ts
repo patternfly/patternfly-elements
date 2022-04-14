@@ -1,9 +1,9 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import { ComposedEvent } from '@patternfly/pfe-core';
+import { ColorTheme, ComposedEvent } from '@patternfly/pfe-core';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
-import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
+import { pfelement, bound, observed, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -85,6 +85,12 @@ export class PfeClipboard extends LitElement {
    * Specify the amount of time in seconds the copy success text should be visible.
    */
   @property({ type: Number, reflect: true, attribute: 'copied-duration' }) copiedDuration = 4;
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
 
   /**
    * Specify when the button slot needs to be aria-disabled or not, coincides with button disabled * states.

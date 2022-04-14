@@ -45,7 +45,7 @@ describe('<pfe-jump-links>', function() {
     consoleSpy = spy(console, 'warn');
     element = await createFixture<PfeJumpLinks>(html`
       <pfe-jump-links>
-        <pfe-jump-links-nav id="jumplinks" color="darkest" style="padding: 16px;">
+        <pfe-jump-links-nav id="jumplinks" color-palette="darkest" style="padding: 16px;">
           <h4 class="heading" slot="pfe-jump-links--heading">Jump to section</h4>
           <ul class="pfe-jump-links-nav">
             <li class="pfe-jump-links-nav__item" active>

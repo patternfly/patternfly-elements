@@ -12,8 +12,8 @@ module.exports = function(eleventyConfig) {
 
     const todos = [];
 
-    const files = await glob('{elements,core,tools}/**/*[!.spec].ts', {
-      ignore: '**/node_modules/**/*',
+    const files = await glob('{elements,core,tools}/**/*.ts', {
+      ignore: ['**/node_modules/**/*', '*.spec.ts', '*.test.ts'],
     });
 
     const cacheKey = files.join('--');

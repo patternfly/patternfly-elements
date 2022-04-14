@@ -1,0 +1,58 @@
+<h2>Band and card examples</h2>
+<dl>
+  <dt><code>[color-palette]</code></dt> <dd><code>ColorPalette</code></dd>
+  <dt><code>[on]</code></dt>    <dd><code>ColorTheme</code></dd>
+</dl>
+
+<pfe-band id="grand" color-palette="darkest">
+  <!-- children must have on=dark -->
+  <!-- --context: dark b/c providercontroller validates 'darkest' => 'dark' -->
+  <ul>
+    <li>CTA Should have LIGHT text b/c i'm on DARK</li>
+    <li>CTA fire context-request</li>
+    <li>CTA obey --context</li>
+    <li>.: --context: dark in #grand</li>
+  </ul>
+  <pfe-cta>
+    .: on=dark
+  </pfe-cta>
+
+  <pfe-card id="father" class="right-side" color-palette="lightest">
+    <!-- children must have on=light -->
+    <!-- --context: dark b/c providercontroller validates 'lighest' => 'light' -->
+    I'm contrasting with my parent band
+    <ul>
+      <li>CTA Should have DARK text b/c i'm on LIGHT</li>
+      <li>CTA fire context-request</li>
+      <li>CTA obey --context</li>
+      <li>.: --context: light in #father</li>
+    </ul>
+    <pfe-cta slot="footer">
+      .: on=light
+    </pfe-cta>
+  </pfe-card>
+
+  <pfe-card id="sibling" color-palette="accent">
+    <ul>
+      <li>CTA inherit context from #sibling</li>
+      <li>CTA fire context-request</li>
+      <li>CTA obey --context</li>
+      <li>.: --context: accent in #sibling</li>
+    </ul>
+    <pfe-cta id="goodie-twoshoes" slot="footer">
+      .: on=saturated
+    </pfe-cta>
+    <ul>
+      <li>CTA want to inherit context from #grand</li>
+      <li>CTA fire context-request</li>
+      <li>CTA obey --context</li>
+      <li>.: --context: saturated in #sibling</li>
+      <li>.: on=light</li>
+      <li>BUT --context is overriden with priority in the cascade by style attr</li>
+    </ul>
+    <pfe-cta id="rebel" slot="footer" style="--context: saturated;">
+      .: on=saturated, and styles are saturated
+    </pfe-cta>
+  </pfe-card>
+</pfe-band>
+

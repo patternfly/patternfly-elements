@@ -49,3 +49,23 @@ body[unresolved] {
     visibility: visible;
   }
 }
+
+.PFElement {
+  color: var(--pfe-broadcasted--text);
+}
+
+.PFElement a {
+  color: var(--pfe-broadcasted--link);
+  text-decoration: var(--pfe-broadcasted--link-decoration);
+}
+
+.PFElement a:hover {
+  color: var(--pfe-broadcasted--link--hover);
+  text-decoration: var(--pfe-broadcasted--link-decoration--hover);
+}
+
+.PFElement a:focus {
+  color: var(--pfe-broadcasted--link--focus);
+  text-decoration: var(--pfe-broadcasted--link-decoration--focus);
+}
+

@@ -60,7 +60,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		}
 	}
 	&__window {
-		--context: #{pfe-local(context)};
+		// --context: #{pfe-local(context)};
 		position: relative;
 		max-width: pfe-local(MaxWidth--mobile);
 		min-width: pfe-local(MinWidth);
@@ -74,6 +74,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			max-width: var(--pfe-modal-width, pfe-local(MaxWidth--large));
 		}
+
 		:host([width="small"]) & {
 			max-width: pfe-local(MaxWidth--small);
 		}
@@ -144,4 +145,10 @@ $pfe-modal--breakpoint--medium: 640px;
 			width: 	pfe-local(size, $region: close);
 		}
 	}
+}
+
+#dialog {
+	--pfe-theme--color--text: var(--pfe-broadcasted--text);
+	background-color: var(--pfe-context-background-color);
+	color: var(--pfe-broadcasted--text);
 }

@@ -144,15 +144,15 @@ export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerConf
 }
 
 function nunjucksSPAMiddleware(options: PfeDevServerConfigOptions): Middleware {
+  const model = { ...SITE_DEFAULTS, ...options?.site };
   return function(ctx, next) {
-    if (ctx.method !== 'HEAD' && ctx.method !== 'GET' || ctx.path.match(/\./)) {
-      return next();
-    } else {
-      const transformed = env.render('index.html', { ...SITE_DEFAULTS, ...options?.site });
+    if (!(ctx.method !== 'HEAD' && ctx.method !== 'GET' || ctx.path.includes('.'))) {
+      const transformed = env.render('index.html', model);
       ctx.body = transformed;
       ctx.type = 'html';
       ctx.status = 200;
     }
+    return next();
   };
 }
 

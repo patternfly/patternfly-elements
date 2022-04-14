@@ -15,9 +15,7 @@ import { nodeExternalsPlugin } from 'esbuild-node-externals';
 import { readdirSync } from 'fs';
 import { resolve, join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { mkdtemp, readdir, writeFile } from 'fs/promises';
-
-import os from 'os';
+import { mkdtemp, readdir, readFile, stat, writeFile } from 'fs/promises';
 
 export interface PfeEsbuildOptions {
   /** Extra esbuild plugins */
@@ -39,6 +37,8 @@ export interface PfeEsbuildOptions {
 }
 
 export interface PfeEsbuildSingleFileOptions {
+  /** list of NPM package names to bundle alongside the repo's components */
+  additionalPackages?: string[];
   outfile?: string;
   plugins?: Plugin[];
   minify?: boolean;
@@ -65,6 +65,8 @@ const ALWAYS_EXCLUDE = [
   'pfe-sass',
   'pfe-styles',
 ];
+
+const exists = (filePath: string) => stat(filePath).then(() => true, () => false);
 
 /** lit-css transform plugin to process `.scss` files on-the-fly */
 export async function transformSass(
@@ -106,36 +108,56 @@ export function getBasePlugins({ minify }: { minify?: boolean } = {}) {
 }
 
 /** Generate a temporary file containing namespace exports of all pfe components */
-export async function componentsEntryPoint(options?: { prefix: string }) {
-  const componentDirs = await readdir(join(REPO_ROOT, 'elements'));
+export async function componentsEntryPoint(options?: { additionalPackages?: string[] }) {
+  const componentDirs = await readdir(join(REPO_ROOT, 'elements')).catch(() => [] as string[]);
   const cacheKey = componentDirs.join('--');
+
+  const additionalImports =
+    options?.additionalPackages
+      ?.reduce((acc, specifier) => `${acc}\nexport * from '${specifier}';`, '') ?? '';
+
+  if (!cacheKey) {
+    return additionalImports;
+  }
+
   if (!COMPONENT_ENTRYPOINTS_CACHE.get(cacheKey)) {
     try {
-      const outdir =
-          options?.prefix ? join(REPO_ROOT, options?.prefix)
-        : await mkdtemp(join(os.tmpdir(), 'pfe'));
-      const tmpfile = join(outdir, 'components.ts');
-      const imports = await Promise.all(componentDirs.reduce((acc, dir) =>
-        `${acc}\nexport * from '@patternfly/${dir}';`, ''));
-      await writeFile(tmpfile, imports, 'utf8');
-      COMPONENT_ENTRYPOINTS_CACHE.set(cacheKey, tmpfile);
-      return tmpfile;
+      const imports = await componentDirs.reduce(async (last, dir) => {
+        const acc = await last;
+        const elementPath = join(REPO_ROOT, 'elements', dir);
+        const packageJsonPath = join(elementPath, 'package.json');
+        const isPackage = await exists(packageJsonPath);
+        if (isPackage) {
+          const { name } = JSON.parse(await readFile(packageJsonPath, 'utf8'));
+          return `${acc}\nexport * from '${name}';`;
+        } else {
+          return `${acc}\nexport * from '${elementPath.replace(REPO_ROOT, './')}/${dir}.js';`;
+        }
+      }, Promise.resolve(additionalImports));
+
+      COMPONENT_ENTRYPOINTS_CACHE.set(cacheKey, imports);
+      return imports;
     } catch (error) {
       console.error(error);
     }
   }
+
   return COMPONENT_ENTRYPOINTS_CACHE.get(cacheKey);
 }
 
 /** Create a single-file production bundle of all elements */
 export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
   try {
-    const prefix = fileURLToPath(new URL('./demo', import.meta.url)).replace(REPO_ROOT, '');
     const result = await esbuild.build({
       absWorkingDir: REPO_ROOT,
       allowOverwrite: true,
       bundle: true,
-      entryPoints: [await componentsEntryPoint({ prefix })],
+      stdin: {
+        contents: await componentsEntryPoint({ additionalPackages: options?.additionalPackages }),
+        resolveDir: REPO_ROOT,
+        sourcefile: 'components.ts',
+        loader: 'ts',
+      },
       format: 'esm',
       keepNames: true,
       legalComments: 'linked',

@@ -7,7 +7,7 @@ const form = root.querySelector('form');
 const sbmt = form.querySelector('pfe-button');
 const slct = form.querySelector('pfe-select');
 
-slct.addEventListener('change', () => {
+slct.addEventListener('select', () => {
   sbmt.style.setProperty('--pfe-button--BackgroundColor', slct.value);
 });
 

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/core/pfe-styles/pfe-layouts.css">
 <link rel="stylesheet" href="/elements/pfe-modal/demo/demo.css">
 
-<pfe-band color="lightest">
+<pfe-band color-palette="lightest">
   <h2 slot="header">Modal: Standard modal</h2>
   <pfe-modal>
     <pfe-cta slot="trigger">
@@ -23,7 +23,7 @@
   </pfe-modal>
 </pfe-band>
 
-<pfe-band color="darkest" id="test-dark">
+<pfe-band color-palette="darkest" id="test-dark">
   <h2 slot="header">Modal: No header region</h2>
   <pfe-modal>
     <pfe-cta priority="secondary" slot="trigger">
@@ -41,7 +41,7 @@
   </pfe-modal>
 </pfe-band>
 
-<pfe-band color="complement">
+<pfe-band color-palette="complement">
   <h2>Modal: No headings</h2>
   <pfe-modal>
     <pfe-cta priority="secondary" slot="trigger">
@@ -58,8 +58,8 @@
   </pfe-modal>
 </pfe-band>
 
-<pfe-band id="external-lots" color="lightest">
-  <pfe-card color="darkest">
+<pfe-band id="external-lots" color-palette="lightest">
+  <pfe-card color-palette="darkest">
     <h2 slot="header">Modal: External trigger</h2>
     <pfe-cta><button id="custom-trigger">Custom open modal</button></pfe-cta>
     <pfe-modal id="custom-modal">
@@ -91,9 +91,9 @@
     </pfe-modal>
   </pfe-card>
 
-  <pfe-card color="complement">
+  <pfe-card color-palette="complement">
     <h2 slot="header">Modal: a lot of content</h2>
-    <pfe-modal context="dark" id="testit">
+    <pfe-modal color-palette="darkest" id="testit">
       <pfe-cta slot="trigger"><button>Open modal</button></pfe-cta>
       <h2 slot="header">Modal with a header with a super duper long title and a lot of content</h2>
       <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
@@ -111,6 +111,7 @@
         odio dui. Maecenas faucibus mollis interdum. Fusce dapibus, tellus ac cursus commodo, tortor mauris
         condimentum nibh, ut fermentum massa justo sit amet risus.</p>
       <pfe-cta>
+        <!-- TODO: find out why this gets on=light, should be on=dark b/c closest modal is color-palette=darkest -->
         <a href="#bar">Learn more</a>
       </pfe-cta>
     </pfe-modal>

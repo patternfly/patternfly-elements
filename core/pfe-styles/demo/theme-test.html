@@ -93,7 +93,7 @@
       grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
     }
 
-    [color="lightest"] {
+    [color-palette="lightest"] {
       border: #ccc solid 1px;
     }
 
@@ -109,12 +109,12 @@
 
 
 
-  <pfe-band color="lightest" class="border-bottom spacious">
+  <pfe-band color-palette="lightest" class="border-bottom spacious">
     <h2 class="heading-1" slot="pfe-band--header">
       Theme demo
     </h2>
     <div class="split-4">
-      <pfe-card color="lightest">
+      <pfe-card color-palette="lightest">
         <h3>Lightest surface</h3>
         <p>This is the lightest pfe-card and <a href="#">a link</a>.</p>
         <div slot="footer">
@@ -132,7 +132,7 @@
           </pfe-cta>
         </div>
       </pfe-card>
-      <pfe-card color="darker">
+      <pfe-card color-palette="darker">
         <h3>Darker surface</h3>
         <p>This is the dark pfe-card and <a href="#">a link</a>.</p>
         <div slot="footer">
@@ -141,7 +141,7 @@
           </pfe-cta>
         </div>
       </pfe-card>
-      <pfe-card color="darkest">
+      <pfe-card color-palette="darkest">
         <h3>Darkest surface</h3>
         <p>This is the darkest pfe-card and <a href="#">a link</a>.</p>
         <div slot="footer">
@@ -150,7 +150,7 @@
           </pfe-cta>
         </div>
       </pfe-card>
-      <pfe-card color="complement">
+      <pfe-card color-palette="complement">
         <h3>Complement surface</h3>
         <p>This is the complement pfe-card and <a href="#">a link</a>.</p>
         <div slot="footer">
@@ -159,7 +159,7 @@
           </pfe-cta>
         </div>
       </pfe-card>
-      <pfe-card color="accent">
+      <pfe-card color-palette="accent">
         <h3>Accent surface</h3>
         <p>This is the accent pfe-card and <a href="#">a link</a>.</p>
         <div slot="footer">
@@ -174,14 +174,14 @@
 
       <div class="stacked center">
         <h4 class="pfe-pfe-headline-gamma">No pfe-color attribute</h4> <!-- NO pfe-color attribute -->
-        <pfe-card color="lighter">
+        <pfe-card color-palette="lighter">
           <div class="ctas">
             <pfe-cta><a href="#">Default CTA</a></pfe-cta>
             <pfe-cta priority="primary"><a href="#">Primary CTA</a></pfe-cta>
             <pfe-cta priority="secondary"><a href="#">Secondary CTA</a></pfe-cta>
           </div>
         </pfe-card>
-        <pfe-card color="darkest">
+        <pfe-card color-palette="darkest">
           <div class="ctas">
             <pfe-cta><a href="#">Default CTA</a></pfe-cta>
             <pfe-cta priority="primary"><a href="#">Primary CTA</a></pfe-cta>
@@ -191,53 +191,53 @@
       </div>
       <div class="stacked center">
         <h4 class="pfe-pfe-headline-gamma">pfe-color: base</h4> <!-- pfe-color: base -->
-        <pfe-card color="lighter">
+        <pfe-card color-palette="lighter">
           <div class="ctas">
-            <pfe-cta color="base"><a href="#">Default CTA</a></pfe-cta>
-            <pfe-cta priority="primary" color="base"><a href="#">Primary CTA</a></pfe-cta>
-            <pfe-cta priority="secondary" color="base"><a href="#">Secondary CTA</a></pfe-cta>
+            <pfe-cta color-palette="base"><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary" color-palette="base"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary" color-palette="base"><a href="#">Secondary CTA</a></pfe-cta>
           </div>
         </pfe-card>
-        <pfe-card color="darkest">
+        <pfe-card color-palette="darkest">
           <div class="ctas">
-            <pfe-cta color="base"><a href="#">Default CTA</a></pfe-cta>
-            <pfe-cta priority="primary" color="base"><a href="#">Primary CTA</a></pfe-cta>
-            <pfe-cta priority="secondary" color="base"><a href="#">Secondary CTA</a></pfe-cta>
+            <pfe-cta color-palette="base"><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary" color-palette="base"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary" color-palette="base"><a href="#">Secondary CTA</a></pfe-cta>
           </div>
         </pfe-card>
       </div>
       <div class="stacked center">
         <h4 class="pfe-headline-gamma">pfe-color: complement (deprecated)</h4> <!-- pfe-color: complement -->
-        <pfe-card color="lighter">
+        <pfe-card color-palette="lighter">
           <div class="ctas">
-            <pfe-cta color="complement"><a href="#">Default CTA</a></pfe-cta>
-            <pfe-cta priority="primary" color="complement"><a href="#">Primary CTA</a></pfe-cta>
-            <pfe-cta priority="secondary" color="complement"><a href="#">Secondary CTA</a></pfe-cta>
+            <pfe-cta color-palette="complement"><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary" color-palette="complement"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary" color-palette="complement"><a href="#">Secondary CTA</a></pfe-cta>
           </div>
         </pfe-card>
-        <pfe-card color="darkest">
+        <pfe-card color-palette="darkest">
           <div class="ctas">
-            <pfe-cta color="complement"><a href="#">Default CTA</a></pfe-cta>
-            <pfe-cta priority="primary" color="complement"><a href="#">Primary CTA</a></pfe-cta>
-            <pfe-cta priority="secondary" color="complement"><a href="#">Secondary CTA</a>
+            <pfe-cta color-palette="complement"><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary" color-palette="complement"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary" color-palette="complement"><a href="#">Secondary CTA</a>
             </pfe-cta>
           </div>
         </pfe-card>
       </div>
       <div class="stacked center">
         <h4 class="pfe-headline-gamma">pfe-color: accent</h4> <!-- pfe-color: accent -->
-        <pfe-card color="lighter">
+        <pfe-card color-palette="lighter">
           <div class="ctas">
-            <pfe-cta color="accent"><a href="#">Default CTA</a></pfe-cta>
-            <pfe-cta priority="primary" color="accent"><a href="#">Primary CTA</a></pfe-cta>
-            <pfe-cta priority="secondary" color="accent"><a href="#">Secondary CTA</a></pfe-cta>
+            <pfe-cta color-palette="accent"><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary" color-palette="accent"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary" color-palette="accent"><a href="#">Secondary CTA</a></pfe-cta>
           </div>
         </pfe-card>
-        <pfe-card color="darker">
+        <pfe-card color-palette="darker">
           <div class="ctas">
-            <pfe-cta color="accent"><a href="#">Default CTA</a></pfe-cta>
-            <pfe-cta priority="primary" color="accent"><a href="#">Primary CTA</a></pfe-cta>
-            <pfe-cta priority="secondary" color="accent"><a href="#">Secondary CTA</a></pfe-cta>
+            <pfe-cta color-palette="accent"><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary" color-palette="accent"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary" color-palette="accent"><a href="#">Secondary CTA</a></pfe-cta>
           </div>
         </pfe-card>
       </div>
@@ -252,15 +252,15 @@
       <h3 class="heading-2">Text</h3>
       <article class="ui-swatches">
 
-        <pfe-card color="lightest" class="ui-swatch">
+        <pfe-card color-palette="lightest" class="ui-swatch">
           <p style="color: var(--theme--color--text);">
             --theme--color--text</p>
         </pfe-card>
-        <pfe-card color="darkest" class="ui-swatch">
+        <pfe-card color-palette="darkest" class="ui-swatch">
           <p style="color: var(--theme--color--text--on-dark);">
             --theme--color--text--on-dark</p>
         </pfe-card>
-        <pfe-card color="accent" class="ui-swatch">
+        <pfe-card color-palette="accent" class="ui-swatch">
           <p style="color: var(--theme--color--text--on-saturated);">
             --theme--color--text--on-saturated
           </p>
@@ -272,55 +272,55 @@
       <h3 class="heading-2">Links</h3>
       <article class="ui-swatches">
 
-        <pfe-card color="lightest" class="ui-swatch">
+        <pfe-card color-palette="lightest" class="ui-swatch">
           <p style="color: var(--theme--color--link);">
             --theme--color--link</p>
         </pfe-card>
-        <pfe-card color="lightest" class="ui-swatch">
+        <pfe-card color-palette="lightest" class="ui-swatch">
           <p style="color: var(--theme--color--link--visited);">
             --theme--color--link--visited
           </p>
         </pfe-card>
-        <pfe-card color="lightest" class="ui-swatch">
+        <pfe-card color-palette="lightest" class="ui-swatch">
           <p style="color: var(--theme--color--link--hover);">
             --theme--color--link--hover</p>
         </pfe-card>
-        <pfe-card color="lightest" class="ui-swatch">
+        <pfe-card color-palette="lightest" class="ui-swatch">
           <p style="color: var(--theme--color--link--focus);">
             --theme--color--link--focus</p>
         </pfe-card>
 
-        <pfe-card color="darkest" class="ui-swatch">
+        <pfe-card color-palette="darkest" class="ui-swatch">
           <p style="color: var(--theme--color--link--on-dark);">
             --theme--color--link--on-dark
           </p>
         </pfe-card>
-        <pfe-card color="darkest" class="ui-swatch">
+        <pfe-card color-palette="darkest" class="ui-swatch">
           <p style="color: var(--theme--color--link--on-dark--hover);">
             --theme--color--link--on-dark--hover</p>
         </pfe-card>
-        <pfe-card color="darkest" class="ui-swatch">
+        <pfe-card color-palette="darkest" class="ui-swatch">
           <p style="color: var(--theme--color--link--on-dark--visited);">
             --theme--color--link--on-dark--visited</p>
         </pfe-card>
-        <pfe-card color="darkest" class="ui-swatch">
+        <pfe-card color-palette="darkest" class="ui-swatch">
           <p style="color: var(--theme--color--link--focus--on-dark);">
             --theme--color--link--focus--on-dark</p>
         </pfe-card>
 
-        <pfe-card color="complement" class="ui-swatch">
+        <pfe-card color-palette="complement" class="ui-swatch">
           <p style="color: var(--theme--color--link--on-saturated);">
             --theme--color--link--on-saturated</p>
         </pfe-card>
-        <pfe-card color="complement" class="ui-swatch">
+        <pfe-card color-palette="complement" class="ui-swatch">
           <p style="color: var(--theme--color--link--visited--on-saturated);">
             --theme--color--link--visited--on-saturated</p>
         </pfe-card>
-        <pfe-card color="complement" class="ui-swatch">
+        <pfe-card color-palette="complement" class="ui-swatch">
           <p style="color: var(--theme--color--link--hover--on-saturated);">
             --theme--color--link--hover--on-saturated</p>
         </pfe-card>
-        <pfe-card color="complement" class="ui-swatch">
+        <pfe-card color-palette="complement" class="ui-swatch">
           <p style="color: var(--theme--color--link--on-saturated--focus);">
             --theme--color--link--on-saturated--focus</p>
         </pfe-card>
@@ -331,20 +331,20 @@
       <h3 class="heading-2">UI items (buttons, flags, etc.)</h3>
 
       <article class="ui-swatches">
-        <pfe-card color="lightest" class="ui-swatch">
+        <pfe-card color-palette="lightest" class="ui-swatch">
           <p style="color: var(--theme--color--ui-disabled);">
             --theme--color--ui-disabled</p>
         </pfe-card>
-        <pfe-card color="lightest" class="ui-swatch">
+        <pfe-card color-palette="lightest" class="ui-swatch">
           <p style="color: var(--theme--color--ui-disabled--text);">
             --theme--color--ui-disabled--text
           </p>
         </pfe-card>
-        <pfe-card color="lightest" class="ui-swatch">
+        <pfe-card color-palette="lightest" class="ui-swatch">
           <p style="color: var(--theme--color--ui-disabled--hover);">
             --theme--color--ui-disabled--hover</p>
         </pfe-card>
-        <pfe-card color="lightest" class="ui-swatch">
+        <pfe-card color-palette="lightest" class="ui-swatch">
           <p style="color: var(--theme--color--ui-disabled--text--hover);">
             --theme--color--ui-disabled--text--hover</p>
         </pfe-card>
@@ -411,7 +411,7 @@
     <div>
       <h3 class="heading-2">Surface (bands, cards, etc.)</h3>
       <article class="swatches">
-        <pfe-card color="lightest">
+        <pfe-card color-palette="lightest">
           <h3><strong>Background:</strong><br />--theme--color--surface--lightest</h3>
           <h3><strong>Text & links:</strong></h3>
           <div class="text-color surface--lightest" style="color: var(--theme--color--surface--lightest--text);">
@@ -450,7 +450,7 @@
             <p>--theme--color--surface--base--link--focus</p>
           </div>
         </pfe-card>
-        <pfe-card color="darker">
+        <pfe-card color-palette="darker">
           <h3><strong>Background:</strong><br />--theme--color--surface--darker</h3>
           <h3><strong>Text & links:</strong></h3>
           <div class="text-color surface--darker" style="color: var(--theme--color--surface--darker--text);">
@@ -469,7 +469,7 @@
             <p>--theme--color--surface--darker--link--focus</p>
           </div>
         </pfe-card>
-        <pfe-card color="darkest">
+        <pfe-card color-palette="darkest">
           <h3><strong>Background:</strong><br />--theme--color--surface--darkest</h3>
           <h3><strong>Text & links:</strong></h3>
           <div class="text-color surface--darkest" style="color: var(--theme--color--surface--darkest--text);">
@@ -488,7 +488,7 @@
             <p>--theme--color--surface--darkest--link--focus</p>
           </div>
         </pfe-card>
-        <pfe-card color="complement">
+        <pfe-card color-palette="complement">
           <h3><strong>Background:</strong><br />--theme--color--surface--complement</h3>
           <h3><strong>Text & links:</strong></h3>
           <div class="text-color surface--complement" style="color: var(--theme--color--surface--complement--text);">
@@ -510,7 +510,7 @@
             <p>--theme--color--surface--complement--link--focus</p>
           </div>
         </pfe-card>
-        <pfe-card color="accent">
+        <pfe-card color-palette="accent">
           <h3><strong>Background:</strong><br />--theme--color--surface--accent</h3>
           <h3><strong>Text & links:</strong></h3>
           <div class="text-color surface--accent" style="color: var(--theme--color--surface--accent--text);">
@@ -550,7 +550,7 @@
 
 
 
-  <pfe-band color="lightest">
+  <pfe-band color-palette="lightest">
     <header slot="pfe-band--header">
       <h2>Accordion component</h2>
     </header>
@@ -603,7 +603,7 @@
     </article>
   </pfe-band>
 
-  <pfe-band color="darkest">
+  <pfe-band color-palette="darkest">
     <header slot="pfe-band--header">
       <h2>Accordion component on dark</h2>
     </header>
@@ -657,7 +657,7 @@
   </pfe-band>
 
 
-  <pfe-band color="complement">
+  <pfe-band color-palette="complement">
     <header slot="pfe-band--header">
       <h2>Accordion component on saturated</h2>
     </header>
@@ -726,7 +726,7 @@
         invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
         dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
     </article>
-    <pfe-card color="accent" slot="pfe-band--aside">
+    <pfe-card color-palette="accent" slot="pfe-band--aside">
       <h3 slot="pfe-card--header">Card component</h3>
       <p>Ut wisi enim ad minim veniam.</p>
       <pfe-cta slot="footer">
@@ -738,21 +738,21 @@
     </pfe-cta>
   </pfe-band>
 
-  <pfe-band color="darkest">
+  <pfe-band color-palette="darkest">
     <header slot="pfe-band--header">
       <h2>Band component</h2>
       <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
         sed diam voluptua.</p>
     </header>
     <article style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 15px;">
-      <pfe-card color="lightest">
+      <pfe-card color-palette="lightest">
         <h3 slot="pfe-card--header">Card component</h3>
         <p>Ut wisi enim ad minim veniam.</p>
         <pfe-cta slot="pfe-card--footer">
           <a href="#">Call-to-action component</a>
         </pfe-cta>
       </pfe-card>
-      <pfe-card color="accent">
+      <pfe-card color-palette="accent">
         <h3 slot="pfe-card--header">Card component</h3>
         <p>Ut wisi enim ad minim veniam.</p>
         <pfe-cta slot="pfe-card--footer">
@@ -769,21 +769,21 @@
     </article>
   </pfe-band>
 
-  <pfe-band color="complement">
+  <pfe-band color-palette="complement">
     <header slot="pfe-band--header">
       <h2>Band component</h2>
       <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
         sed diam voluptua.</p>
     </header>
     <article style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 15px;">
-      <pfe-card color="lightest">
+      <pfe-card color-palette="lightest">
         <h3 slot="pfe-card--header">Card component</h3>
         <p>Ut wisi enim ad minim veniam.</p>
         <pfe-cta slot="pfe-card--footer">
           <a href="#">Call-to-action component</a>
         </pfe-cta>
       </pfe-card>
-      <pfe-card color="darkest">
+      <pfe-card color-palette="darkest">
         <h3 slot="pfe-card--header">Card component</h3>
         <p>Ut wisi enim ad minim veniam.</p>
         <pfe-cta slot="pfe-card--footer">
@@ -800,7 +800,7 @@
     </article>
   </pfe-band> <!-- Pattern | raw_html -->
 
-  <pfe-band color="lightest">
+  <pfe-band color-palette="lightest">
     <header slot="pfe-band--header">
       <h2>Tab component</h2>
     </header>
@@ -861,7 +861,7 @@
     </pfe-tabs>
   </pfe-band>
 
-  <pfe-band color="darkest">
+  <pfe-band color-palette="darkest">
     <header slot="pfe-band--header">
       <h2>Tab component</h2>
     </header>
@@ -922,7 +922,7 @@
     </pfe-tabs>
   </pfe-band>
 
-  <pfe-band color="complement">
+  <pfe-band color-palette="complement">
     <header slot="pfe-band--header">
       <h2>Tab component</h2>
     </header>
@@ -983,7 +983,7 @@
     </pfe-tabs>
   </pfe-band> <!-- Pattern | raw_html -->
 
-  <pfe-band color="lightest">
+  <pfe-band color-palette="lightest">
     <header slot="pfe-band--header" style="text-align: center">
       <h2>Call-to-action component</h2>
     </header>
@@ -994,7 +994,7 @@
     </article>
   </pfe-band>
 
-  <pfe-band color="darkest">
+  <pfe-band color-palette="darkest">
     <header slot="pfe-band--header" style="text-align: center">
       <h2>Call-to-action component</h2>
     </header>
@@ -1005,7 +1005,7 @@
       </pfe-cta>
     </article>
   </pfe-band>
-  <pfe-band color="complement">
+  <pfe-band color-palette="complement">
     <header slot="pfe-band--header" style="text-align: center">
       <h2>Call-to-action component</h2>
     </header>
@@ -1044,12 +1044,12 @@
 
   </style>
 
-  <pfe-band color="lightest">
+  <pfe-band color-palette="lightest">
     <header slot="pfe-band--header">
       <h2>Band component</h2>
     </header>
     <article style="display: grid; grid-gap: 20px; grid-template-columns: repeat(3, 1fr);">
-      <pfe-card color="lightest" class="border-card">
+      <pfe-card color-palette="lightest" class="border-card">
         <img src="https://www.redhat.com/cms/managed-files/bkgd-training-value-2000x727.png"
           overflow="top right left" style="max-height: 200px;">
         <h3 class="pfe-headline-3">Card component</h3>
@@ -1057,7 +1057,7 @@
         <pfe-cta slot="pfe-card--footer"><a href="#">Call-to-action component</a></pfe-cta>
       </pfe-card>
 
-      <pfe-card color="complement" size="small" class="resource-card">
+      <pfe-card color-palette="complement" size="small" class="resource-card">
         <h3 slot="pfe-card--header">
           <span>Card heading</span>
         </h3>
@@ -1069,7 +1069,7 @@
         </div>
       </pfe-card>
 
-      <pfe-card color="accent"
+      <pfe-card color-palette="accent"
         img-src="https://www.redhat.com/cms/managed-files/bkgd-training-value-2000x727.png" class="custom-styles">
         <pfe-icon icon="rh-atom" circled="lightest" size="lg">
           <h3 class="pfe-headline-3">Card heading</h3>
@@ -1083,10 +1083,10 @@
     </article>
   </pfe-band> <!-- Pattern | raw_html -->
 
-  <pfe-band color="lighter">
+  <pfe-band color-palette="lighter">
     <h3 class="pfe-headline-2" slot="pfe-band--header">Modal demo</h3>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 15px;">
-      <pfe-card color="darkest">
+      <pfe-card color-palette="darkest">
         <pfe-modal id="test-modal-1">
           <pfe-cta priority="secondary" slot="pfe-modal--trigger"><a>Open modal</a></pfe-cta>
           <h2 slot="pfe-modal--header">Modal with a header</h2>
@@ -1098,7 +1098,7 @@
           <pfe-cta id="test-modal-1-cta"><a href="#">Learn more</a></pfe-cta>
         </pfe-modal>
       </pfe-card>
-      <pfe-card color="lightest">
+      <pfe-card color-palette="lightest">
         <pfe-modal id="test-modal-2">
           <pfe-cta priority="secondary" slot="pfe-modal--trigger"><a>Open modal</a></pfe-cta>
           <h2 slot="pfe-modal--header">Modal with a header</h2>
@@ -1110,7 +1110,7 @@
           <pfe-cta id="test-modal-2-cta"><a href="#">Learn more</a></pfe-cta>
         </pfe-modal>
       </pfe-card>
-      <pfe-card color="complement">
+      <pfe-card color-palette="complement">
         <pfe-modal id="test-modal-3">
           <pfe-cta priority="secondary" slot="pfe-modal--trigger"><a>Open modal</a></pfe-cta>
           <h2 slot="pfe-modal--header">Modal with a header</h2>

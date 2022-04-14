@@ -20,7 +20,7 @@ title: Theming
   In addition, each "content" component comes equipped to adjust its colors depending on where its placed on the page. For example, should you need to put a default call-to-action link (which is a blue) on a dark blue card, the color of the text will need to adapt. This happens via a behind-the-scenes custom property and attribute combo, which inform the component of the current context (on a saturated background) by giving the on attribute the value of saturated.
 
   <div class="pfe-l-grid pfe-m-gutters">
-    <pfe-card class="pfe-l-grid__item pfe-m-3-col pfe-m-6-col" color="complement">
+    <pfe-card class="pfe-l-grid__item pfe-m-3-col pfe-m-6-col" color-palette="complement">
       <pfe-cta>
         <a href="#">Default</a>
       </pfe-cta>
@@ -28,7 +28,7 @@ title: Theming
   </div>
 
   ```html
-  <pfe-card color="complement">
+  <pfe-card color-palette="complement">
     <pfe-cta>
       <a href="#">Default</a>
     </pfe-cta>
@@ -40,12 +40,12 @@ title: Theming
 {% band header="Combining attributes" %}
   Should you have custom theming needs for a particular use case, you may set individual CTAs to both a priority level to change the style and also apply a particular color from the palette. For example, you can pass a value of `complement` into the `color` attribute like this:
 
-  <pfe-cta priority="primary" color="complement">
+  <pfe-cta priority="primary" color-palette="complement">
     <a href="#">Primary</a>
   </pfe-cta>
 
   ```html
-  <pfe-cta priority="primary" color="complement">
+  <pfe-cta priority="primary" color-palette="complement">
     <a href="#">Primary</a>
   </pfe-cta>
   ```

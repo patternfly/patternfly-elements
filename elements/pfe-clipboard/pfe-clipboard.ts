@@ -76,7 +76,6 @@ export class PfeClipboard extends LitElement {
 
   static readonly styles = [style];
 
-
   /**
    * Optional boolean attribute that, when present, removes the icon from the template.
    */
@@ -113,7 +112,7 @@ export class PfeClipboard extends LitElement {
   /**
    * Specify the copy type to be used depending on security and browser support
    */
-  @property({ type: String || null }) copyType: 'navigator'|'queryCommand'| null = null;
+  @property({ type: String }) copyType: 'navigator' | 'queryCommand' | null = null;
 
 
   /**

@@ -1,5 +1,17 @@
 # @patternfly/pfe-collapse
 
+## 2.0.0-next.2
+
+### Minor Changes
+
+- 6a2a0407: [View commit message here](https://gist.github.com/heyMP/200fc0b840690541475923facba393ab)
+
+### Patch Changes
+
+- 0e9a4130: Export `pfe-collapse-panel.js` from package.json
+- Updated dependencies [6a2a0407]
+  - @patternfly/pfe-core@2.0.0-next.4
+
 ## 2.0.0-next.1
 
 ### Patch Changes

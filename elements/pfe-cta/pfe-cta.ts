@@ -9,8 +9,6 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import {
   bound,
   colorContextConsumer,
-  colorContextProvider,
-  deprecation,
   initializer,
   pfelement,
 } from '@patternfly/pfe-core/decorators.js';
@@ -97,22 +95,12 @@ export class PfeCta extends LitElement {
   @property({ reflect: true }) priority?: 'primary'|'secondary';
 
   /**
-   * Sets color palette, which affects the element's styles as well as descendants' color theme.
-   * Overrides parent color context.
-   * Your theme will influence these colors so check there first if you are seeing inconsistencies.
-   * See [CSS Custom Properties](#css-custom-properties) for default values
-   */
-  @colorContextProvider()
-  @property({ reflect: true, attribute: 'color-palette' }) colorPalette?: ColorPalette;
-
-  /** @deprecated use `color-palette` */
-  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color?: ColorPalette;
-
-  /**
    * Sets color theme based on parent context
    */
   @colorContextConsumer()
   @property({ reflect: true }) on?: ColorTheme;
+
+  @property({ reflect: true, attribute: 'color' }) color?: 'accent' | 'base' | null;
 
   /**
    * `priority="secondary"` has a `wind` variant (`variant="wind"`) that can be applied to change the style of the secondary call-to-action.

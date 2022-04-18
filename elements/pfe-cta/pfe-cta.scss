@@ -159,7 +159,7 @@
 
 // Primary omitted because it already uses the accent color
 
-:host([priority="secondary"][color-palette="accent"]) {
+:host([priority="secondary"][color="accent"]) {
   @include pfe-print-local($secondary-accent);
 }
 
@@ -167,11 +167,11 @@
 /// COLOR=BASE
 /// ===========================================================================
 
-:host([priority="primary"][color-palette="base"]) {
+:host([priority="primary"][color="base"]) {
   @include pfe-print-local($primary-base);
 }
 
-:host([priority="secondary"][color-palette="base"]) {
+:host([priority="secondary"][color="base"]) {
   @include pfe-print-local($secondary-base);
 }
 

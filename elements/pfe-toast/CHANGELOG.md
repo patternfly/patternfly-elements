@@ -1,5 +1,13 @@
 # @patternfly/pfe-toast
 
+## 2.0.0-next.2
+
+### Patch Changes
+
+- 6a2a0407: [View commit message here](https://gist.github.com/heyMP/200fc0b840690541475923facba393ab)
+- Updated dependencies [6a2a0407]
+  - @patternfly/pfe-core@2.0.0-next.4
+
 ## 2.0.0-next.1
 
 ### Patch Changes

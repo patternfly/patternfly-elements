@@ -1,5 +1,16 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.16
+
+### Minor Changes
+
+- bb5b6265: Add `additionalPackages` option to `singleFileBundle`
+- effe009a: Adds a maximize toggle to the dev SPA
+
+### Patch Changes
+
+- 4997735b: update dependencies
+
 ## 1.0.0-next.15
 
 ### Patch Changes

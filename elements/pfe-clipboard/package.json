@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-clipboard",
   "license": "MIT",
-  "version": "2.0.0-next.2",
+  "version": "2.0.0-next.3",
   "description": "Clipboard element for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -67,7 +67,7 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.3",
+    "@patternfly/pfe-core": "^2.0.0-next.4",
     "lit": "^2.1.2"
   }
 }

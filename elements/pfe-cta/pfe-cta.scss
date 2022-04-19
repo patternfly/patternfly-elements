@@ -13,6 +13,11 @@
   border-radius: pfe-local(BorderRadius);
   border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
   cursor: pointer;
+  --pfe-context-background-color: var(--pfe-cta--BackgroundColor, transparent);
+}
+
+:host(:is([color-palette])) {
+  --pfe-context-background-color: var(--pfe-cta--BackgroundColor, transparent);
 }
 
 ::slotted(*) {

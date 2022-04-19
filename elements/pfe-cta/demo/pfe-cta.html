@@ -124,7 +124,7 @@
         <pfe-cta priority="primary" color-palette="accent"><a href="#primary">Primary</a></pfe-cta>
         <pfe-cta priority="secondary" color-palette="accent"><a href="#secondary">Secondary</a></pfe-cta>
         <pfe-cta priority="secondary" color-palette="accent" variant="wind"><a href="#secondary-wind">Secondary + wind variant</a></pfe-cta>
-        <pfe-cta aria-disabled="true" color-palette="accent"><a href="#disabled" disabled>Disabled</a>/pfe-cta>
+        <pfe-cta aria-disabled="true" color-palette="accent"><a href="#disabled" disabled>Disabled</a></pfe-cta>
       </div>
       <div class="event-registry" slot="footer"></div>
     </pfe-card>
@@ -159,7 +159,7 @@
 <pfe-band color-palette="lightest">
   <h2 class="demo" slot="header">Old school testing (custom backgrounds)</h2>
 
-  <div class="custom-saturated-band resize">
+  <pfe-band color-palette="saturated" class="custom-saturated-band resize">
     <h3 style="color:white;">Custom saturated band with broadcast vars</h3>
 
     <h4 style="color:white;">Color responsive</h4>
@@ -178,9 +178,9 @@
       <pfe-cta priority="primary" color-palette="lightest"><a href="#primary">Primary lightest</a></pfe-cta>
       <pfe-cta priority="secondary" variant="wind"><a href="#secondary-wind">Secondary + wind variant</a></pfe-cta>
     </div>
-  </div>
+  </pfe-band>
 
-  <div class="custom-dark-band resize">
+  <pfe-band color-palette="darkest" class="custom-dark-band resize">
     <h3 style="color:white;">
       Custom dark band with custom broadcast variables
     </h3>
@@ -203,5 +203,5 @@
       <pfe-cta priority="primary" color-palette="lightest"><a href="#primary">Primary lightest</a></pfe-cta>
       <pfe-cta priority="secondary" variant="wind"><a href="#secondary-wind">Secondary + wind variant</a></pfe-cta>
     </div>
-  </div>
+  </pfe-band>
 </pfe-band>

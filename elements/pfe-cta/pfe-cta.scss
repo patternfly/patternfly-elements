@@ -13,11 +13,7 @@
   border-radius: pfe-local(BorderRadius);
   border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
   cursor: pointer;
-  --pfe-context-background-color: var(--pfe-cta--BackgroundColor, transparent);
-}
-
-:host(:is([color-palette])) {
-  --pfe-context-background-color: var(--pfe-cta--BackgroundColor, transparent);
+  --pfe-context-background-color: var(--pfe-cta--BackgroundColor, transparent) !important;
 }
 
 ::slotted(*) {
@@ -46,6 +42,11 @@
     padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 2)) !important;
   }
 }
+
+// @TODO: disabled CTAs should not be clickable (needs discussion)
+// :host([aria-disabled="true"]) {
+//   pointer-events: none;
+// }
 
 :host(:not([aria-disabled="true"]):focus),
 :host(:not([aria-disabled="true"]).focus-within),
@@ -141,7 +142,6 @@
 /// CONTEXT CTA VARIANTS
 /// ===========================================================================
 
-
 :host([priority="primary"][on="dark"]),
 :host([priority="primary"][on="saturated"]) {
   @include pfe-print-local($primary-saturated);
@@ -158,19 +158,54 @@
 /// ===========================================================================
 
 /// ===========================================================================
-/// COLOR=ACCENT
+/// COLOR-PALETTE=ACCENT
 /// ===========================================================================
 
 
 // Primary omitted because it already uses the accent color
+
+:host([on^=light][color-palette=accent]),
+:host([on^=dark][color-palette=accent]),
+:host([on=saturated][color-palette=accent]) {
+  --pfe-broadcasted--text: var(--pfe-theme--color--text, #fff) !important;
+  --pfe-broadcasted--link: var(--pfe-theme--color--link, #06c);
+  --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover, #004080);
+  --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus, #004080);
+}
 
 :host([priority="secondary"][color-palette="accent"]) {
   @include pfe-print-local($secondary-accent);
 }
 
 /// ===========================================================================
-/// COLOR=BASE
+/// COLOR-PALETTE=BASE
 /// ===========================================================================
+
+:host([on^=dark]) {
+  --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff) !important;
+  --pfe-broadcasted--text--muted: var(--pfe-theme--color--text--muted--on-dark, #d2d2d2) !important;
+  --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #73bcf7) !important;
+  --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #bee1f4) !important;
+  --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #bee1f4) !important;
+  --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #bee1f4) !important;
+  --pfe-broadcasted--link-decoration: var(--pfe-theme--link-decoration--on-dark, none);
+  --pfe-broadcasted--link-decoration--hover: var(--pfe-theme--link-decoration--hover--on-dark, underline) !important;
+  --pfe-broadcasted--link-decoration--focus: var(--pfe-theme--link-decoration--focus--on-dark, underline) !important;
+  --pfe-broadcasted--link-decoration--visited: var(--pfe-theme--link-decoration--visited--on-dark, none) !important;
+}
+
+:host([on=saturated]) {
+  --pfe-broadcasted--text: var(--pfe-theme--color--text--on-saturated, #fff) !important;
+  --pfe-broadcasted--text--muted: var(--pfe-theme--color--text--muted--on-saturated, #d2d2d2) !important;
+  --pfe-broadcasted--link: var(--pfe-theme--color--link--on-saturated, #fff) !important;
+  --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-saturated, #fafafa) !important;
+  --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-saturated, #fafafa) !important;
+  --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-saturated, #d2d2d2) !important;
+  --pfe-broadcasted--link-decoration: var(--pfe-theme--link-decoration--on-saturated, underline) !important;
+  --pfe-broadcasted--link-decoration--hover: var(--pfe-theme--link-decoration--hover--on-saturated, underline) !important;
+  --pfe-broadcasted--link-decoration--focus: var(--pfe-theme--link-decoration--focus--on-saturated, underline) !important;
+  --pfe-broadcasted--link-decoration--visited: var(--pfe-theme--link-decoration--visited--on-saturated, underline) !important;
+}
 
 :host([priority="primary"][color-palette="base"]) {
   @include pfe-print-local($primary-base);
@@ -221,3 +256,4 @@
   --pfe-cta__inner--BorderColor: #{pfe-local(BorderColor--hover, $region: inner)};
   --pfe-cta__arrow--Padding:     #{$arrow-hover};
 }
+

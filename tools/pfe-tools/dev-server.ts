@@ -143,7 +143,7 @@ export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerConf
   };
 }
 
-function nunjucksSPAMiddleware(options: PfeDevServerConfigOptions): Middleware {
+function nunjucksSPAMiddleware(options?: PfeDevServerConfigOptions): Middleware {
   const model = { ...SITE_DEFAULTS, ...options?.site };
   return function(ctx, next) {
     if (!(ctx.method !== 'HEAD' && ctx.method !== 'GET' || ctx.path.includes('.'))) {
@@ -189,7 +189,7 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
 
     middleware: [
       ...loadDemo ? [
-        nunjucksSPAMiddleware(options),
+        nunjucksSPAMiddleware(_options),
       ] : [],
       cors,
       ...options?.middleware ?? [],

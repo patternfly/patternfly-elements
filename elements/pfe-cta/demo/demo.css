@@ -104,6 +104,24 @@ pfe-band[color-palette="lightest"] pfe-card[color-palette="lightest"] {
   float: left;
 }
 
+.custom::part(body) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+  gap: 8px;
+}
+
+.custom h4 {
+  grid-column: -1/1;
+}
+
+.custom[color-palette=darker] {
+  --pfe-theme--color--surface--darker: #222;
+}
+
+.custom[color-palette=accent] {
+  --pfe-theme--color--surface--accent: #4c1a6d;
+}
+
 .custom-dark-band {
   padding: 15px;
   background: #222;

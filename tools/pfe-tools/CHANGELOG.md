@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.17
+
+### Patch Changes
+
+- b595cafb: corrects passing options to `nunjucksSPAMiddleware(_options)` for repo demo configuration
+
 ## 1.0.0-next.16
 
 ### Minor Changes

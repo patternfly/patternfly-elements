@@ -38,6 +38,7 @@ export type ColorTheme = (
 
 export interface ColorContextOptions {
   prefix?: string;
+  attribute?: string;
 }
 
 // TODO: CSS
@@ -83,6 +84,8 @@ const contextEvents = new Map<ReactiveElement, ContextEvent<UnknownContext>>();
 abstract class ColorContextController implements ReactiveController {
   abstract update(next: ColorTheme | null): void;
 
+  protected abstract attribute: string;
+
   /** The context object which describes the host's colour context */
   protected context: Context<ColorTheme|null>;
 
@@ -113,6 +116,8 @@ abstract class ColorContextController implements ReactiveController {
  * descendents.
  */
 export class ColorContextProvider extends ColorContextController implements ReactiveController {
+  protected attribute: string;
+
   /** Cache of context callbacks. Call each to update consumers */
   private callbacks = new Set<ContextCallback<ColorTheme|null>>();
 
@@ -133,6 +138,7 @@ export class ColorContextProvider extends ColorContextController implements Reac
   constructor(host: ReactiveElement, options?: ColorContextOptions) {
     super(host, options);
     this.style = window.getComputedStyle(host);
+    this.attribute = options?.attribute ?? 'color-palette';
   }
 
   /**
@@ -142,7 +148,7 @@ export class ColorContextProvider extends ColorContextController implements Reac
    */
   hostConnected() {
     this.host.addEventListener('context-request', this.onChildContextEvent);
-    this.mo.observe(this.host, { attributes: true, attributeFilter: ['color-palette', 'on'] });
+    this.mo.observe(this.host, { attributes: true, attributeFilter: [this.attribute, 'on'] });
     this.update(this.contextVariable);
     for (const [host, fired] of contextEvents) {
       host.dispatchEvent(fired);
@@ -202,7 +208,16 @@ export class ColorContextProvider extends ColorContextController implements Reac
  * The consumer has no direct access to the context, it must receive it from the provider.
  */
 export class ColorContextConsumer extends ColorContextController implements ReactiveController {
+  protected attribute: string;
+
   private dispose?: () => void;
+
+  private override: ColorTheme | null = null;
+
+  constructor(host: ReactiveElement, options?: ColorContextOptions) {
+    super(host, options);
+    this.attribute ??= 'on';
+  }
 
   /**
    * When a color context consumer connects,
@@ -211,6 +226,7 @@ export class ColorContextConsumer extends ColorContextController implements Reac
    */
   hostConnected() {
     const event = new ContextEvent(this.context, this.contextCallback, true);
+    this.override = this.host.getAttribute(this.attribute) as ColorTheme;
     this.host.dispatchEvent(event);
     contextEvents.set(this.host, event);
   }
@@ -238,13 +254,13 @@ export class ColorContextConsumer extends ColorContextController implements Reac
 
   /** Sets the `on` attribute on the host and any children that requested multiple updates */
   @bound public update(next: ColorTheme|null) {
-    if (next !== this.last) {
+    if (!this.override && next !== this.last) {
       this.last = next;
-      this.logger.log(`setting context from ${this.host.getAttribute('on')} to ${next}`);
+      this.logger.log(`setting context from ${this.host.getAttribute(this.attribute)} to ${next}`);
       if (next == null) {
-        this.host.removeAttribute('on');
+        this.host.removeAttribute(this.attribute);
       } else {
-        this.host.setAttribute('on', next);
+        this.host.setAttribute(this.attribute, next);
       }
     }
   }

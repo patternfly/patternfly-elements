@@ -78,7 +78,7 @@
     "@types/yargs": "^17.0.9",
     "@vaadin/split-layout": "^23.0.5",
     "@web/dev-server": "^0.1.29",
-    "@web/dev-server-esbuild": "^0.2.16",
+    "@web/dev-server-esbuild": "^0.3.0",
     "@web/dev-server-import-maps": "^0.0.6",
     "@web/dev-server-rollup": "^0.3.15",
     "@web/test-runner": "^0.13.26",

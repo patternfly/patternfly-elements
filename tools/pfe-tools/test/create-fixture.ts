@@ -50,7 +50,7 @@ const helpers: Promise<TestHelpers> = new Promise(resolve => {
  * - If React is available the fixture will be wrapped in a React app.
  * - By default standard a fixture will be created using lit html.
  *
- * @param element The element code you'd like to generate a fixture for.
+ * @param code The element code you'd like to generate a fixture for.
  *
  * @returns  Returns the new web component fixture rendered and ready for tests.
  */
@@ -71,14 +71,13 @@ chai.use(function(_chai) {
     const message = msg ? `${msg} ` : '';
     this.assert(
       actualNormalized === expectNormalized,
-      `expected ${message}#{act} to be the same color as #{exp}`,
-      `expected ${message}#{act} to be a different color than #{exp}`,
+      `${message}#{act} (actual) should be the same color as #{exp} (expected)`,
+      `${message}#{act} (actual) should be a different color than #{exp} (expected)`,
       expectNormalized,
       actualNormalized
     );
   });
 });
-
 
 declare global {
   // That's just the way the chai boils

@@ -49,8 +49,8 @@
 // }
 
 :host(:not([aria-disabled="true"]):focus),
-:host(:not([aria-disabled="true"]).focus-within),
-:host(:not([aria-disabled="true"]).focus-within) ::slotted(*),
+:host(:not([aria-disabled="true"]):focus-within),
+:host(:not([aria-disabled="true"]):focus-within) ::slotted(*),
 :host(:not([aria-disabled="true"])) ::slotted(:focus) {
   outline: none !important;
 }
@@ -77,12 +77,6 @@
     :host(:not([priority]):not([aria-disabled="true"])) & {
       @include browser-query(firefox) {
         max-width: calc(100% - 1ch - #{pfe-local(size, $region: arrow)});
-      }
-    }
-    @include browser-query(edge) {
-      button,
-      input {
-        @extend %reset-button;
       }
     }
   }
@@ -219,8 +213,13 @@
 /// WIND CTA VARIANTS
 /// ===========================================================================
 
-:host([priority="secondary"][variant="wind"]) {
+:host([priority=secondary][variant=wind]) {
   @include pfe-print-local($secondary-wind);
+}
+
+:host([on=dark][priority=secondary][variant=wind][color-palette=base]),
+:host([on=saturated][priority=secondary][variant=wind][color-palette=base]) {
+  --pfe-cta--Color--focus: #ffffff;
 }
 
 // @TODO: Deprecated
@@ -238,7 +237,7 @@
 
 // Note: Focus states need to be defined before hover states
 :host(:not([aria-disabled="true"]):focus),
-:host(:not([aria-disabled="true"]).focus-within) {
+:host(:not([aria-disabled="true"]):focus-within) {
   --pfe-cta--BackgroundColor: #{pfe-local(BackgroundColor--focus)};
   --pfe-cta--BorderColor:     #{pfe-local(BorderColor--focus)};
   --pfe-cta--Color:           #{pfe-local(Color--focus)};

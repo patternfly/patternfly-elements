@@ -208,26 +208,12 @@ export class PfeCta extends LitElement {
       this.data.type = 'disabled';
     }
 
-    // Watch the light DOM link for focus and blur events
-    this.cta.addEventListener('focus', this._focusHandler);
-    this.cta.addEventListener('blur', this._blurHandler);
-
     // Attach the click listener
     this.cta.addEventListener('click', this._clickHandler as EventListener);
     this.cta.addEventListener('keyup', this._keyupHandler);
 
     CONTENT.set(this.cta, true);
     this.initializing = false;
-  }
-
-  // On focus, add a focus class
-  @bound private _focusHandler() {
-    this.classList.add('focus-within');
-  }
-
-  // On focus out, remove the focus class
-  @bound private _blurHandler() {
-    this.classList.remove('focus-within');
   }
 
   // On enter press, trigger click event

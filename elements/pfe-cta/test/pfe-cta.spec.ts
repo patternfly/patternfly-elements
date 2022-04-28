@@ -2,7 +2,7 @@ import type { ReactiveElement } from 'lit';
 import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core';
 
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { expect, oneEvent, html, nextFrame } from '@open-wc/testing';
+import { chai, expect, oneEvent, html, nextFrame } from '@open-wc/testing';
 import { sendMouse } from '@web/test-runner-commands';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { getElementPosition } from '@patternfly/pfe-tools/test/utils.js';
@@ -186,17 +186,45 @@ describe('<pfe-cta>', function() {
       linkColor: string;
       linkTextDecorationLine?: 'underline';
     }) {
-      if (assertions.on) {
-        expect(element.on).to.equal(assertions.on, `uses ${assertions.on} color theme`);
+      const errors: ( Chai.AssertionError & { key: string, actual: string, expected: string } )[] = [];
+
+      for (const [key, expected] of Object.entries(assertions)) {
+        let actual: string;
+        try {
+          switch (key) {
+            case 'on':
+              actual = element.on!;
+              expect(actual).to.equal(expected, `uses ${expected} color theme`);
+              break;
+            case 'elementBackgroundColor':
+              actual = elemStyle.backgroundColor;
+              expect(actual).to.be.colored(expected, 'background color');
+              break;
+            case 'linkColor':
+              actual = linkStyle.getPropertyValue('color');
+              expect(actual).to.be.colored(expected, 'link color');
+              break;
+            case 'linkTextDecorationLine':
+              actual = linkStyle.getPropertyValue('text-decoration-line');
+              expect(actual).to.equal(expected, 'link text decoration');
+              break;
+          }
+        } catch (e) {
+          errors.push({ ...e as Chai.AssertionError & { actual: string, expected: string }, key });
+        }
       }
-      expect(elemStyle.getPropertyValue('background-color'))
-        .to.be.colored(assertions.elementBackgroundColor, 'background color');
-      expect(linkStyle.getPropertyValue('color'))
-        .to.be.colored(assertions.linkColor, 'link color');
-      if (assertions.linkTextDecorationLine) {
-        expect(linkStyle.getPropertyValue('text-decoration-line'))
-          .to.equal(assertions.linkTextDecorationLine, 'link text decoration');
+
+      if (errors.length) {
+        const e = new chai.AssertionError(`styles did not match\n\t${errors.map(e => e.message).join('\n\t')}`, errors.reduce((acc, e) => ({
+          ...acc,
+          actual: { ...acc.actual, [e.key]: e.actual, },
+          expected: { ...acc.expected, [e.key]: e.expected, }
+        }), { actual: {}, expected: {} }));
+        e.showDiff = true;
+        throw e;
       }
+
+      expect(element).to.be.accessible();
     }
 
     describe('no specific context', function() {
@@ -700,7 +728,7 @@ describe('<pfe-cta>', function() {
             beforeEach(focusElement);
             it('has correct theme values', () => assertStyles({
               elementBackgroundColor: '#2897f033',
-              linkColor: '#004080',
+              linkColor: '#ffffff',
             }));
           });
           describe('hovered', function() {
@@ -1015,8 +1043,7 @@ describe('<pfe-cta>', function() {
             beforeEach(focusElement);
             it('has correct theme values', () => assertStyles({
               elementBackgroundColor: 'rgba(40, 151, 240, 0.2)',
-              // FIXME: color contrast error
-              linkColor: '#004080',
+              linkColor: '#ffffff',
             }));
           });
           describe('hovered', function() {

@@ -231,6 +231,12 @@ $size-small: (
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
+    &:is(.has-header){
+      ::slotted(img[overflow~="top"]){
+        padding-top: pfe-local(spacing);
+      }
+    }    
+
     &:not(.has-footer) {
       margin-bottom: 0;
     }

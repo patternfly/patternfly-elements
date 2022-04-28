@@ -98,7 +98,7 @@
 :host([variant="secondary"]) {
   #container {
     ::slotted(button) {
-      color: var(--pfe-button--Color, var(--pfe-theme--color--ui-accent,#06c)) !important;
+      --pfe-button--Color: var(--pfe-theme--color--ui-accent,#06c) !important;
       &::after {
         border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(ui-accent)) !important;
       }
@@ -109,6 +109,18 @@
 :host([on^=dark]),
 :host([on=saturated]) {
   --pfe-theme--color--text: #ffffff;
+}
+
+:host([on^=dark][variant="secondary"]),
+:host([on=saturated][variant="secondary"]) {
+  #container {
+    ::slotted(button) {
+      --pfe-button--Color: var(--pfe-theme--color--ui-accent--on-dark, #73bcf7) !important;
+      &::after {
+        border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(ui-accent--on-dark)) !important;
+      }
+    }
+  }
 }
 
 :host([on^=dark][variant="tertiary"]) {

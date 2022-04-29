@@ -1442,6 +1442,17 @@ class PfeNavigation extends PFElement {
     let timesToCheckForImageDimensions = 8;
     const logoCheckInterval = 500;
     const logoSelector = ".pfe-navigation__logo-image--screen, .pfe-navigation__logo-image, img, svg";
+    const logoLink = this._logoWrapper.querySelector("a");
+
+    // Adding event listener so analytics knows when the logo is clicked
+    logoLink.addEventListener("click", () => {
+      this.emitEvent(PfeNavigation.events.shadowDomInteraction, {
+        detail: {
+          target: logoLink,
+          parent: this,
+        },
+      });
+    });
 
     /**
      * Sets a max width for the logo the logo can be squished at mobile sizes
@@ -2093,6 +2104,19 @@ class PfeNavigation extends PFElement {
         }
         this._moveSearchSlot();
       }, 0);
+    }
+
+    const menuAnchorTags = this._shadowMenuWrapper.querySelectorAll("a.pfe-navigation__menu-link");
+    for (let index = 0; index < menuAnchorTags.length; index++) {
+      const menuAnchorTag = menuAnchorTags[index];
+      menuAnchorTag.addEventListener("click", () => {
+        this.emitEvent(PfeNavigation.events.shadowDomInteraction, {
+          detail: {
+            target: menuAnchorTag,
+            parent: this,
+          },
+        });
+      });
     }
 
     if (this.isOpen()) {

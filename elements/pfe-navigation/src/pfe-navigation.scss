@@ -704,7 +704,7 @@ nav.pfe-navigation {
   // @todo this is a workaround
   // Issue is on redhat.com Services, where breakpoint says mobile,
   // but collapse-secondary-links class doesn't fire
-  [breakpoint='mobile'] & {
+  :host([breakpoint='mobile']) & {
     @include pfe-navigation__dropdown-layout--mobile;
   }
 

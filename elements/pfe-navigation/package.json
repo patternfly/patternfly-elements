@@ -14,7 +14,7 @@
       "ie-polyfills.js"
     ]
   },
-  "version": "1.0.94",
+  "version": "1.0.96",
   "publishConfig": {
     "access": "public"
   },

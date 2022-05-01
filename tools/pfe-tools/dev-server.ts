@@ -241,5 +241,3 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
     ],
   };
 }
-env.addFilter('prettyTag', prettyTag);
-

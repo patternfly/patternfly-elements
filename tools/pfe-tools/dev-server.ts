@@ -18,6 +18,9 @@ import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { importMapsPlugin } from '@web/dev-server-import-maps';
 import { transformSass } from './esbuild.js';
 import { createRequire } from 'module';
+import { promisify } from 'util';
+import _glob from 'glob';
+const glob = promisify(_glob);
 
 export interface PfeDevServerConfigOptions extends DevServerConfig {
   /** Extra dev server plugins */
@@ -225,6 +228,16 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
 
       // Ensure .scss files are loaded as js modules, as `litcss` plugin transforms them to such
       scssMimeType(),
+
+      {
+        name: 'watch-repo-files',
+        async serverStart({ fileWatcher }) {
+          const files = await glob('{elements,core}/**/*.{ts,js,css,scss,html}', { cwd: process.cwd() });
+          for (const file of files) {
+            fileWatcher.add(file);
+          }
+        },
+      },
     ],
   };
 }

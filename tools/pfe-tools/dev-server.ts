@@ -3,7 +3,9 @@ import type { DevServerConfig } from '@web/dev-server';
 import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsPlugin';
 import type { Context, Middleware, Next } from 'koa';
 
-import { readdir, stat } from 'fs/promises';
+import { URLPattern } from 'urlpattern-polyfill';
+
+import { readdir, readFile, stat } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -31,12 +33,6 @@ export interface PfeDevServerConfigOptions extends DevServerConfig {
   };
 }
 
-const require = createRequire(import.meta.url);
-const exists = (x: string) => stat(x).then(() => true, () => false);
-const litcss = fromRollup(litcssRollup);
-const replace = fromRollup(rollupReplace);
-const env = nunjucks.configure(fileURLToPath(new URL('./demo', import.meta.url)));
-
 const SITE_DEFAULTS = {
   title: 'PatternFly Elements',
   logoUrl: '/brand/logo/svg/pfe-icon-white-shaded.svg',
@@ -44,44 +40,36 @@ const SITE_DEFAULTS = {
   description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
 };
 
-function appendLines(body: string, ...lines: string[]): string {
-  return [body, ...lines].join('\n');
+const require = createRequire(import.meta.url);
+const exists = (x: string) => stat(x).then(() => true, () => false);
+const litcss = fromRollup(litcssRollup);
+const replace = fromRollup(rollupReplace);
+const env = nunjucks.configure(fileURLToPath(new URL('./demo', import.meta.url)));
+env.addFilter('prettyTag', prettyTag);
+
+function prettyTag(tagName: string, prefix = 'pfe-'): string {
+  return tagName
+    .replace(prefix, '')
+    .toLowerCase()
+    .replace(/(?:^|[\s-/])\w/g, x => x.toUpperCase())
+    .replace(/-/g, ' ');
 }
 
 async function tryRead(pathname: string) {
   return readdir(pathname).catch(() => []);
 }
 
-/**
- * Binds data from the node context to the dev-server's browser context.
- * exposed data is available by importing `@patternfly/pfe-tools/environment.js`.
- */
-function bindNodeDataToBrowser(options?: PfeDevServerConfigOptions): Plugin {
-  const { rootDir = process.cwd() } = options ?? {};
-  return {
-    name: 'bind-node-data-to-browser',
-    async transform(context) {
-      if (context.path.match(/pfe-tools\/environment\.(?:j|t)s$/)) {
-        // TODO: calculate export names from npm workspaces
-        //       for now, `elements` is the only conventionally-supported workspace
-        const elements = await tryRead(join(rootDir, 'elements'));
-        const core = await tryRead(join(rootDir, 'core'));
-        const transformed = appendLines(
-          context.body as string,
-          `export const elements = ${JSON.stringify(elements)};`,
-          `export const core     = ${JSON.stringify(core)};`
-        );
-        return transformed;
-      }
-    },
-  };
+async function getPackages(rootDir: string) {
+  const elements = await tryRead(join(rootDir, 'elements'));
+  const core = await tryRead(join(rootDir, 'core'));
+  return { core, elements };
 }
 
 function scssMimeType(): Plugin {
   return {
     name: 'scss-mime-type',
     resolveMimeType(context) {
-    // ensure .scss files are loaded by the browser as javascript
+      // ensure .scss files are loaded by the browser as javascript
       if (context.path.endsWith('.scss')) {
         return 'js';
       }
@@ -91,7 +79,6 @@ function scssMimeType(): Plugin {
 
 function tryToResolve(source: string, context: import('koa').Context) {
   let resolved = '';
-
   try {
     resolved = require.resolve(source);
   } catch (error) {
@@ -143,14 +130,30 @@ export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerConf
   };
 }
 
-function nunjucksSPAMiddleware(options?: PfeDevServerConfigOptions): Middleware {
-  const model = { ...SITE_DEFAULTS, ...options?.site };
-  return function(ctx, next) {
+const pattern = new URLPattern({ pathname: '/demo/:element/' });
+
+function nunjucksMiddleware(options?: PfeDevServerConfigOptions): Middleware {
+  return async function(ctx, next) {
+    const { rootDir = process.cwd() } = options ?? {};
     if (!(ctx.method !== 'HEAD' && ctx.method !== 'GET' || ctx.path.includes('.'))) {
-      const transformed = env.render('index.html', model);
-      ctx.body = transformed;
+      const url = new URL(ctx.request.url, `http://${ctx.request.headers.host}`);
+      const { element } = pattern.exec(url)?.pathname?.groups ?? {};
+      const base = element?.match(/^pfe-(core|sass|styles)$/) ? 'core' : 'elements';
+      const basePath = element && join(rootDir, base, element, 'demo');
+      const demoPath = element && join(basePath, `${element}.html`);
       ctx.type = 'html';
       ctx.status = 200;
+      ctx.body = env.render('index.njk', {
+        ...SITE_DEFAULTS,
+        ...options?.site,
+        ...await getPackages(rootDir),
+        element,
+        context: ctx,
+        manifest: element && (await exists(join(basePath, '..', 'custom-elements.json')) ? `/${base}/${element}/custom-elements.json` : '/custom-elements.json'),
+        title: element ? `${prettyTag(element)} | PatternFly Elements` : (options?.site?.title ?? SITE_DEFAULTS.title),
+        demo: element && await readFile(demoPath, 'utf-8'),
+        script: element && await readFile(join(basePath, `${element}.js`), 'utf-8'),
+      });
     }
     return next();
   };
@@ -189,7 +192,7 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
 
     middleware: [
       ...loadDemo ? [
-        nunjucksSPAMiddleware(_options),
+        nunjucksMiddleware(_options),
       ] : [],
       cors,
       ...options?.middleware ?? [],
@@ -208,21 +211,22 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
       // we hope it will work in most cases. If you have a problem loading from packages in the dev
       // server, please open an issue at https://github.com/patternfly/patternfly-elements/issues/new/
       resolveLocalFilesFromTypeScriptSources({ ...options, rootDir }),
-      // importMapsPlugin({ inject: { importMap: { imports } } }),
+
       // serve typescript sources as javascript
       esbuildPlugin({ ts: true }),
-      // bind data from node to the browser
-      // e.g. the file listing of the `elements/` dir
-      // so that we can list the elements by name
-      bindNodeDataToBrowser({ rootDir }),
+
       // load .scss files as lit CSSResult modules
       litcss({ include: ['**/*.scss'], transform: transformSass }),
+
       replace({
         'preventAssignment': true,
         'process.env.NODE_ENV': JSON.stringify('production'),
       }),
+
       // Ensure .scss files are loaded as js modules, as `litcss` plugin transforms them to such
       scssMimeType(),
     ],
   };
 }
+env.addFilter('prettyTag', prettyTag);
+

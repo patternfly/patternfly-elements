@@ -2,6 +2,7 @@ import type { Plugin } from '@web/dev-server-core';
 import type { DevServerConfig } from '@web/dev-server';
 import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsPlugin';
 import type { Context, Next } from 'koa';
+import type { LitCSSOptions } from 'web-dev-server-plugin-lit-css';
 
 import 'urlpattern-polyfill';
 
@@ -9,18 +10,23 @@ import { readdir, readFile, stat } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-import litcssRollup from 'rollup-plugin-lit-css';
 import rollupReplace from '@rollup/plugin-replace';
 import nunjucks from 'nunjucks';
+import _glob from 'glob';
 
+import { litCss } from 'web-dev-server-plugin-lit-css';
 import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { importMapsPlugin } from '@web/dev-server-import-maps';
 import { transformSass } from './esbuild.js';
 import { createRequire } from 'module';
 import { promisify } from 'util';
-import _glob from 'glob';
+
 const glob = promisify(_glob);
+const require = createRequire(import.meta.url);
+const exists = (x: string) => stat(x).then(() => true, () => false);
+const replace = fromRollup(rollupReplace);
+const env = nunjucks.configure(fileURLToPath(new URL('./demo', import.meta.url)));
 
 export interface PfeDevServerConfigOptions extends DevServerConfig {
   /** Extra dev server plugins */
@@ -29,6 +35,7 @@ export interface PfeDevServerConfigOptions extends DevServerConfig {
   importMap?: InjectSetting['importMap'];
   hostname?: string;
   watchFiles: string;
+  litcssOptions: LitCSSOptions,
   site?: {
     tagPrefix: `${string}-`;
     title: string;
@@ -45,11 +52,6 @@ const SITE_DEFAULTS = {
   description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
 };
 
-const require = createRequire(import.meta.url);
-const exists = (x: string) => stat(x).then(() => true, () => false);
-const litcss = fromRollup(litcssRollup);
-const replace = fromRollup(rollupReplace);
-
 /** Prettify a tag name, stripping the prefix and capitalizing the rest */
 function prettyTag(tagName: string, prefix: `${string}-` = 'pfe-'): string {
   return tagName
@@ -57,18 +59,6 @@ function prettyTag(tagName: string, prefix: `${string}-` = 'pfe-'): string {
     .toLowerCase()
     .replace(/(?:^|[\s-/])\w/g, x => x.toUpperCase())
     .replace(/-/g, ' ');
-}
-
-function scssMimeType(): Plugin {
-  return {
-    name: 'scss-mime-type',
-    resolveMimeType(context) {
-      // ensure .scss files are loaded by the browser as javascript
-      if (context.path.endsWith('.scss')) {
-        return 'js';
-      }
-    },
-  };
 }
 
 /** Ugly, ugly hack to resolve packages from the local monorepo */
@@ -242,15 +232,12 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
       }),
 
       // load .scss files as lit CSSResult modules
-      litcss({ include: ['**/*.scss'], transform: transformSass }),
+      litCss(options?.litcssOptions ?? { include: ['**/*.scss'], transform: transformSass }),
 
       replace({
         'preventAssignment': true,
         'process.env.NODE_ENV': JSON.stringify('production'),
       }),
-
-      // Ensure .scss files are loaded as js modules, as `litcss` plugin transforms them to such
-      scssMimeType(),
 
       // Dev server app which loads component demo files
       pfeDevServerPlugin(options),

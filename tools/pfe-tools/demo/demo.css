@@ -3,6 +3,10 @@
   --pfe-demo-menu-width: 280px;
 }
 
+html[unresolved] {
+  opacity: 0;
+}
+
 body {
   display: contents !important;
 }

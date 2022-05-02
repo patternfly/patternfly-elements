@@ -18,15 +18,15 @@
   },
   "dependencies": {
     "@types/eslint": "^8.4.1",
-    "@typescript-eslint/eslint-plugin": "^5.15.0",
-    "@typescript-eslint/parser": "^5.15.0",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
     "eslint": "^8.11.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-html": "^6.2.0",
-    "eslint-plugin-json-schema-validator": "^2.3.16",
+    "eslint-plugin-json-schema-validator": "^2.3.37",
     "eslint-plugin-jsonc": "^2.1.0",
     "eslint-plugin-lit-a11y": "^2.2.0",
     "eslint-plugin-no-only-tests": "^2.6.0",
-    "eslint-plugin-unicorn": "^41.0.0"
+    "eslint-plugin-unicorn": "^42.0.0"
   }
 }

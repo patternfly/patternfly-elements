@@ -22,6 +22,7 @@
   "exports": {
     "./11ty": "./11ty/index.js",
     "./11ty/plugins/*.cjs": "./11ty/plugins/*.cjs",
+    "./environment.js": "./environment.js",
     "./test/create-fixture.js": "./test/create-fixture.js",
     "./test/get-composed-text.js": "./test/get-composed-text.js",
     "./test/hex-to-rgb.js": "./test/hex-to-rgb.js",

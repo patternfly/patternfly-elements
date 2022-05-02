@@ -28,7 +28,9 @@ export interface PfeDevServerConfigOptions extends DevServerConfig {
   plugins?: Plugin[];
   importMap?: InjectSetting['importMap'];
   hostname?: string;
+  watchFiles: string;
   site?: {
+    tagPrefix: `${string}-`;
     title: string;
     logoUrl: string;
     githubUrl: string;
@@ -47,25 +49,13 @@ const require = createRequire(import.meta.url);
 const exists = (x: string) => stat(x).then(() => true, () => false);
 const litcss = fromRollup(litcssRollup);
 const replace = fromRollup(rollupReplace);
-const env = nunjucks.configure(fileURLToPath(new URL('./demo', import.meta.url)));
-env.addFilter('prettyTag', prettyTag);
-
-function prettyTag(tagName: string, prefix = 'pfe-'): string {
+/** Prettify a tag name, stripping the prefix and capitalizing the rest */
+function prettyTag(tagName: string, prefix: PfeDevServerConfigOptions['site']['tagPrefix'] = 'pfe-'): string {
   return tagName
     .replace(prefix, '')
     .toLowerCase()
     .replace(/(?:^|[\s-/])\w/g, x => x.toUpperCase())
     .replace(/-/g, ' ');
-}
-
-async function tryRead(pathname: string) {
-  return readdir(pathname).catch(() => []);
-}
-
-async function getPackages(rootDir: string) {
-  const elements = await tryRead(join(rootDir, 'elements'));
-  const core = await tryRead(join(rootDir, 'core'));
-  return { core, elements };
 }
 
 function scssMimeType(): Plugin {
@@ -133,9 +123,32 @@ export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerConf
   };
 }
 
-const pattern = new URLPattern({ pathname: '/demo/:element/' });
+/**
+ * Add repository files to the dev server's file watcher
+ */
+function watchRepoFiles(pattern: string): Plugin {
+  return {
+    name: 'watch-repo-files',
+    async serverStart({ fileWatcher }) {
+      const files = await glob(pattern ?? '{elements,core}/**/*.{ts,js,css,scss,html}', { cwd: process.cwd() });
+      for (const file of files) {
+        fileWatcher.add(file);
+      }
+    },
+  };
+}
 
+/**
+ * Generate HTML for each component by adding it's demo to a
+ * Declarative Shadow DOM template.
+ * @see https://web.dev/declarative-shadow-dom/
+ *
+ */
 function nunjucksMiddleware(options?: PfeDevServerConfigOptions): Middleware {
+  const pattern = new URLPattern({ pathname: '/demo/:element/' });
+  const env = nunjucks.configure(fileURLToPath(new URL('./demo', import.meta.url)));
+  env.addFilter('prettyTag', x => prettyTag(x, options?.site?.tagPrefix));
+
   return async function(ctx, next) {
     const { rootDir = process.cwd() } = options ?? {};
     if (!(ctx.method !== 'HEAD' && ctx.method !== 'GET' || ctx.path.includes('.'))) {
@@ -149,12 +162,13 @@ function nunjucksMiddleware(options?: PfeDevServerConfigOptions): Middleware {
       ctx.body = env.render('index.njk', {
         ...SITE_DEFAULTS,
         ...options?.site,
-        ...await getPackages(rootDir),
-        element,
+        core: await readdir(join(rootDir, 'core')).catch(() => []),
         context: ctx,
-        manifest: element && (await exists(join(basePath, '..', 'custom-elements.json')) ? `/${base}/${element}/custom-elements.json` : '/custom-elements.json'),
-        title: element ? `${prettyTag(element)} | PatternFly Elements` : (options?.site?.title ?? SITE_DEFAULTS.title),
         demo: element && await readFile(demoPath, 'utf-8'),
+        element,
+        elements: await readdir(join(rootDir, 'elements')).catch(() => []),
+        manifest: element && (await exists(join(basePath, '..', 'custom-elements.json')) ? `/${base}/${element}/custom-elements.json` : '/custom-elements.json'),
+        title: element ? `${prettyTag(element, options?.site?.tagPrefix)} | ${options?.site?.title ?? 'PatternFly Elements'}` : (options?.site?.title ?? SITE_DEFAULTS.title),
         script: element && await readFile(join(basePath, `${element}.js`), 'utf-8'),
       });
     }
@@ -162,6 +176,7 @@ function nunjucksMiddleware(options?: PfeDevServerConfigOptions): Middleware {
   };
 }
 
+/** CORS middleware */
 function cors(context: Context, next: Next) {
   context.set('Access-Control-Allow-Origin', '*');
   return next();
@@ -171,7 +186,7 @@ function cors(context: Context, next: Next) {
  * Creates a default config for PFE's dev server.
  */
 export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevServerConfig {
-  const { importMap, site, loadDemo = true, ...options } = _options ?? {};
+  const { importMap, site, loadDemo = true, ...options } = _options ?? {} as PfeDevServerConfigOptions;
 
   /**
    * Plain case: this file is running from `/node_modules/@patternfly/pfe-tools`.
@@ -229,15 +244,7 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
       // Ensure .scss files are loaded as js modules, as `litcss` plugin transforms them to such
       scssMimeType(),
 
-      {
-        name: 'watch-repo-files',
-        async serverStart({ fileWatcher }) {
-          const files = await glob('{elements,core}/**/*.{ts,js,css,scss,html}', { cwd: process.cwd() });
-          for (const file of files) {
-            fileWatcher.add(file);
-          }
-        },
-      },
+      watchRepoFiles(options?.watchFiles),
     ],
   };
 }

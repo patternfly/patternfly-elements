@@ -22,11 +22,18 @@
   "exports": {
     "./11ty": "./11ty/index.js",
     "./11ty/plugins/*.cjs": "./11ty/plugins/*.cjs",
+    "./test/create-fixture.js": "./test/create-fixture.js",
+    "./test/get-composed-text.js": "./test/get-composed-text.js",
+    "./test/hex-to-rgb.js": "./test/hex-to-rgb.js",
+    "./test/react-wrapper.js": "./test/react-wrapper.js",
+    "./test/render-to-string.js": "./test/render-to-string.js",
+    "./test/utils.js": "./test/utils.js",
+    "./test/vue-wrapper.js": "./test/vue-wrapper.js",
     "./*.js": "./*.js",
     "./*": "./*.js"
   },
   "contributors": [
-    "Kyle Buchanan <kylebuch8@gmail.com>, (https://github.com/kylebuch8)",
+    "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",
     "Benny Powers <bennyp@redhat.com>"
   ],
   "license": "MIT",

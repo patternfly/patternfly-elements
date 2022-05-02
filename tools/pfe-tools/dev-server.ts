@@ -50,7 +50,7 @@ const exists = (x: string) => stat(x).then(() => true, () => false);
 const litcss = fromRollup(litcssRollup);
 const replace = fromRollup(rollupReplace);
 /** Prettify a tag name, stripping the prefix and capitalizing the rest */
-function prettyTag(tagName: string, prefix: PfeDevServerConfigOptions['site']['tagPrefix'] = 'pfe-'): string {
+function prettyTag(tagName: string, prefix: `${string}-` = 'pfe-'): string {
   return tagName
     .replace(prefix, '')
     .toLowerCase()

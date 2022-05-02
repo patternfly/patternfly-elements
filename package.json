@@ -65,16 +65,16 @@
     "pr": "node scripts/open-pr.js"
   },
   "devDependencies": {
-    "@actions/core": "^1.6.0",
+    "@actions/core": "^1.7.0",
     "@actions/exec": "^1.1.1",
-    "@actions/glob": "^0.2.1",
-    "@commitlint/cli": "^16.2.3",
-    "@commitlint/config-conventional": "^16.0.0",
-    "@commitlint/config-lerna-scopes": "^16.0.0",
+    "@actions/glob": "^0.3.0",
+    "@commitlint/cli": "^16.2.4",
+    "@commitlint/config-conventional": "^16.2.4",
+    "@commitlint/config-lerna-scopes": "^16.2.4",
     "@types/numeral": "^2.0.2",
     "@types/prismjs": "^1.26.0",
     "@types/prompts": "^2.0.14",
-    "commitlint": "^16.2.3",
+    "commitlint": "^16.2.4",
     "cpx": "^1.5.0",
     "git-branch": "^2.0.1",
     "husky": "^7.0.4",
@@ -84,7 +84,7 @@
     "open": "^8.0.4",
     "prompts": "^2.4.2",
     "renamer": "^4.0.0",
-    "sassdoc": "^2.7.3"
+    "sassdoc": "^2.7.4"
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --fix"

@@ -10,6 +10,8 @@
   "types": "./pfe-accordion.d.ts",
   "exports": {
     ".": "./pfe-accordion.js",
+    "./pfe-accordion-header.js": "./pfe-accordion-header.js",
+    "./pfe-accordion-panel.js": "./pfe-accordion-panel.js",
     "./*": "./*.js"
   },
   "publishConfig": {

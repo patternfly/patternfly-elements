@@ -235,7 +235,11 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
       resolveLocalFilesFromTypeScriptSources({ ...options, rootDir }),
 
       // serve typescript sources as javascript
-      esbuildPlugin({ ts: true }),
+      esbuildPlugin({
+        ts: true,
+        // see https://github.com/evanw/esbuild/issues/2220
+        target: 'es2020'
+      }),
 
       // load .scss files as lit CSSResult modules
       litcss({ include: ['**/*.scss'], transform: transformSass }),

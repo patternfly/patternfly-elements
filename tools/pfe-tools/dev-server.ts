@@ -91,8 +91,8 @@ function tryToResolve(source: string, context: import('koa').Context) {
 /**
  * Resolves local monorepo package imports. Needed because we consume our own monorepo packages
  */
-export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerConfigOptions): Plugin {
-  const rootDir = options.rootDir as string;
+export function resolveLocalFilesFromTypeScriptSources(options: Partial<PfeDevServerConfigOptions> & { rootDir: string }): Plugin {
+  const { rootDir } = options;
   return {
     name: 'resolve-local-monorepo-packages-from-ts-sources',
     async transformImport({ source, context }) {
@@ -180,9 +180,7 @@ function cors(ctx: Context, next: Next) {
 /**
  * Creates a default config for PFE's dev server.
  */
-export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevServerConfig {
-  const { importMap, site, ...options } = _options ?? {} as PfeDevServerConfigOptions;
-
+export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServerConfig {
   /**
    * Plain case: this file is running from `/node_modules/@patternfly/pfe-tools`.
    *             two dirs up from here is `node_modules`, so we just shear it clean off the path string
@@ -211,7 +209,7 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
     plugins: [
       ...options?.plugins ?? [],
 
-      ...importMap ? [importMapsPlugin({ inject: { importMap } })] : [],
+      ...options?.importMap ? [importMapsPlugin({ inject: { importMap: options.importMap } })] : [],
 
       // ordinarily, the packages' export conditions specify to
       //   1. import the root from a '.js'

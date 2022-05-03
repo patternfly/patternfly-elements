@@ -232,7 +232,7 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
       }),
 
       // load .scss files as lit CSSResult modules
-      litCss(options?.litcssOptions ?? { include: ['**/*.scss'], transform: transformSass }),
+      litCss(options?.litcssOptions ?? { include: /\.scss$/, transform: transformSass }),
 
       replace({
         'preventAssignment': true,

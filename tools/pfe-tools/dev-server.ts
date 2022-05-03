@@ -1,7 +1,7 @@
 import type { Plugin } from '@web/dev-server-core';
 import type { DevServerConfig } from '@web/dev-server';
 import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsPlugin';
-import type { Context, Middleware, Next } from 'koa';
+import type { Context, Next } from 'koa';
 
 import { URLPattern } from 'urlpattern-polyfill';
 
@@ -49,6 +49,7 @@ const require = createRequire(import.meta.url);
 const exists = (x: string) => stat(x).then(() => true, () => false);
 const litcss = fromRollup(litcssRollup);
 const replace = fromRollup(rollupReplace);
+
 /** Prettify a tag name, stripping the prefix and capitalizing the rest */
 function prettyTag(tagName: string, prefix: `${string}-` = 'pfe-'): string {
   return tagName

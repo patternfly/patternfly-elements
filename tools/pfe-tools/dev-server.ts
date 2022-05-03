@@ -70,6 +70,7 @@ function scssMimeType(): Plugin {
   };
 }
 
+/** Ugly, ugly hack to resolve packages from the local monorepo */
 function tryToResolve(source: string, context: import('koa').Context) {
   let resolved = '';
   try {
@@ -124,61 +125,64 @@ export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerConf
 }
 
 /**
- * Add repository files to the dev server's file watcher
+ * Renders the demo page for a given url
  */
-function watchRepoFiles(pattern: string): Plugin {
-  return {
-    name: 'watch-repo-files',
-    async serverStart({ fileWatcher }) {
-      const files = await glob(pattern ?? '{elements,core}/**/*.{ts,js,css,scss,html}', { cwd: process.cwd() });
-      for (const file of files) {
-        fileWatcher.add(file);
-      }
-    },
-  };
+async function renderURL(ctx: Context, env: nunjucks.Environment, pattern: URLPattern, options?: PfeDevServerConfigOptions): Promise<string> {
+  const url = new URL(ctx.request.url, `http://${ctx.request.headers.host}`);
+  const { rootDir = process.cwd() } = options ?? {};
+  const { element } = pattern.exec(url)?.pathname?.groups ?? {};
+  const base = element?.match(/^pfe-(core|sass|styles)$/) ? 'core' : 'elements';
+  const basePath = element && join(rootDir, base, element, 'demo');
+  const demoPath = basePath && join(basePath, `${element}.html`);
+  return env.render('index.njk', {
+    ...SITE_DEFAULTS,
+    ...options?.site,
+    core: await readdir(join(rootDir, 'core')).catch(() => []),
+    context: ctx,
+    demo: demoPath && await readFile(demoPath, 'utf-8'),
+    element,
+    elements: await readdir(join(rootDir, 'elements')).catch(() => []),
+    manifest: basePath && (await exists(join(basePath, '..', 'custom-elements.json')) ? `/${base}/${element}/custom-elements.json` : '/custom-elements.json'),
+    title: element ? `${prettyTag(element, options?.site?.tagPrefix)} | ${options?.site?.title ?? 'PatternFly Elements'}` : (options?.site?.title ?? SITE_DEFAULTS.title),
+    script: basePath && await readFile(join(basePath, `${element}.js`), 'utf-8'),
+  });
 }
 
 /**
  * Generate HTML for each component by adding it's demo to a
  * Declarative Shadow DOM template.
  * @see https://web.dev/declarative-shadow-dom/
- *
+ * Watch repository source files and reload the page when they change
  */
-function nunjucksMiddleware(options?: PfeDevServerConfigOptions): Middleware {
+function pfeDevServerPlugin(options?: PfeDevServerConfigOptions): Plugin {
   const pattern = new URLPattern({ pathname: '/demo/:element/' });
   const env = nunjucks.configure(fileURLToPath(new URL('./demo', import.meta.url)));
   env.addFilter('prettyTag', x => prettyTag(x, options?.site?.tagPrefix));
 
-  return async function(ctx, next) {
-    const { rootDir = process.cwd() } = options ?? {};
-    if (!(ctx.method !== 'HEAD' && ctx.method !== 'GET' || ctx.path.includes('.'))) {
-      const url = new URL(ctx.request.url, `http://${ctx.request.headers.host}`);
-      const { element } = pattern.exec(url)?.pathname?.groups ?? {};
-      const base = element?.match(/^pfe-(core|sass|styles)$/) ? 'core' : 'elements';
-      const basePath = element && join(rootDir, base, element, 'demo');
-      const demoPath = element && join(basePath, `${element}.html`);
-      ctx.type = 'html';
-      ctx.status = 200;
-      ctx.body = env.render('index.njk', {
-        ...SITE_DEFAULTS,
-        ...options?.site,
-        core: await readdir(join(rootDir, 'core')).catch(() => []),
-        context: ctx,
-        demo: element && await readFile(demoPath, 'utf-8'),
-        element,
-        elements: await readdir(join(rootDir, 'elements')).catch(() => []),
-        manifest: element && (await exists(join(basePath, '..', 'custom-elements.json')) ? `/${base}/${element}/custom-elements.json` : '/custom-elements.json'),
-        title: element ? `${prettyTag(element, options?.site?.tagPrefix)} | ${options?.site?.title ?? 'PatternFly Elements'}` : (options?.site?.title ?? SITE_DEFAULTS.title),
-        script: element && await readFile(join(basePath, `${element}.js`), 'utf-8'),
+  return {
+    name: 'pfe-dev-server',
+    async serverStart({ fileWatcher, app }) {
+      /** Render the demo page */
+      app.use(async function nunjucksMiddleware(ctx, next) {
+        if ((options?.loadDemo ?? true) && !(ctx.method !== 'HEAD' && ctx.method !== 'GET' || ctx.path.includes('.'))) {
+          ctx.type = 'html';
+          ctx.status = 200;
+          ctx.body = await renderURL(ctx, env, pattern, options);
+        }
+        return next();
       });
+
+      const files = await glob(options?.watchFiles ?? '{elements,core}/**/*.{ts,js,css,scss,html}', { cwd: process.cwd() });
+      for (const file of files) {
+        fileWatcher.add(file);
+      }
     }
-    return next();
   };
 }
 
 /** CORS middleware */
-function cors(context: Context, next: Next) {
-  context.set('Access-Control-Allow-Origin', '*');
+function cors(ctx: Context, next: Next) {
+  ctx.set('Access-Control-Allow-Origin', '*');
   return next();
 }
 
@@ -186,7 +190,7 @@ function cors(context: Context, next: Next) {
  * Creates a default config for PFE's dev server.
  */
 export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevServerConfig {
-  const { importMap, site, loadDemo = true, ...options } = _options ?? {} as PfeDevServerConfigOptions;
+  const { importMap, site, ...options } = _options ?? {} as PfeDevServerConfigOptions;
 
   /**
    * Plain case: this file is running from `/node_modules/@patternfly/pfe-tools`.
@@ -209,16 +213,15 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
     ...options ?? {},
 
     middleware: [
-      ...loadDemo ? [
-        nunjucksMiddleware(_options),
-      ] : [],
       cors,
       ...options?.middleware ?? [],
     ],
 
     plugins: [
       ...options?.plugins ?? [],
-      ...(importMap) ? [importMapsPlugin({ inject: { importMap } })] : [],
+
+      ...importMap ? [importMapsPlugin({ inject: { importMap } })] : [],
+
       // ordinarily, the packages' export conditions specify to
       //   1. import the root from a '.js'
       //   2. append '.js' to any subpath imports
@@ -244,7 +247,8 @@ export function pfeDevServerConfig(_options?: PfeDevServerConfigOptions): DevSer
       // Ensure .scss files are loaded as js modules, as `litcss` plugin transforms them to such
       scssMimeType(),
 
-      watchRepoFiles(options?.watchFiles),
+      // Dev server app which loads component demo files
+      pfeDevServerPlugin(options),
     ],
   };
 }

@@ -3,7 +3,7 @@ import type { DevServerConfig } from '@web/dev-server';
 import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsPlugin';
 import type { Context, Next } from 'koa';
 
-import { URLPattern } from 'urlpattern-polyfill';
+import 'urlpattern-polyfill';
 
 import { readdir, readFile, stat } from 'fs/promises';
 import { join, dirname } from 'path';

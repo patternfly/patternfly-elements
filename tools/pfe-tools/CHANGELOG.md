@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.19
+
+### Patch Changes
+
+- f2ffb072: pass user options to dev server
+
 ## 1.0.0-next.18
 
 ### Major Changes

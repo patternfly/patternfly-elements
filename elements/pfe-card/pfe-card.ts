@@ -123,7 +123,6 @@ export class PfeCard extends LitElement {
     };
 
     return html`
-      <!-- pfe-card -->
       <div class="pfe-card__header ${classMap(classes)}" part="header">
         <slot name="header"></slot>
         <slot name="pfe-card--header"></slot>

@@ -1,5 +1,42 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.19
+
+### Patch Changes
+
+- f2ffb072: pass user options to dev server
+
+## 1.0.0-next.18
+
+### Major Changes
+
+- d7128af3: Use declarative shadow DOM for dev server, remove SPA code, calculate demo variables on the server side
+
+### Minor Changes
+
+- 2b2aeb57: Adds `colored(colorString)` assertion to chai when using `createFixture`
+
+  ```js
+  expect("rgba(0,0,0,0)").to.be.colored("transparent");
+  ```
+
+- 15051be0: Use web-dev-server-plugin-lit-css.
+  By default, config will transform all .scss files using `dart-sass`.
+  Users may customize the options for lit-css:
+
+  ```js
+  export default pfeDevServerConfig({
+    litcssOptions: {
+      include: ["**/elements/*/*.css"]
+    }
+  });
+  ```
+
+### Patch Changes
+
+- 4a597fed: Add package exports for test helpers
+- b4ac6f24: Updates dependencies
+
 ## 1.0.0-next.17
 
 ### Patch Changes

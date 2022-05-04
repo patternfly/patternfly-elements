@@ -1,5 +1,13 @@
 # @patternfly/pfe-cta
 
+## 2.0.0-next.4
+
+### Patch Changes
+
+- 7239cb49: fixes regression in CTA's color context support
+- Updated dependencies [55e843c8]
+  - @patternfly/pfe-core@2.0.0-next.5
+
 ## 2.0.0-next.3
 
 ### Major Changes

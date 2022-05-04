@@ -69,10 +69,6 @@ chai.use(function(_chai) {
     const actualNormalized = actualParsed.toString({ format: 'hex' });
     const expectNormalized = expectParsed.toString({ format: 'hex' });
     const message = msg ? `${msg} ` : '';
-    console.log({
-      actual, expected,
-      actualParsed, expectParsed,
-    });
     this.assert(
       actualNormalized === expectNormalized,
       `expected ${message}#{act} to be the same color as #{exp}`,

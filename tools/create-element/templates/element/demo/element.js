@@ -1,4 +1,4 @@
-import '<%= packageName %>';
+import '<%= importSpecifier %>';
 
 const root = document.querySelector('[data-demo="<%= tagName %>"]')?.shadowRoot ?? document;
 

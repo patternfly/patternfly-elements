@@ -3,7 +3,7 @@ import { customElement } from 'lit/decorators.js';
 
 import { pfelement } from '@patternfly/pfe-core/decorators.js';
 
-import styles from './<%= tagName %>.scss';
+import styles from '<%= cssRelativePath %>';
 
 /**
  * <%= readmeName %>
@@ -25,5 +25,5 @@ export class <%= className %> extends LitElement {
 declare global {
   interface HTMLElementTagNameMap {
     '<%= tagName %>': <%= className %>;
-  }
+}
 }

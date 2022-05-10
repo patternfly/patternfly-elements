@@ -1,3 +1,13 @@
 {
-  "extends": "@patternfly/eslint-config-elements"
+  "extends": "@patternfly/eslint-config-elements",
+  "overrides": [
+    {
+      "files": [
+        "./tools/create-element/**/*"
+      ],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
 }

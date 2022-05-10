@@ -1,6 +1,0 @@
-{
-  "extends": "@patternfly/eslint-config-elements",
-  "rules": {
-    "no-console": "off"
-  }
-}

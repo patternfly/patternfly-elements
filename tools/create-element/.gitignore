@@ -3,4 +3,5 @@
 *.d.ts
 !templates/**/*.js
 !templates/**/*.d.ts
+!templates/**/*.css
 !bin/main.js

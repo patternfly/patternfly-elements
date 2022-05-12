@@ -60,7 +60,6 @@ async function bundle(options) {
       additionalPackages: options?.additionalPackages,
       minify: process.env.NODE_ENV === 'production' || process.env.ELEVENTY_ENV?.startsWith?.('prod'),
       outfile: 'docs/pfe.min.js',
-      conditions: ['esbuild'],
       plugins: [
         pfeEnvPlugin(),
       ]

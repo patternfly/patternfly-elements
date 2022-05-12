@@ -8,14 +8,14 @@ import CleanCSS from 'clean-css';
 
 import { externalSubComponents } from './esbuild-plugins/external-sub-components.js';
 import { packageVersion } from './esbuild-plugins/package-version.js';
-import { litCssPlugin } from 'esbuild-plugin-lit-css';
+import { LitCSSOptions, litCssPlugin } from 'esbuild-plugin-lit-css';
 
 import { minifyHTMLLiteralsPlugin } from 'esbuild-plugin-minify-html-literals';
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
 import { readdirSync } from 'fs';
 import { resolve, join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { mkdtemp, readdir, readFile, stat, writeFile } from 'fs/promises';
+import { readdir, readFile, stat } from 'fs/promises';
 
 export interface PfeEsbuildOptions {
   /** Extra esbuild plugins */
@@ -31,7 +31,7 @@ export interface PfeEsbuildOptions {
   /** workspace directory from and into which to build elements. (default: `elements`) */
   workspace?: string;
   /** production bundles are minified */
-  mode?: 'development'|'production';
+  mode?: 'development' | 'production';
   /** Packages to treat as external, i.e. not to bundle */
   external: string[];
 }
@@ -39,9 +39,18 @@ export interface PfeEsbuildOptions {
 export interface PfeEsbuildSingleFileOptions {
   /** list of NPM package names to bundle alongside the repo's components */
   additionalPackages?: string[];
+  /** String contents of an entry point file for all elements to be bundled. Defaults to an entry point containing all installed pfe-* elements. */
+  componentsEntryPointContents?: string;
   outfile?: string;
+  litCssOptions?: LitCSSOptions;
   plugins?: Plugin[];
   minify?: boolean;
+  external?: string[];
+}
+
+export interface PfeBasePluginOptions {
+  minify?: boolean,
+  litCssOptions?: LitCSSOptions;
 }
 
 /** best guess at abs-path to repo root */
@@ -90,10 +99,10 @@ export async function transformSass(
  * - optionally minify HTML
  * - replace the package version in component sources
  */
-export function getBasePlugins({ minify }: { minify?: boolean } = {}) {
+export function getBasePlugins({ minify, litCssOptions }: PfeBasePluginOptions = {}) {
   return [
     // import scss files as LitElement CSSResult objects
-    litCssPlugin({
+    litCssPlugin(litCssOptions ?? {
       filter: /\.scss$/,
       transform: (source, { filePath }) =>
         transformSass(source, { filePath, minify }),
@@ -109,7 +118,10 @@ export function getBasePlugins({ minify }: { minify?: boolean } = {}) {
 
 /** Generate a temporary file containing namespace exports of all pfe components */
 export async function componentsEntryPoint(options?: { additionalPackages?: string[] }) {
-  const componentDirs = await readdir(join(REPO_ROOT, 'elements')).catch(() => [] as string[]);
+  const componentDirs = (await readdir(join(REPO_ROOT, 'node_modules', '@patternfly')).catch(() => [] as string[]))
+    .filter((x: string) => x.startsWith('pfe'))
+    .filter((x: string) => !x.match(/pfe-(core|styles|sass|tools)$/));
+
   const cacheKey = componentDirs.join('--');
 
   const additionalImports =
@@ -126,12 +138,11 @@ export async function componentsEntryPoint(options?: { additionalPackages?: stri
         const acc = await last;
         const elementPath = join(REPO_ROOT, 'elements', dir);
         const packageJsonPath = join(elementPath, 'package.json');
-        const isPackage = await exists(packageJsonPath);
-        if (isPackage) {
+        if (!await exists(packageJsonPath)) {
+          return acc;
+        } else {
           const { name } = JSON.parse(await readFile(packageJsonPath, 'utf8'));
           return `${acc}\nexport * from '${name}';`;
-        } else {
-          return `${acc}\nexport * from '${elementPath.replace(REPO_ROOT, './')}/${dir}.js';`;
         }
       }, Promise.resolve(additionalImports));
 
@@ -148,16 +159,18 @@ export async function componentsEntryPoint(options?: { additionalPackages?: stri
 /** Create a single-file production bundle of all elements */
 export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
   try {
+    const contents = options?.componentsEntryPointContents ?? await componentsEntryPoint({ additionalPackages: options?.additionalPackages });
     const result = await esbuild.build({
       absWorkingDir: REPO_ROOT,
       allowOverwrite: true,
       bundle: true,
       stdin: {
-        contents: await componentsEntryPoint({ additionalPackages: options?.additionalPackages }),
+        contents,
         resolveDir: REPO_ROOT,
         sourcefile: 'components.ts',
         loader: 'ts',
       },
+      external: options?.external,
       format: 'esm',
       keepNames: true,
       legalComments: 'linked',
@@ -172,7 +185,7 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
         'process.env.NODE_ENV': 'production',
       },
       plugins: [
-        ...getBasePlugins({ minify: options?.minify ?? true }),
+        ...getBasePlugins(options),
         ...options?.plugins ?? []
       ],
     });
@@ -194,14 +207,14 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
 
   /** List of dir names of all packages which should be included in the build */
   const packageDirs = (
-      // includes specified as an array
-      Array.isArray(options?.include) ? options?.include as Array<string>
+    // includes specified as an array
+    Array.isArray(options?.include) ? options?.include as Array<string>
       // includes specified as a string
-    : typeof options?.include === 'string' ? [options.include]
-      // default: exclude `entryPointFilesExcludes` and get all the dirs in the workspace
-    : readdirSync(resolve(workspace), { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory() && !entryPointFilesExcludes.includes(dirent.name))
-      .flatMap(dirent => dirent.name)
+      : typeof options?.include === 'string' ? [options.include]
+        // default: exclude `entryPointFilesExcludes` and get all the dirs in the workspace
+        : readdirSync(resolve(workspace), { withFileTypes: true })
+          .filter(dirent => dirent.isDirectory() && !entryPointFilesExcludes.includes(dirent.name))
+          .flatMap(dirent => dirent.name)
   );
 
   /**

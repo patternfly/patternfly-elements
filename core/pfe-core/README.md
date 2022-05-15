@@ -9,6 +9,7 @@ Utilities for building PatternFly elements.
 - `CssVariableController` - caches computed styles
 - `LightDOMController` - controls a light-DOM mutation observer
 - `Logger` - logging utilities
+- `MatchMediaController` - update an element when the media breakpoint changes
 - `PerfController` - measures element upgrading performance
 - `PropertyObserverController` - caches set values for observed properties until element is updated
 - `SlotController` - utilities for managing slots and slotted content

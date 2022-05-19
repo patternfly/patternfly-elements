@@ -4,7 +4,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
-import { bound, initializer, observed, pfelement } from '@patternfly/pfe-core/decorators.js';
+import { bound, deprecation, initializer, observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 
@@ -64,10 +64,12 @@ export class PfeModal extends LitElement {
   static readonly styles = [style];
 
   /**
-   * The `width` controls the width of the modal.
+   * The `variant` controls the width of the modal.
    * There are three options: `small`, `medium` and `large`. The default is `large`.
    */
-  @property({ reflect: true }) width: 'small' | 'medium' | 'large' = 'large';
+  @property({ reflect: true }) variant: 'small' | 'medium' | 'large' = 'large';
+
+  @deprecation({ alias: 'variant', attribute: 'width' }) width?: 'small' | 'medium' | 'large';
 
   /**
    * `position="top"` aligns the dialog with the top of the page
@@ -95,7 +97,7 @@ export class PfeModal extends LitElement {
   private cancelling = false;
 
   private slots = new SlotController(this, {
-    slots: [null, 'trigger', 'header', 'description'],
+    slots: [null, 'trigger', 'header', 'description', 'footer'],
     deprecations: {
       'trigger': 'pfe-modal--trigger',
       'header': 'pfe-modal--header',
@@ -104,7 +106,7 @@ export class PfeModal extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('keydown', this._keydownHandler);
+    this.addEventListener('keydown', this.onKeydown);
     this.addEventListener('click', this.onClick);
   }
 
@@ -113,21 +115,22 @@ export class PfeModal extends LitElement {
     const headerLabel = this.triggerElement ? this.triggerElement.innerText : undefined;
     const hasHeader = this.slots.hasSlotted('header', 'pfe-modal--header');
     const hasDescription = this.slots.hasSlotted('description');
+    const hasFooter = this.slots.hasSlotted('footer');
 
     return html`
       <slot name="trigger"></slot>
       <slot name="pfe-modal--trigger"></slot>
-      <section ?hidden="${!this.open}">
-        <div id="overlay" part="overlay" ?hidden="${!this.open}"></div>
+      <section ?hidden=${!this.open}>
+        <div id="overlay" part="overlay" ?hidden=${!this.open}></div>
         <div id="dialog"
             part="dialog"
             tabindex="0"
             role="dialog"
-            aria-labelledby="${ifDefined(headerId)}"
-            aria-label="${ifDefined(headerLabel)}"
+            aria-labelledby=${ifDefined(headerId)}
+            aria-label=${ifDefined(headerLabel)}
             ?hidden="${!this.open}">
           <div id="container">
-            <div id="content" part="content" class="${classMap({ hasHeader, hasDescription })}">
+            <div id="content" part="content" class=${classMap({ hasHeader, hasDescription, hasFooter })}>
               <header>
                 <slot name="header"></slot>
                 <slot name="pfe-modal--header"></slot>
@@ -136,12 +139,15 @@ export class PfeModal extends LitElement {
                 </div>
               </header>
               <slot></slot>
+              <footer ?hidden=${!hasFooter}>
+                <slot name="footer"></slot>
+              </footer>
             </div>
             <button id="close-button"
                 part="close-button"
                 aria-label="Close dialog"
-                @keydown="${this._keydownHandler}"
-                @click="${this.close}">
+                @keydown=${this.onKeydown}
+                @click=${this.close}>
               <svg fill="currentColor" viewBox="0 0 352 512">
                 <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
               </svg>
@@ -155,7 +161,7 @@ export class PfeModal extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this.removeEventListener('keydown', this._keydownHandler);
+    this.removeEventListener('keydown', this.onKeydown);
 
     this.triggerElement?.removeEventListener('click', this.onExternalTriggerClick);
   }
@@ -204,7 +210,7 @@ export class PfeModal extends LitElement {
     }
   }
 
-  @bound private _keydownHandler(event: KeyboardEvent) {
+  @bound private onKeydown(event: KeyboardEvent) {
     switch (event.key) {
       case 'Tab':
         if (event.target === this._modalCloseButton) {

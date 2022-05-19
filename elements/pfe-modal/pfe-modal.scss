@@ -80,16 +80,19 @@ section {
     max-width: var(--pfe-modal-width, pfe-local(MaxWidth--large));
   }
 
-  :host([width="small"]) & {
-    max-width: pfe-local(MaxWidth--small);
+  :host([width="small"]) &,
+  :host([variant="small"]) & {
+    max-width: var(--pfe-modal-width, pfe-local(MaxWidth--small));
   }
 
-  :host([width="medium"]) & {
-    max-width: pfe-local(MaxWidth--medium);
+  :host([width="medium"]) &,
+  :host([variant="medium"]) & {
+    max-width: var(--pfe-modal-width, pfe-local(MaxWidth--medium));
   }
 
-  :host([width="large"]) & {
-    max-width: pfe-local(MaxWidth--large);
+  :host([width="large"]) &,
+  :host([variant="large"]) & {
+    max-width: var(--pfe-modal-width, pfe-local(MaxWidth--large));
   }
 }
 

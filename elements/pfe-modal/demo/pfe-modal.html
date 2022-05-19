@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/core/pfe-styles/pfe-layouts.css">
 <link rel="stylesheet" href="/elements/pfe-modal/demo/demo.css">
 
-<pfe-band color-palette="lightest" size="smallest">
+<pfe-band color-palette="lightest" size="small">
   <h2 slot="header">Basic</h2>
   <pfe-modal>
     <h2 slot="header">Simple modal header</h2>
@@ -26,7 +26,7 @@
   </pfe-modal>
 </pfe-band>
 
-<pfe-band color-palette="lightest" size="smallest">
+<pfe-band color-palette="lightest" size="small">
   <h2 slot="header">With description</h2>
   <pfe-modal>
     <h2 slot="header">Simple modal header</h2>
@@ -72,7 +72,7 @@
   </pfe-modal>
 </pfe-band>
 
-<pfe-band color-palette="lightest" size="smallest">
+<pfe-band color-palette="lightest" size="small">
   <h2 slot="header">Top aligned</h2>
   <pfe-modal position="top">
     <h2 slot="header">Top modal header</h2>
@@ -93,97 +93,202 @@
   </pfe-modal>
 </pfe-band>
 
-<pfe-band color-palette="darkest" id="test-dark">
-  <h2 slot="header">Modal: No header region</h2>
-  <pfe-modal>
-    <pfe-cta priority="secondary" slot="trigger">
+<pfe-band color-palette="lightest" size="small">
+  <h2 slot="header">Small</h2>
+  <pfe-modal variant="small">
+    <h2 slot="header">Small modal header</h2>
+    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
+      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.</p>
+    <pfe-button>
+      <button>Confirm</button>
+    </pfe-button>
+    <pfe-button variant="secondary">
+      <button>Cancel</button>
+    </pfe-button>
+    <pfe-button slot="trigger">
       <button>Show modal</button>
-    </pfe-cta>
-    <h3>This has no header region</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-      magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-      laborum.</p>
-    <pfe-cta id="test-dark-child">
-      <a href="#">Call-to-action</a>
-    </pfe-cta>
+    </pfe-button>
   </pfe-modal>
 </pfe-band>
 
-<pfe-band color-palette="complement">
-  <h2>Modal: No headings</h2>
-  <pfe-modal>
-    <pfe-cta priority="secondary" slot="trigger">
+<pfe-band color-palette="lightest" size="small">
+  <h2 slot="header">Medium</h2>
+  <pfe-modal variant="medium">
+    <h2 slot="header">Medium modal header</h2>
+    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
+      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.</p>
+    <pfe-button>
+      <button>Confirm</button>
+    </pfe-button>
+    <pfe-button variant="secondary">
+      <button>Cancel</button>
+    </pfe-button>
+    <pfe-button slot="trigger">
       <button>Show modal</button>
-    </pfe-cta>
-    <p>This modal doesn't have any headings. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-      officia deserunt mollit anim id est laborum.</p>
-    <pfe-cta>
-      <a href="#">Call-to-action</a>
-    </pfe-cta>
+    </pfe-button>
   </pfe-modal>
 </pfe-band>
 
-<pfe-band id="external-lots" color-palette="lightest">
-  <pfe-card color-palette="darkest">
-    <h2 slot="header">Modal: External trigger</h2>
-    <pfe-cta><button id="custom-trigger">Custom open modal</button></pfe-cta>
-    <pfe-modal id="custom-modal">
-      <h2 slot="header">Custom open modal</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-        ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-        nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-        anim id est laborum.</p>
-      <pfe-cta>
-        <a href="#bar">Learn more</a>
-      </pfe-cta>
-    </pfe-modal>
-  </pfe-card>
+<pfe-band color-palette="lightest" size="small">
+  <h2 slot="header">Large</h2>
+  <pfe-modal variant="large">
+    <h2 slot="header">Large modal header</h2>
+    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
+      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.</p>
+    <pfe-button>
+      <button>Confirm</button>
+    </pfe-button>
+    <pfe-button variant="secondary">
+      <button>Cancel</button>
+    </pfe-button>
+    <pfe-button slot="trigger">
+      <button>Show modal</button>
+    </pfe-button>
+  </pfe-modal>
+</pfe-band>
 
-  <pfe-card>
-    <h2 slot="header">Modal: External trigger By Id</h2>
-    <pfe-cta><button id="id-trigger">Custom open modal</button></pfe-cta>
-    <pfe-modal id="custom-modal" trigger="id-trigger">
-      <h2 slot="header">Trigger by ID</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-        ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-        nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-        anim id est laborum.</p>
-      <pfe-cta>
-        <a href="#bar">Learn more</a>
-      </pfe-cta>
-    </pfe-modal>
-  </pfe-card>
+<pfe-band color-palette="lightest" size="small">
+  <h2 slot="header">pfe-modal-width CSS Custom Property</h2>
+  <pfe-modal style="--pfe-modal-width: 50%">
+    <h2 slot="header">Width 50% header</h2>
+    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
+      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.</p>
+    <pfe-button>
+      <button>Confirm</button>
+    </pfe-button>
+    <pfe-button variant="secondary">
+      <button>Cancel</button>
+    </pfe-button>
+    <pfe-button slot="trigger">
+      <button>Show modal</button>
+    </pfe-button>
+  </pfe-modal>
+</pfe-band>
 
-  <pfe-card color-palette="complement">
-    <h2 slot="header">Modal: a lot of content</h2>
-    <pfe-modal color-palette="darkest" id="testit">
-      <pfe-cta slot="trigger"><button>Show modal</button></pfe-cta>
-      <h2 slot="header">Modal with a header with a super duper long title and a lot of content</h2>
-      <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-        esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-        qui officia deserunt mollit anim id est laborum.</p>
-      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Sed posuere
-        consectetur est at lobortis. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-      <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis
-        parturient montes, nascetur ridiculus mus. Curabitur blandit tempus porttitor. Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit. Curabitur blandit tempus porttitor. Duis mollis, est non commodo luctus, nisi
-        erat porttitor ligula, eget lacinia odio sem nec elit. Curabitur blandit tempus porttitor.</p>
-      <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed
-        odio dui. Maecenas faucibus mollis interdum. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-        condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-      <pfe-cta>
-        <!-- TODO: find out why this gets on=light, should be on=dark b/c closest modal is color-palette=darkest -->
-        <a href="#bar">Learn more</a>
-      </pfe-cta>
-    </pfe-modal>
-  </pfe-card>
+<pfe-band color-palette="lightest" size="small">
+  <h2 slot="header">Custom header and footer</h2>
+  <pfe-modal aria-describedby="custom-modal-description">
+    <h2 slot="header">With custom header/footer content.</h2>
+    <p slot="header">Allows for custom content in the header and/or footer by slotting HTML.</p>
+    <p slot="header" id="custom-modal-description">When static text describing the modal is available, it can be wrapped
+      with an ID referring to the
+      modal's aria-describedby value.</p>
+    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+      aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <h4 slot="footer">
+      <pfe-icon icon="web-icon-alert-warning" size="1x"></pfe-icon>
+      Custom modal footer.
+    </h4>
+    <pfe-button slot="trigger">
+      <button>Show modal</button>
+    </pfe-button>
+  </pfe-modal>
+</pfe-band>
+
+<pfe-band color-palette="lightest" size="small">
+  <h2 slot="header">No header</h2>
+  <pfe-modal aria-describedby="custom-modal-description">
+    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+      aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <pfe-button slot="trigger">
+      <button>Show modal</button>
+    </pfe-button>
+  </pfe-modal>
+</pfe-band>
+
+<pfe-band color-palette="lightest" size="small">
+  <h2 slot="header">Custom icon</h2>
+  <pfe-modal aria-describedby="custom-modal-description">
+    <h2 slot="header">
+      <pfe-icon role="presentation" icon="rh-icon-megaphone" size="1x"></pfe-icon>
+      Modal Header
+    </h2>
+    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+      aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <pfe-button slot="trigger">
+      <button>Show modal</button>
+    </pfe-button>
+  </pfe-modal>
+</pfe-band>
+
+<pfe-band color-palette="lightest" size="small">
+  <h2 slot="header">Warning alert</h2>
+  <pfe-modal aria-describedby="custom-modal-description">
+    <h2 slot="header">
+      <pfe-icon role="presentation" icon="web-icon-alert-warning" color="moderate" size="1x"></pfe-icon>
+      Modal Header
+    </h2>
+    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+      aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <pfe-button slot="trigger">
+      <button>Show modal</button>
+    </pfe-button>
+  </pfe-modal>
+</pfe-band>
+
+<!-- TODO: wizard -->
+<!-- TODO: dropdown that can break out -->
+<!-- TODO: help popover -->
+<!-- TODO: with form fields -->
+
+
+<pfe-band color-palette="lightest" size="small">
+  <h2 slot="header">With overflowing content</h2>
+  <p>If the content that you're passing to the modal is likely to overflow the modal content area, it is still
+    accessible via keyboard scrolling.</p>
+  <pfe-modal>
+    <h2 slot="header">Modal with overflowing content</h2>
+    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
+      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.</p>
+    <p>Nullam dapibus, leo quis suscipit semper, nisi sapien ultricies turpis, ac tincidunt ipsum risus in nibh. Ut
+      consequat dolor risus. Vivamus ultricies lacinia ipsum, mattis egestas nisi scelerisque sit amet. Fusce eleifend,
+      sapien vel tempor convallis, magna nisl dapibus tortor, vel lobortis metus turpis vel odio. Suspendisse pharetra
+      ex nec volutpat tristique. Cras posuere et augue id maximus. Duis lobortis rutrum luctus. Integer cursus odio ac
+      enim vehicula sollicitudin. Morbi feugiat urna nulla, vel molestie enim tempus et. Fusce pellentesque ligula a
+      nibh viverra mattis. Vestibulum tincidunt diam quis enim feugiat finibus in eu felis. Morbi ac fringilla ligula.
+      Praesent nec ex nec sapien laoreet suscipit. Nullam sit amet tempor metus, a consequat purus. Pellentesque non
+      maximus nulla, tempus accumsan enim.</p>
+    <p>Etiam semper metus sed urna blandit lacinia. Maecenas nibh nisl, pharetra elementum enim sed, porta vehicula
+      felis. Donec at ante consequat, aliquet urna vitae, imperdiet urna. Nam vel molestie nibh, quis ornare arcu. Donec
+      faucibus enim id accumsan laoreet. Sed laoreet leo id eleifend sagittis. Praesent eget lacinia lectus, sit amet
+      cursus eros. Aenean et augue risus.</p>
+    <p>Aliquam erat volutpat. Integer nisi justo, molestie a dolor ut, ultricies efficitur est. Lorem ipsum dolor sit
+      amet, consectetur adipiscing elit. In et diam dignissim, aliquet odio quis, efficitur erat. Integer cursus
+      convallis ligula, dapibus elementum sem. Mauris blandit vitae risus id pharetra. Donec et diam eros.</p>
+    <p>Curabitur urna est, mollis vitae leo nec, vehicula pharetra dui. Mauris non est viverra, semper lacus in,
+      sollicitudin est. Fusce pharetra neque vel orci congue dignissim. Curabitur ac sem viverra, molestie mauris ac,
+      egestas tortor. Aenean ut aliquet ligula, id gravida metus. Sed semper et quam et sagittis. Pellentesque egestas
+      magna id eros interdum facilisis. Nam dignissim ante quis augue finibus tristique. Donec at augue sem. Nulla
+      mollis risus at ligula finibus, vitae volutpat ex auctor. Morbi vel cursus felis. Maecenas lobortis porttitor
+      odio, non venenatis risus varius vitae. Proin gravida mi odio, sed pretium neque luctus vitae. Mauris ut libero
+      bibendum, finibus dui non, rutrum sapien. Quisque ac bibendum erat. Vestibulum tincidunt risus nisi.</p>
+    <pfe-button>
+      <button>Confirm</button>
+    </pfe-button>
+    <pfe-button variant="secondary">
+      <button>Cancel</button>
+    </pfe-button>
+    <pfe-button slot="trigger">
+      <button>Show modal</button>
+    </pfe-button>
+  </pfe-modal>
 </pfe-band>

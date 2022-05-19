@@ -1,5 +1,6 @@
 import type { Plugin } from 'esbuild';
 import type { Meta as LitCSSModuleMeta } from '@pwrs/lit-css';
+import type { LitCSSOptions } from 'esbuild-plugin-lit-css';
 
 import esbuild from 'esbuild';
 import glob from 'glob';
@@ -8,7 +9,7 @@ import CleanCSS from 'clean-css';
 
 import { externalSubComponents } from './esbuild-plugins/external-sub-components.js';
 import { packageVersion } from './esbuild-plugins/package-version.js';
-import { LitCSSOptions, litCssPlugin } from 'esbuild-plugin-lit-css';
+import { litCssPlugin } from 'esbuild-plugin-lit-css';
 
 import { minifyHTMLLiteralsPlugin } from 'esbuild-plugin-minify-html-literals';
 import { nodeExternalsPlugin } from 'esbuild-node-externals';

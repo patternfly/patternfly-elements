@@ -63,10 +63,12 @@ export class ModalOpenEvent extends ComposedEvent {
  * @fires {ModalCloseEvent} close - Fires when either a user clicks on either the close button or the overlay or manually closes a modal.
  *
  * @fires {CustomEvent<{ open: true; trigger?: HTMLElement }>} pfe-modal:open - {@deprecated Use `open`} When the modal opens
- * @fires {CustomEvent<{ open: false }>} pfe-modal:close - {@deprecated Use `close`} When the modal closes
+ * @fires {CustomEven
+ * t<{ open: false }>} pfe-modal:close - {@deprecated Use `close`} When the modal closes
  * @slot - The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header.
  * @slot trigger - The only part visible on page load, the trigger opens the modal window. The trigger can be a button, a cta or a link. While it is part of the modal web component, it does not contain any intrinsic styles.
  * @slot header - The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6).
+ * @slot footer - Optional footer content. Good place to put action buttons.
  * @slot pfe-modal--trigger - {@deprecated use `trigger`}
  * @slot pfe-modal--header - {@deprecated use `header`}
  */

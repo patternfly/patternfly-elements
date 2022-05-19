@@ -49,12 +49,6 @@ header {
   justify-content: space-between
 }
 
-[slot=header] {
-  display: flex;
-  align-items: end;
-  gap: 16px;
-}
-
 [slot=header] fieldset {
   border: 0;
   margin: 0;

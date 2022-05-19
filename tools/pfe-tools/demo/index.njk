@@ -67,12 +67,8 @@
       </form>
     </pfe-band>
 
-    <vaadin-split-layout orientation="vertical">
-      <div data-demo="{{ element }}">
-        <template shadowroot="open" data-demo="{{ element }}">{{ demo | safe }}</template>
-      </div>
-      <api-viewer src="{{ manifest }}" only="{{ element }}"></api-viewer>
-    </vaadin-split-layout>
+    <div data-demo="{{ element }}">{{ demo | safe }}</div>
+    <api-viewer src="{{ manifest }}" only="{{ element }}"></api-viewer>
   </main>
 </body>
 

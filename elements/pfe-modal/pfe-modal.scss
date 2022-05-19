@@ -136,20 +136,37 @@ header {
     color: var(--pf-c-button--m-plain--focus--Color, var(--pf-global--Color--100, #151515));
   }
 
-  @media screen and (min-width: $pfe-modal--breakpoint--medium) {
-    top: 	pfe-var(container-padding);
-    right: 	pfe-var(container-padding);
-  }
-
-  @media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
-    top: 	calc(#{pfe-var(container-padding)} / 2);
-    right: 	calc(#{pfe-var(container-padding)} / 2);
-  }
-
   > svg {
     height: pfe-var(ui--element--size);
     width: 	pfe-var(ui--element--size);
     height: pfe-local(size, $region: close);
     width: 	pfe-local(size, $region: close);
   }
+}
+
+@media screen and (min-width: $pfe-modal--breakpoint--medium) {
+  [part=close-button] {
+    top: 	pfe-var(container-padding);
+    right: 	pfe-var(container-padding);
+  }
+}
+
+@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
+  [part=close-button] {
+    top: 	calc(#{pfe-var(container-padding)} / 2);
+    right: 	calc(#{pfe-var(container-padding)} / 2);
+  }
+}
+
+:host([position="top"]) #dialog {
+  position: fixed;
+  align-self: flex-start;
+
+  top: var(--pf-c-modal-box--m-align-top--MarginTop, var(--pf-c-modal-box--m-align-top--spacer, 0.5rem));
+
+  $spacer: var(--pf-c-modal-box--m-align-top--spacer, var(--pf-global--spacer--sm, 0.5rem));
+  $height-offset: min($spacer, var(--pf-global--spacer--2xl, 3rem));
+
+  max-width:  var(--pf-c-modal-box--m-align-top--MaxWidth,  calc(100% - min(calc($spacer * 2), var(--pf-global--spacer--xl, 2rem))));
+  max-height: var(--pf-c-modal-box--m-align-top--MaxHeight, calc(100% - $height-offset - $spacer));
 }

@@ -69,6 +69,11 @@ export class PfeModal extends LitElement {
    */
   @property({ reflect: true }) width: 'small' | 'medium' | 'large' = 'large';
 
+  /**
+   * `position="top"` aligns the dialog with the top of the page
+   */
+  @property({ reflect: true }) position?: 'top';
+
   @observed('_openChanged')
   @property({ type: Boolean, reflect: true }) open = false;
 

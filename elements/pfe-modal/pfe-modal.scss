@@ -29,126 +29,127 @@ $pfe-modal--breakpoint--medium: 640px;
 	position: relative;
 }
 
-.pfe-modal {
-	&__outer {
-		display: flex;
-		position: fixed;
-		height: 100%;
-		width: 100%;
-		top: 0;
-		left: 0;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		z-index: pfe-zindex(modal);
-
-		&[hidden] {
-			display: none;
-		}
-	}
-	&__overlay {
-		position: fixed;
-		height: 100%;
-		width: 100%;
-		top: 0;
-		left: 0;
-		background-color: pfe-local(BackgroundColor, $region: overlay);
-		cursor: pointer;
-
-		&[hidden] {
-			display: none;
-		}
-	}
-	&__window {
-		// --context: #{pfe-local(context)};
-		position: relative;
-		max-width: pfe-local(MaxWidth--mobile);
-		min-width: pfe-local(MinWidth);
-		max-height: pfe-local(MaxHeight);
-		margin: 0 auto;
-		box-shadow: pfe-var(box-shadow--lg);
-		background-color: pfe-var(surface--lightest);
-		color: pfe-var(text);
-		border-radius: pfe-var(ui--border-radius);
-
-		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
-			max-width: var(--pfe-modal-width, pfe-local(MaxWidth--large));
-		}
-
-		:host([width="small"]) & {
-			max-width: pfe-local(MaxWidth--small);
-		}
-
-		:host([width="medium"]) & {
-			max-width: pfe-local(MaxWidth--medium);
-		}
-
-		:host([width="large"]) & {
-			max-width: pfe-local(MaxWidth--large);
-		}
-	}
-	&__container {
-		position: relative;
-		max-height: inherit;
-
-		&[hidden] {
-			display: none;
-		}
-	}
-	&__content {
-		overflow-y: auto;
-		overscroll-behavior: contain;
-		max-height: pfe-local(MaxHeight);
-		padding: pfe-local(Padding);
-		box-sizing: border-box;
-
-		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
-			padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 3) pfe-var(container-padding) pfe-var(container-padding));
-		}
-
-		&:not(.has-header) {
-			// Remove margin-top on the first slotted element that is not the header.
-			::slotted(*:nth-child(2)),
-			::slotted(*:nth-child(1)) {
-				margin-top: 0 !important;
-			}
-		}
-
-		::slotted([slot$="header"]) {
-			margin-top: 0 !important;
-		}
-	}
-	&__close {
-		@extend %reset-button;
-		position: absolute;
-		top: 	calc(#{pfe-var(container-padding)} * .25);
-		right: 	calc(#{pfe-var(container-padding)} * .25);
-		cursor: pointer;
-		line-height: .5;
-		padding: pfe-var(container-padding);
-
-		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
-			top: 	pfe-var(container-padding);
-			right: 	pfe-var(container-padding);
-		}
-
-		@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
-			top: 	calc(#{pfe-var(container-padding)} / 2);
-			right: 	calc(#{pfe-var(container-padding)} / 2);
-		}
-
-		> svg {
-			fill: 	pfe-var(text);
-			height: pfe-var(ui--element--size);
-			width: 	pfe-var(ui--element--size);
-			height: pfe-local(size, $region: close);
-			width: 	pfe-local(size, $region: close);
-		}
-	}
+[hidden] {
+  display: none !important;
 }
 
-#dialog {
+section {
+  display: flex;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: pfe-zindex(modal);
+}
+
+#container {
+  position: relative;
+  max-height: inherit;
+}
+
+[part=overlay] {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: pfe-local(BackgroundColor, $region: overlay);
+}
+
+[part=dialog] {
 	--pfe-theme--color--text: var(--pfe-broadcasted--text);
+
+  position: relative;
+  max-width: pfe-local(MaxWidth--mobile);
+  min-width: pfe-local(MinWidth);
+  max-height: pfe-local(MaxHeight);
+  margin: 0 auto;
+  box-shadow: pfe-var(box-shadow--lg);
+  background-color: pfe-var(surface--lightest);
+  color: pfe-var(text);
+  border-radius: pfe-var(ui--border-radius);
 	background-color: var(--pfe-context-background-color);
 	color: var(--pfe-broadcasted--text);
+  padding: var(--pf-global--spacer--lg, 1.5rem);
+
+  @media screen and (min-width: $pfe-modal--breakpoint--medium) {
+    max-width: var(--pfe-modal-width, pfe-local(MaxWidth--large));
+  }
+
+  :host([width="small"]) & {
+    max-width: pfe-local(MaxWidth--small);
+  }
+
+  :host([width="medium"]) & {
+    max-width: pfe-local(MaxWidth--medium);
+  }
+
+  :host([width="large"]) & {
+    max-width: pfe-local(MaxWidth--large);
+  }
+}
+
+[part=content] {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  max-height: pfe-local(MaxHeight);
+  box-sizing: border-box;
+
+  @media screen and (max-height: $pfe-modal--breakpoint--medium) {
+    padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 3) pfe-var(container-padding) pfe-var(container-padding));
+  }
+
+  &:not(.hasHeader) {
+    // Remove margin-top on the first slotted element that is not the header.
+    ::slotted(*:nth-child(2)),
+    ::slotted(*:nth-child(1)) {
+      margin-top: 0 !important;
+    }
+  }
+
+  ::slotted([slot$="header"]) {
+    margin-top: 0 !important;
+  }
+}
+
+header {
+  position: sticky;
+  top: 0;
+  background: var(--pfe-context-background-color);
+}
+
+[part=close-button] {
+  @extend %reset-button;
+  position: absolute;
+  top: 	calc(#{pfe-var(container-padding)} * .25);
+  right: 	calc(#{pfe-var(container-padding)} * .25);
+  cursor: pointer;
+  line-height: .5;
+  padding: pfe-var(container-padding);
+  color: 	var(--pf-c-button--m-plain--Color, var(--pf-global--Color--200, #6a6e73));
+
+  &:is(:focus-within, :focus-visible, :hover) {
+    color: var(--pf-c-button--m-plain--focus--Color, var(--pf-global--Color--100, #151515));
+  }
+
+  @media screen and (min-width: $pfe-modal--breakpoint--medium) {
+    top: 	pfe-var(container-padding);
+    right: 	pfe-var(container-padding);
+  }
+
+  @media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
+    top: 	calc(#{pfe-var(container-padding)} / 2);
+    right: 	calc(#{pfe-var(container-padding)} / 2);
+  }
+
+  > svg {
+    height: pfe-var(ui--element--size);
+    width: 	pfe-var(ui--element--size);
+    height: pfe-local(size, $region: close);
+    width: 	pfe-local(size, $region: close);
+  }
 }

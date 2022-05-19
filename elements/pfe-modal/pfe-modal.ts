@@ -44,6 +44,21 @@ export class ModalOpenEvent extends ComposedEvent {
  * @csspart content - The container for the dialog content
  * @csspart close-button - The modal's close button
  *
+ * @cssprop {<length>} --pf-c-modal-box--ZIndex {@default 500}
+ * @cssprop {<length>} --pf-c-modal-box--Width - Width of the modal {@default calc(100% - 2rem)}
+ * @cssprop {<length>} --pf-c-modal-box--MaxWidth - Max width of the modal {@default calc(100% - 2rem)}
+ * @cssprop {<length>} --pf-c-modal-box--m-sm--sm--MaxWidth - Max width of the small variant modal {@default 35rem}
+ * @cssprop {<length>} --pf-c-modal-box--m-md--MaxWidth - Max width of the small variant modal {@default 52.5rem}
+ * @cssprop {<length>} --pf-c-modal-box--m-lg--lg--MaxWidth - Max width of the large variant modal {@default 70rem}
+ * @cssprop {<length>} --pf-c-modal-box--MaxHeight - Max height of the modal {@default calc(100% - 3rem)}
+ * @cssprop {<length>} --pf-c-modal-box--BoxShadow - {@default var(--pf-global--BoxShadow--xl)}
+ * @cssprop {<length>} --pf-c-modal-box__title--FontSize - {@default 1.5rem}
+ * @cssprop {<length>} --pf-c-modal-box--m-align-top--MarginTop - {@default 2rem}
+ * @cssprop {<length>} --pf-c-modal-box--m-align-top--MaxWidth
+ * @cssprop {<length>} --pf-c-modal-box--m-align-top--MaxHeight
+ * @cssprop {<color>} --pf-c-modal-box--BackgroundColor - {@default #fff}
+ * @cssprop --pf-c-modal-box__title--FontFamily - default font family for header-slotted headings
+ *
  * @fires {ModalOpenEvent} open - Fires when a user clicks on the trigger or manually opens a modal.
  * @fires {ModalCloseEvent} close - Fires when either a user clicks on either the close button or the overlay or manually closes a modal.
  *
@@ -67,7 +82,7 @@ export class PfeModal extends LitElement {
    * The `variant` controls the width of the modal.
    * There are three options: `small`, `medium` and `large`. The default is `large`.
    */
-  @property({ reflect: true }) variant: 'small' | 'medium' | 'large' = 'large';
+  @property({ reflect: true }) variant?: 'small' | 'medium' | 'large';
 
   @deprecation({ alias: 'variant', attribute: 'width' }) width?: 'small' | 'medium' | 'large';
 

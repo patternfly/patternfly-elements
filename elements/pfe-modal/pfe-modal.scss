@@ -1,28 +1,7 @@
-@use "sass:map";
-@use "@patternfly/pfe-sass" as *;
-
-@include configure(
-  $name: 'modal',
-  $variables: (
-		context: light,
-		MaxHeight: 90vh,
-		MaxWidth: 70vw,
-		MaxWidth--mobile: 94vw,
-		MaxWidth--small: #{"min(35rem, 94vw)"},
-		MaxWidth--medium: #{"min(52.5rem, 94vw)"},
-		MaxWidth--large: #{"min(70rem, 94vw)"},
-		MinWidth: 0,
-		Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2),
-		overlay: (
-			BackgroundColor: pfe-var(overlay)
-		),
-		close: (
-			size: calc(#{pfe-var(ui--element--size)} - 4px)
-		),
-	),
-);
-
-$pfe-modal--breakpoint--medium: 640px;
+$spacer-align-top: var(--pf-c-modal-box--m-align-top--spacer,
+  var(--pf-global--spacer--sm,
+    0.5rem));
+$height-offset: min($spacer-align-top, var(--pf-global--spacer--2xl, 3rem));
 
 :host {
 	display: block;
@@ -40,10 +19,11 @@ section {
   width: 100%;
   top: 0;
   left: 0;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: pfe-zindex(modal);
+  z-index: var(--pf-c-modal-box--ZIndex,
+    var(--pf-global--ZIndex--xl,
+      500));
 }
 
 #container {
@@ -57,64 +37,69 @@ section {
   width: 100%;
   top: 0;
   left: 0;
-  background-color: pfe-local(BackgroundColor, $region: overlay);
+  background-color: var(--pf-c-backdrop--BackgroundColor,
+      var(--pf-global--BackgroundColor--dark-transparent-100,
+        rgba(3, 3, 3, 0.62)));
 }
 
 [part=dialog] {
-	--pfe-theme--color--text: var(--pfe-broadcasted--text);
-
   position: relative;
-  max-width: pfe-local(MaxWidth--mobile);
-  min-width: pfe-local(MinWidth);
-  max-height: pfe-local(MaxHeight);
   margin: 0 auto;
-  box-shadow: pfe-var(box-shadow--lg);
-  background-color: pfe-var(surface--lightest);
-  color: pfe-var(text);
-  border-radius: pfe-var(ui--border-radius);
-	background-color: var(--pfe-context-background-color);
-	color: var(--pfe-broadcasted--text);
+
+  width: var(--pf-c-modal-box--Width,
+    calc(100% - var(--pf-global--spacer--xl,2rem)));
+
+  max-width: var(--pf-c-modal-box--MaxWidth,
+    calc(100% - var(--pf-global--spacer--xl,2rem)));
+
+  max-height: var(--pf-c-modal-box--MaxHeight,
+    calc(100% - var(--pf-global--spacer--2xl,3rem)));
+
+  box-shadow: var(--pf-c-modal-box--BoxShadow,
+    var(--pf-global--BoxShadow--xl,
+      0 1rem 2rem 0 rgba(3, 3, 3, 0.16),
+      0 0 0.5rem 0 rgba(3, 3, 3, 0.1)));
+
+	background-color: var(--pf-c-modal-box--BackgroundColor,
+    var(--pf-global--BackgroundColor--100,
+      var(--pf-global--BackgroundColor--100, #fff)));
+
   padding: var(--pf-global--spacer--lg, 1.5rem);
-
-  @media screen and (min-width: $pfe-modal--breakpoint--medium) {
-    max-width: var(--pfe-modal-width, pfe-local(MaxWidth--large));
-  }
-
-  :host([width="small"]) &,
-  :host([variant="small"]) & {
-    max-width: var(--pfe-modal-width, pfe-local(MaxWidth--small));
-  }
-
-  :host([width="medium"]) &,
-  :host([variant="medium"]) & {
-    max-width: var(--pfe-modal-width, pfe-local(MaxWidth--medium));
-  }
-
-  :host([width="large"]) &,
-  :host([variant="large"]) & {
-    max-width: var(--pfe-modal-width, pfe-local(MaxWidth--large));
-  }
+  margin-inline: var(--pf-global--spacer--md, 1rem);
 }
+
+:host([width]) [part=dialog],
+:host([variant]) [part=dialog] {
+  margin-inline: 0;
+}
+
+:host([width="small"]) [part=dialog],
+:host([variant="small"]) [part=dialog] {
+  --pf-c-modal-box--Width: var(--pf-c-modal-box--m-sm--sm--MaxWidth, 35rem);
+}
+
+:host([width="medium"]) [part=dialog],
+:host([variant="medium"]) [part=dialog] {
+  --pf-c-modal-box--Width: var(--pf-c-modal-box--m-md--Width, 52.5rem);
+}
+
+:host([width="large"]) [part=dialog],
+:host([variant="large"]) [part=dialog] {
+  --pf-c-modal-box--Width: var(--pf-c-modal-box--m-lg--lg--MaxWidth, 70rem);
+}
+
 
 [part=content] {
   overflow-y: auto;
   overscroll-behavior: contain;
-  max-height: pfe-local(MaxHeight);
+
+  max-height: var(--pf-c-modal-box--MaxHeight,
+    calc(100% - var(--pf-global--spacer--2xl,
+      3rem)));
+
   box-sizing: border-box;
 
-  @media screen and (max-height: $pfe-modal--breakpoint--medium) {
-    padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 3) pfe-var(container-padding) pfe-var(container-padding));
-  }
-
-  &:not(.hasHeader) {
-    // Remove margin-top on the first slotted element that is not the header.
-    ::slotted(*:nth-child(2)),
-    ::slotted(*:nth-child(1)) {
-      margin-top: 0 !important;
-    }
-  }
-
-  ::slotted([slot$="header"]) {
+  ::slotted([slot="header"]) {
     margin-top: 0 !important;
   }
 }
@@ -122,54 +107,75 @@ section {
 header {
   position: sticky;
   top: 0;
-  background: var(--pfe-context-background-color);
+	background-color: var(--pf-c-modal-box--BackgroundColor,
+    var(--pf-global--BackgroundColor--100,
+      var(--pf-global--BackgroundColor--100,
+        #fff)));
+}
+
+header ::slotted(:is(h1,h2,h3,h4,h5,h6)[slot="header"]) {
+  font-size: var(--pf-c-modal-box__title--FontSize,
+    var(--pf-global--FontSize--2xl,
+      1.5rem));
+  font-weight: var(--pf-global--FontWeight--normal, 400);
+  font-family: var(--pf-c-modal-box__title--FontFamily,
+    var(--pf-global--FontFamily--heading--sans-serif,
+      var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,
+        "RedHatDisplayUpdated", "Overpass", overpass, helvetica, arial, sans-serif)));
 }
 
 [part=close-button] {
-  @extend %reset-button;
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+
   position: absolute;
-  top: 	calc(#{pfe-var(container-padding)} * .25);
-  right: 	calc(#{pfe-var(container-padding)} * .25);
   cursor: pointer;
-  line-height: .5;
-  padding: pfe-var(container-padding);
-  color: 	var(--pf-c-button--m-plain--Color, var(--pf-global--Color--200, #6a6e73));
+  line-height: 24px;
+  padding-block:
+    var(--pf-c-button--PaddingTop,
+      var(--pf-global--spacer--form-element, 0.375rem));
+  padding-inline:
+    var(--pf-c-button--PaddingRight,
+      var(--pf-global--spacer--md, 1rem));
+  top: 0;
+  right: calc(var(--pf-global--spacer--lg, 1.5rem) / -3);
+  color: var(--pf-c-button--m-plain--Color,
+    var(--pf-global--Color--200,
+      #6a6e73));
+  font-size: var(--pf-c-button--FontSize,
+    var(--pf-global--FontSize--md,
+      1rem));
 
   &:is(:focus-within, :focus-visible, :hover) {
     color: var(--pf-c-button--m-plain--focus--Color, var(--pf-global--Color--100, #151515));
   }
 
   > svg {
-    height: pfe-var(ui--element--size);
-    width: 	pfe-var(ui--element--size);
-    height: pfe-local(size, $region: close);
-    width: 	pfe-local(size, $region: close);
-  }
-}
-
-@media screen and (min-width: $pfe-modal--breakpoint--medium) {
-  [part=close-button] {
-    top: 	pfe-var(container-padding);
-    right: 	pfe-var(container-padding);
-  }
-}
-
-@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
-  [part=close-button] {
-    top: 	calc(#{pfe-var(container-padding)} / 2);
-    right: 	calc(#{pfe-var(container-padding)} / 2);
+    font-size: 16px;
+    width: var(--pf-global--spacer--md, 1rem);
+    aspect-ratio: 1/1;
   }
 }
 
 :host([position="top"]) #dialog {
-  position: fixed;
-  align-self: flex-start;
+  align-self: start;
 
-  top: var(--pf-c-modal-box--m-align-top--MarginTop, var(--pf-c-modal-box--m-align-top--spacer, 0.5rem));
+  margin-block: var(--pf-c-modal-box--m-align-top--MarginTop,
+    var(--pf-c-modal-box--m-align-top--spacer,
+      2rem));
 
-  $spacer: var(--pf-c-modal-box--m-align-top--spacer, var(--pf-global--spacer--sm, 0.5rem));
-  $height-offset: min($spacer, var(--pf-global--spacer--2xl, 3rem));
+  margin-inline: var(--pf-global--spacer--md, 1rem);
 
-  max-width:  var(--pf-c-modal-box--m-align-top--MaxWidth,  calc(100% - min(calc($spacer * 2), var(--pf-global--spacer--xl, 2rem))));
-  max-height: var(--pf-c-modal-box--m-align-top--MaxHeight, calc(100% - $height-offset - $spacer));
+  width: 100%;
+
+  max-width: var(--pf-c-modal-box--m-align-top--MaxWidth,
+    calc(100% - min(
+      var(--pf-c-modal-box--m-align-top--spacer, 2rem) * 2,
+      var(--pf-global--spacer--xl, 2rem))));
+
+  max-height: var(--pf-c-modal-box--m-align-top--MaxHeight,
+    calc(100% - $height-offset - $spacer-align-top));
 }

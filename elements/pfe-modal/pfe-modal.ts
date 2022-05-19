@@ -70,7 +70,7 @@ export class PfeModal extends LitElement {
   @property({ reflect: true }) width: 'small' | 'medium' | 'large' = 'large';
 
   @observed('_openChanged')
-  @property({ type: Boolean }) open = false;
+  @property({ type: Boolean, reflect: true }) open = false;
 
   /** Optional ID of the trigger element */
   @observed
@@ -90,7 +90,7 @@ export class PfeModal extends LitElement {
   private cancelling = false;
 
   private slots = new SlotController(this, {
-    slots: [null, 'trigger', 'header'],
+    slots: [null, 'trigger', 'header', 'description'],
     deprecations: {
       'trigger': 'pfe-modal--trigger',
       'header': 'pfe-modal--header',
@@ -107,37 +107,38 @@ export class PfeModal extends LitElement {
     const headerId = (this.header || this.headings.length) ? this.headerId : undefined;
     const headerLabel = this.triggerElement ? this.triggerElement.innerText : undefined;
     const hasHeader = this.slots.hasSlotted('header', 'pfe-modal--header');
+    const hasDescription = this.slots.hasSlotted('description');
 
     return html`
       <slot name="trigger"></slot>
       <slot name="pfe-modal--trigger"></slot>
-      <section class="pfe-modal__outer" ?hidden="${!this.open}">
-        <div id="overlay"
-            part="overlay"
-            class="pfe-modal__overlay" 
-            ?hidden="${!this.open}"></div>
+      <section ?hidden="${!this.open}">
+        <div id="overlay" part="overlay" ?hidden="${!this.open}"></div>
         <div id="dialog"
             part="dialog"
-            class="pfe-modal__window"
             tabindex="0"
             role="dialog"
             aria-labelledby="${ifDefined(headerId)}"
             aria-label="${ifDefined(headerLabel)}"
             ?hidden="${!this.open}">
-          <div class="pfe-modal__container">
-            <div part="content" class="pfe-modal__content ${classMap({ 'has-header': hasHeader })}">
-              <slot name="header"></slot>
-              <slot name="pfe-modal--header"></slot>
+          <div id="container">
+            <div id="content" part="content" class="${classMap({ hasHeader, hasDescription })}">
+              <header>
+                <slot name="header"></slot>
+                <slot name="pfe-modal--header"></slot>
+                <div part="description" ?hidden=${!hasDescription}>
+                  <slot name="description"></slot>
+                </div>
+              </header>
               <slot></slot>
             </div>
-            <button
+            <button id="close-button"
                 part="close-button"
-                class="pfe-modal__close"
                 aria-label="Close dialog"
                 @keydown="${this._keydownHandler}"
                 @click="${this.close}">
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="-11 11 22 23">
-                <path d="M30 16.669v-1.331c0-0.363-0.131-0.675-0.394-0.938s-0.575-0.394-0.938-0.394h-10.669v-10.65c0-0.362-0.131-0.675-0.394-0.938s-0.575-0.394-0.938-0.394h-1.331c-0.363 0-0.675 0.131-0.938 0.394s-0.394 0.575-0.394 0.938v10.644h-10.675c-0.362 0-0.675 0.131-0.938 0.394s-0.394 0.575-0.394 0.938v1.331c0 0.363 0.131 0.675 0.394 0.938s0.575 0.394 0.938 0.394h10.669v10.644c0 0.363 0.131 0.675 0.394 0.938 0.262 0.262 0.575 0.394 0.938 0.394h1.331c0.363 0 0.675-0.131 0.938-0.394s0.394-0.575 0.394-0.938v-10.637h10.669c0.363 0 0.675-0.131 0.938-0.394 0.269-0.262 0.4-0.575 0.4-0.938z" transform="rotate(45)"/>
+              <svg fill="currentColor" viewBox="0 0 352 512">
+                <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
               </svg>
             </button>
           </div>

@@ -136,7 +136,7 @@ describe('<pfe-modal>', function() {
         const el = await createFixture<PfeModal>(TEMPLATES.smallModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('560px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -145,7 +145,7 @@ describe('<pfe-modal>', function() {
         const el = await createFixture<PfeModal>(TEMPLATES.mediumModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('840px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -154,7 +154,7 @@ describe('<pfe-modal>', function() {
         const el = await createFixture<PfeModal>(TEMPLATES.largeModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('1120px');
+          .to.equal('calc(100% - 32px)');
       });
     });
   });
@@ -169,7 +169,7 @@ describe('<pfe-modal>', function() {
         const el = await createFixture<PfeModal>(TEMPLATES.smallModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('560px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -178,7 +178,7 @@ describe('<pfe-modal>', function() {
         const el = await createFixture<PfeModal>(TEMPLATES.mediumModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('840px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -187,7 +187,7 @@ describe('<pfe-modal>', function() {
         const el = await createFixture<PfeModal>(TEMPLATES.largeModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('940px');
+          .to.equal('calc(100% - 32px)');
       });
     });
   });
@@ -202,7 +202,7 @@ describe('<pfe-modal>', function() {
         const el = await createFixture<PfeModal>(TEMPLATES.smallModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('560px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -211,7 +211,7 @@ describe('<pfe-modal>', function() {
         const el = await createFixture<PfeModal>(TEMPLATES.mediumModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('721.92px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -220,7 +220,7 @@ describe('<pfe-modal>', function() {
         const el = await createFixture<PfeModal>(TEMPLATES.largeModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('721.92px');
+          .to.equal('calc(100% - 32px)');
       });
     });
   });
@@ -235,7 +235,7 @@ describe('<pfe-modal>', function() {
         const el = await createFixture<PfeModal>(TEMPLATES.smallModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('451.2px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -244,7 +244,7 @@ describe('<pfe-modal>', function() {
         const el = await createFixture<PfeModal>(TEMPLATES.mediumModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('451.2px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -253,7 +253,7 @@ describe('<pfe-modal>', function() {
         const el = await createFixture<PfeModal>(TEMPLATES.largeModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('451.2px');
+          .to.equal('calc(100% - 32px)');
       });
     });
   });

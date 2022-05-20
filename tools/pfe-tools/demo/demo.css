@@ -158,3 +158,8 @@ api-viewer {
   max-width: 100%;
   z-index: 1;
 }
+
+.logo-bar a:visited {
+  color: white;
+  text-decoration: none;
+}

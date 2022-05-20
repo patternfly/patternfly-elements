@@ -94,7 +94,7 @@ section {
   overscroll-behavior: contain;
 
   max-height: var(--pf-c-modal-box--MaxHeight,
-    calc(100% - var(--pf-global--spacer--2xl,
+    calc(100vh - var(--pf-global--spacer--2xl,
       3rem)));
 
   box-sizing: border-box;

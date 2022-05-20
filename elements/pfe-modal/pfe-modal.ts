@@ -39,10 +39,25 @@ export class ModalOpenEvent extends ComposedEvent {
  *
  * @summary Displays information or helps a user focus on a task
  *
+ * @slot - The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header.
+ * @slot trigger - The only part visible on page load, the trigger opens the modal window. The trigger can be a button, a cta or a link. While it is part of the modal web component, it does not contain any intrinsic styles.
+ * @slot header - The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6).
+ * @slot footer - Optional footer content. Good place to put action buttons.
+ * @slot pfe-modal--trigger - {@deprecated use `trigger`}
+ * @slot pfe-modal--header - {@deprecated use `header`}
+ *
+ * @fires {ModalOpenEvent} open - Fires when a user clicks on the trigger or manually opens a modal.
+ * @fires {ModalCloseEvent} close - Fires when either a user clicks on either the close button or the overlay or manually closes a modal.
+ * @fires {CustomEvent<{ open: true; trigger?: HTMLElement }>} pfe-modal:open - {@deprecated Use `open`} When the modal opens
+ * @fires {CustomEvent<{ open: false }>} pfe-modal:close - {@deprecated Use `close`} When the modal closes
+ *
  * @csspart overlay - The modal overlay which lies under the dialog and above the page body
  * @csspart dialog - The dialog element
  * @csspart content - The container for the dialog content
+ * @csspart header - The container for the optional dialog header
+ * @csspart description - The container for the optional dialog description in the header
  * @csspart close-button - The modal's close button
+ * @csspart footer - Actions footer container
  *
  * @cssprop {<length>} --pf-c-modal-box--ZIndex {@default 500}
  * @cssprop {<length>} --pf-c-modal-box--Width - Width of the modal {@default calc(100% - 2rem)}
@@ -58,18 +73,6 @@ export class ModalOpenEvent extends ComposedEvent {
  * @cssprop {<length>} --pf-c-modal-box--m-align-top--MaxHeight
  * @cssprop {<color>} --pf-c-modal-box--BackgroundColor - {@default #fff}
  * @cssprop --pf-c-modal-box__title--FontFamily - default font family for header-slotted headings
- *
- * @fires {ModalOpenEvent} open - Fires when a user clicks on the trigger or manually opens a modal.
- * @fires {ModalCloseEvent} close - Fires when either a user clicks on either the close button or the overlay or manually closes a modal.
- * @fires {CustomEvent<{ open: true; trigger?: HTMLElement }>} pfe-modal:open - {@deprecated Use `open`} When the modal opens
- * @fires {CustomEvent<{ open: false }>} pfe-modal:close - {@deprecated Use `close`} When the modal closes
- *
- * @slot - The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header.
- * @slot trigger - The only part visible on page load, the trigger opens the modal window. The trigger can be a button, a cta or a link. While it is part of the modal web component, it does not contain any intrinsic styles.
- * @slot header - The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6).
- * @slot footer - Optional footer content. Good place to put action buttons.
- * @slot pfe-modal--trigger - {@deprecated use `trigger`}
- * @slot pfe-modal--header - {@deprecated use `header`}
  */
 @customElement('pfe-modal') @pfelement()
 export class PfeModal extends LitElement implements HTMLDialogElement {
@@ -148,7 +151,7 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
             ?hidden="${!this.open}">
           <div id="container">
             <div id="content" part="content" class=${classMap({ hasHeader, hasDescription, hasFooter })}>
-              <header>
+              <header part="header">
                 <slot name="header"></slot>
                 <slot name="pfe-modal--header"></slot>
                 <div part="description" ?hidden=${!hasDescription}>
@@ -156,7 +159,7 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
                 </div>
               </header>
               <slot></slot>
-              <footer ?hidden=${!hasFooter}>
+              <footer ?hidden=${!hasFooter} part="footer">
                 <slot name="footer"></slot>
               </footer>
             </div>

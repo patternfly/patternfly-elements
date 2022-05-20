@@ -179,3 +179,9 @@ header ::slotted(:is(h1,h2,h3,h4,h5,h6)[slot="header"]) {
   max-height: var(--pf-c-modal-box--m-align-top--MaxHeight,
     calc(100% - $height-offset - $spacer-align-top));
 }
+
+footer {
+  display: flex;
+  align-items: center;
+  gap: var(--pf-global--spacer--xl, 0.5rem);
+}

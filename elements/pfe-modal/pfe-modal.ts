@@ -82,6 +82,9 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
 
   static readonly styles = [style];
 
+  /** Should the dialog close when user clicks outside the dialog? */
+  protected static closeOnOutsideClick = false;
+
   /**
    * The `variant` controls the width of the modal.
    * There are three options: `small`, `medium` and `large`. The default is `large`.
@@ -221,9 +224,12 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
   }
 
   @bound private onClick(event: MouseEvent) {
-    if (this.open) {
+    const { open, overlay, dialog } = this;
+    if (open) {
       const path = event.composedPath();
-      if (this.overlay && this.dialog && path.includes(this.overlay) && !path.includes(this.dialog)) {
+      const { closeOnOutsideClick } = this.constructor as typeof PfeModal;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      if (closeOnOutsideClick && path.includes(overlay!) && !path.includes(dialog!)) {
         event.preventDefault();
         this.cancel();
       }

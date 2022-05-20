@@ -98,7 +98,7 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
    */
   @property({ reflect: true }) position?: 'top';
 
-  @observed('_openChanged')
+  @observed
   @property({ type: Boolean, reflect: true }) open = false;
 
   /** Optional ID of the trigger element */
@@ -108,9 +108,9 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
   /** @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/returnValue */
   public returnValue?: string;
 
-  @query('#overlay') private overlay?: HTMLElement;
-  @query('#dialog') private dialog?: HTMLElement;
-  @query('.pfe-modal__close') private _modalCloseButton?: HTMLElement | null;
+  @query('#overlay') private overlay?: HTMLElement | null;
+  @query('#dialog') private dialog?: HTMLElement | null;
+  @query('#close-button') private closeButton?: HTMLElement | null;
 
   private headerId = getRandomId();
   private triggerElement: HTMLElement | null = null;
@@ -210,61 +210,6 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
     }
   }
 
-  protected _triggerChanged() {
-    if (this.trigger) {
-      this.triggerElement = (this.getRootNode() as Document | ShadowRoot).getElementById(this.trigger);
-      this.triggerElement?.addEventListener('click', this.onExternalTriggerClick);
-    }
-  }
-
-  @bound private onExternalTriggerClick(event: MouseEvent) {
-    event.preventDefault();
-    // TODO: in non-modal case, toggle the dialog
-    this.showModal();
-  }
-
-  @bound private onClick(event: MouseEvent) {
-    const { open, overlay, dialog } = this;
-    if (open) {
-      const path = event.composedPath();
-      const { closeOnOutsideClick } = this.constructor as typeof PfeModal;
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      if (closeOnOutsideClick && path.includes(overlay!) && !path.includes(dialog!)) {
-        event.preventDefault();
-        this.cancel();
-      }
-    }
-  }
-
-  @bound private onKeydown(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'Tab':
-        if (event.target === this._modalCloseButton) {
-          event.preventDefault();
-          this.dialog?.focus();
-        }
-        return;
-      case 'Escape':
-      case 'Esc':
-        event.preventDefault();
-        this.cancel();
-        return;
-      case 'Enter':
-        if (event.target === this.triggerElement) {
-          event.preventDefault();
-          this.showModal();
-        }
-        return;
-    }
-  }
-
-  private async cancel() {
-    this.cancelling = true;
-    this.open = false;
-    await this.updateComplete;
-    this.cancelling = false;
-  }
-
   protected async _openChanged(oldValue?: boolean, newValue?: boolean) {
     // loosening types to prevent running these effects in unexpected circumstances
     // eslint-disable-next-line eqeqeq
@@ -296,6 +241,61 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
       this.dispatchEvent(cancelling ? new ModalCancelEvent() : new ModalCloseEvent());
       this.dispatchEvent(deprecatedCustomEvent('pfe-modal:close', { open: false }));
     }
+  }
+
+  protected _triggerChanged() {
+    if (this.trigger) {
+      this.triggerElement = (this.getRootNode() as Document | ShadowRoot).getElementById(this.trigger);
+      this.triggerElement?.addEventListener('click', this.onExternalTriggerClick);
+    }
+  }
+
+  @bound private onExternalTriggerClick(event: MouseEvent) {
+    event.preventDefault();
+    // TODO: in non-modal case, toggle the dialog
+    this.showModal();
+  }
+
+  @bound private onClick(event: MouseEvent) {
+    const { open, overlay, dialog } = this;
+    if (open) {
+      const path = event.composedPath();
+      const { closeOnOutsideClick } = this.constructor as typeof PfeModal;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      if (closeOnOutsideClick && path.includes(overlay!) && !path.includes(dialog!)) {
+        event.preventDefault();
+        this.cancel();
+      }
+    }
+  }
+
+  @bound private onKeydown(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'Tab':
+        if (event.target === this.closeButton) {
+          event.preventDefault();
+          this.dialog?.focus();
+        }
+        return;
+      case 'Escape':
+      case 'Esc':
+        event.preventDefault();
+        this.cancel();
+        return;
+      case 'Enter':
+        if (event.target === this.triggerElement) {
+          event.preventDefault();
+          this.showModal();
+        }
+        return;
+    }
+  }
+
+  private async cancel() {
+    this.cancelling = true;
+    this.open = false;
+    await this.updateComplete;
+    this.cancelling = false;
   }
 
   setTrigger(element: HTMLElement) {

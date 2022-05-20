@@ -292,3 +292,29 @@
     </pfe-button>
   </pfe-modal>
 </pfe-band>
+
+<pfe-band color-palette="lightest" size="small">
+  <h2 slot="header">External trigger</h2>
+  <p>You may set an external button as the trigger by setting its' ID as the modal's <code>trigger</code> attribute.</p>
+  <pfe-modal trigger="external-trigger">
+    <h2 slot="header">External trigger</h2>
+    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
+      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.</p>
+    <pfe-button slot="footer">
+      <button>Confirm</button>
+    </pfe-button>
+    <pfe-button variant="secondary" slot="footer">
+      <button>Cancel</button>
+    </pfe-button>
+  </pfe-modal>
+
+  <p>Arbitrary content can intervene between the external trigger and the modal element, as long as they are within the
+    same root.</p>
+
+  <pfe-button id="external-trigger">
+    <button>Show modal with external trigger</button>
+  </pfe-button>
+</pfe-band>

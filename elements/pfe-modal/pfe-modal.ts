@@ -61,10 +61,9 @@ export class ModalOpenEvent extends ComposedEvent {
  *
  * @fires {ModalOpenEvent} open - Fires when a user clicks on the trigger or manually opens a modal.
  * @fires {ModalCloseEvent} close - Fires when either a user clicks on either the close button or the overlay or manually closes a modal.
- *
  * @fires {CustomEvent<{ open: true; trigger?: HTMLElement }>} pfe-modal:open - {@deprecated Use `open`} When the modal opens
- * @fires {CustomEven
- * t<{ open: false }>} pfe-modal:close - {@deprecated Use `close`} When the modal closes
+ * @fires {CustomEvent<{ open: false }>} pfe-modal:close - {@deprecated Use `close`} When the modal closes
+ *
  * @slot - The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header.
  * @slot trigger - The only part visible on page load, the trigger opens the modal window. The trigger can be a button, a cta or a link. While it is part of the modal web component, it does not contain any intrinsic styles.
  * @slot header - The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6).
@@ -73,7 +72,7 @@ export class ModalOpenEvent extends ComposedEvent {
  * @slot pfe-modal--header - {@deprecated use `header`}
  */
 @customElement('pfe-modal') @pfelement()
-export class PfeModal extends LitElement {
+export class PfeModal extends LitElement implements HTMLDialogElement {
   static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   static readonly version = '{{version}}';
@@ -100,6 +99,7 @@ export class PfeModal extends LitElement {
   @observed
   @property() trigger?: string;
 
+  /** @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/returnValue */
   public returnValue?: string;
 
   @query('#overlay') private overlay?: HTMLElement;
@@ -295,9 +295,9 @@ export class PfeModal extends LitElement {
   }
 
   /**
-   * Manually toggles a modal.
-   * ```javascript
-   * document.querySelector('pfe-modal').toggle();
+   * Manually toggles the modal.
+   * ```js
+   * modal.toggle();
    * ```
    */
   @bound toggle() {
@@ -305,9 +305,9 @@ export class PfeModal extends LitElement {
   }
 
   /**
-   * Manually opens a modal.
-   * ```javascript
-   * document.querySelector('pfe-modal').open();
+   * Manually opens the modal.
+   * ```js
+   * modal.open();
    * ```
    */
   @bound show() {
@@ -315,13 +315,14 @@ export class PfeModal extends LitElement {
   }
 
   @bound showModal() {
+    // TODO: non-modal mode
     this.show();
   }
 
   /**
-   * Manually closes a modal.
-   * ```javascript
-   * document.querySelector('pfe-modal').close();
+   * Manually closes the modal.
+   * ```js
+   * modal.close();
    * ```
    */
   @bound close(returnValue?: string) {

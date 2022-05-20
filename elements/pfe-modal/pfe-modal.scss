@@ -1,6 +1,5 @@
 $spacer-align-top: var(--pf-c-modal-box--m-align-top--spacer,
-  var(--pf-global--spacer--sm,
-    0.5rem));
+  var(--pf-global--spacer--sm, 0.5rem));
 $height-offset: min($spacer-align-top, var(--pf-global--spacer--2xl, 3rem));
 
 :host {

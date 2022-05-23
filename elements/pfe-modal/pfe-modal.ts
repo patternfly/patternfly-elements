@@ -154,16 +154,16 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
             ?hidden="${!this.open}">
           <div id="container">
             <div id="content" part="content" class=${classMap({ hasHeader, hasDescription, hasFooter })}>
-              <header part="header">
+              <header part="header">${this.renderHeaderSlot?.() ?? html`
                 <slot name="header"></slot>
-                <slot name="pfe-modal--header"></slot>
-                <div part="description" ?hidden=${!hasDescription}>
-                  <slot name="description"></slot>
+                <slot name="pfe-modal--header"></slot>`}
+                <div part="description" ?hidden=${!hasDescription}>${this.renderDescriptionSlot?.() ?? html`
+                  <slot name="description"></slot>`}
                 </div>
-              </header>
-              <slot></slot>
-              <footer ?hidden=${!hasFooter} part="footer">
-                <slot name="footer"></slot>
+              </header>${this.renderContentSlot?.() ?? html`
+              <slot></slot>`}
+              <footer ?hidden=${!hasFooter} part="footer">${this.renderFooterSlot?.() ?? html`
+                <slot name="footer"></slot>`}
               </footer>
             </div>
             <button id="close-button"
@@ -180,6 +180,18 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
       </section>
     `;
   }
+
+  /** Optional override for the header slot template */
+  protected renderHeaderSlot?(): ReturnType<LitElement['render']>;
+
+  /** Optional override for the description slot template */
+  protected renderDescriptionSlot?(): ReturnType<LitElement['render']>;
+
+  /** Optional override for the content slot template */
+  protected renderContentSlot?(): ReturnType<LitElement['render']>;
+
+  /** Optional override for the footer slot template */
+  protected renderFooterSlot?(): ReturnType<LitElement['render']>;
 
   disconnectedCallback() {
     super.disconnectedCallback();

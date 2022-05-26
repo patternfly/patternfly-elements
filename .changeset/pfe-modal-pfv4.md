@@ -10,10 +10,11 @@ _All_ the `--pfe-*` css variables are **removed** in favour of their `--pf-*` eq
 The `trigger` slot is **removed**. Use the `trigger` attribute instead, or the `setTrigger`, `toggle`, or `showModal` methods.
    ```diff
    - <pfe-modal>
-   -   <pfe-button slot="trigger"><button>Open Modal</button></pfe-button>
    + <pfe-modal trigger="trigger-modal">
-   +   <pfe-button slot="trigger"><button>Open Modal</button></pfe-button>
+   -   <pfe-button slot="trigger"><button>Open Modal</button></pfe-button>
+       Modals can have content
      </pfe-modal>
+     Arbitrary content can intervene between modals and their triggers
    + <pfe-button id="trigger-modal"><button>Open Modal</button></pfe-button>
    ```
 

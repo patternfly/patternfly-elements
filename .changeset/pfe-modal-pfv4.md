@@ -4,7 +4,7 @@
 
 Several changes align `<pfe-modal>` to PatternFly v4.
 
-The `pfelement` attribute and `PFElement` class are **removed** from the `<pfe-modal>` element by default
+The `pfelement` attribute and `PFElement` class are **removed** from the `<pfe-modal>` element by default.
 The `width` attribute is **deprecated** in favour of `variant`.
 _All_ the `--pfe-*` css variables are **removed** in favour of their `--pf-*` equivalents.
 The `trigger` slot is **removed**. Use the `trigger` attribute instead, or the `setTrigger`, `toggle`, or `showModal` methods.

@@ -2,12 +2,19 @@
 "@patternfly/pfe-modal": major
 ---
 
-Align to PatternFly v4.
+Several changes align `<pfe-modal>` to PatternFly v4.
 
-- deprecate the `width` attribute in favour of `variant`
-- implement many `--pf-` css variables
-- add `renderHeaderSlot`, `renderDescriptionSlot`, `renderContentSlot`, and `renderFooterSlot` optional override methods
-- remove _all_ `--pfe-` css variables.
-  If you were relying on any of the (previously undocumented) `--pfe` variables,
-  please use their `--pf` equivalents.
-  See the [docs](https://patternflyelements.org/components/modal) for more info
+The `pfelement` attribute and `PFElement` class are **removed** from the `<pfe-modal>` element by default
+The `width` attribute is **deprecated** in favour of `variant`.
+_All_ the `--pfe-*` css variables are **removed** in favour of their `--pf-*` equivalents.
+The `trigger` slot is **removed**. Use the `trigger` attribute instead, or the `setTrigger`, `toggle`, or `showModal` methods.
+   ```diff
+   - <pfe-modal>
+   -   <pfe-button slot="trigger"><button>Open Modal</button></pfe-button>
+   + <pfe-modal trigger="trigger-modal">
+   +   <pfe-button slot="trigger"><button>Open Modal</button></pfe-button>
+     </pfe-modal>
+   + <pfe-button id="trigger-modal"><button>Open Modal</button></pfe-button>
+   ```
+
+See the [docs](https://patternflyelements.org/components/modal) for more info

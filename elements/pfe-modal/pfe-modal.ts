@@ -40,7 +40,6 @@ export class ModalOpenEvent extends ComposedEvent {
  * @summary Displays information or helps a user focus on a task
  *
  * @slot - The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header.
- * @slot trigger - The only part visible on page load, the trigger opens the modal window. The trigger can be a button, a cta or a link. While it is part of the modal web component, it does not contain any intrinsic styles.
  * @slot header - The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6).
  * @slot footer - Optional footer content. Good place to put action buttons.
  * @slot pfe-modal--trigger - {@deprecated use `trigger`}
@@ -74,7 +73,7 @@ export class ModalOpenEvent extends ComposedEvent {
  * @cssprop {<color>} --pf-c-modal-box--BackgroundColor - {@default #fff}
  * @cssprop --pf-c-modal-box__title--FontFamily - default font family for header-slotted headings
  */
-@customElement('pfe-modal') @pfelement()
+@customElement('pfe-modal')
 export class PfeModal extends LitElement implements HTMLDialogElement {
   static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
@@ -120,9 +119,8 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
   private cancelling = false;
 
   private slots = new SlotController(this, {
-    slots: [null, 'trigger', 'header', 'description', 'footer'],
+    slots: [null, 'header', 'description', 'footer'],
     deprecations: {
-      'trigger': 'pfe-modal--trigger',
       'header': 'pfe-modal--header',
     }
   });
@@ -141,8 +139,6 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
     const hasFooter = this.slots.hasSlotted('footer');
 
     return html`
-      <slot name="trigger"></slot>
-      <slot name="pfe-modal--trigger"></slot>
       <section ?hidden=${!this.open}>
         <div id="overlay" part="overlay" ?hidden=${!this.open}></div>
         <div id="dialog"
@@ -154,16 +150,16 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
             ?hidden="${!this.open}">
           <div id="container">
             <div id="content" part="content" class=${classMap({ hasHeader, hasDescription, hasFooter })}>
-              <header part="header">${this.renderHeaderSlot?.() ?? html`
+              <header part="header">
                 <slot name="header"></slot>
-                <slot name="pfe-modal--header"></slot>`}
-                <div part="description" ?hidden=${!hasDescription}>${this.renderDescriptionSlot?.() ?? html`
-                  <slot name="description"></slot>`}
+                <slot name="pfe-modal--header"></slot>
+                <div part="description" ?hidden=${!hasDescription}>
+                  <slot name="description"></slot>
                 </div>
-              </header>${this.renderContentSlot?.() ?? html`
-              <slot></slot>`}
-              <footer ?hidden=${!hasFooter} part="footer">${this.renderFooterSlot?.() ?? html`
-                <slot name="footer"></slot>`}
+              </header>
+              <slot></slot>
+              <footer ?hidden=${!hasFooter} part="footer">
+                <slot name="footer"></slot>
               </footer>
             </div>
             <button id="close-button"
@@ -181,36 +177,23 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
     `;
   }
 
-  /** Optional override for the header slot template */
-  protected renderHeaderSlot?(): ReturnType<LitElement['render']>;
-
-  /** Optional override for the description slot template */
-  protected renderDescriptionSlot?(): ReturnType<LitElement['render']>;
-
-  /** Optional override for the content slot template */
-  protected renderContentSlot?(): ReturnType<LitElement['render']>;
-
-  /** Optional override for the footer slot template */
-  protected renderFooterSlot?(): ReturnType<LitElement['render']>;
-
   disconnectedCallback() {
     super.disconnectedCallback();
 
     this.removeEventListener('keydown', this.onKeydown);
 
-    this.triggerElement?.removeEventListener('click', this.onExternalTriggerClick);
+    this.triggerElement?.removeEventListener('click', this.onTriggerClick);
   }
 
   @initializer()
   protected async _init() {
     await this.updateComplete;
-    this.triggerElement ??= this.querySelector(`[slot$="trigger"]`);
     this.header = this.querySelector(`[slot$="header"]`);
     this.body = [...this.querySelectorAll(`*:not([slot])`)];
     this.headings = this.body.filter(el => el.tagName.slice(0, 1) === 'H');
 
     if (this.triggerElement) {
-      this.triggerElement.addEventListener('click', this.onExternalTriggerClick);
+      this.triggerElement.addEventListener('click', this.onTriggerClick);
       this.removeAttribute('hidden');
     }
 
@@ -258,11 +241,11 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
   protected _triggerChanged() {
     if (this.trigger) {
       this.triggerElement = (this.getRootNode() as Document | ShadowRoot).getElementById(this.trigger);
-      this.triggerElement?.addEventListener('click', this.onExternalTriggerClick);
+      this.triggerElement?.addEventListener('click', this.onTriggerClick);
     }
   }
 
-  @bound private onExternalTriggerClick(event: MouseEvent) {
+  @bound private onTriggerClick(event: MouseEvent) {
     event.preventDefault();
     // TODO: in non-modal case, toggle the dialog
     this.showModal();
@@ -312,7 +295,7 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
 
   setTrigger(element: HTMLElement) {
     this.triggerElement = element;
-    this.triggerElement.addEventListener('click', this.onExternalTriggerClick);
+    this.triggerElement.addEventListener('click', this.onTriggerClick);
   }
 
   /**

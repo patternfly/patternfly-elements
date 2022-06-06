@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.21
+
+### Patch Changes
+
+- 921e7999: Remove pfe-specific styles from demo pages
+
 ## 1.0.0-next.20
 
 ### Minor Changes

@@ -1,74 +1,92 @@
 <link rel="stylesheet" href="/elements/pfe-button/demo/demo.css">
 <link rel="stylesheet" href="/core/pfe-styles/pfe.min.css">
 
-<pfe-band size="small" class="contextual">
-  <h2 slot="header">Default - Medium size</h2>
-  <pfe-button>
-    <button>Primary</button>
-  </pfe-button>
-  <pfe-button variant="secondary">
-    <button>Secondary</button>
-  </pfe-button>
-  <pfe-button variant="tertiary">
-    <button>Tertiary</button>
-  </pfe-button>
-  <pfe-button variant="danger">
-    <button>Danger</button>
-  </pfe-button>
-  <pfe-button variant="control">
-    <button>Control</button>
-  </pfe-button>
-  <pfe-button disabled>
-    <button>Disabled</button>
-  </pfe-button>
-</pfe-band>
+<section class="contextual">
+  <h2>Default - Medium size</h2>
+  <pfe-button><button>Primary</button></pfe-button>
+  <pfe-button variant="secondary"><button>Secondary</button></pfe-button>
+  <pfe-button variant="secondary" danger><button>Danger Secondary</button></pfe-button>
+  <pfe-button variant="tertiary"><button>Tertiary</button></pfe-button>
+  <pfe-button variant="danger"><button>Danger</button></pfe-button>
+  <pfe-button variant="warning"><button>Warning</button></pfe-button>
 
-<pfe-band size="small" color-palette="lightest">
-  <h2 slot="header">Large size</h2>
-  <pfe-button size="large">
-    <button>Primary</button>
-  </pfe-button>
-  <pfe-button variant="secondary" size="large">
-    <button>Secondary</button>
-  </pfe-button>
-  <pfe-button variant="tertiary" size="large">
-    <button>Tertiary</button>
-  </pfe-button>
-  <pfe-button variant="danger" size="large">
-    <button>Danger</button>
-  </pfe-button>
-  <pfe-button  variant="control" size="large">
-    <button type="submit">Control</button>
-  </pfe-button>
-  <pfe-button size="large" disabled>
-    <button>Disabled</button>
-  </pfe-button>
-</pfe-band>
+  <pfe-button variant="link" icon="plus-circle"><button>Link</button></pfe-button>
+  <pfe-button variant="link" icon="external-link-square" icon-position="right"><button>Link</button></pfe-button>
+  <pfe-button variant="link" inline><button>Inline Link</button></pfe-button>
+  <pfe-button variant="link" danger><button>Danger Link</button></pfe-button>
 
-<pfe-band id="light-dom-styles" size="small" color-palette="lightest">
-  <h2 slot="header">Style Encapsulation</h2>
+  <pfe-button variant="plain" aria-label="Action"><button><pfe-icon icon="times"></pfe-icon></button></pfe-button>
+
+  <pfe-button variant="control"><button>Control</button></pfe-button>
+  <pfe-button variant="control" aria-label="Copy"><button><pfe-icon icon="copy"></pfe-icon></button></pfe-button>
+</section>
+
+<section>
+  <h2>Disabled</h2>
+  <pfe-button disabled><button>Primary disabled</button></pfe-button>
+  <pfe-button disabled variant="secondary"><button>Secondary disabled</button></pfe-button>
+  <pfe-button disabled variant="secondary" danger><button>Danger secondary disabled</button></pfe-button>
+  <pfe-button disabled variant="tertiary"><button>Tertiary disabled</button></pfe-button>
+  <pfe-button disabled variant="danger"><button>Danger disabled</button></pfe-button>
+  <pfe-button disabled variant="warning"><button>Warning disabled</button></pfe-button>
+
+  <pfe-button disabled variant="link" icon="plus-circle"><button>Link disabled</button></pfe-button>
+  <pfe-button disabled variant="link" icon="external-link-square" icon-position="right"><button>Link disabled</button></pfe-button>
+  <pfe-button disabled variant="link" inline><button>Inline link disabled</button></pfe-button>
+  <pfe-button disabled variant="link" danger><button>Danger link disabled</button></pfe-button>
+
+  <pfe-button disabled variant="plain" aria-label="Action"><button><pfe-icon icon="times"></pfe-icon></button></pfe-button>
+
+  <pfe-button disabled variant="control"><button>Control disabled</button></pfe-button>
+  <pfe-button disabled variant="control" aria-label="Copy"><button><pfe-icon icon="copy"></pfe-icon></button></pfe-button>
+</section>
+
+<section>
+  <h2>ARIA Disabled</h2>
+  <pfe-button><button aria-disabled="true">Primary aria-disabled</button></pfe-button>
+  <pfe-button variant="secondary"><button aria-disabled="true">Secondary aria-disabled</button></pfe-button>
+  <pfe-button variant="secondary" danger><button aria-disabled="true">Danger secondary aria-disabled</button></pfe-button>
+  <pfe-button variant="tertiary"><button aria-disabled="true">Tertiary aria-disabled</button></pfe-button>
+  <pfe-button variant="danger"><button aria-disabled="true">Danger aria-disabled</button></pfe-button>
+  <pfe-button variant="warning"><button aria-disabled="true">Warning aria-disabled</button></pfe-button>
+
+  <pfe-button variant="link" icon="plus-circle"><button aria-disabled="true">Link aria-disabled</button></pfe-button>
+  <pfe-button variant="link" icon="external-link-square" icon-position="right"><button aria-disabled="true">Link aria-disabled</button></pfe-button>
+  <pfe-button variant="link" inline><button aria-disabled="true">Inline link aria-disabled</button></pfe-button>
+  <pfe-button variant="link" danger><button aria-disabled="true">Danger link aria-disabled</button></pfe-button>
+
+  <pfe-button variant="plain" aria-label="Action"><button aria-disabled="true"><pfe-icon icon="times"></pfe-icon></button></pfe-button>
+
+  <pfe-button variant="control"><button aria-disabled="true">Control aria-disabled</button></pfe-button>
+  <pfe-button variant="control" aria-label="Copy"><button aria-disabled="true"><pfe-icon icon="copy"></pfe-icon></button></pfe-button>
+</section>
+
+<section>
+  <h2>Block level</h2>
+  <pfe-button block><button>Block level button</button></pfe-button>
+</section>
+
+<section>
+  <h2>Sizes</h2>
+  <pfe-button size="small"><button>Primary disabled</button></pfe-button>
+  <pfe-button size="small" variant="secondary"><button>Secondary disabled</button></pfe-button>
+  <pfe-button size="small" variant="secondary" danger><button>Danger secondary disabled</button></pfe-button>
+  <pfe-button size="small" variant="tertiary"><button>Tertiary disabled</button></pfe-button>
+  <pfe-button size="small" variant="danger"><button>Danger disabled</button></pfe-button>
+  <pfe-button size="small" variant="warning"><button>Warning disabled</button></pfe-button>
+
+<section id="light-dom-styles">
+  <h2>Style Encapsulation</h2>
 
   <p>Light DOM styles targetting the slotted <code>&lt;button&gt;</code> will not affect it.</p>
 
   <div>
-    <pfe-button>
-      <button>Primary</button>
-    </pfe-button>
-    <pfe-button variant="secondary">
-      <button>Secondary</button>
-    </pfe-button>
-    <pfe-button variant="tertiary">
-      <button>Tertiary</button>
-    </pfe-button>
-    <pfe-button variant="danger">
-      <button>Danger</button>
-    </pfe-button>
-    <pfe-button variant="control">
-      <button>Control</button>
-    </pfe-button>
-    <pfe-button disabled>
-      <button>Disabled</button>
-    </pfe-button>
+    <pfe-button><button>Primary</button></pfe-button>
+    <pfe-button variant="secondary"><button>Secondary</button></pfe-button>
+    <pfe-button variant="tertiary"><button>Tertiary</button></pfe-button>
+    <pfe-button variant="danger"><button>Danger</button></pfe-button>
+    <pfe-button variant="control"><button>Control</button></pfe-button>
+    <pfe-button disabled><button>Disabled</button></pfe-button>
   </div>
 
   <p>Users wishing to customize the button can still do so by setting CSS Custom Properties.</p>
@@ -83,9 +101,7 @@
         <option value="blue">Blue</option>
       </select>
     </pfe-select>
-    <pfe-button style="--pfe-button--BackgroundColor: red">
-      <button>Custom Styles</button>
-    </pfe-button>
+    <pfe-button style="--pfe-button--BackgroundColor: red"><button>Custom Styles</button></pfe-button>
   </form>
 
-</pfe-band>
+</section>

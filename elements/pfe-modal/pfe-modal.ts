@@ -105,7 +105,7 @@ export class PfeModal extends LitElement implements HTMLDialogElement {
   @property() trigger?: string;
 
   /** @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/returnValue */
-  public returnValue?: string;
+  public returnValue = '';
 
   @query('#overlay') private overlay?: HTMLElement | null;
   @query('#dialog') private dialog?: HTMLElement | null;

@@ -1,5 +1,11 @@
 # @patternfly/pfe-modal
 
+## 2.0.0-next.4
+
+### Patch Changes
+
+- 3bc04dde: Fix the type of `returnValue`
+
 ## 2.0.0-next.3
 
 ### Major Changes

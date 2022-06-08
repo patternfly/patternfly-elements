@@ -388,8 +388,8 @@
  *                            *
  ******************************/
 
-:host([disabled]) ::slotted(button),
-::slotted(button[aria-disabled=true]) {
+:host([disabled]) #container ::slotted(button),
+#container ::slotted(button[aria-disabled=true]) {
   pointer-events: none !important;
   cursor: default !important;
   color: var(--pf-c-button--disabled--Color,
@@ -398,7 +398,21 @@
     var(--pf-global--disabled-color--200, #d2d2d2)) !important;
 }
 
-:host([disabled]) ::slotted(button)::after,
-::slotted(button[aria-disabled=true])::after {
+:host([disabled]) #container ::slotted(button)::after,
+#container ::slotted(button[aria-disabled=true])::after {
   border-color: var(--pf-c-button--disabled--after--BorderColor, transparent) !important;
+}
+
+/******************************
+ *                            *
+ *           BLOCK            *
+ *                            *
+ ******************************/
+
+:host([block]),
+:host([block]) #container,
+:host([block]) #container ::slotted(button) {
+  display: flex !important;
+  width: 100% !important;
+  justify-content: center !important;
 }

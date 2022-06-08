@@ -30,7 +30,7 @@ icon.addEventListener('click', () => {
 });
 
 slct.addEventListener('select', () => {
-  sbmt.style.setProperty('--pfe-button--BackgroundColor', slct.value);
+  sbmt.style.setProperty('--pf-c-button--m-primary--BackgroundColor', slct.value);
 });
 
 form.addEventListener('submit', event => event.preventDefault());

@@ -1,11 +1,11 @@
-pfe-band::part(body), #light-dom-styles div {
-   display: flex;
-   gap: 4px;
-   flex-flow: row wrap;
+section {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 4px;
 }
 
-#light-dom-styles::part(body) {
-  display: block;
+section > :not(pfe-button) {
+  width: 100%;
 }
 
 #light-dom-styles pfe-button button {

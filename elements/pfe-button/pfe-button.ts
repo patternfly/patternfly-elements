@@ -1,12 +1,18 @@
-import { LitElement, html, PropertyValueMap } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { bound, colorContextConsumer, observed, pfelement } from '@patternfly/pfe-core/decorators.js';
+import { bound, observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import styles from './pfe-button.scss';
-import { ColorTheme } from '@patternfly/pfe-core';
+
+export type ButtonVariant = (
+  |'primary'
+  |'secondary'
+  |'tertiary'
+  |'control'
+);
 
 /**
  * Buttons allow users to perform an action when triggered. They feature a text label, a background or a border, and icons.
@@ -15,46 +21,122 @@ import { ColorTheme } from '@patternfly/pfe-core';
  *
  * @fires {Event} pfe-button:click {@deprecated use native click event instead}
  *
- * @cssprop {<color>} --pfe-button--BackgroundColor
- *          no region
- *          {@default var(--pfe-theme--color--ui-accent, #06c)}
- * @cssprop {<color>} --pfe-button--Color
- *          no region
- *          {@default var(--pfe-theme--color--ui-base--text, #fff)}
- * @cssprop --pfe-button--FontSize
- *          no region
- *          {@default var(--pf-global--FontSize--md, 1rem)}
- * @cssprop {normal | bold | bolder | lighter | <number [1,1000]>} --pfe-button--FontWeight
- *          no region
- *          {@default var(--pfe-theme--font-weight--normal, 400)}
- * @cssprop {<length>} --pfe-button--Padding
- *          no region
- *          {@default calc(var(--pfe-theme--container-padding, 1rem) / 2) var(--pfe-theme--container-padding, 1rem)}
- * @cssprop {<length>|<percentage>} --pfe-button--BorderRadius
- *          no region
- *          {@default var(--pfe-theme--surface--border-radius, 3px)}
- * @cssprop {<number>} --pfe-button--LineHeight
- *          no region
- *          {@default var(--pfe-theme--line-height, 1.5)}
- * @cssprop --pfe-button__after--Border
- *          region `after`
- *          {@default var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-button__after--BorderColor, transparent)}
- * @cssprop {<color>} --pfe-button--BackgroundColor--hover
- *          no region
- *          {@default var(--pfe-theme--color--ui-accent--hover, #004080)}
- * @cssprop --pfe-button__after--Border--hover
- *          region `after`
- *          {@default var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-button__after--BorderColor--hover, transparent)}
- * @cssprop --pfe-button--FontWeight--large
- *          no region
- *          {@default var(--pfe-theme--font-weight--semi-bold, 600)}
- * @cssprop --pfe-button--Padding--large
- *          no region
- *          {@default 12px 24px}
+ * @cssprop {<length>} --pf-c-button--FontSize {@default 1rem}
+ * @cssprop {normal | bold | bolder | lighter | <number [1,1000]>} --pf-c-button--FontWeight {@default 400}
+ * @cssprop {<number>} --pf-c-button--LineHeight {@default 1.5}
  *
- * @csspart container
+ * @cssprop {<length>} --pf-c-button--PaddingTop {@default 0.375rem}
+ * @cssprop {<length>} --pf-c-button--PaddingLeft {@default 1rem}
+ * @cssprop {<length>} --pf-c-button--PaddingBottom {@default 0.375rem}
+ * @cssprop {<length>} --pf-c-button--PaddingTop {@default 1rem}
+ *
+ * @cssprop {<length>|<percentage>} --pf-c-button--BorderRadius {@default 3px}
+ * @cssprop {<color>}  --pf-c-button--after--BorderColor {@default transparent}
+ * @cssprop {<length>} --pf-c-button--after--BorderRadius {@default 3px}
+ * @cssprop {<length>} --pf-c-button--after--BorderWidth {@default 1px}
+ * @cssprop {<length>} --pf-c-button--active--after--BorderWidth {@default 2px}
+ * @cssprop {<length>} --pf-c-button--hover--after--BorderWidth {@default 2px}
+ * @cssprop {<length>} --pf-c-button--focus--after--BorderWidth {@default 2px}
+ *
+ * @cssprop {<color>}  --pf-c-button--m-primary--Color {@default #fff}
+ * @cssprop {<color>}  --pf-c-button--m-primary--BackgroundColor {@default #06c}
+ * @cssprop {<color>}  --pf-c-button--m-primary--active--Color {@default #fff}
+ * @cssprop {<color>}  --pf-c-button--m-primary--active--BackgroundColor {@default #004080}
+ * @cssprop {<color>}  --pf-c-button--m-primary--focus--Color {@default #fff}
+ * @cssprop {<color>}  --pf-c-button--m-primary--focus--BackgroundColor {@default #004080}
+ * @cssprop {<color>}  --pf-c-button--m-primary--hover--Color {@default #fff}
+ * @cssprop {<color>}  --pf-c-button--m-primary--hover--BackgroundColor {@default #004080}
+ *
+ * @cssprop {<color>}  --pf-c-button--m-secondary--Color {@default #06c}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--active--Color {@default #06c}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--active--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--active--BorderColor {@default #06c}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--focus--Color {@default #06c}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--focus--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--focus--BorderColor {@default #06c}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--hover--Color {@default #06c}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--hover--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--hover--BorderColor {@default #06c}
+ *
+ * @cssprop {<color>}  --pf-c-button--m-tertiary--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-tertiary--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-tertiary--active--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-tertiary--active--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-tertiary--active--BorderColor {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-tertiary--focus--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-tertiary--focus--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-tertiary--focus--BorderColor {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-tertiary--hover--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-tertiary--hover--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-tertiary--hover--BorderColor {@default #151515}
+ *
+ * @cssprop {<color>}  --pf-c-button--m-warning--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-warning--BackgroundColor {@default #f0ab00}
+ * @cssprop {<color>}  --pf-c-button--m-warning--active--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-warning--active--BackgroundColor {@default #c58c00}
+ * @cssprop {<color>}  --pf-c-button--m-warning--focus--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-warning--focus--BackgroundColor {@default #c58c00}
+ * @cssprop {<color>}  --pf-c-button--m-warning--hover--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-warning--hover--BackgroundColor {@default #c58c00}
+ *
+ * @cssprop {<color>}  --pf-c-button--m-danger--Color {@default #fff}
+ * @cssprop {<color>}  --pf-c-button--m-danger--BackgroundColor {@default #c9190b}
+ * @cssprop {<color>}  --pf-c-button--m-danger--active--Color {@default #fff}
+ * @cssprop {<color>}  --pf-c-button--m-danger--active--BackgroundColor {@default #a30000}
+ * @cssprop {<color>}  --pf-c-button--m-danger--focus--Color {@default #fff}
+ * @cssprop {<color>}  --pf-c-button--m-danger--focus--BackgroundColor {@default a30000}
+ * @cssprop {<color>}  --pf-c-button--m-danger--hover--Color {@default #fff}
+ * @cssprop {<color>}  --pf-c-button--m-danger--hover--BackgroundColor {@default a30000}
+ *
+ * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--Color {@default #c9190b}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--BorderColor {@default #c9190b}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--active--Color {@default #a30000}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--active--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--active--BorderColor {@default #c9190b}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--focus--Color {@default #a30000}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--focus--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--focus--BorderColor {@default #c9190b}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--hover--Color {@default #a30000}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--hover--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--hover--BorderColor {@default #c9190b}
+ *
+ * @cssprop {<color>}  --pf-c-button--m-plain--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-plain--Color {@default #6a6e73}
+ * @cssprop {<color>}  --pf-c-button--m-plain--hover--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-plain--hover--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-plain--focus--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-plain--focus--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-plain--active--BackgroundColor {@default transparent}
+ * @cssprop {<color>}  --pf-c-button--m-plain--active--Color {@default #151515}
+ *
+ * @cssprop {<color>}  --pf-c-button--m-plain--disabled--Color {@default #d2d2d2}
+ * @cssprop {<color>}  --pf-c-button--m-plain--disabled--BackgroundColor {@default transparent}
+ *
+ * @cssprop {<color>}  --pf-c-button--m-control--disabled--BackgroundColor {@default #f0f0f0}
+ * @cssprop {<length>} --pf-c-button--m-control--BorderRadius {@default 0}
+ * @cssprop {<length>} --pf-c-button--m-control--after--BorderWidth {@default 1px}
+ * @cssprop {<color>}  --pf-c-button--m-control--after--BorderTopColor {@default #f0f0f0}
+ * @cssprop {<color>}  --pf-c-button--m-control--after--BorderRightColor {@default #f0f0f0}
+ * @cssprop {<color>}  --pf-c-button--m-control--after--BorderBottomColor {@default #8a8d90}
+ * @cssprop {<color>}  --pf-c-button--m-control--after--BorderLeftColor {@default #f0f0f0}
+ * @cssprop {<color>}  --pf-c-button--m-control--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-control--BackgroundColor {@default #fff}
+ * @cssprop {<color>}  --pf-c-button--m-control--active--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-control--active--BackgroundColor {@default #fff}
+ * @cssprop {<color>}  --pf-c-button--m-control--active--BorderBottomColor {@default #06c}
+ * @cssprop {<length>} --pf-c-button--m-control--active--after--BorderBottomWidth {@default 2px}
+ * @cssprop {<color>}  --pf-c-button--m-control--focus--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-control--focus--BackgroundColor {@default #fff}
+ * @cssprop {<color>}  --pf-c-button--m-control--focus--BorderBottomColor {@default #06c}
+ * @cssprop {<length>} --pf-c-button--m-control--focus--after--BorderBottomWidth {@default 2px}
+ * @cssprop {<color>}  --pf-c-button--m-control--hover--Color {@default #151515}
+ * @cssprop {<color>}  --pf-c-button--m-control--hover--BackgroundColor {@default #fff}
+ * @cssprop {<color>}  --pf-c-button--m-control--hover--BorderBottomColor {@default #06c}
+ * @cssprop {<length>} --pf-c-button--m-control--hover--after--BorderBottomWidth {@default 2px}
  */
-@customElement('pfe-button') @pfelement()
+@customElement('pfe-button')
 export class PfeButton extends LitElement {
   static readonly version = '{{version}}';
 
@@ -64,29 +146,30 @@ export class PfeButton extends LitElement {
   @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
 
-  // TODO: describe the semantic meaning of these states
   /**
-   * Changes the style of the button. Possible values are
-   *
-   * - primary (default)
-   * - secondary
-   * - tertiary
-   * - danger
-   * - control
+   * Changes the style of the button.
+   * - Primary: Used for the most important call to action on a page. Try to limit primary buttons to one per page.
+   * - Secondary: Use secondary buttons for general actions on a page, that don’t require as much emphasis as primary button actions. For example, you can use secondary buttons where there are multiple actions, like in toolbars or data lists.
+   * - Tertiary: Tertiary buttons are flexible and can be used as needed.
    */
-  @property({ reflect: true }) variant: 'primary'|'secondary'|'tertiary'|'danger'|'control' = 'primary';
+  @property({ reflect: true }) variant: ButtonVariant = 'primary';
 
   /** Changes the size of the button. */
-  @property({ reflect: true }) size: 'medium'|'large' = 'medium';
+  @property({ reflect: true }) size?: 'small'|'large';
 
   @observed
   @property() type?: 'button'|'submit'|'reset';
 
   /**
-   * Sets color theme based on parent context
+   * Use danger buttons for actions a user can take that are potentially destructive or difficult/impossible to undo, like deleting or removing user data.
    */
-  @colorContextConsumer()
-  @property({ reflect: true }) on?: ColorTheme;
+  @property({ type: Boolean, reflect: true }) danger = false;
+
+  /** Represents the state of a stateful button */
+  @property({ type: Boolean, reflect: true }) loading = false;
+
+  /** Applies plain styles */
+  @property({ type: Boolean, reflect: true }) plain = false;
 
   private logger = new Logger(this);
 
@@ -104,7 +187,8 @@ export class PfeButton extends LitElement {
 
   render() {
     return html`
-      <span id="container" part="container" @slotchange="${this.onSlotChange}">
+      <span id="container" @slotchange=${this.onSlotChange}>
+        <slot name="state"></slot>
         <slot></slot>
       </span>
     `;

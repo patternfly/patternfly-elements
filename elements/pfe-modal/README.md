@@ -26,41 +26,42 @@ import '@patternfly/pfe-modal';
 
 ## Usage
 
+Open a modal dialog with the `showModal()` method, or by setting the `open` boolean attribute.
+
+```html
+<pfe-modal>
+  <h2 slot="header">Modal with a header</h2>
+  <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <pfe-cta slot="footer">
+    <a href="#bar">Learn more</a>
+  </pfe-cta>
+</pfe-modal>
+
+<script>
+document.querySelector('pfe-modal').showModal();
+</script>
+```
+
 ### With a trigger
+
+You may assign a button-like trigger element to the modal by setting the modal element's `trigger` attribute to the trigger's ID.
+
 ```html
-<pfe-modal>
-  <button slot="trigger">Open modal</button>
+<pfe-modal trigger="trigger-button">
   <h2 slot="header">Modal with a header</h2>
   <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <pfe-cta>
+  <pfe-cta slot="footer">
     <a href="#bar">Learn more</a>
   </pfe-cta>
 </pfe-modal>
+
+<button id="trigger-button">Open modal</button>
 ```
 
-### Without a trigger
-```html
-<pfe-modal>
-  <h2 slot="header">Modal with a header</h2>
-  <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <pfe-cta>
-    <a href="#bar">Learn more</a>
-  </pfe-cta>
-</pfe-modal>
-```
-
-### With a separate trigger
-```html
-<pfe-button>
-  <button id="modal-trigger">Open modal</button>
-</pfe-button>
-
-<pfe-modal trigger="modal-trigger">
-  <h2 slot="header">Modal with a header</h2>
-  <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <pfe-cta>
-    <a href="#bar">Learn more</a>
-  </pfe-cta>
-</pfe-modal>
+You may also imperatively set the trigger element with the `setTrigger()` method:
+```js
+const modal = document.querySelector('pfe-modal');
+const trigger = document.querySelector('button#my-trigger');
+modal.setTrigger(trigger);
 ```
 

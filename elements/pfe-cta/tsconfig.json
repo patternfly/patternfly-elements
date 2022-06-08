@@ -6,6 +6,7 @@
     "rootDir": "."
   },
   "references": [
+    { "path": "../pfe-band" },
     { "path": "../../core/pfe-core" },
     { "path": "../../tools/pfe-tools" }
   ]

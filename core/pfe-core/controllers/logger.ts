@@ -56,7 +56,7 @@ export class Logger implements ReactiveController {
    * @example Logger.error("Hello");
    */
   static error(...msgs: unknown[]) {
-    throw new Error([...msgs].join(' '));
+    console.error([...msgs].join(' ')); // eslint-disable-line no-console
   }
 
   /**

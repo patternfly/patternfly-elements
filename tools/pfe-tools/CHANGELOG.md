@@ -1,5 +1,116 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.21
+
+### Patch Changes
+
+- 921e7999: Remove pfe-specific styles from demo pages
+
+## 1.0.0-next.20
+
+### Minor Changes
+
+- b8da03e8: `singleFileBuild` now scans `node_modules` for installed
+  `@patternfly/pfe-*` packages (except `core`, `tools`, `sass`, and
+  `styles`) and generates an entrypoint file for them.
+
+  Users can alternatively pass `componentsEntryPointsContent`, which is
+  the string contents of a javascript module that exports the desired
+  components.
+
+  These changes make using `singleFileBuild` more useful and ergonomic for
+  daughter repositories (e.g. RHDS)
+
+  ```js
+  const elements = await readdir(new URL("../elements", import.meta.url));
+
+  /**
+   * @example
+   * export * from '/path/to/redhat-ux/red-hat-design-system/elements/rh-alert/rh-alert.js';
+   * export * from '/path/to/redhat-ux/red-hat-design-system/elements/rh-table/rh-table.js';
+   */
+  const componentsEntryPointContents = elements.reduce(
+    (acc, x) => `${acc}
+  export * from '${fileURLToPath(
+      new URL(`../elements/${x}/${x}.js`, import.meta.url)
+    )}';`,
+    ""
+  );
+
+  await singleFileBuild({
+    componentsEntryPointContents,
+    outfile: "rhds.min.js"
+  });
+  ```
+
+## 1.0.0-next.19
+
+### Patch Changes
+
+- f2ffb072: pass user options to dev server
+
+## 1.0.0-next.18
+
+### Major Changes
+
+- d7128af3: Use declarative shadow DOM for dev server, remove SPA code, calculate demo variables on the server side
+
+### Minor Changes
+
+- 2b2aeb57: Adds `colored(colorString)` assertion to chai when using `createFixture`
+
+  ```js
+  expect("rgba(0,0,0,0)").to.be.colored("transparent");
+  ```
+
+- 15051be0: Use web-dev-server-plugin-lit-css.
+  By default, config will transform all .scss files using `dart-sass`.
+  Users may customize the options for lit-css:
+
+  ```js
+  export default pfeDevServerConfig({
+    litcssOptions: {
+      include: ["**/elements/*/*.css"]
+    }
+  });
+  ```
+
+### Patch Changes
+
+- 4a597fed: Add package exports for test helpers
+- b4ac6f24: Updates dependencies
+
+## 1.0.0-next.17
+
+### Patch Changes
+
+- b595cafb: corrects passing options to `nunjucksSPAMiddleware(_options)` for repo demo configuration
+
+## 1.0.0-next.16
+
+### Minor Changes
+
+- bb5b6265: Add `additionalPackages` option to `singleFileBundle`
+- effe009a: Adds a maximize toggle to the dev SPA
+
+### Patch Changes
+
+- 4997735b: update dependencies
+
+## 1.0.0-next.15
+
+### Patch Changes
+
+- c10f6783: Publish 11ty plugin files
+
+## 1.0.0-next.14
+
+### Minor Changes
+
+- 621fcb38: Adds table-of-contents 11ty plugin
+  Fixes bugs in 11ty plugins
+- cd04ae82: Adds 11ty plugins to pfe-tools
+
 ## 1.0.0-next.13
 
 ### Patch Changes

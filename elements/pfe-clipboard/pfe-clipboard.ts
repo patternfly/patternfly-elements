@@ -1,9 +1,9 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import { ComposedEvent } from '@patternfly/pfe-core';
+import { ColorTheme, ComposedEvent } from '@patternfly/pfe-core';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
-import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
+import { pfelement, bound, observed, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -87,6 +87,12 @@ export class PfeClipboard extends LitElement {
   @property({ type: Number, reflect: true, attribute: 'copied-duration' }) copiedDuration = 4;
 
   /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
+
+  /**
    * Specify when the button slot needs to be aria-disabled or not, coincides with button disabled * states.
    */
   @state() private _ariaDisabled = false;
@@ -103,6 +109,16 @@ export class PfeClipboard extends LitElement {
   @observed('_checkForCopyTarget')
   @property({ type: String, reflect: true, attribute: 'copy-from' })
     copyFrom: string|'url'|'property' = 'url';
+
+  /**
+   * Specify if current site is behind [https]
+   */
+  private _secure = window.isSecureContext;
+
+  /**
+   * Specify the copy type to be used depending on security and browser support
+   */
+  private _copyType: 'navigator' | 'queryCommand' | null = null;
 
   /**
    * A setter to set the content you would like to copy.
@@ -136,6 +152,8 @@ export class PfeClipboard extends LitElement {
     this._checkForCopyTarget();
 
     this.dispatchEvent(deprecatedCustomEvent('pfe-clipboard:connected', { component: this }));
+
+    this._setCopyType();
 
     // This prevents a regression, default text used to be "Copy URL".
     // Now that component can copy _anything_ that's not ideal default text
@@ -213,7 +231,7 @@ export class PfeClipboard extends LitElement {
   /**
    * Checks to make sure the thing we may copy exists
    */
-  @bound private _checkForCopyTarget() {
+  private _checkForCopyTarget() {
     if (this.copyFrom === 'property') {
       if (!this.contentToCopy) {
         this.setAttribute('disabled', '');
@@ -226,6 +244,17 @@ export class PfeClipboard extends LitElement {
       // If target is set to anything else, we're not doing checks for it
       this.removeAttribute('disabled');
       this._ariaDisabled = false;
+    }
+  }
+
+  /**
+   * Sets copy type depending on whether or not the current site is secure
+   */
+  private _setCopyType() {
+    if (this._secure && navigator.clipboard) {
+      this._copyType = 'navigator';
+    } else {
+      this._copyType = 'queryCommand';
     }
   }
 
@@ -374,22 +403,22 @@ export class PfeClipboard extends LitElement {
     if (!text) {
       this.logger.error('Copy function called, but no text was given to copy.');
     }
-    if (navigator.clipboard) {
-      // If the Clipboard API is available then use that
-      await navigator.clipboard.writeText(text);
-      return text;
-    } else if (document.queryCommandEnabled('copy')) {
-      // If execCommand("copy") exists then use that method
-      const dummy = document.createElement('input');
-      document.body.appendChild(dummy);
-      dummy.value = text;
-      dummy.select();
-      document.execCommand('copy');
-      document.body.removeChild(dummy);
-      return text;
-    } else {
-      throw new Error('Current browser does not support copying to the clipboard.');
+
+    switch (this._copyType) {
+      case 'navigator':
+        await navigator.clipboard.writeText(text);
+        break;
+      case 'queryCommand': {
+        const dummy = document.createElement('input');
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+        break;
+      }
     }
+    return text;
   }
 }
 

@@ -1,5 +1,17 @@
 # @patternfly/pfe-core
 
+## 2.0.0-next.5
+
+### Patch Changes
+
+- 55e843c8: - If `on` attribute is set in HTML, it overrides color context from providers
+
+## 2.0.0-next.4
+
+### Major Changes
+
+- 6a2a0407: [View commit message here](https://gist.github.com/heyMP/200fc0b840690541475923facba393ab)
+
 ## 2.0.0-next.3
 
 ### Patch Changes

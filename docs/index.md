@@ -8,7 +8,7 @@ templateEngineOverride: njk,md
 
 <body unresolved>
   <header>
-    <pfe-band class="pfe-l--text-align--center" color="accent" context="accent">
+    <pfe-band class="pfe-l--text-align--center" color-palette="accent">
       <div class="pfe-l-bullseye">
         <div class="pfe-l-bullseye__item">
           <h1 id="home-title">
@@ -39,7 +39,7 @@ templateEngineOverride: njk,md
   </header>
   <main>
     <section>
-      <pfe-band color="lightest">
+      <pfe-band color-palette="lightest">
         <h2 id="lightweight">Lightweight</h2>
         <p class="subtitle">Use only what you need.</p>
         <p>Pick and choose from the <a href="/components/">list of components</a>. Use them all or just one. And keep your page payloads small with PatternFly Elements because the components range from ~3 kB to ~10 kB in size minified and gzipped.</p>
@@ -53,7 +53,7 @@ templateEngineOverride: njk,md
 <script type="module"
         src="https://unpkg.com/@patternfly/pfe-cta?module"></script>
 
-<pfe-card color="lightest">
+<pfe-card color-palette="lightest">
   <h2 slot="header">Card component</h2>
   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quam alias ducimus, amet iure quae earum.</p>
   <pfe-cta slot="footer">
@@ -64,7 +64,7 @@ templateEngineOverride: njk,md
 
 </div>
 </div>
-          <pfe-card class="pfe-l-grid__item pfe-m-12-col pfe-m-6-col-on-md pfe-m-4-col-on-lg" color="lightest" border>
+          <pfe-card class="pfe-l-grid__item pfe-m-12-col pfe-m-6-col-on-md pfe-m-4-col-on-lg" color-palette="lightest" border>
             <h2 slot="header">Card component</h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quam alias ducimus, amet iure quae earum.</p>
             <pfe-cta slot="footer">
@@ -158,7 +158,7 @@ export default function App() {
       </pfe-band>
     </section>
     <section id="themeable-section">
-      <pfe-band color="lightest">
+      <pfe-band color-palette="lightest">
         <div class="pfe-l-grid pfe-m-gutters">
           <h2 id="themeable" class="pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-md">Themeable</h2>
           <form class="pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-md">
@@ -176,7 +176,7 @@ export default function App() {
         <p>Use CSS custom properties to theme at a global or component level.</p>
         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col-on-xl pfe-m-all-6-col-on-lg pfe-m-all-6-col-on-sm">
           <div>
-            <pfe-card class="card-1" color="darkest">
+            <pfe-card class="card-1" color-palette="darkest">
               <h3 slot="header">Card 1</h3>
               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <a href="https://patternflyelements.org">A regular
                   link</a>, <a href="https://patternflyelements.org">or a visited one</a>. Non, qui dolore ex soluta exercitationem fuga asperiores
@@ -190,7 +190,7 @@ export default function App() {
             </pfe-card>
           </div>
           <div>
-            <pfe-card class="card-2" color="accent">
+            <pfe-card class="card-2" color-palette="accent">
               <h3 slot="header">Card 2</h3>
               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <a href="https://patternflyelements.org">A regular
                   link</a>, <a href="https://patternflyelements.org">or a visited one</a>. Non,
@@ -204,7 +204,7 @@ export default function App() {
             </pfe-card>
           </div>
           <div>
-            <pfe-card class="card-3" color="lightest">
+            <pfe-card class="card-3" color-palette="lightest">
               <h3 slot="header">Card 3</h3>
               <p>Lorem, ipsum dolor sectetur adipisicing elit. <a href="https://patternflyelements.org">A regular link</a>, <a
                   href="https://patternflyelements.org">or a visited one</a>.
@@ -219,7 +219,7 @@ export default function App() {
           </div>
         </div>
       </pfe-band>
-      <pfe-band color="lightest" size="small">
+      <pfe-band color-palette="lightest" size="small">
         <pfe-tabs pfe-tab-align="center">
           <pfe-tab slot="tab">
             <h3>Tab 1</h3>
@@ -267,7 +267,7 @@ export default function App() {
           </pfe-tab-panel>
         </pfe-tabs>
       </pfe-band>
-      <pfe-band color="lightest" size="small">
+      <pfe-band color-palette="lightest" size="small">
         <pfe-accordion>
           <pfe-accordion-header>
             <h3>Accordion header 1</h3>
@@ -298,7 +298,7 @@ export default function App() {
           </pfe-accordion-panel>
         </pfe-accordion>
       </pfe-band>
-      <pfe-band color="lightest">
+      <pfe-band color-palette="lightest">
         <div class="pfe-l--text-align--center">
           <pfe-cta>
             <a href="/theming/">Learn more about theming PatternFly Elements</a>

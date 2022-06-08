@@ -1,10 +1,16 @@
-import type { ColorTheme } from '@patternfly/pfe-core';
+import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core/controllers/color-context.js';
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { observed, pfelement } from '@patternfly/pfe-core/decorators.js';
+import {
+  colorContextConsumer,
+  colorContextProvider,
+  deprecation,
+  observed,
+  pfelement
+} from '@patternfly/pfe-core/decorators.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import style from './pfe-card.scss';
@@ -29,6 +35,15 @@ import style from './pfe-card.scss';
  * @csspart header - The container for *header* content
  * @csspart body - The container for *body* content
  * @csspart footer - The container for *footer* content
+ *
+ *
+ * @cssproperty {<color>} --pfe-theme--color--surface--lightest   {@default `#ffffff`}
+ * @cssproperty {<color>} --pfe-theme--color--surface--lighter    {@default `#ececec`}
+ * @cssproperty {<color>} --pfe-theme--color--surface--base       {@default `#f0f0f0`}
+ * @cssproperty {<color>} --pfe-theme--color--surface--darker     {@default `#3c3f42`}
+ * @cssproperty {<color>} --pfe-theme--color--surface--darkest    {@default `#151515`}
+ * @cssproperty {<color>} --pfe-theme--color--surface--accent     {@default `#004080`}
+ * @cssproperty {<color>} --pfe-theme--color--surface--complement {@default `#002952`}
  *
  * @cssproperty --pfe-band--BackgroundColor
  *              Though using the `color` attribute is strongly recommended when setting the background color for the band, you can also use completely custom colors by updating the `--pfe-band--BackgroundColor` variable.  If you update this value manually, you should also update the `--theme` context variable to invoke the right theme on it and it's child elements.  Supported themes include: `light`, `dark`, and `saturated`.
@@ -64,19 +79,24 @@ export class PfeCard extends LitElement {
   @property({ attribute: 'img-src', reflect: true }) imgSrc?: string;
 
   /**
+   * Sets color palette, which affects the element's styles as well as descendants' color theme.
+   * Overrides parent color context.
    * Your theme will influence these colors so check there first if you are seeing inconsistencies.
+   * See [CSS Custom Properties](#css-custom-properties) for default values
    *
-   * | Color      | Hex Value                                                              |
-   * | ---------- | ---------------------------------------------------------------- |
-   * | lightest   | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-   * | lighter    | <span class="color-preview" style="--bg:#ececec"></span> #ececec |
-   * | default    | <span class="color-preview" style="--bg:#dfdfdf"></span> #dfdfdf |
-   * | darker     | <span class="color-preview" style="--bg:#464646"></span> #464646 |
-   * | darkest    | <span class="color-preview" style="--bg:#131313"></span> #131313 |
-   * | accent     | <span class="color-preview" style="--bg:#ee0000"></span> #ee0000 |
-   * | complement | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
+   * Card always resets its context to `base`, unless explicitly provided with a `color-palette`.
    */
-  @property({ reflect: true }) color: ColorTheme = 'base';
+  @colorContextProvider()
+  @property({ reflect: true, attribute: 'color-palette' }) colorPalette?: ColorPalette = 'base';
+
+  /** @deprecated use `color-palette` */
+  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color?: ColorPalette;
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
 
   /** Optionally adjusts the padding on the container. Accepts: `small`. */
   @property({ reflect: true }) size?: 'small';
@@ -103,7 +123,6 @@ export class PfeCard extends LitElement {
     };
 
     return html`
-      <!-- pfe-card -->
       <div class="pfe-card__header ${classMap(classes)}" part="header">
         <slot name="header"></slot>
         <slot name="pfe-card--header"></slot>

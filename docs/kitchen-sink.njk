@@ -160,7 +160,7 @@
       <pfe-band id="accordion-band-lightest"
                 data-element="accordion"
                 class="grid-body flex-footer one-half"
-                color="lightest">
+                color-palette="lightest">
               <h2 slot="header">Accordion component on lightest with disclosure="false"</h2>
               <pfe-accordion disclosure="false">
                 <pfe-accordion-header>
@@ -196,7 +196,7 @@
       <pfe-band id="accordion-band-darkest"
                 data-element="accordion"
                 class="grid-body flex-footer one-half"
-                color="darkest">
+                color-palette="darkest">
               <h2 slot="header">Accordion component on darkest with expanded-index</h2>
               <pfe-accordion expanded-index="2,3">
                 <pfe-accordion-header>
@@ -253,7 +253,7 @@
       <pfe-band id="accordion-band-saturated"
                 data-element="accordion"
                 class="grid-body flex-footer one-half"
-                color="complement">
+                color-palette="complement">
               <h2 slot="header">Accordion component on saturated with history</h2>
               <pfe-accordion history="history" id="accordion-history">
                 <pfe-accordion-header id="header-1">
@@ -366,8 +366,7 @@
       <pfe-band id="accordion-band-context-attr"
                 data-element="accordion"
                 class="grid-body flex-footer one-half"
-                context="dark"
-                style="background-color: #444">
+                style="background-color: #444; --context: dark;">
               <h2 slot="header">Accordion component: context escape hook</h2>
               <pfe-accordion>
                 <pfe-accordion-header>
@@ -502,7 +501,7 @@
             gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
             justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
         </article>
-        <pfe-card color="accent" slot="aside">
+        <pfe-card color-palette="accent" slot="aside">
           <h3 slot="header">Card component</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <pfe-cta slot="footer">
@@ -517,19 +516,19 @@
       <pfe-band id="card-band-dark"
                 data-element="card"
                 class="grid-body"
-                color="darker">
+                color-palette="darker">
         <header slot="header">
           <h2>Band component on dark</h2>
           <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
         </header>
-        <pfe-card color="lightest">
+        <pfe-card color-palette="lightest">
           <h3 slot="header">Card component: lightest</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <pfe-cta slot="footer">
             <a href="#">Call-to-action component</a>
           </pfe-cta>
         </pfe-card>
-        <pfe-card color="accent">
+        <pfe-card color-palette="accent">
           <h3 slot="header">Card component: accent</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <pfe-cta slot="footer">
@@ -550,7 +549,7 @@
             <a href="#">Call-to-action component</a>
           </pfe-cta>
         </pfe-card>
-        <pfe-card context="dark" style="background-color: #444">
+        <pfe-card style="background-color: #444; --context: dark;">
           <h3 slot="header">Card component: context hook</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <pfe-cta slot="footer">
@@ -566,14 +565,14 @@
           <h2>Band component: custom class, --context update</h2>
           <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
         </header>
-        <pfe-card color="lighter">
+        <pfe-card color-palette="lighter">
           <h3 slot="header">Card component: lighter</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <pfe-cta slot="footer">
             <a href="#">Call-to-action component</a>
           </pfe-cta>
         </pfe-card>
-        <pfe-card color="darker">
+        <pfe-card color-palette="darker">
           <h3 slot="header">Card component: darker</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <pfe-cta slot="footer">
@@ -594,7 +593,7 @@
             <a href="#">Call-to-action component</a>
           </pfe-cta>
         </pfe-card>
-        <pfe-card context="dark" style="background-color: #444">
+        <pfe-card style="background-color: #444; --context: dark;">
           <h3 slot="header">Card component: context hook</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <pfe-cta slot="footer">
@@ -606,21 +605,20 @@
       <pfe-band id="card-band-context-attr"
                 data-element="card"
                 class="grid-body"
-                context="dark"
                 full-width="full-width"
-                style="background-color: #444">
+                style="background-color: #444; --context: dark;">
         <header slot="header">
           <h2>Band component: context hook and full-width</h2>
           <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
         </header>
-        <pfe-card color="lightest">
+        <pfe-card color-palette="lightest">
           <h3 slot="header">Card component: lightest</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <pfe-cta slot="footer">
             <a href="#">Call-to-action component</a>
           </pfe-cta>
         </pfe-card>
-        <pfe-card color="darkest">
+        <pfe-card color-palette="darkest">
           <h3 slot="header">Card component: darkest</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <pfe-cta slot="footer">
@@ -641,7 +639,7 @@
             <a href="#">Call-to-action component</a>
           </pfe-cta>
         </pfe-card>
-        <pfe-card context="dark" style="background-color: #444">
+        <pfe-card style="background-color: #444; --context: dark;">
           <h3 slot="header">Card component: context hook</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <pfe-cta slot="footer">
@@ -691,7 +689,7 @@
 
       <pfe-band id="tabs-band-dark"
                 data-element="tabs"
-                class="one-half" color="darkest">
+                class="one-half" color-palette="darkest">
         <h2 slot="header">Tab component on dark</h2>
         <pfe-tabs>
           <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
@@ -725,7 +723,7 @@
 
       <pfe-band id="tabs-band-saturated"
                 data-element="tabs"
-                class="one-half" color="complement">
+                class="one-half" color-palette="complement">
         <h2 slot="header">Tab component on saturated</h2>
         <pfe-tabs>
           <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
@@ -793,7 +791,7 @@
 
       <pfe-band id="tabs-band-theme-hook"
                 data-element="tabs"
-                class="one-half" context="dark" style="background-color: #444">
+                class="one-half" style="background-color: #444; --context: dark;">
         <h2 slot="header">Tab component: context hook</h2>
         <pfe-tabs id="tabs-theme-hook">
           <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
@@ -827,7 +825,7 @@
 
       <pfe-band id="tabs-band-default-earth"
                 data-element="tabs"
-                class="one-half" color="lightest">
+                class="one-half" color-palette="lightest">
         <h2 slot="header">Tab component: default earth variant</h2>
         <pfe-tabs variant="earth">
           <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
@@ -865,7 +863,7 @@
       <pfe-band id="tabs-band-dark-earth"
                 data-element="tabs"
                 class="one-half"
-                color="darkest">
+                color-palette="darkest">
         <h2 slot="header">Tab component on dark, earth variant</h2>
         <pfe-tabs variant="earth">
           <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
@@ -900,7 +898,7 @@
       <pfe-band id="tabs-band-saturated-earth"
                 data-element="tabs"
                 class="one-half"
-                color="complement">
+                color-palette="complement">
         <h2 slot="header">Tab component on saturated, earth variant</h2>
         <pfe-tabs variant="earth">
           <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
@@ -972,7 +970,7 @@
       <pfe-band id="tabs-band-dark-vertical"
                 data-element="tabs"
                 class="one-half"
-                color="darkest">
+                color-palette="darkest">
         <h2 slot="header">Tab component on dark, vertical</h2>
         <pfe-tabs vertical="vertical">
           <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
@@ -1007,7 +1005,7 @@
       <pfe-band id="tabs-band-saturated-vertical"
                 data-element="tabs"
                 class="one-half"
-                color="complement">
+                color-palette="complement">
         <h2 slot="header">Tab component on saturated, vertical</h2>
         <pfe-tabs vertical="vertical">
           <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
@@ -1042,7 +1040,7 @@
       <pfe-band id="tabs-band-default-earth-vertical"
                 data-element="tabs"
                 class="one-half"
-                color="lightest">
+                color-palette="lightest">
         <h2 slot="header">Tab component: default earth variant, vertical</h2>
         <pfe-tabs variant="earth" vertical="vertical">
           <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
@@ -1080,7 +1078,7 @@
       <pfe-band id="tabs-band-dark-earth-vertical"
                 data-element="tabs"
                 class="one-half"
-                color="darkest">
+                color-palette="darkest">
         <h2 slot="header">Tab component on dark, earth variant, vertical</h2>
         <pfe-tabs variant="earth" vertical="vertical">
           <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
@@ -1115,7 +1113,7 @@
       <pfe-band id="tabs-band-saturated-earth-vertical"
                 data-element="tabs"
                 class="one-half"
-                color="complement">
+                color-palette="complement">
         <h2 slot="header">Tab component on saturated, earth variant, vertical</h2>
         <pfe-tabs variant="earth" vertical="vertical">
           <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
@@ -1169,7 +1167,7 @@
       <pfe-band id="cta-band-light"
                 data-element="cta"
                 class="one-third"
-                color="lightest">
+                color-palette="lightest">
         <h2 slot="header" style="text-align: center">Call-to-action component on light</h2>
         <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
           <pfe-cta style="margin-right: 10px;">
@@ -1187,7 +1185,7 @@
       <pfe-band id="cta-band-dark"
                 data-element="cta"
                 class="one-third"
-                color="darkest">
+                color-palette="darkest">
         <h2 slot="header" style="text-align: center">Call-to-action component on dark</h2>
         <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
           <pfe-cta style="margin-right: 10px;">
@@ -1205,7 +1203,7 @@
       <pfe-band id="cta-band-saturated"
                 data-element="cta"
                 class="one-third"
-                color="complement">
+                color-palette="complement">
         <h2 slot="header" style="text-align: center">Call-to-action component on saturated</h2>
         <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
           <pfe-cta style="margin-right: 10px;">
@@ -1240,8 +1238,7 @@
       <pfe-band id="cta-band-context-attr"
                 data-element="cta"
                 class="one-third"
-                context="dark"
-                style="background-color: #444">
+                style="background-color: #444; --context: dark;">
         <h2 slot="header" style="text-align: center">Call-to-action component: context hook</h2>
         <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
           <pfe-cta style="margin-right: 10px;">
@@ -1258,10 +1255,10 @@
 
       <pfe-band id="cta-card-band"
                 data-element="cta"
-                color="lightest">
+                color-palette="lightest">
         <h2 slot="header">Band component</h2>
         <article style="display: grid; grid-gap: 20px; grid-template-columns: repeat(3, 1fr);">
-          <pfe-card color="lightest" class="border-card">
+          <pfe-card color-palette="lightest" class="border-card">
             <img src="" overflow="top right left" style="max-height: 200px;"/>
             <h3 class="pfe-headline-3">Card component</h3>
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.</p>
@@ -1270,7 +1267,7 @@
             </pfe-cta>
           </pfe-card>
 
-          <pfe-card color="complement" size="small" class="resource-card">
+          <pfe-card color-palette="complement" size="small" class="resource-card">
             <h3 slot="header">Card heading</h3>
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
               takimata sanctus est Lorem ipsum dolor sit amet.</p>
@@ -1281,7 +1278,7 @@
             </div>
           </pfe-card>
 
-          <pfe-card color="accent" img-src="" class="custom-styles">
+          <pfe-card color-palette="accent" img-src="" class="custom-styles">
             <pfe-icon icon="rh-atom" circled="lightest" circled="lightest" size="lg"></pfe-icon>
             <h3 class="pfe-headline-3">Card heading</h3>
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
@@ -1319,7 +1316,7 @@
           </pfe-modal>
         </pfe-card>
 
-        <pfe-card color="lightest">
+        <pfe-card color-palette="lightest">
           <h3>Modal on lightest</h3>
           <pfe-modal id="test-modal-2">
             <pfe-cta priority="secondary" slot="trigger">
@@ -1336,7 +1333,7 @@
           </pfe-modal>
         </pfe-card>
 
-        <pfe-card color="complement">
+        <pfe-card color-palette="complement">
           <h3>Modal on complement</h3>
           <pfe-modal id="test-modal-3">
             <pfe-cta priority="secondary" slot="trigger">
@@ -1370,7 +1367,7 @@
           </pfe-modal>
         </pfe-card>
 
-        <pfe-card context="dark" style="background-color: #444">
+        <pfe-card style="background-color: #444; --context: dark;">
           <h3>Modal with context hook</h3>
           <pfe-modal id="test-modal-5">
             <pfe-cta priority="secondary" slot="trigger">
@@ -1392,7 +1389,7 @@
 
       <pfe-band id="jump-links-band"
                 data-element="jump-links"
-                color="lightest"
+                color-palette="lightest"
                 aside-desktop="left"
                 aside-mobile="top"
                 style="border-top: 1px solid #eee">

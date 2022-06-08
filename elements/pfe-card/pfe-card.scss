@@ -53,6 +53,14 @@ $size-small: (
 :host {
   --context: #{pfe-local(context)};
 
+  --pfe-theme--color--surface--lightest: #ffffff;
+  --pfe-theme--color--surface--lighter: #ececec;
+  --pfe-theme--color--surface--base: #f0f0f0;
+  --pfe-theme--color--surface--darker: #3c3f42;
+  --pfe-theme--color--surface--darkest: #151515;
+  --pfe-theme--color--surface--accent: #004080;
+  --pfe-theme--color--surface--complement: #002952;
+
   // Start of style declarations for host element
   display: flex;
   flex-direction: column;
@@ -69,7 +77,7 @@ $size-small: (
   overflow: hidden;
 
   // Base colors
-  background-color:    pfe-local(BackgroundColor);
+  background-color:    var(--pfe-card--BackgroundColor, var(--pfe-context-background-color));
   background-position: pfe-local(BackgroundPosition);
   color: pfe-broadcasted(text);
 
@@ -83,15 +91,17 @@ $size-small: (
   }
 }
 
-// Pull in pfe-var settings for all supported surface colors
-@include pfe-surfaces;
+/* @deprecated */
+:host([color]),
+:host([color-palette]),
+:host([on]) {
+  background-color:    var(--pfe-card--BackgroundColor, var(--pfe-context-background-color));
+}
 
 :host([size="small"]) {
   @include pfe-print-local($size-small);
 }
 
-// TODO: pfe-border is deprecated
-:host([pfe-border]:not([pfe-border="false"])),
 :host([border]:not([border="false"])) {
   --pfe-card--BorderWidth:   #{pfe-fetch(surface--border-width)};
 }
@@ -101,7 +111,6 @@ $size-small: (
   &__header,
   &__body,
   &__footer {
-    ::slotted([pfe-overflow~="top"]),
     ::slotted([overflow~="top"]) {
       z-index: 1;
       margin-top: -2rem; //IE11 fallback
@@ -111,20 +120,17 @@ $size-small: (
       }
     }
 
-    ::slotted([pfe-overflow~="right"]),
     ::slotted([overflow~="right"]) {
       margin-right: -2rem; //IE11 fallback
       margin-right: calc(-1 * #{pfe-local(PaddingRight)});
     }
 
-    ::slotted([pfe-overflow~="bottom"]),
     ::slotted([overflow~="bottom"]) {
       margin-bottom: -2rem; //IE11 fallback
       margin-bottom: calc(-1 * calc(#{pfe-local(PaddingBottom)} + #{pfe-local(BorderRadius)}));
       align-self: flex-end;
     }
 
-    ::slotted([pfe-overflow~="left"]),
     ::slotted([overflow~="left"]) {
       margin-left: -2rem; //IE11 fallback
       margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
@@ -136,29 +142,24 @@ $size-small: (
       object-fit: cover; // Fix distortion
     }
 
-    ::slotted(img:not[pfe-overflow]),
     ::slotted(img:not[overflow]) {
       align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
     }
 
-    ::slotted(img[pfe-overflow]),
     ::slotted(img[overflow]) {
       max-width: unset !important;
     }
 
-    ::slotted(img[pfe-overflow~="right"]),
     ::slotted(img[overflow~="right"]) {
       width: calc(100% + 2rem) !important; //IE11 fallback
       width: calc(100% + #{pfe-local(PaddingRight)}) !important;
     }
 
-    ::slotted(img[pfe-overflow~="left"]),
     ::slotted(img[overflow~="left"]) {
       width: calc(100% + 2rem) !important; //IE11 fallback
       width: calc(100% + #{pfe-local(PaddingLeft)}) !important;
     }
 
-    ::slotted(img[pfe-overflow~="right"][pfe-overflow~="left"]),
     ::slotted(img[overflow~="right"][overflow~="left"]) {
       width: calc(100% + 4rem) !important; //IE11 fallback
       width: calc(100% + #{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)}) !important;
@@ -169,7 +170,7 @@ $size-small: (
     // Declare the header background color
     background-color: pfe-local(BackgroundColor, $region: header);
     color:            pfe-local($cssvar: Color, $region: header);
-    :host([on="dark"]) & {
+    :host([color-palette^="dark"]) & {
         // Declare the header background color
       background-color: pfe-local(BackgroundColor--dark, $region: header);
     }
@@ -190,7 +191,6 @@ $size-small: (
       margin-bottom: pfe-local(PaddingBottom);
     }
 
-    ::slotted([pfe-overflow~="top"]),
     ::slotted([overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
@@ -214,18 +214,15 @@ $size-small: (
     }
   }
   &__body {
-    &:not(.has-header) ::slotted([pfe-overflow~="top"]),
     &:not(.has-header) ::slotted([overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
-    ::slotted([pfe-overflow~="top"]),
     ::slotted([overflow~="top"]) {
       z-index: 1;
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
-    ::slotted([pfe-overflow~="bottom"]),
     ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
@@ -233,6 +230,12 @@ $size-small: (
     &.has-footer ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
+
+    &:is(.has-header){
+      ::slotted(img[overflow~="top"]){
+        padding-top: pfe-local(spacing);
+      }
+    }    
 
     &:not(.has-footer) {
       margin-bottom: 0;
@@ -247,7 +250,6 @@ $size-small: (
     // Aligns buttons and CTAs
     align-items: pfe-local(AlignItems, baseline, $region: footer);
 
-    ::slotted([pfe-overflow~="bottom"]),
     ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
@@ -269,4 +271,8 @@ $size-small: (
       }
     }
   }
+}
+
+#header ::slotted(:is(h1,h2,h3,h4,h5,h6)) {
+  font-weight: var(--pfe-card-header-font-weight, 500);
 }

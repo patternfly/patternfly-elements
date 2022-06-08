@@ -1,5 +1,19 @@
 # @patternfly/create-element
 
+## 1.0.0-next.10
+
+### Patch Changes
+
+- b4ac6f24: Updates dependencies
+
+## 1.0.0-next.9
+
+### Minor Changes
+
+- 22464c00: Adds `--monorepo` flag to generator.
+  In most cases, this is automatically derived from the root package.json.
+  Override with `--monorepo` or `--no-monorepo`.
+
 ## 1.0.0-next.8
 
 ### Patch Changes

@@ -1,5 +1,7 @@
 import type { ComplexAttributeConverter } from 'lit';
 
+export type { ColorPalette, ColorTheme } from './controllers/color-context.js';
+
 /** PatternFly Elements global config object */
 export interface PfeConfig {
   /** Set to false to disable client-side page load performance tracking */
@@ -9,22 +11,6 @@ export interface PfeConfig {
   /** Set to false to disable automatically removing `unresolved` attr from body */
   autoReveal?: boolean;
 }
-
-export type ColorTheme = (
-  | 'base'
-  | 'accent'
-  | 'complement'
-  | 'lighter'
-  | 'lightest'
-  | 'darker'
-  | 'darkest'
-);
-
-export type ContextTheme = (
-  | 'dark'
-  | 'light'
-  | 'saturated'
-);
 
 const noPref = Symbol();
 

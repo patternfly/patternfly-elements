@@ -28,9 +28,6 @@
   ),
 ));
 
-// TODO: context support
-// @include pfe-contexts;
-
 :host {
   display: inline-block;
 }
@@ -101,12 +98,29 @@
 :host([variant="secondary"]) {
   #container {
     ::slotted(button) {
-      color: pfe-local(Color, pfe-var(ui-accent)) !important;
+      color: var(--pfe-button--Color, var(--pfe-theme--color--ui-accent,#06c)) !important;
       &::after {
         border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(ui-accent)) !important;
       }
     }
   }
+}
+
+:host([on^=dark]),
+:host([on=saturated]) {
+  --pfe-theme--color--text: #ffffff;
+}
+
+:host([on^=dark][variant="tertiary"]) {
+  --pfe-theme--color--ui-accent: #ffffff;
+}
+
+:host([on=saturated][variant="control"]) {
+  --pfe-button__after--BorderColor: var(--pfe-theme--color--ui--border, #8a8d90);
+}
+
+:host([on^=dark][variant="control"]) {
+  --pfe-button__after--BorderColor: var(--pfe-theme--color--ui--border--darker, #151515);
 }
 
 :host([variant="tertiary"]) {
@@ -126,8 +140,8 @@
       color: pfe-local(Color, pfe-var(text)) !important;
       border-radius: pfe-local(BorderRadius, 0) !important;
       &::after {
-        border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(ui--border--lightest)) !important;
-        border-bottom-color: pfe-var(ui--border) !important;
+        border-color: var(--pfe-button__after--BorderColor, var(--pfe-theme--color--ui--border--lightest, #f0f0f0)) !important;
+        border-bottom-color: var(--pfe-theme--color--ui--border, #8a8d90) !important;
       }
     }
 

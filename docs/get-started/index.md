@@ -99,9 +99,9 @@ title: Get started
     <a href="https://patternflyelements.org">PatternFly Elements</a>
   </pfe-cta>
 
-  Change the color value of a [card component](/components/card) to change its appearance using the [color attribute](http://localhost:8080/components/card/#color).
+  Change the color-palette value of a [card component](/components/card) to change its appearance using the [color-palette attribute](http://localhost:8080/components/card/#colorPalette).
   ```html
-  <pfe-card color="accent">
+  <pfe-card color-palette="accent">
     <h3 slot="header">Card header</h3>
     <p>This is the pfe-card body.</p>
     <div slot="footer">
@@ -110,7 +110,7 @@ title: Get started
   </pfe-card>
   ```
   <div class="pfe-l-grid pfe-m-gutters">
-    <pfe-card color="accent" class="pfe-l-grid__item pfe-m-4-col">
+    <pfe-card color-palette="accent" class="pfe-l-grid__item pfe-m-4-col">
       <h3 slot="header">Card header</h3>
       <p>This is the pfe-card body.</p>
       <div slot="footer">

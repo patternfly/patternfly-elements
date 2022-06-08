@@ -1,5 +1,19 @@
 # @patternfly/pfe-accordion
 
+## 2.0.0-next.4
+
+### Major Changes
+
+- 6a2a0407: [View commit message here](https://gist.github.com/heyMP/200fc0b840690541475923facba393ab)
+
+### Patch Changes
+
+- Updated dependencies [6a2a0407]
+- Updated dependencies [0e9a4130]
+  - @patternfly/pfe-core@2.0.0-next.4
+  - @patternfly/pfe-collapse@2.0.0-next.2
+  - @patternfly/pfe-icon@2.0.0-next.2
+
 ## 2.0.0-next.3
 
 ### Patch Changes

@@ -1,5 +1,9 @@
 import type { TemplateResult } from 'lit';
 
+import Color from 'colorjs.io';
+
+import { chai } from '@open-wc/testing';
+
 type TestHelpers = {
   fixture: <T extends Element = HTMLElement>(testCase: string|TemplateResult) => Promise<T>;
 };
@@ -56,3 +60,35 @@ export async function createFixture<T extends Element = HTMLElement>(
   const { fixture } = await helpers;
   return fixture<T>(code);
 }
+
+chai.use(function(_chai) {
+  _chai.Assertion.addMethod('colored', function(this: Chai.AssertionPrototype, expected, msg?: string) {
+    const actual = this._obj;
+    const actualParsed = new Color(actual);
+    const expectParsed = new Color(expected);
+    const actualNormalized = actualParsed.toString({ format: 'hex' });
+    const expectNormalized = expectParsed.toString({ format: 'hex' });
+    const message = msg ? `${msg} ` : '';
+    this.assert(
+      actualNormalized === expectNormalized,
+      `expected ${message}#{act} to be the same color as #{exp}`,
+      `expected ${message}#{act} to be a different color than #{exp}`,
+      expectNormalized,
+      actualNormalized
+    );
+  });
+});
+
+
+declare global {
+  // That's just the way the chai boils
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Chai {
+    interface Assertion {
+    /** Given a CSS color string, assert that it matches the expected value.
+      * Color strings are normalized using colorjs.io */
+      colored(expected: string, msg?: string): void;
+    }
+  }
+}
+

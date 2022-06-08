@@ -155,7 +155,7 @@ export class PfeSelect extends LitElement {
   }
 
   @bound private _inputChanged() {
-    const { value } = this._input ?? {};
+    const { value } = this;
     this.dispatchEvent(new SelectChangeEvent(value));
     this.dispatchEvent(deprecatedCustomEvent('pfe-select:change', { value }));
   }

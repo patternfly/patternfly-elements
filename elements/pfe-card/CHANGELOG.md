@@ -1,5 +1,22 @@
 # @patternfly/pfe-card
 
+## 2.0.0-next.4
+
+### Patch Changes
+
+- 9caed6ad: [Issue #1984] Adding padding to top of image if header is present in card and image is set to overflow top.
+
+## 2.0.0-next.3
+
+### Major Changes
+
+- 6a2a0407: [View commit message here](https://gist.github.com/heyMP/200fc0b840690541475923facba393ab)
+
+### Patch Changes
+
+- Updated dependencies [6a2a0407]
+  - @patternfly/pfe-core@2.0.0-next.4
+
 ## 2.0.0-next.2
 
 ### Patch Changes

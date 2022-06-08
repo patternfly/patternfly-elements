@@ -33,12 +33,12 @@
   padding: 0;
 }
 
-@each $color in (darkest, darker, lightest, lighter) {
-  :host([horizontal][color="#{$color}"]) {
+@each $palette in (darkest, darker, lightest, lighter) {
+  :host([horizontal][color-palette="#{$palette}"]) {
     @media(min-width: #{pfe-breakpoint(lg)}) {
-      background-color: pfe-var(surface--#{$color});
-      --context: #{pfe-var(surface--#{$color}--context)};
-      @include pfe-set-broadcast-context(pfe-fetch(surface--#{$color}--context));
+      background-color: pfe-var(surface--#{$palette});
+      --context: #{pfe-var(surface--#{$palette}--context)};
+      @include pfe-set-broadcast-context(pfe-fetch(surface--#{$palette}--context));
     }
   }
 }
@@ -175,13 +175,6 @@ a {
     color: pfe-broadcasted(text);
   }
 
-  // Note: there is no ui-disabled--text--on-dark to pull from
-  @each $context in (dark, saturated) {
-    :host([on="#{$context}"]) & {
-      color: pfe-var(text--muted--on-#{$context});
-    }
-  }
-
   .has-sub-section & {
     padding-bottom: pfe-local(vertical-spacer, $region: link);
   }
@@ -252,7 +245,7 @@ pfe-accordion {
   --context: light;
   --pfe-accordion--BackgroundColor: #{pfe-var(surface--lightest)};
 
-  :host([color="darkest"]) & {
+  :host([color-palette="darkest"]) & {
     --context: dark;
     --pfe-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
     --pfe-theme--color--ui-accent--on-dark: transparent;
@@ -376,3 +369,11 @@ pfe-accordion-panel.animating {
 :host([hidden]) {
   display: none !important;
 }
+
+// Note: there is no ui-disabled--text--on-dark to pull from
+@each $context in (dark, saturated) {
+  :host([on="#{$context}"]) a {
+    color: pfe-var(text--muted--on-#{$context});
+  }
+}
+

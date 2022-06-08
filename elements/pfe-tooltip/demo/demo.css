@@ -1,37 +1,4 @@
-:host {
-  display: block;
-}
-#text {
-  font-size: 14px;
-  font-family: 'Red Hat Text';
-  color: #151515;
-  font-weight: 100;
-}
-slot[name='tooltip']::slotted(*[header]) {
-  font: 'Red Hat Text';
-}
-.rh-product-trial__inline-icon {
-  display: flex;
-  align-self: baseline;
-  width: 14px;
-  height: 16px;
-  overflow: hidden;
-}
-.rh-product-trial__inline-icon svg {
-  display: flex;
-  width: 14px;
-  height: 14px;
-  transform: translateY(2px);
-}
-pfe-tooltip {
-  display: inline-flex;
-  --pfe-tooltip__content--TextAlign: left;
-  width: fit-content;
-}
-/* remove the margin on the top or bottom of the tooltip */
-pfe-tooltip [slot="content"] > *:first-child {
-  margin-top: 0;
-}
-pfe-tooltip [slot="content"] > *:last-child {
-  margin-bottom: 0;
+div.tooltip-holder {
+  margin: 1em;
+  padding: 1em;
 }

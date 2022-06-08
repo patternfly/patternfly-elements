@@ -64,7 +64,7 @@ tags:
     return (
       <div className="App">
         <h1>PatternFly Elements with React</h1>
-        <pfe-card color="lightest">
+        <pfe-card color-palette="lightest">
           <img
             alt="From https://picsum.photos/"
             overflow="left right top"
@@ -257,7 +257,7 @@ tags:
       <div className="App">
         <h1>PatternFly Elements with React</h1>
         <section>
-          <pfe-card color="lightest" border>
+          <pfe-card color-palette="lightest" border>
             <img
               alt="From https://picsum.photos/"
               overflow="left right top"

@@ -79,7 +79,12 @@ async function getBundle({ api, workspace }) {
   await singleFileBuild({ outfile: `${workspace}/pfe.min.js` });
   await copyFile(`${workspace}/core/pfe-styles/pfe.min.css`, `${workspace}/pfe.min.css`);
 
-  const globber = await api.glob.create('pfe.min.*');
+  const patterns = [
+    'pfe.min.*',
+    '!pfe.min.tgz',
+  ];
+
+  const globber = await api.glob.create(patterns.join('\n'));
   const files = (await globber.glob() ?? []).map(path => basename(path));
 
   const file = 'pfe.min.tgz';

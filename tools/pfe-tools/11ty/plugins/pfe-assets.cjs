@@ -1,40 +1,70 @@
 const fs = require('fs');
-const { join } = require('path');
+const path = require('path');
 
-/** Generate a map of files per package which should be copied to the site dir */
-function getFilesToCopy() {
-  const repoRoot = join(__dirname, '..', '..');
+function exists(x) {
+  try {
+    fs.statSync(x);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Generate a map of files per package which should be copied to the site dir
+ * @param {object} [options]
+ * @param {string} [options.prefix='pfe'] element prefix e.g. 'pfe' for 'pfe-button'
+ */
+function getFilesToCopy(options) {
+  /** best guess at abs-path to repo root */
+  const repoRoot = path.join(__dirname, '..', '..', '..', '..').replace(/node_modules\/?$/g, '');
+
+  const prefix = `${(options?.prefix ?? 'pfe').replace(/-$/, '')}-`;
+
+  const hasElements = exists(path.join(repoRoot, 'elements'));
+  const hasCore = exists(path.join(repoRoot, 'core'));
+
+  if (!hasElements && !hasCore) {
+    return null;
+  }
+
+  const files = {};
 
   // Copy all component and core files to _site
-  const files = Object.fromEntries([
-    ...fs.readdirSync(join(repoRoot, 'elements')).map(dir => [
+  if (hasElements) {
+    Object.assign(files, Object.fromEntries(fs.readdirSync(path.join(repoRoot, 'elements')).map(dir => [
       `elements/${dir}`,
-      `components/${dir.replace('pfe-', '')}`,
-    ]),
-    ...fs.readdirSync(join(repoRoot, 'core')).map(dir => [
+      `components/${dir.replace(prefix, '')}`,
+    ])));
+  }
+
+  if (hasCore) {
+    Object.assign(files, Object.fromEntries(fs.readdirSync(path.join(repoRoot, 'core')).map(dir => [
       `core/${dir}`,
-      `core/${dir.replace('pfe-', '')}`,
-    ]),
-  ]);
+      `core/${dir.replace(prefix, '')}`,
+    ])));
+  }
 
   return files;
 }
 
 let didFirstBuild = false;
-/** Generate a single-file bundle of all pfe components and their dependencies */
-async function bundle() {
+
+/** Generate a single-file bundle of all the repo's components and their dependencies */
+async function bundle(options) {
   if (!didFirstBuild) {
     const { singleFileBuild } = await import('@patternfly/pfe-tools/esbuild.js');
     const { pfeEnvPlugin } = await import('@patternfly/pfe-tools/esbuild-plugins/pfe-env.js');
 
     await singleFileBuild({
+      additionalPackages: options?.additionalPackages,
       minify: process.env.NODE_ENV === 'production' || process.env.ELEVENTY_ENV?.startsWith?.('prod'),
       outfile: 'docs/pfe.min.js',
-      conditions: ['esbuild'],
       plugins: [
         pfeEnvPlugin(),
       ]
     }).catch(() => void 0);
+
     didFirstBuild = true;
   }
 }
@@ -60,20 +90,24 @@ function demoPaths(content) {
 }
 
 module.exports = {
-  configFunction(eleventyConfig) {
-    eleventyConfig.addWatchTarget('tools/pfe-tools/11ty/**/*.{js,njk}');
+  configFunction(eleventyConfig, options) {
     eleventyConfig.addPassthroughCopy('docs/bundle.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/pfe.min.{map,css}');
     eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/main.mjs');
     eleventyConfig.addPassthroughCopy('brand/**/*');
-    eleventyConfig.addPassthroughCopy(getFilesToCopy());
+    const filesToCopy = getFilesToCopy(options);
+    if (filesToCopy) {
+      eleventyConfig.addPassthroughCopy(filesToCopy);
+    }
 
     // The demo files are written primarily for the dev SPA (`npm start`),
     // so here we transform the paths found in those files to match the docs site's file structure
     eleventyConfig.addTransform('demo-paths', demoPaths);
 
     // create /docs/pfe.min.js
-    eleventyConfig.on('eleventy.before', bundle);
+    eleventyConfig.on('eleventy.before', () => bundle(options));
   },
 };
+
+

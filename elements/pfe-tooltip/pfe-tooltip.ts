@@ -24,11 +24,11 @@ export class PfeTooltip extends LitElement {
 
   static readonly styles = [styles];
 
-  @property({ type: String, reflect: true }) position: 'top'|'left'|'right'|'bottom' = 'top';
+  @property({ type: String, reflect: true }) position = 'top';
 
   @property({ type: Boolean, reflect: true, attribute: 'is-open' }) isOpen = true;
 
-  @property({ type: Array, reflect: true }) offset = [0, 18];
+  @property({ type: Array, reflect: true }) offset = [0, 25];
 
   private _id = `${PfeTooltip.name}-${getRandomId()}`;
 
@@ -39,6 +39,16 @@ export class PfeTooltip extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
+    switch (this.position) {
+      case 'top-left':
+        this.position = 'top-end';
+        break;
+      case 'top-right':
+        this.position = 'top-start';
+        break;
+      default:
+        break;
+    }
     this._addListeners();
   }
 
@@ -102,6 +112,7 @@ export class PfeTooltip extends LitElement {
 
   _setupPopper() {
     if (this._invoker && this._tooltip) {
+      // this.offset = [((this.position === 'left' || this.position === 'right') ? -4 : 0), 10];
       this._popper = createPopper(this._invoker, this._tooltip, {
         placement: this.position,
         modifiers: [

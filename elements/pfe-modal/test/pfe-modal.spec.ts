@@ -10,9 +10,6 @@ const TEMPLATES = {
 
   smallModal: html`
     <pfe-modal width="small">
-      <pfe-button slot="trigger">
-        <button>Open a small modal</button>
-      </pfe-button>
       <h2 slot="header">Small modal</h2>
       <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </pfe-modal>
@@ -20,9 +17,6 @@ const TEMPLATES = {
 
   mediumModal: html`
     <pfe-modal width="medium">
-      <pfe-button slot="trigger">
-        <button>Open a medium modal</button>
-      </pfe-button>
       <h2 slot="header">Medium modal</h2>
       <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </pfe-modal>
@@ -30,9 +24,6 @@ const TEMPLATES = {
 
   largeModal: html`
     <pfe-modal width="large">
-      <pfe-button slot="trigger">
-        <button>Open a large modal</button>
-      </pfe-button>
       <h2 slot="header">Large modal</h2>
       <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </pfe-modal>
@@ -54,19 +45,16 @@ describe('<pfe-modal>', function() {
     // Use the same markup that's declared at the top of the file.
     const el = await createFixture<PfeModal>(html`
       <pfe-modal>
-        <pfe-button slot="trigger">
-          <button>Open a modal</button>
-        </pfe-button>
         <h2 slot="header">Modal with a header</h2>
         <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       </pfe-modal>
     `);
-    const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
-    const button = el.shadowRoot!.querySelector('.pfe-modal__close')!;
+    const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
+    const button = el.shadowRoot!.querySelector('[part=close-button]')!;
 
     await nextFrame();
 
-    expect(modalWindow.getAttribute('tabindex'), 'modal__window tabindex').to.equal('0');
+    expect(modalWindow.getAttribute('tabindex'), 'dialog tabindex').to.equal('0');
     expect(modalWindow.hasAttribute('hidden'), 'hidden').to.be.true;
     expect(button.getAttribute('aria-label'), 'button aria-label').to.equal('Close dialog');
   });
@@ -75,15 +63,12 @@ describe('<pfe-modal>', function() {
     // Use the same markup that's declared at the top of the file.
     const el = await createFixture<PfeModal>(html`
       <pfe-modal>
-        <pfe-button slot="pfe-modal--trigger">
-          <button>Open a modal</button>
-        </pfe-button>
         <h2 slot="pfe-modal--header">Modal with a header</h2>
         <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       </pfe-modal>
     `);
-    const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
-    const button = el.shadowRoot!.querySelector('.pfe-modal__close')!;
+    const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
+    const button = el.shadowRoot!.querySelector('[part=close-button]')!;
 
     await nextFrame();
 
@@ -94,17 +79,16 @@ describe('<pfe-modal>', function() {
 
   it('should open the modal window when the trigger is clicked', async function() {
     const el = await createFixture<PfeModal>(html`
-      <pfe-modal>
-        <pfe-button slot="trigger">
-          <button>Open a modal</button>
-        </pfe-button>
+      <pfe-modal trigger="trigger">
         <h2 slot="header">Modal with a header</h2>
         <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       </pfe-modal>
+      <pfe-button id="trigger">
+        <button>Open a modal</button>
+      </pfe-button>
     `);
-    const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
-    const button = el.shadowRoot!.querySelector<HTMLButtonElement>('.pfe-modal__close')!;
-    const trigger = el.querySelector<HTMLButtonElement>('[slot="trigger"]')!;
+    const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
+    const trigger = document.getElementById('trigger')!;
 
     trigger.click();
     await el.updateComplete;
@@ -112,7 +96,7 @@ describe('<pfe-modal>', function() {
     expect(modalWindow.hasAttribute('hidden')).to.not.be.true;
 
     // reset
-    button.click();
+    el.close();
     await el.updateComplete;
 
     expect(modalWindow.hasAttribute('hidden')).to.be.true;
@@ -134,27 +118,27 @@ describe('<pfe-modal>', function() {
     describe('with width=small attribute', function() {
       it('has small modal width', async function() {
         const el = await createFixture<PfeModal>(TEMPLATES.smallModal);
-        const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
+        const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('560px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
     describe('with width=medium attribute', function() {
       it('has medium modal width', async function() {
         const el = await createFixture<PfeModal>(TEMPLATES.mediumModal);
-        const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
+        const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('840px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
     describe('with width=large attribute', function() {
       it('has large modal width', async function() {
         const el = await createFixture<PfeModal>(TEMPLATES.largeModal);
-        const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
+        const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('1120px');
+          .to.equal('calc(100% - 32px)');
       });
     });
   });
@@ -167,27 +151,27 @@ describe('<pfe-modal>', function() {
     describe('with width=small attribute', function() {
       it('has small modal width', async function() {
         const el = await createFixture<PfeModal>(TEMPLATES.smallModal);
-        const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
+        const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('560px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
     describe('with width=medium attribute', function() {
       it('has medium modal width', async function() {
         const el = await createFixture<PfeModal>(TEMPLATES.mediumModal);
-        const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
+        const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('840px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
     describe('with width=large attribute', function() {
       it('has large modal width', async function() {
         const el = await createFixture<PfeModal>(TEMPLATES.largeModal);
-        const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
+        const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('940px');
+          .to.equal('calc(100% - 32px)');
       });
     });
   });
@@ -200,27 +184,27 @@ describe('<pfe-modal>', function() {
     describe('with width=small attribute', function() {
       it('has small modal width', async function() {
         const el = await createFixture<PfeModal>(TEMPLATES.smallModal);
-        const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
+        const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('560px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
     describe('with width=medium attribute', function() {
       it('has medium modal width', async function() {
         const el = await createFixture<PfeModal>(TEMPLATES.mediumModal);
-        const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
+        const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('721.92px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
     describe('with width=large attribute', function() {
       it('has large modal width', async function() {
         const el = await createFixture<PfeModal>(TEMPLATES.largeModal);
-        const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
+        const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('721.92px');
+          .to.equal('calc(100% - 32px)');
       });
     });
   });
@@ -233,27 +217,27 @@ describe('<pfe-modal>', function() {
     describe('with width=small attribute', function() {
       it('has small modal width', async function() {
         const el = await createFixture<PfeModal>(TEMPLATES.smallModal);
-        const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
+        const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('451.2px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
     describe('with width=medium attribute', function() {
       it('has medium modal width', async function() {
         const el = await createFixture<PfeModal>(TEMPLATES.mediumModal);
-        const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
+        const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('451.2px');
+          .to.equal('calc(100% - 32px)');
       });
     });
 
     describe('with width=large attribute', function() {
       it('has large modal width', async function() {
         const el = await createFixture<PfeModal>(TEMPLATES.largeModal);
-        const modalWindow = el.shadowRoot!.querySelector('.pfe-modal__window')!;
+        const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('451.2px');
+          .to.equal('calc(100% - 32px)');
       });
     });
   });

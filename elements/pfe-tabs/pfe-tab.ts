@@ -1,7 +1,9 @@
+import type { ColorTheme } from '@patternfly/pfe-core';
+
 import { LitElement, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 
-import { pfelement, bound, observed, initializer } from '@patternfly/pfe-core/decorators.js';
+import { pfelement, bound, observed, initializer, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -30,6 +32,12 @@ export class PfeTab extends LitElement {
 
   /** Variant */
   @property({ reflect: true }) variant: 'wind'|'earth' = 'wind';
+
+  /**
+   * Sets color theme based on parent context
+   */
+  @colorContextConsumer()
+  @property({ reflect: true }) on?: ColorTheme;
 
   /** @deprecated `tabIndex` property reflects per spec */
   get tabindex() {

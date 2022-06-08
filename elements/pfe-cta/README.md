@@ -45,11 +45,11 @@ import '@patternfly/pfe-cta';
   <a href="https://redhat.com/">Red Hat</a>
 </pfe-cta>
 
-<pfe-cta priority="primary" color="lightest">
+<pfe-cta priority="primary" color-palette="lightest">
   <a href="https://pfelements.github.io/">Learn more about PFElements</a>
 </pfe-cta>
 
-<pfe-cta priority="secondary" color="complement">
+<pfe-cta priority="secondary" color-palette="complement">
   <a href="https://redhat.com/">Red Hat</a>
 </pfe-cta>
 ```

@@ -1,5 +1,6 @@
 :host,
-body {
+body,
+[data-demo] {
   padding: 1em;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, calc(25% - 32px)));

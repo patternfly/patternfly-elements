@@ -135,6 +135,10 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--m-control--hover--BackgroundColor {@default #fff}
  * @cssprop {<color>}  --pf-c-button--m-control--hover--BorderBottomColor {@default #06c}
  * @cssprop {<length>} --pf-c-button--m-control--hover--after--BorderBottomWidth {@default 2px}
+ *
+ * @cssprop {<color>}  --pf-c-button--disabled--Color {@default #6a6e73}
+ * @cssprop {<color>}  --pf-c-button--disabled--BackgroundColor {@default #d2d2d2}
+ * @cssprop {<color>}  --pf-c-button--disabled--after--BorderColor {@default transparent}
  */
 @customElement('pfe-button')
 export class PfeButton extends LitElement {
@@ -188,7 +192,11 @@ export class PfeButton extends LitElement {
   render() {
     return html`
       <span id="container" @slotchange=${this.onSlotChange}>
-        <slot name="state"></slot>
+        <span part="state" ?hidden=${!this.loading}>
+          <slot name="state">
+            <pfe-progress-indicator indeterminate size="sm" aria-label="loading"></pfe-progress-indicator>
+          </slot>
+        </span>
         <slot></slot>
       </span>
     `;

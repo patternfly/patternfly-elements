@@ -1,6 +1,7 @@
 import '@patternfly/pfe-band';
 import '@patternfly/pfe-button';
 import '@patternfly/pfe-icon';
+import '@patternfly/pfe-progress-indicator';
 import '@patternfly/pfe-select';
 
 const root = document.querySelector('[data-demo="pfe-button"]')?.shadowRoot ?? document;
@@ -25,8 +26,6 @@ load.addEventListener('click', () => {
 
 icon.addEventListener('click', () => {
   icon.loading = !icon.loading;
-  icon.querySelector('pfe-icon').icon =
-    icon.loading ? 'spinner' : 'upload';
 });
 
 slct.addEventListener('select', () => {

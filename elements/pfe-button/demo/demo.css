@@ -33,3 +33,7 @@ form {
   align-items: center;
   margin-bottom: 1em;
 }
+
+pfe-button[loading] svg {
+  width: 0px;
+}

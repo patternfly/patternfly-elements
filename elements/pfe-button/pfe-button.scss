@@ -1,9 +1,14 @@
 :host {
   display: inline-block;
+  height: max-content;
 }
 
 :host([hidden]) {
   display: none;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 ::slotted(button) {
@@ -416,3 +421,84 @@
   width: 100% !important;
   justify-content: center !important;
 }
+
+/******************************
+ *                            *
+ *           LARGE            *
+ *                            *
+ ******************************/
+
+:host([size=large]) ::slotted(button) {
+  --pf-c-button--PaddingTop: var(--pf-c-button--m-display-lg--PaddingTop,
+    var(--pf-global--spacer--md, 1rem));
+  --pf-c-button--PaddingRight: var(--pf-c-button--m-display-lg--PaddingRight,
+    var(--pf-global--spacer--xl, 2rem));
+  --pf-c-button--PaddingBottom: var(--pf-c-button--m-display-lg--PaddingBottom,
+    var(--pf-global--spacer--md, 1rem));
+  --pf-c-button--PaddingLeft: var(--pf-c-button--m-display-lg--PaddingLeft,
+    var(--pf-global--spacer--xl, 2rem));
+  --pf-c-button--FontWeight: var(--pf-c-button--m-display-lg--FontWeight,
+    var(--pf-global--FontWeight--bold, 700));
+}
+
+/******************************
+ *                            *
+ *           SMALL            *
+ *                            *
+ ******************************/
+
+:host([size=small]) ::slotted(button) {
+  --pf-c-button--FontSize: var(--pf-c-button--m-small--FontSize,
+    var(--pf-global--FontSize--md, 1rem));
+}
+
+/******************************
+ *                            *
+ *          LOADING           *
+ *                            *
+ ******************************/
+
+[part=state] {
+  display: none;
+}
+
+:host([loading]) {
+  height: auto;
+}
+
+:host([loading]) [part=state] {
+  display: inline-block;
+  z-index: 1;
+  position: absolute;
+  aspect-ratio: 1/1;
+  width: 32px;
+  left: 8px;
+}
+
+:host([loading][plain]) [part=state] {
+  left: 16px;
+}
+
+:host([loading]) [part=state] {
+  --pfe-progress-indicator--background-color: rgba(0,102,204,.25);
+  --pfe-progress-indicator--foreground-color: #06c;
+}
+
+:host([loading][variant=primary]:not([plain])) [part=state],
+:host([loading][danger]) [part=state] {
+  --pfe-progress-indicator--background-color: rgba(255, 255, 255, .25);
+  --pfe-progress-indicator--foreground-color: rgba(255, 255, 255, .75);
+}
+
+:host([loading]) #container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+:host([loading]) ::slotted(button) {
+  --pf-c-button--PaddingLeft: 36px;
+  position: absolute;
+  inset: 0;
+}
+

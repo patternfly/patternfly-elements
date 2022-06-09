@@ -462,10 +462,6 @@
   display: none;
 }
 
-:host([loading]) {
-  height: auto;
-}
-
 :host([loading]) [part=state] {
   display: inline-block;
   z-index: 1;

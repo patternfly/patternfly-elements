@@ -218,8 +218,16 @@ export class PfeButton extends LitElement {
   }
 
   protected _disabledChanged() {
+    const prevTabindex = this.button?.tabIndex;
     if (this.button && this.button.disabled !== this.disabled) {
       this.button.disabled = this.disabled;
+      if (this.disabled) {
+        this.button.setAttribute('tabindex', '-1');
+      } else if (prevTabindex) {
+        this.button.setAttribute('tabindex', prevTabindex.toString());
+      } else {
+        this.button.removeAttribute('tabindex');
+      }
     }
   }
 
@@ -237,12 +245,12 @@ export class PfeButton extends LitElement {
   }
 
   @bound private onMutation() {
-    if (this.querySelector(':not(button)')) {
+    if (this.children.length > 1 || !(this.firstElementChild instanceof HTMLButtonElement)) {
       this.logger.warn('The only child in the light DOM must be a button tag');
     } else if (!this.button) {
       this.logger.warn('You must have a button in the light DOM');
     } else {
-      this.disabled = this.button.hasAttribute('disabled');
+      this.disabled = this.button.hasAttribute('disabled') || this.button.getAttribute('aria-disabled') === 'true';
       this.type = this.button.getAttribute('type') as this['type'] ?? undefined;
     }
   }

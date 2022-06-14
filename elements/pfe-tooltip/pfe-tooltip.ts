@@ -24,31 +24,28 @@ export class PfeTooltip extends LitElement {
 
   static readonly styles = [styles];
 
-  @property({ type: String, reflect: true }) position = 'top';
+  @property({ type: String, reflect: true }) position: 'top'|'bottom'|'left'|'right' = 'top';
 
   @property({ type: Boolean, reflect: true, attribute: 'is-open' }) isOpen = true;
+
+  @property({ type: String, reflect: true }) triggers: 'click'|'mouseenter'|'focus'|'manual' = 'click';
 
   @property({ type: Array, reflect: true }) offset = [0, 25];
 
   private _id = `${PfeTooltip.name}-${getRandomId()}`;
 
-  @query('.pf-c-invoker') _invoker?: HTMLElement|null;
-  @query('.pf-c-tooltip') _tooltip?: HTMLElement|null;
+  private _triggerOnClick = this.triggers.includes('click');
+  private _triggerMouseEnter = this.triggers.includes('mouseenter');
+  private _triggerFocus = this.triggers.includes('focus');
+  private _triggerManual = this.triggers.includes('manual');
+
+  @query('.invoker') _invoker?: HTMLElement|null;
+  @query('.tooltip') _tooltip?: HTMLElement|null;
 
   private _popper?: Instance;
 
   connectedCallback(): void {
     super.connectedCallback();
-    switch (this.position) {
-      case 'top-left':
-        this.position = 'top-end';
-        break;
-      case 'top-right':
-        this.position = 'top-start';
-        break;
-      default:
-        break;
-    }
     this._addListeners();
   }
 
@@ -80,12 +77,12 @@ export class PfeTooltip extends LitElement {
 
   render() {
     return html`
-      <div id="invoker-id" class="pf-c-invoker" role="tooltip" tabindex="0" aria-labelledby="${this.id}">
+      <div id="invoker-id" class="invoker" role="tooltip" tabindex="0" aria-labelledby="${this.id}">
         <slot name="invoker"></slot>
       </div>
-      <div id="${this.id}" class="pf-c-tooltip hidden" aria-hidden=${this.isOpen ? 'false' : 'true'}>
-        <div class="pf-c-tooltip__arrow"></div>
-        <div id="content" class="pf-c-tooltip__content">
+      <div id="${this.id}" class="tooltip hidden" aria-hidden=${this.isOpen ? 'false' : 'true'}>
+        <div class="tooltip__arrow"></div>
+        <div id="content" class="tooltip__content">
           <slot name="content"></slot>
         </div>
       </div>
@@ -112,7 +109,6 @@ export class PfeTooltip extends LitElement {
 
   _setupPopper() {
     if (this._invoker && this._tooltip) {
-      // this.offset = [((this.position === 'left' || this.position === 'right') ? -4 : 0), 10];
       this._popper = createPopper(this._invoker, this._tooltip, {
         placement: this.position,
         modifiers: [
@@ -121,6 +117,12 @@ export class PfeTooltip extends LitElement {
             options: {
               offset: this.offset
             }
+          },
+          {
+            name: 'flip',
+            options: {
+              fallbackPlacements: ['top', 'right'],
+            },
           }
         ]
       });

@@ -262,7 +262,7 @@ export async function generateElement(options: GenerateElementOptions): Promise<
     // await analyzeElement(options);
     if (options.monorepo) {
       await updateTsconfig(options);
-      // await execaCommand('npm install');
+      await execaCommand('npm install');
     }
   }
 }

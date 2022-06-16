@@ -1,4 +1,14 @@
 div.tooltip-holder {
   margin: 1em;
   padding: 1em;
+  padding-left: 3em;  
+  width: auto;
+}
+
+rh-product-trial__inline-icon {
+  align-items: center;
+}
+
+pfe-band[color-palette="darkest"] svg {
+  fill: #e0e0e0;
 }

@@ -4,6 +4,17 @@
   background-color: transparent;
 }
 
+:host { 
+  --background-color: var(--pf-global--BackgroundColor--dark-100, #1b1d21);
+  --color: var(--pf-global--Color--light-100, #e0e0e0);
+  display: inline-block;
+}
+
+:host([on=dark]) {
+  --background-color: var(--pf-global--BackgroundColor--light-100, #ffffff);
+  --color: var(--pf-global--Color--light-100, #151515);
+}
+
 .tooltip {
   --pf-c-tooltip--MaxWidth: 18.75rem;
   --pf-c-tooltip--BoxShadow: var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
@@ -11,8 +22,8 @@
   --pf-c-tooltip__content--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-tooltip__content--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-tooltip__content--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
-  --pf-c-tooltip__content--Color: var(--pf-global--Color--light-100, #e0e0e0);
-  --pf-c-tooltip__content--BackgroundColor: var(--pf-global--BackgroundColor--dark-100, #1b1d21);
+  --pf-c-tooltip__content--Color: var(--color);
+  --pf-c-tooltip__content--BackgroundColor: var(--background-color);
   --pf-c-tooltip__content--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
   --pf-c-tooltip__arrow--Width: 0.5rem;
   --pf-c-tooltip__arrow--Height: 0.5rem;
@@ -109,155 +120,8 @@
   pointer-events: none;
   background-color: var(--pf-c-tooltip__content--BackgroundColor);
 }
-// :host {
-//   display: block;
-// }
-
-// :host([hidden]) {
-//   display: none;
-// }
 
 .invoker {
   width: fit-content;
+  display: inline-block;
 }
-
-// .tooltip {
-//   display: block;
-//   position: absolute;
-//   z-index: 1;
-// }
-
-// .tooltip.hidden {
-//   display: none;
-// }
-
-// .tooltip {
-//   position: relative;
-//   position: var(--rh-product-trial-tooltip--Position, relative);
-//   max-width: 300px;
-//   max-width: var(--rh-product-trial-tooltip--MaxWidth, 300px);
-//   -webkit-box-shadow: rgba(3, 3, 3, 0.12) 0px 4px 8px 0px,
-//     rgba(3, 3, 3, 0.06) 0px 0px 4px;
-//   box-shadow: rgba(3, 3, 3, 0.12) 0px 4px 8px 0px,
-//     rgba(3, 3, 3, 0.06) 0px 0px 4px;
-//   -webkit-box-shadow: var(
-//     --rh-product-trial-tooltip--BoxShadow,
-//     rgba(3, 3, 3, 0.12) 0px 4px 8px 0px,
-//     rgba(3, 3, 3, 0.06) 0px 0px 4px
-//   );
-//   box-shadow: var(
-//     --rh-product-trial-tooltip--BoxShadow,
-//     rgba(3, 3, 3, 0.12) 0px 4px 8px 0px,
-//     rgba(3, 3, 3, 0.06) 0px 0px 4px
-//   );
-// }
-
-// .tooltip__arrow {
-//   position: absolute;
-//   position: var(--rh-product-trial-tooltip__arrow--Postion, absolute);
-//   width: 15px;
-//   width: var(--rh-product-trial-tooltip__arrow--Width, 15px);
-//   height: 15px;
-//   height: var(--rh-product-trial-tooltip__arrow--Height, 15px);
-//   pointer-events: var(--rh-product-trial-tooltip--PointerEvents);
-//   background-color: #151515;
-//   background-color: var(--rh-product-trial-tooltip--BackgroundColor, #151515);
-// }
-
-// [data-popper-placement='top'] .tooltip__arrow {
-//   bottom: 0;
-//   bottom: var(--rh-product-trial-tooltip__arrow--top--Bottom, 0);
-//   left: 50%;
-//   left: var(--rh-product-trial-tooltip__arrow--top--Left, 50%);
-//   -webkit-transform: translate(-50%, 50%) rotate(45deg);
-//   transform: translate(-50%, 50%) rotate(45deg);
-//   -webkit-transform: var(
-//     --rh-product-trial-tooltip__arrow--top--Transform,
-//     translate(-50%, 50%) rotate(45deg)
-//   );
-//   transform: var(
-//     --rh-product-trial-tooltip__arrow--top--Transform,
-//     translate(-50%, 50%) rotate(45deg)
-//   );
-// }
-
-// [data-popper-placement='bottom'] .tooltip__arrow {
-//   left: 50%;
-//   left: var(--rh-product-trial-tooltip__arrow--bottom--Left, 50%);
-//   bottom: var(--rh-product-trial-tooltip__arrow--bottom--Bottom);
-//   -webkit-transform: translate(-50%, -50%) rotate(45deg);
-//   transform: translate(-50%, -50%) rotate(45deg);
-//   -webkit-transform: var(
-//     --rh-product-trial-tooltip__arrow--bottom--Transform,
-//     translate(-50%, -50%) rotate(45deg)
-//   );
-//   transform: var(
-//     --rh-product-trial-tooltip__arrow--bottom--Transform,
-//     translate(-50%, -50%) rotate(45deg)
-//   );
-// }
-
-// [data-popper-placement='left'] .tooltip__arrow {
-//   top: 50%;
-//   top: var(--rh-product-trial-tooltip__arrow--left--Top, 50%);
-//   right: 0;
-//   right: var(--rh-product-trial-tooltip__arrow--left--Right, 0);
-//   -webkit-transform: translate(50%, -50%) rotate(45deg);
-//   transform: translate(50%, -50%) rotate(45deg);
-//   -webkit-transform: var(
-//     --rh-product-trial-tooltip__arrow--left--Transform,
-//     translate(50%, -50%) rotate(45deg)
-//   );
-//   transform: var(
-//     --rh-product-trial-tooltip__arrow--left--Transform,
-//     translate(50%, -50%) rotate(45deg)
-//   );
-// }
-
-// [data-popper-placement='right'] .tooltip__arrow {
-//   left: 0;
-//   left: var(--rh-product-trial-tooltip__arrow--right--Left, 0);
-//   top: 50%;
-//   top: var(--rh-product-trial-tooltip__arrow--right--Top, 50%);
-//   -webkit-transform: translate(-50%, -50%) rotate(45deg);
-//   transform: translate(-50%, -50%) rotate(45deg);
-//   -webkit-transform: var(
-//     --rh-product-trial-tooltip__arrow--right--Transform,
-//     translate(-50%, -50%) rotate(45deg)
-//   );
-//   transform: var(
-//     --rh-product-trial-tooltip__arrow--right--Transform,
-//     translate(-50%, -50%) rotate(45deg)
-//   );
-// }
-
-// .tooltip__content {
-//   position: relative;
-//   position: var(--rh-product-trial-tooltip__content--Position, relative);
-//   padding-top: 16px;
-//   padding-top: var(--rh-product-trial-tooltip__content--PaddingTop, 16px);
-//   padding-bottom: 16px;
-//   padding-bottom: var(--rh-product-trial-tooltip__content--PaddingBottom, 16px);
-//   padding-left: 16px;
-//   padding-left: var(--rh-product-trial-tooltip__content--PaddingLeft, 16px);
-//   padding-right: 16px;
-//   padding-right: var(--rh-product-trial-tooltip__content--PaddingRight, 16px);
-//   font-size: 14px;
-//   font-size: var(--rh-product-trial-tooltip__content--FontSize, 14px);
-//   color: white;
-//   color: var(--rh-product-trial-tooltip--Color, white);
-//   background-color: #151515;
-//   background-color: var(--rh-product-trial-tooltip--BackgroundColor, #151515);
-//   text-align: center;
-//   text-align: var(--rh-product-trial-tooltip__content--TextAlign, center);
-//   word-break: break-word;
-//   word-break: var(--rh-product-trial-tooltip__content--WordBreak, break-word);
-//   border-radius: 0;
-//   border-radius: var(--rh-product-trial-tooltip__content--BorderRadius, 0);
-// }
-
-// :host([theme='dark']) {
-//   --rh-product-trial-tooltip--Color: #151515;
-//   --rh-product-trial-tooltip--BackgroundColor: #fff;
-//   --rh-product-trial-tooltip--BoxShadow: var(--rh-product-trial-tooltip--BoxShadow--dark, none);
-// }

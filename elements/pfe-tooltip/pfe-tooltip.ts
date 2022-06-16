@@ -4,11 +4,12 @@ import type { Instance } from '@popperjs/core';
 import { LitElement, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 
-import { pfelement } from '@patternfly/pfe-core/decorators.js';
+import { colorContextConsumer, pfelement } from '@patternfly/pfe-core/decorators.js';
 
 import styles from './pfe-tooltip.scss';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { createPopper } from './lib/createPopper';
+import { ColorTheme } from '@patternfly/pfe-core/core';
 
 
 /**
@@ -24,20 +25,18 @@ export class PfeTooltip extends LitElement {
 
   static readonly styles = [styles];
 
+  @colorContextConsumer()
+  @property({ reflect: true }) on: ColorTheme = 'light';
+
   @property({ type: String, reflect: true }) position: 'top'|'bottom'|'left'|'right' = 'top';
 
   @property({ type: Boolean, reflect: true, attribute: 'is-open' }) isOpen = true;
 
   @property({ type: String, reflect: true }) triggers: 'click'|'mouseenter'|'focus'|'manual' = 'click';
 
-  @property({ type: Array, reflect: true }) offset = [0, 25];
+  @property({ type: Array, reflect: true }) offset = [0, 18];
 
   private _id = `${PfeTooltip.name}-${getRandomId()}`;
-
-  private _triggerOnClick = this.triggers.includes('click');
-  private _triggerMouseEnter = this.triggers.includes('mouseenter');
-  private _triggerFocus = this.triggers.includes('focus');
-  private _triggerManual = this.triggers.includes('manual');
 
   @query('.invoker') _invoker?: HTMLElement|null;
   @query('.tooltip') _tooltip?: HTMLElement|null;
@@ -77,10 +76,10 @@ export class PfeTooltip extends LitElement {
 
   render() {
     return html`
-      <div id="invoker-id" class="invoker" role="tooltip" tabindex="0" aria-labelledby="${this.id}">
+      <div id="invoker-id" class="invoker" role="tooltip" tabindex="0" aria-labelledby="${this._id}">
         <slot name="invoker"></slot>
       </div>
-      <div id="${this.id}" class="tooltip hidden" aria-hidden=${this.isOpen ? 'false' : 'true'}>
+      <div id="${this._id}" class="tooltip hidden" aria-hidden=${this.isOpen ? 'false' : 'true'}>
         <div class="tooltip__arrow"></div>
         <div id="content" class="tooltip__content">
           <slot name="content"></slot>
@@ -121,7 +120,7 @@ export class PfeTooltip extends LitElement {
           {
             name: 'flip',
             options: {
-              fallbackPlacements: ['top', 'right'],
+              fallbackPlacements: ['top', 'right', 'left', 'bottom'],
             },
           }
         ]

@@ -48,9 +48,13 @@ enum InterpolationKey {
   /** e.g. 'PfeJazzHands' */
   className = 'className',
   /** e.g. 'jazz-hands' */
-  cssName = 'cssName',
+  scssName = 'scssName',
+  /** import specifier for the element style e.g. './rh-jazz-hands.css' */
+  cssRelativePath = 'cssRelativePath',
   /** The package's NPM package name. e.g. '@patternfly/pfe-jazz-hands' */
   packageName = 'packageName',
+  /** The import specifier used to import the element */
+  importSpecifier = 'importSpecifier',
   /** e.g. 'Jazz Hands' */
   readmeName = 'readmeName',
   /** The package's NPM scope name based on user options. e.g. 'patternfly' */
@@ -63,22 +67,6 @@ enum InterpolationKey {
 
 /** Available interpolation keys */
 type Interpolations = Record<InterpolationKey, string>;
-
-/** Input files */
-const TEMPLATE_FILE_PATHS: Record<FileKey, string> = {
-  cemConfig: 'custom-elements-manifest.config.js',
-  component: 'element.ts',
-  demo: 'demo/element.html',
-  demoCss: 'demo/element.css',
-  demoScript: 'demo/element.js',
-  docs: 'docs/index.md',
-  package: 'package.json',
-  readme: 'README.md',
-  style: 'element.scss',
-  test: 'test/element.spec.ts',
-  e2e: 'test/element.e2e.spec.ts',
-  tsconfig: 'tsconfig.json',
-};
 
 function isMonorepoFileKey(key: FileKey): boolean {
   switch (key) {
@@ -102,7 +90,7 @@ const getFilePathsRelativeToPackageDir =
     docs: `docs/index.md`,
     package: 'package.json',
     readme: 'README.md',
-    style: `${options.tagName}.scss`,
+    style: `${options.tagName}.${options.css === 'postcss' ? '.postcss.css' : options.css}`,
     test: `test/${options.tagName}.spec.ts`,
     e2e: `test/${options.tagName}.e2e.spec.ts`,
     tsconfig: 'tsconfig.json',
@@ -131,14 +119,18 @@ const normalizeScope = (scope: string): string =>
 const getInterpolations =
   memoize((options: GenerateElementOptions): Interpolations => {
     const { tagName } = options;
-    const [, tagPrefix, cssName] = tagName.match(/^(\w+)-(.*)/) ?? [];
+    const [, tagPrefix, scssName] = tagName.match(/^(\w+)-(.*)/) ?? [];
     const className = Case.pascal(options.tagName);
     const readmeName = Case.title(options.tagName.replace(/^\w+-(.*)/, '$1'));
     const scope = !options.scope ? '' : normalizeScope(options.scope);
     const packageName = `${scope}${tagName}`;
+    const cssRelativePath = `./${options.css === 'postcss' ? `${tagName}.postcss.css` : `${tagName}.${options.css}`}`;
+    const importSpecifier = options.monorepo ? packageName : `@rhds/elements/${tagName}/${tagName}.js`;
     return {
       className,
-      cssName,
+      scssName,
+      cssRelativePath,
+      importSpecifier,
       packageName,
       readmeName,
       scope,
@@ -168,8 +160,9 @@ async function shouldWriteToDir(options: GenerateElementOptions): Promise<boolea
   }
 }
 
-async function getTemplate(key: FileKey): Promise<string> {
+async function getTemplate(key: FileKey, options: GenerateElementOptions): Promise<string> {
   const TEMPLATE_DIR = join(__dirname, '..', 'templates', 'element');
+  const TEMPLATE_FILE_PATHS = getFilePathsRelativeToPackageDir({ ...options, tagName: 'element' });
   return await readFile(join(TEMPLATE_DIR, TEMPLATE_FILE_PATHS[key]), 'utf8');
 }
 
@@ -179,7 +172,7 @@ async function writeComponentFile(key: FileKey, options: GenerateElementOptions)
   }
 
   const PATH = getOutputFilePath(key, options);
-  const TEMPLATE = await getTemplate(key);
+  const TEMPLATE = await getTemplate(key, options);
   const DATA = getInterpolations(options);
   const OUTPUT = processTemplate(TEMPLATE, DATA);
 
@@ -241,7 +234,7 @@ async function updateTsconfig(options: GenerateElementOptions): Promise<void> {
   const config = await readJson<Tsconfig>(configPath);
 
   if (config?.compilerOptions?.paths) {
-    config.compilerOptions.paths[packageName] = [join(`./elements/${tagName}/${tagName}.ts`)];
+    config.compilerOptions.paths[packageName] = [`./elements/${tagName}/${tagName}.ts`];
   }
 
   if (!config.references?.some(x => x.path === `./elements/${tagName}`)) {
@@ -266,7 +259,7 @@ export async function generateElement(options: GenerateElementOptions): Promise<
     return console.log('‼️ No package.json found.', '� Scaffold a repository first');
   } else {
     await writeElementFiles(options);
-    await analyzeElement(options);
+    // await analyzeElement(options);
     if (options.monorepo) {
       await updateTsconfig(options);
       await execaCommand('npm install');

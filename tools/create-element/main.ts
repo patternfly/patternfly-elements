@@ -7,16 +7,15 @@ import { readJson } from './generator/files.js';
 import { join } from 'node:path';
 
 export interface BaseOptions {
+  /** Should console output be omitted? */
   silent: boolean;
   directory: string;
+  /** Should existing files be overwritten */
   overwrite: boolean;
+  /** Is this a monorepo */
   monorepo: boolean;
-}
-
-export interface AppOptions extends BaseOptions {
-  packageDefaults: boolean;
-  install: boolean;
-  start: boolean;
+  /** Which type of CSS files should the generator output? */
+  css: 'css' | 'postcss' | 'scss';
 }
 
 export interface GenerateElementOptions extends BaseOptions {
@@ -130,6 +129,11 @@ export async function main(): Promise<void> {
         type: 'boolean',
         default: await isMonorepo(),
         description: 'Generate an npm package for the element'
+      })
+      .option('css', {
+        type: 'boolean',
+        default: await isMonorepo() ? 'scss' as const : 'css' as const,
+        description: 'Which type of CSS files to output',
       })
       .help()
       .check(({ name }) => {

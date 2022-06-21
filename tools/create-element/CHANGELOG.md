@@ -1,5 +1,14 @@
 # @patternfly/create-element
 
+## 1.0.0-next.11
+
+### Minor Changes
+
+- f2463122: Provides the `css` option to choose the css flavour for the element
+  e.g. `scss`, `css`, or `postcss`
+
+  Also fixes templates and generator code for users in single-package repos.
+
 ## 1.0.0-next.10
 
 ### Patch Changes

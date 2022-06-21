@@ -30,18 +30,6 @@ import './lib/pfe-popper/pfe-popper.ts';
  * @cssproperty --pf-c-tooltip--MaxWidth
  *              Maximum width for the tooltip.
  *              {@default `18.75rem`}
- * @cssproperty --pf-c-tooltip--MaxWidth
- *              Maximum width for the tooltip.
- *              {@default `18.75rem`}
- * @cssproperty --pf-c-tooltip--MaxWidth
- *              Maximum width for the tooltip.
- *              {@default `18.75rem`}
- * @cssproperty --pf-c-tooltip--MaxWidth
- *              Maximum width for the tooltip.
- *              {@default `18.75rem`}
- * @cssproperty --pf-c-tooltip--MaxWidth
- *              Maximum width for the tooltip.
- *              {@default `18.75rem`}
  * @cssproperty --pf-c-tooltip--BoxShadow
  *              Box shadow for the tooltip.
  *              {@default `var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06))`}

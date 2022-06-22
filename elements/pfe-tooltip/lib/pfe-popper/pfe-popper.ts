@@ -24,7 +24,7 @@ export class PfePopper extends LitElement {
 
   @property({ type: Boolean, reflect: true, attribute: 'is-open' }) isOpen = true;
 
-  @property({ type: Array, reflect: true }) offset = [0, 18];
+  @property({ type: Array, reflect: true }) offset = [0, 15];
 
   private _id = `${PfePopper.name}-${getRandomId()}`;
 
@@ -40,6 +40,9 @@ export class PfePopper extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     this._addListeners();
+    if (![Position.TOP, Position.BOTTOM].includes(this.position)) {
+      this.offset = [-4, 15];
+    }
   }
 
   firstUpdated() {

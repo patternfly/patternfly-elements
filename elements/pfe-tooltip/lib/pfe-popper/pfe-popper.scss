@@ -6,7 +6,8 @@
   
   :host { 
     --background-color: var(--pf-global--BackgroundColor--dark-100, #1b1d21);
-    --color: var(--pf-global--Color--light-100, #e0e0e0);
+    --color: var(--pf-global--Color--light-100, #ffffff);
+    line-height: var(--rh-line-height-body-text, 1.5);;
     display: inline-block;
   }
   

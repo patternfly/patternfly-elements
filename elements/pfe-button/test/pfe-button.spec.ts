@@ -44,7 +44,7 @@ describe('<pfe-button>', function() {
     el.disabled = true;
     await el.updateComplete;
 
-    expect(lightDomBtn).dom.to.equal('<button disabled>Button</button>');
+    expect(lightDomBtn).dom.to.equal('<button disabled tabindex="-1">Button</button>');
 
     el.disabled = false;
     await el.updateComplete;

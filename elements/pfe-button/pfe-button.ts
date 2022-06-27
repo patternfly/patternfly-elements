@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { bound, observed, pfelement } from '@patternfly/pfe-core/decorators.js';
+import { bound, observed } from '@patternfly/pfe-core/decorators.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -175,23 +175,25 @@ export class PfeButton extends LitElement {
   /** Applies plain styles */
   @property({ type: Boolean, reflect: true }) plain = false;
 
-  private logger = new Logger(this);
-
-  private mo = new MutationObserver(this.onMutation);
-
-  private get button() {
+  get #button() {
     return this.querySelector('button');
   }
 
+  #logger = new Logger(this);
+
+  #mo = new MutationObserver(this.onMutation);
+
+  #prevTabindex = this.#button?.tabIndex ?? null;
+
   connectedCallback() {
-    this.onSlotChange();
+    this.#onSlotChange();
     super.connectedCallback();
     this.addEventListener('click', this.onClick);
   }
 
   render() {
     return html`
-      <span id="container" @slotchange=${this.onSlotChange}>
+      <span id="container" @slotchange=${this.#onSlotChange}>
         <span part="state" ?hidden=${!this.loading}>
           <slot name="state">
             <pfe-progress-indicator indeterminate size="sm" aria-label="loading"></pfe-progress-indicator>
@@ -208,50 +210,52 @@ export class PfeButton extends LitElement {
   }
 
   protected _typeChanged() {
-    if (this.button && this.button.type !== this.type) {
+    if (this.#button && this.#button.type !== this.type) {
       if (this.type) {
-        this.button.type = this.type;
+        this.#button.type = this.type;
       } else {
-        this.button.removeAttribute('type');
+        this.#button.removeAttribute('type');
       }
     }
   }
 
   protected _disabledChanged() {
-    const prevTabindex = this.button?.tabIndex;
-    if (this.button && this.button.disabled !== this.disabled) {
-      this.button.disabled = this.disabled;
+    if (this.#button && this.#button.disabled !== this.disabled) {
+      this.#button.disabled = this.disabled;
       if (this.disabled) {
-        this.button.setAttribute('tabindex', '-1');
-      } else if (prevTabindex) {
-        this.button.setAttribute('tabindex', prevTabindex.toString());
+        this.#prevTabindex = this.#button.tabIndex;
+        this.#button.setAttribute('tabindex', '-1');
+      } else if (this.#prevTabindex) {
+        this.#button.setAttribute('tabindex', this.#prevTabindex.toString());
+        this.#prevTabindex = null;
       } else {
-        this.button.removeAttribute('tabindex');
+        this.#button.removeAttribute('tabindex');
+        this.#prevTabindex = null;
       }
     }
   }
 
-  private onSlotChange() {
-    this.mo.disconnect();
-    if (this.button) {
-      this.mo.observe(this.button, { attributes: true, attributeFilter: ['type', 'disabled'] });
+  #onSlotChange() {
+    this.#mo.disconnect();
+    if (this.#button) {
+      this.#mo.observe(this.#button, { attributes: true, attributeFilter: ['type', 'disabled'] });
     }
   }
 
   @bound private onClick(event: Event) {
-    if (event.target === this.button) {
+    if (event.target === this.#button) {
       this.dispatchEvent(deprecatedCustomEvent('pfe-button:click'));
     }
   }
 
   @bound private onMutation() {
     if (this.children.length > 1 || !(this.firstElementChild instanceof HTMLButtonElement)) {
-      this.logger.warn('The only child in the light DOM must be a button tag');
-    } else if (!this.button) {
-      this.logger.warn('You must have a button in the light DOM');
+      this.#logger.warn('The only child in the light DOM must be a button tag');
+    } else if (!this.#button) {
+      this.#logger.warn('You must have a button in the light DOM');
     } else {
-      this.disabled = this.button.hasAttribute('disabled') || this.button.getAttribute('aria-disabled') === 'true';
-      this.type = this.button.getAttribute('type') as this['type'] ?? undefined;
+      this.disabled = this.#button.hasAttribute('disabled') || this.#button.getAttribute('aria-disabled') === 'true';
+      this.type = this.#button.getAttribute('type') as this['type'] ?? undefined;
     }
   }
 }

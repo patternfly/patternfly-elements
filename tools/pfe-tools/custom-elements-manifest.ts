@@ -7,6 +7,8 @@ import { dedentDescriptionsPlugin } from './custom-elements-manifest/dedent-desc
 import { deprecatedDescriptionInlineTagPlugin } from './custom-elements-manifest/deprecated-description-inline-tag.js';
 import { sanitizeEventsPlugin } from './custom-elements-manifest/sanitize-events.js';
 import { summaryPlugin } from './custom-elements-manifest/summary.js';
+import { ecmaPrivateClassMembersPlugin } from './custom-elements-manifest/ecma-private-class-members.js';
+import { versionStaticFieldPlugin } from './custom-elements-manifest/version-static-field.js';
 
 /**
  * PFE Default custom-elements-manifest analyzer config
@@ -30,6 +32,8 @@ export function pfeCustomElementsManifestConfig(options?: Config): Config {
       deprecatedDescriptionInlineTagPlugin(),
       dedentDescriptionsPlugin(),
       summaryPlugin(),
+      ecmaPrivateClassMembersPlugin(),
+      versionStaticFieldPlugin(),
 
       ...options?.plugins ?? [],
     ],

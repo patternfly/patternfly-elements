@@ -1,10 +1,14 @@
 /* eslint-disable no-console */
-import { LitElement, html } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { pfelement } from '@patternfly/pfe-core/decorators.js';
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+import './lib/pfe-popper/BaseTooltip.ts';
 
-import './lib/pfe-popper/pfe-popper.ts';
+import style from './pfe-tooltip.scss';
+import { BaseTooltip } from './lib/pfe-popper/BaseTooltip.js';
+import { colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
+import { ColorTheme } from '@patternfly/pfe-core';
 
 
 /**
@@ -98,25 +102,33 @@ import './lib/pfe-popper/pfe-popper.ts';
  *              {@default `45deg`}
  */
 
-@customElement('pfe-tooltip') @pfelement()
-export class PfeTooltip extends LitElement {
+@customElement('pfe-tooltip')
+export class PfeTooltip extends BaseTooltip {
   static readonly version = '{{version}}';
+
+  static readonly styles = [style];
+
+  @colorContextConsumer()
+  @property({ reflect: true }) on: ColorTheme = 'light';
 
   /**
    * Sets tooltip positioning relative to the invoker element.
    */
-  @property({ type: String, reflect: true }) position: 'top'|'bottom'|'left'|'right' = 'top';
+  @property({ type: String, reflect: true }) position = 'top';
 
-  render() {
+  private _id = `${PfeTooltip.name}-${getRandomId()}`;
+
+  override render() {
     return html`
-      <pfe-popper position="${this.position}">
-        <div slot="popper-invoker">
-          <slot name="invoker"></slot>
-        </div>
-        <div slot="popper-content">
+      <div id="invoker-id" class="invoker" role="tooltip" tabindex="0" aria-labelledby="${this._id}">
+        <slot name="invoker"></slot>
+      </div>
+      <div id="${this._id}" class="tooltip hidden" aria-hidden=${this.isOpen ? 'false' : 'true'}>
+        <div class="tooltip__arrow"></div>
+        <div id="content" class="tooltip__content">
           <slot name="content"></slot>
         </div>
-      </pfe-popper>
+      </div>
     `;
   }
 }

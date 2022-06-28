@@ -1,9 +1,7 @@
-import { LitElement, html } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { observed } from '@patternfly/pfe-core/decorators.js';
-import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
+import { BaseButton } from './BaseButton.js';
 
 import styles from './pfe-button.scss';
 
@@ -18,8 +16,6 @@ export type ButtonVariant = (
  * Buttons allow users to perform an action when triggered. They feature a text label, a background or a border, and icons.
  *
  * @summary Allows users to perform an action when triggered
- *
- * @fires {Event} pfe-button:click {@deprecated use native click event instead}
  *
  * @cssprop {<length>} --pf-c-button--FontSize                                               {@default 1rem}
  * @cssprop {normal | bold | bolder | lighter | <number [1,1000]>} --pf-c-button--FontWeight {@default 400}
@@ -145,33 +141,10 @@ export type ButtonVariant = (
  * @slot - Must contain exactly one `<button>` element as the only content not assigned to a named slot.
  */
 @customElement('pfe-button')
-export class PfeButton extends LitElement {
+export class PfeButton extends BaseButton {
   static readonly version = '{{version}}';
 
   static readonly styles = styles;
-
-  /** Disables the button */
-  @observed
-  @property({ reflect: true, type: Boolean }) disabled = false;
-
-  /**
-   * Changes the style of the button.
-   * - Primary: Used for the most important call to action on a page. Try to limit primary buttons to one per page.
-   * - Secondary: Use secondary buttons for general actions on a page, that don’t require as much emphasis as primary button actions. For example, you can use secondary buttons where there are multiple actions, like in toolbars or data lists.
-   * - Tertiary: Tertiary buttons are flexible and can be used as needed.
-   */
-  @property({ reflect: true }) variant: ButtonVariant = 'primary';
-
-  /** Changes the size of the button. */
-  @property({ reflect: true }) size?: 'small'|'large';
-
-  @observed
-  @property() type?: 'button'|'submit'|'reset';
-
-  /**
-   * Use danger buttons for actions a user can take that are potentially destructive or difficult/impossible to undo, like deleting or removing user data.
-   */
-  @property({ type: Boolean, reflect: true }) danger = false;
 
   /** Represents the state of a stateful button */
   @property({ type: Boolean, reflect: true }) loading = false;
@@ -179,25 +152,9 @@ export class PfeButton extends LitElement {
   /** Applies plain styles */
   @property({ type: Boolean, reflect: true }) plain = false;
 
-  get #button() {
-    return this.querySelector('button');
-  }
-
-  #logger = new Logger(this);
-
-  #mo = new MutationObserver(() => this.#onMutation());
-
-  #prevTabindex = this.#button?.tabIndex ?? null;
-
-  connectedCallback() {
-    this.#onSlotChange();
-    super.connectedCallback();
-    this.addEventListener('click', e => this.#onClick(e));
-  }
-
-  render() {
+  override render() {
     return html`
-      <span id="container" @slotchange=${this.#onSlotChange}>
+      <span id="container">
         <span part="state" ?hidden=${!this.loading}>
           <slot name="state">
             <pfe-progress-indicator indeterminate size="sm" aria-label="loading"></pfe-progress-indicator>
@@ -206,61 +163,6 @@ export class PfeButton extends LitElement {
         <slot></slot>
       </span>
     `;
-  }
-
-  protected firstUpdated(): void {
-    this._disabledChanged();
-    this.#onMutation();
-  }
-
-  protected _typeChanged() {
-    if (this.#button && this.#button.type !== this.type) {
-      if (this.type) {
-        this.#button.type = this.type;
-      } else {
-        this.#button.removeAttribute('type');
-      }
-    }
-  }
-
-  protected _disabledChanged() {
-    if (this.#button && this.#button.disabled !== this.disabled) {
-      this.#button.disabled = this.disabled;
-      if (this.disabled) {
-        this.#prevTabindex = this.#button.tabIndex;
-        this.#button.setAttribute('tabindex', '-1');
-      } else if (this.#prevTabindex) {
-        this.#button.setAttribute('tabindex', this.#prevTabindex.toString());
-        this.#prevTabindex = null;
-      } else {
-        this.#button.removeAttribute('tabindex');
-        this.#prevTabindex = null;
-      }
-    }
-  }
-
-  #onSlotChange() {
-    this.#mo.disconnect();
-    if (this.#button) {
-      this.#mo.observe(this.#button, { attributes: true, attributeFilter: ['type', 'disabled'] });
-    }
-  }
-
-  #onClick(event: Event) {
-    if (event.target === this.#button) {
-      this.dispatchEvent(deprecatedCustomEvent('pfe-button:click'));
-    }
-  }
-
-  #onMutation() {
-    if (this.children.length > 1 || !(this.firstElementChild instanceof HTMLButtonElement)) {
-      this.#logger.warn('The only child in the light DOM must be a button tag');
-    } else if (!this.#button) {
-      this.#logger.warn('You must have a button in the light DOM');
-    } else {
-      this.disabled = this.#button.hasAttribute('disabled') || this.#button.getAttribute('aria-disabled') === 'true';
-      this.type = this.#button.getAttribute('type') as this['type'] ?? undefined;
-    }
   }
 }
 

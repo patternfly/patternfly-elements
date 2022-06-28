@@ -3,10 +3,10 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-import './lib/pfe-popper/BaseTooltip.ts';
+import './lib/Tooltip/BaseTooltip.ts';
 
 import style from './pfe-tooltip.scss';
-import { BaseTooltip } from './lib/pfe-popper/BaseTooltip.js';
+import { BaseTooltip } from './lib/Tooltip/BaseTooltip.js';
 import { colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { ColorTheme } from '@patternfly/pfe-core';
 
@@ -110,11 +110,6 @@ export class PfeTooltip extends BaseTooltip {
 
   @colorContextConsumer()
   @property({ reflect: true }) on: ColorTheme = 'light';
-
-  /**
-   * Sets tooltip positioning relative to the invoker element.
-   */
-  @property({ type: String, reflect: true }) position = 'top';
 
   private _id = `${PfeTooltip.name}-${getRandomId()}`;
 

@@ -3,7 +3,7 @@ import { observed } from '@patternfly/pfe-core/decorators.js';
 import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 import { Instance, Placement } from '@popperjs/core';
-import { createPopper } from '../createPopper';
+import { createPopper } from './createPopper.js';
 
 export type Position = (
     |'top'
@@ -13,10 +13,8 @@ export type Position = (
 )
 
 export abstract class BasePopper extends LitElement {
-    @observed
-    @property({ reflect: true, type: String }) position? = 'top';
+    @property({ reflect: true, type: String }) position = 'top';
 
-    @observed
     @property({ reflect: true, type: Array }) offset = [0, 15];
 
     @property({ reflect: true, type: Boolean, attribute: 'is-open' }) isOpen = false;
@@ -50,6 +48,13 @@ export abstract class BasePopper extends LitElement {
     }
 
     abstract render(): ReturnType<LitElement['render']>
+
+    override connectedCallback(): void {
+      super.connectedCallback();
+      if (!['top', 'bottom'].includes(this.position)) {
+        this.offset = [-4, 15];
+      }
+    }
 
     protected override firstUpdated(): void {
       if (this.#invoker && this.#tooltip) {

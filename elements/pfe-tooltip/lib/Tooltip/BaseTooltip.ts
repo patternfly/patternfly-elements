@@ -1,35 +1,13 @@
 /* eslint-disable no-console */
-import { property } from 'lit/decorators.js';
-
-import { observed } from '@patternfly/pfe-core/decorators.js';
-
 import { LitElement } from 'lit';
-import { BasePopper } from '../Popper/Popper';
-
-import style from './pfe-popper.scss';
+import { BasePopper } from '../Popper/Popper.js';
 export abstract class BaseTooltip extends BasePopper {
-  @observed
-  @property({ type: String, reflect: true }) position = 'top';
-
-  // @observed
-  // @property({ type: Boolean, reflect: true, attribute: 'is-open' }) isOpen = false;
-
-  // @observed
-  // @property({ type: Array, reflect: true }) offset = [0, 18];
-
-  static readonly styles = [style];
-
-
   connectedCallback(): void {
     super.connectedCallback();
     this._addListeners();
-    if (!['top', 'bottom'].includes(this.position)) {
-      this.offset = [-4, 15];
-    }
   }
 
   abstract render(): ReturnType<LitElement['render']>
-
 
   disconnectedCallback() {
     super.disconnectedCallback();

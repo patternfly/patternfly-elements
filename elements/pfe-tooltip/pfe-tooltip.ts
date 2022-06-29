@@ -108,9 +108,6 @@ export class PfeTooltip extends BaseTooltip {
 
   static readonly styles = [style];
 
-  @colorContextConsumer()
-  @property({ reflect: true }) on: ColorTheme = 'light';
-
   private _id = `${PfeTooltip.name}-${getRandomId()}`;
 
   override render() {

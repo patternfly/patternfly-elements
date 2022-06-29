@@ -11,11 +11,6 @@
   display: inline-block;
 }
 
-:host([on=dark]) {
-  --background-color: var(--pf-global--BackgroundColor--light-100, #ffffff);
-  --color: var(--pf-global--Color--light-100, #151515);
-}
-
 .tooltip {
   --pf-c-tooltip--MaxWidth: 18.75rem;
   --pf-c-tooltip--BoxShadow: var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));

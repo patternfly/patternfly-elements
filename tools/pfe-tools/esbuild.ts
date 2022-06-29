@@ -179,13 +179,13 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
       minify: options?.minify ?? true,
       minifyWhitespace: options?.minify ?? true,
       outfile: options?.outfile ?? 'pfe.min.js',
-      define: {
-        // eslint-disable-next-line no-useless-escape
-        'process.env.NODE_ENV': JSON.stringify( 'production' ),
-      },
       sourcemap: true,
       treeShaking: true,
       watch: false,
+      define: {
+        // eslint-disable-next-line no-useless-escape
+        'process.env.NODE_ENV': 'production',
+      },
       plugins: [
         ...getBasePlugins(options),
         ...options?.plugins ?? []

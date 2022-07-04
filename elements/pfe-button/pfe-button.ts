@@ -144,7 +144,7 @@ export type ButtonVariant = (
 export class PfeButton extends BaseButton {
   static readonly version = '{{version}}';
 
-  static readonly styles = styles;
+  static readonly styles = [...BaseButton.styles, styles];
 
   /** Represents the state of a stateful button */
   @property({ type: Boolean, reflect: true }) loading = false;

@@ -7,10 +7,11 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import styles from './BaseButton.scss';
 
 export type ButtonVariant = (
-  |'primary'
-  |'secondary'
-  |'tertiary'
-  |'control'
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'control'
+  | 'link'
 );
 
 /**

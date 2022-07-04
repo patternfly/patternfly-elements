@@ -348,6 +348,19 @@
 
 /******************************
  *                            *
+ *           LINK             *
+ *                            *
+ ******************************/
+
+:host([variant=link]) ::slotted(button) {
+  background-color: var(--pf-c-button--m-link--BackgroundColor,
+    var(--pf-c-button--m-link--hover--BackgroundColor, transparent)) !important;
+  color: var(--pf-c-button--m-link--Color,
+    var(--pf-global--link--Color, #06c)) !important;
+}
+
+/******************************
+ *                            *
  *         DISABLED           *
  *                            *
  ******************************/
@@ -411,3 +424,17 @@
     var(--pf-global--FontSize--md, 1rem));
 }
 
+/******************************
+ *                            *
+ *            ICON            *
+ *                            *
+ ******************************/
+
+// [part=icon] {
+//   display: none;
+// }
+//
+// .hasIcon [part=icon] {
+//   display: block;
+// }
+//

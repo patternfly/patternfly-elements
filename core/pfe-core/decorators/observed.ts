@@ -47,7 +47,7 @@ export function observed<T extends ReactiveElement>(...as: any[]): void|TypedFie
     return function(proto, key) {
       (proto.constructor as typeof ReactiveElement)
         .addInitializer(x => new PropertyObserverController(x));
-      observeProperty(proto, key, methodNameOrCallback);
+      observeProperty(proto, key as string & keyof T, methodNameOrCallback);
     };
   } else {
     const [proto, key] = as;
@@ -59,7 +59,7 @@ export function observed<T extends ReactiveElement>(...as: any[]): void|TypedFie
 
 export function observeProperty<T extends ReactiveElement>(
   proto: T,
-  key: string | keyof T,
+  key: string & keyof T,
   callbackOrMethod?: ChangeCallback<T>
 ) {
   const descriptor = Object.getOwnPropertyDescriptor(proto, key);

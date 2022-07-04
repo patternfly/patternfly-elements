@@ -4,6 +4,8 @@ import { property } from 'lit/decorators.js';
 import { observed } from '@patternfly/pfe-core/decorators.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
+import styles from './BaseButton.scss';
+
 export type ButtonVariant = (
   |'primary'
   |'secondary'
@@ -15,6 +17,8 @@ export type ButtonVariant = (
  * Base button class
  */
 export abstract class BaseButton extends LitElement {
+  static readonly styles = [styles];
+
   /** Disables the button */
   @observed
   @property({ reflect: true, type: Boolean }) disabled = false;

@@ -38,17 +38,14 @@
   --pf-c-button--m-plain--BackgroundColor: var(--pf-c-button--m-plain--hover--BackgroundColor,
     transparent);
 }
+
 /******************************
  *                            *
  *          LOADING           *
  *                            *
  ******************************/
 
-[part=state] {
-  display: none;
-}
-
-:host([loading]) [part=state] {
+:host([loading]) [part=icon] {
   display: inline-block;
   z-index: 1;
   position: absolute;
@@ -57,17 +54,17 @@
   left: 8px;
 }
 
-:host([loading][plain]) [part=state] {
+:host([loading][plain]) [part=icon] {
   left: 16px;
 }
 
-:host([loading]) [part=state] {
+:host([loading]) [part=icon] {
   --pfe-progress-indicator--background-color: rgba(0,102,204,.25);
   --pfe-progress-indicator--foreground-color: #06c;
 }
 
-:host([loading][variant=primary]:not([plain])) [part=state],
-:host([loading][danger]) [part=state] {
+:host([loading][variant=primary]:not([plain])) [part=icon],
+:host([loading][danger]) [part=icon] {
   --pfe-progress-indicator--background-color: rgba(255, 255, 255, .25);
   --pfe-progress-indicator--foreground-color: rgba(255, 255, 255, .75);
 }

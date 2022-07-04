@@ -1,5 +1,8 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
+
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import { BaseButton } from './BaseButton.js';
 
@@ -137,7 +140,7 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--disabled--after--BorderColor {@default transparent}
  *
  * @csspart state - Container for the state slot.
- * @slot state - Contains the button's state indicator, e.g. a spinner.
+ * @slot icon - Contains the button's icon or state indicator, e.g. a spinner.
  * @slot - Must contain exactly one `<button>` element as the only content not assigned to a named slot.
  */
 @customElement('pfe-button')
@@ -152,12 +155,19 @@ export class PfeButton extends BaseButton {
   /** Applies plain styles */
   @property({ type: Boolean, reflect: true }) plain = false;
 
+  @property() icon = '';
+
+  slots = new SlotController(this, 'icon');
+
   override render() {
+    const { icon, loading } = this;
+    const hasSlottedIcon = this.slots.hasSlotted('icon');
     return html`
       <span id="container">
-        <span part="state" ?hidden=${!this.loading}>
-          <slot name="state">
-            <pfe-progress-indicator indeterminate size="sm" aria-label="loading"></pfe-progress-indicator>
+        <span part="icon" ?hidden=${!(icon || hasSlottedIcon)}>
+          <slot name="icon">
+            <pfe-progress-indicator ?hidden=${!loading} indeterminate size="sm" aria-label="loading"></pfe-progress-indicator>
+            <pfe-icon ?hidden=${loading} icon=${icon}></pfe-icon>
           </slot>
         </span>
         <slot></slot>

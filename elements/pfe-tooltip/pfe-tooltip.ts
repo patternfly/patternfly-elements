@@ -25,7 +25,7 @@ import { ColorTheme } from '@patternfly/pfe-core';
  *       Typically this would include a string of text without any additional elements.
  *       This element is wrapped with a div inside of the component to give it the stylings and background colors.
  *
- * @cssproperty --background-color
+ * @cssproperty --pf-c-toolip__content--BackgroundColor
  *              Sets the background color for the tooltip content.
  *              {@default `var(--pf-global--BackgroundColor--dark-100, #1b1d21)`}
  * @cssproperty --color
@@ -54,7 +54,7 @@ import { ColorTheme } from '@patternfly/pfe-core';
  *              {@default `var(--color)`}
  * @cssproperty --pf-c-tooltip__content--BackgroundColor
  *              Background color for the tooltip content.
- *              {@default `var(--background-color)`}
+ *              {@default `var(--pf-c-toolip__content--BackgroundColor)`}
  * @cssproperty --pf-c-tooltip__content--FontSize
  *              Font size for the tooltip content.
  *              {@default `var(--pf-global--FontSize--sm, 0.875rem)`}

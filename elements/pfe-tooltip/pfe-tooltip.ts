@@ -1,14 +1,12 @@
 /* eslint-disable no-console */
 import { html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import './lib/Tooltip/BaseTooltip.ts';
 
 import style from './pfe-tooltip.scss';
 import { BaseTooltip } from './lib/Tooltip/BaseTooltip.js';
-import { colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
-import { ColorTheme } from '@patternfly/pfe-core';
 
 
 /**
@@ -28,7 +26,7 @@ import { ColorTheme } from '@patternfly/pfe-core';
  * @cssproperty --pf-c-toolip__content--BackgroundColor
  *              Sets the background color for the tooltip content.
  *              {@default `var(--pf-global--BackgroundColor--dark-100, #1b1d21)`}
- * @cssproperty --color
+ * @cssproperty --pf-c-tooltip__content--Color
  *              Sets the font color for the tooltip content.
  *              {@default `var(--pf-global--Color--light-100, #e0e0e0)`}
  * @cssproperty --pf-c-tooltip--MaxWidth
@@ -49,9 +47,6 @@ import { ColorTheme } from '@patternfly/pfe-core';
  * @cssproperty --pf-c-tooltip__content--PaddingLeft
  *              Left Padding for the tooltip.
  *              {@default `var(--pf-global--spacer--sm, 0.5rem)`}
- * @cssproperty --pf-c-tooltip__content--Color
- *              Color for the tooltip content font.
- *              {@default `var(--color)`}
  * @cssproperty --pf-c-tooltip__content--BackgroundColor
  *              Background color for the tooltip content.
  *              {@default `var(--pf-c-toolip__content--BackgroundColor)`}

@@ -1,12 +1,7 @@
 /* eslint-disable no-console */
-import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-import './lib/Tooltip/BaseTooltip.ts';
-
+import { BaseTooltip } from './lib/BaseTooltip/BaseTooltip.js';
 import style from './pfe-tooltip.scss';
-import { BaseTooltip } from './lib/Tooltip/BaseTooltip.js';
 
 
 /**
@@ -23,76 +18,73 @@ import { BaseTooltip } from './lib/Tooltip/BaseTooltip.js';
  *       Typically this would include a string of text without any additional elements.
  *       This element is wrapped with a div inside of the component to give it the stylings and background colors.
  *
- * @cssproperty --pf-c-toolip__content--BackgroundColor
+ * @cssprop     {color} --pf-c-toolip__content--BackgroundColor
  *              Sets the background color for the tooltip content.
- *              {@default `var(--pf-global--BackgroundColor--dark-100, #1b1d21)`}
- * @cssproperty --pf-c-tooltip__content--Color
+ *              {@default `#1b1d21`}
+ * @cssprop     {color} --pf-c-tooltip__content--Color
  *              Sets the font color for the tooltip content.
- *              {@default `var(--pf-global--Color--light-100, #e0e0e0)`}
- * @cssproperty --pf-c-tooltip--MaxWidth
+ *              {@default `#e0e0e0`}
+ * @cssprop     {length} --pf-c-tooltip--MaxWidth
  *              Maximum width for the tooltip.
  *              {@default `18.75rem`}
- * @cssproperty --pf-c-tooltip--BoxShadow
+ * @cssprop     --pf-c-tooltip--BoxShadow
  *              Box shadow for the tooltip.
- *              {@default `var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06))`}
- * @cssproperty --pf-c-tooltip__content--PaddingTop
+ *              {@default `0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06)`}
+ * @cssprop     {length} --pf-c-tooltip__content--PaddingTop
  *              Top padding for the tooltip.
- *              {@default `var(--pf-global--spacer--sm, 0.5rem)`}
- * @cssproperty --pf-c-tooltip__content--PaddingRight
+ *              {@default `0.5rem`}
+ * @cssprop     {length} --pf-c-tooltip__content--PaddingRight
  *              Right padding for the tooltip.
- *              {@default `var(--pf-global--spacer--sm, 0.5rem)`}
- * @cssproperty --pf-c-tooltip__content--PaddingBottom
+ *              {@default `0.5rem`}
+ * @cssprop     {length} --pf-c-tooltip__content--PaddingBottom
  *              Bottom padding for the tooltip.
- *              {@default `var(--pf-global--spacer--sm, 0.5rem)`}
- * @cssproperty --pf-c-tooltip__content--PaddingLeft
+ *              {@default `0.5rem`}
+ * @cssprop     {length} --pf-c-tooltip__content--PaddingLeft
  *              Left Padding for the tooltip.
- *              {@default `var(--pf-global--spacer--sm, 0.5rem)`}
- * @cssproperty --pf-c-tooltip__content--BackgroundColor
- *              Background color for the tooltip content.
- *              {@default `var(--pf-c-toolip__content--BackgroundColor)`}
- * @cssproperty --pf-c-tooltip__content--FontSize
+ *              {@default `0.5rem`}
+ * @cssprop     --pf-c-tooltip__content--FontSize
  *              Font size for the tooltip content.
- *              {@default `var(--pf-global--FontSize--sm, 0.875rem)`}
- * @cssproperty --pf-c-tooltip__arrow--Width
+ *              {@default `0.875rem`}
+ * @cssprop     {length} --pf-c-tooltip__arrow--Width
  *              Tooltip arrow width.
  *              {@default `0.5rem`}
- * @cssproperty --pf-c-tooltip__arrow--Height
- *              Tooltip arrow height.
+ * @cssprop     {length} --pf-c-tooltip__arrow--Height
+ *              Tooltip arrow height.s
  *              {@default `0.5rem`}
- * @cssproperty --pf-c-tooltip__arrow--m-top--TranslateX
+ * @cssprop     --pf-c-tooltip__arrow--m-top--TranslateX
  *              Positions the tooltip arrow along the x axis for `top` positioned arrows.
  *              {@default `-50%`}
- * @cssproperty --pf-c-tooltip__arrow--m-top--TranslateY
+ * @cssprop     --pf-c-tooltip__arrow--m-top--TranslateY
  *              Positions the tooltip arrow along the y axis for `top` positioned arrows.
  *              {@default `50%`}
- * @cssproperty --pf-c-tooltip__arrow--m-top--Rotate
+ * @cssprop     --pf-c-tooltip__arrow--m-top--Rotate
  *              Rotates the tooltip arrow based on degrees of movement for `top` positioned arrows.
  *              {@default `45deg`}
- * @cssproperty --pf-c-tooltip__arrow--m-right--TranslateX
+ * @cssprop     --pf-c-tooltip__arrow--m-right--TranslateX
  *              Positions the tooltip arrow along the x axis for `right` positioned arrows.
  *              {@default `-50%`}
- * @cssproperty --pf-c-tooltip__arrow--m-right--TranslateY
+ * @cssprop     --pf-c-tooltip__arrow--m-right--TranslateY
  *              Positions the tooltip arrow along the y axis for `right` positioned arrows.
  *              {@default `-50%`}
- * @cssproperty --pf-c-tooltip__arrow--m-right--Rotate
+ * @cssprop     --pf-c-tooltip__arrow--m-right--Rotate
  *              Rotates the tooltip arrow based on degrees of movement for `right` positioned arrows.
  *              {@default `45deg`}
- * @cssproperty --pf-c-tooltip__arrow--m-bottom--TranslateX
+ * @cssprop     --pf-c-tooltip__arrow--m-bottom--TranslateX
  *              Positions the tooltip arrow along the x axis for `bottom` positioned arrows.
  *              {@default `-50%`}
- * @cssproperty --pf-c-tooltip__arrow--m-bottom--TranslateY
+ * @cssprop     --pf-c-tooltip__arrow--m-bottom--TranslateY
  *              Positions the tooltip arrow along the y axis for `bottom` positioned arrows.
  *              {@default `-50%`}
- * @cssproperty --pf-c-tooltip__arrow--m-bottom--Rotate
+ * @cssprop     --pf-c-tooltip__arrow--m-bottom--Rotate
  *              Rotates the tooltip arrow based on degrees of movement for `bottom` positioned arrows.
  *              {@default `45deg`}
- * @cssproperty --pf-c-tooltip__arrow--m-left--TranslateX
+ * @cssprop     --pf-c-tooltip__arrow--m-left--TranslateX
  *              Positions the tooltip arrow along the x axis for `left` positioned arrows.
  *              {@default `50%`}
- * @cssproperty --pf-c-tooltip__arrow--m-left--TranslateY
+ * @cssprop     --pf-c-tooltip__arrow--m-left--TranslateY
  *              Positions the tooltip arrow along the y axis for `left` positioned arrows.
  *              {@default `-50%`}
- * @cssproperty --pf-c-tooltip__arrow--m-left--Rotate
+ * @cssprop     --pf-c-tooltip__arrow--m-left--Rotate
  *              Rotates the tooltip arrow based on degrees of movement for `left` positioned arrows.
  *              {@default `45deg`}
  */
@@ -102,22 +94,6 @@ export class PfeTooltip extends BaseTooltip {
   static readonly version = '{{version}}';
 
   static readonly styles = [style];
-
-  private _id = `${PfeTooltip.name}-${getRandomId()}`;
-
-  override render() {
-    return html`
-      <div id="invoker-id" class="invoker" role="tooltip" tabindex="0" aria-labelledby="${this._id}">
-        <slot name="invoker"></slot>
-      </div>
-      <div id="${this._id}" class="tooltip hidden" aria-hidden=${this.isOpen ? 'false' : 'true'}>
-        <div class="tooltip__arrow"></div>
-        <div id="content" class="tooltip__content">
-          <slot name="content"></slot>
-        </div>
-      </div>
-    `;
-  }
 }
 
 declare global {

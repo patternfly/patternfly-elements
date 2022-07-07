@@ -21,6 +21,7 @@
     "./controllers/perf-controller.js": "./controllers/perf-controller.js",
     "./controllers/property-observer-controller.js": "./controllers/property-observer-controller.js",
     "./controllers/slot-controller.js": "./controllers/slot-controller.js",
+    "./controllers/popper-controller.js": "./controllers/popper-controller.js",
     "./controllers/style-controller.js": "./controllers/style-controller.js",
     "./decorators/bound.js": "./decorators/bound.js",
     "./decorators/cascades.js": "./decorators/cascades.js",
@@ -59,6 +60,7 @@
     "watch:types": "tsc -w"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.5",
     "lit": "^2.1.2"
   },
   "repository": {

@@ -1,5 +1,4 @@
 {% renderOverview %}
-
 ### Left Tooltip
 <pfe-tooltip position="left">
     <div slot="invoker">

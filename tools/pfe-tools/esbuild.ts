@@ -184,7 +184,7 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
       watch: false,
       define: {
         // eslint-disable-next-line no-useless-escape
-        'process.env.NODE_ENV': 'production',
+        'process.env.NODE_ENV': JSON.stringify( 'production' ),
       },
       plugins: [
         ...getBasePlugins(options),

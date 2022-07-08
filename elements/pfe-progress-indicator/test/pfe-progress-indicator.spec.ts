@@ -19,7 +19,7 @@ describe('<pfe-progress-indicator>', function() {
 
   it('should have the proper animation css', async function() {
     const element = await createFixture<PfeProgressIndicator>(html`<pfe-progress-indicator indeterminate></pfe-progress-indicator>`);
-    const style = getComputedStyle(element);
+    const style = getComputedStyle(element.shadowRoot!.getElementById('container')!, ':after');
     expect(style.getPropertyValue('animation-name')).to.equal('spin');
     expect(style.getPropertyValue('animation-duration')).to.equal('1s');
     expect(style.getPropertyValue('animation-timing-function')).to.equal('linear');

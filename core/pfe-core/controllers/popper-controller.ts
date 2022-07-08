@@ -8,7 +8,15 @@ export const createPopper = popperGenerator({
 
 
 export class TooltipDOMController implements ReactiveController {
-  public open = false;
+  #open = false;
+
+  getOpen(): boolean {
+    return this.#open;
+  }
+
+  #setOpen(isOpen: boolean) {
+    this.#open = isOpen;
+  }
 
   private popper: Instance | undefined;
 
@@ -21,6 +29,17 @@ export class TooltipDOMController implements ReactiveController {
 
   hostConnected(): void {
     this.logger.log('popper controller - host connected');
+  }
+
+  show(): void {
+    this.#setOpen(true);
+    this.popper?.update();
+    this.host.requestUpdate();
+  }
+
+  hide(): void {
+    this.#setOpen(false);
+    this.host.requestUpdate();
   }
 
   create(invoker: Element, tooltip: HTMLElement, placement: Placement, offset?: Array<number>): void {
@@ -41,16 +60,5 @@ export class TooltipDOMController implements ReactiveController {
         }
       ]
     });
-  }
-
-  show(): void {
-    this.open = true;
-    this.popper?.update();
-    this.host.requestUpdate();
-  }
-
-  hide(): void {
-    this.open = false;
-    this.host.requestUpdate();
   }
 }

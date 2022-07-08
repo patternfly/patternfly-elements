@@ -7,7 +7,7 @@ Adding `pfe-tooltip`
 ```html
 <pfe-tooltip position="right">
     <div slot="invoker">
-        <div class="rh-product-trial__inline-icon">
+        <div>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24"

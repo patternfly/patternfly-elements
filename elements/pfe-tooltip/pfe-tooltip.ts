@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { customElement } from 'lit/decorators.js';
 import { BaseTooltip } from './lib/BaseTooltip/BaseTooltip.js';
 import style from './pfe-tooltip.scss';

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { Placement } from '@popperjs/core';

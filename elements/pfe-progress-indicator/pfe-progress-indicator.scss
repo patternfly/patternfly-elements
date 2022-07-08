@@ -16,6 +16,7 @@ $pfe-progress-indicator--width: #{pfe-var(surface--border-width--heavy)};
   display: none;
 }
 
+span,
 ::slotted(*) {
   position: absolute;
   overflow: hidden;

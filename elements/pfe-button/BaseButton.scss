@@ -61,6 +61,12 @@
     var(--pf-global--primary-color--200, #004080));
   --pf-c-button--after--BorderWidth: var(--pf-c-button--active--after--BorderWidth,
     var(--pf-global--BorderWidth--md, 2px));
+
+  // DANGER
+  --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--active--Color,
+    var(--pf-global--Color--light-100, #fff));
+  --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--active--BackgroundColor,
+    var(--pf-global--danger-color--200, #a30000));
 }
 
 ::slotted(button:focus) {
@@ -70,6 +76,12 @@
     var(--pf-global--primary-color--200, #004080));
   --pf-c-button--after--BorderWidth: var(--pf-c-button--focus--after--BorderWidth,
     var(--pf-global--BorderWidth--md, 2px));
+
+  // DANGER
+  --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--focus--Color,
+    var(--pf-global--Color--light-100, #fff));
+  --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--focus--BackgroundColor,
+    var(--pf-global--danger-color--200, #a30000));
 }
 
 ::slotted(button:hover) {
@@ -79,40 +91,12 @@
     var(--pf-global--primary-color--200, #004080));
   --pf-c-button--after--BorderWidth: var(--pf-c-button--hover--after--BorderWidth,
     var(--pf-global--BorderWidth--md, 2px));
-}
 
-/******************************
- *                            *
- *          WARNING           *
- *                            *
- ******************************/
-
-:host([warning]) ::slotted(button) {
-  color: var(--pf-c-button--m-warning--Color,
-    var(--pf-global--Color--dark-100, #151515)) !important;
-  background-color: var(--pf-c-button--m-warning--BackgroundColor,
-    var(--pf-global--warning-color--100, #f0ab00)) !important;
-}
-
-:host([warning]) ::slotted(button:active) {
-  --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--active--Color,
-    var(--pf-global--Color--dark-100, #151515));
-  --pf-c-button--m-warning--BackgroundColor: var(--pf-c-button--m-warning--active--BackgroundColor,
-    var(--pf-global--palette--gold-500, #c58c00));
-}
-
-:host([warning]) ::slotted(button:focus) {
-  --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--focus--Color,
-    var(--pf-global--Color--dark-100, #151515));
-  --pf-c-button--m-warning--BackgroundColor: var(--pf-c-button--m-warning--focus--BackgroundColor,
-    var(--pf-global--palette--gold-500, #c58c00));
-}
-
-:host([warning]) ::slotted(button:hover) {
-  --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--hover--Color,
-    var(--pf-global--Color--dark-100, #151515));
-  --pf-c-button--m-warning--BackgroundColor: var(--pf-c-button--m-warning--hover--BackgroundColor,
-    var(--pf-global--palette--gold-500, #c58c00));
+  // DANGER
+  --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--hover--Color,
+    var(--pf-global--Color--light-100, #fff));
+  --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--hover--BackgroundColor,
+    var(--pf-global--danger-color--200, #a30000));
 }
 
 /******************************
@@ -121,32 +105,22 @@
  *                            *
  ******************************/
 
-:host([danger]) ::slotted(button) {
+:host([variant=link]) ::slotted(button),
+:host([variant=link]) #container {
+  color: var(--pf-c-button--m-link--Color,
+    var(--pf-global--link--Color, #06c)) !important;
+}
+
+:host([variant=link]) ::slotted(button) {
+  background-color: var(--pf-c-button--m-link--BackgroundColor,
+    var(--pf-c-button--m-link--hover--BackgroundColor, transparent)) !important;
+}
+
+:host([danger]) #container ::slotted(button) {
   color: var(--pf-c-button--m-danger--Color,
     var(--pf-global--Color--light-100, #fff)) !important;
   background-color: var(--pf-c-button--m-danger--BackgroundColor,
     var(--pf-global--danger-color--100, #c9190b)) !important;
-}
-
-:host([danger]) ::slotted(button:active) {
-  --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--active--Color,
-    var(--pf-global--Color--light-100, #fff));
-  --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--active--BackgroundColor,
-    var(--pf-global--danger-color--200, #a30000));
-}
-
-:host([danger]) ::slotted(button:focus) {
-  --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--focus--Color,
-    var(--pf-global--Color--light-100, #fff));
-  --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--focus--BackgroundColor,
-    var(--pf-global--danger-color--200, #a30000));
-}
-
-:host([danger]) ::slotted(button:hover) {
-  --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--hover--Color,
-    var(--pf-global--Color--light-100, #fff));
-  --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--hover--BackgroundColor,
-    var(--pf-global--danger-color--200, #a30000));
 }
 
 /******************************
@@ -352,11 +326,64 @@
  *                            *
  ******************************/
 
-:host([variant=link]) ::slotted(button) {
-  background-color: var(--pf-c-button--m-link--BackgroundColor,
-    var(--pf-c-button--m-link--hover--BackgroundColor, transparent)) !important;
-  color: var(--pf-c-button--m-link--Color,
-    var(--pf-global--link--Color, #06c)) !important;
+:host([variant=link][inline]) ::slotted(button:hover) {
+  text-decoration: var(--pf-c-button--m-link--m-inline--hover--TextDecoration,
+    var(--pf-global--link--TextDecoration--hover, underline)) !important;
+}
+
+:host(:hover) {
+  --pf-c-button--m-link--Color: var(--pf-c-button--m-link--hover--Color,
+    var(--pf-global--link--Color--hover, #004080));
+  --pf-c-button--m-link--BackgroundColor: var(--pf-c-button--m-link--hover--BackgroundColor, transparent);
+}
+
+:host(:focus),
+:host(:focus-within) {
+  --pf-c-button--m-link--Color: var(--pf-c-button--m-link--focus--Color,
+    var(--pf-global--link--Color--hover, #004080));
+  --pf-c-button--m-link--BackgroundColor: var(--pf-c-button--m-link--hover--BackgroundColor, transparent);
+}
+
+::slotted(button:active) {
+  --pf-c-button--m-link--Color: var(--pf-c-button--m-link--active--Color,
+    var(--pf-global--link--Color--hover, #004080));
+  --pf-c-button--m-link--BackgroundColor: var(--pf-c-button--m-link--active--BackgroundColor, transparent);
+}
+
+:host(:has(button:active)) {
+  --pf-c-button--m-link--Color: var(--pf-c-button--m-link--active--Color,
+    var(--pf-global--link--Color--hover, #004080));
+  --pf-c-button--m-link--BackgroundColor: var(--pf-c-button--m-link--active--BackgroundColor, transparent);
+}
+
+:host([variant=link][danger]) ::slotted(button) {
+  --pf-c-button--m-danger--Color: var(--pf-c-button--m-link--m-danger--Color,
+      var(--pf-global--danger-color--100, #c9190b));
+  --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-link--m-danger--BackgroundColor, transparent);
+}
+
+:host([variant=link][danger]) ::slotted(button:hover) {
+  --pf-c-button--m-link--m-danger--Color: var(--pf-c-button--m-link--m-danger--hover--Color,
+      var(--pf-global--danger-color--200, #a30000));
+  --pf-c-button--m-link--m-danger--BackgroundColor: var(--pf-c-button--m-link--m-danger--hover--BackgroundColor, transparent);
+}
+
+:host([variant=link][danger]) ::slotted(button:active) {
+  --pf-c-button--m-link--m-danger--Color: var(--pf-c-button--m-link--m-danger--active--Color,
+    var(--pf-global--danger-color--200, #a30000));
+  --pf-c-button--m-link--m-danger--BackgroundColor: var(--pf-c-button--m-link--m-danger--active--BackgroundColor, transparent);
+}
+
+:host([variant=link][danger]:has(button:active)) {
+  --pf-c-button--m-link--m-danger--Color: var(--pf-c-button--m-link--m-danger--active--Color,
+    var(--pf-global--danger-color--200, #a30000));
+  --pf-c-button--m-link--m-danger--BackgroundColor: var(--pf-c-button--m-link--m-danger--active--BackgroundColor, transparent);
+}
+
+:host([variant=link][danger]:is(:focus, :focus-within)) {
+  --pf-c-button--m-link--m-danger--Color: var(--pf-c-button--m-link--m-danger--focus--Color,
+    var(--pf-global--danger-color--200, #a30000));
+  --pf-c-button--m-link--m-danger--BackgroundColor: var(--pf-c-button--m-link--m-danger--focus--BackgroundColor, transparent);
 }
 
 /******************************
@@ -430,11 +457,32 @@
  *                            *
  ******************************/
 
-// [part=icon] {
-//   display: none;
-// }
-//
-// .hasIcon [part=icon] {
-//   display: block;
-// }
-//
+[part=icon] {
+  display: none;
+}
+
+.hasIcon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.hasIcon [part=icon] {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  position: absolute;
+  aspect-ratio: 1/1;
+  width: 32px;
+  left: 8px;
+  margin-inline-end: var(--pf-c-button__icon--m-start--MarginRight,
+    var(--pf-global--spacer--xs, 0.25rem));
+}
+
+.hasIcon ::slotted(button) {
+  --pf-c-button--PaddingLeft: 36px;
+  position: absolute;
+  inset: 0;
+}
+
+

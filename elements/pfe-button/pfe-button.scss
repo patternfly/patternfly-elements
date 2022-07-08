@@ -1,5 +1,39 @@
 /******************************
  *                            *
+ *          WARNING           *
+ *                            *
+ ******************************/
+
+:host([warning]) ::slotted(button) {
+  color: var(--pf-c-button--m-warning--Color,
+    var(--pf-global--Color--dark-100, #151515)) !important;
+  background-color: var(--pf-c-button--m-warning--BackgroundColor,
+    var(--pf-global--warning-color--100, #f0ab00)) !important;
+}
+
+:host([warning]) ::slotted(button:active) {
+  --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--active--Color,
+    var(--pf-global--Color--dark-100, #151515));
+  --pf-c-button--m-warning--BackgroundColor: var(--pf-c-button--m-warning--active--BackgroundColor,
+    var(--pf-global--palette--gold-500, #c58c00));
+}
+
+:host([warning]) ::slotted(button:focus) {
+  --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--focus--Color,
+    var(--pf-global--Color--dark-100, #151515));
+  --pf-c-button--m-warning--BackgroundColor: var(--pf-c-button--m-warning--focus--BackgroundColor,
+    var(--pf-global--palette--gold-500, #c58c00));
+}
+
+:host([warning]) ::slotted(button:hover) {
+  --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--hover--Color,
+    var(--pf-global--Color--dark-100, #151515));
+  --pf-c-button--m-warning--BackgroundColor: var(--pf-c-button--m-warning--hover--BackgroundColor,
+    var(--pf-global--palette--gold-500, #c58c00));
+}
+
+/******************************
+ *                            *
  *           PLAIN            *
  *                            *
  ******************************/
@@ -39,35 +73,44 @@
     transparent);
 }
 
+:host([plain]) .hasIcon [part=icon],
+:host([loading][plain]) [part=icon] {
+  left: 16px;
+}
+
+/******************************
+ *                            *
+ *    ICON POSITION RIGHT     *
+ *                            *
+ ******************************/
+
+:host([icon-position=right]) .hasIcon [part=icon],
+:host([icon-position=right][loading]) [part=icon] {
+  display: inline-flex;
+  align-items: center;
+  z-index: 1;
+  position: absolute;
+  aspect-ratio: 1/1;
+  width: 32px;
+  right: -8px;
+  left: initial;
+  margin-inline-start: var(--pf-c-button__icon--m-start--MarginLeft,
+    var(--pf-global--spacer--xs, 0.25rem));
+}
+
+:host([icon-position=right]) .hasIcon ::slotted(button),
+:host([icon-position=right][loading]) ::slotted(button) {
+  --pf-c-button--PaddingLeft: initial;
+  --pf-c-button--PaddingRight: 36px;
+  position: absolute;
+  inset: 0;
+}
+
 /******************************
  *                            *
  *          LOADING           *
  *                            *
  ******************************/
-
-:host([loading]) [part=icon] {
-  display: inline-block;
-  z-index: 1;
-  position: absolute;
-  aspect-ratio: 1/1;
-  width: 32px;
-  left: 8px;
-}
-
-:host([loading][plain]) [part=icon] {
-  left: 16px;
-}
-
-:host([loading]) [part=icon] {
-  --pfe-progress-indicator--background-color: rgba(0,102,204,.25);
-  --pfe-progress-indicator--foreground-color: #06c;
-}
-
-:host([loading][variant=primary]:not([plain])) [part=icon],
-:host([loading][danger]) [part=icon] {
-  --pfe-progress-indicator--background-color: rgba(255, 255, 255, .25);
-  --pfe-progress-indicator--foreground-color: rgba(255, 255, 255, .75);
-}
 
 :host([loading]) #container {
   position: relative;
@@ -75,8 +118,39 @@
   align-items: center;
 }
 
+:host([loading]) #container [part=icon] {
+  display: inline-block;
+  z-index: 1;
+  position: absolute;
+  cursor: pointer;
+  top: var(--pf-c-button__progress--Top, 50%);
+  left: var(--pf-c-button__progress--Left,
+    var(--pf-global--spacer--md, 1rem));
+  line-height: 1;
+  transform: translate(
+    var(--pf-c-button__progress--TranslateX, 0),
+    var(--pf-c-button__progress--TranslateY, -50%));
+  margin-inline-end: var(--pf-c-button__icon--m-start--MarginRight,
+    var(--pf-global--spacer--xs, 0.25rem));
+}
+
+pfe-progress-indicator {
+  --pfe-progress-indicator-size: 18px;
+}
+
+:host([loading]) {
+  --pfe-progress-indicator--background-color: rgba(0,102,204,.25);
+  --pfe-progress-indicator--foreground-color: #06c;
+}
+
+:host([loading][variant=primary]:not([plain])),
+:host([loading][danger]) {
+  --pfe-progress-indicator--background-color: rgba(255, 255, 255, .25);
+  --pfe-progress-indicator--foreground-color: rgba(255, 255, 255, .75);
+}
+
 :host([loading]) ::slotted(button) {
-  --pf-c-button--PaddingLeft: 36px;
+  --pf-c-button--PaddingLeft: 48px;
   position: absolute;
   inset: 0;
 }

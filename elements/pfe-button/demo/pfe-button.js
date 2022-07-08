@@ -8,24 +8,24 @@ const root = document.querySelector('[data-demo="pfe-button"]')?.shadowRoot ?? d
 const form = root.querySelector('#custom-button-styles-form');
 const sbmt = form.querySelector('pfe-button');
 const slct = form.querySelector('pfe-select');
-const logs = root.querySelector('#loading-logs');
-const load = root.querySelector('#loading-scdr');
-const icon = root.querySelector('#loading-icon');
+const logsBtn = root.querySelector('#loading-logs');
+const loadBtn = root.querySelector('#loading-scdr');
+const iconBtn = root.querySelector('#loading-icon');
 
-logs.addEventListener('click', () => {
-  logs.loading = !logs.loading;
-  logs.querySelector('button').textContent =
-    logs.loading ? 'Pause loading logs' : 'Resume loading logs';
+logsBtn.addEventListener('click', () => {
+  logsBtn.loading = !logsBtn.loading;
+  logsBtn.querySelector('button').textContent =
+    logsBtn.loading ? 'Pause loading logs' : 'Resume loading logs';
 });
 
-load.addEventListener('click', () => {
-  load.loading = !load.loading;
-  load.querySelector('button').textContent =
-    load.loading ? 'Click to stop loading' : 'Click to start loading';
+loadBtn.addEventListener('click', () => {
+  loadBtn.loading = !loadBtn.loading;
+  loadBtn.querySelector('button').textContent =
+    loadBtn.loading ? 'Click to stop loading' : 'Click to start loading';
 });
 
-icon.addEventListener('click', () => {
-  icon.loading = !icon.loading;
+iconBtn.addEventListener('click', () => {
+  iconBtn.loading = !iconBtn.loading;
 });
 
 slct.addEventListener('select', () => {

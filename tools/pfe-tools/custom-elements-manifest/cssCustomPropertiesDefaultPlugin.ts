@@ -6,6 +6,8 @@ import { parse } from 'comment-parser';
 
 import dedent from 'dedent';
 
+const DEFAULT_RE = /{@default ([^}]*)}/;
+
 export function cssCustomPropertiesDefaultPlugin(): Plugin {
   return {
     name: 'css-custom-properties-default-plugin',
@@ -52,8 +54,6 @@ export function cssCustomPropertiesDefaultPlugin(): Plugin {
                   // @ts-expect-error: exactly my point!
                   delete existing.type;
                 }
-
-                const DEFAULT_RE = /{@default (.*)}/;
 
                 const [, defaultTag] = existing.description?.match?.(DEFAULT_RE) ?? [];
 

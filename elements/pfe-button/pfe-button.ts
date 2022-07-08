@@ -53,11 +53,11 @@ export class PfeButton extends BaseButton {
   protected override renderDefaultIcon() {
     return html`
       <pfe-icon ?hidden=${!this.icon} icon=${this.icon} size="sm"></pfe-icon>
-        <pfe-progress-indicator
-            ?hidden=${!this.loading}
-            indeterminate
-            aria-label=${this.getAttribute('progress-label') ?? 'loading'}
-        ></pfe-progress-indicator>
+      <pfe-progress-indicator
+          ?hidden=${!this.loading}
+          indeterminate
+          aria-label=${this.getAttribute('progress-label') ?? 'loading'}
+      ></pfe-progress-indicator>
     `;
   }
 }

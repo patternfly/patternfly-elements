@@ -468,6 +468,13 @@
   cursor: pointer;
 }
 
+[part=icon] ::slotted(*) {
+  width: 16px;
+  max-width: 16px;
+  height: 16px;
+  max-height: 16px;
+}
+
 .hasIcon ::slotted(button) {
   --pf-c-button--PaddingLeft: 36px;
   position: absolute;

@@ -304,6 +304,19 @@
     var(--pf-c-button--m-link--hover--BackgroundColor, transparent)) !important;
 }
 
+:host([variant=link][inline]),
+:host([variant=link][inline]) #container,
+:host([variant=link][inline]) ::slotted(button) {
+  display: inline;
+}
+
+:host([variant=link][inline]) {
+  --pf-c-button--PaddingTop: 0;
+  --pf-c-button--PaddingLeft: 0;
+  --pf-c-button--PaddingBottom: 0;
+  --pf-c-button--PaddingRight: 0;
+}
+
 :host([variant=link][inline]) ::slotted(button:hover) {
   text-decoration: var(--pf-c-button--m-link--m-inline--hover--TextDecoration,
     var(--pf-global--link--TextDecoration--hover, underline)) !important;
@@ -481,6 +494,11 @@
   inset: 0;
 }
 
+/******************************
+ *                            *
+ *          DANGER            *
+ *                            *
+ ******************************/
 
 :host([danger]) ::slotted(button) {
   color: var(--pf-c-button--m-danger--Color,

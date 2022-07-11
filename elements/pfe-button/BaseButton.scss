@@ -1,6 +1,7 @@
 :host {
   display: inline-block;
   height: max-content;
+  --pfe-icon--color: currentColor;
 }
 
 :host([hidden]) {
@@ -392,6 +393,7 @@
  ******************************/
 
 :host([disabled]),
+:host([disabled]) #container,
 :host([disabled]) ::slotted(button),
 :host([disabled][danger]) ::slotted(button),
 :host([disabled][variant=link]) ::slotted(button),

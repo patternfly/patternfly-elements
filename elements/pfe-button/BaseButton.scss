@@ -339,13 +339,13 @@
   --pf-c-button--m-link--BackgroundColor: var(--pf-c-button--m-link--hover--BackgroundColor, transparent);
 }
 
-::slotted(button:active) {
+:host(:not([inline])) ::slotted(button:active) {
   --pf-c-button--m-link--Color: var(--pf-c-button--m-link--active--Color,
     var(--pf-global--link--Color--hover, #004080));
   --pf-c-button--m-link--BackgroundColor: var(--pf-c-button--m-link--active--BackgroundColor, transparent);
 }
 
-:host(:has(button:active)) {
+:host(:not([inline]):has(button:active)) {
   --pf-c-button--m-link--Color: var(--pf-c-button--m-link--active--Color,
     var(--pf-global--link--Color--hover, #004080));
   --pf-c-button--m-link--BackgroundColor: var(--pf-c-button--m-link--active--BackgroundColor, transparent);

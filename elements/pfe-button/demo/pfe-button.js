@@ -33,3 +33,8 @@ slct.addEventListener('select', () => {
 });
 
 form.addEventListener('submit', event => event.preventDefault());
+
+for (const button of document.querySelectorAll('pfe-button')) {
+  // eslint-disable-next-line no-console
+  button.addEventListener('click', console.log);
+}

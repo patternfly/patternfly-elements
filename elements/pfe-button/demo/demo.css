@@ -1,3 +1,7 @@
+[data-demo=pfe-button] {
+  padding-inline: 1em;
+}
+
 section {
   display: flex;
   flex-flow: row wrap;

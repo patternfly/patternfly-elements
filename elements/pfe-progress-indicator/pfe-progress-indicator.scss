@@ -1,10 +1,3 @@
-@use "@patternfly/pfe-sass" as *;
-
-@include configure($name: 'progress-indicator');
-
-$pfe-progress-indicator--style: #{pfe-var(surface--border-style)};
-$pfe-progress-indicator--width: #{pfe-var(surface--border-width--heavy)};
-
 :host {
   display: inline-block;
   aspect-ratio: 1;
@@ -37,11 +30,11 @@ span,
 :host([indeterminate]) #container::after {
   content: '';
   animation: spin 1s linear infinite;
-  -webkit-animation:spin 1s linear infinite;
-  -moz-animation:spin 1s linear infinite;
 
-  border-style: $pfe-progress-indicator--style;
-  border-width: $pfe-progress-indicator--width;
+  box-sizing: border-box;
+  border-style: var(--pfe-theme--surface--border-style, solid);
+  border-width: var(--pfe-theme--surface--border-width--heavy, 4px);
+
   // @todo 2.0: potentially make default color align with PatternFly, which is #06c
   border-color: var(--pfe-progress-indicator--background-color, rgba(0, 0, 0, .25));
   border-top-color: var(--pfe-progress-indicator--foreground-color, rgba(0, 0, 0, .75));
@@ -53,39 +46,38 @@ span,
   position: relative;
   vertical-align: middle;
   visibility: visible;
-  --pfe-progress-indicator-scale: 0.8;
   width: var(--pfe-progress-indicator-size, 2rem);
   aspect-ratio: 1;
 
-  transform: scale(var(--pfe-progress-indicator-scale)) rotate(0deg);
+  transform: rotate(0deg);
 }
 
 :host([size="sm"]) {
   --pfe-progress-indicator-size: 1rem;
    #container {
-    border-width: calc(#{pfe-var(surface--border-width--heavy)} * .75);
+    border-width: calc(var(--pfe-theme--surface--border-width--heavy, 4px) * .75);
   }
 }
 
 :host([size="md"]) {
   --pfe-progress-indicator-size: 2rem;
    #container {
-    border-width: calc(#{pfe-var(surface--border-width--heavy)} * 1);
+    border-width: calc(var(--pfe-theme--surface--border-width--heavy, 4px) * 1);
   }
 }
 
 :host([size="xl"]) {
   --pfe-progress-indicator-size: 4rem;
   #container {
-    border-width: calc(#{pfe-var(surface--border-width--heavy)} * 1.5);
+    border-width: calc(var(--pfe-theme--surface--border-width--heavy, 4px) * 1.5);
   }
 }
 
 
 @keyframes spin {
     from {
-        transform: scale(var(--pfe-progress-indicator-scale)) rotate(0deg);
+        transform: rotate(0deg);
     } to {
-        transform: scale(var(--pfe-progress-indicator-scale)) rotate(360deg);
+        transform: rotate(360deg);
     }
 }

@@ -476,9 +476,9 @@
   display: inline-flex;
   align-items: center;
   position: absolute;
-  aspect-ratio: 1/1;
-  width: 32px;
-  left: 8px;
+  width: 16px;
+  left: var(--pf-c-button--PaddingLeft,
+    var(--pf-global--spacer--md, 1rem));
   margin-inline-end: var(--pf-c-button__icon--m-start--MarginRight,
     var(--pf-global--spacer--xs, 0.25rem));
 }
@@ -495,9 +495,13 @@
 }
 
 .hasIcon ::slotted(button) {
-  --pf-c-button--PaddingLeft: 36px;
   position: absolute;
   inset: 0;
+  padding-left: calc(16px + 8px + var(--pf-c-button--PaddingLeft, var(--pf-global--spacer--md, 1rem))) !important;
+}
+
+.hasIcon ::slotted(button) {
+  padding-left: calc(16px + 8px + var(--pf-c-button--PaddingLeft, var(--pf-global--spacer--md, 1rem))) !important;
 }
 
 /******************************

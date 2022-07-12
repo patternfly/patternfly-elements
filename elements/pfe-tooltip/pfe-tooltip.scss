@@ -6,7 +6,7 @@
 
 :host { 
   --pf-c-toolip__content--BackgroundColor: var(--pf-global--BackgroundColor--dark-100, #1b1d21);
-  --color: var(--pf-global--Color--light-100, #ffffff);
+  --pf-c-tooltip__content--Color: var(--pf-global--Color--light-100, #ffffff);
   line-height: var(--rh-line-height-body-text, 1.5);;
   display: inline-block;
 }
@@ -18,8 +18,6 @@
   --pf-c-tooltip__content--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-tooltip__content--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-tooltip__content--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
-  --pf-c-tooltip__content--Color: var(--color);
-  --pf-c-tooltip__content--BackgroundColor: var(--pf-c-toolip__content--BackgroundColor);
   --pf-c-tooltip__content--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
   --pf-c-tooltip__arrow--Width: 0.5rem;
   --pf-c-tooltip__arrow--Height: 0.5rem;
@@ -35,6 +33,8 @@
   --pf-c-tooltip__arrow--m-left--TranslateX: 50%;
   --pf-c-tooltip__arrow--m-left--TranslateY: -50%;
   --pf-c-tooltip__arrow--m-left--Rotate: 45deg;
+  color: var(--pf-c-tooltip__content--Color);
+  background-color: var(--pf-c-toolip__content--BackgroundColor);
   opacity: 1; 
   transition: opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s;
   position: relative;

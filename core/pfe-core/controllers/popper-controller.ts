@@ -8,6 +8,10 @@ export const createPopper = popperGenerator({
 
 
 export class TooltipDOMController implements ReactiveController {
+  #popper: Instance | undefined;
+
+  #logger: Logger;
+
   #open = false;
 
   getOpen(): boolean {
@@ -18,22 +22,18 @@ export class TooltipDOMController implements ReactiveController {
     this.#open = isOpen;
   }
 
-  private popper: Instance | undefined;
-
-  private logger: Logger;
-
   constructor(private host: ReactiveElement) {
-    this.logger = new Logger(this.host);
+    this.#logger = new Logger(this.host);
     host.addController(this);
   }
 
   hostConnected(): void {
-    this.logger.log('popper controller - host connected');
+    this.#logger.log('host connected - popper controller');
   }
 
   show(): void {
     this.#setOpen(true);
-    this.popper?.update();
+    this.#popper?.update();
     this.host.requestUpdate();
   }
 
@@ -43,7 +43,7 @@ export class TooltipDOMController implements ReactiveController {
   }
 
   create(invoker: Element, tooltip: HTMLElement, placement: Placement, offset?: Array<number>): void {
-    this.popper = createPopper(invoker, tooltip, {
+    this.#popper = createPopper(invoker, tooltip, {
       placement,
       modifiers: [
         {

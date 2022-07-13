@@ -1,15 +1,33 @@
-import { html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
 
-import { BaseLabel } from './BaseLabel.js';
+import type { TemplateResult } from 'lit';
+import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
-import styles from './pfe-label.scss';
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
+import styles from './BaseLabel.scss';
+
+export type LabelVariant = (
+  | 'filled'
+  | 'outline'
+);
+
+export type LabelColor = (
+  | 'blue'
+  | 'cyan'
+  | 'green'
+  | 'orange'
+  | 'purple'
+  | 'red'
+  | 'grey'
+  | 'gold'
+)
 
 /**
- * Labels allow users to display meta data in a stylized form.
- *
- * @summary Allows users to display meta data in a stylized form.
+ * Base label class
  *
  * @cssprop {<length>} --pf-c-label--FontSize   {@default `0.875em`}
  *
@@ -78,29 +96,53 @@ import styles from './pfe-label.scss';
  *
  * @slot
  *       Must contain the text for the label.
- *
- * @cssprop {<length>} --pf-c-label--m-compact--PaddingTop     {@default `0`}
- * @cssprop {<length>} --pf-c-label--m-compact--PaddingRight   {@default `0.5rem`}
- * @cssprop {<length>} --pf-c-label--m-compact--PaddingBottom  {@default `0`}
- * @cssprop {<length>} --pf-c-label--m-compact--PaddingLeft    {@default `0.5rem`}
- */
-@customElement('pfe-label')
-export class PfeLabel extends BaseLabel {
-  static readonly version = '{{version}}';
+*/
 
-  static readonly styles = [...BaseLabel.styles, styles];
+export abstract class BaseLabel extends LitElement {
+  static readonly styles = [styles];
 
-  @property({ reflect: true, type: Boolean, attribute: 'is-compact' }) isCompact = false;
+  /**
+   * Changes the style of the label.
+   * - Filled: Colored background with colored border.
+   * - Outline: White background with colored border.
+   */
+  @property({ reflect: true }) variant: LabelVariant = 'filled';
 
-  protected override renderDefaultIcon() {
+  /**
+   * Changes the color of the label
+   */
+  @property({ reflect: true }) color: LabelColor = 'grey';
+
+  /** Shorthand for the `icon` slot, the value is icon name */
+  @property() icon = '';
+
+  /** Represents the state of the anonymous and icon slots */
+  protected slots = new SlotController(this, null, 'icon');
+
+  #logger = new Logger(this);
+
+  override render() {
+    const { icon } = this;
+    const hasIcon = this.slots.hasSlotted('icon') || !!icon;
     return html`
-      <pfe-icon ?hidden=${!this.icon} icon=${this.icon} size="sm"></pfe-icon>
+      <span id="container" class=${classMap({ hasIcon })}>
+        <span part="icon">
+          <slot name="icon">
+          ${ifDefined(this.icon) ? html`${this.renderDefaultIcon()}` : ``}
+          </slot>
+        </span>
+        <slot></slot>
+      </span>
     `;
   }
-}
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'pfe-label': PfeLabel;
-  }
+  /**
+   * Fallback content for the icon slot. When the `icon` attribute is set, it
+   * should render an icon corresponding to the value.
+   *
+   * @example ```html
+   * <pfe-icon icon=${this.icon}></pfe-icon>
+   * ```
+   */
+  protected abstract renderDefaultIcon(): TemplateResult;
 }

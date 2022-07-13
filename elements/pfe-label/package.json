@@ -13,6 +13,7 @@
   },
   "exports": {
     ".": "./pfe-label.js",
+    "./BaseLabel.js": "./BaseLabel.js",
     "./*": "./*.js"
   },
   "publishConfig": {

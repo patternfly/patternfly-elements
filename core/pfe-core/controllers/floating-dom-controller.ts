@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { ReactiveController, ReactiveElement } from 'lit';
 import { Placement, popperGenerator, eventListeners, popperOffsets, computeStyles, applyStyles, offset, flip, preventOverflow, arrow, hide, Instance } from '@popperjs/core';
 import { Logger } from './logger.js';
@@ -44,7 +43,6 @@ export class FloatingDOMController implements ReactiveController {
   }
 
   create(invoker: Element, tooltip: HTMLElement, placement: Placement, offset?: Array<number>): void {
-    // console.log('created');
     this.#popper = createPopper(invoker, tooltip, {
       placement,
       modifiers: [

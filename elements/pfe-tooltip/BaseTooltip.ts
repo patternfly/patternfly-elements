@@ -2,49 +2,57 @@ import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { Placement } from '@popperjs/core';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-import { TooltipDOMController } from '@patternfly/pfe-core/controllers/popper-controller.js';
+import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
 /**
+ * Base tooltip class
+ *
  * A Tooltip is a floating text area triggered by a user that provides helpful or contextual information.
  *
  * @summary Toggle the visiblity of helpful or contextual information.
  *
+ * @slot
+ *       This slot wraps around the element that should be used to invoke the tooltip content to display.
+ *       Typically this would be an icon, button, or other small sized element.
  * @slot content
  *       This slot renders the content that will be displayed inside of the tooltip.
  *       Typically this would include a string of text without any additional elements.
  *       This element is wrapped with a div inside of the component to give it the stylings and background colors.
  *
- * @cssprop     {color} --pf-c-toolip__content--BackgroundColor
+ * @cssprop     {<color>} --pf-c-toolip__content--BackgroundColor
  *              Sets the background color for the tooltip content.
  *              {@default `#1b1d21`}
- * @cssprop     {color} --pf-c-tooltip__content--Color
+ * @cssprop     {<color>} --pf-c-tooltip__content--Color
  *              Sets the font color for the tooltip content.
  *              {@default `#e0e0e0`}
- * @cssprop     {length} --pf-c-tooltip--MaxWidth
+ * @cssprop     {<number>} --pf-c-tooltip--line-height
+ *              Sets the font color for the tooltip content.
+ *              {@default `1.5`}
+ * @cssprop     {<length>} --pf-c-tooltip--MaxWidth
  *              Maximum width for the tooltip.
  *              {@default `18.75rem`}
  * @cssprop     --pf-c-tooltip--BoxShadow
  *              Box shadow for the tooltip.
  *              {@default `0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06)`}
- * @cssprop     {length} --pf-c-tooltip__content--PaddingTop
+ * @cssprop     {<length>} --pf-c-tooltip__content--PaddingTop
  *              Top padding for the tooltip.
  *              {@default `0.5rem`}
- * @cssprop     {length} --pf-c-tooltip__content--PaddingRight
+ * @cssprop     {<length>} --pf-c-tooltip__content--PaddingRight
  *              Right padding for the tooltip.
  *              {@default `0.5rem`}
- * @cssprop     {length} --pf-c-tooltip__content--PaddingBottom
+ * @cssprop     {<length>} --pf-c-tooltip__content--PaddingBottom
  *              Bottom padding for the tooltip.
  *              {@default `0.5rem`}
- * @cssprop     {length} --pf-c-tooltip__content--PaddingLeft
+ * @cssprop     {<length>} --pf-c-tooltip__content--PaddingLeft
  *              Left Padding for the tooltip.
  *              {@default `0.5rem`}
  * @cssprop     --pf-c-tooltip__content--FontSize
  *              Font size for the tooltip content.
  *              {@default `0.875rem`}
- * @cssprop     {length} --pf-c-tooltip__arrow--Width
+ * @cssprop     {<length>} --pf-c-tooltip__arrow--Width
  *              Tooltip arrow width.
  *              {@default `0.5rem`}
- * @cssprop     {length} --pf-c-tooltip__arrow--Height
+ * @cssprop     {<length>} --pf-c-tooltip__arrow--Height
  *              Tooltip arrow height.s
  *              {@default `0.5rem`}
  * @cssprop     --pf-c-tooltip__arrow--m-top--TranslateX
@@ -91,7 +99,7 @@ export abstract class BaseTooltip extends LitElement {
 
   #id = getRandomId(this.localName);
 
-  #domController: TooltipDOMController = new TooltipDOMController(this);
+  #domController: FloatingDOMController = new FloatingDOMController(this);
 
   get #isOpen(): boolean {
     return this.#domController.getOpen();
@@ -162,8 +170,8 @@ export abstract class BaseTooltip extends LitElement {
         <slot></slot>
       </div>
       <div id="${this.#id}" aria-hidden=${this.#isOpen ? 'false' : 'true'}>
-        <div class="tooltip__arrow"></div>
-        <div id="content" class="tooltip__content">
+        <div class="arrow"></div>
+        <div id="content" class="content">
           <slot name="content"></slot>
         </div>
       </div>

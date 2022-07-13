@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { expect, html, fixture } from '@open-wc/testing';
 import { PfeTooltip } from '../pfe-tooltip.js';
 import { setViewport } from '@web/test-runner-commands';

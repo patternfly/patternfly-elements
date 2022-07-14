@@ -29,7 +29,7 @@ const exampleWithIconAttributeEmpty = html`
 `;
 
 const exampleWithCompactAttribute = html`
-  <pfe-label is-compact>Default Compact</pfe-label>
+  <pfe-label compact>Default Compact</pfe-label>
 `;
 
 

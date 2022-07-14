@@ -90,7 +90,7 @@ export class PfeLabel extends BaseLabel {
 
   static readonly styles = [...BaseLabel.styles, styles];
 
-  @property({ reflect: true, type: Boolean, attribute: 'is-compact' }) isCompact = false;
+  @property({ reflect: true, type: Boolean }) compact = false;
 
   protected override renderDefaultIcon() {
     return html`

@@ -1,4 +1,4 @@
-:host([is-compact]) {
+:host([compact]) {
   --pf-c-label--PaddingTop: var(--pf-c-label--m-compact--PaddingTop, 0);
   --pf-c-label--PaddingRight: var(--pf-c-label--m-compact--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
   --pf-c-label--PaddingBottom: var(--pf-c-label--m-compact--PaddingBottom, 0);

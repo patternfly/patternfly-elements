@@ -7,16 +7,6 @@ function getTagName(url) {
   return `pfe-${tagName}`;
 }
 
-async function elementsPackages() {
-  const { getPackageData } = await import('@patternfly/pfe-tools/11ty');
-  return getPackageData('elements', 'components');
-}
-
-async function corePackages() {
-  const { getPackageData } = await import('@patternfly/pfe-tools/11ty');
-  return getPackageData('core');
-}
-
 // it's an 11ty api
 /* eslint-disable no-invalid-this */
 
@@ -38,12 +28,10 @@ module.exports = function configFunction(eleventyConfig) {
 
   eleventyConfig.addGlobalData('env', () => process.env);
 
-  eleventyConfig.addGlobalData('elementsPackages', elementsPackages);
-  eleventyConfig.addGlobalData('corePackages', corePackages);
-  eleventyConfig.addGlobalData('core', async function core() {
-    return [...new Set((await corePackages()).values())]
-      .sort((a, b) => a.package.name > b.package.name ? 1 : -1);
-  });
+  // OOO:
+  // 1. get all packages
+  // 2. get manifests from packages, construct manifest objects, associate packages
+  // 3. get all tag names from each manifest. construct docs page for tag names w/ associates manifest and package
   eleventyConfig.addGlobalData('elements', async function elements() {
     return [...new Set((await elementsPackages()).values())]
       .sort((a, b) => a.tagName > b.tagName ? 1 : -1);

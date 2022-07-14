@@ -7,7 +7,6 @@
 :host { 
   --pf-c-tooltip__content--BackgroundColor: var(--pf-global--BackgroundColor--dark-100, #1b1d21);
   --pf-c-tooltip__content--Color: var(--pf-global--Color--light-100, #ffffff);
-  display: inline-block;
 }
 
 [id^=pfe-tooltip] {

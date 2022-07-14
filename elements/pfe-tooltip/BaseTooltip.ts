@@ -106,7 +106,7 @@ export abstract class BaseTooltip extends LitElement {
   }
 
   get #invoker() {
-    return this.shadowRoot?.querySelector('#invoker-id');
+    return this.shadowRoot?.querySelector('#invoker');
   }
 
   get #tooltip() {
@@ -166,7 +166,7 @@ export abstract class BaseTooltip extends LitElement {
 
   override render() {
     return html`
-      <div id="invoker-id" role="tooltip" tabindex="0" aria-labelledby="${this.#id}">
+      <div id="invoker" role="tooltip" tabindex="0" aria-labelledby="${this.#id}">
         <slot></slot>
       </div>
       <div id="${this.#id}" aria-hidden=${this.#isOpen ? 'false' : 'true'}>

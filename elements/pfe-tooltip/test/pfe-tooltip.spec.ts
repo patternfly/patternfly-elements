@@ -2,6 +2,7 @@ import { expect, html, fixture } from '@open-wc/testing';
 import { PfeTooltip } from '../pfe-tooltip.js';
 import { setViewport } from '@web/test-runner-commands';
 
+
 const blankElement = html`
 <pfe-tooltip>
 </pfe-tooltip>
@@ -52,6 +53,14 @@ describe('<pfe-tooltip>', function() {
       .to.be.an.instanceOf(PfeTooltip);
   });
 
+  const createAndTestPlacements = async (position: string) => {
+    const element = await fixture<HTMLDivElement>(createElement(position));
+
+    const placement = element?.querySelector('pfe-tooltip')?.shadowRoot?.querySelector('[id^=pfe-tooltip]')?.getAttribute('data-popper-placement');
+
+    expect(placement).to.equal(position);
+  };
+
   it('should be accessible', async function() {
     const element = await fixture<HTMLDivElement>(basicElement);
 
@@ -59,35 +68,51 @@ describe('<pfe-tooltip>', function() {
   });
 
   it('should reflect left position', async function() {
-    const element = await fixture<HTMLDivElement>(createElement('left'));
+    createAndTestPlacements('left');
+  });
 
-    const placement = element?.querySelector('pfe-tooltip')?.shadowRoot?.querySelector('[id^=pfe-tooltip]')?.getAttribute('data-popper-placement');
+  it('should reflect left-start position', async function() {
+    createAndTestPlacements('left-start');
+  });
 
-    expect(placement).to.equal('left');
+  it('should reflect left-end position', async function() {
+    createAndTestPlacements('left-end');
   });
 
   it('should reflect top position', async function() {
-    const element = await fixture<HTMLDivElement>(createElement('top'));
+    createAndTestPlacements('top');
+  });
 
-    const placement = element?.querySelector('pfe-tooltip')?.shadowRoot?.querySelector('[id^=pfe-tooltip]')?.getAttribute('data-popper-placement');
+  it('should reflect top-start position', async function() {
+    createAndTestPlacements('top-start');
+  });
 
-    expect(placement).to.equal('top');
+  it('should reflect top-end position', async function() {
+    createAndTestPlacements('top-end');
   });
 
   it('should reflect right position', async function() {
-    const element = await fixture<HTMLDivElement>(createElement('right'));
+    createAndTestPlacements('right');
+  });
 
-    const placement = element?.querySelector('pfe-tooltip')?.shadowRoot?.querySelector('[id^=pfe-tooltip]')?.getAttribute('data-popper-placement');
+  it('should reflect right-start position', async function() {
+    createAndTestPlacements('right-start');
+  });
 
-    expect(placement).to.equal('right');
+  it('should reflect right-end position', async function() {
+    createAndTestPlacements('right-end');
   });
 
   it('should reflect bottom position', async function() {
-    const element = await fixture<HTMLDivElement>(createElement('bottom'));
+    createAndTestPlacements('bottom');
+  });
 
-    const placement = element?.querySelector('pfe-tooltip')?.shadowRoot?.querySelector('[id^=pfe-tooltip]')?.getAttribute('data-popper-placement');
+  it('should reflect bottom-start position', async function() {
+    createAndTestPlacements('bottom-start');
+  });
 
-    expect(placement).to.equal('bottom');
+  it('should reflect bottom-end position', async function() {
+    createAndTestPlacements('bottom-end');
   });
 
   it('should reflect offset position', async function() {

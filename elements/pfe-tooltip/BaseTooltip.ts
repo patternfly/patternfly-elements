@@ -5,7 +5,7 @@ import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
 export abstract class BaseTooltip extends LitElement {
-  @property({ reflect: true, type: String }) position = 'top';
+  @property({ reflect: true }) position: Placement = 'top';
 
   @property({ reflect: true, type: Array }) offset = [0, 15];
 
@@ -40,7 +40,7 @@ export abstract class BaseTooltip extends LitElement {
 
   override firstUpdated(): void {
     if (this.#invoker && this.#tooltip) {
-      this.#domController.create(this.#invoker, this.#tooltip as HTMLElement, this.position as Placement, this.offset);
+      this.#domController.create(this.#invoker, this.#tooltip as HTMLElement, this.position, this.offset);
     }
   }
 

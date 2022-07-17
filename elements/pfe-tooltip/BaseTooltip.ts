@@ -25,7 +25,7 @@ export abstract class BaseTooltip extends LitElement {
   #domController: FloatingDOMController = new FloatingDOMController(this);
 
   get #isOpen(): boolean {
-    return this.#domController.getOpen();
+    return this.#domController.open;
   }
 
   get #invoker() {

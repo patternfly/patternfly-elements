@@ -6,7 +6,12 @@ import { FloatingDOMController, Placement } from '@patternfly/pfe-core/controlle
 export abstract class BaseTooltip extends LitElement {
   @property({ reflect: true }) position: Placement = 'top';
 
-  @property({ reflect: true, type: Array }) offset = [0, 15];
+  @property({ converter: {
+    fromAttribute(numbers: string) {
+      return numbers.split(',').map(x => parseInt(x.trim()));
+    }
+  } })
+    offset = [0, 15];
 
   #id = getRandomId(this.localName);
 

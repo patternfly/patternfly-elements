@@ -55,7 +55,7 @@ import '@patternfly/pfe-tooltip';
 
 ### Tooltip With Left Positioning And Offset
 ```html
-<pfe-tooltip position="left" offset="[10, 10]">
+<pfe-tooltip position="left" offset="10, 10">
     <div>
         This is An Element 
     </div>

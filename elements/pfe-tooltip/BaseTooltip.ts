@@ -41,12 +41,11 @@ export abstract class BaseTooltip extends LitElement {
     if (!['top', 'bottom'].includes(this.position)) {
       this.offset = [-4, 15];
     }
-    this._addListeners();
+    this.#addListeners();
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    this._removeListeners();
   }
 
   override firstUpdated(): void {
@@ -71,22 +70,13 @@ export abstract class BaseTooltip extends LitElement {
     }
   }
 
-  _addListeners() {
+  #addListeners() {
     this.addEventListener('focus', this.show);
     this.addEventListener('blur', this.hide);
     this.addEventListener('tap', this.show);
     this.addEventListener('click', this.show);
     this.addEventListener('mouseenter', this.show);
     this.addEventListener('mouseleave', this.hide);
-  }
-
-  _removeListeners() {
-    this.removeEventListener('focus', this.show);
-    this.removeEventListener('blur', this.hide);
-    this.removeEventListener('tap', this.show);
-    this.removeEventListener('click', this.show);
-    this.removeEventListener('mouseenter', this.show);
-    this.removeEventListener('mouseleave', this.hide);
   }
 
   override render() {

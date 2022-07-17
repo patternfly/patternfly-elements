@@ -1,8 +1,7 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { Placement } from '@popperjs/core';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import { FloatingDOMController, Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
 export abstract class BaseTooltip extends LitElement {
   @property({ reflect: true }) position: Placement = 'top';

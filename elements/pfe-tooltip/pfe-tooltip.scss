@@ -43,12 +43,13 @@
 }
 
 [id^=pfe-tooltip][aria-hidden="true"] {
-  opacity: 0; 
+  opacity: 0;
   transition: opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s;
+  pointer-events: none;
 }
 
-/** 
-  NOTE: If we replace the popper library the styles related to anything data-popper-* will need to be updated.  
+/**
+  NOTE: If we replace the popper library the styles related to anything data-popper-* will need to be updated
         These are popper specific data attributes.
 **/
 

@@ -4,8 +4,15 @@ import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { FloatingDOMController, Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
 export abstract class BaseTooltip extends LitElement {
+  /** The placement of the tooltip, relative to the invoking content */
   @property({ reflect: true }) position: Placement = 'top';
 
+  /**
+   * Optional tooltip offset: a comma separated coordinate pair of numbers
+   *     ```html
+   *     <pfe-tooltip offset="5,6">...</pfe-tooltip>
+   *     ```
+   */
   @property({ converter: {
     fromAttribute(numbers: string) {
       return numbers.split(',').map(x => parseInt(x.trim()));
@@ -48,6 +55,7 @@ export abstract class BaseTooltip extends LitElement {
     }
   }
 
+  /** Show the tooltip */
   show() {
     if (this.#domController) {
       this.#domController.show();
@@ -55,6 +63,7 @@ export abstract class BaseTooltip extends LitElement {
     }
   }
 
+  /** Hide the tooltip */
   hide() {
     if (this.#domController) {
       this.#domController.hide();

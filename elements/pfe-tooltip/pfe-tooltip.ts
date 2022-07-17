@@ -3,7 +3,7 @@ import { BaseTooltip } from './BaseTooltip.js';
 import style from './pfe-tooltip.scss';
 
 /**
- * Patternfly tooltip class
+ * Patternfly tooltip
  *
  * A Tooltip is a floating text area triggered by a user that provides helpful or contextual information.
  *
@@ -90,7 +90,6 @@ import style from './pfe-tooltip.scss';
  *              Rotates the tooltip arrow based on degrees of movement for `left` positioned arrows.
  *              {@default `45deg`}
  */
-
 @customElement('pfe-tooltip')
 export class PfeTooltip extends BaseTooltip {
   static readonly version = '{{version}}';

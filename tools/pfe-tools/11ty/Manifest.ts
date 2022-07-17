@@ -6,6 +6,7 @@ import type {
   CssCustomProperty,
   CssPart,
   CustomElement,
+  CustomElementDeclaration,
   Declaration,
   Event,
   Export,
@@ -13,7 +14,20 @@ import type {
   Slot,
 } from 'custom-elements-manifest/schema';
 
+import { join } from 'node:path';
+import { readFileSync } from 'node:fs';
+
 type PredicateFn = (x: unknown) => boolean;
+
+export interface PackageJSON {
+  customElements?: string;
+  name: string;
+  version: string;
+  private?: boolean;
+  contributors?: string[];
+  author?: string;
+  workspaces?: string[];
+}
 
 const all = (...ps: PredicateFn[]) => (x: unknown) => ps.every(p => p(x));
 const not = (p: PredicateFn) => (x: unknown) => !p(x);
@@ -29,10 +43,13 @@ export const isPublicInstanceField: (x: ClassMember) => x is ClassField =
 export const isPublicInstanceMethod: (x: ClassMember) => x is ClassMethod =
   all(isMethod as PredicateFn, not(isStatic as PredicateFn), isPublic as PredicateFn) as (x: ClassMember) => x is ClassMethod;
 
-export const isCustomElement = (x: Declaration): x is Declaration & CustomElement => 'tagName' in x;
+export const isCustomElement = (x: Declaration): x is CustomElementDeclaration => 'tagName' in x;
 export const isTheField = (x: ClassField) => (y: Attribute) => y.fieldName === x.name;
 
 class ManifestCustomElement {
+  /** The element's name */
+  declare tagName?: string;
+
   /** The element's attributes */
   declare attributes: Attribute[];
 
@@ -63,9 +80,10 @@ class ManifestCustomElement {
   /** The export for the element */
   declare export?: Export;
 
-  constructor(private declaration: Declaration & CustomElement, private manifest: Manifest) {
+  constructor(private declaration: CustomElementDeclaration, private manifest: Manifest) {
     const isAnAttr = (x: ClassField) => !this.declaration?.attributes?.some?.(isTheField(x));
 
+    this.tagName = this.declaration.tagName;
     this.attributes = this.declaration?.attributes ?? [];
     this.cssCustomProperties = this.declaration?.cssProperties ?? [];
     this.cssParts = this.declaration?.cssParts ?? [];
@@ -83,13 +101,22 @@ class ManifestCustomElement {
 }
 
 export class Manifest {
-  public static from(manifest: Package) {
-    return new Manifest(manifest);
+  public static from(packageJson: any, location: string) {
+    const manifest = JSON.parse(readFileSync(join(location, packageJson.customElements), 'utf8'));
+    return new Manifest(
+      manifest as Package,
+      packageJson,
+      location
+    );
   }
 
   declarations = new Map<string, ManifestCustomElement>();
 
-  constructor(public manifest: Package) {
+  constructor(
+    public manifest: Package,
+    public packageJson: PackageJSON,
+    public location: string
+  ) {
     for (const { declarations } of manifest.modules ?? []) {
       for (const declaration of declarations ?? []) {
         if (isCustomElement(declaration) && declaration.tagName) {

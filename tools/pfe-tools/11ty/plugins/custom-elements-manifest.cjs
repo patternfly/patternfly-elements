@@ -1,4 +1,8 @@
+// @ts-check
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
+const { join } = require('node:path');
+const { existsSync } = require('node:fs');
+const glob = require('glob');
 
 let elements;
 
@@ -21,20 +25,76 @@ async function getDocsPage(tagName) {
   }
 }
 
+const loadPackage = packagePath => {
+  const pkgJsonPath = join(packagePath, 'package.json');
+  if (existsSync(pkgJsonPath)) {
+    return require(pkgJsonPath);
+  }
+};
+
+/**
+ * Adapted from `get-monorepo-packages` by Lucas Azzola
+ * @license MIT
+ * @see https://github.com/azz/get-monorepo-packages/
+ */
+const findPackages = (packageSpecs, rootDirectory) => packageSpecs
+  .flatMap(pkgGlob =>
+    (glob.hasMagic(pkgGlob) ?
+        glob.sync(join(rootDirectory, pkgGlob), { nodir: false })
+        : [join(rootDirectory, pkgGlob)]))
+  .map(location => ({ location, package: loadPackage(location) }))
+  .filter(({ package: { name } = {} }) => name);
+
 // TODO: programmable package scopes, etc
-module.exports = function configFunction(eleventyConfig) {
+module.exports = function configFunction(eleventyConfig, options) {
+  const cwd = options?.rootDir ?? process.cwd();
+
   // add `renderTemplate` filter
   eleventyConfig.addPlugin(EleventyRenderPlugin);
 
   eleventyConfig.addGlobalData('env', () => process.env);
 
-  // OOO:
-  // 1. get all packages
-  // 2. get manifests from packages, construct manifest objects, associate packages
-  // 3. get all tag names from each manifest. construct docs page for tag names w/ associates manifest and package
   eleventyConfig.addGlobalData('elements', async function elements() {
-    return [...new Set((await elementsPackages()).values())]
-      .sort((a, b) => a.tagName > b.tagName ? 1 : -1);
+    const { Manifest } = await import('../Manifest.js');
+    const { DocsPage } = await import('../DocsPage.js');
+    const { readFile } = await import('node:fs/promises');
+
+
+    const maybeRead = async filePath => existsSync(filePath) ? readFile(filePath, 'utf8') : null;
+    const rootPackagePath = join(cwd, 'package.json');
+    const rootPackage = require(rootPackagePath);
+
+    // 1. get all packages
+    const packages =
+        Array.isArray(rootPackage.workspaces) ? findPackages(rootPackage.workspaces, cwd)
+      : [{ package: rootPackage, location: rootPackagePath }];
+
+    // 2. get manifests from packages, construct manifest objects, associate packages
+    /** @type {import('../Manifest.js').Manifest[]} */
+    const manifests = packages.flatMap(x =>
+        !x.package.customElements ? []
+      : [Manifest.from(x.package, x.location)]);
+
+    // 3. get all tag names from each manifest. construct docs page for tag names w/ associates manifest and package
+    const docsPages = await Promise.all(manifests.flatMap(manifest => {
+      return Array.from(manifest.declarations.values(), async decl => {
+        const demoPath = join(manifest.location, 'demo', `${decl.tagName}.html`);
+        const docsPath = join(manifest.location, 'docs', 'index.md');
+        const modulePath = join(manifest.location, `${decl.tagName}.js`);
+        const scriptPath = join(manifest.location, 'demo', `${decl.tagName}.js`);
+
+        return new DocsPage(
+          decl.tagName,
+          manifest,
+          await maybeRead(demoPath),
+          await maybeRead(docsPath),
+          await maybeRead(modulePath),
+          await maybeRead(scriptPath)
+        );
+      });
+    }));
+
+    return docsPages;
   });
 
   const toolsFiles = require.resolve('@patternfly/pfe-tools/11ty').replace('index.js', '**/*.{js,njk}');

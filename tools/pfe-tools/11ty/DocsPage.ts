@@ -1,22 +1,12 @@
 import type {
   ClassMethod,
-  Package,
 } from 'custom-elements-manifest/schema';
 
-import { readFile, stat } from 'fs/promises';
-import { join } from 'path';
 import { fileURLToPath } from 'url';
 
 import { Manifest } from './Manifest.js';
 
 import nunjucks, { Environment } from 'nunjucks';
-
-interface PackageJSON {
-  customElements?: string;
-  name: string;
-  version: string;
-  workspaces?: string;
-}
 
 export interface RenderKwargs {
   title?: string;
@@ -38,8 +28,6 @@ export declare class DocsPageRenderer {
   renderSlots(content: string, kwargs?: RenderKwargs): string;
 }
 
-const readJson = (path: string) => readFile(path, 'utf-8').then(x => JSON.parse(x)).catch(() => null);
-
 const ALIASES = new Map([
   ['cta', 'Call to Action']
 ]);
@@ -50,39 +38,33 @@ const pretty = (x: string) => ALIASES.get(x) ?? x
   .replace(/(?:^|[\s-/])\w/g, x => x.toUpperCase())
   .replace(/-/g, ' ');
 
-const exists = (path: string) => stat(path).then(() => true).catch(() => false);
-
-const ifExists = async (path: string) => await exists(path) ? path : undefined;
-
 export class DocsPage implements DocsPageRenderer {
   public static renderBand(content: string, kwargs?: RenderKwargs) {
-    const page = new DocsPage('', '');
+    const page = new DocsPage('', {} as Manifest);
     return page.renderBand(content, kwargs);
   }
 
-  declare demo?: string;
   declare description?: string|null;
-  declare docsPath?: string;
-  declare module?: string;
-  declare script?: string;
   declare summary?: string|null;
-  declare manifest?: Manifest;
-  declare packageJson?: PackageJSON;
-
   declare slug: string;
-  declare tagName: string;
   declare title: string;
-  declare package: string;
   declare templates: Environment;
 
-  constructor(pkg: string, private packagePath: string) {
-    this.package = pkg;
-    this.tagName = this.package.replace('@patternfly/', '');
-    this.slug = this.tagName.replace('pfe-', '');
+  constructor(
+    public tagName: string,
+    public manifest: Manifest,
+    public demo?: string,
+    public docsTemplate?: string,
+    public module?: string,
+    public script?: string,
+  ) {
+    this.slug = this.tagName.replace(/^\w+-/, '');
     this.title = pretty(this.slug);
+    this.summary = this.manifest?.getSummary(this.tagName);
+    this.description = this.manifest?.getDescription(this.tagName);
 
     this.templates = nunjucks.configure(fileURLToPath(new URL('templates', import.meta.url)));
-    this.templates.addGlobal('package', this.package);
+    this.templates.addGlobal('package', this.manifest.packageJson);
     this.templates.addGlobal('tagName', this.tagName);
     this.templates.addGlobal('slug', this.slug);
     this.templates.addGlobal('title', this.title);
@@ -99,29 +81,6 @@ export class DocsPage implements DocsPageRenderer {
     this.templates.addFilter('stringifyParams', (method: ClassMethod) =>
       method.parameters?.map?.(p =>
         `${p.name}: ${p.type?.text ?? 'unknown'}`).join(', ') ?? '');
-  }
-
-  async init() {
-    if (this.packagePath) {
-      const demoPath = join(this.packagePath, 'demo', `${this.tagName}.html`);
-      const docsPath = join(this.packagePath, 'docs', 'index.md');
-      const modulePath = join(this.packagePath, `${this.tagName}.js`);
-      const scriptPath = join(this.packagePath, 'demo', `${this.tagName}.js`);
-      const packageJsonPath = join(this.packagePath, 'package.json');
-      const manifestPath = join(this.packagePath, this.packageJson?.customElements ?? 'custom-elements.json');
-
-      this.demo = await ifExists(demoPath);
-      this.docsPath = await ifExists(docsPath);
-      this.module = await ifExists(modulePath);
-      this.script = await ifExists(scriptPath);
-      this.packageJson = await readJson(packageJsonPath);
-      const manifest = await readJson(manifestPath) as Package;
-      if (manifest) {
-        this.manifest = new Manifest(manifest);
-        this.summary = this.manifest?.getSummary(this.tagName);
-        this.description = this.manifest?.getDescription(this.tagName);
-      }
-    }
   }
 
   renderBand(content: string, kwargs?: RenderKwargs) {

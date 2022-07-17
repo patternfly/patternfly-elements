@@ -28,12 +28,12 @@ export abstract class BaseTooltip extends LitElement {
     return this.#domController.open;
   }
 
-  get #invoker() {
-    return this.shadowRoot?.querySelector('#invoker');
+  get #invoker(): HTMLElement|null {
+    return this.shadowRoot?.querySelector<HTMLElement>('#invoker') ?? null;
   }
 
-  get #tooltip() {
-    return this.shadowRoot?.querySelector(`[id^=${this.localName}`);
+  get #tooltip(): HTMLElement|null {
+    return this.shadowRoot?.querySelector<HTMLElement>(`[id^=${this.localName}`) ?? null;
   }
 
   override connectedCallback(): void {
@@ -51,7 +51,7 @@ export abstract class BaseTooltip extends LitElement {
 
   override firstUpdated(): void {
     if (this.#invoker && this.#tooltip) {
-      this.#domController.create(this.#invoker, this.#tooltip as HTMLElement, this.position, this.offset);
+      this.#domController.create(this.#invoker, this.#tooltip, this.position, this.offset);
     }
   }
 

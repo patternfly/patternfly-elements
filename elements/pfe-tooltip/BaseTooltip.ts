@@ -78,7 +78,7 @@ export abstract class BaseTooltip extends LitElement {
       <div id="invoker" role="tooltip" tabindex="0" aria-labelledby="${this.#id}">
         <slot></slot>
       </div>
-      <div id="${this.#id}" aria-hidden=${this.#isOpen ? 'false' : 'true'}>
+      <div id="${this.#id}" aria-hidden=${!this.#isOpen}>
         <div class="arrow"></div>
         <div id="content" class="content">
           <slot name="content"></slot>

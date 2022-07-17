@@ -56,18 +56,12 @@ export abstract class BaseTooltip extends LitElement {
 
   /** Show the tooltip */
   show() {
-    if (this.#domController) {
-      this.#domController.show();
-      this.performUpdate();
-    }
+    this.#domController.show();
   }
 
   /** Hide the tooltip */
   hide() {
-    if (this.#domController) {
-      this.#domController.hide();
-      this.performUpdate();
-    }
+    this.#domController.hide();
   }
 
   #addListeners() {

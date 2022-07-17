@@ -1,49 +1,90 @@
-import { ReactiveController, ReactiveElement } from 'lit';
-import { Placement, popperGenerator, eventListeners, popperOffsets, computeStyles, applyStyles, offset, flip, preventOverflow, arrow, hide, Instance } from '@popperjs/core';
-import { Logger } from './logger.js';
+import type { Instance } from '@popperjs/core';
+import type { ReactiveController, ReactiveElement } from 'lit';
 
-export const createPopper = popperGenerator({
-  defaultModifiers: [eventListeners, popperOffsets, computeStyles, applyStyles, offset, flip, preventOverflow, arrow, hide],
+import {
+  applyStyles,
+  arrow,
+  computeStyles,
+  eventListeners,
+  flip,
+  hide,
+  offset,
+  popperGenerator,
+  popperOffsets,
+  preventOverflow,
+} from '@popperjs/core';
+
+type Direction =
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+
+type Alignment =
+  | 'start'
+  | 'end'
+
+/**
+ * Represents the placement of floating DOM
+ */
+export type Placement = Direction | `${Direction}-${Alignment}`;
+
+const createPopper = popperGenerator({
+  defaultModifiers: [
+    eventListeners,
+    popperOffsets,
+    computeStyles,
+    applyStyles,
+    offset,
+    flip,
+    preventOverflow,
+    arrow,
+    hide
+  ],
 });
 
-
+/**
+ * Controls floating DOM within a web component, e.g. tooltips and popovers
+ */
 export class FloatingDOMController implements ReactiveController {
-  #popper: Instance | undefined;
-
-  #logger: Logger;
-
   #open = false;
 
-  getOpen(): boolean {
+  /**
+   * When true, the floating DOM is visible
+   */
+  get open() {
     return this.#open;
   }
 
-  #setOpen(isOpen: boolean) {
-    this.#open = isOpen;
+  set open(value: boolean) {
+    this.#open = value;
+    if (value) {
+      this.#popper?.update();
+    }
+    this.host.requestUpdate();
   }
 
+  #popper: Instance | undefined;
+
   constructor(private host: ReactiveElement) {
-    this.#logger = new Logger(this.host);
     host.addController(this);
   }
 
-  hostConnected(): void {
-    this.#logger.log('host connected - popper controller');
-  }
+  hostConnected?(): void;
 
+  /** Show the floating DOM */
   show(): void {
-    this.#setOpen(true);
-    this.#popper?.update();
-    this.host.requestUpdate();
+    this.open = true;
   }
 
+  /** Hide the floating DOM */
   hide(): void {
-    this.#setOpen(false);
-    this.host.requestUpdate();
+    this.open = false;
   }
 
-  create(invoker: Element, tooltip: HTMLElement, placement: Placement, offset?: Array<number>): void {
-    this.#popper = createPopper(invoker, tooltip, {
+  /** Initialize the floating DOM */
+  create(invoker: Element, content: HTMLElement, placement: Placement, offset?: number[]): void {
+    this.#popper = createPopper(invoker, content, {
       placement,
       modifiers: [
         {

@@ -21,7 +21,7 @@ permalink: /components/index.html
 
 <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col">
   {%- for element in elements -%}
-  {%- if element.docsPath -%}
+  {%- if element.docsTemplatePath -%}
     <div class="component-preview">
       <div class="component-preview--container">
         {%- if env.ELEVENTY_ENV == "prod" -%}

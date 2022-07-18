@@ -39,7 +39,11 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(pfeAssetsPlugin);
 
   /** Generate and consume custom elements manifests */
-  eleventyConfig.addPlugin(customElementsManifestPlugin);
+  eleventyConfig.addPlugin(customElementsManifestPlugin, {
+    aliases: {
+      'pfe-cta': 'Call to Action',
+    }
+  });
 
   /** Collections to organize alphabetically instead of by date */
   eleventyConfig.addPlugin(orderTagsPlugin, { tags: ['component'], order: 'alphabetically' });

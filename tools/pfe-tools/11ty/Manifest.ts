@@ -5,7 +5,6 @@ import type {
   ClassMethod,
   CssCustomProperty,
   CssPart,
-  CustomElement,
   CustomElementDeclaration,
   Declaration,
   Event,
@@ -100,24 +99,32 @@ class ManifestCustomElement {
   }
 }
 
+const readJsonSync = (path: string) => {
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch {
+    return null;
+  }
+};
+
 export class Manifest {
-  public static from(packageJson: any, location: string) {
-    const manifest = JSON.parse(readFileSync(join(location, packageJson.customElements), 'utf8'));
-    return new Manifest(
-      manifest as Package,
-      packageJson,
-      location
-    );
+  public static empty(): Manifest {
+    return new Manifest(null, null);
+  }
+
+  public static from(packageJson: PackageJSON, location: string): Manifest {
+    const manifest = readJsonSync(join(location, packageJson?.customElements ?? ''));
+    return new Manifest(manifest as Package, packageJson, location);
   }
 
   declarations = new Map<string, ManifestCustomElement>();
 
   constructor(
-    public manifest: Package,
-    public packageJson: PackageJSON,
-    public location: string
+    public manifest: Package|null,
+    public packageJson: PackageJSON|null,
+    public location?: string
   ) {
-    for (const { declarations } of manifest.modules ?? []) {
+    for (const { declarations } of manifest?.modules ?? []) {
       for (const declaration of declarations ?? []) {
         if (isCustomElement(declaration) && declaration.tagName) {
           this.declarations.set(declaration.tagName, new ManifestCustomElement(declaration, this));

@@ -32,22 +32,35 @@ const loadPackage = packagePath => {
   }
 };
 
-/**
- * Adapted from `get-monorepo-packages` by Lucas Azzola
- * @license MIT
- * @see https://github.com/azz/get-monorepo-packages/
- */
 const findPackages = (packageSpecs, rootDirectory) => packageSpecs
   .flatMap(pkgGlob =>
     (glob.hasMagic(pkgGlob) ?
         glob.sync(join(rootDirectory, pkgGlob), { nodir: false })
         : [join(rootDirectory, pkgGlob)]))
   .map(location => ({ location, package: loadPackage(location) }))
-  .filter(({ package: { name } = {} }) => name);
+  .filter(x => !!x?.package?.name);
+
+/**
+ * Adapted from `get-monorepo-packages` by Lucas Azzola
+ * @license MIT
+ * @see https://github.com/azz/get-monorepo-packages/
+ */
+const findAllPackages = rootDir => {
+  const rootPackagePath = join(rootDir, 'package.json');
+  const rootPackage = require(rootPackagePath);
+  return Array.isArray(rootPackage.workspaces) ? findPackages(rootPackage.workspaces, cwd)
+      : [{ package: rootPackage, location: rootPackagePath }];
+};
+
+const pretty = (x, aliases) => aliases?.[x] ?? x
+  .replace(/^\w+-/, '')
+  .toLowerCase()
+  .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
+  .replace(/-/g, ' ');
 
 // TODO: programmable package scopes, etc
 module.exports = function configFunction(eleventyConfig, options) {
-  const cwd = options?.rootDir ?? process.cwd();
+  const rootDir = options?.rootDir ?? process.cwd();
 
   // add `renderTemplate` filter
   eleventyConfig.addPlugin(EleventyRenderPlugin);
@@ -57,44 +70,28 @@ module.exports = function configFunction(eleventyConfig, options) {
   eleventyConfig.addGlobalData('elements', async function elements() {
     const { Manifest } = await import('../Manifest.js');
     const { DocsPage } = await import('../DocsPage.js');
-    const { readFile } = await import('node:fs/promises');
 
+    const makeManifests = x => !x.package.customElements ? [] : [Manifest.from(x.package, x.location)];
 
-    const maybeRead = async filePath => existsSync(filePath) ? readFile(filePath, 'utf8') : null;
-    const rootPackagePath = join(cwd, 'package.json');
-    const rootPackage = require(rootPackagePath);
+    const makeRenderers = manifest => {
+      return Array.from(manifest.declarations.values(), decl => {
+        const { tagName } = decl;
+        const templatePaths = (/** @type {Record<`${'demo'|'docs'|'script'}TemplatePath`, string>} */(Object.fromEntries(Object.entries({
+          demoTemplatePath: join(manifest.location, 'demo', `${tagName}.html`),
+          docsTemplatePath: join(manifest.location, 'docs', `${tagName}.md`),
+          scriptTemplatePath: join(manifest.location, 'demo', `${tagName}.js`),
+        }).filter(([, v]) => existsSync(v)))));
+
+        return new DocsPage(tagName, pretty(tagName, options?.aliases), manifest, templatePaths);
+      });
+    };
 
     // 1. get all packages
-    const packages =
-        Array.isArray(rootPackage.workspaces) ? findPackages(rootPackage.workspaces, cwd)
-      : [{ package: rootPackage, location: rootPackagePath }];
-
-    // 2. get manifests from packages, construct manifest objects, associate packages
-    /** @type {import('../Manifest.js').Manifest[]} */
-    const manifests = packages.flatMap(x =>
-        !x.package.customElements ? []
-      : [Manifest.from(x.package, x.location)]);
-
-    // 3. get all tag names from each manifest. construct docs page for tag names w/ associates manifest and package
-    const docsPages = await Promise.all(manifests.flatMap(manifest => {
-      return Array.from(manifest.declarations.values(), async decl => {
-        const demoPath = join(manifest.location, 'demo', `${decl.tagName}.html`);
-        const docsPath = join(manifest.location, 'docs', 'index.md');
-        const modulePath = join(manifest.location, `${decl.tagName}.js`);
-        const scriptPath = join(manifest.location, 'demo', `${decl.tagName}.js`);
-
-        return new DocsPage(
-          decl.tagName,
-          manifest,
-          await maybeRead(demoPath),
-          await maybeRead(docsPath),
-          await maybeRead(modulePath),
-          await maybeRead(scriptPath)
-        );
-      });
-    }));
-
-    return docsPages;
+    return findAllPackages(rootDir)
+      // 2. get manifests from packages, construct manifest objects, associate packages
+      .flatMap(makeManifests)
+      // 3. get all tag names from each manifest. construct docs page for tag names w/ associates manifest and package
+      .flatMap(makeRenderers);
   });
 
   const toolsFiles = require.resolve('@patternfly/pfe-tools/11ty').replace('index.js', '**/*.{js,njk}');

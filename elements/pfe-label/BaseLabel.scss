@@ -18,6 +18,7 @@
 #container {
   display: inline-flex;
   align-items: center;
+  vertical-align: middle;
 }
 
 #container {
@@ -123,6 +124,7 @@
 
 .hasIcon [part=icon] {
   display: inline-flex;
+  vertical-align: middle;
   width: 1em;
   left: var(--pf-c-label--PaddingLeft, var(--pf-global--spacer--md, 1rem));
   margin-inline-end: var(--pf-c-label__icon--MarginRight, var(--pf-global--spacer--xs, 0.25rem));
@@ -131,7 +133,6 @@
 :host([color="blue"]) .hasIcon [part=icon] {
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-blue__icon--Color, var(--pf-global--primary-color--100, #06c)));
 }
-
 
 :host([color="cyan"]) .hasIcon [part=icon] {
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-cyan__icon--Color, var(--pf-global--default-color--200, #009596)));

@@ -124,7 +124,6 @@
 
 .hasIcon [part=icon] {
   display: inline-flex;
-  vertical-align: middle;
   width: 1em;
   left: var(--pf-c-label--PaddingLeft, var(--pf-global--spacer--md, 1rem));
   margin-inline-end: var(--pf-c-label__icon--MarginRight, var(--pf-global--spacer--xs, 0.25rem));

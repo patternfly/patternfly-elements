@@ -1,8 +1,10 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
+import style from './BaseTooltip.scss';
 import { FloatingDOMController, Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
 export abstract class BaseTooltip extends LitElement {
+  static readonly styles = [style];
   /** The placement of the tooltip, relative to the invoking content */
   @property({ reflect: true }) position: Placement = 'top';
 
@@ -39,10 +41,6 @@ export abstract class BaseTooltip extends LitElement {
       this.offset = [-4, 15];
     }
     this.#addListeners();
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
   }
 
   override firstUpdated(): void {

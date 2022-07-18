@@ -66,6 +66,7 @@
     "@11ty/eleventy-plugin-syntaxhighlight": "^4.0.0",
     "@changesets/cli": "^2.22.0",
     "@custom-elements-manifest/analyzer": "^0.5.6",
+    "@koa/router": "^11.0.1",
     "@open-wc/testing": "^3.1.4",
     "@orchidjs/eleventy-plugin-ids": "^0.1.1",
     "@percy/cli": "^1.1.0",

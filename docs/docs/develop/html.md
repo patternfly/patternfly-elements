@@ -35,7 +35,7 @@ We'll also need to update `/demo/pfe-cool-element.html`
 so that the user's name is passed into the slot that we added in `pfe-cool-element.ts`:
 
 ```html
-<link rel="stylesheet" href="/elements/pfe-cool-element/demo/demo.css"/>
+<link rel="stylesheet" href="./demo.css"/>
 <pfe-cool-element>
   Kyle Buchanan
 </pfe-cool-element>

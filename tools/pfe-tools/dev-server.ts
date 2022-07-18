@@ -22,6 +22,8 @@ import { transformSass } from './esbuild.js';
 import { createRequire } from 'module';
 import { promisify } from 'util';
 
+import Router from '@koa/router';
+
 const glob = promisify(_glob);
 const require = createRequire(import.meta.url);
 const exists = (x: string) => stat(x).then(() => true, () => false);
@@ -118,13 +120,14 @@ export function resolveLocalFilesFromTypeScriptSources(options: Partial<PfeDevSe
 /**
  * Renders the demo page for a given url
  */
-async function renderURL(ctx: Context, env: nunjucks.Environment, pattern: URLPattern, options?: PfeDevServerConfigOptions): Promise<string> {
+async function renderURL(ctx: Context, env: nunjucks.Environment, options?: PfeDevServerConfigOptions): Promise<string> {
   const url = new URL(ctx.request.url, `http://${ctx.request.headers.host}`);
+  const pattern = new URLPattern('/components/:element/:sub?/', `http://${ctx.request.headers.host}`);
   const { rootDir = process.cwd() } = options ?? {};
-  const { element } = pattern.exec(url)?.pathname?.groups ?? {};
+  const { element, sub } = pattern.exec(url)?.pathname?.groups ?? {};
   const base = element?.match(/^pfe-(core|sass|styles)$/) ? 'core' : 'elements';
   const basePath = element && join(rootDir, base, element, 'demo');
-  const demoPath = basePath && join(basePath, `${element}.html`);
+  const demoPath = basePath && join(basePath, `${sub ?? element}.html`);
   return env.render('index.njk', {
     ...SITE_DEFAULTS,
     ...options?.site,
@@ -146,20 +149,28 @@ async function renderURL(ctx: Context, env: nunjucks.Environment, pattern: URLPa
  * Watch repository source files and reload the page when they change
  */
 function pfeDevServerPlugin(options?: PfeDevServerConfigOptions): Plugin {
-  const pattern = new URLPattern({ pathname: '/demo/:element/' });
   const env = nunjucks.configure(fileURLToPath(new URL('./demo', import.meta.url)));
   env.addFilter('prettyTag', x => prettyTag(x, options?.site?.tagPrefix));
 
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
+      const router = new Router();
+      router
+        .get('/(demo|components)/:tagName/:fileName.:ext(js|css|html)', ctx => {
+          const { tagName, fileName, ext } = ctx.params;
+          ctx.redirect(`/elements/${tagName}/demo/${fileName === 'index' ? tagName : fileName}.${ext}`);
+        });
+      app.use(router.routes());
+
       /** Render the demo page */
       app.use(async function nunjucksMiddleware(ctx, next) {
         if ((options?.loadDemo ?? true) && !(ctx.method !== 'HEAD' && ctx.method !== 'GET' || ctx.path.includes('.'))) {
           ctx.type = 'html';
           ctx.status = 200;
-          ctx.body = await renderURL(ctx, env, pattern, options);
+          ctx.body = await renderURL(ctx, env, options);
         }
+
         return next();
       });
 

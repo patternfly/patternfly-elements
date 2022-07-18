@@ -14,8 +14,6 @@
   <link rel="stylesheet" href="/node_modules/@patternfly/pfe-tools/demo/demo.css">
   <link rel="stylesheet" href="/docs/main.css">
   <script type="module" src="/node_modules/@patternfly/pfe-tools/demo/demo.ts"></script>
-  <script type="module">{{ script | safe }}
-</script>
 </head>
 
 <body>
@@ -36,7 +34,7 @@
       <ul id="elements-container" class="site-navigation__wrapper">
         {% for element in elements %}
           <li class="site-navigation__item">
-            <a class="site-navigation__link" href="/demo/{{ element }}/">{{ element | prettyTag }}</a>
+            <a class="site-navigation__link" href="/components/{{ element }}/">{{ element | prettyTag }}</a>
           </li>
         {% endfor %}
       </ul>

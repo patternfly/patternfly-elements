@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { FloatingDOMController, Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
 export abstract class BaseTooltip extends LitElement {
@@ -20,8 +19,6 @@ export abstract class BaseTooltip extends LitElement {
   } })
     offset = [0, 15];
 
-  #id = getRandomId(this.localName);
-
   #domController: FloatingDOMController = new FloatingDOMController(this);
 
   get #isOpen(): boolean {
@@ -33,7 +30,7 @@ export abstract class BaseTooltip extends LitElement {
   }
 
   get #tooltip(): HTMLElement|null {
-    return this.shadowRoot?.querySelector<HTMLElement>(`[id^=${this.localName}`) ?? null;
+    return this.shadowRoot?.querySelector<HTMLElement>(`#tooltip`) ?? null;
   }
 
   override connectedCallback(): void {
@@ -75,10 +72,10 @@ export abstract class BaseTooltip extends LitElement {
 
   override render() {
     return html`
-      <div id="invoker" role="tooltip" tabindex="0" aria-labelledby="${this.#id}">
+      <div id="invoker" role="tooltip" tabindex="0" aria-labelledby="tooltip">
         <slot></slot>
       </div>
-      <div id="${this.#id}" aria-hidden=${!this.#isOpen}>
+      <div id="tooltip" aria-hidden=${!this.#isOpen}>
         <div class="arrow"></div>
         <div id="content" class="content">
           <slot name="content"></slot>

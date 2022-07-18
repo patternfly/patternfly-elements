@@ -13,15 +13,12 @@ function getTagName(url) {
 
 // it's an 11ty api
 /* eslint-disable no-invalid-this */
-
 async function getDocsPage(tagName) {
   // NB: I think this is new with 11ty 1.0.0. Maybe it's the pagination value? Not sure how bad of an abuse this is
   if (this.ctx._?.constructor?.name === 'DocsPage') {
     return this.ctx._;
   } else {
-    elements ??= await elementsPackages();
-    tagName ??= getTagName(this.page.url);
-    return elements.get(tagName);
+    throw new Error(`Could not load data for ${tagName}`);
   }
 }
 
@@ -48,7 +45,7 @@ const findPackages = (packageSpecs, rootDirectory) => packageSpecs
 const findAllPackages = rootDir => {
   const rootPackagePath = join(rootDir, 'package.json');
   const rootPackage = require(rootPackagePath);
-  return Array.isArray(rootPackage.workspaces) ? findPackages(rootPackage.workspaces, cwd)
+  return Array.isArray(rootPackage.workspaces) ? findPackages(rootPackage.workspaces, rootDir)
       : [{ package: rootPackage, location: rootPackagePath }];
 };
 
@@ -62,32 +59,56 @@ const pretty = (x, aliases) => aliases?.[x] ?? x
 module.exports = function configFunction(eleventyConfig, options) {
   const rootDir = options?.rootDir ?? process.cwd();
 
+  const packages = findAllPackages(rootDir);
+
   // add `renderTemplate` filter
   eleventyConfig.addPlugin(EleventyRenderPlugin);
 
   eleventyConfig.addGlobalData('env', () => process.env);
 
+  // TODO: separate docs page and demo, lift demo to plugin config, on a separate global data key
+  eleventyConfig.addGlobalData('demos', async function demos() {
+    const { Manifest } = await import('../Manifest.js');
+    const makeManifests = x => !x.package.customElements ? [] : [Manifest.from(x)];
+
+    const sourceControlURLPrefix = options?.sourceControlURLPrefix ?? 'https://github.com/patternfly/patternfly-elements/tree/main/';
+    // 1. get all packages
+    return packages
+      // 2. get manifests from packages, construct manifest objects, associate packages
+      .flatMap(makeManifests)
+      .flatMap(manifest => manifest.getTagNames()
+        .flatMap(tagName => manifest.getDemos(tagName)
+          .map(demo => ({
+            tagName,
+            slug: tagName.replace(/^(\w+)-/, ''),
+            ...demo,
+            filePath: demo.source.href.replace(sourceControlURLPrefix, `${rootDir}/`)
+          }))));
+  });
+
   eleventyConfig.addGlobalData('elements', async function elements() {
     const { Manifest } = await import('../Manifest.js');
     const { DocsPage } = await import('../DocsPage.js');
 
-    const makeManifests = x => !x.package.customElements ? [] : [Manifest.from(x.package, x.location)];
+    const makeManifests = x => !x.package.customElements ? [] : [Manifest.from(x)];
 
     const makeRenderers = manifest => {
       return Array.from(manifest.declarations.values(), decl => {
         const { tagName } = decl;
-        const templatePaths = (/** @type {Record<`${'demo'|'docs'|'script'}TemplatePath`, string>} */(Object.fromEntries(Object.entries({
-          demoTemplatePath: join(manifest.location, 'demo', `${tagName}.html`),
+        const templatePaths = (/** @type {{scriptTemplatePath: string}} */(Object.fromEntries(Object.entries({
           docsTemplatePath: join(manifest.location, 'docs', `${tagName}.md`),
-          scriptTemplatePath: join(manifest.location, 'demo', `${tagName}.js`),
         }).filter(([, v]) => existsSync(v)))));
 
-        return new DocsPage(tagName, pretty(tagName, options?.aliases), manifest, templatePaths);
+        return new DocsPage(manifest, {
+          tagName,
+          title: pretty(tagName, options?.aliases),
+          ...templatePaths
+        });
       });
     };
 
     // 1. get all packages
-    return findAllPackages(rootDir)
+    return packages
       // 2. get manifests from packages, construct manifest objects, associate packages
       .flatMap(makeManifests)
       // 3. get all tag names from each manifest. construct docs page for tag names w/ associates manifest and package

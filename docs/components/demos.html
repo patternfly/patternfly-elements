@@ -1,12 +1,12 @@
 ---js
 {
   templateEngineOverride: 'njk',
-  permalink: '/components/{{ element.slug }}/demo/index.html',
+  permalink: '/components/{{ demo.slug }}/{{ demo.url }}',
   pagination: {
-    data: 'elements',
+    data: 'demos',
     size: 1,
-    alias: 'element',
-    before: xs => xs.filter(x => !!x.demoTemplatePath),
+    alias: 'demo',
+    before: xs => xs.filter(x => !!x.filePath)
   },
 }
 ---
@@ -18,7 +18,7 @@
     <meta name="description" content="PatternFly Elements: A set of community-created web components based on PatternFly design.">
     <meta name="pfe-auto-reveal" content="true">
     <link href="/brand/logo/svg/pfe-icon-blue.svg" rel="shortcut icon">
-    <title>{{ element.title }} | PatternFly Elements</title>
+    <title>{{ demo.tagName }} | PatternFly Elements</title>
     <link rel="preconnect" href="https://ga.jspm.io">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/css-tag.js"/>
@@ -80,14 +80,8 @@
     <noscript><link href="/core/styles/pfe--noscript.min.css" rel="stylesheet"></noscript>
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.4.1/dist/es-module-shims.js"></script>
     <script type="importmap">{{ importMap | dump | safe }}</script>
-    {%- if element.scriptTemplatePath -%}
-    <!-- Load the demo's JavaScript, a module which at the least imports the component definition -->
-    <script type="module">
-      {%- include element.scriptTemplatePath -%}
-    </script>
-    {%- endif -%}
   </head>
   <body unresolved>
-    {%- include element.demoTemplatePath -%}
+    {%- include demo.filePath -%}
   </body>
 </html>

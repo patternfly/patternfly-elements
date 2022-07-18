@@ -7,6 +7,7 @@ import type {
   CssPart,
   CustomElementDeclaration,
   Declaration,
+  Demo,
   Event,
   Export,
   Package,
@@ -45,6 +46,14 @@ export const isPublicInstanceMethod: (x: ClassMember) => x is ClassMethod =
 export const isCustomElement = (x: Declaration): x is CustomElementDeclaration => 'tagName' in x;
 export const isTheField = (x: ClassField) => (y: Attribute) => y.fieldName === x.name;
 
+const readJsonSync = (path: string) => {
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch {
+    return null;
+  }
+};
+
 class ManifestCustomElement {
   /** The element's name */
   declare tagName?: string;
@@ -79,6 +88,9 @@ class ManifestCustomElement {
   /** The export for the element */
   declare export?: Export;
 
+  /** The demos for the element */
+  declare demos?: Demo[];
+
   constructor(private declaration: CustomElementDeclaration, private manifest: Manifest) {
     const isAnAttr = (x: ClassField) => !this.declaration?.attributes?.some?.(isTheField(x));
 
@@ -91,6 +103,7 @@ class ManifestCustomElement {
     this.methods = this.declaration?.members?.filter?.(isPublicInstanceMethod) ?? [];
     this.properties = this.declaration?.members?.filter?.(and(isPublicInstanceField as PredicateFn, isAnAttr as PredicateFn) as (typeof isField)) ?? [];
     this.slots = this.declaration?.slots ?? [];
+    this.demos = this.declaration?.demos ?? [];
     this.summary = this.declaration?.summary ?? '';
     this.export = manifest.manifest
       ?.modules
@@ -99,22 +112,19 @@ class ManifestCustomElement {
   }
 }
 
-const readJsonSync = (path: string) => {
-  try {
-    return JSON.parse(readFileSync(path, 'utf8'));
-  } catch {
-    return null;
-  }
-};
-
 export class Manifest {
+  static #instances = new WeakMap<PackageJSON, Manifest>();
+
   public static empty(): Manifest {
     return new Manifest(null, null);
   }
 
-  public static from(packageJson: PackageJSON, location: string): Manifest {
-    const manifest = readJsonSync(join(location, packageJson?.customElements ?? ''));
-    return new Manifest(manifest as Package, packageJson, location);
+  public static from({ package: packageJson, location }: { package: PackageJSON, location: string }): Manifest {
+    if (!Manifest.#instances.has(packageJson)) {
+      const json = readJsonSync(join(location, packageJson?.customElements ?? ''));
+      Manifest.#instances.set(packageJson, new Manifest(json as Package, packageJson, location));
+    }
+    return Manifest.#instances.get(packageJson) as Manifest;
   }
 
   declarations = new Map<string, ManifestCustomElement>();
@@ -133,6 +143,10 @@ export class Manifest {
     }
   }
 
+  #tag(tagName: string): ManifestCustomElement|null {
+    return this.declarations?.get(tagName) ?? null;
+  }
+
   /**
    */
   getTagNames(): string[] {
@@ -142,61 +156,63 @@ export class Manifest {
         ?.map?.(x => x.name)) as string[] ?? [];
   }
 
-  private tag(tagName: string): ManifestCustomElement|null {
-    return this.declarations?.get(tagName) ?? null;
-  }
-
   /**
    */
   getAttributes(tagName: string): undefined|Attribute[] {
-    return this.tag(tagName)?.attributes;
+    return this.#tag(tagName)?.attributes;
   }
 
   /**
    */
   getCssCustomProperties(tagName: string): undefined|CssCustomProperty[] {
-    return this.tag(tagName)?.cssCustomProperties;
+    return this.#tag(tagName)?.cssCustomProperties;
   }
 
   /**
    */
   getCssParts(tagName: string): undefined|CssPart[] {
-    return this.tag(tagName)?.cssParts;
+    return this.#tag(tagName)?.cssParts;
   }
 
   /**
    */
   getDescription(tagName: string): undefined|string {
-    return this.tag(tagName)?.description;
+    return this.#tag(tagName)?.description;
   }
 
   /**
    */
   getEvents(tagName: string): undefined|Event[] {
-    return this.tag(tagName)?.events;
+    return this.#tag(tagName)?.events;
   }
 
   /**
    */
   getMethods(tagName: string): undefined|ClassMethod[] {
-    return this.tag(tagName)?.methods;
+    return this.#tag(tagName)?.methods;
   }
 
   /**
    */
   getProperties(tagName: string): undefined|ClassField[] {
-    return this.tag(tagName)?.properties;
+    return this.#tag(tagName)?.properties;
   }
 
   /**
    */
   getSummary(tagName: string): undefined|string {
-    return this.tag(tagName)?.summary;
+    return this.#tag(tagName)?.summary;
   }
 
   /**
    */
   getSlots(tagName: string): undefined|Slot[] {
-    return this.tag(tagName)?.slots;
+    return this.#tag(tagName)?.slots;
+  }
+
+  /**
+   */
+  getDemos(tagName: string): undefined|Demo[] {
+    return this.#tag(tagName)?.demos;
   }
 }

@@ -30,7 +30,7 @@ export declare class DocsPageRenderer {
 
 export class DocsPage implements DocsPageRenderer {
   public static renderBand(content: string, kwargs?: RenderKwargs) {
-    const page = new DocsPage('', '', Manifest.empty());
+    const page = new DocsPage(Manifest.empty());
     return page.renderBand(content, kwargs);
   }
 
@@ -50,20 +50,23 @@ export class DocsPage implements DocsPageRenderer {
     method.parameters?.map?.(p =>
       `${p.name}: ${p.type?.text ?? 'unknown'}`).join(', ') ?? '';
 
-  declare slug: string;
-  declare templates: Environment;
-  declare description?: string|null;
-  declare summary?: string|null;
-  declare demoTemplatePath?: string;
-  declare docsTemplatePath?: string;
-  declare scriptTemplatePath?: string;
+  tagName: string;
+  title: string;
+  slug: string;
+  templates: Environment;
+  description?: string|null;
+  summary?: string|null;
+  docsTemplatePath?: string;
 
   constructor(
-    public tagName: string,
-    public title: string,
     public manifest: Manifest,
-    templatePaths?: Record<`${'demo'|'docs'|'script'}TemplatePath`, string>,
-  ) {
+    options?: {
+      docsTemplatePath?: string;
+      tagName: string;
+      title: string;
+  }) {
+    this.tagName = options?.tagName ?? '';
+    this.title = options?.title ?? '';
     this.slug = this.tagName.replace(/^\w+-/, '');
     this.summary = this.manifest.getSummary(this.tagName);
     this.description = this.manifest.getDescription(this.tagName);
@@ -76,10 +79,7 @@ export class DocsPage implements DocsPageRenderer {
     this.templates.addFilter('type', DocsPage.#type);
     this.templates.addFilter('innerMD', DocsPage.#innerMD);
     this.templates.addFilter('stringifyParams', DocsPage.#stringifyParams);
-
-    for (const [k, v] of Object.entries(templatePaths ?? {})) {
-      this[k as `${'demo'|'docs'|'script'}TemplatePath`] = v;
-    }
+    this.docsTemplatePath = options?.docsTemplatePath;
   }
 
   #packageTagName(kwargs: RenderKwargs = {}): string {

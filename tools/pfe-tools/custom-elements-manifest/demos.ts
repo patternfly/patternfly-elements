@@ -35,6 +35,7 @@ export function demosPlugin(options?: Options): Plugin {
     packageLinkPhase({ customElementsManifest }) {
       const allTagNames = customElementsManifest.modules.flatMap(x => !x.declarations ? []
         : x.declarations.flatMap(y => (y as { tagName: string }).tagName)).filter(Boolean);
+
       for (const moduleDoc of customElementsManifest.modules) {
         let demoPath = join(rootDir, 'demo');
         let primaryElementName;
@@ -44,23 +45,29 @@ export function demosPlugin(options?: Options): Plugin {
         } else {
           [, primaryElementName] = JSON.parse(readFileSync(join(rootDir, 'package.json'), 'utf8')).name.split('/');
         }
-        const allDemos = readdirSync(demoPath).filter(x => x.endsWith('.html'));
-        for (const decl of moduleDoc.declarations ?? []) {
-          if (isCustomElement(decl) && decl.tagName) {
-            decl.demos ??= [];
-            const { tagName } = decl;
-            for (const demo of allDemos) {
-              const basename = demo.replace(/\.html$/, '');
-              const source = { href: `${sourceControlURLPrefix ?? ''}elements/${primaryElementName}/demo/${demo}` };
-              if (basename === tagName && basename === primaryElementName) {
+
+        if (existsSync(demoPath)) {
+          const allDemos = readdirSync(demoPath).filter(x => x.endsWith('.html'));
+          for (const decl of moduleDoc.declarations ?? []) {
+            if (isCustomElement(decl) && decl.tagName) {
+              decl.demos ??= [];
+              const { tagName } = decl;
+              for (const demo of allDemos) {
+                const basename = demo.replace(/\.html$/, '');
+                const source = { href: `${sourceControlURLPrefix ?? ''}elements/${primaryElementName}/demo/${demo}` };
+                if (basename === tagName && basename === primaryElementName) {
                 // case: elements/pfe-jazz-hands/demo/pfe-jazz-hands.html
-                decl.demos.push({ url: '/demo/', source });
-              } else if (allTagNames.includes(basename) && basename === tagName) {
+                  decl.demos.push({ url: '/demo/', source });
+                } else if (allTagNames.includes(basename) && basename === tagName) {
                 // case: elements/pfe-jazz-hands/demo/pfe-jazz-shimmy.html
-                decl.demos.push({ url: `/demo/${basename}/`, source });
-              } else if (tagName === primaryElementName && !allTagNames.includes(basename)) {
+                  decl.demos.push({ url: `/demo/${basename}/`, source });
+                } else if (tagName === primaryElementName && !allTagNames.includes(basename)) {
                 // case: elements/pfe-jazz-hands/demo/ack.html
-                decl.demos.push({ url: `/demo/${basename}/`, source });
+                  decl.demos.push({ url: `/demo/${basename}/`, source });
+                }
+              }
+              if (!decl.demos.length) {
+                delete decl.demos;
               }
             }
           }

@@ -121,7 +121,8 @@ export class Manifest {
 
   public static from({ package: packageJson, location }: { package: PackageJSON, location: string }): Manifest {
     if (!Manifest.#instances.has(packageJson)) {
-      const json = readJsonSync(join(location, packageJson?.customElements ?? ''));
+      const manifestPath = join(location, packageJson?.customElements ?? '');
+      const json = readJsonSync(manifestPath);
       Manifest.#instances.set(packageJson, new Manifest(json as Package, packageJson, location));
     }
     return Manifest.#instances.get(packageJson) as Manifest;

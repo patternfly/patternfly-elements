@@ -83,7 +83,7 @@ module.exports = function configFunction(eleventyConfig, options) {
             slug: tagName.replace(/^(\w+)-/, ''),
             ...demo,
             filePath: demo.source.href.replace(sourceControlURLPrefix, `${rootDir}/`)
-          }))));
+          })))).concat(options?.extraDemos ?? []);
   });
 
   eleventyConfig.addGlobalData('elements', async function elements() {

@@ -54,7 +54,7 @@
 }
 
 :host([color="cyan"]) {
-  --pf-c-label__content--Color: var(--pf-c-label--m-cyan__content--Color, var(--pf-global--palette--cyan-700, #3b1f00));
+  --pf-c-label__content--Color: var(--pf-c-label--m-cyan__content--Color, var(--pf-global--default-color--300, #003737));
   --pf-c-label--BackgroundColor: var(--pf-c-label--m-cyan--BackgroundColor, var(--pf-global--palette--cyan-50, #f2f9f9));
   --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-cyan__content--before--BorderColor, var(--pf-global--palette--cyan-100, #a2d9d9));
 }
@@ -74,7 +74,7 @@
 }
 
 :host([color="orange"]) {
-  --pf-c-label__content--Color: var(--pf-c-label--m-orange__content--Color, var(--pf-global--default-color--300, #003737));
+  --pf-c-label__content--Color: var(--pf-c-label--m-orange__content--Color, var(--pf-global--palette--orange-700, #3b1f00));
   --pf-c-label--BackgroundColor: var(--pf-c-label--m-orange--BackgroundColor, var(--pf-global--palette--orange-50, #fff6ec));
   --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-orange__content--before--BorderColor, var(--pf-global--palette--orange-100, #f4b678));
 }

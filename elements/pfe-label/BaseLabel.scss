@@ -50,7 +50,7 @@
 }
 
 :host([color="blue"][variant="outline"]) {
-  --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-blue__content--Color, var(--pf-global--primary-color--100, #06c)))
+  --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-blue__content--Color, var(--pf-global--primary-color--100, #06c)));
 }
 
 :host([color="cyan"]) {
@@ -90,6 +90,7 @@
 }
 
 :host([color="purple"][variant="outline"]) {
+  --pf-c-label__content--Color: var(--pf-c-label--m-purple__content--Color, var(--pf-global--palette--purple-500, #6753ac));
   --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-purple__content--Color, var(--pf-global--palette--purple-500, #6753ac)))
 }
 
@@ -115,6 +116,7 @@
 
 :host([variant="outline"]) {
   --pf-c-label--BackgroundColor: var(--pf-c-label--m-outline--BackgroundColor, #ffffff);
+  --pf-c-label__content--before--BorderColor: var(--pf-global--palette--black-300, #d2d2d2);
 }
 
 [part=icon] {
@@ -143,6 +145,10 @@
 
 :host([color="orange"]) .hasIcon [part=icon] {
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-orange__icon--Color, var(--pf-global--palette--orange-300, #ec7a08)));
+}
+
+:host([color="purple"]) .hasIcon [part=icon] {
+  color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-purple__icon--Color, var(--pf-global--palette--purple-500, #6753ac)));
 }
 
 :host([color="red"]) .hasIcon [part=icon] {

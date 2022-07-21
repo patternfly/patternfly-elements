@@ -10,6 +10,7 @@
   "types": "./pfe-button.d.ts",
   "exports": {
     ".": "./pfe-button.js",
+    "./BaseButton.js": "./BaseButton.js",
     "./*": "./*.js"
   },
   "publishConfig": {

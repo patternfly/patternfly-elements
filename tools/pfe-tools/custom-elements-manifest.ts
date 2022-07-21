@@ -2,12 +2,14 @@ import type { Config } from '@custom-elements-manifest/analyzer';
 
 import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
 import { readonlyPlugin } from 'cem-plugin-readonly';
-import { cssCustomPropertiesDefaultPlugin } from './custom-elements-manifest/cssCustomPropertiesDefaultPlugin.js';
+import { jsdocDescriptionDefaultPlugin } from './custom-elements-manifest/jsdoc-description-default.js';
 import { dedentDescriptionsPlugin } from './custom-elements-manifest/dedent-descriptions.js';
 import { demosPlugin } from './custom-elements-manifest/demos.js';
 import { deprecatedDescriptionInlineTagPlugin } from './custom-elements-manifest/deprecated-description-inline-tag.js';
 import { sanitizeEventsPlugin } from './custom-elements-manifest/sanitize-events.js';
 import { summaryPlugin } from './custom-elements-manifest/summary.js';
+import { ecmaPrivateClassMembersPlugin } from './custom-elements-manifest/ecma-private-class-members.js';
+import { versionStaticFieldPlugin } from './custom-elements-manifest/version-static-field.js';
 
 interface Options extends Config {
   sourceControlURLPrefix?: string;
@@ -31,7 +33,7 @@ export function pfeCustomElementsManifestConfig(options?: Options): Config {
     litelement: true,
     plugins: [
       readonlyPlugin(),
-      cssCustomPropertiesDefaultPlugin(),
+      jsdocDescriptionDefaultPlugin(),
       moduleFileExtensionsPlugin(),
       moduleFileExtensionsPlugin({ from: 'src/', to: '' }),
       sanitizeEventsPlugin(),
@@ -39,6 +41,8 @@ export function pfeCustomElementsManifestConfig(options?: Options): Config {
       dedentDescriptionsPlugin(),
       summaryPlugin(),
       demosPlugin({ demoURLPrefix, sourceControlURLPrefix }),
+      ecmaPrivateClassMembersPlugin(),
+      versionStaticFieldPlugin(),
 
       ...options?.plugins ?? [],
     ],

@@ -1,11 +1,9 @@
-pfe-band::part(body), #light-dom-styles div {
-   display: flex;
-   gap: 4px;
-   flex-flow: row wrap;
+[data-demo=pfe-button] {
+  padding-inline: 1em;
 }
 
-#light-dom-styles::part(body) {
-  display: block;
+section > :not(pfe-button) {
+  width: 100%;
 }
 
 #light-dom-styles pfe-button button {
@@ -32,4 +30,8 @@ form {
   gap: 1em;
   align-items: center;
   margin-bottom: 1em;
+}
+
+pfe-button[loading] svg {
+  width: 0px;
 }

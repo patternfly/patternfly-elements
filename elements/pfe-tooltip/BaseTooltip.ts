@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import style from './BaseTooltip.scss';
@@ -45,6 +46,8 @@ export abstract class BaseTooltip extends LitElement {
 
   override firstUpdated(): void {
     if (this.#invoker && this.#tooltip) {
+      console.log('this.offset');
+      console.log(this.offset);
       this.#domController.create(this.#invoker, this.#tooltip, this.position, this.offset);
     }
   }

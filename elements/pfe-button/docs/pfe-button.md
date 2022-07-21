@@ -6,7 +6,7 @@
 </style>
 
 <script type="module">
-const PfeIcon = await customElements.whenDefined('pfe-icon');
+const PfeIcon = await customElements.get('pfe-icon');
 PfeIcon.addIconSet('fa', './', function(name) {
   switch (name) {
     case 'fa-external-link-square':

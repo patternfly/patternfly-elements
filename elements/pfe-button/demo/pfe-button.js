@@ -40,7 +40,7 @@ for (const button of document.querySelectorAll('pfe-button')) {
 }
 
 (async function() {
-  const PfeIcon = await customElements.whenDefined('pfe-icon');
+  const PfeIcon = await customElements.get('pfe-icon');
   PfeIcon.addIconSet('fa', './', function(name) {
     switch (name) {
       case 'fa-external-link-square':

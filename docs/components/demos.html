@@ -75,8 +75,9 @@ preloads: [
     <title>{{ demo.title or (demo.tagName) }} | PatternFly Elements</title>
     <link rel="preconnect" href="https://ga.jspm.io">
     <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script type="importmap">{{ importMap | dump | safe }}</script>
     {%- for path in preloads -%}
-    <link rel="modulepreload" href="https://ga.jsmp.io/npm:{{ path }}"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:{{ path }}"/>
     {%- endfor -%}
     <link rel="stylesheet" href="/main.css"/>
     <link rel="stylesheet" href="/core/styles/pfe.min.css">
@@ -84,7 +85,6 @@ preloads: [
     <link rel="stylesheet" href="/core/styles/red-hat-font.min.css">
     <noscript><link href="/core/styles/pfe--noscript.min.css" rel="stylesheet"></noscript>
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.9/dist/es-module-shims.js"></script>
-    <script type="importmap">{{ importMap | dump | safe }}</script>
   </head>
   <body unresolved>{% if demo.filePath %}
     {%- include demo.filePath -%}{% endif %}

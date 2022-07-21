@@ -8,7 +8,8 @@ const glob = require('glob');
  * @typedef {object} PluginOptions
  * @property {string} [rootDir=process.cwd()] rootDir of the package
  * @property {Record<string, string>} [aliases] object mapping custom element name to page title
- * @property {string} [sourceControlURLPrefix='https://github.com/patternfly/patternfly-elements/tree/main/'] absolute URL to the web page representing the repo root in source control
+ * @property {string} [sourceControlURLPrefix='https://github.com/patternfly/patternfly-elements/tree/main/'] absolute URL to the web page representing the repo root in source control, with trailing slash
+ * @property {string} [demoURLPrefix='https://patternflyelements.org/'] absolute URL prefix for demos, with trailing slash
  * @property {DemoRecord[]} [extraDemos=[]] list of extra demo records not included in the custom-elements-manifest
  */
 
@@ -24,6 +25,7 @@ const glob = require('glob');
  * @property {string} tagName
  * @property {string} slug
  * @property {string} filePath
+ * @property {string} permalink
  * @property {string} url
  */
 
@@ -121,6 +123,7 @@ module.exports = function configFunction(eleventyConfig, options) {
     const { Manifest } = await import('../Manifest.js');
 
     const sourceControlURLPrefix = options?.sourceControlURLPrefix ?? 'https://github.com/patternfly/patternfly-elements/tree/main/';
+    const demoURLPrefix = options?.demoURLPrefix ?? 'https://patternflyelements.org/';
 
     // 1. get all packages
     // 2. get manifests per package
@@ -136,6 +139,7 @@ module.exports = function configFunction(eleventyConfig, options) {
             slug: tagName.replace(/^(\w+)-/, ''),
             title: pretty(tagName),
             ...demo,
+            permalink: demo.url.replace(demoURLPrefix, '/'),
             filePath: demo.source.href.replace(sourceControlURLPrefix, `${rootDir}/`)
           })) ?? [])).concat(options?.extraDemos ?? []);
   });

@@ -10,14 +10,15 @@ import { sanitizeEventsPlugin } from './custom-elements-manifest/sanitize-events
 import { summaryPlugin } from './custom-elements-manifest/summary.js';
 
 interface Options extends Config {
-  sourceControlURLPrefix: string;
+  sourceControlURLPrefix?: string;
+  demoURLPrefix?: string;
 }
 
 /**
  * PFE Default custom-elements-manifest analyzer config
  */
 export function pfeCustomElementsManifestConfig(options?: Options): Config {
-  const { sourceControlURLPrefix = 'https://github.com/patternfly/patternfly-elements/tree/main/', dev } = options ?? {};
+  const { demoURLPrefix, sourceControlURLPrefix, dev } = options ?? {};
   return {
     globs: options?.globs ?? ['src/**/*.ts'],
     dev,
@@ -37,7 +38,7 @@ export function pfeCustomElementsManifestConfig(options?: Options): Config {
       deprecatedDescriptionInlineTagPlugin(),
       dedentDescriptionsPlugin(),
       summaryPlugin(),
-      demosPlugin({ sourceControlURLPrefix }),
+      demosPlugin({ demoURLPrefix, sourceControlURLPrefix }),
 
       ...options?.plugins ?? [],
     ],

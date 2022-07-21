@@ -1,5 +1,5 @@
 import type { Plugin } from '@custom-elements-manifest/analyzer';
-import { isCustomElement } from '../11ty/Manifest.js';
+import { isCustomElement } from './lib/Manifest.js';
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { join, sep } from 'node:path';
 
@@ -57,7 +57,7 @@ export function demosPlugin(options?: Options): Plugin {
               for (const demo of allDemos) {
                 const demoName = demo.replace(/\.html$/, '');
                 const slug = primaryElementName.replace(/^\w+-/, '');
-                const { href } = new URL(`elements/${primaryElementName}/demo/${demo}/`, sourceControlURLPrefix || '/');
+                const href = new URL(`elements/${primaryElementName}/demo/${demo}/`, sourceControlURLPrefix || '/').href.replace(/\/$/, '');
                 if (demoName === tagName && demoName === primaryElementName) {
                 // case: elements/pfe-jazz-hands/demo/pfe-jazz-hands.html
                   const { href: url } = new URL(`/components/${slug}/demo/`, demoURLPrefix || '/');

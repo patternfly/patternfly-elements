@@ -11,9 +11,12 @@
   <link rel="stylesheet" href="/node_modules/@patternfly/pfe-styles/pfe.min.css">
   <link rel="stylesheet" href="/node_modules/@patternfly/pfe-styles/pfe-layouts.min.css">
   <link rel="stylesheet" href="/node_modules/@patternfly/pfe-styles/red-hat-font.min.css">
-  <link rel="stylesheet" href="/node_modules/@patternfly/pfe-tools/demo/demo.css">
+  <link rel="stylesheet" href="/node_modules/@patternfly/pfe-tools/dev-server/demo.css">
   <link rel="stylesheet" href="/docs/main.css">
-  <script type="module" src="/node_modules/@patternfly/pfe-tools/demo/demo.ts"></script>
+  <script type="module">
+    import "@patternfly/pfe-tools/dev-server/demo.ts";
+    import "@patternfly/pfe-band";
+  </script>
 </head>
 
 <body>
@@ -32,9 +35,9 @@
   <aside id="main-nav">
     <nav class="site-navigation" aria-label="Main Navigation">
       <ul id="elements-container" class="site-navigation__wrapper">
-        {% for element in elements %}
+        {% for demo in demos %}
           <li class="site-navigation__item">
-            <a class="site-navigation__link" href="/components/{{ element }}/">{{ element | prettyTag }}</a>
+            <a class="site-navigation__link" href="{{ demo.permalink | replace(demoURLPrefix, '/') }}">{{ demo.title }}</a>
           </li>
         {% endfor %}
       </ul>
@@ -42,7 +45,7 @@
   </aside>
   <main>
     <pfe-band id="component-header" color-palette="base" size="small" full-width>
-      <h1 slot="header">{{ ('<' + element + '>') if element else 'Select a Demo from the Menu' }}</h1>
+      <h1 slot="header">{{ ('<' + demo.tagName + '>') if demo.tagName else 'Select a Demo from the Menu' }}</h1>
       <form slot="header">
         <fieldset hidden>
           <label for="theme-select">Select a context</label>
@@ -65,8 +68,12 @@
       </form>
     </pfe-band>
 
-    <div data-demo="{{ element }}">{{ demo | safe }}</div>
-    <api-viewer src="{{ manifest }}" only="{{ element }}"></api-viewer>
+    {% if templateContent %}
+    <div data-demo="{{ demo.tagName }}">{{ templateContent | safe }}</div>
+    {% endif %}
+    {% if manifest.filePath %}
+    <api-viewer src="{{ manifest.path }}" only="{{ demo.tagName }}"></api-viewer>
+    {% endif %}
   </main>
 </body>
 

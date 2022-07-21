@@ -4,7 +4,7 @@ import type {
 
 import { fileURLToPath } from 'url';
 
-import { Manifest } from './Manifest.js';
+import { Manifest } from '../custom-elements-manifest/lib/Manifest.js';
 
 import nunjucks, { Environment } from 'nunjucks';
 
@@ -63,10 +63,10 @@ export class DocsPage implements DocsPageRenderer {
     options?: {
       docsTemplatePath?: string;
       tagName: string;
-      title: string;
+      title?: string;
   }) {
     this.tagName = options?.tagName ?? '';
-    this.title = options?.title ?? '';
+    this.title = options?.title ?? Manifest.prettyTag(this.tagName);
     this.slug = this.tagName.replace(/^\w+-/, '');
     this.summary = this.manifest.getSummary(this.tagName);
     this.description = this.manifest.getDescription(this.tagName);

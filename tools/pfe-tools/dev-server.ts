@@ -144,34 +144,44 @@ async function renderURL(ctx: Context, env: nunjucks.Environment, options?: PfeD
 }
 
 /**
- * Generate HTML for each component by adding it's demo to a
- * Declarative Shadow DOM template.
- * @see https://web.dev/declarative-shadow-dom/
+ * Generate HTML for each component by rendering a nunjucks template
  * Watch repository source files and reload the page when they change
  */
 function pfeDevServerPlugin(options?: PfeDevServerConfigOptions): Plugin {
+  const loadDemo = options?.loadDemo ?? true;
   const env = nunjucks.configure(fileURLToPath(new URL('./demo', import.meta.url)));
   env.addFilter('prettyTag', x => prettyTag(x, options?.site?.tagPrefix));
 
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
-      const router = new Router();
-      router
-        .get('/(demo|components)/:tagName/:fileName.:ext(js|css|html)', ctx => {
+      app.use(new Router()
+        // redirect /components/pfe-jazz-hands/index.html to /elements/pfe-jazz-hands/demo/pfe-jazz-hands.html
+        .get('/components/:tagName/:fileName.:ext(js|css|html)?', ctx => {
           const { tagName, fileName, ext } = ctx.params;
-          ctx.redirect(`/elements/${tagName}/demo/${fileName === 'index' ? tagName : fileName}.${ext}`);
-        });
-      app.use(router.routes());
+          const redir = `/elements/${tagName}/demo/${fileName === 'index' ? tagName : fileName}.${ext}`;
+          ctx.redirect(redir);
+        })
+        // redirect /components/pfe-jazz-hands/pfe-jazz-hands-lightdom.css to /elements/pfe-jazz-hands/pfe-jazz-hands-lightdom.css
+        // whenever requested from /components/pfe-jazz-hands/**/*
+        .get('/components/:fileName.css', (ctx, next) => {
+          const [, tagName] = ctx.request.header.referer?.match(/\/components\/([-\w]+)\//) ?? [];
+          if (tagName) {
+            const redir = `/elements/${tagName}/${ctx.params.fileName}.css`;
+            return ctx.redirect(redir);
+          }
+          return next();
+        })
+        .routes());
 
-      /** Render the demo page */
+      // Render the demo page whenever there's a trailing slash
       app.use(async function nunjucksMiddleware(ctx, next) {
-        if ((options?.loadDemo ?? true) && !(ctx.method !== 'HEAD' && ctx.method !== 'GET' || ctx.path.includes('.'))) {
+        const { method, path } = ctx;
+        if (loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {
           ctx.type = 'html';
           ctx.status = 200;
           ctx.body = await renderURL(ctx, env, options);
         }
-
         return next();
       });
 

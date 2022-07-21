@@ -46,8 +46,6 @@ export abstract class BaseTooltip extends LitElement {
 
   override firstUpdated(): void {
     if (this.#invoker && this.#tooltip) {
-      console.log('this.offset');
-      console.log(this.offset);
       this.#domController.create(this.#invoker, this.#tooltip, this.position, this.offset);
     }
   }

@@ -49,7 +49,9 @@ export class PfeProgressIndicator extends LitElement {
 
   render() {
     return html`
-      <span><slot @slotchange="${this._init}"></slot></span>
+      <div id="container">
+        <span><slot @slotchange="${this._init}"></slot></span>
+      </div>
     `;
   }
 

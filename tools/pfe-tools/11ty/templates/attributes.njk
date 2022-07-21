@@ -12,7 +12,7 @@
       <dl class="member"> {%- if attribute.fieldName -%}
         <dt>DOM Property</dt> <dd><code>{{ attribute.fieldName }}</code></dd> {%- endif -%}
         <dt>Type</dt> <dd class="inline-type"> {{- (attribute.type.text or 'unknown') | type | safe -}} </dd>
-        <dt>Default</dt> <dd class="inline-type"> {{- (attribute.default or 'unknown') | type | safe -}} </dd>
+        <dt>Default</dt> <dd class="inline-type">{{- (attribute.default or 'unknown') | type | safe -}}</dd>
       </dl>
     </dd> {%- endfor -%}
   </dl> {%- endif -%} {%- if deprecated.length -%}

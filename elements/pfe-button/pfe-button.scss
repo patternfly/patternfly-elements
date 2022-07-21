@@ -1,192 +1,183 @@
-@use "@patternfly/pfe-sass" as *;
-@use "sass:map";
-@use "sass:string";
+/******************************
+ *                            *
+ *          WARNING           *
+ *                            *
+ ******************************/
 
-@include configure(
-  $name: 'button',
-  $variables: (
-    BackgroundColor: pfe-var(ui-accent),
-    BackgroundColor--hover: pfe-var(ui-accent--hover),
-    Color: pfe-var(ui-base--text),
-    FontSize: pfe-var(FontSize--md),
-    Border: 0,
-    BorderRadius: pfe-var(surface--border-radius),
-    Padding: calc(#{pfe-var(container-padding)} / 2) pfe-var(container-padding),
-    LineHeight: pfe-var(line-height),
-    after: (
-      BorderColor: transparent,
-      BorderColor--hover: transparent,
-    ),
-  ),
-);
+:host([warning]) ::slotted(button) {
+  color: var(--pf-c-button--m-warning--Color,
+    var(--pf-global--Color--dark-100, #151515)) !important;
+  background-color: var(--pf-c-button--m-warning--BackgroundColor,
+    var(--pf-global--warning-color--100, #f0ab00)) !important;
+}
 
-// Nested internal variables (pfe-local calls), maps cannot "self-reference"
-@include merge-local-variables((
-  after: (
-    Border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: after),
-    Border--hover: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor--hover, $region: after),
-  ),
-));
+:host([warning]) ::slotted(button:active) {
+  --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--active--Color,
+    var(--pf-global--Color--dark-100, #151515));
+  --pf-c-button--m-warning--BackgroundColor: var(--pf-c-button--m-warning--active--BackgroundColor,
+    var(--pf-global--palette--gold-500, #c58c00));
+}
 
-:host {
+:host([warning]) ::slotted(button:focus) {
+  --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--focus--Color,
+    var(--pf-global--Color--dark-100, #151515));
+  --pf-c-button--m-warning--BackgroundColor: var(--pf-c-button--m-warning--focus--BackgroundColor,
+    var(--pf-global--palette--gold-500, #c58c00));
+}
+
+:host([warning]) ::slotted(button:hover) {
+  --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--hover--Color,
+    var(--pf-global--Color--dark-100, #151515));
+  --pf-c-button--m-warning--BackgroundColor: var(--pf-c-button--m-warning--hover--BackgroundColor,
+    var(--pf-global--palette--gold-500, #c58c00));
+}
+
+:host([disabled][warning]) ::slotted(button) {
+  pointer-events: none !important;
+  cursor: default !important;
+  color: var(--pf-c-button--disabled--Color,
+    var(--pf-global--disabled-color--100, #6a6e73)) !important;
+  background-color: var(--pf-c-button--disabled--BackgroundColor,
+    var(--pf-global--disabled-color--200, #d2d2d2)) !important;
+}
+
+/******************************
+ *                            *
+ *           PLAIN            *
+ *                            *
+ ******************************/
+
+:host([plain]) {
+  --pf-c-button--disabled--BackgroundColor: var(--pf-c-button--m-plain--disabled--BackgroundColor, transparent);
+}
+
+:host([plain]) ::slotted(button) {
+  --pf-c-button--after--BorderWidth: 0 !important;
+  --pf-c-button--after--BorderColor: var(--pf-c-button--m-tertiary--after--BorderColor,
+    var(--pf-global--Color--100, #151515));
+  --pf-c-button--disabled--Color: var(--pf-c-button--m-plain--disabled--Color,
+    var(--pf-global--disabled-color--200, #d2d2d2));
+  color: var(--pf-c-button--m-plain--Color,
+    var(--pf-global--Color--200, #6a6e73)) !important;
+  background-color: var(--pf-c-button--m-plain--BackgroundColor,
+    transparent) !important;
+}
+
+:host([plain]) ::slotted(button:active) {
+  --pf-c-button--m-plain--Color: var(--pf-c-button--m-plain--active--Color,
+    var(--pf-global--Color--100, #151515));
+  --pf-c-button--m-plain--BackgroundColor: var(--pf-c-button--m-plain--active--BackgroundColor,
+    tranparent);
+}
+
+:host([plain]) ::slotted(button:focus) {
+  --pf-c-button--m-plain--Color: var(--pf-c-button--m-plain--focus--Color,
+    var(--pf-global--Color--100, #151515));
+  --pf-c-button--m-plain--BackgroundColor: var(--pf-c-button--m-plain--focus--BackgroundColor,
+    transparent);
+}
+
+:host([plain]) ::slotted(button:hover) {
+  --pf-c-button--m-plain--Color: var(--pf-c-button--m-plain--hover--Color,
+    var(--pf-global--Color--100, #151515));
+  --pf-c-button--m-plain--BackgroundColor: var(--pf-c-button--m-plain--hover--BackgroundColor,
+    transparent);
+}
+
+:host([plain]) .hasIcon [part=icon],
+:host([loading][plain]) [part=icon] {
+  left: 16px;
+}
+
+:host([plain][disabled]),
+:host([plain][disabled][variant=link]) ::slotted(button),
+:host([plain][disabled]) ::slotted(button),
+:host([plain]) ::slotted(button[aria-disabled=true]),
+:host([plain]) ::slotted(button:disabled) {
+  color: var(--pf-c-button--disabled--Color,
+    var(--pf-c-button--m-plain--disabled--Color,
+      var(--pf-global--disabled--color--200, #d2d2d2))) !important;
+}
+
+/******************************
+ *                            *
+ *    ICON POSITION RIGHT     *
+ *                            *
+ ******************************/
+
+:host([icon-position=right]) .hasIcon [part=icon],
+:host([icon-position=right][loading]) [part=icon] {
+  display: inline-flex;
+  align-items: center;
+  position: absolute;
+  width: 16px;
+  left: initial;
+  right: var(--pf-c-button--PaddingRight,
+    var(--pf-global--spacer--md, 1rem));
+  margin-inline-start: var(--pf-c-button__icon--m-start--MarginLeft,
+    var(--pf-global--spacer--xs, 0.25rem));
+  margin-inline-end: initial;
+}
+
+:host([icon-position=right]) .hasIcon ::slotted(button) {
+  padding-left: var(--pf-c-button--PaddingLeft, var(--pf-global--spacer--md, 1rem)) !important;
+  padding-right: calc(16px + 8px + var(--pf-c-button--PaddingRight, var(--pf-global--spacer--md, 1rem))) !important;
+}
+
+/******************************
+ *                            *
+ *          LOADING           *
+ *                            *
+ ******************************/
+
+:host([loading]) #container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+:host([loading]) #container [part=icon] {
   display: inline-block;
+  z-index: 1;
+  position: absolute;
+  cursor: pointer;
+  top: var(--pf-c-button__progress--Top, 50%);
+  left: var(--pf-c-button__progress--Left,
+    var(--pf-global--spacer--md, 1rem));
+  line-height: 1;
+  transform: translate(
+    var(--pf-c-button__progress--TranslateX, 0),
+    var(--pf-c-button__progress--TranslateY, -50%));
+  margin-inline-end: var(--pf-c-button__icon--m-start--MarginRight,
+    var(--pf-global--spacer--xs, 0.25rem));
 }
 
-:host([hidden]) {
-  display: none;
+pfe-progress-indicator {
+  --pfe-progress-indicator-size: 18px;
+  --pfe-theme--surface--border-width--heavy: 2px;
 }
 
-#container {
-  ::slotted(button) {
-    all: unset !important;
-    background-color: pfe-local(BackgroundColor) !important;
-    color: pfe-local(Color) !important;
-    font-size: pfe-local(FontSize) !important;
-    font-family: pfe-var(font-family, $fallback: inherit) !important;
-    font-weight: pfe-local(FontWeight) !important;
-    padding: pfe-local(Padding) !important;
-    cursor: pointer !important;
-    border-radius: pfe-local(BorderRadius) !important;
-    border: pfe-local(Border) !important;
-    position: relative !important;
-    line-height: pfe-local(LineHeight) !important;
-    &::after {
-      position: absolute !important;
-      inset: 0 0 0 0 !important;
-      content: "" !important;
-      border: pfe-local(Border, $region: after) !important;
-      border-radius: pfe-local(BorderRadius) !important;
-    }
-  }
-
-  ::slotted(button:hover),
-  ::slotted(button:focus) {
-    --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover)};
-    --pfe-button__after--Border: #{pfe-local(Border--hover, $region: after)};
-  }
+:host([loading]) {
+  --pfe-progress-indicator--background-color: rgba(0,102,204,.25);
+  --pfe-progress-indicator--foreground-color: #06c;
 }
 
-:host([variant="danger"]) {
-  #container {
-    ::slotted(button) {
-      background-color: pfe-local(BackgroundColor, pfe-var(feedback--critical--lighter)) !important;
-    }
-
-    ::slotted(button:hover),
-    ::slotted(button:focus) {
-      --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover, pfe-var(feedback--critical))};
-    }
-  }
+:host([loading][variant=primary]:not([plain])),
+:host([loading][danger]) {
+  --pfe-progress-indicator--background-color: rgba(255, 255, 255, .25);
+  --pfe-progress-indicator--foreground-color: rgba(255, 255, 255, .75);
 }
 
-:host([variant="secondary"]),
-:host([variant="tertiary"]),
-:host([variant="control"]) {
-  #container {
-    ::slotted(button) {
-      background-color: pfe-local(BackgroundColor, transparent) !important;
-    }
-
-    ::slotted(button:hover),
-    ::slotted(button:focus) {
-      --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover, transparent)};
-      --pfe-button__after--Border: #{pfe-local(Border--hover, $region: after, $fallback: pfe-var(ui--border-width--md) pfe-var(ui--border-style) pfe-local(BorderColor, $region: after))};
-    }
-  }
+:host([loading]:not([plain])) {
+  --pf-c-button--PaddingRight: var(--pf-c-button--m-in-progress--PaddingRight,
+    var(--pf-global--spacer--md, 1rem));
+  --pf-c-button--PaddingLeft: var(--pf-c-button--m-in-progress--PaddingLeft,
+    calc(
+      var(--pf-global--spacer--md, 1rem) + var(--pf-c-button__progress--width,
+        calc(var(--pf-global--icon--FontSize--md, 1.125rem) + var(--pf-global--spacer--sm, 0.5rem))) / 2));
 }
 
-:host([variant="secondary"]) {
-  #container {
-    ::slotted(button) {
-      color: var(--pfe-button--Color, var(--pfe-theme--color--ui-accent,#06c)) !important;
-      &::after {
-        border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(ui-accent)) !important;
-      }
-    }
-  }
+:host([loading]:not([plain])) ::slotted(button) {
+  padding-left: calc(12px + var(--pf-c-button--PaddingLeft, var(--pf-global--spacer--md, 1rem))) !important;
 }
 
-:host([on^=dark]),
-:host([on=saturated]) {
-  --pfe-theme--color--text: #ffffff;
-}
-
-:host([on^=dark][variant="tertiary"]) {
-  --pfe-theme--color--ui-accent: #ffffff;
-}
-
-:host([on=saturated][variant="control"]) {
-  --pfe-button__after--BorderColor: var(--pfe-theme--color--ui--border, #8a8d90);
-}
-
-:host([on^=dark][variant="control"]) {
-  --pfe-button__after--BorderColor: var(--pfe-theme--color--ui--border--darker, #151515);
-}
-
-:host([variant="tertiary"]) {
-  #container {
-    ::slotted(button) {
-      color: pfe-local(Color, pfe-var(text)) !important;
-      &::after {
-        border-color: pfe-local(BorderColor, $region: after, $fallback: pfe-var(text)) !important;
-      }
-    }
-  }
-}
-
-:host([variant="control"]) {
-  #container {
-    ::slotted(button) {
-      color: pfe-local(Color, pfe-var(text)) !important;
-      border-radius: pfe-local(BorderRadius, 0) !important;
-      &::after {
-        border-color: var(--pfe-button__after--BorderColor, var(--pfe-theme--color--ui--border--lightest, #f0f0f0)) !important;
-        border-bottom-color: var(--pfe-theme--color--ui--border, #8a8d90) !important;
-      }
-    }
-
-    ::slotted(button:hover),
-    ::slotted(button:focus) {
-      --pfe-button__after--BorderColor: #{pfe-local(BorderColor--hover, pfe-var(ui--border--lightest))};
-      &::after {
-        border-bottom-width: pfe-var(ui--border-width--md) !important;
-        border-bottom-color: pfe-var(ui-accent) !important;
-      }
-    }
-  }
-}
-
-:host([variant="control"][disabled]) {
-  #container {
-    ::slotted(button) {
-      background-color: pfe-local(BackgroundColor, pfe-var(surface--lighter)) !important;
-    }
-  }
-}
-
-:host([size="large"]) {
-  #container {
-    ::slotted(button) {
-      --pfe-button--FontWeight: #{pfe-local(FontWeight--large, $fallback: pfe-var(font-weight--semi-bold))};
-      --pfe-button--Padding: #{pfe-local(Padding--large, $fallback: 12px 24px)};
-    }
-  }
-}
-
-:host([disabled]) {
-  #container {
-    ::slotted(button) {
-      background-color: pfe-local(BackgroundColor, pfe-var(ui-disabled)) !important;
-      color: pfe-local(Color, pfe-var(ui-disabled--text)) !important;
-      pointer-events: none !important;
-      &::after {
-        border: pfe-local(Border, $region: after, $fallback: 0) !important;
-      }
-    }
-    ::slotted(button:hover),
-    ::slotted(button:focus) {
-      --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover, pfe-var(ui-disabled))};
-      --pfe-button__after--Border: #{pfe-local(Border--hover, $region: after, $fallback: 0)};
-    }
-  }
-}

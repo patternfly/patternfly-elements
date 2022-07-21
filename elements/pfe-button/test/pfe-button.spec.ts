@@ -44,7 +44,7 @@ describe('<pfe-button>', function() {
     el.disabled = true;
     await el.updateComplete;
 
-    expect(lightDomBtn).dom.to.equal('<button disabled>Button</button>');
+    expect(lightDomBtn).dom.to.equal('<button disabled tabindex="-1">Button</button>');
 
     el.disabled = false;
     await el.updateComplete;
@@ -66,13 +66,5 @@ describe('<pfe-button>', function() {
     await el.updateComplete;
 
     expect(lightDomBtn).dom.to.equal('<button>Button</button>');
-  });
-
-  it('should send a pfe-button:click event on click', async function() {
-    const el = await createFixture<PfeButton>(element);
-    setTimeout(() => el.querySelector('button')!.click());
-    const event = await oneEvent(document, 'pfe-button:click');
-    expect(event).to.be.ok;
-    expect(event.type).to.equal('pfe-button:click');
   });
 });

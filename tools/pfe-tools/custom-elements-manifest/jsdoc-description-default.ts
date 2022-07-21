@@ -1,4 +1,4 @@
-import type { CustomElement } from 'custom-elements-manifest/schema';
+import type { Attribute, CssCustomProperty, CustomElement, CustomElementDeclaration } from 'custom-elements-manifest/schema';
 import type { ClassDeclaration, JSDoc } from 'typescript';
 import type { Plugin } from '@custom-elements-manifest/analyzer';
 
@@ -6,9 +6,47 @@ import { parse } from 'comment-parser';
 
 import dedent from 'dedent';
 
-export function cssCustomPropertiesDefaultPlugin(): Plugin {
+const DEFAULT_RE = /{@default `?([^}`]*)`?}/;
+
+function deinlineDefault(
+  classDoc: CustomElement,
+  jsDoc: ReturnType<typeof parse>[number]['tags'][number]
+) {
+  const groupKey =
+      jsDoc.tag.match(/^cssprop/) ? 'cssProperties'
+    : jsDoc.tag.match(/^attr/) ? 'attributes'
+    : null;
+
+  if (!groupKey) {
+    return;
+  }
+
+  const existing = (classDoc[groupKey] as (Attribute|CssCustomProperty)[])?.find?.(x =>
+    x.name === jsDoc.name);
+
+  if (!existing) {
+    return;
+  }
+
+  // @ts-expect-error: exactly my point!
+  if (groupKey === 'cssProperties' && existing.type) {
+    // @ts-expect-error: it does in the draft spec
+    existing.syntax = existing.type.text;
+    // @ts-expect-error: exactly my point!
+    delete existing.type;
+  }
+
+  const [, defaultTag] = existing.description?.match?.(DEFAULT_RE) ?? [];
+
+  if (defaultTag) {
+    existing.default = defaultTag;
+    existing.description =
+      dedent(existing.description?.replace(DEFAULT_RE, '') ?? '');
+  }
+}
+export function jsdocDescriptionDefaultPlugin(): Plugin {
   return {
-    name: 'css-custom-properties-default-plugin',
+    name: 'jsdoc-description-default-plugin',
     analyzePhase({ ts, node, moduleDoc }) {
       if (!ts.isClassDeclaration(node)) {
         return;
@@ -39,30 +77,11 @@ export function cssCustomPropertiesDefaultPlugin(): Plugin {
           parsedJsDoc?.tags?.forEach(jsDoc => {
             switch (jsDoc.tag) {
               case 'cssprop':
-              case 'cssproperty': {
-                const existing = classDoc?.cssProperties?.find?.(x => x.name === jsDoc.name);
-                if (!existing) {
-                  return;
-                }
-
-                // @ts-expect-error: exactly my point!
-                if (existing.type) {
-                  // @ts-expect-error: it does in the draft spec
-                  existing.syntax = existing.type.text;
-                  // @ts-expect-error: exactly my point!
-                  delete existing.type;
-                }
-
-                const DEFAULT_RE = /{@default (.*)}/;
-
-                const [, defaultTag] = existing.description?.match?.(DEFAULT_RE) ?? [];
-
-                if (defaultTag) {
-                  existing.default = defaultTag;
-                  existing.description =
-                    dedent(existing.description?.replace(DEFAULT_RE, '') ?? '');
-                }
-              }
+              case 'cssproperty':
+                return deinlineDefault(classDoc, jsDoc);
+              case 'attr':
+              case 'attribute':
+                return deinlineDefault(classDoc, jsDoc);
             }
           });
         });

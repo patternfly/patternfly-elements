@@ -14,7 +14,7 @@
   <h{{level}} slot="header">{{ header | innerMD | safe }}</h{{level}}> {% if not content and not cssProperties.length %}
   <em>None</em> {%- else -%}
   {{ content | innerMD | safe }}
-  <table>
+  <table class=css-custom-properties>
     <thead>
       <tr>
         <th style="text-align:left">CSS Property</th>
@@ -26,7 +26,10 @@
       <tr>
         <td style="text-align:left"><code>{{ prop.name }}</code></td>
         <td style="text-align:left">{{ prop.description | innerMD | safe }}</td>
-        <td style="text-align:left">{{ (prop.default or '—') | innerMD | safe }}</td>
+        <td style="text-align:left"><code{{
+            (' data-color='+prop.default+' style=--color:'+(prop.default|safe)) if
+            prop.default and prop.default.startsWith('#')
+        }}>{{ (prop.default or '—') | safe }}</code></td>
       </tr> {% endfor %}
     </tbody>
   </table> {%- endif -%} {%- if deprecated.length -%}
@@ -53,3 +56,20 @@
     </table>
   </details> {%- endif -%}
 </pfe-band>
+
+<style>
+table.css-custom-properties code[data-color] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+table.css-custom-properties code[data-color]:after {
+  content: '';
+  background: var(--color);
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 1rem;
+  inset-inline-end: -1rem;
+}
+</style>

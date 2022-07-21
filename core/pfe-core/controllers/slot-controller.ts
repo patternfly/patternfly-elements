@@ -34,7 +34,7 @@ export interface SlotsConfig {
 }
 
 function isObjectConfigSpread(config: ([SlotsConfig]|(string|null)[])): config is [SlotsConfig] {
-  return config.length === 1 && config[0] !== null;
+  return config.length === 1 && typeof config[0] === 'object' && config[0] !== null;
 }
 
 /**
@@ -69,7 +69,7 @@ export class SlotController implements ReactiveController {
       const [{ slots, deprecations }] = config;
       this.slotNames = slots;
       this.deprecations = deprecations ?? {};
-    } else if (config.length > 1) {
+    } else if (config.length >= 1) {
       this.slotNames = config;
       this.deprecations = {};
     } else {

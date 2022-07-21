@@ -88,12 +88,16 @@ export class DocsPage implements DocsPageRenderer {
     this.templates.addGlobal('title', this.title);
     this.templates.addFilter('log', content => (console.log(content), ''));
 
-    this.templates.addFilter('type', (content = '', { lang = 'ts' } = {}) => content.trim() &&
+    this.templates.addFilter('type', (content = '', { lang = 'ts' } = {}) => content.trim?.() &&
       `\n\n\`\`\`${lang}\n${content.trim()}\n\n\`\`\`\n\n`);
 
     this.templates.addFilter('innerMD', (content = '') => {
-      const trimmed = content.trim();
-      return trimmed && `\n\n\n${trimmed}\n\n\n`;
+      try {
+        const trimmed = content.trim();
+        return trimmed && `\n\n\n${trimmed}\n\n\n`;
+      } catch {
+        console.log({ content }); return '';
+      }
     });
 
     this.templates.addFilter('stringifyParams', (method: ClassMethod) =>

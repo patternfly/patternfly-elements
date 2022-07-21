@@ -6,9 +6,10 @@ import type { LitCSSOptions } from 'web-dev-server-plugin-lit-css';
 
 import 'urlpattern-polyfill';
 
-import { readdir, readFile, stat } from 'fs/promises';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { existsSync } from 'node:fs';
+import { readdir, readFile, stat } from 'node:fs/promises';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import rollupReplace from '@rollup/plugin-replace';
 import nunjucks from 'nunjucks';
@@ -135,7 +136,7 @@ async function renderURL(ctx: Context, env: nunjucks.Environment, options?: PfeD
     context: ctx,
     demo: demoPath && await readFile(demoPath, 'utf-8'),
     element,
-    elements: await readdir(join(rootDir, 'elements')).catch(() => []),
+    elements: (await readdir(join(rootDir, 'elements')).catch(() => [])).filter(x => existsSync(join(rootDir, base, x, 'demo'))),
     manifest: basePath && (await exists(join(basePath, '..', 'custom-elements.json')) ? `/${base}/${element}/custom-elements.json` : '/custom-elements.json'),
     title: element ? `${prettyTag(element, options?.site?.tagPrefix)} | ${options?.site?.title ?? 'PatternFly Elements'}` : (options?.site?.title ?? SITE_DEFAULTS.title),
     script: basePath && await readFile(join(basePath, `${element}.js`), 'utf-8'),

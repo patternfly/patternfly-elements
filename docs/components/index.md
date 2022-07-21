@@ -3,7 +3,6 @@ layout: layout-basic.njk
 title: All components
 permalink: /components/index.html
 ---
-
 <pfe-band class="header" use-grid>
   <h1 slot="header">Components</h1>
 </pfe-band>

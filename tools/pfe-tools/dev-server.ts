@@ -3,6 +3,7 @@ import type { DevServerConfig } from '@web/dev-server';
 import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsPlugin';
 import type { Context, Next } from 'koa';
 import type { LitCSSOptions } from 'web-dev-server-plugin-lit-css';
+import type { DemoRecord } from './custom-elements-manifest/lib/Manifest.js';
 
 import 'urlpattern-polyfill';
 
@@ -21,7 +22,7 @@ import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { importMapsPlugin } from '@web/dev-server-import-maps';
 import { transformSass } from './esbuild.js';
 import { createRequire } from 'module';
-import { promisify } from 'util';
+import { promisify } from 'node:util';
 
 import Router from '@koa/router';
 import { Manifest } from './custom-elements-manifest/lib/Manifest.js';
@@ -30,7 +31,11 @@ const glob = promisify(_glob);
 const require = createRequire(import.meta.url);
 const replace = fromRollup(rollupReplace);
 
-const env = nunjucks.configure(fileURLToPath(new URL('./dev-server', import.meta.url)));
+const env = nunjucks
+  .configure(fileURLToPath(new URL('./dev-server', import.meta.url)))
+  .addFilter('log', x => (console.log(x, '')))
+  .addFilter('isElementGroup', (group: DemoRecord[], primary) =>
+    group.every(x => !!primary && x.primaryElementName === primary));
 
 export interface PfeDevServerConfigOptions extends DevServerConfig {
   /** Extra dev server plugins */
@@ -183,6 +188,8 @@ function pfeDevServerPlugin(options?: PfeDevServerConfigOptions): Plugin {
         })
         // redirect /components/pfe-jazz-hands/pfe-jazz-hands-lightdom.css to /elements/pfe-jazz-hands/pfe-jazz-hands-lightdom.css
         .get('/components/:slug/demo/:sub?/:fileName.css', (ctx, next) => {
+          // FIXME: will probably break if one component links to another's lightdom css.
+          //        better to find out why it's requesting from /components/ in the first place
           const [, tagName] = ctx.request.header.referer?.match(/\/components\/([-\w]+)\//) ?? [];
           if (tagName) {
             const redir = `/elements/${tagName}/${ctx.params.fileName}.css`;

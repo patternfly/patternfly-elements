@@ -31,7 +31,7 @@ export interface PackageJSON {
   workspaces?: string[];
 }
 
-interface DemoRecord extends Demo {
+export interface DemoRecord extends Demo {
   tagName: string;
   primaryElementName: string;
   permalink: string;
@@ -265,8 +265,13 @@ export class Manifest {
       const permalink = demo.url.replace(options.demoURLPrefix, '/');
       const [, slug = ''] = permalink.match(/\/components\/(.*)\/demo/) ?? [];
       const primaryElementName = `${options.tagPrefix}-${slug}`;
-      const title = Manifest.prettyTag(tagName);
-      const filePath = demo.source?.href.replace(options.sourceControlURLPrefix, `${options.rootDir}/`);
+      const filePath = demo.source?.href.replace(options.sourceControlURLPrefix, `${options.rootDir}/`) ?? '';
+      const [last = ''] = filePath.split('/').reverse();
+      const filename = last.replace('.html', '');
+      const title = this.getTagNames().includes(filename) ? Manifest.prettyTag(tagName) : last
+        .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
+        .replace(/-/g, ' ')
+        .replace('.html', '');
       return { tagName, primaryElementName, permalink, slug, title, filePath, manifest, ...demo };
     });
   }

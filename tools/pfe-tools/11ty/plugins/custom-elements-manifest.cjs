@@ -24,6 +24,8 @@ const { existsSync } = require('node:fs');
  * @property {string} title
  * @property {string} tagName
  * @property {string} tagPrefix
+ * @property {string} primaryElementName
+ * @property {import('../../custom-elements-manifest/lib/Manifest').Manifest} manifest
  * @property {string} slug
  * @property {string} filePath
  * @property {string} permalink

@@ -29,6 +29,8 @@ export declare class DocsPageRenderer {
 }
 
 export class DocsPage implements DocsPageRenderer {
+  static isDocsPage = true;
+
   public static renderBand(content: string, kwargs?: RenderKwargs) {
     const page = new DocsPage(Manifest.empty());
     return page.renderBand(content, kwargs);

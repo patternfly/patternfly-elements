@@ -35,10 +35,24 @@
   <aside id="main-nav">
     <nav class="site-navigation" aria-label="Main Navigation">
       <ul id="elements-container" class="site-navigation__wrapper">
-        {% for demo in demos %}
-          <li class="site-navigation__item">
-            <a class="site-navigation__link" href="{{ demo.permalink | replace(demoURLPrefix, '/') }}">{{ demo.title }}</a>
-          </li>
+        {% set groupeddemos = demos | sort(false, false, 'permalink') | groupby('primaryElementName') %}
+        {% for primary, group in groupeddemos %}
+        {% if group.length > 1 %}
+        <li class="site-navigation__item">
+          <details {{ 'open' if demo.primaryElementName == primary }}>
+            <summary class="site-navigation__heading">{{ group['0'].title }}</summary>
+            <ul class="site-navigation__sub-menu">{% for d in group %}
+              <li>
+                <a class="site-navigation__link" href="{{ d.permalink | replace(demoURLPrefix, '/') }}">{{ d.title }}</a>
+              </li>{% endfor %}
+            </ul>
+          </details>
+        </li>
+        {% else %}
+        <li>
+          <a class="site-navigation__link" href="{{ group['0'].permalink | replace(demoURLPrefix, '/') }}">{{ group['0'].title }} </a>
+        </li>
+        {% endif %}
         {% endfor %}
       </ul>
     </nav>

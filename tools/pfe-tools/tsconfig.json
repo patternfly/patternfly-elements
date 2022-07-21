@@ -3,6 +3,7 @@
   "include": ["./**/*"],
   "exclude": ["dev-server/bundle.ts"],
   "compilerOptions": {
+    "target": "es2022",
     "allowJs": false,
     "checkJs": false,
     "emitDeclarationOnly": false

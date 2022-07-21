@@ -17,6 +17,8 @@ import type {
 import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
 
+import { getAllPackages } from './get-all-packages.js';
+
 type PredicateFn = (x: unknown) => boolean;
 
 export interface PackageJSON {
@@ -27,6 +29,16 @@ export interface PackageJSON {
   contributors?: string[];
   author?: string;
   workspaces?: string[];
+}
+
+export interface DemoRecord extends Demo {
+  tagName: string;
+  primaryElementName: string;
+  permalink: string;
+  slug: string;
+  title: string;
+  filePath?: string;
+  manifest: Manifest;
 }
 
 const all = (...ps: PredicateFn[]) => (x: unknown) => ps.every(p => p(x));
@@ -128,13 +140,30 @@ export class Manifest {
     return Manifest.#instances.get(packageJson) as Manifest;
   }
 
+  public static getAll(rootDir = process.cwd()): Manifest[] {
+    return getAllPackages(rootDir).flatMap(x =>
+      !x.package.customElements ? [] : [Manifest.from(x)]);
+  }
+
+  public static prettyTag = (tagName: string, aliases?: Record<string, string>) => aliases?.[tagName] ?? tagName
+    .replace(/^\w+-/, '')
+    .toLowerCase()
+    .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
+    .replace(/-/g, ' ');
+
   declarations = new Map<string, ManifestCustomElement>();
+
+  /** file path to the custom elements manifest */
+  path = '';
 
   constructor(
     public manifest: Package|null,
     public packageJson: PackageJSON|null,
     public location?: string
   ) {
+    if (manifest && packageJson && location && packageJson.customElements) {
+      this.path = join(location, packageJson.customElements);
+    }
     for (const { declarations } of manifest?.modules ?? []) {
       for (const declaration of declarations ?? []) {
         if (isCustomElement(declaration) && declaration.tagName) {
@@ -213,7 +242,37 @@ export class Manifest {
 
   /**
    */
-  getDemos(tagName: string): undefined|Demo[] {
-    return this.#tag(tagName)?.demos;
+  getDemos(tagName: string): Demo[] {
+    return this.#tag(tagName)?.demos ?? [];
+  }
+
+  getAllDemos(): Demo[] {
+    return this.manifest?.modules
+      ?.flatMap?.(m => m.declarations)
+      ?.filter?.((x): x is CustomElementDeclaration => !!x && isCustomElement(x))
+      ?.flatMap?.(x => x?.demos ?? []) ?? [];
+  }
+
+  getDemoMetadata(tagName: string, options: {
+    rootDir: string;
+    demoURLPrefix: string;
+    sourceControlURLPrefix: string;
+    tagPrefix: string;
+  }): DemoRecord[] {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const manifest = this;
+    return this.getDemos(tagName).map(demo => {
+      const permalink = demo.url.replace(options.demoURLPrefix, '/');
+      const [, slug = ''] = permalink.match(/\/components\/(.*)\/demo/) ?? [];
+      const primaryElementName = `${options.tagPrefix}-${slug}`;
+      const filePath = demo.source?.href.replace(options.sourceControlURLPrefix, `${options.rootDir}/`) ?? '';
+      const [last = ''] = filePath.split('/').reverse();
+      const filename = last.replace('.html', '');
+      const title = this.getTagNames().includes(filename) ? Manifest.prettyTag(tagName) : last
+        .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
+        .replace(/-/g, ' ')
+        .replace('.html', '');
+      return { tagName, primaryElementName, permalink, slug, title, filePath, manifest, ...demo };
+    });
   }
 }

@@ -3,12 +3,14 @@ import type { DevServerConfig } from '@web/dev-server';
 import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsPlugin';
 import type { Context, Next } from 'koa';
 import type { LitCSSOptions } from 'web-dev-server-plugin-lit-css';
+import type { DemoRecord } from './custom-elements-manifest/lib/Manifest.js';
 
 import 'urlpattern-polyfill';
 
-import { readdir, readFile, stat } from 'fs/promises';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { existsSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import rollupReplace from '@rollup/plugin-replace';
 import nunjucks from 'nunjucks';
@@ -20,15 +22,20 @@ import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { importMapsPlugin } from '@web/dev-server-import-maps';
 import { transformSass } from './esbuild.js';
 import { createRequire } from 'module';
-import { promisify } from 'util';
+import { promisify } from 'node:util';
 
 import Router from '@koa/router';
+import { Manifest } from './custom-elements-manifest/lib/Manifest.js';
 
 const glob = promisify(_glob);
 const require = createRequire(import.meta.url);
-const exists = (x: string) => stat(x).then(() => true, () => false);
 const replace = fromRollup(rollupReplace);
-const env = nunjucks.configure(fileURLToPath(new URL('./demo', import.meta.url)));
+
+const env = nunjucks
+  .configure(fileURLToPath(new URL('./dev-server', import.meta.url)))
+  .addFilter('log', x => (console.log(x, '')))
+  .addFilter('isElementGroup', (group: DemoRecord[], primary) =>
+    group.every(x => !!primary && x.primaryElementName === primary));
 
 export interface PfeDevServerConfigOptions extends DevServerConfig {
   /** Extra dev server plugins */
@@ -36,6 +43,9 @@ export interface PfeDevServerConfigOptions extends DevServerConfig {
   plugins?: Plugin[];
   importMap?: InjectSetting['importMap'];
   hostname?: string;
+  sourceControlURLPrefix?: string;
+  demoURLPrefix?: string;
+  tagPrefix?: string;
   watchFiles: string;
   litcssOptions: LitCSSOptions,
   site?: {
@@ -53,15 +63,6 @@ const SITE_DEFAULTS = {
   githubUrl: 'https://github.com/patternfly/patternfly-elements/',
   description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
 };
-
-/** Prettify a tag name, stripping the prefix and capitalizing the rest */
-function prettyTag(tagName: string, prefix: `${string}-` = 'pfe-'): string {
-  return tagName
-    .replace(prefix, '')
-    .toLowerCase()
-    .replace(/(?:^|[\s-/])\w/g, x => x.toUpperCase())
-    .replace(/-/g, ' ');
-}
 
 /** Ugly, ugly hack to resolve packages from the local monorepo */
 function tryToResolve(source: string, context: import('koa').Context) {
@@ -97,7 +98,7 @@ export function resolveLocalFilesFromTypeScriptSources(options: Partial<PfeDevSe
   const { rootDir } = options;
   return {
     name: 'resolve-local-monorepo-packages-from-ts-sources',
-    async transformImport({ source, context }) {
+    transformImport({ source, context }) {
       const isNodeModule = source.match(/node_modules/) || context.path.match(/node_modules/);
       if (source.endsWith('.ts.js')) {
         // already resolved, but had `.js` appended, probably by export map
@@ -109,68 +110,103 @@ export function resolveLocalFilesFromTypeScriptSources(options: Partial<PfeDevSe
         const resolved = tryToResolve(source, context);
         const absToRoot = resolved.replace(rootDir, '/');
         const replaced = absToRoot.replace(/\.js$/, '.ts');
-        const fileExists = await exists(join(rootDir, replaced));
-        const final = (fileExists ? replaced : resolved);
+        const final = (existsSync(join(rootDir, replaced)) ? replaced : resolved);
         return final;
       }
     },
   };
 }
 
-/**
- * Renders the demo page for a given url
- */
-async function renderURL(ctx: Context, env: nunjucks.Environment, options?: PfeDevServerConfigOptions): Promise<string> {
-  const url = new URL(ctx.request.url, `http://${ctx.request.headers.host}`);
-  const pattern = new URLPattern('/components/:element/:sub?/', `http://${ctx.request.headers.host}`);
-  const { rootDir = process.cwd() } = options ?? {};
-  const { element, sub } = pattern.exec(url)?.pathname?.groups ?? {};
-  const base = element?.match(/^pfe-(core|sass|styles)$/) ? 'core' : 'elements';
-  const basePath = element && join(rootDir, base, element, 'demo');
-  const demoPath = basePath && join(basePath, `${sub ?? element}.html`);
+function renderBasic(ctx: Context, demos: unknown[], options?: PfeDevServerConfigOptions) {
   return env.render('index.njk', {
-    ...SITE_DEFAULTS,
-    ...options?.site,
-    core: await readdir(join(rootDir, 'core')).catch(() => []),
     context: ctx,
-    demo: demoPath && await readFile(demoPath, 'utf-8'),
-    element,
-    elements: await readdir(join(rootDir, 'elements')).catch(() => []),
-    manifest: basePath && (await exists(join(basePath, '..', 'custom-elements.json')) ? `/${base}/${element}/custom-elements.json` : '/custom-elements.json'),
-    title: element ? `${prettyTag(element, options?.site?.tagPrefix)} | ${options?.site?.title ?? 'PatternFly Elements'}` : (options?.site?.title ?? SITE_DEFAULTS.title),
-    script: basePath && await readFile(join(basePath, `${element}.js`), 'utf-8'),
+    demos,
+    title: (options?.site?.title ?? SITE_DEFAULTS.title),
   });
 }
 
 /**
- * Generate HTML for each component by adding it's demo to a
- * Declarative Shadow DOM template.
- * @see https://web.dev/declarative-shadow-dom/
+ * Renders the demo page for a given url
+ */
+async function renderURL(ctx: Context, options?: PfeDevServerConfigOptions): Promise<string> {
+  const url = new URL(ctx.request.url, `http://${ctx.request.headers.host}`);
+  const {
+    rootDir = process.cwd(),
+    sourceControlURLPrefix = 'https://github.com/patternfly/patternfly-elements/tree/main/',
+    demoURLPrefix = 'https://patternflyelements.org/',
+    tagPrefix = 'pfe',
+  } = options ?? {};
+
+  const manifests = Manifest.getAll(rootDir);
+  const demos = manifests
+    .flatMap(manifest => manifest.getTagNames()
+      .flatMap(tagName => manifest.getDemoMetadata(tagName, { rootDir, sourceControlURLPrefix, demoURLPrefix, tagPrefix })));
+  const demo = demos.find(x => x.permalink === url.pathname);
+  const manifest = demo?.manifest;
+
+  if (!demo || !manifest || !demo || !demo.filePath || !existsSync(demo.filePath)) {
+    return renderBasic(ctx, demos, options);
+  }
+
+  const templateContent = await readFile(demo.filePath, 'utf8');
+
+  const title = `${demo.title} | ${options?.site?.title ?? 'PatternFly Elements'}`;
+
+  return env.render('index.njk', {
+    ...SITE_DEFAULTS,
+    ...options?.site,
+    context: ctx,
+    demo,
+    demos,
+    templateContent,
+    manifest,
+    title,
+  });
+}
+
+/**
+ * Generate HTML for each component by rendering a nunjucks template
  * Watch repository source files and reload the page when they change
  */
 function pfeDevServerPlugin(options?: PfeDevServerConfigOptions): Plugin {
-  const env = nunjucks.configure(fileURLToPath(new URL('./demo', import.meta.url)));
-  env.addFilter('prettyTag', x => prettyTag(x, options?.site?.tagPrefix));
+  const loadDemo = options?.loadDemo ?? true;
 
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
-      const router = new Router();
-      router
-        .get('/(demo|components)/:tagName/:fileName.:ext(js|css|html)', ctx => {
-          const { tagName, fileName, ext } = ctx.params;
-          ctx.redirect(`/elements/${tagName}/demo/${fileName === 'index' ? tagName : fileName}.${ext}`);
-        });
-      app.use(router.routes());
+      app.use(new Router()
+        // redirect /components/pfe-jazz-hands/pfe-timestep/index.html to /elements/pfe-jazz-hands/demo/pfe-timestep.html
+        // redirect /components/pfe-jazz-hands/index.html to /elements/pfe-jazz-hands/demo/pfe-jazz-hands.html
+        .get('/components/:slug/demo/:sub?/:fileName', (ctx, next) => {
+          const { slug, fileName } = ctx.params;
+          if (fileName.includes('.')) {
+            const tagName = `${options?.tagPrefix ?? 'pfe'}-${slug}`;
+            const redir = `/elements/${tagName}/demo/${fileName === 'index.html' ? tagName : fileName}`;
+            ctx.redirect(redir);
+          }
+          return next();
+        })
+        // redirect /components/pfe-jazz-hands/pfe-jazz-hands-lightdom.css to /elements/pfe-jazz-hands/pfe-jazz-hands-lightdom.css
+        .get('/components/:slug/demo/:sub?/:fileName.css', (ctx, next) => {
+          // FIXME: will probably break if one component links to another's lightdom css.
+          //        better to find out why it's requesting from /components/ in the first place
+          const [, tagName] = ctx.request.header.referer?.match(/\/components\/([-\w]+)\//) ?? [];
+          if (tagName) {
+            const redir = `/elements/${tagName}/${ctx.params.fileName}.css`;
+            return ctx.redirect(redir);
+          }
+          return next();
+        })
+        .routes());
 
-      /** Render the demo page */
+      // Render the demo page whenever there's a trailing slash
       app.use(async function nunjucksMiddleware(ctx, next) {
-        if ((options?.loadDemo ?? true) && !(ctx.method !== 'HEAD' && ctx.method !== 'GET' || ctx.path.includes('.'))) {
+        const { method, path } = ctx;
+        if (loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {
           ctx.type = 'html';
           ctx.status = 200;
-          ctx.body = await renderURL(ctx, env, options);
+          ctx.body = await renderURL(ctx, options);
         }
-
         return next();
       });
 

@@ -3,7 +3,7 @@ import type { ReactiveElement, PropertyDeclaration, ReactiveController } from 'l
 import { Logger } from '../controllers/logger.js';
 
 export type DeprecationDeclaration<K extends PropertyKey> = PropertyDeclaration & {
-  alias: K;
+  alias: string & K;
   attribute: string;
 }
 
@@ -18,7 +18,10 @@ export type DeprecationDeclaration<K extends PropertyKey> = PropertyDeclaration 
  * ```
  */
 export function deprecation<K extends PropertyKey>(options: DeprecationDeclaration<K>) {
-  return function<T extends ReactiveElement, L extends PropertyKey>(proto: Partial<Record<K | L, T>>, key: keyof T) {
+  return function<T extends ReactiveElement, L extends PropertyKey>(
+    proto: Partial<Record<K | L, T>>,
+    key: string & keyof T
+  ) {
     const { alias, ...deprecationOptions } = options;
     const klass = (proto.constructor as typeof ReactiveElement);
     const declaration = klass.getPropertyOptions(alias);
@@ -34,7 +37,11 @@ class Deprecation<T extends ReactiveElement, K extends PropertyKey> implements R
 
   private logged = false;
 
-  constructor(private host: T, private options: DeprecationDeclaration<K>, private deprecatedKey: keyof T) {
+  constructor(
+    private host: T,
+    private options: DeprecationDeclaration<K>,
+    private deprecatedKey: string & keyof T
+  ) {
     this.logger = new Logger(host);
   }
 

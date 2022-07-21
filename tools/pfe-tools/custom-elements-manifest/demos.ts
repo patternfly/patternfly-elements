@@ -1,10 +1,11 @@
 import type { Plugin } from '@custom-elements-manifest/analyzer';
-import { isCustomElement } from '../11ty/Manifest.js';
+import { isCustomElement } from './lib/Manifest.js';
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { join, sep } from 'node:path';
 
 interface Options {
   sourceControlURLPrefix?: string;
+  demoURLPrefix?: string;
   rootDir?: string;
 }
 
@@ -29,7 +30,8 @@ interface Options {
  */
 export function demosPlugin(options?: Options): Plugin {
   const rootDir = options?.rootDir ?? process.cwd();
-  const sourceControlURLPrefix = options?.sourceControlURLPrefix;
+  const demoURLPrefix = options?.demoURLPrefix ?? 'https://patternflyelements.org/';
+  const sourceControlURLPrefix = options?.sourceControlURLPrefix ?? 'https://github.com/patternfly/patternfly-elements/tree/main/';
   return {
     name: 'demos-plugin',
     packageLinkPhase({ customElementsManifest }) {
@@ -53,21 +55,27 @@ export function demosPlugin(options?: Options): Plugin {
               decl.demos ??= [];
               const { tagName } = decl;
               for (const demo of allDemos) {
-                const basename = demo.replace(/\.html$/, '');
-                const source = { href: `${sourceControlURLPrefix ?? ''}elements/${primaryElementName}/demo/${demo}` };
-                if (basename === tagName && basename === primaryElementName) {
+                const demoName = demo.replace(/\.html$/, '');
+                const slug = primaryElementName.replace(/^\w+-/, '');
+                const href = new URL(`elements/${primaryElementName}/demo/${demo}/`, sourceControlURLPrefix || '/').href.replace(/\/$/, '');
+                if (demoName === tagName && demoName === primaryElementName) {
                 // case: elements/pfe-jazz-hands/demo/pfe-jazz-hands.html
-                  decl.demos.push({ url: '/demo/', source });
-                } else if (allTagNames.includes(basename) && basename === tagName) {
+                  const { href: url } = new URL(`/components/${slug}/demo/`, demoURLPrefix || '/');
+                  decl.demos.push({ url, source: { href } });
+                } else if (allTagNames.includes(demoName) && demoName === tagName) {
                 // case: elements/pfe-jazz-hands/demo/pfe-jazz-shimmy.html
-                  decl.demos.push({ url: `/demo/${basename}/`, source });
-                } else if (tagName === primaryElementName && !allTagNames.includes(basename)) {
+                  const { href: url } = new URL(`/components/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
+                  decl.demos.push({ url, source: { href } });
+                } else if (tagName === primaryElementName && !allTagNames.includes(demoName)) {
                 // case: elements/pfe-jazz-hands/demo/ack.html
-                  decl.demos.push({ url: `/demo/${basename}/`, source });
+                  const { href: url } = new URL(`/components/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
+                  decl.demos.push({ url, source: { href } });
                 }
               }
               if (!decl.demos.length) {
                 delete decl.demos;
+              } else {
+                decl.demos.sort(a => a.url.endsWith('/demo/') ? -1 : 0);
               }
             }
           }

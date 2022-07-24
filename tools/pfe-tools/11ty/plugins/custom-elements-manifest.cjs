@@ -1,6 +1,6 @@
 // @ts-check
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
-const { join } = require('node:path');
+const { join, dirname } = require('node:path');
 const { existsSync } = require('node:fs');
 
 /**
@@ -38,8 +38,11 @@ const { existsSync } = require('node:fs');
  * @this {EleventyContext}
  */
 async function getDocsPage(tagName) {
+  if (!tagName) {
+    return null;
+  }
   // Not sure how bad of an abuse this is
-  if (this.ctx._?.constructor?.name === 'DocsPage') {
+  if (this.ctx._?.constructor?.isDocsPage) {
     return this.ctx._;
   } else {
     throw new Error(`Could not load data for ${tagName}`);
@@ -85,13 +88,15 @@ module.exports = function configFunction(eleventyConfig, options) {
     return Manifest.getAll(rootDir)
       .flatMap(manifest =>
         Array.from(manifest.declarations.values(), decl => {
+          // NB: not a great proxy for monorepo
+          const isSinglepackage = decl.module.path.startsWith('elements/');
+          const root = isSinglepackage ? dirname(decl.module.path) : '.';
           const { tagName } = decl;
+          const docsTemplatePath = join(manifest.location, root, 'docs', `${tagName}.md`);
           return new DocsPage(manifest, {
             tagName,
             // only include the template if it exists
-            ...Object.fromEntries(Object.entries({
-              docsTemplatePath: join(manifest.location, 'docs', `${tagName}.md`),
-            }).filter(([, v]) => existsSync(v)))
+            ...Object.fromEntries(Object.entries({ docsTemplatePath }).filter(([, v]) => existsSync(v)))
           });
         }));
   });
@@ -130,7 +135,7 @@ module.exports = function configFunction(eleventyConfig, options) {
        */
       async function(content, kwargs) {
         const page = await getDocsPage.call(this, kwargs?.for);
-        return page[shortCode](content, kwargs);
+        return page?.[shortCode]?.(content, kwargs) ?? '';
       });
   }
 };

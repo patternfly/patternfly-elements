@@ -8,6 +8,7 @@
   "references": [
     { "path": "../../core/pfe-core" },
     { "path": "../../tools/pfe-tools" },
+    { "path": "../pfe-button" },
     { "path": "../pfe-icon" }
   ]
 }

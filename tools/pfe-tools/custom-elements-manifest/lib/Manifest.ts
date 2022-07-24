@@ -10,6 +10,7 @@ import type {
   Demo,
   Event,
   Export,
+  Module,
   Package,
   Slot,
 } from 'custom-elements-manifest/schema';
@@ -103,7 +104,11 @@ class ManifestCustomElement {
   /** The demos for the element */
   declare demos?: Demo[];
 
-  constructor(private declaration: CustomElementDeclaration, private manifest: Manifest) {
+  constructor(
+    public declaration: CustomElementDeclaration,
+    public module: Module,
+    public manifest: Manifest
+  ) {
     const isAnAttr = (x: ClassField) => !this.declaration?.attributes?.some?.(isTheField(x));
 
     this.tagName = this.declaration.tagName;
@@ -164,10 +169,10 @@ export class Manifest {
     if (manifest && packageJson && location && packageJson.customElements) {
       this.path = join(location, packageJson.customElements);
     }
-    for (const { declarations } of manifest?.modules ?? []) {
-      for (const declaration of declarations ?? []) {
+    for (const mod of manifest?.modules ?? []) {
+      for (const declaration of mod.declarations ?? []) {
         if (isCustomElement(declaration) && declaration.tagName) {
-          this.declarations.set(declaration.tagName, new ManifestCustomElement(declaration, this));
+          this.declarations.set(declaration.tagName, new ManifestCustomElement(declaration, mod, this));
         }
       }
     }

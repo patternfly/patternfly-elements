@@ -140,7 +140,12 @@ async function renderURL(ctx: Context, options?: PfeDevServerConfigOptions): Pro
   const manifests = Manifest.getAll(rootDir);
   const demos = manifests
     .flatMap(manifest => manifest.getTagNames()
-      .flatMap(tagName => manifest.getDemoMetadata(tagName, { rootDir, sourceControlURLPrefix, demoURLPrefix, tagPrefix })));
+      .flatMap(tagName => manifest.getDemoMetadata(tagName, {
+        rootDir,
+        sourceControlURLPrefix,
+        demoURLPrefix,
+        tagPrefix
+      })));
   const demo = demos.find(x => x.permalink === url.pathname);
   const manifest = demo?.manifest;
 

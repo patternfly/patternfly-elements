@@ -87,6 +87,9 @@ export type LabelColor = (
  * @cssprop {<color>} --pf-c-label--m-red__icon--Color {@default `#c9190b`}
  * @cssprop {<color>} --pf-c-label--m-gold__icon--Color {@default `#f0ab00`}
  *
+ * @csspart icon - container for the label icon
+ * @csspart close-button - container for removable labels' close button
+ *
  * @slot icon
  *       Contains the labels's icon, e.g. web-icon-alert-success.
  *

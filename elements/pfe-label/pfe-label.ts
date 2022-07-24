@@ -78,6 +78,9 @@ import { ComposedEvent } from '@patternfly/pfe-core';
  * @cssprop {<color>} --pf-c-label--m-red__icon--Color {@default `#c9190b`}
  * @cssprop {<color>} --pf-c-label--m-gold__icon--Color {@default `#f0ab00`}
  *
+ * @csspart icon - container for the label icon
+ * @csspart close-button - container for removable labels' close button
+ *
  * @slot icon
  *       Contains the labels's icon, e.g. web-icon-alert-success.
  *
@@ -97,7 +100,11 @@ export class PfeLabel extends BaseLabel {
 
   static readonly shadowRootOptions: ShadowRootInit = { ...BaseLabel.shadowRootOptions, delegatesFocus: true };
 
+  /** Flag indicating the label is compact */
   @property({ reflect: true, type: Boolean }) compact = false;
+
+  /** Flag indicating the label text should be truncated */
+  @property({ reflect: true, type: Boolean }) truncated = false;
 
   /** Flag indicating the label is removable */
   @property({ reflect: true, type: Boolean }) removable = false;

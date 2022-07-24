@@ -113,7 +113,7 @@ export class PfeLabel extends BaseLabel {
   @property({ attribute: 'close-button-label' }) closeButtonLabel?: string;
 
   protected override renderDefaultIcon() {
-    return html`
+    return !this.icon ? '' : html`
       <pfe-icon ?hidden=${!this.icon} icon=${this.icon} size="sm"></pfe-icon>
     `;
   }

@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 2.0.0-next.6
+
+### Patch Changes
+
+- 34ecd410: `SlotController` now correctly initializes when given a single string slot name as config argument
+
 ## 2.0.0-next.5
 
 ### Patch Changes

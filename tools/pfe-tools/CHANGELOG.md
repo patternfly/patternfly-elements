@@ -1,5 +1,23 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.22
+
+### Major Changes
+
+- c2f867fd: Rename cssCustomPropertyDefaultPlugin to jsdocDescriptionDefaultPlugin and render colour swatches on docs site
+
+### Minor Changes
+
+- fce3a836: Allow for multiple demos.
+
+  Elements can now have multiple demos, and the demos now load their scripts using script tags,
+  instead of inlining them via nunjucks using filename conventions.
+
+  BREAKING CHANGES: dev server urls now use `/components` instead of `/demo`
+
+- fce3a836: Adds demo plugin for custom-elements-manifests
+- 05a4fab9: Add custom-elements-manifest plugins to mark ECMAScript private fields and to read the version number from package.json
+
 ## 1.0.0-next.21
 
 ### Patch Changes

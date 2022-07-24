@@ -6,7 +6,7 @@ Changes to `<pfe-label>` to align it with [PatternFly v4](https://patternfly.org
 
 NEW:
 Added `variant` attribute for `filled` and `outline` style variants
-Added `is-compact` boolean attribute for compact style version
+Added `compact` boolean attribute for compact style version
 
 BREAKING CHANGES:
 The `pfelement` attribute and `PFElement` class are **removed** from the `<pfe-label>` element by default.

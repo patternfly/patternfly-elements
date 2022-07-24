@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 1.0.0-next.12
+
+### Patch Changes
+
+- fce3a836: Simplify element demo templates
+
 ## 1.0.0-next.11
 
 ### Minor Changes

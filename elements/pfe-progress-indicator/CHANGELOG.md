@@ -1,5 +1,24 @@
 # @patternfly/pfe-progress-indicator
 
+## 2.0.0-next.3
+
+### Major Changes
+
+- 94a8eb9a: Removes `-Height` and `-Width` CSS custom properties in favour of `size`.
+
+  ```css
+  pfe-progress-indicator {
+    /* --pfe-progress-indicator--Height: 2rem; */
+    /* --pfe-progress-indicator--Width: 2rem; */
+    --pfe-progress-indicator-size: 2rem;
+  }
+  ```
+
+### Patch Changes
+
+- Updated dependencies [34ecd410]
+  - @patternfly/pfe-core@2.0.0-next.6
+
 ## 2.0.0-next.2
 
 ### Patch Changes

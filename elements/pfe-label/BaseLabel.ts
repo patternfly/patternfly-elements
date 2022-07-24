@@ -1,11 +1,7 @@
-
-import type { TemplateResult } from 'lit';
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import styles from './BaseLabel.scss';
@@ -119,20 +115,18 @@ export abstract class BaseLabel extends LitElement {
   /** Represents the state of the anonymous and icon slots */
   protected slots = new SlotController(this, null, 'icon');
 
-  #logger = new Logger(this);
-
   override render() {
     const { icon } = this;
     const hasIcon = this.slots.hasSlotted('icon') || !!icon;
     return html`
       <span id="container" class=${classMap({ hasIcon })}>
         <span part="icon">
-          <slot name="icon">
-          ${ifDefined(this.icon) ? html`${this.renderDefaultIcon()}` : ``}
-          </slot>
+          <slot name="icon">${this.renderDefaultIcon()}</slot>
         </span>
-        <slot></slot>
-      </span>
+        <span id="text">
+          <slot></slot>
+        </span>
+      </span>${this.renderSuffix?.() ?? ''}
     `;
   }
 
@@ -144,5 +138,13 @@ export abstract class BaseLabel extends LitElement {
    * <pfe-icon icon=${this.icon}></pfe-icon>
    * ```
    */
-  protected abstract renderDefaultIcon(): TemplateResult;
+  protected abstract renderDefaultIcon(): unknown;
+
+  /**
+   * Optional override to render content after the anonymous slot.
+   * @example ```html
+   * <button id="close-button">X</button>
+   * ```
+   */
+  protected abstract renderSuffix?(): unknown;
 }

@@ -1,15 +1,20 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+import '@patternfly/pfe-button';
+
 import { BaseLabel } from './BaseLabel.js';
 
 import styles from './pfe-label.scss';
+import { ComposedEvent } from '@patternfly/pfe-core';
 
 
 /**
  * Labels allow users to display meta data in a stylized form.
  *
  * @summary Allows users to display meta data in a stylized form.
+ *
+ * @fires close - when a removable label's close button is clicked
  *
  * @cssprop {<length>} --pf-c-label--FontSize   {@default `0.875em`}
  *
@@ -90,11 +95,34 @@ export class PfeLabel extends BaseLabel {
 
   static readonly styles = [...BaseLabel.styles, styles];
 
+  static readonly shadowRootOptions: ShadowRootInit = { ...BaseLabel.shadowRootOptions, delegatesFocus: true };
+
   @property({ reflect: true, type: Boolean }) compact = false;
+
+  /** Flag indicating the label is removable */
+  @property({ reflect: true, type: Boolean }) removable = false;
+
+  /** Text label for a removable label's close button */
+  @property({ attribute: 'close-button-label' }) closeButtonLabel?: string;
 
   protected override renderDefaultIcon() {
     return html`
       <pfe-icon ?hidden=${!this.icon} icon=${this.icon} size="sm"></pfe-icon>
+    `;
+  }
+
+  protected override renderSuffix() {
+    return !this.removable ? '' : html`
+      <span part="close-button" ?hidden=${!this.removable}>
+        <pfe-button plain @click=${() => this.dispatchEvent(new ComposedEvent('close'))}>
+          <button>
+            <svg slot="icon" style="vertical-align:-0.125em" fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
+              <title>${this.closeButtonLabel ?? 'remove'}</title>
+              <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
+            </svg>
+          </button>
+        </pfe-button>
+      </span>
     `;
   }
 }

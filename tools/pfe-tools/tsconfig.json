@@ -1,8 +1,9 @@
 {
   "extends": "../../tsconfig.settings.json",
   "include": ["./**/*"],
-  "exclude": ["demo"],
+  "exclude": ["dev-server/bundle.ts"],
   "compilerOptions": {
+    "target": "es2022",
     "allowJs": false,
     "checkJs": false,
     "emitDeclarationOnly": false

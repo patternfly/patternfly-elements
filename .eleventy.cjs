@@ -39,7 +39,18 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(pfeAssetsPlugin);
 
   /** Generate and consume custom elements manifests */
-  eleventyConfig.addPlugin(customElementsManifestPlugin);
+  eleventyConfig.addPlugin(customElementsManifestPlugin, {
+    aliases: {
+      'pfe-cta': 'Call to Action',
+    },
+    extraDemos: [{
+      slug: 'styles',
+      title: 'Styles',
+      url: 'demo/index.html',
+      base: 'core',
+      filePath: '_site/core/styles/demo/pfe-styles.html',
+    }]
+  });
 
   /** Collections to organize alphabetically instead of by date */
   eleventyConfig.addPlugin(orderTagsPlugin, { tags: ['component'], order: 'alphabetically' });

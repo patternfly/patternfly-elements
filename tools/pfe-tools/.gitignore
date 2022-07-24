@@ -5,3 +5,4 @@
 !11ty/types.d.ts
 !custom-elements-manifest/declaration.d.ts
 !_scripts/dev.js
+!dev-server/demo.css

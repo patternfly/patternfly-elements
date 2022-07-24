@@ -1,15 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-function exists(x) {
-  try {
-    fs.statSync(x);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 /**
  * Generate a map of files per package which should be copied to the site dir
  * @param {object} [options]
@@ -21,8 +12,8 @@ function getFilesToCopy(options) {
 
   const prefix = `${(options?.prefix ?? 'pfe').replace(/-$/, '')}-`;
 
-  const hasElements = exists(path.join(repoRoot, 'elements'));
-  const hasCore = exists(path.join(repoRoot, 'core'));
+  const hasElements = fs.existsSync(path.join(repoRoot, 'elements'));
+  const hasCore = fs.existsSync(path.join(repoRoot, 'core'));
 
   if (!hasElements && !hasCore) {
     return null;

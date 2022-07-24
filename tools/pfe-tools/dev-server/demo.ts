@@ -16,26 +16,26 @@ const contextToColor = new Map(Object.entries({
 
 /** Change the context of the accordions */
 function onContextChange() {
-  for (const element of include.shadowRoot.querySelectorAll('.contextual')) {
-    element.setAttribute('color-palette', contextToColor.get(contextSelect.value) ?? 'lightest');
+  for (const element of include?.shadowRoot?.querySelectorAll('.contextual') ?? []) {
+    element.setAttribute('color-palette', contextToColor.get(contextSelect?.value ?? '') ?? 'lightest');
   }
 }
 
 function toggleNav(force?: boolean | Event) {
   if (window.matchMedia('(max-width: 640px)').matches) {
-    const old = typeof force === 'boolean' ? !force : hamburger.getAttribute('aria-expanded') === 'true';
+    const old = typeof force === 'boolean' ? !force : hamburger?.getAttribute('aria-expanded') === 'true';
     const next = !old;
-    hamburger.setAttribute('aria-expanded', String(next));
-    nav.classList.toggle('expanded');
+    hamburger?.setAttribute('aria-expanded', String(next));
+    nav?.classList.toggle('expanded');
     if (next) {
-      const link: HTMLAnchorElement = nav.querySelector('a:active') ?? nav.querySelector('a');
-      link.focus();
+      const link: HTMLAnchorElement|null = nav?.querySelector('a:active') ?? nav?.querySelector('a') ?? null;
+      link?.focus();
     }
   }
 }
 
 function onMaximize(force?: boolean) {
-  for (const svg of form.querySelectorAll('svg')) {
+  for (const svg of form?.querySelectorAll('svg') ?? []) {
     svg.toggleAttribute('hidden');
   }
   document.documentElement.toggleAttribute('maximized', force);
@@ -43,25 +43,27 @@ function onMaximize(force?: boolean) {
 }
 
 function attachShadowRoots(root: Document | ShadowRoot) {
-  root.querySelectorAll('template[shadowroot]').forEach((template: HTMLTemplateElement) => {
-    const mode = template.getAttribute('shadowroot') as 'open';
-    const shadowRoot: ShadowRoot = (template.parentNode as HTMLElement).attachShadow({ mode });
-    shadowRoot.appendChild(template.content);
-    template.remove();
-    attachShadowRoots(shadowRoot);
+  root.querySelectorAll('template[shadowroot]').forEach(template => {
+    if (template instanceof HTMLTemplateElement) {
+      const mode = template.getAttribute('shadowroot') as 'open';
+      const shadowRoot: ShadowRoot = (template.parentNode as HTMLElement).attachShadow({ mode });
+      shadowRoot.appendChild(template.content);
+      template.remove();
+      attachShadowRoots(shadowRoot);
+    }
   });
 }
 
-form.addEventListener('submit', e => e.preventDefault());
-form.querySelector('button').addEventListener('click', () => onMaximize());
+form?.addEventListener('submit', e => e.preventDefault());
+form?.querySelector('button')?.addEventListener('click', () => onMaximize());
 
 context.addEventListener('select', onContextChange);
-hamburger.addEventListener('click', toggleNav);
+hamburger?.addEventListener('click', toggleNav);
 
 document.addEventListener('click', event => {
-  if (hamburger.getAttribute('aria-expanded') === 'true') {
+  if (hamburger?.getAttribute('aria-expanded') === 'true') {
     const path = event.composedPath();
-    if (!path.includes(nav) && !path.includes(hamburger)) {
+    if (!path.includes(nav!) && !path.includes(hamburger)) {
       event.preventDefault();
       event.stopPropagation();
       toggleNav(false);
@@ -69,8 +71,8 @@ document.addEventListener('click', event => {
   }
 });
 
-nav.addEventListener('keydown', event => {
-  if (hamburger.getAttribute('aria-expanded') === 'true') {
+nav?.addEventListener('keydown', event => {
+  if (hamburger?.getAttribute('aria-expanded') === 'true') {
     switch (event.key) {
       case 'Escape':
         event.preventDefault();

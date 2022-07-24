@@ -87,7 +87,7 @@ const getFilePathsRelativeToPackageDir =
     demo: `demo/${options.tagName}.html`,
     demoCss: `demo/demo.css`,
     demoScript: `demo/${options.tagName}.js`,
-    docs: `docs/index.md`,
+    docs: `docs/${options.tagName}.md`,
     package: 'package.json',
     readme: 'README.md',
     style: `${options.tagName}.${options.css === 'postcss' ? '.postcss.css' : options.css}`,

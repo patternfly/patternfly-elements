@@ -3,7 +3,6 @@ layout: layout-basic.njk
 title: All components
 permalink: /components/index.html
 ---
-
 <pfe-band class="header" use-grid>
   <h1 slot="header">Components</h1>
 </pfe-band>
@@ -21,7 +20,7 @@ permalink: /components/index.html
 
 <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col">
   {%- for element in elements -%}
-  {%- if element.docsPath -%}
+  {%- if element.docsTemplatePath -%}
     <div class="component-preview">
       <div class="component-preview--container">
         {%- if env.ELEVENTY_ENV == "prod" -%}

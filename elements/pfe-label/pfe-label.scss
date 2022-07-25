@@ -1,108 +1,34 @@
-@use "@patternfly/pfe-sass" as *;
-@use "@patternfly/patternfly/sass-utilities/colors" as *;
-
-:host {
-  display: inline-flex;
-  text-rendering: optimizelegibility;
-  line-height: var(--pfe-label--LineHeight, 1rem);
+:host([compact]) {
+  --pf-c-label--PaddingTop: var(--pf-c-label--m-compact--PaddingTop, 0);
+  --pf-c-label--PaddingRight: var(--pf-c-label--m-compact--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
+  --pf-c-label--PaddingBottom: var(--pf-c-label--m-compact--PaddingBottom, 0);
+  --pf-c-label--PaddingLeft: var(--pf-c-label--m-compact--PaddingLeft, var(--pf-global--spacer--sm, 0.5rem));
 }
 
-.pfe-label {
-  padding: var(--pfe-label--PaddingTop, 4px) var(--pfe-label--PaddingRight, 8px) var(--pfe-label--PaddingBottom, 4px) var(--pfe-label--PaddingLeft, 8px);
-  font-size: var(--pfe-label--FontSize, 0.875rem);
-  font-weight: normal;
-  white-space:x nowrap;
-  border: 1px solid transparent;
-  border-radius: var(--pfe-label--BorderRadius, calc(var(--pfe-theme--ui--border-radius, 2px) * 30));
-}
-
-.pfe-label,
-.content {
-  display: inline-flex;
-  align-items: center;
-}
-
-.content {
+:host([truncated]) #text {
   overflow: hidden;
-  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: var(--pf-c-label__text--MaxWidth, 16ch);
 }
 
-.icon {
-  margin-right: var(--pfe-label--IconMargin, 3px);
-  height: var(--pfe-label--LineHeight, 1rem);
-  transform: translateY(-0.075rem);
-}
-
-.pfe-label {
-  color: var(--pfe-label--TextColor, #151515);
-  background-color: var(--pfe-label--BackgroundColor, #f0f0f0);
-  --pfe-icon--color: var(--pfe-label--IconColor, var(--pfe-label--TextColor, #151515));
-}
-
-:host([outline]) .pfe-label {
-  background-color: var(--pfe-label--OutlineBackgroundColor, #ffffff);
-  border-color: var(--pfe-label--BorderColor, #d2d2d2);
-}
-
-:host([color=blue]) .pfe-label {
-  --pfe-label--TextColor: var(--pfe-label--BlueTextColor, #002952);
-  --pfe-label--BackgroundColor: var(--pfe-label--BlueBackgroundColor, #e7f1fa);
-}
-
-:host([color=blue][outline]) .pfe-label {
-  --pfe-label--BorderColor: var(--pfe-label--BlueBorderColor, #bee1f4);
-}
-
-:host([color=green]) .pfe-label {
-  --pfe-label--TextColor: var(--pfe-label--GreenTextColor, #0f280d);
-  --pfe-label--BackgroundColor: var(--pfe-label--GreenBackgroundColor, #f3faf2);
-}
-
-:host([color=green][outline]) .pfe-label {
-  --pfe-label--BorderColor: var(--pfe-label--GreenBorderColor, #bde5b8);
-}
-
-:host([color=orange]) .pfe-label {
-  --pfe-label--TextColor: var(--pfe-label--OrangeTextColor, #3d2c00);
-  --pfe-label--BackgroundColor: var(--pfe-label--OrangeBackgroundColor, #fdf7e7);
-}
-
-:host([color=orange][outline]) .pfe-label {
-  --pfe-label--BorderColor: var(--pfe-label-OrangeBorderColor, #f9e0a2);
-}
-
-:host([color=red]) .pfe-label {
-  --pfe-label--TextColor: var(--pfe-label--RedTextColor, #7d1007);
-  --pfe-label--BackgroundColor: var(--pfe-label--RedBackgroundColor, #faeae8);
-}
-
-:host([color=red][outline]) .pfe-label {
-  --pfe-label--BorderColor: var(--pfe-label--RedBorderColor, #c9190b);
-}
-
-:host([color=purple]) .pfe-label {
-  --pfe-label--TextColor: var(--pfe-label--PurpleTextColor, #1f0066);
-  --pfe-label--BackgroundColor: var(--pfe-label--PurpleBackgroundColor, #f2f0fc);
-}
-
-:host([color=purple][outline]) .pfe-label {
-  --pfe-label--BorderColor: var(--pfe-label--PurpleBorderColor, #cbc1ff);
-}
-
-:host([color=cyan]) .pfe-label {
-  --pfe-label--TextColor: var(--pfe-label--CyanTextColor, #003737);
-  --pfe-label--BackgroundColor: var(--pfe-label--CyanBackgroundColor, #f2f9f9);
-}
-
-:host([color=cyan][outline]) .pfe-label {
-  --pfe-label--BorderColor: var(--pfe-label--CyanBorderColor, #a2d9d9);
-}
-
-:host([color=grey]) .pfe-label {
-  --pfe-label--TextColor: var(--pfe-label--GreyTextColor, #151515);
-  --pfe-label--BackgroundColor: var(--pfe-label--GreyBackgroundColor, #f0f0f0);
-}
-
-:host([color=grey][outline]) .pfe-label {
-  --pfe-label--BorderColor: var(--pfe-label--GreyBorderColor, #d2d2d2);
+pfe-button {
+  --pf-c-button--FontSize: var(--pf-c-label__c-button--FontSize,
+    var(--pf-global--FontSize--xs, 0.75rem));
+  --pf-c-button--PaddingTop: var(--pf-c-label__c-button--PaddingTop,
+    var(--pf-global--spacer--xs, 0.25rem));
+  --pf-c-button--PaddingRight: var(--pf-c-label__c-button--PaddingRight,
+    var(--pf-global--spacer--sm, 0.5rem));
+  --pf-c-button--PaddingBottom: var(--pf-c-label__c-button--PaddingBottom,
+    var(--pf-global--spacer--xs, 0.25rem));
+  --pf-c-button--PaddingLeft: var(--pf-c-label__c-button--PaddingLeft,
+    var(--pf-global--spacer--sm, 0.5rem));
+  margin-top: var(--pf-c-label__c-button--MarginTop,
+    calc(var(--pf-global--spacer--form-element) * -1));
+  margin-right: var(--pf-c-label__c-button--MarginRight,
+    calc(var(--pf-global--spacer--form-element) * -1));
+  margin-bottom: var(--pf-c-label__c-button--MarginBottom,
+    calc(var(--pf-global--spacer--form-element) * -1));
+  margin-left: var(--pf-c-label__c-button--MarginLeft,
+    var(--pf-global--spacer--xs, 0.25rem));
 }

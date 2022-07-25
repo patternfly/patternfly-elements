@@ -10,6 +10,7 @@
   "types": "./pfe-icon.d.ts",
   "exports": {
     ".": "./pfe-icon.js",
+    "./font-awesome.js": "./font-awesome.js",
     "./*": "./*.js"
   },
   "publishConfig": {

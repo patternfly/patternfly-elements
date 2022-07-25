@@ -1,62 +1,116 @@
+// @ts-check
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
+const { join } = require('node:path');
+const { existsSync } = require('node:fs');
 
-let elements;
+/**
+ * @typedef {object} PluginOptions
+ * @property {string} [rootDir=process.cwd()] rootDir of the package
+ * @property {Record<string, string>} [aliases] object mapping custom element name to page title
+ * @property {string} [sourceControlURLPrefix='https://github.com/patternfly/patternfly-elements/tree/main/'] absolute URL to the web page representing the repo root in source control, with trailing slash
+ * @property {string} [demoURLPrefix='https://patternflyelements.org/'] absolute URL prefix for demos, with trailing slash
+ * @property {string} [tagPrefix='pfe'] custom elements namespace
+ * @property {DemoRecord[]} [extraDemos=[]] list of extra demo records not included in the custom-elements-manifest
+ */
 
-function getTagName(url) {
-  const [, , tagName] = url.match(/\/(\w+)\/(\w+)/);
-  return `pfe-${tagName}`;
-}
+/**
+ * NB: New with 11ty 1.0.0? Maybe it's the pagination value?
+ * @typedef {object} EleventyContext
+ * @property {{_: *}} ctx
+ */
 
-async function elementsPackages() {
-  const { getPackageData } = await import('@patternfly/pfe-tools/11ty');
-  return getPackageData('elements', 'components');
-}
+/**
+ * @typedef {object} DemoRecord
+ * @property {string} title
+ * @property {string} tagName
+ * @property {string} tagPrefix
+ * @property {string} primaryElementName
+ * @property {import('../../custom-elements-manifest/lib/Manifest').Manifest} manifest
+ * @property {string} slug
+ * @property {string} filePath
+ * @property {string} permalink
+ * @property {string} url
+ */
 
-async function corePackages() {
-  const { getPackageData } = await import('@patternfly/pfe-tools/11ty');
-  return getPackageData('core');
-}
-
-// it's an 11ty api
-/* eslint-disable no-invalid-this */
-
+/**
+ * @param {string} tagName
+ * @return {Promise<import('../DocsPage').DocsPage>}
+ * @this {EleventyContext}
+ */
 async function getDocsPage(tagName) {
-  // NB: I think this is new with 11ty 1.0.0. Maybe it's the pagination value? Not sure how bad of an abuse this is
+  // Not sure how bad of an abuse this is
   if (this.ctx._?.constructor?.name === 'DocsPage') {
     return this.ctx._;
   } else {
-    elements ??= await elementsPackages();
-    tagName ??= getTagName(this.page.url);
-    return elements.get(tagName);
+    throw new Error(`Could not load data for ${tagName}`);
   }
 }
 
 // TODO: programmable package scopes, etc
-module.exports = function configFunction(eleventyConfig) {
-  // add `renderTemplate` filter
+/**
+ * @param {*} eleventyConfig
+ * @param {PluginOptions} options
+ */
+module.exports = function configFunction(eleventyConfig, options) {
+  const rootDir = options?.rootDir ?? process.cwd();
+  const sourceControlURLPrefix = options?.sourceControlURLPrefix ?? 'https://github.com/patternfly/patternfly-elements/tree/main/';
+  const demoURLPrefix = options?.demoURLPrefix ?? 'https://patternflyelements.org/';
+  const tagPrefix = options?.tagPrefix ?? 'pfe';
+
   eleventyConfig.addPlugin(EleventyRenderPlugin);
 
   eleventyConfig.addGlobalData('env', () => process.env);
 
-  eleventyConfig.addGlobalData('elementsPackages', elementsPackages);
-  eleventyConfig.addGlobalData('corePackages', corePackages);
-  eleventyConfig.addGlobalData('core', async function core() {
-    return [...new Set((await corePackages()).values())]
-      .sort((a, b) => a.package.name > b.package.name ? 1 : -1);
-  });
-  eleventyConfig.addGlobalData('elements', async function elements() {
-    return [...new Set((await elementsPackages()).values())]
-      .sort((a, b) => a.tagName > b.tagName ? 1 : -1);
+  eleventyConfig.addGlobalData('demos', async function demos() {
+    const { Manifest } = await import('../../custom-elements-manifest/lib/Manifest.js');
+
+    // 1. get all packages
+    // 2. get manifests per package
+    // 3. get tagNames per manifest
+    // 4. get demos per tagName
+    // 5. generate demo record with tagName, slug, title, and filepath per demo
+    return Manifest.getAll(rootDir)
+      .flatMap(manifest => manifest.getTagNames()
+        .flatMap(tagName => manifest.getDemoMetadata(tagName, { rootDir, sourceControlURLPrefix, demoURLPrefix, tagPrefix })
+          .concat(options?.extraDemos ?? [])));
   });
 
-  const toolsFiles = require.resolve('@patternfly/pfe-tools/11ty').replace('index.js', '**/*.{js,njk}');
-  eleventyConfig.addWatchTarget(toolsFiles);
+  eleventyConfig.addGlobalData('elements', async function elements() {
+    const { Manifest } = await import('../../custom-elements-manifest/lib/Manifest.js');
+    const { DocsPage } = await import('../DocsPage.js');
+
+    // 1. get all packages
+    // 2. get manifests from packages, construct manifest objects, associate packages
+    // 3. get all tag names from each manifest. construct docs page for tag names w/ associates manifest and package
+    return Manifest.getAll(rootDir)
+      .flatMap(manifest =>
+        Array.from(manifest.declarations.values(), decl => {
+          const { tagName } = decl;
+          return new DocsPage(manifest, {
+            tagName,
+            // only include the template if it exists
+            ...Object.fromEntries(Object.entries({
+              docsTemplatePath: join(manifest.location, 'docs', `${tagName}.md`),
+            }).filter(([, v]) => existsSync(v)))
+          });
+        }));
+  });
+
+  /** Rebuild the site in watch mode when the templates for this plugin change */
+  eleventyConfig
+    .addWatchTarget(require.resolve('@patternfly/pfe-tools/11ty')
+      .replace('index.js', '**/*.{js,njk}'));
 
   // copied from DocsPage
-  eleventyConfig.addPairedAsyncShortcode('band', async function(content, kwargs) {
-    const { renderBand } = await import('@patternfly/pfe-tools/11ty');
-    return renderBand(content, kwargs);
-  });
+  eleventyConfig.addPairedAsyncShortcode('band',
+    /**
+     * @param {string} content
+     * @param {Record<string, string>} kwargs
+     */
+    async function(content, kwargs) {
+      const { renderBand } = await import('@patternfly/pfe-tools/11ty');
+      return renderBand(content, kwargs);
+    });
 
   for (const shortCode of [
     'renderAttributes',
@@ -68,9 +122,15 @@ module.exports = function configFunction(eleventyConfig) {
     'renderProperties',
     'renderSlots',
   ]) {
-    eleventyConfig.addPairedAsyncShortcode(shortCode, async function(content, kwargs) {
-      const page = await getDocsPage.call(this, kwargs?.for);
-      return page[shortCode](content, kwargs);
-    });
+    eleventyConfig.addPairedAsyncShortcode(shortCode,
+      /**
+       * @this {EleventyContext}
+       * @param {string} content
+       * @param {Record<string, string>} kwargs
+       */
+      async function(content, kwargs) {
+        const page = await getDocsPage.call(this, kwargs?.for);
+        return page[shortCode](content, kwargs);
+      });
   }
 };

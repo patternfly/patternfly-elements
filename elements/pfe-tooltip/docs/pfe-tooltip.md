@@ -222,7 +222,7 @@
 </pfe-tooltip>
 
 ### Offset Tooltip
-<pfe-tooltip>
+<pfe-tooltip offset="100,10">
     <div>
         <svg
             xmlns="http://www.w3.org/2000/svg"

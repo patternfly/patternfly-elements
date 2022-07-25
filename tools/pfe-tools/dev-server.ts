@@ -180,8 +180,8 @@ function pfeDevServerPlugin(options?: PfeDevServerConfigOptions): Plugin {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
       app.use(new Router()
-        // redirect /components/pfe-jazz-hands/pfe-timestep/index.html to /elements/pfe-jazz-hands/demo/pfe-timestep.html
-        // redirect /components/pfe-jazz-hands/index.html to /elements/pfe-jazz-hands/demo/pfe-jazz-hands.html
+        // redirect /components/jazz-hands/pfe-timestep/index.html to /elements/pfe-jazz-hands/demo/pfe-timestep.html
+        // redirect /components/jazz-hands/index.html to /elements/pfe-jazz-hands/demo/pfe-jazz-hands.html
         .get('/components/:slug/demo/:sub?/:fileName', (ctx, next) => {
           const { slug, fileName } = ctx.params;
           if (fileName.includes('.')) {
@@ -191,13 +191,18 @@ function pfeDevServerPlugin(options?: PfeDevServerConfigOptions): Plugin {
           }
           return next();
         })
-        // redirect /components/pfe-jazz-hands/pfe-jazz-hands-lightdom.css to /elements/pfe-jazz-hands/pfe-jazz-hands-lightdom.css
+        // redirect /components/jazz-hands/pfe-jazz-hands-lightdom.css to /elements/pfe-jazz-hands/pfe-jazz-hands-lightdom.css
+        // redirect /components/jazz-hands/demo/demo.css to /elements/pfe-jazz-hands/demo/demo.css
         .get('/components/:slug/demo/:sub?/:fileName.css', (ctx, next) => {
           // FIXME: will probably break if one component links to another's lightdom css.
           //        better to find out why it's requesting from /components/ in the first place
-          const [, tagName] = ctx.request.header.referer?.match(/\/components\/([-\w]+)\//) ?? [];
+          const { slug, fileName } = ctx.params;
+          const tagName = `${options?.tagPrefix ?? 'pfe'}-${slug}`;
+          let redir = `/elements/${tagName}/demo/${fileName}.css`;
+          if (fileName.includes('-lightdom')) {
+            redir = `/elements/${tagName}/${fileName}.css`;
+          }
           if (tagName) {
-            const redir = `/elements/${tagName}/${ctx.params.fileName}.css`;
             return ctx.redirect(redir);
           }
           return next();

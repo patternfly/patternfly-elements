@@ -1,55 +1,20 @@
 // @ts-check
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
-const { join } = require('node:path');
+const { join, dirname } = require('node:path');
 const { existsSync } = require('node:fs');
 
 /**
- * @typedef {object} PluginOptions
- * @property {string} [rootDir=process.cwd()] rootDir of the package
- * @property {Record<string, string>} [aliases] object mapping custom element name to page title
- * @property {string} [sourceControlURLPrefix='https://github.com/patternfly/patternfly-elements/tree/main/'] absolute URL to the web page representing the repo root in source control, with trailing slash
- * @property {string} [demoURLPrefix='https://patternflyelements.org/'] absolute URL prefix for demos, with trailing slash
- * @property {string} [tagPrefix='pfe'] custom elements namespace
- * @property {DemoRecord[]} [extraDemos=[]] list of extra demo records not included in the custom-elements-manifest
+ * @param {unknown} x
+ * @return {x is import('../DocsPage').DocsPage}
  */
-
-/**
- * NB: New with 11ty 1.0.0? Maybe it's the pagination value?
- * @typedef {object} EleventyContext
- * @property {{_: *}} ctx
- */
-
-/**
- * @typedef {object} DemoRecord
- * @property {string} title
- * @property {string} tagName
- * @property {string} tagPrefix
- * @property {string} primaryElementName
- * @property {import('../../custom-elements-manifest/lib/Manifest').Manifest} manifest
- * @property {string} slug
- * @property {string} filePath
- * @property {string} permalink
- * @property {string} url
- */
-
-/**
- * @param {string} tagName
- * @return {Promise<import('../DocsPage').DocsPage>}
- * @this {EleventyContext}
- */
-async function getDocsPage(tagName) {
-  // Not sure how bad of an abuse this is
-  if (this.ctx._?.constructor?.name === 'DocsPage') {
-    return this.ctx._;
-  } else {
-    throw new Error(`Could not load data for ${tagName}`);
-  }
+function isDocsPage(x) {
+  return (/** @type {typeof import('../DocsPage').DocsPage}*/(x?.constructor))?.isDocsPage ?? false;
 }
 
 // TODO: programmable package scopes, etc
 /**
  * @param {*} eleventyConfig
- * @param {PluginOptions} options
+ * @param {import('./types').PluginOptions} options
  */
 module.exports = function configFunction(eleventyConfig, options) {
   const rootDir = options?.rootDir ?? process.cwd();
@@ -85,13 +50,15 @@ module.exports = function configFunction(eleventyConfig, options) {
     return Manifest.getAll(rootDir)
       .flatMap(manifest =>
         Array.from(manifest.declarations.values(), decl => {
+          // NB: not a great proxy for monorepo
+          const isSinglepackage = decl.module?.path?.startsWith?.('elements/') ?? false;
+          const root = isSinglepackage ? dirname(decl.module.path) : '.';
           const { tagName } = decl;
+          const docsTemplatePath = join(manifest.location, root, 'docs', `${tagName}.md`);
           return new DocsPage(manifest, {
             tagName,
             // only include the template if it exists
-            ...Object.fromEntries(Object.entries({
-              docsTemplatePath: join(manifest.location, 'docs', `${tagName}.md`),
-            }).filter(([, v]) => existsSync(v)))
+            ...Object.fromEntries(Object.entries({ docsTemplatePath }).filter(([, v]) => existsSync(v)))
           });
         }));
   });
@@ -105,14 +72,15 @@ module.exports = function configFunction(eleventyConfig, options) {
   eleventyConfig.addPairedAsyncShortcode('band',
     /**
      * @param {string} content
-     * @param {Record<string, string>} kwargs
+     * @param {import('../DocsPage').RenderKwargs} kwargs
      */
     async function(content, kwargs) {
       const { renderBand } = await import('@patternfly/pfe-tools/11ty');
       return renderBand(content, kwargs);
     });
 
-  for (const shortCode of [
+  /** @type {import('./types').RendererName} */
+  const shortCodes = [
     'renderAttributes',
     'renderCssCustomProperties',
     'renderCssParts',
@@ -121,16 +89,25 @@ module.exports = function configFunction(eleventyConfig, options) {
     'renderOverview',
     'renderProperties',
     'renderSlots',
-  ]) {
+  ];
+
+  for (const shortCode of shortCodes) {
     eleventyConfig.addPairedAsyncShortcode(shortCode,
       /**
-       * @this {EleventyContext}
+       * @this {import('./types').EleventyContext}
        * @param {string} content
-       * @param {Record<string, string>} kwargs
+       * @param {import('../DocsPage').RenderKwargs} [kwargs]
        */
       async function(content, kwargs) {
-        const page = await getDocsPage.call(this, kwargs?.for);
-        return page[shortCode](content, kwargs);
+        const docsPage = isDocsPage(this.ctx._) ? this.ctx._ : null;
+        if (!docsPage) {
+          console.warn(
+            `{% ${shortCode} %}: No custom elements manifest data found for ${kwargs?.for ?? 'unknown element'}`,
+            `\n  inputPath: ${this.page.inputPath}`,
+            `\n  URL: ${this.page.url}`,
+          );
+        }
+        return docsPage?.[shortCode]?.(content, kwargs) ?? '';
       });
   }
 };

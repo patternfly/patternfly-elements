@@ -36,6 +36,7 @@ module.exports = {
 
     'marked': 'https://ga.jspm.io/npm:marked@4.0.8/lib/marked.esm.js',
     'prismjs': 'https://ga.jspm.io/npm:prismjs@1.25.0/prism.js',
+    '@popperjs/core': 'https://ga.jspm.io/npm:@popperjs/core@2.11.5/dist/umd/popper.js',
     'pwa-helpers': 'https://ga.jspm.io/npm:pwa-helpers@0.9.1/pwa-helpers.js',
     'pwa-helpers/router.js': 'https://ga.jspm.io/npm:pwa-helpers@0.9.1/router.js',
 

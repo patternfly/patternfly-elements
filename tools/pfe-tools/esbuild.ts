@@ -183,7 +183,8 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
       treeShaking: true,
       watch: false,
       define: {
-        'process.env.NODE_ENV': 'production',
+        // eslint-disable-next-line no-useless-escape
+        'process.env.NODE_ENV': JSON.stringify( 'production' ),
       },
       plugins: [
         ...getBasePlugins(options),
@@ -254,7 +255,7 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
       logLevel: 'info',
       sourcemap: true,
       define: {
-        'process.env.NODE_ENV': 'production'
+        'process.env.NODE_ENV': JSON.stringify( 'production' )
       },
       bundle: options?.bundle ?? true,
 

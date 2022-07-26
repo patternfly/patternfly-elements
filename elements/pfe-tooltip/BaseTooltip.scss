@@ -115,7 +115,7 @@
   text-align: center;
   word-break: break-word;
   background-color: var(--pf-c-tooltip__content--BackgroundColor,
-    var(--pf-global--BackgroundColor--dark-100, #1b1d21));
+    var(--pf-global--BackgroundColor--dark-100, #151515));
 }
 
 .arrow {
@@ -124,7 +124,7 @@
   height: var(--pf-c-tooltip__arrow--Height, 0.5rem);
   pointer-events: none;
   background-color: var(--pf-c-tooltip__content--BackgroundColor,
-    var(--pf-global--BackgroundColor--dark-100, #1b1d21));
+    var(--pf-global--BackgroundColor--dark-100, #151515));
 }
 
 #invoker {

@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.23
+
+### Patch Changes
+
+- 017bcb52: Fixes use of custom elements manifest and related 11ty plugins in daughter repos
+
 ## 1.0.0-next.22
 
 ### Major Changes

@@ -19,6 +19,7 @@ jobs:
 
       - run: npm i --prefer-offline
       - run: npm run build
+      - run: npm run prepublishOnly --workspaces --if-present
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets

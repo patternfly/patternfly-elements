@@ -1,37 +1,39 @@
+{% set groupeddemos = demos | sort(false, false, 'permalink') | groupby('primaryElementName') %}
+{% if demo.title %}
+  {% set title = demo.title + ' | ' + options.site.title %}
+{% else %}
+  {% set title = options.site.title %}
+{% endif %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr" unresolved>
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{{ description }}">
+  <meta name="description" content="{{ options.site.description }}">
   <meta name="pfe-track-performance" content="true">
-  <link href="/brand/logo/svg/pfe-icon-blue.svg" rel="shortcut icon">
+  <link href="{{ options.site.favicon }}" rel="shortcut icon">
   <title>{{ title }}</title>
   <link rel="stylesheet" href="/node_modules/@patternfly/pfe-tools/dev-server/fonts.css">
   <link rel="stylesheet" href="/node_modules/@patternfly/pfe-tools/dev-server/demo.css">
-  {% for sheet in config.stylesheets %}
+  {% for sheet in options.site.stylesheets %}
   <link rel="stylesheet" href="{{sheet}}">
   {% endfor %}
   <script type="module">
-    import "@patternfly/pfe-tools/dev-server/demo.ts";
+    import "@patternfly/pfe-icon/font-awesome.js";
     import "@patternfly/pfe-band";
+    import "@patternfly/pfe-button";
+    import "@patternfly/pfe-tools/dev-server/demo.ts";
   </script>
 </head>
 
-<body>
+<body class="menu-open">
   <header id="main-header">
-    <button id="hamburger" aria-label="Expand Main Navigation">&#9776;</button>
-    <a href="/"><img src="{{ logoUrl }}" alt="" />{{ title }}</a>
-     
-    <pfe-button id="toggle-max" plain icon="fa-maximize">
-      <button aria-label="toggle maximize">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384.97 384.97" style="enable-background:new 0 0 384.97 384.97" xml:space="preserve"><path d="M384.97 12.03c0-6.713-5.317-12.03-12.03-12.03H264.847c-6.833 0-11.922 5.39-11.934 12.223 0 6.821 5.101 11.838 11.934 11.838h96.062l-.193 96.519c0 6.833 5.197 12.03 12.03 12.03 6.833-.012 12.03-5.197 12.03-12.03l.193-108.369c0-.036-.012-.06-.012-.084.001-.037.013-.061.013-.097zM120.496 0H12.403c-.036 0-.06.012-.096.012-.024 0-.06-.012-.084-.012C5.51 0 .192 5.317.192 12.03L0 120.399c0 6.833 5.39 11.934 12.223 11.934 6.821 0 11.838-5.101 11.838-11.934l.192-96.339h96.242c6.833 0 12.03-5.197 12.03-12.03C132.514 5.197 127.317 0 120.496 0zM120.123 360.909H24.061v-96.242c0-6.833-5.197-12.03-12.03-12.03S0 257.833 0 264.667v108.092c0 .036.012.06.012.084 0 .036-.012.06-.012.096 0 6.713 5.317 12.03 12.03 12.03h108.092c6.833 0 11.922-5.39 11.934-12.223.001-6.82-5.1-11.837-11.933-11.837zM372.747 252.913c-6.833 0-11.85 5.101-11.838 11.934v96.062h-96.242c-6.833 0-12.03 5.197-12.03 12.03s5.197 12.03 12.03 12.03h108.092c.036 0 .06-.012.084-.012.036-.012.06.012.096.012 6.713 0 12.03-5.317 12.03-12.03V264.847c.001-6.833-5.389-11.934-12.222-11.934z"/></svg>
-        <svg hidden xmlns="http://www.w3.org/2000/svg" viewBox="0 0 385.331 385.331" style="enable-background:new 0 0 385.331 385.331" xml:space="preserve"><path d="M264.943 156.665h108.273c6.833 0 11.934-5.39 11.934-12.211 0-6.833-5.101-11.85-11.934-11.838h-96.242V36.181c0-6.833-5.197-12.03-12.03-12.03s-12.03 5.197-12.03 12.03v108.273c0 .036.012.06.012.084 0 .036-.012.06-.012.096-.001 6.713 5.316 12.043 12.029 12.031zM120.291 24.247c-6.821 0-11.838 5.113-11.838 11.934v96.242H12.03c-6.833 0-12.03 5.197-12.03 12.03 0 6.833 5.197 12.03 12.03 12.03h108.273c.036 0 .06-.012.084-.012.036 0 .06.012.096.012 6.713 0 12.03-5.317 12.03-12.03V36.181c.001-6.821-5.389-11.922-12.222-11.934zM120.387 228.666H12.115c-6.833.012-11.934 5.39-11.934 12.223 0 6.833 5.101 11.85 11.934 11.838h96.242v96.423c0 6.833 5.197 12.03 12.03 12.03 6.833 0 12.03-5.197 12.03-12.03V240.877c0-.036-.012-.06-.012-.084 0-.036.012-.06.012-.096.001-6.714-5.317-12.031-12.03-12.031zM373.3 228.666H265.028c-.036 0-.06.012-.084.012-.036 0-.06-.012-.096-.012-6.713 0-12.03 5.317-12.03 12.03v108.273c0 6.833 5.39 11.922 12.223 11.934 6.821.012 11.838-5.101 11.838-11.922v-96.242H373.3c6.833 0 12.03-5.197 12.03-12.03s-5.196-12.031-12.03-12.043z"/></svg>
-      </button>
+    <pfe-button id="hamburger" plain icon="fa-bars" aria-controls="sidebar">
+      <button aria-label="Expand Main Navigation"></button>
     </pfe-button>
-
-    <a id="github-link" href="{{ githubUrl }}tree/main/{{ base }}/{{ element }}">
+    <a href="/"><img src="{{ options.site.logoUrl }}" alt="" />{{ title }}</a>
+    <a id="github-link" href="{{ options.site.githubUrl }}{{ ('tree/main' + manifest.path.replace(context.cwd, '').replace('/custom-elements.json', '/')) if manifest else ''}}">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
         <title>GitHub</title>
         <!-- Font Awesome Free 5.15.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) -->
@@ -40,10 +42,9 @@
       </svg>
     </a>
   </header>
-  <aside id="sidebar">
+  <aside id="sidebar" aria-expanded="true">
     <nav id="nav" aria-label="Main Navigation">
       <ul id="elements-container">
-        {% set groupeddemos = demos | sort(false, false, 'permalink') | groupby('primaryElementName') %}
         {% for primary, group in groupeddemos %}
         {% set first = group['0'] %}
         {% if group.length > 1 %}
@@ -56,23 +57,15 @@
               </li>{% endfor %}
             </ul>
           </details>
-        </li>
-        {% else %}
+        </li>{% else %}
         <li>
           <a href="{{ first.permalink | replace(demoURLPrefix, '/') }}">{{ first.title }} </a>
-        </li>
-        {% endif %}
-        {% endfor %}
+        </li>{% endif %}{% endfor %}
       </ul>
     </nav>
   </aside>
-  <main>
-    {% if templateContent %}
-    <div data-demo="{{ demo.tagName }}">{{ templateContent | safe }}</div>
-    {% endif %}
-    {% if manifest.filePath %}
-    <api-viewer src="{{ manifest.filePath }}" only="{{ demo.tagName }}"></api-viewer>
-    {% endif %}
+  <main>{% if templateContent %}
+    <div data-demo="{{ demo.tagName }}">{{ templateContent | safe }}</div>{% endif %}
   </main>
 </body>
 

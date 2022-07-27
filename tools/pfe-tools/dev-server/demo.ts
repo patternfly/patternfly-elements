@@ -1,45 +1,16 @@
-import 'api-viewer-element';
-import '@vaadin/split-layout';
-
-const include = document.querySelector<HTMLElement & { src?: string }>('html-include');
 const hamburger = document.getElementById('hamburger');
-const nav = document.getElementById('main-nav');
-const form = document.querySelector<HTMLFormElement>('#component-header form');
-const context = document.getElementById('context-selector') as HTMLElement;
-const contextSelect = context.querySelector('select');
+const sidebar = document.getElementById('sidebar');
+const list = matchMedia('(max-width: 640px)');
 
-const contextToColor = new Map(Object.entries({
-  dark: 'darkest',
-  saturated: 'accent',
-  light: 'lightest',
-}));
-
-/** Change the context of the accordions */
-function onContextChange() {
-  for (const element of include?.shadowRoot?.querySelectorAll('.contextual') ?? []) {
-    element.setAttribute('color-palette', contextToColor.get(contextSelect?.value ?? '') ?? 'lightest');
+function toggleNav(force?: boolean) {
+  const old = sidebar?.getAttribute('aria-expanded') === 'true';
+  const next = force ?? !old;
+  sidebar?.setAttribute('aria-expanded', String(next));
+  document.body.classList.toggle('menu-open', next);
+  if (next) {
+    const link: HTMLAnchorElement|null = sidebar?.querySelector('a:active') ?? sidebar?.querySelector('a') ?? null;
+    link?.focus();
   }
-}
-
-function toggleNav(force?: boolean | Event) {
-  if (window.matchMedia('(max-width: 640px)').matches) {
-    const old = typeof force === 'boolean' ? !force : hamburger?.getAttribute('aria-expanded') === 'true';
-    const next = !old;
-    hamburger?.setAttribute('aria-expanded', String(next));
-    nav?.classList.toggle('expanded');
-    if (next) {
-      const link: HTMLAnchorElement|null = nav?.querySelector('a:active') ?? nav?.querySelector('a') ?? null;
-      link?.focus();
-    }
-  }
-}
-
-function onMaximize(force?: boolean) {
-  for (const svg of form?.querySelectorAll('svg') ?? []) {
-    svg.toggleAttribute('hidden');
-  }
-  document.documentElement.toggleAttribute('maximized', force);
-  localStorage.setItem('pfe-demo-maximized', document.documentElement.hasAttribute('maximized').toString());
 }
 
 function attachShadowRoots(root: Document | ShadowRoot) {
@@ -54,25 +25,12 @@ function attachShadowRoots(root: Document | ShadowRoot) {
   });
 }
 
-form?.addEventListener('submit', e => e.preventDefault());
-form?.querySelector('button')?.addEventListener('click', () => onMaximize());
+function onClick() {
+  toggleNav();
+}
 
-context.addEventListener('select', onContextChange);
-hamburger?.addEventListener('click', toggleNav);
-
-document.addEventListener('click', event => {
-  if (hamburger?.getAttribute('aria-expanded') === 'true') {
-    const path = event.composedPath();
-    if (!path.includes(nav!) && !path.includes(hamburger)) {
-      event.preventDefault();
-      event.stopPropagation();
-      toggleNav(false);
-    }
-  }
-});
-
-nav?.addEventListener('keydown', event => {
-  if (hamburger?.getAttribute('aria-expanded') === 'true') {
+function onKeydown(event: KeyboardEvent) {
+  if (sidebar?.getAttribute('aria-expanded') === 'true') {
     switch (event.key) {
       case 'Escape':
         event.preventDefault();
@@ -80,8 +38,20 @@ nav?.addEventListener('keydown', event => {
         toggleNav(false);
     }
   }
-});
+}
 
-attachShadowRoots(document);
-document.documentElement.toggleAttribute('maximized', localStorage.getItem('pfe-demo-maximized') === 'true');
+function onMediaChange() {
+  toggleNav(!list.matches);
+}
+
+if (!Object.prototype.hasOwnProperty.call(HTMLTemplateElement.prototype, 'shadowRoot')) {
+  attachShadowRoots(document);
+}
+
+sidebar?.addEventListener('keydown', onKeydown);
+hamburger?.addEventListener('click', onClick);
 document.documentElement.removeAttribute('unresolved');
+
+list.addEventListener('change', onMediaChange);
+
+onMediaChange();

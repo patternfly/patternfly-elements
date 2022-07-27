@@ -2,14 +2,14 @@
 "@patternfly/pfe-core": minor
 ---
 
-Adding popper controller into pfe-core for use with components that require popover content.
+Adds floating DOM controller into pfe-core for use with components that require popover content.
 
-For example, in BaseTooltip we use the popper-controller in this manner:
+For example, in `BaseTooltip` we use the controller in this manner:
 
 ```typescript
-import { TooltipDOMController } from '@patternfly/pfe-core/controllers/popper-controller.js';
+import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
-export abstract class BaseTooltip extends LitElement {
-    #domController: TooltipDOMController = new TooltipDOMController(this);
+export class BaseTooltip extends LitElement {
+  #domController = new FloatingDOMController(this);
 }
 ```

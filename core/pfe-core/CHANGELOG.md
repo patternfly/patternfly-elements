@@ -1,5 +1,21 @@
 # @patternfly/pfe-core
 
+## 2.0.0-next.7
+
+### Minor Changes
+
+- 7c9b85cc: Adds floating DOM controller into pfe-core for use with components that require popover content.
+
+  For example, in `BaseTooltip` we use the controller in this manner:
+
+  ```typescript
+  import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
+  export class BaseTooltip extends LitElement {
+    #domController = new FloatingDOMController(this);
+  }
+  ```
+
 ## 2.0.0-next.6
 
 ### Patch Changes

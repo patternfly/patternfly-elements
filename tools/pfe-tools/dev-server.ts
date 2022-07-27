@@ -37,31 +37,38 @@ const env = nunjucks
   .addFilter('isElementGroup', (group: DemoRecord[], primary) =>
     group.every(x => !!primary && x.primaryElementName === primary));
 
+interface SiteOptions {
+  description?: string;
+  favicon: string;
+  githubUrl?: string;
+  logoUrl?: string;
+  stylesheets?: string[];
+  title?: string;
+}
+
 export interface PfeDevServerConfigOptions extends DevServerConfig {
+  demoURLPrefix?: string;
+  hostname?: string;
+  importMap?: InjectSetting['importMap'];
+  litcssOptions?: LitCSSOptions,
   /** Extra dev server plugins */
   loadDemo?: boolean;
   plugins?: Plugin[];
-  importMap?: InjectSetting['importMap'];
-  hostname?: string;
+  site?: SiteOptions;
   sourceControlURLPrefix?: string;
-  demoURLPrefix?: string;
-  tagPrefix?: string;
-  watchFiles: string;
-  litcssOptions: LitCSSOptions,
-  site?: {
-    tagPrefix: `${string}-`;
-    title: string;
-    logoUrl: string;
-    githubUrl: string;
-    description: string;
-  };
+  tagPrefix: 'pfe',
+  watchFiles?: string;
 }
 
-const SITE_DEFAULTS = {
-  title: 'PatternFly Elements',
-  logoUrl: '/brand/logo/svg/pfe-icon-white-shaded.svg',
-  githubUrl: 'https://github.com/patternfly/patternfly-elements/',
+type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & { site: Required<SiteOptions> };
+
+const SITE_DEFAULTS: Required<SiteOptions> = {
   description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
+  favicon: '/brand/logo/svg/pfe-icon-blue.svg',
+  githubUrl: 'https://github.com/patternfly/patternfly-elements/',
+  logoUrl: '/brand/logo/svg/pfe-icon-white-shaded.svg',
+  stylesheets: [],
+  title: 'PatternFly Elements',
 };
 
 /** Ugly, ugly hack to resolve packages from the local monorepo */
@@ -94,7 +101,7 @@ function tryToResolve(source: string, context: import('koa').Context) {
 /**
  * Resolves local monorepo package imports. Needed because we consume our own monorepo packages
  */
-export function resolveLocalFilesFromTypeScriptSources(options: Partial<PfeDevServerConfigOptions> & { rootDir: string }): Plugin {
+export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerInternalConfig): Plugin {
   const { rootDir } = options;
   return {
     name: 'resolve-local-monorepo-packages-from-ts-sources',
@@ -117,65 +124,35 @@ export function resolveLocalFilesFromTypeScriptSources(options: Partial<PfeDevSe
   };
 }
 
-function renderBasic(ctx: Context, demos: unknown[], options?: PfeDevServerConfigOptions) {
-  return env.render('index.html', {
-    context: ctx,
-    demos,
-    title: (options?.site?.title ?? SITE_DEFAULTS.title),
-  });
+function renderBasic(context: Context, demos: unknown[], options: PfeDevServerConfigOptions) {
+  return env.render('index.html', { context, options, demos });
 }
 
 /**
  * Renders the demo page for a given url
  */
-async function renderURL(ctx: Context, options?: PfeDevServerConfigOptions): Promise<string> {
-  const url = new URL(ctx.request.url, `http://${ctx.request.headers.host}`);
-  const {
-    rootDir = process.cwd(),
-    sourceControlURLPrefix = 'https://github.com/patternfly/patternfly-elements/tree/main/',
-    demoURLPrefix = 'https://patternflyelements.org/',
-    tagPrefix = 'pfe',
-  } = options ?? {};
-
-  const manifests = Manifest.getAll(rootDir);
+async function renderURL(context: Context, options: PfeDevServerInternalConfig): Promise<string> {
+  const url = new URL(context.request.url, `http://${context.request.headers.host}`);
+  const manifests = Manifest.getAll(options.rootDir);
   const demos = manifests
     .flatMap(manifest => manifest.getTagNames()
-      .flatMap(tagName => manifest.getDemoMetadata(tagName, {
-        rootDir,
-        sourceControlURLPrefix,
-        demoURLPrefix,
-        tagPrefix
-      })));
+      .flatMap(tagName => manifest.getDemoMetadata(tagName, options as PfeDevServerInternalConfig)));
   const demo = demos.find(x => x.permalink === url.pathname);
   const manifest = demo?.manifest;
 
-  if (!demo || !manifest || !demo || !demo.filePath || !existsSync(demo.filePath)) {
-    return renderBasic(ctx, demos, options);
+  if (!manifest || !demo || !demo.filePath || !existsSync(demo.filePath)) {
+    return renderBasic(context, demos, options);
+  } else {
+    const templateContent = await readFile(demo.filePath, 'utf8');
+    return env.render('index.html', { context, options, demo, demos, templateContent, manifest });
   }
-
-  const templateContent = await readFile(demo.filePath, 'utf8');
-
-  const title = `${demo.title} | ${options?.site?.title ?? 'PatternFly Elements'}`;
-
-  return env.render('index.html', {
-    ...SITE_DEFAULTS,
-    ...options?.site,
-    context: ctx,
-    demo,
-    demos,
-    templateContent,
-    manifest,
-    title,
-  });
 }
 
 /**
  * Generate HTML for each component by rendering a nunjucks template
  * Watch repository source files and reload the page when they change
  */
-function pfeDevServerPlugin(options?: PfeDevServerConfigOptions): Plugin {
-  const loadDemo = options?.loadDemo ?? true;
-
+function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
@@ -185,7 +162,7 @@ function pfeDevServerPlugin(options?: PfeDevServerConfigOptions): Plugin {
         .get('/components/:slug/demo/:sub?/:fileName', (ctx, next) => {
           const { slug, fileName } = ctx.params;
           if (fileName.includes('.')) {
-            const tagName = `${options?.tagPrefix ?? 'pfe'}-${slug}`;
+            const tagName = `${options.tagPrefix}-${slug}`;
             const redir = `/elements/${tagName}/demo/${fileName === 'index.html' ? tagName : fileName}`;
             ctx.redirect(redir);
           }
@@ -197,7 +174,7 @@ function pfeDevServerPlugin(options?: PfeDevServerConfigOptions): Plugin {
           // FIXME: will probably break if one component links to another's lightdom css.
           //        better to find out why it's requesting from /components/ in the first place
           const { slug, fileName } = ctx.params;
-          const tagName = `${options?.tagPrefix ?? 'pfe'}-${slug}`;
+          const tagName = `${options.tagPrefix}-${slug}`;
           let redir = `/elements/${tagName}/demo/${fileName}.css`;
           if (fileName.includes('-lightdom')) {
             redir = `/elements/${tagName}/${fileName}.css`;
@@ -212,7 +189,8 @@ function pfeDevServerPlugin(options?: PfeDevServerConfigOptions): Plugin {
       // Render the demo page whenever there's a trailing slash
       app.use(async function nunjucksMiddleware(ctx, next) {
         const { method, path } = ctx;
-        if (loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {
+        if (options.loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {
+          ctx.cwd = process.cwd();
           ctx.type = 'html';
           ctx.status = 200;
           ctx.body = await renderURL(ctx, options);
@@ -220,7 +198,7 @@ function pfeDevServerPlugin(options?: PfeDevServerConfigOptions): Plugin {
         return next();
       });
 
-      const files = await glob(options?.watchFiles ?? '{elements,core}/**/*.{ts,js,css,scss,html}', { cwd: process.cwd() });
+      const files = await glob(options.watchFiles, { cwd: process.cwd() });
       for (const file of files) {
         fileWatcher.add(file);
       }
@@ -234,10 +212,24 @@ function cors(ctx: Context, next: Next) {
   return next();
 }
 
+function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInternalConfig {
+  const config = options ?? {} as PfeDevServerConfigOptions;
+  config.site = { ...SITE_DEFAULTS, ...options?.site ?? {} };
+  config.rootDir ??= process.cwd();
+  config.sourceControlURLPrefix ??= 'https://github.com/patternfly/patternfly-elements/tree/main/';
+  config.demoURLPrefix ??= 'https://patternflyelements.org/';
+  config.loadDemo ??= true;
+  config.watchFiles ??= '{elements,core}/**/*.{ts,js,css,scss,html}';
+  config.litcssOptions ??= { include: /\.scss$/, transform: transformSass };
+  return config as PfeDevServerInternalConfig;
+}
+
 /**
  * Creates a default config for PFE's dev server.
  */
 export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServerConfig {
+  const config = normalizeOptions(options);
+
   /**
    * Plain case: this file is running from `/node_modules/@patternfly/pfe-tools`.
    *             two dirs up from here is `node_modules`, so we just shear it clean off the path string
@@ -277,7 +269,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       // so we run this cheap hack to manually resolve those file paths
       // we hope it will work in most cases. If you have a problem loading from packages in the dev
       // server, please open an issue at https://github.com/patternfly/patternfly-elements/issues/new/
-      resolveLocalFilesFromTypeScriptSources({ ...options, rootDir }),
+      resolveLocalFilesFromTypeScriptSources({ ...config, rootDir }),
 
       // serve typescript sources as javascript
       esbuildPlugin({
@@ -287,7 +279,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       }),
 
       // load .scss files as lit CSSResult modules
-      litCss(options?.litcssOptions ?? { include: /\.scss$/, transform: transformSass }),
+      litCss(config.litcssOptions),
 
       replace({
         'preventAssignment': true,
@@ -295,7 +287,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       }),
 
       // Dev server app which loads component demo files
-      pfeDevServerPlugin(options),
+      pfeDevServerPlugin(config),
     ],
   };
 }

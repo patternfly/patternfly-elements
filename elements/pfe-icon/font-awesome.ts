@@ -16,6 +16,9 @@ PfeIcon.addIconSet('fa', './', function(name) {
     case 'fa-info-circle':
       return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='vertical-align:-0.125em' fill='currentColor' height='1em' width='1em' viewBox='0 0 512 512' aria-hidden='true' role='img'%3E%3Cpath d='M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z'%3E%3C/path%3E%3C/svg%3E`;
 
+    case 'fa-bars':
+      return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='vertical-align:-0.125em' fill='currentColor' height='1em' width='1em' viewBox='0 0 448 512' aria-hidden='true' role='img'%3E%3Cpath d='M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z'%3E%3C/path%3E%3C/svg%3E`;
+
     default:
       return '';
   }

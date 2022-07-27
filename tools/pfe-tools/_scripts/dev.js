@@ -12,7 +12,7 @@ esbuild.build({
   color: true,
   outdir: cwd,
   define: {
-    'process.env.NODE_ENV': JSON.stringify( 'production' )
+    'process.env.NODE_ENV': 'production'
   },
   entryPoints,
 });

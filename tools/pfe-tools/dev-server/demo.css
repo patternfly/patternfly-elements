@@ -1,6 +1,5 @@
 :root {
   --pfe-demo-header-height: 60px;
-  --pfe-demo-menu-width: 280px;
   --pfe-theme--font-family: "Red Hat Text", "Overpass", Helvetica, Arial, sans-serif;
   --pfe-theme--font-family--heading: "Red Hat Display", "Overpass", Helvetica, Arial, sans-serif;
   --pfe-navigation--Height--actual: 60px;
@@ -32,43 +31,38 @@ body {
   min-height: 100%;
   display: grid;
   grid-template-rows: var(--pfe-demo-header-height, 60px) auto;
-  grid-template-columns: var(--pfe-demo-menu-width) 1fr;
+  grid-template-columns: 100vw;
+  grid-template-areas:
+    'head'
+    'body';
+}
+
+body.menu-open {
+  grid-template-columns: 280px 1fr;
   grid-template-areas:
     'head head'
     'menu body';
 }
 
-html[maximized] body {
-  grid-template: 'body' auto / auto;
-  --pfe-demo-header-height: 0;
-}
+@media (max-width: 640px) {
+  body.menu-open {
+    grid-template-columns: 100vw 0;
+  }
 
-html[maximized] #main-header,
-html[maximized] #sidebar {
-  display: none;
-}
-
-html[maximized] api-viewer {
-  max-height: 0px;
+  #sidebar {
+    width: 100%;
+  }
 }
 
 #main-header {
+  --pfe-navigation--Height--actual: 60px;
   grid-area: head;
   background: var(--pfe-theme--color--surface--accent, #004080);
   color: white;
   padding: 1em;
   display: flex;
   align-items: center;
-  justify-content: space-between
-}
-
-#main-header a:visited {
-  color: white;
-  text-decoration: none;
-}
-
-#main-header {
-  --pfe-navigation--Height--actual: 60px;
+  justify-content: space-between;
   position: fixed;
   top: 0;
   left: 0;
@@ -82,10 +76,6 @@ html[maximized] api-viewer {
   z-index: 200;
 }
 
-#main-header h1[slot="header"] {
-  margin: 0;
-}
-
 #main-header a {
   display: flex;
   align-items: center;
@@ -93,7 +83,16 @@ html[maximized] api-viewer {
   text-decoration: none;
   font-size: 1.25rem;
   font-weight: bold;
-  margin-left: calc(1.5rem + 16px);
+  /* margin-left: calc(1.5rem + 16px); */
+}
+
+#main-header a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+#main-header #hamburger + a {
+  margin-inline-end: auto;
 }
 
 #main-header a img {
@@ -106,7 +105,10 @@ html[maximized] api-viewer {
 
 #sidebar {
   grid-area: menu;
-  width: 17.5rem;
+}
+
+#sidebar[aria-expanded=false] {
+  display: none;
 }
 
 #nav {
@@ -137,7 +139,7 @@ html[maximized] api-viewer {
   text-decoration: none;
   transition: background-color .25s;
   font-size: 1.125rem;
-  padding: .5em 2rem;
+  padding: .25em 2rem;
   color: #151515;
 }
 
@@ -200,25 +202,9 @@ html[maximized] api-viewer {
     z-index: 2;
   }
 
-  #sidebar:not(.expanded) {
-    display: none;
-  }
-
   html {
     grid-template-areas: 'head' 'body';
     grid-template-columns: 1fr;
-  }
-}
-
-#hamburger {
-  border: 0;
-  background: transparent;
-  color: white;
-}
-
-@media(min-width: 641px) {
-  #hamburger {
-    display: none;
   }
 }
 

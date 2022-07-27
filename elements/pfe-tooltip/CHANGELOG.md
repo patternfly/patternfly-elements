@@ -1,0 +1,23 @@
+# @patternfly/pfe-tooltip
+
+## 1.1.0-next.0
+
+### Minor Changes
+
+- 7c9b85cc: Adding `pfe-tooltip`
+
+  ```html
+  <pfe-tooltip position="left">
+    <pfe-button><button>Left Tooltip</button></pfe-button>
+    <span slot="content"
+      >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris
+      pharetra et ultrices.</span
+    >
+  </pfe-tooltip>
+  ```
+
+### Patch Changes
+
+- Updated dependencies [7c9b85cc]
+  - @patternfly/pfe-core@2.0.0-next.7

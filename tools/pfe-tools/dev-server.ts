@@ -118,7 +118,7 @@ export function resolveLocalFilesFromTypeScriptSources(options: Partial<PfeDevSe
 }
 
 function renderBasic(ctx: Context, demos: unknown[], options?: PfeDevServerConfigOptions) {
-  return env.render('index.njk', {
+  return env.render('index.html', {
     context: ctx,
     demos,
     title: (options?.site?.title ?? SITE_DEFAULTS.title),
@@ -157,7 +157,7 @@ async function renderURL(ctx: Context, options?: PfeDevServerConfigOptions): Pro
 
   const title = `${demo.title} | ${options?.site?.title ?? 'PatternFly Elements'}`;
 
-  return env.render('index.njk', {
+  return env.render('index.html', {
     ...SITE_DEFAULTS,
     ...options?.site,
     context: ctx,

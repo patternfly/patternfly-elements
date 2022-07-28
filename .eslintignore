@@ -19,6 +19,7 @@
 *.txt
 *.yml
 *.yaml
+*.woff*
 
 custom-elements.json
 package-lock.json

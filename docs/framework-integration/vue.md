@@ -41,7 +41,7 @@ tags:
   Once again, if we were building this app locally, we’d install our dependencies from npm.
 
   ```bash
-  npm install --save @patternfly/pfe-card @patternfly/pfe-cta
+  npm install --save @patternfly/pfe-card@next @patternfly/pfe-cta@next
   ```
 
   But if you’re using CodeSandbox, just search for “@patternfly/pfe-card” and “@patternfly/pfe-cta”.

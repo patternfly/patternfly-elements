@@ -23,8 +23,8 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="PatternFly Elements - Quick start">
   <title>PatternFly Elements - Quick start</title>
-  <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles/pfe.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles/pfe-layouts.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles@next/pfe.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles@next/pfe-layouts.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text&display=swap" rel="stylesheet">
   <style>
     html,
@@ -38,11 +38,11 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
     }
   </style>
   <script type="module">
-    import "https://unpkg.com/@patternfly/pfe-card?module";
-    import "https://unpkg.com/@patternfly/pfe-band?module";
-    import "https://unpkg.com/@patternfly/pfe-cta?module";
-    import "https://unpkg.com/@patternfly/pfe-accordion?module";
-    import "https://unpkg.com/@patternfly/pfe-tabs?module";
+    import "https://unpkg.com/@patternfly/pfe-card@next?module";
+    import "https://unpkg.com/@patternfly/pfe-band@next?module";
+    import "https://unpkg.com/@patternfly/pfe-cta@next?module";
+    import "https://unpkg.com/@patternfly/pfe-accordion@next?module";
+    import "https://unpkg.com/@patternfly/pfe-tabs@next?module";
   </script>
 </head>
 <body unresolved>

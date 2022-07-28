@@ -16,8 +16,8 @@ title: Get started
   you’d like as a dependency of your project like this:
 
   ```shell
-  npm install --save @patternfly/pfe-card
-  npm install --save @patternfly/pfe-cta
+  npm install --save @patternfly/pfe-card@next
+  npm install --save @patternfly/pfe-cta@next
   ```
 
   This will install not only the pfe-card and pfe-cta, but also the core utilities and styles,
@@ -35,8 +35,8 @@ title: Get started
   In this example, we load the [card](/components/card/) and [cta](/components/cta/) modules from [`https://unpkg.com`](https://unpkg.com).
 
   ```html
-  <script type="module" src="https://unpkg.com/@patternfly/pfe-card?module"></script>
-  <script type="module" src="https://unpkg.com/@patternfly/pfe-cta?module"></script>
+  <script type="module" src="https://unpkg.com/@patternfly/pfe-card@next?module"></script>
+  <script type="module" src="https://unpkg.com/@patternfly/pfe-cta@next?module"></script>
   ```
 
   <a id="in-an-app"></a>
@@ -185,7 +185,7 @@ title: Get started
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PatternFly Elements - Avoiding the FOUC</title>
     <!-- Add PFE core styles to the head -->
-    <link rel="stylesheet" href="https://jspm.dev/@patternfly/pfe-styles@2.0.0/pfe.min.css">
+    <link rel="stylesheet" href="https://jspm.dev/@patternfly/pfe-styles@next/pfe.min.css">
     <style>
       :root {
         /* Optional: customize the delay until the body is revealed regardless */
@@ -196,9 +196,9 @@ title: Get started
     </style>
     <!-- Add noscript styles to immediately reveal content when JavaScript is disabled -->
     <noscript>
-      <link rel="stylesheet" href="https://jspm.dev/@patternfly/pfe-styles@2.0.0/pfe--noscript.min.css">
+      <link rel="stylesheet" href="https://jspm.dev/@patternfly/pfe-styles@next/pfe--noscript.min.css">
     </noscript>
-    <script type="module" src="https://jspm.dev/@patternfly/pfe-band@2.0.0"></script>
+    <script type="module" src="https://jspm.dev/@patternfly/pfe-band@next"></script>
   </head>
   <!-- Add the unresolved attribute to the body tag -->
   <!-- The pfe-core library and pfe.min.css file automatically remove the unresolved attribute -->

@@ -1,5 +1,7 @@
+[build.environment]
+  NPM_FLAGS = '--dry-run'
 [build]
-  command = "npm i nunjucks -w @patternfly/pfe-tools && npm run site"
+  command = "npm ci && npm run site"
 
 [[plugins]]
   package = "/tools/netlify-plugin-github-actions"

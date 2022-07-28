@@ -23,17 +23,11 @@ jobs:
       - run: npm ci --prefer-offline
       - run: npm run build
 
-      - name: Get the slugified branch name
-        run: |
-          branch=$(npx slugify-cli ${GITHUB_HEAD_REF})
-          echo ::set-output name=name::$branch
-        id: slugified-branch
-
       - name: Publish to Netlify
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: npx netlify-cli deploy --alias=${{steps.slugified-branch.outputs.name}} --dir=_site
+        run: npx netlify-cli deploy --alias=deploy-preview-${{github.event.number}} --dir=_site
 
       - name: Post Previews
         uses: actions/github-script@v6
@@ -41,10 +35,10 @@ jobs:
             script: |
               const { owner, repo } = context.repo;
               const issue_number = context.issue.number;
-              const { GITHUB_SHA, GITHUB_HEAD_REF, GITHUB_REPOSITORY } = process.env;
-              const NETLIFY_ORG_NAME = 'patternfly-elements';
-              const HEADER = '### <span aria-hidden="true">✅</span> Deploy Preview for *${GITHUB_REPOSITORY.split('/').pop()}* ready!';
-              const PREVIEW_URL = `https://deploy-preview-${issue_number}--${NETLIFY_ORG_NAME}.netlify.app/`;
+              const { GITHUB_SHA, GITHUB_HEAD_REF } = process.env;
+              const NETLIFY_SITE_SLUG = 'patternfly-elements';
+              const PREVIEW_URL = `https://deploy-preview-${issue_number}--${NETLIFY_SITE_SLUG}.netlify.app/`;
+              const HEADER = `### <span aria-hidden="true">✅</span> Deploy Preview for *${repo}* ready!`;
               const body = `${HEADER}
 
 
@@ -54,13 +48,15 @@ jobs:
               |<span aria-hidden="true">😎</span> Deploy Preview | [${PREVIEW_URL}](${PREVIEW_URL}) |
               ---
 
-              _To edit notification comments on pull requests, go to your [Netlify site settings](https://app.netlify.com/sites/${NETLIFY_ORG_NAME}/settings/deploys#deploy-notifications).`
+              _To edit notification comments on pull requests, go to your [Netlify site settings](https://app.netlify.com/sites/${NETLIFY_SITE_SLUG}/settings/deploys#deploy-notifications).`
 
-              const comments = await github.issues.listComments({ owner, repo, issue_number });
+              console.log({ owner, repo, issue_number, GITHUB_SHA, GITHUB_HEAD_REF, NETLIFY_SITE_SLUG, PREVIEW_URL, BODY, HEADER })
+
+              const comments = await github.rest.issues.listComments({ owner, repo, issue_number });
               const priorComment = comments.data.find(comment => comment.body.startsWith(HEADER));
 
               if (priorComment) {
-                await github.issues.updateComment({ owner, repo, comment_id: priorComment.id, body });
+                await github.rest.issues.updateComment({ owner, repo, comment_id: priorComment.id, body });
               } else {
-                await github.issues.createComment({ owner, repo, issue_number, body });
+                await github.rest.issues.createComment({ owner, repo, issue_number, body });
               }

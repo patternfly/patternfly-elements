@@ -33,7 +33,7 @@
       <button aria-label="Expand Main Navigation"></button>
     </pfe-button>
     <a href="/"><img src="{{ options.site.logoUrl }}" alt="" />{{ title }}</a>
-    <a id="github-link" href="{{ options.site.githubUrl }}{{ ('tree/main' + manifest.path.replace(context.cwd, '').replace('/custom-elements.json', '/')) if manifest else ''}}">
+    <a id="github-link" href="{{ options.sourceControlURLPrefix.replace('tree/main/', '') }}{{ ('tree/main' + manifest.path.replace(context.cwd, '').replace('/custom-elements.json', '/')) if manifest else ''}}">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
         <title>GitHub</title>
         <!-- Font Awesome Free 5.15.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) -->

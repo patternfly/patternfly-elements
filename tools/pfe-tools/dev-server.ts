@@ -39,10 +39,12 @@ const env = nunjucks
 
 interface SiteOptions {
   description?: string;
-  favicon: string;
-  githubUrl?: string;
+  favicon?: string;
+  /** URL to the demo page's main brand logo */
   logoUrl?: string;
+  /** URLs to stylesheets to add to the demo (absolute from cwd) */
   stylesheets?: string[];
+  /** Title for main page of the demo */
   title?: string;
 }
 
@@ -56,7 +58,7 @@ export interface PfeDevServerConfigOptions extends DevServerConfig {
   plugins?: Plugin[];
   site?: SiteOptions;
   sourceControlURLPrefix?: string;
-  tagPrefix: 'pfe',
+  tagPrefix?: string,
   watchFiles?: string;
 }
 
@@ -65,7 +67,6 @@ type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & { site: 
 const SITE_DEFAULTS: Required<SiteOptions> = {
   description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
   favicon: '/brand/logo/svg/pfe-icon-blue.svg',
-  githubUrl: 'https://github.com/patternfly/patternfly-elements/',
   logoUrl: '/brand/logo/svg/pfe-icon-white-shaded.svg',
   stylesheets: [],
   title: 'PatternFly Elements',

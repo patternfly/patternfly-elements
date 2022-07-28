@@ -217,6 +217,7 @@ function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInte
   const config = options ?? {} as PfeDevServerConfigOptions;
   config.site = { ...SITE_DEFAULTS, ...options?.site ?? {} };
   config.rootDir ??= process.cwd();
+  config.tagPrefix ??= 'pfe';
   config.sourceControlURLPrefix ??= 'https://github.com/patternfly/patternfly-elements/tree/main/';
   config.demoURLPrefix ??= 'https://patternflyelements.org/';
   config.loadDemo ??= true;

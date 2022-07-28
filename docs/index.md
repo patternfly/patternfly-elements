@@ -49,9 +49,9 @@ templateEngineOverride: njk,md
 
 ```html
 <script type="module"
-        src="https://unpkg.com/@patternfly/pfe-card?module"></script>
+        src="https://unpkg.com/@patternfly/pfe-card@next?module"></script>
 <script type="module"
-        src="https://unpkg.com/@patternfly/pfe-cta?module"></script>
+        src="https://unpkg.com/@patternfly/pfe-cta@next?module"></script>
 
 <pfe-card color-palette="lightest">
   <h2 slot="header">Card component</h2>
@@ -89,7 +89,7 @@ templateEngineOverride: njk,md
           <div class="pfe-l-grid__item pfe-m-12-col pfe-m-8-col-on-md pfe-m-7-col-on-lg">
 
 ```shell
-npm install @patternfly/pfe-accordion
+npm install @patternfly/pfe-accordion@next
 ```
 
 ```jsx

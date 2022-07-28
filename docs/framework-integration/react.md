@@ -43,7 +43,7 @@ tags:
   Once again, if we were building this app locally, we’d install our dependencies from npm using yarn.
 
   ```bash
-  yarn add @patternfly/pfe-card @patternfly/pfe-cta
+  yarn add @patternfly/pfe-card@next @patternfly/pfe-cta@next
   ```
   But if you’re using CodeSandbox, just search for "@patternfly/pfe-card" and "@patternfly/pfe-cta".
 
@@ -101,7 +101,7 @@ tags:
   If we were building this app locally, we’d install our dependencies from npm using yarn.
 
   ```bash
-  yarn add @patternfly/pfe-accordion
+  yarn add @patternfly/pfe-accordion@next
   ```
 
   If you’re using CodeSandbox, just search for “@patternfly/pfe-accordion”.
@@ -372,7 +372,7 @@ tags:
   we’d install our dependencies from npm using yarn.
 
   ```bash
-  yarn add @patternfly/pfe-styles
+  yarn add @patternfly/pfe-styles@next
   ```
 
   If you’re using CodeSandbox, search for “@patternfly/pfe-styles”.

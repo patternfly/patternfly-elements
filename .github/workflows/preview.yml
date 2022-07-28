@@ -33,7 +33,7 @@ jobs:
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: npx netlify deploy --alias=${{steps.slugified-branch.outputs.name}} --dir=_site
+        run: npx netlify-cli deploy --alias=${{steps.slugified-branch.outputs.name}} --dir=_site
 
       - name: Post Previews
         uses: actions/github-script@v6

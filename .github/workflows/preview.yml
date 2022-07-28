@@ -39,11 +39,12 @@ jobs:
         uses: actions/github-script@v6
         with:
             script: |
-              const { GITHUB_SHA, GITHUB_HEAD_REF, GITHUB_REPOSITORY } = process.env;
               const { owner, repo } = context.repo;
               const issue_number = context.issue.number;
+              const { GITHUB_SHA, GITHUB_HEAD_REF, GITHUB_REPOSITORY } = process.env;
               const NETLIFY_ORG_NAME = 'patternfly-elements';
               const HEADER = '### <span aria-hidden="true">✅</span> Deploy Preview for *${GITHUB_REPOSITORY.split('/').pop()}* ready!';
+              const PREVIEW_URL = `https://deploy-preview-${issue_number}--${NETLIFY_ORG_NAME}.netlify.app/`;
               const body = `${HEADER}
 
 

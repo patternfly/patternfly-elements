@@ -45,7 +45,7 @@
     "demo/**/*",
     "custom-elements.json",
     "**/*.LEGAL.txt",
-    "**/*.{njk,html,md,css}",
+    "**/*.{njk,html,md,css,woff,woff2}",
     "**/*.{js,cjs,d.ts,map}"
   ],
   "scripts": {

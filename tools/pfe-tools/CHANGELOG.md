@@ -1,5 +1,12 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.24
+
+### Major Changes
+
+- 654a9489: Remove `githubUrl` site option - uses sourceControlPrefixURL instead
+- e3de6bde: Adds `site.stylesheets` option to dev server config. REMOVES `site.tagPrefix` option in favor of `tagPrefix` option
+
 ## 1.0.0-next.23
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @patternfly/pfe-tooltip
 
+## 1.1.0-next.1
+
+### Patch Changes
+
+- b5fe1d3e: Use popper version from pfe-core
+
 ## 1.1.0-next.0
 
 ### Minor Changes

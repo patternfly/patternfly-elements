@@ -172,7 +172,7 @@ export class PfeJumpLinksNav extends LitElement {
   private scrollTimeout?: number;
 
   /** This flag indicates if the rebuild should update the light DOM */
-  private updateLightDom = false;
+  private shouldUpdateLightDOM = false;
 
   private currentActive?: number;
 
@@ -797,7 +797,7 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
       return;
     }
 
-    this.updateLightDom = true;
+    this.shouldUpdateLightDOM = true;
     this.rebuild();
   }
 
@@ -810,7 +810,7 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
       return;
     }
 
-    this.updateLightDom = true;
+    this.shouldUpdateLightDOM = true;
 
     // Reset the sections object to allow refetching
     this._sections = null;
@@ -1026,7 +1026,7 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
 
       let menu;
 
-      if (this.autobuild && this.update) {
+      if (this.autobuild && this.shouldUpdateLightDOM) {
         menu = this.build();
       } else {
         menu = this.querySelector('ul');
@@ -1050,7 +1050,7 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
       });
     }
 
-    this.updateLightDom = false;
+    this.shouldUpdateLightDOM = false;
   }
 
   /**

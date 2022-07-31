@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.26
+
+### Patch Changes
+
+- 58fe3a75: Include dev server webfonts in npm tarball
+
 ## 1.0.0-next.25
 
 ### Patch Changes

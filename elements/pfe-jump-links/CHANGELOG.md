@@ -1,5 +1,11 @@
 ## 1.0.0-prerelease.50 ( TBD )
 
+## 2.0.0-next.4
+
+### Patch Changes
+
+- 8fb76bb1: Fix predicate which updates light DOM
+
 ## 2.0.0-next.3
 
 ### Major Changes

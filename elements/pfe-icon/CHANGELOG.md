@@ -1,5 +1,11 @@
 # @patternfly/pfe-icon
 
+## 2.0.0-next.3
+
+### Minor Changes
+
+- e3de6bde: Adds a small subset of font-awesome icons
+
 ## 2.0.0-next.2
 
 ### Patch Changes

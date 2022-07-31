@@ -42,17 +42,11 @@
   },
   "files": [
     "!*.ts",
+    "demo/**/*",
     "custom-elements.json",
     "**/*.LEGAL.txt",
-    "**/*.LEGAL.txt",
-    "demo/**/*",
-    "**/*.css",
-    "**/*.njk",
-    "**/*.md",
-    "**/*.d.ts",
-    "**/*.js",
-    "**/*.js.map",
-    "11ty/plugins/*.cjs"
+    "**/*.{njk,html,md,css}",
+    "**/*.{js,cjs,d.ts,map}"
   ],
   "scripts": {
     "build": "tsc -b .",

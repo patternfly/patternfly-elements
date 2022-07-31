@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.25
+
+### Patch Changes
+
+- 4ff704d4: Add html template to npm tarball
+
 ## 1.0.0-next.24
 
 ### Major Changes

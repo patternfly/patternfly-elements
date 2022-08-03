@@ -221,7 +221,7 @@ function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInte
   config.sourceControlURLPrefix ??= 'https://github.com/patternfly/patternfly-elements/tree/main/';
   config.demoURLPrefix ??= 'https://patternflyelements.org/';
   config.loadDemo ??= true;
-  config.watchFiles ??= '{elements,core}/**/*.{ts,js,css,scss,html}';
+  config.watchFiles ??= '{elements,core}/**/*.{css,scss,html}';
   config.litcssOptions ??= { include: /\.scss$/, transform: transformSass };
   return config as PfeDevServerInternalConfig;
 }

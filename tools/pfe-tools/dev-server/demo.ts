@@ -7,10 +7,6 @@ function toggleNav(force?: boolean) {
   const next = force ?? !old;
   sidebar?.setAttribute('aria-expanded', String(next));
   document.body.classList.toggle('menu-open', next);
-  if (next) {
-    const link: HTMLAnchorElement|null = sidebar?.querySelector('a:active') ?? sidebar?.querySelector('a') ?? null;
-    link?.focus();
-  }
 }
 
 function attachShadowRoots(root: Document | ShadowRoot) {

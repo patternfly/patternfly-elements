@@ -4,7 +4,7 @@ A tooltip is a floating text area triggered by a user that provides helpful or c
 ## Usage
 A tooltip is used by wrapping an html element in the pfe-tooltip element along with contextual information to be displayed alongside of the element.  
 
-Read more about Jump Links in the [PatternFly Elements Tooltip documentation](https://patternflyelements.org/components/tooltip)
+Read more about tooltips in the [PatternFly Elements Tooltip documentation](https://patternflyelements.org/components/tooltip)
 
 ##  Installation
 

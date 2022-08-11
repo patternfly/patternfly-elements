@@ -137,6 +137,7 @@ export class PfeAccordionHeader extends LitElement {
               on-fail="collapse"
               part="icon"
               class="pf-c-accordion__toggle-icon"
+              size="1x"
           ></pfe-icon>
         </button>`}
       </${tag}>

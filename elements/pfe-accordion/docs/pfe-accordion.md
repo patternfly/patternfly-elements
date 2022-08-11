@@ -31,7 +31,6 @@
       </pfe-cta>
     </pfe-accordion-panel>
   </pfe-accordion>
-
   ### Disclosure variation
   Accordions need to have at least two section panels. If only one panel is needed, a Disclosure is presented instead. Accordions are used to organize more important information whereas a disclosure is used to store supplementary content that might not be a crucial part of the user experience.
 

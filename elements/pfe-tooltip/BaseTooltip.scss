@@ -7,7 +7,7 @@
 #tooltip {
   color: var(--pf-c-tooltip__content--Color,
     var(--pf-global--Color--light-100, #ffffff));
-  background-color: var(--pf-c-toolip__content--BackgroundColor,
+  background-color: var(--pf-c-tooltip__content--BackgroundColor,
     var(--pf-global--BackgroundColor--dark-100, #151515));
   line-height: var(--pf-c-tooltip--line-height, 1.5);
   opacity: 1; 

@@ -16,7 +16,7 @@ import { BaseTooltip } from './BaseTooltip.js';
  *       Typically this would include a string of text without any additional elements.
  *       This element is wrapped with a div inside of the component to give it the stylings and background colors.
  *
- * @cssprop     {<color>} --pf-c-toolip__content--BackgroundColor
+ * @cssprop     {<color>} --pf-c-tooltip__content--BackgroundColor
  *              Sets the background color for the tooltip content.
  *              {@default `#1b1d21`}
  * @cssprop     {<color>} --pf-c-tooltip__content--Color
@@ -50,7 +50,7 @@ import { BaseTooltip } from './BaseTooltip.js';
  *              Tooltip arrow width.
  *              {@default `0.5rem`}
  * @cssprop     {<length>} --pf-c-tooltip__arrow--Height
- *              Tooltip arrow height.s
+ *              Tooltip arrow height.
  *              {@default `0.5rem`}
  * @cssprop     --pf-c-tooltip__arrow--m-top--TranslateX
  *              Positions the tooltip arrow along the x axis for `top` positioned arrows.

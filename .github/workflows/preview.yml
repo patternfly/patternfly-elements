@@ -1,4 +1,4 @@
-name: Preview
+name: Build Site Preview
 
 on: pull_request
 
@@ -6,7 +6,7 @@ jobs:
   release:
     # Prevents changesets action from creating a PR on forks
     if: github.repository == 'patternfly/patternfly-elements'
-    name: Preview
+    name: Build Site Preview
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -15,7 +15,7 @@ jobs:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: npm

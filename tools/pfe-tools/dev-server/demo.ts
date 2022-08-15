@@ -1,16 +1,13 @@
 const hamburger = document.getElementById('hamburger');
 const sidebar = document.getElementById('sidebar');
 const list = matchMedia('(max-width: 640px)');
+const LS_KEY = 'pfe-tools-dev-server-maximized';
 
 function toggleNav(force?: boolean) {
   const old = sidebar?.getAttribute('aria-expanded') === 'true';
   const next = force ?? !old;
   sidebar?.setAttribute('aria-expanded', String(next));
   document.body.classList.toggle('menu-open', next);
-  if (next) {
-    const link: HTMLAnchorElement|null = sidebar?.querySelector('a:active') ?? sidebar?.querySelector('a') ?? null;
-    link?.focus();
-  }
 }
 
 function attachShadowRoots(root: Document | ShadowRoot) {
@@ -26,6 +23,12 @@ function attachShadowRoots(root: Document | ShadowRoot) {
 }
 
 function onClick() {
+  const next = sidebar?.getAttribute('aria-expanded') !== 'true';
+  if (next) {
+    localStorage.removeItem(LS_KEY);
+  } else {
+    localStorage.setItem(LS_KEY, 'true');
+  }
   toggleNav();
 }
 
@@ -44,10 +47,6 @@ function onMediaChange() {
   toggleNav(!list.matches);
 }
 
-if (!Object.prototype.hasOwnProperty.call(HTMLTemplateElement.prototype, 'shadowRoot')) {
-  attachShadowRoots(document);
-}
-
 sidebar?.addEventListener('keydown', onKeydown);
 hamburger?.addEventListener('click', onClick);
 document.documentElement.removeAttribute('unresolved');
@@ -55,3 +54,12 @@ document.documentElement.removeAttribute('unresolved');
 list.addEventListener('change', onMediaChange);
 
 onMediaChange();
+
+if (!Object.prototype.hasOwnProperty.call(HTMLTemplateElement.prototype, 'shadowRoot')) {
+  attachShadowRoots(document);
+}
+
+if (localStorage.getItem(LS_KEY)) {
+  toggleNav(false);
+}
+

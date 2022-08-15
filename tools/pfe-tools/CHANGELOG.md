@@ -1,5 +1,12 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.27
+
+### Patch Changes
+
+- c625b329: Store nav state
+- a44b5484: Serve changes to TypeScript sources
+
 ## 1.0.0-next.26
 
 ### Patch Changes

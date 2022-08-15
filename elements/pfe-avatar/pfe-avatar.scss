@@ -21,53 +21,14 @@
   height: pfe-local(size);
 }
 
-canvas {
-  width: 100%;
-  height: 100%;
-
-  image-rendering: optimizeSpeed; /* Older versions of FF */
-  image-rendering: -moz-crisp-edges; /* FF 6.0+ */
-  image-rendering: -webkit-optimize-contrast; /* Safari */
-  image-rendering: -o-crisp-edges; /* OS X & Windows Opera (12.02+) */
-  image-rendering: pixelated; /* Awesome future-browsers */
-  -ms-interpolation-mode: nearest-neighbor; /* IE */
-}
-
-:host([shape="rounded"]) {
-  // When border radius lines up with the size of the avatar's random
-  // patterns, it looks nice, so make border-radius the same size as the
-  // patterns, ie 1/8th the width of the avatars.  add 1px beacuse it looks
-  // just a little bit better.
-  img,
-  canvas {
-    border-radius: calc(#{pfe-local(size)} / 8 + 1px);
-  }
-}
-
-:host([shape="circle"]) {
-  img,
-  canvas {
-    border-radius: 50%;
-  }
-}
-
 // when src attribute is provided, show the img but hide the canvas
 :host([src]) {
-  canvas {
-    display: none;
-  }
-
   img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-}
-
-// when src attribute is not present, hide the img
-:host(:not([src])) img {
-  display: none;
 }
 
 :host([hidden]) {

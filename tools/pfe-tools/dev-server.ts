@@ -111,7 +111,7 @@ export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerInte
       if (source.endsWith('.ts.js')) {
         // already resolved, but had `.js` appended, probably by export map
         return source.replace('.ts.js', isNodeModule ? '.js' : '.ts');
-      } else if (isNodeModule) {
+      } else if (isNodeModule && !(source.match(/@patternfly\/pfe-/) || context.path.match(/@patternfly\/pfe-/))) {
         // don't try to resolve node_modules, they're already resolved
         return;
       } else {

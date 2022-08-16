@@ -64,7 +64,7 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "next",
+"@patternfly/pfe-core": "^2.0.0-next.7",
     "lit": "2.3.0"
   }
 }

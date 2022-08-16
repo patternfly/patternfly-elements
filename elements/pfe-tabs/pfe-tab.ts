@@ -1,157 +1,106 @@
-import type { ColorTheme } from '@patternfly/pfe-core';
-
 import { LitElement, html } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
-import { pfelement, bound, observed, initializer, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
+import { ComposedEvent } from '@patternfly/pfe-core';
+import { bound, observed } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import style from './pfe-tab.scss';
 
-function isSlotElement(el?: Node|null): el is HTMLSlotElement {
-  return el instanceof HTMLElement && el.tagName === 'SLOT';
+
+export class PfeTabExpandEvent extends ComposedEvent {
+  constructor(
+    public selected: 'true' | 'false',
+    public tab: PfeTab,
+  ) {
+    super('tab-expand');
+  }
 }
 
 /**
  * @slot - Add the heading for your tab here.
  */
-@customElement('pfe-tab') @pfelement()
+@customElement('pfe-tab')
 export class PfeTab extends LitElement {
   static readonly version = '{{version}}';
 
   static readonly styles = [style];
 
-  /** If the tab is selected */
+  #logger = new Logger(this);
+
+  @property({ reflect: true, type: Boolean }) disabled = false;
+
   @observed
-  @property({ reflect: true, attribute: 'aria-selected' })
-    selected: 'true'|'false' = 'false';
-
-  /** Connected panel ID */
-  @property({ reflect: true, attribute: 'aria-controls' }) controls?: string;
-
-  /** Variant */
-  @property({ reflect: true }) variant: 'wind'|'earth' = 'wind';
-
-  /**
-   * Sets color theme based on parent context
-   */
-  @colorContextConsumer()
-  @property({ reflect: true }) on?: ColorTheme;
-
-  /** @deprecated `tabIndex` property reflects per spec */
-  get tabindex() {
-    return this.tabIndex;
-  }
-
-  set tabindex(v: number) {
-    this.tabIndex = v;
-  }
-
-  @query('#tab') private _tabItem?: HTMLElement;
-
-  private logger = new Logger(this);
+  @property({ reflect: true, attribute: 'aria-selected' }) selected: 'true' | 'false' = 'false';
 
   connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('role', 'tab'); // override user role
+    this.id ||= getRandomId('pfe-tab');
+    this.addEventListener('click', this._clickHandler);
+    this.#updateAccessibility();
+    this.#getParentVariant();
   }
 
   render() {
     return html`
-      <span id="tab"></span>
+      <span part="span">
+        <slot></slot>
+      </span>
     `;
   }
 
-  protected _selectedChanged() {
-    this.tabIndex = this.selected === 'true' ? 0 : -1;
+  #open() {
+    this.selected = 'true';
+    this.dispatchEvent(new PfeTabExpandEvent(this.selected, this));
   }
 
-  @initializer({ observe: { characterData: true, childList: true, subtree: true } })
-  protected _init() {
-    // Copy the tab content into the template
-    this._setTabContent();
-
-    // If an ID is not defined, generate a random one
-    this.id ||= getRandomId();
+  setAriaControls(id: string) {
+    this.setAttribute('aria-controls', id);
   }
 
-  @bound private _getTabElement(): Element|void {
-    // Check if there is no nested element or nested textNodes
-    if (!this.firstElementChild && !this.firstChild) {
-      this.logger.warn(`No tab content provided`);
+  /**
+   * When selected property changes, check the new value, if true
+   * run the `#open()` method, if false run the `#close()` method.
+   * @param oldVal {string} - Boolean value in string form
+   * @param newVal {string} - Boolean value in string form
+   * @returns {void}
+   */
+  @bound
+  protected _selectedChanged(oldVal?: 'false' | 'true', newVal?: 'false' | 'true'): void {
+    if (newVal === oldVal) {
       return;
     }
-
-    if (this.firstElementChild && this.firstElementChild.tagName) {
-      // If the first element is a slot, query for it's content
-      if (isSlotElement(this.firstElementChild)) {
-        const slotted = this.firstElementChild.assignedElements();
-        // If there is no content inside the slot, return empty with a warning
-        if (slotted.length === 0) {
-          this.logger.warn(`No heading information exists within this slot.`);
-          return;
-        }
-        // If there is more than 1 element in the slot, capture the first h-tag
-        if (slotted.length > 1) {
-          this.logger.warn(`Tab heading currently only supports 1 heading tag.`);
-        }
-        const htags =
-          slotted.filter(slot => slot.tagName.match(/^H[1-6]/) || slot.tagName === 'P');
-        if (htags.length > 0) {
-          return htags[0];
-        } else {
-          return;
-        }
-      } else if (
-        this.firstElementChild.tagName.match(/^H[1-6]/) ||
-        this.firstElementChild.tagName === 'P'
-      ) {
-        return this.firstElementChild;
+    if (newVal) {
+      if (this.selected === 'true' && !this.disabled) {
+        this.tabIndex = 0;
       } else {
-        this.logger.warn(`Tab heading should contain at least 1 heading tag for correct semantics.`);
+        this.tabIndex = -1;
       }
     }
-
-    return;
   }
 
-  @bound private async _setTabContent() {
-    await this.updateComplete;
-    let label = '';
-    let semantics = 'h3';
-
-    const tabElement = this._getTabElement();
-    if (tabElement) {
-      // Copy the tab content into the template
-      label = tabElement?.textContent?.trim().replace(/\s+/g, ' ') ?? '';
-      semantics = tabElement.tagName.toLowerCase();
-    }
-
-    if (!tabElement) {
-      // If no element is found, try for a text node
-      if (this.textContent?.trim().replace(/\s+/g, ' ')) {
-        label = this.textContent.trim().replace(/\s+/g, ' ');
-      }
-    }
-
-    if (!label) {
-      this.logger.warn(`There does not appear to be any content in the tab region.`);
+  @bound
+  private _clickHandler(event: MouseEvent) {
+    event.preventDefault();
+    if (this.disabled || this.hasAttribute('aria-disabled')) {
       return;
     }
+    this.#open();
+  }
 
-    // Create an h-level tag for the shadow tab, default h3
-    // or use the provided semantics from light DOM
-    const heading = document.createElement(semantics);
-
-    // Assign the label content to the new heading
-    heading.textContent = label;
-
-    // Attach the heading to the tabItem
-    if (this._tabItem) {
-      this._tabItem.innerHTML = '';
-      this._tabItem.appendChild(heading);
+  async #updateAccessibility() {
+    await this.updateComplete;
+    this.setAttribute('role', 'tab');
+    if (this.disabled) {
+      this.setAttribute('aria-disabled', this.disabled.toString());
     }
+  }
+
+  #getParentVariant() {
+    this.parentElement?.hasAttribute('box') ?? this.classList.add('box');
+    this.parentElement?.hasAttribute('vertical') ?? this.classList.add('vertical');
   }
 }
 

@@ -1,521 +1,259 @@
-import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core';
-
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, queryAssignedElements, state } from 'lit/decorators.js';
 
-import {
-  bound,
-  cascades,
-  colorContextConsumer,
-  colorContextProvider,
-  deprecation,
-  initializer,
-  observed,
-  pfelement,
-} from '@patternfly/pfe-core/decorators.js';
-import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
+import { bound, observed } from '@patternfly/pfe-core/decorators.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
-import { PfeTab } from './pfe-tab.js';
+import { PfeTab, PfeTabExpandEvent } from './pfe-tab.js';
 import { PfeTabPanel } from './pfe-tab-panel.js';
 
 import style from './pfe-tabs.scss';
 
 /**
- * Tabs are used to organize and navigate between sections of content. They feature a horizontal or a vertical list of section text labels with a content panel below or to the right of the component.
- *
- * @summary Organizes content in a contained view on the same page
- *
- * @attr {'light'|'dark'|'saturated'} context - Changes the context of the call-to-action to one of 3 possible options:
- *       This will override any context being passed from a parent component and will add a style attribute setting the `--context` variable.
- *       {@default 'light'}
- *
- * @slot - Place the `pfe-tab` and `pfe-tab-panel` elements here.
- *
- * @fires pfe-tabs:shown-tab - Fires when a new tab is selected. The `event.detail.tab` will be the tab that has been selected.
- * @fires pfe-tabs:hidden-tab - Fires when a selected tab is no longer the selected tab. The `event.detail.tab` will be the tab that is no longer selected.
- *
- * @csspart tabs - container for the tab elements
- * @csspart panels - container for the panel elements
- *
- * @cssprop --pfe-theme--container-padding - Tab padding and panel padding {@default 16px}
- * @cssprop --pfe-theme--color--surface--border - Link color for default CTA {@default `$pfe-color--surface--border`}
- * @cssprop --pfe-theme--ui--border-style - Border style for selected tab {@default solid}
- * @cssprop --pfe-theme--ui--border-width - Border width for selected tab {@default 1px}
- * @cssprop --pfe-theme--color--surface--lightest - Selected tab background color {@default `$pfe-color--surface--lightest`}
- * @cssprop --pfe-theme--color--surface--lightest--text - Default tab text color {@default `$pfe-color--surface--lightest--text`}
- * @cssprop --pfe-theme--color--surface--lightest--link - Tab hover and selected indicator color {@default `$pfe-color--surface--lightest--link`}
- * @cssprop --pfe-theme--color--surface--lightest--link--focus - Focused tab outline color {@default `$pfe-color--surface--lightest--link--focus`}
- * @cssprop --pfe-tabs__indicator--Display - Tab indicator display {@default block}
- * @cssprop --pfe-tabs__indicator--Height - Tab indicator height {@default 4px}
- * @cssprop --pfe-tabs__indicator--Width - Tab indicator width {@default 22px}
- * @cssprop --pfe-tabs__tab--TextTransform - Tab text transform {@default none}
+ * @slot - Add the heading for your tab here.
  */
-@customElement('pfe-tabs') @pfelement()
+@customElement('pfe-tabs')
 export class PfeTabs extends LitElement {
   static readonly version = '{{version}}';
 
   static readonly styles = [style];
 
-  private logger = new Logger(this);
+  #logger = new Logger(this);
 
-  private _linked = false;
+  @queryAssignedElements({ slot: 'tab', selector: 'pfe-tab', flatten: true }) _tabs!: PfeTab[];
+  @queryAssignedElements({ selector: 'pfe-tab-panel' }) _panels!: PfeTabPanel[];
 
-  private _updateHistory = true;
-
-  private _setFocus = false;
-
-  /**
-   * Sets color palette, which affects the element's styles as well as descendants' color theme.
-   * Overrides parent color context.
-   * Your theme will influence these colors so check there first if you are seeing inconsistencies.
-   * See [CSS Custom Properties](#css-custom-properties) for default values
-   *
-   * Card always resets its context to `base`, unless explicitly provided with a `color-palette`.
-   */
-  @colorContextProvider()
-  @property({ reflect: true, attribute: 'color-palette' }) colorPalette?: ColorPalette;
-
-  /** @deprecated use `color-palette` */
-  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color?: ColorPalette;
-
-  /**
-   * Sets color theme based on parent context
-   */
-  @colorContextConsumer()
-  @property({ reflect: true }) on?: ColorTheme;
-
-   /**
-    * Values:
-    * - `wind`: Borders are removed, only an accent colored indicator appears under the active heading.
-    * - `earth`: Headings are encased in a block. The active heading has an accent colored border on one side.
-    *
-    * ```html
-    * <pfe-tabs variant="wind">
-    *   ...
-    * </pfe-tabs>
-    * ```
-  */
-   @cascades('pfe-tab', 'pfe-tab-panel')
-   @property({ reflect: true })
-     variant: 'wind'|'earth' = 'wind';
-
-  /**
-   * Orients the tabs vertically on the left and pushes the content panes to the right.
-   *
-   * ```html
-   * <pfe-tabs vertical>
-   *   ...
-   * </pfe-tabs>
-   * ```
-   */
   @observed
-  @cascades('pfe-tab', 'pfe-tab-panel')
-  @property({ type: Boolean, reflect: true })
-    vertical = false;
+  @property({ reflect: true, attribute: 'active-key' }) activeKey = 0;
 
-  /**
-   * Sets and reflects the currently selected tab index.
-   *
-   * ```html
-   * <pfe-tabs selected-index="2">
-   *   ...
-   * </pfe-tabs>
-   * ```
-   */
+  @property({ reflect: true, type: Boolean }) box = false;
+
+  @property({ reflect: true, type: Boolean }) vertical = false;
+
   @observed
-  @property({ type: Number, reflect: true, attribute: 'selected-index' })
-    selectedIndex = 0;
+  @state() current: PfeTab | null = null;
 
-  /** Orientation */
-  @property({ type: String, attribute: 'aria-orientation', reflect: true })
-    orientation: 'horizontal'|'vertical' = 'horizontal';
-
-  /** Tab alignment */
-  @property({ reflect: true }) tabAlign?: 'center';
-
-  @property({ reflect: true, attribute: 'aria-controls' }) controls?: string;
-
-  /**
-   * Updates window.history and the URL to create sharable links. With the
-   * `tab-history` attribute, the tabs and each tab *must* have an `id`.
-   *
-   * The URL pattern will be `?{id-of-tabs}={id-of-selected-tab}`. In the example
-   * below, selecting "Tab 2" will update the URL as follows: `?my-tabs=tab2`.
-   *
-   * ```html
-   * <pfe-tabs tab-history id="my-tabs">
-   *   <pfe-tab role="heading" slot="tab" id="tab1">Tab 1</pfe-tab>
-   *   <pfe-tab-panel role="region" slot="panel">
-   *     <h2>Content 1</h2>
-   *     <p>Tab 1 panel content.</p>
-   *   </pfe-tab-panel>
-   *   <pfe-tab role="heading" slot="tab" id="tab2">Tab 2</pfe-tab>
-   *   <pfe-tab-panel role="region" slot="panel">
-   *     <h2>Content 2</h2>
-   *     <p>Tab 2 panel content.</p>
-   *   </pfe-tab-panel>
-   * </pfe-tabs>
-   * ```
-   *
-   * ### Using the URL to open a specific tab
-   *
-   * By default, `pfe-tabs` will read the URL and look for a query string parameter
-   * that matches the id of a `pfe-tabs` component and a value of a specific
-   * `pfe-tab`.
-   *
-   * For example, `?my-tabs=tab2` would open the second tab in the code sample below.
-   * "my-tabs" is equal to the id of the `pfe-tabs` component and "tab2" is equal to
-   * the id of the second tab in the tab set.
-   *
-   * ```html
-   * <pfe-tabs id="my-tabs">
-   *   <pfe-tab role="heading" slot="tab" id="tab1">Tab 1</pfe-tab>
-   *   <pfe-tab-panel role="region" slot="panel">
-   *     <h2>Content 1</h2>
-   *     <p>Tab 1 panel content.</p>
-   *   </pfe-tab-panel>
-   *   <pfe-tab role="heading" slot="tab" id="tab2">Tab 2</pfe-tab>
-   *   <pfe-tab-panel role="region" slot="panel">
-   *     <h2>Content 2</h2>
-   *     <p>Tab 2 panel content.</p>
-   *   </pfe-tab-panel>
-   * </pfe-tabs>
-   * ```
-   *
-   * In the event that a tab with the supplied id in the URL does not exist,
-   * `pfe-tabs` will fall back to the `selected-index` attribute if one is supplied
-   * in the markup, or the first tab if `selected-index` is not provided.
-   */
   @observed
-  @property({ type: Boolean, reflect: true, attribute: 'tab-history' })
-    tabHistory = false;
+  @state() focused: PfeTab | null = null;
 
-  @property({ type: Boolean, reflect: true }) selected?: boolean|PfeTab;
+  static isTab(element: HTMLElement) {
+    return element instanceof PfeTab;
+  }
 
-  @property({ reflect: true }) role = 'tablist';
+  static isPanel(element: HTMLElement) {
+    return element instanceof PfeTabPanel;
+  }
 
-  connectedCallback() {
+  async connectedCallback() {
     super.connectedCallback();
-
-    this.addEventListener('keydown', this._onKeyDown);
-    this.addEventListener('click', this._onClick);
+    this.addEventListener('tab-expand', this._tabExpandEventHandler);
+    this.addEventListener('keydown', this._onKeyDownHandler);
+    this.#updateAccessibility();
   }
 
   render() {
     return html`
-      <div class="tabs" part="tabs">
-        <div class="tabs-prefix"></div>
-        <slot name="tab"></slot>
-        <div class="tabs-suffix"></div>
-      </div>
-      <div class="panels" part="panels">
-        <slot name="panel"></slot>
+      <div id="container" part="container">
+        <div id="wrapper">
+          <div id="tabs" part="tabs" role="tablist">
+            <div id="tab-container">
+              <slot name="tab"></slot>
+            </div>
+          </div>
+        </div>
+        <div id="panels" part="panels">
+          <slot></slot>
+        </div>
       </div>
     `;
   }
 
-  disconnectedCallback() {
-    super.disconnectedCallback();
+  #activate(key: number): void {
+    let tab = this.#allTabs()[key];
+    if (tab === undefined) {
+      this.#logger.warn(`Tab at active key: ${key} does not exist`);
+      // if tab doesn't exist return first of set
+      [tab] = this.#allTabs();
+    }
+    // set the current an focused to tab
+    this.current = tab;
+    this.focused = tab;
+  }
 
-    this.removeEventListener('keydown', this._onKeyDown);
-    this._allTabs().forEach(tab => tab.removeEventListener('click', this._onClick));
-
-    if (this.tabHistory) {
-      window.removeEventListener('popstate', this._popstateEventHandler);
+  @bound
+  private _currentChanged(oldVal: PfeTab, newVal: PfeTab) {
+    if (!newVal || newVal === oldVal) {
+      return;
+    }
+    if (oldVal) {
+      oldVal.selected = 'false';
+    }
+    newVal.selected = 'true';
+    const selectedPanel = this.#allPanels().find(panel => panel.getAttribute('aria-labelledby') === newVal.id);
+    if (selectedPanel) {
+      selectedPanel.hidden = false;
+      const notSelectedPanels = this.#allPanels().filter(panel => panel !== selectedPanel);
+      notSelectedPanels.forEach(panel => panel.hidden = true);
     }
   }
 
-  protected _verticalChanged() {
-    if (this.vertical) {
-      this.orientation = 'vertical';
-    } else {
-      this.orientation = 'horizontal';
+  @bound
+  private _focusedChanged(oldVal: PfeTab, newVal: PfeTab) {
+    if (!newVal || newVal === oldVal) {
+      return;
+    }
+    newVal.focus();
+  }
+
+  #allTabs(): PfeTab[] {
+    return this._tabs.filter(PfeTabs.isTab);
+  }
+
+  #focusableTabs(): PfeTab[] {
+    return this._tabs.filter(tab => PfeTabs.isTab(tab) && tab.disabled === false);
+  }
+
+  #allPanels(): PfeTabPanel[] {
+    return this._panels.filter(PfeTabs.isPanel);
+  }
+
+  #tabIndex(element: PfeTab): number | null {
+    if (!PfeTabs.isTab(element)) {
+      this.#logger.warn('PfeTab element expected');
+      return null;
+    }
+    return this.#allTabs().findIndex(tab => tab.id === element.id);
+  }
+
+  #focusableTabIndex(element: PfeTab): number | null {
+    if (!PfeTabs.isTab(element)) {
+      this.#logger.warn('PfeTab element expected');
+      return null;
+    }
+    return this.#focusableTabs().findIndex(tab => tab.id === element.id && tab.disabled === false);
+  }
+
+  #first(): void {
+    const [firstTab] = this.#focusableTabs();
+    const found = this.#allTabs().find(tab => tab.id === firstTab.id);
+    this.#focusTab(found);
+  }
+
+  #last(): void {
+    const lastTab = this.#focusableTabs().slice(-1).pop();
+    if (lastTab) {
+      const found = this.#allTabs().find(tab => tab.id === lastTab.id);
+      this.#focusTab(found);
     }
   }
 
-  protected async _selectedIndexChanged(oldVal?: number, newVal?: number) {
-    if (newVal != null && oldVal !== newVal) {
-      // Wait until the tab and panels are loaded
-      await this.updateComplete;
-      this._linkPanels();
-      this.selectIndex(newVal);
-      this._updateHistory = true;
-    }
-  }
-
-  protected _tabHistoryChanged() {
-    if (!this.tabHistory) {
-      window.removeEventListener('popstate', this._popstateEventHandler);
-    } else {
-      window.addEventListener('popstate', this._popstateEventHandler);
-    }
-  }
-
-  @initializer({ observe: {
-    childList: true,
-    subtree: true,
-  } }) protected async _init() {
-    await this.updateComplete;
-    const tabIndexFromURL = this._getTabIndexFromURL();
-    this._linked = false;
-    this._linkPanels();
-
-    this.role = 'tablist';
-
-    if (tabIndexFromURL > -1) {
-      this._setFocus = true;
-      this.selectedIndex = tabIndexFromURL;
-    }
-  }
-
-  @bound private _linkPanels() {
-    if (this._linked) {
+  #next(): void {
+    if (!this.focused) {
       return;
     }
 
-    this.updateAccessibility();
+    const total = this.#focusableTabs().length;
+    const key = this.#focusableTabIndex(this.focused);
 
-    this._linked = true;
-  }
-
-  private _allPanels(): PfeTabPanel[] {
-    return [...this.children].filter(child => child.matches('pfe-tab-panel')) as PfeTabPanel[];
-  }
-
-  private _allTabs(): PfeTab[] {
-    return [...this.children].filter(child => child.matches('pfe-tab')) as PfeTab[];
-  }
-
-  private _panelForTab(tab: PfeTab): PfeTabPanel|null {
-    if (!tab || !tab.controls) {
-      return null;
-    }
-
-    const panel = this.querySelector(`#${tab.controls}`);
-    if (panel instanceof PfeTabPanel) {
-      return panel;
-    } else {
-      return null;
-    }
-  }
-
-  private _prevTab() {
-    const tabs = this._allTabs();
-    const newIdx = tabs.findIndex(tab => tab.selected === 'true') - 1;
-    return tabs[(newIdx + tabs.length) % tabs.length];
-  }
-
-  private _firstTab() {
-    const tabs = this._allTabs();
-    return tabs[0];
-  }
-
-  private _lastTab() {
-    const tabs = this._allTabs();
-    return tabs[tabs.length - 1];
-  }
-
-  private _nextTab() {
-    const tabs = this._allTabs();
-    const newIdx = tabs.findIndex(tab => tab.selected === 'true') + 1;
-    return tabs[newIdx % tabs.length];
-  }
-
-  private _getTabIndex(_tab: EventTarget|null) {
-    if (_tab instanceof PfeTab) {
-      const tabs = this._allTabs();
-      return tabs.findIndex(tab => tab.id === _tab.id);
-    } else {
-      this.logger.warn(`No tab was provided to _getTabIndex; required to return the index value.`);
-      return 0;
-    }
-  }
-
-  private _selectTab(newTab?: PfeTab) {
-    if (!newTab) {
-      return;
-    }
-
-    this.reset();
-
-    const newPanel = this._panelForTab(newTab);
-    let newTabSelected = false;
-
-    if (!newPanel) {
-      this.logger.warn(`No panel was found for the selected tab${newTab.id ? `: pfe-tab#${newTab.id}` : ''}`);
-    }
-
-    // this.selected on tabs contains a pointer to the selected tab element
-    if (this.selected && this.selected !== newTab) {
-      newTabSelected = true;
-
-      this.dispatchEvent(deprecatedCustomEvent('pfe-tabs:hidden-tab', { tab: this.selected }));
-    }
-
-    newTab.selected = 'true';
-    if (newPanel) {
-      newPanel.hidden = false;
-    }
-
-    // Update the value of the selected pointer to the new tab
-    this.selected = newTab;
-
-    if (newTabSelected) {
-      if (this._setFocus) {
-        newTab.focus();
+    if (key !== null) {
+      const newKey = key + 1;
+      if (newKey < total) {
+        const nextTab = this.#focusableTabs()[key + 1];
+        const found = this.#allTabs().find(tab => tab.id === nextTab.id);
+        this.#focusTab(found);
+      } else {
+        this.#first();
       }
-
-      this.dispatchEvent(deprecatedCustomEvent('pfe-tabs:shown-tab', { tab: this.selected }));
     }
 
-    this._setFocus = false;
+    if (key === total) {
+      this.#first();
+    }
   }
 
-  @bound private _onKeyDown(event: KeyboardEvent) {
-    const tabs = this._allTabs();
-    const foundTab = tabs.find(tab => tab === event.target);
+  #prev(): void {
+    if (!this.focused) {
+      return;
+    }
+    const key = this.#focusableTabIndex(this.focused);
+    if (key && key !== 0) {
+      const prevTab = this.#focusableTabs()[key - 1];
+      const found = this.#allTabs().find(tab => tab === prevTab);
+      this.#focusTab(found);
+    }
+    if (key === 0) {
+      this.#last();
+    }
+  }
 
+  #focusTab(tab: PfeTab | undefined) {
+    if (tab) {
+      if (!tab.getAttribute('aria-disabled')) {
+        this.current = tab;
+      }
+      this.focused = tab;
+    }
+  }
+
+  @bound
+  private _tabExpandEventHandler(event: Event): void {
+    if (event instanceof PfeTabExpandEvent) {
+      const selected = this.#allTabs().find(tab => tab === event.target as PfeTab);
+      if (selected) {
+        this.current = selected;
+      }
+    }
+  }
+
+  @bound
+  private async _activeKeyChanged(oldVal: string | undefined, newVal: string ): Promise<void> {
+    await this.updateComplete;
+    const key = parseInt(newVal);
+    this.#activate(key);
+  }
+
+  @bound
+  private _onKeyDownHandler(event: KeyboardEvent) {
+    const foundTab = this.#allTabs().find(tab => tab === event.target);
     if (!foundTab) {
       return;
     }
 
-    if (event.altKey) {
-      return;
-    }
-
-    let newTab;
-
+    // if (event.shiftKey && event.key === 'Tab') {
+    //   this.#prev();
+    // } else {
     switch (event.key) {
       case 'ArrowLeft':
-      case 'ArrowUp':
-        newTab = this._prevTab();
+        this.#prev();
         break;
 
       case 'ArrowRight':
-      case 'ArrowDown':
-        newTab = this._nextTab();
+        this.#next();
         break;
 
       case 'Home':
-        newTab = this._firstTab();
+        this.#first();
         break;
 
       case 'End':
-        newTab = this._lastTab();
+        this.#last();
         break;
 
       default:
         return;
     }
-
-    event.preventDefault();
-
-    if (newTab) {
-      this.selectedIndex = this._getTabIndex(newTab);
-      this._setFocus = true;
-    } else {
-      this.logger.warn(`No new tab could be found.`);
-    }
+    // }
   }
 
-  @bound private _onClick(event: MouseEvent) {
-    // Find the clicked tab
-    const foundTab = this._allTabs().find(tab => tab === event.currentTarget);
-
-    // If the tab wasn't found in the markup, exit the handler
-    if (!foundTab) {
-      return;
-    }
-
-    // Update the selected index to the clicked tab
-    this.selectedIndex = this._getTabIndex(event.currentTarget);
-  }
-
-  private _getTabIndexFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-
-    const tabsetInUrl = urlParams.has(this.id);
-
-    if (urlParams && tabsetInUrl) {
-      const id = urlParams.get(this.id);
-      return this._allTabs().findIndex(tab => tab.id === id);
-    }
-
-    return -1;
-  }
-
-  @bound private _popstateEventHandler() {
-    const tabIndexFromURL = this._getTabIndexFromURL();
-
-    this._updateHistory = false;
-    if (tabIndexFromURL > -1) {
-      this.selectedIndex = tabIndexFromURL;
-    }
-  }
-
-  select(newTab: Element) {
-    if (!(newTab instanceof PfeTab)) {
-      this.logger.warn(`the tab must be a pfe-tab element`);
-      return;
-    }
-
-    this.selectedIndex = this._getTabIndex(newTab);
-  }
-
-  selectIndex(_index: number|string) {
-    if (_index == null) {
-      return;
-    }
-
-    const index = typeof _index === 'string' ? parseInt(_index, 10) : _index;
-    const tabs = this._allTabs();
-    const tab = tabs[index];
-
-    if (tabs.length > 0 && !tab) {
-      this.logger.warn(`tab ${_index} does not exist`);
-      return;
-    } else if (!tabs && !tab) {
-      // Wait for upgrade?
-      return;
-    }
-
-    if (this.selected && this.tabHistory && this._updateHistory) {
-      // rebuild the url
-      const { pathname } = window.location;
-      const urlParams = new URLSearchParams(window.location.search);
-      const { hash } = window.location;
-
-      urlParams.set(this.id, tab.id);
-      history.pushState({}, '', `${pathname}?${urlParams.toString()}${hash}`);
-    }
-
-    this._selectTab(tab);
-
-    return tab;
-  }
-
-  reset() {
-    const tabs = this._allTabs();
-    const panels = this._allPanels();
-
-    tabs.forEach(tab => (tab.selected = 'false'));
-    panels.forEach(panel => (panel.hidden = true));
-  }
-
-  updateAccessibility() {
-    this._allTabs().forEach(tab => {
-      const panel = tab.nextElementSibling;
-      if (!(panel instanceof PfeTabPanel)) {
-        this.logger.warn(`not a sibling of a <pfe-tab-panel>`);
-        return;
-      }
-
-      // Connect the 2 items via appropriate aria attributes
-      tab.controls = panel.id;
-      panel.labelledby = tab.id;
-
-      tab.addEventListener('click', this._onClick);
+  async #updateAccessibility(): Promise<void> {
+    await this.updateComplete;
+    this.#allTabs().forEach((tab: PfeTab, index: number) => {
+      this.#allPanels().forEach((panel: PfeTabPanel, pindex: number) => {
+        if (index === pindex) {
+          panel.setAriaLabelledBy(tab.id);
+          tab.setAriaControls(panel.id);
+        }
+      });
     });
   }
 }

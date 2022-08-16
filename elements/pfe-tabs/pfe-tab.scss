@@ -8,6 +8,20 @@
 }
 
 :host {
+  display: inline-block;
+}
+
+:host(:focus-visible) {
+  outline: none;
+}
+
+:host(:focus-visible) #container {
+  /* https://remysharp.com/til/css/focus-ring-default-styles */
+  outline: 5px auto Highlight;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+#container {
   /* Reset styles */
   margin: 0;
   font-family: inherit;
@@ -41,7 +55,7 @@
   border: 0;
 }
 
-:host::before {
+#container::before {
   /* .pf-c-tabs::before, .pf-c-tabs__list::before, .pf-c-tabs__link::before, .pf-c-tabs__link::after, .pf-c-tabs__item.pf-m-action::before, .pf-c-tabs__item.pf-m-action::after, .pf-c-tabs__scroll-button::before, .pf-c-tabs__add::before */
   position: absolute;
   right: 0;
@@ -74,7 +88,7 @@
   border-inline-start-color: var(--pf-c-tabs__link--before--BorderLeftColor, var(--pf-global--BorderColor--100, var(--pf-global--palette--black-300,#d2d2d2)));
 }
 
-:host::after {
+#container::after {
   /* .pf-c-tabs::before, .pf-c-tabs__list::before, .pf-c-tabs__link::before, .pf-c-tabs__link::after, .pf-c-tabs__item.pf-m-action::before, .pf-c-tabs__item.pf-m-action::after, .pf-c-tabs__scroll-button::before, .pf-c-tabs__add::before */
   position: absolute;
   /* overwritten below
@@ -143,13 +157,13 @@ span[part] {
   margin-inline-end: var(--pf-c-tabs__link--child--MarginRight)
 }
 
-/* This isn't going to work.  Need to move the box class to the host. */
-:host([aria-selected="true"]) span[part].box {
+:host([aria-selected="true"]) #container.box {
   /* .pf-c-tabs.pf-m-box .pf-c-tabs__item.pf-m-current */
   --pf-c-tabs__link--BackgroundColor: var(--pf-c-tabs__item--m-current__link--BackgroundColor, var(--pf-c-tabs--m-color-scheme--light-300__item--m-current__link--BackgroundColor, var(--pf-global--BackgroundColor--light-300, #f0f0f0)));
   --pf-c-tabs__link--before--BorderBottomColor: var(--pf-c-tabs__link--BackgroundColor, transparent);
   /* .pf-c-tabs.pf-m-box .pf-c-tabs__link */
-  --pf-c-tabs__link--after--BorderTopWidth: var(--pf-c-tabs__link--after--BorderWidth);
+  --pf-c-tabs__link--after--BorderTopWidth: var(--pf-c-tabs__link--after--BorderWidth, var(--pf-c-tabs__item--m-current__link--after--BorderWidth, var(--pf-global--BorderWidth--lg, 3px)));
   /* .pf-c-tabs.pf-m-box .pf-c-tabs__link, .pf-c-tabs.pf-m-vertical .pf-c-tabs__link */
   --pf-c-tabs__link--after--BorderBottomWidth: 0;
 }
+

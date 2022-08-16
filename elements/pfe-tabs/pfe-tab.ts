@@ -32,6 +32,12 @@ export class PfeTab extends LitElement {
 
   @property({ reflect: true, type: Boolean }) disabled = false;
 
+  @state()
+  private _box = false;
+
+  @state()
+  private _vertical = false;
+
   @observed
   @property({ reflect: true, attribute: 'aria-selected' }) selected: 'true' | 'false' = 'false';
 
@@ -44,10 +50,13 @@ export class PfeTab extends LitElement {
   }
 
   render() {
+    const classes = { box: this._box, vertical: this._vertical };
     return html`
+    <div id="container" class="${classMap(classes)}" part="container">
       <span part="span">
         <slot></slot>
       </span>
+    <div>
     `;
   }
 
@@ -99,8 +108,8 @@ export class PfeTab extends LitElement {
   }
 
   #getParentVariant() {
-    this.parentElement?.hasAttribute('box') ?? this.classList.add('box');
-    this.parentElement?.hasAttribute('vertical') ?? this.classList.add('vertical');
+    this._box = this.parentElement?.hasAttribute('box') ?? true;
+    this._vertical = this.parentElement?.hasAttribute('vertical') ?? true;
   }
 }
 

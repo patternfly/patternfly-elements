@@ -119,7 +119,7 @@ export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerInte
         const absToRoot = resolved.replace(rootDir, '/');
         const replaced = absToRoot.replace(/\.js$/, '.ts');
         const final = (existsSync(join(rootDir, replaced)) ? replaced : resolved);
-        return final;
+        return final.replace('//', '/');
       }
     },
   };

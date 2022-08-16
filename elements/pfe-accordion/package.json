@@ -71,9 +71,9 @@
     "Michael Potter"
   ],
   "dependencies": {
-    "@patternfly/pfe-collapse": "^2.0.0-next.2",
-    "@patternfly/pfe-core": "^2.0.0-next.4",
-    "@patternfly/pfe-icon": "^2.0.0-next.2",
-    "lit": "^2.1.2"
+    "@patternfly/pfe-collapse": "next",
+    "@patternfly/pfe-core": "next",
+    "@patternfly/pfe-icon": "next",
+    "lit": "2.3.0"
   }
 }

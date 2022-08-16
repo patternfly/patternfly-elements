@@ -60,8 +60,8 @@
     "watch:types": "tsc -w"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.5",
-    "lit": "^2.1.2"
+    "@popperjs/core": "2.11.6",
+    "lit": "2.3.0"
   },
   "repository": {
     "type": "git",

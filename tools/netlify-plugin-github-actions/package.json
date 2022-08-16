@@ -7,6 +7,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@octokit/core": "^3.5.1"
+    "@octokit/core": "4.0.5"
   }
 }

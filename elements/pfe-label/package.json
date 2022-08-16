@@ -45,9 +45,9 @@
     "web components"
   ],
   "dependencies": {
-    "@patternfly/pfe-button": "^2.0.0-next.4",
-    "@patternfly/pfe-core": "^2.0.0-next.6",
-    "@patternfly/pfe-icon": "^2.0.0-next.2",
-    "lit": "^2.1.2"
+    "@patternfly/pfe-button": "next",
+    "@patternfly/pfe-core": "next",
+    "@patternfly/pfe-icon": "next",
+    "lit": "2.3.0"
   }
 }

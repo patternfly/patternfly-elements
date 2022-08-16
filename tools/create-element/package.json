@@ -53,13 +53,13 @@
     "directory": "packages/create-element"
   },
   "dependencies": {
-    "case": "^1.6.3",
-    "chalk": "^5.0.0",
-    "execa": "^6.1.0",
-    "ncp": "^2.0.0",
-    "prompts": "^2.4.2",
-    "tslib": "^2.4.0",
-    "yargs": "^17.2.1"
+    "case": "1.6.3",
+    "chalk": "5.0.1",
+    "execa": "6.1.0",
+    "ncp": "2.0.0",
+    "prompts": "2.4.2",
+    "tslib": "2.4.0",
+    "yargs": "17.5.1"
   },
   "directories": {
     "test": "test"

@@ -56,9 +56,7 @@ export class PfeTabs extends LitElement {
       <div id="container" part="container">
         <div id="wrapper">
           <div id="tabs" part="tabs" role="tablist">
-            <div id="tab-container">
-              <slot name="tab"></slot>
-            </div>
+            <slot name="tab"></slot>
           </div>
         </div>
         <div id="panels" part="panels">
@@ -74,6 +72,9 @@ export class PfeTabs extends LitElement {
       this.#logger.warn(`Tab at active key: ${key} does not exist`);
       // if tab doesn't exist return first of set
       [tab] = this.#allTabs();
+    }
+    if (tab.disabled) {
+      this.#logger.warn(`Tab at active key: ${key} is disabled`);
     }
     // set the current an focused to tab
     this.current = tab;

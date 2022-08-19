@@ -53,7 +53,7 @@ export class PfeTab extends LitElement {
     const classes = { box: this._box, vertical: this._vertical };
     return html`
     <div id="container" class="${classMap(classes)}" part="container">
-      <span part="span">
+      <span part="text">
         <slot></slot>
       </span>
     <div>

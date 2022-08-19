@@ -8,17 +8,54 @@
 }
 
 :host {
-  display: inline-block;
+  /* .pf-c-tabs__item */
+  display: flex;
+  flex: none;
+  scroll-snap-align: var(--pf-c-tabs__item--ScrollSnapAlign);
 }
 
 :host(:focus-visible) {
   outline: none;
 }
 
-:host(:focus-visible) #container {
-  /* https://remysharp.com/til/css/focus-ring-default-styles */
-  outline: 5px auto Highlight;
-  outline: 5px auto -webkit-focus-ring-color;
+:host([aria-selected="true"]) {
+  --pf-c-tabs__link--Color: var(--pf-c-tabs__item--m-current__link--Color, var(--pf-global--Color--100, #151515));
+  --pf-c-tabs__link--after--BorderColor: var(--pf-c-tabs__item--m-current__link--after--BorderColor, var(--pf-global--Color--100, #06c));
+  --pf-c-tabs__link--after--BorderWidth: var(--pf-c-tabs__item--m-current__link--after--BorderWidth, 3px);
+}
+
+:host(:hover) {
+  /* .pf-c-tabs__link:hover */
+  --pf-c-tabs__link-toggle-icon--Color: var(--pf-c-tabs__link--hover__toggle-icon--Color, var(--pf-global--Color--100, #151515));
+  /* .pf-c-tabs__item.pf-m-action:hover, .pf-c-tabs__link:hover */
+  --pf-c-tabs__link--after--BorderWidth: var(--pf-c-tabs__link--hover--after--BorderWidth, var(--pf-global--BorderWidth--lg, 3px));
+}
+
+:host(:disabled),
+:host([aria-disabled="true"]) {
+  /*
+    position: unset; is an attempt to compensate for tooltip support, but causes issues with borders
+    this is due to them being on ::before and ::after pseudo elements that require position: relative;
+    position: unset;
+  */
+
+  /* .pf-c-tabs__item.pf-m-action.pf-m-disabled, .pf-c-tabs__link:disabled, .pf-c-tabs__link.pf-m-disabled, .pf-c-tabs__link.pf-m-aria-disabled */
+  --pf-c-tabs__link--Color: var(--pf-c-tabs__link--disabled--Colo, var(--pf-global--disabled-color--100, #6a6e73));
+  --pf-c-tabs__link--BackgroundColor: var(--pf-c-tabs__link--disabled--BackgroundColor, var(--pf-global--palette--black-150, #f5f5f5));
+  --pf-c-tabs__link--before--BorderRightWidth: var(--pf-c-tabs__link--disabled--before--BorderRightWidth, 0);
+  --pf-c-tabs__link--before--BorderBottomWidth: var(--pf-c-tabs__link--disabled--before--BorderBottomWidth, var(--pf-c-tabs--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
+  --pf-c-tabs__link--before--BorderLeftWidth: var(--pf-c-tabs__link--disabled--before--BorderLeftWidth, 0);
+  --pf-c-tabs__link--after--BorderWidth: 0;
+}
+
+:host(:disabled) {
+  /* .pf-c-tabs__link:disabled, .pf-c-tabs__link.pf-m-disabled */
+  /* we only turn off pointer-events when button is fully disabled, not for aria-disabled */
+  pointer-events: none;
+}
+
+:host([aria-disabled="true"]) {
+  cursor: default;
 }
 
 #container {
@@ -36,11 +73,8 @@
 
   /* .pf-c-tabs__link */
   position: relative;
-  /*
-    display flex was causing an issue here with the text, assuming since it is not in a <button>
-    display: flex;
-    flex: 1;
-  */
+  display: flex;
+  flex: 1;
   display: inline-block;
   padding-block-start: var(--pf-c-tabs__link--PaddingTop, var(--pf-global--spacer--sm, 0.5rem));
   padding-inline-end: var(--pf-c-tabs__link--PaddingRight, var(--pf-global--spacer--md, 1rem));
@@ -53,6 +87,7 @@
 
   /* .pf-c-tabs__link, .pf-c-tabs__scroll-button, .pf-c-tabs__list::before, .pf-c-tabs__add::before */
   border: 0;
+
 }
 
 #container::before {
@@ -112,49 +147,10 @@
   border-inline-start-width: var(--pf-c-tabs__link--after--BorderLeftWidth, 0);
 }
 
-:host([aria-selected="true"]) {
-  --pf-c-tabs__link--Color: var(--pf-c-tabs__item--m-current__link--Color, var(--pf-global--Color--100, #151515));
-  --pf-c-tabs__link--after--BorderColor: var(--pf-c-tabs__item--m-current__link--after--BorderColor, var(--pf-global--Color--100, #06c));
-  --pf-c-tabs__link--after--BorderWidth: var(--pf-c-tabs__item--m-current__link--after--BorderWidth, 3px);
-}
-
-:host(:hover) {
-  /* .pf-c-tabs__link:hover */
-  --pf-c-tabs__link-toggle-icon--Color: var(--pf-c-tabs__link--hover__toggle-icon--Color, var(--pf-global--Color--100, #151515));
-  /* .pf-c-tabs__item.pf-m-action:hover, .pf-c-tabs__link:hover */
-  --pf-c-tabs__link--after--BorderWidth: var(--pf-c-tabs__link--hover--after--BorderWidth, var(--pf-global--BorderWidth--lg, 3px));
-}
-
-:host(:disabled),
-:host([aria-disabled="true"]) {
-  /*
-    position: unset; is an attempt to compensate for tooltip support, but causes issues with borders
-    this is due to them being on ::before and ::after pseudo elements that require position: relative;
-    position: unset;
-  */
-
-  /* .pf-c-tabs__item.pf-m-action.pf-m-disabled, .pf-c-tabs__link:disabled, .pf-c-tabs__link.pf-m-disabled, .pf-c-tabs__link.pf-m-aria-disabled */
-  --pf-c-tabs__link--Color: var(--pf-c-tabs__link--disabled--Colo, var(--pf-global--disabled-color--100, #6a6e73));
-  --pf-c-tabs__link--BackgroundColor: var(--pf-c-tabs__link--disabled--BackgroundColor, var(--pf-global--palette--black-150, #f5f5f5));
-  --pf-c-tabs__link--before--BorderRightWidth: var(--pf-c-tabs__link--disabled--before--BorderRightWidth, 0);
-  --pf-c-tabs__link--before--BorderBottomWidth: var(--pf-c-tabs__link--disabled--before--BorderBottomWidth, var(--pf-c-tabs--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
-  --pf-c-tabs__link--before--BorderLeftWidth: var(--pf-c-tabs__link--disabled--before--BorderLeftWidth, 0);
-  --pf-c-tabs__link--after--BorderWidth: 0;
-}
-
-:host(:disabled) {
-  /* .pf-c-tabs__link:disabled, .pf-c-tabs__link.pf-m-disabled */
-  /* we only turn off pointer-events when button is fully disabled, not for aria-disabled */
-  pointer-events: none;
-}
-
-:host([aria-disabled="true"]) {
-  cursor: default;
-}
-
-span[part] {
-  /* .pf-c-tabs__link .pf-c-tabs__item-icon, .pf-c-tabs__link .pf-c-tabs__item-text */
-  margin-inline-end: var(--pf-c-tabs__link--child--MarginRight)
+:host(:focus-visible) #container {
+  /* https://remysharp.com/til/css/focus-ring-default-styles */
+  outline: 5px auto Highlight;
+  outline: 5px auto -webkit-focus-ring-color;
 }
 
 :host([aria-selected="true"]) #container.box {
@@ -167,3 +163,15 @@ span[part] {
   --pf-c-tabs__link--after--BorderBottomWidth: 0;
 }
 
+#container.vertical {
+  /* .pf-c-tabs.pf-m-vertical .pf-c-tabs__link */
+  --pf-c-tabs__link--after--BorderTopWidth: 0;
+  --pf-c-tabs__link--after--BorderLeftWidth: var(--pf-c-tabs__link--after--BorderWidth, var(--pf-c-tabs__item--m-current__link--after--BorderWidth, var(--pf-global--BorderWidth--sm, 1px)));
+  max-width: 100%;
+  text-align: left;
+}
+
+span[part] {
+  /* .pf-c-tabs__link .pf-c-tabs__item-icon, .pf-c-tabs__link .pf-c-tabs__item-text */
+  margin-inline-end: var(--pf-c-tabs__link--child--MarginRight)
+}

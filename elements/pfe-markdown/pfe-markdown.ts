@@ -9,7 +9,7 @@ import style from './pfe-markdown.scss';
 
 /**
  * Markdown takes markdown as input and displays it as HTML.
- * This element uses the [marked.js library](https://marked.js.org/#/README.md#README.md) to convert the markdown to HTML.
+ * This element uses the [marked.js library](https://marked.js.org/) to convert the markdown to HTML.
  *
  * @summary Takes markdown as input and displays it as HTML
  */

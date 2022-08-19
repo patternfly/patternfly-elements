@@ -36,7 +36,6 @@ export class PfeTabPanel extends LitElement {
 
   #upgradeAccessibility() {
     this.setAttribute('role', 'tabpanel');
-    this.ariaHidden = this.hidden.toString();
   }
 }
 

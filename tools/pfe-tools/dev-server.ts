@@ -108,9 +108,15 @@ export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerInte
     name: 'resolve-local-monorepo-packages-from-ts-sources',
     transformImport({ source, context }) {
       const isNodeModule = source.match(/node_modules/) || context.path.match(/node_modules/);
-      if (source.endsWith('.ts.js')) {
+      if (options.tagPrefix === 'pfe' && isNodeModule && source.match(/@patternfly\/pfe-/) && !source.match(/@patternfly\/pfe-(sass|styles|core|tools)/)) {
+        const [, pkgName, rest] = source.match(/@patternfly\/pfe-([-\w]+)\/?(.*)/) ?? [];
+        if (pkgName) {
+          return `/elements/pfe-${pkgName}${rest ? '/' : ''}${rest ?? ''}`.replace(/\.js$/, '.ts');
+        }
+      } else if (source.endsWith('.ts.js')) {
         // already resolved, but had `.js` appended, probably by export map
-        return source.replace('.ts.js', isNodeModule ? '.js' : '.ts');
+        const normalized = source.replace('.ts.js', isNodeModule ? '.js' : '.ts');
+        return normalized;
       } else if (isNodeModule && !(source.match(/@patternfly\/pfe-/) || context.path.match(/@patternfly\/pfe-/))) {
         // don't try to resolve node_modules, they're already resolved
         return;

@@ -158,20 +158,13 @@ export class PfeAccordion extends LitElement {
   @colorContextConsumer()
   @property({ reflect: true }) on: ColorTheme = 'light';
 
-  /**
-   * If the element has one `pfe-accordion-header`, it will get tagged with
-   * `disclosure="true"`. This applies a slightly different set of styles:
-   * chevron appears on the left side, the header has a single border on all four sides.
-   * Applying `disclosure="false"` to an element containing only one header/panel pairing
-   * will set the element to display as a standard accordion.
-   */
-  @cascades('pfe-accordion-header', 'pfe-accordion-panel')
-  @property({ type: String, reflect: true })
-    disclosure?: 'true'|'false';
-
   @cascades('pfe-accordion-header', 'pfe-accordion-panel')
   @property({ type: String, reflect: true })
     bordered?: 'true'|'false';
+
+  @cascades('pfe-accordion-header', 'pfe-accordion-panel')
+  @property({ type: String, reflect: true })
+    large?: 'true'|'false';
 
   @property({ type: String, reflect: true })
     single?: 'true'|'false';
@@ -238,8 +231,6 @@ export class PfeAccordion extends LitElement {
 
   private expandedSets = new Set<number>();
 
-  private _manualDisclosure?: 'true'|'false';
-
   private initialized = false;
 
   private logger = new Logger(this);
@@ -273,7 +264,6 @@ export class PfeAccordion extends LitElement {
    */
   @initializer() protected async _init() {
     if (!this.initialized) {
-      this._manualDisclosure = this.getAttribute('disclosure') as 'true'|'false';
       await this.updateComplete;
       this.initialized = true;
     }
@@ -588,13 +578,6 @@ export class PfeAccordion extends LitElement {
         panel.hidden = !panel.expanded;
       }
     });
-
-    // If disclosure was not set by the author, set up the defaults
-    if (headers.length === 1) {
-      this.disclosure = this._manualDisclosure ?? 'true';
-    } else if (headers.length > 1) {
-      this.disclosure = 'false';
-    }
   }
 
   /**

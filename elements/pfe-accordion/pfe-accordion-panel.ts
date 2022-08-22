@@ -24,12 +24,11 @@ export class PfeAccordionPanel extends LitElement {
     style
   ];
 
-  /** Disclosure */
-  @property({ type: String, reflect: true }) disclosure?: 'true'|'false';
-
   @property({ type: String, reflect: true }) boredered?: 'true'|'false';
 
   @property({ type: Boolean, reflect: true }) expanded = false;
+
+  @property({ type: Boolean, reflect: true }) fixed = false;
 
   @property({ attribute: 'aria-labelledby', reflect: true }) ariaLabelledby?: string;
 

@@ -59,9 +59,6 @@ export class PfeAccordionHeader extends LitElement {
 
   @property({ attribute: 'aria-controls', reflect: true }) ariaControls?: string;
 
-  /** Disclosure */
-  @property({ type: String, reflect: true }) disclosure?: 'true'|'false';
-
   @property({ type: String, reflect: true }) boredered?: 'true'|'false';
 
   @observed

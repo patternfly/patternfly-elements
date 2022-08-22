@@ -88,7 +88,27 @@ html, body, p, ol, ul, li, dl, dt, dd, blockquote, figure, fieldset, legend, tex
   background-color: transparent;
 }
 
-.pf-c-accordion.pf-m-display-lg {
+:host([bordered])::slotted(pfe-accordion-header:first-child) {
+  display: block;
+  border-top: 1px solid #d2d2d2;
+  border-bottom: 1px solid #d2d2d2;
+}
+:host([bordered])::slotted(pfe-accordion-header:not(:first-child)) {
+  display: block;
+  border-bottom: 1px solid #d2d2d2;
+}
+
+:host([bordered])::slotted(pfe-accordion-header:is([expanded])) {
+  display: block;
+  border-bottom: 0px;
+}
+
+:host([bordered])::slotted(pfe-accordion-panel:is([expanded])) {
+  display: block;
+  border-bottom: 1px solid #d2d2d2;
+}
+
+:host([large]) {
   --pf-c-accordion__toggle--PaddingTop: var(--pf-c-accordion--m-display-lg__toggle--PaddingTop);
   --pf-c-accordion__toggle--PaddingRight: var(--pf-c-accordion--m-display-lg__toggle--PaddingRight);
   --pf-c-accordion__toggle--PaddingBottom: var(--pf-c-accordion--m-display-lg__toggle--PaddingBottom);
@@ -102,42 +122,6 @@ html, body, p, ol, ul, li, dl, dt, dd, blockquote, figure, fieldset, legend, tex
   --pf-c-accordion__toggle--focus__toggle-text--FontWeight: var(--pf-c-accordion--m-display-lg__toggle--focus__toggle-text--FontWeight);
   --pf-c-accordion__toggle--m-expanded__toggle-text--Color: var(--pf-c-accordion--m-display-lg__toggle--m-expanded__toggle-text--Color);
   --pf-c-accordion__toggle--m-expanded__toggle-text--FontWeight: var(--pf-c-accordion--m-display-lg__toggle--m-expanded__toggle-text--FontWeight);
-  --pf-c-accordion__expanded-content-body--PaddingTop: var(--pf-c-accordion--m-display-lg__expanded-content-body--PaddingTop);
-  --pf-c-accordion__expanded-content-body--PaddingRight: var(--pf-c-accordion--m-display-lg__expanded-content-body--PaddingRight);
-  --pf-c-accordion__expanded-content-body--PaddingBottom: var(--pf-c-accordion--m-display-lg__expanded-content-body--PaddingBottom);
-  --pf-c-accordion__expanded-content-body--PaddingLeft: var(--pf-c-accordion--m-display-lg__expanded-content-body--PaddingLeft);
-  --pf-c-accordion__expanded-content--FontSize: var(--pf-c-accordion--m-display-lg__expanded-content--FontSize);
-  --pf-c-accordion__expanded-content--Color: var(--pf-c-accordion--m-display-lg__expanded-content--Color);
-}
-.pf-c-accordion.pf-m-display-lg .pf-c-accordion__expanded-content-body:last-child {
-  --pf-c-accordion__expanded-content-body--PaddingBottom: var(--pf-c-accordion--m-display-lg__expanded-content-body--last-child--PaddingBottom);
-}
-// :host([bordered]) {
-//   --pf-c-accordion__toggle--before--Top: var(--pf-c-accordion--m-bordered__toggle--before--Top);
-//   border-top: var(--pf-c-accordion--m-bordered--BorderTopWidth) solid var(--pf-c-accordion--m-bordered--BorderTopColor);
-// }
-:host([bordered]) .pf-c-accordion__toggle::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  content: "";
-  border: solid var(--pf-c-accordion--m-bordered__toggle--after--BorderColor);
-  border-width: var(--pf-c-accordion--m-bordered__toggle--after--BorderTopWidth) 0 var(--pf-c-accordion--m-bordered__toggle--after--BorderBottomWidth);
-}
-:host([bordered]) .pf-c-accordion__toggle[aria-expanded="true"] {
-  --pf-c-accordion--m-bordered__toggle--after--BorderBottomWidth: 0;
-}
-:host([bordered]) .pf-c-accordion__expanded-content .pf-c-accordion__expanded-content-body:last-child::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  pointer-events: none;
-  content: "";
-  border-bottom: var(--pf-c-accordion--m-bordered__expanded-content--m-expanded__expanded-content-body--last-child--after--BorderBottomWidth) solid var(--pf-c-accordion--m-bordered__expanded-content--m-expanded__expanded-content-body--last-child--after--BorderBottomColor);
 }
 
 .pf-c-accordion__toggle {
@@ -202,35 +186,6 @@ html, body, p, ol, ul, li, dl, dt, dd, blockquote, figure, fieldset, legend, tex
   transition: var(--pf-c-accordion__toggle-icon--Transition);
 }
 
-.pf-c-accordion__expanded-content {
-  font-size: var(--pf-c-accordion__expanded-content--FontSize);
-  color: var(--pf-c-accordion__expanded-content--Color);
-}
-.pf-c-accordion__expanded-content.pf-m-fixed {
-  max-height: var(--pf-c-accordion__expanded-content--m-fixed--MaxHeight);
-  overflow-y: auto;
-}
-.pf-c-accordion__expanded-content[expanded],
-:host([expanded]) .pf-c-accordion__expanded-content {
-  --pf-c-accordion__expanded-content-body--before--BackgroundColor: var(--pf-c-accordion__expanded-content--m-expanded__expanded-content-body--before--BackgroundColor);
-}
-
-.pf-c-accordion__expanded-content-body {
-  position: relative;
-  padding: var(--pf-c-accordion__expanded-content-body--PaddingTop) var(--pf-c-accordion__expanded-content-body--PaddingRight) var(--pf-c-accordion__expanded-content-body--PaddingBottom) var(--pf-c-accordion__expanded-content-body--PaddingLeft);
-}
-.pf-c-accordion__expanded-content-body::after {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: var(--pf-c-accordion__expanded-content-body--before--Width);
-  content: "";
-  background-color: var(--pf-c-accordion__expanded-content-body--before--BackgroundColor);
-}
-.pf-c-accordion__expanded-content-body + .pf-c-accordion__expanded-content-body {
-  --pf-c-accordion__expanded-content-body--PaddingTop: var(--pf-c-accordion__expanded-content-body--expanded-content-body--PaddingTop);
-}
 :where(.pf-theme-dark) .pf-c-accordion {
   --pf-c-accordion__toggle--hover--BackgroundColor: var(--pf-global--BackgroundColor--300, #26292d);
   --pf-c-accordion__toggle--focus--BackgroundColor: var(--pf-global--BackgroundColor--300, #26292d);

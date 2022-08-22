@@ -3,6 +3,9 @@ import { customElement, property } from 'lit/decorators.js';
 
 import { BaseButton } from './BaseButton.js';
 
+import '@patternfly/pfe-icon';
+import '@patternfly/pfe-progress-indicator';
+
 import styles from './pfe-button.scss';
 
 /**

@@ -59,6 +59,6 @@
   ],
   "dependencies": {
     "@patternfly/pfe-core": "^2.0.0-next.7",
-    "lit": "^2.1.2"
+    "lit": "2.3.0"
   }
 }

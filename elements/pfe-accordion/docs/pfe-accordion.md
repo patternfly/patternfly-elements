@@ -1,4 +1,12 @@
+<style>
+.accordion-demo {
+  margin: 1em;
+  background-color: white;
+}
+</style>
+
 {% renderOverview %}
+  <div class="accordion-demo">
   <pfe-accordion>
     <pfe-accordion-header>
       <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
@@ -31,6 +39,7 @@
       </pfe-cta>
     </pfe-accordion-panel>
   </pfe-accordion>
+  </div>
   ### Disclosure variation
   Accordions need to have at least two section panels. If only one panel is needed, a Disclosure is presented instead. Accordions are used to organize more important information whereas a disclosure is used to store supplementary content that might not be a crucial part of the user experience.
 

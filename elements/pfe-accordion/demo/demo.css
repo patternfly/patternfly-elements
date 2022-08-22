@@ -87,3 +87,11 @@ h2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-gap: 20px;
 }
+
+#context-band-2 { 
+    margin: 1em;
+}
+
+body { 
+    background-color: gray;
+}

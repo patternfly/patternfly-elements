@@ -27,6 +27,8 @@ export class PfeAccordionPanel extends LitElement {
   /** Disclosure */
   @property({ type: String, reflect: true }) disclosure?: 'true'|'false';
 
+  @property({ type: String, reflect: true }) boredered?: 'true'|'false';
+
   @property({ type: Boolean, reflect: true }) expanded = false;
 
   @property({ attribute: 'aria-labelledby', reflect: true }) ariaLabelledby?: string;
@@ -47,7 +49,9 @@ export class PfeAccordionPanel extends LitElement {
     return html`
       <div tabindex="-1">
         <div id="container" class="pf-c-accordion__expanded-content" part="container">
-          <slot></slot>
+          <div class="pf-c-accordion__expanded-content-body">
+            <slot></slot>
+          </div>
         </div>
       </div>
     `;

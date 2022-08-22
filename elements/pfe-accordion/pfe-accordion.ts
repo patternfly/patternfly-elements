@@ -169,6 +169,13 @@ export class PfeAccordion extends LitElement {
   @property({ type: String, reflect: true })
     disclosure?: 'true'|'false';
 
+  @cascades('pfe-accordion-header', 'pfe-accordion-panel')
+  @property({ type: String, reflect: true })
+    bordered?: 'true'|'false';
+
+  @property({ type: String, reflect: true })
+    single?: 'true'|'false';
+
   /**
    * Updates `window.history` and the URL to create sharable links.
    * With the `history` attribute, the accordion *must* have an `id`.
@@ -617,6 +624,15 @@ export class PfeAccordion extends LitElement {
 
     // Get all the headers and capture the item by index value
     const headers = this._allHeaders();
+
+    if (this.single === 'true') {
+      const allOpenedHeaders = headers.filter(header => header.expanded);
+      const allOpenedPanels = this._allPanels().filter(panel => panel.expanded);
+
+      allOpenedHeaders.forEach(header => this._collapseHeader(header));
+      allOpenedPanels.forEach(panel => this._collapsePanel(panel));
+    }
+
     const toggle = headers[index];
     if (!toggle) {
       return;
@@ -626,6 +642,7 @@ export class PfeAccordion extends LitElement {
     if (!toggle || !panel) {
       return;
     }
+
 
     // If the header and panel exist, open both
     this._expandHeader(toggle);
@@ -671,12 +688,12 @@ export class PfeAccordion extends LitElement {
   /**
    * Collapses all accordion items.
    */
-  public collapseAll() {
+  public async collapseAll() {
     const headers = this._allHeaders();
     const panels = this._allPanels();
 
-    headers.forEach(header => this._collapseHeader(header));
-    panels.forEach(panel => this._collapsePanel(panel));
+    await headers.forEach(header => this._collapseHeader(header));
+    await panels.forEach(panel => this._collapsePanel(panel));
   }
 }
 

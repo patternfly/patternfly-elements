@@ -62,6 +62,8 @@ export class PfeAccordionHeader extends LitElement {
   /** Disclosure */
   @property({ type: String, reflect: true }) disclosure?: 'true'|'false';
 
+  @property({ type: String, reflect: true }) boredered?: 'true'|'false';
+
   @observed
   @property({ type: Boolean, reflect: true }) expanded = false;
 
@@ -120,7 +122,6 @@ export class PfeAccordionHeader extends LitElement {
         <button id="button"
           aria-expanded="${this.ariaExpandedState}"
           class="pf-c-accordion__toggle">
-          <span class="pf-c-accordion__toggle-wrapper">
             <span class="pf-c-accordion__toggle-text" part="text">
               ${this.headingText || html`
               <slot></slot>
@@ -131,7 +132,6 @@ export class PfeAccordionHeader extends LitElement {
               <slot name="accents"></slot>
             </span>
             `}
-          </span>
           <pfe-icon
               icon="web-icon-caret-thin-right"
               on-fail="collapse"

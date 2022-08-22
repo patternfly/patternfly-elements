@@ -122,9 +122,12 @@ export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerInte
         return;
       } else {
         const resolved = tryToResolve(source, context);
-        const absToRoot = resolved.replace(rootDir, '/');
+        const absToRoot = resolved.replace(`${rootDir}/`.replace('//', '/'), '/');
         const replaced = absToRoot.replace(/\.js$/, '.ts');
-        const final = (existsSync(join(rootDir, replaced)) ? replaced : resolved);
+        const checked = join(rootDir, replaced);
+        const existsTs = existsSync(checked);
+        const existsJs = existsSync(checked.replace(/\.ts$/, '.js'));
+        const final = existsTs ? replaced : existsJs ? replaced.replace(/\.ts/, '.js') : resolved;
         return final.replace('//', '/');
       }
     },

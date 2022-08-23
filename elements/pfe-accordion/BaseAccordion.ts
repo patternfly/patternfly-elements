@@ -12,7 +12,7 @@ import {
   observed,
 } from '@patternfly/pfe-core/decorators.js';
 
-import { NumberListConverter, ColorPalette, ColorTheme } from '@patternfly/pfe-core';
+import { NumberListConverter, ColorPalette, ColorTheme, ComposedEvent } from '@patternfly/pfe-core';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -21,6 +21,28 @@ import { AccordionHeaderChangeEvent, BaseAccordionHeader } from './BaseAccordion
 import { BaseAccordionPanel } from './BaseAccordionPanel.js';
 
 const CSS_TIMING_UNITS_RE = /^[0-9.]+(?<unit>[a-zA-Z]+)/g;
+
+function isAccordionPanel(el?: EventTarget|null): any {
+  return el instanceof Element && el.tagName.toLowerCase() === 'pfe-accordion-panel';
+}
+
+export class AccordionExpandEvent extends ComposedEvent {
+  constructor(
+      public toggle: BaseAccordionHeader,
+      public panel: BaseAccordionPanel,
+  ) {
+    super('expand');
+  }
+}
+
+export class AccordionCollapseEvent extends ComposedEvent {
+  constructor(
+      public toggle: BaseAccordionHeader,
+      public panel: BaseAccordionPanel,
+  ) {
+    super('collapse');
+  }
+}
 
 
 export abstract class BaseAccordion extends LitElement {
@@ -142,7 +164,20 @@ export abstract class BaseAccordion extends LitElement {
     window.removeEventListener('popstate', this._updateStateFromURL);
   }
 
-  abstract _panelForHeader(header: any): any;
+  _panelForHeader(header: BaseAccordionHeader) {
+    const next = header.nextElementSibling;
+
+    if (!next) {
+      return;
+    }
+
+    if (!isAccordionPanel(next)) {
+      this.#logger.error('Sibling element to a header needs to be a panel');
+      return;
+    }
+
+    return next;
+  }
 
   /**
    * Initialize the accordion by connecting headers and panels

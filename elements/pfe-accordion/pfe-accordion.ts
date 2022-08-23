@@ -1,35 +1,10 @@
-import { ComposedEvent } from '@patternfly/pfe-core';
 import { cascades } from '@patternfly/pfe-core/decorators/cascades.js';
 import { property } from 'lit/decorators.js';
 import { customElement } from 'lit/decorators.js';
 
 import { BaseAccordion } from './BaseAccordion.js';
-import { PfeAccordionHeader } from './pfe-accordion-header.js';
-import { PfeAccordionPanel } from './pfe-accordion-panel.js';
 
 import style from './pfe-accordion.scss';
-
-function isPfeAccordionPanel(el?: EventTarget|null): el is PfeAccordionPanel {
-  return el instanceof Element && el.tagName.toLowerCase() === 'pfe-accordion-panel';
-}
-
-export class AccordionExpandEvent extends ComposedEvent {
-  constructor(
-    public toggle: PfeAccordionHeader,
-    public panel: PfeAccordionPanel,
-  ) {
-    super('expand');
-  }
-}
-
-export class AccordionCollapseEvent extends ComposedEvent {
-  constructor(
-    public toggle: PfeAccordionHeader,
-    public panel: PfeAccordionPanel,
-  ) {
-    super('collapse');
-  }
-}
 
 /**
  * Accordions toggle the visibility of sections of content.
@@ -123,21 +98,6 @@ export class PfeAccordion extends BaseAccordion {
   @cascades('pfe-accordion-header', 'pfe-accordion-panel')
   @property({ type: String, reflect: true })
     large?: 'true'|'false';
-
-  _panelForHeader(header: PfeAccordionHeader) {
-    const next = header.nextElementSibling;
-
-    if (!next) {
-      return;
-    }
-
-    if (!isPfeAccordionPanel(next)) {
-      // this.logger.error('Sibling element to a header needs to be a panel');
-      return;
-    }
-
-    return next;
-  }
 }
 
 declare global {

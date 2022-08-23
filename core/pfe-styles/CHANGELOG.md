@@ -1,5 +1,11 @@
 # @patternfly/pfe-styles
 
+## 2.0.0-next.3
+
+### Patch Changes
+
+- bfad8b4b: Updates dependencies
+
 ## 2.0.0-next.2
 
 ### Minor Changes

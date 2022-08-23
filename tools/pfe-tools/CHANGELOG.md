@@ -1,5 +1,14 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.28
+
+### Patch Changes
+
+- bfad8b4b: Updates dependencies
+- bfad8b4b: fix local module resolution in dev server
+- a423b010: fix typescript config and update dependencies
+- bfad8b4b: dev server: Resolve local elements from their source files
+
 ## 1.0.0-next.27
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-styles",
-  "version": "2.0.0-next.2",
+  "version": "2.0.0-next.3",
   "license": "MIT",
   "description": "Helper classes for PatternFly Elements",
   "type": "module",
@@ -41,6 +41,6 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "devDependencies": {
-"@patternfly/pfe-sass": "^2.0.0-next.5"
+    "@patternfly/pfe-sass": "^2.0.0-next.5"
   }
 }

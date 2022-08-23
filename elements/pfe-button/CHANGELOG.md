@@ -1,5 +1,18 @@
 # @patternfly/pfe-button
 
+## 2.0.0-next.5
+
+### Patch Changes
+
+- bfad8b4b: Updates dependencies
+- bfad8b4b: Add missing dependencies
+- a423b010: fix typescript config and update dependencies
+- Updated dependencies [bfad8b4b]
+- Updated dependencies [a423b010]
+  - @patternfly/pfe-core@2.0.0-next.8
+  - @patternfly/pfe-icon@2.0.0-next.4
+  - @patternfly/pfe-progress-indicator@2.0.0-next.4
+
 ## 2.0.0-next.4
 
 ### Major Changes

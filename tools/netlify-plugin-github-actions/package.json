@@ -1,6 +1,6 @@
 {
   "name": "netlify-plugin-github-actions",
-  "version": "0.0.1",
+  "version": "0.0.2-next.0",
   "type": "commonjs",
   "publishConfig": {
     "access": "public",

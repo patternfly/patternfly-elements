@@ -1,5 +1,17 @@
 # @patternfly/pfe-label
 
+## 1.0.0-next.4
+
+### Patch Changes
+
+- bfad8b4b: Updates dependencies
+- Updated dependencies [bfad8b4b]
+- Updated dependencies [bfad8b4b]
+- Updated dependencies [a423b010]
+  - @patternfly/pfe-core@2.0.0-next.8
+  - @patternfly/pfe-button@2.0.0-next.5
+  - @patternfly/pfe-icon@2.0.0-next.4
+
 ## 1.0.0-next.3
 
 ### Major Changes

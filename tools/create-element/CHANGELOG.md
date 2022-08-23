@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 1.0.0-next.13
+
+### Patch Changes
+
+- bfad8b4b: Updates dependencies
+
 ## 1.0.0-next.12
 
 ### Patch Changes

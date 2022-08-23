@@ -1,5 +1,12 @@
 # @patternfly/eslint-config-elements
 
+## 0.0.2-next.4
+
+### Patch Changes
+
+- bfad8b4b: Updates dependencies
+- a423b010: fix typescript config and update dependencies
+
 ## 0.0.2-next.3
 
 ### Patch Changes

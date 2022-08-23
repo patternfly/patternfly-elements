@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-card",
   "license": "MIT",
-  "version": "2.0.0-next.4",
+  "version": "2.0.0-next.5",
   "description": "Cards for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -69,7 +69,7 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.7",
+    "@patternfly/pfe-core": "^2.0.0-next.8",
     "lit": "2.3.0"
   }
 }

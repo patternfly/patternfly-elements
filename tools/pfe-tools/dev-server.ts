@@ -4,6 +4,7 @@ import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsP
 import type { Context, Next } from 'koa';
 import type { LitCSSOptions } from 'web-dev-server-plugin-lit-css';
 import type { DemoRecord } from './custom-elements-manifest/lib/Manifest.js';
+import type { PfeConfig } from './config.js';
 
 import 'urlpattern-polyfill';
 
@@ -26,6 +27,7 @@ import { promisify } from 'node:util';
 
 import Router from '@koa/router';
 import { Manifest } from './custom-elements-manifest/lib/Manifest.js';
+import { getPfeConfig } from './config.js';
 
 const glob = promisify(_glob);
 const require = createRequire(import.meta.url);
@@ -37,40 +39,18 @@ const env = nunjucks
   .addFilter('isElementGroup', (group: DemoRecord[], primary) =>
     group.every(x => !!primary && x.primaryElementName === primary));
 
-interface SiteOptions {
-  description?: string;
-  favicon?: string;
-  /** URL to the demo page's main brand logo */
-  logoUrl?: string;
-  /** URLs to stylesheets to add to the demo (absolute from cwd) */
-  stylesheets?: string[];
-  /** Title for main page of the demo */
-  title?: string;
-}
-
-export interface PfeDevServerConfigOptions extends DevServerConfig {
-  demoURLPrefix?: string;
+type Base = (DevServerConfig & PfeConfig);
+export interface PfeDevServerConfigOptions extends Base {
   hostname?: string;
   importMap?: InjectSetting['importMap'];
   litcssOptions?: LitCSSOptions,
   /** Extra dev server plugins */
   loadDemo?: boolean;
   plugins?: Plugin[];
-  site?: SiteOptions;
-  sourceControlURLPrefix?: string;
-  tagPrefix?: string,
   watchFiles?: string;
 }
 
-type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & { site: Required<SiteOptions> };
-
-const SITE_DEFAULTS: Required<SiteOptions> = {
-  description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
-  favicon: '/brand/logo/svg/pfe-icon-blue.svg',
-  logoUrl: '/brand/logo/svg/pfe-icon-white-shaded.svg',
-  stylesheets: [],
-  title: 'PatternFly Elements',
-};
+type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & { site: Required<PfeConfig['site']> };
 
 /** Ugly, ugly hack to resolve packages from the local monorepo */
 function tryToResolve(source: string, context: import('koa').Context) {
@@ -223,12 +203,8 @@ function cors(ctx: Context, next: Next) {
 }
 
 function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInternalConfig {
-  const config = options ?? {} as PfeDevServerConfigOptions;
-  config.site = { ...SITE_DEFAULTS, ...options?.site ?? {} };
-  config.rootDir ??= process.cwd();
-  config.tagPrefix ??= 'pfe';
-  config.sourceControlURLPrefix ??= 'https://github.com/patternfly/patternfly-elements/tree/main/';
-  config.demoURLPrefix ??= 'https://patternflyelements.org/';
+  const config = { ...getPfeConfig(), ...options ?? {} };
+  config.site = { ...config.site, ...options?.site ?? {} };
   config.loadDemo ??= true;
   config.watchFiles ??= '{elements,core}/**/*.{css,scss,html}';
   config.litcssOptions ??= { include: /\.scss$/, transform: transformSass };

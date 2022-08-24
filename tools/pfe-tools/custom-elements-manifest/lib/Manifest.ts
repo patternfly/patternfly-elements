@@ -1,3 +1,4 @@
+import type { PfeConfig } from '@patternfly/pfe-tools/config.js';
 import type {
   Attribute,
   ClassField,
@@ -258,14 +259,10 @@ export class Manifest {
       ?.flatMap?.(x => x?.demos ?? []) ?? [];
   }
 
-  getDemoMetadata(tagName: string, options: {
-    rootDir: string;
-    demoURLPrefix: string;
-    sourceControlURLPrefix: string;
-    tagPrefix: string;
-  }): DemoRecord[] {
+  getDemoMetadata(tagName: string, options: Required<PfeConfig>): DemoRecord[] {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const manifest = this;
+    const { prettyTag } = Manifest;
     return this.getDemos(tagName).map(demo => {
       const permalink = demo.url.replace(options.demoURLPrefix, '/');
       const [, slug = ''] = permalink.match(/\/components\/(.*)\/demo/) ?? [];
@@ -273,11 +270,21 @@ export class Manifest {
       const filePath = demo.source?.href.replace(options.sourceControlURLPrefix, `${options.rootDir}/`) ?? '';
       const [last = ''] = filePath.split('/').reverse();
       const filename = last.replace('.html', '');
-      const title = this.getTagNames().includes(filename) ? Manifest.prettyTag(tagName) : last
+      const isMainElementDemo = this.getTagNames().includes(filename);
+      const title = isMainElementDemo ? options.aliases[tagName] ?? prettyTag(tagName) : last
         .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
         .replace(/-/g, ' ')
         .replace('.html', '');
-      return { tagName, primaryElementName, permalink, slug, title, filePath, manifest, ...demo };
+      return {
+        tagName,
+        primaryElementName,
+        permalink,
+        slug,
+        title,
+        filePath,
+        manifest,
+        ...demo
+      };
     });
   }
 }

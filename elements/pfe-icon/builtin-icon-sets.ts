@@ -1,6 +1,6 @@
 import type { PfeConfig } from '@patternfly/pfe-core';
-import type { IconNameResolverFn } from './icon-set';
-import type { PfeIcon } from './pfe-icon';
+import type { IconNameResolverFn } from './icon-set.js';
+import type { PfeIcon } from './pfe-icon.js';
 
 declare module '@patternfly/pfe-core' {
   export interface PfeConfig {

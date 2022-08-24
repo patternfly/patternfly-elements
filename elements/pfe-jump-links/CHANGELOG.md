@@ -1,5 +1,14 @@
 ## 1.0.0-prerelease.50 ( TBD )
 
+## 2.0.0-next.5
+
+### Patch Changes
+
+- bfad8b4b: Updates dependencies
+- Updated dependencies [bfad8b4b]
+  - @patternfly/pfe-core@2.0.0-next.8
+  - @patternfly/pfe-accordion@2.0.0-next.5
+
 ## 2.0.0-next.4
 
 ### Patch Changes

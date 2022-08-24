@@ -1,5 +1,17 @@
 # @patternfly/pfe-autocomplete
 
+## 2.0.0-next.3
+
+### Patch Changes
+
+- bfad8b4b: Updates dependencies
+- a423b010: Add missing `@patternfly/pfe-button` dependency
+- Updated dependencies [bfad8b4b]
+- Updated dependencies [bfad8b4b]
+- Updated dependencies [a423b010]
+  - @patternfly/pfe-core@2.0.0-next.8
+  - @patternfly/pfe-button@2.0.0-next.5
+
 ## 2.0.0-next.2
 
 ### Patch Changes

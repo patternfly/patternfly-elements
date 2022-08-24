@@ -3,6 +3,8 @@ import { property } from 'lit/decorators.js';
 import { customElement } from 'lit/decorators.js';
 
 import { BaseAccordion } from './BaseAccordion.js';
+import './pfe-accordion-header.js';
+import './pfe-accordion-panel.js';
 
 import style from './pfe-accordion.scss';
 

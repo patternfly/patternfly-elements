@@ -22,10 +22,6 @@ import { BaseAccordionPanel } from './BaseAccordionPanel.js';
 
 const CSS_TIMING_UNITS_RE = /^[0-9.]+(?<unit>[a-zA-Z]+)/g;
 
-function isAccordionPanel(el?: EventTarget|null): any {
-  return el instanceof Element && el.tagName.toLowerCase() === 'pfe-accordion-panel';
-}
-
 export class AccordionExpandEvent extends ComposedEvent {
   constructor(
       public toggle: BaseAccordionHeader,
@@ -164,6 +160,10 @@ export abstract class BaseAccordion extends LitElement {
     window.removeEventListener('popstate', this._updateStateFromURL);
   }
 
+  isAccordionPanel(el?: EventTarget|null): el is BaseAccordionPanel {
+    return el instanceof Element;
+  }
+
   _panelForHeader(header: BaseAccordionHeader) {
     const next = header.nextElementSibling;
 
@@ -171,7 +171,7 @@ export abstract class BaseAccordion extends LitElement {
       return;
     }
 
-    if (!isAccordionPanel(next)) {
+    if (!this.isAccordionPanel(next)) {
       this.#logger.error('Sibling element to a header needs to be a panel');
       return;
     }
@@ -516,7 +516,7 @@ export abstract class BaseAccordion extends LitElement {
     // Get all the headers and capture the item by index value
     const headers = this._allHeaders();
 
-    if (this.single === 'true') {
+    if (this.single === 'true' && this._updateHistory) {
       const allOpenedHeaders = headers.filter(header => header.expanded);
       const allOpenedPanels = this._allPanels().filter(panel => panel.expanded);
 

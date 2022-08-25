@@ -2,6 +2,41 @@
 
 Tools and utilities for building PatternFly Elements and other design systems.
 
+## Config
+
+Repos using pfe-tools can customize the docs pages, dev server, and custom-elements manifest
+generator by adding a `.pfe.config.json` file to the repository root.
+
+That file can contain the following properties:
+
+```ts
+interface PfeConfig {
+  /** custom elements namespace. Default 'pfe' */
+  tagPrefix?: string;
+  /** absolute URL to the web page representing the repo root in source control, with trailing slash. default 'https://github.com/patternfly/patternfly-elements/tree/main/' */
+  sourceControlURLPrefix?: string ;
+  /** absolute URL prefix for demos, with trailing slash. Default 'https://patternflyelements.org/' */
+  demoURLPrefix?: string ;
+  /** rootDir of the package. Default process.cwd() */
+  rootDir?: string;
+  /** object mapping custom element name to page title */
+  aliases?: Record<string, string> ;
+  /** Dev Server site options */
+  site?: {
+    /** The site's default page description */
+    description?: string;
+    /** URL to the site's favicon */
+    favicon?: string;
+    /** URL to the demo page's main brand logo */
+    logoUrl?: string;
+    /** URLs to stylesheets to add to the demo (absolute from cwd) */
+    stylesheets?: string[];
+    /** Title for main page of the demo */
+    title?: string;
+  };
+}
+```
+
 ## 11ty Helpers
 
 Helpers for collating and rendering

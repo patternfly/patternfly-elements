@@ -14,35 +14,35 @@ function isDocsPage(x) {
 // TODO: programmable package scopes, etc
 /**
  * @param {*} eleventyConfig
- * @param {import('./types').PluginOptions} options
+ * @param {import('./types').PluginOptions} _options
  */
-module.exports = function configFunction(eleventyConfig, options) {
-  const rootDir = options?.rootDir ?? process.cwd();
-  const sourceControlURLPrefix = options?.sourceControlURLPrefix ?? 'https://github.com/patternfly/patternfly-elements/tree/main/';
-  const demoURLPrefix = options?.demoURLPrefix ?? 'https://patternflyelements.org/';
-  const tagPrefix = options?.tagPrefix ?? 'pfe';
-
+module.exports = function configFunction(eleventyConfig, _options = {}) {
   eleventyConfig.addPlugin(EleventyRenderPlugin);
 
   eleventyConfig.addGlobalData('env', () => process.env);
 
   eleventyConfig.addGlobalData('demos', async function demos() {
     const { Manifest } = await import('../../custom-elements-manifest/lib/Manifest.js');
+    const { getPfeConfig } = await import('../../config.js');
+    const options = { ...getPfeConfig(), ..._options };
+    const extraDemos = options?.extraDemos ?? [];
 
     // 1. get all packages
     // 2. get manifests per package
     // 3. get tagNames per manifest
     // 4. get demos per tagName
     // 5. generate demo record with tagName, slug, title, and filepath per demo
-    return Manifest.getAll(rootDir)
+    return Manifest.getAll(options.rootDir)
       .flatMap(manifest => manifest.getTagNames()
-        .flatMap(tagName => manifest.getDemoMetadata(tagName, { rootDir, sourceControlURLPrefix, demoURLPrefix, tagPrefix })
-          .concat(options?.extraDemos ?? [])));
+        .flatMap(tagName => [...manifest.getDemoMetadata(tagName, options), ...extraDemos]));
   });
 
   eleventyConfig.addGlobalData('elements', async function elements() {
     const { Manifest } = await import('../../custom-elements-manifest/lib/Manifest.js');
     const { DocsPage } = await import('../DocsPage.js');
+    const { getPfeConfig } = await import('../../config.js');
+    const options = { ...getPfeConfig(), ..._options };
+    const rootDir = options?.rootDir ?? process.cwd();
 
     // 1. get all packages
     // 2. get manifests from packages, construct manifest objects, associate packages
@@ -56,6 +56,7 @@ module.exports = function configFunction(eleventyConfig, options) {
           const { tagName } = decl;
           const docsTemplatePath = join(manifest.location, root, 'docs', `${tagName}.md`);
           return new DocsPage(manifest, {
+            ...options,
             tagName,
             // only include the template if it exists
             ...Object.fromEntries(Object.entries({ docsTemplatePath }).filter(([, v]) => existsSync(v)))

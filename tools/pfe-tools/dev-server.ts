@@ -6,8 +6,6 @@ import type { LitCSSOptions } from 'web-dev-server-plugin-lit-css';
 import type { DemoRecord } from './custom-elements-manifest/lib/Manifest.js';
 import type { PfeConfig } from './config.js';
 
-import 'urlpattern-polyfill';
-
 import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
@@ -15,6 +13,7 @@ import { fileURLToPath } from 'node:url';
 
 import rollupReplace from '@rollup/plugin-replace';
 import nunjucks from 'nunjucks';
+import slugify from 'slugify';
 import _glob from 'glob';
 
 import { litCss } from 'web-dev-server-plugin-lit-css';
@@ -143,6 +142,13 @@ async function renderURL(context: Context, options: PfeDevServerInternalConfig):
  * Watch repository source files and reload the page when they change
  */
 function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
+  const DESLUGIFIED = Object.fromEntries(Object.entries(options.aliases)
+    .map(([tagName, alias]) => [slugify(alias).toLowerCase(), tagName]));
+
+  function deslugify(slug: string) {
+    return DESLUGIFIED[slug] ?? `${options.tagPrefix}-${slug}`;
+  }
+
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
@@ -152,7 +158,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
         .get('/components/:slug/demo/:sub?/:fileName', (ctx, next) => {
           const { slug, fileName } = ctx.params;
           if (fileName.includes('.')) {
-            const tagName = `${options.tagPrefix}-${slug}`;
+            const tagName = deslugify(slug);
             const redir = `/elements/${tagName}/demo/${fileName === 'index.html' ? tagName : fileName}`;
             ctx.redirect(redir);
           }
@@ -164,7 +170,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           // FIXME: will probably break if one component links to another's lightdom css.
           //        better to find out why it's requesting from /components/ in the first place
           const { slug, fileName } = ctx.params;
-          const tagName = `${options.tagPrefix}-${slug}`;
+          const tagName = deslugify(slug);
           let redir = `/elements/${tagName}/demo/${fileName}.css`;
           if (fileName.includes('-lightdom')) {
             redir = `/elements/${tagName}/${fileName}.css`;

@@ -31,7 +31,7 @@ export class PfeProgressSteps extends LitElement {
 
   private _resizeObserver = new ResizeObserver(this._build);
 
-  private get stepItems() {
+  protected get stepItems() {
     return [...this.querySelectorAll('pfe-progress-steps-item')];
   }
 

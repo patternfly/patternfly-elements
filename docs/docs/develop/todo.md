@@ -4,8 +4,6 @@ title: To-do items
 order: 10
 tags:
   - develop
-packages:
-  - pfe-markdown
 ---
 
 ## Overview

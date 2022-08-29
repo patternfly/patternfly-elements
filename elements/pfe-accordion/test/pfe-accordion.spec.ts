@@ -101,7 +101,7 @@ describe('<pfe-accordion>', function() {
     await pfeAccordion.updateComplete;
 
     expect(secondHeader.id).to.match(/pfe-/);
-    expect(secondPanel.id).to.match(/pfe-/);
+    expect(secondPanel.id).to.match(/panel-/);
   });
 
   it('should use the ids that are provided instead of generating new ones', async function() {
@@ -237,9 +237,6 @@ describe('<pfe-accordion>', function() {
     const headers = Array.from(element.children).filter(PfeAccordion.isHeader);
     element.setAttribute('expanded-index', '2,3');
 
-    // Wait until the animation is complete
-    await oneEvent(element, 'transitionend');
-
     await element.updateComplete;
     await Promise.all(headers.map(x => x.updateComplete));
 
@@ -273,123 +270,6 @@ describe('<pfe-accordion>', function() {
 
     expect(console.warn) // eslint-disable-line no-console
       .to.have.been.calledOnceWith(`[pfe-accordion-header#bad-header-element]`, 'Header should contain at least 1 heading tag for correct semantics.');
-  });
-
-  /* DISCLOSURE TESTS */
-  it('should render as disclosure if there is only one header in an accordion', async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(html`
-      <pfe-accordion>
-        <pfe-accordion-header>
-          <h2>Header</h2>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          Panel
-        </pfe-accordion-panel>
-      </pfe-accordion>`);
-
-    const headers = Array.from(pfeAccordion.querySelectorAll('pfe-accordion-header'));
-    const panels = Array.from(pfeAccordion.querySelectorAll('pfe-accordion-panel'));
-
-    expect(headers.length).to.equal(1);
-    expect(panels.length).to.equal(1);
-
-    const [header] = headers;
-    const [panel] = panels;
-
-    await aTimeout(10);
-
-    await pfeAccordion.updateComplete;
-    await header.updateComplete;
-    await panel.updateComplete;
-
-    expect(header.getAttribute('disclosure'), 'header').to.equal('true');
-    expect(panel.getAttribute('disclosure'), 'panel').to.equal('true');
-  });
-
-  it(`should not render as a disclosure if the disclosure attribute is set to false and there is only one header`, async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(html`
-      <pfe-accordion disclosure="false">
-        <pfe-accordion-header>
-          <h2>Header</h2>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          Panel
-        </pfe-accordion-panel>
-      </pfe-accordion>`);
-
-    await pfeAccordion.updateComplete;
-
-    const header = pfeAccordion.querySelector('pfe-accordion-header')!;
-    const panel = pfeAccordion.querySelector('pfe-accordion-panel')!;
-
-    await aTimeout(100);
-
-    expect(header.getAttribute('disclosure'), 'header disclosure').to.equal('false');
-    expect(panel.getAttribute('disclosure'), 'panel disclosure').to.equal('false');
-  });
-
-  it(`should switch from an accordion to a disclosure if the disclosure attribute switches from false to true`, async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(testElement);
-    const header = pfeAccordion.querySelector('pfe-accordion-header')!;
-    const panel = pfeAccordion.querySelector('pfe-accordion-panel')!;
-
-    pfeAccordion.disclosure = 'false';
-
-    await aTimeout(50);
-
-    pfeAccordion.disclosure = 'true';
-
-    await aTimeout(50);
-
-    expect(header.getAttribute('disclosure'), 'header disclosure').to.equal('true');
-    expect(panel.getAttribute('disclosure'), 'panel disclosure').to.equal('true');
-  });
-
-  it(`should switch to a disclosure if an accordion loses children and only one header is left`, async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(testElement);
-
-    const header = pfeAccordion.querySelector('pfe-accordion-header')!;
-    const panel = pfeAccordion.querySelector('pfe-accordion-panel')!;
-
-    const elementsToRemove = Array.from(
-      pfeAccordion.querySelectorAll(
-        ':is(pfe-accordion-header, pfe-accordion-panel):not(:first-of-type)'
-      ),
-    );
-
-    elementsToRemove.forEach(element => pfeAccordion.removeChild(element));
-
-    await aTimeout(50);
-
-    expect(pfeAccordion.getAttribute('disclosure'), 'accordion disclosure').to.equal('true');
-    expect(header.getAttribute('disclosure'), 'header disclosure').to.equal('true');
-    expect(panel.getAttribute('disclosure'), 'panel disclosue').to.equal('true');
-  });
-
-  it(`should switch to an accordion from a disclosure if the accordion gains more than one header`, async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(html`
-      <pfe-accordion>
-        <pfe-accordion-header>
-          <h2>Header</h2>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>Panel</pfe-accordion-panel>
-      </pfe-accordion>
-    `);
-
-    expect(pfeAccordion.getAttribute('disclosure')).to.equal('true');
-
-    const newHeader = document.createElement('pfe-accordion-header');
-    newHeader.innerHTML = `<h2>New Header</h2>`;
-
-    const newPanel = document.createElement('pfe-accordion-panel');
-    newPanel.innerHTML = `New Panel`;
-
-    pfeAccordion.appendChild(newHeader);
-    pfeAccordion.appendChild(newPanel);
-
-    await aTimeout(50);
-
-    expect(pfeAccordion.getAttribute('disclosure')).to.equal('false');
   });
 
   it('should properly initialize any dynamically added headers and panels', async function() {

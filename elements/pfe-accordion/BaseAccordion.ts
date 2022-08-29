@@ -438,7 +438,7 @@ export abstract class BaseAccordion extends LitElement {
     }
 
     if (!this.id) {
-      this.#logger.error(`The history feature cannot update the URL without an ID added to the pfe-accordion tag.`);
+      this.#logger.error(`The history feature cannot update the URL without an ID added to the accordion tag.`);
       return;
     }
 
@@ -541,8 +541,8 @@ export abstract class BaseAccordion extends LitElement {
 
     toggle.focus();
 
-    // this.dispatchEvent(new AccordionExpandEvent(toggle, panel));
-    // this.dispatchEvent(deprecatedCustomEvent('pfe-accordion:expand', { toggle, panel }));
+    this.dispatchEvent(new AccordionExpandEvent(toggle, panel));
+    this.dispatchEvent(deprecatedCustomEvent('pfe-accordion:expand', { toggle, panel }));
   }
 
   /**

@@ -40,19 +40,6 @@
     </pfe-accordion-panel>
   </pfe-accordion>
   </div>
-  ### Disclosure variation
-  Accordions need to have at least two section panels. If only one panel is needed, a Disclosure is presented instead. Accordions are used to organize more important information whereas a disclosure is used to store supplementary content that might not be a crucial part of the user experience.
-
-  <pfe-accordion>
-    <pfe-accordion-header>
-      <h3>This is a disclosure</h3>
-    </pfe-accordion-header>
-    <pfe-accordion-panel>
-      <h3>Headline, sm</h3>
-      <p>A Disclosure toggles the visibility of sections of content. It features one panel that consists of a caret icon and a section text label that collapses or expands to reveal more information.</p>
-      <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
-    </pfe-accordion-panel>
-  </pfe-accordion>
 {% endrenderOverview %}
 
 {% band header="Usage" %}
@@ -126,22 +113,6 @@
 {% endband %}
 
 {% renderSlots %}
-  ### Accents slot in pfe-accordion
-
-  These elements will appear inline with the accordion header, between the header and the chevron (or after the chevron and header in disclosure mode).
-
-  <pfe-accordion>
-    <pfe-accordion-header>
-      <h3>This is a disclosure</h3>
-      <pfe-badge slot="accents" state="success">NEW</pfe-badge>
-    </pfe-accordion-header>
-    <pfe-accordion-panel>
-      <h3>Headline, sm</h3>
-      <p>A Disclosure toggles the visibility of sections of content. It features one panel that consists of a caret icon and a section text label that collapses or expands to reveal more information.</p>
-      <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
-    </pfe-accordion-panel>
-  </pfe-accordion>
-
   ### Default slot in pfe-accordion-header
 
   We expect the light DOM of the `pfe-accordion-header` to be a heading level tag

@@ -1,4 +1,5 @@
 import type { Config } from '@custom-elements-manifest/analyzer';
+import type { PfeConfig } from './config.js';
 
 import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
 import { readonlyPlugin } from 'cem-plugin-readonly';
@@ -10,17 +11,16 @@ import { sanitizeEventsPlugin } from './custom-elements-manifest/sanitize-events
 import { summaryPlugin } from './custom-elements-manifest/summary.js';
 import { ecmaPrivateClassMembersPlugin } from './custom-elements-manifest/ecma-private-class-members.js';
 import { versionStaticFieldPlugin } from './custom-elements-manifest/version-static-field.js';
+import { getPfeConfig } from './config.js';
 
-interface Options extends Config {
-  sourceControlURLPrefix?: string;
-  demoURLPrefix?: string;
-}
+type Options = Config & Pick<PfeConfig, 'sourceControlURLPrefix'|'demoURLPrefix'>;
 
 /**
  * PFE Default custom-elements-manifest analyzer config
  */
 export function pfeCustomElementsManifestConfig(options?: Options): Config {
-  const { demoURLPrefix, sourceControlURLPrefix, dev } = options ?? {};
+  const config = getPfeConfig();
+  const { demoURLPrefix, sourceControlURLPrefix, dev } = { ...config, ...options ?? {} };
   return {
     globs: options?.globs ?? ['src/**/*.ts'],
     dev,

@@ -1,12 +1,19 @@
-import type {
-  ClassMethod,
-} from 'custom-elements-manifest/schema';
+import type { PfeConfig } from '../config.js';
+import type { ClassMethod } from 'custom-elements-manifest/schema';
 
 import { fileURLToPath } from 'url';
 
 import { Manifest } from '../custom-elements-manifest/lib/Manifest.js';
 
+import slugify from 'slugify';
+
 import nunjucks, { Environment } from 'nunjucks';
+
+interface DocsPageOptions extends PfeConfig {
+  docsTemplatePath?: string;
+  tagName: string;
+  title?: string;
+}
 
 export interface RenderKwargs {
   title?: string;
@@ -62,14 +69,10 @@ export class DocsPage implements DocsPageRenderer {
 
   constructor(
     public manifest: Manifest,
-    options?: {
-      docsTemplatePath?: string;
-      tagName: string;
-      title?: string;
-  }) {
+    options?: DocsPageOptions) {
     this.tagName = options?.tagName ?? '';
     this.title = options?.title ?? Manifest.prettyTag(this.tagName);
-    this.slug = this.tagName.replace(/^\w+-/, '');
+    this.slug = slugify(options?.aliases?.[this.tagName] ?? this.tagName.replace(/^\w+-/, '')).toLowerCase();
     this.summary = this.manifest.getSummary(this.tagName);
     this.description = this.manifest.getDescription(this.tagName);
     this.templates = nunjucks.configure(DocsPage.#templatesDir);

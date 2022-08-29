@@ -1,13 +1,11 @@
 import type { Plugin } from '@custom-elements-manifest/analyzer';
+import type { PfeConfig } from '../config.js';
+
 import { isCustomElement } from './lib/Manifest.js';
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { join, sep } from 'node:path';
-
-interface Options {
-  sourceControlURLPrefix?: string;
-  demoURLPrefix?: string;
-  rootDir?: string;
-}
+import { getPfeConfig } from '../config.js';
+import slugify from 'slugify';
 
 /**
  * Adds demo entries to element declarations
@@ -28,10 +26,9 @@ interface Options {
  * `/elements/pfe-jazz-hands/demo/accessibility.html` would be associated with
  * `/elements/pfe-jazz-hands/pfe-jazz-hands.js`
  */
-export function demosPlugin(options?: Options): Plugin {
-  const rootDir = options?.rootDir ?? process.cwd();
-  const demoURLPrefix = options?.demoURLPrefix ?? 'https://patternflyelements.org/';
-  const sourceControlURLPrefix = options?.sourceControlURLPrefix ?? 'https://github.com/patternfly/patternfly-elements/tree/main/';
+export function demosPlugin(options?: PfeConfig): Plugin {
+  const config = { ...getPfeConfig(), ...options };
+  const { rootDir, demoURLPrefix, sourceControlURLPrefix } = config;
   return {
     name: 'demos-plugin',
     packageLinkPhase({ customElementsManifest }) {
@@ -49,6 +46,7 @@ export function demosPlugin(options?: Options): Plugin {
         }
 
         if (existsSync(demoPath)) {
+          const alias = config.aliases[primaryElementName] ?? primaryElementName.replace(/^\w+-/, '');
           const allDemos = readdirSync(demoPath).filter(x => x.endsWith('.html'));
           for (const decl of moduleDoc.declarations ?? []) {
             if (isCustomElement(decl) && decl.tagName) {
@@ -56,7 +54,7 @@ export function demosPlugin(options?: Options): Plugin {
               const { tagName } = decl;
               for (const demo of allDemos) {
                 const demoName = demo.replace(/\.html$/, '');
-                const slug = primaryElementName.replace(/^\w+-/, '');
+                const slug = slugify(alias).toLowerCase();
                 const href = new URL(`elements/${primaryElementName}/demo/${demo}/`, sourceControlURLPrefix || '/').href.replace(/\/$/, '');
                 if (demoName === tagName && demoName === primaryElementName) {
                 // case: elements/pfe-jazz-hands/demo/pfe-jazz-hands.html

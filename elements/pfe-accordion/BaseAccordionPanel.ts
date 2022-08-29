@@ -29,15 +29,15 @@ export class BaseAccordionPanel extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.id ||= getRandomId('pfe-accordion-panel');
+    this.id ||= getRandomId('panel');
     this.setAttribute('role', 'region');
   }
 
   override render() {
     return html`
       <div tabindex="-1">
-        <div id="container" class="accordion__expanded-content" part="container">
-          <div class="accordion__expanded-content-body">
+        <div id="container" class="content" part="container">
+          <div class="body">
             <slot></slot>
           </div>
         </div>

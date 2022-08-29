@@ -1,7 +1,9 @@
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
 import '@patternfly/pfe-icon';
 import { BaseAccordionHeader } from './BaseAccordionHeader.js';
+
+import style from './pfe-accordion-header.scss';
 
 /**
  * Accordion Header
@@ -17,18 +19,12 @@ import { BaseAccordionHeader } from './BaseAccordionHeader.js';
  *       (or after the chevron and header in disclosure mode).
  *
  * @fires {AccordionHeaderChangeEvent} change - when the open panels change
- * @fires {CustomEvent<{ expanded: Boolean; toggle: PfeAccordionHeader }>} pfe-accordion:change -
- *        when the open panels change {@deprecated Use `change`}
- *        ```javascript
- *        detail: {
- *          expanded: Boolean;
- *          toggle: PfeAccordionHeader;
- *        }
- *        ```
  */
 @customElement('pfe-accordion-header')
 export class PfeAccordionHeader extends BaseAccordionHeader {
   static readonly version = '{{version}}';
+
+  static readonly styles = [...BaseAccordionHeader.styles, style];
 }
 
 declare global {

@@ -100,6 +100,9 @@ export class PfeAccordion extends BaseAccordion {
   @cascades('pfe-accordion-header', 'pfe-accordion-panel')
   @property({ type: String, reflect: true })
     large?: 'true'|'false';
+
+
+  @property({ type: Boolean, reflect: true }) fixed = false;
 }
 
 declare global {

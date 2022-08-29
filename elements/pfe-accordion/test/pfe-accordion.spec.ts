@@ -231,22 +231,6 @@ describe('<pfe-accordion>', function() {
     });
   });
 
-  /* EVENT TESTS */
-  it('should fire a pfe-accordion:change event when a header is clicked', async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(testElement);
-    const header = pfeAccordion.querySelector('pfe-accordion-header')!;
-    // const panel = pfeAccordion.querySelector('pfe-accordion-panel');
-
-    setTimeout(() => header.click(), 100);
-
-    const { detail } = await oneEvent(pfeAccordion, 'pfe-accordion:change');
-
-    expect(detail).to.deep.equal({
-      expanded: true,
-      toggle: header,
-    });
-  });
-
   /* ATTRIBUTE TESTS */
   it('should open the items listed in the expanded-index attribute', async function() {
     const element = await createFixture<PfeAccordion>(testElement);

@@ -5,7 +5,6 @@ import { unsafeStatic, html as staticH } from 'lit/static-html.js';
 import { ColorTheme, ComposedEvent } from '@patternfly/pfe-core';
 import { bound, observed, initializer, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -35,7 +34,7 @@ export abstract class BaseAccordionHeader extends LitElement {
 
   @property({ attribute: 'aria-controls', reflect: true }) ariaControls?: string;
 
-  @property({ type: String, reflect: true }) boredered?: 'true'|'false';
+  @property({ type: String, reflect: true }) bordered?: 'true'|'false';
 
   @observed
   @property({ type: Boolean, reflect: true }) expanded = false;
@@ -50,7 +49,7 @@ export abstract class BaseAccordionHeader extends LitElement {
   @colorContextConsumer()
   @property({ reflect: true }) on?: ColorTheme;
 
-  @query('.pf-c-accordion__toggle') button?: HTMLButtonElement;
+  @query('.toggle') button?: HTMLButtonElement;
 
   private _generatedHtag?: HTMLHeadingElement;
 
@@ -94,14 +93,14 @@ export abstract class BaseAccordionHeader extends LitElement {
       <${tag} id="heading">${html`
         <button id="button"
           aria-expanded="${this.ariaExpandedState}"
-          class="pf-c-accordion__toggle">
-            <span class="pf-c-accordion__toggle-text" part="text">
+          class="toggle">
+            <span part="text">
               ${this.headingText || html`
               <slot></slot>
               `}
             </span>
             ${!this.slots.hasSlotted('accents') ? '' : html`
-            <span class="pf-c-accordion__toggle-accents" part="accents">
+            <span part="accents">
               <slot name="accents"></slot>
             </span>
             `}
@@ -109,7 +108,7 @@ export abstract class BaseAccordionHeader extends LitElement {
               icon="web-icon-caret-thin-right"
               on-fail="collapse"
               part="icon"
-              class="pf-c-accordion__toggle-icon"
+              class="icon"
               size="1x"
           ></pfe-icon>
         </button>`}
@@ -159,7 +158,6 @@ export abstract class BaseAccordionHeader extends LitElement {
   @bound private _clickHandler() {
     const expanded = !this.expanded;
     this.dispatchEvent(new AccordionHeaderChangeEvent(expanded, this));
-    this.dispatchEvent(deprecatedCustomEvent('pfe-accordion:change', { expanded, toggle: this }));
   }
 
   protected _expandedChanged() {

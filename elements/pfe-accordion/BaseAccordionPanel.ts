@@ -15,11 +15,9 @@ export class BaseAccordionPanel extends LitElement {
     style
   ];
 
-  @property({ type: String, reflect: true }) boredered?: 'true'|'false';
+  @property({ type: String, reflect: true }) bordered?: 'true'|'false';
 
   @property({ type: Boolean, reflect: true }) expanded = false;
-
-  @property({ type: Boolean, reflect: true }) fixed = false;
 
   @property({ attribute: 'aria-labelledby', reflect: true }) ariaLabelledby?: string;
 
@@ -38,8 +36,8 @@ export class BaseAccordionPanel extends LitElement {
   override render() {
     return html`
       <div tabindex="-1">
-        <div id="container" class="pf-c-accordion__expanded-content" part="container">
-          <div class="pf-c-accordion__expanded-content-body">
+        <div id="container" class="accordion__expanded-content" part="container">
+          <div class="accordion__expanded-content-body">
             <slot></slot>
           </div>
         </div>

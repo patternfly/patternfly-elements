@@ -26,7 +26,7 @@ import { promisify } from 'node:util';
 
 import Router from '@koa/router';
 import { Manifest } from './custom-elements-manifest/lib/Manifest.js';
-import { getPfeConfig } from './config.js';
+import { getPfeConfig, deslugify } from './config.js';
 
 const glob = promisify(_glob);
 const require = createRequire(import.meta.url);
@@ -142,13 +142,6 @@ async function renderURL(context: Context, options: PfeDevServerInternalConfig):
  * Watch repository source files and reload the page when they change
  */
 function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
-  const DESLUGIFIED = Object.fromEntries(Object.entries(options.aliases)
-    .map(([tagName, alias]) => [slugify(alias).toLowerCase(), tagName]));
-
-  function deslugify(slug: string) {
-    return DESLUGIFIED[slug] ?? `${options.tagPrefix}-${slug}`;
-  }
-
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
@@ -158,7 +151,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
         .get('/components/:slug/demo/:sub?/:fileName', (ctx, next) => {
           const { slug, fileName } = ctx.params;
           if (fileName.includes('.')) {
-            const tagName = deslugify(slug);
+            const tagName = deslugify(slug, options.rootDir);
             const redir = `/elements/${tagName}/demo/${fileName === 'index.html' ? tagName : fileName}`;
             ctx.redirect(redir);
           }

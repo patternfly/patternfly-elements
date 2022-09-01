@@ -20,6 +20,7 @@ import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
 
 import { getAllPackages } from './get-all-packages.js';
+import { deslugify } from '@patternfly/pfe-tools/config.js';
 
 type PredicateFn = (x: unknown) => boolean;
 
@@ -266,7 +267,7 @@ export class Manifest {
     return this.getDemos(tagName).map(demo => {
       const permalink = demo.url.replace(options.demoURLPrefix, '/');
       const [, slug = ''] = permalink.match(/\/components\/(.*)\/demo/) ?? [];
-      const primaryElementName = `${options.tagPrefix}-${slug}`;
+      const primaryElementName = deslugify(slug, options.rootDir);
       const filePath = demo.source?.href.replace(options.sourceControlURLPrefix, `${options.rootDir}/`) ?? '';
       const [last = ''] = filePath.split('/').reverse();
       const filename = last.replace('.html', '');

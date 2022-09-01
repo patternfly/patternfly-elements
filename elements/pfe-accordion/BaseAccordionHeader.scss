@@ -19,6 +19,9 @@
     --pf-c-accordion__toggle--m-expanded__toggle-text--FontWeight: var(--pf-global--FontWeight--semi-bold, 700);
     --pf-c-accordion__toggle-icon--Transition: .2s ease-in 0s;
     --pf-c-accordion__toggle--m-expanded__toggle-icon--Rotate: 90deg;
+    --pf-c-accordion__toggle--FontSize: var(--pf-global--FontSize--lg, 1rem);
+    --pf-c-accordion__toggle--FontFamily: var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,
+        "RedHatDisplayUpdated", "Overpass", overpass, helvetica, arial, sans-serif)
     color: var(--pf-global--Color--100, #151515);
     background-color: var(--pf-global--BackgroundColor--100);
   }

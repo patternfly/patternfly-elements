@@ -1,8 +1,11 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, queryAssignedElements, state } from 'lit/decorators.js';
+import { customElement, property, query, queryAssignedElements, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
-import { bound, observed } from '@patternfly/pfe-core/decorators.js';
+import { bound, observed, cascades, } from '@patternfly/pfe-core/decorators.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
+
+import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.js';
 
 import { PfeTab, PfeTabExpandEvent } from './pfe-tab.js';
 import { PfeTabPanel } from './pfe-tab-panel.js';
@@ -20,14 +23,20 @@ export class PfeTabs extends LitElement {
 
   #logger = new Logger(this);
 
+  #scrollTimeout: ReturnType<typeof setTimeout> = setTimeout(() => '', 100);
+
   @queryAssignedElements({ slot: 'tab', selector: 'pfe-tab', flatten: true }) _tabs!: PfeTab[];
   @queryAssignedElements({ selector: 'pfe-tab-panel' }) _panels!: PfeTabPanel[];
+
+  @query('#tabs') _tabList: HTMLElement;
 
   @observed
   @property({ reflect: true, attribute: 'active-key' }) activeKey = 0;
 
-  @property({ reflect: true, type: Boolean }) box = false;
+  @cascades('pfe-tab', 'pfe-tab-panel')
+  @property({ reflect: true }) box: 'light' | 'dark' | null = null;
 
+  @cascades('pfe-tab', 'pfe-tab-panel')
   @property({ reflect: true, type: Boolean }) vertical = false;
 
   @observed
@@ -35,6 +44,12 @@ export class PfeTabs extends LitElement {
 
   @observed
   @state() focused: PfeTab | null = null;
+
+  @state() _showScrollButtons = false;
+
+  @state() _overflowOnLeft = false;
+
+  @state() _overflowOnRight = false;
 
   static isTab(element: HTMLElement) {
     return element instanceof PfeTab;
@@ -49,15 +64,31 @@ export class PfeTabs extends LitElement {
     this.addEventListener('tab-expand', this._tabExpandEventHandler);
     this.addEventListener('keydown', this._onKeyDownHandler);
     this.#updateAccessibility();
+    await this.updateComplete;
+    this._handleScrollButtons();
+    this._tabList.addEventListener('scroll', this._handleScrollButtons);
+    // on resize check for overflows
+    window.addEventListener('resize', this._handleScrollButtons, false);
   }
 
   render() {
+    const classes = { scrollable: this._showScrollButtons };
     return html`
       <div id="container" part="container">
-        <div id="wrapper">
+        <div id="tabs-container" class="${classMap(classes)}">
+          ${this._showScrollButtons ? html`
+            <button id="previousTab" aria-label="Scroll left" ?disabled="${!this._overflowOnLeft}" @click="${this._scrollLeft}">
+              <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg>
+            </button>`
+          : html``}
           <div id="tabs" part="tabs" role="tablist">
-            <slot name="tab"></slot>
+            <slot name="tab" @slotchange="${this.#onSlotChange}"></slot>
           </div>
+          ${this._showScrollButtons ? html`
+            <button id="nextTab" aria-label="Scroll right" ?disabled="${!this._overflowOnRight}" @click="${this._scrollRight}">
+              <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+            </button>`
+          : html``}
         </div>
         <div id="panels" part="panels">
           <slot></slot>
@@ -134,17 +165,25 @@ export class PfeTabs extends LitElement {
     return this.#focusableTabs().findIndex(tab => tab.id === element.id && tab.disabled === false);
   }
 
-  #first(): void {
-    const [firstTab] = this.#focusableTabs();
-    const found = this.#allTabs().find(tab => tab.id === firstTab.id);
-    this.#focusTab(found);
+  #first(): PfeTab {
+    const [firstTab] = this.#allTabs();
+    return firstTab;
   }
 
-  #last(): void {
+  #last(): PfeTab | undefined {
+    const lastTab = this.#allTabs().slice(-1).pop();
+    return lastTab;
+  }
+
+  #firstFocusable(): PfeTab | undefined {
+    const [firstTab] = this.#focusableTabs();
+    return this.#allTabs().find(tab => tab.id === firstTab.id);
+  }
+
+  #lastFocusable(): PfeTab | undefined {
     const lastTab = this.#focusableTabs().slice(-1).pop();
     if (lastTab) {
-      const found = this.#allTabs().find(tab => tab.id === lastTab.id);
-      this.#focusTab(found);
+      return this.#allTabs().find(tab => tab.id === lastTab.id);
     }
   }
 
@@ -163,12 +202,13 @@ export class PfeTabs extends LitElement {
         const found = this.#allTabs().find(tab => tab.id === nextTab.id);
         this.#focusTab(found);
       } else {
-        this.#first();
+        const first = this.#firstFocusable();
+        this.#focusTab(first);
       }
     }
-
     if (key === total) {
-      this.#first();
+      const first = this.#firstFocusable();
+      this.#focusTab(first);
     }
   }
 
@@ -183,7 +223,8 @@ export class PfeTabs extends LitElement {
       this.#focusTab(found);
     }
     if (key === 0) {
-      this.#last();
+      const last = this.#lastFocusable();
+      this.#focusTab(last);
     }
   }
 
@@ -220,9 +261,6 @@ export class PfeTabs extends LitElement {
       return;
     }
 
-    // if (event.shiftKey && event.key === 'Tab') {
-    //   this.#prev();
-    // } else {
     switch (event.key) {
       case 'ArrowLeft':
         this.#prev();
@@ -233,17 +271,30 @@ export class PfeTabs extends LitElement {
         break;
 
       case 'Home':
-        this.#first();
+        this.#firstFocusable();
         break;
 
       case 'End':
-        this.#last();
+        this.#lastFocusable();
         break;
 
       default:
         return;
     }
-    // }
+  }
+
+  #onSlotChange():void {
+    this._tabs.forEach((tab, index) => {
+      if (index === 0) {
+        tab.classList.add('pfe-tab-first');
+      } else {
+        tab.classList.remove('pfe-tab-first');
+        tab.classList.remove('pfe-tab-last');
+      }
+      if (index === this._tabs.length - 1) {
+        tab.classList.add('pfe-tab-last');
+      }
+    });
   }
 
   async #updateAccessibility(): Promise<void> {
@@ -256,6 +307,52 @@ export class PfeTabs extends LitElement {
         }
       });
     });
+  }
+
+  @bound
+  _handleScrollButtons(): void {
+    clearTimeout(this.#scrollTimeout);
+    this.#scrollTimeout = setTimeout(() => {
+      const tabs = this._tabList;
+      this._overflowOnLeft = !isElementInView(tabs, this.#first() as HTMLElement, false);
+      this._overflowOnRight = !isElementInView(tabs, this.#last() as HTMLElement, false);
+      this._showScrollButtons = this._overflowOnLeft || this._overflowOnRight;
+    }, 100);
+  }
+
+  @bound
+  _scrollLeft(): void {
+    const container = this._tabList;
+    const childrenArr = this.#allTabs();
+    let firstElementInView: PfeTab | undefined;
+    let lastElementOutOfView: PfeTab | undefined;
+    let i;
+    for (i = 0; i < childrenArr.length && !firstElementInView; i++) {
+      if (isElementInView(container, childrenArr[i] as HTMLElement, false)) {
+        firstElementInView = childrenArr[i];
+        lastElementOutOfView = childrenArr[i - 1];
+      }
+    }
+    if (lastElementOutOfView) {
+      container.scrollLeft -= lastElementOutOfView.scrollWidth;
+    }
+  }
+
+  @bound
+  _scrollRight(): void {
+    const container = this._tabList;
+    const childrenArr = this.#allTabs();
+    let lastElementInView: PfeTab | undefined;
+    let firstElementOutOfView: PfeTab | undefined;
+    for (let i = childrenArr.length - 1; i >= 0 && !lastElementInView; i--) {
+      if (isElementInView(container, childrenArr[i] as HTMLElement, false)) {
+        lastElementInView = childrenArr[i];
+        firstElementOutOfView = childrenArr[i + 1];
+      }
+    }
+    if (firstElementOutOfView) {
+      container.scrollLeft += firstElementOutOfView.scrollWidth;
+    }
   }
 }
 

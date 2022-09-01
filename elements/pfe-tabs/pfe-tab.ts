@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
@@ -30,33 +30,33 @@ export class PfeTab extends LitElement {
 
   #logger = new Logger(this);
 
+  @query('button') _button: HTMLButtonElement;
+
   @property({ reflect: true, type: Boolean }) disabled = false;
 
-  @state()
-  private _box = false;
+  @property({ reflect: true }) box: 'light' | 'dark' | null = null;
 
-  @state()
-  private _vertical = false;
+  @property({ reflect: true, type: Boolean }) vertical = false;
 
   @observed
   @property({ reflect: true, attribute: 'aria-selected' }) selected: 'true' | 'false' = 'false';
 
-  connectedCallback() {
+  async connectedCallback() {
     super.connectedCallback();
     this.id ||= getRandomId('pfe-tab');
     this.addEventListener('click', this._clickHandler);
     this.#updateAccessibility();
-    this.#getParentVariant();
+    await this.updateComplete;
   }
 
   render() {
-    const classes = { box: this._box, vertical: this._vertical };
+    const classes = { 'box-light': this._box === 'light', 'box-dark': this._box === 'dark', 'vertical': this._vertical };
     return html`
-    <div id="container" class="${classMap(classes)}" part="container">
+    <button class="${classMap(classes)}" part="button" ?disabled="${this.disabled}">
       <span part="text">
         <slot></slot>
       </span>
-    <div>
+    </button>
     `;
   }
 
@@ -66,7 +66,7 @@ export class PfeTab extends LitElement {
   }
 
   setAriaControls(id: string) {
-    this.setAttribute('aria-controls', id);
+    this._button.setAttribute('aria-controls', id);
   }
 
   /**
@@ -101,15 +101,10 @@ export class PfeTab extends LitElement {
 
   async #updateAccessibility() {
     await this.updateComplete;
-    this.setAttribute('role', 'tab');
+    this._button.setAttribute('role', 'tab');
     if (this.disabled) {
       this.setAttribute('aria-disabled', this.disabled.toString());
     }
-  }
-
-  #getParentVariant() {
-    this._box = this.parentElement?.hasAttribute('box') ?? true;
-    this._vertical = this.parentElement?.hasAttribute('vertical') ?? true;
   }
 }
 

@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="./demo.css"/>
 <script type="module" src="./pfe-tabs.js"></script>
 
 <pfe-band color-palette="darkest" size="small">
@@ -12,18 +13,19 @@
   <h2 slot="header">Default</h2>
   <pfe-tabs>
     <pfe-tab id="users" slot="tab">Users</pfe-tab>
-    <pfe-tab slot="tab">Containers</pfe-tab>
-    <pfe-tab slot="tab">Database</pfe-tab>
-    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
-    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
-    <!-- <pfe-tab slot="tab" aria-disabled="true"><pfe-tooltip>Aria Disabled (Tooltip) <span slot="content">Aria Disabled tabs are like disabled tabs, but focusable. Allows for tooltip support</span></pfe-tooltip></pfe-tab> -->
     <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab">Containers</pfe-tab>
     <pfe-tab-panel>Containers <a href="#">Focusable element</a></pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
     <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
     <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
     <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+    <!-- <pfe-tab slot="tab" aria-disabled="true"><pfe-tooltip>Aria Disabled (Tooltip) <span slot="content">Aria Disabled tabs are like disabled tabs, but focusable. Allows for tooltip support</span></pfe-tooltip></pfe-tab> -->
     <!-- <pfe-tab-panel>Aria Disabled Tooltip</pfe-tab-panel> -->
   </pfe-tabs>
+
 </pfe-band>
 
 <pfe-band color-palette="lightest" size="small">
@@ -35,7 +37,7 @@
     that is counter to <a href="https://www.w3.org/WAI/ARIA/apg/example-index/tabs/tabs-automatic">W3C aria tabs</a> accessibility authoring practices
     which only allow the active tab to be focusable (in this case an non-focusable tab).  This stops the user from entering the tablist via the Tab key.
   </p>
-  <p>If an [aria-disabled] tab is set as the [active-key] it still allows focus on the tablist enabling keyboard navigation via arrows and home and end keys.</p>
+  <p>If an [aria-disabled] tab is set as the [active-key] it still allows focus on the tablist enabling keyboard navigation via arrows, home and end key.</p>
   <p>TODO: Make a decision on if the disabled tab should be allowable as selected at initialization like PatternFly 4?</p>
   <ul>
     <li>Solution 1: Allow: <strong>(current)</strong> [disabled] tabs allowed to be initially selected via [active-key], gives console warning. Aligns with PatternFly v4 but has caveat of non focusable tablist. Possible use case in fully disabled tablist wanting to display a specific disabled tabs.</li>
@@ -46,26 +48,30 @@
        A warning is logged in console, and panel for the disabled tab is still shown
        This is how PatternFly reacts as well.
   -->
-  <pfe-tabs active-key="3">
+  <pfe-tabs active-key="3" id="disabledExample">
     <pfe-tab slot="tab">Users</pfe-tab>
-    <pfe-tab slot="tab">Containers</pfe-tab>
-    <pfe-tab slot="tab">Database</pfe-tab>
-    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
-    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
-    <!-- <pfe-tab slot="tab" aria-disabled="true"><pfe-tooltip position="right">Aria Disabled (Tooltip) <span slot="content">Aria Disabled tabs are like disabled tabs, but focusable. Allows for tooltip support</span></pfe-tooltip></pfe-tab> -->
     <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab">Containers</pfe-tab>
     <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
     <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
     <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
     <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+    <!-- <pfe-tab slot="tab" aria-disabled="true"><pfe-tooltip position="right">Aria Disabled (Tooltip) <span slot="content">Aria Disabled tabs are like disabled tabs, but focusable. Allows for tooltip support</span></pfe-tooltip></pfe-tab> -->
     <!-- <pfe-tab-panel>Aria Disabled Tooltip</pfe-tab-panel> -->
   </pfe-tabs>
+
+  <div style="margin-top: 20px;">
+    <input type="checkbox" name="toggle-disabled" checked/> Disabled tab is set as active-key
+  </div>
 </pfe-band>
 
 <pfe-band color-palette="lightest" size="small">
   <h2 slot="header">Active Key is invalid</h2>
   <p><strong>Developer Note:</strong></p>
-  <p>When given an invalid [active-key] Pattenfly 4 does not select a panel and does not generate a warning.</p>
+  <p>When given an invalid [active-key] Patternfly 4 does not select a panel and does not generate a warning.</p>
   <p>TODO: Make a decision on if the [active-key] doesn't exist what the default output should be?</p>
   <ul>
     <li>Solution 1: Disallow: <strong>(current)</strong> show the first selectable tab and panel, and give misconfiguration warning in console</li>
@@ -75,53 +81,112 @@
   <!-- Warning is logged in console but component activates the first tab -->
   <pfe-tabs active-key="33">
     <pfe-tab slot="tab">Users</pfe-tab>
-    <pfe-tab slot="tab">Containers</pfe-tab>
-    <pfe-tab slot="tab">Database</pfe-tab>
-    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
-    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
-    <!-- <pfe-tab slot="tab" aria-disabled="true"><pfe-tooltip position="bottom">Aria Disabled (Tooltip) <span slot="content">Aria Disabled tabs are like disabled tabs, but focusable. Allows for tooltip support</span></pfe-tooltip></pfe-tab> -->
     <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab">Containers</pfe-tab>
     <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
     <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
     <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
     <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+    <!-- <pfe-tab slot="tab" aria-disabled="true"><pfe-tooltip position="bottom">Aria Disabled (Tooltip) <span slot="content">Aria Disabled tabs are like disabled tabs, but focusable. Allows for tooltip support</span></pfe-tooltip></pfe-tab> -->
     <!-- <pfe-tab-panel>Aria Disabled Tooltip</pfe-tab-panel> -->
   </pfe-tabs>
 </pfe-band>
 
 <pfe-band color-palette="lightest" size="small">
   <h2 slot="header">Box variation</h2>
-  <pfe-tabs box>
+  <pfe-tabs box="light">
     <pfe-tab slot="tab">Users</pfe-tab>
-    <pfe-tab slot="tab">Containers</pfe-tab>
-    <pfe-tab slot="tab">Database</pfe-tab>
-    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
-    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
-    <!-- <pfe-tab slot="tab" aria-disabled="true"><pfe-tooltip position="bottom">Aria Disabled (Tooltip) <span slot="content">Aria Disabled tabs are like disabled tabs, but focusable. Allows for tooltip support</span></pfe-tooltip></pfe-tab> -->
     <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab">Containers</pfe-tab>
     <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
     <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
     <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
     <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+    <!-- <pfe-tab slot="tab" aria-disabled="true"><pfe-tooltip position="bottom">Aria Disabled (Tooltip) <span slot="content">Aria Disabled tabs are like disabled tabs, but focusable. Allows for tooltip support</span></pfe-tooltip></pfe-tab> -->
     <!-- <pfe-tab-panel>Aria Disabled Tooltip</pfe-tab-panel> -->
   </pfe-tabs>
+
+  <div style="margin-top: 20px;">
+    <input type="checkbox" name="toggle-variant" checked/> Tabs light variation
+  </div>
+</pfe-band>
+
+
+<pfe-band color-palette="lightest" size="small">
+  <h2 slot="header">Default overflow</h2>
+  <div class="resize">
+    <pfe-tabs scrollable active-key="4">
+      <pfe-tab slot="tab">Users</pfe-tab>
+      <pfe-tab-panel>Users</pfe-tab-panel>
+      <pfe-tab slot="tab">Containers</pfe-tab>
+      <pfe-tab-panel>Containers</pfe-tab-panel>
+      <pfe-tab slot="tab">Database</pfe-tab>
+      <pfe-tab-panel>Database</pfe-tab-panel>
+      <pfe-tab slot="tab">Server</pfe-tab>
+      <pfe-tab-panel>Server</pfe-tab-panel>
+      <pfe-tab slot="tab">System</pfe-tab>
+      <pfe-tab-panel>System</pfe-tab-panel>
+      <pfe-tab slot="tab">Network</pfe-tab>
+      <pfe-tab-panel>Network</pfe-tab-panel>
+    </pfe-tabs>
+
+    <div style="padding: 2rem"></div>
+
+    <pfe-tabs scrollable active-key="1" box="light">
+      <pfe-tab slot="tab">Users</pfe-tab>
+      <pfe-tab-panel>Users</pfe-tab-panel>
+      <pfe-tab slot="tab">Containers</pfe-tab>
+      <pfe-tab-panel>Containers</pfe-tab-panel>
+      <pfe-tab slot="tab">Database</pfe-tab>
+      <pfe-tab-panel>Database</pfe-tab-panel>
+      <pfe-tab slot="tab">Server</pfe-tab>
+      <pfe-tab-panel>Server</pfe-tab-panel>
+      <pfe-tab slot="tab">System</pfe-tab>
+      <pfe-tab-panel>System</pfe-tab-panel>
+      <pfe-tab slot="tab">Network</pfe-tab>
+      <pfe-tab-panel>Network</pfe-tab-panel>
+    </pfe-tabs>
+  </div>
 </pfe-band>
 
 <pfe-band color-palette="lightest" size="small">
   <h2 slot="header">Vertical variation</h2>
   <pfe-tabs vertical>
     <pfe-tab slot="tab">Users</pfe-tab>
-    <pfe-tab slot="tab">Containers</pfe-tab>
-    <pfe-tab slot="tab">Database</pfe-tab>
-    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
-    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
-    <!-- <pfe-tab slot="tab" aria-disabled="true"><pfe-tooltip position="bottom">Aria Disabled (Tooltip) <span slot="content">Aria Disabled tabs are like disabled tabs, but focusable. Allows for tooltip support</span></pfe-tooltip></pfe-tab> -->
     <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab">Containers</pfe-tab>
     <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
     <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
     <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
     <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+    <!-- <pfe-tab slot="tab" aria-disabled="true"><pfe-tooltip position="bottom">Aria Disabled (Tooltip) <span slot="content">Aria Disabled tabs are like disabled tabs, but focusable. Allows for tooltip support</span></pfe-tooltip></pfe-tab> -->
     <!-- <pfe-tab-panel>Aria Disabled Tooltip</pfe-tab-panel> -->
   </pfe-tabs>
 </pfe-band>
 
+<pfe-band color-palette="lightest" size="small">
+  <h2 slot="header">Vertical variation</h2>
+  <pfe-tabs vertical box>
+    <pfe-tab slot="tab">Users</pfe-tab>
+    <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab">Containers</pfe-tab>
+    <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
+    <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
+    <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
+    <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+    <!-- <pfe-tab slot="tab" aria-disabled="true"><pfe-tooltip position="bottom">Aria Disabled (Tooltip) <span slot="content">Aria Disabled tabs are like disabled tabs, but focusable. Allows for tooltip support</span></pfe-tooltip></pfe-tab> -->
+    <!-- <pfe-tab-panel>Aria Disabled Tooltip</pfe-tab-panel> -->
+  </pfe-tabs>
+</pfe-band>

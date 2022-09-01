@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
@@ -14,6 +14,10 @@ export class PfeTabPanel extends LitElement {
   static readonly version = '{{version}}';
 
   static readonly styles = [style];
+
+  @property({ reflect: true, type: Boolean }) disabled = false;
+
+  @property({ reflect: true }) box: 'light' | 'dark' | null = null;
 
   async connectedCallback() {
     super.connectedCallback();

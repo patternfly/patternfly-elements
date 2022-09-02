@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-core",
-  "version": "2.0.0-next.7",
+  "version": "2.0.0-next.8",
   "license": "MIT",
   "description": "PatternFly Elements Core Library",
   "customElements": "custom-elements.json",
@@ -61,8 +61,8 @@
     "watch:types": "tsc -w"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.5",
-    "lit": "^2.1.2"
+    "@popperjs/core": "2.11.6",
+    "lit": "2.3.0"
   },
   "repository": {
     "type": "git",

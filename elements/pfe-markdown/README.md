@@ -1,6 +1,6 @@
 # PatternFly Elements Markdown
      
-Use this element to take markdown and have it display as HTML. This element uses the [marked.js library](https://marked.js.org/#/README.md#README.md) to convert the markdown to HTML.
+Use this element to take markdown and have it display as HTML. This element uses the [marked.js library](https://marked.js.org/) to convert the markdown to HTML.
 
 Read more about Markdown in the [PatternFly Elements Markdown documentation](https://patternflyelements.org/components/markdown)
 

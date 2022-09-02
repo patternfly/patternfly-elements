@@ -1,0 +1,66 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+interface SiteOptions {
+  /** The site's default page description */
+  description?: string;
+  /** URL to the site's favicon */
+  favicon?: string;
+  /** URL to the demo page's main brand logo */
+  logoUrl?: string;
+  /** URLs to stylesheets to add to the demo (absolute from cwd) */
+  stylesheets?: string[];
+  /** Title for main page of the demo */
+  title?: string;
+}
+
+export interface PfeConfig {
+  /** rootDir of the package. Default process.cwd() */
+  rootDir?: string;
+  /** object mapping custom element name to page title */
+  aliases?: Record<string, string> ;
+  /** absolute URL to the web page representing the repo root in source control, with trailing slash. default 'https://github.com/patternfly/patternfly-elements/tree/main/' */
+  sourceControlURLPrefix?: string ;
+  /** absolute URL prefix for demos, with trailing slash. Default 'https://patternflyelements.org/' */
+  demoURLPrefix?: string ;
+  /** custom elements namespace. Default 'pfe' */
+  tagPrefix?: string;
+  /** Dev Server site options */
+  site?: SiteOptions;
+}
+
+const SITE_DEFAULTS: Required<SiteOptions> = {
+  description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
+  favicon: '/brand/logo/svg/pfe-icon-blue.svg',
+  logoUrl: '/brand/logo/svg/pfe-icon-white-shaded.svg',
+  stylesheets: [],
+  title: 'PatternFly Elements',
+};
+
+const DEFAULT_CONFIG: PfeConfig = {
+  demoURLPrefix: 'https://patternflyelements.org/',
+  sourceControlURLPrefix: 'https://github.com/patternfly/patternfly-elements/tree/main/',
+  tagPrefix: 'pfe',
+  aliases: {},
+};
+
+function tryJson(path: string) {
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
+export function getPfeConfig(rootDir = process.cwd()): Required<PfeConfig> {
+  const jsonConfig = tryJson(join(rootDir, '.pfe.config.json'));
+  return {
+    ...DEFAULT_CONFIG,
+    rootDir,
+    ...jsonConfig,
+    site: {
+      ...SITE_DEFAULTS,
+      ...jsonConfig.site ?? {}
+    }
+  };
+}

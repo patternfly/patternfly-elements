@@ -1,5 +1,19 @@
 # @patternfly/pfe-tooltip
 
+## 1.1.0-next.3
+
+### Patch Changes
+
+- bfad8b4b: Updates dependencies
+- Updated dependencies [bfad8b4b]
+  - @patternfly/pfe-core@2.0.0-next.8
+
+## 1.1.0-next.2
+
+### Patch Changes
+
+- f25258e9: Updating the README.md, fixing an scss variable found in pfe-tooltip for the background color.
+
 ## 1.1.0-next.1
 
 ### Patch Changes

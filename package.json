@@ -65,24 +65,24 @@
     "pr": "node scripts/open-pr.js"
   },
   "devDependencies": {
-    "@actions/core": "^1.7.0",
+    "@actions/core": "^1.9.1",
     "@actions/exec": "^1.1.1",
     "@actions/glob": "^0.3.0",
-    "@commitlint/cli": "^16.2.4",
-    "@commitlint/config-conventional": "^16.2.4",
-    "@commitlint/config-lerna-scopes": "^16.2.4",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@commitlint/config-lerna-scopes": "^17.0.2",
     "@types/koa__router": "^8.0.11",
     "@types/numeral": "^2.0.2",
     "@types/prismjs": "^1.26.0",
     "@types/prompts": "^2.0.14",
-    "commitlint": "^16.2.4",
+    "commitlint": "^17.0.3",
     "cpx": "^1.5.0",
     "git-branch": "^2.0.1",
-    "husky": "^7.0.4",
-    "leasot": "^13.0.0",
-    "lerna": "^4.0.0",
+    "husky": "^8.0.1",
+    "leasot": "^13.2.0",
+    "lerna": "^5.4.2",
     "npm-merge-driver": "^2.3.6",
-    "open": "^8.0.4",
+    "open": "^8.4.0",
     "prompts": "^2.4.2",
     "renamer": "^4.0.0",
     "sassdoc": "^2.7.4"
@@ -96,6 +96,6 @@
     "./tools/*"
   ],
   "dependencies": {
-    "@octokit/core": "^3.6.0"
+    "@octokit/core": "^4.0.5"
   }
 }

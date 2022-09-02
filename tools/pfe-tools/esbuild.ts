@@ -100,7 +100,7 @@ export async function transformSass(
  * - optionally minify HTML
  * - replace the package version in component sources
  */
-export function getBasePlugins({ minify, litCssOptions }: PfeBasePluginOptions = {}) {
+export function getBasePlugins({ minify, litCssOptions }: PfeBasePluginOptions = {}): Plugin[] {
   return [
     // import scss files as LitElement CSSResult objects
     litCssPlugin(litCssOptions ?? {
@@ -114,7 +114,7 @@ export function getBasePlugins({ minify, litCssOptions }: PfeBasePluginOptions =
     ],
     // replace `{{version}}` with each package's version
     packageVersion(),
-  ];
+  ] as Plugin[];
 }
 
 /** Generate a temporary file containing namespace exports of all pfe components */
@@ -278,7 +278,7 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
         // ignore sub components bundling like "pfe-progress-steps-item"
         externalSubComponents(),
         // don't bundle node_module dependencies
-        nodeExternalsPlugin({ packagePath }),
+        nodeExternalsPlugin({ packagePath }) as Plugin,
       ],
     });
     result.stop?.();

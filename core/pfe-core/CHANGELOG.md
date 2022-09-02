@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 2.0.0-next.8
+
+### Patch Changes
+
+- bfad8b4b: Updates dependencies
+
 ## 2.0.0-next.7
 
 ### Minor Changes

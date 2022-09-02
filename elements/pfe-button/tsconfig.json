@@ -7,6 +7,8 @@
   },
   "references": [
     { "path": "../../core/pfe-core" },
+    { "path": "../pfe-progress-indicator" },
+    { "path": "../pfe-icon" },
     { "path": "../../tools/pfe-tools" }
   ]
 }

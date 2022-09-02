@@ -1,3 +1,4 @@
+import type { PfeConfig } from '@patternfly/pfe-tools/config';
 import type { Manifest } from '@patternfly/pfe-tools/custom-elements-manifest/lib/Manifest.js';
 
 export interface DemoRecord {
@@ -12,17 +13,7 @@ export interface DemoRecord {
   url: string;
 }
 
-export interface PluginOptions {
-  /** rootDir of the package. Default process.cwd() */
-  rootDir?: string;
-  /** object mapping custom element name to page title */
-  aliases?: Record<string, string> ;
-  /** absolute URL to the web page representing the repo root in source control, with trailing slash. default 'https://github.com/patternfly/patternfly-elements/tree/main/' */
-  sourceControlURLPrefix?: string ;
-  /** absolute URL prefix for demos, with trailing slash. Default 'https://patternflyelements.org/' */
-  demoURLPrefix?: string ;
-  /** custom elements namespace. Default 'pfe' */
-  tagPrefix?: string;
+export interface PluginOptions extends PfeConfig {
   /** list of extra demo records not included in the custom-elements-manifest. Default [] */
   extraDemos?: DemoRecord[]
 }

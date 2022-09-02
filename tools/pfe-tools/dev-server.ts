@@ -4,8 +4,7 @@ import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsP
 import type { Context, Next } from 'koa';
 import type { LitCSSOptions } from 'web-dev-server-plugin-lit-css';
 import type { DemoRecord } from './custom-elements-manifest/lib/Manifest.js';
-
-import 'urlpattern-polyfill';
+import type { PfeConfig } from './config.js';
 
 import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
@@ -14,6 +13,7 @@ import { fileURLToPath } from 'node:url';
 
 import rollupReplace from '@rollup/plugin-replace';
 import nunjucks from 'nunjucks';
+import slugify from 'slugify';
 import _glob from 'glob';
 
 import { litCss } from 'web-dev-server-plugin-lit-css';
@@ -26,6 +26,7 @@ import { promisify } from 'node:util';
 
 import Router from '@koa/router';
 import { Manifest } from './custom-elements-manifest/lib/Manifest.js';
+import { getPfeConfig } from './config.js';
 
 const glob = promisify(_glob);
 const require = createRequire(import.meta.url);
@@ -37,40 +38,18 @@ const env = nunjucks
   .addFilter('isElementGroup', (group: DemoRecord[], primary) =>
     group.every(x => !!primary && x.primaryElementName === primary));
 
-interface SiteOptions {
-  description?: string;
-  favicon?: string;
-  /** URL to the demo page's main brand logo */
-  logoUrl?: string;
-  /** URLs to stylesheets to add to the demo (absolute from cwd) */
-  stylesheets?: string[];
-  /** Title for main page of the demo */
-  title?: string;
-}
-
-export interface PfeDevServerConfigOptions extends DevServerConfig {
-  demoURLPrefix?: string;
+type Base = (DevServerConfig & PfeConfig);
+export interface PfeDevServerConfigOptions extends Base {
   hostname?: string;
   importMap?: InjectSetting['importMap'];
   litcssOptions?: LitCSSOptions,
   /** Extra dev server plugins */
   loadDemo?: boolean;
   plugins?: Plugin[];
-  site?: SiteOptions;
-  sourceControlURLPrefix?: string;
-  tagPrefix?: string,
   watchFiles?: string;
 }
 
-type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & { site: Required<SiteOptions> };
-
-const SITE_DEFAULTS: Required<SiteOptions> = {
-  description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
-  favicon: '/brand/logo/svg/pfe-icon-blue.svg',
-  logoUrl: '/brand/logo/svg/pfe-icon-white-shaded.svg',
-  stylesheets: [],
-  title: 'PatternFly Elements',
-};
+type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & { site: Required<PfeConfig['site']> };
 
 /** Ugly, ugly hack to resolve packages from the local monorepo */
 function tryToResolve(source: string, context: import('koa').Context) {
@@ -108,18 +87,27 @@ export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerInte
     name: 'resolve-local-monorepo-packages-from-ts-sources',
     transformImport({ source, context }) {
       const isNodeModule = source.match(/node_modules/) || context.path.match(/node_modules/);
-      if (source.endsWith('.ts.js')) {
+      if (options.tagPrefix === 'pfe' && isNodeModule && source.match(/@patternfly\/pfe-/) && !source.match(/@patternfly\/pfe-(sass|styles|core|tools)/)) {
+        const [, pkgName, rest] = source.match(/@patternfly\/pfe-([-\w]+)\/?(.*)/) ?? [];
+        if (pkgName) {
+          return `/elements/pfe-${pkgName}${rest ? '/' : ''}${rest ?? ''}`.replace(/\.js$/, '.ts');
+        }
+      } else if (source.endsWith('.ts.js')) {
         // already resolved, but had `.js` appended, probably by export map
-        return source.replace('.ts.js', isNodeModule ? '.js' : '.ts');
-      } else if (isNodeModule) {
+        const normalized = source.replace('.ts.js', isNodeModule ? '.js' : '.ts');
+        return normalized;
+      } else if (isNodeModule && !(source.match(/@patternfly\/pfe-/) || context.path.match(/@patternfly\/pfe-/))) {
         // don't try to resolve node_modules, they're already resolved
         return;
       } else {
         const resolved = tryToResolve(source, context);
-        const absToRoot = resolved.replace(rootDir, '/');
+        const absToRoot = resolved.replace(`${rootDir}/`.replace('//', '/'), '/');
         const replaced = absToRoot.replace(/\.js$/, '.ts');
-        const final = (existsSync(join(rootDir, replaced)) ? replaced : resolved);
-        return final;
+        const checked = join(rootDir, replaced);
+        const existsTs = existsSync(checked);
+        const existsJs = existsSync(checked.replace(/\.ts$/, '.js'));
+        const final = existsTs ? replaced : existsJs ? replaced.replace(/\.ts/, '.js') : resolved;
+        return final.replace('//', '/');
       }
     },
   };
@@ -154,6 +142,13 @@ async function renderURL(context: Context, options: PfeDevServerInternalConfig):
  * Watch repository source files and reload the page when they change
  */
 function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
+  const DESLUGIFIED = Object.fromEntries(Object.entries(options.aliases)
+    .map(([tagName, alias]) => [slugify(alias).toLowerCase(), tagName]));
+
+  function deslugify(slug: string) {
+    return DESLUGIFIED[slug] ?? `${options.tagPrefix}-${slug}`;
+  }
+
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
@@ -163,7 +158,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
         .get('/components/:slug/demo/:sub?/:fileName', (ctx, next) => {
           const { slug, fileName } = ctx.params;
           if (fileName.includes('.')) {
-            const tagName = `${options.tagPrefix}-${slug}`;
+            const tagName = deslugify(slug);
             const redir = `/elements/${tagName}/demo/${fileName === 'index.html' ? tagName : fileName}`;
             ctx.redirect(redir);
           }
@@ -175,7 +170,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           // FIXME: will probably break if one component links to another's lightdom css.
           //        better to find out why it's requesting from /components/ in the first place
           const { slug, fileName } = ctx.params;
-          const tagName = `${options.tagPrefix}-${slug}`;
+          const tagName = deslugify(slug);
           let redir = `/elements/${tagName}/demo/${fileName}.css`;
           if (fileName.includes('-lightdom')) {
             redir = `/elements/${tagName}/${fileName}.css`;
@@ -214,12 +209,8 @@ function cors(ctx: Context, next: Next) {
 }
 
 function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInternalConfig {
-  const config = options ?? {} as PfeDevServerConfigOptions;
-  config.site = { ...SITE_DEFAULTS, ...options?.site ?? {} };
-  config.rootDir ??= process.cwd();
-  config.tagPrefix ??= 'pfe';
-  config.sourceControlURLPrefix ??= 'https://github.com/patternfly/patternfly-elements/tree/main/';
-  config.demoURLPrefix ??= 'https://patternflyelements.org/';
+  const config = { ...getPfeConfig(), ...options ?? {} };
+  config.site = { ...config.site, ...options?.site ?? {} };
   config.loadDemo ??= true;
   config.watchFiles ??= '{elements,core}/**/*.{css,scss,html}';
   config.litcssOptions ??= { include: /\.scss$/, transform: transformSass };

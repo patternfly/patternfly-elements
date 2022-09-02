@@ -1,5 +1,14 @@
 # @patternfly/pfe-icon
 
+## 2.0.0-next.4
+
+### Patch Changes
+
+- bfad8b4b: Updates dependencies
+- a423b010: fix typescript config and update dependencies
+- Updated dependencies [bfad8b4b]
+  - @patternfly/pfe-core@2.0.0-next.8
+
 ## 2.0.0-next.3
 
 ### Minor Changes

@@ -178,11 +178,9 @@
   const datetimeComponents = [...document.querySelectorAll(".overview-datetime")];
   const minutesAgo = document.querySelector("#minutesago");
   const date = new Date();
-
   datetimeComponents.forEach(component => {
     component.setAttribute("datetime", date);
     component.textContent = date;
   });
-
   minutesAgo.setAttribute('datetime', new Date(Date.now() - 600000).toString());
 </script>

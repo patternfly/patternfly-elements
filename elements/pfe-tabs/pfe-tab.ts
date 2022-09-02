@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { bound, observed } from '@patternfly/pfe-core/decorators.js';
@@ -43,26 +42,24 @@ export class PfeTab extends LitElement {
 
   async connectedCallback() {
     super.connectedCallback();
-    this.id ||= getRandomId('pfe-tab');
     this.addEventListener('click', this._clickHandler);
-    this.#updateAccessibility();
+    this.id ||= getRandomId('pfe-tab');
     await this.updateComplete;
+    this.#updateAccessibility();
   }
 
   render() {
-    const classes = { 'box-light': this._box === 'light', 'box-dark': this._box === 'dark', 'vertical': this._vertical };
     return html`
-    <button class="${classMap(classes)}" part="button" ?disabled="${this.disabled}">
-      <span part="text">
-        <slot></slot>
-      </span>
-    </button>
+      <button part="button" role="tab">
+        <span part="text">
+          <slot></slot>
+        </span>
+      </button>
     `;
   }
 
-  #open() {
-    this.selected = 'true';
-    this.dispatchEvent(new PfeTabExpandEvent(this.selected, this));
+  button() {
+    return this._button;
   }
 
   setAriaControls(id: string) {
@@ -71,7 +68,7 @@ export class PfeTab extends LitElement {
 
   /**
    * When selected property changes, check the new value, if true
-   * run the `#open()` method, if false run the `#close()` method.
+   * and not disabled, set tabIndex to 0. Otherwise set to -1
    * @param oldVal {string} - Boolean value in string form
    * @param newVal {string} - Boolean value in string form
    * @returns {void}
@@ -81,13 +78,16 @@ export class PfeTab extends LitElement {
     if (newVal === oldVal) {
       return;
     }
-    if (newVal) {
-      if (this.selected === 'true' && !this.disabled) {
-        this.tabIndex = 0;
-      } else {
-        this.tabIndex = -1;
-      }
+    if (newVal === 'true' && !this.disabled) {
+      this.removeAttribute('tabindex');
+    } else {
+      this.tabIndex = -1;
     }
+  }
+
+  #open() {
+    this.selected = 'true';
+    this.dispatchEvent(new PfeTabExpandEvent(this.selected, this));
   }
 
   @bound
@@ -101,7 +101,7 @@ export class PfeTab extends LitElement {
 
   async #updateAccessibility() {
     await this.updateComplete;
-    this._button.setAttribute('role', 'tab');
+    this.setAttribute('role', 'tab');
     if (this.disabled) {
       this.setAttribute('aria-disabled', this.disabled.toString());
     }

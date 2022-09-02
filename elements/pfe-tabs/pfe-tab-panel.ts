@@ -40,6 +40,11 @@ export class PfeTabPanel extends LitElement {
 
   #upgradeAccessibility() {
     this.setAttribute('role', 'tabpanel');
+    if (!this.disabled) {
+      this.tabIndex = 0;
+    } else {
+      this.tabIndex = -1;
+    }
   }
 }
 

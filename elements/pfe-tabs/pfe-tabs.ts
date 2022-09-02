@@ -134,7 +134,7 @@ export class PfeTabs extends LitElement {
     if (!newVal || newVal === oldVal) {
       return;
     }
-    newVal.focus();
+    newVal.button().focus();
   }
 
   #allTabs(): PfeTab[] {

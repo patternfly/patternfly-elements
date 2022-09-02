@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property, query, queryAssignedElements, state } from 'lit/decorators.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { bound, observed } from '@patternfly/pfe-core/decorators.js';
@@ -29,13 +29,17 @@ export class PfeTab extends LitElement {
 
   #logger = new Logger(this);
 
-  @query('button') _button: HTMLButtonElement;
+  @query('button') _button!: HTMLButtonElement;
+
+  @queryAssignedElements({ slot: 'icon', flatten: true }) _icons!: Array<HTMLElement>;
 
   @property({ reflect: true, type: Boolean }) disabled = false;
 
   @property({ reflect: true }) box: 'light' | 'dark' | null = null;
 
   @property({ reflect: true, type: Boolean }) vertical = false;
+
+  @state() _hasIcons = false;
 
   @observed
   @property({ reflect: true, attribute: 'aria-selected' }) selected: 'true' | 'false' = 'false';
@@ -46,11 +50,15 @@ export class PfeTab extends LitElement {
     this.id ||= getRandomId('pfe-tab');
     await this.updateComplete;
     this.#updateAccessibility();
+    this._hasIcons = this._icons.length === 0;
   }
 
   render() {
     return html`
       <button part="button" role="tab">
+        <span part="icon" ?hidden="${this._hasIcons}">
+          <slot name="icon"></slot>
+        </span>
         <span part="text">
           <slot></slot>
         </span>

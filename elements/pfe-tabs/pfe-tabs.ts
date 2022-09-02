@@ -28,7 +28,7 @@ export class PfeTabs extends LitElement {
   @queryAssignedElements({ slot: 'tab', selector: 'pfe-tab', flatten: true }) _tabs!: PfeTab[];
   @queryAssignedElements({ selector: 'pfe-tab-panel' }) _panels!: PfeTabPanel[];
 
-  @query('#tabs') _tabList: HTMLElement;
+  @query('#tabs') _tabList!: HTMLElement;
 
   @observed
   @property({ reflect: true, attribute: 'active-key' }) activeKey = 0;
@@ -38,6 +38,9 @@ export class PfeTabs extends LitElement {
 
   @cascades('pfe-tab', 'pfe-tab-panel')
   @property({ reflect: true, type: Boolean }) vertical = false;
+
+  @cascades('pfe-tab')
+  @property({ reflect: true, type: Boolean }) fill = false;
 
   @observed
   @state() current: PfeTab | null = null;

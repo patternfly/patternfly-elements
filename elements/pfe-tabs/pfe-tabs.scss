@@ -962,16 +962,16 @@ button:disabled {
 
 :host([inset="md"]) #tabs-container {
   // .pf-c-tabs.pf-m-inset-md {
-  --pf-c-tabs--inset: var(--pf-global--spacer--md);
-  --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md);
-  --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md);
+  --pf-c-tabs--inset: var(--pf-global--spacer--md, 1rem);
+  --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md, 1rem);
+  --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md, 1rem);
 }
 
 :host([inset="lg"]) #tabs-container {
   // .pf-c-tabs.pf-m-inset-lg {
-  --pf-c-tabs--inset: var(--pf-global--spacer--lg);
-  --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg);
-  --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg);
+  --pf-c-tabs--inset: var(--pf-global--spacer--lg, 1.5rem);
+  --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg, 1.5rem);
+  --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg, 1.5rem);
 }
 
 :host([inset="xl"]) #tabs-container {
@@ -1006,16 +1006,16 @@ button:disabled {
 
   :host([inset="md"]) #tabs-container {
     // .pf-c-tabs.pf-m-inset-md-on-sm {
-    --pf-c-tabs--inset: var(--pf-global--spacer--md);
-    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md);
-    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md);
+    --pf-c-tabs--inset: var(--pf-global--spacer--md, 1rem);
+    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md, 1rem);
+    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md, 1rem);
   }
 
   :host([inset="lg"]) #tabs-container {
     // .pf-c-tabs.pf-m-inset-lg-on-sm {
-    --pf-c-tabs--inset: var(--pf-global--spacer--lg);
-    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg);
-    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg);
+    --pf-c-tabs--inset: var(--pf-global--spacer--lg, 1.5rem);
+    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg, 1.5rem);
+    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg, 1.5rem);
   }
 
   :host([inset="xl"]) #tabs-container {
@@ -1050,16 +1050,16 @@ button:disabled {
 
   :host([inset="md"]) #tabs-container {
     // .pf-c-tabs.pf-m-inset-md-on-md {
-    --pf-c-tabs--inset: var(--pf-global--spacer--md);
-    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md);
-    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md);
+    --pf-c-tabs--inset: var(--pf-global--spacer--md, 1rem);
+    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md, 1rem);
+    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md, 1rem);
   }
 
   :host([inset="lg"]) #tabs-container {
     // .pf-c-tabs.pf-m-inset-lg-on-md {
-    --pf-c-tabs--inset: var(--pf-global--spacer--lg);
-    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg);
-    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg);
+    --pf-c-tabs--inset: var(--pf-global--spacer--lg, 1.5rem);
+    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg, 1.5rem);
+    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg, 1.5rem);
   }
 
   :host([inset="xl"]) #tabs-container {
@@ -1093,16 +1093,16 @@ button:disabled {
 
   :host([inset="md"]) #tabs-container {
     // .pf-c-tabs.pf-m-inset-md-on-lg {
-    --pf-c-tabs--inset: var(--pf-global--spacer--md);
-    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md);
-    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md);
+    --pf-c-tabs--inset: var(--pf-global--spacer--md, 1rem);
+    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md, 1rem);
+    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md, 1rem);
   }
 
   :host([inset="lg"]) {
     // .pf-c-tabs.pf-m-inset-lg-on-lg {
-    --pf-c-tabs--inset: var(--pf-global--spacer--lg);
-    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg);
-    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg);
+    --pf-c-tabs--inset: var(--pf-global--spacer--lg, 1.5rem);
+    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg, 1.5rem);
+    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg, 1.5rem);
   }
 
   :host([inset="xl"]) #tabs-container {
@@ -1136,16 +1136,16 @@ button:disabled {
 
   :host([inset="md"]) #tabs-container {
     // .pf-c-tabs.pf-m-inset-md-on-xl {
-    --pf-c-tabs--inset: var(--pf-global--spacer--md);
-    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md);
-    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md);
+    --pf-c-tabs--inset: var(--pf-global--spacer--md, 1rem);
+    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md, 1rem);
+    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md, 1rem);
   }
 
   :host([inset="lg"]) #tabs-container {
     // .pf-c-tabs.pf-m-inset-lg-on-xl {
-    --pf-c-tabs--inset: var(--pf-global--spacer--lg);
-    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg);
-    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg);
+    --pf-c-tabs--inset: var(--pf-global--spacer--lg, 1.5rem);
+    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg, 1.5rem);
+    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg, 1.5rem);
   }
 
   :host([inset="x;"]) #tabs-container {
@@ -1179,16 +1179,16 @@ button:disabled {
 
   :host([inset="md"]) #tabs-container {
     // .pf-c-tabs.pf-m-inset-md-on-2xl {
-    --pf-c-tabs--inset: var(--pf-global--spacer--md);
-    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md);
-    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md);
+    --pf-c-tabs--inset: var(--pf-global--spacer--md, 1rem);
+    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md, 1rem);
+    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md, 1rem);
   }
 
   :host([inset="lg"]) #tabs-container {
     // .pf-c-tabs.pf-m-inset-lg-on-2xl {
-    --pf-c-tabs--inset: var(--pf-global--spacer--lg);
-    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg);
-    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg);
+    --pf-c-tabs--inset: var(--pf-global--spacer--lg, 1.5rem);
+    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg, 1.5rem);
+    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg, 1.5rem);
   }
 
   :host([inset="xl"]) #tabs-container {

@@ -298,6 +298,7 @@ export class PfeTabs extends LitElement {
         tab.classList.add('pfe-tab-last');
       }
     });
+    this.#updateAccessibility();
   }
 
   async #updateAccessibility(): Promise<void> {

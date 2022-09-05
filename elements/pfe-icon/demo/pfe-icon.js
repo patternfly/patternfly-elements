@@ -1,7 +1,7 @@
 import '@patternfly/pfe-icon';
 import '@patternfly/pfe-tooltip';
 import '@patternfly/pfe-button';
-import { iconSets } from '@patternfly/pfe-tools/environment';
+import { iconSets } from '@patternfly/pfe-tools/environment.js';
 import { render, html } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 

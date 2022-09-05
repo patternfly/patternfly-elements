@@ -1,0 +1,10 @@
+#pfe-icon-demo-output ul {
+  list-style-type: none;
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(
+    var(--pf-global--icon--FontSize--sm, 0.625rem),
+    var(--pf-global--icon--FontSize--xl, 3.375rem)));
+  padding: 0;
+  margin: 0;
+}

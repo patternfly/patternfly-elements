@@ -1,10 +1,20 @@
-#pfe-icon-demo-output ul {
+[data-demo] {
+  padding: 1em;
+}
+
+output ul {
   list-style-type: none;
   display: grid;
   gap: 1em;
-  grid-template-columns: repeat(auto-fit, minmax(
-    var(--pf-global--icon--FontSize--sm, 0.625rem),
-    var(--pf-global--icon--FontSize--xl, 3.375rem)));
+  grid-template-columns: repeat(auto-fit, var(--size, var(--pf-global--icon--FontSize--xl, 3.375rem)));
   padding: 0;
   margin: 0;
+}
+
+#styled-icon-demo-output [icon=redhat]     { color: var(--rh-color-brand-red-on-light, #ee0000); }
+#styled-icon-demo-output [icon=patternfly] { color: var(--pf-global--link--Color--hover, #004080); }
+
+#styled-icon-demo-output,
+#custom-icon-demo-output {
+  --size: var(--pf-global--icon--FontSize--lg, 1.5rem);
 }

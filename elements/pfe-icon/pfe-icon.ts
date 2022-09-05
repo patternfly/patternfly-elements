@@ -15,18 +15,24 @@ const ric = window.requestIdleCallback ?? window.requestAnimationFrame;
  */
 @customElement('pfe-icon')
 export class PfeIcon extends LitElement {
-  static readonly version = '{{version}}';
+  public static readonly version = '{{version}}';
 
-  static readonly styles = [style];
+  public static readonly styles = [style];
 
-  static getIconUrl = (set: string, icon: string) =>
-    new URL(`./icons/${set}/${icon}.js`, import.meta.url);
+  public static addIconSet(set: string, getter: typeof PfeIcon['defaultGetter']) {
+    this.getters.set(set, getter);
+  }
 
-  static onIntersect: IntersectionObserverCallback = records =>
+  private static onIntersect: IntersectionObserverCallback = records =>
     records.forEach(({ isIntersecting, target }) => ric(() =>
       isIntersecting && target instanceof PfeIcon && target.load()));
 
-  static io = new IntersectionObserver(PfeIcon.onIntersect);
+  private static io = new IntersectionObserver(PfeIcon.onIntersect);
+
+  private static getters = new Map();
+
+  private static defaultGetter = (set: string, icon: string) =>
+    new URL(`./icons/${set}/${icon}.js`, import.meta.url);
 
   /** Icon set */
   @property() set = 'fas';
@@ -40,8 +46,8 @@ export class PfeIcon extends LitElement {
 
   @property({ reflect: true }) label?: string;
 
-  /** Icon SVG lit template */
-  @state() private svg?: TemplateResult;
+  /** Icon content. Any value that lit can render */
+  @state() private content?: unknown;
 
   /**
    * Controls how eager the element will be to load the icon data
@@ -58,7 +64,7 @@ export class PfeIcon extends LitElement {
     return html`
       <div id="container"
           aria-label=${ifDefined(this.label)}
-          aria-hidden=${ariaHidden}>${this.svg ?? html`
+          aria-hidden=${ariaHidden}>${this.content ?? html`
         <slot></slot>`}
       </div>
     `;
@@ -74,9 +80,10 @@ export class PfeIcon extends LitElement {
 
   protected async load() {
     if (this.set && this.icon) {
-      const { pathname } = PfeIcon.getIconUrl(this.set, this.icon);
+      const getter = PfeIcon.getters.get(this.set) ?? PfeIcon.defaultGetter;
+      const { pathname } = getter(this.set, this.icon);
       try {
-        this.svg = await import(pathname).then(m => m.default);
+        this.content = await import(pathname).then(m => m.default);
       } catch (error) {
         this.#logger.error(error.message === 'error loading dynamically imported module' ? `Could not load ${pathname}` : error);
       }

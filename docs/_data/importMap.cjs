@@ -44,6 +44,7 @@ module.exports = {
     '@patternfly/pfe-core/decorators.js': '/core/core/decorators.js',
     '@patternfly/pfe-core/decorators/': '/core/core/decorators/',
     '@patternfly/pfe-core/': '/core/core/',
+    '@patternfly/pfe-tools/environment.js': '/tools/environment.js',
 
     ...Object.fromEntries(fs.readdirSync(path.join(__dirname, '..', '..', 'elements')).flatMap(dirname => [
       [

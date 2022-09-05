@@ -27,6 +27,7 @@ import { promisify } from 'node:util';
 import Router from '@koa/router';
 import { Manifest } from './custom-elements-manifest/lib/Manifest.js';
 import { getPfeConfig } from './config.js';
+import { makeDemoEnv } from './esbuild-plugins/pfe-env.js';
 
 const glob = promisify(_glob);
 const require = createRequire(import.meta.url);
@@ -153,6 +154,10 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
       app.use(new Router()
+        .get('/tools/pfe-tools/environment.js(.js)?', async (ctx, next) => {
+          ctx.body = await makeDemoEnv(options.rootDir);
+          ctx.type = 'application/javascript';
+        })
         // redirect /components/jazz-hands/pfe-timestep/index.html to /elements/pfe-jazz-hands/demo/pfe-timestep.html
         // redirect /components/jazz-hands/index.html to /elements/pfe-jazz-hands/demo/pfe-jazz-hands.html
         .get('/components/:slug/demo/:sub?/:fileName', (ctx, next) => {

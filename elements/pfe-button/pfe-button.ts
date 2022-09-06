@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { BaseButton } from './BaseButton.js';
 
@@ -159,7 +160,11 @@ export class PfeButton extends BaseButton {
 
   protected override renderDefaultIcon() {
     return html`
-      <pfe-icon ?hidden=${!this.icon} icon=${this.icon} size="sm"></pfe-icon>
+      <pfe-icon
+          size="sm"
+          icon=${ifDefined(this.icon)}
+          set=${ifDefined(this.iconSet)}
+          ?hidden=${!this.icon}></pfe-icon>
       <pfe-progress-indicator
           ?hidden=${!this.loading}
           indeterminate

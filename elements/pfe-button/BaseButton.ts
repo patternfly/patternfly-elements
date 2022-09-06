@@ -157,7 +157,10 @@ export abstract class BaseButton extends LitElement {
   @property({ type: Boolean, reflect: true }) danger = false;
 
   /** Shorthand for the `icon` slot, the value is icon name */
-  @property() icon = '';
+  @property() icon?: string;
+
+  /** Icon set for the `icon` property */
+  @property() iconSet?: string;
 
   /** Represents the state of the anonymous and icon slots */
   protected slots = new SlotController(this, null, 'icon');

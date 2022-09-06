@@ -1,8 +1,7 @@
-import type { TemplateResult } from 'lit';
-
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -19,7 +18,9 @@ export class PfeIcon extends LitElement {
 
   public static readonly styles = [style];
 
-  public static addIconSet(set: string, getter: typeof PfeIcon['defaultGetter']) {
+  public static defaultIconSet = 'fas';
+
+  public static addIconSet(set: string, getter: typeof PfeIcon['getIconUrl']) {
     this.getters.set(set, getter);
   }
 
@@ -31,11 +32,11 @@ export class PfeIcon extends LitElement {
 
   private static getters = new Map();
 
-  private static defaultGetter = (set: string, icon: string) =>
+  public static getIconUrl = (set: string, icon: string) =>
     new URL(`./icons/${set}/${icon}.js`, import.meta.url);
 
   /** Icon set */
-  @property() set = 'fas';
+  @property() set = PfeIcon.defaultIconSet;
 
   /** Icon name */
   @observed
@@ -61,11 +62,13 @@ export class PfeIcon extends LitElement {
 
   render() {
     const ariaHidden = String(!this.label) as 'true'|'false';
+    const { content, label } = this;
     return html`
       <div id="container"
-          aria-label=${ifDefined(this.label)}
-          aria-hidden=${ariaHidden}>${this.content ?? html`
-        <slot></slot>`}
+          aria-label=${ifDefined(label)}
+          aria-hidden=${ariaHidden}>
+        ${content}
+        <span ?hidden=${content}><slot></slot></span>
       </div>
     `;
   }
@@ -80,7 +83,7 @@ export class PfeIcon extends LitElement {
 
   protected async load() {
     if (this.set && this.icon) {
-      const getter = PfeIcon.getters.get(this.set) ?? PfeIcon.defaultGetter;
+      const getter = PfeIcon.getters.get(this.set) ?? PfeIcon.getIconUrl;
       const { pathname } = getter(this.set, this.icon);
       try {
         this.content = await import(pathname).then(m => m.default);

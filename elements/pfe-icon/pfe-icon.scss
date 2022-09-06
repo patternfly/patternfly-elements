@@ -1,19 +1,33 @@
 :host {
   position: relative;
   display:  inline-block;
-  min-height: var(--pf-icon--size);
-  min-width: var(--pf-icon--size);
   line-height:  0;
+
+  height: fit-content !important;
+  width: fit-content !important;
 }
 
-:host([size=sm]) { --pf-icon--size: var(--pf-global--icon--FontSize--sm, 10px); }
-:host([size=md]) { --pf-icon--size: var(--pf-global--icon--FontSize--md, 18px); }
-:host([size=lg]) { --pf-icon--size: var(--pf-global--icon--FontSize--lg, 24px); }
-:host([size=xl]) { --pf-icon--size: var(--pf-global--icon--FontSize--xl, 54px); }
+:host([size=sm]) #container { --_size: var(--pf-global--icon--FontSize--sm, 10px); }
+:host([size=md]) #container { --_size: var(--pf-global--icon--FontSize--md, 18px); }
+:host([size=lg]) #container { --_size: var(--pf-global--icon--FontSize--lg, 24px); }
+:host([size=xl]) #container { --_size: var(--pf-global--icon--FontSize--xl, 54px); }
+
+#container {
+  display: grid;
+  grid-template: 1fr / 1fr;
+  place-content: center;
+}
+
+#container, svg {
+  width: var(--_size);
+  height: var(--_size);
+}
+
+#container.content ::slotted(*) {
+  display: none;
+}
 
 svg {
   fill: currentcolor;
-  width: var(--pf-icon--size);
-  height: var(--pf-icon--size);
 }
 

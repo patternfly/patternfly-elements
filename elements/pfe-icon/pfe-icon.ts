@@ -1,11 +1,12 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import style from './pfe-icon.scss';
+
+export type URLGetter = (set: string, icon: string) => URL;
 
 const ric = window.requestIdleCallback ?? window.requestAnimationFrame;
 
@@ -30,9 +31,9 @@ export class PfeIcon extends LitElement {
 
   private static io = new IntersectionObserver(PfeIcon.onIntersect);
 
-  private static getters = new Map();
+  private static getters = new Map<string, URLGetter>();
 
-  public static getIconUrl = (set: string, icon: string) =>
+  public static getIconUrl: URLGetter = (set: string, icon: string) =>
     new URL(`./icons/${set}/${icon}.js`, import.meta.url);
 
   /** Icon set */
@@ -45,10 +46,8 @@ export class PfeIcon extends LitElement {
   /** Size of the icon */
   @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
 
+  /** Accessible label for the icon */
   @property({ reflect: true }) label?: string;
-
-  /** Icon content. Any value that lit can render */
-  @state() private content?: unknown;
 
   /**
    * Controls how eager the element will be to load the icon data
@@ -57,6 +56,9 @@ export class PfeIcon extends LitElement {
    * - `lazy` (default): wait for the element to enter the viewport before loading
    */
   @property() loading?: 'idle'|'lazy'|'eager' = 'lazy';
+
+  /** Icon content. Any value that lit can render */
+  @state() private content?: unknown;
 
   #logger = new Logger(this);
 
@@ -68,7 +70,7 @@ export class PfeIcon extends LitElement {
           aria-label=${ifDefined(label)}
           aria-hidden=${ariaHidden}>
         ${content}
-        <span ?hidden=${content}><slot></slot></span>
+        <span ?hidden=${!!content}><slot></slot></span>
       </div>
     `;
   }
@@ -82,13 +84,15 @@ export class PfeIcon extends LitElement {
   }
 
   protected async load() {
-    if (this.set && this.icon) {
-      const getter = PfeIcon.getters.get(this.set) ?? PfeIcon.getIconUrl;
-      const { pathname } = getter(this.set, this.icon);
+    const { set, icon, } = this;
+    const getter = PfeIcon.getters.get(set) ?? PfeIcon.getIconUrl;
+    let pathname = 'UNKNOWN ICON';
+    if (set && icon) {
       try {
+        ({ pathname } = getter(set, icon));
         this.content = await import(pathname).then(m => m.default);
-      } catch (error) {
-        this.#logger.error(error.message === 'error loading dynamically imported module' ? `Could not load ${pathname}` : error);
+      } catch (error: unknown) {
+        this.#logger.error(`Could not load ${pathname}`, (error as Error).message);
       }
     }
   }

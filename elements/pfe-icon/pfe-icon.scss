@@ -21,6 +21,8 @@
 #container, svg {
   width: var(--_size);
   height: var(--_size);
+  min-width: var(--_size);
+  min-height: var(--_size);
 }
 
 #container.content ::slotted(*) {

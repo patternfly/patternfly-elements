@@ -34,6 +34,7 @@ module.exports = {
     'lit/polyfill-support.js': 'https://ga.jspm.io/npm:lit@2.0.2/polyfill-support.js',
     'lit/static-html.js': 'https://ga.jspm.io/npm:lit@2.0.2/static-html.js',
 
+    'fuse.js': 'https://ga.jsmp.il/npm:fuse.js@6.6.2/dist/fuse.esm.js',
     'marked': 'https://ga.jspm.io/npm:marked@4.0.8/lib/marked.esm.js',
     'prismjs': 'https://ga.jspm.io/npm:prismjs@1.25.0/prism.js',
     '@popperjs/core': 'https://ga.jspm.io/npm:@popperjs/core@2.11.5/dist/umd/popper.js',

@@ -79,6 +79,7 @@
     "@types/prompts": "^2.0.14",
     "commitlint": "^17.0.3",
     "cpx": "^1.5.0",
+    "fuse.js": "^6.6.2",
     "git-branch": "^2.0.1",
     "husky": "^8.0.1",
     "leasot": "^13.2.0",

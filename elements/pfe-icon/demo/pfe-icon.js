@@ -14,7 +14,7 @@ const names = new Map([
 ]);
 
 async function copy(event) {
-  const { html, icon } = event.target.closest('pfe-button').dataset;
+  const { html, icon } = event.target.closest('[data-icon]').dataset;
   const tooltip = event.target.closest('li').querySelector('[slot=content]');
   await navigator.clipboard.writeText(html);
   tooltip.textContent = 'Copied!';
@@ -24,10 +24,13 @@ async function copy(event) {
 render(repeat(iconSets, ([setName, icons]) => html`
   <h3 id=${setName}>${names.get(setName)}</h3>
   <ul>${icons.map(icon => html`
-    <li title="${icon}">
-      <pfe-button plain icon="${icon}" icon-set="${setName}" @click=${copy} data-icon="${icon}" data-html='<pfe-icon set="${setName}" icon="${icon}" size="lg" loading="idle"></pfe-icon>'>
-        <button>${icon}</button>
-      </pfe-button>
+    <li>
+      <button title="${icon}"
+          data-icon="${icon}"
+          data-html='<pfe-icon set="${setName}" icon="${icon}" size="lg" loading="idle"></pfe-icon>'
+          @click=${copy}>
+        <pfe-icon icon="${icon}" set="${setName}" size="xl">${icon}</pfe-icon>
+      </button>
     </li>`)}
   </ul>
 `), document.getElementById('pfe-icon-demo-output'));

@@ -18,3 +18,13 @@ output ul {
 #custom-icon-demo-output {
   --size: var(--pf-global--icon--FontSize--lg, 1.5rem);
 }
+
+li button {
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+li button:focus {
+  color: gray;
+}

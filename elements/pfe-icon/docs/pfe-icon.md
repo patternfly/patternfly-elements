@@ -6,198 +6,176 @@
 </style>
 
 {% renderOverview %}
-  <pfe-icon icon="rh-leaf" size="4x"></pfe-icon>
-  <pfe-icon icon="rh-protected" size="4x" color="complement"></pfe-icon>
-  <pfe-icon icon="rh-code" size="4x" color="accent"></pfe-icon>
-  <pfe-icon icon="rh-cloud" size="4x" color="darkest"></pfe-icon>
-
-  ### Circled
-  <pfe-icon icon="rh-sports-play" size="4x" circled></pfe-icon>
-  <pfe-icon icon="rh-fast-jet" size="4x" circled color="complement"></pfe-icon>
-  <pfe-icon icon="rh-shopping-cart" size="4x" circled color="accent"></pfe-icon>
-  <pfe-icon icon="rh-server-stack" size="4x" circled color="darkest"></pfe-icon>
+  <pfe-icon icon="user" size="xl"></pfe-icon>
+  <pfe-icon icon="lock" size="xl"></pfe-icon>
+  <pfe-icon icon="laptop" size="xl"></pfe-icon>
+  <pfe-icon icon="cloud" size="xl"></pfe-icon>
 {% endrenderOverview %}
 
 {% band header="Usage" %}
   ### Default
-  <pfe-icon icon="rh-leaf"></pfe-icon>
-  <pfe-icon icon="rh-protected"></pfe-icon>
-  <pfe-icon icon="rh-code"></pfe-icon>
-  <pfe-icon icon="rh-cloud"></pfe-icon>
+  <pfe-icon icon="user"></pfe-icon>
+  <pfe-icon icon="lock"></pfe-icon>
+  <pfe-icon icon="laptop"></pfe-icon>
+  <pfe-icon icon="cloud"></pfe-icon>
   ```html
-  <pfe-icon icon="rh-leaf"></pfe-icon>
-  <pfe-icon icon="rh-protected"></pfe-icon>
-  <pfe-icon icon="rh-code"></pfe-icon>
-  <pfe-icon icon="rh-cloud"></pfe-icon>
+  <pfe-icon icon="user"></pfe-icon>
+  <pfe-icon icon="lock"></pfe-icon>
+  <pfe-icon icon="laptop"></pfe-icon>
+  <pfe-icon icon="cloud"></pfe-icon>
   ```
 
   ### Size
   The default size is 1em, so icon size matches text size.  `2x`, etc, are multiples of font size.  `sm`, `md`, etc are fixed pixel-based sizes.
 
-  <pfe-icon icon="rh-leaf" size="sm"></pfe-icon>
-  <pfe-icon icon="rh-leaf" size="md"></pfe-icon>
-  <pfe-icon icon="rh-leaf" size="lg"></pfe-icon>
-  <pfe-icon icon="rh-leaf" size="xl"></pfe-icon>
-  <pfe-icon icon="rh-leaf" size="2x"></pfe-icon>
-  <pfe-icon icon="rh-leaf" size="3x"></pfe-icon>
-  <pfe-icon icon="rh-leaf" size="4x"></pfe-icon>
+  <pfe-icon icon="user" size="sm"></pfe-icon>
+  <pfe-icon icon="user" size="md"></pfe-icon>
+  <pfe-icon icon="user" size="lg"></pfe-icon>
+  <pfe-icon icon="user" size="xl"></pfe-icon>
 
   ```html
-  <pfe-icon icon="rh-leaf" size="sm"></pfe-icon>
-  <pfe-icon icon="rh-leaf" size="md"></pfe-icon>
-  <pfe-icon icon="rh-leaf" size="lg"></pfe-icon>
-  <pfe-icon icon="rh-leaf" size="xl"></pfe-icon>
-  <pfe-icon icon="rh-leaf" size="2x"></pfe-icon>
-  <pfe-icon icon="rh-leaf" size="3x"></pfe-icon>
-  <pfe-icon icon="rh-leaf" size="4x"></pfe-icon>
-  ```
-
-  ### Circled
-  <pfe-icon icon="rh-leaf" circled></pfe-icon>
-  <pfe-icon icon="rh-leaf" circled color="darkest"></pfe-icon>
-
-  ```html
-  <pfe-icon icon="rh-leaf" circled></pfe-icon>
-  <pfe-icon icon="rh-leaf" circled color="darkest"></pfe-icon>
-  ```
-
-  ### Colored
-  Supported color variants are:
-  - `base`
-  - `lightest`
-  - `lighter`
-  - `darker`
-  - `darkest`
-  - `complement`
-  - `accent`
-  - `critical`
-  - `important`
-  - `moderate`
-  - `success`
-  - `info`
-  - `default`
-
-  This draws from your theming layer to color the icon.  This will set icon color or background color (if `circled` is true).
-
-  <pfe-icon icon="rh-leaf" color="base"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="lightest"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="lighter"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="darker"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="darkest"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="complement"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="accent"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="critical"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="important"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="moderate"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="success"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="info"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="default"></pfe-icon>
-
-  ```html
-  <pfe-icon icon="rh-leaf" color="base"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="lightest"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="lighter"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="darker"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="darkest"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="complement"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="accent"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="critical"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="important"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="moderate"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="success"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="info"></pfe-icon>
-  <pfe-icon icon="rh-leaf" color="default"></pfe-icon>
+  <pfe-icon icon="user" size="sm"></pfe-icon>
+  <pfe-icon icon="user" size="md"></pfe-icon>
+  <pfe-icon icon="user" size="lg"></pfe-icon>
+  <pfe-icon icon="user" size="xl"></pfe-icon>
   ```
 {% endband %}
 
+{% band header="Icon sets" %}
+Icon comes with three built-in icon sets:
+
+1. `fas`: Font Awesome Free Solid icons (the default set)
+1. `far`: Font Awesome Free Regular icons
+1. `patternfly`: PatternFly icons
+
+Use the `set` attribute to pick an alternative icon set.
+```html
+<pfe-icon icon="star"    set="far"></pfe-icon>
+<pfe-icon icon="redhat"  set="fab"></pfe-icon>
+<pfe-icon icon="package" set="patternfly"></pfe-icon>
+```
+
+### Register a New Icon Set
+
+Icons are JavaScript module which export a [lit renderable][renderable], typically an inline SVG
+element [template literal][template-literals] tagged with the Lit [`svg`][svg-tag] template tag.
+To register a new icon set, call the static `addIconSet` method with the set name and a getter
+function. The getter function takes the icon set and icon name and returns a URL object that points 
+to the icon's JavaScript module.
+
+```ts
+type getter = (set: string, icon: string) => URL
+```
+
+```javascript
+import { PfeIcon } from '@patternfly/pfe-icon';
+
+// Or, in a non-module context:
+// const PfeIcon = await customElements.whenDefined('pfe-icon');
+
+PfeIcon.addIconSet('local', (set, icon) =>
+  new URL(`/assets/icons/${set}-${icon}.js`));
+```
+
+### Updating an Existing Icon Set
+
+To updating an existing icon set, you use the same `addIconSet` function.
+
+```javascript
+PfeIcon.addIconSet('patternfly', (_, icon) =>
+  new URL(`/icons/${icon}.js`, 'https://hosted-icons.com/'));
+```
+
+### Override the Default Icon Sets
+
+Icons are [loaded lazily](#loading) by default, so there's no performance penalty for keeping the
+default icon sets arond and unused. However, if you'd like to override the default icon sets across
+the entire page, you can override the default `getIconURL` static method:
+
+```js
+import { pfeicon } from '@patternfly/pfe-icon';
+
+PfeIcon.getIconURL = (set, icon) =>
+  new URL(`/icons/js/${set}/${icon}.js`, 'https://static.redhat.com');
+```
+
+To change the default set name, you can also override `PfeIcon.defaultIconSet`
+
+```js
+PfeIcon.defaultIconSet = 'patternfly';
+```
+
+Now when `<pfe-icon>` is used, it will automatically load icon modules from
+`https://static.redhat.com/icons/js/patternfly/...`.
+
+{% endband %}
+
+{% band header="Loading" %}
+
+Icons load _lazily_ by default, meaning that the browser will not attempt to fetch and render the
+icon until it scrolls into view. You can change this with the `loading` attribute, which has three
+values:
+
+1. `lazy` (the default): load icons when they scroll into view
+2. `idle`: load each icon on the page as soon as the browser enters an [idle state][ric]
+    <small>Or, on less-capable browsers, at the next frame</small>
+3. `eager`: each icon will begin to load and render the moment it connects to the DOM.
+
+You might choose to enable eager rendering for "above-the-fold" content, but keep lazy loading for
+the rest of the page.
+
+```html
+<header>
+  <h1>
+    <pfe-icon icon="fire" loading="eager"></pfe-icon>
+    Hot News!
+  </h1>
+</header>
+
+<main>
+  <article>...</article>
+</main>
+
+<footer>
+  <h2>
+    <pfe-icon icon="phone"></pfe-icon>
+    Contact Us
+  </h2>
+  ...
+</footer>
+```
+{% endband %}
+
 {% renderSlots %}
-There are no slots, but if you wish to display some text when JS is disabled,
-you can put some text inside the pfe-icon tag. For instance, when using a
-checkmark icon in a server status table, you may wish to display "success"
-if JS is disabled.
+If you wish to display some content while the icon loads (or while JS is disabled),
+you can slot it into `<pfe-icon>`. For instance, when using a checkmark icon in a server status
+table, you may wish to display a checkmark emoji if JS is disabled.
+
+```html
+<pfe-icon icon="check">✅</pfe-icon>
+```
+
+It's recommended to use the icon name in the default slot, so that the icon is accessible to screen
+readers.
+
+```html
+<pfe-icon icon="check">check</pfe-icon>
+```
 {% endrenderSlots %}
 
 {% renderAttributes %}{% endrenderAttributes %}
 
 {% renderProperties %}{% endrenderProperties %}
 
-{% band header="Icon sets" %}
-  Icon sets are defined in detail in [this blog post](https://clayto.com/2019/07/web-component-icons/index.html#icon-sets).
-
-  ### Register a new icon set
-
-  To register a new icon set, choose a global namespace for that set and identify the path at which the SVGs for that set will be hosted.  Consider also the function needed to convert the icon name into the filename on that hosted location.  The `addIconSet` call accepts the namespace (as a string), the path to the SVGs (as a string), and a function for parsing the icon name into the filename.
-
-  ```javascript
-  PfeIcon.addIconSet(
-    "local",
-    "./",
-    function(name, iconSetName, iconSetPath) {
-      var regex = new RegExp("^" + iconSetName + "-(.*)");
-      var match = regex.exec(name);
-      return iconSetPath + match[1] + ".svg";
-    }
-  );
-  ```
-
-  ### Override the default icon sets
-
-  Out of the box, the default icon set (using the rh / web namespace) is hosted on [access.redhat.com](https://access.redhat.com). If you would like to override the `rh / web` namespace, you can add the following to a global variable named `PfeConfig`.
-
-  The config must be set _before_ the PfeIcon class is defined.
-
-  ```javascript
-  window.PfeConfig = {
-    IconSets: [
-      {
-        name: "rh",
-        path: "path/to/svg/directory", // Or https://hosted-icons.com/,
-        resolveIconName: function(name, iconSetName, iconSetPath) { // Optional function to resolve icon paths.
-          var regex = new RegExp("^" + iconSetName + "-(.*)");
-          var match = regex.exec(name);
-          return iconSetPath + match[1] + ".svg";
-        }
-      }
-    ]
-  };
-  ```
-
-  Now when `pfe-icon` is used, it will automatically reference the icon set defined in the config.
-
-  If you would like to opt out of any defaults so that you can dynamically add icon sets later using `PfeIcon.addIconSet()`, use the following:
-
-  ```javascript
-  window.PfeConfig = {
-    IconSets: []
-  };
-  ```
-
-  ### Updating an existing icon set
-
-  To updating an existing icon set, you use the same `addIconSet` function.  The first input which is the icon set namespace is required, as is the new path.  You can optionally pass in a new function for parsing the icon names into filenames.
-
-  ```javascript
-  PfeIcon.addIconSet("local", "https://hosted-icons.com/");
-  ```
-{% endband %}
-
 {% renderMethods %}{% endrenderMethods %}
 
 {% renderEvents %}{% endrenderEvents %}
 
-{% renderCssCustomProperties %}
-  ### Color
-  The `color` attribute is available to pull icon color from your theming layer.
-  For more fine-grained control, `--pfe-icon--color` is available to override the
-  color of a specific icon or sets of icons and will be applied to either the SVG
-  lines or the background of the circle (if circled).
-  [Examples](https://clayto.com/2019/07/web-component-icons/index.html#setting-icon-colors)
-
-  ### Background color
-  The `color` attribute is available to pull background color from your theming layer.
-  For more fine-grained control, `--pfe-icon--BackgroundColor` is available to override
-  the background color of a specific icon or sets of icons.
-  Be sure to set `--pfe-icon--theme` to the appropriate theme if you are setting the background-color.
-{% endrenderCssCustomProperties %}
+{% renderCssCustomProperties %}{% endrenderCssCustomProperties %}
 
 {% renderCssParts %}{% endrenderCssParts %}
+
+[renderable]: https://lit.dev/docs/components/rendering/
+[template-literals]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+[svg-tag]: https://lit.dev/docs/api/templates/#svg
+[ric]: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback

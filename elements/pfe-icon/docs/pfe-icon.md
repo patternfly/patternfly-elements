@@ -79,21 +79,31 @@ PfeIcon.addIconSet('local', (set, icon) =>
 
 ### Updating an Existing Icon Set
 
-To updating an existing icon set, you use the same `addIconSet` function.
+To updating an existing icon set, you use the same `addIconSet` function. By defaulting back to then
+existing `getIconURL` method, you  you can add a new icon to an existing set:
 
-```javascript
-PfeIcon.addIconSet('patternfly', (_, icon) =>
-  new URL(`/icons/${icon}.js`, 'https://hosted-icons.com/'));
+```js
+PfeIcon.addIconSet('patternfly', (set, icon) => {
+  switch (icon) {
+    // add your custom icons
+    case 'my-custom-icon':
+    case 'other-custom-icon':
+      return new URL(`/icons/patternfly-custom/${icon}.js`, window.location.href);
+    // fall back to built-in icons
+    default:
+      return PfeIcon.getIconUrl(set, icon);
+  }
+});
 ```
 
 ### Override the Default Icon Sets
 
 Icons are [loaded lazily](#loading) by default, so there's no performance penalty for keeping the
 default icon sets arond and unused. However, if you'd like to override the default icon sets across
-the entire page, you can override the default `getIconURL` static method:
+the entire page, you can use `addIconSet` with the `fas`, `far`, and `patternfly` set names:
 
 ```js
-import { pfeicon } from '@patternfly/pfe-icon';
+import { PfeIcon } from '@patternfly/pfe-icon';
 
 PfeIcon.getIconURL = (set, icon) =>
   new URL(`/icons/js/${set}/${icon}.js`, 'https://static.redhat.com');

@@ -11,7 +11,10 @@ export type URLGetter = (set: string, icon: string) => URL;
 const ric = window.requestIdleCallback ?? window.requestAnimationFrame;
 
 /**
- * PatternFly Icon
+ * PatternFly Icon component lazy-loads icons and allows custom icon sets
+ *
+ * @slot - Slotted content is used as a fallback in case the icon doesn't load
+ * @csspart fallback - Container for the fallback (i.e. slotted) content
  */
 @customElement('pfe-icon')
 export class PfeIcon extends LitElement {
@@ -25,6 +28,9 @@ export class PfeIcon extends LitElement {
     this.getters.set(set, getter);
   }
 
+  public static getIconUrl: URLGetter = (set: string, icon: string) =>
+    new URL(`./icons/${set}/${icon}.js`, import.meta.url);
+
   private static onIntersect: IntersectionObserverCallback = records =>
     records.forEach(({ isIntersecting, target }) => ric(() =>
       isIntersecting && target instanceof PfeIcon && target.load()));
@@ -32,9 +38,6 @@ export class PfeIcon extends LitElement {
   private static io = new IntersectionObserver(PfeIcon.onIntersect);
 
   private static getters = new Map<string, URLGetter>();
-
-  public static getIconUrl: URLGetter = (set: string, icon: string) =>
-    new URL(`./icons/${set}/${icon}.js`, import.meta.url);
 
   /** Icon set */
   @property() set = PfeIcon.defaultIconSet;
@@ -70,7 +73,9 @@ export class PfeIcon extends LitElement {
           aria-label=${ifDefined(label)}
           aria-hidden=${ariaHidden}>
         ${content}
-        <span ?hidden=${!!content}><slot></slot></span>
+        <span part="fallback" ?hidden=${!!content}>
+          <slot></slot>
+        </span>
       </div>
     `;
   }

@@ -25,10 +25,8 @@ render(repeat(iconSets, ([setName, icons]) => html`
   <h3 id=${setName}>${names.get(setName)}</h3>
   <ul>${icons.map(icon => html`
     <li title="${icon}">
-      <pfe-button plain @click=${copy} data-icon="${icon}" data-html='<pfe-icon set="${setName}" icon="${icon}" size="lg" loading="idle"></pfe-icon>'>
-        <button>
-          <pfe-icon set=${setName} icon=${icon} size="xl" loading="lazy"></pfe-icon>
-        </button>
+      <pfe-button plain icon="${icon}" icon-set="${setName}" @click=${copy} data-icon="${icon}" data-html='<pfe-icon set="${setName}" icon="${icon}" size="lg" loading="idle"></pfe-icon>'>
+        <button>${icon}</button>
       </pfe-button>
     </li>`)}
   </ul>

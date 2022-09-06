@@ -3,10 +3,11 @@
 }
 
 output ul {
-  list-style-type: none;
+  --g: repeat(auto-fit, var(--pf-global--icon--FontSize--xl, 3.375rem));
   display: grid;
+  grid-template: var(--g) / var(--g);
   gap: 1em;
-  grid-template-columns: repeat(auto-fit, var(--size, var(--pf-global--icon--FontSize--xl, 3.375rem)));
+  list-style-type: none;
   padding: 0;
   margin: 0;
 }

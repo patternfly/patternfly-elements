@@ -88,7 +88,8 @@
     "open": "^8.4.0",
     "prompts": "^2.4.2",
     "renamer": "^4.0.0",
-    "sassdoc": "^2.7.4"
+    "sassdoc": "^2.7.4",
+    "zero-md": "^2.3.6"
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --fix"

@@ -49,7 +49,7 @@ export class CopiedEvent extends ComposedEvent {
  *       Optionally override the default link svg icon. You can inline svg `<svg slot="icon"></svg>` or use pfe-icon.
  *       For example:
  *       ```html
- *       <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+ *       <pfe-icon slot="icon" icon="globe"></pfe-icon>
  *       ```
  * @slot success - Optionally override the text of the success state which defaults to `Copied`.
  * @slot text--success - {@deprecated use `success`}

@@ -1,11 +1,12 @@
-/* eslint-disable no-console */
+import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import style from './BaseTooltip.scss';
+import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
-import { FloatingDOMController, Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import style from './BaseTooltip.scss';
 
 export abstract class BaseTooltip extends LitElement {
   static readonly styles = [style];

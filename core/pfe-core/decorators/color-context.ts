@@ -1,9 +1,7 @@
 import type { ReactiveElement } from 'lit';
-import {
-  ColorContextOptions,
-  ColorContextConsumer,
-  ColorContextProvider,
-} from '../controllers/color-context.js';
+import type { ColorContextOptions } from '../controllers/color-context.js';
+
+import { ColorContextConsumer, ColorContextProvider } from '../controllers/color-context.js';
 
 export function colorContextProvider<T extends ReactiveElement>(options?: ColorContextOptions) {
   return function(proto: T, _key: string) {

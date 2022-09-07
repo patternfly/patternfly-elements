@@ -34,7 +34,7 @@ module.exports = {
     'lit/polyfill-support.js': 'https://ga.jspm.io/npm:lit@2.0.2/polyfill-support.js',
     'lit/static-html.js': 'https://ga.jspm.io/npm:lit@2.0.2/static-html.js',
 
-    'fuse.js': 'https://ga.jsmp.io/npm:fuse.js@6.6.2/dist/fuse.esm.js',
+    'fuse.js': 'https://ga.jspm.io/npm:fuse.js@6.6.2/dist/fuse.esm.js',
     'zero-md': 'https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js',
     'marked': 'https://ga.jspm.io/npm:marked@4.0.8/lib/marked.esm.js',
     'prismjs': 'https://ga.jspm.io/npm:prismjs@1.25.0/prism.js',

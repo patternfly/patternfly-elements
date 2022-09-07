@@ -13,6 +13,7 @@ export function fakePrismModule() {
 }
 
 export default pfeDevServerConfig({
+  tsconfig: 'tsconfig.settings.json',
   plugins: [
     fakePrismModule(),
   ],

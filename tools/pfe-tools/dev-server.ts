@@ -267,8 +267,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       // serve typescript sources as javascript
       esbuildPlugin({
         ts: true,
-        // see https://github.com/evanw/esbuild/issues/2220
-        target: 'es2020'
+        target: 'es2022'
       }),
 
       // load .scss files as lit CSSResult modules

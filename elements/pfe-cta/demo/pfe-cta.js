@@ -7,13 +7,6 @@ const root = document.querySelector('[data-demo="pfe-cta"]')?.shadowRoot ?? docu
 let activeRegistry = null;
 
 function onSelect(event) {
-  // since we're listening on the root itself,
-  // which doesn't change from demo to demo, we need
-  // to ensure we're viewing the cta demo
-  if (!root.host.dataset.demo !== 'pfe-cta') {
-    return;
-  }
-
   const { originEvent } = event.detail;
 
   // Cancel the propogation of the CTA
@@ -31,7 +24,7 @@ function onSelect(event) {
     }
     activeRegistry = registry;
     registry.innerHTML = `
-      <pfe-icon icon="rh-safety-warning-alert" size="lg"></pfe-icon>
+      <pfe-icon icon="warning-triangle" set="patternfly" size="lg"></pfe-icon>
       <span>
         Event registered on
         <strong>${event.detail.type}</strong>

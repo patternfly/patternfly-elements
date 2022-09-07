@@ -31,7 +31,6 @@ import style from './pfe-band.scss';
  *       The template is automatically wrapping all content within an `article` tag.
  * @slot footer
  *       This slot is typically used for calls-to-action or footnotes and is pushed to the bottom of the container.
- *       Recommended tags include `pfe-cta`.
  *       The template is automatically wrapping this slot in a `footer` tag.
  * @slot aside
  *       This slot is for content that should be rendered to the right or left of the default slot on desktop.

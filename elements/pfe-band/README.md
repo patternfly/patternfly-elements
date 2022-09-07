@@ -37,9 +37,7 @@ import '@patternfly/pfe-band';
     <p>Ut wisi enim ad minim veniam.</p>
   </pfe-card>
 
-  <pfe-cta slot="footer" priority="tertiary">
-    <a href="#">Learn more</a>
-  </pfe-cta>
+  <a slot="footer" class="cta tertiary" href="#">Learn more</a>
 </pfe-band>
 ```
 

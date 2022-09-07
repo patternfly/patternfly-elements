@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="/core/pfe-styles/_temp/pfe-colors.css">
     <link rel="stylesheet" href="/core/pfe-styles/red-hat-font.min.css">
     <link rel="stylesheet" href="/core/pfe-styles/pfe.min.css"/>
-    <link rel="stylesheet" href="/elements/pfe-cta/pfe-cta--lightdom.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
 
     <noscript>
@@ -22,12 +21,12 @@
 
     <script type="module">
       const containers = document.querySelectorAll('.context-container');
-      const ctas = document.querySelectorAll('.themes');
+      const buttons = document.querySelectorAll('.themes');
 
       const applyTheme = function(event) {
         const button = event.target;
-        for (const cta of ctas) {
-          cta.context_set(button.name);
+        for (const button of buttons) {
+          button.context_set(button.name);
         }
         for (const item of containers) {
           const prevClass = [...item.classList].find(value => /^on-(.*?)/.test(value));
@@ -38,7 +37,7 @@
         }
       };
 
-      for (const item of ctas) {
+      for (const item of buttons) {
         item.addEventListener('click', applyTheme);
         item.addEventListener('keypress', function(event) {
           if (event.key === 'Enter') {
@@ -125,15 +124,15 @@
         <section class="pfe-l-grid pfe-m-gutters context-container">
           <p>Click the buttons below to change the theme context of the container:</p>
           <div class="context-buttons">
-            <pfe-cta priority="secondary" class="themes light">
+            <pfe-btton variant="secondary" class="themes light">
               <button name="light">Light theme</button>
-            </pfe-cta>
-            <pfe-cta priority="primary" color-palette="complement" class="themes dark">
+            </pfe-btton>
+            <pfe-btton variant="primary" color-palette="complement" class="themes dark">
               <button name="dark">Dark theme</button>
-            </pfe-cta>
-            <pfe-cta priority="primary" color-palette="base" class="themes saturated">
+            </pfe-btton>
+            <pfe-btton variant="primary" color-palette="base" class="themes saturated">
               <button name="saturated">Saturated theme</button>
-            </pfe-cta>
+            </pfe-btton>
           </div>
           <h3>UI elements</h3>
           <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col swatches">

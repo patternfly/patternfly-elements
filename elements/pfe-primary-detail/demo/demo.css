@@ -36,7 +36,7 @@ pfe-primary-detail .is-focused:hover {
 }
 
 pfe-primary-detail ul.is-focused:hover,
-pfe-primary-detail :not(pfe-cta).is-focused:hover {
+pfe-primary-detail .is-focused:hover {
     outline: 0;
 }
 

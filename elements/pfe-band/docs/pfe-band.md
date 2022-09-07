@@ -8,9 +8,7 @@
         <p>Content for a card that is in the aside slot.</p>
       </pfe-card>
       <p slot="footer">This is the footer slot.</p>
-      <pfe-cta slot="footer">
-        <a href="#">Learn more</a>
-      </pfe-cta>
+      <a href="#" slot="footer">Learn more</a>
     </pfe-band>
   </div>
 {% endrenderOverview %}
@@ -25,9 +23,7 @@
       <p>Content for a card that is in the aside slot.</p>
     </pfe-card>
     <p slot="footer">This is the footer slot.</p>
-    <pfe-cta slot="footer">
-      <a href="#">Learn more</a>
-    </pfe-cta>
+    <a href="#" slot="footer">Learn more</a>
   </pfe-band>
   ```
 {% endband %}

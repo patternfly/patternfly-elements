@@ -17,10 +17,9 @@ title: Get started
 
   ```shell
   npm install --save @patternfly/pfe-card@next
-  npm install --save @patternfly/pfe-cta@next
   ```
 
-  This will install not only the pfe-card and pfe-cta, but also the core utilities and styles,
+  This will install not only the pfe-card, but also the core utilities and styles,
   and will save it to your package-lock.json.
 {% endband %}
 
@@ -32,11 +31,10 @@ title: Get started
   and the browser will fetch the dependencies dynamically on load.
   [Learn more about JavaScript modules](https://hospodarets.com/native-ecmascript-modules-the-first-overview).
 
-  In this example, we load the [card](/components/card/) and [cta](/components/cta/) modules from [`https://unpkg.com`](https://unpkg.com).
+  In this example, we load the [card](/components/card/) modules from [`https://unpkg.com`](https://unpkg.com).
 
   ```html
   <script type="module" src="https://unpkg.com/@patternfly/pfe-card@next?module"></script>
-  <script type="module" src="https://unpkg.com/@patternfly/pfe-cta@next?module"></script>
   ```
 
   <a id="in-an-app"></a>
@@ -48,22 +46,10 @@ title: Get started
 
   ```javascript
   import '@patternfly/pfe-card';
-  import '@patternfly/pfe-cta';
   ```
 {% endband %}
 
 {% band header="Add PatternFly Elements markup" %}
-  Add a [call-to-action component](/components/cta).
-  ```html
-  <pfe-cta>
-    <a href="https://patternflyelements.org">PatternFly Elements</a>
-  </pfe-cta>
-  ```
-
-  <pfe-cta>
-    <a href="https://patternflyelements.org">PatternFly Elements</a>
-  </pfe-cta>
-
   Add a [card component](/components/card).
   ```html
   <pfe-card>
@@ -87,17 +73,6 @@ title: Get started
 
 {% band header="Add attributes" %}
   Attributes can be used to adjust a theme, a palette color, a priority, set default values, etc. Be sure to check out the "Attributes" section for each component to see which attributes are available.
-
-  Change the priority of a [call-to-action component](/components/cta) using the [priority attribute](http://localhost:8080/components/cta/#priority).
-  ```html
-  <pfe-cta priority="primary">
-    <a href="https://patternflyelements.org">PatternFly Elements</a>
-  </pfe-cta>
-  ```
-
-  <pfe-cta priority="primary">
-    <a href="https://patternflyelements.org">PatternFly Elements</a>
-  </pfe-cta>
 
   Change the color-palette value of a [card component](/components/card) to change its appearance using the [color-palette attribute](http://localhost:8080/components/card/#colorPalette).
   ```html
@@ -134,30 +109,16 @@ title: Get started
   }
   ```
 
-  **Note**: overriding local variables (i.e., –pfe-cta–foo) will not work at this level. Those overrides can only be done on the component via tag name, class, or ID.
+  **Note**: overriding local variables (i.e., –pfe-card–foo) will not work at this level. Those overrides can only be done on the component via tag name, class, or ID.
 
   ### Page-level CSS, component variables
   ```css
   /* your-page.css */
-  pfe-cta {
-    --pfe-cta--BackgroundColor: pink;
-    --pfe-cta--Color: black;
-  }
-
   pfe-band {
     --pfe-band--Padding--vertical: 34px;
     --pfe-band--BackgroundColor: green;
     --theme: saturated;
   }
-  ```
-
-  ### Component-level inline CSS
-  As a last resort, you may choose to override variables with inline styles. This could be desirable if you only need one component to deviate from the design system. Note that this incurs some level of risk, especially related to colors, as you are opting out of the color combinations in the system.
-
-  ```html
-  <pfe-cta style="--pfe-cta--BackgroundColor: pink">
-    <a href="https://patternflyelements.org">PatternFly Elements</a>
-  </pfe-cta>
   ```
 {% endband %}
 

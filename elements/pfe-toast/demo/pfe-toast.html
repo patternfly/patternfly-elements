@@ -6,16 +6,16 @@
 <script type="module" src="./pfe-toast.js"></script>
 
 <pfe-band color-palette="lightest" size="small">
-  <pfe-cta priority="secondary"><button data-toast="toast1">Toggle example one</button></pfe-cta>
-  <pfe-cta priority="secondary"><button data-toast="toast2">Toggle example two</button></pfe-cta>
-  <pfe-cta priority="secondary"><button data-toast="toast3">Toggle example three</button></pfe-cta>
+  <pfe-button><button data-toast="toast1">Toggle example one</button></pfe-button>
+  <pfe-button><button data-toast="toast2">Toggle example two</button></pfe-button>
+  <pfe-button><button data-toast="toast3">Toggle example three</button></pfe-button>
 </pfe-band>
 
 <pfe-band color-palette="lightest" size="small">
   <h2 slot="header">Toast using JS</h2>
   <label for="content">Toast Content</label>
   <input id="content" value="Toast this message"/>
-  <pfe-cta priority="secondary"><button id="js-toast">Toast It</button></pfe-cta>
+  <pfe-button priority="secondary"><button id="js-toast">Toast It</button></pfe-button>
 </pfe-band>
 
 <pfe-toast auto-dismiss="3s" id="toast1">
@@ -24,8 +24,8 @@
 
 <pfe-toast id="toast2">
   <p>Lorem ipsum dolor sit amet.</p>
-  <pfe-cta priority="secondary"><button>Button 1</button></pfe-cta>
-  <pfe-cta priority="secondary"><button>Button 2</button></pfe-cta>
+  <pfe-button><button>Button 1</button></pfe-button>
+  <pfe-button><button>Button 2</button></pfe-button>
 </pfe-toast>
 
 <pfe-toast id="toast3" aria-label="Custom alert dialog" close-label="Cerrar">
@@ -35,6 +35,6 @@
     clita
     kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
     sadipscing elitr.</p>
-  <pfe-cta priority="secondary"><button>Button 1</button></pfe-cta>
-  <pfe-cta priority="secondary"><button>Button 2</button></pfe-cta>
+  <pfe-button><button>Button 1</button></pfe-button>
+  <pfe-button><button>Button 2</button></pfe-button>
 </pfe-toast>

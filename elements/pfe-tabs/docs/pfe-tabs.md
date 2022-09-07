@@ -248,9 +248,7 @@
 {% renderSlots for="pfe-tab-panel", level=3, header="Slots on `pfe-tab-panel`" %}{% endrenderSlots %}
 
 {% renderAttributes %}
-  <pfe-cta>
-    <a href="demo">View the tab history demo</a>
-  </pfe-cta>
+  <a href="demo">View the tab history demo</a>
 {% endrenderAttributes %}
 
 {% renderProperties %}{% endrenderProperties %}

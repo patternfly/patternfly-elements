@@ -32,9 +32,7 @@ Open a modal dialog with the `showModal()` method, or by setting the `open` bool
 <pfe-modal>
   <h2 slot="header">Modal with a header</h2>
   <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <pfe-cta slot="footer">
-    <a href="#bar">Learn more</a>
-  </pfe-cta>
+  <a slot="footer" href="#bar">Learn more</a>
 </pfe-modal>
 
 <script>
@@ -50,9 +48,7 @@ You may assign a button-like trigger element to the modal by setting the modal e
 <pfe-modal trigger="trigger-button">
   <h2 slot="header">Modal with a header</h2>
   <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <pfe-cta slot="footer">
-    <a href="#bar">Learn more</a>
-  </pfe-cta>
+  <a slot="footer" href="#bar">Learn more</a>
 </pfe-modal>
 
 <button id="trigger-button">Open modal</button>

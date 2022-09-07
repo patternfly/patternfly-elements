@@ -329,14 +329,6 @@ main.blog {
   flex-direction: column;
 }
 
-.header-ctas pfe-cta:first-child {
-  margin-bottom: 16px;
-}
-
-.header-ctas pfe-cta a {
-  min-width: 250px;
-}
-
 .framework-logos img {
   width: 125px;
   margin: 8px;
@@ -378,15 +370,9 @@ main.blog {
   align-items: center;
 }
 
-.overlay > pfe-cta,
 .overlay > a {
   margin-bottom: 16px;
 }
-
-.overlay > pfe-cta[variant="wind"] {
-  background-color: white;
-}
-
 
 .preview-image {
   height: 250px;

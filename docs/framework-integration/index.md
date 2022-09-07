@@ -16,10 +16,7 @@ title: Framework integration
       </h3>
       <p>To get web components to work with React it’s pretty easy and straightforward. If you’d like to follow
         along, go ahead and...</p>
-      <pfe-cta slot="footer">
-        <a href="https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-react-app-fe079be262ed">Read
-          on Medium</a>
-      </pfe-cta>
+      <a class="cta" slot="footer" href="https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-react-app-fe079be262ed">Read on Medium</a>
     </pfe-card>
     <pfe-card color-palette="lightest" border>
       <h3 slot="header" class="push-bottom">
@@ -28,10 +25,7 @@ title: Framework integration
       </h3>
       <p>To get web components to work with Vue, it’s pretty easy and straightforward. If you’d like to follow
         along, go ahead and...</p>
-      <pfe-cta slot="footer">
-        <a href="https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-vue-app-340fc9a9d7e5">Read
-          on Medium</a>
-      </pfe-cta>
+      <a class="cta" slot="footer" href="https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-vue-app-340fc9a9d7e5">Read on Medium</a>
     </pfe-card>
     <pfe-card color-palette="lightest" border>
       <h3 slot="header" class="push-bottom">
@@ -40,10 +34,7 @@ title: Framework integration
       </h3>
       <p>To get web components to work with Angular, there are a few steps that we need to take. If you’d like to
         follow along, go ahead and...</p>
-      <pfe-cta slot="footer">
-        <a href="https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-angular-app-4b18b1c9c363">Read
-          on Medium</a>
-      </pfe-cta>
+      <a class="cta" slot="footer" href="https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-angular-app-4b18b1c9c363">Read on Medium</a>
     </pfe-card>
   </div>
 {% endband %}

@@ -28,9 +28,7 @@ import '@patternfly/pfe-card';
 <pfe-card>
   <h2 slot="header">Card header</h2>
   <p>This is the pfe-card body.</p>
-  <pfe-cta slot="footer">
-    <a href="#">Footer link</a>
-  </pfe-cta>
+  <a href="#" slot="footer">Footer link</a>
 </pfe-card>
 ```
 

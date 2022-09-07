@@ -43,6 +43,7 @@ export interface PfeDevServerConfigOptions extends Base {
   hostname?: string;
   importMap?: InjectSetting['importMap'];
   litcssOptions?: LitCSSOptions,
+  tsconfig?: string;
   /** Extra dev server plugins */
   loadDemo?: boolean;
   plugins?: Plugin[];
@@ -236,6 +237,8 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
     .replace(/\/node_modules$/, '/')
     .replace('//', '/');
 
+  const tsconfig = options?.tsconfig;
+
   return {
     rootDir,
 
@@ -267,7 +270,8 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       // serve typescript sources as javascript
       esbuildPlugin({
         ts: true,
-        target: 'es2022'
+        target: 'es2022',
+        tsconfig,
       }),
 
       // load .scss files as lit CSSResult modules

@@ -1,5 +1,7 @@
+import type { SinonStub } from 'sinon';
+
 import { expect, aTimeout, oneEvent, nextFrame, html } from '@open-wc/testing';
-import { spy, stub, SinonStub } from 'sinon';
+import { spy, stub } from 'sinon';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { getComposedText } from '@patternfly/pfe-tools/test/get-composed-text.js';
 import { hexToRgb } from '@patternfly/pfe-tools/test/hex-to-rgb.js';

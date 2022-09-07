@@ -2,6 +2,8 @@ import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-co
 
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
+
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
 import style from './BaseTooltip.scss';
@@ -46,14 +48,9 @@ export abstract class BaseTooltip extends LitElement {
     this.#addListeners();
   }
 
-  override firstUpdated(): void {
-    if (this.#invoker && this.#tooltip) {
-      this.#domController.create(this.#invoker, this.#tooltip, this.position, this.offset);
-    }
-  }
-
   /** Show the tooltip */
   show() {
+    this.#domController.create(this.#invoker, this.#tooltip, this.position, this.offset);
     this.#domController.show();
   }
 
@@ -72,11 +69,12 @@ export abstract class BaseTooltip extends LitElement {
   }
 
   override render() {
+    const { initialized } = this.#domController;
     return html`
       <div id="invoker" role="tooltip" tabindex="0" aria-labelledby="tooltip">
         <slot></slot>
       </div>
-      <div id="tooltip" aria-hidden=${!this.#isOpen}>
+      <div id="tooltip" aria-hidden=${!this.#isOpen} class=${classMap({ initialized })}>
         <div class="arrow"></div>
         <div id="content" class="content">
           <slot name="content"></slot>

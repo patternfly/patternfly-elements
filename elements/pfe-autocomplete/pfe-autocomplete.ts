@@ -1,17 +1,14 @@
-import type { DroplistSelectEvent, PfeSearchDroplist } from './pfe-search-droplist';
+import type { DroplistSelectEvent, PfeSearchDroplist } from './pfe-search-droplist.js';
+import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core';
 
 import { LitElement, html } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
-
-import { ColorPalette, ColorTheme } from '@patternfly/pfe-core';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed, colorContextConsumer, colorContextProvider, deprecation } from '@patternfly/pfe-core/decorators.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 
-
-import './pfe-search-droplist';
-
+import './pfe-search-droplist.js';
 
 import style from './pfe-autocomplete.scss';
 

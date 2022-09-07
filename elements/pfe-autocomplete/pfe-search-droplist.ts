@@ -1,9 +1,11 @@
+import type { ColorTheme } from '@patternfly/pfe-core';
+
 import { LitElement, html } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 
-import { ComposedEvent, ColorTheme } from '@patternfly/pfe-core';
+import { ComposedEvent } from '@patternfly/pfe-core';
 
 import { pfelement, bound, observed, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';

@@ -10,8 +10,7 @@
   "types": "./pfe-autocomplete.d.ts",
   "exports": {
     ".": "./pfe-autocomplete.js",
-    "./*": "./*.js",
-    "./*.js": "./*.js"
+    "./*": "./*"
   },
   "publishConfig": {
     "access": "public",

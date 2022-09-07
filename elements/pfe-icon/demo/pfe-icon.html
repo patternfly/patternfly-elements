@@ -4,16 +4,28 @@
 <section id="sizes">
   <h2>Icon Sizes</h2>
   <dl>
-    <dt>sm</dt><dd><pfe-icon set="patternfly" icon="home-alt" size="sm"></pfe-icon></dd>
-    <dt>md</dt><dd><pfe-icon set="patternfly" icon="home-alt" size="md"></pfe-icon></dd>
-    <dt>lg</dt><dd><pfe-icon set="patternfly" icon="home-alt" size="lg"></pfe-icon></dd>
-    <dt>xl</dt><dd><pfe-icon set="patternfly" icon="home-alt" size="xl"></pfe-icon></dd>
+    <dt>Small</dt><dd><pfe-icon icon="circle-play" size="sm"></pfe-icon></dd>
+    <dt>Medium</dt><dd><pfe-icon icon="circle-play" size="md"></pfe-icon></dd>
+    <dt>Large</dt><dd><pfe-icon icon="circle-play" size="lg"></pfe-icon></dd>
+    <dt>X-Large</dt><dd><pfe-icon icon="circle-play" size="xl"></pfe-icon></dd>
+  </dl>
+</section>
+
+<section id="colors">
+  <h2>Colors</h2>
+  <dl>
+    <dt>danger</dt><dd><pfe-icon class="danger" icon="circle-play" size="lg"></pfe-icon></dd>
+    <dt>default</dt><dd><pfe-icon class="default" icon="circle-play" size="lg"></pfe-icon></dd>
+    <dt>info</dt><dd><pfe-icon class="info" icon="circle-play" size="lg"></pfe-icon></dd>
+    <dt>success</dt><dd><pfe-icon class="success" icon="circle-play" size="lg"></pfe-icon></dd>
+    <dt>warning</dt><dd><pfe-icon class="warning" icon="circle-play" size="lg"></pfe-icon></dd>
+    <dt>disabled</dt><dd><pfe-icon class="disabled" icon="circle-play" size="lg"></pfe-icon></dd>
   </dl>
 </section>
 
 <section id="sets">
   <h2>Default Icon Sets</h2>
-  <pfe-autocomplete><input placeholder="icon-name"></pfe-autocomplete>
+  <pfe-autocomplete id="icon-search"><input placeholder="icon-name"></pfe-autocomplete>
   <p>Use the text field above to search for an icon name. Click the icon to copy it's HTML.</p>
   <p>PatternFly Icon comes with three built-in icon sets, the default is fontawesome solid</p>
   <output id="pfe-icon-demo-output"></output>

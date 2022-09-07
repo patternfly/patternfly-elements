@@ -43,7 +43,7 @@ const fuse = new Fuse(Array.from(iconSets, ([set, icons]) => icons.map(icon => (
   keys: ['icon'],
 });
 
-const search = document.querySelector('[data-demo] pfe-autocomplete');
+const search = document.getElementById('icon-search');
 search.autocompleteRequest = function({ query }, cb) {
   const results = fuse.search(query);
   cb(results.map(x => x.item.icon));

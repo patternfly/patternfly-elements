@@ -29,3 +29,17 @@ li button {
 li button:focus {
   color: gray;
 }
+
+dl {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: start;
+}
+
+#colors dt { text-transform: capitalize; }
+.danger { color: var(--pf-global--danger-color--200, #a30000); }
+.default { color: var(--pf-global--default-color--200, #009596); }
+.info { color: var(--pf-global--info-color--100, #2b9af3); }
+.success { color: var(--pf-global--success-color--100, #3e8635); }
+.warning { color: var(--pf-global--warning-color--100, #f0ab00); }
+.disabled { color: var(--pf-global--disabled-color--100, #6a6e73); }

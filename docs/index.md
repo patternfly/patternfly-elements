@@ -31,7 +31,7 @@ templateEngineOverride: njk,md
       <div class="pfe-l--text-align--center">
         <pfe-cta>
           <a href="{{ githubLink }}">
-            <pfe-icon size="md" style="--pfe-icon--Color: #666" icon="fas-github" aria-hidden="true"></pfe-icon>&nbsp;&nbsp;Contribute on GitHub
+            <pfe-icon size="md" style="color: #666" icon="github" set="fab" aria-hidden="true"></pfe-icon>&nbsp;&nbsp;Contribute on GitHub
           </a>
         </pfe-cta>
       </div>

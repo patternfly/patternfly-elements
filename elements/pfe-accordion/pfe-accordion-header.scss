@@ -21,9 +21,11 @@
   color:            pfe-local(Color); // broadcasted text
 
   box-shadow: pfe-local(BoxShadow); // default is none
+}
 
+pfe-icon {
   // Set the chevron to use the same color as the text
-  --pfe-icon--color: #{pfe-local(Color)};
+  color: #{pfe-local(Color)};
 
   // Note: 14px here gives us the 16px x 10.3px icon from designs
   // @TODO Should this use the ui-element variable?

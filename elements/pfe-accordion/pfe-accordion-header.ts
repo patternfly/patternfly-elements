@@ -133,7 +133,7 @@ export class PfeAccordionHeader extends LitElement {
             `}
           </span>
           <pfe-icon
-              icon="web-icon-caret-thin-right"
+              icon="caret-right"
               on-fail="collapse"
               part="icon"
               class="pf-c-accordion__toggle-icon"

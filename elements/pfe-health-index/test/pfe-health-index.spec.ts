@@ -1,9 +1,11 @@
+import type { SinonSpy } from 'sinon';
+
 import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 
 import { PfeHealthIndex } from '@patternfly/pfe-health-index';
 
-import { spy, SinonSpy } from 'sinon';
+import { spy } from 'sinon';
 
 describe('<pfe-health-index>', function() {
   let consoleSpy: SinonSpy;

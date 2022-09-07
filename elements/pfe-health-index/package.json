@@ -9,7 +9,7 @@
   "module": "./pfe-health-index.js",
   "exports": {
     ".": "./pfe-health-index.js",
-    "./*": "./*.js"
+    "./*": "./*"
   },
   "publishConfig": {
     "access": "public",

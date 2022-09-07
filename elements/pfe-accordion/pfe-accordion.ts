@@ -1,4 +1,5 @@
 import type { TemplateResult } from 'lit';
+import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core';
 
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
@@ -14,7 +15,7 @@ import {
   pfelement,
 } from '@patternfly/pfe-core/decorators.js';
 
-import { NumberListConverter, ComposedEvent, ColorPalette, ColorTheme } from '@patternfly/pfe-core';
+import { NumberListConverter, ComposedEvent } from '@patternfly/pfe-core';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 

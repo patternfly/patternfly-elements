@@ -1,6 +1,7 @@
-import { ReactiveController, ReactiveElement } from 'lit';
+import type { ReactiveController } from 'lit';
 import type { Context, ContextCallback, UnknownContext } from '../context.js';
 
+import { ReactiveElement } from 'lit';
 import { ContextEvent, createContext } from '../context.js';
 import { bound } from '../decorators/bound.js';
 import { Logger } from './logger.js';

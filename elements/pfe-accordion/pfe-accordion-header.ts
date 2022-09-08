@@ -1,8 +1,10 @@
+import type { ColorTheme } from '@patternfly/pfe-core';
+
 import { LitElement, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { unsafeStatic, html as staticH } from 'lit/static-html.js';
 
-import { ColorTheme, ComposedEvent } from '@patternfly/pfe-core';
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed, initializer, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';

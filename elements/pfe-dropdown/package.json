@@ -10,7 +10,7 @@
   "types": "./pfe-dropdown.d.ts",
   "exports": {
     ".": "./pfe-dropdown.js",
-    "./*": "./*.js"
+    "./*": "./*"
   },
   "publishConfig": {
     "access": "public",

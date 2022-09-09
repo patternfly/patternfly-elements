@@ -104,14 +104,8 @@
       "@patternfly/pfe-dropdown": [
         "./elements/pfe-dropdown/pfe-dropdown.ts"
       ],
-      "@patternfly/pfe-health-index": [
-        "./elements/pfe-health-index/pfe-health-index.ts"
-      ],
       "@patternfly/pfe-icon": [
         "./elements/pfe-icon/pfe-icon.ts"
-      ],
-      "@patternfly/pfe-icon-panel": [
-        "./elements/pfe-icon-panel/pfe-icon-panel.ts"
       ],
       "@patternfly/pfe-jump-links": [
         "./elements/pfe-jump-links/pfe-jump-links.ts"
@@ -119,14 +113,8 @@
       "@patternfly/pfe-label": [
         "elements/pfe-label/pfe-label.ts"
       ],
-      "@patternfly/pfe-markdown": [
-        "./elements/pfe-markdown/pfe-markdown.ts"
-      ],
       "@patternfly/pfe-modal": [
         "./elements/pfe-modal/pfe-modal.ts"
-      ],
-      "@patternfly/pfe-number": [
-        "./elements/pfe-number/pfe-number.ts"
       ],
       "@patternfly/pfe-page-status": [
         "./elements/pfe-page-status/pfe-page-status.ts"
@@ -207,25 +195,13 @@
       "path": "./elements/pfe-dropdown"
     },
     {
-      "path": "./elements/pfe-health-index"
-    },
-    {
       "path": "./elements/pfe-icon"
-    },
-    {
-      "path": "./elements/pfe-icon-panel"
     },
     {
       "path": "./elements/pfe-jump-links"
     },
     {
-      "path": "./elements/pfe-markdown"
-    },
-    {
       "path": "./elements/pfe-modal"
-    },
-    {
-      "path": "./elements/pfe-number"
     },
     {
       "path": "./elements/pfe-page-status"

@@ -35,7 +35,7 @@ describe('<pfe-timestamp>', function() {
 
   it('should show a passed in date with default formatting', async () => {
     const element = await createFixture<PfeTimestamp>(html`
-      <pfe-timestamp date="Sat Jan 01 2022 00:00:00 GMT-0500"></pfe-timestamp>
+      <pfe-timestamp date="Sat Jan 01 2022 00:00:00"></pfe-timestamp>
     `);
 
     const text = element.shadowRoot!.querySelector('time')!.textContent;

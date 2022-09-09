@@ -1,4 +1,4 @@
-# @patternfly/pfe-datetime
+# @patternfly/pfe-timestamp
 
 ## 2.0.0-next.4
 

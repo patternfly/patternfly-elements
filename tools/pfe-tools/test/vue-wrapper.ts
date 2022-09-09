@@ -46,7 +46,6 @@ export async function fixture<T extends Element = HTMLElement>(
     'pfe-codeblock',
     'pfe-collapse',
     'pfe-cta',
-    'pfe-datetime',
     'pfe-dropdown',
     'pfe-health-index',
     'pfe-icon',
@@ -62,6 +61,7 @@ export async function fixture<T extends Element = HTMLElement>(
     'pfe-readtime',
     'pfe-select',
     'pfe-tabs',
+    'pfe-timestamp',
     'pfe-toast',
   ];
 

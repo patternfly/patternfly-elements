@@ -1,0 +1,13 @@
+:host {
+    display: inline;
+}
+
+// @TODO: need a way to underline the text
+// if a tooltip is surrounding pfe-timestamp
+// :host(.has-tooltip) time {
+//     cursor: pointer;
+//     text-decoration: underline;
+//     text-decoration-style: dashed;
+//     text-decoration-thickness: 1px;
+//     text-underline-offset: 4px;
+// }

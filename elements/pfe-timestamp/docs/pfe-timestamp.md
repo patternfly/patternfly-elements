@@ -1,29 +1,6 @@
 {% renderOverview %}
   A timestamp provides consistent formats for displaying date and time values.
 
-  <pfe-timestamp
-  date="Mon Jan 2 15:04:05 EST 2006"
-  date-format="full"
-  time-format="long">
-</pfe-timestamp>
-
-<pfe-timestamp
-  date="Mon Jan 2 15:04:05 EST 2006"
-  date-format="full"
-  time-format="long"
-  locale="en-GB">
-</pfe-timestamp>
-
-<pfe-timestamp
-  date="Mon Jan 2 15:04:05 EST 2006"
-  relative>
-</pfe-timestamp>
-
-<pfe-timestamp
-  date="Mon Jan 2 15:04:05 EST 2006"
-  date-format="long">
-</pfe-timestamp>
-
   <div>Default:<strong><pfe-timestamp></pfe-timestamp></strong></div>
   <div>With a locale of es:<strong><pfe-timestamp time-format="medium" date-format="long" locale="es"></pfe-timestamp></strong></div>
   <div>Relative time:<strong><pfe-timestamp relative></pfe-timestamp></strong></div>

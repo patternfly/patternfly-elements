@@ -44,7 +44,7 @@ describe('<pfe-timestamp>', function() {
 
   it('should show custom formatting when date-format and time-format are passed in', async () => {
     const element = await createFixture<PfeTimestamp>(html`
-      <pfe-timestamp date="Sat Jan 01 2022 00:00:00 GMT-0500" date-format="full" time-format="short"></pfe-timestamp>
+      <pfe-timestamp date="Sat Jan 01 2022 00:00:00" date-format="full" time-format="short"></pfe-timestamp>
     `);
 
     const text = element.shadowRoot!.querySelector('time')!.textContent;
@@ -53,7 +53,7 @@ describe('<pfe-timestamp>', function() {
 
   it('should show only a date when date-format is passed in', async () => {
     const element = await createFixture<PfeTimestamp>(html`
-      <pfe-timestamp date="Sat Jan 01 2022 00:00:00 GMT-0500" date-format="full"></pfe-timestamp>
+      <pfe-timestamp date="Sat Jan 01 2022 00:00:00" date-format="full"></pfe-timestamp>
     `);
 
     const text = element.shadowRoot!.querySelector('time')!.textContent;
@@ -62,7 +62,7 @@ describe('<pfe-timestamp>', function() {
 
   it('should show only time when time-format is passed in', async () => {
     const element = await createFixture<PfeTimestamp>(html`
-      <pfe-timestamp date="Sat Jan 01 2022 00:00:00 GMT-0500" time-format="short"></pfe-timestamp>
+      <pfe-timestamp date="Sat Jan 01 2022 00:00:00" time-format="short"></pfe-timestamp>
     `);
 
     const text = element.shadowRoot!.querySelector('time')!.textContent;
@@ -71,7 +71,7 @@ describe('<pfe-timestamp>', function() {
 
   it('should show custom formatting when custom-format is passed in', async () => {
     const element = await createFixture<PfeTimestamp>(html`
-      <pfe-timestamp date="Sat Jan 01 2022 00:00:00 GMT-0500" custom-format='{ "year": "2-digit", "month": "short", "weekday": "short", "day": "numeric", "hour": "numeric" }'></pfe-timestamp>
+      <pfe-timestamp date="Sat Jan 01 2022 00:00:00" custom-format='{ "year": "2-digit", "month": "short", "weekday": "short", "day": "numeric", "hour": "numeric" }'></pfe-timestamp>
     `);
 
     const text = element.shadowRoot!.querySelector('time')!.textContent;
@@ -80,7 +80,7 @@ describe('<pfe-timestamp>', function() {
 
   it('should show a custom suffix when display-suffix is passed in', async () => {
     const element = await createFixture<PfeTimestamp>(html`
-      <pfe-timestamp date="Sat Jan 01 2022 00:00:00 GMT-0500" display-suffix="US Eastern"></pfe-timestamp>
+      <pfe-timestamp date="Sat Jan 01 2022 00:00:00" display-suffix="US Eastern"></pfe-timestamp>
     `);
 
     const text = element.shadowRoot!.querySelector('time')!.textContent;
@@ -89,7 +89,7 @@ describe('<pfe-timestamp>', function() {
 
   it('should show a 12 hour time when is-12-hour is passed in', async () => {
     const element = await createFixture<PfeTimestamp>(html`
-      <pfe-timestamp date="Sat Jan 01 2022 13:00:00 GMT-0500"></pfe-timestamp>
+      <pfe-timestamp date="Sat Jan 01 2022 13:00:00"></pfe-timestamp>
     `);
 
     const text = element.shadowRoot!.querySelector('time')!.textContent;
@@ -98,7 +98,7 @@ describe('<pfe-timestamp>', function() {
 
   it('should show a 24 hour time when is-12-hour is set to false', async () => {
     const element = await createFixture<PfeTimestamp>(html`
-      <pfe-timestamp date="Sat Jan 01 2022 13:00:00 GMT-0500" is-12-hour="false"></pfe-timestamp>
+      <pfe-timestamp date="Sat Jan 01 2022 13:00:00" is-12-hour="false"></pfe-timestamp>
     `);
 
     const text = element.shadowRoot!.querySelector('time')!.textContent;

@@ -1,8 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
-function readPackageVersion(modulePath) {
-  return JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'node_modules', modulePath, 'package.json'))).version;
+const packageLock = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'package-lock.json')));
+
+function readPackageVersion(module) {
+  // eslint-disable-next-line prefer-destructuring
+  return packageLock.packages[`node_modules/${module}`].version;
 }
 
 const LIT_VERSION = readPackageVersion('lit');

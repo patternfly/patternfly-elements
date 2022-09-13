@@ -85,8 +85,8 @@ module.exports = async function() {
 
   fs.readdirSync(path.join(__dirname, '..', '..', 'elements')).flatMap(component => {
     const base = component.replace('pfe-', '');
-    map.imports[component] = `/components/${base}/${component}.js`;
-    map.imports[`${component}/`] = `/components/${base}/`;
+    map.imports[`@patternfly/${component}`] = `/components/${base}/${component}.js`;
+    map.imports[`@patternfly/${component}/`] = `/components/${base}/`;
   });
 
   return map;

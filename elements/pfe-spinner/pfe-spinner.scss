@@ -1,0 +1,83 @@
+:host {
+  display: inline-block;
+  aspect-ratio: 1;
+  max-width: var(--pfe-progress-indicator-size, 2rem);
+  width: var(--pfe-progress-indicator-size, 2rem);
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+span,
+::slotted(*) {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0px, 0px, 0px, 0px);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0px;
+  border: 0px none;
+}
+
+#container {
+  aspect-ratio: 1;
+  max-width: var(--pfe-progress-indicator-size, 2rem);
+  width: var(--pfe-progress-indicator-size, 2rem);
+}
+
+:host([indeterminate]) #container::after {
+  content: '';
+  animation: spin 1s linear infinite;
+
+  box-sizing: border-box;
+  border-style: var(--pfe-theme--surface--border-style, solid);
+  border-width: var(--pfe-theme--surface--border-width--heavy, 4px);
+
+  // @todo 2.0: potentially make default color align with PatternFly, which is #06c
+  border-color: var(--pfe-progress-indicator--background-color, rgba(0, 0, 0, .25));
+  border-top-color: var(--pfe-progress-indicator--foreground-color, rgba(0, 0, 0, .75));
+
+  border-radius: 100%;
+
+  display: inline-block;
+  margin: 0 auto;
+  position: relative;
+  vertical-align: middle;
+  visibility: visible;
+  width: var(--pfe-progress-indicator-size, 2rem);
+  aspect-ratio: 1;
+
+  transform: rotate(0deg);
+}
+
+:host([size="sm"]) {
+  --pfe-progress-indicator-size: 1rem;
+   #container {
+    border-width: calc(var(--pfe-theme--surface--border-width--heavy, 4px) * .75);
+  }
+}
+
+:host([size="md"]) {
+  --pfe-progress-indicator-size: 2rem;
+   #container {
+    border-width: calc(var(--pfe-theme--surface--border-width--heavy, 4px) * 1);
+  }
+}
+
+:host([size="xl"]) {
+  --pfe-progress-indicator-size: 4rem;
+  #container {
+    border-width: calc(var(--pfe-theme--surface--border-width--heavy, 4px) * 1.5);
+  }
+}
+
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}

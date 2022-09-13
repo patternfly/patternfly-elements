@@ -4,14 +4,14 @@ const path = require('path');
 const packageLock = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'package-lock.json')));
 
 function readPackageVersion(module) {
-  return packageLock.packages[module].version;
+  return packageLock.packages[`node_modules/${module}`].version;
 }
 
-const LIT_VERSION = readPackageVersion('node_modules/lit');
-const POPPER_VERSION = readPackageVersion('node_modules/@popperjs/core');
-const MARKED_VERSION = readPackageVersion('node_modules/marked');
-const PRISM_VERSION = readPackageVersion('node_modules/prismjs');
-const PWA_HELPER_VERSION = readPackageVersion('node_modules/pwa-helpers');
+const LIT_VERSION = readPackageVersion('lit');
+const POPPER_VERSION = readPackageVersion('@popperjs/core');
+const MARKED_VERSION = readPackageVersion('marked');
+const PRISM_VERSION = readPackageVersion('prismjs');
+const PWA_HELPER_VERSION = readPackageVersion('pwa-helpers');
 
 const LIT_DEPS = [
   {

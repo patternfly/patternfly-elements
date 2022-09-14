@@ -1,19 +1,23 @@
-:host([bordered]) ::slotted(pfe-accordion-header:first-child) {
+:host([bordered][large]) ::slotted(pfe-accordion-header:first-child),
+:host([large]) ::slotted(pfe-accordion-header:first-child) {
   display: block;
   border-top: 1px solid #d2d2d2;
   border-bottom: 1px solid #d2d2d2;
 }
-:host([bordered]) ::slotted(pfe-accordion-header:not(:first-child)) {
+:host([bordered]) ::slotted(pfe-accordion-header:not(:first-child)),
+:host([large]) ::slotted(pfe-accordion-header:not(:first-child)) {
   display: block;
   border-bottom: 1px solid #d2d2d2;
 }
 
-:host([bordered]) ::slotted(pfe-accordion-header:is([expanded])) {
+:host([bordered][large]) ::slotted(pfe-accordion-header:is([expanded])),
+:host([large]) ::slotted(pfe-accordion-header:is([expanded])) {
   display: block;
   border-bottom: 0px;
 }
 
-:host([bordered]) ::slotted(pfe-accordion-panel:is([expanded])) {
+:host([bordered][large]) ::slotted(pfe-accordion-panel:is([expanded])),
+:host([large]) ::slotted(pfe-accordion-panel:is([expanded])) {
   display: block;
   border-bottom: 1px solid #d2d2d2;
 }

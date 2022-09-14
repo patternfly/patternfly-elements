@@ -21,9 +21,10 @@
     --pf-c-accordion__toggle--m-expanded__toggle-icon--Rotate: 90deg;
     --pf-c-accordion__toggle--FontSize: var(--pf-global--FontSize--lg, 1rem);
     --pf-c-accordion__toggle--FontFamily: var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,
-        "RedHatDisplayUpdated", "Overpass", overpass, helvetica, arial, sans-serif)
+        "RedHatDisplayUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
     color: var(--pf-global--Color--100, #151515);
     background-color: var(--pf-global--BackgroundColor--100);
+    --pfe-icon--size: var(--pf-c-accordion__toggle--IconSize, 10px)
   }
   
   #heading {

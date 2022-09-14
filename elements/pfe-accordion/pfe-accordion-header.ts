@@ -1,4 +1,4 @@
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 
 import '@patternfly/pfe-icon';
 import { BaseAccordionHeader } from './BaseAccordionHeader.js';

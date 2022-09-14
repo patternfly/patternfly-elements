@@ -1,3 +1,4 @@
+import type { ColorTheme } from '@patternfly/pfe-core';
 import type { IconNameResolverFn } from './icon-set.js';
 
 import { LitElement, html, svg } from 'lit';
@@ -13,7 +14,6 @@ import { PfeIconSet } from './icon-set.js';
 import { addBuiltIns } from './builtin-icon-sets.js';
 
 import style from './pfe-icon.scss';
-import { ColorTheme } from '@patternfly/pfe-core';
 
 export type IconColor = (
   | 'accent'

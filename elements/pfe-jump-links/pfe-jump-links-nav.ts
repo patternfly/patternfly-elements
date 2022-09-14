@@ -1,8 +1,10 @@
+import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core';
+
 import { LitElement, html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { customElement, property, query, state } from 'lit/decorators.js';
 
-import { ColorPalette, ColorTheme, ComposedEvent } from '@patternfly/pfe-core';
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed, colorContextConsumer, deprecation, colorContextProvider } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';

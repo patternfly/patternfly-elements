@@ -254,7 +254,9 @@ export abstract class BaseTabs extends LitElement {
     if (!newVal || newVal === oldVal) {
       return;
     }
-    newVal.focusButton();
+    if (oldVal) {
+      newVal.focusButton();
+    }
   }
 
   @bound

@@ -8,7 +8,6 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import style from './pfe-tab.scss';
 
-
 export class PfeTabExpandEvent extends ComposedEvent {
   constructor(
     public selected: 'true' | 'false',

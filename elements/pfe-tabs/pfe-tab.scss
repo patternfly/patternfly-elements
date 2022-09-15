@@ -34,12 +34,12 @@
   --pf-c-tabs__link--before--BorderBottomColor: var(--pf-c-tabs__link--BackgroundColor);
 }
 
-:host(.pfe-tab-first[box][aria-selected="true"]) button::before {
+:host(.first[box][aria-selected="true"]) button::before {
   // .pf-c-tabs.pf-m-box .pf-c-tabs__item.pf-m-current:first-child .pf-c-tabs__link::before {
   border-left-width: var(--pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderLeftWidth);
 }
 
-:host(.pfe-tab-last[box][aria-selected="true"]) button::before {
+:host(.last[box][aria-selected="true"]) button::before {
   // .pf-c-tabs.pf-m-box .pf-c-tabs__item.pf-m-current:last-child .pf-c-tabs__link::before {
   border-right-width: var(--pf-c-tabs--m-box__item--m-current--last-child__link--before--BorderRightWidth);
 }
@@ -70,7 +70,7 @@
 
 // ???
 // This combo host most likely will not work
-:host(.pfe-tab-first[box][vertical]) button::after,
+:host(.first[box][vertical]) button::after,
 :host([box][vertical][aria-selected="true"]) + :host button::after {
 // .pf-c-tabs.pf-m-box.pf-m-vertical .pf-c-tabs__item:first-child .pf-c-tabs__link::after,
 // .pf-c-tabs.pf-m-box.pf-m-vertical .pf-c-tabs__item.pf-m-current + .pf-c-tabs__item .pf-c-tabs__link::after {

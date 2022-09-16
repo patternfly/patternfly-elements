@@ -221,6 +221,7 @@ export abstract class BaseTabs extends LitElement {
       const selected = this.#allTabs().find(tab => tab === event.target as BaseTab);
       if (selected) {
         this.current = selected;
+        this.focused = selected;
       }
     }
   }
@@ -275,11 +276,13 @@ export abstract class BaseTabs extends LitElement {
         break;
 
       case 'Home':
-        this.#firstFocusable();
+        event.preventDefault();
+        this.#focusTab(this.#firstFocusable());
         break;
 
       case 'End':
-        this.#lastFocusable();
+        event.preventDefault();
+        this.#focusTab(this.#lastFocusable());
         break;
 
       default:

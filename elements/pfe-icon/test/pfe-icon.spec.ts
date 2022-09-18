@@ -73,18 +73,15 @@ describe('<pfe-icon>', function() {
         expectIconsEqual(getter('rh', iconName));
       }
     });
-  });
 
-  it('should change color when pfe-icon\'s color CSS property is changed', async function() {
-    // we can't get the exact color of the image, but we can make sure
-    // the feFlood element is getting `flood-color` from the appropriate
-    // CSS variable.
-    const newColor = 'rgb(11, 12, 13)';
-    element.style.setProperty('color', newColor);
-    element.icon = 'atom';
-    await oneEvent(element, 'load');
-    const color = getComputedStyle(element.shadowRoot!.querySelector('svg')!).getPropertyValue('color');
-    expect(color).to.equal(newColor);
+    it('should change color when pfe-icon\'s color CSS property is changed', async function() {
+      const newColor = 'rgb(11, 12, 13)';
+      element.style.setProperty('color', newColor);
+      element.icon = 'atom';
+      await oneEvent(element, 'load');
+      const color = getComputedStyle(element.shadowRoot!.querySelector('svg')!).getPropertyValue('color');
+      expect(color).to.equal(newColor);
+    });
   });
 
   it('should change size based on the relative size attribute values', async function() {

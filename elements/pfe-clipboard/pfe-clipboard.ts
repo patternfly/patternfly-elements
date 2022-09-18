@@ -1,7 +1,9 @@
+import type { ColorTheme } from '@patternfly/pfe-core';
+
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import { ColorTheme, ComposedEvent } from '@patternfly/pfe-core';
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { pfelement, bound, observed, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';

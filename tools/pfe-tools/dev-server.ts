@@ -13,7 +13,6 @@ import { fileURLToPath } from 'node:url';
 
 import rollupReplace from '@rollup/plugin-replace';
 import nunjucks from 'nunjucks';
-import slugify from 'slugify';
 import _glob from 'glob';
 
 import { litCss } from 'web-dev-server-plugin-lit-css';
@@ -26,8 +25,8 @@ import { promisify } from 'node:util';
 
 import Router from '@koa/router';
 import { Manifest } from './custom-elements-manifest/lib/Manifest.js';
-import { getPfeConfig } from './config.js';
 import { makeDemoEnv } from './esbuild-plugins/pfe-env.js';
+import { getPfeConfig, deslugify } from './config.js';
 
 const glob = promisify(_glob);
 const require = createRequire(import.meta.url);
@@ -44,6 +43,7 @@ export interface PfeDevServerConfigOptions extends Base {
   hostname?: string;
   importMap?: InjectSetting['importMap'];
   litcssOptions?: LitCSSOptions,
+  tsconfig?: string;
   /** Extra dev server plugins */
   loadDemo?: boolean;
   plugins?: Plugin[];
@@ -143,13 +143,6 @@ async function renderURL(context: Context, options: PfeDevServerInternalConfig):
  * Watch repository source files and reload the page when they change
  */
 function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
-  const DESLUGIFIED = Object.fromEntries(Object.entries(options.aliases)
-    .map(([tagName, alias]) => [slugify(alias).toLowerCase(), tagName]));
-
-  function deslugify(slug: string) {
-    return DESLUGIFIED[slug] ?? `${options.tagPrefix}-${slug}`;
-  }
-
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
@@ -163,7 +156,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
         .get('/components/:slug/demo/:sub?/:fileName', (ctx, next) => {
           const { slug, fileName } = ctx.params;
           if (fileName.includes('.')) {
-            const tagName = deslugify(slug);
+            const tagName = deslugify(slug, options.rootDir);
             const redir = `/elements/${tagName}/demo/${fileName === 'index.html' ? tagName : fileName}`;
             ctx.redirect(redir);
           }
@@ -241,6 +234,8 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
     .replace(/\/node_modules$/, '/')
     .replace('//', '/');
 
+  const tsconfig = options?.tsconfig;
+
   return {
     rootDir,
 
@@ -272,8 +267,8 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       // serve typescript sources as javascript
       esbuildPlugin({
         ts: true,
-        // see https://github.com/evanw/esbuild/issues/2220
-        target: 'es2020'
+        target: 'es2022',
+        tsconfig,
       }),
 
       // load .scss files as lit CSSResult modules

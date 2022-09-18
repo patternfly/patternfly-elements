@@ -30,7 +30,7 @@
     "./test/utils.js": "./test/utils.js",
     "./test/vue-wrapper.js": "./test/vue-wrapper.js",
     "./*.js": "./*.js",
-    "./*": "./*.js"
+    "./*": "./*"
   },
   "contributors": [
     "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",

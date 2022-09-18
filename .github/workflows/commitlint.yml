@@ -40,7 +40,7 @@ jobs:
       - name: Validate conventional commit format for title
         id: prTitle
         if: ${{ steps.commitlint.outcome == 'failure' }}
-        uses: aslafy-z/conventional-pr-title-action@v2.2.0
+        uses: aslafy-z/conventional-pr-title-action@v2.4.4
         continue-on-error: true
         with:
           success-state: Title follows the conventional commit format.
@@ -58,7 +58,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const results = ${{ steps.commitlint.outputs.results }};
-            const titleGood = ${{ steps.prTitle.outcome == 'success' }};
+            const titleGood = ${{ steps.prTitle.output.success }};
 
             const totalErrors = results.reduce((a, r) => a + r.errors.length, 0);
             const totalWarnings = results.reduce((a, r) => a + r.warnings.length, 0);

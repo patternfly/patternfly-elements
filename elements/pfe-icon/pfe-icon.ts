@@ -14,6 +14,8 @@ const ric = window.requestIdleCallback ?? window.requestAnimationFrame;
  * PatternFly Icon component lazy-loads icons and allows custom icon sets
  *
  * @slot - Slotted content is used as a fallback in case the icon doesn't load
+ * @fires load - Fired when icon is loaded and rendered
+ * @fires error - Fired when icon fails to load
  * @csspart fallback - Container for the fallback (i.e. slotted) content
  */
 @customElement('pfe-icon')
@@ -24,20 +26,36 @@ export class PfeIcon extends LitElement {
 
   public static defaultIconSet = 'fas';
 
-  public static addIconSet(set: string, getter: typeof PfeIcon['getIconUrl']) {
-    this.getters.set(set, getter);
+  public static addIconSet(setName: string, getter: typeof PfeIcon['getIconUrl']) {
+    if (typeof getter !== 'function') {
+      Logger.warn('[PfeIcon.addIconSet(setName, getter)]: getter must be a function');
+    } else {
+      this.getters.set(setName, getter);
+      for (const instance of this.instances) {
+        instance.load();
+      }
+    }
   }
 
   public static getIconUrl: URLGetter = (set: string, icon: string) =>
     new URL(`./icons/${set}/${icon}.js`, import.meta.url);
 
   private static onIntersect: IntersectionObserverCallback = records =>
-    records.forEach(({ isIntersecting, target }) => ric(() =>
-      isIntersecting && target instanceof PfeIcon && target.load()));
+    records.forEach(({ isIntersecting, target }) => {
+      const icon = target as PfeIcon;
+      icon.#intersecting = isIntersecting;
+      ric(() => {
+        if (icon.#intersecting) {
+          icon.load();
+        }
+      });
+    });
 
   private static io = new IntersectionObserver(PfeIcon.onIntersect);
 
   private static getters = new Map<string, URLGetter>();
+
+  private static instances = new Set();
 
   /** Icon set */
   @property() set = PfeIcon.defaultIconSet;
@@ -63,17 +81,35 @@ export class PfeIcon extends LitElement {
   /** Icon content. Any value that lit can render */
   @state() private content?: unknown;
 
+  #intersecting = false;
+
   #logger = new Logger(this);
+
+  #lazyLoad() {
+    PfeIcon.io.observe(this);
+    if (this.#intersecting) {
+      this.load();
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    PfeIcon.instances.add(this);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    PfeIcon.instances.delete(this);
+  }
 
   render() {
     const ariaHidden = String(!this.label) as 'true'|'false';
-    const { content, label } = this;
     return html`
       <div id="container"
-          aria-label=${ifDefined(label)}
+          aria-label=${ifDefined(this.label)}
           aria-hidden=${ariaHidden}>
-        ${content}
-        <span part="fallback" ?hidden=${!!content}>
+        ${this.content ?? ''}
+        <span part="fallback" ?hidden=${!!this.content}>
           <slot></slot>
         </span>
       </div>
@@ -83,7 +119,7 @@ export class PfeIcon extends LitElement {
   protected async _iconChanged() {
     switch (this.loading) {
       case 'idle': return void ric(() => this.load());
-      case 'lazy': return void PfeIcon.io.observe(this);
+      case 'lazy': return void this.#lazyLoad();
       case 'eager': return void this.load();
     }
   }
@@ -96,8 +132,12 @@ export class PfeIcon extends LitElement {
       try {
         ({ pathname } = getter(set, icon));
         this.content = await import(pathname).then(m => m.default);
+        await this.updateComplete;
+        this.dispatchEvent(new Event('load', { bubbles: true }));
       } catch (error: unknown) {
-        this.#logger.error(`Could not load ${pathname}`, (error as Error).message);
+        const message = `Could not load icon at ${pathname}`;
+        this.dispatchEvent(new ErrorEvent('error', { message }));
+        this.#logger.error(message);
       }
     }
   }

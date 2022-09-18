@@ -1,8 +1,9 @@
 import { expect, fixture, oneEvent } from '@open-wc/testing';
 import { html, render } from 'lit';
 
-import { spy } from 'sinon';
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
+import '@patternfly/pfe-tools/test/stub-logger.js';
 import { PfeIcon } from '@patternfly/pfe-icon';
 
 describe('<pfe-icon>', function() {
@@ -31,24 +32,16 @@ describe('<pfe-icon>', function() {
   });
 
   it('should warn if the 2nd argument to addIconSet is not a function', function() {
-    const consoleSpy = spy(console, 'warn');
-
     // @ts-expect-error: 3rd input is a string
     PfeIcon.addIconSet('test', './', 'rh-icon-aed.svg');
-    expect(consoleSpy).to.have.been.calledOnceWith(`[PfeIcon.addIconSet(setName, getter)]: getter must be a function`);
-
-    consoleSpy.restore();
+    expect(Logger.warn).to.have.been.calledOnceWith(`[PfeIcon.addIconSet(setName, getter)]: getter must be a function`);
   });
 
   it('should warn if there is no function provided to resolve the icon names', function() {
-    const consoleSpy = spy(console, 'warn');
-
     // @ts-expect-error: testing bad input
     PfeIcon.addIconSet('test', './');
 
-    expect(consoleSpy).to.have.been.calledOnceWith('[PfeIcon.addIconSet(setName, getter)]: getter must be a function');
-
-    consoleSpy.restore();
+    expect(Logger.warn).to.have.been.calledOnceWith('[PfeIcon.addIconSet(setName, getter)]: getter must be a function');
   });
 
   describe('with a custom icon set', function() {
@@ -66,13 +59,13 @@ describe('<pfe-icon>', function() {
       element.set = 'rh';
     });
 
-    it('should change icon when icon name is changed', async function() {
-      // wait for each test icon to be loaded, then move to the next one
-      for (const iconName of testIcons) {
+    for (const iconName of testIcons) {
+      it('loads icons', async function() {
+        // wait for each test icon to be loaded, then move to the next one
         element.icon = iconName;
-        expectIconsEqual(getter('rh', iconName));
-      }
-    });
+        await expectIconsEqual(getter('rh', iconName));
+      });
+    }
 
     it('should change color when pfe-icon\'s color CSS property is changed', async function() {
       const newColor = 'rgb(11, 12, 13)';
@@ -84,23 +77,20 @@ describe('<pfe-icon>', function() {
     });
   });
 
-  it('should change size based on the relative size attribute values', async function() {
-    // a function that accepts "size" values and makes sure they're
-    // arranged in order from smallest to largest.
-    async function sizeCheck(sizes: PfeIcon['size'][]) {
-      let lastSize = { width: 0, height: 0 };
-      for (const size of sizes) {
-        element.setAttribute('size', size);
+  describe('changing size attribute', function() {
+    const sizes: PfeIcon['size'][] = ['sm', 'md', 'lg', 'xl'];
+    let lastSize = { width: 0, height: 0 };
+
+    for (const size of sizes) {
+      it('should change size based on the attribute value', async function() {
+        element.size = size;
         await element.updateComplete;
         const { width, height } = element.getBoundingClientRect();
         expect(width, `size "${size}" should be wider than the size below`).to.be.greaterThan(lastSize.width);
         expect(height, `size "${size}" should be taller than the size below`).to.be.greaterThan(lastSize.height);
         lastSize = { width, height };
-      }
+      });
     }
-
-    // test all the valid values for "size"
-    await sizeCheck(['sm', 'md', 'lg', 'xl']);
   });
 
   it('should hide the fallback when it successfully upgrades', async function() {

@@ -3,6 +3,7 @@ import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfeLabel } from '@patternfly/pfe-label';
 import { getColor, hexToRgb } from '@patternfly/pfe-tools/test/hex-to-rgb.js';
 import { PfeIcon } from '@patternfly/pfe-icon';
+import '@patternfly/pfe-tools/test/stub-logger.js';
 
 const example = html`
   <pfe-label>Default</pfe-label>

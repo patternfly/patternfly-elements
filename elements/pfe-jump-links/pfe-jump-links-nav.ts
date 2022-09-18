@@ -538,10 +538,6 @@ export class PfeJumpLinksNav extends LitElement {
 
     // If the stickiness changes, update the sticky navigation offset
     window.addEventListener('pfe-jump-links-nav:stuck', this._updateOffset);
-
-    // @TODO respond to URL change? Ensure anchor link alignment accounts for sticky nav(s)
-    // window.addEventListener("locationchange", (evt) => console.log("locationchange", evt));
-    // window.addEventListener("hashchange", (evt) => console.log("hashchange", evt));
   }
 
   /**
@@ -559,10 +555,6 @@ export class PfeJumpLinksNav extends LitElement {
 
     // If the stickiness changes, update the sticky navigation offset
     window.removeEventListener('pfe-jump-links-nav:stuck', this._updateOffset);
-
-    // @TODO respond to URL change? Ensure anchor link alignment accounts for sticky nav(s)
-    // window.removeEventListener("locationchange", (evt) => console.log("locationchange", evt));
-    // window.removeEventListener("hashchange", (evt) => console.log("hashchange", evt));
   }
 
   @bound private _buildItem(data: ItemData, isSubSection = false) {

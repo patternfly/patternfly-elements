@@ -5,9 +5,12 @@ import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfeTabs } from '@patternfly/pfe-tabs';
 import { PfeTab } from '@patternfly/pfe-tabs/pfe-tab';
 
+import '@patternfly/pfe-tools/test/stub-logger.js';
+
 import '@patternfly/pfe-tabs';
 
 import sinon from 'sinon';
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 /* @TODO: Add focus-state tests to validate against document.activeElement */
 
@@ -407,13 +410,11 @@ describe('<pfe-tabs>', function() {
   it(`should throw an error when passing a bad index value to the selectIndex method`, async function() {
     const tabs = await createFixture<PfeTabs>(TEMPLATES.default)!;
     const badIndex = 5;
-    const spy = sinon.spy(console, 'warn');
-
     tabs.selectIndex(badIndex);
 
     await aTimeout(50);
 
-    sinon.assert.calledWith(spy, '[pfe-tabs#default]', `tab ${badIndex} does not exist`);
+    expect(Logger.warn).to.have.been.calledWith('[pfe-tabs#default]', `tab ${badIndex} does not exist`);
   });
 
   it('should fire a pfe-tabs:hidden-tab event when a tab is closed', async function() {

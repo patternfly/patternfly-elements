@@ -6,7 +6,9 @@ import { expect, oneEvent, html, nextFrame } from '@open-wc/testing';
 import { sendMouse } from '@web/test-runner-commands';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { getElementPosition } from '@patternfly/pfe-tools/test/utils.js';
-import { spy } from 'sinon';
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
+
+import '@patternfly/pfe-tools/test/stub-logger.js';
 
 // Import the element we're testing.
 import { PfeCta } from '@patternfly/pfe-cta';
@@ -30,22 +32,18 @@ describe('<pfe-cta>', function() {
   });
 
   it('should log a warning if there are no children in the light DOM', async function() {
-    const warnSpy = spy(console, 'warn');
     const pfeCta = await createFixture<PfeCta>(html`<pfe-cta>This is wrong</pfe-cta>`);
 
     await pfeCta.updateComplete;
 
-    expect(warnSpy)
+    expect(Logger.warn)
       .to.have.been.calledOnceWith(
         '[pfe-cta]',
         'The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)'
       );
-
-    warnSpy.restore();
   });
 
   it('should log a warning if the first child in the light DOM is not an anchor', async function() {
-    const warnSpy = spy(console, 'warn');
     const pfeCta = await createFixture<PfeCta>(html`
       <pfe-cta>
         <p>Something</p>
@@ -55,16 +53,13 @@ describe('<pfe-cta>', function() {
 
     await pfeCta.updateComplete;
 
-    expect(warnSpy).to.have.been.calledOnceWith(
+    expect(Logger.warn).to.have.been.calledOnceWith(
       '[pfe-cta]',
       'The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)'
     );
-
-    warnSpy.restore();
   });
 
   it(`it should log a warning if the first child in the light DOM is a default style button`, async function() {
-    const warnSpy = spy(console, 'warn');
     const pfeCta = await createFixture<PfeCta>(html`
       <pfe-cta>
         <button>A button</button>
@@ -73,12 +68,10 @@ describe('<pfe-cta>', function() {
 
     await pfeCta.updateComplete;
 
-    expect(warnSpy).to.have.been.calledOnceWith(
+    expect(Logger.warn).to.have.been.calledOnceWith(
       '[pfe-cta]',
       'Button tag is not supported semantically by the default link styles'
     );
-
-    warnSpy.restore();
   });
 
   it('should properly initialize when the contents of the slot change', async function() {

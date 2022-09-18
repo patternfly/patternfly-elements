@@ -103,7 +103,7 @@ jobs:
             core.setOutput('comment', comment);
 
       - name: Notify PR
-        if: ${{ steps.commitlint.outcome == 'failure' && steps.prTitle.outcome == 'failure' }}
+        if: ${{ steps.commitlint.outcome == 'failure' && steps.prTitle.outputs.success == 'false' }}
         id: comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
@@ -113,7 +113,7 @@ jobs:
             ${{ steps.format.outputs.comment }}
 
       - name: Fail Job on Error
-        if: ${{ steps.commitlint.outcome == 'failure' && steps.prTitle.outcome == 'failure' }}
+        if: ${{ steps.commitlint.outcome == 'failure' && steps.prTitle.outputs.success == 'false' }}
         uses: actions/github-script@v6
         with:
           script: |

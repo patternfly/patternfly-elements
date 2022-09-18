@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import slugify from 'slugify';
 
 interface SiteOptions {
   /** The site's default page description */
@@ -63,4 +64,21 @@ export function getPfeConfig(rootDir = process.cwd()): Required<PfeConfig> {
       ...jsonConfig.site ?? {}
     }
   };
+}
+
+const slugsConfigMap = new Map<string, { config: PfeConfig, slugs: Map<string, string> }>();
+const reverseSlugifyObject = ([k, v]: [string, string]): [string, string] =>
+  [slugify(v).toLowerCase(), k];
+function getSlugsMap(rootDir: string) {
+  if (!slugsConfigMap.get(rootDir)) {
+    const config = getPfeConfig(rootDir);
+    const slugs = new Map(Object.entries(config.aliases).map(reverseSlugifyObject));
+    slugsConfigMap.set(rootDir, { slugs, config });
+  }
+  return slugsConfigMap.get(rootDir)!;
+}
+
+export function deslugify(slug: string, rootDir = process.cwd()): string {
+  const { slugs, config } = getSlugsMap(rootDir);
+  return slugs.get(slug) ?? `${config.tagPrefix}-${slug}`;
 }

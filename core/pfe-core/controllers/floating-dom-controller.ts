@@ -49,6 +49,18 @@ const createPopper = popperGenerator({
 export class FloatingDOMController implements ReactiveController {
   #open = false;
 
+  #popper: Instance | undefined;
+
+  #initialized = false;
+
+  get initialized() {
+    return this.#initialized;
+  }
+
+  set initialized(v: boolean) {
+    this.#initialized = v; this.host.requestUpdate();
+  }
+
   /**
    * When true, the floating DOM is visible
    */
@@ -63,8 +75,6 @@ export class FloatingDOMController implements ReactiveController {
     }
     this.host.requestUpdate();
   }
-
-  #popper: Instance | undefined;
 
   constructor(private host: ReactiveElement) {
     host.addController(this);
@@ -84,22 +94,25 @@ export class FloatingDOMController implements ReactiveController {
 
   /** Initialize the floating DOM */
   create(invoker: Element, content: HTMLElement, placement: Placement, offset?: number[]): void {
-    this.#popper = createPopper(invoker, content, {
-      placement,
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset
-          }
-        },
-        {
-          name: 'flip',
-          options: {
-            fallbackPlacements: ['top', 'right', 'left', 'bottom'],
+    if (invoker && content) {
+      this.#popper ??= createPopper(invoker, content, {
+        placement,
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset
+            }
           },
-        }
-      ]
-    });
+          {
+            name: 'flip',
+            options: {
+              fallbackPlacements: ['top', 'right', 'left', 'bottom'],
+            },
+          }
+        ]
+      });
+      this.initialized ||= true;
+    }
   }
 }

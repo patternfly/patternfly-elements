@@ -100,9 +100,7 @@ describe('<pfe-label>', function() {
     const el = await createFixture<PfeLabel>(exampleWithIconAttribute);
     await el.updateComplete;
     const icon = el.shadowRoot!.querySelector('pfe-icon')!;
-    const image = icon.shadowRoot!.querySelector('svg image')!;
-    setTimeout(() => icon.setAttribute('icon', 'rh-bike'));
-    await oneEvent(image, 'load');
+    expect(icon.icon).to.equal(el.icon);
   });
 
   it('should not render a pfe-icon if the icon attribute is present but empty', async function() {

@@ -67,6 +67,19 @@ describe('<pfe-icon>', function() {
       });
     }
 
+    it('should hide the fallback when it successfully upgrades', async function() {
+      element.innerHTML = `<p>Icon failed to load.</p>`;
+      // Check that the fallback is hidden when the icon is successfully loaded
+      element.icon = 'bike';
+      await oneEvent(element, 'load');
+      expect(element).shadowDom.to.equal(`
+      <div id="container" aria-hidden="true">
+        <span part="fallback" hidden>
+          <slot></slot>
+        </span>
+      </div>`);
+    });
+
     it('should change color when pfe-icon\'s color CSS property is changed', async function() {
       const newColor = 'rgb(11, 12, 13)';
       element.style.setProperty('color', newColor);
@@ -91,19 +104,6 @@ describe('<pfe-icon>', function() {
         lastSize = { width, height };
       });
     }
-  });
-
-  it('should hide the fallback when it successfully upgrades', async function() {
-    element.innerHTML = `<p>Icon failed to load.</p>`;
-    // Check that the fallback is hidden when the icon is successfully loaded
-    element.icon = 'atom';
-    await oneEvent(element, 'load');
-    expect(element).shadowDom.to.equal(`
-      <div id="container" aria-hidden="true">
-        <span part="fallback" hidden>
-          <slot></slot>
-        </span>
-      </div>`);
   });
 
   it(`should fetch an icon even when the icon set is registered after the element upgrades`, async function() {

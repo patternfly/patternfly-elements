@@ -1,4 +1,4 @@
-import { expect, html, oneEvent } from '@open-wc/testing';
+import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfeLabel } from '@patternfly/pfe-label';
 import { getColor, hexToRgb } from '@patternfly/pfe-tools/test/hex-to-rgb.js';

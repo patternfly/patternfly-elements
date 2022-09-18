@@ -17,7 +17,7 @@ const names = new Map([
 ]);
 
 async function copy(event) {
-  const { html, icon } = event.target.closest('[data-icon]').dataset;
+  const { html } = event.target.closest('[data-icon]').dataset;
   await navigator.clipboard.writeText(html);
 }
 

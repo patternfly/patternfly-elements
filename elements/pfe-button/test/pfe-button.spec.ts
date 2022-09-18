@@ -1,4 +1,4 @@
-import { expect, html, oneEvent } from '@open-wc/testing';
+import { expect, html } from '@open-wc/testing';
 import { spy } from 'sinon';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfeButton } from '@patternfly/pfe-button';

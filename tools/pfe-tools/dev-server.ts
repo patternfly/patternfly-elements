@@ -147,7 +147,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
       app.use(new Router()
-        .get('/tools/pfe-tools/environment.js(.js)?', async (ctx, next) => {
+        .get('/tools/pfe-tools/environment.js(.js)?', async ctx => {
           ctx.body = await makeDemoEnv(options.rootDir);
           ctx.type = 'application/javascript';
         })

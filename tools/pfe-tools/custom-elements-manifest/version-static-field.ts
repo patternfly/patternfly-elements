@@ -1,4 +1,4 @@
-import type { Declaration, ClassField, ClassDeclaration, ClassMember, CustomElement } from 'custom-elements-manifest/schema';
+import type { Declaration, ClassField, ClassDeclaration, ClassMember } from 'custom-elements-manifest/schema';
 import type { Plugin } from '@custom-elements-manifest/analyzer';
 
 import { readFileSync } from 'node:fs';

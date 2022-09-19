@@ -3,6 +3,9 @@
   "include": [
     "./**/*"
   ],
+  "exclude": [
+    "./icons/**/*.js"
+  ],
   "compilerOptions": {
     "module": "esnext",
     "resolveJsonModule": true,

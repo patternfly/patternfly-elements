@@ -31,9 +31,25 @@ li button:focus {
 }
 
 dl {
-  display: grid;
-  grid-template-columns: max-content max-content;
-  align-items: start;
+  display: flex;
+  flex-flow: row wrap;
+  gap: var(--pf-global--spacer--md, 1rem);
+  align-items: end;
+}
+
+dl div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+dd, dt {
+  margin: 0;
+}
+
+dt {
+  order: 1;
 }
 
 #colors dt { text-transform: capitalize; }

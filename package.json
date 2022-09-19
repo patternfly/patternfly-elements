@@ -71,6 +71,7 @@
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
     "@commitlint/config-lerna-scopes": "^17.0.2",
+    "@jspm/generator": "^1.0.0-beta.33",
     "@types/koa__router": "^8.0.11",
     "@types/numeral": "^2.0.2",
     "@types/prismjs": "^1.26.0",

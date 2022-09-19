@@ -89,7 +89,7 @@ module.exports = async function() {
   map.imports['@patternfly/pfe-core/decorators.js'] = '/core/core/decorators.js';
   map.imports['@patternfly/pfe-core/decorators/'] = '/core/core/decorators/';
   map.imports['@patternfly/pfe-core/'] = '/core/core/';
-
+  map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
 
   fs.readdirSync(path.join(__dirname, '..', '..', 'elements')).flatMap(component => {
     const base = component.replace('pfe-', '');

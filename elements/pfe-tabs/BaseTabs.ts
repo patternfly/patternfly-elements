@@ -15,6 +15,8 @@ export abstract class BaseTabs extends LitElement {
 
   #logger = new Logger(this);
 
+  private _initialized = false;
+
   @query('#tabs') _tabList!: HTMLElement;
 
   @queryAssignedElements({ slot: 'tab' }) protected _tabs!: BaseTab[];
@@ -50,8 +52,8 @@ export abstract class BaseTabs extends LitElement {
     super.connectedCallback();
     this.addEventListener('tab-expand', this._tabExpandEventHandler);
     this.addEventListener('keydown', this._onKeyDownHandler);
-    this.#updateAccessibility();
     await this.updateComplete;
+    this.#updateAccessibility();
     this._handleScrollButtons();
     this._tabList.addEventListener('scroll', this._handleScrollButtons);
     // on resize check for overflows
@@ -81,12 +83,12 @@ export abstract class BaseTabs extends LitElement {
     `;
   }
 
-  #allTabs(): BaseTab[] {
-    return this._tabs.filter(BaseTabs.isTab);
+  protected _allTabs(): BaseTab[] {
+    return this._tabs.filter(tab => BaseTabs.isTab(tab));
   }
 
-  #allPanels(): BaseTabPanel[] {
-    return this._panels.filter(BaseTabs.isPanel);
+  protected _allPanels(): BaseTabPanel[] {
+    return this._panels.filter(panel => BaseTabs.isPanel(panel));
   }
 
   #focusableTabIndex(element: BaseTab): number | null {
@@ -98,7 +100,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #focusableTabs(): BaseTab[] {
-    return this.#allTabs().filter(tab => !tab.disabled);
+    return this._allTabs().filter(tab => !tab.disabled);
   }
 
   #focusTab(tab: BaseTab | undefined) {
@@ -111,11 +113,11 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #activate(key: number): void {
-    let tab = this.#allTabs()[key];
+    let tab = this._allTabs()[key];
     if (tab === undefined) {
       this.#logger.warn(`Tab at active key: ${key} does not exist`);
       // if tab doesn't exist return first of set
-      [tab] = this.#allTabs();
+      [tab] = this._allTabs();
     }
     if (tab.disabled) {
       this.#logger.warn(`Tab at active key: ${key} is disabled`);
@@ -126,24 +128,24 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #first(): BaseTab {
-    const [firstTab] = this.#allTabs();
+    const [firstTab] = this._allTabs();
     return firstTab;
   }
 
   #last(): BaseTab | undefined {
-    const lastTab = this.#allTabs().slice(-1).pop();
+    const lastTab = this._allTabs().slice(-1).pop();
     return lastTab;
   }
 
   #firstFocusable(): BaseTab | undefined {
     const [firstTab] = this.#focusableTabs();
-    return this.#allTabs().find(tab => tab.id === firstTab.id);
+    return this._allTabs().find(tab => tab.id === firstTab.id);
   }
 
   #lastFocusable(): BaseTab | undefined {
     const lastTab = this.#focusableTabs().slice(-1).pop();
     if (lastTab) {
-      return this.#allTabs().find(tab => tab.id === lastTab.id);
+      return this._allTabs().find(tab => tab.id === lastTab.id);
     }
   }
 
@@ -159,7 +161,7 @@ export abstract class BaseTabs extends LitElement {
       const newKey = key + 1;
       if (newKey < total) {
         const nextTab = this.#focusableTabs()[key + 1];
-        const found = this.#allTabs().find(tab => tab.id === nextTab.id);
+        const found = this._allTabs().find(tab => tab.id === nextTab.id);
         this.#focusTab(found);
       } else {
         const first = this.#firstFocusable();
@@ -179,7 +181,7 @@ export abstract class BaseTabs extends LitElement {
     const key = this.#focusableTabIndex(this.focused);
     if (key && key !== 0) {
       const prevTab = this.#focusableTabs()[key - 1];
-      const found = this.#allTabs().find(tab => tab === prevTab);
+      const found = this._allTabs().find(tab => tab === prevTab);
       this.#focusTab(found);
     }
     if (key === 0) {
@@ -188,7 +190,7 @@ export abstract class BaseTabs extends LitElement {
     }
   }
 
-  protected _onSlotChange():void {
+  protected async _onSlotChange(): Promise<void> {
     this._tabs.forEach((tab, index) => {
       if (index === 0) {
         tab.classList.add('first');
@@ -200,25 +202,22 @@ export abstract class BaseTabs extends LitElement {
         tab.classList.add('last');
       }
     });
+    await this.updateComplete;
     this.#updateAccessibility();
   }
 
-  async #updateAccessibility(): Promise<void> {
-    await this.updateComplete;
-    this.#allTabs().forEach((tab: BaseTab, index: number) => {
-      this.#allPanels().forEach((panel: BaseTabPanel, pindex: number) => {
-        if (index === pindex) {
-          panel.setAriaLabelledBy(tab.id);
-          tab.setAriaControls(panel.id);
-        }
-      });
+  #updateAccessibility(): void {
+    this._allTabs().forEach((tab: BaseTab, index: number) => {
+      const panel = this._allPanels()[index];
+      panel.setAriaLabelledBy(tab.id);
+      tab.setAriaControls(panel.id);
     });
   }
 
   @bound
   private _tabExpandEventHandler(event: Event): void {
     if (event instanceof TabExpandEvent) {
-      const selected = this.#allTabs().find(tab => tab === event.target as BaseTab);
+      const selected = this._allTabs().find(tab => tab === event.target as BaseTab);
       if (selected) {
         this.current = selected;
         this.focused = selected;
@@ -242,10 +241,10 @@ export abstract class BaseTabs extends LitElement {
       oldVal.selected = 'false';
     }
     newVal.selected = 'true';
-    const selectedPanel = this.#allPanels().find(panel => panel.getAttribute('aria-labelledby') === newVal.id);
+    const selectedPanel = this._allPanels().find(panel => panel.getAttribute('aria-labelledby') === newVal.id);
     if (selectedPanel) {
       selectedPanel.hidden = false;
-      const notSelectedPanels = this.#allPanels().filter(panel => panel !== selectedPanel);
+      const notSelectedPanels = this._allPanels().filter(panel => panel !== selectedPanel);
       notSelectedPanels.forEach(panel => panel.hidden = true);
     }
   }
@@ -262,7 +261,7 @@ export abstract class BaseTabs extends LitElement {
 
   @bound
   private _onKeyDownHandler(event: KeyboardEvent) {
-    const foundTab = this.#allTabs().find(tab => tab === event.target);
+    const foundTab = this._allTabs().find(tab => tab === event.target);
     if (!foundTab) {
       return;
     }
@@ -304,7 +303,7 @@ export abstract class BaseTabs extends LitElement {
   @bound
   _scrollLeft(): void {
     const container = this._tabList;
-    const childrenArr = this.#allTabs();
+    const childrenArr = this._allTabs();
     let firstElementInView: BaseTab | undefined;
     let lastElementOutOfView: BaseTab | undefined;
     let i;
@@ -322,7 +321,7 @@ export abstract class BaseTabs extends LitElement {
   @bound
   _scrollRight(): void {
     const container = this._tabList;
-    const childrenArr = this.#allTabs();
+    const childrenArr = this._allTabs();
     let lastElementInView: BaseTab | undefined;
     let firstElementOutOfView: BaseTab | undefined;
     for (let i = childrenArr.length - 1; i >= 0 && !lastElementInView; i--) {

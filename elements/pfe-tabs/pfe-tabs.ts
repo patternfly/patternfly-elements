@@ -5,8 +5,8 @@ import { classMap } from 'lit/directives/class-map.js';
 import { cascades } from '@patternfly/pfe-core/decorators.js';
 
 import { BaseTabs } from './BaseTabs.js';
-import './pfe-tab.js';
-import './pfe-tab-panel.js';
+import { PfeTab } from './pfe-tab.js';
+import { PfeTabPanel } from './pfe-tab-panel.js';
 
 import style from './pfe-tabs.scss';
 
@@ -25,6 +25,14 @@ export class PfeTabs extends BaseTabs {
 
   @cascades('pfe-tab')
   @property({ reflect: true, type: Boolean }) fill = false;
+
+  static isTab(element: HTMLElement): element is PfeTab {
+    return element instanceof PfeTab;
+  }
+
+  static isPanel(element: HTMLElement): element is PfeTabPanel {
+    return element instanceof PfeTabPanel;
+  }
 
   render() {
     const classes = { scrollable: this._showScrollButtons };
@@ -50,6 +58,16 @@ export class PfeTabs extends BaseTabs {
         </div>
       </div>
     `;
+  }
+
+  protected _allTabs(): PfeTab[] {
+    const tabs = this._tabs as PfeTab[];
+    return tabs.filter(tab => PfeTabs.isTab(tab));
+  }
+
+  protected _allPanels(): PfeTabPanel[] {
+    const panels = this._panels as PfeTabPanel[];
+    return panels.filter(panel => PfeTabs.isPanel(panel));
   }
 }
 

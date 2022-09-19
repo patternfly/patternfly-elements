@@ -57,7 +57,7 @@ export abstract class BaseTab extends LitElement {
   }
 
   setAriaControls(id: string) {
-    this._button.setAttribute('aria-controls', id);
+    this.setAttribute('aria-controls', id);
   }
 
   /**

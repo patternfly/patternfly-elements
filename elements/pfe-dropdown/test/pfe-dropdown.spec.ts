@@ -1,9 +1,11 @@
+import type { ActionOption, PfeDropdownOption, DropdownChangeEvent } from '@patternfly/pfe-dropdown';
+import type { PfeDropdownItem } from '@patternfly/pfe-dropdown/pfe-dropdown-item.js';
+
 import { expect, html, oneEvent } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 
-import { PfeDropdown, PfeDropdownOption, DropdownChangeEvent, ActionOption } from '@patternfly/pfe-dropdown';
-import { PfeDropdownItem } from '@patternfly/pfe-dropdown/pfe-dropdown-item.js';
+import { PfeDropdown } from '@patternfly/pfe-dropdown';
 
 describe('<pfe-dropdown>', function() {
   it('should upgrade', async function() {

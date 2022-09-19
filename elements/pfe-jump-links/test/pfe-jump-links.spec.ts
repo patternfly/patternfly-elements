@@ -1,11 +1,12 @@
 import type { LitElement } from 'lit';
+import type { SinonSpy } from 'sinon';
 
 import { expect, html, oneEvent } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 
 import { PfeJumpLinks, PfeJumpLinksPanel } from '@patternfly/pfe-jump-links';
 
-import { spy, SinonSpy } from 'sinon';
+import { spy } from 'sinon';
 import { ChangeEvent } from '../pfe-jump-links-nav';
 
 describe('<pfe-jump-links>', function() {

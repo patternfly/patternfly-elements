@@ -1,28 +1,35 @@
-<style>
-.overview-demo pfe-spinner {
-  margin-right: 8px;
-}
-</style>
-
 {% renderOverview %}
-  <div class="overview-demo">
-    <pfe-spinner indeterminate size="sm">
-      <h3>My fallback loading message</h3>
-    </pfe-spinner>
-    <pfe-spinner indeterminate size="md">
-      <h3>My fallback loading message</h3>
-    </pfe-spinner>
-    <pfe-spinner indeterminate size="xl">
-      <h3>My fallback loading message</h3>
-    </pfe-spinner>
-  </div>
+  A spinner is used to indicate to users that an action is in progress.
+  
+  <pfe-spinner>Loading...</pfe-spinner>
 {% endrenderOverview %}
 
 {% band header="Usage" %}
+  ### Basic
+  <pfe-spinner>Loading...</pfe-spinner>
+
   ```html
-  <pfe-spinner indeterminate>
-    <h1>My fallback loading message</h1>
-  </pfe-spinner>
+  <pfe-spinner>Loading...</pfe-spinner>
+  ```
+
+  ### Size variations
+  <pfe-spinner size="sm">Loading...</pfe-spinner>
+  <pfe-spinner size="md">Loading...</pfe-spinner>
+  <pfe-spinner size="lg">Loading...</pfe-spinner>
+  <pfe-spinner size="xl">Loading...</pfe-spinner>
+
+  ```html
+<pfe-spinner size="sm">Loading...</pfe-spinner>
+<pfe-spinner size="md">Loading...</pfe-spinner>
+<pfe-spinner size="lg">Loading...</pfe-spinner>
+<pfe-spinner size="xl">Loading...</pfe-spinner>
+  ```
+
+  ### Custom size
+  <pfe-spinner diameter="80px">Loading...</pfe-spinner>
+
+  ```html
+<pfe-spinner diameter="80px">Loading...</pfe-spinner>
   ```
 {% endband %}
 

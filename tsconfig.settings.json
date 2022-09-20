@@ -125,9 +125,6 @@
       "@patternfly/pfe-primary-detail": [
         "./elements/pfe-primary-detail/pfe-primary-detail.ts"
       ],
-      "@patternfly/pfe-progress-indicator": [
-        "./elements/pfe-progress-indicator/pfe-progress-indicator.ts"
-      ],
       "@patternfly/pfe-progress-steps": [
         "./elements/pfe-progress-steps/pfe-progress-steps.ts"
       ],
@@ -136,6 +133,9 @@
       ],
       "@patternfly/pfe-select": [
         "./elements/pfe-select/pfe-select.ts"
+      ],
+      "@patternfly/pfe-spinner": [
+        "./elements/pfe-spinner/pfe-spinner.ts"
       ],
       "@patternfly/pfe-tabs": [
         "./elements/pfe-tabs/pfe-tabs.ts"
@@ -213,9 +213,6 @@
       "path": "./elements/pfe-primary-detail"
     },
     {
-      "path": "./elements/pfe-progress-indicator"
-    },
-    {
       "path": "./elements/pfe-progress-steps"
     },
     {
@@ -223,6 +220,9 @@
     },
     {
       "path": "./elements/pfe-select"
+    },
+    {
+      "path": "./elements/pfe-spinner"
     },
     {
       "path": "./elements/pfe-tabs"

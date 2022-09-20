@@ -5,40 +5,32 @@
 <link rel="stylesheet" href="./demo.css">
 <script type="module" src="./pfe-spinner.js"></script>
 
-<pfe-band id="indeterminate" color-palette="lightest">
-  <h2 slot="header">Indeterminate State</h2>
-
-  <pfe-card size="small">
-    <h3 slot="header">Small Size</h3>
-    <pfe-spinner indeterminate size="sm">loading...</pfe-spinner>
-  </pfe-card>
-
-  <pfe-card size="small">
-    <h3 slot="header">Medium Size</h3>
-    <pfe-spinner indeterminate size="md">loading...</pfe-spinner>
-  </pfe-card>
-
-  <pfe-card size="small">
-    <h3 slot="header">Extra-Large Size</h3>
-    <pfe-spinner indeterminate size="xl">loading...</pfe-spinner>
-  </pfe-card>
+<pfe-band color="lightest">
+  <h2 slot="header">Spinner</h2>
+  <p>A spinner is used to indicate to users that an action is in progress.</p>
 </pfe-band>
 
-<pfe-band id="custom-colors" color-palette="lightest">
-  <h2 slot="header">Custom Colours</h2>
+<pfe-band color="lightest" size="small">
+  <h3 slot="header">Basic</h3>
+  <pfe-spinner>Loading...</pfe-spinner>
+  <pfe-codeblock><div codeblock-container code-language="html"><code>&lt;pfe-spinner&gt;Loading...&lt;/pfe-spinner&gt;</code></div></pfe-codeblock>
+</pfe-band>
 
-  <pfe-card size="small">
-    <h3 slot="header">Small Size</h3>
-    <pfe-spinner indeterminate size="sm">loading...</pfe-spinner>
-  </pfe-card>
+<pfe-band color="lightest" size="small">
+  <h3 slot="header">Size variations</h3>
+  <pfe-spinner size="sm">Loading...</pfe-spinner>
+  <pfe-spinner size="md">Loading...</pfe-spinner>
+  <pfe-spinner size="lg">Loading...</pfe-spinner>
+  <pfe-spinner size="xl">Loading...</pfe-spinner>
+  <pfe-codeblock><div codeblock-container code-language="html"><code>&lt;pfe-spinner size="sm"&gt;Loading...&lt;/pfe-spinner&gt;
+&lt;pfe-spinner size="md"&gt;Loading...&lt;/pfe-spinner&gt;
+&lt;pfe-spinner size="lg"&gt;Loading...&lt;/pfe-spinner&gt;
+&lt;pfe-spinner size="xl"&gt;Loading...&lt;/pfe-spinner&gt;
+  </code></div></pfe-codeblock>
+</pfe-band>
 
-  <pfe-card size="small">
-    <h3 slot="header">Medium Size</h3>
-    <pfe-spinner indeterminate size="md">loading...</pfe-spinner>
-  </pfe-card>
-
-  <pfe-card size="small">
-    <h3 slot="header">Extra-Large Size</h3>
-    <pfe-spinner indeterminate size="xl">loading...</pfe-spinner>
-  </pfe-card>
+<pfe-band color="lightest" size="small">
+  <h3 slot="header">Custom size</h3>
+  <pfe-spinner diameter="80px">Loading...</pfe-spinner>
+  <pfe-codeblock><div codeblock-container code-language="html"><code>&lt;pfe-spinner diameter="80px"&gt;Loading...&lt;/pfe-spinner&gt;</code></div></pfe-codeblock>
 </pfe-band>

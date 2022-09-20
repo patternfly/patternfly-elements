@@ -1,0 +1,80 @@
+:host {
+  --pf-c-spinner--diameter: var(--pf-global--icon--FontSize--xl, 3.375rem);
+  --pf-c-spinner--Width: var(--pf-c-spinner--diameter, 3.375rem);
+  --pf-c-spinner--Height: var(--pf-c-spinner--diameter, 3.375rem);
+  --pf-c-spinner--Color: var(--pf-global--primary-color--100, #06c);
+  --pf-c-spinner--m-sm--diameter: var(--pf-global--icon--FontSize--sm, 0.625rem);
+  --pf-c-spinner--m-md--diameter: var(--pf-global--icon--FontSize--md, 1.125rem);
+  --pf-c-spinner--m-lg--diameter: var(--pf-global--icon--FontSize--lg, 1.5rem);
+  --pf-c-spinner--m-xl--diameter: var(--pf-global--icon--FontSize--xl, 3.375rem);
+  --pf-c-spinner--AnimationDuration: 1.4s;
+  --pf-c-spinner--stroke-width: 10;
+  --pf-c-spinner__path--StrokeWidth: 10;
+  --pf-c-spinner--AnimationTimingFunction: linear;
+  --pf-c-spinner__path--AnimationTimingFunction: ease-in-out;
+  display: inline-block;
+  width: var(--pf-c-spinner--Width);
+  height: var(--pf-c-spinner--Height);
+}
+
+.pf-c-spinner {
+  width: var(--pf-c-spinner--Width);
+  height: var(--pf-c-spinner--Height);
+  animation: pf-c-spinner-animation-rotate calc(var(--pf-c-spinner--AnimationDuration) * 2) var(--pf-c-spinner--AnimationTimingFunction) infinite;
+  overflow: hidden;
+}
+
+:host([size="sm"]) {
+  --pf-c-spinner--diameter: var(--pf-c-spinner--m-sm--diameter);
+}
+
+:host([size="md"]) {
+  --pf-c-spinner--diameter: var(--pf-c-spinner--m-md--diameter);
+}
+
+:host([size="lg"]) {
+  --pf-c-spinner--diameter: var(--pf-c-spinner--m-lg--diameter);
+}
+
+:host([size="xl"]) {
+  --pf-c-spinner--diameter: var(--pf-c-spinner--m-xl--diameter);
+}
+
+.pf-c-spinner__path {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+  animation: pf-c-spinner-animation-dash var(--pf-c-spinner--AnimationDuration) var(--pf-c-spinner__path--AnimationTimingFunction) infinite;
+  stroke: var(--pf-c-spinner--Color);
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 280;
+  stroke-width: var(--pf-c-spinner--stroke-width);
+}
+
+@keyframes pf-c-spinner-animation-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pf-c-spinner-animation-dash {
+  0% {
+    stroke-dashoffset: 280;
+    transform: rotate(0);
+  }
+  15% {
+    stroke-width: calc(var(--pf-c-spinner__path--StrokeWidth) - 4);
+  }
+  40% {
+    stroke-dashoffset: 150;
+    stroke-dasharray: 220;
+  }
+  100% {
+    stroke-dashoffset: 280;
+    transform: rotate(720deg);
+  }
+}

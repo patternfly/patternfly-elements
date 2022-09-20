@@ -26,8 +26,21 @@ import '@patternfly/pfe-spinner';
 
 ## Usage
 ```html
-<pfe-spinner>My fallback loading message</pfe-spinner>
+<pfe-spinner>Loading...</pfe-spinner>
 ```
 
-At the time of writing there is only one style variant, `indeterminate` that spins without informing the user of where they are in the waiting process, only that http activity has not been resolved. This may change in the future as more style variants become available.
+### Size variations
+
+```html
+<pfe-spinner size="sm">Loading...</pfe-spinner>
+<pfe-spinner size="md">Loading...</pfe-spinner>
+<pfe-spinner size="lg">Loading...</pfe-spinner>
+<pfe-spinner size="xl">Loading...</pfe-spinner>
+```
+
+### Custom size
+
+```html
+<pfe-spinner diameter="80px">Loading...</pfe-spinner>
+```
 

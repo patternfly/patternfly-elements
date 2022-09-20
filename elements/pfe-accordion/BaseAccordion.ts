@@ -12,7 +12,8 @@ import {
   observed,
 } from '@patternfly/pfe-core/decorators.js';
 
-import { NumberListConverter, ColorPalette, ColorTheme, ComposedEvent } from '@patternfly/pfe-core';
+import { NumberListConverter, ComposedEvent } from '@patternfly/pfe-core';
+import type { ColorTheme, ColorPalette } from '@patternfly/pfe-core';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 

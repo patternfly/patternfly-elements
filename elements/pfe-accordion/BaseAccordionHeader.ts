@@ -1,8 +1,10 @@
-import { LitElement, html, TemplateResult } from 'lit';
+import { LitElement, html } from 'lit';
+import type { TemplateResult } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { unsafeStatic, html as staticH } from 'lit/static-html.js';
 
-import { ColorTheme, ComposedEvent } from '@patternfly/pfe-core';
+import { ComposedEvent } from '@patternfly/pfe-core';
+import type { ColorTheme } from '@patternfly/pfe-core';
 import { bound, observed, initializer, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';

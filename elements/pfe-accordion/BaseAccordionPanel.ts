@@ -7,7 +7,7 @@ import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { PfeCollapsePanel } from '@patternfly/pfe-collapse/pfe-collapse-panel.js';
 
 import style from './BaseAccordionPanel.scss';
-import { ColorTheme } from '@patternfly/pfe-core';
+import type { ColorTheme } from '@patternfly/pfe-core';
 
 export class BaseAccordionPanel extends LitElement {
   static readonly styles = [

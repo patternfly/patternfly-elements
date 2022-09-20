@@ -81,7 +81,5 @@ tags:
 
   Read more about [project references on the TypeScript docs](https://www.typescriptlang.org/docs/handbook/project-references.html).
 
-  <pfe-cta>
-      <a href="../structure">Next up: Structure</a>
-  </pfe-cta>
+  <a class="cta" href="../structure">Next up: Structure</a>
 {% endband %}

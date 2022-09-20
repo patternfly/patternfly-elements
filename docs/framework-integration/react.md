@@ -37,15 +37,15 @@ tags:
 
 {% band header="Adding PatternFly Elements" %}
   With the setup complete, let’s add a couple of PatternFly Elements web components to our application to make sure everything is hooked up properly.
-  We’re going to add a card ([pfe-card](/components/card)) and a call-to-action button ([pfe-cta](/components/cta)).
+  We’re going to add a card ([pfe-card](/components/card)).
   Later, we’ll add an accordion ([pfe-accordion](/components/accordion)) and some CSS to help with our layout ([pfe-layouts](/layout)).
 
   Once again, if we were building this app locally, we’d install our dependencies from npm using yarn.
 
   ```bash
-  yarn add @patternfly/pfe-card@next @patternfly/pfe-cta@next
+  yarn add @patternfly/pfe-card@next
   ```
-  But if you’re using CodeSandbox, just search for "@patternfly/pfe-card" and "@patternfly/pfe-cta".
+  But if you’re using CodeSandbox, just search for "@patternfly/pfe-card"
 
   In our `index.js` file in the `/src/` directory, let’s add the import statements for our components to the top of the file.
 
@@ -53,11 +53,10 @@ tags:
   import React from "react";
   import ReactDOM from "react-dom";
   import "@patternfly/pfe-card";
-  import "@patternfly/pfe-cta";
   import "./styles.css";
   ```
 
-  Let’s add some simple markup in the `App` function in the `index.js` file to see that our pfe-card and pfe-cta are working.
+  Let’s add some simple markup in the `App` function in the `index.js` file to see that our pfe-card is working.
 
   ```js
   function App() {
@@ -80,9 +79,7 @@ tags:
             Organically grow the holistic world view of disruptive innovation via
             workplace diversity and empowerment.
           </p>
-          <pfe-cta slot="footer">
-            <a href="#">Learn more</a>
-          </pfe-cta>
+          <a class="cta" slot="footer" href="#">Learn more</a>
         </pfe-card>
       </div>
     );
@@ -93,7 +90,7 @@ tags:
 {% endband %}
 
 {% band %}
-  <iframe src="https://codesandbox.io/embed/patternfly-elements-with-react-pfe-card-and-pfe-cta-w3zhw?autoresize=1&fontsize=14&hidenavigation=1&moduleview=1&theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="PatternFly Elements with React (pfe-card and pfe-cta)" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+  <iframe src="https://codesandbox.io/embed/patternfly-elements-with-react-pfe-card-and-pfe-cta-w3zhw?autoresize=1&fontsize=14&hidenavigation=1&moduleview=1&theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="PatternFly Elements with React (pfe-card></iframe>
 {% endband %}
 
 {% band %}
@@ -181,7 +178,6 @@ tags:
   import ReactDOM from "react-dom";
 
   import "@patternfly/pfe-card";
-  import "@patternfly/pfe-cta";
   import "@patternfly/pfe-accordion";
 
   import "./styles.css";
@@ -275,9 +271,7 @@ tags:
               Organically grow the holistic world view of disruptive innovation
               via workplace diversity and empowerment.
             </p>
-            <pfe-cta slot="footer">
-              <a href="#">Learn more</a>
-            </pfe-cta>
+            <a class="cta" slot="footer" href="#">Learn more</a>
           </pfe-card>
         </section>
         <section>
@@ -364,7 +358,7 @@ tags:
 {% endband %}
 
 {% band header="Adding icing on the cake" %}
-  Right now our app has a single card (pfe-card) with a call-to-action (pfe-cta) link inside it.
+  Right now our app has a single card (pfe-card).
   Beneath that, we have an accordion (pfe-accordion) with the first panel opening after the page loads.
   Let’s make things look a bit nicer by adding in a few more cards and a grid for layout (pfe-layouts).
 
@@ -385,7 +379,6 @@ tags:
 
   import "@patternfly/pfe-card";
   import "@patternfly/pfe-accordion";
-  import "@patternfly/pfe-cta";
 
   import "@patternfly/pfe-styles/pfe-layouts.min.css";
   import "./styles.css";
@@ -412,7 +405,7 @@ tags:
   I realize that may have been a lot. So let’s recap what we did.
 
   1. Initial Setup: Added the web component polyfills
-  2. Adding PatternFly Elements (web components): Added the following web components as dependencies in our app: pfe-card, pfe-cta, and pfe-accordion
+  2. Adding PatternFly Elements (web components): Added the following web components as dependencies in our app: pfe-card, and pfe-accordion
   3. Adding PatternFly Elements (web components): Imported the web components into our `index.js` file
   4. Adding PatternFly Elements (web components): Added the markup for our components in `index.js`
   5. Interacting with our web components API: Created a reference to the accordion so we could open the first panel after the page loads

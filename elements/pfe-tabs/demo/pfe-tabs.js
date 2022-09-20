@@ -1,6 +1,5 @@
 import '@patternfly/pfe-band';
 import '@patternfly/pfe-button';
-import '@patternfly/pfe-cta';
 import '@patternfly/pfe-jump-links';
 import '@patternfly/pfe-select';
 import '@patternfly/pfe-tabs';

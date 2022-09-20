@@ -72,7 +72,7 @@ const testComponent = html`
     </div>
 
     <div slot="details-nav--footer">
-      <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
+      <a href="#">All Products</a>
     </div>
   </pfe-primary-detail>
 `;

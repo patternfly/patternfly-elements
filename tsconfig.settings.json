@@ -98,9 +98,6 @@
       "@patternfly/pfe-collapse": [
         "./elements/pfe-collapse/pfe-collapse.ts"
       ],
-      "@patternfly/pfe-cta": [
-        "./elements/pfe-cta/pfe-cta.ts"
-      ],
       "@patternfly/pfe-datetime": [
         "./elements/pfe-datetime/pfe-datetime.ts"
       ],
@@ -187,9 +184,6 @@
     },
     {
       "path": "./elements/pfe-collapse"
-    },
-    {
-      "path": "./elements/pfe-cta"
     },
     {
       "path": "./elements/pfe-datetime"

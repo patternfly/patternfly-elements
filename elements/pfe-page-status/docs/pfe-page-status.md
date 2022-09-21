@@ -1,9 +1,6 @@
 {% renderOverview %}
   <img src="page-status-demo.png" style="max-width: 100%" alt=""/>
-
-  <pfe-cta>
-    <a href="demo">View the demo</a>
-  </pfe-cta>
+  <a href="demo">View the demo</a>
 {% endrenderOverview %}
 
 {% band header="Usage" %}

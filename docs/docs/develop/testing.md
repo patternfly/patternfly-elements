@@ -257,6 +257,4 @@ A quick note about the framework testing—the Vue and React tests are meant to 
 
 That's it for testing! Now that we've created our `pfe-cool-element` and all of our code passes, the final step is to submit a pull request to get this merged.
 
-<pfe-cta>
-  <a href="../pull-request">Next up: Open a pull request</a>
-</pfe-cta>
+<a class="cta" href="../pull-request">Next up: Open a pull request</a>

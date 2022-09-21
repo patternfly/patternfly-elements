@@ -53,6 +53,4 @@ When you save changes, the dev server reloads the page and shows you your change
 
 Now that we've added the HTML, let's style our element by updating the SASS file.
 
-<pfe-cta>
-  <a href="../sass">Next up: Write your Sass</a>
-</pfe-cta>
+<a class="cta" href="../sass">Next up: Write your Sass</a>

@@ -229,6 +229,4 @@ declare global {
 
 Out next step is to write unit test for our component so that we can use it with greater confidence.
 
-<pfe-cta>
-  <a href="../testing">Next up: Write your tests</a>
-</pfe-cta>
+<a class="cta" href="../testing">Next up: Write your tests</a>

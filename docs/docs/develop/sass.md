@@ -165,6 +165,4 @@ We can accomplish both of these tasks by updating the `pfe-cool-element.ts` file
 
 <a href="/theming/">Learn more about applying a theme.</a>
 
-<pfe-cta>
-  <a href="../javascript">Next up: Write your JavaScript</a>
-</pfe-cta>
+<a class="cta" href="../javascript">Next up: Write your JavaScript</a>

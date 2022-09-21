@@ -2,7 +2,6 @@ import '@patternfly/pfe-accordion';
 import '@patternfly/pfe-band';
 import '@patternfly/pfe-button';
 import '@patternfly/pfe-card';
-import '@patternfly/pfe-cta';
 import '@patternfly/pfe-jump-links';
 import '@patternfly/pfe-select';
 

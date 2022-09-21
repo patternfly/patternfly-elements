@@ -34,7 +34,7 @@
       <li><a href="#">Praesent dapibus, neque id cursus faucibus</a></li>
     </ul>
     <div slot="footer" style="padding: 1em 0.75em 2em;">
-      <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
+      <a href="#">All Products</a>
     </div>
   <pfe-primary-detail>
 {% endrenderOverview %}
@@ -79,7 +79,7 @@
       <li><a href="#">Praesent dapibus, neque id cursus faucibus</a></li>
     </ul>
     <div slot="footer" style="padding: 1em 0.75em 2em;">
-      <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
+      <a href="#">All Products</a>
     </div>
   <pfe-primary-detail>
 
@@ -127,7 +127,7 @@
     </ul>
 
     <div slot="footer" style="padding: 1em 0.75em 2em;">
-      <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
+      <a href="#">All Products</a>
     </div>
   <pfe-primary-detail>
   ```

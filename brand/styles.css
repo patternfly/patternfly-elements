@@ -54,7 +54,7 @@ pfe-card h3 {
     margin-bottom: 16px;
 }
 
-pfe-card pfe-cta {
+pfe-card .cta {
     min-width: 100%;
 }
 
@@ -69,11 +69,11 @@ a:visited {
     flex-direction: column;
 }
 
-.header-ctas pfe-cta:first-child {
+.header-ctas .cta:first-child {
     margin-bottom: 16px;
 }
 
-.header-ctas pfe-cta a {
+.header-ctas a.cta {
     min-width: 250px;
 }
 
@@ -92,12 +92,12 @@ table+h3 {
         flex-direction: row;
     }
 
-    .header-ctas pfe-cta:first-child {
+    .header-ctas .cta:first-child {
         margin-bottom: 0;
         margin-right: 16px;
     }
 
-    .header-ctas pfe-cta a {
+    .header-ctas .cta a {
         min-width: initial;
     }
 }

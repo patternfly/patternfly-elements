@@ -40,9 +40,6 @@ module.exports = function(eleventyConfig) {
 
   /** Generate and consume custom elements manifests */
   eleventyConfig.addPlugin(customElementsManifestPlugin, {
-    aliases: {
-      'pfe-cta': 'Call to Action',
-    },
     extraDemos: [{
       slug: 'styles',
       title: 'Styles',

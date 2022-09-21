@@ -6,13 +6,10 @@ import { property } from 'lit/decorators.js';
 import { colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
-import { PfeCollapsePanel } from '@patternfly/pfe-collapse/pfe-collapse-panel.js';
-
 import style from './BaseAccordionPanel.scss';
 
 export class BaseAccordionPanel extends LitElement {
   static readonly styles = [
-    ...PfeCollapsePanel.styles,
     style
   ];
 

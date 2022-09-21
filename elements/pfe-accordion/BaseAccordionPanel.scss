@@ -1,4 +1,7 @@
 :host { 
+  display: none;
+  overflow: hidden;
+  will-change: height;
   --pf-c-accordion--BackgroundColor: var(--pf-global--BackgroundColor--light-100, #fff);
   --_accordion__expanded-content--Color: var(--pf-global--Color--dark-200, #6a6e73);
   --_accordion__expanded-content--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
@@ -14,6 +17,17 @@
   --_accordion__expanded-content-body--before--Top: 0;
   color: var(--pf-global--Color--100, #151515);
   background-color: var(--pf-c-accordion--BackgroundColor);
+}
+
+:host([expanded]),
+:host([expanded]) {
+  display: block;
+  position: relative;
+}
+
+:host(.animating) {
+  display: block;
+  transition: height 0.3s ease-in-out;
 }
 
 .content {

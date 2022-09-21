@@ -13,7 +13,7 @@ export class BaseAccordionPanel extends LitElement {
     style
   ];
 
-  @property({ type: String, reflect: true }) bordered?: 'true'|'false';
+  @property({ reflect: true }) bordered?: 'true'|'false';
 
   @property({ type: Boolean, reflect: true }) expanded = false;
 

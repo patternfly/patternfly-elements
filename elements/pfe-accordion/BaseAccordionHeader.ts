@@ -37,7 +37,7 @@ export abstract class BaseAccordionHeader extends LitElement {
 
   @property({ attribute: 'aria-controls', reflect: true }) ariaControls?: string;
 
-  @property({ type: String, reflect: true }) bordered?: 'true'|'false';
+  @property({ reflect: true }) bordered?: 'true'|'false';
 
   @observed
   @property({ type: Boolean, reflect: true }) expanded = false;

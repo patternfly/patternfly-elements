@@ -71,7 +71,7 @@ export abstract class BaseAccordion extends LitElement {
   @colorContextConsumer()
   @property({ reflect: true }) on: ColorTheme = 'light';
 
-  @property({ type: String, reflect: true })
+  @property({ reflect: true })
     single?: 'true'|'false';
 
   /**

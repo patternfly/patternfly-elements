@@ -94,11 +94,11 @@ export class PfeAccordion extends BaseAccordion {
   static readonly styles = [...BaseAccordion.styles, style];
 
   @cascades('pfe-accordion-header', 'pfe-accordion-panel')
-  @property({ type: String, reflect: true })
+  @property({ reflect: true })
     bordered?: 'true'|'false';
 
   @cascades('pfe-accordion-header', 'pfe-accordion-panel')
-  @property({ type: String, reflect: true })
+  @property({ reflect: true })
     large?: 'true'|'false';
 
 

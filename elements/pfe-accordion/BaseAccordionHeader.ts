@@ -22,6 +22,7 @@ export class AccordionHeaderChangeEvent extends ComposedEvent {
   constructor(
     public expanded: boolean,
     public toggle: BaseAccordionHeader,
+    public accordion: any
   ) {
     super('change');
   }
@@ -157,9 +158,10 @@ export abstract class BaseAccordionHeader extends LitElement {
     }
   }
 
-  @bound private _clickHandler() {
+  @bound private _clickHandler(event: any) {
     const expanded = !this.expanded;
-    this.dispatchEvent(new AccordionHeaderChangeEvent(expanded, this));
+    const element = event.composedPath().find((el: any) => el.tagName === 'PFE-ACCORDION');
+    this.dispatchEvent(new AccordionHeaderChangeEvent(expanded, this, element));
   }
 
   protected _expandedChanged() {

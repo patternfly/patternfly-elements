@@ -1,4 +1,5 @@
 import type { TemplateResult } from 'lit';
+import type { ColorTheme, ColorPalette } from '@patternfly/pfe-core';
 
 import { LitElement, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
@@ -13,7 +14,6 @@ import {
 } from '@patternfly/pfe-core/decorators.js';
 
 import { NumberListConverter, ComposedEvent } from '@patternfly/pfe-core';
-import type { ColorTheme, ColorPalette } from '@patternfly/pfe-core';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -134,20 +134,20 @@ export abstract class BaseAccordion extends LitElement {
 
   @state() private _updateHistory = true;
 
-  private expandedSets = new Set<number>();
+  #expandedSets = new Set<number>();
 
   private initialized = false;
 
   #logger = new Logger(this);
 
-  private styles = getComputedStyle(this);
+  #styles = getComputedStyle(this);
 
-  private transitionDuration = this.getAnimationDuration();
+  #transitionDuration = this.#getAnimationDuration();
 
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('change', this._changeHandler as EventListener);
-    this.addEventListener('keydown', this._keydownHandler);
+    this.addEventListener('keydown', this.#keydownHandler);
   }
 
   render(): TemplateResult {
@@ -203,10 +203,10 @@ export abstract class BaseAccordion extends LitElement {
       return;
     }
 
-    const index = this._getIndex(event.target as Element);
+    const index = this.#getIndex(event.target as Element);
 
     if (event.expanded) {
-      this.expand(index);
+      this.expand(index, event.accordion);
     } else {
       this.collapse(index);
     }
@@ -214,11 +214,12 @@ export abstract class BaseAccordion extends LitElement {
     this._updateURLHistory();
   }
 
-  private _expandHeader(header: BaseAccordionHeader) {
-    const index = this._getIndex(header);
-
+  _expandHeader(header: BaseAccordionHeader, index?: number) {
+    if (index === undefined) {
+      index = this.#getIndex(header);
+    }
     // If this index is not already listed in the expandedSets array, add it
-    this.expandedSets.add(index);
+    this.#expandedSets.add(index);
 
     header.expanded = true;
   }
@@ -244,10 +245,10 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   private _collapseHeader(header: BaseAccordionHeader) {
-    const index = this._getIndex(header);
+    const index = this.#getIndex(header);
 
     // If this index is exists in the expanded array, remove it
-    this.expandedSets.delete(index);
+    this.#expandedSets.delete(index);
 
     header.expanded = false;
   }
@@ -272,12 +273,12 @@ export abstract class BaseAccordion extends LitElement {
     this._animate(panel, rect.height, 0);
   }
 
-  private getAnimationDuration(): number {
+  #getAnimationDuration(): number {
     if ('computedStyleMap' in this) {
       // @ts-expect-error: https://caniuse.com/?search=computedStyleMap
       return this.computedStyleMap().get('transition-duration')?.to('ms').value;
     } else {
-      const { transitionDuration } = this.styles;
+      const { transitionDuration } = this.#styles;
 
       const groups = CSS_TIMING_UNITS_RE.exec(transitionDuration)?.groups;
 
@@ -299,12 +300,12 @@ export abstract class BaseAccordion extends LitElement {
     if (panel) {
       const header = panel.previousElementSibling;
 
-      const transitionDuration = this.getAnimationDuration();
+      const transitionDuration = this.#getAnimationDuration();
       if (transitionDuration) {
-        this.transitionDuration = transitionDuration;
+        this.#transitionDuration = transitionDuration;
       }
 
-      const duration = this.transitionDuration ?? 0;
+      const duration = this.#transitionDuration ?? 0;
 
       header?.classList.add('animating');
       panel.classList.add('animating');
@@ -324,7 +325,7 @@ export abstract class BaseAccordion extends LitElement {
   /**
    * @see https://www.w3.org/TR/wai-aria-practices/#accordion
    */
-  private async _keydownHandler(evt: KeyboardEvent) {
+  async #keydownHandler(evt: KeyboardEvent) {
     const currentHeader = evt.target as Element;
 
     if (!BaseAccordion.isHeader(currentHeader)) {
@@ -336,19 +337,19 @@ export abstract class BaseAccordion extends LitElement {
     switch (evt.key) {
       case 'ArrowDown':
         evt.preventDefault();
-        newHeader = this._nextHeader();
+        newHeader = this.#nextHeader();
         break;
       case 'ArrowUp':
         evt.preventDefault();
-        newHeader = this._previousHeader();
+        newHeader = this.#previousHeader();
         break;
       case 'Home':
         evt.preventDefault();
-        newHeader = this._firstHeader();
+        newHeader = this.#firstHeader();
         break;
       case 'End':
         evt.preventDefault();
-        newHeader = this._lastHeader();
+        newHeader = this.#lastHeader();
         break;
       default:
         return;
@@ -357,33 +358,39 @@ export abstract class BaseAccordion extends LitElement {
     newHeader?.focus?.();
   }
 
-  private _allHeaders(): BaseAccordionHeader[] {
+  #allHeaders(accordion?: BaseAccordion): BaseAccordionHeader[] {
+    if ( accordion !== undefined ) {
+      return Array.from(accordion.children).filter(BaseAccordion.isHeader);
+    }
     return Array.from(this.children).filter(BaseAccordion.isHeader);
   }
 
-  private _allPanels(): BaseAccordionPanel[] {
+  #allPanels(accordion?: BaseAccordion): BaseAccordionPanel[] {
+    if ( accordion !== undefined ) {
+      return Array.from(accordion.children).filter(BaseAccordion.isPanel);
+    }
     return Array.from(this.children).filter(BaseAccordion.isPanel);
   }
 
-  private _previousHeader() {
-    const headers = this._allHeaders();
+  #previousHeader() {
+    const headers = this.#allHeaders();
     const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) - 1;
     return headers[(newIndex + headers.length) % headers.length];
   }
 
-  private _nextHeader() {
-    const headers = this._allHeaders();
+  #nextHeader() {
+    const headers = this.#allHeaders();
     const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) + 1;
     return headers[newIndex % headers.length];
   }
 
-  private _firstHeader() {
-    const headers = this._allHeaders();
+  #firstHeader() {
+    const headers = this.#allHeaders();
     return headers[0];
   }
 
-  private _lastHeader() {
-    const headers = this._allHeaders();
+  #lastHeader() {
+    const headers = this.#allHeaders();
     return headers[headers.length - 1];
   }
 
@@ -395,14 +402,14 @@ export abstract class BaseAccordion extends LitElement {
     [...newVal].reverse().forEach(i => this.expand(i - 1));
   }
 
-  private _getIndex(_el: Element|null) {
+  #getIndex(_el: Element|null) {
     if (BaseAccordion.isHeader(_el)) {
-      const headers = this._allHeaders();
+      const headers = this.#allHeaders();
       return headers.findIndex(header => header.id === _el.id);
     }
 
     if (BaseAccordion.isPanel(_el)) {
-      const panels = this._allPanels();
+      const panels = this.#allPanels();
       return panels.findIndex(panel => panel.id === _el.id);
     }
 
@@ -445,7 +452,7 @@ export abstract class BaseAccordion extends LitElement {
 
     // Iterate the expanded array by 1 to convert to human-readable vs. array notation;
     // sort values numerically and connect them using a dash
-    const openIndexes = Array.from(this.expandedSets, item => item + 1)
+    const openIndexes = Array.from(this.#expandedSets, item => item + 1)
       .sort((a, b) => a - b)
       .join('-');
 
@@ -454,7 +461,7 @@ export abstract class BaseAccordion extends LitElement {
 
     // If values exist in the array, add them to the parameter string
     // Otherwise delete the set entirely
-    if (this.expandedSets.size > 0) {
+    if (this.#expandedSets.size > 0) {
       url.searchParams.set(this.id, openIndexes);
     } else {
       url.searchParams.delete(this.id);
@@ -476,7 +483,7 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   public updateAccessibility() {
-    const headers = this._allHeaders();
+    const headers = this.#allHeaders();
 
     // For each header in the accordion, attach the aria connections
     headers.forEach(header => {
@@ -493,7 +500,7 @@ export abstract class BaseAccordion extends LitElement {
    * Accepts a 0-based index value (integer) for the set of accordion items to expand or collapse.
    */
   public toggle(index: number) {
-    const headers = this._allHeaders();
+    const headers = this.#allHeaders();
     const header = headers[index];
 
     if (!header.expanded) {
@@ -506,7 +513,7 @@ export abstract class BaseAccordion extends LitElement {
   /**
    * Accepts a 0-based index value (integer) for the set of accordion items to expand.
    */
-  public expand(index: number) {
+  public expand(index: number, parentAccordion?: BaseAccordion) {
     if (index == null) {
       return;
     }
@@ -514,18 +521,23 @@ export abstract class BaseAccordion extends LitElement {
     // Ensure the input is a number
     index = parseInt(`${index}`, 10);
 
-    // Get all the headers and capture the item by index value
-    const headers = this._allHeaders();
+    if (index === -1) {
+      return;
+    }
 
+    const allHeaders: Array<BaseAccordionHeader> = this.#allHeaders(parentAccordion);
+    const allPanels: Array<BaseAccordionPanel> = this.#allPanels(parentAccordion);
+
+    // Get all the headers and capture the item by index value
     if (this.single === 'true' && this._updateHistory) {
-      const allOpenedHeaders = headers.filter(header => header.expanded);
-      const allOpenedPanels = this._allPanels().filter(panel => panel.expanded);
+      const allOpenedHeaders = allHeaders.filter(header => header.expanded);
+      const allOpenedPanels = allPanels.filter(panel => panel.expanded);
 
       allOpenedHeaders.forEach(header => this._collapseHeader(header));
       allOpenedPanels.forEach(panel => this._collapsePanel(panel));
     }
 
-    const toggle = headers[index];
+    const toggle = allHeaders[index];
     if (!toggle) {
       return;
     }
@@ -537,21 +549,20 @@ export abstract class BaseAccordion extends LitElement {
 
 
     // If the header and panel exist, open both
-    this._expandHeader(toggle);
+    this._expandHeader(toggle, index);
     this._expandPanel(panel);
 
     toggle.focus();
 
-    this.dispatchEvent(new AccordionExpandEvent(toggle, panel));
-    this.dispatchEvent(deprecatedCustomEvent('pfe-accordion:expand', { toggle, panel }));
+    // this.dispatchEvent(new AccordionExpandEvent(toggle, panel));
   }
 
   /**
    * Expands all accordion items.
    */
   public expandAll() {
-    const headers = this._allHeaders();
-    const panels = this._allPanels();
+    const headers = this.#allHeaders();
+    const panels = this.#allPanels();
 
     headers.forEach(header => this._expandHeader(header));
     panels.forEach(panel => this._expandPanel(panel));
@@ -561,8 +572,8 @@ export abstract class BaseAccordion extends LitElement {
    * Accepts a 0-based index value (integer) for the set of accordion items to collapse.
    */
   public collapse(index: number) {
-    const headers = this._allHeaders();
-    const panels = this._allPanels();
+    const headers = this.#allHeaders();
+    const panels = this.#allPanels();
     const toggle = headers[index];
     const panel = panels[index];
 
@@ -572,8 +583,6 @@ export abstract class BaseAccordion extends LitElement {
 
     this._collapseHeader(toggle);
     this._collapsePanel(panel);
-
-    // this.dispatchEvent(new AccordionCollapseEvent(toggle, panel));
     this.dispatchEvent(deprecatedCustomEvent('pfe-accordion:collapse', { toggle, panel }));
   }
 
@@ -581,8 +590,8 @@ export abstract class BaseAccordion extends LitElement {
    * Collapses all accordion items.
    */
   public async collapseAll() {
-    const headers = this._allHeaders();
-    const panels = this._allPanels();
+    const headers = this.#allHeaders();
+    const panels = this.#allPanels();
 
     await headers.forEach(header => this._collapseHeader(header));
     await panels.forEach(panel => this._collapsePanel(panel));

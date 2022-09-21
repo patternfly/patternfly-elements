@@ -2,23 +2,3 @@
   color: var(--pf-global--Color--100, #151515);
   background-color: var(--pf-global--BackgroundColor--100, #fff);
 }
-
-:host([bordered]) ::slotted(pfe-accordion-header:first-child) {
-  display: block;
-  border-top: 1px solid #d2d2d2;
-  border-bottom: 1px solid #d2d2d2;
-}
-:host([bordered]) ::slotted(pfe-accordion-header:not(:first-child)) {
-  display: block;
-  border-bottom: 1px solid #d2d2d2;
-}
-
-:host([bordered]) ::slotted(pfe-accordion-header:is([expanded])) {
-  display: block;
-  border-bottom: 0px;
-}
-
-:host([bordered]) ::slotted(pfe-accordion-panel:is([expanded])) {
-  display: block;
-  border-bottom: 1px solid #d2d2d2;
-}

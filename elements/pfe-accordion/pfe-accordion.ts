@@ -17,75 +17,13 @@ import style from './pfe-accordion.scss';
  * @fires {AccordionExpandEvent} expand - when a panel expands
  * @fires {AccordionCollapseEvent} collapse - when a panel collapses
  *
- * @fires {CustomEvent<{ toggle: PfeAccordionHeader, panel: PfeAccordionPanel }>} pfe-accordion:expand - when a panel expands {@deprecated Use `expand`}
- * @fires {CustomEvent<{ toggle: PfeAccordionHeader, panel: PfeAccordionPanel }>} pfe-accordion:collapse - when a panel collapses {@deprecated Use `collapse`}
  *
  * @slot
  *       Place the `pfe-accordion-header` and `pfe-accordion-panel` elements here.
  *
- * @cssproperty {[ <length> | <percentage> ]{1,4}}--pfe-accordion--Padding
- *              Applied to header and panel components
- *              {@default `var(--pfe-theme--container-padding, 1rem) calc(var(--pfe-theme--container-padding, 1rem) * 1.5)`}
- * @cssproperty {<color>} --pfe-accordion--BorderColor
- *              Color of the encompassing borders
- *              {@default `var(--pfe-theme--color--surface--border, #d2d2d2)`}
- * @cssproperty {<length>} --pfe-accordion--BorderWidth
- *              Width of the encompassing borders
- *              {@default `var(--pfe-theme--surface--border-width, 1px)`}
- * @cssproperty {<length>} --pfe-accordion--accent--width
- *              Width of the accent mark
- *              {@default `var(--pfe-theme--surface--border-width--active, 3px)`}
- * @cssproperty {<length>} --pfe-accordion--Width
- *              Maximum width for the accordion element
- *              {@default `100%`}
- * @cssproperty {<length>} --pfe-accordion--MaxWidth--content
- *              Maximum width for the content inside the accordion panel
- *              {@default `80ch`}
- * @cssproperty --pfe-accordion--BoxShadow
- *              Box shadow on the header and panel in closed state
- *              {@default `0 5px 4px transparent`}
- * @cssproperty {<number>} --pfe-accordion--ZIndex
- *              Accordion's z-index for the stack
- *              {@default `3`}
- * @cssproperty --pfe-accordion--FontSize--header
- *              Font-size for the accordion header text
- *              {@default `var(--pf-global--FontSize--xl, 1.25rem)`}
- * @cssproperty --pfe-accordion--FontWeight--header
- *              Font-weight for the accordion header text
- *              {@default `var(--pfe-theme--font-weight--normal, 400)`}
- * @cssproperty --pfe-accordion--TextAlign
- *              Text alignment for the accordion header text
- *              {@default `left`}
- * @cssproperty --pfe-accordion--BackgroundColor
- *              Background color for the accordion header and panel
- *              {@default `transparent`}
- * @cssproperty {<color>} --pfe-accordion--Color
- *              Text color for the accordion header and panel
- *              {@default `var(--pfe-broadcasted--text, #3c3f42)`}
- * @cssproperty --pfe-accordion--accent
- *              Left accent line color for the accordion header and panel
- *              {@default `transparent`}
- * @cssproperty --pfe-accordion--BackgroundColor--active
- *              Background color when the accordion is active (hover, focus)
- *              {@default `var(--pfe-theme--color--surface--lighter, #f0f0f0)`}
- * @cssproperty --pfe-accordion--Color--active
- *              Text color when the accordion is active (hover, focus)
- *              {@default `var(--pfe-broadcasted--text, #3c3f42)`}
- * @cssproperty --pfe-accordion--accent--active
- *              Color of the accent mark when the accordion is active (hover, focus)
- *              {@default `var(--pfe-theme--color--ui-accent, #06c)`}
- * @cssproperty --pfe-accordion--BackgroundColor--expanded
- *              Background color when the accordion is open
- *              {@default `var(--pfe-theme--color--surface--lightest, #fff)`}
- * @cssproperty --pfe-accordion--Color--expanded
- *              Text color when the accordion is open
- *              {@default `var(--pfe-broadcasted--text, #3c3f42)`}
- * @cssproperty --pfe-accordion--accent--expanded
- *              Color of the accent mark when the accordion is open
- *              {@default `var(--pfe-theme--color--ui-accent, #06c)`}
- * @cssproperty --pfe-accordion--BoxShadow--expanded
- *              Box shadow when the accordion is open
- *              {@default `0 5px 4px rgba(140, 140, 140, 0.35)`}
+ * @cssproperty {<color>} --accordion__bordered--Color
+ *              Color for the borders between accordion headers when using bordered or large attributes
+ *              {@default `var(--rh-color-black-300, #d2d2d2)`}
  */
 @customElement('pfe-accordion')
 export class PfeAccordion extends BaseAccordion {

@@ -17,7 +17,6 @@ describe('<pfe-spinner>', function() {
     `);
 
     expect(element.getAttribute('size')).to.equal('xl');
-    expect(element.getAttribute('role')).to.equal('progressbar');
   });
 
   it('should allow sizes of sm, md, lg, xl', async () => {

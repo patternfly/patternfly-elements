@@ -33,8 +33,6 @@ export type SpinnerSize = (
 export abstract class BaseSpinner extends LitElement {
   static readonly styles = [styles];
 
-  @property({ reflect: true }) role = 'progressbar';
-
   /** Size variant of progress */
   @property({ reflect: true }) size: SpinnerSize = 'xl';
 

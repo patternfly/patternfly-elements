@@ -17,7 +17,7 @@
   height: var(--pf-c-spinner--Height);
 }
 
-.pf-c-spinner {
+svg {
   width: var(--pf-c-spinner--Width);
   height: var(--pf-c-spinner--Height);
   animation: pf-c-spinner-animation-rotate calc(var(--pf-c-spinner--AnimationDuration) * 2) var(--pf-c-spinner--AnimationTimingFunction) infinite;

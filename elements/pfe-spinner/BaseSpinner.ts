@@ -44,7 +44,7 @@ export abstract class BaseSpinner extends LitElement {
 
   override render() {
     return html`
-      <svg class="pf-c-spinner" viewBox="0 0 100 100">
+      <svg role="progressbar" viewBox="0 0 100 100">
         <circle class="pf-c-spinner__path" cx="50" cy="50" r="45" fill="none" />
       </svg>
     `;

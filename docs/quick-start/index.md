@@ -40,7 +40,6 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
   <script type="module">
     import "https://unpkg.com/@patternfly/pfe-card@next?module";
     import "https://unpkg.com/@patternfly/pfe-band@next?module";
-    import "https://unpkg.com/@patternfly/pfe-cta@next?module";
     import "https://unpkg.com/@patternfly/pfe-accordion@next?module";
     import "https://unpkg.com/@patternfly/pfe-tabs@next?module";
   </script>
@@ -56,39 +55,23 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
       <h2 slot="pfe-band--header">Card components</h2>
       <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
         <pfe-card>
-          <h3 slot="pfe-card--header">Card 1</h3>
+          <h3 slot="header">Card 1</h3>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis laboriosam eum saepe eius tempora sequi eligendi repudiandae aspernatur beatae totam voluptatum facere unde, vitae inventore eveniet accusamus nulla recusandae aliquam.</p>
-          <div slot="pfe-card--footer">
-            <pfe-cta>
-              <a href="https://patternflyelements.org">More about PatternFly Elements</a>
-            </pfe-cta>
-          </div>
+          <a slot="footer" class="cta primary" href="https://patternflyelements.org">More about PatternFly Elements</a>
         </pfe-card>
         <pfe-card>
           <h3 slot="pfe-card--header">Card 2</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque necessitatibus sapiente aliquam recusandae maxime consectetur magnam ipsa veniam expedita molestiae. Quis officia minima libero repellat laboriosam sit nemo porro laborum.</p>
-          <div slot="pfe-card--footer">
-            <pfe-cta>
-              <a href="https://patternflyelements.org/get-started">Get started</a>
-            </pfe-cta>
-          </div>
+          <a class="cta" slot="footer" href="https://patternflyelements.org/get-started">Get started</a>
         </pfe-card>
         <pfe-card>
           <h3 slot="pfe-card--header">Card 3</h3>
           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate iusto laboriosam molestias, quidem ab voluptates nihil earum sed! Esse repellat quo ut numquam mollitia quis saepe aspernatur fuga error in!</p>
-          <div slot="pfe-card--footer">
-            <pfe-cta>
-              <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components">About web components</a>
-            </pfe-cta>
-          </div>
+          <a class="cta" slot="footer" href="https://developer.mozilla.org/en-US/docs/Web/Web_Components">About web components</a>
         </pfe-card>
       </div>
       <br>
-      <div slot="pfe-band--footer" class="pfe-l--text-align--center">
-        <pfe-cta>
-          <a href="https://patternflyelements.org/components">View all of the components</a>
-        </pfe-cta>
-      </div>
+      <a class="cta" slot="footer" href="https://patternflyelements.org/components">View all of the components</a>
     </pfe-band>
     <pfe-band>
       <h2 slot="pfe-band--header">Accordion component</h2>

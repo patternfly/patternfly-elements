@@ -128,6 +128,4 @@ but for now, we use some [build-time tricks](https://npm.im/esbuild-plugin-lit-c
 
 Now that our dev server is running and we have our element's structure, let's make it actually do something.
 
-<pfe-cta>
-  <a href="../html">Next up: Write your HTML</a>
-</pfe-cta>
+<a class="cta" href="../html">Next up: Write your HTML</a>

@@ -1,5 +1,5 @@
 import '@patternfly/pfe-band';
-import '@patternfly/pfe-cta';
+import '@patternfly/pfe-button';
 import { PfeToast } from '@patternfly/pfe-toast';
 
 const root = document.querySelector('[data-demo="pfe-toast"]')?.shadowRoot ?? document;

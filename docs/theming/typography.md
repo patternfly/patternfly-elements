@@ -44,9 +44,7 @@ tags:
   <p class="pfe-text--lg">There are body copy typography classes too.</p>
   ```
 
-  <pfe-cta>
-    <a href="https://patternflyelements.org/elements/pfe-styles/demo/#typography">View the demo page of all CSS typography classes</a>
-  </pfe-cta>
+  <a class="cta" href="https://patternflyelements.org/elements/pfe-styles/demo/#typography">View the demo page of all CSS typography classes</a>
 {% endband %}
 
 

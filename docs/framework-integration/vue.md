@@ -36,22 +36,21 @@ tags:
 {% endband %}
 
 {% band header="Adding PatternFly Elements" %}
-  With the setup complete, let’s add a couple of PatternFly Elements web components to our application to make sure everything is hooked up properly. We’re going to add a card ([pfe-card](/components/card)) and a call-to-action button ([pfe-cta](/components/cta)). Later, we’ll add an accordion ([pfe-accordion](/components/accordion)) and some CSS to help with our layout ([pfe-layouts](/layout)).
+  With the setup complete, let’s add a couple of PatternFly Elements web components to our application to make sure everything is hooked up properly. We’re going to add a card ([pfe-card](/components/card)). Later, we’ll add an accordion ([pfe-accordion](/components/accordion)) and some CSS to help with our layout ([pfe-layouts](/layout)).
 
   Once again, if we were building this app locally, we’d install our dependencies from npm.
 
   ```bash
-  npm install --save @patternfly/pfe-card@next @patternfly/pfe-cta@next
+  npm install --save @patternfly/pfe-card@next
   ```
 
-  But if you’re using CodeSandbox, just search for “@patternfly/pfe-card” and “@patternfly/pfe-cta”.
+  But if you’re using CodeSandbox, just search for “@patternfly/pfe-card”
 
   In our `HelloWorld.vue` file in the `/src/components/` directory, let’s add the import statements for our components to the top of the `<script>` tag in the file.
 
   ```html
   <script>
     import "@patternfly/pfe-card";
-    import "@patternfly/pfe-cta";
     export default {
       name: "HelloWorld",
       props: {
@@ -61,7 +60,7 @@ tags:
   </script>
   ```
 
-  Let’s add some simple markup in the `template` section of the `HellowWorld.vue` file to see that our pfe-card and pfe-cta are working.
+  Let’s add some simple markup in the `template` section of the `HellowWorld.vue` file to see that our pfe-card is working.
 
   ```html
   <template>
@@ -87,9 +86,7 @@ tags:
           Organically grow the holistic world view of disruptive
           innovation via workplace diversity and empowerment.
         </p>
-        <pfe-cta slot="pfe-card--footer">
-          <a href="#">Learn more</a>
-        </pfe-cta>
+        <a class="cta" slot="footer" href="#">Learn more</a>
       </pfe-card>
     </div>
   </template>

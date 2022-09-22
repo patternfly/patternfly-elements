@@ -139,8 +139,6 @@ Would only impact this CSS modifier class: `.pfe-title--3xl`.
 Finally, components include "local" variables, meaning they are named for that particular component and sometimes a region within that component. 
 
 ```css
-font-size: var(--pfe-cta--FontSize, var(--pf-global--FontSize--lg, 1.125rem));
-  
 font-size: var(--pfe-accordion--FontSize--header, calc(var(--pfe-theme--font-size, 1rem) * 1.1));
 ```
 
@@ -148,8 +146,7 @@ This ensures that developers will not need to override using the component name,
 
 ```css
 :root {
---pfe-cta--FontSize: 17px;
---pfe-accordion--FontSize--header: 21px;
+  --pfe-accordion--FontSize--header: 21px;
 }
 ```
 

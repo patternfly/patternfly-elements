@@ -13,9 +13,7 @@
     <li>CTA obey --context</li>
     <li>.: --context: dark in #grand</li>
   </ul>
-  <pfe-cta>
-    .: on=dark
-  </pfe-cta>
+  <span>.: on=dark</span
 
   <pfe-card id="father" class="right-side" color-palette="lightest">
     <!-- children must have on=light -->
@@ -27,9 +25,7 @@
       <li>CTA obey --context</li>
       <li>.: --context: light in #father</li>
     </ul>
-    <pfe-cta slot="footer">
-      .: on=light
-    </pfe-cta>
+    <span slot="footer">.: on=light</span>
   </pfe-card>
 
   <pfe-card id="sibling" color-palette="accent">
@@ -39,9 +35,7 @@
       <li>CTA obey --context</li>
       <li>.: --context: accent in #sibling</li>
     </ul>
-    <pfe-cta id="goodie-twoshoes" slot="footer">
-      .: on=saturated
-    </pfe-cta>
+    <span id="goodie-twoshoes" slot="footer">.: on=saturated</span>
     <ul>
       <li>CTA want to inherit context from #grand</li>
       <li>CTA fire context-request</li>
@@ -50,9 +44,7 @@
       <li>.: on=light</li>
       <li>BUT --context is overriden with priority in the cascade by style attr</li>
     </ul>
-    <pfe-cta id="rebel" slot="footer" style="--context: saturated;">
-      .: on=saturated, and styles are saturated
-    </pfe-cta>
+    <span id="rebel" slot="footer">.: on=saturated, and styles are saturated</span>
   </pfe-card>
 </pfe-band>
 

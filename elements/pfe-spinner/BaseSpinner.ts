@@ -9,7 +9,7 @@ export type SpinnerSize = (
   | 'md'
   | 'lg'
   | 'xl'
-)
+);
 
 /**
  * Base spinner class

@@ -58,6 +58,20 @@ Use the `set` attribute to pick an alternative icon set.
 It is possible to add custom icon sets or override the default sets.
 Icon sets are defined in detail in [the docs][icon-sets].
 
+### Bundling
+
+When bundling PfeIcon with other modules, the default icon imports will be
+relative to the bundle, not the source file, so be sure to either register all
+the icon sets you'll need, or override the default getter.
+
+```js
+// Workaround for bundled pfe-icon: make icon imports absolute, instead of relative to the bundle
+import { PfeIcon } from '/pfe.min.js';
+PfeIcon.getIconUrl = (set, icon) =>
+  new URL(`/assets/icons/${set}/${icon}.js`, import.meta.url);
+  // default: new URL(`./icons/${set}/${icon}.js`, import.meta.url);
+```
+
 ## Loading
 
 Icons load _lazily_ by default, meaning that the browser will not attempt to fetch and render the

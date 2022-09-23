@@ -18,8 +18,7 @@ class IconLoadError extends ErrorEvent {
     /** The original error when importing the icon module */
     public originalError: Error
   ) {
-    super('error', { message: `Could not load icon at ${pathname}`, bubbles: true });
-    this.preventDefault();
+    super('error', { message: `Could not load icon at ${pathname}` });
   }
 }
 
@@ -150,7 +149,7 @@ export class PfeIcon extends LitElement {
         this.dispatchEvent(new Event('load', { bubbles: true }));
       } catch (error: unknown) {
         const event = new IconLoadError(pathname, error as Error);
-        this.#logger.error(event.message);
+        this.#logger.error((error as IconLoadError).message);
         this.dispatchEvent(event);
       }
     }

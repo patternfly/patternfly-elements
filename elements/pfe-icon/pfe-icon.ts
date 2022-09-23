@@ -8,14 +8,27 @@ import style from './pfe-icon.scss';
 
 export type URLGetter = (set: string, icon: string) => URL;
 
+/** requestIdleCallback when available, requestAnimationFrame when not */
 const ric = window.requestIdleCallback ?? window.requestAnimationFrame;
+
+/** Fired when an icon fails to load */
+class IconLoadError extends ErrorEvent {
+  constructor(
+    pathname: string,
+    /** The original error when importing the icon module */
+    public originalError: Error
+  ) {
+    super('error', { message: `Could not load icon at ${pathname}`, bubbles: true });
+    this.preventDefault();
+  }
+}
 
 /**
  * PatternFly Icon component lazy-loads icons and allows custom icon sets
  *
  * @slot - Slotted content is used as a fallback in case the icon doesn't load
- * @fires load - Fired when icon is loaded and rendered
- * @fires error - Fired when icon fails to load
+ * @fires load - Fired when an icon is loaded and rendered
+ * @fires error - Fired when an icon fails to load
  * @csspart fallback - Container for the fallback (i.e. slotted) content
  */
 @customElement('pfe-icon')
@@ -131,13 +144,14 @@ export class PfeIcon extends LitElement {
     if (set && icon) {
       try {
         ({ pathname } = getter(set, icon));
-        this.content = await import(pathname).then(m => m.default);
+        const mod = await import(pathname);
+        this.content = mod.default instanceof Node ? mod.default.cloneNode(true) : mod.default;
         await this.updateComplete;
         this.dispatchEvent(new Event('load', { bubbles: true }));
       } catch (error: unknown) {
-        const message = `Could not load icon at ${pathname}`;
-        this.dispatchEvent(new ErrorEvent('error', { message }));
-        this.#logger.error(message);
+        const event = new IconLoadError(pathname, error as Error);
+        this.#logger.error(event.message);
+        this.dispatchEvent(event);
       }
     }
   }

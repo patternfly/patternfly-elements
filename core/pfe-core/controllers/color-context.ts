@@ -42,19 +42,6 @@ export interface ColorContextOptions {
   attribute?: string;
 }
 
-// TODO: CSS
-// 1. move sass that maps from palette to theme from _colors.scss:198+ to color-context.scss (and rename them)
-// 2. except don't because hard, wait for design tokens instead
-
-// TODO: QA
-// 1. verify elements
-//   pfe-band - (easy)
-//   pfe-card - (easy)
-//   pfe-tabs - (easy)
-//   pfe-jump-links - (potentially fraught)
-//   pfe-autocomplete - (anyways broken)
-//   pfe-cta - (anyways broken)
-
 /**
 * Maps from consumer host elements to already-fired request events
 * We hold these in memory in order to re-fire the events every time a new provider connects.

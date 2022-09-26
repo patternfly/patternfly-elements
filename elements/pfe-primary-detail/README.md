@@ -71,7 +71,7 @@ import '@patternfly/pfe-primary-detail';
     <li><a href="#">Praesent dapibus, neque id cursus faucibus</a></li>
   </ul>
 
-  <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
+  <a href="#">All Products</a>
 <pfe-primary-detail>
 ```
 ```css
@@ -98,7 +98,7 @@ The component requires visible focus indicator styles for focusable elements (ie
   }
 
   pfe-primary-detail ul.is-focused:hover,
-  pfe-primary-detail :not(pfe-cta).is-focused:hover {
+  pfe-primary-detail .is-focused:hover {
       outline: 0;
   }
 

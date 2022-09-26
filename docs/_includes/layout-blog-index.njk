@@ -19,9 +19,7 @@ layout: layout-base.njk
         {% if post.data.description %}
           {{ post.data.description }}
         {% endif %}
-        <pfe-cta slot="footer">
-          <a href="{{ post.data.page.url }}">Read Post</a>
-        </pfe-cta>
+        <a class="cta" slot="footer" href="{{ post.data.page.url }}">Read Post</a>
       </pfe-card>
     {% endfor %}
   </pfe-band>

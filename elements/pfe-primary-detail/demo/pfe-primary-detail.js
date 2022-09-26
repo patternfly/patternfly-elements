@@ -1,5 +1,4 @@
 import '@patternfly/pfe-band';
-import '@patternfly/pfe-cta';
 import { PrimaryDetailChangeEvent } from '@patternfly/pfe-primary-detail';
 
 const root = document.querySelector('[data-demo="pfe-primary-detail"]')?.shadowRoot ?? document;

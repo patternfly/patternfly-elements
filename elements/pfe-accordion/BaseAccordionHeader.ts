@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import type { TemplateResult } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { unsafeStatic, html as staticH } from 'lit/static-html.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 import type { ColorTheme } from '@patternfly/pfe-core';
@@ -38,6 +39,8 @@ export abstract class BaseAccordionHeader extends LitElement {
   @property({ attribute: 'aria-controls', reflect: true }) ariaControls?: string;
 
   @property({ reflect: true }) bordered?: 'true'|'false';
+
+  @property({ reflect: true }) icon?: 'web-icon-caret-thin-right';
 
   @observed
   @property({ type: Boolean, reflect: true }) expanded = false;
@@ -108,7 +111,7 @@ export abstract class BaseAccordionHeader extends LitElement {
             </span>
             `}
           <pfe-icon
-              icon="web-icon-caret-thin-right"
+              icon="${ifDefined(this.icon)}"
               on-fail="collapse"
               part="icon"
               class="icon"

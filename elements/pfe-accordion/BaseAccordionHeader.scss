@@ -3,7 +3,8 @@
     --pf-c-accordion__toggle--PaddingRight: var(--pf-global--spacer--md, 1rem);
     --pf-c-accordion__toggle--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
     --pf-c-accordion__toggle--PaddingLeft: var(--pf-global--spacer--md, 1rem);
-    --pf-c-accordion__toggle--before--BackgroundColor: transparent;
+    --pf-c-accordion__toggle--BackgroundColor: transparent;
+    --pf-c-accordion__toggle--after--BackgroundColor: transparent;
     --pf-c-accordion__toggle--hover--BackgroundColor: var(--pf-global--BackgroundColor--200, #f0f0f0);
     --pf-c-accordion__toggle--focus--BackgroundColor: var(--pf-global--BackgroundColor--200, #f0f0f0);
     --pf-c-accordion__toggle--active--BackgroundColor: var(--pf-global--BackgroundColor--200, #f0f0f0);
@@ -18,10 +19,12 @@
     --pf-c-accordion__toggle--m-expanded__toggle-text--Color: var(--pf-global--link--Color, #06c);
     --pf-c-accordion__toggle--m-expanded__toggle-text--FontWeight: var(--pf-global--FontWeight--semi-bold, 700);
     --pf-c-accordion__toggle-icon--Transition: .2s ease-in 0s;
+    --pf-c-accordion__toggle-icon--Rotate: 0deg;
     --pf-c-accordion__toggle--m-expanded__toggle-icon--Rotate: 90deg;
     --pf-c-accordion__toggle--FontSize: var(--pf-global--FontSize--lg, 1rem);
     --pf-c-accordion__toggle--FontFamily: var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,
         "RedHatDisplayUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
+    --pf-c-accordion__toggle--FontWeight: var(--pf-global--FontWeight--normal, 400);
     color: var(--pf-global--Color--100, #151515);
     background-color: var(--pf-global--BackgroundColor--100);
     --pfe-icon--size: var(--pf-c-accordion__toggle--IconSize, 10px)
@@ -29,7 +32,7 @@
   
   #heading {
     font-size: 100%;
-    font-weight: var(--pf-global--FontWeight--normal, 400);
+    font-weight: var(--pf-c-accordion__toggle--FontWeight);
     padding: 0;
     margin: 0;
   }
@@ -43,7 +46,12 @@
   .toggle::after {
     padding: 0;
     margin: 0;
-    background-color: transparent;
+    background-color: var(--pf-c-accordion__toggle--BackgroundColor);
+  }
+
+  .icon {
+    transition: var(--pf-c-accordion__toggle-icon--Transition);
+    transform: rotate(var(--pf-c-accordion__toggle-icon--Rotate, 0deg));
   }
   
   .toggle {
@@ -55,10 +63,11 @@
     padding: var(--pf-c-accordion__toggle--PaddingTop) var(--pf-c-accordion__toggle--PaddingRight) var(--pf-c-accordion__toggle--PaddingBottom) var(--pf-c-accordion__toggle--PaddingLeft);
     font-family: var(--pf-c-accordion__toggle--FontFamily, inherit);
     font-size: var(--pf-c-accordion__toggle--FontSize, inherit);
+    font-weight: var(--pf-c-accordion__toggle--FontWeight);
     border: 0;
   }
   .toggle[aria-expanded="true"] {
-    --pf-c-accordion__toggle--before--BackgroundColor: var(--pf-c-accordion__toggle--m-expanded--before--BackgroundColor);
+    --pf-c-accordion__toggle--after--BackgroundColor: var(--pf-c-accordion__toggle--m-expanded--before--BackgroundColor);
   }
   .toggle::after {
     position: absolute;
@@ -67,7 +76,7 @@
     left: 0;
     width: var(--pf-c-accordion__toggle--before--Width);
     content: "";
-    background-color: var(--pf-c-accordion__toggle--before--BackgroundColor);
+    background-color: var(--pf-c-accordion__toggle--after--BackgroundColor);
   }
   .toggle[aria-expanded="true"] span {
     font-weight: var(--pf-c-accordion__toggle--m-expanded__toggle-text--FontWeight);
@@ -104,9 +113,7 @@
     max-width: var(--pf-c-accordion__toggle-text--MaxWidth);
   }
   
- .icon {
-    transition: var(--pf-c-accordion__toggle-icon--Transition);
-  }
+ 
   
   :host([on="dark"]) .pf-c-accordion {
     --pf-c-accordion__toggle--hover--BackgroundColor: var(--pf-global--BackgroundColor--300, #26292d);

@@ -4,38 +4,38 @@
 
 #tabs-container {
   // .pf-c-tabs {
-  --pf-c-tabs--inset: 0;
-  --pf-c-tabs--Width: auto;
+  // --pf-c-tabs--inset: 0;
+  // --pf-c-tabs--Width: auto;
   --pf-c-tabs--before--BorderColor: var(--pf-global--BorderColor--100, #d2d2d2);
   --pf-c-tabs--before--border-width--base: var(--pf-global--BorderWidth--sm, 1px);
-  --pf-c-tabs--before--BorderTopWidth: 0;
-  --pf-c-tabs--before--BorderRightWidth: 0;
+  // --pf-c-tabs--before--BorderTopWidth: 0;
+  // --pf-c-tabs--before--BorderRightWidth: 0;
   --pf-c-tabs--before--BorderBottomWidth: var(--pf-c-tabs--before--border-width--base);
-  --pf-c-tabs--before--BorderLeftWidth: 0;
+  // --pf-c-tabs--before--BorderLeftWidth: 0;
   --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg, 1.5rem);
   --pf-c-tabs--m-page-insets--inset: var(--pf-global--spacer--md, 1rem);
   --pf-c-tabs--m-page-insets--xl--inset: var(--pf-global--spacer--lg, 1.5rem);
-  --pf-c-tabs--m-vertical--Width: 100%;
-  --pf-c-tabs--m-vertical--MaxWidth: 15.625rem;
+  // --pf-c-tabs--m-vertical--Width: 100%;
+  // --pf-c-tabs--m-vertical--MaxWidth: 15.625rem;
   --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--xl, 2rem);
   --pf-c-tabs--m-vertical__list--before--BorderColor: var(--pf-c-tabs--before--BorderColor);
-  --pf-c-tabs--m-vertical__list--before--BorderTopWidth: 0;
-  --pf-c-tabs--m-vertical__list--before--BorderRightWidth: 0;
-  --pf-c-tabs--m-vertical__list--before--BorderBottomWidth: 0;
+  // --pf-c-tabs--m-vertical__list--before--BorderTopWidth: 0;
+  // --pf-c-tabs--m-vertical__list--before--BorderRightWidth: 0;
+  // --pf-c-tabs--m-vertical__list--before--BorderBottomWidth: 0;
   --pf-c-tabs--m-vertical__list--before--BorderLeftWidth: var(--pf-c-tabs--before--border-width--base);
   --pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderLeftWidth: var(--pf-c-tabs__link--before--border-width--base);
   --pf-c-tabs--m-box__item--m-current--last-child__link--before--BorderRightWidth: var(--pf-c-tabs--before--border-width--base);
-  --pf-c-tabs--m-color-scheme--light-300__link--BackgroundColor: transparent;
+  // --pf-c-tabs--m-color-scheme--light-300__link--BackgroundColor: transparent;
   --pf-c-tabs--m-color-scheme--light-300__item--m-current__link--BackgroundColor: var(--pf-global--BackgroundColor--light-300, #f0f0f0);
   --pf-c-tabs--m-color-scheme--light-300__link--disabled--BackgroundColor: var(--pf-global--palette--black-150, #f5f5f5);
-  --pf-c-tabs__list--Display: flex;
-  --pf-c-tabs__list--Visibility: visible;
+  // --pf-c-tabs__list--Display: flex;
+  // --pf-c-tabs__list--Visibility: visible;
   --pf-c-tabs__item--m-action--before--ZIndex: var(--pf-global--ZIndex--xs, 100);
   --pf-c-tabs__item--m-action__link--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-tabs__link--Color: var(--pf-global--Color--200, #6a6e73);
   --pf-c-tabs__link--FontSize: var(--pf-global--FontSize--md, 1rem);
-  --pf-c-tabs__link--BackgroundColor: transparent;
-  --pf-c-tabs__link--OutlineOffset: calc(-1 * 0.375rem);
+  // --pf-c-tabs__link--BackgroundColor: transparent;
+  // --pf-c-tabs__link--OutlineOffset: calc(-1 * 0.375rem);
   --pf-c-tabs__link--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-tabs__link--PaddingRight: var(--pf-global--spacer--md, 1rem);
   --pf-c-tabs__link--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
@@ -56,22 +56,22 @@
   --pf-c-tabs__link--before--BorderRightColor: var(--pf-c-tabs__link--before--border-color--base);
   --pf-c-tabs__link--before--BorderBottomColor: var(--pf-c-tabs__link--before--border-color--base);
   --pf-c-tabs__link--before--BorderLeftColor: var(--pf-c-tabs__link--before--border-color--base);
-  --pf-c-tabs__link--before--BorderTopWidth: 0;
-  --pf-c-tabs__link--before--BorderRightWidth: 0;
-  --pf-c-tabs__link--before--BorderBottomWidth: 0;
-  --pf-c-tabs__link--before--BorderLeftWidth: 0;
+  // --pf-c-tabs__link--before--BorderTopWidth: 0;
+  // --pf-c-tabs__link--before--BorderRightWidth: 0;
+  // --pf-c-tabs__link--before--BorderBottomWidth: 0;
+  // --pf-c-tabs__link--before--BorderLeftWidth: 0;
   --pf-c-tabs__link--before--Left: calc(var(--pf-c-tabs__link--before--border-width--base) * -1);
-  --pf-c-tabs__link--disabled--before--BorderRightWidth: 0;
+  // --pf-c-tabs__link--disabled--before--BorderRightWidth: 0;
   --pf-c-tabs__link--disabled--before--BorderBottomWidth: var(--pf-c-tabs--before--border-width--base);
-  --pf-c-tabs__link--disabled--before--BorderLeftWidth: 0;
-  --pf-c-tabs__link--after--Top: auto;
-  --pf-c-tabs__link--after--Right: 0;
-  --pf-c-tabs__link--after--Bottom: 0;
+  // --pf-c-tabs__link--disabled--before--BorderLeftWidth: 0;
+  // --pf-c-tabs__link--after--Top: auto;
+  // --pf-c-tabs__link--after--Right: 0;
+  // --pf-c-tabs__link--after--Bottom: 0;
   --pf-c-tabs__link--after--BorderColor: var(--pf-global--BorderColor--light-100, #b8bbbe);
-  --pf-c-tabs__link--after--BorderWidth: 0;
-  --pf-c-tabs__link--after--BorderTopWidth: 0;
-  --pf-c-tabs__link--after--BorderRightWidth: 0;
-  --pf-c-tabs__link--after--BorderLeftWidth: 0;
+  // --pf-c-tabs__link--after--BorderWidth: 0;
+  // --pf-c-tabs__link--after--BorderTopWidth: 0;
+  // --pf-c-tabs__link--after--BorderRightWidth: 0;
+  // --pf-c-tabs__link--after--BorderLeftWidth: 0;
   --pf-c-tabs__link--hover--after--BorderWidth: var(--pf-global--BorderWidth--lg, 3px);
   --pf-c-tabs__link--focus--after--BorderWidth: var(--pf-global--BorderWidth--lg, 3px);
   --pf-c-tabs__link--active--after--BorderWidth: var(--pf-global--BorderWidth--lg, 3px);
@@ -84,64 +84,64 @@
   --pf-c-tabs__scroll-button--BackgroundColor: var(--pf-global--BackgroundColor--100, #ffffff);
   --pf-c-tabs__scroll-button--Width: var(--pf-global--spacer--2xl, 3rem);
   --pf-c-tabs__scroll-button--xl--Width: var(--pf-global--spacer--3xl, 4rem);
-  --pf-c-tabs__scroll-button--OutlineOffset: calc(-1 * var(--pf-global--spacer--xs, 0.25rem));
-  --pf-c-tabs__scroll-button--TransitionDuration--margin: .125s;
-  --pf-c-tabs__scroll-button--TransitionDuration--transform: .125s;
-  --pf-c-tabs__scroll-button--TransitionDuration--opacity: .125s;
+  // --pf-c-tabs__scroll-button--OutlineOffset: calc(-1 * var(--pf-global--spacer--xs, 0.25rem));
+  // --pf-c-tabs__scroll-button--TransitionDuration--margin: .125s;
+  // --pf-c-tabs__scroll-button--TransitionDuration--transform: .125s;
+  // --pf-c-tabs__scroll-button--TransitionDuration--opacity: .125s;
   --pf-c-tabs__scroll-button--before--BorderColor: var(--pf-c-tabs--before--BorderColor);
   --pf-c-tabs__scroll-button--before--border-width--base: var(--pf-global--BorderWidth--sm, 1px);
-  --pf-c-tabs__scroll-button--before--BorderRightWidth: 0;
+  // --pf-c-tabs__scroll-button--before--BorderRightWidth: 0;
   --pf-c-tabs__scroll-button--before--BorderBottomWidth: var(--pf-c-tabs__scroll-button--before--border-width--base);
-  --pf-c-tabs__scroll-button--before--BorderLeftWidth: 0;
-  --pf-c-tabs__list--ScrollSnapTypeAxis: x;
-  --pf-c-tabs__list--ScrollSnapTypeStrictness: proximity;
-  --pf-c-tabs__list--ScrollSnapType: var(--pf-c-tabs__list--ScrollSnapTypeAxis) var(--pf-c-tabs__list--ScrollSnapTypeStrictness);
-  --pf-c-tabs__item--ScrollSnapAlign: end;
-  --pf-c-tabs--m-vertical__list--ScrollSnapTypeAxis: y;
-  --pf-c-tabs__toggle--Display: flex;
-  --pf-c-tabs__toggle--Visibility: hidden;
-  --pf-c-tabs__toggle--MarginBottom: 0;
-  --pf-c-tabs--m-expanded__toggle--MarginBottom: var(--pf-global--spacer--md, 1rem);
-  --pf-c-tabs__toggle-icon--Color: currentcolor;
-  --pf-c-tabs__toggle-icon--Transition: var(--pf-global--Transition, all 250ms cubic-bezier(0.42, 0, 0.58, 1));
-  --pf-c-tabs__toggle-icon--Rotate: 0;
-  --pf-c-tabs__toggle-text--MarginLeft: 0;
-  --pf-c-tabs__toggle-button__toggle-text--MarginLeft: var(--pf-global--spacer--md, 1rem);
-  --pf-c-tabs__toggle-button__toggle-text--Color: var(--pf-global--Color--100, #151515);
-  --pf-c-tabs__toggle-button--MarginTop: calc(-1 * var(--pf-global--spacer--form-element, 0.375rem));
-  --pf-c-tabs__toggle-button--MarginBottom: calc(-1 * var(--pf-global--spacer--form-element, 0.375rem));
-  --pf-c-tabs__toggle-button--MarginLeft: calc(-1 * var(--pf-global--spacer--md, 1rem));
-  --pf-c-tabs--m-expanded__toggle-icon--Color: var(--pf-global--Color--100, #151515);
-  --pf-c-tabs--m-expanded__toggle-icon--Rotate: 90deg;
-  --pf-c-tabs__item-close--c-button--FontSize: var(--pf-global--FontSize--xs, 0.75rem);
-  --pf-c-tabs--m-secondary__item-close--c-button--FontSize: var(--pf-global--icon--FontSize--sm, 0.625rem);
-  --pf-c-tabs__item-close--c-button--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
-  --pf-c-tabs__item-close--c-button--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
-  --pf-c-tabs__item-close--c-button--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
-  --pf-c-tabs__item-close--c-button--OutlineOffset: -0.1875rem;
-  --pf-c-tabs__item-close-icon--MarginTop: 0.125rem;
-  --pf-c-tabs__add--before--BorderColor: var(--pf-c-tabs__link--before--border-color--base);
-  --pf-c-tabs__add--before--BorderLeftWidth: var(--pf-c-tabs__link--before--border-width--base);
-  --pf-c-tabs__add--c-button--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
-  --pf-c-tabs--m-secondary__add--c-button--FontSize: var(--pf-global--FontSize--xs, 0.75rem);
-  --pf-c-tabs__add--c-button--PaddingTop: var(--pf-c-tabs__link--PaddingTop);
-  --pf-c-tabs__add--c-button--PaddingBottom: var(--pf-c-tabs__link--PaddingBottom);
-  --pf-c-tabs__add--c-button--OutlineOffset: calc(-1 * var(--pf-global--spacer--xs, 0.25rem));
-  --pf-c-tabs__link-toggle-icon--Color: var(--pf-global--Color--200, #6a6e73);
-  --pf-c-tabs__link-toggle-icon--Transition: .2s ease-in 0s;
-  --pf-c-tabs__link-toggle-icon--Rotate: 0;
-  --pf-c-tabs__link-toggle-icon--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
-  --pf-c-tabs__link--m-expanded__toggle-icon--Color: var(--pf-global--Color--100, #151515);
-  --pf-c-tabs__link--m-expanded__toggle-icon--Rotate: 90deg;
-  --pf-c-tabs__link--hover__toggle-icon--Color: var(--pf-global--Color--100, #151515);
-  --pf-c-tabs__link--active__toggle-icon--Color: var(--pf-global--Color--100, #151515);
-  --pf-c-tabs__link--focus__toggle-icon--Color: var(--pf-global--Color--100, #151515);
+  // --pf-c-tabs__scroll-button--before--BorderLeftWidth: 0;
+  // --pf-c-tabs__list--ScrollSnapTypeAxis: x;
+  // --pf-c-tabs__list--ScrollSnapTypeStrictness: proximity;
+  --pf-c-tabs__list--ScrollSnapType: var(--pf-c-tabs__list--ScrollSnapTypeAxis, x) var(--pf-c-tabs__list--ScrollSnapTypeStrictness, proximity);
+  // --pf-c-tabs__item--ScrollSnapAlign: end;
+  // --pf-c-tabs--m-vertical__list--ScrollSnapTypeAxis: y;
+  // --pf-c-tabs__toggle--Display: flex;
+  // --pf-c-tabs__toggle--Visibility: hidden;
+  // --pf-c-tabs__toggle--MarginBottom: 0;
+  // --pf-c-tabs--m-expanded__toggle--MarginBottom: var(--pf-global--spacer--md, 1rem);
+  // --pf-c-tabs__toggle-icon--Color: currentcolor;
+  // --pf-c-tabs__toggle-icon--Transition: var(--pf-global--Transition, all 250ms cubic-bezier(0.42, 0, 0.58, 1));
+  // --pf-c-tabs__toggle-icon--Rotate: 0;
+  // --pf-c-tabs__toggle-text--MarginLeft: 0;
+  // --pf-c-tabs__toggle-button__toggle-text--MarginLeft: var(--pf-global--spacer--md, 1rem);
+  // --pf-c-tabs__toggle-button__toggle-text--Color: var(--pf-global--Color--100, #151515);
+  // --pf-c-tabs__toggle-button--MarginTop: calc(-1 * var(--pf-global--spacer--form-element, 0.375rem));
+  // --pf-c-tabs__toggle-button--MarginBottom: calc(-1 * var(--pf-global--spacer--form-element, 0.375rem));
+  // --pf-c-tabs__toggle-button--MarginLeft: calc(-1 * var(--pf-global--spacer--md, 1rem));
+  // --pf-c-tabs--m-expanded__toggle-icon--Color: var(--pf-global--Color--100, #151515);
+  // --pf-c-tabs--m-expanded__toggle-icon--Rotate: 90deg;
+  // --pf-c-tabs__item-close--c-button--FontSize: var(--pf-global--FontSize--xs, 0.75rem);
+  // --pf-c-tabs--m-secondary__item-close--c-button--FontSize: var(--pf-global--icon--FontSize--sm, 0.625rem);
+  // --pf-c-tabs__item-close--c-button--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
+  // --pf-c-tabs__item-close--c-button--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
+  // --pf-c-tabs__item-close--c-button--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
+  // --pf-c-tabs__item-close--c-button--OutlineOffset: -0.1875rem;
+  // --pf-c-tabs__item-close-icon--MarginTop: 0.125rem;
+  // --pf-c-tabs__add--before--BorderColor: var(--pf-c-tabs__link--before--border-color--base);
+  // --pf-c-tabs__add--before--BorderLeftWidth: var(--pf-c-tabs__link--before--border-width--base);
+  // --pf-c-tabs__add--c-button--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  // --pf-c-tabs--m-secondary__add--c-button--FontSize: var(--pf-global--FontSize--xs, 0.75rem);
+  // --pf-c-tabs__add--c-button--PaddingTop: var(--pf-c-tabs__link--PaddingTop);
+  // --pf-c-tabs__add--c-button--PaddingBottom: var(--pf-c-tabs__link--PaddingBottom);
+  // --pf-c-tabs__add--c-button--OutlineOffset: calc(-1 * var(--pf-global--spacer--xs, 0.25rem));
+  // --pf-c-tabs__link-toggle-icon--Color: var(--pf-global--Color--200, #6a6e73);
+  // --pf-c-tabs__link-toggle-icon--Transition: .2s ease-in 0s;
+  // --pf-c-tabs__link-toggle-icon--Rotate: 0;
+  // --pf-c-tabs__link-toggle-icon--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  // --pf-c-tabs__link--m-expanded__toggle-icon--Color: var(--pf-global--Color--100, #151515);
+  // --pf-c-tabs__link--m-expanded__toggle-icon--Rotate: 90deg;
+  // --pf-c-tabs__link--hover__toggle-icon--Color: var(--pf-global--Color--100, #151515);
+  // --pf-c-tabs__link--active__toggle-icon--Color: var(--pf-global--Color--100, #151515);
+  // --pf-c-tabs__link--focus__toggle-icon--Color: var(--pf-global--Color--100, #151515);
 
   position: relative;
   display: flex;
-  width: var(--pf-c-tabs--Width);
-  padding-right: var(--pf-c-tabs--inset);
-  padding-left: var(--pf-c-tabs--inset);
+  width: var(--pf-c-tabs--Width, auto);
+  padding-right: var(--pf-c-tabs--inset, 0);
+  padding-left: var(--pf-c-tabs--inset, 0);
   overflow: hidden;
 }
 
@@ -289,7 +289,7 @@
 
 :host([box="light"]) #tabs-container {
   // .pf-c-tabs.pf-m-box.pf-m-color-scheme--light-300 {
-  --pf-c-tabs__link--BackgroundColor: var(--pf-c-tabs--m-color-scheme--light-300__link--BackgroundColor);
+  --pf-c-tabs__link--BackgroundColor: var(--pf-c-tabs--m-color-scheme--light-300__link--BackgroundColor, transparent);
   --pf-c-tabs__item--m-current__link--BackgroundColor: var(--pf-c-tabs--m-color-scheme--light-300__item--m-current__link--BackgroundColor);
   --pf-c-tabs__link--disabled--BackgroundColor: var(--pf-c-tabs--m-color-scheme--light-300__link--disabled--BackgroundColor);
 }
@@ -301,7 +301,7 @@
 
 :host([vertical]) #tabs-container {
   // .pf-c-tabs.pf-m-vertical {
-  --pf-c-tabs--Width: var(--pf-c-tabs--m-vertical--Width);
+  --pf-c-tabs--Width: var(--pf-c-tabs--m-vertical--Width, 100%);
   --pf-c-tabs--inset: var(--pf-c-tabs--m-vertical--inset);
   --pf-c-tabs--before--BorderBottomWidth: 0;
   --pf-c-tabs__link--PaddingTop: var(--pf-c-tabs--m-vertical__link--PaddingTop);
@@ -310,9 +310,9 @@
   --pf-c-tabs__link--disabled--before--BorderBottomWidth: 0;
   --pf-c-tabs__link--disabled--before--BorderLeftWidth: var(--pf-c-tabs--before--border-width--base);
   --pf-c-tabs__link--after--Top: 0;
-  --pf-c-tabs__link--after--Bottom: 0;
+  // --pf-c-tabs__link--after--Bottom: 0;
   --pf-c-tabs__link--after--Right: auto;
-  --pf-c-tabs__list--ScrollSnapTypeAxis: var(--pf-c-tabs--m-vertical__list--ScrollSnapTypeAxis);
+  --pf-c-tabs__list--ScrollSnapTypeAxis: var(--pf-c-tabs--m-vertical__list--ScrollSnapTypeAxis, y);
   display: inline-flex;
   flex-direction: column;
   height: 100%;
@@ -325,7 +325,7 @@
   position: relative;
   flex-direction: column;
   flex-grow: 1;
-  max-width: var(--pf-c-tabs--m-vertical--MaxWidth);
+  max-width: var(--pf-c-tabs--m-vertical--MaxWidth, 15.625rem);
 }
 
 :host([vertical]) #tabs::before {
@@ -335,20 +335,20 @@
   // border: solid var(--pf-c-tabs--m-vertical__list--before--BorderColor);
   border-style: solid;
   border-color: var(--pf-c-tabs--m-vertical__list--before--BorderColor);
-  border-block-start-width: var(--pf-c-tabs--m-vertical__list--before--BorderTopWidth);
-  border-inline-end-width: var(--pf-c-tabs--m-vertical__list--before--BorderRightWidth);
-  border-block-end-width: var(--pf-c-tabs--m-vertical__list--before--BorderBottomWidth);
+  border-block-start-width: var(--pf-c-tabs--m-vertical__list--before--BorderTopWidth, 0);
+  border-inline-end-width: var(--pf-c-tabs--m-vertical__list--before--BorderRightWidth, 0);
+  border-block-end-width: var(--pf-c-tabs--m-vertical__list--before--BorderBottomWidth, 0);
   border-inline-start-width: var(--pf-c-tabs--m-vertical__list--before--BorderLeftWidth);
 }
 
 :host([vertical]) ::slotted(pfe-tab:first-of-type) {
   // .pf-c-tabs.pf-m-vertical .pf-c-tabs__item:first-child {
-  margin-top: var(--pf-c-tabs--inset);
+  margin-top: var(--pf-c-tabs--inset, 0);
 }
 
 :host([vertical]) ::slotted(pfe-tab:last-of-type) {
   // .pf-c-tabs.pf-m-vertical .pf-c-tabs__item:last-child {
-  margin-bottom: var(--pf-c-tabs--inset);
+  margin-bottom: var(--pf-c-tabs--inset, 0);
 }
 
 // Moved to pf-tab.css
@@ -589,13 +589,13 @@
   scrollbar-width: none;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   position: relative;
-  display: var(--pf-c-tabs__list--Display);
+  display: var(--pf-c-tabs__list--Display, flex);
   max-width: 100%;
   overflow-x: auto;
   scroll-behavior: smooth;
   -ms-scroll-snap-type: var(--pf-c-tabs__list--ScrollSnapType);
       scroll-snap-type: var(--pf-c-tabs__list--ScrollSnapType);
-  visibility: var(--pf-c-tabs__list--Visibility);
+  visibility: var(--pf-c-tabs__list--Visibility, visible);
   -webkit-overflow-scrolling: touch;
 }
 
@@ -887,9 +887,9 @@ button {
   line-height: 1;
   color: var(--pf-c-tabs__scroll-button--Color);
   background-color: var(--pf-c-tabs__scroll-button--BackgroundColor);
-  outline-offset: var(--pf-c-tabs__scroll-button--OutlineOffset);
+  outline-offset: var(--pf-c-tabs__scroll-button--OutlineOffset, calc(-1 * var(--pf-global--spacer--xs, 0.25rem)));
   opacity: 0;
-  transition: margin var(--pf-c-tabs__scroll-button--TransitionDuration--margin), transform var(--pf-c-tabs__scroll-button--TransitionDuration--transform), opacity var(--pf-c-tabs__scroll-button--TransitionDuration--opacity);
+  transition: margin var(--pf-c-tabs__scroll-button--TransitionDuration--margin, .125s), transform var(--pf-c-tabs__scroll-button--TransitionDuration--transform, .125s), opacity var(--pf-c-tabs__scroll-button--TransitionDuration--opacity, .125s);
 }
 
 button:hover {
@@ -902,9 +902,9 @@ button::before {
   border-color: var(--pf-c-tabs__scroll-button--before--BorderColor);
   // border-width: 0 var(--pf-c-tabs__scroll-button--before--BorderRightWidth) var(--pf-c-tabs__scroll-button--before--BorderBottomWidth) var(--pf-c-tabs__scroll-button--before--BorderLeftWidth);
   border-block-start-width: 0;
-  border-inline-end-width: var(--pf-c-tabs__scroll-button--before--BorderRightWidth);
+  border-inline-end-width: var(--pf-c-tabs__scroll-button--before--BorderRightWidth, 0);
   border-block-end-width: var(--pf-c-tabs__scroll-button--before--BorderBottomWidth);
-  border-inline-start-width: var(--pf-c-tabs__scroll-button--before--BorderLeftWidth);
+  border-inline-start-width: var(--pf-c-tabs__scroll-button--before--BorderLeftWidth, 0);
 }
 
 button:nth-of-type(1) {

@@ -1,11 +1,12 @@
 :host([large]) {
-  --_accordion__expanded-content-body--PaddingTop: var(--pf-c-accordion--m-display-lg__expanded-content-body--PaddingTop, 0em);
-  --_accordion__expanded-content-body--PaddingRight: var(--pf-c-accordion--m-display-lg__expanded-content-body--PaddingRight, 1rem);
-  --_accordion__expanded-content-body--PaddingBottom: var(--pf-c-accordion--m-display-lg__expanded-content-body--PaddingBottom, 1.5rem);
-  --_accordion__expanded-content-body--PaddingLeft: var(--pf-c-accordion--m-display-lg__expanded-content-body--PaddingLeft, 1.5rem);
-  --_accordion__expanded-content--FontSize: var(--pf-c-accordion--m-display-lg__expanded-content--FontSize, 1rem);
-  --_accordion__expanded-content--Color: var(--pf-c-accordion--m-display-lg__expanded-content--Color, #151515);
+  --pf-c-accordion__panel-body--PaddingTop: var(--pf-c-accordion--m-display-lg__expanded-content-body--PaddingTop, 0);
+  --pf-c-accordion__panel-body--PaddingRight: var(--pf-c-accordion--m-display-lg__expanded-content-body--PaddingRight, 1rem);
+  --pf-c-accordion__panel-body--PaddingBottom: var(--pf-c-accordion--m-display-lg__expanded-content-body--PaddingBottom, 1.5rem);
+  --pf-c-accordion__panel-body--PaddingLeft: var(--pf-c-accordion--m-display-lg__expanded-content-body--PaddingLeft, 1.5rem);
+  --pf-c-accordion__panel--FontSize: var(--pf-c-accordion--m-display-lg__expanded-content--FontSize, 1rem);
+  --pf-c-accordion__panel--Color: var(--pf-c-accordion--m-display-lg__expanded-content--Color, #151515);
 }
+
 :host([large]) .body:last-child {
-  --_accordion__expanded-content-body--PaddingBottom: var(--pf-c-accordion--m-display-lg__expanded-content-body--last-child--PaddingBottom, 1.5rem);
+  --pf-c-accordion__panel-body--PaddingBottom: var(--pf-c-accordion--m-display-lg__expanded-content-body--last-child--PaddingBottom, 1.5rem);
 }

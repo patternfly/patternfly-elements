@@ -1,25 +1,26 @@
-:host { 
+:host {
   display: none;
   overflow: hidden;
   will-change: height;
-  --pf-c-accordion--BackgroundColor: var(--pf-global--BackgroundColor--light-100, #fff);
-  --_accordion__expanded-content--Color: var(--pf-global--Color--dark-200, #6a6e73);
-  --_accordion__expanded-content--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
-  --_accordion__expanded-content--m-expanded__expanded-content-body--before--BackgroundColor: var(--pf-global--primary-color--100, #06c);
-  --_accordion__expanded-content--m-fixed--MaxHeight: 9.375rem;
-  --_accordion__expanded-content-body--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
-  --_accordion__expanded-content-body--PaddingRight: var(--pf-global--spacer--md, 1rem);
-  --_accordion__expanded-content-body--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
-  --_accordion__expanded-content-body--PaddingLeft: var(--pf-global--spacer--md, 1rem);
-  --_accordion__expanded-content-body--expanded-content-body--PaddingTop: 0;
-  --_accordion__expanded-content-body--before--BackgroundColor: transparent;
-  --_accordion__expanded-content-body--before--Width: var(--pf-global--BorderWidth--lg, 3px);
-  --_accordion__expanded-content-body--before--Top: 0;
+
+  --pf-c-accordion--BackgroundColor: var(--pf-global--BackgroundColor--light-100, #ffffff);
+  --pf-c-accordion__panel--Color: var(--pf-global--Color--dark-200, #6a6e73);
+  --pf-c-accordion__panel--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  --pf-c-accordion__panel--content-body--before--BackgroundColor: var(--pf-global--primary-color--100, #0066cc);
+  --pf-c-accordion__panel--m-fixed--MaxHeight: 9.375rem;
+  --pf-c-accordion__panel-body--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
+  --pf-c-accordion__panel-body--PaddingRight: var(--pf-global--spacer--md, 1rem);
+  --pf-c-accordion__panel-body--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
+  --pf-c-accordion__panel-body--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+  --pf-c-accordion__panel-body--expanded-content-body--PaddingTop: 0;
+  --pf-c-accordion__panel-body--before--BackgroundColor: transparent;
+  --pf-c-accordion__panel-body--before--Width: var(--pf-global--BorderWidth--lg, 3px);
+  --pf-c-accordion__panel-body--before--Top: 0;
+
   color: var(--pf-global--Color--100, #151515);
   background-color: var(--pf-c-accordion--BackgroundColor);
 }
 
-:host([expanded]),
 :host([expanded]) {
   display: block;
   position: relative;
@@ -31,31 +32,35 @@
 }
 
 .content {
-  font-size: var(--_accordion__expanded-content--FontSize);
-  color: var(--_accordion__expanded-content--Color);
+  color: var(--pf-c-accordion__panel--Color);
+  font-size: var(--pf-c-accordion__panel--FontSize);
 }
+
 :host([fixed]) {
-  max-height: var(--_accordion__expanded-content--m-fixed--MaxHeight);
+  max-height: var(--pf-c-accordion__panel--m-fixed--MaxHeight);
   overflow-y: auto;
 }
+
 .content[expanded],
 :host([expanded]) .content {
-  --_accordion__expanded-content-body--before--BackgroundColor: var(--_accordion__expanded-content--m-expanded__expanded-content-body--before--BackgroundColor);
+  --pf-c-accordion__panel-body--before--BackgroundColor: var(--pf-c-accordion__panel--content-body--before--BackgroundColor);
 }
 
 .body {
   position: relative;
-  padding: var(--_accordion__expanded-content-body--PaddingTop) var(--_accordion__expanded-content-body--PaddingRight) var(--_accordion__expanded-content-body--PaddingBottom) var(--_accordion__expanded-content-body--PaddingLeft);
+  padding: var(--pf-c-accordion__panel-body--PaddingTop) var(--pf-c-accordion__panel-body--PaddingRight) var(--pf-c-accordion__panel-body--PaddingBottom) var(--pf-c-accordion__panel-body--PaddingLeft);
 }
-.body::after {
+
+.body:after {
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
-  width: var(--_accordion__expanded-content-body--before--Width);
-  content: "";
-  background-color: var(--_accordion__expanded-content-body--before--BackgroundColor);
+  width: var(--pf-c-accordion__panel-body--before--Width);
+  background-color: var(--pf-c-accordion__panel-body--before--BackgroundColor);
 }
+
 .body + .body {
-  --_accordion__expanded-content-body--PaddingTop: var(--_accordion__expanded-content-body--expanded-content-body--PaddingTop);
+  --pf-c-accordion__panel-body--PaddingTop: var(--pf-c-accordion__panel-body--expanded-content-body--PaddingTop);
 }

@@ -40,7 +40,7 @@ export abstract class BaseAccordionHeader extends LitElement {
 
   @property({ reflect: true }) bordered?: 'true'|'false';
 
-  @property({ reflect: true }) icon?: 'web-icon-caret-thin-right';
+  @property({ reflect: true }) icon? = 'web-icon-caret-thin-right';
 
   @observed
   @property({ type: Boolean, reflect: true }) expanded = false;

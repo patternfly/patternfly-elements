@@ -1,4 +1,5 @@
 :host { 
+    --pf-c-accordion__toggle--Color: var(--pf-global--Color--100, #151515);
     --pf-c-accordion__toggle--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
     --pf-c-accordion__toggle--PaddingRight: var(--pf-global--spacer--md, 1rem);
     --pf-c-accordion__toggle--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
@@ -25,7 +26,7 @@
     --pf-c-accordion__toggle--FontFamily: var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,
         "RedHatDisplayUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
     --pf-c-accordion__toggle--FontWeight: var(--pf-global--FontWeight--normal, 400);
-    color: var(--pf-global--Color--100, #151515);
+    color: var(--pf-c-accordion__toggle--Color);
     background-color: var(--pf-global--BackgroundColor--100);
     --pfe-icon--size: var(--pf-c-accordion__toggle--IconSize, 10px)
   }
@@ -64,6 +65,7 @@
     font-family: var(--pf-c-accordion__toggle--FontFamily, inherit);
     font-size: var(--pf-c-accordion__toggle--FontSize, inherit);
     font-weight: var(--pf-c-accordion__toggle--FontWeight);
+    color: var(--pf-c-accordion__toggle--Color);
     border: 0;
   }
   .toggle[aria-expanded="true"] {

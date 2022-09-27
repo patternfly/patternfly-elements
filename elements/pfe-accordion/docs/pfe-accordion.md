@@ -5,9 +5,7 @@
     </pfe-accordion-header>
     <pfe-accordion-panel>
       <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
-      <pfe-cta>
-        <a href="#">Call to action</a>
-      </pfe-cta>
+      <a href="#">Call to action</a>
     </pfe-accordion-panel>
     <pfe-accordion-header>
       <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
@@ -26,9 +24,7 @@
     </pfe-accordion-header>
     <pfe-accordion-panel>
       <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
-      <pfe-cta>
-        <a href="#">Call to action</a>
-      </pfe-cta>
+      <a href="#">Call to action</a>
     </pfe-accordion-panel>
   </pfe-accordion>
 
@@ -42,7 +38,7 @@
     <pfe-accordion-panel>
       <h3>Headline, sm</h3>
       <p>A Disclosure toggles the visibility of sections of content. It features one panel that consists of a caret icon and a section text label that collapses or expands to reveal more information.</p>
-      <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+      <a href="#">Call-to-action</a>
     </pfe-accordion-panel>
   </pfe-accordion>
 {% endrenderOverview %}
@@ -54,9 +50,7 @@
     </pfe-accordion-header>
     <pfe-accordion-panel>
       <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
-      <pfe-cta>
-        <a href="#">Call to action</a>
-      </pfe-cta>
+      <a href="#">Call to action</a>
     </pfe-accordion-panel>
     <pfe-accordion-header>
       <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
@@ -75,9 +69,7 @@
     </pfe-accordion-header>
     <pfe-accordion-panel>
       <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
-      <pfe-cta>
-        <a href="#">Call to action</a>
-      </pfe-cta>
+      <a href="#">Call to action</a>
     </pfe-accordion-panel>
   </pfe-accordion>
 
@@ -88,9 +80,7 @@
     </pfe-accordion-header>
     <pfe-accordion-panel>
       <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
-      <pfe-cta>
-        <a href="#">Call to action</a>
-      </pfe-cta>
+      <a href="#">Call to action</a>
     </pfe-accordion-panel>
     <pfe-accordion-header>
       <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
@@ -109,9 +99,7 @@
     </pfe-accordion-header>
     <pfe-accordion-panel>
       <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
-      <pfe-cta>
-        <a href="#">Call to action</a>
-      </pfe-cta>
+      <a href="#">Call to action</a>
     </pfe-accordion-panel>
   </pfe-accordion>
   ```
@@ -130,7 +118,7 @@
     <pfe-accordion-panel>
       <h3>Headline, sm</h3>
       <p>A Disclosure toggles the visibility of sections of content. It features one panel that consists of a caret icon and a section text label that collapses or expands to reveal more information.</p>
-      <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+      <a href="#">Call-to-action</a>
     </pfe-accordion-panel>
   </pfe-accordion>
 

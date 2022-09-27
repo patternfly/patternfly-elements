@@ -30,7 +30,7 @@ permalink: /components/index.html
         {%- else -%}
         <div class="preview-image" style="background-image: url(/components/{{ element.slug }}/docs/preview.png);"></div>
         <div class="overlay">
-          <pfe-cta priority="secondary" variant="wind"><a href="/components/{{ element.slug }}/demo/">Demo</a></pfe-cta>
+          <a class="cta secondary wind" href="/components/{{ element.slug }}/demo/">Demo</a>
         </div>
         {%- endif -%}
       </div>
@@ -39,7 +39,7 @@ permalink: /components/index.html
       </h3>
       {% renderTemplate "njk,md", element=element %}{{ element.summary }}{% endrenderTemplate %}
       {%- if env.ELEVENTY_ENV != "prod" -%}
-      <pfe-cta><a href="/components/{{ element.slug }}/">Component overview</a></pfe-cta>
+      <a class="cta" href="/components/{{ element.slug }}/">Component overview</a>
       {%- endif -%}
     </div>
   {%- endif -%}

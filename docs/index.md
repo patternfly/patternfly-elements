@@ -17,23 +17,17 @@ templateEngineOverride: njk,md
           </h1>
           <p class="tagline">{{ description }}</p>
           <div class="header-ctas">
-            <pfe-cta priority="primary">
-              <a href="get-started">Get started</a>
-            </pfe-cta>
-            <pfe-cta priority="secondary">
-              <a href="components">View the components</a>
-            </pfe-cta>
+            <a class="cta primary" href="get-started">Get started</a>
+            <a class="cta secondary" href="components">View the components</a>
           </div>
         </div>
       </div>
     </pfe-band>
     <pfe-band size="small">
       <div class="pfe-l--text-align--center">
-        <pfe-cta>
-          <a href="{{ githubLink }}">
-            <pfe-icon size="md" style="--pfe-icon--Color: #666" icon="fas-github" aria-hidden="true"></pfe-icon>&nbsp;&nbsp;Contribute on GitHub
-          </a>
-        </pfe-cta>
+        <a class="cta" href="{{ githubLink }}">
+          <pfe-icon size="md" style="--pfe-icon--Color: #666" icon="fas-github" aria-hidden="true"></pfe-icon>&nbsp;&nbsp;Contribute on GitHub
+        </a>
       </div>
     </pfe-band>
   </header>
@@ -51,14 +45,12 @@ templateEngineOverride: njk,md
 <script type="module"
         src="https://unpkg.com/@patternfly/pfe-card@next?module"></script>
 <script type="module"
-        src="https://unpkg.com/@patternfly/pfe-cta@next?module"></script>
+        src="https://unpkg.com/@patternfly/pfe-button@next?module"></script>
 
 <pfe-card color-palette="lightest">
   <h2 slot="header">Card component</h2>
   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quam alias ducimus, amet iure quae earum.</p>
-  <pfe-cta slot="footer">
-    <a href="components/card">Learn more about pfe-card</a>
-  </pfe-cta>
+  <a class="cta" slot="footer" href="components/card">Learn more about pfe-card</a>
 </pfe-card>
 ```
 
@@ -67,16 +59,12 @@ templateEngineOverride: njk,md
           <pfe-card class="pfe-l-grid__item pfe-m-12-col pfe-m-6-col-on-md pfe-m-4-col-on-lg" color-palette="lightest" border>
             <h2 slot="header">Card component</h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quam alias ducimus, amet iure quae earum.</p>
-            <pfe-cta slot="footer">
-              <a href="components/card">More about the pfe-card</a>
-            </pfe-cta>
+            <a class="cta" slot="footer" href="components/card">More about the pfe-card</a>
           </pfe-card>
         </div>
         <br>
         <div class="pfe-l--text-align--center">
-          <pfe-cta>
-            <a href="components/">View the rest of the components</a>
-          </pfe-cta>
+          <a class="cta" href="components/">View the rest of the components</a>
         </div>
       </pfe-band>
     </section>
@@ -151,9 +139,7 @@ export default function App() {
       </div>
         <br>
         <div class="pfe-l--text-align--center">
-          <pfe-cta>
-            <a href="/framework-integration/">Learn how to integrate PatternFly Elements in your application</a>
-          </pfe-cta>
+          <a class="cta" href="/framework-integration/">Learn how to integrate PatternFly Elements in your application</a>
         </div>
       </pfe-band>
     </section>
@@ -182,11 +168,7 @@ export default function App() {
                   link</a>, <a href="https://patternflyelements.org">or a visited one</a>. Non, qui dolore ex soluta exercitationem fuga asperiores
                 natus illo nobis? Expedita modi
                 fuga qui praesentium.</p>
-              <div slot="footer">
-                <pfe-cta>
-                  <a href="#">Link 1</a>
-                </pfe-cta>
-              </div>
+              <a class="cta" slot="footer" href="#">Link 1</a>
             </pfe-card>
           </div>
           <div>
@@ -196,11 +178,7 @@ export default function App() {
                   link</a>, <a href="https://patternflyelements.org">or a visited one</a>. Non,
                 qui dolore ex soluta exercitationem fuga asperiores natus illo nobis? Expedita modi fuga qui
                 praesentium.</p>
-              <div slot="footer">
-                <pfe-cta>
-                  <a href="#">Link 2</a>
-                </pfe-cta>
-              </div>
+              <a class="cta" slot="footer" href="#">Link 2</a>
             </pfe-card>
           </div>
           <div>
@@ -210,11 +188,7 @@ export default function App() {
                   href="https://patternflyelements.org">or a visited one</a>.
                 doloremque natus corrupti ullam numquam laudantium voluptatibus assumenda alias recusandae vel
                 temporibus a soluta?</p>
-              <div slot="footer">
-                <pfe-cta>
-                  <a href="#">Link 3</a>
-                </pfe-cta>
-              </div>
+              <a slot="footer" class="cta" href="#">Link 3</a>
             </pfe-card>
           </div>
         </div>
@@ -229,15 +203,9 @@ export default function App() {
               eum, omnis earum aliquam explicabo excepturi at voluptate, repellendus ipsam velit, nisi enim autem
               reiciendis reprehenderit!</p>
             <div class="pfe-l--text-align--center push-top">
-              <pfe-cta priority="secondary" class="push-bottom">
-                <a href="#">Link 1</a>
-              </pfe-cta>
-              <pfe-cta priority="secondary" class="push-bottom">
-                <a href="#">Link 2</a>
-              </pfe-cta>
-              <pfe-cta priority="primary" class="push-bottom">
-                <a href="#">Link 3</a>
-              </pfe-cta>
+              <a class="cta secondary push-bottom" href="#">Link 1</a>
+              <a class="cta secondary push-bottom" href="#">Link 2</a>
+              <a class="cta primary push-bottom" href="#">Link 3</a>
             </div>
           </pfe-tab-panel>
           <pfe-tab slot="tab">
@@ -250,9 +218,7 @@ export default function App() {
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem possimus, velit assumenda id ea dicta
               at deleniti neque repellendus quasi doloremque quidem quam fuga aliquam temporibus adipisci ducimus saepe
               ullam.</p>
-            <pfe-cta priority="secondary">
-              <a href="#">Link 1</a>
-            </pfe-cta>
+            <a class="cta secondary" href="#">Link 1</a>
           </pfe-tab-panel>
           <pfe-tab slot="tab">
             <h3>Tab 3</h3>
@@ -261,9 +227,7 @@ export default function App() {
             <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet doloremque dignissimos, libero magni
               repudiandae quod quam optio deserunt, beatae consequatur eius officiis molestiae molestias? Adipisci
               suscipit beatae sed vitae consectetur.</p>
-            <pfe-cta>
-              <a href="#">Link 1</a>
-            </pfe-cta>
+            <a class="cta secondary" href="#">Link 1</a>
           </pfe-tab-panel>
         </pfe-tabs>
       </pfe-band>
@@ -300,9 +264,7 @@ export default function App() {
       </pfe-band>
       <pfe-band color-palette="lightest">
         <div class="pfe-l--text-align--center">
-          <pfe-cta>
-            <a href="/theming/">Learn more about theming PatternFly Elements</a>
-          </pfe-cta>
+          <a class="cta" href="/theming/">Learn more about theming PatternFly Elements</a>
         </div>
       </pfe-band>
     </section>
@@ -326,15 +288,9 @@ export default function App() {
         <p>Since PatternFly Elements are contextually aware of their surface colors, when you change the context, PatternFly Elements will adjust child elements with appropriate contrasting values. For example, a dark context on an element would adjust child elements to have light colored text.</p>
         <br>
         <div class="pfe-l--text-align--center push-bottom">
-          <pfe-cta priority="primary" class="push-bottom">
-            <a href="#">Primary</a>
-          </pfe-cta>
-          <pfe-cta priority="secondary" class="push-bottom">
-            <a href="#">Secondary</a>
-          </pfe-cta>
-          <pfe-cta class="push-bottom">
-            <a href="#">Default</a>
-          </pfe-cta>
+          <a class="cta primary push-bottom" href="#">Primary</a>
+          <a class="cta secondary push-bottom" href="#">Secondary</a>
+          <a class="cta push-bottom" href="#">Default</a>
         </div>
         <br>
         <pfe-accordion class="push-top push-bottom">

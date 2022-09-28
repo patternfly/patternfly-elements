@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { observed } from '@patternfly/pfe-core/decorators.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import styles from './BaseSpinner.scss';
 
@@ -33,26 +33,19 @@ export type SpinnerSize = (
 export abstract class BaseSpinner extends LitElement {
   static readonly styles = [styles];
 
-  /** Size variant of progress */
+  /** Preset sizes for the spinner */
   @property({ reflect: true }) size: SpinnerSize = 'xl';
 
   /** Custom diameter of spinner set as CSS variable */
-  @observed
   @property({ reflect: true }) diameter?: string;
 
   override render() {
     return html`
-      <svg role="progressbar" viewBox="0 0 100 100">
+      <svg role="progressbar" viewBox="0 0 100 100" style=${styleMap({
+        '--pf-c-spinner--diameter': this.diameter
+      })}>
         <circle cx="50" cy="50" r="45" fill="none" />
       </svg>
     `;
-  }
-
-  protected _diameterChanged() {
-    if (!this.diameter) {
-      return;
-    }
-
-    this.style.setProperty('--pf-c-spinner--diameter', this.diameter);
   }
 }

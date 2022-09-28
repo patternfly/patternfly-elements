@@ -1,55 +1,57 @@
 :host {
-  --pf-c-spinner--diameter: var(--pf-global--icon--FontSize--xl, 3.375rem);
-  --pf-c-spinner--Width: var(--pf-c-spinner--diameter, 3.375rem);
-  --pf-c-spinner--Height: var(--pf-c-spinner--diameter, 3.375rem);
-  --pf-c-spinner--Color: var(--pf-global--primary-color--100, #06c);
-  --pf-c-spinner--m-sm--diameter: var(--pf-global--icon--FontSize--sm, 0.625rem);
-  --pf-c-spinner--m-md--diameter: var(--pf-global--icon--FontSize--md, 1.125rem);
-  --pf-c-spinner--m-lg--diameter: var(--pf-global--icon--FontSize--lg, 1.5rem);
-  --pf-c-spinner--m-xl--diameter: var(--pf-global--icon--FontSize--xl, 3.375rem);
-  --pf-c-spinner--AnimationDuration: 1.4s;
-  --pf-c-spinner--stroke-width: 10;
-  --pf-c-spinner__path--StrokeWidth: 10;
-  --pf-c-spinner--AnimationTimingFunction: linear;
-  --pf-c-spinner__path--AnimationTimingFunction: ease-in-out;
   display: inline-block;
-  width: var(--pf-c-spinner--Width);
-  height: var(--pf-c-spinner--Height);
+  width: min-content;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
 }
 
 svg {
-  width: var(--pf-c-spinner--Width);
-  height: var(--pf-c-spinner--Height);
-  animation: pf-c-spinner-animation-rotate calc(var(--pf-c-spinner--AnimationDuration) * 2) var(--pf-c-spinner--AnimationTimingFunction) infinite;
+  width: var(--pf-c-spinner--Width,
+    var(--pf-c-spinner--diameter,
+      var(--pf-global--icon--FontSize--xl, 3.375rem)));
+  height: var(--pf-c-spinner--Height,
+    var(--pf-c-spinner--diameter,
+      var(--pf-global--icon--FontSize--xl, 3.375rem)));
+  animation:
+    pf-c-spinner-animation-rotate
+    calc(var(--pf-c-spinner--AnimationDuration, 1.4s) * 2)
+    var(--pf-c-spinner--AnimationTimingFunction, linear) infinite;
   overflow: hidden;
 }
 
-:host([size="sm"]) {
-  --pf-c-spinner--diameter: var(--pf-c-spinner--m-sm--diameter);
+:host([size="sm"]) svg {
+  --pf-c-spinner--diameter: var(--pf-c-spinner--m-sm--diameter,
+    var(--pf-global--icon--FontSize--sm, 0.625rem));
 }
 
-:host([size="md"]) {
-  --pf-c-spinner--diameter: var(--pf-c-spinner--m-md--diameter);
+:host([size="md"]) svg {
+  --pf-c-spinner--diameter: var(--pf-c-spinner--m-md--diameter,
+    var(--pf-global--icon--FontSize--md, 1.125rem));
 }
 
-:host([size="lg"]) {
-  --pf-c-spinner--diameter: var(--pf-c-spinner--m-lg--diameter);
+:host([size="lg"]) svg {
+  --pf-c-spinner--diameter: var(--pf-c-spinner--m-lg--diameter,
+    var(--pf-global--icon--FontSize--lg, 1.5rem));
 }
 
-:host([size="xl"]) {
-  --pf-c-spinner--diameter: var(--pf-c-spinner--m-xl--diameter);
+:host([size="xl"]) svg {
+  --pf-c-spinner--diameter: var(--pf-c-spinner--m-xl--diameter,
+    var(--pf-global--icon--FontSize--xl, 3.375rem));
 }
 
 circle {
   width: 100%;
   height: 100%;
   transform-origin: 50% 50%;
-  animation: pf-c-spinner-animation-dash var(--pf-c-spinner--AnimationDuration) var(--pf-c-spinner__path--AnimationTimingFunction) infinite;
-  stroke: var(--pf-c-spinner--Color);
+  animation:
+    pf-c-spinner-animation-dash
+    var(--pf-c-spinner--AnimationDuration, 1.4s)
+    var(--pf-c-spinner__path--AnimationTimingFunction, ease-in-out) infinite;
+  stroke: var(--pf-c-spinner--Color, var(--pf-global--primary-color--100, #06c));
   stroke-linecap: round;
   stroke-dasharray: 283;
   stroke-dashoffset: 280;
-  stroke-width: var(--pf-c-spinner--stroke-width);
+  stroke-width: var(--pf-c-spinner--stroke-width, 10);
 }
 
 @keyframes pf-c-spinner-animation-rotate {
@@ -67,7 +69,7 @@ circle {
     transform: rotate(0);
   }
   15% {
-    stroke-width: calc(var(--pf-c-spinner__path--StrokeWidth) - 4);
+    stroke-width: calc(var(--pf-c-spinner__path--StrokeWidth, 10) - 4);
   }
   40% {
     stroke-dashoffset: 150;

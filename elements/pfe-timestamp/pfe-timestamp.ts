@@ -15,7 +15,8 @@ export class PfeTimestamp extends LitElement {
   @property({ reflect: true, attribute: 'display-suffix' }) displaySuffix?: string;
   @property({ reflect: true }) locale?: string;
   @property({ reflect: true, type: Boolean }) relative?: boolean;
-  @property({ reflect: true, attribute: 'is-utc', type: Boolean }) isUtc?: boolean;
+
+  @property({ reflect: true, type: Boolean }) utc?: boolean;
   @property({
     reflect: true,
     attribute: 'is-12-hour',
@@ -29,10 +30,10 @@ export class PfeTimestamp extends LitElement {
       ...(this.dateFormat && { dateStyle: this.dateFormat }),
       ...(this.timeFormat && { timeStyle: this.timeFormat }),
       ...(this.is12Hour !== undefined && { hour12: this.is12Hour }),
-      ...(this.isUtc && { timeZone: 'UTC' })
+      ...(this.utc && { timeZone: 'UTC' })
     };
 
-    if (!this.displaySuffix && this.isUtc) {
+    if (!this.displaySuffix && this.utc) {
       this.displaySuffix = 'UTC';
     }
 

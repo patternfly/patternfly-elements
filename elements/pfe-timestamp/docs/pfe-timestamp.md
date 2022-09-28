@@ -57,29 +57,29 @@
   ```
 
   ### Adding a tooltip
-  To add a tooltip that displays the timestamp content as a UTC time, you can wrap `pfe-timestamp` with `pfe-tooltip` and set the `is-utc` attribute on an additional `pfe-timestamp`.
+  To add a tooltip that displays the timestamp content as a UTC time, you can wrap `pfe-timestamp` with `pfe-tooltip` and set the `utc` attribute on an additional `pfe-timestamp`.
 
   <pfe-tooltip>
     <pfe-timestamp></pfe-timestamp>
-    <pfe-timestamp slot="content" is-utc></pfe-timestamp>
+    <pfe-timestamp slot="content" utc></pfe-timestamp>
   </pfe-tooltip>
 
   ```html
   <pfe-tooltip>
     <pfe-timestamp></pfe-timestamp>
-    <pfe-timestamp slot="content" is-utc></pfe-timestamp>
+    <pfe-timestamp slot="content" utc></pfe-timestamp>
   </pfe-tooltip>
   ```
 
   <pfe-tooltip>
     <pfe-timestamp></pfe-timestamp>
-    <pfe-timestamp slot="content" is-utc display-suffix="Coordinated Universal Time"></pfe-timestamp>
+    <pfe-timestamp slot="content" utc display-suffix="Coordinated Universal Time"></pfe-timestamp>
   </pfe-tooltip>
 
   ```html
   <pfe-tooltip>
     <pfe-timestamp></pfe-timestamp>
-    <pfe-timestamp slot="content" is-utc display-suffix="Coordinated Universal Time"></pfe-timestamp>
+    <pfe-timestamp slot="content" utc display-suffix="Coordinated Universal Time"></pfe-timestamp>
   </pfe-tooltip>
   ```
 
@@ -141,12 +141,12 @@
   ```
 
   ### As a UTC timestamp
-  Set the `is-utc` attribute.
+  Set the `utc` attribute.
   
-  <pfe-timestamp is-utc></pfe-timestamp>
+  <pfe-timestamp utc></pfe-timestamp>
 
   ```html
-  <pfe-timestamp is-utc></pfe-timestamp>
+  <pfe-timestamp utc></pfe-timestamp>
   ```
 {% endband %}
 

@@ -1,7 +1,7 @@
 import '@patternfly/pfe-band';
 import '@patternfly/pfe-button';
 import '@patternfly/pfe-icon/font-awesome.js';
-import '@patternfly/pfe-progress-indicator';
+import '@patternfly/pfe-spinner';
 import '@patternfly/pfe-select';
 
 const root = document.querySelector('[data-demo="pfe-button"]')?.shadowRoot ?? document;

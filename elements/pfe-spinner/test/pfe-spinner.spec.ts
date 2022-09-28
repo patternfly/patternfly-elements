@@ -19,11 +19,11 @@ describe('<pfe-spinner>', function() {
     expect(element.getAttribute('size')).to.equal('xl');
   });
 
-  describe('size attribute', async function() {
+  describe('size attribute', function() {
     let element: PfeSpinner;
 
-    const { fontSize } = getComputedStyle(document.documentElement);
     function convertRemToPixels(rem: `${number}rem`) {
+      const { fontSize } = getComputedStyle(document.documentElement);
       return parseFloat(rem) * parseFloat(fontSize);
     }
 
@@ -47,12 +47,14 @@ describe('<pfe-spinner>', function() {
     }
   });
 
-  it('should allow a custom diameter', async function() {
-    const customDiameterValue = 80;
-    const element = await createFixture<PfeSpinner>(html`
-      <pfe-spinner diameter="${customDiameterValue}px">Loading...</pfe-spinner>
-    `);
+  describe('diameter attribute', function() {
+    it('sets the element diameter', async function() {
+      const customDiameterValue = 80;
+      const element = await createFixture<PfeSpinner>(html`
+        <pfe-spinner diameter="${customDiameterValue}px">Loading...</pfe-spinner>
+      `);
 
-    expect(element.offsetWidth).to.equal(customDiameterValue);
+      expect(element.offsetWidth).to.equal(customDiameterValue);
+    });
   });
 });

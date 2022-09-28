@@ -162,7 +162,6 @@ export class PfeButton extends BaseButton {
       <pfe-icon ?hidden=${!this.icon} icon=${this.icon} size="sm"></pfe-icon>
       <pfe-spinner
           ?hidden=${!this.loading}
-          indeterminate
           aria-label=${this.getAttribute('progress-label') ?? 'loading'}
       ></pfe-spinner>
     `;

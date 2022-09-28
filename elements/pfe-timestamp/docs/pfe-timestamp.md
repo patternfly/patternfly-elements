@@ -51,22 +51,22 @@
   <pfe-timestamp id="timestamp-custom-format" date="Sat Jan 01 2022 00:00:00 GMT-0500"></pfe-timestamp>
   <script>
   document.getElementById('timestamp-custom-format').customFormat = {
-    year: "2-digit",
-    month: "short",
-    weekday: "short",
-    day: "numeric",
-    hour: "numeric"
+    year: '2-digit',
+    month: 'short',
+    weekday: 'short',
+    day: 'numeric',
+    hour: 'numeric'
   };
   </script>
   ```html
   <pfe-timestamp id="timestamp-custom-format" date="Sat Jan 01 2022 00:00:00 GMT-0500"></pfe-timestamp>
   <script>
   document.getElementById('timestamp-custom-format').customFormat = {
-    year: "2-digit",
-    month: "short",
-    weekday: "short",
-    day: "numeric",
-    hour: "numeric"
+    year: '2-digit',
+    month: 'short',
+    weekday: 'short',
+    day: 'numeric',
+    hour: 'numeric'
   };
   </script>
   ```

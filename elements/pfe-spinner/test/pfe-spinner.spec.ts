@@ -11,7 +11,7 @@ describe('<pfe-spinner>', function() {
       .to.be.an.instanceOf(PfeSpinner);
   });
 
-  it('should properly initialize the component', async () => {
+  it('should properly initialize the component', async function() {
     const element = await createFixture<PfeSpinner>(html`
       <pfe-spinner>Loading...</pfe-spinner>
     `);
@@ -19,36 +19,40 @@ describe('<pfe-spinner>', function() {
     expect(element.getAttribute('size')).to.equal('xl');
   });
 
-  it('should allow sizes of sm, md, lg, xl', async () => {
-    let diameterValue;
-    const element = await createFixture<PfeSpinner>(html`
-      <pfe-spinner>Loading...</pfe-spinner>
-    `);
+  describe('size attribute', async function() {
+    let element: PfeSpinner;
 
-    element.setAttribute('size', 'sm');
-    diameterValue = getComputedStyle(element).getPropertyValue('--pf-c-spinner--diameter').trim();
-    expect(diameterValue).to.equal('0.625rem');
+    const { fontSize } = getComputedStyle(document.documentElement);
+    function convertRemToPixels(rem: `${number}rem`) {
+      return parseFloat(rem) * parseFloat(fontSize);
+    }
 
-    element.setAttribute('size', 'md');
-    diameterValue = getComputedStyle(element).getPropertyValue('--pf-c-spinner--diameter').trim();
-    expect(diameterValue).to.equal('1.125rem');
+    beforeEach(async function() {
+      element = await createFixture<PfeSpinner>(html`
+        <pfe-spinner>Loading...</pfe-spinner>
+      `);
+    });
 
-    element.setAttribute('size', 'lg');
-    diameterValue = getComputedStyle(element).getPropertyValue('--pf-c-spinner--diameter').trim();
-    expect(diameterValue).to.equal('1.5rem');
-
-    element.setAttribute('size', 'xl');
-    diameterValue = getComputedStyle(element).getPropertyValue('--pf-c-spinner--diameter').trim();
-    expect(diameterValue).to.equal('3.375rem');
+    for (const [size, expected] of [
+      ['sm', '0.625rem'],
+      ['md', '1.125rem'],
+      ['lg', '1.5rem'],
+      ['xl', '3.375rem'],
+    ] as const) {
+      it(size, async function() {
+        element.size = size;
+        await element.updateComplete;
+        expect(element.offsetWidth).to.equal(convertRemToPixels(expected));
+      });
+    }
   });
 
-  it('should allow a custom diameter', async () => {
-    const customDiameterValue = '80px';
+  it('should allow a custom diameter', async function() {
+    const customDiameterValue = 80;
     const element = await createFixture<PfeSpinner>(html`
-      <pfe-spinner diameter="${customDiameterValue}">Loading...</pfe-spinner>
+      <pfe-spinner diameter="${customDiameterValue}px">Loading...</pfe-spinner>
     `);
 
-    const diameterValue = getComputedStyle(element).getPropertyValue('--pf-c-spinner--diameter');
-    expect(diameterValue).to.equal(customDiameterValue);
+    expect(element.offsetWidth).to.equal(customDiameterValue);
   });
 });

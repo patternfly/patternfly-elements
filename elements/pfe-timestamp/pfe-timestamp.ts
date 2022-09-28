@@ -48,7 +48,7 @@ export class PfeTimestamp extends LitElement {
     const _date = new Date(this.date);
     const formattedDate = _date.toLocaleString(this.locale, formatOptions);
     const isoDate = _date.toISOString();
-    const timestampContent = this.relative ? this._getTimeRelative(_date) : `${formattedDate}${this.displaySuffix ? ` ${this.displaySuffix}` : ''}`;
+    const timestampContent = this.relative ? this.#getTimeRelative(_date) : `${formattedDate}${this.displaySuffix ? ` ${this.displaySuffix}` : ''}`;
 
     return html`
       <time datetime="${isoDate}">${timestampContent}</time>
@@ -59,7 +59,7 @@ export class PfeTimestamp extends LitElement {
    * Based off of Github Relative Time
    * https://github.com/github/time-elements/blob/master/src/relative-time.js
    */
-  private _getTimeRelative(date: Date) {
+  #getTimeRelative(date: Date) {
     const ms: number = date.getTime() - Date.now();
     const tense = ms > 0 ? 'until' : 'ago';
     let str = 'just now';

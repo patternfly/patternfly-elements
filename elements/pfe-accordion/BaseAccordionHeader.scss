@@ -20,7 +20,7 @@
   --pf-c-accordion__toggle--expanded--before--BackgroundColor: var(--pf-global--primary-color--100, #0066cc);
   --pf-c-accordion__toggle--expanded-text--Color: var(--pf-global--link--Color, #0066cc);
   --pf-c-accordion__toggle--expanded-text--FontWeight: var(--pf-global--FontWeight--semi-bold, 700);
-  --pf-c-accordion__toggle--expanded__toggle-icon--Rotate: 90deg;
+  --pf-c-accordion__toggle--expanded-icon--Rotate: 90deg;
   --pf-c-accordion__toggle-text--MaxWidth: calc(100% - var(--pf-global--spacer--lg, 1.5rem));
   --pf-c-accordion__toggle--before--Width: var(--pf-global--BorderWidth--lg, 3px);
   --pf-c-accordion__toggle-icon--Transition: 0.2s ease-in 0s;
@@ -101,7 +101,7 @@ span {
 }
 
 .toggle[aria-expanded="true"] .icon {
-  transform: rotate(var(--pf-c-accordion__toggle--expanded__toggle-icon--Rotate, 90deg));
+  transform: rotate(var(--pf-c-accordion__toggle--expanded-icon--Rotate, 90deg));
 }
 
 .toggle:hover {

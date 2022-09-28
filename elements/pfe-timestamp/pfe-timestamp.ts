@@ -9,27 +9,35 @@ export class PfeTimestamp extends LitElement {
   static readonly styles = [style];
 
   @property({ reflect: true, type: String }) date: string = new Date().toLocaleString();
+
   @property({ reflect: true, attribute: 'date-format' }) dateFormat?: 'full' | 'long' | 'medium' | 'short';
+
   @property({ reflect: true, attribute: 'time-format' }) timeFormat?: 'full' | 'long' | 'medium' | 'short';
-  @property({ attribute: 'custom-format', type: Object }) customFormat?: object;
+
+  @property({ attribute: false }) customFormat?: object;
+
   @property({ reflect: true, attribute: 'display-suffix' }) displaySuffix?: string;
+
   @property({ reflect: true }) locale?: string;
+
   @property({ reflect: true, type: Boolean }) relative?: boolean;
 
   @property({ reflect: true, type: Boolean }) utc?: boolean;
+
   @property({
     reflect: true,
-    attribute: 'is-12-hour',
+    attribute: 'hour-12',
     converter: value => {
       return !value || value === 'true';
     }
-  }) is12Hour?: boolean;
+  }) hour12?: boolean;
 
   render() {
+    const { hour12 } = this;
     const formatOptions = this.customFormat || {
       ...(this.dateFormat && { dateStyle: this.dateFormat }),
       ...(this.timeFormat && { timeStyle: this.timeFormat }),
-      ...(this.is12Hour !== undefined && { hour12: this.is12Hour }),
+      ...{ hour12 },
       ...(this.utc && { timeZone: 'UTC' })
     };
 

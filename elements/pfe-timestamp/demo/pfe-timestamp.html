@@ -18,7 +18,17 @@
   <p><pfe-timestamp date-format="full" locale="es"></pfe-timestamp></p>
 
   <h3>Custom format</h3>
-  <p><pfe-timestamp date="Sat Jan 01 2022 00:00:00 GMT-0500" custom-format='{ "year": "2-digit", "month": "short", "weekday": "short", "day": "numeric", "hour": "numeric" }'></pfe-timestamp></p>
+  <p><pfe-timestamp id="timestamp-custom-format" date="Sat Jan 01 2022 00:00:00 GMT-0500"></pfe-timestamp></p>
+
+  <script>
+  document.getElementById('timestamp-custom-format').customFormat = {
+    year: "2-digit",
+    month: "short",
+    weekday: "short",
+    day: "numeric",
+    hour: "numeric"
+  };
+  </script>
 
   <h3>Default tooltip</h3>
   <p>

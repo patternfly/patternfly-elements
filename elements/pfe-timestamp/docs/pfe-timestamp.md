@@ -48,12 +48,27 @@
   ### Custom format
   The format of the displayed content can be further customized by setting the custom-format attributes. Read [datetime format options](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options) for a list of options that can be set.
 
-  <pfe-timestamp date="Sat Jan 01 2022 00:00:00 GMT-0500" custom-format='{ "year": "2-digit", "month": "short", "weekday": "short", "day": "numeric", "hour": "numeric" }'></pfe-timestamp>
+  <pfe-timestamp id="timestamp-custom-format" date="Sat Jan 01 2022 00:00:00 GMT-0500"></pfe-timestamp>
+  <script>
+  document.getElementById('timestamp-custom-format').customFormat = {
+    year: "2-digit",
+    month: "short",
+    weekday: "short",
+    day: "numeric",
+    hour: "numeric"
+  };
+  </script>
   ```html
-  <pfe-timestamp
-    date="Sat Jan 01 2022 00:00:00 GMT-0500"
-    custom-format='{ "year": "2-digit", "month": "short", "weekday": "short", "day": "numeric", "hour": "numeric" }'>
-  </pfe-timestamp>
+  <pfe-timestamp id="timestamp-custom-format" date="Sat Jan 01 2022 00:00:00 GMT-0500"></pfe-timestamp>
+  <script>
+  document.getElementById('timestamp-custom-format').customFormat = {
+    year: "2-digit",
+    month: "short",
+    weekday: "short",
+    day: "numeric",
+    hour: "numeric"
+  };
+  </script>
   ```
 
   ### Adding a tooltip

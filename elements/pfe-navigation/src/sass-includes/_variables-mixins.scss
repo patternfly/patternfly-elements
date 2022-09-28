@@ -11,6 +11,7 @@ $LOCAL-VARIABLES: (
   FontFamily: #{"Red Hat Text", "RedHatText", Arial, Helvetica, sans-serif},
   ZIndex: pfe-zindex(navigation),
   overlay--Background: rgba(21, 21, 21, 0.5),
+  fade-transition-delay: 1s,
 
   logo: (
     // maxWidth: // Is calculated by JS and never used in component's SCSS

@@ -401,7 +401,8 @@ nav.pfe-navigation {
 
 .pfe-navigation__outer-menu-wrapper__inner {
   // Opacity transition is to hide jank as the nav changes layout state
-  $opacity-transition: opacity 0.25s 1s linear;
+  $opacity-transition: opacity 0.25s pfe-local(fade-transition-delay) linear;
+
   width: 100%;
   opacity: 0;
   transition:

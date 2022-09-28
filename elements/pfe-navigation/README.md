@@ -324,6 +324,7 @@ Navigation (and all PFElements) use [Prettier][prettier] to auto-format JS and J
 |`--pfe-navigation--FontFamily` | "Red Hat Text", "RedHatText", Arial, Helvetica, sans-serif |  |
 |`--pfe-navigation--ZIndex` | pfe-zindex(navigation) | Default is 98 |
 |`--pfe-navigation--overlay--Background` | rgba(21, 21, 21, 0.5) |  |
+|`--pfe-navigation--fade-transition-delay` | 1s | How long the navigational elements remain hidden before fading in |
 
 ### Nav Bar Variables
 | CSS Property Name | Default | Description |

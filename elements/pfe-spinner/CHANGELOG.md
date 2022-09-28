@@ -1,4 +1,4 @@
-# @patternfly/pfe-progress-indicator
+# @patternfly/pfe-spinner
 
 ## 2.0.0-next.4
 

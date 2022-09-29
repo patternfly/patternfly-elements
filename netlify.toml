@@ -14,3 +14,9 @@
     owner = "patternfly"
     repository = "patternfly-elements"
     workflowId = "visual-regression.yml"
+
+[[redirects]]
+  from = '/v1/*'
+  to = 'https://61f9ac3d5f4a9200081bb953--patternfly-elements.netlify.app/:splat'
+  status = 200
+  force = true

@@ -14,6 +14,14 @@
   </label>
   <div class="menu-toggle__toggleable site-navigation__outer-wrapper">
     <nav class="l-header__site-navigation site-navigation menu-toggle__toggleable-content-wrapper">
+      <pfe-dropdown label="Docs Versions">
+        <pfe-dropdown-item item-type="link">
+          <a href="{{ page.url }}">v2 prerelease</a>
+        </pfe-dropdown-item>
+        <pfe-dropdown-item item-type="link">
+          <a href="/v1{{ page.url }}">v1</a>
+        </pfe-dropdown-item>
+      </pfe-dropdown>
       <ul class="site-navigation__wrapper">
         <li class="site-navigation__item">
           <a class="site-navigation__link{% if page.url == "/get-started/" %} site-navigation__link--active{% endif %}"

@@ -431,12 +431,17 @@ main.blog {
 
 .site-navigation {
   width: 17.5rem;
-  padding-top: 1.875rem;
+  /* padding-top: 1.875rem; */ /* disable for version dropdown */
   height: calc(100vh - 3.75rem);
   overflow-y: auto;
   color: #151515;
   background: #fff;
   border-right: .0625rem solid #d2d2d2;
+}
+
+.site-navigation > pfe-dropdown {
+  --pfe-dropdown--MinWidth: 100%;
+  width: var(--pfe-dropdown--MinWidth);
 }
 
 .site-navigation__sub-menu,

@@ -9,44 +9,39 @@ import style from './pfe-accordion-panel.scss';
  *
  * @slot - Panel content
  * @cssprop     {<color>} --pf-c-accordion--BackgroundColor
- *              Sets the background color for the tooltip content.
- *              {@default `var(--pf-global--BackgroundColor--light-100, #fff)`}
- * @cssprop     {<color>} --_accordion__expanded-content--Color
- *              Sets the background color for the tooltip content.
+ *              Sets the background color for the panel content.
+ *              {@default `var(--pf-global--BackgroundColor--light-100, #ffffff)`}
+ * @cssprop     {<color>} --pf-c-accordion__panel--Color
+ *              Sets the font color for the panel content.
  *              {@default `var(--pf-global--Color--dark-200, #6a6e73)`}
- * @cssprop     {<length>} --_accordion__expanded-content--FontSize
- *              Sets the background color for the tooltip content.
+ * @cssprop     {<length>} --pf-c-accordion__panel--FontSize
+ *              Sets the font size for the panel content.
  *              {@default `var(--pf-global--FontSize--sm, 0.875rem)`}
- * @cssprop     {<color>} --_accordion__expanded-content--m-expanded__expanded-content-body--before--BackgroundColor
- *              Sets the background color for the tooltip content.
- *              {@default `var(--pf-global--primary-color--100, #06c)`}
- * @cssprop     {<length>} --_accordion__expanded-content--m-fixed--MaxHeight
- *              Sets the background color for the tooltip content.
+ * @cssprop     {<color>} --pf-c-accordion__panel--content-body--before--BackgroundColor
+ *              Sets the sidebar color for the panel when the context is expanded.
+ *              {@default `var(--pf-global--primary-color--100, #0066cc)`}
+ * @cssprop     {<length>} --pf-c-accordion__panel--m-fixed--MaxHeight
+ *              Sets the maximum height for the panel content.
+ *              Will only be used if the `fixed` attribute is used.
  *              {@default `9.375rem`}
- * @cssprop     {<length>} --_accordion__expanded-content-body--PaddingTop
- *              Sets the background color for the tooltip content.
+ * @cssprop     {<length>} --pf-c-accordion__panel-body--PaddingTop
+ *              Sets the padding top for the panel content.
  *              {@default `var(--pf-global--spacer--sm, 0.5rem)`}
- * @cssprop     {<length>} --_accordion__expanded-content-body--PaddingRight
- *              Sets the background color for the tooltip content.
+ * @cssprop     {<length>} --pf-c-accordion__panel-body--PaddingRight
+ *              Sets the padding right for the panel content.
  *              {@default `var(--pf-global--spacer--md, 1rem)`}
- * @cssprop     {<length>} --_accordion__expanded-content-body--PaddingBottom
- *              Sets the background color for the tooltip content.
+ * @cssprop     {<length>} --pf-c-accordion__panel-body--PaddingBottom
+ *              Sets the padding bottom for the panel content.
  *              {@default `var(--pf-global--spacer--sm, 0.5rem)`}
- * @cssprop     {<length>} --_accordion__expanded-content-body--PaddingLeft
- *              Sets the background color for the tooltip content.
+ * @cssprop     {<length>} --pf-c-accordion__panel-body--PaddingLeft
+ *              Sets the padding left for the panel content.
  *              {@default `var(--pf-global--spacer--md, 1rem)`}
- * @cssprop     {<length>} --_accordion__expanded-content-body--expanded-content-body--PaddingTop
- *              Sets the background color for the tooltip content.
- *              {@default `0`}
- * @cssprop     {<color>} --_accordion__expanded-content-body--before--BackgroundColor
- *              Sets the background color for the tooltip content.
+ * @cssprop     {<color>} --pf-c-accordion__panel-body--before--BackgroundColor
+ *              Sets the background color for the panel content.
  *              {@default `transparent`}
- * @cssprop     --_accordion__expanded-content-body--before--Width
- *              Sets the background color for the tooltip content.
+ * @cssprop     --pf-c-accordion__panel-body--before--Width
+ *              Sets the before width for the panel content.
  *              {@default `var(--pf-global--BorderWidth--lg, 3px)`}
- * @cssprop     {<length>} --_accordion__expanded-content-body--before--Top
- *              Sets the background color for the tooltip content.
- *              {@default `0`}
  */
 @customElement('pfe-accordion-panel')
 export class PfeAccordionPanel extends BaseAccordionPanel {

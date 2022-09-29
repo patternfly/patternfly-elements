@@ -12,10 +12,8 @@
   --pf-c-accordion__panel-body--PaddingRight: var(--pf-global--spacer--md, 1rem);
   --pf-c-accordion__panel-body--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-accordion__panel-body--PaddingLeft: var(--pf-global--spacer--md, 1rem);
-  --pf-c-accordion__panel-body--expanded-content-body--PaddingTop: 0;
   --pf-c-accordion__panel-body--before--BackgroundColor: transparent;
   --pf-c-accordion__panel-body--before--Width: var(--pf-global--BorderWidth--lg, 3px);
-  --pf-c-accordion__panel-body--before--Top: 0;
 
   color: var(--pf-global--Color--100, #151515);
   background-color: var(--pf-c-accordion--BackgroundColor);
@@ -59,8 +57,4 @@
   left: 0;
   width: var(--pf-c-accordion__panel-body--before--Width);
   background-color: var(--pf-c-accordion__panel-body--before--BackgroundColor);
-}
-
-.body + .body {
-  --pf-c-accordion__panel-body--PaddingTop: var(--pf-c-accordion__panel-body--expanded-content-body--PaddingTop);
 }

@@ -1,15 +1,15 @@
 {
-  "name": "@patternfly/pfe-progress-indicator",
+  "name": "@patternfly/pfe-spinner",
   "license": "MIT",
   "version": "2.0.0-next.4",
-  "description": "Progress element for PatternFly Elements",
+  "description": "Spinner element for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
-  "main": "./pfe-progress-indicator.js",
-  "module": "./pfe-progress-indicator.js",
-  "types": "./pfe-progress-indicator.d.ts",
+  "main": "./pfe-spinner.js",
+  "module": "./pfe-spinner.js",
+  "types": "./pfe-spinner.d.ts",
   "exports": {
-    ".": "./pfe-progress-indicator.js",
+    ".": "./pfe-spinner.js",
     "./*": "./*.js"
   },
   "publishConfig": {
@@ -25,7 +25,7 @@
     "analyze": "cem analyze",
     "build": "run-s build:*",
     "build:clean": "npm run clean",
-    "build:esbuild": "node ../../scripts/build.js --include pfe-progress-indicator",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-spinner",
     "build:analyze": "npm run analyze",
     "build:types": "tsc -b .",
     "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
@@ -44,7 +44,7 @@
   "repository": {
     "type": "git",
     "url": "github:patternfly/patternfly-elements",
-    "directory": "elements/pfe-progress-indicator"
+    "directory": "elements/pfe-spinner"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"
@@ -64,7 +64,8 @@
   ],
   "contributors": [
     "Daniel Faucette",
-    "Benny Powers <bennyp@redhat.com>"
+    "Benny Powers <bennyp@redhat.com>",
+    "Kyle Buchanan <kylebuch8@gmail.com>"
   ],
   "dependencies": {
     "@patternfly/pfe-core": "^2.0.0-next.8",

@@ -79,9 +79,6 @@ export class PfeIcon extends LitElement {
   /** Size of the icon */
   @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
 
-  /** Accessible label for the icon */
-  @property({ reflect: true }) label?: string;
-
   /**
    * Controls how eager the element will be to load the icon data
    * - `eager`: eagerly load the icon, blocking the main thread
@@ -115,17 +112,14 @@ export class PfeIcon extends LitElement {
   }
 
   render() {
-    const ariaHidden = String(!this.label) as 'true'|'false';
+    const content = this.content ?? ''; /* eslint-disable indent */
     return html`
-      <div id="container"
-          aria-label=${ifDefined(this.label)}
-          aria-hidden=${ariaHidden}>
-        ${this.content ?? ''}
-        <span part="fallback" ?hidden=${!!this.content}>
+      <div id="container" aria-hidden="true">${content
+       }<span part="fallback" ?hidden=${!!content}>
           <slot></slot>
         </span>
       </div>
-    `;
+    `;/* eslint-enable indent */
   }
 
   protected async _iconChanged() {

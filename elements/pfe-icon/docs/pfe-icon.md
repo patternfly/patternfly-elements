@@ -13,20 +13,26 @@
 {% endrenderOverview %}
 
 {% band header="Usage" %}
-  ### Default
-  <pfe-icon icon="user"></pfe-icon>
-  <pfe-icon icon="lock"></pfe-icon>
-  <pfe-icon icon="laptop"></pfe-icon>
-  <pfe-icon icon="cloud"></pfe-icon>
+  Place the icon element on the page and give it an icon name from the [default
+  icon set][icon-sets]. In most cases, the icon should be labelled using
+  `aria-label` or `aria-labelledby`, or removed from the accessibility tree
+  with `aria-hidden="true"` or `role="presentation"`, if its content is merely
+  presentational and expressed using accessible text copy elsewhere.
+
+  <pfe-icon icon="user" aria-label="user"></pfe-icon>
+  <pfe-icon icon="lock" aria-label="lock"></pfe-icon>
+  <pfe-icon icon="laptop" aria-label="laptop"></pfe-icon>
+  <pfe-icon icon="cloud" aria-label="cloud"></pfe-icon>
   ```html
-  <pfe-icon icon="user"></pfe-icon>
-  <pfe-icon icon="lock"></pfe-icon>
-  <pfe-icon icon="laptop"></pfe-icon>
-  <pfe-icon icon="cloud"></pfe-icon>
+  <pfe-icon icon="user" aria-label="user"></pfe-icon>
+  <pfe-icon icon="lock" aria-label="lock"></pfe-icon>
+  <pfe-icon icon="laptop" aria-label="laptop"></pfe-icon>
+  <pfe-icon icon="cloud" aria-label="cloud"></pfe-icon>
   ```
 
   ### Size
-  The default size is 1em, so icon size matches text size.  `2x`, etc, are multiples of font size.  `sm`, `md`, etc are fixed pixel-based sizes.
+  The default size is 1em, so icon size matches text size.  `2x`, etc, are
+  multiples of font size.  `sm`, `md`, etc are fixed pixel-based sizes.
 
   <pfe-icon icon="user" size="sm"></pfe-icon>
   <pfe-icon icon="user" size="md"></pfe-icon>
@@ -57,11 +63,12 @@ Use the `set` attribute to pick an alternative icon set.
 
 ### Register a New Icon Set
 
-Icons are JavaScript module which export a [lit renderable][renderable], typically an inline SVG
-element [template literal][template-literals] tagged with the Lit [`svg`][svg-tag] template tag.
-To register a new icon set, call the static `addIconSet` method with the set name and a getter
-function. The getter function takes the icon set and icon name and returns a URL object that points 
-to the icon's JavaScript module.
+Icons are JavaScript module which export a [lit renderable][renderable],
+typically an inline SVG element [template literal][template-literals] tagged
+with the Lit [`svg`][svg-tag] template tag. To register a new icon set, call
+the static `addIconSet` method with the set name and a getter function. The
+getter function takes the icon set and icon name and returns a URL object that
+points to the icon's JavaScript module.
 
 ```ts
 type getter = (set: string, icon: string) => URL
@@ -79,8 +86,9 @@ PfeIcon.addIconSet('local', (set, icon) =>
 
 ### Updating an Existing Icon Set
 
-To updating an existing icon set, you use the same `addIconSet` function. By defaulting back to then
-existing `getIconURL` method, you  you can add a new icon to an existing set:
+To updating an existing icon set, you use the same `addIconSet` function. By
+defaulting back to then existing `getIconURL` method, you  you can add a new
+icon to an existing set:
 
 ```js
 PfeIcon.addIconSet('patternfly', (set, icon) => {
@@ -98,9 +106,10 @@ PfeIcon.addIconSet('patternfly', (set, icon) => {
 
 ### Override the Default Icon Sets
 
-Icons are [loaded lazily](#loading) by default, so there's no performance penalty for keeping the
-default icon sets arond and unused. However, if you'd like to override the default icon sets across
-the entire page, you can use `addIconSet` with the `fas`, `far`, and `patternfly` set names:
+Icons are [loaded lazily](#loading) by default, so there's no performance
+penalty for keeping the default icon sets arond and unused. However, if you'd
+like to override the default icon sets across the entire page, you can use
+`addIconSet` with the `fas`, `far`, and `patternfly` set names:
 
 ```js
 import { PfeIcon } from '@patternfly/pfe-icon';
@@ -122,17 +131,18 @@ Now when `<pfe-icon>` is used, it will automatically load icon modules from
 
 {% band header="Loading" %}
 
-Icons load _lazily_ by default, meaning that the browser will not attempt to fetch and render the
-icon until it scrolls into view. You can change this with the `loading` attribute, which has three
-values:
+Icons load _lazily_ by default, meaning that the browser will not attempt to
+fetch and render the icon until it scrolls into view. You can change this with
+the `loading` attribute, which has three values:
 
 1. `lazy` (the default): load icons when they scroll into view
-2. `idle`: load each icon on the page as soon as the browser enters an [idle state][ric]
-    <small>Or, on less-capable browsers, at the next frame</small>
-3. `eager`: each icon will begin to load and render the moment it connects to the DOM.
+2. `idle`: load each icon on the page as soon as the browser enters an [idle
+   state][ric] <small>Or, on less-capable browsers, at the next frame</small>
+3. `eager`: each icon will begin to load and render the moment it connects to
+   the DOM.
 
-You might choose to enable eager rendering for "above-the-fold" content, but keep lazy loading for
-the rest of the page.
+You might choose to enable eager rendering for "above-the-fold" content, but
+keep lazy loading for the rest of the page.
 
 ```html
 <header>
@@ -157,16 +167,18 @@ the rest of the page.
 {% endband %}
 
 {% renderSlots %}
-If you wish to display some content while the icon loads (or while JS is disabled),
-you can slot it into `<pfe-icon>`. For instance, when using a checkmark icon in a server status
-table, you may wish to display a checkmark emoji if JS is disabled.
+
+If you wish to display some content while the icon loads (or while JS is
+disabled), you can slot it into `<pfe-icon>`. For instance, when using a
+checkmark icon in a server status table, you may wish to display a checkmark
+emoji if JS is disabled.
 
 ```html
 <pfe-icon icon="check">✅</pfe-icon>
 ```
 
-It's recommended to use the icon name in the default slot, so that the icon is accessible to screen
-readers.
+It's recommended to use the icon name in the default slot, or
+`aria-label(ledby)` so that the icon is accessible to screen readers.
 
 ```html
 <pfe-icon icon="check">check</pfe-icon>

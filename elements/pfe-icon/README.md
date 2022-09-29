@@ -25,9 +25,12 @@ import '@patternfly/pfe-icon';
 ## Usage
 
 Place the icon element on the page and give it an icon name from the [default icon set][icon-sets].
+In most cases, the icon should be labelled using `aria-label` or `aria-labelledby`, or removed from
+the accessibility tree with `aria-hidden="true"` or `role="presentation"`, if its content is merely
+presentational and expressed using accessible text copy elsewhere.
 
 ```html
-<pfe-icon icon="award"></pfe-icon>
+<pfe-icon icon="award" aria-label="Awards"></pfe-icon>
 ```
 
 ### Fallback Content

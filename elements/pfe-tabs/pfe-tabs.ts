@@ -8,14 +8,15 @@ import { BaseTabs } from './BaseTabs.js';
 import { PfeTab } from './pfe-tab.js';
 import { PfeTabPanel } from './pfe-tab-panel.js';
 
-import style from './pfe-tabs.scss';
+import style from './BaseTabs.scss';
+import pfeStyle from './pfe-tabs.scss';
 
 /**
  * @slot - Add the heading for your tab here.
  */
 @customElement('pfe-tabs')
 export class PfeTabs extends BaseTabs {
-  static readonly styles = [style];
+  static readonly styles = [style, pfeStyle];
 
   @cascades('pfe-tab', 'pfe-tab-panel')
   @property({ reflect: true }) box: 'light' | 'dark' | null = null;

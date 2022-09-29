@@ -87,7 +87,7 @@ span {
 }
 
 .toggle[aria-expanded="true"] .icon {
-  transform: rotate(var(--pf-c-accordion__toggle--expanded-icon--Rotate, 90deg));
+  rotate: var(--pf-c-accordion__toggle--expanded-icon--Rotate, 90deg);
 }
 
 .toggle:hover,

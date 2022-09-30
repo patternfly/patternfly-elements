@@ -55,6 +55,9 @@
       "ScriptHost"
     ],
     "paths": {
+      "@patternfly/pfe-switch": [
+        "./elements/pfe-switch/pfe-switch.ts"
+      ],
       "@custom-elements-manifest/analyzer": [
         "@types/custom-elements-manifest__analyzer"
       ],
@@ -229,6 +232,9 @@
     },
     {
       "path": "./elements/pfe-tooltip"
+    },
+    {
+      "path": "./elements/pfe-switch"
     }
   ]
 }

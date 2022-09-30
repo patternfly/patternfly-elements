@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="./demo.css"/>
+<script type="module" src="./pfe-switch.js"></script>
+
+<section>
+  <h1>Switch</h1>
+  <p>A switch toggles the state of a setting (between on and off). Switches provide a more explicit, visible representation on a setting.</p>
+  <h2>Basic</h2>
+  <div>
+    <pfe-switch label="Message when on" label-off="Message when off"></pfe-switch>
+  </div>
+  <div>
+    <pfe-switch label="Message when on" label-off="Message when off" checked></pfe-switch>
+  </div>
+</section>
+
+<section>
+  <h2>Reversed</h2>
+  <pfe-switch label="Message when on" label-off="Message when off" reversed></pfe-switch>
+</section>
+
+<section>
+  <h2>Without label</h2>
+  <pfe-switch checked></pfe-switch>
+</section>
+
+<section>
+  <h2>Disabled</h2>
+  <div>
+    <pfe-switch label="Message when on" label-off="Message when off" disabled></pfe-switch>
+  </div>    
+  <div>
+    <pfe-switch label="Message when on" label-off="Message when off" checked disabled></pfe-switch>
+  </div>    
+  <div>
+    <pfe-switch checked disabled></pfe-switch>
+  </div>    
+  <div>
+    <pfe-switch disabled></pfe-switch>
+  </div>    
+</section>

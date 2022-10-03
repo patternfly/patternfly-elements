@@ -19,7 +19,7 @@
   "dependencies": {
     "@types/eslint": "8.4.5",
     "@typescript-eslint/eslint-plugin": "5.34.0",
-    "@typescript-eslint/parser": "5.34.0",
+    "@typescript-eslint/parser": "5.39.0",
     "eslint": "8.22.0",
     "eslint-config-google": "0.14.0",
     "eslint-plugin-html": "7.1.0",

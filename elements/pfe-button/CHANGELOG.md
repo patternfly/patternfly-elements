@@ -1,5 +1,15 @@
 # @patternfly/pfe-button
 
+## 2.0.0-next.6
+
+### Patch Changes
+
+- eeebb45d: Replace `<pfe-progress-indicator>` with `<pfe-spinner>`
+- Updated dependencies [b7602c2c]
+- Updated dependencies [166ecee1]
+  - @patternfly/pfe-spinner@2.0.0-next.5
+  - @patternfly/pfe-core@2.0.0-next.9
+
 ## 2.0.0-next.5
 
 ### Patch Changes

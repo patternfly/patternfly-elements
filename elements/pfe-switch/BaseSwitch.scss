@@ -77,6 +77,26 @@ label {
   }
 }
 
+::slotted(input) {
+  position: absolute;
+  cursor: pointer;
+  opacity: 0;
+}
+
+:host([checked]:not([disabled])) {
+  label {
+    color: var(--pf-c-switch__input--checked__label--Color);
+  }
+
+  #toggle {
+    background-color: var(--pf-c-switch__input--checked__toggle--BackgroundColor);
+
+    &::before {
+      transform: translateX(var(--pf-c-switch__input--checked__toggle--before--TranslateX));
+    }
+  }
+}
+
 :host([disabled]) {
   cursor: not-allowed;
 
@@ -92,30 +112,17 @@ label {
     &::before {
       background-color: var(--pf-c-switch__input--disabled__toggle--before--BackgroundColor);
     }
+
+    &:focus {
+      outline: none;
+    }
   }
 }
 
-input {
-  position: absolute;
-  cursor: pointer;
-  opacity: 0;
-
-  &:focus ~ #toggle {
-    outline: var(--pf-c-switch__input--focus__toggle--OutlineWidth) solid var(--pf-c-switch__input--focus__toggle--OutlineColor);
-    outline-offset: var(--pf-c-switch__input--focus__toggle--OutlineOffset);
-  }
-
-  &:checked {
-    ~ label {
-      color: var(--pf-c-switch__input--checked__label--Color);
-    }
-
-    ~ #toggle {
-      background-color: var(--pf-c-switch__input--checked__toggle--BackgroundColor);
-
-      &::before {
-        transform: translateX(var(--pf-c-switch__input--checked__toggle--before--TranslateX));
-      }
+:host([checked][disabled]) {
+  #toggle {
+    &::before {
+      transform: translateX(var(--pf-c-switch__input--checked__toggle--before--TranslateX));
     }
   }
 }
@@ -127,6 +134,11 @@ input {
   height: var(--pf-c-switch__toggle--Height);
   background-color: var(--pf-c-switch__toggle--BackgroundColor);
   border-radius: var(--pf-c-switch__toggle--BorderRadius);
+
+  &:focus {
+    outline: var(--pf-c-switch__input--focus__toggle--OutlineWidth) solid var(--pf-c-switch__input--focus__toggle--OutlineColor);
+    outline-offset: var(--pf-c-switch__input--focus__toggle--OutlineOffset);
+  }
 
   &::before {
     position: absolute;

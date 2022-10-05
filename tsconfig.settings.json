@@ -55,9 +55,6 @@
       "ScriptHost"
     ],
     "paths": {
-      "@patternfly/pfe-switch": [
-        "./elements/pfe-switch/pfe-switch.ts"
-      ],
       "@custom-elements-manifest/analyzer": [
         "@types/custom-elements-manifest__analyzer"
       ],
@@ -136,6 +133,9 @@
       ],
       "@patternfly/pfe-spinner": [
         "./elements/pfe-spinner/pfe-spinner.ts"
+      ],
+      "@patternfly/pfe-switch": [
+        "./elements/pfe-switch/pfe-switch.ts"
       ],
       "@patternfly/pfe-tabs": [
         "./elements/pfe-tabs/pfe-tabs.ts"
@@ -222,6 +222,9 @@
       "path": "./elements/pfe-spinner"
     },
     {
+      "path": "./elements/pfe-switch"
+    },
+    {
       "path": "./elements/pfe-tabs"
     },
     {
@@ -232,9 +235,6 @@
     },
     {
       "path": "./elements/pfe-tooltip"
-    },
-    {
-      "path": "./elements/pfe-switch"
     }
   ]
 }

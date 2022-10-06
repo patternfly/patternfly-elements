@@ -1,5 +1,17 @@
 # @patternfly/pfe-tooltip
 
+## 1.1.0-next.4
+
+### Minor Changes
+
+- 166ecee1: Improves performance of floating DOM (tooltip) by lazily initializing
+
+### Patch Changes
+
+- 0b90b899: Null check in tooltip's `show()` method
+- Updated dependencies [166ecee1]
+  - @patternfly/pfe-core@2.0.0-next.9
+
 ## 1.1.0-next.3
 
 ### Patch Changes

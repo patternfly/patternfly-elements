@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 2.0.0-next.9
+
+### Minor Changes
+
+- 166ecee1: Improves performance of floating DOM (tooltip) by lazily initializing
+
 ## 2.0.0-next.8
 
 ### Patch Changes
@@ -15,7 +21,7 @@
   For example, in `BaseTooltip` we use the controller in this manner:
 
   ```typescript
-  import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+  import { FloatingDOMController } from "@patternfly/pfe-core/controllers/floating-dom-controller.js";
 
   export class BaseTooltip extends LitElement {
     #domController = new FloatingDOMController(this);
@@ -81,8 +87,8 @@
       return {
         cool: {
           type: Boolean,
-          observer: "_upgradeObserver"
-        }
+          observer: "_upgradeObserver",
+        },
       };
     }
   }

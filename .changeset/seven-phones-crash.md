@@ -1,7 +1,5 @@
 ---
 "@patternfly/pfe-spinner": minor
-"@patternfly/pfe-button": patch
-"@patternfly/pfe-tools": patch
 ---
 
 BREAKING CHANGE:

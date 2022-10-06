@@ -554,7 +554,7 @@ export abstract class BaseAccordion extends LitElement {
 
     toggle.focus();
 
-    // this.dispatchEvent(new AccordionExpandEvent(toggle, panel));
+    this.dispatchEvent(new AccordionExpandEvent(toggle, panel));
   }
 
   /**
@@ -583,7 +583,7 @@ export abstract class BaseAccordion extends LitElement {
 
     this._collapseHeader(toggle);
     this._collapsePanel(panel);
-    this.dispatchEvent(deprecatedCustomEvent('pfe-accordion:collapse', { toggle, panel }));
+    this.dispatchEvent(new AccordionCollapseEvent(toggle, panel));
   }
 
   /**

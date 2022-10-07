@@ -22,6 +22,7 @@ export abstract class BaseTab extends LitElement {
 
   @queryAssignedElements({ slot: 'icon', flatten: true }) _icons!: Array<HTMLElement>;
 
+  @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
 
   @property({ reflect: true, type: Boolean }) vertical = false;
@@ -79,6 +80,14 @@ export abstract class BaseTab extends LitElement {
     }
   }
 
+  @bound
+  protected _disabledChanged(oldVal?: 'false' | 'true', newVal?: 'false' | 'true'): void {
+    if (newVal === oldVal) {
+      return;
+    }
+    this.#updateAccessibility();
+  }
+
   open() {
     this.selected = 'true';
     this.dispatchEvent(new TabExpandEvent(this.selected, this));
@@ -93,8 +102,7 @@ export abstract class BaseTab extends LitElement {
     this.open();
   }
 
-  async #updateAccessibility() {
-    await this.updateComplete;
+  #updateAccessibility() {
     this.setAttribute('role', 'tab');
     if (this.disabled) {
       this.setAttribute('aria-disabled', this.disabled.toString());

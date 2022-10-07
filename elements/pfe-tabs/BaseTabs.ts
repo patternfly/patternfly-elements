@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { state, property, query, queryAssignedElements } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { bound, observed } from '@patternfly/pfe-core/decorators.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
@@ -12,6 +13,8 @@ import style from './BaseTab.scss';
 
 export abstract class BaseTabs extends LitElement {
   static readonly styles = [style];
+
+  static readonly delay = 100;
 
   #logger = new Logger(this);
 
@@ -31,6 +34,9 @@ export abstract class BaseTabs extends LitElement {
 
   @observed
   @property({ reflect: true, attribute: 'active-key' }) activeKey = 0;
+
+  @observed
+  @property({ reflect: true, type: Boolean }) scrollable = false;
 
   @state() protected _showScrollButtons = false;
 
@@ -64,24 +70,27 @@ export abstract class BaseTabs extends LitElement {
   }
 
   override render() {
+    const classes = { scrollable: this._showScrollButtons };
     return html`
       <div id="container" part="container">
-        ${this._showScrollButtons ? html`
-          <button id="previousTab" aria-label="Scroll left" ?disabled="${!this._overflowOnLeft}" @click="${this._scrollLeft}">
-            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg>
-          </button>`
-        : html``}
-        <div id="tabs" part="tabs">
-          <slot name="tab" @slotchange="${this._onSlotChange}"></slot>
+        <div id="tabs-container" class="${classMap(classes)}">
+          ${this._showScrollButtons ? html`
+            <button id="previousTab" aria-label="Scroll left" ?disabled="${!this._overflowOnLeft}" @click="${this._scrollLeft}">
+              <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg>
+            </button>`
+          : html``}
+          <div id="tabs" part="tabs" role="tablist">
+            <slot name="tab" @slotchange="${this._onSlotChange}"></slot>
+          </div>
+          ${this._showScrollButtons ? html`
+            <button id="nextTab" aria-label="Scroll right" ?disabled="${!this._overflowOnRight}" @click="${this._scrollRight}">
+              <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+            </button>`
+          : html``}
         </div>
-        ${this._showScrollButtons ? html`
-          <button id="nextTab" aria-label="Scroll right" ?disabled="${!this._overflowOnRight}" @click="${this._scrollRight}">
-            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
-          </button>`
-        : html``}
-      </div>
-      <div id="panels" part="panels">
-        <slot></slot>
+        <div id="panels" part="panels">
+          <slot></slot>
+        </div>
       </div>
     `;
   }
@@ -253,6 +262,11 @@ export abstract class BaseTabs extends LitElement {
   }
 
   @bound
+  private _scrollableChanged() {
+    this._handleScrollButtons();
+  }
+
+  @bound
   private _focusedChanged(oldVal: BaseTab, newVal: BaseTab) {
     if (!newVal || newVal === oldVal) {
       return;
@@ -295,7 +309,7 @@ export abstract class BaseTabs extends LitElement {
   _isOverflow() {
     this._overflowOnLeft = !isElementInView(this._tabList, this.#first() as HTMLElement, false);
     this._overflowOnRight = !isElementInView(this._tabList, this.#last() as HTMLElement, false);
-    this._showScrollButtons = this._overflowOnLeft || this._overflowOnRight;
+    this._showScrollButtons = (this._overflowOnLeft || this._overflowOnRight) && this.scrollable;
   }
 
   @bound
@@ -303,7 +317,7 @@ export abstract class BaseTabs extends LitElement {
     clearTimeout(this.#scrollTimeout);
     this.#scrollTimeout = setTimeout(() => {
       this._isOverflow();
-    }, 100);
+    }, BaseTabs.delay);
   }
 
   @bound

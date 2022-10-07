@@ -1,8 +1,14 @@
-:host([border-bottom]) #tabs-container {
-  --pf-c-tabs--before--BorderBottomWidth: var(--pf-c-tabs--before--border-width--base);
-  --pf-c-tabs__link--disabled--before--BorderBottomWidth: var(--pf-c-tabs--before--border-width--base);
+
+:host([border-bottom="false"]) #tabs-container {
+  --pf-c-tabs--before--BorderBottomWidth: 0; // *override user setting* when border-bottom is false border bottom styles should be 0;
 }
 
 :host([inset="page"]) #tabs-container {
-  --pf-c-tabs--inset: var(--pf-c-tabs--m-page-insets--inset);
+  --pf-c-tabs--inset: var(--pf-c-tabs--m-page-insets--inset, var(--pf-global--spacer--md, 1rem));
+}
+
+@media screen and (min-width: 1200px) {
+  :host([inset="page"]) #tabs-container {
+    --pf-c-tabs--inset: var(--pf-c-tabs--m-page-insets--inset, var(--pf-c-tabs--m-page-insets--xl--inset, var(--pf-global--spacer--lg, 1.5rem)));
+  }
 }

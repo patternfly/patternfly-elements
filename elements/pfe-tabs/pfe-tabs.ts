@@ -1,4 +1,3 @@
-import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import { cascades } from '@patternfly/pfe-core/decorators.js';
@@ -25,6 +24,8 @@ export class PfeTabs extends BaseTabs {
 
   @cascades('pfe-tab')
   @property({ reflect: true, type: Boolean }) fill = false;
+
+  @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'true';
 
   static isTab(element: HTMLElement): element is PfeTab {
     return element instanceof PfeTab;

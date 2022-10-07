@@ -1,3 +1,3 @@
 ::slotted(pfe-icon) {
-  margin-right: var(--pf-c-tabs__link--child--MarginRight);
+  margin-right: var(--pf-c-tabs__link--child--MarginRight, var(--pf-global--spacer--md, 1rem));
 }

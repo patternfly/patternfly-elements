@@ -64,8 +64,8 @@ export abstract class BaseSwitch extends LitElement {
   #mo = new MutationObserver(() => this.#onMutation());
 
   override connectedCallback() {
-    this.#onSlotChange();
     super.connectedCallback();
+    this.#onSlotChange();
     this.shadowRoot?.addEventListener('slotchange', () => this.#onSlotChange());
     this.addEventListener('click', this.#clickHandler);
     this.addEventListener('keyup', this.#keyHandler);

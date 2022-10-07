@@ -4,7 +4,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { BaseButton } from './BaseButton.js';
 
 import '@patternfly/pfe-icon';
-import '@patternfly/pfe-progress-indicator';
+import '@patternfly/pfe-spinner';
 
 import styles from './pfe-button.scss';
 
@@ -160,11 +160,10 @@ export class PfeButton extends BaseButton {
   protected override renderDefaultIcon() {
     return html`
       <pfe-icon ?hidden=${!this.icon} icon=${this.icon} size="sm"></pfe-icon>
-      <pfe-progress-indicator
+      <pfe-spinner
           ?hidden=${!this.loading}
-          indeterminate
           aria-label=${this.getAttribute('progress-label') ?? 'loading'}
-      ></pfe-progress-indicator>
+      ></pfe-spinner>
     `;
   }
 }

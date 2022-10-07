@@ -1,4 +1,25 @@
-# @patternfly/pfe-progress-indicator
+# @patternfly/pfe-spinner
+
+## 2.0.0-next.5
+
+### Minor Changes
+
+- b7602c2c: BREAKING CHANGE:
+
+  Renames `<pfe-progress-indicator>` to `<pfe-spinner>` and changes it's HTML and
+  CSS APIs to more closely match PatternFly v4 design specs.
+
+  ```html
+  <!-- BEFORE -->
+  <pfe-progress-indicator indeterminate>Loading...</pfe-progress-indicator>
+  <!-- AFTER -->
+  <pfe-spinner>Loading...</pfe-spinner>
+  ```
+
+### Patch Changes
+
+- Updated dependencies [166ecee1]
+  - @patternfly/pfe-core@2.0.0-next.9
 
 ## 2.0.0-next.4
 

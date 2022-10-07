@@ -10,7 +10,16 @@ import style from './BaseTabs.scss';
 import pfeStyle from './pfe-tabs.scss';
 
 /**
- * @slot - Add the heading for your tab here.
+ * Tabs
+ * @attribute {number} active-key - DOM Property: `activeKey`
+ * @attribute {Boolean} scrollable - DOM Property: `scrollable`
+ *
+ * @csspart container - Container wrapper
+ * @csspart tabs - Tabs wrapper container
+ * @csspart panels - Panels wrapper container
+ *
+ * @slot tab - We expect the light DOM of `<pfe-tab>`
+ * @slot - We expect the light DOM of `<pfe-panel>`
  */
 @customElement('pfe-tabs')
 export class PfeTabs extends BaseTabs {

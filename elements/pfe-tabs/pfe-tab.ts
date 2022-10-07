@@ -6,15 +6,23 @@ import style from './BaseTab.scss';
 import pfeStyle from './pfe-tab.scss';
 
 /**
- * @slot - Add the heading for your tab here.
+ * PfeTab
+ *
+ * @csspart button - button element
+ * @csspart icon - span container for the icon
+ * @csspart text - span container for the title text
+ *
+ * @slot icon - We expect the light DOM of `<svg>` or `<pfe-icon>`
+ * @slot - The tab title text
+ *
+ * @fires { TabExpandEvent } tab-expand - when a tab is selected
+ * @fires { CustomEvent<{ selected: 'true'|'false'; tab BaseTab }> }
  */
 @customElement('pfe-tab')
 export class PfeTab extends BaseTab {
   static readonly version = '{{version}}';
 
   static readonly styles = [style, pfeStyle];
-
-  @property({ reflect: true }) box: 'light' | 'dark' | null = null;
 
   async connectedCallback() {
     super.connectedCallback();

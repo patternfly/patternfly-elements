@@ -15,6 +15,7 @@ export class TabExpandEvent extends ComposedEvent {
   }
 }
 
+
 export abstract class BaseTab extends LitElement {
   static readonly styles = [style];
 

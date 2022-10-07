@@ -1,13 +1,8 @@
-import type { ColorPalette, ColorTheme } from '@patternfly/pfe-core/controllers/color-context.js';
-
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import {
-  colorContextConsumer,
-  colorContextProvider,
-  deprecation,
   observed,
   pfelement
 } from '@patternfly/pfe-core/decorators.js';
@@ -79,46 +74,38 @@ export class PfeCard extends LitElement {
   @property({ attribute: 'img-src', reflect: true }) imgSrc?: string;
 
   /**
-   * Sets color palette, which affects the element's styles as well as descendants' color theme.
-   * Overrides parent color context.
-   * Your theme will influence these colors so check there first if you are seeing inconsistencies.
-   * See [CSS Custom Properties](#css-custom-properties) for default values
-   *
-   * Card always resets its context to `base`, unless explicitly provided with a `color-palette`.
+   * Optionally provide a size for the card and the card contents.
+   * The default is set to `undefined` and provides default styles.
+   * Compact provides styles which decreases the padding between the sections.
+   * Large provides styles which increases the padding between the sections and the font size for the title, header, and footer.
    */
-  @colorContextProvider()
-  @property({ reflect: true, attribute: 'color-palette' }) colorPalette?: ColorPalette = 'base';
+   @property({ reflect: true }) size: 'compact'|'large'|undefined = undefined;
 
-  /** @deprecated use `color-palette` */
-  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color?: ColorPalette;
-
-  /**
-   * Sets color theme based on parent context
+   /**
+   * Optionally apply a border radius for the drop shadow and/or border.
    */
-  @colorContextConsumer()
-  @property({ reflect: true }) on?: ColorTheme;
+    @property({ type: Boolean, reflect: true }) rounded = false;
 
-  /** Optionally adjusts the padding on the container. Accepts: `small`. */
-  @property({ reflect: true }) size?: 'small';
+    /**
+   * Optionally apply a border color and weight to the entire card container.
+   * The default color and weight is `#d2d2d2` and `1px`, respectively.
+   */
+     @property({ type: Boolean, reflect: true }) fullHeight = false;
 
   /**
    * Optionally apply a border color and weight to the entire card container.
    * The default color and weight is `#d2d2d2` and `1px`, respectively.
    */
-  @property({ type: Boolean, reflect: true }) border = false;
+  @property({ type: Boolean, reflect: true }) plain = false;
 
   protected slots = new SlotController(this, {
     slots: ['header', null, 'footer'],
-    deprecations: {
-      header: 'pfe-card--header',
-      footer: 'pfe-card--footer',
-    }
   });
 
   render() {
     const classes = {
-      'has-header': this.slots.hasSlotted('header', 'pfe-card--header'),
-      'has-footer': this.slots.hasSlotted('footer', 'pfe-card--footer'),
+      'has-header': this.slots.hasSlotted('header'),
+      'has-footer': this.slots.hasSlotted('footer'),
       'has-body': this.slots.hasSlotted(),
     };
 

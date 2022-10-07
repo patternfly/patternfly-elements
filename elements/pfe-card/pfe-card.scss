@@ -1,278 +1,218 @@
-@use "@patternfly/pfe-sass" as *;
-
-@include configure(
-  $name: 'card',
-  $variables: (
-    // Individual padding overrides available
-    PaddingTop: calc(#{pfe-var(container-spacer)} * 2),
-    PaddingRight: calc(#{pfe-var(container-spacer)} * 2),
-    PaddingBottom: calc(#{pfe-var(container-spacer)} * 2),
-    PaddingLeft: calc(#{pfe-var(container-spacer)} * 2),
-
-    //-- Border settings
-    BorderRadius: pfe-var(surface--border-radius),
-
-    //-- Color properties
-    BackgroundColor: pfe-var(surface--base),
-    context: pfe-var(surface--base--context),
-    BackgroundPosition: center center,
-
-    spacing: pfe-var(container-spacer),
-
-    header: (
-      BackgroundColor: rgba(0, 0, 0, pfe-var(opacity)),
-      BackgroundColor--dark: rgba(255, 255, 255, pfe-var(opacity)),
-      Color:           pfe-broadcasted(text)
-    ),
-
-    footer: (
-      spacing--horizontal: calc(#{pfe-var(container-spacer)} / 2)
-    ),
-  ),
-);
-
-// Nested internal variables (pfe-local calls), maps cannot "self-reference"
-@include merge-local-variables((
-  // Internal spacing; elements inside the card (header, body, footer regions)
-  spacing--vertical: pfe-local(spacing),
-
-  // Combine above variables or allow single override point via variable
-  Padding: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft),
-
-  //-- Border variable encompasses width, style, and color
-  Border: pfe-local(BorderWidth, 0) pfe-local(BorderStyle, solid) pfe-local(BorderColor, pfe-var(surface--border))
-));
-
-$size-small: (
-  PaddingTop:     pfe-var(container-spacer),
-  PaddingRight:   pfe-var(container-spacer),
-  PaddingBottom:  pfe-var(container-spacer),
-  PaddingLeft:    pfe-var(container-spacer)
-);
-
 :host {
-  --context: #{pfe-local(context)};
-
-  --pfe-theme--color--surface--lightest: #ffffff;
-  --pfe-theme--color--surface--lighter: #ececec;
-  --pfe-theme--color--surface--base: #f0f0f0;
-  --pfe-theme--color--surface--darker: #3c3f42;
-  --pfe-theme--color--surface--darkest: #151515;
-  --pfe-theme--color--surface--accent: #004080;
-  --pfe-theme--color--surface--complement: #002952;
-
-  // Start of style declarations for host element
+  --pf-c-card--BackgroundColor: var(--pf-global--BackgroundColor--100, #ffffff);
+  --pf-c-card--BoxShadow: var(--pf-global--BoxShadow--sm, 0 0.0625rem 0.125rem 0 rgba(3, 3, 3, 0.12), 0 0 0.125rem 0 rgba(3, 3, 3, 0.06));
+  --pf-c-card--first-child--PaddingTop: var(--pf-global--spacer--lg, 1.5rem);
+  --pf-c-card--child--PaddingRight: var(--pf-global--spacer--lg, 1.5rem);
+  --pf-c-card--child--PaddingBottom: var(--pf-global--spacer--lg, 1.5rem);
+  --pf-c-card--child--PaddingLeft: var(--pf-global--spacer--lg, 1.5rem);
+  --pf-c-card--c-divider--child--PaddingTop: var(--pf-global--spacer--lg, 1.5rem);
+  --pf-c-card__title--FontFamily: var(--pf-global--FontFamily--heading--sans-serif, "RedHatDisplayUpdated", helvetica, arial, sans-serif);
+  --pf-c-card__title--FontSize: var(--pf-global--FontSize--md, 1rem);
+  --pf-c-card__title--FontWeight: var(--pf-global--FontWeight--bold, 700);
+  --pf-c-card__title--not--last-child--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+  --pf-c-card__body--FontSize: var(--pf-global--FontSize--md, 1rem);
+  --pf-c-card__footer--FontSize: var(--pf-global--FontSize--md, 1rem);
+  --pf-c-card__actions--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+  --pf-c-card__actions--child--MarginLeft: var(--pf-global--spacer--sm, .5rem);
+  --pf-c-card__header-toggle--MarginTop: calc(var(--pf-global--spacer--form-element, .375rem) * -1);
+  --pf-c-card__header-toggle--MarginRight: var(--pf-global--spacer--xs, 0.25rem);
+  --pf-c-card__header-toggle--MarginBottom: calc(var(--pf-global--spacer--form-element, .375rem) * -1);
+  --pf-c-card__header-toggle--MarginLeft: calc(var(--pf-global--spacer--md, 1rem) * -1);
+  --pf-c-card__header-toggle-icon--Transition: var(--pf-global--Transition, all 250ms cubic-bezier(0.42, 0, 0.58, 1));
+  --pf-c-card--m-expanded__header-toggle-icon--Rotate: 90deg;
+  --pf-c-card--m-hoverable--hover--BoxShadow: var(--pf-global--BoxShadow--lg, 0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08));
+  --pf-c-card--m-selectable--hover--BoxShadow: var(--pf-global--BoxShadow--lg, 0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08));
+  --pf-c-card--m-selectable--focus--BoxShadow: var(--pf-global--BoxShadow--lg, 0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08));
+  --pf-c-card--m-selectable--active--BoxShadow: var(--pf-global--BoxShadow--lg, 0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08));
+  --pf-c-card--m-selectable--m-selected--BoxShadow: var(--pf-global--BoxShadow--lg, 0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08));
+  --pf-c-card--m-selectable--m-selected--before--Height: var(--pf-global--BorderWidth--lg, 3px);
+  --pf-c-card--m-selectable--m-selected--before--BackgroundColor: var(--pf-global--active-color--100, #0066cc);
+  --pf-c-card--m-hoverable-raised--hover--BoxShadow: var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
+  --pf-c-card--m-hoverable-raised--hover--before--BackgroundColor: var(--pf-global--active-color--400, #73bcf7);
+  --pf-c-card--m-selectable-raised--before--Right: 0;
+  --pf-c-card--m-selectable-raised--before--Bottom: 0;
+  --pf-c-card--m-selectable-raised--before--Left: 0;
+  --pf-c-card--m-flat--m-selectable-raised--before--Right: calc(-1 * var(--pf-c-card--m-flat--BorderWidth, 1px));
+  --pf-c-card--m-flat--m-selectable-raised--before--Bottom: calc(-1 * var(--pf-c-card--m-flat--BorderWidth, 1px));
+  --pf-c-card--m-flat--m-selectable-raised--before--Left: calc(-1 * var(--pf-c-card--m-flat--BorderWidth, 1px));
+  --pf-c-card--m-selectable-raised--before--Height: var(--pf-global--BorderWidth--xl, 4px);
+  --pf-c-card--m-selectable-raised--before--BackgroundColor: transparent;
+  --pf-c-card--m-selectable-raised--before--Transition: none;
+  --pf-c-card--m-selectable-raised--before--ScaleY: 1;
+  --pf-c-card--m-selectable-raised--before--TranslateY: 0;
+  --pf-c-card--m-selectable-raised--hover--BoxShadow: var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
+  --pf-c-card--m-selectable-raised--hover--before--BackgroundColor: var(--pf-global--active-color--400, #73bcf7);
+  --pf-c-card--m-selectable-raised--focus--BoxShadow: var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
+  --pf-c-card--m-selectable-raised--focus--before--BackgroundColor: var(--pf-global--active-color--400, #73bcf7);
+  --pf-c-card--m-selectable-raised--active--BoxShadow: var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
+  --pf-c-card--m-selectable-raised--active--before--BackgroundColor: var(--pf-global--active-color--400, #73bcf7);
+  --pf-c-card--m-selectable-raised--m-selected-raised--before--BackgroundColor: var(--pf-global--active-color--100, #0066cc);
+  --pf-c-card--m-selectable-raised--m-selected-raised--BoxShadow: var(--pf-global--BoxShadow--lg, 0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08));
+  --pf-c-card--m-selectable-raised--m-selected-raised--TranslateY--base: -0.5rem;
+  --pf-c-card--m-selectable-raised--m-selected-raised--TranslateY: var(--pf-c-card--m-selectable-raised--m-selected-raised--TranslateY--base, -.5rem);
+  --pf-c-card--m-flat--m-selectable-raised--m-selected-raised--TranslateY: calc(var(--pf-c-card--m-selectable-raised--m-selected-raised--TranslateY--base, -.5rem) + var(--pf-c-card--m-flat--BorderWidth, 1px));
+  --pf-c-card--m-rounded--m-selectable-raised--m-selected-raised--TranslateY: calc(var(--pf-c-card--m-selectable-raised--m-selected-raised--TranslateY--base, -.5rem) + var(--pf-c-card--m-rounded--BorderRadius));
+  --pf-c-card--m-selectable-raised--m-selected-raised--ZIndex: var(--pf-global--ZIndex--xs, 100);
+  --pf-c-card--m-selectable-raised--m-selected-raised--Transition: transform .25s linear, box-shadow .25s linear;
+  --pf-c-card--m-selectable-raised--m-selected-raised--before--Transition: transform .25s linear;
+  --pf-c-card--m-selectable-raised--m-selected-raised--before--TranslateY: calc(var(--pf-c-card--m-selectable-raised--m-selected-raised--TranslateY, -.5rem) * -1);
+  --pf-c-card--m-selectable-raised--m-selected-raised--before--ScaleY: 2;
+  --pf-c-card--m-non-selectable-raised--BackgroundColor: var(--pf-global--BackgroundColor--light-200, #fafafa);
+  --pf-c-card--m-non-selectable-raised--before--BackgroundColor: var(--pf-global--disabled-color--200, #d2d2d2);
+  --pf-c-card--m-non-selectable-raised--before--ScaleY: 2;
+  --pf-c-card--m-flat--m-non-selectable-raised--before--BorderColor: var(--pf-global--disabled-color--200, #d2d2d2);
+  --pf-c-card--m-compact__body--FontSize: var(--pf-global--FontSize--sm, .875rem);
+  --pf-c-card--m-compact__footer--FontSize: var(--pf-global--FontSize--sm, .875rem);
+  --pf-c-card--m-compact--first-child--PaddingTop: var(--pf-global--spacer--md, 1rem);
+  --pf-c-card--m-compact--child--PaddingRight: var(--pf-global--spacer--md, 1rem);
+  --pf-c-card--m-compact--child--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+  --pf-c-card--m-compact--child--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+  --pf-c-card--m-compact--c-divider--child--PaddingTop: var(--pf-global--spacer--md, 1rem);
+  --pf-c-card--m-compact__title--not--last-child--PaddingBottom: var(--pf-global--spacer--sm, .5rem);
+  --pf-c-card--m-display-lg__title--FontSize: var(--pf-global--FontSize--xl, 1.25rem);
+  --pf-c-card--m-display-lg--first-child--PaddingTop: var(--pf-global--spacer--xl, 2rem);
+  --pf-c-card--m-display-lg--child--PaddingRight: var(--pf-global--spacer--xl, 2rem);
+  --pf-c-card--m-display-lg--child--PaddingBottom: var(--pf-global--spacer--xl, 2rem);
+  --pf-c-card--m-display-lg--child--PaddingLeft: var(--pf-global--spacer--xl, 2rem);
+  --pf-c-card--m-display-lg--c-divider--child--PaddingTop: var(--pf-global--spacer--xl, 2rem);
+  --pf-c-card--m-display-lg__title--not--last-child--PaddingBottom: var(--pf-global--spacer--lg, 1.5rem);
+  --pf-c-card--m-flat--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
+  --pf-c-card--m-flat--BorderColor: var(--pf-global--BorderColor--100, #d2d2d2);
+  --pf-c-card--m-rounded--BorderRadius: var(--pf-global--BorderRadius--sm, 3px);
+  --pf-c-card--m-full-height--Height: 100%;
+  --pf-c-card--m-plain--BoxShadow: none;
+  --pf-c-card--m-plain--BackgroundColor: transparent;
+  --pf-c-card__header--m-toggle-right--toggle--MarginRight: calc(var(--pf-global--spacer--form-element, .375rem) * -1);
+  --pf-c-card__header--m-toggle-right--toggle--MarginLeft: var(--pf-global--spacer--xs, 0.25rem);
+  --pf-c-card__header--m-toggle-right--actions--MarginRight: 0;
+  --pf-c-card__input--focus--BorderWidth: var(--pf-global--BorderWidth--md, 2px);
+  --pf-c-card__input--focus--BorderColor: var(--pf-global--primary-color--100, #0066cc);
   display: flex;
   flex-direction: column;
-  justify-items: flex-start;
-  // This allows the card to fill it's container if necessary
-  align-self: stretch;
-
-  padding:       pfe-local(Padding);
-  border:        pfe-local(Border);  // @TODO add automatic border when lightest card is on lightest background?
-  border-radius: pfe-local(BorderRadius);
-
-  // This property ensures that children in the slots do no overflow
-  // the border-radius being set on the container
-  overflow: hidden;
-
-  // Base colors
-  background-color:    var(--pfe-card--BackgroundColor, var(--pfe-context-background-color));
-  background-position: pfe-local(BackgroundPosition);
-  color: pfe-broadcasted(text);
-
-  // Remove background color for print
-  @include pfe-no-print-background;
-
-  // Add the border to the card for print
-  @include pfe-print-media {
-    border-radius: pfe-fetch(surface--border-radius);
-    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
-  }
+  background-color: var(--pf-c-card--BackgroundColor);
+  box-shadow: var(--pf-c-card--BoxShadow);
 }
 
-/* @deprecated */
-:host([color]),
-:host([color-palette]),
-:host([on]) {
-  background-color:    var(--pfe-card--BackgroundColor, var(--pfe-context-background-color));
+:host([size="compact"]) {
+  --pf-c-card__body--FontSize: var(--pf-c-card--m-compact__body--FontSize);
+  --pf-c-card__footer--FontSize: var(--pf-c-card--m-compact__footer--FontSize);
+  --pf-c-card--first-child--PaddingTop: var(--pf-c-card--m-compact--first-child--PaddingTop);
+  --pf-c-card--child--PaddingRight: var(--pf-c-card--m-compact--child--PaddingRight);
+  --pf-c-card--child--PaddingBottom: var(--pf-c-card--m-compact--child--PaddingBottom);
+  --pf-c-card--child--PaddingLeft: var(--pf-c-card--m-compact--child--PaddingLeft);
+  --pf-c-card--c-divider--child--PaddingTop: var(--pf-c-card--m-compact--c-divider--child--PaddingTop);
+  --pf-c-card__title--not--last-child--PaddingBottom: var(--pf-c-card--m-compact__title--not--last-child--PaddingBottom);
 }
 
-:host([size="small"]) {
-  @include pfe-print-local($size-small);
+:host([size="large"]) {
+  --pf-c-card__title--FontSize: var(--pf-c-card--m-display-lg__title--FontSize);
+  --pf-c-card--first-child--PaddingTop: var(--pf-c-card--m-display-lg--first-child--PaddingTop);
+  --pf-c-card--child--PaddingRight: var(--pf-c-card--m-display-lg--child--PaddingRight);
+  --pf-c-card--child--PaddingBottom: var(--pf-c-card--m-display-lg--child--PaddingBottom);
+  --pf-c-card--child--PaddingLeft: var(--pf-c-card--m-display-lg--child--PaddingLeft);
+  --pf-c-card--c-divider--child--PaddingTop: var(--pf-c-card--m-display-lg--c-divider--child--PaddingTop);
+  --pf-c-card__title--not--last-child--PaddingBottom: var(--pf-c-card--m-display-lg__title--not--last-child--PaddingBottom);
 }
 
-:host([border]:not([border="false"])) {
-  --pfe-card--BorderWidth:   #{pfe-fetch(surface--border-width)};
+:host([flat]) {
+  --pf-c-card--BoxShadow: none;
+  --pf-c-card--m-selectable-raised--before--Right: var(--pf-c-card--m-flat--m-selectable-raised--before--Right);
+  --pf-c-card--m-selectable-raised--before--Bottom: var(--pf-c-card--m-flat--m-selectable-raised--before--Bottom);
+  --pf-c-card--m-selectable-raised--before--Left: var(--pf-c-card--m-flat--m-selectable-raised--before--Left);
+  --pf-c-card--m-selectable-raised--m-selected-raised--TranslateY: var(--pf-c-card--m-flat--m-selectable-raised--m-selected-raised--TranslateY);
+  border: var(--pf-c-card--m-flat--BorderWidth, 1px) solid var(--pf-c-card--m-flat--BorderColor);
 }
 
-// Targets the wrappers in the shadow DOM
-.pfe-card {
-  &__header,
-  &__body,
-  &__footer {
-    ::slotted([overflow~="top"]) {
-      z-index: 1;
-      margin-top: -2rem; //IE11 fallback
-      margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
-      :host(.has-header) & {
-        padding-top: pfe-local(spacing);
-      }
-    }
-
-    ::slotted([overflow~="right"]) {
-      margin-right: -2rem; //IE11 fallback
-      margin-right: calc(-1 * #{pfe-local(PaddingRight)});
-    }
-
-    ::slotted([overflow~="bottom"]) {
-      margin-bottom: -2rem; //IE11 fallback
-      margin-bottom: calc(-1 * calc(#{pfe-local(PaddingBottom)} + #{pfe-local(BorderRadius)}));
-      align-self: flex-end;
-    }
-
-    ::slotted([overflow~="left"]) {
-      margin-left: -2rem; //IE11 fallback
-      margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
-    }
-
-    ::slotted(img) {
-      max-width: 100% !important;
-      align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
-      object-fit: cover; // Fix distortion
-    }
-
-    ::slotted(img:not[overflow]) {
-      align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
-    }
-
-    ::slotted(img[overflow]) {
-      max-width: unset !important;
-    }
-
-    ::slotted(img[overflow~="right"]) {
-      width: calc(100% + 2rem) !important; //IE11 fallback
-      width: calc(100% + #{pfe-local(PaddingRight)}) !important;
-    }
-
-    ::slotted(img[overflow~="left"]) {
-      width: calc(100% + 2rem) !important; //IE11 fallback
-      width: calc(100% + #{pfe-local(PaddingLeft)}) !important;
-    }
-
-    ::slotted(img[overflow~="right"][overflow~="left"]) {
-      width: calc(100% + 4rem) !important; //IE11 fallback
-      width: calc(100% + #{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)}) !important;
-    }
-  }
-  &__header {
-    z-index: 2;
-    // Declare the header background color
-    background-color: pfe-local(BackgroundColor, $region: header);
-    color:            pfe-local($cssvar: Color, $region: header);
-    :host([color-palette^="dark"]) & {
-        // Declare the header background color
-      background-color: pfe-local(BackgroundColor--dark, $region: header);
-    }
-
-    // Margin styles on header region
-    margin-top:    calc(#{pfe-local(PaddingTop)} * -1) !important;
-    margin-right:  calc(#{pfe-local(PaddingRight)} * -1);
-    margin-bottom: pfe-local(spacing--vertical);
-    margin-left:   calc(#{pfe-local(PaddingLeft)} * -1);
-
-    // Padding for the header region
-    padding-top:    pfe-local(spacing--vertical);
-    padding-right:  pfe-local(PaddingRight);
-    padding-left:   pfe-local(PaddingLeft);
-    padding-bottom: pfe-local(spacing--vertical);
-
-    &:not(.has-body,.has-footer) {
-      margin-bottom: pfe-local(PaddingBottom);
-    }
-
-    ::slotted([overflow~="top"]) {
-      --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
-    }
-
-    &:not(.has-header) {
-      display: none;
-    }
-
-    &.has-body,&.has-footer ::slotted([overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
-    }
-
-    ::slotted([overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
-    }
-
-    @each $tag in (h1, h2, h3, h4, h5, h6) {
-      ::slotted(#{$tag}) {
-        margin-bottom: 0;
-      }
-    }
-  }
-  &__body {
-    &:not(.has-header) ::slotted([overflow~="top"]) {
-      --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
-    }
-
-    ::slotted([overflow~="top"]) {
-      z-index: 1;
-      --pfe-card__overflow--MarginTop: calc(#{pfe-local(spacing--vertical)} * -1);
-    }
-
-    ::slotted([overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
-    }
-
-    &.has-footer ::slotted([overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
-    }
-
-    &:is(.has-header){
-      ::slotted(img[overflow~="top"]){
-        padding-top: pfe-local(spacing);
-      }
-    }    
-
-    &:not(.has-footer) {
-      margin-bottom: 0;
-    }
-  }
-  &__footer {
-    margin-top: auto; // This allows the footer to move to the very bottom
-
-    display: flex;
-    flex-direction: pfe-local(Row, row, $region: footer);
-    flex-wrap:      pfe-local(Wrap, wrap, $region: footer);
-    // Aligns buttons and CTAs
-    align-items: pfe-local(AlignItems, baseline, $region: footer);
-
-    ::slotted([overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
-    }
-
-    &:not(.has-footer) {
-      display: none;
-    }
-  }
-  &__header,
-  &__body {
-    margin-bottom: pfe-local(spacing--vertical);
-
-    //-- Slotted styles for typography
-    // Remove margins from typography inside the slots
-    @each $tag in (p, h1, h2, h3, h4, h5, h6) {
-      ::slotted(#{$tag}:first-child) {
-        // Remove top margins
-        margin-top: 0;
-      }
-    }
-  }
+:host([plain]) {
+  --pf-c-card--BoxShadow: var(--pf-c-card--m-plain--BoxShadow);
+  --pf-c-card--BackgroundColor: var(--pf-c-card--m-plain--BackgroundColor);
 }
 
-#header ::slotted(:is(h1,h2,h3,h4,h5,h6)) {
-  font-weight: var(--pfe-card-header-font-weight, 500);
+:host([rounded]) {
+  --pf-c-card--m-selectable-raised--m-selected-raised--TranslateY: var(--pf-c-card--m-rounded--m-selectable-raised--m-selected-raised--TranslateY);
+  border-radius: var(--pf-c-card--m-rounded--BorderRadius);
+}
+
+:host([fullHeight]) {
+  height: var(--pf-c-card--m-full-height--Height);
+}
+
+::slotted(*) {
+  margin: 0;
+}
+
+::slotted([slot="header"]) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+::slotted([slot="header"]) .pf-c-card__title {
+  --pf-c-card--first-child--PaddingTop: 0;
+  --pf-c-card__title--not--last-child--PaddingBottom: 0;
+  padding: 0;
+}
+
+::slotted([slot="header"]).pf-m-toggle-right {
+  --pf-c-card__header-toggle--MarginRight: var(--pf-c-card__header--m-toggle-right--toggle--MarginRight);
+  --pf-c-card__header-toggle--MarginLeft: var(--pf-c-card__header--m-toggle-right--toggle--MarginLeft);
+}
+
+::slotted([slot="header"]).pf-m-toggle-right .pf-c-card__actions {
+  --pf-c-card__header-toggle--MarginRight: var(--pf-c-card__header--m-toggle-right--actions--MarginRight);
+}
+
+::slotted([slot="header"]).pf-m-toggle-right .pf-c-card__header-toggle {
+  order: 2;
+}
+
+::slotted([slot="header"]).pf-m-toggle-right .pf-c-card__title {
+  flex: 1;
+}
+
+::slotted([slot="title"]) {
+  font-family: var(--pf-c-card__title--FontFamily);
+  font-size: var(--pf-c-card__title--FontSize);
+  font-weight: var(--pf-c-card__title--FontWeight);
+}
+
+::slotted(*) {
+  padding-right: var(--pf-c-card--child--PaddingRight);
+  padding-bottom: var(--pf-c-card--child--PaddingBottom);
+  padding-left: var(--pf-c-card--child--PaddingLeft);
+}
+
+::slotted(:first-child) {
+  padding-top: var(--pf-c-card--first-child--PaddingTop);
+}
+
+::slotted([slot="header"]:not(:last-child)),
+::slotted([slot="title"]:not(:last-child)) {
+  padding-bottom: var(--pf-c-card__title--not--last-child--PaddingBottom);
+}
+
+.pf-c-card__body:not(.pf-m-no-fill) {
+  flex: 1 1 auto;
+}
+
+slot:not([name])::slotted(*) {
+  font-size: var(--pf-c-card__body--FontSize);
+}
+
+::slotted([slot="footer"]) {
+  font-size: var(--pf-c-card__footer--FontSize);
+}
+
+.pf-c-card__sr-input:focus+.pf-c-card::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: "";
+  border: var(--pf-c-card__input--focus--BorderWidth) solid var(--pf-c-card__input--focus--BorderColor);
+}
+
+.pf-m-overpass-font .pf-c-card .pf-c-card__title {
+  font-weight: var(--pf-global--FontWeight--normal);
 }

@@ -49,25 +49,35 @@
   </pfe-tabs>
 {% endband %}
 
-
-<div style="--pfe-band__body--layout: 100vw; --pfe-band__body--gutter--horizontal: 0;">
 {% band header="Default overflow" %}
-  <pfe-tabs scrollable active-key="4">
-    <pfe-tab slot="tab">Users</pfe-tab>
-    <pfe-tab-panel>Users</pfe-tab-panel>
-    <pfe-tab slot="tab">Containers</pfe-tab>
-    <pfe-tab-panel>Containers</pfe-tab-panel>
-    <pfe-tab slot="tab">Database</pfe-tab>
-    <pfe-tab-panel>Database</pfe-tab-panel>
-    <pfe-tab slot="tab">Server</pfe-tab>
-    <pfe-tab-panel>Server</pfe-tab-panel>
-    <pfe-tab slot="tab">System</pfe-tab>
-    <pfe-tab-panel>System</pfe-tab-panel>
-    <pfe-tab slot="tab">Network</pfe-tab>
-    <pfe-tab-panel>Network</pfe-tab-panel>
-  </pfe-tabs>
+  <style>
+    .overflow-tab-wrapper {
+      width: 94vw;
+    }
+    @media screen and (min-width: 568px) {
+      .overflow-tab-wrapper {
+        width: auto;
+      }
+    }
+  </style>
+  <div class="overflow-tab-wrapper">
+    <pfe-tabs scrollable active-key="4">
+      <pfe-tab slot="tab">Users</pfe-tab>
+      <pfe-tab-panel>Users</pfe-tab-panel>
+      <pfe-tab slot="tab">Containers</pfe-tab>
+      <pfe-tab-panel>Containers</pfe-tab-panel>
+      <pfe-tab slot="tab">Database</pfe-tab>
+      <pfe-tab-panel>Database</pfe-tab-panel>
+      <pfe-tab slot="tab">Server</pfe-tab>
+      <pfe-tab-panel>Server</pfe-tab-panel>
+      <pfe-tab slot="tab">System</pfe-tab>
+      <pfe-tab-panel>System</pfe-tab-panel>
+      <pfe-tab slot="tab">Network</pfe-tab>
+      <pfe-tab-panel>Network</pfe-tab-panel>
+    </pfe-tabs>
+  </div> 
 {% endband %}
-</div>
+
 
 {% band header="Vertical" %}
   <pfe-tabs vertical>

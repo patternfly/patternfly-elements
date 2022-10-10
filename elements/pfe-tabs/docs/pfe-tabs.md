@@ -50,6 +50,7 @@
 {% endband %}
 
 
+<div style="--pfe-band__body--layout: 100vw; --pfe-band__body--gutter--horizontal: 0;">
 {% band header="Default overflow" %}
   <pfe-tabs scrollable active-key="4">
     <pfe-tab slot="tab">Users</pfe-tab>
@@ -66,7 +67,7 @@
     <pfe-tab-panel>Network</pfe-tab-panel>
   </pfe-tabs>
 {% endband %}
-
+</div>
 
 {% band header="Vertical" %}
   <pfe-tabs vertical>

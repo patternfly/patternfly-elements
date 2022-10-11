@@ -1,5 +1,10 @@
-import '@patternfly/pfe-switch';
+if (!('ElementInternals' in window && 'setFormValue' in window.ElementInternals.prototype)) {
+  await import('element-internals-polyfill');
+}
 
-const root = document.querySelector('[data-demo="pfe-switch"]')?.shadowRoot ?? document;
+import('@patternfly/pfe-switch');
 
-root.querySelector('pfe-switch');
+document.getElementById('form-disabled').addEventListener('change', /** @this{HTMLFieldsetElement}*/function(event) {
+  const controls = document.getElementById(event.target.getAttribute('aria-controls'));
+  controls.toggleAttribute('disabled', event.target.checked);
+});

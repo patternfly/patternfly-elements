@@ -95,6 +95,7 @@
     "custom-elements-manifest": "1.0.0",
     "dedent": "0.7.0",
     "dotenv": "16.0.1",
+    "element-internals-polyfill": "^1.1.14",
     "eleventy-plugin-toc": "1.1.5",
     "esbuild": "0.15.5",
     "esbuild-node-externals": "1.4.1",

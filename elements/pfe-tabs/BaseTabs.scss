@@ -69,7 +69,7 @@
 }
 
 :host([box][scrollable]) button:nth-of-type(2)::before {
-  left: calc(var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--spacer--sm, 0.5rem)) * -1);
+  left: calc(var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)) * -1);
 }
 
 :host([box]) pfe-tab[aria-selected="true"] + pfe-tab {

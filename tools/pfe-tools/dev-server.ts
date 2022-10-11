@@ -267,7 +267,6 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       // serve typescript sources as javascript
       esbuildPlugin({
         ts: true,
-        target: 'es2022',
         tsconfig,
       }),
 

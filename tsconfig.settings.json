@@ -137,9 +137,6 @@
       "@patternfly/pfe-tabs": [
         "./elements/pfe-tabs/pfe-tabs.ts"
       ],
-      "@patternfly/pfe-toast": [
-        "./elements/pfe-toast/pfe-toast.ts"
-      ],
       "@patternfly/pfe-tools/*": [
         "./tools/pfe-tools/*"
       ],
@@ -220,9 +217,6 @@
     },
     {
       "path": "./elements/pfe-tabs"
-    },
-    {
-      "path": "./elements/pfe-toast"
     },
     {
       "path": "./elements/pfe-label"

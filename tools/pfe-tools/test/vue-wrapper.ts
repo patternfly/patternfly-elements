@@ -57,7 +57,6 @@ export async function fixture<T extends Element = HTMLElement>(
     'pfe-select',
     'pfe-spinner',
     'pfe-tabs',
-    'pfe-toast',
   ];
 
   const wrapper = document.getElementById('vue-wrapper');

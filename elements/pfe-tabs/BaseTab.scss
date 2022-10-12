@@ -133,11 +133,11 @@ button:active {
 }
 
 :host(.first[box][aria-selected="true"]) button::before {
-  border-left-width: var(--pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderLeftWidth,  var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
+  border-inline-start-width: var(--pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderLeftWidth,  var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
 }
 
 :host(.last[box][aria-selected="true"]) button::before {
-  border-right-width: var(--pf-c-tabs--m-box__item--m-current--last-child__link--before--BorderRightWidth, var(--pf-c-tabs--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
+  border-inline-end-width: var(--pf-c-tabs--m-box__item--m-current--last-child__link--before--BorderRightWidth, var(--pf-c-tabs--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
 }
 
 :host(:disabled) button {
@@ -159,7 +159,7 @@ button:active {
 }
 
 span[part="icon"] {
-  margin-right: var(--pf-c-tabs__link--child--MarginRight, var(--pf-global--spacer--md, 1rem));
+  margin-inline-end: var(--pf-c-tabs__link--child--MarginRight, var(--pf-global--spacer--md, 1rem));
 }
 
 span[part="icon"]:last-child {

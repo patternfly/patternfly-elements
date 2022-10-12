@@ -6,8 +6,8 @@
   position: relative;
   display: flex;
   width: var(--pf-c-tabs--Width, auto);
-  padding-right: var(--pf-c-tabs--inset, 0);
-  padding-left: var(--pf-c-tabs--inset, 0);
+  padding-inline-end: var(--pf-c-tabs--inset, 0);
+  padding-inline-start: var(--pf-c-tabs--inset, 0);
   overflow: hidden;
 }
 
@@ -45,12 +45,12 @@
 }
 
 :host([scrollable]) button:nth-of-type(1) {
-  margin-right: 0;
+  margin-inline-end: 0;
   transform: translateX(0);
 }
 
 :host([scrollable]) button:nth-of-type(2) {
-  margin-left: 0;
+  margin-inline-start: 0;
   transform: translateX(0);
 }
 
@@ -120,11 +120,11 @@
 }
 
 :host([vertical]) ::slotted(pfe-tab:first-of-type) {
-  margin-top: var(--pf-c-tabs--inset, 0);
+  margin-block-start: var(--pf-c-tabs--inset, 0);
 }
 
 :host([vertical]) ::slotted(pfe-tab:last-of-type) {
-  margin-bottom: var(--pf-c-tabs--inset, 0);
+  margin-block-end: var(--pf-c-tabs--inset, 0);
 }
 
 :host([box][vertical]) #tabs-container {
@@ -223,13 +223,13 @@ button::before {
 
 button:nth-of-type(1) {
   --pf-c-tabs__scroll-button--before--BorderRightWidth: var(--pf-c-tabs__scroll-button--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px));
-  margin-right: calc(var(--pf-c-tabs__scroll-button--Width, var(--pf-global--spacer--2xl, 3rem)) * -1);
+  margin-inline-end: calc(var(--pf-c-tabs__scroll-button--Width, var(--pf-global--spacer--2xl, 3rem)) * -1);
   transform: translateX(-100%);
 }
 
 button:nth-of-type(2) {
   --pf-c-tabs__scroll-button--before--BorderLeftWidth: var(--pf-c-tabs__scroll-button--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px));
-  margin-left: calc(var(--pf-c-tabs__scroll-button--Width, var(--pf-global--spacer--2xl, 3rem)) * -1);
+  margin-inline-start: calc(var(--pf-c-tabs__scroll-button--Width, var(--pf-global--spacer--2xl, 3rem)) * -1);
   transform: translateX(100%);
 }
 

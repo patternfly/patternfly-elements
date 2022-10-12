@@ -3,19 +3,10 @@ main {
   grid: unset;
 }
 
-.resize {
-  border: 1px solid #d2d2d2;
-  padding: 20px; 
-  width: auto;
-  resize: horizontal;
-  overflow: auto;
-  width: 500px;
-}
-
 .example {
   margin: 0 auto;
   max-width: 1008px;
-  padding: 0 16px;
+  padding: 0 16px 32px;
 }
 
 .example:last-of-type {
@@ -28,6 +19,6 @@ main {
 
 @media screen and (min-width: 768px) {
   .example {
-    padding: 0 32px;
+    padding: 0 32px 32px;
   }
 }

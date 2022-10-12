@@ -17,6 +17,6 @@
 
 [[redirects]]
   from = '/v1/*'
-  to = 'https://v1--patternfly-elements.netlify.app/:splat'
+  to = 'https://release-v1--patternfly-elements.netlify.app/:splat'
   status = 200
   force = true

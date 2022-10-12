@@ -45,27 +45,29 @@ export abstract class BaseSwitch extends LitElement {
 
   declare shadowRoot: ShadowRoot;
 
+  #internals = this.attachInternals();
+
+  #initiallyDisabled = this.hasAttribute('disabled');
+
+  get #input(): HTMLInputElement {
+    return this.shadowRoot.getElementById('input') as HTMLInputElement;
+  }
+
   @property({ reflect: true }) label?: string;
 
   @property({ reflect: true, type: Boolean, attribute: 'show-check-icon' }) showCheckIcon = false;
 
   @property({ reflect: true, type: Boolean }) checked = false;
 
-  #internals = this.attachInternals();
-
-  #initiallyDisabled = this.hasAttribute('disabled');
   disabled = this.#initiallyDisabled;
 
   get labels() {
     return this.#internals.labels;
   }
 
-  get #input(): HTMLInputElement {
-    return this.shadowRoot.getElementById('input') as HTMLInputElement;
-  }
-
   override connectedCallback(): void {
     super.connectedCallback();
+    this.setAttribute('role', 'checkbox');
     this.getRootNode().addEventListener('click', this.#onClick);
   }
 
@@ -85,20 +87,25 @@ export abstract class BaseSwitch extends LitElement {
 
   override render() {
     return html`
-      <label for="input">
+      <label for="input" aria-hidden="true">
         <svg id="toggle"
           ?hidden="${!this.showCheckIcon && !!this.labels.length}"
-          aria-hidden="true"
           fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512">
             <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/>
         </svg>
       </label>
       <input id="input"
           type="checkbox"
+          aria-hidden="true"
           ?checked="${this.checked}"
           ?disabled="${this.disabled}"
           @change=${this.#onChange}>
     `;
+  }
+
+  override updated() {
+    this.#internals.ariaChecked = String(this.checked);
+    this.#internals.ariaDisabled = String(this.disabled);
   }
 
   #onChange() {

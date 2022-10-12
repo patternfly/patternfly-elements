@@ -1,7 +1,8 @@
-import { customElement } from 'lit/decorators.js';
+import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
-import style from './pfe-card.scss';
-import { BaseCard } from './BaseCard';
+import style from './BaseCard.scss';
 
 /**
  * This element creates a header, body, and footer region in which to place
@@ -52,15 +53,54 @@ import { BaseCard } from './BaseCard';
  * @cssproperty --pfe-card--BorderColor
  *              This allows the customization of a border color around the entire container.
  */
-@customElement('pfe-card')
-export class PfeCard extends BaseCard {
+
+export abstract class BaseCard extends LitElement {
   static readonly version = '{{version}}';
 
   static readonly styles = [style];
-}
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'pfe-card': PfeCard;
+  /**
+   * Optionally provide a size for the card and the card contents.
+   * The default is set to `undefined` and provides default styles.
+   * Compact provides styles which decreases the padding between the sections.
+   * Large provides styles which increases the padding between the sections and the font size for the title, header, and footer.
+   */
+   @property({ reflect: true }) size: 'compact'|'large'|undefined = undefined;
+
+   /**
+   * Optionally apply a border radius for the drop shadow and/or border.
+   */
+    @property({ type: Boolean, reflect: true }) rounded = false;
+
+    /**
+   * Optionally apply a border color and weight to the entire card container.
+   * The default color and weight is `#d2d2d2` and `1px`, respectively.
+   */
+     @property({ type: Boolean, reflect: true }) fullHeight = false;
+
+  /**
+   * Optionally apply a border color and weight to the entire card container.
+   * The default color and weight is `#d2d2d2` and `1px`, respectively.
+   */
+  @property({ type: Boolean, reflect: true }) plain = false;
+
+  protected slots = new SlotController(this, {
+    slots: ['header', null, 'footer'],
+  });
+
+  render() {
+    return html`
+      <div part="header">
+        <slot name="header"></slot>
+        <slot name="pfe-card--header"></slot>
+      </div>
+      <div part="body">
+        <slot></slot>
+      </div>
+      <div part="footer">
+        <slot name="footer"></slot>
+        <slot name="pfe-card--footer"></slot>
+      </div>
+    `;
   }
 }

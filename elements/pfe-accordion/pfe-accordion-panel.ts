@@ -1,12 +1,6 @@
-import type { ColorTheme } from '@patternfly/pfe-core';
+import { customElement, } from 'lit/decorators.js';
 
-import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-
-import { colorContextConsumer, pfelement } from '@patternfly/pfe-core/decorators.js';
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-
-import { PfeCollapsePanel } from '@patternfly/pfe-collapse/pfe-collapse-panel.js';
+import { BaseAccordionPanel } from './BaseAccordionPanel.js';
 
 import style from './pfe-accordion-panel.scss';
 
@@ -14,45 +8,46 @@ import style from './pfe-accordion-panel.scss';
  * Accordion Panel
  *
  * @slot - Panel content
- * @csspart container - container element for slotted content
+ * @cssprop     {<color>} --pf-c-accordion--BackgroundColor
+ *              Sets the background color for the panel content.
+ *              {@default `var(--pf-global--BackgroundColor--light-100, #ffffff)`}
+ * @cssprop     {<color>} --pf-c-accordion__panel--Color
+ *              Sets the font color for the panel content.
+ *              {@default `var(--pf-global--Color--dark-200, #6a6e73)`}
+ * @cssprop     {<length>} --pf-c-accordion__panel--FontSize
+ *              Sets the font size for the panel content.
+ *              {@default `var(--pf-global--FontSize--sm, 0.875rem)`}
+ * @cssprop     {<color>} --pf-c-accordion__panel--content-body--before--BackgroundColor
+ *              Sets the sidebar color for the panel when the context is expanded.
+ *              {@default `var(--pf-global--primary-color--100, #0066cc)`}
+ * @cssprop     {<length>} --pf-c-accordion__panel--m-fixed--MaxHeight
+ *              Sets the maximum height for the panel content.
+ *              Will only be used if the `fixed` attribute is used.
+ *              {@default `9.375rem`}
+ * @cssprop     {<length>} --pf-c-accordion__panel-body--PaddingTop
+ *              Sets the padding top for the panel content.
+ *              {@default `var(--pf-global--spacer--sm, 0.5rem)`}
+ * @cssprop     {<length>} --pf-c-accordion__panel-body--PaddingRight
+ *              Sets the padding right for the panel content.
+ *              {@default `var(--pf-global--spacer--md, 1rem)`}
+ * @cssprop     {<length>} --pf-c-accordion__panel-body--PaddingBottom
+ *              Sets the padding bottom for the panel content.
+ *              {@default `var(--pf-global--spacer--sm, 0.5rem)`}
+ * @cssprop     {<length>} --pf-c-accordion__panel-body--PaddingLeft
+ *              Sets the padding left for the panel content.
+ *              {@default `var(--pf-global--spacer--md, 1rem)`}
+ * @cssprop     {<color>} --pf-c-accordion__panel-body--before--BackgroundColor
+ *              Sets the background color for the panel content.
+ *              {@default `transparent`}
+ * @cssprop     --pf-c-accordion__panel-body--before--Width
+ *              Sets the before width for the panel content.
+ *              {@default `var(--pf-global--BorderWidth--lg, 3px)`}
  */
-@customElement('pfe-accordion-panel') @pfelement()
-export class PfeAccordionPanel extends LitElement {
+@customElement('pfe-accordion-panel')
+export class PfeAccordionPanel extends BaseAccordionPanel {
   static readonly version = '{{version}}';
 
-  static readonly styles = [
-    ...PfeCollapsePanel.styles,
-    style
-  ];
-
-  /** Disclosure */
-  @property({ type: String, reflect: true }) disclosure?: 'true'|'false';
-
-  @property({ type: Boolean, reflect: true }) expanded = false;
-
-  @property({ attribute: 'aria-labelledby', reflect: true }) ariaLabelledby?: string;
-
-  /**
-   * Sets color theme based on parent context
-   */
-  @colorContextConsumer()
-  @property({ reflect: true }) on?: ColorTheme;
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.id ||= getRandomId('pfe-accordion-panel');
-    this.setAttribute('role', 'region');
-  }
-
-  render() {
-    return html`
-      <div tabindex="-1">
-        <div id="container" class="pf-c-accordion__expanded-content" part="container">
-          <slot></slot>
-        </div>
-      </div>
-    `;
-  }
+  static readonly styles = [...BaseAccordionPanel.styles, style];
 }
 
 declare global {

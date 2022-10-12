@@ -18,21 +18,110 @@ const testElement = html`
       <h3>Consetetur sadipscing elitr?</h3>
     </pfe-accordion-header>
     <pfe-accordion-panel id="panel1" data-panel="1">
-      <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+      <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+        rebum.</p>
     </pfe-accordion-panel>
-
+  
     <pfe-accordion-header data-header="2">
       <h3>Labore et dolore magna aliquyam erat?</h3>
     </pfe-accordion-header>
     <pfe-accordion-panel data-panel="2">
-      <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+      <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+        rebum.</p>
     </pfe-accordion-panel>
-
+  
     <pfe-accordion-header data-header="3">
       <h3>Incididunt in Lorem voluptate eiusmod dolor?</h3>
     </pfe-accordion-header>
     <pfe-accordion-panel data-panel="3">
-      <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+      <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+        rebum.</p>
+    </pfe-accordion-panel>
+  </pfe-accordion>
+`;
+
+const testSingleElement = html`
+  <pfe-accordion single="true">
+    <pfe-accordion-header id="header1" data-header="1">
+      <h3>Consetetur sadipscing elitr?</h3>
+    </pfe-accordion-header>
+    <pfe-accordion-panel id="panel1" data-panel="1">
+      <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+        rebum.</p>
+    </pfe-accordion-panel>
+  
+    <pfe-accordion-header data-header="2">
+      <h3>Labore et dolore magna aliquyam erat?</h3>
+    </pfe-accordion-header>
+    <pfe-accordion-panel data-panel="2">
+      <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+        rebum.</p>
+    </pfe-accordion-panel>
+  
+    <pfe-accordion-header data-header="3">
+      <h3>Incididunt in Lorem voluptate eiusmod dolor?</h3>
+    </pfe-accordion-header>
+    <pfe-accordion-panel data-panel="3">
+      <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+        rebum.</p>
+    </pfe-accordion-panel>
+  </pfe-accordion>
+`;
+
+const testNestedElement = html`
+  <pfe-accordion>
+    <pfe-accordion-header id="header1" data-header="1">
+      <h3>Consetetur sadipscing elitr?</h3>
+    </pfe-accordion-header>
+    <pfe-accordion-panel id="panel1" data-panel="1">
+      <pfe-accordion>
+        <pfe-accordion-header id="header1-1" data-header="1-1">
+          <h3>Consetetur sadipscing elitr?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel id="panel1-1" data-panel="1-1">
+          <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+            dolores et ea rebum.</p>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </pfe-accordion-panel>
+    <pfe-accordion-header id="header2" data-header="2">
+      <h3>Labore et dolore magna aliquyam erat?</h3>
+    </pfe-accordion-header>
+    <pfe-accordion-panel data-panel="2">
+      <pfe-accordion single="true">
+        <pfe-accordion-header id="header2-1" data-header="2-1">
+          <h3>Consetetur sadipscing elitr?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel id="panel2-1" data-panel="2-1">
+          <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+            dolores et ea rebum.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header id="header2-2" data-header="2-2">
+          <h3>Consetetur sadipscing elitr?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel id="panel2-2" data-panel="2-2">
+          <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+            dolores et ea rebum.</p>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </pfe-accordion-panel>
+  
+    <pfe-accordion-header data-header="3">
+      <h3>Incididunt in Lorem voluptate eiusmod dolor?</h3>
+    </pfe-accordion-header>
+    <pfe-accordion-panel data-panel="3">
+      <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+        rebum.</p>
     </pfe-accordion-panel>
   </pfe-accordion>
 `;
@@ -92,6 +181,98 @@ describe('<pfe-accordion>', function() {
     expect(panel.expanded).to.be.false;
   });
 
+  it('should collapse expanded panels when another header is expanded AND single attribute is set to true', async function() {
+    const pfeAccordion = await createFixture<PfeAccordion>(testSingleElement);
+    const header = pfeAccordion.querySelector('pfe-accordion-header')!;
+    const secondHeader = pfeAccordion.querySelector<PfeAccordionHeader>('pfe-accordion-header:nth-of-type(2)')!;
+    const secondPanel = pfeAccordion.querySelector<PfeAccordionPanel>('pfe-accordion-panel:nth-of-type(2)')!;
+    const panel = pfeAccordion.querySelector('pfe-accordion-panel')!;
+
+    // expand the first panel
+    header.click();
+
+    await header.updateComplete;
+    await pfeAccordion.updateComplete;
+
+    // close it
+    secondHeader.click();
+
+    await header.updateComplete;
+    await secondHeader.updateComplete;
+    await pfeAccordion.updateComplete;
+
+    expect(header.button?.getAttribute('aria-expanded')).to.equal('false');
+    expect(header.expanded).to.be.false;
+    expect(panel.hasAttribute('expanded')).to.be.false;
+    expect(panel.expanded).to.be.false;
+    expect(secondHeader.button?.getAttribute('aria-expanded')).to.equal('true');
+    expect(secondHeader.expanded).to.be.true;
+    expect(secondPanel.hasAttribute('expanded')).to.be.true;
+    expect(secondPanel.expanded).to.be.true;
+  });
+
+  describe('nested pfe-accordion', () => {
+    it('should collapse expanded panels when another header is expanded AND single attribute is set to true', async function() {
+      const pfeAccordion = await createFixture<PfeAccordion>(testNestedElement);
+      const topLevelHeaderOne = pfeAccordion.querySelector<PfeAccordionHeader>('pfe-accordion-header#header1')!;
+      const topLevelPanelOne = pfeAccordion.querySelector<PfeAccordionPanel>('pfe-accordion-header#header1')!;
+      const topLevelHeaderTwo = pfeAccordion.querySelector<PfeAccordionHeader>('pfe-accordion-header#header2')!;
+      const topLevelPanelTwo = pfeAccordion.querySelector<PfeAccordionPanel>('pfe-accordion-header#header2')!;
+      const nestedHeaderOne = pfeAccordion.querySelector<PfeAccordionHeader>('pfe-accordion-header#header2-1')!;
+      const nestedPanelOne = pfeAccordion.querySelector<PfeAccordionPanel>('pfe-accordion-header#header2-1')!;
+      const nestedHeaderTwo = pfeAccordion.querySelector<PfeAccordionHeader>('pfe-accordion-header#header2-2')!;
+      const nestedPanelTwo = pfeAccordion.querySelector<PfeAccordionPanel>('pfe-accordion-header#header2-2')!;
+
+      // expand the first panel
+      topLevelHeaderOne.click();
+
+      await topLevelHeaderOne.updateComplete;
+      await pfeAccordion.updateComplete;
+
+      // expand the second panel
+      topLevelHeaderTwo.click();
+
+      await topLevelHeaderTwo.updateComplete;
+      await pfeAccordion.updateComplete;
+
+      // expand the nested first panel
+      nestedHeaderOne.click();
+
+      await nestedHeaderOne.updateComplete;
+      await pfeAccordion.updateComplete;
+
+      // expand the nested second panel
+      nestedHeaderTwo.click();
+
+      await nestedHeaderTwo.updateComplete;
+      await pfeAccordion.updateComplete;
+
+      // Check that the first top level header / panel combination is still expanded
+      expect(topLevelHeaderOne.button?.getAttribute('aria-expanded')).to.equal('true');
+      expect(topLevelHeaderOne.expanded).to.be.true;
+      expect(topLevelPanelOne.hasAttribute('expanded')).to.be.true;
+      expect(topLevelPanelOne.expanded).to.be.true;
+
+      // Check that the second top level header / panel combination is still expanded
+      expect(topLevelHeaderTwo.button?.getAttribute('aria-expanded')).to.equal('true');
+      expect(topLevelHeaderTwo.expanded).to.be.true;
+      expect(topLevelPanelTwo.hasAttribute('expanded')).to.be.true;
+      expect(topLevelPanelTwo.expanded).to.be.true;
+
+      // Check that the first nested header / panel combination is not expanded because the single attribute is set to true
+      expect(nestedHeaderOne.button?.getAttribute('aria-expanded')).to.equal('false');
+      expect(nestedHeaderOne.expanded).to.be.false;
+      expect(nestedPanelOne.hasAttribute('expanded')).to.be.false;
+      expect(nestedPanelOne.expanded).to.be.false;
+
+      // Check that the second nested header / panel combination is expanded
+      expect(nestedHeaderTwo.button?.getAttribute('aria-expanded')).to.equal('true');
+      expect(nestedHeaderTwo.expanded).to.be.true;
+      expect(nestedPanelTwo.hasAttribute('expanded')).to.be.true;
+      expect(nestedPanelTwo.expanded).to.be.true;
+    });
+  });
+
   it('should randomly generate ids for aria use', async function() {
     const pfeAccordion = await createFixture<PfeAccordion>(testElement);
     // The first header and panel have existing IDs
@@ -101,7 +282,7 @@ describe('<pfe-accordion>', function() {
     await pfeAccordion.updateComplete;
 
     expect(secondHeader.id).to.match(/pfe-/);
-    expect(secondPanel.id).to.match(/pfe-/);
+    expect(secondPanel.id).to.match(/panel-/);
   });
 
   it('should use the ids that are provided instead of generating new ones', async function() {
@@ -231,30 +412,11 @@ describe('<pfe-accordion>', function() {
     });
   });
 
-  /* EVENT TESTS */
-  it('should fire a pfe-accordion:change event when a header is clicked', async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(testElement);
-    const header = pfeAccordion.querySelector('pfe-accordion-header')!;
-    // const panel = pfeAccordion.querySelector('pfe-accordion-panel');
-
-    setTimeout(() => header.click(), 100);
-
-    const { detail } = await oneEvent(pfeAccordion, 'pfe-accordion:change');
-
-    expect(detail).to.deep.equal({
-      expanded: true,
-      toggle: header,
-    });
-  });
-
   /* ATTRIBUTE TESTS */
   it('should open the items listed in the expanded-index attribute', async function() {
     const element = await createFixture<PfeAccordion>(testElement);
     const headers = Array.from(element.children).filter(PfeAccordion.isHeader);
     element.setAttribute('expanded-index', '2,3');
-
-    // Wait until the animation is complete
-    await oneEvent(element, 'transitionend');
 
     await element.updateComplete;
     await Promise.all(headers.map(x => x.updateComplete));
@@ -291,123 +453,6 @@ describe('<pfe-accordion>', function() {
       .to.have.been.calledOnceWith(`[pfe-accordion-header#bad-header-element]`, 'Header should contain at least 1 heading tag for correct semantics.');
   });
 
-  /* DISCLOSURE TESTS */
-  it('should render as disclosure if there is only one header in an accordion', async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(html`
-      <pfe-accordion>
-        <pfe-accordion-header>
-          <h2>Header</h2>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          Panel
-        </pfe-accordion-panel>
-      </pfe-accordion>`);
-
-    const headers = Array.from(pfeAccordion.querySelectorAll('pfe-accordion-header'));
-    const panels = Array.from(pfeAccordion.querySelectorAll('pfe-accordion-panel'));
-
-    expect(headers.length).to.equal(1);
-    expect(panels.length).to.equal(1);
-
-    const [header] = headers;
-    const [panel] = panels;
-
-    await aTimeout(10);
-
-    await pfeAccordion.updateComplete;
-    await header.updateComplete;
-    await panel.updateComplete;
-
-    expect(header.getAttribute('disclosure'), 'header').to.equal('true');
-    expect(panel.getAttribute('disclosure'), 'panel').to.equal('true');
-  });
-
-  it(`should not render as a disclosure if the disclosure attribute is set to false and there is only one header`, async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(html`
-      <pfe-accordion disclosure="false">
-        <pfe-accordion-header>
-          <h2>Header</h2>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          Panel
-        </pfe-accordion-panel>
-      </pfe-accordion>`);
-
-    await pfeAccordion.updateComplete;
-
-    const header = pfeAccordion.querySelector('pfe-accordion-header')!;
-    const panel = pfeAccordion.querySelector('pfe-accordion-panel')!;
-
-    await aTimeout(100);
-
-    expect(header.getAttribute('disclosure'), 'header disclosure').to.equal('false');
-    expect(panel.getAttribute('disclosure'), 'panel disclosure').to.equal('false');
-  });
-
-  it(`should switch from an accordion to a disclosure if the disclosure attribute switches from false to true`, async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(testElement);
-    const header = pfeAccordion.querySelector('pfe-accordion-header')!;
-    const panel = pfeAccordion.querySelector('pfe-accordion-panel')!;
-
-    pfeAccordion.disclosure = 'false';
-
-    await aTimeout(50);
-
-    pfeAccordion.disclosure = 'true';
-
-    await aTimeout(50);
-
-    expect(header.getAttribute('disclosure'), 'header disclosure').to.equal('true');
-    expect(panel.getAttribute('disclosure'), 'panel disclosure').to.equal('true');
-  });
-
-  it(`should switch to a disclosure if an accordion loses children and only one header is left`, async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(testElement);
-
-    const header = pfeAccordion.querySelector('pfe-accordion-header')!;
-    const panel = pfeAccordion.querySelector('pfe-accordion-panel')!;
-
-    const elementsToRemove = Array.from(
-      pfeAccordion.querySelectorAll(
-        ':is(pfe-accordion-header, pfe-accordion-panel):not(:first-of-type)'
-      ),
-    );
-
-    elementsToRemove.forEach(element => pfeAccordion.removeChild(element));
-
-    await aTimeout(50);
-
-    expect(pfeAccordion.getAttribute('disclosure'), 'accordion disclosure').to.equal('true');
-    expect(header.getAttribute('disclosure'), 'header disclosure').to.equal('true');
-    expect(panel.getAttribute('disclosure'), 'panel disclosue').to.equal('true');
-  });
-
-  it(`should switch to an accordion from a disclosure if the accordion gains more than one header`, async function() {
-    const pfeAccordion = await createFixture<PfeAccordion>(html`
-      <pfe-accordion>
-        <pfe-accordion-header>
-          <h2>Header</h2>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>Panel</pfe-accordion-panel>
-      </pfe-accordion>
-    `);
-
-    expect(pfeAccordion.getAttribute('disclosure')).to.equal('true');
-
-    const newHeader = document.createElement('pfe-accordion-header');
-    newHeader.innerHTML = `<h2>New Header</h2>`;
-
-    const newPanel = document.createElement('pfe-accordion-panel');
-    newPanel.innerHTML = `New Panel`;
-
-    pfeAccordion.appendChild(newHeader);
-    pfeAccordion.appendChild(newPanel);
-
-    await aTimeout(50);
-
-    expect(pfeAccordion.getAttribute('disclosure')).to.equal('false');
-  });
-
   it('should properly initialize any dynamically added headers and panels', async function() {
     const pfeAccordion = await createFixture<PfeAccordion>(testElement);
 
@@ -437,14 +482,6 @@ describe('<pfe-accordion>', function() {
     expect(newPanel.getAttribute('aria-labelledby'))
       .to.equal(newHeader.getAttribute('id'));
   });
-
-  // @TODO: Write the following tests
-
-  // Validate that the is-navigation attribute triggers spacebar events to open the accordion
-  // Validate that the is-navigation attribute turns off the up/down arrow functionality
-  // Validate that the is-direct-link attribute on an accordion header acts like a link on click
-  // Validate that the is-direct-link attribute throws a warning if it doesn't contain a link
-  // -> pfe-accordion-header: This component expects to find a link in the light DOM due to the "is-direct-link" attribute
 
   /**
    * @see https://www.w3.org/TR/wai-aria-practices/examples/accordion/accordion.html

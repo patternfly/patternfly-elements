@@ -23,7 +23,17 @@ import pfeStyle from './pfe-tabs.scss';
  */
 @customElement('pfe-tabs')
 export class PfeTabs extends BaseTabs {
+  static readonly version = '{{version}}';
+
   static readonly styles = [style, pfeStyle];
+
+  static isTab(element: HTMLElement): element is PfeTab {
+    return element instanceof PfeTab;
+  }
+
+  static isPanel(element: HTMLElement): element is PfeTabPanel {
+    return element instanceof PfeTabPanel;
+  }
 
   @cascades('pfe-tab', 'pfe-tab-panel')
   @property({ reflect: true }) box: 'light' | 'dark' | null = null;
@@ -35,14 +45,6 @@ export class PfeTabs extends BaseTabs {
   @property({ reflect: true, type: Boolean }) fill = false;
 
   @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'true';
-
-  static isTab(element: HTMLElement): element is PfeTab {
-    return element instanceof PfeTab;
-  }
-
-  static isPanel(element: HTMLElement): element is PfeTabPanel {
-    return element instanceof PfeTabPanel;
-  }
 
   protected _allTabs(): PfeTab[] {
     const tabs = this._tabs as PfeTab[];

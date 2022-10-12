@@ -8,22 +8,14 @@ export abstract class BaseTabPanel extends LitElement {
 
   @property({ reflect: true, type: Boolean }) disabled = false;
 
-  async connectedCallback() {
-    super.connectedCallback();
-    await this.updateComplete;
-    this.#upgradeAccessibility();
-  }
-
   render() {
     return html`
       <slot></slot>
     `;
   }
 
-  setAriaLabelledBy(id: string) {
-    if (!this.hasAttribute('aria-labelledby')) {
-      this.setAttribute('aria-labelledby', id);
-    }
+  firstUpdated() {
+    this.#upgradeAccessibility();
   }
 
   #upgradeAccessibility() {
@@ -32,6 +24,12 @@ export abstract class BaseTabPanel extends LitElement {
       this.tabIndex = 0;
     } else {
       this.tabIndex = -1;
+    }
+  }
+
+  setAriaLabelledBy(id: string) {
+    if (!this.hasAttribute('aria-labelledby')) {
+      this.setAttribute('aria-labelledby', id);
     }
   }
 }

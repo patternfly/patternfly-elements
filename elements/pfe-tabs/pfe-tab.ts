@@ -20,11 +20,9 @@ import pfeStyle from './pfe-tab.scss';
  */
 @customElement('pfe-tab')
 export class PfeTab extends BaseTab {
-  static readonly version = '{{version}}';
-
   static readonly styles = [style, pfeStyle];
 
-  async connectedCallback() {
+  connectedCallback() {
     super.connectedCallback();
     this.id ||= getRandomId('pfe-tab');
   }

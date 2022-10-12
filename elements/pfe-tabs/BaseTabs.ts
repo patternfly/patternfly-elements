@@ -16,9 +16,13 @@ export abstract class BaseTabs extends LitElement {
 
   static readonly delay = 100;
 
-  #logger = new Logger(this);
+  static isTab(element: HTMLElement): element is BaseTab {
+    return element instanceof BaseTab;
+  }
 
-  private _initialized = false;
+  static isPanel(element: HTMLElement): element is BaseTabPanel {
+    return element instanceof BaseTabPanel;
+  }
 
   @query('#tabs') _tabList!: HTMLElement;
 
@@ -44,29 +48,16 @@ export abstract class BaseTabs extends LitElement {
 
   @state() protected _overflowOnRight = false;
 
+  #logger = new Logger(this);
+
   #scrollTimeout: ReturnType<typeof setTimeout> = setTimeout(() => '', 100);
 
-  static isTab(element: HTMLElement): element is BaseTab {
-    return element instanceof BaseTab;
-  }
-
-  static isPanel(element: HTMLElement): element is BaseTabPanel {
-    return element instanceof BaseTabPanel;
-  }
-
-  async connectedCallback(): Promise<void> {
+  connectedCallback() {
     super.connectedCallback();
     this.addEventListener('tab-expand', this._tabExpandEventHandler);
     this.addEventListener('keydown', this._onKeyDownHandler);
-    await this.updateComplete;
-    this.#updateAccessibility();
-    this._tabList.addEventListener('scroll', this._handleScrollButtons);
     // on resize check for overflows
     window.addEventListener('resize', this._handleScrollButtons, false);
-  }
-
-  protected firstUpdated() {
-    this._isOverflow();
   }
 
   override render() {
@@ -93,6 +84,17 @@ export abstract class BaseTabs extends LitElement {
         </div>
       </div>
     `;
+  }
+
+  firstUpdated() {
+    this.#isOverflow();
+    this.#updateAccessibility();
+    this._tabList.addEventListener('scroll', this._handleScrollButtons);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    window.removeEventListener('resize', this._handleScrollButtons);
   }
 
   protected _allTabs(): BaseTab[] {
@@ -306,22 +308,22 @@ export abstract class BaseTabs extends LitElement {
     }
   }
 
-  _isOverflow() {
+  #isOverflow() {
     this._overflowOnLeft = !isElementInView(this._tabList, this.#first() as HTMLElement, false);
     this._overflowOnRight = !isElementInView(this._tabList, this.#last() as HTMLElement, false);
     this._showScrollButtons = (this._overflowOnLeft || this._overflowOnRight) && this.scrollable;
   }
 
   @bound
-  _handleScrollButtons(): void {
+  private _handleScrollButtons(): void {
     clearTimeout(this.#scrollTimeout);
     this.#scrollTimeout = setTimeout(() => {
-      this._isOverflow();
+      this.#isOverflow();
     }, BaseTabs.delay);
   }
 
   @bound
-  _scrollLeft(): void {
+  private _scrollLeft(): void {
     const container = this._tabList;
     const childrenArr = this._allTabs();
     let firstElementInView: BaseTab | undefined;
@@ -339,7 +341,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   @bound
-  _scrollRight(): void {
+  private _scrollRight(): void {
     const container = this._tabList;
     const childrenArr = this._allTabs();
     let lastElementInView: BaseTab | undefined;

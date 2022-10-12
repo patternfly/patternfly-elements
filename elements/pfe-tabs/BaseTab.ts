@@ -15,7 +15,6 @@ export class TabExpandEvent extends ComposedEvent {
   }
 }
 
-
 export abstract class BaseTab extends LitElement {
   static readonly styles = [style];
 
@@ -33,12 +32,9 @@ export abstract class BaseTab extends LitElement {
   @observed
   @property({ reflect: true, attribute: 'aria-selected' }) selected: 'true' | 'false' = 'false';
 
-  async connectedCallback() {
+  connectedCallback() {
     super.connectedCallback();
     this.addEventListener('click', this._clickHandler);
-    await this.updateComplete;
-    this.#updateAccessibility();
-    this._hasIcons = this._icons.length === 0;
   }
 
   render() {
@@ -54,12 +50,9 @@ export abstract class BaseTab extends LitElement {
     `;
   }
 
-  focusButton() {
-    this._button.focus();
-  }
-
-  setAriaControls(id: string) {
-    this.setAttribute('aria-controls', id);
+  firstUpdated(): void {
+    this.#updateAccessibility();
+    this._hasIcons = this._icons.length === 0;
   }
 
   /**
@@ -89,11 +82,6 @@ export abstract class BaseTab extends LitElement {
     this.#updateAccessibility();
   }
 
-  open() {
-    this.selected = 'true';
-    this.dispatchEvent(new TabExpandEvent(this.selected, this));
-  }
-
   @bound
   private _clickHandler(event: MouseEvent) {
     event.preventDefault();
@@ -108,5 +96,18 @@ export abstract class BaseTab extends LitElement {
     if (this.disabled) {
       this.setAttribute('aria-disabled', this.disabled.toString());
     }
+  }
+
+  open() {
+    this.selected = 'true';
+    this.dispatchEvent(new TabExpandEvent(this.selected, this));
+  }
+
+  focusButton() {
+    this._button.focus();
+  }
+
+  setAriaControls(id: string) {
+    this.setAttribute('aria-controls', id);
   }
 }

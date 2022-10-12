@@ -11,11 +11,9 @@ import { BaseTabPanel } from './BaseTabPanel';
  */
 @customElement('pfe-tab-panel')
 export class PfeTabPanel extends BaseTabPanel {
-  static readonly version = '{{version}}';
-
   static readonly styles = [style];
 
-  async connectedCallback() {
+  connectedCallback() {
     super.connectedCallback();
     this.id ||= getRandomId('pfe-tab-panel');
   }

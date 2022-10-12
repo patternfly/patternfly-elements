@@ -92,6 +92,9 @@
       "@patternfly/pfe-clipboard": [
         "./elements/pfe-clipboard/pfe-clipboard.ts"
       ],
+      "@patternfly/pfe-clipboard-copy": [
+        "./elements/pfe-clipboard-copy/pfe-clipboard-copy.ts"
+      ],
       "@patternfly/pfe-codeblock": [
         "./elements/pfe-codeblock/pfe-codeblock.ts"
       ],
@@ -229,6 +232,9 @@
     },
     {
       "path": "./elements/pfe-tooltip"
+    },
+    {
+      "path": "./elements/pfe-clipboard-copy"
     }
   ]
 }

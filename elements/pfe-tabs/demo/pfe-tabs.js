@@ -48,26 +48,6 @@ function resizeToggle() {
 }
 resizeInput.addEventListener('change', resizeToggle);
 
-const resizeWrapper = root.querySelector('.resize');
-const observer = new ResizeObserver(function() {
-  // debounce
-  let timeout = null;
-  clearTimeout(timeout);
-  timeout = setTimeout(() => {
-    simulateResize();
-  }, 100);
-});
-observer.observe(resizeWrapper, { attributes: true });
-
-function simulateResize() {
-  const event = new UIEvent('resize', {
-    'view': window,
-    'bubbles': true,
-    'cancelable': true
-  });
-  window.dispatchEvent(event);
-}
-
 const insetInput = root.querySelectorAll('input[name="toggle-inset"]');
 function insetToggle(event) {
   const inset = root.querySelector('pfe-tabs[inset]');

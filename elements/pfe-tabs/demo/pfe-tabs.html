@@ -1,15 +1,7 @@
 <link rel="stylesheet" href="./demo.css"/>
 <script type="module" src="./pfe-tabs.js"></script>
 
-<pfe-band color-palette="darkest" size="small">
-  <h2 slot="header">Developer Notes</h2>
-  <ul>
-    <li>Tab keyboard navigation aligns with <a href="https://www.w3.org/WAI/ARIA/apg/example-index/tabs/tabs-automatic">W3C Aria authoring practices</a>.</li>
-    <li>Tabs auto activate when focus is gained, if preferred we could implement <a href="https://www.w3.org/WAI/ARIA/apg/example-index/tabs/tabs-manual.html">manual</a>activation or offer options</li>
-  </ul>
-</pfe-band>
-
-<pfe-band color-palette="lightest" size="small">
+<div class="example">
   <h2 slot="header">Default</h2>
   <pfe-tabs>
     <pfe-tab id="users" slot="tab">Users</pfe-tab>
@@ -23,10 +15,9 @@
     <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
     <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
   </pfe-tabs>
+</div>
 
-</pfe-band>
-
-<pfe-band color-palette="lightest" size="small">
+<div class="example">
   <h2 slot="header">Active Key is Disabled</h2>
   <pfe-tabs active-key="3" id="disabledExample">
     <pfe-tab slot="tab">Users</pfe-tab>
@@ -44,9 +35,9 @@
   <div style="margin-top: 20px;">
     <input type="checkbox" name="toggle-disabled" checked/> Disabled tab is set as active-key
   </div>
-</pfe-band>
+</div>
 
-<pfe-band color-palette="lightest" size="small">
+<div class="example">
   <h2 slot="header">Active Key is invalid</h2>
   <pfe-tabs active-key="33">
     <pfe-tab slot="tab">Users</pfe-tab>
@@ -60,9 +51,9 @@
     <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
     <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
   </pfe-tabs>
-</pfe-band>
+</div>
 
-<pfe-band color-palette="lightest" size="small">
+<div class="example">
   <h2 slot="header">Box</h2>
   <pfe-tabs box="light">
     <pfe-tab slot="tab">Users</pfe-tab>
@@ -80,12 +71,11 @@
   <div style="margin-top: 20px;">
     <input type="checkbox" name="toggle-variant" checked/> Box light/dark toggle
   </div>
-</pfe-band>
+</div>
 
-
-<pfe-band color-palette="lightest" size="small">
+<div class="example">
   <h2 slot="header">Default overflow</h2>
-  <div class="resize">
+
     <pfe-tabs scrollable active-key="4">
       <pfe-tab slot="tab">Users</pfe-tab>
       <pfe-tab-panel>Users</pfe-tab-panel>
@@ -100,14 +90,13 @@
       <pfe-tab slot="tab">Network</pfe-tab>
       <pfe-tab-panel>Network</pfe-tab-panel>
     </pfe-tabs>
-  </div>
 
   <div style="margin-top: 20px;">
     <input type="checkbox" name="toggle-resize" /> Box variant toggle
   </div>
-</pfe-band>
+</div>
 
-<pfe-band color-palette="lightest" size="small">
+<div class="example">
   <h2 slot="header">Vertical</h2>
   <pfe-tabs vertical>
     <pfe-tab slot="tab">Users</pfe-tab>
@@ -125,9 +114,9 @@
   <div style="margin-top: 20px;">
     <input type="checkbox" name="toggle-vertical" /> Box variant toggle
   </div>
-</pfe-band>
+</div>
 
-<pfe-band color-palette="lightest" size="small">
+<div class="example">
   <h2 slot="header">Inset</h2>
   <pfe-tabs inset="md">
     <pfe-tab slot="tab">Users</pfe-tab>
@@ -150,9 +139,9 @@
     <input type="radio" name="toggle-inset" value="2xl" /> 2X-Large
     <input type="radio" name="toggle-inset" value="page" /> Page
   </div>
-</pfe-band>
+</div>
 
-<pfe-band color-palette="lightest" size="small">
+<div class="example">
   <h2 slot="header">Icons and text</h2>
   <pfe-tabs>
     <pfe-tab slot="tab">
@@ -186,10 +175,9 @@
     </pfe-tab>
     <pfe-tab-panel>Network</pfe-tab-panel>
   </pfe-tabs>
-</pfe-band>
+</div>
 
-
-<pfe-band color-palette="lightest" size="small">
+<div class="example">
   <h2 slot="header">Filled</h2>
   <pfe-tabs fill>
     <pfe-tab slot="tab">Users</pfe-tab>
@@ -199,10 +187,9 @@
     <pfe-tab slot="tab">Database</pfe-tab>
     <pfe-tab-panel>Database</pfe-tab-panel>
   </pfe-tabs>
-</pfe-band>
+</div>
 
-
-<pfe-band color-palette="lightest" size="small">
+<div class="example">
   <h2 slot="header">Filled with icons</h2>
   <pfe-tabs fill>
     <pfe-tab slot="tab">
@@ -221,4 +208,4 @@
     </pfe-tab>
     <pfe-tab-panel>Database</pfe-tab-panel>
   </pfe-tabs>
-</pfe-band>
+</div>

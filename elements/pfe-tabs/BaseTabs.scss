@@ -167,14 +167,6 @@
   display: var(--pf-c-tabs__list--Display, flex);
   max-width: 100%;
   overflow-x: auto;
-  scroll-behavior: smooth;
-  scroll-snap-type: var(--pf-c-tabs__list--ScrollSnapType, var(--pf-c-tabs__list--ScrollSnapTypeAxis, x) var(--pf-c-tabs__list--ScrollSnapTypeStrictness, proximity));
-  visibility: var(--pf-c-tabs__list--Visibility, visible);
-  -webkit-overflow-scrolling: touch;
-}
-
-#tabs::-webkit-scrollbar {
-  display: none;
 }
 
 #tabs-container::before,

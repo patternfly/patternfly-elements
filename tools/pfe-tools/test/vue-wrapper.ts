@@ -51,13 +51,11 @@ export async function fixture<T extends Element = HTMLElement>(
     'pfe-jump-links',
     'pfe-modal',
     'pfe-page-status',
-    'pfe-primary-detail',
     'pfe-progress-steps',
     'pfe-readtime',
     'pfe-select',
     'pfe-spinner',
     'pfe-tabs',
-    'pfe-toast',
   ];
 
   const wrapper = document.getElementById('vue-wrapper');

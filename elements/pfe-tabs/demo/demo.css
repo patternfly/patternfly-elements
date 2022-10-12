@@ -5,8 +5,9 @@ main {
 
 .example {
   margin: 0 auto;
-  max-width: 1008px;
   padding: 0 16px 32px;
+  width: 100%;
+  max-width: 1008px;
 }
 
 .example:last-of-type {

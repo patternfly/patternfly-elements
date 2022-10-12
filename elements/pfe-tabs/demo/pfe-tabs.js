@@ -4,8 +4,6 @@ import '@patternfly/pfe-tooltip';
 
 const root = document.querySelector('[data-demo="pfe-tabs"]')?.shadowRoot ?? document;
 
-root.querySelector('pfe-tabs');
-
 const switchToAriaDisabledInput = root.querySelector('input[name="toggle-disabled"]');
 function disabledToggle() {
   const disabledExample = root.querySelector('#disabledExample');
@@ -39,7 +37,6 @@ function verticalToggle() {
 }
 verticalInput.addEventListener('change', verticalToggle);
 
-
 const resizeInput = root.querySelector('input[name="toggle-resize"]');
 function resizeToggle() {
   const resize = root.querySelector('.resize pfe-tabs');
@@ -60,7 +57,6 @@ const observer = new ResizeObserver(function() {
     simulateResize();
   }, 100);
 });
-
 observer.observe(resizeWrapper, { attributes: true });
 
 function simulateResize() {
@@ -71,7 +67,6 @@ function simulateResize() {
   });
   window.dispatchEvent(event);
 }
-
 
 const insetInput = root.querySelectorAll('input[name="toggle-inset"]');
 function insetToggle(event) {

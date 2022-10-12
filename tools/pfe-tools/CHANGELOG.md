@@ -1,5 +1,18 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.30
+
+### Minor Changes
+
+- dcb85646: Adds tsconfig option to dev server config
+- 4ccd1ff8: Adds `deslugify` function to config module
+  Fixes demo manifest utility functions - gets the correct path by deslugifying the demo url.
+
+### Patch Changes
+
+- 29c0b6cd: Update the TS target in dev server
+- eeebb45d: Replace `<pfe-progress-indicator>` with `<pfe-spinner>`
+
 ## 1.0.0-next.29
 
 ### Minor Changes
@@ -126,7 +139,7 @@
 
   await singleFileBuild({
     componentsEntryPointContents,
-    outfile: "rhds.min.js"
+    outfile: "rhds.min.js",
   });
   ```
 
@@ -157,8 +170,8 @@
   ```js
   export default pfeDevServerConfig({
     litcssOptions: {
-      include: ["**/elements/*/*.css"]
-    }
+      include: ["**/elements/*/*.css"],
+    },
   });
   ```
 

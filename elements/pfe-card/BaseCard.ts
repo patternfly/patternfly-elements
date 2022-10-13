@@ -2,6 +2,8 @@ import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
+import { classMap } from 'lit/directives/class-map.js';
+
 import style from './BaseCard.scss';
 
 /**
@@ -89,15 +91,21 @@ export abstract class BaseCard extends LitElement {
   });
 
   render() {
+    const classes = {
+      'has-header': this.slots.hasSlotted('header', 'pfe-card--header'),
+      'has-footer': this.slots.hasSlotted('footer', 'pfe-card--footer'),
+      'has-body': this.slots.hasSlotted(),
+    };
+
     return html`
-      <div part="header">
+      <div class="pfe-card__header ${classMap(classes)}" part="header">
         <slot name="header"></slot>
         <slot name="pfe-card--header"></slot>
       </div>
-      <div part="body">
+      <div class="pfe-card__body ${classMap(classes)}" part="body">
         <slot></slot>
       </div>
-      <div part="footer">
+      <div class="pfe-card__footer ${classMap(classes)}" part="footer">
         <slot name="footer"></slot>
         <slot name="pfe-card--footer"></slot>
       </div>

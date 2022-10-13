@@ -1,4 +1,4 @@
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
 import style from './pfe-card.scss';
 import { BaseCard } from './BaseCard';
@@ -56,7 +56,32 @@ import { BaseCard } from './BaseCard';
 export class PfeCard extends BaseCard {
   static readonly version = '{{version}}';
 
-  static readonly styles = [style];
+  static readonly styles = [...BaseCard.styles, style];
+
+  /**
+   * Optionally provide a size for the card and the card contents.
+   * The default is set to `undefined` and provides default styles.
+   * Compact provides styles which decreases the padding between the sections.
+   * Large provides styles which increases the padding between the sections and the font size for the title, header, and footer.
+   */
+  @property({ reflect: true }) size: 'compact' | 'large' | undefined = undefined;
+
+  /**
+  * Optionally apply a border radius for the drop shadow and/or border.
+  */
+  @property({ type: Boolean, reflect: true }) rounded = false;
+
+  /**
+ * Optionally apply a border color and weight to the entire card container.
+ * The default color and weight is `#d2d2d2` and `1px`, respectively.
+ */
+  @property({ type: Boolean, reflect: true }) fullHeight = false;
+
+  /**
+   * Optionally apply a border color and weight to the entire card container.
+   * The default color and weight is `#d2d2d2` and `1px`, respectively.
+   */
+  @property({ type: Boolean, reflect: true }) plain = false;
 }
 
 declare global {

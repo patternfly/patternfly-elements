@@ -12,7 +12,6 @@ import pfeStyle from './pfe-tabs.scss';
 /**
  * Tabs
  * @attribute {number} active-key - DOM Property: `activeKey`
- * @attribute {Boolean} scrollable - DOM Property: `scrollable`
  *
  * @csspart container - Container wrapper
  * @csspart tabs - Tabs wrapper container

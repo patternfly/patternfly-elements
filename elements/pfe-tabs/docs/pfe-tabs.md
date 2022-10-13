@@ -61,7 +61,7 @@
     }
   </style>
   <div class="overflow-tab-wrapper">
-    <pfe-tabs scrollable active-key="4">
+    <pfe-tabs active-key="4">
       <pfe-tab slot="tab">Users</pfe-tab>
       <pfe-tab-panel>Users</pfe-tab-panel>
       <pfe-tab slot="tab">Containers</pfe-tab>

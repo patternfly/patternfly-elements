@@ -2,8 +2,8 @@
 import { expect, html, nextFrame, aTimeout } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { setViewport } from '@web/test-runner-commands';
-import { BaseTabs } from '@patternfly/pfe-tabs/BaseTabs.js';
-import { PfeTabs } from '@patternfly/pfe-tabs';
+import { BaseTabs } from '../BaseTabs.js';
+import { PfeTabs } from '../pfe-tabs.js';
 
 const TEMPLATE = html`
     <pfe-tabs>
@@ -131,36 +131,22 @@ describe('<pfe-tabs>', function() {
       await setViewport({ width: 320, height: 640 });
     });
 
-    it('should have visible next and previous buttons on a scrollable tab set', async function() {
+    it('should overflow if too wide', async function() {
       const el = await createFixture<PfeTabs>(TEMPLATE);
-      el.setAttribute('scrollable', '');
-      await nextFrame();
-      await aTimeout(200);
+      const tabs = el.shadowRoot!.querySelector('#tabs')!;
+      const tabsOverflow = getComputedStyle(tabs).overflowX === 'auto';
+      expect(tabsOverflow).to.equal(true);
+    });
+
+    it('should have visible scroll buttons if overflowed', async function() {
+      const el = await createFixture<PfeTabs>(TEMPLATE);
+      await aTimeout(BaseTabs.delay);
       const previousTab = el.shadowRoot!.querySelector('#previousTab')!;
       const nextTab = el.shadowRoot!.querySelector('#nextTab')!;
       const prevDisplayStyle = getComputedStyle(previousTab).display;
       const nextDisplayStyle = getComputedStyle(nextTab).display;
       expect(prevDisplayStyle ).to.not.equal('none');
       expect(nextDisplayStyle).to.not.equal('none');
-    });
-
-    it('should not have visible next and previous buttons if scrollable is not set', async function() {
-      const el = await createFixture<PfeTabs>(TEMPLATE);
-      await nextFrame();
-      await aTimeout(150);
-      const previousTab = el.shadowRoot?.querySelector('#previousTab');
-      const nextTab = el.shadowRoot?.querySelector('#nextTab');
-      expect(previousTab).to.equal(null);
-      expect(nextTab).to.equal(null);
-    });
-
-    it('should overflow if too wide', async function() {
-      const el = await createFixture<PfeTabs>(TEMPLATE);
-      await nextFrame();
-      await aTimeout(150);
-      const tabs = el.shadowRoot!.querySelector('#tabs')!;
-      const tabsOverflow = getComputedStyle(tabs).overflowX === 'auto';
-      expect(tabsOverflow).to.equal(true);
     });
   });
 });

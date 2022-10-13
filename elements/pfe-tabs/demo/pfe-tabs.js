@@ -37,7 +37,7 @@ verticalInput.addEventListener('change', verticalToggle);
 
 const resizeInput = root.querySelector('input[name="toggle-resize"]');
 function resizeToggle() {
-  const resize = root.querySelector('pfe-tabs[scrollable]');
+  const resize = root.querySelector('#overflow');
   if (resizeInput.checked) {
     resize.setAttribute('box', 'dark');
   } else {

@@ -40,16 +40,16 @@
   --pf-c-tabs--m-box__item--m-current--last-child__link--before--BorderRightWidth: 0;
 }
 
-:host([scrollable]) button {
+:host button {
   opacity: 1;
 }
 
-:host([scrollable]) button:nth-of-type(1) {
+:host button:nth-of-type(1) {
   margin-inline-end: 0;
   transform: translateX(0);
 }
 
-:host([scrollable]) button:nth-of-type(2) {
+:host button:nth-of-type(2) {
   margin-inline-start: 0;
   transform: translateX(0);
 }
@@ -68,7 +68,7 @@
   --pf-c-tabs__link--before--BorderRightWidth: 0;
 }
 
-:host([box][scrollable]) button:nth-of-type(2)::before {
+:host([box]) button:nth-of-type(2)::before {
   left: calc(var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)) * -1);
 }
 

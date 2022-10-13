@@ -4,7 +4,7 @@
       <img src="{{ '/brand/logo/svg/pfe-icon-white-shaded.svg' | url }}" alt="PatternFly Elements - Home">
       PatternFly Elements
     </a>
-    <pfe-dropdown id="docs-versions-dropdown" label="Docs Versions">
+    <pfe-dropdown id="docs-versions-dropdown" aria-label="Docs Versions" label="Docs Versions">
       <pfe-dropdown-item item-type="link" data-version="v2">
         <a href="{{ page.url }}">v2 prerelease</a>
       </pfe-dropdown-item>
@@ -12,23 +12,14 @@
         <a href="/v1{{ page.url }}">v1</a>
       </pfe-dropdown-item>
     </pfe-dropdown>
-    {# TODO: when dropdown supports selecting an item without clicking it, show the current version
     <script type="module">
       const dropdown = document.getElementById('docs-versions-dropdown');
       const items = dropdown.querySelectorAll('[data-version]');
       const versions = Object.fromEntries(Array.from(items, x => [x.dataset.version, x]));
       const [fst] = new URL(location.href).pathname;
-      await customElements.whenDefined('pfe-dropdown');
-      await dropdown.updateComplete;
-      let [version] = Object.entries(versions).sort(([a], [b]) => a < b ? 1 : a > b ? -1 : 0);
-      console.log(version);
-      if (fst in versions) {
-        version = versions[fst];
-      }
-      // WARNING: private APIs, tsk tsk.
-      dropdown._selectItem(versions[fst]);
+      let [highest] = Object.keys(versions).sort().reverse();
+      dropdown.setAttribute('label', fst in versions ? fst : highest);
     </script>
-    #}
   </div>
 
   <input id="mobile-menu-toggle" class="menu-toggle element-invisible" type="checkbox"

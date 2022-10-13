@@ -8,6 +8,10 @@ export abstract class BaseTabPanel extends LitElement {
 
   @property({ reflect: true, type: Boolean }) disabled = false;
 
+  connectedCallback() {
+    super.connectedCallback();
+  }
+
   render() {
     return html`
       <slot></slot>

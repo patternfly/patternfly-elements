@@ -5,12 +5,19 @@
       PatternFly Elements
     </a>
     <pfe-dropdown id="docs-versions-dropdown" aria-label="Docs Versions" label="Docs Versions">
-      <pfe-dropdown-item item-type="link" data-version="v2">
-        <a href="{{ page.url }}">v2 prerelease</a>
+      {% for version in versions %}
+      {%- if version.current -%}
+        {%- set prefix = '' -%}
+      {%- else -%}
+        {%- set prefix = '/' + version.slug -%}
+      {%- endif %}
+      <pfe-dropdown-item
+          item-type="link"
+          data-version="{{ version.slug }}"
+          data-label="{{ version.label }}">
+        <a href="{{ prefix }}{{ page.url }}">{{ version.label }}</a>
       </pfe-dropdown-item>
-      <pfe-dropdown-item item-type="link" data-version="v1">
-        <a href="/v1{{ page.url }}">v1</a>
-      </pfe-dropdown-item>
+      {% endfor %}
     </pfe-dropdown>
     <script type="module">
       const dropdown = document.getElementById('docs-versions-dropdown');
@@ -18,7 +25,8 @@
       const versions = Object.fromEntries(Array.from(items, x => [x.dataset.version, x]));
       const [fst] = new URL(location.href).pathname;
       let [highest] = Object.keys(versions).sort().reverse();
-      dropdown.setAttribute('label', fst in versions ? fst : highest);
+      const selected = fst in versions ? versions[fst] : versions[highest];
+      dropdown.setAttribute('label', selected.dataset.label);
     </script>
   </div>
 

@@ -744,11 +744,11 @@ blockquote {
     top: 2rem;
   }
 
-  .logo-bar a {
+  .logo-bar > a {
     margin-left: 16px;
   }
 
-  .logo-bar a img {
+  .logo-bar > a img {
     display: inline-block;
     height: 3.75rem;
     position: relative;

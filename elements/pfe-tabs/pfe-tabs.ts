@@ -10,7 +10,10 @@ import style from './BaseTabs.scss';
 import pfeStyle from './pfe-tabs.scss';
 
 /**
- * Tabs
+ * Tabs allow users to navigate between views within the same page or context. Variants include
+ * horizontal, vertical, inset, and filled. Most tab variations are available as open (default) or
+ * box style tabs. Box style tabs also feature a light and dark variation.
+ *
  * @attribute {number} active-key - DOM Property: `activeKey`
  *
  * @csspart container - Container wrapper

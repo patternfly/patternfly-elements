@@ -1,23 +1,50 @@
 <header>
   <div class="logo-bar">
-    <a href="/">
-      <img src="/brand/logo/svg/pfe-icon-white-shaded.svg" alt="PatternFly Elements - Home">
+    <a href="{{ '/' | url }}">
+      <img src="{{ '/brand/logo/svg/pfe-icon-white-shaded.svg' | url }}" alt="PatternFly Elements - Home">
       PatternFly Elements
     </a>
+    <pfe-dropdown id="docs-versions-dropdown" aria-label="Docs Versions" label="Docs Versions">
+      {% for version in versions %}
+      {%- if version.current -%}
+        {%- set prefix = '' -%}
+      {%- else -%}
+        {%- set prefix = '/' + version.slug -%}
+      {%- endif %}
+      <pfe-dropdown-item
+          item-type="link"
+          data-version="{{ version.slug }}"
+          data-label="{{ version.label }}">
+        <a href="{{ prefix }}{{ page.url }}">{{ version.label }}</a>
+      </pfe-dropdown-item>
+      {% endfor %}
+    </pfe-dropdown>
+    <script type="module">
+      const dropdown = document.getElementById('docs-versions-dropdown');
+      const items = dropdown.querySelectorAll('[data-version]');
+      const versions = Object.fromEntries(Array.from(items, x => [x.dataset.version, x]));
+      const [fst] = new URL(location.href).pathname.split('/').filter(Boolean);
+      let [highest] = Object.keys(versions).sort().reverse();
+      const selected = fst in versions ? versions[fst] : versions[highest];
+      dropdown.setAttribute('label', selected.dataset.label);
+    </script>
   </div>
+
   <input id="mobile-menu-toggle" class="menu-toggle element-invisible" type="checkbox"
     aria-controls="mobile-menu-menu-container" autocomplete="off">
+
   <label class="menu-toggle__button l-header__mobile-menu-toggle" for="mobile-menu-toggle"
     data-controls="mobile-menu-menu-container">
     <span class="l-header__burger-icon"></span>
     <span class="menu-toggle-assistive-text element-invisible">Toggle menu visibility</span>
   </label>
+
   <div class="menu-toggle__toggleable site-navigation__outer-wrapper">
     <nav class="l-header__site-navigation site-navigation menu-toggle__toggleable-content-wrapper">
       <ul class="site-navigation__wrapper">
         <li class="site-navigation__item">
           <a class="site-navigation__link{% if page.url == "/get-started/" %} site-navigation__link--active{% endif %}"
-            href="/get-started/">Get started</a>
+            href="{{ '/get-started/' | url }}">Get started</a>
         </li>
         <li class="site-navigation__item">
           <details{{ ' open' if page.url.includes('components/') }}>
@@ -25,13 +52,13 @@
             <ul class="site-navigation__sub-menu">
               <li class="site-navigation__sub-menu__item">
                 <a class="site-navigation__sub-menu__link{{ ' site-navigation__sub-menu__link--active' if page.url == '/components/' }}"
-                  href="/components/">All components</a>
+                  href="{{ '/components/' | url }}">All components</a>
               </li>
               {%- for component in elements -%}
               {%- if component.docsTemplatePath -%}
               <li class="site-navigation__sub-menu__item">
                 <a class="site-navigation__sub-menu__link{{ ' site-navigation__sub-menu__link--active' if page.url == ('/components/' + component.slug + '/') }}"
-                  href="/components/{{ component.slug }}/">{{ component.title }}</a>
+                  href="{{ ('/components/' + component.slug + '/' ) | url }}">{{ component.title }}</a>
               </li>
               {%- endif -%}
               {%- endfor -%}
@@ -44,12 +71,12 @@
             <ul class="site-navigation__sub-menu">
               <li class="site-navigation__sub-menu__item">
                 <a class="site-navigation__sub-menu__link{% if page.url == "/framework-integration/" %} site-navigation__sub-menu__link--active{% endif %}"
-                  href="/framework-integration/">Overview</a>
+                  href="{{ '/framework-integration/' | url }}">Overview</a>
               </li>
               {%- for document in collections.frameworkIntegration -%}
               <li class="site-navigation__sub-menu__item">
                 <a class="site-navigation__sub-menu__link{% if page.url == document.url %} site-navigation__sub-menu__link--active{% endif %}"
-                  href="{{ document.url }}">{{ document.data.title }}</a>
+                  href="{{ document.url | url }}">{{ document.data.title }}</a>
               </li>
               {%- endfor -%}
             </ul>
@@ -61,12 +88,12 @@
             <ul class="site-navigation__sub-menu">
               <li class="site-navigation__sub-menu__item">
                 <a class="site-navigation__sub-menu__link{{ ' site-navigation__sub-menu__link--active' if page.url == "/theming/" }}"
-                  href="/theming/">Overview</a>
+                  href="{{ '/theming/' | url }}">Overview</a>
               </li>
               {%- for document in collections.theming -%}
               <li class="site-navigation__sub-menu__item">
                 <a class="site-navigation__sub-menu__link{{ ' site-navigation__sub-menu__link--active' if page.url == document.url }}"
-                  href="{{ document.url }}">{{ document.data.title }}</a>
+                  href="{{ document.url | url }}">{{ document.data.title }}</a>
               </li>
               {%- endfor -%}
             </ul>
@@ -74,7 +101,7 @@
         </li>
         <li class="site-navigation__item">
           <a class="site-navigation__link{{ ' site-navigation__link--active' if page.url == "/layout/" }}"
-            href="/layout/">Layout</a>
+            href="{{ '/layout/' | url }}">Layout</a>
         </li>
         <li class="site-navigation__item">
           <details{{ ' open' if page.url.includes('docs/develop/') }}>
@@ -83,7 +110,7 @@
               {%- for document in collections.develop -%}
               <li class="site-navigation__sub-menu__item">
                 <a class="site-navigation__sub-menu__link{% if page.url == document.url %} site-navigation__sub-menu__link--active{% endif %}"
-                  href="{{ document.url }}">{{ document.data.title }}</a>
+                  href="{{ document.url | url }}">{{ document.data.title }}</a>
               </li>
               {%- endfor -%}
             </ul>
@@ -95,4 +122,5 @@
       </ul>
     </nav>
   </div>
+
 </header>

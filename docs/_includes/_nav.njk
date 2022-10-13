@@ -23,7 +23,7 @@
       const dropdown = document.getElementById('docs-versions-dropdown');
       const items = dropdown.querySelectorAll('[data-version]');
       const versions = Object.fromEntries(Array.from(items, x => [x.dataset.version, x]));
-      const [fst] = new URL(location.href).pathname;
+      const [fst] = new URL(location.href).pathname.split('/').filter(Boolean);
       let [highest] = Object.keys(versions).sort().reverse();
       const selected = fst in versions ? versions[fst] : versions[highest];
       dropdown.setAttribute('label', selected.dataset.label);

@@ -4,24 +4,44 @@
       <img src="{{ '/brand/logo/svg/pfe-icon-white-shaded.svg' | url }}" alt="PatternFly Elements - Home">
       PatternFly Elements
     </a>
+    <pfe-dropdown id="docs-versions-dropdown" label="Docs Versions">
+      <pfe-dropdown-item item-type="link" data-version="v2">
+        <a href="{{ page.url }}">v2 prerelease</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item item-type="link" data-version="v1">
+        <a href="/v1{{ page.url }}">v1</a>
+      </pfe-dropdown-item>
+    </pfe-dropdown>
+    {# TODO: when dropdown supports selecting an item without clicking it, show the current version
+    <script type="module">
+      const dropdown = document.getElementById('docs-versions-dropdown');
+      const items = dropdown.querySelectorAll('[data-version]');
+      const versions = Object.fromEntries(Array.from(items, x => [x.dataset.version, x]));
+      const [fst] = new URL(location.href).pathname;
+      await customElements.whenDefined('pfe-dropdown');
+      await dropdown.updateComplete;
+      let [version] = Object.entries(versions).sort(([a], [b]) => a < b ? 1 : a > b ? -1 : 0);
+      console.log(version);
+      if (fst in versions) {
+        version = versions[fst];
+      }
+      // WARNING: private APIs, tsk tsk.
+      dropdown._selectItem(versions[fst]);
+    </script>
+    #}
   </div>
+
   <input id="mobile-menu-toggle" class="menu-toggle element-invisible" type="checkbox"
     aria-controls="mobile-menu-menu-container" autocomplete="off">
+
   <label class="menu-toggle__button l-header__mobile-menu-toggle" for="mobile-menu-toggle"
     data-controls="mobile-menu-menu-container">
     <span class="l-header__burger-icon"></span>
     <span class="menu-toggle-assistive-text element-invisible">Toggle menu visibility</span>
   </label>
+
   <div class="menu-toggle__toggleable site-navigation__outer-wrapper">
     <nav class="l-header__site-navigation site-navigation menu-toggle__toggleable-content-wrapper">
-      <pfe-dropdown label="Docs Versions">
-        <pfe-dropdown-item item-type="link">
-          <a href="{{ page.url }}">v2 prerelease</a>
-        </pfe-dropdown-item>
-        <pfe-dropdown-item item-type="link">
-          <a href="/v1{{ page.url }}">v1</a>
-        </pfe-dropdown-item>
-      </pfe-dropdown>
       <ul class="site-navigation__wrapper">
         <li class="site-navigation__item">
           <a class="site-navigation__link{% if page.url == "/get-started/" %} site-navigation__link--active{% endif %}"
@@ -103,4 +123,5 @@
       </ul>
     </nav>
   </div>
+
 </header>

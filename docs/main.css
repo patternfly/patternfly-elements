@@ -265,6 +265,7 @@ main.blog {
   right: 0;
   display: flex;
   align-items: center;
+  gap: 1em;
   height: 3.75rem;
   padding: var(--pfe-theme--container-spacer, 16px);
   color: white;
@@ -272,7 +273,7 @@ main.blog {
   z-index: 200;
 }
 
-.logo-bar a {
+.logo-bar > a {
   display: flex;
   align-items: center;
   color: white;
@@ -282,8 +283,13 @@ main.blog {
   margin-left: calc(1.5rem + 16px);
 }
 
-.logo-bar a img {
+.logo-bar > a img {
   display: none;
+}
+
+#docs-versions-dropdown {
+  margin-inline-start: auto;
+  --pfe-dropdown--Color: white;
 }
 
 .component-preview {
@@ -431,7 +437,7 @@ main.blog {
 
 .site-navigation {
   width: 17.5rem;
-  /* padding-top: 1.875rem; */ /* disable for version dropdown */
+  padding-top: 1.875rem;
   height: calc(100vh - 3.75rem);
   overflow-y: auto;
   color: #151515;

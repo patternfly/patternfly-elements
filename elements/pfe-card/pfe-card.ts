@@ -1,7 +1,9 @@
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
 import style from './pfe-card.scss';
 import { BaseCard } from './BaseCard';
+import { bound } from '@patternfly/pfe-core/decorators.js';
+// import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 
 /**
  * This element creates a header, body, and footer region in which to place
@@ -56,7 +58,24 @@ import { BaseCard } from './BaseCard';
 export class PfeCard extends BaseCard {
   static readonly version = '{{version}}';
 
-  static readonly styles = [style];
+  static readonly styles = [...BaseCard.styles, style];
+
+  @property({ type: Boolean, reflect: true }) selectable = false;
+
+  @property({ type: Boolean, reflect: true }) selected = false;
+
+  @property({ type: Boolean, reflect: true }) hoverable = false;
+
+  @bound private async _clickHandler() {
+    if (this.selectable && this.hoverable) {
+      this.selected = !this.selected;
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('click', this._clickHandler.bind(this));
+  }
 }
 
 declare global {

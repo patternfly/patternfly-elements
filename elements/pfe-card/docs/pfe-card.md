@@ -9,6 +9,12 @@
     <a slot="footer" href="#">Link in the footer</a>
   </pfe-card>
 
+  <pfe-card selectable hoverable>
+    <h3 slot="header">Default hoverable card</h3>
+    <p>This is the default card</p>
+    <a slot="footer" href="#">Link in the footer</a>
+  </pfe-card>
+
   <pfe-card size="compact">
     <h3 slot="header">Compact card</h3>
     <p>This is the compact card</p>

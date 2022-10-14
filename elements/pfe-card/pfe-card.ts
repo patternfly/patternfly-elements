@@ -2,6 +2,8 @@ import { customElement, property } from 'lit/decorators.js';
 
 import style from './pfe-card.scss';
 import { BaseCard } from './BaseCard';
+import { bound } from '@patternfly/pfe-core/decorators.js';
+// import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 
 /**
  * This element creates a header, body, and footer region in which to place

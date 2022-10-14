@@ -22,7 +22,7 @@ export abstract class BaseTabPanel extends LitElement {
     this.#upgradeAccessibility();
   }
 
-  #upgradeAccessibility() {
+  #upgradeAccessibility(): void {
     this.setAttribute('role', 'tabpanel');
     if (!this.disabled) {
       this.tabIndex = 0;
@@ -31,7 +31,7 @@ export abstract class BaseTabPanel extends LitElement {
     }
   }
 
-  setAriaLabelledBy(id: string) {
+  setAriaLabelledBy(id: string): void {
     if (!this.hasAttribute('aria-labelledby')) {
       this.setAttribute('aria-labelledby', id);
     }

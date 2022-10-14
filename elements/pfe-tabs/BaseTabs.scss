@@ -2,7 +2,7 @@
   display: block;
 }
 
-#tabs-container {
+[part="tabs-container"] {
   position: relative;
   display: flex;
   width: var(--pf-c-tabs--Width, auto);
@@ -11,7 +11,7 @@
   overflow: hidden;
 }
 
-#tabs-container::before {
+[part="tabs-container"]::before {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -24,7 +24,7 @@
   border-inline-start-width: var(--pf-c-tabs--before--BorderLeftWidth, 0);
 }
 
-:host([fill]) #tabs {
+:host([fill]) [part="tabs"] {
   flex-basis: 100%;
 }
 
@@ -54,7 +54,7 @@
   transform: translateX(0);
 }
 
-:host([box]) #tabs-container {
+:host([box]) [part="tabs-container"] {
   --pf-c-tabs__link--BackgroundColor: var(--pf-c-tabs--m-box__link--BackgroundColor, var(--pf-global--BackgroundColor--200, #f0f0f0));
   --pf-c-tabs__link--disabled--BackgroundColor: var(--pf-c-tabs--m-box__link--disabled--BackgroundColor, var(--pf-global--disabled-color--200, #d2d2d2));
   --pf-c-tabs__link--before--BorderBottomWidth: var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px));
@@ -76,13 +76,13 @@
   --pf-c-tabs__link--before--Left: 0;
 }
 
-:host([box="light"]) #tabs-container {
+:host([box="light"]) [part="tabs-container"] {
   --pf-c-tabs__link--BackgroundColor: var(--pf-c-tabs--m-color-scheme--light-300__link--BackgroundColor, transparent);
   --pf-c-tabs__item--m-current__link--BackgroundColor: var(--pf-c-tabs--m-color-scheme--light-300__item--m-current__link--BackgroundColor, var(--pf-global--BackgroundColor--light-300, #f0f0f0));
   --pf-c-tabs__link--disabled--BackgroundColor: var(--pf-c-tabs--m-color-scheme--light-300__link--disabled--BackgroundColor, var(--pf-global--palette--black-150, #f5f5f5));
 }
 
-:host([vertical]) #tabs-container {
+:host([vertical]) [part="tabs-container"] {
   --pf-c-tabs--Width: var(--pf-c-tabs--m-vertical--Width, 100%);
   --pf-c-tabs--inset: var(--pf-c-tabs--m-vertical--inset, var(--pf-global--spacer--lg, 1.5rem));
   --pf-c-tabs--before--BorderBottomWidth: 0;  // *override user setting* border bottom should always be 0 for vertical tabs
@@ -93,7 +93,7 @@
   --pf-c-tabs__link--disabled--before--BorderLeftWidth: var(--pf-c-tabs--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px));
   --pf-c-tabs__link--after--Top: 0;
   --pf-c-tabs__link--after--Right: auto;
-  --pf-c-tabs__list--ScrollSnapTypeAxis: var(--pf-c-tabs--m-vertical__list--ScrollSnapTypeAxis, y);
+
   display: inline-flex;
   flex-direction: column;
   height: 100%;
@@ -101,14 +101,14 @@
   overflow: visible;
 }
 
-:host([vertical]) #tabs {
+:host([vertical]) [part="tabs"] {
   position: relative;
   flex-direction: column;
   flex-grow: 1;
   max-width: var(--pf-c-tabs--m-vertical--MaxWidth, 15.625rem);
 }
 
-:host([vertical]) #tabs::before {
+:host([vertical]) [part="tabs"]::before {
   position: absolute;
   right: auto;
   border-style: solid;
@@ -127,7 +127,7 @@
   margin-block-end: var(--pf-c-tabs--inset, 0);
 }
 
-:host([box][vertical]) #tabs-container {
+:host([box][vertical]) [part="tabs-container"] {
   --pf-c-tabs--inset: var(--pf-c-tabs--m-vertical--m-box--inset, var(--pf-global--spacer--xl, 2rem));
   --pf-c-tabs--m-vertical__list--before--BorderLeftWidth: 0; // *override user setting* border left should be 0 for vertical box;
   --pf-c-tabs--m-vertical__list--before--BorderRightWidth: var(--pf-c-tabs--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px));
@@ -136,7 +136,7 @@
   --pf-c-tabs__link--disabled--before--BorderLeftWidth: 0; // *override user setting* border left should be 0 for disabled ;
 }
 
-:host([box][vertical]) #tabs::before {
+:host([box][vertical]) [part="tabs"]::before {
   right: 0;
   left: auto;
 }
@@ -156,12 +156,12 @@
   --pf-c-tabs__link--before--BorderTopWidth: var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px));
 }
 
-:host([overflow]) #tabs-container ,
-:host([overflow]) #tabs {
+:host([overflow]) [part="tabs-container"] ,
+:host([overflow]) [part="tabs"] {
   overflow: visible;
 }
 
-#tabs {
+[part="tabs"] {
   scrollbar-width: none;
   position: relative;
   display: var(--pf-c-tabs__list--Display, flex);
@@ -169,8 +169,8 @@
   overflow-x: auto;
 }
 
-#tabs-container::before,
-#tabs::before,
+[part="tabs-container"]::before,
+[part="tabs"]::before,
 button::before {
   position: absolute;
   right: 0;
@@ -180,13 +180,13 @@ button::before {
   border-style: solid;
 }
 
-#tabs::before,
+[part="tabs"]::before,
 button::before {
   top: 0;
 }
 
 button,
-#tabs::before {
+[part="tabs"]::before {
   border: 0;
 }
 
@@ -230,68 +230,68 @@ button:disabled {
   pointer-events: none;
 }
 
-:host(:not([inset], :not[vertical])) #tabs-container {
+:host(:not([inset], :not[vertical])) [part="tabs-container"] {
   --pf-c-tabs--inset: 0;
   --pf-c-tabs--m-vertical--inset: 0;
   --pf-c-tabs--m-vertical--m-box--inset: 0;
 }
 
-:host([inset="sm"]) #tabs-container {
+:host([inset="sm"]) [part="tabs-container"] {
   --pf-c-tabs--inset: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--sm, 0.5rem);
 }
 
-:host([inset="md"]) #tabs-container {
+:host([inset="md"]) [part="tabs-container"] {
   --pf-c-tabs--inset: var(--pf-global--spacer--md, 1rem);
   --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md, 1rem);
   --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md, 1rem);
 }
 
-:host([inset="lg"]) #tabs-container {
+:host([inset="lg"]) [part="tabs-container"] {
   --pf-c-tabs--inset: var(--pf-global--spacer--lg, 1.5rem);
   --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg, 1.5rem);
   --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg, 1.5rem);
 }
 
-:host([inset="xl"]) #tabs-container {
+:host([inset="xl"]) [part="tabs-container"] {
   --pf-c-tabs--inset: var(--pf-global--spacer--xl, 2rem);
   --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--xl, 2rem);
   --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--xl, 2rem);
 }
 
-:host([inset="2xl"]) #tabs-container {
+:host([inset="2xl"]) [part="tabs-container"] {
   --pf-c-tabs--inset: var(--pf-global--spacer--2xl, 3rem);
   --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--2xl, 3rem);
   --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--2xl, 3rem);
 }
 
 @media screen and (min-width: 576px) {
-  :host([inset="sm"]) #tabs-container {
+  :host([inset="sm"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--sm, 0.5rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--sm, 0.5rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--sm, 0.5rem);
   }
 
-  :host([inset="md"]) #tabs-container {
+  :host([inset="md"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--md, 1rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md, 1rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md, 1rem);
   }
 
-  :host([inset="lg"]) #tabs-container {
+  :host([inset="lg"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--lg, 1.5rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg, 1.5rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg, 1.5rem);
   }
 
-  :host([inset="xl"]) #tabs-container {
+  :host([inset="xl"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--xl, 2rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--xl, 2rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--xl, 2rem);
   }
 
-  :host([inset="2xl"]) #tabs-container {
+  :host([inset="2xl"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--2xl, 3rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--2xl, 3rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--2xl, 3rem);
@@ -299,32 +299,31 @@ button:disabled {
 }
 
 @media screen and (min-width: 768px) {
-
-  :host([inset="sm"]) #tabs-container {
+  :host([inset="sm"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--sm, 0.5rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--sm, 0.5rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--sm, 0.5rem);
   }
 
-  :host([inset="md"]) #tabs-container {
+  :host([inset="md"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--md, 1rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md, 1rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md, 1rem);
   }
 
-  :host([inset="lg"]) #tabs-container {
+  :host([inset="lg"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--lg, 1.5rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg, 1.5rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg, 1.5rem);
   }
 
-  :host([inset="xl"]) #tabs-container {
+  :host([inset="xl"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--xl, 2rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--xl, 2rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--xl, 2rem);
   }
 
-  :host([inset="2xl"]) #tabs-container {
+  :host([inset="2xl"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--2xl, 3rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--2xl, 3rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--2xl, 3rem);
@@ -332,13 +331,13 @@ button:disabled {
 }
 
 @media screen and (min-width: 992px) {
-  :host([inset="sm"]) #tabs-container {
+  :host([inset="sm"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--sm, 0.5rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--sm, 0.5rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--sm, 0.5rem);
   }
 
-  :host([inset="md"]) #tabs-container {
+  :host([inset="md"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--md, 1rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md, 1rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md, 1rem);
@@ -350,13 +349,13 @@ button:disabled {
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg, 1.5rem);
   }
 
-  :host([inset="xl"]) #tabs-container {
+  :host([inset="xl"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--xl, 2rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--xl, 2rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--xl, 2rem);
   }
 
-  :host([inset="2xl"]) #tabs-container {
+  :host([inset="2xl"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--2xl, 3rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--2xl, 3rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--2xl, 3rem);
@@ -364,36 +363,36 @@ button:disabled {
 }
 
 @media screen and (min-width: 1200px) {
-  #tabs-container {
+  [part="tabs-container"] {
     --pf-c-tabs__scroll-button--Width: var(--pf-c-tabs__scroll-button--xl--Width, var(--pf-global--spacer--3xl, 4rem));
     // --pf-c-tabs--m-page-insets--inset: var(--pf-c-tabs--m-page-insets--xl--inset);
   }
 
-  :host([inset="sm"]) #tabs-container {
+  :host([inset="sm"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--sm, 0.5rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--sm, 0.5rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--sm, 0.5rem);
   }
 
-  :host([inset="md"]) #tabs-container {
+  :host([inset="md"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--md, 1rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md, 1rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md, 1rem);
   }
 
-  :host([inset="lg"]) #tabs-container {
+  :host([inset="lg"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--lg, 1.5rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg, 1.5rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg, 1.5rem);
   }
 
-  :host([inset="x;"]) #tabs-container {
+  :host([inset="xl"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--xl, 2rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--xl, 2rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--xl, 2rem);
   }
 
-  :host([inset="2xl"]) #tabs-container {
+  :host([inset="2xl"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--2xl, 3rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--2xl, 3rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--2xl, 3rem);
@@ -401,31 +400,31 @@ button:disabled {
 }
 
 @media (min-width: 1450px) {
-  :host([inset="sm"]) #tabs-container {
+  :host([inset="sm"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--sm, 0.5rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--sm, 0.5rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--sm, 0.5rem);
   }
 
-  :host([inset="md"]) #tabs-container {
+  :host([inset="md"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--md, 1rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--md, 1rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--md, 1rem);
   }
 
-  :host([inset="lg"]) #tabs-container {
+  :host([inset="lg"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--lg, 1.5rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--lg, 1.5rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--lg, 1.5rem);
   }
 
-  :host([inset="xl"]) #tabs-container {
+  :host([inset="xl"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--xl, 2rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--xl, 2rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--xl, 2rem);
   }
 
-  :host([inset="2xl"]) #tabs-container {
+  :host([inset="2xl"]) [part="tabs-container"] {
     --pf-c-tabs--inset: var(--pf-global--spacer--2xl, 3rem);
     --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--2xl, 3rem);
     --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--2xl, 3rem);

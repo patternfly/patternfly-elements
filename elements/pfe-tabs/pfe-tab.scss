@@ -1,0 +1,4 @@
+:host([disabled][border-bottom="false"]) button,
+:host([aria-disabled="true"][border-bottom="false"]) button {
+  --pf-c-tabs__link--before--BorderBottomWidth: 0;
+}

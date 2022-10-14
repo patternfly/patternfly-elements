@@ -83,7 +83,7 @@ export abstract class BaseTab extends LitElement {
   }
 
   @bound
-  private _clickHandler(event: MouseEvent) {
+  private _clickHandler(event: MouseEvent): void {
     event.preventDefault();
     if (this.disabled || this.hasAttribute('aria-disabled')) {
       return;
@@ -91,23 +91,29 @@ export abstract class BaseTab extends LitElement {
     this.open();
   }
 
-  #updateAccessibility() {
+  #updateAccessibility(): void {
     this.setAttribute('role', 'tab');
     if (this.disabled) {
       this.setAttribute('aria-disabled', this.disabled.toString());
     }
   }
 
-  open() {
+  /**
+   * Sets tab as selected and dispatches TabExpandEvent
+   */
+  open(): void {
     this.selected = 'true';
     this.dispatchEvent(new TabExpandEvent(this.selected, this));
   }
 
-  focusButton() {
+  /**
+   * Sets tab as selected and dispatches TabExpandEvent
+   */
+  focusButton(): void {
     this._button.focus();
   }
 
-  setAriaControls(id: string) {
+  setAriaControls(id: string): void {
     this.setAttribute('aria-controls', id);
   }
 }

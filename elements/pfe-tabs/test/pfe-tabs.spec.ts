@@ -84,8 +84,7 @@ describe('<pfe-tabs>', function() {
       const el = await createFixture<PfeTabs>(TEMPLATE);
       el.setAttribute('vertical', '');
       await nextFrame();
-      await aTimeout(200);
-      const tabs = el.shadowRoot!.querySelector('#tabs')!;
+      const tabs = el.shadowRoot!.querySelector('[part="tabs"]')!;
       const tabsVerticalStyles = getComputedStyle(tabs).flexDirection;
       expect(tabsVerticalStyles).to.be.equal('column');
     });
@@ -133,7 +132,7 @@ describe('<pfe-tabs>', function() {
 
     it('should overflow if too wide', async function() {
       const el = await createFixture<PfeTabs>(TEMPLATE);
-      const tabs = el.shadowRoot!.querySelector('#tabs')!;
+      const tabs = el.shadowRoot!.querySelector('[part="tabs"]')!;
       const tabsOverflow = getComputedStyle(tabs).overflowX === 'auto';
       expect(tabsOverflow).to.equal(true);
     });

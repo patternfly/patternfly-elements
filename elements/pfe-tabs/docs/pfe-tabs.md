@@ -1,14 +1,15 @@
-{% renderOverview %}
-  <style>
+<style>
+  .overflow-tab-wrapper {
+    width: 94vw;
+  }
+  @media screen and (min-width: 568px) {
     .overflow-tab-wrapper {
-      width: 94vw;
+      width: auto;
     }
-    @media screen and (min-width: 568px) {
-      .overflow-tab-wrapper {
-        width: auto;
-      }
-    }
-  </style>
+  }
+</style>
+
+{% renderOverview %}
   ### Default
   <div class="overflow-tab-wrapper">
     <pfe-tabs>
@@ -221,14 +222,8 @@
 {% renderSlots for="pfe-tab-panel", level=3, header="Slots on `pfe-tab-panel`" %}{% endrenderSlots %}
 
 {% renderAttributes %}{% endrenderAttributes %}
-{% renderAttributes for="pfe-tab", level=3, header="Attributes on `pfe-tab`" %}{% endrenderAttributes %}
-{% renderAttributes for="pfe-tab-panel", level=3, header="Attributes on `pfe-tab-panel`" %}{% endrenderAttributes %}
 
-{% renderProperties %}{% endrenderProperties %}
-
-{% renderMethods %}{% endrenderMethods %}
-
-{% renderEvents %}{% endrenderEvents %}
+{% renderEvents for="pfe-tab", level=2, header="Events" %}{% endrenderEvents %}
 
 {% renderCssCustomProperties %}{% endrenderCssCustomProperties %}
 {% renderCssCustomProperties for="pfe-tab", level=3, header="CSS Properties on `pfe-tab`" %}{% endrenderCssCustomProperties %}

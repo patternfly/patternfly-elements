@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit';
 import { state, property, query, queryAssignedElements } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 
 import { bound, observed } from '@patternfly/pfe-core/decorators.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
@@ -24,7 +23,7 @@ export abstract class BaseTabs extends LitElement {
     return element instanceof BaseTabPanel;
   }
 
-  @query('#tabs') _tabList!: HTMLElement;
+  @query('[part="tabs"]') _tabList!: HTMLElement;
 
   @queryAssignedElements({ slot: 'tab' }) protected _tabs!: BaseTab[];
 
@@ -59,14 +58,14 @@ export abstract class BaseTabs extends LitElement {
 
   override render() {
     return html`
-      <div id="container" part="container">
-        <div id="tabs-container">
+      <div part="container">
+        <div part="tabs-container">
           ${this._showScrollButtons ? html`
             <button id="previousTab" aria-label="Scroll left" ?disabled="${!this._overflowOnLeft}" @click="${this._scrollLeft}">
               <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg>
             </button>`
           : html``}
-          <div id="tabs" part="tabs" role="tablist">
+          <div part="tabs" role="tablist">
             <slot name="tab" @slotchange="${this._onSlotChange}"></slot>
           </div>
           ${this._showScrollButtons ? html`
@@ -75,7 +74,7 @@ export abstract class BaseTabs extends LitElement {
             </button>`
           : html``}
         </div>
-        <div id="panels" part="panels">
+        <div part="panels">
           <slot></slot>
         </div>
       </div>
@@ -243,7 +242,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   @bound
-  private _currentChanged(oldVal: BaseTab, newVal: BaseTab) {
+  private _currentChanged(oldVal: BaseTab, newVal: BaseTab): void {
     if (!newVal || newVal === oldVal) {
       return;
     }
@@ -260,7 +259,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   @bound
-  private _focusedChanged(oldVal: BaseTab, newVal: BaseTab) {
+  private _focusedChanged(oldVal: BaseTab, newVal: BaseTab): void {
     if (!newVal || newVal === oldVal) {
       return;
     }
@@ -270,7 +269,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   @bound
-  private _onKeyDownHandler(event: KeyboardEvent) {
+  private _onKeyDownHandler(event: KeyboardEvent): void {
     const foundTab = this._allTabs().find(tab => tab === event.target);
     if (!foundTab) {
       return;
@@ -299,7 +298,7 @@ export abstract class BaseTabs extends LitElement {
     }
   }
 
-  #isOverflow() {
+  #isOverflow(): void {
     this._overflowOnLeft = !isElementInView(this._tabList, this.#first() as HTMLElement, false);
     this._overflowOnRight = !isElementInView(this._tabList, this.#last() as HTMLElement, false);
     this._showScrollButtons = (this._overflowOnLeft || this._overflowOnRight);

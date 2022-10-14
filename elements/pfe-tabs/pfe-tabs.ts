@@ -14,14 +14,52 @@ import pfeStyle from './pfe-tabs.scss';
  * horizontal, vertical, inset, and filled. Most tab variations are available as open (default) or
  * box style tabs. Box style tabs also feature a light and dark variation.
  *
- * @attribute {number} active-key - DOM Property: `activeKey`
+ * @attr {number} active-key - DOM Property: `activeKey` {@default `0`}
  *
- * @csspart container - Container wrapper
- * @csspart tabs - Tabs wrapper container
- * @csspart panels - Panels wrapper container
+ * @csspart container - outer container
+ * @csspart tabs-container - tabs container
+ * @csspart tabs - tablist
+ * @csspart panels - panels
  *
- * @slot tab - We expect the light DOM of `<pfe-tab>`
- * @slot - We expect the light DOM of `<pfe-panel>`
+ * @slot tab - Must contain one or more `<pfe-tab>`
+ * @slot - Must contain one or more `<pfe-panel>`
+ *
+ * @cssprop     {<length>} --pf-c-tabs--Width {@default `auto`}
+ * @cssprop     {<length>} --pf-c-tabs--inset {@default `0`}
+ *
+ * @cssprop     {<color>}   --pf-c-tabs--before--BorderColor       {@default `#d2d2d2`}
+ * @cssprop     {<length>}  --pf-c-tabs--before--BorderTopWidth    {@default `0`}
+ * @cssprop     {<length>}  --pf-c-tabs--before--BorderRightWidth  {@default `0`}
+ * @cssprop     {<length>}  --pf-c-tabs--before--BorderBottomWidth {@default `1px`}
+ * @cssprop     {<length>}  --pf-c-tabs--before---BorderLeftWidth  {@default `0`}
+ *
+ * @cssprop     {<length>}  --pf-c-tabs--m-vertical--MaxWidth      {@default `15.625rem`}
+ *
+ * @cssprop     {<color>}   --pf-c-tabs--m-vertical__list--before--BorderColor       {@default `#d2d2d2`}
+ * @cssprop     {<length>}  --pf-c-tabs--m-vertical__list--before--BorderTopWidth    {@default `0`}
+ * @cssprop     {<length>}  --pf-c-tabs--m-vertical__list--before--BorderRightWidth  {@default `0`}
+ * @cssprop     {<length>}  --pf-c-tabs--m-vertical__list--before--BorderBottomWidth {@default `0`}
+ * @cssprop     {<length>}  --pf-c-tabs--m-vertical__list--before--BorderLeftWidth   {@default `1px`}
+ *
+ * @cssprop     {<length>}  --pf-c-tabs--m-vertical--m-box--inset  {@default `2rem`}
+ *
+ * @cssprop     {<display>} --pf-c-tabs__list--Display  {@default `flex`}
+ *
+ * @cssprop     {<length>}  --pf-c-tabs__scroll-button--Width                         {@default `3rem`}
+ * @cssprop     {<color>}   --pf-c-tabs__scroll-button--Color                         {@default `#151515`}
+ * @cssprop     {<color>}   --pf-c-tabs__scroll-button--BackgroundColor               {@default `#ffffff`}
+ * @cssprop     {<length>}  --pf-c-tabs__scroll-button--OutlineOffset                 {@default `-0.25rem`}
+ * @cssprop     {<time>}    --pf-c-tabs__scroll-button--TransitionDuration--margin    {@default `.125s`}
+ * @cssprop     {<time>}    --pf-c-tabs__scroll-button--TransitionDuration--transform {@default `.125s`}
+ * @cssprop     {<color>}   --pf-c-tabs__scroll-button--hover--Color                  {@default `#06c`}
+ *
+ * @cssprop     {<color>}   --pf-c-tabs__scroll-button--before--BorderColor           {@default `#d2d2d2`}
+ * @cssprop     {<length>}  --pf-c-tabs__scroll-button--before--BorderRightWidth      {@default `0`}
+ * @cssprop     {<length>}  --pf-c-tabs__scroll-button--before--BorderBottomWidth     {@default `1px`}
+ * @cssprop     {<length>}  --pf-c-tabs__scroll-button--before--BorderLeftWidth       {@default `0`}
+ * @cssprop     {<length>}  --pf-c-tabs__scroll-button--before--border-width--base    {@default `1px`}
+ *
+ * @cssprop     {<color>} --pf-c-tabs__scroll-button--disabled--Color                 {@default `#d2d2d2`}
  */
 @customElement('pfe-tabs')
 export class PfeTabs extends BaseTabs {
@@ -46,6 +84,7 @@ export class PfeTabs extends BaseTabs {
   @cascades('pfe-tab')
   @property({ reflect: true, type: Boolean }) fill = false;
 
+  @cascades('pfe-tab')
   @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'true';
 
   protected _allTabs(): PfeTab[] {

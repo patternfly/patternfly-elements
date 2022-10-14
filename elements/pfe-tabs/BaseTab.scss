@@ -19,7 +19,7 @@
   left: calc(var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)) * -1);
 }
 
-:host([vertical]) span[part="text"] {
+:host([vertical]) [part="text"] {
   max-width: 100%;
   overflow-wrap: break-word;
 }

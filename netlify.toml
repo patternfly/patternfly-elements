@@ -8,7 +8,10 @@
   command = "npm ci && npm run site"
 
 [[plugins]]
-  package = "/tools/netlify-plugin-github-actions"
+  package = "@netlify/plugin-local-install-core"
+
+[[plugins]]
+  package = "netlify-plugin-github-actions"
 
   [plugins.inputs]
     owner = "patternfly"

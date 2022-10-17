@@ -82,6 +82,7 @@
     "husky": "^8.0.1",
     "leasot": "^13.2.0",
     "lerna": "^5.4.2",
+    "netlify-plugin-github-actions": "^0.0.2-next.0",
     "npm-merge-driver": "^2.3.6",
     "open": "^8.4.0",
     "prompts": "^2.4.2",

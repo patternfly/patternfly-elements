@@ -1,160 +1,128 @@
-import type { SinonSpy } from 'sinon';
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfeSwitch } from '@patternfly/pfe-switch';
-import { spy } from 'sinon';
+import { a11ySnapshot } from '@web/test-runner-commands';
 
-declare global {
-  interface Window {
-      React: object;
-  }
+interface A11yTreeSnapshot {
+  name: string;
+  children: A11yTreeSnapshot[];
+  role: string;
+  checked?: boolean;
 }
 
-const element = html`
-  <pfe-switch label="Message when on" label-off="Message when off">
-    <input type="checkbox">
-  </pfe-switch>
-`;
-
-const checkElement = html`
-  <pfe-switch checked>
-    <input type="checkbox">
-  </pfe-switch>
-`;
-
-const checkElementWithMessage = html`
-  <pfe-switch label="Message when on" label-off="Message when off" has-check-icon checked>
-    <input type="checkbox">
-  </pfe-switch>
-`;
-
-const disabledSwitchElement = html`
-  <pfe-switch disabled>
-    <input type="checkbox">
-  </pfe-switch>
-`;
-
-const disabledInputElement = html`
-  <pfe-switch>
-    <input type="checkbox" disabled>
-  </pfe-switch>
-`;
-
-const checkedElement = html`
-  <pfe-switch checked>
-    <input type="checkbox">
-  </pfe-switch>
-`;
-
-const checkedInputElement = html`
-  <pfe-switch>
-    <input type="checkbox" checked>
-  </pfe-switch>
-`;
-
-const noInput = html`
-  <pfe-switch></pfe-switch>
-`;
-
-const multipleInputs = html`
-  <pfe-switch>
-    <input type="checkbox">
-    <input type="checkbox">
-  </pfe-switch>
-`;
-
-const badInputType = html`
-  <pfe-switch>
-    <input type="text">
-  </pfe-switch>
-`;
-
 describe('<pfe-switch>', function() {
-  beforeEach(function() {
-    spy(console, 'warn');
+  describe('simply instantiating', function() {
+    let element: PfeSwitch;
+    let snapshot: A11yTreeSnapshot;
+    beforeEach(async function() {
+      element = await createFixture<PfeSwitch>(html`<pfe-switch></pfe-switch>`);
+      snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
+    });
+    it('should upgrade', async function() {
+      const klass = customElements.get('pfe-switch');
+      expect(element)
+        .to.be.an.instanceOf(klass)
+        .and
+        .to.be.an.instanceOf(PfeSwitch);
+    });
+    it('has accessible role', function() {
+      expect(snapshot.role).to.equal('checkbox');
+    });
+    it('has accessible checked field', function() {
+      expect(snapshot.role).to.equal('checkbox');
+    });
+    it('has accessible name', function() {
+      // TRUE failure
+      expect(snapshot.name).to.be.ok;
+    });
   });
 
-  afterEach(function() {
-    (console.warn as SinonSpy).restore(); // eslint-disable-line no-console
+  describe('with labels for on and off state', function() {
+    let element: PfeSwitch;
+    let snapshot: A11yTreeSnapshot;
+    beforeEach(async function() {
+      element = await createFixture<PfeSwitch>(html`
+        <pfe-switch id="switch"></pfe-switch>
+        <label for="switch" data-state="on">Message when on</label>
+        <label for="switch" data-state="off" hidden>Message when off</label>
+      `);
+      snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
+    });
+
+    it('is accessible', function() {
+      expect(snapshot.role).to.equal('checkbox');
+      expect(snapshot.name).to.be.ok;
+      expect(snapshot.checked).to.be.false;
+    });
+
+    it('should show the label for the unchecked state', function() {
+      expect(snapshot.name).to.equal('Message when off');
+    });
+
+    describe('clicking the checkbox', function() {
+      beforeEach(async function() {
+        element.click();
+        await element.updateComplete;
+        snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
+      });
+      it('should be checked', function() {
+        expect(element.checked).to.be.true;
+        expect(snapshot.checked).to.be.true;
+      });
+      it('should show the label for the checked state', function() {
+        expect(snapshot.name).to.equal('Message when on');
+      });
+    });
   });
 
-  it('should upgrade', async function() {
-    const el = await createFixture <PfeSwitch>(element);
-    const klass = customElements.get('pfe-switch');
-    expect(el)
-      .to.be.an.instanceOf(klass)
-      .and
-      .to.be.an.instanceOf(PfeSwitch);
+  describe('when checked attr is present', function() {
+    let element: PfeSwitch;
+    beforeEach(async function() {
+      element = await createFixture<PfeSwitch>(html`
+        <pfe-switch checked></pfe-switch>
+      `);
+    });
+    it('should display a check icon', async function() {
+      // TODO: can we test this without inspecting the private shadowRoot?
+      const svg = element.shadowRoot.querySelector('svg');
+      expect(svg).to.be.ok;
+      expect(svg?.hasAttribute('hidden')).to.be.false;
+    });
   });
 
-  it('should show the label message when pfe-switch is checked', async function() {
-    const el = await createFixture <PfeSwitch>(element);
-    await el.click();
-
-    const labelSpan = el.shadowRoot?.querySelector('#label');
-    expect(labelSpan?.textContent).to.equal('Message when on');
+  describe('when checked and show-check-icon attrs are present', function() {
+    let element: PfeSwitch;
+    beforeEach(async function() {
+      element = await createFixture<PfeSwitch>(html`
+        <pfe-switch id="switch" show-check-icon checked></pfe-switch>
+        <label for="switch" data-state="on">Message when on</label>
+        <label for="switch" data-state="off">Message when off</label>
+      `);
+    });
+    it('should display a check icon', async function() {
+      // TODO: can we test this without inspecting the private shadowRoot?
+      const svg = element.shadowRoot.querySelector('svg');
+      expect(svg).to.be.ok;
+      expect(svg?.hasAttribute('hidden')).to.be.false;
+    });
   });
 
-  it('should show the labelOff message when pfe-switch is not checked', async function() {
-    const el = await createFixture <PfeSwitch>(element);
-    const labelSpan = el.shadowRoot?.querySelector('#label');
-    expect(labelSpan?.textContent).to.equal('Message when off');
+  describe('when checked and show-check-icon attrs are present', function() {
+    let element: PfeSwitch;
+    beforeEach(async function() {
+      element = await createFixture<PfeSwitch>(html`
+        <pfe-switch id="switch" show-check-icon checked></pfe-switch>
+        <label for="switch" data-state="on">Message when on</label>
+        <label for="switch" data-state="off">Message when off</label>
+      `);
+    });
+    it('should display a check icon', async function() {
+      // TODO: can we test this without inspecting the private shadowRoot?
+      const svg = element.shadowRoot.querySelector('svg');
+      expect(svg).to.be.ok;
+      expect(svg?.hasAttribute('hidden')).to.be.false;
+    });
   });
 
-  it('should have a check icon when checked and no label has been provided', async function() {
-    const el = await createFixture <PfeSwitch>(checkElement);
-    const toggleIcon = el.shadowRoot?.querySelectorAll('#toggle-icon');
-    expect(toggleIcon?.length).to.equal(1);
-  });
-
-  it('should have a check icon with the message if the has-check-icon attribute is present', async function() {
-    const el = await createFixture <PfeSwitch>(checkElementWithMessage);
-    const toggleIcon = el.shadowRoot?.querySelectorAll('#toggle-icon');
-    expect(toggleIcon?.length).to.equal(1);
-  });
-
-  it('should add a disabled attribute to the input if disabled is true on pfe-switch', async function() {
-    const el = await createFixture <PfeSwitch>(disabledSwitchElement);
-    const input = el.querySelector('input');
-    expect(input?.disabled).to.be.true;
-  });
-
-  it('should add a disabled attribute to pfe-switch if a disabled attribute is present on the input', async function() {
-    const el = await createFixture <PfeSwitch>(disabledInputElement);
-    expect(el.disabled).to.be.true;
-  });
-
-  it('should add a checked attribute to the input if checked is true on pfe-switch', async function() {
-    const el = await createFixture <PfeSwitch>(checkedElement);
-    const input = el.querySelector('input');
-    expect(input?.checked).to.be.true;
-  });
-
-  it('should add a checked attribute to pfe-switch if a checked attribute is present on the input', async function() {
-    // React wants defaultChecked on the input
-    if (window.React) {
-      return;
-    }
-
-    const el = await createFixture <PfeSwitch>(checkedInputElement);
-    expect(el.hasAttribute('checked')).to.be.true;
-  });
-
-  it('should log a warning if an input is not provided in the light dom', async function() {
-    await createFixture <PfeSwitch>(noInput);
-    expect(console.warn) // eslint-disable-line no-console
-      .to.have.been.calledOnceWith('[pfe-switch]', 'You must have an input in the light DOM');
-  });
-
-  it('should log a warning if there are multiple inputs in the light DOM', async function() {
-    await createFixture <PfeSwitch>(multipleInputs);
-    expect(console.warn) // eslint-disable-line no-console
-      .to.have.been.calledOnceWith('[pfe-switch]', 'Only one input child is allowed');
-  });
-
-  it('should log a warning if the input does not have a type of checkbox', async function() {
-    await createFixture <PfeSwitch>(badInputType);
-    expect(console.warn) // eslint-disable-line no-console
-      .to.have.been.calledOnceWith('[pfe-switch]', 'The input must have a type of checkbox');
-  });
+  // TODO: test keyboard a11y with wtr sendKeys
 });

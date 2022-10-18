@@ -1,23 +1,28 @@
-@use "@patternfly/pfe-sass" as *;
-
-// TODO: pass this as a shared stylesheet object
-@use "shared-assets" as *;
-
 :host {
+  --accordion__bordered--Color: var(--rh-color-black-300, #d2d2d2);
+}
+
+:host([bordered]) ::slotted(pfe-accordion-header:first-child),
+:host([large]) ::slotted(pfe-accordion-header:first-child) {
   display: block;
-  position: relative;
-  overflow: hidden;
-  margin: 0;
-
-  width: pfe-local(Width);
+  border-top: 1px solid var(--accordion__bordered--Color);
+  border-bottom: 1px solid var(--accordion__bordered--Color);
 }
 
-:host {
-  // This is required for the focus state to overflow the container
-  overflow: visible;
+:host([bordered]) ::slotted(pfe-accordion-header:not(:first-child)),
+:host([large]) ::slotted(pfe-accordion-header:not(:first-child)) {
+  display: block;
+  border-bottom: 1px solid var(--accordion__bordered--Color);
 }
 
-[hidden],
-:host([hidden]) {
-  display: none !important;
+:host([bordered]) ::slotted(pfe-accordion-header:is([expanded])),
+:host([large]) ::slotted(pfe-accordion-header:is([expanded])) {
+  display: block;
+  border-bottom: 0;
+}
+
+:host([bordered]) ::slotted(pfe-accordion-panel:is([expanded])),
+:host([large]) ::slotted(pfe-accordion-panel:is([expanded])) {
+  display: block;
+  border-bottom: 1px solid var(--accordion__bordered--Color);
 }

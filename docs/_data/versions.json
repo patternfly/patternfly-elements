@@ -1,0 +1,14 @@
+[
+  {
+    "version": "v2.0.0",
+    "slug": "v2",
+    "label": "v2 prerelease",
+    "current": true
+  },
+  {
+    "version": "v1.12.3",
+    "slug": "v1",
+    "label": "v1",
+    "current": false
+  }
+]

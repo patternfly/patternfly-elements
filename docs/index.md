@@ -12,13 +12,13 @@ templateEngineOverride: njk,md
       <div class="pfe-l-bullseye">
         <div class="pfe-l-bullseye__item">
           <h1 id="home-title">
-            <img src="/images/logo/pfe-icon-white-shaded.svg" alt="">
+            <img src="{{ '/images/logo/pfe-icon-white-shaded.svg' | url }}" role="presentation">
             {{ title }}
           </h1>
           <p class="tagline">{{ description }}</p>
           <div class="header-ctas">
-            <a class="cta primary" href="get-started">Get started</a>
-            <a class="cta secondary" href="components">View the components</a>
+            <a class="cta primary" href="{{ 'get-started' | url }}">Get started</a>
+            <a class="cta secondary" href="{{ 'components' | url }}">View the components</a>
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@ templateEngineOverride: njk,md
       <pfe-band color-palette="lightest">
         <h2 id="lightweight">Lightweight</h2>
         <p class="subtitle">Use only what you need.</p>
-        <p>Pick and choose from the <a href="/components/">list of components</a>. Use them all or just one. And keep your page payloads small with PatternFly Elements because the components range from ~3 kB to ~10 kB in size minified and gzipped.</p>
+        <p>Pick and choose from the <a href="{{ '/components/' | url }}">list of components</a>. Use them all or just one. And keep your page payloads small with PatternFly Elements because the components range from ~3 kB to ~10 kB in size minified and gzipped.</p>
         <div class="pfe-l-grid pfe-m-gutters">
           <div class="pfe-l-grid__item pfe-m-12-col pfe-m-6-col-on-md pfe-m-8-col-on-lg">
 <div>
@@ -139,7 +139,7 @@ export default function App() {
       </div>
         <br>
         <div class="pfe-l--text-align--center">
-          <a class="cta" href="/framework-integration/">Learn how to integrate PatternFly Elements in your application</a>
+          <a class="cta" href="{{ '/framework-integration/' | url }}">Learn how to integrate PatternFly Elements in your application</a>
         </div>
       </pfe-band>
     </section>
@@ -264,7 +264,7 @@ export default function App() {
       </pfe-band>
       <pfe-band color-palette="lightest">
         <div class="pfe-l--text-align--center">
-          <a class="cta" href="/theming/">Learn more about theming PatternFly Elements</a>
+          <a class="cta" href="{{ '/theming/' | url }}">Learn more about theming PatternFly Elements</a>
         </div>
       </pfe-band>
     </section>
@@ -339,4 +339,4 @@ export default function App() {
   </main>
   {% include '_foot.njk' %}
 
-  <script type="module" src="/main.mjs"></script>
+  <script type="module" src="{{ '/main.mjs' | url }}"></script>

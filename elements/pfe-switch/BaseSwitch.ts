@@ -34,6 +34,7 @@ export abstract class BaseSwitch extends LitElement {
     super.connectedCallback();
     this.setAttribute('role', 'checkbox');
     this.addEventListener('click', this.#onClick);
+    this.addEventListener('keyup', this.#onKeyup);
     this.#updateLabels();
   }
 
@@ -44,7 +45,7 @@ export abstract class BaseSwitch extends LitElement {
 
   override render() {
     return html`
-      <div id="label">
+      <div id="label" tabindex="0">
         <svg id="toggle"
           ?hidden="${!this.showCheckIcon && !!this.labels.length}"
           fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512">
@@ -64,6 +65,15 @@ export abstract class BaseSwitch extends LitElement {
     this.#updateLabels();
     const event = new Event('change', { bubbles: true });
     this.dispatchEvent(event);
+  }
+
+  #onKeyup(event: KeyboardEvent) {
+    switch (event.key) {
+      case ' ':
+      case 'Enter':
+        event.preventDefault();
+        this.#onClick();
+    }
   }
 
   #updateLabels() {

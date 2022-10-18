@@ -34,6 +34,7 @@ export abstract class BaseSwitch extends LitElement {
     super.connectedCallback();
     this.setAttribute('role', 'checkbox');
     this.addEventListener('click', this.#onClick);
+    this.#updateLabels();
   }
 
   formDisabledCallback(disabled: boolean) {
@@ -60,11 +61,15 @@ export abstract class BaseSwitch extends LitElement {
 
   #onClick() {
     this.checked = !this.checked;
+    this.#updateLabels();
+    const event = new Event('change', { bubbles: true });
+    this.dispatchEvent(event);
+  }
+
+  #updateLabels() {
     const labelState = this.checked ? 'on' : 'off';
     for (const label of this.labels) {
       label.hidden = label.dataset.state !== labelState;
     }
-    const event = new Event('change', { bubbles: true });
-    this.dispatchEvent(event);
   }
 }

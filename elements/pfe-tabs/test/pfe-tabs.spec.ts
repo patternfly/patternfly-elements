@@ -3,11 +3,12 @@ import { expect, html, nextFrame, aTimeout } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { setViewport } from '@web/test-runner-commands';
 import { BaseTabs } from '../BaseTabs.js';
+import { BaseTab } from '../BaseTab.js';
 import { PfeTabs } from '../pfe-tabs.js';
 
 const TEMPLATE = html`
     <pfe-tabs>
-      <pfe-tab slot="tab">Users</pfe-tab>
+      <pfe-tab slot="tab" active>Users</pfe-tab>
       <pfe-tab-panel>Users</pfe-tab-panel>
       <pfe-tab slot="tab">Containers</pfe-tab>
       <pfe-tab-panel>Containers</pfe-tab-panel>
@@ -48,29 +49,39 @@ describe('<pfe-tabs>', function() {
     });
   });
 
-  it('should activate tab when given active-key attribute', async function() {
+  it('should activate the first focusable tab given no active attribute', async function() {
     const el = await createFixture<PfeTabs>(TEMPLATE);
-    el.activeKey = 2;
+    const firstTab = el.querySelector('pfe-tab:first-of-type');
+    firstTab!.disabled = true;
     await nextFrame();
-    /* given active-key of 2 on a zero based index, nth-of-type(n) takes a 1 based index = 3. */
-    const active = el.querySelector('pfe-tab:nth-of-type(3)');
-    expect(active!.getAttribute('aria-selected')).to.equal('true');
+    const activeTabIndex = el.activeIndex;
+    const secondTab = el.querySelector('pfe-tab[active]');
   });
 
-  it('should activate tab when active-key property is changed', async function() {
+  it('should activate tab when given an active attribute', async function() {
     const el = await createFixture<PfeTabs>(TEMPLATE);
-    el.activeKey = 2;
+    const tab = el.querySelector('pfe-tab:nth-of-type(3)');
+    tab!.setAttribute('active', '');
     await nextFrame();
-    el.activeKey = 0;
+    expect(tab!.hasAttribute('active')).to.equal(true);
+    expect(tab!.getAttribute('aria-selected')).to.equal('true');
+  });
+
+  it('should activate tab when activeIndex property is changed', async function() {
+    const el = await createFixture<PfeTabs>(TEMPLATE);
+    el.activeIndex = 2;
     await nextFrame();
-    const active = el.querySelector('pfe-tab:first-of-type');
-    expect(active!.getAttribute('aria-selected')).to.equal('true');
+    el.activeIndex = 0;
+    await nextFrame();
+    const tab = el.querySelector('pfe-tab:first-of-type');
+    expect(tab!.hasAttribute('active')).to.equal(true);
+    expect(tab!.getAttribute('aria-selected')).to.equal('true');
   });
 
   it('should open panel at same index of selected tab', async function() {
     const el = await createFixture<PfeTabs>(TEMPLATE);
     await nextFrame();
-    el.activeKey = 1;
+    el.activeIndex = 1;
     await nextFrame();
     const inactivePanel = el.querySelector('pfe-tab-panel:first-of-type');
     /* given active-key of 1 on a zero based index, nth-of-type(n) takes a 1 based index = 2. */
@@ -97,8 +108,8 @@ describe('<pfe-tabs>', function() {
 
     it('should aria-disable the tab', async function() {
       const el = await createFixture<PfeTabs>(TEMPLATE);
-      const disabledTab = el.querySelector('pfe-tab:first-of-type')!;
-      disabledTab.setAttribute('disabled', 'disabled');
+      const disabledTab = el.querySelector('pfe-tab:nth-of-type(2)')! as BaseTab;
+      disabledTab.disabled = true;
       await nextFrame();
       const ariaDisabled = disabledTab!.hasAttribute('aria-disabled');
       expect(ariaDisabled).to.equal(true);

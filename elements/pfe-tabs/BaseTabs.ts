@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { state, property, query, queryAssignedElements } from 'lit/decorators.js';
 
-import { bound, observed } from '@patternfly/pfe-core/decorators.js';
+import { bound } from '@patternfly/pfe-core/decorators.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.js';
 
@@ -23,20 +23,11 @@ export abstract class BaseTabs extends LitElement {
     return element instanceof BaseTabPanel;
   }
 
-  @query('[part="tabs"]') _tabList!: HTMLElement;
-
   @queryAssignedElements({ slot: 'tab' }) protected _tabs!: BaseTab[];
 
   @queryAssignedElements() protected _panels!: BaseTabPanel[];
 
-  @observed
-  @state() current: BaseTab | null = null;
-
-  @observed
-  @state() focused: BaseTab | null = null;
-
-  @observed
-  @property({ reflect: true, attribute: 'active-key' }) activeKey = 0;
+  @query('[part="tabs"]') _tabList!: HTMLElement;
 
   @state() protected _showScrollButtons = false;
 
@@ -46,13 +37,82 @@ export abstract class BaseTabs extends LitElement {
 
   #logger = new Logger(this);
 
-  #scrollTimeout: ReturnType<typeof setTimeout> = setTimeout(() => '', 100);
-
   #allTabs: BaseTab[] = [];
 
   #allPanels: BaseTabPanel[] = [];
 
   #focusableTabs: BaseTab[] = [];
+
+  #focusTab?: BaseTab;
+
+  #scrollTimeout: ReturnType<typeof setTimeout> = setTimeout(() => '', 100);
+
+  #activeIndex = 0;
+
+  @property({ attribute: false })
+  get activeIndex() {
+    return this.#activeIndex;
+  }
+
+  set activeIndex(index: number) {
+    let tab = this.allTabs[index];
+    if (tab === undefined || tab.disabled) {
+      if (tab === undefined) {
+        this.#logger.warn(`No active tab set, setting first focusable tab to active`);
+      } else {
+        this.#logger.warn(`Disabled tabs can not be set as active, setting first focusable tab to active`);
+      }
+      [tab] = this.focusableTabs;
+      index = this.allTabs.findIndex(focusable => focusable === tab);
+      if (index === -1) {
+        this.#logger.warn(`No available tabs to activate`);
+        return;
+      }
+    }
+    tab.active = true;
+    this.allPanels[index].hidden = false;
+    this.#deactivateExcept(index);
+
+    this.#activeIndex = index;
+    this.requestUpdate('#activeIndex', index);
+  }
+
+  private get activeTab() {
+    const [tab] = this.#allTabs.filter(tab => tab.active);
+    return tab;
+  }
+
+  private get allTabs() {
+    return this.#allTabs;
+  }
+
+  private set allTabs(tabs: BaseTab[]) {
+    tabs = tabs.filter(tab => BaseTabs.isTab(tab));
+    this.#allTabs = tabs;
+    this.#focusableTabs = tabs.filter(tab => !tab.disabled);
+  }
+
+  private get allPanels() {
+    return this.#allPanels;
+  }
+
+  private set allPanels(panels: BaseTabPanel[]) {
+    panels = panels.filter(panel => BaseTabs.isPanel(panel));
+    this.#allPanels = panels;
+  }
+
+  private get focusableTabs() {
+    return this.#focusableTabs;
+  }
+
+  private get focusTab(): BaseTab | undefined {
+    return this.#focusTab;
+  }
+
+  private set focusTab(tab: BaseTab | undefined) {
+    this.#focusTab = tab;
+    this.#focusTab?.focusButton();
+  }
 
   connectedCallback() {
     super.connectedCallback();
@@ -72,7 +132,7 @@ export abstract class BaseTabs extends LitElement {
             </button>`
           : html``}
           <div part="tabs" role="tablist">
-            <slot name="tab" @slotchange="${this._onSlotChange}"></slot>
+            <slot name="tab" @slotchange="${this._slotChange}"></slot>
           </div>
           ${this._showScrollButtons ? html`
             <button id="nextTab" aria-label="Scroll right" ?disabled="${!this._overflowOnRight}" @click="${this._scrollRight}">
@@ -81,214 +141,142 @@ export abstract class BaseTabs extends LitElement {
           : html``}
         </div>
         <div part="panels">
-          <slot @slotchange="${this._onSlotChange}"></slot>
+          <slot @slotchange="${this._slotChange}"></slot>
         </div>
       </div>
     `;
   }
 
-  firstUpdated() {
+  async firstUpdated() {
+    await this.updateComplete;
+    if (this.activeIndex === -1) {
+      this.activeIndex = 0;
+    }
     this._handleScrollButtons();
-    this.#updateAccessibility();
     this._tabList.addEventListener('scroll', this._handleScrollButtons);
   }
 
-  disconnectedCallback(): void {
-    super.disconnectedCallback();
-    window.removeEventListener('resize', this._handleScrollButtons);
-  }
-
-  private get allTabs() {
-    return this.#allTabs;
-  }
-
-  private set allTabs(tabs: BaseTab[]) {
-    tabs = tabs.filter(tab => BaseTabs.isTab(tab));
-    this.#allTabs = tabs;
-    this.#focusableTabs = tabs.filter(tab => !tab.disabled);
-  }
-
-  private get focusableTabs() {
-    return this.#focusableTabs;
-  }
-
-  private get allPanels() {
-    return this.#allPanels;
-  }
-
-  private set allPanels(panels: BaseTabPanel[]) {
-    panels = panels.filter(panel => BaseTabs.isPanel(panel));
-    this.#allPanels = panels;
-  }
-
-  #focusableTabIndex(element: BaseTab): number | null {
-    if (!BaseTabs.isTab(element)) {
-      this.#logger.warn('Tab element expected');
-      return null;
-    }
-    return this.#focusableTabs.findIndex(tab => tab.id === element.id && !tab.disabled);
-  }
-
-  #focusTab(tab: BaseTab | undefined) {
-    if (tab) {
-      if (!tab.getAttribute('aria-disabled')) {
-        this.current = tab;
-      }
-      this.focused = tab;
-    }
-  }
-
-  #activate(key: number): void {
-    let tab = this.allTabs[key];
-    if (tab === undefined) {
-      this.#logger.warn(`Tab at active key: ${key} does not exist`);
-      // if tab doesn't exist return first of set
-      [tab] = this.allTabs;
-    }
-    if (tab.disabled) {
-      this.#logger.warn(`Tab at active key: ${key} is disabled`);
-    }
-    // set the current an focused to tab
-    this.current = tab;
-    this.focused = tab;
-  }
-
-  #first(): BaseTab {
-    const [firstTab] = this.allTabs;
-    return firstTab;
-  }
-
-  #last(): BaseTab | undefined {
-    const lastTab = this.allTabs.slice(-1).pop();
-    return lastTab;
-  }
-
-  #firstFocusable(): BaseTab | undefined {
-    const [firstTab] = this.focusableTabs;
-    return this.allTabs.find(tab => tab.id === firstTab.id);
-  }
-
-  #lastFocusable(): BaseTab | undefined {
-    const lastTab = this.focusableTabs.slice(-1).pop();
-    if (lastTab) {
-      return this.allTabs.find(tab => tab.id === lastTab.id);
-    }
-  }
-
-  #next(): void {
-    if (!this.focused) {
-      return;
-    }
-
-    const total = this.focusableTabs.length;
-    const key = this.#focusableTabIndex(this.focused);
-
-    if (key !== null) {
-      const newKey = key + 1;
-      if (newKey < total) {
-        const nextTab = this.focusableTabs[key + 1];
-        const found = this.allTabs.find(tab => tab.id === nextTab.id);
-        this.#focusTab(found);
-      } else {
-        const first = this.#firstFocusable();
-        this.#focusTab(first);
-      }
-    }
-    if (key === total) {
-      const first = this.#firstFocusable();
-      this.#focusTab(first);
-    }
-  }
-
-  #prev(): void {
-    if (!this.focused) {
-      return;
-    }
-    const key = this.#focusableTabIndex(this.focused);
-    if (key && key !== 0) {
-      const prevTab = this.focusableTabs[key - 1];
-      const found = this.allTabs.find(tab => tab === prevTab);
-      this.#focusTab(found);
-    }
-    if (key === 0) {
-      const last = this.#lastFocusable();
-      this.#focusTab(last);
-    }
-  }
-
-  protected _onSlotChange(): void {
-    this.allTabs = this._tabs;
-    this.#firstLastClasses();
-    this.allPanels = this._panels;
-    this.#updateAccessibility();
-  }
-
-
-  #updateAccessibility(): void {
-    this.allTabs.forEach((tab: BaseTab, index: number) => {
+  #updateAccessibility() {
+    this.allTabs.forEach((tab, index) => {
       const panel = this.allPanels[index];
       panel.setAriaLabelledBy(tab.id);
       tab.setAriaControls(panel.id);
     });
   }
 
-  #firstLastClasses() {
-    this.allTabs.forEach((tab, index) => {
-      if (index === 0) {
-        tab.classList.add('first');
-      } else {
-        tab.classList.remove('first');
-        tab.classList.remove('last');
+  private _slotChange(event: { target: { name: string; }; }) {
+    if (event.target.name === 'tab') {
+      this.allTabs = this._tabs;
+    } else {
+      this.allPanels = this._panels;
+    }
+    if (this.allTabs.length === this.allPanels.length &&
+      (this.allTabs.length !== 0 || this.allPanels.length !== 0)) {
+      this.#updateAccessibility();
+      this.activeIndex = this.allTabs.findIndex(tab => tab.active);
+    }
+  }
+
+  @bound
+  private async _tabExpandEventHandler(event: Event) {
+    if (this.allTabs.length === 0) {
+      return;
+    }
+
+    const target = event as TabExpandEvent;
+    if (target.active) {
+      this.activeIndex = this.allTabs.findIndex(tab => tab === target.tab);
+      // close all tabs that are not the activeIndex
+      this.#deactivateExcept(this.activeIndex);
+    } else {
+      if (this.activeTab === undefined) {
+        // if activeTab is invalid set to first focusable tab
+        const index = this.allTabs.findIndex(tab => tab === this.#firstFocusable());
+        this.activeIndex = index;
       }
-      if (index === this.length - 1) {
-        tab.classList.add('last');
-      }
+    }
+  }
+
+  #deactivateExcept(index: number) {
+    const notActiveTabs = this.allTabs.filter((tab, i) => i !== index);
+    notActiveTabs.forEach(tab => {
+      tab.active = false;
+    });
+    const notActivePanels = this.allPanels.filter((panel, i) => i !== index);
+    notActivePanels.forEach(panel => {
+      panel.hidden = true;
     });
   }
 
-  @bound
-  private _tabExpandEventHandler(event: Event): void {
-    if (event instanceof TabExpandEvent) {
-      const selected = this.allTabs.find(tab => tab === event.target as BaseTab);
-      if (selected) {
-        this.current = selected;
-        this.focused = selected;
-      }
-    }
+  #firstFocusable(): BaseTab {
+    const [firstTab] = this.focusableTabs;
+    return firstTab;
   }
 
-  @bound
-  private async _activeKeyChanged(oldVal: string | undefined, newVal: string ): Promise<void> {
-    await this.updateComplete;
-    const key = parseInt(newVal);
-    this.#activate(key);
+  #lastFocusable(): BaseTab {
+    return this.focusableTabs[this.focusableTabs.length - 1];
   }
 
-  @bound
-  private _currentChanged(oldVal: BaseTab, newVal: BaseTab): void {
-    if (!newVal || newVal === oldVal) {
-      return;
-    }
-    if (oldVal) {
-      oldVal.selected = 'false';
-    }
-    newVal.selected = 'true';
-    const selectedPanel = this.allPanels.find(panel => panel.getAttribute('aria-labelledby') === newVal.id);
-    if (selectedPanel) {
-      selectedPanel.hidden = false;
-      const notSelectedPanels = this.allPanels.filter(panel => panel !== selectedPanel);
-      notSelectedPanels.forEach(panel => panel.hidden = true);
-    }
+  #firstTab(): BaseTab {
+    const [tab] = this.allTabs;
+    return tab;
   }
 
-  @bound
-  private _focusedChanged(oldVal: BaseTab, newVal: BaseTab): void {
-    if (!newVal || newVal === oldVal) {
-      return;
+  #lastTab(): BaseTab {
+    const tab = this.allTabs[this.allTabs.length - 1];
+    return tab;
+  }
+
+  #next(): void {
+    // find index of active tab in focusableTabs
+    const currentIndex = this.#currentIndex();
+    // increment focusable index and return focusable tab
+    const nextFocusableIndex = currentIndex + 1;
+    let nextTab: BaseTab;
+    if (nextFocusableIndex >= this.focusableTabs.length) {
+      // get the first focusable tab
+      [nextTab] = this.#focusableTabs;
+    } else {
+      // get index of that focusable tab from all tabs
+      nextTab = this.#focusableTabs[nextFocusableIndex];
     }
-    if (oldVal) {
-      newVal.focusButton();
+
+    this.#select(nextTab);
+  }
+
+  #prev(): void {
+    const currentIndex = this.#currentIndex();
+    // increment focusable index and return focusable tab
+    const nextFocusableIndex = currentIndex - 1;
+    let prevTab: BaseTab;
+    if (nextFocusableIndex < 0) {
+      // get the last focusable tab
+      prevTab = this.#focusableTabs[this.#focusableTabs.length - 1];
+    } else {
+      // get index of that focusable tab from all tabs
+      prevTab = this.#focusableTabs[nextFocusableIndex];
     }
+    this.#select(prevTab);
+  }
+
+  #currentIndex(): number {
+    let current: BaseTab;
+    // get current tab
+    if (this.focusTab?.ariaDisabled) {
+      current = this.focusTab;
+    } else {
+      current = this.activeTab;
+    }
+    const index = this.focusableTabs.findIndex(tab => tab === current);
+    return index;
+  }
+
+  #select(selectedTab: BaseTab): void {
+    if (selectedTab.ariaDisabled === null || selectedTab.ariaDisabled === 'false') {
+      const index = this.#allTabs.findIndex(tab => tab === selectedTab);
+      this.activeIndex = index;
+    }
+    this.focusTab = selectedTab;
   }
 
   @bound
@@ -298,33 +286,33 @@ export abstract class BaseTabs extends LitElement {
       return;
     }
     switch (event.key) {
+      case 'ArrowUp':
       case 'ArrowLeft':
+        event.preventDefault();
         this.#prev();
         break;
 
+      case 'ArrowDown':
       case 'ArrowRight':
+        event.preventDefault();
         this.#next();
         break;
 
       case 'Home':
         event.preventDefault();
-        this.#focusTab(this.#firstFocusable());
+        this.activeIndex = this.allTabs.findIndex(tab => tab === this.#firstFocusable());
+        this.focusTab = this.#firstFocusable();
         break;
 
       case 'End':
         event.preventDefault();
-        this.#focusTab(this.#lastFocusable());
+        this.activeIndex = this.allTabs.findIndex(tab => tab === this.#lastFocusable());
+        this.focusTab = this.#lastFocusable();
         break;
 
       default:
         return;
     }
-  }
-
-  #isOverflow(): void {
-    this._overflowOnLeft = !isElementInView(this._tabList, this.#first() as HTMLElement, false);
-    this._overflowOnRight = !isElementInView(this._tabList, this.#last() as HTMLElement, false);
-    this._showScrollButtons = (this._overflowOnLeft || this._overflowOnRight);
   }
 
   @bound
@@ -333,6 +321,12 @@ export abstract class BaseTabs extends LitElement {
     this.#scrollTimeout = setTimeout(() => {
       this.#isOverflow();
     }, BaseTabs.delay);
+  }
+
+  #isOverflow(): void {
+    this._overflowOnLeft = !isElementInView(this._tabList, this.#firstTab() as HTMLElement, false);
+    this._overflowOnRight = !isElementInView(this._tabList, this.#lastTab() as HTMLElement, false);
+    this._showScrollButtons = (this._overflowOnLeft || this._overflowOnRight);
   }
 
   @bound

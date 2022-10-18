@@ -2,17 +2,6 @@ import '@patternfly/pfe-tabs';
 
 const root = document.querySelector('[data-demo="pfe-tabs"]')?.shadowRoot ?? document;
 
-const switchToAriaDisabledInput = root.querySelector('input[name="toggle-disabled"]');
-function disabledToggle() {
-  const disabledExample = root.querySelector('#disabledExample');
-  if (switchToAriaDisabledInput.checked) {
-    disabledExample.setAttribute('active-key', '3');
-  } else {
-    disabledExample.setAttribute('active-key', '4');
-  }
-}
-switchToAriaDisabledInput.addEventListener('change', disabledToggle);
-
 const variantInput = root.querySelector('input[name="toggle-variant"]');
 function variantToggle() {
   const boxVariant = root.querySelector('pfe-tabs[box]');

@@ -40,7 +40,9 @@ export abstract class BaseAccordionHeader extends LitElement {
 
   @property({ reflect: true }) bordered?: 'true'|'false';
 
-  @property({ reflect: true }) icon? = 'web-icon-caret-thin-right';
+  @property({ reflect: true }) icon? = 'angle-right';
+
+  @property({ reflect: true, attribute: 'icon-set' }) iconSet? = 'fas';
 
   @observed
   @property({ type: Boolean, reflect: true }) expanded = false;
@@ -114,6 +116,7 @@ export abstract class BaseAccordionHeader extends LitElement {
               icon="${ifDefined(this.icon)}"
               on-fail="collapse"
               part="icon"
+              set="${ifDefined(this.iconSet)}"
               class="icon"
               size="1x"
           ></pfe-icon>

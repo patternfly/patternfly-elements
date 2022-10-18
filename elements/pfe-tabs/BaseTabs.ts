@@ -116,10 +116,10 @@ export abstract class BaseTabs extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('tab-expand', this._tabExpandEventHandler);
-    this.addEventListener('keydown', this._onKeyDownHandler);
+    this.addEventListener('tab-expand', this.#onTabExpand);
+    this.addEventListener('keydown', this.#onKeydown);
     // on resize check for overflows
-    window.addEventListener('resize', this._handleScrollButtons, false);
+    window.addEventListener('resize', this.#onScroll, false);
   }
 
   override render() {
@@ -127,21 +127,21 @@ export abstract class BaseTabs extends LitElement {
       <div part="container">
         <div part="tabs-container">
           ${this._showScrollButtons ? html`
-            <button id="previousTab" aria-label="Scroll left" ?disabled="${!this._overflowOnLeft}" @click="${this._scrollLeft}">
+            <button id="previousTab" aria-label="Scroll left" ?disabled="${!this._overflowOnLeft}" @click="${this.#scrollLeft}">
               <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg>
             </button>`
           : html``}
           <div part="tabs" role="tablist">
-            <slot name="tab" @slotchange="${this._slotChange}"></slot>
+            <slot name="tab" @slotchange="${this._onSlotchange}"></slot>
           </div>
           ${this._showScrollButtons ? html`
-            <button id="nextTab" aria-label="Scroll right" ?disabled="${!this._overflowOnRight}" @click="${this._scrollRight}">
+            <button id="nextTab" aria-label="Scroll right" ?disabled="${!this._overflowOnRight}" @click="${this.#scrollRight}">
               <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
             </button>`
           : html``}
         </div>
         <div part="panels">
-          <slot @slotchange="${this._slotChange}"></slot>
+          <slot @slotchange="${this._onSlotchange}"></slot>
         </div>
       </div>
     `;
@@ -152,19 +152,11 @@ export abstract class BaseTabs extends LitElement {
     if (this.activeIndex === -1) {
       this.activeIndex = 0;
     }
-    this._handleScrollButtons();
-    this._tabList.addEventListener('scroll', this._handleScrollButtons);
+    this.#onScroll();
+    this._tabList.addEventListener('scroll', this.#onScroll);
   }
 
-  #updateAccessibility() {
-    this.allTabs.forEach((tab, index) => {
-      const panel = this.allPanels[index];
-      panel.setAriaLabelledBy(tab.id);
-      tab.setAriaControls(panel.id);
-    });
-  }
-
-  private _slotChange(event: { target: { name: string; }; }) {
+  protected _onSlotchange(event: { target: { name: string; }; }) {
     if (event.target.name === 'tab') {
       this.allTabs = this._tabs;
     } else {
@@ -177,8 +169,15 @@ export abstract class BaseTabs extends LitElement {
     }
   }
 
-  @bound
-  private async _tabExpandEventHandler(event: Event) {
+  #updateAccessibility(): void {
+    this.allTabs.forEach((tab, index) => {
+      const panel = this.allPanels[index];
+      panel.setAriaLabelledBy(tab.id);
+      tab.setAriaControls(panel.id);
+    });
+  }
+
+  #onTabExpand = (event: Event): void => {
     if (this.allTabs.length === 0) {
       return;
     }
@@ -195,7 +194,7 @@ export abstract class BaseTabs extends LitElement {
         this.activeIndex = index;
       }
     }
-  }
+  };
 
   #deactivateExcept(index: number) {
     const notActiveTabs = this.allTabs.filter((tab, i) => i !== index);
@@ -279,8 +278,7 @@ export abstract class BaseTabs extends LitElement {
     this.focusTab = selectedTab;
   }
 
-  @bound
-  private _onKeyDownHandler(event: KeyboardEvent): void {
+  #onKeydown = (event: KeyboardEvent): void => {
     const foundTab = this.allTabs.find(tab => tab === event.target);
     if (!foundTab) {
       return;
@@ -313,15 +311,14 @@ export abstract class BaseTabs extends LitElement {
       default:
         return;
     }
-  }
+  };
 
-  @bound
-  private _handleScrollButtons(): void {
+  #onScroll = ():void => {
     clearTimeout(this.#scrollTimeout);
     this.#scrollTimeout = setTimeout(() => {
       this.#isOverflow();
     }, BaseTabs.delay);
-  }
+  };
 
   #isOverflow(): void {
     this._overflowOnLeft = !isElementInView(this._tabList, this.#firstTab() as HTMLElement, false);
@@ -329,8 +326,7 @@ export abstract class BaseTabs extends LitElement {
     this._showScrollButtons = (this._overflowOnLeft || this._overflowOnRight);
   }
 
-  @bound
-  private _scrollLeft(): void {
+  #scrollLeft(): void {
     const container = this._tabList;
     const childrenArr = this.allTabs;
     let firstElementInView: BaseTab | undefined;
@@ -347,8 +343,7 @@ export abstract class BaseTabs extends LitElement {
     }
   }
 
-  @bound
-  private _scrollRight(): void {
+  #scrollRight(): void {
     const container = this._tabList;
     const childrenArr = this.allTabs;
     let lastElementInView: BaseTab | undefined;

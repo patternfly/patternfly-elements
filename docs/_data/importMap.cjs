@@ -69,7 +69,12 @@ module.exports = async function() {
     env: ['production', 'browser', 'module']
   });
 
-  await generator.install(['tslib', ...LIT_DEPS, ...PWA_DEPS]);
+  await generator.install([
+    'tslib',
+    'element-internals-polyfill',
+    ...LIT_DEPS,
+    ...PWA_DEPS
+  ]);
 
   const map = generator.getMap();
 

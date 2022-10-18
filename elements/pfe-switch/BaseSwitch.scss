@@ -1,174 +1,35 @@
-@use "@patternfly/pfe-sass" as *;
-
-@include configure(
-  $name: '<%= cssName %>',
-  $variables: (),
-);
-
-
 :host {
-  // Switch - the vars for this file don't follow our normal order so that the IE11 script can convert the vars correctly
-  --pf-c-switch--FontSize: var(--pf-global--FontSize--md, 1rem);
-  --pf-c-switch__label--PaddingLeft: var(--pf-global--spacer--md, 1rem); // remove at breaking change
-  --pf-c-switch--ColumnGap: var(--pf-c-switch__label--PaddingLeft, 1rem); // update at breaking change
-
-  // Switch icon
-  --pf-c-switch__toggle-icon--FontSize: calc(var(--pf-c-switch--FontSize, 1rem) * .625); // We don't use an icon font-size here because this value allows the icon to scale relative to the switch's font-size.
-  --pf-c-switch__toggle-icon--Color: var(--pf-global--Color--light-100, #fff);
-  --pf-c-switch__toggle-icon--Left: calc(var(--pf-c-switch--FontSize, 1rem) * .4);
-  // --pf-c-switch__toggle-icon--Offset: #{pf-size-prem(2px)}; // this value is created to handle sizing of the toggle and therefore the width of the toggle and its transform value.
-  --pf-c-switch__toggle-icon--Offset: 0.125rem;
-
-  // Switch
-  --pf-c-switch--LineHeight: var(--pf-global--LineHeight--md, 1.5);
-  --pf-c-switch--Height: auto;
-
-  // Switch input
-  --pf-c-switch__input--checked__toggle--BackgroundColor: var(--pf-global--primary-color--100, #06c);
-  --pf-c-switch__input--checked__toggle--before--TranslateX: calc(100% + var(--pf-c-switch__toggle-icon--Offset, 0.125rem));
-  --pf-c-switch__input--checked__label--Color: var(--pf-global--Color--dark-100, #151515);
-  --pf-c-switch__input--not-checked__label--Color: var(--pf-global--disabled-color--100, #6a6e73);
-  --pf-c-switch__input--disabled__label--Color: var(--pf-global--disabled-color--100, #6a6e73);
-  --pf-c-switch__input--disabled__toggle--BackgroundColor: var(--pf-global--disabled-color--200, #d2d2d2);
-  --pf-c-switch__input--disabled__toggle--before--BackgroundColor: var(--pf-global--palette--black-150, #f5f5f5);
-  --pf-c-switch__input--focus__toggle--OutlineWidth: var(--pf-global--BorderWidth--md, 2px);
-  --pf-c-switch__input--focus__toggle--OutlineOffset: var(--pf-global--spacer--sm, 0.5rem);
-  --pf-c-switch__input--focus__toggle--OutlineColor: var(--pf-global--primary-color--100, #06c);
-
-  // Switch toggle
-  --pf-c-switch__toggle--Height: calc(var(--pf-c-switch--FontSize) * var(--pf-c-switch--LineHeight));
-  --pf-c-switch__toggle--BackgroundColor: var(--pf-global--palette--black-500, #8a8d90);
-  --pf-c-switch__toggle--BorderRadius: var(--pf-c-switch__toggle--Height);
-  --pf-c-switch__toggle--before--Width: calc(var(--pf-c-switch--FontSize) - var(--pf-c-switch__toggle-icon--Offset));
-  --pf-c-switch__toggle--before--Height: var(--pf-c-switch__toggle--before--Width);
-  --pf-c-switch__toggle--before--Top: calc((var(--pf-c-switch__toggle--Height) - var(--pf-c-switch__toggle--before--Height)) / 2);
-  --pf-c-switch__toggle--before--Left: var(--pf-c-switch__toggle--before--Top);
-  --pf-c-switch__toggle--before--BackgroundColor: var(--pf-global--BackgroundColor--100, #fff);
-  --pf-c-switch__toggle--before--BorderRadius: var(--pf-global--BorderRadius--lg, 30em);
-  --pf-c-switch__toggle--before--BoxShadow: var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
-  --pf-c-switch__toggle--before--Transition: transform .25s ease 0s;
-  --pf-c-switch__toggle--Width: calc(var(--pf-c-switch__toggle--Height) + var(--pf-c-switch__toggle-icon--Offset) + var(--pf-c-switch__toggle--before--Width));
-
-  // Switch label
-  --pf-c-switch__label--Color: var(--pf-global--Color--dark-100, #151515);
   display: inline-block;
 }
 
-label {
-  display: inline-grid;
-  grid-template-columns: auto;
-  grid-auto-columns: 1fr;
-  column-gap: var(--pf-c-switch--ColumnGap);
-  position: relative;
-  height: var(--pf-c-switch--Height);
-  font-size: var(--pf-c-switch--FontSize);
-  line-height: var(--pf-c-switch--LineHeight);
-  cursor: pointer;
+[hidden] {
+  display:none !important;
 }
 
-:host([reversed]) {
-  #label,
-  #toggle {
-    grid-row: 1;
-  }
-
-  #label {
-    grid-column: 1;
-  }
+svg {
+  fill: currentcolor;
 }
 
-::slotted(input) {
-  position: absolute;
-  cursor: pointer;
-  opacity: 0;
-}
-
-:host([checked]:not([disabled])) {
-  label {
-    color: var(--pf-c-switch__input--checked__label--Color);
-  }
-
-  #toggle {
-    background-color: var(--pf-c-switch__input--checked__toggle--BackgroundColor);
-
-    &::before {
-      transform: translateX(var(--pf-c-switch__input--checked__toggle--before--TranslateX));
-    }
-  }
-}
-
+:host(:disabled),
 :host([disabled]) {
   cursor: not-allowed;
-
   #label {
-    color: var(--pf-c-switch__input--disabled__label--Color);
     cursor: not-allowed;
-  }
-
-  #toggle {
-    cursor: not-allowed;
-    background-color: var(--pf-c-switch__input--disabled__toggle--BackgroundColor);
-
-    &::before {
-      background-color: var(--pf-c-switch__input--disabled__toggle--before--BackgroundColor);
-    }
-
-    &:focus {
-      outline: none;
-    }
   }
 }
 
-:host([checked][disabled]) {
-  #toggle {
-    &::before {
-      transform: translateX(var(--pf-c-switch__input--checked__toggle--before--TranslateX));
-    }
-  }
-}
-
-#toggle {
-  position: relative;
-  display: inline-block;
-  width: var(--pf-c-switch__toggle--Width);
-  height: var(--pf-c-switch__toggle--Height);
-  background-color: var(--pf-c-switch__toggle--BackgroundColor);
-  border-radius: var(--pf-c-switch__toggle--BorderRadius);
-
-  &:focus {
-    outline: var(--pf-c-switch__input--focus__toggle--OutlineWidth) solid var(--pf-c-switch__input--focus__toggle--OutlineColor);
-    outline-offset: var(--pf-c-switch__input--focus__toggle--OutlineOffset);
-  }
-
-  &::before {
-    position: absolute;
-    top: var(--pf-c-switch__toggle--before--Top);
-    left: var(--pf-c-switch__toggle--before--Left);
-    display: block;
-    width: var(--pf-c-switch__toggle--before--Width);
-    height: var(--pf-c-switch__toggle--before--Height);
-    content: "";
-    background-color: var(--pf-c-switch__toggle--before--BackgroundColor);
-    border-radius: var(--pf-c-switch__toggle--before--BorderRadius);
-    box-shadow: var(--pf-c-switch__toggle--before--BoxShadow);
-    transition: var(--pf-c-switch__toggle--before--Transition);
-  }
+:host(:disabled:focus-within) #label,
+:host([disabled]:focus-within) #label {
+  outline: none;
 }
 
 #label {
-  display: inline-block;
-  grid-column: 2;
-  color: var(--pf-c-switch__label--Color);
-  vertical-align: top;
-}
-
-#toggle-icon {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--pf-c-switch__toggle-icon--Left);
-  display: flex;
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  font-size: var(--pf-c-switch__toggle-icon--FontSize);
-  color: var(--pf-c-switch__toggle-icon--Color);
+  &::before {
+    position: absolute;
+    display: block;
+    content: "";
+  }
 }

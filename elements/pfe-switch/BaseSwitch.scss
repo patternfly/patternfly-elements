@@ -9,7 +9,7 @@ svg {
 }
 
 :host([checked]) {
-  label {
+  #label {
     color: var(--pf-c-switch__input--checked__label--Color, var(--pf-global--Color--dark-100, #151515));
     background-color: var(--pf-c-switch__input--checked__toggle--BackgroundColor, var(--pf-global--primary-color--100, #06c));
 
@@ -23,7 +23,7 @@ svg {
 :host([disabled]) {
   cursor: not-allowed;
 
-  label {
+  #label {
     cursor: not-allowed;
     color: var(--pf-c-switch__input--disabled__label--Color, var(--pf-global--disabled-color--100, #6a6e73));
     background-color: var(--pf-c-switch__input--disabled__toggle--BackgroundColor, var(--pf-global--disabled-color--200, #d2d2d2));
@@ -35,20 +35,20 @@ svg {
   }
 }
 
-:host(:disabled:focus-within) label,
-:host([disabled]:focus-within) label {
+:host(:disabled:focus-within) #label,
+:host([disabled]:focus-within) #label {
   outline: none;
 }
 
 :host([checked]:disabled) {
-  label {
+  #label {
     &::before {
       translate: var(--pf-c-switch__input--checked__toggle--before--TranslateX, calc(100% + var(--pf-c-switch__toggle-icon--Offset, 0.125rem)));
     }
   }
 }
 
-label {
+#label {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -70,12 +70,11 @@ label {
     box-shadow: var(--pf-c-switch__toggle--before--BoxShadow, var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06)));
     transition: var(
       --pf-c-switch__toggle--before--Transition,
-      var(--pf-c-switch__toggle--before--Transition, translate .25s ease 0s));
-  ;
+      var(--pf-c-switch__toggle--before--Transition, translate .25s ease 0s)); ;
   }
 }
 
-:host(:focus-within) label {
+:host(:focus-within) #label {
   outline: var(--pf-c-switch__input--focus__toggle--OutlineWidth, var(--pf-global--BorderWidth--md, 2px)) solid var(--pf-c-switch__input--focus__toggle--OutlineColor, var(--pf-global--primary-color--100, #06c));
   outline-offset: var(--pf-c-switch__input--focus__toggle--OutlineOffset, var(--pf-global--spacer--sm, 0.5rem));
 }
@@ -85,17 +84,4 @@ svg {
   margin-inline: var(--pf-c-switch__toggle-icon--Left, calc(var(--pf-c-switch--FontSize, var(--pf-global--FontSize--md, 1rem)) * .4));
   font-size: var(--pf-c-switch__toggle-icon--FontSize,  calc(var(--pf-c-switch--FontSize, var(--pf-global--FontSize--md, 1rem)) * .625));
   color: var(--pf-c-switch__toggle-icon--Color, var(--pf-global--Color--light-100, #fff));
-}
-
-/* visually hidden */
-input {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: auto;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  white-space: nowrap;
 }

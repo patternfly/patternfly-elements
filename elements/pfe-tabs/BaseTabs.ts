@@ -132,7 +132,7 @@ export abstract class BaseTabs extends LitElement {
             </button>`
           : html``}
           <div part="tabs" role="tablist">
-            <slot name="tab" @slotchange="${this._onSlotchange}"></slot>
+            <slot name="tab" @slotchange="${this.onSlotchange}"></slot>
           </div>
           ${this._showScrollButtons ? html`
             <button id="nextTab" aria-label="Scroll right" ?disabled="${!this._overflowOnRight}" @click="${this.#scrollRight}">
@@ -141,7 +141,7 @@ export abstract class BaseTabs extends LitElement {
           : html``}
         </div>
         <div part="panels">
-          <slot @slotchange="${this._onSlotchange}"></slot>
+          <slot @slotchange="${this.onSlotchange}"></slot>
         </div>
       </div>
     `;
@@ -156,7 +156,7 @@ export abstract class BaseTabs extends LitElement {
     this._tabList.addEventListener('scroll', this.#onScroll);
   }
 
-  protected _onSlotchange(event: { target: { name: string; }; }) {
+  protected onSlotchange(event: { target: { name: string; }; }) {
     if (event.target.name === 'tab') {
       this.allTabs = this._tabs;
     } else {

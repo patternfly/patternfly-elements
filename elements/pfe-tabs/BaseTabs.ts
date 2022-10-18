@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit';
 import { state, property, query, queryAssignedElements } from 'lit/decorators.js';
 
-import { bound } from '@patternfly/pfe-core/decorators.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.js';
 

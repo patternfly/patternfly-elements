@@ -5,9 +5,7 @@ import styles from './pfe-switch.scss';
 
 /**
  * Switch
- * @slot - Expecting `<input type="checkbox">`
  * @cssprop --pf-c-switch--FontSize {@default `1rem`}
- * @cssprop {<length>} --pf-c-switch__label--PaddingLeft {@default `1rem`}
  * @cssprop {<length>} --pf-c-switch--ColumnGap {@default `1rem`}
  * @cssprop --pf-c-switch__toggle-icon--FontSize {@default `calc(1rem * .625)`}
  * @cssprop {<color>} --pf-c-switch__toggle-icon--Color {@default `#fff`}
@@ -37,7 +35,6 @@ import styles from './pfe-switch.scss';
  * @cssprop --pf-c-switch__toggle--before--BoxShadow {@default `0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06)`}
  * @cssprop --pf-c-switch__toggle--before--Transition {@default `transform .25s ease 0s`}
  * @cssprop {<length>} --pf-c-switch__toggle--Width {@default `calc(calc(1rem * 1.5) + 0.125rem + calc(1rem - 0.125rem))`}
- * @cssprop {<color>} --pf-c-switch__label--Color {@default `#151515`}
  */
 
 @customElement('pfe-switch')

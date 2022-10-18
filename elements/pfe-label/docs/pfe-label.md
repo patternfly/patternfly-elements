@@ -88,12 +88,12 @@
   </pfe-label>
   ```
   <pfe-label color="blue">Globe
-    <pfe-icon slot="icon" icon="web-icon-globe" size="sm" color="important"></pfe-icon>
+    <pfe-icon slot="icon" icon="globe" size="sm"></pfe-icon>
   </pfe-label>
 
   ```html
   <pfe-label color="blue">Globe
-    <pfe-icon slot="icon" icon="web-icon-globe" size="sm"></pfe-icon>
+    <pfe-icon slot="icon" icon="globe" size="sm"></pfe-icon>
   </pfe-label>
   ```
 
@@ -106,7 +106,7 @@
   <pfe-label compact color="red" icon="web-icon-globe">Red</pfe-label>
   <pfe-label compact variant="outline" color="purple">Purple</pfe-label>
   <pfe-label compact color="cyan">Cyan</pfe-label>
-  <pfe-label compact variant="outline" color="gold">Gold <pfe-icon slot="icon" icon="web-icon-globe" size="sm" color="important"></pfe-icon></pfe-label>
+  <pfe-label compact variant="outline" color="gold">Gold <pfe-icon slot="icon" icon="globe" size="sm"></pfe-icon></pfe-label>
   <pfe-label compact>Default</pfe-label>  
 
   ```html
@@ -118,7 +118,7 @@
   <pfe-label compact color="red" icon="web-icon-globe">Red</pfe-label>
   <pfe-label compact variant="outline" color="purple">Purple</pfe-label>
   <pfe-label compact color="cyan">Cyan</pfe-label>
-  <pfe-label compact variant="outline" color="gold">Gold <pfe-icon slot="icon" icon="web-icon-globe" size="sm" color="important"></pfe-icon></pfe-label>
+  <pfe-label compact variant="outline" color="gold">Gold <pfe-icon slot="icon" icon="globe" size="sm"></pfe-icon></pfe-label>
   <pfe-label compact>Default</pfe-label>  
   ```
 

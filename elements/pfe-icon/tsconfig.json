@@ -1,12 +1,23 @@
 {
   "extends": "../../tsconfig.settings.json",
-  "include": ["./**/*"],
+  "include": [
+    "./**/*"
+  ],
+  "exclude": [
+    "./icons/**/*.js"
+  ],
   "compilerOptions": {
+    "module": "esnext",
+    "resolveJsonModule": true,
     "outDir": ".",
     "rootDir": "."
   },
   "references": [
-    { "path": "../../core/pfe-core" },
-    { "path": "../../tools/pfe-tools" }
+    {
+      "path": "../../core/pfe-core"
+    },
+    {
+      "path": "../../tools/pfe-tools"
+    }
   ]
 }

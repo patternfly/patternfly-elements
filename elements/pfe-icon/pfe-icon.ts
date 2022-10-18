@@ -1,224 +1,151 @@
-import type { ColorTheme } from '@patternfly/pfe-core';
-import type { IconNameResolverFn } from './icon-set.js';
-
-import { LitElement, html, svg } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
-import { styleMap } from 'lit/directives/style-map.js';
-
-import { pfelement, bound, observed, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+import { LitElement, html } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
-
-import { PfeIconSet } from './icon-set.js';
-
-import { addBuiltIns } from './builtin-icon-sets.js';
 
 import style from './pfe-icon.scss';
 
-export type IconColor = (
-  | 'accent'
-  | 'base'
-  | 'complement'
-  | 'critical'
-  | 'darker'
-  | 'darkest'
-  | 'important'
-  | 'info'
-  | 'lightest'
-  | 'moderate'
-  | 'success'
-);
+export type URLGetter = (set: string, icon: string) => URL;
 
-const INSTANCES = new Set<PfeIcon>();
+/** requestIdleCallback when available, requestAnimationFrame when not */
+const ric = window.requestIdleCallback ?? window.requestAnimationFrame;
 
-/** Ensure iconsets are registered before elements are upgraded */
-function register(klass: typeof PfeIcon) {
-  // Allow the user to supply their own icon sets via config.
-  // See more in the pfe-icon README.md.
-  window.PfeConfig ??= {};
-
-  addBuiltIns({ PfeIcon: klass, config: window.PfeConfig });
-
-  // Attach a listener for the registration of an icon set
-  // Leaving this attached allows for the registered set to be updated
-  document.body.addEventListener(`pfe-icon:add-icon-set`, () => {
-    for (const el of INSTANCES) {
-      el.updateIcon();
-    }
-  });
+/** Fired when an icon fails to load */
+class IconLoadError extends ErrorEvent {
+  constructor(
+    pathname: string,
+    /** The original error when importing the icon module */
+    public originalError: Error
+  ) {
+    super('error', { message: `Could not load icon at ${pathname}` });
+  }
 }
 
 /**
- * Icon delivers icon elements that can be sized, colored, and circled.
- * Other icon sets can also be registered and added for use.
+ * PatternFly Icon component lazy-loads icons and allows custom icon sets
  *
- * @summary Delivers icon elements that can be sized, colored, and circled
+ * @slot - Slotted content is used as a fallback in case the icon doesn't load
+ * @fires load - Fired when an icon is loaded and rendered
+ * @fires error - Fired when an icon fails to load
+ * @csspart fallback - Container for the fallback (i.e. slotted) content
  */
-@customElement('pfe-icon') @register @pfelement()
+@customElement('pfe-icon')
 export class PfeIcon extends LitElement {
-  static readonly version = '{{version}}';
+  public static readonly version = '{{version}}';
 
-  static readonly styles = [style];
+  public static readonly styles = [style];
 
-  /**
-   * Get an icon set by providing the set's name, _or_ the name of an icon from that set.
-   *
-   * @param  iconName the name of the set, or the name of an icon from that set.
-   */
-  static getIconSet(iconName: string): { set?: PfeIconSet } {
-    iconName ??= '';
-    const [setName] = iconName.split('-');
-    return {
-      set: this._iconSets.get(setName),
-    };
-  }
+  public static defaultIconSet = 'fas';
 
-  static addIconSet(name: string, path: string, resolveIconName?: IconNameResolverFn) {
-    let resolveFunction = resolveIconName;
-
-    const existingSet = this._iconSets.get(name);
-
-    if (!resolveFunction && existingSet && typeof existingSet?.resolver === 'function') {
-      resolveFunction = existingSet.resolver;
-    } else if (resolveFunction && typeof resolveFunction !== 'function') {
-      return Logger.warn(`[${'pfe-icon'}]: The third input to addIconSet should be a function that parses and returns the icon's filename.`);
-    } else if (!resolveFunction) {
-      return Logger.warn(`[${'pfe-icon'}]: The set ${name} needs a resolve function for the icon names.`);
+  public static addIconSet(setName: string, getter: typeof PfeIcon['getIconUrl']) {
+    if (typeof getter !== 'function') {
+      Logger.warn('[PfeIcon.addIconSet(setName, getter)]: getter must be a function');
+    } else {
+      this.getters.set(setName, getter);
+      for (const instance of this.instances) {
+        instance.load();
+      }
     }
-
-
-    // Register the icon set and set up the event indicating the change
-    this._iconSets.set(name, new PfeIconSet(name, path, resolveFunction));
-
-    document.body.dispatchEvent(
-      new CustomEvent('pfe-icon:add-icon-set', {
-        bubbles: false,
-        detail: {
-          set: this._iconSets.get(name),
-        },
-      })
-    );
   }
 
-  private static _iconSets = new Map<string, PfeIconSet>();
+  public static getIconUrl: URLGetter = (set: string, icon: string) =>
+    new URL(`./icons/${set}/${icon}.js`, import.meta.url);
 
-  /**
-   * For example, `rh-leaf` loads a leaf icon from an icon set named "rh".
-   */
+  private static onIntersect: IntersectionObserverCallback = records =>
+    records.forEach(({ isIntersecting, target }) => {
+      const icon = target as PfeIcon;
+      icon.#intersecting = isIntersecting;
+      ric(() => {
+        if (icon.#intersecting) {
+          icon.load();
+        }
+      });
+    });
+
+  private static io = new IntersectionObserver(PfeIcon.onIntersect);
+
+  private static getters = new Map<string, URLGetter>();
+
+  private static instances = new Set();
+
+  /** Icon set */
+  @property() set = PfeIcon.defaultIconSet;
+
+  /** Icon name */
   @observed
-  @property({ type: String, reflect: true }) icon = '';
+  @property({ reflect: true }) icon = '';
+
+  /** Size of the icon */
+  @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
 
   /**
-   * The default size is 1em, so icon size matches text size. `2x`, etc, are multiples of font size. `sm`, `md`, etc are fixed pixel-based sizes.
+   * Controls how eager the element will be to load the icon data
+   * - `eager`: eagerly load the icon, blocking the main thread
+   * - `idle`: wait for the browser to attain an idle state before loading
+   * - `lazy` (default): wait for the element to enter the viewport before loading
    */
-  @property({ type: String, reflect: true }) size: 'xl'|'lg'|'md'|'sm'|'1x'|'2x'|'3x'|'4x' = 'xl';
+  @property() loading?: 'idle'|'lazy'|'eager' = 'lazy';
 
-  /**
-   * The color variant to use. This draws from your theming layer to color the icon.
-   * This will set icon color or background color (if circled is true).
-   * Values:
-   * - base
-   * - lightest
-   * - lighter
-   * - darker
-   * - darkest
-   * - complement
-   * - accent
-   * - critical
-   * - important
-   * - moderate
-   * - success
-   * - info
-   * - default
-   */
-  @property({ type: String, reflect: true }) color?: IconColor;
+  /** Icon content. Any value that lit can render */
+  @state() private content?: unknown;
 
-  @property({ type: String, reflect: true, attribute: 'on-fail' }) onFail?: 'collapse';
+  #intersecting = false;
 
-  /**
-   * Whether to draw a circular background behind the icon.
-   */
-  @property({ type: Boolean, reflect: true }) circled = false;
+  #logger = new Logger(this);
 
-  @property({ type: Boolean, reflect: true }) block = false;
-
-  /**
-   * Sets color theme based on parent context
-   */
-  @colorContextConsumer()
-  @property({ reflect: true }) on?: ColorTheme;
-
-  @state() private _iconHref = '';
-
-  @state() private _filterId?: string;
-
-  @query('svg image') private image?: SVGElement;
-
-  get upgraded(): boolean {
-    return this.image?.hasAttribute('href') ?? false;
+  #lazyLoad() {
+    PfeIcon.io.observe(this);
+    if (this.#intersecting) {
+      this.load();
+    }
   }
 
   connectedCallback() {
     super.connectedCallback();
-    INSTANCES.add(this);
-  }
-
-  render() {
-    return html`
-      <div class="pfe-icon--fallback">
-        <slot></slot>
-      </div>
-      ${svg`
-        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
-          <filter id="${this._filterId}"
-              color-interpolation-filters="sRGB"
-              x="0" y="0"
-              height="100%" width="100%">
-            <feFlood result="COLOR" />
-            <feComposite operator="in" in="COLOR" in2="SourceAlpha" />
-          </filter>
-          <image href="${this._iconHref}"
-              width="100%"
-              height="100%"
-              @load=${this._iconLoad}
-              @error=${this._iconLoadError}
-              style="${styleMap({
-                filter: this._filterId && `url(#${this._filterId})`,
-              })}"
-          ></image>
-        </svg>
-      `}
-    `;
+    PfeIcon.instances.add(this);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    INSTANCES.delete(this);
+    PfeIcon.instances.delete(this);
   }
 
-  @bound private _iconLoad() {
-    this.classList.remove('load-failed');
+  render() {
+    const content = this.content ?? ''; /* eslint-disable indent */
+    return html`
+      <div id="container" aria-hidden="true">${content
+       }<span part="fallback" ?hidden=${!!content}>
+          <slot></slot>
+        </span>
+      </div>
+    `;/* eslint-enable indent */
   }
 
-  @bound private _iconLoadError() {
-    this.classList.add('load-failed');
-    this.classList.toggle('has-fallback', !!(
-      this.children.length ||
-      this.textContent?.trim().length
-    ));
+  protected async _iconChanged() {
+    switch (this.loading) {
+      case 'idle': return void ric(() => this.load());
+      case 'lazy': return void this.#lazyLoad();
+      case 'eager': return void this.load();
+    }
   }
 
-  protected _iconChanged() {
-    this.updateIcon();
-  }
-
-  @bound public updateIcon() {
-    const { set } = PfeIcon.getIconSet(this.icon);
-    if (set) {
-      this._iconHref = set.resolveIconName(this.icon);
-      // Sets the id attribute on the <filter> element and points the CSS `filter` at that id.
-      // also sets the CSS filter property to point at the given id
-      this._filterId = getRandomId('filter');
+  protected async load() {
+    const { set, icon, } = this;
+    const getter = PfeIcon.getters.get(set) ?? PfeIcon.getIconUrl;
+    let pathname = 'UNKNOWN ICON';
+    if (set && icon) {
+      try {
+        ({ pathname } = getter(set, icon));
+        const mod = await import(pathname);
+        this.content = mod.default instanceof Node ? mod.default.cloneNode(true) : mod.default;
+        await this.updateComplete;
+        this.dispatchEvent(new Event('load', { bubbles: true }));
+      } catch (error: unknown) {
+        const event = new IconLoadError(pathname, error as Error);
+        this.#logger.error((error as IconLoadError).message);
+        this.dispatchEvent(event);
+      }
     }
   }
 }

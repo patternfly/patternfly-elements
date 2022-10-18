@@ -12,7 +12,7 @@
   },
   "scripts": {
     "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
-    "start": "run-p dev:* watch:docs:analyze",
+    "start": "npm-run-all build:tools build:icons build:analyze --parallel dev:* watch:docs:analyze",
     "start:demo": "npm run dev",
     "dev": "run-p dev:*",
     "dev:server": "web-dev-server --open --watch",
@@ -26,6 +26,7 @@
     "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
     "build": "run-s build:*",
     "build:tools": "npm run build --workspace @patternfly/pfe-tools",
+    "build:icons": "ts-node --esm --project tsconfig.icons.json ./scripts/icons/build.ts",
     "build:analyze": "lerna run analyze --parallel",
     "build:styles": "npm run build --workspace @patternfly/pfe-styles",
     "build:core": "npm run build --workspace @patternfly/pfe-core",
@@ -72,12 +73,14 @@
     "@commitlint/config-conventional": "^17.0.3",
     "@commitlint/config-lerna-scopes": "^17.0.2",
     "@jspm/generator": "^1.0.0-beta.33",
+    "@patternfly/patternfly": "^4.210.2",
     "@types/koa__router": "^8.0.11",
     "@types/numeral": "^2.0.2",
     "@types/prismjs": "^1.26.0",
     "@types/prompts": "^2.4.1",
     "commitlint": "^17.0.3",
     "cpx": "^1.5.0",
+    "fuse.js": "^6.6.2",
     "git-branch": "^2.0.1",
     "husky": "^8.0.1",
     "leasot": "^13.2.0",
@@ -86,7 +89,8 @@
     "open": "^8.4.0",
     "prompts": "^2.4.2",
     "renamer": "^4.0.0",
-    "sassdoc": "^2.7.4"
+    "sassdoc": "^2.7.4",
+    "zero-md": "^2.3.6"
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --fix"

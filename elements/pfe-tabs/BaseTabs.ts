@@ -27,8 +27,17 @@ export abstract class BaseTabs extends LitElement {
   protected static readonly scrollIconSet = 'fas';
 
   @queryAssignedElements() protected _panels!: BaseTabPanel[];
+  static #instances = new Set<BaseTabs>();
 
   @query('[part="tabs"]') _tabList!: HTMLElement;
+  static {
+    // on resize check for overflows to add or remove scroll buttons
+    window.addEventListener('resize', () => {
+      for (const instance of this.#instances) {
+        instance.#onScroll();
+      }
+    }, { capture: false });
+  }
 
   @state() protected _showScrollButtons = false;
 
@@ -120,8 +129,12 @@ export abstract class BaseTabs extends LitElement {
     super.connectedCallback();
     this.addEventListener('tab-expand', this.#onTabExpand);
     this.addEventListener('keydown', this.#onKeydown);
-    // on resize check for overflows
-    window.addEventListener('resize', this.#onScroll, false);
+    BaseTabs.#instances.add(this);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    BaseTabs.#instances.delete(this);
   }
 
   override render() {

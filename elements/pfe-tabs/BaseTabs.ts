@@ -125,9 +125,9 @@ export abstract class BaseTabs extends LitElement {
     this.#focusTab?.focusButton();
   }
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('tab-expand', this.#onTabExpand);
+    this.addEventListener('expand', this.#onTabExpand);
     this.addEventListener('keydown', this.#onKeydown);
     BaseTabs.#instances.add(this);
   }
@@ -195,7 +195,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #onTabExpand = (event: Event): void => {
-    if (this.allTabs.length === 0) {
+    if (!(event instanceof TabExpandEvent) || this.allTabs.length === 0) {
       return;
     }
 

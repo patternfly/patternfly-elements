@@ -12,7 +12,7 @@ export class TabExpandEvent extends ComposedEvent {
     public active: boolean,
     public tab: BaseTab,
   ) {
-    super('tab-expand');
+    super('expand');
   }
 }
 

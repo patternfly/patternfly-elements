@@ -345,10 +345,16 @@ export abstract class BaseTabs extends LitElement {
     this.#lastTab.classList.add('last');
   }
 
+  /** override to prevent scroll buttons from showing */
+  protected get canShowScrollButtons() {
+    return true;
+  }
+
   #setOverflowState(): void {
-    this.#overflowOnLeft = !isElementInView(this.tabList, this.#firstTab);
-    this.#overflowOnRight = !isElementInView(this.tabList, this.#lastTab);
-    this.#showScrollButtons = (this.#overflowOnLeft || this.#overflowOnRight);
+    const { canShowScrollButtons } = this;
+    this.#overflowOnLeft = canShowScrollButtons && !isElementInView(this.tabList, this.#firstTab);
+    this.#overflowOnRight = canShowScrollButtons && !isElementInView(this.tabList, this.#lastTab);
+    this.#showScrollButtons = canShowScrollButtons && (this.#overflowOnLeft || this.#overflowOnRight);
     this.requestUpdate();
   }
 

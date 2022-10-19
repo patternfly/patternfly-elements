@@ -89,6 +89,8 @@ export class PfeTabs extends BaseTabs {
   @cascades('pfe-tab')
   @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'true';
 
+  protected get canShowScrollButtons(): boolean {
+    return !this.vertical;
   }
 }
 

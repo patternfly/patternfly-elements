@@ -9,6 +9,11 @@ import { BaseTabPanel } from './BaseTabPanel.js';
 
 import style from './BaseTab.scss';
 
+/**
+ * @attr [label-scroll-left="Scroll left"] - accessible label for the tab panel's scroll left button.
+ * @attr [label-scroll-right="Scroll right"] - accessible label for the tab panel's scroll right button.
+ *
+ */
 export abstract class BaseTabs extends LitElement {
   static readonly styles = [style];
 
@@ -155,7 +160,7 @@ export abstract class BaseTabs extends LitElement {
             <slot name="tab" @slotchange="${this.onSlotchange}"></slot>
           </div>${!this.#showScrollButtons ? '' : html`
           <button id="nextTab"
-              aria-label="${this.getAttribute('label-scroll-left') ?? 'Scroll right'}"
+              aria-label="${this.getAttribute('label-scroll-right') ?? 'Scroll right'}"
               ?disabled="${!this.#overflowOnRight}"
               @click="${this.#scrollRight}">
             <pfe-icon icon="${scrollIconRight}" set="${scrollIconSet}" loading="eager"></pfe-icon>

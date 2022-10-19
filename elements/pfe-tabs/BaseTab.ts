@@ -29,6 +29,15 @@ export abstract class BaseTab extends LitElement {
   @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
 
+  #internals = this.attachInternals();
+
+  get ariaDisabled() {
+    return this.#internals.ariaDisabled;
+  }
+
+  get ariaSelected() {
+    return this.#internals.ariaSelected;
+  }
 
   connectedCallback() {
     super.connectedCallback();
@@ -52,7 +61,7 @@ export abstract class BaseTab extends LitElement {
   }
 
   #clickHandler() {
-    if (!this.disabled && this.ariaDisabled !== 'true') {
+    if (!this.disabled && this.#internals.ariaDisabled !== 'true') {
       this.active = true;
     }
   }
@@ -64,10 +73,10 @@ export abstract class BaseTab extends LitElement {
     }
     if (newVal && !this.disabled) {
       this.removeAttribute('tabindex');
-      this.ariaSelected = 'true';
+      this.#internals.ariaSelected = 'true';
     } else {
       this.tabIndex = -1;
-      this.ariaSelected = 'false';
+      this.#internals.ariaSelected = 'false';
     }
     this.dispatchEvent(new TabExpandEvent(newVal, this));
   }
@@ -81,11 +90,7 @@ export abstract class BaseTab extends LitElement {
     // if a tab is removed from disabled its not necessarily
     // not still aria-disabled so we don't remove the aria-disabled
     if (newVal === true) {
-      this.ariaDisabled = 'true';
+      this.#internals.ariaDisabled = 'true';
     }
-  }
-
-  setAriaControls(id: string): void {
-    this.setAttribute('aria-controls', id);
   }
 }

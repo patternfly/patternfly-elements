@@ -199,8 +199,10 @@ export abstract class BaseTabs extends LitElement {
   #updateAccessibility(): void {
     this.allTabs.forEach((tab, index) => {
       const panel = this.allPanels[index];
-      panel.setAriaLabelledBy(tab.id);
-      tab.setAriaControls(panel.id);
+      if (!panel.hasAttribute('aria-labelledby')) {
+        panel.setAttribute('aria-labelledby', tab.id);
+      }
+      tab.setAttribute('aria-controls', panel.id);
     });
   }
 

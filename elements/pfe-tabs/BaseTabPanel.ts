@@ -17,17 +17,7 @@ export abstract class BaseTabPanel extends LitElement {
   }
 
   firstUpdated() {
-    this.#upgradeAccessibility();
-  }
-
-  #upgradeAccessibility(): void {
     this.setAttribute('role', 'tabpanel');
     this.tabIndex = 0;
-  }
-
-  setAriaLabelledBy(id: string): void {
-    if (!this.hasAttribute('aria-labelledby')) {
-      this.setAttribute('aria-labelledby', id);
-    }
   }
 }

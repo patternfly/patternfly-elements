@@ -46,12 +46,21 @@
 
 :host button:nth-of-type(1) {
   margin-inline-end: 0;
-  transform: translateX(0);
+  translate: 0 0;
 }
 
 :host button:nth-of-type(2) {
   margin-inline-start: 0;
-  transform: translateX(0);
+  translate: 0 0;
+}
+
+// workaround to disable scroll right button when last tab is aria-disabled
+::slotted(pfe-tab[aria-disabled=true]:last-of-type) {
+  translate: calc(-1 * var(--pf-c-tabs__link--disabled--before--BorderRightWidth, 1px)) 0;
+}
+// workaround to disable scroll left button when first tab is aria-disabled
+::slotted(pfe-tab[aria-disabled=true]:first-of-type) {
+  translate: var(--pf-c-tabs__link--disabled--before--BorderRightWidth, 1px) 0;
 }
 
 :host([box]) [part="tabs-container"] {
@@ -198,7 +207,9 @@ button {
   background-color: var(--pf-c-tabs__scroll-button--BackgroundColor, var(--pf-global--BackgroundColor--100, #ffffff));
   outline-offset: var(--pf-c-tabs__scroll-button--OutlineOffset, calc(-1 * var(--pf-global--spacer--xs, 0.25rem)));
   opacity: 0;
-  transition: margin var(--pf-c-tabs__scroll-button--TransitionDuration--margin, .125s), transform var(--pf-c-tabs__scroll-button--TransitionDuration--transform, .125s), opacity var(--pf-c-tabs__scroll-button--TransitionDuration--opacity, .125s);
+  transition:
+    margin var(--pf-c-tabs__scroll-button--TransitionDuration--margin, .125s),
+    translate var(--pf-c-tabs__scroll-button--TransitionDuration--transform, .125s), opacity var(--pf-c-tabs__scroll-button--TransitionDuration--opacity, .125s);
 }
 
 button:hover {
@@ -216,13 +227,13 @@ button::before {
 button:nth-of-type(1) {
   --pf-c-tabs__scroll-button--before--BorderRightWidth: var(--pf-c-tabs__scroll-button--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px));
   margin-inline-end: calc(var(--pf-c-tabs__scroll-button--Width, var(--pf-global--spacer--2xl, 3rem)) * -1);
-  transform: translateX(-100%);
+  translate: -100% 0;
 }
 
 button:nth-of-type(2) {
   --pf-c-tabs__scroll-button--before--BorderLeftWidth: var(--pf-c-tabs__scroll-button--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px));
   margin-inline-start: calc(var(--pf-c-tabs__scroll-button--Width, var(--pf-global--spacer--2xl, 3rem)) * -1);
-  transform: translateX(100%);
+  translate: 100% 0;
 }
 
 button:disabled {

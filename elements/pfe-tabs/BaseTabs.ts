@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { state, property, query, queryAssignedElements } from 'lit/decorators.js';
+import { property, query, queryAssignedElements } from 'lit/decorators.js';
 
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.js';
@@ -36,14 +36,17 @@ export abstract class BaseTabs extends LitElement {
     }, { capture: false });
   }
 
-  @state() protected _showScrollButtons = false;
   @queryAssignedElements({ slot: 'tab' }) private tabs!: BaseTab[];
 
-  @state() protected _overflowOnLeft = false;
   @queryAssignedElements() private panels!: BaseTabPanel[];
 
-  @state() protected _overflowOnRight = false;
   @query('[part="tabs"]') private tabList!: HTMLElement;
+
+  #showScrollButtons = false;
+
+  #overflowOnLeft = false;
+
+  #overflowOnRight = false;
 
   #logger = new Logger(this);
 
@@ -141,20 +144,22 @@ export abstract class BaseTabs extends LitElement {
     const { scrollIconSet, scrollIconLeft, scrollIconRight } = this.constructor as typeof BaseTabs;
     return html`
       <div part="container">
-        <div part="tabs-container">
-          ${this._showScrollButtons ? html`
-            <button id="previousTab" aria-label="Scroll left" ?disabled="${!this._overflowOnLeft}" @click="${this.#scrollLeft}">
-            </button>`
-          : html``}
+        <div part="tabs-container">${!this.#showScrollButtons ? '' : html`
+          <button id="previousTab"
+              aria-label="${this.getAttribute('label-scroll-left') ?? 'Scroll left'}"
+              ?disabled="${!this.#overflowOnLeft}"
+              @click="${this.#scrollLeft}">
             <pfe-icon icon="${scrollIconLeft}" set="${scrollIconSet}" loading="eager"></pfe-icon>
+          </button>`}
           <div part="tabs" role="tablist">
             <slot name="tab" @slotchange="${this.onSlotchange}"></slot>
-          </div>
-          ${this._showScrollButtons ? html`
-            <button id="nextTab" aria-label="Scroll right" ?disabled="${!this._overflowOnRight}" @click="${this.#scrollRight}">
-            </button>`
-          : html``}
+          </div>${!this.#showScrollButtons ? '' : html`
+          <button id="nextTab"
+              aria-label="${this.getAttribute('label-scroll-left') ?? 'Scroll right'}"
+              ?disabled="${!this.#overflowOnRight}"
+              @click="${this.#scrollRight}">
             <pfe-icon icon="${scrollIconRight}" set="${scrollIconSet}" loading="eager"></pfe-icon>
+          </button>`}
         </div>
         <div part="panels">
           <slot @slotchange="${this.onSlotchange}"></slot>
@@ -341,10 +346,11 @@ export abstract class BaseTabs extends LitElement {
     this.#lastTab().classList.add('last');
   }
 
-  #isOverflow(): void {
-    this._overflowOnLeft = !isElementInView(this._tabList, this.#firstTab() as HTMLElement, false);
-    this._overflowOnRight = !isElementInView(this._tabList, this.#lastTab() as HTMLElement, false);
-    this._showScrollButtons = (this._overflowOnLeft || this._overflowOnRight);
+  #setOverflowState(): void {
+    this.#overflowOnLeft = !isElementInView(this.tabList, this.#firstTab);
+    this.#overflowOnRight = !isElementInView(this.tabList, this.#lastTab);
+    this.#showScrollButtons = (this.#overflowOnLeft || this.#overflowOnRight);
+    this.requestUpdate();
   }
 
   #scrollLeft(): void {
@@ -362,6 +368,7 @@ export abstract class BaseTabs extends LitElement {
     if (lastElementOutOfView) {
       container.scrollLeft -= lastElementOutOfView.scrollWidth;
     }
+    this.#setOverflowState();
   }
 
   #scrollRight(): void {
@@ -378,5 +385,6 @@ export abstract class BaseTabs extends LitElement {
     if (firstElementOutOfView) {
       container.scrollLeft += firstElementOutOfView.scrollWidth;
     }
+    this.#setOverflowState();
   }
 }

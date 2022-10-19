@@ -63,7 +63,7 @@ export abstract class BaseTabs extends LitElement {
 
   #focusTab?: BaseTab;
 
-  #scrollTimeout: ReturnType<typeof setTimeout> = setTimeout(() => '', 100);
+  #scrollTimeout?: ReturnType<typeof setTimeout>;
 
   #activeIndex = 0;
 

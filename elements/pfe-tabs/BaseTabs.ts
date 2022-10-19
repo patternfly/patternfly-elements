@@ -54,6 +54,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   set activeIndex(index: number) {
+    const oldIndex = this.activeIndex;
     let tab = this.allTabs[index];
     if (tab === undefined || tab.disabled) {
       if (tab === undefined) {
@@ -73,7 +74,7 @@ export abstract class BaseTabs extends LitElement {
     this.#deactivateExcept(index);
 
     this.#activeIndex = index;
-    this.requestUpdate('#activeIndex', index);
+    this.requestUpdate('activeIndex', oldIndex);
   }
 
   private get activeTab() {

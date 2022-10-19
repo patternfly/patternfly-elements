@@ -163,7 +163,7 @@ describe('<pfe-tabs>', function() {
 
     it('should have visible scroll buttons if overflowed', async function() {
       const el = await createFixture<PfeTabs>(TEMPLATE);
-      await aTimeout(BaseTabs.delay);
+      await aTimeout(BaseTabs.scrollTimeoutDelay);
       const previousTab = el.shadowRoot!.querySelector('#previousTab')!;
       const nextTab = el.shadowRoot!.querySelector('#nextTab')!;
       const prevDisplayStyle = getComputedStyle(previousTab).display;

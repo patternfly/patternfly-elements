@@ -68,6 +68,8 @@ export class PfeTabs extends BaseTabs {
 
   static readonly styles = [style, pfeStyle];
 
+  protected static readonly scrollTimeoutDelay = 150;
+
   static isTab(element: HTMLElement): element is PfeTab {
     return element instanceof PfeTab;
   }

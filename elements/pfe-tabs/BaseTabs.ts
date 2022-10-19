@@ -12,8 +12,6 @@ import style from './BaseTab.scss';
 export abstract class BaseTabs extends LitElement {
   static readonly styles = [style];
 
-  static readonly delay = 100;
-
   static isTab(element: BaseTab): element is BaseTab {
     return element instanceof BaseTab;
   }
@@ -23,6 +21,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   @queryAssignedElements({ slot: 'tab' }) protected _tabs!: BaseTab[];
+  protected static readonly scrollTimeoutDelay = 0;
 
   @queryAssignedElements() protected _panels!: BaseTabPanel[];
 
@@ -314,11 +313,10 @@ export abstract class BaseTabs extends LitElement {
     }
   };
 
-  #onScroll = ():void => {
+  #onScroll = () => {
     clearTimeout(this.#scrollTimeout);
-    this.#scrollTimeout = setTimeout(() => {
-      this.#isOverflow();
-    }, BaseTabs.delay);
+    const { scrollTimeoutDelay } = (this.constructor as typeof BaseTabs);
+    this.#scrollTimeout = setTimeout(() => this.#setOverflowState(), scrollTimeoutDelay);
   };
 
   #firstLastClasses() {

@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.31
+
+### Patch Changes
+
+- b1c439d5: Removed esbuild target configuration relying on tsconfig.json for configuration options.
+
 ## 1.0.0-next.30
 
 ### Minor Changes

@@ -2,6 +2,9 @@ import { expect, aTimeout, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { spy } from 'sinon';
 
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
+import '@patternfly/pfe-tools/test/stub-logger.js';
+
 import { PfeCollapse } from '@patternfly/pfe-collapse';
 
 describe('<pfe-collapse>', function() {
@@ -276,17 +279,13 @@ describe('<pfe-collapse>', function() {
 
     const toggle = element.querySelector('pfe-collapse-toggle')!;
 
-    const consoleSpy = spy(console, 'warn');
-
     toggle.click();
 
-    expect(consoleSpy)
-      .to.have.been.calledOnceWith(
+    expect(Logger.warn)
+      .to.have.been.calledWith(
         '[pfe-collapse-toggle#toggle-element]',
         'This toggle doesn\'t have a panel associated with it'
       );
-
-    consoleSpy.restore();
   });
 
   it('should not open the panel if the toggle has been disabled', async function() {

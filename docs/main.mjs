@@ -1,14 +1,3 @@
-import { PfeIcon } from '/pfe.min.js';
-
-PfeIcon.addIconSet(
-  'fas',
-  '/icons/font-awesome/solid',
-  (iconName, _setName, path) => {
-    const name = iconName.replace('fas-', '');
-    return `${path}/${name}.svg`;
-  }
-);
-
 const themeableSection = document.querySelector('#themeable-section');
 const themeSelect = themeableSection.querySelector('pfe-select');
 themeSelect.addEventListener('select', event => {

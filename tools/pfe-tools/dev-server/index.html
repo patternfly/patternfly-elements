@@ -20,7 +20,6 @@
   <link rel="stylesheet" href="{{sheet}}">
   {% endfor %}
   <script type="module">
-    import '@patternfly/pfe-icon/font-awesome.js';
     import '@patternfly/pfe-band';
     import '@patternfly/pfe-button';
     import '@patternfly/pfe-tools/dev-server/demo.ts';
@@ -29,7 +28,7 @@
 
 <body class="menu-open">
   <header id="main-header">
-    <pfe-button id="hamburger" plain icon="fa-bars" aria-controls="sidebar">
+    <pfe-button id="hamburger" plain icon="bars" aria-controls="sidebar">
       <button aria-label="Expand Main Navigation"></button>
     </pfe-button>
     <a href="/"><img src="{{ options.site.logoUrl }}" alt="" />{{ title }}</a>

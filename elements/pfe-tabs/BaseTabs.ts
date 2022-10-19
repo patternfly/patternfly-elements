@@ -165,6 +165,7 @@ export abstract class BaseTabs extends LitElement {
       (this.allTabs.length !== 0 || this.allPanels.length !== 0)) {
       this.#updateAccessibility();
       this.activeIndex = this.allTabs.findIndex(tab => tab.active);
+      this.#firstLastClasses();
     }
   }
 
@@ -318,6 +319,11 @@ export abstract class BaseTabs extends LitElement {
       this.#isOverflow();
     }, BaseTabs.delay);
   };
+
+  #firstLastClasses() {
+    this.#firstTab().classList.add('first');
+    this.#lastTab().classList.add('last');
+  }
 
   #isOverflow(): void {
     this._overflowOnLeft = !isElementInView(this._tabList, this.#firstTab() as HTMLElement, false);

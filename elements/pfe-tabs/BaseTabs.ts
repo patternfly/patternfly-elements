@@ -20,16 +20,13 @@ export abstract class BaseTabs extends LitElement {
     return element instanceof BaseTabPanel;
   }
 
-  @queryAssignedElements({ slot: 'tab' }) protected _tabs!: BaseTab[];
   protected static readonly scrollTimeoutDelay = 0;
   protected static readonly scrollIconLeft = 'angle-left';
   protected static readonly scrollIconRight = 'angle-right';
   protected static readonly scrollIconSet = 'fas';
 
-  @queryAssignedElements() protected _panels!: BaseTabPanel[];
   static #instances = new Set<BaseTabs>();
 
-  @query('[part="tabs"]') _tabList!: HTMLElement;
   static {
     // on resize check for overflows to add or remove scroll buttons
     window.addEventListener('resize', () => {
@@ -40,10 +37,13 @@ export abstract class BaseTabs extends LitElement {
   }
 
   @state() protected _showScrollButtons = false;
+  @queryAssignedElements({ slot: 'tab' }) private tabs!: BaseTab[];
 
   @state() protected _overflowOnLeft = false;
+  @queryAssignedElements() private panels!: BaseTabPanel[];
 
   @state() protected _overflowOnRight = false;
+  @query('[part="tabs"]') private tabList!: HTMLElement;
 
   #logger = new Logger(this);
 
@@ -169,14 +169,14 @@ export abstract class BaseTabs extends LitElement {
       this.activeIndex = 0;
     }
     this.#onScroll();
-    this._tabList.addEventListener('scroll', this.#onScroll);
+    this.tabList.addEventListener('scroll', this.#onScroll);
   }
 
   protected onSlotchange(event: { target: { name: string; }; }) {
     if (event.target.name === 'tab') {
-      this.allTabs = this._tabs;
+      this.allTabs = this.tabs;
     } else {
-      this.allPanels = this._panels;
+      this.allPanels = this.panels;
     }
     if (this.allTabs.length === this.allPanels.length &&
       (this.allTabs.length !== 0 || this.allPanels.length !== 0)) {
@@ -348,7 +348,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #scrollLeft(): void {
-    const container = this._tabList;
+    const container = this.tabList;
     const childrenArr = this.allTabs;
     let firstElementInView: BaseTab | undefined;
     let lastElementOutOfView: BaseTab | undefined;
@@ -365,7 +365,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #scrollRight(): void {
-    const container = this._tabList;
+    const container = this.tabList;
     const childrenArr = this.allTabs;
     let lastElementInView: BaseTab | undefined;
     let firstElementOutOfView: BaseTab | undefined;

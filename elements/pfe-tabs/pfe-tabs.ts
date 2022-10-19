@@ -96,12 +96,12 @@ export class PfeTabs extends BaseTabs {
   }
 
   protected _allTabs(): PfeTab[] {
-    const tabs = this._tabs as PfeTab[];
+    const tabs = this.tabs as PfeTab[];
     return tabs.filter(tab => PfeTabs.isTab(tab));
   }
 
   protected _allPanels(): PfeTabPanel[] {
-    const panels = this._panels as PfeTabPanel[];
+    const panels = this.panels as PfeTabPanel[];
     return panels.filter(panel => PfeTabs.isPanel(panel));
   }
 }

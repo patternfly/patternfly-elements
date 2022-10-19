@@ -21,6 +21,21 @@ const TEMPLATE = html`
     </pfe-tabs>
   `;
 
+const DISABLED = html`
+  <pfe-tabs>
+    <pfe-tab slot="tab" disabled>Users</pfe-tab>
+    <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab">Containers</pfe-tab>
+    <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
+    <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
+    <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
+    <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+  </pfe-tabs>
+`;
+
 describe('<pfe-tabs>', function() {
   it('should upgrade', async function() {
     const el = await createFixture<PfeTabs>(TEMPLATE);
@@ -49,13 +64,11 @@ describe('<pfe-tabs>', function() {
     });
   });
 
-  it('should activate the first focusable tab given no active attribute', async function() {
-    const el = await createFixture<PfeTabs>(TEMPLATE);
-    const firstTab = el.querySelector('pfe-tab:first-of-type');
-    firstTab!.disabled = true;
+  it('should activate the first focusable tab when first tab is disabled and no active is given', async function() {
+    const el = await createFixture<PfeTabs>(DISABLED);
     await nextFrame();
-    const activeTabIndex = el.activeIndex;
-    const secondTab = el.querySelector('pfe-tab[active]');
+    const secondTab = el.querySelector('pfe-tab:nth-of-type(2)');
+    expect(secondTab!.hasAttribute('active')).to.equal(true);
   });
 
   it('should activate tab when given an active attribute', async function() {

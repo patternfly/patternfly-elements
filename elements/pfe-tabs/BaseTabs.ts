@@ -88,7 +88,7 @@ export abstract class BaseTabs extends LitElement {
       } else {
         this.#logger.warn(`Disabled tabs can not be set as active, setting first focusable tab to active`);
       }
-      [tab] = this.focusableTabs;
+      [tab] = this.#focusableTabs;
       index = this.allTabs.findIndex(focusable => focusable === tab);
       if (index === -1) {
         this.#logger.warn(`No available tabs to activate`);
@@ -123,10 +123,6 @@ export abstract class BaseTabs extends LitElement {
 
   private set allPanels(panels: BaseTabPanel[]) {
     this.#allPanels = panels.filter(panel => (this.constructor as typeof BaseTabs).isPanel(panel));
-  }
-
-  private get focusableTabs() {
-    return this.#focusableTabs;
   }
 
   private get focusTab(): BaseTab | undefined {
@@ -234,12 +230,12 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #firstFocusable(): BaseTab {
-    const [firstTab] = this.focusableTabs;
+    const [firstTab] = this.#focusableTabs;
     return firstTab;
   }
 
   #lastFocusable(): BaseTab {
-    return this.focusableTabs[this.focusableTabs.length - 1];
+    return this.#focusableTabs.at(-1) as BaseTab;
   }
 
   get #firstTab(): BaseTab {
@@ -257,7 +253,7 @@ export abstract class BaseTabs extends LitElement {
     // increment focusable index and return focusable tab
     const nextFocusableIndex = currentIndex + 1;
     let nextTab: BaseTab;
-    if (nextFocusableIndex >= this.focusableTabs.length) {
+    if (nextFocusableIndex >= this.#focusableTabs.length) {
       // get the first focusable tab
       [nextTab] = this.#focusableTabs;
     } else {
@@ -291,12 +287,12 @@ export abstract class BaseTabs extends LitElement {
     } else {
       current = this.activeTab;
     }
-    const index = this.focusableTabs.findIndex(tab => tab === current);
+    const index = this.#focusableTabs.findIndex(tab => tab === current);
     return index;
   }
 
   #select(selectedTab: BaseTab): void {
-    if (selectedTab.ariaDisabled === null || selectedTab.ariaDisabled === 'false') {
+    if (!selectedTab.disabled) {
       const index = this.#allTabs.findIndex(tab => tab === selectedTab);
       this.activeIndex = index;
     }

@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property, query, queryAssignedElements, state } from 'lit/decorators.js';
 
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { bound, observed } from '@patternfly/pfe-core/decorators.js';
 
@@ -12,16 +11,17 @@ export class TabExpandEvent extends ComposedEvent {
     public active: boolean,
     public tab: BaseTab,
   ) {
-    super('tab-expand');
+    super('expand');
   }
 }
 
 export abstract class BaseTab extends LitElement {
   static readonly styles = [style];
 
-  @query('button') _button!: HTMLButtonElement;
+  static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
-  @queryAssignedElements({ slot: 'icon', flatten: true }) _icons!: Array<HTMLElement>;
+  @queryAssignedElements({ slot: 'icon', flatten: true })
+  private icons!: Array<HTMLElement>;
 
   @observed
   @property({ reflect: true, type: Boolean }) active = false;
@@ -29,19 +29,28 @@ export abstract class BaseTab extends LitElement {
   @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
 
-  @state() _hasIcons = false;
+  #internals = this.attachInternals();
 
-  #logger = new Logger(this);
+  get ariaDisabled() {
+    return this.#internals.ariaDisabled;
+  }
+
+  get ariaSelected() {
+    return this.#internals.ariaSelected;
+  }
 
   connectedCallback() {
     super.connectedCallback();
+    this.setAttribute('role', 'tab');
     this.addEventListener('click', this.#clickHandler);
   }
 
   render() {
     return html`
       <button part="button" role="tab">
-        <span part="icon" ?hidden="${this._hasIcons}">
+        <span part="icon"
+              ?hidden="${!this.icons.length}"
+              @slotchange="${() => this.requestUpdate()}">
           <slot name="icon"></slot>
         </span>
         <span part="text">
@@ -51,19 +60,10 @@ export abstract class BaseTab extends LitElement {
     `;
   }
 
-  firstUpdated(): void {
-    this.#updateAccessibility();
-    this._hasIcons = this._icons.length === 0;
-  }
-
   #clickHandler() {
-    if (!this.disabled && this.ariaDisabled !== 'true') {
+    if (!this.disabled && this.#internals.ariaDisabled !== 'true') {
       this.active = true;
     }
-  }
-
-  #updateAccessibility(): void {
-    this.setAttribute('role', 'tab');
   }
 
   @bound
@@ -73,10 +73,10 @@ export abstract class BaseTab extends LitElement {
     }
     if (newVal && !this.disabled) {
       this.removeAttribute('tabindex');
-      this.ariaSelected = 'true';
+      this.#internals.ariaSelected = 'true';
     } else {
       this.tabIndex = -1;
-      this.ariaSelected = 'false';
+      this.#internals.ariaSelected = 'false';
     }
     this.dispatchEvent(new TabExpandEvent(newVal, this));
   }
@@ -90,15 +90,7 @@ export abstract class BaseTab extends LitElement {
     // if a tab is removed from disabled its not necessarily
     // not still aria-disabled so we don't remove the aria-disabled
     if (newVal === true) {
-      this.ariaDisabled = 'true';
+      this.#internals.ariaDisabled = 'true';
     }
-  }
-
-  setAriaControls(id: string): void {
-    this.setAttribute('aria-controls', id);
-  }
-
-  focusButton(): void {
-    this._button.focus();
   }
 }

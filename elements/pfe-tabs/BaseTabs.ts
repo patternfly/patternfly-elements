@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
-import { state, property, query, queryAssignedElements } from 'lit/decorators.js';
+import { property, query, queryAssignedElements } from 'lit/decorators.js';
 
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.js';
 
@@ -9,10 +10,13 @@ import { BaseTabPanel } from './BaseTabPanel.js';
 
 import style from './BaseTab.scss';
 
+/**
+ * @attr [label-scroll-left="Scroll left"] - accessible label for the tab panel's scroll left button.
+ * @attr [label-scroll-right="Scroll right"] - accessible label for the tab panel's scroll right button.
+ *
+ */
 export abstract class BaseTabs extends LitElement {
   static readonly styles = [style];
-
-  static readonly delay = 100;
 
   static isTab(element: BaseTab): element is BaseTab {
     return element instanceof BaseTab;
@@ -22,17 +26,37 @@ export abstract class BaseTabs extends LitElement {
     return element instanceof BaseTabPanel;
   }
 
-  @queryAssignedElements({ slot: 'tab' }) protected _tabs!: BaseTab[];
+  /** Time in milliseconds to debounce between scroll events and updating scroll button state */
+  protected static readonly scrollTimeoutDelay: number = 0;
+  /** Icon name to use for the scroll left button */
+  protected static readonly scrollIconLeft: string = 'angle-left';
+  /** Icon name to use for the scroll right button */
+  protected static readonly scrollIconRight: string = 'angle-right';
+  /** Icon set to use for the scroll buttons */
+  protected static readonly scrollIconSet: string = 'fas';
 
-  @queryAssignedElements() protected _panels!: BaseTabPanel[];
+  static #instances = new Set<BaseTabs>();
 
-  @query('[part="tabs"]') _tabList!: HTMLElement;
+  static {
+    // on resize check for overflows to add or remove scroll buttons
+    window.addEventListener('resize', () => {
+      for (const instance of this.#instances) {
+        instance.#onScroll();
+      }
+    }, { capture: false });
+  }
 
-  @state() protected _showScrollButtons = false;
+  @queryAssignedElements({ slot: 'tab' }) private tabs!: BaseTab[];
 
-  @state() protected _overflowOnLeft = false;
+  @queryAssignedElements() private panels!: BaseTabPanel[];
 
-  @state() protected _overflowOnRight = false;
+  @query('[part="tabs"]') private tabList!: HTMLElement;
+
+  #showScrollButtons = false;
+
+  #overflowOnLeft = false;
+
+  #overflowOnRight = false;
 
   #logger = new Logger(this);
 
@@ -44,9 +68,11 @@ export abstract class BaseTabs extends LitElement {
 
   #focusTab?: BaseTab;
 
-  #scrollTimeout: ReturnType<typeof setTimeout> = setTimeout(() => '', 100);
+  #scrollTimeout?: ReturnType<typeof setTimeout>;
 
   #activeIndex = 0;
+
+  id: string = this.id || getRandomId(this.localName);
 
   @property({ attribute: false })
   get activeIndex() {
@@ -61,15 +87,18 @@ export abstract class BaseTabs extends LitElement {
         this.#logger.warn(`Disabled tabs can not be active, setting first focusable tab to active`);
         this.#activate(this.#firstFocusable());
         index = this.allTabs.findIndex(t => t === this.#firstFocusable());
+        return;
       } else if (!tab.active) {
         // if the activeIndex was set through the CLI e.g.`$0.activeIndex = 2`
         tab.active = true;
+        return;
       }
     }
     if (index === -1) {
       this.#logger.warn(`No active tab found, setting first focusable tab to active`);
       this.#activate(this.#firstFocusable());
       index = this.allTabs.findIndex(t => t === this.#firstFocusable());
+      return;
     }
     this.#activeIndex = index;
     this.requestUpdate('activeIndex', oldIndex);
@@ -85,9 +114,8 @@ export abstract class BaseTabs extends LitElement {
   }
 
   private set allTabs(tabs: BaseTab[]) {
-    tabs = tabs.filter(tab => BaseTabs.isTab(tab));
-    this.#allTabs = tabs;
-    this.#focusableTabs = tabs.filter(tab => !tab.disabled);
+    this.#allTabs = tabs.filter(tab => (this.constructor as typeof BaseTabs).isTab(tab));
+    this.#focusableTabs = this.#allTabs.filter(tab => !tab.disabled);
   }
 
   private get allPanels() {
@@ -95,12 +123,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   private set allPanels(panels: BaseTabPanel[]) {
-    panels = panels.filter(panel => BaseTabs.isPanel(panel));
-    this.#allPanels = panels;
-  }
-
-  private get focusableTabs() {
-    return this.#focusableTabs;
+    this.#allPanels = panels.filter(panel => (this.constructor as typeof BaseTabs).isPanel(panel));
   }
 
   private get focusTab(): BaseTab | undefined {
@@ -109,34 +132,41 @@ export abstract class BaseTabs extends LitElement {
 
   private set focusTab(tab: BaseTab | undefined) {
     this.#focusTab = tab;
-    this.#focusTab?.focusButton();
+    this.#focusTab?.focus();
   }
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('tab-expand', this.#onTabExpand);
+    this.addEventListener('expand', this.#onTabExpand);
     this.addEventListener('keydown', this.#onKeydown);
-    // on resize check for overflows
-    window.addEventListener('resize', this.#onScroll, false);
+    BaseTabs.#instances.add(this);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    BaseTabs.#instances.delete(this);
   }
 
   override render() {
+    const { scrollIconSet, scrollIconLeft, scrollIconRight } = this.constructor as typeof BaseTabs;
     return html`
       <div part="container">
-        <div part="tabs-container">
-          ${this._showScrollButtons ? html`
-            <button id="previousTab" aria-label="Scroll left" ?disabled="${!this._overflowOnLeft}" @click="${this.#scrollLeft}">
-              <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg>
-            </button>`
-          : html``}
+        <div part="tabs-container">${!this.#showScrollButtons ? '' : html`
+          <button id="previousTab"
+              aria-label="${this.getAttribute('label-scroll-left') ?? 'Scroll left'}"
+              ?disabled="${!this.#overflowOnLeft}"
+              @click="${this.#scrollLeft}">
+            <pfe-icon icon="${scrollIconLeft}" set="${scrollIconSet}" loading="eager"></pfe-icon>
+          </button>`}
           <div part="tabs" role="tablist">
             <slot name="tab" @slotchange="${this.onSlotchange}"></slot>
-          </div>
-          ${this._showScrollButtons ? html`
-            <button id="nextTab" aria-label="Scroll right" ?disabled="${!this._overflowOnRight}" @click="${this.#scrollRight}">
-              <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
-            </button>`
-          : html``}
+          </div>${!this.#showScrollButtons ? '' : html`
+          <button id="nextTab"
+              aria-label="${this.getAttribute('label-scroll-right') ?? 'Scroll right'}"
+              ?disabled="${!this.#overflowOnRight}"
+              @click="${this.#scrollRight}">
+            <pfe-icon icon="${scrollIconRight}" set="${scrollIconSet}" loading="eager"></pfe-icon>
+          </button>`}
         </div>
         <div part="panels">
           <slot @slotchange="${this.onSlotchange}"></slot>
@@ -146,16 +176,15 @@ export abstract class BaseTabs extends LitElement {
   }
 
   async firstUpdated() {
-    await this.updateComplete;
     this.#onScroll();
-    this._tabList.addEventListener('scroll', this.#onScroll);
+    this.tabList.addEventListener('scroll', this.#onScroll);
   }
 
-  protected onSlotchange(event: { currentTarget: { name: string; }; }) {
-    if (event.currentTarget.name === 'tab') {
-      this.allTabs = this._tabs;
+  protected onSlotchange(event: { target: { name: string; }; }) {
+    if (event.target.name === 'tab') {
+      this.allTabs = this.tabs;
     } else {
-      this.allPanels = this._panels;
+      this.allPanels = this.panels;
     }
     if (this.allTabs.length === this.allPanels.length &&
       (this.allTabs.length !== 0 || this.allPanels.length !== 0)) {
@@ -168,13 +197,16 @@ export abstract class BaseTabs extends LitElement {
   #updateAccessibility(): void {
     this.allTabs.forEach((tab, index) => {
       const panel = this.allPanels[index];
-      panel.setAriaLabelledBy(tab.id);
-      tab.setAriaControls(panel.id);
+      if (!panel.hasAttribute('aria-labelledby')) {
+        panel.setAttribute('aria-labelledby', tab.id);
+      }
+      tab.setAttribute('aria-controls', panel.id);
     });
   }
 
   #onTabExpand = (event: Event): void => {
-    if (this.allTabs.length === 0 || this.allPanels.length === 0) {
+    if (!(event instanceof TabExpandEvent) ||
+        this.allTabs.length === 0 || this.allPanels.length === 0) {
       return;
     }
 
@@ -188,33 +220,26 @@ export abstract class BaseTabs extends LitElement {
   };
 
   #deactivateExcept(index: number) {
-    const notActiveTabs = this.allTabs.filter((tab, i) => i !== index);
-    notActiveTabs.forEach(tab => {
-      tab.active = false;
-    });
-    const notActivePanels = this.allPanels.filter((panel, i) => i !== index);
-    notActivePanels.forEach(panel => {
-      panel.hidden = true;
-    });
+    this.allTabs.forEach((tab, i) => tab.active = i === index);
+    this.allPanels.forEach((panel, i) => panel.hidden = i !== index);
   }
 
   #firstFocusable(): BaseTab {
-    const [firstTab] = this.focusableTabs;
+    const [firstTab] = this.#focusableTabs;
     return firstTab;
   }
 
   #lastFocusable(): BaseTab {
-    return this.focusableTabs[this.focusableTabs.length - 1];
+    return this.#focusableTabs.at(-1) as BaseTab;
   }
 
-  #firstTab(): BaseTab {
+  get #firstTab(): BaseTab {
     const [tab] = this.allTabs;
     return tab;
   }
 
-  #lastTab(): BaseTab {
-    const tab = this.allTabs[this.allTabs.length - 1];
-    return tab;
+  get #lastTab(): BaseTab {
+    return this.allTabs.at(-1) as BaseTab;
   }
 
   #next(): void {
@@ -223,7 +248,7 @@ export abstract class BaseTabs extends LitElement {
     // increment focusable index and return focusable tab
     const nextFocusableIndex = currentIndex + 1;
     let nextTab: BaseTab;
-    if (nextFocusableIndex >= this.focusableTabs.length) {
+    if (nextFocusableIndex >= this.#focusableTabs.length) {
       // get the first focusable tab
       [nextTab] = this.#focusableTabs;
     } else {
@@ -257,7 +282,7 @@ export abstract class BaseTabs extends LitElement {
     } else {
       current = this.activeTab;
     }
-    const index = this.focusableTabs.findIndex(tab => tab === current);
+    const index = this.#focusableTabs.findIndex(tab => tab === current);
     return index;
   }
 
@@ -305,31 +330,36 @@ export abstract class BaseTabs extends LitElement {
     }
   };
 
-  #onScroll = ():void => {
+  #onScroll = () => {
     clearTimeout(this.#scrollTimeout);
-    this.#scrollTimeout = setTimeout(() => {
-      this.#isOverflow();
-    }, BaseTabs.delay);
+    const { scrollTimeoutDelay } = (this.constructor as typeof BaseTabs);
+    this.#scrollTimeout = setTimeout(() => this.#setOverflowState(), scrollTimeoutDelay);
   };
 
   #firstLastClasses() {
-    this.#firstTab().classList.add('first');
-    this.#lastTab().classList.add('last');
+    this.#firstTab.classList.add('first');
+    this.#lastTab.classList.add('last');
   }
 
-  #isOverflow(): void {
-    this._overflowOnLeft = !isElementInView(this._tabList, this.#firstTab() as HTMLElement, false);
-    this._overflowOnRight = !isElementInView(this._tabList, this.#lastTab() as HTMLElement, false);
-    this._showScrollButtons = (this._overflowOnLeft || this._overflowOnRight);
+  /** override to prevent scroll buttons from showing */
+  protected get canShowScrollButtons() {
+    return true;
+  }
+
+  #setOverflowState(): void {
+    const { canShowScrollButtons } = this;
+    this.#overflowOnLeft = canShowScrollButtons && !isElementInView(this.tabList, this.#firstTab);
+    this.#overflowOnRight = canShowScrollButtons && !isElementInView(this.tabList, this.#lastTab);
+    this.#showScrollButtons = canShowScrollButtons && (this.#overflowOnLeft || this.#overflowOnRight);
+    this.requestUpdate();
   }
 
   #scrollLeft(): void {
-    const container = this._tabList;
+    const container = this.tabList;
     const childrenArr = this.allTabs;
     let firstElementInView: BaseTab | undefined;
     let lastElementOutOfView: BaseTab | undefined;
-    let i;
-    for (i = 0; i < childrenArr.length && !firstElementInView; i++) {
+    for (let i = 0; i < childrenArr.length && !firstElementInView; i++) {
       if (isElementInView(container, childrenArr[i] as HTMLElement, false)) {
         firstElementInView = childrenArr[i];
         lastElementOutOfView = childrenArr[i - 1];
@@ -338,10 +368,11 @@ export abstract class BaseTabs extends LitElement {
     if (lastElementOutOfView) {
       container.scrollLeft -= lastElementOutOfView.scrollWidth;
     }
+    this.#setOverflowState();
   }
 
   #scrollRight(): void {
-    const container = this._tabList;
+    const container = this.tabList;
     const childrenArr = this.allTabs;
     let lastElementInView: BaseTab | undefined;
     let firstElementOutOfView: BaseTab | undefined;
@@ -354,5 +385,6 @@ export abstract class BaseTabs extends LitElement {
     if (firstElementOutOfView) {
       container.scrollLeft += firstElementOutOfView.scrollWidth;
     }
+    this.#setOverflowState();
   }
 }

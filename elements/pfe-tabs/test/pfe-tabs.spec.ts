@@ -77,7 +77,7 @@ describe('<pfe-tabs>', function() {
     tab!.setAttribute('active', '');
     await nextFrame();
     expect(tab!.hasAttribute('active')).to.equal(true);
-    expect(tab!.getAttribute('aria-selected')).to.equal('true');
+    expect(tab!.ariaSelected).to.equal('true');
   });
 
   it('should activate tab when activeIndex property is changed', async function() {
@@ -88,7 +88,7 @@ describe('<pfe-tabs>', function() {
     await nextFrame();
     const tab = el.querySelector('pfe-tab:first-of-type');
     expect(tab!.hasAttribute('active')).to.equal(true);
-    expect(tab!.getAttribute('aria-selected')).to.equal('true');
+    expect(tab!.ariaSelected).to.equal('true');
   });
 
   it('should open panel at same index of selected tab', async function() {
@@ -119,16 +119,16 @@ describe('<pfe-tabs>', function() {
       await setViewport({ width: 320, height: 640 });
     });
 
-    it('should aria-disable the tab', async function() {
+    it('should aria-disable the tab if disabled', async function() {
       const el = await createFixture<PfeTabs>(TEMPLATE);
       const disabledTab = el.querySelector('pfe-tab:nth-of-type(2)')! as BaseTab;
       disabledTab.disabled = true;
       await nextFrame();
-      const ariaDisabled = disabledTab!.hasAttribute('aria-disabled');
-      expect(ariaDisabled).to.equal(true);
+      const { ariaDisabled } = disabledTab!;
+      expect(ariaDisabled).to.equal('true');
     });
 
-    it('should have disabled styles', async function() {
+    it('should have disabled css styles if disabled', async function() {
       const el = await createFixture<PfeTabs>(TEMPLATE);
       const disabledTab = el.querySelector('pfe-tab:first-of-type')!;
       disabledTab.setAttribute('disabled', 'disabled');
@@ -138,7 +138,7 @@ describe('<pfe-tabs>', function() {
       expect(disabledStyles).to.equal('rgb(245, 245, 245)');
     });
 
-    it('should have disabled styles if aria-disabled attribute is true', async function() {
+    it('should have disabled css styles if aria-disabled attribute is true', async function() {
       const el = await createFixture<PfeTabs>(TEMPLATE);
       const disabledTab = el.querySelector('pfe-tab:first-of-type')!;
       disabledTab.setAttribute('aria-disabled', 'true');
@@ -163,7 +163,9 @@ describe('<pfe-tabs>', function() {
 
     it('should have visible scroll buttons if overflowed', async function() {
       const el = await createFixture<PfeTabs>(TEMPLATE);
-      await aTimeout(BaseTabs.delay);
+      // Property 'scrollTimeoutDelay' is protected and only accessible within class 'PfeTabs' and its subclasses.
+      // using 150 as a static representation.
+      await aTimeout(150);
       const previousTab = el.shadowRoot!.querySelector('#previousTab')!;
       const nextTab = el.shadowRoot!.querySelector('#nextTab')!;
       const prevDisplayStyle = getComputedStyle(previousTab).display;

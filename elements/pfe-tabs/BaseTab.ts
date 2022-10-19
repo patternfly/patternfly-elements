@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property, query, queryAssignedElements, state } from 'lit/decorators.js';
 
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { bound, observed } from '@patternfly/pfe-core/decorators.js';
 
@@ -19,7 +18,7 @@ export class TabExpandEvent extends ComposedEvent {
 export abstract class BaseTab extends LitElement {
   static readonly styles = [style];
 
-  @query('button') _button!: HTMLButtonElement;
+  static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @queryAssignedElements({ slot: 'icon', flatten: true }) _icons!: Array<HTMLElement>;
 
@@ -96,9 +95,5 @@ export abstract class BaseTab extends LitElement {
 
   setAriaControls(id: string): void {
     this.setAttribute('aria-controls', id);
-  }
-
-  focusButton(): void {
-    this._button.focus();
   }
 }

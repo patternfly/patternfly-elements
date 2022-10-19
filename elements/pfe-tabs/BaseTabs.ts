@@ -130,7 +130,7 @@ export abstract class BaseTabs extends LitElement {
 
   private set focusTab(tab: BaseTab | undefined) {
     this.#focusTab = tab;
-    this.#focusTab?.focusButton();
+    this.#focusTab?.focus();
   }
 
   override connectedCallback() {

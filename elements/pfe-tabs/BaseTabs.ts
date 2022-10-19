@@ -173,8 +173,7 @@ export abstract class BaseTabs extends LitElement {
     `;
   }
 
-  async firstUpdated() {
-    await this.updateComplete;
+  firstUpdated() {
     if (this.activeIndex === -1) {
       this.activeIndex = 0;
     }
@@ -211,9 +210,8 @@ export abstract class BaseTabs extends LitElement {
       return;
     }
 
-    const target = event as TabExpandEvent;
-    if (target.active) {
-      this.activeIndex = this.allTabs.findIndex(tab => tab === target.tab);
+    if (event.active) {
+      this.activeIndex = this.allTabs.findIndex(tab => tab === event.tab);
       // close all tabs that are not the activeIndex
       this.#deactivateExcept(this.activeIndex);
     } else {
@@ -226,14 +224,8 @@ export abstract class BaseTabs extends LitElement {
   };
 
   #deactivateExcept(index: number) {
-    const notActiveTabs = this.allTabs.filter((tab, i) => i !== index);
-    notActiveTabs.forEach(tab => {
-      tab.active = false;
-    });
-    const notActivePanels = this.allPanels.filter((panel, i) => i !== index);
-    notActivePanels.forEach(panel => {
-      panel.hidden = true;
-    });
+    this.allTabs.forEach((tab, i) => tab.active = i === index);
+    this.allPanels.forEach((panel, i) => panel.hidden = i !== index);
   }
 
   #firstFocusable(): BaseTab {
@@ -245,14 +237,13 @@ export abstract class BaseTabs extends LitElement {
     return this.focusableTabs[this.focusableTabs.length - 1];
   }
 
-  #firstTab(): BaseTab {
+  get #firstTab(): BaseTab {
     const [tab] = this.allTabs;
     return tab;
   }
 
-  #lastTab(): BaseTab {
-    const tab = this.allTabs[this.allTabs.length - 1];
-    return tab;
+  get #lastTab(): BaseTab {
+    return this.allTabs.at(-1) as BaseTab;
   }
 
   #next(): void {
@@ -349,8 +340,8 @@ export abstract class BaseTabs extends LitElement {
   };
 
   #firstLastClasses() {
-    this.#firstTab().classList.add('first');
-    this.#lastTab().classList.add('last');
+    this.#firstTab.classList.add('first');
+    this.#lastTab.classList.add('last');
   }
 
   #setOverflowState(): void {
@@ -365,8 +356,7 @@ export abstract class BaseTabs extends LitElement {
     const childrenArr = this.allTabs;
     let firstElementInView: BaseTab | undefined;
     let lastElementOutOfView: BaseTab | undefined;
-    let i;
-    for (i = 0; i < childrenArr.length && !firstElementInView; i++) {
+    for (let i = 0; i < childrenArr.length && !firstElementInView; i++) {
       if (isElementInView(container, childrenArr[i] as HTMLElement, false)) {
         firstElementInView = childrenArr[i];
         lastElementOutOfView = childrenArr[i - 1];

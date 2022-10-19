@@ -5,10 +5,7 @@ import style from './BaseTabPanel.scss';
 export abstract class BaseTabPanel extends LitElement {
   static readonly styles = [style];
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.hidden = true;
-  }
+  hidden = true;
 
   render() {
     return html`

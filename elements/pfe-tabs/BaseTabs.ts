@@ -81,24 +81,25 @@ export abstract class BaseTabs extends LitElement {
 
   set activeIndex(index: number) {
     const oldIndex = this.activeIndex;
-    let tab = this.allTabs[index];
-    if (tab === undefined || tab.disabled) {
-      if (tab === undefined) {
-        this.#logger.warn(`No active tab set, setting first focusable tab to active`);
-      } else {
-        this.#logger.warn(`Disabled tabs can not be set as active, setting first focusable tab to active`);
-      }
-      [tab] = this.#focusableTabs;
-      index = this.allTabs.findIndex(focusable => focusable === tab);
-      if (index === -1) {
-        this.#logger.warn(`No available tabs to activate`);
+    const tab = this.allTabs[index];
+    if (tab) {
+      if (tab.disabled) {
+        this.#logger.warn(`Disabled tabs can not be active, setting first focusable tab to active`);
+        this.#activate(this.#firstFocusable());
+        index = this.allTabs.findIndex(t => t === this.#firstFocusable());
+        return;
+      } else if (!tab.active) {
+        // if the activeIndex was set through the CLI e.g.`$0.activeIndex = 2`
+        tab.active = true;
         return;
       }
     }
-    tab.active = true;
-    this.allPanels[index].hidden = false;
-    this.#deactivateExcept(index);
-
+    if (index === -1) {
+      this.#logger.warn(`No active tab found, setting first focusable tab to active`);
+      this.#activate(this.#firstFocusable());
+      index = this.allTabs.findIndex(t => t === this.#firstFocusable());
+      return;
+    }
     this.#activeIndex = index;
     this.requestUpdate('activeIndex', oldIndex);
   }
@@ -174,10 +175,7 @@ export abstract class BaseTabs extends LitElement {
     `;
   }
 
-  firstUpdated() {
-    if (this.activeIndex === -1) {
-      this.activeIndex = 0;
-    }
+  async firstUpdated() {
     this.#onScroll();
     this.tabList.addEventListener('scroll', this.#onScroll);
   }
@@ -207,20 +205,17 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #onTabExpand = (event: Event): void => {
-    if (!(event instanceof TabExpandEvent) || this.allTabs.length === 0) {
+    if (!(event instanceof TabExpandEvent) ||
+        this.allTabs.length === 0 || this.allPanels.length === 0) {
       return;
     }
 
-    if (event.active) {
-      this.activeIndex = this.allTabs.findIndex(tab => tab === event.tab);
+    const target = event as TabExpandEvent;
+    if (target.active) {
+      this.activeIndex = this.allTabs.findIndex(tab => tab === target.tab);
+      this.allPanels[this.activeIndex].hidden = false;
       // close all tabs that are not the activeIndex
       this.#deactivateExcept(this.activeIndex);
-    } else {
-      if (this.activeTab === undefined) {
-        // if activeTab is invalid set to first focusable tab
-        const index = this.allTabs.findIndex(tab => tab === this.#firstFocusable());
-        this.activeIndex = index;
-      }
     }
   };
 
@@ -282,7 +277,7 @@ export abstract class BaseTabs extends LitElement {
   #currentIndex(): number {
     let current: BaseTab;
     // get current tab
-    if (this.focusTab?.ariaDisabled) {
+    if (this.focusTab?.ariaDisabled === 'true') {
       current = this.focusTab;
     } else {
       current = this.activeTab;
@@ -291,11 +286,14 @@ export abstract class BaseTabs extends LitElement {
     return index;
   }
 
-  #select(selectedTab: BaseTab): void {
-    if (!selectedTab.disabled) {
-      const index = this.#allTabs.findIndex(tab => tab === selectedTab);
-      this.activeIndex = index;
+  #activate(selectedTab: BaseTab): void {
+    if (selectedTab.ariaDisabled === null || selectedTab.ariaDisabled === 'false') {
+      selectedTab.active = true;
     }
+  }
+
+  #select(selectedTab: BaseTab): void {
+    this.#activate(selectedTab);
     this.focusTab = selectedTab;
   }
 
@@ -319,14 +317,12 @@ export abstract class BaseTabs extends LitElement {
 
       case 'Home':
         event.preventDefault();
-        this.activeIndex = this.allTabs.findIndex(tab => tab === this.#firstFocusable());
-        this.focusTab = this.#firstFocusable();
+        this.#select(this.#firstFocusable());
         break;
 
       case 'End':
         event.preventDefault();
-        this.activeIndex = this.allTabs.findIndex(tab => tab === this.#lastFocusable());
-        this.focusTab = this.#lastFocusable();
+        this.#select(this.#lastFocusable());
         break;
 
       default:

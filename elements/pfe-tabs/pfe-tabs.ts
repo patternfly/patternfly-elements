@@ -1,7 +1,6 @@
 import { customElement, property } from 'lit/decorators.js';
 
 import { cascades } from '@patternfly/pfe-core/decorators.js';
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { BaseTabs } from './BaseTabs.js';
 import { PfeTab } from './pfe-tab.js';
@@ -90,19 +89,6 @@ export class PfeTabs extends BaseTabs {
   @cascades('pfe-tab')
   @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'true';
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.id ||= getRandomId('pfe-tabs');
-  }
-
-  protected _allTabs(): PfeTab[] {
-    const tabs = this.tabs as PfeTab[];
-    return tabs.filter(tab => PfeTabs.isTab(tab));
-  }
-
-  protected _allPanels(): PfeTabPanel[] {
-    const panels = this.panels as PfeTabPanel[];
-    return panels.filter(panel => PfeTabs.isPanel(panel));
   }
 }
 

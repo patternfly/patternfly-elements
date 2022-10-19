@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { property, query, queryAssignedElements } from 'lit/decorators.js';
 
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.js';
 
@@ -67,6 +68,8 @@ export abstract class BaseTabs extends LitElement {
 
   #activeIndex = 0;
 
+  id: string = this.id || getRandomId(this.localName);
+
   @property({ attribute: false })
   get activeIndex() {
     return this.#activeIndex;
@@ -106,9 +109,8 @@ export abstract class BaseTabs extends LitElement {
   }
 
   private set allTabs(tabs: BaseTab[]) {
-    tabs = tabs.filter(tab => BaseTabs.isTab(tab));
-    this.#allTabs = tabs;
-    this.#focusableTabs = tabs.filter(tab => !tab.disabled);
+    this.#allTabs = tabs.filter(tab => (this.constructor as typeof BaseTabs).isTab(tab));
+    this.#focusableTabs = this.#allTabs.filter(tab => !tab.disabled);
   }
 
   private get allPanels() {
@@ -116,8 +118,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   private set allPanels(panels: BaseTabPanel[]) {
-    panels = panels.filter(panel => BaseTabs.isPanel(panel));
-    this.#allPanels = panels;
+    this.#allPanels = panels.filter(panel => (this.constructor as typeof BaseTabs).isPanel(panel));
   }
 
   private get focusableTabs() {

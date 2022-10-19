@@ -20,7 +20,8 @@ export abstract class BaseTab extends LitElement {
 
   static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
-  @queryAssignedElements({ slot: 'icon', flatten: true }) _icons!: Array<HTMLElement>;
+  @queryAssignedElements({ slot: 'icon', flatten: true })
+  private icons!: Array<HTMLElement>;
 
   @observed
   @property({ reflect: true, type: Boolean }) active = false;
@@ -28,19 +29,19 @@ export abstract class BaseTab extends LitElement {
   @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
 
-  @state() _hasIcons = false;
-
-  #logger = new Logger(this);
 
   connectedCallback() {
     super.connectedCallback();
+    this.setAttribute('role', 'tab');
     this.addEventListener('click', this.#clickHandler);
   }
 
   render() {
     return html`
       <button part="button" role="tab">
-        <span part="icon" ?hidden="${this._hasIcons}">
+        <span part="icon"
+              ?hidden="${!this.icons.length}"
+              @slotchange="${() => this.requestUpdate()}">
           <slot name="icon"></slot>
         </span>
         <span part="text">
@@ -50,19 +51,10 @@ export abstract class BaseTab extends LitElement {
     `;
   }
 
-  firstUpdated(): void {
-    this.#updateAccessibility();
-    this._hasIcons = this._icons.length === 0;
-  }
-
   #clickHandler() {
     if (!this.disabled && this.ariaDisabled !== 'true') {
       this.active = true;
     }
-  }
-
-  #updateAccessibility(): void {
-    this.setAttribute('role', 'tab');
   }
 
   @bound

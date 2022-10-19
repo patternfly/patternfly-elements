@@ -26,10 +26,14 @@ export abstract class BaseTabs extends LitElement {
     return element instanceof BaseTabPanel;
   }
 
-  protected static readonly scrollTimeoutDelay = 0;
-  protected static readonly scrollIconLeft = 'angle-left';
-  protected static readonly scrollIconRight = 'angle-right';
-  protected static readonly scrollIconSet = 'fas';
+  /** Time in milliseconds to debounce between scroll events and updating scroll button state */
+  protected static readonly scrollTimeoutDelay: number = 0;
+  /** Icon name to use for the scroll left button */
+  protected static readonly scrollIconLeft: string = 'angle-left';
+  /** Icon name to use for the scroll right button */
+  protected static readonly scrollIconRight: string = 'angle-right';
+  /** Icon set to use for the scroll buttons */
+  protected static readonly scrollIconSet: string = 'fas';
 
   static #instances = new Set<BaseTabs>();
 

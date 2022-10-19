@@ -1,3 +1,4 @@
+import '@patternfly/pfe-icon';
 import '@patternfly/pfe-tabs';
 
 const root = document.querySelector('[data-demo="pfe-tabs"]')?.shadowRoot ?? document;

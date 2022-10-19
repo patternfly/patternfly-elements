@@ -287,7 +287,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #activate(selectedTab: BaseTab): void {
-    if (selectedTab.ariaDisabled === null || selectedTab.ariaDisabled === 'false') {
+    if (selectedTab.ariaDisabled !== 'true') {
       selectedTab.active = true;
     }
   }

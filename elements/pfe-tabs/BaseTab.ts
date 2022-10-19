@@ -31,10 +31,6 @@ export abstract class BaseTab extends LitElement {
 
   #internals = this.attachInternals();
 
-  get ariaDisabled() {
-    return this.#internals.ariaDisabled;
-  }
-
   get ariaSelected() {
     return this.#internals.ariaSelected;
   }
@@ -61,7 +57,7 @@ export abstract class BaseTab extends LitElement {
   }
 
   #clickHandler() {
-    if (!this.disabled && this.#internals.ariaDisabled !== 'true') {
+    if (!this.disabled && this.ariaDisabled !== 'true') {
       this.active = true;
     }
   }
@@ -90,7 +86,7 @@ export abstract class BaseTab extends LitElement {
     // if a tab is removed from disabled its not necessarily
     // not still aria-disabled so we don't remove the aria-disabled
     if (newVal === true) {
-      this.#internals.ariaDisabled = 'true';
+      this.ariaDisabled = 'true';
     }
   }
 }

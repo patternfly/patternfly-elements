@@ -1,16 +1,17 @@
+import type { ColorTheme } from '@patternfly/pfe-core';
+
 import { LitElement, html } from 'lit';
-import { property, customElement, query } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { property, customElement } from 'lit/decorators.js';
 
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
-import { CssVariableController } from '@patternfly/pfe-core/controllers/css-variable-controller.js';
-import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
-import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
+import { pfelement } from '@patternfly/pfe-core/decorators.js';
 
-import styles from './pfe-avatar.scss';
+import { colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
+
+import style from './pfe-avatar.scss';
 
 /**
  * Avatar is an element for displaying a user's avatar image.
+ *
  *
  * @summary For displaying a user's avatar image
  *
@@ -18,26 +19,48 @@ import styles from './pfe-avatar.scss';
  *
  * @csspart {HTMLImageElement} img - The image element for when an image URL is provided
  */
-@customElement('pfe-avatar') @pfelement() @register
+
+@customElement('pfe-avatar') @pfelement()
 export class PfeAvatar extends LitElement {
   static readonly version = '{{version}}';
 
-  static readonly styles = styles;
+  static readonly styles = [style];
 
-  private static readonly defaultSize = 128;
+
+  /**
+ * Sets color theme based on parent context
+ */
+   @colorContextConsumer()
+   @property({ reflect: true }) on?: ColorTheme;
 
   /**
    * The URL to the user's custom avatar image.
-   *
    */
-  @observed('_update')
-  @property({ reflect: true }) src?: string;
+  @property({ reflect: true }) src?: string = '/elements/pfe-avatar/lib/img_avatar-light.svg';
 
-  private css = new CssVariableController(this);
+  /**
+ * The alt text for the avatar image.
+ */
+  @property({ reflect: true }) alt?: string = 'Avatar image';
+
+  /** Size of the Avatar */
+  @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
 
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'pfe-avatar': PfeAvatar;
+  render() {
+    return html`
+      <img
+        class="pf-c-avatar"
+        size=${this.size}
+        alt=${this.alt}
+        src=${this.src}
+      />
+    `;
   }
 }
+
+  declare global {
+    interface HTMLElementTagNameMap {
+      'pfe-avatar': PfeAvatar;
+    }
+  }

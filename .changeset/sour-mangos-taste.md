@@ -5,7 +5,7 @@
 Rewrote `<pfe-badge>` to more closely implement the PatternFly v4 spec. This includes component API changes, but HTML implementation remains the same.
 
 ```html
-<pfe-badge number="1">7</pfe-badge>
+<pfe-badge number="7">7</pfe-badge>
 ```
 
 ```html

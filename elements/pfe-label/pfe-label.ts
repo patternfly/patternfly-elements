@@ -8,7 +8,6 @@ import { BaseLabel } from './BaseLabel.js';
 import styles from './pfe-label.scss';
 import { ComposedEvent } from '@patternfly/pfe-core';
 
-
 /**
  * Labels allow users to display meta data in a stylized form.
  *
@@ -96,7 +95,7 @@ import { ComposedEvent } from '@patternfly/pfe-core';
 export class PfeLabel extends BaseLabel {
   static readonly version = '{{version}}';
 
-  static readonly styles = [...BaseLabel.styles, styles];
+  static readonly styles = [styles];
 
   static readonly shadowRootOptions: ShadowRootInit = { ...BaseLabel.shadowRootOptions, delegatesFocus: true };
 

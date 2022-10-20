@@ -10,6 +10,7 @@
   "types": "./pfe-badge.d.ts",
   "exports": {
     ".": "./pfe-badge.js",
+    "./BaseBadge.js": "./BaseBadge.js",
     "./*": "./*.js"
   },
   "publishConfig": {

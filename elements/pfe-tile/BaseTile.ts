@@ -1,9 +1,5 @@
 import { LitElement, html } from 'lit';
 
-/**
- * Tile
- * @slot - Place element content here
- */
 
 export abstract class BaseTile extends LitElement {
   override render() {

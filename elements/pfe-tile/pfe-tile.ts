@@ -13,7 +13,45 @@ export type StackedSize = (
 
 /**
  * Tile
- * @slot - Place element content here
+ * @slot icon           - Icon expects a `<pfe-icon>` or `<svg>`
+ * @slot body           - Body expects text content for the tile
+ * @slot                - Default slot, the title of the tile
+ *
+ * @attr {'boolean'} selected       - selected variant
+ * @attr {'md'|'lg'|null} stacked   - stacked variant
+ *
+ * @csspart icon        - container for the icon
+ * @csspart title       - container for the title
+ * @csspart body        - container for the body content
+ *
+ * @cssprop   {<length>} --pf-c-tile--PaddingTop      {@default `1.5rem`}
+ * @cssprop   {<length>} --pf-c-tile--PaddingRight    {@default `1.5rem`}
+ * @cssprop   {<length>} --pf-c-tile--PaddingBottom   {@default `1.5rem`}
+ * @cssprop   {<length>} --pf-c-tile--PaddingLeft     {@default `1.5rem`}
+ *
+ * @cssprop   {<color>} --pf-c-tile--BackgroundColor  {@default `#FFFFFF`}
+ *
+ * @cssprop   --pf-c-tile--Transition {@default `none`}
+ * @cssprop   --pf-c-tile--TranslateY {@default `0`}
+ *
+ * @cssprop   {<length>} --pf-c-tile--before--BorderWidth {@default `1px`}
+ * @cssprop   {<color>} --pf-c-tile--before--BorderColor  {@default `#444548`}
+ *
+ * @cssprop   {<length>} --pf-c-tile--after--Height {@default `3px`}
+ * @cssprop   {<color>} --pf-c-tile--after--BackgroundColor {@default `transparent`}
+ *
+ * @cssprop   --pf-c-tile--after--Transition {@default `none`}
+ * @cssprop   --pf-c-tile--after--ScaleY {@default `1`}
+ * @cssprop   --pf-c-tile--after--ScaleY {@default `0`}
+ *
+ * @cssprop   {<color>} --pf-c-tile__title--Color {@default `#06c`}
+ * @cssprop   {<color>} --pf-c-tile__icon--Color {@default `#06c`}
+ * @cssprop   {<color>} --pf-c-tile--after--BackgroundColor {@default `#73bcf7`}
+ *
+ * @cssprop   {<length>} --pf-c-tile__icon--MarginRight {@default `0`}
+ * @cssprop   {<length>} --pf-c-tile__icon--FontSize {@default `1.5rem`}
+ *
+ * @cssprop   {<lenght>} --pf-c-tile__header--m-stacked__icon--MarginBottom {@default `0.25rem`}
  */
 @customElement('pfe-tile')
 export class PfeTile extends BaseTile {

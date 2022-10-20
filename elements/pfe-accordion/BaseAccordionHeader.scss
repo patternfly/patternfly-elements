@@ -56,7 +56,7 @@ a {
   position: absolute;
   bottom: 0;
   left: 0;
-  top: var(--pf-c-accordion__toggle--before--Top, 0);
+  top: var(--pf-c-accordion__toggle--before--Top, -1px);
   width: var(--pf-c-accordion__toggle--before--Width, var(--pf-global--BorderWidth--lg, 3px));
   background-color: var(--pf-c-accordion__toggle--after--BackgroundColor, transparent);
 }

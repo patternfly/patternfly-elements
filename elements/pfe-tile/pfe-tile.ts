@@ -6,6 +6,11 @@ import { BaseTile } from './BaseTile.js';
 
 import styles from './pfe-tile.scss';
 
+export type StackedSize = (
+  | 'md'
+  | 'lg'
+)
+
 /**
  * Tile
  * @slot - Place element content here
@@ -18,9 +23,7 @@ export class PfeTile extends BaseTile {
 
   @property({ reflect: true, type: Boolean }) selected = false;
 
-  @property({ reflect: true, type: Boolean }) stacked = false;
-
-  @property({ reflect: true, type: Boolean }) large = false;
+  @property({ reflect: true }) stacked?: StackedSize = 'md';
 }
 
 declare global {

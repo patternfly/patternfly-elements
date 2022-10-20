@@ -95,7 +95,7 @@
   justify-content: initial;
 }
 
-:host([large][stacked]) [part="header"] {
+:host([stacked="lg"]) [part="header"] {
   // .pf-c-tile.pf-m-display-lg .pf-c-tile__header.pf-m-stacked {
   --pf-c-tile__icon--FontSize: var(--pf-c-tile--m-display-lg__header--m-stacked__icon--FontSize, var(--pf-global--icon--FontSize--xl, 3.375rem));
   --pfe-icon--size: var(--pf-global--icon--FontSize--xl, 54px);

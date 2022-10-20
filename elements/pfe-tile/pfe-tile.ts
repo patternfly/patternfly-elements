@@ -42,11 +42,9 @@ export type StackedSize = (
  *
  * @cssprop   --pf-c-tile--after--Transition {@default `none`}
  * @cssprop   --pf-c-tile--after--ScaleY {@default `1`}
- * @cssprop   --pf-c-tile--after--ScaleY {@default `0`}
  *
  * @cssprop   {<color>} --pf-c-tile__title--Color {@default `#06c`}
  * @cssprop   {<color>} --pf-c-tile__icon--Color {@default `#06c`}
- * @cssprop   {<color>} --pf-c-tile--after--BackgroundColor {@default `#73bcf7`}
  *
  * @cssprop   {<length>} --pf-c-tile__icon--MarginRight {@default `0`}
  * @cssprop   {<length>} --pf-c-tile__icon--FontSize {@default `1.5rem`}

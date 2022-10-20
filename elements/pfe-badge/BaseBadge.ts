@@ -1,8 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { pfelement } from '@patternfly/pfe-core/decorators.js';
-
 import style from './BaseBadge.scss';
 
 export abstract class BaseBadge extends LitElement {
@@ -12,7 +10,7 @@ export abstract class BaseBadge extends LitElement {
    * Denotes the state-of-affairs this badge represents
    * Options include read and unread
    */
-  @property({ reflect: true }) state?: 'default'|'unread'|'read' = 'default';
+  @property({ reflect: true }) state?: 'unread'|'read';
 
   /**
    * Sets a numeric value for a badge.

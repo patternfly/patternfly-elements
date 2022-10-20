@@ -6,11 +6,8 @@ import { PfeBadge } from '@patternfly/pfe-badge';
 // Background colors for the various states
 const states = {
   default: '#f0f0f0',
-  info: '#0066cc',
-  success: '#3e8635',
-  important: '#c9190b',
-  moderate: '#f0ab00',
-  critical: '#a30000',
+  read: '#f0f0f0',
+  unread: '#0066cc',
 };
 
 const element = html`<pfe-badge number="10">10</pfe-badge>`;
@@ -44,16 +41,17 @@ describe('<pfe-badge>', function() {
     expect(el.shadowRoot!.querySelector('span')!.textContent).to.equal('900');
   });
 
-  Object.entries(states).forEach(([state, colour]) => {
-    it(`should have a background color of ${colour} when state is ${state}`, async function() {
+  // This is the one that created an error:
+  Object.entries(states).forEach(([state, color]) => {
+    it(`should have a background color of '${color}' when state is ${state}`, async function() {
       const el = await createFixture<PfeBadge>(element);
 
       if (state !== 'default') {
         el.setAttribute('state', state);
       }
 
-      const [r, g, b] = getColor(el.shadowRoot!.querySelector('span')!, 'background-color');
-      expect([r, g, b]).to.deep.equal(hexToRgb(colour));
+      const [r, g, b] = getColor(el, 'background-color');
+      expect([r, g, b]).to.deep.equal(hexToRgb(color));
     });
   });
 });

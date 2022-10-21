@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { BaseButton } from './BaseButton.js';
 
@@ -118,7 +119,7 @@ import styles from './pfe-button.scss';
  * @slot
  *       Must contain exactly one `<button>` element as the only content not assigned to a named slot.
  *
- * @attr {string} progress-label - ARIA label for the progress indicator {@default `'loading'`}
+ * @attr {string} loading-label - ARIA label for the loading indicator {@default `'loading'`}
  *
  * @cssprop {<color>}  --pf-c-button--m-warning--Color                   {@default `#151515`}
  * @cssprop {<color>}  --pf-c-button--m-warning--BackgroundColor         {@default `#f0ab00`}
@@ -159,10 +160,14 @@ export class PfeButton extends BaseButton {
 
   protected override renderDefaultIcon() {
     return html`
-      <pfe-icon ?hidden=${!this.icon} icon=${this.icon} size="sm"></pfe-icon>
+      <pfe-icon
+          size="sm"
+          icon=${ifDefined(this.icon)}
+          set=${ifDefined(this.iconSet)}
+          ?hidden=${!this.icon}></pfe-icon>
       <pfe-spinner
           ?hidden=${!this.loading}
-          aria-label=${this.getAttribute('progress-label') ?? 'loading'}
+          aria-label=${this.getAttribute('loading-label') ?? 'loading'}
       ></pfe-spinner>
     `;
   }

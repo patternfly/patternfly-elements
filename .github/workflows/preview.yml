@@ -48,14 +48,7 @@ jobs:
               |<span aria-hidden="true">😎</span> Deploy Preview | [${PREVIEW_URL}](${PREVIEW_URL}) |
               ---
 
-              _To edit notification comments on pull requests, go to your [Netlify site settings](https://app.netlify.com/sites/${NETLIFY_SITE_SLUG}/settings/deploys#deploy-notifications).`
-
-              console.log({
-                owner, repo, issue_number,
-                GITHUB_SHA, GITHUB_HEAD_REF,
-                NETLIFY_SITE_SLUG, PREVIEW_URL,
-                body, HEADER,
-              });
+              _To edit notification comments on pull requests, go to your [Netlify site settings](https://app.netlify.com/sites/${NETLIFY_SITE_SLUG}/settings/deploys#deploy-notifications)._`
 
               const comments = await github.rest.issues.listComments({ owner, repo, issue_number });
               const priorComment = comments.data.find(comment => comment.body.startsWith(HEADER));

@@ -38,7 +38,7 @@ pfe-tabs {
 }
 
 .scroll-up pfe-icon {
-    --pfe-icon--Color: #fff;
+    color: #fff;
 }
 
 .form-ui+.form-ui {

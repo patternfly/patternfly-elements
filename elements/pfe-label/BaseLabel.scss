@@ -10,8 +10,10 @@
   background-color: var(--pf-c-label--BackgroundColor, var(--pf-global--palette--black-150, #f5f5f5));
   border: 0;
   border-radius: var(--pf-c-label--BorderRadius, 30em);
+}
 
-  --pfe-icon--color: currentColor;
+pfe-icon, ::slotted(pfe-icon) {
+  color: currentColor;
 }
 
 :host,
@@ -40,7 +42,6 @@
   content: "";
   border-radius: var(--pf-c-label--BorderRadius, 30em);
   border: var(--pf-c-label__content--before--BorderWidth, 1px) solid var(--pf-c-label__content--before--BorderColor, var(--pf-global--palette--black-300, #d2d2d2));
-  --pfe-icon--color: currentColor;
 }
 
 :host([color="blue"]) {

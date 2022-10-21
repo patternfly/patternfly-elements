@@ -76,7 +76,7 @@ document.getElementById('copyButton').contentToCopy('Wakka wakka!');
 ### Override the icon
 ```html
 <pfe-clipboard>
-    <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+    <pfe-icon slot="icon" icon="globe"></pfe-icon>
 </pfe-clipboard>
 ```
 
@@ -85,7 +85,7 @@ document.getElementById('copyButton').contentToCopy('Wakka wakka!');
 <pfe-clipboard>
   <span slot="label">Copy this article URL</span>
   <span slot="success">URL Copied to clipboard</span>
-  <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+  <pfe-icon slot="icon" icon="globe"></pfe-icon>
 </pfe-clipboard>
 ```
 

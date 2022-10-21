@@ -6,7 +6,7 @@
 </style>
 
 <script type="module">
-import '@patternfly/pfe-icon/font-awesome.js';
+import '@patternfly/pfe-icon';
 </script>
 
 {% renderOverview %}

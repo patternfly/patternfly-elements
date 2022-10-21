@@ -2,6 +2,8 @@ import { expect, oneEvent, html } from '@open-wc/testing';
 import { spy } from 'sinon';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfeSelect } from '@patternfly/pfe-select';
+import '@patternfly/pfe-tools/test/stub-logger.js';
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 // One element, defined here, is used
 // in multiple tests. It's torn down and recreated each time.
@@ -24,28 +26,24 @@ describe('<pfe-select>', function() {
   });
 
   it('should log a warning if there are no children in the light DOM', async function() {
-    const spyConsole = spy(console, 'warn');
     const el = await createFixture<PfeSelect>(html`
       <pfe-select>
       </pfe-select>
     `);
     expect(el).to.exist;
-    expect(spyConsole, 'The first child in the light DOM must be a supported select tag')
+    expect(Logger.warn, 'The first child in the light DOM must be a supported select tag')
       .to.have.been.calledWith('[pfe-select]');
-    spyConsole.restore();
   });
 
   it(`should log a warning if select tag is not the first child of pfe-select element`, async function() {
-    const spyConsole = spy(console, 'warn');
     await createFixture<PfeSelect>(html`
       <pfe-select>
         <div></div>
       </pfe-select>
     `);
 
-    expect(spyConsole, 'The first child needs to be a select element')
+    expect(Logger.warn, 'The first child needs to be a select element')
       .to.have.been.calledWith('[pfe-select]');
-    spyConsole.restore();
   });
 
   // Attribute test.
@@ -80,7 +78,6 @@ describe('<pfe-select>', function() {
   });
 
   it(`should log a warning if multiple options exist with selected field set as true`, async function() {
-    const spyConsole = spy(console, 'warn');
     const pfeSelect = await createFixture<PfeSelect>(html`
       <pfe-select>
         <select>
@@ -96,10 +93,8 @@ describe('<pfe-select>', function() {
       { text: 'Three', value: '3', selected: false },
     ];
 
-    expect(spyConsole, `The first 'selected' option will take precedence over others in case of multiple 'selected' options`)
+    expect(Logger.warn, `The first 'selected' option will take precedence over others in case of multiple 'selected' options`)
       .to.have.been.calledWith('[pfe-select]');
-
-    spyConsole.restore();
   });
 
   it('should add options to select through addOptions API', async function() {

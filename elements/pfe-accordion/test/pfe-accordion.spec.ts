@@ -1,14 +1,14 @@
-import type { SinonSpy } from 'sinon';
-
 import { expect, oneEvent, html, aTimeout, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { spy } from 'sinon';
 import { sendKeys } from '@web/test-runner-commands';
 
 // Import the element we're testing.
 import { PfeAccordion } from '@patternfly/pfe-accordion';
 import { PfeAccordionPanel } from '@patternfly/pfe-accordion/pfe-accordion-panel.js';
 import { PfeAccordionHeader } from '@patternfly/pfe-accordion/pfe-accordion-header.js';
+
+import '@patternfly/pfe-tools/test/stub-logger.js';
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 // One element, defined here, is used
 // in multiple tests. It's torn down and recreated each time.
@@ -127,14 +127,6 @@ const testNestedElement = html`
 `;
 
 describe('<pfe-accordion>', function() {
-  beforeEach(function() {
-    spy(console, 'warn');
-  });
-
-  afterEach(function() {
-    (console.warn as SinonSpy).restore(); // eslint-disable-line no-console
-  });
-
   it('should upgrade pfe-accordion', async function() {
     const element = await createFixture<PfeAccordion>(html`<pfe-accordion></pfe-accordion>`);
     expect(element, 'pfe-accordion should be an instance of PfeAccordion')
@@ -449,7 +441,7 @@ describe('<pfe-accordion>', function() {
 
     await pfeAccordion.updateComplete;
 
-    expect(console.warn) // eslint-disable-line no-console
+    expect(Logger.warn)
       .to.have.been.calledOnceWith(`[pfe-accordion-header#bad-header-element]`, 'Header should contain at least 1 heading tag for correct semantics.');
   });
 

@@ -1,6 +1,5 @@
 import '@patternfly/pfe-band';
 import '@patternfly/pfe-button';
-import '@patternfly/pfe-icon/font-awesome.js';
 import '@patternfly/pfe-spinner';
 import '@patternfly/pfe-select';
 

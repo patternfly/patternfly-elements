@@ -10,7 +10,6 @@
   "types": "./pfe-icon.d.ts",
   "exports": {
     ".": "./pfe-icon.js",
-    "./font-awesome.js": "./font-awesome.js",
     "./*": "./*.js"
   },
   "publishConfig": {
@@ -70,5 +69,10 @@
   "dependencies": {
     "@patternfly/pfe-core": "^2.0.0-next.8",
     "lit": "2.3.0"
+  },
+  "devDependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.2.0",
+    "@fortawesome/free-regular-svg-icons": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0"
   }
 }

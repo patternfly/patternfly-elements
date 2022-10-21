@@ -4,6 +4,8 @@ import { classMap } from 'lit/directives/class-map.js';
 
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
+import styles from './BaseLabel.scss';
+
 export type LabelVariant = (
   | 'filled'
   | 'outline'
@@ -24,6 +26,8 @@ export type LabelColor = (
  * Base label class
 */
 export abstract class BaseLabel extends LitElement {
+  static readonly styles = [styles];
+
   /**
    * Changes the style of the label.
    * - Filled: Colored background with colored border.

@@ -18,6 +18,15 @@
     },
     {
       "path": "../../tools/pfe-tools"
+    },
+    {
+      "path": "../pfe-tooltip"
+    },
+    {
+      "path": "../pfe-button"
+    },
+    {
+      "path": "../pfe-autocomplete"
     }
   ]
 }

@@ -57,7 +57,8 @@ export abstract class BaseLabel extends LitElement {
         <span id="text">
           <slot></slot>
         </span>
-      </span>${this.renderSuffix?.() ?? ''}
+        ${this.renderSuffix?.() ?? ''}
+      </span>
     `;
   }
 

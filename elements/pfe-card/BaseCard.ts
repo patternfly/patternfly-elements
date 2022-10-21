@@ -69,35 +69,18 @@ export abstract class BaseCard extends LitElement {
    */
    @property({ reflect: true }) size: 'compact'|'large'|undefined = undefined;
 
-   /**
-   * Optionally apply a border radius for the drop shadow and/or border.
-   */
-    @property({ type: Boolean, reflect: true }) rounded = false;
+   protected slots = new SlotController(this, {
+     slots: ['header', null, 'footer'],
+   });
 
-    /**
-   * Optionally apply a border color and weight to the entire card container.
-   * The default color and weight is `#d2d2d2` and `1px`, respectively.
-   */
-     @property({ type: Boolean, reflect: true }) fullHeight = false;
+   render() {
+     const classes = {
+       'has-header': this.slots.hasSlotted('header', 'pfe-card--header'),
+       'has-footer': this.slots.hasSlotted('footer', 'pfe-card--footer'),
+       'has-body': this.slots.hasSlotted(),
+     };
 
-  /**
-   * Optionally apply a border color and weight to the entire card container.
-   * The default color and weight is `#d2d2d2` and `1px`, respectively.
-   */
-  @property({ type: Boolean, reflect: true }) plain = false;
-
-  protected slots = new SlotController(this, {
-    slots: ['header', null, 'footer'],
-  });
-
-  render() {
-    const classes = {
-      'has-header': this.slots.hasSlotted('header', 'pfe-card--header'),
-      'has-footer': this.slots.hasSlotted('footer', 'pfe-card--footer'),
-      'has-body': this.slots.hasSlotted(),
-    };
-
-    return html`
+     return html`
       <div class="pfe-card__header ${classMap(classes)}" part="header">
         <slot name="header"></slot>
         <slot name="pfe-card--header"></slot>
@@ -110,5 +93,5 @@ export abstract class BaseCard extends LitElement {
         <slot name="pfe-card--footer"></slot>
       </div>
     `;
-  }
+   }
 }

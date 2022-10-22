@@ -13,6 +13,7 @@
   },
   "exports": {
     ".": "./pfe-clipboard-copy.js",
+    "./BaseClipboardCopy.js": "./BaseClipboardCopy.js",
     "./*": "./*.js"
   },
   "publishConfig": {
@@ -45,7 +46,6 @@
   ],
   "dependencies": {
     "@patternfly/pfe-core": "^2.0.0 || ^2.0.0-next.0",
-    "lit": "^2.0.0",
-    "@patternfly/pfe-icon": "^2.0.0"
+    "lit": "^2.0.0"
   }
 }

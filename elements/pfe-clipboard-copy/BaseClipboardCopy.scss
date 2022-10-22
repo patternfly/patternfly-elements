@@ -1,0 +1,12 @@
+[part="input-group"] {
+  display: flex;
+  height: 36px;
+}
+
+[part="input"]:not(textarea) {
+  text-overflow: ellipsis;
+}
+
+[part="action"] {
+  text-overflow: ellipsis;
+}

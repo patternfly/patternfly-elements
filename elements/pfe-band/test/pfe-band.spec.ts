@@ -4,6 +4,8 @@ import { hexToRgb, getColor } from '@patternfly/pfe-tools/test/hex-to-rgb.js';
 import { PfeBand } from '@patternfly/pfe-band';
 import { setViewport } from '@web/test-runner-commands';
 
+import '@patternfly/pfe-tools/test/stub-logger.js';
+
 // Themes and their expected hex values
 const colors = {
   default: '#f0f0f0',

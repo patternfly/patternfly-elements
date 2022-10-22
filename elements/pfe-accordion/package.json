@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-accordion",
-  "version": "2.0.0-next.5",
+  "version": "2.0.0-next.6",
   "license": "MIT",
   "description": "Accordion for PatternFly Elements",
   "customElements": "custom-elements.json",
@@ -12,6 +12,9 @@
     ".": "./pfe-accordion.js",
     "./pfe-accordion-header.js": "./pfe-accordion-header.js",
     "./pfe-accordion-panel.js": "./pfe-accordion-panel.js",
+    "./BaseAccordion.js": "./BaseAccordion.js",
+    "./BaseAccordionHeader.js": "./BaseAccordionHeader.js",
+    "./BaseAccordionPanel.js": "./BaseAccordionPanel.js",
     "./*": "./*.js"
   },
   "publishConfig": {

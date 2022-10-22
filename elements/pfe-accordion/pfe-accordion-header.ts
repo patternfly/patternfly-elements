@@ -1,32 +1,9 @@
-import type { ColorTheme } from '@patternfly/pfe-core';
-
-import { LitElement, html } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
-import { unsafeStatic, html as staticH } from 'lit/static-html.js';
-
-import { ComposedEvent } from '@patternfly/pfe-core';
-import { pfelement, bound, observed, initializer, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
-import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
-
-import style from './pfe-accordion-header.scss';
+import { customElement } from 'lit/decorators.js';
 
 import '@patternfly/pfe-icon';
+import { BaseAccordionHeader } from './BaseAccordionHeader.js';
 
-const isPorHeader =
-  (el: Node): el is HTMLElement =>
-    el instanceof HTMLElement && !!el.tagName.match(/P|^H[1-6]/);
-
-export class AccordionHeaderChangeEvent extends ComposedEvent {
-  constructor(
-    public expanded: boolean,
-    public toggle: PfeAccordionHeader,
-  ) {
-    super('change');
-  }
-}
+import style from './pfe-accordion-header.scss';
 
 /**
  * Accordion Header
@@ -42,157 +19,67 @@ export class AccordionHeaderChangeEvent extends ComposedEvent {
  *       (or after the chevron and header in disclosure mode).
  *
  * @fires {AccordionHeaderChangeEvent} change - when the open panels change
- * @fires {CustomEvent<{ expanded: Boolean; toggle: PfeAccordionHeader }>} pfe-accordion:change -
- *        when the open panels change {@deprecated Use `change`}
- *        ```javascript
- *        detail: {
- *          expanded: Boolean;
- *          toggle: PfeAccordionHeader;
- *        }
- *        ```
+ *
+ * @cssprop     {<color>} --pf-c-accordion__toggle--Color
+ *              Sets the font color for the accordion header.
+ *              {@default `var(--pf-global--Color--100, #151515)`}
+ * @cssprop     {<color>} --pf-c-accordion__toggle--BackgroundColor
+ *              Sets the background color for the accordion header toggle element.
+ *              {@default `transparent`}
+ * @cssprop     {<color>} --pf-c-accordion__toggle--after--BackgroundColor
+ *              Sets the background color for the after element for the accordion header toggle element.
+ *              {@default `transparent`}
+ * @cssprop     {<length>} --pf-c-accordion__toggle--PaddingTop
+ *              Sets the top padding for the accordion header.
+ *              {@default `var(--pf-global--spacer--sm, 0.5rem)`}
+ * @cssprop     {<length>} --pf-c-accordion__toggle--PaddingRight
+ *              Sets the right padding for the accordion header.
+ *              {@default `var(--pf-global--spacer--md, 1rem)`}
+ * @cssprop     {<length>} --pf-c-accordion__toggle--PaddingBottom
+ *              Sets the bottom padding for the accordion header.
+ *              {@default `var(--pf-global--spacer--sm, 0.5rem)`}
+ * @cssprop     {<length>} --pf-c-accordion__toggle--PaddingLeft
+ *              Sets the left padding for the accordion header.
+ *              {@default `var(--pf-global--spacer--md, 1rem)`}
+ * @cssprop     {<length>} --pf-c-accordion__toggle--FontSize
+ *              Sets the sidebar background color for the accordion header.
+ *              {@default `var(--pf-global--FontSize--lg, 1rem)`}
+ * @cssprop     {<color>} --pf-c-accordion__toggle--FontFamily
+ *              Sets the font family for the accordion header.
+ *              {@default `var(--pf-global--FontFamily--redhat-updated--heading--sans-serif, "RedHatDisplayUpdated", helvetica, arial, sans-serif)`}
+ * @cssprop     --pf-c-accordion__toggle--FontWeight
+ *              Sets the font weight for the accordion header.
+ *              {@default `var(--pf-global--FontWeight--normal, 400)`}
+ * @cssprop     {<color>} --pf-c-accordion__toggle--active--BackgroundColor
+ *              Sets the active backgrdound color for the accordion header.
+ *              {@default `var(--pf-global--BackgroundColor--200, #f0f0f0)`}
+ * @cssprop     {<color>} --pf-c-accordion__toggle--active-text--Color
+ *              Sets the active text color for the accordion header.
+ *              {@default `var(--pf-global--link--Color, #0066cc)`}
+ * @cssprop     --pf-c-accordion__toggle--active-text--FontWeight
+ *              Sets the active text font weight for the accordion header.
+ *              {@default `var(--pf-global--FontWeight--semi-bold, 700)`}
+ * @cssprop     {<color>} --pf-c-accordion__toggle--expanded--before--BackgroundColor
+ *              Sets the hover expanded before background color for the accordion header.
+ *              {@default `var(--pf-global--link--Color, #0066cc)`}
+ * @cssprop     --pf-c-accordion__toggle--expanded-icon--Rotate
+ *              Sets the expanded icon rotation degrees for the accordion header.
+ *              {@default `90deg`}
+ * @cssprop     {<length>} --pf-c-accordion__toggle-text--MaxWidth
+ *              Sets the max width for the text inside the accordion header.
+ *              {@default `calc(100% - var(--pf-global--spacer--lg, 1.5rem))`}
+ * @cssprop     --pf-c-accordion__toggle--before--Width
+ *              Sets the sidebar width for the accordion header.
+ *              {@default `var(--pf-global--BorderWidth--lg, 3px)`}
+ * @cssprop     --pf-c-accordion__toggle-icon--Transition
+ *              Sets the transition animation for the accordion header.
+ *              {@default `0.2s ease-in 0s`}
  */
-@customElement('pfe-accordion-header') @pfelement()
-export class PfeAccordionHeader extends LitElement {
+@customElement('pfe-accordion-header')
+export class PfeAccordionHeader extends BaseAccordionHeader {
   static readonly version = '{{version}}';
 
-  static readonly styles = [style];
-
-  static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
-
-  @property({ attribute: 'aria-controls', reflect: true }) ariaControls?: string;
-
-  /** Disclosure */
-  @property({ type: String, reflect: true }) disclosure?: 'true'|'false';
-
-  @observed
-  @property({ type: Boolean, reflect: true }) expanded = false;
-
-  @property({ reflect: true, attribute: 'heading-text' }) headingText = '';
-
-  @property({ reflect: true, attribute: 'heading-tag' }) headingTag = 'h3';
-
-  /**
-   * Sets color theme based on parent context
-   */
-  @colorContextConsumer()
-  @property({ reflect: true }) on?: ColorTheme;
-
-  @query('.pf-c-accordion__toggle') button?: HTMLButtonElement;
-
-  private _generatedHtag?: HTMLHeadingElement;
-
-  private slots = new SlotController(this, 'accents', null);
-
-  private logger = new Logger(this);
-
-  private get ariaExpandedState(): 'true'|'false' {
-    return String(!!this.expanded) as 'true'|'false';
-  }
-
-  constructor() {
-    super();
-    this.addEventListener('click', this._clickHandler);
-  }
-
-  override connectedCallback() {
-    super.connectedCallback();
-    this.hidden = true;
-    this.id ||= getRandomId('pfe-accordion');
-  }
-
-  @initializer() protected async _init() {
-    const header = await this._getHeaderElement();
-
-    // prevent double-logging
-    if (header !== this._generatedHtag) {
-      this._generatedHtag = undefined;
-    }
-
-    this.headingTag = header?.tagName.toLowerCase() ?? 'h3';
-    this.headingText = header?.textContent?.trim() ?? '';
-
-    // Remove the hidden attribute after upgrade
-    this.hidden = false;
-  }
-
-  override render() {
-    const tag = unsafeStatic(this.headingTag);
-    return staticH`
-      <${tag} id="heading">${html`
-        <button id="button"
-          aria-expanded="${this.ariaExpandedState}"
-          class="pf-c-accordion__toggle">
-          <span class="pf-c-accordion__toggle-wrapper">
-            <span class="pf-c-accordion__toggle-text" part="text">
-              ${this.headingText || html`
-              <slot></slot>
-              `}
-            </span>
-            ${!this.slots.hasSlotted('accents') ? '' : html`
-            <span class="pf-c-accordion__toggle-accents" part="accents">
-              <slot name="accents"></slot>
-            </span>
-            `}
-          </span>
-          <pfe-icon
-              icon="web-icon-caret-thin-right"
-              on-fail="collapse"
-              part="icon"
-              class="pf-c-accordion__toggle-icon"
-          ></pfe-icon>
-        </button>`}
-      </${tag}>
-    `;
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener('click', this._clickHandler);
-  }
-
-  @bound private async _getHeaderElement(): Promise<HTMLElement|undefined> {
-    await this.updateComplete;
-    // Check if there is no nested element or nested textNodes
-    if (!this.firstElementChild && !this.firstChild) {
-      return void this.logger.warn('No header content provided');
-    } else if (this.firstElementChild) {
-      const [heading, ...otherContent] = this.slots.getSlotted().filter(isPorHeader);
-
-      // If there is no content inside the slot, return empty with a warning
-      // else, if there is more than 1 element in the slot, capture the first h-tag
-      if (!heading) {
-        return void this.logger.warn('No heading information was provided.');
-      } else if (otherContent.length) {
-        this.logger.warn('Heading currently only supports 1 tag; extra tags will be ignored.');
-      }
-      return heading;
-    } else {
-      if (!this._generatedHtag) {
-        this.logger.warn('Header should contain at least 1 heading tag for correct semantics.');
-      }
-      this._generatedHtag = document.createElement('h3');
-
-      // If a text node was provided but no semantics, default to an h3
-      // otherwise, incorrect semantics were used, create an H3 and try to capture the content
-      if (this.firstChild?.nodeType === Node.TEXT_NODE) {
-        this._generatedHtag.textContent = this.firstChild.textContent;
-      } else {
-        this._generatedHtag.textContent = this.textContent;
-      }
-
-      return this._generatedHtag;
-    }
-  }
-
-  @bound private _clickHandler() {
-    const expanded = !this.expanded;
-    this.dispatchEvent(new AccordionHeaderChangeEvent(expanded, this));
-    this.dispatchEvent(deprecatedCustomEvent('pfe-accordion:change', { expanded, toggle: this }));
-  }
-
-  protected _expandedChanged() {
-    this.button?.setAttribute('aria-expanded', this.ariaExpandedState);
-  }
+  static readonly styles = [...BaseAccordionHeader.styles, style];
 }
 
 declare global {

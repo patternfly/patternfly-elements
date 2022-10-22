@@ -7,10 +7,8 @@
 [build]
   command = "npm ci && npm run site"
 
-[[plugins]]
-  package = "/tools/netlify-plugin-github-actions"
-
-  [plugins.inputs]
-    owner = "patternfly"
-    repository = "patternfly-elements"
-    workflowId = "visual-regression.yml"
+[[redirects]]
+  from = '/v1/*'
+  to = 'https://release-v1--patternfly-elements.netlify.app/:splat'
+  status = 200
+  force = true

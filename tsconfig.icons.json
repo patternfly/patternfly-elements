@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.settings.json",
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "module": "esnext"
+  }
+}

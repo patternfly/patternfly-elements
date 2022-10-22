@@ -1,0 +1,39 @@
+#heading {
+  font-size: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+.toggle,
+.toggle:before,
+.toggle:after {
+  padding: 0;
+  margin: 0;
+}
+
+.toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
+}
+
+.toggle:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

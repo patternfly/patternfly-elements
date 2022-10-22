@@ -122,9 +122,6 @@
       "@patternfly/pfe-page-status": [
         "./elements/pfe-page-status/pfe-page-status.ts"
       ],
-      "@patternfly/pfe-primary-detail": [
-        "./elements/pfe-primary-detail/pfe-primary-detail.ts"
-      ],
       "@patternfly/pfe-progress-steps": [
         "./elements/pfe-progress-steps/pfe-progress-steps.ts"
       ],
@@ -139,9 +136,6 @@
       ],
       "@patternfly/pfe-tabs": [
         "./elements/pfe-tabs/pfe-tabs.ts"
-      ],
-      "@patternfly/pfe-toast": [
-        "./elements/pfe-toast/pfe-toast.ts"
       ],
       "@patternfly/pfe-tools/*": [
         "./tools/pfe-tools/*"
@@ -207,9 +201,6 @@
       "path": "./elements/pfe-page-status"
     },
     {
-      "path": "./elements/pfe-primary-detail"
-    },
-    {
       "path": "./elements/pfe-progress-steps"
     },
     {
@@ -223,9 +214,6 @@
     },
     {
       "path": "./elements/pfe-tabs"
-    },
-    {
-      "path": "./elements/pfe-toast"
     },
     {
       "path": "./elements/pfe-label"

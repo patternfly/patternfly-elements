@@ -57,8 +57,6 @@
     // This is needed if the icon isn't square
     height: pfe-local(icon--Height);
     margin: pfe-local(icon--Margin);
-    // Customize icon color for pfe-icons
-    --pfe-icon--Color: #{pfe-local(icon--Color)};
     svg {
       // Customize icon color of fallback svg icon
       fill: pfe-local(icon--Color) !important;
@@ -103,8 +101,6 @@
       color: pfe-local(Color--hover) !important;
     }
     &__icon {
-      // Customize icon color for pfe-icons
-      --pfe-icon--Color: #{pfe-local(icon--Color--hover)};
       svg {
         // Customize icon color of fallback svg icon
         fill: pfe-local(icon--Color--hover) !important;
@@ -129,6 +125,14 @@
 .pfe-clipboard__icon > * {
   width: 100%;
   --pfe-icon--size: #{pfe-local(icon--Width)};
+}
+// Customize icon color for pfe-icons
+::slotted(pfe-icon) {
+  color: #{pfe-local(icon--Color)};
+}
+:host(:hover:not([disabled])) ::slotted(pfe-icon),
+:host(:focus:not([disabled])) ::slotted(pfe-icon) {
+  color: #{pfe-local(icon--Color--hover)};
 }
 
 .icon--url {

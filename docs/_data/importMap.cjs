@@ -8,6 +8,8 @@ function readPackageVersion(module) {
 }
 
 const LIT_VERSION = readPackageVersion('lit');
+const FUSE_VERSION = readPackageVersion('fuse.js');
+const ZERO_MD_VERSION = readPackageVersion('zero-md');
 const POPPER_VERSION = readPackageVersion('@popperjs/core');
 const MARKED_VERSION = readPackageVersion('marked');
 const PRISM_VERSION = readPackageVersion('prismjs');
@@ -69,7 +71,13 @@ module.exports = async function() {
     env: ['production', 'browser', 'module']
   });
 
-  await generator.install(['tslib', ...LIT_DEPS, ...PWA_DEPS]);
+  await generator.install([
+    'tslib',
+    ...LIT_DEPS,
+    ...PWA_DEPS,
+    `zero-md@${ZERO_MD_VERSION}`,
+    `fuse.js@${FUSE_VERSION}`,
+  ]);
 
   const map = generator.getMap();
 
@@ -81,7 +89,7 @@ module.exports = async function() {
   map.imports['@patternfly/pfe-core/decorators.js'] = '/core/core/decorators.js';
   map.imports['@patternfly/pfe-core/decorators/'] = '/core/core/decorators/';
   map.imports['@patternfly/pfe-core/'] = '/core/core/';
-
+  map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
 
   fs.readdirSync(path.join(__dirname, '..', '..', 'elements')).flatMap(component => {
     const base = component.replace('pfe-', '');

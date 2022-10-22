@@ -71,12 +71,12 @@
 
   ### Override the icon
   <pfe-clipboard>
-    <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+    <pfe-icon slot="icon" icon="globe"></pfe-icon>
   </pfe-clipboard>
 
   ```html
   <pfe-clipboard>
-    <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+    <pfe-icon slot="icon" icon="globe"></pfe-icon>
   </pfe-clipboard>
   ```
 
@@ -84,14 +84,14 @@
   <pfe-clipboard>
     <span slot="label">Copy this article URL</span>
     <span slot="success">URL Copied to clipboard</span>
-    <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+    <pfe-icon slot="icon" icon="globe"></pfe-icon>
   </pfe-clipboard>
 
   ```html
   <pfe-clipboard>
     <span slot="label">Copy this article URL</span>
     <span slot="success">URL Copied to clipboard</span>
-    <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+    <pfe-icon slot="icon" icon="globe"></pfe-icon>
   </pfe-clipboard>
   ```
 

@@ -8,7 +8,7 @@ export class PfeTimestamp extends LitElement {
   static readonly version = '{{version}}';
   static readonly styles = [style];
 
-  @property({ reflect: true, type: String }) date: string = new Date().toLocaleString();
+  @property({ reflect: true }) date = new Date().toLocaleString();
 
   @property({ reflect: true, attribute: 'date-format' }) dateFormat?: 'full' | 'long' | 'medium' | 'short';
 

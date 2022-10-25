@@ -43,7 +43,7 @@ describe('<pfe-clipboard>', async function() {
     const el = await createFixture<PfeClipboard>(element);
     const defaultSlot = `<span slot="label">You can totally click to copy url</span>`;
     const textSuccessSlot = `<span slot="success">Making some copies!</span>`;
-    const iconSlot = `<pfe-icon slot="icon" icon="web-icon-globe" color="darker"></pfe-icon>`;
+    const iconSlot = `<pfe-icon slot="icon" icon="globe"></pfe-icon>`;
     el.innerHTML = `
         ${defaultSlot}
         ${textSuccessSlot}

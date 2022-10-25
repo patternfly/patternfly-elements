@@ -14,17 +14,17 @@
     <title>Web components test</title>
     <link rel="canonical" href="https://patternflyelements.org/kitchen-sink/"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link type="text/css" rel="stylesheet" href="/red-hat-theme.css" media="all"/>
-    <link type="text/css" rel="stylesheet" href="/core/styles/pfe.min.css" media="all"/>
-    <link type="text/css" rel="stylesheet" href="/core/styles/pfe-base.min.css" media="all"/>
-    {# <link type="text/css" rel="stylesheet" href="/core/styles/pfe-context.min.css" media="all"/> #}
-    {# <link type="text/css" rel="stylesheet" href="/core/styles/pfe-layouts.min.css" media="all"/> #}
-    {# <link type="text/css" rel="stylesheet" href="/core/styles/pfe-typography-classes.min.css" media="all"/> #}
-    {# <link type="text/css" rel="stylesheet" href="/core/styles/pfe-vars-as-px.min.css" media="all"/> #}
-    {# <link type="text/css" rel="stylesheet" href="/core/styles/pfe-vars.min.css" media="all"/> #}
-    <link type="text/css" rel="stylesheet" href="/core/styles/red-hat-font.min.css" media="all"/>
-    <script type="module" src="/pfe.min.js"></script>
-    <noscript><link href="/core/core/pfe--noscript.min.css" rel="stylesheet"></noscript>
+    <link type="text/css" rel="stylesheet" href="{{ '/red-hat-theme.css' | url }}" media="all"/>
+    <link type="text/css" rel="stylesheet" href="{{ '/core/styles/pfe.min.css' | url }}" media="all"/>
+    <link type="text/css" rel="stylesheet" href="{{ '/core/styles/pfe-base.min.css' | url }}" media="all"/>
+    {# <link type="text/css" rel="stylesheet" href="{{ '/core/styles/pfe-context.min.css' | url }}" media="all"/> #}
+    {# <link type="text/css" rel="stylesheet" href="{{ '/core/styles/pfe-layouts.min.css' | url }}" media="all"/> #}
+    {# <link type="text/css" rel="stylesheet" href="{{ '/core/styles/pfe-typography-classes.min.css' | url }}" media="all"/> #}
+    {# <link type="text/css" rel="stylesheet" href="{{ '/core/styles/pfe-vars-as-px.min.css' | url }}" media="all"/> #}
+    {# <link type="text/css" rel="stylesheet" href="{{ '/core/styles/pfe-vars.min.css' | url }}" media="all"/> #}
+    <link type="text/css" rel="stylesheet" href="{{ '/core/styles/red-hat-font.min.css' | url }}" media="all"/>
+    <script type="module" src="{{ '/pfe.min.js' | url }}"></script>
+    <noscript><link rel="stylesheet" href="{{ '/core/core/pfe--noscript.min.css' | url }}"></noscript>
     <style>
       /* Replicate styles from /sites/ and static.redhat.com */
       :root :is(h1, h2, h3) {
@@ -1149,7 +1149,7 @@
           </pfe-card>
 
           <pfe-card color-palette="accent" img-src="" class="custom-styles">
-            <pfe-icon icon="rh-atom" circled="lightest" circled="lightest" size="lg"></pfe-icon>
+            <pfe-icon icon="atom" size="lg"></pfe-icon>
             <h3 class="pfe-headline-3">Card heading</h3>
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
               takimata sanctus est Lorem ipsum dolor sit amet.</p>

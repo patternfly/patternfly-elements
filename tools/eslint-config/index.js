@@ -205,6 +205,7 @@ const config = {
     files: ['*.cjs'],
     parserOptions: {
       ecmaVersion: 2021,
+      sourceType: 'script',
     },
     env: { node: true },
   }, {

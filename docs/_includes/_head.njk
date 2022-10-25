@@ -5,7 +5,7 @@
   <meta name="description" content="{{ title }} - PatternFly Elements">
   <meta name="pfe-auto-reveal" content="true">
   <title>{{ element.title or title }} - PatternFly Elements</title>
-  <link href="/brand/logo/svg/pfe-icon-blue.svg" rel="shortcut icon">
+  <link href="{{ '/brand/logo/svg/pfe-icon-blue.svg' | url }}" rel="shortcut icon">
 
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link
@@ -13,14 +13,19 @@
     rel="stylesheet">
 
   <noscript>
-    <link href="../../core/styles/pfe--noscript.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '../../core/styles/pfe--noscript.min.css' | url }}">
   </noscript>
 
-  <link rel="stylesheet" href="/prism.css">
-  <link rel="stylesheet" href="/core/styles/pfe.min.css">
-  <link rel="stylesheet" href="/core/styles/pfe-base.min.css">
-  <link rel="stylesheet" href="/core/styles/pfe-layouts.min.css">
-  <link rel="stylesheet" href="/main.css">
+  <link rel="stylesheet" href="{{ '/prism.css' | url }}">
+  <link rel="stylesheet" href="{{ '/core/styles/pfe.min.css' | url }}">
+  <link rel="stylesheet" href="{{ '/core/styles/pfe-base.min.css' | url }}">
+  <link rel="stylesheet" href="{{ '/core/styles/pfe-layouts.min.css' | url }}">
+  <link rel="stylesheet" href="{{ '/main.css' | url }}">
 
-  <script type="module" src="/pfe.min.js"></script>
+  <script type="module">
+    // Workaround for bundled pfe-icon: make icon imports absolute, instead of relative to the bundle
+    import * as Bundle from '/pfe.min.js';
+    Bundle.PfeIcon.getIconUrl = (set, icon) =>
+      new URL(`/components/icon/icons/${set}/${icon}.js`, import.meta.url);
+  </script>
 </head>

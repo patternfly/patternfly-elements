@@ -1,0 +1,31 @@
+:host {
+  display: none;
+  overflow: hidden;
+  will-change: height;
+}
+
+:host([expanded]) {
+  display: block;
+  position: relative;
+}
+
+:host(.animating) {
+  display: block;
+  transition: height 0.3s ease-in-out;
+}
+
+:host([fixed]) {
+  overflow-y: auto;
+}
+
+.body {
+  position: relative;
+}
+
+.body:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}

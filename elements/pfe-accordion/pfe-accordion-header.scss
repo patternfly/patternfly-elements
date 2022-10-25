@@ -1,246 +1,128 @@
-@use "@patternfly/pfe-sass" as *;
-
-// TODO: pass this as a shared stylesheet object
-@use "shared-assets" as *;
-
-/// ===========================================================================
-/// ACCORDION HEADER
-/// Styles sourced from: @patternfly/patternfly/components/Accordion/accordion.scss
-/// then updated for pfe theming variables
-/// ===========================================================================
 :host {
-  @include pfe-hidden;
-  @include pfe-box-sizing;
+  --pfe-icon--size: var(--pf-c-accordion__toggle--IconSize, 10px);
 
-  position: relative;
-  display: block;
-  outline: none;
-
-  box-sizing: border-box;
-
-  color:            pfe-local(Color); // broadcasted text
-
-  box-shadow: pfe-local(BoxShadow); // default is none
-
-  // Set the chevron to use the same color as the text
-  --pfe-icon--color: #{pfe-local(Color)};
-
-  // Note: 14px here gives us the 16px x 10.3px icon from designs
-  // @TODO Should this use the ui-element variable?
-  --pfe-icon--size: 14px;
+  color: var(--pf-c-accordion__toggle--Color, var(--pf-global--Color--100, #151515));
+  background-color: var(--pf-global--BackgroundColor--100, #ffffff);
 }
 
-// Remove margins from the heading tag
-#heading {
-  margin: 0;
-}
-
-// Button element
-.pf-c-accordion__toggle {
-  cursor: pointer;
-
-  outline: none;
-  position: relative;
-
-  // Focus uses a pseudo-element because it needs to overflow the container, outline also does not support border-radius settings
-  &::before {
-    position: absolute;
-    content: "";
-    top: -2px;
-    left: -2px;
-    width: calc(100% + #{pfe-var(ui--border-width--active)});
-    height: calc(100% + #{pfe-var(ui--border-width--active)});
-    border-radius: pfe-var(ui--border-radius);
-    border: pfe-var(ui--border-width--md) pfe-var(ui--border-style) transparent;
-  }
-
-  &:focus::before{
-    // TODO: parameterize
-    border-color: #6b9ff0;
-  }
-
-  // Remove the focus indicator on mouse-focus for browsers
-  // that do support :focus-visible
-  &:focus:not(:focus-visible)::before {
-    border: unset;
-  }
-
-  width:  100%;
-  margin: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
-
-  padding:          pfe-local(Padding);
-
-  background-color: transparent;
-  color:            pfe-local(Color); // broadcasted text
-
-  // Default typography
-  text-align:   left;
-  font-family:  pfe-var(font-family--heading);
-  font-size:    pfe-local(FontSize--header);
-  font-weight:  pfe-local(FontWeight--header);
-  text-align:   pfe-local(TextAlign);
-  line-height:  pfe-var(line-height);
-
-  --_typography-offset: calc((1em * #{pfe-var(line-height)} - 1em) / 2);
-
-  .pf-c-accordion__toggle-icon {
-    --_typography-offset: calc((1em * #{pfe-var(line-height)} - var(--pfe-icon--size, 14px)) / 2);
-  }
-
-  // To accomodate for the line-height when the header does not wrap
-  .pf-c-accordion__toggle-text {
-    // ~= -5px -> 20px font-size * 1.5 line height / 2 top+bottom
-    margin-top: calc(-1 * var(--_typography-offset, 5px));
-    margin-bottom: calc(-1 * var(--_typography-offset, 5px));
-  }
-
-  // Very minor adjustment to the top of the icon for alignment
-  .pf-c-accordion__toggle-icon {
-    margin-top: calc(var(--_typography-offset, 5px) / 4);
-  }
-
-  // @TODO: Do we want to force dark background color in dark mode or rely on the wrapper
-  // @media (prefers-color-scheme: dark) {
-  //   --context: dark;
-  //   background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--darker)); // transparent
-  //   color:            pfe-local(Color, $fallback: pfe-var(text--on-dark)); // broadcasted text
-  // }
-
-  // Standard border styles
-  border-style: pfe-var(surface--border-style);
-  border-width: pfe-local(BorderWidth);
-  border-color: pfe-local(BorderColor);
-
-  // Default accordion uses transparent right & left borders
-  border-right-color: transparent;
-  border-left-color: transparent;
-
-  // Remove the top border for non-first headers
-  // (the bottom-border of the previous provides delineation)
-  :host(:not(:first-of-type)) & {
-    border-top-width: 0;
-  }
-
-  // Accent bar
-  &::after {
-    @include accent-bar(
-      $direction: vertical,
-      $offset: (
-        top: -1px,
-        left: -1px,
-        bottom: -1px
-      ),
-      $thickness: pfe-local(accent--width),
-      $color: pfe-local(accent) // defaults to transparent
+:host([large]) {
+  --pf-c-accordion__toggle--PaddingTop: var(--pf-global--spacer--md, 1rem);
+  --pf-c-accordion__toggle--PaddingRight: var(--pf-global--spacer--md, 1rem);
+  --pf-c-accordion__toggle--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+  --pf-c-accordion__toggle--PaddingLeft: var(--pf-global--spacer--lg, 1.5rem);
+  --pf-c-accordion__toggle--FontFamily:
+    var(
+      --pf-global--FontFamily--redhat-updated--heading--sans-serif,
+      "RedHatDisplayUpdated",
+      "Overpass",
+      overpass,
+      helvetica,
+      arial,
+      sans-serif
     );
-    z-index: #{pfe-fetch(ZIndex) + 1}; // Fallback value
-    z-index: calc(#{pfe-local(ZIndex)} + 1);
-  }
-
-  // Hover, active, and focus state (only when not open)
-  // States source from the button element, not the host
-  &:hover,
-  &:active,
-  :host(:not([expanded])) &:focus {
-    background-color: #{pfe-local(BackgroundColor--active)};
-    --pfe-accordion--Color:           #{pfe-local(Color--active)};
-  }
-
-  :host(:not([expanded])) &:hover,
-  :host(:not([expanded])) &:active,
-  :host(:not([expanded])) &:focus {
-    --pfe-accordion--accent:          #{pfe-local(accent--active)};
-  }
-
-  @each $context in (dark, saturated) {
-    $overlay: rgba(247, 247, 249, .1);
-
-    @if $context == saturated {
-      $overlay: rgba(0, 0, 0, .2);
-    }
-
-    // Set properties to use their active modifier
-    :host([on="#{$context}"]) &:hover,
-    :host([on="#{$context}"]:not([expanded])) &:focus,
-    :host([on="#{$context}"]) &:active {
-      background-color: #{pfe-local(BackgroundColor--active, $overlay)};
-      --pfe-accordion--Color:           #{pfe-local(Color--active)};
-    }
-
-    :host([on="#{$context}"]:not([expanded])) &:hover,
-    :host([on="#{$context}"]:not([expanded])) &:active,
-    :host([on="#{$context}"]:not([expanded])) &:focus {
-      --pfe-accordion--accent:          #{pfe-local(accent--active, #{pfe-var(ui-accent--on-#{$context})})};
-    }
-  }
-
-  :host([expanded]) &,
-  :host(.animating) & {
-    border-bottom-width: 0;
-  }
-
-  :host([expanded]) &,
-  :host(.animating) &,
-  :host([disclosure]:not([disclosure="false"])) & {
-    border-right-color: pfe-local(BorderColor);
-    border-left-color:  pfe-local(BorderColor);
-  }
-
-  // Disclosure typography + styles
-  :host([disclosure]:not([disclosure="false"])) & {
-    gap: calc(#{pfe-var(container-padding)} / 2); // 8px
-    font-family:  pfe-var(font-family);
-    font-size:    pfe-local(FontSize--header, $fallback: pfe-var(FontSize--md));
-    font-weight:  pfe-local(FontWeight--header, $fallback: pfe-var(font-weight--semi-bold));
-  }
+  --pf-c-accordion__toggle--FontSize: var(--pf-global--FontSize--xl, 1.25rem);
+  --pf-c-accordion__toggle--hover-text--Color: var(--pf-global--Color--100, #151515);
+  --pf-c-accordion__toggle--active-text--Color: var(--pf-global--Color--100, #151515);
+  --pf-c-accordion__toggle--active-text--FontWeight: var(--pf-global--FontWeight--normal, 400);
+  --pf-c-accordion__toggle--focus-text--Color: var(--pf-global--Color--100, #151515);
+  --pf-c-accordion__toggle--focus-text--FontWeight: var(--pf-global--FontWeight--normal, 400);
+  --pf-c-accordion__toggle--expanded-text--Color: var(--pf-global--Color--100, #151515);
+  --pf-c-accordion__toggle--expanded-text--FontWeight: var(--pf-global--FontWeight--normal, 400);
+  --pfe-icon--size: var(--pf-c-accordion__toggle--IconSize, 12px);
 }
 
-// This element sets the layout for the text, accents, and icons inside the button
-.pf-c-accordion__toggle-wrapper {
-  // Fill the rest of the .pf-c-accordion__toggle
-  flex-grow: 1;
-  // Set up the layout for the text and accent elements
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  // Internal gap is 24px
-  // @TODO design hook?
-  gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
+#heading {
+  font-weight: var(--pf-c-accordion__toggle--FontWeight, var(--pf-global--FontWeight--normal, 400));
 }
 
-// Text inside the button, wrapped in a span tag
-// limits text width to 80ch per readability research
-.pf-c-accordion__toggle-text {
-  max-width: pfe-local(MaxWidth--content);
+.toggle,
+.toggle:before,
+.toggle:after {
+  background-color: var(--pf-c-accordion__toggle--BackgroundColor, transparent);
 }
 
-// Chevron icon
-.pf-c-accordion__toggle-icon {
-  // Note: do not set this to center because headers can wrap
-  // and we want the icon to align with the top row of content
-  align-self: flex-start;
-
-  transition-property: transform;
-  transition-duration: pfe-var(animation-speed);
-  transition-timing-function: pfe-var(animation-timing);
-
-  :host([expanded]) & {
-    transform: rotate(90deg);
-  }
-
-  // Move the icon to the front of the row on disclosures
-  :host([disclosure]:not([disclosure="false"])) & {
-    order: -1;
-  }
+.icon {
+  transition: var(--pf-c-accordion__toggle-icon--Transition, 0.2s ease-in 0s);
 }
 
-// Applies to accent region inside the template
-.pf-c-accordion__toggle-accents {
-  flex-grow: 1;
+.toggle {
+  padding:
+    var(--pf-c-accordion__toggle--PaddingTop, var(--pf-global--spacer--md, 0.5rem))
+    var(--pf-c-accordion__toggle--PaddingRight, var(--pf-global--spacer--md, 1rem))
+    var(--pf-c-accordion__toggle--PaddingBottom, var(--pf-global--spacer--sm, 0.5rem))
+    var(--pf-c-accordion__toggle--PaddingLeft, var(--pf-global--spacer--md, 1rem));
+  font-family:
+    var(
+      --pf-c-accordion__toggle--FontFamily,
+      var(
+        --pf-global--FontFamily--redhat-updated--heading--sans-serif,
+        "RedHatTextUpdated",
+        helvetica,
+        arial,
+        sans-serif
+      )
+    );
+  font-size: var(--pf-c-accordion__toggle--FontSize, var(--pf-global--FontSize--lg, 1rem));
+  font-weight: var(--pf-c-accordion__toggle--FontWeight, var(--pf-global--FontWeight--normal, 400));
+  color: var(--pf-c-accordion__toggle--Color, var(--pf-global--Color--100, #151515));
+}
+
+.toggle[aria-expanded="true"] {
+  --pf-c-accordion__toggle--after--BackgroundColor:
+    var(
+      --pf-c-accordion__toggle--expanded--before--BackgroundColor,
+      var(
+        --pf-global--primary-color--100,
+        #0066cc
+      )
+    );
+}
+
+.toggle:after {
+  top: var(--pf-c-accordion__toggle--before--Top, -1px);
+  width: var(--pf-c-accordion__toggle--before--Width, var(--pf-global--BorderWidth--lg, 3px));
+  background-color: var(--pf-c-accordion__toggle--after--BackgroundColor, transparent);
+}
+
+span {
+  max-width:
+    var(
+      --pf-c-accordion__toggle-text--MaxWidth,
+      calc(100% - var(--pf-global--spacer--lg, 1.5rem))
+    );
+}
+
+.toggle[aria-expanded="true"] .icon {
+  rotate: var(--pf-c-accordion__toggle--expanded-icon--Rotate, 90deg);
+}
+
+.toggle:hover,
+.toggle:active,
+.toggle:focus {
+  background-color:
+    var(
+      --pf-c-accordion__toggle--active--BackgroundColor,
+      var(
+        --pf-global--BackgroundColor--200,
+        #f0f0f0
+      )
+    );
+}
+
+.toggle:hover span,
+.toggle:focus span,
+.toggle:active span {
+  color: var(--pf-c-accordion__toggle--active-text--Color, var(--pf-global--link--Color, #0066cc));
+}
+
+.toggle:focus span,
+.toggle:active span {
+  font-weight:
+    var(
+      --pf-c-accordion__toggle--active-text--FontWeight,
+      var(
+        --pf-global--FontWeight--semi-bold,
+        700
+      )
+    );
 }

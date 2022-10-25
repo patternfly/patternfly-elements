@@ -1,7 +1,10 @@
 :host {
   display: inline-block;
   height: max-content;
-  --pfe-icon--color: currentColor;
+}
+
+pfe-icon, ::slotted(pfe-icon) {
+  color: currentColor;
 }
 
 :host([hidden]) {

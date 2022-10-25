@@ -10,6 +10,7 @@
   "types": "./pfe-spinner.d.ts",
   "exports": {
     ".": "./pfe-spinner.js",
+    "./BaseSpinner.js": "./BaseSpinner.js",
     "./*": "./*.js"
   },
   "publishConfig": {

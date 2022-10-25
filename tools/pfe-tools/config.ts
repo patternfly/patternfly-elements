@@ -75,6 +75,7 @@ function getSlugsMap(rootDir: string) {
     const slugs = new Map(Object.entries(config.aliases).map(reverseSlugifyObject));
     slugsConfigMap.set(rootDir, { slugs, config });
   }
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return slugsConfigMap.get(rootDir)!;
 }
 

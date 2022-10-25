@@ -1,5 +1,14 @@
 # @patternfly/pfe-autocomplete
 
+## 2.0.0-next.4
+
+### Patch Changes
+
+- 07ad1d3d: Updates use of `<pfe-icon>`
+- Updated dependencies [07ad1d3d]
+  - @patternfly/pfe-core@2.0.0-next.10
+  - @patternfly/pfe-button@2.0.0-next.7
+
 ## 2.0.0-next.3
 
 ### Patch Changes

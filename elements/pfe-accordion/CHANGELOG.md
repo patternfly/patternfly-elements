@@ -1,5 +1,18 @@
 # @patternfly/pfe-accordion
 
+## 2.0.0-next.7
+
+### Patch Changes
+
+- 7d7d6839: Uses latest version of `<pfe-icon>` internally.
+- f53155bc: Moving variable specific styles directly into pfe-accordion/header/panel.scss. Updating package exports to include Base Classes.
+- 07ad1d3d: Updates use of `<pfe-icon>`
+- Updated dependencies [07ad1d3d]
+- Updated dependencies [07ad1d3d]
+  - @patternfly/pfe-icon@2.0.0-next.5
+  - @patternfly/pfe-core@2.0.0-next.10
+  - @patternfly/pfe-collapse@2.0.0-next.4
+
 ## 2.0.0-next.6
 
 ### Minor Changes

@@ -67,7 +67,7 @@ export class PfeIcon extends LitElement {
 
   private static getters = new Map<string, URLGetter>();
 
-  private static instances = new Set();
+  private static instances = new Set<PfeIcon>();
 
   /** Icon set */
   @property() set = PfeIcon.defaultIconSet;

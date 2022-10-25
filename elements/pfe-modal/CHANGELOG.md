@@ -1,5 +1,13 @@
 # @patternfly/pfe-modal
 
+## 2.0.0-next.6
+
+### Patch Changes
+
+- 07ad1d3d: Updates use of `<pfe-icon>`
+- Updated dependencies [07ad1d3d]
+  - @patternfly/pfe-core@2.0.0-next.10
+
 ## 2.0.0-next.5
 
 ### Patch Changes

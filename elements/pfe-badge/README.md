@@ -44,16 +44,12 @@ With the `threshold` attribute:
 </section>
 ```
 
-With multiple state options for the `state` attribute:
+With two state options for the `state` attribute:
 
 ```html
 <section>
-  <pfe-badge state="info" number="10">10</pfe-badge>
-  <pfe-badge state="success" number="20">20</pfe-badge>
-  <pfe-badge state="moderate" number="30">30</pfe-badge>
-  <pfe-badge state="important" number="40">40</pfe-badge>
-  <pfe-badge state="critical" number="50">50</pfe-badge>
-  <pfe-badge state="default" number="60">60</pfe-badge>
+  <pfe-badge state="read" number="10">10</pfe-badge>
+  <pfe-badge state="unread" number="20">20</pfe-badge>
 </section>
 ```
 

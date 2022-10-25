@@ -96,7 +96,7 @@ import styles from './pfe-label.scss';
 export class PfeLabel extends BaseLabel {
   static readonly version = '{{version}}';
 
-  static readonly styles = [BaseLabel.styles, styles];
+  static readonly styles = [...BaseLabel.styles, styles];
 
   static readonly shadowRootOptions: ShadowRootInit = { ...BaseLabel.shadowRootOptions, delegatesFocus: true };
 

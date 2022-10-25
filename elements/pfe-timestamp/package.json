@@ -2,7 +2,7 @@
   "name": "@patternfly/pfe-timestamp",
   "license": "MIT",
   "version": "2.0.0-next.4",
-  "description": "Timestamp element for PFElements",
+  "description": "PatternFly Timestamp element",
   "customElements": "custom-elements.json",
   "type": "module",
   "main": "./pfe-timestamp.js",

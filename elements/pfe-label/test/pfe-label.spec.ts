@@ -39,8 +39,8 @@ describe('<pfe-label>', function() {
     // replace the default built-in icon set resolveIconName function
     // with one that loads local icons.  we don't want tests dependent on
     // prod servers.
-    PfeIcon.addIconSet('rh', '', function(name: string) {
-      return `/elements/pfe-icon/test/${name.replace('rh', 'rh-icon')}.svg`;
+    PfeIcon.addIconSet('rh', function(name: string) {
+      return new URL(`/elements/pfe-icon/test/${name.replace('rh', 'rh-icon')}.svg`);
     });
   });
 

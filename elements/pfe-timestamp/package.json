@@ -1,15 +1,15 @@
 {
-  "name": "@patternfly/pfe-datetime",
+  "name": "@patternfly/pfe-timestamp",
   "license": "MIT",
   "version": "2.0.0-next.4",
-  "description": "Datetime element for PFElements",
+  "description": "PatternFly Timestamp element",
   "customElements": "custom-elements.json",
   "type": "module",
-  "main": "./pfe-datetime.js",
-  "module": "./pfe-datetime.js",
-  "types": "./pfe-datetime.d.ts",
+  "main": "./pfe-timestamp.js",
+  "module": "./pfe-timestamp.js",
+  "types": "./pfe-timestamp.d.ts",
   "exports": {
-    ".": "./pfe-datetime.js",
+    ".": "./pfe-timestamp.js",
     "./*": "./*.js"
   },
   "publishConfig": {
@@ -25,7 +25,7 @@
     "analyze": "cem analyze",
     "build": "run-s build:*",
     "build:clean": "npm run clean",
-    "build:esbuild": "node ../../scripts/build.js --include pfe-datetime",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-timestamp",
     "build:analyze": "npm run analyze",
     "build:types": "tsc -b .",
     "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
@@ -43,7 +43,7 @@
   "repository": {
     "type": "git",
     "url": "github:patternfly/patternfly-elements",
-    "directory": "elements/pfe-datetime"
+    "directory": "elements/pfe-timestamp"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

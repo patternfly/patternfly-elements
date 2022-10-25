@@ -120,6 +120,10 @@ jobs:
         id: build
         run: npm run build
 
+      - name: Release Dry Run
+        id: release-dry
+        run: npm run prepublishOnly -ws --if-present
+
       # Upload compiled assets to make them available for downstream jobs
       - name: Upload artifacts
         uses: actions/upload-artifact@v2

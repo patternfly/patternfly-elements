@@ -1,11 +1,11 @@
 {% renderOverview %}
   A timestamp provides consistent formats for displaying date and time values.
 
-  Default:**<pfe-timestamp></pfe-timestamp>**
+  Default: <pfe-timestamp></pfe-timestamp>
 
-  With a locale of es:**<pfe-timestamp time-format="medium" date-format="long" locale="es"></pfe-timestamp>**
+  With a locale of es: <pfe-timestamp time-format="medium" date-format="long" locale="es"></pfe-timestamp>
   
-  Relative time:**<pfe-timestamp relative></pfe-timestamp>**
+  Relative time: <pfe-timestamp relative></pfe-timestamp>
 {% endrenderOverview %}
 
 {% band header="Usage" %}

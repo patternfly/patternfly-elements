@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-tools",
-  "version": "1.0.0-next.30",
+  "version": "1.0.0-next.32",
   "type": "module",
   "description": "Development and build tools for PatternFly Elements and related projects",
   "keywords": [
@@ -30,7 +30,7 @@
     "./test/utils.js": "./test/utils.js",
     "./test/vue-wrapper.js": "./test/vue-wrapper.js",
     "./*.js": "./*.js",
-    "./*": "./*.js"
+    "./*": "./*"
   },
   "contributors": [
     "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",
@@ -97,7 +97,7 @@
     "dotenv": "16.0.1",
     "element-internals-polyfill": "^1.1.14",
     "eleventy-plugin-toc": "1.1.5",
-    "esbuild": "0.15.5",
+    "esbuild": "^0.15.5",
     "esbuild-node-externals": "1.4.1",
     "esbuild-plugin-lit-css": "2.0.0",
     "esbuild-plugin-minify-html-literals": "1.0.1",

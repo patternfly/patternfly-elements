@@ -1,7 +1,9 @@
-import { expect, html, oneEvent } from '@open-wc/testing';
-import { spy } from 'sinon';
+import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfeButton } from '@patternfly/pfe-button';
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
+
+import '@patternfly/pfe-tools/test/stub-logger.js';
 
 // reference the imported value in runtime code so that typescript doesn't strip the import
 PfeButton;
@@ -28,13 +30,11 @@ describe('<pfe-button>', function() {
   });
 
   it('should log a console warning if the light dom inside pfe-button is not a button', async function() {
-    const spyConsole = spy(console, 'warn');
     const el = await createFixture(badElement);
 
     expect(el).to.exist;
-    expect(spyConsole, 'The only child in the light DOM must be a button tag')
+    expect(Logger.log, 'The only child in the light DOM must be a button tag')
       .to.have.been.calledWith('[pfe-button]');
-    spyConsole.restore();
   });
 
   it('should synchronize disabled attribute to the light DOM button', async function() {

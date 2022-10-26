@@ -26,48 +26,38 @@ import '@patternfly/pfe-switch';
 
 ## Usage
 ```html
-<pfe-switch label="Message when on" label-off="Message when off">
-  <input type="checkbox">
-</pfe-switch>
-```
-
-### Reversed layout
-
-```html
-<pfe-switch label="Message when on" label-off="Message when off" reversed>
-  <input type="checkbox">
-</pfe-switch>
+<pfe-switch id="color-scheme-toggle"></pfe-switch>
+<label for="color-scheme-toggle" data-state="on">Dark Mode</label>
+<label for="color-scheme-toggle" data-state="off" hidden>Light Mode</label>
 ```
 
 ### Without label
 
 ```html
-<pfe-switch>
-  <input type="checkbox">
-</pfe-switch>
+<pfe-switch></pfe-switch>
 ```
 
 ### Checked with label
 
 ```html
-<pfe-switch label="Message when on" label-off="Message when off" has-check-icon>
-  <input type="checkbox">
-</pfe-switch>
+<pfe-switch show-check-icon></pfe-switch>
 ```
 
-### Disabled
+### Disabled Switches
 
 ```html
-<pfe-switch label="Message when on" label-off="Message when off" checked disabled>
-  <input type="checkbox">
-</pfe-switch>
-<pfe-switch label="Message when on" label-off="Message when off" disabled>
-  <input type="checkbox">
-</pfe-switch>
-<pfe-switch checked disabled>
-  <input type="checkbox">
-</pfe-switch>
-<pfe-switch disabled>
-  <input type="checkbox">
-</pfe-switch>
+<form>
+  <fieldset>
+    <legend>Checked and Disabled</legend>
+    <pfe-switch id="checked-disabled" checked disabled></pfe-switch>
+    <label for="checked-disabled" data-state="on">Message when on</label>
+    <label for="checked-disabled" data-state="off">Message when off</label>
+  </fieldset>
+
+  <fieldset>
+    <pfe-switch id="disabled" disabled></pfe-switch>
+    <label for="disabled" data-state="on">Message when on</label>
+    <label for="disabled" data-state="off">Message when off</label>
+  </fieldset>
+</form>
 ```

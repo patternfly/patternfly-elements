@@ -7,77 +7,67 @@ A switch toggles the state of a setting (between on and off). Switches provide a
 {% endrenderOverview %}
 
 {% band header="Usage" %}
-### Basic 
-<pfe-switch label="Message when on" label-off="Message when off" checked>
-  <input type="checkbox">
-</pfe-switch>
+
+### Basic
+<pfe-switch id="color-scheme-toggle"></pfe-switch>
+<label for="color-scheme-toggle" data-state="on">Dark Mode</label>
+<label for="color-scheme-toggle" data-state="off" hidden>Light Mode</label>
 
 ```html
-<pfe-switch label="Message when on" label-off="Message when off">
-  <input type="checkbox">
-</pfe-switch>
+<pfe-switch id="color-scheme-toggle"></pfe-switch>
+<label for="color-scheme-toggle" data-state="on">Dark Mode</label>
+<label for="color-scheme-toggle" data-state="off" hidden>Light Mode</label>
 ```
 
-### Reversed layout
-<pfe-switch label="Message when on" label-off="Message when off" reversed checked>
-  <input type="checkbox">
-</pfe-switch>
-
-```html
-<pfe-switch label="Message when on" label-off="Message when off" reversed>
-  <input type="checkbox">
-</pfe-switch>
-```
 
 ### Without label
-<pfe-switch checked>
-  <input type="checkbox">
-</pfe-switch>
+<pfe-switch checked></pfe-switch>
 
 ```html
-<pfe-switch>
-  <input type="checkbox">
-</pfe-switch>
+<pfe-switch></pfe-switch>
 ```
 
 ### Checked with label
-<pfe-switch label="Message when on" label-off="Message when off" has-check-icon checked>
-  <input type="checkbox">
-</pfe-switch>
+<pfe-switch id="checked" checked show-check-icon></pfe-switch>
+<label for="checked" data-state="on">Message when on</label>
+<label for="checked" data-state="off">Message when off</label>
 
 ```html
-<pfe-switch label="Message when on" label-off="Message when off" has-check-icon>
-  <input type="checkbox">
-</pfe-switch>
+<pfe-switch id="checked" checked show-check-icon></pfe-switch>
+<label for="checked" data-state="on">Message when on</label>
+<label for="checked" data-state="off">Message when off</label>
 ```
 
 ### Disabled
-<pfe-switch label="Message when on" label-off="Message when off" checked disabled>
-  <input type="checkbox">
-</pfe-switch>
-<pfe-switch label="Message when on" label-off="Message when off" disabled>
-  <input type="checkbox">
-</pfe-switch>
-<pfe-switch checked disabled>
-  <input type="checkbox">
-</pfe-switch>
-<pfe-switch disabled>
-  <input type="checkbox">
-</pfe-switch>
+<form>
+  <fieldset>
+    <legend>Checked and Disabled</legend>
+    <pfe-switch id="checked-disabled" checked disabled></pfe-switch>
+    <label for="checked-disabled" data-state="on">Message when on</label>
+    <label for="checked-disabled" data-state="off">Message when off</label>
+  </fieldset>
+  <fieldset>
+    <pfe-switch id="disabled" disabled></pfe-switch>
+    <label for="disabled" data-state="on">Message when on</label>
+    <label for="disabled" data-state="off">Message when off</label>
+  </fieldset>
+</form>
 
 ```html
-<pfe-switch label="Message when on" label-off="Message when off" checked disabled>
-  <input type="checkbox">
-</pfe-switch>
-<pfe-switch label="Message when on" label-off="Message when off" disabled>
-  <input type="checkbox">
-</pfe-switch>
-<pfe-switch checked disabled>
-  <input type="checkbox">
-</pfe-switch>
-<pfe-switch disabled>
-  <input type="checkbox">
-</pfe-switch>
+<form>
+  <fieldset>
+    <legend>Checked and Disabled</legend>
+    <pfe-switch id="checked-disabled" checked disabled></pfe-switch>
+    <label for="checked-disabled" data-state="on">Message when on</label>
+    <label for="checked-disabled" data-state="off">Message when off</label>
+  </fieldset>
+
+  <fieldset>
+    <pfe-switch id="disabled" disabled></pfe-switch>
+    <label for="disabled" data-state="on">Message when on</label>
+    <label for="disabled" data-state="off">Message when off</label>
+  </fieldset>
+</form>
 ```
 {% endband %}
 

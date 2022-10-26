@@ -40,6 +40,7 @@ import styles from './pfe-switch.scss';
 @customElement('pfe-switch')
 export class PfeSwitch extends BaseSwitch {
   static readonly version = '{{version}}';
+
   static readonly styles = [...BaseSwitch.styles, styles];
 }
 

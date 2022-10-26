@@ -13,6 +13,7 @@
   },
   "exports": {
     ".": "./pfe-switch.js",
+    "./BaseSwitch.js": "./BaseSwitch.js",
     "./*": "./*.js"
   },
   "publishConfig": {

@@ -98,9 +98,6 @@
       "@patternfly/pfe-collapse": [
         "./elements/pfe-collapse/pfe-collapse.ts"
       ],
-      "@patternfly/pfe-datetime": [
-        "./elements/pfe-datetime/pfe-datetime.ts"
-      ],
       "@patternfly/pfe-dropdown": [
         "./elements/pfe-dropdown/pfe-dropdown.ts"
       ],
@@ -136,6 +133,9 @@
       ],
       "@patternfly/pfe-tabs": [
         "./elements/pfe-tabs/pfe-tabs.ts"
+      ],
+      "@patternfly/pfe-timestamp": [
+        "./elements/pfe-timestamp/pfe-timestamp.ts"
       ],
       "@patternfly/pfe-tools/*": [
         "./tools/pfe-tools/*"
@@ -183,9 +183,6 @@
       "path": "./elements/pfe-collapse"
     },
     {
-      "path": "./elements/pfe-datetime"
-    },
-    {
       "path": "./elements/pfe-dropdown"
     },
     {
@@ -220,6 +217,9 @@
     },
     {
       "path": "./elements/pfe-label"
+    },
+    {
+      "path": "./elements/pfe-timestamp"
     },
     {
       "path": "./elements/pfe-tooltip"

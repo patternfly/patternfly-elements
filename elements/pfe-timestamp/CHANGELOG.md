@@ -1,4 +1,10 @@
-# @patternfly/pfe-datetime
+# @patternfly/pfe-timestamp
+
+## 2.0.0-next.5
+
+### Minor Changes
+
+- daba8a53: Changing from pfe-datetime to pfe-timestamp
 
 ## 2.0.0-next.4
 

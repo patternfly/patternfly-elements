@@ -40,7 +40,8 @@
     "@patternfly/pfe-tools": "0.0.1",
     "@patternfly/pfe-label": "0.0.0",
     "@patternfly/pfe-tooltip": "1.0.0",
-    "@patternfly/pfe-spinner": "2.0.0-next.4"
+    "@patternfly/pfe-spinner": "2.0.0-next.4",
+    "@patternfly/pfe-timestamp": "2.0.0-next.4"
   },
   "changesets": [
     "accordion",
@@ -51,6 +52,7 @@
     "band",
     "big-crews-prove",
     "big-dingos-taste",
+    "big-monkeys-jam",
     "blue-emus-draw",
     "breezy-bikes-smell",
     "breezy-steaks-melt",
@@ -78,6 +80,7 @@
     "eight-spiders-brake",
     "eight-ways-travel",
     "eighty-cheetahs-join",
+    "eighty-news-double",
     "eleven-toys-unite",
     "empty-cougars-remain",
     "few-windows-exercise",
@@ -160,6 +163,7 @@
     "soft-radios-hear",
     "soft-tigers-jam",
     "sour-jeans-pull",
+    "sour-mangos-taste",
     "strong-yaks-join",
     "stupid-buttons-shop",
     "stupid-dolphins-compare",

@@ -45,7 +45,7 @@ export abstract class BaseSwitch extends LitElement {
 
   override render() {
     return html`
-      <div id="label" tabindex="0">
+      <div id="container" tabindex="0">
         <svg id="toggle"
           ?hidden="${!this.showCheckIcon && !!this.labels.length}"
           fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512">
@@ -60,11 +60,22 @@ export abstract class BaseSwitch extends LitElement {
     this.#internals.ariaDisabled = String(this.disabled);
   }
 
-  #onClick() {
+  #events = new Set();
+
+  #onClick(event?: Event) {
+    if (event) {
+      const path = event.composedPath();
+      const hostFirst = path.at(0) === this;
+      const labels = Array.from(this.labels);
+      const nestedInLabel = labels.includes(this.closest('label') as HTMLLabelElement);
+      if (!hostFirst && nestedInLabel) {
+        return true;
+      }
+    }
     this.checked = !this.checked;
     this.#updateLabels();
-    const event = new Event('change', { bubbles: true });
-    this.dispatchEvent(event);
+    this.dispatchEvent(new Event('change', { bubbles: true }));
+    this.#events.delete(event);
   }
 
   #onKeyup(event: KeyboardEvent) {
@@ -78,8 +89,10 @@ export abstract class BaseSwitch extends LitElement {
 
   #updateLabels() {
     const labelState = this.checked ? 'on' : 'off';
-    for (const label of this.labels) {
-      label.hidden = label.dataset.state !== labelState;
+    if (this.labels.length > 1) {
+      for (const label of this.labels) {
+        label.hidden = label.dataset.state !== labelState;
+      }
     }
   }
 }

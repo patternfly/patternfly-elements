@@ -31,9 +31,11 @@ describe('<pfe-switch>', function() {
     it('has accessible checked field', function() {
       expect(snapshot.role).to.equal('checkbox');
     });
-    it('has accessible name', function() {
-      // TRUE failure
-      expect(snapshot.name).to.be.ok;
+    it('requires accessible name', function() {
+      // Double negative - this would fail an accessibility audit,
+      // but that failure would be correct, because the template instantiated
+      // in this test's beforeeach hook does not have an accessible name
+      expect(snapshot.name).to.not.be.ok;
     });
   });
 
@@ -121,6 +123,44 @@ describe('<pfe-switch>', function() {
       const svg = element.shadowRoot.querySelector('svg');
       expect(svg).to.be.ok;
       expect(svg?.hasAttribute('hidden')).to.be.false;
+    });
+  });
+
+  describe('when nested inside a label element', function() {
+    let label: HTMLLabelElement;
+    let element: PfeSwitch;
+    let snapshot: A11yTreeSnapshot;
+    beforeEach(async function() {
+      label = await createFixture<HTMLLabelElement>(html`
+        <label>
+          <span>Dark Mode</span>
+          <pfe-switch id="switch"></pfe-switch>
+        </label>
+      `);
+      element = label.querySelector('pfe-switch')!;
+      snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
+    });
+    it('does not hide label', function() {
+      expect(label.hidden).to.be.false;
+    });
+    it('has an accessible name', function() {
+      expect(snapshot.name).to.equal('Dark Mode');
+    });
+    describe('clicking the label', function() {
+      beforeEach(function() {
+        label.click();
+      });
+      it('toggles the state', function() {
+        expect(element.checked).to.be.true;
+      });
+    });
+    describe('clicking the switch', function() {
+      beforeEach(function() {
+        element.click();
+      });
+      it('toggles the state', function() {
+        expect(element.checked).to.be.true;
+      });
     });
   });
 

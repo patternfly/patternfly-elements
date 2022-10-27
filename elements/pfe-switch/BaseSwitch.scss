@@ -14,17 +14,17 @@ svg {
 :host(:disabled),
 :host([disabled]) {
   cursor: not-allowed;
-  #label {
+  #container {
     cursor: not-allowed;
   }
 }
 
-:host(:disabled:focus-within) #label,
-:host([disabled]:focus-within) #label {
+:host(:disabled:focus-within) #container,
+:host([disabled]:focus-within) #container {
   outline: none;
 }
 
-#label {
+#container {
   position: relative;
   display: inline-flex;
   align-items: center;

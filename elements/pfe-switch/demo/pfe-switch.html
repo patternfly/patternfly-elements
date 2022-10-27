@@ -1,6 +1,17 @@
 <link rel="stylesheet" href="./demo.css"/>
 <script type="module" src="./pfe-switch.js"></script>
 
+<form>
+  <label> Dark Mode
+    <pfe-switch name="dark"></pfe-switch>
+  </label>
+  <script>
+  document.currentScript.closest('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    console.log(this.elements.dark) // <pfe-switch>
+  });
+  </script>
+</form>
 <section>
   <h1>Switch</h1>
   <p>A switch toggles the state of a setting (between on and off). Switches provide a more explicit, visible representation on a setting.</p>
@@ -86,3 +97,4 @@
   </fieldset>
 </form>
 </section>
+

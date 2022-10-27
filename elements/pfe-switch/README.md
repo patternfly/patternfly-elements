@@ -31,6 +31,28 @@ import '@patternfly/pfe-switch';
 <label for="switch" data-state="off" hidden>Message when off</label>
 ```
 
+### Form Associated
+
+`<pfe-switch>` is a form-associated custom element. That means that it can
+participate in HTML forms just like a native `<input>`. For example, if you add
+the `name` attribute, or the `id` attribute, the element will appear in the
+FormData object. For example, if you add the `name` attribute, or the `id`
+attribute, the element will appear in the `FormData` object.
+
+```html
+<form>
+  <label> Dark Mode
+    <pfe-switch name="dark"></pfe-switch>
+  </label>
+  <script>
+  document.currentScript.closest('form').addEventListener('submit', function() {
+    console.log(this.elements.dark) // <pfe-switch>
+  })
+  </script>
+</form>
+```
+
+
 ### Without label
 
 ```html

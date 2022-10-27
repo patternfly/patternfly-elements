@@ -62,12 +62,11 @@ export abstract class BaseSwitch extends LitElement {
     // @ts-expect-error: firefox workarounds for double-firing in the case of switch nested in label
     const { originalTarget, explicitOriginalTarget } = event;
     if (explicitOriginalTarget) {
-      const labels = Array.from(this.labels);
-      const labelParent = this.closest('label') as HTMLLabelElement;
+      let labels: HTMLLabelElement[];
       if (
         originalTarget === event.target &&
-        labels.includes(labelParent) &&
-        !labels.includes(explicitOriginalTarget)
+        (labels = Array.from(this.labels), !labels.includes(explicitOriginalTarget)) &&
+        labels.includes(this.closest('label') as HTMLLabelElement)
       ) {
         return;
       }

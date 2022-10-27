@@ -6,3 +6,8 @@ document.getElementById('form-disabled').addEventListener('change', /** @this{HT
   const controls = document.getElementById(event.target.getAttribute('aria-controls'));
   controls.toggleAttribute('disabled', event.target.checked);
 });
+
+document.getElementById('nested-label').addEventListener('submit', /** @this {HTMLFormElement} */function(event) {
+  event.preventDefault();
+  this.querySelector('output').textContent = `Dark mode ${this.elements.status.checked ? 'on' : 'off'}`;
+});

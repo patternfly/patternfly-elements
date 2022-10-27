@@ -79,12 +79,6 @@
       </label>
       <pfe-button type="submit"><button>Submit</button></pfe-button>
       <output>Submit to read status</output>
-      <script>
-        const form = document.currentScript.closest('form').addEventListener('submit', function(e) {
-          e.preventDefault();
-          this.querySelector('output').textContent = `Dark mode ${this.elements.status.checked ? 'on': 'off'}`
-        });
-      </script>
     </fieldset>
   </form>
 </section>

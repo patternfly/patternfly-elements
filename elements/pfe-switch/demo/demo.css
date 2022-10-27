@@ -20,3 +20,13 @@ pfe-switch:not([checked]) ~ label,
 label:has(~ pfe-switch:not([checked])) {
   color: var(--pf-c-switch__input--not-checked__label--Color, var(--pf-global--disabled-color--100, #6a6e73));
 }
+
+#nested-label fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#nested-label output {
+  width: 100%;
+}

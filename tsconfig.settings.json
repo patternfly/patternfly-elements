@@ -128,6 +128,9 @@
       "@patternfly/pfe-spinner": [
         "./elements/pfe-spinner/pfe-spinner.ts"
       ],
+      "@patternfly/pfe-switch": [
+        "./elements/pfe-switch/pfe-switch.ts"
+      ],
       "@patternfly/pfe-tabs": [
         "./elements/pfe-tabs/pfe-tabs.ts"
       ],
@@ -205,6 +208,9 @@
     },
     {
       "path": "./elements/pfe-spinner"
+    },
+    {
+      "path": "./elements/pfe-switch"
     },
     {
       "path": "./elements/pfe-tabs"

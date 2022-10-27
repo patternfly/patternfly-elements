@@ -54,6 +54,7 @@ export async function fixture<T extends Element = HTMLElement>(
     'pfe-readtime',
     'pfe-select',
     'pfe-spinner',
+    'pfe-switch',
     'pfe-tabs',
     'pfe-timestamp',
   ];

@@ -26,9 +26,9 @@ import '@patternfly/pfe-switch';
 
 ## Usage
 ```html
-<pfe-switch id="color-scheme-toggle"></pfe-switch>
-<label for="color-scheme-toggle" data-state="on">Dark Mode</label>
-<label for="color-scheme-toggle" data-state="off" hidden>Light Mode</label>
+<pfe-switch id="switch"></pfe-switch>
+<label for="switch" data-state="on">Message when on</label>
+<label for="switch" data-state="off" hidden>Message when off</label>
 ```
 
 ### Without label
@@ -41,6 +41,8 @@ import '@patternfly/pfe-switch';
 
 ```html
 <pfe-switch show-check-icon></pfe-switch>
+<label for="switch" data-state="on">Message when on</label>
+<label for="switch" data-state="off" hidden>Message when off</label>
 ```
 
 ### Disabled Switches

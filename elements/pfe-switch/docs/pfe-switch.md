@@ -1,22 +1,22 @@
 {% renderOverview %}
 A switch toggles the state of a setting (between on and off). Switches provide a more explicit, visible representation on a setting.
 
-<pfe-switch label="Message when on" label-off="Message when off" checked>
-  <input type="checkbox">
-</pfe-switch>
+<pfe-switch id="overview-switch" checked></pfe-switch>
+<label for="overview-switch" data-state="on">Message when on</label>
+<label for="overview-switch" data-state="off" hidden>Message when off</label>
 {% endrenderOverview %}
 
 {% band header="Usage" %}
 
 ### Basic
-<pfe-switch id="color-scheme-toggle"></pfe-switch>
-<label for="color-scheme-toggle" data-state="on">Dark Mode</label>
-<label for="color-scheme-toggle" data-state="off" hidden>Light Mode</label>
+<pfe-switch id="color-scheme-toggle" checked></pfe-switch>
+<label for="color-scheme-toggle" data-state="on">Message when on</label>
+<label for="color-scheme-toggle" data-state="off" hidden>Message when off</label>
 
 ```html
 <pfe-switch id="color-scheme-toggle"></pfe-switch>
-<label for="color-scheme-toggle" data-state="on">Dark Mode</label>
-<label for="color-scheme-toggle" data-state="off" hidden>Light Mode</label>
+<label for="color-scheme-toggle" data-state="on">Message when on</label>
+<label for="color-scheme-toggle" data-state="off" hidden>Message when off</label>
 ```
 
 

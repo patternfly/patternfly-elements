@@ -6,6 +6,10 @@ svg {
   fill: currentcolor;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 :host(:disabled),
 :host([disabled]) {
   cursor: not-allowed;

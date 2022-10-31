@@ -1,0 +1,73 @@
+{
+  "name": "@patternfly/pfe-timestamp",
+  "license": "MIT",
+  "version": "2.0.0-next.5",
+  "description": "PatternFly Timestamp element",
+  "customElements": "custom-elements.json",
+  "type": "module",
+  "main": "./pfe-timestamp.js",
+  "module": "./pfe-timestamp.js",
+  "types": "./pfe-timestamp.d.ts",
+  "exports": {
+    ".": "./pfe-timestamp.js",
+    "./*": "./*.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
+    "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
+    "🚚-----DIST-------🚚": "❓ Publish packages",
+    "prepublishOnly": "npm run build",
+    "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
+    "analyze": "cem analyze",
+    "build": "run-s build:*",
+    "build:clean": "npm run clean",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-timestamp",
+    "build:analyze": "npm run analyze",
+    "build:types": "tsc -b .",
+    "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
+    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js",
+    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
+    "test:watch": "npm test -- --watch",
+    "watch:analyze": "npm run analyze -- --watch",
+    "watch:types": "tsc -w"
+  },
+  "keywords": [
+    "web-components",
+    "date time",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-timestamp"
+  },
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
+  "files": [
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "!custom-elements-manifest.config.js",
+    "!demo/*",
+    "!docs/*",
+    "!test/*"
+  ],
+  "contributors": [
+    "Luke Dary",
+    "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",
+    "Benny Powers <bennyp@redhat.com>"
+  ],
+  "dependencies": {
+    "@patternfly/pfe-core": "^2.0.0-next.8",
+    "lit": "2.3.0"
+  }
+}

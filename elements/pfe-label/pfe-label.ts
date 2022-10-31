@@ -1,13 +1,13 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import '@patternfly/pfe-button';
+import { ComposedEvent } from '@patternfly/pfe-core';
 
 import { BaseLabel } from './BaseLabel.js';
 
-import styles from './pfe-label.scss';
-import { ComposedEvent } from '@patternfly/pfe-core';
+import '@patternfly/pfe-button';
 
+import styles from './pfe-label.scss';
 
 /**
  * Labels allow users to display meta data in a stylized form.

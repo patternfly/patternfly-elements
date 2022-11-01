@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { property, query, queryAssignedElements, state } from 'lit/decorators.js';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { bound, observed } from '@patternfly/pfe-core/decorators.js';
@@ -31,10 +31,6 @@ export abstract class BaseTab extends LitElement {
 
   #internals = this.attachInternals();
 
-  get ariaDisabled() {
-    return this.#internals.ariaDisabled;
-  }
-
   get ariaSelected() {
     return this.#internals.ariaSelected;
   }
@@ -60,8 +56,12 @@ export abstract class BaseTab extends LitElement {
     `;
   }
 
+  updated() {
+    this.#internals.ariaSelected = String(this.ariaSelected);
+  }
+
   #clickHandler() {
-    if (!this.disabled && this.#internals.ariaDisabled !== 'true') {
+    if (!this.disabled && this.ariaDisabled !== 'true') {
       this.active = true;
     }
   }
@@ -90,7 +90,7 @@ export abstract class BaseTab extends LitElement {
     // if a tab is removed from disabled its not necessarily
     // not still aria-disabled so we don't remove the aria-disabled
     if (newVal === true) {
-      this.#internals.ariaDisabled = 'true';
+      this.ariaDisabled = 'true';
     }
   }
 }

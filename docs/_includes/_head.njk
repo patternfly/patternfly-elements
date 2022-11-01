@@ -22,9 +22,10 @@
   <link rel="stylesheet" href="{{ '/core/styles/pfe-layouts.min.css' | url }}">
   <link rel="stylesheet" href="{{ '/main.css' | url }}">
 
+  <script type="module" src="{{ '/element-internals-polyfill/dist/index.js' | url }}"></script>
   <script type="module">
-    // Workaround for bundled pfe-icon: make icon imports absolute, instead of relative to the bundle
     import * as Bundle from '/pfe.min.js';
+    // Workaround for bundled pfe-icon: make icon imports absolute, instead of relative to the bundle
     Bundle.PfeIcon.getIconUrl = (set, icon) =>
       new URL(`/components/icon/icons/${set}/${icon}.js`, import.meta.url);
   </script>

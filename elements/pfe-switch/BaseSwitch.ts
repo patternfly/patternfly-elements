@@ -58,22 +58,20 @@ export abstract class BaseSwitch extends LitElement {
     this.#internals.ariaDisabled = String(this.disabled);
   }
 
-  #events = new Set();
-
-  #onClick(event?: Event) {
-    if (event) {
-      const path = event.composedPath();
-      const hostFirst = path.at(0) === this;
-      const labels = Array.from(this.labels);
-      const nestedInLabel = labels.includes(this.closest('label') as HTMLLabelElement);
-      if (!hostFirst && nestedInLabel) {
-        return true;
+  #onClick(event: Event) {
+    // @ts-expect-error: firefox workarounds for double-firing in the case of switch nested in label
+    const { originalTarget, explicitOriginalTarget } = event;
+    if (explicitOriginalTarget) {
+      let labels: HTMLLabelElement[];
+      if (
+        originalTarget === event.target &&
+        !(labels = Array.from(this.labels)).includes(explicitOriginalTarget) &&
+        labels.includes(this.closest('label') as HTMLLabelElement)
+      ) {
+        return;
       }
     }
-    this.checked = !this.checked;
-    this.#updateLabels();
-    this.dispatchEvent(new Event('change', { bubbles: true }));
-    this.#events.delete(event);
+    this.#toggle();
   }
 
   #onKeyup(event: KeyboardEvent) {
@@ -81,8 +79,14 @@ export abstract class BaseSwitch extends LitElement {
       case ' ':
       case 'Enter':
         event.preventDefault();
-        this.#onClick();
+        this.#toggle();
     }
+  }
+
+  #toggle() {
+    this.checked = !this.checked;
+    this.#updateLabels();
+    this.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   #updateLabels() {

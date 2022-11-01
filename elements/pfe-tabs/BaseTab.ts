@@ -37,7 +37,6 @@ export abstract class BaseTab extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('role', 'tab');
     this.addEventListener('click', this.#clickHandler);
   }
 

@@ -102,6 +102,10 @@ export abstract class BaseTabs extends LitElement {
     }
     this.#activeIndex = index;
     this.requestUpdate('activeIndex', oldIndex);
+
+    this.allPanels[this.#activeIndex].hidden = false;
+    // close all tabs that are not the activeIndex
+    this.#deactivateExcept(this.#activeIndex);
   }
 
   private get activeTab() {
@@ -213,9 +217,6 @@ export abstract class BaseTabs extends LitElement {
     const target = event as TabExpandEvent;
     if (target.active) {
       this.activeIndex = this.allTabs.findIndex(tab => tab === target.tab);
-      this.allPanels[this.activeIndex].hidden = false;
-      // close all tabs that are not the activeIndex
-      this.#deactivateExcept(this.activeIndex);
     }
   };
 

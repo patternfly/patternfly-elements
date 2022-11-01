@@ -59,7 +59,7 @@ export class PfeTile extends BaseTile {
 
   @property({ reflect: true, type: Boolean }) selected = false;
 
-  @property({ reflect: true }) stacked?: StackedSize = 'md';
+  @property({ reflect: true }) stacked?: StackedSize;
 }
 
 declare global {

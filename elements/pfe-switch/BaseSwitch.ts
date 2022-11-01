@@ -47,7 +47,7 @@ export abstract class BaseSwitch extends LitElement {
     return html`
       <div id="container" tabindex="0">
         <svg id="toggle" fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512">
-            <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/>
+          <path ?hidden=${!this.showCheckIcon} d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />
         </svg>
       </div>
     `;
@@ -58,22 +58,20 @@ export abstract class BaseSwitch extends LitElement {
     this.#internals.ariaDisabled = String(this.disabled);
   }
 
-  #events = new Set();
-
-  #onClick(event?: Event) {
-    if (event) {
-      const path = event.composedPath();
-      const hostFirst = path.at(0) === this;
-      const labels = Array.from(this.labels);
-      const nestedInLabel = labels.includes(this.closest('label') as HTMLLabelElement);
-      if (!hostFirst && nestedInLabel) {
-        return true;
+  #onClick(event: Event) {
+    // @ts-expect-error: firefox workarounds for double-firing in the case of switch nested in label
+    const { originalTarget, explicitOriginalTarget } = event;
+    if (explicitOriginalTarget) {
+      let labels: HTMLLabelElement[];
+      if (
+        originalTarget === event.target &&
+        !(labels = Array.from(this.labels)).includes(explicitOriginalTarget) &&
+        labels.includes(this.closest('label') as HTMLLabelElement)
+      ) {
+        return;
       }
     }
-    this.checked = !this.checked;
-    this.#updateLabels();
-    this.dispatchEvent(new Event('change', { bubbles: true }));
-    this.#events.delete(event);
+    this.#toggle();
   }
 
   #onKeyup(event: KeyboardEvent) {
@@ -81,8 +79,14 @@ export abstract class BaseSwitch extends LitElement {
       case ' ':
       case 'Enter':
         event.preventDefault();
-        this.#onClick();
+        this.#toggle();
     }
+  }
+
+  #toggle() {
+    this.checked = !this.checked;
+    this.#updateLabels();
+    this.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   #updateLabels() {

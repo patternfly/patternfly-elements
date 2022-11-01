@@ -1,6 +1,5 @@
 ---
 "@patternfly/pfe-switch": major
-"@patternfly/pfe-tools": minor
 ---
 
 Added `<pfe-switch>`, a control that toggles the state of a setting between on and off.

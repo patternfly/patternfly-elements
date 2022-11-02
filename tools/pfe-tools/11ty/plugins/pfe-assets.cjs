@@ -19,7 +19,9 @@ function getFilesToCopy(options) {
     return null;
   }
 
-  const files = {};
+  const files = {
+    [path.join(repoRoot, 'node_modules/element-internals-polyfill')]: 'element-internals-polyfill',
+  };
 
   // Copy all component and core files to _site
   if (hasElements) {

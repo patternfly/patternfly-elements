@@ -1,5 +1,17 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.33
+
+### Minor Changes
+
+- daba8a53: Changing from pfe-datetime to pfe-timestamp
+
+## 1.0.0-next.32
+
+### Minor Changes
+
+- 07ad1d3d: Adds testing utilities to stub Logger methods
+
 ## 1.0.0-next.31
 
 ### Patch Changes

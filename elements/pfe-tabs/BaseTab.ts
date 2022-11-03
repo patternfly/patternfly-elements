@@ -32,7 +32,11 @@ export abstract class BaseTab extends LitElement {
   #internals = this.attachInternals();
 
   get ariaSelected() {
-    return this.#internals.ariaSelected;
+    return this.#internals.ariaSelected ?? 'false';
+  }
+
+  get ariaDisabled() {
+    return this.getAttribute('aria-disabled');
   }
 
   connectedCallback() {
@@ -89,7 +93,7 @@ export abstract class BaseTab extends LitElement {
     // if a tab is removed from disabled its not necessarily
     // not still aria-disabled so we don't remove the aria-disabled
     if (newVal === true) {
-      this.ariaDisabled = 'true';
+      this.setAttribute('aria-disabled', 'true');
     }
   }
 }

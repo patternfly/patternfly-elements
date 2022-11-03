@@ -13,11 +13,11 @@
 }
 
 // workaround to disable scroll right button when last tab is aria-disabled
-::slotted(pfe-tab[aria-disabled=true]:last-of-type) {
+:host(:not([vertical])) ::slotted(pfe-tab[aria-disabled=true]:last-of-type) {
   translate: calc(-1 * var(--pf-c-tabs__link--disabled--before--BorderRightWidth, 1px)) 0;
 }
 // workaround to disable scroll left button when first tab is aria-disabled
-::slotted(pfe-tab[aria-disabled=true]:first-of-type) {
+:host(:not([vertical])) ::slotted(pfe-tab[aria-disabled=true]:first-of-type) {
   translate: var(--pf-c-tabs__link--disabled--before--BorderRightWidth, 1px) 0;
 }
 

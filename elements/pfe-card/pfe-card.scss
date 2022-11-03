@@ -4,24 +4,22 @@
 }
 
 :host([size="compact"]) {
-  --pf-c-card__body--FontSize: var(--pf-c-card--size-compact__body--FontSize, var(--pf-global--FontSize--sm, .875rem));
-  --pf-c-card__footer--FontSize: var(--pf-c-card--size-compact__footer--FontSize, var(--pf-global--spacer--md, 1rem));
-  --pf-c-card--first-child--PaddingTop: var(--pf-c-card--size-compact--first-child--PaddingTop, var(--pf-global--spacer--lg, 1.5rem));
-  --pf-c-card--child--PaddingRight: var(--pf-c-card--size-compact--child--PaddingRight, var(--pf-global--spacer--md, 1rem));
-  --pf-c-card--child--PaddingBottom: var(--pf-c-card--size-compact--child--PaddingBottom, var(--pf-global--spacer--md, 1rem));
-  --pf-c-card--child--PaddingLeft: var(--pf-c-card--size-compact--child--PaddingLeft, var(--pf-global--spacer--md, 1rem));
-  --pf-c-card--c-divider--child--PaddingTop: var(--pf-c-card--size-compact--c-divider--child--PaddingTop, var(--pf-global--spacer--md, 1rem));
-  --pf-c-card__title--not--last-child--PaddingBottom: var(--pf-c-card--size-compact__title--not--last-child--PaddingBottom, var(--pf-global--spacer--sm, .5rem));
+  --_pf-c-card__body--FontSize: var(--pf-c-card--size-compact__body--FontSize, var(--pf-global--FontSize--sm, .875rem));
+  --_pf-c-card__footer--FontSize: var(--pf-c-card--size-compact__footer--FontSize, var(--pf-global--spacer--md, 1rem));
+  --_pf-c-card--first-child--PaddingTop: var(--pf-c-card--size-compact--first-child--PaddingTop, var(--pf-global--spacer--lg, 1.5rem));
+  --_pf-c-card--child--PaddingRight: var(--pf-c-card--size-compact--child--PaddingRight, var(--pf-global--spacer--md, 1rem));
+  --_pf-c-card--child--PaddingBottom: var(--pf-c-card--size-compact--child--PaddingBottom, var(--pf-global--spacer--md, 1rem));
+  --_pf-c-card--child--PaddingLeft: var(--pf-c-card--size-compact--child--PaddingLeft, var(--pf-global--spacer--md, 1rem));
+  --_pf-c-card__title--not--last-child--PaddingBottom: var(--pf-c-card--size-compact__title--not--last-child--PaddingBottom, var(--pf-global--spacer--sm, .5rem));
 }
 
 :host([size="large"]) {
-  --pf-c-card__title--FontSize: var(--pf-c-card--size-large__title--FontSize, var(--pf-global--FontSize--xl, 1.25rem));
-  --pf-c-card--first-child--PaddingTop: var(--pf-c-card--size-large--first-child--PaddingTop, var(--pf-global--spacer--xl, 2rem));
-  --pf-c-card--child--PaddingRight: var(--pf-c-card--size-large--child--PaddingRight, var(--pf-global--spacer--xl, 2rem));
-  --pf-c-card--child--PaddingBottom: var(--pf-c-card--size-large--child--PaddingBottom, var(--pf-global--spacer--xl, 2rem));
-  --pf-c-card--child--PaddingLeft: var(--pf-c-card--size-large--child--PaddingLeft, var(--pf-global--spacer--xl, 2rem));
-  --pf-c-card--c-divider--child--PaddingTop: var(--pf-c-card--size-large--c-divider--child--PaddingTop, var(--pf-global--spacer--xl, 2rem));
-  --pf-c-card__title--not--last-child--PaddingBottom: var(--pf-c-card--size-large__title--not--last-child--PaddingBottom, var(--pf-global--spacer--lg, 1.5rem));
+  --_pf-c-card__title--FontSize: var(--pf-c-card--size-large__title--FontSize, var(--pf-global--FontSize--xl, 1.25rem));
+  --_pf-c-card--first-child--PaddingTop: var(--pf-c-card--size-large--first-child--PaddingTop, var(--pf-global--spacer--xl, 2rem));
+  --_pf-c-card--child--PaddingRight: var(--pf-c-card--size-large--child--PaddingRight, var(--pf-global--spacer--xl, 2rem));
+  --_pf-c-card--child--PaddingBottom: var(--pf-c-card--size-large--child--PaddingBottom, var(--pf-global--spacer--xl, 2rem));
+  --_pf-c-card--child--PaddingLeft: var(--pf-c-card--size-large--child--PaddingLeft, var(--pf-global--spacer--xl, 2rem));
+  --_pf-c-card__title--not--last-child--PaddingBottom: var(--pf-c-card--size-large__title--not--last-child--PaddingBottom, var(--pf-global--spacer--lg, 1.5rem));
 }
 
 :host([flat]) {
@@ -44,31 +42,31 @@
 
 [part="title"] {
   font-family: var(--pf-c-card__title--FontFamily, var(--pf-global--FontFamily--heading--sans-serif, "RedHatDisplayUpdated", helvetica, arial, sans-serif));
-  font-size: var(--pf-c-card__title--FontSize, var(--pf-global--FontSize--md, 1rem));
+  font-size: var(--_pf-c-card__title--FontSize, var(--pf-global--FontSize--md, 1rem));
   font-weight: var(--pf-c-card__title--FontWeight, var(--pf-global--FontWeight--bold, 700));
 }
 
 [part="header"],
 [part="body"],
 [part="footer"] {
-  padding-right: var(--pf-c-card--child--PaddingRight, var(--pf-global--spacer--lg, 1.5rem));
-  padding-bottom: var(--pf-c-card--child--PaddingBottom, var(--pf-global--spacer--lg, 1.5rem));
-  padding-left: var(--pf-c-card--child--PaddingLeft, var(--pf-global--spacer--lg, 1.5rem));
+  padding-right: var(--_pf-c-card--child--PaddingRight, var(--pf-global--spacer--lg, 1.5rem));
+  padding-bottom: var(--_pf-c-card--child--PaddingBottom, var(--pf-global--spacer--lg, 1.5rem));
+  padding-left: var(--_pf-c-card--child--PaddingLeft, var(--pf-global--spacer--lg, 1.5rem));
 }
 
 [part="body"] {
-  font-size: var(--pf-c-card__body--FontSize, var(--pf-global--FontSize--md, 1rem));
+  font-size: var(--_pf-c-card__body--FontSize, var(--pf-global--FontSize--md, 1rem));
 }
 
 [part="header"]:first-child {
-  padding-top: var(--pf-c-card--first-child--PaddingTop, var(--pf-global--spacer--lg, 1.5rem));
+  padding-top: var(--_pf-c-card--first-child--PaddingTop, var(--pf-global--spacer--lg, 1.5rem));
 }
 
 [part="header"]:not(:last-child),
 [part="title"]:not(:last-child) {
-  padding-bottom: var(--pf-c-card__title--not--last-child--PaddingBottom, var(--pf-global--spacer--md, 1rem));
+  padding-bottom: var(--_pf-c-card__title--not--last-child--PaddingBottom, var(--pf-global--spacer--md, 1rem));
 }
 
 [part="footer"] {
-  font-size: var(--pf-c-card__footer--FontSize, var(--pf-global--FontSize--md, 1rem));
+  font-size: var(--_pf-c-card__footer--FontSize, var(--pf-global--FontSize--md, 1rem));
 }

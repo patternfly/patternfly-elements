@@ -12,6 +12,7 @@ svg {
 
 :host(:disabled),
 :host([disabled]) {
+  pointer-events: none;
   cursor: not-allowed;
   #container {
     cursor: not-allowed;

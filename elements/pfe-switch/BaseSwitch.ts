@@ -84,6 +84,10 @@ export abstract class BaseSwitch extends LitElement {
   }
 
   #toggle() {
+    if (this.disabled) {
+      return;
+    }
+
     this.checked = !this.checked;
     this.#updateLabels();
     this.dispatchEvent(new Event('change', { bubbles: true }));

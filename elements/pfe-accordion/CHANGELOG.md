@@ -1,5 +1,11 @@
 # @patternfly/pfe-accordion
 
+## 2.0.0-next.8
+
+### Patch Changes
+
+- e2774512: Updating the accordion to include a minor animation for screen reader accessibility in Chrome on Mac
+
 ## 2.0.0-next.7
 
 ### Patch Changes

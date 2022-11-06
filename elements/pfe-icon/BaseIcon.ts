@@ -59,7 +59,7 @@ export abstract class BaseIcon extends LitElement {
       });
     });
 
-  private static io = new IntersectionObserver(this.#class.onIntersect);
+  private static io = new IntersectionObserver(this.onIntersect);
 
   private static getters = new Map<string, URLGetter>();
 

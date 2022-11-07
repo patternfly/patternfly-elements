@@ -119,9 +119,6 @@
       "@patternfly/pfe-progress-steps": [
         "./elements/pfe-progress-steps/pfe-progress-steps.ts"
       ],
-      "@patternfly/pfe-readtime": [
-        "./elements/pfe-readtime/pfe-readtime.ts"
-      ],
       "@patternfly/pfe-select": [
         "./elements/pfe-select/pfe-select.ts"
       ],
@@ -199,9 +196,6 @@
     },
     {
       "path": "./elements/pfe-progress-steps"
-    },
-    {
-      "path": "./elements/pfe-readtime"
     },
     {
       "path": "./elements/pfe-select"

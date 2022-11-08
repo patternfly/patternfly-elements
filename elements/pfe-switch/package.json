@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-switch",
-  "version": "1.0.0",
+  "version": "2.0.0-next.0",
   "description": "PatternFly Elements | Switch",
   "customElements": "custom-elements.json",
   "license": "MIT",

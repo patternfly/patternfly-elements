@@ -14,7 +14,7 @@
 }
 
 :host([size="large"]) {
-  --_pf-c-card__title--FontSize: var(--pf-c-card--size-large__title--FontSize, var(--pf-global--FontSize--xl, 1.25rem));
+  --pf-c-card__title--FontSize: var(--pf-c-card--size-large__title--FontSize, var(--pf-global--FontSize--xl, 1.25rem));
   --_pf-c-card--first-child--PaddingTop: var(--pf-c-card--size-large--first-child--PaddingTop, var(--pf-global--spacer--xl, 2rem));
   --_pf-c-card--child--PaddingRight: var(--pf-c-card--size-large--child--PaddingRight, var(--pf-global--spacer--xl, 2rem));
   --_pf-c-card--child--PaddingBottom: var(--pf-c-card--size-large--child--PaddingBottom, var(--pf-global--spacer--xl, 2rem));
@@ -42,7 +42,7 @@
 
 [part="title"] {
   font-family: var(--pf-c-card__title--FontFamily, var(--pf-global--FontFamily--heading--sans-serif, "RedHatDisplayUpdated", helvetica, arial, sans-serif));
-  font-size: var(--_pf-c-card__title--FontSize, var(--pf-global--FontSize--md, 1rem));
+  font-size: var(--pf-c-card__title--FontSize, var(--pf-global--FontSize--md, 1rem));
   font-weight: var(--pf-c-card__title--FontWeight, var(--pf-global--FontWeight--bold, 700));
 }
 

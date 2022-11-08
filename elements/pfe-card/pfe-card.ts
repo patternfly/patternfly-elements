@@ -42,7 +42,7 @@ import { BaseCard } from './BaseCard';
  * @cssproperty {<color>} --pf-c-card--m-rounded--BorderRadius {@default `3px`}
  * @cssproperty {<color>} --pf-c-card--m-full-height--Height {@default `100%`}
  * @cssproperty {<color>} --pf-c-card__title--FontFamily {@default `"RedHatDisplayUpdated", helvetica, arial, sans-serif`}
- * @cssproperty {<color>} --_pf-c-card__title--FontSize {@default `1rem`}
+ * @cssproperty {<color>} --pf-c-card__title--FontSize {@default `1rem`}
  * @cssproperty {<color>} --pf-c-card__title--FontWeight {@default `700`}
  */
 @customElement('pfe-card')

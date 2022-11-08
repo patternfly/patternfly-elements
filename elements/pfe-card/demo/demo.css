@@ -2,3 +2,6 @@ body {
   margin: 2em;
 }
 
+pfe-button {
+  margin-inline: 0.5em;
+}

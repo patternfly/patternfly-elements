@@ -1,20 +1,31 @@
 import type { TemplateResult, PropertyValueMap } from 'lit';
 import { html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { BaseClipboardCopy } from './BaseClipboardCopy.js';
 import styles from './pfe-clipboard-copy.scss';
 import baseStyles from './BaseClipboardCopy.scss';
+import { ComposedEvent } from '@patternfly/pfe-core';
+import '@patternfly/pfe-tooltip';
 
 export type ClipboardCopyVariant = (
   | 'inline'
   | 'inline-compact'
   | 'expansion'
-);
+)
+
+export class ClipboardCopyCopiedEvent extends ComposedEvent {
+  constructor(
+    public text: string
+  ) {
+    super('copy');
+  }
+}
 
 /**
  * Clipboard Copy
  * @slot - Place element content here
  */
+
 @customElement('pfe-clipboard-copy')
 export class PfeClipboardCopy extends BaseClipboardCopy {
   static readonly version = '{{version}}';
@@ -23,6 +34,10 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
 
   @property({ reflect: true }) variant: ClipboardCopyVariant = 'inline';
   @property({ type: Boolean }) expanded = false;
+  @property({ type: String }) hoverTip = 'Copy';
+  @property({ type: String }) clickTip = 'Copied';
+  @state() _copied = false;
+
   // @property({ type: Boolean, reflect: true }) block = false;
   // @property({ type: Boolean, reflect: true }) code = false;
 
@@ -32,6 +47,15 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   protected _dropdownClickHandler(e: Event): void {
     const { value } = e.target as HTMLButtonElement;
     this.expanded = !this.expanded;
+  }
+
+  protected override _copyToClipboard(e: Event): void {
+    navigator.clipboard.writeText(this.value);
+    this.dispatchEvent(new ClipboardCopyCopiedEvent(this.value));
+    this._copied = true;
+    setTimeout(() => {
+      this._copied = false;
+    }, 4000);
   }
 
   /**
@@ -52,17 +76,27 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   protected override renderDropdownTrigger() {
     return html`
       ${this.variant === 'expansion' ? html`
-        <button part="dropdown" @click=${this._dropdownClickHandler}>
-          ${this.expanded ? html`
-            <slot name="dropdown-button-opened">
-              <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg>
-            </slot>
-          ` : html`
-            <slot name="dropdown-button-closed">
-              <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
-            </slot>
-          `}
-        </button>
+      <button part="dropdown" @click=${this._dropdownClickHandler}>
+        ${this.expanded ? html`
+        <slot name="dropdown-button-opened">
+          <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img"
+            style="vertical-align: -0.125em;">
+            <path
+              d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z">
+            </path>
+          </svg>
+        </slot>
+        ` : html`
+        <slot name="dropdown-button-closed">
+          <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img"
+            style="vertical-align: -0.125em;">
+            <path
+              d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z">
+            </path>
+          </svg>
+        </slot>
+        `}
+      </button>
       ` : ''}
     `;
   }
@@ -73,10 +107,24 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   protected override renderDropdown() {
     return html`
       ${(this.variant === 'expansion') ? html`
-        <div part="dropdown">
-          <textarea part="dropdown-textarea" .value=${this.value} .disabled=${this.readonly || !this.expanded} @input=${this._valueChangeHandler}></textarea>
-        </div>
+      <div part="dropdown">
+        <textarea part="dropdown-textarea" .value=${this.value} .disabled=${this.readonly || !this.expanded}
+          @input=${this._valueChangeHandler}></textarea>
+      </div>
       ` : ''}
+    `;
+  }
+
+  protected override renderActionButton() {
+    const content = super.renderActionButton();
+    return html`
+      <pfe-tooltip>
+        ${content}
+        <span slot="content">
+          <slot part="hover-tip" name="hover-tip" ?hidden=${this._copied}>${this.hoverTip}</slot>
+          <slot part="click-tip" name="click-tip" ?hidden=${!this._copied}>${this.clickTip}</slot>
+        </span>
+      </pfe-tooltip>
     `;
   }
 }

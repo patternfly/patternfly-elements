@@ -10,6 +10,7 @@ import style from './BaseTooltip.scss';
 
 export abstract class BaseTooltip extends LitElement {
   static readonly styles = [style];
+
   /** The placement of the tooltip, relative to the invoking content */
   @property({ reflect: true }) position: Placement = 'top';
 

@@ -51,7 +51,6 @@ export async function fixture<T extends Element = HTMLElement>(
     'pfe-modal',
     'pfe-page-status',
     'pfe-progress-steps',
-    'pfe-readtime',
     'pfe-select',
     'pfe-spinner',
     'pfe-switch',

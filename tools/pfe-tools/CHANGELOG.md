@@ -1,5 +1,16 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.34
+
+### Minor Changes
+
+- 4400866a: Adds a11y tree testing to test runner config
+
+### Patch Changes
+
+- 9d10155b: Update element internals polyfill, fixes clicking on label in safari
+- 4400866a: update dependencies
+
 ## 1.0.0-next.33
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-switch",
-  "version": "1.0.0",
+  "version": "2.0.0-next.0",
   "description": "PatternFly Elements | Switch",
   "customElements": "custom-elements.json",
   "license": "MIT",
@@ -43,6 +43,24 @@
     "custom elements",
     "design systems",
     "web components"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-switch"
+  },
+  "files": [
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "!custom-elements-manifest.config.js",
+    "!demo/*",
+    "!docs/*",
+    "!test/*"
   ],
   "dependencies": {
     "@patternfly/pfe-core": "^2.0.0 || ^2.0.0-next.0",

@@ -10,7 +10,6 @@ window.ZeroMdConfig = {
 };
 
 import '@patternfly/pfe-label';
-import '@patternfly/pfe-codeblock';
 import '@patternfly/pfe-band';
 import 'zero-md';
 

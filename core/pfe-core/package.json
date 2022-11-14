@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-core",
-  "version": "2.0.0-next.9",
+  "version": "2.0.0-next.10",
   "license": "MIT",
   "description": "PatternFly Elements Core Library",
   "customElements": "custom-elements.json",
@@ -34,7 +34,8 @@
     "./decorators/trace.js": "./decorators/trace.js",
     "./functions/debounce.js": "./functions/debounce.js",
     "./functions/deprecatedCustomEvent.js": "./functions/deprecatedCustomEvent.js",
-    "./functions/random.js": "./functions/random.js"
+    "./functions/random.js": "./functions/random.js",
+    "./functions/isElementInView.js": "./functions/isElementInView.js"
   },
   "publishConfig": {
     "access": "public",

@@ -4,7 +4,11 @@
     "./**/*"
   ],
   "exclude": [
-    "./icons/**/*.js"
+    "./icons/**/*.js",
+    "./demo/pfe-icon.js",
+    "./demo/custom-icon-sets.js",
+    "./test/rh-icon*.js",
+    "./custom-elements-manifest.config.js"
   ],
   "compilerOptions": {
     "module": "esnext",
@@ -21,9 +25,6 @@
     },
     {
       "path": "../pfe-tooltip"
-    },
-    {
-      "path": "../pfe-button"
     },
     {
       "path": "../pfe-autocomplete"

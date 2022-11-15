@@ -10,6 +10,7 @@
   "types": "./pfe-tabs.d.ts",
   "exports": {
     ".": "./pfe-tabs.js",
+    "./BaseTabs.js": "./BaseTabs.js",
     "./*": "./*.js"
   },
   "publishConfig": {

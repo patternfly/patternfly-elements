@@ -44,7 +44,6 @@ export async function fixture<T extends Element = HTMLElement>(
     'pfe-card',
     'pfe-clipboard',
     'pfe-codeblock',
-    'pfe-collapse',
     'pfe-dropdown',
     'pfe-icon',
     'pfe-jump-links',

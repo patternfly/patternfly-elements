@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { computePosition, Placement, offset, shift, autoPlacement, arrow } from '@floating-ui/dom';
+import { computePosition, Placement, offset, shift, arrow } from '@floating-ui/dom';
 
 import style from './BaseTooltip.scss';
 
@@ -47,7 +47,6 @@ export abstract class BaseTooltip extends LitElement {
     if (!['top', 'bottom'].includes(this.position)) {
       this.offset = [-4, 15];
     }
-    // this.#addListeners();
     enterEvents.forEach(evt => this.addEventListener(evt, this.show));
     exitEvents.forEach(evt => this.addEventListener(evt, this.hide));
   }
@@ -60,7 +59,6 @@ export abstract class BaseTooltip extends LitElement {
         middleware: [
           offset(this.offset[1]),
           shift(),
-          autoPlacement({ allowedPlacements: ['top', 'left', 'right', 'bottom'] }),
           arrow({
             element: this.#arrow!
           }),

@@ -38,6 +38,7 @@
 
 :host([fullHeight]) {
   height: var(--pf-c-card--m-full-height--Height, 100%);
+  --_pf-c-card__body--FullHeight--Flex: 1 1 auto;
 }
 
 [part="title"] {
@@ -56,6 +57,7 @@
 
 [part="body"] {
   font-size: var(--_pf-c-card__body--FontSize, var(--pf-global--FontSize--md, 1rem));
+  flex: var(--_pf-c-card__body--FullHeight--Flex, initial);
 }
 
 [part="header"]:first-child {

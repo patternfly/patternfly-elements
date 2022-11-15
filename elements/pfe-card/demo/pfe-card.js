@@ -3,6 +3,7 @@ import '@patternfly/pfe-card';
 import '@patternfly/pfe-button';
 // import '@patternfly/pfe-select';
 const pfeCard = document.querySelector('pfe-card');
+const cardContainer = document.querySelector('#card-container');
 
 function setAttr(name, val = '') {
   pfeCard.setAttribute(name, val);
@@ -17,6 +18,7 @@ function rmAttr(name, val = '') {
 
 document.querySelectorAll('.card_controls').forEach(cardControl => {
   cardControl.addEventListener('click', event => {
+    cardContainer.classList.remove('resize');
     document.querySelectorAll('.card_controls').forEach(control => {
       const enabled = control.checked;
       switch (control.value) {
@@ -31,6 +33,7 @@ document.querySelectorAll('.card_controls').forEach(cardControl => {
           break;
         case 'large':
           enabled ? setAttr('size', 'large') : rmAttr('size', 'large');
+          cardContainer.classList.add('resize');
           break;
         case 'fullHeight':
           enabled ? setAttr('fullHeight') : rmAttr('fullHeight');

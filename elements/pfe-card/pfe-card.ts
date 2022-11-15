@@ -65,14 +65,12 @@ export class PfeCard extends BaseCard {
   @property({ type: Boolean, reflect: true }) rounded = false;
 
   /**
- * Optionally apply a border color and weight to the entire card container.
- * The default color and weight is `#d2d2d2` and `1px`, respectively.
+ * Optionally allow the card to take up the full height of the parent element.
  */
   @property({ type: Boolean, reflect: true }) fullHeight = false;
 
   /**
-   * Optionally apply a border color and weight to the entire card container.
-   * The default color and weight is `#d2d2d2` and `1px`, respectively.
+   * Optionally remove the border on the card container.
    */
   @property({ type: Boolean, reflect: true }) plain = false;
 }

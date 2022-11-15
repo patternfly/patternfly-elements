@@ -1,7 +1,13 @@
 body {
   margin: 2em;
+  background: #eeeeee;
 }
 
 pfe-button {
   margin-inline: 0.5em;
+}
+
+.resize {
+  resize: vertical;
+  overflow: auto;
 }

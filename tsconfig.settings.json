@@ -95,9 +95,6 @@
       "@patternfly/pfe-code-block": [
         "./elements/pfe-code-block/pfe-code-block.ts"
       ],
-      "@patternfly/pfe-collapse": [
-        "./elements/pfe-collapse/pfe-collapse.ts"
-      ],
       "@patternfly/pfe-dropdown": [
         "./elements/pfe-dropdown/pfe-dropdown.ts"
       ],
@@ -175,9 +172,6 @@
     },
     {
       "path": "./elements/pfe-code-block"
-    },
-    {
-      "path": "./elements/pfe-collapse"
     },
     {
       "path": "./elements/pfe-dropdown"

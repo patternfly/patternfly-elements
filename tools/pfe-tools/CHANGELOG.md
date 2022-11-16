@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.35
+
+### Patch Changes
+
+- 0ef73073: Removing pfe-collapse
+
 ## 1.0.0-next.34
 
 ### Minor Changes

@@ -2,4 +2,4 @@
 "@patternfly/pfe-tabs": patch
 ---
 
-Fixed `<pfe-tabs>` CSS imports, typo caused issue with child repository having incorrect styles
+Fixed `<pfe-tabs>` CSS imports and a typo that caused an issue with the child repository having incorrect styles

@@ -1,5 +1,11 @@
 # @patternfly/pfe-tabs
 
+## 2.0.0-next.6
+
+### Patch Changes
+
+- 2d47840a: Fixed `<pfe-tabs>` CSS imports and a typo that caused an issue with the child repository having incorrect styles
+
 ## 2.0.0-next.5
 
 ### Major Changes

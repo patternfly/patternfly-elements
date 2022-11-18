@@ -1,25 +1,7 @@
-:host {
-  display: block;
-  position: relative;
-
-  width: --_size;
-  height: --_size;
-}
-
 :host([size=sm]) { --_size: var(--pf-global--icon--FontSize--sm, 10px); }
 :host([size=md]) { --_size: var(--pf-global--icon--FontSize--md, 18px); }
 :host([size=lg]) { --_size: var(--pf-global--icon--FontSize--lg, 24px); }
 :host([size=xl]) { --_size: var(--pf-global--icon--FontSize--xl, 54px); }
-
-// when src attribute is provided, show the img but hide the canvas
-:host([src]) img {
-    display: block;
-    object-fit: cover;
-}
-
-:host([hidden]) {
-  display: none;
-}
 
 .pf-c-avatar {
   --pf-c-avatar--BorderColor: transparent;

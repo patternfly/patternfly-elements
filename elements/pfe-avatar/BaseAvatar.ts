@@ -1,15 +1,13 @@
 import type { ColorTheme } from '@patternfly/pfe-core';
 
-import { html } from 'lit';
+import { LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
 import { pfelement } from '@patternfly/pfe-core/decorators.js';
 
 import { colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 
-import { BaseAvatar } from './BaseAvatar.js';
-
-import style from './pfe-avatar.scss';
+import style from './BaseAvatar.scss';
 
 /**
  * Avatar is an element for displaying a user's avatar image.
@@ -21,7 +19,7 @@ import style from './pfe-avatar.scss';
  */
 
 @customElement('pfe-avatar') @pfelement()
-export class PfeAvatar extends BaseAvatar {
+export abstract class BaseAvatar extends LitElement {
   static readonly version = '{{version}}';
 
   static readonly styles = [style];

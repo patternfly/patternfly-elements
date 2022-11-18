@@ -1,0 +1,17 @@
+:host {
+    display: block;
+    position: relative;
+  
+    width: --_size;
+    height: --_size;
+  }
+
+// when src attribute is provided, show the img
+:host([src]) img {
+    display: block;
+    object-fit: cover;
+}
+
+:host([hidden]) {
+  display: none;
+}

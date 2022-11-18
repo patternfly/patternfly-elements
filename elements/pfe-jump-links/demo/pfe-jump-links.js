@@ -11,7 +11,7 @@ import { installRouter } from 'pwa-helpers/router.js';
  */
 async function route(location = window.location, event) {
   event?.preventDefault();
-  event?.stopPropagating();
+  event?.stopPropagation();
   if (location.hash) {
     root?.querySelector(location.hash)?.scrollIntoView({ behavior: 'smooth' });
   }

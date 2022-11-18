@@ -1,7 +1,6 @@
 import { aTimeout, expect, oneEvent, nextFrame, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
-import * as sinon from 'sinon';
 
 // Import the element we're testing.
 import { PfeAutocomplete } from '@patternfly/pfe-autocomplete';
@@ -11,6 +10,8 @@ import type {
   AutocompleteSearchEvent,
   AutocompleteSelectEvent } from '@patternfly/pfe-autocomplete';
 import { PfeSearchDroplist } from '@patternfly/pfe-autocomplete/pfe-search-droplist.js';
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
+import '@patternfly/pfe-tools/test/stub-logger.js';
 
 const TEMPLATES = {
   autocomplete: html`
@@ -372,23 +373,25 @@ describe('<pfe-autocomplete>', function() {
   });
 
   it('should trigger a console error if there is no light DOM', async function() {
-    const spy = sinon.spy(console, 'error');
     const autocompleteNoLightDOM = await createFixture<PfeAutocomplete>(TEMPLATES.nolightdom);
     autocompleteNoLightDOM.innerHTML = '';
 
     await nextFrame();
 
-    expect(spy).to.have.been.calledWith(`pfe-autocomplete: There must be a input tag in the light DOM`);
-    spy.restore();
+    expect(Logger.error).to.have.been.calledWith(
+      '[pfe-autocomplete]',
+      'There must be a input tag in the light DOM'
+    );
   });
 
   it(`should trigger a console error if there isn't a input as the first child of the light DOM`, async function() {
-    const spy = sinon.spy(console, 'error');
     const autocompleteBadLightDOM = await createFixture<PfeAutocomplete>(TEMPLATES.badlightdom);
     expect(autocompleteBadLightDOM).shadowDom.to.not.be.empty;
 
-    expect(spy).to.have.been.calledWith(`pfe-autocomplete: The only child in the light DOM must be an input tag`);
-    spy.restore();
+    expect(Logger.error).to.have.been.calledWith(
+      '[pfe-autocomplete]',
+      'The only child in the light DOM must be an input tag'
+    );
   });
 
   it(`should use the provided aria-label instead of the fallback in the component`, async function() {

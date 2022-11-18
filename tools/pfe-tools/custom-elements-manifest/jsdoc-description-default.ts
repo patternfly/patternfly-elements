@@ -1,4 +1,4 @@
-import type { Attribute, CssCustomProperty, CustomElement, CustomElementDeclaration } from 'custom-elements-manifest/schema';
+import type { Attribute, CssCustomProperty, CustomElement } from 'custom-elements-manifest/schema';
 import type { ClassDeclaration, JSDoc } from 'typescript';
 import type { Plugin } from '@custom-elements-manifest/analyzer';
 

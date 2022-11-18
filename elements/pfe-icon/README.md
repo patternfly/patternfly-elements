@@ -1,6 +1,6 @@
 # PatternFly Elements Icon
      
-Read more about Icon in the [PatternFly Elements Icon documentation](https://patternflyelements.org/components/icon)
+Read more about Icon in the [PatternFly Elements Icon documentation][docs]
 
 ##  Installation
 
@@ -10,7 +10,7 @@ Load `<pfe-icon>` via CDN:
 <script src="https://unpkg.com/@patternfly/pfe-icon?module"></script>
 ```
 
-Or, if you are using [NPM](https://npm.im), install it
+Or, if you are using [NPM](https://npm.im/@patternfly/pfe-icon/), install it
 
 ```bash
 npm install @patternfly/pfe-icon
@@ -24,77 +24,62 @@ import '@patternfly/pfe-icon';
 
 ## Usage
 
+Place the icon element on the page and give it an icon name from the [default icon set][icon-sets].
+In most cases, the icon should be labelled using `aria-label` or `aria-labelledby`, or removed from
+the accessibility tree with `aria-hidden="true"` or `role="presentation"`, if its content is merely
+presentational and expressed using accessible text copy elsewhere.
+
 ```html
-<pfe-icon icon="rh-leaf"></pfe-icon>
+<pfe-icon icon="award" aria-label="Awards"></pfe-icon>
 ```
 
 ### Fallback Content
 
-There are no slots, but if you wish to display some text when JS is disabled, you can put some text inside the pfe-icon tag.  For instance, when using a checkmark icon in a server status table, you may wish to display "success" if JS is disabled.
+If you wish to display some content while the icon loads (or while JS is disabled),
+you can slot it into `<pfe-icon>`. For instance, when using a checkmark icon in a server status
+table, you may wish to display a checkmark emoji if JS is disabled.
 
 ```html
-<pfe-icon icon="rh-check-mark">✅</pfe-icon>
+<pfe-icon icon="check">✅</pfe-icon>
 ```
 
-### Icon sets
+### Icon Sets
 
-Icon sets are defined in detail in [this blog post][icon-sets].  The blog post should eventually be absorbed into the official documentation.
+Icon comes with three built-in icon sets:
 
-#### Register a new icon set
+1. `fas`: Font Awesome Free Solid icons (the default set)
+1. `far`: Font Awesome Free Regular icons
+1. `patternfly`: PatternFly icons
 
-To register a new icon set, choose a global namespace for that set and identify the path at which the SVGs for that set will be hosted.  Consider also the function needed to convert the icon name into the filename on that hosted location.  The `addIconSet` call accepts the namespace (as a string), the path to the SVGs (as a string), and a function for parsing the icon name into the filename.
-
-```javascript
-await customElements.whenDefined('pfe-icon');
-const PfeIcon = customElements.get('pfe-icon');
-PfeIcon.addIconSet(
-  "local",
-  "./",
-  function(name, iconSetName, iconSetPath) {
-    var regex = new RegExp("^" + iconSetName + "-(.*)");
-    var match = regex.exec(name);
-    return iconSetPath + match[1] + ".svg";
-  }
-);
+Use the `set` attribute to pick an alternative icon set.
+```html
+<pfe-icon icon="star"    set="far"></pfe-icon>
+<pfe-icon icon="redhat"  set="fab"></pfe-icon>
+<pfe-icon icon="package" set="patternfly"></pfe-icon>
 ```
 
-#### Override the default icon sets
+It is possible to add custom icon sets or override the default sets.
+Icon sets are defined in detail in [the docs][icon-sets].
 
-Out of the box, the default icon set (using the rh / web namespace) is hosted on [access.redhat.com](https://access.redhat.com). If you would like to override the `rh / web` namespace, you can add the following to a global variable named `PfeConfig`.
+### Bundling
 
-The config must be set _before_ the PfeIcon class is defined.
+When bundling PfeIcon with other modules, the default icon imports will be
+relative to the bundle, not the source file, so be sure to either register all
+the icon sets you'll need, or override the default getter.
 
-```javascript
-window.PfeConfig = {
-  IconSets: [
-    {
-      name: "web",
-      path: "path/to/svg/directory", // Or https://hosted-icons.com/,
-      resolveIconName: function(name, iconSetName, iconSetPath) { // Optional function to resolve icon paths.
-        var regex = new RegExp("^" + iconSetName + "-(.*)");
-        var match = regex.exec(name);
-        return iconSetPath + match[1] + ".svg";
-      }
-    }
-  ]
-};
+```js
+// Workaround for bundled pfe-icon: make icon imports absolute, instead of relative to the bundle
+import { PfeIcon } from '/pfe.min.js';
+PfeIcon.getIconUrl = (set, icon) =>
+  new URL(`/assets/icons/${set}/${icon}.js`, import.meta.url);
+  // default: new URL(`./icons/${set}/${icon}.js`, import.meta.url);
 ```
 
-Now when `<pfe-icon>` is used, it will automatically reference the icon set defined in the config.
+## Loading
 
-If you would like to opt out of any defaults so that you can dynamically add icon sets later using `PfeIcon.addIconSet()`, use the following:
+Icons load _lazily_ by default, meaning that the browser will not attempt to fetch and render the
+icon until it scrolls into view. You can change this with the `loading` attribute;
+see the [docs][docs] for more info.
 
-```javascript
-window.PfeConfig = {
-  IconSets: []
-};
-```
-
-#### Updating an existing icon set
-
-To updating an existing icon set, you use the same `addIconSet` function.  The first input which is the icon set namespace is required, as is the new path.  You can optionally pass in a new function for parsing the icon names into filenames.
-
-```javascript
-PfeIcon.addIconSet("local", "https://hosted-icons.com/");
-```
-
+[docs]: https://patternflyelements.org/components/icon/
+[icon-sets]: https://patternflyelements.org/components/icon/#icon-sets

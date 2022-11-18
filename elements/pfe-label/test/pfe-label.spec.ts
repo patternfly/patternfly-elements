@@ -1,8 +1,9 @@
-import { expect, html, oneEvent } from '@open-wc/testing';
+import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfeLabel } from '@patternfly/pfe-label';
 import { getColor, hexToRgb } from '@patternfly/pfe-tools/test/hex-to-rgb.js';
 import { PfeIcon } from '@patternfly/pfe-icon';
+import '@patternfly/pfe-tools/test/stub-logger.js';
 
 const example = html`
   <pfe-label>Default</pfe-label>
@@ -38,8 +39,8 @@ describe('<pfe-label>', function() {
     // replace the default built-in icon set resolveIconName function
     // with one that loads local icons.  we don't want tests dependent on
     // prod servers.
-    PfeIcon.addIconSet('rh', '', function(name: string) {
-      return `/elements/pfe-icon/test/${name.replace('rh', 'rh-icon')}.svg`;
+    PfeIcon.addIconSet('rh', function(name: string) {
+      return new URL(`/elements/pfe-icon/test/${name.replace('rh', 'rh-icon')}.svg`);
     });
   });
 
@@ -100,9 +101,7 @@ describe('<pfe-label>', function() {
     const el = await createFixture<PfeLabel>(exampleWithIconAttribute);
     await el.updateComplete;
     const icon = el.shadowRoot!.querySelector('pfe-icon')!;
-    const image = icon.shadowRoot!.querySelector('svg image')!;
-    setTimeout(() => icon.setAttribute('icon', 'rh-bike'));
-    await oneEvent(image, 'load');
+    expect(icon.icon).to.equal(el.icon);
   });
 
   it('should not render a pfe-icon if the icon attribute is present but empty', async function() {

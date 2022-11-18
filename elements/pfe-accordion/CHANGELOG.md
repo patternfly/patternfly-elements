@@ -1,5 +1,88 @@
 # @patternfly/pfe-accordion
 
+## 2.0.0-next.8
+
+### Patch Changes
+
+- e2774512: Updating the accordion to include a minor animation for screen reader accessibility in Chrome on Mac
+
+## 2.0.0-next.7
+
+### Patch Changes
+
+- 7d7d6839: Uses latest version of `<pfe-icon>` internally.
+- f53155bc: Moving variable specific styles directly into pfe-accordion/header/panel.scss. Updating package exports to include Base Classes.
+- 07ad1d3d: Updates use of `<pfe-icon>`
+- Updated dependencies [07ad1d3d]
+- Updated dependencies [07ad1d3d]
+  - @patternfly/pfe-icon@2.0.0-next.5
+  - @patternfly/pfe-core@2.0.0-next.10
+  - @patternfly/pfe-collapse@2.0.0-next.4
+
+## 2.0.0-next.6
+
+### Minor Changes
+
+- 70795e85: ### pfe-accordion 1:1 with patternfly!
+
+  With this change we are adding three base class components `BaseAccordion`, `BaseAccordionHeader`, and `BaseAccordion` panel which rhds will extend off of for functionality.
+
+  ### Adding:
+
+  - Single
+    - Only a single accordion panel can be expanded at a time.
+  - Fixed
+    - Sets a fixed height for an accordion panel with a scrollbar if the context extends beyond this height.
+  - Bordered
+    - Sets a border between the headers of the accordion
+  - Large
+    - Uses the large styles along with the bordered styles (larger font, more padding, font color change, and more)
+
+  ### Breaking Changes
+
+  - Disclosure variant removed (will be re-implemented in rhds)
+
+  #### Example Accordion:
+
+  ```html
+  <pfe-accordion>
+    <pfe-accordion-header> Item One </pfe-accordion-header>
+    <pfe-accordion-panel>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    </pfe-accordion-panel>
+    <pfe-accordion-header> Item Two </pfe-accordion-header>
+    <pfe-accordion-panel>
+      Adipiscing elit pellentesque habitant morbi tristique senectus et netus
+      et.
+    </pfe-accordion-panel>
+  </pfe-accordion>
+  ```
+
+  #### Example Nested Accordion
+
+  ```html
+  <pfe-accordion>
+    <pfe-accordion-header> Item One </pfe-accordion-header>
+    <pfe-accordion-panel>
+      <pfe-accordion>
+        <pfe-accordion-header> Nested Item One </pfe-accordion-header>
+        <pfe-accordion-panel>
+          Elementum nisi quis eleifend quam adipiscing vitae proin sagittis.
+        </pfe-accordion-panel>
+        <pfe-accordion-header> Nested Item Two </pfe-accordion-header>
+        <pfe-accordion-panel>
+          Justo donec enim diam vulputate ut pharetra sit.
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </pfe-accordion-panel>
+    <pfe-accordion-header> Item Two </pfe-accordion-header>
+    <pfe-accordion-panel>
+      Aliquam ultrices sagittis orci a scelerisque purus semper eget.
+    </pfe-accordion-panel>
+  </pfe-accordion>
+  ```
+
 ## 2.0.0-next.5
 
 ### Patch Changes

@@ -7,6 +7,7 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed, colorContextConsumer, colorContextProvider, deprecation } from '@patternfly/pfe-core/decorators.js';
 import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecatedCustomEvent.js';
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import './pfe-search-droplist.js';
 
@@ -209,6 +210,8 @@ export class PfeAutocomplete extends LitElement {
 
   private _input?: HTMLInputElement;
 
+  #logger = new Logger(this);
+
   constructor() {
     super();
 
@@ -315,15 +318,13 @@ export class PfeAutocomplete extends LitElement {
     // input box
     const slotElems = this._slot?.assignedElements() as HTMLInputElement[] ?? [];
 
-    /* eslint-disable no-console */
     if (slotElems.length === 0) {
-      return console.error(`pfe-autocomplete: There must be a input tag in the light DOM`);
+      return this.#logger.error('There must be a input tag in the light DOM');
     }
 
     if (slotElems.length > 1 || slotElems.some(x => !isInputElement(x))) {
-      return console.error(`pfe-autocomplete: The only child in the light DOM must be an input tag`);
+      return this.#logger.error('The only child in the light DOM must be an input tag');
     }
-    /* eslint-enable no-console */
 
     [this._input] = slotElems;
 

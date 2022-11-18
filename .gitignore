@@ -138,3 +138,6 @@ core/pfe-core/demo/*
 /test
 browserstack.err
 !docs/demo/web-dev-server.demo.config.js
+
+# Local Netlify folder
+.netlify

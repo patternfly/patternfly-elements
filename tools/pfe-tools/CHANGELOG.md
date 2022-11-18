@@ -1,5 +1,34 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.34
+
+### Minor Changes
+
+- 4400866a: Adds a11y tree testing to test runner config
+
+### Patch Changes
+
+- 9d10155b: Update element internals polyfill, fixes clicking on label in safari
+- 4400866a: update dependencies
+
+## 1.0.0-next.33
+
+### Minor Changes
+
+- daba8a53: Changing from pfe-datetime to pfe-timestamp
+
+## 1.0.0-next.32
+
+### Minor Changes
+
+- 07ad1d3d: Adds testing utilities to stub Logger methods
+
+## 1.0.0-next.31
+
+### Patch Changes
+
+- b1c439d5: Removed esbuild target configuration relying on tsconfig.json for configuration options.
+
 ## 1.0.0-next.30
 
 ### Minor Changes

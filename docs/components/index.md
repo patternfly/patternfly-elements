@@ -24,22 +24,22 @@ permalink: /components/index.html
     <div class="component-preview">
       <div class="component-preview--container">
         {%- if env.ELEVENTY_ENV == "prod" -%}
-        <a href="/components/{{ element.slug }}/" aria-label="{{ element.title }}">
-          <div class="preview-image" style="background-image: url(/components/{{ element.slug }}/docs/preview.png);"></div>
+        <a href="{{ ('/components/'+ element.slug +'/') | url }}" aria-label="{{ element.title }}">
+          <div class="preview-image" style="background-image: url({{ ('/components/'+ element.slug +'/docs/preview.png') | url }});"></div>
         </a>
         {%- else -%}
-        <div class="preview-image" style="background-image: url(/components/{{ element.slug }}/docs/preview.png);"></div>
+        <div class="preview-image" style="background-image: url({{ ('/components/'+ element.slug +'/docs/preview.png') | url }});"></div>
         <div class="overlay">
-          <a class="cta secondary wind" href="/components/{{ element.slug }}/demo/">Demo</a>
+          <a class="cta secondary wind" href="{{ ('/components/'+ element.slug +'/demo/') | url }}">Demo</a>
         </div>
         {%- endif -%}
       </div>
       <h3>
-        <a href="/components/{{ element.slug }}/">{{ element.title }}</a>
+        <a href="{{ ('/components/'+ element.slug +'/') | url }}">{{ element.title }}</a>
       </h3>
       {% renderTemplate "njk,md", element=element %}{{ element.summary }}{% endrenderTemplate %}
       {%- if env.ELEVENTY_ENV != "prod" -%}
-      <a class="cta" href="/components/{{ element.slug }}/">Component overview</a>
+      <a class="cta" href="{{ ('/components/'+ element.slug +'/') | url }}">Component overview</a>
       {%- endif -%}
     </div>
   {%- endif -%}

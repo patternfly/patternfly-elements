@@ -13,7 +13,6 @@ import { fileURLToPath } from 'node:url';
 
 import rollupReplace from '@rollup/plugin-replace';
 import nunjucks from 'nunjucks';
-import slugify from 'slugify';
 import _glob from 'glob';
 
 import { litCss } from 'web-dev-server-plugin-lit-css';
@@ -26,6 +25,7 @@ import { promisify } from 'node:util';
 
 import Router from '@koa/router';
 import { Manifest } from './custom-elements-manifest/lib/Manifest.js';
+import { makeDemoEnv } from './esbuild-plugins/pfe-env.js';
 import { getPfeConfig, deslugify } from './config.js';
 
 const glob = promisify(_glob);
@@ -147,6 +147,10 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
       app.use(new Router()
+        .get('/tools/pfe-tools/environment.js(.js)?', async ctx => {
+          ctx.body = await makeDemoEnv(options.rootDir);
+          ctx.type = 'application/javascript';
+        })
         // redirect /components/jazz-hands/pfe-timestep/index.html to /elements/pfe-jazz-hands/demo/pfe-timestep.html
         // redirect /components/jazz-hands/index.html to /elements/pfe-jazz-hands/demo/pfe-jazz-hands.html
         .get('/components/:slug/demo/:sub?/:fileName', (ctx, next) => {

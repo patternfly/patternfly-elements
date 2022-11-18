@@ -4,6 +4,7 @@ import type { ColorContextOptions } from '../controllers/color-context.js';
 import { ColorContextConsumer, ColorContextProvider } from '../controllers/color-context.js';
 
 export function colorContextProvider<T extends ReactiveElement>(options?: ColorContextOptions) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return function(proto: T, _key: string) {
     (proto.constructor as typeof ReactiveElement).addInitializer(instance => {
       // @ts-expect-error: this is strictly for debugging purposes
@@ -14,6 +15,7 @@ export function colorContextProvider<T extends ReactiveElement>(options?: ColorC
 }
 
 export function colorContextConsumer<T extends ReactiveElement>(options?: ColorContextOptions) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return function(proto: T, _key: string) {
     (proto.constructor as typeof ReactiveElement).addInitializer(instance => {
       // @ts-expect-error: this is strictly for debugging purposes

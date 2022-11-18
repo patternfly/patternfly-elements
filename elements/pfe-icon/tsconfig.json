@@ -1,12 +1,33 @@
 {
   "extends": "../../tsconfig.settings.json",
-  "include": ["./**/*"],
+  "include": [
+    "./**/*"
+  ],
+  "exclude": [
+    "./icons/**/*.js",
+    "./demo/pfe-icon.js",
+    "./demo/custom-icon-sets.js",
+    "./test/rh-icon*.js",
+    "./custom-elements-manifest.config.js"
+  ],
   "compilerOptions": {
+    "module": "esnext",
+    "resolveJsonModule": true,
     "outDir": ".",
     "rootDir": "."
   },
   "references": [
-    { "path": "../../core/pfe-core" },
-    { "path": "../../tools/pfe-tools" }
+    {
+      "path": "../../core/pfe-core"
+    },
+    {
+      "path": "../../tools/pfe-tools"
+    },
+    {
+      "path": "../pfe-tooltip"
+    },
+    {
+      "path": "../pfe-autocomplete"
+    }
   ]
 }

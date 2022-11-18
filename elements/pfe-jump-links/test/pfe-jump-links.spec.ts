@@ -1,17 +1,16 @@
 import type { LitElement } from 'lit';
-import type { SinonSpy } from 'sinon';
 
 import { expect, html, oneEvent } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 
 import { PfeJumpLinks, PfeJumpLinksPanel } from '@patternfly/pfe-jump-links';
 
-import { spy } from 'sinon';
 import { ChangeEvent } from '../pfe-jump-links-nav';
+
+import '@patternfly/pfe-tools/test/stub-logger.js';
 
 describe('<pfe-jump-links>', function() {
   let element: PfeJumpLinks;
-  let consoleSpy: SinonSpy;
 
   before(function() {
     const template = document.createElement('template');
@@ -43,7 +42,6 @@ describe('<pfe-jump-links>', function() {
   });
 
   beforeEach(async function() {
-    consoleSpy = spy(console, 'warn');
     element = await createFixture<PfeJumpLinks>(html`
       <pfe-jump-links>
         <pfe-jump-links-nav id="jumplinks" color-palette="darkest" style="padding: 16px;">
@@ -371,10 +369,6 @@ describe('<pfe-jump-links>', function() {
         </pfe-jump-links-panel>
       </pfe-jump-links>
     `);
-  });
-
-  afterEach(function() {
-    consoleSpy.restore();
   });
 
   it('should upgrade', async function() {

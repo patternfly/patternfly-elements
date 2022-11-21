@@ -36,6 +36,8 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   @property({ type: Boolean }) expanded = false;
   @property({ type: String }) hoverTip = 'Copy';
   @property({ type: String }) clickTip = 'Copied';
+  @property({ type: Number }) entryDelay = 300;
+  @property({ type: Number }) exitDelay = 1500;
   @state() _copied = false;
 
   // @property({ type: Boolean, reflect: true }) block = false;
@@ -52,10 +54,13 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   protected override _copyToClipboard(e: Event): void {
     navigator.clipboard.writeText(this.value);
     this.dispatchEvent(new ClipboardCopyCopiedEvent(this.value));
+    setTimeout(() => {
+      this._copied = true;
+    }, this.entryDelay);
     this._copied = true;
     setTimeout(() => {
       this._copied = false;
-    }, 4000);
+    }, this.exitDelay);
   }
 
   /**

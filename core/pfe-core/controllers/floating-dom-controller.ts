@@ -1,47 +1,5 @@
-import type { Instance } from '@popperjs/core';
+import { computePosition, Placement, shift, arrow } from '@floating-ui/dom';
 import type { ReactiveController, ReactiveElement } from 'lit';
-
-import {
-  applyStyles,
-  arrow,
-  computeStyles,
-  eventListeners,
-  flip,
-  hide,
-  offset,
-  popperGenerator,
-  popperOffsets,
-  preventOverflow,
-} from '@popperjs/core';
-
-type Direction =
-  | 'top'
-  | 'bottom'
-  | 'left'
-  | 'right'
-
-type Alignment =
-  | 'start'
-  | 'end'
-
-/**
- * Represents the placement of floating DOM
- */
-export type Placement = Direction | `${Direction}-${Alignment}`;
-
-const createPopper = popperGenerator({
-  defaultModifiers: [
-    eventListeners,
-    popperOffsets,
-    computeStyles,
-    applyStyles,
-    offset,
-    flip,
-    preventOverflow,
-    arrow,
-    hide
-  ],
-});
 
 /**
  * Controls floating DOM within a web component, e.g. tooltips and popovers
@@ -49,7 +7,7 @@ const createPopper = popperGenerator({
 export class FloatingDOMController implements ReactiveController {
   #open = false;
 
-  #popper: Instance | undefined;
+  #popper: undefined;
 
   #initialized = false;
 
@@ -70,9 +28,9 @@ export class FloatingDOMController implements ReactiveController {
 
   set open(value: boolean) {
     this.#open = value;
-    if (value) {
-      this.#popper?.update();
-    }
+    // if (value) {
+    //   this.#popper?.update();
+    // }
     this.host.requestUpdate();
   }
 
@@ -93,24 +51,46 @@ export class FloatingDOMController implements ReactiveController {
   }
 
   /** Initialize the floating DOM */
-  create(invoker: Element, content: HTMLElement, placement: Placement, offset?: number[]): void {
+  create(invoker: Element, content: HTMLElement, arrowElement: HTMLElement, placement: Placement = 'left', offsetNumbers?: number[]): void {
     if (invoker && content) {
-      this.#popper ??= createPopper(invoker, content, {
+      computePosition(invoker!, content, {
+        strategy: 'absolute',
         placement,
-        modifiers: [
-          {
-            name: 'offset',
-            options: {
-              offset
-            }
-          },
-          {
-            name: 'flip',
-            options: {
-              fallbackPlacements: ['top', 'right', 'left', 'bottom'],
-            },
-          }
+        middleware: [
+          // offset(offsetNumbers !== undefined ? offsetNumbers[0] : [0]),
+          shift(),
+          arrow({
+            element: arrowElement
+          }),
         ]
+      }).then(({ x, y, middlewareData }) => {
+        Object.assign(content!.style, {
+          top: `${y}px`,
+          left: `${x}px`,
+        });
+
+        if (middlewareData.arrow) {
+          const { y: arrowY, x: arrowX } = middlewareData.arrow;
+
+          let staticSide = {
+            top: 'bottom',
+            right: 'left',
+            bottom: 'top',
+            left: 'right',
+          }[placement.split('-')[0]];
+
+          if (staticSide === undefined) {
+            staticSide = 'left';
+          }
+
+          Object.assign(arrowElement!.style, {
+            left: arrowX != null ? `${arrowX}px` : '',
+            top: arrowY != null ? `${arrowY}px` : '',
+            right: '',
+            bottom: '',
+            [staticSide]: '-4px',
+          });
+        }
       });
       this.initialized ||= true;
     }

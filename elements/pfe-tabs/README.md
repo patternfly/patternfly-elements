@@ -26,16 +26,12 @@ import '@patternfly/pfe-tabs';
 
 ```html
 <pfe-tabs>
-  <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
-  <pfe-tab-panel role="region" slot="panel">
-    <h2>Content 1</h2>
-    <p>Tab 1 panel content.</p>
-  </pfe-tab-panel>
-  <pfe-tab role="heading" slot="tab">Tab 2</pfe-tab>
-  <pfe-tab-panel role="region" slot="panel">
-    <h2>Content 2</h2>
-    <p>Tab 2 panel content.</p>
-  </pfe-tab-panel>
+  <pfe-tab id="users" slot="tab">Users</pfe-tab>
+  <pfe-tab-panel>Users</pfe-tab-panel>
+  <pfe-tab slot="tab">Containers</pfe-tab>
+  <pfe-tab-panel>Containers <a href="#">Focusable element</a></pfe-tab-panel>
+  <pfe-tab slot="tab">Database</pfe-tab>
+  <pfe-tab-panel>Database</pfe-tab-panel>
 </pfe-tabs>
 ```
 

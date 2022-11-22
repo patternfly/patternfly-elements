@@ -31,13 +31,13 @@ export abstract class BaseCard extends LitElement {
      };
 
      return html`
-      <div class="pfe-card__header ${classMap(classes)}" part="header">
+      <div class="header ${classMap(classes)}" part="header">
         <slot name="header"></slot>
       </div>
-      <div class="pfe-card__body ${classMap(classes)}" part="body">
+      <div class="body ${classMap(classes)}" part="body">
         <slot></slot>
       </div>
-      <div class="pfe-card__footer ${classMap(classes)}" part="footer">
+      <div class="footer ${classMap(classes)}" part="footer">
         <slot name="footer"></slot>
       </div>
     `;

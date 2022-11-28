@@ -3,9 +3,7 @@ import type { ColorTheme } from '@patternfly/pfe-core';
 import { LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
-import { pfelement } from '@patternfly/pfe-core/decorators.js';
-
-import { colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
+import { pfelement, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 
 import style from './BaseAvatar.scss';
 
@@ -23,7 +21,6 @@ export abstract class BaseAvatar extends LitElement {
   static readonly version = '{{version}}';
 
   static readonly styles = [style];
-
 
   /**
  * Sets color theme based on parent context

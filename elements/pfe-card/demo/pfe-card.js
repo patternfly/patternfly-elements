@@ -31,10 +31,10 @@ pfeSwitchAll.forEach(pfeSwitch => {
         break;
       case 'large':
         enabled ? setAttr('size', 'large') : rmAttr('size', 'large');
-        cardContainer.classList.add('resize');
         break;
       case 'fullHeight':
-        enabled ? setAttr('fullHeight') : rmAttr('fullHeight');
+        enabled ? setAttr('full-height') : rmAttr('full-height');
+        cardContainer.classList.add('resize');
         break;
       case 'plain':
         enabled ? setAttr('plain') : rmAttr('plain');

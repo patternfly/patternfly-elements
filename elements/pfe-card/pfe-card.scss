@@ -36,7 +36,7 @@
   border-radius: var(--pf-c-card--m-rounded--BorderRadius, var(--pf-global--BorderRadius--sm, 3px));
 }
 
-:host([fullHeight]) {
+:host([full-height]) {
   height: var(--pf-c-card--m-full-height--Height, 100%);
   --_pf-c-card__body--FullHeight--Flex: 1 1 auto;
 }

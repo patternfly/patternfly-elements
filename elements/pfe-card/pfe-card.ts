@@ -67,7 +67,7 @@ export class PfeCard extends BaseCard {
   /**
  * Optionally allow the card to take up the full height of the parent element.
  */
-  @property({ type: Boolean, reflect: true }) fullHeight = false;
+  @property({ type: Boolean, reflect: true, attribute: 'full-height' }) fullHeight = false;
 
   /**
    * Optionally remove the border on the card container.

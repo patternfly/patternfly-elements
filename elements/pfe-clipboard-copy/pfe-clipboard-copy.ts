@@ -123,7 +123,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   protected override renderActionButton() {
     const content = super.renderActionButton();
     return html`
-      <pfe-tooltip>
+      <pfe-tooltip part="tooltip">
         ${content}
         <span slot="content">
           <slot part="hover-tip" name="hover-tip" ?hidden=${this._copied}>${this.hoverTip}</slot>

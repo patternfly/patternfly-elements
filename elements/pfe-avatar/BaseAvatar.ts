@@ -3,7 +3,7 @@ import type { ColorTheme } from '@patternfly/pfe-core';
 import { LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
-import { pfelement, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
+import { colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 
 import style from './BaseAvatar.scss';
 
@@ -16,7 +16,6 @@ import style from './BaseAvatar.scss';
  * @csspart {HTMLImageElement} img - The image element for when an image URL is provided
  */
 
-@customElement('pfe-avatar') @pfelement()
 export abstract class BaseAvatar extends LitElement {
   static readonly version = '{{version}}';
 
@@ -32,7 +31,6 @@ export abstract class BaseAvatar extends LitElement {
    * The URL to the user's custom avatar image.
    */
     @property({ reflect: true }) src?: string = '/elements/pfe-avatar/lib/img_avatar-dark.svg';
-    @property({ reflect: true }) src?: string = '/elements/pfe-avatar/lib/img_avatar-light.svg';
 
   /**
  * The alt text for the avatar image.
@@ -41,10 +39,6 @@ export abstract class BaseAvatar extends LitElement {
 
   /** Size of the Avatar */
   @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
-
-  public BaseAvatar() {
-    const src = this._getIndex(header);
-  }
 
   render() {
     return html`
@@ -57,9 +51,3 @@ export abstract class BaseAvatar extends LitElement {
     `;
   }
 }
-
-  declare global {
-    interface HTMLElementTagNameMap {
-      'pfe-avatar': PfeAvatar;
-    }
-  }

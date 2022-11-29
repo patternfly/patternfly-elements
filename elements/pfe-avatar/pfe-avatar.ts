@@ -33,12 +33,6 @@ export class PfeAvatar extends BaseAvatar {
    @colorContextConsumer()
    @property({ reflect: true }) on?: ColorTheme;
 
-   /**
-   * The URL to the user's custom avatar image.
-   */
-    @property({ reflect: true }) src?: string = '/elements/pfe-avatar/lib/img_avatar-dark.svg';
-    @property({ reflect: true }) src?: string = '/elements/pfe-avatar/lib/img_avatar-light.svg';
-
   /**
  * The alt text for the avatar image.
  */
@@ -46,10 +40,6 @@ export class PfeAvatar extends BaseAvatar {
 
   /** Size of the Avatar */
   @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
-
-  public BaseAvatar() {
-    const src = this._getIndex(header);
-  }
 
   render() {
     return html`

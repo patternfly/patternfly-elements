@@ -1,7 +1,7 @@
-// import '@patternfly/pfe-band';
 import '@patternfly/pfe-card';
 import '@patternfly/pfe-button';
-// import '@patternfly/pfe-select';
+import '@patternfly/pfe-switch';
+const pfeSwitchAll = document.querySelectorAll('pfe-switch');
 const pfeCard = document.querySelector('pfe-card');
 const cardContainer = document.querySelector('#card-container');
 
@@ -16,34 +16,32 @@ function rmAttr(name, val = '') {
   pfeCard.removeAttribute(name);
 }
 
-document.querySelectorAll('.card_controls').forEach(cardControl => {
-  cardControl.addEventListener('click', event => {
-    cardContainer.classList.remove('resize');
-    document.querySelectorAll('.card_controls').forEach(control => {
-      const enabled = control.checked;
-      switch (control.value) {
-        case 'compact':
-          enabled ? setAttr('size', 'compact') : rmAttr('size', 'compact');
-          break;
-        case 'flat':
-          enabled ? setAttr('flat') : rmAttr('flat');
-          break;
-        case 'rounded':
-          enabled ? setAttr('rounded') : rmAttr('rounded');
-          break;
-        case 'large':
-          enabled ? setAttr('size', 'large') : rmAttr('size', 'large');
-          cardContainer.classList.add('resize');
-          break;
-        case 'fullHeight':
-          enabled ? setAttr('fullHeight') : rmAttr('fullHeight');
-          break;
-        case 'plain':
-          enabled ? setAttr('plain') : rmAttr('plain');
-          break;
-        default:
-          break;
-      }
-    });
+pfeSwitchAll.forEach(pfeSwitch => {
+  pfeSwitch.addEventListener('click', event => {
+    const enabled = event.target.checked;
+    switch (event.target.id) {
+      case 'compact':
+        enabled ? setAttr('size', 'compact') : rmAttr('size', 'compact');
+        break;
+      case 'flat':
+        enabled ? setAttr('flat') : rmAttr('flat');
+        break;
+      case 'rounded':
+        enabled ? setAttr('rounded') : rmAttr('rounded');
+        break;
+      case 'large':
+        enabled ? setAttr('size', 'large') : rmAttr('size', 'large');
+        cardContainer.classList.add('resize');
+        break;
+      case 'fullHeight':
+        enabled ? setAttr('fullHeight') : rmAttr('fullHeight');
+        break;
+      case 'plain':
+        enabled ? setAttr('plain') : rmAttr('plain');
+        break;
+      default:
+        break;
+    }
   });
 });
+

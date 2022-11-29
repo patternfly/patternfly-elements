@@ -46,12 +46,11 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   /**
    * Togggle the dropdown element.
    */
-  protected _dropdownClickHandler(e: Event): void {
-    const { value } = e.target as HTMLButtonElement;
+  protected _dropdownClickHandler(): void {
     this.expanded = !this.expanded;
   }
 
-  protected override _copyToClipboard(e: Event): void {
+  protected override _copyToClipboard(): void {
     navigator.clipboard.writeText(this.value);
     this.dispatchEvent(new ClipboardCopyCopiedEvent(this.value));
     setTimeout(() => {

@@ -98,9 +98,6 @@
       "@patternfly/pfe-codeblock": [
         "./elements/pfe-codeblock/pfe-codeblock.ts"
       ],
-      "@patternfly/pfe-collapse": [
-        "./elements/pfe-collapse/pfe-collapse.ts"
-      ],
       "@patternfly/pfe-dropdown": [
         "./elements/pfe-dropdown/pfe-dropdown.ts"
       ],
@@ -115,9 +112,6 @@
       ],
       "@patternfly/pfe-modal": [
         "./elements/pfe-modal/pfe-modal.ts"
-      ],
-      "@patternfly/pfe-page-status": [
-        "./elements/pfe-page-status/pfe-page-status.ts"
       ],
       "@patternfly/pfe-progress-steps": [
         "./elements/pfe-progress-steps/pfe-progress-steps.ts"
@@ -180,9 +174,6 @@
       "path": "./elements/pfe-codeblock"
     },
     {
-      "path": "./elements/pfe-collapse"
-    },
-    {
       "path": "./elements/pfe-dropdown"
     },
     {
@@ -193,9 +184,6 @@
     },
     {
       "path": "./elements/pfe-modal"
-    },
-    {
-      "path": "./elements/pfe-page-status"
     },
     {
       "path": "./elements/pfe-progress-steps"

@@ -6,8 +6,7 @@ import { BaseTabs } from './BaseTabs.js';
 import { PfeTab } from './pfe-tab.js';
 import { PfeTabPanel } from './pfe-tab-panel.js';
 
-import style from './BaseTabs.scss';
-import pfeStyle from './pfe-tabs.scss';
+import styles from './pfe-tabs.scss';
 
 /**
  * Tabs allow users to navigate between views within the same page or context. Variants include
@@ -65,7 +64,7 @@ import pfeStyle from './pfe-tabs.scss';
 export class PfeTabs extends BaseTabs {
   static readonly version = '{{version}}';
 
-  static readonly styles = [style, pfeStyle];
+  static readonly styles = [...BaseTabs.styles, styles];
 
   protected static readonly scrollTimeoutDelay = 150;
 

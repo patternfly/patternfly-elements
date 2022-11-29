@@ -2,8 +2,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { BaseTab } from './BaseTab.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
-import style from './BaseTab.scss';
-import pfeStyle from './pfe-tab.scss';
+import styles from './pfe-tab.scss';
 
 /**
  * PfeTab
@@ -67,7 +66,7 @@ import pfeStyle from './pfe-tab.scss';
  */
 @customElement('pfe-tab')
 export class PfeTab extends BaseTab {
-  static readonly styles = [style, pfeStyle];
+  static readonly styles = [...BaseTab.styles, styles];
 
   connectedCallback() {
     super.connectedCallback();

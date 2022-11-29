@@ -1,5 +1,13 @@
 # @patternfly/pfe-accordion
 
+## 2.0.0-next.9
+
+### Patch Changes
+
+- 0ef73073: Removing pfe-collapse
+- Updated dependencies [b6bb3818]
+  - @patternfly/pfe-core@2.0.0-next.11
+
 ## 2.0.0-next.8
 
 ### Patch Changes

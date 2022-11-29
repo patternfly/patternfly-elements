@@ -8,7 +8,7 @@ import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.
 import { BaseTab, TabExpandEvent } from './BaseTab.js';
 import { BaseTabPanel } from './BaseTabPanel.js';
 
-import style from './BaseTab.scss';
+import styles from './BaseTabs.scss';
 
 /**
  * @attr [label-scroll-left="Scroll left"] - accessible label for the tab panel's scroll left button.
@@ -16,7 +16,7 @@ import style from './BaseTab.scss';
  *
  */
 export abstract class BaseTabs extends LitElement {
-  static readonly styles = [style];
+  static readonly styles = [styles];
 
   static isTab(element: BaseTab): element is BaseTab {
     return element instanceof BaseTab;

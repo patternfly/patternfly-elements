@@ -1,5 +1,17 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.36
+
+### Patch Changes
+
+- fcdcc274: Removing pfe-page-status
+
+## 1.0.0-next.35
+
+### Patch Changes
+
+- 0ef73073: Removing pfe-collapse
+
 ## 1.0.0-next.34
 
 ### Minor Changes

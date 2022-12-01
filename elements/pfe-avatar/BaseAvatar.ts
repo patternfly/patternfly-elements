@@ -1,9 +1,5 @@
-import type { ColorTheme } from '@patternfly/pfe-core';
-
 import { LitElement, html } from 'lit';
-import { property, customElement } from 'lit/decorators.js';
-
-import { colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
+import { property } from 'lit/decorators.js';
 
 import style from './BaseAvatar.scss';
 
@@ -22,15 +18,9 @@ export abstract class BaseAvatar extends LitElement {
   static readonly styles = [style];
 
   /**
- * Sets color theme based on parent context
- */
-   @colorContextConsumer()
-   @property({ reflect: true }) on?: ColorTheme;
-
-   /**
-   * The URL to the user's custom avatar image.
-   */
-    @property({ reflect: true }) src?: string = '/elements/pfe-avatar/lib/img_avatar-dark.svg';
+  * The URL to the user's custom avatar image.
+  */
+  @property({ reflect: true }) src?: string = '/elements/pfe-avatar/lib/img_avatar-light.svg';
 
   /**
  * The alt text for the avatar image.

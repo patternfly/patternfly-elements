@@ -1,11 +1,7 @@
-import type { ColorTheme } from '@patternfly/pfe-core';
-
 import { html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
 import { pfelement } from '@patternfly/pfe-core/decorators.js';
-
-import { colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
 
 import { BaseAvatar } from './BaseAvatar.js';
 
@@ -28,14 +24,13 @@ export class PfeAvatar extends BaseAvatar {
 
 
   /**
- * Sets color theme based on parent context
- */
-   @colorContextConsumer()
-   @property({ reflect: true }) on?: ColorTheme;
+  * The URL to the user's custom avatar image.
+  */
+   @property({ reflect: true }) src?: string = '/elements/pfe-avatar/lib/img_avatar-light.svg';
 
   /**
- * The alt text for the avatar image.
- */
+  * The alt text for the avatar image.
+  */
   @property({ reflect: true }) alt?: string = 'Avatar image';
 
   /** Size of the Avatar */

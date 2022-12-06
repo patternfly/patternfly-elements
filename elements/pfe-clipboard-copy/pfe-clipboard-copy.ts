@@ -80,7 +80,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   protected override renderDropdownTrigger() {
     return html`
       ${this.variant === 'expansion' ? html`
-      <button part="dropdown" @click=${this._dropdownClickHandler}>
+      <button part="action dropdown-action" @click=${this._dropdownClickHandler}>
         ${this.expanded ? html`
         <slot name="dropdown-button-opened">
           <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img"

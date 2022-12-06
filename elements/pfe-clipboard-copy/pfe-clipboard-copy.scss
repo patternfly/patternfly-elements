@@ -411,6 +411,10 @@
   -webkit-appearance: none;
 }
 
+[part="input"][disabled] {
+  background-color: var(--pf-c-form-control--readonly--BackgroundColor, var(--pf-global--disabled-color--300, #f0f0f0));
+}
+
 [part="input"]:not(textarea) {
   height: var(--pf-c-form-control--Height, calc(var(--pf-c-form-control--FontSize) * var(--pf-c-form-control--LineHeight) + var(--pf-c-form-control--BorderWidth) * 2 + var(--pf-c-form-control--PaddingTop) + var(--pf-c-form-control--PaddingBottom)), 36px);
   text-overflow: ellipsis;

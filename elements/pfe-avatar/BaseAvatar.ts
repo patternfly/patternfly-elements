@@ -23,8 +23,8 @@ export abstract class BaseAvatar extends LitElement {
   @property({ reflect: true }) src?: string = '/elements/pfe-avatar/lib/img_avatar-light.svg';
 
   /**
- * The alt text for the avatar image.
- */
+  * The alt text for the avatar image.
+  */
   @property({ reflect: true }) alt?: string = 'Avatar image';
 
   /** Size of the Avatar */

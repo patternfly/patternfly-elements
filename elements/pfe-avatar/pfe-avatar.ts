@@ -22,17 +22,6 @@ export class PfeAvatar extends BaseAvatar {
 
   static readonly styles = [style];
 
-
-  /**
-  * The URL to the user's custom avatar image.
-  */
-   @property({ reflect: true }) src?: string = '/elements/pfe-avatar/lib/img_avatar-light.svg';
-
-  /**
-  * The alt text for the avatar image.
-  */
-  @property({ reflect: true }) alt?: string = 'Avatar image';
-
   /** Size of the Avatar */
   @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
 

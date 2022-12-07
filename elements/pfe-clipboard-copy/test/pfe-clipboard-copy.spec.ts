@@ -28,7 +28,7 @@ describe('<pfe-clipboard-copy>', function() {
     const el = await createFixture <PfeClipboardCopy>(element);
     el.setAttribute('readonly', '');
     await el.updateComplete;
-    const input = el.shadowRoot?.querySelector('[part="input"]') as HTMLElement;
+    const input = el.shadowRoot?.querySelector('[part~="input"]') as HTMLElement;
     expect(input?.hasAttribute('disabled')).to.be.true;
     // it should be grayed out
     expect(getComputedStyle(input)?.getPropertyValue('background-color')).to.equal('rgb(240, 240, 240)');
@@ -38,7 +38,14 @@ describe('<pfe-clipboard-copy>', function() {
     const el = await createFixture <PfeClipboardCopy>(element);
     el.setAttribute('variant', 'expansion');
     await el.updateComplete;
+    // ensure the dropdown action button is present
     expect(el.shadowRoot?.querySelector('[part~="dropdown-action"]')).to.not.be.null;
+    // ensure the dropdown is not present
+    expect(el.shadowRoot?.querySelector('[part~="dropdown"]')).to.be.null;
+
+    // check if the dropdown appears if you expand it.
+    el.expanded = true;
+    await el.updateComplete;
     expect(el.shadowRoot?.querySelector('[part~="dropdown"]')).to.not.be.null;
   });
 });

@@ -378,16 +378,24 @@
 /*     -moz-appearance: none; */
 /*     -webkit-appearance: none; */
 /* } */
+:host {
+  display: block;
+}
 
-[part="input-group"] {
+[part~="base"] {
+  display: flex;
+  flex-direction: column;
+}
+
+[part~="input-group"] {
   display: flex;
 }
 
-[part="input-group"] > * + * {
+[part~="input-group"] > * + * {
   margin-left: -1px;
 }
 
-[part="input"] {
+[part~="form-input"] {
   color: var(--pf-c-form-control--Color, var(--pf-global--Color--100, var(--pf-global--Color--dark-100, #151515)));
   width: var(--pf-c-form-control--Width);
   padding:
@@ -409,18 +417,19 @@
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
+  flex: 1 1 auto;
 }
 
-[part="input"][disabled] {
+[part~="input"][disabled] {
   background-color: var(--pf-c-form-control--readonly--BackgroundColor, var(--pf-global--disabled-color--300, #f0f0f0));
 }
 
-[part="input"]:not(textarea) {
+[part~="input"]:not(textarea) {
   height: var(--pf-c-form-control--Height, calc(var(--pf-c-form-control--FontSize) * var(--pf-c-form-control--LineHeight) + var(--pf-c-form-control--BorderWidth) * 2 + var(--pf-c-form-control--PaddingTop) + var(--pf-c-form-control--PaddingBottom)), 36px);
   text-overflow: ellipsis;
 }
 
-[part="action"] {
+[part~="action"] {
   --pf-c-button--BorderRadius: var(--pf-c-button--m-control--BorderRadius, 0);
   --pf-c-button--disabled--BackgroundColor: var(--pf-c-button--m-control--disabled--BackgroundColor, var(--pf-global--disabled-color--300, #f0f0f0));
   --pf-c-button--after--BorderWidth: var(--pf-c-button--m-control--after--BorderWidth, var(--pf-global--BorderWidth--sm, 1px));
@@ -436,7 +445,7 @@
   border: none;
 }
 
-[part="action"]::after {
+[part~="action"]::after {
   position: absolute;
   top: 0;
   right: 0;
@@ -449,17 +458,22 @@
   border-radius: var(--pf-c-button--after--BorderRadius);
 }
 
-[part="action"]:hover {
+[part~="action"]:is(:hover, :focus-within) {
   --pf-c-button--m-control--Color: var(--pf-c-button--m-control--hover--Color, var(--pf-global--Color--100, #151515));
   --pf-c-button--m-control--BackgroundColor: var(--pf-c-button--m-control--hover--BackgroundColor, var(--pf-global--BackgroundColor--100, #fff));
   --pf-c-button--m-control--after--BorderBottomColor: var(--pf-c-button--m-control--hover--after--BorderBottomColor, var(--pf-global--active-color--100, #06c));
 }
 
-.pf-c-button.pf-m-control:hover::after {
+[part~="action"]:is(:hover, :focus-within):after {
   border-bottom-width: var(--pf-c-button--m-control--hover--after--BorderBottomWidth, 2px);
 }
 
 [part="tooltip"]::part(invoker) {
   display: flex;
   height: 100%;
+}
+
+[part~="dropdown"] {
+  display: flex;
+  flex: 1 1 auto;
 }

@@ -25,7 +25,6 @@ export class ClipboardCopyCopiedEvent extends ComposedEvent {
  * Clipboard Copy
  * @slot - Place element content here
  */
-
 @customElement('pfe-clipboard-copy')
 export class PfeClipboardCopy extends BaseClipboardCopy {
   static readonly version = '{{version}}';
@@ -110,9 +109,9 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
    */
   protected override renderDropdown() {
     return html`
-      ${(this.variant === 'expansion') ? html`
+      ${(this.variant === 'expansion' && this.expanded) ? html`
       <div part="dropdown">
-        <textarea part="dropdown-textarea" .value=${this.value} .disabled=${this.readonly || !this.expanded}
+        <textarea part="dropdown-textarea form-input" .value=${this.value} .disabled=${this.readonly}
           @input=${this._valueChangeHandler}></textarea>
       </div>
       ` : ''}

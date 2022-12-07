@@ -70,12 +70,14 @@ export abstract class BaseClipboardCopy extends LitElement {
 
   render() {
     return html`
-      <div part="input-group">
-        ${this.renderDropdownTrigger()}
-        <input part="input" ?disabled=${this._disableInput} .value=${this.value} @input=${this._valueChangeHandler}></input>
-        ${this.renderActionButton()}
+      <div part="base">
+        <div part="input-group">
+          ${this.renderDropdownTrigger()}
+          <input part="input form-input" ?disabled=${this._disableInput} .value=${this.value} @input=${this._valueChangeHandler}></input>
+          ${this.renderActionButton()}
+        </div>
+        ${this.renderDropdown()}
       </div>
-      ${this.renderDropdown()}
     `;
   }
 }

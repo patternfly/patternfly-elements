@@ -168,7 +168,7 @@ describe('<pfe-card>', function() {
       it('should have an updated flex on body (1 1 auto)', async function() {
         const element = await createFixture<PfeCard>(TEMPLATES.card1);
         const cardBody = element.shadowRoot!.querySelector<HTMLSlotElement>('[part="body"]')!;
-        element.setAttribute('fullHeight', '');
+        element.setAttribute('full-height', '');
         await element.updateComplete;
 
         expect(getComputedStyle(cardBody).getPropertyValue('flex')).to.equal('1 1 auto');
@@ -193,6 +193,21 @@ describe('<pfe-card>', function() {
         expect(getComputedStyle(element).getPropertyValue('box-shadow')).to.equal('none');
         expect(getComputedStyle(element).getPropertyValue('background-color')).to.equal('rgba(0, 0, 0, 0)');
       });
+    });
+  });
+
+  describe('accessible', () => {
+    it('should be accessible in both the light and shadow dom', async () => {
+      const element = await createFixture<PfeCard>(TEMPLATES.card1);
+
+      expect(element).to.be.accessible();
+      expect(element.shadowRoot).to.be.accessible();
+    });
+
+    it('should have an article element wrapper in the shadow dom', async () => {
+      const element = await createFixture<PfeCard>(TEMPLATES.card1);
+
+      expect(element.shadowRoot?.querySelector('article')).not.to.be.undefined;
     });
   });
 });

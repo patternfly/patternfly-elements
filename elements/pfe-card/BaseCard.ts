@@ -49,6 +49,7 @@ export abstract class BaseCard extends LitElement {
     };
 
     return html`
+    <article>
       <div class="header ${classMap(classes)}" part="header">
         <slot name="header"></slot>
       </div>
@@ -58,6 +59,7 @@ export abstract class BaseCard extends LitElement {
       <div class="footer ${classMap(classes)}" part="footer">
         <slot name="footer"></slot>
       </div>
+    </article>
     `;
   }
 }

@@ -51,6 +51,10 @@ export abstract class BaseTooltip extends LitElement {
     return this.shadowRoot?.querySelector<HTMLElement>(`#tooltip`) ?? null;
   }
 
+  disconnectedCallback() {
+    this.#domController.removeAutoUpdate();
+  }
+
   override connectedCallback(): void {
     super.connectedCallback();
     if (!['top', 'bottom'].includes(this.position)) {

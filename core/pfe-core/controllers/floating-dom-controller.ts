@@ -1,4 +1,5 @@
-import { computePosition, Placement, shift, arrow } from '@floating-ui/dom';
+import { computePosition, shift, arrow, offset, autoUpdate } from '@floating-ui/dom';
+import type { Placement } from '@floating-ui/dom';
 import type { ReactiveController, ReactiveElement } from 'lit';
 
 /**
@@ -6,18 +7,9 @@ import type { ReactiveController, ReactiveElement } from 'lit';
  */
 export class FloatingDOMController implements ReactiveController {
   #open = false;
-
-  #popper: undefined;
-
   #initialized = false;
-
-  get initialized() {
-    return this.#initialized;
-  }
-
-  set initialized(v: boolean) {
-    this.#initialized = v; this.host.requestUpdate();
-  }
+  #cleanup?: () => void;
+  #calcPosition = true;
 
   /**
    * When true, the floating DOM is visible
@@ -28,10 +20,54 @@ export class FloatingDOMController implements ReactiveController {
 
   set open(value: boolean) {
     this.#open = value;
-    // if (value) {
-    //   this.#popper?.update();
-    // }
+
     this.host.requestUpdate();
+  }
+
+  get initialized() {
+    return this.#initialized;
+  }
+
+  set initialized(v: boolean) {
+    this.#initialized = v; this.host.requestUpdate();
+  }
+
+  get cleanup() {
+    return this.#cleanup;
+  }
+
+  set cleanup(v: any) {
+    this.#cleanup = v;
+    this.host.requestUpdate();
+  }
+
+  get calcPosition() {
+    return this.#calcPosition;
+  }
+
+  set calcPosition(v: any) {
+    this.#calcPosition = v;
+    this.host.requestUpdate();
+  }
+
+  setAutoUpdate(invoker: Element, content: HTMLElement) {
+    if (!this.cleanup) {
+      this.cleanup = autoUpdate(
+        invoker,
+        content,
+        () => {
+          if (!this.calcPosition) {
+            this.calcPosition = true;
+          }
+        }
+      );
+    }
+  }
+
+  removeAutoUpdate() {
+    if (this.#cleanup) {
+      this.#cleanup();
+    }
   }
 
   constructor(private host: ReactiveElement) {
@@ -50,20 +86,19 @@ export class FloatingDOMController implements ReactiveController {
     this.open = false;
   }
 
-  /** Initialize the floating DOM */
-  create(invoker: Element, content: HTMLElement, arrowElement: HTMLElement, placement: Placement = 'left', offsetNumbers?: number[]): void {
+  computeElementPosition(invoker: Element, content: HTMLElement, arrowElement: HTMLElement, providedPlacement: Placement = 'left', offsetNumbers?: number[]) {
     if (invoker && content) {
       computePosition(invoker!, content, {
         strategy: 'absolute',
-        placement,
+        placement: providedPlacement,
         middleware: [
-          // offset(offsetNumbers !== undefined ? offsetNumbers[0] : [0]),
+          offset(offsetNumbers ? offsetNumbers[0] : 0),
           shift(),
           arrow({
             element: arrowElement
           }),
         ]
-      }).then(({ x, y, middlewareData }) => {
+      }).then(({ x, y, placement, middlewareData }) => {
         Object.assign(content!.style, {
           top: `${y}px`,
           left: `${x}px`,
@@ -72,6 +107,7 @@ export class FloatingDOMController implements ReactiveController {
         if (middlewareData.arrow) {
           const { y: arrowY, x: arrowX } = middlewareData.arrow;
 
+          // @ts-ignore
           let staticSide = {
             top: 'bottom',
             right: 'left',
@@ -92,7 +128,16 @@ export class FloatingDOMController implements ReactiveController {
           });
         }
       });
-      this.initialized ||= true;
+      this.calcPosition = false;
+    }
+    this.initialized ||= true;
+  }
+
+  /** Initialize the floating DOM */
+  create(invoker: Element, content: HTMLElement, arrowElement: HTMLElement, providedPlacement: any = 'left', offsetNumbers?: number[]): void {
+    if (invoker && content) {
+      this.setAutoUpdate(invoker, content);
+      this.computeElementPosition(invoker, content, arrowElement, providedPlacement, offsetNumbers);
     }
   }
 }

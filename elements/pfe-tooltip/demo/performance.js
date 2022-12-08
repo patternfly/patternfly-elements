@@ -7,7 +7,7 @@ import { html, render } from 'lit';
 import '@patternfly/pfe-tooltip';
 
 async function measure(start) {
-  render(Array.from({ length: 3000 }, (_, i) => html`
+  render(Array.from({ length: 10000 }, (_, i) => html`
 <pfe-tooltip>
   <button>${i + 1}</button>
   <span slot="content">Content for ${i + 1}</span>

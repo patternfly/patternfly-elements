@@ -1,6 +1,6 @@
 import { expect, html, aTimeout } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-
+import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 import '@patternfly/pfe-tools/test/stub-logger.js';
 
 import { PfeCard } from '@patternfly/pfe-card';
@@ -201,13 +201,23 @@ describe('<pfe-card>', function() {
       const element = await createFixture<PfeCard>(TEMPLATES.card1);
 
       expect(element).to.be.accessible();
-      expect(element.shadowRoot).to.be.accessible();
     });
 
     it('should have an article element wrapper in the shadow dom', async () => {
       const element = await createFixture<PfeCard>(TEMPLATES.card1);
+      const role = 'WebArea';
 
-      expect(element.shadowRoot?.querySelector('article')).not.to.be.undefined;
+      // @ts-ignore
+      const snapshot = await a11ySnapshot(element);
+
+      const foundNode = findAccessibilityNode(
+        // @ts-ignore
+        snapshot,
+        // @ts-ignore
+        node => node.role === role
+      );
+
+      expect(foundNode, 'A node with the supplied name has been found.').to.not.be.null;
     });
   });
 });

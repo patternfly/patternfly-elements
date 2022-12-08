@@ -1,34 +1,12 @@
-:host {
-  position: relative;
-  display:  inline-block;
-  line-height:  0;
-  height: fit-content !important;
-  width: fit-content !important;
-}
-
 :host([size=sm]) #container { --_size: var(--pf-global--icon--FontSize--sm, 10px); }
 :host([size=md]) #container { --_size: var(--pf-global--icon--FontSize--md, 18px); }
 :host([size=lg]) #container { --_size: var(--pf-global--icon--FontSize--lg, 24px); }
 :host([size=xl]) #container { --_size: var(--pf-global--icon--FontSize--xl, 54px); }
-
-#container {
-  display: grid;
-  grid-template: 1fr / 1fr;
-  place-content: center;
-}
 
 #container, svg {
   width: var(--pfe-icon--size, var(--_size));
   height: var(--pfe-icon--size, var(--_size));
   min-width: var(--pfe-icon--size, var(--_size));
   min-height: var(--pfe-icon--size, var(--_size));
-}
-
-#container.content ::slotted(*) {
-  display: none;
-}
-
-svg {
-  fill: currentcolor;
 }
 

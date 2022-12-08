@@ -1,75 +1,39 @@
-@use "@patternfly/pfe-sass" as *;
-
-@include configure(
-  $name: "avatar",
-  $variables: (
-    size: 128px,
-  ),
-);
-
-// Backwards compatibility
-// TODO: This will be removed at 1.0 in favor of size
-@include merge-local-variables((
-  size: pfe-local(width, $fallback: 128px),
-));
-
-:host {
-  display: block;
-  position: relative;
-
-  width: pfe-local(size);
-  height: pfe-local(size);
+img {
+  width: var(--pf-c-avatar--Width, 24px);
+  height: var(--pf-c-avatar--Height, 24px);
+  border-radius: var(--pf-c-avatar--BorderRadius, var(--pf-global--BorderRadius--lg, 128px));
+  border:
+    var(--pf-c-avatar--BorderWidth, 0)
+    solid
+    var(--pf-c-avatar--BorderColor,
+      var(--pf-global--BorderColor--dark-100, #d2d2d2));
 }
 
-canvas {
-  width: 100%;
-  height: 100%;
-
-  image-rendering: optimizeSpeed; /* Older versions of FF */
-  image-rendering: -moz-crisp-edges; /* FF 6.0+ */
-  image-rendering: -webkit-optimize-contrast; /* Safari */
-  image-rendering: -o-crisp-edges; /* OS X & Windows Opera (12.02+) */
-  image-rendering: pixelated; /* Awesome future-browsers */
-  -ms-interpolation-mode: nearest-neighbor; /* IE */
+:host([border]) img {
+  --pf-c-avatar--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
 }
 
-:host([shape="rounded"]) {
-  // When border radius lines up with the size of the avatar's random
-  // patterns, it looks nice, so make border-radius the same size as the
-  // patterns, ie 1/8th the width of the avatars.  add 1px beacuse it looks
-  // just a little bit better.
-  img,
-  canvas {
-    border-radius: calc(#{pfe-local(size)} / 8 + 1px);
-  }
+:host([border="dark"]) img {
+  --pf-c-avatar--BorderColor: var(--pf-c-avatar--m-dark--BorderColor,
+      var(--pf-global--palette--black-700, #4f5255));
 }
 
-:host([shape="circle"]) {
-  img,
-  canvas {
-    border-radius: 50%;
-  }
+:host([size='sm']) {
+  --pf-c-avatar--Width: var(--pf-c-avatar--m-sm--Width, 24px);
+  --pf-c-avatar--Height: var(--pf-c-avatar--m-sm--Height, 24px);
 }
 
-// when src attribute is provided, show the img but hide the canvas
-:host([src]) {
-  canvas {
-    display: none;
-  }
-
-  img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+:host([size='md']) {
+  --pf-c-avatar--Width: var(--pf-c-avatar--m-md--Width, 36px);
+  --pf-c-avatar--Height: var(--pf-c-avatar--m-md--Height, 36px);
 }
 
-// when src attribute is not present, hide the img
-:host(:not([src])) img {
-  display: none;
+:host([size='lg']) {
+  --pf-c-avatar--Width: var(--pf-c-avatar--m-lg--Width, 72px);
+  --pf-c-avatar--Height: var(--pf-c-avatar--m-lg--Height, 72px);
 }
 
-:host([hidden]) {
-  display: none;
+:host([size='xl']) {
+  --pf-c-avatar--Width: var(--pf-c-avatar--m-xl--Width, 128px);
+  --pf-c-avatar--Height: var(--pf-c-avatar--m-xl--Height, 128px);
 }

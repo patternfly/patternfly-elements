@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property, query, queryAssignedElements } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
@@ -83,7 +84,7 @@ export abstract class BaseTabs extends LitElement {
 
   id: string = this.id || getRandomId(this.localName);
 
-  @property({ reflect: true }) inset?: InsetVariant;
+  @property({ reflect: false }) inset?: InsetVariant;
 
   @property({ attribute: false })
   get activeIndex() {
@@ -163,9 +164,17 @@ export abstract class BaseTabs extends LitElement {
   }
 
   override render() {
+    const classes = {
+      'inset-sm': this.inset === 'sm',
+      'inset-md': this.inset === 'md',
+      'inset-lg': this.inset === 'lg',
+      'inset-xl': this.inset === 'xl',
+      'inset-2xl': this.inset === '2xl',
+      'inset-page': this.inset === 'page'
+    };
     const { scrollIconSet, scrollIconLeft, scrollIconRight } = this.constructor as typeof BaseTabs;
     return html`
-      <div part="container">
+      <div part="container" class="${classMap(classes)}">
         <div part="tabs-container">${!this.#showScrollButtons ? '' : html`
           <button id="previousTab"
               aria-label="${this.getAttribute('label-scroll-left') ?? 'Scroll left'}"

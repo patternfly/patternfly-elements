@@ -1,4 +1,4 @@
-import { expect, html } from '@open-wc/testing';
+import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfeSwitch } from '@patternfly/pfe-switch';
 import { a11ySnapshot } from '@web/test-runner-commands';
@@ -15,7 +15,12 @@ describe('<pfe-switch>', function() {
     let element: PfeSwitch;
     let snapshot: A11yTreeSnapshot;
     beforeEach(async function() {
-      element = await createFixture<PfeSwitch>(html`<pfe-switch></pfe-switch>`);
+      const container = await createFixture<PfeSwitch>(html`
+        <div>
+          <pfe-switch></pfe-switch>
+        </div>
+      `);
+      element = container.querySelector('pfe-switch')!;
       snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
     });
     it('should upgrade', async function() {
@@ -43,12 +48,15 @@ describe('<pfe-switch>', function() {
     let element: PfeSwitch;
     let snapshot: A11yTreeSnapshot;
     beforeEach(async function() {
-      element = await createFixture<PfeSwitch>(html`
-        <pfe-switch id="switch"></pfe-switch>
-        <label for="switch" data-state="on">Message when on</label>
-        <label for="switch" data-state="off" hidden>Message when off</label>
-      `);
-      snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
+      const container = await createFixture<PfeSwitch>(html`
+        <div>
+          <pfe-switch id="switch"></pfe-switch>
+          <label for="switch" data-state="on">Message when on</label>
+          <label for="switch" data-state="off" hidden>Message when off</label>
+        </div>
+        `);
+      element = container.querySelector('pfe-switch')!;
+      snapshot = await a11ySnapshot({ selector: '#switch' }) as unknown as A11yTreeSnapshot;
     });
 
     it('is accessible', function() {
@@ -65,7 +73,8 @@ describe('<pfe-switch>', function() {
       beforeEach(async function() {
         element.click();
         await element.updateComplete;
-        snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
+        await nextFrame();
+        snapshot = await a11ySnapshot({ selector: '#switch' }) as unknown as A11yTreeSnapshot;
       });
       it('should be checked', function() {
         expect(element.checked).to.be.true;
@@ -95,11 +104,14 @@ describe('<pfe-switch>', function() {
   describe('when checked and show-check-icon attrs are present', function() {
     let element: PfeSwitch;
     beforeEach(async function() {
-      element = await createFixture<PfeSwitch>(html`
-        <pfe-switch id="switch" show-check-icon checked></pfe-switch>
-        <label for="switch" data-state="on">Message when on</label>
-        <label for="switch" data-state="off">Message when off</label>
+      const container = await createFixture<PfeSwitch>(html`
+        <div>
+          <pfe-switch id="switch" show-check-icon checked></pfe-switch>
+          <label for="switch" data-state="on">Message when on</label>
+          <label for="switch" data-state="off">Message when off</label>
+        </div>
       `);
+      element = container.querySelector('pfe-switch')!;
     });
     it('should display a check icon', async function() {
       // TODO: can we test this without inspecting the private shadowRoot?

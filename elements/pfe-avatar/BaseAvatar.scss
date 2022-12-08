@@ -1,0 +1,13 @@
+:host {
+  display: contents;
+}
+
+// when src attribute is provided, show the img
+:host([src]) img {
+  display: inline;
+  object-fit: cover;
+}
+
+:host([hidden]) {
+  display: none;
+}

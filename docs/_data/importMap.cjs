@@ -10,8 +10,6 @@ function readPackageVersion(module) {
 const LIT_VERSION = readPackageVersion('lit');
 const FUSE_VERSION = readPackageVersion('fuse.js');
 const ZERO_MD_VERSION = readPackageVersion('zero-md');
-// const FLOATING_UI_VERSION = readPackageVersion('@floating-ui/dom');
-// const POPPER_VERSION = readPackageVersion('@popperjs/core');
 const MARKED_VERSION = readPackageVersion('marked');
 const PRISM_VERSION = readPackageVersion('prismjs');
 const PWA_HELPER_VERSION = readPackageVersion('pwa-helpers');
@@ -83,7 +81,6 @@ module.exports = async function() {
 
   const map = generator.getMap();
 
-  // map.imports['@popperjs/core'] = `https://ga.jspm.io/npm:@popperjs/core@${POPPER_VERSION}/dist/umd/popper.js`;
   map.imports['@floating-ui/dom'] = `https://ga.jspm.io/npm:@floating-ui/dom@1.0.5/dist/floating-ui.dom.mjs`;
   map.imports['@floating-ui/core'] = `https://ga.jspm.io/npm:@floating-ui/core@1.0.2/dist/floating-ui.core.browser.mjs`;
   map.imports['marked'] = `https://ga.jspm.io/npm:marked@${MARKED_VERSION}/lib/marked.esm.js`;

@@ -4,6 +4,10 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import styles from './BaseClipboardCopy.scss';
 
+export type ClipboardCopyBaseVariant = (
+  | 'input'
+  | 'block'
+)
 
 /**
  * Clipboard Copy
@@ -17,6 +21,7 @@ export abstract class BaseClipboardCopy extends LitElement {
   @property({ type: Boolean, reflect: true }) readonly = false;
   @property({ type: String }) value = '';
   @state() _disableInput = this.readonly;
+  @state() _variant: ClipboardCopyBaseVariant = 'input';
 
   /**
    * Copy the current value to the clipboard.
@@ -59,6 +64,16 @@ export abstract class BaseClipboardCopy extends LitElement {
     `;
   }
 
+  protected renderTextTarget(): TemplateResult {
+    return html`
+      ${this._variant === 'input' ? html`
+        <input part="text-target form-input" ?disabled=${this._disableInput} .value=${this.value} @input=${this._valueChangeHandler}></input>
+      ` : html`
+        <div part="text-target">${this.value}</div>
+      `}
+    `;
+  }
+
   /**
    * Update computed properties
    */
@@ -69,11 +84,12 @@ export abstract class BaseClipboardCopy extends LitElement {
   }
 
   render() {
+    const classes = { [`variant-${this._variant}`]: true };
     return html`
-      <div part="base">
+      <div part="base" class=${classMap(classes)}>
         <div part="input-group">
           ${this.renderDropdownTrigger()}
-          <input part="input form-input" ?disabled=${this._disableInput} .value=${this.value} @input=${this._valueChangeHandler}></input>
+          ${this.renderTextTarget()}
           ${this.renderActionButton()}
         </div>
         ${this.renderDropdown()}

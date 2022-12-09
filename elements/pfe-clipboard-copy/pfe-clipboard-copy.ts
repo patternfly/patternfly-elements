@@ -71,6 +71,10 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
     if (changedProperties.has('expanded')) {
       this._disableInput = this.expanded ? true : this.readonly;
     }
+    // Combine extended variant options with the base class
+    if (changedProperties.has('variant')) {
+      this._variant = this.variant === 'inline-compact' ? 'block' : 'input';
+    }
   }
 
   /**

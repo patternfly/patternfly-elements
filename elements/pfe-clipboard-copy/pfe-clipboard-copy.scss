@@ -468,7 +468,7 @@
   border-bottom-width: var(--pf-c-button--m-control--hover--after--BorderBottomWidth, 2px);
 }
 
-[part="tooltip"]::part(invoker) {
+[part~="tooltip"]::part(invoker) {
   display: flex;
   height: 100%;
 }
@@ -476,4 +476,22 @@
 [part~="dropdown"] {
   display: flex;
   flex: 1 1 auto;
+}
+
+[part~="dropdown-textarea"] {
+  padding:
+    var(--pf-c-clipboard-copy__expandable-content--PaddingTop, var(--pf-global--spacer--md, 1rem))
+    var(--pf-c-clipboard-copy__expandable-content--PaddingRight, var(--pf-global--spacer--md, 1rem))
+    var(--pf-c-clipboard-copy__expandable-content--PaddingBottom, var(--pf-global--spacer--md, 1rem))
+    var(--pf-c-clipboard-copy__expandable-content--PaddingLeft, var(--pf-global--spacer--md, 1rem));
+  word-wrap: break-word;
+  background-color: var(--pf-c-clipboard-copy__expandable-content--BackgroundColor, var(--pf-global--BackgroundColor--light-100, #fff));
+  background-clip: padding-box;
+  border: solid var(--pf-c-clipboard-copy__expandable-content--BorderColor, var(--pf-global--BorderColor--100, #d2d2d2));
+  border-width:
+    var(--pf-c-clipboard-copy__expandable-content--BorderTopWidth, 0)
+    var(--pf-c-clipboard-copy__expandable-content--BorderRightWidth, var(--pf-global--BorderWidth--sm, 1px))
+    var(--pf-c-clipboard-copy__expandable-content--BorderBottomWidth, var(--pf-global--BorderWidth--sm, 1px))
+    var(--pf-c-clipboard-copy__expandable-content--BorderLeftWidth, var(--pf-global--BorderWidth--sm, 1px));
+  box-shadow: var(--pf-c-clipboard-copy__expandable-content--BoxShadow);
 }

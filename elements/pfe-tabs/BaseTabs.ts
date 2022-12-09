@@ -164,14 +164,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   override render() {
-    const classes = {
-      'inset-sm': this.inset === 'sm',
-      'inset-md': this.inset === 'md',
-      'inset-lg': this.inset === 'lg',
-      'inset-xl': this.inset === 'xl',
-      'inset-2xl': this.inset === '2xl',
-      'inset-page': this.inset === 'page'
-    };
+    const classes = { [`inset-${this.inset}`]: true };
     const { scrollIconSet, scrollIconLeft, scrollIconRight } = this.constructor as typeof BaseTabs;
     return html`
       <div part="container" class="${classMap(classes)}">

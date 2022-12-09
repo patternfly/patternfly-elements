@@ -7,7 +7,7 @@ import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating
 
 import style from './BaseTooltip.scss';
 
-const enterEvents = ['focus', 'tap', 'click', 'mouseenter'];
+const enterEvents = ['focusin', 'focusout', 'tap', 'click', 'mouseenter'];
 const exitEvents = ['blur', 'mouseleave'];
 
 export abstract class BaseTooltip extends LitElement {
@@ -81,7 +81,7 @@ export abstract class BaseTooltip extends LitElement {
   override render() {
     const { initialized } = this.#domController;
     return html`
-      <div id="invoker" role="tooltip" tabindex="0" aria-labelledby="tooltip">
+      <div id="invoker" role="tooltip" aria-labelledby="tooltip">
         <slot></slot>
       </div>
       <div id="tooltip" aria-hidden=${!this.#isOpen} class=${classMap({ initialized })}>

@@ -1,4 +1,4 @@
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
 import { BaseBadge } from './BaseBadge.js';
 
@@ -32,7 +32,18 @@ import styles from './pfe-badge.scss';
 @customElement('pfe-badge')
 export class PfeBadge extends BaseBadge {
   static readonly version = '{{version}}';
+
   static readonly styles = [...BaseBadge.styles, styles];
+
+  /**
+   * Denotes the state-of-affairs this badge represents
+   * Options include read and unread
+   */
+  @property({ reflect: true }) state?: 'unread'|'read';
+
+  @property({ reflect: true, type: Number }) number?: number;
+
+  @property({ reflect: true, type: Number }) threshold?: number;
 }
 
 declare global {

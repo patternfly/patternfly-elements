@@ -39,6 +39,6 @@ resizeInput.addEventListener('change', resizeToggle);
 const insetInput = root.querySelectorAll('input[name="toggle-inset"]');
 function insetToggle(event) {
   const inset = root.querySelector('pfe-tabs[inset]');
-  inset.setAttribute('inset', event.target.value);
+  inset.inset = event.target.value;
 }
 insetInput.forEach(input => input.addEventListener('change', insetToggle));

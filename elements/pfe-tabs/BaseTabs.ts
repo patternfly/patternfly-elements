@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property, query, queryAssignedElements } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
@@ -9,6 +10,15 @@ import { BaseTab, TabExpandEvent } from './BaseTab.js';
 import { BaseTabPanel } from './BaseTabPanel.js';
 
 import styles from './BaseTabs.scss';
+
+export type InsetVariant = (
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | '2xl'
+  | 'page'
+);
 
 /**
  * @attr [label-scroll-left="Scroll left"] - accessible label for the tab panel's scroll left button.
@@ -73,6 +83,8 @@ export abstract class BaseTabs extends LitElement {
   #activeIndex = 0;
 
   id: string = this.id || getRandomId(this.localName);
+
+  @property({ reflect: false }) inset?: InsetVariant;
 
   @property({ attribute: false })
   get activeIndex() {
@@ -152,9 +164,10 @@ export abstract class BaseTabs extends LitElement {
   }
 
   override render() {
+    const classes = { [`inset-${this.inset}`]: true };
     const { scrollIconSet, scrollIconLeft, scrollIconRight } = this.constructor as typeof BaseTabs;
     return html`
-      <div part="container">
+      <div part="container" class="${classMap(classes)}">
         <div part="tabs-container">${!this.#showScrollButtons ? '' : html`
           <button id="previousTab"
               aria-label="${this.getAttribute('label-scroll-left') ?? 'Scroll left'}"

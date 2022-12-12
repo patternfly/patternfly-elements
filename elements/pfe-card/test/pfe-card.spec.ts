@@ -92,7 +92,7 @@ describe('<pfe-card>', function() {
       });
     });
 
-    describe('is set ot `large`', () => {
+    describe('is set to `large`', () => {
       it('should have larger font sizes for body, footer, more padding for header', async function() {
         const element = await createFixture<PfeCard>(TEMPLATES.card1);
         element.setAttribute('size', 'large');

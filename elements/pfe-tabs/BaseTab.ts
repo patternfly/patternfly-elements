@@ -1,8 +1,8 @@
 import { LitElement, html } from 'lit';
-import { property, queryAssignedElements } from 'lit/decorators.js';
+import { queryAssignedElements } from 'lit/decorators.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
-import { bound, observed } from '@patternfly/pfe-core/decorators.js';
+import { bound } from '@patternfly/pfe-core/decorators.js';
 
 import style from './BaseTab.scss';
 
@@ -23,11 +23,9 @@ export abstract class BaseTab extends LitElement {
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private icons!: Array<HTMLElement>;
 
-  @observed
-  @property({ reflect: true, type: Boolean }) active = false;
+  abstract active: boolean;
 
-  @observed
-  @property({ reflect: true, type: Boolean }) disabled = false;
+  abstract disabled: boolean;
 
   #internals = this.attachInternals();
 

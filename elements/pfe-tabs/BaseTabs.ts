@@ -11,16 +11,9 @@ import { BaseTabPanel } from './BaseTabPanel.js';
 
 import styles from './BaseTabs.scss';
 
-export type InsetVariant = (
-  | 'sm'
-  | 'md'
-  | 'lg'
-  | 'xl'
-  | '2xl'
-  | 'page'
-);
-
 /**
+ * BaseTabs
+ *
  * @attr [label-scroll-left="Scroll left"] - accessible label for the tab panel's scroll left button.
  * @attr [label-scroll-right="Scroll right"] - accessible label for the tab panel's scroll right button.
  *
@@ -84,7 +77,7 @@ export abstract class BaseTabs extends LitElement {
 
   id: string = this.id || getRandomId(this.localName);
 
-  @property({ reflect: false }) inset?: InsetVariant;
+  abstract inset?: string;
 
   @property({ attribute: false })
   get activeIndex() {

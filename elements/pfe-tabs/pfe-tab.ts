@@ -1,4 +1,7 @@
 import { customElement, property } from 'lit/decorators.js';
+
+import { observed } from '@patternfly/pfe-core/decorators.js';
+
 import { BaseTab } from './BaseTab.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
@@ -67,6 +70,13 @@ import styles from './pfe-tab.scss';
 @customElement('pfe-tab')
 export class PfeTab extends BaseTab {
   static readonly styles = [...BaseTab.styles, styles];
+
+  @observed
+  @property({ reflect: true, type: Boolean }) active = false;
+
+
+  @observed
+  @property({ reflect: true, type: Boolean }) disabled = false;
 
   connectedCallback() {
     super.connectedCallback();

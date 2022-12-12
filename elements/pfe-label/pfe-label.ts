@@ -9,6 +9,22 @@ import '@patternfly/pfe-button';
 
 import styles from './pfe-label.scss';
 
+export type LabelVariant = (
+  | 'filled'
+  | 'outline'
+);
+
+export type LabelColor = (
+  | 'blue'
+  | 'cyan'
+  | 'green'
+  | 'orange'
+  | 'purple'
+  | 'red'
+  | 'grey'
+  | 'gold'
+)
+
 /**
  * Labels allow users to display meta data in a stylized form.
  *
@@ -100,14 +116,29 @@ export class PfeLabel extends BaseLabel {
 
   static readonly shadowRootOptions: ShadowRootInit = { ...BaseLabel.shadowRootOptions, delegatesFocus: true };
 
+  /**
+   * Changes the style of the label.
+   * - Filled: Colored background with colored border.
+   * - Outline: White background with colored border.
+   */
+  @property() variant: LabelVariant = 'filled';
+
+  /**
+   * Changes the color of the label
+   */
+  @property() color: LabelColor = 'grey';
+
+  /** Shorthand for the `icon` slot, the value is icon name */
+  @property() icon = '';
+
   /** Flag indicating the label is compact */
-  @property({ reflect: true, type: Boolean }) compact = false;
+  @property({ type: Boolean }) compact = false;
 
   /** Flag indicating the label text should be truncated */
-  @property({ reflect: true, type: Boolean }) truncated = false;
+  @property({ type: Boolean }) truncated = false;
 
   /** Flag indicating the label is removable */
-  @property({ reflect: true, type: Boolean }) removable = false;
+  @property({ type: Boolean }) removable = false;
 
   /** Text label for a removable label's close button */
   @property({ attribute: 'close-button-label' }) closeButtonLabel?: string;
@@ -116,6 +147,12 @@ export class PfeLabel extends BaseLabel {
     return !this.icon ? '' : html`
       <pfe-icon ?hidden=${!this.icon} icon=${this.icon} size="sm"></pfe-icon>
     `;
+  }
+
+  willUpdate() {
+    super.willUpdate();
+    const pfeClasses = { compact: this.compact, truncated: this.truncated };
+    this.classes = { ...this.classes, ...pfeClasses };
   }
 
   protected override renderSuffix() {

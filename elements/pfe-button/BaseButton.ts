@@ -11,7 +11,7 @@ import styles from './BaseButton.scss';
 /**
  * Base button class
  *
- * @csspart state - Container for the state slot.
+ * @csspart icon - Container for the icon slot
  * @slot icon
  *       Contains the button's icon or state indicator, e.g. a spinner.
  * @slot
@@ -34,7 +34,8 @@ export abstract class BaseButton extends LitElement {
   @property() name?: string;
 
   /** Changes the size of the button. */
-  @property({ reflect: true }) size?: 'small'|'large';
+  abstract size?: string;
+
   /**
    * Use danger buttons for actions a user can take that are potentially
    * destructive or difficult/impossible to undo, like deleting or removing
@@ -44,9 +45,6 @@ export abstract class BaseButton extends LitElement {
 
   /** Shorthand for the `icon` slot, the value is icon name */
   @property() icon?: string;
-
-  /** Icon set for the `icon` property */
-  @property({ attribute: 'icon-set' }) iconSet?: string;
 
   #internals = new InternalsController(this);
 
@@ -62,11 +60,11 @@ export abstract class BaseButton extends LitElement {
 
   override render() {
     return html`
-      <button type=${ifDefined(this.type)}
-              class=${classMap({ hasIcon: !!this.icon })}
-              value=${ifDefined(this.value)}
-              @click=${this.#onClick}
-              ?disabled=${this.disabled}>
+      <button type="${ifDefined(this.type)}"
+              class="${classMap({ hasIcon: !!this.icon })}"
+              value="${ifDefined(this.value)}"
+              @click="${this.#onClick}"
+              ?disabled="${this.disabled}">
         <span id="icon" part="icon">
           <slot name="icon">${this.renderDefaultIcon()}</slot>
         </span>
@@ -91,7 +89,7 @@ export abstract class BaseButton extends LitElement {
    * should render an icon corresponding to the value.
    *
    * @example ```html
-   *          <pfe-icon icon=${this.icon}></pfe-icon>
+   *          <base-icon icon=${this.icon}></base-icon>
    *          ```
    */
   protected abstract renderDefaultIcon(): TemplateResult;

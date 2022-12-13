@@ -166,6 +166,11 @@ export class PfeButton extends BaseButton {
   /** Not as urgent as danger */
   @property({ type: Boolean, reflect: true }) warning = false;
 
+  @property({ reflect: true }) size?: 'small'|'large';
+
+  /** Icon set for the `icon` property */
+  @property({ attribute: 'icon-set' }) iconSet?: string;
+
   /**
    * Changes the style of the button.
    * - Primary: Used for the most important call to action on a page. Try to
@@ -182,13 +187,12 @@ export class PfeButton extends BaseButton {
     return html`
       <pfe-icon
           size="sm"
-          icon=${ifDefined(this.icon)}
-          set=${ifDefined(this.iconSet)}
-          ?hidden=${!this.icon}></pfe-icon>
+          icon="${ifDefined(this.icon)}"
+          set="${ifDefined(this.iconSet)}"
+        ?hidden="${!this.icon}"></pfe-icon>
       <pfe-spinner
-          ?hidden=${!this.loading}
-          aria-label=${this.getAttribute('loading-label') ?? 'loading'}
-      ></pfe-spinner>
+          ?hidden="${!this.loading}"
+          aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pfe-spinner>
     `;
   }
 }

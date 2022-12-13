@@ -70,7 +70,7 @@
   ],
   "dependencies": {
     "@patternfly/pfe-core": "^2.0.0-next.10",
-    "lit": "2.3.0"
+    "lit": "2.5.0"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.2.0",

@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@popperjs/core": "2.11.6",
-    "lit": "2.3.0"
+    "lit": "2.5.0"
   },
   "repository": {
     "type": "git",

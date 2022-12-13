@@ -72,6 +72,6 @@
     "@patternfly/pfe-core": "^2.0.0-next.10",
     "@patternfly/pfe-icon": "^2.0.0-next.5",
     "@patternfly/pfe-spinner": "^2.0.0-next.6",
-    "lit": "2.3.0"
+    "lit": "2.5.0"
   }
 }

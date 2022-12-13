@@ -69,6 +69,6 @@
     "@patternfly/pfe-button": "^2.0.0-next.7",
     "@patternfly/pfe-core": "^2.0.0-next.10",
     "@patternfly/pfe-sass": "^2.0.0-next.5",
-    "lit": "2.3.0"
+    "lit": "2.5.0"
   }
 }

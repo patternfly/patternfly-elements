@@ -140,7 +140,7 @@
   margin: 0;
 }
 
-.variant-block [part~="text-target"] {
+.variant-block [part~="content-target"] {
   display: inline;
   padding-top: var(--pf-c-clipboard-copy--m-inline--PaddingTop, 0px);
   padding-bottom: var(--pf-c-clipboard-copy--m-inline--PaddingBottom, 0px);

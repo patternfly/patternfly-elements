@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import type { TemplateResult, PropertyValueMap } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import styles from './BaseClipboardCopy.scss';
 
@@ -18,10 +18,29 @@ export abstract class BaseClipboardCopy extends LitElement {
 
   static readonly styles = [styles];
 
-  @property({ type: Boolean, reflect: true }) readonly = false;
+  @property({ type: Boolean }) readonly = false;
   @property({ type: String }) value = '';
+  @property({ type: Boolean }) code = false;
   @state() _disableInput = this.readonly;
   @state() _variant: ClipboardCopyBaseVariant = 'input';
+  @state() _classes = {};
+
+  #onSlotChange() {
+    // Get children that are using the content or default slot.
+    const children = [...this.childNodes].filter(i => (['content', '', null, false].includes(i?.getAttribute?.('slot') ?? false)));
+    if (children.length > 0) {
+      // Format the children
+      this.value = children.map(child => {
+        let _text = child?.textContent;
+        _text = _text?.replace(/^[\s\\]*/gm, '') as string | null;
+        return _text;
+      }).join('');
+    }
+  }
+
+  protected firstUpdated(): void {
+    this.#onSlotChange();
+  }
 
   /**
    * Copy the current value to the clipboard.
@@ -67,9 +86,13 @@ export abstract class BaseClipboardCopy extends LitElement {
   protected renderTextTarget(): TemplateResult {
     return html`
       ${this._variant === 'input' ? html`
-        <input part="text-target form-input" ?disabled=${this._disableInput} .value=${this.value} @input=${this._valueChangeHandler}></input>
-      ` : html`
-        <div part="text-target">${this.value}</div>
+        <input part="content-target form-input" ?disabled=${this._disableInput} .value=${this.value} @input=${this._valueChangeHandler}><slot name="content" hidden @slotchange=${this.#onSlotChange}><slot></slot></slot></input>
+      `
+      : this.code ? html`
+        <code part="content-target"><slot name="content"><slot></slot></slot></code>
+      `
+      : html`
+        <div part="content-target"><slot name="content"><slot></slot></slot></div>
       `}
     `;
   }
@@ -81,12 +104,12 @@ export abstract class BaseClipboardCopy extends LitElement {
     if (changedProperties.has('readonly')) {
       this._disableInput = this.readonly;
     }
+    this._classes = { [`variant-${this._variant}`]: true };
   }
 
-  render() {
-    const classes = { [`variant-${this._variant}`]: true };
+  override render() {
     return html`
-      <div part="base" class=${classMap(classes)}>
+      <div part="base" class=${classMap(this._classes)}>
         <div part="input-group">
           ${this.renderDropdownTrigger()}
           ${this.renderTextTarget()}

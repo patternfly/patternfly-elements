@@ -2,19 +2,26 @@
 <script type="module" src="./pfe-clipboard-copy.js"></script>
 <pfe-band color-palette="lightest">
   <h3>Default</h3>
-  <pfe-clipboard-copy value="copy me!"></pfe-clipboard-copy>
-  <h3>Inline</h3>
-  <pfe-clipboard-copy readonly value="copy me!"></pfe-clipboard-copy>
-  <pfe-clipboard-copy variant="inline" value="copy me!"></pfe-clipboard-copy>
-  <pfe-clipboard-copy variant="inline" value="copy me!" readonly></pfe-clipboard-copy>
-  <pfe-clipboard-copy variant="inline" value="copy me!"></pfe-clipboard-copy>
+  <pfe-clipboard-copy value="This is editable"></pfe-clipboard-copy>
+  <h3>Read-only</h3>
+  <pfe-clipboard-copy readonly value="This is read-only"></pfe-clipboard-copy>
+  <h3>Expanded</h3>
+  <pfe-clipboard-copy variant="expansion">
+    Got a lot of text here, need to see all of it? Click that arrow on the left side and check out the resulting expansion.
+  </pfe-clipboard-copy>
+  <h3>Read-only expanded</h3>
+  <pfe-clipboard-copy variant="expansion" readonly>
+    Got a lot of text here, need to see all of it? Click that arrow on the left side and check out the resulting expansion.
+  </pfe-clipboard-copy>
+  <h3>Read-only expanded by default</h3>
+  <pfe-clipboard-copy variant="expansion" readonly expanded>
+    <span slot="content">
+      <p>Got a lot of text here, need to see all of it? Click that arrow on the left side and check out the resulting expansion.</p>
+      <p>asodifna osdif</p>
+    </span>
+  </pfe-clipboard-copy>
   <h3>Inline compact</h3>
-  <pfe-clipboard-copy variant="inline-compact" value="copy me!"></pfe-clipboard-copy>
-  <pfe-clipboard-copy variant="inline-compact" readonly value="copy me!"></pfe-clipboard-copy>
-  <h3>Expansion</h3>
-  <pfe-clipboard-copy variant="expansion" value="copy me!"></pfe-clipboard-copy>
-  <pfe-clipboard-copy variant="expansion" expanded value="copy me!"></pfe-clipboard-copy>
-  <pfe-clipboard-copy variant="expansion" readonly value="copy me!"></pfe-clipboard-copy>
-  <pfe-clipboard-copy variant="expansion" block value="copy me!"></pfe-clipboard-copy>
-  <pfe-clipboard-copy variant="expansion" block readonly value="copy me!"></pfe-clipboard-copy>
+  <pfe-clipboard-copy variant="inline-compact">2.3.4-2-redhat</pfe-clipboard-copy>
+  <h3>Inline compact</h3>
+  <pfe-clipboard-copy variant="inline-compact" code block>2.3.4-2-redhat</pfe-clipboard-copy>
 </pfe-band>

@@ -7,7 +7,7 @@ import baseStyles from './BaseClipboardCopy.scss';
 import { ComposedEvent } from '@patternfly/pfe-core';
 import '@patternfly/pfe-tooltip';
 
-export type ClipboardCopyVariant = (
+export type ClipboardCopyVariantExtended = (
   | 'inline'
   | 'inline-compact'
   | 'expansion'
@@ -39,8 +39,8 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   @property({ type: Number }) exitDelay = 1500;
   @state() _copied = false;
 
-  // @property({ type: Boolean, reflect: true }) block = false;
-  // @property({ type: Boolean, reflect: true }) code = false;
+  /* @property({ type: Boolean, reflect: true }) block = false; */
+  /* @property({ type: Boolean, reflect: true }) code = false; */
 
   /**
    * Togggle the dropdown element.

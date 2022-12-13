@@ -21,14 +21,14 @@ describe('<pfe-clipboard-copy>', function() {
     const el = await createFixture <PfeClipboardCopy>(element);
     el.setAttribute('value', 'another copy item!');
     await el.updateComplete;
-    expect(el.shadowRoot?.querySelector('[part~="text-target"]')?.value).to.equal('another copy item!');
+    expect(el.shadowRoot?.querySelector('[part~="value-target"]')?.value).to.equal('another copy item!');
   });
 
   it('it should contain a readonly property', async function() {
     const el = await createFixture <PfeClipboardCopy>(element);
     el.setAttribute('readonly', '');
     await el.updateComplete;
-    const input = el.shadowRoot?.querySelector('[part~="text-target"]') as HTMLElement;
+    const input = el.shadowRoot?.querySelector('[part~="value-target"]') as HTMLElement;
     expect(input?.hasAttribute('disabled')).to.be.true;
     // it should be grayed out
     expect(getComputedStyle(input)?.getPropertyValue('background-color')).to.equal('rgb(240, 240, 240)');

@@ -15,7 +15,11 @@
   margin-left: -1px;
 }
 
-.variant-block [part~="input-group"] {
+[part~="input-group"] {
+  display: flex;
+}
+
+.variant-inline-compact [part~="input-group"] {
   background-color: var(--pf-c-button--m-plain--BackgroundColor, var(--pf-global--BackgroundColor--200, #f0f0f0));
   width: fit-content;
 }
@@ -66,7 +70,7 @@
   border: none;
 }
 
-.variant-input [part~="action"] {
+:is(.variant-inline, .variant-expansion) [part~="action"] {
   --pf-c-button--BorderRadius: var(--pf-c-button--m-control--BorderRadius, 0);
   --pf-c-button--disabled--BackgroundColor: var(--pf-c-button--m-control--disabled--BackgroundColor, var(--pf-global--disabled-color--300, #f0f0f0));
   --pf-c-button--after--BorderWidth: var(--pf-c-button--m-control--after--BorderWidth, var(--pf-global--BorderWidth--sm, 1px));
@@ -77,7 +81,7 @@
   border: none;
 }
 
-.variant-input [part~="action"]::after {
+:is(.variant-inline, .variant-expansion) [part~="action"]::after {
   position: absolute;
   top: 0;
   right: 0;
@@ -90,17 +94,17 @@
   border-radius: var(--pf-c-button--after--BorderRadius);
 }
 
-.variant-input [part~="action"]:is(:hover, :focus-within) {
+:is(.variant-inline, .variant-expansion) [part~="action"]:is(:hover, :focus-within) {
   --pf-c-button--m-control--Color: var(--pf-c-button--m-control--hover--Color, var(--pf-global--Color--100, #151515));
   --pf-c-button--m-control--BackgroundColor: var(--pf-c-button--m-control--hover--BackgroundColor, var(--pf-global--BackgroundColor--100, #fff));
   --pf-c-button--m-control--after--BorderBottomColor: var(--pf-c-button--m-control--hover--after--BorderBottomColor, var(--pf-global--active-color--100, #06c));
 }
 
-.variant-input [part~="action"]:is(:hover, :focus-within):after {
+:is(.variant-inline, .variant-expansion) [part~="action"]:is(:hover, :focus-within):after {
   border-bottom-width: var(--pf-c-button--m-control--hover--after--BorderBottomWidth, 2px);
 }
 
-.variant-block [part~="action"] {
+.variant-inline-compact [part~="action"] {
   --pf-c-button--disabled--Color: var(--pf-c-button--m-plain--disabled--Color);
   --pf-c-button--disabled--BackgroundColor: var(--pf-c-button--m-plain--disabled--BackgroundColor);
   --pf-c-button--PaddingTop: var(--pf-c-clipboard-copy__actions-item--button--PaddingTop, var(--pf-global--spacer--xs, 0.25rem));
@@ -140,7 +144,7 @@
   margin: 0;
 }
 
-.variant-block [part~="content-target"] {
+.variant-inline-compact [part~="value-target"] {
   display: inline;
   padding-top: var(--pf-c-clipboard-copy--m-inline--PaddingTop, 0px);
   padding-bottom: var(--pf-c-clipboard-copy--m-inline--PaddingBottom, 0px);

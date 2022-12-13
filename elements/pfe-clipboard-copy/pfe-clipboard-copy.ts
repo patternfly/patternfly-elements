@@ -1,25 +1,17 @@
 import type { TemplateResult, PropertyValueMap } from 'lit';
 import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { BaseClipboardCopy } from './BaseClipboardCopy.js';
 import styles from './pfe-clipboard-copy.scss';
 import baseStyles from './BaseClipboardCopy.scss';
-import { ComposedEvent } from '@patternfly/pfe-core';
 import '@patternfly/pfe-tooltip';
 
-export type ClipboardCopyVariantExtended = (
+export type ClipboardCopyVariant = (
   | 'inline'
   | 'inline-compact'
   | 'expansion'
 )
-
-export class ClipboardCopyCopiedEvent extends ComposedEvent {
-  constructor(
-    public text: string
-  ) {
-    super('copy');
-  }
-}
 
 /**
  * Clipboard Copy
@@ -31,16 +23,15 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
 
   static readonly styles = [baseStyles, styles];
 
-  @property({ reflect: true }) variant: ClipboardCopyVariant = 'inline';
+  @property({ type: String }) variant: ClipboardCopyVariant = 'inline';
   @property({ type: Boolean }) expanded = false;
   @property({ type: String }) hoverTip = 'Copy';
   @property({ type: String }) clickTip = 'Copied';
   @property({ type: Number }) entryDelay = 300;
   @property({ type: Number }) exitDelay = 1500;
+  @property({ type: Boolean }) readonly = false;
+  @property({ type: Boolean }) code = false;
   @state() _copied = false;
-
-  /* @property({ type: Boolean, reflect: true }) block = false; */
-  /* @property({ type: Boolean, reflect: true }) code = false; */
 
   /**
    * Togggle the dropdown element.
@@ -49,9 +40,11 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
     this.expanded = !this.expanded;
   }
 
+  /**
+   * Extends _copyToClipboard action from base class
+   */
   protected override _copyToClipboard(): void {
-    navigator.clipboard.writeText(this.value);
-    this.dispatchEvent(new ClipboardCopyCopiedEvent(this.value));
+    super._copyToClipboard();
     setTimeout(() => {
       this._copied = true;
     }, this.entryDelay);
@@ -61,26 +54,69 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
     }, this.exitDelay);
   }
 
-  /**
-   * Update computed properties
-   */
-  protected willUpdate(changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    super.willUpdate(changedProperties);
-    // Disable input if the dropdown is expanded
-    // @todo make test for this
-    if (changedProperties.has('expanded')) {
-      this._disableInput = this.expanded ? true : this.readonly;
-    }
-    // Combine extended variant options with the base class
-    if (changedProperties.has('variant')) {
-      this._variant = this.variant === 'inline-compact' ? 'block' : 'input';
-    }
+  render() {
+    return html`
+      <div part="base" class=${classMap({ [`variant-${this.variant}`]: true })}>
+        <div part="input-group">
+          ${this.renderDropdownTrigger()}
+          ${this.renderTextTarget()}
+          ${this.renderActionButton()}
+        </div>
+        ${this.renderDropdown()}
+      </div>
+    `;
+  }
+
+  protected renderDropdown() {
+    return html`
+      ${(this.variant === 'expansion' && this.expanded) ? html`
+      <div part="dropdown">
+        <textarea part="dropdown-textarea form-input" .value=${this.value} .disabled=${this.readonly}
+          @input=${this._valueChangeHandler}></textarea>
+      </div>
+      ` : ''}
+    `;
+  }
+
+  protected renderActionButton() {
+    return html`
+      <pfe-tooltip part="tooltip">
+        <button part="action" @click=${this._copyToClipboard}>
+          <slot name="action">
+            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512" aria-hidden="true" role="img"
+              style="vertical-align: -0.125em;">
+              <path
+                d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z">
+              </path>
+            </svg>
+          </slot>
+        </button>
+        <span slot="content">
+          <slot part="hover-tip" name="hover-tip" ?hidden=${this._copied}>${this.hoverTip}</slot>
+          <slot part="click-tip" name="click-tip" ?hidden=${!this._copied}>${this.clickTip}</slot>
+        </span>
+      </pfe-tooltip>
+    `;
+  }
+
+  protected renderTextTarget(): TemplateResult {
+    return html`
+      ${this.variant === 'expansion' || this.variant === 'inline' ? html`
+        <input part="value-target form-input" ?disabled=${this.expanded ? true : this.readonly} .value=${this.value} @input=${this._valueChangeHandler}><slot name="value" hidden @slotchange=${this._onSlotChange}><slot></slot></slot></input>
+      `
+      : this.code ? html`
+        <code part="value-target"><slot name="value"><slot></slot></slot></code>
+      `
+      : html`
+        <div part="value-target"><slot name="value"><slot></slot></slot></div>
+      `}
+    `;
   }
 
   /**
    * Add the dropdown button for the expansion variant
    */
-  protected override renderDropdownTrigger() {
+  protected renderDropdownTrigger() {
     return html`
       ${this.variant === 'expansion' ? html`
       <button part="action dropdown-action" @click=${this._dropdownClickHandler}>
@@ -105,33 +141,6 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
         `}
       </button>
       ` : ''}
-    `;
-  }
-
-  /**
-   * Add the dropdown area for the expansion variant
-   */
-  protected override renderDropdown() {
-    return html`
-      ${(this.variant === 'expansion' && this.expanded) ? html`
-      <div part="dropdown">
-        <textarea part="dropdown-textarea form-input" .value=${this.value} .disabled=${this.readonly}
-          @input=${this._valueChangeHandler}></textarea>
-      </div>
-      ` : ''}
-    `;
-  }
-
-  protected override renderActionButton() {
-    const content = super.renderActionButton();
-    return html`
-      <pfe-tooltip part="tooltip">
-        ${content}
-        <span slot="content">
-          <slot part="hover-tip" name="hover-tip" ?hidden=${this._copied}>${this.hoverTip}</slot>
-          <slot part="click-tip" name="click-tip" ?hidden=${!this._copied}>${this.clickTip}</slot>
-        </span>
-      </pfe-tooltip>
     `;
   }
 }

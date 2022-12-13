@@ -23,14 +23,16 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
 
   static readonly styles = [baseStyles, styles];
 
-  @property({ type: String }) variant: ClipboardCopyVariant = 'inline';
+  @property() variant: ClipboardCopyVariant = 'inline';
   @property({ type: Boolean }) expanded = false;
-  @property({ type: String }) hoverTip = 'Copy';
-  @property({ type: String }) clickTip = 'Copied';
+  @property() hoverTip = 'Copy';
+  @property() clickTip = 'Copied';
   @property({ type: Number }) entryDelay = 300;
   @property({ type: Number }) exitDelay = 1500;
   @property({ type: Boolean }) readonly = false;
   @property({ type: Boolean }) code = false;
+  // Extends value from baseclass
+  @property() value = '';
   @state() _copied = false;
 
   /**
@@ -38,6 +40,36 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
    */
   protected _dropdownClickHandler(): void {
     this.expanded = !this.expanded;
+  }
+
+  /**
+   * Update the value property when it changes in the input.
+   */
+  protected _valueChangeHandler(e: Event): void {
+    const { value } = e.target as HTMLInputElement || HTMLTextAreaElement;
+    this.value = value;
+  }
+
+  protected firstUpdated(): void {
+    this._onSlotChange();
+  }
+
+  /**
+   * Slotchange callback.
+   */
+  protected _onSlotChange(): void {
+    // Collect all text node from either the slot[name=value] or the default slot content.
+    const children = [...this.childNodes].filter(i => (['value', '', null, false].includes(i?.getAttribute?.('slot') ?? false)));
+    if (children.length > 0) {
+      this.value = children.map(child => {
+        // Get the textContent of each child
+        let _text = child?.textContent;
+        // Romove unecessary whitespace.
+        // @todo This needs more comprehensive formatting to properly convert markup to text.
+        _text = _text?.replace(/^[\s\\]*/gm, '') as string | null;
+        return _text;
+      }).join('');
+    }
   }
 
   /**
@@ -64,52 +96,6 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
         </div>
         ${this.renderDropdown()}
       </div>
-    `;
-  }
-
-  protected renderDropdown() {
-    return html`
-      ${(this.variant === 'expansion' && this.expanded) ? html`
-      <div part="dropdown">
-        <textarea part="dropdown-textarea form-input" .value=${this.value} .disabled=${this.readonly}
-          @input=${this._valueChangeHandler}></textarea>
-      </div>
-      ` : ''}
-    `;
-  }
-
-  protected renderActionButton() {
-    return html`
-      <pfe-tooltip part="tooltip">
-        <button part="action" @click=${this._copyToClipboard}>
-          <slot name="action">
-            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512" aria-hidden="true" role="img"
-              style="vertical-align: -0.125em;">
-              <path
-                d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z">
-              </path>
-            </svg>
-          </slot>
-        </button>
-        <span slot="content">
-          <slot part="hover-tip" name="hover-tip" ?hidden=${this._copied}>${this.hoverTip}</slot>
-          <slot part="click-tip" name="click-tip" ?hidden=${!this._copied}>${this.clickTip}</slot>
-        </span>
-      </pfe-tooltip>
-    `;
-  }
-
-  protected renderTextTarget(): TemplateResult {
-    return html`
-      ${this.variant === 'expansion' || this.variant === 'inline' ? html`
-        <input part="value-target form-input" ?disabled=${this.expanded ? true : this.readonly} .value=${this.value} @input=${this._valueChangeHandler}><slot name="value" hidden @slotchange=${this._onSlotChange}><slot></slot></slot></input>
-      `
-      : this.code ? html`
-        <code part="value-target"><slot name="value"><slot></slot></slot></code>
-      `
-      : html`
-        <div part="value-target"><slot name="value"><slot></slot></slot></div>
-      `}
     `;
   }
 
@@ -140,6 +126,52 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
         </slot>
         `}
       </button>
+      ` : ''}
+    `;
+  }
+
+  protected renderTextTarget(): TemplateResult {
+    return html`
+      ${this.variant === 'expansion' || this.variant === 'inline' ? html`
+        <input part="value-target form-input" ?disabled=${this.expanded ? true : this.readonly} .value=${this.value} @input=${this._valueChangeHandler}><slot name="value" hidden @slotchange=${this._onSlotChange}><slot></slot></slot></input>
+      `
+      : this.code ? html`
+        <code part="value-target"><slot name="value"><slot></slot></slot></code>
+      `
+      : html`
+        <div part="value-target"><slot name="value"><slot></slot></slot></div>
+      `}
+    `;
+  }
+
+  protected renderActionButton() {
+    return html`
+      <pfe-tooltip part="tooltip">
+        <button part="action" @click=${this._copyToClipboard}>
+          <slot name="action">
+            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512" aria-hidden="true" role="img"
+              style="vertical-align: -0.125em;">
+              <path
+                d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z">
+              </path>
+            </svg>
+          </slot>
+        </button>
+        <span slot="content">
+          <slot part="hover-tip" name="hover-tip" ?hidden=${this._copied}>${this.hoverTip}</slot>
+          <slot part="click-tip" name="click-tip" ?hidden=${!this._copied}>${this.clickTip}</slot>
+        </span>
+      </pfe-tooltip>
+    `;
+  }
+
+  protected renderDropdown() {
+    return html`
+      ${(this.variant === 'expansion' && this.expanded) ? html`
+      <div part="dropdown">
+        <textarea part="dropdown-textarea form-input" .value=${this.value} .disabled=${this.readonly}
+          @input=${this._valueChangeHandler}></textarea>
+      </div>
       ` : ''}
     `;
   }

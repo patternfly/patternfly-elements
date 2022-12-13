@@ -44,7 +44,7 @@ export abstract class BaseButton extends LitElement {
    * destructive or difficult/impossible to undo, like deleting or removing
    * user data.
    */
-  @property({ type: Boolean, reflect: true }) danger = false;
+  abstract danger: unknown;
 
   /** Shorthand for the `icon` slot, the value is icon name */
   @property() icon?: string;

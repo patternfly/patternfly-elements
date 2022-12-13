@@ -171,6 +171,8 @@ export class PfeButton extends BaseButton {
   /** Icon set for the `icon` property */
   @property({ attribute: 'icon-set' }) iconSet?: string;
 
+  @property({ type: Boolean, reflect: true }) danger = false;
+
   /**
    * Changes the style of the button.
    * - Primary: Used for the most important call to action on a page. Try to

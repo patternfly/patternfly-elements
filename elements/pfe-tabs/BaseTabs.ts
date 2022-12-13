@@ -77,6 +77,8 @@ export abstract class BaseTabs extends LitElement {
 
   id: string = this.id || getRandomId(this.localName);
 
+  protected classes = {};
+
   abstract inset?: string;
 
   @property({ attribute: false })
@@ -157,10 +159,9 @@ export abstract class BaseTabs extends LitElement {
   }
 
   override render() {
-    const classes = { [`inset-${this.inset}`]: true };
     const { scrollIconSet, scrollIconLeft, scrollIconRight } = this.constructor as typeof BaseTabs;
     return html`
-      <div part="container" class="${classMap(classes)}">
+      <div part="container" class="${classMap(this.styleList())}">
         <div part="tabs-container">${!this.#showScrollButtons ? '' : html`
           <button id="previousTab"
               aria-label="${this.getAttribute('label-scroll-left') ?? 'Scroll left'}"
@@ -183,6 +184,15 @@ export abstract class BaseTabs extends LitElement {
         </div>
       </div>
     `;
+  }
+
+  protected styleList() {
+    if (this.inset !== undefined) {
+      this.classes = { [`inset-${this.inset}`]: true };
+    } else {
+      this.classes = {};
+    }
+    return this.classes;
   }
 
   async firstUpdated() {

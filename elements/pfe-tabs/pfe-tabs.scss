@@ -127,7 +127,6 @@
   display: var(--pf-c-tabs__list--Display, flex);
 }
 
-
 button {
   width: var(--pf-c-tabs__scroll-button--Width, var(--pf-global--spacer--2xl, 3rem));
   color: var(--pf-c-tabs__scroll-button--Color, var(--pf-global--Color--100, #151515));
@@ -298,7 +297,6 @@ button:disabled {
 @media screen and (min-width: 1200px) {
   [part="tabs-container"] {
     --pf-c-tabs__scroll-button--Width: var(--pf-c-tabs__scroll-button--xl--Width, var(--pf-global--spacer--3xl, 4rem));
-    // --pf-c-tabs--m-page-insets--inset: var(--pf-c-tabs--m-page-insets--xl--inset);
   }
 
   .inset-sm [part="tabs-container"] {
@@ -364,8 +362,13 @@ button:disabled {
   }
 }
 
+:host([fill]) [part="tabs"] {
+  flex-basis: 100%;
+}
 
-
+:host([fill]) ::slotted(pfe-tab) {
+  flex-grow: 1;
+}
 
 :host([fill]) ::slotted(pfe-tab:first-of-type) {
   --pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderLeftWidth: 0;

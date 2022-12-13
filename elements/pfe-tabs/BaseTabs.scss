@@ -16,14 +16,6 @@
   border-style: solid;
 }
 
-:host([fill]) [part="tabs"] {
-  flex-basis: 100%;
-}
-
-:host([fill]) ::slotted(pfe-tab) {
-  flex-grow: 1;
-}
-
 :host button {
   opacity: 1;
 }
@@ -36,11 +28,6 @@
 :host button:nth-of-type(2) {
   margin-inline-start: 0;
   translate: 0 0;
-}
-
-:host([overflow]) [part="tabs-container"] ,
-:host([overflow]) [part="tabs"] {
-  overflow: visible;
 }
 
 [part="tabs"] {

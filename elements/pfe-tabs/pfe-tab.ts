@@ -74,7 +74,6 @@ export class PfeTab extends BaseTab {
   @observed
   @property({ reflect: true, type: Boolean }) active = false;
 
-
   @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
 

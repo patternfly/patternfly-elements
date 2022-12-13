@@ -29,6 +29,9 @@ export abstract class BaseButton extends LitElement {
 
   @property({ reflect: true }) type?: 'button'|'submit'|'reset';
 
+  /** Accessible name for the button, use when the button does not have slotted text */
+  @property() label?: string;
+
   @property() value?: string;
 
   @property() name?: string;
@@ -63,12 +66,13 @@ export abstract class BaseButton extends LitElement {
       <button type="${ifDefined(this.type)}"
               class="${classMap({ hasIcon: !!this.icon })}"
               value="${ifDefined(this.value)}"
+              aria-label="${ifDefined(this.label)}"
               @click="${this.#onClick}"
               ?disabled="${this.disabled}">
-        <span id="icon" part="icon">
+        <span id="icon" part="icon" aria-hidden="true">
           <slot name="icon">${this.renderDefaultIcon()}</slot>
         </span>
-        <span id="text">
+        <span id="text" aria-hidden=${String(!!this.label) as 'true'|'false'}>
           <slot></slot>
         </span>
       </button>

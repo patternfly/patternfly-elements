@@ -48,7 +48,7 @@ export abstract class BaseAccordionHeader extends LitElement {
     super.connectedCallback();
     this.addEventListener('click', this.#onClick);
     this.hidden = true;
-    this.id ||= getRandomId('pfe-accordion');
+    this.id ||= getRandomId(this.localName);
     this.#initHeader();
   }
 

@@ -12,7 +12,7 @@ export class BaseAccordionPanel extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.id ||= getRandomId('panel');
+    this.id ||= getRandomId(this.localName);
     this.setAttribute('role', 'region');
   }
 

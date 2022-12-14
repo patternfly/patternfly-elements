@@ -22,6 +22,21 @@
   </pfe-clipboard-copy>
   <h3>Inline compact</h3>
   <pfe-clipboard-copy variant="inline-compact">2.3.4-2-redhat</pfe-clipboard-copy>
-  <h3>Inline compact</h3>
-  <pfe-clipboard-copy variant="inline-compact" code block>2.3.4-2-redhat</pfe-clipboard-copy>
+  <h3>Inline compact code</h3>
+  <pfe-clipboard-copy variant="inline-compact" code>2.3.4-2-redhat</pfe-clipboard-copy>
+  <h3>Inline compact with additional action</h3>
+  <pfe-clipboard-copy variant="inline-compact">2.3.4-2-redhat
+    <pfe-button slot="additional-actions" plain variant="primary">
+      <button aria-label="Action">
+        <svg style="vertical-align:-0.125em" fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512" aria-hidden="true" role="img"><path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>
+      </button>
+    </pfe-button>
+  </pfe-clipboard-copy>
+  <h3>Inline compact in sentence</h3>
+  <b>Basic</b>
+  <p>Lorem ipsum <pfe-clipboard-copy variant="inline-compact">2.3.4-2-redhat</pfe-clipboard-copy></p>
+  <b>Long copy string</b>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <pfe-clipboard-copy variant="inline-compact">https://app.openshift.io/path/sub-path/sub-sub-path/?runtime=quarkus/12345678901234567890/abcdefghijklmnopqrstuvwxyz1234567890</pfe-clipboard-copy> Mauris luctus, libero nec dapibus ultricies, urna purus pretium mauris, ullamcorper pharetra lacus nibh vitae enim.</p>
+  <b>Long copy string in block</b>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <pfe-clipboard-copy variant="inline-compact" block>https://app.openshift.io/path/sub-path/sub-sub-path/?runtime=quarkus/12345678901234567890/abcdefghijklmnopqrstuvwxyz1234567890</pfe-clipboard-copy> Mauris luctus, libero nec dapibus ultricies, urna purus pretium mauris, ullamcorper pharetra lacus nibh vitae enim.</p>
 </pfe-band>

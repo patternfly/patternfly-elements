@@ -93,6 +93,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
           ${this.renderDropdownTrigger()}
           ${this.renderTextTarget()}
           ${this.renderActionButton()}
+          <slot name="additional-actions"></slot>
         </div>
         ${this.renderDropdown()}
       </div>
@@ -105,27 +106,29 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   protected renderDropdownTrigger() {
     return html`
       ${this.variant === 'expansion' ? html`
-      <button part="action dropdown-action" @click=${this._dropdownClickHandler}>
-        ${this.expanded ? html`
-        <slot name="dropdown-button-opened">
-          <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img"
-            style="vertical-align: -0.125em;">
-            <path
-              d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z">
-            </path>
-          </svg>
-        </slot>
-        ` : html`
-        <slot name="dropdown-button-closed">
-          <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img"
-            style="vertical-align: -0.125em;">
-            <path
-              d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z">
-            </path>
-          </svg>
-        </slot>
-        `}
-      </button>
+      <pfe-button variant="control" part="button">
+        <button @click=${this._dropdownClickHandler}>
+          ${this.expanded ? html`
+          <slot name="dropdown-button-opened">
+            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img"
+              style="vertical-align: -0.125em;">
+              <path
+                d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z">
+              </path>
+            </svg>
+          </slot>
+          ` : html`
+          <slot name="dropdown-button-closed">
+            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img"
+              style="vertical-align: -0.125em;">
+              <path
+                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z">
+              </path>
+            </svg>
+          </slot>
+          `}
+        </button>
+      </pfe-button>
       ` : ''}
     `;
   }
@@ -145,18 +148,17 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   }
 
   protected renderActionButton() {
+    const buttonPlain = this.variant === 'inline-compact';
+    const buttonVariant = this.variant === 'inline-compact' ? 'primary' : 'control';
     return html`
       <pfe-tooltip part="tooltip">
-        <button part="action" @click=${this._copyToClipboard}>
-          <slot name="action">
-            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512" aria-hidden="true" role="img"
-              style="vertical-align: -0.125em;">
-              <path
-                d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z">
-              </path>
+        <pfe-button ?plain=${buttonPlain} variant=${buttonVariant} part="button">
+          <button aria-label="${this.hoverTip}" @click=${this._copyToClipboard}>
+            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;">
+              <path d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"> </path>
             </svg>
-          </slot>
-        </button>
+          </button>
+        </pfe-button>
         <span slot="content">
           <slot part="hover-tip" name="hover-tip" ?hidden=${this._copied}>${this.hoverTip}</slot>
           <slot part="click-tip" name="click-tip" ?hidden=${!this._copied}>${this.clickTip}</slot>

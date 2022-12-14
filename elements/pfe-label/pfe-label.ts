@@ -122,12 +122,10 @@ export class PfeLabel extends BaseLabel {
     return !this.removable ? '' : html`
       <span part="close-button" ?hidden=${!this.removable}>
         <pfe-button plain @click=${() => this.dispatchEvent(new ComposedEvent('close'))}>
-          <button>
-            <svg slot="icon" style="vertical-align:-0.125em" fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
-              <title>${this.closeButtonLabel ?? 'remove'}</title>
-              <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
-            </svg>
-          </button>
+          <svg style="vertical-align:-0.125em" fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
+            <title>${this.closeButtonLabel ?? 'remove'}</title>
+            <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
+          </svg>
         </pfe-button>
       </span>
     `;

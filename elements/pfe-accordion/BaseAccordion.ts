@@ -250,7 +250,7 @@ export abstract class BaseAccordion extends LitElement {
       return;
     }
 
-    let newHeader: BaseAccordionHeader;
+    let newHeader: BaseAccordionHeader|undefined;
 
     switch (evt.key) {
       case 'ArrowDown':
@@ -269,8 +269,6 @@ export abstract class BaseAccordion extends LitElement {
         evt.preventDefault();
         newHeader = this.#lastHeader();
         break;
-      default:
-        return;
     }
 
     newHeader?.focus?.();

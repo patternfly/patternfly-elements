@@ -71,6 +71,14 @@ export abstract class BaseAccordion extends LitElement {
     converter: NumberListConverter
   }) expandedIndex: number[] = [];
 
+  protected get headers() {
+    return this.#allHeaders();
+  }
+
+  protected get panels() {
+    return this.#allPanels();
+  }
+
   protected expandedSets = new Set<number>();
 
   #logger = new Logger(this);
@@ -145,6 +153,9 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   async #collapseHeader(header: BaseAccordionHeader, index = this.#getIndex(header)) {
+    if (!this.expandedSets) {
+      await this.updateComplete;
+    }
     this.expandedSets.delete(index);
     header.expanded = false;
     await header.updateComplete;
@@ -274,36 +285,32 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   #previousHeader() {
-    const headers = this.#allHeaders();
+    const { headers } = this;
     const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) - 1;
     return headers[(newIndex + headers.length) % headers.length];
   }
 
   #nextHeader() {
-    const headers = this.#allHeaders();
+    const { headers } = this;
     const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) + 1;
     return headers[newIndex % headers.length];
   }
 
   #firstHeader() {
-    const headers = this.#allHeaders();
-    return headers[0];
+    return this.headers.at(0);
   }
 
   #lastHeader() {
-    const headers = this.#allHeaders();
-    return headers[headers.length - 1];
+    return this.headers.at(-1);
   }
 
   #getIndex(el: Element|null) {
     if (BaseAccordion.isHeader(el)) {
-      const headers = this.#allHeaders();
-      return headers.findIndex(header => header.id === el.id);
+      return this.headers.findIndex(header => header.id === el.id);
     }
 
     if (BaseAccordion.isPanel(el)) {
-      const panels = this.#allPanels();
-      return panels.findIndex(panel => panel.id === el.id);
+      return this.panels.findIndex(panel => panel.id === el.id);
     }
 
     this.#logger.warn('The #getIndex method expects to receive a header or panel element.');
@@ -311,7 +318,7 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   public updateAccessibility() {
-    const headers = this.#allHeaders();
+    const { headers } = this;
 
     // For each header in the accordion, attach the aria connections
     headers.forEach(header => {
@@ -328,7 +335,7 @@ export abstract class BaseAccordion extends LitElement {
    * Accepts a 0-based index value (integer) for the set of accordion items to expand or collapse.
    */
   public async toggle(index: number) {
-    const headers = this.#allHeaders();
+    const { headers } = this;
     const header = headers[index];
 
     if (!header.expanded) {
@@ -382,8 +389,8 @@ export abstract class BaseAccordion extends LitElement {
    * Expands all accordion items.
    */
   public async expandAll() {
-    this.#allHeaders().forEach(header => this.#expandHeader(header));
-    this.#allPanels().forEach(panel => this.#expandPanel(panel));
+    this.headers.forEach(header => this.#expandHeader(header));
+    this.panels.forEach(panel => this.#expandPanel(panel));
     await this.updateComplete;
   }
 
@@ -391,8 +398,8 @@ export abstract class BaseAccordion extends LitElement {
    * Accepts a 0-based index value (integer) for the set of accordion items to collapse.
    */
   public async collapse(index: number) {
-    const header = this.#allHeaders().at(index);
-    const panel = this.#allPanels().at(index);
+    const header = this.headers.at(index);
+    const panel = this.panels.at(index);
 
     if (!header || !panel) {
       return;
@@ -409,8 +416,8 @@ export abstract class BaseAccordion extends LitElement {
    * Collapses all accordion items.
    */
   public async collapseAll() {
-    this.#allHeaders().forEach(header => this.#collapseHeader(header));
-    this.#allPanels().forEach(panel => this.#collapsePanel(panel));
+    this.headers.forEach(header => this.#collapseHeader(header));
+    this.panels.forEach(panel => this.#collapsePanel(panel));
     await this.updateComplete;
   }
 }

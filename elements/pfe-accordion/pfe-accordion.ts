@@ -1,4 +1,5 @@
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
+import { observed } from '@patternfly/pfe-core/decorators.js';
 import { property } from 'lit/decorators.js';
 import { customElement } from 'lit/decorators.js';
 
@@ -46,6 +47,9 @@ export class PfeAccordion extends BaseAccordion {
   @property({ type: Boolean, reflect: true }) bordered = false;
 
   /** Whether to apply the `large` style variant */
+  @observed(function largeChanged(this: PfeAccordion) {
+    [...this.headers, ...this.panels].forEach(el => el.toggleAttribute('large', this.large));
+  })
   @property({ type: Boolean, reflect: true }) large = false;
 
   /**

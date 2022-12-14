@@ -1,8 +1,6 @@
 import '@patternfly/pfe-accordion';
 import '@patternfly/pfe-button';
-import '@patternfly/pfe-card';
-import '@patternfly/pfe-jump-links';
-import '@patternfly/pfe-select';
+import '@patternfly/pfe-switch';
 
 const bordered = document.getElementById('#bordered-example');
 const isLarge = document.getElementById('toggle-size');

@@ -1,9 +1,12 @@
-import { customElement } from 'lit/decorators.js';
+import { html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 
-import '@patternfly/pfe-icon';
 import { BaseAccordionHeader } from './BaseAccordionHeader.js';
 
 import style from './pfe-accordion-header.scss';
+
+import '@patternfly/pfe-icon';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 /**
  * Accordion Header
@@ -80,7 +83,29 @@ export class PfeAccordionHeader extends BaseAccordionHeader {
   static readonly version = '{{version}}';
 
   static readonly styles = [...BaseAccordionHeader.styles, style];
+
+  @property({ reflect: true }) bordered?: 'true'|'false';
+
+  @property({ reflect: true }) icon?: string;
+
+  @property({ reflect: true, attribute: 'icon-set' }) iconSet?: string;
+
+  #slots = new SlotController(this, 'accents', null);
+
+  renderAfterButton() {
+    return html`${!this.#slots.hasSlotted('accents') ? '' : html`
+      <span part="accents">
+        <slot name="accents"></slot>
+      </span>`}
+      <pfe-icon part="icon"
+                icon="${this.icon ?? 'angle-right'}"
+                set="${this.iconSet ?? 'fas'}"
+                class="icon"
+                size="lg"></pfe-icon>
+    `;
+  }
 }
+
 
 declare global {
   interface HTMLElementTagNameMap {

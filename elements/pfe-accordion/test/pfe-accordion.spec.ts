@@ -120,10 +120,6 @@ describe('<pfe-accordion>', function() {
     });
 
     it('randomly generates ids on children', function() {
-      // The first header and panel have existing IDs
-      const secondHeader = element.querySelector('pfe-accordion-header:nth-of-type(2)')!;
-      const secondPanel = element.querySelector('pfe-accordion-panel:nth-of-type(2)')!;
-
       expect(secondHeader.id).to.match(/pfe-/);
       expect(secondPanel.id).to.match(/panel-/);
     });
@@ -381,6 +377,11 @@ describe('<pfe-accordion>', function() {
             expect(panel1.expanded).to.be.true;
             expect(panel2.expanded).to.be.false;
             expect(panel3.expanded).to.be.false;
+          });
+          it('removes hidden attribute from the first panel', function() {
+            expect(panel1.hidden, 'panel1').to.be.false;
+            expect(panel2.hidden, 'panel2').to.be.true;
+            expect(panel3.hidden, 'panel3').to.be.true;
           });
         });
 

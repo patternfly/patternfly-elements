@@ -9,6 +9,14 @@ import '@patternfly/pfe-spinner';
 
 import styles from './pfe-button.scss';
 
+export type ButtonVariant = (
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'control'
+  | 'link'
+);
+
 /**
  * Buttons allow users to perform an action when triggered. They feature a text
  * label, a background or a border, and icons.
@@ -113,14 +121,6 @@ import styles from './pfe-button.scss';
  * @cssprop {<color>}  --pf-c-button--disabled--BackgroundColor    {@default `#d2d2d2`}
  * @cssprop {<color>}  --pf-c-button--disabled--after--BorderColor {@default `transparent`}
  *
- * @csspart state - Container for the state slot.
- * @slot icon
- *       Contains the button's icon or state indicator, e.g. a spinner.
- * @slot
- *       Must contain exactly one `<button>` element as the only content not assigned to a named slot.
- *
- * @attr {string} loading-label - ARIA label for the loading indicator {@default `'loading'`}
- *
  * @cssprop {<color>}  --pf-c-button--m-warning--Color                   {@default `#151515`}
  * @cssprop {<color>}  --pf-c-button--m-warning--BackgroundColor         {@default `#f0ab00`}
  * @cssprop {<color>}  --pf-c-button--m-warning--active--Color           {@default `#151515`}
@@ -142,6 +142,14 @@ import styles from './pfe-button.scss';
  * @cssprop {<color>}  --pf-c-button--m-plain--disabled--Color           {@default `#d2d2d2`}
  * @cssprop {<color>}  --pf-c-button--m-plain--disabled--BackgroundColor {@default `transparent`}
  *
+ * @csspart state - Container for the state slot.
+ * @slot icon
+ *       Contains the button's icon or state indicator, e.g. a spinner.
+ * @slot
+ *       Must contain exactly one `<button>` element as the only content not assigned to a named slot.
+ *
+ * @attr {string} loading-label - ARIA label for the loading indicator {@default `'loading'`}
+ *
  */
 @customElement('pfe-button')
 export class PfeButton extends BaseButton {
@@ -158,17 +166,35 @@ export class PfeButton extends BaseButton {
   /** Not as urgent as danger */
   @property({ type: Boolean, reflect: true }) warning = false;
 
+  @property({ reflect: true }) size?: 'small'|'large';
+
+  /** Icon set for the `icon` property */
+  @property({ attribute: 'icon-set' }) iconSet?: string;
+
+  @property({ type: Boolean, reflect: true }) danger = false;
+
+  /**
+   * Changes the style of the button.
+   * - Primary: Used for the most important call to action on a page. Try to
+   *   limit primary buttons to one per page.
+   * - Secondary: Use secondary buttons for general actions on a page, that
+   *   don’t require as much emphasis as primary button actions. For example,
+   *   you can use secondary buttons where there are multiple actions, like in
+   *   toolbars or data lists.
+   * - Tertiary: Tertiary buttons are flexible and can be used as needed.
+   */
+  @property({ reflect: true }) variant: ButtonVariant = 'primary';
+
   protected override renderDefaultIcon() {
     return html`
       <pfe-icon
           size="sm"
-          icon=${ifDefined(this.icon)}
-          set=${ifDefined(this.iconSet)}
-          ?hidden=${!this.icon}></pfe-icon>
+          icon="${ifDefined(this.icon)}"
+          set="${ifDefined(this.iconSet)}"
+        ?hidden="${!this.icon}"></pfe-icon>
       <pfe-spinner
-          ?hidden=${!this.loading}
-          aria-label=${this.getAttribute('loading-label') ?? 'loading'}
-      ></pfe-spinner>
+          ?hidden="${!this.loading}"
+          aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pfe-spinner>
     `;
   }
 }

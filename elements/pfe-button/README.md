@@ -32,9 +32,7 @@ When using this component, you must provide a standard HTML Button Elements as
 the only light DOM child of `pfe-button`.
 
 ```html
-<pfe-button>
-  <button>My Button</button>
-</pfe-button>
+<pfe-button>My Button</pfe-button>
 ```
 
 ### Accessibility
@@ -48,35 +46,16 @@ Adding the `disabled` attribute to either the `<pfe-button>` wrapper or the
 `<button>` element in the light DOM will disable the button.
 
 ```html
-<pfe-button disabled>
-  <button>Submit</button>
-</pfe-button>
-```
-
-Or
-
-```html
-<pfe-button>
-  <button disabled>Submit</button>
-</pfe-button>
+<pfe-button disabled>Submit</pfe-button>
 ```
 
 #### Type Attribute
 Using the `type` attribute works in the same fashion as the `disabled`
-attribute. You can add a `type` attribute to either the `<pfe-button>` wrapper
-or the `<button>` element in the light DOM.
+attribute. You can add a `type` attribute to the `<pfe-button>` element.
 
 ```html
-<pfe-button type="button or reset or submit">
-  <button>Submit</button>
-</pfe-button>
-```
-
-Or
-
-```html
-<pfe-button>
-  <button type="button or reset or submit">Submit</button>
-</pfe-button>
+<pfe-button type="button">Submit</pfe-button>
+<pfe-button type="submit">Submit</pfe-button>
+<pfe-button type="reset">Reset</pfe-button>
 ```
 

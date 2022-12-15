@@ -60,7 +60,7 @@ describe('<pfe-label>', function() {
     const beforeStyles = getComputedStyle(container, '::before');
 
     expect(getColor(container, 'color')).to.deep.equal(hexToRgb('#151515'));
-    expect(getColor(el, 'background-color')).to.deep.equal(hexToRgb('#f5f5f5'));
+    expect(getColor(container, 'background-color')).to.deep.equal(hexToRgb('#f5f5f5'));
     expect(beforeStyles.getPropertyValue('border-color')).to.equal('rgb(210, 210, 210)');
   });
 
@@ -71,7 +71,7 @@ describe('<pfe-label>', function() {
     const beforeStyles = getComputedStyle(container, '::before');
 
     expect(getColor(container, 'color')).to.deep.equal(hexToRgb('#7d1007'));
-    expect(getColor(el, 'background-color')).to.deep.equal(hexToRgb('#faeae8'));
+    expect(getColor(container, 'background-color')).to.deep.equal(hexToRgb('#faeae8'));
     expect(beforeStyles.getPropertyValue('border-color')).to.equal('rgb(201, 25, 11)');
   });
 
@@ -82,7 +82,7 @@ describe('<pfe-label>', function() {
     const beforeStyles = getComputedStyle(container, '::before');
 
     expect(getColor(container, 'color')).to.deep.equal(hexToRgb('#151515'));
-    expect(getColor(el, 'background-color')).to.deep.equal(hexToRgb('#f5f5f5'));
+    expect(getColor(container, 'background-color')).to.deep.equal(hexToRgb('#f5f5f5'));
     expect(beforeStyles.getPropertyValue('border-color')).to.equal('rgb(210, 210, 210)');
   });
 
@@ -92,8 +92,8 @@ describe('<pfe-label>', function() {
     const container = el.shadowRoot!.querySelector('#container')!;
     const beforeStyles = getComputedStyle(container, '::before');
 
-    expect(getColor(el, 'color')).to.deep.equal(hexToRgb('#151515'));
-    expect(getColor(el, 'background-color')).to.deep.equal(hexToRgb('#ffffff'));
+    expect(getColor(container, 'color')).to.deep.equal(hexToRgb('#151515'));
+    expect(getColor(container, 'background-color')).to.deep.equal(hexToRgb('#ffffff'));
     expect(beforeStyles.getPropertyValue('border-color')).to.equal('rgb(210, 210, 210)');
   });
 
@@ -116,14 +116,15 @@ describe('<pfe-label>', function() {
     await el.updateComplete;
     const container = el.shadowRoot!.querySelector('#container')!;
     const beforeStyles = getComputedStyle(container, '::before');
-    const elStyles = getComputedStyle(el);
+    const containerStyles = getComputedStyle(container);
 
     expect(getColor(container, 'color')).to.deep.equal(hexToRgb('#151515'));
-    expect(getColor(el, 'background-color')).to.deep.equal(hexToRgb('#f5f5f5'));
+    expect(getColor(container, 'background-color')).to.deep.equal(hexToRgb('#f5f5f5'));
     expect(beforeStyles.getPropertyValue('border-color')).to.equal('rgb(210, 210, 210)');
-    expect(elStyles.getPropertyValue('padding-top')).to.equal('0px');
-    expect(elStyles.getPropertyValue('padding-right')).to.equal('8px'); // 0.5rem = 8px @ 16px browser default
-    expect(elStyles.getPropertyValue('padding-bottom')).to.equal('0px');
-    expect(elStyles.getPropertyValue('padding-left')).to.equal('8px'); // 0.5rem = 8px @ 16px browser default
+
+    expect(containerStyles.getPropertyValue('padding-top')).to.equal('0px');
+    expect(containerStyles.getPropertyValue('padding-right')).to.equal('8px'); // 0.5rem = 8px @ 16px browser default
+    expect(containerStyles.getPropertyValue('padding-bottom')).to.equal('0px');
+    expect(containerStyles.getPropertyValue('padding-left')).to.equal('8px'); // 0.5rem = 8px @ 16px browser default
   });
 });

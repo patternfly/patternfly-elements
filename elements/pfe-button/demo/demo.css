@@ -6,32 +6,6 @@ section > :not(pfe-button) {
   width: 100%;
 }
 
-#light-dom-styles pfe-button button {
-  background-color: lightgreen;
-  color: darkred;
-  font-size: 250px;
-  font-family: "Comic Sans";
-  font-weight: 900;
-  padding: 200px;
-  cursor:all-scroll;
-  border-radius: 200px;
-  border: 30px dashed pink;
-  position: fixed;
-  line-height: 2;
-}
-
-#light-dom-styles pfe-button:last-child button {
-  background-color: lightgreen !important;
-}
-
-form {
-  display: grid;
-  grid-template-columns: max-content 1fr max-content;
-  gap: 1em;
-  align-items: center;
-  margin-bottom: 1em;
-}
-
 pfe-button[loading] svg {
   width: 0px;
 }

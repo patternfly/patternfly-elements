@@ -394,24 +394,12 @@
                 data-element="button"
                 class="grid-body">
         <h2 slot="header">Button</h2>
-        <pfe-button>
-          <button>Primary</button>
-        </pfe-button>
-        <pfe-button variant="secondary">
-          <button>Secondary</button>
-        </pfe-button>
-        <pfe-button variant="tertiary">
-          <button>Tertiary</button>
-        </pfe-button>
-        <pfe-button variant="danger">
-          <button>Danger</button>
-        </pfe-button>
-        <pfe-button variant="control">
-          <button>Control</button>
-        </pfe-button>
-        <pfe-button disabled>
-          <button>Disabled</button>
-        </pfe-button>
+        <pfe-button>Primary</pfe-button>
+        <pfe-button variant="secondary">Secondary</pfe-button>
+        <pfe-button variant="tertiary">Tertiary</pfe-button>
+        <pfe-button variant="danger">Danger</pfe-button>
+        <pfe-button variant="control">Control</pfe-button>
+        <pfe-button disabled>Disabled</pfe-button>
       </pfe-band>
 
       <pfe-band id="button-band-large"
@@ -419,24 +407,12 @@
                 class="grid-body"
                 size="small">
         <h2 slot="header">Large size</h2>
-        <pfe-button size="large">
-          <button>Primary</button>
-        </pfe-button>
-        <pfe-button variant="secondary" size="large">
-          <button>Secondary</button>
-        </pfe-button>
-        <pfe-button variant="tertiary" size="large">
-          <button>Tertiary</button>
-        </pfe-button>
-        <pfe-button variant="danger" size="large">
-          <button>Danger</button>
-        </pfe-button>
-        <pfe-button  variant="control" size="large">
-          <button type="submit">Control</button>
-        </pfe-button>
-        <pfe-button size="large" disabled>
-          <button>Disabled</button>
-        </pfe-button>
+        <pfe-button size="large">Primary</pfe-button>
+        <pfe-button variant="secondary" size="large">Secondary</pfe-button>
+        <pfe-button variant="tertiary" size="large">Tertiary</pfe-button>
+        <pfe-button variant="danger" size="large">Danger</pfe-button>
+        <pfe-button type="submit" variant="control" size="large">Control</pfe-button>
+        <pfe-button size="large" disabled>Disabled</pfe-button>
       </pfe-band>
 
       <!-- CARD -->
@@ -1168,9 +1144,7 @@
         <pfe-card>
           <h3>Modal on default</h3>
           <pfe-modal id="test-modal-1">
-            <pfe-button variant="secondary" slot="trigger">
-              <button>Open modal</button>
-            </pfe-button>
+            <pfe-button variant="secondary" slot="trigger">Open modal</pfe-button>
             <h2 slot="header">Modal with a header</h2>
             <p>Lorem ipsum dolor sit amet,
               <a href="#foo">consectetur adipisicing</a>
@@ -1183,9 +1157,7 @@
         <pfe-card color-palette="lightest">
           <h3>Modal on lightest</h3>
           <pfe-modal id="test-modal-2">
-            <pfe-button variant="secondary" slot="trigger">
-              <button>Open modal</button>
-            </pfe-button>
+            <pfe-button variant="secondary" slot="trigger">Open modal</pfe-button>
             <h2 slot="header">Modal with a header</h2>
             <p>Lorem ipsum dolor sit amet,
               <a href="#foo">consectetur adipisicing</a>
@@ -1198,9 +1170,7 @@
         <pfe-card color-palette="complement">
           <h3>Modal on complement</h3>
           <pfe-modal id="test-modal-3">
-            <pfe-button variant="secondary" slot="trigger">
-              <button>Open modal</button>
-            </pfe-button>
+            <pfe-button variant="secondary" slot="trigger">Open modal</pfe-button>
             <h2 slot="header">Modal with a header</h2>
             <p>Lorem ipsum dolor sit amet,
               <a href="#foo">consectetur adipisicing</a>
@@ -1213,9 +1183,7 @@
         <pfe-card class="custom-background">
           <h3>Modal on custom, class-based, --context</h3>
           <pfe-modal id="test-modal-4">
-            <pfe-button variant="secondary" slot="trigger">
-              <button>Open modal</button>
-            </pfe-button>
+            <pfe-button variant="secondary" slot="trigger">Open modal</pfe-button>
             <h2 slot="header">Modal with a header</h2>
             <p>Lorem ipsum dolor sit amet,
               <a href="#foo">consectetur adipisicing</a>
@@ -1228,9 +1196,7 @@
         <pfe-card style="background-color: #444; --context: dark;">
           <h3>Modal with context hook</h3>
           <pfe-modal id="test-modal-5">
-            <pfe-button variant="secondary" slot="trigger">
-              <button>Open modal</button>
-            </pfe-button>
+            <pfe-button variant="secondary" slot="trigger">Open modal</pfe-button>
             <h2 slot="header">Modal with a header</h2>
             <p>Lorem ipsum dolor sit amet,
               <a href="#foo">consectetur adipisicing</a>

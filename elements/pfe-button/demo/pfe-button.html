@@ -5,175 +5,94 @@
 
 <section>
   <h2 slot="header">Default - Medium size</h2>
-  <pfe-button>
-    <button>Primary</button>
-  </pfe-button>
-  <pfe-button variant="secondary">
-    <button>Secondary</button>
-  </pfe-button>
-  <pfe-button variant="link" icon="link" icon-position="right">
-    <button>Link</button>
-  </pfe-button>
-  <pfe-button variant="link" inline><button>Inline Link</button></pfe-button>
-  <pfe-button variant="link" danger><button>Danger Link</button></pfe-button>
+  <pfe-button>Primary</pfe-button>
+  <pfe-button variant="secondary">Secondary</pfe-button>
+  <pfe-button variant="link" icon="link" icon-position="right">Link</pfe-button>
+  <pfe-button variant="link" inline>Inline Link</pfe-button>
+  <pfe-button variant="link" danger>Danger Link</pfe-button>
 
   <h3>Plain button</h3>
-  <pfe-button plain>
-    <button aria-label="Action">
-      <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
-        <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
-      </svg>
-    </button>
+  <pfe-button plain label="Action">
+    <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
+      <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
+    </svg>
   </pfe-button>
 
   <h3>Control variant</h3>
-  <pfe-button variant="control"><button>Control</button></pfe-button>
-  <pfe-button variant="control">
-    <button aria-label="Copy">
-      <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512">
-        <path d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"/>
-      </svg>
-    </button>
+  <pfe-button variant="control">Control</pfe-button>
+  <pfe-button variant="control" label="Copy">
+    <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512">
+      <path d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"/>
+    </svg>
   </pfe-button>
+  <p>
+    <strong>Note:</strong> when using <code>&lt;pfe-button&gt;</code> as an icon-button,
+    <code>&lt;pfe-button&gt;</code> must have the <code>label</code> attribute.
+  </p>
 </section>
 
 <section>
   <h2>Disabled</h2>
-  <pfe-button disabled><button>Primary disabled</button></pfe-button>
-  <pfe-button disabled variant="secondary"><button>Secondary disabled</button></pfe-button>
-  <pfe-button disabled variant="secondary" danger><button>Danger secondary disabled</button></pfe-button>
-  <pfe-button disabled variant="tertiary"><button>Tertiary disabled</button></pfe-button>
-  <pfe-button disabled danger><button>Danger disabled</button></pfe-button>
-  <pfe-button disabled warning><button>Warning disabled</button></pfe-button>
+  <pfe-button disabled>Primary disabled</pfe-button>
+  <pfe-button disabled variant="secondary">Secondary disabled</pfe-button>
+  <pfe-button disabled variant="secondary" danger>Danger secondary disabled</pfe-button>
+  <pfe-button disabled variant="tertiary">Tertiary disabled</pfe-button>
+  <pfe-button disabled danger>Danger disabled</pfe-button>
+  <pfe-button disabled warning>Warning disabled</pfe-button>
 
   <h3>Link variant</h3>
-  <pfe-button disabled variant="link" icon="plus-circle"><button>Link disabled</button></pfe-button>
-  <pfe-button disabled variant="link" icon="link" icon-position="right"><button>Link disabled</button></pfe-button>
-  <pfe-button disabled variant="link" inline><button>Inline link disabled</button></pfe-button>
-  <pfe-button disabled variant="link" danger><button>Danger link disabled</button></pfe-button>
+  <pfe-button disabled variant="link" icon="plus-circle">Link disabled</pfe-button>
+  <pfe-button disabled variant="link" icon="link" icon-position="right">Link disabled</pfe-button>
+  <pfe-button disabled variant="link" inline>Inline link disabled</pfe-button>
+  <pfe-button disabled variant="link" danger>Danger link disabled</pfe-button>
 
   <h3>Plain button</h3>
-  <pfe-button disabled plain>
-    <button aria-label="Action">
-      <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
-        <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
-      </svg>
-    </button>
+  <pfe-button disabled plain label="Action">
+    <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
+      <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
+    </svg>
   </pfe-button>
 
   <h3>Control variant</h3>
-  <pfe-button disabled variant="control"><button>Control disabled</button></pfe-button>
-  <pfe-button disabled variant="control">
-    <button aria-label="Copy">
-      <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512">
-        <path d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"/>
-      </svg>
-    </button>
-  </pfe-button>
-</section>
-
-<section>
-  <h2>ARIA Disabled</h2>
-  <pfe-button><button aria-disabled="true">Primary aria-disabled</button></pfe-button>
-  <pfe-button variant="secondary"><button aria-disabled="true">Secondary aria-disabled</button></pfe-button>
-  <pfe-button variant="secondary" danger><button aria-disabled="true">Danger secondary aria-disabled</button></pfe-button>
-  <pfe-button variant="tertiary"><button aria-disabled="true">Tertiary aria-disabled</button></pfe-button>
-  <pfe-button danger><button aria-disabled="true">Danger aria-disabled</button></pfe-button>
-  <pfe-button warning><button aria-disabled="true">Warning aria-disabled</button></pfe-button>
-
-  <pfe-button variant="link" icon="plus-circle"><button aria-disabled="true">Link aria-disabled</button></pfe-button>
-  <pfe-button variant="link" icon="link" icon-position="right"><button aria-disabled="true">Link aria-disabled</button></pfe-button>
-  <pfe-button variant="link" inline><button aria-disabled="true">Inline link aria-disabled</button></pfe-button>
-  <pfe-button variant="link" danger><button aria-disabled="true">Danger link aria-disabled</button></pfe-button>
-
-  <h3>Plain button</h3>
-  <pfe-button plain>
-    <button aria-disabled="true" aria-label="Action">
-      <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
-        <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
-      </svg>
-    </button>
-  </pfe-button>
-
-  <h3>Control variant</h3>
-  <pfe-button variant="control"><button aria-disabled="true">Control aria-disabled</button></pfe-button>
-  <pfe-button variant="control">
-    <button aria-disabled="true" aria-label="Copy">
-      <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512">
-        <path d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"/>
-      </svg>
-    </button>
+  <pfe-button disabled variant="control">Control disabled</pfe-button>
+  <pfe-button disabled variant="control" label="Copy">
+    <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512">
+      <path d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"/>
+    </svg>
   </pfe-button>
 </section>
 
 <section>
   <h2>Block level</h2>
-  <pfe-button block><button>Block level button</button></pfe-button>
+  <pfe-button block>Block level button</pfe-button>
 </section>
 
 <section>
   <h2>Sizes</h2>
-  <pfe-button size="small"><button>Primary small</button></pfe-button>
-  <pfe-button size="small" variant="secondary"><button>Secondary small</button></pfe-button>
-  <pfe-button size="small" variant="secondary" danger><button>Danger secondary small</button></pfe-button>
-  <pfe-button size="small" variant="tertiary"><button>Tertiary small</button></pfe-button>
-  <pfe-button size="small" danger><button>Danger small</button></pfe-button>
-  <pfe-button size="small" warning><button>Warning small</button></pfe-button>
+  <pfe-button size="small">Primary small</pfe-button>
+  <pfe-button size="small" variant="secondary">Secondary small</pfe-button>
+  <pfe-button size="small" variant="secondary" danger>Danger secondary small</pfe-button>
+  <pfe-button size="small" variant="tertiary">Tertiary small</pfe-button>
+  <pfe-button size="small" danger>Danger small</pfe-button>
+  <pfe-button size="small" warning>Warning small</pfe-button>
 
-  <pfe-button size="large"><button>Primary large</button></pfe-button>
-  <pfe-button size="large" variant="secondary"><button>Secondary large</button></pfe-button>
-  <pfe-button size="large" variant="secondary" danger><button>Danger secondary large</button></pfe-button>
-  <pfe-button size="large" variant="tertiary"><button>Tertiary large</button></pfe-button>
-  <pfe-button size="large" danger><button>Danger large</button></pfe-button>
-  <pfe-button size="large" warning><button>Warning large</button></pfe-button>
+  <pfe-button size="large">Primary large</pfe-button>
+  <pfe-button size="large" variant="secondary">Secondary large</pfe-button>
+  <pfe-button size="large" variant="secondary" danger>Danger secondary large</pfe-button>
+  <pfe-button size="large" variant="tertiary">Tertiary large</pfe-button>
+  <pfe-button size="large" danger>Danger large</pfe-button>
+  <pfe-button size="large" warning>Warning large</pfe-button>
 </section>
 
 <section>
   <h2>Progress</h2>
   <p>Stateful buttons have a <code>loading</code> indicator</p>
-  <pfe-button id="loading-logs">
-    <button>Resume loading logs</button>
-  </pfe-button>
+  <pfe-button id="loading-logs">Resume loading logs</pfe-button>
   <!-- Custom ARIA-label for progress indicator -->
-  <pfe-button id="loading-scdr" variant="secondary" progress-label="Custom progress label">
-    <button>Click to start loading</button>
+  <pfe-button id="loading-scdr" variant="secondary" progress-label="Custom progress label">Click to start loading</pfe-button>
+  <pfe-button id="loading-icon" plain label="upload">
+    <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512">
+      <path d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"></path>
+    </svg>
   </pfe-button>
-  <pfe-button id="loading-icon" plain>
-    <button>
-      <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512" aria-label="upload">
-        <path d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"></path>
-      </svg>
-    </button>
-  </pfe-button>
-</section>
-
-<section id="light-dom-styles">
-  <h2>Style Encapsulation</h2>
-
-  <p>Light DOM styles targetting the slotted <code>&lt;button&gt;</code> will not affect it.</p>
-
-  <div>
-    <pfe-button><button>Primary</button></pfe-button>
-    <pfe-button variant="secondary"><button>Secondary</button></pfe-button>
-    <pfe-button variant="tertiary"><button>Tertiary</button></pfe-button>
-    <pfe-button danger><button>Danger</button></pfe-button>
-    <pfe-button variant="control"><button>Control</button></pfe-button>
-    <pfe-button disabled><button>Disabled</button></pfe-button>
-  </div>
-
-  <p>Users wishing to customize the button can still do so by setting CSS Custom Properties.</p>
-
-  <form id="custom-button-styles-form">
-    <label for="bg">Background Color</label>
-    <pfe-select id="bg">
-      <select>
-        <option disabled>Please select a colour</option>
-        <option value="red">Red</option>
-        <option value="green">Green</option>
-        <option value="blue">Blue</option>
-      </select>
-    </pfe-select>
-    <pfe-button style="--pf-c-button--m-primary--BackgroundColor: red"><button>Custom Styles</button></pfe-button>
-  </form>
-
 </section>

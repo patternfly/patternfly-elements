@@ -17,8 +17,8 @@ const CSS_TIMING_UNITS_RE = /^[0-9.]+(?<unit>[a-zA-Z]+)/g;
 
 export class AccordionExpandEvent extends ComposedEvent {
   constructor(
-      public toggle: BaseAccordionHeader,
-      public panel: BaseAccordionPanel,
+    public toggle: BaseAccordionHeader,
+    public panel: BaseAccordionPanel,
   ) {
     super('expand');
   }
@@ -26,8 +26,8 @@ export class AccordionExpandEvent extends ComposedEvent {
 
 export class AccordionCollapseEvent extends ComposedEvent {
   constructor(
-      public toggle: BaseAccordionHeader,
-      public panel: BaseAccordionPanel,
+    public toggle: BaseAccordionHeader,
+    public panel: BaseAccordionPanel,
   ) {
     super('collapse');
   }
@@ -36,20 +36,17 @@ export class AccordionCollapseEvent extends ComposedEvent {
 export abstract class BaseAccordion extends LitElement {
   static readonly styles = [style];
 
-  static isAccordion(target: EventTarget|null): target is BaseAccordion {
+  static isAccordion(target: EventTarget | null): target is BaseAccordion {
     return target instanceof BaseAccordion;
   }
 
-  static isHeader(target: EventTarget|null): target is BaseAccordionHeader {
+  static isHeader(target: EventTarget | null): target is BaseAccordionHeader {
     return target instanceof BaseAccordionHeader;
   }
 
-  static isPanel(target: EventTarget|null): target is BaseAccordionPanel {
+  static isPanel(target: EventTarget | null): target is BaseAccordionPanel {
     return target instanceof BaseAccordionPanel;
   }
-
-  /** When true, only one accordion panel may be expanded at a time */
-  @property({ reflect: true, type: Boolean }) single = false;
 
   /**
    * Sets and reflects the currently expanded accordion 0-based indexes.
@@ -71,11 +68,11 @@ export abstract class BaseAccordion extends LitElement {
     converter: NumberListConverter
   }) expandedIndex: number[] = [];
 
-  protected get headers() {
+  get headers() {
     return this.#allHeaders();
   }
 
-  protected get panels() {
+  get panels() {
     return this.#allPanels();
   }
 
@@ -162,11 +159,10 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   async #collapsePanel(panel: BaseAccordionPanel) {
+    await panel.updateComplete;
     if (!panel.expanded) {
       return;
     }
-
-    await panel.updateComplete;
 
     const rect = panel.getBoundingClientRect();
 
@@ -250,7 +246,7 @@ export abstract class BaseAccordion extends LitElement {
       return;
     }
 
-    let newHeader: BaseAccordionHeader|undefined;
+    let newHeader: BaseAccordionHeader | undefined;
 
     switch (evt.key) {
       case 'ArrowDown':
@@ -302,7 +298,7 @@ export abstract class BaseAccordion extends LitElement {
     return this.headers.at(-1);
   }
 
-  #getIndex(el: Element|null) {
+  #getIndex(el: Element | null) {
     if (BaseAccordion.isHeader(el)) {
       return this.headers.findIndex(header => header.id === el.id);
     }
@@ -352,15 +348,6 @@ export abstract class BaseAccordion extends LitElement {
     }
 
     const allHeaders: Array<BaseAccordionHeader> = this.#allHeaders(parentAccordion);
-    const allPanels: Array<BaseAccordionPanel> = this.#allPanels(parentAccordion);
-
-    // Get all the headers and capture the item by index value
-    if (this.single) {
-      await Promise.all([
-        ...allHeaders.map(header => header.expanded && this.#collapseHeader(header)),
-        ...allPanels.map(panel => panel.expanded && this.#collapsePanel(panel)),
-      ]);
-    }
 
     const header = allHeaders[index];
     if (!header) {

@@ -1,4 +1,4 @@
-import { customElement, property, } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
 import { BaseAccordionPanel } from './BaseAccordionPanel.js';
 

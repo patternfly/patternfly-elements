@@ -4,6 +4,7 @@ import { property } from 'lit/decorators.js';
 import { customElement } from 'lit/decorators.js';
 
 import { BaseAccordion } from './BaseAccordion.js';
+import { BaseAccordionHeader } from './BaseAccordionHeader.js';
 import './pfe-accordion-header.js';
 import './pfe-accordion-panel.js';
 
@@ -42,6 +43,9 @@ export class PfeAccordion extends BaseAccordion {
       PfeAccordion.instances.forEach(el =>
         el.#updateStateFromURL()));
   }
+
+  /** When true, only one accordion panel may be expanded at a time */
+  @property({ reflect: true, type: Boolean }) single = false;
 
   /** Whether to apply the `bordered` style variant */
   @property({ type: Boolean, reflect: true }) bordered = false;
@@ -100,6 +104,22 @@ export class PfeAccordion extends BaseAccordion {
   disconnectedCallback() {
     super.disconnectedCallback();
     PfeAccordion.instances.delete(this);
+  }
+
+  override async expand(index: number, parentAccordion?: BaseAccordion) {
+    if (index === -1) {
+      return;
+    }
+
+    const allHeaders: Array<BaseAccordionHeader> = this.headers;
+
+    // Get all the headers and capture the item by index value
+    if (this.single) {
+      await Promise.all([
+        ...allHeaders.map((header, index) => header.expanded && this.collapse(index)),
+      ]);
+    }
+    super.expand(index, parentAccordion);
   }
 
   #getIndexesFromURL() {

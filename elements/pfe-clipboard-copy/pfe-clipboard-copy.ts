@@ -6,6 +6,7 @@ import { BaseClipboardCopy } from './BaseClipboardCopy.js';
 import styles from './pfe-clipboard-copy.scss';
 import baseStyles from './BaseClipboardCopy.scss';
 import '@patternfly/pfe-tooltip';
+import '@patternfly/pfe-button';
 
 export type ClipboardCopyVariant = (
   | 'inline'
@@ -31,6 +32,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   @property({ type: Number }) exitDelay = 1500;
   @property({ type: Boolean }) readonly = false;
   @property({ type: Boolean }) code = false;
+  @property({ type: Boolean }) block = false;
   // Extends value from baseclass
   @property() value = '';
   @state() _copied = false;
@@ -87,8 +89,20 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   }
 
   render() {
-    return html`
-      <div part="base" class=${classMap({ [`variant-${this.variant}`]: true })}>
+    /**
+     * @todo fix the collapsed whitespace between the end of the "inline-compact" variant and the text node.
+     * This demonstrates the collapsed whitespace issue.
+     * The extra space between the closing slot tag and the closing template litteral results in a collapsed whitespace.
+     *
+     * @example return html`<slot></slot> `;
+     * return html`<slot></slot> `;
+     */
+    return html`<div part="base" class=${classMap({ [`variant-${this.variant}`]: true, block: this.block })}>
+      ${this.variant === 'inline-compact' ? html`
+        ${this.renderTextTarget()}
+        ${this.renderActionButton()}
+        <slot name="additional-actions"></slot>
+      ` : html`
         <div part="input-group">
           ${this.renderDropdownTrigger()}
           ${this.renderTextTarget()}
@@ -96,6 +110,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
           <slot name="additional-actions"></slot>
         </div>
         ${this.renderDropdown()}
+      `}
       </div>
     `;
   }
@@ -106,7 +121,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   protected renderDropdownTrigger() {
     return html`
       ${this.variant === 'expansion' ? html`
-      <pfe-button variant="control" part="button">
+      <pfe-button variant="control" part="button dropdown-button">
         <button @click=${this._dropdownClickHandler}>
           ${this.expanded ? html`
           <slot name="dropdown-button-opened">
@@ -136,13 +151,13 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   protected renderTextTarget(): TemplateResult {
     return html`
       ${this.variant === 'expansion' || this.variant === 'inline' ? html`
-        <input part="value-target form-input" ?disabled=${this.expanded ? true : this.readonly} .value=${this.value} @input=${this._valueChangeHandler}><slot name="value" hidden @slotchange=${this._onSlotChange}><slot></slot></slot></input>
+        <input part="value form-input" ?disabled=${this.expanded ? true : this.readonly} .value=${this.value} @input=${this._valueChangeHandler}><slot name="value" hidden @slotchange=${this._onSlotChange}><slot></slot></slot></input>
       `
       : this.code ? html`
-        <code part="value-target"><slot name="value"><slot></slot></slot></code>
+        <code part="value"><slot name="value"><slot></slot></slot></code>
       `
       : html`
-        <div part="value-target"><slot name="value"><slot></slot></slot></div>
+        <span part="value"><slot name="value"><slot></slot></slot></span>
       `}
     `;
   }
@@ -152,7 +167,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
     const buttonVariant = this.variant === 'inline-compact' ? 'primary' : 'control';
     return html`
       <pfe-tooltip part="tooltip">
-        <pfe-button ?plain=${buttonPlain} variant=${buttonVariant} part="button">
+        <pfe-button ?plain=${buttonPlain} variant=${buttonVariant} part="button copy-button">
           <button aria-label="${this.hoverTip}" @click=${this._copyToClipboard}>
             <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;">
               <path d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"> </path>

@@ -24,16 +24,18 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
 
   static readonly styles = [baseStyles, styles];
 
-  @property() variant: ClipboardCopyVariant = 'inline';
-  @property({ type: Boolean }) expanded = false;
-  @property() hoverTip = 'Copy';
+  @property({ type: Boolean }) block = false;
+  @property({ type: Boolean }) code = false;
   @property() clickTip = 'Copied';
+  @property({ type: Boolean, reflect: true }) expanded = false;
+  @property() hoverTip = 'Copy';
   @property({ type: Number }) entryDelay = 300;
   @property({ type: Number }) exitDelay = 1500;
+  @property() textAriaLabel = 'Copyable input';
+  @property() toggleAriaLabel = 'Show content';
   @property({ type: Boolean }) readonly = false;
-  @property({ type: Boolean }) code = false;
-  @property({ type: Boolean }) block = false;
-  // Extends value from baseclass
+  @property() variant: ClipboardCopyVariant = 'inline';
+  // Extends value from base class
   @property() value = '';
   @state() _copied = false;
 
@@ -92,9 +94,9 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
     /**
      * @todo fix the collapsed whitespace between the end of the "inline-compact" variant and the text node.
      * This demonstrates the collapsed whitespace issue.
-     * The extra space between the closing slot tag and the closing template litteral results in a collapsed whitespace.
+     * The extra space between the closing slot tag and the closing template literal results in a collapsed whitespace.
      *
-     * @example return html`<slot></slot> `;
+     * @example
      * return html`<slot></slot> `;
      */
     return html`<div part="base" class=${classMap({ [`variant-${this.variant}`]: true, block: this.block })}>
@@ -122,9 +124,9 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
     return html`
       ${this.variant === 'expansion' ? html`
       <pfe-button variant="control" part="button dropdown-button">
-        <button @click=${this._dropdownClickHandler}>
+        <button @click=${this._dropdownClickHandler} aria-label=${this.textAriaLabel}>
           ${this.expanded ? html`
-          <slot name="dropdown-button-opened">
+          <slot name="dropdown-button-opened-icon">
             <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img"
               style="vertical-align: -0.125em;">
               <path
@@ -133,7 +135,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
             </svg>
           </slot>
           ` : html`
-          <slot name="dropdown-button-closed">
+          <slot name="dropdown-button-closed-icon">
             <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img"
               style="vertical-align: -0.125em;">
               <path
@@ -151,7 +153,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   protected renderTextTarget(): TemplateResult {
     return html`
       ${this.variant === 'expansion' || this.variant === 'inline' ? html`
-        <input part="value form-input" ?disabled=${this.expanded ? true : this.readonly} .value=${this.value} @input=${this._valueChangeHandler}><slot name="value" hidden @slotchange=${this._onSlotChange}><slot></slot></slot></input>
+        <input part="value form-input" ?disabled=${this.expanded ? true : this.readonly} .value=${this.value} @input=${this._valueChangeHandler} aria-label=${this.textAriaLabel}><slot name="value" hidden @slotchange=${this._onSlotChange}><slot></slot></slot></input>
       `
       : this.code ? html`
         <code part="value"><slot name="value"><slot></slot></slot></code>

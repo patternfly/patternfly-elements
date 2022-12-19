@@ -1,5 +1,16 @@
 # @patternfly/pfe-label
 
+## 1.0.0-next.6
+
+### Patch Changes
+
+- 7e95ddbe: - Abstracted base class property fields
+  - Removed reflected properties in pfe-tabs.ts opting for classMap() usage
+- Updated dependencies [6b6e2617]
+- Updated dependencies [6b6e2617]
+  - @patternfly/pfe-button@2.0.0-next.8
+  - @patternfly/pfe-core@2.0.0-next.12
+
 ## 1.0.0-next.5
 
 ### Patch Changes

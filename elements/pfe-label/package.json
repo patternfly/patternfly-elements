@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-label",
-  "version": "1.0.0-next.5",
+  "version": "1.0.0-next.6",
   "description": "PatternFly Elements | Label",
   "customElements": "custom-elements.json",
   "license": "MIT",
@@ -62,8 +62,8 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-button": "^2.0.0-next.7",
-    "@patternfly/pfe-core": "^2.0.0-next.10",
+    "@patternfly/pfe-button": "^2.0.0-next.8",
+    "@patternfly/pfe-core": "^2.0.0-next.12",
     "@patternfly/pfe-icon": "^2.0.0-next.5",
     "lit": "2.3.0"
   }

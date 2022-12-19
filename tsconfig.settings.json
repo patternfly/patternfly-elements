@@ -50,6 +50,7 @@
       "DOM",
       "es2015.iterable",
       "es2020",
+      "es2022",
       "es5",
       "es6",
       "ScriptHost"

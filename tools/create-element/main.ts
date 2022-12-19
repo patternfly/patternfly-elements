@@ -24,6 +24,7 @@ export interface GenerateElementOptions extends BaseOptions {
   /** The element's npm package scope e.g. `patternfly` */
   scope: string;
 }
+
 export type PromptOptions<T> =
   Partial<T> & BaseOptions;
 
@@ -96,7 +97,7 @@ export async function promptForElementGeneratorOptions(
 
 export async function main(): Promise<void> {
   return Promise.resolve(
-    Yargs(process.argv)
+    (Yargs(process.argv) as Yargs.Argv<GenerateElementOptions>)
       .scriptName('npm init @patternfly/element')
       .usage('$0 [<cmd>] [args]')
       .option('directory', {
@@ -132,7 +133,7 @@ export async function main(): Promise<void> {
       })
       .option('css', {
         type: 'boolean',
-        default: await isMonorepo() ? 'scss' as const : 'css' as const,
+        default: (await isMonorepo() ? 'scss' : 'css') as 'css'|'scss'|'postcss',
         description: 'Which type of CSS files to output',
       })
       .help()
@@ -143,7 +144,7 @@ export async function main(): Promise<void> {
           return true;
         }
       }))
-    .then(({ argv }) => argv)
+    .then(({ argv }) => argv as GenerateElementOptions)
     .then(promptForElementGeneratorOptions)
     .then(generateElement);
 }

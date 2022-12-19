@@ -259,6 +259,7 @@ export async function generateElement(options: GenerateElementOptions): Promise<
     return console.log('‼️ No package.json found.', '� Scaffold a repository first');
   } else {
     await writeElementFiles(options);
+    analyzeElement; // skip this for now, come back to fix later
     // await analyzeElement(options);
     if (options.monorepo) {
       await updateTsconfig(options);

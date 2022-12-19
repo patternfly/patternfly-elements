@@ -5,6 +5,7 @@ import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import { NumberListConverter } from '@patternfly/pfe-core';
 
 import style from './BaseTooltip.scss';
 
@@ -20,12 +21,7 @@ export abstract class BaseTooltip extends LitElement {
    *     <pfe-tooltip offset="5,6">...</pfe-tooltip>
    *     ```
    */
-  @property({ converter: {
-    fromAttribute(numbers: string) {
-      return numbers.split(',').map(x => parseInt(x.trim()));
-    }
-  } })
-    offset = [0, 15];
+  @property({ converter: NumberListConverter }) offset = [0, 15];
 
   #domController: FloatingDOMController = new FloatingDOMController(this);
 

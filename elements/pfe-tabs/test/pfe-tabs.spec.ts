@@ -1,8 +1,6 @@
-
 import { expect, html, nextFrame, aTimeout } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { setViewport } from '@web/test-runner-commands';
-import { BaseTabs } from '../BaseTabs.js';
 import { BaseTab } from '../BaseTab.js';
 import { PfeTabs } from '../pfe-tabs.js';
 

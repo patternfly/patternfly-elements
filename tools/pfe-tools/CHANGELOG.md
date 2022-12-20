@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.38
+
+### Patch Changes
+
+- 8294d385: Fixed package publishing automation scripts.
+
 ## 1.0.0-next.37
 
 ### Patch Changes

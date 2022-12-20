@@ -140,12 +140,12 @@ describe('<pfe-card>', function() {
       it('should be accessible in both the light and shadow dom', async function() {
         expect(element).to.be.accessible();
       });
-
-      it.skip('should have an article element wrapper in the shadow dom', async function() {
-        const snapshot = await a11ySnapshot();
-        const foundNode = findAccessibilityNode(snapshot, node => node.role === 'WebArea');
-        expect(foundNode, 'A node with the supplied name has been found.').to.not.be.null;
-      });
+      // TODO: this has been flaky. revisit later
+      // it('should have an article element wrapper in the shadow dom', async function() {
+      //   const snapshot = await a11ySnapshot();
+      //   const foundNode = findAccessibilityNode(snapshot, node => node.role === 'WebArea');
+      //   expect(foundNode, 'A node with the supplied name has been found.').to.not.be.null;
+      // });
     });
   });
 

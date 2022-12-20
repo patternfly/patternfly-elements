@@ -8,41 +8,29 @@
 <link rel="stylesheet" href="/elements/pfe-card/demo/demo.css" />
 <script type="module" src="./pfe-card.js"></script>
 
-<div>
-  <pfe-switch id="compact"></pfe-switch>
-  <label for="compact">Compact</label>
-</div>
-
-<div>
-  <pfe-switch id="flat"></pfe-switch>
+<form id="card-settings">
+  <pfe-switch id="flat" data-attribute="flat"></pfe-switch>
   <label for="flat">Flat</label>
-</div>
 
-<div>
-  <pfe-switch id="rounded"></pfe-switch>
+  <pfe-switch id="rounded" data-attribute="rounded"></pfe-switch>
   <label for="rounded">Rounded</label>
-</div>
 
-<div>
-  <pfe-switch id="large"></pfe-switch>
-  <label for="large">Large</label>
-</div>
-
-<div>
-  <pfe-switch id="fullHeight"></pfe-switch>
-  <label for="fullHeight">Full Height</label>
-</div>
-
-<div>
-  <pfe-switch id="plain"></pfe-switch>
+  <pfe-switch id="plain" data-attribute="plain"></pfe-switch>
   <label for="plain">Plain</label>
-</div>
 
-<div id="card-container">
+  <pfe-switch id="full-height" data-attribute="full-height"></pfe-switch>
+  <label for="full-height">Full Height</label>
+
+  <pfe-switch id="size" data-attribute="size"></pfe-switch>
+  <label for="size" data-state="on">Compact</label>
+  <label for="size" data-state="off">Large</label>
+</form>
+
+<div id="card-container" class="resize">
   <pfe-card>
     <h2 slot="header">Lightest card</h2>
     <p>This is the lightest pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a> with <code>border</code>.</p>
-    <pfe-button slot="footer"><button>Try</button></pfe-button>
-    <pfe-button slot="footer"><button>Buy</button></pfe-button>
+    <pfe-button slot="footer">Try</pfe-button>
+    <pfe-button slot="footer">Buy</pfe-button>
   </pfe-card>
 </div>

@@ -57,7 +57,7 @@ export class PfeCard extends BaseCard {
    * Compact provides styles which decreases the padding between the sections.
    * Large provides styles which increases the padding between the sections and the font size for the title, header, and footer.
    */
-  @property({ reflect: true }) size: 'compact' | 'large' | undefined = undefined;
+  @property({ reflect: true }) size?: 'compact' | 'large';
 
   /**
   * Optionally apply a border radius for the drop shadow and/or border.

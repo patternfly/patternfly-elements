@@ -41,18 +41,12 @@
   --_pf-c-card__body--FullHeight--Flex: 1 1 auto;
 }
 
-[part="title"] {
-  font-family: var(--pf-c-card__title--FontFamily, var(--pf-global--FontFamily--heading--sans-serif, "RedHatDisplayUpdated", helvetica, arial, sans-serif));
-  font-size: var(--pf-c-card__title--FontSize, var(--pf-global--FontSize--md, 1rem));
-  font-weight: var(--pf-c-card__title--FontWeight, var(--pf-global--FontWeight--bold, 700));
-}
-
 [part="header"],
 [part="body"],
 [part="footer"] {
-  padding-right: var(--_pf-c-card--child--PaddingRight, var(--pf-global--spacer--lg, 1.5rem));
-  padding-bottom: var(--_pf-c-card--child--PaddingBottom, var(--pf-global--spacer--lg, 1.5rem));
-  padding-left: var(--_pf-c-card--child--PaddingLeft, var(--pf-global--spacer--lg, 1.5rem));
+  padding-inline-start: var(--_pf-c-card--child--PaddingLeft, var(--pf-global--spacer--lg, 1.5rem));
+  padding-inline-end: var(--_pf-c-card--child--PaddingRight, var(--pf-global--spacer--lg, 1.5rem));
+  padding-block-end: var(--_pf-c-card--child--PaddingBottom, var(--pf-global--spacer--lg, 1.5rem));
 }
 
 [part="body"] {
@@ -60,13 +54,16 @@
   flex: var(--_pf-c-card__body--FullHeight--Flex, initial);
 }
 
-[part="header"]:first-child {
-  padding-top: var(--_pf-c-card--first-child--PaddingTop, var(--pf-global--spacer--lg, 1.5rem));
+header {
+  padding-block-start: var(--_pf-c-card--first-child--PaddingTop, var(--pf-global--spacer--lg, 1.5rem));
+  padding-block-end: var(--_pf-c-card__title--not--last-child--PaddingBottom, var(--pf-global--spacer--md, 1rem));
 }
 
-[part="header"]:not(:last-child),
-[part="title"]:not(:last-child) {
-  padding-bottom: var(--_pf-c-card__title--not--last-child--PaddingBottom, var(--pf-global--spacer--md, 1rem));
+header ::slotted(*) {
+  font-family: var(--pf-c-card__title--FontFamily, var(--pf-global--FontFamily--heading--sans-serif, "RedHatDisplayUpdated", helvetica, arial, sans-serif));
+  font-size: var(--pf-c-card__title--FontSize, var(--pf-global--FontSize--md, 1rem));
+  font-weight: var(--pf-c-card__title--FontWeight, var(--pf-global--FontWeight--bold, 700));
+  margin-block: 0;
 }
 
 [part="footer"] {

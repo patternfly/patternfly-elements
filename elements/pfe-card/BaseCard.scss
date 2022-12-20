@@ -3,13 +3,26 @@
   flex-direction: column;
 }
 
-::slotted(*) {
-  margin: 0;
-}
-
-::slotted([slot="header"]) {
+[part=header] {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+[part=body] ::slotted(:not([slot]):first-of-type) {
+  margin-block-start: 0;
+}
+
+[part=body] ::slotted(:not([slot]):last-of-type) {
+  margin-block-end: 0;
+}
+
+[part=footer] {
+  display: flex;
+  gap: 0.5em;
+}
+
+.empty {
+  display: none;
 }
 

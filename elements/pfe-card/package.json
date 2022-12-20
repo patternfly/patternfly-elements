@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-card",
   "license": "MIT",
-  "version": "2.0.0-next.6",
+  "version": "2.0.0-next.7",
   "description": "Cards for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",

@@ -1,31 +1,24 @@
 import type { TemplateResult } from 'lit';
-import type { ColorTheme, ColorPalette } from '@patternfly/pfe-core';
 
 import { LitElement, html } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
-import {
-  bound,
-  colorContextConsumer,
-  colorContextProvider,
-  deprecation,
-  initializer,
-  observed,
-} from '@patternfly/pfe-core/decorators.js';
+import { observed } from '@patternfly/pfe-core/decorators.js';
 
 import { NumberListConverter, ComposedEvent } from '@patternfly/pfe-core';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
-import style from './BaseAccordion.scss';
 import { AccordionHeaderChangeEvent, BaseAccordionHeader } from './BaseAccordionHeader.js';
 import { BaseAccordionPanel } from './BaseAccordionPanel.js';
+
+import style from './BaseAccordion.scss';
 
 const CSS_TIMING_UNITS_RE = /^[0-9.]+(?<unit>[a-zA-Z]+)/g;
 
 export class AccordionExpandEvent extends ComposedEvent {
   constructor(
-      public toggle: BaseAccordionHeader,
-      public panel: BaseAccordionPanel,
+    public toggle: BaseAccordionHeader,
+    public panel: BaseAccordionPanel,
   ) {
     super('expand');
   }
@@ -33,109 +26,57 @@ export class AccordionExpandEvent extends ComposedEvent {
 
 export class AccordionCollapseEvent extends ComposedEvent {
   constructor(
-      public toggle: BaseAccordionHeader,
-      public panel: BaseAccordionPanel,
+    public toggle: BaseAccordionHeader,
+    public panel: BaseAccordionPanel,
   ) {
     super('collapse');
   }
 }
 
-
 export abstract class BaseAccordion extends LitElement {
   static readonly styles = [style];
 
-  static isHeader(element: Element|null): element is BaseAccordionHeader {
-    return element instanceof BaseAccordionHeader;
+  static isAccordion(target: EventTarget | null): target is BaseAccordion {
+    return target instanceof BaseAccordion;
   }
 
-  static isPanel(element: Element|null): element is BaseAccordionPanel {
-    return element instanceof BaseAccordionPanel;
+  static isHeader(target: EventTarget | null): target is BaseAccordionHeader {
+    return target instanceof BaseAccordionHeader;
+  }
+
+  static isPanel(target: EventTarget | null): target is BaseAccordionPanel {
+    return target instanceof BaseAccordionPanel;
   }
 
   /**
-   * Sets color palette, which affects the element's styles as well as descendants' color theme.
-   * Overrides parent color context.
-   * Your theme will influence these colors so check there first if you are seeing inconsistencies.
-   * See [Color](https://patternflyelements.org/theming/colors/) for default values
-   */
-  @colorContextProvider()
-  @property({ reflect: true, attribute: 'color-palette' }) colorPalette?: ColorPalette;
-
-  /** @deprecated use `color-palette` */
-  @deprecation({ alias: 'colorPalette', attribute: 'color' }) color?: ColorPalette;
-
-  /**
-   * Sets color theme based on parent context
-   */
-  @colorContextConsumer()
-  @property({ reflect: true }) on: ColorTheme = 'light';
-
-  @property({ reflect: true })
-    single?: 'true'|'false';
-
-  /**
-   * Updates `window.history` and the URL to create sharable links.
-   * With the `history` attribute, the accordion *must* have an `id`.
-   *
-   * The URL pattern will be `?{id-of-tabs}={index-of-expanded-items}`.
-   * In the example below, selecting "Accordion 2" will update the URL as follows:
-   * `?lorem-ipsum=2`. The index value for the expanded items starts at 1.
-   *
+   * Sets and reflects the currently expanded accordion 0-based indexes.
+   * Use commas to separate multiple indexes.
    * ```html
-   * <pfe-accordion history id="lorem-ipsum">
-   *   <pfe-accordion-header>
-   *     <h3>Accordion 1</h3>
-   *   </pfe-accordion-header>
-   *   <pfe-accordion-panel>
-   *     <p>Accordion 1 panel content.</p>
-   *   </pfe-accordion-panel>
-   *   <pfe-accordion-header>
-   *     <h3>Accordion 2</h3>
-   *   </pfe-accordion-header>
-   *   <pfe-accordion-panel>
-   *     <p>Accordion 2 panel content.</p>
-   *   </pfe-accordion-panel>
-   * </pfe-accordion>
-   * ```
-   *
-   * To expand multiple sets, you can dash separate indexes: ?lorem-ipsum=1-2.
-   */
-  @observed
-  @property({ type: Boolean }) history = false;
-
-  /**
-   * Sets and reflects the currently expanded accordion indexes.
-   * Use commas to separate multiple indexes. The index value for the
-   * expanded items starts at 1.
-   *
-   * ```html
-   * <pfe-accordion expanded-index="2,3">
+   * <pfe-accordion expanded-index="1,2">
    *   ...
    * </pfe-accordion>
    * ```
    */
-  @observed
-  @property({ attribute: 'expanded-index', converter: NumberListConverter })
-    expandedIndex: number[] = [];
+  @observed(async function expandedIndexChanged(this: BaseAccordion) {
+    await this.collapseAll();
+    for (const i of this.expandedIndex) {
+      await this.expand(i, this);
+    }
+  })
+  @property({
+    attribute: 'expanded-index',
+    converter: NumberListConverter
+  }) expandedIndex: number[] = [];
 
-  /**
-   * Changes the context of the accordion to one of 3 possible themes:
-   *
-   * - `light` (default)
-   * - `dark`
-   * - `saturated`
-   *
-   * This will override any context being passed from a parent component
-   * and will add a style attribute setting the `--theme` variable.
-   * @attr context
-   */
-  declare context: 'light'|'dark'|'saturated';
+  get headers() {
+    return this.#allHeaders();
+  }
 
-  @state() private _updateHistory = true;
+  get panels() {
+    return this.#allPanels();
+  }
 
-  #expandedSets = new Set<number>();
-
-  private initialized = false;
+  protected expandedSets = new Set<number>();
 
   #logger = new Logger(this);
 
@@ -143,10 +84,26 @@ export abstract class BaseAccordion extends LitElement {
 
   #transitionDuration = this.#getAnimationDuration();
 
+  // actually is read in #init, by the `||=` operator
+  #initialized = false;
+
+  protected override async getUpdateComplete(): Promise<boolean> {
+    const c = await super.getUpdateComplete();
+    const results = await Promise.all([
+      ...this.#allHeaders().map(x => x.updateComplete),
+      ...this.#allPanels().map(x => x.updateComplete),
+    ]);
+    return c && results.every(Boolean);
+  }
+
+  #mo = new MutationObserver(() => this.#init());
+
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('change', this._changeHandler as EventListener);
-    this.addEventListener('keydown', this.#keydownHandler);
+    this.addEventListener('change', this.#onChange as EventListener);
+    this.addEventListener('keydown', this.#onKeydown);
+    this.#mo.observe(this, { childList: true });
+    this.#init();
   }
 
   render(): TemplateResult {
@@ -155,84 +112,33 @@ export abstract class BaseAccordion extends LitElement {
     `;
   }
 
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    window.removeEventListener('popstate', this._updateStateFromURL);
-  }
-
-  isAccordionPanel(el?: EventTarget|null): el is BaseAccordionPanel {
-    return el instanceof Element;
-  }
-
-  _panelForHeader(header: BaseAccordionHeader) {
-    const next = header.nextElementSibling;
-
-    if (!next) {
-      return;
-    }
-
-    if (!this.isAccordionPanel(next)) {
-      this.#logger.error('Sibling element to a header needs to be a panel');
-      return;
-    }
-
-    return next;
-  }
-
   /**
    * Initialize the accordion by connecting headers and panels
    * with aria controls and labels; set up the default disclosure
    * state if not set by the author; and check the URL for default
    * open
    */
-  @initializer() protected async _init() {
-    if (!this.initialized) {
-      await this.updateComplete;
-      this.initialized = true;
-    }
-
+  async #init() {
+    this.#initialized ||= !!await this.updateComplete;
     this.updateAccessibility();
-
-    // Update state if params exist in the URL
-    this._updateStateFromURL();
   }
 
-  @bound private _changeHandler(event: AccordionHeaderChangeEvent) {
-    if (this.classList.contains('animating')) {
-      return;
-    }
-
-    const index = this.#getIndex(event.target as Element);
-
-    if (event.expanded) {
-      this.expand(index, event.accordion);
+  #panelForHeader(header: BaseAccordionHeader) {
+    const next = header.nextElementSibling;
+    if (!BaseAccordion.isPanel(next)) {
+      return void this.#logger.error('Sibling element to a header needs to be a panel');
     } else {
-      this.collapse(index);
+      return next;
     }
-
-    this._updateURLHistory();
   }
 
-  _expandHeader(header: BaseAccordionHeader, index?: number) {
-    if (index === undefined) {
-      index = this.#getIndex(header);
-    }
+  #expandHeader(header: BaseAccordionHeader, index = this.#getIndex(header)) {
     // If this index is not already listed in the expandedSets array, add it
-    this.#expandedSets.add(index);
-
+    this.expandedSets.add(index);
     header.expanded = true;
   }
 
-  private async _expandPanel(panel: BaseAccordionPanel) {
-    if (!panel) {
-      this.#logger.error(`Trying to expand a panel that doesn't exist.`);
-      return;
-    }
-
-    if (panel.expanded) {
-      return;
-    }
-
+  async #expandPanel(panel: BaseAccordionPanel) {
     panel.expanded = true;
     panel.hidden = false;
 
@@ -240,26 +146,20 @@ export abstract class BaseAccordion extends LitElement {
 
     const rect = panel.getBoundingClientRect();
 
-    this._animate(panel, 0, rect.height);
+    this.#animate(panel, 0, rect.height);
   }
 
-  private _collapseHeader(header: BaseAccordionHeader) {
-    const index = this.#getIndex(header);
-
-    // If this index is exists in the expanded array, remove it
-    this.#expandedSets.delete(index);
-
-    header.expanded = false;
-  }
-
-  private async _collapsePanel(panel: BaseAccordionPanel) {
-    if (!panel) {
-      this.#logger.error(`Trying to collapse a panel that doesn't exist`);
-      return;
+  async #collapseHeader(header: BaseAccordionHeader, index = this.#getIndex(header)) {
+    if (!this.expandedSets) {
+      await this.updateComplete;
     }
+    this.expandedSets.delete(index);
+    header.expanded = false;
+    await header.updateComplete;
+  }
 
+  async #collapsePanel(panel: BaseAccordionPanel) {
     await panel.updateComplete;
-
     if (!panel.expanded) {
       return;
     }
@@ -269,7 +169,8 @@ export abstract class BaseAccordion extends LitElement {
     panel.expanded = false;
     panel.hidden = true;
 
-    this._animate(panel, rect.height, 0);
+    this.#animate(panel, rect.height, 0);
+    await panel.updateComplete;
   }
 
   #getAnimationDuration(): number {
@@ -295,7 +196,7 @@ export abstract class BaseAccordion extends LitElement {
     }
   }
 
-  private async _animate(panel: BaseAccordionPanel, start: number, end: number) {
+  async #animate(panel: BaseAccordionPanel, start: number, end: number) {
     if (panel) {
       const header = panel.previousElementSibling;
 
@@ -321,17 +222,31 @@ export abstract class BaseAccordion extends LitElement {
     }
   }
 
+  #onChange(event: AccordionHeaderChangeEvent) {
+    if (this.classList.contains('animating')) {
+      return;
+    }
+
+    const index = this.#getIndex(event.target as Element);
+
+    if (event.expanded) {
+      this.expand(index, event.accordion);
+    } else {
+      this.collapse(index);
+    }
+  }
+
   /**
    * @see https://www.w3.org/TR/wai-aria-practices/#accordion
    */
-  async #keydownHandler(evt: KeyboardEvent) {
+  async #onKeydown(evt: KeyboardEvent) {
     const currentHeader = evt.target as Element;
 
     if (!BaseAccordion.isHeader(currentHeader)) {
       return;
     }
 
-    let newHeader: BaseAccordionHeader;
+    let newHeader: BaseAccordionHeader | undefined;
 
     switch (evt.key) {
       case 'ArrowDown':
@@ -350,143 +265,58 @@ export abstract class BaseAccordion extends LitElement {
         evt.preventDefault();
         newHeader = this.#lastHeader();
         break;
-      default:
-        return;
     }
 
     newHeader?.focus?.();
   }
 
-  #allHeaders(accordion?: BaseAccordion): BaseAccordionHeader[] {
-    if ( accordion !== undefined ) {
-      return Array.from(accordion.children).filter(BaseAccordion.isHeader);
-    }
-    return Array.from(this.children).filter(BaseAccordion.isHeader);
+  #allHeaders(accordion: BaseAccordion = this): BaseAccordionHeader[] {
+    return Array.from(accordion.children).filter(BaseAccordion.isHeader);
   }
 
-  #allPanels(accordion?: BaseAccordion): BaseAccordionPanel[] {
-    if ( accordion !== undefined ) {
-      return Array.from(accordion.children).filter(BaseAccordion.isPanel);
-    }
-    return Array.from(this.children).filter(BaseAccordion.isPanel);
+  #allPanels(accordion: BaseAccordion = this): BaseAccordionPanel[] {
+    return Array.from(accordion.children).filter(BaseAccordion.isPanel);
   }
 
   #previousHeader() {
-    const headers = this.#allHeaders();
+    const { headers } = this;
     const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) - 1;
     return headers[(newIndex + headers.length) % headers.length];
   }
 
   #nextHeader() {
-    const headers = this.#allHeaders();
+    const { headers } = this;
     const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) + 1;
     return headers[newIndex % headers.length];
   }
 
   #firstHeader() {
-    const headers = this.#allHeaders();
-    return headers[0];
+    return this.headers.at(0);
   }
 
   #lastHeader() {
-    const headers = this.#allHeaders();
-    return headers[headers.length - 1];
+    return this.headers.at(-1);
   }
 
-  protected async _expandedIndexChanged(oldVal?: number[], newVal?: number[]) {
-    await this.updateComplete;
-    if (oldVal === newVal || !Array.isArray(newVal)) {
-      return;
-    }
-    [...newVal].reverse().forEach(i => this.expand(i - 1));
-  }
-
-  #getIndex(_el: Element|null) {
-    if (BaseAccordion.isHeader(_el)) {
-      const headers = this.#allHeaders();
-      return headers.findIndex(header => header.id === _el.id);
+  #getIndex(el: Element | null) {
+    if (BaseAccordion.isHeader(el)) {
+      return this.headers.findIndex(header => header.id === el.id);
     }
 
-    if (BaseAccordion.isPanel(_el)) {
-      const panels = this.#allPanels();
-      return panels.findIndex(panel => panel.id === _el.id);
+    if (BaseAccordion.isPanel(el)) {
+      return this.panels.findIndex(panel => panel.id === el.id);
     }
 
-    this.#logger.warn('The _getIndex method expects to receive a header or panel element.');
+    this.#logger.warn('The #getIndex method expects to receive a header or panel element.');
     return -1;
   }
 
-  @bound private _getIndexesFromURL() {
-    // Capture the URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-
-    // If parameters exist and they contain the ID for this accordion
-    if (urlParams.has(this.id)) {
-      const params = urlParams.get(this.id);
-      // Split the parameters by underscore to see if more than 1 item is expanded
-      const indexes = (params ?? '').split('-');
-      if (indexes.length < 0) {
-        return [];
-      }
-
-      // Clean up the results by converting to array count
-      return indexes.map(item => parseInt(item.trim(), 10) - 1);
-    }
-  }
-
-  /**
-   * This handles updating the URL parameters based on the current state
-   * of the global this.expanded array
-   * @requires this.expandedSets {Array}
-   */
-  @bound private _updateURLHistory() {
-    if (!this.history || !this._updateHistory) {
-      return;
-    }
-
-    if (!this.id) {
-      this.#logger.error(`The history feature cannot update the URL without an ID added to the accordion tag.`);
-      return;
-    }
-
-    // Iterate the expanded array by 1 to convert to human-readable vs. array notation;
-    // sort values numerically and connect them using a dash
-    const openIndexes = Array.from(this.#expandedSets, item => item + 1)
-      .sort((a, b) => a - b)
-      .join('-');
-
-    // Capture the URL and rebuild it using the new state
-    const url = new URL(window.location.href);
-
-    // If values exist in the array, add them to the parameter string
-    // Otherwise delete the set entirely
-    if (this.#expandedSets.size > 0) {
-      url.searchParams.set(this.id, openIndexes);
-    } else {
-      url.searchParams.delete(this.id);
-    }
-
-    // Note: Using replace state protects the user's back navigation
-    history.replaceState({}, '', url.toString());
-  }
-
-  /**
-   * This captures the URL parameters and expands each item in the array
-   */
-  @bound private _updateStateFromURL() {
-    const indexesFromURL = this._getIndexesFromURL() ?? [];
-
-    this._updateHistory = false;
-    indexesFromURL.forEach(idx => this.expand(idx));
-    this._updateHistory = true;
-  }
-
   public updateAccessibility() {
-    const headers = this.#allHeaders();
+    const { headers } = this;
 
     // For each header in the accordion, attach the aria connections
     headers.forEach(header => {
-      const panel = this._panelForHeader(header);
+      const panel = this.#panelForHeader(header);
       if (panel) {
         header.setAttribute('aria-controls', panel.id);
         panel.setAttribute('aria-labelledby', header.id);
@@ -498,101 +328,81 @@ export abstract class BaseAccordion extends LitElement {
   /**
    * Accepts a 0-based index value (integer) for the set of accordion items to expand or collapse.
    */
-  public toggle(index: number) {
-    const headers = this.#allHeaders();
+  public async toggle(index: number) {
+    const { headers } = this;
     const header = headers[index];
 
     if (!header.expanded) {
-      this.expand(index);
+      await this.expand(index);
     } else {
-      this.collapse(index);
+      await this.collapse(index);
     }
   }
 
   /**
    * Accepts a 0-based index value (integer) for the set of accordion items to expand.
    */
-  public expand(index: number, parentAccordion?: BaseAccordion) {
-    if (index == null) {
-      return;
-    }
-
-    // Ensure the input is a number
-    index = parseInt(`${index}`, 10);
-
+  public async expand(index: number, parentAccordion?: BaseAccordion) {
     if (index === -1) {
       return;
     }
 
     const allHeaders: Array<BaseAccordionHeader> = this.#allHeaders(parentAccordion);
-    const allPanels: Array<BaseAccordionPanel> = this.#allPanels(parentAccordion);
 
-    // Get all the headers and capture the item by index value
-    if (this.single === 'true' && this._updateHistory) {
-      const allOpenedHeaders = allHeaders.filter(header => header.expanded);
-      const allOpenedPanels = allPanels.filter(panel => panel.expanded);
-
-      allOpenedHeaders.forEach(header => this._collapseHeader(header));
-      allOpenedPanels.forEach(panel => this._collapsePanel(panel));
-    }
-
-    const toggle = allHeaders[index];
-    if (!toggle) {
+    const header = allHeaders[index];
+    if (!header) {
       return;
     }
 
-    const panel = this._panelForHeader(toggle);
-    if (!toggle || !panel) {
+    const panel = this.#panelForHeader(header);
+    if (!panel) {
       return;
     }
-
 
     // If the header and panel exist, open both
-    this._expandHeader(toggle, index);
-    this._expandPanel(panel);
+    this.#expandHeader(header, index),
+    this.#expandPanel(panel),
 
-    toggle.focus();
+    header.focus();
 
-    this.dispatchEvent(new AccordionExpandEvent(toggle, panel));
+    this.dispatchEvent(new AccordionExpandEvent(header, panel));
+
+    await this.updateComplete;
   }
 
   /**
    * Expands all accordion items.
    */
-  public expandAll() {
-    const headers = this.#allHeaders();
-    const panels = this.#allPanels();
-
-    headers.forEach(header => this._expandHeader(header));
-    panels.forEach(panel => this._expandPanel(panel));
+  public async expandAll() {
+    this.headers.forEach(header => this.#expandHeader(header));
+    this.panels.forEach(panel => this.#expandPanel(panel));
+    await this.updateComplete;
   }
 
   /**
    * Accepts a 0-based index value (integer) for the set of accordion items to collapse.
    */
-  public collapse(index: number) {
-    const headers = this.#allHeaders();
-    const panels = this.#allPanels();
-    const toggle = headers[index];
-    const panel = panels[index];
+  public async collapse(index: number) {
+    const header = this.headers.at(index);
+    const panel = this.panels.at(index);
 
-    if (!toggle || !panel) {
+    if (!header || !panel) {
       return;
     }
 
-    this._collapseHeader(toggle);
-    this._collapsePanel(panel);
-    this.dispatchEvent(new AccordionCollapseEvent(toggle, panel));
+    this.#collapseHeader(header);
+    this.#collapsePanel(panel);
+
+    this.dispatchEvent(new AccordionCollapseEvent(header, panel));
+    await this.updateComplete;
   }
 
   /**
    * Collapses all accordion items.
    */
   public async collapseAll() {
-    const headers = this.#allHeaders();
-    const panels = this.#allPanels();
-
-    await headers.forEach(header => this._collapseHeader(header));
-    await panels.forEach(panel => this._collapsePanel(panel));
+    this.headers.forEach(header => this.#collapseHeader(header));
+    this.panels.forEach(panel => this.#collapsePanel(panel));
+    await this.updateComplete;
   }
 }

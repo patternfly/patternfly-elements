@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.39
+
+### Minor Changes
+
+- d47ecddf: Added `A11ySnapshot` type to pfe-tools
+
 ## 1.0.0-next.38
 
 ### Patch Changes

@@ -4,38 +4,46 @@ import { PfeCodeBlock } from '@patternfly/pfe-code-block';
 
 const element = html`
   <pfe-code-block id="code">
-    <span slot="code">apiVersion: helm.openshift.io/v1beta1/
-kind: HelmChartRepository
-metadata:
-name: azure-sample-repo
-spec:
-connectionConfig:
-url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs</span>
-    <button slot="actions">Button</button>
+    <script type="application/openshift">
+      apiVersion: helm.openshift.io/v1beta1/
+      kind: HelmChartRepository
+      metadata:
+      name: azure-sample-repo0oooo00ooo
+      spec:
+      connectionConfig:
+      url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
+    </script>
+    <pfe-clipboard slot="actions" copy-from="#code"></pfe-clipboard>
   </pfe-code-block>
 `;
 
 const expandElement = html`
   <pfe-code-block id="expandable-code">
-    <span slot="code">apiVersion: helm.openshift.io/v1beta1/
-kind: HelmChartRepository
-metadata:
-name: azure-sample-repo</span><span slot="expandable-code">spec:
-connectionConfig:
-url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs</span>
+    <script type="application/openshift">
+      apiVersion: helm.openshift.io/v1beta1/
+      kind: HelmChartRepository
+      metadata:
+      name: azure-sample-repo</script><script type="application/openshift" data-expand>
+      spec:
+      connectionConfig:
+      url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
+    </script>
     <pfe-clipboard slot="actions" copy-from="#expandable-code"></pfe-clipboard>
   </pfe-code-block>
 `;
 
 const expandElementByDefault = html`
-  <pfe-code-block id="expandable-code" expanded>
-    <span slot="code">apiVersion: helm.openshift.io/v1beta1/
-kind: HelmChartRepository
-metadata:
-name: azure-sample-repo</span><span slot="expandable-code">spec:
-connectionConfig:
-url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs</span>
-    <pfe-clipboard slot="actions" copy-from="#expandable-code"></pfe-clipboard>
+  <pfe-code-block id="expandable-code-expanded" expanded>
+    <script type="application/openshift">
+      apiVersion: helm.openshift.io/v1beta1/
+      kind: HelmChartRepository
+      metadata:
+      name: azure-sample-repo</script><script type="application/openshift" data-expand>
+      spec:
+      connectionConfig:
+      url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
+    </script>
+    <pfe-clipboard slot="actions" copy-from="#expandable-code-expanded"></pfe-clipboard>
   </pfe-code-block>
 `;
 
@@ -52,7 +60,7 @@ describe('<pfe-code-block>', function() {
   it('should not show a "Show more" button by default', async function() {
     const el = await createFixture <PfeCodeBlock>(element);
     const button = el.shadowRoot?.querySelector('button');
-    expect(button).to.be.null;
+    expect(button?.hidden).to.be.true;
   });
 
   it('should show a "Show more" button if content is present in the expandable-code slot', async function() {

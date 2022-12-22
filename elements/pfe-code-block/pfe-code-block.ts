@@ -1,4 +1,6 @@
-import { customElement } from 'lit/decorators.js';
+import { html } from 'lit';
+import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { BaseCodeBlock } from './BaseCodeBlock.js';
 import styles from './pfe-code-block.scss';
 
@@ -27,6 +29,38 @@ import styles from './pfe-code-block.scss';
 export class PfeCodeBlock extends BaseCodeBlock {
   static readonly version = '{{version}}';
   static readonly styles = [...BaseCodeBlock.styles, styles];
+
+  @property({ type: Boolean, reflect: true }) expanded = false;
+
+  #toggle() {
+    this.expanded = !this.expanded;
+  }
+
+  get #expandedContent(): string {
+    return this.querySelector('script[data-expand]')?.textContent ?? '';
+  }
+
+  override render() {
+    const { expanded } = this;
+    return html`
+      <div id="header">
+        <div id="actions">
+          <slot name="actions"></slot>
+        </div>
+      </div>
+      <div id="container" class="${classMap({ expanded })}">
+        <pre><code id="content">${this.content}</code><code id="code-block-expand"
+          ?hidden="${!expanded}">${this.#expandedContent}</code></pre>
+        <button ?hidden="${!this.#expandedContent}"
+                @click=${this.#toggle}
+                aria-expanded=${this.expanded}
+                aria-controls="code-block-expand">
+          <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 256 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+          ${!this.expanded ? 'Show more' : 'Show less'}
+        </button>
+      </div>
+    `;
+  }
 }
 
 declare global {

@@ -2,4 +2,4 @@
 "@patternfly/pfe-code-block": major
 ---
 
-adding pfe-code-block and removing pfe-codeblock
+Renamed `<pfe-codeblock>` to `<pfe-code-block>` and brought it into line with PatternFly v4 specs.

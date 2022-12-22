@@ -4,98 +4,33 @@
 <link rel="stylesheet" href="/core/pfe-styles/pfe-layouts.min.css">
 <link rel="stylesheet" href="/core/pfe-styles/pfe.min.css">
 <link rel="stylesheet" href="/elements/pfe-card/pfe-card--lightdom.min.css">
-<link rel="stylesheet" href="./demo.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe.min.css">
+<link rel="stylesheet" href="/elements/pfe-card/demo/demo.css" />
 <script type="module" src="./pfe-card.js"></script>
 
-<pfe-card color-palette="lightest" border class="button-series">
-  <h2 slot="header">Lightest card</h2>
-  <p>This is the lightest pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a> with <code>border</code>.</p>
-  <a class="cta primary" href="#" slot="footer">Try</a>
-  <a class="cta primary" href="#" slot="footer">Buy</a>
-</pfe-card>
+<form id="card-settings">
+  <pfe-switch id="flat" data-attribute="flat"></pfe-switch>
+  <label for="flat">Flat</label>
 
-<pfe-card class="button-series">
-  <h2 slot="header">Default card</h2>
-  Unwrapped item. This is the default pfe-card and <a href=#"">a link</a>, and <a href=".">a visited link</a>.
-  <a href="#" slot="footer">Try</a>
-  <a href="#" slot="footer">Buy</a>
-</pfe-card>
+  <pfe-switch id="rounded" data-attribute="rounded"></pfe-switch>
+  <label for="rounded">Rounded</label>
 
-<pfe-card color-palette="darker" class="button-series">
-  <h2 slot="header">Darker Card</h2>
-  <p>This is the darker pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
-  <a href="#" slot="footer">Try</a>
-  <a href="#" slot="footer">Buy</a>
-</pfe-card>
+  <pfe-switch id="plain" data-attribute="plain"></pfe-switch>
+  <label for="plain">Plain</label>
 
-<pfe-card color-palette="darkest">
-  <h2 slot="header">Darkest Card</h2>
-  <p>This is the darkest pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
-  <a href="#" slot="footer">Learn more</a>
-</pfe-card>
+  <pfe-switch id="full-height" data-attribute="full-height"></pfe-switch>
+  <label for="full-height">Full Height</label>
 
-<pfe-card color-palette="complement">
-  <h2 slot="header">Complement Card</h2>
-  <p>This is the complement pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
-  <a href="#" slot="footer">Learn more</a>
-</pfe-card>
+  <pfe-switch id="size" data-attribute="size"></pfe-switch>
+  <label for="size" data-state="on">Compact</label>
+  <label for="size" data-state="off">Large</label>
+</form>
 
-<pfe-card color-palette="accent">
-  <h2 slot="header">Accent Card</h2>
-  <p>This is the accent pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
-  <a href="#" slot="footer">Learn more</a>
-</pfe-card>
-
-<pfe-card color-palette="lightest" id="first-image">
-  <img overflow="top right left" src="/elements/pfe-card/demo/kitten-900x300.jpeg" alt="A cute kitten"/>
-  <h2>Imaged card with top & side overflow</h2>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis,
-    porro?</p>
-  <a href="#" slot="footer">Learn more</a>
-</pfe-card>
-
-<pfe-card color-palette="lightest" class="custom-header-background">
-  <h2 slot="header">Imaged card with side overflow + header</h2>
-  <img overflow="top right left" src="/elements/pfe-card/demo/kitten-500x250.jpeg" alt="A cute kitten"/>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis,
-    porro?</p>
-  <a href="#" slot="footer">Learn more</a>
-</pfe-card>
-
-<pfe-card color-palette="lighter">
-  <h2>Imaged card with side overflow</h2>
-  <img overflow="right left" src="/elements/pfe-card/demo/kitten-650x250.jpeg" alt="A cute kitten"/>
-  <a href="#" slot="footer">Learn more</a>
-</pfe-card>
-
-<pfe-card color-palette="darker">
-  <h2>Imaged card with side & bottom overflow</h2>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum tempore natus alias! Cumque illum
-    provident corrupti voluptates.</p>
-  <img overflow="right left bottom" src="/elements/pfe-card/demo/kitten-400x250.jpeg" slot="footer" alt="A cute kitten"/>
-</pfe-card>
-
-<pfe-card color-palette="darker" img-src="/elements/pfe-card/demo/kitten-500x500.jpeg"
-  style="--pfe-card__header--BackgroundColor--dark: rgba(45,45,45,.7);">
-  <h2 slot="header">Background Image on card </h2>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum tempore natus alias! Cumque illum
-    provident corrupti voluptates.</p>
-</pfe-card>
-
-<pfe-card>
-  <h2 slot="header">Deprecated <code>color</code> attribute</h2>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum tempore natus alias! Cumque illum
-    provident corrupti voluptates.</p>
-  <pfe-select id="context-selector" slot="footer">
-    <select>
-      <option disabled>Select a palette</option>
-      <option value="lightest">Lightest</option>
-      <option value="lighter">Lighter</option>
-      <option value="base" selected>Default</option>
-      <option value="darker">Darker</option>
-      <option value="darkest">Darkest</option>
-      <option value="accent">Accent</option>
-      <option value="complement">Complement</option>
-    </select>
-  </pfe-select>
-</pfe-card>
+<div id="card-container" class="resize">
+  <pfe-card>
+    <h2 slot="header">Lightest card</h2>
+    <p>This is the lightest pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a> with <code>border</code>.</p>
+    <pfe-button slot="footer">Try</pfe-button>
+    <pfe-button slot="footer">Buy</pfe-button>
+  </pfe-card>
+</div>

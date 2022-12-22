@@ -298,9 +298,7 @@ export class PfeAutocomplete extends LitElement {
           part="text-search-button"
           ?hidden="${!this.showTextualSearch || searchButtonsDisabled}"
           @click="${this._search}">
-        <button class="search-button__text"
-            ?disabled="${searchButtonsDisabled}"
-        >${this.buttonText || 'Search'}</button>
+        ${this.buttonText || 'Search'}
       </pfe-button>
     `;
   }

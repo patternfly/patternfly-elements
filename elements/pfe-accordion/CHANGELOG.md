@@ -1,5 +1,20 @@
 # @patternfly/pfe-accordion
 
+## 2.0.0-next.10
+
+### Major Changes
+
+- d47ecddf: - Made `expanded-index` attribute 0-based.
+  - Made `single` and other boolean attributes actually boolean, instead of
+    `'true'|'false'`
+  - Added protected `headers` and `panels` getters
+  - Removed colour context
+  - Several performance improvements
+  - Moved from `BaseAccordion` to `PfeAccordion`:
+    - URL/History API
+    - `bordered`, `icon` and `icon-set` attributes
+    - `accents` slot
+
 ## 2.0.0-next.9
 
 ### Patch Changes

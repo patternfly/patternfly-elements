@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-icon",
   "license": "MIT",
-  "version": "2.0.0-next.5",
+  "version": "2.0.0-next.6",
   "description": "Icon element for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -10,7 +10,9 @@
   "types": "./pfe-icon.d.ts",
   "exports": {
     ".": "./pfe-icon.js",
-    "./*": "./*.js"
+    "./BaseIcon.js": "./BaseIcon.js",
+    "./*": "./*.js",
+    "./icons/*": "./icons/*"
   },
   "publishConfig": {
     "access": "public",

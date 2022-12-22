@@ -1,4 +1,4 @@
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import { BaseTab } from './BaseTab.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 

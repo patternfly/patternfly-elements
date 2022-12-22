@@ -93,8 +93,8 @@
       "@patternfly/pfe-clipboard": [
         "./elements/pfe-clipboard/pfe-clipboard.ts"
       ],
-      "@patternfly/pfe-codeblock": [
-        "./elements/pfe-codeblock/pfe-codeblock.ts"
+      "@patternfly/pfe-code-block": [
+        "./elements/pfe-code-block/pfe-code-block.ts"
       ],
       "@patternfly/pfe-dropdown": [
         "./elements/pfe-dropdown/pfe-dropdown.ts"
@@ -169,7 +169,7 @@
       "path": "./elements/pfe-clipboard"
     },
     {
-      "path": "./elements/pfe-codeblock"
+      "path": "./elements/pfe-code-block"
     },
     {
       "path": "./elements/pfe-dropdown"

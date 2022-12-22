@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { BaseCodeBlock } from './BaseCodeBlock.js';
 import styles from './pfe-code-block.scss';

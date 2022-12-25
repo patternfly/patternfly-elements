@@ -61,8 +61,12 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
 
   #copied = false;
 
-  firstUpdated() {
-    this.#onSlotchange();
+  #mo = new MutationObserver(() => this.#onMutation());
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.#mo.observe(this, { characterData: true });
+    this.#onMutation();
   }
 
   /**
@@ -83,20 +87,19 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
                       @click="${this.#onClick}">
             <pfe-icon icon="chevron-right"></pfe-icon>
           </pfe-button>
+          <span ?hidden="${!(inline || compact)}">${this.value}</span>
           <input
-              ?inert="${inline || expanded}"
+              ?hidden="${inline || compact}"
               ?disabled="${expanded || readonly}"
               .value="${this.value}"
               @input="${this.#onChange}"
               aria-label="${this.textAriaLabel}">
-          <slot id="content-slot"
-                ?inert="${inline || expanded}"
-                @slotchange="${this.#onSlotchange}"></slot>
           <pfe-tooltip>
             <pfe-button id="copy-button"
                         plain
-                        variant="${ifDefined(!inline ? 'control' : undefined)}"
+                        variant="${ifDefined(!(inline || compact) ? 'control' : undefined)}"
                         label="${this.hoverTip}"
+                        size="lg"
                         @click="${this.copy}">
               <pfe-icon icon="copy"></pfe-icon>
             </pfe-button>
@@ -106,7 +109,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
         </div>
         <textarea .value="${this.value}"
                   .disabled="${this.readonly}"
-                  ?inert="${!(expandable && expanded)}"
+                  ?hidden="${!(expandable && expanded)}"
                   @input="${this.#onChange}">
         </textarea>
       </div>
@@ -122,14 +125,18 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
     this.value = value;
   }
 
-  #onSlotchange(event?: Event) {
-    const slot = (event?.target ?? this.shadowRoot?.getElementById('content-slot')) as HTMLSlotElement;
-    const nodes = slot?.assignedNodes() ?? [];
-    if (nodes.length > 0) {
-      this.value = this.getAttribute('value') ?? nodes.map(child =>
+  #onMutation() {
+    if (this.childNodes.length > 0) {
+      this.value = this.getAttribute('value') ?? this.#dedent(Array.from(this.childNodes, child =>
         (child instanceof Element || child instanceof Text) ? (child.textContent ?? '') : '')
-        .join('');
+        .join(''));
     }
+  }
+
+  #dedent(str: string): string {
+    const stripped = str.replace(/^\n/, '');
+    const match = stripped.match(/^\s+/);
+    return match ? stripped.replace(new RegExp(`^${match[0]}`, 'gm'), '') : str;
   }
 
   override async copy() {

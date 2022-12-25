@@ -121,3 +121,8 @@
   margin-bottom: var(--pf-c-tile__header--m-stacked__icon--MarginBottom, var(--pf-global--spacer--xs, 0.25rem));
 }
 
+#body::slotted(:is(h1,h2,h3,h4,h5,h6,p)),
+#title::slotted(:is(h1,h2,h3,h4,h5,h6,p)) {
+  margin-block: 0;
+}
+

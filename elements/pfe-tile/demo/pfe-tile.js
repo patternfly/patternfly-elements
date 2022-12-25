@@ -1,5 +1,21 @@
 import '@patternfly/pfe-tile';
 
-const root = document.querySelector('[data-demo="pfe-tile"]')?.shadowRoot ?? document;
+const container = document.getElementById('keyboard-interaction');
 
-root.querySelector('pfe-tile');
+function selectByEvent(event) {
+  const tile = event.composedPath().find(node => node.localName === 'pfe-tile');
+  if (tile) {
+    for (const child of container.querySelectorAll('pfe-tile')) {
+      child.selected = tile === child && !child.disabled;
+    }
+  }
+}
+container.addEventListener('click', selectByEvent);
+container.addEventListener('keydown', function(event) {
+  switch (event.key) {
+    case ' ':
+    case 'Enter':
+      event.preventDefault();
+      selectByEvent(event);
+  }
+});

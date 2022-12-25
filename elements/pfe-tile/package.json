@@ -13,6 +13,7 @@
   },
   "exports": {
     ".": "./pfe-tile.js",
+    "./BaseTile.js": "./BaseTile.js",
     "./*": "./*.js"
   },
   "publishConfig": {

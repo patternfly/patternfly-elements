@@ -1,11 +1,12 @@
 # Tile
-Add a description of the component here.
-
-## Usage
-Describe how best to use this web component along with best practices.
+A **tile** component is a form of selection that can be used in place of a radio 
+button and is commonly used in forms. A tile appears visually similar to a 
+selectable card. However, tiles are used specifically when the user is selecting 
+a static option, whereas a selectable card triggers an action or opens a 
+quickstart or sidebar to provide additional information.
 
 ```html
 <pfe-tile>
-
+  <h3 slot="title">Default</h3>
 </pfe-tile>
 ```

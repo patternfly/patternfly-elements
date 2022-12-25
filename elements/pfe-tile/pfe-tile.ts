@@ -13,16 +13,17 @@ export type StackedSize = (
 
 /**
  * Tile
- * @slot icon           - Icon expects a `<pfe-icon>` or `<svg>`
- * @slot body           - Body expects text content for the tile
- * @slot                - Default slot, the title of the tile
  *
- * @attr {'boolean'} selected       - selected variant
- * @attr {'md'|'lg'|null} stacked   - stacked variant
+ * @slot icon           - Icon expects a `<pfe-icon>` or `<svg>`
+ * @slot title          - the title of the tile should be a heading
+ * @slot                - The content should be a paragraph
  *
  * @csspart icon        - container for the icon
  * @csspart title       - container for the title
  * @csspart body        - container for the body content
+ *
+ * @attr {'boolean'} selected       - selected variant
+ * @attr {'md'|'lg'|null} stacked   - stacked variant
  *
  * @cssprop   {<length>} --pf-c-tile--PaddingTop      {@default `1.5rem`}
  * @cssprop   {<length>} --pf-c-tile--PaddingRight    {@default `1.5rem`}

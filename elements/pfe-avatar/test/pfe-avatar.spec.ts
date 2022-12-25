@@ -15,11 +15,6 @@ describe('<pfe-avatar>', function() {
       .to.be.an.instanceOf(PfeAvatar);
   });
 
-  it(`should default to pattern: "squares"`, async function() {
-    const el = await createFixture<PfeAvatar>(element);
-    expect(el.pattern).to.equal('squares');
-  });
-
   it('should load a user-provided avatar image', async function() {
     const el = await createFixture<PfeAvatar>(element);
     const img = el.shadowRoot!.querySelector('img')!;

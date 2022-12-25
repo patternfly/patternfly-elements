@@ -46,8 +46,8 @@
   ],
   "dependencies": {
     "@patternfly/pfe-core": "^2.0.0 || ^2.0.0-next.0",
-    "@patternfly/pfe-tooltip": "^1.1.0 || ^1.1.0-next.6",
-    "@patternfly/pfe-button": "^1.1.0 || ^1.1.0-next.7",
+    "@patternfly/pfe-tooltip": "^1.1.0 || ^1.1.0-next.7",
+    "@patternfly/pfe-button": "^2.0.0 || ^2.0.0-next.0",
     "lit": "^2.0.0"
   }
 }

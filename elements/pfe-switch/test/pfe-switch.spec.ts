@@ -1,22 +1,21 @@
-import { expect, html } from '@open-wc/testing';
+import type { A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfeSwitch } from '@patternfly/pfe-switch';
-import { a11ySnapshot } from '@web/test-runner-commands';
-
-interface A11yTreeSnapshot {
-  name: string;
-  children: A11yTreeSnapshot[];
-  role: string;
-  checked?: boolean;
-}
+import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 describe('<pfe-switch>', function() {
   describe('simply instantiating', function() {
     let element: PfeSwitch;
     let snapshot: A11yTreeSnapshot;
     beforeEach(async function() {
-      element = await createFixture<PfeSwitch>(html`<pfe-switch></pfe-switch>`);
-      snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
+      const container = await createFixture<PfeSwitch>(html`
+        <div>
+          <pfe-switch></pfe-switch>
+        </div>
+      `);
+      element = container.querySelector('pfe-switch')!;
+      snapshot = await a11ySnapshot({ selector: 'pfe-switch' });
     });
     it('should upgrade', async function() {
       const klass = customElements.get('pfe-switch');
@@ -43,12 +42,15 @@ describe('<pfe-switch>', function() {
     let element: PfeSwitch;
     let snapshot: A11yTreeSnapshot;
     beforeEach(async function() {
-      element = await createFixture<PfeSwitch>(html`
-        <pfe-switch id="switch"></pfe-switch>
-        <label for="switch" data-state="on">Message when on</label>
-        <label for="switch" data-state="off" hidden>Message when off</label>
-      `);
-      snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
+      const container = await createFixture<PfeSwitch>(html`
+        <div>
+          <pfe-switch id="switch"></pfe-switch>
+          <label for="switch" data-state="on">Message when on</label>
+          <label for="switch" data-state="off" hidden>Message when off</label>
+        </div>
+        `);
+      element = container.querySelector('pfe-switch')!;
+      snapshot = await a11ySnapshot({ selector: '#switch' });
     });
 
     it('is accessible', function() {
@@ -65,7 +67,8 @@ describe('<pfe-switch>', function() {
       beforeEach(async function() {
         element.click();
         await element.updateComplete;
-        snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
+        await nextFrame();
+        snapshot = await a11ySnapshot({ selector: '#switch' });
       });
       it('should be checked', function() {
         expect(element.checked).to.be.true;
@@ -95,11 +98,14 @@ describe('<pfe-switch>', function() {
   describe('when checked and show-check-icon attrs are present', function() {
     let element: PfeSwitch;
     beforeEach(async function() {
-      element = await createFixture<PfeSwitch>(html`
-        <pfe-switch id="switch" show-check-icon checked></pfe-switch>
-        <label for="switch" data-state="on">Message when on</label>
-        <label for="switch" data-state="off">Message when off</label>
+      const container = await createFixture<PfeSwitch>(html`
+        <div>
+          <pfe-switch id="switch" show-check-icon checked></pfe-switch>
+          <label for="switch" data-state="on">Message when on</label>
+          <label for="switch" data-state="off">Message when off</label>
+        </div>
       `);
+      element = container.querySelector('pfe-switch')!;
     });
     it('should display a check icon', async function() {
       // TODO: can we test this without inspecting the private shadowRoot?
@@ -138,7 +144,7 @@ describe('<pfe-switch>', function() {
         </label>
       `);
       element = label.querySelector('pfe-switch')!;
-      snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
+      snapshot = await a11ySnapshot({ selector: 'pfe-switch' });
     });
     it('does not hide label', function() {
       expect(label.hidden).to.be.false;

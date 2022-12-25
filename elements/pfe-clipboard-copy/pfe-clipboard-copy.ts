@@ -78,6 +78,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
           <pfe-button id="expand-button"
                       plain
                       variant="control"
+                      label="EXPAND"
                       ?inert="${!expandable}"
                       @click="${this.#onClick}">
             <pfe-icon icon="chevron-right"></pfe-icon>

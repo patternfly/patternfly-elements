@@ -1,5 +1,23 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.39
+
+### Minor Changes
+
+- d47ecddf: Added `A11ySnapshot` type to pfe-tools
+
+## 1.0.0-next.38
+
+### Patch Changes
+
+- 8294d385: Fixed package publishing automation scripts.
+
+## 1.0.0-next.37
+
+### Patch Changes
+
+- 6b6e2617: Updates use of pfe-button
+
 ## 1.0.0-next.36
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @patternfly/pfe-icon
 
+## 2.0.0-next.6
+
+### Patch Changes
+
+- 7b9eb03a: Added `BaseIcon` and package exports for `<pfe-icon>` to improve import map support and downstream development
+
 ## 2.0.0-next.5
 
 ### Major Changes

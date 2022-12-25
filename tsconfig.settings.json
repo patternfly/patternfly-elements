@@ -50,6 +50,7 @@
       "DOM",
       "es2015.iterable",
       "es2020",
+      "es2022",
       "es5",
       "es6",
       "ScriptHost"
@@ -95,8 +96,8 @@
       "@patternfly/pfe-clipboard-copy": [
         "./elements/pfe-clipboard-copy/pfe-clipboard-copy.ts"
       ],
-      "@patternfly/pfe-codeblock": [
-        "./elements/pfe-codeblock/pfe-codeblock.ts"
+      "@patternfly/pfe-code-block": [
+        "./elements/pfe-code-block/pfe-code-block.ts"
       ],
       "@patternfly/pfe-dropdown": [
         "./elements/pfe-dropdown/pfe-dropdown.ts"
@@ -127,6 +128,9 @@
       ],
       "@patternfly/pfe-tabs": [
         "./elements/pfe-tabs/pfe-tabs.ts"
+      ],
+      "@patternfly/pfe-tile": [
+        "./elements/pfe-tile/pfe-tile.ts"
       ],
       "@patternfly/pfe-timestamp": [
         "./elements/pfe-timestamp/pfe-timestamp.ts"
@@ -168,10 +172,10 @@
       "path": "./elements/pfe-card"
     },
     {
-      "path": "./elements/pfe-clipboard"
+      "path": "./elements/pfe-clipboard-copy"
     },
     {
-      "path": "./elements/pfe-codeblock"
+      "path": "./elements/pfe-code-block"
     },
     {
       "path": "./elements/pfe-dropdown"
@@ -210,7 +214,7 @@
       "path": "./elements/pfe-tooltip"
     },
     {
-      "path": "./elements/pfe-clipboard-copy"
+      "path": "./elements/pfe-tile"
     }
   ]
 }

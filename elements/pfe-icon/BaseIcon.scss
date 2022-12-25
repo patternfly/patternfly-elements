@@ -1,0 +1,22 @@
+:host {
+  position: relative;
+  display:  inline-block;
+  line-height:  0;
+  height: fit-content !important;
+  width: fit-content !important;
+}
+
+#container {
+  display: grid;
+  grid-template: 1fr / 1fr;
+  place-content: center;
+}
+
+#container.content ::slotted(*) {
+  display: none;
+}
+
+svg {
+  fill: currentcolor;
+}
+

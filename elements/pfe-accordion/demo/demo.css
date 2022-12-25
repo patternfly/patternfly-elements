@@ -1,4 +1,9 @@
-article { 
-    margin-left: 4em;
-    margin-right: 4em;
+article {
+  margin-inline: 4em;
+}
+
+article header {
+  display: flex;
+  align-items: center;
+  gap: 1em;
 }

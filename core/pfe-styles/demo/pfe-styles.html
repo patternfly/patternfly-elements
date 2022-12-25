@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="/core/styles/pfe-typography-classes.css">
 <link rel="stylesheet" href="/core/styles/demo/pfe-colors.css">
 <script type="module" src="/core/styles/demo/pfe-styles.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
 
 <style>
   pre {
@@ -35,13 +36,20 @@
       </div>
       <br />
       <h4>Code</h4>
-      <pfe-codeblock code-language="html"><pre codeblock-container><code>&lt;div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-4-col-on-md pfe-m-all-3-col-on-lg"&gt;
-  &lt;div&gt;Item&lt;/div&gt;
-  &lt;div&gt;Item&lt;/div&gt;
-  &lt;div&gt;Item&lt;/div&gt;
-  &lt;div&gt;Item&lt;/div&gt;
-  &lt;div&gt;Item&lt;/div&gt;
-&lt;/div&gt;</code></pre></pfe-codeblock>
+      
+      <zero-md>
+        <script type="text/markdown" data-dedent>
+          ```html
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-4-col-on-md pfe-m-all-3-col-on-lg">
+            <div>Item</div>
+            <div>Item</div>
+            <div>Item</div>
+            <div>Item</div>
+            <div>Item</div>
+          </div>
+          ```
+        </script>
+      </zero-md>
     </pfe-card>
 
     <pfe-card color-palette="lightest">
@@ -60,17 +68,24 @@
       </div>
       <br />
       <h4 class="demo">Code</h4>
-      <pfe-codeblock code-language="html"><pre codeblock-container><code>&lt;div class="pfe-l-grid pfe-m-gutters"&gt;
-  &lt;div class="pfe-l-grid__item"&gt;Default Item&lt;/div&gt;
-  &lt;div class="pfe-l-grid__item pfe-m-2-col"&gt;&lt;code&gt;pfe-m-2-col&lt;/code&gt;&lt;/div&gt;
-  &lt;div class="pfe-l-grid__item pfe-m-10-col"&gt;&lt;code&gt;pfe-m-10-col&lt;/code&gt;&lt;/div&gt;
-  &lt;div class="pfe-l-grid__item pfe-m-4-col"&gt;&lt;code&gt;pfe-m-4-col&lt;/code&gt;&lt;/div&gt;
-  &lt;div class="pfe-l-grid__item pfe-m-4-col"&gt;&lt;code&gt;pfe-m-4-col&lt;/code&gt;&lt;/div&gt;
-  &lt;div class="pfe-l-grid__item pfe-m-4-col"&gt;&lt;code&gt;pfe-m-4-col&lt;/code&gt;&lt;/div&gt;
-  &lt;div class="pfe-l-grid__item pfe-m-6-col pfe-m-3-col-on-md"&gt;&lt;code&gt;pfe-m-6-col pfe-m-3-col-on-md&lt;/code&gt;&lt;/div&gt;
-  &lt;div class="pfe-l-grid__item pfe-m-6-col pfe-m-3-col-on-md pfe-m-startat-7-col-on-md"&gt;&lt;code&gt;pfe-m-6-col pfe-m-3-col-on-md pfe-m-startat-7-col-on-md&lt;/code&gt;&lt;/div&gt;
-  &lt;div class="pfe-l-grid__item pfe-m-6-col pfe-m-3-col-on-md"&gt;&lt;code&gt;pfe-m-6-col pfe-m-3-col-on-md&lt;/code&gt;&lt;/div&gt;
-&lt;/div&gt;</code></pre></pfe-codeblock>
+      
+      <zero-md>
+        <script type="text/markdown" data-dedent>
+          ```html
+          <div class="pfe-l-grid pfe-m-gutters">
+            <div class="pfe-l-grid__item">Default Item</div>
+            <div class="pfe-l-grid__item pfe-m-2-col"><code>pfe-m-2-col</code></div>
+            <div class="pfe-l-grid__item pfe-m-10-col"><code>pfe-m-10-col</code></div>
+            <div class="pfe-l-grid__item pfe-m-4-col"><code>pfe-m-4-col</code></div>
+            <div class="pfe-l-grid__item pfe-m-4-col"><code>pfe-m-4-col</code></div>
+            <div class="pfe-l-grid__item pfe-m-4-col"><code>pfe-m-4-col</code></div>
+            <div class="pfe-l-grid__item pfe-m-6-col pfe-m-3-col-on-md"><code>pfe-m-6-col pfe-m-3-col-on-md</code></div>
+            <div class="pfe-l-grid__item pfe-m-6-col pfe-m-3-col-on-md pfe-m-startat-7-col-on-md"><code>pfe-m-6-col pfe-m-3-col-on-md pfe-m-startat-7-col-on-md</code></div>
+            <div class="pfe-l-grid__item pfe-m-6-col pfe-m-3-col-on-md"><code>pfe-m-6-col pfe-m-3-col-on-md</code></div>
+          </div>
+          ```
+        </script>
+      </zero-md>
 
     </pfe-card>
 
@@ -90,11 +105,17 @@
         </section>
 
         <h4 class="demo">Code</h4>
-        <pfe-codeblock code-language="html"><pre codeblock-container><code>&lt;section style="height: 250px; background: #ecf4f1;" &gt;
-    &lt;div class="pfe-l-bullseye"&gt;
-      &lt;div class="pfe-l-bullseye__item"&gt;Bam!&lt;/div&gt;
-    &lt;div&gt;
-&lt;/section&gt;</code></pre></pfe-codeblock>
+        <zero-md>
+          <script type="text/markdown" data-dedent>
+            ```html
+            <section style="height: 250px; background: #ecf4f1;">
+              <div class="pfe-l-bullseye">
+                <div class="pfe-l-bullseye__item">Bam!</div>
+              <div>
+            </section>
+            ```
+          </script>
+        </zero-md>
       </div>
     </pfe-card>
 
@@ -258,7 +279,13 @@
             </ul>
         </li>
       </ol>
-      <pfe-codeblock><pre codeblock-container><code>&lt;ol class="pfe-list--primary">...&lt;/ol&gt;</code></pre></pfe-codeblock>
+      <zero-md>
+        <script type="text/markdown" data-dedent>
+          ```html
+          <ol class="pfe-list--primary">...</ol>
+          ```
+        </script>
+      </zero-md>
        <p>Paragraph text: suspendisse id elementum ullamcorper lobortis porttitor congue a molestie ante rhoncus hac a a tortor aptent arcu ad eleifend nisi arcu ultricies ornare elementum.Cum condimentum parturient a condimentum ullamcorper aliquet adipiscing urna ut. </p>
       <dl>
         <dt>Definition term: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio

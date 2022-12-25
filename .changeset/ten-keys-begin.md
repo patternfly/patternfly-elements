@@ -4,7 +4,12 @@
 
 Implemented `<pfe-tile>` aligned with [PatternFly v4](https://patternfly.org/components/tile)
 
+```html
+<pfe-tile selected stacked="lg">
+  <h3 slot="title">Selected</h3>
+  <pfe-icon slot="icon" icon="plus"></pfe-icon>
+  <p>Selected tiles use colour, borders, & position to indicate their state</p>
+</pfe-tile>
+```
 
-- Added `BaseTile` and `<pfe-tile>`
-- Added `selected` attribute to highlight the tile
-- Added `stacked` attribute which has two sizes `md` and `lg` to align the icon above the title
+Read more in the [docs](https://patternflyelements.org/components/tile).

@@ -126,6 +126,9 @@
       "@patternfly/pfe-tabs": [
         "./elements/pfe-tabs/pfe-tabs.ts"
       ],
+      "@patternfly/pfe-tile": [
+        "./elements/pfe-tile/pfe-tile.ts"
+      ],
       "@patternfly/pfe-timestamp": [
         "./elements/pfe-timestamp/pfe-timestamp.ts"
       ],
@@ -206,6 +209,9 @@
     },
     {
       "path": "./elements/pfe-tooltip"
+    },
+    {
+      "path": "./elements/pfe-tile"
     }
   ]
 }

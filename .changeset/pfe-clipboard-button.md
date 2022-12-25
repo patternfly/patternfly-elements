@@ -2,4 +2,6 @@
 "@patternfly/pfe-clipboard-copy": major
 ---
 
-Migrating pfe-clipboard-copy
+**Breaking Changes**: Renamed `pfe-clipboard` to `pfe-clipboard-copy`. See the 
+[docs](https://patternflyelements.org/components/pfe-clipboard-copy) for API 
+docs.

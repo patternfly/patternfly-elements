@@ -1,12 +1,27 @@
 {
   "extends": "../../tsconfig.settings.json",
-  "include": ["./**/*"],
+  "include": [
+    "./**/*"
+  ],
   "compilerOptions": {
     "outDir": ".",
     "rootDir": "."
   },
   "references": [
-    { "path": "../../core/pfe-core" },
-    { "path": "../../tools/pfe-tools" }
+    {
+      "path": "../../core/pfe-core"
+    },
+    {
+      "path": "../../elements/pfe-button"
+    },
+    {
+      "path": "../../elements/pfe-tooltip"
+    },
+    {
+      "path": "../../elements/pfe-icon"
+    },
+    {
+      "path": "../../tools/pfe-tools"
+    }
   ]
 }

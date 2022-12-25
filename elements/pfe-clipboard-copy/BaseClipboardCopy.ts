@@ -24,8 +24,8 @@ export abstract class BaseClipboardCopy extends LitElement {
   /**
    * Copy the current value to the clipboard.
    */
-  protected _copyToClipboard(): void {
-    navigator.clipboard.writeText(this.value);
+  async copy() {
+    await navigator.clipboard.writeText(this.value);
     this.dispatchEvent(new ClipboardCopyCopiedEvent(this.value));
   }
 }

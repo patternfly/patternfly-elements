@@ -1,42 +1,69 @@
 <link rel="stylesheet" href="./demo.css" />
 <script type="module" src="./pfe-clipboard-copy.js"></script>
-<pfe-band color-palette="lightest">
+
+<section>
   <h3>Default</h3>
   <pfe-clipboard-copy value="This is editable"></pfe-clipboard-copy>
+</section>
+
+<section>
   <h3>Read-only</h3>
   <pfe-clipboard-copy readonly value="This is read-only"></pfe-clipboard-copy>
+</section>
+
+<section>
   <h3>Expanded</h3>
-  <pfe-clipboard-copy variant="expansion">
+  <pfe-clipboard-copy expandable>
     Got a lot of text here, need to see all of it? Click that arrow on the left side and check out the resulting expansion.
   </pfe-clipboard-copy>
+</section>
+
+<section>
   <h3>Read-only expanded</h3>
-  <pfe-clipboard-copy variant="expansion" readonly>
+  <pfe-clipboard-copy expandable readonly>
     Got a lot of text here, need to see all of it? Click that arrow on the left side and check out the resulting expansion.
   </pfe-clipboard-copy>
+</section>
+
+<section>
   <h3>Read-only expanded by default</h3>
-  <pfe-clipboard-copy variant="expansion" readonly expanded>
-    <span slot="value">
-      <p>Got a lot of text here, need to see all of it? Click that arrow on the left side and check out the resulting expansion.</p>
-      <p>asodifna osdif</p>
-    </span>
+  <pfe-clipboard-copy expandable readonly expanded>
+    <p>Got a lot of text here, need to see all of it? Click that arrow on the left side and check out the resulting expansion.</p>
+    <p>asodifna osdif</p>
   </pfe-clipboard-copy>
+</section>
+
+<section>
   <h3>Inline compact</h3>
-  <pfe-clipboard-copy variant="inline-compact">2.3.4-2-redhat</pfe-clipboard-copy>
+  <pfe-clipboard-copy inline compact>2.3.4-2-redhat</pfe-clipboard-copy>
+</section>
+
+<section>
   <h3>Inline compact code</h3>
-  <pfe-clipboard-copy variant="inline-compact" code>2.3.4-2-redhat</pfe-clipboard-copy>
+  <pfe-clipboard-copy inline compact code>2.3.4-2-redhat</pfe-clipboard-copy>
+</section>
+
+<section>
   <h3>Inline compact with additional action</h3>
-  <pfe-clipboard-copy variant="inline-compact">2.3.4-2-redhat
-    <pfe-button slot="additional-actions" plain variant="primary">
+  <pfe-clipboard-copy inline compact>2.3.4-2-redhat
+    <pfe-button slot="actions" plain variant="primary">
       <button aria-label="Action">
         <svg style="vertical-align:-0.125em" fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512" aria-hidden="true" role="img"><path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>
       </button>
     </pfe-button>
   </pfe-clipboard-copy>
-  <h3>Inline compact in sentence</h3>
-  <b>Basic</b>
-  <p>Lorem ipsum <pfe-clipboard-copy variant="inline-compact">2.3.4-2-redhat</pfe-clipboard-copy></p>
-  <b>Long copy string</b>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <pfe-clipboard-copy variant="inline-compact">https://app.openshift.io/path/sub-path/sub-sub-path/?runtime=quarkus/12345678901234567890/abcdefghijklmnopqrstuvwxyz1234567890</pfe-clipboard-copy> Mauris luctus, libero nec dapibus ultricies, urna purus pretium mauris, ullamcorper pharetra lacus nibh vitae enim.</p>
-  <b>Long copy string in block</b>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <pfe-clipboard-copy variant="inline-compact" block>https://app.openshift.io/path/sub-path/sub-sub-path/?runtime=quarkus/12345678901234567890/abcdefghijklmnopqrstuvwxyz1234567890</pfe-clipboard-copy> Mauris luctus, libero nec dapibus ultricies, urna purus pretium mauris, ullamcorper pharetra lacus nibh vitae enim.</p>
-</pfe-band>
+</section>
+
+<section>
+  <hgroup>
+    <h3>Inline compact in sentence</h3>
+    <h4>Basic</h4>
+  </hgroup>
+  <p>Lorem ipsum <pfe-clipboard-copy inline compact>2.3.4-2-redhat</pfe-clipboard-copy></p>
+
+  <h4>Long copy string</h4>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <pfe-clipboard-copy inline compact>https://app.openshift.io/path/sub-path/sub-sub-path/?runtime=quarkus/12345678901234567890/abcdefghijklmnopqrstuvwxyz1234567890</pfe-clipboard-copy> Mauris luctus, libero nec dapibus ultricies, urna purus pretium mauris, ullamcorper pharetra lacus nibh vitae enim.</p>
+
+  <h4>Long copy string in block</h4>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <pfe-clipboard-copy inline compact block>https://app.openshift.io/path/sub-path/sub-sub-path/?runtime=quarkus/12345678901234567890/abcdefghijklmnopqrstuvwxyz1234567890</pfe-clipboard-copy> Mauris luctus, libero nec dapibus ultricies, urna purus pretium mauris, ullamcorper pharetra lacus nibh vitae enim.</p>
+</section>

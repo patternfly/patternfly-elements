@@ -1,26 +1,22 @@
-[part~="base"] {
+#container {
   display: flex;
   flex-direction: column;
 }
 
-[part~="input-group"] {
+#input-group {
   display: flex;
 }
 
-[part~="input-group"] > * + * {
+#input-group > * + * {
   margin-left: -1px;
 }
 
-[part~="input-group"] {
-  display: flex;
-}
-
-.variant-inline-compact [part~="input-group"] {
+.inline #input-group {
   background-color: var(--pf-c-button--m-plain--BackgroundColor, var(--pf-global--BackgroundColor--200, #f0f0f0));
   width: fit-content;
 }
 
-[part~="form-input"] {
+input {
   color: var(--pf-c-form-control--Color, var(--pf-global--Color--100, var(--pf-global--Color--dark-100, #151515)));
   width: var(--pf-c-form-control--Width);
   padding:
@@ -46,26 +42,23 @@
   flex: 1 1 auto;
 }
 
-[part~="form-input"][disabled] {
+input[disabled] {
   background-color: var(--pf-c-form-control--readonly--BackgroundColor, var(--pf-global--disabled-color--300, #f0f0f0));
 }
 
-[part~="form-input"]:not(textarea) {
+input:not(textarea) {
   height: var(--pf-c-form-control--Height, calc(var(--pf-c-form-control--FontSize) * var(--pf-c-form-control--LineHeight) + var(--pf-c-form-control--BorderWidth) * 2 + var(--pf-c-form-control--PaddingTop) + var(--pf-c-form-control--PaddingBottom)), 36px);
   text-overflow: ellipsis;
 }
 
-[part~="tooltip"]::part(invoker) {
+pfe-tooltip::part(invoker) {
   display: flex;
   height: 100%;
 }
 
-[part~="dropdown"] {
+textarea {
   display: flex;
   flex: 1 1 auto;
-}
-
-[part~="dropdown-textarea"] {
   padding:
     var(--pf-c-clipboard-copy__expandable-content--PaddingTop, var(--pf-global--spacer--md, 1rem))
     var(--pf-c-clipboard-copy__expandable-content--PaddingRight, var(--pf-global--spacer--md, 1rem))
@@ -84,7 +77,7 @@
   margin: 0;
 }
 
-.variant-inline-compact[part~="base"] {
+.inline.compact {
   display: inline;
   background-color: var(--pf-c-clipboard-copy--m-inline--backgroundcolor, var(--pf-global--backgroundcolor--200, #f0f0f0));
   padding-top: var(--pf-c-clipboard-copy--m-inline--paddingtop, 0px);
@@ -94,13 +87,13 @@
   white-space: normal;
 }
 
-.variant-inline-compact.block[part~="base"] {
+.inline.compact.block {
   display: block;
   background-color: var(--pf-c-clipboard-copy--m-inline--backgroundcolor, var(--pf-global--backgroundcolor--200, #f0f0f0));
 }
 
-.variant-inline-compact [part~="copy-button"],
-.variant-inline-compact slot[name="additional-actions"]::slotted(*) {
+.inline.compact #copy-button,
+.inline.compact slot[name="actions"]::slotted(*) {
   --pf-c-button--PaddingTop: var(--pf-c-clipboard-copy__actions-item--button--PaddingTop, var(--pf-global--spacer--xs, 0.25rem));
   --pf-c-button--PaddingRight: var(--pf-c-clipboard-copy__actions-item--button--PaddingRight, var(--pf-global--spacer--xs, 0.25rem));
   --pf-c-button--PaddingBottom: var(--pf-c-clipboard-copy__actions-item--button--PaddingBottom, var(--pf-global--spacer--xs, 0.25rem));
@@ -109,7 +102,7 @@
   margin-bottom: calc(-1 * var(--pf-c-button--PaddingBottom));
 }
 
-.variant-inline-compact [part~="tooltip"] {
+.inline.compact pfe-tooltip {
   display: inline-flex;
 }
 

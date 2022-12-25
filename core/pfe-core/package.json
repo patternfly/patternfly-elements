@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-core",
-  "version": "2.0.0-next.9",
+  "version": "2.0.0-next.12",
   "license": "MIT",
   "description": "PatternFly Elements Core Library",
   "customElements": "custom-elements.json",
@@ -18,6 +18,7 @@
     "./controllers/css-variable-controller.js": "./controllers/css-variable-controller.js",
     "./controllers/light-dom-controller.js": "./controllers/light-dom-controller.js",
     "./controllers/logger.js": "./controllers/logger.js",
+    "./controllers/internals-controller.js": "./controllers/internals-controller.js",
     "./controllers/perf-controller.js": "./controllers/perf-controller.js",
     "./controllers/property-observer-controller.js": "./controllers/property-observer-controller.js",
     "./controllers/slot-controller.js": "./controllers/slot-controller.js",
@@ -34,7 +35,8 @@
     "./decorators/trace.js": "./decorators/trace.js",
     "./functions/debounce.js": "./functions/debounce.js",
     "./functions/deprecatedCustomEvent.js": "./functions/deprecatedCustomEvent.js",
-    "./functions/random.js": "./functions/random.js"
+    "./functions/random.js": "./functions/random.js",
+    "./functions/isElementInView.js": "./functions/isElementInView.js"
   },
   "publishConfig": {
     "access": "public",

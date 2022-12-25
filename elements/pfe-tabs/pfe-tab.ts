@@ -1,157 +1,76 @@
-import type { ColorTheme } from '@patternfly/pfe-core';
-
-import { LitElement, html } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
-
-import { pfelement, bound, observed, initializer, colorContextConsumer } from '@patternfly/pfe-core/decorators.js';
+import { customElement } from 'lit/decorators.js';
+import { BaseTab } from './BaseTab.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
-import style from './pfe-tab.scss';
-
-function isSlotElement(el?: Node|null): el is HTMLSlotElement {
-  return el instanceof HTMLElement && el.tagName === 'SLOT';
-}
+import styles from './pfe-tab.scss';
 
 /**
- * @slot - Add the heading for your tab here.
+ * PfeTab
+ *
+ * @slot icon
+ *       Can contain an `<svg>` or `<pfe-icon>`
+ * @slot
+ *       Tab title text
+ *
+ * @csspart button - button element
+ * @csspart icon - span container for the icon
+ * @csspart text - span container for the title text
+ *
+ * @cssprop     {<length>} --pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderLeftWidth  {@default `1px`}
+ * @cssprop     {<length>} --pf-c-tabs--m-box__item--m-current--last-child__link--before--BorderRightWidth  {@default `1px`}
+ *
+ * @cssprop     {<color>} --pf-c-tabs__link--BackgroundColor            {@default `#f0f0f0`}
+ * @cssprop     {<color>} --pf-c-tabs__link--disabled--BackgroundColor  {@default `#d2d2d2`}
+ *
+ * @cssprop     {<length>} --pf-c-tabs__link--before--BorderTopWidth    {@default `1px`}
+ * @cssprop     {<length>} --pf-c-tabs__link--before--BorderBottomWidth {@default `1px`}
+ * @cssprop     {<length>} --pf-c-tabs__link--before--BorderLeftWidth   {@default `0`}
+ * @cssprop     {<length>} --pf-c-tabs__link--before--BorderRightWidth  {@default `1px`}
+ *
+ * @cssprop     {<length>} --pf-c-tabs__link--disabled--before--BorderRightWidth  {@default `1px`}
+ *
+ * @cssprop     {<length>} --pf-c-tabs__link--after--Top    {@default `auto`}
+ * @cssprop     {<length>} --pf-c-tabs__link--after--Right  {@default `0`}
+ * @cssprop     {<length>} --pf-c-tabs__link--after--Bottom {@default `0`}
+ * @cssprop     {<length>} --pf-c-tabs__link--before--Left  {@default `0`}
+ *
+ * @cssprop     {<length>} --pf-c-tabs__link--PaddingTop    {@default `1rem`}
+ * @cssprop     {<length>} --pf-c-tabs__link--PaddingBottom {@default `1rem`}
+ *
+ * @cssprop     {<length>} --pf-c-tabs__link--disabled--before--BorderBottomWidth {@default `1px`}
+ * @cssprop     {<length>} --pf-c-tabs__link--disabled--before--BorderLeftWidth   {@default `1px`}
+ *
+ * @cssprop     {<color>} --pf-c-tabs__link--before--BorderTopColor     {@default `#d2d2d2`}
+ * @cssprop     {<color>} --pf-c-tabs__link--before--BorderRightColor   {@default `#d2d2d2`}
+ * @cssprop     {<color>} --pf-c-tabs__link--before--BorderBottomColor  {@default `#d2d2d2`}
+ * @cssprop     {<color>} --pf-c-tabs__link--before--BorderLeftColor    {@default `#d2d2d2`}
+ *
+ * @cssprop     {<length>}  --pf-c-tabs__link--FontSize      {@default `1rem`}
+ * @cssprop     {<color>}   --pf-c-tabs__link--Color          {@default `#6a6e73`}
+ * @cssprop     {<length>}  --pf-c-tabs__link--OutlineOffset {@default `-0.375rem`}
+ *
+ * @cssprop     {<color>}  --pf-c-tabs__link--after--BorderColor        {@default `#b8bbbe`}
+ * @cssprop     {<length>} --pf-c-tabs__link--after--BorderTopWidth     {@default `0`}
+ * @cssprop     {<length>} --pf-c-tabs__link--after--BorderRightWidth   {@default `0`}
+ * @cssprop     {<length>} --pf-c-tabs__link--after--BorderBottomWidth  {@default `0`}
+ * @cssprop     {<length>} --pf-c-tabs__link--after--BorderLeftWidth    {@default `0`}
+ *
+ * @cssprop     {<color>} --pf-c-tabs__item--m-current__link--Color {@default `#151515`}
+ *
+ * @cssprop     {<color>}   --pf-c-tabs__item--m-current__link--after--BorderColor {@default `#06c`}
+ * @cssprop     {<length>}  --pf-c-tabs__item--m-current__link--after--BorderWidth {@default `3px`}
+ *
+ * @cssprop     {<length>} --pf-c-tabs__link--child--MarginRight  {@default `1rem`}
+ *
+ * @fires { TabExpandEvent } tab-expand - when a tab expands
  */
-@customElement('pfe-tab') @pfelement()
-export class PfeTab extends LitElement {
-  static readonly version = '{{version}}';
-
-  static readonly styles = [style];
-
-  /** If the tab is selected */
-  @observed
-  @property({ reflect: true, attribute: 'aria-selected' })
-    selected: 'true'|'false' = 'false';
-
-  /** Connected panel ID */
-  @property({ reflect: true, attribute: 'aria-controls' }) controls?: string;
-
-  /** Variant */
-  @property({ reflect: true }) variant: 'wind'|'earth' = 'wind';
-
-  /**
-   * Sets color theme based on parent context
-   */
-  @colorContextConsumer()
-  @property({ reflect: true }) on?: ColorTheme;
-
-  /** @deprecated `tabIndex` property reflects per spec */
-  get tabindex() {
-    return this.tabIndex;
-  }
-
-  set tabindex(v: number) {
-    this.tabIndex = v;
-  }
-
-  @query('#tab') private _tabItem?: HTMLElement;
-
-  private logger = new Logger(this);
+@customElement('pfe-tab')
+export class PfeTab extends BaseTab {
+  static readonly styles = [...BaseTab.styles, styles];
 
   connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('role', 'tab'); // override user role
-  }
-
-  render() {
-    return html`
-      <span id="tab"></span>
-    `;
-  }
-
-  protected _selectedChanged() {
-    this.tabIndex = this.selected === 'true' ? 0 : -1;
-  }
-
-  @initializer({ observe: { characterData: true, childList: true, subtree: true } })
-  protected _init() {
-    // Copy the tab content into the template
-    this._setTabContent();
-
-    // If an ID is not defined, generate a random one
-    this.id ||= getRandomId();
-  }
-
-  @bound private _getTabElement(): Element|void {
-    // Check if there is no nested element or nested textNodes
-    if (!this.firstElementChild && !this.firstChild) {
-      this.logger.warn(`No tab content provided`);
-      return;
-    }
-
-    if (this.firstElementChild && this.firstElementChild.tagName) {
-      // If the first element is a slot, query for it's content
-      if (isSlotElement(this.firstElementChild)) {
-        const slotted = this.firstElementChild.assignedElements();
-        // If there is no content inside the slot, return empty with a warning
-        if (slotted.length === 0) {
-          this.logger.warn(`No heading information exists within this slot.`);
-          return;
-        }
-        // If there is more than 1 element in the slot, capture the first h-tag
-        if (slotted.length > 1) {
-          this.logger.warn(`Tab heading currently only supports 1 heading tag.`);
-        }
-        const htags =
-          slotted.filter(slot => slot.tagName.match(/^H[1-6]/) || slot.tagName === 'P');
-        if (htags.length > 0) {
-          return htags[0];
-        } else {
-          return;
-        }
-      } else if (
-        this.firstElementChild.tagName.match(/^H[1-6]/) ||
-        this.firstElementChild.tagName === 'P'
-      ) {
-        return this.firstElementChild;
-      } else {
-        this.logger.warn(`Tab heading should contain at least 1 heading tag for correct semantics.`);
-      }
-    }
-
-    return;
-  }
-
-  @bound private async _setTabContent() {
-    await this.updateComplete;
-    let label = '';
-    let semantics = 'h3';
-
-    const tabElement = this._getTabElement();
-    if (tabElement) {
-      // Copy the tab content into the template
-      label = tabElement?.textContent?.trim().replace(/\s+/g, ' ') ?? '';
-      semantics = tabElement.tagName.toLowerCase();
-    }
-
-    if (!tabElement) {
-      // If no element is found, try for a text node
-      if (this.textContent?.trim().replace(/\s+/g, ' ')) {
-        label = this.textContent.trim().replace(/\s+/g, ' ');
-      }
-    }
-
-    if (!label) {
-      this.logger.warn(`There does not appear to be any content in the tab region.`);
-      return;
-    }
-
-    // Create an h-level tag for the shadow tab, default h3
-    // or use the provided semantics from light DOM
-    const heading = document.createElement(semantics);
-
-    // Assign the label content to the new heading
-    heading.textContent = label;
-
-    // Attach the heading to the tabItem
-    if (this._tabItem) {
-      this._tabItem.innerHTML = '';
-      this._tabItem.appendChild(heading);
-    }
+    this.id ||= getRandomId('pfe-tab');
   }
 }
 

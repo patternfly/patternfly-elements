@@ -1,5 +1,58 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.39
+
+### Minor Changes
+
+- d47ecddf: Added `A11ySnapshot` type to pfe-tools
+
+## 1.0.0-next.38
+
+### Patch Changes
+
+- 8294d385: Fixed package publishing automation scripts.
+
+## 1.0.0-next.37
+
+### Patch Changes
+
+- 6b6e2617: Updates use of pfe-button
+
+## 1.0.0-next.36
+
+### Patch Changes
+
+- fcdcc274: Removing pfe-page-status
+
+## 1.0.0-next.35
+
+### Patch Changes
+
+- 0ef73073: Removing pfe-collapse
+
+## 1.0.0-next.34
+
+### Minor Changes
+
+- 4400866a: Adds a11y tree testing to test runner config
+
+### Patch Changes
+
+- 9d10155b: Update element internals polyfill, fixes clicking on label in safari
+- 4400866a: update dependencies
+
+## 1.0.0-next.33
+
+### Minor Changes
+
+- daba8a53: Changing from pfe-datetime to pfe-timestamp
+
+## 1.0.0-next.32
+
+### Minor Changes
+
+- 07ad1d3d: Adds testing utilities to stub Logger methods
+
 ## 1.0.0-next.31
 
 ### Patch Changes

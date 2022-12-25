@@ -1,11 +1,7 @@
 {% renderOverview %}
-  <pfe-badge number="17">17</pfe-badge>
+  <pfe-badge state="read" number="17">17</pfe-badge>
   <pfe-badge number="900" threshold="100">900</pfe-badge>
-  <pfe-badge state="info" number="10">10</pfe-badge>
-  <pfe-badge state="success" number="20">20</pfe-badge>
-  <pfe-badge state="moderate" number="30">30</pfe-badge>
-  <pfe-badge state="important" number="40">40</pfe-badge>
-  <pfe-badge state="critical" number="50">50</pfe-badge>
+  <pfe-badge state="unread" number="10">10</pfe-badge>
 {% endrenderOverview %}
 
 {% band header="Usage" %}
@@ -29,18 +25,12 @@
   ### With a state
   This adds a background color to the badge based on the state.
 
-  <pfe-badge state="info" number="10">10</pfe-badge>
-  <pfe-badge state="success" number="20">20</pfe-badge>
-  <pfe-badge state="moderate" number="30">30</pfe-badge>
-  <pfe-badge state="important" number="40">40</pfe-badge>
-  <pfe-badge state="critical" number="50">50</pfe-badge>
+  <pfe-badge state="read" number="10">10</pfe-badge>
+  <pfe-badge state="unread" number="20">20</pfe-badge>
 
   ```html
-  <pfe-badge state="info" number="10">10</pfe-badge>
-  <pfe-badge state="success" number="20">20</pfe-badge>
-  <pfe-badge state="moderate" number="30">30</pfe-badge>
-  <pfe-badge state="important" number="40">40</pfe-badge>
-  <pfe-badge state="critical" number="50">50</pfe-badge>
+  <pfe-badge state="read" number="10">10</pfe-badge>
+  <pfe-badge state="unread" number="20">20</pfe-badge>
   ```
 {% endband %}
 

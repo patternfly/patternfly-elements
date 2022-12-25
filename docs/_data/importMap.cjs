@@ -73,10 +73,11 @@ module.exports = async function() {
 
   await generator.install([
     'tslib',
-    ...LIT_DEPS,
-    ...PWA_DEPS,
+    'element-internals-polyfill',
     `zero-md@${ZERO_MD_VERSION}`,
     `fuse.js@${FUSE_VERSION}`,
+    ...LIT_DEPS,
+    ...PWA_DEPS
   ]);
 
   const map = generator.getMap();

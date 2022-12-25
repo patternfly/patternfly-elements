@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-badge",
   "license": "MIT",
-  "version": "2.0.0-next.2",
+  "version": "2.0.0-next.4",
   "description": "Badge element for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -10,6 +10,7 @@
   "types": "./pfe-badge.d.ts",
   "exports": {
     ".": "./pfe-badge.js",
+    "./BaseBadge.js": "./BaseBadge.js",
     "./*": "./*.js"
   },
   "publishConfig": {

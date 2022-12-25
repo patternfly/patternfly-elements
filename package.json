@@ -51,7 +51,7 @@
     "🚚-----DIST-------🚚": "❓ Publish packages",
     "license-update": "node scripts/license-update.js",
     "leftover-check": "bash scripts/leftover-check.sh",
-    "site": "run-s build:tools build:analyze build:styles build:core build:elements build:docs",
+    "site": "run-s build:tools build:icons build:analyze build:styles build:core build:elements build:docs",
     "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
     "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
     "clean:deep": "git clean -fX -e node_modules",

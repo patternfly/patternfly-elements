@@ -1,5 +1,16 @@
 ## 1.0.0-prerelease.50 ( TBD )
 
+## 2.0.0-next.6
+
+### Patch Changes
+
+- 07ad1d3d: Updates use of `<pfe-icon>`
+- Updated dependencies [7d7d6839]
+- Updated dependencies [f53155bc]
+- Updated dependencies [07ad1d3d]
+  - @patternfly/pfe-accordion@2.0.0-next.7
+  - @patternfly/pfe-core@2.0.0-next.10
+
 ## 2.0.0-next.5
 
 ### Patch Changes

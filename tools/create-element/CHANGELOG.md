@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 1.0.0-next.14
+
+### Patch Changes
+
+- b51b551f: Fixed a TypeScript error in the main entrypoint
+
 ## 1.0.0-next.13
 
 ### Patch Changes

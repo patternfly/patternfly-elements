@@ -1,5 +1,46 @@
 # @patternfly/pfe-tooltip
 
+## 1.1.0-next.7
+
+### Patch Changes
+
+- b51b551f: Use `NumberListConverter` from pfe-core
+- Updated dependencies [6b6e2617]
+  - @patternfly/pfe-core@2.0.0-next.12
+
+## 1.1.0-next.6
+
+### Minor Changes
+
+- daba8a53: Adds styles to slotted timestamps.
+
+  ```html
+  <pfe-tooltip position="top">
+    <pfe-timestamp
+      date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)"
+    ></pfe-timestamp>
+    <span slot="content"
+      >Last updated on
+      <pfe-timestamp
+        date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)"
+        date-format="long"
+        time-format="short"
+        display-suffix="UTC"
+        utc
+      >
+      </pfe-timestamp>
+    </span>
+  </pfe-tooltip>
+  ```
+
+## 1.1.0-next.5
+
+### Patch Changes
+
+- 07ad1d3d: Updates use of `<pfe-icon>`
+- Updated dependencies [07ad1d3d]
+  - @patternfly/pfe-core@2.0.0-next.10
+
 ## 1.1.0-next.4
 
 ### Minor Changes

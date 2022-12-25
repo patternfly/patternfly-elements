@@ -1,0 +1,9 @@
+:host {
+  --_timestamp-text-decoration: underline dashed 1px;
+  --_timestamp-text-underline-offset: 4px;
+}
+
+#content {
+  --_timestamp-text-decoration: none;
+  --_timestamp-text-underline-offset: initial;
+}

@@ -4,6 +4,7 @@ import type { TestRunnerConfig } from '@web/test-runner';
 import { playwrightLauncher } from '@web/test-runner-playwright';
 import { summaryReporter, defaultReporter } from '@web/test-runner';
 import { junitReporter } from '@web/test-runner-junit-reporter';
+import { a11ySnapshotPlugin } from '@web/test-runner-commands/plugins';
 
 import { pfeDevServerConfig } from './dev-server.js';
 
@@ -106,5 +107,10 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
       },
     ],
     reporters,
+    plugins: [
+      ...devServerConfig.plugins ?? [],
+      ...opts.plugins ?? [],
+      a11ySnapshotPlugin(),
+    ]
   };
 }

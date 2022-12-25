@@ -1,18 +1,9 @@
 :host {
   display: grid;
-  gap: 1em;
+  gap: 1em; 
 }
 
-pfe-band.figure::part(body) {
-  display: grid;
-  grid-template-columns: min-content auto;
-  column-gap: 1em;
+section {
+  padding: 2em;
 }
 
-pfe-band.figure p {
-  grid-column: span 2;
-}
-
-pfe-band.figure pfe-badge {
-  place-self: center;
-}

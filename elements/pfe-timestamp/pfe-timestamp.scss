@@ -1,0 +1,8 @@
+:host {
+  display: inline;
+}
+
+time {
+  text-decoration: var(--_timestamp-text-decoration, none);
+  text-underline-offset: var(--_timestamp-text-underline-offset, initial);
+}

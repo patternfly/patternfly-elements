@@ -8,7 +8,6 @@
 "@patternfly/pfe-card": patch
 "@patternfly/pfe-clipboard": patch
 "@patternfly/pfe-collapse": patch
-"@patternfly/pfe-cta": patch
 "@patternfly/pfe-jump-links": patch
 "@patternfly/pfe-label": patch
 "@patternfly/pfe-modal": patch

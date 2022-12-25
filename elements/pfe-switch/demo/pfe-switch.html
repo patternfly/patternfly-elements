@@ -1,0 +1,102 @@
+<link rel="stylesheet" href="./demo.css">
+<script type="module" src="./pfe-switch.js"></script>
+
+<section>
+  <h1>Switch</h1>
+  <p>A switch toggles the state of a setting (between on and off). Switches provide a more explicit, visible representation on a setting.</p>
+  <h2>Basic</h2>
+  <form>
+    <fieldset id="fieldset-a">
+      <legend>Option A</legend>
+      <pfe-switch id="a" checked></pfe-switch>
+      <label for="a" data-state="on">Message when on</label>
+      <label for="a" data-state="off" hidden>Message when off</label>
+    </fieldset>
+
+    <fieldset id="fieldset-b">
+      <legend>Option B (no explicit label)</legend>
+      <pfe-switch id="b" checked></pfe-switch>
+    </fieldset>
+
+    <fieldset id="form-disabled">
+      <legend>Form Disabled State</legend>
+      <pfe-switch id="disable-a" aria-controls="fieldset-a"></pfe-switch>
+      <label for="disable-a" data-state="on">Fieldset A is disabled</label>
+      <label for="disable-a" data-state="off" hidden>Fieldset A is enabled</label>
+
+      <pfe-switch id="disable-a-switch" aria-controls="a"></pfe-switch>
+      <label for="disable-a-switch" data-state="on">Switch A is disabled</label>
+      <label for="disable-a-switch" data-state="off" hidden>Switch A is enabled</label>
+
+      <pfe-switch id="disable-b" aria-controls="fieldset-b"></pfe-switch>
+      <label for="disable-b" data-state="on">Fieldset B is disabled</label>
+      <label for="disable-b" data-state="off" hidden>Fieldset B is enabled</label>
+
+      <pfe-switch id="disable-b-switch" aria-controls="b"></pfe-switch>
+      <label for="disable-b-switch" data-state="on">Switch B is disabled</label>
+      <label for="disable-b-switch" data-state="off" hidden>Switch B is enabled</label>
+    </fieldset>
+  </form>
+</section>
+
+<section>
+<form>
+  <fieldset>
+    <legend>Reversed</legend>
+    <label for="reversed" data-state="on">Message when on</label>
+    <label for="reversed" data-state="off">Message when off</label>
+    <pfe-switch id="reversed" reversed></pfe-switch>
+  </fieldset>
+</form>
+</section>
+
+<section>
+<form>
+  <fieldset>
+    <legend>Without label</legend>
+    <pfe-switch checked></pfe-switch>
+  </fieldset>
+</form>
+</section>
+
+<section>
+<form>
+  <fieldset>
+    <legend>Checked with label</legend>
+    <pfe-switch id="checked" checked show-check-icon></pfe-switch>
+    <label for="checked" data-state="on">Message when on</label>
+    <label for="checked" data-state="off">Message when off</label>
+  </fieldset>
+</form>
+</section>
+
+<section>
+  <form id="nested-label">
+    <fieldset>
+      <legend>Nested in a label</legend>
+      <label> Status
+        <pfe-switch name="status"></pfe-switch>
+      </label>
+      <pfe-button type="submit">Submit</pfe-button>
+      <output>Submit to read status</output>
+    </fieldset>
+  </form>
+</section>
+
+<section>
+<h2>Disabled</h2>
+<form>
+  <fieldset>
+    <legend>Checked and Disabled</legend>
+    <pfe-switch id="checked-disabled" checked disabled></pfe-switch>
+    <label for="checked-disabled" data-state="on">Message when on</label>
+    <label for="checked-disabled" data-state="off">Message when off</label>
+  </fieldset>
+  <fieldset>
+    <pfe-switch id="default-disabled" disabled></pfe-switch>
+    <label for="default-disabled" data-state="on">Message when on</label>
+    <label for="default-disabled" data-state="off">Message when off</label>
+  </fieldset>
+</form>
+</section>
+

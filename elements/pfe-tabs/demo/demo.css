@@ -1,75 +1,25 @@
-html {
-    scroll-behavior: smooth;
+main {
+  display: block;
+  grid: unset;
 }
 
-body {
-    color: var(--pfe-broadcasted--text, var(--pfe-theme--color--text, #151515));
+.example {
+  margin: 0 auto;
+  padding: 0 16px 32px;
+  width: 100%;
+  max-width: 1008px;
 }
 
-pfe-tabs {
-    margin-bottom: 5em;
+.example:last-of-type {
+  padding-block-end: 64px;
 }
 
-@media screen and (max-width: 899px) {
-    a[href="#top"] {
-        display: none;
-    }
+.input {
+  margin-block-start: 16px;
 }
 
-@media screen and (min-width: 900px) {
-    .scroll-up {
-        display: none;
-    }
-    .toc {
-        position: fixed;
-        top: 0;
-        right: 0;
-        z-index: 5;
-    }
-}
-
-.scroll-up {
-    border-radius: 3px;
-    padding: 3px;
-    background-color: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-}
-
-.scroll-up pfe-icon {
-    color: #fff;
-}
-
-.form-ui+.form-ui {
-    margin-top: var(--pfe-theme--content-spacer, 16px);
-}
-
-.form {
-    width: fit-content;
-    margin-top: 10px;
-}
-
-.form-ui label {
-    display: block;
-}
-
-.form-ui input {
-    width: 100%;
-    height: 2em;
-    font-size: 1em;
-    padding: 2px 5px;
-}
-
-.light-background {
-    background-color: rgb(252, 250, 244);
-    --context: light;
-}
-
-.toc {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 5;
-    width: 250px;
+@media screen and (min-width: 768px) {
+  .example {
+    padding: 0 32px 32px;
+  }
 }

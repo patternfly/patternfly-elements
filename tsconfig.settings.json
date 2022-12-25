@@ -50,6 +50,7 @@
       "DOM",
       "es2015.iterable",
       "es2020",
+      "es2022",
       "es5",
       "es6",
       "ScriptHost"
@@ -92,14 +93,8 @@
       "@patternfly/pfe-clipboard": [
         "./elements/pfe-clipboard/pfe-clipboard.ts"
       ],
-      "@patternfly/pfe-codeblock": [
-        "./elements/pfe-codeblock/pfe-codeblock.ts"
-      ],
-      "@patternfly/pfe-collapse": [
-        "./elements/pfe-collapse/pfe-collapse.ts"
-      ],
-      "@patternfly/pfe-datetime": [
-        "./elements/pfe-datetime/pfe-datetime.ts"
+      "@patternfly/pfe-code-block": [
+        "./elements/pfe-code-block/pfe-code-block.ts"
       ],
       "@patternfly/pfe-dropdown": [
         "./elements/pfe-dropdown/pfe-dropdown.ts"
@@ -116,14 +111,8 @@
       "@patternfly/pfe-modal": [
         "./elements/pfe-modal/pfe-modal.ts"
       ],
-      "@patternfly/pfe-page-status": [
-        "./elements/pfe-page-status/pfe-page-status.ts"
-      ],
       "@patternfly/pfe-progress-steps": [
         "./elements/pfe-progress-steps/pfe-progress-steps.ts"
-      ],
-      "@patternfly/pfe-readtime": [
-        "./elements/pfe-readtime/pfe-readtime.ts"
       ],
       "@patternfly/pfe-select": [
         "./elements/pfe-select/pfe-select.ts"
@@ -131,11 +120,17 @@
       "@patternfly/pfe-spinner": [
         "./elements/pfe-spinner/pfe-spinner.ts"
       ],
+      "@patternfly/pfe-switch": [
+        "./elements/pfe-switch/pfe-switch.ts"
+      ],
       "@patternfly/pfe-tabs": [
         "./elements/pfe-tabs/pfe-tabs.ts"
       ],
       "@patternfly/pfe-tile": [
         "./elements/pfe-tile/pfe-tile.ts"
+      ],
+      "@patternfly/pfe-timestamp": [
+        "./elements/pfe-timestamp/pfe-timestamp.ts"
       ],
       "@patternfly/pfe-tools/*": [
         "./tools/pfe-tools/*"
@@ -177,13 +172,7 @@
       "path": "./elements/pfe-clipboard"
     },
     {
-      "path": "./elements/pfe-codeblock"
-    },
-    {
-      "path": "./elements/pfe-collapse"
-    },
-    {
-      "path": "./elements/pfe-datetime"
+      "path": "./elements/pfe-code-block"
     },
     {
       "path": "./elements/pfe-dropdown"
@@ -198,13 +187,7 @@
       "path": "./elements/pfe-modal"
     },
     {
-      "path": "./elements/pfe-page-status"
-    },
-    {
       "path": "./elements/pfe-progress-steps"
-    },
-    {
-      "path": "./elements/pfe-readtime"
     },
     {
       "path": "./elements/pfe-select"
@@ -213,10 +196,16 @@
       "path": "./elements/pfe-spinner"
     },
     {
+      "path": "./elements/pfe-switch"
+    },
+    {
       "path": "./elements/pfe-tabs"
     },
     {
       "path": "./elements/pfe-label"
+    },
+    {
+      "path": "./elements/pfe-timestamp"
     },
     {
       "path": "./elements/pfe-tooltip"

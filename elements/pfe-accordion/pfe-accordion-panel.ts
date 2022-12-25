@@ -1,4 +1,4 @@
-import { customElement, } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
 import { BaseAccordionPanel } from './BaseAccordionPanel.js';
 
@@ -48,6 +48,8 @@ export class PfeAccordionPanel extends BaseAccordionPanel {
   static readonly version = '{{version}}';
 
   static readonly styles = [...BaseAccordionPanel.styles, style];
+
+  @property({ reflect: true }) bordered?: 'true'|'false';
 }
 
 declare global {

@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-tabs",
   "license": "MIT",
-  "version": "2.0.0-next.3",
+  "version": "2.0.0-next.8",
   "description": "Tabs for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -10,6 +10,11 @@
   "types": "./pfe-tabs.d.ts",
   "exports": {
     ".": "./pfe-tabs.js",
+    "./pfe-tab.js": "./pfe-tab.js",
+    "./pfe-tab-panel.js": "./pfe-tab-panel.js",
+    "./BaseTabs.js": "./BaseTabs.js",
+    "./BaseTab.js": "./BaseTab.js",
+    "./BaseTabPanel.js": "./BaseTabPanel.js",
     "./*": "./*.js"
   },
   "publishConfig": {
@@ -67,7 +72,7 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.8",
+    "@patternfly/pfe-core": "^2.0.0-next.11",
     "lit": "2.3.0"
   }
 }

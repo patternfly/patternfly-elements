@@ -1,6 +1,8 @@
 import { customElement } from 'lit/decorators.js';
 import { BaseTooltip } from './BaseTooltip.js';
 
+import styles from './pfe-tooltip.scss';
+
 /**
  * Patternfly tooltip
  *
@@ -92,6 +94,8 @@ import { BaseTooltip } from './BaseTooltip.js';
 @customElement('pfe-tooltip')
 export class PfeTooltip extends BaseTooltip {
   static readonly version = '{{version}}';
+
+  static readonly styles = [...BaseTooltip.styles, styles];
 }
 
 declare global {

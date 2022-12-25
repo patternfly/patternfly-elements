@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-card",
   "license": "MIT",
-  "version": "2.0.0-next.5",
+  "version": "2.0.0-next.7",
   "description": "Cards for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -10,6 +10,7 @@
   "types": "./pfe-card.d.ts",
   "exports": {
     ".": "./pfe-card.js",
+    "./BaseCard.js": "./BaseCard.js",
     "./*": "./*.js"
   },
   "publishConfig": {
@@ -27,7 +28,6 @@
     "build:clean": "npm run clean",
     "build:esbuild": "node ../../scripts/build.js --include pfe-card",
     "build:analyze": "npm run analyze",
-    "build:lightdom": "sass pfe-card--lightdom.scss pfe-card--lightdom.min.css --style=compressed --load-path=../../node_modules",
     "build:types": "tsc -b .",
     "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js",
@@ -69,7 +69,7 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.8",
+    "@patternfly/pfe-core": "^2.0.0-next.10",
     "lit": "2.3.0"
   }
 }

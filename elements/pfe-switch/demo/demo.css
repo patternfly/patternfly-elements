@@ -1,0 +1,32 @@
+section {
+  margin: 2rem;
+}
+
+fieldset {
+  display: grid;
+  grid-template-columns: min-content max-content;
+  gap: var(--pf-c-switch--ColumnGap, var(--pf-c-switch__label--PaddingLeft, 1rem));
+}
+
+fieldset:has(#reversed) {
+  grid-template-columns: max-content min-content;
+}
+
+label {
+  color: var(--pf-c-switch__label--Color, var(--pf-global--Color--dark-100, #151515));
+}
+
+pfe-switch:not([checked]) ~ label,
+label:has(~ pfe-switch:not([checked])) {
+  color: var(--pf-c-switch__input--not-checked__label--Color, var(--pf-global--disabled-color--100, #6a6e73));
+}
+
+#nested-label fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#nested-label output {
+  width: 100%;
+}

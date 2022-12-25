@@ -1,586 +1,196 @@
-<link rel="stylesheet" href="/core/pfe-styles/red-hat-font.min.css">
-<link rel="stylesheet" href="/core/pfe-styles/pfe-base.css">
-<link rel="stylesheet" href="/core/pfe-styles/pfe-layouts.css">
-<link rel="stylesheet" href="/core/pfe-styles/pfe-typography-classes.css">
-<link rel="stylesheet" href="/core/pfe-styles/pfe.css">
-<link rel="stylesheet" href="./demo.css">
+<link rel="stylesheet" href="./demo.css"/>
 <script type="module" src="./pfe-tabs.js"></script>
 
-<pfe-band id="context-band" class="contextual" color-palette="lightest" aside-height="full" aside-mobile-position="top">
-  <pfe-card color-palette="lightest" slot="aside" style="position: sticky; top: 0;" id="toc">
-    <pfe-jump-links-nav autobuild id="light-context" style="padding: 0">
-      <h3 slot="heading">Table of contents</h3>
-    </pfe-jump-links-nav>
-  </pfe-card>
+<div class="example">
+  <h2>Default</h2>
+  <pfe-tabs>
+    <pfe-tab id="users" slot="tab">Users</pfe-tab>
+    <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab">Containers</pfe-tab>
+    <pfe-tab-panel>Containers <a href="#">Focusable element</a></pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
+    <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
+    <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab slot="tab" aria-disabled="true" id="aria-disabled">Aria Disabled</pfe-tab>
+    <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+  </pfe-tabs>
+</div>
 
-  <pfe-jump-links-panel class="stacked" scrolltarget="light-context">
-    <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="style-horizontal-section">Horizontal layouts</h2>
-    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section has-sub-section" id="style-horizontal-plain">Wind variants</h3>
-    <pfe-tabs>
-      <pfe-tab role="heading" slot="tab" id="tab1">
-        <h2>h2</h2>
-        <h3>h3</h3>
-        <h4>h4</h4>
-      </pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 1</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab" id="tab2">
-        <h3>Tab</h3>
-        <h4>2</h4>
-      </pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 2</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab" id="tab3">
-        <pfe-icon icon="atom"></pfe-icon>
-        <p>Tab 3</p>
-      </pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 3</h2>
-        <div class="floating-card">
-          <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        <div class="floating-card">
-          <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-      </pfe-tab-panel>
+<div class="example">
+  <h2>Box</h2>
+  <pfe-tabs box="light">
+    <pfe-tab slot="tab" active>Users</pfe-tab>
+    <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab">Containers</pfe-tab>
+    <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
+    <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
+    <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
+    <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+  </pfe-tabs>
+
+  <div class="input">
+    <label><input type="checkbox" name="toggle-variant" checked> Box light/dark toggle</label>
+  </div>
+</div>
+
+<div class="example">
+  <h2>Default overflow</h2>
+    <pfe-tabs id="overflow">
+      <pfe-tab slot="tab">Users</pfe-tab>
+      <pfe-tab-panel>Users</pfe-tab-panel>
+      <pfe-tab slot="tab">Containers</pfe-tab>
+      <pfe-tab-panel>Containers</pfe-tab-panel>
+      <pfe-tab slot="tab">Database</pfe-tab>
+      <pfe-tab-panel>Database</pfe-tab-panel>
+      <pfe-tab slot="tab" active>Server</pfe-tab>
+      <pfe-tab-panel>Server</pfe-tab-panel>
+      <pfe-tab slot="tab">System</pfe-tab>
+      <pfe-tab-panel>System</pfe-tab-panel>
+      <pfe-tab slot="tab">Network</pfe-tab>
+      <pfe-tab-panel>Network</pfe-tab-panel>
     </pfe-tabs>
 
-    <h4 class="pfe-title--2xl pfe-jump-links-panel__section sub-section" id="style-horizontal-wind-with-center-alignment">Center alignment</h4>
-    <pfe-tabs tab-align="center" variant="wind">
-      <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 1</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">Tab 2 has a few more words</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 2</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">Tab 3</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 3</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-    </pfe-tabs>
+  <div class="input">
+    <label><input type="checkbox" name="toggle-resize"> Box variant toggle</label>
+  </div>
+</div>
 
-    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section has-sub-section" id="style-horizontal-earth">Earth variants</h3>
-    <pfe-tabs variant="earth">
-      <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 1</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">Tab 2 has a few more words</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 2</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">Tab 3</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 3</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">Tab 4</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 4</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu strud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-          laborum.</p>
-      </pfe-tab-panel>
-    </pfe-tabs>
+<div class="example">
+  <h2>Vertical</h2>
+  <pfe-tabs vertical>
+    <pfe-tab slot="tab">Users</pfe-tab>
+    <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab" active>Containers</pfe-tab>
+    <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
+    <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
+    <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
+    <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+  </pfe-tabs>
 
-    <h4 class="pfe-title--2xl pfe-jump-links-panel__section sub-section" id="style-horizontal-earth">Center alignment</h4>
-    <pfe-tabs variant="earth" tab-align="center">
-      <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 1</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim
-          id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">Tab 2 has a few more words</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 2</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim
-          id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim
-          id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">Tab 3</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 3</h2>
-        <div class="floating-card">
-          <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-            fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit
-            anim id est laborum.</p>
-        </div>
-        <div class="floating-card">
-          <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-            nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit
-            in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-      </pfe-tab-panel>
-    </pfe-tabs>
+  <div class="input">
+    <label><input type="checkbox" name="toggle-vertical"> Box variant toggle</label>
+  </div>
+</div>
 
-    <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="style-vertical-wind">Vertical layouts</h2>
-    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="style-vertical-earth">Wind variant</h3>
-    <pfe-tabs vertical variant="wind">
-      <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 1</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim
-          id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">Tab 2 has a few more words</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 2</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim
-          id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim
-          id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">Tab 3</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 3</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim
-          id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim
-          id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim
-          id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim
-          id est laborum.</p>
-      </pfe-tab-panel>
-    </pfe-tabs>
+<div class="example">
+  <h2>Inset</h2>
+  <pfe-tabs inset="md">
+    <pfe-tab slot="tab" active>Users</pfe-tab>
+    <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab">Containers</pfe-tab>
+    <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
+    <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab slot="tab" disabled>Disabled</pfe-tab>
+    <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
+    <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+  </pfe-tabs>
 
-    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="style-vertical-earth">Earth variant</h3>
-    <pfe-tabs vertical variant="earth" tab-align="center">
-      <pfe-tab role="heading" slot="tab">
-        <h3>Tab 1 with more text so it wraps to two lines</h3>
-      </pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 1</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">
-        <h3>Tab 2 with a few more words</h3>
-      </pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 2</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">
-        <h3>Tab 3</h3>
-      </pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 3</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-          in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-    </pfe-tabs>
+  <div class="input">
+    <label><input type="radio" name="toggle-inset" value="sm"> Small</label>
+    <label><input type="radio" name="toggle-inset" value="md" checked> Medium</label>
+    <label><input type="radio" name="toggle-inset" value="lg"> Large</label>
+    <label><input type="radio" name="toggle-inset" value="xl"> X-Large</label>
+    <label><input type="radio" name="toggle-inset" value="2xl"> 2X-Large</label>
+    <label><input type="radio" name="toggle-inset" value="page"> Page</label>
+  </div>
+</div>
 
-    <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="functionality">Featured functionality</h2>
-    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="selected-index">Selected index</h3>
-    <pfe-tabs variant="earth" selected-index="1">
-      <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 1</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-          esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-          qui officia deserunt mollit anim id est laborum.</p>
-        <a href="https://redhat.com">https://redhat.com</a>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">Tab 2 has a few more words</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 2</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-          esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-          qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-          esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-          qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">Tab 3</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h2>Content 3</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-          esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-          qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-          esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-          qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-          esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-          qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-          esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-          qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-tab-panel>
-    </pfe-tabs>
+<div class="example">
+  <h2>Icons and text</h2>
+  <pfe-tabs>
+    <pfe-tab slot="tab"> Users          <pfe-icon slot="icon" icon="users"></pfe-icon></pfe-tab>
+    <pfe-tab slot="tab"> Containers     <pfe-icon slot="icon" icon="box-open"></pfe-icon></pfe-tab>
+    <pfe-tab slot="tab"> Database       <pfe-icon slot="icon" icon="database"></pfe-icon></pfe-tab>
+    <pfe-tab slot="tab"> Server         <pfe-icon slot="icon" icon="server"></pfe-icon></pfe-tab>
+    <pfe-tab slot="tab"> System         <pfe-icon slot="icon" icon="laptop"></pfe-icon></pfe-tab>
+    <pfe-tab slot="tab" active> Network <pfe-icon slot="icon" icon="network-wired"></pfe-icon></pfe-tab>
+    <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab-panel>Server</pfe-tab-panel>
+    <pfe-tab-panel>System</pfe-tab-panel>
+    <pfe-tab-panel>Network</pfe-tab-panel>
+  </pfe-tabs>
+</div>
 
-    <div class="skip-e2e">
-      <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="tab-history">Tab history</h3>
-      <pfe-tabs id="my-tabs" tab-history>
-        <pfe-tab role="heading" slot="tab" id="tab1">Tab 1</pfe-tab>
-        <pfe-tab-panel role="region" slot="panel">
-          <h2>Content 1</h2>
-          <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.</p>
-          <a href="https://www.redhat.com">https://www.redhat.com</a>
-        </pfe-tab-panel>
-        <pfe-tab role="heading" slot="tab" id="tab2">Tab 2 has a few more words</pfe-tab>
-        <pfe-tab-panel role="region" slot="panel">
-          <h2>Content 2</h2>
-          <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-            laborum.</p>
-        </pfe-tab-panel>
-        <pfe-tab role="heading" slot="tab" id="tab3-a">Tab 3</pfe-tab>
-        <pfe-tab-panel role="region" slot="panel">
-          <h2>Content 3</h2>
-          <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-            est Lorem ipsum dolor sit amet.</p>
-        </pfe-tab-panel>
-      </pfe-tabs>
+<div class="example">
+  <h2>Filled</h2>
+  <pfe-tabs fill>
+    <pfe-tab slot="tab">Users</pfe-tab>
+    <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab" active>Containers</pfe-tab>
+    <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
+    <pfe-tab-panel>Database</pfe-tab-panel>
+  </pfe-tabs>
+</div>
 
-      <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="testing-tab-history-with-hash-anchors">Tab history with hash anchors</h3>
+<div class="example">
+  <h2>Filled with icons</h2>
+  <pfe-tabs fill>
+    <pfe-tab slot="tab"> Users      <pfe-icon slot="icon" icon="users"></pfe-icon></pfe-tab>
+    <pfe-tab slot="tab"> Containers <pfe-icon slot="icon" icon="box-open"></pfe-icon></pfe-tab>
+    <pfe-tab slot="tab"> Database   <pfe-icon slot="icon" icon="database"></pfe-icon></pfe-tab>
+    <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab-panel>Database</pfe-tab-panel>
+  </pfe-tabs>
+</div>
 
-      <p>This tabs component has the <code>pfe-tab-history</code> attribute added to it which adds entries into the browser history for each tab open.
-        Try changing the tab and then use the browser's back button.
-        Also, try selecting a tab and then refresh the browser.
-        The same tab you previously opened should be active.</p>
-      <pfe-tabs id="tabs-and-has-test" tab-history>
-        <pfe-tab role="heading" slot="tab" id="tabHash1">Tab 1</pfe-tab>
-        <pfe-tab-panel role="region" slot="panel">
-          <h2>Content 1</h2>
-          <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.</p>
-          <a href="https://www.redhat.com">https://www.redhat.com</a>
-        </pfe-tab-panel>
-        <pfe-tab role="heading" slot="tab" id="tabHash2">Tab 2 has a few more words</pfe-tab>
-        <pfe-tab-panel role="region" slot="panel">
-          <h2>Content 2</h2>
-          <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-            est Lorem ipsum dolor sit amet.</p>
-        </pfe-tab-panel>
-        <pfe-tab role="heading" slot="tab" id="tabHash3">Tab 3</pfe-tab>
-        <pfe-tab-panel role="region" slot="panel">
-          <h2>Content 3</h2>
-          <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-            laborum.</p>
-        </pfe-tab-panel>
-      </pfe-tabs>
-    </div>
+<div class="example">
+  <h2>Active Tab is Disabled</h2>
+  <pfe-tabs id="disabledExample">
+    <pfe-tab slot="tab">Users</pfe-tab>
+    <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab slot="tab">Containers</pfe-tab>
+    <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab slot="tab">Database</pfe-tab>
+    <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab slot="tab" disabled active>Disabled</pfe-tab>
+    <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
+    <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+  </pfe-tabs>
+</div>
 
-    <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="edge-cases">Edge cases</h2>
-    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="tabs-in-tabs">Tabs in tabs</h3>
-    <pfe-tabs variant="earth">
-      <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col-on-xl pfe-m-all-12-col-on-xs">
-          <pfe-card class="pfe-m-3-col-on-xl pfe-l-grid-fill-height">
-            <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consetetur sadipscing elitr, sed diam nonumy eirmod
-              tempor.</p>
-          </pfe-card>
-          <pfe-tabs variant="wind" id="subtabset" class="pfe-m-8-col-on-xl pfe-m-startat-5-col-on-xl">
-            <pfe-tab role="heading" slot="tab">Sub Tab 1</pfe-tab>
-            <pfe-tab-panel role="region" slot="panel">
-              <h2>Content for Sub Tab 1</h2>
-              <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consetetur sadipscing elitr, sed diam nonumy eirmod
-                tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-            </pfe-tab-panel>
-            <pfe-tab role="heading" slot="tab">Sub Tab 2 has a few more words</pfe-tab>
-            <pfe-tab-panel role="region" slot="panel">
-              <h2>Content for Sub Tab 2</h2>
-              <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-                sanctus est Lorem ipsum dolor sit amet.</p>
-            </pfe-tab-panel>
-          </pfe-tabs>
-        </div>
-      </pfe-tab-panel>
-      <pfe-tab role="heading" slot="tab">Tab 2 has a few more words</pfe-tab>
-      <pfe-tab-panel role="region" slot="panel">
-        <h1>Tab 2 Content</h1>
-        <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-          est Lorem ipsum dolor sit amet.</p>
-      </pfe-tab-panel>
-    </pfe-tabs>
+<div class="example">
+  <h2>Tabs first in markup</h2>
+  <pfe-tabs id="tabs-first">
+    <pfe-tab slot="tab">Users</pfe-tab>
+    <pfe-tab slot="tab">Containers</pfe-tab>
+    <pfe-tab slot="tab">Database</pfe-tab>
+    <pfe-tab slot="tab" disabled active>Disabled</pfe-tab>
+    <pfe-tab slot="tab" aria-disabled="true">Aria Disabled</pfe-tab>
+    <pfe-tab-panel>Users</pfe-tab-panel>
+    <pfe-tab-panel>Containers</pfe-tab-panel>
+    <pfe-tab-panel>Database</pfe-tab-panel>
+    <pfe-tab-panel>Disabled</pfe-tab-panel>
+    <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
+  </pfe-tabs>
+</div>
 
-    <div class="skip-e2e">
-      <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="dynamic-examples">Dynamic examples</h2>
-      <div class="pfe-l-grid pfe-m-gutters">
-        <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-lg" id="dynamically-adding-a-tab-and-tab-panel">Dynamic tabset injection</h3>
-        <pfe-button class="pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg"><button id="addTabAndPanelBtn">Add a tab + panel</button></pfe-button>
-      </div><br>
-      <pfe-tabs variant="earth" id="dynamic">
-        <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
-        <pfe-tab-panel role="region" slot="panel">
-          <h4>Tab 1</h4>
-          <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.</p>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-        </pfe-tab-panel>
-        <pfe-tab role="heading" slot="tab">Tab 2 has a few more words</pfe-tab>
-        <pfe-tab-panel role="region" slot="panel">
-          <h4>Tab 2</h4>
-          <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-            est Lorem ipsum dolor sit amet.</p>
-          <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-            laborum.</p>
-        </pfe-tab-panel>
-      </pfe-tabs>
+<div class="example">
+  <h2>Tabs with explicit relationships</h2>
+  <pfe-tabs id="explicit">
+    <pfe-tab slot="tab" aria-controls="panel-1">1</pfe-tab>
+    <pfe-tab slot="tab" aria-controls="panel-2">2</pfe-tab>
+    <pfe-tab slot="tab" aria-controls="panel-3">3</pfe-tab>
+    <pfe-tab slot="tab" aria-controls="panel-4">4</pfe-tab>
+    <pfe-tab slot="tab" aria-controls="panel-5">5</pfe-tab>
 
-      <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="add-text-to-tab-and-panel">Dynamic text added to tab and panel</h3><br>
-      <div class="pfe-l-grid pfe-m-gutters">
-        <pfe-tabs class="pfe-l-grid__item pfe-m-12-col pfe-m-7-col-on-xl" variant="earth" id="dynamic-text">
-          <pfe-tab role="heading" slot="tab" id="dynamicTextTab">Tab 1</pfe-tab>
-          <pfe-tab-panel role="region" slot="panel" id="dynamicTextPanel">
-            <h4>Tab 1</h4>
-            <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-              invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-          </pfe-tab-panel>
-          <pfe-tab role="heading" slot="tab">Tab 2 has a few more words</pfe-tab>
-          <pfe-tab-panel role="region" slot="panel" id="dynamicTextPanel">
-            <h4>Tab 2</h4>
-            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-              est Lorem ipsum dolor sit amet.</p>
-          </pfe-tab-panel>
-        </pfe-tabs>
-
-        <pfe-card class="pfe-l-grid__item pfe-m-12-col pfe-m-5-col-on-xl form" color-palette="lighter" style="height: max-content;">
-          <h4 class="pfe-title--md">Inject content into the tabset above</h4>
-          <form>
-            <div class="form-ui">
-              <label>Tab 1</label>
-              <input type="text" placeholder="Additional Tab Text" id="additional-tab-text">
-            </div>
-            <div class="form-ui">
-              <label>Panel 1</label>
-              <input type="text" placeholder="Additional Panel Text" id="additional-panel-text">
-            </div>
-          </form>
-        </pfe-card>
-      </div>
-    </div>
-  </pfe-jump-links-panel>
-
-  <a slot="footer" class="scroll-up" title="Scroll to top" href="#top" style="position: sticky; bottom: 0;">
-    <pfe-icon size="md" icon="caret-up"></pfe-icon>
-  </a>
-</pfe-band>
+    <pfe-tab-panel id="panel-5">5</pfe-tab-panel>
+    <pfe-tab-panel id="panel-4">4</pfe-tab-panel>
+    <pfe-tab-panel id="panel-3">3</pfe-tab-panel>
+    <pfe-tab-panel id="panel-2">2</pfe-tab-panel>
+    <pfe-tab-panel id="panel-1">1</pfe-tab-panel>
+  </pfe-tabs>
+</div>

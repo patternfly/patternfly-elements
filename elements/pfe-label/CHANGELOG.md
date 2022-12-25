@@ -1,5 +1,29 @@
 # @patternfly/pfe-label
 
+## 1.0.0-next.6
+
+### Patch Changes
+
+- 7e95ddbe: - Abstracted base class property fields
+  - Removed reflected properties in pfe-tabs.ts opting for classMap() usage
+- Updated dependencies [6b6e2617]
+- Updated dependencies [6b6e2617]
+  - @patternfly/pfe-button@2.0.0-next.8
+  - @patternfly/pfe-core@2.0.0-next.12
+
+## 1.0.0-next.5
+
+### Patch Changes
+
+- a4b92f42: Fix label style loading
+- d4442a66: Moved all pfe css property referencing styles from the `BaseLabel.scss` into to `pfe-label.scss`
+- 07ad1d3d: Updates use of `<pfe-icon>`
+- Updated dependencies [07ad1d3d]
+- Updated dependencies [07ad1d3d]
+  - @patternfly/pfe-icon@2.0.0-next.5
+  - @patternfly/pfe-core@2.0.0-next.10
+  - @patternfly/pfe-button@2.0.0-next.7
+
 ## 1.0.0-next.4
 
 ### Patch Changes

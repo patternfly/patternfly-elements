@@ -1,4 +1,5 @@
 :host {
-  color: var(--pf-global--Color--100, #151515);
-  background-color: var(--pf-global--BackgroundColor--100, #ffffff);
+  transition-property: box-shadow, border;
+  transition-timing-function: ease-out;
+  transition-duration: 1ms;
 }

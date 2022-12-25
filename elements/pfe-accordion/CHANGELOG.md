@@ -1,5 +1,47 @@
 # @patternfly/pfe-accordion
 
+## 2.0.0-next.10
+
+### Major Changes
+
+- d47ecddf: - Made `expanded-index` attribute 0-based.
+  - Made `single` and other boolean attributes actually boolean, instead of
+    `'true'|'false'`
+  - Added protected `headers` and `panels` getters
+  - Removed colour context
+  - Several performance improvements
+  - Moved from `BaseAccordion` to `PfeAccordion`:
+    - URL/History API
+    - `bordered`, `icon` and `icon-set` attributes
+    - `accents` slot
+
+## 2.0.0-next.9
+
+### Patch Changes
+
+- 0ef73073: Removing pfe-collapse
+- Updated dependencies [b6bb3818]
+  - @patternfly/pfe-core@2.0.0-next.11
+
+## 2.0.0-next.8
+
+### Patch Changes
+
+- e2774512: Updating the accordion to include a minor animation for screen reader accessibility in Chrome on Mac
+
+## 2.0.0-next.7
+
+### Patch Changes
+
+- 7d7d6839: Uses latest version of `<pfe-icon>` internally.
+- f53155bc: Moving variable specific styles directly into pfe-accordion/header/panel.scss. Updating package exports to include Base Classes.
+- 07ad1d3d: Updates use of `<pfe-icon>`
+- Updated dependencies [07ad1d3d]
+- Updated dependencies [07ad1d3d]
+  - @patternfly/pfe-icon@2.0.0-next.5
+  - @patternfly/pfe-core@2.0.0-next.10
+  - @patternfly/pfe-collapse@2.0.0-next.4
+
 ## 2.0.0-next.6
 
 ### Minor Changes

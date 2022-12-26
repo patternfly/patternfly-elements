@@ -79,7 +79,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
   render() {
     const { expanded, expandable, inline, compact, code, block, readonly } = this;
     return html`
-      <div id="container" class="${classMap({ code, expanded, inline, compact, block, })}">
+      <div class="container ${classMap({ code, expanded, inline, compact, block, })}">
         <div id="input-group">
           <pfe-button id="expand-button"
                       plain

@@ -1,4 +1,4 @@
-#container {
+.container {
   display: flex;
   flex-direction: column;
 }
@@ -78,7 +78,7 @@ textarea {
   font-family: inherit;
 }
 
-.code textarea {
+.container.code textarea {
   font-family: var(--pf-global--FontFamily--monospace,
     var(--pf-global--FontFamily--redhat--monospace,
       "RedHatMono",
@@ -91,11 +91,11 @@ textarea {
       monospace));
 }
 
-.expanded #expand-button pfe-icon {
+.container.expanded #expand-button pfe-icon {
   rotate: 90deg;
 }
 
-#container.inline {
+.container.inline {
   display: inline;
   background-color: var(--pf-c-clipboard-copy--m-inline--BackgroundColor,
     var(--pf-global--BackgroundColor--200, #f0f0f0));
@@ -107,28 +107,28 @@ textarea {
   white-space: normal;
 }
 
-#container:is(.compact, .inline) #input-group {
+.container:is(.compact, .inline) #input-group {
   display: contents;
 }
 
-#container:is(.compact, .inline) pfe-tooltip,
-#container:is(.compact, .inline) pfe-tooltip::part(invoker) {
+.container:is(.compact, .inline) pfe-tooltip,
+.container:is(.compact, .inline) pfe-tooltip::part(invoker) {
   display: inline-flex;
 }
 
-#container:is(.compact, .inline) #input-group {
+.container:is(.compact, .inline) #input-group {
   background-color: var(--pf-c-button--m-plain--BackgroundColor,
     var(--pf-global--BackgroundColor--200, #f0f0f0));
 }
 
-#container.compact.block {
+.container.compact.block {
   display: block;
   background-color: var(--pf-c-clipboard-copy--m-inline--BackgroundColor,
     var(--pf-global--BackgroundColor--200, #f0f0f0));
 }
 
-#container:is(.compact, .inline) #copy-button,
-#container:is(.compact, .inline) slot[name="actions"]::slotted(*) {
+.container:is(.compact, .inline) #copy-button,
+.container:is(.compact, .inline) slot[name="actions"]::slotted(*) {
   --pf-c-button--PaddingTop: var(--pf-c-clipboard-copy__actions-item--button--PaddingTop,
     var(--pf-global--spacer--xs, 0.25rem));
   --pf-c-button--PaddingRight: var(--pf-c-clipboard-copy__actions-item--button--PaddingRight,

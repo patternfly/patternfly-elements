@@ -25,6 +25,8 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
 
   static readonly styles = [baseStyles, styles];
 
+  static shadowRootOptions: ShadowRootInit = { ...BaseClipboardCopy.shadowRootOptions, delegatesFocus: true };
+
   @property({ attribute: 'click-tip' }) clickTip = 'Copied';
 
   @property({ attribute: 'hover-tip' }) hoverTip = 'Copy';

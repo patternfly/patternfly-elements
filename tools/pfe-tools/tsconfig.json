@@ -7,8 +7,6 @@
     "dev-server/bundle.ts"
   ],
   "compilerOptions": {
-    "target": "es2022",
-    "composite": false,
     "allowJs": false,
     "checkJs": false,
     "emitDeclarationOnly": false

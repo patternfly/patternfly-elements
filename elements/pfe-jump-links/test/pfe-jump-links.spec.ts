@@ -28,7 +28,7 @@ describe('<pfe-jump-links-item>', function() {
   let element: PfeJumpLinksItem;
 
   beforeEach(async function() {
-    element = await createFixture<PfeJumpLinks>(html`
+    element = await createFixture<PfeJumpLinksItem>(html`
       <pfe-jump-links-item></pfe-jump-links-item>
     `);
   });

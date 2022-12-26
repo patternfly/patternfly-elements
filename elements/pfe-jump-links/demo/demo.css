@@ -1,10 +1,5 @@
-:host {
-  background: #eee;
-  scroll-behavior: smooth;
-}
-
-:host {
-  --pfe-navigation--Height--actual: 0 !important;
+main {
+  padding: 1em;
 }
 
 a.pfe-jump-links-nav__item {

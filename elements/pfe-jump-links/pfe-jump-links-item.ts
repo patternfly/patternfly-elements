@@ -1,16 +1,16 @@
+import { LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { BaseJumpLinks } from './BaseJumpLinks.js';
 
 /**
  * **Jump links** allow users to navigate to sections within a page.
  */
-@customElement('pfe-jump-links')
-export class PfeJumpLinks extends BaseJumpLinks {
+@customElement('pfe-jump-links-item')
+export class PfeJumpLinksItem extends LitElement {
 }
 
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pfe-jump-links': PfeJumpLinks;
+    'pfe-jump-links-item': PfeJumpLinksItem;
   }
 }

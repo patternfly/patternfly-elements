@@ -36,6 +36,23 @@
 </section>
 
 <section>
+  <h3>JSON object (wrap code with pre)</h3>
+  <pfe-clipboard-copy code expandable expanded>
+    { "menu": {
+      "id": "file",
+      "value": "File",
+      "popup": {
+        "menuitem": [
+          {"value": "New", "onclick": "CreateNewDoc()"},
+          {"value": "Open", "onclick": "OpenDoc()"},
+          {"value": "Close", "onclick": "CloseDoc()"}
+        ]
+      }
+    }}
+  </pfe-clipboard-copy>
+</section>
+
+<section>
   <h3>Inline compact</h3>
   <pfe-clipboard-copy inline compact>2.3.4-2-redhat</pfe-clipboard-copy>
 </section>

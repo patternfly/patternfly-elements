@@ -11,7 +11,7 @@ export abstract class BaseJumpLinks extends LitElement {
   #onIntersection(entries: IntersectionObserverEntry[]) {
     for (const entry of entries) {
       // eslint-disable-next-line no-console
-      console.log(entry);
+      // console.log(entry);
     }
   }
 }

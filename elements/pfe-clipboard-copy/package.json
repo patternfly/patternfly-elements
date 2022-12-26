@@ -1,15 +1,19 @@
 {
-  "name": "@patternfly/pfe-clipboard",
-  "license": "MIT",
-  "version": "2.0.0-next.5",
-  "description": "Clipboard element for PatternFly Elements",
+  "name": "@patternfly/pfe-clipboard-copy",
+  "version": "1.0.0",
+  "description": "PatternFly Elements | Clipboard Copy",
   "customElements": "custom-elements.json",
+  "license": "MIT",
   "type": "module",
-  "main": "./pfe-clipboard.js",
-  "module": "./pfe-clipboard.js",
-  "types": "./pfe-clipboard.d.ts",
+  "main": "./pfe-clipboard-copy.js",
+  "module": "./pfe-clipboard-copy.js",
+  "types": "./pfe-clipboard-copy.d.ts",
+  "directories": {
+    "test": "tests"
+  },
   "exports": {
-    ".": "./pfe-clipboard.js",
+    ".": "./pfe-clipboard-copy.js",
+    "./BaseClipboardCopy.js": "./BaseClipboardCopy.js",
     "./*": "./*.js"
   },
   "publishConfig": {
@@ -25,7 +29,7 @@
     "analyze": "cem analyze",
     "build": "run-s build:*",
     "build:clean": "npm run clean",
-    "build:esbuild": "node ../../scripts/build.js --include pfe-clipboard",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-clipboard-copy",
     "build:analyze": "npm run analyze",
     "build:types": "tsc -b .",
     "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
@@ -36,38 +40,14 @@
     "watch:types": "tsc -w"
   },
   "keywords": [
-    "web-components",
-    "clipboard",
-    "html"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "github:patternfly/patternfly-elements",
-    "directory": "elements/pfe-clipboard"
-  },
-  "bugs": {
-    "url": "https://github.com/patternfly/patternfly-elements/issues"
-  },
-  "files": [
-    "!*.ts",
-    "custom-elements.json",
-    "**/*.LEGAL.txt",
-    "**/*.css",
-    "**/*.d.ts",
-    "**/*.js",
-    "**/*.js.map",
-    "!custom-elements-manifest.config.js",
-    "!demo/*",
-    "!docs/*",
-    "!test/*"
-  ],
-  "contributors": [
-    "heyMP",
-    "wesruv",
-    "Benny Powers <bennyp@redhat.com>"
+    "custom elements",
+    "design systems",
+    "web components"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.10",
-    "lit": "2.3.0"
+    "@patternfly/pfe-button": "^2.0.0 || ^2.0.0-next.0",
+    "@patternfly/pfe-core": "^2.0.0 || ^2.0.0-next.0",
+    "@patternfly/pfe-tooltip": "^1.1.0 || ^1.1.0-next.7",
+    "lit": "^2.0.0"
   }
 }

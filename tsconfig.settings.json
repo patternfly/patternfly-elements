@@ -93,6 +93,9 @@
       "@patternfly/pfe-clipboard": [
         "./elements/pfe-clipboard/pfe-clipboard.ts"
       ],
+      "@patternfly/pfe-clipboard-copy": [
+        "./elements/pfe-clipboard-copy/pfe-clipboard-copy.ts"
+      ],
       "@patternfly/pfe-code-block": [
         "./elements/pfe-code-block/pfe-code-block.ts"
       ],
@@ -169,7 +172,7 @@
       "path": "./elements/pfe-card"
     },
     {
-      "path": "./elements/pfe-clipboard"
+      "path": "./elements/pfe-clipboard-copy"
     },
     {
       "path": "./elements/pfe-code-block"

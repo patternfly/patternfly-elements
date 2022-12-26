@@ -70,7 +70,7 @@ export abstract class BaseTooltip extends LitElement {
   override render() {
     const { initialized } = this.#domController;
     return html`
-      <div id="invoker" role="tooltip" tabindex="0" aria-labelledby="tooltip">
+      <div id="invoker" part="invoker" role="tooltip" tabindex="0" aria-labelledby="tooltip">
         <slot></slot>
       </div>
       <div id="tooltip" aria-hidden=${!this.#isOpen} class=${classMap({ initialized })}>

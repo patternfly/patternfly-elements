@@ -6,6 +6,12 @@
   display: contents;
 }
 
+slot:not([name]) {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--pf-global--spacer--md, 1rem);
+}
+
 a {
   position: relative;
   display: flex;
@@ -31,7 +37,7 @@ a::before {
   inset: 0;
   pointer-events: none;
   content: "";
-  border-color: var(--pf-c-jump-links__link--before--BorderColor);
+  border-color: var(--pf-c-jump-links__link--before--BorderColor, transparent);
   border-style: solid;
   border-width:
     var(--pf-c-jump-links__link--before--BorderTopWidth,

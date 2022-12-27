@@ -37,6 +37,7 @@ export class PfeJumpLinksItem extends LitElement {
       <a href="${ifDefined(this.href)}">
         <slot></slot>
       </a>
+      <slot name="subsection"></slot>
     `;
   }
 }

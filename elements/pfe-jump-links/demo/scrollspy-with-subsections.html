@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../demo.css">
+<link rel="stylesheet" href="../scrollspy-with-subsections.css">
 <script type="module" src="../scrollspy-with-subsections.js"></script>
 
 <header>
@@ -9,21 +9,21 @@
   <label for="is-vertical" data-state="off">Horizontal</label>
 </header>
 
-<article>
-  <aside>
-    <pfe-jump-links vertical
-                    expandable
-                    expanded
-                    label="Jump to section"
-                    scrollable-element="scrollable-element">
-      <pfe-jump-links-item href="#heading-1">Heading 1</pfe-jump-links-item>
-      <pfe-jump-links-item href="#heading-2">Heading 2</pfe-jump-links-item>
-      <pfe-jump-links-item href="#heading-3">Heading 3</pfe-jump-links-item>
-      <pfe-jump-links-item href="#heading-4">Heading 4</pfe-jump-links-item>
-      <pfe-jump-links-item href="#heading-5">Heading 5</pfe-jump-links-item>
-    </pfe-jump-links>
-  </aside>
+<aside>
+  <pfe-jump-links vertical
+                  expandable
+                  expanded
+                  label="Jump to section"
+                  scrollable-element="scrollable-element">
+    <pfe-jump-links-item href="#heading-1">Heading 1</pfe-jump-links-item>
+    <pfe-jump-links-item href="#heading-2">Heading 2</pfe-jump-links-item>
+    <pfe-jump-links-item href="#heading-3">Heading 3</pfe-jump-links-item>
+    <pfe-jump-links-item href="#heading-4">Heading 4</pfe-jump-links-item>
+    <pfe-jump-links-item href="#heading-5">Heading 5</pfe-jump-links-item>
+  </pfe-jump-links>
+</aside>
 
+<article id="scrollable-element">
   <h2 id="heading-1">Heading 1</h2>
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut

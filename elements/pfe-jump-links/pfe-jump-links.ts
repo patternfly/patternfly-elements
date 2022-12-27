@@ -14,9 +14,17 @@ import style from './pfe-jump-links.scss';
 export class PfeJumpLinks extends BaseJumpLinks {
   static readonly styles = [style];
 
+  static scrollableElementAttr = 'scrollable-element';
+
+  static linkChildrenTags = ['pfe-jump-links-item'];
+
+  @property({ attribute: PfeJumpLinks.scrollableElementAttr }) scrollableElement?: string;
+
   @property({ reflect: true, type: Boolean }) expandable = false;
 
   @property({ reflect: true, type: Boolean }) expanded = false;
+
+  @property({ reflect: true, type: Boolean }) vertical = false;
 
   @property() label?: string;
 

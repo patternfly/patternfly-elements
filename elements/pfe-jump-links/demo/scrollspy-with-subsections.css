@@ -1,0 +1,29 @@
+[data-demo] {
+  display: contents;
+}
+
+main {
+  display: grid;
+  grid-template-rows: max-content auto;
+  grid-template-columns: 300px auto;
+  grid-template-areas:
+    'head head'
+    'side body';
+}
+
+main header {
+  grid-area: head;
+}
+
+main aside {
+  grid-area: side;
+}
+
+main article {
+  grid-area: body;
+}
+
+pfe-jump-links {
+  position: sticky;
+  top: 1em;
+}

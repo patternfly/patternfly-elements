@@ -1,6 +1,7 @@
-import { html } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { BaseJumpLinks } from './BaseJumpLinks.js';
+
+import { ScrollSpyController } from '@patternfly/pfe-core/controllers/scroll-spy-controller.js';
 
 import './pfe-jump-links-item.js';
 import '@patternfly/pfe-icon';
@@ -13,10 +14,8 @@ import style from './pfe-jump-links.scss';
  * @slot - Place pfe-jump-links-items here
  */
 @customElement('pfe-jump-links')
-export class PfeJumpLinks extends BaseJumpLinks {
+export class PfeJumpLinks extends LitElement {
   static readonly styles = [style];
-
-  override hrefChildTagNames = ['pfe-jump-links-item'];
 
   @property({ reflect: true, type: Boolean }) expandable = false;
 
@@ -29,6 +28,22 @@ export class PfeJumpLinks extends BaseJumpLinks {
   @property({ type: Number }) offset = 0;
 
   @property() label?: string;
+
+  #spy = new ScrollSpyController(this, {
+    rootMargin: `${this.offset}px 0px 0px 0px`,
+    tagNames: ['pfe-jump-links-item'],
+  });
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('select', this.#onSelect);
+  }
+
+  override updated(changed: Map<string, unknown>) {
+    if (changed.has('offset')) {
+      this.#spy.rootMargin = `${this.offset ?? 0}px 0px 0px 0px`;
+    }
+  }
 
   render() {
     return html`
@@ -44,6 +59,10 @@ export class PfeJumpLinks extends BaseJumpLinks {
         <slot role="listbox"></slot>`}
       </nav>
     `;
+  }
+
+  async #onSelect(event: Event) {
+    this.#spy.setActive(event.target);
   }
 
   #onToggle(event: Event) {

@@ -2,6 +2,10 @@
   display: none !important;
 }
 
+:host {
+  display: block;
+}
+
 #container {
   display: flex;
   flex-wrap: wrap;

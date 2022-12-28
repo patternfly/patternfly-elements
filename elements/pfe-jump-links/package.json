@@ -10,7 +10,6 @@
   "types": "./pfe-jump-links.d.ts",
   "exports": {
     ".": "./pfe-jump-links.js",
-    "./BaseJumpLinks.js": "./BaseJumpLinks.js",
     "./pfe-jump-links-item.js": "./pfe-jump-links-item.js",
     "./pfe-jump-links-list.js": "./pfe-jump-links-list.js",
     "./*": "./*.js"

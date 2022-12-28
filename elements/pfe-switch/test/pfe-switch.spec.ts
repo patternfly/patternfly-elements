@@ -1,14 +1,8 @@
+import type { A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfeSwitch } from '@patternfly/pfe-switch';
-import { a11ySnapshot } from '@web/test-runner-commands';
-
-interface A11yTreeSnapshot {
-  name: string;
-  children: A11yTreeSnapshot[];
-  role: string;
-  checked?: boolean;
-}
+import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 describe('<pfe-switch>', function() {
   describe('simply instantiating', function() {
@@ -21,7 +15,7 @@ describe('<pfe-switch>', function() {
         </div>
       `);
       element = container.querySelector('pfe-switch')!;
-      snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
+      snapshot = await a11ySnapshot({ selector: 'pfe-switch' });
     });
     it('should upgrade', async function() {
       const klass = customElements.get('pfe-switch');
@@ -56,7 +50,7 @@ describe('<pfe-switch>', function() {
         </div>
         `);
       element = container.querySelector('pfe-switch')!;
-      snapshot = await a11ySnapshot({ selector: '#switch' }) as unknown as A11yTreeSnapshot;
+      snapshot = await a11ySnapshot({ selector: '#switch' });
     });
 
     it('is accessible', function() {
@@ -74,7 +68,7 @@ describe('<pfe-switch>', function() {
         element.click();
         await element.updateComplete;
         await nextFrame();
-        snapshot = await a11ySnapshot({ selector: '#switch' }) as unknown as A11yTreeSnapshot;
+        snapshot = await a11ySnapshot({ selector: '#switch' });
       });
       it('should be checked', function() {
         expect(element.checked).to.be.true;
@@ -150,7 +144,7 @@ describe('<pfe-switch>', function() {
         </label>
       `);
       element = label.querySelector('pfe-switch')!;
-      snapshot = await a11ySnapshot({ selector: 'pfe-switch' }) as unknown as A11yTreeSnapshot;
+      snapshot = await a11ySnapshot({ selector: 'pfe-switch' });
     });
     it('does not hide label', function() {
       expect(label.hidden).to.be.false;

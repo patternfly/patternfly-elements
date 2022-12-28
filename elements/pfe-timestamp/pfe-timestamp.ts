@@ -1,7 +1,15 @@
+import type { ComplexAttributeConverter } from 'lit';
+
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import style from './pfe-timestamp.scss';
+
+const BooleanStringConverter: ComplexAttributeConverter = {
+  fromAttribute(value) {
+    return !value || value === 'true';
+  },
+};
 
 @customElement('pfe-timestamp')
 export class PfeTimestamp extends LitElement {
@@ -24,13 +32,7 @@ export class PfeTimestamp extends LitElement {
 
   @property({ reflect: true, type: Boolean }) utc?: boolean;
 
-  @property({
-    reflect: true,
-    attribute: 'hour-12',
-    converter: value => {
-      return !value || value === 'true';
-    }
-  }) hour12?: boolean;
+  @property({ reflect: true, attribute: 'hour-12', converter: BooleanStringConverter }) hour12?: boolean;
 
   render() {
     const { hour12 } = this;

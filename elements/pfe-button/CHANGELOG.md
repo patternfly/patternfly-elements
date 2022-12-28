@@ -1,5 +1,31 @@
 # @patternfly/pfe-button
 
+## 2.0.0-next.8
+
+### Major Changes
+
+- 6b6e2617: Makes `<pfe-button>` a form-associated custom element
+
+  BREAKING CHANGE:
+  users should no longer slot a native `<button>` into the element
+
+  Before:
+
+  ```html
+  <pfe-button><button>Submit</button></pfe-button>
+  ```
+
+  After:
+
+  ```html
+  <pfe-button>Submit</pfe-button>
+  ```
+
+### Patch Changes
+
+- Updated dependencies [6b6e2617]
+  - @patternfly/pfe-core@2.0.0-next.12
+
 ## 2.0.0-next.7
 
 ### Patch Changes

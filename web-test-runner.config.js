@@ -1,5 +1,6 @@
 import { pfeTestRunnerConfig } from '@patternfly/pfe-tools/test-runner.js';
 import { fakePrismModule } from './web-dev-server.config.js';
+import { a11ySnapshotPlugin } from '@web/test-runner-commands/plugins';
 
 export default pfeTestRunnerConfig({
   tsconfig: 'tsconfig.settings.json',
@@ -8,5 +9,6 @@ export default pfeTestRunnerConfig({
   // reporter: 'default',
   plugins: [
     fakePrismModule(),
+    a11ySnapshotPlugin()
   ],
 });

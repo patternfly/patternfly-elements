@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 2.0.0-next.12
+
+### Minor Changes
+
+- 6b6e2617: Add InternalsController, providing preliminary facility for ElementInternals
+
 ## 2.0.0-next.11
 
 ### Minor Changes

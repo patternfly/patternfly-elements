@@ -1,9 +1,12 @@
+import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-
+import { styleMap } from 'lit/directives/style-map.js';
 
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import { NumberListConverter } from '@patternfly/pfe-core';
 
 import style from './BaseTooltip.scss';
 
@@ -14,9 +17,17 @@ export abstract class BaseTooltip extends LitElement {
   static readonly styles = [style];
 
   /** The placement of the tooltip, relative to the invoking content */
-  @property({ reflect: true }) position = 'top';
+  @property({ reflect: true }) position: Placement = 'top';
 
-  @property({ reflect: true, type: Boolean }) showing = false;
+  @property({ reflect: true, type: Boolean })
+  get showing() {
+    return this.#float.open;
+  }
+
+  set showing(v: boolean) {
+    this.#float.open = v;
+    this.toggleAttribute('showing', v);
+  }
 
   /**
    * Optional tooltip offset: a comma separated coordinate pair of numbers
@@ -24,35 +35,13 @@ export abstract class BaseTooltip extends LitElement {
    *     <pfe-tooltip offset="5,6">...</pfe-tooltip>
    *     ```
    */
-  @property({
-    converter: {
-      fromAttribute(numbers: string) {
-        return numbers.split(',').map(x => parseInt(x.trim()));
-      }
-    }
-  })
-    offset = [0, 15];
+  @property({ converter: NumberListConverter }) offset = [0, 15];
 
-  #domController: FloatingDOMController = new FloatingDOMController(this);
-
-  get #isOpen(): boolean {
-    return this.#domController.open;
-  }
-
-  get #arrow(): HTMLElement | null {
-    return this.shadowRoot?.querySelector<HTMLElement>('#arrow') ?? null;
-  }
-
-  get #invoker(): HTMLElement | null {
-    return this.shadowRoot?.querySelector<HTMLElement>('#invoker') ?? null;
-  }
-
-  get #tooltip(): HTMLElement | null {
-    return this.shadowRoot?.querySelector<HTMLElement>(`#tooltip`) ?? null;
-  }
+  #float: FloatingDOMController;
 
   disconnectedCallback() {
-    this.#domController.removeAutoUpdate();
+    super.disconnectedCallback?.();
+    this.#float.removeAutoUpdate();
   }
 
   override connectedCallback(): void {
@@ -64,32 +53,44 @@ export abstract class BaseTooltip extends LitElement {
     exitEvents.forEach(evt => this.addEventListener(evt, this.hide));
   }
 
-  show() {
-    if (this.#invoker && this.#tooltip && this.#arrow) {
-      this.#domController.create(this.#invoker, this.#tooltip, this.#arrow, this.position, this.offset);
-      this.#domController.show();
-      this.showing = true;
+  firstUpdated() {
+    const arrow = this.shadowRoot.querySelector('#arrow');
+    const invoker = this.shadowRoot.querySelector('#invoker');
+    const content = this.shadowRoot.querySelector('#tooltip');
+    this.#float = new FloatingDOMController(this, { arrow, invoker, content });
+  }
+
+  updated(changed: PropertyValues<this>) {
+    if (changed.has('position')) {
+      this.#float.position = this.position;
+    }
+    if (changed.has('offset')) {
+      this.#float.offset = this.offset;
     }
   }
 
+  async show() {
+    await this.updateComplete;
+    const { offset, position } = this;
+    await this.#float?.show({ offset, placement: position });
+  }
 
-  hide() {
-    this.showing = false;
-    this.#domController.hide();
+  async hide() {
+    await this.updateComplete;
+    await this.#float?.hide();
   }
 
   override render() {
-    const { initialized } = this.#domController;
     return html`
-      <div id="invoker" role="tooltip" aria-labelledby="tooltip">
+      <span id="invoker" part="invoker" role="tooltip" tabindex="0" aria-labelledby="tooltip">
         <slot></slot>
-      </div>
-      <div id="tooltip" aria-hidden=${!this.#isOpen} class=${classMap({ initialized })}>
-        <div id="arrow"></div>
-        <div id="content" class="content">
+      </span>
+      <span id="tooltip" aria-hidden=${String(!this.#float?.open)} class=${classMap({ initialized: !!this.#float })}>
+        <span id="arrow" style="${styleMap(this.#float?.arrowStyles ?? {})}"></span>
+        <span id="content" class="content" style="${styleMap(this.#float?.contentStyles ?? {})}">
           <slot name="content"></slot>
-        </div>
-      </div>
+        </span>
+      </span>
     `;
   }
 }

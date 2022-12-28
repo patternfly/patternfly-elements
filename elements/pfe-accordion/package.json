@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-accordion",
-  "version": "2.0.0-next.9",
+  "version": "2.0.0-next.10",
   "license": "MIT",
   "description": "Accordion for PatternFly Elements",
   "customElements": "custom-elements.json",

@@ -16,29 +16,34 @@ import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 export class PfeJumpLinksItem extends LitElement {
   static readonly styles = [style];
 
-  @property({ reflect: true }) href?: string;
+  #internals = new InternalsController(this);
 
   @observed('activeChanged')
   @property({ type: Boolean, reflect: true }) active = false;
+
+  @property({ reflect: true }) href?: string;
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.activeChanged();
+    this.#internals.role = 'listitem';
+  }
+
+  render() {
+    return html`
+      <a href="${ifDefined(this.href)}" @click="${this.#onClick}">
+        <slot></slot>
+      </a>
+      <slot name="subsection"></slot>
+    `;
+  }
 
   private activeChanged() {
     this.#internals.ariaCurrent = this.active ? 'location' : null;
   }
 
-  override connectedCallback() {
-    super.connectedCallback();
-    this.#internals.role = 'listitem';
-  }
-
-  #internals = new InternalsController(this);
-
-  render() {
-    return html`
-      <a href="${ifDefined(this.href)}">
-        <slot></slot>
-      </a>
-      <slot name="subsection"></slot>
-    `;
+  #onClick() {
+    this.dispatchEvent(new Event('select', { bubbles: true }));
   }
 }
 

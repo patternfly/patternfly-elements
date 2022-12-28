@@ -2,32 +2,34 @@ import '@patternfly/pfe-switch';
 import '@patternfly/pfe-jump-links';
 import '@patternfly/pfe-jump-links/pfe-jump-links-list.js';
 
-import { installRouter } from 'pwa-helpers/router.js';
+const main = document.querySelector('main');
+/** @type {import('@patternfly/pfe-jump-links').PfeJumpLinks} */
+const links = document.querySelector('pfe-jump-links');
+/** @type {import('@patternfly/pfe-switch').PfeSwitch} */
+const swtch = document.querySelector('pfe-switch');
+const media = matchMedia('(max-width: 600px)');
 
-const jumpLinks = document.querySelector('pfe-jump-links');
-const verticalSwitch = document.querySelector('pfe-switch');
-
-verticalSwitch.addEventListener('change', onVertical);
-
-function onVertical() {
-  jumpLinks.vertical = verticalSwitch.checked;
-  jumpLinks.centered = !jumpLinks.vertical;
+function sumHeights(...elements) {
+  return elements.reduce((sum, el) => sum + el?.getBoundingClientRect?.().height ?? 0, 0);
 }
 
-onVertical();
-
-/**
- * scroll to element with id in the URL hash.
- * @this {HTMLElement}
- */
-async function route(location = window.location, event) {
-  event?.preventDefault();
-  event?.stopPropagation();
-  if (location.hash) {
-    document.querySelector(location.hash)?.scrollIntoView({ behavior: 'smooth' });
-  }
+async function update() {
+  const { matches } = media;
+  const { checked } = swtch;
+  main.classList.toggle('mobile', matches);
+  main.classList.toggle('horizontal', !checked);
+  links.vertical = checked;
+  links.expandable = matches && checked;
+  links.centered = !checked;
+  await links.updateComplete;
+  links.offset = sumHeights(
+    document.getElementById('main-header'),
+  ) + 72;
 }
 
-installRouter(route);
+media.addEventListener('change', update);
+swtch.addEventListener('change', update);
+links.addEventListener('toggle', update);
 
-route();
+update();
+

@@ -1,4 +1,3 @@
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { LitElement } from 'lit';
 
 type HREFElement = Element & { href: string };
@@ -7,23 +6,19 @@ function hasHrefHash(child: Element): child is HREFElement {
 }
 
 export abstract class BaseJumpLinks extends LitElement {
-  static scrollableElementAttr: string;
+  protected abstract hrefChildTagNames: string[];
 
-  static linkChildrenTags: string[];
-
-  #logger = new Logger(this);
+  abstract offset: number;
 
   #io?: IntersectionObserver;
 
-  #activeItems = new Set<Element>();
+  #passedLinks = new Set<Element>();
 
-  get #cons() {
-    return this.constructor as typeof BaseJumpLinks;
-  }
+  /** When true, ignore intersections */
+  #force = false;
 
-  get #ioRootId() {
-    return this[this.#cons.scrollableElementAttr as keyof this] as string;
-  }
+  /** Has the intersection observer found an element */
+  #intersected = false;
 
   get #rootNode() {
     const rootNode = this.getRootNode();
@@ -35,7 +30,7 @@ export abstract class BaseJumpLinks extends LitElement {
   }
 
   get #linkChildren(): HREFElement[] {
-    return Array.from(this.querySelectorAll(this.#cons.linkChildrenTags.join(',')))
+    return Array.from(this.querySelectorAll(this.hrefChildTagNames.join(',')))
       .filter(hasHrefHash);
   }
 
@@ -47,66 +42,80 @@ export abstract class BaseJumpLinks extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
+    this.addEventListener('select', this.#onSelect);
     this.#initIo();
   }
 
-  updated(changed: Map<string, unknown>) {
-    const { scrollableElementAttr } = this.#cons;
-    if (!scrollableElementAttr) {
-      this.#logger.warn('must implement scrollableElementAttr');
-    } else if (changed.has(scrollableElementAttr)) {
+  override updated(changed: Map<string, unknown>) {
+    if (changed.has('offset')) {
+      this.#io?.disconnect();
       this.#initIo();
     }
   }
 
-  #updateActive() {
-    for (const link of this.#linkChildren) {
-      link.removeAttribute('active');
-    }
-    const links = [...this.#activeItems];
-    const last = links.at(-1);
-    if (last) {
-      last.toggleAttribute('active', true);
-    } else {
-      this.#linkChildren.at(0)?.toggleAttribute('active', true);
-    }
-  }
-
   #initIo() {
-    this.#io?.disconnect();
-    const { linkChildrenTags, scrollableElementAttr } = this.#cons;
-    if (!scrollableElementAttr) {
-      return this.#logger.warn('must implement scrollableElementAttr');
-    } else if (!linkChildrenTags) {
-      return this.#logger.warn('must implement linkChildrenTags');
+    if (this.#rootNode) {
+      this.#io = new IntersectionObserver(r => this.#onIntersection(r), {
+        rootMargin: `${this.offset ?? 0}px 0px 0px 0px`,
+        threshold: 0.85,
+      });
+      for (const target of this.#ioTargets) {
+        this.#io.observe(target);
+      }
+    }
+  }
+
+  async #nextIntersection() {
+    this.#intersected = false;
+    // safeguard the loop
+    setTimeout(() => this.#intersected = false, 5000);
+    while (!this.#intersected) {
+      await new Promise(requestAnimationFrame);
+    }
+  }
+
+  async #onIntersection(entries: IntersectionObserverEntry[]) {
+    if (!this.#force) {
+      const { hrefChildTagNames } = this;
+      for (const { target, boundingClientRect, intersectionRect } of entries) {
+        const selector = `:is(${hrefChildTagNames.join(',')})[href="#${target.id}"]`;
+        const link = this.querySelector(selector);
+        if (link) {
+          this.#markPassed(link, boundingClientRect.top < intersectionRect.top);
+        }
+      }
+      const link = [...this.#passedLinks];
+      const last = link.at(-1);
+      this.#setActive(last ?? this.#linkChildren.at(0));
+    }
+    this.#intersected = true;
+  }
+
+  async #onSelect(event: Event) {
+    this.#force = true;
+    this.#setActive(event.target);
+    let sawActive = false;
+    for (const link of this.#linkChildren) {
+      this.#markPassed(link, !sawActive);
+      if (link === event.target) {
+        sawActive = true;
+      }
+    }
+    await this.#nextIntersection();
+    this.#force = false;
+  }
+
+  #markPassed(link: Element, force: boolean) {
+    if (force) {
+      this.#passedLinks.add(link);
     } else {
-      if (this.#rootNode) {
-        const threshold = 0.85;
-        const root = this.#rootNode.getElementById(this.#ioRootId);
-        this.#io = new IntersectionObserver(r => this.#onIntersection(r), { threshold, root });
-        for (const target of this.#ioTargets) {
-          this.#io.observe(target);
-        }
-      }
+      this.#passedLinks.delete(link);
     }
   }
 
-  #onIntersection(entries: IntersectionObserverEntry[]) {
-    for (const entry of entries) {
-      const selector = `:is(${this.#cons.linkChildrenTags.join(',')})[href="#${entry.target.id}"]`;
-      const child = this.querySelector(selector);
-      if (child) {
-        if (hasScrolledPast(entry)) {
-          this.#activeItems.add(child);
-        } else {
-          this.#activeItems.delete(child);
-        }
-      }
+  #setActive(activeLink?: EventTarget|null) {
+    for (const link of this.#linkChildren) {
+      link.toggleAttribute('active', link === activeLink);
     }
-    this.#updateActive();
   }
-}
-
-function hasScrolledPast(entry: IntersectionObserverEntry) {
-  return entry.boundingClientRect.top < entry.intersectionRect.top;
 }

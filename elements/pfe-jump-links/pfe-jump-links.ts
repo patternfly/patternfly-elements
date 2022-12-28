@@ -9,22 +9,24 @@ import style from './pfe-jump-links.scss';
 
 /**
  * **Jump links** allow users to navigate to sections within a page.
+ * @fires toggle - when the `expanded` disclosure widget is toggled
+ * @slot - Place pfe-jump-links-items here
  */
 @customElement('pfe-jump-links')
 export class PfeJumpLinks extends BaseJumpLinks {
   static readonly styles = [style];
 
-  static scrollableElementAttr = 'scrollable-element';
-
-  static linkChildrenTags = ['pfe-jump-links-item'];
-
-  @property({ attribute: PfeJumpLinks.scrollableElementAttr }) scrollableElement?: string;
+  override hrefChildTagNames = ['pfe-jump-links-item'];
 
   @property({ reflect: true, type: Boolean }) expandable = false;
 
   @property({ reflect: true, type: Boolean }) expanded = false;
 
   @property({ reflect: true, type: Boolean }) vertical = false;
+
+  @property({ reflect: true, type: Boolean }) centered = false;
+
+  @property({ type: Number }) offset = 0;
 
   @property() label?: string;
 
@@ -48,6 +50,7 @@ export class PfeJumpLinks extends BaseJumpLinks {
     if (event.target instanceof HTMLDetailsElement) {
       this.expanded = event.target.open;
     }
+    this.dispatchEvent(new Event('toggle'));
   }
 }
 

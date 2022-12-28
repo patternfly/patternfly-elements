@@ -12,6 +12,12 @@ export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
    * @default 'active'
    */
   activeAttribute?: string;
+
+  /**
+   * The root node to query content for
+   * @default the host's root node
+   */
+  rootNode?: Node;
 }
 
 type HREFElement = Element & { href: string };
@@ -38,24 +44,11 @@ export class ScrollSpyController implements ReactiveController {
   #rootMargin?: string;
   #threshold: number|number[];
 
-  get #rootNode() {
-    const rootNode = this.host.getRootNode();
-    if (rootNode instanceof ShadowRoot || rootNode instanceof Document) {
-      return rootNode;
-    } else {
-      return null;
-    }
-  }
+  #rootNode: Node;
 
   get #linkChildren(): HREFElement[] {
     return Array.from(this.host.querySelectorAll(this.#tagNames.join(',')))
       .filter(hasHrefHash);
-  }
-
-  get #ioTargets(): HTMLElement[] {
-    return this.#linkChildren
-      .map(x => this.#rootNode?.getElementById(x.href.replace('#', '')))
-      .filter((x): x is HTMLElement => !!x);
   }
 
   get root() {
@@ -98,6 +91,7 @@ export class ScrollSpyController implements ReactiveController {
     this.#rootMargin = options.rootMargin;
     this.#activeAttribute = options.activeAttribute ?? 'active';
     this.#threshold = options.threshold ?? 0.85;
+    this.#rootNode = options.rootNode ?? host.getRootNode();
   }
 
   hostConnected() {
@@ -105,12 +99,14 @@ export class ScrollSpyController implements ReactiveController {
   }
 
   #initIo() {
-    if (this.#rootNode) {
+    const rootNode = this.#rootNode;
+    if (rootNode instanceof Document || rootNode instanceof ShadowRoot) {
       const { rootMargin, threshold, root } = this;
       this.#io = new IntersectionObserver(r => this.#onIo(r), { root, rootMargin, threshold });
-      for (const target of this.#ioTargets) {
-        this.#io.observe(target);
-      }
+      this.#linkChildren
+        .map(x => rootNode.getElementById(x.href.replace('#', '')))
+        .filter((x): x is HTMLElement => !!x)
+        .forEach(target => this.#io?.observe(target));
     }
   }
 

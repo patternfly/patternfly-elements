@@ -22,7 +22,7 @@ const basicElement = html`
 </pfe-tooltip>
 `;
 
-const createElement = (position: PfeTooltip['position'], offset?: string) => {
+const createElement = (position: PfeTooltip['placement'], offset?: string) => {
   return html`
     <div style="padding:500px;">
       <pfe-tooltip position="${position}" offset="${ifDefined(offset)}">
@@ -53,7 +53,7 @@ describe('<pfe-tooltip>', function() {
       .to.be.an.instanceOf(PfeTooltip);
   });
 
-  const createAndTestPlacements = async (position: PfeTooltip['position']) => {
+  const createAndTestPlacements = async (position: PfeTooltip['placement']) => {
     const element = await fixture<HTMLDivElement>(createElement(position));
 
     const placement = element?.querySelector('pfe-tooltip')?.shadowRoot?.querySelector('[id^=pfe-tooltip]')?.getAttribute('data-popper-placement');

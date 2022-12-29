@@ -11,8 +11,6 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import style from './BaseAccordionHeader.scss';
 
-import '@patternfly/pfe-icon';
-
 const isPorHeader =
   (el: Node): el is HTMLElement =>
     el instanceof HTMLElement && !!el.tagName.match(/P|^H[1-6]/);

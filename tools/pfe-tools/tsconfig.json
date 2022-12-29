@@ -11,10 +11,5 @@
     "allowJs": false,
     "checkJs": false,
     "emitDeclarationOnly": false
-  },
-  "references": [
-    {
-      "path": "../../core/pfe-core"
-    }
-  ]
+  }
 }

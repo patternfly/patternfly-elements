@@ -26,7 +26,8 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: npx changeset publish
-          commit: "chore: version packages"
+          commit: "chore: prepare release"
+          title: "chore: prepare release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

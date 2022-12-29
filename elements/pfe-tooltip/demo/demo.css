@@ -14,14 +14,7 @@
 
 #block li {
   padding: 0;
-}
-
-#block li pfe-tooltip {
-  background: #06c;
-  padding: 1em 1.5em;
-  border-radius: 4px;
-  display: inline-block;
-  color: white;
+  display: block;
 }
 
 samp {

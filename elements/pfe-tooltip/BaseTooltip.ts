@@ -8,8 +8,8 @@ import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating
 
 import style from './BaseTooltip.scss';
 
-const enterEvents = ['focusin', 'focusout', 'tap', 'click', 'mouseenter'];
-const exitEvents = ['blur', 'mouseleave'];
+const enterEvents = ['focusin', 'tap', 'click', 'mouseenter'];
+const exitEvents = ['focusout', 'blur', 'mouseleave'];
 
 export abstract class BaseTooltip extends LitElement {
   static readonly styles = [style];

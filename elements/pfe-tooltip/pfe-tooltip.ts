@@ -1,4 +1,6 @@
-import { customElement } from 'lit/decorators.js';
+import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
+import { customElement, property } from 'lit/decorators.js';
 import { BaseTooltip } from './BaseTooltip.js';
 
 import styles from './pfe-tooltip.scss';
@@ -96,6 +98,11 @@ export class PfeTooltip extends BaseTooltip {
   static readonly version = '{{version}}';
 
   static readonly styles = [...BaseTooltip.styles, styles];
+
+  @property() position: Placement = 'top';
+
+  /** Tooltip content. Overridden by the content slot */
+  @property() content?: string;
 }
 
 declare global {

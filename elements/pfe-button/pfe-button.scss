@@ -211,13 +211,13 @@ button:hover {
  *                            *
  ******************************/
 
-:host([loading]) #container {
+:host([loading]) button {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-:host([loading]) #container [part=icon] {
+:host([loading]) button [part=icon] {
   display: inline-block;
   z-index: 1;
   position: absolute;
@@ -233,20 +233,9 @@ button:hover {
     var(--pf-global--spacer--xs, 0.25rem));
 }
 
-pfe-progress-indicator {
-  --pfe-progress-indicator-size: 18px;
-  --pfe-theme--surface--border-width--heavy: 2px;
-}
-
-:host([loading]) {
-  --pfe-progress-indicator--background-color: rgba(0,102,204,.25);
-  --pfe-progress-indicator--foreground-color: #06c;
-}
-
 :host([loading][variant=primary]:not([plain])),
 :host([loading][danger]) {
-  --pfe-progress-indicator--background-color: rgba(255, 255, 255, .25);
-  --pfe-progress-indicator--foreground-color: rgba(255, 255, 255, .75);
+  --pf-c-spinner--Color: white;
 }
 
 :host([loading]:not([plain])) {
@@ -457,8 +446,7 @@ pfe-progress-indicator {
  *                            *
  ******************************/
 
-:host([variant=link]) button,
-:host([variant=link]) #container {
+:host([variant=link]) button {
   color: var(--pf-c-button--m-link--Color,
     var(--pf-global--link--Color, #06c));
 }
@@ -469,7 +457,6 @@ pfe-progress-indicator {
 }
 
 :host([variant=link][inline]),
-:host([variant=link][inline]) #container,
 :host([variant=link][inline]) button {
   display: inline;
 }
@@ -552,7 +539,6 @@ pfe-progress-indicator {
  ******************************/
 
 :host(:is(:disabled, [aria-disabled=true])),
-:host(:is(:disabled, [aria-disabled=true])) #container,
 :host(:is(:disabled, [aria-disabled=true])) button,
 :host(:is(:disabled, [aria-disabled=true])[danger]) button,
 :host(:is(:disabled, [aria-disabled=true])[variant=link]) button {
@@ -573,7 +559,6 @@ pfe-progress-indicator {
  ******************************/
 
 :host([block]),
-:host([block]) #container,
 :host([block]) button {
   display: flex;
   width: 100%;

@@ -29,15 +29,17 @@ describe('<pfe-tile>', function() {
     expect(height).to.equal('3px');
     const { backgroundColor } = getComputedStyle(el, ':after');
     expect(backgroundColor).to.equal('rgb(0, 102, 204)');
-    const { color } = getComputedStyle(el.shadowRoot.querySelector('[part="icon"]'));
+    // TODO: don't test shadowroots
+    const { color } = getComputedStyle(el.shadowRoot!.querySelector('[part="icon"]')!);
     expect(color).to.be.equal('rgb(0, 102, 204)');
   });
 
   it('should be flex direction column if stacked', async function() {
     const el = await createFixture <PfeTile>(TEMPLATE);
-    el.stacked = true;
+    el.stacked = 'md';
     await nextFrame();
-    const { flexDirection } = getComputedStyle(el.shadowRoot.querySelector('[part="header"]'));
+    // TODO: don't test shadowroots
+    const { flexDirection } = getComputedStyle(el.shadowRoot!.querySelector('[part="header"]')!);
     expect(flexDirection).to.equal('column');
   });
 
@@ -47,7 +49,8 @@ describe('<pfe-tile>', function() {
     await nextFrame();
     const { backgroundColor } = getComputedStyle(el);
     expect(backgroundColor).to.equal('rgb(240, 240, 240)');
-    const { color } = getComputedStyle(el.shadowRoot.querySelector('[part="title"]'));
+    // TODO: don't test shadowroots
+    const { color } = getComputedStyle(el.shadowRoot!.querySelector('[part="title"]')!);
     expect(color).to.equal('rgb(106, 110, 115)');
   });
 });

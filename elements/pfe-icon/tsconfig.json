@@ -5,6 +5,7 @@
   ],
   "exclude": [
     "./icons/**/*.js",
+    "./icons/**/*",
     "./demo/pfe-icon.js",
     "./demo/custom-icon-sets.js",
     "./test/rh-icon*.js",
@@ -13,6 +14,7 @@
   "compilerOptions": {
     "module": "esnext",
     "resolveJsonModule": true,
+    "allowJs": false,
     "outDir": ".",
     "rootDir": "."
   },

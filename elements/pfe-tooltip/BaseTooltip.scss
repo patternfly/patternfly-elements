@@ -1,135 +1,73 @@
-[class*=pf-c-], [class*=pf-c-]::before, [class*=pf-c-]::after {
-  padding: 0;
-  margin: 0;
-  background-color: transparent;
+:host {
+  display: inline;
 }
 
-#tooltip {
-  color: var(--pf-c-tooltip__content--Color,
-    var(--pf-global--Color--light-100, #ffffff));
-  background-color: var(--pf-c-tooltip__content--BackgroundColor,
-    var(--pf-global--BackgroundColor--dark-100, #151515));
-  line-height: var(--pf-c-tooltip--line-height, 1.5);
-  opacity: 1;
-  transition: opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s;
+#container {
+  display: inline-flex;
   position: relative;
-  max-width: var(--pf-c-tooltip--MaxWidth, 18.75rem);
-  box-shadow: var(--pf-c-tooltip--BoxShadow,
-    var(--pf-global--BoxShadow--md,
-      0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12),
-      0 0 0.25rem 0 rgba(3, 3, 3, 0.06)));
-  z-index: 999;
-}
-
-#tooltip:not(.initialized) { display: none; }
-
-#tooltip[aria-hidden="true"] {
-  opacity: 0;
-  transition: opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s;
-  pointer-events: none;
-}
-
-/**
-  NOTE: If we replace the popper library the styles related to anything data-popper-* will need to be updated
-        These are popper specific data attributes.
-**/
-
-[data-popper-placement='top'] .arrow,
-[data-popper-placement='top-end'] .arrow,
-[data-popper-placement='top-start'] .arrow {
-  bottom: 0;
-  left: 50%;
-  transform:
-    translateX(var(--pf-c-tooltip__arrow--m-top--TranslateX, -50%))
-    translateY(var(--pf-c-tooltip__arrow--m-top--TranslateY, 50%))
-    rotate(var(--pf-c-tooltip__arrow--m-top--Rotate, 45deg));
-}
-
-[data-popper-placement='bottom'] .arrow,
-[data-popper-placement='bottom-end'] .arrow,
-[data-popper-placement='bottom-start'] .arrow {
-  top: 0;
-  left: 50%;
-  transform:
-    translateX(var(--pf-c-tooltip__arrow--m-bottom--TranslateX, -50%))
-    translateY(var(--pf-c-tooltip__arrow--m-bottom--TranslateY, -50%))
-    rotate(var(--pf-c-tooltip__arrow--m-bottom--Rotate, 45deg));
-}
-
-[data-popper-placement='left'] .arrow,
-[data-popper-placement='left-end'] .arrow,
-[data-popper-placement='left-start'] .arrow {
-  top: 50%;
-  right: 0;
-  transform:
-    translateX(var(--pf-c-tooltip__arrow--m-left--TranslateX, 50%))
-    translateY(var(--pf-c-tooltip__arrow--m-left--TranslateY, -50%))
-    rotate(var(--pf-c-tooltip__arrow--m-left--Rotate, 45deg));
-}
-
-[data-popper-placement='right'] .arrow,
-[data-popper-placement='right-end'] .arrow,
-[data-popper-placement='right-start'] .arrow {
-  top: 50%;
-  left: 0;
-  transform:
-    translateX(var(--pf-c-tooltip__arrow--m-right--TranslateX, -50%))
-    translateY(var(--pf-c-tooltip__arrow--m-right--TranslateY, -50%))
-    rotate(var(--pf-c-tooltip__arrow--m-right--Rotate, 45deg));
-}
-
-[data-popper-placement='left-start'] .arrow,
-[data-popper-placement='right-start'] .arrow {
-  top: var(--pf-c-tooltip__arrow--Height, 0.5rem);
-}
-
-[data-popper-placement='left-end'] .arrow,
-[data-popper-placement='right-end'] .arrow {
-  top: auto;
-  bottom: 0;
-}
-
-[data-popper-placement='top-start'] .arrow,
-[data-popper-placement='bottom-start'] .arrow {
-  left: var(--pf-c-tooltip__arrow--Width, 0.5rem);
-}
-
-[data-popper-placement='top-end'] .arrow,
-[data-popper-placement='bottom-end'] .arrow {
-  right: 0;
-  left: auto;
-}
-
-.content {
-  position: relative;
-  padding:
-    var(--pf-c-tooltip__content--PaddingTop,
-      var(--pf-global--spacer--sm, 0.5rem))
-    var(--pf-c-tooltip__content--PaddingRight,
-      var(--pf-global--spacer--sm, 0.5rem))
-    var(--pf-c-tooltip__content--PaddingBottom,
-      var(--pf-global--spacer--sm, 0.5rem))
-    var(--pf-c-tooltip__content--PaddingLeft,
-      var(--pf-global--spacer--sm, 0.5rem));
-  font-size: var(--pf-c-tooltip__content--FontSize,
-    var(--pf-global--FontSize--sm, 0.875rem));
-  color: var(--pf-c-tooltip__content--Color, var(--pf-global--Color--light-100, #ffffff));
-  text-align: center;
-  word-break: break-word;
-  background-color: var(--pf-c-tooltip__content--BackgroundColor,
-    var(--pf-global--BackgroundColor--dark-100, #151515));
-}
-
-.arrow {
-  position: absolute;
-  width: var(--pf-c-tooltip__arrow--Width, 0.5rem);
-  height: var(--pf-c-tooltip__arrow--Height, 0.5rem);
-  pointer-events: none;
-  background-color: var(--pf-c-tooltip__content--BackgroundColor,
-    var(--pf-global--BackgroundColor--dark-100, #151515));
+  --_floating-arrow-size: 0.5rem;
 }
 
 #invoker {
-  width: fit-content;
   display: inline-block;
+  position: relative;
 }
+
+#tooltip,
+#tooltip::after {
+  position: absolute;
+}
+
+#tooltip {
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10000;
+  transition: opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s;
+  text-align: center;
+  word-break: break-word;
+  translate: var(--_floating-content-translate);
+  max-width: calc(100vw - 10px);
+  width: max-content;
+  top: 0;
+  left: 0;
+  will-change: opacity;
+}
+
+#tooltip::after {
+  display: block;
+  content: '';
+  rotate: 45deg;
+  width: var(--_floating-arrow-size);
+  height: var(--_floating-arrow-size);
+  will-change: left top right bottom;
+}
+
+.open #tooltip {
+  opacity: 1;
+}
+
+// LEFT
+.left #tooltip::after          { right: calc(-0.5 * var(--_floating-arrow-size)); }
+.left.center #tooltip::after   { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.left.start #tooltip::after    { top: var(--_floating-arrow-size); }
+.left.end #tooltip::after      { bottom: var(--_floating-arrow-size); }
+
+// TOP
+.top #tooltip::after           { top: calc(100% - 0.5 * var(--_floating-arrow-size)); }
+.top.center #tooltip::after    { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.top.start #tooltip::after     { left: var(--_floating-arrow-size); }
+.top.end #tooltip::after       { right: var(--_floating-arrow-size); }
+
+// RIGHT
+.right #tooltip::after         { right: calc(100% - 0.5 * var(--_floating-arrow-size)); }
+.right.center #tooltip::after  { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.right.start #tooltip::after   { top: var(--_floating-arrow-size); }
+.right.end #tooltip::after     { bottom: var(--_floating-arrow-size); }
+
+// BOTTOM
+.bottom #tooltip::after        { bottom: calc(100% - 0.5 * var(--_floating-arrow-size)); }
+.bottom.center #tooltip::after { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.bottom.start #tooltip::after  { left: var(--_floating-arrow-size); }
+.bottom.end #tooltip::after    { right: var(--_floating-arrow-size); }
+

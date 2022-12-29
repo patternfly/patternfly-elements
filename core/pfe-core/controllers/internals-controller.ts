@@ -12,7 +12,7 @@ export class InternalsController implements ReactiveController {
   hostConnected?(): void
 
   submit() {
-    this.#internals.form?.requestSubmit(this.host);
+    this.#internals.form?.requestSubmit();
   }
 
   reset() {

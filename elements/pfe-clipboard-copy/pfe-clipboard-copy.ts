@@ -105,7 +105,7 @@ export class PfeClipboardCopy extends BaseClipboardCopy {
                         @click="${this.copy}">
               <pfe-icon icon="copy"></pfe-icon>
             </pfe-button>
-            <span slot="content">${this.#copied ? this.hoverTip : this.clickTip}</span>
+            <span slot="content">${this.#copied ? this.clickTip : this.hoverTip}</span>
           </pfe-tooltip>
           <slot name="actions"></slot>
         </div>

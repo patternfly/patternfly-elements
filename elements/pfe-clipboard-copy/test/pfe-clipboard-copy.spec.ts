@@ -90,8 +90,6 @@ describe('<pfe-clipboard-copy>', function() {
       describe('then focusing the textarea', function() {
         beforeEach(async function() {
           await sendKeys({ press: 'Tab' });
-          // NB: pfe-tooltip forces double tabindex
-          await sendKeys({ press: 'Tab' });
           await sendKeys({ press: 'Tab' });
         });
         it('focuses a different element', function() {

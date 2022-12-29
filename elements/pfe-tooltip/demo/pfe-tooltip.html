@@ -3,134 +3,110 @@
 
 <script type="module" src="./pfe-tooltip.js"></script>
 
-<pfe-band size="small" color-palette="lightest">
-  <h2 slot="header">Placement</h2>
+<header>
+  <h2>Toggle Container Width</h2>
+  <pfe-switch id="width-toggle"></pfe-switch>
+  <label for="width-toggle" data-state="off">Full width</label>
+  <label for="width-toggle" data-state="on">Narrow</label>
+</header>
 
+<section id="basic">
+  <h2>Basic</h2>
   <p>
-    <pfe-tooltip position="left">
-      <pfe-button>Left Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
+    A <pfe-tooltip content="floating UI element" position="top" tabindex="0"><samp>Tooltip</samp></pfe-tooltip>
+    is a piece of flow content with an associated secondary piece of hidden flow content.
+    Tooltips which wrap non-interactive content must have a <code>tabindex</code> of <code>0</code>.
   </p>
+</section>
 
+<section id="slotted">
+  <h2>Slotted Tooltip Content</h2>
+  <p>A tooltip may contain
+    <pfe-tooltip tabindex="0">
+      <samp>HTML content</samp>
+      <span slot="content">
+        Slotted content can be <mark>formatted</mark>, using HTML
+        tags like <em>em</em>, <strong>strong</strong>, or <code>code</code>.
+      </span>
+    </pfe-tooltip> by using the <code>content</code> slot.
+    Slotted content must be phrasing content, so no <code>&lt;p&gt;</code>s.
+  </p>
+</section>
+
+<section id="placement">
+  <h2>Placement</h2>
   <p>
-    <pfe-tooltip position="left-start">
-      <pfe-button>Left Start Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
+    Tooltips can be anchored to the left:
+    <pfe-tooltip position="left" content="Left Tooltip" tabindex="0"><samp>Left</samp></pfe-tooltip>,
+    <pfe-tooltip position="left-start" content="Left Start Tooltip" tabindex="0"><samp>Left Start</samp></pfe-tooltip>,
+    <pfe-tooltip position="left-end" content="Left End Tooltip" tabindex="0"><samp>Left End</samp></pfe-tooltip>.
+    They can be anchored to the right:
+    <pfe-tooltip position="right" content="Right Tooltip" tabindex="0"><samp>Right</samp></pfe-tooltip>,
+    <pfe-tooltip position="right-start" content="Right Start Tooltip" tabindex="0"><samp>Right Start</samp></pfe-tooltip>,
+    <pfe-tooltip position="right-end" content="Right End Tooltip" tabindex="0"><samp>Right End</samp></pfe-tooltip>.
+    They can be anchored to the top:
+    <pfe-tooltip position="top" content="Top Tooltip" tabindex="0"><samp>Top</samp></pfe-tooltip>,
+    <pfe-tooltip position="top-start" content="Top Start Tooltip" tabindex="0"><samp>Top Start</samp></pfe-tooltip>,
+    <pfe-tooltip position="top-end" content="Top End Tooltip" tabindex="0"><samp>Top End</samp></pfe-tooltip>.
+    They can be anchored to the bottom:
+    <pfe-tooltip position="bottom" content="Bottom Tooltip" tabindex="0"><samp>Bottom</samp></pfe-tooltip>,
+    <pfe-tooltip position="bottom-start" content="Bottom Start Tooltip" tabindex="0"><samp>Bottom Start</samp></pfe-tooltip>,
+    <pfe-tooltip position="bottom-end" content="Bottom End Tooltip" tabindex="0"><samp>Bottom End</samp></pfe-tooltip>.
   </p>
-
   <p>
-    <pfe-tooltip position="left-end">
-      <pfe-button>Left End Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
+    Tooltips can have content which wraps lines, but this is discouraged,
+    because tooltips are meant to contain as little content as possible.
+    When tooltips have lengthy content anchored to the left, it looks like this:
+    <pfe-tooltip position="left" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Left</samp></pfe-tooltip>,
+    <pfe-tooltip position="left-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Left Start</samp></pfe-tooltip>,
+    <pfe-tooltip position="left-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Left End</samp></pfe-tooltip>.
+    When tooltips have lengthy content anchored to the right, it looks like this:
+    <pfe-tooltip position="right" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Right</samp></pfe-tooltip>,
+    <pfe-tooltip position="right-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Right Start</samp></pfe-tooltip>,
+    <pfe-tooltip position="right-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Right End</samp></pfe-tooltip>.
+    When tooltips have lengthy content anchored to the top, it looks like this:
+    <pfe-tooltip position="top" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Top</samp></pfe-tooltip>,
+    <pfe-tooltip position="top-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Top Start</samp></pfe-tooltip>,
+    <pfe-tooltip position="top-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Top End</samp></pfe-tooltip>.
+    When tooltips have lengthy content anchored to the bottom, it looks like this:
+    <pfe-tooltip position="bottom" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Bottom</samp></pfe-tooltip>,
+    <pfe-tooltip position="bottom-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Bottom Start</samp></pfe-tooltip>,
+    <pfe-tooltip position="bottom-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Bottom End</samp></pfe-tooltip>.
   </p>
+</section>
 
-  <p>
-    <pfe-tooltip position="right">
-      <pfe-button>Right Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
+<section id="block">
+  <h2>Block Triggers</h2>
+  <p>Tooltips can wrap block-level elements. 
+    Tooltips which wrap focusable content must not have a <code>tabindex</code> greater than <code>-1</code>.
   </p>
+  <ul>
+    <li><pfe-tooltip position="left" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pfe-button>Left Tooltip</pfe-button></pfe-tooltip></li>
+    <li><pfe-tooltip position="left-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pfe-button>Left Start Tooltip</pfe-button></pfe-tooltip></li>
+    <li><pfe-tooltip position="left-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pfe-button>Left End Tooltip</pfe-button></pfe-tooltip></li>
+    <li><pfe-tooltip position="right" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pfe-button>Right Tooltip</pfe-button></pfe-tooltip></li>
+    <li><pfe-tooltip position="right-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pfe-button>Right Start Tooltip</pfe-button></pfe-tooltip></li>
+    <li><pfe-tooltip position="right-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pfe-button>Right End Tooltip</pfe-button></pfe-tooltip></li>
+    <li><pfe-tooltip position="top" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pfe-button>Top Tooltip</pfe-button></pfe-tooltip></li>
+    <li><pfe-tooltip position="top-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pfe-button>Top Start Tooltip</pfe-button></pfe-tooltip></li>
+    <li><pfe-tooltip position="top-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pfe-button>Top End Tooltip</pfe-button></pfe-tooltip></li>
+    <li><pfe-tooltip position="bottom" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pfe-button>Bottom Tooltip</pfe-button></pfe-tooltip></li>
+    <li><pfe-tooltip position="bottom-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pfe-button>Bottom Start Tooltip</pfe-button></pfe-tooltip></li>
+    <li><pfe-tooltip position="bottom-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pfe-button>Bottom End Tooltip</pfe-button></pfe-tooltip></li>
+  </ul>
+</section>
 
-  <p>
-    <pfe-tooltip position="right-start">
-      <pfe-button>Right Start Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
+<section id="custom-styles">
+  <h2>Custom Styles</h2>
+  <p>Tooltips can be styled using CSS custom properties. For example, a tooltip may have
+    <pfe-tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0">
+      <samp>custom text color</samp>
+    </pfe-tooltip>,
+    <pfe-tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0">
+      <samp>a custom shadow</samp>
+    </pfe-tooltip>, or
+    <pfe-tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0">
+      <samp>custom content padding</samp>
+    </pfe-tooltip>.
   </p>
-
-  <p>
-    <pfe-tooltip position="right-end">
-      <pfe-button>Right End Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
-  </p>
-
-  <p>
-    <pfe-tooltip position="top">
-      <pfe-button>Top Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
-  </p>
-
-  <p>
-    <pfe-tooltip position="top-start">
-      <pfe-button>Top Start Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
-  </p>
-
-  <p>
-    <pfe-tooltip position="top-end">
-      <pfe-button>Top End Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
-  </p>
-
-  <p>
-    <pfe-tooltip position="bottom">
-      <pfe-button>Bottom Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
-  </p>
-
-  <p>
-    <pfe-tooltip position="bottom-start">
-      <pfe-button>Bottom Start Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
-  </p>
-
-  <p>
-    <pfe-tooltip position="bottom-end">
-      <pfe-button>Bottom End Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
-  </p>
-
-</pfe-band>
-
-<pfe-band size="small" color-palette="lightest">
-  <h2 slot="header">Custom Styles</h2>
-
-  <p>
-    <pfe-tooltip style="--pf-c-tooltip__content--Color: lightblue;">
-      <pfe-button>Text Color Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
-  </p>
-
-  <p>
-    <pfe-tooltip
-      style="--pf-c-tooltip--BoxShadow: var(--pf-global--BoxShadow--lg, 0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08)); ">
-      <pfe-button>Box Shadow Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
-  </p>
-
-  <p>
-    <pfe-tooltip
-      style="--pf-c-tooltip__content--PaddingTop: 2rem; --pf-c-tooltip__content--PaddingRight: 2rem; --pf-c-tooltip__content--PaddingBottom: 2rem; --pf-c-tooltip__content--PaddingLeft: 2rem; ">
-      <pfe-button>Content Padding Tooltip</pfe-button>
-      <span slot="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.</span>
-    </pfe-tooltip>
-  </p>
-
-</pfe-band>
+</section>

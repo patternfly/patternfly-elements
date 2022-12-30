@@ -42,13 +42,17 @@ jobs:
               const body = `${HEADER}
 
 
-              |  Name                                            | Link                             |
-              |--------------------------------------------------|----------------------------------|
-              |<span aria-hidden="true">🔨</span> Latest commit  | ${GITHUB_SHA}                    |
-              |<span aria-hidden="true">😎</span> Deploy Preview | [${PREVIEW_URL}](${PREVIEW_URL}) |
+              |  Name                                            | Link                  |
+              |--------------------------------------------------|-----------------------|
+              |<span aria-hidden="true">🔨</span> Latest commit  | ${GITHUB_SHA}         |
+              |<span aria-hidden="true">😎</span> Deploy Preview | [${PREVIEW_URL}][url] |
               ---
 
-              _To edit notification comments on pull requests, go to your [Netlify site settings](https://app.netlify.com/sites/${NETLIFY_SITE_SLUG}/settings/deploys#deploy-notifications)._`
+              _To edit notification comments on pull requests, go to your [Netlify site settings][settings]._
+
+
+              [url]: ${PREVIEW_URL}
+              [settings]: https://app.netlify.com/sites/${NETLIFY_SITE_SLUG}/settings/deploys#deploy-notifications`
 
               const comments = await github.rest.issues.listComments({ owner, repo, issue_number });
               const priorComment = comments.data.find(comment => comment.body.startsWith(HEADER));

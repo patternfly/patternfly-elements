@@ -1,4 +1,10 @@
+#pfe-container {
+  display: contents;
+}
+
 #container {
+  --pf-global--icon--FontSize--sm: 14px;
+
   padding-top: var(--pf-c-label--PaddingTop, var(--pf-global--spacer--xs, 0.25rem));
   padding-left: var(--pf-c-label--PaddingLeft, var(--pf-global--spacer--sm, 0.5rem));
   padding-bottom: var(--pf-c-label--PaddingBottom, var(--pf-global--spacer--xs, 0.25rem));
@@ -7,8 +13,6 @@
   color: var(--pf-c-label--Color, var(--pf-global--Color--100, #151515));
   background-color: var(--pf-c-label--BackgroundColor, var(--pf-global--palette--black-150, #f5f5f5));
   border-radius: var(--pf-c-label--BorderRadius, 30em);
-  --pf-global--icon--FontSize--sm: 14px;
-
   max-width: var(--pf-c-label__content--MaxWidth, 100%);
   color: var(--pf-c-label__content--Color, var(--pf-global--Color--100, #151515));
 }
@@ -103,36 +107,36 @@
   --pf-c-label__content--before--BorderColor: var(--pf-global--palette--black-300, #d2d2d2);
 }
 
-.has-icon [part=icon] {
+.hasIcon [part=icon] {
   left: var(--pf-c-label--PaddingLeft, var(--pf-global--spacer--md, 1rem));
   margin-inline-end: var(--pf-c-label__icon--MarginRight, var(--pf-global--spacer--xs, 0.25rem));
 }
 
-.blue .has-icon [part=icon] {
+.blue .hasIcon [part=icon] {
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-blue__icon--Color, var(--pf-global--primary-color--100, #06c)));
 }
 
-.cyan .has-icon [part=icon] {
+.cyan .hasIcon [part=icon] {
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-cyan__icon--Color, var(--pf-global--default-color--200, #009596)));
 }
 
-.green .has-icon [part=icon] {
+.green .hasIcon [part=icon] {
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-green__icon--Color, var(--pf-global--success-color--100, #3e8635)));
 }
 
-.orange .has-icon [part=icon] {
+.orange .hasIcon [part=icon] {
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-orange__icon--Color, var(--pf-global--palette--orange-300, #ec7a08)));
 }
 
-.purple .has-icon [part=icon] {
+.purple .hasIcon [part=icon] {
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-purple__icon--Color, var(--pf-global--palette--purple-500, #6753ac)));
 }
 
-.red .has-icon [part=icon] {
+.red .hasIcon [part=icon] {
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-red__icon--Color, var(--pf-global--danger-color--100, #c9190b)));
 }
 
-.gold .has-icon [part=icon] {
+.gold .hasIcon [part=icon] {
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-gold__icon--Color, var(--pf-global--palette--gold-400, #f0ab00)));
 }
 
@@ -151,4 +155,11 @@ pfe-button {
     margin-right: var(--pf-c-label__c-button--MarginRight, -0.5rem);
     margin-bottom: var(--pf-c-label__c-button--MarginBottom, -0.5rem);
     margin-left: var(--pf-c-label__c-button--MarginLeft, 0.25rem);
+}
+
+svg {
+  vertical-align:-0.125em;
+  fill: currentColor;
+  height: 1em;
+  width: 1em;
 }

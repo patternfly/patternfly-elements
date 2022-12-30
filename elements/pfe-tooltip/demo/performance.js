@@ -1,3 +1,4 @@
+import '@patternfly/pfe-button';
 import '@patternfly/pfe-tooltip';
 
 const $ = x => document.querySelector(x);

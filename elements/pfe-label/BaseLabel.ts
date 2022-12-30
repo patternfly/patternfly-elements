@@ -11,38 +11,26 @@ import styles from './BaseLabel.scss';
 export abstract class BaseLabel extends LitElement {
   static readonly styles = [styles];
 
-  abstract variant: string;
+  abstract variant?: string;
 
-  abstract color: string;
+  abstract color?: string;
 
-  abstract icon: string;
-
-  protected classes = {};
+  abstract icon?: string;
 
   /** Represents the state of the anonymous and icon slots */
   protected slots = new SlotController(this, null, 'icon');
 
-  willUpdate() {
-    this.classes = { 'has-icon': this.#hasIcon(), [`${this.variant}`]: true, [`${this.color}`]: true };
-  }
-
   override render() {
+    const { variant, color, icon } = this;
+    const hasIcon = !!icon || this.slots.hasSlotted('icon');
     return html`
-      <span id="container" class=${classMap(this.classes)}>
-        <span part="icon">
-          <slot name="icon">${this.renderDefaultIcon()}</slot>
-        </span>
-        <span id="text">
-          <slot></slot>
-        </span>
+      <span id="container"
+            class=${classMap({ hasIcon, [variant ?? '']: !!variant, [color ?? '']: !!color })}>
+        <slot name="icon" part="icon">${this.renderDefaultIcon?.()}</slot>
+        <slot id="text"></slot>
         ${this.renderSuffix?.() ?? ''}
       </span>
     `;
-  }
-
-  #hasIcon() {
-    const { icon } = this;
-    return (this.slots.hasSlotted('icon') || !!icon);
   }
 
   /**
@@ -53,7 +41,7 @@ export abstract class BaseLabel extends LitElement {
    * <pfe-icon icon=${this.icon}></pfe-icon>
    * ```
    */
-  protected abstract renderDefaultIcon(): unknown;
+  protected abstract renderDefaultIcon?(): unknown;
 
   /**
    * Optional override to render content after the anonymous slot.

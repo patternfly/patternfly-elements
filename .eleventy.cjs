@@ -20,7 +20,7 @@ const markdownLib = markdownIt({ html: true })
 module.exports = function(eleventyConfig) {
   eleventyConfig.setLibrary('md', markdownLib);
 
-  eleventyConfig.setQuietMode(process.env.npm_config_quiet);
+  eleventyConfig.setQuietMode(true);
 
   eleventyConfig.setWatchThrottleWaitTime(500);
 

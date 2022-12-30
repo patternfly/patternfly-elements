@@ -1,6 +1,7 @@
 {
   "lerna": "2.5.1",
   "version": "1.12.3",
+  "useWorkspaces": true,
   "packages": [
     "core/*",
     "elements/*",

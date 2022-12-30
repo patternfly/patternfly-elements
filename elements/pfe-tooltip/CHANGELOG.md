@@ -1,5 +1,13 @@
 # @patternfly/pfe-tooltip
 
+## 1.1.0-next.7
+
+### Patch Changes
+
+- b51b551f: Use `NumberListConverter` from pfe-core
+- Updated dependencies [6b6e2617]
+  - @patternfly/pfe-core@2.0.0-next.12
+
 ## 1.1.0-next.6
 
 ### Minor Changes

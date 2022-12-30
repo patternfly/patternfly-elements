@@ -2,43 +2,43 @@
 
   Cards are flexible surfaces used to group information in a small layout. They give small previews of information or provide secondary content in relation to the content it's near. Several cards can be used together to group related information.
 
-<div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-4-col-on-md">
+<!-- <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-4-col-on-md"> -->
   <pfe-card>
     <h3 slot="header">Default card</h3>
     <p>This is the default card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pfe-card>
 
-  <pfe-card color-palette="lightest" border>
-    <h3 slot="header">Lightest card</h3>
-    <p>This is the lightest card with a border</p>
+  <pfe-card size="compact">
+    <h3 slot="header">Compact card</h3>
+    <p>This is the compact card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pfe-card>
 
-  <pfe-card color-palette="darker">
-    <h3 slot="header">Darker card</h3>
-    <p>This is the darker card</p>
+  <pfe-card rounded>
+    <h3 slot="header">Rounded card</h3>
+    <p>This is the rounded card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pfe-card>
 
-  <pfe-card color-palette="darkest">
-    <h3 slot="header">Darkest card</h3>
-    <p>This is the darkest card</p>
+  <pfe-card size="large">
+    <h3 slot="header">Large card</h3>
+    <p>This is the large card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pfe-card>
 
-  <pfe-card color-palette="complement">
-    <h3 slot="header">Complement card</h3>
-    <p>This is the complement card</p>
+  <pfe-card fullHeight>
+    <h3 slot="header">Full Height card</h3>
+    <p>This is the full height card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pfe-card>
 
-  <pfe-card color-palette="accent">
-    <h3 slot="header">Accent card</h3>
-    <p>This is the accent card</p>
+  <pfe-card plain>
+    <h3 slot="header">Plain card</h3>
+    <p>This is the plain card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pfe-card>
-</div>
+<!-- </div> -->
 {% endrenderOverview %}
 
 {% band header="Usage" %}

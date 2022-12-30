@@ -11,7 +11,7 @@ import nunjucks, { Environment } from 'nunjucks';
 
 interface DocsPageOptions extends PfeConfig {
   docsTemplatePath?: string;
-  tagName: string;
+  tagName?: string;
   title?: string;
 }
 

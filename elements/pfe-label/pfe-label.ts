@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 
@@ -8,6 +9,22 @@ import { BaseLabel } from './BaseLabel.js';
 import '@patternfly/pfe-button';
 
 import styles from './pfe-label.scss';
+
+export type LabelVariant = (
+  | 'filled'
+  | 'outline'
+);
+
+export type LabelColor = (
+  | 'blue'
+  | 'cyan'
+  | 'green'
+  | 'orange'
+  | 'purple'
+  | 'red'
+  | 'grey'
+  | 'gold'
+)
 
 /**
  * Labels allow users to display meta data in a stylized form.
@@ -100,34 +117,55 @@ export class PfeLabel extends BaseLabel {
 
   static readonly shadowRootOptions: ShadowRootInit = { ...BaseLabel.shadowRootOptions, delegatesFocus: true };
 
+  /**
+   * Changes the style of the label.
+   * - Filled: Colored background with colored border.
+   * - Outline: White background with colored border.
+   */
+  @property() variant: LabelVariant = 'filled';
+
+  /**
+   * Changes the color of the label
+   */
+  @property() color: LabelColor = 'grey';
+
+  /** Shorthand for the `icon` slot, the value is icon name */
+  @property() icon?: string;
+
   /** Flag indicating the label is compact */
-  @property({ reflect: true, type: Boolean }) compact = false;
+  @property({ type: Boolean }) compact = false;
 
   /** Flag indicating the label text should be truncated */
-  @property({ reflect: true, type: Boolean }) truncated = false;
+  @property({ type: Boolean }) truncated = false;
 
   /** Flag indicating the label is removable */
-  @property({ reflect: true, type: Boolean }) removable = false;
+  @property({ type: Boolean }) removable = false;
 
   /** Text label for a removable label's close button */
   @property({ attribute: 'close-button-label' }) closeButtonLabel?: string;
 
+  override render() {
+    const { compact, truncated } = this;
+    return html`
+      <span id="pfe-container" class="${classMap({ compact, truncated })}">${super.render()}</span>
+    `;
+  }
+
   protected override renderDefaultIcon() {
     return !this.icon ? '' : html`
-      <pfe-icon ?hidden=${!this.icon} icon=${this.icon} size="sm"></pfe-icon>
+      <pfe-icon icon="${this.icon}" size="sm"></pfe-icon>
     `;
   }
 
   protected override renderSuffix() {
     return !this.removable ? '' : html`
       <span part="close-button" ?hidden=${!this.removable}>
-        <pfe-button plain @click=${() => this.dispatchEvent(new ComposedEvent('close'))}>
-          <button>
-            <svg slot="icon" style="vertical-align:-0.125em" fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
-              <title>${this.closeButtonLabel ?? 'remove'}</title>
-              <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
-            </svg>
-          </button>
+        <pfe-button plain
+                    @click="${() => this.dispatchEvent(new ComposedEvent('close'))}"
+                    label="${this.closeButtonLabel ?? 'remove'}">
+          <svg viewBox="0 0 352 512">
+            <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
+          </svg>
         </pfe-button>
       </span>
     `;

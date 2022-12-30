@@ -1,0 +1,87 @@
+<link rel="stylesheet" href="./demo.css" />
+<script type="module" src="./pfe-clipboard-copy.js"></script>
+
+<section>
+  <h3>Default</h3>
+  <pfe-clipboard-copy value="This is editable"></pfe-clipboard-copy>
+</section>
+
+<section>
+  <h3>Read-only</h3>
+  <pfe-clipboard-copy readonly value="This is read-only"></pfe-clipboard-copy>
+</section>
+
+<section>
+  <h3>Expanded</h3>
+  <pfe-clipboard-copy expandable>
+    Got a lot of text here, need to see all of it?
+    Click that arrow on the left side and check out the resulting expansion.
+  </pfe-clipboard-copy>
+</section>
+
+<section>
+  <h3>Read-only expanded</h3>
+  <pfe-clipboard-copy expandable readonly>
+    Got a lot of text here, need to see all of it?
+    Click that arrow on the left side and check out the resulting expansion.
+  </pfe-clipboard-copy>
+</section>
+
+<section>
+  <h3>Read-only expanded by default</h3>
+  <pfe-clipboard-copy expandable readonly expanded>
+    <p>Got a lot of text here, need to see all of it? Click that arrow on the left side and check out the resulting expansion.</p>
+    <p>asodifna osdif</p>
+  </pfe-clipboard-copy>
+</section>
+
+<section>
+  <h3>JSON object (wrap code with pre)</h3>
+  <pfe-clipboard-copy code expandable expanded>
+    { "menu": {
+      "id": "file",
+      "value": "File",
+      "popup": {
+        "menuitem": [
+          {"value": "New", "onclick": "CreateNewDoc()"},
+          {"value": "Open", "onclick": "OpenDoc()"},
+          {"value": "Close", "onclick": "CloseDoc()"}
+        ]
+      }
+    }}
+  </pfe-clipboard-copy>
+</section>
+
+<section>
+  <h3>Inline compact</h3>
+  <pfe-clipboard-copy inline compact>2.3.4-2-redhat</pfe-clipboard-copy>
+</section>
+
+<section>
+  <h3>Inline compact code</h3>
+  <pfe-clipboard-copy inline compact code>2.3.4-2-redhat</pfe-clipboard-copy>
+</section>
+
+<section>
+  <h3>Inline compact with additional action</h3>
+  <pfe-clipboard-copy inline compact>2.3.4-2-redhat
+    <pfe-button slot="actions" label="Action" plain variant="primary">
+      <pfe-icon icon="play"></pfe-icon>
+    </pfe-button>
+  </pfe-clipboard-copy>
+</section>
+
+<section>
+  <hgroup>
+    <h3>Inline compact in sentence</h3>
+    <h4>Basic</h4>
+  </hgroup>
+  <p>Lorem ipsum <pfe-clipboard-copy inline compact>2.3.4-2-redhat</pfe-clipboard-copy></p>
+
+  <h4>Long copy string</h4>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <pfe-clipboard-copy inline compact>https://app.openshift.io/path/sub-path/sub-sub-path/?runtime=quarkus/12345678901234567890/abcdefghijklmnopqrstuvwxyz1234567890</pfe-clipboard-copy> Mauris luctus, libero nec dapibus ultricies, urna purus pretium mauris, ullamcorper pharetra lacus nibh vitae enim.</p>
+
+  <h4>Long copy string in block</h4>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    <pfe-clipboard-copy compact block>https://app.openshift.io/path/sub-path/sub-sub-path/?runtime=quarkus/12345678901234567890/abcdefghijklmnopqrstuvwxyz1234567890</pfe-clipboard-copy> Mauris luctus, libero nec dapibus ultricies, urna purus pretium mauris, ullamcorper pharetra lacus nibh vitae enim.</p>
+</section>

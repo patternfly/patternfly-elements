@@ -1,5 +1,11 @@
 # @patternfly/pfe-badge
 
+## 2.0.0-next.4
+
+### Patch Changes
+
+- 5bc0a5ad: Made `state` property on `BaseBadge` abstract.
+
 ## 2.0.0-next.3
 
 ### Major Changes

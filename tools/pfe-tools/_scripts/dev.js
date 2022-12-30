@@ -11,8 +11,5 @@ esbuild.build({
   watch: true,
   color: true,
   outdir: cwd,
-  define: {
-    'process.env.NODE_ENV': 'production'
-  },
   entryPoints,
 });

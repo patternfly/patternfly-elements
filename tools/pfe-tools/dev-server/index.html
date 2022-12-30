@@ -28,9 +28,13 @@
 
 <body class="menu-open">
   <header id="main-header">
-    <pfe-button id="hamburger" plain icon="bars" aria-controls="sidebar">
-      <button aria-label="Expand Main Navigation"></button>
-    </pfe-button>
+    <pfe-button id="hamburger"
+                plain
+                aria-controls="sidebar"
+                style="--pf-c-button--m-plain--Color:white"
+                label="Expand Main Navigation">
+        <pfe-icon icon="bars"></pfe-icon>
+      </pfe-button>
     <a href="/"><img src="{{ options.site.logoUrl }}" alt="" />{{ title }}</a>
     <a id="github-link" href="{{ options.sourceControlURLPrefix.replace('tree/main/', '') }}{{ ('tree/main' + manifest.path.replace(context.cwd, '').replace('/custom-elements.json', '/')) if manifest else ''}}">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">

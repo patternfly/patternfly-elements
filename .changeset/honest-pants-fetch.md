@@ -1,5 +1,5 @@
 ---
-"@patternfly/pfe-core": minor
+"@patternfly/pfe-core": major
 ---
 
 `FloatingDOMController`: Removed `popperjs` dependency and replaced it with 

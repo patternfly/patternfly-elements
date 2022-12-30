@@ -1,8 +1,9 @@
 ---
-"@patternfly/pfe-core": minor
+"@patternfly/pfe-core": major
 ---
 
-Removed popperjs dependency and replaced it with floating-ui dependency.
+`FloatingDOMController`: Removed `popperjs` dependency and replaced it with 
+`floating-ui` dependency.
 
 - removed the `initialized` property
 - removed the `create` method
@@ -11,8 +12,7 @@ Removed popperjs dependency and replaced it with floating-ui dependency.
 - added read-only `alignment`, `anchor`, `placement`, and `styles` properties.
 - made `open` property read-only.
 
-Now, `FloatingDOMController`s constructor requires certain options, at least 
-`content`, which is an `HTMLElement` or a function returning an `HTMLElement`. 
+Now, `FloatingDOMController`s constructor requires certain options, at least `content`, which is an `HTMLElement` or a function returning an `HTMLElement`.
 
 Before:
 

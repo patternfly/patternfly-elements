@@ -63,12 +63,8 @@ tags:
     return (
       <div className="App">
         <h1>PatternFly Elements with React</h1>
-        <pfe-card color-palette="lightest">
-          <img
-            alt="From https://picsum.photos/"
-            overflow="left right top"
-            src="https://picsum.photos/id/1019/300/200"
-          />
+        <pfe-card>
+          <img alt="From https://picsum.photos/" src="https://picsum.photos/id/1019/300/200" />
           <p>This is the light pfe-card and <a href="#">a link</a>.</p>
           <p>
             Leverage agile frameworks to provide a robust synopsis for high level
@@ -253,12 +249,8 @@ tags:
       <div className="App">
         <h1>PatternFly Elements with React</h1>
         <section>
-          <pfe-card color-palette="lightest" border>
-            <img
-              alt="From https://picsum.photos/"
-              overflow="left right top"
-              src="https://picsum.photos/id/1019/300/200"
-            />
+          <pfe-card rounded>
+            <img alt="From https://picsum.photos/" src="https://picsum.photos/id/1019/300/200" />
             <p>
               This is the light pfe-card and <a href="#">a link</a>.
             </p>

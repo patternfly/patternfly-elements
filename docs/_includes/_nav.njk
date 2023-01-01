@@ -83,27 +83,6 @@
             </details>
         </li>
         <li class="site-navigation__item">
-          <details{{ ' open' if page.url.includes('theming/') }}>
-            <summary class="site-navigation__heading">Theming</summary>
-            <ul class="site-navigation__sub-menu">
-              <li class="site-navigation__sub-menu__item">
-                <a class="site-navigation__sub-menu__link{{ ' site-navigation__sub-menu__link--active' if page.url == "/theming/" }}"
-                  href="{{ '/theming/' | url }}">Overview</a>
-              </li>
-              {%- for document in collections.theming -%}
-              <li class="site-navigation__sub-menu__item">
-                <a class="site-navigation__sub-menu__link{{ ' site-navigation__sub-menu__link--active' if page.url == document.url }}"
-                  href="{{ document.url | url }}">{{ document.data.title }}</a>
-              </li>
-              {%- endfor -%}
-            </ul>
-            </details>
-        </li>
-        <li class="site-navigation__item">
-          <a class="site-navigation__link{{ ' site-navigation__link--active' if page.url == "/layout/" }}"
-            href="{{ '/layout/' | url }}">Layout</a>
-        </li>
-        <li class="site-navigation__item">
           <details{{ ' open' if page.url.includes('docs/develop/') }}>
             <summary class="site-navigation__heading">Develop</summary>
             <ul class="site-navigation__sub-menu">

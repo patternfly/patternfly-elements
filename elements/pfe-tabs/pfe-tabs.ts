@@ -85,7 +85,7 @@ export class PfeTabs extends BaseTabs {
     return element instanceof PfeTabPanel;
   }
 
-  @property({ reflect: false }) inset?: InsetVariant;
+  @property({ reflect: true }) inset?: InsetVariant;
 
   @cascades('pfe-tab', 'pfe-tab-panel')
   @property({ reflect: true }) box: 'light' | 'dark' | null = null;

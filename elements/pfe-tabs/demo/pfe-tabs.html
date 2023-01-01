@@ -32,9 +32,12 @@
     <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
   </pfe-tabs>
 
-  <div class="input">
-    <label><input type="checkbox" name="toggle-variant" checked> Box light/dark toggle</label>
-  </div>
+  <form class="input">
+    Box Type:
+    <label for="toggle-variant" data-state="on">Dark</label>
+    <label for="toggle-variant" data-state="off">Light</label>
+    <pfe-switch id="toggle-variant">
+  </form>
 </div>
 
 <div class="example">
@@ -54,9 +57,12 @@
       <pfe-tab-panel>Network</pfe-tab-panel>
     </pfe-tabs>
 
-  <div class="input">
-    <label><input type="checkbox" name="toggle-resize"> Box variant toggle</label>
-  </div>
+  <form>
+    Box variant:
+    <label for="toggle-resize" data-state="on">Dark</label>
+    <label for="toggle-resize" data-state="off">None</label>
+    <pfe-switch id="toggle-resize">
+  </form>
 </div>
 
 <div class="example">
@@ -74,9 +80,12 @@
     <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
   </pfe-tabs>
 
-  <div class="input">
-    <label><input type="checkbox" name="toggle-vertical"> Box variant toggle</label>
-  </div>
+  <form>
+    Box variant:
+    <label for="toggle-vertical" data-state="on">Dark</label>
+    <label for="toggle-vertical" data-state="off">None</label>
+    <pfe-switch id="toggle-vertical">
+  </form>
 </div>
 
 <div class="example">
@@ -94,14 +103,14 @@
     <pfe-tab-panel>Aria Disabled</pfe-tab-panel>
   </pfe-tabs>
 
-  <div class="input">
+  <form class="input">
     <label><input type="radio" name="toggle-inset" value="sm"> Small</label>
     <label><input type="radio" name="toggle-inset" value="md" checked> Medium</label>
     <label><input type="radio" name="toggle-inset" value="lg"> Large</label>
     <label><input type="radio" name="toggle-inset" value="xl"> X-Large</label>
     <label><input type="radio" name="toggle-inset" value="2xl"> 2X-Large</label>
     <label><input type="radio" name="toggle-inset" value="page"> Page</label>
-  </div>
+  </form>
 </div>
 
 <div class="example">

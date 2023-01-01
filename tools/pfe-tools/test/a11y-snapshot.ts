@@ -5,6 +5,7 @@ export interface A11yTreeSnapshot {
   children: A11yTreeSnapshot[];
   role: string;
   checked?: boolean;
+  disabled?: boolean;
 }
 
 export async function a11ySnapshot(

@@ -8,6 +8,15 @@ import { PfeTabPanel } from './pfe-tab-panel.js';
 
 import styles from './pfe-tabs.scss';
 
+export type InsetVariant = (
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | '2xl'
+  | 'page'
+);
+
 /**
  * Tabs allow users to navigate between views within the same page or context. Variants include
  * horizontal, vertical, inset, and filled. Most tab variations are available as open (default) or
@@ -75,6 +84,8 @@ export class PfeTabs extends BaseTabs {
   static isPanel(element: HTMLElement): element is PfeTabPanel {
     return element instanceof PfeTabPanel;
   }
+
+  @property({ reflect: true }) inset?: InsetVariant;
 
   @cascades('pfe-tab', 'pfe-tab-panel')
   @property({ reflect: true }) box: 'light' | 'dark' | null = null;

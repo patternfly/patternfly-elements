@@ -1,8 +1,9 @@
+import type { PropertyValues } from 'lit';
+
 import { LitElement, html } from 'lit';
 import { queryAssignedElements } from 'lit/decorators.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
-import { bound } from '@patternfly/pfe-core/decorators.js';
 
 import style from './BaseTab.scss';
 
@@ -23,19 +24,13 @@ export abstract class BaseTab extends LitElement {
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private icons!: Array<HTMLElement>;
 
+  /** `active` should be observed, and true when the tab is selected */
   abstract active: boolean;
 
+  /** `active` should be observed, and true when the tab is disabled */
   abstract disabled: boolean;
 
   #internals = this.attachInternals();
-
-  get ariaSelected() {
-    return this.#internals.ariaSelected ?? 'false';
-  }
-
-  get ariaDisabled() {
-    return this.getAttribute('aria-disabled');
-  }
 
   connectedCallback() {
     super.connectedCallback();
@@ -45,53 +40,48 @@ export abstract class BaseTab extends LitElement {
   render() {
     return html`
       <button part="button" role="tab">
-        <span part="icon"
+        <slot name="icon"
+              part="icon"
               ?hidden="${!this.icons.length}"
-              @slotchange="${() => this.requestUpdate()}">
-          <slot name="icon"></slot>
-        </span>
-        <span part="text">
-          <slot></slot>
-        </span>
+              @slotchange="${() => this.requestUpdate()}"></slot>
+        <slot part="text"></slot>
       </button>
     `;
   }
 
-  updated() {
+  updated(changed: PropertyValues<this>) {
     this.#internals.ariaSelected = String(this.ariaSelected);
+    if (changed.has('active')) {
+      this.#activeChanged();
+    }
+    if (changed.has('disabled')) {
+      this.#disabledChanged();
+    }
   }
 
   #clickHandler() {
-    if (!this.disabled && this.ariaDisabled !== 'true') {
+    if (!this.disabled && this.#internals.ariaDisabled !== 'true') {
       this.active = true;
     }
   }
 
-  @bound
-  _activeChanged(oldVal: boolean, newVal: boolean) {
-    if (oldVal === newVal) {
-      return;
-    }
-    if (newVal && !this.disabled) {
+  #activeChanged() {
+    if (this.active && !this.disabled) {
       this.removeAttribute('tabindex');
       this.#internals.ariaSelected = 'true';
     } else {
       this.tabIndex = -1;
       this.#internals.ariaSelected = 'false';
     }
-    this.dispatchEvent(new TabExpandEvent(newVal, this));
+    this.dispatchEvent(new TabExpandEvent(this.active, this));
   }
 
-  @bound
-  _disabledChanged(oldVal: boolean, newVal: boolean) {
-    if (oldVal === newVal) {
-      return;
-    }
-    // if a tab is disabled, then it is also aria-disabled
-    // if a tab is removed from disabled its not necessarily
-    // not still aria-disabled so we don't remove the aria-disabled
-    if (newVal === true) {
-      this.setAttribute('aria-disabled', 'true');
-    }
+  /**
+   * if a tab is disabled, then it is also aria-disabled
+   * if a tab is removed from disabled its not necessarily
+   * not still aria-disabled so we don't remove the aria-disabled
+   */
+  #disabledChanged() {
+    this.#internals.ariaDisabled = String(!!this.disabled);
   }
 }

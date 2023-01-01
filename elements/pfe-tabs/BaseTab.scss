@@ -8,6 +8,14 @@
   overflow-wrap: break-word;
 }
 
+[hidden] {
+  display: none !important;
+}
+
+slot[name="icon"] {
+  display: block;
+}
+
 button {
   margin: 0;
   font-family: inherit;

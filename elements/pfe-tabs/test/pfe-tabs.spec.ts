@@ -1,5 +1,6 @@
 import { expect, html, nextFrame, aTimeout } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
+import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { setViewport } from '@web/test-runner-commands';
 import { BaseTab } from '../BaseTab.js';
 import { PfeTabs } from '../pfe-tabs.js';
@@ -75,8 +76,9 @@ describe('<pfe-tabs>', function() {
     const tab = el.querySelector('pfe-tab:nth-of-type(3)');
     tab!.setAttribute('active', '');
     await nextFrame();
-    expect(tab!.hasAttribute('active')).to.equal(true);
-    expect(tab!.ariaSelected).to.equal('true');
+    expect(tab!.hasAttribute('active'), 'active attr').to.equal(true);
+    const panel = (await a11ySnapshot()).children.find(x => x.role === 'tabpanel');
+    expect(panel?.name, 'active panel').to.equal('Database');
   });
 
   it('should activate tab when activeIndex property is changed', async function() {
@@ -87,7 +89,8 @@ describe('<pfe-tabs>', function() {
     await nextFrame();
     const tab = el.querySelector('pfe-tab:first-of-type');
     expect(tab!.hasAttribute('active')).to.equal(true);
-    expect(tab!.ariaSelected).to.equal('true');
+    const panel = (await a11ySnapshot()).children.find(x => x.role === 'tabpanel');
+    expect(panel?.name, 'active panel').to.equal('Users');
   });
 
   it('should open panel at same index of selected tab', async function() {
@@ -123,8 +126,8 @@ describe('<pfe-tabs>', function() {
       const disabledTab = el.querySelector('pfe-tab:nth-of-type(2)')! as BaseTab;
       disabledTab.disabled = true;
       await nextFrame();
-      const { ariaDisabled } = disabledTab!;
-      expect(ariaDisabled).to.equal('true');
+      const tab = (await a11ySnapshot()).children.find(x => x.role === 'tab' && x.name === 'Containers');
+      expect(tab?.disabled).to.be.true;
     });
 
     it('should have disabled css styles if disabled', async function() {

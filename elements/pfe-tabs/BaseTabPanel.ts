@@ -7,14 +7,17 @@ export abstract class BaseTabPanel extends LitElement {
 
   hidden = true;
 
+  #internals = this.attachInternals();
+
   render() {
     return html`
       <slot></slot>
     `;
   }
 
-  firstUpdated() {
-    this.setAttribute('role', 'tabpanel');
+  connectedCallback() {
+    super.connectedCallback();
+    this.#internals.role = 'tabpanel';
     this.tabIndex = 0;
   }
 }

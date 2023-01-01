@@ -1,21 +1,21 @@
-<pfe-band class="header" use-grid>
-  <h1 slot="header">{{ title }}</h1>
-</pfe-band>
+<header class="band">
+  <h1>{{ title }}</h1>
+</header>
 
-<pfe-band size="small" color-palette="lightest" use-grid>
-  <h2 slot="header">Overview</h2>
+<section class="band overview">
+  <h2>Overview</h2>
 
   {{ description | safe }}
 
   {{ content | safe }}
 
-</pfe-band>
+</section>
 
-<pfe-band size="small" color-palette="lightest" use-grid>
-  <h2 slot="header">Installation</h2>
+<section class="band">
+  <h2>Installation</h2>
 
 ```shell
 npm install {{ package.name }}
 ```
 
-</pfe-band>
+</section>

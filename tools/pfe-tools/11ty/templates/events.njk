@@ -1,9 +1,11 @@
 {% set level = level or 2 %}
 {% set header = header or 'Events' %}
 
-<pfe-band size="small" color-palette="lightest" use-grid>
-  <h{{level}} slot="header">{{ header | innerMD | safe }}</h{{level}}> {% if not content and not events.length %}
+<section class="api band events">
+  <h{{level}}>{{ header | innerMD | safe }}</h{{level}}> {% if not content and not events.length %}
+
   <em>None</em> {% else %}
+
   {{ content | innerMD | safe }}
   <dl> {%- for event in events -%}
     <dt><strong><code>{{ event.name }}</code></strong></dt>
@@ -29,4 +31,4 @@
     </dl>
 
   </details> {%- endif -%}
-</pfe-band>
+</section>

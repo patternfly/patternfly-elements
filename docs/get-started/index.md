@@ -3,9 +3,9 @@ layout: layout-basic.njk
 title: Get started
 ---
 
-<pfe-band class="header" use-grid>
-  <h1 slot="header">{{ title }}</h1>
-</pfe-band>
+<header class="band" use-grid>
+  <h1>{{ title }}</h1>
+</header>
 
 {% band header="Quick start" %}
   If you'd like to start exploring PatternFly Elements right away, checkout our [Quick start demo page](/quick-start).
@@ -114,10 +114,8 @@ title: Get started
   ### Page-level CSS, component variables
   ```css
   /* your-page.css */
-  pfe-band {
-    --pfe-band--Padding--vertical: 34px;
-    --pfe-band--BackgroundColor: green;
-    --theme: saturated;
+  :root {
+    --pf-c-card--BackgroundColor: green;
   }
   ```
 {% endband %}
@@ -145,8 +143,6 @@ title: Get started
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PatternFly Elements - Avoiding the FOUC</title>
-    <!-- Add PFE core styles to the head -->
-    <link rel="stylesheet" href="https://jspm.dev/@patternfly/pfe-styles@next/pfe.min.css">
     <style>
       :root {
         /* Optional: customize the delay until the body is revealed regardless */
@@ -154,20 +150,36 @@ title: Get started
         /* Optional: customize the animation duration of the reveal */
         --pfe-reveal-duration: 0.2s;
       }
+
+      pfe-card {
+        opacity: 1;
+        transition:
+          opacity
+          var(--pfe-reveal-duration)
+          ease
+          var(--pfe-reveal-delay);
+      }
+
+      pfe-card:not(:defined) {
+        opacity: 0;
+      }
+
     </style>
     <!-- Add noscript styles to immediately reveal content when JavaScript is disabled -->
     <noscript>
-      <link rel="stylesheet" href="https://jspm.dev/@patternfly/pfe-styles@next/pfe--noscript.min.css">
+      pfe-card:not(:defined) {
+        opacity: 1;
+      }
     </noscript>
-    <script type="module" src="https://jspm.dev/@patternfly/pfe-band@next"></script>
+    <script type="module" src="https://jspm.dev/@patternfly/pfe-card@next"></script>
   </head>
   <!-- Add the unresolved attribute to the body tag -->
   <!-- The pfe-core library and pfe.min.css file automatically remove the unresolved attribute -->
-  <body unresolved>
-    <pfe-band>
+  <body>
+    <pfe-card>
       <h1 slot="header">No FOUC</h1>
       <p>Content will remain hidden until component definitions are loaded.</p>
-    </pfe-band>
+    </pfe-card>
   </body>
   </html>
   ```

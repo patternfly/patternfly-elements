@@ -3,22 +3,20 @@ layout: layout-basic.njk
 title: All components
 permalink: /components/index.html
 ---
-<pfe-band class="header" use-grid>
-  <h1 slot="header">Components</h1>
-</pfe-band>
-
-<pfe-band class="header" size="small" color-palette="lightest" use-grid>
-  <h2 slot="header">Overview</h2>
+<header class="band">
+  <hgroup>
+    <h1>Components</h1>
+    <h2>Overview</h2>
+  </hgroup>
   <p>
     Components are interactive building blocks of our design system.
     Each component was created to meet a specific UI and accessibility need.
     Components should be used harmoniously together in the same space to create more intuitive user experiences.
   </p>
-</pfe-band>
+</header>
 
-<pfe-band class="header" size="small" color-palette="lightest" use-grid>
-
-<div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col">
+<section class="band">
+  <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col">
   {%- for element in elements -%}
   {%- if element.docsTemplatePath -%}
     <div class="component-preview">
@@ -44,6 +42,5 @@ permalink: /components/index.html
     </div>
   {%- endif -%}
   {%- endfor -%}
-</div>
-
-</pfe-band>
+  </div>
+</section>

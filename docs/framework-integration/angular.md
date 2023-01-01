@@ -4,10 +4,9 @@ title: Angular
 # tags:
 #   - frameworkIntegration
 ---
-
-<pfe-band class="header" use-grid>
-  <h1 slot="header">{{ title }}</h1>
-</pfe-band>
+<header class="band">
+  <h1>{{ title }}</h1>
+</header>
 
 {% band header="Angular" %}
 {% endband %}

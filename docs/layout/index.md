@@ -16,9 +16,9 @@ package: pfe-styles
   }
 </style>
 
-<pfe-band class="header" use-grid>
-  <h1 slot="header">{{ title }}</h1>
-</pfe-band>
+<header class="band">
+  <h1>{{ title }}</h1>
+</header>
 
 {% band header="Overview" %}
   PatternFly Elements Layouts, like Bootstrap, is based on a 12 column grid with similar breakpoints available. We also provide some helper classes that help with positioning and text alignment.

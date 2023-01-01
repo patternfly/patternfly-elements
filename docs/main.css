@@ -57,6 +57,16 @@ strong {
   font-weight: bold;
 }
 
+.band {
+  padding-inline: 48px;
+  padding-block: 64px;
+}
+
+.band.small {
+  padding-inline: 16px;
+  padding-block: 48px;
+}
+
 a.cta {
   white-space: normal;
   display: inline-block;
@@ -187,32 +197,32 @@ a.cta:hover {
   --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #73bcf7);
 }
 
-pfe-band.header h1 {
+header.band h1 {
   margin: 0;
 }
 
-pfe-band > h2[id]:not(.no-header-styles) {
+.band > h2[id]:not(.no-header-styles) {
   font-size: 1.5rem;
   line-height: 1.9375rem;
   font-weight: bold;
   margin-top: 2em;
 }
 
-pfe-band > h3[id] {
+.band > h3[id] {
   font-size: 1.3rem;
   font-weight: bold;
   margin-top: 2em;
 }
 
-pfe-band > h2 + h3[id],
-pfe-band > p + h3[id] {
+.band > h2 + h3[id],
+.band > p + h3[id] {
   margin-top: 0;
 }
 
-pfe-band > h1+p,
-pfe-band > h2+p,
-pfe-band > h3+p,
-pfe-band > h4+p {
+.band > h1+p,
+.band > h2+p,
+.band > h3+p,
+.band > h4+p {
   margin-top: 0;
 }
 
@@ -710,8 +720,8 @@ blockquote {
 }
 
 @media (min-width: 820px) {
-  :root {
-    --pfe-band--Padding--horizontal: 48px;
+  .band {
+    padding-inline: 48px;
   }
 
   main.basic,
@@ -779,7 +789,7 @@ nav.toc li {
 }
 
 @media (min-width: 1200px) {
-  pfe-band > h2[id]:not(.no-header-styles) {
+  .band > h2[id]:not(.no-header-styles) {
     font-size: 2rem;
     line-height: 2.3125rem;
   }
@@ -795,7 +805,7 @@ nav.toc li {
     grid-template-columns: auto 300px;
   }
 
-  main.blog > pfe-band.header {
+  main.blog > header.band {
     grid-area: header
   }
 
@@ -803,7 +813,7 @@ nav.toc li {
     grid-area: toc;
   }
 
-  main.blog > pfe-band:not(.header) {
+  main.blog > .band:not(header) {
     grid-area: content;
   }
 

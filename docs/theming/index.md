@@ -3,10 +3,10 @@ layout: layout-basic.njk
 title: Theming
 ---
 
-<pfe-band class="header" use-grid>
-  <h1 slot="header">{{ title }}</h1>
+<header class="band">
+  <h1>{{ title }}</h1>
   <p class="tagline">Use our beautifully designed theme, or modify it to your needs.</p>
-</pfe-band>
+</header>
 
 {% band header="Overview" %}
   Every PatternFly Element is built to automatically utilize the colors, fonts, spacing, and more defined in the [palette](/theming/palette), which you control! Generally speaking, the only thing you will need to do is re-define some of the CSS variables to match your brand and you’re done.

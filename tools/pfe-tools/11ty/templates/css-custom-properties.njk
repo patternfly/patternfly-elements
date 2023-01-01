@@ -9,10 +9,12 @@
   </tr>
 {%- endmacro -%}
 
-<pfe-band size="small" color-palette="lightest" use-grid>
+<section class="api band css-custom-properties">
   <a id="styling-hooks"></a>
-  <h{{level}} slot="header">{{ header | innerMD | safe }}</h{{level}}> {% if not content and not cssProperties.length %}
+  <h{{level}}>{{ header | innerMD | safe }}</h{{level}}> {% if not content and not cssProperties.length %}
+
   <em>None</em> {%- else -%}
+
   {{ content | innerMD | safe }}
   <table class=css-custom-properties>
     <thead>
@@ -55,7 +57,7 @@
       </tbody>
     </table>
   </details> {%- endif -%}
-</pfe-band>
+</section>
 
 <style>
 table.css-custom-properties code[data-color] {

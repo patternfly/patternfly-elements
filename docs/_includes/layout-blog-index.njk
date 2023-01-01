@@ -5,30 +5,26 @@ layout: layout-base.njk
 
 
 <main class="basic">
-  <pfe-band>
-    <h1 slot="header">{{ title }}</h1>
-  </pfe-band>
-  <pfe-band color-palette="lightest">
-    {% if content.trim().length %}
-      <div id="content">{{ content | safe }}</div>
-    {% endif %}
-    {% for post in collections.blog %}
-      <pfe-card>
-        <h2 slot="header">{{ post.data.title }}</h2>
-        {% if post.data.tagline %}<p class="tagline">{{ post.data.tagline }}</p>{% endif %}
-        {% if post.data.description %}
-          {{ post.data.description }}
-        {% endif %}
-        <a class="cta" slot="footer" href="{{ post.data.page.url }}">Read Post</a>
-      </pfe-card>
-    {% endfor %}
-  </pfe-band>
+  <header class="band">
+    <h1>{{ title }}</h1>
+  </header>
+  <section class="band">{% if content.trim().length %}
+    <div id="content">{{ content | safe }}</div>{% endif %}{% for post in collections.blog %}
+    <pfe-card>
+      <h2 slot="header">{{ post.data.title }}</h2>{% if post.data.tagline %}
+        <p class="tagline">{{ post.data.tagline }}</p>{% endif %}
+      {% if post.data.description %}
+        {{ post.data.description }}
+      {% endif %}
+      <a class="cta" slot="footer" href="{{ post.data.page.url }}">Read Post</a>
+    </pfe-card>{% endfor %}
+  </section>
 </main>
 
-{% include '_foot.njk' %} 
+{% include '_foot.njk' %}
 
 <style>
-pfe-band::part(body) { 
+section.band {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }

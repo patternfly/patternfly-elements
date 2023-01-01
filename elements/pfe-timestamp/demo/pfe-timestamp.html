@@ -6,17 +6,21 @@
 
 <script type="module" src="./pfe-timestamp.js"></script>
 
-<pfe-band color-palette="lightest" size="small" use-grid>
+<section>
   <h3>Default</h3>
-  <p><pfe-timestamp></pfe-timestamp></p> 
+  <p><pfe-timestamp></pfe-timestamp></p>
+</section>
 
+<section>
   <h3>Basic formats</h3>
   <p><pfe-timestamp date-format="full" time-format="full"></pfe-timestamp></p>
   <p><pfe-timestamp date-format="full"></pfe-timestamp></p>
   <p><pfe-timestamp time-format="full"></pfe-timestamp></p>
   <p><pfe-timestamp date-format="medium" time-format="short" display-suffix="US Eastern"></pfe-timestamp></p>
   <p><pfe-timestamp date-format="full" locale="es"></pfe-timestamp></p>
+</section>
 
+<section>
   <h3>Custom format</h3>
   <p><pfe-timestamp id="timestamp-custom-format" date="Sat Jan 01 2022 00:00:00 GMT-0500"></pfe-timestamp></p>
 
@@ -29,7 +33,9 @@
     hour: 'numeric'
   };
   </script>
+</section>
 
+<section>
   <h3>Default tooltip</h3>
   <p>
     <pfe-tooltip>
@@ -43,7 +49,9 @@
       <pfe-timestamp slot="content" utc display-suffix="Coordinated Universal Time"></pfe-timestamp>
     </pfe-tooltip>
   </p>
+</section>
 
+<section>
   <h3>Custom tooltip</h3>
   <p>
     <pfe-tooltip>
@@ -57,7 +65,9 @@
       <pfe-timestamp slot="content" date="Mon Oct 31 2022 00:00:00 GMT-0400 (Eastern Daylight Time)" date-format="medium"></pfe-timestamp>
     </pfe-tooltip>
   </p>
+</section>
 
+<section>
   <h3>Relative with tooltip</h3>
   <p>
     <pfe-tooltip>
@@ -71,4 +81,4 @@
       <pfe-timestamp slot="content" date="Aug 09 2024 14:57:00 GMT-0400 (Eastern Daylight Time)"></pfe-timestamp>
     </pfe-tooltip>
   </p>
-</pfe-band>
+</section>

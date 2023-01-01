@@ -5,8 +5,6 @@ tags:
   - about
 ---
 
-<pfe-band class="header" use-grid>
-
-# {{ title }}
-
-</pfe-band>
+<header class="band">
+  <h1>{{ title }}</h1>
+</header>

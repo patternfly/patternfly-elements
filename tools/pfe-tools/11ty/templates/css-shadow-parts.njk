@@ -1,8 +1,8 @@
 {% set level = level or 2 %}
 {% set header = header or 'CSS Shadow Parts' %}
 
-<pfe-band size="small" color-palette="lightest" use-grid>
-  <h{{level}} slot="header">{{ header | innerMD | safe }}</h{{level}}> {% if not content and not parts.length %}
+<section class="api band css-shadow-parts">
+  <h{{level}}>{{ header | innerMD | safe }}</h{{level}}> {% if not content and not parts.length %}
 
   <em>None</em> {%- else -%}
 
@@ -26,4 +26,4 @@
     </dl>
 
   </details> {%- endif -%}
-</pfe-band>
+</section>

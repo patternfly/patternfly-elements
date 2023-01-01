@@ -3,9 +3,9 @@ layout: layout-basic.njk
 title: Framework integration
 ---
 
-<pfe-band class="header" use-grid>
-  <h1 slot="header">{{ title }}</h1>
-</pfe-band>
+<header class="band">
+  <h1>{{ title }}</h1>
+</header>
 
 {% band %}
   <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">

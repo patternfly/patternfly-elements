@@ -1,4 +1,3 @@
-import '@patternfly/pfe-band';
 import '@patternfly/pfe-card';
 import '@patternfly/pfe-button';
 import '@patternfly/pfe-modal';

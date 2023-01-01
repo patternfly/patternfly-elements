@@ -183,8 +183,6 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js'
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { pfelement } from '@patternfly/pfe-core/decorators.js';
-
 import styles from './pfe-cool-element.scss';
 
 /**
@@ -192,7 +190,7 @@ import styles from './pfe-cool-element.scss';
  *
  * @slot - The profile's user name. Should be a text node.
  */
-@customElement('pfe-cool-element') @pfelement()
+@customElement('pfe-cool-element')
 export class PfeCoolElement extends LitElement {
   static readonly styles = [styles];
 

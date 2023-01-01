@@ -3,16 +3,21 @@ layout: layout-basic.njk
 title: Quick start
 ---
 
-<header class="band" use-grid>
+<header class="band">
   <h1>{{ title }}</h1>
 </header>
 
 <section class="band small">
 
 ## Quick start template
-Use the markup below to start exploring PatternFly Elements. The template below includes the [card](/components/card), [band](/components/band), [call-to-action](/components/cta), [accordion](/components/accordion), and [tabs](/components/tabs) components as well the grid system and alignment helpers included with PatternFly Elements.
+Use the markup below to start exploring PatternFly Elements. The template below 
+includes the [card](/components/card), [accordion](/components/accordion), and 
+[tabs](/components/tabs) components.
 
-The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly Elements to the page. This is fine for development and exploration, but it's highly recommended that you install PatternFly Elements from npm for use in production.
+The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly 
+Elements to the page. This is fine for development and exploration, but it's 
+highly recommended that you install PatternFly Elements from npm for use in 
+production.
 
 ```html
 <!DOCTYPE html>
@@ -23,7 +28,6 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
   <meta name="description" content="PatternFly Elements - Quick start">
   <title>PatternFly Elements - Quick start</title>
   <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles@next/pfe.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles@next/pfe-layouts.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text&display=swap" rel="stylesheet">
   <style>
     html,
@@ -42,31 +46,28 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
     import "https://unpkg.com/@patternfly/pfe-tabs@next?module";
   </script>
 </head>
-<body unresolved>
+<body>
   <header>
     <h1>PatternFly Elements</h1>
   </header>
   <main>
     <section class="band">
       <h2>Card components</h2>
-      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
-        <pfe-card>
-          <h3 slot="header">Card 1</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis laboriosam eum saepe eius tempora sequi eligendi repudiandae aspernatur beatae totam voluptatum facere unde, vitae inventore eveniet accusamus nulla recusandae aliquam.</p>
-          <a slot="footer" class="cta primary" href="https://patternflyelements.org">More about PatternFly Elements</a>
-        </pfe-card>
-        <pfe-card>
-          <h3 slot="header">Card 2</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque necessitatibus sapiente aliquam recusandae maxime consectetur magnam ipsa veniam expedita molestiae. Quis officia minima libero repellat laboriosam sit nemo porro laborum.</p>
-          <a class="cta" slot="footer" href="https://patternflyelements.org/get-started">Get started</a>
-        </pfe-card>
-        <pfe-card>
-          <h3 slot="header">Card 3</h3>
-          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate iusto laboriosam molestias, quidem ab voluptates nihil earum sed! Esse repellat quo ut numquam mollitia quis saepe aspernatur fuga error in!</p>
-          <a class="cta" slot="footer" href="https://developer.mozilla.org/en-US/docs/Web/Web_Components">About web components</a>
-        </pfe-card>
-      </div>
-      <br>
+      <pfe-card>
+        <h3 slot="header">Card 1</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis laboriosam eum saepe eius tempora sequi eligendi repudiandae aspernatur beatae totam voluptatum facere unde, vitae inventore eveniet accusamus nulla recusandae aliquam.</p>
+        <a slot="footer" class="cta primary" href="https://patternflyelements.org">More about PatternFly Elements</a>
+      </pfe-card>
+      <pfe-card>
+        <h3 slot="header">Card 2</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque necessitatibus sapiente aliquam recusandae maxime consectetur magnam ipsa veniam expedita molestiae. Quis officia minima libero repellat laboriosam sit nemo porro laborum.</p>
+        <a class="cta" slot="footer" href="https://patternflyelements.org/get-started">Get started</a>
+      </pfe-card>
+      <pfe-card>
+        <h3 slot="header">Card 3</h3>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate iusto laboriosam molestias, quidem ab voluptates nihil earum sed! Esse repellat quo ut numquam mollitia quis saepe aspernatur fuga error in!</p>
+        <a class="cta" slot="footer" href="https://developer.mozilla.org/en-US/docs/Web/Web_Components">About web components</a>
+      </pfe-card>
       <a class="cta" slot="footer" href="https://patternflyelements.org/components">View all of the components</a>
     </section>
     <section>
@@ -111,21 +112,21 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
         <pfe-tab slot="tab" id="tab1">
           <h3>Tab 1</h3>
         </pfe-tab>
-        <pfe-tab-panel role="region">
+        <pfe-tab-panel>
           <h3>Content 1</h3>
           <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </pfe-tab-panel>
         <pfe-tab role="heading" slot="tab" id="tab2">
           <h3>Tab 2</h3>
         </pfe-tab>
-        <pfe-tab-panel role="region">
+        <pfe-tab-panel>
           <h3>Content 2</h3>
           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis eius illum, ut vel quis porro voluptatum amet! Enim, sequi. Laudantium magnam officia dolore debitis quas eius placeat beatae illo obcaecati?</p>
         </pfe-tab-panel>
         <pfe-tab role="heading" slot="tab" id="tab3">
           <h3>Tab 3</h3>
         </pfe-tab>
-        <pfe-tab-panel role="region">
+        <pfe-tab-panel>
           <h3>Content 3</h3>
           <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea animi enim eum ipsum laudantium eius deleniti quos illo id veritatis. Vero veritatis architecto aliquam non voluptate quibusdam saepe in cum.</p>
         </pfe-tab-panel>

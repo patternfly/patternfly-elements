@@ -25,15 +25,13 @@ Let's take a look at the `pfe-cool-element.ts` file to see what we have.
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-import { pfelement } from '@patternfly/pfe-core/decorators.js';
-
 import styles from './pfe-cool-element.scss';
 
 /**
  * Cool Element
  * @slot - Place element content here
  */
-@customElement('pfe-cool-element') @pfelement()
+@customElement('pfe-cool-element')
 export class PfeCoolElement extends LitElement {
   static readonly version = '{{version}}';
 
@@ -104,11 +102,8 @@ Decorators are a [proposed JavaScript language feature](https://github.com/tc39/
 TypeScript implements an experimental version of the decorator language feature with a slightly different internal API.
 
 ```ts
-@customElement('pfe-cool-element') @pfelement()
+@customElement('pfe-cool-element')
 ```
-
-We also apply the `@pfelement()` decorator from `@patternfly/pfe-core`, which provides some common features for all PatternFly Elements,
-like colour-context awarerness, and optional performance tracking.
 
 Third, we import an use our component's SASS styles
 

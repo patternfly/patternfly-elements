@@ -6,52 +6,52 @@
 <link rel="stylesheet" href="./demo.css">
 <script type="module" src="./pfe-autocomplete.js"></script>
 
-<pfe-band color-palette="lightest" class="contextual" size="small">
-  <h2 slot="header">Textual Button</h2>
+<section>
+  <h2>Textual Button</h2>
   <pfe-autocomplete class="static" debounce="300" button-text="Search">
     <input placeholder="Enter Your Search Term" />
   </pfe-autocomplete>
-  <dl slot="aside">
+  <dl>
     <dt>Static Selected Value</dt>
     <dd><output>Nothing yet</output></dd>
   </dl>
-</pfe-band>
+</section>
 
-<pfe-band color-palette="lightest">
-  <h2 slot="header">Static Data</h2>
+<section>
+  <h2>Static Data</h2>
   <p>Uses an array of strings.</p>
   <pfe-autocomplete class="static" debounce="300">
     <input placeholder="Enter Your Search Term" />
   </pfe-autocomplete>
-  <dl slot="aside">
+  <dl>
     <dt>Static Selected Value</dt>
     <dd><output>Nothing yet</output></dd>
   </dl>
-</pfe-band>
+</section>
 
-<pfe-band color-palette="darker">
-  <h2 slot="header">Lazy Loading with init-value</h2>
+<section>
+  <h2>Lazy Loading with init-value</h2>
   <p>Makes an ajax call, filters the response and sends the filtered data to the component.</p>
   <p>Search for book titles in the above input.</p>
   <pfe-autocomplete id="search-lazy-loading" debounce="500" init-value="uni">
     <input placeholder="Enter Your Search Term" />
   </pfe-autocomplete>
-  <dl slot="aside">
+  <dl>
     <dt>Ajax Selected Value</dt>
     <dd><output>Nothing yet</output></dd>
   </dl>
-</pfe-band>
+</section>
 
-<pfe-band color-palette="lightest">
-  <h2 slot="header">Disabled</h2>
+<section>
+  <h2>Disabled</h2>
   <pfe-autocomplete disabled init-value="uni">
     <input placeholder="Enter Your Search Term" />
   </pfe-autocomplete>
-</pfe-band>
+</section>
 
-<pfe-band color-palette="lightest">
-  <h2 slot="header">Deprecated is-disabled</h2>
+<section>
+  <h2>Deprecated is-disabled</h2>
   <pfe-autocomplete is-disabled init-value="uni">
     <input placeholder="Enter Your Search Term" />
   </pfe-autocomplete>
-</pfe-band>
+</section>

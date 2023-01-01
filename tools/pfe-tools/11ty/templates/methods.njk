@@ -3,9 +3,11 @@
 
 {# TODO: inline code highlighting for type and default: render the markdown to html and extract the `<code>` from the `<pre>` #}
 
-<pfe-band size="small" color-palette="lightest" use-grid>
-  <h{{level}} slot="header">{{ header | innerMD | safe }}</h{{level}}> {% if not content and not methods.length %}
+<section class="api band methods">
+  <h{{level}}>{{ header | innerMD | safe }}</h{{level}}> {% if not content and not methods.length %}
+
   <em>None</em> {% else %}
+
   {{ content | innerMD | safe }}
   <dl> {%- for method in methods -%}
     <dt><strong><code>{{ method.name }}({{ method | stringifyParams }})</code></strong></dt>
@@ -25,4 +27,4 @@
     </dl>
 
   </details> {%- endif -%}
-</pfe-band>
+</section>

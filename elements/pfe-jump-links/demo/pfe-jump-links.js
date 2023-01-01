@@ -1,4 +1,3 @@
-import '@patternfly/pfe-band';
 import '@patternfly/pfe-jump-links';
 
 const root = document.querySelector('[data-demo="pfe-jump-links"]')?.shadowRoot ?? document;

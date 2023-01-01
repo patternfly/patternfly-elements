@@ -4,9 +4,9 @@ title: Typography
 tags:
   - theming
 ---
-<pfe-band class="header" use-grid>
-  <h1 slot="header">{{ title }}</h1>
-</pfe-band>
+<header class="band">
+  <h1>{{ title }}</h1>
+</header>
 
 {% band header="General" %}
   The pfe-styles component ships with a variety of stylesheets to allow developers to opt-into what they need, and leave behind what they don't. We leverage naming conventions that match up with the [core PatternFly project](https://github.com/patternfly/patternfly), and we follow best practices from the web and accessibility.

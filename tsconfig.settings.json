@@ -81,8 +81,8 @@
       "@patternfly/pfe-badge": [
         "./elements/pfe-badge/pfe-badge.ts"
       ],
-      "@patternfly/pfe-band": [
-        "./elements/pfe-band/pfe-band.ts"
+      "@patternfly/pfe-panel": [
+        "./elements/pfe-panel/pfe-panel.ts"
       ],
       "@patternfly/pfe-button": [
         "./elements/pfe-button/pfe-button.ts"
@@ -163,9 +163,6 @@
       "path": "./elements/pfe-avatar"
     },
     {
-      "path": "./elements/pfe-band"
-    },
-    {
       "path": "./elements/pfe-button"
     },
     {
@@ -188,6 +185,9 @@
     },
     {
       "path": "./elements/pfe-modal"
+    },
+    {
+      "path": "./elements/pfe-panel"
     },
     {
       "path": "./elements/pfe-progress-steps"

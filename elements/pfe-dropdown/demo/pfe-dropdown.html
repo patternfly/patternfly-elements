@@ -10,13 +10,14 @@
   position: relative;
 }
 
-#expandable-dropdown-band {
-  --pfe-band__body--layout: repeat(auto-fill, minmax(300px, 1fr));
+#expandable-dropdown-band pfe-card::part(body) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 </style>
 
-<pfe-band id="expandable-dropdown-band" color-palette="lightest" size="small" use-grid>
-  <pfe-card color-palette="lightest" style="overflow: unset;">
+<section id="expandable-dropdown-band">
+  <pfe-card style="overflow: unset;">
     <h2>Expandable dropdown</h2>
 
     <pfe-dropdown label="Dropdown" id="dropdown">
@@ -85,4 +86,4 @@
       </pfe-dropdown-item>
     </pfe-dropdown>
   </pfe-card>
-</pfe-band>
+</section>

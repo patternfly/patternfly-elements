@@ -8,7 +8,7 @@ templateEngineOverride: njk,md
 
 <body unresolved>
   <header>
-    <pfe-band class="pfe-l--text-align--center" color-palette="accent">
+    <section class="band">
       <div class="pfe-l-bullseye">
         <div class="pfe-l-bullseye__item">
           <h1 id="home-title">
@@ -22,18 +22,18 @@ templateEngineOverride: njk,md
           </div>
         </div>
       </div>
-    </pfe-band>
-    <pfe-band size="small">
+    </section>
+    <section class="band small">
       <div class="pfe-l--text-align--center">
         <a class="cta" href="{{ githubLink }}">
           <pfe-icon size="md" style="color: #666" icon="github" set="fab" aria-hidden="true"></pfe-icon>&nbsp;&nbsp;Contribute on GitHub
         </a>
       </div>
-    </pfe-band>
+    </section>
   </header>
   <main>
     <section>
-      <pfe-band color-palette="lightest">
+      <section>
         <h2 id="lightweight">Lightweight</h2>
         <p class="subtitle">Use only what you need.</p>
         <p>Pick and choose from the <a href="{{ '/components/' | url }}">list of components</a>. Use them all or just one. And keep your page payloads small with PatternFly Elements because the components range from ~3 kB to ~10 kB in size minified and gzipped.</p>
@@ -66,13 +66,8 @@ templateEngineOverride: njk,md
         <div class="pfe-l--text-align--center">
           <a class="cta" href="components/">View the rest of the components</a>
         </div>
-      </pfe-band>
-    </section>
-    <section>
-      <pfe-band>
-        <h2 id="universal">Universal</h2>
-        <h3>Integrate PatternFly Elements with your framework of choice or use them by themselves.</h3>
-        <p>PatternFly Elements integrate seamlessly with multiple frontend frameworks. Or use PatternFly Elements on their own without a framework. It's up to you and the needs of your project.</p>
+      </section>
+      without a framework. It's up to you and the needs of your project.</p>
         <div class="pfe-l-grid pfe-m-gutters">
           <div class="pfe-l-grid__item pfe-m-12-col pfe-m-8-col-on-md pfe-m-7-col-on-lg">
 
@@ -141,10 +136,10 @@ export default function App() {
         <div class="pfe-l--text-align--center">
           <a class="cta" href="{{ '/framework-integration/' | url }}">Learn how to integrate PatternFly Elements in your application</a>
         </div>
-      </pfe-band>
+      </section>
     </section>
     <section id="themeable-section">
-      <pfe-band color-palette="lightest">
+      <section class="band">
         <div class="pfe-l-grid pfe-m-gutters">
           <h2 id="themeable" class="pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-md">Themeable</h2>
           <form class="pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-md">
@@ -192,8 +187,8 @@ export default function App() {
             </pfe-card>
           </div>
         </div>
-      </pfe-band>
-      <pfe-band color-palette="lightest" size="small">
+      </section>
+      <section class="band small">
         <pfe-tabs pfe-tab-align="center">
           <pfe-tab slot="tab">
             <h3>Tab 1</h3>
@@ -230,8 +225,8 @@ export default function App() {
             <a class="cta secondary" href="#">Link 1</a>
           </pfe-tab-panel>
         </pfe-tabs>
-      </pfe-band>
-      <pfe-band color-palette="lightest" size="small">
+      </section>
+      <section class="band small">
         <pfe-accordion>
           <pfe-accordion-header>
             <h3>Accordion header 1</h3>
@@ -261,15 +256,15 @@ export default function App() {
               saepe.</p>
           </pfe-accordion-panel>
         </pfe-accordion>
-      </pfe-band>
-      <pfe-band color-palette="lightest">
+      </section>
+      <section class="band">
         <div class="pfe-l--text-align--center">
           <a class="cta" href="{{ '/theming/' | url }}">Learn more about theming PatternFly Elements</a>
         </div>
-      </pfe-band>
+      </section>
     </section>
     <section>
-      <pfe-band id="context-band">
+      <section class="band" id="context-band">
         <div class="pfe-l-grid pfe-m-gutters">
           <h2 id="context" class="pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-md">Context-aware</h2>
           <form class="pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-md">
@@ -334,9 +329,6 @@ export default function App() {
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ut quibusdam accusamus alias exercitationem sequi impedit, cumque adipisci eos, expedita porro? Ullam quam aspernatur perspiciatis. Similique neque doloremque voluptatum cupiditate?</p>
           </pfe-tab-panel>
         </pfe-tabs>
-      </pfe-band>
-    </section>
-  </main>
-  {% include '_foot.njk' %}
+      </section>
 
   <script type="module" src="{{ '/main.mjs' | url }}"></script>

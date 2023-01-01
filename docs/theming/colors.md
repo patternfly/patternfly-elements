@@ -5,9 +5,9 @@ tags:
   - theming
 ---
 
-<pfe-band class="header" use-grid>
-  <h1 slot="header">{{ title }}</h1>
-</pfe-band>
+<header class="band">
+  <h1>{{ title }}</h1>
+</header>
 
 {% band header="Color theory" %}
   We've created a palette of abstract color swatches for you to plug in your brand colors. The abstract naming conventions allow you to evolve your colors over time, without trapping your color choices in the code, such as `<pfe-card pfe-color="red">`.

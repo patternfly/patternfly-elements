@@ -7,7 +7,7 @@ test.describe(tagName, () => {
   test('snapshot', async ({ page }) => {
     const componentPage = new PfeDemoPage(page, tagName);
     await componentPage.navigate();
-    await page.$eval('#realtime', el => el.closest('pfe-band')?.remove());
+    await page.$eval('#realtime', el => el.closest('section')?.remove());
     await componentPage.snapshot();
   });
 });

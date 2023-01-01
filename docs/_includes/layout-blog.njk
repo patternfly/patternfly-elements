@@ -1,16 +1,14 @@
 ---
 layout: layout-base.njk
-packages:
-  - pfe-band
 ---
 {% include '_nav.njk' %}
 
 <main class="blog">
-  <pfe-band class="header">
-    <h1 slot="header">{{ title }}</h1>{% if tagline %}
+  <header class="band header">
+    <h1>{{ title }}</h1>{% if tagline %}
     <p class="tagline">{{ tagline }}</p>{% endif %}
     <time datetime="{{ page.date }}">{{ page.date | prettyDate }}</time>
-  </pfe-band>
+  </header>
 
   <aside class="block-toc">
     <h2>Contents</h2>
@@ -70,7 +68,7 @@ packages:
 </script>
 
 <style>
-main.blog > pfe-band.header::part(body) {
+main.blog > header.band {
   display: flex;
   align-items: baseline;
   justify-content: space-between;

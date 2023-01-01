@@ -5,9 +5,9 @@ tags:
   - frameworkIntegration
 ---
 
-<pfe-band class="header" use-grid>
-  <h1 slot="header">{{ title }}</h1>
-</pfe-band>
+<header class="band">
+  <h1>{{ title }}</h1>
+</header>
 
 {% band header="Using PatternFly Elements in your React app" %}
   To get web components to work with React it’s pretty easy and straightforward. If you’d like to follow along,

@@ -39,7 +39,6 @@ export async function fixture<T extends Element = HTMLElement>(
     'pfe-autocomplete',
     'pfe-avatar',
     'pfe-badge',
-    'pfe-band',
     'pfe-button',
     'pfe-card',
     'pfe-clipboard',

@@ -1,6 +1,6 @@
 {% set level = level or 2 %}
 
-<pfe-band size="small" color-palette="lightest" use-grid>
-  <h{{level}} slot="header">{{ header | innerMD | safe }}</h{{level}}>
+<section class="band">
+  <h{{level}}>{{ header | innerMD | safe }}</h{{level}}>
   {{ content | innerMD | safe }}
-</pfe-band>
+</section>

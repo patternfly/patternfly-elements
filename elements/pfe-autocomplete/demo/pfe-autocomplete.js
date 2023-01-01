@@ -1,5 +1,4 @@
 import '@patternfly/pfe-autocomplete';
-import '@patternfly/pfe-band';
 import '@patternfly/pfe-select';
 
 const root = document.querySelector('[data-demo="pfe-autocomplete"]')?.shadowRoot ?? document;
@@ -42,7 +41,7 @@ function ajaxCallback(params, callback) {
 }
 
 function onSearch(event) {
-  const output = event.target.closest('pfe-band').querySelector('output');
+  const output = event.target.closest('section').querySelector('output');
   if (output) {
     output.textContent = event.value;
   }

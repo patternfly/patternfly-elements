@@ -168,9 +168,10 @@ export abstract class BaseTabs extends LitElement {
               @click="${this.#scrollLeft}">
             <pfe-icon icon="${scrollIconLeft}" set="${scrollIconSet}" loading="eager"></pfe-icon>
           </button>`}
-          <div part="tabs" role="tablist">
-            <slot name="tab" @slotchange="${this.#onSlotchange}"></slot>
-          </div>${!this.#showScrollButtons ? '' : html`
+          <slot name="tab"
+                part="tabs"
+                role="tablist"
+                @slotchange="${this.#onSlotchange}"></slot> ${!this.#showScrollButtons ? '' : html`
           <button id="nextTab"
               aria-label="${this.getAttribute('label-scroll-right') ?? 'Scroll right'}"
               ?disabled="${!this.#overflowOnRight}"
@@ -178,9 +179,7 @@ export abstract class BaseTabs extends LitElement {
             <pfe-icon icon="${scrollIconRight}" set="${scrollIconSet}" loading="eager"></pfe-icon>
           </button>`}
         </div>
-        <div part="panels">
-          <slot @slotchange="${this.#onSlotchange}"></slot>
-        </div>
+        <slot part="panels" @slotchange="${this.#onSlotchange}"></slot>
       </div>
     `;
   }

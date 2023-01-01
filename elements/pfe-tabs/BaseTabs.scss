@@ -30,6 +30,11 @@
   translate: 0 0;
 }
 
+[part="tabs"],
+[part="panels"] {
+  display: block;
+}
+
 [part="tabs"] {
   scrollbar-width: none;
   position: relative;

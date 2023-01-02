@@ -56,7 +56,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 18
           cache: npm
       - run: npm ci --prefer-offline
       - name: Visual Regression Tests

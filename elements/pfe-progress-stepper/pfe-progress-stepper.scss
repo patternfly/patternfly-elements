@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  display: flex;
+  width: auto;
+  justify-content: space-between;
+  position: relative;
+  align-items: flex-start;
+}
+
+:host([vertical]) {
+  flex-direction: column;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:host([vertical]) ::slotted(pfe-progress-step) {
+  flex-direction: row;
+  align-items: flex-start;
+}
+

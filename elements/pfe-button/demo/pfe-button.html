@@ -4,9 +4,19 @@
 <script type="module" src="./pfe-button.js"></script>
 
 <section>
-  <h2 slot="header">Default - Medium size</h2>
+  <h2>Variant examples</h2>
+
+  <p>PatternFly supports several button styling variants to be used in different scenarios as needed. The following button variants can be assigned using the <code>variant</code> property.</p>
+
   <pfe-button>Primary</pfe-button>
   <pfe-button variant="secondary">Secondary</pfe-button>
+  <pfe-button danger variant="secondary">Danger Secondary</pfe-button>
+  <pfe-button variant="tertiary">Tertiary</pfe-button>
+  <pfe-button danger>Danger</pfe-button>
+  <pfe-button warning>Warning</pfe-button>
+
+  <h3>Link variant</h3>
+  <pfe-button variant="link" icon="circle-plus">Link</pfe-button>
   <pfe-button variant="link" icon="link" icon-position="right">Link</pfe-button>
   <pfe-button variant="link" inline>Inline Link</pfe-button>
   <pfe-button variant="link" danger>Danger Link</pfe-button>

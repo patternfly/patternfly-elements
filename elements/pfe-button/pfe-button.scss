@@ -1,3 +1,4 @@
+/* hi */
 button {
   color: var(--pf-c-button--m-primary--Color,
     var(--pf-global--Color--light-100, #fff));
@@ -182,22 +183,29 @@ button:hover {
 
 /******************************
  *                            *
+ *            ICON            *
+ *                            *
+ ******************************/
+
+.hasIcon {
+  gap: calc(2 * var(--pf-c-button__icon--m-start--MarginLeft,
+    var(--pf-global--spacer--xs, 0.25rem)));
+}
+
+.hasIcon [part=icon] {
+  --pfe-icon--size: 16px;
+  position: relative;
+}
+
+/******************************
+ *                            *
  *    ICON POSITION RIGHT     *
  *                            *
  ******************************/
 
 :host([icon-position=right]) .hasIcon [part=icon],
 :host([icon-position=right][loading]) [part=icon] {
-  display: inline-flex;
-  align-items: center;
-  position: absolute;
-  width: 16px;
-  left: initial;
-  right: var(--pf-c-button--PaddingRight,
-    var(--pf-global--spacer--md, 1rem));
-  margin-inline-start: var(--pf-c-button__icon--m-start--MarginLeft,
-    var(--pf-global--spacer--xs, 0.25rem));
-  margin-inline-end: initial;
+  order: 1;
 }
 
 :host([icon-position=right]) .hasIcon button {
@@ -593,23 +601,6 @@ button:hover {
 :host([size=small]) button {
   --pf-c-button--FontSize: var(--pf-c-button--m-small--FontSize,
     var(--pf-global--FontSize--md, 1rem));
-}
-
-/******************************
- *                            *
- *            ICON            *
- *                            *
- ******************************/
-
-.hasIcon [part=icon] {
-  left: var(--pf-c-button--PaddingLeft,
-    var(--pf-global--spacer--md, 1rem));
-  margin-inline-end: var(--pf-c-button__icon--m-start--MarginRight,
-    var(--pf-global--spacer--xs, 0.25rem));
-}
-
-.hasIcon button {
-  padding-left: calc(16px + 8px + var(--pf-c-button--PaddingLeft, var(--pf-global--spacer--md, 1rem)));
 }
 
 /******************************

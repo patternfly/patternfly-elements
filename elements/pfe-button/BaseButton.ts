@@ -74,12 +74,8 @@ export abstract class BaseButton extends LitElement {
               aria-label="${ifDefined(this.label)}"
               @click="${this.#onClick}"
               ?disabled="${this.disabled}">
-        <span id="icon" part="icon" aria-hidden="true">
-          <slot name="icon">${this.renderDefaultIcon()}</slot>
-        </span>
-        <span id="text" aria-hidden=${String(!!this.label) as 'true'|'false'}>
-          <slot></slot>
-        </span>
+        <slot id="icon" part="icon" aria-hidden="true" name="icon">${this.renderDefaultIcon()}</slot>
+        <slot id="text" aria-hidden=${String(!!this.label) as 'true'|'false'}></slot>
       </button>
     `;
   }

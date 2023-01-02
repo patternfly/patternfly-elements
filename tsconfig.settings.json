@@ -81,9 +81,6 @@
       "@patternfly/pfe-badge": [
         "./elements/pfe-badge/pfe-badge.ts"
       ],
-      "@patternfly/pfe-panel": [
-        "./elements/pfe-panel/pfe-panel.ts"
-      ],
       "@patternfly/pfe-button": [
         "./elements/pfe-button/pfe-button.ts"
       ],
@@ -113,6 +110,9 @@
       ],
       "@patternfly/pfe-modal": [
         "./elements/pfe-modal/pfe-modal.ts"
+      ],
+      "@patternfly/pfe-panel": [
+        "./elements/pfe-panel/pfe-panel.ts"
       ],
       "@patternfly/pfe-progress-steps": [
         "./elements/pfe-progress-steps/pfe-progress-steps.ts"

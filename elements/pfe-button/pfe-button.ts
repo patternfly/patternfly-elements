@@ -192,7 +192,6 @@ export class PfeButton extends BaseButton {
   protected override renderDefaultIcon() {
     return html`
       <pfe-icon
-          size="sm"
           icon="${ifDefined(this.icon)}"
           set="${ifDefined(this.iconSet)}"
           ?hidden="${!this.icon}"></pfe-icon>

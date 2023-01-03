@@ -1,10 +1,6 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
 export class InternalsController implements ReactiveController, ARIAMixin {
-  #internals: ElementInternals;
-
-  disabled = false;
-
   declare role: ARIAMixin['role'];
   declare ariaAtomic: ARIAMixin['ariaAtomic'];
   declare ariaAutoComplete: ARIAMixin['ariaAutoComplete'];
@@ -46,36 +42,61 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   declare ariaValueNow: ARIAMixin['ariaValueNow'];
   declare ariaValueText: ARIAMixin['ariaValueText'];
 
+  #internals: ElementInternals;
+
+  /** True when the control is disabled via it's containing fieldset element */
+  #formDisabled = false;
+
+  get formDisabled() {
+    return this.#formDisabled;
+  }
+
+  set formDisabled(v: boolean) {
+    this.#formDisabled = v;
+    this.host.requestUpdate();
+  }
+
   constructor(
     public host: ReactiveControllerHost & HTMLElement,
   ) {
     this.#internals = host.attachInternals();
-    const { formDisabledCallback } = host;
-    Object.defineProperty(Object.getPrototypeOf(host), 'formDisabledCallback', {
-      configurable: true,
-      value: (disabled: boolean) => {
-        formDisabledCallback?.call(host, disabled);
-        this.formDisabledCallback(disabled);
-      }
-    });
-  }
-
-  formDisabledCallback(disabled: boolean) {
-    this.disabled = disabled;
-    this.host.requestUpdate();
-    for (const key of Object.keys(Object.getPrototypeOf(this.#internals))) {
-      Object.defineProperty(this, key, {
-        get() {
-          return this.#internals[key];
-        },
-        set(value) {
-          this.#internals[key] = value;
+    // wrap the host's form callbacks
+    for (const key of ['formDisabledCallback', 'formResetCallback'] as const) {
+      const orig = host[key as keyof typeof host] as undefined | ((...args:any[]) => void);
+      Object.defineProperty(Object.getPrototypeOf(host), key, {
+        configurable: true,
+        value: (...args: any[]) => {
+          orig?.call(host, ...args);
+          this[key as 'formResetCallback'](...args as []);
         }
       });
     }
+    // proxy the internals object's aria prototype
+    for (const key of Object.keys(Object.getPrototypeOf(this.#internals))) {
+      if (key === 'role' || key.startsWith('aria')) {
+        Object.defineProperty(this, key, {
+          get() {
+            return this.#internals[key];
+          },
+          set(value) {
+            this.#internals[key] = value;
+          }
+        });
+      }
+    }
   }
 
-  hostConnected?(): void
+  formDisabledCallback(disabled: boolean) {
+    this.formDisabled = disabled;
+  }
+
+  formResetCallback() {
+    this.hostConnected();
+  }
+
+  hostConnected() {
+    this.formDisabled = this.host.closest('fieldset')?.disabled ?? false;
+  }
 
   submit() {
     this.#internals.form?.requestSubmit();

@@ -44,9 +44,9 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   #internals: ElementInternals;
 
-  /** True when the control is disabled via it's containing fieldset element */
   #formDisabled = false;
 
+  /** True when the control is disabled via it's containing fieldset element */
   get formDisabled() {
     return this.#formDisabled;
   }
@@ -80,6 +80,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
           },
           set(value) {
             this.#internals[key] = value;
+            this.host.requestUpdate();
           }
         });
       }

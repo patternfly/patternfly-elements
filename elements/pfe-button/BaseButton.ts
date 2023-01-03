@@ -36,6 +36,9 @@ export abstract class BaseButton extends LitElement {
 
   @property() name?: string;
 
+  /** Shorthand for the `icon` slot, the value is icon name */
+  @property() icon?: string;
+
   /** Changes the size of the button. */
   abstract size?: string;
 
@@ -45,9 +48,6 @@ export abstract class BaseButton extends LitElement {
    * user data.
    */
   abstract danger: unknown;
-
-  /** Shorthand for the `icon` slot, the value is icon name */
-  @property() icon?: string;
 
   #internals = new InternalsController(this);
 

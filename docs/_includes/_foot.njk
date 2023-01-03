@@ -3,48 +3,44 @@
     {% set component = c %}
   {% endif %}
 {% endfor %}
-  <footer class="basic">
-    <pfe-band color-palette="darkest">
-      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
-        <div>
-          <h3>Community</h3>
-          <ul>
-            <li>
-              <a href="https://github.com/patternfly/patternfly-elements">GitHub</a>
-            </li>
-            <li>
-              <a href="https://github.com/patternfly/patternfly-elements/blob/main/CONTRIBUTING.md">Contributing</a>
-            </li>
-            <li>
-              <a href="https://github.com/patternfly/patternfly-elements/blob/main/CODE_OF_CONDUCT.md">Code of conduct</a>
-            </li>
-            <li>
-              <a href="https://www.redhat.com/mailman/listinfo/patternfly-elements-contribute">Contributors email list</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h3>Resources</h3>
-          <ul>
-            <li>
-              <a href="/get-started">Documentation</a>
-            </li>{% if page.url == component.url %}
-            <li>
-              <a href="/elements/{{ component.data.package }}/demo">Demo page</a>
-            </li>{% endif %}
-            <li>
-              <a href="/blog">Blog</a>
-            </li>
-            <li>
-              <a href="https://medium.com/patternfly-elements">Medium</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <a href="https://www.netlify.com">
-            <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify">
-          </a>
-        </div>
-      </div>
-    </pfe-band>
-  </footer>
+<footer class="basic band">
+  <section>
+    <h3>Community</h3>
+    <ul>
+      <li>
+        <a href="https://github.com/patternfly/patternfly-elements">GitHub</a>
+      </li>
+      <li>
+        <a href="https://github.com/patternfly/patternfly-elements/blob/main/CONTRIBUTING.md">Contributing</a>
+      </li>
+      <li>
+        <a href="https://github.com/patternfly/patternfly-elements/blob/main/CODE_OF_CONDUCT.md">Code of conduct</a>
+      </li>
+      <li>
+        <a href="https://www.redhat.com/mailman/listinfo/patternfly-elements-contribute">Contributors email list</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+    <h3>Resources</h3>
+    <ul>
+      <li>
+        <a href="/get-started">Documentation</a>
+      </li>{% if page.url == component.url %}
+      <li>
+        <a href="/elements/{{ component.data.package }}/demo">Demo page</a>
+      </li>{% endif %}
+      <li>
+        <a href="/blog">Blog</a>
+      </li>
+      <li>
+        <a href="https://medium.com/patternfly-elements">Medium</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+    <a href="https://www.netlify.com">
+      <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify">
+    </a>
+  </section>
+</footer>

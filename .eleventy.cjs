@@ -1,6 +1,7 @@
 const compress = require('compression');
 const anchorsPlugin = require('@orchidjs/eleventy-plugin-ids');
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
+const { EleventyRenderPlugin } = require('@11ty/eleventy');
 const directoryOutputPlugin = require('@11ty/eleventy-plugin-directory-output');
 
 const pfeAssetsPlugin = require('@patternfly/pfe-tools/11ty/plugins/pfe-assets.cjs');
@@ -20,7 +21,7 @@ const markdownLib = markdownIt({ html: true })
 module.exports = function(eleventyConfig) {
   eleventyConfig.setLibrary('md', markdownLib);
 
-  eleventyConfig.setQuietMode(process.env.npm_config_quiet);
+  eleventyConfig.setQuietMode(true);
 
   eleventyConfig.setWatchThrottleWaitTime(500);
 
@@ -31,6 +32,8 @@ module.exports = function(eleventyConfig) {
       middleware: [compress()],
     },
   });
+
+  eleventyConfig.addPlugin(EleventyRenderPlugin);
 
   /** Table of Contents Shortcode */
   eleventyConfig.addPlugin(pluginToc, { tags: ['h2', 'h3', 'h4'] });

@@ -1,16 +1,14 @@
-import '@patternfly/pfe-band';
 import '@patternfly/pfe-button';
 import '@patternfly/pfe-spinner';
 import '@patternfly/pfe-select';
 
-const root = document.querySelector('[data-demo="pfe-button"]')?.shadowRoot ?? document;
-const logsBtn = root.querySelector('#loading-logs');
-const loadBtn = root.querySelector('#loading-scdr');
-const iconBtn = root.querySelector('#loading-icon');
+const logsBtn = document.getElementById('loading-logs');
+const loadBtn = document.getElementById('loading-scdr');
+const iconBtn = document.getElementById('loading-icon');
 
 logsBtn.addEventListener('click', () => {
   logsBtn.loading = !logsBtn.loading;
-  logsBtn.querySelector('button').textContent =
+  logsBtn.textContent =
     logsBtn.loading ? 'Pause loading logs' : 'Resume loading logs';
 });
 

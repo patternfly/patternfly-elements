@@ -1,0 +1,162 @@
+---
+layout: layout-base.njk
+title: PatternFly Elements
+description: A set of community-created web components based on PatternFly design.
+githubLink: https://github.com/patternfly/patternfly-elements
+---
+
+<style>
+  #home-header {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    background-color: #004080;
+    color: white;
+    padding-block-end: 0;
+    padding-inline: 0;
+    max-width: 100%;
+  }
+
+  #home-header h1 img {
+    width: 6rem;
+    translate: 0 2rem;
+  }
+
+  #home-header > :is(h1, p, section) {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  #home-header pfe-icon {
+   color: #666
+  }
+
+  #home-header section {
+    margin-block-start: 48px;
+    color: black;
+  }
+
+  #lightw,
+  #univ {
+    display: grid;
+    gap: 1em;
+  }
+
+  #lightw {
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+      'h h'
+      'tag tag'
+      'p p'
+      'snippets cards'
+      'link link';
+  }
+
+  #univ {
+    grid-template-areas:
+      'h h'
+      'header header'
+      'snippets cards'
+      'snippets logos'
+      'link link';
+  }
+
+  #lightw > h2 { grid-area: h; }
+  #lightw > .subtitle { grid-area: tag; }
+  #lightw > p:not(.subtitle) { grid-area: p; }
+  #lightw > pre { grid-area: snippets; }
+  #lightw > pfe-card { grid-area: cards; }
+  #lightw > a { grid-area: link; }
+
+  #univ ul {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    flex-direction: column;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  #univ > h2 { grid-area: h; }
+  #univ > header { grid-area: header; }
+  #univ > div { grid-area: snippets; }
+  #univ > pfe-accordion { grid-area: cards; }
+  #univ > ul { grid-area: logos; }
+  #univ > a { grid-area: link; }
+
+  #univ ul img {
+    width: 125px;
+    height: auto;
+  }
+</style>
+
+<body>
+  <header class="band accent" id="home-header">
+    <h1>
+      <img alt="" src="{{ '/images/logo/pfe-icon-white-shaded.svg' | url }}"> {{ title }}
+    </h1>
+    <p>{{ description }}</p>
+    <a class="cta primary" href="{{ 'get-started' | url }}">Get started</a>
+    <a class="cta secondary" href="{{ 'components' | url }}">View the components</a>
+    <section class="band small base">
+      <a class="cta" href="{{ githubLink }}">
+        <pfe-icon size="md" icon="github" set="fab" aria-hidden="true"></pfe-icon>
+        Contribute on GitHub
+      </a>
+    </section>
+  </header>
+  <main>
+    <section id="lightw" class="band">
+      <h2 id="lightweight">Lightweight</h2>
+      <p class="subtitle">Use only what you need.</p>
+      <p>Pick and choose from the <a href="{{ '/components/' | url }}">list of components</a>. Use them all or just one. And keep your page payloads small with PatternFly Elements because the components range from ~3 kB to ~10 kB in size minified and gzipped.</p>
+
+      {% renderFile "./docs/_snippets/card-html.md" %}
+
+      <pfe-card border>
+        <h2 slot="header">Card component</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quam alias ducimus, amet iure quae earum.</p>
+        <a class="cta" slot="footer" href="components/card">More about the pfe-card</a>
+      </pfe-card>
+
+      <a class="cta" href="components/">View the rest of the components</a>
+    </section>
+
+    <section id="univ" class="band base">
+      <h2>Universal</h2>
+      <header>
+        <p class="tagline">Integrate PatternFly Elements with your framework of choice or use them by themselves.</p>
+        <p>PatternFly Elements integrate seamlessly with multiple frontend frameworks. Or use PatternFly Elements on their own without a framework. It's up to you and the needs of your project.</p>
+      </header>
+
+      <div>{% renderFile "./docs/_snippets/accordion-jsx.md" %}</div>
+
+      <pfe-accordion>
+        <pfe-accordion-header>
+          <h3>Accordion header</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Here is some content</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Accordion header</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Here is some more content</p>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+
+      <ul id="framework-logos">
+        <li><img class="react-logo" src="images/react.svg" alt="React logo"></li>
+        <li><img class="vue-logo" src="images/vue.svg" alt="Vue logo"></li>
+        <li><img class="angular-logo" src="images/angular.svg" alt="Angular logo"></li>
+      </ul>
+
+      <a class="cta" href="{{ '/framework-integration/' | url }}">Learn how to integrate PatternFly Elements in your application</a>
+    </section>
+
+  </main>
+  <script type="module" src="{{ '/main.mjs' | url }}"></script>

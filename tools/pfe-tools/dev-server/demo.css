@@ -276,32 +276,32 @@ strong {
   font-weight: bold;
 }
 
-pfe-band.header h1 {
+header.band h1 {
   margin: 0;
 }
 
-pfe-band > h2[id]:not(.no-header-styles) {
+.band > h2[id]:not(.no-header-styles) {
   font-size: 1.5rem;
   line-height: 1.9375rem;
   font-weight: bold;
   margin-top: 2em;
 }
 
-pfe-band > h3[id] {
+.band > h3[id] {
   font-size: 1.3rem;
   font-weight: bold;
   margin-top: 2em;
 }
 
-pfe-band > h2 + h3[id],
-pfe-band > p + h3[id] {
+.band > h2 + h3[id],
+.band > p + h3[id] {
   margin-top: 0;
 }
 
-pfe-band > h1+p,
-pfe-band > h2+p,
-pfe-band > h3+p,
-pfe-band > h4+p {
+.band > h1+p,
+.band > h2+p,
+.band > h3+p,
+.band > h4+p {
   margin-top: 0;
 }
 
@@ -521,10 +521,6 @@ footer ul {
 }
 
 @media (min-width: 820px) {
-  :root {
-    --pfe-band--Padding--horizontal: 48px;
-  }
-
   main.basic,
   main.blog,
   body:not(.layout-base) footer.basic {

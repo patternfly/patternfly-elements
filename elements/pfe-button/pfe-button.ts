@@ -185,15 +185,19 @@ export class PfeButton extends BaseButton {
    */
   @property({ reflect: true }) variant: ButtonVariant = 'primary';
 
+  protected override get hasIcon() {
+    return !!this.icon || !!this.loading;
+  }
+
   protected override renderDefaultIcon() {
     return html`
       <pfe-icon
-          size="sm"
           icon="${ifDefined(this.icon)}"
           set="${ifDefined(this.iconSet)}"
-        ?hidden="${!this.icon}"></pfe-icon>
+          ?hidden="${!this.icon}"></pfe-icon>
       <pfe-spinner
           ?hidden="${!this.loading}"
+          size="md"
           aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pfe-spinner>
     `;
   }

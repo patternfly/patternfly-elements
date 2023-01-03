@@ -11,10 +11,13 @@ jobs:
     if: github.repository == 'patternfly/patternfly-elements'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 18
           cache: npm
 
       - run: npm i --prefer-offline
@@ -26,7 +29,8 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: npx changeset publish
-          commit: "chore: version packages"
+          commit: "chore: prepare release"
+          title: "chore: prepare release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

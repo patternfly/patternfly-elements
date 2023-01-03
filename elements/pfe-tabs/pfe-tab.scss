@@ -95,7 +95,14 @@ button:active {
   top: 0;
 }
 
+:host([box][vertical][active]) button::before {
+  --pf-c-tabs__link--before--BorderRightColor: var(--pf-c-tabs__item--m-current__link--BackgroundColor, var(--pf-global--BackgroundColor--100, #ffffff));
+  --pf-c-tabs__link--before--BorderBottomWidth: var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px));
+  --pf-c-tabs__link--before--BorderBottomColor: var(--pf-c-tabs__link--before--border-color--base, var(--pf-global--BorderColor--100, #d2d2d2));
+}
+
 :host(.first[box][active]) button::before {
+  border-block-start-width: var(--pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderTopWidth,  var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
   border-inline-start-width: var(--pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderLeftWidth,  var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
 }
 

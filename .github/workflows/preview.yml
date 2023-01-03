@@ -12,12 +12,11 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@master
         with:
-          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           cache: npm
 
       - run: npm ci --prefer-offline
@@ -42,13 +41,17 @@ jobs:
               const body = `${HEADER}
 
 
-              |  Name                                            | Link                             |
-              |--------------------------------------------------|----------------------------------|
-              |<span aria-hidden="true">🔨</span> Latest commit  | ${GITHUB_SHA}                    |
-              |<span aria-hidden="true">😎</span> Deploy Preview | [${PREVIEW_URL}](${PREVIEW_URL}) |
+              |  Name                                            | Link                  |
+              |--------------------------------------------------|-----------------------|
+              |<span aria-hidden="true">🔨</span> Latest commit  | ${GITHUB_SHA}         |
+              |<span aria-hidden="true">😎</span> Deploy Preview | [${PREVIEW_URL}][url] |
               ---
 
-              _To edit notification comments on pull requests, go to your [Netlify site settings](https://app.netlify.com/sites/${NETLIFY_SITE_SLUG}/settings/deploys#deploy-notifications)._`
+              _To edit notification comments on pull requests, go to your [Netlify site settings][settings]._
+
+
+              [url]: ${PREVIEW_URL}
+              [settings]: https://app.netlify.com/sites/${NETLIFY_SITE_SLUG}/settings/deploys#deploy-notifications`
 
               const comments = await github.rest.issues.listComments({ owner, repo, issue_number });
               const priorComment = comments.data.find(comment => comment.body.startsWith(HEADER));

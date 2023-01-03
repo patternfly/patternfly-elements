@@ -46,13 +46,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: 18
           cache: npm
 
       - name: Install dependencies
@@ -75,14 +77,12 @@ jobs:
 
   build:
     name: Compile project
-    outputs:
-      CACHE_KEY: ${{ steps.hash.outputs.HASH }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node:
-          - '16'
-          - '17'
+          - 18
+          - 19
     if: |
       github.event_name == 'workflow_dispatch'
       ||   github.event_name == 'push'
@@ -100,11 +100,9 @@ jobs:
       )
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Capture hash value
-        id: hash
-        run: echo '::set-output name=HASH::${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
@@ -123,17 +121,6 @@ jobs:
       - name: Release Dry Run
         id: release-dry
         run: npm run prepublishOnly -ws --if-present
-
-      # Upload compiled assets to make them available for downstream jobs
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: compiled-assets
-          if-no-files-found: error
-          path: |
-            core/
-            elements/
-            tools/
 
   # Validate the build to main was successful; open an issue if not
   validate:

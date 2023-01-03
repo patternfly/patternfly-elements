@@ -1,8 +1,7 @@
+import '@patternfly/pfe-switch';
 import '@patternfly/pfe-tooltip';
-import '@patternfly/pfe-band';
-import '@patternfly/pfe-button';
 
-const root = document.querySelector('[data-demo="pfe-tooltip"]')?.shadowRoot ?? document;
-
-root.querySelector('pfe-tooltip');
+document.getElementById('width-toggle').addEventListener('change', function(event) {
+  document.querySelector('[data-demo]').classList.toggle('narrow', event.target.checked);
+});
 

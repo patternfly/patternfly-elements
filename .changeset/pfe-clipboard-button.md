@@ -2,6 +2,7 @@
 "@patternfly/pfe-clipboard-copy": major
 ---
 
-**Breaking Changes**: Renamed `pfe-clipboard` to `pfe-clipboard-copy`. See the 
-[docs](https://patternflyelements.org/components/pfe-clipboard-copy) for API 
-docs.
+Renamed `<pfe-clipboard>` to `<pfe-clipboard-copy>`. See the [docs][docs] for more info. 
+
+
+[docs]: https://patternflyelements.org/components/clipboard-copy

@@ -1,4 +1,3 @@
-import '@patternfly/pfe-band';
 import '@patternfly/pfe-select';
 
 const root = document.querySelector('[data-demo="pfe-select"]')?.shadowRoot ?? document;

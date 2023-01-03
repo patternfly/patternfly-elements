@@ -63,7 +63,7 @@
     "watch:types": "tsc -w"
   },
   "dependencies": {
-    "@popperjs/core": "2.11.6",
+    "@floating-ui/dom": "^1.0.5",
     "lit": "2.3.0"
   },
   "repository": {

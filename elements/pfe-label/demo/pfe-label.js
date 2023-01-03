@@ -10,7 +10,6 @@ window.ZeroMdConfig = {
 };
 
 import '@patternfly/pfe-label';
-import '@patternfly/pfe-band';
 import 'zero-md';
 
 const container = document.querySelector('[data-demo]');

@@ -1,44 +1,43 @@
 import '@patternfly/pfe-icon';
+import '@patternfly/pfe-switch';
 import '@patternfly/pfe-tabs';
 
-const root = document.querySelector('[data-demo="pfe-tabs"]')?.shadowRoot ?? document;
+const toggleVariant = document.getElementById('toggle-variant');
+const resize = document.getElementById('overflow');
+const verticalInput = document.getElementById('toggle-vertical');
+const resizeInput = document.getElementById('toggle-resize');
+const verticalVariant = document.querySelector('pfe-tabs[vertical]');
+const boxVariant = document.querySelector('pfe-tabs[box]');
+const inset = document.querySelector('pfe-tabs[inset]');
 
-const variantInput = root.querySelector('input[name="toggle-variant"]');
 function variantToggle() {
-  const boxVariant = root.querySelector('pfe-tabs[box]');
-  if (variantInput.checked) {
-    boxVariant.setAttribute('box', 'light');
-  } else {
-    boxVariant.setAttribute('box', 'dark');
-  }
+  boxVariant.setAttribute('box', toggleVariant.checked ? 'dark' : 'light');
 }
-variantInput.addEventListener('change', variantToggle);
 
-const verticalInput = root.querySelector('input[name="toggle-vertical"]');
 function verticalToggle() {
-  const verticalVariant = root.querySelector('pfe-tabs[vertical]');
   if (verticalInput.checked) {
     verticalVariant.setAttribute('box', 'dark');
   } else {
     verticalVariant.removeAttribute('box');
   }
 }
-verticalInput.addEventListener('change', verticalToggle);
 
-const resizeInput = root.querySelector('input[name="toggle-resize"]');
 function resizeToggle() {
-  const resize = root.querySelector('#overflow');
   if (resizeInput.checked) {
     resize.setAttribute('box', 'dark');
   } else {
     resize.removeAttribute('box');
   }
 }
-resizeInput.addEventListener('change', resizeToggle);
 
-const insetInput = root.querySelectorAll('input[name="toggle-inset"]');
 function insetToggle(event) {
-  const inset = root.querySelector('pfe-tabs[inset]');
   inset.inset = event.target.value;
 }
-insetInput.forEach(input => input.addEventListener('change', insetToggle));
+
+for (const input of document.querySelectorAll('input[name="toggle-inset"]')) {
+  input.addEventListener('change', insetToggle);
+}
+
+toggleVariant.addEventListener('change', variantToggle);
+resizeInput.addEventListener('change', resizeToggle);
+verticalInput.addEventListener('change', verticalToggle);

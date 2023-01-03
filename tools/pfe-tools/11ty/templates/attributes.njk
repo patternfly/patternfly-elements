@@ -1,9 +1,11 @@
 {% set level = level or 2 %}
 {% set header = header or 'Attributes' %}
 
-<pfe-band size="small" color-palette="lightest" use-grid>
-  <h{{level}} slot="header">{{ header | innerMD | safe }}</h{{level}}> {% if not content and not attributes.length %}
+<section class="band api attributes">
+  <h{{level}}>{{ header | innerMD | safe }}</h{{level}}> {% if not content and not attributes.length %}
+
   <em>None</em> {%- else -%}
+
   {{ content | innerMD | safe }}
   <dl> {%- for attribute in attributes -%}
     <dt><strong><code>{{ attribute.name }}</code></strong></dt>
@@ -34,4 +36,4 @@
       </dd> {%- endfor -%}
     </dl>
   </details>{%- endif -%}
-</pfe-band>
+</section>

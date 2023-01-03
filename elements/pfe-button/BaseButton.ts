@@ -53,6 +53,10 @@ export abstract class BaseButton extends LitElement {
 
   #initiallyDisabled = this.hasAttribute('disabled');
 
+  protected get hasIcon() {
+    return !!this.icon;
+  }
+
   formDisabledCallback(disabled: boolean) {
     this.disabled = disabled;
   }
@@ -62,19 +66,16 @@ export abstract class BaseButton extends LitElement {
   }
 
   override render() {
+    const { hasIcon } = this;
     return html`
       <button type="${ifDefined(this.type)}"
-              class="${classMap({ hasIcon: !!this.icon })}"
+              class="${classMap({ hasIcon })}"
               value="${ifDefined(this.value)}"
               aria-label="${ifDefined(this.label)}"
               @click="${this.#onClick}"
               ?disabled="${this.disabled}">
-        <span id="icon" part="icon" aria-hidden="true">
-          <slot name="icon">${this.renderDefaultIcon()}</slot>
-        </span>
-        <span id="text" aria-hidden=${String(!!this.label) as 'true'|'false'}>
-          <slot></slot>
-        </span>
+        <slot id="icon" part="icon" aria-hidden="true" name="icon">${this.renderDefaultIcon()}</slot>
+        <slot id="text" aria-hidden=${String(!!this.label) as 'true'|'false'}></slot>
       </button>
     `;
   }

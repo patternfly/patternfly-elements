@@ -52,7 +52,7 @@ Many commands have an optional argument of space-separated component name(s), if
 npm run build
 
 # Build one or more components
-npm run build -w @patternfly/pfe-band -w @patternfly/pfe-bard
+npm run build -w @patternfly/pfe-card
 ```
 
 ### Preview

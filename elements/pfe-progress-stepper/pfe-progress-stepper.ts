@@ -35,7 +35,7 @@ export class PfeProgressStepper extends LitElement {
     ariaValueNow: this.value,
   });
 
-  #mo = new MutationObserver(rs => this.#onMutation(rs));
+  #mo = new MutationObserver(() => this.#onMutation());
 
   get value() {
     const steps = this.querySelectorAll('pfe-progress-step');

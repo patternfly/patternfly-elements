@@ -48,36 +48,20 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   #internals: ElementInternals;
 
-  #formDisabled = false;
-
   /** True when the control is disabled via it's containing fieldset element */
   get formDisabled() {
-    return this.#formDisabled;
+    return this.host.matches(':disabled');
   }
 
-  set formDisabled(v: boolean) {
-    this.#formDisabled = v;
-    this.host.requestUpdate();
-  }
+  static protos = new WeakMap();
 
   constructor(
     public host: ReactiveControllerHost & HTMLElement,
     options?: Partial<ARIAMixin>
   ) {
     this.#internals = host.attachInternals();
-    // wrap the host's form callbacks
-    for (const key of ['formDisabledCallback', 'formResetCallback'] as const) {
-      const orig = host[key as keyof typeof host] as undefined | ((...args:any[]) => void);
-      Object.defineProperty(Object.getPrototypeOf(host), key, {
-        configurable: true,
-        value: (...args: any[]) => {
-          orig?.call(host, ...args);
-          this[key as 'formResetCallback'](...args as []);
-        }
-      });
-    }
     // proxy the internals object's aria prototype
-    for (const key of Object.keys(Object.getPrototypeOf(this.#internals))) {
+    for (const key of Object.keys(this.#internals)) {
       if (isARIAMixinProp(key)) {
         Object.defineProperty(this, key, {
           get() {
@@ -98,17 +82,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     }
   }
 
-  formDisabledCallback(disabled: boolean) {
-    this.formDisabled = disabled;
-  }
-
-  formResetCallback() {
-    this.hostConnected();
-  }
-
-  hostConnected() {
-    this.formDisabled = this.host.closest('fieldset')?.disabled ?? false;
-  }
+  hostConnected?(): void
 
   submit() {
     this.#internals.form?.requestSubmit();

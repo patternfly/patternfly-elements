@@ -10,10 +10,10 @@ import { InternalsController } from '@patternfly/pfe-core/controllers/internals-
 import style from './pfe-progress-step.scss';
 
 const ICONS = new Map(Object.entries({
-  success: 'circle-check',
-  danger: 'circle-exclamation',
-  warning: 'triangle-exclamation',
-  info: 'circle',
+  success: { icon: 'circle-check' },
+  danger: { icon: 'circle-exclamation' },
+  warning: { icon: 'triangle-exclamation' },
+  info: { icon: 'resources-full', set: 'patternfly' },
 }));
 
 /**
@@ -31,9 +31,9 @@ export class PfeProgressStep extends LitElement {
 
   static readonly styles = [style];
 
-  @property() icon?: string;
-
   @property() description?: string;
+
+  @property() icon?: string;
 
   @property({ attribute: 'icon-set' }) iconSet?: string;
 
@@ -50,16 +50,21 @@ export class PfeProgressStep extends LitElement {
   });
 
   render() {
-    const hasDescription = this.#slots.hasSlotted('description');
-    const icon = this.icon ?? ICONS.get(this.variant ?? 'default');
+    const hasDescription = !!this.description ?? this.#slots.hasSlotted('description');
+    const icon = this.icon ?? ICONS.get(this.variant ?? 'default')?.icon;
+    const set = this.iconSet ?? ICONS.get(this.variant ?? 'default')?.set;
     return html`
-      <slot name="icon">
-        <pfe-icon ?hidden="${!icon}"
-                  icon="${ifDefined(icon)}"
-                  set="${ifDefined(this.iconSet)}"></pfe-icon>
-      </slot>
-      <slot></slot>
-      <slot name="description" ?hidden="${!hasDescription}">${this.description}</slot>
+      <div id="connector">
+        <slot id="icon" name="icon">
+          <pfe-icon ?hidden="${!icon}"
+                    icon="${ifDefined(icon)}"
+                    set="${ifDefined(set)}"></pfe-icon>
+        </slot>
+      </div>
+      <div id="main">
+        <slot id="title"></slot>
+        <slot id="description" name="description" ?hidden="${!hasDescription}">${this.description}</slot>
+      </div>
     `;
   }
 

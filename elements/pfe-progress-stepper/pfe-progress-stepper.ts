@@ -15,12 +15,14 @@ export class PfeProgressStepper extends LitElement {
 
   static readonly styles = [style];
 
+  static formAssociated = true;
+
   @property({ type: Boolean, reflect: true }) vertical = false;
 
   @property({ type: Boolean, reflect: true }) centered = false;
 
   #internals = new InternalsController(this, {
-    role: 'listbox',
+    role: 'progress',
   });
 
   #mo = new MutationObserver(rs => this.#onMutation(rs));
@@ -42,7 +44,7 @@ export class PfeProgressStepper extends LitElement {
 
   render() {
     return html`
-      <slot></slot>
+      <slot role="listbox"></slot>
     `;
   }
 }

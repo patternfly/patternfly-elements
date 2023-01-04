@@ -1,13 +1,91 @@
-:host {
-  background-color: blue;
-  display: block;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 [hidden] {
   display: none !important;
 }
 
+#icon {
+  z-index: var(--pf-c-progress-stepper__step-icon--ZIndex);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--pf-c-progress-stepper__step-icon--Width);
+  height: var(--pf-c-progress-stepper__step-icon--Height);
+  color: var(--pf-c-progress-stepper__step-icon--Color);
+  background-color: var(--pf-c-progress-stepper__step-icon--BackgroundColor);
+  border: var(--pf-c-progress-stepper__step-icon--BorderWidth) solid var(--pf-c-progress-stepper__step-icon--BorderColor);
+  border-radius: 50%;
+  font-size: var(--pf-c-progress-stepper__step-icon--FontSize);
+  --pfe-icon--size: 1.125em;
+}
+
+#main {
+  min-width: 0;
+  margin: var(--pf-c-progress-stepper__step-main--MarginTop) var(--pf-c-progress-stepper__step-main--MarginRight) var(--pf-c-progress-stepper__step-main--MarginBottom) var(--pf-c-progress-stepper__step-main--MarginLeft);
+  text-align: var(--pf-c-progress-stepper--step-main--TextAlign, auto);
+  overflow-wrap: anywhere;
+}
+
+#title {
+  font-size: var(--pf-c-progress-stepper__step-title--FontSize);
+  font-weight: var(--pf-c-progress-stepper__step-title--FontWeight);
+  color: var(--pf-c-progress-stepper__step-title--Color);
+  text-align: var(--pf-c-progress-stepper__step-title--TextAlign);
+  border: 0;
+}
+
+#description {
+  margin-top: var(--pf-c-progress-stepper__step-description--MarginTop);
+  font-size: var(--pf-c-progress-stepper__step-description--FontSize);
+  color: var(--pf-c-progress-stepper__step-description--Color);
+  text-align: var(--pf-c-progress-stepper__step-description--TextAlign);
+  display: block;
+}
+
+:host {
+  display: contents;
+}
+
+#connector {
+  position: relative;
+  display: flex;
+  justify-content: var(--pf-c-progress-stepper__step-connector--JustifyContent);
+  width: 100%;
+}
+
+:host(:not(:last-of-type)) #connector::before {
+  position: absolute;
+  top: var(--pf-c-progress-stepper__step-connector--before--Top);
+  left: var(--pf-c-progress-stepper__step-connector--before--Left);
+  width: var(--pf-c-progress-stepper__step-connector--before--Width);
+  height: var(--pf-c-progress-stepper__step-connector--before--Height);
+  content: "";
+  border-right: var(--pf-c-progress-stepper__step-connector--before--BorderRightWidth) solid var(--pf-c-progress-stepper__step-connector--before--BorderRightColor);
+  border-bottom: var(--pf-c-progress-stepper__step-connector--before--BorderBottomWidth) solid var(--pf-c-progress-stepper__step-connector--before--BorderBottomColor);
+  transform: var(--pf-c-progress-stepper__step-connector--before--Transform);
+}
+
+:host([current]) {
+  --pf-c-progress-stepper__step-title--FontWeight: var(--pf-c-progress-stepper__step--m-current__step-title--FontWeight);
+  --pf-c-progress-stepper__step-title--Color: var(--pf-c-progress-stepper__step--m-current__step-title--Color);
+}
+
+:host([variant="success"]) {
+  --pf-c-progress-stepper__step-icon--Color: var(--pf-global--success-color--100, #3e8635);
+}
+
+:host([variant="info"]) {
+  --pf-c-progress-stepper__step-icon--Color: var(--pf-global--info-color--100, #2b9af3);
+}
+
+:host([variant="warning"]) {
+  --pf-c-progress-stepper__step-icon--Color: var(--pf-global--warning-color--100, #f0ab00);
+}
+
+:host([variant="danger"]) {
+  --pf-c-progress-stepper__step-icon--Color: var(--pf-global--danger-color--100, #c9190b);
+  --pf-c-progress-stepper__step-title--Color: var(--pf-c-progress-stepper__step--m-danger__step-title--Color);
+  --pf-c-progress-stepper__step-title--m-help-text--hover--Color: var(--pf-c-progress-stepper__step--m-danger__step-title--m-help-text--hover--Color);
+  --pf-c-progress-stepper__step-title--m-help-text--focus--Color: var(--pf-c-progress-stepper__step--m-danger__step-title--m-help-text--focus--Color);
+  --pf-c-progress-stepper__step-title--m-help-text--TextDecorationColor: var(--pf-c-progress-stepper__step--m-danger__step-title--m-help-text--TextDecorationColor);
+  --pf-c-progress-stepper__step-title--m-help-text--hover--TextDecorationColor: var(--pf-c-progress-stepper__step--m-danger__step-title--m-help-text--hover--TextDecorationColor);
+  --pf-c-progress-stepper__step-title--m-help-text--focus--TextDecorationColor: var(--pf-c-progress-stepper__step--m-danger__step-title--m-help-text--focus--TextDecorationColor);
+}

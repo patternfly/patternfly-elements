@@ -207,3 +207,22 @@
   --pf-c-progress-stepper__step-main--Position: relative;
 }
 
+:host([vertical][center]) {
+  --pf-c-progress-stepper__step-connector--before--Left: var(--pf-c-progress-stepper--m-center__step-connector--before--Left);
+}
+
+:host([compact]) {
+  --pf-c-progress-stepper__step-main--MarginTop: var(--pf-c-progress-stepper--m-compact__step-main--MarginTop);
+  --pf-c-progress-stepper__step-main--MarginBottom: var(--pf-c-progress-stepper--m-compact__step-main--MarginBottom);
+  --pf-c-progress-stepper__step-icon--Width: var(--pf-c-progress-stepper--m-compact__step-icon--Width);
+  --pf-c-progress-stepper__step-icon--FontSize: var(--pf-c-progress-stepper--m-compact__step-icon--FontSize);
+  --pf-c-progress-stepper__step-title--FontSize: var(--pf-c-progress-stepper--m-compact__step-title--FontSize);
+  --pf-c-progress-stepper__step--m-current__step-title--FontWeight: var(--pf-c-progress-stepper--m-compact__step-title--FontWeight);
+  --pf-c-progress-stepper__pficon--MarginTop: var(--pf-c-progress-stepper--m-compact__pficon--MarginTop);
+  --pf-c-progress-stepper__fa-exclamation-triangle--MarginTop: var(--pf-c-progress-stepper--m-compact__fa-exclamation-triangle--MarginTop);
+  --pf-c-progress-stepper--m-vertical__step-main--MarginLeft: var(--pf-c-progress-stepper--m-vertical--m-compact__step-main--MarginLeft);
+  --pf-c-progress-stepper--m-vertical__step-main--MarginRight: var(--pf-c-progress-stepper--m-vertical--m-compact__step-main--MarginRight);
+  display: inline-grid;
+  grid-template-columns: var(--pf-c-progress-stepper--m-compact--GridTemplateColumns);
+  grid-auto-flow: var(--pf-c-progress-stepper--m-compact--GridAutoFlow);
+}

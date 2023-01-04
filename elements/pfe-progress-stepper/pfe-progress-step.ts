@@ -1,8 +1,9 @@
 import type { PropertyValues } from 'lit';
 
-import { LitElement, html, svg } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
@@ -53,15 +54,16 @@ export class PfeProgressStep extends LitElement {
     const hasDescription = !!this.description ?? this.#slots.hasSlotted('description');
     const icon = this.icon ?? ICONS.get(this.variant ?? 'default')?.icon;
     const set = this.iconSet ?? ICONS.get(this.variant ?? 'default')?.set;
+    const { compact = false } = this.closest('pfe-progress-stepper') ?? {};
     return html`
-      <div id="connector">
+      <div id="connector" class="${classMap({ compact })}">
         <slot id="icon" name="icon">
           <pfe-icon ?hidden="${!icon}"
                     icon="${ifDefined(icon)}"
                     set="${ifDefined(set)}"></pfe-icon>
         </slot>
       </div>
-      <div id="main">
+      <div id="main" class="${classMap({ compact })}">
         <slot id="title"></slot>
         <slot id="description" name="description" ?hidden="${!hasDescription}">${this.description}</slot>
       </div>

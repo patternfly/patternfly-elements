@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 
 import style from './pfe-progress-stepper.scss';
 
@@ -20,6 +21,11 @@ export class PfeProgressStepper extends LitElement {
   @property({ type: Boolean, reflect: true }) vertical = false;
 
   @property({ type: Boolean, reflect: true }) center = false;
+
+  @observed(function(this: PfeProgressStepper) {
+    this.querySelectorAll('pfe-progress-step').forEach(step => step.requestUpdate());
+  })
+  @property({ type: Boolean, reflect: true }) compact = false;
 
   #internals = new InternalsController(this, {
     role: 'progress',

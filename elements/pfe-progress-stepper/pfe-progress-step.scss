@@ -18,6 +18,7 @@
 }
 
 #main {
+  position: var(--pf-c-progress-stepper__step-main--Position, initial);
   min-width: 0;
   margin: var(--pf-c-progress-stepper__step-main--MarginTop) var(--pf-c-progress-stepper__step-main--MarginRight) var(--pf-c-progress-stepper__step-main--MarginBottom) var(--pf-c-progress-stepper__step-main--MarginLeft);
   text-align: var(--pf-c-progress-stepper--step-main--TextAlign, auto);
@@ -51,13 +52,23 @@
   width: 100%;
 }
 
+:host(:not(:last-of-type)) #main::before {
+  content: var(--pf-c-progress-stepper__step-main--before--Content);
+  position: absolute;
+  top: calc(100% + var(--pf-c-progress-stepper__step-main--MarginTop));
+  left: calc(50% - var(--pf-c-progress-stepper__step-connector--before--BorderRightWidth) / 2);
+  width: auto;
+  height: calc(var(--pf-c-progress-stepper__step-main--MarginTop) + var(--pf-c-progress-stepper__step-main--MarginBottom));
+  border-right: var(--pf-c-progress-stepper__step-connector--before--BorderRightWidth) solid var(--pf-c-progress-stepper__step-connector--before--BorderRightColor);
+}
+
 :host(:not(:last-of-type)) #connector::before {
   position: absolute;
   top: var(--pf-c-progress-stepper__step-connector--before--Top);
   left: var(--pf-c-progress-stepper__step-connector--before--Left);
   width: var(--pf-c-progress-stepper__step-connector--before--Width);
   height: var(--pf-c-progress-stepper__step-connector--before--Height);
-  content: "";
+  content: var(--pf-c-progress-stepper__step-connector--before--Content);
   border-right: var(--pf-c-progress-stepper__step-connector--before--BorderRightWidth) solid var(--pf-c-progress-stepper__step-connector--before--BorderRightColor);
   border-bottom: var(--pf-c-progress-stepper__step-connector--before--BorderBottomWidth) solid var(--pf-c-progress-stepper__step-connector--before--BorderBottomColor);
   transform: var(--pf-c-progress-stepper__step-connector--before--Transform);

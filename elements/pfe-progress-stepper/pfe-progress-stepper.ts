@@ -19,7 +19,7 @@ export class PfeProgressStepper extends LitElement {
 
   @property({ type: Boolean, reflect: true }) vertical = false;
 
-  @property({ type: Boolean, reflect: true }) centered = false;
+  @property({ type: Boolean, reflect: true }) center = false;
 
   #internals = new InternalsController(this, {
     role: 'progress',

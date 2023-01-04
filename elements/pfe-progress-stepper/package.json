@@ -1,15 +1,15 @@
 {
-  "name": "@patternfly/pfe-progress-steps",
+  "name": "@patternfly/pfe-progress-stepper",
   "license": "MIT",
   "version": "2.0.0-next.2",
   "description": "Progress stepper element for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
-  "main": "./pfe-progress-steps.js",
-  "module": "./pfe-progress-steps.js",
-  "types": "./pfe-progress-steps.d.ts",
+  "main": "./pfe-progress-stepper.js",
+  "module": "./pfe-progress-stepper.js",
+  "types": "./pfe-progress-stepper.d.ts",
   "exports": {
-    ".": "./pfe-progress-steps.js",
+    ".": "./pfe-progress-stepper.js",
     "./*": "./*.js"
   },
   "publishConfig": {
@@ -25,7 +25,7 @@
     "analyze": "cem analyze",
     "build": "run-s build:*",
     "build:clean": "npm run clean",
-    "build:esbuild": "node ../../scripts/build.js --include pfe-progress-steps",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-progress-stepper",
     "build:analyze": "npm run analyze",
     "build:types": "tsc -b .",
     "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
@@ -42,7 +42,7 @@
   "repository": {
     "type": "git",
     "url": "github:patternfly/patternfly-elements",
-    "directory": "elements/pfe-progress-steps"
+    "directory": "elements/pfe-progress-stepper"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

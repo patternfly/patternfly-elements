@@ -7,7 +7,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
-import style from './pfe-progress-steps-item.scss';
+import style from './pfe-progress-step.scss';
 
 const ICONS = new Map(Object.entries({
   success: 'circle-check',
@@ -45,7 +45,9 @@ export class PfeProgressStep extends LitElement {
 
   #slots = new SlotController(this, 'title', 'description');
 
-  #internals = new InternalsController(this);
+  #internals = new InternalsController(this, {
+    role: 'listitem',
+  });
 
   render() {
     const hasDescription = this.#slots.hasSlotted('description');

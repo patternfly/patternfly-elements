@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import style from './pfe-progress-steps.scss';
+import style from './pfe-progress-stepper.scss';
 
 import { PfeProgressStep } from './pfe-progress-step.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
@@ -19,7 +19,9 @@ export class PfeProgressStepper extends LitElement {
 
   @property({ type: Boolean, reflect: true }) centered = false;
 
-  #internals = new InternalsController(this);
+  #internals = new InternalsController(this, {
+    role: 'listbox',
+  });
 
   #mo = new MutationObserver(rs => this.#onMutation(rs));
 
@@ -31,7 +33,6 @@ export class PfeProgressStepper extends LitElement {
 
   constructor() {
     super();
-    this.#internals.role = 'progress';
     this.#mo.observe(this, { childList: true });
   }
 

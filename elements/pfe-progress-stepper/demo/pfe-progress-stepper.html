@@ -22,7 +22,7 @@
 <form id="alignment">
   <h2>With alignment</h2>
   <label><pfe-switch name="vertical"></pfe-switch> Vertical alignment</label>
-  <label><pfe-switch name="center"></pfe-switch> Center alignment</label>
+  <label><pfe-switch name="centered"></pfe-switch> Center alignment</label>
   <pfe-progress-stepper name="progress">
     <pfe-progress-step description="This is the first thing to happen" variant="success">First Step</pfe-progress-step>
     <pfe-progress-step description="This is the second thing to happen" variant="info" current>Second Step</pfe-progress-step>
@@ -33,7 +33,7 @@
 <form id="compact">
   <h2>Compact</h2>
   <label><pfe-switch name="vertical"></pfe-switch> Vertical alignment</label>
-  <label><pfe-switch name="center"></pfe-switch> Center alignment</label>
+  <label><pfe-switch name="centered"></pfe-switch> Center alignment</label>
   <pfe-progress-stepper name="progress" compact>
     <pfe-progress-step variant="success">First Step</pfe-progress-step>
     <pfe-progress-step variant="info" current>Second Step</pfe-progress-step>
@@ -67,7 +67,7 @@
   <h2>With custom icons</h2>
   <pfe-progress-stepper>
     <pfe-progress-step variant="success">Successful completion</pfe-progress-step>
-    <pfe-progress-step icon="in-progress" current>In process</pfe-progress-step>
-    <pfe-progress-step icon="pending" variant="pending">Pending</pfe-progress-step>
+    <pfe-progress-step icon="in-progress" icon-set="patternfly" current>In process</pfe-progress-step>
+    <pfe-progress-step icon="pending" icon-set="patternfly" variant="pending">Pending</pfe-progress-step>
   </pfe-progress-stepper>
 </section>

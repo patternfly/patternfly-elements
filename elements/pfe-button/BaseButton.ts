@@ -5,7 +5,6 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
-
 import styles from './BaseButton.scss';
 
 /**
@@ -51,18 +50,8 @@ export abstract class BaseButton extends LitElement {
 
   #internals = new InternalsController(this);
 
-  #initiallyDisabled = this.hasAttribute('disabled');
-
   protected get hasIcon() {
     return !!this.icon;
-  }
-
-  formDisabledCallback(disabled: boolean) {
-    this.disabled = disabled;
-  }
-
-  formResetCallback() {
-    this.disabled = this.#initiallyDisabled;
   }
 
   override render() {
@@ -73,11 +62,16 @@ export abstract class BaseButton extends LitElement {
               value="${ifDefined(this.value)}"
               aria-label="${ifDefined(this.label)}"
               @click="${this.#onClick}"
-              ?disabled="${this.disabled}">
+              ?disabled="${this.disabled || this.#internals.formDisabled}">
         <slot id="icon" part="icon" aria-hidden="true" name="icon">${this.renderDefaultIcon()}</slot>
         <slot id="text" aria-hidden=${String(!!this.label) as 'true'|'false'}></slot>
       </button>
     `;
+  }
+
+  protected async formDisabledCallback() {
+    await this.updateComplete;
+    this.requestUpdate();
   }
 
   #onClick() {

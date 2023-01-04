@@ -32,10 +32,13 @@ export class PfeProgressStep extends LitElement {
 
   static readonly styles = [style];
 
+  /** Optional extended description of the step */
   @property() description?: string;
 
+  /** Step Icon */
   @property() icon?: string;
 
+  /** Step icon set */
   @property({ attribute: 'icon-set' }) iconSet?: string;
 
   /** Describes the state of the current item */

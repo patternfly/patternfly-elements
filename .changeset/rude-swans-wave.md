@@ -2,4 +2,4 @@
 "@patternfly/pfe-progress-stepper": major
 ---
 
-Added `<pfe-progress-stepper>`
+Removed `<pfe-progress-steps>` and added `<pfe-progress-stepper>`

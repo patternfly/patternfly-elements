@@ -18,17 +18,21 @@ export class PfeProgressStepper extends LitElement {
 
   static formAssociated = true;
 
+  /** Whether to use the vertical layout */
   @property({ type: Boolean, reflect: true }) vertical = false;
 
+  /** Whether to use the center alignment */
   @property({ type: Boolean, reflect: true }) center = false;
 
+  /** Whether to use the compact layout */
   @observed(function(this: PfeProgressStepper) {
     this.querySelectorAll('pfe-progress-step').forEach(step => step.requestUpdate());
   })
   @property({ type: Boolean, reflect: true }) compact = false;
 
   #internals = new InternalsController(this, {
-    role: 'progress',
+    role: 'progressbar',
+    ariaValueNow: this.value,
   });
 
   #mo = new MutationObserver(rs => this.#onMutation(rs));
@@ -36,7 +40,8 @@ export class PfeProgressStepper extends LitElement {
   get value() {
     const steps = this.querySelectorAll('pfe-progress-step');
     const current = this.querySelector('pfe-progress-step[current]');
-    return (Array.from(steps).indexOf(current as PfeProgressStep) + 1 / steps.length) * 100;
+    const n = Array.from(steps).indexOf(current as PfeProgressStep) + 1;
+    return (n / steps.length) * 100;
   }
 
   constructor() {
@@ -45,7 +50,7 @@ export class PfeProgressStepper extends LitElement {
   }
 
   #onMutation() {
-    this.#internals.ariaValuenow = this.value;
+    this.#internals.ariaValueNow = this.value.toString();
   }
 
   render() {

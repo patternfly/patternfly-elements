@@ -16,7 +16,7 @@ describe('<pfe-button>', function() {
   describe('in a fieldset', function() {
     let element: PfeButton;
     let fieldset: HTMLFieldSetElement;
-    let form: HTMLFormSetElement;
+    let form: HTMLFormElement;
 
     beforeEach(async function() {
       form = await createFixture(html`
@@ -28,9 +28,9 @@ describe('<pfe-button>', function() {
           <input id="post">
         </form>
       `);
-      fieldset = form.querySelector('fieldset');
-      element = form.querySelector('pfe-button');
-      form.querySelector('input').focus();
+      fieldset = form.querySelector('fieldset')!;
+      element = form.querySelector('pfe-button')!;
+      form.querySelector('input')?.focus();
       await element.updateComplete;
     });
 

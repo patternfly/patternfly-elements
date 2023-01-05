@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-panel",
-  "version": "2.0.0",
+  "version": "3.0.0-next.0",
   "description": "PatternFly Elements | Panel",
   "customElements": "custom-elements.json",
   "license": "MIT",
@@ -44,7 +44,7 @@
     "web components"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0 || ^2.0.0-next.0",
+    "@patternfly/pfe-core": "^2.0.0-next.13",
     "lit": "^2.0.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-clipboard-copy",
-  "version": "1.0.0",
+  "version": "2.0.0-next.0",
   "description": "PatternFly Elements | Clipboard Copy",
   "customElements": "custom-elements.json",
   "license": "MIT",
@@ -45,9 +45,9 @@
     "web components"
   ],
   "dependencies": {
-    "@patternfly/pfe-button": "^2.0.0 || ^2.0.0-next.0",
-    "@patternfly/pfe-core": "^2.0.0 || ^2.0.0-next.0",
-    "@patternfly/pfe-tooltip": "^1.1.0 || ^1.1.0-next.7",
+    "@patternfly/pfe-button": "^2.0.0-next.9",
+    "@patternfly/pfe-core": "^2.0.0-next.13",
+    "@patternfly/pfe-tooltip": "^2.0.0-next.8",
     "lit": "^2.0.0"
   }
 }

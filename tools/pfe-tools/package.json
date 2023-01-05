@@ -92,6 +92,7 @@
     "clean-css": "^5.3.1",
     "colorjs.io": "^0.4.0",
     "compression": "^1.7.4",
+    "construct-style-sheets-polyfill": "^3.1.0",
     "custom-elements-manifest": "^2.0.0",
     "dedent": "^0.7.0",
     "dotenv": "^16.0.3",

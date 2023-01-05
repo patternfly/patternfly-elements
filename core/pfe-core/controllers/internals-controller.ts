@@ -61,7 +61,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   ) {
     this.#internals = host.attachInternals();
     // proxy the internals object's aria prototype
-    for (const key of Object.keys(this.#internals)) {
+    for (const key of Object.keys(Object.getPrototypeOf(this.#internals))) {
       if (isARIAMixinProp(key)) {
         Object.defineProperty(this, key, {
           get() {

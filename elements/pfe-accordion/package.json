@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-accordion",
-  "version": "2.0.0-next.10",
+  "version": "2.0.0-next.11",
   "license": "MIT",
   "description": "Accordion for PatternFly Elements",
   "customElements": "custom-elements.json",
@@ -74,7 +74,7 @@
     "Michael Potter"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.11",
+    "@patternfly/pfe-core": "^2.0.0-next.13",
     "@patternfly/pfe-icon": "^2.0.0-next.5",
     "lit": "2.3.0"
   }

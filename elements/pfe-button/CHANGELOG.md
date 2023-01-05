@@ -1,5 +1,17 @@
 # @patternfly/pfe-button
 
+## 2.0.0-next.9
+
+### Patch Changes
+
+- 0fe6c52db: Allowed button to be disabled by its form without sprouting a disabled attr
+- b841afe40: `<pfe-button>`: fixed loading state
+- bbcfb687f: fixed icon layouts
+- Updated dependencies [b841afe40]
+- Updated dependencies [0fe6c52db]
+- Updated dependencies [0fe6c52db]
+  - @patternfly/pfe-core@2.0.0-next.13
+
 ## 2.0.0-next.8
 
 ### Major Changes

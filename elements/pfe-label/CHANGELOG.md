@@ -1,5 +1,22 @@
 # @patternfly/pfe-label
 
+## 1.0.0-next.7
+
+### Minor Changes
+
+- af005e2ca: Made abstract props `color`, `icon`, and `variant` optional, removed `classes` protected property in favour of composition, refactored shadow CSS
+
+### Patch Changes
+
+- Updated dependencies [b841afe40]
+- Updated dependencies [0fe6c52db]
+- Updated dependencies [0fe6c52db]
+- Updated dependencies [b841afe40]
+- Updated dependencies [0fe6c52db]
+- Updated dependencies [bbcfb687f]
+  - @patternfly/pfe-core@2.0.0-next.13
+  - @patternfly/pfe-button@2.0.0-next.9
+
 ## 1.0.0-next.6
 
 ### Patch Changes

@@ -1,5 +1,23 @@
 # @patternfly/pfe-tooltip
 
+## 2.0.0-next.8
+
+### Major Changes
+
+- b841afe40: `<pfe-tooltip>`:
+
+  - updated `FloatingDOMController`
+  - removed `offset` attribute
+  - added `content` attribute
+  - simplified DOM and CSS
+
+### Patch Changes
+
+- Updated dependencies [b841afe40]
+- Updated dependencies [0fe6c52db]
+- Updated dependencies [0fe6c52db]
+  - @patternfly/pfe-core@2.0.0-next.13
+
 ## 1.1.0-next.7
 
 ### Patch Changes

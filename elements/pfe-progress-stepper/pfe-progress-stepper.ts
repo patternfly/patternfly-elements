@@ -7,6 +7,8 @@ import style from './pfe-progress-stepper.scss';
 import { PfeProgressStep } from './pfe-progress-step.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
+import '@patternfly/pfe-icon';
+
 /**
  * A **progress stepper** displays a timeline of tasks in a workflow and tracks the user's current progress through this workflow.
  */

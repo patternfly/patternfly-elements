@@ -141,7 +141,6 @@ export abstract class BaseTabs extends LitElement {
 
   set #focusTab(tab: BaseTab | undefined) {
     this.#_focusTab = tab;
-    this.#_focusTab?.focus();
   }
 
   override connectedCallback() {
@@ -261,7 +260,6 @@ export abstract class BaseTabs extends LitElement {
       // get index of that focusable tab from all tabs
       nextTab = this.#_focusableTabs[nextFocusableIndex];
     }
-
     this.#select(nextTab);
   }
 
@@ -298,9 +296,11 @@ export abstract class BaseTabs extends LitElement {
     }
   }
 
-  #select(selectedTab: BaseTab): void {
+  async #select(selectedTab: BaseTab): Promise<void> {
     this.#activate(selectedTab);
     this.#focusTab = selectedTab;
+    await this.updateComplete;
+    selectedTab.focus();
   }
 
   #onKeydown = (event: KeyboardEvent): void => {

@@ -300,7 +300,7 @@ export abstract class BaseTabs extends LitElement {
     this.#activate(selectedTab);
     this.#focusTab = selectedTab;
     await this.updateComplete;
-    selectedTab.focus();
+    this.#focusTab.focus();
   }
 
   #onKeydown = (event: KeyboardEvent): void => {

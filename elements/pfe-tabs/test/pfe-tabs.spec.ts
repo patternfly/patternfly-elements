@@ -1,7 +1,8 @@
 import { expect, html, nextFrame, aTimeout } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
-import { setViewport } from '@web/test-runner-commands';
+import { setViewport, sendKeys } from '@web/test-runner-commands';
+
 import { BaseTab } from '../BaseTab.js';
 import { PfeTabs } from '../pfe-tabs.js';
 
@@ -91,6 +92,21 @@ describe('<pfe-tabs>', function() {
     expect(tab!.hasAttribute('active')).to.equal(true);
     const panel = (await a11ySnapshot()).children.find(x => x.role === 'tabpanel');
     expect(panel?.name, 'active panel').to.equal('Users');
+  });
+
+  it('should change focus when keyboard navigation is used', async function() {
+    const el = await createFixture<PfeTabs>(TEMPLATE);
+    await el.updateComplete;
+    const firstTab = el.querySelector('pfe-tab:first-of-type') as HTMLElement;
+    const secondTab = el.querySelector('pfe-tab:nth-of-type(2)')?.id;
+    firstTab?.focus();
+    await nextFrame();
+    const initial = document.activeElement?.id;
+    await sendKeys({ down: 'ArrowRight' });
+    await nextFrame();
+    const after = document.activeElement?.id;
+    expect(initial).to.not.equal(after);
+    expect(secondTab).to.equal(after);
   });
 
   it('should open panel at same index of selected tab', async function() {

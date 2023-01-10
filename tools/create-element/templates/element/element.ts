@@ -1,18 +1,14 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-import { pfelement } from '@patternfly/pfe-core/decorators.js';
-
 import styles from '<%= cssRelativePath %>';
 
 /**
  * <%= readmeName %>
  * @slot - Place element content here
  */
-@customElement('<%= tagName %>') @pfelement()
+@customElement('<%= tagName %>')
 export class <%= className %> extends LitElement {
-  static readonly version = '{{version}}';
-
   static readonly styles = [styles];
 
   render() {
@@ -25,5 +21,5 @@ export class <%= className %> extends LitElement {
 declare global {
   interface HTMLElementTagNameMap {
     '<%= tagName %>': <%= className %>;
-}
+  }
 }

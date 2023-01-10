@@ -21,17 +21,18 @@ import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 export class PfeJumpLinksItem extends LitElement {
   static readonly styles = [style];
 
-  #internals = new InternalsController(this);
-
   @observed('activeChanged')
   @property({ type: Boolean, reflect: true }) active = false;
 
   @property({ reflect: true }) href?: string;
 
+  #internals = new InternalsController(this, {
+    role: 'listitem'
+  });
+
   override connectedCallback() {
     super.connectedCallback();
     this.activeChanged();
-    this.#internals.role = 'listitem';
   }
 
   render() {

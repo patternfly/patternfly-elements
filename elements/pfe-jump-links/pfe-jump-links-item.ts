@@ -10,7 +10,12 @@ import style from './pfe-jump-links-item.scss';
 import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 
 /**
- * **Jump links** allow users to navigate to sections within a page.
+ * @cssprop --pf-c-jump-links__link--PaddingTop -- padding around the link
+ * @cssprop --pf-c-jump-links__link--PaddingRight
+ * @cssprop --pf-c-jump-links__link--PaddingBottom
+ * @cssprop --pf-c-jump-links__link--PaddingLeft
+ * @cssprop --pf-c-jump-links__link--OutlineOffset
+ * @cssprop --pf-c-jump-links__link-text--Color
  */
 @customElement('pfe-jump-links-item')
 export class PfeJumpLinksItem extends LitElement {

@@ -18,11 +18,11 @@ export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
    * @default the host's root node
    */
   rootNode?: Node;
-}
-
-type HREFElement = Element & { href: string };
-function hasHrefHash(child: Element): child is HREFElement {
-  return 'href' in child && typeof child.href === 'string' && child.href.startsWith('#');
+  /**
+   * function to call on link children to get their URL hash (i.e. id to scroll to)
+   * @default el => el.getAttribute('href');
+   */
+  getHash?: (el: Element) => string|null;
 }
 
 export class ScrollSpyController implements ReactiveController {
@@ -45,10 +45,11 @@ export class ScrollSpyController implements ReactiveController {
   #threshold: number|number[];
 
   #rootNode: Node;
+  #getHash: (el: Element) => string|null;
 
-  get #linkChildren(): HREFElement[] {
+  get #linkChildren(): Element[] {
     return Array.from(this.host.querySelectorAll(this.#tagNames.join(',')))
-      .filter(hasHrefHash);
+      .filter(this.#getHash);
   }
 
   get root() {
@@ -92,6 +93,7 @@ export class ScrollSpyController implements ReactiveController {
     this.#activeAttribute = options.activeAttribute ?? 'active';
     this.#threshold = options.threshold ?? 0.85;
     this.#rootNode = options.rootNode ?? host.getRootNode();
+    this.#getHash = options?.getHash ?? ((el: Element) => el.getAttribute('href'));
   }
 
   hostConnected() {
@@ -104,7 +106,9 @@ export class ScrollSpyController implements ReactiveController {
       const { rootMargin, threshold, root } = this;
       this.#io = new IntersectionObserver(r => this.#onIo(r), { root, rootMargin, threshold });
       this.#linkChildren
-        .map(x => rootNode.getElementById(x.href.replace('#', '')))
+        .map(x => this.#getHash(x))
+        .filter((x): x is string => !!x)
+        .map(x => rootNode.getElementById(x.replace('#', '')))
         .filter((x): x is HTMLElement => !!x)
         .forEach(target => this.#io?.observe(target));
     }

@@ -1,5 +1,15 @@
 # @patternfly/pfe-accordion
 
+## 2.0.0-next.11
+
+### Patch Changes
+
+- f51f8ec33: Removed an unnecessary icon import from accordion base classes
+- Updated dependencies [b841afe40]
+- Updated dependencies [0fe6c52db]
+- Updated dependencies [0fe6c52db]
+  - @patternfly/pfe-core@2.0.0-next.13
+
 ## 2.0.0-next.10
 
 ### Major Changes

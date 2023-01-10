@@ -1,5 +1,18 @@
 # @patternfly/pfe-tabs
 
+## 2.0.0-next.9
+
+### Major Changes
+
+- fb96c92ed: Makes some `BaseTab` properties abstract, simplifies shadow DOM
+
+### Patch Changes
+
+- Updated dependencies [b841afe40]
+- Updated dependencies [0fe6c52db]
+- Updated dependencies [0fe6c52db]
+  - @patternfly/pfe-core@2.0.0-next.13
+
 ## 2.0.0-next.8
 
 ### Patch Changes

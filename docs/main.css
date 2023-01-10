@@ -72,13 +72,7 @@ strong {
 }
 
 @media screen and (min-width: 768px) {
-  .band { padding-inline: calc(100vw - 768px + var(--pfe-theme--container-spacer,1rem) * 4); }
-}
-@media screen and (min-width: 992px) {
-  .band { padding-inline: calc(100vw - 992px + var(--pfe-theme--container-spacer,1rem) * 4); }
-}
-@media screen and (min-width: 1200px) {
-  .band { padding-inline: calc(100vw - 1200px + var(--pfe-theme--container-spacer,1rem) * 4); }
+  .band { padding-inline: calc(100vw - 100% + var(--pfe-theme--container-spacer,1rem) * 4); }
 }
 
 a.cta {

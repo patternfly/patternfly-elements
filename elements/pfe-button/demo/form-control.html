@@ -1,0 +1,37 @@
+<script type="module" src="../form-control.js"></script>
+
+<form>
+  <h2>Nothing disabled</h2>
+  <fieldset>
+    <pfe-button>Ok</pfe-button>
+  </fieldset>
+  <label>Fieldset Disabled <pfe-switch name="fieldset"></pfe-switch> </label>
+  <label>Button Disabled <pfe-switch name="button"></pfe-switch> </label>
+</form>
+
+<form>
+  <h2>fieldset disabled</h2>
+  <fieldset disabled>
+    <pfe-button>Ok</pfe-button>
+  </fieldset>
+  <label>Fieldset Disabled <pfe-switch name="fieldset" checked></pfe-switch> </label>
+  <label>Button Disabled <pfe-switch name="button"></pfe-switch> </label>
+</form>
+
+<form>
+  <h2>Button disabled</h2>
+  <fieldset>
+    <pfe-button disabled>Ok</pfe-button>
+  </fieldset>
+  <label>Fieldset Disabled <pfe-switch name="fieldset"></pfe-switch> </label>
+  <label>Button Disabled <pfe-switch name="button" checked></pfe-switch> </label>
+</form>
+
+<form>
+  <h2>Both disabled</h2>
+  <fieldset disabled>
+    <pfe-button disabled>Ok</pfe-button>
+  </fieldset>
+  <label>Fieldset Disabled <pfe-switch name="fieldset" checked></pfe-switch> </label>
+  <label>Button Disabled <pfe-switch name="button" checked></pfe-switch> </label>
+</form>

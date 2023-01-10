@@ -1,5 +1,15 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.40
+
+### Patch Changes
+
+- 6369ee00d: load elementinternals polyfill in dev server
+- fb96c92ed: Added `disabled` property to a11y snapshot type
+- b841afe40: tools: made `a11ySnapshot` helper a bit more ergonomic
+- 0fe6c52db: Added constructible stylesheets polyfill to dev server
+- b841afe40: tools: fixed demo server hamburger buttons
+
 ## 1.0.0-next.39
 
 ### Minor Changes

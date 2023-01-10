@@ -8,7 +8,7 @@
     "url": "github:patternfly/patternfly-elements"
   },
   "engines": {
-    "node": ">=14 <=17"
+    "node": ">=16 <=19"
   },
   "scripts": {
     "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
@@ -84,7 +84,7 @@
     "git-branch": "^2.0.1",
     "husky": "^8.0.1",
     "leasot": "^13.2.0",
-    "lerna": "^5.4.2",
+    "lerna": "^6.3.0",
     "npm-merge-driver": "^2.3.6",
     "open": "^8.4.0",
     "prompts": "^2.4.2",

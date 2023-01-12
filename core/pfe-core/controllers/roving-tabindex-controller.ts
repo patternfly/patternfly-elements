@@ -171,8 +171,7 @@ export class RovingTabindexController implements ReactiveController {
   /**
    * will move move active item to next focusable item
    */
-  updateItems() {
-    const items = this._items || [];
+  updateItems(items:FocusableElements) {
     const sequence = [...items.slice(this.#itemIndex), ...items.slice(0, this.#itemIndex)];
     const filter = sequence.filter(item=>this.#focusableItems.includes(item));
     this.focusOnItem(filter[0] || this.#focusableItems[0]);

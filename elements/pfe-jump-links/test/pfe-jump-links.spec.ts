@@ -1,5 +1,6 @@
-import { expect, html } from '@open-wc/testing';
+import { expect, nextFrame, html, aTimeout } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
+import { setViewport, sendKeys } from '@web/test-runner-commands';
 
 import { PfeJumpLinks } from '@patternfly/pfe-jump-links';
 import { PfeJumpLinksItem } from '../pfe-jump-links-item';
@@ -12,15 +13,25 @@ describe('<pfe-jump-links>', function() {
 
   beforeEach(async function() {
     element = await createFixture<PfeJumpLinks>(html`
-      <pfe-jump-links></pfe-jump-links>
+      <pfe-jump-links>
+        <pfe-jump-links-item id="first">Inactive section</pfe-jump-links-item>
+        <pfe-jump-links-item id="second">Active section</pfe-jump-links-item>
+        <pfe-jump-links-item id="third">Inactive section</pfe-jump-links-item>
+      </pfe-jump-links>
     `);
   });
 
-  it('should upgrade', async function() {
-    expect(element, 'the <pfe-jump-links> should be an instance of PfeJumpLinks')
-      .to.be.an.instanceof(customElements.get('pfe-jump-links'))
-      .and
-      .to.be.an.instanceof(PfeJumpLinks);
+  it('should change focus when keyboard navigation is used', async function() {
+    await element.updateComplete;
+    const firstItem = element.querySelector('pfe-jump-links-item:first-of-type') as HTMLElement;
+    const secondItem = element.querySelector('pfe-jump-links-item:nth-of-type(2)')?.id;
+    firstItem?.focus();
+    const initial = document.activeElement?.id;
+    await sendKeys({ down: 'ArrowRight' });
+    await nextFrame();
+    const after = document.activeElement?.id;
+    expect(initial).to.not.equal(after);
+    expect(secondItem).to.equal(after);
   });
 });
 

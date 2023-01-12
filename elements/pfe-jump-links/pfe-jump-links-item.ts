@@ -1,5 +1,5 @@
 import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -21,6 +21,7 @@ import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 export class PfeJumpLinksItem extends LitElement {
   static readonly styles = [style];
 
+  @query('a') link!:HTMLAnchorElement;
   @observed('activeChanged')
   @property({ type: Boolean, reflect: true }) active = false;
 
@@ -42,6 +43,10 @@ export class PfeJumpLinksItem extends LitElement {
       </a>
       <slot name="subsection"></slot>
     `;
+  }
+
+  focus(): void {
+    this.link.focus();
   }
 
   private activeChanged() {

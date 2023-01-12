@@ -1,5 +1,5 @@
 import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, queryAssignedElements } from 'lit/decorators.js';
 
 import { ScrollSpyController } from '@patternfly/pfe-core/controllers/scroll-spy-controller.js';
 import { RovingTabindexController } from '../../core/pfe-core/controllers/roving-tabindex-controller.js';
@@ -9,6 +9,7 @@ import './pfe-jump-links-item.js';
 import '@patternfly/pfe-icon';
 
 import style from './pfe-jump-links.scss';
+import { PfeJumpLinksItem } from './pfe-jump-links-item.js';
 
 /**
  * **Jump links** allow users to navigate to sections within a page.
@@ -61,6 +62,8 @@ import style from './pfe-jump-links.scss';
 export class PfeJumpLinks extends LitElement {
   static readonly styles = [style];
 
+  @queryAssignedElements() _items!:PfeJumpLinksItem[];
+
   @property({ reflect: true, type: Boolean }) expandable = false;
 
   @property({ reflect: true, type: Boolean }) expanded = false;
@@ -73,6 +76,7 @@ export class PfeJumpLinks extends LitElement {
 
   @property() label?: string;
 
+  #items!:PfeJumpLinksItem[];
   #init = false;
   #rovingTabindexController = new RovingTabindexController(this);
 
@@ -84,19 +88,12 @@ export class PfeJumpLinks extends LitElement {
   override connectedCallback() {
     super.connectedCallback();
     this.addEventListener('select', this.#onSelect);
-    this.addEventListener('focus', this.#onFocus);
   }
 
   override updated(changed: Map<string, unknown>) {
     if (changed.has('offset')) {
       this.#spy.rootMargin = `${this.offset ?? 0}px 0px 0px 0px`;
     }
-  }
-
-  #initLinks() {
-    const items = [...this.querySelectorAll('pfe-jump-links-item')];
-    const links = items.map(item=>item.shadowRoot?.querySelector('a') as FocusableElement);
-    this.#rovingTabindexController.initItems(links);
   }
 
   render() {
@@ -107,20 +104,22 @@ export class PfeJumpLinks extends LitElement {
             <pfe-icon icon="chevron-right"></pfe-icon>
             <span id="label">${this.label}</span>
           </summary>
-          <slot role="listbox"></slot>
+          <slot role="listbox" @slotchange="${this.#onSlotchange}"></slot>
         </details>` : html`
         <span id="label">${this.label}</span>
-        <slot role="listbox"></slot>`}
+        <slot role="listbox" @slotchange="${this.#onSlotchange}"></slot>`}
       </nav>
     `;
   }
 
-  #onFocus() {
-    if (!this.#init) {
-      this.#initLinks();
-      this.#init = true;
+  #onSlotchange() {
+    this.#items = this._items;
+    const items = this.#items?.map(item=>item.link as FocusableElement);
+    if (this.#init) {
+      this.#rovingTabindexController.updateItems(items);
     } else {
-      this.removeEventListener('focus', this.#onFocus);
+      this.#rovingTabindexController.initItems(items);
+      this.#init = true;
     }
   }
 

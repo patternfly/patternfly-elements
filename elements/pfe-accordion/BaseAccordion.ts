@@ -114,12 +114,10 @@ export abstract class BaseAccordion extends LitElement {
     `;
   }
 
-  firstUpdated() {
-    for (const header of this.#allHeaders()) {
-      let panel: BaseAccordionPanel;
-      if (header.expanded && (panel = this.#panelForHeader(header)!)) {
-        panel.expanded = true;
-      }
+  async firstUpdated() {
+    const { headers } = this;
+    for (const header of headers.filter(x => x.expanded)) {
+      await this.expand(headers.indexOf(header));
     }
   }
 

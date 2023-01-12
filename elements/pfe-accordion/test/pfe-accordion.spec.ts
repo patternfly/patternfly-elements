@@ -955,9 +955,10 @@ describe('<pfe-accordion>', function() {
       [header, secondHeader] = headers;
       [panel, secondPanel] = panels;
       await allUpdates(element);
+      await nextFrame();
     });
     it('hides the first panel', function() {
-      expect(panel).to.have.attribute('expanded');
+      expect(panel).to.not.have.attribute('expanded');
     });
     it('expands the second panel', function() {
       expect(secondPanel).to.have.attribute('expanded');

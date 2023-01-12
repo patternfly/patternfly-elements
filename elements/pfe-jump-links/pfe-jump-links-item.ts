@@ -37,7 +37,7 @@ export class PfeJumpLinksItem extends LitElement {
 
   render() {
     return html`
-      <a href="${ifDefined(this.href)}" @click="${this.#onClick}">
+      <a href="${ifDefined(this.href)}" @focus="${this.#onFocus}" @click="${this.#onClick}">
         <slot></slot>
       </a>
       <slot name="subsection"></slot>
@@ -50,6 +50,10 @@ export class PfeJumpLinksItem extends LitElement {
 
   #onClick() {
     this.dispatchEvent(new Event('select', { bubbles: true }));
+  }
+
+  #onFocus() {
+    this.dispatchEvent(new Event('focus', { bubbles: true }));
   }
 }
 

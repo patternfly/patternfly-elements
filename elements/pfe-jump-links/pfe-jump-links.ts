@@ -2,6 +2,8 @@ import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import { ScrollSpyController } from '@patternfly/pfe-core/controllers/scroll-spy-controller.js';
+import { RovingTabindexController } from '../../core/pfe-core/controllers/roving-tabindex-controller.js';
+import type { FocusableElement, FocusableElements } from '../../core/pfe-core/controllers/roving-tabindex-controller.js';
 
 import './pfe-jump-links-item.js';
 import '@patternfly/pfe-icon';
@@ -71,6 +73,9 @@ export class PfeJumpLinks extends LitElement {
 
   @property() label?: string;
 
+  #init = false;
+  #rovingTabindexController = new RovingTabindexController(this);
+
   #spy = new ScrollSpyController(this, {
     rootMargin: `${this.offset}px 0px 0px 0px`,
     tagNames: ['pfe-jump-links-item'],
@@ -79,12 +84,19 @@ export class PfeJumpLinks extends LitElement {
   override connectedCallback() {
     super.connectedCallback();
     this.addEventListener('select', this.#onSelect);
+    this.addEventListener('focus', this.#onFocus);
   }
 
   override updated(changed: Map<string, unknown>) {
     if (changed.has('offset')) {
       this.#spy.rootMargin = `${this.offset ?? 0}px 0px 0px 0px`;
     }
+  }
+
+  #initLinks() {
+    const items = [...this.querySelectorAll('pfe-jump-links-item')];
+    const links = items.map(item=>item.shadowRoot?.querySelector('a') as FocusableElement);
+    this.#rovingTabindexController.initItems(links);
   }
 
   render() {
@@ -101,6 +113,15 @@ export class PfeJumpLinks extends LitElement {
         <slot role="listbox"></slot>`}
       </nav>
     `;
+  }
+
+  #onFocus() {
+    if (!this.#init) {
+      this.#initLinks();
+      this.#init = true;
+    } else {
+      this.removeEventListener('focus', this.#onFocus);
+    }
   }
 
   async #onSelect(event: Event) {

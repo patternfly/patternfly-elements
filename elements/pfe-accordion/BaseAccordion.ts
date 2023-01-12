@@ -57,10 +57,12 @@ export abstract class BaseAccordion extends LitElement {
    * </pfe-accordion>
    * ```
    */
-  @observed(async function expandedIndexChanged(this: BaseAccordion) {
-    await this.collapseAll();
-    for (const i of this.expandedIndex) {
-      await this.expand(i, this);
+  @observed(async function expandedIndexChanged(this: BaseAccordion, oldVal: unknown, newVal: unknown) {
+    if (oldVal && oldVal !== newVal) {
+      await this.collapseAll();
+      for (const i of this.expandedIndex) {
+        await this.expand(i, this);
+      }
     }
   })
   @property({
@@ -110,6 +112,15 @@ export abstract class BaseAccordion extends LitElement {
     return html`
       <slot></slot>
     `;
+  }
+
+  firstUpdated() {
+    for (const header of this.#allHeaders()) {
+      let panel: BaseAccordionPanel;
+      if (header.expanded && (panel = this.#panelForHeader(header)!)) {
+        panel.expanded = true;
+      }
+    }
   }
 
   /**

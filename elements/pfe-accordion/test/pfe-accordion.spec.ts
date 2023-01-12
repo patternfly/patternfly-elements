@@ -941,7 +941,7 @@ describe('<pfe-accordion>', function() {
   describe('with single attribute and expanded attribute on two headers', function() {
     beforeEach(async function() {
       element = await createFixture<PfeAccordion>(html`
-        <pfe-accordion>
+        <pfe-accordion single>
           <pfe-accordion-header data-index="0" expanded><h2>h</h2></pfe-accordion-header>
           <pfe-accordion-panel data-index="0"><p>p</p></pfe-accordion-panel>
           <pfe-accordion-header data-index="1" expanded><h2>h</h2></pfe-accordion-header>

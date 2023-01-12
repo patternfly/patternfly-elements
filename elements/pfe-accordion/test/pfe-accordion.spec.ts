@@ -909,6 +909,63 @@ describe('<pfe-accordion>', function() {
     });
   });
 
+  describe('with expanded attribute on two headers', function() {
+    beforeEach(async function() {
+      element = await createFixture<PfeAccordion>(html`
+        <pfe-accordion>
+          <pfe-accordion-header data-index="0" expanded><h2>h</h2></pfe-accordion-header>
+          <pfe-accordion-panel data-index="0"><p>p</p></pfe-accordion-panel>
+          <pfe-accordion-header data-index="1" expanded><h2>h</h2></pfe-accordion-header>
+          <pfe-accordion-panel data-index="1"><p>p</p></pfe-accordion-panel>
+          <pfe-accordion-header data-index="2"><h2>h</h2></pfe-accordion-header>
+          <pfe-accordion-panel data-index="2"><p>p</p></pfe-accordion-panel>
+        </pfe-accordion>
+      `);
+      headers = Array.from(element.querySelectorAll('pfe-accordion-header'));
+      panels = Array.from(element.querySelectorAll('pfe-accordion-panel'));
+      [header, secondHeader] = headers;
+      [panel, secondPanel] = panels;
+      await allUpdates(element);
+    });
+    it('expands the first panel', function() {
+      expect(panel).to.have.attribute('expanded');
+    });
+    it('expands the second panel', function() {
+      expect(secondPanel).to.have.attribute('expanded');
+    });
+    it('hides the third panel', function() {
+      expect(panels[2]).to.not.have.attribute('expanded');
+    });
+  });
+
+  describe('with single attribute and expanded attribute on two headers', function() {
+    beforeEach(async function() {
+      element = await createFixture<PfeAccordion>(html`
+        <pfe-accordion>
+          <pfe-accordion-header data-index="0" expanded><h2>h</h2></pfe-accordion-header>
+          <pfe-accordion-panel data-index="0"><p>p</p></pfe-accordion-panel>
+          <pfe-accordion-header data-index="1" expanded><h2>h</h2></pfe-accordion-header>
+          <pfe-accordion-panel data-index="1"><p>p</p></pfe-accordion-panel>
+          <pfe-accordion-header data-index="2"><h2>h</h2></pfe-accordion-header>
+          <pfe-accordion-panel data-index="2"><p>p</p></pfe-accordion-panel>
+        </pfe-accordion>
+      `);
+      headers = Array.from(element.querySelectorAll('pfe-accordion-header'));
+      panels = Array.from(element.querySelectorAll('pfe-accordion-panel'));
+      [header, secondHeader] = headers;
+      [panel, secondPanel] = panels;
+      await allUpdates(element);
+    });
+    it('hides the first panel', function() {
+      expect(panel).to.have.attribute('expanded');
+    });
+    it('expands the second panel', function() {
+      expect(secondPanel).to.have.attribute('expanded');
+    });
+    it('hides the third panel', function() {
+      expect(panels[2]).to.not.have.attribute('expanded');
+    });
+  });
   describe('with no h* tag in heading lightdom', function() {
     beforeEach(async function() {
       element = await createFixture<PfeAccordion>(html`

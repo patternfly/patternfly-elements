@@ -1,5 +1,12 @@
 # @patternfly/pfe-tabs
 
+## 2.0.0-next.10
+
+### Patch Changes
+
+- a5b31abec: Fixed focus on keyboard navigation, await tabindex update before applying focus to tab
+- 466fad228: Removed imperative modification of the tabindex attribute
+
 ## 2.0.0-next.9
 
 ### Major Changes

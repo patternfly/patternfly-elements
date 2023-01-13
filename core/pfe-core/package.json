@@ -22,6 +22,7 @@
     "./controllers/logger.js": "./controllers/logger.js",
     "./controllers/perf-controller.js": "./controllers/perf-controller.js",
     "./controllers/property-observer-controller.js": "./controllers/property-observer-controller.js",
+    "./controllers/roving-tabindex-controller.js": "./controllers/roving-tabindex-controller.js",
     "./controllers/scroll-spy-controller.js": "./controllers/scroll-spy-controller.js",
     "./controllers/slot-controller.js": "./controllers/slot-controller.js",
     "./controllers/style-controller.js": "./controllers/style-controller.js",

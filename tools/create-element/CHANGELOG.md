@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 1.0.0-next.15
+
+### Patch Changes
+
+- fdf12c782: Removed `@pfelement` decorator
+
 ## 1.0.0-next.14
 
 ### Patch Changes

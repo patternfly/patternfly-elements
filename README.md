@@ -22,7 +22,7 @@ A generator is included for creating web components that meet these goals.
 git clone git@github.com:patternfly/patternfly-elements.git
 cd patternfly-elements
 npm ci # install dependencies.
-npm run dev # spin up a local dev server
+npm run start 
 ```
 
 ### Additional dependencies

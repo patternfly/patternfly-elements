@@ -1,12 +1,24 @@
-import { expect, nextFrame, html, aTimeout } from '@open-wc/testing';
+import type { ReactiveElement } from 'lit';
+import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { setViewport, sendKeys } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
 
 import { PfeJumpLinks } from '@patternfly/pfe-jump-links';
 import { PfeJumpLinksItem } from '../pfe-jump-links-item';
 import { PfeJumpLinksList } from '../pfe-jump-links-list';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
+
+async function allUpdates(element: ReactiveElement) {
+  let count = 0;
+  do {
+    if (count > 100) {
+      throw new Error('Too Many Updates');
+    }
+    await element.updateComplete;
+    count++;
+  } while (!await element.updateComplete);
+}
 
 describe('<pfe-jump-links>', function() {
   let element: PfeJumpLinks;
@@ -19,19 +31,39 @@ describe('<pfe-jump-links>', function() {
         <pfe-jump-links-item id="third">Inactive section</pfe-jump-links-item>
       </pfe-jump-links>
     `);
+    await allUpdates(element);
   });
 
-  it('should change focus when keyboard navigation is used', async function() {
-    await element.updateComplete;
-    const firstItem = element.querySelector('pfe-jump-links-item:first-of-type') as HTMLElement;
-    const secondItem = element.querySelector('pfe-jump-links-item:nth-of-type(2)')?.id;
-    firstItem?.focus();
-    const initial = document.activeElement?.id;
-    await sendKeys({ down: 'ArrowRight' });
-    await nextFrame();
-    const after = document.activeElement?.id;
-    expect(initial).to.not.equal(after);
-    expect(secondItem).to.equal(after);
+  describe('tabbing to first item', function() {
+    let firstItem: PfeJumpLinksItem;
+    let secondItem: PfeJumpLinksItem;
+    let initialActiveElement: Element|null;
+    beforeEach(async function() {
+      [firstItem, secondItem] = element.querySelectorAll<PfeJumpLinksItem>('pfe-jump-links-item');
+      await sendKeys({ press: 'Tab' });
+      initialActiveElement = document.activeElement;
+    });
+
+    it('should focus a this first jump-links-item', function() {
+      expect(document.activeElement).to.equal(firstItem);
+    });
+
+    describe('pressing right arrow key', function() {
+      beforeEach(async function() {
+        await sendKeys({ press: 'ArrowRight' });
+        await allUpdates(element);
+        await nextFrame();
+      });
+      it('should focus a jump-links-item', function() {
+        expect(document.activeElement).to.be.an.instanceof(PfeJumpLinksItem);
+      });
+      it('should change focus when keyboard navigation is used', function() {
+        expect(document.activeElement).to.not.equal(initialActiveElement);
+      });
+      it('should focus the second jump links item', function() {
+        expect(document.activeElement).to.equal(secondItem);
+      });
+    });
   });
 });
 

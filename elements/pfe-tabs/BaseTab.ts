@@ -1,7 +1,7 @@
 import type { PropertyValues } from 'lit';
 
-import { LitElement, html } from 'lit';
-import { query, queryAssignedElements } from 'lit/decorators.js';
+import { LitElement, html, nothing } from 'lit';
+import { queryAssignedElements } from 'lit/decorators.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 
@@ -21,8 +21,6 @@ export abstract class BaseTab extends LitElement {
 
   static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
-  @query('button') _button!: HTMLButtonElement;
-
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private icons!: Array<HTMLElement>;
 
@@ -40,8 +38,9 @@ export abstract class BaseTab extends LitElement {
   }
 
   render() {
+    const tabIndex = (this.active && !this.disabled) ? null : '-1';
     return html`
-      <button part="button" role="tab">
+      <button part="button" role="tab" tabindex="${tabIndex ?? nothing}">
         <slot name="icon"
               part="icon"
               ?hidden="${!this.icons.length}"
@@ -69,10 +68,8 @@ export abstract class BaseTab extends LitElement {
 
   #activeChanged() {
     if (this.active && !this.disabled) {
-      this._button.removeAttribute('tabindex');
       this.#internals.ariaSelected = 'true';
     } else {
-      this._button.tabIndex = -1;
       this.#internals.ariaSelected = 'false';
     }
     this.dispatchEvent(new TabExpandEvent(this.active, this));

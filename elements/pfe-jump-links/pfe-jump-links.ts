@@ -2,8 +2,7 @@ import { html, LitElement } from 'lit';
 import { customElement, property, queryAssignedElements } from 'lit/decorators.js';
 
 import { ScrollSpyController } from '@patternfly/pfe-core/controllers/scroll-spy-controller.js';
-import { RovingTabindexController } from '../../core/pfe-core/controllers/roving-tabindex-controller.js';
-import type { FocusableElement, FocusableElements } from '../../core/pfe-core/controllers/roving-tabindex-controller.js';
+import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
 import './pfe-jump-links-item.js';
 import '@patternfly/pfe-icon';
@@ -114,7 +113,7 @@ export class PfeJumpLinks extends LitElement {
 
   #onSlotchange() {
     this.#items = this._items;
-    const items = this.#items?.map(item=>item.link as FocusableElement);
+    const items = this.#items?.map(item=>item.link);
     if (this.#init) {
       this.#rovingTabindexController.updateItems(items);
     } else {

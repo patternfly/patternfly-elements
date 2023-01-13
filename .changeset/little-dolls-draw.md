@@ -2,4 +2,4 @@
 "@patternfly/pfe-tabs": patch
 ---
 
-Removed imperative modification tabindex attribute
+Removed imperative modification of the tabindex attribute

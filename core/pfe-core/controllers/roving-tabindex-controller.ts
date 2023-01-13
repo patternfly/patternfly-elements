@@ -87,14 +87,19 @@ export class RovingTabindexController implements ReactiveController {
   /**
    * handles keyboard navigation
    */
-  #onkeydown(event: KeyboardEvent):void {
-    const item = this.activeItem;
-    let shouldPreventDefault = false;
-    const horizontalOnly = !item ? false : item.tagName === 'SELECT' || item.getAttribute('aria-expanded') === 'true' || item.getAttribute('role') === 'spinbutton';
-
+  #onKeydown(event: KeyboardEvent):void {
     if (event.ctrlKey || event.altKey || event.metaKey || this.#focusableItems.length < 1) {
       return;
     }
+
+    const item = this.activeItem;
+    let shouldPreventDefault = false;
+    const horizontalOnly =
+        !item ? false
+      : item.tagName === 'SELECT' ||
+        item.getAttribute('aria-expanded') === 'true' ||
+        item.getAttribute('role') === 'spinbutton';
+
     switch (event.key) {
       case 'ArrowLeft':
         this.focusOnItem(this.prevItem);
@@ -185,13 +190,15 @@ export class RovingTabindexController implements ReactiveController {
    */
   initItems(items: HTMLElement[]) {
     this.#items = items ?? [];
-
-    const [focusableItem,] = this.#focusableItems;
+    const focusableItems = this.#focusableItems;
+    const [focusableItem] = focusableItems;
     this.#activeItem = focusableItem;
-    this.#focusableItems.forEach(item=>item.tabIndex = this.#activeItem === item ? 0 : -1);
+    for (const item of focusableItems) {
+      item.tabIndex = this.#activeItem === item ? 0 : -1;
+    }
   }
 
   hostConnected() {
-    this.host.addEventListener('keydown', this.#onkeydown.bind(this));
+    this.host.addEventListener('keydown', this.#onKeydown.bind(this));
   }
 }

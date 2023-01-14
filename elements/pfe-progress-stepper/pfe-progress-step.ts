@@ -21,7 +21,7 @@ const ICONS = new Map(Object.entries({
  * @slot -
  *       Short description of the current step.
  * @slot description
- *       Longer decscription of the current step.
+ *       Longer description of the current step.
  * @slot icon
  *       Overrides the icon property
  *

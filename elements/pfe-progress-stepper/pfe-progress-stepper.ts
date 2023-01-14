@@ -34,7 +34,7 @@ export class PfeProgressStepper extends LitElement {
 
   #internals = new InternalsController(this, {
     role: 'progressbar',
-    ariaValueNow: this.value,
+    ariaValueNow: this.value.toString(),
   });
 
   #mo = new MutationObserver(() => this.#onMutation());

@@ -119,7 +119,7 @@ export class PfeAccordion extends BaseAccordion {
         ...allHeaders.map((header, index) => header.expanded && this.collapse(index)),
       ]);
     }
-    super.expand(index, parentAccordion);
+    await super.expand(index, parentAccordion);
   }
 
   #getIndexesFromURL() {

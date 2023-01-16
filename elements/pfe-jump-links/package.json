@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/pfe-jump-links",
   "license": "MIT",
-  "version": "2.0.0-next.6",
+  "version": "2.0.0-next.7",
   "description": "Jump links element for PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -68,7 +68,7 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.10",
+    "@patternfly/pfe-core": "^2.0.0-next.14",
     "lit": "2.3.0"
   }
 }

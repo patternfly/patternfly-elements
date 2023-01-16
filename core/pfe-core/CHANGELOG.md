@@ -1,5 +1,17 @@
 # @patternfly/pfe-core
 
+## 2.0.0-next.14
+
+### Minor Changes
+
+- 82da44c11: ✨ Added `ScrollSpyController`
+  ✨ Added `RovingTabindexController`
+
+  - `ScrollSpyController` sets an attribute (`active` by default) on one of it's
+    children when that child's `href` attribute is to a hash reference to an IDd
+    heading on the page.
+  - `RovingTabindexController` implements roving tabindex, as described in WAI-ARIA practices.
+
 ## 2.0.0-next.13
 
 ### Major Changes

@@ -1,5 +1,13 @@
 # @patternfly/pfe-accordion
 
+## 2.0.0-next.12
+
+### Patch Changes
+
+- 1a43f607f: Fixed: `expanded` attribute on headers in HTML will expand associated panels
+- Updated dependencies [82da44c11]
+  - @patternfly/pfe-core@2.0.0-next.14
+
 ## 2.0.0-next.11
 
 ### Patch Changes

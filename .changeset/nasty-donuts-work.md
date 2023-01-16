@@ -3,10 +3,6 @@
 "@patternfly/pfe-tools": patch
 ---
 
-`pfe-tools`:
+`pfe-tools`: Set typescript compilerOptions `composite: true`
 
-- Set typescript compilerOptions `composite: true`
-
-`pfe-tooltip`:
-
-- Added return type for anonymous function for content in constructor
+`pfe-tooltip`: Added return type for anonymous function for content in constructor

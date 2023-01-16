@@ -75,7 +75,9 @@ export class PfeProgressStep extends LitElement {
 
   updated(changed: PropertyValues<this>) {
     super.updated?.(changed);
-    this.#internals.ariaCurrent = String(!!this.current);
+    if (changed.has('current')) {
+      this.#internals.ariaCurrent = String(!!this.current);
+    }
   }
 }
 

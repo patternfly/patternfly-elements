@@ -14,6 +14,8 @@ import '@patternfly/pfe-icon';
  */
 @customElement('pfe-progress-stepper')
 export class PfeProgressStepper extends LitElement {
+  protected static childTagName = 'pfe-progress-step';
+
   static readonly version = '{{version}}';
 
   static readonly styles = [style];
@@ -28,7 +30,8 @@ export class PfeProgressStepper extends LitElement {
 
   /** Whether to use the compact layout */
   @observed(function(this: PfeProgressStepper) {
-    this.querySelectorAll('pfe-progress-step').forEach(step => step.requestUpdate());
+    const { childTagName } = (this.constructor as typeof PfeProgressStepper);
+    this.querySelectorAll<PfeProgressStep>(childTagName).forEach(step => step.requestUpdate());
   })
   @property({ type: Boolean, reflect: true }) compact = false;
 
@@ -40,8 +43,9 @@ export class PfeProgressStepper extends LitElement {
   #mo = new MutationObserver(() => this.#onMutation());
 
   get value() {
-    const steps = this.querySelectorAll('pfe-progress-step');
-    const current = this.querySelector('pfe-progress-step[current]');
+    const { childTagName } = (this.constructor as typeof PfeProgressStepper);
+    const steps = this.querySelectorAll<PfeProgressStep>(childTagName);
+    const current = this.querySelector(`${childTagName}[current]`);
     const n = Array.from(steps).indexOf(current as PfeProgressStep) + 1;
     return (n / steps.length) * 100;
   }

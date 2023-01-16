@@ -9,6 +9,7 @@ import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
 import style from './pfe-progress-step.scss';
+import type { PfeProgressStepper } from './pfe-progress-stepper.js';
 
 const ICONS = new Map(Object.entries({
   success: { icon: 'circle-check' },
@@ -28,6 +29,8 @@ const ICONS = new Map(Object.entries({
  */
 @customElement('pfe-progress-step')
 export class PfeProgressStep extends LitElement {
+  protected static parentTagName = 'pfe-progress-stepper';
+
   static readonly version = '{{version}}';
 
   static readonly styles = [style];
@@ -57,7 +60,8 @@ export class PfeProgressStep extends LitElement {
     const hasDescription = !!this.description ?? this.#slots.hasSlotted('description');
     const icon = this.icon ?? ICONS.get(this.variant ?? 'default')?.icon;
     const set = this.iconSet ?? ICONS.get(this.variant ?? 'default')?.set;
-    const { compact = false } = this.closest('pfe-progress-stepper') ?? {};
+    const { parentTagName } = (this.constructor as typeof PfeProgressStep);
+    const { compact = false } = this.closest<PfeProgressStepper>(parentTagName) ?? {};
     return html`
       <div id="connector" class="${classMap({ compact })}">
         <slot id="icon" name="icon">

@@ -10,6 +10,8 @@
   "types": "./pfe-jump-links.d.ts",
   "exports": {
     ".": "./pfe-jump-links.js",
+    "./pfe-jump-links-item.js": "./pfe-jump-links-item.js",
+    "./pfe-jump-links-list.js": "./pfe-jump-links-list.js",
     "./*": "./*.js"
   },
   "publishConfig": {
@@ -66,7 +68,6 @@
     "Benny Powers <bennyp@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-accordion": "^2.0.0-next.7",
     "@patternfly/pfe-core": "^2.0.0-next.10",
     "lit": "2.3.0"
   }

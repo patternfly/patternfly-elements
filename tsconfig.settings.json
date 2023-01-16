@@ -69,6 +69,9 @@
       "@patternfly/patternfly/*": [
         "@patternfly/patternfly/*"
       ],
+      "@patternfly/pf-popover": [
+        "./elements/pf-popover/pf-popover.ts"
+      ],
       "@patternfly/pfe-accordion": [
         "./elements/pfe-accordion/pfe-accordion.ts"
       ],
@@ -215,6 +218,9 @@
     },
     {
       "path": "./elements/pfe-tile"
+    },
+    {
+      "path": "./elements/pf-popover"
     }
   ]
 }

@@ -1,5 +1,20 @@
 ## 1.0.0-prerelease.50 ( TBD )
 
+## 2.0.0-next.7
+
+### Major Changes
+
+- 82da44c11: Reimplemented `<pfe-jump-links>` to align with [PatternFly
+  v4](https://patternfly.org/components/jump-links).
+
+  See the [docs](https://patternflyelements.org/components/jump-links) for more
+  info.
+
+### Patch Changes
+
+- Updated dependencies [82da44c11]
+  - @patternfly/pfe-core@2.0.0-next.14
+
 ## 2.0.0-next.6
 
 ### Patch Changes

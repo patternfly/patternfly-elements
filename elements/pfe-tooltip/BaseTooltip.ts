@@ -21,7 +21,7 @@ export abstract class BaseTooltip extends LitElement {
 
   #float = new FloatingDOMController(this, {
     arrow: true,
-    content: () => this.shadowRoot?.querySelector('#tooltip'),
+    content: (): HTMLElement | undefined | null => this.shadowRoot?.querySelector('#tooltip'),
   });
 
   override connectedCallback(): void {

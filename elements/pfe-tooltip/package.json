@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-tooltip",
-  "version": "2.0.0-next.8",
+  "version": "2.0.0-next.9",
   "description": "PatternFly Elements | Tooltip",
   "customElements": "custom-elements.json",
   "license": "MIT",
@@ -58,7 +58,7 @@
     "!test/*"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.13",
+    "@patternfly/pfe-core": "^2.0.0-next.14",
     "lit": "2.3.0"
   }
 }

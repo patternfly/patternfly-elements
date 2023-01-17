@@ -1,6 +1,12 @@
 @use "@patternfly/pfe-sass" as *;
 
-@import "shared-assets";
+@include configure(
+  $name: 'dropdown',
+  $variables: (
+    spacing--vertical: calc(#{pfe-var(container-padding)} * .5),
+    spacing--horizontal: calc(#{pfe-var(container-padding)} * .5),
+  ),
+);
 
 @include merge-local-variables((
   FontSize: pfe-var(FontSize--md),

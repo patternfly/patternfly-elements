@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "include": [
+    "./**/*"
+  ],
+  "compilerOptions": {
+    "outDir": ".",
+    "rootDir": "."
+  },
+  "references": [
+    {
+      "path": "../../core/pfe-core"
+    },
+    {
+      "path": "../../tools/pfe-tools"
+    },
+    {
+      "path": "../pfe-icon"
+    }
+  ]
+}

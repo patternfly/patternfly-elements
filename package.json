@@ -11,7 +11,7 @@
     "node": ">=16 <=19"
   },
   "scripts": {
-    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
+    "🐒-DEV": "❓ Development aids",
     "start": "wireit",
     "dev": "wireit",
     "dev:server": "wireit",
@@ -19,9 +19,8 @@
     "watch:docs": "wireit",
     "watch:docs:analyze": "wireit",
     "watch:docs:core": "wireit",
-    "watch:docs:eleventy": "wireit",
     "new": "./tools/create-element/bin/main.js",
-    "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
+    "🚧-BUILD": "❓ Make packages and artifacts",
     "build": "wireit",
     "build:tools": "wireit",
     "build:elements": "wireit",
@@ -29,47 +28,60 @@
     "build:core": "wireit",
     "build:lightdom": "wireit",
     "build:bundle": "wireit",
-    "build:analyze": "wireit",
-    "build:docs": "wireit",
-    "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
+    "analyze": "wireit",
+    "docs": "wireit",
+    "site": "npm run build",
+    "🧪-TEST": "❓ Test packages",
     "test": "wtr --group default",
-    "🧑‍🔬--TEST---ALL FRAMEWORKS--🧑‍🔬": "❓ Test packages - all frameworks",
     "test:ci": "wtr",
     "test:watch": "wtr --watch",
     "test:vue": "wtr --watch --group with-vue",
     "test:react": "wtr --watch --group with-react",
-    "🎨--TEST---VISUAL REGRESSION--🎨": "❓ Test packages for visual rergressions, locally",
-    "test:e2e": "run-s test:e2e:build test:e2e:test",
-    "test:e2e:build": "run-s build:tools build:analyze build:core build:docs build:elements",
-    "test:e2e:update": "PW_EXPERIMENTAL_TS_ESM=1 playwright test --update-snapshots",
-    "test:e2e:test": "PW_EXPERIMENTAL_TS_ESM=1 playwright test",
-    "🚚-----DIST-------🚚": "❓ Publish packages",
+    "e2e": "wireit",
+    "e2e:update": "wireit",
+    "🚚-DIST": "❓ Publish packages",
     "license-update": "node scripts/license-update.js",
     "leftover-check": "bash scripts/leftover-check.sh",
-    "site": "run-s build:tools build:icons build:analyze build:core build:elements build:docs",
-    "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
-    "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
-    "clean:deep": "git clean -fX -e node_modules",
-    "clean:nuke": "git clean -fX",
+    "⚙️--UTIL": "❓ Manages the repo",
+    "postinstall": "wireit",
+    "clean": "git clean -fX",
     "lint": "eslint .",
-    "postinstall": "run-s postinstall:**",
-    "postinstall:patch": "patch-package",
-    "postinstall:husky": "npx husky install",
-    "postinstall:build:create": "npm run build --workspace @patternfly/create-element",
-    "postinstall:build:tools": "npm run build",
+    "patch": "wireit",
+    "husky": "wireit",
     "pr": "node scripts/open-pr.js"
   },
   "wireit": {
+    "postinstall": {
+      "dependencies": [
+        "patch",
+        "husky",
+        "build"
+      ]
+    },
+    "patch": {
+      "command": "patch-package"
+    },
+    "husky": {
+      "command": "npx husky install"
+    },
     "build": {
       "dependencies": [
         "build:tools",
-        "build:analyze",
-        "build:docs",
+        "analyze",
+        "docs",
         "build:core",
         "build:icons",
         "build:lightdom",
         "build:elements",
+        "build:create",
         "build:bundle"
+      ]
+    },
+    "build:create": {
+      "command": "npm run build --workspace @patternfly/create-element",
+      "dependencies": [
+        "build:core",
+        "build:tools"
       ]
     },
     "build:elements": {
@@ -133,7 +145,7 @@
         "elements/pfe-icon/icons/*/*.js"
       ]
     },
-    "build:analyze": {
+    "analyze": {
       "command": "npm run -ws --if-present analyze",
       "files": [
         "elements/**/*.ts",
@@ -170,7 +182,7 @@
         "build:tools"
       ]
     },
-    "build:docs": {
+    "docs": {
       "command": "eleventy --config=eleventy.config.cjs",
       "files": [
         "elements/*/docs/*",
@@ -182,22 +194,13 @@
       "dependencies": [
         "build:core",
         "build:tools",
-        "build:analyze"
+        "analyze"
       ]
     },
     "dev": {
       "command": "web-dev-server --open --watch",
       "dependencies": [
         "build:tools"
-      ]
-    },
-    "watch:docs": {
-      "command": "npm-run-all --parallel watch:docs:*",
-      "dependencies": [
-        "build:tools",
-        "watch:docs:analyze",
-        "build:core",
-        "watch:docs:eleventy"
       ]
     },
     "watch:docs:analyze": {
@@ -212,21 +215,42 @@
         "build:tools"
       ]
     },
-    "watch:docs:core": {
-      "command": "npm run build:core -- --watch",
-      "service": true
-    },
-    "watch:docs:eleventy": {
+    "watch:docs": {
       "command": "eleventy --serve --config=eleventy.config.cjs",
-      "service": true
+      "service": true,
+      "dependencies": [
+        "build:tools",
+        "build:core",
+        "watch:docs:analyze"
+      ]
     },
     "start": {
       "dependencies": [
         "build:tools",
         "build:icons",
-        "build:analyze",
+        "analyze",
         "dev",
         "watch:docs:analyze"
+      ]
+    },
+    "e2e": {
+      "command": "PW_EXPERIMENTAL_TS_ESM=1 playwright test",
+      "dependencies": [
+        "build:tools",
+        "build:core",
+        "analyze",
+        "docs",
+        "build:elements"
+      ]
+    },
+    "e2e:update": {
+      "command": "PW_EXPERIMENTAL_TS_ESM=1 playwright test --update-snapshots",
+      "dependencies": [
+        "build:tools",
+        "build:core",
+        "analyze",
+        "docs",
+        "build:elements"
       ]
     }
   },

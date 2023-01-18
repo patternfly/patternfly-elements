@@ -34,12 +34,9 @@
     "prepublishOnly": "npm run build",
     "clean": "rimraf './main.{js,d.ts}' './generator/*.{js,d.ts}' bin/main.d.ts",
     "build": "tsc -b .",
-    "lint": "run-s lint:*",
-    "lint:types": "tsc --noEmit",
+    "lint": "tsc -b . --noEmit",
     "start": "tsc -w",
-    "test": "run-s build test:unit",
-    "test:unit": "echo 'unit tests for PFE generator not written yet'",
-    "x-test:unit": "tape-es test/unit.test.js | tap-spec"
+    "test": "echo 'unit tests for PFE generator not written yet'"
   },
   "bugs": {
     "url": "git+ssh://git@github.com/patternfly/pfe-tools/issues"

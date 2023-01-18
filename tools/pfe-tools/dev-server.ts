@@ -211,7 +211,7 @@ function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInte
   config.site = { ...config.site, ...options?.site ?? {} };
   config.loadDemo ??= true;
   config.watchFiles ??= '{elements,core}/**/*.{css,html}';
-  config.litcssOptions ??= { include: /\.css$/, exclude: /(fonts|demo)\.css$/ };
+  config.litcssOptions ??= { include: /\.css$/, exclude: /((fonts|demo)|(demo\/.*))\.css$/ };
   return config as PfeDevServerInternalConfig;
 }
 

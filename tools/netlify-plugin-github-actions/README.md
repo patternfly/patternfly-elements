@@ -60,10 +60,9 @@ jobs:
           cache: npm
       - run: npm ci --prefer-offline
       - name: Visual Regression Tests
-        run: npx percy exec -- playwright test
+        run: npx playwright test
         env:
           VISUAL_REGRESSION_ORIGIN: ${{ github.event.inputs.deployPrimeUrl }}
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
 
   lighthouse:
     runs-on: ubuntu-latest

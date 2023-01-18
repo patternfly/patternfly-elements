@@ -30,13 +30,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 * 3. Add the output path to `getFilePathsRelativeToPackageDir`, interpolating as needed.
 */
 enum FileKey {
-  cemConfig = 'cemConfig',
   component = 'component',
   demo = 'demo',
   demoCss = 'demoCss',
   demoScript = 'demoScript',
   docs = 'docs',
-  package = 'package',
   readme = 'readme',
   style = 'style',
   test = 'test',
@@ -70,8 +68,6 @@ type Interpolations = Record<InterpolationKey, string>;
 
 function isMonorepoFileKey(key: FileKey): boolean {
   switch (key) {
-    case FileKey.package:
-    case FileKey.cemConfig:
     case FileKey.tsconfig:
       return true;
     default:
@@ -82,13 +78,11 @@ function isMonorepoFileKey(key: FileKey): boolean {
 /** Get output files */
 const getFilePathsRelativeToPackageDir =
   memoize((options: GenerateElementOptions): Record<FileKey, string> => ({
-    cemConfig: 'custom-elements-manifest.config.js',
     component: `${options.tagName}.ts`,
     demo: `demo/${options.tagName}.html`,
     demoCss: `demo/demo.css`,
     demoScript: `demo/${options.tagName}.js`,
     docs: `docs/${options.tagName}.md`,
-    package: 'package.json',
     readme: 'README.md',
     style: `${options.tagName}.${options.css === 'postcss' ? '.postcss.css' : options.css}`,
     test: `test/${options.tagName}.spec.ts`,

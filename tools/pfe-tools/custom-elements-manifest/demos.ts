@@ -36,16 +36,14 @@ export function demosPlugin(options?: PfeConfig): Plugin {
         : x.declarations.flatMap(y => (y as { tagName: string }).tagName)).filter(Boolean);
 
       for (const moduleDoc of customElementsManifest.modules) {
-        let demoPath = join(rootDir, 'demo');
-        let primaryElementName;
-        if (!existsSync(demoPath) && moduleDoc.path.startsWith('elements/')) {
-          [, primaryElementName] = moduleDoc.path.split(sep);
+        const [primaryElementName] = moduleDoc.path.split(sep);
+        let demoPath = join(rootDir, primaryElementName, 'demo');
+
+        if (!existsSync(demoPath)) {
           demoPath = join('elements', primaryElementName, 'demo');
-        } else {
-          [, primaryElementName] = JSON.parse(readFileSync(join(rootDir, 'package.json'), 'utf8')).name.split('/');
         }
 
-        if (existsSync(demoPath)) {
+        if (primaryElementName && existsSync(demoPath)) {
           const alias = config.aliases[primaryElementName] ?? primaryElementName.replace(/^\w+-/, '');
           const allDemos = readdirSync(demoPath).filter(x => x.endsWith('.html'));
           for (const decl of moduleDoc.declarations ?? []) {

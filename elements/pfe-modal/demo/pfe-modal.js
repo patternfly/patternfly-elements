@@ -2,7 +2,6 @@ import '@patternfly/pfe-card';
 import '@patternfly/pfe-button';
 import '@patternfly/pfe-modal';
 import '@patternfly/pfe-icon';
-import '@patternfly/pfe-dropdown';
 
 const root = document.querySelector('[data-demo="pfe-modal"]')?.shadowRoot ?? document;
 

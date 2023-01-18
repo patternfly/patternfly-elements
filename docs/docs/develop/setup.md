@@ -105,7 +105,7 @@ tags:
 
   ```bash
   # Run a single test in watch mode.
-  npm run test:watch -w @patternfly/pfe-select
+  npm run test:watch --files "./elements/pfe-button/test/pfe-button.spec.ts"
 
   # Or multiple:
   npm run test:watch --files "./elements/pfe-{avatar,card,tabs}/test/*.spec.ts"

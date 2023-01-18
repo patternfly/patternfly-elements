@@ -1,6 +1,5 @@
 import '@patternfly/pfe-button';
 import '@patternfly/pfe-spinner';
-import '@patternfly/pfe-select';
 
 const logsBtn = document.getElementById('loading-logs');
 const loadBtn = document.getElementById('loading-scdr');

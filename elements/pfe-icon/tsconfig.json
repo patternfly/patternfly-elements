@@ -27,9 +27,6 @@
     },
     {
       "path": "../pfe-tooltip"
-    },
-    {
-      "path": "../pfe-autocomplete"
     }
   ]
 }

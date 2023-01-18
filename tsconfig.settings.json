@@ -72,13 +72,5 @@
         "@patternfly/patternfly/*"
       ]
     }
-  },
-  "references": [
-    {
-      "path": "./core/pfe-core"
-    },
-    {
-      "path": "./elements"
-    }
-  ]
+  }
 }

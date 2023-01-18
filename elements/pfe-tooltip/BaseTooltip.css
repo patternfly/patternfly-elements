@@ -2,6 +2,7 @@
   display: inline;
 }
 
+
 #container {
   display: inline-flex;
   position: relative;
@@ -47,25 +48,25 @@
   opacity: 1;
 }
 
-// LEFT
+/* LEFT */
 .left #tooltip::after          { right: calc(-0.5 * var(--_floating-arrow-size)); }
 .left.center #tooltip::after   { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
 .left.start #tooltip::after    { top: var(--_floating-arrow-size); }
 .left.end #tooltip::after      { bottom: var(--_floating-arrow-size); }
 
-// TOP
+/* TOP */
 .top #tooltip::after           { top: calc(100% - 0.5 * var(--_floating-arrow-size)); }
 .top.center #tooltip::after    { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
 .top.start #tooltip::after     { left: var(--_floating-arrow-size); }
 .top.end #tooltip::after       { right: var(--_floating-arrow-size); }
 
-// RIGHT
+/* RIGHT */
 .right #tooltip::after         { right: calc(100% - 0.5 * var(--_floating-arrow-size)); }
 .right.center #tooltip::after  { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
 .right.start #tooltip::after   { top: var(--_floating-arrow-size); }
 .right.end #tooltip::after     { bottom: var(--_floating-arrow-size); }
 
-// BOTTOM
+/* BOTTOM */
 .bottom #tooltip::after        { bottom: calc(100% - 0.5 * var(--_floating-arrow-size)); }
 .bottom.center #tooltip::after { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
 .bottom.start #tooltip::after  { left: var(--_floating-arrow-size); }

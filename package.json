@@ -12,29 +12,25 @@
   },
   "scripts": {
     "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
-    "start": "npm-run-all build:tools build:icons build:analyze --parallel dev:* watch:docs:analyze",
-    "start:demo": "npm run dev",
-    "dev": "run-p dev:*",
-    "dev:server": "web-dev-server --open --watch",
-    "dev:packages": "lerna run dev --parallel",
-    "watch:docs": "npm-run-all build:tools --parallel watch:docs:*",
-    "watch:docs:analyze": "lerna run watch:analyze --parallel",
-    "watch:docs:core": "npm run build:core --watch",
-    "watch:docs:eleventy": "eleventy --serve --config=.eleventy.cjs",
-    "watch:types": "ttsc -b --watch",
+    "start": "wireit",
+    "dev": "wireit",
+    "dev:server": "wireit",
+    "dev:tools": "wireit",
+    "watch:docs": "wireit",
+    "watch:docs:analyze": "wireit",
+    "watch:docs:core": "wireit",
+    "watch:docs:eleventy": "wireit",
     "new": "./tools/create-element/bin/main.js",
     "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
-    "build": "run-s build:*",
-    "build:tools": "npm run build --workspace @patternfly/pfe-tools",
-    "build:compile": "ttsc -b .",
-    "build:icons": "ts-node --esm --project tsconfig.icons.json ./scripts/icons/build.ts",
-    "build:core": "npm run build --workspace @patternfly/pfe-core",
-    "build:lightdom": "npm run build:lightdom --workspaces --if-present",
-    "build:bundle": "scripts/build.js",
-    "build:analyze": "lerna run analyze --parallel",
-    "build:docs": "run-s build:docs:*",
-    "build:docs:eleventy": "eleventy --config=.eleventy.cjs",
-    "bundle": "node --input-type module -e \"await import('./tools/pfe-tools/esbuild.js').then(x => x.singleFileBuild())\"",
+    "build": "wireit",
+    "build:tools": "wireit",
+    "build:elements": "wireit",
+    "build:icons": "wireit",
+    "build:core": "wireit",
+    "build:lightdom": "wireit",
+    "build:bundle": "wireit",
+    "build:analyze": "wireit",
+    "build:docs": "wireit",
     "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
     "test": "wtr --group default",
     "🧑‍🔬--TEST---ALL FRAMEWORKS--🧑‍🔬": "❓ Test packages - all frameworks",
@@ -60,8 +56,179 @@
     "postinstall:patch": "patch-package",
     "postinstall:husky": "npx husky install",
     "postinstall:build:create": "npm run build --workspace @patternfly/create-element",
-    "postinstall:build:tools": "npm run build --workspace @patternfly/pfe-tools",
+    "postinstall:build:tools": "npm run build",
     "pr": "node scripts/open-pr.js"
+  },
+  "wireit": {
+    "build": {
+      "dependencies": [
+        "build:tools",
+        "build:analyze",
+        "build:docs",
+        "build:core",
+        "build:icons",
+        "build:lightdom",
+        "build:elements",
+        "build:bundle"
+      ]
+    },
+    "build:elements": {
+      "command": "ttsc --build elements --pretty",
+      "clean": "if-file-deleted",
+      "dependencies": [
+        "build:core",
+        "build:tools"
+      ],
+      "files": [
+        "elements/**/*.ts",
+        "elements/**/*.css",
+        "elements/tsconfig.json",
+        "core/**/*.ts",
+        "core/tsconfig.json",
+        "tsconfig.settings.json"
+      ],
+      "output": [
+        "elements/*/*.js",
+        "elements/*/*.js.map",
+        "elements/*/*.d.ts",
+        "elements/*.tsbuildinfo"
+      ]
+    },
+    "build:tools": {
+      "command": "tsc --build ./tools/pfe-tools --pretty",
+      "clean": "if-file-deleted",
+      "files": [
+        "tools/pfe-tools/**/*.ts"
+      ],
+      "output": [
+        "tools/pfe-tools/**/*.js",
+        "tools/pfe-tools/**/*.d.ts",
+        "tools/pfe-tools/**/*.map",
+        "*.tsbuildinfo"
+      ]
+    },
+    "build:core": {
+      "command": "ttsc --build ./core/pfe-core --pretty",
+      "clean": "if-file-deleted",
+      "dependencies": [
+        "build:tools"
+      ],
+      "files": [
+        "core/pfe-core/**/*.ts"
+      ],
+      "output": [
+        "core/pfe-core/**/*.js",
+        "core/pfe-core/**/*.map",
+        "core/pfe-core/**/*.d.ts",
+        "*.tsbuildinfo"
+      ]
+    },
+    "build:icons": {
+      "command": "ts-node --esm --project tsconfig.icons.json ./scripts/icons/build.ts",
+      "dependencies": [
+        "build:core",
+        "build:tools"
+      ],
+      "output": [
+        "elements/pfe-icon/icons/*/*.js"
+      ]
+    },
+    "build:analyze": {
+      "command": "npm run -ws --if-present analyze",
+      "files": [
+        "elements/**/*.ts",
+        "elements/**/*.css",
+        "core/**/*.ts",
+        "tools/**/*.ts"
+      ],
+      "output": [
+        "elements/custom-elements.json",
+        "core/pfe-core/custom-elements.json"
+      ],
+      "dependencies": [
+        "build:core",
+        "build:tools"
+      ]
+    },
+    "build:bundle": {
+      "command": "scripts/bundle.js",
+      "dependencies": [
+        "build:core",
+        "build:tools"
+      ],
+      "files": [
+        "**/*.ts",
+        "scripts/bundle.js"
+      ],
+      "output": [
+        "elements/pfe.min.js"
+      ]
+    },
+    "build:lightdom": {
+      "command": "npm run build:lightdom --workspaces --if-present",
+      "dependencies": [
+        "build:tools"
+      ]
+    },
+    "build:docs": {
+      "command": "eleventy --config=eleventy.config.cjs",
+      "files": [
+        "elements/*/docs/*",
+        "docs/**/*"
+      ],
+      "output": [
+        "_site"
+      ],
+      "dependencies": [
+        "build:core",
+        "build:tools",
+        "build:analyze"
+      ]
+    },
+    "dev": {
+      "command": "web-dev-server --open --watch",
+      "dependencies": [
+        "build:tools"
+      ]
+    },
+    "watch:docs": {
+      "command": "npm-run-all --parallel watch:docs:*",
+      "dependencies": [
+        "build:tools",
+        "watch:docs:analyze",
+        "build:core",
+        "watch:docs:eleventy"
+      ]
+    },
+    "watch:docs:analyze": {
+      "service": true,
+      "command": "npm run -ws --if-present analyze -- --watch",
+      "files": [
+        "elements/**/*.ts",
+        "core/**/*.ts",
+        "tools/**/*.ts"
+      ],
+      "dependencies": [
+        "build:tools"
+      ]
+    },
+    "watch:docs:core": {
+      "command": "npm run build:core -- --watch",
+      "service": true
+    },
+    "watch:docs:eleventy": {
+      "command": "eleventy --serve --config=eleventy.config.cjs",
+      "service": true
+    },
+    "start": {
+      "dependencies": [
+        "build:tools",
+        "build:icons",
+        "build:analyze",
+        "dev",
+        "watch:docs:analyze"
+      ]
+    }
   },
   "devDependencies": {
     "@actions/core": "^1.10.0",
@@ -69,12 +236,12 @@
     "@actions/glob": "^0.3.0",
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
-    "@commitlint/config-lerna-scopes": "^17.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@jspm/generator": "^1.0.0-beta.33",
     "@patternfly/patternfly": "^4.210.2",
+    "@patternfly/pfe-tools": "^1.0.0-next.41",
     "@types/koa__router": "^12.0.0",
     "@types/numeral": "^2.0.2",
     "@types/prismjs": "^1.26.0",
@@ -85,11 +252,12 @@
     "git-branch": "^2.0.1",
     "husky": "^8.0.3",
     "leasot": "^13.3.0",
-    "lerna": "^6.4.1",
     "npm-merge-driver": "^2.3.6",
+    "nunjucks": "^3.2.3",
     "open": "^8.4.0",
     "prompts": "^2.4.2",
     "renamer": "^4.0.0",
+    "wireit": "^0.9.3",
     "zero-md": "^2.3.6"
   },
   "lint-staged": {

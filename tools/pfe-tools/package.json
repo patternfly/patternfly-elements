@@ -53,13 +53,6 @@
     "**/*.{njk,html,md,css,woff,woff2}",
     "**/*.{js,cjs,d.ts,map}"
   ],
-  "scripts": {
-    "build": "tsc -b .",
-    "rebuild": "rm -f tsconfig.tsbuildinfo && tsc -b .",
-    "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
-    "dev": "node _scripts/dev.js",
-    "prepublishOnly": "npm run rebuild"
-  },
   "dependencies": {
     "@11ty/eleventy": "^1.0.2",
     "@11ty/eleventy-plugin-directory-output": "^1.0.1",
@@ -109,7 +102,7 @@
     "esbuild-plugin-minify-html-literals": "^1.0.1",
     "eslint": "^8.26.0",
     "execa": "^6.1.0",
-    "glob": "^8.0.3",
+    "glob": "^8.1.0",
     "html-include-element": "^0.3.0",
     "koa-send": "^5.0.1",
     "lit": "^2.4.0",

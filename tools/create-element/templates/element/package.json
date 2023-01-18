@@ -32,11 +32,7 @@
     "build:analyze": "npm run analyze",
     "build:types": "tsc -b .",
     "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
-    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js",
-    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
-    "test:watch": "npm test -- --watch",
-    "watch:analyze": "npm run analyze -- --watch",
-    "watch:types": "tsc -w"
+    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },
   "keywords": [
     "custom elements",

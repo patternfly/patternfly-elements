@@ -10,17 +10,16 @@ svg {
   display: none !important;
 }
 
-:host(:disabled),
-:host([disabled]) {
+:host(:disabled) {
   pointer-events: none;
   cursor: not-allowed;
-  #container {
-    cursor: not-allowed;
-  }
 }
 
-:host(:disabled:focus-within) #container,
-:host([disabled]:focus-within) #container {
+:host(:disabled) #container {
+  cursor: not-allowed;
+}
+
+:host(:disabled:focus-within) #container {
   outline: none;
 }
 
@@ -28,9 +27,10 @@ svg {
   position: relative;
   display: inline-flex;
   align-items: center;
-  &::before {
-    position: absolute;
-    display: block;
-    content: "";
-  }
+}
+
+#container::before {
+  position: absolute;
+  display: block;
+  content: "";
 }

@@ -59,10 +59,9 @@ search.autocompleteRequest = function({ query }, cb) {
   }), {}));
 };
 
-search.addEventListener('change', () => renderIcons());
-search.addEventListener('select', e => renderIcons(e.target.value));
+search.addEventListener('input', e => renderIcons(e.target.value || undefined));
 
-renderIcons(search.querySelector('input').value || undefined);
+renderIcons(search.value || undefined);
 
 render(repeat(iconSets, ([setName, icons]) => repeat(icons, icon => `${setName}-${icon}`, icon => html`
   <option value="${icon}">${setName} - ${icon}</option>

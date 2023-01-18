@@ -2,12 +2,12 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 
-import style from './pfe-progress-stepper.scss';
+import style from './pfe-progress-stepper.css';
 
 import { PfeProgressStep } from './pfe-progress-step.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
-import '@patternfly/pfe-icon';
+import '@patternfly/elements/pfe-icon/pfe-icon.js';
 
 /**
  * A **progress stepper** displays a timeline of tasks in a workflow and tracks the user's current progress through this workflow.

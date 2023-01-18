@@ -133,7 +133,7 @@ export async function main(): Promise<void> {
       })
       .option('css', {
         type: 'boolean',
-        default: (await isMonorepo() ? 'scss' : 'css') as 'css'|'scss'|'postcss',
+        default: 'css',
         description: 'Which type of CSS files to output',
       })
       .help()

@@ -5,9 +5,9 @@ import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 
 // Import the element we're testing.
-import { PfeAccordion } from '@patternfly/pfe-accordion';
-import { PfeAccordionPanel } from '@patternfly/pfe-accordion/pfe-accordion-panel.js';
-import { PfeAccordionHeader } from '@patternfly/pfe-accordion/pfe-accordion-header.js';
+import { PfeAccordion } from '@patternfly/elements/pfe-accordion/pfe-accordion.js';
+import { PfeAccordionPanel } from '@patternfly/elements/pfe-accordion/pfe-accordion-panel.js';
+import { PfeAccordionHeader } from '@patternfly/elements/pfe-accordion/pfe-accordion-header.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';

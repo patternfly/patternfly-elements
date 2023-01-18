@@ -7,19 +7,19 @@ Read more about Icon in the [PatternFly Elements Icon documentation][docs]
 Load `<pfe-icon>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-icon?module"></script>
+<script src="https://unpkg.com/@patternfly/elements/pfe-icon/pfe-icon.js?module"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im/@patternfly/pfe-icon/), install it
 
 ```bash
-npm install @patternfly/pfe-icon
+npm install @patternfly/elements
 ```
 
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/pfe-icon';
+import '@patternfly/elements/pfe-icon/pfe-icon.js';
 ```
 
 ## Usage

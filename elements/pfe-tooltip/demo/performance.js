@@ -1,5 +1,5 @@
-import '@patternfly/pfe-button';
-import '@patternfly/pfe-tooltip';
+import '@patternfly/elements/pfe-button/pfe-button.js';
+import '@patternfly/elements/pfe-tooltip/pfe-tooltip.js';
 
 const $ = x => document.querySelector(x);
 const $$ = x => document.querySelectorAll(x);

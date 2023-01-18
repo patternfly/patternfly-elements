@@ -5,7 +5,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
-import styles from './BaseButton.scss';
+import styles from './BaseButton.css';
 
 /**
  * Base button class

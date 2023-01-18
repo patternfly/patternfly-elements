@@ -7,7 +7,7 @@ import { bound } from '../decorators/bound.js';
 import { Logger } from './logger.js';
 import { StyleController } from './style-controller.js';
 
-import CONTEXT_BASE_STYLES from './color-context.scss';
+import CONTEXT_BASE_STYLES from './color-context.css';
 
 /**
  * A `ColorPalette` is a collection of specific color values
@@ -63,7 +63,7 @@ const contextEvents = new Map<ReactiveElement, ContextEvent<UnknownContext>>();
 /**
  * Color context is derived from the `--context` css custom property,
  * which can be set by the `on` attribute, but *must* be set by the `color-palette` attribute
- * This property is set (in most cases) in `color-context.scss`,
+ * This property is set (in most cases) in `color-context.css`,
  * which is added to components via `StyleController`.
  *
  * In this way, we avoid the need to execute javascript in order to convert from a given

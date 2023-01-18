@@ -9,7 +9,7 @@ import { ComposedEvent } from '@patternfly/pfe-core';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
-import style from './BaseAccordionHeader.scss';
+import style from './BaseAccordionHeader.css';
 
 const isPorHeader =
   (el: Node): el is HTMLElement =>

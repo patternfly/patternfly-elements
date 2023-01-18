@@ -7,19 +7,19 @@ Read more about Tabs in the [PatternFly Elements Tabs documentation](https://pat
 Load `<pfe-tabs>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-tabs?module"></script>
+<script src="https://unpkg.com/@patternfly/elements/pfe-tabs/pfe-tabs.js?module"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it
 
 ```bash
-npm install @patternfly/pfe-tabs
+npm install @patternfly/elements
 ```
 
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/pfe-tabs';
+import '@patternfly/elements/pfe-tabs/pfe-tabs.js';
 ```
 
 ## Usage

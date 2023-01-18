@@ -3,7 +3,7 @@ import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller
 
 import { classMap } from 'lit/directives/class-map.js';
 
-import style from './BaseCard.scss';
+import style from './BaseCard.css';
 
 /**
  * This element creates a header, body, and footer region in which to place

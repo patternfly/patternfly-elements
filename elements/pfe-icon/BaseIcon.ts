@@ -3,7 +3,7 @@ import { property, state } from 'lit/decorators.js';
 import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
-import style from './BaseIcon.scss';
+import style from './BaseIcon.css';
 
 export type URLGetter = (set: string, icon: string) => URL;
 

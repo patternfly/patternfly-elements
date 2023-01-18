@@ -102,11 +102,10 @@ export async function transformSass(
  */
 export function getBasePlugins({ minify, litCssOptions }: PfeBasePluginOptions = {}): Plugin[] {
   return [
-    // import scss files as LitElement CSSResult objects
+    // import css files as LitElement CSSResult objects
     litCssPlugin(litCssOptions ?? {
-      filter: /\.scss$/,
-      transform: (source, { filePath }) =>
-        transformSass(source, { filePath, minify }),
+      filter: /\.css$/,
+      transform: source => !minify ? source : cleanCSS.minify(source).then(x => x.styles)
     }),
     ...!minify ? [] : [
       // minify lit-html templates

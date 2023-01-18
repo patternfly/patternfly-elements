@@ -3,7 +3,7 @@ import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-co
 import { customElement, property } from 'lit/decorators.js';
 import { BaseTooltip } from './BaseTooltip.js';
 
-import styles from './pfe-tooltip.scss';
+import styles from './pfe-tooltip.css';
 
 /**
  * Patternfly tooltip

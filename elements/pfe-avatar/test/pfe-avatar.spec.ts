@@ -1,6 +1,6 @@
 import { html, expect, oneEvent } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfeAvatar } from '@patternfly/pfe-avatar';
+import { PfeAvatar } from '@patternfly/elements/pfe-avatar/pfe-avatar.js';
 
 const element = html`
   <pfe-avatar name="foobar"></pfe-avatar>

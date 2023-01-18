@@ -7,19 +7,19 @@ Read more about Card in the [PatternFly Elements Card documentation](https://pat
 Load `<pfe-card>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-card?module"></script>
+<script src="https://unpkg.com/@patternfly/elements/pfe-card/pfe-card.js?module"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it
 
 ```bash
-npm install @patternfly/pfe-card
+npm install @patternfly/elements
 ```
 
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/pfe-card';
+import '@patternfly/elements/pfe-card/pfe-card.js';
 ```
 
 ## Usage

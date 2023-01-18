@@ -1,6 +1,6 @@
 import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfeCodeBlock } from '@patternfly/pfe-code-block';
+import { PfeCodeBlock } from '@patternfly/elements/pfe-code-block/pfe-code-block.js';
 
 const element = html`
   <pfe-code-block id="code">

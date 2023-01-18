@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
-import styles from './pfe-panel.scss';
+import styles from './pfe-panel.css';
 
 /**
  * Panel

@@ -1,11 +1,10 @@
 # Panel
-Add a description of the component here.
+Panel contains content with optional header and footer content.
 
 ## Usage
-Describe how best to use this web component along with best practices.
 
 ```html
 <pfe-panel>
-
+  <p>Panel content</p>
 </pfe-panel>
 ```

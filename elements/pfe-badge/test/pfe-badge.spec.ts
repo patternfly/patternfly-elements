@@ -1,7 +1,7 @@
 import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { hexToRgb, getColor } from '@patternfly/pfe-tools/test/hex-to-rgb.js';
-import { PfeBadge } from '@patternfly/pfe-badge';
+import { PfeBadge } from '@patternfly/elements/pfe-badge/pfe-badge.js';
 
 // Background colors for the various states
 const states = {

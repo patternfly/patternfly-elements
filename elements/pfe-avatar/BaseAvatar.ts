@@ -2,7 +2,7 @@ import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import style from './BaseAvatar.scss';
+import style from './BaseAvatar.css';
 
 const DEFAULT = new URL('./lib/img_avatar-light.svg', import.meta.url).pathname;
 

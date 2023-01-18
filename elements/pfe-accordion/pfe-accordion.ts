@@ -8,7 +8,7 @@ import { BaseAccordionHeader } from './BaseAccordionHeader.js';
 import './pfe-accordion-header.js';
 import './pfe-accordion-panel.js';
 
-import style from './pfe-accordion.scss';
+import style from './pfe-accordion.css';
 
 /**
  * Accordions toggle the visibility of sections of content.

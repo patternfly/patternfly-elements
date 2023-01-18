@@ -1,7 +1,7 @@
 import { customElement } from 'lit/decorators.js';
 
 import { BaseSpinner } from './BaseSpinner.js';
-import styles from './pfe-spinner.scss';
+import styles from './pfe-spinner.css';
 
 /**
  * @cssprop {<length>} --pf-c-spinner--diameter                      {@default `3.375rem`}

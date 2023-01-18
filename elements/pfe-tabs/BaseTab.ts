@@ -5,7 +5,7 @@ import { queryAssignedElements } from 'lit/decorators.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 
-import style from './BaseTab.scss';
+import style from './BaseTab.css';
 
 export class TabExpandEvent extends ComposedEvent {
   constructor(

@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 
-import style from './BaseBadge.scss';
+import style from './BaseBadge.css';
 
 export abstract class BaseBadge extends LitElement {
   static readonly styles = [style];

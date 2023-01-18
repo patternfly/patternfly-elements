@@ -1,6 +1,7 @@
 # PatternFly Elements Switch
      
-`pfe-switch` is a switch that toggles the state of a setting (between on and off). Switches provide a more explicit, visible representation on a setting.
+`<pfe-switch>` is a switch that toggles the state of a setting (between on and 
+off). Switches provide a more explicit, visible representation on a setting.
 
 Read more about Switch in the [PatternFly Elements Switch documentation](https://patternflyelements.org/components/switch)
 
@@ -9,19 +10,19 @@ Read more about Switch in the [PatternFly Elements Switch documentation](https:/
 Load `<pfe-switch>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-switch?module"></script>
+<script src="https://unpkg.com/@patternfly/elements/pfe-switch/pfe-switch.js?module"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it
 
 ```bash
-npm install @patternfly/pfe-switch
+npm install @patternfly/elements
 ```
 
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/pfe-switch';
+import '@patternfly/elements/pfe-switch/pfe-switch.js';
 ```
 
 ### Note

@@ -3,8 +3,9 @@ import { html, render } from 'lit';
 
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
+import { PfeIcon } from '@patternfly/elements/pfe-icon/pfe-icon.js';
+
 import '@patternfly/pfe-tools/test/stub-logger.js';
-import { PfeIcon } from '@patternfly/pfe-icon';
 
 describe('<pfe-icon>', function() {
   let element: PfeIcon;

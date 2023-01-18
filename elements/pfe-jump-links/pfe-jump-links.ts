@@ -5,9 +5,9 @@ import { ScrollSpyController } from '@patternfly/pfe-core/controllers/scroll-spy
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
 import './pfe-jump-links-item.js';
-import '@patternfly/pfe-icon';
+import '@patternfly/elements/pfe-icon/pfe-icon.js';
 
-import style from './pfe-jump-links.scss';
+import style from './pfe-jump-links.css';
 import { PfeJumpLinksItem } from './pfe-jump-links-item.js';
 
 /**

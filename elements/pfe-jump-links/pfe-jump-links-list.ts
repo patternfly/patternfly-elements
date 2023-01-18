@@ -1,7 +1,7 @@
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-import style from './pfe-jump-links-list.scss';
+import style from './pfe-jump-links-list.css';
 
 /**
  * @cssprop --pf-c-jump-links__list__list__link--PaddingTop -- padding around each link

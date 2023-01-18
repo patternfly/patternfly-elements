@@ -1,12 +1,13 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
+
 import { BaseAccordionHeader } from './BaseAccordionHeader.js';
 
-import style from './pfe-accordion-header.scss';
+import style from './pfe-accordion-header.css';
 
-import '@patternfly/pfe-icon';
-import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
+import '@patternfly/elements/pfe-icon/pfe-icon.js';
 
 /**
  * Accordion Header

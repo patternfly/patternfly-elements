@@ -9,19 +9,20 @@ Read more about Accordion in the [PatternFly Elements Accordion documentation](h
 Load `<pfe-accordion>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-accordion?module"></script>
+<script 
+src="https://unpkg.com/@patternfly/elements/pfe-accordion/pfe-accordion.js?module"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it
 
 ```bash
-npm install @patternfly/pfe-accordion
+npm install @patternfly/elements
 ```
 
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/pfe-accordion';
+import '@patternfly/elements/pfe-accordion/pfe-accordion.js';
 ```
 ## Usage
 

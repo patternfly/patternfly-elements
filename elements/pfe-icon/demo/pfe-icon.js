@@ -1,8 +1,7 @@
-import '@patternfly/pfe-icon';
-import '@patternfly/pfe-tooltip';
-// TS6202: Project references may not form a circular graph.
-// import '@patternfly/pfe-button';
-import('@patternfly' + '/' + 'pfe-button');
+import '@patternfly/elements/pfe-icon/pfe-icon.js';
+import '@patternfly/elements/pfe-tooltip/pfe-tooltip.js';
+import '@patternfly/elements/pfe-button/pfe-button.js';
+
 import { iconSets } from '@patternfly/pfe-tools/environment.js';
 import { render, html } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';

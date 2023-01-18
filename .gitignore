@@ -45,19 +45,7 @@ elements/**/*.d.ts
 core/**/*.d.ts
 tools/**/*.d.ts
 
-elements/**/__*.scss
-core/**/__*.scss
-tools/**/__*.scss
-
-elements/**/*.css
-core/**/*.css
 tools/**/*.css
-
-elements/**/*.css.map
-core/**/*.css.map
-tools/**/*.css.map
-
-!elements/**/*--noscript.css
 
 elements/*/package-lock.json
 core/*/package-lock.json

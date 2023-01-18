@@ -5,12 +5,12 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { BaseClipboardCopy } from './BaseClipboardCopy.js';
 
-import styles from './pfe-clipboard-copy.scss';
-import baseStyles from './BaseClipboardCopy.scss';
+import styles from './pfe-clipboard-copy.css';
+import baseStyles from './BaseClipboardCopy.css';
 
-import '@patternfly/pfe-button';
-import '@patternfly/pfe-icon';
-import '@patternfly/pfe-tooltip';
+import '@patternfly/elements/pfe-button/pfe-button.js';
+import '@patternfly/elements/pfe-icon/pfe-icon.js';
+import '@patternfly/elements/pfe-tooltip/pfe-tooltip.js';
 
 const sleep = (ms?: number) => new Promise(r => setTimeout(r, ms));
 

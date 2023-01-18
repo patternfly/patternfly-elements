@@ -5,7 +5,7 @@ import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { BaseTab } from './BaseTab.js';
 
-import styles from './pfe-tab.scss';
+import styles from './pfe-tab.css';
 
 /**
  * PfeTab

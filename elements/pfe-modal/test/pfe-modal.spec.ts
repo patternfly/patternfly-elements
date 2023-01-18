@@ -1,7 +1,7 @@
 import { expect, nextFrame, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { setViewport } from '@web/test-runner-commands';
-import { PfeModal } from '@patternfly/pfe-modal';
+import { PfeModal } from '@patternfly/elements/pfe-modal/pfe-modal.js';
 import '@patternfly/pfe-tools/test/stub-logger.js';
 
 // One element, defined here, is used

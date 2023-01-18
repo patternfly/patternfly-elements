@@ -1,9 +1,9 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfeLabel } from '@patternfly/pfe-label';
 import { getColor, hexToRgb } from '@patternfly/pfe-tools/test/hex-to-rgb.js';
-import { PfeIcon } from '@patternfly/pfe-icon';
 import '@patternfly/pfe-tools/test/stub-logger.js';
+import { PfeLabel } from '@patternfly/elements/pfe-label/pfe-label.js';
+import { PfeIcon } from '@patternfly/elements/pfe-icon/pfe-icon.js';
 
 const example = html`
   <pfe-label>Default</pfe-label>

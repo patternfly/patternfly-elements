@@ -210,8 +210,8 @@ function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInte
   const config = { ...getPfeConfig(), ...options ?? {} };
   config.site = { ...config.site, ...options?.site ?? {} };
   config.loadDemo ??= true;
-  config.watchFiles ??= '{elements,core}/**/*.{css,scss,html}';
-  config.litcssOptions ??= { include: /\.scss$/, transform: transformSass };
+  config.watchFiles ??= '{elements,core}/**/*.{css,html}';
+  config.litcssOptions ??= { include: /\.css$/, exclude: /(fonts|demo)\.css$/ };
   return config as PfeDevServerInternalConfig;
 }
 
@@ -262,7 +262,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       // so we run this cheap hack to manually resolve those file paths
       // we hope it will work in most cases. If you have a problem loading from packages in the dev
       // server, please open an issue at https://github.com/patternfly/patternfly-elements/issues/new/
-      resolveLocalFilesFromTypeScriptSources({ ...config, rootDir }),
+      // resolveLocalFilesFromTypeScriptSources({ ...config, rootDir }),
 
       // serve typescript sources as javascript
       esbuildPlugin({
@@ -270,7 +270,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
         tsconfig,
       }),
 
-      // load .scss files as lit CSSResult modules
+      // load .css files as lit CSSResult modules
       litCss(config.litcssOptions),
 
       replace({

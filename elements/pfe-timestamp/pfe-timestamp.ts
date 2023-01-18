@@ -3,7 +3,7 @@ import type { ComplexAttributeConverter } from 'lit';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import style from './pfe-timestamp.scss';
+import style from './pfe-timestamp.css';
 
 const BooleanStringConverter: ComplexAttributeConverter = {
   fromAttribute(value) {

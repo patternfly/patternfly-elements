@@ -1,6 +1,6 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfeSpinner } from '@patternfly/pfe-spinner';
+import { PfeSpinner } from '@patternfly/elements/pfe-spinner/pfe-spinner.js';
 
 describe('<pfe-spinner>', function() {
   it('should upgrade', async function() {

@@ -2,7 +2,7 @@ import type { TemplateResult } from 'lit';
 
 import { LitElement } from 'lit';
 
-import styles from './BaseCodeBlock.scss';
+import styles from './BaseCodeBlock.css';
 
 export abstract class BaseCodeBlock extends LitElement {
   static readonly styles = [styles];

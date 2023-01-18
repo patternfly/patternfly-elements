@@ -1,11 +1,9 @@
-import '@patternfly/pfe-switch';
-import '@patternfly/pfe-jump-links';
-import '@patternfly/pfe-jump-links/pfe-jump-links-list.js';
+import '@patternfly/elements/pfe-switch/pfe-switch.js';
+import '@patternfly/elements/pfe-jump-links/pfe-jump-links.js';
+import '@patternfly/elements/pfe-jump-links/pfe-jump-links-list.js';
 
 const main = document.querySelector('main');
-/** @type {import('@patternfly/pfe-jump-links').PfeJumpLinks} */
 const links = document.querySelector('pfe-jump-links');
-/** @type {import('@patternfly/pfe-switch').PfeSwitch} */
 const swtch = document.querySelector('pfe-switch');
 const media = matchMedia('(max-width: 600px)');
 

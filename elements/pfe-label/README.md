@@ -8,44 +8,42 @@ Read more about Label in the [PatternFly Elements Label documentation](https://p
 Load `<pfe-label>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-label?module"></script>
+<script src="https://unpkg.com/@patternfly/elements/pfe-label/pfe-label.js?module"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it
 
 ```bash
-npm install @patternfly/pfe-label
+npm install @patternfly/elements
 ```
 
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/pfe-label';
+import '@patternfly/elements/pfe-label/pfe-label.js';
 ```
 
 ## Usage
 
 Default
 ```html
-<p>Some Text <pfe-label>Your label text here</pfe-label>
+<p>Some Text <pfe-label>Your label text here</pfe-label></p>
 ```
 
 Color Options: `grey (default), blue ,green, orange, red, purple, cyan`
 ```html
-<p>Some Text <pfe-label color="red">Your label text here</pfe-label>
+<p>Some Text <pfe-label color="red">Your label text here</pfe-label></p>
 ```
 
 With and Icon:
 ```html
-<p>Some Text <pfe-label icon="web-icon-globe">Your label text here</pfe-label>
+<p>Some Text <pfe-label icon="web-icon-globe">Your label text here</pfe-label></p>
 ```
 
 Outline variant:
 ```html
-<p>Some Text <pfe-label outline>Your label text here</pfe-label>
+<p>Some Text <pfe-label outline>Your label text here</pfe-label></p>
 ```
-
-
 
 > ### Conveying meaning to assistive technologies
 > Using color to add meaning only provides a visual indication, which will not be conveyed to users of assistive technologies – such as screen readers. Ensure that

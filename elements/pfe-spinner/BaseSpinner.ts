@@ -2,7 +2,7 @@ import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import styles from './BaseSpinner.scss';
+import styles from './BaseSpinner.css';
 
 export type SpinnerSize = (
   | 'sm'

@@ -3,7 +3,7 @@ import type { SinonStub } from 'sinon';
 import { sendKeys } from '@web/test-runner-commands';
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfeClipboardCopy } from '@patternfly/pfe-clipboard-copy';
+import { PfeClipboardCopy } from '@patternfly/elements/pfe-clipboard-copy/pfe-clipboard-copy.js';
 
 import { stub } from 'sinon';
 

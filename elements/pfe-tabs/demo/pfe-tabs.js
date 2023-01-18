@@ -1,6 +1,6 @@
-import '@patternfly/pfe-icon';
-import '@patternfly/pfe-switch';
-import '@patternfly/pfe-tabs';
+import '@patternfly/elements/pfe-icon/pfe-icon.js';
+import '@patternfly/elements/pfe-switch/pfe-switch.js';
+import '@patternfly/elements/pfe-tabs/pfe-tabs.js';
 
 const toggleVariant = document.getElementById('toggle-variant');
 const resize = document.getElementById('overflow');

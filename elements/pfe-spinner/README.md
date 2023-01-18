@@ -1,6 +1,6 @@
 # PatternFly Elements Spinner
      
-`pfe-spinner` is used to indicate to users that an action is in progress.
+`<pfe-spinner>` is used to indicate to users that an action is in progress.
 
 Read more about Spinner in the [PatternFly Elements Spinner documentation](https://patternflyelements.org/components/spinner)
 
@@ -9,19 +9,19 @@ Read more about Spinner in the [PatternFly Elements Spinner documentation](https
 Load `<pfe-spinner>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-spinner?module"></script>
+<script src="https://unpkg.com/@patternfly/elements/pfe-spinner/pfe-spinner.js?module"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it
 
 ```bash
-npm install @patternfly/pfe-spinner
+npm install @patternfly/elements
 ```
 
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/pfe-spinner';
+import '@patternfly/elements/pfe-spinner/pfe-spinner.js';
 ```
 
 ## Usage

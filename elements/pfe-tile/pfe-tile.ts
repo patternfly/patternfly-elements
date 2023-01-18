@@ -4,7 +4,7 @@ import { property } from 'lit/decorators.js';
 
 import { BaseTile } from './BaseTile.js';
 
-import styles from './pfe-tile.scss';
+import styles from './pfe-tile.css';
 
 export type StackedSize = (
   | 'md'

@@ -9,7 +9,7 @@ window.ZeroMdConfig = {
   ]
 };
 
-import '@patternfly/pfe-label';
+import '@patternfly/elements/pfe-label/pfe-label.js';
 import 'zero-md';
 
 const container = document.querySelector('[data-demo]');
@@ -19,17 +19,17 @@ container.addEventListener('close', function(event) {
 });
 
 /* global Prism */
-customElements.whenDefined('zero-md').then(() => {
-  for (const z of document.querySelectorAll('zero-md')) {
-    z.render({
-      gfm: true,
-      highlight: (code, lang) => {
-        if (Prism.languages[lang]) {
-          return Prism.highlight(code, Prism.languages[lang], lang);
-        } else {
-          return code;
-        }
-      },
-    });
-  }
-});
+await customElements.whenDefined('zero-md');
+
+for (const z of document.querySelectorAll('zero-md')) {
+  z.render({
+    gfm: true,
+    highlight: (code, lang) => {
+      if (Prism.languages[lang]) {
+        return Prism.highlight(code, Prism.languages[lang], lang);
+      } else {
+        return code;
+      }
+    },
+  });
+}

@@ -1,18 +1,16 @@
 {
-  "name": "@patternfly/pfe-jump-links",
+  "name": "@patternfly/elements",
   "license": "MIT",
-  "version": "2.0.0-next.7",
-  "description": "Jump links element for PatternFly Elements",
+  "version": "1.0.0",
+  "description": "PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
-  "main": "./pfe-jump-links.js",
-  "module": "./pfe-jump-links.js",
-  "types": "./pfe-jump-links.d.ts",
+  "main": "./pfe.js",
+  "module": "./pfe.js",
+  "types": "./pfe.d.ts",
   "exports": {
-    ".": "./pfe-jump-links.js",
-    "./pfe-jump-links-item.js": "./pfe-jump-links-item.js",
-    "./pfe-jump-links-list.js": "./pfe-jump-links-list.js",
-    "./*": "./*.js"
+    ".": "./pfe.js",
+    "./*": "./*"
   },
   "publishConfig": {
     "access": "public",
@@ -27,24 +25,25 @@
     "analyze": "cem analyze",
     "build": "run-s build:*",
     "build:clean": "npm run clean",
-    "build:esbuild": "node ../../scripts/build.js --include pfe-jump-links",
     "build:analyze": "npm run analyze",
-    "build:types": "tsc -b .",
+    "build:compile": "ttsc -b .",
+    "build:bundle": "node ../scripts/build.js",
     "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
-    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js",
+    "test": "wtr --files './*/test/*.spec.ts' --config ../web-test-runner.config.js",
     "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
     "test:watch": "npm test -- --watch",
     "watch:analyze": "npm run analyze -- --watch",
-    "watch:types": "tsc -w"
+    "watch:compile": "ttsc -w"
   },
   "keywords": [
     "web-components",
+    "date time",
     "html"
   ],
   "repository": {
     "type": "git",
     "url": "github:patternfly/patternfly-elements",
-    "directory": "elements/pfe-jump-links"
+    "directory": "elements"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"
@@ -63,12 +62,23 @@
     "!test/*"
   ],
   "contributors": [
+    "Benny Powers <bennyp@redhat.com>",
     "Daniel Faucette",
-    "castastrophe (https://www.github.com/castastrophe)",
-    "Benny Powers <bennyp@redhat.com>"
+    "Diwanshi Pandey <diwanshipandey@gmail.com> (https://github.com/diwanshi)",
+    "Ivana Rodriguez (https://github.com/eyevana)",
+    "Kendall Totten",
+    "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",
+    "Luke Dary",
+    "Mark Caron <mark@redhat.com> (https://github.com/markcaron)",
+    "Michael Clayton <mclayton@redhat.com>",
+    "Michael Potter",
+    "Steven Spriggs <sspriggs@redhat.com",
+    "castastrophe (https://github.com/castastrophe)",
+    "Wes Ruvalcaba"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0-next.14",
-    "lit": "2.3.0"
+    "@patternfly/pfe-core": "^2.0.0-next.8",
+    "lit": "2.3.0",
+    "tslib": "^2.4.1"
   }
 }

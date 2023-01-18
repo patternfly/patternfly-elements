@@ -1,4 +1,5 @@
 import type { PropertyValues } from 'lit';
+import type { PfeProgressStepper } from './pfe-progress-stepper.js';
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -8,8 +9,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
-import style from './pfe-progress-step.scss';
-import type { PfeProgressStepper } from './pfe-progress-stepper.js';
+import style from './pfe-progress-step.css';
 
 const ICONS = new Map(Object.entries({
   success: { icon: 'circle-check' },

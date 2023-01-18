@@ -254,6 +254,9 @@
       ]
     }
   },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --fix"
+  },
   "devDependencies": {
     "@actions/core": "^1.10.0",
     "@actions/exec": "^1.1.1",
@@ -264,6 +267,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@jspm/generator": "^1.0.0-beta.33",
+    "@octokit/core": "^4.1.0",
     "@patternfly/patternfly": "^4.210.2",
     "@patternfly/pfe-tools": "^1.0.0-next.41",
     "@types/koa__router": "^12.0.0",
@@ -284,15 +288,9 @@
     "wireit": "^0.9.3",
     "zero-md": "^2.3.6"
   },
-  "lint-staged": {
-    "*.{js,ts}": "eslint --fix"
-  },
   "workspaces": [
     "./core/*",
     "./elements",
     "./tools/*"
-  ],
-  "dependencies": {
-    "@octokit/core": "^4.1.0"
-  }
+  ]
 }

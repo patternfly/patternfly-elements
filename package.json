@@ -47,8 +47,8 @@
     "postinstall": "wireit",
     "clean": "git clean -fX",
     "lint": "eslint .",
-    "patch": "wireit",
-    "husky": "wireit",
+    "patch": "patch-package",
+    "husky": "npx husky install",
     "pr": "node scripts/open-pr.js"
   },
   "wireit": {
@@ -57,12 +57,6 @@
         "patch",
         "husky"
       ]
-    },
-    "patch": {
-      "command": "patch-package"
-    },
-    "husky": {
-      "command": "npx husky install"
     },
     "build": {
       "dependencies": [

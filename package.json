@@ -34,7 +34,7 @@
     "site": "npm run build",
     "🧪-TEST": "❓ Test packages",
     "test": "wireit",
-    "test:ci": "wtr",
+    "test:ci": "wireit",
     "test:watch": "wtr --watch",
     "test:vue": "wtr --watch --group with-vue",
     "test:react": "wtr --watch --group with-react",
@@ -55,8 +55,7 @@
     "postinstall": {
       "dependencies": [
         "patch",
-        "husky",
-        "build"
+        "husky"
       ]
     },
     "patch": {
@@ -125,12 +124,6 @@
         "tools/pfe-tools/**/*.ts"
       ],
       "output": [
-        "tools/pfe-tools/*.js",
-        "tools/pfe-tools/*.d.ts",
-        "tools/pfe-tools/*.map",
-        "tools/pfe-tools/**/*.js",
-        "tools/pfe-tools/**/*.d.ts",
-        "tools/pfe-tools/**/*.map",
         "tools/*.tsbuildinfo"
       ]
     },
@@ -251,8 +244,26 @@
     },
     "test": {
       "command": "wtr --group default",
+      "files": [
+        "**/*.ts",
+        "**/*.css"
+      ],
+      "output": [],
       "dependencies": [
-        "build:tools"
+        "build:tools",
+        "build:icons"
+      ]
+    },
+    "test:ci": {
+      "command": "wtr",
+      "files": [
+        "**/*.ts",
+        "**/*.css"
+      ],
+      "output": [],
+      "dependencies": [
+        "build:tools",
+        "build:icons"
       ]
     },
     "e2e": {
@@ -291,7 +302,6 @@
     "@jspm/generator": "^1.0.0-beta.33",
     "@octokit/core": "^4.1.0",
     "@patternfly/patternfly": "^4.210.2",
-    "@patternfly/pfe-tools": "^1.0.0-next.41",
     "@types/koa__router": "^12.0.0",
     "@types/numeral": "^2.0.2",
     "@types/prismjs": "^1.26.0",

@@ -1,7 +1,7 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
-  testMatch: '**/*.e2e.spec.ts',
+  testMatch: '**/*.e2e.ts',
   testIgnore: /node_modules|_site|create-element\/templates/,
   timeout: 120 * 1000,
   workers: process.env.CI ? 2 : 8,

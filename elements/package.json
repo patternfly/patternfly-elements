@@ -17,20 +17,15 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
     "prepublishOnly": "npm run build",
-    "analyze": "wireit",
+    "analyze": "cem analyze",
     "build": "wireit",
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },
   "wireit": {
-    "analyze": {
-      "command": "cem analyze"
-    },
     "build": {
-      "command": "ttsc -b .",
+      "command": "ttsc -b . --pretty",
       "dependencies": [
-        "clean",
         "analyze"
       ]
     }

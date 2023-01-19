@@ -11,7 +11,7 @@ documentation][docs].
 Load `<pfe-progress-stepper>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/elements/pfe-progress-stepper/pfe-progress-stepper.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-progress-stepper/pfe-progress-stepper.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

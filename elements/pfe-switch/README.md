@@ -10,7 +10,7 @@ Read more about Switch in the [PatternFly Elements Switch documentation](https:/
 Load `<pfe-switch>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/elements/pfe-switch/pfe-switch.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-switch/pfe-switch.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

@@ -7,7 +7,7 @@ Read more about Tabs in the [PatternFly Elements Tabs documentation](https://pat
 Load `<pfe-tabs>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/elements/pfe-tabs/pfe-tabs.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-tabs/pfe-tabs.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

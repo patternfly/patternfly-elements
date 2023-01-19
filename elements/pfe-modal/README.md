@@ -9,7 +9,7 @@ Read more about Modal in the [PatternFly Elements Modal documentation](https://p
 Load `<pfe-modal>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/elements/pfe-modal/pfe-modal.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-modal/pfe-modal.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

@@ -11,7 +11,7 @@ Read more about tooltips in the [PatternFly Elements Tooltip documentation](http
 Load `<pfe-tooltip>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/elements/pfe-tooltip/pfe-tooltip.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-tooltip/pfe-tooltip.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

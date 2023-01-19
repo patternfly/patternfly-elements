@@ -8,7 +8,7 @@ Read more about Label in the [PatternFly Elements Label documentation](https://p
 Load `<pfe-label>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/elements/pfe-label/pfe-label.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-label/pfe-label.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

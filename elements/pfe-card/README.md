@@ -7,7 +7,7 @@ Read more about Card in the [PatternFly Elements Card documentation](https://pat
 Load `<pfe-card>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/elements/pfe-card/pfe-card.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-card/pfe-card.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

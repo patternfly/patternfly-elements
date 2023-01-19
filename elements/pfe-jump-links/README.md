@@ -9,7 +9,7 @@ Read more about Jump Links in the [documentation][docs].
 Load `<pfe-jump-links>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/elements/pfe-jump-links/pfe-jump-links.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-jump-links/pfe-jump-links.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

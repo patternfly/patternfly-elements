@@ -9,8 +9,7 @@ Read more about Accordion in the [PatternFly Elements Accordion documentation](h
 Load `<pfe-accordion>` via CDN:
 
 ```html
-<script 
-src="https://unpkg.com/@patternfly/elements/pfe-accordion/pfe-accordion.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-accordion/pfe-accordion.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

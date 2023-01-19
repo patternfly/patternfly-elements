@@ -9,7 +9,7 @@ Read more about Spinner in the [PatternFly Elements Spinner documentation](https
 Load `<pfe-spinner>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/elements/pfe-spinner/pfe-spinner.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-spinner/pfe-spinner.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

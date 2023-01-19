@@ -14,7 +14,7 @@ Use the markup below to start exploring PatternFly Elements. The template below
 includes the [card](/components/card), [accordion](/components/accordion), and 
 [tabs](/components/tabs) components.
 
-The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly 
+The template below utilizes [JSPM](https://jspm.dev/) to deliver PatternFly 
 Elements to the page. This is fine for development and exploration, but it's 
 highly recommended that you install PatternFly Elements from npm for use in 
 production.
@@ -27,7 +27,6 @@ production.
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="PatternFly Elements - Quick start">
   <title>PatternFly Elements - Quick start</title>
-  <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles@next/pfe.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text&display=swap" rel="stylesheet">
   <style>
     html,
@@ -40,11 +39,7 @@ production.
       font-family: "Red Hat Display";
     }
   </style>
-  <script type="module">
-    import "https://unpkg.com/@patternfly/pfe-card@next?module";
-    import "https://unpkg.com/@patternfly/pfe-accordion@next?module";
-    import "https://unpkg.com/@patternfly/pfe-tabs@next?module";
-  </script>
+  <script type="module" src="https://jspm.dev/@patternfly/elements"></script>
 </head>
 <body>
   <header>

@@ -9,7 +9,7 @@ Read more about Datetime in the [PatternFly Elements Timestamp documentation](ht
 Load `<pfe-timestamp>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/elements/pfe-timestamp/pfe-timestamp.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-timestamp/pfe-timestamp.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

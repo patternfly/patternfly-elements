@@ -11,8 +11,7 @@ Read more about Button in the [PatternFly Elements Button documentation](https:/
 Load `<pfe-button>` via CDN:
 
 ```html
-<script 
-src="https://unpkg.com/@patternfly/elements/pfe-button/pfe-button.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-button/pfe-button.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

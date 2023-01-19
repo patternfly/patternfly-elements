@@ -9,8 +9,7 @@ Read more about Avatar in the [PatternFly Elements Avatar documentation](https:/
 Load `<pfe-avatar>` via CDN:
 
 ```html
-<script 
-src="https://unpkg.com/@patternfly/elements/pfe-avatar/pfe-avatar.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-avatar/pfe-avatar.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

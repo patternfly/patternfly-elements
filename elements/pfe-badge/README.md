@@ -9,8 +9,7 @@ Read more about Badge in the [PatternFly Elements Badge documentation](https://p
 Load `<pfe-badge>` via CDN:
 
 ```html
-<script 
-src="https://unpkg.com/@patternfly/elements/pfe-badge/pfe-badge.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-badge/pfe-badge.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

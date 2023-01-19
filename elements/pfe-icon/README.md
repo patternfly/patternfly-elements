@@ -7,7 +7,7 @@ Read more about Icon in the [PatternFly Elements Icon documentation][docs]
 Load `<pfe-icon>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/elements/pfe-icon/pfe-icon.js?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-icon/pfe-icon.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im/@patternfly/pfe-icon/), install it

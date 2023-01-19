@@ -10,7 +10,6 @@ import { packageVersion } from './esbuild-plugins/package-version.js';
 import { litCssPlugin } from 'esbuild-plugin-lit-css';
 
 import { minifyHTMLLiteralsPlugin } from 'esbuild-plugin-minify-html-literals';
-import { nodeExternalsPlugin } from 'esbuild-node-externals';
 import { readdirSync } from 'fs';
 import { resolve, join } from 'path';
 import { fileURLToPath } from 'url';
@@ -152,7 +151,6 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
       outfile: options?.outfile ?? 'pfe.min.js',
       sourcemap: true,
       treeShaking: true,
-      watch: false,
       define: {
         // eslint-disable-next-line no-useless-escape
         'process.env.NODE_ENV': JSON.stringify( 'production' ),

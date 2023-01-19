@@ -45,8 +45,6 @@ enum FileKey {
 enum InterpolationKey {
   /** e.g. 'PfeJazzHands' */
   className = 'className',
-  /** e.g. 'jazz-hands' */
-  scssName = 'scssName',
   /** import specifier for the element style e.g. './rh-jazz-hands.css' */
   cssRelativePath = 'cssRelativePath',
   /** The package's NPM package name. e.g. '@patternfly/pfe-jazz-hands' */
@@ -113,7 +111,7 @@ const normalizeScope = (scope: string): string =>
 const getInterpolations =
   memoize((options: GenerateElementOptions): Interpolations => {
     const { tagName } = options;
-    const [, tagPrefix, scssName] = tagName.match(/^(\w+)-(.*)/) ?? [];
+    const [, tagPrefix] = tagName.match(/^(\w+)-(.*)/) ?? [];
     const className = Case.pascal(options.tagName);
     const readmeName = Case.title(options.tagName.replace(/^\w+-(.*)/, '$1'));
     const scope = !options.scope ? '' : normalizeScope(options.scope);
@@ -122,7 +120,6 @@ const getInterpolations =
     const importSpecifier = options.monorepo ? packageName : `@rhds/elements/${tagName}/${tagName}.js`;
     return {
       className,
-      scssName,
       cssRelativePath,
       importSpecifier,
       packageName,

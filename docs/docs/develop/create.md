@@ -53,7 +53,7 @@ tags:
   The element's source files are located directly in it's package root, in our 
   case:
     - `pfe-cool-element.ts` - The element class declaration
-    - `pfe-cool-element.scss` - The element's SASS style module
+    - `pfe-cool-element.css` - The element's CSS style module
 
   These two files are the most important as they contain the actual element 
   definition. In addition, there are a number of config files. Do not edit these files 

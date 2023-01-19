@@ -86,10 +86,6 @@ local.log
 
 test/.wct-kludge
 
-# Sass
-.sass-cache
-# Sassdoc compiled assets ignored
-elements/pfe-sass/demo/*
 core/pfe-core/demo/*
 !core/pfe-core/demo/example.html
 

@@ -164,7 +164,8 @@ Finally, we'll need to update our demo page (`/demo/index.html`) to include the 
 </pfe-cool-element>
 ```
 
-We can also modify `pfe-cool-element.scss` to adjust the background-size property on `.pfe-cool-element__profile`.
+We can also modify `pfe-cool-element.css` to adjust the background-size property 
+on `.pfe-cool-element__profile`.
 
 The final result should look like this:
 
@@ -183,7 +184,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js'
 import { styleMap } from 'lit/directives/style-map.js';
 
-import styles from './pfe-cool-element.scss';
+import styles from './pfe-cool-element.css';
 
 /**
  * Displays a user profile and optional avatar, and provides a "follow"/"unfollow" toggle.

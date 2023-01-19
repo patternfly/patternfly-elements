@@ -66,7 +66,7 @@ tags:
   In the newly created directory, you'll find:
 
   - A TypeScript file containing the element's class definition.
-  - An SCSS file where you'll add your element's private styles.
+  - A CSS file where you'll add your element's private styles.
   - A README file where you should briefly document your element
   - A file to write your unit tests
   - An HTML demo where you can show off your element and add examples for your development workflow
@@ -85,7 +85,8 @@ tags:
 
   This launches a "buildless" development server which serves a simple <abbr title="single page app">SPA</abbr> containing all the element demos.
   The server _does not require a build step_ to work, so avoid running `npm run build` unless you have to.
-  Rather, the dev server compiles your source files (`.ts`, `.scss`, etc.) on-the-fly.
+  Rather, the dev server compiles your source files (`.ts`, `.css`, etc.) 
+  on-the-fly.
 
   Running that command launches the demo app in a new browser tab, and refreshes the page on save.
 

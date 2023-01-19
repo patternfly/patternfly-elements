@@ -15,7 +15,7 @@ export interface BaseOptions {
   /** Is this a monorepo */
   monorepo: boolean;
   /** Which type of CSS files should the generator output? */
-  css: 'css' | 'postcss' | 'scss';
+  css: 'css' | 'postcss';
 }
 
 export interface GenerateElementOptions extends BaseOptions {

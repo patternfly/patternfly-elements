@@ -5,10 +5,7 @@ import path from 'path';
 
 const elementsDir = path.join(__dirname, '../elements');
 
-let elementNames = fs.readdirSync(elementsDir).filter(file => fs.statSync(path.join(elementsDir, file)).isDirectory());
-
-// Remove sass helpers from the listings
-elementNames = elementNames.filter(folder => !folder.includes('sass'));
+const elementNames = fs.readdirSync(elementsDir).filter(file => fs.statSync(path.join(elementsDir, file)).isDirectory());
 
 // Copy the LICENSE.txt file from root to the root for each element
 if (fs.existsSync('LICENSE.txt')) {

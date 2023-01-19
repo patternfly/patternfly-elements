@@ -10,7 +10,6 @@
 *.njk
 *.patch
 *.png
-*.scss
 *.sh
 *.spec.js
 *.svg
@@ -33,7 +32,6 @@ docs/core
 docs/components
 node_modules
 
-core/pfe-sass/docs/index.html
 core/**/*.js
 elements/**/*.js
 tools/**/*.js

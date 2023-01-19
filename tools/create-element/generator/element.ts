@@ -84,7 +84,7 @@ const getFilePathsRelativeToPackageDir =
     readme: 'README.md',
     style: `${options.tagName}.${options.css === 'postcss' ? '.postcss.css' : options.css}`,
     test: `test/${options.tagName}.spec.ts`,
-    e2e: `test/${options.tagName}.e2e.spec.ts`,
+    e2e: `test/${options.tagName}.e2e.ts`,
     tsconfig: 'tsconfig.json',
   }));
 
@@ -219,23 +219,6 @@ async function analyzeElement(options: GenerateElementOptions): Promise<void> {
   }
 }
 
-async function updateTsconfig(options: GenerateElementOptions): Promise<void> {
-  const configPath = join(process.cwd(), 'tsconfig.settings.json');
-  const { packageName, tagName } = getInterpolations(options);
-  const config = await readJson<Tsconfig>(configPath);
-
-  if (config?.compilerOptions?.paths) {
-    config.compilerOptions.paths[packageName] = [`./elements/${tagName}/${tagName}.ts`];
-  }
-
-  if (!config.references?.some(x => x.path === `./elements/${tagName}`)) {
-    config.references.push({ 'path': `./elements/${tagName}` });
-  }
-
-  await writeFile(configPath, JSON.stringify(config, null, 2), 'utf8');
-  await execaCommand(`npx eslint --fix ${configPath}`);
-}
-
 /**
  * Generate an Element
  */
@@ -251,10 +234,5 @@ export async function generateElement(options: GenerateElementOptions): Promise<
   } else {
     await writeElementFiles(options);
     analyzeElement; // skip this for now, come back to fix later
-    // await analyzeElement(options);
-    if (options.monorepo) {
-      await updateTsconfig(options);
-      await execaCommand('npm install');
-    }
   }
 }

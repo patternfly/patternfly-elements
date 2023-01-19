@@ -47,8 +47,6 @@ elements/**/*.d.ts
 core/**/*.d.ts
 tools/**/*.d.ts
 
-tools/**/*.css
-
 elements/*/package-lock.json
 core/*/package-lock.json
 tools/*/package-lock.json

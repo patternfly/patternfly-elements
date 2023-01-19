@@ -14,7 +14,6 @@ function createLitCssImportStatement(ctx, sourceFile) {
       statement.moduleSpecifier.getText() === 'lit') {
       for (const binding of statement.importClause?.namedBindings?.getChildren() ?? []) {
         if (binding.getText() === 'css') {
-          console.log(statement)
           return;
         }
       }
@@ -94,6 +93,30 @@ module.exports = function(_program, { inline = false } = {}) {
       }
       return ts.visitEachChild(node, visitor, ctx);
     }
-    return sourceFile => ts.visitEachChild(sourceFile, visitor, ctx);
+
+    return sourceFile => {
+      const children = sourceFile.getChildren();
+      const litImportBindings = /** @type {ts.ImportDeclaration|undefined} */(children.find(x =>
+        !ts.isTypeOnlyImportOrExportDeclaration(x) &&
+        !ts.isNamespaceImport(x) &&
+        ts.isImportDeclaration(x) &&
+        x.moduleSpecifier.getText() === 'lit' &&
+        x.importClause?.namedBindings
+      ))?.importClause?.namedBindings;
+
+      const hasStyleImports = children.find(x => ts.isImportDeclaration(x) && x.moduleSpecifier.getText().endsWith('.css'));
+      if (hasStyleImports) {
+        if (litImportBindings && ts.isNamedImports(litImportBindings) && !litImportBindings.elements?.some(x => x.getText() === 'css')) {
+          ctx.factory.updateNamedImports(
+            litImportBindings,
+            [
+              ...litImportBindings.elements,
+              ctx.factory.createImportSpecifier(false, undefined, ctx.factory.createIdentifier('css'))
+            ]
+          );
+        }
+      }
+      return ts.visitEachChild(sourceFile, visitor, ctx);
+    };
   };
 };

@@ -19,7 +19,7 @@
     "watch:docs": "wireit",
     "watch:docs:analyze": "wireit",
     "watch:docs:core": "wireit",
-    "new": "wireit",
+    "new": "npm run build:create && ./tools/create-element/bin/main.js",
     "🚧-BUILD": "❓ Make packages and artifacts",
     "build": "wireit",
     "build:tools": "wireit",
@@ -75,12 +75,6 @@
         "build:elements",
         "build:create",
         "build:bundle"
-      ]
-    },
-    "new": {
-      "command": "./tools/create-element/bin/main.js",
-      "dependencies": [
-        "build:create"
       ]
     },
     "analyze": {
@@ -322,7 +316,7 @@
     "prompts": "^2.4.2",
     "renamer": "^4.0.0",
     "wireit": "^0.9.3"
-   },
+  },
   "workspaces": [
     "./core/*",
     "./elements",

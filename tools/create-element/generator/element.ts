@@ -1,21 +1,15 @@
 import type { GenerateElementOptions } from '../main';
-import type { CompilerOptions, ProjectReference } from 'typescript';
 
 import Case from 'case';
 import Chalk from 'chalk';
 import prompts from 'prompts';
-import { execa, execaCommand } from 'execa';
+import { execa } from 'execa';
 
 import { fileURLToPath } from 'url';
 import { dirname, join, relative } from 'path';
 
-import { exists, mkdirp, processTemplate, readFile, readJson, writeFile } from './files.js';
+import { exists, mkdirp, processTemplate, readFile, writeFile } from './files.js';
 import { memoize } from './fp.js';
-
-interface Tsconfig {
-  compilerOptions: CompilerOptions;
-  references: ProjectReference[];
-}
 
 const { green, greenBright } = Chalk;
 

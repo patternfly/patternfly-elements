@@ -31,11 +31,6 @@
     "templates/**/*"
   ],
   "scripts": {
-    "prepublishOnly": "npm run build",
-    "clean": "rimraf './main.{js,d.ts}' './generator/*.{js,d.ts}' bin/main.d.ts",
-    "build": "tsc -b .",
-    "lint": "tsc -b . --noEmit",
-    "start": "tsc -w",
     "test": "echo 'unit tests for PFE generator not written yet'"
   },
   "bugs": {

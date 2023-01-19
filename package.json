@@ -28,6 +28,7 @@
     "build:core": "wireit",
     "build:lightdom": "wireit",
     "build:bundle": "wireit",
+    "build:create": "wireit",
     "analyze": "wireit",
     "docs": "wireit",
     "site": "npm run build",
@@ -78,7 +79,19 @@
       ]
     },
     "build:create": {
-      "command": "npm run build --workspace @patternfly/create-element",
+      "command": "tsc -b tools/create-element",
+      "files": [
+        "tools/create-element/*.ts",
+        "tools/create-element/generator/**/*.ts"
+      ],
+      "output": [
+        "tools/create-element/*.js",
+        "tools/create-element/*.map",
+        "tools/create-element/*.d.ts",
+        "tools/create-element/generator/**/*.js",
+        "tools/create-element/generator/**/*.map",
+        "tools/create-element/generator/**/*.d.ts"
+      ],
       "dependencies": [
         "build:core",
         "build:tools"
@@ -92,11 +105,9 @@
         "build:tools"
       ],
       "files": [
-        "elements/**/*.ts",
-        "elements/**/*.css",
+        "elements/*/*.ts",
+        "elements/*/*.css",
         "elements/tsconfig.json",
-        "core/**/*.ts",
-        "core/tsconfig.json",
         "tsconfig.settings.json"
       ],
       "output": [
@@ -126,7 +137,8 @@
         "build:tools"
       ],
       "files": [
-        "core/pfe-core/**/*.ts"
+        "core/**/*.ts",
+        "core/tsconfig.json"
       ],
       "output": [
         "core/pfe-core/**/*.js",

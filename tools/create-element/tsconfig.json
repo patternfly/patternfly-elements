@@ -10,12 +10,5 @@
   ],
   "include": [
     "."
-  ],
-  "compilerOptions": {
-    "module": "es2020",
-    "target": "es2020",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "emitDeclarationOnly": false
-  }
+  ]
 }

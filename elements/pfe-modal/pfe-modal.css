@@ -1,10 +1,9 @@
-$spacer-align-top: var(--pf-c-modal-box--m-align-top--spacer,
-  var(--pf-global--spacer--sm, 0.5rem));
-$height-offset: min($spacer-align-top, var(--pf-global--spacer--2xl, 3rem));
-
 :host {
 	display: block;
 	position: relative;
+  --_spacer-align-top: var(--pf-c-modal-box--m-align-top--spacer,
+    var(--pf-global--spacer--sm, 0.5rem));
+  --_height-offset: min(var(--_spacer-align-top), var(--pf-global--spacer--2xl, 3rem));
 }
 
 [hidden] {
@@ -87,7 +86,6 @@ section {
   --pf-c-modal-box--Width: var(--pf-c-modal-box--m-lg--lg--MaxWidth, 70rem);
 }
 
-
 [part=content] {
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -97,10 +95,10 @@ section {
       3rem)));
 
   box-sizing: border-box;
+}
 
-  ::slotted([slot="header"]) {
-    margin-top: 0 !important;
-  }
+[part=content] ::slotted([slot="header"]) {
+  margin-top: 0 !important;
 }
 
 header {
@@ -147,16 +145,16 @@ header ::slotted(:is(h1,h2,h3,h4,h5,h6)[slot="header"]) {
   font-size: var(--pf-c-button--FontSize,
     var(--pf-global--FontSize--md,
       1rem));
+}
 
-  &:is(:focus-within, :focus-visible, :hover) {
-    color: var(--pf-c-button--m-plain--focus--Color, var(--pf-global--Color--100, #151515));
-  }
+[part=close-button]:is(:focus-within, :focus-visible, :hover) {
+  color: var(--pf-c-button--m-plain--focus--Color, var(--pf-global--Color--100, #151515));
+}
 
-  > svg {
-    font-size: 16px;
-    width: var(--pf-global--spacer--md, 1rem);
-    aspect-ratio: 1/1;
-  }
+[part=close-button] > svg {
+  font-size: 16px;
+  width: var(--pf-global--spacer--md, 1rem);
+  aspect-ratio: 1/1;
 }
 
 :host([position="top"]) #dialog {
@@ -176,7 +174,7 @@ header ::slotted(:is(h1,h2,h3,h4,h5,h6)[slot="header"]) {
       var(--pf-global--spacer--xl, 2rem))));
 
   max-height: var(--pf-c-modal-box--m-align-top--MaxHeight,
-    calc(100% - $height-offset - $spacer-align-top));
+    calc(100% - var(--_height-offset) - var(--_spacer-align-top)));
 }
 
 footer {

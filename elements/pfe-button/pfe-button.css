@@ -45,7 +45,7 @@ button:active {
     var(--pf-global--primary-color--200, #004080));
   --pf-c-button--after--BorderWidth: var(--pf-c-button--active--after--BorderWidth,
     var(--pf-global--BorderWidth--md, 2px));
-  // DANGER
+  /* DANGER */
   --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--active--Color,
     var(--pf-global--Color--light-100, #fff));
   --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--active--BackgroundColor,
@@ -59,7 +59,7 @@ button:focus {
     var(--pf-global--primary-color--200, #004080));
   --pf-c-button--after--BorderWidth: var(--pf-c-button--focus--after--BorderWidth,
     var(--pf-global--BorderWidth--md, 2px));
-  // DANGER
+  /* DANGER */
   --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--focus--Color,
     var(--pf-global--Color--light-100, #fff));
   --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--focus--BackgroundColor,
@@ -73,7 +73,7 @@ button:hover {
     var(--pf-global--primary-color--200, #004080));
   --pf-c-button--after--BorderWidth: var(--pf-c-button--hover--after--BorderWidth,
     var(--pf-global--BorderWidth--md, 2px));
-  // DANGER
+  /* DANGER */
   --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--hover--Color,
     var(--pf-global--Color--light-100, #fff));
   --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--hover--BackgroundColor,
@@ -285,7 +285,7 @@ button:hover {
   --pf-c-button--m-secondary--BackgroundColor: var(--pf-c-button--m-secondary--active--BackgroundColor, transparent);
   --pf-c-button--after--BorderColor: var(--pf-c-button--m-secondary--active--after--BorderColor,
     var(--pf-global--primary-color--100, #06c));
-  // DANGER
+  /* DANGER */
   --pf-c-button--m-danger--Color: var(--pf-c-button--m-secondary--m-danger--active--Color,
     var(--pf-global--danger--color--200, #a30000));
   --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-secondary--m-danger--active--BackgroundColor, transparent);
@@ -297,7 +297,8 @@ button:hover {
   --pf-c-button--m-secondary--BackgroundColor: var(--pf-c-button--m-secondary--focus--BackgroundColor, transparent);
   --pf-c-button--after--BorderColor: var(--pf-c-button--m-secondary--focus--after--BorderColor,
     var(--pf-global--primary-color--100, #06c));
-  // DANGER
+  /* DANGER */
+  --pf-c-button--m-danger--Color: var(--pf-c-button--m-secondary--m-danger--active--Color,
   --pf-c-button--m-danger--Color: var(--pf-c-button--m-secondary--m-danger--focus--Color,
     var(--pf-global--danger--color--200, #a30000));
   --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-secondary--m-danger--focus--BackgroundColor, transparent);
@@ -310,7 +311,7 @@ button:hover {
     transparent);
   --pf-c-button--after--BorderColor: var(--pf-c-button--m-secondary--hover--after--BorderColor,
     var(--pf-global--primary-color--100, #06c));
-  // DANGER
+  /* DANGER */
   --pf-c-button--m-danger--Color: var(--pf-c-button--m-secondary--m-danger--hover--Color,
     var(--pf-global--danger--color--200, #a30000));
   --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-secondary--m-danger--hover--BackgroundColor, transparent);

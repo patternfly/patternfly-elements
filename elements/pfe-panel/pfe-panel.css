@@ -1,5 +1,5 @@
 :host {
-  // NB: upstream sets these on the container, which is why we do not use fallbacks here.
+  /* NB: upstream sets these on the container, which is why we do not use fallbacks here. */
   --pf-c-panel--Width: auto;
   --pf-c-panel--MinWidth: auto;
   --pf-c-panel--MaxWidth: none;

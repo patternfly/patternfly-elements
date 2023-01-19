@@ -1,48 +1,33 @@
-const compress = require('compression');
-const anchorsPlugin = require('@orchidjs/eleventy-plugin-ids');
-const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
-const directoryOutputPlugin = require('@11ty/eleventy-plugin-directory-output');
+const AnchorsPlugin = require('@orchidjs/eleventy-plugin-ids');
+const SyntaxHighlightPlugin = require('@11ty/eleventy-plugin-syntaxhighlight');
+const DirectoryOutputPlugin = require('@11ty/eleventy-plugin-directory-output');
 
-const pfeAssetsPlugin = require('@patternfly/pfe-tools/11ty/plugins/pfe-assets.cjs');
+const PfeAssetsPlugin = require('@patternfly/pfe-tools/11ty/plugins/pfe-assets.cjs');
+const CustomElementsManifestPlugin = require('@patternfly/pfe-tools/11ty/plugins/custom-elements-manifest.cjs');
+const OrderTagsPlugin = require('@patternfly/pfe-tools/11ty/plugins/order-tags.cjs');
+const TodosPlugin = require('@patternfly/pfe-tools/11ty/plugins/todos.cjs');
+const TocPlugin = require('@patternfly/pfe-tools/11ty/plugins/table-of-contents.cjs');
 
-const customElementsManifestPlugin = require('@patternfly/pfe-tools/11ty/plugins/custom-elements-manifest.cjs');
-const orderTagsPlugin = require('@patternfly/pfe-tools/11ty/plugins/order-tags.cjs');
-const todosPlugin = require('@patternfly/pfe-tools/11ty/plugins/todos.cjs');
-
-const markdownIt = require('markdown-it');
 const markdownItAnchor = require('markdown-it-anchor');
 
-const pluginToc = require('@patternfly/pfe-tools/11ty/plugins/table-of-contents.cjs');
-
-const markdownLib = markdownIt({ html: true })
-  .use(markdownItAnchor);
-
 module.exports = function(eleventyConfig) {
-  eleventyConfig.setLibrary('md', markdownLib);
+  eleventyConfig.amendLibrary('md', md => md.use(markdownItAnchor));
 
   eleventyConfig.setQuietMode(true);
 
   eleventyConfig.setWatchThrottleWaitTime(500);
 
-  eleventyConfig.setBrowserSyncConfig({
-    open: 'local',
-    server: {
-      baseDir: '_site',
-      middleware: [compress()],
-    },
-  });
-
   eleventyConfig.addPlugin(EleventyRenderPlugin);
 
   /** Table of Contents Shortcode */
-  eleventyConfig.addPlugin(pluginToc, { tags: ['h2', 'h3', 'h4'] });
+  eleventyConfig.addPlugin(TocPlugin, { tags: ['h2', 'h3', 'h4'] });
 
   /** Copy and manage site assets from the monorepo */
-  eleventyConfig.addPlugin(pfeAssetsPlugin);
+  eleventyConfig.addPlugin(PfeAssetsPlugin);
 
   /** Generate and consume custom elements manifests */
-  eleventyConfig.addPlugin(customElementsManifestPlugin, {
+  eleventyConfig.addPlugin(CustomElementsManifestPlugin, {
     extraDemos: [{
       slug: 'styles',
       title: 'Styles',
@@ -53,13 +38,13 @@ module.exports = function(eleventyConfig) {
   });
 
   /** Collections to organize alphabetically instead of by date */
-  eleventyConfig.addPlugin(orderTagsPlugin, { tags: ['component'], order: 'alphabetically' });
+  eleventyConfig.addPlugin(OrderTagsPlugin, { tags: ['component'], order: 'alphabetically' });
 
   /** Collections to organize by order instead of date */
-  eleventyConfig.addPlugin(orderTagsPlugin, { tags: ['develop'] });
+  eleventyConfig.addPlugin(OrderTagsPlugin, { tags: ['develop'] });
 
   /** list todos */
-  eleventyConfig.addPlugin(todosPlugin);
+  eleventyConfig.addPlugin(TodosPlugin);
 
   /** format date strings */
   eleventyConfig.addFilter('prettyDate', function(dateStr, options = {}) {
@@ -69,10 +54,10 @@ module.exports = function(eleventyConfig) {
   });
 
   /** fancy syntax highlighting with diff support */
-  eleventyConfig.addPlugin(syntaxHighlight);
+  eleventyConfig.addPlugin(SyntaxHighlightPlugin);
 
   /** Add IDs to heading elements */
-  eleventyConfig.addPlugin(anchorsPlugin, {
+  eleventyConfig.addPlugin(AnchorsPlugin, {
     formatter(element, existingids) {
       if (
         !existingids.includes(element.getAttribute('id')) &&
@@ -88,7 +73,7 @@ module.exports = function(eleventyConfig) {
     },
   });
 
-  eleventyConfig.addPlugin(directoryOutputPlugin, {
+  eleventyConfig.addPlugin(DirectoryOutputPlugin, {
     // Customize columns
     columns: {
       filesize: true, // Use `false` to disable

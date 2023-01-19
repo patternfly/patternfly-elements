@@ -22,21 +22,10 @@ A generator is included for creating web components that meet these goals.
 git clone git@github.com:patternfly/patternfly-elements.git
 cd patternfly-elements
 npm ci # install dependencies.
-npm run start 
+npm run start
 ```
 
 ### Additional dependencies
-
-#### Hub
-
-If you will be doing any release work, it is recommended that you install Hub.
-
-To install on a MacOS: `brew install hub`.
-
-For other systems, please see documentation:
-    - [Hub](https://hub.github.com/)
-
-_Note: You will need to use [Node](https://nodejs.org/en/) v12 or higher._
 
 #### nvm
 
@@ -50,14 +39,12 @@ Many commands have an optional argument of space-separated component name(s), if
 ```shell
 # Build all components
 npm run build
-
-# Build one or more components
-npm run build -w @patternfly/pfe-card
 ```
 
 ### Preview
 
-Runs server process to preview files (does not build)
+Runs development server.
+
 ```shell
 npm start
 ```
@@ -100,12 +87,12 @@ npm run pr
 ### Documentation site
 View the documentation locally
 ```shell
-npm run start:docs
+npm run start
 ```
 
 Build the documentation site
 ```shell
-npm run build:docs
+npm run docs
 ```
 
 ## Support

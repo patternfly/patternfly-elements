@@ -54,7 +54,7 @@
     "**/*.{js,cjs,d.ts,map}"
   ],
   "dependencies": {
-    "@11ty/eleventy": "^1.0.2",
+    "@11ty/eleventy": "^2.0.0-beta.1 || ^2.0.0",
     "@11ty/eleventy-plugin-directory-output": "^1.0.1",
     "@11ty/eleventy-plugin-syntaxhighlight": "^4.1.0",
     "@changesets/cli": "^2.25.0",

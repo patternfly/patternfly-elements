@@ -192,7 +192,7 @@
       ]
     },
     "docs": {
-      "command": "eleventy --config=eleventy.config.cjs",
+      "command": "eleventy",
       "files": [
         "elements/*/docs/*",
         "docs/**/*"
@@ -208,6 +208,7 @@
     },
     "dev": {
       "command": "web-dev-server --open --watch",
+      "service": true,
       "dependencies": [
         "build:tools"
       ]
@@ -225,7 +226,7 @@
       ]
     },
     "watch:docs": {
-      "command": "eleventy --serve --config=eleventy.config.cjs",
+      "command": "eleventy --serve",
       "service": true,
       "dependencies": [
         "build:tools",
@@ -234,6 +235,8 @@
       ]
     },
     "start": {
+      "service": true,
+      "command": "eleventy --serve",
       "dependencies": [
         "build:tools",
         "build:icons",

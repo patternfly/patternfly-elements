@@ -107,12 +107,7 @@
         "tools/create-element/generator/**/*.ts"
       ],
       "output": [
-        "tools/create-element/*.js",
-        "tools/create-element/*.map",
-        "tools/create-element/*.d.ts",
-        "tools/create-element/generator/**/*.js",
-        "tools/create-element/generator/**/*.map",
-        "tools/create-element/generator/**/*.d.ts"
+        "tools/create-element/*.tsbuildinfo"
       ],
       "dependencies": [
         "build:core",
@@ -326,9 +321,8 @@
     "open": "^8.4.0",
     "prompts": "^2.4.2",
     "renamer": "^4.0.0",
-    "wireit": "^0.9.3",
-    "zero-md": "^2.3.6"
-  },
+    "wireit": "^0.9.3"
+   },
   "workspaces": [
     "./core/*",
     "./elements",

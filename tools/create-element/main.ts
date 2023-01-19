@@ -83,9 +83,11 @@ export async function promptForElementGeneratorOptions(
   } as GenerateElementOptions;
 }
 
+const readJsonOrVoid = (path: string) => readJson(path).catch(() => void 0);
+
 async function getDefaultPackageName() {
-  return (await readJson(join(process.cwd(), 'elements', 'package.json')) as PackageJSON)?.name ??
-         (await readJson(join(process.cwd(), 'package.json')) as PackageJSON) ?? '';
+  return (await readJsonOrVoid(join(process.cwd(), 'elements', 'package.json')) as PackageJSON)?.name ??
+         (await readJsonOrVoid(join(process.cwd(), 'package.json')) as PackageJSON)?.name ?? '';
 }
 
 export async function main(): Promise<void> {

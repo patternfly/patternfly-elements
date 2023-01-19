@@ -112,6 +112,12 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
       app.use(new Router()
+        .get(/elements\/.*\.(css|js)$/, async (ctx, next) => {
+          ctx.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+          ctx.set('Pragma', 'no-cache');
+          ctx.set('Expires', '0');
+          return next();
+        })
         .get('/elements/:tagName/:fileName.js', async ctx => {
           return ctx.redirect(`/elements/${ctx.params.tagName}/${ctx.params.fileName}.ts`);
         })
@@ -228,6 +234,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       }),
 
       replace({
+        'preventAssignment': true,
         'process.env.NODE_ENV': '"production"',
       }),
 

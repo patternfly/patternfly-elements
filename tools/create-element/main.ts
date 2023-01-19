@@ -12,8 +12,6 @@ export interface BaseOptions {
   directory: string;
   /** Should existing files be overwritten */
   overwrite: boolean;
-  /** Is this a monorepo */
-  monorepo: boolean;
   /** Which type of CSS files should the generator output? */
   css: 'css' | 'postcss';
 }
@@ -21,8 +19,8 @@ export interface BaseOptions {
 export interface GenerateElementOptions extends BaseOptions {
   /** The element's tagname e.g. `pfe-button` */
   tagName: string;
-  /** The element's npm package scope e.g. `patternfly` */
-  scope: string;
+  /** The NPM package name */
+  packageName: string;
 }
 
 export type PromptOptions<T> =
@@ -38,11 +36,6 @@ interface PackageJSON {
   name: string;
   version: string;
   workspaces?: string;
-}
-
-async function isMonorepo() {
-  const { workspaces } = await readJson<PackageJSON>(join(process.cwd(), 'package.json'));
-  return !!workspaces;
 }
 
 function banner() {
@@ -86,13 +79,13 @@ export async function promptForElementGeneratorOptions(
       message: 'What is the element\'s tag name?',
       initial: options?.tagName ?? '',
       validate: name => name.includes('-') || ERR_BAD_CE_TAG_NAME,
-    }, {
-      type: () => (!options?.scope && options?.monorepo) ? 'text' : false,
-      name: 'scope',
-      message: 'What is the package\'s NPM scope?',
-      initial: options?.scope ?? ''
     }]),
   } as GenerateElementOptions;
+}
+
+async function getDefaultPackageName() {
+  return (await readJson(join(process.cwd(), 'elements', 'package.json')) as PackageJSON)?.name ??
+         (await readJson(join(process.cwd(), 'package.json')) as PackageJSON) ?? '';
 }
 
 export async function main(): Promise<void> {
@@ -116,20 +109,16 @@ export async function main(): Promise<void> {
         type: 'string',
         description: 'Custom element tag name. e.g. `pfe-button`',
       })
-      .option('scope', {
-        alias: 's',
+      .option('packageName', {
+        alias: 'p',
         type: 'string',
-        description: 'NPM package scope. e.g. `@patternfly`',
+        description: 'NPM package name e.g. `@patternfly/elements`',
+        default: await getDefaultPackageName(),
       })
       .option('overwrite', {
         type: 'boolean',
         default: false,
         description: 'Overwrite files without prompting',
-      })
-      .option('monorepo', {
-        type: 'boolean',
-        default: await isMonorepo(),
-        description: 'Generate an npm package for the element'
       })
       .option('css', {
         type: 'boolean',

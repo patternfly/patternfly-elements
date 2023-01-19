@@ -2,7 +2,7 @@ import type { Plugin } from '@custom-elements-manifest/analyzer';
 import type { PfeConfig } from '../config.js';
 
 import { isCustomElement } from './lib/Manifest.js';
-import { readdirSync, readFileSync, existsSync } from 'node:fs';
+import { readdirSync, existsSync } from 'node:fs';
 import { join, sep } from 'node:path';
 import { getPfeConfig } from '../config.js';
 import slugify from 'slugify';

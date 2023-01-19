@@ -19,7 +19,6 @@ import { litCss } from 'web-dev-server-plugin-lit-css';
 import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { importMapsPlugin } from '@web/dev-server-import-maps';
-import { transformSass } from './esbuild.js';
 import { createRequire } from 'module';
 import { promisify } from 'node:util';
 

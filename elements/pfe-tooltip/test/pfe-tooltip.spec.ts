@@ -1,4 +1,4 @@
-import { expect, html, fixture, nextFrame } from '@open-wc/testing';
+import { expect, html, fixture } from '@open-wc/testing';
 import type { A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 import { PfeTooltip } from '../pfe-tooltip.js';

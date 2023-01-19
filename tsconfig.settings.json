@@ -117,6 +117,9 @@
       "@patternfly/pfe-panel": [
         "./elements/pfe-panel/pfe-panel.ts"
       ],
+      "@patternfly/pfe-popover": [
+        "./elements/pfe-popover/pfe-popover.ts"
+      ],
       "@patternfly/pfe-progress-steps": [
         "./elements/pfe-progress-steps/pfe-progress-steps.ts"
       ],
@@ -221,6 +224,9 @@
     },
     {
       "path": "./elements/pf-popover"
+    },
+    {
+      "path": "./elements/pfe-popover"
     }
   ]
 }

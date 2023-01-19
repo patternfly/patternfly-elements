@@ -19,7 +19,7 @@
     "watch:docs": "wireit",
     "watch:docs:analyze": "wireit",
     "watch:docs:core": "wireit",
-    "new": "./tools/create-element/bin/main.js",
+    "new": "wireit",
     "🚧-BUILD": "❓ Make packages and artifacts",
     "build": "wireit",
     "build:tools": "wireit",
@@ -75,6 +75,29 @@
         "build:elements",
         "build:create",
         "build:bundle"
+      ]
+    },
+    "new": {
+      "command": "./tools/create-element/bin/main.js",
+      "dependencies": [
+        "build:create"
+      ]
+    },
+    "analyze": {
+      "command": "npm run -ws --if-present analyze",
+      "files": [
+        "elements/**/*.ts",
+        "elements/**/*.css",
+        "core/**/*.ts",
+        "tools/**/*.ts"
+      ],
+      "output": [
+        "elements/custom-elements.json",
+        "core/pfe-core/custom-elements.json"
+      ],
+      "dependencies": [
+        "build:core",
+        "build:tools"
       ]
     },
     "build:create": {
@@ -152,23 +175,6 @@
       ],
       "output": [
         "elements/pfe-icon/icons/*/*.js"
-      ]
-    },
-    "analyze": {
-      "command": "npm run -ws --if-present analyze",
-      "files": [
-        "elements/**/*.ts",
-        "elements/**/*.css",
-        "core/**/*.ts",
-        "tools/**/*.ts"
-      ],
-      "output": [
-        "elements/custom-elements.json",
-        "core/pfe-core/custom-elements.json"
-      ],
-      "dependencies": [
-        "build:core",
-        "build:tools"
       ]
     },
     "build:bundle": {

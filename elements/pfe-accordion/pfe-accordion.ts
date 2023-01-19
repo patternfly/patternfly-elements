@@ -5,8 +5,9 @@ import { customElement } from 'lit/decorators.js';
 
 import { BaseAccordion } from './BaseAccordion.js';
 import { BaseAccordionHeader } from './BaseAccordionHeader.js';
-import './pfe-accordion-header.js';
-import './pfe-accordion-panel.js';
+
+export * from './pfe-accordion-header.js';
+export * from './pfe-accordion-panel.js';
 
 import style from './pfe-accordion.css';
 

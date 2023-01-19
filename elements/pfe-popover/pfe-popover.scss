@@ -1,11 +1,105 @@
-@use "@patternfly/pfe-sass" as *;
-
-@include configure(
-  $name: '<%= cssName %>',
-  $variables: (),
-);
-
-
 :host {
-  display: block;
+  display: inline;
+  // 
+  --_timestamp-text-decoration: underline dashed 1px;
+  --_timestamp-text-underline-offset: 4px;
 }
+
+#invoker {
+  display: inline-block;
+  position: relative;
+}
+
+#popover,
+#popover::after {
+  position: absolute;
+}
+
+
+#popover {
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10000;
+  transition: opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s;
+  text-align: center;
+  word-break: break-word;
+  translate: var(--_floating-content-translate);
+  max-width: calc(100vw - 10px);
+  width: max-content;
+  top: 0;
+  left: 0;
+  will-change: opacity;
+  //
+  --_timestamp-text-decoration: none;
+  --_timestamp-text-underline-offset: initial;
+  line-height: var(--pf-c-popover--line-height, 1.5);
+  max-width: var(--pf-c-popover--MaxWidth, 18.75rem);
+  box-shadow: var(--pf-c-popover--BoxShadow,
+    var(--pf-global--BoxShadow--md,
+      0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12),
+      0 0 0.25rem 0 rgba(3, 3, 3, 0.06)));
+  padding:
+    var(--pf-c-popover__content--PaddingTop,
+      var(--pf-global--spacer--sm, 0.5rem))
+    var(--pf-c-popover__content--PaddingRight,
+      var(--pf-global--spacer--sm, 0.5rem))
+    var(--pf-c-popover__content--PaddingBottom,
+      var(--pf-global--spacer--sm, 0.5rem))
+    var(--pf-c-popover__content--PaddingLeft,
+      var(--pf-global--spacer--sm, 0.5rem));
+  font-size: var(--pf-c-popover__content--FontSize,
+    var(--pf-global--FontSize--sm, 0.875rem));
+  color: var(--pf-c-popover__content--Color,
+    var(--pf-global--Color--light-100, #ffffff));
+  background-color: var(--pf-c-popover__content--BackgroundColor,
+    var(--pf-global--BackgroundColor--dark-100, #151515));
+}
+
+#container {
+  display: inline-flex;
+  position: relative;
+  --_floating-arrow-size: 0.5rem;
+  // 
+  --_floating-arrow-size: var(--pf-c-popover__arrow--Width, 0.5rem);
+}
+
+#popover::after {
+  display: block;
+  content: '';
+  rotate: 45deg;
+  width: var(--_floating-arrow-size);
+  height: var(--_floating-arrow-size);
+  will-change: left top right bottom;
+  //
+  background-color: var(--pf-c-popover__content--BackgroundColor,
+    var(--pf-global--BackgroundColor--dark-100, #151515));
+}
+
+.open #popover {
+  opacity: 1;
+}
+
+// LEFT
+.left #popover::after          { right: calc(-0.5 * var(--_floating-arrow-size)); }
+.left.center #popover::after   { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.left.start #popover::after    { top: var(--_floating-arrow-size); }
+.left.end #popover::after      { bottom: var(--_floating-arrow-size); }
+
+// TOP
+.top #popover::after           { top: calc(100% - 0.5 * var(--_floating-arrow-size)); }
+.top.center #popover::after    { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.top.start #popover::after     { left: var(--_floating-arrow-size); }
+.top.end #popover::after       { right: var(--_floating-arrow-size); }
+
+// RIGHT
+.right #popover::after         { right: calc(100% - 0.5 * var(--_floating-arrow-size)); }
+.right.center #popover::after  { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.right.start #popover::after   { top: var(--_floating-arrow-size); }
+.right.end #popover::after     { bottom: var(--_floating-arrow-size); }
+
+// BOTTOM
+.bottom #popover::after        { bottom: calc(100% - 0.5 * var(--_floating-arrow-size)); }
+.bottom.center #popover::after { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.bottom.start #popover::after  { left: var(--_floating-arrow-size); }
+.bottom.end #popover::after    { right: var(--_floating-arrow-size); }

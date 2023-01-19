@@ -33,7 +33,7 @@
     "docs": "wireit",
     "site": "npm run build",
     "🧪-TEST": "❓ Test packages",
-    "test": "wtr --group default",
+    "test": "wireit",
     "test:ci": "wtr",
     "test:watch": "wtr --watch",
     "test:vue": "wtr --watch --group with-vue",
@@ -118,16 +118,20 @@
       ]
     },
     "build:tools": {
-      "command": "tsc --build ./tools/pfe-tools --pretty",
+      "command": "tsc --build tools/pfe-tools --pretty",
       "clean": "if-file-deleted",
       "files": [
+        "tools/pfe-tools/*.ts",
         "tools/pfe-tools/**/*.ts"
       ],
       "output": [
+        "tools/pfe-tools/*.js",
+        "tools/pfe-tools/*.d.ts",
+        "tools/pfe-tools/*.map",
         "tools/pfe-tools/**/*.js",
         "tools/pfe-tools/**/*.d.ts",
         "tools/pfe-tools/**/*.map",
-        "*.tsbuildinfo"
+        "tools/*.tsbuildinfo"
       ]
     },
     "build:core": {
@@ -243,6 +247,12 @@
         "analyze",
         "dev",
         "watch:docs:analyze"
+      ]
+    },
+    "test": {
+      "command": "wtr --group default",
+      "dependencies": [
+        "build:tools"
       ]
     },
     "e2e": {

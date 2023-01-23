@@ -1,6 +1,23 @@
 <link rel="stylesheet" href="./demo.css" />
 <script type="module" src="./pfe-popover.js"></script>
 
-<pf-popover header="Popover header" headingLevel="3" body="Popovers are triggered by click rather than hover." footer="Popover footer">
-  <pfe-button>Toggle popover</pfe-button>
-</pf-popover>
+<section id="basic">
+  <h2>Basic</h2>
+  <pfe-popover
+    header="Popover header"
+    body="Popovers are triggered by click rather than hover."
+    footer="Popover footer"
+  >
+    <pfe-button>Toggle popover</pfe-button>
+  </pfe-popover>
+</section>
+<section>
+  <pfe-popover
+    header="Popover header"
+    body="Popovers are triggered by click rather than hover."
+    footer="Popover footer"
+  >
+    <pfe-icon icon="user" slot="header-icon"></pfe-icon>
+    <pfe-button>Toggle popover</pfe-button>
+  </pfe-popover>
+</section>

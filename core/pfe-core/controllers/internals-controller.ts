@@ -48,18 +48,27 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   #internals: ElementInternals;
 
+  #formDisabled = false;
+
   /** True when the control is disabled via it's containing fieldset element */
   get formDisabled() {
-    return this.host.matches(':disabled');
+    return this.host.matches(':disabled') || this.#formDisabled;
   }
 
   static protos = new WeakMap();
 
   constructor(
-    public host: ReactiveControllerHost & HTMLElement,
+    public host: ReactiveControllerHost & HTMLElement & { formDisabledCallback?(disabled: boolean): void },
     options?: Partial<ARIAMixin>
   ) {
     this.#internals = host.attachInternals();
+    // We need to polyfill :disabled
+    // see https://github.com/calebdwilliams/element-internals-polyfill/issues/88
+    const orig = host.formDisabledCallback;
+    host.formDisabledCallback = disabled => {
+      this.#formDisabled = disabled;
+      orig?.call(host, disabled);
+    };
     // proxy the internals object's aria prototype
     for (const key of Object.keys(Object.getPrototypeOf(this.#internals))) {
       if (isARIAMixinProp(key)) {

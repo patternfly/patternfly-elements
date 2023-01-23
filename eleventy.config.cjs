@@ -27,15 +27,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(PfeAssetsPlugin);
 
   /** Generate and consume custom elements manifests */
-  eleventyConfig.addPlugin(CustomElementsManifestPlugin, {
-    extraDemos: [{
-      slug: 'styles',
-      title: 'Styles',
-      url: 'demo/index.html',
-      base: 'core',
-      filePath: '_site/core/styles/demo/pfe-styles.html',
-    }]
-  });
+  eleventyConfig.addPlugin(CustomElementsManifestPlugin);
 
   /** Collections to organize alphabetically instead of by date */
   eleventyConfig.addPlugin(OrderTagsPlugin, { tags: ['component'], order: 'alphabetically' });

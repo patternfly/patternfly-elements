@@ -9,7 +9,6 @@ function readPackageVersion(module) {
 
 const LIT_VERSION = readPackageVersion('lit');
 const FUSE_VERSION = readPackageVersion('fuse.js');
-const ZERO_MD_VERSION = readPackageVersion('zero-md');
 const PRISM_VERSION = readPackageVersion('prismjs');
 const PWA_HELPER_VERSION = readPackageVersion('pwa-helpers');
 
@@ -72,7 +71,6 @@ module.exports = async function() {
   await generator.install([
     'tslib',
     'element-internals-polyfill',
-    `zero-md@${ZERO_MD_VERSION}`,
     `fuse.js@${FUSE_VERSION}`,
     ...LIT_DEPS,
     ...PWA_DEPS

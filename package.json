@@ -152,7 +152,7 @@
         "build:tools"
       ],
       "output": [
-        "elements/pfe-icon/icons/*/*.js"
+        "elements/pf-icon/icons/*/*.js"
       ]
     },
     "build:bundle": {

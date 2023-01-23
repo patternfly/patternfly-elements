@@ -54,7 +54,7 @@ tags:
 | `--version`       | Show version number                        | boolean                                                         |
 | `--directory`     | Output directory                           | string [default: "/users/bennyp/developer/patternfly-elements"] |
 | `--silent`        | Do not log anything to stdout              | boolean [default: false]                                        |
-| `-n`, `--tagName` | Custom element tag name. e.g. `pfe-button` | string                                                          |
+| `-n`, `--tagName` | Custom element tag name. e.g. `pf-button` | string                                                          |
 | `-s`, `--scope`   | NPM package scope. e.g. `@patternfly`      | string                                                          |
 | `--overwrite`     | Overwrite files without prompting          | boolean [default: false]                                        |
 | `--help`          | Show help                                  | boolean                                                         |
@@ -71,7 +71,7 @@ tags:
   - A file to write your unit tests
   - An HTML demo where you can show off your element and add examples for your development workflow
 
-  You may also add noscript styles which load in situations where JavaScript is not available.  This file uses a standard naming convention of `pfe-foo--noscript`.
+  You may also add noscript styles which load in situations where JavaScript is not available.  This file uses a standard naming convention of `pf-foo--noscript`.
 {% endband %}
 
 <a id="compile-watch-and-preview"></a>
@@ -91,7 +91,7 @@ tags:
   Running that command launches the demo app in a new browser tab, and refreshes the page on save.
 
   From there you can navigate to the demo page of the element you're working on.
-  For example, if you want to preview the `pfe-card` component, then navigate in the browser to `http://localhost:8000/demo/pfe-card/`.
+  For example, if you want to preview the `pf-card` component, then navigate in the browser to `http://localhost:8000/demo/pf-card/`.
 {% endband %}
 
 {% band header="Testing" %}
@@ -106,10 +106,10 @@ tags:
 
   ```bash
   # Run a single test in watch mode.
-  npm run test:watch --files "./elements/pfe-button/test/pfe-button.spec.ts"
+  npm run test:watch --files "./elements/pf-button/test/pf-button.spec.ts"
 
   # Or multiple:
-  npm run test:watch --files "./elements/pfe-{avatar,card,tabs}/test/*.spec.ts"
+  npm run test:watch --files "./elements/pf-{avatar,card,tabs}/test/*.spec.ts"
   ```
 
   The default `npm test` command executes each unit test three times, once using plain HTML, once in a React wrapper app, and once in a Vue 2 wrapper app.

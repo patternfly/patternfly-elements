@@ -1,0 +1,44 @@
+:host {
+  position: relative;
+  white-space: nowrap;
+  border: 0;
+}
+
+pf-icon, ::slotted(pf-icon) {
+  color: currentColor;
+}
+
+:host,
+#container {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+#container {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-width: 0;
+}
+
+#container::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  content: "";
+}
+
+[part=icon] {
+  display: none;
+  pointer-events: none;
+}
+
+.hasIcon [part=icon] {
+  display: inline-flex;
+  width: 1em;
+}
+

@@ -3,23 +3,23 @@ npm install @patternfly/elements
 ```
 
 ```ts
-import "@patternfly/elements/pfe-accordion/pfe-accordion.js";
+import "@patternfly/elements/pf-accordion/pf-accordion.js";
 
 import { Component } from "@angular/core";
 
 @Component({
   selector: "app-root",
   template: `
-    <pfe-accordion>
+    <pf-accordion>
       <ng-template ngFor let-item [ngForOf]="data">
-        <pfe-accordion-header>
+        <pf-accordion-header>
           <h3>{{ item.header }}</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
+        </pf-accordion-header>
+        <pf-accordion-panel>
           <p>{{ item.panel }}</p>
-        </pfe-accordion-panel>
+        </pf-accordion-panel>
       </ng-template>
-    </pfe-accordion>
+    </pf-accordion>
   `,
 })
 export class AppComponent {

@@ -70,8 +70,8 @@ preloads: [
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="PatternFly Elements: A set of community-created web components based on PatternFly design.">
-    <meta name="pfe-auto-reveal" content="true">
-    <link href="{{ '/brand/logo/svg/pfe-icon-blue.svg' | url }}" rel="shortcut icon">
+    <meta name="pf-auto-reveal" content="true">
+    <link href="{{ '/brand/logo/svg/pf-icon-blue.svg' | url }}" rel="shortcut icon">
     <title>{{ demo.title or (demo.tagName) }} | PatternFly Elements</title>
     <link rel="preconnect" href="https://ga.jspm.io">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -80,15 +80,15 @@ preloads: [
     <link rel="modulepreload" href="https://ga.jspm.io/npm:{{ path }}">
     {%- endfor -%}
     <link rel="stylesheet" href="{{ '/main.css' | url }}">
-    <noscript><link href="{{ '/core/styles/pfe--noscript.min.css' | url }}" rel="stylesheet"></noscript>
+    <noscript><link href="{{ '/core/styles/pf--noscript.min.css' | url }}" rel="stylesheet"></noscript>
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.1/dist/es-module-shims.js"></script>
     <script type="module">
-    import { PfeIcon } from '@patternfly/elements/pfe-icon/pfe-icon.js';
+    import { PfIcon } from '@patternfly/elements/pf-icon/pf-icon.js';
     const get = (set, icon) => new URL(`/components/icon/icons/${set}/${icon}.js`, import.meta.url);
-    PfeIcon.addIconSet('patternfly', get);
-    PfeIcon.addIconSet('fas', get);
-    PfeIcon.addIconSet('far', get);
-    PfeIcon.addIconSet('fab', get);
+    PfIcon.addIconSet('patternfly', get);
+    PfIcon.addIconSet('fas', get);
+    PfIcon.addIconSet('far', get);
+    PfIcon.addIconSet('fab', get);
     </script>
   </head>
   <body unresolved>{% if demo.filePath %}

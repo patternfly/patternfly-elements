@@ -3,19 +3,19 @@ npm install @patternfly/elements
 ```
 {%raw%}
 ```html
-<pfe-accordion>
+<pf-accordion>
   {#each data as item}
-  <pfe-accordion-header>
+  <pf-accordion-header>
     <h3>{item.header}</h3>
-  </pfe-accordion-header>
-  <pfe-accordion-panel>
+  </pf-accordion-header>
+  <pf-accordion-panel>
     <p>{item.panel}</p>
-  </pfe-accordion-panel>
+  </pf-accordion-panel>
   {/each}
-</pfe-accordion>
+</pf-accordion>
 
 <script>
-  import "@patternfly/elements/pfe-accordion/pfe-accordion.js";
+  import "@patternfly/elements/pf-accordion/pf-accordion.js";
 	let data = [
     { header: 'Heading 1', panel: 'Here is some content' },
     { header: 'Heading 2', panel: 'Here is some more content' },

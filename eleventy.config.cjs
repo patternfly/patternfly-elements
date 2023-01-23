@@ -54,7 +54,7 @@ module.exports = function(eleventyConfig) {
       if (
         !existingids.includes(element.getAttribute('id')) &&
         element.hasAttribute('slot') &&
-        element.closest('pfe-card')
+        element.closest('pf-card')
       ) {
         return null;
       } else {

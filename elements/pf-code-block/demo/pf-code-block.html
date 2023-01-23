@@ -1,0 +1,103 @@
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-code-block.js"></script>
+
+<article>
+  <h2>Basic</h2>
+  <pf-code-block id="code">
+    <script type="application/openshift">
+      apiVersion: helm.openshift.io/v1beta1/
+      kind: HelmChartRepository
+      metadata:
+      name: azure-sample-repo0oooo00ooo
+      spec:
+      connectionConfig:
+      url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
+    </script>
+    <pf-clipboard slot="actions" copy-from="#code"></pf-clipboard>
+  </pf-code-block>
+</article>
+
+<article>
+  <h2>Expandable</h2>
+  <pf-code-block id="expandable-code">
+    <script type="application/openshift">
+      apiVersion: helm.openshift.io/v1beta1/
+      kind: HelmChartRepository
+      metadata:
+      name: azure-sample-repo</script><script type="application/openshift" data-expand>
+      spec:
+      connectionConfig:
+      url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
+    </script>
+    <pf-clipboard slot="actions" copy-from="#expandable-code"></pf-clipboard>
+  </pf-code-block>
+</article>
+
+<article>
+  <h2>Expanded by default</h2>
+  <pf-code-block id="expandable-code-expanded" expanded>
+    <script type="application/openshift">
+      apiVersion: helm.openshift.io/v1beta1/
+      kind: HelmChartRepository
+      metadata:
+      name: azure-sample-repo</script><script type="application/openshift" data-expand>
+      spec:
+      connectionConfig:
+      url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
+    </script>
+    <pf-clipboard slot="actions" copy-from="#expandable-code-expanded"></pf-clipboard>
+  </pf-code-block>
+</article>
+
+<article>
+  <h2>JavaScript Sample</h2>
+  <p>JavaScript snippets <strong>must</strong> use the <code>text/javascript-sample</code> script type.</p>
+  <pf-code-block id="javascript-sample" expanded>
+    <script type="text/javascript-sample">
+      console.log("If this appears in console, something's broken");
+    </script>
+    <pf-clipboard slot="actions" copy-from="#javascript-sample"></pf-clipboard>
+  </pf-code-block>
+</article>
+
+<article>
+  <h2>When JavaScript is Disabled</h2>
+  <p>To display code snippets when javascript is disabled, use the following HTML snippet:</p>
+  <pf-code-block id="javascript-sample" expanded>
+    <script type="text/html">
+      <noscript>
+        <style>
+          pf-code-block,
+          pf-code-block > script {
+            display: block;
+            white-space: pre;
+            font-family: monospace;
+          }
+        </style>
+      </noscript>
+    </script>
+    <pf-clipboard slot="actions" copy-from="#javascript-sample"></pf-clipboard>
+  </pf-code-block>
+  <iframe sandbox width="100%"></iframe>
+  <script>
+    document.currentScript.previousElementSibling.srcdoc = `
+      <p>Code Block in an iframe with JavaScript disabled</p>
+      <pf-code-block id="javascript-sample" expanded>
+        <script type="text/javascript-sample">
+          console.log("If this appears in console, something's broken");
+        </s` + `cript>
+        <pf-clipboard slot="actions" copy-from="#javascript-sample"></pf-clipboard>
+      </pf-code-block>
+      <noscript>
+        <style>
+          pf-code-block,
+          pf-code-block > script {
+            display: block;
+            white-space: pre;
+            font-family: monospace;
+          }
+        </style>
+      </noscript>
+    `;
+  </script>
+</article>

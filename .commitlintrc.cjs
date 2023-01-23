@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const normalizeWorkspace = x =>
-  fs.readdirSync(path.join(__dirname, x)).map(x => x.replace('pfe-', ''));
+  fs.readdirSync(path.join(__dirname, x)).map(x => x.replace('pf-', ''));
 
 module.exports = {
   extends: ['@commitlint/config-conventional'],

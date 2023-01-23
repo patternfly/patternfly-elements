@@ -17,7 +17,7 @@ export interface BaseOptions {
 }
 
 export interface GenerateElementOptions extends BaseOptions {
-  /** The element's tagname e.g. `pfe-button` */
+  /** The element's tagname e.g. `pf-button` */
   tagName: string;
   /** The NPM package name */
   packageName: string;
@@ -109,7 +109,7 @@ export async function main(): Promise<void> {
       .option('tagName', {
         alias: 'n',
         type: 'string',
-        description: 'Custom element tag name. e.g. `pfe-button`',
+        description: 'Custom element tag name. e.g. `pf-button`',
       })
       .option('packageName', {
         alias: 'p',

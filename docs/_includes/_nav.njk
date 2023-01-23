@@ -1,24 +1,24 @@
 <header>
   <div class="logo-bar">
     <a href="{{ '/' | url }}">
-      <img src="{{ '/brand/logo/svg/pfe-icon-white-shaded.svg' | url }}" alt="PatternFly Elements - Home">
+      <img src="{{ '/brand/logo/svg/pf-icon-white-shaded.svg' | url }}" alt="PatternFly Elements - Home">
       PatternFly Elements
     </a>
-    <pfe-dropdown id="docs-versions-dropdown" aria-label="Docs Versions" label="Docs Versions">
+    <pf-dropdown id="docs-versions-dropdown" aria-label="Docs Versions" label="Docs Versions">
       {% for version in versions %}
       {%- if version.current -%}
         {%- set prefix = '' -%}
       {%- else -%}
         {%- set prefix = '/' + version.slug -%}
       {%- endif %}
-      <pfe-dropdown-item
+      <pf-dropdown-item
           item-type="link"
           data-version="{{ version.slug }}"
           data-label="{{ version.label }}">
         <a href="{{ prefix }}{{ page.url }}">{{ version.label }}</a>
-      </pfe-dropdown-item>
+      </pf-dropdown-item>
       {% endfor %}
-    </pfe-dropdown>
+    </pf-dropdown>
     <script type="module">
       const dropdown = document.getElementById('docs-versions-dropdown');
       const items = dropdown.querySelectorAll('[data-version]');

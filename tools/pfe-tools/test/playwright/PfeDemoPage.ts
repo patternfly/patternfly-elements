@@ -22,7 +22,7 @@ export class PfeDemoPage {
   async navigate(pathname?: string): Promise<void>
   async navigate(pathnameOrOptions?: string | NavigateOptions): Promise<void> {
     const selectorOverride = typeof pathnameOrOptions === 'string' ? undefined : pathnameOrOptions?.selector;
-    const pathname = typeof pathnameOrOptions === 'string' ? pathnameOrOptions : `${this.workspace}/${this.tagName.replace('pfe-', '')}/demo`;
+    const pathname = typeof pathnameOrOptions === 'string' ? pathnameOrOptions : `${this.workspace}/${this.tagName.replace('pf-', '')}/demo`;
     const url = new URL(pathname, this.origin).toString();
     console.log(`NAVIGATING to ${url}`);
     await this.page.goto(url, { waitUntil: 'networkidle' });

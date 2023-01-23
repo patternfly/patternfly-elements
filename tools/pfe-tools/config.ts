@@ -24,7 +24,7 @@ export interface PfeConfig {
   sourceControlURLPrefix?: string ;
   /** absolute URL prefix for demos, with trailing slash. Default 'https://patternflyelements.org/' */
   demoURLPrefix?: string ;
-  /** custom elements namespace. Default 'pfe' */
+  /** custom elements namespace. Default 'pf' */
   tagPrefix?: string;
   /** Dev Server site options */
   site?: SiteOptions;
@@ -32,8 +32,8 @@ export interface PfeConfig {
 
 const SITE_DEFAULTS: Required<SiteOptions> = {
   description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
-  favicon: '/brand/logo/svg/pfe-icon-blue.svg',
-  logoUrl: '/brand/logo/svg/pfe-icon-white-shaded.svg',
+  favicon: '/brand/logo/svg/pf-icon-blue.svg',
+  logoUrl: '/brand/logo/svg/pf-icon-white-shaded.svg',
   stylesheets: [],
   title: 'PatternFly Elements',
 };
@@ -41,7 +41,7 @@ const SITE_DEFAULTS: Required<SiteOptions> = {
 const DEFAULT_CONFIG: PfeConfig = {
   demoURLPrefix: 'https://patternflyelements.org/',
   sourceControlURLPrefix: 'https://github.com/patternfly/patternfly-elements/tree/main/',
-  tagPrefix: 'pfe',
+  tagPrefix: 'pf',
   aliases: {},
 };
 

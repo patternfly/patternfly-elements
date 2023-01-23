@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const REPO_ROOT = fileURLToPath(new URL('../../..', import.meta.url));
 
 export async function makeDemoEnv(cwd = process.cwd()): Promise<string> {
-  const iconsDir = join(cwd, 'elements', 'pfe-icon', 'icons');
+  const iconsDir = join(cwd, 'elements', 'pf-icon', 'icons');
   const iconSetNames = await readdir(iconsDir);
   const iconSets = await Promise.all(iconSetNames.reverse().map(async set => {
     const files = await readdir(join(iconsDir, set));

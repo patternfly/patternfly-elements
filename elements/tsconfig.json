@@ -4,10 +4,10 @@
     "**/*.ts"
   ],
   "exclude": [
-    "pfe-icon/icons/**/*.js",
-    "pfe-icon/icons/**/*",
+    "pf-icon/icons/**/*.js",
+    "pf-icon/icons/**/*",
     "*/demo/*.js",
-    "pfe-icon/test/rh-icon*.js",
+    "pf-icon/test/rh-icon*.js",
     "custom-elements-manifest.config.js"
   ],
   "compilerOptions": {

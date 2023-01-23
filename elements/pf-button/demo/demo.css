@@ -1,0 +1,11 @@
+[data-demo=pf-button] {
+  padding-inline: 1em;
+}
+
+section > :not(pf-button) {
+  width: 100%;
+}
+
+pf-button[loading] svg {
+  width: 0px;
+}

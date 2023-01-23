@@ -4,21 +4,21 @@ npm install @patternfly/elements
 
 ```html
 <script type="module">
-  import '@patternfly/elements/pfe-accordion/pfe-accordion.js';
+  import '@patternfly/elements/pf-accordion/pf-accordion.js';
 </script>
 
-<pfe-accordion>
-  <pfe-accordion-header>
+<pf-accordion>
+  <pf-accordion-header>
     <h3>Heading 1</h3>
-  </pfe-accordion-header>
-  <pfe-accordion-panel>
+  </pf-accordion-header>
+  <pf-accordion-panel>
     <p>Here is some content</p>
-  </pfe-accordion-panel>
-  <pfe-accordion-header>
+  </pf-accordion-panel>
+  <pf-accordion-header>
     <h3>Heading 2</h3>
-  </pfe-accordion-header>
-  <pfe-accordion-panel>
+  </pf-accordion-header>
+  <pf-accordion-panel>
     <p>Here is some more content</p>
-  </pfe-accordion-panel>
-</pfe-accordion>
+  </pf-accordion-panel>
+</pf-accordion>
 ```

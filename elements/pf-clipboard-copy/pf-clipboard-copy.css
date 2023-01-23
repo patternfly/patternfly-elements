@@ -1,0 +1,144 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+#input-group {
+  display: flex;
+}
+
+pf-tooltip::part(invoker) {
+  display: flex;
+  height: 100%;
+}
+
+#input-group > * + * {
+  margin-left: -1px;
+}
+
+input {
+  color: var(--pf-c-form-control--Color,
+    var(--pf-global--Color--100, var(--pf-global--Color--dark-100, #151515)));
+  width: var(--pf-c-form-control--Width);
+  padding:
+    var(--pf-c-form-control--PaddingTop, calc(var(--pf-global--spacer--form-element, 0.375rem) - var(--pf-global--BorderWidth--sm, 1px)))
+    var(--pf-c-form-control--PaddingRight, var(--pf-c-form-control--inset--base, var(--pf-global--spacer--sm, 0.5rem)))
+    var(--pf-c-form-control--PaddingBottom, calc(var(--pf-global--spacer--form-element, 0.375rem) - var(--pf-global--BorderWidth--sm, 1px)))
+    var(--pf-c-form-control--PaddingLeft, var(--pf-c-form-control--inset--base, var(--pf-global--spacer--sm, 0.5rem)));
+  font-size: var(--pf-c-form-control--FontSize);
+  line-height: var(--pf-c-form-control--LineHeight);
+  background-color: var(--pf-c-form-control--BackgroundColor);
+  background-repeat: no-repeat;
+  border: var(--pf-c-form-control--BorderWidth, var(--pf-global--BorderWidth--sm, 1px)) solid;
+  border-color:
+    var(--pf-c-form-control--BorderTopColor, var(--pf-global--BorderColor--300, #f0f0f0))
+    var(--pf-c-form-control--BorderRightColor, var(--pf-global--BorderColor--300, #f0f0f0))
+    var(--pf-c-form-control--BorderBottomColor, var(--pf-global--BorderColor--200, #8a8d90))
+    var(--pf-c-form-control--BorderLeftColor, var(--pf-global--BorderColor--300, #f0f0f0));
+  border-radius: var(--pf-c-form-control--BorderRadius, 0);
+  margin: 0;
+  appearance: none;
+  height: var(--pf-c-form-control--Height, calc(var(--pf-c-form-control--FontSize) * var(--pf-c-form-control--LineHeight) + var(--pf-c-form-control--BorderWidth) * 2 + var(--pf-c-form-control--PaddingTop) + var(--pf-c-form-control--PaddingBottom)), 36px);
+  text-overflow: ellipsis;
+  flex: 1 1 auto;
+}
+
+input[disabled] {
+  background-color: var(--pf-c-form-control--readonly--BackgroundColor,
+    var(--pf-global--disabled-color--300, #f0f0f0));
+}
+
+textarea {
+  display: flex;
+  flex: 1 1 auto;
+  padding:
+    var(--pf-c-clipboard-copy__expandable-content--PaddingTop,
+      var(--pf-global--spacer--md, 1rem))
+    var(--pf-c-clipboard-copy__expandable-content--PaddingRight,
+      var(--pf-global--spacer--md, 1rem))
+    var(--pf-c-clipboard-copy__expandable-content--PaddingBottom,
+      var(--pf-global--spacer--md, 1rem))
+    var(--pf-c-clipboard-copy__expandable-content--PaddingLeft,
+      var(--pf-global--spacer--md, 1rem));
+  word-wrap: break-word;
+  background-color: var(--pf-c-clipboard-copy__expandable-content--BackgroundColor, var(--pf-global--BackgroundColor--light-100, #fff));
+  background-clip: padding-box;
+  border: solid var(--pf-c-clipboard-copy__expandable-content--BorderColor,
+    var(--pf-global--BorderColor--100, #d2d2d2));
+  border-width:
+    var(--pf-c-clipboard-copy__expandable-content--BorderTopWidth, 0)
+    var(--pf-c-clipboard-copy__expandable-content--BorderRightWidth,
+      var(--pf-global--BorderWidth--sm, 1px))
+    var(--pf-c-clipboard-copy__expandable-content--BorderBottomWidth,
+      var(--pf-global--BorderWidth--sm, 1px))
+    var(--pf-c-clipboard-copy__expandable-content--BorderLeftWidth,
+      var(--pf-global--BorderWidth--sm, 1px));
+  box-shadow: var(--pf-c-clipboard-copy__expandable-content--BoxShadow);
+  margin: 0;
+  color: inherit;
+  font-family: inherit;
+}
+
+.container.code textarea {
+  font-family: var(--pf-global--FontFamily--monospace,
+    var(--pf-global--FontFamily--redhat--monospace,
+      "RedHatMono",
+      "Liberation Mono",
+      consolas,
+      "SFMono-Regular",
+      menlo,
+      monaco,
+      "Courier New",
+      monospace));
+}
+
+.container.expanded #expand-button pf-icon {
+  rotate: 90deg;
+}
+
+.container.inline {
+  display: inline;
+  background-color: var(--pf-c-clipboard-copy--m-inline--BackgroundColor,
+    var(--pf-global--BackgroundColor--200, #f0f0f0));
+  padding-block-start: var(--pf-c-clipboard-copy--m-inline--PaddingTop, 0px);
+  padding-block-end: var(--pf-c-clipboard-copy--m-inline--PaddingBottom, 0px);
+  padding-inline-start: var(--pf-c-clipboard-copy--m-inline--PaddingLeft,
+    var(--pf-global--spacer--xs, 0.25rem));
+  word-break: break-word;
+  white-space: normal;
+}
+
+.container:is(.compact, .inline) #input-group {
+  display: contents;
+}
+
+.container:is(.compact, .inline) pf-tooltip,
+.container:is(.compact, .inline) pf-tooltip::part(invoker) {
+  display: inline-flex;
+}
+
+.container:is(.compact, .inline) #input-group {
+  background-color: var(--pf-c-button--m-plain--BackgroundColor,
+    var(--pf-global--BackgroundColor--200, #f0f0f0));
+}
+
+.container.compact.block {
+  display: block;
+  background-color: var(--pf-c-clipboard-copy--m-inline--BackgroundColor,
+    var(--pf-global--BackgroundColor--200, #f0f0f0));
+}
+
+.container:is(.compact, .inline) #copy-button,
+.container:is(.compact, .inline) slot[name="actions"]::slotted(*) {
+  --pf-c-button--PaddingTop: var(--pf-c-clipboard-copy__actions-item--button--PaddingTop,
+    var(--pf-global--spacer--xs, 0.25rem));
+  --pf-c-button--PaddingRight: var(--pf-c-clipboard-copy__actions-item--button--PaddingRight,
+    var(--pf-global--spacer--xs, 0.25rem));
+  --pf-c-button--PaddingBottom: var(--pf-c-clipboard-copy__actions-item--button--PaddingBottom,
+    var(--pf-global--spacer--xs, 0.25rem));
+  --pf-c-button--PaddingLeft: var(--pf-c-clipboard-copy__actions-item--button--PaddingLeft,
+    var(--pf-global--spacer--sm, 0.5rem));
+  margin-block-start: calc(-1 * var(--pf-c-button--PaddingTop));
+  margin-block-end: calc(-1 * var(--pf-c-button--PaddingBottom));
+}
+

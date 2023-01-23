@@ -17,17 +17,17 @@ If you are unfamiliar with TypeScript, read their getting-started documentation,
 and feel free to reach out to the PatternFly Elements team on our social media 
 channels.
 
-We'll edit the `pfe-cool-element.ts` file to add some HTML to our element's 
+We'll edit the `pf-cool-element.ts` file to add some HTML to our element's 
 template. LitElements define their template in the `render()` method.
 The `render()` method can return a string, a number, a DOM node, etc, but 
 usually it returns a `TemplateResult`, which is an `html`
 [tagged template 
 literal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates).
 
-Let's turn `pfe-cool-element` into a profile element that has a profile photo, a 
+Let's turn `pf-cool-element` into a profile element that has a profile photo, a 
 username, and a button to follow the user.
 
-Here's the updated `render()` method in `pfe-cool-element.ts`:
+Here's the updated `render()` method in `pf-cool-element.ts`:
 
 ```ts
 render() {
@@ -41,14 +41,14 @@ render() {
 }
 ```
 
-We'll also need to update `/demo/pfe-cool-element.html`
-so that the user's name is passed into the slot that we added in `pfe-cool-element.ts`:
+We'll also need to update `/demo/pf-cool-element.html`
+so that the user's name is passed into the slot that we added in `pf-cool-element.ts`:
 
 ```html
 <link rel="stylesheet" href="./demo.css"/>
-<pfe-cool-element>
+<pf-cool-element>
   Kyle Buchanan
-</pfe-cool-element>
+</pf-cool-element>
 ```
 
 > Slots take the HTML from the light DOM and project it into the shadow DOM at a 

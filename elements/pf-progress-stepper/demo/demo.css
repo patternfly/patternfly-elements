@@ -1,0 +1,10 @@
+form,
+label pf-switch {
+  padding-inline: .5rem;
+}
+
+form,
+label {
+  display: block;
+  padding-block: .5rem;
+}

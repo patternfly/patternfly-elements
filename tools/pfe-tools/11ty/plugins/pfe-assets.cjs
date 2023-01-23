@@ -4,7 +4,7 @@ const path = require('path');
 /**
  * Generate a map of files per package which should be copied to the site dir
  * @param {object} [options]
- * @param {string} [options.prefix='pfe'] element prefix e.g. 'pfe' for 'pfe-button'
+ * @param {string} [options.prefix='pfe'] element prefix e.g. 'pfe' for 'pf-button'
  */
 function getFilesToCopy(options) {
   /** best guess at abs-path to repo root */
@@ -91,7 +91,7 @@ async function bundle() {
  */
 function demoPaths(content) {
   if (this.outputPath.match(/(components|core|tools)\/.*\/demo\/index\.html$/)) {
-    return content.replace(/(?<attr>href|src)="\/(?<workspace>elements|core)\/pfe-(?<unprefixed>.*)\/(?<filename>.*)\.(?<extension>[.\w]+)"/g, (...args) => {
+    return content.replace(/(?<attr>href|src)="\/(?<workspace>elements|core)\/pf-(?<unprefixed>.*)\/(?<filename>.*)\.(?<extension>[.\w]+)"/g, (...args) => {
       const [{ attr, workspace, unprefixed, filename, extension }] = args.reverse();
       return `${attr}="/${workspace === 'elements' ? 'components' : workspace}/${unprefixed}/${filename}.${extension}"`;
     });

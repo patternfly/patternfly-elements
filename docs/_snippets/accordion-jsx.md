@@ -4,7 +4,7 @@ npm install @patternfly/elements
 
 ```jsx
 import React from "react";
-import "@patternfly/elements/pfe-accordion/pfe-accordion.js";
+import "@patternfly/elements/pf-accordion/pf-accordion.js";
 
 export default function App() {
   const data = [
@@ -13,14 +13,14 @@ export default function App() {
   ];
 
   return (
-    <pfe-accordion>{data.map(({ header, panel }) => (
-      <pfe-accordion-header>
+    <pf-accordion>{data.map(({ header, panel }) => (
+      <pf-accordion-header>
         <h3>{header}</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
+      </pf-accordion-header>
+      <pf-accordion-panel>
         <p>{panel}</p>
-      </pfe-accordion-panel>))}
-    </pfe-accordion>
+      </pf-accordion-panel>))}
+    </pf-accordion>
   );
 }
 ```

@@ -10,14 +10,14 @@ layout: layout-base.njk
   </header>
   <section class="band">{% if content.trim().length %}
     <div id="content">{{ content | safe }}</div>{% endif %}{% for post in collections.blog %}
-    <pfe-card>
+    <pf-card>
       <h2 slot="header">{{ post.data.title }}</h2>{% if post.data.tagline %}
         <p class="tagline">{{ post.data.tagline }}</p>{% endif %}
       {% if post.data.description %}
         {{ post.data.description }}
       {% endif %}
       <a class="cta" slot="footer" href="{{ post.data.page.url }}">Read Post</a>
-    </pfe-card>{% endfor %}
+    </pf-card>{% endfor %}
   </section>
 </main>
 

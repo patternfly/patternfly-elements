@@ -1,0 +1,165 @@
+#pf-container {
+  display: contents;
+}
+
+#container {
+  --pf-global--icon--FontSize--sm: 14px;
+
+  padding-top: var(--pf-c-label--PaddingTop, var(--pf-global--spacer--xs, 0.25rem));
+  padding-left: var(--pf-c-label--PaddingLeft, var(--pf-global--spacer--sm, 0.5rem));
+  padding-bottom: var(--pf-c-label--PaddingBottom, var(--pf-global--spacer--xs, 0.25rem));
+  padding-right: var(--pf-c-label--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
+  font-size: var(--pf-c-label--FontSize, 0.875em);
+  color: var(--pf-c-label--Color, var(--pf-global--Color--100, #151515));
+  background-color: var(--pf-c-label--BackgroundColor, var(--pf-global--palette--black-150, #f5f5f5));
+  border-radius: var(--pf-c-label--BorderRadius, 30em);
+  max-width: var(--pf-c-label__content--MaxWidth, 100%);
+  color: var(--pf-c-label__content--Color, var(--pf-global--Color--100, #151515));
+}
+
+#container::before {
+  border-radius: var(--pf-c-label--BorderRadius, 30em);
+  border: var(--pf-c-label__content--before--BorderWidth, 1px) solid var(--pf-c-label__content--before--BorderColor, var(--pf-global--palette--black-300, #d2d2d2));
+}
+
+.compact {
+  --pf-c-label--PaddingTop: var(--pf-c-label--m-compact--PaddingTop, 0);
+  --pf-c-label--PaddingRight: var(--pf-c-label--m-compact--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
+  --pf-c-label--PaddingBottom: var(--pf-c-label--m-compact--PaddingBottom, 0);
+  --pf-c-label--PaddingLeft: var(--pf-c-label--m-compact--PaddingLeft, var(--pf-global--spacer--sm, 0.5rem));
+  --pf-global--icon--FontSize--sm: 12px;
+}
+
+
+.blue {
+  --pf-c-label__content--Color: var(--pf-c-label--m-blue__content--Color, var(--pf-global--info-color--200, #002952));
+  --pf-c-label--BackgroundColor: var(--pf-c-label--m-blue--BackgroundColor, var(--pf-global--palette--blue-50, #e7f1fa));
+  --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-blue__content--before--BorderColor, var(--pf-global--palette--blue-100, #bee1f4));
+}
+
+.blue.outline {
+  --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-blue__content--Color, var(--pf-global--primary-color--100, #06c)));
+}
+
+.cyan {
+  --pf-c-label__content--Color: var(--pf-c-label--m-cyan__content--Color, var(--pf-global--default-color--300, #003737));
+  --pf-c-label--BackgroundColor: var(--pf-c-label--m-cyan--BackgroundColor, var(--pf-global--palette--cyan-50, #f2f9f9));
+  --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-cyan__content--before--BorderColor, var(--pf-global--palette--cyan-100, #a2d9d9));
+}
+
+.cyan.outline {
+  --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-cyan__content--Color, var(--pf-global--palette--cyan-400, #005f60)))
+}
+
+.green {
+  --pf-c-label__content--Color: var(--pf-c-label--m-green__content--Color,var(--pf-global--success-color--200, #1e4f18));
+  --pf-c-label--BackgroundColor: var(--pf-c-label--m-green--BackgroundColor, var(--pf-global--palette--green-50, #f3faf2));
+  --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-green__content--before--BorderColor, var(--pf-global--palette--green-100, #bde5b8));
+}
+
+.green.outline{
+  --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-green__content--Color, var(--pf-global--success-color--100, #3e8635)))
+}
+
+.orange {
+  --pf-c-label__content--Color: var(--pf-c-label--m-orange__content--Color, var(--pf-global--palette--orange-700, #3b1f00));
+  --pf-c-label--BackgroundColor: var(--pf-c-label--m-orange--BackgroundColor, var(--pf-global--palette--orange-50, #fff6ec));
+  --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-orange__content--before--BorderColor, var(--pf-global--palette--orange-100, #f4b678));
+}
+
+.orange.outline {
+  --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-orange__content--Color, var(--pf-global--palette--orange-500, #8f4700)))
+}
+
+.purple {
+  --pf-c-label__content--Color: var(--pf-c-label--m-purple__content--Color, var(--pf-global--palette--purple-700, #1f0066));
+  --pf-c-label--BackgroundColor: var(--pf-c-label--m-purple--BackgroundColor, var(--pf-global--palette--purple-50, #f2f0fc));
+  --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-purple__content--before--BorderColor, var(--pf-global--palette--purple-100, #cbc1ff));
+}
+
+.purple.outline {
+  --pf-c-label__content--Color: var(--pf-c-label--m-purple__content--Color, var(--pf-global--palette--purple-500, #6753ac));
+  --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-purple__content--Color, var(--pf-global--palette--purple-500, #6753ac)))
+}
+
+.red {
+  --pf-c-label__content--Color: var(--pf-c-label--m-red__content--Color, var(--pf-global--palette--red-300, #7d1007));
+  --pf-c-label--BackgroundColor: var(--pf-c-label--m-red--BackgroundColor, var(--pf-global--palette--red-50, #faeae8));
+  --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-red__content--before--BorderColor, var(--pf-global--palette--red-100, #c9190b));
+}
+
+.red.outline {
+  --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-red__content--Color, var(--pf-global--danger-color--100, #c9190b)))
+}
+
+.gold {
+  --pf-c-label__content--Color: var(--pf-c-label--m-gold__content--Color, var(--pf-global--palette--gold-700, #3d2c00));
+  --pf-c-label--BackgroundColor: var(--pf-c-label--m-gold--BackgroundColor, var(--pf-global--palette--gold-50, #fdf7e7));
+  --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-gold__content--before--BorderColor, var(--pf-global--palette--gold-100, #f9e0a2));
+}
+
+.gold.outline {
+  --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-gold__content--Color, var(--pf-global--palette--gold-600, #795600)))
+}
+
+.outline {
+  --pf-c-label--BackgroundColor: var(--pf-c-label--m-outline--BackgroundColor, #ffffff);
+  --pf-c-label__content--before--BorderColor: var(--pf-global--palette--black-300, #d2d2d2);
+}
+
+.hasIcon [part=icon] {
+  left: var(--pf-c-label--PaddingLeft, var(--pf-global--spacer--md, 1rem));
+  margin-inline-end: var(--pf-c-label__icon--MarginRight, var(--pf-global--spacer--xs, 0.25rem));
+}
+
+.blue .hasIcon [part=icon] {
+  color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-blue__icon--Color, var(--pf-global--primary-color--100, #06c)));
+}
+
+.cyan .hasIcon [part=icon] {
+  color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-cyan__icon--Color, var(--pf-global--default-color--200, #009596)));
+}
+
+.green .hasIcon [part=icon] {
+  color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-green__icon--Color, var(--pf-global--success-color--100, #3e8635)));
+}
+
+.orange .hasIcon [part=icon] {
+  color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-orange__icon--Color, var(--pf-global--palette--orange-300, #ec7a08)));
+}
+
+.purple .hasIcon [part=icon] {
+  color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-purple__icon--Color, var(--pf-global--palette--purple-500, #6753ac)));
+}
+
+.red .hasIcon [part=icon] {
+  color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-red__icon--Color, var(--pf-global--danger-color--100, #c9190b)));
+}
+
+.gold .hasIcon [part=icon] {
+  color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-gold__icon--Color, var(--pf-global--palette--gold-400, #f0ab00)));
+}
+
+pf-button {
+  --pf-c-button--FontSize: var(--pf-c-label__c-button--FontSize,
+    var(--pf-global--FontSize--xs, 0.75rem));
+  --pf-c-button--PaddingTop: var(--pf-c-label__c-button--PaddingTop,
+    var(--pf-global--spacer--xs, 0.25rem));
+  --pf-c-button--PaddingRight: var(--pf-c-label__c-button--PaddingRight,
+    var(--pf-global--spacer--sm, 0.5rem));
+  --pf-c-button--PaddingBottom: var(--pf-c-label__c-button--PaddingBottom,
+    var(--pf-global--spacer--xs, 0.25rem));
+  --pf-c-button--PaddingLeft: var(--pf-c-label__c-button--PaddingLeft,
+    var(--pf-global--spacer--sm, 0.5rem));
+    margin-top: var(--pf-c-label__c-button--MarginTop, -0.5rem);
+    margin-right: var(--pf-c-label__c-button--MarginRight, -0.5rem);
+    margin-bottom: var(--pf-c-label__c-button--MarginBottom, -0.5rem);
+    margin-left: var(--pf-c-label__c-button--MarginLeft, 0.25rem);
+}
+
+svg {
+  vertical-align:-0.125em;
+  fill: currentColor;
+  height: 1em;
+  width: 1em;
+}

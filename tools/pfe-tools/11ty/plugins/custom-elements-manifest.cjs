@@ -55,8 +55,6 @@ module.exports = function configFunction(eleventyConfig, _options = {}) {
           const root = isSinglepackage ? dirname(decl.module.path) : '.';
           const { tagName } = decl;
           const docsTemplatePath = join(manifest.location, root, tagName, 'docs', `${tagName}.md`);
-
-          console.log(decl.module.path, { docsTemplatePath })
           return new DocsPage(manifest, {
             ...options,
             tagName,

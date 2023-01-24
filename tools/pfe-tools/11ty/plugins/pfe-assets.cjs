@@ -44,21 +44,43 @@ function getFilesToCopy(options) {
 let didFirstBuild = false;
 
 /** Generate a single-file bundle of all the repo's components and their dependencies */
-async function bundle(options) {
+async function bundle() {
   if (!didFirstBuild) {
-    const { singleFileBuild } = await import('@patternfly/pfe-tools/esbuild.js');
-    const { pfeEnvPlugin } = await import('@patternfly/pfe-tools/esbuild-plugins/pfe-env.js');
+    const { build } = await import('esbuild');
+    const { default: CleanCSS } = await import('clean-css');
+    const { litCssPlugin } = await import('esbuild-plugin-lit-css');
 
-    await singleFileBuild({
-      additionalPackages: options?.additionalPackages,
-      minify: process.env.NODE_ENV === 'production' || process.env.ELEVENTY_ENV?.startsWith?.('prod'),
-      outfile: 'docs/pfe.min.js',
+    const cleanCSS = new CleanCSS({
+      sourceMap: true,
+      returnPromise: true,
+    });
+
+    await build({
+      entryPoints: ['elements/pfe.ts'],
+      format: 'esm',
+      outfile: '_site/pfe.min.js',
+      allowOverwrite: true,
+      treeShaking: true,
+      legalComments: 'linked',
+      logLevel: 'info',
+      sourcemap: true,
+      bundle: true,
+      minify: true,
+      minifyWhitespace: true,
+
+      external: [
+        'lit',
+        'tslib',
+        '@floating-ui*'
+      ],
+
       plugins: [
-        pfeEnvPlugin(),
-      ]
-    }).catch(() => void 0);
-
-    didFirstBuild = true;
+        litCssPlugin({
+          filter: /\.css$/,
+          transform: source => cleanCSS.minify(source).then(x => x.styles)
+        }),
+      ],
+    });
   }
 }
 

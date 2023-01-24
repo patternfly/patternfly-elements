@@ -82,7 +82,7 @@ module.exports = async function() {
   ]);
 
   const map = generator.getMap();
-
+  map.imports['@patternfly/elements'] = '/pfe.min.js';
   map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
 
   return map;

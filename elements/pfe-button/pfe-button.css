@@ -298,7 +298,6 @@ button:hover {
   --pf-c-button--after--BorderColor: var(--pf-c-button--m-secondary--focus--after--BorderColor,
     var(--pf-global--primary-color--100, #06c));
   /* DANGER */
-  --pf-c-button--m-danger--Color: var(--pf-c-button--m-secondary--m-danger--active--Color,
   --pf-c-button--m-danger--Color: var(--pf-c-button--m-secondary--m-danger--focus--Color,
     var(--pf-global--danger--color--200, #a30000));
   --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-secondary--m-danger--focus--BackgroundColor, transparent);

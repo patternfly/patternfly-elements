@@ -8,7 +8,6 @@ import type { PfeConfig } from './config.js';
 
 import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
-import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import rollupReplace from '@rollup/plugin-replace';
@@ -19,7 +18,6 @@ import { litCss } from 'web-dev-server-plugin-lit-css';
 import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { importMapsPlugin } from '@web/dev-server-import-maps';
-import { createRequire } from 'module';
 import { promisify } from 'node:util';
 
 import Router from '@koa/router';
@@ -28,7 +26,6 @@ import { makeDemoEnv } from './esbuild-plugins/pfe-env.js';
 import { getPfeConfig, deslugify } from './config.js';
 
 const glob = promisify(_glob);
-const require = createRequire(import.meta.url);
 const replace = fromRollup(rollupReplace);
 
 const env = nunjucks
@@ -51,33 +48,6 @@ export interface PfeDevServerConfigOptions extends Base {
 }
 
 type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & { site: Required<PfeConfig['site']> };
-
-/** Ugly, ugly hack to resolve packages from the local monorepo */
-function tryToResolve(source: string, context: import('koa').Context) {
-  let resolved = '';
-  try {
-    resolved = require.resolve(source);
-  } catch (error) {
-    const { message } = error as Error;
-    // try not to look
-    if (message.startsWith('Cannot find module')) {
-      const [, resolved] = /Cannot find module '(.*)'/.exec(message) ?? [];
-      if (!resolved) {
-        throw error;
-      }
-    } else {
-      throw error;
-    }
-  }
-
-  // e.g., a relative path from a file deeper in the module graph
-  // `context.path` here is the abspath to the importee
-  if (!resolved) {
-    resolved = join(dirname(context.path), source);
-  }
-
-  return resolved;
-}
 
 function renderBasic(context: Context, demos: unknown[], options: PfeDevServerConfigOptions) {
   return env.render('index.html', { context, options, demos });

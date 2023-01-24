@@ -64,17 +64,17 @@
       "@custom-elements-manifest/analyzer/*": [
         "@types/custom-elements-manifest__analyzer/*"
       ],
-      "@patternfly/pfe-core/*": [
-        "./core/pfe-core/*"
-      ],
-      "@patternfly/pfe-tools/*": [
-        "./tools/pfe-tools/*"
-      ],
       "@patternfly/elements/*": [
         "./elements/*"
       ],
       "@patternfly/patternfly/*": [
         "@patternfly/patternfly/*"
+      ],
+      "@patternfly/pfe-core/*": [
+        "./core/pfe-core/*"
+      ],
+      "@patternfly/pfe-tools/*": [
+        "./tools/pfe-tools/*"
       ]
     }
   }

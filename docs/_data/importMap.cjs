@@ -70,6 +70,9 @@ module.exports = async function() {
 
   await generator.install([
     'tslib',
+    '@floating-ui/dom',
+    '@floating-ui/core',
+    `prismjs@${PRISM_VERSION}`,
     'element-internals-polyfill',
     `fuse.js@${FUSE_VERSION}`,
     ...LIT_DEPS,
@@ -78,14 +81,6 @@ module.exports = async function() {
 
   const map = generator.getMap();
 
-  map.imports['@floating-ui/dom'] = `https://ga.jspm.io/npm:@floating-ui/dom@1.0.5/dist/floating-ui.dom.mjs`;
-  map.imports['@floating-ui/core'] = `https://ga.jspm.io/npm:@floating-ui/core@1.0.2/dist/floating-ui.core.browser.mjs`;
-  map.imports['prismjs'] = `https://ga.jspm.io/npm:prismjs@${PRISM_VERSION}/prism.js`;
-
-  map.imports['@patternfly/pfe-core'] = '/core/core/core.js';
-  map.imports['@patternfly/pfe-core/decorators.js'] = '/core/core/decorators.js';
-  map.imports['@patternfly/pfe-core/decorators/'] = '/core/core/decorators/';
-  map.imports['@patternfly/pfe-core/'] = '/core/core/';
   map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
 
   return map;

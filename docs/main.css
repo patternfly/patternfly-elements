@@ -72,7 +72,7 @@ strong {
 }
 
 @media screen and (min-width: 768px) {
-  .band { padding-inline: calc(100vw - 100% + var(--pfe-theme--container-spacer,1rem) * 4); }
+  .band { padding-inline: 4rem; }
 }
 
 a.cta {

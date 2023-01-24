@@ -106,6 +106,9 @@ module.exports = {
     eleventyConfig.addPassthroughCopy('docs/pfe.min.{map,css}');
     eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/main.mjs');
+    eleventyConfig.addPassthroughCopy({
+      'node_modules/@rhds/elements': '/assets/@rhds'
+    });
     eleventyConfig.addPassthroughCopy('brand/**/*');
     const filesToCopy = getFilesToCopy(options);
     if (filesToCopy) {

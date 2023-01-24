@@ -72,6 +72,8 @@ module.exports = async function() {
     'tslib',
     '@floating-ui/dom',
     '@floating-ui/core',
+    '@rhds/elements',
+    '@rhds/elements/rh-footer/rh-global-footer.js',
     `prismjs@${PRISM_VERSION}`,
     'element-internals-polyfill',
     `fuse.js@${FUSE_VERSION}`,

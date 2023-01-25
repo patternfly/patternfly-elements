@@ -44,6 +44,34 @@ body.menu-open {
     'menu body';
 }
 
+#components {
+  display: grid;
+  padding: 1em;
+  gap: 1em;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+#components img {
+  width: 100%;
+  height: auto;
+}
+
+#components a {
+  display: block;
+}
+
+#components a:is(:focus, :hover) {
+  outline: 2px solid var(--pf-global--primary-color--200, #004080);
+}
+
+#components ul {
+  padding: 0;
+}
+
+#components li {
+  list-style-type: none;
+}
+
 @media (max-width: 640px) {
   body.menu-open {
     grid-template-columns: 100vw 0;

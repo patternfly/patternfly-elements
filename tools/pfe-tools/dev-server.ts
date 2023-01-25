@@ -31,6 +31,7 @@ const replace = fromRollup(rollupReplace);
 const env = nunjucks
   .configure(fileURLToPath(new URL('./dev-server', import.meta.url)))
   .addFilter('log', x => (console.log(x, '')))
+  .addFilter('deslugify', x => deslugify(x))
   .addFilter('isElementGroup', (group: DemoRecord[], primary) =>
     group.every(x => !!primary && x.primaryElementName === primary));
 
@@ -100,6 +101,10 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           ctx.set('Cache-Control', 'no-store, no-cache, must-revalidate');
           ctx.set('Pragma', 'no-cache');
           ctx.set('Expires', '0');
+          return next();
+        })
+        .get(/\/pfe-icon\/icons\/.*\.js$/, (ctx, next) => {
+          ctx.type = 'application/javascript';
           return next();
         })
         .get('/elements/:tagName/:fileName.js', async ctx => {

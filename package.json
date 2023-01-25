@@ -16,9 +16,7 @@
     "dev": "wireit",
     "dev:server": "wireit",
     "dev:tools": "wireit",
-    "watch:docs": "wireit",
-    "watch:docs:analyze": "wireit",
-    "watch:docs:core": "wireit",
+    "watch:analyze": "wireit",
     "new": "npm run build:create && ./tools/create-element/bin/main.js",
     "🚧-BUILD": "❓ Make packages and artifacts",
     "build": "wireit",
@@ -144,9 +142,6 @@
         "core/tsconfig.json"
       ],
       "output": [
-        "core/pfe-core/**/*.js",
-        "core/pfe-core/**/*.map",
-        "core/pfe-core/**/*.d.ts",
         "*.tsbuildinfo"
       ]
     },
@@ -192,6 +187,7 @@
       "dependencies": [
         "build:core",
         "build:tools",
+        "build:icons",
         "analyze"
       ]
     },
@@ -202,7 +198,7 @@
         "build:tools"
       ]
     },
-    "watch:docs:analyze": {
+    "watch:analyze": {
       "service": true,
       "command": "npm run -ws --if-present analyze -- --watch",
       "files": [
@@ -214,24 +210,16 @@
         "build:tools"
       ]
     },
-    "watch:docs": {
-      "command": "eleventy --serve",
-      "service": true,
-      "dependencies": [
-        "build:tools",
-        "build:core",
-        "watch:docs:analyze"
-      ]
-    },
     "start": {
       "service": true,
       "command": "eleventy --serve",
       "dependencies": [
+        "build:core",
         "build:tools",
         "build:icons",
         "analyze",
-        "dev",
-        "watch:docs:analyze"
+        "watch:analyze",
+        "dev"
       ]
     },
     "test": {

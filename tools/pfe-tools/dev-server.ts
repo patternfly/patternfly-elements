@@ -53,12 +53,26 @@ function renderBasic(context: Context, demos: unknown[], options: PfeDevServerCo
   return env.render('index.html', { context, options, demos });
 }
 
+const isPFEManifest = (x: Manifest) => x.packageJson?.name === '@patternfly/elements';
+
+/** cludge to ensure the dev server starts up only after the manifests are generated */
+async function getManifests(options: PfeDevServerInternalConfig) {
+  let count = 0;
+  let manifests = Manifest.getAll(options.rootDir);
+  while (count < 1000 && manifests.find(isPFEManifest)?.manifest === null) {
+    await new Promise(r => setTimeout(r, 50));
+    count++;
+    manifests = Manifest.getAll(options.rootDir);
+  }
+  return manifests;
+}
+
 /**
  * Renders the demo page for a given url
  */
 async function renderURL(context: Context, options: PfeDevServerInternalConfig): Promise<string> {
   const url = new URL(context.request.url, `http://${context.request.headers.host}`);
-  const manifests = Manifest.getAll(options.rootDir);
+  const manifests = await getManifests(options);
   const demos = manifests
     .flatMap(manifest => manifest.getTagNames()
       .flatMap(tagName => manifest.getDemoMetadata(tagName, options as PfeDevServerInternalConfig)));
@@ -122,19 +136,18 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           }
           return next();
         })
-        .routes());
-
-      // Render the demo page whenever there's a trailing slash
-      app.use(async function nunjucksMiddleware(ctx, next) {
-        const { method, path } = ctx;
-        if (options.loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {
-          ctx.cwd = process.cwd();
-          ctx.type = 'html';
-          ctx.status = 200;
-          ctx.body = await renderURL(ctx, options);
-        }
-        return next();
-      });
+        .routes())
+        // Render the demo page whenever there's a trailing slash
+        .use(async function nunjucksMiddleware(ctx, next) {
+          const { method, path } = ctx;
+          if (options.loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {
+            ctx.cwd = process.cwd();
+            ctx.type = 'html';
+            ctx.status = 200;
+            ctx.body = await renderURL(ctx, options);
+          }
+          return next();
+        });
 
       const files = await glob(options.watchFiles, { cwd: process.cwd() });
       for (const file of files) {

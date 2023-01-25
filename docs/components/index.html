@@ -23,10 +23,10 @@ templateEngineOverride: njk
       <div class="component-preview--container">
         {%- if env.ELEVENTY_ENV == "prod" -%}
         <a href="{{ ('/components/'+ element.slug +'/') | url }}" aria-label="{{ element.title }}">
-          <div class="preview-image" style="background-image: url({{ ('/components/'+ element.slug +'/docs/preview.png') | url }});"></div>
+          <div class="preview-image" style="background-image: url({{ ('/components/'+ element.slug +'/docs/screenshot.png') | url }});"></div>
         </a>
         {%- else -%}
-        <div class="preview-image" style="background-image: url({{ ('/components/'+ element.slug +'/docs/preview.png') | url }});"></div>
+        <div class="preview-image" style="background-image: url({{ ('/components/'+ element.slug +'/docs/screenshot.png') | url }});"></div>
         <div class="overlay">
           <a class="cta secondary wind" href="{{ ('/components/'+ element.slug +'/demo/') | url }}">Demo</a>
         </div>

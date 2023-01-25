@@ -10,7 +10,7 @@ window.ZeroMdConfig = {
 };
 
 import '@patternfly/elements/pfe-label/pfe-label.js';
-import 'zero-md';
+import 'https://jspm.dev/zero-md';
 
 const container = document.querySelector('[data-demo]');
 

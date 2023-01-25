@@ -6,7 +6,6 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { BaseClipboardCopy } from './BaseClipboardCopy.js';
 
 import styles from './pfe-clipboard-copy.css';
-import baseStyles from './BaseClipboardCopy.css';
 
 import '@patternfly/elements/pfe-button/pfe-button.js';
 import '@patternfly/elements/pfe-icon/pfe-icon.js';
@@ -23,7 +22,7 @@ const sleep = (ms?: number) => new Promise(r => setTimeout(r, ms));
 export class PfeClipboardCopy extends BaseClipboardCopy {
   static readonly version = '{{version}}';
 
-  static readonly styles = [baseStyles, styles];
+  static readonly styles = [...BaseClipboardCopy.styles, styles];
 
   static shadowRootOptions: ShadowRootInit = { ...BaseClipboardCopy.shadowRootOptions, delegatesFocus: true };
 

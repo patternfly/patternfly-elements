@@ -13,8 +13,6 @@ import style from './pf-icon.css';
  */
 @customElement('pf-icon')
 export class PfIcon extends BaseIcon {
-  public static readonly version = '{{version}}';
-
   public static readonly styles = [...BaseIcon.styles, style];
 
   public static defaultIconSet = 'fas';

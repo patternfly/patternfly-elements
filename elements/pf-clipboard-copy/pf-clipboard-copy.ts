@@ -20,8 +20,6 @@ const sleep = (ms?: number) => new Promise(r => setTimeout(r, ms));
  */
 @customElement('pf-clipboard-copy')
 export class PfClipboardCopy extends BaseClipboardCopy {
-  static readonly version = '{{version}}';
-
   static readonly styles = [...BaseClipboardCopy.styles, styles];
 
   static shadowRootOptions: ShadowRootInit = { ...BaseClipboardCopy.shadowRootOptions, delegatesFocus: true };

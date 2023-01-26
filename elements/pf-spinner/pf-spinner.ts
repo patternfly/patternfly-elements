@@ -24,7 +24,6 @@ import styles from './pf-spinner.css';
 
 @customElement('pf-spinner')
 export class PfSpinner extends BaseSpinner {
-  static readonly version = '{{version}}';
   static readonly styles = [...BaseSpinner.styles, styles];
   render() {
     return html`<div style=${styleMap({ '--pf-c-spinner--diameter': this.diameter })}>${super.render()}</div>`;

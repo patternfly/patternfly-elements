@@ -111,8 +111,6 @@ export type LabelColor = (
  */
 @customElement('pf-label')
 export class PfLabel extends BaseLabel {
-  static readonly version = '{{version}}';
-
   static readonly styles = [...BaseLabel.styles, styles];
 
   static readonly shadowRootOptions: ShadowRootInit = { ...BaseLabel.shadowRootOptions, delegatesFocus: true };

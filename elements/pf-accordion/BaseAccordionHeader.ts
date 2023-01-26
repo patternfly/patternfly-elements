@@ -26,8 +26,6 @@ export class AccordionHeaderChangeEvent extends ComposedEvent {
 }
 
 export abstract class BaseAccordionHeader extends LitElement {
-  static readonly version = '{{version}}';
-
   static readonly styles = [style];
 
   static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };

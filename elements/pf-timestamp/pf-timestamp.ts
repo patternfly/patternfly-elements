@@ -13,7 +13,6 @@ const BooleanStringConverter: ComplexAttributeConverter = {
 
 @customElement('pf-timestamp')
 export class PfTimestamp extends LitElement {
-  static readonly version = '{{version}}';
   static readonly styles = [style];
 
   @property({ reflect: true }) date = new Date().toLocaleString();

@@ -32,9 +32,7 @@ import styles from './pf-cool-element.css';
  * @slot - Place element content here
  */
 @customElement('pf-cool-element')
-export class PfeCoolElement extends LitElement {
-  static readonly version = '{{version}}';
-
+export class PfCoolElement extends LitElement {
   static readonly styles = [styles];
 
   render() {
@@ -46,7 +44,7 @@ export class PfeCoolElement extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-cool-element': PfeCoolElement;
+    'pf-cool-element': PfCoolElement;
   }
 }
 ```

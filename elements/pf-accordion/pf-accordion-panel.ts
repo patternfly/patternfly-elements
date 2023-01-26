@@ -45,8 +45,6 @@ import style from './pf-accordion-panel.css';
  */
 @customElement('pf-accordion-panel')
 export class PfAccordionPanel extends BaseAccordionPanel {
-  static readonly version = '{{version}}';
-
   static readonly styles = [...BaseAccordionPanel.styles, style];
 
   @property({ reflect: true }) bordered?: 'true'|'false';

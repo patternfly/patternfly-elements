@@ -23,8 +23,6 @@ import style from './BaseCard.css';
  * @csspart footer - The container for *footer* content
  */
 export abstract class BaseCard extends LitElement {
-  static readonly version = '{{version}}';
-
   static readonly styles = [style];
 
   protected slots = new SlotController(this, 'header', null, 'footer');

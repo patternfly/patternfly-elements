@@ -31,8 +31,6 @@ const ICONS = new Map(Object.entries({
 export class PfProgressStep extends LitElement {
   protected static parentTagName = 'pf-progress-stepper';
 
-  static readonly version = '{{version}}';
-
   static readonly styles = [style];
 
   /** Optional extended description of the step */

@@ -71,8 +71,6 @@ export type InsetVariant = (
  */
 @customElement('pf-tabs')
 export class PfTabs extends BaseTabs {
-  static readonly version = '{{version}}';
-
   static readonly styles = [...BaseTabs.styles, styles];
 
   protected static readonly scrollTimeoutDelay = 150;

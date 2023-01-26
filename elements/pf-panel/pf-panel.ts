@@ -13,8 +13,6 @@ import styles from './pf-panel.css';
  */
 @customElement('pf-panel')
 export class PfPanel extends LitElement {
-  static readonly version = '{{version}}';
-
   static readonly styles = [styles];
 
   @property({ type: Boolean, reflect: true }) scrollable = false;

@@ -15,8 +15,6 @@ export class ClipboardCopyCopiedEvent extends ComposedEvent {
  * @slot - Place element content here
  */
 export abstract class BaseClipboardCopy extends LitElement {
-  static readonly version = '{{version}}';
-
   static readonly styles = [styles];
 
   abstract value: string;

@@ -95,8 +95,6 @@ import styles from './pf-tooltip.css';
  */
 @customElement('pf-tooltip')
 export class PfTooltip extends BaseTooltip {
-  static readonly version = '{{version}}';
-
   static readonly styles = [...BaseTooltip.styles, styles];
 
   @property() position: Placement = 'top';

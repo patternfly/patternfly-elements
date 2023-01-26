@@ -31,8 +31,6 @@ import styles from './pf-badge.css';
 
 @customElement('pf-badge')
 export class PfBadge extends BaseBadge {
-  static readonly version = '{{version}}';
-
   static readonly styles = [...BaseBadge.styles, styles];
 
   /**

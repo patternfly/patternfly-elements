@@ -72,8 +72,6 @@ export class ModalOpenEvent extends ComposedEvent {
 export class PfModal extends LitElement implements HTMLDialogElement {
   static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
-  static readonly version = '{{version}}';
-
   static readonly styles = [style];
 
   /** Should the dialog close when user clicks outside the dialog? */

@@ -39,8 +39,6 @@ import styles from './pf-switch.css';
 
 @customElement('pf-switch')
 export class PfSwitch extends BaseSwitch {
-  static readonly version = '{{version}}';
-
   static readonly styles = [...BaseSwitch.styles, styles];
 }
 

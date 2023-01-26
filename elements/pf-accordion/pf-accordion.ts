@@ -30,8 +30,6 @@ import style from './pf-accordion.css';
  */
 @customElement('pf-accordion')
 export class PfAccordion extends BaseAccordion {
-  static readonly version = '{{version}}';
-
   static readonly styles = [...BaseAccordion.styles, style];
 
   protected static instances = new Set<PfAccordion>();

@@ -54,8 +54,6 @@ export type StackedSize = (
  */
 @customElement('pf-tile')
 export class PfTile extends BaseTile {
-  static readonly version = '{{version}}';
-
   static readonly styles = [styles];
 
   @property({ reflect: true, type: Boolean }) selected = false;

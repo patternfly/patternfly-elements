@@ -31,8 +31,6 @@ class IconLoadError extends ErrorEvent {
  * @csspart fallback - Container for the fallback (i.e. slotted) content
  */
 export abstract class BaseIcon extends LitElement {
-  public static readonly version = '{{version}}';
-
   public static readonly styles = [style];
 
   public static addIconSet(setName: string, getter: typeof BaseIcon['getIconUrl']) {

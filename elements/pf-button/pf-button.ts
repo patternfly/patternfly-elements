@@ -153,8 +153,6 @@ export type ButtonVariant = (
  */
 @customElement('pf-button')
 export class PfButton extends BaseButton {
-  static readonly version = '{{version}}';
-
   static readonly styles = [...BaseButton.styles, styles];
 
   /** Represents the state of a stateful button */

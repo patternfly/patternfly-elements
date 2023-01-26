@@ -14,8 +14,6 @@ const DEFAULT = new URL('./lib/img_avatar-light.svg', import.meta.url).pathname;
  */
 
 export class BaseAvatar extends LitElement {
-  static readonly version = '{{version}}';
-
   static readonly styles = [style];
 
   /** The URL to the user's custom avatar image. */

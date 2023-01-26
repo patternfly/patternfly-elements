@@ -47,8 +47,6 @@ import { BaseCard } from './BaseCard.js';
  */
 @customElement('pf-card')
 export class PfCard extends BaseCard {
-  static readonly version = '{{version}}';
-
   static readonly styles = [...BaseCard.styles, style];
 
   /**

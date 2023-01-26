@@ -12,8 +12,6 @@ import style from './pf-avatar.css';
  */
 @customElement('pf-avatar')
 export class PfAvatar extends BaseAvatar {
-  static readonly version = '{{version}}';
-
   static readonly styles = [style];
 
   /** Size of the Avatar */

@@ -16,8 +16,6 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
 export class PfProgressStepper extends LitElement {
   protected static childTagName = 'pf-progress-step';
 
-  static readonly version = '{{version}}';
-
   static readonly styles = [style];
 
   static formAssociated = true;

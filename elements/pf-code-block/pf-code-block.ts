@@ -27,8 +27,6 @@ import styles from './pf-code-block.css';
 
 @customElement('pf-code-block')
 export class PfCodeBlock extends BaseCodeBlock {
-  static readonly version = '{{version}}';
-
   static readonly styles = [...BaseCodeBlock.styles, styles];
 
   @property({ type: Boolean, reflect: true }) expanded = false;

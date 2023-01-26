@@ -63,6 +63,8 @@ tools/*/test/**/*.png
 !core/*/demo/*
 !tools/*/demo/*
 
+!elements/pfe-icon/demo/icons/**/*.js
+
 !scripts/**/*.js
 
 *.tgz

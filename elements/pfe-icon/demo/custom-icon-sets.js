@@ -6,8 +6,8 @@ PfeIcon.addIconSet('rh', (set, icon) =>
   new URL(`./icons/${set}/${icon}.js`, import.meta.url));
 
 const icons = [
-  'redhat',
-  'patternfly',
+  'lifecycle',
+  'boba-tea',
 ];
 
 const items = html`

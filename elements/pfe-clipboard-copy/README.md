@@ -1,10 +1,8 @@
 # Clipboard Copy
-Add a description of the component here.
+Copy-to-clipboard widget
 
 ## Usage
-Describe how best to use this web component along with best practices.
 
 ```html
-<pfe-clipboard-copy>
-</pfe-clipboard-copy>
+<pfe-clipboard-copy>Content to copy</pfe-clipboard-copy>
 ```

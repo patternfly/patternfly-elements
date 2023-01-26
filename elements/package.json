@@ -1,0 +1,79 @@
+{
+  "name": "@patternfly/elements",
+  "license": "MIT",
+  "version": "1.0.0",
+  "description": "PatternFly Elements",
+  "customElements": "custom-elements.json",
+  "type": "module",
+  "main": "./pfe.min.js",
+  "module": "./pfe.js",
+  "types": "./pfe.d.ts",
+  "exports": {
+    ".": "./pfe.js",
+    "./*": "./*"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "analyze": "cem analyze",
+    "build": "wireit",
+    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
+  },
+  "wireit": {
+    "build": {
+      "command": "ttsc -b . --pretty",
+      "dependencies": [
+        "analyze"
+      ]
+    }
+  },
+  "keywords": [
+    "web-components",
+    "date time",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements"
+  },
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
+  "files": [
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "!custom-elements-manifest.config.js",
+    "!demo/*",
+    "!docs/*",
+    "!test/*"
+  ],
+  "contributors": [
+    "Benny Powers <bennyp@redhat.com>",
+    "Daniel Faucette",
+    "Diwanshi Pandey <diwanshipandey@gmail.com> (https://github.com/diwanshi)",
+    "Ivana Rodriguez (https://github.com/eyevana)",
+    "Kendall Totten",
+    "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",
+    "Luke Dary",
+    "Mark Caron <mark@redhat.com> (https://github.com/markcaron)",
+    "Michael Clayton <mclayton@redhat.com>",
+    "Michael Potter",
+    "Steven Spriggs <sspriggs@redhat.com",
+    "castastrophe (https://github.com/castastrophe)",
+    "Wes Ruvalcaba"
+  ],
+  "dependencies": {
+    "@patternfly/pfe-core": "^2.0.0-beta.14",
+    "lit": "2.3.0",
+    "tslib": "^2.4.1"
+  }
+}

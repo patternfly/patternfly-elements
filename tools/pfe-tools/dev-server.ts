@@ -8,7 +8,6 @@ import type { PfeConfig } from './config.js';
 
 import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
-import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import rollupReplace from '@rollup/plugin-replace';
@@ -19,8 +18,6 @@ import { litCss } from 'web-dev-server-plugin-lit-css';
 import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { importMapsPlugin } from '@web/dev-server-import-maps';
-import { transformSass } from './esbuild.js';
-import { createRequire } from 'module';
 import { promisify } from 'node:util';
 
 import Router from '@koa/router';
@@ -29,16 +26,17 @@ import { makeDemoEnv } from './esbuild-plugins/pfe-env.js';
 import { getPfeConfig, deslugify } from './config.js';
 
 const glob = promisify(_glob);
-const require = createRequire(import.meta.url);
 const replace = fromRollup(rollupReplace);
 
 const env = nunjucks
   .configure(fileURLToPath(new URL('./dev-server', import.meta.url)))
   .addFilter('log', x => (console.log(x, '')))
+  .addFilter('deslugify', x => deslugify(x))
   .addFilter('isElementGroup', (group: DemoRecord[], primary) =>
     group.every(x => !!primary && x.primaryElementName === primary));
 
 type Base = (DevServerConfig & PfeConfig);
+
 export interface PfeDevServerConfigOptions extends Base {
   hostname?: string;
   importMap?: InjectSetting['importMap'];
@@ -52,70 +50,22 @@ export interface PfeDevServerConfigOptions extends Base {
 
 type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & { site: Required<PfeConfig['site']> };
 
-/** Ugly, ugly hack to resolve packages from the local monorepo */
-function tryToResolve(source: string, context: import('koa').Context) {
-  let resolved = '';
-  try {
-    resolved = require.resolve(source);
-  } catch (error) {
-    const { message } = error as Error;
-    // try not to look
-    if (message.startsWith('Cannot find module')) {
-      const [, resolved] = /Cannot find module '(.*)'/.exec(message) ?? [];
-      if (!resolved) {
-        throw error;
-      }
-    } else {
-      throw error;
-    }
-  }
-
-  // e.g., a relative path from a file deeper in the module graph
-  // `context.path` here is the abspath to the importee
-  if (!resolved) {
-    resolved = join(dirname(context.path), source);
-  }
-
-  return resolved;
-}
-
-/**
- * Resolves local monorepo package imports. Needed because we consume our own monorepo packages
- */
-export function resolveLocalFilesFromTypeScriptSources(options: PfeDevServerInternalConfig): Plugin {
-  const { rootDir } = options;
-  return {
-    name: 'resolve-local-monorepo-packages-from-ts-sources',
-    transformImport({ source, context }) {
-      const isNodeModule = source.match(/node_modules/) || context.path.match(/node_modules/);
-      if (options.tagPrefix === 'pfe' && isNodeModule && source.match(/@patternfly\/pfe-/) && !source.match(/@patternfly\/pfe-(sass|styles|core|tools)/)) {
-        const [, pkgName, rest] = source.match(/@patternfly\/pfe-([-\w]+)\/?(.*)/) ?? [];
-        if (pkgName) {
-          return `/elements/pfe-${pkgName}${rest ? '/' : ''}${rest ?? ''}`.replace(/\.js$/, '.ts');
-        }
-      } else if (source.endsWith('.ts.js')) {
-        // already resolved, but had `.js` appended, probably by export map
-        const normalized = source.replace('.ts.js', isNodeModule ? '.js' : '.ts');
-        return normalized;
-      } else if (isNodeModule && !(source.match(/@patternfly\/pfe-/) || context.path.match(/@patternfly\/pfe-/))) {
-        // don't try to resolve node_modules, they're already resolved
-        return;
-      } else {
-        const resolved = tryToResolve(source, context);
-        const absToRoot = resolved.replace(`${rootDir}/`.replace('//', '/'), '/');
-        const replaced = absToRoot.replace(/\.js$/, '.ts');
-        const checked = join(rootDir, replaced);
-        const existsTs = existsSync(checked);
-        const existsJs = existsSync(checked.replace(/\.ts$/, '.js'));
-        const final = existsTs ? replaced : existsJs ? replaced.replace(/\.ts/, '.js') : resolved;
-        return final.replace('//', '/');
-      }
-    },
-  };
-}
-
 function renderBasic(context: Context, demos: unknown[], options: PfeDevServerConfigOptions) {
   return env.render('index.html', { context, options, demos });
+}
+
+const isPFEManifest = (x: Manifest) => x.packageJson?.name === '@patternfly/elements';
+
+/** cludge to ensure the dev server starts up only after the manifests are generated */
+async function getManifests(options: PfeDevServerInternalConfig) {
+  let count = 0;
+  let manifests = Manifest.getAll(options.rootDir);
+  while (count < 1000 && manifests.find(isPFEManifest)?.manifest === null) {
+    await new Promise(r => setTimeout(r, 50));
+    count++;
+    manifests = Manifest.getAll(options.rootDir);
+  }
+  return manifests;
 }
 
 /**
@@ -123,7 +73,7 @@ function renderBasic(context: Context, demos: unknown[], options: PfeDevServerCo
  */
 async function renderURL(context: Context, options: PfeDevServerInternalConfig): Promise<string> {
   const url = new URL(context.request.url, `http://${context.request.headers.host}`);
-  const manifests = Manifest.getAll(options.rootDir);
+  const manifests = await getManifests(options);
   const demos = manifests
     .flatMap(manifest => manifest.getTagNames()
       .flatMap(tagName => manifest.getDemoMetadata(tagName, options as PfeDevServerInternalConfig)));
@@ -147,6 +97,19 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
       app.use(new Router()
+        .get(/elements\/.*\.(css|js)$/, async (ctx, next) => {
+          ctx.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+          ctx.set('Pragma', 'no-cache');
+          ctx.set('Expires', '0');
+          return next();
+        })
+        .get(/\/pfe-icon\/icons\/.*\.js$/, (ctx, next) => {
+          ctx.type = 'application/javascript';
+          return next();
+        })
+        .get('/elements/:tagName/:fileName.js', async ctx => {
+          return ctx.redirect(`/elements/${ctx.params.tagName}/${ctx.params.fileName}.ts`);
+        })
         .get('/tools/pfe-tools/environment.js(.js)?', async ctx => {
           ctx.body = await makeDemoEnv(options.rootDir);
           ctx.type = 'application/javascript';
@@ -178,19 +141,18 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           }
           return next();
         })
-        .routes());
-
-      // Render the demo page whenever there's a trailing slash
-      app.use(async function nunjucksMiddleware(ctx, next) {
-        const { method, path } = ctx;
-        if (options.loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {
-          ctx.cwd = process.cwd();
-          ctx.type = 'html';
-          ctx.status = 200;
-          ctx.body = await renderURL(ctx, options);
-        }
-        return next();
-      });
+        .routes())
+        // Render the demo page whenever there's a trailing slash
+        .use(async function nunjucksMiddleware(ctx, next) {
+          const { method, path } = ctx;
+          if (options.loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {
+            ctx.cwd = process.cwd();
+            ctx.type = 'html';
+            ctx.status = 200;
+            ctx.body = await renderURL(ctx, options);
+          }
+          return next();
+        });
 
       const files = await glob(options.watchFiles, { cwd: process.cwd() });
       for (const file of files) {
@@ -210,8 +172,8 @@ function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInte
   const config = { ...getPfeConfig(), ...options ?? {} };
   config.site = { ...config.site, ...options?.site ?? {} };
   config.loadDemo ??= true;
-  config.watchFiles ??= '{elements,core}/**/*.{css,scss,html}';
-  config.litcssOptions ??= { include: /\.scss$/, transform: transformSass };
+  config.watchFiles ??= '{elements,core}/**/*.{css,html}';
+  config.litcssOptions ??= { include: /\.css$/, exclude: /((fonts|demo)|(demo\/.*))\.css$/ };
   return config as PfeDevServerInternalConfig;
 }
 
@@ -253,30 +215,19 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
 
       ...options?.importMap ? [importMapsPlugin({ inject: { importMap: options.importMap } })] : [],
 
-      // ordinarily, the packages' export conditions specify to
-      //   1. import the root from a '.js'
-      //   2. append '.js' to any subpath imports
-      // that's great when we're importing *actual* node_modules, since we want the build artifacts
-      // but when we're importing a monorepo package, we want to load up the typescript sources
-      // that's the whole idea of 'buildless' via esbuild plugin - no need to run a file watcher
-      // so we run this cheap hack to manually resolve those file paths
-      // we hope it will work in most cases. If you have a problem loading from packages in the dev
-      // server, please open an issue at https://github.com/patternfly/patternfly-elements/issues/new/
-      resolveLocalFilesFromTypeScriptSources({ ...config, rootDir }),
-
       // serve typescript sources as javascript
       esbuildPlugin({
         ts: true,
         tsconfig,
       }),
 
-      // load .scss files as lit CSSResult modules
-      litCss(config.litcssOptions),
-
       replace({
         'preventAssignment': true,
-        'process.env.NODE_ENV': JSON.stringify('production'),
+        'process.env.NODE_ENV': '"production"',
       }),
+
+      // load .css files as lit CSSResult modules
+      litCss(config.litcssOptions),
 
       // Dev server app which loads component demo files
       pfeDevServerPlugin(config),

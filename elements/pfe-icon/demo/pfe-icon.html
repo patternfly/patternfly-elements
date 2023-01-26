@@ -21,7 +21,10 @@
 
 <section id="sets">
   <h2>Default Icon Sets</h2>
-  <pfe-autocomplete id="icon-search"><input placeholder="icon-name"></pfe-autocomplete>
+  <label>Icon Name
+    <input id="icon-search" list="icons-list" placeholder="icon-name">
+    <datalist id="icons-list"></datalist>
+  </label>
   <p>Use the text field above to search for an icon name. Click the icon to copy it's HTML.</p>
   <p>PatternFly Icon comes with three built-in icon sets, the default is fontawesome solid</p>
   <output id="pfe-icon-demo-output"></output>

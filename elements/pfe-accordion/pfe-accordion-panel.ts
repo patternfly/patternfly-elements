@@ -2,7 +2,7 @@ import { customElement, property } from 'lit/decorators.js';
 
 import { BaseAccordionPanel } from './BaseAccordionPanel.js';
 
-import style from './pfe-accordion-panel.scss';
+import style from './pfe-accordion-panel.css';
 
 /**
  * Accordion Panel

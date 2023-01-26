@@ -1,6 +1,6 @@
 import { LitElement } from 'lit';
 import { ComposedEvent } from '@patternfly/pfe-core';
-import styles from './BaseClipboardCopy.scss';
+import styles from './BaseClipboardCopy.css';
 
 export class ClipboardCopyCopiedEvent extends ComposedEvent {
   constructor(

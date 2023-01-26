@@ -3,7 +3,7 @@ import { property } from 'lit/decorators.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
-import style from './BaseAccordionPanel.scss';
+import style from './BaseAccordionPanel.css';
 
 export class BaseAccordionPanel extends LitElement {
   static readonly styles = [style];

@@ -1,4 +1,4 @@
-import '@patternfly/pfe-tile';
+import '@patternfly/elements/pfe-tile/pfe-tile.js';
 
 const container = document.getElementById('keyboard-interaction');
 

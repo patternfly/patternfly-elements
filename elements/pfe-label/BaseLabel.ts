@@ -3,7 +3,7 @@ import { classMap } from 'lit/directives/class-map.js';
 
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
-import styles from './BaseLabel.scss';
+import styles from './BaseLabel.css';
 
 /**
  * Base label class

@@ -1,9 +1,7 @@
-import '@patternfly/pfe-icon';
-import '@patternfly/pfe-tooltip';
-// TS6202: Project references may not form a circular graph.
-// import '@patternfly/pfe-button';
-import('@patternfly' + '/' + 'pfe-button');
-import '@patternfly/pfe-autocomplete';
+import '@patternfly/elements/pfe-icon/pfe-icon.js';
+import '@patternfly/elements/pfe-tooltip/pfe-tooltip.js';
+import '@patternfly/elements/pfe-button/pfe-button.js';
+
 import { iconSets } from '@patternfly/pfe-tools/environment.js';
 import { render, html } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
@@ -46,6 +44,9 @@ const fuse = new Fuse(Array.from(iconSets, ([set, icons]) => icons.map(icon => (
 });
 
 const search = document.getElementById('icon-search');
+
+const list = document.getElementById('icons-list');
+
 search.autocompleteRequest = function({ query }, cb) {
   const results = fuse.search(query);
   cb(results.map(x => x.item.icon));
@@ -58,7 +59,10 @@ search.autocompleteRequest = function({ query }, cb) {
   }), {}));
 };
 
-search.addEventListener('clear', () => renderIcons());
-search.addEventListener('select', e => renderIcons(e.value));
+search.addEventListener('input', e => renderIcons(e.target.value || undefined));
 
-renderIcons(search.querySelector('input').value || undefined);
+renderIcons(search.value || undefined);
+
+render(repeat(iconSets, ([setName, icons]) => repeat(icons, icon => `${setName}-${icon}`, icon => html`
+  <option value="${icon}">${setName} - ${icon}</option>
+`)), list);

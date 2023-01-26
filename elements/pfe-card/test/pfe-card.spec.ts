@@ -1,9 +1,8 @@
 import { expect, html, aTimeout } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 import '@patternfly/pfe-tools/test/stub-logger.js';
 
-import { PfeCard } from '@patternfly/pfe-card';
+import { PfeCard } from '@patternfly/elements/pfe-card/pfe-card.js';
 
 describe('<pfe-card>', function() {
   it('should upgrade', async function() {

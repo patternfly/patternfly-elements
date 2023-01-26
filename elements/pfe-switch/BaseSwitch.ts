@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import styles from './BaseSwitch.scss';
+import styles from './BaseSwitch.css';
 
 /**
  * Switch

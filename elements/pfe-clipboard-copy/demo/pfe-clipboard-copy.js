@@ -1,5 +1,1 @@
-import '@patternfly/pfe-clipboard-copy';
-
-const root = document.querySelector('[data-demo="pfe-clipboard-copy"]')?.shadowRoot ?? document;
-
-root.querySelector('pfe-clipboard-copy');
+import '@patternfly/elements/pfe-clipboard-copy/pfe-clipboard-copy.js';

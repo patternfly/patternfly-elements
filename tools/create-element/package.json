@@ -31,17 +31,7 @@
     "templates/**/*"
   ],
   "scripts": {
-    "prepublishOnly": "npm run build",
-    "clean": "rimraf './main.{js,d.ts}' './generator/*.{js,d.ts}' bin/main.d.ts",
-    "build": "run-p build:*",
-    "build:esbuild": "esbuild main.ts generator/element.ts generator/files.ts generator/fp.ts --outdir=. --target=es2020",
-    "build:tsc": "tsc --emitDeclarationOnly",
-    "lint": "run-s lint:*",
-    "lint:types": "tsc --noEmit",
-    "start": "tsc -w",
-    "test": "run-s build test:unit",
-    "test:unit": "echo 'unit tests for PFE generator not written yet'",
-    "x-test:unit": "tape-es test/unit.test.js | tap-spec"
+    "test": "echo 'unit tests for PFE generator not written yet'"
   },
   "bugs": {
     "url": "git+ssh://git@github.com/patternfly/pfe-tools/issues"
@@ -55,7 +45,7 @@
   "dependencies": {
     "case": "1.6.3",
     "chalk": "5.0.1",
-    "execa": "6.1.0",
+    "execa": "^6.1.0",
     "ncp": "2.0.0",
     "prompts": "2.4.2",
     "tslib": "2.4.0",

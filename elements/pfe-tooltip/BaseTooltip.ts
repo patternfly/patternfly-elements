@@ -6,7 +6,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
-import style from './BaseTooltip.scss';
+import style from './BaseTooltip.css';
 
 const enterEvents = ['focusin', 'tap', 'click', 'mouseenter'];
 const exitEvents = ['focusout', 'blur', 'mouseleave'];

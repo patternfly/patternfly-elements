@@ -3,9 +3,9 @@ import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 
-import { PfeJumpLinks } from '@patternfly/pfe-jump-links';
-import { PfeJumpLinksItem } from '../pfe-jump-links-item';
-import { PfeJumpLinksList } from '../pfe-jump-links-list';
+import { PfeJumpLinks } from '@patternfly/elements/pfe-jump-links/pfe-jump-links.js';
+import { PfeJumpLinksItem } from '../pfe-jump-links-item.js';
+import { PfeJumpLinksList } from '../pfe-jump-links-list.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
 

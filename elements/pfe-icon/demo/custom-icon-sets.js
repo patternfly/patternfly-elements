@@ -1,12 +1,13 @@
-import { PfeIcon } from '@patternfly/pfe-icon';
+import { PfeIcon } from '@patternfly/elements/pfe-icon/pfe-icon.js';
+
 import { render, html } from 'lit';
 
 PfeIcon.addIconSet('rh', (set, icon) =>
   new URL(`./icons/${set}/${icon}.js`, import.meta.url));
 
 const icons = [
-  'redhat',
-  'patternfly',
+  'lifecycle',
+  'boba-tea',
 ];
 
 const items = html`
@@ -16,5 +17,6 @@ const items = html`
     </li>`)}
   </ul>
 `;
+
 render(items, document.getElementById('custom-icon-demo-output'));
 render(items, document.getElementById('styled-icon-demo-output'));

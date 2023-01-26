@@ -11,96 +11,298 @@
     "node": ">=16 <=19"
   },
   "scripts": {
-    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
-    "start": "npm-run-all build:tools build:icons build:analyze --parallel dev:* watch:docs:analyze",
-    "start:demo": "npm run dev",
-    "dev": "run-p dev:*",
-    "dev:server": "web-dev-server --open --watch",
-    "dev:packages": "lerna run dev --parallel",
-    "watch:docs": "npm-run-all build:tools build:styles --parallel watch:docs:*",
-    "watch:docs:analyze": "lerna run watch:analyze --parallel",
-    "watch:docs:core": "npm run build:core --watch",
-    "watch:docs:eleventy": "eleventy --serve --config=.eleventy.cjs",
-    "watch:types": "tsc -b --watch",
-    "new": "./tools/create-element/bin/main.js",
-    "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
-    "build": "run-s build:*",
-    "build:types": "tsc -b .",
-    "build:tools": "npm run build --workspace @patternfly/pfe-tools",
-    "build:icons": "ts-node --esm --project tsconfig.icons.json ./scripts/icons/build.ts",
-    "build:analyze": "lerna run analyze --parallel",
-    "build:styles": "npm run build --workspace @patternfly/pfe-styles",
-    "build:core": "npm run build --workspace @patternfly/pfe-core",
-    "build:lightdom": "npm run build:lightdom --workspaces --if-present",
-    "build:elements": "scripts/build.js",
-    "build:docs": "run-s build:docs:*",
-    "build:docs:eleventy": "eleventy --config=.eleventy.cjs",
-    "bundle": "node --input-type module -e \"await import('./tools/pfe-tools/esbuild.js').then(x => x.singleFileBuild())\"",
-    "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
-    "test": "wtr --group default",
-    "🧑‍🔬--TEST---ALL FRAMEWORKS--🧑‍🔬": "❓ Test packages - all frameworks",
-    "test:ci": "wtr",
+    "🐒-DEV": "❓ Development aids",
+    "start": "wireit",
+    "dev": "wireit",
+    "dev:server": "wireit",
+    "dev:tools": "wireit",
+    "watch:analyze": "wireit",
+    "new": "npm run build:create && ./tools/create-element/bin/main.js",
+    "🚧-BUILD": "❓ Make packages and artifacts",
+    "build": "wireit",
+    "build:tools": "wireit",
+    "build:elements": "wireit",
+    "build:icons": "wireit",
+    "build:core": "wireit",
+    "build:lightdom": "wireit",
+    "build:bundle": "wireit",
+    "build:create": "wireit",
+    "analyze": "wireit",
+    "docs": "wireit",
+    "site": "npm run build",
+    "🧪-TEST": "❓ Test packages",
+    "test": "wireit",
+    "test:ci": "wireit",
     "test:watch": "wtr --watch",
     "test:vue": "wtr --watch --group with-vue",
     "test:react": "wtr --watch --group with-react",
-    "🎨--TEST---VISUAL REGRESSION--🎨": "❓ Test packages for visual rergressions, locally",
-    "test:e2e": "run-s test:e2e:build test:e2e:test",
-    "test:e2e:build": "run-s build:tools build:analyze build:styles build:core build:docs build:elements",
-    "test:e2e:update": "PW_EXPERIMENTAL_TS_ESM=1 playwright test --update-snapshots",
-    "test:e2e:test": "PW_EXPERIMENTAL_TS_ESM=1 playwright test",
-    "🚚-----DIST-------🚚": "❓ Publish packages",
+    "e2e": "wireit",
+    "e2e:update": "wireit",
+    "🚚-DIST": "❓ Publish packages",
     "license-update": "node scripts/license-update.js",
     "leftover-check": "bash scripts/leftover-check.sh",
-    "site": "run-s build:tools build:icons build:analyze build:styles build:core build:elements build:docs",
-    "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
-    "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
-    "clean:deep": "git clean -fX -e node_modules",
-    "clean:nuke": "git clean -fX",
+    "⚙️--UTIL": "❓ Manages the repo",
+    "postinstall": "wireit",
+    "clean": "git clean -fX",
     "lint": "eslint .",
-    "postinstall": "run-s postinstall:**",
-    "postinstall:patch": "patch-package",
-    "postinstall:husky": "npx husky install",
-    "postinstall:build:create": "npm run build --workspace @patternfly/create-element",
-    "postinstall:build:tools": "npm run build --workspace @patternfly/pfe-tools",
-    "postinstall:build:styles": "npm run build --workspace @patternfly/pfe-styles",
+    "patch": "patch-package",
+    "husky": "npx husky install",
     "pr": "node scripts/open-pr.js"
+  },
+  "wireit": {
+    "postinstall": {
+      "dependencies": [
+        "patch",
+        "husky"
+      ]
+    },
+    "build": {
+      "dependencies": [
+        "build:tools",
+        "analyze",
+        "docs",
+        "build:core",
+        "build:icons",
+        "build:lightdom",
+        "build:elements",
+        "build:create",
+        "build:bundle"
+      ]
+    },
+    "analyze": {
+      "command": "npm run -ws --if-present analyze",
+      "files": [
+        "elements/**/*.ts",
+        "elements/**/*.css",
+        "core/**/*.ts",
+        "tools/**/*.ts"
+      ],
+      "output": [
+        "elements/custom-elements.json",
+        "core/pfe-core/custom-elements.json"
+      ],
+      "dependencies": [
+        "build:core",
+        "build:tools"
+      ]
+    },
+    "build:create": {
+      "command": "tsc -b tools/create-element",
+      "files": [
+        "tools/create-element/*.ts",
+        "tools/create-element/generator/**/*.ts"
+      ],
+      "output": [
+        "tools/create-element/*.tsbuildinfo"
+      ],
+      "dependencies": [
+        "build:core",
+        "build:tools"
+      ]
+    },
+    "build:elements": {
+      "command": "ttsc --build elements --pretty",
+      "clean": "if-file-deleted",
+      "dependencies": [
+        "build:core",
+        "build:tools"
+      ],
+      "files": [
+        "elements/*/*.ts",
+        "elements/*/*.css",
+        "elements/tsconfig.json",
+        "tsconfig.settings.json"
+      ],
+      "output": [
+        "elements/*/*.js",
+        "elements/*/*.js.map",
+        "elements/*/*.d.ts",
+        "elements/*.tsbuildinfo"
+      ]
+    },
+    "build:tools": {
+      "command": "tsc --build tools/pfe-tools --pretty",
+      "clean": "if-file-deleted",
+      "files": [
+        "tools/pfe-tools/*.ts",
+        "tools/pfe-tools/**/*.ts"
+      ],
+      "output": [
+        "tools/*.tsbuildinfo"
+      ]
+    },
+    "build:core": {
+      "command": "ttsc --build ./core/pfe-core --pretty",
+      "clean": "if-file-deleted",
+      "dependencies": [
+        "build:tools"
+      ],
+      "files": [
+        "core/**/*.ts",
+        "core/tsconfig.json"
+      ],
+      "output": [
+        "*.tsbuildinfo"
+      ]
+    },
+    "build:icons": {
+      "command": "ts-node --esm --project tsconfig.icons.json ./scripts/icons/build.ts",
+      "dependencies": [
+        "build:core",
+        "build:tools"
+      ],
+      "output": [
+        "elements/pfe-icon/icons/*/*.js"
+      ]
+    },
+    "build:bundle": {
+      "command": "scripts/bundle.js",
+      "dependencies": [
+        "build:core",
+        "build:tools"
+      ],
+      "files": [
+        "**/*.ts",
+        "scripts/bundle.js"
+      ],
+      "output": [
+        "elements/pfe.min.js"
+      ]
+    },
+    "build:lightdom": {
+      "command": "npm run build:lightdom --workspaces --if-present",
+      "dependencies": [
+        "build:tools"
+      ]
+    },
+    "docs": {
+      "command": "eleventy",
+      "files": [
+        "elements/*/docs/*",
+        "docs/**/*"
+      ],
+      "output": [
+        "_site"
+      ],
+      "dependencies": [
+        "build:core",
+        "build:tools",
+        "build:icons",
+        "analyze"
+      ]
+    },
+    "dev": {
+      "command": "web-dev-server --open --watch",
+      "service": true,
+      "dependencies": [
+        "build:tools"
+      ]
+    },
+    "watch:analyze": {
+      "service": true,
+      "command": "npm run -ws --if-present analyze -- --watch",
+      "files": [
+        "elements/**/*.ts",
+        "core/**/*.ts",
+        "tools/**/*.ts"
+      ],
+      "dependencies": [
+        "build:tools"
+      ]
+    },
+    "start": {
+      "service": true,
+      "command": "eleventy --serve",
+      "dependencies": [
+        "build:core",
+        "build:tools",
+        "build:icons",
+        "analyze",
+        "watch:analyze",
+        "dev"
+      ]
+    },
+    "test": {
+      "command": "wtr --group default",
+      "files": [
+        "**/*.ts",
+        "**/*.css"
+      ],
+      "output": [],
+      "dependencies": [
+        "build:tools",
+        "build:icons"
+      ]
+    },
+    "test:ci": {
+      "command": "wtr",
+      "files": [
+        "**/*.ts",
+        "**/*.css"
+      ],
+      "output": [],
+      "dependencies": [
+        "build:tools",
+        "build:icons"
+      ]
+    },
+    "e2e": {
+      "command": "PW_EXPERIMENTAL_TS_ESM=1 playwright test",
+      "dependencies": [
+        "build:tools",
+        "build:core",
+        "analyze",
+        "docs",
+        "build:elements"
+      ]
+    },
+    "e2e:update": {
+      "command": "PW_EXPERIMENTAL_TS_ESM=1 playwright test --update-snapshots",
+      "dependencies": [
+        "build:tools",
+        "build:core",
+        "analyze",
+        "docs",
+        "build:elements"
+      ]
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --fix"
   },
   "devDependencies": {
     "@actions/core": "^1.10.0",
     "@actions/exec": "^1.1.1",
     "@actions/glob": "^0.3.0",
-    "@commitlint/cli": "^17.0.3",
-    "@commitlint/config-conventional": "^17.0.3",
-    "@commitlint/config-lerna-scopes": "^17.0.2",
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
+    "@fortawesome/free-brands-svg-icons": "^6.2.0",
+    "@fortawesome/free-regular-svg-icons": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@jspm/generator": "^1.0.0-beta.33",
+    "@octokit/core": "^4.2.0",
     "@patternfly/patternfly": "^4.210.2",
-    "@types/koa__router": "^8.0.11",
+    "@rhds/elements": "^1.0.0-beta.28",
+    "@types/koa__router": "^12.0.0",
     "@types/numeral": "^2.0.2",
     "@types/prismjs": "^1.26.0",
     "@types/prompts": "^2.4.1",
-    "commitlint": "^17.0.3",
+    "commitlint": "^17.4.2",
     "cpx": "^1.5.0",
     "fuse.js": "^6.6.2",
     "git-branch": "^2.0.1",
-    "husky": "^8.0.1",
-    "leasot": "^13.2.0",
-    "lerna": "^6.3.0",
+    "husky": "^8.0.3",
+    "leasot": "^13.3.0",
     "npm-merge-driver": "^2.3.6",
+    "nunjucks": "^3.2.3",
     "open": "^8.4.0",
     "prompts": "^2.4.2",
     "renamer": "^4.0.0",
-    "sassdoc": "^2.7.4",
-    "zero-md": "^2.3.6"
-  },
-  "lint-staged": {
-    "*.{js,ts}": "eslint --fix"
+    "wireit": "^0.9.3"
   },
   "workspaces": [
     "./core/*",
-    "./elements/*",
+    "./elements",
     "./tools/*"
-  ],
-  "dependencies": {
-    "@octokit/core": "^4.1.0"
-  }
+  ]
 }

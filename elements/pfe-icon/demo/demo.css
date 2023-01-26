@@ -12,8 +12,8 @@ output ul {
   margin: 0;
 }
 
-#styled-icon-demo-output [icon=redhat]     { color: var(--rh-color-brand-red-on-light, #ee0000); }
-#styled-icon-demo-output [icon=patternfly] { color: var(--pf-global--link--Color--hover, #004080); }
+#styled-icon-demo-output [icon=lifecycle]     { color: var(--rh-color-brand-red-on-light, #ee0000); }
+#styled-icon-demo-output [icon=boba-tea] { color: var(--pf-global--link--Color--hover, #004080); }
 
 #styled-icon-demo-output,
 #custom-icon-demo-output {

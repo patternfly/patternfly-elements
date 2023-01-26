@@ -1,6 +1,6 @@
 import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfeTile } from '@patternfly/pfe-tile';
+import { PfeTile } from '@patternfly/elements/pfe-tile/pfe-tile.js';
 
 const TEMPLATE = html`
   <pfe-tile>

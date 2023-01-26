@@ -11,19 +11,19 @@ Read more about tooltips in the [PatternFly Elements Tooltip documentation](http
 Load `<pfe-tooltip>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-tooltip?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-tooltip/pfe-tooltip.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it
 
 ```bash
-npm install @patternfly/pfe-tooltip
+npm install @patternfly/elements
 ```
 
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/pfe-tooltip';
+import '@patternfly/elements/pfe-tooltip/pfe-tooltip.js';
 ```
 
 ## Usage
@@ -31,25 +31,23 @@ import '@patternfly/pfe-tooltip';
 
 ### Basic Tooltip 
 ```html
-<pfe-tooltip>
-    <div>
-        This is An Element 
-    </div>
-    <div slot="content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.
-    </div>
+<pfe-tooltip> This is An Element
+  <div slot="content">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et 
+    ultrices.
+  </div>
 </pfe-tooltip>
 ```
 
 ### Tooltip With Left Positioning (also available: top, right, bottom)
 ```html
-<pfe-tooltip position="left">
-    <div>
-        This is An Element 
-    </div>
-    <div slot="content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices.
-    </div>
+<pfe-tooltip position="left"> This is An Element
+  <div slot="content">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et 
+    ultrices.
+  </div>
 </pfe-tooltip>
 ```
 

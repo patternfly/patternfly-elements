@@ -22,7 +22,8 @@
   <script type="module">
     import 'construct-style-sheets-polyfill';
     import 'element-internals-polyfill';
-    import '@patternfly/pfe-button';
+    import '@patternfly/elements/pfe-button/pfe-button.js';
+    import '@patternfly/elements/pfe-card/pfe-card.js';
     import '@patternfly/pfe-tools/dev-server/demo.ts';
   </script>
 </head>
@@ -69,7 +70,23 @@
     </nav>
   </aside>
   <main>{% if templateContent %}
-    <div data-demo="{{ demo.tagName }}">{{ templateContent | safe }}</div>{% endif %}
+    <div data-demo="{{ demo.tagName }}">{{ templateContent | safe }}</div>{% else %}
+    <section id="components">
+        {% for primary, group in groupeddemos %}
+        {% set first = group['0'] %}
+        <pfe-card rounded compact>
+          <h2 slot="header">{{ first.title }}</h2>
+          <a href="{{ first.permalink | replace(demoURLPrefix, '/') }}">
+            <img src="/elements/{{ primary }}/docs/screenshot.png" alt="{{ primary }}">
+          </a>
+          <ul>{% for d in group %}{% if not loop.first %}
+            <li>
+              <a href="{{ d.permalink | replace(demoURLPrefix, '/') }}">{{ d.title }}</a>
+            </li>{% endif %}{% endfor %}
+          </ul>
+        </pfe-card>{% endfor %}
+    </section>
+    {% endif %}
   </main>
 </body>
 

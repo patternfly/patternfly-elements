@@ -1,6 +1,6 @@
 import 'element-internals-polyfill';
-import '@patternfly/pfe-switch';
-import '@patternfly/pfe-button';
+import '@patternfly/elements/pfe-switch/pfe-switch.js';
+import '@patternfly/elements/pfe-button/pfe-button.js';
 
 document.getElementById('form-disabled').addEventListener('change', /** @this{HTMLFieldsetElement}*/function(event) {
   const controls = document.getElementById(event.target.getAttribute('aria-controls'));

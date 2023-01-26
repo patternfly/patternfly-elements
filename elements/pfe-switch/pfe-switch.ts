@@ -1,7 +1,7 @@
 import { customElement } from 'lit/decorators.js';
 
 import { BaseSwitch } from './BaseSwitch.js';
-import styles from './pfe-switch.scss';
+import styles from './pfe-switch.css';
 
 /**
  * Switch

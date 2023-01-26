@@ -5,7 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
-import style from './pfe-jump-links-item.scss';
+import style from './pfe-jump-links-item.css';
 
 import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 

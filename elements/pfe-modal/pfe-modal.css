@@ -1,0 +1,184 @@
+:host {
+	display: block;
+	position: relative;
+  --_spacer-align-top: var(--pf-c-modal-box--m-align-top--spacer,
+    var(--pf-global--spacer--sm, 0.5rem));
+  --_height-offset: min(var(--_spacer-align-top), var(--pf-global--spacer--2xl, 3rem));
+}
+
+[hidden] {
+  display: none !important;
+}
+
+section {
+  display: flex;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--pf-c-modal-box--ZIndex,
+    var(--pf-global--ZIndex--xl,
+      500));
+}
+
+#container {
+  position: relative;
+  max-height: inherit;
+}
+
+[part=overlay] {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--pf-c-backdrop--BackgroundColor,
+      var(--pf-global--BackgroundColor--dark-transparent-100,
+        rgba(3, 3, 3, 0.62)));
+}
+
+[part=dialog] {
+  position: relative;
+  margin: 0 auto;
+
+  width: var(--pf-c-modal-box--Width,
+    calc(100% - var(--pf-global--spacer--xl,2rem)));
+
+  max-width: var(--pf-c-modal-box--MaxWidth,
+    calc(100% - var(--pf-global--spacer--xl,2rem)));
+
+  max-height: var(--pf-c-modal-box--MaxHeight,
+    calc(100% - var(--pf-global--spacer--2xl,3rem)));
+
+  box-shadow: var(--pf-c-modal-box--BoxShadow,
+    var(--pf-global--BoxShadow--xl,
+      0 1rem 2rem 0 rgba(3, 3, 3, 0.16),
+      0 0 0.5rem 0 rgba(3, 3, 3, 0.1)));
+
+	background-color: var(--pf-c-modal-box--BackgroundColor,
+    var(--pf-global--BackgroundColor--100,
+      var(--pf-global--BackgroundColor--100, #fff)));
+
+  padding: var(--pf-global--spacer--lg, 1.5rem);
+  margin-inline: var(--pf-global--spacer--md, 1rem);
+}
+
+:host([width]) [part=dialog],
+:host([variant]) [part=dialog] {
+  margin-inline: 0;
+}
+
+:host([width="small"]) [part=dialog],
+:host([variant="small"]) [part=dialog] {
+  --pf-c-modal-box--Width: var(--pf-c-modal-box--m-sm--sm--MaxWidth, 35rem);
+}
+
+:host([width="medium"]) [part=dialog],
+:host([variant="medium"]) [part=dialog] {
+  --pf-c-modal-box--Width: var(--pf-c-modal-box--m-md--Width, 52.5rem);
+}
+
+:host([width="large"]) [part=dialog],
+:host([variant="large"]) [part=dialog] {
+  --pf-c-modal-box--Width: var(--pf-c-modal-box--m-lg--lg--MaxWidth, 70rem);
+}
+
+[part=content] {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  max-height: var(--pf-c-modal-box--MaxHeight,
+    calc(100vh - var(--pf-global--spacer--2xl,
+      3rem)));
+
+  box-sizing: border-box;
+}
+
+[part=content] ::slotted([slot="header"]) {
+  margin-top: 0 !important;
+}
+
+header {
+  position: sticky;
+  top: 0;
+	background-color: var(--pf-c-modal-box--BackgroundColor,
+    var(--pf-global--BackgroundColor--100,
+      var(--pf-global--BackgroundColor--100,
+        #fff)));
+}
+
+header ::slotted(:is(h1,h2,h3,h4,h5,h6)[slot="header"]) {
+  font-size: var(--pf-c-modal-box__title--FontSize,
+    var(--pf-global--FontSize--2xl,
+      1.5rem));
+  font-weight: var(--pf-global--FontWeight--normal, 400);
+  font-family: var(--pf-c-modal-box__title--FontFamily,
+    var(--pf-global--FontFamily--heading--sans-serif,
+      var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,
+        "RedHatDisplayUpdated", "Overpass", overpass, helvetica, arial, sans-serif)));
+}
+
+[part=close-button] {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+
+  position: absolute;
+  cursor: pointer;
+  line-height: 24px;
+  padding-block:
+    var(--pf-c-button--PaddingTop,
+      var(--pf-global--spacer--form-element, 0.375rem));
+  padding-inline:
+    var(--pf-c-button--PaddingRight,
+      var(--pf-global--spacer--md, 1rem));
+  top: 0;
+  right: calc(var(--pf-global--spacer--lg, 1.5rem) / -3);
+  color: var(--pf-c-button--m-plain--Color,
+    var(--pf-global--Color--200,
+      #6a6e73));
+  font-size: var(--pf-c-button--FontSize,
+    var(--pf-global--FontSize--md,
+      1rem));
+}
+
+[part=close-button]:is(:focus-within, :focus-visible, :hover) {
+  color: var(--pf-c-button--m-plain--focus--Color, var(--pf-global--Color--100, #151515));
+}
+
+[part=close-button] > svg {
+  font-size: 16px;
+  width: var(--pf-global--spacer--md, 1rem);
+  aspect-ratio: 1/1;
+}
+
+:host([position="top"]) #dialog {
+  align-self: start;
+
+  margin-block: var(--pf-c-modal-box--m-align-top--MarginTop,
+    var(--pf-c-modal-box--m-align-top--spacer,
+      2rem));
+
+  margin-inline: var(--pf-global--spacer--md, 1rem);
+
+  width: 100%;
+
+  max-width: var(--pf-c-modal-box--m-align-top--MaxWidth,
+    calc(100% - min(
+      var(--pf-c-modal-box--m-align-top--spacer, 2rem) * 2,
+      var(--pf-global--spacer--xl, 2rem))));
+
+  max-height: var(--pf-c-modal-box--m-align-top--MaxHeight,
+    calc(100% - var(--_height-offset) - var(--_spacer-align-top)));
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  gap: var(--pf-global--spacer--xl, 0.5rem);
+}

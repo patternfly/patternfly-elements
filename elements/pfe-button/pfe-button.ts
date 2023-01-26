@@ -4,10 +4,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { BaseButton } from './BaseButton.js';
 
-import '@patternfly/pfe-icon';
-import '@patternfly/pfe-spinner';
+import '@patternfly/elements/pfe-icon/pfe-icon.js';
+import '@patternfly/elements/pfe-spinner/pfe-spinner.js';
 
-import styles from './pfe-button.scss';
+import styles from './pfe-button.css';
 
 export type ButtonVariant = (
   | 'primary'

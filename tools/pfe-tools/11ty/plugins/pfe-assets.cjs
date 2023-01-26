@@ -41,25 +41,43 @@ function getFilesToCopy(options) {
   return files;
 }
 
-let didFirstBuild = false;
-
 /** Generate a single-file bundle of all the repo's components and their dependencies */
-async function bundle(options) {
-  if (!didFirstBuild) {
-    const { singleFileBuild } = await import('@patternfly/pfe-tools/esbuild.js');
-    const { pfeEnvPlugin } = await import('@patternfly/pfe-tools/esbuild-plugins/pfe-env.js');
+async function bundle() {
+  const { build } = await import('esbuild');
+  const { default: CleanCSS } = await import('clean-css');
+  const { litCssPlugin } = await import('esbuild-plugin-lit-css');
 
-    await singleFileBuild({
-      additionalPackages: options?.additionalPackages,
-      minify: process.env.NODE_ENV === 'production' || process.env.ELEVENTY_ENV?.startsWith?.('prod'),
-      outfile: 'docs/pfe.min.js',
-      plugins: [
-        pfeEnvPlugin(),
-      ]
-    }).catch(() => void 0);
+  const cleanCSS = new CleanCSS({
+    sourceMap: true,
+    returnPromise: true,
+  });
 
-    didFirstBuild = true;
-  }
+  await build({
+    entryPoints: ['elements/pfe.ts'],
+    format: 'esm',
+    outfile: '_site/pfe.min.js',
+    allowOverwrite: true,
+    treeShaking: true,
+    legalComments: 'linked',
+    logLevel: 'info',
+    sourcemap: true,
+    bundle: true,
+    minify: true,
+    minifyWhitespace: true,
+
+    external: [
+      'lit',
+      'tslib',
+      '@floating-ui*'
+    ],
+
+    plugins: [
+      litCssPlugin({
+        filter: /\.css$/,
+        transform: source => cleanCSS.minify(source).then(x => x.styles)
+      }),
+    ],
+  });
 }
 
 /**
@@ -88,6 +106,9 @@ module.exports = {
     eleventyConfig.addPassthroughCopy('docs/pfe.min.{map,css}');
     eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/main.mjs');
+    eleventyConfig.addPassthroughCopy({
+      'node_modules/@rhds/elements': '/assets/@rhds'
+    });
     eleventyConfig.addPassthroughCopy('brand/**/*');
     const filesToCopy = getFilesToCopy(options);
     if (filesToCopy) {

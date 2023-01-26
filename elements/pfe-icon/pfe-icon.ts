@@ -1,7 +1,7 @@
 import { BaseIcon } from './BaseIcon.js';
 import { customElement } from 'lit/decorators.js';
 
-import style from './pfe-icon.scss';
+import style from './pfe-icon.css';
 
 /**
  * PatternFly Icon component lazy-loads icons and allows custom icon sets

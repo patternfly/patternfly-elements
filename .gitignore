@@ -2,6 +2,8 @@
 node_modules
 **/node_modules
 
+.wireit
+.lvimrc
 tmp
 .tmp
 
@@ -45,20 +47,6 @@ elements/**/*.d.ts
 core/**/*.d.ts
 tools/**/*.d.ts
 
-elements/**/__*.scss
-core/**/__*.scss
-tools/**/__*.scss
-
-elements/**/*.css
-core/**/*.css
-tools/**/*.css
-
-elements/**/*.css.map
-core/**/*.css.map
-tools/**/*.css.map
-
-!elements/**/*--noscript.css
-
 elements/*/package-lock.json
 core/*/package-lock.json
 tools/*/package-lock.json
@@ -74,6 +62,8 @@ tools/*/test/**/*.png
 !elements/*/demo/*
 !core/*/demo/*
 !tools/*/demo/*
+
+!elements/pfe-icon/demo/icons/**/*.js
 
 !scripts/**/*.js
 
@@ -96,10 +86,6 @@ local.log
 
 test/.wct-kludge
 
-# Sass
-.sass-cache
-# Sassdoc compiled assets ignored
-elements/pfe-sass/demo/*
 core/pfe-core/demo/*
 !core/pfe-core/demo/example.html
 

@@ -1,5 +1,5 @@
-import '@patternfly/pfe-switch';
-import '@patternfly/pfe-button';
+import '@patternfly/elements/pfe-switch/pfe-switch.js';
+import '@patternfly/elements/pfe-button/pfe-button.js';
 
 for (const form of document.querySelectorAll('form')) {
   form.addEventListener('submit', e=>e.preventDefault());

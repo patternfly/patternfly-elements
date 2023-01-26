@@ -10,7 +10,7 @@ import { deprecatedCustomEvent } from '@patternfly/pfe-core/functions/deprecated
 
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
-import style from './pfe-modal.scss';
+import style from './pfe-modal.css';
 
 export class ModalCancelEvent extends ComposedEvent {
   constructor() {

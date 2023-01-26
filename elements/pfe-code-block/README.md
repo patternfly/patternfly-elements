@@ -10,7 +10,7 @@ documentation](https://patternflyelements.org/components/code-block)
 Load `<pfe-code-block>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-code-block?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-code-block/pfe-code-block.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

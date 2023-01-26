@@ -9,7 +9,7 @@ import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.
 import { BaseTab, TabExpandEvent } from './BaseTab.js';
 import { BaseTabPanel } from './BaseTabPanel.js';
 
-import styles from './BaseTabs.scss';
+import styles from './BaseTabs.css';
 
 /**
  * BaseTabs

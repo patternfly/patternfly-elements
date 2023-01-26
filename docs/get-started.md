@@ -35,10 +35,10 @@ title: Get started
   [Learn more about JavaScript modules][modules].
 
   In this example, we load the [card](/components/card/) modules from 
-  [`https://unpkg.com`](https://unpkg.com).
+  [JSPM](https://jspm.dev).
 
   ```html
-  <script type="module" src="https://unpkg.com/@patternfly/pfe-card@next?module"></script>
+  <script type="module" src="https://jspm.dev/@patternfly/elements/pfe-card/pfe-card.js"></script>
   ```
 
   <a id="in-an-app"></a>

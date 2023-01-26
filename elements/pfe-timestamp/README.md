@@ -9,19 +9,19 @@ Read more about Datetime in the [PatternFly Elements Timestamp documentation](ht
 Load `<pfe-timestamp>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-timestamp?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-timestamp/pfe-timestamp.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it
 
 ```bash
-npm install @patternfly/pfe-timestamp
+npm install @patternfly/elements
 ```
 
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/pfe-timestamp';
+import '@patternfly/elements/pfe-timestamp/pfe-timestamp.js';
 ```
 
 ## Usage

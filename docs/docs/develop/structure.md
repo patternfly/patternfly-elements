@@ -25,7 +25,7 @@ Let's take a look at the `pfe-cool-element.ts` file to see what we have.
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-import styles from './pfe-cool-element.scss';
+import styles from './pfe-cool-element.css';
 
 /**
  * Cool Element
@@ -105,19 +105,21 @@ TypeScript implements an experimental version of the decorator language feature 
 @customElement('pfe-cool-element')
 ```
 
-Third, we import an use our component's SASS styles
+Third, we import an use our component's CSS styles
 
 ```ts
-import styles from './pfe-cool-element.scss';
+import styles from './pfe-cool-element.css';
 ```
 
 ```ts
 static readonly styles = [styles];
 ```
 
-Of course, web browsers don't know how to import `.scss` files as CSS styles. In the near future, we will use
+As of this writing, web browsers don't yet know how to import `.css` files as 
+CSS styles. In the near future, we will use
 [import assertions](https://github.com/tc39/proposal-import-assertions) to import [CSS modules](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/css-modules-v1-explainer.md),
-but for now, we use some [build-time tricks](https://npm.im/esbuild-plugin-lit-css) to transform our SASS sources into JavaScript objects which work with LitElement.
+but for now, we use some [build-time tricks](https://npm.im/esbuild-plugin-lit-css) to transform our CSS sources into 
+JavaScript objects which work with LitElement.
 
 > For questions on how Custom Elements work, or if you want to learn the basics of shadow DOM, check out Eric Bidelman's post: [Custom Elements v1: Reusable Web Components](https://developers.google.com/web/fundamentals/web-components/customelements).
 

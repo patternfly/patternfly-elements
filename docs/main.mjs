@@ -1,11 +1,7 @@
-const themeableSection = document.querySelector('#themeable-section');
-const themeSelect = themeableSection.querySelector('pfe-select');
-themeSelect.addEventListener('select', event => {
-  themeableSection.className = event.value;
-});
+import { PfeIcon } from '@patternfly/elements';
+import '@rhds/elements/rh-footer/rh-global-footer.js';
+import 'element-internals-polyfill';
 
-const contextBand = document.getElementById('context-band');
-const contextSelect = contextBand.querySelector('pfe-select');
-contextSelect.addEventListener('select', event => {
-  contextBand.setAttribute('color-palette', event.value || 'base');
-});
+// Workaround for bundled pfe-icon: make icon imports absolute, instead of relative to the bundle
+PfeIcon.getIconUrl = (set, icon) =>
+  new URL(`/components/icon/icons/${set}/${icon}.js`, import.meta.url);

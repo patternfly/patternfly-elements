@@ -1,8 +1,5 @@
 ```html
-<script type="module"
-src="https://unpkg.com/@patternfly/pfe-card@next?module"></script>
-<script type="module"
-src="https://unpkg.com/@patternfly/pfe-button@next?module"></script>
+<script type="module" src="https://jspm.dev/@patternfly/elements"></script>
 
 <pfe-card color-palette="lightest">
   <h2 slot="header">Card component</h2>

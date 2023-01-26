@@ -6,6 +6,8 @@ import { setViewport, sendKeys } from '@web/test-runner-commands';
 import { BaseTab } from '../BaseTab.js';
 import { PfeTabs } from '../pfe-tabs.js';
 
+import '@patternfly/pfe-tools/test/stub-logger.js';
+
 const TEMPLATE = html`
     <pfe-tabs>
       <pfe-tab slot="tab" active>Users</pfe-tab>

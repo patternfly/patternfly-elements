@@ -1,6 +1,6 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfeTimestamp } from '@patternfly/pfe-timestamp';
+import { PfeTimestamp } from '@patternfly/elements/pfe-timestamp/pfe-timestamp.js';
 
 describe('<pfe-timestamp>', function() {
   it('should upgrade', async function() {

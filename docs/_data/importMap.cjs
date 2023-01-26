@@ -9,8 +9,6 @@ function readPackageVersion(module) {
 
 const LIT_VERSION = readPackageVersion('lit');
 const FUSE_VERSION = readPackageVersion('fuse.js');
-const ZERO_MD_VERSION = readPackageVersion('zero-md');
-const MARKED_VERSION = readPackageVersion('marked');
 const PRISM_VERSION = readPackageVersion('prismjs');
 const PWA_HELPER_VERSION = readPackageVersion('pwa-helpers');
 
@@ -72,31 +70,24 @@ module.exports = async function() {
 
   await generator.install([
     'tslib',
+    '@floating-ui/dom',
+    '@floating-ui/core',
+    '@rhds/elements',
+    '@rhds/elements/rh-footer/rh-global-footer.js',
+    `prismjs@${PRISM_VERSION}`,
     'element-internals-polyfill',
-    `zero-md@${ZERO_MD_VERSION}`,
     `fuse.js@${FUSE_VERSION}`,
     ...LIT_DEPS,
     ...PWA_DEPS
   ]);
 
   const map = generator.getMap();
-
-  map.imports['@floating-ui/dom'] = `https://ga.jspm.io/npm:@floating-ui/dom@1.0.5/dist/floating-ui.dom.mjs`;
-  map.imports['@floating-ui/core'] = `https://ga.jspm.io/npm:@floating-ui/core@1.0.2/dist/floating-ui.core.browser.mjs`;
-  map.imports['marked'] = `https://ga.jspm.io/npm:marked@${MARKED_VERSION}/lib/marked.esm.js`;
-  map.imports['prismjs'] = `https://ga.jspm.io/npm:prismjs@${PRISM_VERSION}/prism.js`;
-
-  map.imports['@patternfly/pfe-core'] = '/core/core/core.js';
-  map.imports['@patternfly/pfe-core/decorators.js'] = '/core/core/decorators.js';
-  map.imports['@patternfly/pfe-core/decorators/'] = '/core/core/decorators/';
-  map.imports['@patternfly/pfe-core/'] = '/core/core/';
-  map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
-
+  map.imports['@patternfly/elements'] = '/pfe.min.js';
   fs.readdirSync(path.join(__dirname, '..', '..', 'elements')).flatMap(component => {
     const base = component.replace('pfe-', '');
-    map.imports[`@patternfly/${component}`] = `/components/${base}/${component}.js`;
-    map.imports[`@patternfly/${component}/`] = `/components/${base}/`;
+    map.imports[`@patternfly/elements/${component}/${component}.js`] = `/pfe.min.js`;
   });
+  map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
 
   return map;
 };

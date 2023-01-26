@@ -1,7 +1,8 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfeButton } from '@patternfly/pfe-button';
 import { sendKeys } from '@web/test-runner-commands';
+
+import { PfeButton } from '@patternfly/elements/pfe-button/pfe-button.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
 

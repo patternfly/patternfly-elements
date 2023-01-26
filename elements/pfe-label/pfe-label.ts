@@ -6,9 +6,9 @@ import { ComposedEvent } from '@patternfly/pfe-core';
 
 import { BaseLabel } from './BaseLabel.js';
 
-import '@patternfly/pfe-button';
+import '@patternfly/elements/pfe-button/pfe-button.js';
 
-import styles from './pfe-label.scss';
+import styles from './pfe-label.css';
 
 export type LabelVariant = (
   | 'filled'

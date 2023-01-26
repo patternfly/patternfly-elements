@@ -66,7 +66,6 @@ Remember that any changes we make in the element directory are watched while the
 When you save changes, the dev server reloads the page and shows you your 
 changes automatically.
 
-Now that we've added the HTML, let's style our element by updating the SASS 
-file.
+Now that we've added the HTML, let's style our element by updating the CSS file.
 
-<a class="cta" href="../sass">Next up: Write your Sass</a>
+<a class="cta" href="../css">Next up: Write your CSS</a>

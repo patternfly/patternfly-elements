@@ -2,7 +2,7 @@ import { customElement, property } from 'lit/decorators.js';
 
 import { BaseBadge } from './BaseBadge.js';
 
-import styles from './pfe-badge.scss';
+import styles from './pfe-badge.css';
 
 /**
  * A badge is used to annotate other information like a label or an object name.

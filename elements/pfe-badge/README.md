@@ -9,19 +9,19 @@ Read more about Badge in the [PatternFly Elements Badge documentation](https://p
 Load `<pfe-badge>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-badge?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-badge/pfe-badge.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it
 
 ```bash
-npm install @patternfly/pfe-badge
+npm install @patternfly/elements
 ```
 
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/pfe-badge';
+import '@patternfly/elements/pfe-badge/pfe-badge.js';
 ```
 
 ## Usage

@@ -2,7 +2,7 @@ import { property, customElement } from 'lit/decorators.js';
 
 import { BaseAvatar } from './BaseAvatar.js';
 
-import style from './pfe-avatar.scss';
+import style from './pfe-avatar.css';
 
 /**
  * Avatar is an element for displaying a user's avatar image.

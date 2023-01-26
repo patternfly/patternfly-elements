@@ -2,7 +2,7 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { BaseCodeBlock } from './BaseCodeBlock.js';
-import styles from './pfe-code-block.scss';
+import styles from './pfe-code-block.css';
 
 /**
  * @slot code
@@ -28,6 +28,7 @@ import styles from './pfe-code-block.scss';
 @customElement('pfe-code-block')
 export class PfeCodeBlock extends BaseCodeBlock {
   static readonly version = '{{version}}';
+
   static readonly styles = [...BaseCodeBlock.styles, styles];
 
   @property({ type: Boolean, reflect: true }) expanded = false;

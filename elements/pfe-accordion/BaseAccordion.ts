@@ -11,7 +11,7 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { AccordionHeaderChangeEvent, BaseAccordionHeader } from './BaseAccordionHeader.js';
 import { BaseAccordionPanel } from './BaseAccordionPanel.js';
 
-import style from './BaseAccordion.scss';
+import style from './BaseAccordion.css';
 
 const CSS_TIMING_UNITS_RE = /^[0-9.]+(?<unit>[a-zA-Z]+)/g;
 

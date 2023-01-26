@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 
-import style from './BaseTabPanel.scss';
+import style from './BaseTabPanel.css';
 
 export abstract class BaseTabPanel extends LitElement {
   static readonly styles = [style];

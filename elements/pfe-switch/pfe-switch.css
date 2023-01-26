@@ -1,0 +1,102 @@
+:host([checked]) #container {
+  color: var(--pf-c-switch__input--checked__label--Color,
+    var(--pf-global--Color--dark-100, #151515));
+  background-color: var(--pf-c-switch__input--checked__toggle--BackgroundColor,
+    var(--pf-global--primary-color--100, #06c));
+}
+
+:host([checked]) #container::before {
+  translate: var(--pf-c-switch__input--checked__toggle--before--TranslateX,
+    calc(100% + var(--pf-c-switch__toggle-icon--Offset, 0.125rem)));
+}
+
+:host(:disabled) #container {
+  color: var(--pf-c-switch__input--disabled__label--Color,
+    var(--pf-global--disabled-color--100, #6a6e73));
+  background-color: var(--pf-c-switch__input--disabled__toggle--BackgroundColor,
+    var(--pf-global--disabled-color--200, #d2d2d2));
+}
+
+:host(:disabled) #container::before {
+  background-color: var(--pf-c-switch__input--disabled__toggle--before--BackgroundColor,
+    var(--pf-global--palette--black-150, #f5f5f5));
+}
+
+:host([checked]:disabled) #container::before {
+  translate: var(--pf-c-switch__input--checked__toggle--before--TranslateX,
+    calc(100% + var(--pf-c-switch__toggle-icon--Offset, 0.125rem)));
+}
+
+#container {
+  width: var(--pf-c-switch__toggle--Width,
+    calc(var(--pf-c-switch__toggle--Height,
+      calc(var(--pf-c-switch--FontSize,
+        var(--pf-global--FontSize--md, 1rem)) * var(--pf-c-switch--LineHeight,
+          var(--pf-global--LineHeight--md, 1.5)))) + var(--pf-c-switch__toggle-icon--Offset, 0.125rem) + var(--pf-c-switch__toggle--before--Width,
+            calc(var(--pf-c-switch--FontSize,
+              var(--pf-global--FontSize--md, 1rem)) - var(--pf-c-switch__toggle-icon--Offset, 0.125rem)))));
+  height: var(--pf-c-switch__toggle--Height,
+    calc(var(--pf-c-switch--FontSize,
+      var(--pf-global--FontSize--md, 1rem)) * var(--pf-c-switch--LineHeight,
+        var(--pf-global--LineHeight--md, 1.5))));
+  background-color: var(--pf-c-switch__toggle--BackgroundColor,
+    var(--pf-global--palette--black-500, #8a8d90));
+  border-radius: var(--pf-c-switch__toggle--BorderRadius,
+    var(--pf-c-switch__toggle--Height, calc(var(--pf-c-switch--FontSize,
+      var(--pf-global--FontSize--md, 1rem)) * var(--pf-c-switch--LineHeight,
+        var(--pf-global--LineHeight--md, 1.5)))));
+}
+
+#container::before {
+  top: var(--pf-c-switch__toggle--before--Top,
+    calc((var(--pf-c-switch__toggle--Height,
+      calc(var(--pf-c-switch--FontSize,
+        var(--pf-global--FontSize--md, 1rem)) * var(--pf-c-switch--LineHeight,
+          var(--pf-global--LineHeight--md, 1.5)))) - var(--pf-c-switch__toggle--before--Height,
+            var(--pf-c-switch__toggle--before--Width,
+              calc(var(--pf-c-switch--FontSize,
+                var(--pf-global--FontSize--md, 1rem)) - var(--pf-c-switch__toggle-icon--Offset, 0.125rem))))) / 2));
+  left: var(--pf-c-switch__toggle--before--Left,
+    var(--pf-c-switch__toggle--before--Top,
+      calc((var(--pf-c-switch__toggle--Height,
+        calc(var(--pf-c-switch--FontSize,
+          var(--pf-global--FontSize--md, 1rem)) * var(--pf-c-switch--LineHeight,
+            var(--pf-global--LineHeight--md, 1.5)))) - var(--pf-c-switch__toggle--before--Height,
+              var(--pf-c-switch__toggle--before--Width,
+                calc(var(--pf-c-switch--FontSize,
+                  var(--pf-global--FontSize--md, 1rem)) - var(--pf-c-switch__toggle-icon--Offset, 0.125rem))))) / 2)));
+  width: var(--pf-c-switch__toggle--before--Width,
+    calc(var(--pf-c-switch--FontSize,
+      var(--pf-global--FontSize--md, 1rem)) - var(--pf-c-switch__toggle-icon--Offset, 0.125rem)));
+  height: var(--pf-c-switch__toggle--before--Height,
+    var(--pf-c-switch__toggle--before--Width,
+      calc(var(--pf-c-switch--FontSize,
+        var(--pf-global--FontSize--md, 1rem)) - var(--pf-c-switch__toggle-icon--Offset, 0.125rem))));
+  background-color: var(--pf-c-switch__toggle--before--backgroundcolor,
+    var(--pf-global--backgroundcolor--100, #fff));
+  border-radius: var(--pf-c-switch__toggle--before--BorderRadius,
+    var(--pf-global--BorderRadius--lg, 30em));
+  box-shadow: var(--pf-c-switch__toggle--before--BoxShadow,
+    var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06)));
+  transition: var(--pf-c-switch__toggle--before--Transition,
+    var(--pf-c-switch__toggle--before--Transition, translate .25s ease 0s)); ;
+}
+
+:host(:focus-within) #container {
+  outline: var(--pf-c-switch__input--focus__toggle--OutlineWidth,
+    var(--pf-global--BorderWidth--md, 2px)) solid var(--pf-c-switch__input--focus__toggle--OutlineColor,
+      var(--pf-global--primary-color--100, #06c));
+  outline-offset: var(--pf-c-switch__input--focus__toggle--OutlineOffset,
+    var(--pf-global--spacer--sm, 0.5rem));
+}
+
+svg {
+  margin-inline: var(--pf-c-switch__toggle-icon--Left,
+    calc(var(--pf-c-switch--FontSize,
+      var(--pf-global--FontSize--md, 1rem)) * .4));
+  font-size: var(--pf-c-switch__toggle-icon--FontSize,
+    calc(var(--pf-c-switch--FontSize,
+      var(--pf-global--FontSize--md, 1rem)) * .625));
+  color: var(--pf-c-switch__toggle-icon--Color,
+    var(--pf-global--Color--light-100, #fff));
+}

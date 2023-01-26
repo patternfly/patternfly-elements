@@ -1,8 +1,8 @@
-import { html, expect, aTimeout, nextFrame } from '@open-wc/testing';
+import { html, expect } from '@open-wc/testing';
 
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 
-import { PfeProgressStepper } from '@patternfly/pfe-progress-stepper';
+import { PfeProgressStepper } from '@patternfly/elements/pfe-progress-stepper/pfe-progress-stepper.js';
 
 describe('<pfe-progress-stepper>', function() {
   it('it should upgrade', async function() {

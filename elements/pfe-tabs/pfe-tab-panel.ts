@@ -2,9 +2,9 @@ import { customElement } from 'lit/decorators.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
-import styles from './pfe-tab-panel.scss';
+import styles from './pfe-tab-panel.css';
 
-import { BaseTabPanel } from './BaseTabPanel';
+import { BaseTabPanel } from './BaseTabPanel.js';
 
 /**
  * @slot - Tab panel content

@@ -1,9 +1,10 @@
+import type { PropertyValues } from 'lit';
+
 import { LitElement, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
-import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
-import style from './BaseIcon.scss';
+import style from './BaseIcon.css';
 
 export type URLGetter = (set: string, icon: string) => URL;
 
@@ -71,7 +72,6 @@ export abstract class BaseIcon extends LitElement {
   @property() set = this.#class.defaultIconSet;
 
   /** Icon name */
-  @observed
   @property({ reflect: true }) icon = '';
 
   /** Size of the icon */
@@ -103,9 +103,23 @@ export abstract class BaseIcon extends LitElement {
     }
   }
 
+  #iconChanged() {
+    switch (this.loading) {
+      case 'idle': return void ric(() => this.load());
+      case 'lazy': return void this.#lazyLoad();
+      case 'eager': return void this.load();
+    }
+  }
+
   connectedCallback() {
     super.connectedCallback();
     this.#class.instances.add(this);
+  }
+
+  willUpdate(changed: PropertyValues<this>) {
+    if (changed.has('icon')) {
+      this.#iconChanged();
+    }
   }
 
   disconnectedCallback() {
@@ -122,14 +136,6 @@ export abstract class BaseIcon extends LitElement {
         </span>
       </div>
     `;/* eslint-enable indent */
-  }
-
-  protected async _iconChanged() {
-    switch (this.loading) {
-      case 'idle': return void ric(() => this.load());
-      case 'lazy': return void this.#lazyLoad();
-      case 'eager': return void this.load();
-    }
   }
 
   protected async load() {

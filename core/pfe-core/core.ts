@@ -1,7 +1,5 @@
 import type { ComplexAttributeConverter } from 'lit';
 
-export type { ColorPalette, ColorTheme } from './controllers/color-context.js';
-
 /** PatternFly Elements global config object */
 export interface PfeConfig {
   /** Set to false to disable client-side page load performance tracking */

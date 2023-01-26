@@ -11,19 +11,19 @@ Read more about Button in the [PatternFly Elements Button documentation](https:/
 Load `<pfe-button>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-button?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pfe-button/pfe-button.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it
 
 ```bash
-npm install @patternfly/pfe-button
+npm install @patternfly/elements
 ```
 
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/pfe-button';
+import '@patternfly/elements/pfe-button/pfe-button.js';
 ```
 
 ## Usage

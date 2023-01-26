@@ -6,7 +6,7 @@ import { BaseTabs } from './BaseTabs.js';
 import { PfeTab } from './pfe-tab.js';
 import { PfeTabPanel } from './pfe-tab-panel.js';
 
-import styles from './pfe-tabs.scss';
+import styles from './pfe-tabs.css';
 
 export type InsetVariant = (
   | 'sm'

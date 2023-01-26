@@ -1,6 +1,6 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfePanel } from '@patternfly/pfe-panel';
+import { PfePanel } from '@patternfly/elements/pfe-panel/pfe-panel.js';
 
 describe('<pfe-panel>', function() {
   describe('simply instantiating', function() {

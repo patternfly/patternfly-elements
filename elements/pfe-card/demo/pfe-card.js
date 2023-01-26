@@ -1,6 +1,7 @@
-import '@patternfly/pfe-card';
-import '@patternfly/pfe-button';
-import '@patternfly/pfe-switch';
+import '@patternfly/elements/pfe-card/pfe-card.js';
+import '@patternfly/elements/pfe-button/pfe-button.js';
+import '@patternfly/elements/pfe-switch/pfe-switch.js';
+
 const form = document.getElementById('card-settings');
 const card = document.querySelector('pfe-card');
 

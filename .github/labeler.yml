@@ -14,7 +14,7 @@ functionality:
   - core/*/*.{ts,html}
 
 styles:
-  - elements/*/*.{scss,css}
+  - elements/*/*.css
   - tokens/**/*
 
 tests:

@@ -1,9 +1,10 @@
 import { expect, html } from '@open-wc/testing';
-import { createFixture } from '@patternfly/pf-tools/test/create-fixture.js';
-import { getColor, hexToRgb } from '@patternfly/pf-tools/test/hex-to-rgb.js';
-import '@patternfly/pf-tools/test/stub-logger.js';
+import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
+import { getColor, hexToRgb } from '@patternfly/pfe-tools/test/hex-to-rgb.js';
 import { PfLabel } from '@patternfly/elements/pf-label/pf-label.js';
 import { PfIcon } from '@patternfly/elements/pf-icon/pf-icon.js';
+
+import '@patternfly/pfe-tools/test/stub-logger.js';
 
 const example = html`
   <pf-label>Default</pf-label>

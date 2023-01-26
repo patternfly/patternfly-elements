@@ -16,7 +16,7 @@ describe('<pf-avatar>', function() {
   });
 
   it('should load a user-provided avatar image', async function() {
-    const el = await createFixture<PfeAvatar>(element);
+    const el = await createFixture<PfAvatar>(element);
     const img = el.shadowRoot!.querySelector('img')!;
     el.src = 'elements/pf-avatar/test/mwcz.jpg';
 

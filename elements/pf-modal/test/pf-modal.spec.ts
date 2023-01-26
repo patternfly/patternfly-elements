@@ -1,8 +1,8 @@
 import { expect, nextFrame, html } from '@open-wc/testing';
-import { createFixture } from '@patternfly/pf-tools/test/create-fixture.js';
+import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { setViewport } from '@web/test-runner-commands';
 import { PfModal } from '@patternfly/elements/pf-modal/pf-modal.js';
-import '@patternfly/pf-tools/test/stub-logger.js';
+import '@patternfly/pfe-tools/test/stub-logger.js';
 
 // One element, defined here, is used
 // in multiple tests. It's torn down and recreated each time.

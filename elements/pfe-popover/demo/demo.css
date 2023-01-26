@@ -1,3 +1,15 @@
 section {
   padding: 0 1rem;
 }
+
+#no-padding pfe-popover::part(content) {
+  --pf-c-popover__content--PaddingTop: 0;
+  --pf-c-popover__content--PaddingRight: 0;
+  --pf-c-popover__content--PaddingBottom: 0;
+  --pf-c-popover__content--PaddingLeft: 0;
+}
+
+#auto-width pfe-popover::part(content) {
+  --pf-c-popover--MaxWidth: none;
+  --pf-c-popover--MinWidth: auto;
+}

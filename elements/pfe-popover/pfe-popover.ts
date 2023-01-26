@@ -1,4 +1,3 @@
-/* eslint-disable lit-a11y/click-events-have-key-events */
 import { LitElement, nothing } from 'lit';
 import { html, unsafeStatic } from 'lit/static-html.js';
 import { customElement, property, query } from 'lit/decorators.js';
@@ -9,6 +8,7 @@ import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
 import styles from './pfe-popover.scss';
 
@@ -24,8 +24,7 @@ type AlertSeverity = 'default' | 'info' | 'warning' | 'success' | 'danger';
 export class PfePopover extends LitElement {
   static readonly styles = [styles];
 
-  // todo: add defaults
-  @property() position = 'top';
+  @property({ type: String, reflect: true }) position: Placement = 'top';
   @property({ type: String, reflect: true }) tile?: string;
   @property({ type: String, reflect: true }) body = '';
   @property({ type: String, reflect: true }) footer?: string;
@@ -33,8 +32,7 @@ export class PfePopover extends LitElement {
   @property({ type: String, reflect: true }) label?: string;
   @property({ type: Number, reflect: true, attribute: 'heading-level' }) headingLevel?: HeadingLevel;
   @property({ type: String, reflect: true, attribute: 'icon-set' }) iconSet?: string;
-  @property({ type: Boolean, reflect: true, attribute: 'auto-width' }) autoWidth?: boolean;
-  @property({ type: Boolean, reflect: true, attribute: 'no-padding' }) noPadding?: boolean;
+  // todo?: use shorter name
   @property({ type: Boolean, reflect: true, attribute: 'no-close-button' }) noCloseButton?: boolean;
   @property({ type: String, reflect: true, attribute: 'alert-severity' }) alertSeverity?: AlertSeverity;
 

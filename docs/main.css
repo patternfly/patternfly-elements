@@ -169,6 +169,10 @@ a.cta.secondary {
 	--pfe-cta__inner--BorderColor--focus: var(--pfe-theme--color--ui-base, #6a6e73);
 }
 
+.overlay > a.cta.secondary {
+	--pfe-cta--Color--hover:var(--pfe-broadcasted--text, #3c3f42);
+}
+
 .band.dark a.cta.secondary,
 .band.accent a.cta.secondary {
   --pfe-broadcasted--link--hover: black;

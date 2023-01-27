@@ -16,11 +16,11 @@
   ### With a threshold
   This adds a "+" next to the number once the threshold value has been passed.
 
-  <pf-badge aria-label="2 unread messages" number="20" threshold="10">20</-badge>
-pf
+  <pf-badge aria-label="2 unread messages" number="20" threshold="10">20</pf-badge>
+
   ```html
-  <pf-badge aria-label="2 unread messages" number="20" threshold="10">20</-badge>
-  ``pf`
+  <pf-badge aria-label="2 unread messages" number="20" threshold="10">20</pf-badge>
+  ```
 
   ### With a state
   This adds a background color to the badge based on the state.

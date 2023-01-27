@@ -17,6 +17,21 @@
   position: relative;
 }
 
+#arrow {
+  position: absolute;
+  background-color: var(--pf-c-popover__content--BackgroundColor,
+    var(--pf-global--BackgroundColor--100, #fff));
+  box-shadow: var(--pf-c-popover--BoxShadow,
+    var(--pf-global--BoxShadow--lg,
+    0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08)));
+  content: '';
+  display: block;
+  height: var(--_floating-arrow-size);
+  width: var(--_floating-arrow-size);
+  rotate: 45deg;
+  z-index: -1;
+}
+
 #popover {
   display: block;
   opacity: 0;
@@ -60,20 +75,6 @@
   // min-width: var(--pf-c-popover--MinWidth, calc(var(--pf-c-popover__content--PaddingLeft, 1rem) + var(--pf-c-popover__content--PaddingRight, 1rem) + 18.75rem));
   width: max-content;
   }
-
-[part="content"]::after {
-  background-color: var(--pf-c-popover__content--BackgroundColor,
-    var(--pf-global--BackgroundColor--100, #fff));
-  box-shadow: var(--pf-c-popover--BoxShadow,
-    var(--pf-global--BoxShadow--lg,
-    0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08)));
-  content: '';
-  display: block;
-  height: var(--_floating-arrow-size);
-  rotate: 45deg;
-  width: var(--_floating-arrow-size);
-  z-index: -1;
-}
 
 #popover,
 [part="content"]::after {
@@ -128,26 +129,6 @@
 [part="footer"] {
   margin-top: var(--pf-c-popover__footer--MarginTop, var(--pf-global--spacer--md, 1rem));
 }
-
-.left #content::after          { right: calc(-0.5 * var(--_floating-arrow-size)); }
-.left.center #content::after   { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
-.left.start #content::after    { top: var(--_floating-arrow-size); }
-.left.end #content::after      { bottom: var(--_floating-arrow-size); }
-
-.top #content::after           { top: calc(100% - 0.5 * var(--_floating-arrow-size)); }
-.top.center #content::after    { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
-.top.start #content::after     { left: var(--_floating-arrow-size); }
-.top.end #content::after       { right: var(--_floating-arrow-size); }
-
-.right #content::after         { right: calc(100% - 0.5 * var(--_floating-arrow-size)); }
-.right.center #content::after  { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
-.right.start #content::after   { top: var(--_floating-arrow-size); }
-.right.end #content::after     { bottom: var(--_floating-arrow-size); }
-
-.bottom #content::after        { bottom: calc(100% - 0.5 * var(--_floating-arrow-size)); }
-.bottom.center #content::after { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
-.bottom.start #content::after  { left: var(--_floating-arrow-size); }
-.bottom.end #content::after    { right: var(--_floating-arrow-size); }
 
 // todo?: is there a more concise way of doing this? don't judge meee
 // default

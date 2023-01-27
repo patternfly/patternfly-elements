@@ -20,7 +20,7 @@ export abstract class BaseTooltip extends LitElement {
   abstract position?: Placement;
 
   #float = new FloatingDOMController(this, {
-    arrow: true,
+    // arrow: true,
     content: () => this.shadowRoot?.querySelector('#tooltip'),
   });
 

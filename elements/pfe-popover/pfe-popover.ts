@@ -43,7 +43,7 @@ export class PfePopover extends LitElement {
   #titleId = getRandomId();
   #bodyId = getRandomId();
   #float = new FloatingDOMController(this, {
-    arrow: true,
+    arrow: () => this.shadowRoot?.querySelector('#arrow'),
     content: () => this.shadowRoot?.querySelector('#popover'),
   });
 
@@ -84,7 +84,6 @@ export class PfePopover extends LitElement {
         })}"
       >
         <slot id="invoker" @keydown=${this.onKeydown} @click=${this.show}></slot>
-
         <div
           id="popover"
           role="dialog"
@@ -93,6 +92,8 @@ export class PfePopover extends LitElement {
           aria-label=${ifDefined(this.label)}
           ?hidden=${!open}
         >
+          <div id="arrow"></div>
+
           <div id="content" part="content">
             ${this._renderCloseButton()} ${this._renderHeader()} ${this._renderBody()} ${this._renderFooter()}
           </div>

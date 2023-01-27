@@ -16,138 +16,146 @@ describe('<pf-timestamp>', function() {
       <pf-timestamp></pf-timestamp>
     `);
 
-    const formattedDate = new Date().toLocaleString();
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
+    const expected = new Date().toLocaleString();
 
-    expect(text, 'should show a default date and time').to.equal(formattedDate);
+    expect(element.time).to.equal(expected);
   });
 
   it('should set the correct ISO date on the datetime attribute in the time element', async function() {
-    const date = new Date().toString();
+    const date = new Date('Sat Jan 01 2022 00:00:00');
+    const dateString = date.toString();
+    const expected = date.toISOString();
     const element = await createFixture<PfTimestamp>(html`
-      <pf-timestamp date="${date}"></pf-timestamp>
+      <pf-timestamp date="${dateString}"></pf-timestamp>
     `);
 
-    const datetimeAttributeValue = element.shadowRoot!.querySelector('time')!.getAttribute('datetime');
-    const isoDate = new Date(element.date).toISOString();
-    expect(datetimeAttributeValue).to.equal(isoDate);
+    expect(element.isoString).to.equal(expected);
   });
 
   it('should show a passed in date with default formatting', async function() {
+    const dateString = 'Sat Jan 01 2022 00:00:00';
     const element = await createFixture<PfTimestamp>(html`
-      <pf-timestamp date="Sat Jan 01 2022 00:00:00"></pf-timestamp>
+      <pf-timestamp date="${dateString}"></pf-timestamp>
     `);
 
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text, 'should show a passed in date with default formatting').to.equal('1/1/2022, 12:00:00 AM');
+    expect(element.time).to.equal(new Date(dateString).toLocaleString());
   });
 
   it('should show custom formatting when date-format and time-format are passed in', async function() {
+    const dateString = 'Sat Jan 01 2022 00:00:00';
+    const expected = new Date(dateString).toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' });
     const element = await createFixture<PfTimestamp>(html`
-      <pf-timestamp date="Sat Jan 01 2022 00:00:00" date-format="full" time-format="short"></pf-timestamp>
+      <pf-timestamp date="${dateString}" date-format="full" time-format="short"></pf-timestamp>
     `);
 
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text).to.equal('Saturday, January 1, 2022 at 12:00 AM');
+    expect(element.time).to.equal(expected);
   });
 
   it('should show only a date when date-format is passed in', async function() {
+    const dateString = 'Sat Jan 01 2022 00:00:00';
+    const expected = new Date(dateString).toLocaleString('en-US', { dateStyle: 'full' });
     const element = await createFixture<PfTimestamp>(html`
-      <pf-timestamp date="Sat Jan 01 2022 00:00:00" date-format="full"></pf-timestamp>
+      <pf-timestamp date="${dateString}" date-format="full"></pf-timestamp>
     `);
 
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text).to.equal('Saturday, January 1, 2022');
+    expect(element.time).to.equal(expected);
   });
 
   it('should show only time when time-format is passed in', async function() {
+    const dateString = 'Sat Jan 01 2022 00:00:00';
+    const expected = new Date(dateString).toLocaleString('en-US', { timeStyle: 'short' });
     const element = await createFixture<PfTimestamp>(html`
-      <pf-timestamp date="Sat Jan 01 2022 00:00:00" time-format="short"></pf-timestamp>
+      <pf-timestamp date="${dateString}" time-format="short"></pf-timestamp>
     `);
 
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text).to.equal('12:00 AM');
+    expect(element.time).to.equal(expected);
   });
 
   it('should show custom formatting when customFormat is passed in', async function() {
+    const dateString = 'Sat Jan 01 2022 00:00:00';
+    const options: Intl.DateTimeFormatOptions = {
+      year: '2-digit',
+      month: 'short',
+      weekday: 'short',
+      day: 'numeric',
+      hour: 'numeric'
+    };
+    const expected = new Date(dateString).toLocaleString('en-US', options);
     const element = await createFixture<PfTimestamp>(html`
-      <pf-timestamp date="Sat Jan 01 2022 00:00:00" .customFormat=${{
-        year: '2-digit',
-        month: 'short',
-        weekday: 'short',
-        day: 'numeric',
-        hour: 'numeric'
-      }}></pf-timestamp>
+      <pf-timestamp date="Sat Jan 01 2022 00:00:00" .customFormat=${options}></pf-timestamp>
     `);
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text).to.equal('Sat, Jan 1, 22, 12 AM');
+    expect(element.time).to.equal(expected);
   });
 
   it('should show a custom suffix when display-suffix is passed in', async function() {
+    const dateString = 'Sat Jan 01 2022 00:00:00';
+    const suffix = 'US Eastern';
+    const expected = `${new Date(dateString).toLocaleString('en-US')} ${suffix}`;
     const element = await createFixture<PfTimestamp>(html`
-      <pf-timestamp date="Sat Jan 01 2022 00:00:00" display-suffix="US Eastern"></pf-timestamp>
+      <pf-timestamp date="${dateString}" display-suffix="${suffix}"></pf-timestamp>
     `);
 
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text).to.equal('1/1/2022, 12:00:00 AM US Eastern');
+    expect(element.time).to.equal(expected);
   });
 
-  it('should show a 12 hour time when hour-12 is passed in', async function() {
+  it('should show a 12 hour time', async function() {
+    const dateString = 'Sat Jan 01 2022 13:00:00';
+    const expected = new Date(dateString).toLocaleString('en-US');
     const element = await createFixture<PfTimestamp>(html`
-      <pf-timestamp date="Sat Jan 01 2022 13:00:00"></pf-timestamp>
+      <pf-timestamp date="${dateString}"></pf-timestamp>
     `);
 
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text).to.equal('1/1/2022, 1:00:00 PM');
+    expect(element.time).to.equal(expected);
   });
 
   it('should show a 24 hour time when hour-12 is set to false', async function() {
+    const dateString = 'Sat Jan 01 2022 13:00:00';
+    const expected = new Date(dateString).toLocaleString('en-US', { hour12: false });
     const element = await createFixture<PfTimestamp>(html`
-      <pf-timestamp date="Sat Jan 01 2022 13:00:00" hour-12="false"></pf-timestamp>
+      <pf-timestamp date="${dateString}" hour-12="false"></pf-timestamp>
     `);
 
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text).to.equal('1/1/2022, 13:00:00');
+    expect(element.time).to.equal(expected);
   });
 
   it('should show with locale passed in', async function() {
     const date = new Date(2022, 1, 1).toString();
+    const expected = new Date(date).toLocaleString('en-GB');
     const element = await createFixture<PfTimestamp>(html`
       <pf-timestamp date="${date}" locale="en-GB"></pf-timestamp>
     `);
 
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text).to.equal('01/02/2022, 00:00:00');
+    expect(element.time).to.equal(expected);
   });
 
   it('should show a 12 hour time by default for US locale', async function() {
     const date = new Date(2022, 1, 1, 13, 0).toString();
+    const expected = new Date(date).toLocaleString('en-US');
     const element = await createFixture<PfTimestamp>(html`
       <pf-timestamp date="${date}" locale="en-US"></pf-timestamp>
     `);
 
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text).to.equal('2/1/2022, 1:00:00 PM');
+    expect(element.time).to.equal(expected);
   });
 
   it('should show a 24 hour time for US locale when hour-12 is false', async function() {
     const date = new Date(2022, 1, 1, 13, 0).toString();
+    const expected = new Date(date).toLocaleString('en-US', { hour12: false });
     const element = await createFixture<PfTimestamp>(html`
       <pf-timestamp date="${date}" locale="en-US" hour-12="false"></pf-timestamp>
     `);
 
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text).to.equal('2/1/2022, 13:00:00');
+    expect(element.time).to.equal(expected);
   });
 
   it('should show a 12 hour time for a 24 hour locale when hour-12 is passed', async function() {
     const date = new Date(2022, 1, 1, 13, 0).toString();
+    const expected = new Date(date).toLocaleString('en-GB', { hour12: true });
     const element = await createFixture<PfTimestamp>(html`
       <pf-timestamp date="${date}" locale="en-GB" hour-12></pf-timestamp>
     `);
 
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text).to.equal('01/02/2022, 1:00:00 pm');
+    expect(element.time).to.equal(expected);
   });
 
   it('should show relative time', async function() {
@@ -156,7 +164,6 @@ describe('<pf-timestamp>', function() {
       <pf-timestamp date="${date.toString()}" relative></pf-timestamp>
     `);
 
-    const text = element.shadowRoot!.querySelector('time')!.textContent;
-    expect(text).to.match(/\d+ years ago/);
+    expect(element.time).to.match(/\d+ years ago/);
   });
 });

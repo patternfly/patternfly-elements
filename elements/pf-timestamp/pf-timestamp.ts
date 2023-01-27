@@ -15,7 +15,15 @@ const BooleanStringConverter: ComplexAttributeConverter = {
 export class PfTimestamp extends LitElement {
   static readonly styles = [style];
 
-  @property({ reflect: true }) date = new Date().toLocaleString();
+  @property({ reflect: true })
+  get date() {
+    return this.#date.toLocaleString();
+  }
+
+  set date(string) {
+    this.#date = new Date(string);
+    this.#isoString = this.#date.toISOString();
+  }
 
   @property({ reflect: true, attribute: 'date-format' }) dateFormat?: 'full' | 'long' | 'medium' | 'short';
 
@@ -33,26 +41,31 @@ export class PfTimestamp extends LitElement {
 
   @property({ reflect: true, attribute: 'hour-12', converter: BooleanStringConverter }) hour12?: boolean;
 
-  render() {
-    const { hour12 } = this;
-    const formatOptions = this.customFormat || {
-      ...(this.dateFormat && { dateStyle: this.dateFormat }),
-      ...(this.timeFormat && { timeStyle: this.timeFormat }),
-      ...{ hour12 },
-      ...(this.utc && { timeZone: 'UTC' })
-    };
+  #date = new Date();
 
+  #isoString = this.#date.toISOString();
+
+  get isoString() {
+    return this.#isoString;
+  }
+
+  get time() {
+    const { hour12, customFormat, dateFormat: dateStyle, timeFormat: timeStyle, utc } = this;
+    const timeZone = utc ? 'UTC' : undefined;
+    const formatOptions = customFormat || { hour12, dateStyle, timeStyle, timeZone };
+    const formattedDate = this.#date.toLocaleString(this.locale, formatOptions);
+    return this.relative ? this.#getTimeRelative(this.#date) : `${formattedDate}${this.displaySuffix ? ` ${this.displaySuffix}` : ''}`;
+  }
+
+  willUpdate() {
     if (!this.displaySuffix && this.utc) {
       this.displaySuffix = 'UTC';
     }
+  }
 
-    const _date = new Date(this.date);
-    const formattedDate = _date.toLocaleString(this.locale, formatOptions);
-    const isoDate = _date.toISOString();
-    const timestampContent = this.relative ? this.#getTimeRelative(_date) : `${formattedDate}${this.displaySuffix ? ` ${this.displaySuffix}` : ''}`;
-
+  render() {
     return html`
-      <time datetime="${isoDate}">${timestampContent}</time>
+      <time datetime="${this.isoString}">${this.time}</time>
     `;
   }
 

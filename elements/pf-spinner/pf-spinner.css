@@ -19,22 +19,22 @@ svg {
     var(--pf-c-spinner--AnimationTimingFunction, linear) infinite;
 }
 
-:host([size="sm"]) svg {
+:host([size="sm"]) div {
   --pf-c-spinner--diameter: var(--pf-c-spinner--m-sm--diameter,
     var(--pf-global--icon--FontSize--sm, 0.625rem));
 }
 
-:host([size="md"]) svg {
+:host([size="md"]) div {
   --pf-c-spinner--diameter: var(--pf-c-spinner--m-md--diameter,
     var(--pf-global--icon--FontSize--md, 1.125rem));
 }
 
-:host([size="lg"]) svg {
+:host([size="lg"]) div {
   --pf-c-spinner--diameter: var(--pf-c-spinner--m-lg--diameter,
     var(--pf-global--icon--FontSize--lg, 1.5rem));
 }
 
-:host([size="xl"]) svg {
+:host([size="xl"]) div {
   --pf-c-spinner--diameter: var(--pf-c-spinner--m-xl--diameter,
     var(--pf-global--icon--FontSize--xl, 3.375rem));
 }

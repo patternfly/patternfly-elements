@@ -109,14 +109,14 @@ export class RovingTabindexController implements ReactiveController {
         this.focusOnItem(this.nextItem);
         shouldPreventDefault = true;
         break;
-      case 'ArrowDown':
+      case 'ArrowUp':
         if (horizontalOnly) {
           return;
         }
         this.focusOnItem(this.prevItem);
         shouldPreventDefault = true;
         break;
-      case 'ArrowUp':
+      case 'ArrowDown':
         if (horizontalOnly) {
           return;
         }

@@ -54,8 +54,10 @@
     var(--pf-global--Color--100, #151515));
   background-color: var(--pf-c-popover__content--BackgroundColor,
     var(--pf-global--BackgroundColor--100, #fff));
-  max-width: var(--pf-c-popover--MaxWidth, calc(var(--pf-c-popover__content--PaddingLeft, 1rem) + var(--pf-c-popover__content--PaddingRight, 1rem) + 18.75rem));
-  min-width: var(--pf-c-popover--MinWidth, calc(var(--pf-c-popover__content--PaddingLeft, 1rem) + var(--pf-c-popover__content--PaddingRight, 1rem) + 18.75rem));
+  max-width: var(--pf-c-popover--MaxWidth, 18.75rem);
+  // todo: not working
+  // max-width: var(--pf-c-popover--MaxWidth, calc(var(--pf-c-popover__content--PaddingLeft, 1rem) + var(--pf-c-popover__content--PaddingRight, 1rem) + 18.75rem));
+  // min-width: var(--pf-c-popover--MinWidth, calc(var(--pf-c-popover__content--PaddingLeft, 1rem) + var(--pf-c-popover__content--PaddingRight, 1rem) + 18.75rem));
   width: max-content;
   }
 

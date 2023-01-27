@@ -59,6 +59,7 @@ export class PfePopover extends LitElement {
     await this.updateComplete;
     const placement = this.position;
     // todo: determine final offset due to larger arrow size
+    // todo: arrow alignment always in the center, which is problematic with wide content
     const offset = !placement?.match(/top|bottom/) ? 35 : { mainAxis: 35, alignmentAxis: -4 };
     await this.#float.show({ offset, placement });
     this._popover?.focus();

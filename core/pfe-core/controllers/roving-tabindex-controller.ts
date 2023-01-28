@@ -109,14 +109,14 @@ export class RovingTabindexController implements ReactiveController {
         this.focusOnItem(this.nextItem);
         shouldPreventDefault = true;
         break;
-      case 'ArrowDown':
+      case 'ArrowUp':
         if (horizontalOnly) {
           return;
         }
         this.focusOnItem(this.prevItem);
         shouldPreventDefault = true;
         break;
-      case 'ArrowUp':
+      case 'ArrowDown':
         if (horizontalOnly) {
           return;
         }
@@ -158,7 +158,7 @@ export class RovingTabindexController implements ReactiveController {
   /**
    * sets tabindex of item based on whether or not it is active
    */
-  #updateActiveItem(item?: HTMLElement):void {
+  updateActiveItem(item?: HTMLElement):void {
     if (item) {
       if (!!this.#activeItem && item !== this.#activeItem) {
         this.#activeItem.tabIndex = -1;
@@ -172,7 +172,7 @@ export class RovingTabindexController implements ReactiveController {
    * focuses on an item and sets it as active
    */
   focusOnItem(item?: HTMLElement):void {
-    this.#updateActiveItem(item || this.firstItem);
+    this.updateActiveItem(item || this.firstItem);
     this.#activeItem?.focus();
   }
 

@@ -25,10 +25,12 @@ function getFilesToCopy(options) {
 
   // Copy all component and core files to _site
   if (hasElements) {
-    Object.assign(files, Object.fromEntries(fs.readdirSync(path.join(repoRoot, 'elements')).map(dir => [
-      `elements/${dir}`,
-      `components/${dir.replace(prefix, '')}`,
-    ])));
+    Object.assign(files, Object.fromEntries(fs.readdirSync(path.join(repoRoot, 'elements'))
+      .filter(x => !x.match(/node_modules|tsconfig|(?:config\.js$)/))
+      .map(dir => [
+        `elements/${dir}`,
+        `components/${dir.replace(prefix, '')}`,
+      ])));
   }
 
   if (hasCore) {
@@ -39,6 +41,26 @@ function getFilesToCopy(options) {
   }
 
   return files;
+}
+
+/**
+ * @typedef {object} EleventyTransformContext
+ * @property {string} outputPath path this file will be written to
+ */
+
+/**
+ * Replace paths in demo files from the dev SPA's format to 11ty's format
+ * @this {EleventyTransformContext}
+ */
+function demoPaths(content) {
+  if (this.outputPath.match(/(components|core|tools)\/.*\/demo\/index\.html$/)) {
+    return content.replace(/(?<attr>href|src)="\/(?<workspace>elements|core)\/pf-(?<unprefixed>.*)\/(?<filename>.*)\.(?<extension>[.\w]+)"/g, (...args) => {
+      const [{ attr, workspace, unprefixed, filename, extension }] = args.reverse();
+      return `${attr}="/${workspace === 'elements' ? 'components' : workspace}/${unprefixed}/${filename}.${extension}"`;
+    });
+  } else {
+    return content;
+  }
 }
 
 /** Generate a single-file bundle of all the repo's components and their dependencies */
@@ -78,26 +100,6 @@ async function bundle() {
       }),
     ],
   });
-}
-
-/**
- * @typedef {object} EleventyTransformContext
- * @property {string} outputPath path this file will be written to
- */
-
-/**
- * Replace paths in demo files from the dev SPA's format to 11ty's format
- * @this {EleventyTransformContext}
- */
-function demoPaths(content) {
-  if (this.outputPath.match(/(components|core|tools)\/.*\/demo\/index\.html$/)) {
-    return content.replace(/(?<attr>href|src)="\/(?<workspace>elements|core)\/pf-(?<unprefixed>.*)\/(?<filename>.*)\.(?<extension>[.\w]+)"/g, (...args) => {
-      const [{ attr, workspace, unprefixed, filename, extension }] = args.reverse();
-      return `${attr}="/${workspace === 'elements' ? 'components' : workspace}/${unprefixed}/${filename}.${extension}"`;
-    });
-  } else {
-    return content;
-  }
 }
 
 module.exports = {

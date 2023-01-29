@@ -10,7 +10,7 @@ function getFilesToCopy(options) {
   /** best guess at abs-path to repo root */
   const repoRoot = path.join(__dirname, '..', '..', '..', '..').replace(/node_modules\/?$/g, '');
 
-  const prefix = `${(options?.prefix ?? 'pfe').replace(/-$/, '')}-`;
+  const prefix = `${(options?.prefix ?? 'pf').replace(/-$/, '')}-`;
 
   const hasElements = fs.existsSync(path.join(repoRoot, 'elements'));
   const hasCore = fs.existsSync(path.join(repoRoot, 'core'));

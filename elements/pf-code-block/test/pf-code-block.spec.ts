@@ -13,7 +13,7 @@ const element = html`
       connectionConfig:
       url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
     </script>
-    <pf-clipboard slot="actions" copy-from="#code"></pf-clipboard>
+    <pf-clipboard-copy slot="actions" copy-from="#code"></pf-clipboard-copy>
   </pf-code-block>
 `;
 
@@ -28,7 +28,7 @@ const expandElement = html`
       connectionConfig:
       url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
     </script>
-    <pf-clipboard slot="actions" copy-from="#expandable-code"></pf-clipboard>
+    <pf-clipboard-copy slot="actions" copy-from="#expandable-code"></pf-clipboard-copy>
   </pf-code-block>
 `;
 
@@ -43,7 +43,7 @@ const expandElementByDefault = html`
       connectionConfig:
       url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
     </script>
-    <pf-clipboard slot="actions" copy-from="#expandable-code-expanded"></pf-clipboard>
+    <pf-clipboard-copy slot="actions" copy-from="#expandable-code-expanded"></pf-clipboard-copy>
   </pf-code-block>
 `;
 

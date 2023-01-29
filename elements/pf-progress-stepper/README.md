@@ -11,8 +11,7 @@ documentation][docs].
 Load `<pf-progress-stepper>` via CDN:
 
 ```html
-<scriptpf 
-src="https://jspm.dev/@patternfly/elements/-progress-stepper/pf-progress-stepper.js"></script>
+<script src="https://jspm.dev/@patternfly/elements/pf-progress-stepper/pf-progress-stepper.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

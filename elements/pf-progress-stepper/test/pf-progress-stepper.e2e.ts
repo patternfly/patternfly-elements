@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 import { PfeDemoPage } from '@patternfly/pfe-tools/test/playwright/PfeDemoPage.js';
 
-const tagName = 'pf-progress-steps';
+const tagName = 'pf-progress-stepper';
 
 test.describe(tagName, () => {
   test('snapshot', async ({ page }) => {

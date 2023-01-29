@@ -10,8 +10,7 @@ documentation](https://patternflyelements.org/components/code-block)
 Load `<pf-code-block>` via CDN:
 
 ```html
-<scriptpf 
-src="https://jspm.dev/@patternfly/elements/-code-block/pf-code-block.js"></script>
+<script src="https://jspm.dev/@patternfly/elements/pf-code-block/pf-code-block.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it

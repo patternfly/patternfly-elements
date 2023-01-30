@@ -1,30 +1,30 @@
-<link rel="stylesheet" href="../demo.css">
-<script type="module" src="../custom-icon-sets.js"></script>
+<link rel="stylesheet" href="demo.css">
+<link rel="stylesheet" href="pf-icon.js">
 
 <h2>Styling Icons</h2>
 
 <p>Color the icons with the CSS <code>color</code> property.</p>
 
-<section id="styling-icons">
-  <pf-icon set="rh" icon="boba-tea" size="xl" loading="lazy"></pf-icon>
-  <pf-icon set="rh" icon="lifecycle" size="xl" loading="lazy"></pf-icon>
+<section>
+  <pf-icon set="patternfly" icon="unplugged" size="xl"></pf-icon>
+  <pf-icon set="patternfly" icon="info-alt" size="xl"></pf-icon>
   <zero-md manual-render>
     <script type="text/markdown" data-dedent>
       ```css
-      [icon="boba-tea"] { color: firebrick; }
-      [icon="lifecycle"] { color: dodgerblue; }
+      [icon="unplugged"] { color: firebrick; }
+      [icon="info-alt"] { color: dodgerblue; }
       ```
     </script>
   </zero-md>
 </section>
 
 <style>
-#styling-icons {
+[icon="unplugged"] { color: firebrick; }
+[icon="info-alt"] { color: dodgerblue; }
+section {
   display: flex;
   gap: .5em;
   flex-wrap: wrap;
   align-items: center;
 }
-[icon="boba-tea"] { color: firebrick; }
-[icon="lifecycle"] { color: dodgerblue; }
 </style>

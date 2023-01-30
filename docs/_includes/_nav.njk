@@ -21,7 +21,7 @@
       {% endfor %}
     </pf-dropdown>
     #}
-    <select id="docs-versions-dropdown" aria-label="Docs Versions" onchange="location.href=this.selected.value">
+    <select id="docs-versions-dropdown" aria-label="Docs Versions" oninput="location.href=this.options[this.selectedIndex].value">
       {% for version in versions %}
       {%- if version.current -%}
         {%- set prefix = '' -%}

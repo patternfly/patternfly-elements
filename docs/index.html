@@ -55,21 +55,23 @@ githubLink: https://github.com/patternfly/patternfly-elements
       'link link';
   }
 
-  #univ {
-    grid-template-areas:
-      'h h'
-      'header header'
-      'cards cards'
-      'snippets snippets'
-      'link link';
-  }
-
   #lightw > h2 { grid-area: h; }
   #lightw > .subtitle { grid-area: tag; }
   #lightw > p:not(.subtitle) { grid-area: p; }
   #lightw > pre { grid-area: snippets; }
   #lightw > pf-card { grid-area: cards; }
   #lightw > a { grid-area: link; }
+
+  #univ {
+    width: 100vw;
+    max-width: 100vw;
+    grid-template-areas:
+      'h'
+      'header'
+      'cards'
+      'snippets'
+      'link';
+  }
 
   #univ ul {
     display: flex;
@@ -88,6 +90,11 @@ githubLink: https://github.com/patternfly/patternfly-elements
   #univ > pf-accordion { grid-area: cards; }
   #univ > ul { grid-area: logos; }
   #univ > a { grid-area: link; }
+
+  #univ > * {
+    max-width: 100%;
+    overflow: hidden;
+  }
 
   #univ svg {
     width: 16px;

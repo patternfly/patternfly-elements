@@ -1,4 +1,5 @@
 import { PfIcon } from '@patternfly/elements/pf-icon/pf-icon.js';
+import '../../pf-label/demo/zero-md.js';
 
 import { render, html } from 'lit';
 

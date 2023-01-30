@@ -6,6 +6,8 @@
 article {
   position: relative;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 [part=header] {
@@ -26,7 +28,6 @@ article {
   display: flex;
   gap: 0.5em;
   inset-block-end: 0;
-  position: absolute;
 }
 
 .empty {

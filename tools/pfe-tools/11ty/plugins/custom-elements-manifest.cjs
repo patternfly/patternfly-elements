@@ -83,12 +83,12 @@ module.exports = function configFunction(eleventyConfig, _options = {}) {
     }
   });
 
-  // 11ty turn elements/pf-jazz-hands/demo/special-name.html into 
+  // 11ty turn elements/pf-jazz-hands/demo/special-name.html into
   //            components/jazz-hands/demo/special-name/index.html
   // Here, we rewrite the subresource links so they point to the right files.
   eleventyConfig.addTransform('reroute-special-demo-subresources', function(content) {
     if (this.inputPath.endsWith('/demos.html')) {
-      const [, one, two, three, four] = this.outputPath.split('/')
+      const [, one, , three, four] = this.outputPath.split('/');
       if ( one === 'components' && three === 'demo' && four !== 'index.html') {
         const cheerio = require('cheerio');
         const $ = cheerio.load(content);

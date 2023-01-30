@@ -105,10 +105,9 @@ module.exports = function configFunction(eleventyConfig, _options = {}) {
           }
         });
         return $.html();
-      } else {
-        return content;
       }
     }
+    return content;
   });
 
   /** Rebuild the site in watch mode when the templates for this plugin change */

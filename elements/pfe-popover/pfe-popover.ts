@@ -25,29 +25,26 @@ export class PfePopover extends LitElement {
   static readonly styles = [styles];
 
   @property({ type: String, reflect: true }) position: Placement = 'top';
-  @property({ type: String, reflect: true }) tile?: string;
+  @property({ type: String, reflect: true }) heading?: string;
   @property({ type: String, reflect: true }) body = '';
   @property({ type: String, reflect: true }) footer?: string;
   @property({ type: String, reflect: true }) icon?: string;
   @property({ type: String, reflect: true }) label?: string;
   @property({ type: Number, reflect: true, attribute: 'heading-level' }) headingLevel?: HeadingLevel;
   @property({ type: String, reflect: true, attribute: 'icon-set' }) iconSet?: string;
-  // todo?: use shorter name
-  @property({ type: Boolean, reflect: true, attribute: 'no-close-button' }) noCloseButton?: boolean;
+  @property({ type: Boolean, reflect: true, attribute: 'hide-close' }) hideClose?: boolean;
   @property({ type: String, reflect: true, attribute: 'alert-severity' }) alertSeverity?: AlertSeverity;
 
   @query('#popover') private _popover?: HTMLElement | null;
   @query('#close-button') private _closeButton?: HTMLElement | null;
   @query('#invoker') private _invoker?: HTMLElement | null;
 
-  #titleId = getRandomId();
-  #bodyId = getRandomId();
   #float = new FloatingDOMController(this, {
     arrow: () => this.shadowRoot?.querySelector('#arrow'),
     content: () => this.shadowRoot?.querySelector('#popover'),
   });
 
-  #slots = new SlotController(this, { slots: [null, 'icon', 'title', 'body', 'footer'] });
+  #slots = new SlotController(this, { slots: [null, 'icon', 'heading', 'body', 'footer'] });
 
   connectedCallback() {
     super.connectedCallback();
@@ -70,9 +67,7 @@ export class PfePopover extends LitElement {
   }
 
   render() {
-    const titleId = this.title ? this.#titleId : undefined;
     const { alignment, anchor, open, styles } = this.#float;
-    // todo?: not sure if I'm apply the correct values to aria-labelledby/aria-describedby
     return html`
       <div
         id="container"
@@ -87,13 +82,12 @@ export class PfePopover extends LitElement {
         <div
           id="popover"
           role="dialog"
-          aria-labelledby=${ifDefined(titleId)}
-          aria-describedby=${this.#bodyId}
+          aria-labelledby="heading"
+          aria-describedby="body"
           aria-label=${ifDefined(this.label)}
           ?hidden=${!open}
         >
           <div id="arrow"></div>
-
           <div id="content" part="content">
             ${this._renderCloseButton()} ${this._renderHeader()} ${this._renderBody()} ${this._renderFooter()}
           </div>
@@ -109,7 +103,7 @@ export class PfePopover extends LitElement {
   }
 
   protected _renderCloseButton() {
-    return !this.noCloseButton ?
+    return !this.hideClose ?
       html`
           <pfe-button
             id="close-button"
@@ -130,50 +124,45 @@ export class PfePopover extends LitElement {
   }
 
   protected _renderFallbackIcon() {
-    // todo?: do I need to define my own icon set to get correct icons or just add to internal repo?
     const alertIcons: Record<AlertSeverity, string> = {
       default: 'bell',
-      info: 'info',
-      success: 'check',
-      warning: 'exclamation',
-      danger: 'dumpster-fire',
+      info: 'circle-info',
+      success: 'circle-check',
+      warning: 'triangle-exclamation',
+      danger: 'circle-exclamation',
     };
     const icon = this.icon ?? (this.alertSeverity ? alertIcons[this.alertSeverity] : nothing);
     return html`<pfe-icon icon=${icon} set=${ifDefined(this.iconSet)} size="md"></pfe-icon>`;
   }
 
-  protected _renderTitle() {
+  protected _renderHeading() {
     const headingLevel = headingLevels.find(level => level === this.headingLevel) ?? 6;
-    const hasTitle = this.#slots.hasSlotted('title') || !!this.title;
-    return hasTitle ?
-      html`<slot id="title" name="title" part="title"
-          >${unsafeStatic(`<h${headingLevel}>${this.title}</h${headingLevel}>`)}</slot
+    const hasHeading = this.#slots.hasSlotted('heading') || !!this.heading;
+    return hasHeading ?
+      html`<slot id="heading" name="heading" part="heading"
+          >${unsafeStatic(`<h${headingLevel}>${this.heading}</h${headingLevel}>`)}</slot
         >`
       : nothing;
   }
 
   protected _renderHeader() {
-    const hasTitle = this.#slots.hasSlotted('title') || !!this.title;
+    const hasHeading = this.#slots.hasSlotted('heading') || !!this.heading;
     const hasIcon = this.#slots.hasSlotted('icon') || !!this.icon || !!this.alertSeverity;
-    const asHeader = hasTitle && hasIcon;
+    const asHeader = hasHeading && hasIcon;
     return asHeader ?
       html`
           <header part="header">
             <span part="icon">
               <slot name="icon"> ${this._renderFallbackIcon()} </slot>
             </span>
-            ${this._renderTitle()}
+            ${this._renderHeading()}
           </header>
         `
-      : html`${this._renderTitle()}`;
+      : html`${this._renderHeading()}`;
   }
 
   protected _renderBody() {
-    return html`
-      <div id=${this.#bodyId} part="body">
-        <slot name="body">${this.body}</slot>
-      </div>
-    `;
+    return html` <slot id="body" part="body" name="body">${this.body}</slot> `;
   }
 
   protected _renderFooter() {

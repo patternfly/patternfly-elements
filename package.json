@@ -177,7 +177,7 @@
       ]
     },
     "docs": {
-      "command": "eleventy",
+      "command": "eleventy --incremental",
       "files": [
         "elements/*/docs/*",
         "docs/**/*"

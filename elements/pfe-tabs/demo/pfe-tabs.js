@@ -8,7 +8,7 @@ const verticalInput = document.getElementById('toggle-vertical');
 const resizeInput = document.getElementById('toggle-resize');
 const verticalVariant = document.querySelector('pfe-tabs[vertical]');
 const boxVariant = document.querySelector('pfe-tabs[box]');
-const inset = document.querySelector('pfe-tabs[inset]');
+const inset = document.querySelector('#inset');
 
 function variantToggle() {
   boxVariant.setAttribute('box', toggleVariant.checked ? 'dark' : 'light');
@@ -31,7 +31,7 @@ function resizeToggle() {
 }
 
 function insetToggle(event) {
-  inset.inset = event.target.value;
+  inset.classList = event.target.value;
 }
 
 for (const input of document.querySelectorAll('input[name="toggle-inset"]')) {

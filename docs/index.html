@@ -15,7 +15,7 @@ githubLink: https://github.com/patternfly/patternfly-elements
     background-color: #004080;
     color: white;
     padding-block-end: 0;
-    padding-inline: 0;
+    padding-inline: 1rem;
     max-width: 100%;
   }
 
@@ -24,7 +24,7 @@ githubLink: https://github.com/patternfly/patternfly-elements
     translate: 0 2rem;
   }
 
-  #home-header > :is(h1, p, section) {
+  #home-header > :is(h1, p) {
     width: 100%;
     max-width: 100%;
   }
@@ -36,6 +36,8 @@ githubLink: https://github.com/patternfly/patternfly-elements
   #home-header section {
     margin-block-start: 48px;
     color: black;
+    width: calc(100% + 2rem);
+    margin-inline: -2rem;
   }
 
   #lightw,

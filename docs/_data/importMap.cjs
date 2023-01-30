@@ -82,6 +82,7 @@ module.exports = async function() {
   ]);
 
   const map = generator.getMap();
+  map.imports['/docs/zero-md.js'] = '/zero-md.js';
   map.imports['@patternfly/elements'] = '/pfe.min.js';
   for (const tagName of fs.readdirSync(path.join(__dirname, '..', '..', 'elements'))) {
     map.imports[`@patternfly/elements/${tagName}/${tagName}.js`] = `/pfe.min.js`;

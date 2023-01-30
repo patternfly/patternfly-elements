@@ -1,4 +1,5 @@
-import './zero-md.js';
+import '/docs/zero-md.js';
+
 import '@patternfly/elements/pf-label/pf-label.js';
 
 const container = document.querySelector('[data-demo]');

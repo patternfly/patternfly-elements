@@ -65,7 +65,7 @@ preloads: [
 }
 ---
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" style="height: 100%">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -90,8 +90,8 @@ preloads: [
     PfIcon.addIconSet('fab', get);
     </script>
   </head>
-  <body>
-    <main>
+  <body style="height: 100%">
+    <main style="height: 100%">
       <div data-demo="{{demo.tagName}}">{% if demo.filePath %}
         {%- include demo.filePath -%}{% endif %}
       </div>

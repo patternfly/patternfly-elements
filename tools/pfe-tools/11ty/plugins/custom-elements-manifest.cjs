@@ -2,6 +2,8 @@
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
 const { join, dirname } = require('node:path');
 const { existsSync } = require('node:fs');
+const glob = require('node:util').promisify(require('glob'));
+const { stat, rm } = require('node:fs/promises');
 
 /**
  * @param {unknown} x
@@ -10,6 +12,8 @@ const { existsSync } = require('node:fs');
 function isDocsPage(x) {
   return (/** @type {typeof import('../DocsPage').DocsPage}*/(x?.constructor))?.isDocsPage ?? false;
 }
+
+const isDir = dir => stat(dir).then(x => x.isDirectory, () => false);
 
 // TODO: programmable package scopes, etc
 /**
@@ -62,6 +66,21 @@ module.exports = function configFunction(eleventyConfig, _options = {}) {
             ...Object.fromEntries(Object.entries({ docsTemplatePath }).filter(([, v]) => existsSync(v)))
           });
         }));
+  });
+
+  // Netlify tends to turn html files into directories with index.html,
+  // but 11ty already did that, so let's delete the html file.
+  eleventyConfig.on('eleventy.after', async function({ runMode, dir }) {
+    if (runMode === 'build') {
+      const files = await glob(`${dir.output}/components/*/demo/*`)
+      const htmls = files.filter(x => x.endsWith('.html') && !x.endsWith('/index.html'));
+      for (const file of htmls) {
+        const dir = file.replace(/\.html$/, '');
+        if (await isDir(dir)) {
+          await rm(file);
+        }
+      }
+    }
   });
 
   /** Rebuild the site in watch mode when the templates for this plugin change */

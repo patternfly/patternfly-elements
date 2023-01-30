@@ -17,7 +17,7 @@ jobs:
           cache: npm
 
       - run: npm ci --prefer-offline
-      - run: npm run build
+      - run: npm run docs
 
       - name: Publish to Netlify
         env:

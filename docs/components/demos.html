@@ -70,7 +70,6 @@ preloads: [
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="PatternFly Elements: A set of community-created web components based on PatternFly design.">
-    <meta name="pf-auto-reveal" content="true">
     <link href="{{ '/brand/logo/svg/pfe-icon-blue.svg' | url }}" rel="shortcut icon">
     <title>{{ demo.title or (demo.tagName) }} | PatternFly Elements</title>
     <link rel="preconnect" href="https://ga.jspm.io">
@@ -91,7 +90,11 @@ preloads: [
     PfIcon.addIconSet('fab', get);
     </script>
   </head>
-  <body unresolved>{% if demo.filePath %}
-    {%- include demo.filePath -%}{% endif %}
+  <body>
+    <main>
+      <div data-demo="{{demo.tagName}}">{% if demo.filePath %}
+        {%- include demo.filePath -%}{% endif %}
+      </div>
+    </main>
   </body>
 </html>

@@ -1,3 +1,4 @@
+svg,
 img {
   width: var(--pf-c-avatar--Width, 24px);
   height: var(--pf-c-avatar--Height, 24px);
@@ -9,11 +10,11 @@ img {
       var(--pf-global--BorderColor--dark-100, #d2d2d2));
 }
 
-:host([border]) img {
+:host([border]) :is(img, svg) {
   --pf-c-avatar--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
 }
 
-:host([border="dark"]) img {
+:host([border="dark"]) :is(img, svg) {
   --pf-c-avatar--BorderColor: var(--pf-c-avatar--m-dark--BorderColor,
       var(--pf-global--palette--black-700, #4f5255));
 }

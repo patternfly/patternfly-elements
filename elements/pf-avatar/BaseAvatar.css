@@ -2,6 +2,7 @@
   display: contents;
 }
 
+svg,
 :host([src]) img {
   display: inline;
   object-fit: cover;

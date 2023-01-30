@@ -2,31 +2,37 @@ const fs = require('fs');
 const path = require('path');
 
 /**
+ * @typedef {object} EleventyTransformContext
+ * @property {string} outputPath path this file will be written to
+ */
+
+/**
  * Generate a map of files per package which should be copied to the site dir
  * @param {object} [options]
  * @param {string} [options.prefix='pfe'] element prefix e.g. 'pfe' for 'pf-button'
  */
 function getFilesToCopy(options) {
-  /** best guess at abs-path to repo root */
-  const repoRoot = path.join(__dirname, '..', '..', '..', '..').replace(/node_modules\/?$/g, '');
-
+  const cwd = process.cwd();
   const prefix = `${(options?.prefix ?? 'pf').replace(/-$/, '')}-`;
 
-  const hasElements = fs.existsSync(path.join(repoRoot, 'elements'));
-  const hasCore = fs.existsSync(path.join(repoRoot, 'core'));
+  const hasElements = fs.existsSync(path.join(cwd, 'elements'));
+  const hasCore = fs.existsSync(path.join(cwd, 'core'));
 
   if (!hasElements && !hasCore) {
     return null;
   }
 
   const files = {
-    [path.join(repoRoot, 'node_modules/element-internals-polyfill')]: 'element-internals-polyfill',
+    [path.join(cwd, 'node_modules/element-internals-polyfill')]: 'element-internals-polyfill',
   };
+
+  const tagNames = fs.readdirSync(path.join(cwd, 'elements'));
+  const corePkgs = fs.readdirSync(path.join(cwd, 'core'));
 
   // Copy all component and core files to _site
   if (hasElements) {
-    Object.assign(files, Object.fromEntries(fs.readdirSync(path.join(repoRoot, 'elements'))
-      .filter(x => !x.match(/node_modules|tsconfig|(?:config\.js$)/))
+    Object.assign(files, Object.fromEntries(tagNames
+      .filter(x => !x.match(/node_modules|tsconfig|README\.md|(?:\.ts$)|(?:config\.js$)/))
       .map(dir => [
         `elements/${dir}`,
         `components/${dir.replace(prefix, '')}`,
@@ -34,7 +40,7 @@ function getFilesToCopy(options) {
   }
 
   if (hasCore) {
-    Object.assign(files, Object.fromEntries(fs.readdirSync(path.join(repoRoot, 'core')).map(dir => [
+    Object.assign(files, Object.fromEntries(corePkgs.map(dir => [
       `core/${dir}`,
       `core/${dir.replace(prefix, '')}`,
     ])));
@@ -42,11 +48,6 @@ function getFilesToCopy(options) {
 
   return files;
 }
-
-/**
- * @typedef {object} EleventyTransformContext
- * @property {string} outputPath path this file will be written to
- */
 
 /**
  * Replace paths in demo files from the dev SPA's format to 11ty's format
@@ -114,6 +115,7 @@ module.exports = {
     });
     eleventyConfig.addPassthroughCopy('brand/**/*');
     const filesToCopy = getFilesToCopy(options);
+
     if (filesToCopy) {
       eleventyConfig.addPassthroughCopy(filesToCopy);
     }

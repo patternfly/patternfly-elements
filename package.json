@@ -72,6 +72,7 @@
     "analyze": {
       "command": "npm run -ws --if-present analyze",
       "files": [
+        "elements/*/demo/*.html",
         "elements/**/*.ts",
         "elements/**/*.css",
         "core/**/*.ts",

@@ -1,7 +1,4 @@
-```shell
-npm install @patternfly/elements
-```
-
+{%raw%}
 ```ts
 import "@patternfly/elements/pf-accordion/pf-accordion.js";
 
@@ -29,3 +26,4 @@ export class AppComponent {
   ];
 }
 ```
+{%endraw%}

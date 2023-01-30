@@ -5,111 +5,7 @@ description: A set of community-created web components based on PatternFly desig
 githubLink: https://github.com/patternfly/patternfly-elements
 ---
 
-<style>
-  #home-header {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    flex-wrap: wrap;
-    gap: 16px;
-    background-color: #004080;
-    color: white;
-    padding-block-end: 0;
-    padding-inline: 1rem;
-    max-width: 100%;
-  }
-
-  #home-header h1 img {
-    width: 6rem;
-    translate: 0 2rem;
-  }
-
-  #home-header > :is(h1, p) {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  #home-header pf-icon {
-   color: #666
-  }
-
-  #home-header section {
-    margin-block-start: 48px;
-    color: black;
-    width: calc(100% + 2rem);
-    margin-inline: -2rem;
-  }
-
-  #lightw,
-  #univ {
-    display: grid;
-    gap: 1em;
-  }
-
-  #lightw {
-    grid-template-columns: 2fr 1fr;
-    grid-template-areas:
-      'h h'
-      'tag tag'
-      'p p'
-      'cards cards'
-      'snippets snippets'
-      'link link';
-  }
-
-  #lightw > h2 { grid-area: h; }
-  #lightw > .subtitle { grid-area: tag; }
-  #lightw > p:not(.subtitle) { grid-area: p; }
-  #lightw > pre { grid-area: snippets; }
-  #lightw > pf-card { grid-area: cards; }
-  #lightw > a { grid-area: link; }
-
-  #univ {
-    width: 100vw;
-    max-width: 100vw;
-    grid-template-areas:
-      'h'
-      'header'
-      'cards'
-      'snippets'
-      'link';
-  }
-
-  #univ ul {
-    display: flex;
-    gap: 1em;
-    align-items: center;
-    flex-direction: column;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  #univ > h2 { grid-area: h; }
-  #univ > header { grid-area: header; }
-  #univ > div { grid-area: snippets; }
-  #univ > pf-tabs { grid-area: snippets; }
-  #univ > pf-accordion { grid-area: cards; }
-  #univ > ul { grid-area: logos; }
-  #univ > a { grid-area: link; }
-
-  #univ > * {
-    max-width: 100%;
-    overflow: hidden;
-  }
-
-  #univ svg {
-    width: 16px;
-  }
-  
-  #lightw > h2 { grid-area: h; }
-  #lightw > .subtitle { grid-area: tag; }
-  #lightw > p:not(.subtitle) { grid-area: p; }
-  #lightw > pre { grid-area: snippets; }
-  #lightw > pf-card { grid-area: cards; }
-  #lightw > a { grid-area: link; }
-
-</style>
+<link rel="stylesheet" href="home.css">
 
 <body>
   <header class="band accent" id="home-header">
@@ -130,24 +26,44 @@ githubLink: https://github.com/patternfly/patternfly-elements
     <section id="lightw" class="band">
       <h2 id="lightweight">Lightweight</h2>
       <p class="subtitle">Use only what you need.</p>
-      <p>Pick and choose from the <a href="{{ '/components/' | url }}">list of components</a>. Use them all or just one. And keep your page payloads small with PatternFly Elements because the components range from ~3 kB to ~10 kB in size minified and gzipped.</p>
+      <p>Pick and choose from the <a href="{{ '/components/' | url }}">list of components</a>.
+        Use them all or just one, and keep your page payloads small with PatternFly Elements
+        because the components range from ~3 kB to ~10 kB in size minified and gzipped.</p>
 
       {% renderFile "./docs/_snippets/card-html.md" %}
 
       <pf-card border>
         <h2 slot="header">Card component</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quam alias ducimus, amet iure quae earum.</p>
-        <a class="cta" slot="footer" href="components/card">More about the pf-card</a>
+        <p>PatternFly Elements are custom HTML elements that work everywhere.
+          The Card element has <code>header</code> and <code>footer</code> slots for things like 
+          titles and actions.
+        </p>
+        <a class="cta" slot="footer" href="components/card">More about <code>pf-card</code></a>
       </pf-card>
 
       <a class="cta" href="components/">View the rest of the components</a>
+
+      <pf-progress-stepper vertical>
+        <pf-progress-step description="Use NPM or load PatternFly Elements directly via CDN"
+                          variant="success">Install</pf-progress-step>
+        <pf-progress-step description="Craft pages and apps using our HTML, CSS, and JS APIs"
+                          variant="info">Build Your UI</pf-progress-step>
+        <pf-progress-step description="Ship performant, accessible products"
+                          variant="success"
+                          current
+                          icon="optimize" icon-set="patternfly">Ship!</pf-progress-step>
+      </pf-progress-stepper>
+
     </section>
 
     <section id="univ" class="band base">
       <h2>Universal</h2>
       <header>
         <p class="tagline">Integrate PatternFly Elements with your framework of choice or use them by themselves.</p>
-        <p>PatternFly Elements integrate seamlessly with multiple frontend frameworks. Or use PatternFly Elements on their own without a framework. It's up to you and the needs of your project.</p>
+        <p>PatternFly Elements integrate seamlessly with multiple frontend frameworks. Just install it 
+           with <pf-clipboard-copy inline compact code>npm install @patternfly/elements</pf-clipboard-copy>,
+          or use PatternFly Elements on their own without a framework.
+          It's up to you and the needs of your project.</p>
       </header>
 
       <pf-tabs>
@@ -168,17 +84,17 @@ githubLink: https://github.com/patternfly/patternfly-elements
       </pf-tabs>
 
       <pf-accordion>
-        <pf-accordion-header>
-          <h3>Accordion header</h3>
+        <pf-accordion-header expanded>
+          <h3>Getting Started</h3>
         </pf-accordion-header>
         <pf-accordion-panel>
-          <p>Here is some content</p>
+          <p>Read our <a href="/get-started/">Getting started</a> page to learn how to install and use PatternFly Elements.</p>
         </pf-accordion-panel>
         <pf-accordion-header>
-          <h3>Accordion header</h3>
+          <h3>HTML APIs</h3>
         </pf-accordion-header>
         <pf-accordion-panel>
-          <p>Here is some more content</p>
+          <p>For more information on how to use each PatternFly element, read the <a href="/components/">component docs</a>.</p>
         </pf-accordion-panel>
       </pf-accordion>
 

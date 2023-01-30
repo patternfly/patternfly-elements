@@ -1,7 +1,4 @@
-```shell
-npm install @patternfly/elements
-```
-
+{%raw%}
 ```html
 <template>
   <pf-accordion>
@@ -15,6 +12,7 @@ npm install @patternfly/elements
     </template>
   </pf-accordion>
 </template>
+{%endraw%}
 
 <script>
 import "@patternfly/elements/pf-accordion/pf-accordion.js";

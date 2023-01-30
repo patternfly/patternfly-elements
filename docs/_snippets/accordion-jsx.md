@@ -1,17 +1,12 @@
-```shell
-npm install @patternfly/elements
-```
-
 ```jsx
 import React from "react";
 import "@patternfly/elements/pf-accordion/pf-accordion.js";
 
 export default function App() {
   const data = [
-    { header: "Heading 1", panel: "Here is some content"},
-    { header: "Heading 2", panel: "Here is some more content" }
+    { header: "Getting Started", panel: <>Read our <a href="/get-started/">Getting started</a> page to learn how to install and use PatternFly Elements.<>},
+    { header: "HTML APIs", panel: <>For more information on how to use each PatternFly element, read the <a href="/components/">component docs</a>.<>}
   ];
-
   return (
     <pf-accordion>{data.map(({ header, panel }) => (
       <pf-accordion-header>

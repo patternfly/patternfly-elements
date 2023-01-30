@@ -1,6 +1,3 @@
-```shell
-npm install @patternfly/elements
-```
 {%raw%}
 ```html
 <pf-accordion>

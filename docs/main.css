@@ -766,7 +766,7 @@ nav.toc li {
     display: inline-block;
     width: 1em;
     height: 1em;
-    background-image: url(/brand/logo/svg/pf-icon-blue.svg);
+    background-image: url(/brand/logo/svg/pfe-icon-blue.svg);
     padding-inline-end: 4px;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;

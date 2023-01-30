@@ -83,6 +83,34 @@ module.exports = function configFunction(eleventyConfig, _options = {}) {
     }
   });
 
+  // 11ty turn elements/pf-jazz-hands/demo/special-name.html into 
+  //            components/jazz-hands/demo/special-name/index.html
+  // Here, we rewrite the subresource links so they point to the right files.
+  eleventyConfig.addTransform('reroute-special-demo-subresources', function(content) {
+    if (this.inputPath.endsWith('/demos.html')) {
+      const [, one, two, three, four] = this.outputPath.split('/')
+      if ( one === 'components' && three === 'demo' && four !== 'index.html') {
+        const cheerio = require('cheerio');
+        const $ = cheerio.load(content);
+        $('body link').each(function() {
+          const href = $(this).attr('href');
+          if (href && !href.startsWith('http')) {
+            $(this).attr('href', join('..', href));
+          }
+        });
+        $('body script').each(function() {
+          const src = $(this).attr('src');
+          if (src && !src.startsWith('http')) {
+            $(this).attr('src', join('..', src));
+          }
+        });
+        return $.html();
+      } else {
+        return content;
+      }
+    }
+  });
+
   /** Rebuild the site in watch mode when the templates for this plugin change */
   eleventyConfig
     .addWatchTarget(require.resolve('@patternfly/pfe-tools/11ty')

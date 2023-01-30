@@ -68,5 +68,6 @@ header ::slotted(*) {
 
 [part="footer"] {
   font-size: var(--_pf-c-card__footer--FontSize, var(--pf-global--FontSize--md, 1rem));
+  margin-block-start: auto;
 }
 

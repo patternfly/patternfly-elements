@@ -72,7 +72,7 @@ module.exports = function configFunction(eleventyConfig, _options = {}) {
   // but 11ty already did that, so let's delete the html file.
   eleventyConfig.on('eleventy.after', async function({ runMode, dir }) {
     if (runMode === 'build') {
-      const files = await glob(`${dir.output}/components/*/demo/*`)
+      const files = await glob(`${dir.output}/components/*/demo/*`);
       const htmls = files.filter(x => x.endsWith('.html') && !x.endsWith('/index.html'));
       for (const file of htmls) {
         const dir = file.replace(/\.html$/, '');
@@ -119,7 +119,7 @@ module.exports = function configFunction(eleventyConfig, _options = {}) {
        * @param {import('../DocsPage').RenderKwargs} [kwargs]
        */
       async function(content, kwargs) {
-        const docsPage = isDocsPage(this.ctx._) ? this.ctx._ : null;
+        const docsPage = isDocsPage(this.ctx?._) ? this.ctx?._ : null;
         if (!docsPage) {
           console.warn(
             `{% ${shortCode} %}: No custom elements manifest data found for ${kwargs?.for ?? 'unknown element'}`,

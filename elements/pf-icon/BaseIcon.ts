@@ -73,7 +73,7 @@ export abstract class BaseIcon extends LitElement {
   @property({ reflect: true }) icon = '';
 
   /** Size of the icon */
-  @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
+  abstract size: string;
 
   /**
    * Controls how eager the element will be to load the icon data

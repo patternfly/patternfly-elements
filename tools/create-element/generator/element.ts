@@ -48,7 +48,7 @@ enum InterpolationKey {
   readmeName = 'readmeName',
   /** e.g. 'pf-jazz-hands' */
   tagName = 'tagName',
-  /** e.g. 'pfe' */
+  /** e.g. 'pf' */
   tagPrefix = 'tagPrefix',
 }
 

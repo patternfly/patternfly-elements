@@ -5,7 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import style from './BaseAvatar.css';
 
 export class AvatarLoadEvent extends Event {
-  constructor(public originalEvent) {
+  constructor(public originalEvent: Event) {
     super('load', { bubbles: true, composed: true });
   }
 }
@@ -35,7 +35,7 @@ export class BaseAvatar extends LitElement {
       <img
         size=${this.size}
         alt=${this.alt ?? ''}
-        @load="${e => this.dispatchEvent(new AvatarLoadEvent(e))}"
+        @load="${(e: Event) => this.dispatchEvent(new AvatarLoadEvent(e))}"
         src=${this.src}>
     ` : isDark ? html`
       <svg xmlns="http://www.w3.org/2000/svg" style="enable-background:new 0 0 36 36" viewBox="0 0 36 36">

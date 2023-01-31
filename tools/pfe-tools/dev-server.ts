@@ -103,7 +103,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           ctx.set('Expires', '0');
           return next();
         })
-        .get(/\/pfe-icon\/icons\/.*\.js$/, (ctx, next) => {
+        .get(/\/pf-icon\/icons\/.*\.js$/, (ctx, next) => {
           ctx.type = 'application/javascript';
           return next();
         })
@@ -114,8 +114,8 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           ctx.body = await makeDemoEnv(options.rootDir);
           ctx.type = 'application/javascript';
         })
-        // redirect /components/jazz-hands/pfe-timestep/index.html to /elements/pfe-jazz-hands/demo/pfe-timestep.html
-        // redirect /components/jazz-hands/index.html to /elements/pfe-jazz-hands/demo/pfe-jazz-hands.html
+        // redirect /components/jazz-hands/pf-jazz-hands/index.html to /elements/pf-jazz-hands/demo/pf-jazz-hands.html
+        // redirect /components/jazz-hands/index.html to /elements/pf-jazz-hands/demo/pf-jazz-hands.html
         .get('/components/:slug/demo/:sub?/:fileName', (ctx, next) => {
           const { slug, fileName } = ctx.params;
           if (fileName.includes('.')) {
@@ -125,21 +125,31 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           }
           return next();
         })
-        // redirect /components/jazz-hands/pfe-jazz-hands-lightdom.css to /elements/pfe-jazz-hands/pfe-jazz-hands-lightdom.css
-        // redirect /components/jazz-hands/demo/demo.css to /elements/pfe-jazz-hands/demo/demo.css
+        // redirect /components/jazz-hands/pf-jazz-hands-lightdom.css to /elements/pf-jazz-hands/pf-jazz-hands-lightdom.css
         .get('/components/:slug/demo/:sub?/:fileName.css', (ctx, next) => {
           // FIXME: will probably break if one component links to another's lightdom css.
           //        better to find out why it's requesting from /components/ in the first place
           const { slug, fileName } = ctx.params;
           const tagName = deslugify(slug);
-          let redir = `/elements/${tagName}/demo/${fileName}.css`;
-          if (fileName.includes('-lightdom')) {
-            redir = `/elements/${tagName}/${fileName}.css`;
+          if (tagName && fileName.includes('-lightdom')) {
+            return ctx.redirect(`/elements/${tagName}/${fileName}.css`);
+          } else {
+            return next();
           }
-          if (tagName) {
-            return ctx.redirect(redir);
+        })
+        // redirect /components/jazz-hands/demo/demo.css to /elements/pf-jazz-hands/demo/demo.css
+        // redirect /components/jazz-hands/demo/special-demo/demo.css to /elements/pf-jazz-hands/demo/demo.css
+        .get('/components/:slug/demo/:sub?/:fileName.:ext', (ctx, next) => {
+          // FIXME: will probably break if one component links to another's lightdom css.
+          //        better to find out why it's requesting from /components/ in the first place
+          const { slug, fileName, ext } = ctx.params;
+          const tagName = deslugify(slug);
+          const lastDir = ctx.originalUrl.split('/').at(-2);
+          if (tagName && lastDir !== 'demo') {
+            return ctx.redirect(`/elements/${tagName}/demo/${fileName}.${ext}`);
+          } else {
+            return next();
           }
-          return next();
         })
         .routes())
         // Render the demo page whenever there's a trailing slash

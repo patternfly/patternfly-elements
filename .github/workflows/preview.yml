@@ -17,7 +17,8 @@ jobs:
           cache: npm
 
       - run: npm ci --prefer-offline
-      - run: npm run build
+      - run: npm run docs
+      - run: cat _site/components/icon/demo/custom-icon-sets/index.html
 
       - name: Publish to Netlify
         env:

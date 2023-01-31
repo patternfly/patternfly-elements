@@ -2,6 +2,8 @@
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
 const { join, dirname } = require('node:path');
 const { existsSync } = require('node:fs');
+const glob = require('node:util').promisify(require('glob'));
+const { stat, rm } = require('node:fs/promises');
 
 /**
  * @param {unknown} x
@@ -10,6 +12,8 @@ const { existsSync } = require('node:fs');
 function isDocsPage(x) {
   return (/** @type {typeof import('../DocsPage').DocsPage}*/(x?.constructor))?.isDocsPage ?? false;
 }
+
+const isDir = dir => stat(dir).then(x => x.isDirectory, () => false);
 
 // TODO: programmable package scopes, etc
 /**
@@ -64,6 +68,48 @@ module.exports = function configFunction(eleventyConfig, _options = {}) {
         }));
   });
 
+  // Netlify tends to turn html files into directories with index.html,
+  // but 11ty already did that, so let's delete the html file.
+  eleventyConfig.on('eleventy.after', async function({ runMode, dir }) {
+    if (runMode === 'build') {
+      const files = await glob(`${dir.output}/components/*/demo/*`);
+      const htmls = files.filter(x => x.endsWith('.html') && !x.endsWith('/index.html'));
+      for (const file of htmls) {
+        const dir = file.replace(/\.html$/, '');
+        if (await isDir(dir)) {
+          await rm(file);
+        }
+      }
+    }
+  });
+
+  // 11ty turn elements/pf-jazz-hands/demo/special-name.html into
+  //            components/jazz-hands/demo/special-name/index.html
+  // Here, we rewrite the subresource links so they point to the right files.
+  eleventyConfig.addTransform('reroute-special-demo-subresources', function(content) {
+    if (this.inputPath.endsWith('/demos.html')) {
+      const [, one, , three, four] = this.outputPath.split('/');
+      if ( one === 'components' && three === 'demo' && four !== 'index.html') {
+        const cheerio = require('cheerio');
+        const $ = cheerio.load(content);
+        $('body link').each(function() {
+          const href = $(this).attr('href');
+          if (href && !href.startsWith('http')) {
+            $(this).attr('href', join('..', href));
+          }
+        });
+        $('body script').each(function() {
+          const src = $(this).attr('src');
+          if (src && !src.startsWith('http')) {
+            $(this).attr('src', join('..', src));
+          }
+        });
+        return $.html();
+      }
+    }
+    return content;
+  });
+
   /** Rebuild the site in watch mode when the templates for this plugin change */
   eleventyConfig
     .addWatchTarget(require.resolve('@patternfly/pfe-tools/11ty')
@@ -100,7 +146,7 @@ module.exports = function configFunction(eleventyConfig, _options = {}) {
        * @param {import('../DocsPage').RenderKwargs} [kwargs]
        */
       async function(content, kwargs) {
-        const docsPage = isDocsPage(this.ctx._) ? this.ctx._ : null;
+        const docsPage = isDocsPage(this.ctx?._) ? this.ctx?._ : null;
         if (!docsPage) {
           console.warn(
             `{% ${shortCode} %}: No custom elements manifest data found for ${kwargs?.for ?? 'unknown element'}`,

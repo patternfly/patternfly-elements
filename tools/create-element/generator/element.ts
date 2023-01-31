@@ -40,15 +40,15 @@ enum InterpolationKey {
   className = 'className',
   /** import specifier for the element style e.g. './rh-jazz-hands.css' */
   cssRelativePath = 'cssRelativePath',
-  /** The package's NPM package name. e.g. '@patternfly/pfe-jazz-hands' */
+  /** The package's NPM package name. e.g. '@patternfly/pf-jazz-hands' */
   packageName = 'packageName',
   /** The import specifier used to import the element */
   importSpecifier = 'importSpecifier',
   /** e.g. 'Jazz Hands' */
   readmeName = 'readmeName',
-  /** e.g. 'pfe-jazz-hands' */
+  /** e.g. 'pf-jazz-hands' */
   tagName = 'tagName',
-  /** e.g. 'pfe' */
+  /** e.g. 'pf' */
   tagPrefix = 'tagPrefix',
 }
 
@@ -69,12 +69,12 @@ const getFilePathsRelativeToPackageDir =
     e2e: `test/${options.tagName}.e2e.ts`,
   }));
 
-/** e.g. elements/pfe-jazz-hands */
+/** e.g. elements/pf-jazz-hands */
 const getComponentPathFromDirectoryOption =
   memoize((options: GenerateElementOptions): string =>
     join('elements', options.tagName));
 
-/** e.g. /Users/alj/Developer/jazz-elements/elements/pfe-jazz-hands */
+/** e.g. /Users/alj/Developer/jazz-elements/elements/pf-jazz-hands */
 const getComponentAbsPath =
   memoize((options: GenerateElementOptions): string =>
     join(options.directory, getComponentPathFromDirectoryOption(options)));
@@ -99,7 +99,7 @@ const getInterpolations =
     };
   });
 
-/** e.g. /Users/alj/Developer/jazz-elements/elements/pfe-jazz-hands/pfe-jazz-hands.ts */
+/** e.g. /Users/alj/Developer/jazz-elements/elements/pf-jazz-hands/pf-jazz-hands.ts */
 const getOutputFilePath =
   (key: FileKey, options: GenerateElementOptions): string =>
     join(getComponentAbsPath(options), getFilePathsRelativeToPackageDir(options)[key]);
@@ -151,7 +151,7 @@ async function writeElementFiles(options: GenerateElementOptions) {
     console.log(`\nCreating ${green(options.tagName)} in ${getComponentPathFromDirectoryOption(options)}\n`);
   }
 
-  // $ mkdir -p /Users/alj/jazz-elements/elements/pfe-jazz-hands
+  // $ mkdir -p /Users/alj/jazz-elements/elements/pf-jazz-hands
   await mkdirp(getComponentAbsPath(options));
 
   for (const key of Object.keys(FileKey).sort() as FileKey[]) {

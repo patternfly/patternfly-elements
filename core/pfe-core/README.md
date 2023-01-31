@@ -19,8 +19,8 @@ Utilities for building PatternFly elements.
 - `@cascades` - cascades the decorated property to configured light and shadow child elements
 - `@initializer` - executes a decorated method when the element upgrades and on DOM mutations (opt-out)
 - `@observed` - runs a callback when the decorated property changes
-- `@pfelement` - enabled body auto-reveal as well as colour context and other PFE features
-- `@time` - tracks the time a method takes to complete using the [performance API](https://developer.mozilla.org/en-US/docs/Web/API/Performance)
+- `@time` - tracks the time a method takes to complete using the [performance 
+  API](https://developer.mozilla.org/en-US/docs/Web/API/Performance)
 - `@trace` - debug decorator which logs the name and result of a class method whenever it runs
 
 ## Directives

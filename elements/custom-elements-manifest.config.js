@@ -2,7 +2,7 @@ import { pfeCustomElementsManifestConfig } from '@patternfly/pfe-tools/custom-el
 
 export default pfeCustomElementsManifestConfig({
   globs: [
-    './*/pfe-*.ts',
+    './*/pf-*.ts',
     './*/Base*.ts'
   ],
 });

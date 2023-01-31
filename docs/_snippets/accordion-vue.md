@@ -1,23 +1,21 @@
-```shell
-npm install @patternfly/elements
-```
-
+{%raw%}
 ```html
 <template>
-  <pfe-accordion>
+  <pf-accordion>
     <template v-for="{ header, panel } in data">
-      <pfe-accordion-header>
+      <pf-accordion-header>
         <h3>{{ header }}</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
+      </pf-accordion-header>
+      <pf-accordion-panel>
         <p>{{ panel }}</p>
-      </pfe-accordion-panel>
+      </pf-accordion-panel>
     </template>
-  </pfe-accordion>
+  </pf-accordion>
 </template>
+{%endraw%}
 
 <script>
-import "@patternfly/elements/pfe-accordion/pfe-accordion.js";
+import "@patternfly/elements/pf-accordion/pf-accordion.js";
 export default {
   name: 'App',
   data() {

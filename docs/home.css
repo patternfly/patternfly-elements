@@ -1,0 +1,82 @@
+#home-header {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  background-color: #004080;
+  color: white;
+  padding-block-end: 0;
+  padding-inline: 1rem;
+  max-width: 100%;
+}
+
+#home-header h1 img {
+  width: 6rem;
+  translate: 0 2rem;
+}
+
+#home-header > :is(h1, p) {
+  width: 100%;
+  max-width: 100%;
+}
+
+#home-header pf-icon {
+ color: #666
+}
+
+#home-header section {
+  margin-block-start: 48px;
+  color: black;
+  width: calc(100% + 2rem);
+  margin-inline: -2rem;
+}
+
+#lightw {
+  display: grid;
+  gap: 1em;
+}
+
+#lightw {
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    'h h'
+    'tag tag'
+    'p p'
+    'snip snip'
+    'card step'
+    'link link';
+}
+
+#lightw > .subtitle { grid-area: tag; }
+#lightw > a { grid-area: link; }
+#lightw > h2 { grid-area: h; }
+#lightw > p:not(.subtitle) { grid-area: p; }
+#lightw > pf-card { grid-area: card; }
+#lightw > pf-progress-stepper { grid-area: step; }
+#lightw > pre { grid-area: snip; margin-block: 0; }
+
+#univ {
+  width: 100vw;
+  max-width: 100vw;
+}
+
+#univ ul {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  flex-direction: column;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#univ > * {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+#univ svg {
+  width: 16px;
+}
+

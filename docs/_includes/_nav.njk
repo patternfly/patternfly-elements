@@ -4,21 +4,36 @@
       <img src="{{ '/brand/logo/svg/pfe-icon-white-shaded.svg' | url }}" alt="PatternFly Elements - Home">
       PatternFly Elements
     </a>
-    <pfe-dropdown id="docs-versions-dropdown" aria-label="Docs Versions" label="Docs Versions">
+    {# TODO: implement pf-dropdown
+    <pf-dropdown id="docs-versions-dropdown" aria-label="Docs Versions" label="Docs Versions">
       {% for version in versions %}
       {%- if version.current -%}
         {%- set prefix = '' -%}
       {%- else -%}
         {%- set prefix = '/' + version.slug -%}
       {%- endif %}
-      <pfe-dropdown-item
+      <pf-dropdown-item
           item-type="link"
           data-version="{{ version.slug }}"
           data-label="{{ version.label }}">
         <a href="{{ prefix }}{{ page.url }}">{{ version.label }}</a>
-      </pfe-dropdown-item>
+      </pf-dropdown-item>
       {% endfor %}
-    </pfe-dropdown>
+    </pf-dropdown>
+    #}
+    <select id="docs-versions-dropdown" aria-label="Docs Versions" oninput="location.href=this.options[this.selectedIndex].value">
+      {% for version in versions %}
+      {%- if version.current -%}
+        {%- set prefix = '' -%}
+      {%- else -%}
+        {%- set prefix = '/' + version.slug -%}
+      {%- endif %}
+      <option
+          value="{{ prefix }}{{ page.url }}"
+          data-version="{{ version.slug }}"
+          data-label="{{ version.label }}">{{ version.label }}</option>
+      {% endfor %}
+    </select>
     <script type="module">
       const dropdown = document.getElementById('docs-versions-dropdown');
       const items = dropdown.querySelectorAll('[data-version]');

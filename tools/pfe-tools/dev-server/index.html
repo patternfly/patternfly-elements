@@ -11,7 +11,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{{ options.site.description }}">
-  <meta name="pfe-track-performance" content="true">
+  <meta name="pf-track-performance" content="true">
   <link href="{{ options.site.favicon }}" rel="shortcut icon">
   <title>{{ title }}</title>
   <link rel="stylesheet" href="/node_modules/@patternfly/pfe-tools/dev-server/fonts.css">
@@ -22,21 +22,21 @@
   <script type="module">
     import 'construct-style-sheets-polyfill';
     import 'element-internals-polyfill';
-    import '@patternfly/elements/pfe-button/pfe-button.js';
-    import '@patternfly/elements/pfe-card/pfe-card.js';
+    import '@patternfly/elements/pf-button/pf-button.js';
+    import '@patternfly/elements/pf-card/pf-card.js';
     import '@patternfly/pfe-tools/dev-server/demo.ts';
   </script>
 </head>
 
 <body class="menu-open">
   <header id="main-header">
-    <pfe-button id="hamburger"
+    <pf-button id="hamburger"
                 plain
                 aria-controls="sidebar"
                 style="--pf-c-button--m-plain--Color:white"
                 label="Expand Main Navigation">
-        <pfe-icon icon="bars"></pfe-icon>
-      </pfe-button>
+        <pf-icon icon="bars"></pf-icon>
+      </pf-button>
     <a href="/"><img src="{{ options.site.logoUrl }}" alt="">{{ title }}</a>
     <a id="github-link" href="{{ options.sourceControlURLPrefix.replace('tree/main/', '') }}{{ ('tree/main' + manifest.path.replace(context.cwd, '').replace('/custom-elements.json', '/')) if manifest else ''}}">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
@@ -74,7 +74,7 @@
     <section id="components">
         {% for primary, group in groupeddemos %}
         {% set first = group['0'] %}
-        <pfe-card rounded compact>
+        <pf-card rounded compact>
           <h2 slot="header">{{ first.title }}</h2>
           <a href="{{ first.permalink | replace(demoURLPrefix, '/') }}">
             <img src="/elements/{{ primary }}/docs/screenshot.png" alt="{{ primary }}">
@@ -84,7 +84,7 @@
               <a href="{{ d.permalink | replace(demoURLPrefix, '/') }}">{{ d.title }}</a>
             </li>{% endif %}{% endfor %}
           </ul>
-        </pfe-card>{% endfor %}
+        </pf-card>{% endfor %}
     </section>
     {% endif %}
   </main>

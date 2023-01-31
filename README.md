@@ -7,7 +7,7 @@
 3. [Creating components][creating]
 4. [Theming components][theming]
 
-[PatternFly Elements][pfe-home] is a work-in-progress collection of flexible and lightweight Web Components based on the Unified Design Kit. The repo also includes a generator to build new components. PatternFly Elements are:
+[PatternFly Elements][home] is a work-in-progress collection of flexible and lightweight Web Components based on the Unified Design Kit. The repo also includes a generator to build new components. PatternFly Elements are:
 
 - **Lightweight**: small file size, minimal boilerplate, no "framework-like" features.
 - **Universal**: write once, use everywhere. PatternFly Elements work in React, Vue, Angular, vanilla JS, anywhere HTML elements are used.
@@ -58,10 +58,10 @@ npm start
 npm run test:watch
 
 # Run a single test in watch mode.
-npm run test:watch -- --files elements/pfe-accordion/test/pfe-accordion.spec.ts
+npm run test:watch -- --files elements/pf-accordion/test/pf-accordion.spec.ts
 
 # Or multiple:
-npm run test:watch -- --files 'elements/pfe-{select,card}/test/*.spec.ts'
+npm run test:watch -- --files 'elements/pf-{select,card}/test/*.spec.ts'
 
 # Run all tests excluding react and vue tests.
 npm run test:watch
@@ -108,7 +108,7 @@ You can also participate in discussions on [patternfly.slack.com](https://patter
 
 ---
 
-[home][pfe-home] |
+[home][home] |
 [start][getting-started] |
 [develop][creating] |
 [theming][theming] |
@@ -116,7 +116,7 @@ You can also participate in discussions on [patternfly.slack.com](https://patter
 [web components][wc-org]
 
 
-[pfe-home]: https://patternflyelements.org
+[home]: https://patternflyelements.org
 [getting-started]: https://patternflyelements.org/get-started
 [catalog]: https://patternflyelements.org/components
 [creating]: https://patternflyelements.org/docs/develop/create/

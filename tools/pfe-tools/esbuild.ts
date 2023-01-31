@@ -6,7 +6,6 @@ import glob from 'glob';
 import CleanCSS from 'clean-css';
 
 import { externalSubComponents } from './esbuild-plugins/external-sub-components.js';
-import { packageVersion } from './esbuild-plugins/package-version.js';
 import { litCssPlugin } from 'esbuild-plugin-lit-css';
 
 import { minifyHTMLLiteralsPlugin } from 'esbuild-plugin-minify-html-literals';
@@ -37,7 +36,7 @@ export interface PfeEsbuildOptions {
 export interface PfeEsbuildSingleFileOptions {
   /** list of NPM package names to bundle alongside the repo's components */
   additionalPackages?: string[];
-  /** String contents of an entry point file for all elements to be bundled. Defaults to an entry point containing all installed pfe-* elements. */
+  /** String contents of an entry point file for all elements to be bundled. Defaults to an entry point containing all installed pf-* elements. */
   componentsEntryPointContents?: string;
   outfile?: string;
   litCssOptions?: LitCSSOptions;
@@ -81,17 +80,15 @@ export function getBasePlugins({ minify, litCssOptions }: PfeBasePluginOptions =
     ...!minify ? [] : [
       // minify lit-html templates
       minifyHTMLLiteralsPlugin(),
-    ],
-    // replace `{{version}}` with each package's version
-    packageVersion(),
-  ] as Plugin[];
+    ].filter(x=>!!x),
+  ] as unknown as Plugin[];
 }
 
 /** Generate a temporary file containing namespace exports of all pfe components */
 export async function componentsEntryPoint(options?: { additionalPackages?: string[] }) {
   const componentDirs = (await readdir(join(REPO_ROOT, 'node_modules', '@patternfly')).catch(() => [] as string[]))
-    .filter((x: string) => x.startsWith('pfe'))
-    .filter((x: string) => !x.match(/pfe-(core|tools)$/));
+    .filter((x: string) => x.startsWith('pf'))
+    .filter((x: string) => !x.match(/pf-(core|tools)$/));
 
   const cacheKey = componentDirs.join('--');
 
@@ -238,7 +235,7 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
 
       plugins: [
         ...getBasePlugins({ minify: mode === 'production' }),
-        // ignore sub components bundling like "pfe-progress-steps-item"
+        // ignore sub components bundling like "pf-progress-steps-item"
         externalSubComponents(),
       ],
     });

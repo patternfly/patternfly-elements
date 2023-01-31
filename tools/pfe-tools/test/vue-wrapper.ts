@@ -35,21 +35,21 @@ export async function fixture<T extends Element = HTMLElement>(
   const code = (typeof testCase === 'string') ? testCase : renderToString(testCase);
 
   Vue.config.ignoredElements = [
-    'pfe-accordion',
-    'pfe-avatar',
-    'pfe-badge',
-    'pfe-button',
-    'pfe-card',
-    'pfe-clipboard',
-    'pfe-code-block',
-    'pfe-icon',
-    'pfe-jump-links',
-    'pfe-modal',
-    'pfe-progress-steps',
-    'pfe-spinner',
-    'pfe-switch',
-    'pfe-tabs',
-    'pfe-timestamp',
+    'pf-accordion',
+    'pf-avatar',
+    'pf-badge',
+    'pf-button',
+    'pf-card',
+    'pf-clipboard',
+    'pf-code-block',
+    'pf-icon',
+    'pf-jump-links',
+    'pf-modal',
+    'pf-progress-steps',
+    'pf-spinner',
+    'pf-switch',
+    'pf-tabs',
+    'pf-timestamp',
   ];
 
   const wrapper = document.getElementById('vue-wrapper');

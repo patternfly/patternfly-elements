@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-progress-stepper.js"></script>
+
+<section id="basic">
+  <h2>Basic</h2>
+  <pf-progress-stepper>
+    <pf-progress-step variant="success">First Step</pf-progress-step>
+    <pf-progress-step variant="info" current>Second Step</pf-progress-step>
+    <pf-progress-step variant="pending">Third Step</pf-progress-step>
+  </pf-progress-stepper>
+</section>
+
+<section id="descriptions">
+  <h2>With step descriptions</h2>
+  <pf-progress-stepper>
+    <pf-progress-step description="This is the first thing to happen" variant="success">First Step</pf-progress-step>
+    <pf-progress-step description="This is the second thing to happen" variant="info" current>Second Step</pf-progress-step>
+    <pf-progress-step description="This is the last thing to happen" variant="pending">Third Step</pf-progress-step>
+  </pf-progress-stepper>
+</section>
+
+<form id="alignment">
+  <h2>With alignment</h2>
+  <label><pf-switch name="vertical"></pf-switch> Vertical alignment</label>
+  <label><pf-switch name="center"></pf-switch> Center alignment</label>
+  <pf-progress-stepper name="progress">
+    <pf-progress-step description="This is the first thing to happen" variant="success">First Step</pf-progress-step>
+    <pf-progress-step description="This is the second thing to happen" variant="info" current>Second Step</pf-progress-step>
+    <pf-progress-step description="This is the last thing to happen" variant="pending">Third Step</pf-progress-step>
+  </pf-progress-stepper>
+</form>
+
+<form id="compact">
+  <h2>Compact</h2>
+  <label><pf-switch name="vertical"></pf-switch> Vertical alignment</label>
+  <label><pf-switch name="center"></pf-switch> Center alignment</label>
+  <pf-progress-stepper name="progress" compact>
+    <pf-progress-step variant="success">First Step</pf-progress-step>
+    <pf-progress-step variant="info" current>Second Step</pf-progress-step>
+    <pf-progress-step variant="pending">Third Step</pf-progress-step>
+  </pf-progress-stepper>
+</form>
+
+<section id="issue">
+  <h2>With an issue</h2>
+  <pf-progress-stepper>
+    <pf-progress-step variant="success">First Step</pf-progress-step>
+    <pf-progress-step variant="success">Second Step</pf-progress-step>
+    <pf-progress-step variant="warning">Third Step</pf-progress-step>
+    <pf-progress-step variant="info" current>Fourth Step</pf-progress-step>
+    <pf-progress-step variant="pending">Fifth Step</pf-progress-step>
+  </pf-progress-stepper>
+</section>
+
+<section id="failure">
+  <h2>With a failure</h2>
+  <pf-progress-stepper>
+    <pf-progress-step variant="success">First Step</pf-progress-step>
+    <pf-progress-step variant="success">Second Step</pf-progress-step>
+    <pf-progress-step variant="success">Third Step</pf-progress-step>
+    <pf-progress-step variant="danger" current>Fourth Step</pf-progress-step>
+    <pf-progress-step variant="pending">Fifth Step</pf-progress-step>
+  </pf-progress-stepper>
+</section>
+
+<section id="failure">
+  <h2>With custom icons</h2>
+  <pf-progress-stepper>
+    <pf-progress-step variant="success">Successful completion</pf-progress-step>
+    <pf-progress-step icon="in-progress" icon-set="patternfly" current>In process</pf-progress-step>
+    <pf-progress-step icon="pending" icon-set="patternfly" variant="pending">Pending</pf-progress-step>
+  </pf-progress-stepper>
+</section>

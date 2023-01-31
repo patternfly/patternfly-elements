@@ -1,0 +1,13 @@
+:host {
+  display: contents;
+}
+
+svg,
+:host([src]) img {
+  display: inline;
+  object-fit: cover;
+}
+
+:host([hidden]) {
+  display: none;
+}

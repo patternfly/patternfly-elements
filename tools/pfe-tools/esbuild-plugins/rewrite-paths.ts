@@ -7,12 +7,12 @@ import type { Plugin } from 'esbuild';
  *
  * For example
  * ```
- * import PfeCard from "@patternfly/pfe-card";
+ * import { PfCard } from "@patternfly/pf-card";
  * ```
  *
  * is rewritten to
  * ```
- * import PfeCard from "../../pfe-card/built/pfe-card.js";
+ * import { PfCard } from "../../pf-card/pf-card.js";
  * ```
  *
  * This plugin makes these assumptions
@@ -36,7 +36,7 @@ export function rewritePaths(): Plugin {
     setup(build) {
       build.onLoad({ filter: /\.js$/ }, ({ path }) => {
         const source = readFileSync(path, 'utf8');
-        const contents = source.replace(/@patternfly\/(.*);?"/g, '../../$1/built/$1.js"');
+        const contents = source.replace(/@patternfly\/(.*);?"/g, '../../$1/$1.js"');
         return {
           contents,
         };

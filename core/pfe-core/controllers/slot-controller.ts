@@ -20,12 +20,12 @@ export interface SlotsConfig {
   slots: (string|null)[];
   /**
    * Object mapping new slot name keys to deprecated slot name values
-   * @example `pfe-modal--header` is deprecated in favour of `header`
+   * @example `pf-modal--header` is deprecated in favour of `header`
    * ```js
    * new SlotController(this, {
    *   slots: ['header'],
    *   deprecations: {
-   *     'header': 'pfe-modal--header'
+   *     'header': 'pf-modal--header'
    *   }
    * })
    * ```

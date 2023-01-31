@@ -1,0 +1,124 @@
+[hidden] {
+  display: none !important;
+}
+
+#icon {
+  z-index: var(--pf-c-progress-stepper__step-icon--ZIndex);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--pf-c-progress-stepper__step-icon--Width);
+  height: var(--pf-c-progress-stepper__step-icon--Height);
+  color: var(--pf-c-progress-stepper__step-icon--Color);
+  background-color: var(--pf-c-progress-stepper__step-icon--BackgroundColor);
+  border: var(--pf-c-progress-stepper__step-icon--BorderWidth) solid var(--pf-c-progress-stepper__step-icon--BorderColor);
+  border-radius: 50%;
+  font-size: var(--pf-c-progress-stepper__step-icon--FontSize);
+  --pf-icon--size: 1.125em;
+}
+
+#main {
+  position: var(--pf-c-progress-stepper__step-main--Position, initial);
+  min-width: 0;
+  margin: var(--pf-c-progress-stepper__step-main--MarginTop) var(--pf-c-progress-stepper__step-main--MarginRight) var(--pf-c-progress-stepper__step-main--MarginBottom) var(--pf-c-progress-stepper__step-main--MarginLeft);
+  text-align: var(--pf-c-progress-stepper--step-main--TextAlign, auto);
+  overflow-wrap: anywhere;
+}
+
+:host(:not([current])) #main.compact {
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  margin-bottom: var(--pf-c-progress-stepper--m-compact__step-main--MarginBottom);
+}
+
+:host([current]) #main.compact {
+  grid-column: 1/-1;
+  grid-row: 1/2;
+}
+
+#title {
+  font-size: var(--pf-c-progress-stepper__step-title--FontSize);
+  font-weight: var(--pf-c-progress-stepper__step-title--FontWeight);
+  color: var(--pf-c-progress-stepper__step-title--Color);
+  text-align: var(--pf-c-progress-stepper__step-title--TextAlign);
+  border: 0;
+}
+
+#description {
+  margin-top: var(--pf-c-progress-stepper__step-description--MarginTop);
+  font-size: var(--pf-c-progress-stepper__step-description--FontSize);
+  color: var(--pf-c-progress-stepper__step-description--Color);
+  text-align: var(--pf-c-progress-stepper__step-description--TextAlign);
+  display: block;
+}
+
+:host {
+  display: contents;
+}
+
+#connector {
+  position: relative;
+  display: flex;
+  justify-content: var(--pf-c-progress-stepper__step-connector--JustifyContent);
+  width: 100%;
+}
+
+#connector.compact {
+  min-width: var(--pf-c-progress-stepper--m-compact__step-connector--MinWidth);
+  grid-row: var(--pf-c-progress-stepper--m-compact__step-connector--GridRow);
+  padding-bottom: var(--pf-c-progress-stepper--m-compact__step-connector--PaddingBottom);
+}
+
+:host(:not(:last-of-type)) #main::before {
+  content: var(--pf-c-progress-stepper__step-main--before--Content);
+  position: absolute;
+  top: calc(100% + var(--pf-c-progress-stepper__step-main--MarginTop));
+  left: calc(50% - var(--pf-c-progress-stepper__step-connector--before--BorderRightWidth) / 2);
+  width: auto;
+  height: calc(var(--pf-c-progress-stepper__step-main--MarginTop) + var(--pf-c-progress-stepper__step-main--MarginBottom));
+  border-right: var(--pf-c-progress-stepper__step-connector--before--BorderRightWidth) solid var(--pf-c-progress-stepper__step-connector--before--BorderRightColor);
+}
+
+:host(:not(:last-of-type)) #connector::before {
+  position: absolute;
+  top: var(--pf-c-progress-stepper__step-connector--before--Top);
+  left: var(--pf-c-progress-stepper__step-connector--before--Left);
+  width: var(--pf-c-progress-stepper__step-connector--before--Width);
+  height: var(--pf-c-progress-stepper__step-connector--before--Height);
+  content: var(--pf-c-progress-stepper__step-connector--before--Content);
+  border-right: var(--pf-c-progress-stepper__step-connector--before--BorderRightWidth) solid var(--pf-c-progress-stepper__step-connector--before--BorderRightColor);
+  border-bottom: var(--pf-c-progress-stepper__step-connector--before--BorderBottomWidth) solid var(--pf-c-progress-stepper__step-connector--before--BorderBottomColor);
+  transform: var(--pf-c-progress-stepper__step-connector--before--Transform);
+}
+
+:host([current]) {
+  --pf-c-progress-stepper__step-title--FontWeight: var(--pf-c-progress-stepper__step--m-current__step-title--FontWeight);
+  --pf-c-progress-stepper__step-title--Color: var(--pf-c-progress-stepper__step--m-current__step-title--Color);
+}
+
+:host([variant="success"]) {
+  --pf-c-progress-stepper__step-icon--Color: var(--pf-global--success-color--100, #3e8635);
+}
+
+:host([variant="info"]) {
+  --pf-c-progress-stepper__step-icon--Color: var(--pf-global--info-color--100, #2b9af3);
+}
+
+:host([variant="warning"]) {
+  --pf-c-progress-stepper__step-icon--Color: var(--pf-global--warning-color--100, #f0ab00);
+}
+
+:host([variant="danger"]) {
+  --pf-c-progress-stepper__step-icon--Color: var(--pf-global--danger-color--100, #c9190b);
+  --pf-c-progress-stepper__step-title--Color: var(--pf-c-progress-stepper__step--m-danger__step-title--Color);
+  --pf-c-progress-stepper__step-title--m-help-text--hover--Color: var(--pf-c-progress-stepper__step--m-danger__step-title--m-help-text--hover--Color);
+  --pf-c-progress-stepper__step-title--m-help-text--focus--Color: var(--pf-c-progress-stepper__step--m-danger__step-title--m-help-text--focus--Color);
+  --pf-c-progress-stepper__step-title--m-help-text--TextDecorationColor: var(--pf-c-progress-stepper__step--m-danger__step-title--m-help-text--TextDecorationColor);
+  --pf-c-progress-stepper__step-title--m-help-text--hover--TextDecorationColor: var(--pf-c-progress-stepper__step--m-danger__step-title--m-help-text--hover--TextDecorationColor);
+  --pf-c-progress-stepper__step-title--m-help-text--focus--TextDecorationColor: var(--pf-c-progress-stepper__step--m-danger__step-title--m-help-text--focus--TextDecorationColor);
+}

@@ -1,0 +1,31 @@
+:host {
+  --accordion__bordered--Color: var(--rh-color-black-300, #d2d2d2);
+
+  color: var(--pf-global--Color--100, #151515);
+  background-color: var(--pf-global--BackgroundColor--100, #ffffff);
+}
+
+:host([bordered]) ::slotted(pf-accordion-header:first-child),
+:host([large]) ::slotted(pf-accordion-header:first-child) {
+  display: block;
+  border-top: 1px solid var(--accordion__bordered--Color);
+  border-bottom: 1px solid var(--accordion__bordered--Color);
+}
+
+:host([bordered]) ::slotted(pf-accordion-header:not(:first-child)),
+:host([large]) ::slotted(pf-accordion-header:not(:first-child)) {
+  display: block;
+  border-bottom: 1px solid var(--accordion__bordered--Color);
+}
+
+:host([bordered]) ::slotted(pf-accordion-header:is([expanded])),
+:host([large]) ::slotted(pf-accordion-header:is([expanded])) {
+  display: block;
+  border-bottom: 0;
+}
+
+:host([bordered]) ::slotted(pf-accordion-panel:is([expanded])),
+:host([large]) ::slotted(pf-accordion-panel:is([expanded])) {
+  display: block;
+  border-bottom: 1px solid var(--accordion__bordered--Color);
+}

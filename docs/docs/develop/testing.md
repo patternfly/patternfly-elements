@@ -6,7 +6,7 @@ tags:
   - develop
 ---
 
-Let's write tests for `pfe-cool-element`.
+Let's write tests for `pf-cool-element`.
 
 We rely on a few tools to ensure our element is reliable in production:
 
@@ -19,7 +19,7 @@ If you followed the [Prerequisites](/docs/develop/setup/#prerequisites) in [Setu
 
 ### Test Setup
 
-In the root of the element, there's a `/test` directory with an `pfe-cool-element.spec.ts` file. This file will be where we add all of our tests.
+In the root of the element, there's a `/test` directory with an `pf-cool-element.spec.ts` file. This file will be where we add all of our tests.
 
 Let's add four stubs for the functionality we need to test in our test file:
 
@@ -33,17 +33,17 @@ import { expect, html } from '@open-wc/testing/index-no-side-effects.js';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 
 // Import the element we're testing.
-import { PfeCoolElement } from '@patternfly/pfe-cool-element';
+import { PfeCoolElement } from '@patternfly/pf-cool-element';
 
 // One element template, defined here, is used
 // in multiple tests. It's torn down and recreated each time.
 const template = html`
-  <pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
+  <pf-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
     Kyle Buchanan
-  </pfe-cool-element>
+  </pf-cool-element>
 `;
 
-describe('<pfe-cool-element>', function() {
+describe('<pf-cool-element>', function() {
   it('should upgrade', async function() {
     const el = await createFixture<PfeCoolElement>(template);
     const klass = customElements.get(<%= className %>.tag);
@@ -86,7 +86,7 @@ Now that our setup is complete, we can start building our tests.
 
 ### Test Cases
 
-Let's build out the 'pfe-cool-element' tests. We'll use fixtures and `querySelector` to grab our element and include DOM API methods to interact with what we're testing.
+Let's build out the 'pf-cool-element' tests. We'll use fixtures and `querySelector` to grab our element and include DOM API methods to interact with what we're testing.
 
 Here is the full JavaScript code:
 
@@ -177,7 +177,7 @@ it('should set a profile pic from the photo-url attribute', async function() {
 You may notice we're accessing the `shadowRoot` here, available to our element by extending `LitElement` in the definition of our element.
 You can also access content in the `<slot></slot>` of your element by using the `assignedNodes()` method.
 
-We use a slot for the username in `pfe-cool-element`, making it available to us in the array returned by `assignedNodes()`.
+We use a slot for the username in `pf-cool-element`, making it available to us in the array returned by `assignedNodes()`.
 
 ```javascript
 shadowRoot.querySelector('slot').assignedNodes()[0].textContent.trim();
@@ -185,10 +185,10 @@ shadowRoot.querySelector('slot').assignedNodes()[0].textContent.trim();
 
 ### Run the Test
 
-Lastly, we can run the test command below to see how we did. You can focus on this specific test so you're only running the tests for `pfe-cool-element`.
+Lastly, we can run the test command below to see how we did. You can focus on this specific test so you're only running the tests for `pf-cool-element`.
 
 ```bash
-npm run test:watch -w @patternfly/pfe-cool-element
+npm run test:watch -- --files **/pf-cool-element.spec.ts
 ```
 
 This command starts up web test runner and allows us to debug our test in the browser.
@@ -255,6 +255,6 @@ Nice! All tests are working in Chrome and with React and Vue wrappers. 🎉
 
 A quick note about the framework testing—the Vue and React tests are meant to be an initial first pass in those frameworks just to make sure that the functionality is working and that the component renders properly.
 
-That's it for testing! Now that we've created our `pfe-cool-element` and all of our code passes, the final step is to submit a pull request to get this merged.
+That's it for testing! Now that we've created our `pf-cool-element` and all of our code passes, the final step is to submit a pull request to get this merged.
 
 <a class="cta" href="../pull-request">Next up: Open a pull request</a>

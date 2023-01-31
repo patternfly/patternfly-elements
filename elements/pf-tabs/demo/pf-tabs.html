@@ -1,0 +1,205 @@
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-tabs.js"></script>
+
+<div class="example">
+  <h2>Default</h2>
+  <pf-tabs>
+    <pf-tab id="users" slot="tab">Users</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab slot="tab">Containers</pf-tab>
+    <pf-tab-panel>Containers <a href="#">Focusable element</a></pf-tab-panel>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab slot="tab" disabled>Disabled</pf-tab>
+    <pf-tab-panel>Disabled</pf-tab-panel>
+    <pf-tab slot="tab" aria-disabled="true" id="aria-disabled">Aria Disabled</pf-tab>
+    <pf-tab-panel>Aria Disabled</pf-tab-panel>
+  </pf-tabs>
+</div>
+
+<div class="example">
+  <h2>Box</h2>
+  <pf-tabs box="light">
+    <pf-tab slot="tab" active>Users</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab slot="tab">Containers</pf-tab>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab slot="tab" disabled>Disabled</pf-tab>
+    <pf-tab-panel>Disabled</pf-tab-panel>
+    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+    <pf-tab-panel>Aria Disabled</pf-tab-panel>
+  </pf-tabs>
+
+  <form class="input">
+    Box Type:
+    <label for="toggle-variant" data-state="on">Dark</label>
+    <label for="toggle-variant" data-state="off">Light</label>
+    <pf-switch id="toggle-variant">
+  </form>
+</div>
+
+<div class="example">
+  <h2>Default overflow</h2>
+    <pf-tabs id="overflow">
+      <pf-tab slot="tab">Users</pf-tab>
+      <pf-tab-panel>Users</pf-tab-panel>
+      <pf-tab slot="tab">Containers</pf-tab>
+      <pf-tab-panel>Containers</pf-tab-panel>
+      <pf-tab slot="tab">Database</pf-tab>
+      <pf-tab-panel>Database</pf-tab-panel>
+      <pf-tab slot="tab" active>Server</pf-tab>
+      <pf-tab-panel>Server</pf-tab-panel>
+      <pf-tab slot="tab">System</pf-tab>
+      <pf-tab-panel>System</pf-tab-panel>
+      <pf-tab slot="tab">Network</pf-tab>
+      <pf-tab-panel>Network</pf-tab-panel>
+    </pf-tabs>
+
+  <form>
+    Box variant:
+    <label for="toggle-resize" data-state="on">Dark</label>
+    <label for="toggle-resize" data-state="off">None</label>
+    <pf-switch id="toggle-resize">
+  </form>
+</div>
+
+<div class="example">
+  <h2>Vertical</h2>
+  <pf-tabs vertical>
+    <pf-tab slot="tab">Users</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab slot="tab" active>Containers</pf-tab>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab slot="tab" disabled>Disabled</pf-tab>
+    <pf-tab-panel>Disabled</pf-tab-panel>
+    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+    <pf-tab-panel>Aria Disabled</pf-tab-panel>
+  </pf-tabs>
+
+  <form>
+    Box variant:
+    <label for="toggle-vertical" data-state="on">Dark</label>
+    <label for="toggle-vertical" data-state="off">None</label>
+    <pf-switch id="toggle-vertical">
+  </form>
+</div>
+
+<div class="example">
+  <h2>Inset</h2>
+  <pf-tabs inset="md">
+    <pf-tab slot="tab" active>Users</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab slot="tab">Containers</pf-tab>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab slot="tab" disabled>Disabled</pf-tab>
+    <pf-tab-panel>Disabled</pf-tab-panel>
+    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+    <pf-tab-panel>Aria Disabled</pf-tab-panel>
+  </pf-tabs>
+
+  <form class="input">
+    <label><input type="radio" name="toggle-inset" value="sm"> Small</label>
+    <label><input type="radio" name="toggle-inset" value="md" checked> Medium</label>
+    <label><input type="radio" name="toggle-inset" value="lg"> Large</label>
+    <label><input type="radio" name="toggle-inset" value="xl"> X-Large</label>
+    <label><input type="radio" name="toggle-inset" value="2xl"> 2X-Large</label>
+    <label><input type="radio" name="toggle-inset" value="page"> Page</label>
+  </form>
+</div>
+
+<div class="example">
+  <h2>Icons and text</h2>
+  <pf-tabs>
+    <pf-tab slot="tab"> Users          <pf-icon slot="icon" icon="users"></pf-icon></pf-tab>
+    <pf-tab slot="tab"> Containers     <pf-icon slot="icon" icon="box-open"></pf-icon></pf-tab>
+    <pf-tab slot="tab"> Database       <pf-icon slot="icon" icon="database"></pf-icon></pf-tab>
+    <pf-tab slot="tab"> Server         <pf-icon slot="icon" icon="server"></pf-icon></pf-tab>
+    <pf-tab slot="tab"> System         <pf-icon slot="icon" icon="laptop"></pf-icon></pf-tab>
+    <pf-tab slot="tab" active> Network <pf-icon slot="icon" icon="network-wired"></pf-icon></pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab-panel>Server</pf-tab-panel>
+    <pf-tab-panel>System</pf-tab-panel>
+    <pf-tab-panel>Network</pf-tab-panel>
+  </pf-tabs>
+</div>
+
+<div class="example">
+  <h2>Filled</h2>
+  <pf-tabs fill>
+    <pf-tab slot="tab">Users</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab slot="tab" active>Containers</pf-tab>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab-panel>Database</pf-tab-panel>
+  </pf-tabs>
+</div>
+
+<div class="example">
+  <h2>Filled with icons</h2>
+  <pf-tabs fill>
+    <pf-tab slot="tab"> Users      <pf-icon slot="icon" icon="users"></pf-icon></pf-tab>
+    <pf-tab slot="tab"> Containers <pf-icon slot="icon" icon="box-open"></pf-icon></pf-tab>
+    <pf-tab slot="tab"> Database   <pf-icon slot="icon" icon="database"></pf-icon></pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab-panel>Database</pf-tab-panel>
+  </pf-tabs>
+</div>
+
+<div class="example">
+  <h2>Active Tab is Disabled</h2>
+  <pf-tabs id="disabledExample">
+    <pf-tab slot="tab">Users</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab slot="tab">Containers</pf-tab>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab slot="tab" disabled active>Disabled</pf-tab>
+    <pf-tab-panel>Disabled</pf-tab-panel>
+    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+    <pf-tab-panel>Aria Disabled</pf-tab-panel>
+  </pf-tabs>
+</div>
+
+<div class="example">
+  <h2>Tabs first in markup</h2>
+  <pf-tabs id="tabs-first">
+    <pf-tab slot="tab">Users</pf-tab>
+    <pf-tab slot="tab">Containers</pf-tab>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab slot="tab" disabled active>Disabled</pf-tab>
+    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab-panel>Disabled</pf-tab-panel>
+    <pf-tab-panel>Aria Disabled</pf-tab-panel>
+  </pf-tabs>
+</div>
+
+<div class="example">
+  <h2>Tabs with explicit relationships</h2>
+  <pf-tabs id="explicit">
+    <pf-tab slot="tab" aria-controls="panel-1">1</pf-tab>
+    <pf-tab slot="tab" aria-controls="panel-2">2</pf-tab>
+    <pf-tab slot="tab" aria-controls="panel-3">3</pf-tab>
+    <pf-tab slot="tab" aria-controls="panel-4">4</pf-tab>
+    <pf-tab slot="tab" aria-controls="panel-5">5</pf-tab>
+
+    <pf-tab-panel id="panel-5">5</pf-tab-panel>
+    <pf-tab-panel id="panel-4">4</pf-tab-panel>
+    <pf-tab-panel id="panel-3">3</pf-tab-panel>
+    <pf-tab-panel id="panel-2">2</pf-tab-panel>
+    <pf-tab-panel id="panel-1">1</pf-tab-panel>
+  </pf-tabs>
+</div>

@@ -33,7 +33,6 @@
     "./decorators/deprecation.js": "./decorators/deprecation.js",
     "./decorators/initializer.js": "./decorators/initializer.js",
     "./decorators/observed.js": "./decorators/observed.js",
-    "./decorators/pfelement.js": "./decorators/pfelement.js",
     "./decorators/time.js": "./decorators/time.js",
     "./decorators/trace.js": "./decorators/trace.js",
     "./functions/debounce.js": "./functions/debounce.js",

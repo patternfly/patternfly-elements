@@ -1,0 +1,109 @@
+:host {
+  --pf-icon--size: var(--pf-c-accordion__toggle--IconSize, 10px);
+
+  color: var(--pf-c-accordion__toggle--Color, var(--pf-global--Color--100, #151515));
+  background-color: var(--pf-global--BackgroundColor--100, #ffffff);
+}
+
+:host([large]) {
+  --pf-c-accordion__toggle--PaddingTop: var(--pf-global--spacer--md, 1rem);
+  --pf-c-accordion__toggle--PaddingRight: var(--pf-global--spacer--md, 1rem);
+  --pf-c-accordion__toggle--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+  --pf-c-accordion__toggle--PaddingLeft: var(--pf-global--spacer--lg, 1.5rem);
+  --pf-c-accordion__toggle--FontFamily:
+    var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,
+      "RedHatDisplayUpdated",
+      "Overpass",
+      overpass,
+      helvetica,
+      arial,
+      sans-serif
+    );
+  --pf-c-accordion__toggle--FontSize: var(--pf-global--FontSize--xl, 1.25rem);
+  --pf-c-accordion__toggle--hover-text--Color: var(--pf-global--Color--100, #151515);
+  --pf-c-accordion__toggle--active-text--Color: var(--pf-global--Color--100, #151515);
+  --pf-c-accordion__toggle--active-text--FontWeight: var(--pf-global--FontWeight--normal, 400);
+  --pf-c-accordion__toggle--focus-text--Color: var(--pf-global--Color--100, #151515);
+  --pf-c-accordion__toggle--focus-text--FontWeight: var(--pf-global--FontWeight--normal, 400);
+  --pf-c-accordion__toggle--expanded-text--Color: var(--pf-global--Color--100, #151515);
+  --pf-c-accordion__toggle--expanded-text--FontWeight: var(--pf-global--FontWeight--normal, 400);
+  --pf-icon--size: var(--pf-c-accordion__toggle--IconSize, 12px);
+}
+
+#heading {
+  font-weight: var(--pf-c-accordion__toggle--FontWeight, var(--pf-global--FontWeight--normal, 400));
+}
+
+.toggle,
+.toggle:before,
+.toggle:after {
+  background-color: var(--pf-c-accordion__toggle--BackgroundColor, transparent);
+}
+
+.icon {
+  transition: var(--pf-c-accordion__toggle-icon--Transition, 0.2s ease-in 0s);
+}
+
+.toggle {
+  padding:
+    var(--pf-c-accordion__toggle--PaddingTop, var(--pf-global--spacer--md, 0.5rem))
+    var(--pf-c-accordion__toggle--PaddingRight, var(--pf-global--spacer--md, 1rem))
+    var(--pf-c-accordion__toggle--PaddingBottom, var(--pf-global--spacer--sm, 0.5rem))
+    var(--pf-c-accordion__toggle--PaddingLeft, var(--pf-global--spacer--md, 1rem));
+  font-family:
+    var(--pf-c-accordion__toggle--FontFamily,
+      var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,
+        "RedHatTextUpdated",
+        helvetica,
+        arial,
+        sans-serif));
+  font-size: var(--pf-c-accordion__toggle--FontSize, var(--pf-global--FontSize--lg, 1rem));
+  font-weight: var(--pf-c-accordion__toggle--FontWeight, var(--pf-global--FontWeight--normal, 400));
+  color: var(--pf-c-accordion__toggle--Color, var(--pf-global--Color--100, #151515));
+}
+
+.toggle[aria-expanded="true"] {
+  --pf-c-accordion__toggle--after--BackgroundColor:
+    var(
+      --pf-c-accordion__toggle--expanded--before--BackgroundColor,
+      var(
+        --pf-global--primary-color--100,
+        #0066cc
+      )
+    );
+}
+
+.toggle:after {
+  top: var(--pf-c-accordion__toggle--before--Top, -1px);
+  width: var(--pf-c-accordion__toggle--before--Width, var(--pf-global--BorderWidth--lg, 3px));
+  background-color: var(--pf-c-accordion__toggle--after--BackgroundColor, transparent);
+}
+
+span {
+  max-width: var(--pf-c-accordion__toggle-text--MaxWidth,
+    calc(100% - var(--pf-global--spacer--lg, 1.5rem)));
+}
+
+.toggle[aria-expanded="true"] .icon {
+  rotate: var(--pf-c-accordion__toggle--expanded-icon--Rotate, 90deg);
+}
+
+.toggle:hover,
+.toggle:active,
+.toggle:focus {
+  background-color:
+    var(--pf-c-accordion__toggle--active--BackgroundColor,
+      var(--pf-global--BackgroundColor--200, #f0f0f0));
+}
+
+.toggle:hover span,
+.toggle:focus span,
+.toggle:active span {
+  color: var(--pf-c-accordion__toggle--active-text--Color, var(--pf-global--link--Color, #0066cc));
+}
+
+.toggle:focus span,
+.toggle:active span {
+  font-weight: var(--pf-c-accordion__toggle--active-text--FontWeight,
+      var(--pf-global--FontWeight--semi-bold, 700));
+}

@@ -72,6 +72,7 @@
     "analyze": {
       "command": "npm run -ws --if-present analyze",
       "files": [
+        "elements/*/demo/*.html",
         "elements/**/*.ts",
         "elements/**/*.css",
         "core/**/*.ts",
@@ -152,7 +153,7 @@
         "build:tools"
       ],
       "output": [
-        "elements/pfe-icon/icons/*/*.js"
+        "elements/pf-icon/icons/*/*.js"
       ]
     },
     "build:bundle": {
@@ -176,7 +177,7 @@
       ]
     },
     "docs": {
-      "command": "eleventy",
+      "command": "eleventy --incremental",
       "files": [
         "elements/*/docs/*",
         "docs/**/*"

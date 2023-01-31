@@ -1,11 +1,5 @@
-[build.environment]
-  # used when netlify runs `npm install` before running the build commmand
-  # we don't want to use netlify's cache because its non-deterministic
-  # so we ignore scripts and don't actually install anything
-  # defering instead to the build command to run npm ci
-  NPM_FLAGS = '--dry-run --ignore-scripts'
 [build]
-  command = "npm ci && npm run site"
+  command = "npm run docs"
 
 [[redirects]]
   from = '/v1/*'

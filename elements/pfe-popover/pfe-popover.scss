@@ -1,5 +1,6 @@
 :host {
   display: inline;
+  --_floating-arrow-size: var(--pf-c-popover__arrow--Width, var(--pf-global--arrow--width-lg, 1.5625rem));
   --_header-text-color: var(--pf-c-popover__title-text--Color, inherit);
   --_header-icon-color: var(--pf-c-popover__title-icon--Color, var(--pf-global--Color--100, #151515));
 }
@@ -31,6 +32,7 @@
   width: var(--pf-c-popover__arrow--Width, var(--pf-global--arrow--width-lg, 1.5625rem));
   rotate: 45deg;
   z-index: -1;
+  pointer-events: none;
 }
 
 #popover {
@@ -159,16 +161,40 @@
 }
 
 :host([alert-severity='warning']) {
-  --_header-text-color: var(--pf-c-popover--m-warning__title-icon--Color, var(--pf-global--warning-color--100, #f0ab00));
-  --_header-icon-color: var(--pf-c-popover--m-warning__title-text--Color, var(--pf-global--warning-color--200, #795600));
+  --_header-icon-color: var(--pf-c-popover--m-warning__title-icon--Color, var(--pf-global--warning-color--100, #f0ab00));
+  --_header-text-color: var(--pf-c-popover--m-warning__title-text--Color, var(--pf-global--warning-color--200, #795600));
 }
 
 :host([alert-severity='success']) {
-  --_header-text-color: var(--pf-c-popover--m-success__title-icon--Color, var(--pf-global--success-color--100, #3e8635));
-  --_header-icon-color: var(--pf-c-popover--m-success__title-text--Color, var(--pf-global--success-color--200, #1e4f18));
+  --_header-icon-color: var(--pf-c-popover--m-success__title-icon--Color, var(--pf-global--success-color--100, #3e8635));
+  --_header-text-color: var(--pf-c-popover--m-success__title-text--Color, var(--pf-global--success-color--200, #1e4f18));
 }
 
 :host([alert-severity='danger']) {
-  --_header-text-color: var(--pf-c-popover--m-danger__title-icon--Color, var(--pf-global--danger-color--100, #c9190b));
-  --_header-icon-color: var(--pf-c-popover--m-danger__title-text--Color, var(--pf-global--danger-color--200, #a30000));
+  --_header-icon-color: var(--pf-c-popover--m-danger__title-icon--Color, var(--pf-global--danger-color--100, #c9190b));
+  --_header-text-color: var(--pf-c-popover--m-danger__title-text--Color, var(--pf-global--danger-color--200, #a30000));
 }
+
+// LEFT
+.left #arrow          { right: calc(-0.5 * var(--_floating-arrow-size)); }
+.left.center #arrow   { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.left.start #arrow    { top: calc(0.5 * var(--_floating-arrow-size)); }
+.left.end #arrow      { bottom: calc(0.5 * var(--_floating-arrow-size)); }
+
+// TOP
+.top #arrow           { top: calc(100% - 0.5 * var(--_floating-arrow-size)); }
+.top.center #arrow    { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.top.start #arrow     { left: calc(0.5 * var(--_floating-arrow-size)); }
+.top.end #arrow       { right: calc(0.5 * var(--_floating-arrow-size)); }
+
+// RIGHT
+.right #arrow         { right: calc(100% - 0.5 * var(--_floating-arrow-size)); }
+.right.center #arrow  { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.right.start #arrow   { top: calc(0.5 * var(--_floating-arrow-size)); }
+.right.end #arrow     { bottom: calc(0.5 * var(--_floating-arrow-size)); }
+
+// BOTTOM
+.bottom #arrow        { bottom: calc(100% - 0.5 * var(--_floating-arrow-size)); }
+.bottom.center #arrow { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.bottom.start #arrow  { left: calc(0.5 * var(--_floating-arrow-size)); }
+.bottom.end #arrow    { right: calc(0.5 * var(--_floating-arrow-size)); }

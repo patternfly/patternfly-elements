@@ -24,6 +24,11 @@
   <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" heading-level="3">
     <pfe-button>Toggle popover</pfe-button>
   </pfe-popover>
+
+  <h3>Custom position (defaults to <code>top</code>)</h3>
+  <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" position="bottom-end">
+    <pfe-button>Toggle popover</pfe-button>
+  </pfe-popover>
 </section>
 
 <section id="close-from-content">
@@ -51,7 +56,7 @@
 
 <section id="auto-width">
   <h2>Width auto</h2>
-  <pfe-popover>
+  <pfe-popover position="bottom">
     <div slot="body">Removes fixed-width and allows width to be defined by contents.</div>
     <pfe-button>Toggle popover</pfe-button>
   </pfe-popover>

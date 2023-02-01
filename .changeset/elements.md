@@ -24,12 +24,13 @@ cutting-edge web technologies like [form-associated custom elements][FACE] and
   ```
 - Removed `@patternfly/pfe-styles` package
 - Removed `@patternfly/pfe-sass` package
+- Removed `<pfe-autocomplete>`, pending rewrite to `<pf-search-input>` ([#2115][autocomplete]).
 - Removed `<pfe-collapse>`
-- Removed `<pfe-page-status>`
+- Removed `<pfe-dropdown>`, pending rewrite to `<pf-dropdown>` ([#2049][dropdown]).
 - Removed `<pfe-health-index>`
 - Removed `<pfe-icon-panel>`
-- Removed `<pfe-autocomplete>`, pending rewrite to `<pf-search-input>` ([#2115][autocomplete]).
-- Removed `<pfe-dropdown>`, pending rewrite to `<pf-dropdown>` ([#2049][dropdown]).
+- Removed `<pfe-markdown>`
+- Removed `<pfe-page-status>`
 - Removed `<pfe-select>`, pending rewrite to `<pf-select>` ([#2145][select]).
 
 [lit]: https://lit.dev

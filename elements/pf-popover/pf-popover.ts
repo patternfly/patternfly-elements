@@ -9,7 +9,7 @@ import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
-import styles from './pf-popover.css';
+import styles from './pf-popover.scss';
 
 const headingLevels = [2, 3, 4, 5, 6] as const;
 type HeadingLevel = typeof headingLevels[number];

@@ -5,8 +5,7 @@
 Initial Release 🎉
 
 `@patternfly/pfe-core` provides utilities for building PatternFly elements,
-like [TypeScript decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) and
-[Lit reactive controllers](https://lit.dev/docs/composition/controllers/).
+like [TypeScript decorators][decorators] and [Lit reactive controllers][controllers].
 Core utilities replace the `PFElement` base class.
 
 ### Before
@@ -32,13 +31,18 @@ PFElement.create(PfeJazzHands);
 ### After
 
 ```ts
-@customElement('pfe-jazz-hands') @pfelement()
-export class PfeJazzHands extends LitElement {
-  static readonly version = '{{version}}';
-
+@customElement('pf-jazz-hands')
+export class PfJazzHands extends LitElement {
   @observed('_upgradeObserver')
   @property({ type: Boolean }) cool = true;
+  _upgradeObserver() {
+    console.log('cool');
+  }
 }
 ```
 
-See README and [the docs](https://patternflyelements.org/core/core/) for more info.
+See README and [the docs][docs] for more info.
+
+[decorators]: https://www.typescriptlang.org/docs/handbook/decorators.html
+[controllers]: https://lit.dev/docs/composition/controllers/
+[docs]: https://patternflyelements.org/core/core/

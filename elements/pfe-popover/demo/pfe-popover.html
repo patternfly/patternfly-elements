@@ -4,6 +4,21 @@
 <section id="basic">
   <h2>Basic</h2>
 
+  <select id="position-select" aria-label="Popover positions">
+    <option value="top">top</option>
+    <option value="right">right</option>
+    <option value="bottom">bottom</option>
+    <option value="left">left</option>
+    <option value="top-start">top-start</option>
+    <option value="top-end">top-end</option>
+    <option value="right-start">right-start</option>
+    <option value="right-end">right-end</option>
+    <option value="bottom-start">bottom-start</option>
+    <option value="bottom-end">bottom-end</option>
+    <option value="left-start">left-start</option>
+    <option value="left-end">left-end</option>
+  </select>
+
   <h3>via attribute</h3>
   <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer">
     <pfe-button>Toggle popover</pfe-button>
@@ -21,11 +36,6 @@
 
   <h3>Custom Heading Level</h3>
   <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" heading-level="3">
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
-
-  <h3>Custom position (defaults to <code>top</code>)</h3>
-  <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" position="bottom-end">
     <pfe-button>Toggle popover</pfe-button>
   </pfe-popover>
 </section>
@@ -91,37 +101,17 @@
   </pfe-popover>
 </section>
 
-<!-- todo: create dropdown -->
 <section id="alert">
   <h2>Alert popover</h2>
+  <select id="alert-select" aria-label="Popover alert type">
+    <option value="default">default</option>
+    <option value="info">info</option>
+    <option value="success">success</option>
+    <option value="warning">warning</option>
+    <option value="danger">danger</option>
+  </select>
 
-  <h3>Default</h3>
   <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" alert-severity="default">
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
-
-  <h3>Info</h3>
-  <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" alert-severity="info">
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
-
-  <h3>Success</h3>
-  <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" alert-severity="success">
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
-
-  <h3>Warning</h3>
-  <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" alert-severity="warning">
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
-
-  <h3>Danger</h3>
-  <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" alert-severity="danger">
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
-
-  <h4>Custom Icon</h4>
-  <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" alert-severity="danger" icon="bolt">
     <pfe-button>Toggle popover</pfe-button>
   </pfe-popover>
 </section>

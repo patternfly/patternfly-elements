@@ -6,7 +6,14 @@
 
 {% endrenderOverview %}
 
-{% band header="Usage" %}{% endband %}
+{% band header="Usage" %}
+
+```html
+  <pf-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer">
+    <button>Toggle popover</button>
+  </pf-popover>```
+
+{% endband %}
 
 {% renderSlots %}{% endrenderSlots %}
 

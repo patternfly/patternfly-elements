@@ -1,8 +1,23 @@
 ---
 "@patternfly/elements": major
 ---
+✨ Added `<pf-tabs>` and removed `<pfe-tabs>`. Tabs now closely follows 
+PatternFly design spec.
 
-Removed `<pfe-tabs>` and added `<pf-tabs>`.
+```html
+<pf-tabs>
+  <pf-tab id="users" slot="tab">Users</pf-tab>
+  <pf-tab-panel>Users</pf-tab-panel>
+  <pf-tab slot="tab">Containers</pf-tab>
+  <pf-tab-panel>Containers <a href="#">Focusable element</a></pf-tab-panel>
+  <pf-tab slot="tab">Database</pf-tab>
+  <pf-tab-panel>Database</pf-tab-panel>
+</pf-tabs>
+```
+
+- ✨ Added `container`, `tabs-container`, `tabs` and `panels` CSS parts
+- ✨ Added `button`, `icon` and `text` CSS parts to `<pf-tab>`
+- ✨ Added `container` CSS part to `<pf-tab-panel>`
 
 ### Breaking Changes:
 

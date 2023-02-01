@@ -1,14 +1,8 @@
 ---
 "@patternfly/elements": major
 ---
-
-Added `<pf-switch>`, a control that toggles the state of a setting between on 
+✨ Added `<pf-switch>`, a control that toggles the state of a setting between on 
 and off.
-
-Switches provide a more explicit, visible representation on a setting than checkboxes.
-
-`<pf-button>` is a form-associated custom element, and may require the 
-[element-internals polyfill][polyfill]
 
 ```html
 <form>
@@ -17,6 +11,11 @@ Switches provide a more explicit, visible representation on a setting than check
   <label for="color-scheme-toggle" data-state="off" hidden>Light Mode</label>
 </form>
 ```
+
+Switches provide a more explicit, visible representation on a setting than checkboxes.
+
+`<pf-switch>` is a form-associated custom element, and may require the 
+[element-internals polyfill][polyfill]
 
 Read the [docs][docs] for more info.
 

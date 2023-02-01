@@ -1,14 +1,18 @@
 ---
 "@patternfly/elements": major
 ---
-
-Removed `<pfe-icon>` and added `<pf-icon>`.
+✨ Added `<pf-icon>` and removed `<pf-icon>`. Icon now closely follows the 
+PatternFly design spec.
 
 Icon now ships with the entire free fontawesome collection as well as the 
 patternfly icon set.
 
+```html
+<pf-icon icon="award" aria-label="Awards"></pf-icon>
+```
+
 ### Breaking Changes
-- icon names are no longer prefixed by their set. use the `set` attribute 
+- 💱 icon names are no longer prefixed by their set. use the `set` attribute 
   instead.
   ```html
   <!-- BEFORE -->

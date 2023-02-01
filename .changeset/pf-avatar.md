@@ -1,20 +1,22 @@
 ---
 "@patternfly/elements": major
 ---
+✨ Added `<pf-avatar>` and removed `<pfe-avatar>`. Avatar now closely follows 
+PatternFly design specs.
 
-Removed `<pfe-avatar>` and added `<pf-avatar>`.
+- ✨ Added `border` and `alt` attributes
 
-- Added `border` and `alt` attributes
-- Added `canvas` and `img` CSS parts
+```html
+<pf-avatar alt="shadowman" border="dark"></pf-avatar>
+<pf-avatar alt="Michael Clayton"
+           src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg"></pf-avatar>
+```
 
 ### Breaking Changes
-- Removed `name`, `pattern`, and `shape` attributes
-- Removed `pfe-avatar:connected` event. Use `await pfeAvatar.updateComplete` 
-  instead
-- Removed `pfe-avatar:options-shown`, `pfe-avatar:option-cleared`, 
-  `pfe-avatar:search-event`, and `pfe-avatar:option-selected` events.
-- Removed `--pfe-*` CSS custom properties in favour of `--pf-*` ones. See 
-  [PFv4][PFv4] docs.
+- ❌ Removed `name`, `pattern`, and `shape` attributes
+- ❌ Removed `pfe-avatar:connected` event. Use `await pfeAvatar.updateComplete` instead
+- ❌ Removed `pfe-avatar:options-shown`, `pfe-avatar:option-cleared`, `pfe-avatar:search-event`, and `pfe-avatar:option-selected` events.
+- ❌ Removed `--pfe-*` CSS custom properties in favour of `--pf-*` ones. See ones. See ones. See ones. See ones. See ones. See ones. See ones. See [PFv4][PFv4] docs.
 
 There are more changes than these, including breaking changes. See the 
 [docs][docs] for more info.

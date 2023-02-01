@@ -1,12 +1,19 @@
 ---
 "@patternfly/elements": major
 ---
+✨ Added `<pf-timestamp>` and removed `<pfe-datetime>`. Timestamp now closely 
+follows PatternFly design spec.
 
-Removed `<pfe-datetime>` and added `<pf-timestamp>`.
+```html
+<pf-timestamp
+  date="Mon Jan 2 15:04:05 EST 2006"
+  date-format="long">
+</pf-timestamp>
+```
 
 ### Breaking Changes:
 
-- Removed `--pfe-*` CSS custom properties in favour of `--pf-*` ones. See [PFv4][PFv4] docs.
+- ❌ Removed `--pfe-*` CSS custom properties in favour of `--pf-*` ones. See [PFv4][PFv4] docs.
 
 There are more changes than these, including breaking changes. See the [docs][docs] for more info.
 

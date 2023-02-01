@@ -2,5 +2,4 @@
 "@patternfly/elements": patch
 ---
 
-`pfe-tabs`:
- - Removed incorrect implementation of inset attribute, opting to use `[part="tabs-container]` only to style insets with `--pf-*` css tokens.
+`<pf-tabs>`: Removed `inset` attribute in favour of `tabs-container` [CSS Shadow Part](https://patternflyelements.org/components/tabs/#css-shadow-parts).

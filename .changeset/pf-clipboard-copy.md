@@ -4,10 +4,9 @@
 
 Removed `<pfe-clipboard>` and added `<pf-clipboard-copy>`.
 
-- Removed `--pfe-*` CSS custom properties in favour of `--pf-*` ones. See [PFv4][PFv4] docs.
-
 ### Breaking Changes
 
+- Removed `--pfe-*` CSS custom properties in favour of `--pf-*` ones. See [PFv4][PFv4] docs.
 - `role="button"` and `tabindex=0` attributes must *no longer* be applied to 
   `<pf-clipboard-copy>`, make sure all instances on your page are updated
   ```diff
@@ -19,4 +18,3 @@ There are more changes than these, including breaking changes. See the [docs][do
 
 [docs]: https://patternflyelements.org/components/clipboard-copy/
 [PFv4]: https://patternfly.org/v4/
-

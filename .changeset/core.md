@@ -55,7 +55,7 @@ export class PfJazzHands extends LitElement {
   ElementInternals
 - ✨ Added `ScrollSpyController` which sets an attribute (`active` by default) 
   on one of it's children when that child's `href` attribute is to a hash 
-  reference to an IDd heading on the page.
+  reference to an ID'd heading on the page.
 - ✨ Added `RovingTabindexController` which  implements roving tabindex, as 
   described in WAI-ARIA practices.  Added `RovingTabindexController`. 
 

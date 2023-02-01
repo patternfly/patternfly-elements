@@ -26,6 +26,7 @@ cutting-edge web technologies like [form-associated custom elements][FACE] and
 - Removed `@patternfly/pfe-sass` package
 - Removed `<pfe-collapse>`
 - Removed `<pfe-page-status>`
+- Removed `<pfe-health-index>`
 - Removed `<pfe-autocomplete>`, pending rewrite to `<pf-search-input>` ([#2115][autocomplete]).
 - Removed `<pfe-dropdown>`, pending rewrite to `<pf-dropdown>` ([#2049][dropdown]).
 - Removed `<pfe-select>`, pending rewrite to `<pf-select>` ([#2145][select]).

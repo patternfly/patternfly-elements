@@ -4,7 +4,7 @@
 ✨ Added `<pf-icon>` and removed `<pf-icon>`. Icon now closely follows the 
 PatternFly design spec.
 
-Icon now ships with the entire free fontawesome collection as well as the 
+Icon now ships with the entire free Font Awesome collection as well as the 
 patternfly icon set.
 
 ```html

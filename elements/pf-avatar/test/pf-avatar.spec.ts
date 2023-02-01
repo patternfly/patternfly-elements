@@ -5,7 +5,7 @@ import { AvatarLoadEvent } from '../BaseAvatar';
 
 describe('<pf-avatar>', function() {
   it('should upgrade', async function() {
-    const el = await createFixture(html`<pf-avatar name="foobar"></pf-avatar>`);
+    const el = await createFixture(html`<pf-avatar></pf-avatar>`);
     expect(el, 'pf-badge should be an instance of PfAvatar')
       .to.be.an.instanceOf(customElements.get('pf-avatar'))
       .and
@@ -15,7 +15,7 @@ describe('<pf-avatar>', function() {
   describe('without src attr', function() {
     let element: PfAvatar;
     beforeEach(async function() {
-      element = await createFixture(html`<pf-avatar name="foobar"></pf-avatar>`);
+      element = await createFixture(html`<pf-avatar></pf-avatar>`);
       await nextFrame();
     });
     it('loads default avatar', function() {
@@ -33,7 +33,7 @@ describe('<pf-avatar>', function() {
       loaded = paths.find(x => x.localName === 'img')?.src;
     };
     beforeEach(async function() {
-      element = await createFixture(html`<pf-avatar name="foobar" @load="${onLoad}"></pf-avatar>`);
+      element = await createFixture(html`<pf-avatar @load="${onLoad}"></pf-avatar>`);
       setTimeout(() => element.src = datauri);
       await oneEvent(element, 'load');
     });

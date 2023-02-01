@@ -27,5 +27,5 @@ import '@patternfly/elements/pf-avatar/pf-avatar.js';
 ## Usage
 
 ```html
-<pf-avatar name="Edwardo Lindsey" src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg"></pf-avatar>
+<pf-avatar alt="Michael Clayton" src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg"></pf-avatar>
 ```

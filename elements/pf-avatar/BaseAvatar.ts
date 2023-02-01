@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 import style from './BaseAvatar.css';
 

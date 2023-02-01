@@ -11,19 +11,19 @@ Read more about popovers in the [PatternFly Elements Popover documentation](http
 Load `<pfe-popover>` via CDN:
 
 ```html
-<script src="https://unpkg.com/@patternfly/pfe-popover?module"></script>
+<script src="https://jspm.dev/@patternfly/elements/pf-popover/pf-popover.js"></script>
 ```
 
 Or, if you are using [NPM](https://npm.im), install it
 
 ```bash
-npm install @patternfly/pfe-popover
+npm install @patternfly/elements
 ```
 
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/pfe-popover';
+import '@patternfly/elements/pf-popover/pf-popover.js';
 ```
 
 ## Usage
@@ -31,7 +31,7 @@ import '@patternfly/pfe-popover';
 ### Basic Tooltip
 
 ```html
-<pfe-popover
+<pf-popover
   heading="Popover heading"
   body="Popovers are triggered by click rather than hover."
   footer="Popover footer"

@@ -66,7 +66,6 @@
   font-size: var(--pf-c-popover__content--FontSize, var(--pf-global--FontSize--sm, 0.875rem));
   color: var(--pf-c-popover__content--Color, var(--pf-global--Color--100, #151515));
   background-color: var(--pf-c-popover__content--BackgroundColor, var(--pf-global--BackgroundColor--100, #fff));
-  // todo?: override with 0 breaks calc
   max-width: var(
     --pf-c-popover--MaxWidth,
     calc(var(--pf-c-popover__content--PaddingLeft, 1rem) + var(--pf-c-popover__content--PaddingRight, 1rem) + 18.75rem)
@@ -175,25 +174,21 @@
   --_header-text-color: var(--pf-c-popover--m-danger__title-text--Color, var(--pf-global--danger-color--200, #a30000));
 }
 
-// LEFT
 .left #arrow          { right: calc(-0.5 * var(--_floating-arrow-size)); }
 .left.center #arrow   { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
 .left.start #arrow    { top: calc(0.5 * var(--_floating-arrow-size)); }
 .left.end #arrow      { bottom: calc(0.5 * var(--_floating-arrow-size)); }
 
-// TOP
 .top #arrow           { top: calc(100% - 0.5 * var(--_floating-arrow-size)); }
 .top.center #arrow    { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
 .top.start #arrow     { left: calc(0.5 * var(--_floating-arrow-size)); }
 .top.end #arrow       { right: calc(0.5 * var(--_floating-arrow-size)); }
 
-// RIGHT
 .right #arrow         { right: calc(100% - 0.5 * var(--_floating-arrow-size)); }
 .right.center #arrow  { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
 .right.start #arrow   { top: calc(0.5 * var(--_floating-arrow-size)); }
 .right.end #arrow     { bottom: calc(0.5 * var(--_floating-arrow-size)); }
 
-// BOTTOM
 .bottom #arrow        { bottom: calc(100% - 0.5 * var(--_floating-arrow-size)); }
 .bottom.center #arrow { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
 .bottom.start #arrow  { left: calc(0.5 * var(--_floating-arrow-size)); }

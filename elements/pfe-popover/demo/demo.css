@@ -1,5 +1,5 @@
 section {
-  padding: 0 1rem;
+  padding: 0 2rem;
 }
 
 #no-padding pfe-popover::part(content) {

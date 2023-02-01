@@ -15,5 +15,5 @@ Removed `<pfe-accordion>` and added `<pf-accordion>`.
 There are more changes than these, including breaking changes. See the 
 [docs][docs] for more info.
 
-[docs]: https://patternflyelements.org/components/progress-stepper/
+[docs]: https://patternflyelements.org/components/accordion/
 [PFv4]: https://patternfly.org/v4/

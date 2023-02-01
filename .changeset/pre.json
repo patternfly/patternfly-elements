@@ -50,9 +50,8 @@
   },
   "changesets": [
     "pf-accordion",
-    "angry-kangaroos-lay",
     "autocomplete",
-    "avatar",
+    "pf-avatar",
     "badge",
     "band",
     "big-crews-prove",

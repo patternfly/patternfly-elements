@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 1.0.0-next.16
+
+### Patch Changes
+
+- cc8df87b: Updated core library and tools to use new `pf-` element prefix.
+
 ## 1.0.0-next.15
 
 ### Patch Changes

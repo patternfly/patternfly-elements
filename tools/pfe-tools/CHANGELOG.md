@@ -1,5 +1,15 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-next.42
+
+### Major Changes
+
+- 80e19972: Moved `pfe-assets` 11ty plugin to local docs folder
+
+### Patch Changes
+
+- cc8df87b: Updated core library and tools to use new `pf-` element prefix.
+
 ## 1.0.0-next.41
 
 ### Patch Changes

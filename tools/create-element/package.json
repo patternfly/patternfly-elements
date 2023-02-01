@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/create-element",
-  "version": "1.0.0-next.15",
+  "version": "1.0.0-next.16",
   "description": "Scaffold web components monorepos based on PatternFly Elements",
   "author": "Benny Powers <bennyp@redhat.com>",
   "license": "MIT",

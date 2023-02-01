@@ -1,5 +1,19 @@
 # @patternfly/pfe-core
 
+## 2.0.0-next.15
+
+### Major Changes
+
+- aa2e369f: Removed color-context and `@pfelement` decorators
+- aa2e369f: Removed `pfe-sass` and `pfe-styles`
+
+### Patch Changes
+
+- cc8df87b: Updated core library and tools to use new `pf-` element prefix.
+- baf333e5: Fixed `roving-tabindex-controller.js`:
+  - so that up / down arrow keys listeners to move focus up / down respectively
+  - so active item can be set without setting focus
+
 ## 2.0.0-next.14
 
 ### Minor Changes

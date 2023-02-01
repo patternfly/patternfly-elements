@@ -49,7 +49,7 @@
     "@patternfly/pfe-tile": "1.0.0"
   },
   "changesets": [
-    "accordion",
+    "pf-accordion",
     "angry-kangaroos-lay",
     "autocomplete",
     "avatar",

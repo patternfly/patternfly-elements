@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 1.0.0-rc.1
+
+### Patch Changes
+
+- 5d3315fd: Prepared release candidate
+
 ## 1.0.0-next.15
 
 ### Patch Changes

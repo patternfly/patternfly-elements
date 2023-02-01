@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 2.0.0-rc.1
+
+### Patch Changes
+
+- 5d3315fd: Prepared release candidate
+
 ## 2.0.0-next.14
 
 ### Minor Changes

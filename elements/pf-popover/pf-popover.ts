@@ -9,7 +9,7 @@ import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
-import styles from './pfe-popover.scss';
+import styles from './pf-popover.css';
 
 const headingLevels = [2, 3, 4, 5, 6] as const;
 type HeadingLevel = typeof headingLevels[number];
@@ -143,8 +143,8 @@ type AlertSeverity = 'default' | 'info' | 'warning' | 'success' | 'danger';
  *          Default alert icon color
  *          {@default `#c9190b`}
  */
-@customElement('pfe-popover')
-export class PfePopover extends LitElement {
+@customElement('pf-popover')
+export class PfPopover extends LitElement {
   static readonly styles = [styles];
 
   @property({ type: String, reflect: true }) position: Placement = 'top';
@@ -233,7 +233,7 @@ export class PfePopover extends LitElement {
   protected _renderCloseButton() {
     return !this.hideClose ?
       html`
-          <pfe-button
+          <pf-button
             id="close-button"
             label="Close popover"
             part="close-button"
@@ -246,7 +246,7 @@ export class PfePopover extends LitElement {
                 d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
               ></path>
             </svg>
-          </pfe-button>
+          </pf-button>
         `
       : nothing;
   }
@@ -260,7 +260,7 @@ export class PfePopover extends LitElement {
       danger: 'circle-exclamation',
     };
     const icon = this.icon ?? (this.alertSeverity ? alertIcons[this.alertSeverity] : nothing);
-    return html`<pfe-icon icon=${icon} set=${ifDefined(this.iconSet)} size="md"></pfe-icon>`;
+    return html`<pf-icon icon=${icon} set=${ifDefined(this.iconSet)} size="md"></pf-icon>`;
   }
 
   protected _renderHeading() {
@@ -335,6 +335,6 @@ export class PfePopover extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pfe-popover': PfePopover;
+    'pf-popover': PfPopover;
   }
 }

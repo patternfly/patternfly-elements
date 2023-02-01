@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="./demo.css" />
-<script type="module" src="./pfe-popover.js"></script>
+<script type="module" src="./pf-popover.js"></script>
 
 <section id="basic">
   <h2>Basic</h2>
@@ -20,85 +20,85 @@
   </select>
 
   <h3>via attribute</h3>
-  <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer">
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
+  <pf-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer">
+    <pf-button>Toggle popover</pf-button>
+  </pf-popover>
 
   <h3>via slot</h3>
-  <pfe-popover>
+  <pf-popover>
     <h3 slot="heading">Popover heading</h3>
     <div slot="body">
       Popovers are triggered by click rather than hover.
     </div>
     <span slot="footer">Popover footer</span>
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
+    <pf-button>Toggle popover</pf-button>
+  </pf-popover>
 
   <h3>Custom Heading Level</h3>
-  <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" heading-level="3">
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
+  <pf-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" heading-level="3">
+    <pf-button>Toggle popover</pf-button>
+  </pf-popover>
 </section>
 
 <section id="close-from-content">
   <h2>Close popover from content</h2>
-  <pfe-popover>
+  <pf-popover>
     <h3 slot="heading">Popover heading</h3>
     <div slot="body">Popovers are triggered by click rather than hover.</div>
     <span slot="footer">
-      <pfe-button id="close-button" variant="link" size="sm" inline>Close popover</pfe-button>
+      <pf-button id="close-button" variant="link" size="sm" inline>Close popover</pf-button>
     </span>
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
+    <pf-button>Toggle popover</pf-button>
+  </pf-popover>
 </section>
 
 <section id="no-padding">
   <h2>Without header/footer/close and no padding</h2>
-  <pfe-popover hide-close>
+  <pf-popover hide-close>
     <div slot="body">
       This popover has no padding and is intended for use with content that has its own spacing and should touch the
       edges of the popover container.
     </div>
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
+    <pf-button>Toggle popover</pf-button>
+  </pf-popover>
 </section>
 
 <section id="auto-width">
   <h2>Width auto</h2>
-  <pfe-popover position="bottom">
+  <pf-popover position="bottom">
     <div slot="body">Removes fixed-width and allows width to be defined by contents.</div>
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
+    <pf-button>Toggle popover</pf-button>
+  </pf-popover>
 </section>
 
 <section id="icon">
   <h2>Popover with icon in the header</h2>
   
   <h3>via attribute</h3>
-  <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" icon="bullhorn">
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
+  <pf-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" icon="bullhorn">
+    <pf-button>Toggle popover</pf-button>
+  </pf-popover>
 
   <h3>via slot</h3>
-  <pfe-popover>
-    <pfe-icon slot="icon" icon="user"></pfe-icon>
+  <pf-popover>
+    <pf-icon slot="icon" icon="user"></pf-icon>
     <h4 slot="heading">Popover with icon</h4>
     <div slot="body">Popovers are triggered by click rather than hover.</div>
     <div slot="footer">Popover footer</div>
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
+    <pf-button>Toggle popover</pf-button>
+  </pf-popover>
 
   <!-- todo?: why isn't this working? -->
   <h4>Custom Icon Set</h4>
-  <pfe-popover>
-    <pfe-icon slot="icon" icon="package" icon-set="patternfly"></pfe-icon>
+  <pf-popover>
+    <pf-icon slot="icon" icon="package" icon-set="patternfly"></pf-icon>
     <h3 slot="heading">Popover heading</h3>
     <div slot="body">
       Popovers are triggered by click rather than hover.
     </div>
     <span slot="footer">Popover footer</span>
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
+    <pf-button>Toggle popover</pf-button>
+  </pf-popover>
 </section>
 
 <section id="alert">
@@ -111,7 +111,7 @@
     <option value="danger">danger</option>
   </select>
 
-  <pfe-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" alert-severity="default">
-    <pfe-button>Toggle popover</pfe-button>
-  </pfe-popover>
+  <pf-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer" alert-severity="default">
+    <pf-button>Toggle popover</pf-button>
+  </pf-popover>
 </section>

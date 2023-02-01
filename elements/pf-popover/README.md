@@ -8,7 +8,7 @@ Read more about popovers in the [PatternFly Elements Popover documentation](http
 
 ## Installation
 
-Load `<pfe-popover>` via CDN:
+Load `<pf-popover>` via CDN:
 
 ```html
 <script src="https://jspm.dev/@patternfly/elements/pf-popover/pf-popover.js"></script>
@@ -36,15 +36,15 @@ import '@patternfly/elements/pf-popover/pf-popover.js';
   body="Popovers are triggered by click rather than hover."
   footer="Popover footer"
 >
-  <pfe-button>Toggle popover</pfe-button>
-</pfe-popover>
+  <pf-button>Toggle popover</pf-button>
+</pf-popover>
 ```
 
 ```html
-<pfe-popover>
+<pf-popover>
   <h3 slot="heading">Popover heading</h3>
   <div slot="body">Popovers are triggered by click rather than hover.</div>
   <span slot="footer">Popover footer</span>
-  <pfe-button>Toggle popover</pfe-button>
-</pfe-popover>
+  <pf-button>Toggle popover</pf-button>
+</pf-popover>
 ```

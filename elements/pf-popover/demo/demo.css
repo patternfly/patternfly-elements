@@ -9,14 +9,14 @@ section {
   margin-bottom: 1rem;
 }
 
-#no-padding pfe-popover::part(content) {
+#no-padding pf-popover::part(content) {
   --pf-c-popover__content--PaddingTop: 0px;
   --pf-c-popover__content--PaddingRight: 0px;
   --pf-c-popover__content--PaddingBottom: 0px;
   --pf-c-popover__content--PaddingLeft: 0px;
 }
 
-#auto-width pfe-popover::part(content) {
+#auto-width pf-popover::part(content) {
   --pf-c-popover--MaxWidth: none;
   --pf-c-popover--MinWidth: auto;
 }

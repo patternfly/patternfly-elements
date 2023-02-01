@@ -1,5 +1,5 @@
 {% renderOverview %}
-  <pfe-popover></pfe-popover>
+  <pf-popover></pf-popover>
 {% endrenderOverview %}
 
 {% band header="Usage" %}{% endband %}

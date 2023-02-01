@@ -1,7 +1,6 @@
 ---
 "@patternfly/pfe-core": major
 ---
-
 Initial Release 🎉
 
 `@patternfly/pfe-core` provides utilities for building PatternFly elements,
@@ -40,6 +39,25 @@ export class PfJazzHands extends LitElement {
   }
 }
 ```
+
+### Controllers
+- ✨ Added `FloatingDOMController` for use with components that require popover 
+  content. For example, in `BaseTooltip` we use the controller in this manner:
+
+  ```typescript
+  import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
+  export class BaseTooltip extends LitElement {
+    #domController = new FloatingDOMController(this);
+  }
+  ```
+- ✨ Added `InternalsController`, providing preliminary facility for 
+  ElementInternals
+- ✨ Added `ScrollSpyController` which sets an attribute (`active` by default) 
+  on one of it's children when that child's `href` attribute is to a hash 
+  reference to an IDd heading on the page.
+- ✨ Added `RovingTabindexController` which  implements roving tabindex, as 
+  described in WAI-ARIA practices.  Added `RovingTabindexController`. 
 
 See README and [the docs][docs] for more info.
 

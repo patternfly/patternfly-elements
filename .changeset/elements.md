@@ -1,7 +1,6 @@
 ---
 "@patternfly/elements": major
 ---
-
 PatternFly Elements 2.0 is a major rewrite of the project.
 It brings PFE in-line with PatternFly React in terms of design specs
 and modernizes the codebase with [Lit][lit] and [TypeScript][ts]. It adds a 
@@ -13,25 +12,28 @@ cutting-edge web technologies like [form-associated custom elements][FACE] and
 - 🔥 Migrated elements to [Lit][lit]: initial render made [asynchronous][async].
   If your code assumes that shadow DOM is ready once the element is constructed,
   ensure you first `await element.updateComplete`
-- Reimplemented elements in line with [PFv4][PFv4] design specs
-- Combined all elements into a single package: `@patternfly/elements`
-- Renamed all element prefixes from `pfe-` to `pf-`.
+- ♻️ Reimplemented elements in line with [PFv4][PFv4] design specs
+- 🍱 Combined all elements into a single package: `@patternfly/elements`
+- 🥨 Renamed all element prefixes from `pfe-` to `pf-`.
   ```html
   <!-- BEFORE: -->
   <pfe-button>Cancel</pfe-button>
   <!-- AFTER: -->
   <pf-button>Ok</pf-button>
   ```
-- Removed `@patternfly/pfe-styles` package
-- Removed `@patternfly/pfe-sass` package
-- Removed `<pfe-autocomplete>`, pending rewrite to `<pf-search-input>` ([#2115][autocomplete]).
-- Removed `<pfe-collapse>`
-- Removed `<pfe-dropdown>`, pending rewrite to `<pf-dropdown>` ([#2049][dropdown]).
-- Removed `<pfe-health-index>`
-- Removed `<pfe-icon-panel>`
-- Removed `<pfe-markdown>`
-- Removed `<pfe-page-status>`
-- Removed `<pfe-select>`, pending rewrite to `<pf-select>` ([#2145][select]).
+- ❌ Removed `@patternfly/pfe-styles` package
+- ❌ Removed `@patternfly/pfe-sass` package
+- ❌ Removed `<pfe-autocomplete>`, pending rewrite to `<pf-search-input>` ([#2115][autocomplete]).
+- ❌ Removed `<pfe-collapse>`
+- ❌ Removed `<pfe-dropdown>`, pending rewrite to `<pf-dropdown>` ([#2049][dropdown]).
+- ❌ Removed `<pfe-health-index>`
+- ❌ Removed `<pfe-icon-panel>`
+- ❌ Removed `<pfe-markdown>`
+- ❌ Removed `<pfe-number>`
+- ❌ Removed `<pfe-page-status>`
+- ❌ Removed `<pfe-primary-detail>`
+- ❌ Removed `<pfe-select>`, pending rewrite to `<pf-select>` ([#2145][select]).
+- ❌ Removed `<pfe-toast>`
 
 [lit]: https://lit.dev
 [ts]: https://typescriptlang.org

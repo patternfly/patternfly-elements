@@ -1,18 +1,28 @@
 ---
 "@patternfly/elements": major
 ---
+✨ Added `<pf-card>` and removed `<pfe-card>`. Card now closely follows the 
+PatternFly design specs.
 
-Removed `<pfe-card>` and added `<pf-card>`.
+```html
+<pf-card>
+  <h2 slot="header">Card header</h2>
+  <p>This is the pf-card body.</p>
+  <a href="#" slot="footer">Footer link</a>
+</pf-card>
+```
 
-- Added `header`, `body`, and `footer` CSS parts
-- Added `rounded`, `full-height`, and `plain` attributes
+- ✨ Added `header`, `body`, and `footer` CSS parts
+- ✨ Added `rounded`, `full-height`, and `plain` attributes
 
 ### Breaking Changes
 
-- Removed `--pfe-*` CSS custom properties in favour of `--pf-*` ones. See [PFv4][PFv4] docs.
-- Removed `pfe-card--header` and `pfe-card--footer` slots. Use `header` and `footer` instead
-- Removed `imgSrc` and `border` attributes.
-- Changed `size` attribute values
+- ❌ Removed `--pfe-*` CSS custom properties in favour of `--pf-*` ones. See 
+  [PFv4][PFv4] docs.
+- ❌ Removed `pfe-card--header` and `pfe-card--footer` slots. Use `header` and 
+  `footer` instead
+- ❌ Removed `imgSrc` and `border` attributes.
+- 💱 Changed `size` attribute values
   ```html
     <!-- BEFORE -->
     <pfe-card size="small"></pfe-card>

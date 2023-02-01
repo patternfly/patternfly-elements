@@ -1,8 +1,11 @@
 ---
 "@patternfly/elements": minor
 ---
+✨ Added `<pf-label>`.
 
-Added `<pf-label>`.
+```html
+<p>Some Text <pf-label color="red">Your label text here</pf-label></p>
+```
 
 `<pf-label>` is an inline-block element component that provides a distinct 
 visual style for metadata in a UI.  Commonly used as visual representations for 

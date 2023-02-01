@@ -2,12 +2,12 @@
   "mode": "pre",
   "tag": "rc",
   "initialVersions": {
-    "@patternfly/pfe-core": "2.0.0-rc.1",
-    "@patternfly/elements": "2.0.0-rc.1",
-    "@patternfly/create-element": "1.0.0-rc.1",
-    "@patternfly/eslint-config-elements": "1.0.0-rc.1",
-    "netlify-plugin-github-actions": "1.0.0-rc.1",
-    "@patternfly/pfe-tools": "1.0.0-rc.1"
+    "@patternfly/pfe-core": "2.0.0-rc.0",
+    "@patternfly/elements": "2.0.0-rc.0",
+    "@patternfly/create-element": "1.0.0-rc.0",
+    "@patternfly/eslint-config-elements": "1.0.0-rc.0",
+    "netlify-plugin-github-actions": "1.0.0-rc.0",
+    "@patternfly/pfe-tools": "1.0.0-rc.0"
   },
   "changesets": [
     "core",

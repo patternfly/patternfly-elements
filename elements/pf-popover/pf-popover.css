@@ -114,7 +114,7 @@
 [part='heading'] :is(h2, h3, h4, h5, h6) {
   font-size: var(--pf-c-popover__title--FontSize, var(--pf-global--FontSize--md, 1rem));
   font-weight: var(--pf-global--FontWeight--normal, 400);
-  --pfe-icon--size: var(
+  --pf-icon--size: var(
     --pf-c-popover__title--FontSize,
     var(--pf-global--FontSize--md, var(--pf-global--icon--FontSize--md, 1em))
   );

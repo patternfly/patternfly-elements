@@ -49,7 +49,7 @@ tags:
   dependencies from npm.
 
   ```bash
-  npm install --save @patternfly/pf-card@next
+  npm install --save @patternfly/elements
   ```
 
   But if you’re using CodeSandbox, just search for “@patternfly/pf-card”
@@ -60,7 +60,7 @@ tags:
 
   ```html
   <script>
-    import "@patternfly/pf-card";
+    import "@patternfly/elements/pf-card/pf-card.js";
     export default {
       name: "HelloWorld",
       props: {

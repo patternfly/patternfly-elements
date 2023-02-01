@@ -15,7 +15,8 @@ tags:
   The React sandbox uses [create-react-app](https://github.com/facebook/create-react-app) to scaffold an app and you can
   view your changes in real-time right in the web app. With CodeSandbox, you can also add any npm dependency with
   just a few button clicks. If you want to run this app locally, you can
-  [clone the repository on GitHub](https://github.com/kylebuch8/patternfly-elements-with-react).
+  [clone the repository on 
+  GitHub](https://github.com/kylebuch8/patternfly-elements-with-react).
 
   “Using PatternFly Elements in your React App” is broken down into four sections:
   - Initial setup
@@ -43,7 +44,7 @@ tags:
   Once again, if we were building this app locally, we’d install our dependencies from npm using yarn.
 
   ```bash
-  yarn add @patternfly/pf-card@next
+  yarn add @patternfly/elements
   ```
   But if you’re using CodeSandbox, just search for "@patternfly/pf-card"
 
@@ -52,7 +53,7 @@ tags:
   ```js
   import React from "react";
   import ReactDOM from "react-dom";
-  import "@patternfly/pf-card";
+  import "@patternfly/elements/pf-card/pf-card.js";
   import "./styles.css";
   ```
 
@@ -97,7 +98,7 @@ tags:
   yarn add @patternfly/elements
   ```
 
-  If you’re using CodeSandbox, just search for “@patternfly/pf-accordion”.
+  If you’re using CodeSandbox, just search for “@patternfly/elements”.
 
   After installing pf-accordion, add the markup to the `App` function in the `index.js` file.
 
@@ -173,8 +174,8 @@ tags:
   import React from "react";
   import ReactDOM from "react-dom";
 
-  import "@patternfly/pf-card";
-  import "@patternfly/pf-accordion";
+  import "@patternfly/elements/pf-card/pf-card.js";
+  import "@patternfly/elements/pf-accordion/pf-accordion.js";
 
   import "./styles.css";
   ```
@@ -349,50 +350,6 @@ tags:
   <iframe src="https://codesandbox.io/embed/patternfly-elements-with-react-pf-accordion-api-5clsc?fontsize=14&hidenavigation=1&theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="PatternFly Elements with React (pf-accordion api)" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
 {% endband %}
 
-{% band header="Adding icing on the cake" %}
-  Right now our app has a single card (pf-card).
-  Beneath that, we have an accordion (pf-accordion) with the first panel opening after the page loads.
-  Let’s make things look a bit nicer by adding in a few more cards and a grid for layout (pf-layouts).
-
-  We’ll start by installing pf-styles, which contains pf-layouts, into our app. If we were building this app locally,
-  we’d install our dependencies from npm using yarn.
-
-  ```bash
-  yarn add @patternfly/pf-styles@next
-  ```
-
-  If you’re using CodeSandbox, search for “@patternfly/pf-styles”.
-
-  Next, in `index.js`, let’s import the pf-layouts stylesheet.
-
-  ```js
-  import React, { Component } from "react";
-  import ReactDOM from "react-dom";
-
-  import "@patternfly/pf-card";
-  import "@patternfly/pf-accordion";
-
-  import "@patternfly/pf-styles/pf-layouts.min.css";
-  import "./styles.css";
-  ```
-
-  Finally, we’ll add the classes we need in our section of cards in the index.js file so we have three cards across on screens wider than or equal to 992px, two cards across on screens wider than or equal to 576px, and one card across on smaller screens.
-
-  ```html
-  <div className="pf-l-grid pf-m-gutters pf-m-all-12-col-on-xs pf-m-all-6-col-on-sm pf-m-all-4-col-on-lg">
-     ... cards are in here
-  </div>
-  ```
-
-  If all of the classes above look confusing and don’t make any sense, don’t worry about it. We’ll write a post that explains how to use pf-layouts. If you’re still curious [check out pf-layouts](https://patternflyelements.org/layout/) to getter a better understanding of the classes above.
-
-  The end result of adding pf-layouts and a grid is in the CodeSandbox below.
-{% endband %}
-
-{% band %}
-  <iframe src="https://codesandbox.io/embed/patternfly-elements-with-react-ipu2u?fontsize=14&hidenavigation=1&theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="PatternFly Elements with React" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
-{% endband %}
-
 {% band %}
   I realize that may have been a lot. So let’s recap what we did.
 
@@ -401,7 +358,6 @@ tags:
   3. Adding PatternFly Elements (web components): Imported the web components into our `index.js` file
   4. Adding PatternFly Elements (web components): Added the markup for our components in `index.js`
   5. Interacting with our web components API: Created a reference to the accordion so we could open the first panel after the page loads
-  6. Adding icing on the cake: Added pf-layouts to create a grid for our cards
 {% endband %}
 
 {% band header="Wrap up" %}

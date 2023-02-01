@@ -1,0 +1,12 @@
+main {
+  padding: 1em;
+}
+
+section {
+  max-width: 832px;
+}
+
+pf-clipboard-copy + pf-clipboard-copy {
+  margin-top: 1rem;
+}
+

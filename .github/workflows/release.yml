@@ -12,15 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          fetch-depth: 0
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 18
+          node-version: '18'
           cache: npm
 
-      - run: npm i --prefer-offline
+      - run: npm ci --prefer-offline
       - run: npm run build
       - run: npm run prepublishOnly --workspaces --if-present
 

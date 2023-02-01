@@ -41,18 +41,18 @@ tags:
 {% band header="Adding PatternFly Elements" %}
   With the setup complete, let’s add a couple of PatternFly Elements web 
   components to our application to make sure everything is hooked up properly. 
-  We’re going to add a card ([pfe-card](/components/card)). Later, we’ll add an 
-  accordion ([pfe-accordion](/components/accordion)) and some CSS to help with 
+  We’re going to add a card ([pf-card](/components/card)). Later, we’ll add an 
+  accordion ([pf-accordion](/components/accordion)) and some CSS to help with 
   our layout.
 
   Once again, if we were building this app locally, we’d install our 
   dependencies from npm.
 
   ```bash
-  npm install --save @patternfly/pfe-card@next
+  npm install --save @patternfly/elements
   ```
 
-  But if you’re using CodeSandbox, just search for “@patternfly/pfe-card”
+  But if you’re using CodeSandbox, just search for “@patternfly/pf-card”
 
   In our `HelloWorld.vue` file in the `/src/components/` directory, let’s add 
   the import statements for our components to the top of the `<script>` tag in 
@@ -60,7 +60,7 @@ tags:
 
   ```html
   <script>
-    import "@patternfly/pfe-card";
+    import "@patternfly/elements/pf-card/pf-card.js";
     export default {
       name: "HelloWorld",
       props: {
@@ -71,16 +71,16 @@ tags:
   ```
 
   Let’s add some simple markup in the `template` section of the 
-  `HellowWorld.vue` file to see that our pfe-card is working.
+  `HellowWorld.vue` file to see that our pf-card is working.
 
   ```html
   <template>
     <div>
       <h1>PatternFly Elements with Vue</h1>
-      <pfe-card>
+      <pf-card>
         <img alt="From https://picsum.photos/" src="https://picsum.photos/id/1019/300/200">
         <p>
-          This is the light pfe-card and
+          This is the light pf-card and
           <a href="#">a link</a>.
         </p>
         <p>
@@ -93,8 +93,8 @@ tags:
           Organically grow the holistic world view of disruptive
           innovation via workplace diversity and empowerment.
         </p>
-        <pfe-button slot="footer" variant="link" href="#">Learn more</pfe-button>
-      </pfe-card>
+        <pf-button slot="footer" variant="link" href="#">Learn more</pf-button>
+      </pf-card>
     </div>
   </template>
   ```

@@ -2,8 +2,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#004080">
+  <meta name="generator" content="Eleventy">
   <meta name="description" content="{{ title }} - PatternFly Elements">
-  <meta name="pfe-auto-reveal" content="true">
+  <meta name="pf-auto-reveal" content="true">
   <title>{{ element.title or title }} - PatternFly Elements</title>
   <link href="{{ '/brand/logo/svg/pfe-icon-blue.svg' | url }}" rel="shortcut icon">
 
@@ -13,20 +14,14 @@
     rel="stylesheet">
 
   <noscript>
-    <link rel="stylesheet" href="{{ '../../core/styles/pfe--noscript.min.css' | url }}">
+    <link rel="stylesheet" href="{{ '../../core/styles/pf--noscript.min.css' | url }}">
   </noscript>
 
   <link rel="stylesheet" href="{{ '/prism.css' | url }}">
-  <link rel="stylesheet" href="{{ '/core/styles/pfe.min.css' | url }}">
-  <link rel="stylesheet" href="{{ '/core/styles/pfe-base.min.css' | url }}">
-  <link rel="stylesheet" href="{{ '/core/styles/pfe-layouts.min.css' | url }}">
   <link rel="stylesheet" href="{{ '/main.css' | url }}">
+  <link rel="stylesheet" href="{{ '/assets/@rhds/elements/rh-footer/rh-footer-lightdom.css' | url }}">
 
-  <script type="module" src="{{ '/element-internals-polyfill/dist/index.js' | url }}"></script>
-  <script type="module">
-    import * as Bundle from '/pfe.min.js';
-    // Workaround for bundled pfe-icon: make icon imports absolute, instead of relative to the bundle
-    Bundle.PfeIcon.getIconUrl = (set, icon) =>
-      new URL(`/components/icon/icons/${set}/${icon}.js`, import.meta.url);
-  </script>
+  <script type="importmap">{{ importMap|dump|safe }}</script>
+  <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous"></script>
+  <script type="module" src="/main.mjs"></script>
 </head>

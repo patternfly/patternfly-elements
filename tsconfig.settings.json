@@ -19,14 +19,12 @@
     "composite": true,
     "declaration": true,
     "downlevelIteration": true,
-    "emitDeclarationOnly": true,
     "experimentalDecorators": true,
-    "importHelpers": false,
+    "importHelpers": true,
     "incremental": true,
     "inlineSources": true,
     "module": "es2020",
     "moduleResolution": "Node",
-    "noEmitOnError": false,
     "preserveValueImports": true,
     "rootDir": ".",
     "sourceMap": true,
@@ -38,6 +36,10 @@
       "./@types"
     ],
     "plugins": [
+      {
+        "transform": "@patternfly/pfe-tools/typescript/transformers/css-imports.cjs",
+        "inline": true
+      },
       {
         "name": "typescript-lit-html-plugin"
       },
@@ -62,171 +64,18 @@
       "@custom-elements-manifest/analyzer/*": [
         "@types/custom-elements-manifest__analyzer/*"
       ],
-      "@patternfly/*": [
-        "./core/*",
+      "@patternfly/elements/*": [
         "./elements/*"
       ],
       "@patternfly/patternfly/*": [
         "@patternfly/patternfly/*"
       ],
-      "@patternfly/pf-popover": [
-        "./elements/pf-popover/pf-popover.ts"
-      ],
-      "@patternfly/pfe-accordion": [
-        "./elements/pfe-accordion/pfe-accordion.ts"
-      ],
-      "@patternfly/pfe-autocomplete": [
-        "./elements/pfe-autocomplete/pfe-autocomplete.ts"
-      ],
-      "@patternfly/pfe-avatar": [
-        "./elements/pfe-avatar/pfe-avatar.ts"
-      ],
-      "@patternfly/pfe-badge": [
-        "./elements/pfe-badge/pfe-badge.ts"
-      ],
-      "@patternfly/pfe-button": [
-        "./elements/pfe-button/pfe-button.ts"
-      ],
-      "@patternfly/pfe-card": [
-        "./elements/pfe-card/pfe-card.ts"
-      ],
-      "@patternfly/pfe-clipboard": [
-        "./elements/pfe-clipboard/pfe-clipboard.ts"
-      ],
-      "@patternfly/pfe-clipboard-copy": [
-        "./elements/pfe-clipboard-copy/pfe-clipboard-copy.ts"
-      ],
-      "@patternfly/pfe-code-block": [
-        "./elements/pfe-code-block/pfe-code-block.ts"
-      ],
-      "@patternfly/pfe-dropdown": [
-        "./elements/pfe-dropdown/pfe-dropdown.ts"
-      ],
-      "@patternfly/pfe-icon": [
-        "./elements/pfe-icon/pfe-icon.ts"
-      ],
-      "@patternfly/pfe-jump-links": [
-        "./elements/pfe-jump-links/pfe-jump-links.ts"
-      ],
-      "@patternfly/pfe-label": [
-        "elements/pfe-label/pfe-label.ts"
-      ],
-      "@patternfly/pfe-modal": [
-        "./elements/pfe-modal/pfe-modal.ts"
-      ],
-      "@patternfly/pfe-panel": [
-        "./elements/pfe-panel/pfe-panel.ts"
-      ],
-      "@patternfly/pfe-popover": [
-        "./elements/pfe-popover/pfe-popover.ts"
-      ],
-      "@patternfly/pfe-progress-steps": [
-        "./elements/pfe-progress-steps/pfe-progress-steps.ts"
-      ],
-      "@patternfly/pfe-select": [
-        "./elements/pfe-select/pfe-select.ts"
-      ],
-      "@patternfly/pfe-spinner": [
-        "./elements/pfe-spinner/pfe-spinner.ts"
-      ],
-      "@patternfly/pfe-switch": [
-        "./elements/pfe-switch/pfe-switch.ts"
-      ],
-      "@patternfly/pfe-tabs": [
-        "./elements/pfe-tabs/pfe-tabs.ts"
-      ],
-      "@patternfly/pfe-tile": [
-        "./elements/pfe-tile/pfe-tile.ts"
-      ],
-      "@patternfly/pfe-timestamp": [
-        "./elements/pfe-timestamp/pfe-timestamp.ts"
+      "@patternfly/pfe-core/*": [
+        "./core/pfe-core/*"
       ],
       "@patternfly/pfe-tools/*": [
         "./tools/pfe-tools/*"
-      ],
-      "@patternfly/pfe-tooltip": [
-        "elements/pfe-tooltip/pfe-tooltip.ts"
-      ],
-      "marked": [
-        "@types/marked"
       ]
     }
-  },
-  "references": [
-    {
-      "path": "./core/pfe-core"
-    },
-    {
-      "path": "./elements/pfe-accordion"
-    },
-    {
-      "path": "./elements/pfe-autocomplete"
-    },
-    {
-      "path": "./elements/pfe-badge"
-    },
-    {
-      "path": "./elements/pfe-avatar"
-    },
-    {
-      "path": "./elements/pfe-button"
-    },
-    {
-      "path": "./elements/pfe-card"
-    },
-    {
-      "path": "./elements/pfe-clipboard-copy"
-    },
-    {
-      "path": "./elements/pfe-code-block"
-    },
-    {
-      "path": "./elements/pfe-dropdown"
-    },
-    {
-      "path": "./elements/pfe-icon"
-    },
-    {
-      "path": "./elements/pfe-jump-links"
-    },
-    {
-      "path": "./elements/pfe-modal"
-    },
-    {
-      "path": "./elements/pfe-panel"
-    },
-    {
-      "path": "./elements/pfe-progress-steps"
-    },
-    {
-      "path": "./elements/pfe-select"
-    },
-    {
-      "path": "./elements/pfe-spinner"
-    },
-    {
-      "path": "./elements/pfe-switch"
-    },
-    {
-      "path": "./elements/pfe-tabs"
-    },
-    {
-      "path": "./elements/pfe-label"
-    },
-    {
-      "path": "./elements/pfe-timestamp"
-    },
-    {
-      "path": "./elements/pfe-tooltip"
-    },
-    {
-      "path": "./elements/pfe-tile"
-    },
-    {
-      "path": "./elements/pf-popover"
-    },
-    {
-      "path": "./elements/pfe-popover"
-    }
-  ]
+  }
 }

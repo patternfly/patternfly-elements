@@ -1,8 +1,8 @@
 :root {
-  --pfe-demo-header-height: 60px;
-  --pfe-theme--font-family: "Red Hat Text", "Overpass", Helvetica, Arial, sans-serif;
-  --pfe-theme--font-family--heading: "Red Hat Display", "Overpass", Helvetica, Arial, sans-serif;
-  --pfe-navigation--Height--actual: 60px;
+  --pf-demo-header-height: 60px;
+  --pf-theme--font-family: "Red Hat Text", "Overpass", Helvetica, Arial, sans-serif;
+  --pf-theme--font-family--heading: "Red Hat Display", "Overpass", Helvetica, Arial, sans-serif;
+  --pf-navigation--Height--actual: 60px;
 }
 
 *, *::before, *::after {
@@ -30,7 +30,7 @@ html, body {
 body {
   min-height: 100%;
   display: grid;
-  grid-template-rows: var(--pfe-demo-header-height, 60px) auto;
+  grid-template-rows: var(--pf-demo-header-height, 60px) auto;
   grid-template-columns: 100vw;
   grid-template-areas:
     'head'
@@ -44,6 +44,34 @@ body.menu-open {
     'menu body';
 }
 
+#components {
+  display: grid;
+  padding: 1em;
+  gap: 1em;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+#components img {
+  width: 100%;
+  height: auto;
+}
+
+#components a {
+  display: block;
+}
+
+#components a:is(:focus, :hover) {
+  outline: 2px solid var(--pf-global--primary-color--200, #004080);
+}
+
+#components ul {
+  padding: 0;
+}
+
+#components li {
+  list-style-type: none;
+}
+
 @media (max-width: 640px) {
   body.menu-open {
     grid-template-columns: 100vw 0;
@@ -55,9 +83,9 @@ body.menu-open {
 }
 
 #main-header {
-  --pfe-navigation--Height--actual: 60px;
+  --pf-navigation--Height--actual: 60px;
   grid-area: head;
-  background: var(--pfe-theme--color--surface--accent, #004080);
+  background: var(--pf-theme--color--surface--accent, #004080);
   color: white;
   padding: 1em;
   display: flex;
@@ -70,9 +98,9 @@ body.menu-open {
   display: flex;
   align-items: center;
   height: 3.75rem;
-  padding: var(--pfe-theme--container-spacer, 16px);
+  padding: var(--pf-theme--container-spacer, 16px);
   color: white;
-  background: var(--pfe-theme--color--surface--accent, #004080);
+  background: var(--pf-theme--color--surface--accent, #004080);
   z-index: 200;
 }
 
@@ -189,7 +217,7 @@ body.menu-open {
 
 #nav a:active {
   background: #f5f5f5;
-  box-shadow: inset 0.1875rem 0 0 0 var(--pfe-theme--color--surface--accent, #004080);
+  box-shadow: inset 0.1875rem 0 0 0 var(--pf-theme--color--surface--accent, #004080);
   color: #151515;
 }
 
@@ -215,7 +243,7 @@ main {
   height: 100%;
   overflow: scroll;
   width: 100%;
-  max-height: calc(100vh - var(--pfe-demo-header-height));
+  max-height: calc(100vh - var(--pf-demo-header-height));
 }
 
 [slot=header] fieldset {

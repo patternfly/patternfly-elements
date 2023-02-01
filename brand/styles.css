@@ -17,13 +17,13 @@ h1 {
     height: 36px;
 }
 
-pfe-card .img-link {
+pf-card .img-link {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-pfe-card h2 {
+pf-card h2 {
     margin-bottom: 0;
     padding-bottom: .5rem;
     margin-top: 0;
@@ -44,17 +44,17 @@ pfe-card h2 {
     margin-bottom: 0;
 }
 
-pfe-card h2,
-pfe-card h3 {
+pf-card h2,
+pf-card h3 {
     margin-top: 8px;
 }
 
-pfe-card h3 {
+pf-card h3 {
     font-weight: 700;
     margin-bottom: 16px;
 }
 
-pfe-card .cta {
+pf-card .cta {
     min-width: 100%;
 }
 

@@ -1,7 +1,5 @@
 import type { ComplexAttributeConverter } from 'lit';
 
-export type { ColorPalette, ColorTheme } from './controllers/color-context.js';
-
 /** PatternFly Elements global config object */
 export interface PfeConfig {
   /** Set to false to disable client-side page load performance tracking */
@@ -75,13 +73,13 @@ const bodyNoAutoReveal = document.body.hasAttribute('no-auto-reveal');
 
 /** Global patternfly elements config */
 window.PfeConfig = Object.assign(window.PfeConfig ?? {}, {
-  trackPerformance: window.PfeConfig?.trackPerformance ?? getMeta('pfe-track-performance') === 'true',
+  trackPerformance: window.PfeConfig?.trackPerformance ?? getMeta('pf-track-performance') === 'true',
   // if the body tag has `no-auto-reveal` attribute, reveal immediately
-  // if `<meta name="pfe-auto-reveal">` exists, and it's `content` is 'true',
+  // if `<meta name="pf-auto-reveal">` exists, and it's `content` is 'true',
   // then auto-reveal the body
   autoReveal: window.PfeConfig?.autoReveal ?? (
       bodyNoAutoReveal ? !bodyNoAutoReveal
-    : getMeta('pfe-auto-reveal') === 'true'
+    : getMeta('pf-auto-reveal') === 'true'
   ),
   get log() {
     return !!localStorage.pfeLog;

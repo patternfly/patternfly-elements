@@ -1,12 +1,10 @@
 ---
 "@patternfly/pfe-core": major
 ---
-
 Initial Release 🎉
 
 `@patternfly/pfe-core` provides utilities for building PatternFly elements,
-like [TypeScript decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) and
-[Lit reactive controllers](https://lit.dev/docs/composition/controllers/).
+like [TypeScript decorators][decorators] and [Lit reactive controllers][controllers].
 Core utilities replace the `PFElement` base class.
 
 ### Before
@@ -32,13 +30,37 @@ PFElement.create(PfeJazzHands);
 ### After
 
 ```ts
-@customElement('pfe-jazz-hands') @pfelement()
-export class PfeJazzHands extends LitElement {
-  static readonly version = '{{version}}';
-
+@customElement('pf-jazz-hands')
+export class PfJazzHands extends LitElement {
   @observed('_upgradeObserver')
   @property({ type: Boolean }) cool = true;
+  _upgradeObserver() {
+    console.log('cool');
+  }
 }
 ```
 
-See README and [the docs](https://patternflyelements.org/core/core/) for more info.
+### Controllers
+- ✨ Added `FloatingDOMController` for use with components that require popover 
+  content. For example, in `BaseTooltip` we use the controller in this manner:
+
+  ```typescript
+  import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
+  export class BaseTooltip extends LitElement {
+    #domController = new FloatingDOMController(this);
+  }
+  ```
+- ✨ Added `InternalsController`, providing preliminary facility for 
+  ElementInternals
+- ✨ Added `ScrollSpyController` which sets an attribute (`active` by default) 
+  on one of it's children when that child's `href` attribute is to a hash 
+  reference to an ID'd heading on the page.
+- ✨ Added `RovingTabindexController` which  implements roving tabindex, as 
+  described in WAI-ARIA practices.  Added `RovingTabindexController`. 
+
+See README and [the docs][docs] for more info.
+
+[decorators]: https://www.typescriptlang.org/docs/handbook/decorators.html
+[controllers]: https://lit.dev/docs/composition/controllers/
+[docs]: https://patternflyelements.org/core/core/

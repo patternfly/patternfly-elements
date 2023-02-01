@@ -1,0 +1,171 @@
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-label.js"></script>
+<script type="module" src="/zero-md.js">
+
+<section>
+  <h2>Default</h2>
+  <pf-label>Default</pf-label>
+  <div class="example">
+    Example:
+    <zero-md manual-render>
+      <script type="text/markdown" data-dedent>
+      ```html
+      <pf-label>Default</pf-label>
+      ```
+      </script>
+    </zero-md>
+  </div>
+</section>
+
+<section>
+  <h2>Filled Color</h2>
+  <pf-label color="blue">Blue</pf-label>
+  <pf-label color="green">Green</pf-label>
+  <pf-label color="orange">Orange</pf-label>
+  <pf-label color="red"><span>Red <span class="visually-hidden-class">Hat</span></span></pf-label>
+  <pf-label color="purple">Purple</pf-label>
+  <pf-label color="cyan">Cyan</pf-label>
+  <pf-label color="gold">Gold</pf-label>
+  <pf-label>Grey</pf-label>
+  <zero-md manual-render>
+    <script type="text/markdown" data-dedent>
+    ### Example:
+    ```html
+    <pf-label color="blue">Blue</pf-label>
+    ```
+    </script>
+  </zero-md>
+</section>
+
+<section>
+  <h2>Outline Color</h2>
+  <pf-label color="blue" variant="outline">Blue</pf-label>
+  <pf-label color="green" variant="outline">Green</pf-label>
+  <pf-label color="orange" variant="outline">Orange</pf-label>
+  <pf-label color="red" variant="outline">Red</pf-label>
+  <pf-label color="purple" variant="outline">Purple</pf-label>
+  <pf-label color="cyan" variant="outline">Cyan</pf-label>
+  <pf-label color="gold" variant="outline">Gold</pf-label>
+  <pf-label variant="outline">Grey</pf-label>
+  <div class="example">
+    Example:
+    <zero-md manual-render>
+      <script type="text/markdown" data-dedent>
+      ```html
+      <pf-label color="red" variant="outline">Red</pf-label>
+      ```
+      </script>
+    </zero-md>
+  </div>
+</section>
+
+<section>
+  <h2>With Icon</h2>
+  <div>
+    <pf-label icon="circle-radiation" variant="outline">Default</pf-label>
+    <pf-label color="blue" icon="circle-radiation" variant="outline">Blue label</pf-label>
+    <pf-label color="green" variant="outline">Green label <svg slot="icon" height="1em" width: "1em" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true" role="img"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path></svg></pf-label>
+    <pf-label color="orange" icon="circle-radiation" variant="outline">Orange label</pf-label>
+    <pf-label color="red" icon="circle-radiation" variant="outline">Red label</pf-label>
+    <pf-label color="purple" icon="circle-radiation" variant="outline">Purple label <svg slot="icon" height="1em" width: "1em" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true" role="img"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path></svg></pf-label>
+    <pf-label color="cyan" icon="circle-radiation" variant="outline">Cyan label</pf-label>
+    <pf-label color="gold" icon="circle-radiation" variant="outline">Gold label</pf-label>
+  </div>
+  <div>
+    <pf-label icon="circle-radiation" >Default</pf-label>
+    <pf-label color="blue" icon="circle-radiation" >Blue label</pf-label>
+    <pf-label color="green" icon="circle-radiation" >Green label</pf-label>
+    <pf-label color="orange" icon="circle-radiation">Orange label</pf-label>
+    <pf-label color="red" icon="circle-radiation" >Red label</pf-label>
+    <pf-label color="purple" icon="circle-radiation" >Purple label</pf-label>
+    <pf-label color="cyan" icon="circle-radiation" >Cyan label</pf-label>
+    <pf-label color="gold" icon="circle-radiation" >Gold label</pf-label>
+  </div>
+
+  <div class="example">
+    Example: <pf-label icon="circle-radiation" variant="outline">Default</pf-label>
+    <zero-md manual-render>
+      <script type="text/markdown" data-dedent>
+      ```html
+      <pf-label icon="circle-radiation" variant="outline">Default</pf-label>
+      ```
+      </script>
+    </zero-md>
+  </div>
+
+  <div class="example">
+    Slotted Icon:
+    <pf-label color="red">
+      Red label
+      <svg slot="icon" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true" role="img">
+        <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
+      </svg>
+    </pf-label>
+
+    <zero-md manual-render>
+      <script type="text/markdown" data-dedent>
+      ```html
+      <pf-label color="red">Red label
+        <svg slot="icon" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true" role="img">
+          <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
+        </svg>
+      </pf-label>
+      ```
+      </script>
+    </zero-md>
+  </div>
+
+  <div class="example">
+    Slotted <code>&lt;pf-icon&gt;</code>:
+    <pf-label color="red" icon>Default
+      <pf-icon slot="icon" icon="circle-radiation" size="sm"></pf-icon>
+    </pf-label>
+    <zero-md manual-render>
+      <script type="text/markdown" data-dedent>
+        ```html
+        <pf-label color="red" icon>
+          Default
+          <pf-icon slot="icon" icon="circle-radiation" size="sm"></pf-icon>
+        </pf-label>
+        ```
+      </script>
+    </zero-md>
+  </div>
+
+  <div class="example">
+    Icon attribute empty:
+    <pf-label icon="">Default</pf-label>
+    <zero-md manual-render>
+      <script type="text/markdown" data-dedent>
+      ```html
+      <pf-label icon="">Default</pf-label></div>
+      ```
+      </script>
+    </zero-md>
+  </div>
+</section>
+
+<section>
+  <h2>Compact</h2>
+  <pf-label compact>Default</pf-label>
+  <pf-label compact color="blue">Blue label</pf-label>
+  <pf-label compact color="green">Green label</pf-label>
+  <pf-label compact color="orange" icon="circle-radiation">Orange label</pf-label>
+  <pf-label compact color="red">Red label</pf-label>
+  <pf-label compact color="purple" variant="outline">Purple label</pf-label>
+  <pf-label compact color="cyan" icon="circle-radiation" variant="outline">Cyan label</pf-label>
+  <pf-label compact color="gold" variant="outline">Gold label</pf-label>
+  <pf-label compact variant="outline">Grey label</pf-label>
+
+  <div class="example">
+    Example: <pf-label compact icon="circle-radiation" variant="outline">Default</pf-label>
+    <zero-md manual-render>
+      <script type="text/markdown" data-dedent>
+      ```html
+      <pf-label compact icon="circle-radiation" variant="outline">Default</pf-label>
+      ```
+      </script>
+    </zero-md>
+  </div>
+</section>
+

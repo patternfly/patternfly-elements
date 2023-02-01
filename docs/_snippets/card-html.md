@@ -1,12 +1,12 @@
 ```html
-<script type="module"
-src="https://unpkg.com/@patternfly/pfe-card@next?module"></script>
-<script type="module"
-src="https://unpkg.com/@patternfly/pfe-button@next?module"></script>
+<script type="module" src="https://jspm.dev/@patternfly/elements/pf-card/pf-card.js"></script>
 
-<pfe-card color-palette="lightest">
+<pf-card border>
   <h2 slot="header">Card component</h2>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quam alias ducimus, amet iure quae earum.</p>
-  <a class="cta" slot="footer" href="components/card">Learn more about pfe-card</a>
-</pfe-card>
+  <p>PatternFly Elements are custom HTML elements that work everywhere.
+    The Card element has <code>header</code> and <code>footer</code> slots for things like 
+    titles and actions.
+  </p>
+  <a class="cta" slot="footer" href="components/card">More about <code>pf-card</code></a>
+</pf-card>
 ```

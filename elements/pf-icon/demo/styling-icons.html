@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="demo.css">
+<link rel="stylesheet" href="pf-icon.js">
+
+<h2>Styling Icons</h2>
+
+<p>Color the icons with the CSS <code>color</code> property.</p>
+
+<section>
+  <pf-icon set="patternfly" icon="unplugged" size="xl"></pf-icon>
+  <pf-icon set="patternfly" icon="info-alt" size="xl"></pf-icon>
+  <zero-md manual-render>
+    <script type="text/markdown" data-dedent>
+      ```css
+      [icon="unplugged"] { color: firebrick; }
+      [icon="info-alt"] { color: dodgerblue; }
+      ```
+    </script>
+  </zero-md>
+</section>
+
+<style>
+[icon="unplugged"] { color: firebrick; }
+[icon="info-alt"] { color: dodgerblue; }
+section {
+  display: flex;
+  gap: .5em;
+  flex-wrap: wrap;
+  align-items: center;
+}
+</style>

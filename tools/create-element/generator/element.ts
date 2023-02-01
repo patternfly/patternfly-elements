@@ -1,21 +1,15 @@
 import type { GenerateElementOptions } from '../main';
-import type { CompilerOptions, ProjectReference } from 'typescript';
 
 import Case from 'case';
 import Chalk from 'chalk';
 import prompts from 'prompts';
-import { execa, execaCommand } from 'execa';
+import { execa } from 'execa';
 
 import { fileURLToPath } from 'url';
 import { dirname, join, relative } from 'path';
 
-import { exists, mkdirp, processTemplate, readFile, readJson, writeFile } from './files.js';
+import { exists, mkdirp, processTemplate, readFile, writeFile } from './files.js';
 import { memoize } from './fp.js';
-
-interface Tsconfig {
-  compilerOptions: CompilerOptions;
-  references: ProjectReference[];
-}
 
 const { green, greenBright } = Chalk;
 
@@ -30,116 +24,82 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 * 3. Add the output path to `getFilePathsRelativeToPackageDir`, interpolating as needed.
 */
 enum FileKey {
-  cemConfig = 'cemConfig',
   component = 'component',
   demo = 'demo',
   demoCss = 'demoCss',
   demoScript = 'demoScript',
   docs = 'docs',
-  package = 'package',
   readme = 'readme',
   style = 'style',
   test = 'test',
   e2e = 'e2e',
-  tsconfig = 'tsconfig',
 }
 
 enum InterpolationKey {
   /** e.g. 'PfeJazzHands' */
   className = 'className',
-  /** e.g. 'jazz-hands' */
-  scssName = 'scssName',
   /** import specifier for the element style e.g. './rh-jazz-hands.css' */
   cssRelativePath = 'cssRelativePath',
-  /** The package's NPM package name. e.g. '@patternfly/pfe-jazz-hands' */
+  /** The package's NPM package name. e.g. '@patternfly/pf-jazz-hands' */
   packageName = 'packageName',
   /** The import specifier used to import the element */
   importSpecifier = 'importSpecifier',
   /** e.g. 'Jazz Hands' */
   readmeName = 'readmeName',
-  /** The package's NPM scope name based on user options. e.g. 'patternfly' */
-  scope = 'scope',
-  /** e.g. 'pfe-jazz-hands' */
+  /** e.g. 'pf-jazz-hands' */
   tagName = 'tagName',
-  /** e.g. 'pfe' */
+  /** e.g. 'pf' */
   tagPrefix = 'tagPrefix',
 }
 
 /** Available interpolation keys */
 type Interpolations = Record<InterpolationKey, string>;
 
-function isMonorepoFileKey(key: FileKey): boolean {
-  switch (key) {
-    case FileKey.package:
-    case FileKey.cemConfig:
-    case FileKey.tsconfig:
-      return true;
-    default:
-      return false;
-  }
-}
-
 /** Get output files */
 const getFilePathsRelativeToPackageDir =
   memoize((options: GenerateElementOptions): Record<FileKey, string> => ({
-    cemConfig: 'custom-elements-manifest.config.js',
     component: `${options.tagName}.ts`,
     demo: `demo/${options.tagName}.html`,
     demoCss: `demo/demo.css`,
     demoScript: `demo/${options.tagName}.js`,
     docs: `docs/${options.tagName}.md`,
-    package: 'package.json',
     readme: 'README.md',
     style: `${options.tagName}.${options.css === 'postcss' ? '.postcss.css' : options.css}`,
     test: `test/${options.tagName}.spec.ts`,
-    e2e: `test/${options.tagName}.e2e.spec.ts`,
-    tsconfig: 'tsconfig.json',
+    e2e: `test/${options.tagName}.e2e.ts`,
   }));
 
-/** e.g. elements/pfe-jazz-hands */
+/** e.g. elements/pf-jazz-hands */
 const getComponentPathFromDirectoryOption =
   memoize((options: GenerateElementOptions): string =>
     join('elements', options.tagName));
 
-/** e.g. /Users/alj/Developer/jazz-elements/elements/pfe-jazz-hands */
+/** e.g. /Users/alj/Developer/jazz-elements/elements/pf-jazz-hands */
 const getComponentAbsPath =
   memoize((options: GenerateElementOptions): string =>
     join(options.directory, getComponentPathFromDirectoryOption(options)));
 
-/**
- * Returns a 'fully qualified' NPM package scope e.g. `@patternfly/`,
- * whether or not the user provides one as such,
- * or just the scope name e.g. `patternfly`.
- * If no scope is provided, returns the empty string.
- */
-const normalizeScope = (scope: string): string =>
-  scope ? `@${scope.replace(/^(@+)([-.\w]+)\/?$/, '$2')}/` : '';
-
 /** Get template interpolation data from options */
 const getInterpolations =
   memoize((options: GenerateElementOptions): Interpolations => {
-    const { tagName } = options;
-    const [, tagPrefix, scssName] = tagName.match(/^(\w+)-(.*)/) ?? [];
+    const { tagName, packageName } = options;
+    const [, tagPrefix] = tagName.match(/^(\w+)-(.*)/) ?? [];
     const className = Case.pascal(options.tagName);
     const readmeName = Case.title(options.tagName.replace(/^\w+-(.*)/, '$1'));
-    const scope = !options.scope ? '' : normalizeScope(options.scope);
-    const packageName = `${scope}${tagName}`;
     const cssRelativePath = `./${options.css === 'postcss' ? `${tagName}.postcss.css` : `${tagName}.${options.css}`}`;
-    const importSpecifier = options.monorepo ? packageName : `@rhds/elements/${tagName}/${tagName}.js`;
+    const importSpecifier = `${packageName}/${tagName}/${tagName}.js`;
     return {
       className,
-      scssName,
       cssRelativePath,
       importSpecifier,
       packageName,
       readmeName,
-      scope,
       tagName,
       tagPrefix,
     };
   });
 
-/** e.g. /Users/alj/Developer/jazz-elements/elements/pfe-jazz-hands/pfe-jazz-hands.ts */
+/** e.g. /Users/alj/Developer/jazz-elements/elements/pf-jazz-hands/pf-jazz-hands.ts */
 const getOutputFilePath =
   (key: FileKey, options: GenerateElementOptions): string =>
     join(getComponentAbsPath(options), getFilePathsRelativeToPackageDir(options)[key]);
@@ -167,10 +127,6 @@ async function getTemplate(key: FileKey, options: GenerateElementOptions): Promi
 }
 
 async function writeComponentFile(key: FileKey, options: GenerateElementOptions) {
-  if (!options.monorepo && isMonorepoFileKey(key)) {
-    return;
-  }
-
   const PATH = getOutputFilePath(key, options);
   const TEMPLATE = await getTemplate(key, options);
   const DATA = getInterpolations(options);
@@ -195,7 +151,7 @@ async function writeElementFiles(options: GenerateElementOptions) {
     console.log(`\nCreating ${green(options.tagName)} in ${getComponentPathFromDirectoryOption(options)}\n`);
   }
 
-  // $ mkdir -p /Users/alj/jazz-elements/elements/pfe-jazz-hands
+  // $ mkdir -p /Users/alj/jazz-elements/elements/pf-jazz-hands
   await mkdirp(getComponentAbsPath(options));
 
   for (const key of Object.keys(FileKey).sort() as FileKey[]) {
@@ -212,10 +168,8 @@ async function analyzeElement(options: GenerateElementOptions): Promise<void> {
     console.log(`\nAnalyzing ${greenBright(options.tagName)}`);
   }
 
-  const monorepoArgs = !options.monorepo ? [] : ['--prefix', getComponentAbsPath(options)];
-
   const { stderr, stdout } =
-    await execa('npm', ['run', 'analyze', ...monorepoArgs], {
+    await execa('npm', ['run', 'analyze',], {
       all: true,
       cwd: options.directory,
     });
@@ -226,23 +180,6 @@ async function analyzeElement(options: GenerateElementOptions): Promise<void> {
   } else if (!options.silent) {
     console.log(stdout);
   }
-}
-
-async function updateTsconfig(options: GenerateElementOptions): Promise<void> {
-  const configPath = join(process.cwd(), 'tsconfig.settings.json');
-  const { packageName, tagName } = getInterpolations(options);
-  const config = await readJson<Tsconfig>(configPath);
-
-  if (config?.compilerOptions?.paths) {
-    config.compilerOptions.paths[packageName] = [`./elements/${tagName}/${tagName}.ts`];
-  }
-
-  if (!config.references?.some(x => x.path === `./elements/${tagName}`)) {
-    config.references.push({ 'path': `./elements/${tagName}` });
-  }
-
-  await writeFile(configPath, JSON.stringify(config, null, 2), 'utf8');
-  await execaCommand(`npx eslint --fix ${configPath}`);
 }
 
 /**
@@ -260,10 +197,5 @@ export async function generateElement(options: GenerateElementOptions): Promise<
   } else {
     await writeElementFiles(options);
     analyzeElement; // skip this for now, come back to fix later
-    // await analyzeElement(options);
-    if (options.monorepo) {
-      await updateTsconfig(options);
-      await execaCommand('npm install');
-    }
   }
 }

@@ -13,8 +13,8 @@ export class PerfController implements ReactiveController {
     // Set up the mark ID based on existing ID on component if it exists
     if (!host.id) {
       this.markId = getRandomId(host.localName);
-    } else if (host.id.startsWith('pfe-') && !host.id.startsWith(host.localName)) {
-      this.markId = host.id.replace('pfe', host.localName);
+    } else if (host.id.startsWith('pf-') && !host.id.startsWith(host.localName)) {
+      this.markId = host.id.replace('pf', host.localName);
     } else {
       this.markId = `${host.localName}-${host.id}`;
     }

@@ -7,7 +7,7 @@
 3. [Creating components][creating]
 4. [Theming components][theming]
 
-[PatternFly Elements][pfe-home] is a work-in-progress collection of flexible and lightweight Web Components based on the Unified Design Kit. The repo also includes a generator to build new components. PatternFly Elements are:
+[PatternFly Elements][home] is a work-in-progress collection of flexible and lightweight Web Components based on the Unified Design Kit. The repo also includes a generator to build new components. PatternFly Elements are:
 
 - **Lightweight**: small file size, minimal boilerplate, no "framework-like" features.
 - **Universal**: write once, use everywhere. PatternFly Elements work in React, Vue, Angular, vanilla JS, anywhere HTML elements are used.
@@ -22,21 +22,10 @@ A generator is included for creating web components that meet these goals.
 git clone git@github.com:patternfly/patternfly-elements.git
 cd patternfly-elements
 npm ci # install dependencies.
-npm run start 
+npm run start
 ```
 
 ### Additional dependencies
-
-#### Hub
-
-If you will be doing any release work, it is recommended that you install Hub.
-
-To install on a MacOS: `brew install hub`.
-
-For other systems, please see documentation:
-    - [Hub](https://hub.github.com/)
-
-_Note: You will need to use [Node](https://nodejs.org/en/) v12 or higher._
 
 #### nvm
 
@@ -50,14 +39,12 @@ Many commands have an optional argument of space-separated component name(s), if
 ```shell
 # Build all components
 npm run build
-
-# Build one or more components
-npm run build -w @patternfly/pfe-card
 ```
 
 ### Preview
 
-Runs server process to preview files (does not build)
+Runs development server.
+
 ```shell
 npm start
 ```
@@ -71,10 +58,10 @@ npm start
 npm run test:watch
 
 # Run a single test in watch mode.
-npm run test:watch -- --files elements/pfe-accordion/test/pfe-accordion.spec.ts
+npm run test:watch -- --files elements/pf-accordion/test/pf-accordion.spec.ts
 
 # Or multiple:
-npm run test:watch -- --files 'elements/pfe-{select,card}/test/*.spec.ts'
+npm run test:watch -- --files 'elements/pf-{select,card}/test/*.spec.ts'
 
 # Run all tests excluding react and vue tests.
 npm run test:watch
@@ -100,12 +87,12 @@ npm run pr
 ### Documentation site
 View the documentation locally
 ```shell
-npm run start:docs
+npm run start
 ```
 
 Build the documentation site
 ```shell
-npm run build:docs
+npm run docs
 ```
 
 ## Support
@@ -121,7 +108,7 @@ You can also participate in discussions on [patternfly.slack.com](https://patter
 
 ---
 
-[home][pfe-home] |
+[home][home] |
 [start][getting-started] |
 [develop][creating] |
 [theming][theming] |
@@ -129,7 +116,7 @@ You can also participate in discussions on [patternfly.slack.com](https://patter
 [web components][wc-org]
 
 
-[pfe-home]: https://patternflyelements.org
+[home]: https://patternflyelements.org
 [getting-started]: https://patternflyelements.org/get-started
 [catalog]: https://patternflyelements.org/components
 [creating]: https://patternflyelements.org/docs/develop/create/

@@ -1,0 +1,69 @@
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-jump-links.js"></script>
+
+<section>
+  <h2>Basic</h2>
+  <pf-jump-links>
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+    <pf-jump-links-item active>Active section</pf-jump-links-item>
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+  </pf-jump-links>
+</section>
+
+<section>
+  <h2>With centered list</h2>
+  <pf-jump-links centered>
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+    <pf-jump-links-item active>Active section</pf-jump-links-item>
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+  </pf-jump-links>
+</section>
+
+<section>
+  <h2>With label</h2>
+  <pf-jump-links label="Jump to section">
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+    <pf-jump-links-item active>Active section</pf-jump-links-item>
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+  </pf-jump-links>
+  <pf-jump-links centered label="Jump to section">
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+    <pf-jump-links-item active>Active section</pf-jump-links-item>
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+  </pf-jump-links>
+</section>
+
+<section>
+  <h2>Vertical</h2>
+  <pf-jump-links vertical>
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+    <pf-jump-links-item active>Active section</pf-jump-links-item>
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+  </pf-jump-links>
+</section>
+
+<section>
+  <h2>Vertical with label</h2>
+  <pf-jump-links vertical label="Jump to section">
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+    <pf-jump-links-item active>Active section</pf-jump-links-item>
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+  </pf-jump-links>
+</section>
+
+<section>
+  <h2>Expandable vertical with subsection</h2>
+  <pf-jump-links vertical expandable label="Jump to section">
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+    <pf-jump-links-item>
+      Section with active subsection
+      <pf-jump-links-list slot="subsection">
+        <pf-jump-links-item active>Active subsection</pf-jump-links-item>
+        <pf-jump-links-item>Inactive subsection</pf-jump-links-item>
+        <pf-jump-links-item>Inactive subsection</pf-jump-links-item>
+      </pf-jump-links-list>
+    </pf-jump-links-item>
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+    <pf-jump-links-item>Inactive section</pf-jump-links-item>
+  </pf-jump-links>
+</section>

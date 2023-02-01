@@ -15,26 +15,24 @@ The server will load on `http://localhost:8000` by default.
 
 ![npm run live-demo command](/images/develop/develop-structure.png)
 
-Assuming the `dev` command started a server on port 8000, navigate to `http://localhost:8000/demo/pfe-cool-element/` to view your element.
+Assuming the `dev` command started a server on port 8000, navigate to `http://localhost:8000/demo/pf-cool-element/` to view your element.
 
 You're off to a good start! You have a new custom element that extends the base LitElement class.
 
-Let's take a look at the `pfe-cool-element.ts` file to see what we have.
+Let's take a look at the `pf-cool-element.ts` file to see what we have.
 
 ```ts
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-import styles from './pfe-cool-element.scss';
+import styles from './pf-cool-element.css';
 
 /**
  * Cool Element
  * @slot - Place element content here
  */
-@customElement('pfe-cool-element')
-export class PfeCoolElement extends LitElement {
-  static readonly version = '{{version}}';
-
+@customElement('pf-cool-element')
+export class PfCoolElement extends LitElement {
   static readonly styles = [styles];
 
   render() {
@@ -46,7 +44,7 @@ export class PfeCoolElement extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pfe-cool-element': PfeCoolElement;
+    'pf-cool-element': PfCoolElement;
   }
 }
 ```
@@ -67,7 +65,7 @@ Unlike PFE 1.0's `PFElement` base class, Lit template updates (i.e. renders) are
 For example, with `PFElement` we could handle the side-effects of our actions immediately:
 
 ```js
-const element = document.querySelector('pfe-tabs');
+const element = document.querySelector('pf-tabs');
 // Select the 2nd Tab
 element.selectIndex(1);
 // Side effects happen immediately,
@@ -79,7 +77,7 @@ const active = element.querySelector('[aria-selected="true"]');
 With `LitElement`, we must wait for our changes to apply before continuing:
 
 ```diff-js
-  const element = document.querySelector('pfe-tabs');
+  const element = document.querySelector('pf-tabs');
   // Select the 2nd Tab
   element.selectIndex(1);
 - // Side effects happen immediately,
@@ -102,22 +100,24 @@ Decorators are a [proposed JavaScript language feature](https://github.com/tc39/
 TypeScript implements an experimental version of the decorator language feature with a slightly different internal API.
 
 ```ts
-@customElement('pfe-cool-element')
+@customElement('pf-cool-element')
 ```
 
-Third, we import an use our component's SASS styles
+Third, we import an use our component's CSS styles
 
 ```ts
-import styles from './pfe-cool-element.scss';
+import styles from './pf-cool-element.css';
 ```
 
 ```ts
 static readonly styles = [styles];
 ```
 
-Of course, web browsers don't know how to import `.scss` files as CSS styles. In the near future, we will use
+As of this writing, web browsers don't yet know how to import `.css` files as 
+CSS styles. In the near future, we will use
 [import assertions](https://github.com/tc39/proposal-import-assertions) to import [CSS modules](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/css-modules-v1-explainer.md),
-but for now, we use some [build-time tricks](https://npm.im/esbuild-plugin-lit-css) to transform our SASS sources into JavaScript objects which work with LitElement.
+but for now, we use some [build-time tricks](https://npm.im/esbuild-plugin-lit-css) to transform our CSS sources into 
+JavaScript objects which work with LitElement.
 
 > For questions on how Custom Elements work, or if you want to learn the basics of shadow DOM, check out Eric Bidelman's post: [Custom Elements v1: Reusable Web Components](https://developers.google.com/web/fundamentals/web-components/customelements).
 

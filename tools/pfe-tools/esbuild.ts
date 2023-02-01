@@ -1,20 +1,16 @@
 import type { Plugin } from 'esbuild';
-import type { Meta as LitCSSModuleMeta } from '@pwrs/lit-css';
 import type { LitCSSOptions } from 'esbuild-plugin-lit-css';
 
 import esbuild from 'esbuild';
 import glob from 'glob';
-import Sass from 'sass';
 import CleanCSS from 'clean-css';
 
 import { externalSubComponents } from './esbuild-plugins/external-sub-components.js';
-import { packageVersion } from './esbuild-plugins/package-version.js';
 import { litCssPlugin } from 'esbuild-plugin-lit-css';
 
 import { minifyHTMLLiteralsPlugin } from 'esbuild-plugin-minify-html-literals';
-import { nodeExternalsPlugin } from 'esbuild-node-externals';
 import { readdirSync } from 'fs';
-import { resolve, join, dirname } from 'path';
+import { resolve, join } from 'path';
 import { fileURLToPath } from 'url';
 import { readdir, readFile, stat } from 'fs/promises';
 
@@ -40,7 +36,7 @@ export interface PfeEsbuildOptions {
 export interface PfeEsbuildSingleFileOptions {
   /** list of NPM package names to bundle alongside the repo's components */
   additionalPackages?: string[];
-  /** String contents of an entry point file for all elements to be bundled. Defaults to an entry point containing all installed pfe-* elements. */
+  /** String contents of an entry point file for all elements to be bundled. Defaults to an entry point containing all installed pf-* elements. */
   componentsEntryPointContents?: string;
   outfile?: string;
   litCssOptions?: LitCSSOptions;
@@ -57,9 +53,6 @@ export interface PfeBasePluginOptions {
 /** best guess at abs-path to repo root */
 const REPO_ROOT = fileURLToPath(new URL('../..', import.meta.url)).replace(/node_modules\/$/, '');
 
-/** abs-path to root node_modules */
-const NODE_MODULES = join(REPO_ROOT, 'node_modules/');
-
 /** memoization cache for temporary component entrypoint files */
 const COMPONENT_ENTRYPOINTS_CACHE = new Map();
 
@@ -68,60 +61,34 @@ const cleanCSS = new CleanCSS({
   returnPromise: true,
 });
 
-/**
- * Exclude SASS-only packages because there are no ts sources there
- */
-const ALWAYS_EXCLUDE = [
-  'pfe-sass',
-  'pfe-styles',
-];
-
 const exists = (filePath: string) => stat(filePath).then(() => true, () => false);
-
-/** lit-css transform plugin to process `.scss` files on-the-fly */
-export async function transformSass(
-  source: string,
-  { filePath, minify }: LitCSSModuleMeta & { minify?: boolean }
-): Promise<string> {
-  const loadPaths = [dirname(filePath), NODE_MODULES];
-  const result = Sass.compileString(source, { loadPaths });
-  // TODO: forward sourcemaps by returning an object, would probably need a PR to lit-css
-  if (!minify) {
-    return result.css;
-  } else {
-    const { styles } = await cleanCSS.minify(result.css/* , result.sourceMap */);
-    return styles;
-  }
-}
 
 /**
  * The basic set of plugins that all esbuild jobs should apply
- * - Transform (and optionally minify) SCSS
  * - optionally minify HTML
  * - replace the package version in component sources
  */
 export function getBasePlugins({ minify, litCssOptions }: PfeBasePluginOptions = {}): Plugin[] {
   return [
-    // import scss files as LitElement CSSResult objects
+    // import css files as LitElement CSSResult objects
     litCssPlugin(litCssOptions ?? {
-      filter: /\.scss$/,
-      transform: (source, { filePath }) =>
-        transformSass(source, { filePath, minify }),
+      filter: /\.css$/,
+      ...minify && {
+        transform: source => cleanCSS.minify(source).then(x => x.styles)
+      }
     }),
     ...!minify ? [] : [
       // minify lit-html templates
       minifyHTMLLiteralsPlugin(),
-    ],
-    // replace `{{version}}` with each package's version
-    packageVersion(),
-  ] as Plugin[];
+    ].filter(x=>!!x),
+  ] as unknown as Plugin[];
 }
 
 /** Generate a temporary file containing namespace exports of all pfe components */
 export async function componentsEntryPoint(options?: { additionalPackages?: string[] }) {
   const componentDirs = (await readdir(join(REPO_ROOT, 'node_modules', '@patternfly')).catch(() => [] as string[]))
-    .filter((x: string) => x.startsWith('pfe'))
-    .filter((x: string) => !x.match(/pfe-(core|styles|sass|tools)$/));
+    .filter((x: string) => x.startsWith('pf'))
+    .filter((x: string) => !x.match(/pf-(core|tools)$/));
 
   const cacheKey = componentDirs.join('--');
 
@@ -181,7 +148,6 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
       outfile: options?.outfile ?? 'pfe.min.js',
       sourcemap: true,
       treeShaking: true,
-      watch: false,
       define: {
         // eslint-disable-next-line no-useless-escape
         'process.env.NODE_ENV': JSON.stringify( 'production' ),
@@ -191,7 +157,6 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
         ...options?.plugins ?? []
       ],
     });
-    result.stop?.();
     return result.outputFiles?.map(x => x.path) ?? [];
   } catch {
     process.exit(1);
@@ -202,7 +167,7 @@ export async function singleFileBuild(options?: PfeEsbuildSingleFileOptions) {
  * Build all components in a monorepo
  */
 export async function pfeBuild(options?: PfeEsbuildOptions) {
-  const entryPointFilesExcludes = [...ALWAYS_EXCLUDE, ...options?.entryPointFilesExcludes ?? []];
+  const entryPointFilesExcludes = options?.entryPointFilesExcludes ?? [];
   const workspace = options?.workspace ?? 'elements';
   const mode = options?.mode ?? 'development';
   const cwd = options?.cwd ?? process.cwd();
@@ -238,10 +203,6 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
   const entryNames =
     join(...options?.include?.length === 1 ? [options.include[0]] : [], '[dir]', '[name]');
 
-  /** list of paths to package.json files */
-  const packagePath = packageDirs.flatMap(dir =>
-    glob.sync(`${workspace}/${dir}/package.json`, { absolute: true, cwd }));
-
   try {
     const result = await esbuild.build({
       entryPoints,
@@ -251,7 +212,6 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
       allowOverwrite: true,
       treeShaking: true,
       legalComments: 'linked',
-      watch: Boolean(process.env.WATCH) || false,
       logLevel: 'info',
       sourcemap: true,
       define: {
@@ -275,13 +235,10 @@ export async function pfeBuild(options?: PfeEsbuildOptions) {
 
       plugins: [
         ...getBasePlugins({ minify: mode === 'production' }),
-        // ignore sub components bundling like "pfe-progress-steps-item"
+        // ignore sub components bundling like "pf-progress-steps-item"
         externalSubComponents(),
-        // don't bundle node_module dependencies
-        nodeExternalsPlugin({ packagePath }) as Plugin,
       ],
     });
-    result.stop?.();
     return result.outputFiles?.map(x => x.path) ?? [];
   } catch (error) {
     console.log(error);

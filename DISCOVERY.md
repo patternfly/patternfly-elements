@@ -1,5 +1,6 @@
 # Project name
-_NOTE:_ Please convert this file to WHY.md and save it in the folder for the elements it references (i.e., `elements/pfe-cta/WHY.md`).
+_NOTE:_ Please convert this file to WHY.md and save it in the folder for the 
+elements it references (i.e., `elements/pf-cta/WHY.md`).
 
 |  |  |
 | --- | --- |

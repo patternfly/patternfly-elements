@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-icon.js"></script>
+
+<section id="sizes">
+  <h2>Icon Sizes and Colours</h2>
+  <dl>
+    <div><dt>Small</dt><dd><pf-icon icon="circle-play" size="sm"></pf-icon></dd></div>
+    <div><dt>Medium</dt><dd><pf-icon icon="circle-play" size="md"></pf-icon></dd></div>
+    <div><dt>Large</dt><dd><pf-icon icon="circle-play" size="lg"></pf-icon></dd></div>
+    <div><dt>X-Large</dt><dd><pf-icon icon="circle-play" size="xl"></pf-icon></dd></div>
+  </dl>
+  <dl id="colors">
+    <div><dt>danger</dt><dd><pf-icon class="danger" icon="circle-play" size="lg"></pf-icon></dd></div>
+    <div><dt>default</dt><dd><pf-icon class="default" icon="circle-play" size="lg"></pf-icon></dd></div>
+    <div><dt>info</dt><dd><pf-icon class="info" icon="circle-play" size="lg"></pf-icon></dd></div>
+    <div><dt>success</dt><dd><pf-icon class="success" icon="circle-play" size="lg"></pf-icon></dd></div>
+    <div><dt>warning</dt><dd><pf-icon class="warning" icon="circle-play" size="lg"></pf-icon></dd></div>
+    <div><dt>disabled</dt><dd><pf-icon class="disabled" icon="circle-play" size="lg"></pf-icon></dd></div>
+  </dl>
+</section>
+
+<section id="sets">
+  <h2>Default Icon Sets</h2>
+  <label>Icon Name
+    <input id="icon-search" list="icons-list" placeholder="icon-name">
+    <datalist id="icons-list"></datalist>
+  </label>
+  <p>Use the text field above to search for an icon name. Click the icon to copy it's HTML.</p>
+  <p>PatternFly Icon comes with three built-in icon sets, the default is fontawesome solid</p>
+  <output id="pf-icon-demo-output"></output>
+</section>

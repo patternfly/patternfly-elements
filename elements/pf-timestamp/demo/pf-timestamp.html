@@ -1,0 +1,78 @@
+<script type="module" src="pf-timestamp.js"></script>
+
+<section>
+  <h3>Default</h3>
+  <p><pf-timestamp></pf-timestamp></p>
+</section>
+
+<section>
+  <h3>Basic formats</h3>
+  <p><pf-timestamp date-format="full" time-format="full"></pf-timestamp></p>
+  <p><pf-timestamp date-format="full"></pf-timestamp></p>
+  <p><pf-timestamp time-format="full"></pf-timestamp></p>
+  <p><pf-timestamp date-format="medium" time-format="short" display-suffix="US Eastern"></pf-timestamp></p>
+  <p><pf-timestamp date-format="full" locale="es"></pf-timestamp></p>
+</section>
+
+<section>
+  <h3>Custom format</h3>
+  <p><pf-timestamp id="timestamp-custom-format" date="Sat Jan 01 2022 00:00:00 GMT-0500"></pf-timestamp></p>
+
+  <script>
+  document.getElementById('timestamp-custom-format').customFormat = {
+    year: '2-digit',
+    month: 'short',
+    weekday: 'short',
+    day: 'numeric',
+    hour: 'numeric'
+  };
+  </script>
+</section>
+
+<section>
+  <h3>Default tooltip</h3>
+  <p>
+    <pf-tooltip>
+      <pf-timestamp></pf-timestamp>
+      <pf-timestamp slot="content" utc></pf-timestamp>
+    </pf-tooltip>
+  </p>
+  <p>
+    <pf-tooltip>
+      <pf-timestamp></pf-timestamp>
+      <pf-timestamp slot="content" utc display-suffix="Coordinated Universal Time"></pf-timestamp>
+    </pf-tooltip>
+  </p>
+</section>
+
+<section>
+  <h3>Custom tooltip</h3>
+  <p>
+    <pf-tooltip>
+      <pf-timestamp date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)"></pf-timestamp>
+      <span slot="content">Last updated on <pf-timestamp date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)" date-format="long" time-format="short" utc></pf-timestamp></span>
+    </pf-tooltip>
+  </p>
+  <p>
+    <pf-tooltip>
+      Halloween
+      <pf-timestamp slot="content" date="Mon Oct 31 2022 00:00:00 GMT-0400 (Eastern Daylight Time)" date-format="medium"></pf-timestamp>
+    </pf-tooltip>
+  </p>
+</section>
+
+<section>
+  <h3>Relative with tooltip</h3>
+  <p>
+    <pf-tooltip>
+      <pf-timestamp date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)" relative></pf-timestamp>
+      <pf-timestamp slot="content" date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)"></pf-timestamp>
+    </pf-tooltip>
+  </p>
+  <p>
+    <pf-tooltip>
+      <pf-timestamp date="Aug 09 2024 14:57:00 GMT-0400 (Eastern Daylight Time)" relative></pf-timestamp>
+      <pf-timestamp slot="content" date="Aug 09 2024 14:57:00 GMT-0400 (Eastern Daylight Time)"></pf-timestamp>
+    </pf-tooltip>
+  </p>
+</section>

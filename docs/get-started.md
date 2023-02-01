@@ -18,10 +18,11 @@ title: Get started
   project like this:
 
   ```shell
-  npm install --save @patternfly/pfe-card@next
+  npm install --save @patternfly/elements
   ```
 
-  This will install not only the pfe-card, but also the core utilities and styles,
+  This will install not only the pf-card, but also the core utilities and 
+  styles,
   and will save it to your package.json.
 {% endband %}
 
@@ -35,10 +36,10 @@ title: Get started
   [Learn more about JavaScript modules][modules].
 
   In this example, we load the [card](/components/card/) modules from 
-  [`https://unpkg.com`](https://unpkg.com).
+  [JSPM](https://jspm.dev).
 
   ```html
-  <script type="module" src="https://unpkg.com/@patternfly/pfe-card@next?module"></script>
+  <script type="module" src="https://jspm.dev/@patternfly/elements/pf-card/pf-card.js"></script>
   ```
 
   <a id="in-an-app"></a>
@@ -51,7 +52,7 @@ title: Get started
   [bare module specifiers](https://lit.dev/docs/tools/requirements/) to import the components.
 
   ```javascript
-  import '@patternfly/pfe-card';
+  import '@patternfly/elements/pf-card/pf-card.js';
   ```
 {% endband %}
 
@@ -59,18 +60,18 @@ title: Get started
   Add a [card component](/components/card).
 
   ```html
-  <pfe-card>
+  <pf-card>
     <h3 slot="header">Card header</h3>
-    <p>This is the pfe-card body.</p>
-    <pfe-button slot="footer">OK</p>
-  </pfe-card>
+    <p>This is the pf-card body.</p>
+    <pf-button slot="footer">OK</pf-button>
+  </pf-card>
   ```
 
-  <pfe-card>
+  <pf-card>
     <h3 slot="header">Card header</h3>
-    <p>This is the pfe-card body.</p>
-    <pfe-button slot="footer">OK</p>
-  </pfe-card>
+    <p>This is the pf-card body.</p>
+    <pf-button slot="footer">OK</pf-button>
+  </pf-card>
 
 {% endband %}
 
@@ -80,18 +81,18 @@ title: Get started
   component to see which attributes are available.
 
   ```html
-  <pfe-card rounded>
+  <pf-card rounded>
     <h3 slot="header">Card header</h3>
-    <p>This is the pfe-card body.</p>
-    <pfe-button slot="footer">OK</p>
-  </pfe-card>
+    <p>This is the pf-card body.</p>
+    <pf-button slot="footer">OK</pf-button>
+  </pf-card>
   ```
 
-  <pfe-card rounded>
+  <pf-card rounded>
     <h3 slot="header">Card header</h3>
-    <p>This is the pfe-card body.</p>
-    <pfe-button slot="footer">OK</p>
-  </pfe-card>
+    <p>This is the pf-card body.</p>
+    <pf-button slot="footer">OK</pf-button>
+  </pf-card>
 {% endband %}
 
 {% band header="Use CSS variables to customize or theme your components" %}
@@ -108,11 +109,11 @@ title: Get started
     --pf-c-card--BackgroundColor: cornflowerblue;
   }
   ```
-  <pfe-card flat rounded style="--pf-c-card--BackgroundColor: cornflowerblue;">
+  <pf-card flat rounded style="--pf-c-card--BackgroundColor: cornflowerblue;">
     <h3 slot="header">Card header</h3>
-    <p>This is the pfe-card body.</p>
-    <pfe-button slot="footer">OK</p>
-  </pfe-card>
+    <p>This is the pf-card body.</p>
+    <pf-button slot="footer">OK</pf-button>
+  </pf-card>
 {% endband %}
 
 {% band header="Avoiding the flash of unstyled content (FOUC)" %}
@@ -137,12 +138,12 @@ title: Get started
         --reveal-duration: 0.2s;
       }
 
-      pfe-card {
+      pf-card {
         opacity: 1;
         transition: opacity var(--reveal-duration) ease var(--reveal-delay);
       }
 
-      pfe-card:not(:defined) {
+      pf-card:not(:defined) {
         opacity: 0;
       }
     </style>
@@ -150,18 +151,18 @@ title: Get started
     <!-- Add noscript styles to immediately reveal content when JavaScript is disabled -->
     <noscript>
       <style>
-        pfe-card:not(:defined) {
+        pf-card:not(:defined) {
           opacity: 1;
         }
       </style>
     </noscript>
-    <script type="module" src="https://jspm.dev/@patternfly/pfe-card@next"></script>
+    <script type="module" src="https://jspm.dev/@patternfly/elements/pf-card/pf-card.js"></script>
   </head>
   <body>
-    <pfe-card>
+    <pf-card>
       <h1 slot="header">No FOUC</h1>
       <p>Content will remain hidden until component definitions are loaded.</p>
-    </pfe-card>
+    </pf-card>
   </body>
   </html>
   ```

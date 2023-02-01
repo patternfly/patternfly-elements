@@ -8,8 +8,8 @@
   ],
   "compilerOptions": {
     "target": "es2022",
+    "composite": true,
     "allowJs": false,
-    "checkJs": false,
-    "emitDeclarationOnly": false
+    "checkJs": false
   }
 }

@@ -3,7 +3,6 @@ import type { Page } from '@playwright/test';
 
 import { URL } from 'url';
 import { expect } from '@playwright/test';
-import percySnapshot from '@percy/playwright';
 
 interface NavigateOptions {
   selector: string;
@@ -23,7 +22,7 @@ export class PfeDemoPage {
   async navigate(pathname?: string): Promise<void>
   async navigate(pathnameOrOptions?: string | NavigateOptions): Promise<void> {
     const selectorOverride = typeof pathnameOrOptions === 'string' ? undefined : pathnameOrOptions?.selector;
-    const pathname = typeof pathnameOrOptions === 'string' ? pathnameOrOptions : `${this.workspace}/${this.tagName.replace('pfe-', '')}/demo`;
+    const pathname = typeof pathnameOrOptions === 'string' ? pathnameOrOptions : `${this.workspace}/${this.tagName.replace('pf-', '')}/demo`;
     const url = new URL(pathname, this.origin).toString();
     console.log(`NAVIGATING to ${url}`);
     await this.page.goto(url, { waitUntil: 'networkidle' });
@@ -31,9 +30,10 @@ export class PfeDemoPage {
       await this.page.goto(url, { waitUntil: 'networkidle' });
     }
     await this.page.waitForLoadState('domcontentloaded');
-    await this.page.$$eval('[pfelement]', async els =>
-      await Promise.all(Array.from(els, x =>
-        customElements.whenDefined(x.localName)
+    await this.page.$$eval('*', async els =>
+      await Promise.all(Array.from(els)
+        .filter(x => x.localName.startsWith('pf-'))
+        .map(x => customElements.whenDefined(x.localName)
           .then(() =>
             (x as LitElement)?.updateComplete))));
     await this.updateComplete(selectorOverride);
@@ -65,13 +65,9 @@ export class PfeDemoPage {
     }
   }
 
-  /** Take a snapshot. When running in CI, send it to Percy, otherwise, save it to disk */
+  /** Take a snapshot and save it to disk */
   async snapshot(name?: string) {
     const snapshotName = `${this.tagName}${name ? `-${name}` : ''}`;
-    if (process.env.CI) {
-      await percySnapshot(this.page, snapshotName, { enableJavaScript: true });
-    } else {
-      expect(await this.page.screenshot({ fullPage: true })).toMatchSnapshot(`${snapshotName}.png`);
-    }
+    expect(await this.page.screenshot({ fullPage: true })).toMatchSnapshot(`${snapshotName}.png`);
   }
 }

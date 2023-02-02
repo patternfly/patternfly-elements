@@ -9,8 +9,7 @@
   "module": "./pfe.js",
   "types": "./pfe.d.ts",
   "exports": {
-    ".": "./pfe.js",
-    "./*": "./*"
+    ".": "./pfe.js"
   },
   "publishConfig": {
     "access": "public",

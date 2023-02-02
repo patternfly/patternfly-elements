@@ -3,8 +3,12 @@
   "version": "1.2.0",
   "type": "module",
   "description": "Development and build tools for PatternFly Elements and related projects",
+  "bin": {
+    "pfe": "cli/cli.js"
+  },
   "keywords": [
     "web-components",
+    "cli",
     "html"
   ],
   "repository": {
@@ -20,11 +24,6 @@
     "node": ">=14"
   },
   "exports": {
-    "./config.js": "./config.js",
-    "./custom-elements-manifest/config.js": "./custom-elements-manifest/config.js",
-    "./dev-server/config.js": "./dev-server/config.js",
-    "./dev-server/demo.js": "./dev-server/demo.js",
-    "./environment.js": "./environment.js",
     "./11ty": "./11ty/index.js",
     "./11ty/DocsPage.js": "./11ty/DocsPage.js",
     "./11ty/plugins/anchors.cjs": "./11ty/plugins/anchors.cjs",
@@ -32,6 +31,12 @@
     "./11ty/plugins/order-tags.cjs": "./11ty/plugins/order-tags.cjs",
     "./11ty/plugins/table-of-contents.cjs": "./11ty/plugins/table-of-contents.cjs",
     "./11ty/plugins/todos.cjs": "./11ty/plugins/todos.cjs",
+    "./cli/*": "./cli/*",
+    "./config.js": "./config.js",
+    "./custom-elements-manifest/config.js": "./custom-elements-manifest/config.js",
+    "./dev-server/config.js": "./dev-server/config.js",
+    "./dev-server/demo.js": "./dev-server/demo.js",
+    "./environment.js": "./environment.js",
     "./test/a11y-snapshot.js": "./test/a11y-snapshot.js",
     "./test/config.js": "./test/config.js",
     "./test/create-fixture.js": "./test/create-fixture.js",
@@ -55,6 +60,7 @@
   "files": [
     "!*.ts",
     "demo/**/*",
+    "cli/commands/generator/templates/**/*",
     "custom-elements.json",
     "**/*.LEGAL.txt",
     "**/*.{njk,html,md,css,woff,woff2}",
@@ -86,8 +92,10 @@
     "@web/test-runner-commands": "^0.6.5",
     "@web/test-runner-junit-reporter": "^0.5.0",
     "@web/test-runner-playwright": "^0.9.0",
+    "case": "1.6.3",
     "cem-plugin-module-file-extensions": "^0.0.5",
     "cem-plugin-readonly": "^0.0.5",
+    "chalk": "5.0.1",
     "clean-css": "^5.3.2",
     "colorjs.io": "^0.4.3",
     "compression": "^1.7.4",
@@ -111,17 +119,16 @@
     "patch-package": "^6.5.1",
     "playwright": "^1.31.1",
     "playwright-lighthouse": "^2.2.2",
+    "prompts": "2.4.2",
     "pwa-helpers": "^0.9.1",
     "rollup-plugin-lit-css": "^4.0.1",
     "sinon": "^15.0.1",
     "ts-lit-plugin": "^1.2.1",
     "ts-node": "^10.9.1",
-    "ttypescript": "^1.5.15",
-    "typescript": "4.9.5",
-    "urlpattern-polyfill": "^6.0.2",
-    "web-dev-server-plugin-lit-css": "^2.0.3"
-  },
-  "devDependencies": {
-    "@types/glob": "^8.1.0"
+    "tslib": "2.5.0",
+    "typescript": "4.9.4",
+    "urlpattern-polyfill": "^6.0.1",
+    "web-dev-server-plugin-lit-css": "^2.0.0",
+    "yargs": "17.5.1"
   }
 }

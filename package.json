@@ -16,11 +16,10 @@
     "dev": "wireit",
     "🚧-BUILD": "❓ Make packages and artifacts",
     "build": "wireit",
-    "build:create": "wireit",
     "analyze": "wireit",
     "docs": "wireit",
     "site": "npm run build",
-    "new": "npm run build:create && ./tools/create-element/bin/main.js",
+    "new": "wireit",
     "🧪-TEST": "❓ Test packages",
     "test": "wireit",
     "test:ci": "wireit",
@@ -52,10 +51,10 @@
         "analyze",
         "docs",
         "build:core",
+        "build:create",
         "build:icons",
         "build:lightdom",
         "build:elements",
-        "build:create",
         "build:bundle"
       ]
     },
@@ -71,20 +70,6 @@
       "output": [
         "elements/custom-elements.json",
         "core/pfe-core/custom-elements.json"
-      ],
-      "dependencies": [
-        "build:core",
-        "build:tools"
-      ]
-    },
-    "build:create": {
-      "command": "tsc -b tools/create-element",
-      "files": [
-        "tools/create-element/*.ts",
-        "tools/create-element/generator/**/*.ts"
-      ],
-      "output": [
-        "tools/create-element/*.tsbuildinfo"
       ],
       "dependencies": [
         "build:core",
@@ -240,7 +225,7 @@
     "new": {
       "command": "./tools/create-element/bin/main.js",
       "dependencies": [
-        "build:create"
+        "build:tools"
       ]
     },
     "test:ci": {

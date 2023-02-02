@@ -54,7 +54,8 @@
     "./pf-tile/pf-tile.js": "./pf-tile/pf-tile.js",
     "./pf-timestamp/pf-timestamp.js": "./pf-timestamp/pf-timestamp.js",
     "./pf-tooltip/BaseTooltip.js": "./pf-tooltip/BaseTooltip.js",
-    "./pf-tooltip/pf-tooltip.js": "./pf-tooltip/pf-tooltip.js"
+    "./pf-tooltip/pf-tooltip.js": "./pf-tooltip/pf-tooltip.js",
+    "./*": "./*"
   },
   "publishConfig": {
     "access": "public",

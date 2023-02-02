@@ -1,4 +1,4 @@
-import type { GenerateElementOptions } from '../main';
+import type { GenerateElementOptions } from '../generate.js';
 
 import Case from 'case';
 import Chalk from 'chalk';

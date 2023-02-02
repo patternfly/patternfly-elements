@@ -13,6 +13,7 @@
     "core",
     "create-element",
     "elements",
+    "package-entrypoints",
     "pf-accordion",
     "pf-avatar",
     "pf-badge",

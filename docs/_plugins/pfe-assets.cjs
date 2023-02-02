@@ -66,41 +66,8 @@ function demoPaths(content) {
 
 /** Generate a single-file bundle of all the repo's components and their dependencies */
 async function bundle() {
-  const { build } = await import('esbuild');
-  const { default: CleanCSS } = await import('clean-css');
-  const { litCssPlugin } = await import('esbuild-plugin-lit-css');
-
-  const cleanCSS = new CleanCSS({
-    sourceMap: true,
-    returnPromise: true,
-  });
-
-  await build({
-    entryPoints: ['elements/pfe.ts'],
-    format: 'esm',
-    outfile: '_site/pfe.min.js',
-    allowOverwrite: true,
-    treeShaking: true,
-    legalComments: 'linked',
-    logLevel: 'info',
-    sourcemap: true,
-    bundle: true,
-    minify: true,
-    minifyWhitespace: true,
-
-    external: [
-      'lit',
-      'tslib',
-      '@floating-ui*'
-    ],
-
-    plugins: [
-      litCssPlugin({
-        filter: /\.css$/,
-        transform: source => cleanCSS.minify(source).then(x => x.styles)
-      }),
-    ],
-  });
+  const { bundle } = await import('../../scripts/bundle.js');
+  await bundle();
 }
 
 module.exports = {

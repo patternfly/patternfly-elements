@@ -1,4 +1,3 @@
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { observed } from '@patternfly/pfe-core/decorators.js';
 import { property } from 'lit/decorators.js';
 import { customElement } from 'lit/decorators.js';

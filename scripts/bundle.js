@@ -19,7 +19,7 @@ const cleanCSS = new CleanCSS({
   returnPromise: true,
 });
 
-try {
+export async function bundle() {
   await build({
     stdin: {
       contents,
@@ -51,8 +51,12 @@ try {
       }),
     ],
   });
-} catch {
-  process.exit(1);
 }
 
-
+if (process.argv.at(1) === import.meta.url) {
+  try {
+    await bundle();
+  } catch {
+    process.exit(1);
+  }
+}

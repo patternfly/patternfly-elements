@@ -37,12 +37,20 @@ export async function handler(argv: Opts) {
 
   const fixed = packageJson;
   const missing = new Map();
+  const noTarget = new Map();
+
   for (const entryPoint of entryPoints) {
     const js = entryPoint.replace(/\.ts$/, '.js');
     if (packageJson.exports[js] !== js) {
       missing.set(js, js);
     }
     fixed.exports[js] = js;
+  }
+
+  for (const [k, target] of Object.entries(fixed.exports) as [string, string][]) {
+    if (!(await exists(join(pkgDir, target)))) {
+      noTarget.set(k, target);
+    }
   }
 
   if (argv.fix) {
@@ -56,6 +64,17 @@ export async function handler(argv: Opts) {
         console.log(chalk.red`missing export`, x);
       }
     }
+  }
+
+  if (noTarget.size) {
+    if (!argv.quiet) {
+      for (const [k, x] of noTarget) {
+        console.log(`${chalk.red`target`} ${chalk.yellow(x)} for export ${chalk.blue(k)} ${chalk.red`doesn't exist`}`);
+      }
+    }
+  }
+
+  if (missing.size || noTarget.size) {
     process.exit(1);
   }
 }

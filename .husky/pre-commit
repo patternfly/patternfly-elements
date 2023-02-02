@@ -1,2 +1,3 @@
 #!/bin/sh
 npx lint-staged
+node tools/pfe-tools/cli/cli.js lint exports elements --fix

@@ -20,7 +20,6 @@ interface Opts {
 }
 
 export async function handler(argv: Opts) {
-  console.log(argv);
   const pkgDir = join(process.cwd(), argv.package);
   const ts = argv.typescript ?? await exists(join(pkgDir, 'tsconfig.json'));
   const entryPoints = (await glob(argv.glob, { cwd: pkgDir }))
@@ -63,7 +62,7 @@ export async function handler(argv: Opts) {
 
 export const command: Yargs.CommandModule<unknown, Opts> = {
   command: 'lint <exports> [opts]',
-  describe: 'Ensure package.json contains the required package exports',
+  describe: 'Apply code standards',
   handler(yargs) {
     (yargs as unknown as Yargs.Argv<Opts>).showHelp();
   },
@@ -85,7 +84,8 @@ export const command: Yargs.CommandModule<unknown, Opts> = {
     })
       .command({
         command: 'exports <package>',
+        describe: 'Ensure package.json contains required exports',
         handler
-      });
+      } as Yargs.CommandModule<unknown, Opts>) as Yargs.Argv<Opts>;
   }
 };

@@ -77,7 +77,7 @@ module.exports = {
     eleventyConfig.addPassthroughCopy({ 'elements/pfe.min.js': 'pfe.min.js' } );
     eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/main.mjs');
-    eleventyConfig.addPassthroughCopy({ 'elements/pf-icon/icons/': 'components/icon/icons' });
+    eleventyConfig.addPassthroughCopy({ 'elements/pf-icon/icons/': 'icons' });
     eleventyConfig.addPassthroughCopy({
       'node_modules/@rhds/elements': '/assets/@rhds'
     });

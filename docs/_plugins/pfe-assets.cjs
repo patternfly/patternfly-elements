@@ -74,7 +74,7 @@ module.exports = {
   configFunction(eleventyConfig, options) {
     eleventyConfig.addPassthroughCopy('docs/bundle.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/pfe.min.{map,css}');
-    eleventyConfig.addPassthroughCopy('docs/pfe.min.{map,css}');
+    eleventyConfig.addPassthroughCopy({ 'elements/pfe.min.js': 'pfe.min.js' } );
     eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/main.mjs');
     eleventyConfig.addPassthroughCopy({ 'elements/pf-icon/icons/': 'components/icon/icons' });

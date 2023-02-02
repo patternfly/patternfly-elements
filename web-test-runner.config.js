@@ -3,7 +3,7 @@ import { a11ySnapshotPlugin } from '@web/test-runner-commands/plugins';
 
 export default pfeTestRunnerConfig({
   tsconfig: 'tsconfig.settings.json',
-  files: ['!tools/create-element/templates/**/*'],
+  files: ['!tools/**/templates/**/*'],
   // uncomment to get default wtr reporter
   // reporter: 'default',
   plugins: [

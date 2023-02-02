@@ -46,7 +46,7 @@ export async function handler(argv: Opts) {
   }
 
   if (argv.fix) {
-    await writeFile(PACKAGE_JSON_PATH, JSON.stringify(packageJson, null, 2), 'utf-8');
+    await writeFile(PACKAGE_JSON_PATH, `${JSON.stringify(packageJson, null, 2)}\n`, 'utf-8');
     return;
   }
 

@@ -20,6 +20,7 @@ interface Opts {
 }
 
 export async function handler(argv: Opts) {
+  console.log(argv);
   const pkgDir = join(process.cwd(), argv.package);
   const ts = argv.typescript ?? await exists(join(pkgDir, 'tsconfig.json'));
   const entryPoints = (await glob(argv.glob, { cwd: pkgDir }))
@@ -61,27 +62,30 @@ export async function handler(argv: Opts) {
 }
 
 export const command: Yargs.CommandModule<unknown, Opts> = {
-  command: 'lint-exports <package>',
+  command: 'lint <exports> [opts]',
   describe: 'Ensure package.json contains the required package exports',
-  handler,
-  builder: {
-    glob: {
-      type: 'string',
-      describe: 'Glob pattern of files which must be included in package exports',
-      default: './*/*.js'
-    },
-    typescript: {
-      alias: 'ts',
-      type: 'boolean',
-      describe: 'Whether to consider .ts sources'
-    },
-    quiet: {
-      type: 'boolean',
-      describe: 'Whether to suppress output messages',
-    },
-    fix: {
-      type: 'boolean',
-      describe: 'Whether to automatically write changes to package.json'
-    }
+  handler(yargs) {
+    (yargs as unknown as Yargs.Argv<Opts>).showHelp();
   },
+  builder(yargs) {
+    return yargs.options({
+      glob: {
+        type: 'string',
+        describe: 'Glob pattern of files which must be included in package exports',
+        default: './*/*.js'
+      },
+      quiet: {
+        type: 'boolean',
+        describe: 'Whether to suppress output messages',
+      },
+      fix: {
+        type: 'boolean',
+        describe: 'Whether to automatically write changes to package.json'
+      }
+    })
+      .command({
+        command: 'exports <package>',
+        handler
+      });
+  }
 };

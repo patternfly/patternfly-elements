@@ -1,5 +1,8 @@
 const fs = require('fs');
 const path = require('path');
+const { promisify } = require('node:util');
+const Glob = require('glob');
+const glob = promisify(Glob);
 
 const packageLock = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'package-lock.json')));
 
@@ -88,6 +91,14 @@ module.exports = async function() {
     map.imports[`@patternfly/elements/${tagName}/${tagName}.js`] = `/pfe.min.js`;
   }
   map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
+
+  // add imports for imports under pfe-core
+  const pfeCoreImports = (await glob('./{functions,controllers}/*.ts', { cwd: path.join(__dirname, '../../core/pfe-core') }))
+    .filter(x => !x.endsWith('.d.ts'))
+    .map(x => x.replace('.ts', '.js'));
+  for (const file of pfeCoreImports) {
+    map.imports[path.join('@patternfly/elements', file)] = '/pfe.min.js';
+  }
 
   return map;
 };

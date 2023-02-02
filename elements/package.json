@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/elements",
   "license": "MIT",
-  "version": "2.0.0-rc.2",
+  "version": "2.0.0-rc.3",
   "description": "PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -9,7 +9,7 @@
   "module": "./pfe.js",
   "types": "./pfe.d.ts",
   "exports": {
-    ".": "./pfe.js",
+    ".": "./pfe.min.js",
     "./pf-accordion/BaseAccordion.js": "./pf-accordion/BaseAccordion.js",
     "./pf-accordion/BaseAccordionHeader.js": "./pf-accordion/BaseAccordionHeader.js",
     "./pf-accordion/BaseAccordionPanel.js": "./pf-accordion/BaseAccordionPanel.js",

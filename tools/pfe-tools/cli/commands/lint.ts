@@ -58,19 +58,13 @@ export async function handler(argv: Opts) {
     return;
   }
 
-  if (missing.size) {
-    if (!argv.quiet) {
-      for (const [, x] of missing) {
-        console.log(chalk.red`missing export`, x);
-      }
+  if (!argv.quiet) {
+    for (const [, x] of missing) {
+      console.log(chalk.red`missing export`, x);
     }
-  }
 
-  if (noTarget.size) {
-    if (!argv.quiet) {
-      for (const [k, x] of noTarget) {
-        console.log(`${chalk.red`target`} ${chalk.yellow(x)} for export ${chalk.blue(k)} ${chalk.red`doesn't exist`}`);
-      }
+    for (const [k, x] of noTarget) {
+      console.log(`${chalk.red`target`} ${chalk.yellow(x)} for export ${chalk.blue(k)} ${chalk.red`doesn't exist`}`);
     }
   }
 

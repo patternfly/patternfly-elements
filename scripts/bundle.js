@@ -38,7 +38,6 @@ export async function bundle() {
     minifyWhitespace: true,
 
     external: [
-      '@patternfly*',
       'lit',
       'tslib',
       '@floating-ui*'

@@ -1,17 +1,16 @@
 import type { Config } from '@custom-elements-manifest/analyzer';
-import type { PfeConfig } from './config.js';
 
 import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
 import { readonlyPlugin } from 'cem-plugin-readonly';
-import { jsdocDescriptionDefaultPlugin } from './custom-elements-manifest/jsdoc-description-default.js';
-import { dedentDescriptionsPlugin } from './custom-elements-manifest/dedent-descriptions.js';
-import { demosPlugin } from './custom-elements-manifest/demos.js';
-import { deprecatedDescriptionInlineTagPlugin } from './custom-elements-manifest/deprecated-description-inline-tag.js';
-import { sanitizeEventsPlugin } from './custom-elements-manifest/sanitize-events.js';
-import { summaryPlugin } from './custom-elements-manifest/summary.js';
-import { ecmaPrivateClassMembersPlugin } from './custom-elements-manifest/ecma-private-class-members.js';
-import { versionStaticFieldPlugin } from './custom-elements-manifest/version-static-field.js';
-import { getPfeConfig } from './config.js';
+import { jsdocDescriptionDefaultPlugin } from './jsdoc-description-default.js';
+import { dedentDescriptionsPlugin } from './dedent-descriptions.js';
+import { demosPlugin } from './demos.js';
+import { deprecatedDescriptionInlineTagPlugin } from './deprecated-description-inline-tag.js';
+import { sanitizeEventsPlugin } from './sanitize-events.js';
+import { summaryPlugin } from './summary.js';
+import { ecmaPrivateClassMembersPlugin } from './ecma-private-class-members.js';
+import { versionStaticFieldPlugin } from './version-static-field.js';
+import { getPfeConfig, type PfeConfig } from '../config.js';
 
 import Chalk from 'chalk';
 

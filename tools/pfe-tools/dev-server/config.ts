@@ -2,9 +2,6 @@ import type { Plugin } from '@web/dev-server-core';
 import type { DevServerConfig } from '@web/dev-server';
 import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsPlugin';
 import type { Context, Next } from 'koa';
-import type { LitCSSOptions } from 'web-dev-server-plugin-lit-css';
-import type { DemoRecord } from './custom-elements-manifest/lib/Manifest.js';
-import type { PfeConfig } from './config.js';
 
 import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
@@ -14,16 +11,16 @@ import rollupReplace from '@rollup/plugin-replace';
 import nunjucks from 'nunjucks';
 import _glob from 'glob';
 
-import { litCss } from 'web-dev-server-plugin-lit-css';
+import { litCss, type LitCSSOptions } from 'web-dev-server-plugin-lit-css';
 import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { importMapsPlugin } from '@web/dev-server-import-maps';
 import { promisify } from 'node:util';
 
 import Router from '@koa/router';
-import { Manifest } from './custom-elements-manifest/lib/Manifest.js';
-import { makeDemoEnv } from './environment.js';
-import { getPfeConfig, deslugify } from './config.js';
+import { Manifest, type DemoRecord } from '../custom-elements-manifest/lib/Manifest.js';
+import { makeDemoEnv } from '../environment.js';
+import { getPfeConfig, deslugify, type PfeConfig } from '../config.js';
 
 const glob = promisify(_glob);
 const replace = fromRollup(rollupReplace);

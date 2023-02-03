@@ -1,4 +1,4 @@
-import { pfeTestRunnerConfig } from '@patternfly/pfe-tools/test-runner.js';
+import { pfeTestRunnerConfig } from '@patternfly/pfe-tools/test/config.js';
 import { a11ySnapshotPlugin } from '@web/test-runner-commands/plugins';
 
 export default pfeTestRunnerConfig({

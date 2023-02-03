@@ -72,17 +72,12 @@ async function backoff(fn, retries = 0, max = 10) {
  */
 async function getBundle({ api, workspace }) {
   const { basename } = require('path');
-  const { singleFileBuild } = await import('../tools/pfe-tools/esbuild.js');
+  const { bundle } = await import('../scripts/bundle.js');
 
   // Create or fetch artifacts
-  await singleFileBuild({ outfile: `${workspace}/pfe.min.js` });
+  await bundle({ outfile: `${workspace}/pfe.min.js` });
 
-  const patterns = [
-    'pfe.min.*',
-    '!pfe.min.tgz',
-  ];
-
-  const globber = await api.glob.create(patterns.join('\n'));
+  const globber = await api.glob.create('elements/pfe.min.*');
   const files = (await globber.glob() ?? []).map(path => basename(path));
 
   const file = 'pfe.min.tgz';

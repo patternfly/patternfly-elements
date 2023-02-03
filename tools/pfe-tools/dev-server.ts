@@ -22,7 +22,7 @@ import { promisify } from 'node:util';
 
 import Router from '@koa/router';
 import { Manifest } from './custom-elements-manifest/lib/Manifest.js';
-import { makeDemoEnv } from './esbuild-plugins/pfe-env.js';
+import { makeDemoEnv } from './environment.js';
 import { getPfeConfig, deslugify } from './config.js';
 
 const glob = promisify(_glob);

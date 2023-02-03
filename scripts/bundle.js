@@ -19,7 +19,7 @@ const cleanCSS = new CleanCSS({
   returnPromise: true,
 });
 
-export async function bundle() {
+export async function bundle({ outfile = 'elements/pfe.min.js' } = {}) {
   await build({
     stdin: {
       contents,
@@ -27,7 +27,7 @@ export async function bundle() {
       resolveDir,
     },
     format: 'esm',
-    outfile: 'elements/pfe.min.js',
+    outfile,
     allowOverwrite: true,
     treeShaking: true,
     legalComments: 'linked',

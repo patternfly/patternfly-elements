@@ -20,8 +20,17 @@
     "node": ">=14"
   },
   "exports": {
+    "./config.js": "./config.js",
+    "./custom-elements-manifest/config.js": "./custom-elements-manifest/config.js",
+    "./dev-server/config.js": "./dev-server/config.js",
+    "./environment.js": "./environment.js",
     "./11ty": "./11ty/index.js",
-    "./11ty/plugins/*.cjs": "./11ty/plugins/*.cjs",
+    "./11ty/DocsPage.js": "./11ty/DocsPage.js",
+    "./11ty/plugins/custom-elements-manifest.cjs": "./11ty/plugins/custom-elements-manifest.cjs",
+    "./11ty/plugins/order-tags.cjs": "./11ty/plugins/order-tags.cjs",
+    "./11ty/plugins/table-of-contents.cjs": "./11ty/plugins/table-of-contents.cjs",
+    "./11ty/plugins/todos.cjs": "./11ty/plugins/todos.cjs",
+    "./test/config.js": "./test/config.js",
     "./test/create-fixture.js": "./test/create-fixture.js",
     "./test/get-composed-text.js": "./test/get-composed-text.js",
     "./test/hex-to-rgb.js": "./test/hex-to-rgb.js",
@@ -29,13 +38,7 @@
     "./test/render-to-string.js": "./test/render-to-string.js",
     "./test/utils.js": "./test/utils.js",
     "./test/vue-wrapper.js": "./test/vue-wrapper.js",
-    "./test/*": "./test/*",
-    "./11ty/*": "./11ty/*",
-    "./typescript/*": "./typescript/*",
-    "./typescript/transformers/*": "./typescript/transformers/*",
-    "./typescript/transformers/css-imports.cjs": "./typescript/transformers/css-imports.cjs",
-    "./*.js": "./*.js",
-    "./*": "./*"
+    "./typescript/transformers/css-imports.cjs": "./typescript/transformers/css-imports.cjs"
   },
   "contributors": [
     "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",

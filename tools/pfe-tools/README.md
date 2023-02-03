@@ -33,8 +33,7 @@ but there are cases where this may not work. If you get a 404 error to index.htm
 1. Confirm that you have an `index.html` file in your repository root
 2. Set the `rootDir` option to `pfeDevServerConfig`, e.g.
     ```js
-    // web-dev-server.config.js
-    import { pfeDevServerConfig } from '@patternfly/pfe-tools/dev-server.js';
+    import { pfeDevServerConfig } from '@patternfly/pfe-tools/dev-server/config.js';
 
     export default pfeDevServerConfig({
       rootDir: '.',

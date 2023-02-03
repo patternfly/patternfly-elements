@@ -3,7 +3,6 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 import type { StyleInfo } from 'lit/directives/style-map.js';
 import type { Options as Offset } from '@floating-ui/core/src/middleware/offset';
 
-
 export { Placement };
 
 import {
@@ -12,6 +11,7 @@ import {
   offset as offsetMiddleware,
   shift as shiftMiddleware,
   flip as flipMiddleware,
+  arrow as arrowMiddleware
 } from '@floating-ui/dom';
 
 type Lazy<T> = T|(() => T|null|undefined);
@@ -19,7 +19,7 @@ type Lazy<T> = T|(() => T|null|undefined);
 interface FloatingDOMControllerOptions {
   content: Lazy<HTMLElement>;
   invoker?: Lazy<HTMLElement>;
-  arrow?: boolean;
+  arrow?: Lazy<HTMLElement>;
   flip?: boolean;
   shift?: boolean;
   padding?: number;
@@ -54,6 +54,11 @@ export class FloatingDOMController implements ReactiveController {
   get #content() {
     const { content } = this.#options;
     return typeof content === 'function' ? content() : content;
+  }
+
+  get #arrow() {
+    const { arrow } = this.#options;
+    return typeof arrow === 'function' ? arrow() : arrow;
   }
 
   /** The crosswise alignment of the invoker on which to display the floating DOM */
@@ -94,7 +99,6 @@ export class FloatingDOMController implements ReactiveController {
     host.addController(this);
     this.#options = options as Required<FloatingDOMControllerOptions>;
     this.#options.invoker ??= host;
-    this.#options.arrow ??= false;
     this.#options.flip ??= true;
     this.#options.shift ??= true;
   }
@@ -108,18 +112,39 @@ export class FloatingDOMController implements ReactiveController {
 
     const invoker = this.#invoker;
     const content = this.#content;
+    const arrow = this.#arrow;
     if (!invoker || !content) {
       return;
     }
-    const { x, y, placement: _placement } = await computePosition(invoker, content, {
+    const { x, y, placement: _placement, middlewareData } = await computePosition(invoker, content, {
       strategy: 'absolute',
       placement,
       middleware: [
         offsetMiddleware(offset),
         shift && shiftMiddleware({ padding }),
+        arrow && arrowMiddleware({ element: arrow, padding: arrow.offsetHeight / 2 }),
         flip && flipMiddleware({ padding }),
       ].filter(Boolean)
     });
+
+    if (arrow) {
+      const { x: arrowX, y: arrowY } = middlewareData.arrow || {};
+
+      const staticSide = {
+        top: 'bottom',
+        right: 'left',
+        bottom: 'top',
+        left: 'right',
+      }[_placement.split('-')[0]] || '';
+
+      Object.assign(arrow.style, {
+        left: arrowX != null ? `${arrowX}px` : '',
+        top: arrowY != null ? `${arrowY}px` : '',
+        right: '',
+        bottom: '',
+        [staticSide]: `-${arrow.offsetHeight / 2}px`,
+      });
+    }
 
     this.#placement = _placement;
     [this.#anchor, this.#alignment] = (this.#placement.split('-') ?? []) as [Anchor, Alignment];

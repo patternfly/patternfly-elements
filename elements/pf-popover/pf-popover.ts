@@ -164,6 +164,7 @@ export class PfPopover extends LitElement {
 
   #float = new FloatingDOMController(this, {
     content: () => this.shadowRoot?.querySelector('#popover'),
+    arrow: () => this.shadowRoot?.querySelector('#arrow')
   });
 
   #slots = new SlotController(this, { slots: [null, 'icon', 'heading', 'body', 'footer'] });
@@ -214,7 +215,7 @@ export class PfPopover extends LitElement {
           aria-describedby="body"
           aria-label=${ifDefined(this.label)}
           ?hidden=${!open}
-        >
+        > 
           <div id="arrow"></div>
           <div id="content" part="content">
             ${this._renderCloseButton()} ${this._renderHeader()} ${this._renderBody()} ${this._renderFooter()}

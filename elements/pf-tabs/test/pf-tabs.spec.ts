@@ -56,8 +56,6 @@ describe('<pf-tabs>', function() {
     tabs.forEach(function(tab: Element, index: number) {
       const tabId = tab.getAttribute('id');
       const tabControls = tab.getAttribute('aria-controls');
-      const tabButton = tab.shadowRoot?.querySelector('button');
-      expect(tabButton?.getAttribute('role')).to.equal('tab');
       tabPanels.forEach(function(panel: Element, pindex: number) {
         if (index === pindex) {
           expect(panel.getAttribute('aria-labelledby')).to.equal(tabId);

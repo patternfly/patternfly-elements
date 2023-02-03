@@ -192,4 +192,44 @@ describe('<pf-tabs>', function() {
       expect(nextDisplayStyle).to.not.equal('none');
     });
   });
+
+  describe('manual activation', function() {
+    it('should not activate tab after right arrow key press', async function() {
+      const el = await createFixture<PfTabs>(TEMPLATE);
+      el.setAttribute('manual', '');
+      await el.updateComplete;
+      await nextFrame();
+      const firstTab = el.querySelector('pf-tab:first-of-type') as BaseTab;
+      const secondTab = el.querySelector('pf-tab:nth-of-type(2)') as BaseTab;
+      firstTab?.focus();
+      const initialFocus = document.activeElement?.id;
+      await sendKeys({ down: 'ArrowRight' });
+      await el.updateComplete;
+      await nextFrame();
+      const afterFocus = document.activeElement?.id;
+      expect(initialFocus).to.not.equal('');
+      expect(initialFocus).to.not.equal(afterFocus);
+      expect(firstTab.active).to.be.equal(true);
+      expect(secondTab.active).to.be.equal(false);
+    });
+
+    it('should activate tab after right arrow key press and enter key press', async function() {
+      const el = await createFixture<PfTabs>(TEMPLATE);
+      el.setAttribute('manual', '');
+      await el.updateComplete;
+      await nextFrame();
+      const firstTab = el.querySelector('pf-tab:first-of-type') as BaseTab;
+      firstTab?.focus();
+      const initialFocus = document.activeElement?.id;
+      const secondTabId = el.querySelector('pf-tab:nth-of-type(2)')?.id;
+      await sendKeys({ down: 'ArrowRight' });
+      await nextFrame();
+      await sendKeys({ down: 'Enter' });
+      await nextFrame();
+      const afterFocus = document.activeElement?.id;
+      expect(initialFocus).to.not.equal('');
+      expect(initialFocus).to.not.equal(after);
+      expect(afterFocus).to.equal(secondTabId);
+    });
+  });
 });

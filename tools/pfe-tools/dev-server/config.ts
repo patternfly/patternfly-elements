@@ -4,6 +4,7 @@ import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsP
 import type { Context, Next } from 'koa';
 
 import { existsSync } from 'node:fs';
+import { dirname } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
@@ -26,7 +27,7 @@ const glob = promisify(_glob);
 const replace = fromRollup(rollupReplace);
 
 const env = nunjucks
-  .configure(fileURLToPath(new URL('./dev-server', import.meta.url)))
+  .configure(dirname(fileURLToPath(import.meta.url)))
   .addFilter('log', x => (console.log(x, '')))
   .addFilter('deslugify', x => deslugify(x))
   .addFilter('isElementGroup', (group: DemoRecord[], primary) =>

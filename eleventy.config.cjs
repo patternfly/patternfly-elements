@@ -1,9 +1,10 @@
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
-const AnchorsPlugin = require('@orchidjs/eleventy-plugin-ids');
 const SyntaxHighlightPlugin = require('@11ty/eleventy-plugin-syntaxhighlight');
 const DirectoryOutputPlugin = require('@11ty/eleventy-plugin-directory-output');
 
 const PfeAssetsPlugin = require('./docs/_plugins/pfe-assets.cjs');
+
+const AnchorsPlugin = require('@patternfly/pfe-tools/11ty/plugins/anchors.cjs');
 const CustomElementsManifestPlugin = require('@patternfly/pfe-tools/11ty/plugins/custom-elements-manifest.cjs');
 const OrderTagsPlugin = require('@patternfly/pfe-tools/11ty/plugins/order-tags.cjs');
 const TodosPlugin = require('@patternfly/pfe-tools/11ty/plugins/todos.cjs');
@@ -11,6 +12,7 @@ const TocPlugin = require('@patternfly/pfe-tools/11ty/plugins/table-of-contents.
 
 const markdownItAnchor = require('markdown-it-anchor');
 
+/** @param {import('@11ty/eleventy/src/UserConfig')} eleventyConfig */
 module.exports = function(eleventyConfig) {
   eleventyConfig.amendLibrary('md', md => md.use(markdownItAnchor));
 
@@ -50,16 +52,17 @@ module.exports = function(eleventyConfig) {
 
   /** Add IDs to heading elements */
   eleventyConfig.addPlugin(AnchorsPlugin, {
-    formatter(element, existingids) {
+    exclude: /\/components\/.*\/demo\//,
+    formatter($, existingids) {
       if (
-        !existingids.includes(element.getAttribute('id')) &&
-        element.hasAttribute('slot') &&
-        element.closest('pf-card')
+        !existingids.includes($.attr('id')) &&
+        $.attr('slot') &&
+        $.closest('pf-card')
       ) {
         return null;
       } else {
         return eleventyConfig.javascriptFunctions
-          .slug(element.textContent)
+          .slug($.text())
           .replace(/[&,+()$~%.'":*?!<>{}]/g, '');
       }
     },

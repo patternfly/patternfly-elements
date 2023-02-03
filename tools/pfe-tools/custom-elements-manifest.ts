@@ -13,12 +13,16 @@ import { ecmaPrivateClassMembersPlugin } from './custom-elements-manifest/ecma-p
 import { versionStaticFieldPlugin } from './custom-elements-manifest/version-static-field.js';
 import { getPfeConfig } from './config.js';
 
+import Chalk from 'chalk';
+
 type Options = Config & Pick<PfeConfig, 'sourceControlURLPrefix'|'demoURLPrefix'>;
 
 /**
  * PFE Default custom-elements-manifest analyzer config
+ * @deprecated
  */
 export function pfeCustomElementsManifestConfig(options?: Options): Config {
+  console.log(`${Chalk.yellow(`pfeCustomElementsManifestConfig is ${Chalk.bold('deprecated')}`)}`);
   const config = getPfeConfig();
   const { demoURLPrefix, sourceControlURLPrefix, dev } = { ...config, ...options ?? {} };
   return {

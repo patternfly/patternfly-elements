@@ -198,7 +198,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
    *             so we get the correct path
    * Edge/Corner cases: all other cases must set the `rootDir` option themselves so as to avoid 404s
    */
-  const rootDir = options?.rootDir ?? fileURLToPath(new URL('../..', import.meta.url))
+  const rootDir = options?.rootDir ?? fileURLToPath(new URL('../../..', import.meta.url))
     .replace(/node_modules\/$/, '/')
     .replace(/\/node_modules$/, '/')
     .replace('//', '/');

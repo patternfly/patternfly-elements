@@ -14,7 +14,7 @@
     "🐒-DEV": "❓ Development aids",
     "start": "wireit",
     "dev": "wireit",
-    "new": "npm run build:create && ./tools/create-element/bin/main.js",
+    "new": "wireit",
     "🚧-BUILD": "❓ Make packages and artifacts",
     "build": "wireit",
     "analyze": "wireit",
@@ -223,6 +223,12 @@
       "dependencies": [
         "build:tools",
         "build:icons"
+      ]
+    },
+    "new": {
+      "command": "./tools/create-element/bin/main.js",
+      "dependencies": [
+        "build:create"
       ]
     },
     "test:ci": {

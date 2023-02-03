@@ -1,3 +1,4 @@
+import 'element-internals-polyfill';
 import '@patternfly/elements/pf-button/pf-button.js';
 import '@patternfly/elements/pf-spinner/pf-spinner.js';
 

@@ -14,12 +14,13 @@
     "🐒-DEV": "❓ Development aids",
     "start": "wireit",
     "dev": "wireit",
-    "new": "wireit",
     "🚧-BUILD": "❓ Make packages and artifacts",
     "build": "wireit",
+    "build:create": "wireit",
     "analyze": "wireit",
     "docs": "wireit",
     "site": "npm run build",
+    "new": "npm run build:create && ./tools/create-element/bin/main.js",
     "🧪-TEST": "❓ Test packages",
     "test": "wireit",
     "test:ci": "wireit",
@@ -38,7 +39,7 @@
     "patch": "patch-package",
     "husky": "npx husky install",
     "pr": "node scripts/open-pr.js"
-  },
+ },
   "wireit": {
     "postinstall": {
       "dependencies": [

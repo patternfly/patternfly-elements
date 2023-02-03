@@ -5,7 +5,7 @@ import { summaryReporter, defaultReporter } from '@web/test-runner';
 import { junitReporter } from '@web/test-runner-junit-reporter';
 import { a11ySnapshotPlugin } from '@web/test-runner-commands/plugins';
 
-import { pfeDevServerConfig, type PfeDevServerConfigOptions } from '../dev-server.js';
+import { pfeDevServerConfig, type PfeDevServerConfigOptions } from '../dev-server/config.js';
 
 export interface PfeTestRunnerConfigOptions extends PfeDevServerConfigOptions {
   files?: string[];

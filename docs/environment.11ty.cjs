@@ -4,7 +4,7 @@ module.exports = class Environment {
   }
 
   async render() {
-    const { makeDemoEnv } = await import('@patternfly/pfe-tools/esbuild-plugins/pfe-env.js');
+    const { makeDemoEnv } = await import('@patternfly/pfe-tools/environment.js');
     return makeDemoEnv();
   }
 };

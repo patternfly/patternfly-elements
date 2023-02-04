@@ -8,12 +8,39 @@ import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import { ComposedEvent } from '@patternfly/pfe-core';
 
 import styles from './pf-popover.css';
 
 const headingLevels = [2, 3, 4, 5, 6] as const;
 type HeadingLevel = typeof headingLevels[number];
 type AlertSeverity = 'default' | 'info' | 'warning' | 'success' | 'danger';
+
+export class PopoverHideEvent extends ComposedEvent {
+  constructor() {
+    super('hide');
+  }
+}
+
+export class PopoverHiddenEvent extends ComposedEvent {
+  constructor() {
+    super('hidden');
+  }
+}
+
+export class PopoverShowEvent extends ComposedEvent {
+  constructor() {
+    super('show');
+  }
+}
+
+export class PopoverShownEvent extends ComposedEvent {
+  constructor() {
+    super('shown');
+  }
+}
+
+// todo: onMount event
 
 /**
  * Patternfly popover
@@ -158,6 +185,16 @@ export class PfPopover extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'hide-close' }) hideClose?: boolean;
   @property({ type: String, reflect: true, attribute: 'alert-severity' }) alertSeverity?: AlertSeverity;
 
+  // todo: alertSeverityScreenReaderText
+  // todo: closeBtnAriaLabel
+  // todo: animationDuration (CSS custom property)
+  // todo: distance (#float --> offset)
+  // todo: enableFlip (#float --> flip)
+  // todo: flipBehavior (#float --> fallbackPlacements)
+  // todo: hideOnOutsideClick
+  // todo: withFocusTrap
+  // todo: zIndex (CSS custom property)
+
   @query('#popover') private _popover?: HTMLElement | null;
   @query('#close-button') private _closeButton?: HTMLElement | null;
   @query('#invoker') private _invoker?: HTMLElement | null;
@@ -180,11 +217,13 @@ export class PfPopover extends LitElement {
    * @return resolves when the update completes
    */
   async show() {
+    this.dispatchEvent(new PopoverShowEvent());
     await this.updateComplete;
     const placement = this.position;
-    const offset = 35;
+    const offset = 25;
     await this.#float.show({ offset, placement });
     this._popover?.focus();
+    this.dispatchEvent(new PopoverShownEvent());
   }
 
   /**
@@ -192,7 +231,9 @@ export class PfPopover extends LitElement {
    * @return resolves when the update completes
    */
   async hide() {
+    this.dispatchEvent(new PopoverHideEvent());
     await this.#float.hide();
+    this.dispatchEvent(new PopoverHiddenEvent());
   }
 
   render() {

@@ -35,6 +35,7 @@
     "pf-timestamp",
     "pf-tooltip",
     "rc-1",
+    "tools-remove-esbuild",
     "tools"
   ]
 }

@@ -893,6 +893,6 @@ dl.member dd {
 @media (min-width: 820px) {
   rh-global-footer {
     width: calc(100vw - 17.5rem);
-    translate: 17.5rem;
+    transform: translate(17.5rem);
   }
 }

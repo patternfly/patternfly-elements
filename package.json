@@ -39,7 +39,7 @@
     "patch": "patch-package",
     "husky": "npx husky install",
     "pr": "node scripts/open-pr.js"
- },
+  },
   "wireit": {
     "postinstall": {
       "dependencies": [
@@ -101,6 +101,7 @@
       ],
       "files": [
         "elements/*/*.ts",
+        "!elements/*/*.d.ts",
         "elements/*/*.css",
         "elements/tsconfig.json",
         "tsconfig.settings.json"
@@ -117,9 +118,14 @@
       "clean": "if-file-deleted",
       "files": [
         "tools/pfe-tools/*.ts",
-        "tools/pfe-tools/**/*.ts"
+        "tools/pfe-tools/**/*.ts",
+        "!tools/pfe-tools/*.d.ts",
+        "!tools/pfe-tools/**/*.d.ts"
       ],
       "output": [
+        "tools/pfe-tools/**/*.js",
+        "tools/pfe-tools/**/*.map",
+        "tools/pfe-tools/**/*.d.ts",
         "tools/*.tsbuildinfo"
       ]
     },
@@ -131,9 +137,13 @@
       ],
       "files": [
         "core/**/*.ts",
+        "!core/**/*.d.ts",
         "core/tsconfig.json"
       ],
       "output": [
+        "core/**/*.js",
+        "core/**/*.map",
+        "core/**/*.d.ts",
         "*.tsbuildinfo"
       ]
     },
@@ -154,7 +164,9 @@
         "build:tools"
       ],
       "files": [
-        "**/*.ts",
+        "elements/**/*.ts",
+        "elements/**/*.css",
+        "core/**/*.ts",
         "scripts/bundle.js"
       ],
       "output": [

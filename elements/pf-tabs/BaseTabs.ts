@@ -69,10 +69,6 @@ export abstract class BaseTabs extends LitElement {
 
   #_allPanels: BaseTabPanel[] = [];
 
-  #_focusableTabs: BaseTab[] = [];
-
-  #_focusTab?: BaseTab;
-
   #scrollTimeout?: ReturnType<typeof setTimeout>;
 
   #activeIndex = 0;
@@ -97,8 +93,7 @@ export abstract class BaseTabs extends LitElement {
     if (tab) {
       if (tab.disabled) {
         this.#logger.warn(`Disabled tabs can not be active, setting first focusable tab to active`);
-        const first = this.#rovingTabindexController.firstItem;
-        this.#rovingTabindexController.updateActiveItem(first);
+        this.#rovingTabindexController.updateActiveItem(this.#firstFocusable);
         index = this.#activeItemIndex;
       } else if (!tab.active) {
         // if the activeIndex was set through the CLI e.g.`$0.activeIndex = 2`
@@ -231,12 +226,11 @@ export abstract class BaseTabs extends LitElement {
     this.#allPanels.forEach((panel, i) => panel.hidden = i !== index);
   }
 
-  #firstFocusable(): BaseTab {
-    const firstItem = this.#rovingTabindexController.firstItem as BaseTab;
-    return firstItem;
+  get #firstFocusable(): BaseTab {
+    return this.#rovingTabindexController.firstItem as BaseTab;
   }
 
-  #lastFocusable(): BaseTab {
+  get #lastFocusable(): BaseTab {
     return this.#rovingTabindexController.lastItem as BaseTab;
   }
 
@@ -276,23 +270,23 @@ export abstract class BaseTabs extends LitElement {
       case 'ArrowUp':
       case 'ArrowLeft':
         event.preventDefault();
-        this.#select(this.#rovingTabindexController.activeItem);
+        this.#select(this.#rovingTabindexController.activeItem as BaseTab);
         break;
 
       case 'ArrowDown':
       case 'ArrowRight':
         event.preventDefault();
-        this.#select(this.#rovingTabindexController.activeItem);
+        this.#select(this.#rovingTabindexController.activeItem as BaseTab);
         break;
 
       case 'Home':
         event.preventDefault();
-        this.#select(this.#firstFocusable());
+        this.#select(this.#firstFocusable);
         break;
 
       case 'End':
         event.preventDefault();
-        this.#select(this.#lastFocusable());
+        this.#select(this.#lastFocusable);
         break;
 
       default:

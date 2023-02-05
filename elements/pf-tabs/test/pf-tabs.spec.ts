@@ -5,6 +5,7 @@ import { setViewport, sendKeys } from '@web/test-runner-commands';
 
 import { BaseTab } from '../BaseTab.js';
 import { PfTabs } from '../pf-tabs.js';
+import { PfTab } from '../pf-tab.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
 
@@ -194,42 +195,61 @@ describe('<pf-tabs>', function() {
   });
 
   describe('manual activation', function() {
-    it('should not activate tab after right arrow key press', async function() {
-      const el = await createFixture<PfTabs>(TEMPLATE);
-      el.setAttribute('manual', '');
-      await el.updateComplete;
+    let element: PfTabs;
+    let firstTab: PfTab;
+    let secondTab: PfTab;
+    let initialFocus: Element|null;
+    let afterFocus: Element|null;
+    beforeEach(async function() {
+      element = await createFixture<PfTabs>(html`
+        <pf-tabs manual>
+          <pf-tab slot="tab" active>Users</pf-tab>
+          <pf-tab-panel>Users</pf-tab-panel>
+          <pf-tab slot="tab">Containers</pf-tab>
+          <pf-tab-panel>Containers</pf-tab-panel>
+          <pf-tab slot="tab">Database</pf-tab>
+          <pf-tab-panel>Database</pf-tab-panel>
+          <pf-tab slot="tab" disabled>Disabled</pf-tab>
+          <pf-tab-panel>Disabled</pf-tab-panel>
+          <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+          <pf-tab-panel>Aria Disabled</pf-tab-panel>
+        </pf-tabs>
+      `);
+      [firstTab, secondTab] = element.querySelectorAll('pf-tab');
+      await element.updateComplete;
       await nextFrame();
-      const firstTab = el.querySelector('pf-tab:first-of-type') as BaseTab;
-      const secondTab = el.querySelector('pf-tab:nth-of-type(2)') as BaseTab;
-      firstTab?.focus();
-      const initialFocus = document.activeElement?.id;
-      await sendKeys({ down: 'ArrowRight' });
-      await el.updateComplete;
-      await nextFrame();
-      const afterFocus = document.activeElement?.id;
-      expect(initialFocus).to.not.equal('');
-      expect(initialFocus).to.not.equal(afterFocus);
-      expect(firstTab.active).to.be.equal(true);
-      expect(secondTab.active).to.be.equal(false);
+      initialFocus = document.activeElement;
     });
 
-    it('should activate tab after right arrow key press and enter key press', async function() {
-      const el = await createFixture<PfTabs>(TEMPLATE);
-      el.setAttribute('manual', '');
-      await el.updateComplete;
-      await nextFrame();
-      const firstTab = el.querySelector('pf-tab:first-of-type') as BaseTab;
-      firstTab?.focus();
-      const initialFocus = document.activeElement?.id;
-      const secondTabId = el.querySelector('pf-tab:nth-of-type(2)')?.id;
-      await sendKeys({ down: 'ArrowRight' });
-      await nextFrame();
-      await sendKeys({ down: 'Enter' });
-      await nextFrame();
-      const afterFocus = document.activeElement?.id;
-      expect(initialFocus).to.not.equal('');
-      expect(initialFocus).to.not.equal(after);
-      expect(afterFocus).to.equal(secondTabId);
+    describe('pressing right arrow', function() {
+      beforeEach(async function() {
+        firstTab?.focus();
+        await sendKeys({ down: 'ArrowRight' });
+        await element.updateComplete;
+        await nextFrame();
+        afterFocus = document.activeElement;
+      });
+      it('should not activate second tab', function() {
+        expect(firstTab.active).to.be.true;
+        expect(secondTab.active).to.be.false;
+        expect(initialFocus).to.be.ok
+          .and.to.not.equal(afterFocus)
+          .and.to.not.equal(secondTab);
+      });
+      describe('then pressing enter', function() {
+        beforeEach(async function() {
+          await sendKeys({ down: 'Enter' });
+          await nextFrame();
+          afterFocus = document.activeElement;
+        });
+        it('should activate second tab', async function() {
+          expect(firstTab.active).to.be.false;
+          expect(secondTab.active).to.be.true;
+          expect(afterFocus).to.equal(secondTab)
+            .and.to.not.equal(initialFocus)
+            .and.to.not.equal(firstTab);
+        });
+      });
     });
   });
 });

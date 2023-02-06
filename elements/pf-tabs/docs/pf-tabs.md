@@ -106,26 +106,21 @@
   ```
 
   ### Inset
-  Inset sizes: `sm`, `md`, `lg`, `xl`, `2xl`, `page`
+  Inset is implemented using CSS part `tab-container`
 
-  `page` inset can be set using the css custom property `--pf-c-tabs--m-page-insets--inset`
-  <div class="overflow-tab-wrapper">
-    <pf-tabs inset="xl">
-      <pf-tab slot="tab">Users</pf-tab>
-      <pf-tab-panel>Users</pf-tab-panel>
-      <pf-tab slot="tab">Containers</pf-tab>
-      <pf-tab-panel>Containers</pf-tab-panel>
-      <pf-tab slot="tab">Database</pf-tab>
-      <pf-tab-panel>Database</pf-tab-panel>
-      <pf-tab slot="tab" disabled>Disabled</pf-tab>
-      <pf-tab-panel>Disabled</pf-tab-panel>
-      <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
-      <pf-tab-panel>Aria Disabled</pf-tab-panel>
-    </pf-tabs>
-  </div>
+  ```css
+  .inset-sm::part(tabs-container) {
+    --pf-c-tabs--inset: var(--pf-global--spacer--sm, 0.5rem);
+    --pf-c-tabs--m-vertical--inset: var(--pf-global--spacer--sm, 0.5rem);
+    --pf-c-tabs--m-vertical--m-box--inset: var(--pf-global--spacer--sm, 0.5rem);
+  }
+  ```
 
   ```html
-    <pf-tabs inset="xl">...</pf-tabs>
+  <pf-tabs vertical class="inset-sm">
+    <pf-tab slot="tab">Users</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+  </pf-tabs>
   ```
 
   ### Filled

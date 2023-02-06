@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { property, query, queryAssignedElements } from 'lit/decorators.js';
 
+import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.js';
@@ -37,6 +38,8 @@ export abstract class BaseTabs extends LitElement {
   /** Icon set to use for the scroll buttons */
   protected static readonly scrollIconSet: string = 'fas';
 
+  #rovingTabindexController = new RovingTabindexController(this);
+
   static #instances = new Set<BaseTabs>();
 
   static {
@@ -66,15 +69,18 @@ export abstract class BaseTabs extends LitElement {
 
   #_allPanels: BaseTabPanel[] = [];
 
-  #_focusableTabs: BaseTab[] = [];
-
-  #_focusTab?: BaseTab;
-
   #scrollTimeout?: ReturnType<typeof setTimeout>;
 
   #activeIndex = 0;
 
   id: string = this.id || getRandomId(this.localName);
+
+  /**
+   * Tab activation
+   * Tabs can be either [automatic](https://w3c.github.io/aria-practices/examples/tabs/tabs-automatic.html) activated
+   * or [manual](https://w3c.github.io/aria-practices/examples/tabs/tabs-manual.html)
+   */
+  @property({ reflect: true, type: Boolean }) manual = false;
 
   @property({ attribute: false })
   get activeIndex() {
@@ -87,20 +93,20 @@ export abstract class BaseTabs extends LitElement {
     if (tab) {
       if (tab.disabled) {
         this.#logger.warn(`Disabled tabs can not be active, setting first focusable tab to active`);
-        this.#activate(this.#firstFocusable());
-        index = this.#allTabs.findIndex(t => t === this.#firstFocusable());
-        return;
+        this.#rovingTabindexController.updateActiveItem(this.#firstFocusable);
+        index = this.#activeItemIndex;
       } else if (!tab.active) {
         // if the activeIndex was set through the CLI e.g.`$0.activeIndex = 2`
         tab.active = true;
         return;
       }
     }
+
     if (index === -1) {
       this.#logger.warn(`No active tab found, setting first focusable tab to active`);
-      this.#activate(this.#firstFocusable());
-      index = this.#allTabs.findIndex(t => t === this.#firstFocusable());
-      return;
+      const first = this.#rovingTabindexController.firstItem as BaseTab;
+      this.#rovingTabindexController.updateActiveItem(first);
+      index = this.#activeItemIndex;
     }
     this.#activeIndex = index;
     this.requestUpdate('activeIndex', oldIndex);
@@ -121,7 +127,6 @@ export abstract class BaseTabs extends LitElement {
 
   set #allTabs(tabs: BaseTab[]) {
     this.#_allTabs = tabs.filter(tab => (this.constructor as typeof BaseTabs).isTab(tab));
-    this.#_focusableTabs = this.#_allTabs.filter(tab => !tab.disabled);
   }
 
   get #allPanels() {
@@ -130,14 +135,6 @@ export abstract class BaseTabs extends LitElement {
 
   set #allPanels(panels: BaseTabPanel[]) {
     this.#_allPanels = panels.filter(panel => (this.constructor as typeof BaseTabs).isPanel(panel));
-  }
-
-  get #focusTab(): BaseTab | undefined {
-    return this.#_focusTab;
-  }
-
-  set #focusTab(tab: BaseTab | undefined) {
-    this.#_focusTab = tab;
   }
 
   override connectedCallback() {
@@ -158,7 +155,7 @@ export abstract class BaseTabs extends LitElement {
     return html`
       <div part="container">
         <div part="tabs-container">${!this.#showScrollButtons ? '' : html`
-          <button id="previousTab"
+          <button id="previousTab" tabindex="-1"
               aria-label="${this.getAttribute('label-scroll-left') ?? 'Scroll left'}"
               ?disabled="${!this.#overflowOnLeft}"
               @click="${this.#scrollLeft}">
@@ -168,7 +165,7 @@ export abstract class BaseTabs extends LitElement {
                 part="tabs"
                 role="tablist"
                 @slotchange="${this.#onSlotchange}"></slot> ${!this.#showScrollButtons ? '' : html`
-          <button id="nextTab"
+          <button id="nextTab" tabindex="-1"
               aria-label="${this.getAttribute('label-scroll-right') ?? 'Scroll right'}"
               ?disabled="${!this.#overflowOnRight}"
               @click="${this.#scrollRight}">
@@ -191,11 +188,14 @@ export abstract class BaseTabs extends LitElement {
     } else {
       this.#allPanels = this.panels;
     }
-    if (this.#allTabs.length === this.#allPanels.length &&
+
+    if ((this.#allTabs.length === this.#allPanels.length) &&
       (this.#allTabs.length !== 0 || this.#allPanels.length !== 0)) {
       this.#updateAccessibility();
-      this.activeIndex = this.#allTabs.findIndex(tab => tab.active);
       this.#firstLastClasses();
+      this.#rovingTabindexController.initItems(this.#allTabs);
+      this.activeIndex = this.#allTabs.findIndex(tab => tab.active);
+      this.#rovingTabindexController.updateActiveItem(this.#activeTab);
     }
   }
 
@@ -226,13 +226,12 @@ export abstract class BaseTabs extends LitElement {
     this.#allPanels.forEach((panel, i) => panel.hidden = i !== index);
   }
 
-  #firstFocusable(): BaseTab {
-    const [firstTab] = this.#_focusableTabs;
-    return firstTab;
+  get #firstFocusable(): BaseTab {
+    return this.#rovingTabindexController.firstItem as BaseTab;
   }
 
-  #lastFocusable(): BaseTab {
-    return this.#_focusableTabs.at(-1) as BaseTab;
+  get #lastFocusable(): BaseTab {
+    return this.#rovingTabindexController.lastItem as BaseTab;
   }
 
   get #firstTab(): BaseTab {
@@ -244,47 +243,9 @@ export abstract class BaseTabs extends LitElement {
     return this.#allTabs.at(-1) as BaseTab;
   }
 
-  #next(): void {
-    // find index of active tab in focusableTabs
-    const currentIndex = this.#currentIndex();
-    // increment focusable index and return focusable tab
-    const nextFocusableIndex = currentIndex + 1;
-    let nextTab: BaseTab;
-    if (nextFocusableIndex >= this.#_focusableTabs.length) {
-      // get the first focusable tab
-      [nextTab] = this.#_focusableTabs;
-    } else {
-      // get index of that focusable tab from all tabs
-      nextTab = this.#_focusableTabs[nextFocusableIndex];
-    }
-    this.#select(nextTab);
-  }
-
-  #prev(): void {
-    const currentIndex = this.#currentIndex();
-    // increment focusable index and return focusable tab
-    const nextFocusableIndex = currentIndex - 1;
-    let prevTab: BaseTab;
-    if (nextFocusableIndex < 0) {
-      // get the last focusable tab
-      prevTab = this.#_focusableTabs[this.#_focusableTabs.length - 1];
-    } else {
-      // get index of that focusable tab from all tabs
-      prevTab = this.#_focusableTabs[nextFocusableIndex];
-    }
-    this.#select(prevTab);
-  }
-
-  #currentIndex(): number {
-    let current: BaseTab;
-    // get current tab
-    if (this.#focusTab?.ariaDisabled === 'true') {
-      current = this.#focusTab;
-    } else {
-      current = this.#activeTab;
-    }
-    const index = this.#_focusableTabs.findIndex(tab => tab === current);
-    return index;
+  get #activeItemIndex() {
+    const { activeItem } = this.#rovingTabindexController;
+    return this.#allTabs.findIndex(t => t === activeItem);
   }
 
   #activate(selectedTab: BaseTab): void {
@@ -294,12 +255,12 @@ export abstract class BaseTabs extends LitElement {
   }
 
   async #select(selectedTab: BaseTab): Promise<void> {
-    this.#activate(selectedTab);
-    this.#focusTab = selectedTab;
-    await this.updateComplete;
-    this.#focusTab.focus();
+    if (!this.manual) {
+      this.#activate(selectedTab);
+    }
   }
 
+  // RTI: will handle key events
   #onKeydown = (event: KeyboardEvent): void => {
     const foundTab = this.#allTabs.find(tab => tab === event.target);
     if (!foundTab) {
@@ -309,23 +270,23 @@ export abstract class BaseTabs extends LitElement {
       case 'ArrowUp':
       case 'ArrowLeft':
         event.preventDefault();
-        this.#prev();
+        this.#select(this.#rovingTabindexController.activeItem as BaseTab);
         break;
 
       case 'ArrowDown':
       case 'ArrowRight':
         event.preventDefault();
-        this.#next();
+        this.#select(this.#rovingTabindexController.activeItem as BaseTab);
         break;
 
       case 'Home':
         event.preventDefault();
-        this.#select(this.#firstFocusable());
+        this.#select(this.#firstFocusable);
         break;
 
       case 'End':
         event.preventDefault();
-        this.#select(this.#lastFocusable());
+        this.#select(this.#lastFocusable);
         break;
 
       default:

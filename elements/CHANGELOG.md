@@ -1,5 +1,12 @@
 # @patternfly/elements
 
+## 2.0.0-rc.4
+
+### Patch Changes
+
+- 1af2749db: `<pf-tabs>`: improved accessibility
+  - added `manual` boolean attribute which enables [manual tab activation](https://w3c.github.io/aria-practices/examples/tabs/tabs-manual.html) option.
+
 ## 2.0.0-rc.3
 
 ### Patch Changes

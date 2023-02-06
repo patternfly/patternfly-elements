@@ -1,5 +1,13 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-rc.3
+
+### Minor Changes
+
+- 99db432f4: ✨ Added `anchors` 11ty plugin, based on [@orchidjs/eleventy-plugin-ids][npm]
+
+  [npm]: https://npm.im/@orchidjs/eleventy-plugin-ids
+
 ## 1.0.0-rc.2
 
 ### Major Changes

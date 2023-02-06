@@ -83,4 +83,14 @@
 rh-global-footer {
   width: 100vw !important;
   translate: none !important;
+  --rh-footer-icon-color:, var(--rh-color-black-500, #8a8d90);
+  --rh-footer-icon-color-hover: var(--rh-color-black-400, #b8bbbe);
+}
+
+rh-global-footer .global-logo-image {
+  fill: var(--rh-footer-icon-color);
+}
+
+rh-global-footer .global-logo-image:is(:hover, :focus-within) {
+  fill: var(--rh-footer-icon-color-hover);
 }

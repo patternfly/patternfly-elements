@@ -62,6 +62,7 @@ button:hover {
 
 button:focus,
 button:focus-visible {
+  outline-color: var(--pf-c-tabs__link--after--BorderColor, #06c);
   --pf-c-tabs__link--after--BorderWidth: var(--pf-c-tabs__link--focus--after--BorderWidth, var(--pf-global--BorderWidth--lg, 3px));
 }
 

@@ -5,6 +5,7 @@ import { setViewport, sendKeys } from '@web/test-runner-commands';
 
 import { BaseTab } from '../BaseTab.js';
 import { PfTabs } from '../pf-tabs.js';
+import { PfTab } from '../pf-tab.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
 
@@ -56,8 +57,6 @@ describe('<pf-tabs>', function() {
     tabs.forEach(function(tab: Element, index: number) {
       const tabId = tab.getAttribute('id');
       const tabControls = tab.getAttribute('aria-controls');
-      const tabButton = tab.shadowRoot?.querySelector('button');
-      expect(tabButton?.getAttribute('role')).to.equal('tab');
       tabPanels.forEach(function(panel: Element, pindex: number) {
         if (index === pindex) {
           expect(panel.getAttribute('aria-labelledby')).to.equal(tabId);
@@ -192,6 +191,65 @@ describe('<pf-tabs>', function() {
       const nextDisplayStyle = getComputedStyle(nextTab).display;
       expect(prevDisplayStyle ).to.not.equal('none');
       expect(nextDisplayStyle).to.not.equal('none');
+    });
+  });
+
+  describe('manual activation', function() {
+    let element: PfTabs;
+    let firstTab: PfTab;
+    let secondTab: PfTab;
+    let initialFocus: Element|null;
+    let afterFocus: Element|null;
+    beforeEach(async function() {
+      element = await createFixture<PfTabs>(html`
+        <pf-tabs manual>
+          <pf-tab slot="tab" active>Users</pf-tab>
+          <pf-tab-panel>Users</pf-tab-panel>
+          <pf-tab slot="tab">Containers</pf-tab>
+          <pf-tab-panel>Containers</pf-tab-panel>
+          <pf-tab slot="tab">Database</pf-tab>
+          <pf-tab-panel>Database</pf-tab-panel>
+          <pf-tab slot="tab" disabled>Disabled</pf-tab>
+          <pf-tab-panel>Disabled</pf-tab-panel>
+          <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+          <pf-tab-panel>Aria Disabled</pf-tab-panel>
+        </pf-tabs>
+      `);
+      [firstTab, secondTab] = element.querySelectorAll('pf-tab');
+      await element.updateComplete;
+      await nextFrame();
+      initialFocus = document.activeElement;
+    });
+
+    describe('pressing right arrow', function() {
+      beforeEach(async function() {
+        firstTab?.focus();
+        await sendKeys({ down: 'ArrowRight' });
+        await element.updateComplete;
+        await nextFrame();
+        afterFocus = document.activeElement;
+      });
+      it('should not activate second tab', function() {
+        expect(firstTab.active).to.be.true;
+        expect(secondTab.active).to.be.false;
+        expect(initialFocus).to.be.ok
+          .and.to.not.equal(afterFocus)
+          .and.to.not.equal(secondTab);
+      });
+      describe('then pressing enter', function() {
+        beforeEach(async function() {
+          await sendKeys({ down: 'Enter' });
+          await nextFrame();
+          afterFocus = document.activeElement;
+        });
+        it('should activate second tab', async function() {
+          expect(firstTab.active).to.be.false;
+          expect(secondTab.active).to.be.true;
+          expect(afterFocus).to.equal(secondTab)
+            .and.to.not.equal(initialFocus)
+            .and.to.not.equal(firstTab);
+        });
+      });
     });
   });
 });

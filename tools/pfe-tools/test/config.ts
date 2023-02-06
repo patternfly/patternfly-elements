@@ -1,4 +1,3 @@
-import type { PfeDevServerConfigOptions } from './dev-server';
 import type { TestRunnerConfig } from '@web/test-runner';
 
 import { playwrightLauncher } from '@web/test-runner-playwright';
@@ -6,7 +5,7 @@ import { summaryReporter, defaultReporter } from '@web/test-runner';
 import { junitReporter } from '@web/test-runner-junit-reporter';
 import { a11ySnapshotPlugin } from '@web/test-runner-commands/plugins';
 
-import { pfeDevServerConfig } from './dev-server.js';
+import { pfeDevServerConfig, type PfeDevServerConfigOptions } from '../dev-server/config.js';
 
 export interface PfeTestRunnerConfigOptions extends PfeDevServerConfigOptions {
   files?: string[];
@@ -114,3 +113,4 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
     ]
   };
 }
+

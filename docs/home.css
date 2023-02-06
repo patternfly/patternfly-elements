@@ -80,3 +80,7 @@
   width: 16px;
 }
 
+rh-global-footer {
+  width: 100vw !important;
+  translate: none !important;
+}

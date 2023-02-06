@@ -1,7 +1,7 @@
 import type { PropertyValues } from 'lit';
 
-import { LitElement, html, nothing } from 'lit';
-import { queryAssignedElements } from 'lit/decorators.js';
+import { LitElement, html } from 'lit';
+import { queryAssignedElements, query } from 'lit/decorators.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 
@@ -24,6 +24,8 @@ export abstract class BaseTab extends LitElement {
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private icons!: Array<HTMLElement>;
 
+  @query('button') private button!: HTMLButtonElement;
+
   /** `active` should be observed, and true when the tab is selected */
   abstract active: boolean;
 
@@ -35,12 +37,12 @@ export abstract class BaseTab extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('click', this.#clickHandler);
+    this.#internals.role = 'tab';
   }
 
   render() {
-    const tabIndex = (this.active && !this.disabled) ? null : '-1';
     return html`
-      <button part="button" role="tab" tabindex="${tabIndex ?? nothing}">
+      <button part="button" ?disabled="${this.disabled}">
         <slot name="icon"
               part="icon"
               ?hidden="${!this.icons.length}"
@@ -61,7 +63,7 @@ export abstract class BaseTab extends LitElement {
   }
 
   #clickHandler() {
-    if (!this.disabled && this.#internals.ariaDisabled !== 'true') {
+    if (!this.disabled && this.#internals.ariaDisabled !== 'true' && this.ariaDisabled !== 'true') {
       this.active = true;
     }
   }

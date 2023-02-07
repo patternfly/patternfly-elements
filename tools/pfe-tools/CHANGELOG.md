@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-rc.5
+
+### Patch Changes
+
+- 3035d9163: analyzer: find demos in different repo setups
+
 ## 1.0.0-rc.4
 
 ### Minor Changes

@@ -38,7 +38,8 @@
     "plugins": [
       {
         "transform": "@patternfly/pfe-tools/typescript/transformers/css-imports.cjs",
-        "inline": true
+        "inline": true,
+        "minify": true
       },
       {
         "name": "typescript-lit-html-plugin"

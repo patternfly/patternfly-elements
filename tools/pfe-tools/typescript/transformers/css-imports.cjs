@@ -45,10 +45,10 @@ function createLitCssImportStatement(ctx, sourceFile) {
 
 /**
  * @param {import('typescript').CoreTransformationContext} ctx
- * @param {string} content
+ * @param {string} stylesheet
  * @param {string} [name]
  */
-function createLitCssTaggedTemplateLiteral(ctx, content, name) {
+function createLitCssTaggedTemplateLiteral(ctx, stylesheet, name) {
   return ctx.factory.createVariableStatement(
     undefined,
     ctx.factory.createVariableDeclarationList([
@@ -59,7 +59,7 @@ function createLitCssTaggedTemplateLiteral(ctx, content, name) {
         ctx.factory.createTaggedTemplateExpression(
           ctx.factory.createIdentifier('css'),
           undefined,
-          ctx.factory.createNoSubstitutionTemplateLiteral(content),
+          ctx.factory.createNoSubstitutionTemplateLiteral(stylesheet),
         )
       )
     ], ts.NodeFlags.Const)
@@ -67,11 +67,29 @@ function createLitCssTaggedTemplateLiteral(ctx, content, name) {
 }
 
 /**
+ * @param {string} stylesheet
+ * @param {string} filePath
+ */
+function minifyCss(stylesheet, filePath) {
+  const CleanCSS = require('clean-css');
+
+  try {
+    const clean = new CleanCSS({ returnPromise: false });
+    const { styles } = clean.minify(stylesheet);
+    return styles;
+  } catch (e) {
+    console.log('Could not minify ', filePath);
+    console.error(e);
+    return stylesheet;
+  }
+}
+
+/**
  * Replace .css import specifiers with .css.js import specifiers
  * @param {import('typescript').Program} _program
  * @return {import('typescript').TransformerFactory<import('typescript').Node>}
  */
-module.exports = function(_program, { inline = false } = {}) {
+module.exports = function(_program, { inline = false, minify = false } = {}) {
   return ctx => {
     /**
      * @param {import('typescript').Node} node
@@ -85,9 +103,10 @@ module.exports = function(_program, { inline = false } = {}) {
             const dir = pathToFileURL(fileName);
             const url = new URL(specifier, dir);
             const content = fs.readFileSync(url, 'utf-8');
+            const stylesheet = minify ? minifyCss(content, url.pathname) : content;
             return [
               createLitCssImportStatement(ctx, node.getSourceFile()),
-              createLitCssTaggedTemplateLiteral(ctx, content, node.importClause?.name?.getText()),
+              createLitCssTaggedTemplateLiteral(ctx, stylesheet, node.importClause?.name?.getText()),
             ];
           } else {
             return ctx.factory.createImportDeclaration(

@@ -10,9 +10,14 @@
     "@patternfly/pfe-tools": "1.0.0-rc.0"
   },
   "changesets": [
+    "chilled-dogs-guess",
     "core",
     "create-element",
+    "curvy-windows-poke",
     "elements",
+    "itchy-roses-vanish",
+    "package-dot-export",
+    "package-entrypoints",
     "pf-accordion",
     "pf-avatar",
     "pf-badge",
@@ -33,6 +38,9 @@
     "pf-timestamp",
     "pf-tooltip",
     "rc-1",
+    "tools-11ty-anchor",
+    "tools-analyzer-demos",
+    "tools-remove-esbuild",
     "tools"
   ]
 }

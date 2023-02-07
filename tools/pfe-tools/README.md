@@ -7,57 +7,21 @@ Tools and utilities for building PatternFly Elements and other design systems.
 Repos using pfe-tools can customize the docs pages, dev server, and custom-elements manifest
 generator by adding a `.pfe.config.json` file to the repository root.
 
-That file can contain the following properties:
-
-```ts
-interface PfeConfig {
-  /** custom elements namespace. Default 'pfe' */
-  tagPrefix?: string;
-  /** absolute URL to the web page representing the repo root in source control, with trailing slash. default 'https://github.com/patternfly/patternfly-elements/tree/main/' */
-  sourceControlURLPrefix?: string ;
-  /** absolute URL prefix for demos, with trailing slash. Default 'https://patternflyelements.org/' */
-  demoURLPrefix?: string ;
-  /** rootDir of the package. Default process.cwd() */
-  rootDir?: string;
-  /** object mapping custom element name to page title */
-  aliases?: Record<string, string> ;
-  /** Dev Server site options */
-  site?: {
-    /** The site's default page description */
-    description?: string;
-    /** URL to the site's favicon */
-    favicon?: string;
-    /** URL to the demo page's main brand logo */
-    logoUrl?: string;
-    /** URLs to stylesheets to add to the demo (absolute from cwd) */
-    stylesheets?: string[];
-    /** Title for main page of the demo */
-    title?: string;
-  };
-}
-```
+See [config.ts](./config.ts) for info on what that file can contain.
 
 ## 11ty Helpers
 
-Helpers for collating and rendering
-[custom-elements manifests](https://github.com/webcomponents/custom-elements-manifest/)
-in 11ty sites.
-
-## custom-elements-manifest
-
-Plugins and helpers for working with custom-elements-manifest analyzer
-
-## esbuild-plugins
-
-Helpers for working with esbuild in design system monorepos
+- Helpers for collating and rendering [custom-elements manifests][cem] in 11ty
+  sites.
+- Various 11ty utility plugins
 
 ## test
 
-Helpers for testing web components using [web test runner](https://modern-web.dev/docs/test-runner/overview/)
+Helpers for testing web components using [web test runner][wtr]
 
 ## dev-server
 
-Preset [web-dev-server](https://modern-web.dev/docs/dev-server/overview/) configuration.
+Preset [web-dev-server][wds] configuration.
 
 ### Troubleshooting
 
@@ -69,8 +33,7 @@ but there are cases where this may not work. If you get a 404 error to index.htm
 1. Confirm that you have an `index.html` file in your repository root
 2. Set the `rootDir` option to `pfeDevServerConfig`, e.g.
     ```js
-    // web-dev-server.config.js
-    import { pfeDevServerConfig } from '@patternfly/pfe-tools/dev-server.js';
+    import { pfeDevServerConfig } from '@patternfly/pfe-tools/dev-server/config.js';
 
     export default pfeDevServerConfig({
       rootDir: '.',
@@ -78,3 +41,7 @@ but there are cases where this may not work. If you get a 404 error to index.htm
     ```
 
 Make sure to do the same in `web-test-runner.config.js` as well, for your unit tests
+
+[cem]: https://github.com/webcomponents/custom-elements-manifest/
+[wds]: https://modern-web.dev/docs/dev-server/overview/
+[wtr]: https://modern-web.dev/docs/test-runner/overview/

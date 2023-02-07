@@ -188,19 +188,19 @@
   </pf-tabs>
 </div>
 
-<div class="example">
-  <h2>Tabs with explicit relationships</h2>
-  <pf-tabs id="explicit">
-    <pf-tab slot="tab" aria-controls="panel-1">1</pf-tab>
-    <pf-tab slot="tab" aria-controls="panel-2">2</pf-tab>
-    <pf-tab slot="tab" aria-controls="panel-3">3</pf-tab>
-    <pf-tab slot="tab" aria-controls="panel-4">4</pf-tab>
-    <pf-tab slot="tab" aria-controls="panel-5">5</pf-tab>
 
-    <pf-tab-panel id="panel-5">5</pf-tab-panel>
-    <pf-tab-panel id="panel-4">4</pf-tab-panel>
-    <pf-tab-panel id="panel-3">3</pf-tab-panel>
-    <pf-tab-panel id="panel-2">2</pf-tab-panel>
-    <pf-tab-panel id="panel-1">1</pf-tab-panel>
+<div class="example">
+  <h2>Manual Activation</h2>
+  <pf-tabs id="tabs-first" manual>
+    <pf-tab slot="tab">Users</pf-tab>
+    <pf-tab slot="tab">Containers</pf-tab>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab slot="tab" disabled active>Disabled</pf-tab>
+    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab-panel>Disabled</pf-tab-panel>
+    <pf-tab-panel>Aria Disabled</pf-tab-panel>
   </pf-tabs>
 </div>

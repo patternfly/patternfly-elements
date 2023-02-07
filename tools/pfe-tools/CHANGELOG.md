@@ -1,5 +1,43 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-rc.5
+
+### Patch Changes
+
+- 3035d9163: analyzer: find demos in different repo setups
+
+## 1.0.0-rc.4
+
+### Minor Changes
+
+- c76a65b93: ✨ Added `minify` option to `@patternfly/pfe-tools/typescript/transformers/css-imports.cjs`
+
+### Patch Changes
+
+- 3ab1de179: Allowed TypeScript modules to import multiple CSS modules when inlining CSS.
+
+## 1.0.0-rc.3
+
+### Minor Changes
+
+- 99db432f4: ✨ Added `anchors` 11ty plugin, based on [@orchidjs/eleventy-plugin-ids][npm]
+
+  [npm]: https://npm.im/@orchidjs/eleventy-plugin-ids
+
+## 1.0.0-rc.2
+
+### Major Changes
+
+- d01c7e067: Removed and deprecated esbuild and cem/a features
+
+  ### Breaking Changes
+
+  - ❌ Removed esbuild helpers
+  - 💱 Moved custom-elements-manifest config helper to `custom-elements-manifest/config.js`
+  - 💱 Moved dev-server config helper to `dev-server/config.js`
+  - 💱 Moved test-runner config helper to `test-runner/config.js`
+  - ⚠️ Deprecated custom-elements-manifest helpers
+
 ## 1.0.0-rc.1
 
 ### Patch Changes

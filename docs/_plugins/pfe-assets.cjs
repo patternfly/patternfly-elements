@@ -66,50 +66,18 @@ function demoPaths(content) {
 
 /** Generate a single-file bundle of all the repo's components and their dependencies */
 async function bundle() {
-  const { build } = await import('esbuild');
-  const { default: CleanCSS } = await import('clean-css');
-  const { litCssPlugin } = await import('esbuild-plugin-lit-css');
-
-  const cleanCSS = new CleanCSS({
-    sourceMap: true,
-    returnPromise: true,
-  });
-
-  await build({
-    entryPoints: ['elements/pfe.ts'],
-    format: 'esm',
-    outfile: '_site/pfe.min.js',
-    allowOverwrite: true,
-    treeShaking: true,
-    legalComments: 'linked',
-    logLevel: 'info',
-    sourcemap: true,
-    bundle: true,
-    minify: true,
-    minifyWhitespace: true,
-
-    external: [
-      'lit',
-      'tslib',
-      '@floating-ui*'
-    ],
-
-    plugins: [
-      litCssPlugin({
-        filter: /\.css$/,
-        transform: source => cleanCSS.minify(source).then(x => x.styles)
-      }),
-    ],
-  });
+  const { bundle } = await import('../../scripts/bundle.js');
+  await bundle();
 }
 
 module.exports = {
   configFunction(eleventyConfig, options) {
     eleventyConfig.addPassthroughCopy('docs/bundle.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/pfe.min.{map,css}');
+    eleventyConfig.addPassthroughCopy({ 'elements/pfe.min.*': '/' } );
     eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/main.mjs');
-    eleventyConfig.addPassthroughCopy({ 'elements/pf-icon/icons/': 'components/icon/icons' });
+    eleventyConfig.addPassthroughCopy({ 'elements/pf-icon/icons/': 'icons' });
     eleventyConfig.addPassthroughCopy({
       'node_modules/@rhds/elements': '/assets/@rhds'
     });

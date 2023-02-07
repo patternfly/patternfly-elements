@@ -3,22 +3,29 @@ const ts = require('typescript');
 const fs = require('node:fs');
 const { pathToFileURL } = require('node:url');
 
+const SEEN_SOURCES = new WeakSet();
+
 /**
  * @param {import('typescript').CoreTransformationContext} ctx
  * @param {import('typescript').SourceFile} sourceFile
  */
 function createLitCssImportStatement(ctx, sourceFile) {
+  if (SEEN_SOURCES.has(sourceFile)) {
+    return;
+  }
   for (const statement of sourceFile.statements) {
     if (
       ts.isImportDeclaration(statement) &&
       statement.moduleSpecifier.getText() === 'lit') {
       for (const binding of statement.importClause?.namedBindings?.getChildren() ?? []) {
         if (binding.getText() === 'css') {
+          SEEN_SOURCES.add(sourceFile);
           return;
         }
       }
     }
   }
+  SEEN_SOURCES.add(sourceFile);
   return ctx.factory.createImportDeclaration(
     undefined,
     ctx.factory.createImportClause(
@@ -120,3 +127,4 @@ module.exports = function(_program, { inline = false } = {}) {
     };
   };
 };
+

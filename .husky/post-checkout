@@ -1,0 +1,19 @@
+#!/bin/sh
+# Don't do it in CI
+# Branch checkout, not file checkout
+# Not a clone operation
+# Old ref and new ref are different (i.e. actually switched branches)
+if   [ -z "$CI" ] \
+  && [ -n "$1" ] \
+  && [ "$3" = "1" ] \
+  && [ "$1" != "$3" ]; \
+then
+  NO_FORMAT="\033[0m"
+  C_YELLOW="\033[38;5;11m"
+  C_AQUA="\033[38;5;14m"
+  C_RED="\033[38;5;9m"
+  REF_NAME=$(git name-rev --name-only --always "$2")
+  echo -e "\n${C_YELLOW}NOTICE${NO_FORMAT}: Checked out ${C_AQUA}$REF_NAME${NO_FORMAT}. ${C_RED}DELETING${NO_FORMAT} wireit cache."
+  rm -rf .wireit
+fi
+

@@ -1,5 +1,11 @@
 # @patternfly/elements
 
+## 2.0.0-rc.5
+
+### Patch Changes
+
+- 8a1ba2b65: `<pf-icon>`: add icons to package exports
+
 ## 2.0.0-rc.4
 
 ### Patch Changes

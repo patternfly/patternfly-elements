@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-rc.7
+
+### Patch Changes
+
+- b3b472ef6: update 11ty
+
 ## 1.0.0-rc.6
 
 ### Patch Changes

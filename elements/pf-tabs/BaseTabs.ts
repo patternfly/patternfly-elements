@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property, query, queryAssignedElements } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
@@ -151,9 +152,9 @@ export abstract class BaseTabs extends LitElement {
 
   override render() {
     const { scrollIconSet, scrollIconLeft, scrollIconRight } = this.constructor as typeof BaseTabs;
-
+    const classes = { overflow: this.#showScrollButtons };
     return html`
-      <div part="container">
+      <div part="container" class="${classMap(classes)}">
         <div part="tabs-container">${!this.#showScrollButtons ? '' : html`
           <button id="previousTab" tabindex="-1"
               aria-label="${this.getAttribute('label-scroll-left') ?? 'Scroll left'}"

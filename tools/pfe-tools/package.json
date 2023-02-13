@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-tools",
-  "version": "1.0.0-rc.3",
+  "version": "1.0.0-rc.7",
   "type": "module",
   "description": "Development and build tools for PatternFly Elements and related projects",
   "keywords": [
@@ -23,7 +23,7 @@
     "./config.js": "./config.js",
     "./custom-elements-manifest/config.js": "./custom-elements-manifest/config.js",
     "./dev-server/config.js": "./dev-server/config.js",
-    "./dev-server/demo.ts": "./dev-server/demo.ts",
+    "./dev-server/demo.js": "./dev-server/demo.js",
     "./environment.js": "./environment.js",
     "./11ty": "./11ty/index.js",
     "./11ty/DocsPage.js": "./11ty/DocsPage.js",
@@ -61,7 +61,7 @@
     "**/*.{js,cjs,d.ts,map}"
   ],
   "dependencies": {
-    "@11ty/eleventy": "^2.0.0-beta.1 || ^2.0.0",
+    "@11ty/eleventy": "^2.0.0",
     "@11ty/eleventy-plugin-directory-output": "^1.0.1",
     "@11ty/eleventy-plugin-syntaxhighlight": "^4.1.0",
     "@changesets/cli": "^2.25.0",

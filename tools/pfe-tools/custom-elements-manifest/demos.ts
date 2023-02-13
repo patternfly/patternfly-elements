@@ -36,7 +36,7 @@ export function demosPlugin(options?: PfeConfig): Plugin {
         : x.declarations.flatMap(y => (y as { tagName: string }).tagName)).filter(Boolean);
 
       for (const moduleDoc of customElementsManifest.modules) {
-        const [primaryElementName] = moduleDoc.path.split(sep);
+        const primaryElementName = moduleDoc.path.split(sep).find(x => x !== 'elements') ?? '';
         let demoPath = join(rootDir, primaryElementName, 'demo');
 
         if (!existsSync(demoPath)) {

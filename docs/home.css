@@ -83,6 +83,7 @@
 rh-global-footer {
   width: 100vw !important;
   translate: none !important;
+  transform: none;
   --rh-footer-icon-color: var(--rh-color-black-500, #8a8d90);
   --rh-footer-icon-color-hover: var(--rh-color-black-400, #b8bbbe);
 }

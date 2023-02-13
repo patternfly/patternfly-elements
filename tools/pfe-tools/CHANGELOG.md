@@ -1,5 +1,33 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-rc.7
+
+### Patch Changes
+
+- b3b472ef6: update 11ty
+
+## 1.0.0-rc.6
+
+### Patch Changes
+
+- 66b025d86: dev-server: fixed demo script import and styles
+
+## 1.0.0-rc.5
+
+### Patch Changes
+
+- 3035d9163: analyzer: find demos in different repo setups
+
+## 1.0.0-rc.4
+
+### Minor Changes
+
+- c76a65b93: ✨ Added `minify` option to `@patternfly/pfe-tools/typescript/transformers/css-imports.cjs`
+
+### Patch Changes
+
+- 3ab1de179: Allowed TypeScript modules to import multiple CSS modules when inlining CSS.
+
 ## 1.0.0-rc.3
 
 ### Minor Changes

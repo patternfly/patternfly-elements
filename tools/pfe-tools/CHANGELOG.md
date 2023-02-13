@@ -1,5 +1,17 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-rc.7
+
+### Patch Changes
+
+- b3b472ef6: update 11ty
+
+## 1.0.0-rc.6
+
+### Patch Changes
+
+- 66b025d86: dev-server: fixed demo script import and styles
+
 ## 1.0.0-rc.5
 
 ### Patch Changes

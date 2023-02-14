@@ -1,8 +1,9 @@
 section {
   padding: 0 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+}
+
+select {
+  display: block;
 }
 
 #alert-select {

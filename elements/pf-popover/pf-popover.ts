@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import { LitElement, nothing } from 'lit';
 import { html, unsafeStatic } from 'lit/static-html.js';
 import { customElement, property, query } from 'lit/decorators.js';
@@ -7,13 +8,16 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
+import { ComposedEvent } from '@patternfly/pfe-core/core.js';
+import { observed } from '@patternfly/pfe-core/decorators.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
-import { ComposedEvent } from '@patternfly/pfe-core';
 
 import styles from './pf-popover.css';
 
 const headingLevels = [2, 3, 4, 5, 6] as const;
+
 type HeadingLevel = typeof headingLevels[number];
+
 type AlertSeverity = 'default' | 'info' | 'warning' | 'success' | 'danger';
 
 export class PopoverHideEvent extends ComposedEvent {
@@ -40,7 +44,8 @@ export class PopoverShownEvent extends ComposedEvent {
   }
 }
 
-// todo: onMount event
+// todo?: onMount event
+// https://www.patternfly.org/v4/components/popover#popover
 
 /**
  * Patternfly popover
@@ -61,8 +66,8 @@ export class PopoverShownEvent extends ComposedEvent {
  * @csspart heading - The heading element
  * @csspart icon - The header icon
  * @csspart close-button - The close button
- * @csspart body - The container for the body content.
- * @csspart footer - The container for the footer content.
+ * @csspart body - The container for the body content
+ * @csspart footer - The container for the footer content
  *
  * @cssprop {<length>} --pf-c-popover__arrow--Height
  *          Height of the arrow
@@ -90,13 +95,13 @@ export class PopoverShownEvent extends ComposedEvent {
  *          {@default `1rem`}
  * @cssprop {<length>} --pf-c-tooltip__content--PaddingRight
  *          Popover right padding
- *          {@default ``1rem`}
+ *          {@default `1rem`}
  * @cssprop {<length>} --pf-c-tooltip__content--PaddingBottom
  *          Popover bottom padding
- *          {@default ``1rem`}
+ *          {@default `1rem`}
  * @cssprop {<length>} --pf-c-tooltip__content--PaddingLeft
  *          Popover left padding
- *          {@default ``1rem`}
+ *          {@default `1rem`}
  * @cssprop --pf-c-popover--line-height
  *          Popover line height
  *          {@default `1.5`}
@@ -174,102 +179,125 @@ export class PopoverShownEvent extends ComposedEvent {
 export class PfPopover extends LitElement {
   static readonly styles = [styles];
 
+  // todo: alertSeverityScreenReaderText
+  // todo: hideOnOutsideClick
+  // todo: withFocusTrap
+
   @property({ type: String, reflect: true }) position: Placement = 'top';
   @property({ type: String, reflect: true }) heading?: string;
   @property({ type: String, reflect: true }) body = '';
   @property({ type: String, reflect: true }) footer?: string;
   @property({ type: String, reflect: true }) icon?: string;
   @property({ type: String, reflect: true }) label?: string;
+  @property({ type: Number, reflect: true }) distance?: number = 25;
+  // todo: handle PF4s 'flip' Placement option in flip-behavior
+  // https://www.patternfly.org/v4/components/popover#popover
+  @property({ type: String, reflect: true, attribute: 'flip-behavior' }) flipBehavior?: Placement[] = ['top', 'bottom', 'left', 'right', 'top-start', 'top-end', 'bottom-start', 'bottom-end', 'left-start', 'left-end', 'right-start', 'right-end'];
+  @property({ type: Boolean, reflect: true, attribute: 'enable-flip' }) enableFlip?: boolean = true;
   @property({ type: Number, reflect: true, attribute: 'heading-level' }) headingLevel?: HeadingLevel;
   @property({ type: String, reflect: true, attribute: 'icon-set' }) iconSet?: string;
   @property({ type: Boolean, reflect: true, attribute: 'hide-close' }) hideClose?: boolean;
   @property({ type: String, reflect: true, attribute: 'alert-severity' }) alertSeverity?: AlertSeverity;
+  @property({ type: String, reflect: true, attribute: 'close-label' }) closeButtonLabel = 'Close popover';
 
-  // todo: alertSeverityScreenReaderText
-  // todo: closeBtnAriaLabel
-  // todo: animationDuration (CSS custom property)
-  // todo: distance (#float --> offset)
-  // todo: enableFlip (#float --> flip)
-  // todo: flipBehavior (#float --> fallbackPlacements)
-  // todo: hideOnOutsideClick
-  // todo: withFocusTrap
-  // todo: zIndex (CSS custom property)
+  @observed
+  @property({ type: String, reflect: true }) trigger?: string;
 
-  @query('#popover') private _popover?: HTMLElement | null;
-  @query('#close-button') private _closeButton?: HTMLElement | null;
-  @query('#invoker') private _invoker?: HTMLElement | null;
+  @query('#popover') private _popover?: HTMLDialogElement | null;
+  @query('#close-button') private _closeButton?: HTMLButtonElement | null;
+  @query('#trigger') private _slottedTrigger?: HTMLElement | null;
+
+  #referenceTrigger?: HTMLElement | null = null;
 
   #float = new FloatingDOMController(this, {
+    flip: this.enableFlip,
+    fallbackPlacements: this.flipBehavior,
     content: () => this.shadowRoot?.querySelector('#popover'),
-    arrow: () => this.shadowRoot?.querySelector('#arrow')
+    arrow: () => this.shadowRoot?.querySelector('#arrow'),
+    invoker: () => this.#referenceTrigger || this._slottedTrigger
   });
 
   #slots = new SlotController(this, { slots: [null, 'icon', 'heading', 'body', 'footer'] });
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('keydown', this.onKeydown);
+    this.addEventListener('keydown', this._onKeydown);
     document.addEventListener('click', this._outsideClick);
   }
 
-  /**
-   * Shows the popover
-   * @return resolves when the update completes
-   */
-  async show() {
-    this.dispatchEvent(new PopoverShowEvent());
-    await this.updateComplete;
-    const placement = this.position;
-    const offset = 25;
-    await this.#float.show({ offset, placement });
-    this._popover?.focus();
-    this.dispatchEvent(new PopoverShownEvent());
-  }
-
-  /**
-   * Hides the popover
-   * @return resolves when the update completes
-   */
-  async hide() {
-    this.dispatchEvent(new PopoverHideEvent());
-    await this.#float.hide();
-    this.dispatchEvent(new PopoverHiddenEvent());
-  }
-
   render() {
-    const { alignment, anchor, open, styles } = this.#float;
+    const { alignment, anchor, styles } = this.#float;
     return html`
       <div
         id="container"
         style="${styleMap(styles)}"
         class="${classMap({
-          open,
           [anchor]: !!anchor,
           [alignment]: !!alignment,
         })}"
       >
-        <slot id="invoker" @keydown=${this.onKeydown} @click=${this.show}></slot>
-        <div
+        <slot id="trigger" @keydown=${this._onKeydown} @click=${this.show}></slot>
+        <dialog
           id="popover"
-          role="dialog"
           aria-labelledby="heading"
           aria-describedby="body"
           aria-label=${ifDefined(this.label)}
-          ?hidden=${!open}
         > 
           <div id="arrow"></div>
           <div id="content" part="content">
             ${this._renderCloseButton()} ${this._renderHeader()} ${this._renderBody()} ${this._renderFooter()}
           </div>
-        </div>
+      </dialog>
       </div>
     `;
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('keydown', this.onKeydown);
+
+    this.removeEventListener('keydown', this._onKeydown);
     document.removeEventListener('click', this._outsideClick);
+
+    this.#referenceTrigger?.removeEventListener('click', this.show);
+    this.#referenceTrigger?.removeEventListener('keydown', this._onKeydown);
+  }
+
+  @bound private _onKeydown(event: KeyboardEvent) {
+    switch (event.key) {
+      // todo?: tab, shift + tab to prevent user from tabbing out of dialog before closing
+      case 'Escape':
+      case 'Esc':
+        event.preventDefault();
+        this.hide();
+        return;
+      case 'Enter':
+        if (event.target === this.#referenceTrigger || event.target === this._slottedTrigger) {
+          event.preventDefault();
+          this.show();
+        }
+        return;
+    }
+  }
+
+  @bound private _outsideClick(event: MouseEvent) {
+    const path = event.composedPath();
+    // todo?: is bad that I casted to HTMLElement here?
+    if (!path.includes(this) && !path.includes(this.#referenceTrigger as HTMLElement)) {
+      this.hide();
+    }
+  }
+
+  // todo: unit test
+  protected _triggerChanged(oldValue?: string, newValue?: string) {
+    if (oldValue) {
+      this.#referenceTrigger?.removeEventListener('click', this.show);
+      this.#referenceTrigger?.removeEventListener('keydown', this._onKeydown);
+    }
+    if (newValue) {
+      this.#referenceTrigger = (this.getRootNode() as Document | ShadowRoot).getElementById(newValue);
+      this.#referenceTrigger?.addEventListener('click', this.show);
+      this.#referenceTrigger?.addEventListener('keydown', this._onKeydown);
+    }
   }
 
   protected _renderCloseButton() {
@@ -277,11 +305,11 @@ export class PfPopover extends LitElement {
       html`
           <pf-button
             id="close-button"
-            label="Close popover"
+            label=${this.closeButtonLabel}
             part="close-button"
             plain
             @click=${this.hide}
-            @keydown=${this.onKeydown}
+            @keydown=${this._onKeydown}
           >
             <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
               <path
@@ -346,32 +374,19 @@ export class PfPopover extends LitElement {
       : nothing;
   }
 
-  @bound private onKeydown(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'Tab':
-        if (event.target === this._closeButton) {
-          event.preventDefault();
-          this._closeButton?.focus();
-        }
-        return;
-      case 'Escape':
-      case 'Esc':
-        event.preventDefault();
-        this.hide();
-        return;
-      case 'Enter':
-        if (event.target === this._invoker) {
-          event.preventDefault();
-          this.show();
-        }
-        return;
-    }
+  @bound async show() {
+    this.dispatchEvent(new PopoverShowEvent());
+    await this.updateComplete;
+    await this.#float.show({ offset: this.distance, placement: this.position });
+    this._popover?.show();
+    this.dispatchEvent(new PopoverShownEvent());
   }
 
-  @bound private _outsideClick(event: MouseEvent) {
-    if (!event.composedPath().includes(this)) {
-      this.hide();
-    }
+  @bound async hide() {
+    this.dispatchEvent(new PopoverHideEvent());
+    await this.#float.hide();
+    this._popover?.close();
+    this.dispatchEvent(new PopoverHiddenEvent());
   }
 }
 

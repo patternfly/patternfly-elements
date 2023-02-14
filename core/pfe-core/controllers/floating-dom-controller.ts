@@ -23,6 +23,7 @@ interface FloatingDOMControllerOptions {
   flip?: boolean;
   shift?: boolean;
   padding?: number;
+  fallbackPlacements?: Placement[];
 }
 
 interface ShowOptions {
@@ -108,7 +109,7 @@ export class FloatingDOMController implements ReactiveController {
   }
 
   async #update(placement: Placement = 'top', offset?: Offset) {
-    const { flip, padding, shift } = this.#options;
+    const { flip, padding, shift, fallbackPlacements } = this.#options;
 
     const invoker = this.#invoker;
     const content = this.#content;
@@ -123,7 +124,7 @@ export class FloatingDOMController implements ReactiveController {
         offsetMiddleware(offset),
         shift && shiftMiddleware({ padding }),
         arrow && arrowMiddleware({ element: arrow, padding: arrow.offsetHeight / 2 }),
-        flip && flipMiddleware({ padding }),
+        flip && flipMiddleware({ padding, fallbackPlacements }),
       ].filter(Boolean)
     });
 

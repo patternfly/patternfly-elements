@@ -1,7 +1,7 @@
 {% renderOverview %}
 
 <pf-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer">
-  <button>Toggle popover</button>
+  <pf-button>Toggle popover</pf-button>
 </pf-popover>
 
 {% endrenderOverview %}

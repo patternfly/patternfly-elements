@@ -3,7 +3,6 @@
   --_floating-arrow-size: var(--pf-c-popover__arrow--Width, var(--pf-global--arrow--width-lg, 1.5625rem));
   --_header-text-color: var(--pf-c-popover__title-text--Color, inherit);
   --_header-icon-color: var(--pf-c-popover__title-icon--Color, var(--pf-global--Color--100, #151515));
-  /* todo?: confirm format of local variable name */
   --_animation-speed: var(--pf-popover--animation-speed, 300ms);
   --_z-index: var(--pf-popover--z-index, 9999);
 }
@@ -178,23 +177,3 @@
   --_header-icon-color: var(--pf-c-popover--m-danger__title-icon--Color, var(--pf-global--danger-color--100, #c9190b));
   --_header-text-color: var(--pf-c-popover--m-danger__title-text--Color, var(--pf-global--danger-color--200, #a30000));
 }
-
-.left #arrow          { right: calc(-0.5 * var(--_floating-arrow-size)); }
-.left.center #arrow   { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
-.left.start #arrow    { top: calc(0.5 * var(--_floating-arrow-size)); }
-.left.end #arrow      { bottom: calc(0.5 * var(--_floating-arrow-size)); }
-
-.top #arrow           { top: calc(100% - 0.5 * var(--_floating-arrow-size)); }
-.top.center #arrow    { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
-.top.start #arrow     { left: calc(0.5 * var(--_floating-arrow-size)); }
-.top.end #arrow       { right: calc(0.5 * var(--_floating-arrow-size)); }
-
-.right #arrow         { right: calc(100% - 0.5 * var(--_floating-arrow-size)); }
-.right.center #arrow  { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
-.right.start #arrow   { top: calc(0.5 * var(--_floating-arrow-size)); }
-.right.end #arrow     { bottom: calc(0.5 * var(--_floating-arrow-size)); }
-
-.bottom #arrow        { bottom: calc(100% - 0.5 * var(--_floating-arrow-size)); }
-.bottom.center #arrow { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
-.bottom.start #arrow  { left: calc(0.5 * var(--_floating-arrow-size)); }
-.bottom.end #arrow    { right: calc(0.5 * var(--_floating-arrow-size)); }

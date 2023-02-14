@@ -43,9 +43,6 @@ export class PopoverShownEvent extends ComposedEvent {
   }
 }
 
-// todo?: onMount event
-// https://www.patternfly.org/v4/components/popover#popover
-
 /**
  * Patternfly popover
  *
@@ -181,7 +178,6 @@ export class PfPopover extends LitElement {
   // todo: alertSeverityScreenReaderText
   // todo: hideOnOutsideClick
   // todo: withFocusTrap
-
   @property({ type: String, reflect: true }) position: Placement = 'top';
   @property({ type: String, reflect: true }) heading?: string;
   @property({ type: String, reflect: true }) body = '';
@@ -189,7 +185,7 @@ export class PfPopover extends LitElement {
   @property({ type: String, reflect: true }) icon?: string;
   @property({ type: String, reflect: true }) label?: string;
   @property({ type: Number, reflect: true }) distance?: number = 25;
-  // todo: handle PF4s 'flip' Placement option in flip-behavior
+  // todo: handle PF4s 'flip' Placement option in flip-behavior if possible
   // https://www.patternfly.org/v4/components/popover#popover
   @property({ type: String, reflect: true, attribute: 'flip-behavior' }) flipBehavior?: Placement[] = ['top', 'bottom', 'left', 'right', 'top-start', 'top-end', 'bottom-start', 'bottom-end', 'left-start', 'left-end', 'right-start', 'right-end'];
   @property({ type: Boolean, reflect: true, attribute: 'enable-flip' }) enableFlip?: boolean = true;
@@ -263,7 +259,6 @@ export class PfPopover extends LitElement {
 
   @bound private _onKeydown(event: KeyboardEvent) {
     switch (event.key) {
-      // todo?: tab, shift + tab to prevent user from tabbing out of dialog before closing
       case 'Escape':
       case 'Esc':
         event.preventDefault();
@@ -280,7 +275,6 @@ export class PfPopover extends LitElement {
 
   @bound private _outsideClick(event: MouseEvent) {
     const path = event.composedPath();
-    // todo?: is bad that I casted to HTMLElement here?
     if (!path.includes(this) && !path.includes(this.#referenceTrigger as HTMLElement)) {
       this.hide();
     }

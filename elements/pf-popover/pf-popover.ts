@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import { LitElement, nothing } from 'lit';
 import { html, unsafeStatic } from 'lit/static-html.js';
 import { customElement, property, query } from 'lit/decorators.js';

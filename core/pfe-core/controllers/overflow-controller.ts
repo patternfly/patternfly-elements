@@ -91,7 +91,6 @@ export class OverflowController implements ReactiveController {
     this.#setOverflowState();
   }
 
-
   update() {
     this.#setOverflowState();
   }

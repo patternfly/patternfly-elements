@@ -55,38 +55,38 @@ export class OverflowController implements ReactiveController {
     this.#scrollTimeout = setTimeout(() => this.#setOverflowState(), this.#scrollTimeoutDelay);
   };
 
-  scrollLeft(instance: OverflowController) {
-    if (!instance.#container) {
+  scrollLeft() {
+    if (!this.#container) {
       return;
     }
     let firstElementInView: HTMLElement | undefined;
     let lastElementOutOfView: HTMLElement | undefined;
-    for (let i = 0; i < instance.#items.length && !firstElementInView; i++) {
-      if (isElementInView(instance.#container, instance.#items[i] as HTMLElement, false)) {
-        firstElementInView = instance.#items[i];
-        lastElementOutOfView = instance.#items[i - 1];
+    for (let i = 0; i < this.#items.length && !firstElementInView; i++) {
+      if (isElementInView(this.#container, this.#items[i] as HTMLElement, false)) {
+        firstElementInView = this.#items[i];
+        lastElementOutOfView = this.#items[i - 1];
       }
     }
     if (lastElementOutOfView) {
-      instance.#container.scrollLeft -= lastElementOutOfView.scrollWidth;
+      this.#container.scrollLeft -= lastElementOutOfView.scrollWidth;
     }
     this.#setOverflowState();
   }
 
-  scrollRight(instance: OverflowController) {
-    if (!instance.#container) {
+  scrollRight() {
+    if (!this.#container) {
       return;
     }
     let lastElementInView: HTMLElement | undefined;
     let firstElementOutOfView: HTMLElement | undefined;
-    for (let i = instance.#items.length - 1; i >= 0 && !lastElementInView; i--) {
-      if (isElementInView(instance.#container, instance.#items[i] as HTMLElement, false)) {
-        lastElementInView = instance.#items[i];
-        firstElementOutOfView = instance.#items[i + 1];
+    for (let i = this.#items.length - 1; i >= 0 && !lastElementInView; i--) {
+      if (isElementInView(this.#container, this.#items[i] as HTMLElement, false)) {
+        lastElementInView = this.#items[i];
+        firstElementOutOfView = this.#items[i + 1];
       }
     }
     if (firstElementOutOfView) {
-      instance.#container.scrollLeft += firstElementOutOfView.scrollWidth;
+      this.#container.scrollLeft += firstElementOutOfView.scrollWidth;
     }
     this.#setOverflowState();
   }

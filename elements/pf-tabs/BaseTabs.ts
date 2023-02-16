@@ -158,7 +158,7 @@ export abstract class BaseTabs extends LitElement {
           <button id="previousTab" tabindex="-1"
               aria-label="${this.getAttribute('label-scroll-left') ?? 'Scroll left'}"
               ?disabled="${!this.#overflow.overflowLeft}"
-              @click="${this.#scrollLeft}">
+              @click="${this.#scrollLeft.bind(this)}">
             <pf-icon icon="${scrollIconLeft}" set="${scrollIconSet}" loading="eager"></pf-icon>
           </button>`}
           <slot name="tab"
@@ -168,7 +168,7 @@ export abstract class BaseTabs extends LitElement {
           <button id="nextTab" tabindex="-1"
               aria-label="${this.getAttribute('label-scroll-right') ?? 'Scroll right'}"
               ?disabled="${!this.#overflow.overflowRight}"
-              @click="${this.#scrollRight}">
+              @click="${this.#scrollRight.bind(this)}">
             <pf-icon icon="${scrollIconRight}" set="${scrollIconSet}" loading="eager"></pf-icon>
           </button>`}
         </div>
@@ -296,10 +296,10 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #scrollLeft() {
-    this.#overflow.scrollLeft(this.#overflow);
+    this.#overflow.scrollLeft();
   }
 
   #scrollRight() {
-    this.#overflow.scrollRight(this.#overflow);
+    this.#overflow.scrollRight();
   }
 }

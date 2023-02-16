@@ -7,10 +7,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
-import { ComposedEvent } from '@patternfly/pfe-core/core.js';
+import { ComposedEvent, StringListConverter } from '@patternfly/pfe-core/core.js';
 import { observed } from '@patternfly/pfe-core/decorators.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
-
+import '@patternfly/elements/pf-button/pf-button.js';
 import styles from './pf-popover.css';
 
 const headingLevels = [2, 3, 4, 5, 6] as const;
@@ -187,7 +187,7 @@ export class PfPopover extends LitElement {
   @property({ type: Number, reflect: true }) distance?: number = 25;
   // todo: handle PF4s 'flip' Placement option in flip-behavior if possible
   // https://www.patternfly.org/v4/components/popover#popover
-  @property({ type: String, reflect: true, attribute: 'flip-behavior' }) flipBehavior?: Placement[] = ['top', 'bottom', 'left', 'right', 'top-start', 'top-end', 'bottom-start', 'bottom-end', 'left-start', 'left-end', 'right-start', 'right-end'];
+  @property({ type: String, attribute: 'flip-behavior', converter: StringListConverter }) flipBehavior?: Placement[] = ['top', 'bottom', 'left', 'right', 'top-start', 'top-end', 'bottom-start', 'bottom-end', 'left-start', 'left-end', 'right-start', 'right-end'];
   @property({ type: Boolean, reflect: true, attribute: 'enable-flip' }) enableFlip?: boolean = true;
   @property({ type: Number, reflect: true, attribute: 'heading-level' }) headingLevel?: HeadingLevel;
   @property({ type: String, reflect: true, attribute: 'icon-set' }) iconSet?: string;
@@ -205,8 +205,6 @@ export class PfPopover extends LitElement {
   #referenceTrigger?: HTMLElement | null = null;
 
   #float = new FloatingDOMController(this, {
-    flip: this.enableFlip,
-    fallbackPlacements: this.flipBehavior,
     content: () => this.shadowRoot?.querySelector('#popover'),
     arrow: () => this.shadowRoot?.querySelector('#arrow'),
     invoker: () => this.#referenceTrigger || this._slottedTrigger
@@ -370,7 +368,7 @@ export class PfPopover extends LitElement {
   @bound async show() {
     this.dispatchEvent(new PopoverShowEvent());
     await this.updateComplete;
-    await this.#float.show({ offset: this.distance, placement: this.position });
+    await this.#float.show({ offset: this.distance, placement: this.position, flip: this.enableFlip, fallbackPlacements: this.flipBehavior });
     this._popover?.show();
     this.dispatchEvent(new PopoverShownEvent());
   }

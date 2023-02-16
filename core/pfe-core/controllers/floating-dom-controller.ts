@@ -29,6 +29,8 @@ interface FloatingDOMControllerOptions {
 interface ShowOptions {
   offset?: Offset;
   placement?: Placement;
+  flip?: boolean;
+  fallbackPlacements?: Placement[]
 }
 
 export type Anchor = ''|'top'|'left'|'bottom'|'right';
@@ -100,7 +102,6 @@ export class FloatingDOMController implements ReactiveController {
     host.addController(this);
     this.#options = options as Required<FloatingDOMControllerOptions>;
     this.#options.invoker ??= host;
-    this.#options.flip ??= true;
     this.#options.shift ??= true;
   }
 
@@ -108,8 +109,8 @@ export class FloatingDOMController implements ReactiveController {
     this.#cleanup?.();
   }
 
-  async #update(placement: Placement = 'top', offset?: Offset) {
-    const { flip, padding, shift, fallbackPlacements } = this.#options;
+  async #update(placement: Placement = 'top', offset?: Offset, flip = true, fallbackPlacements?: Placement[]) {
+    const { padding, shift } = this.#options;
 
     const invoker = this.#invoker;
     const content = this.#content;
@@ -156,7 +157,7 @@ export class FloatingDOMController implements ReactiveController {
   }
 
   /** Show the floating DOM */
-  async show({ offset, placement }: ShowOptions = {}) {
+  async show({ offset, placement, flip, fallbackPlacements }: ShowOptions = {}) {
     const invoker = this.#invoker;
     const content = this.#content;
     if (!invoker || !content) {
@@ -164,7 +165,7 @@ export class FloatingDOMController implements ReactiveController {
     }
     if (!this.#opening) {
       this.#opening = true;
-      const p = this.#update(placement, offset);
+      const p = this.#update(placement, offset, flip, fallbackPlacements);
       this.#cleanup ??= autoUpdate(invoker, content, () =>
         this.#update(placement, offset));
       await p;

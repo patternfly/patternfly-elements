@@ -41,9 +41,6 @@ export abstract class BaseTabs extends LitElement {
   /** Icon set to use for the scroll buttons */
   protected static readonly scrollIconSet: string = 'fas';
 
-  #tabindex = new RovingTabindexController(this);
-  #overflow = new OverflowController(this);
-
   static #instances = new Set<BaseTabs>();
 
   static {
@@ -60,6 +57,10 @@ export abstract class BaseTabs extends LitElement {
   @queryAssignedElements() private panels!: BaseTabPanel[];
 
   @query('[part="tabs"]') private tabList!: HTMLElement;
+
+  #tabindex = new RovingTabindexController(this);
+
+  #overflow = new OverflowController(this);
 
   #logger = new Logger(this);
 

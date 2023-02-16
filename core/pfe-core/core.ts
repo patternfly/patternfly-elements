@@ -47,6 +47,23 @@ export const NumberListConverter: ComplexAttributeConverter<null|number[]> = {
 };
 
 /**
+ * A LitElement property converter which represents a list of strings as a comma separated string
+ * @see https://lit.dev/docs/components/properties/#conversion-converter
+ */
+export const StringListConverter: ComplexAttributeConverter<null|string[]> = {
+  fromAttribute(value: string) {
+    if (typeof value !== 'string') {
+      return null;
+    } else {
+      return value.split(',').map(x => x.trim());
+    }
+  },
+  toAttribute(value: string[]) {
+    return value.join(',');
+  },
+};
+
+/**
  * A composed, bubbling event for UI interactions
  * e.g. when an accordion panel opens.
  */

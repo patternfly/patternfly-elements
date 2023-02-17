@@ -29,7 +29,7 @@ export class OverflowController implements ReactiveController {
     return this.#items.at(-1);
   }
 
-  constructor(public host: ReactiveControllerHost & HTMLElement) {
+  constructor(public host: ReactiveControllerHost & Element) {
     this.host.addController(this);
   }
 

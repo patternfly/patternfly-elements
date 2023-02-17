@@ -147,7 +147,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   async firstUpdated() {
-    this.tabList.addEventListener('scroll', this.#overflow.onScroll);
+    this.tabList.addEventListener('scroll', this.#overflow.onScroll.bind(this));
   }
 
   override render() {

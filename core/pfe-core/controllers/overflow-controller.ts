@@ -22,7 +22,7 @@ export class OverflowController implements ReactiveController {
   }
 
   get firstItem(): HTMLElement | undefined {
-    return this.#items[0];
+    return this.#items.at(0);
   }
 
   get lastItem(): HTMLElement | undefined {

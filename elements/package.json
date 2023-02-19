@@ -117,7 +117,7 @@
   ],
   "dependencies": {
     "@patternfly/pfe-core": "^2.0.0-rc.1",
-    "lit": "2.3.0",
+    "lit": "2.6.1",
     "tslib": "^2.4.1"
   }
 }

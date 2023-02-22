@@ -141,7 +141,7 @@ export class FloatingDOMController implements ReactiveController {
 
       Object.assign(arrow.style, {
         left: arrowX != null ? `${arrowX}px` : '',
-        top: arrowY != null ? `${arrowY}px` : '',
+        top: arrowY != null && !['top'].includes(_placement) ? `${arrowY}px` : '',
         right: '',
         bottom: '',
         [staticSide]: `-${arrow.offsetHeight / 2}px`,

@@ -178,34 +178,35 @@ export class PfPopover extends LitElement {
   // todo: alertSeverityScreenReaderText
   // todo: hideOnOutsideClick
   // todo: withFocusTrap
-  @property({ type: String, reflect: true }) position: Placement = 'top';
-  @property({ type: String, reflect: true }) heading?: string;
-  @property({ type: String, reflect: true }) body = '';
-  @property({ type: String, reflect: true }) footer?: string;
-  @property({ type: String, reflect: true }) icon?: string;
-  @property({ type: String, reflect: true }) label?: string;
+  @property({ reflect: true }) position: Placement = 'top';
+  @property({ reflect: true }) heading?: string;
+  @property({ reflect: true }) body = '';
+  @property({ reflect: true }) footer?: string;
+  @property({ reflect: true }) icon?: string;
+  @property({ reflect: true }) label?: string;
   @property({ type: Number, reflect: true }) distance?: number = 25;
   // todo: handle PF4s 'flip' Placement option in flip-behavior if possible
   // https://www.patternfly.org/v4/components/popover#popover
-  @property({ type: String, attribute: 'flip-behavior', converter: StringListConverter }) flipBehavior?: Placement[] = ['top', 'bottom', 'left', 'right', 'top-start', 'top-end', 'bottom-start', 'bottom-end', 'left-start', 'left-end', 'right-start', 'right-end'];
+  @property({ attribute: 'flip-behavior', converter: StringListConverter }) flipBehavior?: Placement[] = ['top', 'bottom', 'left', 'right', 'top-start', 'top-end', 'bottom-start', 'bottom-end', 'left-start', 'left-end', 'right-start', 'right-end'];
   @property({ type: Boolean, reflect: true, attribute: 'enable-flip' }) enableFlip?: boolean = true;
   @property({ type: Number, reflect: true, attribute: 'heading-level' }) headingLevel?: HeadingLevel;
-  @property({ type: String, reflect: true, attribute: 'icon-set' }) iconSet?: string;
+  @property({ reflect: true, attribute: 'icon-set' }) iconSet?: string;
   @property({ type: Boolean, reflect: true, attribute: 'hide-close' }) hideClose?: boolean;
-  @property({ type: String, reflect: true, attribute: 'alert-severity' }) alertSeverity?: AlertSeverity;
-  @property({ type: String, reflect: true, attribute: 'close-label' }) closeButtonLabel = 'Close popover';
+  @property({ reflect: true, attribute: 'alert-severity' }) alertSeverity?: AlertSeverity;
+  @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel = 'Close popover';
 
   @observed
-  @property({ type: String, reflect: true }) trigger?: string;
+  @property({ reflect: true }) trigger?: string;
 
   @query('#popover') private _popover?: HTMLDialogElement | null;
   @query('#trigger') private _slottedTrigger?: HTMLElement | null;
+  @query('#arrow') private _arrow?: HTMLElement | null;
 
   #referenceTrigger?: HTMLElement | null = null;
 
   #float = new FloatingDOMController(this, {
-    content: () => this.shadowRoot?.querySelector('#popover'),
-    arrow: () => this.shadowRoot?.querySelector('#arrow'),
+    content: () => this._popover,
+    arrow: () => this._arrow,
     invoker: () => this.#referenceTrigger || this._slottedTrigger
   });
 

@@ -27,26 +27,26 @@ describe('<pf-popover>', function() {
     expect(element).to.be.an.instanceOf(klass).and.to.be.an.instanceOf(PfPopover);
   });
 
-  it('should be accessible', async function() {
-    await expect(element).shadowDom.to.be.accessible();
+  it('should be accessible', function() {
+    expect(element).shadowDom.to.be.accessible();
   });
 
-  it('should hide popover content from assistive technology', async function() {
+  it('should hide popover content from assistive technology', function() {
     expect(snapshot.children).to.deep.equal([{ name: 'Toggle popover', role: 'button' }]);
   });
 
-  it('should show popover content from assistive technology', async function() {
+  it('should show popover content to assistive technology', async function() {
     await sendKeys({ press: 'Tab' });
     expect(document.activeElement).to.be.an.instanceof(PfButton);
     await sendKeys({ press: 'Enter' });
     snapshot = await a11ySnapshot();
     expect(snapshot.children).to.deep.equal([
       {
-        focused: true,
         name: 'Toggle popover',
         role: 'button',
       },
       {
+        focused: true,
         name: 'Close popover',
         role: 'button',
       },
@@ -69,11 +69,9 @@ describe('<pf-popover>', function() {
   it('should be closeable on close button select', async function() {
     await sendKeys({ press: 'Tab' });
     await sendKeys({ press: 'Enter' });
-    // tab to close button
-    await sendKeys({ press: 'Tab' });
     await sendKeys({ press: 'Enter' });
     snapshot = await a11ySnapshot();
-    expect(snapshot.children).to.deep.equal([{ name: 'Toggle popover', role: 'button' }]);
+    expect(snapshot.children).to.deep.equal([{ focused: true, name: 'Toggle popover', role: 'button' }]);
   });
 
   it('should be closeable on escape', async function() {

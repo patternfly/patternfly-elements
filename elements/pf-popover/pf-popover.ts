@@ -199,7 +199,6 @@ export class PfPopover extends LitElement {
   @property({ type: String, reflect: true }) trigger?: string;
 
   @query('#popover') private _popover?: HTMLDialogElement | null;
-  @query('#close-button') private _closeButton?: HTMLButtonElement | null;
   @query('#trigger') private _slottedTrigger?: HTMLElement | null;
 
   #referenceTrigger?: HTMLElement | null = null;

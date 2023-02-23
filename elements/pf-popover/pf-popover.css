@@ -8,7 +8,7 @@
 }
 
 [hidden] {
-  visibility: hidden !important;
+  visibility: hidden;
 }
 
 #container {
@@ -52,11 +52,13 @@
   );
   border: 0;
   padding: 0;
+  visibility: hidden;
 }
 
 #popover[open] {
   opacity: 1;
   z-index: var(--_z-index);
+  visibility: visible;
 }
 
 [part='content'] {

@@ -1,6 +1,6 @@
 ---
-"@patternfly/eslint-config-elements": minor
-"@patternfly/eslint-plugin-elements": minor
+"@patternfly/eslint-config-elements": patch
+"@patternfly/eslint-plugin-elements": major
 ---
 
 ✨ Added `@patternfly/eslint-plugin-elements`

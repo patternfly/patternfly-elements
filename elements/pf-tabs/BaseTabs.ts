@@ -1,5 +1,7 @@
 import { LitElement, html } from 'lit';
-import { property, query, queryAssignedElements } from 'lit/decorators.js';
+import { property } from 'lit/decorators/property.js';
+import { query } from 'lit/decorators/query.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';

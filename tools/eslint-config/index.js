@@ -62,6 +62,7 @@ const config = {
     'html',
     'no-only-tests',
     'lit-a11y',
+    '@patternfly/elements'
   ],
 
   rules: {
@@ -150,6 +151,8 @@ const config = {
     'unicorn/prefer-keyboard-event-key': ERROR,
     'unicorn/prefer-modern-dom-apis': ERROR,
     'unicorn/prefer-object-from-entries': ERROR,
+
+    '@patternfly/elements/no-lit-decorators-index-import': ERROR,
   },
   overrides: [{
     files: NODE_FILES,

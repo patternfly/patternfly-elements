@@ -1,4 +1,4 @@
-import { customElement } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators/custom-element.js';
 
 import { BaseSwitch } from './BaseSwitch.js';
 import styles from './pf-switch.css';

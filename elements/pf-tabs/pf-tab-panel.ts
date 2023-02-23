@@ -1,4 +1,4 @@
-import { customElement } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators/custom-element.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 

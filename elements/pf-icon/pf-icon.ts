@@ -1,5 +1,6 @@
 import { BaseIcon } from './BaseIcon.js';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
 
 import style from './pf-icon.css';
 

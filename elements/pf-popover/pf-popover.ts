@@ -98,10 +98,10 @@ export class PopoverShownEvent extends ComposedEvent {
  * @cssprop {<length>} --pf-c-tooltip__content--PaddingLeft
  *          Popover left padding
  *          {@default `1rem`}
- * @cssprop --pf-c-popover--line-height
+ * @cssprop {<number>} --pf-c-popover--line-height
  *          Popover line height
  *          {@default `1.5`}
- * @cssprop --pf-c-popover__content--FontSize
+ * @cssprop {<length>} --pf-c-popover__content--FontSize
  *          Popover font-size
  *          {@default `0.875rem`}
  * @cssprop {<color>} --pf-c-popover__content--BackgroundColor
@@ -113,31 +113,31 @@ export class PopoverShownEvent extends ComposedEvent {
  * @cssprop {<length>} --pf-c-popover--MinWidth
  *          Popover min-width
  *          {@default `20.75rem`}
- * @cssprop --pf-c-popover--c-button--Right
+ * @cssprop {<number>} --pf-c-popover--c-button--Right
  *          Close button right position
  *          {@default `0}
- * @cssprop --pf-c-popover--c-button--Top
+ * @cssprop {<number>} --pf-c-popover--c-button--Top
  *          Close button top position
- *          {@default `0.625rem`}
+ *          {@default `0`}
  * @cssprop {<length>} --pf-c-popover--c-button--sibling--PaddingRight
- *          Padding between close button and it's immediate sibling
+ *          Padding between close button and its immediate sibling
  *          {@default `3rem`}
  * @cssprop {<length>} --pf-c-popover__title-icon--MarginRight
  *          Heading icon right margin
  *          {@default `0.5rem`}
- * @cssprop --pf-c-popover__title--FontSize
+ * @cssprop {<length>} --pf-c-popover__title--FontSize
  *          Header font-size
  *          {@default `1rem`}
- * @cssprop --pf-c-popover__title--MarginBottom
+ * @cssprop {<length>} --pf-c-popover__title--MarginBottom
  *          Header bottom margin
  *          {@default `0.5rem`}
- * @cssprop --pf-c-popover__title--LineHeight
+ * @cssprop {<number>} --pf-c-popover__title--LineHeight
  *          Header line height
  *          {@default `1.5`}
- * @cssprop --pf-c-popover__title--FontFamily
+ * @cssprop {<string>} --pf-c-popover__title--FontFamily
  *          Header font-family
  *          {@default `'RedHatDisplay', 'Overpass', overpass, helvetica, arial, sans-serif`}
- * @cssprop --pf-c-popover__footer--MarginTop
+ * @cssprop {<length>} --pf-c-popover__footer--MarginTop
  *          Footer top margin
  *          {@default `1rem`}
  * @cssprop {<color>} --pf-c-popover--m-default__title-text--Color
@@ -278,7 +278,6 @@ export class PfPopover extends LitElement {
     }
   }
 
-  // todo: unit test
   protected _triggerChanged(oldValue?: string, newValue?: string) {
     if (oldValue) {
       this.#referenceTrigger?.removeEventListener('click', this.show);

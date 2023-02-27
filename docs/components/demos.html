@@ -82,6 +82,7 @@ preloads: [
     <noscript><link href="{{ '/core/styles/pf--noscript.min.css' | url }}" rel="stylesheet"></noscript>
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.1/dist/es-module-shims.js"></script>
     <script type="module">
+    import 'element-internals-polyfill';
     import { PfIcon } from '@patternfly/elements/pf-icon/pf-icon.js';
     const get = (set, icon) => new URL(`/components/icon/icons/${set}/${icon}.js`, import.meta.url);
     PfIcon.addIconSet('patternfly', get);

@@ -3,10 +3,9 @@ import type { DevServerConfig } from '@web/dev-server';
 import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsPlugin';
 import type { Context, Next } from 'koa';
 
-import { createHmac } from 'node:crypto';
 import { existsSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { readFile, stat } from 'node:fs/promises';
+import { dirname } from 'node:path';
+import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 import rollupReplace from '@rollup/plugin-replace';
@@ -52,8 +51,6 @@ type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & { site: 
 function renderBasic(context: Context, demos: unknown[], options: PfeDevServerConfigOptions) {
   return env.render('index.html', { context, options, demos });
 }
-
-const md5 = createHmac('md5', 'trust no one');
 
 const isPFEManifest = (x: Manifest) => x.packageJson?.name === '@patternfly/elements';
 

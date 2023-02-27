@@ -17,7 +17,6 @@ import { BaseTabPanel } from './BaseTabPanel.js';
 
 import styles from './BaseTabs.css';
 
-
 /**
  * BaseTabs
  *

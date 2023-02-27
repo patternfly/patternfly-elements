@@ -2,6 +2,10 @@ import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
 import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.js';
 
+export interface Options {
+  hideOverflowButtons?: boolean;
+}
+
 export class OverflowController implements ReactiveController {
   /** Overflow container */
   #container?: HTMLElement;
@@ -12,14 +16,10 @@ export class OverflowController implements ReactiveController {
   #scrollTimeout?: ReturnType<typeof setTimeout>;
 
   /** Default state */
+  #hideOverflowButtons = false;
   showScrollButtons = false;
   overflowLeft = false;
   overflowRight = false;
-
-  /** override to prevent scroll buttons from showing */
-  protected get canShowScrollButtons() {
-    return true;
-  }
 
   get firstItem(): HTMLElement | undefined {
     return this.#items.at(0);
@@ -29,18 +29,20 @@ export class OverflowController implements ReactiveController {
     return this.#items.at(-1);
   }
 
-  constructor(public host: ReactiveControllerHost & Element) {
+  constructor(public host: ReactiveControllerHost & Element, private options?: Options) {
     this.host.addController(this);
+    if (options?.hideOverflowButtons) {
+      this.#hideOverflowButtons = options?.hideOverflowButtons;
+    }
   }
 
   #setOverflowState(): void {
-    const { canShowScrollButtons } = this;
     if (!this.firstItem || !this.lastItem || !this.#container) {
       return;
     }
-    this.overflowLeft = canShowScrollButtons && !isElementInView(this.#container, this.firstItem);
-    this.overflowRight = canShowScrollButtons && !isElementInView(this.#container, this.lastItem);
-    this.showScrollButtons = canShowScrollButtons && (this.overflowLeft || this.overflowRight);
+    this.overflowLeft = !this.#hideOverflowButtons && !isElementInView(this.#container, this.firstItem);
+    this.overflowRight = !this.#hideOverflowButtons && !isElementInView(this.#container, this.lastItem);
+    this.showScrollButtons = !this.#hideOverflowButtons && (this.overflowLeft || this.overflowRight);
     this.host.requestUpdate();
   }
 

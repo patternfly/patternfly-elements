@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property } from 'lit/decorators/property.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 

@@ -1,6 +1,6 @@
 import type { TemplateResult } from 'lit';
 import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 

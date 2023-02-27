@@ -1,7 +1,8 @@
 import type { PropertyValues } from 'lit';
 
 import { LitElement, html } from 'lit';
-import { queryAssignedElements, query } from 'lit/decorators.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+import { query } from 'lit/decorators/query.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 

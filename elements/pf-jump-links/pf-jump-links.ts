@@ -1,5 +1,7 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, queryAssignedElements } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 
 import { ScrollSpyController } from '@patternfly/pfe-core/controllers/scroll-spy-controller.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';

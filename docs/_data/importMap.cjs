@@ -51,7 +51,6 @@ const LIT_DEPS = [
       './html.js',
       './polyfill-support.js',
       './static-html.js',
-      
     ]
   }
 ];

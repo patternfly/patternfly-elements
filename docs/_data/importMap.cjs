@@ -26,6 +26,8 @@ const LIT_DEPS = [
       './decorators/query-async.js',
       './decorators/query.js',
       './decorators/state.js',
+      './decorators/property.js',
+      './decorators/custom-element.js',
       './directives/async-append.js',
       './directives/async-replace.js',
       './directives/cache.js',
@@ -48,7 +50,8 @@ const LIT_DEPS = [
       './experimental-hydrate.js',
       './html.js',
       './polyfill-support.js',
-      './static-html.js'
+      './static-html.js',
+      
     ]
   }
 ];

@@ -1,4 +1,5 @@
-import { property, customElement } from 'lit/decorators.js';
+import { property } from 'lit/decorators/property.js';
+import { customElement } from 'lit/decorators/custom-element.js';
 
 import { BaseAvatar } from './BaseAvatar.js';
 

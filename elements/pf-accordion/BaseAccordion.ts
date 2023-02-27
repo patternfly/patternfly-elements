@@ -1,7 +1,7 @@
 import type { TemplateResult } from 'lit';
 
 import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property } from 'lit/decorators/property.js';
 
 import { observed } from '@patternfly/pfe-core/decorators.js';
 

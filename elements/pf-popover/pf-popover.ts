@@ -1,6 +1,8 @@
 import { LitElement, nothing } from 'lit';
 import { html, unsafeStatic } from 'lit/static-html.js';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+import { query } from 'lit/decorators/query.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -8,7 +10,7 @@ import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent, StringListConverter } from '@patternfly/pfe-core/core.js';
-import { observed } from '@patternfly/pfe-core/decorators.js';
+import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 import styles from './pf-popover.css';

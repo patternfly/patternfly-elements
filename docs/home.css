@@ -93,15 +93,16 @@
   padding: 0;
 }
 
-#univ > * {
-  max-width: 100%;
-  overflow: hidden;
-}
 
 #univ svg {
   width: 16px;
 }
 
+#lightw,
+.max-width-container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
 
 rh-global-footer {
   width: 100vw !important;

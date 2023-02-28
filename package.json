@@ -292,7 +292,7 @@
     "@jspm/generator": "^1.0.0-beta.33",
     "@octokit/core": "^4.2.0",
     "@patternfly/patternfly": "^4.210.2",
-    "@rhds/elements": "^1.0.0-beta.28",
+    "@rhds/elements": "^1.0.0-beta.32",
     "@types/koa__router": "^12.0.0",
     "@types/numeral": "^2.0.2",
     "@types/prismjs": "^1.26.0",

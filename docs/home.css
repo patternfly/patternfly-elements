@@ -93,7 +93,6 @@
   padding: 0;
 }
 
-
 #univ svg {
   width: 16px;
 }
@@ -112,7 +111,7 @@ rh-global-footer {
 
 @media (min-width: 820px) {
   #lightw,
-  #univ {
+  .max-width-container {
     padding: var(--pf-global--spacer--3xl, 4rem) var(--pf-global--spacer--3xl, 4rem);
   }
 }

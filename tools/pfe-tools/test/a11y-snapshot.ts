@@ -6,6 +6,10 @@ export interface A11yTreeSnapshot {
   role: string;
   checked?: boolean;
   disabled?: boolean;
+  value?: number;
+  valuetext?: string;
+  valuemin?: number;
+  valuemax?: number;
 }
 
 export async function a11ySnapshot(
@@ -20,4 +24,3 @@ export async function a11ySnapshot(
   } while (!snapshot && tries < 10);
   return snapshot;
 }
-

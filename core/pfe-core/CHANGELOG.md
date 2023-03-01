@@ -1,5 +1,17 @@
 # @patternfly/pfe-core
 
+## 2.0.0-rc.2
+
+### Minor Changes
+
+- 530ef7155: ✨ Added `OverflowController`
+
+  When added to a container and given a child array of elements,
+  `OverflowController` checks to see if those elements exceed the bounds of the
+  container.
+
+- 2e1fb5705: `InternalsController`: added `labels` and `validity` getters; added `setFormValue`, `setValidity`, `checkValidity` and `reportValidity` methods
+
 ## 2.0.0-rc.1
 
 ### Patch Changes

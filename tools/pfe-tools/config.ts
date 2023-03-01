@@ -20,6 +20,8 @@ export interface PfeConfig {
   rootDir?: string;
   /** object mapping custom element name to page title */
   aliases?: Record<string, string> ;
+  /** Directory containing the custom elements, defaults to `elements` */
+  elementsDir?: string;
   /** absolute URL to the web page representing the repo root in source control, with trailing slash. default 'https://github.com/patternfly/patternfly-elements/tree/main/' */
   sourceControlURLPrefix?: string ;
   /** absolute URL prefix for demos, with trailing slash. Default 'https://patternflyelements.org/' */

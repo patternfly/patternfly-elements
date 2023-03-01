@@ -1,10 +1,16 @@
 import { LitElement, html } from 'lit';
-import { property, query, queryAssignedElements } from 'lit/decorators.js';
+
+import { property } from 'lit/decorators/property.js';
+import { query } from 'lit/decorators/query.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+
+import { classMap } from 'lit/directives/class-map.js';
 
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+import { OverflowController } from '@patternfly/pfe-core/controllers/overflow-controller.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
-import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.js';
+
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { BaseTab, TabExpandEvent } from './BaseTab.js';
 import { BaseTabPanel } from './BaseTabPanel.js';
@@ -38,15 +44,13 @@ export abstract class BaseTabs extends LitElement {
   /** Icon set to use for the scroll buttons */
   protected static readonly scrollIconSet: string = 'fas';
 
-  #rovingTabindexController = new RovingTabindexController(this);
-
   static #instances = new Set<BaseTabs>();
 
   static {
     // on resize check for overflows to add or remove scroll buttons
     window.addEventListener('resize', () => {
       for (const instance of this.#instances) {
-        instance.#onScroll();
+        instance.#overflow.onScroll();
       }
     }, { capture: false });
   }
@@ -57,19 +61,15 @@ export abstract class BaseTabs extends LitElement {
 
   @query('[part="tabs"]') private tabList!: HTMLElement;
 
-  #showScrollButtons = false;
+  #tabindex = new RovingTabindexController(this);
 
-  #overflowOnLeft = false;
-
-  #overflowOnRight = false;
+  #overflow = new OverflowController(this);
 
   #logger = new Logger(this);
 
   #_allTabs: BaseTab[] = [];
 
   #_allPanels: BaseTabPanel[] = [];
-
-  #scrollTimeout?: ReturnType<typeof setTimeout>;
 
   #activeIndex = 0;
 
@@ -93,7 +93,7 @@ export abstract class BaseTabs extends LitElement {
     if (tab) {
       if (tab.disabled) {
         this.#logger.warn(`Disabled tabs can not be active, setting first focusable tab to active`);
-        this.#rovingTabindexController.updateActiveItem(this.#firstFocusable);
+        this.#tabindex.updateActiveItem(this.#firstFocusable);
         index = this.#activeItemIndex;
       } else if (!tab.active) {
         // if the activeIndex was set through the CLI e.g.`$0.activeIndex = 2`
@@ -104,8 +104,8 @@ export abstract class BaseTabs extends LitElement {
 
     if (index === -1) {
       this.#logger.warn(`No active tab found, setting first focusable tab to active`);
-      const first = this.#rovingTabindexController.firstItem as BaseTab;
-      this.#rovingTabindexController.updateActiveItem(first);
+      const first = this.#tabindex.firstItem as BaseTab;
+      this.#tabindex.updateActiveItem(first);
       index = this.#activeItemIndex;
     }
     this.#activeIndex = index;
@@ -149,25 +149,28 @@ export abstract class BaseTabs extends LitElement {
     BaseTabs.#instances.delete(this);
   }
 
+  async firstUpdated() {
+    this.tabList.addEventListener('scroll', this.#overflow.onScroll.bind(this));
+  }
+
   override render() {
     const { scrollIconSet, scrollIconLeft, scrollIconRight } = this.constructor as typeof BaseTabs;
-
     return html`
-      <div part="container">
-        <div part="tabs-container">${!this.#showScrollButtons ? '' : html`
+      <div part="container" class="${classMap({ overflow: this.#overflow.showScrollButtons })}">
+        <div part="tabs-container">${!this.#overflow.showScrollButtons ? '' : html`
           <button id="previousTab" tabindex="-1"
               aria-label="${this.getAttribute('label-scroll-left') ?? 'Scroll left'}"
-              ?disabled="${!this.#overflowOnLeft}"
+              ?disabled="${!this.#overflow.overflowLeft}"
               @click="${this.#scrollLeft}">
             <pf-icon icon="${scrollIconLeft}" set="${scrollIconSet}" loading="eager"></pf-icon>
           </button>`}
           <slot name="tab"
                 part="tabs"
                 role="tablist"
-                @slotchange="${this.#onSlotchange}"></slot> ${!this.#showScrollButtons ? '' : html`
+                @slotchange="${this.#onSlotchange}"></slot> ${!this.#overflow.showScrollButtons ? '' : html`
           <button id="nextTab" tabindex="-1"
               aria-label="${this.getAttribute('label-scroll-right') ?? 'Scroll right'}"
-              ?disabled="${!this.#overflowOnRight}"
+              ?disabled="${!this.#overflow.overflowRight}"
               @click="${this.#scrollRight}">
             <pf-icon icon="${scrollIconRight}" set="${scrollIconSet}" loading="eager"></pf-icon>
           </button>`}
@@ -175,11 +178,6 @@ export abstract class BaseTabs extends LitElement {
         <slot part="panels" @slotchange="${this.#onSlotchange}"></slot>
       </div>
     `;
-  }
-
-  async firstUpdated() {
-    this.#onScroll();
-    this.tabList.addEventListener('scroll', this.#onScroll);
   }
 
   #onSlotchange(event: { target: { name: string; }; }) {
@@ -193,9 +191,10 @@ export abstract class BaseTabs extends LitElement {
       (this.#allTabs.length !== 0 || this.#allPanels.length !== 0)) {
       this.#updateAccessibility();
       this.#firstLastClasses();
-      this.#rovingTabindexController.initItems(this.#allTabs);
+      this.#tabindex.initItems(this.#allTabs);
       this.activeIndex = this.#allTabs.findIndex(tab => tab.active);
-      this.#rovingTabindexController.updateActiveItem(this.#activeTab);
+      this.#tabindex.updateActiveItem(this.#activeTab);
+      this.#overflow.init(this.tabList, this.#allTabs);
     }
   }
 
@@ -227,11 +226,11 @@ export abstract class BaseTabs extends LitElement {
   }
 
   get #firstFocusable(): BaseTab {
-    return this.#rovingTabindexController.firstItem as BaseTab;
+    return this.#tabindex.firstItem as BaseTab;
   }
 
   get #lastFocusable(): BaseTab {
-    return this.#rovingTabindexController.lastItem as BaseTab;
+    return this.#tabindex.lastItem as BaseTab;
   }
 
   get #firstTab(): BaseTab {
@@ -244,7 +243,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   get #activeItemIndex() {
-    const { activeItem } = this.#rovingTabindexController;
+    const { activeItem } = this.#tabindex;
     return this.#allTabs.findIndex(t => t === activeItem);
   }
 
@@ -270,13 +269,13 @@ export abstract class BaseTabs extends LitElement {
       case 'ArrowUp':
       case 'ArrowLeft':
         event.preventDefault();
-        this.#select(this.#rovingTabindexController.activeItem as BaseTab);
+        this.#select(this.#tabindex.activeItem as BaseTab);
         break;
 
       case 'ArrowDown':
       case 'ArrowRight':
         event.preventDefault();
-        this.#select(this.#rovingTabindexController.activeItem as BaseTab);
+        this.#select(this.#tabindex.activeItem as BaseTab);
         break;
 
       case 'Home':
@@ -294,61 +293,16 @@ export abstract class BaseTabs extends LitElement {
     }
   };
 
-  #onScroll = () => {
-    clearTimeout(this.#scrollTimeout);
-    const { scrollTimeoutDelay } = (this.constructor as typeof BaseTabs);
-    this.#scrollTimeout = setTimeout(() => this.#setOverflowState(), scrollTimeoutDelay);
-  };
-
   #firstLastClasses() {
     this.#firstTab.classList.add('first');
     this.#lastTab.classList.add('last');
   }
 
-  /** override to prevent scroll buttons from showing */
-  protected get canShowScrollButtons() {
-    return true;
+  #scrollLeft() {
+    this.#overflow.scrollLeft();
   }
 
-  #setOverflowState(): void {
-    const { canShowScrollButtons } = this;
-    this.#overflowOnLeft = canShowScrollButtons && !isElementInView(this.tabList, this.#firstTab);
-    this.#overflowOnRight = canShowScrollButtons && !isElementInView(this.tabList, this.#lastTab);
-    this.#showScrollButtons = canShowScrollButtons && (this.#overflowOnLeft || this.#overflowOnRight);
-    this.requestUpdate();
-  }
-
-  #scrollLeft(): void {
-    const container = this.tabList;
-    const childrenArr = this.#allTabs;
-    let firstElementInView: BaseTab | undefined;
-    let lastElementOutOfView: BaseTab | undefined;
-    for (let i = 0; i < childrenArr.length && !firstElementInView; i++) {
-      if (isElementInView(container, childrenArr[i] as HTMLElement, false)) {
-        firstElementInView = childrenArr[i];
-        lastElementOutOfView = childrenArr[i - 1];
-      }
-    }
-    if (lastElementOutOfView) {
-      container.scrollLeft -= lastElementOutOfView.scrollWidth;
-    }
-    this.#setOverflowState();
-  }
-
-  #scrollRight(): void {
-    const container = this.tabList;
-    const childrenArr = this.#allTabs;
-    let lastElementInView: BaseTab | undefined;
-    let firstElementOutOfView: BaseTab | undefined;
-    for (let i = childrenArr.length - 1; i >= 0 && !lastElementInView; i--) {
-      if (isElementInView(container, childrenArr[i] as HTMLElement, false)) {
-        lastElementInView = childrenArr[i];
-        firstElementOutOfView = childrenArr[i + 1];
-      }
-    }
-    if (firstElementOutOfView) {
-      container.scrollLeft += firstElementOutOfView.scrollWidth;
-    }
-    this.#setOverflowState();
+  #scrollRight() {
+    this.#overflow.scrollRight();
   }
 }

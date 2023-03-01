@@ -18,9 +18,9 @@ const isDir = dir => stat(dir).then(x => x.isDirectory, () => false);
 // TODO: programmable package scopes, etc
 /**
  * @param {*} eleventyConfig
- * @param {import('./types').PluginOptions} _options
+ * @param {import('./types').PluginOptions} pluginOpts
  */
-module.exports = function configFunction(eleventyConfig, _options = {}) {
+module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
   eleventyConfig.addPlugin(EleventyRenderPlugin);
 
   eleventyConfig.addGlobalData('env', () => process.env);
@@ -28,7 +28,7 @@ module.exports = function configFunction(eleventyConfig, _options = {}) {
   eleventyConfig.addGlobalData('demos', async function demos() {
     const { Manifest } = await import('../../custom-elements-manifest/lib/Manifest.js');
     const { getPfeConfig } = await import('../../config.js');
-    const options = { ...getPfeConfig(), ..._options };
+    const options = { ...getPfeConfig(), ...pluginOpts };
     const extraDemos = options?.extraDemos ?? [];
 
     // 1. get all packages
@@ -45,7 +45,7 @@ module.exports = function configFunction(eleventyConfig, _options = {}) {
     const { Manifest } = await import('../../custom-elements-manifest/lib/Manifest.js');
     const { DocsPage } = await import('../DocsPage.js');
     const { getPfeConfig } = await import('../../config.js');
-    const options = { ...getPfeConfig(), ..._options };
+    const options = { ...getPfeConfig(), ...pluginOpts };
     const rootDir = options?.rootDir ?? process.cwd();
 
     // 1. get all packages
@@ -54,16 +54,16 @@ module.exports = function configFunction(eleventyConfig, _options = {}) {
     return Manifest.getAll(rootDir)
       .flatMap(manifest =>
         Array.from(manifest.declarations.values(), decl => {
-          // NB: not a great proxy for monorepo
-          const isSinglepackage = decl.module?.path?.startsWith?.('elements/') ?? false;
-          const root = isSinglepackage ? dirname(decl.module.path) : '.';
           const { tagName } = decl;
-          const docsTemplatePath = join(manifest.location, root, tagName, 'docs', `${tagName}.md`);
+          const elementsDir = options.elementsDir ?? 'elements';
+          const root = manifest.location ?? options.rootDir;
+          const docsTemplatePath = join(root, elementsDir, `${tagName}`, 'docs', `${tagName}.md`);
           return new DocsPage(manifest, {
             ...options,
             tagName,
             // only include the template if it exists
-            ...Object.fromEntries(Object.entries({ docsTemplatePath }).filter(([, v]) => existsSync(v)))
+            ...Object.fromEntries(Object.entries({ docsTemplatePath }).filter(([, path]) =>
+              existsSync(path)))
           });
         }));
   });

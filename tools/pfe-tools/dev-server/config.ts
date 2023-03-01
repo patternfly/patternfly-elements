@@ -95,12 +95,6 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
       app.use(new Router()
-        .get(/elements\/.*\.(css|js)$/, async (ctx, next) => {
-          ctx.set('Cache-Control', 'no-store, no-cache, must-revalidate');
-          ctx.set('Pragma', 'no-cache');
-          ctx.set('Expires', '0');
-          return next();
-        })
         .get(/\/pf-icon\/icons\/.*\.js$/, (ctx, next) => {
           ctx.type = 'application/javascript';
           return next();
@@ -149,18 +143,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
             return next();
           }
         })
-        .routes())
-        // Render the demo page whenever there's a trailing slash
-        .use(async function nunjucksMiddleware(ctx, next) {
-          const { method, path } = ctx;
-          if (options.loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {
-            ctx.cwd = process.cwd();
-            ctx.type = 'html';
-            ctx.status = 200;
-            ctx.body = await renderURL(ctx, options);
-          }
-          return next();
-        });
+        .routes());
 
       const files = await glob(options.watchFiles, { cwd: process.cwd() });
       for (const file of files) {
@@ -170,12 +153,6 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
   };
 }
 
-/** CORS middleware */
-function cors(ctx: Context, next: Next) {
-  ctx.set('Access-Control-Allow-Origin', '*');
-  return next();
-}
-
 function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInternalConfig {
   const config = { ...getPfeConfig(), ...options ?? {} };
   config.site = { ...config.site, ...options?.site ?? {} };
@@ -183,6 +160,38 @@ function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInte
   config.watchFiles ??= '{elements,core}/**/*.{css,html}';
   config.litcssOptions ??= { include: /\.css$/, exclude: /((fonts|demo)|(demo\/.*))\.css$/ };
   return config as PfeDevServerInternalConfig;
+}
+
+/** CORS middleware */
+function cors(ctx: Context, next: Next) {
+  ctx.set('Access-Control-Allow-Origin', '*');
+  return next();
+}
+
+async function cacheBusterMiddleware(ctx: Context, next: Next) {
+  await next();
+  if (ctx.path.match(/elements\/[\w-]+\/[\w-]+.js$/)) {
+    const lm = new Date().toString();
+    const etag = Date.now().toString();
+    ctx.response.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+    ctx.response.set('Pragma', 'no-cache');
+    ctx.response.set('Last-Modified', lm);
+    ctx.response.etag = etag;
+  }
+}
+
+// Render the demo page whenever there's a trailing slash
+function nunjucksMiddleware(options: PfeDevServerInternalConfig) {
+  return async function(ctx: Context, next: Next) {
+    const { method, path } = ctx;
+    if (options.loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {
+      ctx.cwd = process.cwd();
+      ctx.type = 'html';
+      ctx.status = 200;
+      ctx.body = await renderURL(ctx, options);
+    }
+    return next();
+  };
 }
 
 /**
@@ -215,6 +224,8 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
 
     middleware: [
       cors,
+      cacheBusterMiddleware,
+      nunjucksMiddleware(config),
       ...options?.middleware ?? [],
     ],
 

@@ -136,6 +136,7 @@ button {
   transition:
     margin var(--pf-c-tabs__scroll-button--TransitionDuration--margin, .125s),
     translate var(--pf-c-tabs__scroll-button--TransitionDuration--transform, .125s), opacity var(--pf-c-tabs__scroll-button--TransitionDuration--opacity, .125s);
+  --pf-icon--size: 16px;
 }
 
 button:hover {

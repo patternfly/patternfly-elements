@@ -1,7 +1,8 @@
 import type { PropertyValues } from 'lit';
 
 import { LitElement, html } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { property } from 'lit/decorators/property.js';
+import { state } from 'lit/decorators/state.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import style from './BaseIcon.css';

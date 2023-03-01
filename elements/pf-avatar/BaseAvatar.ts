@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property } from 'lit/decorators/property.js';
 
 import style from './BaseAvatar.css';
 
@@ -28,15 +28,17 @@ export class BaseAvatar extends LitElement {
   /** Size of the Avatar */
   @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
 
+  /** Whether or not the Avatar image is dark */
+  @property({ type: Boolean, reflect: true }) dark = false;
+
   render() {
-    const isDark = false; // TODO: later
     return this.src != null ? html`
       <img
         size=${this.size}
         alt=${this.alt ?? ''}
         @load="${(e: Event) => this.dispatchEvent(new AvatarLoadEvent(e))}"
         src=${this.src}>
-    ` : isDark ? html`
+    ` : this.dark ? html`
       <svg xmlns="http://www.w3.org/2000/svg" style="enable-background:new 0 0 36 36" viewBox="0 0 36 36">
         <style>.st1,.st2{fill-rule:evenodd;clip-rule:evenodd;fill:#6a6e73}.st2{fill:#4f5255}</style><path d="M0 0h36v36H0z" style="fill:#212427"/>
         <path d="M30.5 36c-.4-3.9-1.3-9-2.9-11-1.1-1.4-2.3-2.2-3.5-2.6s-1.8-.6-6.3-.6-6.1.7-6.1.7c-1.2.4-2.4 1.2-3.4 2.6C6.7 27 5.8 32.2 5.4 36h25.1zM17.7 20.1c-3.5 0-6.4-2.9-6.4-6.4s2.9-6.4 6.4-6.4 6.4 2.9 6.4 6.4-2.8 6.4-6.4 6.4z" class="st1"/><path d="M13.3 36v-6.7c-2 .4-2.9 1.4-3.1 3.5l-.1 3.2h3.2zM22.7 36v-6.7c2 .4 2.9 1.4 3.1 3.5l.1 3.2h-3.2z" class="st2"/>

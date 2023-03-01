@@ -1,7 +1,7 @@
 import type { TemplateResult } from 'lit';
 
 import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property } from 'lit/decorators/property.js';
 import { unsafeStatic, html as staticH } from 'lit/static-html.js';
 
 import { BaseAccordion } from './BaseAccordion.js';

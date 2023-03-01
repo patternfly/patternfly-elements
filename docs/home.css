@@ -11,9 +11,29 @@
   max-width: 100%;
 }
 
+#home-header h1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
 #home-header h1 img {
   width: 6rem;
   translate: 0 2rem;
+  object-fit: none;
+}
+
+@media (min-width: 767px) {
+  #home-header h1 {
+    flex-direction: row;
+    gap: 0;
+  }
+
+  #home-header h1 img {
+    translate: 0;
+  }
 }
 
 #home-header > :is(h1, p) {
@@ -83,6 +103,7 @@
 rh-global-footer {
   width: 100vw !important;
   translate: none !important;
+  transform: none;
   --rh-footer-icon-color: var(--rh-color-black-500, #8a8d90);
   --rh-footer-icon-color-hover: var(--rh-color-black-400, #b8bbbe);
 }

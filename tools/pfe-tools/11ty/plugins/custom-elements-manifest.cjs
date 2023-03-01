@@ -56,8 +56,7 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
         Array.from(manifest.declarations.values(), decl => {
           const { tagName } = decl;
           const elementsDir = options.elementsDir ?? 'elements';
-          const root = manifest.location ?? options.rootDir;
-          const docsTemplatePath = join(root, elementsDir, `${tagName}`, 'docs', `${tagName}.md`);
+          const docsTemplatePath = join(process.cwd(), elementsDir, `${tagName}`, 'docs', `${tagName}.md`);
           return new DocsPage(manifest, {
             ...options,
             tagName,

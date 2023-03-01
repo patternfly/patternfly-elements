@@ -1,5 +1,13 @@
 # @patternfly/pfe-tools
 
+## 1.0.0-rc.8
+
+### Patch Changes
+
+- 0a22a3375: `dev-server`: refresh element css when files change
+- f03a41941: 11ty plugin: calculate path to demo files in more circumstances
+- 42d5cd9fb: `a11ySnapshot`: fixed typescript types
+
 ## 1.0.0-rc.7
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @patternfly/elements
 
+## 2.0.0-rc.6
+
+### Patch Changes
+
+- 67c3c351b: improved performance when loading individual elements
+- 530ef7155: `<pf-tabs>`: integrated overflow controller.
+- Updated dependencies [530ef7155]
+- Updated dependencies [2e1fb5705]
+  - @patternfly/pfe-core@2.0.0-rc.2
+
 ## 2.0.0-rc.5
 
 ### Patch Changes

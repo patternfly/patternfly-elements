@@ -74,7 +74,7 @@ header.band {
 
 /* Not an ideal selector... hacking away */
 section.band:not(#component-list):not(#lightw):not(#univ):not(.accent):not(.small) {
-  max-width: 1008px;
+  max-width: 1020px;
   padding: var(--pf-global--spacer--md, 1rem) var(--pf-global--spacer--md, 1rem);
 }
 

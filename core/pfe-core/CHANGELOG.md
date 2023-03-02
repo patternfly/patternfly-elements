@@ -1,5 +1,90 @@
 # @patternfly/pfe-core
 
+## 2.0.0
+
+### Major Changes
+
+- e8788c7214: Initial Release 🎉
+
+  `@patternfly/pfe-core` provides utilities for building PatternFly elements,
+  like [TypeScript decorators][decorators] and [Lit reactive controllers][controllers].
+  Core utilities replace the `PFElement` base class.
+
+  ### Before
+
+  ```js
+  export class PfeJazzHands extends PFElement {
+    static get tag() {
+      return "pfe-jazz-hands";
+    }
+
+    static get properties() {
+      return {
+        cool: {
+          type: Boolean,
+          observer: "_upgradeObserver",
+        },
+      };
+    }
+  }
+  PFElement.create(PfeJazzHands);
+  ```
+
+  ### After
+
+  ```ts
+  @customElement("pf-jazz-hands")
+  export class PfJazzHands extends LitElement {
+    @observed("_upgradeObserver")
+    @property({ type: Boolean })
+    cool = true;
+    _upgradeObserver() {
+      console.log("cool");
+    }
+  }
+  ```
+
+  ### Controllers
+
+  - ✨ Added `FloatingDOMController` for use with components that require popover
+    content. For example, in `BaseTooltip` we use the controller in this manner:
+
+    ```typescript
+    import { FloatingDOMController } from "@patternfly/pfe-core/controllers/floating-dom-controller.js";
+
+    export class BaseTooltip extends LitElement {
+      #domController = new FloatingDOMController(this);
+    }
+    ```
+
+  - ✨ Added `InternalsController`, providing preliminary facility for
+    ElementInternals
+  - ✨ Added `ScrollSpyController` which sets an attribute (`active` by default)
+    on one of it's children when that child's `href` attribute is to a hash
+    reference to an ID'd heading on the page.
+  - ✨ Added `RovingTabindexController` which implements roving tabindex, as
+    described in WAI-ARIA practices. Added `RovingTabindexController`.
+
+  See README and [the docs][docs] for more info.
+
+  [decorators]: https://www.typescriptlang.org/docs/handbook/decorators.html
+  [controllers]: https://lit.dev/docs/composition/controllers/
+  [docs]: https://patternflyelements.org/core/core/
+
+### Minor Changes
+
+- 530ef7155: ✨ Added `OverflowController`
+
+  When added to a container and given a child array of elements,
+  `OverflowController` checks to see if those elements exceed the bounds of the
+  container.
+
+- 2e1fb5705: `InternalsController`: added `labels` and `validity` getters; added `setFormValue`, `setValidity`, `checkValidity` and `reportValidity` methods
+
+### Patch Changes
+
+- 5d3315fd4: Prepared release candidate
+
 ## 2.0.0-rc.2
 
 ### Minor Changes

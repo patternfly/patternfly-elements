@@ -98,7 +98,6 @@
     "element-internals-polyfill": "^1.1.19",
     "eleventy-plugin-toc": "^1.1.5",
     "esbuild": "^0.17.3",
-    "esbuild-node-externals": "^1.5.0",
     "esbuild-plugin-lit-css": "^2.0.0",
     "esbuild-plugin-minify-html-literals": "^1.0.1",
     "eslint": "^8.26.0",

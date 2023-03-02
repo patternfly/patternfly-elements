@@ -37,8 +37,7 @@
     "clean": "git clean -fX",
     "lint": "eslint .",
     "patch": "patch-package",
-    "husky": "npx husky install",
-    "pr": "node scripts/open-pr.js"
+    "husky": "npx husky install"
   },
   "wireit": {
     "postinstall": {
@@ -301,11 +300,8 @@
     "fuse.js": "^6.6.2",
     "husky": "^8.0.3",
     "leasot": "^13.3.0",
-    "npm-merge-driver": "^2.3.6",
     "nunjucks": "^3.2.3",
-    "open": "^8.4.0",
     "prompts": "^2.4.2",
-    "renamer": "^4.0.0",
     "wireit": "^0.9.4"
   },
   "workspaces": [

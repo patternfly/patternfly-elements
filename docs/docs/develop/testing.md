@@ -6,6 +6,12 @@ tags:
   - develop
 ---
 
+<style>
+  img {
+    max-width: 100%;
+  }
+</style>
+
 {% band %}
 
 Let's write tests for `pf-cool-element`.

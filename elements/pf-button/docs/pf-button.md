@@ -33,8 +33,7 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
   </svg>
   Link
 </pf-button>
-<pf-button variant="link" icon="fa-external-link-square" 
-icon-position="right">Link</pf-button>
+<pf-button variant="link" icon-set="patternfly" icon="arrow" icon-position="right">Link</pf-button>
 <pf-button variant="link" inline>Inline Link</pf-button>
 <pf-button variant="link" danger>Danger Link</pf-button>
 
@@ -45,8 +44,7 @@ icon-position="right">Link</pf-button>
   </svg>
   Link
 </pf-button>
-<pf-button variant="link" icon="fa-external-link-square" 
-icon-position="right">Link</pf-button>
+<pf-button variant="link" icon-set="patternfly" icon="arrow" icon-position="right">Link</pf-button>
 <pf-button variant="link" inline>Inline Link</pf-button>
 <pf-button variant="link" danger>Danger Link</pf-button>
 ```

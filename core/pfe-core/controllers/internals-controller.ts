@@ -57,6 +57,14 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   static protos = new WeakMap();
 
+  get labels() {
+    return this.#internals.labels;
+  }
+
+  get validity() {
+    return this.#internals.validity;
+  }
+
   constructor(
     public host: ReactiveControllerHost & HTMLElement,
     options?: Partial<ARIAMixin>
@@ -92,6 +100,22 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   }
 
   hostConnected?(): void
+
+  setFormValue(...args: Parameters<ElementInternals['setFormValue']>) {
+    return this.#internals.setFormValue(...args);
+  }
+
+  setValidity(...args: Parameters<ElementInternals['setValidity']>) {
+    return this.#internals.setValidity(...args);
+  }
+
+  checkValidity(...args: Parameters<ElementInternals['checkValidity']>) {
+    return this.#internals.checkValidity(...args);
+  }
+
+  reportValidity(...args: Parameters<ElementInternals['reportValidity']>) {
+    return this.#internals.reportValidity(...args);
+  }
 
   submit() {
     this.#internals.form?.requestSubmit();

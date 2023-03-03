@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/eslint-plugin-elements",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "description": "JavaScript Code Standards for PatternFly Elements",
   "author": "Benny Powers <bennyp@redhat.com>",
   "license": "MIT",
@@ -16,18 +16,5 @@
     "type": "git",
     "url": "git+https://github.com/@patternfly/patternfly-elements.git",
     "directory": "tools/eslint-plugin"
-  },
-  "dependencies": {
-    "@types/eslint": "^8.4.10",
-    "@typescript-eslint/eslint-plugin": "^5.46.1",
-    "@typescript-eslint/parser": "^5.46.1",
-    "eslint": "^8.30.0",
-    "eslint-config-google": "0.14.0",
-    "eslint-plugin-html": "7.1.0",
-    "eslint-plugin-json-schema-validator": "^4.0.3",
-    "eslint-plugin-jsonc": "^2.5.0",
-    "eslint-plugin-lit-a11y": "^2.3.0",
-    "eslint-plugin-no-only-tests": "^3.1.0",
-    "eslint-plugin-unicorn": "45.0.2"
   }
 }

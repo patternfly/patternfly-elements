@@ -1,5 +1,34 @@
 # @patternfly/eslint-config-elements
 
+## 1.0.0
+
+### Patch Changes
+
+- 67c3c351b: ✨ Added `@patternfly/eslint-plugin-elements`
+
+  Initial release contains a single rule:
+
+  - `no-lit-decorators-index-import` enforces that decorator imports from lit are
+    tree-shaken in source
+
+- 5d3315fd4: Prepared release candidate
+- Updated dependencies [67c3c351b]
+  - @patternfly/eslint-plugin-elements@1.0.0
+
+## 1.0.0-rc.2
+
+### Patch Changes
+
+- 67c3c351b: ✨ Added `@patternfly/eslint-plugin-elements`
+
+  Initial release contains a single rule:
+
+  - `no-lit-decorators-index-import` enforces that decorator imports from lit are
+    tree-shaken in source
+
+- Updated dependencies [67c3c351b]
+  - @patternfly/eslint-plugin-elements@1.0.0-rc.2
+
 ## 1.0.0-rc.1
 
 ### Patch Changes

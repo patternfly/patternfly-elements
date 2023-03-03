@@ -2,12 +2,6 @@
 <pf-panel>
   <p>Main content</p>
 </pf-panel>
-
-```html
-<pf-panel>
-  <p>Main content</p>
-</pf-panel>
-```  
 {% endrenderOverview %}
 
 {% band header="Usage" %}

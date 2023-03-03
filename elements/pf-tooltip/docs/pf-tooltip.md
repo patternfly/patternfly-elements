@@ -6,15 +6,6 @@
     This is some content
   </div>
 </pf-tooltip>
-
-```html
-<pf-tooltip>
-  <pf-button>Tooltip</pf-button>
-  <div slot="content">
-    This is some content
-  </div>
-</pf-tooltip>
-```
 {% endrenderOverview %}
 
 {% band header="Usage" %}

@@ -7,15 +7,6 @@
     <pf-jump-links-item href="#heading-3">Inactive section</pf-jump-links-item>
   </pf-jump-links>
 </section>
-
-```html
-<pf-jump-links>
-  <pf-jump-links-item href="#heading-1">Inactive section</pf-jump-links-item>
-  <pf-jump-links-item href="#heading-2" active>Active section</pf-jump-links-item>
-  <pf-jump-links-item href="#heading-3">Inactive section</pf-jump-links-item>
-</pf-jump-links>
-```
-
 {% endrenderOverview %}
 
 {% band header="Usage" %}

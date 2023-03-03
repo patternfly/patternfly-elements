@@ -2,10 +2,6 @@
   <div class="pf-clipboard-example">
     <pf-clipboard-copy value="This is editable"></pf-clipboard-copy>
   </div>
-  
-  ```html
-  <pf-clipboard-copy value="This is editable"></pf-clipboard-copy>
-  ```  
 {% endrenderOverview %}
 
 {% band header="Usage" %}

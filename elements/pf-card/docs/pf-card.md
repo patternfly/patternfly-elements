@@ -2,20 +2,11 @@
 
   Cards are flexible surfaces used to group information in a small layout. They give small previews of information or provide secondary content in relation to the content it's near. Several cards can be used together to group related information.
 
-  <h3 slot="header">Default</h3>
   <pf-card>
     <h3 slot="header">Header</h3>
     <p>This is the default card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
-
-  ```html
-  <pf-card>
-    <h3 slot="header">Header</h3>
-    <p>This is the default card</p>
-    <a slot="footer" href="#">Link in the footer</a>
-  </pf-card>  
-  ```
 {% endrenderOverview %}
 
 {% band header="Usage" %}

@@ -6,11 +6,13 @@ tags:
   - develop
 ---
 
-## Overview
+{% band header="Overview" %}
+
 The items below represent in-code `// @TODO` notes we have left for ourselves to ensure updates are made later on when we have more time.
 
-{%- band %}
+{% endband %}
 
+{% band %}
 <table>
   <thead>
     <tr><th>Description</th><th>Location</th></tr>
@@ -25,4 +27,4 @@ The items below represent in-code `// @TODO` notes we have left for ourselves to
   </tbody>
 </table>
 
-{% endband -%}
+{% endband %}

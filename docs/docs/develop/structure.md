@@ -6,16 +6,25 @@ tags:
   - develop
 ---
 
-Run this command from the project root to start the build, watch, and server processes, see others in the project README.
+<style>
+  img {
+    max-width: 100%;
+  }
+</style>
+
+{% band %}
+
+Run this command from the project root to start the build, watch, and server processes.
 ```bash
-npm run dev
+npm run start
 ```
 
 The server will load on `http://localhost:8000` by default.
 
+<!-- TODO: Update Graphic to a more current image -->
 ![npm run live-demo command](/images/develop/develop-structure.png)
 
-Assuming the `dev` command started a server on port 8000, navigate to `http://localhost:8000/demo/pf-cool-element/` to view your element.
+Assuming the `start` command started a server on port 8000, navigate to `http://localhost:8000/components/cool-element/demo/` to view your element.  Depending on other projects you are running via NPM the port number may differ.
 
 You're off to a good start! You have a new custom element that extends the base LitElement class.
 
@@ -124,3 +133,5 @@ JavaScript objects which work with LitElement.
 Now that our dev server is running and we have our element's structure, let's make it actually do something.
 
 <a class="cta" href="../html">Next up: Write your HTML</a>
+
+{% endband %}

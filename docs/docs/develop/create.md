@@ -6,13 +6,14 @@ tags:
   - develop
 ---
 
-{% band header="Prerequisites" %}
+{% band %}
+
   Before you begin, make sure you've followed the 
   [Prerequisites](/docs/develop/setup#prerequisites) in 
   [Setup](/docs/develop/setup).
-{% endband %}
 
-{% band header="The PatternFly Element Generator" %}
+  <h3>PatternFly Element generator</h3>
+
   Use the PatternFly Element generator to start the scaffolding process. From 
   the root directory of the PatternFly Elements  repository, run the following 
   command.

@@ -6,6 +6,8 @@ tags:
   - develop
 ---
 
+{% band %}
+
 In this step, we will:
 
 1.  Add a click and keyup listener to the follow button
@@ -229,3 +231,5 @@ declare global {
 Out next step is to write unit test for our component so that we can use it with greater confidence.
 
 <a class="cta" href="../testing">Next up: Write your tests</a>
+
+{% endband %}

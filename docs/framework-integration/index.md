@@ -3,11 +3,27 @@ layout: layout-basic.njk
 title: Framework integration
 ---
 
+<style>
+  #framework {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns:repeat(2,[col-start] 1fr);
+    max-width: 1020px;
+    padding: 2rem 1rem;
+  }
+
+  @media screen and (min-width: 820px) {
+    #framework {
+      padding-inline: 4rem;
+    }
+  }
+</style>
+
 <header class="band">
   <h1>{{ title }}</h1>
 </header>
 
-{% band %}
+<section id="framework">
   <pf-card color-palette="lightest" border>
     <h3 slot="header" class="push-bottom">
       <a href="https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-react-app-fe079be262ed">Using
@@ -35,12 +51,5 @@ title: Framework integration
       follow along, go ahead and...</p>
     <a class="cta" slot="footer" href="https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-angular-app-4b18b1c9c363">Read on Medium</a>
   </pf-card>
-{% endband %}
+</section>  
 
-<style>
-  section.band {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns:repeat(12,[col-start] 1fr);
-  }
-</style>

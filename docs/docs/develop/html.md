@@ -6,6 +6,12 @@ tags:
   - develop
 ---
 
+<style>
+  img {
+    max-width: 100%;
+  }
+</style>
+
 {% band %}
 
 Now that our element is set up and our dev server is running, let's take 

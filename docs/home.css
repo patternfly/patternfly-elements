@@ -45,7 +45,7 @@
 }
 
 #home-header a.cta.primary:hover {
-  --pf-cta--Color--hover: white;
+  --pf-cta--Color--hover: var(--pf-theme--color--white, #fff);
   --pf-cta--BackgroundColor: transparent;
 }
 

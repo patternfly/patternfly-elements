@@ -30,6 +30,18 @@ main.blog {
   transition: opacity 0.2s ease;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 summary :is(h1,h2,h3,h4,h5,h6) {
   margin: 0;
   display: inline-block;
@@ -113,7 +125,7 @@ a.cta {
   vertical-align: middle;
   max-width: var(--pf-cta--MaxWidth,max-content);
   background-color: var(--pf-cta--BackgroundColor,transparent);
-  border-radius: var(--pf-cta--BorderRadius,0);
+  border-radius: var(--pf-cta--BorderRadius, 3px);
   border: var(--pf-theme--ui--border-width,1px) var(--pf-theme--ui--border-style,solid) var(--pf-cta--BorderColor,transparent);
   cursor: pointer;
   --pf-context-background-color: var(--pf-cta--BackgroundColor, transparent) !important;
@@ -165,7 +177,11 @@ a.cta.secondary {
     var(--pf-theme--container-padding,1rem)
     calc(var(--pf-theme--container-padding,1rem) * 2)) !important;
   font-size: var(--pf-cta--FontSize--priority, var(--pf-global--FontSize--md, 1rem));
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   --pf-cta--BackgroundColor: var(--pf-theme--color--surface--lightest, #fff);
   --pf-cta--BorderColor: var(--pf-theme--color--surface--lightest, #fff);
   --pf-cta--Color: var(--pf-theme--color--text, #151515);
@@ -309,6 +325,11 @@ main.blog {
 }
 
 .pf-bar {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-end;
   padding-inline-start: var(--pf-c-masthead--PaddingLeft, var(--pf-c-masthead--inset, 24px));
   padding-inline-end: var(--pf-c-masthead--PaddingLeft, var(--pf-c-masthead--inset, 24px));
   height: 2.125rem;
@@ -325,6 +346,7 @@ main.blog {
 .pf-bar a.cta {
   display: flex;
   align-items: center;
+  gap: 0.25rem;
   padding: 0;
   height: 100%;
 }

@@ -19,8 +19,12 @@ export type ButtonVariant = (
 );
 
 /**
- * Buttons allow users to perform an action when triggered. They feature a text
- * label, a background or a border, and icons.
+ * A button is a box area or text that communicates and triggers user actions when
+ * clicked or selected. Buttons can be used to communicate and immediately trigger
+ * actions a user can take in an application, like submitting a form, canceling a
+ * process, or creating a new object. Buttons can also be used to take a user to a
+ * new location, like another page inside of a web application, or an external site
+ * such as help or documentation..
  *
  * @summary Allows users to perform an action when triggered
  *
@@ -142,12 +146,6 @@ export type ButtonVariant = (
  *
  * @cssprop {<color>}  --pf-c-button--m-plain--disabled--Color           {@default `#d2d2d2`}
  * @cssprop {<color>}  --pf-c-button--m-plain--disabled--BackgroundColor {@default `transparent`}
- *
- * @csspart state - Container for the state slot.
- * @slot icon
- *       Contains the button's icon or state indicator, e.g. a spinner.
- * @slot
- *       Must contain exactly one `<button>` element as the only content not assigned to a named slot.
  *
  * @attr {string} loading-label - ARIA label for the loading indicator {@default `'loading'`}
  *

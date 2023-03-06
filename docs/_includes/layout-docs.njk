@@ -5,10 +5,9 @@ layout: layout-basic.njk
 <header class="band">
   <h1>{{ title }}</h1>
   {% if tagline %}
-  <p class="tagline">{{ tagline }}</p>
+  <span class="tagline">{{ tagline }}</span>
   {% endif %}
 </header>
 
-{%- band -%}
-  {{ content | safe }}
-{%- endband -%}
+{{ content | safe }}
+

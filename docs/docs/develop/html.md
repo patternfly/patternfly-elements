@@ -6,6 +6,14 @@ tags:
   - develop
 ---
 
+<style>
+  img {
+    max-width: 100%;
+  }
+</style>
+
+{% band %}
+
 Now that our element is set up and our dev server is running, let's take 
 advantage of the slot and shadow root to make our element a bit more 
 interesting.
@@ -69,3 +77,5 @@ changes automatically.
 Now that we've added the HTML, let's style our element by updating the CSS file.
 
 <a class="cta" href="../css">Next up: Write your CSS</a>
+
+{% endband %}

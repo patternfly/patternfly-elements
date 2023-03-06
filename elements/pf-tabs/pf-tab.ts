@@ -9,7 +9,7 @@ import { BaseTab } from './BaseTab.js';
 import styles from './pf-tab.css';
 
 /**
- * PfTab
+ * Tab
  *
  * @slot icon
  *       Can contain an `<svg>` or `<pf-icon>`

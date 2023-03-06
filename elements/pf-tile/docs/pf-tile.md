@@ -11,6 +11,14 @@
 {% endrenderOverview %}
 
 {% band header="Usage" %}
+
+### With subtext
+<pf-tile>
+  <pf-icon slot="icon" set="fas" icon="plus" size="md" loading="eager"></pf-icon>
+  <h3 slot="title">Default</h3>
+  <p>Subtext goes here</p>
+</pf-tile>
+
 ```html
 <pf-tile>
   <pf-icon slot="icon" set="fas" icon="plus" size="md" loading="eager"></pf-icon>
@@ -18,11 +26,7 @@
   <p>Subtext goes here</p>
 </pf-tile>
 ```
-{% endband %}
 
-{% renderSlots %}{% endrenderSlots %}
-
-{% renderAttributes %}
 ### Selected
 
 <pf-tile selected>
@@ -83,8 +87,11 @@
   <p>Subtext goes here</p>
 </pf-tile>
 ```
+{% endband %}
 
-{% endrenderAttributes %}
+{% renderSlots %}{% endrenderSlots %}
+
+{% renderAttributes %}{% endrenderAttributes %}
 
 {% renderMethods %}{% endrenderMethods %}
 

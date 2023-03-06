@@ -12,6 +12,9 @@ const BooleanStringConverter: ComplexAttributeConverter = {
   },
 };
 
+/**
+ * A timestamp provides consistent formats for displaying date and time values.
+ */
 @customElement('pf-timestamp')
 export class PfTimestamp extends LitElement {
   static readonly styles = [style];

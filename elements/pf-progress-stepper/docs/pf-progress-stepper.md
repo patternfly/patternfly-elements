@@ -20,24 +20,17 @@
   ```
 {% endband %}
 
+
 {% renderSlots %}{% endrenderSlots %}
-{% renderSlots for="pf-progress-step", level=3, header="Slots on `-progress-step`" 
-%pf}{% endrenderSlots %}
+
+{% renderSlots for='pf-progress-step', header='Slots on `pf-progress-step`' %}{% endrenderSlots %}
 
 {% renderAttributes %}{% endrenderAttributes %}
-{% renderAttributes for="pf-progress-step", level=3, header="Attributes on 
-`pf-progress-step`" %}{% endrenderAttributes %}
-
-{% renderProperties %}{% endrenderProperties %}
 
 {% renderMethods %}{% endrenderMethods %}
 
 {% renderEvents %}{% endrenderEvents %}
 
 {% renderCssCustomProperties %}{% endrenderCssCustomProperties %}
-{% renderCssCustomProperties for="pf-progress-step", level=3, header="CSS 
-Properties on `pf-progress-step`" %}{% endrenderCssCustomProperties %}
 
 {% renderCssParts %}{% endrenderCssParts %}
-{% renderCssParts for="pf-progress-step", level=3, header="Parts on 
-`pf-progress-step`" %}{% endrenderCssParts %}

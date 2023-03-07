@@ -10,9 +10,11 @@
     <pf-clipboard-copy readonly value="This is read-only"></pf-clipboard-copy>
   </div>
   
+  {% htmlexample %}
   ```html
   <pf-clipboard-copy readonly value="This is read-only"></pf-clipboard-copy>
   ```  
+  {% endhtmlexample %}
 
   <div class="pf-clipboard-example">
     <h3>Expanded</h3>
@@ -22,12 +24,14 @@
     </pf-clipboard-copy>
   </div>
 
+  {% htmlexample %}
   ```html
   <pf-clipboard-copy expandable>
     Got a lot of text here, need to see all of it?
     Click that arrow on the left side and check out the resulting expansion.
   </pf-clipboard-copy>
   ```
+  {% endhtmlexample %}
 
   <div class="pf-clipboard-example">
     <h3>Read-only expanded</h3>
@@ -37,12 +41,14 @@
     </pf-clipboard-copy>
   </div>
 
+  {% htmlexample %}
   ```html
   <pf-clipboard-copy expandable readonly>
     Got a lot of text here, need to see all of it?
     Click that arrow on the left side and check out the resulting expansion.
   </pf-clipboard-copy>
   ```
+  {% endhtmlexample %}
 
   <div class="pf-clipboard-example">
     <h3>Read-only expanded by default</h3>
@@ -52,12 +58,14 @@
     </pf-clipboard-copy>
   </div>
 
+  {% htmlexample %}
   ```html
   <pf-clipboard-copy expandable readonly expanded>
     <p>Got a lot of text here, need to see all of it? Click that arrow on the left side and check out the resulting expansion.</p>
     <p>asodifna osdif</p>
   </pf-clipboard-copy>
   ```
+  {% endhtmlexample %}
 
   <div class="pf-clipboard-example">
     <h3>JSON object (pre-formatted code)</h3>
@@ -76,6 +84,7 @@
     </pf-clipboard-copy>
   </div>
 
+  {% htmlexample %}
   ```html
     <pf-clipboard-copy code expandable expanded>
       { "menu": {
@@ -91,24 +100,29 @@
       }}
     </pf-clipboard-copy>
   ```
+  {% endhtmlexample %}
 
   <div class="pf-clipboard-example">
     <h3>Inline compact</h3>
     <pf-clipboard-copy inline compact>2.3.4-2-redhat</pf-clipboard-copy>
   </div>
 
+  {% htmlexample %}
   ```html
   <pf-clipboard-copy inline compact>2.3.4-2-redhat</pf-clipboard-copy>
   ``` 
+  {% endhtmlexample %}
 
   <div class="pf-clipboard-example">
     <h3>Inline compact code</h3>
     <pf-clipboard-copy inline compact code>2.3.4-2-redhat</pf-clipboard-copy>
   </div>
 
+  {% htmlexample %}
   ```html
   <pf-clipboard-copy inline compact code>2.3.4-2-redhat</pf-clipboard-copy>
-  ``` 
+  ```
+  {% endhtmlexample %}
 
   <div class="pf-clipboard-example">
     <h3>Inline compact with additional action</h3>
@@ -119,6 +133,7 @@
     </pf-clipboard-copy>
   </div>
 
+  {% htmlexample %}
   ```html
   <pf-clipboard-copy inline compact>2.3.4-2-redhat
     <pf-button slot="actions" label="Action" plain variant="primary">
@@ -126,6 +141,7 @@
     </pf-button>
   </pf-clipboard-copy>
   ```
+  {% endhtmlexample %}
 
   <div class="pf-clipboard-example">
     <hgroup>

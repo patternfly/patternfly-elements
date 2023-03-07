@@ -37,6 +37,7 @@ To add copy-to-clipboard functionality, be sure to import `@patternfly/pf-clipbo
   <pf-clipboard slot="actions" copy-from="#basic"></pf-clipboard>
 </pf-code-block>
 
+{% htmlexample %}
 ```html
 <pf-code-block id="basic">
   <script type="application/openshift">
@@ -51,6 +52,7 @@ To add copy-to-clipboard functionality, be sure to import `@patternfly/pf-clipbo
   <pf-clipboard slot="actions" copy-from="#basic"></pf-clipboard>
 </pf-code-block>
 ```
+{% endhtmlexample %}
 
 ### Expandable
 
@@ -73,6 +75,7 @@ breaks.
   <pf-clipboard slot="actions" copy-from="#expandable-code"></pf-clipboard>
 </pf-code-block>
 
+{% htmlexample %}
 ```html
 <pf-code-block id="expandable-code">
   <script type="application/openshift">
@@ -87,6 +90,7 @@ breaks.
   <pf-clipboard slot="actions" copy-from="#expandable-code"></pf-clipboard>
 </pf-code-block>
 ```
+{% endhtmlexample %}
 {% endband %}
 
 {% renderSlots %}{% endrenderSlots %}

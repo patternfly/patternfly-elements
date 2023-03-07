@@ -21,6 +21,7 @@
   </pf-jump-links>
 </section>
 
+{% htmlexample %}
 ```html
 <pf-jump-links centered>
   <pf-jump-links-item href="#heading-1">Inactive section</pf-jump-links-item>
@@ -28,6 +29,7 @@
   <pf-jump-links-item href="#heading-3">Inactive section</pf-jump-links-item>
 </pf-jump-links>
 ```
+{% endhtmlexample %}
 
 <section>
   <h2>With label</h2>
@@ -38,6 +40,7 @@
   </pf-jump-links>
 </section>
 
+{% htmlexample %}
 ```html
 <pf-jump-links label="Jump to section">
   <pf-jump-links-item href="#heading-1">Inactive section</pf-jump-links-item>
@@ -45,6 +48,7 @@
   <pf-jump-links-item href="#heading-3">Inactive section</pf-jump-links-item>
 </pf-jump-links>
 ```
+{% endhtmlexample %}
 
 <section>
   <h2>Vertical</h2>
@@ -55,6 +59,7 @@
   </pf-jump-links>
 </section>
 
+{% htmlexample %}
 ```html
 <pf-jump-links vertical>
   <pf-jump-links-item href="#heading-1">Inactive section</pf-jump-links-item>
@@ -62,6 +67,7 @@
   <pf-jump-links-item href="#heading-3">Inactive section</pf-jump-links-item>
 </pf-jump-links>
 ```
+{% endhtmlexample %}
 
 
 <section>
@@ -81,6 +87,7 @@
   </pf-jump-links>
 </section>
 
+{% htmlexample %}
 ```html
 <pf-jump-links vertical expandable label="Jump to section">
   <pf-jump-links-item href="#heading-1">Inactive section</pf-jump-links-item>
@@ -96,6 +103,8 @@
   <pf-jump-links-item href="#heading-4">Inactive section</pf-jump-links-item>
 </pf-jump-links>
 ```
+{% endhtmlexample %}
+
 <section>
   <h2>Expandable vertical with Scrollspy</h2>
   <pf-jump-links vertical
@@ -111,6 +120,7 @@
   </pf-jump-links>
 </section>
 
+{% htmlexample %}
 ```html
 <pf-jump-links vertical
                 expandable
@@ -124,6 +134,7 @@
   <pf-jump-links-item id="5" href="#heading-5">Heading 5</pf-jump-links-item>
 </pf-jump-links>
 ```
+{% endhtmlexample %}
 {%endband %}
 
 {% renderSlots %}{% endrenderSlots %}

@@ -13,30 +13,35 @@ A switch toggles the state of a setting (between on and off). Switches provide a
 <label for="color-scheme-toggle" data-state="on">Message when on</label>
 <label for="color-scheme-toggle" data-state="off" hidden>Message when off</label>
 
+{% htmlexample %}
 ```html
 <pf-switch id="color-scheme-toggle"></pf-switch>
 <label for="color-scheme-toggle" data-state="on">Message when on</label>
 <label for="color-scheme-toggle" data-state="off" hidden>Message when off</label>
 ```
-
+{% endhtmlexample %}
 
 ### Without label
 <pf-switch checked></pf-switch>
 
+{% htmlexample %}
 ```html
 <pf-switch></pf-switch>
 ```
+{% endhtmlexample %}
 
 ### Checked with label
 <pf-switch id="checked" checked show-check-icon></pf-switch>
 <label for="checked" data-state="on">Message when on</label>
 <label for="checked" data-state="off">Message when off</label>
 
+{% htmlexample %}
 ```html
 <pf-switch id="checked" checked show-check-icon></pf-switch>
 <label for="checked" data-state="on">Message when on</label>
 <label for="checked" data-state="off">Message when off</label>
 ```
+{% endhtmlexample %}
 
 ### Disabled
 <form>
@@ -53,6 +58,7 @@ A switch toggles the state of a setting (between on and off). Switches provide a
   </fieldset>
 </form>
 
+{% htmlexample %}
 ```html
 <form>
   <fieldset>
@@ -69,6 +75,8 @@ A switch toggles the state of a setting (between on and off). Switches provide a
   </fieldset>
 </form>
 ```
+{% endhtmlexample %}
+
 {% endband %}
 
 {% renderSlots %}{% endrenderSlots %}

@@ -18,6 +18,7 @@
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
 
+  {% htmlexample %}
   ```html
   <pf-card size="compact">
     <h3 slot="header">Header</h3>
@@ -25,6 +26,8 @@
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
   ```
+  {% endhtmlexample %}
+
   <h3 slot="header">Rounded card</h3>
   <pf-card rounded>
     <h3 slot="header">Header</h3>
@@ -32,6 +35,7 @@
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
 
+  {% htmlexample %}
   ```html
   <pf-card rounded>
     <h3 slot="header">Header</h3>
@@ -39,6 +43,7 @@
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
   ```
+  {% endhtmlexample %}
 
   <h3 slot="header">Large card</h3>
   <pf-card size="large">
@@ -47,6 +52,7 @@
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
 
+  {% htmlexample %}
   ```html
   <pf-card size="large">
     <h3 slot="header">Large card</h3>
@@ -54,6 +60,7 @@
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
   ```
+  {% endhtmlexample %}
 
   <h3 slot="header">Full Height card</h3>
   <pf-card fullHeight>
@@ -62,6 +69,7 @@
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
 
+  {% htmlexample %}
   ```html
   <pf-card fullHeight>
     <h3 slot="header">Header</h3>
@@ -69,6 +77,7 @@
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
   ```
+  {% endhtmlexample %}
 
   <h3 slot="header">Plain card</h3>
   <pf-card plain>
@@ -77,13 +86,15 @@
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
 
+  {% htmlexample %}
   ```html
   <pf-card plain>
     <h3 slot="header">Header</h3>
     <p>This is the plain card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
-  ```  
+  ```
+  {% endhtmlexample %}
 {% endband %}
 
 {% renderSlots %}

@@ -23,12 +23,15 @@
   <pf-icon icon="lock" aria-label="lock"></pf-icon>
   <pf-icon icon="laptop" aria-label="laptop"></pf-icon>
   <pf-icon icon="cloud" aria-label="cloud"></pf-icon>
+
+  {% htmlexample %}
   ```html
   <pf-icon icon="user" aria-label="user"></pf-icon>
   <pf-icon icon="lock" aria-label="lock"></pf-icon>
   <pf-icon icon="laptop" aria-label="laptop"></pf-icon>
   <pf-icon icon="cloud" aria-label="cloud"></pf-icon>
   ```
+  {% endhtmlexample %}
 
   ### Size
   The default size is 1em, so icon size matches text size.  `2x`, etc, are
@@ -39,12 +42,14 @@
   <pf-icon icon="user" size="lg"></pf-icon>
   <pf-icon icon="user" size="xl"></pf-icon>
 
+  {% htmlexample %}
   ```html
   <pf-icon icon="user" size="sm"></pf-icon>
   <pf-icon icon="user" size="md"></pf-icon>
   <pf-icon icon="user" size="lg"></pf-icon>
   <pf-icon icon="user" size="xl"></pf-icon>
   ```
+  {% endhtmlexample %}
 {% endband %}
 
 {% band header="Icon sets" %}

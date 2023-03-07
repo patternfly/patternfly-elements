@@ -37,6 +37,7 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
 <pf-button variant="link" inline>Inline Link</pf-button>
 <pf-button variant="link" danger>Danger Link</pf-button>
 
+{% htmlexample %}
 ```html
 <pf-button variant="link" id="test">
   <svg fill="currentColor" style="vertical-align:-0.125em" height="1em" width="1em" viewBox="0 0 512 512" aria-hidden="true">
@@ -48,6 +49,7 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
 <pf-button variant="link" inline>Inline Link</pf-button>
 <pf-button variant="link" danger>Danger Link</pf-button>
 ```
+{% endhtmlexample %}
 
 #### Plain button
 
@@ -57,6 +59,7 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
   </svg>
 </pf-button>
 
+{% htmlexample %}
 ```html
 <pf-button plain>
   <svg aria-label="Action" fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
@@ -64,6 +67,7 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
   </svg>
 </pf-button>
 ```
+{% endhtmlexample %}
 
 #### Control variant
 
@@ -74,6 +78,7 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
   </svg>
 </pf-button>
 
+{% htmlexample %}
 ```html
 <pf-button variant="control">Control</pf-button>
 <pf-button variant="control">
@@ -82,16 +87,19 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
   </svg>
 </pf-button>
 ```
+{% endhtmlexample %}
 
 <h3>Size</h3>
 <pf-button>Medium Button</pf-button>
 <pf-button size="large">Large Button</pf-button>
 
-
+{% htmlexample %}
 ```html
 <pf-button>Medium Button</pf-button>
 <pf-button size="large">Large Button</pf-button>
 ```
+{% endhtmlexample %}
+
 {% endband %}
 
 {% renderSlots %}{% endrenderSlots %}

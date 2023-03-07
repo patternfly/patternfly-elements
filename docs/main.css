@@ -632,6 +632,23 @@ code {
   font-size: 14px;
 }
 
+
+.html-example {
+  display: flex;
+}
+
+.html-example summary {
+  cursor: pointer;
+}
+
+.html-example p:empty {
+  display: none;
+}
+
+.html-example pre[class*="language-"] {
+  margin: 0;
+}
+
 .push-top {
   margin-top: var(--pf-theme--container-spacer, 0.83em);
 }

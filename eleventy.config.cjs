@@ -79,6 +79,15 @@ module.exports = function(eleventyConfig) {
     warningFileSize: 400 * 1000,
   });
 
+  eleventyConfig.addPairedShortcode('htmlexample', function(content) {
+    const id = Math.random().toString(36).at(2, 9);
+    return `
+    <details class="html-example">
+      <summary>&lt;HTML&gt;</summary>
+      ${content}
+    </details>`;
+  });
+
   return {
     dir: {
       input: './docs',

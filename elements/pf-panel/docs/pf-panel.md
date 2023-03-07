@@ -12,25 +12,29 @@
   <p>Main content</p>
 </pf-panel>
 
+{% htmlexample %}
 ```html
 <pf-panel>
   <h3 slot="header">Header content</h3>
   <p>Main content</p>
 </pf-panel>
 ```
+{% endhtmlexample %}
 
-<h3>Header</h3>
+<h3>No Header</h3>
 <pf-panel>
   <p>Main content</p>
   <p slot="footer">Footer content</p>
 </pf-panel>
 
+{% htmlexample %}
 ```html
 <pf-panel>
   <p>Main content</p>
   <p slot="footer">Footer content</p>
 </pf-panel>
 ```
+{% endhtmlexample %}
 
 <h3>Header and footer</h3>
 <pf-panel>
@@ -39,6 +43,7 @@
   <p slot="footer">Footer content</p>
 </pf-panel>
 
+{% htmlexample %}
 ```html
 <pf-panel>
   <h3 slot="header">Header content</h3>
@@ -46,28 +51,33 @@
   <p slot="footer">Footer content</p>
 </pf-panel>
 ```
+{% endhtmlexample %}
 
 <h3>Raised</h3>
 <pf-panel variant="raised">
   <p>Main content</p>
 </pf-panel>
 
+{% htmlexample %}
 ```html
 <pf-panel variant="raised">
   <p>Main content</p>
 </pf-panel>
 ```
+{% endhtmlexample %}
 
 <h3>Bordered</h3>
 <pf-panel variant="bordered">
   <p>Main content</p>
 </pf-panel>
 
+{% htmlexample %}
 ```html
 <pf-panel variant="bordered">
   <p>Main content</p>
 </pf-panel>
 ```
+{% endhtmlexample %}
 
 <h3>Scrollable</h3>
 <pf-panel scrollable>

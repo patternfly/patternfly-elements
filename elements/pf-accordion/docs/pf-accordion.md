@@ -59,6 +59,7 @@
     </pf-accordion-panel>
   </pf-accordion>
 
+  {% htmlexample %}
   ```html
   <pf-accordion>
     <pf-accordion-header>
@@ -89,6 +90,8 @@
     </pf-accordion-panel>
   </pf-accordion>
   ```
+  {% endhtmlexample %}
+
 {% endband %}
 
 {% renderSlots %}

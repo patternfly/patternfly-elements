@@ -71,7 +71,11 @@ tags:
   - A file to write your unit tests
   - An HTML demo where you can show off your element and add examples for your development workflow
 
-  You may also add noscript styles which load in situations where JavaScript is not available.  This file uses a standard naming convention of `pf-foo--noscript`.
+  You may also add light DOM styles which can be loaded prior to [element defined](https://developer.mozilla.org/en-US/docs/Web/CSS/:defined) `pf-foo:not(:defined){...}`. An example use case would be to avoid above the fold layout shift.  
+
+  The light DOM CSS file uses a standard naming convention of: 
+  `{scope}-{component-name}--lightdom.css` 
+  Example: `pf-accordion--lightdom.css`.
 {% endband %}
 
 <a id="compile-watch-and-preview"></a>

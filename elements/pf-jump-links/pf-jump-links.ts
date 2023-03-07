@@ -6,11 +6,10 @@ import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js
 import { ScrollSpyController } from '@patternfly/pfe-core/controllers/scroll-spy-controller.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
-import './pf-jump-links-item.js';
+import { PfJumpLinksItem } from './pf-jump-links-item.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
 
 import style from './pf-jump-links.css';
-import { PfJumpLinksItem } from './pf-jump-links-item.js';
 
 /**
  * Jump links allow users to navigate to sections within a page.
@@ -100,7 +99,7 @@ export class PfJumpLinks extends LitElement {
 
   render() {
     return html`
-      <nav id="container">${this.expandable ? html`
+      <nav id="container" @listupdate="${this.#onListUpdate}">${this.expandable ? html`
         <details ?open="${this.expanded}" @toggle="${this.#onToggle}">
           <summary>
             <pf-icon icon="chevron-right"></pf-icon>
@@ -114,9 +113,17 @@ export class PfJumpLinks extends LitElement {
     `;
   }
 
+  #onListUpdate() {
+    this.#updateItems();
+  }
+
   #onSlotchange() {
+    this.#updateItems();
+  }
+
+  #updateItems() {
     this.#items = this._items;
-    const items = this.#items?.map(item=>item.link);
+    const items = this.#items.flatMap(item => item.items);
     if (this.#init) {
       this.#rovingTabindexController.updateItems(items);
     } else {

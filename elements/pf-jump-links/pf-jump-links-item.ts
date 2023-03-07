@@ -2,6 +2,9 @@ import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
+import { PfJumpLinksList } from './pf-jump-links-list.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+import { ComposedEvent } from '@patternfly/pfe-core';
 
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -24,6 +27,9 @@ export class PfJumpLinksItem extends LitElement {
   static readonly styles = [style];
 
   @query('a') link!:HTMLAnchorElement;
+
+  @queryAssignedElements({ slot: 'subsection' }) _items!:PfJumpLinksList[];
+
   @observed('activeChanged')
   @property({ type: Boolean, reflect: true }) active = false;
 
@@ -43,7 +49,7 @@ export class PfJumpLinksItem extends LitElement {
       <a href="${ifDefined(this.href)}" @focus="${this.#onFocus}" @click="${this.#onClick}">
         <slot></slot>
       </a>
-      <slot name="subsection"></slot>
+      <slot name="subsection" @slotchange="${this.#onSlotchange}"></slot>
     `;
   }
 
@@ -61,6 +67,14 @@ export class PfJumpLinksItem extends LitElement {
 
   #onFocus() {
     this.dispatchEvent(new Event('focus', { bubbles: true }));
+  }
+
+  #onSlotchange() {
+    this.dispatchEvent(new ComposedEvent('listupdate'));
+  }
+
+  get items():HTMLAnchorElement[] {
+    return [this.link, ...this._items.map(item => item.items)].flat();
   }
 }
 

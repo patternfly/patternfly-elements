@@ -15,6 +15,9 @@ export class RovingTabindexController implements ReactiveController {
   /** active focusable element */
   #activeItem?: HTMLElement;
 
+  /** closest ancestor containing items */
+  #itemsContainer?: HTMLElement;
+
   /** array of all focusable elements */
   #items: HTMLElement[] = [];
 
@@ -97,8 +100,8 @@ export class RovingTabindexController implements ReactiveController {
     const horizontalOnly =
         !item ? false
       : item.tagName === 'SELECT' ||
-        item.getAttribute('aria-expanded') === 'true' ||
         item.getAttribute('role') === 'spinbutton';
+
 
     switch (event.key) {
       case 'ArrowLeft':
@@ -188,7 +191,7 @@ export class RovingTabindexController implements ReactiveController {
   /**
    * from array of HTML items, and sets active items
    */
-  initItems(items: HTMLElement[]) {
+  initItems(items: HTMLElement[], itemsContainer?: HTMLElement) {
     this.#items = items ?? [];
     const focusableItems = this.#focusableItems;
     const [focusableItem] = focusableItems;
@@ -196,9 +199,20 @@ export class RovingTabindexController implements ReactiveController {
     for (const item of focusableItems) {
       item.tabIndex = this.#activeItem === item ? 0 : -1;
     }
+
+    /**
+     * removes listener on previous contained and applies it to new container
+     */
+    if (!this.#itemsContainer || itemsContainer !== this.#itemsContainer) {
+      if (this.#itemsContainer) {
+        this.#itemsContainer.removeEventListener('keydown', this.#onKeydown.bind(this));
+      }
+      this.#itemsContainer = itemsContainer || this.host;
+      this.#itemsContainer.addEventListener('keydown', this.#onKeydown.bind(this));
+    }
   }
 
   hostConnected() {
-    this.host.addEventListener('keydown', this.#onKeydown.bind(this));
+    this.#itemsContainer = undefined;
   }
 }

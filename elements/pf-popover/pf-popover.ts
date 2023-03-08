@@ -223,26 +223,25 @@ export class PfPopover extends LitElement {
   render() {
     const { alignment, anchor, styles } = this.#float;
     return html`
-      <div
-        id="container"
-        style="${styleMap(styles)}"
-        class="${classMap({
-          [anchor]: !!anchor,
-          [alignment]: !!alignment,
-        })}"
-      >
+      <div id="container"
+            style="${styleMap(styles)}"
+            class="${classMap({
+              [anchor]: !!anchor,
+              [alignment]: !!alignment,
+            })}">
         <slot id="trigger" @keydown=${this._onKeydown} @click=${this.show}></slot>
-        <dialog
-          id="popover"
-          aria-labelledby="heading"
-          aria-describedby="body"
-          aria-label=${ifDefined(this.label)}
-        > 
+        <dialog id="popover"
+                aria-labelledby="heading"
+                aria-describedby="body"
+                aria-label=${ifDefined(this.label)}> 
           <div id="arrow"></div>
           <div id="content" part="content">
-            ${this._renderCloseButton()} ${this._renderHeader()} ${this._renderBody()} ${this._renderFooter()}
+            ${this._renderCloseButton()}
+            ${this._renderHeader()}
+            ${this._renderBody()}
+            ${this._renderFooter()}
           </div>
-      </dialog>
+        </dialog>
       </div>
     `;
   }

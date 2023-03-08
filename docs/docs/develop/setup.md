@@ -8,8 +8,14 @@ tags:
 ---
 
 {% band header="Prerequisites" %}
-  In order to work on PatternFly elements, you'll need to have Git and NodeJS installed.
-  We recommend installing [the Node Version Manager - nvm](https://github.com/nvm-sh/nvm) so that your development environment uses the expected node version.
+  To get started with PatternFly elements, you will need to have the following installed: 
+  
+  - [Git](https://git-scm.com/) 
+  - [NodeJS](https://nodejs.org/)
+  - [Node Version Manager - nvm (recommended)](https://github.com/nvm-sh/nvm)
+
+  We recommend installing the [Node Version Manager - nvm](https://github.com/nvm-sh/nvm) so that your development environment uses the expected node version set by the project `.nvmrc` file.
+
   If you are using Windows or Fish shell, follow the [special instructions to install a compatible version of nvm](https://github.com/nvm-sh/nvm#important-notes).
 
   Clone the [PatternFly Elements repo]({{ githubLink }}) and change directory to it.

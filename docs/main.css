@@ -37,17 +37,19 @@ summary :is(h1,h2,h3,h4,h5,h6) {
 
 :is(h1, h2, h3):not([slot]),
 p.subtitle {
-  font-weight: 400;
-  font-family: 'Red Hat Display', sans-serif;
+  font-weight: var(--pf-c-title--m-4xl--FontWeight, var(--pf-global--FontWeight--normal, 600));
+  font-family: var(--pf-c-content--heading--FontFamily, var(--pf-global--FontFamily--heading--sans-serif, var(--pf-global--FontFamily--redhat-updated--heading--sans-serif, "Red Hat Display", "Overpass", overpass, helvetica, arial, sans-serif)));
 }
 
 h1:not([slot]) {
-  font-size: 2rem;
+  /* font-size: 2rem; */
+  font-size: var(--pf-c-title--m-4xl--FontSize, var(--pf-c-title--m-4xl--FontWeight, 2.25rem));
+  line-height: var(--pf-c-title--m-4xl--LineHeight, var(--pf-global--LineHeight--sm, 1.3));
 }
 
 h3:not([slot]),
 p.subtitle {
-  margin-top: 0.83em;
+  margin-block-start: 0.83em;
   font-weight: 500;
 }
 
@@ -59,23 +61,42 @@ strong {
   font-weight: bold;
 }
 
-.band {
-  padding-block: 48px;
-  padding-inline: 64px;
+header.band {
+  background-color:
+    var(
+      --pf-c-page__main-section--BackgroundColor,
+      var(
+        --pf-c-page__main-section--m-light-100--BackgroundColor,
+        var(--pf-global--BackgroundColor--150, #fafafa)));
+  padding: var(--pf-global--spacer--md, 1rem) var(--pf-global--spacer--md, 1rem);
+  box-shadow: var(--pf-c-page--section--m-sticky-top--BoxShadow, var(--pf-global--BoxShadow--sm-bottom, 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)));
 }
 
-.band.small {
+/* Not an ideal selector... hacking away */
+section.band:not(#component-list):not(#lightw):not(#univ):not(.accent):not(.small) {
+  max-width: 1020px;
+  padding: var(--pf-global--spacer--md, 1rem) var(--pf-global--spacer--md, 1rem);
+}
+
+#component-list {
+  padding: var(--pf-global--spacer--xl, 2rem) var(--pf-global--spacer--md, 1rem);
+}
+
+section.band.small {
   padding-block: 16px;
   padding-inline: 48px;
 }
 
-.band.base {
+section.band.base {
   background-color: #ededed;
 }
 
-@media screen and (min-width: 768px) {
-  .band { padding-inline: 4rem; }
+/* This most likely could have unintended side effects */
+section.band.overview + section.band {
+  display: none;
 }
+
+
 
 a.cta {
   white-space: normal;
@@ -218,13 +239,11 @@ header.band h1 {
 .band > h2[id]:not(.no-header-styles) {
   font-size: 1.5rem;
   line-height: 1.9375rem;
-  font-weight: bold;
   margin-top: 2em;
 }
 
 .band > h3[id] {
   font-size: 1.3rem;
-  font-weight: bold;
   margin-top: 2em;
 }
 
@@ -665,6 +684,12 @@ blockquote {
   }
 }
 
+@media (min-width: 768px) {
+  header.band {
+    padding-block: var(--pf-global--spacer--xl, 2rem);
+  }
+}
+
 @media (min-width: 820px) {
   main.basic,
   main.blog,
@@ -672,7 +697,14 @@ blockquote {
     padding-left: 17.5rem;
   }
 
+  header.band,
+  section.band:not(#component-list):not(#lightw):not(#univ):not(.accent):not(.small) {
+    padding-inline: var(--pf-global--spacer--3xl, 4rem)
+  }
 
+  #component-list {
+    padding: var(--pf-global--spacer--3xl, 4rem) var(--pf-global--spacer--3xl, 4rem);
+  }
 
   .site-navigation {
     visibility: visible;
@@ -888,19 +920,6 @@ dl.member dd {
 .token.inserted:not(.prefix),
 .token.deleted:not(.prefix) {
 	display: block;
-}
-
-rh-global-footer {
-  --rh-footer-icon-color: var(--rh-color-black-500, #8a8d90);
-  --rh-footer-icon-color-hover: var(--rh-color-black-400, #b8bbbe);
-}
-
-rh-global-footer .global-logo-image {
-  fill: var(--rh-footer-icon-color);
-}
-
-rh-global-footer .global-logo-image:is(:hover, :focus-within) {
-  fill: var(--rh-footer-icon-color-hover);
 }
 
 @media (min-width: 820px) {

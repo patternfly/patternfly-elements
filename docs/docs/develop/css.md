@@ -6,6 +6,15 @@ tags:
   - develop
 ---
 
+<style>
+  img {
+    max-width: 100%;
+  }
+</style>
+
+
+{% band %}
+
 We want the `pf-cool-element` to have a profile photo, a username, and a follow button.
 Right now, it only contains the HTML structure, but we can style our element by 
 updating our CSS to make it look the way we want.
@@ -52,3 +61,5 @@ We can accomplish both of these tasks by updating the `pf-cool-element.ts` file.
 <a href="{{ '/theming/' | url }}">Learn more about applying a theme.</a>
 
 <a class="cta" href="{{ '../javascript' | url }}">Next up: Write your JavaScript</a>
+
+{% endband %}

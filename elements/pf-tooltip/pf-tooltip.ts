@@ -7,11 +7,10 @@ import { BaseTooltip } from './BaseTooltip.js';
 import styles from './pf-tooltip.css';
 
 /**
- * Patternfly tooltip
+ * A tooltip is in-app messaging used to identify elements on a page with short,
+ * clarifying text.
  *
- * A Tooltip is a floating text area triggered by a user that provides helpful or contextual information.
- *
- * @summary Toggle the visiblity of helpful or contextual information.
+ * @summary Toggle the visibility of helpful or contextual information.
  *
  * @slot
  *       This slot wraps around the element that should be used to invoke the tooltip content to display.

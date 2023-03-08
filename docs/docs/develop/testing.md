@@ -6,6 +6,14 @@ tags:
   - develop
 ---
 
+<style>
+  img {
+    max-width: 100%;
+  }
+</style>
+
+{% band %}
+
 Let's write tests for `pf-cool-element`.
 
 We rely on a few tools to ensure our element is reliable in production:
@@ -258,3 +266,5 @@ A quick note about the framework testing—the Vue and React tests are meant to 
 That's it for testing! Now that we've created our `pf-cool-element` and all of our code passes, the final step is to submit a pull request to get this merged.
 
 <a class="cta" href="../pull-request">Next up: Open a pull request</a>
+
+{% endband %}

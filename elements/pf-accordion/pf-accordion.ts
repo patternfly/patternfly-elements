@@ -11,8 +11,7 @@ export * from './pf-accordion-panel.js';
 import style from './pf-accordion.css';
 
 /**
- * Accordions toggle the visibility of sections of content.
- * They feature panels that consist of a section text label and a caret icon that collapses or expands to reveal more information.
+ * An accordion is an interactive container that expands and collapses to hide or reveal nested content. It takes advantage of progressive disclosure to help reduce page scrolling, by allowing users to choose whether they want to show or hide more detailed information as needed.
  *
  * @summary Toggle the visibility of sections of content
  *

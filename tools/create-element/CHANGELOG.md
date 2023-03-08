@@ -1,5 +1,19 @@
 # @patternfly/create-element
 
+## 1.0.0
+
+### Major Changes
+
+- 034eed047: ✨ Added `@patternfly/create-element` package. Use it with the command
+
+  ```shell
+  npm init @patternfly/element
+  ```
+
+### Patch Changes
+
+- 5d3315fd4: Prepared release candidate
+
 ## 1.0.0-rc.1
 
 ### Patch Changes

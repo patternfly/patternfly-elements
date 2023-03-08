@@ -14,6 +14,8 @@ tags:
 
 {% band %}
 
+## Start the development server
+
 Run this command from the project root to start the build, watch, and server processes.
 ```bash
 npm run start
@@ -25,6 +27,9 @@ The server will load on `http://localhost:8000` by default.
 ![npm run live-demo command](/images/develop/develop-structure.png)
 
 Assuming the `start` command started a server on port 8000, navigate to `http://localhost:8000/components/cool-element/demo/` to view your element.  Depending on other projects you are running via NPM the port number may differ.
+
+
+## Our new custom element
 
 You're off to a good start! You have a new custom element that extends the base LitElement class.
 
@@ -58,7 +63,7 @@ declare global {
 }
 ```
 
-## Lit
+### Lit
 
 ```ts
 import { LitElement, html } from 'lit';
@@ -102,7 +107,7 @@ These changes usually take mere milliseconds to occur, so this doesn't affect en
 
 Read more about [Lit](https://lit.dev) on their site. 
 
-## TypeScript Decorators
+### TypeScript Decorators
 
 Second, we define HTML tag name using lit's `@customElement()` [TypeScript decorator](https://www.typescriptlang.org/docs/handbook/decorators.html).
 Decorators are a [proposed JavaScript language feature](https://github.com/tc39/proposal-decorators).

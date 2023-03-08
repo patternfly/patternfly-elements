@@ -15,9 +15,17 @@ import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-co
 import '@patternfly/elements/pf-button/pf-button.js';
 import styles from './pf-popover.css';
 
+const alertIcons: Record<AlertSeverity, string> = {
+  default: 'bell',
+  info: 'circle-info',
+  success: 'circle-check',
+  warning: 'triangle-exclamation',
+  danger: 'circle-exclamation',
+};
+
 const headingLevels = [2, 3, 4, 5, 6] as const;
 
-type HeadingLevel = typeof headingLevels[number];
+type HeadingLevel = (typeof headingLevels)[number];
 
 type AlertSeverity = 'default' | 'info' | 'warning' | 'success' | 'danger';
 
@@ -189,7 +197,21 @@ export class PfPopover extends LitElement {
   @property({ type: Number, reflect: true }) distance?: number = 25;
   // todo: handle PF4s 'flip' Placement option in flip-behavior if possible
   // https://www.patternfly.org/v4/components/popover#popover
-  @property({ attribute: 'flip-behavior', converter: StringListConverter }) flipBehavior?: Placement[] = ['top', 'bottom', 'left', 'right', 'top-start', 'top-end', 'bottom-start', 'bottom-end', 'left-start', 'left-end', 'right-start', 'right-end'];
+  @property({ attribute: 'flip-behavior', converter: StringListConverter }) flipBehavior?: Placement[] = [
+    'top',
+    'bottom',
+    'left',
+    'right',
+    'top-start',
+    'top-end',
+    'bottom-start',
+    'bottom-end',
+    'left-start',
+    'left-end',
+    'right-start',
+    'right-end',
+  ];
+
   @property({ type: Boolean, reflect: true, attribute: 'enable-flip' }) enableFlip?: boolean = true;
   @property({ type: Number, reflect: true, attribute: 'heading-level' }) headingLevel?: HeadingLevel;
   @property({ reflect: true, attribute: 'icon-set' }) iconSet?: string;
@@ -209,7 +231,7 @@ export class PfPopover extends LitElement {
   #float = new FloatingDOMController(this, {
     content: () => this._popover,
     arrow: () => this._arrow,
-    invoker: () => this.#referenceTrigger || this._slottedTrigger
+    invoker: () => this.#referenceTrigger || this._slottedTrigger,
   });
 
   #slots = new SlotController(this, { slots: [null, 'icon', 'heading', 'body', 'footer'] });
@@ -222,13 +244,31 @@ export class PfPopover extends LitElement {
 
   render() {
     const { alignment, anchor, styles } = this.#float;
+
+    const hasIcon = this.#slots.hasSlotted('icon') || !!this.icon || !!this.alertSeverity;
+    const fallbackIcon = this.icon ?? (this.alertSeverity ? alertIcons[this.alertSeverity] : nothing);
+
+    const hasHeading = this.#slots.hasSlotted('heading') || !!this.heading;
+    const headingLevel = headingLevels.find(level => level === this.headingLevel) ?? 6;
+    const heading = html`<slot id="heading" name="heading" part="heading" ?hidden=${!hasHeading}>${unsafeStatic(`<h${headingLevel}>${this.heading}</h${headingLevel}>`)}</slot>`;
+    const asHeader = hasHeading && hasIcon;
+    const header = asHeader ?
+      html`
+          <header part="header">
+            <span part="icon">
+              <slot name="icon"><pf-icon icon=${fallbackIcon} set=${ifDefined(this.iconSet)} size="md"></pf-icon></slot>
+            </span>
+            ${heading}
+          </header>
+        `
+      : html`${heading}`;
+
+    const hasFooter = this.#slots.hasSlotted('footer') || !!this.footer;
+
     return html`
       <div id="container"
             style="${styleMap(styles)}"
-            class="${classMap({
-              [anchor]: !!anchor,
-              [alignment]: !!alignment,
-            })}">
+            class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment, })}">
         <slot id="trigger" @keydown=${this._onKeydown} @click=${this.show}></slot>
         <dialog id="popover"
                 aria-labelledby="heading"
@@ -236,10 +276,26 @@ export class PfPopover extends LitElement {
                 aria-label=${ifDefined(this.label)}> 
           <div id="arrow"></div>
           <div id="content" part="content">
-            ${this._renderCloseButton()}
-            ${this._renderHeader()}
-            ${this._renderBody()}
-            ${this._renderFooter()}
+            <pf-button id="close-button"
+                        label=${this.closeButtonLabel}
+                        part="close-button"
+                        plain
+                        @click=${this.hide}
+                        @keydown=${this._onKeydown}
+                        ?hidden=${this.hideClose}>
+              <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
+                <path
+                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                ></path>
+              </svg>
+            </pf-button>
+            ${header}
+            <slot id="body"
+                  part="body"
+                  name="body">${this.body}</slot>
+            <footer part="footer" ?hidden=${!hasFooter}>
+              <slot name="footer">${this.footer}</slot>
+            </footer>
           </div>
         </dialog>
       </div>
@@ -291,84 +347,15 @@ export class PfPopover extends LitElement {
     }
   }
 
-  protected _renderCloseButton() {
-    return !this.hideClose ?
-      html`
-          <pf-button
-            id="close-button"
-            label=${this.closeButtonLabel}
-            part="close-button"
-            plain
-            @click=${this.hide}
-            @keydown=${this._onKeydown}
-          >
-            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
-              <path
-                d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-              ></path>
-            </svg>
-          </pf-button>
-        `
-      : nothing;
-  }
-
-  protected _renderFallbackIcon() {
-    const alertIcons: Record<AlertSeverity, string> = {
-      default: 'bell',
-      info: 'circle-info',
-      success: 'circle-check',
-      warning: 'triangle-exclamation',
-      danger: 'circle-exclamation',
-    };
-    const icon = this.icon ?? (this.alertSeverity ? alertIcons[this.alertSeverity] : nothing);
-    return html`<pf-icon icon=${icon} set=${ifDefined(this.iconSet)} size="md"></pf-icon>`;
-  }
-
-  protected _renderHeading() {
-    const headingLevel = headingLevels.find(level => level === this.headingLevel) ?? 6;
-    const hasHeading = this.#slots.hasSlotted('heading') || !!this.heading;
-    return hasHeading ?
-      html`<slot id="heading" name="heading" part="heading"
-          >${unsafeStatic(`<h${headingLevel}>${this.heading}</h${headingLevel}>`)}</slot
-        >`
-      : nothing;
-  }
-
-  protected _renderHeader() {
-    const hasHeading = this.#slots.hasSlotted('heading') || !!this.heading;
-    const hasIcon = this.#slots.hasSlotted('icon') || !!this.icon || !!this.alertSeverity;
-    const asHeader = hasHeading && hasIcon;
-    return asHeader ?
-      html`
-          <header part="header">
-            <span part="icon">
-              <slot name="icon"> ${this._renderFallbackIcon()} </slot>
-            </span>
-            ${this._renderHeading()}
-          </header>
-        `
-      : html`${this._renderHeading()}`;
-  }
-
-  protected _renderBody() {
-    return html` <slot id="body" part="body" name="body">${this.body}</slot> `;
-  }
-
-  protected _renderFooter() {
-    const hasFooter = this.#slots.hasSlotted('footer') || !!this.footer;
-    return hasFooter ?
-      html`
-          <footer part="footer" ?hidden=${!hasFooter}>
-            <slot name="footer">${this.footer}</slot>
-          </footer>
-        `
-      : nothing;
-  }
-
   @bound async show() {
     this.dispatchEvent(new PopoverShowEvent());
     await this.updateComplete;
-    await this.#float.show({ offset: this.distance, placement: this.position, flip: this.enableFlip, fallbackPlacements: this.flipBehavior });
+    await this.#float.show({
+      offset: this.distance,
+      placement: this.position,
+      flip: this.enableFlip,
+      fallbackPlacements: this.flipBehavior,
+    });
     this._popover?.show();
     this.dispatchEvent(new PopoverShownEvent());
   }

@@ -96,7 +96,7 @@
   );
 }
 
-[part='content'] > [part='close-button'] + * {
+[part='content'] > [part='close-button']:not([hidden]) ~ *:not([hidden]) {
   padding-right: var(--pf-c-popover--c-button--sibling--PaddingRight, var(--pf-global--spacer--2xl, 3rem));
 }
 

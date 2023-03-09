@@ -265,10 +265,20 @@ export class PfPopover extends LitElement {
   @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel ?: string;
 
   /**
-   * The text announced by the screen reader to indicate severity for the alert popover.
+   * The text announced by the screen reader to indicate the popover's severity.
    * The default is `{alertSeverity} alert:`.
    */
   @property({ reflect: true, attribute: 'alert-severity-text' }) alertSeverityText ?: string;
+
+  /**
+   * Don't trap focus in the popover.
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'no-focus-trap' }) noFocusTrap?: string;
+
+  /**
+   * Don't hide the popover when clicking ouside of it.
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'no-outside-click' }) noOutsideClick?: string;
 
   /**
    * The ID of the element to attach the popover to.
@@ -278,7 +288,8 @@ export class PfPopover extends LitElement {
 
   @query('#popover') private _popover?: HTMLDialogElement | null;
   @query('#trigger') private _slottedTrigger?: HTMLElement | null;
-  @query('#arrow') private _arrow?: HTMLElement | null;
+  @query('#arrow') private _arrow?: HTMLDivElement | null;
+  @query('#close-button') private _closeButton?: HTMLButtonElement | null;
 
   #referenceTrigger?: HTMLElement | null = null;
 
@@ -293,7 +304,7 @@ export class PfPopover extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('keydown', this._onKeydown);
-    document.addEventListener('click', this._outsideClick);
+    !this.noOutsideClick && document.addEventListener('click', this._outsideClick);
     PfPopover._instances.add(this);
   }
 
@@ -379,6 +390,7 @@ export class PfPopover extends LitElement {
         if (event.target === this.#referenceTrigger || event.target === this._slottedTrigger) {
           event.preventDefault();
           this.show();
+          this._closeButton?.focus();
         }
         return;
     }

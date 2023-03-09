@@ -297,6 +297,8 @@ export class PfPopover extends LitElement {
     const hasIcon = this.#slots.hasSlotted('icon') || !!this.icon || !!this.alertSeverity;
     const fallbackIcon = this.icon ?? (this.alertSeverity ? alertIcons[this.alertSeverity] : nothing);
 
+    const screenReaderText = this.alertSeverity ? html`<span class="sr-only">${this.alertSeverity} alert:</span>` : nothing;
+
     const hasHeading = this.#slots.hasSlotted('heading') || !!this.heading;
     const headingLevel = headingLevels.find(level => level === this.headingLevel) ?? 6;
     const heading = html`<slot id="heading" name="heading" part="heading" ?hidden=${!hasHeading}>${unsafeStatic(`<h${headingLevel}>${this.heading}</h${headingLevel}>`)}</slot>`;
@@ -307,6 +309,7 @@ export class PfPopover extends LitElement {
             <span part="icon">
               <slot name="icon"><pf-icon icon=${fallbackIcon} set=${ifDefined(this.iconSet)} size="md"></pf-icon></slot>
             </span>
+            ${screenReaderText}
             ${heading}
           </header>
         `

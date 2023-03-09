@@ -194,7 +194,7 @@ export class PfPopover extends LitElement {
   @property({ reflect: true }) footer?: string;
   @property({ reflect: true }) icon?: string;
   @property({ reflect: true }) label?: string;
-  @property({ type: Number, reflect: true }) distance?: number = 25;
+  @property({ type: Number, reflect: true }) distance?: number;
   // todo: handle PF4s 'flip' Placement option in flip-behavior if possible
   // https://www.patternfly.org/v4/components/popover#popover
   @property({ attribute: 'flip-behavior', converter: StringListConverter }) flipBehavior?: Placement[] = [
@@ -217,7 +217,7 @@ export class PfPopover extends LitElement {
   @property({ reflect: true, attribute: 'icon-set' }) iconSet?: string;
   @property({ type: Boolean, reflect: true, attribute: 'hide-close' }) hideClose?: boolean;
   @property({ reflect: true, attribute: 'alert-severity' }) alertSeverity?: AlertSeverity;
-  @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel = 'Close popover';
+  @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel;
 
   @observed
   @property({ reflect: true }) trigger?: string;
@@ -351,7 +351,7 @@ export class PfPopover extends LitElement {
     this.dispatchEvent(new PopoverShowEvent());
     await this.updateComplete;
     await this.#float.show({
-      offset: this.distance,
+      offset: this.distance ?? 25,
       placement: this.position,
       flip: this.enableFlip,
       fallbackPlacements: this.flipBehavior,

@@ -6,10 +6,21 @@ tags:
   - develop
 ---
 
+<style>
+  a.cta.secondary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+</style>
+
 {% band %}
 
-You may experience issues when developing against the PatternFly Elements repository.
-This page contains a number of troubleshooting steps you should follow if you run into problems while working on PatternFly Elements.
-If you are using PatternFly Elements in your own pages and applications and experience an issue, [please open an issue on GitHub](https://github.com/patternfly/patternfly-elements/issues)
+If you experience issues when using or developing with PatternFly Elements, please open an issue on [GitHub](https://github.com/patternfly/patternfly-elements/issues).
+
+<a class="cta secondary" href="https://github.com/patternfly/patternfly-elements/issues">
+  <pf-icon icon="github" set="fab" size="md"></pf-icon>
+  Open an issue
+</a>
 
 {% endband %}

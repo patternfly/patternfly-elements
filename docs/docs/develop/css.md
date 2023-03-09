@@ -47,7 +47,7 @@ Now we can update our styles, like so:
 
 After saving and viewing our demo page, our profile element looks much better.
 
-![Demo Page CSS](/images/develop/develop-sass.png)
+<!-- @TODO: Insert screenshot with css added here -->
 
 A couple of things to note:
 

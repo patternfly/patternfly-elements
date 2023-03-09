@@ -205,7 +205,7 @@ This command starts up web test runner and allows us to debug our test in the br
 
 Debugging the test in the browser should give you the following:
 
-![Browser test debugging](/images/develop/develop-testing-final-pass.png)
+<!-- @TODO: Insert new screenshot of browser testing debugging, console open here-->
 
 #### Note
 

@@ -53,7 +53,7 @@ and which are likely to change without notice. For example, a user of `<pf-cool-
 
 After saving your files, the demo page will refresh and you'll notice the start of your button interactivity.
 
-![demo page js click setup step](/images/develop/develop-javascript-click.png)
+<!-- @TODO: Insert screenshot demo page js with open console here -->
 
 ## Properties
 
@@ -98,7 +98,7 @@ Note that we declare the property has `type: Boolean` and that it reflects.
 This means that `following` is a "boolean attribute" - considered true when present and false when absent.
 "Reflecting" properties are those which, when set, automatically set (or remove) their corresponding attribute.
 
-![demo page javascript properties](/images/develop/develop-javascript-properties.png)
+<!-- @TODO: Insert screenshot javascript of properties on component, console open here -->
 
 ## Observed properties
 
@@ -120,7 +120,7 @@ render() {
 }
 ```
 
-![demo page javascript observer](/images/develop/develop-javascript-observer.png)
+<!-- @TODO: Insert screenshot javascript observer console open here -->
 
 Next, we'll add a `photoUrl` property to pass in a profile image.
 Once again, we'll use lit's `@property()` decorator to observe the property.
@@ -177,7 +177,7 @@ on `.pf-cool-element__profile`.
 
 The final result should look like this:
 
-![demo page js profile pic step](/images/develop/develop-javascript-photo.png)
+<!-- @TODO: add javascript demo final result, console open here-->
 
 ## Wrap-up
 

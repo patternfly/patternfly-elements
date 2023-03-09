@@ -59,20 +59,13 @@ so that the user's name is passed into the slot that we added in `pf-cool-elemen
 </pf-cool-element>
 ```
 
-> Slots take the HTML from the light DOM and project it into the shadow DOM at a 
-> given location.
-> To learn more about shadow DOM and how to use slots, check out [Shadow DOM v1: 
-> Self-Contained Web 
-> Components](https://developers.google.com/web/fundamentals/web-components/shadowdom).
+Slots take the HTML from the light DOM and project it into the shadow DOM at a given location.
 
 Here's how it should look in the browser:
 
-![demo page html step](/images/develop/develop-html.png)
+<!-- @TODO: Insert screenshot of demo html step here -->
 
-Remember that any changes we make in the element directory are watched while the 
-`npm run dev` command runs.
-When you save changes, the dev server reloads the page and shows you your 
-changes automatically.
+Remember that any changes we make in the element directory are watched while the `npm run dev` command runs. When you save changes, the dev server reloads the page and shows you your changes automatically.
 
 Now that we've added the HTML, let's style our element by updating the CSS file.
 

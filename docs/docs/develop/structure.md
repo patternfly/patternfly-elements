@@ -23,9 +23,7 @@ npm run start
 
 The server will load on `http://localhost:8000` by default.
 
-<!-- TODO: Update Graphic to a more current image -->
-![npm run live-demo command](/images/develop/develop-structure.png)
-
+<!-- @TODO: Update Graphic to a more current image -->
 Assuming the `start` command started a server on port 8000, navigate to `http://localhost:8000/components/cool-element/demo/` to view your element.  Depending on other projects you are running via NPM the port number may differ.
 
 
@@ -133,7 +131,9 @@ CSS styles. In the near future, we will use
 but for now, we use some [build-time tricks](https://npm.im/esbuild-plugin-lit-css) to transform our CSS sources into 
 JavaScript objects which work with LitElement.
 
-> For questions on how Custom Elements work, or if you want to learn the basics of shadow DOM, check out Eric Bidelman's post: [Custom Elements v1: Reusable Web Components](https://developers.google.com/web/fundamentals/web-components/customelements).
+<div class="callout">
+For questions on how Custom Elements work, or if you want to learn the basics of shadow DOM, check out Eric Bidelman's post: [Custom Elements v1: Reusable Web Components](https://developers.google.com/web/fundamentals/web-components/customelements).
+</div>
 
 Now that our dev server is running and we have our element's structure, let's make it actually do something.
 

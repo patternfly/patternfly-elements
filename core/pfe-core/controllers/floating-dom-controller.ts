@@ -20,7 +20,6 @@ interface FloatingDOMControllerOptions {
   content: Lazy<HTMLElement>;
   invoker?: Lazy<HTMLElement>;
   arrow?: Lazy<HTMLElement>;
-  flip?: boolean;
   shift?: boolean;
   padding?: number;
   fallbackPlacements?: Placement[];
@@ -167,7 +166,7 @@ export class FloatingDOMController implements ReactiveController {
       this.#opening = true;
       const p = this.#update(placement, offset, flip, fallbackPlacements);
       this.#cleanup ??= autoUpdate(invoker, content, () =>
-        this.#update(placement, offset));
+        this.#update(placement, offset, flip, fallbackPlacements));
       await p;
       this.#opening = false;
     }

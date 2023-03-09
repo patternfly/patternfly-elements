@@ -185,9 +185,6 @@ export class PopoverShownEvent extends ComposedEvent {
 export class PfPopover extends LitElement {
   static readonly styles = [styles];
 
-  // todo: alertSeverityScreenReaderText
-  // todo: hideOnOutsideClick
-  // todo: withFocusTrap
   @property({ reflect: true }) position: Placement = 'top';
   @property({ reflect: true }) heading?: string;
   @property({ reflect: true }) body = '';
@@ -195,8 +192,6 @@ export class PfPopover extends LitElement {
   @property({ reflect: true }) icon?: string;
   @property({ reflect: true }) label?: string;
   @property({ type: Number, reflect: true }) distance?: number;
-  // todo: handle PF4s 'flip' Placement option in flip-behavior if possible
-  // https://www.patternfly.org/v4/components/popover#popover
   @property({ attribute: 'flip-behavior', converter: StringListConverter }) flipBehavior?: Placement[] = [
     'top',
     'bottom',
@@ -212,7 +207,7 @@ export class PfPopover extends LitElement {
     'right-end',
   ];
 
-  @property({ type: Boolean, reflect: true, attribute: 'enable-flip' }) enableFlip?: boolean = true;
+  @property({ type: Boolean, reflect: true, attribute: 'no-flip' }) noFlip?: boolean;
   @property({ type: Number, reflect: true, attribute: 'heading-level' }) headingLevel?: HeadingLevel;
   @property({ reflect: true, attribute: 'icon-set' }) iconSet?: string;
   @property({ type: Boolean, reflect: true, attribute: 'hide-close' }) hideClose?: boolean;
@@ -353,7 +348,7 @@ export class PfPopover extends LitElement {
     await this.#float.show({
       offset: this.distance ?? 25,
       placement: this.position,
-      flip: this.enableFlip,
+      flip: !(this.noFlip ?? false),
       fallbackPlacements: this.flipBehavior,
     });
     this._popover?.show();

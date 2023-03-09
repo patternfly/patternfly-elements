@@ -217,7 +217,7 @@ export class PfPopover extends LitElement {
   @property({ reflect: true, attribute: 'icon-set' }) iconSet?: string;
   @property({ type: Boolean, reflect: true, attribute: 'hide-close' }) hideClose?: boolean;
   @property({ reflect: true, attribute: 'alert-severity' }) alertSeverity?: AlertSeverity;
-  @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel;
+  @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel ?: string;
 
   @observed
   @property({ reflect: true }) trigger?: string;
@@ -277,7 +277,7 @@ export class PfPopover extends LitElement {
           <div id="arrow"></div>
           <div id="content" part="content">
             <pf-button id="close-button"
-                        label=${this.closeButtonLabel}
+                        label=${this.closeButtonLabel ?? 'Close popover'}
                         part="close-button"
                         plain
                         @click=${this.hide}

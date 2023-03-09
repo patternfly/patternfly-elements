@@ -132,7 +132,7 @@ but for now, we use some [build-time tricks](https://npm.im/esbuild-plugin-lit-c
 JavaScript objects which work with LitElement.
 
 <div class="callout">
-For questions on how Custom Elements work, or if you want to learn the basics of shadow DOM, check out Eric Bidelman's post: [Custom Elements v1: Reusable Web Components](https://developers.google.com/web/fundamentals/web-components/customelements).
+For questions on how Custom Elements work, or if you want to learn the basics of shadow DOM, check out Eric Bidelman's post: <a href="https://developers.google.com/web/fundamentals/web-components/customelements">Custom Elements v1: Reusable Web Components</a>.
 </div>
 
 Now that our dev server is running and we have our element's structure, let's make it actually do something.

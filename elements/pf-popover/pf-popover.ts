@@ -227,6 +227,9 @@ export class PfPopover extends LitElement {
 
   /**
    * The flip order when flip is enabled and the initial position is not possible.
+   * There are 12 options: `top`, `bottom`, `left`, `right`, `top-start`, `top-end`,
+   * `bottom-start`, `bottom-end`, `left-start`, `left-end`,`right-start`, `right-end`.
+   * The default is [oppositePlacement], where only the opposite placement is tried.
    */
   @property({ attribute: 'flip-behavior', converter: StringListConverter }) flipBehavior?: Placement[];
 
@@ -407,20 +410,7 @@ export class PfPopover extends LitElement {
       offset: this.distance ?? 25,
       placement: this.position,
       flip: !(this.noFlip ?? false),
-      fallbackPlacements: this.flipBehavior ?? [
-        'top',
-        'bottom',
-        'left',
-        'right',
-        'top-start',
-        'top-end',
-        'bottom-start',
-        'bottom-end',
-        'left-start',
-        'left-end',
-        'right-start',
-        'right-end',
-      ],
+      fallbackPlacements: this.flipBehavior
     });
     this._popover?.show();
     this.dispatchEvent(new PopoverShownEvent());

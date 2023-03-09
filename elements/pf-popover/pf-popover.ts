@@ -192,21 +192,7 @@ export class PfPopover extends LitElement {
   @property({ reflect: true }) icon?: string;
   @property({ reflect: true }) label?: string;
   @property({ type: Number, reflect: true }) distance?: number;
-  @property({ attribute: 'flip-behavior', converter: StringListConverter }) flipBehavior?: Placement[] = [
-    'top',
-    'bottom',
-    'left',
-    'right',
-    'top-start',
-    'top-end',
-    'bottom-start',
-    'bottom-end',
-    'left-start',
-    'left-end',
-    'right-start',
-    'right-end',
-  ];
-
+  @property({ attribute: 'flip-behavior', converter: StringListConverter }) flipBehavior?: Placement[];
   @property({ type: Boolean, reflect: true, attribute: 'no-flip' }) noFlip?: boolean;
   @property({ type: Number, reflect: true, attribute: 'heading-level' }) headingLevel?: HeadingLevel;
   @property({ reflect: true, attribute: 'icon-set' }) iconSet?: string;
@@ -349,7 +335,20 @@ export class PfPopover extends LitElement {
       offset: this.distance ?? 25,
       placement: this.position,
       flip: !(this.noFlip ?? false),
-      fallbackPlacements: this.flipBehavior,
+      fallbackPlacements: this.flipBehavior ?? [
+        'top',
+        'bottom',
+        'left',
+        'right',
+        'top-start',
+        'top-end',
+        'bottom-start',
+        'bottom-end',
+        'left-start',
+        'left-end',
+        'right-start',
+        'right-end',
+      ],
     });
     this._popover?.show();
     this.dispatchEvent(new PopoverShownEvent());

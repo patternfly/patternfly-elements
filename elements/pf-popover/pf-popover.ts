@@ -265,6 +265,12 @@ export class PfPopover extends LitElement {
   @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel ?: string;
 
   /**
+   * The text announced by the screen reader to indicate severity for the alert popover.
+   * The default is `{alertSeverity} alert:`.
+   */
+  @property({ reflect: true, attribute: 'alert-severity-text' }) alertSeverityText ?: string;
+
+  /**
    * The ID of the element to attach the popover to.
    */
   @observed
@@ -297,7 +303,7 @@ export class PfPopover extends LitElement {
     const hasIcon = this.#slots.hasSlotted('icon') || !!this.icon || !!this.alertSeverity;
     const fallbackIcon = this.icon ?? (this.alertSeverity ? alertIcons[this.alertSeverity] : nothing);
 
-    const screenReaderText = this.alertSeverity ? html`<span class="sr-only">${this.alertSeverity} alert:</span>` : nothing;
+    const screenReaderText = this.alertSeverity ? html`<span class="sr-only">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>` : nothing;
 
     const hasHeading = this.#slots.hasSlotted('heading') || !!this.heading;
     const headingLevel = headingLevels.find(level => level === this.headingLevel) ?? 6;

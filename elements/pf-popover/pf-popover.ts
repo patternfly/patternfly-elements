@@ -185,21 +185,83 @@ export class PopoverShownEvent extends ComposedEvent {
 export class PfPopover extends LitElement {
   static readonly styles = [styles];
 
+  /**
+   * `position` inidicates the initial popover position.
+   * There are 12 options: `top`, `bottom`, `left`, `right`, `top-start`, `top-end`,
+   * `bottom-start`, `bottom-end`, `left-start`, `left-end`,`right-start`, `right-end`.
+   * The default is `top`.
+   */
   @property({ reflect: true }) position: Placement = 'top';
+
+  /**
+   * The content rendered in the popover's heading.
+   */
   @property({ reflect: true }) heading?: string;
+
+  /**
+   * The content rendered in the popover's body. The default is `''`.
+   */
   @property({ reflect: true }) body = '';
+
+  /**
+   * The content rendered in the popover's footer.
+   */
   @property({ reflect: true }) footer?: string;
+
+  /**
+   * The icon placed before the popover's heading.
+   */
   @property({ reflect: true }) icon?: string;
+
+  /**
+   * The accessible label for the popover. This is required if the no heading is set.
+   */
   @property({ reflect: true }) label?: string;
+
+  /**
+   * The distance to set between the popover and its trigger element.
+   */
   @property({ type: Number, reflect: true }) distance?: number;
+
+  /**
+   * The flip order when flip is enabled and the initial position is not possible.
+   */
   @property({ attribute: 'flip-behavior', converter: StringListConverter }) flipBehavior?: Placement[];
+
+  /**
+   * Disable the flip behavior. The default is `false`.
+   */
   @property({ type: Boolean, reflect: true, attribute: 'no-flip' }) noFlip?: boolean;
+
+  /**
+   * The heading level to use for the popover's header. The default is `h6`.
+   */
   @property({ type: Number, reflect: true, attribute: 'heading-level' }) headingLevel?: HeadingLevel;
+
+  /**
+   * Indicates which icon set to use for the header's icon. The default is `fas` (Font Awesome Free Solid).
+   */
   @property({ reflect: true, attribute: 'icon-set' }) iconSet?: string;
+
+  /**
+   * Hide the close button. The default is `false`.
+   */
   @property({ type: Boolean, reflect: true, attribute: 'hide-close' }) hideClose?: boolean;
+
+  /**
+   * Indicates the severity variant to use for the alert popover. There are five options: `default`, `info`,
+   * `warning`, `success`, and `danger`.
+   */
   @property({ reflect: true, attribute: 'alert-severity' }) alertSeverity?: AlertSeverity;
+
+  /**
+   * The accessible label for the popover's close button. The default is `Close popover`.
+   */
   @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel ?: string;
 
+  /**
+   * The ID of the element to attach the popover to.
+   */
   @observed
   @property({ reflect: true }) trigger?: string;
 
@@ -215,7 +277,7 @@ export class PfPopover extends LitElement {
     invoker: () => this.#referenceTrigger || this._slottedTrigger,
   });
 
-  #slots = new SlotController(this, { slots: [null, 'icon', 'heading', 'body', 'footer'] });
+  #slots = new SlotController(this, null, 'icon', 'heading', 'body', 'footer');
 
   connectedCallback() {
     super.connectedCallback();
@@ -316,6 +378,12 @@ export class PfPopover extends LitElement {
     }
   }
 
+  /**
+   * Removes event listeners from the old trigger element and attaches
+   * them to the new trigger element.
+   * @param oldValue
+   * @param newValue
+   */
   protected _triggerChanged(oldValue?: string, newValue?: string) {
     if (oldValue) {
       this.#referenceTrigger?.removeEventListener('click', this.show);
@@ -328,6 +396,9 @@ export class PfPopover extends LitElement {
     }
   }
 
+  /**
+   * Opens the popover
+   */
   @bound async show() {
     this.dispatchEvent(new PopoverShowEvent());
     await this.updateComplete;
@@ -354,6 +425,9 @@ export class PfPopover extends LitElement {
     this.dispatchEvent(new PopoverShownEvent());
   }
 
+  /**
+   * Closes the popover
+   */
   @bound async hide() {
     this.dispatchEvent(new PopoverHideEvent());
     await this.#float.hide();

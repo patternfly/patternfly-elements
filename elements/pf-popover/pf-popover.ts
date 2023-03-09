@@ -185,6 +185,8 @@ export class PopoverShownEvent extends ComposedEvent {
 export class PfPopover extends LitElement {
   static readonly styles = [styles];
 
+  private static _instances = new Set<PfPopover>();
+
   /**
    * `position` inidicates the initial popover position.
    * There are 12 options: `top`, `bottom`, `left`, `right`, `top-start`, `top-end`,
@@ -283,6 +285,7 @@ export class PfPopover extends LitElement {
     super.connectedCallback();
     this.addEventListener('keydown', this._onKeydown);
     document.addEventListener('click', this._outsideClick);
+    PfPopover._instances.add(this);
   }
 
   render() {
@@ -347,10 +350,8 @@ export class PfPopover extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-
-    this.removeEventListener('keydown', this._onKeydown);
     document.removeEventListener('click', this._outsideClick);
-
+    PfPopover._instances.delete(this);
     this.#referenceTrigger?.removeEventListener('click', this.show);
     this.#referenceTrigger?.removeEventListener('keydown', this._onKeydown);
   }

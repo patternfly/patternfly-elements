@@ -20,7 +20,7 @@ pf-tooltip::part(invoker) {
 }
 
 :host {
-  --pf-icon--size: 16px !important;
+  --pf-icon--size: var(--pf-global--FontSize--md, 1rem);
 }
 
 #input-group > * + * {

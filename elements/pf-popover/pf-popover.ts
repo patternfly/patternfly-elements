@@ -262,13 +262,13 @@ export class PfPopover extends LitElement {
   /**
    * The accessible label for the popover's close button. The default is `Close popover`.
    */
-  @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel ?: string;
+  @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel?: string;
 
   /**
    * The text announced by the screen reader to indicate the popover's severity.
    * The default is `{alertSeverity} alert:`.
    */
-  @property({ reflect: true, attribute: 'alert-severity-text' }) alertSeverityText ?: string;
+  @property({ reflect: true, attribute: 'alert-severity-text' }) alertSeverityText?: string;
 
   /**
    * Don't trap focus in the popover.
@@ -289,6 +289,7 @@ export class PfPopover extends LitElement {
   @query('#popover') private _popover?: HTMLDialogElement | null;
   @query('#trigger') private _slottedTrigger?: HTMLElement | null;
   @query('#arrow') private _arrow?: HTMLDivElement | null;
+  @query('#content') private _content?: HTMLDivElement | null;
   @query('#close-button') private _closeButton?: HTMLButtonElement | null;
 
   #referenceTrigger?: HTMLElement | null = null;
@@ -314,11 +315,15 @@ export class PfPopover extends LitElement {
     const hasIcon = this.#slots.hasSlotted('icon') || !!this.icon || !!this.alertSeverity;
     const fallbackIcon = this.icon ?? (this.alertSeverity ? alertIcons[this.alertSeverity] : nothing);
 
-    const screenReaderText = this.alertSeverity ? html`<span class="sr-only">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>` : nothing;
+    const screenReaderText = this.alertSeverity ?
+      html`<span class="sr-only">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>`
+      : nothing;
 
     const hasHeading = this.#slots.hasSlotted('heading') || !!this.heading;
     const headingLevel = headingLevels.find(level => level === this.headingLevel) ?? 6;
-    const heading = html`<slot id="heading" name="heading" part="heading" ?hidden=${!hasHeading}>${unsafeStatic(`<h${headingLevel}>${this.heading}</h${headingLevel}>`)}</slot>`;
+    const heading = html`<slot id="heading" name="heading" part="heading" ?hidden=${!hasHeading}
+      >${unsafeStatic(`<h${headingLevel}>${this.heading}</h${headingLevel}>`)}</slot
+    >`;
     const asHeader = hasHeading && hasIcon;
     const header = asHeader ?
       html`
@@ -326,8 +331,7 @@ export class PfPopover extends LitElement {
             <span part="icon">
               <slot name="icon"><pf-icon icon=${fallbackIcon} set=${ifDefined(this.iconSet)} size="md"></pf-icon></slot>
             </span>
-            ${screenReaderText}
-            ${heading}
+            ${screenReaderText} ${heading}
           </header>
         `
       : html`${heading}`;
@@ -335,37 +339,36 @@ export class PfPopover extends LitElement {
     const hasFooter = this.#slots.hasSlotted('footer') || !!this.footer;
 
     return html`
-      <div id="container"
-            style="${styleMap(styles)}"
-            class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment, })}">
+      <div
+        id="container"
+        style="${styleMap(styles)}"
+        class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}"
+      >
         <slot id="trigger" @keydown=${this._onKeydown} @click=${this.show}></slot>
-        <dialog id="popover"
-                aria-labelledby="heading"
-                aria-describedby="body"
-                aria-label=${ifDefined(this.label)}> 
+        <dialog id="popover" aria-labelledby="heading" aria-describedby="body" aria-label=${ifDefined(this.label)}>
           <div id="arrow"></div>
-          <div id="content" part="content">
-            <pf-button id="close-button"
-                        label=${this.closeButtonLabel ?? 'Close popover'}
-                        part="close-button"
-                        plain
-                        @click=${this.hide}
-                        @keydown=${this._onKeydown}
-                        ?hidden=${this.hideClose}>
-              <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
-                <path
-                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                ></path>
-              </svg>
-            </pf-button>
+          <div id="content" part="content" tabindex="0">
             ${header}
-            <slot id="body"
-                  part="body"
-                  name="body">${this.body}</slot>
+            <slot id="body" part="body" name="body">${this.body}</slot>
             <footer part="footer" ?hidden=${!hasFooter}>
               <slot name="footer">${this.footer}</slot>
             </footer>
           </div>
+          <pf-button
+            id="close-button"
+            label=${this.closeButtonLabel ?? 'Close popover'}
+            part="close-button"
+            plain
+            @click=${this.hide}
+            @keydown=${this._onKeydown}
+            ?hidden=${this.hideClose}
+          >
+            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
+              <path
+                d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+              ></path>
+            </svg>
+          </pf-button>
         </dialog>
       </div>
     `;
@@ -381,6 +384,15 @@ export class PfPopover extends LitElement {
 
   @bound private _onKeydown(event: KeyboardEvent) {
     switch (event.key) {
+      case 'Tab':
+        if (!this.noFocusTrap) {
+          if (event.target === this._closeButton) {
+            event.preventDefault();
+            this._content?.focus();
+            return;
+          }
+        }
+        return;
       case 'Escape':
       case 'Esc':
         event.preventDefault();
@@ -390,7 +402,6 @@ export class PfPopover extends LitElement {
         if (event.target === this.#referenceTrigger || event.target === this._slottedTrigger) {
           event.preventDefault();
           this.show();
-          this._closeButton?.focus();
         }
         return;
     }
@@ -431,7 +442,7 @@ export class PfPopover extends LitElement {
       offset: this.distance ?? 25,
       placement: this.position,
       flip: !(this.noFlip ?? false),
-      fallbackPlacements: this.flipBehavior
+      fallbackPlacements: this.flipBehavior,
     });
     this._popover?.show();
     this.dispatchEvent(new PopoverShownEvent());

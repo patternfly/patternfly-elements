@@ -4,7 +4,6 @@ import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { PfJumpLinksList } from './pf-jump-links-list.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
-import { ComposedEvent } from '@patternfly/pfe-core';
 
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -26,14 +25,20 @@ import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 export class PfJumpLinksItem extends LitElement {
   static readonly styles = [style];
 
-  @query('a') link!:HTMLAnchorElement;
-
-  @queryAssignedElements({ slot: 'subsection' }) _items!:PfJumpLinksList[];
-
+  /** Whether this item is active. */
   @observed('activeChanged')
   @property({ type: Boolean, reflect: true }) active = false;
 
+  /** hypertext reference for this link */
   @property({ reflect: true }) href?: string;
+
+  get items(): HTMLAnchorElement[] {
+    return [this.link, ...this.slottedItems.map(item => item.items)].flat();
+  }
+
+  @query('a') private link!: HTMLAnchorElement;
+
+  @queryAssignedElements({ slot: 'subsection' }) private slottedItems!: PfJumpLinksList[];
 
   #internals = new InternalsController(this, {
     role: 'listitem'
@@ -49,12 +54,8 @@ export class PfJumpLinksItem extends LitElement {
       <a href="${ifDefined(this.href)}" @focus="${this.#onFocus}" @click="${this.#onClick}">
         <slot></slot>
       </a>
-      <slot name="subsection" @slotchange="${this.#onSlotchange}"></slot>
+      <slot name="subsection"></slot>
     `;
-  }
-
-  focus(): void {
-    this.link.focus();
   }
 
   private activeChanged() {
@@ -69,12 +70,8 @@ export class PfJumpLinksItem extends LitElement {
     this.dispatchEvent(new Event('focus', { bubbles: true }));
   }
 
-  #onSlotchange() {
-    this.dispatchEvent(new ComposedEvent('listupdate'));
-  }
-
-  get items():HTMLAnchorElement[] {
-    return [this.link, ...this._items.map(item => item.items)].flat();
+  focus(): void {
+    this.link.focus();
   }
 }
 

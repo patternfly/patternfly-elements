@@ -63,22 +63,30 @@ import style from './pf-jump-links.css';
 export class PfJumpLinks extends LitElement {
   static readonly styles = [style];
 
-  @queryAssignedElements() _items!:PfJumpLinksItem[];
-
+  /** Whether the element features a disclosure widget around the nav items */
   @property({ reflect: true, type: Boolean }) expandable = false;
 
+  /** Whether the expandable element's disclosure widget is expanded */
   @property({ reflect: true, type: Boolean }) expanded = false;
 
+  /** Whether the layout of children is vertical or horizontal. */
   @property({ reflect: true, type: Boolean }) vertical = false;
 
+  /** Whether to center children. */
   @property({ reflect: true, type: Boolean }) centered = false;
 
+  /** Offset to add to the scroll position, potentially for a masthead which content scrolls under. */
   @property({ type: Number }) offset = 0;
 
+  /** Label to add to nav element. */
   @property() label?: string;
 
-  #items!:PfJumpLinksItem[];
+  @queryAssignedElements() private slottedItems!: PfJumpLinksItem[];
+
+  #items!: PfJumpLinksItem[];
+
   #init = false;
+
   #rovingTabindexController = new RovingTabindexController(this);
 
   #spy = new ScrollSpyController(this, {
@@ -99,30 +107,22 @@ export class PfJumpLinks extends LitElement {
 
   render() {
     return html`
-      <nav id="container" @listupdate="${this.#onListUpdate}">${this.expandable ? html`
+      <nav id="container" @slotchange="${this.#updateItems}">${this.expandable ? html`
         <details ?open="${this.expanded}" @toggle="${this.#onToggle}">
           <summary>
             <pf-icon icon="chevron-right"></pf-icon>
             <span id="label">${this.label}</span>
           </summary>
-          <slot role="listbox" @slotchange="${this.#onSlotchange}"></slot>
+          <slot role="listbox" @slotchange="${this.#updateItems}"></slot>
         </details>` : html`
         <span id="label">${this.label}</span>
-        <slot role="listbox" @slotchange="${this.#onSlotchange}"></slot>`}
+        <slot role="listbox" @slotchange="${this.#updateItems}"></slot>`}
       </nav>
     `;
   }
 
-  #onListUpdate() {
-    this.#updateItems();
-  }
-
-  #onSlotchange() {
-    this.#updateItems();
-  }
-
   #updateItems() {
-    this.#items = this._items;
+    this.#items = this.slottedItems;
     const items = this.#items.flatMap(item => item.items);
     if (this.#init) {
       this.#rovingTabindexController.updateItems(items);

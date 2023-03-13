@@ -6,6 +6,12 @@ tags:
   - develop
 ---
 
+<style>
+  img {
+    max-width: 100%;
+  }
+</style>
+
 {% band %}
 
   ## PatternFly Element generator
@@ -32,6 +38,8 @@ tags:
     * As an example, we'll create `pf-cool-element`.  
     * PatternFly Elements should be prefixed with `pf-`. However, prefix your 
       elements with whatever fits your project if you are using the generator outside of this project.
+
+  ![npm run new command](/images/develop/npm-run-new.png)
 
   After answering, your new component will be created and bootstrapped in the repository.
 

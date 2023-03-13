@@ -722,7 +722,7 @@ blockquote {
 }
 
 .callout {
-  background-color: #bee1f4;
+  background-color: var(--pf-global--active-color--200, #bee1f4);
   margin-left: 0;
   margin-right: 0;
   padding: 1.5rem;

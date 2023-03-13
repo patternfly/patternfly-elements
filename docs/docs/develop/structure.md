@@ -23,9 +23,22 @@ npm run start
 
 The server will load on `http://localhost:8000` by default.
 
-<!-- @TODO: Update Graphic to a more current image -->
-Assuming the `start` command started a server on port 8000, navigate to `http://localhost:8000/components/cool-element/demo/` to view your element.  Depending on other projects you are running via NPM the port number may differ.
+![npm run live-demo command](/images/develop/localhost-dev-server.png)
 
+Assuming the `npm run start` command started a server on port 8000, navigate to `http://localhost:8000/components/cool-element/demo/` to view your element development demo page.
+
+**Note:** Depending on other projects you are running via NPM the port number may differ.
+
+
+### 11ty Docs development server
+
+The `npm run start` command also starts an 11ty development server on `http://localhost:8080` by default.
+
+![npm run live docs](/images/develop/localhost-docs-server.png)
+
+Assuming the `npm run start` command started a server on port 8080, navigate to `http://localhost:8080/components/cool-element/demo` to view your new elements documentation page.
+
+**Note:** Depending on other projects you are running via NPM the port number may differ.
 
 ## Our new custom element
 
@@ -69,7 +82,7 @@ import { LitElement, html } from 'lit';
 
 First, notice that our element extends from `LitElement` instead of `HTMLElement`. Lit provides a few key features on top of standard web components (i.e. `HTMLElement`):
 
-- **Observed Properties**. Any time an observed property changes, the component automatically and performantly updates based on the new state.
+- **Observed Properties**. Any time an observed property changes, the component automatically and efficiently updates based on the new state.
 - **Declarative Templates**. The `html` [template literal tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) lets you define HTML elements and attributes as well as JavaScript DOM properties and event listeners in a simple, familiar syntax.
 
 Unlike PFE 1.0's `PFElement` base class, Lit template updates (i.e. renders) are _asynchronous_. What this means for developers is that once they set an observed property, they should `await element.updateComplete` to ensure that changes to the DOM are applied if they need to do any work based on the results.

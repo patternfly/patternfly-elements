@@ -14,7 +14,7 @@ interface SiteOptions {
   /** Title for main page of the demo */
   title?: string;
   /** Host of the repo, e.g. GitHub, GitLab, BitBucket */
-  repoHost?: string | null;
+  repoHost?: string;
 }
 
 export interface PfeConfig {

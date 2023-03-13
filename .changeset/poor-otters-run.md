@@ -2,5 +2,4 @@
 "@patternfly/elements": patch
 ---
 
-`<pf-clipboard-copy>`:
- - Fixed icon size and input-group CSS styles
+`<pf-clipboard-copy>`: fixed icon size and input-group CSS styles

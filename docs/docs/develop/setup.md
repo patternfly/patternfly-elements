@@ -49,7 +49,7 @@ tags:
   Make sure you are in the root directory of the PatternFly Elements repository.
 
   ```bash
-  npm init @patternfly/element
+  npm run new
   ```
 
   When creating your new components, you may find you are entering the same answers over and over again.

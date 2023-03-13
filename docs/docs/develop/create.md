@@ -28,7 +28,7 @@ tags:
   * What is the element's tag name?
     * Your element's name should be lowercase and needs to contain at least 
       one hyphen. For rules on naming custom elements, refer to the W3C 
-      [Custom Elements Working Draft](https://www.w3.org/TR/custom-elements/#valid-custom-element-name).
+      [Custom Elements Working Draft](https://html.spec.whatwg.org/multipage/custom-elements.html#valid-custom-element-name).
     * As an example, we'll create `pf-cool-element`.  
     * PatternFly Elements should be prefixed with `pf-`. However, prefix your 
       elements with whatever fits your project if you are using the generator outside of this project.

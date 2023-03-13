@@ -60,10 +60,17 @@ tags:
 | `--version`       | Show version number                        | boolean                                                         |
 | `--directory`     | Output directory                           | string [default: "/users/bennyp/developer/patternfly-elements"] |
 | `--silent`        | Do not log anything to stdout              | boolean [default: false]                                        |
-| `-n`, `--tagName` | Custom element tag name. e.g. `pf-button` | string                                                          |
+| `-n`, `--tagName` | Custom element tag name. e.g. `pf-button`  | string                                                          |
 | `-s`, `--scope`   | NPM package scope. e.g. `@patternfly`      | string                                                          |
 | `--overwrite`     | Overwrite files without prompting          | boolean [default: false]                                        |
 | `--help`          | Show help                                  | boolean                                                         |
+
+Example
+```bash
+npm run new -- --tagName pf-foo
+```
+
+
 {% endband %}
 
 {% band header="Scaffolding Structure" %}

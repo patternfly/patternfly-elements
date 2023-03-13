@@ -13,6 +13,8 @@ interface SiteOptions {
   stylesheets?: string[];
   /** Title for main page of the demo */
   title?: string;
+  /** Host of the repo, e.g. GitHub, GitLab, BitBucket */
+  repoHost?: string | null;
 }
 
 export interface PfeConfig {
@@ -38,6 +40,7 @@ const SITE_DEFAULTS: Required<SiteOptions> = {
   logoUrl: '/docs/images/pfe-logo-inverse-white.svg',
   stylesheets: [],
   title: 'PatternFly Elements',
+  repoHost: 'GitHub',
 };
 
 const DEFAULT_CONFIG: PfeConfig = {

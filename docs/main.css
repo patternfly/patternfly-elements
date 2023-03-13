@@ -30,6 +30,10 @@ main.blog {
   transition: opacity 0.2s ease;
 }
 
+p:empty {
+  display: none;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

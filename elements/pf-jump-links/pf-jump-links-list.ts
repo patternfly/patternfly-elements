@@ -1,7 +1,5 @@
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
-import { PfJumpLinksItem } from './pf-jump-links-item.js';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 
 import style from './pf-jump-links-list.css';
 
@@ -13,12 +11,6 @@ import style from './pf-jump-links-list.css';
 @customElement('pf-jump-links-list')
 export class PfJumpLinksList extends LitElement {
   static readonly styles = [style];
-
-  @queryAssignedElements() private slottedItems!: PfJumpLinksItem[];
-
-  get items(): HTMLAnchorElement[] {
-    return this.slottedItems.flatMap(item => item.items);
-  }
 
   render() {
     return html`

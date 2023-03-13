@@ -2,8 +2,6 @@ import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
-import { PfJumpLinksList } from './pf-jump-links-list.js';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -32,13 +30,7 @@ export class PfJumpLinksItem extends LitElement {
   /** hypertext reference for this link */
   @property({ reflect: true }) href?: string;
 
-  get items(): HTMLAnchorElement[] {
-    return [this.link, ...this.slottedItems.map(item => item.items)].flat();
-  }
-
   @query('a') private link!: HTMLAnchorElement;
-
-  @queryAssignedElements({ slot: 'subsection' }) private slottedItems!: PfJumpLinksList[];
 
   #internals = new InternalsController(this, {
     role: 'listitem'

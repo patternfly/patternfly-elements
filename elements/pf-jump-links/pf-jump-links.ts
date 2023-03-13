@@ -1,12 +1,10 @@
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 
 import { ScrollSpyController } from '@patternfly/pfe-core/controllers/scroll-spy-controller.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
-import { PfJumpLinksItem } from './pf-jump-links-item.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
 
 import style from './pf-jump-links.css';
@@ -81,10 +79,6 @@ export class PfJumpLinks extends LitElement {
   /** Label to add to nav element. */
   @property() label?: string;
 
-  @queryAssignedElements() private slottedItems!: PfJumpLinksItem[];
-
-  #items!: PfJumpLinksItem[];
-
   #init = false;
 
   #rovingTabindexController = new RovingTabindexController(this);
@@ -122,8 +116,11 @@ export class PfJumpLinks extends LitElement {
   }
 
   #updateItems() {
-    this.#items = this.slottedItems;
-    const items = this.#items.flatMap(item => item.items);
+    const items = Array.from(this.querySelectorAll(':is(pf-jump-links-item, pf-jump-links-list)'))
+      .flatMap(i => [
+        ...i.shadowRoot?.querySelectorAll('a') ?? [],
+        ...i.querySelectorAll('a') ?? [],
+      ]);
     if (this.#init) {
       this.#rovingTabindexController.updateItems(items);
     } else {

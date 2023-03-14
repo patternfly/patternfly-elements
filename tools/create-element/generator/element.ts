@@ -5,15 +5,18 @@ import Chalk from 'chalk';
 import prompts from 'prompts';
 import { $ } from 'execa';
 
-import { fileURLToPath } from 'url';
-import { dirname, join, relative } from 'path';
+import { fileURLToPath } from 'node:url';
+import { dirname, join, relative } from 'node:path';
+import * as path from 'node:path';
 
 import { exists, mkdirp, processTemplate, readFile, writeFile } from './files.js';
 import { memoize } from './fp.js';
 
-const { blue, green, greenBright } = Chalk;
+const { blue, green, greenBright, red, yellow } = Chalk;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const $$ = $({ stderr: 'inherit' });
 
 /**
 * Available filenames.
@@ -142,26 +145,43 @@ async function writeComponentFile(key: FileKey, options: GenerateElementOptions)
   }
 }
 
+async function getElementPackageJsonPath(options: GenerateElementOptions) {
+  const abspath = getComponentAbsPath(options);
+  const { root } = path.parse(abspath);
+  let packageJsonPath;
+  let currentdir = abspath;
+  while (currentdir !== root && !packageJsonPath) {
+    const possible = join(currentdir, 'package.json');
+    if (await exists(possible)) {
+      packageJsonPath = possible;
+    } else {
+      currentdir = dirname(currentdir);
+    }
+  }
+  return packageJsonPath;
+}
+
+export class PackageJSONError extends Error {}
+
 /**
  * Generate an Element
  */
 export async function generateElement(options: GenerateElementOptions): Promise<void> {
-  // ctrl-c
+  const log = (...args: unknown[]) => void (!options?.silent && console.log(...args));
+  const start = performance.now();
   if (!options || !options.tagName) {
+    // ctrl-c
     return;
-  }
-
-  const log = (...args: unknown[]) => !options.silent && console.log(...args);
-
-  const $$ = $({ stderr: 'inherit' });
-
-  const packageJsonPath = join(options.directory, 'package.json');
-  // Quit if trying to scaffold an element in an uninitialized non-monorepo
-  if (!await exists(packageJsonPath)) {
-    return console.log('‼️ No package.json found.', '� Scaffold a repository first');
+  } else if (!await exists(join(options.directory, 'package.json'))) {
+    // Quit if trying to scaffold an element in an uninitialized non-monorepo
+    throw new PackageJSONError('‼️ No package.json found. � Scaffold a repository first');
   } else if (!await shouldWriteToDir(options)) {
-    return;
+    return log(red`Skipping`, 'file write!');
   } else {
+    const packageJsonPath = await getElementPackageJsonPath(options) ?? './**/package.json ./package.json';
+    if (!await exists(packageJsonPath)) {
+      throw new PackageJSONError(`Could not find package at ${packageJsonPath}`);
+    }
     log(`\nCreating ${green(options.tagName)} in ${getComponentPathFromDirectoryOption(options)}\n`);
     log(blue`Writing`, 'files...');
     // $ mkdir -p /Users/alj/jazz-elements/elements/pf-jazz-hands
@@ -169,10 +189,12 @@ export async function generateElement(options: GenerateElementOptions): Promise<
     for (const key of Object.keys(FileKey).sort() as FileKey[]) {
       await writeComponentFile(key, options);
     }
-    log(blue`Linting`, 'package exports...');
+    log(blue`Linting`, `${relative(options.directory, packageJsonPath)} for package exports...`);
     await $$`npx eslint ${packageJsonPath} --fix`;
     log(blue`Analyzing`, 'elements...');
     await $$`npm run analyze`;
-    log(`\n${greenBright('Done!')}`);
+    const end = performance.now();
+    const seconds = (end - start) / 1000;
+    log(`\n${greenBright`Done`} in ${yellow(seconds.toFixed(2))} seconds`);
   }
 }

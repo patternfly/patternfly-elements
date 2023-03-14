@@ -1,4 +1,4 @@
-import { generateElement } from './generator/element.js';
+import { generateElement, PackageJSONError } from './generator/element.js';
 
 import Chalk from 'chalk';
 import Yargs from 'yargs';
@@ -38,6 +38,7 @@ interface PackageJSON {
   workspaces?: string;
 }
 
+/** generated at https://dom111.github.io/image-to-ansi/ */
 function banner() {
   console.log(`\x1b[49m                          \x1b[38;5;87;49m▄\x1b[38;5;87;48;5;87m▄\x1b[38;5;87;49m▄\x1b[49m                          \x1b[m
 \x1b[49m                        \x1b[38;5;81;49m▄\x1b[38;5;81;48;5;87m▄▄\x1b[49m \x1b[38;5;81;48;5;87m▄\x1b[38;5;87;48;5;87m▄\x1b[38;5;81;49m▄\x1b[49m                        \x1b[m
@@ -140,5 +141,13 @@ export async function main(): Promise<void> {
       }))
     .then(({ argv }) => argv as GenerateElementOptions)
     .then(promptForElementGeneratorOptions)
-    .then(generateElement);
+    .then(generateElement)
+    .catch(e => {
+      if (e instanceof PackageJSONError) {
+        console.log(e.message);
+        process.exit(1);
+      } else {
+        throw e;
+      }
+    });
 }

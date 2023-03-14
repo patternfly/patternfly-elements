@@ -3,7 +3,7 @@ import type { GenerateElementOptions } from '../main';
 import Case from 'case';
 import Chalk from 'chalk';
 import prompts from 'prompts';
-import { execa } from 'execa';
+import { $ } from 'execa';
 
 import { fileURLToPath } from 'url';
 import { dirname, join, relative } from 'path';
@@ -142,46 +142,6 @@ async function writeComponentFile(key: FileKey, options: GenerateElementOptions)
   }
 }
 
-async function writeElementFiles(options: GenerateElementOptions) {
-  if (!await shouldWriteToDir(options)) {
-    return;
-  }
-
-  if (!options.silent) {
-    console.log(`\nCreating ${green(options.tagName)} in ${getComponentPathFromDirectoryOption(options)}\n`);
-  }
-
-  // $ mkdir -p /Users/alj/jazz-elements/elements/pf-jazz-hands
-  await mkdirp(getComponentAbsPath(options));
-
-  for (const key of Object.keys(FileKey).sort() as FileKey[]) {
-    await writeComponentFile(key, options);
-  }
-
-  if (!options.silent) {
-    console.log(`\n${greenBright('Done!')}`);
-  }
-}
-
-async function analyzeElement(options: GenerateElementOptions): Promise<void> {
-  if (!options.silent) {
-    console.log(`\nAnalyzing ${greenBright(options.tagName)}`);
-  }
-
-  const { stderr, stdout } =
-    await execa('npm', ['run', 'analyze',], {
-      all: true,
-      cwd: options.directory,
-    });
-
-  if (stderr) {
-    console.log(stderr);
-    throw new Error(`Could not analyze ${options.tagName}`);
-  } else if (!options.silent) {
-    console.log(stdout);
-  }
-}
-
 /**
  * Generate an Element
  */
@@ -191,11 +151,27 @@ export async function generateElement(options: GenerateElementOptions): Promise<
     return;
   }
 
+  const log = (...args: unknown[]) => !options.silent && console.log(...args);
+
+  const $$ = $({ stderr: 'inherit' });
+
+  const packageJsonPath = join(options.directory, 'package.json');
   // Quit if trying to scaffold an element in an uninitialized non-monorepo
-  if (!await exists(join(options.directory, 'package.json'))) {
+  if (!await exists(packageJsonPath)) {
     return console.log('‼️ No package.json found.', '� Scaffold a repository first');
+  } else if (!await shouldWriteToDir(options)) {
+    return;
   } else {
-    await writeElementFiles(options);
-    analyzeElement; // skip this for now, come back to fix later
+    log(`\nCreating ${green(options.tagName)} in ${getComponentPathFromDirectoryOption(options)}\n`);
+    // $ mkdir -p /Users/alj/jazz-elements/elements/pf-jazz-hands
+    await mkdirp(getComponentAbsPath(options));
+    for (const key of Object.keys(FileKey).sort() as FileKey[]) {
+      await writeComponentFile(key, options);
+    }
+    log(`Linting package exports...`);
+    await $$`npx eslint ${packageJsonPath} --fix`;
+    log(`Analyzing elements...`);
+    await $$`npm run analyze`;
+    log(`\n${greenBright('Done!')}`);
   }
 }

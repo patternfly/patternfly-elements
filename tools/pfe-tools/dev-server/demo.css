@@ -79,6 +79,13 @@ body.menu-open {
   height: 100%;
 }
 
+.logo-bar #hamburger {
+  --pf-c-button--m-plain--Color: #fff;
+  --pf-c-button--m-plain--active--Color: #fff;
+  --pf-c-button--m-plain--focus--Color: #fff;
+  --pf-c-button--m-plain--hover--Color: #fff;
+}
+
 #source-control {
   display: flex;
   gap: 0.5rem;

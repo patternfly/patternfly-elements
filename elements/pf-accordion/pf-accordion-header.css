@@ -53,7 +53,7 @@
   font-family:
     var(--pf-c-accordion__toggle--FontFamily,
       var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,
-        "RedHatTextUpdated",
+        "Red Hat Text",
         helvetica,
         arial,
         sans-serif));

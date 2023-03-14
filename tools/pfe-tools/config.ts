@@ -13,8 +13,6 @@ interface SiteOptions {
   stylesheets?: string[];
   /** Title for main page of the demo */
   title?: string;
-  /** Host of the repo, e.g. GitHub, GitLab, BitBucket */
-  repoHost?: string;
 }
 
 export interface PfeConfig {
@@ -36,11 +34,10 @@ export interface PfeConfig {
 
 const SITE_DEFAULTS: Required<SiteOptions> = {
   description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
-  favicon: '/brand/logo/svg/pfe-icon-blue.svg',
+  favicon: '/docs/images/logo/pfe-icon-blue.svg',
   logoUrl: '/docs/images/pfe-logo-inverse-white.svg',
   stylesheets: [],
-  title: 'PatternFly Elements',
-  repoHost: 'GitHub',
+  title: 'PatternFly Elements'
 };
 
 const DEFAULT_CONFIG: PfeConfig = {

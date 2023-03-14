@@ -16,5 +16,8 @@
     "type": "git",
     "url": "git+https://github.com/@patternfly/patternfly-elements.git",
     "directory": "tools/eslint-plugin"
+  },
+  "dependencies": {
+    "glob": "^9.2.1"
   }
 }

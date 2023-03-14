@@ -11,7 +11,7 @@ import { dirname, join, relative } from 'path';
 import { exists, mkdirp, processTemplate, readFile, writeFile } from './files.js';
 import { memoize } from './fp.js';
 
-const { green, greenBright } = Chalk;
+const { blue, green, greenBright } = Chalk;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -138,7 +138,7 @@ async function writeComponentFile(key: FileKey, options: GenerateElementOptions)
   await writeFile(PATH, OUTPUT, 'utf-8');
 
   if (!options.silent) {
-    console.log(`✏️ Wrote ${green(relative(options.directory, PATH))}`);
+    console.log(`  ✏️  ${green(relative(options.directory, PATH))}`);
   }
 }
 
@@ -163,14 +163,15 @@ export async function generateElement(options: GenerateElementOptions): Promise<
     return;
   } else {
     log(`\nCreating ${green(options.tagName)} in ${getComponentPathFromDirectoryOption(options)}\n`);
+    log(blue`Writing`, 'files...');
     // $ mkdir -p /Users/alj/jazz-elements/elements/pf-jazz-hands
     await mkdirp(getComponentAbsPath(options));
     for (const key of Object.keys(FileKey).sort() as FileKey[]) {
       await writeComponentFile(key, options);
     }
-    log(`Linting package exports...`);
+    log(blue`Linting`, 'package exports...');
     await $$`npx eslint ${packageJsonPath} --fix`;
-    log(`Analyzing elements...`);
+    log(blue`Analyzing`, 'elements...');
     await $$`npm run analyze`;
     log(`\n${greenBright('Done!')}`);
   }

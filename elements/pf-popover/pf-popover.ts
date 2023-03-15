@@ -271,14 +271,14 @@ export class PfPopover extends LitElement {
   @property({ reflect: true, attribute: 'alert-severity-text' }) alertSeverityText?: string;
 
   /**
-   * Don't trap focus in the popover.
+   * Trap focus in the popover.
    */
-  @property({ type: Boolean, reflect: true, attribute: 'no-focus-trap' }) noFocusTrap?: string;
+  @property({ type: Boolean, reflect: true, attribute: 'focus-trap' }) focusTrap?: boolean;
 
   /**
    * Don't hide the popover when clicking ouside of it.
    */
-  @property({ type: Boolean, reflect: true, attribute: 'no-outside-click' }) noOutsideClick?: string;
+  @property({ type: Boolean, reflect: true, attribute: 'no-outside-click' }) noOutsideClick?: boolean;
 
   /**
    * The ID of the element to attach the popover to.
@@ -286,11 +286,11 @@ export class PfPopover extends LitElement {
   @observed
   @property({ reflect: true }) trigger?: string;
 
-  @query('#popover') private _popover?: HTMLDialogElement | null;
+  @query('#popover') private _popover!: HTMLDialogElement;
   @query('#trigger') private _slottedTrigger?: HTMLElement | null;
-  @query('#arrow') private _arrow?: HTMLDivElement | null;
-  @query('#content') private _content?: HTMLDivElement | null;
-  @query('#close-button') private _closeButton?: HTMLButtonElement | null;
+  @query('#arrow') private _arrow!: HTMLDivElement;
+  @query('#content') private _content!: HTMLDivElement;
+  @query('#close-button') private _closeButton!: HTMLButtonElement;
 
   #referenceTrigger?: HTMLElement | null = null;
 
@@ -344,30 +344,31 @@ export class PfPopover extends LitElement {
         style="${styleMap(styles)}"
         class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}"
       >
-        <slot id="trigger" @keydown=${this._onKeydown} @click=${this.show}></slot>
+        <slot id="trigger" @keydown=${this._onKeydown} @click=${this.toggle}></slot>
         <dialog id="popover" aria-labelledby="heading" aria-describedby="body" aria-label=${ifDefined(this.label)}>
           <div id="arrow"></div>
-          <div id="content" part="content" tabindex="0">
-            ${header}
-            <slot id="body" part="body" name="body">${this.body}</slot>
-            <footer part="footer" ?hidden=${!hasFooter}>
-              <slot name="footer">${this.footer}</slot>
-            </footer>
-          </div>
-          <pf-button
+          <div id="content" part="content">
+            <pf-button
               id="close-button"
               label=${this.closeButtonLabel ?? 'Close popover'}
               part="close-button"
               plain
               @click=${this.hide}
               @keydown=${this._onKeydown}
-              ?hidden=${this.hideClose}>
-            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
-              <path
-                d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-              ></path>
-            </svg>
-          </pf-button>
+              ?hidden=${this.hideClose}
+            >
+              <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
+                <path
+                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                ></path>
+              </svg>
+            </pf-button>
+            ${header}
+            <slot id="body" part="body" name="body">${this.body}</slot>
+            <footer part="footer" ?hidden=${!hasFooter}>
+              <slot name="footer">${this.footer}</slot>
+            </footer>
+          </div>
         </dialog>
       </div>
     `;
@@ -384,12 +385,11 @@ export class PfPopover extends LitElement {
   @bound private _onKeydown(event: KeyboardEvent) {
     switch (event.key) {
       case 'Tab':
-        if (!this.noFocusTrap) {
-          if (event.target === this._closeButton) {
-            event.preventDefault();
-            this._content?.focus();
-            return;
+        if (this.focusTrap) {
+          if (event.shiftKey) {
+            // @todo: SHIFT + TAB
           }
+          // @todo: TAB
         }
         return;
       case 'Escape':
@@ -429,6 +429,13 @@ export class PfPopover extends LitElement {
       this.#referenceTrigger?.addEventListener('click', this.show);
       this.#referenceTrigger?.addEventListener('keydown', this._onKeydown);
     }
+  }
+
+  /**
+   * Toggle the popover
+   */
+  @bound async toggle() {
+    this.#float.open ? this.hide() : this.show();
   }
 
   /**

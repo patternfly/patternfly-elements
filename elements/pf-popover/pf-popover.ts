@@ -384,14 +384,6 @@ export class PfPopover extends LitElement {
 
   @bound private _onKeydown(event: KeyboardEvent) {
     switch (event.key) {
-      case 'Tab':
-        if (this.focusTrap) {
-          if (event.shiftKey) {
-            // @todo: SHIFT + TAB
-          }
-          // @todo: TAB
-        }
-        return;
       case 'Escape':
       case 'Esc':
         event.preventDefault();
@@ -450,7 +442,7 @@ export class PfPopover extends LitElement {
       flip: !(this.noFlip ?? false),
       fallbackPlacements: this.flipBehavior,
     });
-    this._popover?.show();
+    this.focusTrap ? this._popover?.showModal() : this._popover?.show();
     this.dispatchEvent(new PopoverShownEvent());
   }
 

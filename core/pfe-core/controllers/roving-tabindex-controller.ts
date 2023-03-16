@@ -90,7 +90,7 @@ export class RovingTabindexController implements ReactiveController {
   /**
    * handles keyboard navigation
    */
-  #onKeydown(event: KeyboardEvent):void {
+  #onKeydown = (event: KeyboardEvent) => {
     if (event.ctrlKey || event.altKey || event.metaKey || this.#focusableItems.length < 1) {
       return;
     }
@@ -191,7 +191,7 @@ export class RovingTabindexController implements ReactiveController {
   /**
    * from array of HTML items, and sets active items
    */
-  initItems(items: HTMLElement[], itemsContainer?: HTMLElement) {
+  initItems(items: HTMLElement[], itemsContainer: HTMLElement = this.host) {
     this.#items = items ?? [];
     const focusableItems = this.#focusableItems;
     const [focusableItem] = focusableItems;
@@ -203,11 +203,9 @@ export class RovingTabindexController implements ReactiveController {
      * removes listener on previous contained and applies it to new container
      */
     if (!this.#itemsContainer || itemsContainer !== this.#itemsContainer) {
-      if (this.#itemsContainer) {
-        this.#itemsContainer.removeEventListener('keydown', this.#onKeydown.bind(this));
-      }
-      this.#itemsContainer = itemsContainer || this.host;
-      this.#itemsContainer?.addEventListener('keydown', this.#onKeydown.bind(this));
+      this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
+      this.#itemsContainer = itemsContainer;
+      this.hostConnected();
     }
   }
 
@@ -215,13 +213,13 @@ export class RovingTabindexController implements ReactiveController {
    * adds event listners to items container
    */
   hostConnected() {
-    this.#itemsContainer?.addEventListener('keydown', this.#onKeydown.bind(this));
+    this.#itemsContainer?.addEventListener('keydown', this.#onKeydown);
   }
 
   /**
    * removes event listners from items container
    */
   hostDisconnected() {
-    this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown.bind(this));
+    this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
   }
 }

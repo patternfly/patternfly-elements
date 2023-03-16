@@ -156,7 +156,7 @@ export class RovingTabindexController implements ReactiveController {
       event.stopPropagation();
       event.preventDefault();
     }
-  }
+  };
 
   /**
    * sets tabindex of item based on whether or not it is active

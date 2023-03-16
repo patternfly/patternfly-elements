@@ -199,7 +199,6 @@ export class RovingTabindexController implements ReactiveController {
     for (const item of focusableItems) {
       item.tabIndex = this.#activeItem === item ? 0 : -1;
     }
-
     /**
      * removes listener on previous contained and applies it to new container
      */
@@ -208,11 +207,21 @@ export class RovingTabindexController implements ReactiveController {
         this.#itemsContainer.removeEventListener('keydown', this.#onKeydown.bind(this));
       }
       this.#itemsContainer = itemsContainer || this.host;
-      this.#itemsContainer.addEventListener('keydown', this.#onKeydown.bind(this));
+      this.#itemsContainer?.addEventListener('keydown', this.#onKeydown.bind(this));
     }
   }
 
+  /**
+   * adds event listners to items container
+   */
   hostConnected() {
-    this.#itemsContainer = undefined;
+    this.#itemsContainer?.addEventListener('keydown', this.#onKeydown.bind(this));
+  }
+
+  /**
+   * removes event listners from items container
+   */
+  hostDisconnected() {
+    this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown.bind(this));
   }
 }

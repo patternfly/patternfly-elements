@@ -53,7 +53,9 @@ We'll also need to update `/demo/pf-cool-element.html`
 so that the user's name is passed into the slot that we added in `pf-cool-element.ts`:
 
 ```html
-<link rel="stylesheet" href="./demo.css"/>
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-cool-element.js"></script>
+
 <pf-cool-element>
   Kyle Buchanan
 </pf-cool-element>
@@ -63,7 +65,7 @@ Slots take the HTML from the light DOM and project it into the shadow DOM at a g
 
 Here's how it should look in the browser:
 
-<!-- @TODO: Insert screenshot of demo html step here -->
+![demo page html step](/images/develop/develop-html.png)
 
 Remember that any changes we make in the element directory are watched while the `npm run dev` command runs. When you save changes, the dev server reloads the page and shows you your changes automatically.
 

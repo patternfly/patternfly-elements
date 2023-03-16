@@ -34,20 +34,38 @@ Now we can update our styles, like so:
 
 ```css
 :host {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 
+    var(--pf-global--BorderWidth--sm, 1px) 
+    solid 
+    var(--pf-global--BorderColor--100, #d2d2d2);
+  padding: var(--pf-global--spacer--xl, 2rem);
+  margin: var(--pf-global--spacer--md, 1rem);
 }
 
 :host([hidden]) {
   display: none;
 }
+
+#profile-pic {
+  width: 60px;
+  height: 60px;
+  margin: var(--pf-global--spacer--md, 1rem);
+  border: 
+    var(--pf-global--BorderWidth--sm, 1px) 
+    solid 
+    var(--pf-global--BorderColor--200, #8a8d90);
+  border-radius: 50%;
+  background-color: var(--pf-global--BackgroundColor--200, #f0f0f0);
+}
 ```
 
 After saving and viewing our demo page, our profile element looks much better.
 
-<!-- @TODO: Insert screenshot with css added here -->
+![Demo Page CSS](/images/develop/develop-css.png)
 
 A couple of things to note:
 

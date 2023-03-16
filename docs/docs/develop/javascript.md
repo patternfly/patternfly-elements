@@ -30,12 +30,12 @@ render() {
     <div id="profile-pic"></div>
     <slot></slot>
     <div id="social">
-      <button @click="${this.onClick}">Follow</button>
+      <button @click="${this.#onClick}">Follow</button>
     </div>
   `;
 }
 
-private onClick() {
+#onClick() {
   console.log("Button clicked!!!");
 }
 ```
@@ -53,7 +53,7 @@ and which are likely to change without notice. For example, a user of `<pf-cool-
 
 After saving your files, the demo page will refresh and you'll notice the start of your button interactivity.
 
-<!-- @TODO: Insert screenshot demo page js with open console here -->
+![demo page js click setup step](/images/develop/develop-javascript-click.png)
 
 ## Properties
 
@@ -61,10 +61,11 @@ When a user clicks our "Follow" button, we'd like to update the state of the com
 To do this, we'll add a property to our component that will maintain the state.
 
 In TypeScript, lit observed properties are defined using either the `@property()` decorator (for public properties and attributes)
-or the `@state()` decorator (for private or internal properties). Add the property to the existing import statement.
+or the `@state()` decorator (for private or internal properties). Add the property import statement.
 
 ```ts
-import { customElement, property } from 'lit/decorators.js'
+import { customElement } from 'lit/decorators/custom-element.js'
+import { property } from 'lit/decorators/property.js'
 ```
 
 Then define the `following` boolean attribute on the element.
@@ -88,9 +89,9 @@ Learn more about [how to document components](https://custom-elements-manifest.o
 Now that we have declared the `follow` property, we can toggle it in our private `onClick` handler.
 
 ```ts
-private onClick() {
+#onClick() {
   this.following = !this.following;
-  console.log("this.following:", this.following);
+  console.log('this.following: ', this.following);
 }
 ```
 
@@ -98,7 +99,7 @@ Note that we declare the property has `type: Boolean` and that it reflects.
 This means that `following` is a "boolean attribute" - considered true when present and false when absent.
 "Reflecting" properties are those which, when set, automatically set (or remove) their corresponding attribute.
 
-<!-- @TODO: Insert screenshot javascript of properties on component, console open here -->
+![demo page javascript properties](/images/develop/develop-javascript-properties.png)
 
 ## Observed properties
 
@@ -109,18 +110,18 @@ and be confident that our element's template will stay up-to-date.
 
 ```ts
 render() {
-  const message = this.following ? 'Unfollow': 'follow';
+  const message = this.following ? 'Unfollow' : 'Follow';
   return html`
     <div id="profile-pic"></div>
     <slot></slot>
     <div id="social">
-      <button @click="${this.onClick}">${message}</button>
+      <button @click="${this.#onClick}">${message}</button>
     </div>
   `;
 }
 ```
 
-<!-- @TODO: Insert screenshot javascript observer console open here -->
+![demo page javascript observer](/images/develop/develop-javascript-observer.png)
 
 Next, we'll add a `photoUrl` property to pass in a profile image.
 Once again, we'll use lit's `@property()` decorator to observe the property.
@@ -152,13 +153,13 @@ If the value is undefined, the `styleMap` directive simply removes that property
 
 ```ts
 render() {
-  const message = this.following ? 'Unfollow': 'Follow';
+  const message = this.following ? 'Unfollow' : 'Follow';
   const backgroundImage = this.photoUrl && `url(${this.photoUrl})`;
   return html`
-    <div id="profile-pic" ${styleMap({ backgroundImage })}></div>
+    <div id="profile-pic" style="${styleMap({ backgroundImage })} background-size: 100%; background-position: contain;"></div>
     <slot></slot>
     <div id="social">
-      <button @click="${this.onClick}">${message}</button>
+      <button @click="${this.#onClick}">${message}</button>
     </div>
   `;
 }
@@ -177,7 +178,7 @@ on `.pf-cool-element__profile`.
 
 The final result should look like this:
 
-<!-- @TODO: add javascript demo final result, console open here-->
+![demo page js profile pic step](/images/develop/develop-javascript-photo.png)
 
 ## Wrap-up
 
@@ -189,18 +190,18 @@ For your reference, here's the final Javascript code for `pf-cool-element`:
 
 ```ts
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js'
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import styles from './pf-cool-element.css';
 
 /**
- * Displays a user profile and optional avatar, and provides a "follow"/"unfollow" toggle.
- *
- * @slot - The profile's user name. Should be a text node.
+ * Cool Element
+ * @slot - Place element content here
  */
 @customElement('pf-cool-element')
-export class PfeCoolElement extends LitElement {
+export class PfCoolElement extends LitElement {
   static readonly styles = [styles];
 
   /** Whether the user follows this profile */
@@ -210,26 +211,26 @@ export class PfeCoolElement extends LitElement {
   @property({ attribute: 'photo-url' }) photoUrl?: string;
 
   render() {
-    const message = this.following ? 'Unfollow': 'Follow';
+    const message = this.following ? 'Unfollow' : 'Follow';
     const backgroundImage = this.photoUrl && `url(${this.photoUrl})`;
     return html`
-      <div id="profile-pic" ${styleMap({ backgroundImage })}></div>
+      <div id="profile-pic" style="${styleMap({ backgroundImage })} background-size: 100%; background-position: contain;"></div>
       <slot></slot>
       <div id="social">
-        <button @click="${this.onClick}">${message}</button>
+        <button @click="${this.#onClick}">${message}</button>
       </div>
     `;
   }
 
-  private onClick() {
+  #onClick() {
     this.following = !this.following;
-    console.log("this.following:", this.following);
+    console.log('this.following:', this.following);
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-cool-element': PfeCoolElement;
+    'pf-cool-element': PfCoolElement;
   }
 }
 ```

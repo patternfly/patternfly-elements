@@ -30,6 +30,22 @@ main.blog {
   transition: opacity 0.2s ease;
 }
 
+p:empty {
+  display: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 summary :is(h1,h2,h3,h4,h5,h6) {
   margin: 0;
   display: inline-block;
@@ -97,7 +113,6 @@ section.band.overview + section.band {
 }
 
 
-
 a.cta {
   white-space: normal;
   display: inline-block;
@@ -113,7 +128,7 @@ a.cta {
   vertical-align: middle;
   max-width: var(--pf-cta--MaxWidth,max-content);
   background-color: var(--pf-cta--BackgroundColor,transparent);
-  border-radius: var(--pf-cta--BorderRadius,0);
+  border-radius: var(--pf-cta--BorderRadius, 3px);
   border: var(--pf-theme--ui--border-width,1px) var(--pf-theme--ui--border-style,solid) var(--pf-cta--BorderColor,transparent);
   cursor: pointer;
   --pf-context-background-color: var(--pf-cta--BackgroundColor, transparent) !important;
@@ -165,7 +180,11 @@ a.cta.secondary {
     var(--pf-theme--container-padding,1rem)
     calc(var(--pf-theme--container-padding,1rem) * 2)) !important;
   font-size: var(--pf-cta--FontSize--priority, var(--pf-global--FontSize--md, 1rem));
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   --pf-cta--BackgroundColor: var(--pf-theme--color--surface--lightest, #fff);
   --pf-cta--BorderColor: var(--pf-theme--color--surface--lightest, #fff);
   --pf-cta--Color: var(--pf-theme--color--text, #151515);
@@ -261,7 +280,7 @@ header.band h1 {
 
 main.basic,
 main.blog {
-  margin-top: 3.75rem;
+  margin-top: 6.5rem;
   margin-bottom: 3.75rem;
   flex-grow: 1;
 }
@@ -300,20 +319,66 @@ main.blog {
   width: 200px;
 }
 
-.logo-bar {
-  --pf-navigation--Height--actual: 60px;
+.header-bar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 200;
+}
+
+.pf-bar {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-end;
+  padding-inline-start: var(--pf-c-masthead--PaddingLeft, var(--pf-c-masthead--inset, 24px));
+  padding-inline-end: var(--pf-c-masthead--PaddingLeft, var(--pf-c-masthead--inset, 24px));
+  height: 2.125rem;
+  font-size: 0.875rem;
+  background: var(--pf-c-masthead--BackgroundColor, var(--pf-global--BackgroundColor--dark-100, #151515));
+  color: var(--pf-theme--color--white, #fff);
+}
+
+.pf-bar a {
+  font-size: 0.875rem;
+  color: var(--pf-theme--color--white, #fff);
+}
+
+.pf-bar a.cta {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0;
+  height: 100%;
+}
+
+.pf-bar a:hover {
+  color: var(--pf-theme--color--white, #fff);
+}
+
+.pf-bar a.cta:not(.primary):not(.secondary)::after {
+  background-image: url("data:image/svg+xml,%3Csvg fill='white' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 31.56 31.56' %3E%3Cpath d='M15.78 0l-3.1 3.1 10.5 10.49H0v4.38h23.18l-10.5 10.49 3.1 3.1 15.78-15.78L15.78 0z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.pf-bar a.cta:hover:not(.primary):not(.secondary)::after {
+  translate: 6px;
+}
+
+
+.logo-bar {
+  --pf-navigation--Height--actual: 70px;
   display: flex;
   align-items: center;
   gap: 1em;
-  height: 3.75rem;
-  padding: var(--pf-theme--container-spacer, 16px);
+  height: 4.375rem; /* old: 3.75rem */
+  padding-inline-start: var(--pf-c-masthead--PaddingLeft, var(--pf-c-masthead--inset, 24px));
+  padding-inline-end: var(--pf-c-masthead--PaddingRight, var(--pf-c-masthead--inset, 24px));
+  padding-block-start: 8px;
+  padding-block-end: 8px;
   color: white;
-  background: var(--pf-theme--color--surface--accent, #004080);
-  z-index: 200;
+  background: var(--pf-theme--color--accent, #0066cc);
 }
 
 .logo-bar > a {
@@ -324,10 +389,12 @@ main.blog {
   font-size: 1.25rem;
   font-weight: bold;
   margin-left: calc(1.5rem + 16px);
+  height: 100%;
 }
 
 .logo-bar > a img {
   display: none;
+  height: 100%;
 }
 
 #docs-versions-dropdown {
@@ -409,13 +476,13 @@ main.blog {
 
 .l-header__mobile-menu-toggle {
   width: 1.5rem;
-  height: 3.75rem;
+  height: 4.375rem;
   margin-right: 16px;
   color: #fff;
   z-index: 200;
   position: fixed;
-  top: 0;
-  left: 16px;
+  top: 2.125rem;
+  left: var(--pf-c-masthead--PaddingLeft, var(--pf-c-masthead--inset, 24px));
 }
 
 .menu-toggle__button {
@@ -472,10 +539,10 @@ main.blog {
 
 .site-navigation__outer-wrapper {
   position: fixed;
-  top: 3.75rem;
+  top: 6.5rem;
   left: 0;
   z-index: 10;
-  height: calc(100vh - 3.75rem);
+  height: calc(100vh - 6.5rem);
 }
 
 .site-navigation {
@@ -751,7 +818,6 @@ blockquote {
 
   .logo-bar > a img {
     display: inline-block;
-    height: 3.75rem;
     position: relative;
     left: -1rem;
     margin-right: -1rem;

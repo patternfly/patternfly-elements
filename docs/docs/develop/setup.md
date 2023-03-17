@@ -55,15 +55,14 @@ tags:
   When creating your new components, you may find you are entering the same answers over and over again.
   To prevent this, you can pass a number of flags to the generator:
 
-| Switch            | Description                                | Type                                                            |
-| ----------------- | ------------------------------------------ | --------------------------------------------------------------- |
-| `--version`       | Show version number                        | boolean                                                         |
-| `--directory`     | Output directory                           | string [default: "/users/bennyp/developer/patternfly-elements"] |
-| `--silent`        | Do not log anything to stdout              | boolean [default: false]                                        |
-| `-n`, `--tagName` | Custom element tag name. e.g. `pf-button`  | string                                                          |
-| `-s`, `--scope`   | NPM package scope. e.g. `@patternfly`      | string                                                          |
-| `--overwrite`     | Overwrite files without prompting          | boolean [default: false]                                        |
-| `--help`          | Show help                                  | boolean                                                         |
+| Switch                | Description                                | Type                                                            |
+| --------------------- | ------------------------------------------ | --------------------------------------------------------------- |
+| `--directory`         | Output directory                           | string [default: "/users/bennyp/developer/patternfly-elements"] |
+| `--silent`            | Do not log anything to stdout              | boolean [default: false]                                        |
+| `-n`, `--tagName`     | Custom element tag name. e.g. `pf-button`  | string                                                          |
+| `-p`, `--packageName` | NPM package scope. e.g. `@patternfly/elements`| string                                                   |
+| `--overwrite`         | Overwrite files without prompting          | boolean [default: false]                                        |
+| `--help`              | Show help                                  | boolean                                                         |
 
 Example
 ```bash

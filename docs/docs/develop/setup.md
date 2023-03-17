@@ -129,7 +129,7 @@ npm run new -- --tagName pf-foo
   npm run test:watch --files "./elements/pf-{avatar,card,tabs}/test/*.spec.ts"
   ```
 
-  You can run tests in a specific wrapper using:
+  You can also run tests with a specific framework wrapper using:
 
   ```bash
   # Run all tests using a React wrapper in watch mode.

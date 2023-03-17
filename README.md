@@ -1,4 +1,9 @@
-# PatternFly Elements [![Netlify status](https://api.netlify.com/api/v1/badges/bf40e3e7-4f98-4088-91d9-112dbe8a1872/deploy-status)](https://patternfly-elements.netlify.app) ![build status](https://img.shields.io/github/workflow/status/patternfly/patternfly-elements/Build%20&%20test/main) ![commit](https://badgen.net/github/last-commit/patternfly/patternfly-elements) ![latest version](https://img.shields.io/github/lerna-json/v/patternfly/patternfly-elements?label=version) ![contributors](https://img.shields.io/github/contributors/patternfly/patternfly-elements)
+# PatternFly Elements 
+
+ [![latest version](https://img.shields.io/github/package-json/v/patternfly/patternfly-elements?filename=elements%2Fpackage.json)](https://github.com/patternfly/patternfly-elements/releases) [![contributors](https://img.shields.io/github/contributors/patternfly/patternfly-elements?color=%2306c)](https://github.com/patternfly/patternfly-elements/graphs/contributors) \
+ \
+  ![build status](https://img.shields.io/github/actions/workflow/status/patternfly/patternfly-elements/tests.yml)
+ ![last commit](https://img.shields.io/github/last-commit/patternfly/patternfly-elements?color=%2306c) [![Netlify status](https://api.netlify.com/api/v1/badges/bf40e3e7-4f98-4088-91d9-112dbe8a1872/deploy-status?branch=main)](https://patternflyelements.com)
 
 ## Table of Contents
 

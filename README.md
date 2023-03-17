@@ -82,22 +82,10 @@ npm run test:vue
 npm run test:ci
 ```
 
-### Open a new pull request
-
+### Development and Documentation servers
 ```shell
-# Open a new pull request
-npm run pr
-```
-
-### Documentation site
-View the documentation locally
-```shell
+# Development and documentation servers load simultaneously on localhost:port `:8000` and `:8080` respectively.
 npm run start
-```
-
-Build the documentation site
-```shell
-npm run docs
 ```
 
 ## Support

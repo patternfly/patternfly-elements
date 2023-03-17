@@ -41,7 +41,7 @@ import { expect, html } from '@open-wc/testing/index-no-side-effects.js';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 
 // Import the element we're testing.
-import { PfeCoolElement } from '@patternfly/pf-cool-element';
+import { PfCoolElement } from '@patternfly/pf-cool-element';
 
 // One element template, defined here, is used
 // in multiple tests. It's torn down and recreated each time.
@@ -52,17 +52,16 @@ const template = html`
 `;
 
 describe('<pf-cool-element>', function() {
-  it('should upgrade', async function() {
-    const el = await createFixture<PfeCoolElement>(template);
-    const klass = customElements.get(<%= className %>.tag);
-    expect(el)
-      .to.be.an.instanceOf(klass)
-      .and
-      .to.be.an.instanceOf(<%= className %>);
-  });
-
-  it('should set a username from the light DOM', async function() {
-
+  describe('simply instantiating', function() {
+    let element: PfCoolElement;
+    it('should upgrade', async function() {
+      element = await createFixture<PfCoolElement>(html`<pf-cool-element></pf-cool-element>`);
+      const klass = customElements.get('pf-cool-element');
+      expect(element)
+        .to.be.an.instanceOf(klass)
+        .and
+        .to.be.an.instanceOf(PfCoolElement);
+    });
   });
 
   it('should allow a user to follow a profile', async function() {
@@ -79,11 +78,11 @@ describe('<pf-cool-element>', function() {
 });
 ```
 
-You'll notice the `createFixture<PfeCoolElement>(element)` function. A [test fixture](https://open-wc.org/docs/testing/helpers/#test-fixtures)
+You'll notice the `createFixture<PfCoolElement>(element)` function. A [test fixture](https://open-wc.org/docs/testing/helpers/#test-fixtures)
 renders a piece of HTML and injects into the DOM so that you can test the behavior of your component.
 It returns the first DOM element from the template so that you can interact with it if needed.
 For example you can call functions, look up DOM nodes or inspect the rendered HTML.
-The `<PfeCoolElement>` part signals to TypeScript that the result of calling this function is an instance of `PfeCoolElement`;
+The `<PfCoolElement>` part signals to TypeScript that the result of calling this function is an instance of `PfCoolElement`;
 
 Test fixtures are async to ensure rendering is properly completed.
 
@@ -99,86 +98,100 @@ Let's build out the 'pf-cool-element' tests. We'll use fixtures and `querySelect
 Here is the full JavaScript code:
 
 ```ts
-it('should set a username from the light DOM', async function() {
-  const el = await createFixture<PfeCoolElement>(element);
+import { expect, html } from '@open-wc/testing';
+import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
+import { PfCoolElement } from '@patternfly/elements/pf-cool-element/pf-cool-element.js';
 
-  // Grab the text content from the light DOM and trim off any extra white space.
-  const elementLightDOMContent = el.textContent.trim();
-  const shadowRoot = el.shadowRoot;
+// One element template, defined here, is used
+// in multiple tests. It's torn down and recreated each time.
+const template = html`
+  <pf-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
+    Kyle Buchanan
+  </pf-cool-element>
+`;
 
-  // Grab the text content from the slot and trim off any extra white space.
-  const slotContent = shadowRoot.querySelector('slot').assignedNodes()[0].textContent.trim();
+describe('<pf-cool-element>', function() {
+  describe('simply instantiating', function() {
+    let element: PfCoolElement;
 
-  // Make sure the slot text matches the light DOM text.
-  expect(slotContent).to.equal(elementLightDOMContent);
-});
+    it('should upgrade', async function() {
+      element = await createFixture<PfCoolElement>(html`<pf-cool-element></pf-cool-element>`);
+      const klass = customElements.get('pf-cool-element');
+      expect(element)
+        .to.be.an.instanceOf(klass)
+        .and
+        .to.be.an.instanceOf(PfCoolElement);
+    });
 
-it('should allow a user to follow a profile', async function() {
-  const el = await createFixture<PfeCoolElement>(element);
-  // Click the button.
-  el.button.click();
+    it('should allow a user to follow a profile', async function() {
+      const el = await createFixture<PfCoolElement>(template);
+      const button = el.shadowRoot!.querySelector('button')!;
+      // Click the button.
+      button.click();
 
-  // Wait for the element to be done updating.
-  // Make sure to do this after changing any of the element's observed properties,
-  // or calling methods which do so
-  await el.updateComplete;
+      // Wait for the element to be done updating.
+      // Make sure to do this after changing any of the element's observed properties,
+      // or calling methods which do so
+      await el.updateComplete;
 
-  // Make sure the follow attribute is now updated.
-  expect(el.hasAttribute("follow")).to.be.true;
-  // Make sure the text is updated to reflect the "unfollowed" state.
-  expect(el.button.textContent).to.equal("Unfollow");
+      // Make sure the follow attribute is now updated.
+      expect(el.hasAttribute('following')).to.be.true;
+      // Make sure the text is updated to reflect the "unfollowed" state.
+      expect(button.textContent).to.equal('Unfollow');
 
-  // Click the button again.
-  el.button.click();
+      // Click the button again.
+      button.click();
 
-  await el.updateComplete;
+      await el.updateComplete;
 
-  // Make sure the follow attribute is updated.
-  expect(el.hasAttribute("follow")).to.be.false;
-  // Make sure the text is updated to reflect the "follow" state.
-  expect(el.button.textContent).to.equal("Follow");
+      // Make sure the follow attribute is updated.
+      expect(el.hasAttribute('following')).to.be.false;
+      // Make sure the text is updated to reflect the "follow" state.
+      expect(button.textContent).to.equal('Follow');
+    });
 
-});
+    it('should set the state to follow if the following attribute is present', async function() {
+      const el = await createFixture<PfCoolElement>(template);
+      const button = el.shadowRoot!.querySelector('button')!;
 
-it('should set the state to follow if the following attribute is present', async function() {
-  const el = await createFixture<PfeCoolElement>(element);
+      // Manually add the follow attribute.
+      el.setAttribute('following', '');
 
-  // Manually add the follow attribute.
-  el.setAttribute("follow", "");
+      // Wait for the element to be done updating.
+      await el.updateComplete;
 
-  // Wait for the element to be done updating.
-  await el.updateComplete;
+      // Make sure the follow attribute is now updated.
+      expect(el.hasAttribute('following')).to.be.true;
+      // Make sure the text is updated to reflect the "unfollowed" state.
+      expect(button.textContent).to.equal('Unfollow');
 
-  // Make sure the follow attribute is now updated.
-  expect(el.hasAttribute("follow")).to.be.true;
-  // Make sure the text is updated to reflect the "unfollowed" state.
-  expect(el.button.textContent).to.equal("Unfollow");
+      // Manually remove the follow attribute.
+      el.removeAttribute('following');
 
-  // Manually remove the follow attribute.
-  el.removeAttribute("follow");
+      // Wait for the element to be done updating.
+      await el.updateComplete;
 
-  // Wait for the element to be done updating.
-  await el.updateComplete;
+      // Make sure the follow attribute is updated.
+      expect(el.hasAttribute('following')).to.be.false;
+      // Make sure the text is updated to reflect the "follow" state.
+      expect(button.textContent).to.equal('Follow');
+    });
 
-  // Make sure the follow attribute is updated.
-  expect(el.hasAttribute("follow")).to.be.false;
-  // Make sure the text is updated to reflect the "follow" state.
-  expect(el.button.textContent).to.equal("Follow");
-});
+    it('should set a profile pic from the photo-url attribute', async function() {
+      const el = await createFixture<PfCoolElement>(template);
 
-it('should set a profile pic from the photo-url attribute', async function() {
-  const el = await createFixture<PfeCoolElement>(element);
+      // Grab the `photo-url` attribute.
+      const photoUrlAttribute = el.getAttribute('photo-url');
 
-  // Grab the `photo-url` attribute.
-  const photoUrlAttribute = el.getAttribute('photo-url');
+      // Find the background image in the shadow root css.
+      const { shadowRoot } = el;
+      const profilePicContainer = shadowRoot!.querySelector('#profile-pic')! as HTMLElement;
+      const backgroundImageUrl = profilePicContainer!.style.backgroundImage.slice(5, -2);
 
-  // Find the background image in the shadow root css.
-  const shadowRoot = el.shadowRoot;
-  const profilePicContainer = shadowRoot.querySelector('#profile-pic');
-  const backgroundImageUrl = profilePicContainer.style.backgroundImage.slice(5, -2);
-
-  // Make sure the photo url attribute matches the background image url.
-  expect(photoUrlAttribute).to.equal(backgroundImageUrl);
+      // Make sure the photo url attribute matches the background image url.
+      expect(photoUrlAttribute).to.equal(backgroundImageUrl);
+    });
+  });
 });
 ```
 
@@ -196,37 +209,27 @@ shadowRoot.querySelector('slot').assignedNodes()[0].textContent.trim();
 Lastly, we can run the test command below to see how we did. You can focus on this specific test so you're only running the tests for `pf-cool-element`.
 
 ```bash
-npm run test:watch -- --files **/pf-cool-element.spec.ts
+npm run test:watch -- --files elements/**/pf-cool-element.spec.ts
 ```
 
 This command starts up web test runner and allows us to debug our test in the browser.
 
 ![npm test command](/images/develop/develop-testing-first-pass.png)
 
+Nice! We're passing all of our tests. Let's look at a couple different ways to run these tests.
+
+### Debugging Tests
+
+You can debug these tests in a live browser by pressing the `D` key in the terminal.
+
 Debugging the test in the browser should give you the following:
 
-<!-- @TODO: Insert new screenshot of browser testing debugging, console open here-->
+![npm test in browser](/images/develop/develop-testing-browser.png)
 
-#### Note
+Tests can also be run manually in browser by running the following command:
 
-![Unexpected reserved word error](/images/develop/develop-testing-error.png)
-
-If you run into an `SyntaxError: Unexpected reserved word` error while writing tests, chances are it's because you're using an `await` function without an `async` parent.
-
-**Will error out**
-
-```js
-it('should set a username from the light DOM', function() {
-  const el = await createFixture<PfeCoolElement>(element);
-});
-```
-
-**Fixed by adding the `async` keyword**
-
-```js
-it('should set a username from the light DOM', async function() {
-  const el = await createFixture<PfeCoolElement>(element);
-});
+```bash
+npm run test:watch -- --files elements/**/pf-cool-element.spec.ts --open --manual
 ```
 
 ### Testing against Vue and React
@@ -236,13 +239,13 @@ Now that our vanilla JavaScript tests are passing, let's use Vue and React wrapp
 Run the same tests within React by using:
 
 ```bash
-npm run test:watch --group with-react
+npm run test:react --files elements/**/pf-cool-element.spec.ts
 ```
 
 Run the same tests within Vue with:
 
 ```bash
-npm run test:watch --group with-vue
+npm run test:vue --files elements/**/pf-cool-element.spec.ts
 ```
 
 This works exactly the same as the normal `npm run test:watch` command, the only difference is the fixture will be wrapped with React or Vue.
@@ -254,10 +257,10 @@ Finally we can run the test "ci" command which will run the following:
 3. Those same tests with Vue wrappers.
 
 ```bash
-npm run test:ci
+npm run test:ci --files elements/**/pf-cool-element.spec.ts
 ```
 
-![Final test output](/images/develop/develop-testing-npm-test.png)
+![Final test output](/images/develop/develop-testing-ci.png)
 
 Nice! All tests are working in Chrome and with React and Vue wrappers. 🎉
 

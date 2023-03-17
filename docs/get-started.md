@@ -43,7 +43,7 @@ title: Get started
   ### In HTML
   You may load the components in HTML using script tags via `<script type="importmap">` and `<script type="module">`. 
   
-  List out all the components you want to use on your page or app, and use [generator.jspm.io](https://generator.jspm.io/#U2VhYGAIzSvJLMlJTWEAACKwkqAOAA) to generate a JSON importmap for the component entry points.  [Learn more about importmaps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap). 
+  List all the components you want to use on your page or app, and use [generator.jspm.io](https://generator.jspm.io/#U2VhYGAIzSvJLMlJTWEAACKwkqAOAA) to generate a JSON importmap for the component entry points.  [Learn more about importmaps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap). 
   
   **Note for older browser support:** ES Module Shims: Import maps polyfill for browsers without import maps support (all except Chrome 89+) 
 

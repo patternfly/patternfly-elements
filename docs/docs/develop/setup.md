@@ -57,7 +57,7 @@ tags:
 
 | Switch                | Description                                | Type                                                            |
 | --------------------- | ------------------------------------------ | --------------------------------------------------------------- |
-| `--directory`         | Output directory                           | string [default: "/users/bennyp/developer/patternfly-elements"] |
+| `--directory`         | Output directory                           | string [default: "/path/to/patternfly-elements"] |
 | `--silent`            | Do not log anything to stdout              | boolean [default: false]                                        |
 | `-n`, `--tagName`     | Custom element tag name. e.g. `pf-button`  | string                                                          |
 | `-p`, `--packageName` | NPM package scope. e.g. `@patternfly/elements`| string                                                   |

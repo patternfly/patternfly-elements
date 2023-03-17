@@ -111,14 +111,15 @@ npm run new -- --tagName pf-foo
 {% endband %}
 
 {% band header="Testing" %}
-  From the project's root directory, run the test command `npm run test:watch` and
-  [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/) will execute your tests in the browser.
+  From the project's root directory, run the test command `npm run test` and
+  [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/) will execute your tests in a headless browser for each component.
 
+  To run your tests in watch mode run:
   ```bash
   npm run test:watch
   ```
 
-  You can also run a tests on a single package using npm's `--workspace` switch:
+  You can also run a tests on a single package using the `--files` switch:
 
   ```bash
   # Run a single test in watch mode.
@@ -128,19 +129,16 @@ npm run new -- --tagName pf-foo
   npm run test:watch --files "./elements/pf-{avatar,card,tabs}/test/*.spec.ts"
   ```
 
-  The default `npm test` command executes each unit test three times, once using plain HTML, once in a React wrapper app, and once in a Vue 2 wrapper app.
   You can run tests in a specific wrapper using:
 
   ```bash
   # Run all tests using a React wrapper in watch mode.
-  npm run test:react -- --watch
+  npm run test:react
 
   # Run all tests using a Vue wrapper in watch mode.
-  npm run test:vue -- --watch
-
-  # Run all test using only the default wrapper
-  npm run test -- --group default
+  npm run test:vue
   ```
+  
 {% endband %}
 
 {% band header="Final build" %}

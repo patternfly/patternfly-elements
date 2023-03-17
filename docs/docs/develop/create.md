@@ -39,6 +39,7 @@ tags:
     * PatternFly Elements should be prefixed with `pf-`. However, prefix your 
       elements with whatever fits your project if you are using the generator outside of this project.
 
+
   ![npm run new command](/images/develop/npm-run-new.png)
 
   After answering, your new component will be created and bootstrapped in the repository.
@@ -57,33 +58,12 @@ tags:
   * `pf-cool-element.ts` - The element class declaration
   * `pf-cool-element.css` - The element's CSS style module
 
-  These two files are the most important as they contain the actual element 
-  definition. In addition, there are a number of config files. Do not edit these files 
-  unless you know what you're doing.
-
-  * `custom-elements-manifest.config.js` - Configuration for the 
-      custom-elements-manifest analyzer.
-  * `custom-elements.json` - A manifest of your package's JS exports and 
-      custom elements.
-  * `package.json` - NPM package configuration and scripts
-  * `tsconfig.json` - TypeScript configuration for your monorepo.
-
-  For now, your `custom-elements.json` file is empty. If you'd like to generate 
-  content for it, run the `analyze` script in your element's workspace:
-
-  ```bash
-  npm run analyze
-  ```
-
-  This happens automatically when you build or publish your elements, so don't 
-  worry about forgetting to run it.
-
   The `demo` directory contains an HTML partial that you can edit to provide an 
   interactive demo of your element.
 
-  The `test` directory contains unit test files for your elemen.
+  The `test` directory contains unit test files for your element.
 
-  You'll also notice that the generator editted the root `tsconfig.json`, adding 
+  You'll also notice that the generator edited the root `tsconfig.json`, adding 
   a `path` to our new element.
   This is important so that TypeScript knows where each of our packages in the 
   monorepo are.

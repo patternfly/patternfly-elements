@@ -76,8 +76,6 @@ Now that our `pf-cool-element` is more appealing, we'll add the follow button's 
 and fill in the profile photo.
 We can accomplish both of these tasks by updating the `pf-cool-element.ts` file.
 
-<a href="{{ '/theming/' | url }}">Learn more about applying a theme.</a>
-
 <a class="cta" href="{{ '../javascript' | url }}">Next up: Write your JavaScript</a>
 
 {% endband %}

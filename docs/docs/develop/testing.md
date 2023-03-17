@@ -41,7 +41,7 @@ import { expect, html } from '@open-wc/testing/index-no-side-effects.js';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 
 // Import the element we're testing.
-import { PfCoolElement } from '@patternfly/pf-cool-element';
+import { PfCoolElement } from '@patternfly/elements/pf-cool-element/pf-cool-element.js';
 
 // One element template, defined here, is used
 // in multiple tests. It's torn down and recreated each time.
@@ -229,8 +229,7 @@ Debugging the test in the browser should give you the following:
 Tests can also be run manually in browser by running the following command:
 
 ```bash
-npm run test:watch -- --files elements/**/pf-cool-element.spec.ts --open --manual
-```
+npm run test:watch -- --files elements/**/pf-cool-element.spec.ts --open```
 
 ### Testing against Vue and React
 

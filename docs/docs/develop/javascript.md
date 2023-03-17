@@ -44,7 +44,7 @@ Note that when event listeners are bound in this way,
 lit-element automatically binds the handler method's `this` reference to the host class,
 i.e. to our `PfeCoolElement` instance.
 
-Please note the TypeScript `private` keyword before the handlers' method name.
+Please note the TypeScript `#` character before the handlers' method name.
 This signals to the custom elements manifest analyzer to list this method as private,
 and marks it as such in the element's TypeScript definition file.
 This helps users of your element know which of its features are safe to use with confidence,
@@ -71,7 +71,7 @@ import { property } from 'lit/decorators/property.js'
 Then define the `following` boolean attribute on the element.
 
 ```ts
-export class PfeCoolElement extends LitElement {
+export class PfCoolElement extends LitElement {
   static readonly styles = [style];
 
   /** Whether the user follows this profile */

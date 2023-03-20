@@ -1,7 +1,6 @@
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { query } from 'lit/decorators/query.js';
 
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -23,14 +22,14 @@ import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 export class PfJumpLinksItem extends LitElement {
   static readonly styles = [style];
 
+  static readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+
   /** Whether this item is active. */
   @observed('activeChanged')
   @property({ type: Boolean, reflect: true }) active = false;
 
   /** hypertext reference for this link */
   @property({ reflect: true }) href?: string;
-
-  @query('a') private link!: HTMLAnchorElement;
 
   #internals = new InternalsController(this, {
     role: 'listitem'
@@ -60,10 +59,6 @@ export class PfJumpLinksItem extends LitElement {
 
   #onFocus() {
     this.dispatchEvent(new Event('focus', { bubbles: true }));
-  }
-
-  focus(): void {
-    this.link.focus();
   }
 }
 

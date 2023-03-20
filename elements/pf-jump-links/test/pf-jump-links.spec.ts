@@ -1,5 +1,5 @@
 import type { ReactiveElement } from 'lit';
-import { expect, html, nextFrame } from '@open-wc/testing';
+import { expect, html, nextFrame, aTimeout } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 
@@ -22,29 +22,31 @@ async function allUpdates(element: ReactiveElement) {
 
 describe('<pf-jump-links>', function() {
   let element: PfJumpLinks;
+  let firstItem: PfJumpLinksItem;
+  let secondItem: PfJumpLinksItem;
+  let thirdItem: PfJumpLinksItem;
 
   beforeEach(async function() {
     element = await createFixture<PfJumpLinks>(html`
       <pf-jump-links>
         <pf-jump-links-item id="first">Inactive section</pf-jump-links-item>
-        <pf-jump-links-item id="second">Active section</pf-jump-links-item>
+        <pf-jump-links-item id="second" active>Active section</pf-jump-links-item>
         <pf-jump-links-item id="third">Inactive section</pf-jump-links-item>
       </pf-jump-links>
     `);
     await allUpdates(element);
+    [firstItem, secondItem, thirdItem] = element.querySelectorAll<PfJumpLinksItem>('pf-jump-links-item');
   });
 
   describe('tabbing to first item', function() {
-    let firstItem: PfJumpLinksItem;
-    let secondItem: PfJumpLinksItem;
     let initialActiveElement: Element|null;
     beforeEach(async function() {
-      [firstItem, secondItem] = element.querySelectorAll<PfJumpLinksItem>('pf-jump-links-item');
-      await sendKeys({ press: 'Tab' });
       initialActiveElement = document.activeElement;
+      await sendKeys({ press: 'Tab' });
+      await nextFrame();
     });
 
-    it('should focus a this first jump-links-item', function() {
+    it('should focus the first jump-links-item', function() {
       expect(document.activeElement).to.equal(firstItem);
     });
 

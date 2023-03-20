@@ -7,6 +7,8 @@ import { RovingTabindexController } from '@patternfly/pfe-core/controllers/rovin
 
 import '@patternfly/elements/pf-icon/pf-icon.js';
 
+import './pf-jump-links-item.js';
+
 import style from './pf-jump-links.css';
 
 /**
@@ -79,7 +81,7 @@ export class PfJumpLinks extends LitElement {
   /** Label to add to nav element. */
   @property() label?: string;
 
-  #init = false;
+  #initialized = false;
 
   #rovingTabindexController = new RovingTabindexController(this);
 
@@ -101,7 +103,7 @@ export class PfJumpLinks extends LitElement {
 
   render() {
     return html`
-      <nav id="container" @slotchange="${this.#updateItems}">${this.expandable ? html`
+      <nav id="container">${this.expandable ? html`
         <details ?open="${this.expanded}" @toggle="${this.#onToggle}">
           <summary>
             <pf-icon icon="chevron-right"></pf-icon>
@@ -121,11 +123,11 @@ export class PfJumpLinks extends LitElement {
         ...i.shadowRoot?.querySelectorAll('a') ?? [],
         ...i.querySelectorAll('a') ?? [],
       ]);
-    if (this.#init) {
+    if (this.#initialized) {
       this.#rovingTabindexController.updateItems(items);
     } else {
       this.#rovingTabindexController.initItems(items);
-      this.#init = true;
+      this.#initialized = true;
     }
   }
 

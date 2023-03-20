@@ -233,6 +233,14 @@ const config = {
         ],
       }],
     },
+  }, {
+    files: ['./elements/package.json'],
+    plugins: ['jsonc'],
+    rules: {
+      '@patternfly/elements/no-missing-package-exports': [ERROR, {
+        matches: ['elements/*/pf-*.js', 'elements/*/Base*.js'],
+      }],
+    },
   }],
 };
 

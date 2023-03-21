@@ -2,4 +2,4 @@
 "@patternfly/elements": patch
 ---
 
-`<pf-clipboard-copy>`: Fixed inline variant styles, to `inline-flex`
+`<pf-clipboard-copy>`: fixed inline variant styles to `display: inline-flex` to prevent wrapping

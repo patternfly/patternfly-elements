@@ -1,5 +1,15 @@
 # @patternfly/elements
 
+## 2.0.1
+
+### Patch Changes
+
+- 77ce9f78e: `<pf-clipboard-copy>`: prevent component's internal layout from wrapping lines
+- 708824d46: `<pf-jump-links>`: improved accessibility for keyboard users
+- 5905246fd: `<pf-clipboard-copy>`: fixed icon size and input-group CSS styles
+- Updated dependencies [e45f5eb5a]
+  - @patternfly/pfe-core@2.1.0
+
 ## 2.0.0
 
 ### Major Changes

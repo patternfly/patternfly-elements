@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 1.0.1
+
+### Patch Changes
+
+- abf2a7c89: Added lint rule: `no-missing-package-exports`
+
 ## 1.0.0
 
 ### Major Changes

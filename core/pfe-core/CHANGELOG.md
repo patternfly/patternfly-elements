@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 2.1.0
+
+### Minor Changes
+
+- e45f5eb5a: `roving-tabindex-controller`: enabled controller to be used by aria-expanded elements
+
 ## 2.0.0
 
 ### Major Changes

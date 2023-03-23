@@ -8,6 +8,7 @@ import { BaseAccordion } from './BaseAccordion.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import style from './BaseAccordionHeader.css';
 
@@ -40,6 +41,8 @@ export abstract class BaseAccordionHeader extends LitElement {
 
   #logger = new Logger(this);
 
+  #slots = new SlotController(this, null);
+
   override connectedCallback() {
     super.connectedCallback();
     this.addEventListener('click', this.#onClick);
@@ -56,8 +59,13 @@ export abstract class BaseAccordionHeader extends LitElement {
       this.#generatedHtag = undefined;
     }
 
-    this.headingTag = header?.tagName.toLowerCase() ?? 'h3';
-    this.headingText = header?.textContent?.trim() ?? '';
+    if (!this.headingTag) {
+      this.headingTag = header?.tagName.toLowerCase() ?? 'h3';
+    }
+
+    if (!this.headingText) {
+      this.headingText = header?.textContent?.trim() ?? '';
+    }
 
     do {
       await this.updateComplete;
@@ -71,10 +79,23 @@ export abstract class BaseAccordionHeader extends LitElement {
   renderAfterButton?(): TemplateResult;
 
   override render(): TemplateResult {
+    const hasAnonymousSlot = this.#slots.getSlotted()?.length > 0;
     const tag = unsafeStatic(this.headingTag);
     const ariaExpandedState = String(!!this.expanded) as 'true'|'false';
     return staticH`
-      <${tag} id="heading">
+      ${!hasAnonymousSlot ?
+        staticH`
+          <${tag} id="heading">
+            <button id="button"
+                class="toggle"
+                aria-expanded="${ariaExpandedState}">
+              <span part="text">
+                ${this.headingText || html`<slot></slot>`}
+              </span>
+              ${this.renderAfterButton?.()}
+            </button>
+          </${tag}>`
+        : html`
         <button id="button"
                 class="toggle"
                 aria-expanded="${ariaExpandedState}">
@@ -83,8 +104,7 @@ export abstract class BaseAccordionHeader extends LitElement {
           </span>
           ${this.renderAfterButton?.()}
         </button>
-      </${tag}>
-    `;
+`}`;
   }
 
   #getOrCreateHeader(): HTMLElement|undefined {

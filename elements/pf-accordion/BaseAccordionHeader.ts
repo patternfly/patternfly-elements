@@ -34,13 +34,11 @@ export abstract class BaseAccordionHeader extends LitElement {
 
   @property({ reflect: true, attribute: 'heading-text' }) headingText = '';
 
-  @property({ reflect: true, attribute: 'heading-tag' }) headingTag = 'h3';
+  @property({ reflect: true, attribute: 'heading-tag' }) headingTag = '';
 
   #generatedHtag?: HTMLHeadingElement;
 
   #logger = new Logger(this);
-
-  #slots = new SlotController(this, null);
 
   override connectedCallback() {
     super.connectedCallback();
@@ -51,6 +49,9 @@ export abstract class BaseAccordionHeader extends LitElement {
   }
 
   async #initHeader() {
+    if (this.headingText && !this.headingTag) {
+      this.headingTag = 'h3';
+    }
     const header = this.#getOrCreateHeader();
 
     // prevent double-logging
@@ -58,13 +59,7 @@ export abstract class BaseAccordionHeader extends LitElement {
       this.#generatedHtag = undefined;
     }
 
-    if (!this.headingTag) {
-      this.headingTag = header?.tagName.toLowerCase() ?? 'h3';
-    }
-
-    if (!this.headingText) {
-      this.headingText = header?.textContent?.trim() ?? '';
-    }
+    this.headingText = this.headingText ? this.headingText.trim() : header?.textContent?.trim() ?? '';
 
     do {
       await this.updateComplete;
@@ -93,9 +88,7 @@ export abstract class BaseAccordionHeader extends LitElement {
   }
 
   override render(): TemplateResult {
-    const hasAnonymousSlot = this.#slots.getSlotted()?.length > 0;
-
-    if (!hasAnonymousSlot) {
+    if (this.headingTag) {
       switch (this.headingTag) {
         case 'h1': return html`<h1 id="heading">${this.#renderHeaderContent()}</h1>`;
         case 'h2': return html`<h2 id="heading">${this.#renderHeaderContent()}</h2>`;

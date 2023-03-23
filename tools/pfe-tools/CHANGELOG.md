@@ -1,5 +1,13 @@
 # @patternfly/pfe-tools
 
+## 1.0.1
+
+### Patch Changes
+
+- cfc5913c6: `pfe-tools`:
+  - Updated dev server header styles to match look and feel of 11ty documentation site
+  - Added `repoHost` to `PfeConfig` which enables customizing the dev server repository host name and icon
+
 ## 1.0.0
 
 ### Major Changes

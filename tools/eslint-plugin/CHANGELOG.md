@@ -1,5 +1,11 @@
 # @patternfly/eslint-plugin-elements
 
+## 1.1.0
+
+### Minor Changes
+
+- abf2a7c89: Added lint rule: `no-missing-package-exports`
+
 ## 1.0.0
 
 ### Major Changes

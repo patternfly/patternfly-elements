@@ -15,6 +15,9 @@ export class RovingTabindexController implements ReactiveController {
   /** active focusable element */
   #activeItem?: HTMLElement;
 
+  /** closest ancestor containing items */
+  #itemsContainer?: HTMLElement;
+
   /** array of all focusable elements */
   #items: HTMLElement[] = [];
 
@@ -87,7 +90,7 @@ export class RovingTabindexController implements ReactiveController {
   /**
    * handles keyboard navigation
    */
-  #onKeydown(event: KeyboardEvent):void {
+  #onKeydown = (event: KeyboardEvent) => {
     if (event.ctrlKey || event.altKey || event.metaKey || this.#focusableItems.length < 1) {
       return;
     }
@@ -97,8 +100,8 @@ export class RovingTabindexController implements ReactiveController {
     const horizontalOnly =
         !item ? false
       : item.tagName === 'SELECT' ||
-        item.getAttribute('aria-expanded') === 'true' ||
         item.getAttribute('role') === 'spinbutton';
+
 
     switch (event.key) {
       case 'ArrowLeft':
@@ -153,7 +156,7 @@ export class RovingTabindexController implements ReactiveController {
       event.stopPropagation();
       event.preventDefault();
     }
-  }
+  };
 
   /**
    * sets tabindex of item based on whether or not it is active
@@ -188,7 +191,7 @@ export class RovingTabindexController implements ReactiveController {
   /**
    * from array of HTML items, and sets active items
    */
-  initItems(items: HTMLElement[]) {
+  initItems(items: HTMLElement[], itemsContainer: HTMLElement = this.host) {
     this.#items = items ?? [];
     const focusableItems = this.#focusableItems;
     const [focusableItem] = focusableItems;
@@ -196,9 +199,27 @@ export class RovingTabindexController implements ReactiveController {
     for (const item of focusableItems) {
       item.tabIndex = this.#activeItem === item ? 0 : -1;
     }
+    /**
+     * removes listener on previous contained and applies it to new container
+     */
+    if (!this.#itemsContainer || itemsContainer !== this.#itemsContainer) {
+      this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
+      this.#itemsContainer = itemsContainer;
+      this.hostConnected();
+    }
   }
 
+  /**
+   * adds event listners to items container
+   */
   hostConnected() {
-    this.host.addEventListener('keydown', this.#onKeydown.bind(this));
+    this.#itemsContainer?.addEventListener('keydown', this.#onKeydown);
+  }
+
+  /**
+   * removes event listners from items container
+   */
+  hostDisconnected() {
+    this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
   }
 }

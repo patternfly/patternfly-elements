@@ -3,13 +3,28 @@
   flex-direction: column;
 }
 
-#input-group {
+#input-group,
+#wrapper,
+pf-tooltip,
+pf-button {
   display: flex;
+}
+
+.inline #wrapper {
+  display: inline-flex;
+}
+
+pf-button {
+  height: 100%;
 }
 
 pf-tooltip::part(invoker) {
   display: flex;
   height: 100%;
+}
+
+:host {
+  --pf-icon--size: var(--pf-global--FontSize--md, 1rem);
 }
 
 #input-group > * + * {
@@ -106,6 +121,11 @@ textarea {
     var(--pf-global--spacer--xs, 0.25rem));
   word-break: break-word;
   white-space: normal;
+}
+
+#input-group {
+  display: flex;
+  height: 100%;
 }
 
 .container:is(.compact, .inline) #input-group {

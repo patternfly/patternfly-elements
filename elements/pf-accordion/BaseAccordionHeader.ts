@@ -77,120 +77,36 @@ export abstract class BaseAccordionHeader extends LitElement {
   /** Template hook: before </button> */
   renderAfterButton?(): TemplateResult;
 
+  #renderHeaderContent() {
+    const ariaExpandedState = String(!!this.expanded) as 'true'|'false';
 
-  #renderHeader(ariaExpandedState: 'true'|'false'|'undefined' = 'false') {
-    switch (this.headingTag) {
-      case 'h1':
-        return html`<h1 id="heading">
-                      <button id="button"
-                        class="toggle"
-                        aria-expanded="${ariaExpandedState}">
-                        
-                        <span part="text">
-                          ${this.headingText || html`<slot></slot>`}
-                        </span>
-              
-                        ${this.renderAfterButton?.()}
-                      </button>
-                    </h1>`;
-      case 'h2':
-        return html`<h2 id="heading">
-                      <button id="button"
-                        class="toggle"
-                        aria-expanded="${ariaExpandedState}">
-                        
-                        <span part="text">
-                          ${this.headingText || html`<slot></slot>`}
-                        </span>
-              
-                        ${this.renderAfterButton?.()}
-                      </button>
-                    </h2>`;
-      case 'h3':
-        return html`<h3 id="heading">
-                      <button id="button"
-                        class="toggle"
-                        aria-expanded="${ariaExpandedState}">
-                        
-                        <span part="text">
-                          ${this.headingText || html`<slot></slot>`}
-                        </span>
-              
-                        ${this.renderAfterButton?.()}
-                      </button>
-                    </h3>`;
-      case 'h4':
-        return html`<h4 id="heading">
-                      <button id="button"
-                        class="toggle"
-                        aria-expanded="${ariaExpandedState}">
-                        
-                        <span part="text">
-                          ${this.headingText || html`<slot></slot>`}
-                        </span>
-              
-                        ${this.renderAfterButton?.()}
-                      </button>
-                    </h4>`;
-      case 'h5':
-        return html`<h5 id="heading">
-                      <button id="button"
-                        class="toggle"
-                        aria-expanded="${ariaExpandedState}">
-                        
-                        <span part="text">
-                          ${this.headingText || html`<slot></slot>`}
-                        </span>
-              
-                        ${this.renderAfterButton?.()}
-                      </button>
-                    </h5>`;
-      case 'h6':
-        return html`<h6 id="heading">
-                      <button id="button"
-                        class="toggle"
-                        aria-expanded="${ariaExpandedState}">
-                        
-                        <span part="text">
-                          ${this.headingText || html`<slot></slot>`}
-                        </span>
-              
-                        ${this.renderAfterButton?.()}
-                      </button>
-                    </h6>`;
-      default:
-        return html`<h3 id="heading">
-                      <button id="button"
-                        class="toggle"
-                        aria-expanded="${ariaExpandedState}">
-                        
-                        <span part="text">
-                          ${this.headingText || html`<slot></slot>`}
-                        </span>
-              
-                        ${this.renderAfterButton?.()}
-                      </button>
-                    </h3>`;
-    }
+    return html`<button id="button"
+                  class="toggle"
+                  aria-expanded="${ariaExpandedState}">
+                  
+                  <span part="text">
+                    ${this.headingText || html`<slot></slot>`}
+                  </span>
+                  
+                  ${this.renderAfterButton?.()}
+                </button>`;
   }
 
   override render(): TemplateResult {
     const hasAnonymousSlot = this.#slots.getSlotted()?.length > 0;
-    const ariaExpandedState = String(!!this.expanded) as 'true'|'false';
 
-    return html`
-      ${!hasAnonymousSlot ?
-          this.#renderHeader(ariaExpandedState)
-        : html`
-        <button id="button"
-                class="toggle"
-                aria-expanded="${ariaExpandedState}">
-          <span part="text">${this.headingText || html`
-            <slot></slot>`}
-          </span>
-          ${this.renderAfterButton?.()}
-        </button>
-`}`;
+    if (!hasAnonymousSlot) {
+      switch (this.headingTag) {
+        case 'h1': return html`<h1 id="heading">${this.#renderHeaderContent()}</h1>`;
+        case 'h2': return html`<h2 id="heading">${this.#renderHeaderContent()}</h2>`;
+        case 'h4': return html`<h4 id="heading">${this.#renderHeaderContent()}</h4>`;
+        case 'h5': return html`<h5 id="heading">${this.#renderHeaderContent()}</h5>`;
+        case 'h6': return html`<h6 id="heading">${this.#renderHeaderContent()}</h6>`;
+        case 'h3':
+        default: return html`<h3 id="heading">${this.#renderHeaderContent()}</h3>`;
+      }
+    }
+    return this.#renderHeaderContent();
   }
 
   #getOrCreateHeader(): HTMLElement|undefined {

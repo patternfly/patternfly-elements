@@ -41,17 +41,13 @@ title: Get started
   ```
 
   ### In HTML
-  You may load the components in HTML using script tags via `<script type="importmap">` and `<script type="module">`. 
-  
-  List all the components you want to use on your page or app, and use [generator.jspm.io](https://generator.jspm.io/#U2VhYGAIzSvJLMlJTWEAACKwkqAOAA) to generate a JSON importmap for the component entry points.  [Learn more about importmaps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap). 
-  
-  **Note for older browser support:** ES Module Shims: Import maps polyfill for browsers without import maps support (all except Chrome 89+) 
-
-  Then include the generated importmap in your HTML, and load the components you need with `<script type="module">`. [Learn more about JavaScript modules][modules].
+  To load the PatternFly Element web components in HTML you will need to use an importmap type script tag:
+  `<script type="importmap"> ... </script>` and module type script tag `<script type="module"> ... </script>`. 
 
   In this example, we load the [card](/components/card/) modules using an importmap from JSPM.
 
   ```html
+  <head>
   <!--
     JSPM Generator Import Map
     Edit URL: https://generator.jspm.io/#U2NgYGBkDM0rySzJSU1hcChILClJLcpLy6nUT81JzU3NKyl2MNIz0DPQL0jTTU4sSoHRelnFAN524ZI8AA
@@ -77,14 +73,20 @@ title: Get started
   }
   </script>
   
-  <!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support (all except Chrome 89+) -->
-  <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous"></script>
-
   <script type="module">
     import "@patternfly/elements/pf-card/pf-card.js";
   </script>
+  </head>
+  <body>
+    <pf-card>
+      <h3 slot="header">Card header</h3>
+      <p>This is the pf-card body.</p>
+    </pf-card>
+  </body>
   ```
 
+  To learn more about how to create importmaps, read our [creating an import map](/docs/develop/import-maps/) section, and go into more detail at [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) or the [import map specification](https://html.spec.whatwg.org/multipage/webappapis.html#import-maps). 
+  
 {% endband %}
 
 {% band header="Add PatternFly Elements markup" %}

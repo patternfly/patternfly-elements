@@ -1,7 +1,7 @@
 ---
 layout: layout-docs.njk
 title: Develop a structure
-order: 3
+order: 30
 tags:
   - develop
 ---

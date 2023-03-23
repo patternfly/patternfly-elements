@@ -1,7 +1,7 @@
 ---
 layout: layout-docs.njk
 title: Write your JavaScript
-order: 6
+order: 60
 tags:
   - develop
 ---

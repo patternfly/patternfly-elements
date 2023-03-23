@@ -1,7 +1,7 @@
 ---
 layout: layout-docs.njk
 title: Open a pull request
-order: 8
+order: 80
 tags:
   - develop
 ---

@@ -1,7 +1,7 @@
 ---
 layout: layout-docs.njk
 title: Create a PatternFly Element
-order: 2
+order: 20
 tags:
   - develop
 ---

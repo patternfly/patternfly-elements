@@ -2,7 +2,7 @@
 layout: layout-docs.njk
 tagline: Create your own PatternFly Element
 title: Setup
-order: 1
+order: 10
 tags:
   - develop
 ---

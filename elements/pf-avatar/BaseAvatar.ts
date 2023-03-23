@@ -16,7 +16,7 @@ export class AvatarLoadEvent extends Event {
  * @summary For displaying a user's avatar image
  */
 
-export class BaseAvatar extends LitElement {
+export abstract class BaseAvatar extends LitElement {
   static readonly styles = [style];
 
   /** The URL to the user's custom avatar image. */
@@ -26,7 +26,7 @@ export class BaseAvatar extends LitElement {
   @property({ reflect: true }) alt?: string = 'Avatar image';
 
   /** Size of the Avatar */
-  @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
+  abstract size?: string;
 
   /** Whether or not the Avatar image is dark */
   @property({ type: Boolean, reflect: true }) dark = false;
@@ -34,7 +34,7 @@ export class BaseAvatar extends LitElement {
   render() {
     return this.src != null ? html`
       <img
-        size=${this.size}
+        size=${this.size ?? ''}
         alt=${this.alt ?? ''}
         @load="${(e: Event) => this.dispatchEvent(new AvatarLoadEvent(e))}"
         src=${this.src}>

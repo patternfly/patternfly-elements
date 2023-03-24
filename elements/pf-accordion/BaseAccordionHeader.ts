@@ -7,7 +7,6 @@ import { BaseAccordion } from './BaseAccordion.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
-import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import style from './BaseAccordionHeader.css';
 

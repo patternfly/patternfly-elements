@@ -18,10 +18,6 @@
   overflow-y: auto;
 }
 
-.body {
-  position: relative;
-}
-
 .body:after {
   content: "";
   position: absolute;

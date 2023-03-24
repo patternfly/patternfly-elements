@@ -2,4 +2,4 @@
 "@patternfly/elements": patch
 ---
 
-`pf-accordion-panel`: - removing position relative from body class which was causing the accent color to not fill the entire panel
+`pf-accordion-panel`: - adding overflow hidden to the body tag for an issue where the border would not span the whole height of the panel.

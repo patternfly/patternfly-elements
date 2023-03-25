@@ -2,4 +2,4 @@
 "@patternfly/elements": patch
 ---
 
-`<pf-switch>`: docs: added change event
+`<pf-switch>`: documented the `change` event

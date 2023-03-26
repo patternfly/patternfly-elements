@@ -36,6 +36,7 @@
   max-width: var(--pf-c-panel--MaxWidth);
   background-color: var(--pf-c-panel--BackgroundColor);
   box-shadow: var(--pf-c-panel--BoxShadow);
+  display: block;
 }
 
 :host([variant="bordered"])::before {
@@ -52,10 +53,7 @@
 
 :host([variant="raised"])::before {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   pointer-events: none;
   content: "";
   box-shadow: var(--pf-c-panel--m-raised--BoxShadow, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));

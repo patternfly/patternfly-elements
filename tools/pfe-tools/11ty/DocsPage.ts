@@ -63,8 +63,8 @@ export class DocsPage implements DocsPageRenderer {
   title: string;
   slug: string;
   templates: Environment;
-  description?: string|null;
-  summary?: string|null;
+  description?: string | null;
+  summary?: string | null;
   docsTemplatePath?: string;
 
   constructor(

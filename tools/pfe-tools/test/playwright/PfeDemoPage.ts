@@ -53,7 +53,7 @@ export class PfeDemoPage {
   }
 
   /** Wait for the element, or a given selector, to update */
-  async updateComplete(selector: string|null = this.tagName) {
+  async updateComplete(selector: string | null = this.tagName) {
     await this.page.waitForLoadState('domcontentloaded');
     await this.page.waitForLoadState('networkidle');
     if (selector) {

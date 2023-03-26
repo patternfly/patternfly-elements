@@ -40,7 +40,7 @@ type TypedFieldDecorator<T> = (proto: T, key: string | keyof T) => void ;
 export function observed<T extends ReactiveElement>(methodName: string): TypedFieldDecorator<T>
 export function observed<T extends ReactiveElement>(cb: ChangeCallback<T>): TypedFieldDecorator<T>
 export function observed<T extends ReactiveElement>(proto: T, key: string): void
-export function observed<T extends ReactiveElement>(...as: any[]): void|TypedFieldDecorator<T> {
+export function observed<T extends ReactiveElement>(...as: any[]): void | TypedFieldDecorator<T> {
   /** @observed('_myCustomChangeCallback') */
   if (as.length === 1) {
     const [methodNameOrCallback] = as;

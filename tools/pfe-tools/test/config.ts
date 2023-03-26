@@ -9,7 +9,7 @@ import { pfeDevServerConfig, type PfeDevServerConfigOptions } from '../dev-serve
 
 export interface PfeTestRunnerConfigOptions extends PfeDevServerConfigOptions {
   files?: string[];
-  reporter?: 'summary'|'default';
+  reporter?: 'summary' | 'default';
 }
 
 const isWatchMode = process.argv.some(x => x.match(/-w|--watch/));

@@ -36,7 +36,7 @@ export abstract class BaseSpinner extends LitElement {
   @property({ reflect: true }) size: SpinnerSize = 'xl';
 
   /** Custom diameter of spinner set as CSS variable */
-  @property({ reflect: true }) diameter?: `${string}${'px'|'%'|'rem'|'em'|'fr'|'pt'}`;
+  @property({ reflect: true }) diameter?: `${string}${'px' | '%' | 'rem' | 'em' | 'fr' | 'pt'}`;
 
   override render() {
     return html`

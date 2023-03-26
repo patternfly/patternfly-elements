@@ -5,7 +5,7 @@ import Color from 'colorjs.io';
 import { chai } from '@open-wc/testing';
 
 type TestHelpers = {
-  fixture: <T extends Element = HTMLElement>(testCase: string|TemplateResult) => Promise<T>;
+  fixture: <T extends Element = HTMLElement>(testCase: string | TemplateResult) => Promise<T>;
 };
 
 /**
@@ -55,7 +55,7 @@ const helpers: Promise<TestHelpers> = new Promise(resolve => {
  * @returns  Returns the new web component fixture rendered and ready for tests.
  */
 export async function createFixture<T extends Element = HTMLElement>(
-  code: string|TemplateResult
+  code: string | TemplateResult
 ): Promise<T> {
   const { fixture } = await helpers;
   return fixture<T>(code);

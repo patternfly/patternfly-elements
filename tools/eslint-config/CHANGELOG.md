@@ -1,5 +1,11 @@
 # @patternfly/eslint-config-elements
 
+## 2.0.1
+
+### Patch Changes
+
+- c2e901f81: Added more formatting rules (infix spacing and type annotation spacing).
+
 ## 2.0.0
 
 ### Patch Changes

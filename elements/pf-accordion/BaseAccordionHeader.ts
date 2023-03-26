@@ -72,7 +72,7 @@ export abstract class BaseAccordionHeader extends LitElement {
 
   override render(): TemplateResult {
     const tag = unsafeStatic(this.headingTag);
-    const ariaExpandedState = String(!!this.expanded) as 'true'|'false';
+    const ariaExpandedState = String(!!this.expanded) as 'true' | 'false';
     return staticH`
       <${tag} id="heading">
         <button id="button"
@@ -87,7 +87,7 @@ export abstract class BaseAccordionHeader extends LitElement {
     `;
   }
 
-  #getOrCreateHeader(): HTMLElement|undefined {
+  #getOrCreateHeader(): HTMLElement | undefined {
     // Check if there is no nested element or nested textNodes
     if (!this.firstElementChild && !this.firstChild) {
       return void this.#logger.warn('No header content provided');

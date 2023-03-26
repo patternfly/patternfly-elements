@@ -163,7 +163,7 @@ export class PfButton extends BaseButton {
   /** Not as urgent as danger */
   @property({ type: Boolean, reflect: true }) warning = false;
 
-  @property({ reflect: true }) size?: 'small'|'large';
+  @property({ reflect: true }) size?: 'small' | 'large';
 
   /** Icon set for the `icon` property */
   @property({ attribute: 'icon-set' }) iconSet?: string;

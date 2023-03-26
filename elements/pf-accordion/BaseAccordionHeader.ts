@@ -2,7 +2,6 @@ import type { TemplateResult } from 'lit';
 
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { unsafeStatic, html as staticH } from 'lit/static-html.js';
 
 import { BaseAccordion } from './BaseAccordion.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
@@ -32,13 +31,15 @@ export abstract class BaseAccordionHeader extends LitElement {
 
   @property({ type: Boolean, reflect: true }) expanded = false;
 
-  @property({ reflect: true, attribute: 'heading-text' }) headingText = '';
+  @property({ reflect: true, attribute: 'heading-text' }) headingText?: string;
 
-  @property({ reflect: true, attribute: 'heading-tag' }) headingTag = 'h3';
+  @property({ reflect: true, attribute: 'heading-tag' }) headingTag?: string;
 
   #generatedHtag?: HTMLHeadingElement;
 
   #logger = new Logger(this);
+
+  #header?: HTMLElement;
 
   override connectedCallback() {
     super.connectedCallback();
@@ -49,15 +50,15 @@ export abstract class BaseAccordionHeader extends LitElement {
   }
 
   async #initHeader() {
-    const header = this.#getOrCreateHeader();
+    if (this.headingText && !this.headingTag) {
+      this.headingTag = 'h3';
+    }
+    this.#header = this.#getOrCreateHeader();
 
     // prevent double-logging
-    if (header !== this.#generatedHtag) {
+    if (this.#header !== this.#generatedHtag) {
       this.#generatedHtag = undefined;
     }
-
-    this.headingTag = header?.tagName.toLowerCase() ?? 'h3';
-    this.headingText = header?.textContent?.trim() ?? '';
 
     do {
       await this.updateComplete;
@@ -71,19 +72,28 @@ export abstract class BaseAccordionHeader extends LitElement {
   renderAfterButton?(): TemplateResult;
 
   override render(): TemplateResult {
-    const tag = unsafeStatic(this.headingTag);
-    const ariaExpandedState = String(!!this.expanded) as 'true' | 'false';
-    return staticH`
-      <${tag} id="heading">
-        <button id="button"
-                class="toggle"
-                aria-expanded="${ariaExpandedState}">
-          <span part="text">${this.headingText || html`
-            <slot></slot>`}
-          </span>
-          ${this.renderAfterButton?.()}
-        </button>
-      </${tag}>
+    switch (this.headingTag) {
+      case 'h1': return html`<h1 id="heading">${this.#renderHeaderContent()}</h1>`;
+      case 'h2': return html`<h2 id="heading">${this.#renderHeaderContent()}</h2>`;
+      case 'h3': return html`<h3 id="heading">${this.#renderHeaderContent()}</h3>`;
+      case 'h4': return html`<h4 id="heading">${this.#renderHeaderContent()}</h4>`;
+      case 'h5': return html`<h5 id="heading">${this.#renderHeaderContent()}</h5>`;
+      case 'h6': return html`<h6 id="heading">${this.#renderHeaderContent()}</h6>`;
+      default: return this.#renderHeaderContent();
+    }
+  }
+
+  #renderHeaderContent() {
+    const headingText = this.headingText?.trim() ?? this.#header?.textContent?.trim();
+    return html`
+      <button id="button"
+              class="toggle"
+              aria-expanded="${String(!!this.expanded) as 'true' | 'false'}">
+        <span part="text">${headingText ?? html`
+          <slot></slot>`}
+        </span>
+        ${this.renderAfterButton?.()}
+      </button>
     `;
   }
 

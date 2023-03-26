@@ -26,7 +26,7 @@ export class BaseAvatar extends LitElement {
   @property({ reflect: true }) alt?: string = 'Avatar image';
 
   /** Size of the Avatar */
-  @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
+  @property({ reflect: true }) size: 'sm' | 'md' | 'lg' | 'xl' = 'sm';
 
   /** Whether or not the Avatar image is dark */
   @property({ type: Boolean, reflect: true }) dark = false;

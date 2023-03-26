@@ -82,7 +82,7 @@ export abstract class BaseIcon extends LitElement {
    * - `idle`: wait for the browser to attain an idle state before loading
    * - `lazy` (default): wait for the element to enter the viewport before loading
    */
-  @property() loading?: 'idle'|'lazy'|'eager' = 'lazy';
+  @property() loading?: 'idle' | 'lazy' | 'eager' = 'lazy';
 
   /** Icon content. Any value that lit can render */
   @state() private content?: unknown;

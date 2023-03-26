@@ -180,7 +180,7 @@ export abstract class BaseTabs extends LitElement {
     `;
   }
 
-  #onSlotchange(event: { target: { name: string; }; }) {
+  #onSlotchange(event: { target: { name: string } }) {
     if (event.target.name === 'tab') {
       this.#allTabs = this.tabs;
     } else {

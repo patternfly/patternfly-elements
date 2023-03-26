@@ -71,20 +71,6 @@ export abstract class BaseAccordionHeader extends LitElement {
   /** Template hook: before </button> */
   renderAfterButton?(): TemplateResult;
 
-  #renderHeaderContent() {
-    const headingText = this.headingText?.trim() ?? this.#header?.textContent?.trim();
-    return html`
-      <button id="button"
-              class="toggle"
-              aria-expanded="${String(!!this.expanded) as 'true'|'false'}">
-        <span part="text">${headingText ?? html`
-          <slot></slot>`}
-        </span>
-        ${this.renderAfterButton?.()}
-      </button>
-    `;
-  }
-
   override render(): TemplateResult {
     switch (this.headingTag) {
       case 'h1': return html`<h1 id="heading">${this.#renderHeaderContent()}</h1>`;
@@ -97,7 +83,21 @@ export abstract class BaseAccordionHeader extends LitElement {
     }
   }
 
-  #getOrCreateHeader(): HTMLElement|undefined {
+  #renderHeaderContent() {
+    const headingText = this.headingText?.trim() ?? this.#header?.textContent?.trim();
+    return html`
+      <button id="button"
+              class="toggle"
+              aria-expanded="${String(!!this.expanded) as 'true' | 'false'}">
+        <span part="text">${headingText ?? html`
+          <slot></slot>`}
+        </span>
+        ${this.renderAfterButton?.()}
+      </button>
+    `;
+  }
+
+  #getOrCreateHeader(): HTMLElement | undefined {
     // Check if there is no nested element or nested textNodes
     if (!this.firstElementChild && !this.firstChild) {
       return void this.#logger.warn('No header content provided');

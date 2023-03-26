@@ -15,10 +15,10 @@ export class PfAvatar extends BaseAvatar {
   static readonly styles = [style];
 
   /** Size of the Avatar */
-  @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
+  @property({ reflect: true }) size: 'sm' | 'md' | 'lg' | 'xl' = 'sm';
 
   /** Whether to display a border around the avatar */
-  @property({ reflect: true }) border?: 'light'|'dark';
+  @property({ reflect: true }) border?: 'light' | 'dark';
 }
 
 declare global {

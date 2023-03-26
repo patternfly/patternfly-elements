@@ -20,7 +20,7 @@ export class PfIcon extends BaseIcon {
   public static defaultIconSet = 'fas';
 
   /** Size of the icon */
-  @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
+  @property({ reflect: true }) size: 'sm' | 'md' | 'lg' | 'xl' = 'sm';
 }
 
 declare global {

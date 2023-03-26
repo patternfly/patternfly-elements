@@ -14,7 +14,7 @@ import {
   flip as flipMiddleware,
 } from '@floating-ui/dom';
 
-type Lazy<T> = T|(() => T|null|undefined);
+type Lazy<T> = T | (() => T | null | undefined);
 
 interface FloatingDOMControllerOptions {
   content: Lazy<HTMLElement>;
@@ -30,8 +30,8 @@ interface ShowOptions {
   placement?: Placement;
 }
 
-export type Anchor = ''|'top'|'left'|'bottom'|'right';
-export type Alignment = 'center'|'start'|'end';
+export type Anchor = '' | 'top' | 'left' | 'bottom' | 'right';
+export type Alignment = 'center' | 'start' | 'end';
 
 /**
  * Controls floating DOM within a web component, e.g. tooltips and popovers

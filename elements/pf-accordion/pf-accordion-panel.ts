@@ -48,7 +48,7 @@ import style from './pf-accordion-panel.css';
 export class PfAccordionPanel extends BaseAccordionPanel {
   static readonly styles = [...BaseAccordionPanel.styles, style];
 
-  @property({ reflect: true }) bordered?: 'true'|'false';
+  @property({ reflect: true }) bordered?: 'true' | 'false';
 }
 
 declare global {

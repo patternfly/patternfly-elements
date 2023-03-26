@@ -22,7 +22,7 @@ export class PfPanel extends LitElement {
 
   @property({ type: Boolean, reflect: true }) scrollable = false;
 
-  @property({ reflect: true }) variant?: 'raised'|'bordered';
+  @property({ reflect: true }) variant?: 'raised' | 'bordered';
 
   #slots = new SlotController(this, 'header', null, 'footer');
 

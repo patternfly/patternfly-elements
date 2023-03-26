@@ -17,7 +17,7 @@ export interface IconSpec {
   /** Icon height in pixels */
   height: number;
   /** SVG path attribute value */
-  path: string|string[ ];
+  path: string | string[ ];
 }
 
 type JsonIconPack = Record<string, Omit<IconSpec, 'path'> & { svgPathData: string }>;

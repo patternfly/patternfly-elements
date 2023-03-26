@@ -198,8 +198,8 @@ describe('<pf-tabs>', function() {
     let element: PfTabs;
     let firstTab: PfTab;
     let secondTab: PfTab;
-    let initialFocus: Element|null;
-    let afterFocus: Element|null;
+    let initialFocus: Element | null;
+    let afterFocus: Element | null;
     beforeEach(async function() {
       element = await createFixture<PfTabs>(html`
         <pf-tabs manual>

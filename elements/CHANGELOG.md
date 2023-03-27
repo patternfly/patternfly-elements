@@ -1,5 +1,11 @@
 # @patternfly/elements
 
+## 2.0.3
+
+### Patch Changes
+
+- 9fd329e21: `<pf-panel>`: fixed raised and bordered variants
+
 ## 2.0.2
 
 ### Patch Changes

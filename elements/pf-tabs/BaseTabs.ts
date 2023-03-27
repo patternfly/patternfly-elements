@@ -61,7 +61,11 @@ export abstract class BaseTabs extends LitElement {
 
   @query('[part="tabs"]') private tabList!: HTMLElement;
 
-  #tabindex = new RovingTabindexController(this);
+  #tabindex = new RovingTabindexController(this, {
+    onChange: focusedItem => {
+      this.#select(focusedItem as BaseTab);
+    }
+  });
 
   #overflow = new OverflowController(this);
 
@@ -140,7 +144,7 @@ export abstract class BaseTabs extends LitElement {
   override connectedCallback() {
     super.connectedCallback();
     this.addEventListener('expand', this.#onTabExpand);
-    this.addEventListener('keydown', this.#onKeydown);
+    // this.addEventListener('keydown', this.#onKeydown);
     BaseTabs.#instances.add(this);
   }
 
@@ -229,10 +233,6 @@ export abstract class BaseTabs extends LitElement {
     return this.#tabindex.firstItem as BaseTab;
   }
 
-  get #lastFocusable(): BaseTab {
-    return this.#tabindex.lastItem as BaseTab;
-  }
-
   get #firstTab(): BaseTab {
     const [tab] = this.#allTabs;
     return tab;
@@ -253,45 +253,11 @@ export abstract class BaseTabs extends LitElement {
     }
   }
 
-  async #select(selectedTab: BaseTab): Promise<void> {
+  #select(selectedTab: BaseTab): void {
     if (!this.manual) {
       this.#activate(selectedTab);
     }
   }
-
-  // RTI: will handle key events
-  #onKeydown = (event: KeyboardEvent): void => {
-    const foundTab = this.#allTabs.find(tab => tab === event.target);
-    if (!foundTab) {
-      return;
-    }
-    switch (event.key) {
-      case 'ArrowUp':
-      case 'ArrowLeft':
-        event.preventDefault();
-        this.#select(this.#tabindex.activeItem as BaseTab);
-        break;
-
-      case 'ArrowDown':
-      case 'ArrowRight':
-        event.preventDefault();
-        this.#select(this.#tabindex.activeItem as BaseTab);
-        break;
-
-      case 'Home':
-        event.preventDefault();
-        this.#select(this.#firstFocusable);
-        break;
-
-      case 'End':
-        event.preventDefault();
-        this.#select(this.#lastFocusable);
-        break;
-
-      default:
-        return;
-    }
-  };
 
   #firstLastClasses() {
     this.#firstTab.classList.add('first');

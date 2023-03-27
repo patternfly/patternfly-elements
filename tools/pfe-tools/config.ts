@@ -68,7 +68,7 @@ export function getPfeConfig(rootDir = process.cwd()): Required<PfeConfig> {
   };
 }
 
-const slugsConfigMap = new Map<string, { config: PfeConfig, slugs: Map<string, string> }>();
+const slugsConfigMap = new Map<string, { config: PfeConfig; slugs: Map<string, string> }>();
 const reverseSlugifyObject = ([k, v]: [string, string]): [string, string] =>
   [slugify(v).toLowerCase(), k];
 function getSlugsMap(rootDir: string) {

@@ -1,5 +1,5 @@
 import type { ReactiveElement } from 'lit';
-import { expect, html, nextFrame, aTimeout } from '@open-wc/testing';
+import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 
@@ -24,7 +24,6 @@ describe('<pf-jump-links>', function() {
   let element: PfJumpLinks;
   let firstItem: PfJumpLinksItem;
   let secondItem: PfJumpLinksItem;
-  let thirdItem: PfJumpLinksItem;
 
   beforeEach(async function() {
     element = await createFixture<PfJumpLinks>(html`
@@ -35,11 +34,11 @@ describe('<pf-jump-links>', function() {
       </pf-jump-links>
     `);
     await allUpdates(element);
-    [firstItem, secondItem, thirdItem] = element.querySelectorAll<PfJumpLinksItem>('pf-jump-links-item');
+    [firstItem, secondItem] = element.querySelectorAll<PfJumpLinksItem>('pf-jump-links-item');
   });
 
   describe('tabbing to first item', function() {
-    let initialActiveElement: Element|null;
+    let initialActiveElement: Element | null;
     beforeEach(async function() {
       initialActiveElement = document.activeElement;
       await sendKeys({ press: 'Tab' });

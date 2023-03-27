@@ -29,8 +29,6 @@ export type PromptOptions<T> =
 const ERR_BAD_CE_TAG_NAME =
   'Custom element tag names must contain a hyphen (-)';
 
-const b = Chalk.cyanBright;
-
 interface PackageJSON {
   customElements?: string;
   name: string;

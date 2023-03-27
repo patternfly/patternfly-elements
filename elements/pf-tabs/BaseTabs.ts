@@ -61,11 +61,7 @@ export abstract class BaseTabs extends LitElement {
 
   @query('[part="tabs"]') private tabList!: HTMLElement;
 
-  #tabindex = new RovingTabindexController(this, {
-    onChange: focusedItem => {
-      this.#select(focusedItem as BaseTab);
-    }
-  });
+  #tabindex = new RovingTabindexController(this);
 
   #overflow = new OverflowController(this);
 
@@ -270,5 +266,12 @@ export abstract class BaseTabs extends LitElement {
 
   #scrollRight() {
     this.#overflow.scrollRight();
+  }
+
+  protected updated(): void {
+    /* If RTI has an activeItem, select that tab */
+    if (this.#tabindex.activeItem) {
+      this.#select(this.#tabindex.activeItem as BaseTab);
+    }
   }
 }

@@ -1,7 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
-import { bound } from '@patternfly/pfe-core/decorators/bound.js';
-
 const isFocusableElement = (el: Element): el is HTMLElement =>
   !!el &&
   !el.hasAttribute('disabled') &&
@@ -87,11 +85,8 @@ export class RovingTabindexController implements ReactiveController {
     );
   }
 
-  constructor(public host: ReactiveControllerHost & HTMLElement, options?: {
-    onChange?(activeItem: HTMLElement): void;
-  }) {
+  constructor(public host: ReactiveControllerHost & HTMLElement) {
     this.host.addController(this);
-    this.onChange = options?.onChange;
   }
 
   /**
@@ -184,7 +179,7 @@ export class RovingTabindexController implements ReactiveController {
   focusOnItem(item?: HTMLElement): void {
     this.updateActiveItem(item || this.firstItem);
     this.#activeItem?.focus();
-    this.evaluate();
+    this.host.requestUpdate();
   }
 
   /**
@@ -229,12 +224,5 @@ export class RovingTabindexController implements ReactiveController {
    */
   hostDisconnected() {
     this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
-  }
-
-  @bound evaluate() {
-    this.host.requestUpdate();
-    if (this.#activeItem && this.#activeItem.matches(':focus')) {
-      this.onChange?.(this.#activeItem);
-    }
   }
 }

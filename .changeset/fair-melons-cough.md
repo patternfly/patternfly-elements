@@ -2,4 +2,4 @@
 "@patternfly/elements": patch
 ---
 
-`<pf-tabs>`: Ensure auto mode keyboard navigation correctly activates focused tab
+`<pf-tabs>`: improved keyboard navigation so it correctly activates the focused tab

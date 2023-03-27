@@ -217,6 +217,7 @@ export abstract class BaseTabs extends LitElement {
     const target = event as TabExpandEvent;
     if (target.active) {
       this.activeIndex = this.#allTabs.findIndex(tab => tab === target.tab);
+      this.#tabindex.updateActiveItem(this.#activeTab);
     }
   };
 
@@ -270,7 +271,7 @@ export abstract class BaseTabs extends LitElement {
 
   protected updated(): void {
     /* If RTI has an activeItem, select that tab */
-    if (this.#tabindex.activeItem) {
+    if (this.#tabindex.activeItem !== this.#activeTab) {
       this.#select(this.#tabindex.activeItem as BaseTab);
     }
   }

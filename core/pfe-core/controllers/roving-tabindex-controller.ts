@@ -1,5 +1,7 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
+import { bound } from '@patternfly/pfe-core/decorators/bound.js';
+
 const isFocusableElement = (el: Element): el is HTMLElement =>
   !!el &&
   !el.hasAttribute('disabled') &&
@@ -20,6 +22,8 @@ export class RovingTabindexController implements ReactiveController {
 
   /** array of all focusable elements */
   #items: HTMLElement[] = [];
+
+  private onChange?(activeItem: HTMLElement): void
 
   /**
    * finds focusable items from a group of items
@@ -83,8 +87,11 @@ export class RovingTabindexController implements ReactiveController {
     );
   }
 
-  constructor(public host: ReactiveControllerHost & HTMLElement) {
+  constructor(public host: ReactiveControllerHost & HTMLElement, options?: {
+    onChange?(activeItem: HTMLElement): void;
+  }) {
     this.host.addController(this);
+    this.onChange = options?.onChange;
   }
 
   /**
@@ -177,6 +184,7 @@ export class RovingTabindexController implements ReactiveController {
   focusOnItem(item?: HTMLElement):void {
     this.updateActiveItem(item || this.firstItem);
     this.#activeItem?.focus();
+    this.evaluate();
   }
 
   /**
@@ -210,16 +218,23 @@ export class RovingTabindexController implements ReactiveController {
   }
 
   /**
-   * adds event listners to items container
+   * adds event listeners to items container
    */
   hostConnected() {
     this.#itemsContainer?.addEventListener('keydown', this.#onKeydown);
   }
 
   /**
-   * removes event listners from items container
+   * removes event listeners from items container
    */
   hostDisconnected() {
     this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
+  }
+
+  @bound evaluate() {
+    this.host.requestUpdate();
+    if (this.#activeItem && this.#activeItem.matches(':focus')) {
+      this.onChange?.(this.#activeItem);
+    }
   }
 }

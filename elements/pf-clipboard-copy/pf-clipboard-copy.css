@@ -10,6 +10,10 @@ pf-button {
   display: flex;
 }
 
+.inline #wrapper {
+  display: inline-flex;
+}
+
 pf-button {
   height: 100%;
 }

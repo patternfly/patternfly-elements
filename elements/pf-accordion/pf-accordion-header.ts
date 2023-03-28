@@ -84,7 +84,7 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
 export class PfAccordionHeader extends BaseAccordionHeader {
   static readonly styles = [...BaseAccordionHeader.styles, style];
 
-  @property({ reflect: true }) bordered?: 'true'|'false';
+  @property({ reflect: true }) bordered?: 'true' | 'false';
 
   @property({ reflect: true }) icon?: string;
 

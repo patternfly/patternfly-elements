@@ -21,7 +21,7 @@ function deinlineDefault(
     return;
   }
 
-  const existing = (classDoc[groupKey] as (Attribute|CssCustomProperty)[])?.find?.(x =>
+  const existing = (classDoc[groupKey] as (Attribute | CssCustomProperty)[])?.find?.(x =>
     x.name === jsDoc.name);
 
   if (!existing) {

@@ -1,5 +1,46 @@
 # @patternfly/pfe-tools
 
+## 1.1.0
+
+### Minor Changes
+
+- 79f30b8f6: `11ty/plugins/custom-elements-manifest.cjs`: added `renderTitleInOverview`
+  option, a boolean flag which defaults to `true`.
+
+  When true, this option renders an `<h1>` in the element's docs page's "Overview"
+  section.
+
+  Note: the next major release will switch this option to `false` by default, so
+  to prepare your docs pages, add your own headings:
+
+  BEFORE:
+
+  ```md
+  {% renderOverview %}
+  <pf-jazz-hands></pf-jazz-hands>
+  {% endrenderOverview %}
+  ```
+
+  AFTER:
+
+  ```md
+  <section class="band">
+    <h1 id="jazz-hands">Jazz Hands</h1>
+  </section>
+
+  {% renderOverview %}
+  <pf-jazz-hands></pf-jazz-hands>
+  {% endrenderOverview %}
+  ```
+
+## 1.0.1
+
+### Patch Changes
+
+- cfc5913c6: `pfe-tools`:
+  - Updated dev server header styles to match look and feel of 11ty documentation site
+  - Added `repoHost` to `PfeConfig` which enables customizing the dev server repository host name and icon
+
 ## 1.0.0
 
 ### Major Changes

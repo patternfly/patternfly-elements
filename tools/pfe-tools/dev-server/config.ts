@@ -38,7 +38,7 @@ type Base = (DevServerConfig & PfeConfig);
 export interface PfeDevServerConfigOptions extends Base {
   hostname?: string;
   importMap?: InjectSetting['importMap'];
-  litcssOptions?: LitCSSOptions,
+  litcssOptions?: LitCSSOptions;
   tsconfig?: string;
   /** Extra dev server plugins */
   loadDemo?: boolean;

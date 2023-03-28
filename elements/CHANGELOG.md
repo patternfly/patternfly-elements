@@ -1,5 +1,14 @@
 # @patternfly/elements
 
+## 2.0.4
+
+### Patch Changes
+
+- 83024fe5e: `<pf-tabs>`: improved keyboard navigation so it correctly activates the focused tab
+- Updated dependencies [83024fe5e]
+- Updated dependencies [83024fe5e]
+  - @patternfly/pfe-core@2.2.0
+
 ## 2.0.3
 
 ### Patch Changes

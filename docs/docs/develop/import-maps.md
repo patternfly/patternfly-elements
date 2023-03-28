@@ -14,27 +14,32 @@ tags:
 
 {% band %}
 
-## What are import maps?
-Import maps are a feature of modern web browsers that allow developers to specify a mapping between a module specifier and the location of the module's implementation. This enables developers to use short, easy-to-remember module specifiers in their code, while the import map takes care of resolving the correct URL for the module.
-
-### Why use import maps and bare import specifiers?
-Prior to the adoption of import maps, developers had to manually specify the full URL of each module they wanted to import in their code. This made code harder to read and write, and made it more difficult to manage dependencies as they evolved over time.
-
-Import maps provide a way for developers to use shorter and more descriptive module specifiers in their code, which can improve code readability and maintainability. Instead of having to remember and type out lengthy URLs for each module, developers can use simple and memorable module specifiers that map to the correct URLs in the import map.
+Import maps provide a way for developers to use shorter and more descriptive module specifiers in their code, which can improve code readability and maintainability. Instead of having to remember and type out lengthy URLs for each module, developers can use simple and memorable module specifiers that map to the correct URLs in the import map. Developers can still use tools like bundlers and minifiers, but now they can ship bare modules specifiers to production, and map those specifiers to the original source or to minified bundles.
 
 Bare import specifiers are a shorthand for module specifiers that are used in JavaScript code. They allow developers to write simpler and more concise module specifiers, without having to specify the full URL of the module.
 
+## What are import maps?
+Import maps are a feature of modern web browsers that allow developers to map between module specifiers and their implementing files. This enables developers to use short, easy-to-remember module specifiers in their code, while the import map takes care of resolving the correct URL for the module.
+
+### Why use import maps and bare import specifiers?
+Prior to the adoption of import maps, developers had to manually specify the full URL of each module they wanted to import in their code, or use a build step to "resolve" those specifiers, prior to publishing. This made code harder to read and write, and made it more difficult to manage dependencies as they evolved over time.
+
+
 Example:
-```javascript
-// Import map
+```html
+<!-- // Import map -->
+<script type="importmap">
 {
   "imports": {
     "@patternfly/elements/pf-card/pf-card.js": "path/to/pf-card.js"
   }
 }
+</script>
 
-// Bare module import specifier
+<!-- //  Bare module import specifier -->
+<script type="module">
 import '@patternfly/elements/pf-card/pf-card.js';
+</script>
 ```
 
 ### Using generator.jspm.io
@@ -86,11 +91,13 @@ Once you've generated your import map and added it to your project, you can use 
 </script>
 ```
 
-Overall, [generator.jspm.io](https://generator.jspm.io) provides a simple and convenient way to generate import maps for your JavaScript projects. By using import maps and bare import specifiers, you can write cleaner, more concise code that is easier to read and maintain over time.
+Overall, [generator.jspm.io](https://generator.jspm.io) provides a simple and convenient way to generate import maps for your JavaScript projects. By using import maps and bare import specifiers, you can write cleaner, more concise code that is easier to read and maintain over time.  
+
+As an alternative to [generator.jspm.io](https://generator.jspm.io), you can also use the [@jspm/generator](https://github.com/jspm/generator).  Install it using `npm install @jspm/generator`.  The ES module generator can be used to generate import maps with code for a more custom setup.  The [@jspm/generator](https://github.com/jspm/generator) can also be used against most common CDNs by configuring the `defaultProvider`, defaulting to the JSPM CDN.
 
 ### Writing import maps manually
 
-If you prefer not to use a tool like [generator.jspm.io](https://generator.jspm.io) and its CDN, you can write them manually. Here's how:
+If you prefer not to use a tool like [generator.jspm.io](https://generator.jspm.io) or [@jspm/generator](https://github.com/jspm/generator), you can write `importmaps` manually. Here's how:
 
 1. Create a new `<script type="importmap"></script>` tag.
 2. Edit the contents of the script tag to specify the mapping between your module specifiers and the URLs of their implementations. For example:
@@ -99,7 +106,7 @@ If you prefer not to use a tool like [generator.jspm.io](https://generator.jspm.
 <script type="importmap">
 {
   "imports": {
-    "module-specifier": "path/to/module.js"
+    "module-specifier": "./path/to/module.js"
   }
 }
 </script>
@@ -117,8 +124,8 @@ Import maps allow you to specify multiple versions of the same module. This can 
 <script type="importmap">
 {
   "imports": {
-    "module-specifier@2": "path/to/v2/module.js",
-    "module-specifier@3": "path/to/v3/module.js",
+    "module-specifier@2": "./path/to/v2/module.js",
+    "module-specifier@3": "./path/to/v3/module.js",
   }
 }
 </script>
@@ -132,11 +139,11 @@ By utilizing import maps scopes, you can specify the same module specifier for d
 <script type="importmap">
 {
   "imports": {
-    "module-specifier": "path/to/module.js"
+    "module-specifier": "./path/to/module.js"
   },
   "scopes": {
     "/path/to/feature/": {
-      "module-specifier": "path/to/v2/module.js"
+      "module-specifier": "./path/to/v2/module.js"
     }
   }
 }

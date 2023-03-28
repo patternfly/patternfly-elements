@@ -1,0 +1,283 @@
+:host {
+  display: block;
+  /* todo: this is set programmatically */
+  --pf-c-pagination__nav-page-select--c-form-control--width-chars: 2;
+}
+
+#container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#container > *:not(:last-child) {
+  margin-right: var(--pf-c-pagination--child--MarginRight);
+}
+
+@media (min-width: 768px) {
+  #container {
+    --pf-c-pagination--m-bottom__nav-control--c-button--PaddingTop: var(--pf-c-pagination--m-bottom__nav-control--c-button--md--PaddingTop, var(--pf-global--spacer--form-element, .375rem));
+    --pf-c-pagination--m-bottom__nav-control--c-button--PaddingRight: var(--pf-c-pagination--m-bottom__nav-control--c-button--md--PaddingRight, var(--pf-global--spacer--sm, .5rem));
+    --pf-c-pagination--m-bottom__nav-control--c-button--PaddingBottom: var(--pf-c-pagination--m-bottom__nav-control--c-button--md--PaddingBottom, var(--pf-global--spacer--form-element, .375rem));
+    --pf-c-pagination--m-bottom__nav-control--c-button--PaddingLeft: var(--pf-c-pagination--m-bottom__nav-control--c-button--md--PaddingLeft, var(--pf-global--spacer--sm, .5rem));
+    --pf-c-pagination--m-bottom--child--MarginRight: var(--pf-c-pagination--m-bottom--child--md--MarginRight, var(--pf-global--spacer--lg, 1.5rem));
+    --pf-c-pagination--m-bottom__nav-control--c-button--OutlineOffset: 0;
+    --pf-c-pagination--m-bottom--BoxShadow: none;
+    --pf-c-pagination--c-options-menu--Display: inline-flex;
+    --pf-c-pagination--c-options-menu--Visibility: visible;
+    --pf-c-pagination__nav--Display: inline-flex;
+    --pf-c-pagination__nav--Visibility: visible;
+    --pf-c-pagination__total-items--Display: none;
+    --pf-c-pagination__total-items--Visibility: hidden;
+  }
+}
+
+@media (min-width: 1200px) {
+  #container {
+    --pf-c-pagination--m-bottom--md--PaddingRight: var(--pf-c-pagination--m-bottom--xl--PaddingRight, var(--pf-global--spacer--lg, 1.5rem));
+    --pf-c-pagination--m-bottom--md--PaddingLeft: var(--pf-c-pagination--m-bottom--xl--PaddingLeft, var(--pf-global--spacer--lg, 1.5rem));
+    /* todo: find correct fallback */
+    --pf-c-pagination__scroll-button--Width: var(--pf-c-pagination__scroll-button--xl--Width);
+    --pf-c-pagination--m-page-insets--inset: var(--pf-c-pagination--m-page-insets--xl--inset, var(--pf-global--spacer--lg, 1.5rem));
+  }
+}
+
+/* PER PAGE SELECT */
+#container #options-menu {
+  position: absolute;
+  display: block;
+  visibility: visible;
+}
+
+@media (min-width: 768px) {
+  #container.bottom #options-menu {
+    position: relative;
+  }
+}
+
+/* PER PAGE SELECT: TOGGLE */
+#container #options-menu #menu-toggle {
+  position: relative;
+  --pf-c-button--FontSize: var(--pf-c-pagination--c-options-menu__toggle--FontSize, var(--pf-global--FontSize--sm, .875rem));
+  --pf-c-button--LineHeight: var(--pf-c-options-menu__toggle--LineHeight, var(--pf-global--LineHeight--md, 1.5));
+  --pf-c-button--PaddingTop: var(--pf-c-options-menu__toggle--PaddingTop, var(--pf-global--spacer--form-element, 0.375rem));
+  --pf-c-button--PaddingRight: var(--pf-c-options-menu__toggle--PaddingRight, var(--pf-global--spacer--sm, .5rem));
+  --pf-c-button--PaddingBottom: var(--pf-c-options-menu__toggle--PaddingBottom, var(--pf-global--spacer--form-element, 0.375rem));
+  --pf-c-button--PaddingLeft: var(--pf-c-options-menu__toggle--PaddingLeft, var(--pf-global--spacer--sm, .5rem));
+  --pf-c-button--BorderRadius: 0;
+  --pf-c-button--m-plain--Color	: var(--pf-c-options-menu__toggle--Color, var(--pf-global--Color--100, #151515));
+  --pf-c-button--m-plain--BackgroundColor: var(--pf-c-options-menu__toggle--BackgroundColor, transparent);
+  --pf-c-button__icon--m-start--MarginLeft: var(--pf-c-options-menu__toggle-icon--MarginLeft, var(--pf-global--spacer--sm, .5rem));
+}
+
+#container #options-menu #menu-toggle:hover,
+#container #options-menu #menu-toggle:active,
+#container #options-menu #menu-toggle:focus {
+  --pf-c-options-menu__toggle--m-plain--Color: var(--pf-c-options-menu__toggle--m-plain--hover--Color, var(--pf-global--Color--100, #151515));
+  --pf-c-options-menu--m-plain__toggle-icon--Color: var(--pf-c-options-menu--m-plain--hover__toggle-icon--Color,  var(--pf-global--Color--100, #151515));
+}
+
+#container #options-menu #menu-toggle::part(icon) {
+  --_icon-color: var(--pf-c-options-menu__toggle-icon--Color, var(--pf-c-options-menu--m-plain__toggle-icon--Color, var(--pf-global--Color--200, #6a6e73)));
+  margin-right: var(--pf-c-options-menu__toggle-icon--MarginRight, var(--pf-global--spacer--sm, .5rem));
+  color: var(--_icon-color, inherit);
+  /* todo: icon style + size not 100% aligned with pf */
+  --pf-icon--size: 12px;
+  width: 12px;
+  left: 0;
+}
+
+/* PER PAGE SELECT: MENU */
+#container #options-menu:not(.expanded) #menu-list {
+  display: none;
+}
+
+#container #options-menu #menu-list {
+  position: absolute;
+  list-style: none;
+  margin: 0;
+  top: var(--pf-c-options-menu--m-top__menu--Top, 0);
+  transform: translateY(var(--pf-c-options-menu--m-top__menu--TranslateY, calc(-100% - var(--pf-global--spacer--xs, 0.25rem))));
+  z-index: var(--pf-c-options-menu__menu--ZIndex, var(--pf-global--ZIndex--sm, 200));
+  min-width: 100%;
+  padding-top: var(--pf-c-options-menu__menu--PaddingTop, var(--pf-global--spacer--sm, .5rem));
+  padding-right: 0;
+  padding-bottom: var(--pf-c-options-menu__menu--PaddingBottom, var(--pf-global--spacer--sm, .5rem));
+  padding-left: 0;
+  background-color: var(--pf-c-options-menu__menu--BackgroundColor, var(--pf-global--BackgroundColor--light-100, #fff));
+  background-clip: padding-box;
+  box-shadow: var(--pf-c-options-menu__menu--BoxShadow, var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06)));
+}
+
+#container #options-menu #menu-list .menu-item {
+  white-space: nowrap;
+  --pf-c-button--JustifyContent: start;
+  --pf-c-button--PaddingTop: var(--pf-c-options-menu__menu-item--PaddingTop, var(--pf-global--spacer--sm, .5rem));
+  --pf-c-button--PaddingRight: var(--pf-c-options-menu__menu-item--PaddingRight, var(--pf-global--spacer--md, 1rem));
+  --pf-c-button--PaddingBottom: var(--pf-c-options-menu__menu-item--PaddingBottom, var(--pf-global--spacer--sm, .5rem));
+  --pf-c-button--PaddingLeft: var(--pf-c-options-menu__menu-item--PaddingLeft, var(--pf-global--spacer--md, 1rem));
+  --pf-c-button--FontSize: var(--pf-c-options-menu__menu-item--FontSize, var(--pf-global--FontSize--md, 1rem));
+  --pf-c-button--m-tertiary--Color: var(--pf-c-options-menu__menu-item--Color, var(--pf-global--Color--100, #151515));
+  --pf-c-button--m-tertiary--BackgroundColor: var(--pf-c-options-menu__menu-item--BackgroundColor, transparent);
+  --pf-c-button--BorderRadius: 0;
+  --pf-c-button--m-tertiary--after--BorderColor: transparent;
+}
+
+#container #options-menu #menu-list .menu-item.selected {
+  --pf-c-button__icon--m-start--MarginLeft: calc(var(--pf-c-options-menu__menu-item-icon--PaddingLeft, var(--pf-global--spacer--lg, 1.5rem)) / 2);
+  align-self: center;
+  width: auto;
+  margin-left: auto;
+}
+
+#container #options-menu #menu-list .menu-item.selected::part(icon) {
+  /* todo: icon size doesn't seem to match */
+  --pf-icon--size: var(--pf-c-options-menu__menu-item-icon--FontSize, var(--pf-global--icon--FontSize--sm, 0.625rem));
+  width: var(--pf-c-options-menu__menu-item-icon--FontSize, var(--pf-global--icon--FontSize--sm, 0.625rem));
+  color: var(--pf-c-options-menu__menu-item-icon--Color, var(--pf-global--active-color--100, #06c));
+}
+
+#container #options-menu #menu-list .menu-item:hover {
+  --pf-c-button--m-tertiary--hover--after--BorderColor: transparent;
+  --pf-c-button--m-tertiary--hover--Color: var(--pf-c-options-menu__menu-item--Color, var(--pf-global--Color--100, #151515));
+  --pf-c-button--m-tertiary--hover--BackgroundColor: var(--pf-c-options-menu__menu-item--hover--BackgroundColor, var(--pf-global--BackgroundColor--light-300, #f0f0f0));
+}
+
+#container #options-menu #menu-list .menu-item:active {
+  --pf-c-button--m-tertiary--active--after--BorderColor: transparent;
+  --pf-c-button--m-tertiary--active--Color: var(--pf-c-options-menu__menu-item--Color, var(--pf-global--Color--100, #151515));
+  --pf-c-button--m-tertiary--active--BackgroundColor: var(--pf-c-options-menu__menu-item--hover--BackgroundColor, var(--pf-global--BackgroundColor--light-300, #f0f0f0));
+}
+
+#container #options-menu #menu-list .menu-item:focus {
+  --pf-c-button--m-tertiary--focus--after--BorderColor: transparent;
+  --pf-c-button--m-tertiary--focus--Color: var(--pf-c-options-menu__menu-item--Color, var(--pf-global--Color--100, #151515));
+  --pf-c-button--m-tertiary--focus--BackgroundColor: var(--pf-c-options-menu__menu-item--hover--BackgroundColor, var(--pf-global--BackgroundColor--light-300, #f0f0f0));
+}
+
+#container #nav #page-select > * {
+  font-size: var(--pf-c-pagination__nav-page-select--FontSize, var(--pf-global--FontSize--sm, .875rem));
+  white-space: nowrap;
+}
+
+#container #nav #page-select > *:not(:last-child) {
+  margin-right: var(--pf-c-pagination__nav-page-select--child--MarginRight, var(--pf-global--spacer--xs, .25rem));
+}
+
+#container #nav #page-select #page-select-input {
+  /* todo: long complicated calc */
+  width: var(--pf-c-pagination__nav-page-select--c-form-control--Width, 24px);
+  appearance: textfield;
+  /* pf-form-control ? */
+  font-family: inherit;
+  color: var(--pf-c-form-control--Color, var(--pf-global--Color--100, #151515));
+  --_padding-top: var(--pf-c-form-control--PaddingTop, calc(var(--pf-global--spacer--form-element, 0.375rem) - var(--pf-global--BorderWidth--sm, 1px)));
+  --_padding-right: var(--pf-c-form-control--PaddingRight, var(--pf-c-form-control--inset--base, var(--pf-global--spacer--sm, 0.5rem)));
+  --_padding-bottom: var(--pf-c-form-control--PaddingTop, calc(var(--pf-global--spacer--form-element, 0.375rem) - var(--pf-global--BorderWidth--sm, 1px)));
+  --_padding-left: var(--pf-c-form-control--PaddingRight, var(--pf-c-form-control--inset--base, var(--pf-global--spacer--sm, 0.5rem)));
+  padding: var(--_padding-top) var(--_padding-right) var(--_padding-bottom) var(--_padding-left);
+  line-height: var(--pf-c-form-control--LineHeight, 1.5);
+  background-color: var(--pf-c-form-control--BackgroundColor, var(--pf-global--BackgroundColor--100, var(--pf-global--BackgroundColor--light-100, #fff)));
+  background-repeat: no-repeat;
+  border: var(--pf-c-form-control--BorderWidth, var(--pf-global--BorderWidth--sm, 1px)) solid;
+  --_border-top-color: var(--pf-c-form-control--BorderTopColor, var(--pf-global--BorderColor--300, #f0f0f0));
+  --_border-right-color: var(--pf-c-form-control--BorderRightColor, var(--pf-global--BorderColor--300, #f0f0f0));
+  --_border-bottom-color: var(--pf-c-form-control--BorderBottomColor, var(--pf-global--BorderColor--200, #8a8d90));
+  --_border-left-color: var(--pf-c-form-control--BorderLeftColor, var(--pf-global--BorderColor--300, #f0f0f0));
+  border-color: var(--_border-top-color) var(--_border-right-color) var(--_border-bottom-color) var(--_border-left-color);
+  border-radius: var(--pf-c-form-control--BorderRadius, 0);
+}
+
+#container #nav #page-select #page-select-input::-webkit-inner-spin-button, 
+#container #nav #page-select #page-select-input::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+#container #nav #page-select #page-select-input:focus {
+  --pf-c-form-control--BorderBottomColor: var(--pf-c-form-control--focus--BorderBottomColor, var(--pf-global--primary-color--100, var(--pf-global--primary-color--dark-100, #06c)));
+  --_border-bottom-width: var(--pf-c-form-control--focus--BorderBottomWidth, var(--pf-global--BorderWidth--md, 2px));
+  padding-bottom: var(--pf-c-form-control--focus--PaddingBottom, calc(var(--pf-global--spacer--form-element, 0.375rem) - var(--_border-bottom-width)));
+  border-bottom-width: var(--_border-bottom-width);
+}
+
+#container #nav #page-select #page-select-input:hover {
+  --pf-c-form-control--BorderBottomColor: var(--pf-c-form-control--hover--BorderBottomColor, var(--pf-global--primary-color--100, var(--pf-global--primary-color--dark-100, #06c)));
+}
+
+/* This should be on the input component */
+#container #nav #page-select input:not(textarea) {
+  height: var(--pf-c-form-control--Height);
+  text-overflow: ellipsis;
+}
+
+#container #nav .nav-control pf-button {
+  --pf-c-button--PaddingRight: var(--pf-c-pagination__nav-control--c-button--PaddingRight);
+  --pf-c-button--PaddingLeft: var(--pf-c-pagination__nav-control--c-button--PaddingLeft);
+  --pf-c-button--FontSize: var(--pf-c-pagination__nav-control--c-button--FontSize, var(--pf-global--FontSize--md, 1rem));
+}
+
+/* Bottom variant */
+#container.bottom {
+  --pf-c-pagination--child--MarginRight: var(--pf-c-pagination--m-bottom--child--MarginRight, 0);
+  --pf-c-pagination__nav-control--c-button--PaddingRight: var(--pf-c-pagination--m-bottom__nav-control--c-button--PaddingRight, var(--pf-global--spacer--md, 1rem));
+  --pf-c-pagination__nav-control--c-button--PaddingLeft: var(--pf-c-pagination--m-bottom__nav-control--c-button--PaddingRight, var(--pf-global--spacer--md, 1rem));
+  position: sticky;
+  bottom: var(--pf-c-pagination--m-bottom--Bottom, 0);
+  justify-content: center;
+  background-color: var(--pf-c-pagination--m-bottom--BackgroundColor, var(--pf-global--BackgroundColor--100, #fff));
+  box-shadow: var(--pf-c-pagination--m-bottom--BoxShadow, var(--pf-global--BoxShadow--sm-top, 0 -0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)));
+}
+
+#container.bottom #nav {
+  display: flex;
+  flex-basis: 100%;
+  justify-content: space-between;
+  visibility: visible;
+}
+
+#container.bottom #nav #page-select {
+  display: flex;
+  align-items: center;
+  padding-right: var(--pf-c-pagination__nav-page-select--PaddingRight, var(--pf-global--spacer--md, 1rem));
+  padding-left: var(--pf-c-pagination__nav-page-select--PaddingLeft, var(--pf-global--spacer--md, 1rem));
+}
+
+#container.bottom #nav .nav-control:first-child,
+#container.bottom #nav #page-select,
+#container.bottom #nav .nav-control:last-child {
+  display: none;
+  visibility: hidden;
+}
+
+#container.bottom #nav .nav-control pf-button {
+  --pf-c-button--PaddingTop: var(--pf-c-pagination--m-bottom__nav-control--c-button--PaddingTop);
+  --pf-c-button--PaddingBottom: var(--pf-c-pagination--m-bottom__nav-control--c-button--PaddingBottom);
+  /* Can't set on pf-button */
+  outline-offset: var(--pf-c-pagination--m-bottom__nav-control--c-button--OutlineOffset, 0);
+}
+
+@media (min-width: 768px) {
+  #container.bottom {
+    --pf-c-pagination--m-bottom--BorderTopWidth: 0;
+    --pf-c-pagination--m-bottom--MarginTop: 0;
+    --pf-c-pagination--m-bottom--Bottom: auto;
+    position: relative;
+    justify-content: flex-end;
+    padding: var(--pf-c-pagination--m-bottom--md--PaddingTop, var(--pf-global--spacer--md, 1rem)) var(--pf-c-pagination--m-bottom--md--PaddingRight, var(--pf-global--spacer--md, 1rem)) var(--pf-c-pagination--m-bottom--md--PaddingBottom, var(--pf-global--spacer--md, 1rem)) var(--pf-c-pagination--m-bottom--md--PaddingLeft, var(--pf-global--spacer--md, 1rem));
+  }
+
+  #container.bottom #nav {
+    display: inline-flex;
+    flex-basis: auto;
+  }
+
+  /* Not using modifier class, verify that this works correctly */
+  #container.bottom #nav .nav-control:first-child,
+  #container.bottom #nav #page-select,
+  #container.bottom #nav .nav-control:last-child {
+    display: block;
+    visibility: visible;
+  }
+}

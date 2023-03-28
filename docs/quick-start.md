@@ -7,12 +7,13 @@ title: Quick start
   <h1>{{ title }}</h1>
 </header>
 
-<section class="band small">
+<section class="band">
 
 ## Quick start template
 Use the markup below to start exploring PatternFly Elements. The template below 
 includes the [card](/components/card), [accordion](/components/accordion), and 
-[tabs](/components/tabs) components.
+[tabs](/components/tabs) components, however, all components are accessible in the
+importmap.
 
 The template below utilizes [JSPM](https://jspm.dev/) to deliver PatternFly 
 Elements to the page. This is fine for development and exploration, but it's 
@@ -39,7 +40,37 @@ production.
       font-family: "Red Hat Display";
     }
   </style>
-  <script type="module" src="https://jspm.dev/@patternfly/elements"></script>
+  <!--
+    JSPM Generator Import Map
+    Edit URL: https://generator.jspm.io/#U2VhYGBkDM0rySzJSU1hcChILClJLcpLy6nUT81JzU3NKyl2MNIz0DMAADWC5vEpAA
+  -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@patternfly/elements": "https://ga.jspm.io/npm:@patternfly/elements@2.0.0/pfe.min.js"
+    },
+    "scopes": {
+      "https://ga.jspm.io/": {
+        "@floating-ui/core": "https://ga.jspm.io/npm:@floating-ui/core@1.2.3/dist/floating-ui.core.browser.mjs",
+        "@floating-ui/dom": "https://ga.jspm.io/npm:@floating-ui/dom@1.2.4/dist/floating-ui.dom.browser.mjs",
+        "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/development/reactive-element.js",
+        "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/development/decorators/",
+        "lit": "https://ga.jspm.io/npm:lit@2.6.1/index.js",
+        "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.2.2/development/lit-element.js",
+        "lit-html": "https://ga.jspm.io/npm:lit-html@2.6.1/development/lit-html.js",
+        "lit-html/": "https://ga.jspm.io/npm:lit-html@2.6.1/development/",
+        "lit/": "https://ga.jspm.io/npm:lit@2.6.1/",
+        "tslib": "https://ga.jspm.io/npm:tslib@2.5.0/tslib.es6.js"
+      }
+    }
+  }
+  </script>
+  <!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support (all except Chrome 89+) -->
+  <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous"></script>
+  
+  <script type="module">
+    import * as Elements from "@patternfly/elements";
+  </script>
 </head>
 <body>
   <header>
@@ -104,32 +135,19 @@ production.
     <section>
       <h2>Tabs component</h2>
       <pf-tabs>
-        <pf-tab slot="tab" id="tab1">
-          <h3>Tab 1</h3>
-        </pf-tab>
-        <pf-tab-panel>
-          <h3>Content 1</h3>
-          <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </pf-tab-panel>
-        <pf-tab role="heading" slot="tab" id="tab2">
-          <h3>Tab 2</h3>
-        </pf-tab>
-        <pf-tab-panel>
-          <h3>Content 2</h3>
-          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis eius illum, ut vel quis porro voluptatum amet! Enim, sequi. Laudantium magnam officia dolore debitis quas eius placeat beatae illo obcaecati?</p>
-        </pf-tab-panel>
-        <pf-tab role="heading" slot="tab" id="tab3">
-          <h3>Tab 3</h3>
-        </pf-tab>
-        <pf-tab-panel>
-          <h3>Content 3</h3>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea animi enim eum ipsum laudantium eius deleniti quos illo id veritatis. Vero veritatis architecto aliquam non voluptate quibusdam saepe in cum.</p>
-        </pf-tab-panel>
+        <pf-tab slot="tab">Users</pf-tab>
+        <pf-tab-panel>Users</pf-tab-panel>
+        <pf-tab slot="tab" active>Containers</pf-tab>
+        <pf-tab-panel>Containers</pf-tab-panel>
+        <pf-tab slot="tab">Database</pf-tab>
+        <pf-tab-panel>Database</pf-tab-panel>
       </pf-tabs>
     </section>
   </main>
 </body>
 </html>
 ```
+
+[Lit Playground](https://lit.dev/playground/#gist=1540e63845ed8eeb88957a11ec234674&view-mode=code) example of the HTML above
 
 </section>

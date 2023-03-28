@@ -51,7 +51,7 @@
 }
 
 #home-header a.cta.primary:focus {
-  color: var(--pf-theme--color--white, #fff);
+  color: var(--pf-theme--color--accent, #0066cc);
 }
 
 #home-header a.cta.secondary:hover {

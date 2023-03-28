@@ -48,7 +48,7 @@ const markupRuiner = (_: unknown, css: string) =>
  * @returns  Returns the new web component rendered within React.
  */
 export async function fixture<T extends Element = HTMLElement>(
-  testCase: string|TemplateResult
+  testCase: string | TemplateResult
 ): Promise<T> {
   const code = (typeof testCase === 'string') ? testCase : renderToString(testCase);
   const appRoot = document.getElementById('root');

@@ -9,7 +9,7 @@
   --pf-c-panel--before--BorderWidth: 0;
   --pf-c-panel--before--BorderColor: var(--pf-global--BorderColor--100, #d2d2d2);
   --pf-c-panel--m-bordered--before--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
-  --pf-c-panel--m-raised--BoxShadow: pfglobalvar(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
+  --pf-c-panel--m-raised--BoxShadow: var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
   --pf-c-panel--m-raised--ZIndex: var(--pf-global--ZIndex--sm, 200);
   --pf-c-panel__header--PaddingTop: var(--pf-global--spacer--md, 1rem);
   --pf-c-panel__header--PaddingRight: var(--pf-global--spacer--md, 1rem);
@@ -36,6 +36,7 @@
   max-width: var(--pf-c-panel--MaxWidth);
   background-color: var(--pf-c-panel--BackgroundColor);
   box-shadow: var(--pf-c-panel--BoxShadow);
+  display: block;
 }
 
 :host([variant="bordered"])::before {
@@ -44,12 +45,19 @@
   pointer-events: none;
   content: "";
   border:
-    var(--pf-c-panel--before--BorderWidth,
-      var(--pf-c-panel--m-bordered--before--BorderWidth,
-        var(--pf-global--BorderWidth--sm, 1px)))
+  var(--pf-c-panel--m-bordered--before--BorderWidth, var(--pf-global--BorderWidth--sm, 1px))
     solid
     var(--pf-c-panel--before--BorderColor,
       var(--pf-global--BorderColor--100, #d2d2d2));
+}
+
+:host([variant="raised"])::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  box-shadow: var(--pf-c-panel--m-raised--BoxShadow, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
+  z-index: var(--pf-c-panel--m-raised--ZIndex, var(--pf-global--ZIndex--sm, 200));
 }
 
 :host([variant="raised"]) {

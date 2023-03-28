@@ -1,5 +1,23 @@
 # @patternfly/elements
 
+## 2.0.3
+
+### Patch Changes
+
+- 9fd329e21: `<pf-panel>`: fixed raised and bordered variants
+
+## 2.0.2
+
+### Patch Changes
+
+- af77424f8: `<pf-accordion>`: fixed issue where accent would not display full height if the
+  `large` attribute was set on `<pf-accordion>` and `<pf-accordion-panel>` slotted
+  content had padding or margins
+- caabed634: `<pf-accordion-header>`: fixed duplicated/nested headings when slotted heading
+  elements are used instead of the `header-text` attribute.
+- caabed634: `<pf-accordion-header>`: fixed broken `header-tag` and `header-text` attributes
+- ed747e98e: `<pf-switch>`: documented the `change` event
+
 ## 2.0.1
 
 ### Patch Changes

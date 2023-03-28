@@ -5,7 +5,7 @@ import { debounce } from '../functions/debounce.js';
 import { Logger } from './logger.js';
 
 export interface Options<E extends ReactiveElement> {
-  properties: Partial<Record<keyof E, string|string[]>>;
+  properties: Partial<Record<keyof E, string | string[]>>;
   prefix?: string;
 }
 
@@ -49,7 +49,7 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
    * Handles the cascading of properties to nested components when new elements are added
    * Attribute updates/additions are handled by the attribute callback
    */
-  cascadeProperties(nodeList: HTMLCollection|NodeList = this.host.children) {
+  cascadeProperties(nodeList: HTMLCollection | NodeList = this.host.children) {
     if (this.host.isConnected) {
       const selectors = this.cache.keys();
 
@@ -84,7 +84,7 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
    * falling back to the lowercased property name, and caches the attribute name
    * with it's designated child selectors for value-propagation on change
    */
-  initProp(propName: string, cascade: string|string[]) {
+  initProp(propName: string, cascade: string | string[]) {
     for (const nodeItem of [cascade].flat(Infinity).filter(Boolean) as string[]) {
       const { attribute } = this.class.getPropertyOptions(propName);
 

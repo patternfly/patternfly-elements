@@ -13,6 +13,8 @@ interface DocsPageOptions extends PfeConfig {
   docsTemplatePath?: string;
   tagName?: string;
   title?: string;
+  /** When true, renders an <h1> with the element's title in the element docs overview */
+  renderTitleInOverview?: boolean;
 }
 
 export interface RenderKwargs {
@@ -63,13 +65,13 @@ export class DocsPage implements DocsPageRenderer {
   title: string;
   slug: string;
   templates: Environment;
-  description?: string|null;
-  summary?: string|null;
+  description?: string | null;
+  summary?: string | null;
   docsTemplatePath?: string;
 
   constructor(
     public manifest: Manifest,
-    options?: DocsPageOptions) {
+    private options?: DocsPageOptions) {
     this.tagName = options?.tagName ?? '';
     this.title = options?.title ?? Manifest.prettyTag(this.tagName);
     this.slug = slugify(options?.aliases?.[this.tagName] ?? this.tagName.replace(/^\w+-/, '')).toLowerCase();
@@ -103,7 +105,13 @@ export class DocsPage implements DocsPageRenderer {
   /** Render the overview of a component page */
   renderOverview(content: string, kwargs: RenderKwargs = {}) {
     const description = this.manifest.getDescription(this.#packageTagName(kwargs));
-    return this.templates.render('overview.njk', { description, content, ...kwargs });
+    const header = kwargs.title ?? this.title;
+    // TODO: switch to false in next major
+    const { renderTitleInOverview = true } = this.options ?? {};
+    const renderedTitle =
+        !renderTitleInOverview ? ''
+      : this.renderBand('', { level: 1, header });
+    return `${renderedTitle}\n${this.templates.render('overview.njk', { description, content, ...kwargs })}`;
   }
 
   /** Render the list of element attributes */

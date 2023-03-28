@@ -138,7 +138,7 @@ export class Manifest {
     return new Manifest(null, null);
   }
 
-  public static from({ package: packageJson, location }: { package: PackageJSON, location: string }): Manifest {
+  public static from({ package: packageJson, location }: { package: PackageJSON; location: string }): Manifest {
     if (!Manifest.#instances.has(packageJson)) {
       const manifestPath = join(location, packageJson?.customElements ?? '');
       const json = readJsonSync(manifestPath);
@@ -164,8 +164,8 @@ export class Manifest {
   path = '';
 
   constructor(
-    public manifest: Package|null,
-    public packageJson: PackageJSON|null,
+    public manifest: Package | null,
+    public packageJson: PackageJSON | null,
     public location?: string
   ) {
     if (manifest && packageJson && location && packageJson.customElements) {
@@ -180,7 +180,7 @@ export class Manifest {
     }
   }
 
-  #tag(tagName: string): ManifestCustomElement|null {
+  #tag(tagName: string): ManifestCustomElement | null {
     return this.declarations?.get(tagName) ?? null;
   }
 
@@ -195,55 +195,55 @@ export class Manifest {
 
   /**
    */
-  getAttributes(tagName: string): undefined|Attribute[] {
+  getAttributes(tagName: string): undefined | Attribute[] {
     return this.#tag(tagName)?.attributes;
   }
 
   /**
    */
-  getCssCustomProperties(tagName: string): undefined|CssCustomProperty[] {
+  getCssCustomProperties(tagName: string): undefined | CssCustomProperty[] {
     return this.#tag(tagName)?.cssCustomProperties;
   }
 
   /**
    */
-  getCssParts(tagName: string): undefined|CssPart[] {
+  getCssParts(tagName: string): undefined | CssPart[] {
     return this.#tag(tagName)?.cssParts;
   }
 
   /**
    */
-  getDescription(tagName: string): undefined|string {
+  getDescription(tagName: string): undefined | string {
     return this.#tag(tagName)?.description;
   }
 
   /**
    */
-  getEvents(tagName: string): undefined|Event[] {
+  getEvents(tagName: string): undefined | Event[] {
     return this.#tag(tagName)?.events;
   }
 
   /**
    */
-  getMethods(tagName: string): undefined|ClassMethod[] {
+  getMethods(tagName: string): undefined | ClassMethod[] {
     return this.#tag(tagName)?.methods;
   }
 
   /**
    */
-  getProperties(tagName: string): undefined|ClassField[] {
+  getProperties(tagName: string): undefined | ClassField[] {
     return this.#tag(tagName)?.properties;
   }
 
   /**
    */
-  getSummary(tagName: string): undefined|string {
+  getSummary(tagName: string): undefined | string {
     return this.#tag(tagName)?.summary;
   }
 
   /**
    */
-  getSlots(tagName: string): undefined|Slot[] {
+  getSlots(tagName: string): undefined | Slot[] {
     return this.#tag(tagName)?.slots;
   }
 

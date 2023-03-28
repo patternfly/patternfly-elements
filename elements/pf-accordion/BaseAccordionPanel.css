@@ -20,6 +20,7 @@
 
 .body {
   position: relative;
+  overflow: hidden;
 }
 
 .body:after {

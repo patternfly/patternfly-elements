@@ -50,6 +50,10 @@
   color: var(--pf-theme--color--white, #fff);
 }
 
+#home-header a.cta.primary:focus {
+  color: var(--pf-theme--color--white, #fff);
+}
+
 #home-header a.cta.secondary:hover {
   --pf-cta--Color--hover: #06c;
 }

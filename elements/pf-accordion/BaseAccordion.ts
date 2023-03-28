@@ -372,8 +372,6 @@ export abstract class BaseAccordion extends LitElement {
     this.#expandHeader(header, index),
     this.#expandPanel(panel),
 
-    header.focus();
-
     this.dispatchEvent(new AccordionExpandEvent(header, panel));
 
     await this.updateComplete;

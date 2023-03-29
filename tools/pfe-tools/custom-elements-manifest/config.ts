@@ -14,7 +14,7 @@ import { getPfeConfig, type PfeConfig } from '../config.js';
 
 import Chalk from 'chalk';
 
-type Options = Config & Pick<PfeConfig, 'sourceControlURLPrefix'|'demoURLPrefix'>;
+type Options = Config & Pick<PfeConfig, 'sourceControlURLPrefix' | 'demoURLPrefix'>;
 
 /**
  * PFE Default custom-elements-manifest analyzer config

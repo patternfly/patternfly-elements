@@ -169,9 +169,12 @@ const config = {
       'plugin:@typescript-eslint/recommended',
     ],
     rules: {
+      'valid-jsdoc': OFF,
+      'space-infix-ops': OFF,
+      '@typescript-eslint/space-infix-ops': ERROR,
+      '@typescript-eslint/type-annotation-spacing': ERROR,
       'no-invalid-this': OFF,
       '@typescript-eslint/no-invalid-this': [ERROR],
-      'valid-jsdoc': OFF,
       '@typescript-eslint/no-explicit-any': [WARNING, {
         ignoreRestArgs: true,
       }],
@@ -180,6 +183,16 @@ const config = {
       }],
       '@typescript-eslint/ban-ts-comment': [WARNING, {
         'ts-expect-error': 'allow-with-description',
+      }],
+      '@typescript-eslint/member-delimiter-style': [ERROR, {
+        multiline: {
+          delimiter: 'semi',
+          requireLast: true,
+        },
+        singleline: {
+          delimiter: 'semi',
+          requireLast: false,
+        },
       }],
     },
   }, {
@@ -231,6 +244,14 @@ const config = {
           { fileMatch: TSCONFIG_FILES, schema: 'https://json.schemastore.org/tsconfig.json' },
           { fileMatch: ['**/package.json'], schema: 'https://json.schemastore.org/package.json' },
         ],
+      }],
+    },
+  }, {
+    files: ['./elements/package.json'],
+    plugins: ['jsonc'],
+    rules: {
+      '@patternfly/elements/no-missing-package-exports': [ERROR, {
+        matches: ['elements/*/pf-*.js', 'elements/*/Base*.js'],
       }],
     },
   }],

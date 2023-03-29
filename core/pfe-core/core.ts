@@ -13,7 +13,7 @@ export interface PfeConfig {
 const noPref = Symbol();
 
 /** Retrieve an HTML metadata item */
-function getMeta(name: string): string|undefined {
+function getMeta(name: string): string | undefined {
   return document.head.querySelector<HTMLMetaElement>(`meta[name="${name}"]`)?.content;
 }
 
@@ -33,7 +33,7 @@ export function trackPerformance(preference: boolean | typeof noPref = noPref) {
  * A LitElement property converter which represents a list of numbers as a comma separated string
  * @see https://lit.dev/docs/components/properties/#conversion-converter
  */
-export const NumberListConverter: ComplexAttributeConverter<null|number[]> = {
+export const NumberListConverter: ComplexAttributeConverter<null | number[]> = {
   fromAttribute(value: string) {
     if (typeof value !== 'string') {
       return null;

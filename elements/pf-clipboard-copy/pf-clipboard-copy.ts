@@ -80,14 +80,16 @@ export class PfClipboardCopy extends BaseClipboardCopy {
     return html`
       <div class="container ${classMap({ code, expanded, inline, compact, block, })}">
         <div id="input-group">
-          <pf-button id="expand-button"
-                      plain
-                      variant="control"
-                      label="EXPAND"
-                      ?inert="${!expandable}"
-                      @click="${this.#onClick}">
-            <pf-icon icon="chevron-right"></pf-icon>
-          </pf-button>
+          <div id="wrapper">
+            <pf-button id="expand-button"
+                        plain
+                        variant="control"
+                        label="EXPAND"
+                        ?inert="${!expandable}"
+                        @click="${this.#onClick}">
+              <pf-icon icon="chevron-right"></pf-icon>
+            </pf-button>
+          </div>
           <span ?hidden="${!(inline || compact)}">${this.value}</span>
           <input
               ?hidden="${inline || compact}"

@@ -1,68 +1,71 @@
 #home-header {
   display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  color: white;
+  background-color: var(--pf-theme--color--accent, #0066cc);
   justify-content: center;
   text-align: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  background-color: #004080;
-  color: white;
-  padding-block-end: 0;
-  padding-inline: 1rem;
-  max-width: 100%;
+  padding: 4rem 0;
 }
 
 #home-header h1 {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  gap: 1rem;
+  text-align: center;
 }
 
 #home-header h1 img {
-  width: 6rem;
-  translate: 0 2rem;
-  object-fit: none;
-}
-
-@media (min-width: 767px) {
-  #home-header h1 {
-    flex-direction: row;
-    gap: 0;
-  }
-
-  #home-header h1 img {
-    translate: 0;
-  }
-}
-
-#home-header > :is(h1, p) {
-  width: 100%;
+  width: 650px;
   max-width: 100%;
+  padding: 0 1rem;
 }
 
-#home-header pf-icon {
- color: #666
+#home-header p {
+  font-family: "Red Hat Display", sans-serif;
+  font-size: var(--pf-c-title--m-xl--FontSize, var(--pf-global--FontSize--xl, 1.25rem));
+  font-weight: var(--pf-c-title--m-xl--FontWeight, var(--pf-global--FontWeight--normal, 500));
+  line-height: var(--pf-c-title--m-xl--LineHeight, var(--pf-global--LineHeight--md, 1.5));
 }
 
-#home-header section {
-  margin-block-start: 48px;
-  color: black;
-  width: calc(100% + 2rem);
-  margin-inline: -2rem;
+.cta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
 }
+
+#home-header a {
+  font-size: var(--pf-global--FontSize--lg, 1.125rem);
+}
+
+#home-header a.cta.primary {
+  --pf-cta--Color: #06c;
+}
+
+#home-header a.cta.primary:hover {
+  --pf-cta--Color--hover: var(--pf-theme--color--white, #fff);
+  --pf-cta--BackgroundColor: transparent;
+}
+
+#home-header a.cta.secondary:hover {
+  --pf-cta--Color--hover: #06c;
+}
+
 
 #lightw {
   display: grid;
   gap: 1em;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-template-areas:
-    'h h'
-    'tag tag'
-    'p p'
-    'snip snip'
-    'card step'
-    'link link';
+    'h'
+    'tag'
+    'p'
+    'snip'
+    'card'
+    'step'
+    'link';
 }
 
 #lightw > .subtitle { grid-area: tag; }
@@ -113,5 +116,22 @@ rh-global-footer {
   #lightw,
   .max-width-container {
     padding: var(--pf-global--spacer--3xl, 4rem) var(--pf-global--spacer--3xl, 4rem);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .cta-group {
+    flex-direction: row;
+  }
+
+  #lightw {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'h h'
+      'tag tag'
+      'p p'
+      'snip snip'
+      'card step'
+      'link link';
   }
 }

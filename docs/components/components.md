@@ -15,4 +15,8 @@
 }
 ---
 
+<header class="band">
+  <h1>{{element.title}}</h1>
+</header>
+
 {% renderFile element.docsTemplatePath, element %}

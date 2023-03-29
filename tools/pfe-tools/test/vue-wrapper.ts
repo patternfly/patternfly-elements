@@ -4,13 +4,13 @@ import { elementUpdated, nextFrame, oneEvent } from '@open-wc/testing';
 import { renderToString } from './render-to-string';
 
 declare class Vue {
-  constructor(opts: { el: string|Element, template: string; mounted(): void });
+  constructor(opts: { el: string | Element; template: string; mounted(): void });
   $destroy(): void;
   $forceUpdate(): void;
   $nextTick(f: () => void): void;
   static nextTick(f: () => void): void;
   static config: {
-    ignoredElements?: string[]
+    ignoredElements?: string[];
   };
 }
 
@@ -30,7 +30,7 @@ let app: Vue;
  * @returns  Returns the new web component rendered within Vue.
  */
 export async function fixture<T extends Element = HTMLElement>(
-  testCase: string|TemplateResult
+  testCase: string | TemplateResult
 ): Promise<T> {
   const code = (typeof testCase === 'string') ? testCase : renderToString(testCase);
 

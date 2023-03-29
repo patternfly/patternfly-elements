@@ -54,7 +54,7 @@ export abstract class BaseTooltip extends LitElement {
         <slot id="invoker" role="tooltip" aria-labelledby="tooltip"></slot>
         <slot id="tooltip"
               name="content"
-              aria-hidden="${String(!open) as 'true'|'false'}">${this.content}</slot>
+              aria-hidden="${String(!open) as 'true' | 'false'}">${this.content}</slot>
       </div>
     `;
   }

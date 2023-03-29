@@ -1,7 +1,7 @@
 ---
 layout: layout-docs.njk
 title: Write your HTML
-order: 4
+order: 40
 tags:
   - develop
 ---
@@ -19,7 +19,7 @@ advantage of the slot and shadow root to make our element a bit more
 interesting.
 
 PatternFly elements are written in [TypeScript](https://typescriptlang.org), a 
-dialect of JavaScript which adds development-time type checking and other 
+superset of JavaScript which adds development-time type checking and other 
 features.
 If you are unfamiliar with TypeScript, read their getting-started documentation, 
 and feel free to reach out to the PatternFly Elements team on our social media 
@@ -53,26 +53,21 @@ We'll also need to update `/demo/pf-cool-element.html`
 so that the user's name is passed into the slot that we added in `pf-cool-element.ts`:
 
 ```html
-<link rel="stylesheet" href="./demo.css"/>
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-cool-element.js"></script>
+
 <pf-cool-element>
   Kyle Buchanan
 </pf-cool-element>
 ```
 
-> Slots take the HTML from the light DOM and project it into the shadow DOM at a 
-> given location.
-> To learn more about shadow DOM and how to use slots, check out [Shadow DOM v1: 
-> Self-Contained Web 
-> Components](https://developers.google.com/web/fundamentals/web-components/shadowdom).
+Slots take the HTML from the light DOM and project it into the shadow DOM at a given location.
 
 Here's how it should look in the browser:
 
 ![demo page html step](/images/develop/develop-html.png)
 
-Remember that any changes we make in the element directory are watched while the 
-`npm run dev` command runs.
-When you save changes, the dev server reloads the page and shows you your 
-changes automatically.
+Remember that any changes we make in the element directory are watched while the `npm run start` command runs. When you save changes, the dev server reloads the page and shows you your changes automatically.
 
 Now that we've added the HTML, let's style our element by updating the CSS file.
 

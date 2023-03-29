@@ -26,7 +26,7 @@ export abstract class BaseButton extends LitElement {
   /** Disables the button */
   @property({ reflect: true, type: Boolean }) disabled = false;
 
-  @property({ reflect: true }) type?: 'button'|'submit'|'reset';
+  @property({ reflect: true }) type?: 'button' | 'submit' | 'reset';
 
   /** Accessible name for the button, use when the button does not have slotted text */
   @property() label?: string;
@@ -64,7 +64,7 @@ export abstract class BaseButton extends LitElement {
               @click="${this.#onClick}"
               ?disabled="${this.disabled || this.#internals.formDisabled}">
         <slot id="icon" part="icon" aria-hidden="true" name="icon">${this.renderDefaultIcon()}</slot>
-        <slot id="text" aria-hidden=${String(!!this.label) as 'true'|'false'}></slot>
+        <slot id="text" aria-hidden=${String(!!this.label) as 'true' | 'false'}></slot>
       </button>
     `;
   }

@@ -31,10 +31,10 @@
   <pf-label color="gold">Gold</pf-label>
   ```
 
-  > ### Conveying meaning to assistive technologies
-  > Using color to add meaning only provides a visual indication, which will not be conveyed to users of assistive technologies – such as screen readers. Ensure that
-  > information denoted by the color is either obvious from the content itself (e.g. the visible text), or is included through alternative means, such as additional text 
-  > hidden with the a class.
+  <div class="callout">
+  <h3> Conveying meaning to assistive technologies</h3>
+  <p>Using color to add meaning only provides a visual indication, which will not be conveyed to users of assistive technologies – such as screen readers. Ensure that information denoted by the color is either obvious from the content itself (e.g. the visible text), or is included through alternative means, such as additional text hidden with a class. </p>
+  </div>
 
   ```html
   <pf-label color="red">Red <span class="visually-hidden-class">Warning</span></pf-label>

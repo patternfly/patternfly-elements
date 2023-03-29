@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-tools",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "Development and build tools for PatternFly Elements and related projects",
   "keywords": [
@@ -101,7 +101,7 @@
     "esbuild-plugin-lit-css": "^2.0.1",
     "esbuild-plugin-minify-html-literals": "^1.0.2",
     "eslint": "^8.35.0",
-    "execa": "^6.1.0",
+    "execa": "^7.1.0",
     "glob": "^8.1.0",
     "html-include-element": "^0.3.0",
     "koa-send": "^5.0.1",

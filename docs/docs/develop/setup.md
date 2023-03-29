@@ -2,14 +2,20 @@
 layout: layout-docs.njk
 tagline: Create your own PatternFly Element
 title: Setup
-order: 1
+order: 10
 tags:
   - develop
 ---
 
 {% band header="Prerequisites" %}
-  In order to work on PatternFly elements, you'll need to have Git and NodeJS installed.
-  We recommend installing [the Node Version Manager - nvm](https://github.com/nvm-sh/nvm) so that your development environment uses the expected node version.
+  To get started with PatternFly elements, you will need to have the following installed: 
+  
+  - [Git](https://git-scm.com/) 
+  - [NodeJS](https://nodejs.org/)
+  - [Node Version Manager - nvm (recommended)](https://github.com/nvm-sh/nvm)
+
+  We recommend installing the [Node Version Manager - nvm](https://github.com/nvm-sh/nvm) so that your development environment uses the expected node version set by the project `.nvmrc` file.
+
   If you are using Windows or Fish shell, follow the [special instructions to install a compatible version of nvm](https://github.com/nvm-sh/nvm#important-notes).
 
   Clone the [PatternFly Elements repo]({{ githubLink }}) and change directory to it.
@@ -43,21 +49,27 @@ tags:
   Make sure you are in the root directory of the PatternFly Elements repository.
 
   ```bash
-  npm init @patternfly/element
+  npm run new
   ```
 
   When creating your new components, you may find you are entering the same answers over and over again.
   To prevent this, you can pass a number of flags to the generator:
 
-| Switch            | Description                                | Type                                                            |
-| ----------------- | ------------------------------------------ | --------------------------------------------------------------- |
-| `--version`       | Show version number                        | boolean                                                         |
-| `--directory`     | Output directory                           | string [default: "/users/bennyp/developer/patternfly-elements"] |
-| `--silent`        | Do not log anything to stdout              | boolean [default: false]                                        |
-| `-n`, `--tagName` | Custom element tag name. e.g. `pf-button` | string                                                          |
-| `-s`, `--scope`   | NPM package scope. e.g. `@patternfly`      | string                                                          |
-| `--overwrite`     | Overwrite files without prompting          | boolean [default: false]                                        |
-| `--help`          | Show help                                  | boolean                                                         |
+| Switch                | Description                                | Type                                                            |
+| --------------------- | ------------------------------------------ | --------------------------------------------------------------- |
+| `--directory`         | Output directory                           | string [default: "/path/to/patternfly-elements"] |
+| `--silent`            | Do not log anything to stdout              | boolean [default: false]                                        |
+| `-n`, `--tagName`     | Custom element tag name. e.g. `pf-button`  | string                                                          |
+| `-p`, `--packageName` | NPM package scope. e.g. `@patternfly/elements`| string                                                   |
+| `--overwrite`         | Overwrite files without prompting          | boolean [default: false]                                        |
+| `--help`              | Show help                                  | boolean                                                         |
+
+Example
+```bash
+npm run new -- --tagName pf-cool-element
+```
+
+
 {% endband %}
 
 {% band header="Scaffolding Structure" %}
@@ -71,7 +83,11 @@ tags:
   - A file to write your unit tests
   - An HTML demo where you can show off your element and add examples for your development workflow
 
-  You may also add noscript styles which load in situations where JavaScript is not available.  This file uses a standard naming convention of `pf-foo--noscript`.
+  You may also add light DOM styles which can be loaded prior to [element defined](https://developer.mozilla.org/en-US/docs/Web/CSS/:defined) `pf-cool-element:not(:defined){...}`. An example use case would be to avoid above the fold layout shift.  
+
+  The light DOM CSS file uses a standard naming convention of: 
+  `{scope}-{component-name}--lightdom.css` 
+  Example: `pf-cool-element--lightdom.css`.
 {% endband %}
 
 <a id="compile-watch-and-preview"></a>
@@ -95,14 +111,15 @@ tags:
 {% endband %}
 
 {% band header="Testing" %}
-  From the project's root directory, run the test command `npm run test:watch` and
-  [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/) will execute your tests in the browser.
+  From the project's root directory, run the test command `npm run test` and
+  [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/) will execute your tests in a headless browser for each component.
 
+  To run your tests in watch mode run:
   ```bash
   npm run test:watch
   ```
 
-  You can also run a tests on a single package using npm's `--workspace` switch:
+  You can also run a tests on a single package using the `--files` switch:
 
   ```bash
   # Run a single test in watch mode.
@@ -112,19 +129,16 @@ tags:
   npm run test:watch --files "./elements/pf-{avatar,card,tabs}/test/*.spec.ts"
   ```
 
-  The default `npm test` command executes each unit test three times, once using plain HTML, once in a React wrapper app, and once in a Vue 2 wrapper app.
-  You can run tests in a specific wrapper using:
+  You can also run tests with a specific framework wrapper using:
 
   ```bash
   # Run all tests using a React wrapper in watch mode.
-  npm run test:react -- --watch
+  npm run test:react
 
   # Run all tests using a Vue wrapper in watch mode.
-  npm run test:vue -- --watch
-
-  # Run all test using only the default wrapper
-  npm run test -- --group default
+  npm run test:vue
   ```
+  
 {% endband %}
 
 {% band header="Final build" %}
@@ -142,7 +156,7 @@ tags:
 {% endband %}
 
 {% band header="Create a PatternFly Element" %}
-  Now that we have understand how it all works, let's create a PatternFly Element together.
+  Now that we understand the basics, let's create a new PatternFly Element.
 
   <a class="cta" href="{{ '/docs/develop/create' | url }}">Create a PatternFly Element</a>
 {% endband %}

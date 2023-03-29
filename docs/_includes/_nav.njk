@@ -1,48 +1,50 @@
 <header>
-  <div class="logo-bar">
-    <a href="{{ '/' | url }}">
-      <img src="{{ '/brand/logo/svg/pfe-icon-white-shaded.svg' | url }}" alt="PatternFly Elements - Home">
-      PatternFly Elements
-    </a>
-    {# TODO: implement pf-dropdown
-    <pf-dropdown id="docs-versions-dropdown" aria-label="Docs Versions" label="Docs Versions">
-      {% for version in versions %}
-      {%- if version.current -%}
-        {%- set prefix = '' -%}
-      {%- else -%}
-        {%- set prefix = '/' + version.slug -%}
-      {%- endif %}
-      <pf-dropdown-item
-          item-type="link"
-          data-version="{{ version.slug }}"
-          data-label="{{ version.label }}">
-        <a href="{{ prefix }}{{ page.url }}">{{ version.label }}</a>
-      </pf-dropdown-item>
-      {% endfor %}
-    </pf-dropdown>
-    #}
-    <select id="docs-versions-dropdown" aria-label="Docs Versions" oninput="location.href=this.options[this.selectedIndex].value">
-      {% for version in versions %}
-      {%- if version.current -%}
-        {%- set prefix = '' -%}
-      {%- else -%}
-        {%- set prefix = '/' + version.slug -%}
-      {%- endif %}
-      <option
-          value="{{ prefix }}{{ page.url }}"
-          data-version="{{ version.slug }}"
-          data-label="{{ version.label }}">{{ version.label }}</option>
-      {% endfor %}
-    </select>
-    <script type="module">
-      const dropdown = document.getElementById('docs-versions-dropdown');
-      const items = dropdown.querySelectorAll('[data-version]');
-      const versions = Object.fromEntries(Array.from(items, x => [x.dataset.version, x]));
-      const [fst] = new URL(location.href).pathname.split('/').filter(Boolean);
-      let [highest] = Object.keys(versions).sort().reverse();
-      const selected = fst in versions ? versions[fst] : versions[highest];
-      dropdown.setAttribute('label', selected.dataset.label);
-    </script>
+  <div class="header-bar">
+   {% include "../_snippets/pf-bar-html.md" %}
+    <div class="logo-bar">
+      <a href="{{ '/' | url }}" aria-label="PatternFly Elements Home">
+        <img src="{{ '/images/pfe-logo-inverse-white.svg' | url }}" alt="PatternFly Elements">
+      </a>
+      {# TODO: implement pf-dropdown
+      <pf-dropdown id="docs-versions-dropdown" aria-label="Docs Versions" label="Docs Versions">
+        {% for version in versions %}
+        {%- if version.current -%}
+          {%- set prefix = '' -%}
+        {%- else -%}
+          {%- set prefix = '/' + version.slug -%}
+        {%- endif %}
+        <pf-dropdown-item
+            item-type="link"
+            data-version="{{ version.slug }}"
+            data-label="{{ version.label }}">
+          <a href="{{ prefix }}{{ page.url }}">{{ version.label }}</a>
+        </pf-dropdown-item>
+        {% endfor %}
+      </pf-dropdown>
+      #}
+      <select id="docs-versions-dropdown" aria-label="Docs Versions" oninput="location.href=this.options[this.selectedIndex].value">
+        {% for version in versions %}
+        {%- if version.current -%}
+          {%- set prefix = '' -%}
+        {%- else -%}
+          {%- set prefix = '/' + version.slug -%}
+        {%- endif %}
+        <option
+            value="{{ prefix }}{{ page.url }}"
+            data-version="{{ version.slug }}"
+            data-label="{{ version.label }}">{{ version.label }}</option>
+        {% endfor %}
+      </select>
+      <script type="module">
+        const dropdown = document.getElementById('docs-versions-dropdown');
+        const items = dropdown.querySelectorAll('[data-version]');
+        const versions = Object.fromEntries(Array.from(items, x => [x.dataset.version, x]));
+        const [fst] = new URL(location.href).pathname.split('/').filter(Boolean);
+        let [highest] = Object.keys(versions).sort().reverse();
+        const selected = fst in versions ? versions[fst] : versions[highest];
+        dropdown.setAttribute('label', selected.dataset.label);
+      </script>
+    </div>
   </div>
 
   <input id="mobile-menu-toggle" class="menu-toggle element-invisible" type="checkbox"
@@ -110,6 +112,9 @@
             </ul>
             </details>
         </li>
+        <li class="site-navigation__item">
+          <a class="site-navigation__link{% if page.url == "/blog/" %} site-navigation__link--active{% endif %}" href="/blog/">Blog</a>
+        </li>       
         <!-- <li class="site-navigation__item">
             <a class="site-navigation__link{% if page.url == "/about/" %} site-navigation__link--active{% endif %}" href="/about/">About PatternFly Elements</a>
           </li> -->

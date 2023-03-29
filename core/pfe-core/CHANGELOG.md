@@ -1,5 +1,18 @@
 # @patternfly/pfe-core
 
+## 2.2.0
+
+### Minor Changes
+
+- 83024fe5e: `roving-tabindex-controller`: notify the host when the focused item changes.
+- 83024fe5e: `roving-tabindex-controller`: allow component authors to specify the type of items.
+
+## 2.1.0
+
+### Minor Changes
+
+- e45f5eb5a: `roving-tabindex-controller`: enabled controller to be used by aria-expanded elements
+
 ## 2.0.0
 
 ### Major Changes

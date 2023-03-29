@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/eslint-config-elements",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "JavaScript Code Standards for PatternFly Elements",
   "author": "Benny Powers <bennyp@redhat.com>",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "directory": "tools/eslint-config"
   },
   "peerDependencies": {
-    "@patternfly/eslint-plugin-elements": "^1.0.0"
+    "@patternfly/eslint-plugin-elements": "^1.1.0"
   },
   "dependencies": {
     "@types/eslint": "^8.21.1",
@@ -31,6 +31,6 @@
     "eslint-plugin-jsonc": "^2.6.0",
     "eslint-plugin-lit-a11y": "^2.3.0",
     "eslint-plugin-no-only-tests": "^3.1.0",
-    "eslint-plugin-unicorn": "45.0.2"
+    "eslint-plugin-unicorn": "46.0.0"
   }
 }

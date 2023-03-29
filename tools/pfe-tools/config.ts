@@ -34,10 +34,10 @@ export interface PfeConfig {
 
 const SITE_DEFAULTS: Required<SiteOptions> = {
   description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
-  favicon: '/brand/logo/svg/pfe-icon-blue.svg',
-  logoUrl: '/brand/logo/svg/pfe-icon-white-shaded.svg',
+  favicon: '/docs/images/logo/pfe-icon-blue.svg',
+  logoUrl: '/docs/images/pfe-logo-inverse-white.svg',
   stylesheets: [],
-  title: 'PatternFly Elements',
+  title: 'PatternFly Elements'
 };
 
 const DEFAULT_CONFIG: PfeConfig = {
@@ -68,7 +68,7 @@ export function getPfeConfig(rootDir = process.cwd()): Required<PfeConfig> {
   };
 }
 
-const slugsConfigMap = new Map<string, { config: PfeConfig, slugs: Map<string, string> }>();
+const slugsConfigMap = new Map<string, { config: PfeConfig; slugs: Map<string, string> }>();
 const reverseSlugifyObject = ([k, v]: [string, string]): [string, string] =>
   [slugify(v).toLowerCase(), k];
 function getSlugsMap(rootDir: string) {

@@ -54,9 +54,10 @@ export class PopoverShownEvent extends ComposedEvent {
 }
 
 /**
- * Patternfly popover
- *
  * A Popover displays content in a non-modal dialog and adds contextual information or provides resources via text and links.
+ *
+ * Unlike the Patternfly React pattern, this component does not trap focus in the popover dialog.
+ * If you woud like to trap focus, consider using a modal dialog instead.
  *
  * @summary Toggle the visiblity of helpful or contextual information.
  *
@@ -271,11 +272,6 @@ export class PfPopover extends LitElement {
   @property({ reflect: true, attribute: 'alert-severity-text' }) alertSeverityText?: string;
 
   /**
-   * Trap focus in the popover.
-   */
-  @property({ type: Boolean, reflect: true, attribute: 'focus-trap' }) focusTrap?: boolean;
-
-  /**
    * Don't hide the popover when clicking ouside of it.
    */
   @property({ type: Boolean, reflect: true, attribute: 'no-outside-click' }) noOutsideClick?: boolean;
@@ -442,7 +438,7 @@ export class PfPopover extends LitElement {
       flip: !(this.noFlip ?? false),
       fallbackPlacements: this.flipBehavior,
     });
-    this.focusTrap ? this._popover?.showModal() : this._popover?.show();
+    this._popover?.show();
     this.dispatchEvent(new PopoverShownEvent());
   }
 

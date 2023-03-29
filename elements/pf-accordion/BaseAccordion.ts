@@ -117,7 +117,7 @@ export abstract class BaseAccordion extends LitElement {
   async firstUpdated() {
     const { headers } = this;
     for (const header of headers.filter(x => x.expanded)) {
-      await this.expand(headers.indexOf(header), this, true);
+      await this.expand(headers.indexOf(header), this, false);
     }
   }
 

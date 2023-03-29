@@ -266,7 +266,9 @@ export class Manifest {
     const { prettyTag } = Manifest;
     return this.getDemos(tagName).map(demo => {
       const permalink = demo.url.replace(options.demoURLPrefix, '/');
-      const [, slug = ''] = permalink.match(/\/components\/(.*)\/demo/) ?? [];
+      let [, slug = ''] = permalink.match(/\/components\/(.*)\/demo/) ?? [];
+      // remove all special characters from slug
+      slug = slug.replace(/^a-zA-Z0-9 ]/g, '');
       const primaryElementName = deslugify(slug, options.rootDir);
       const filePath = demo.source?.href.replace(options.sourceControlURLPrefix, `${options.rootDir}/`) ?? '';
       const [last = ''] = filePath.split('/').reverse();

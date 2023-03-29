@@ -29,7 +29,7 @@ interface ShowOptions {
   offset?: Offset;
   placement?: Placement;
   flip?: boolean;
-  fallbackPlacements?: Placement[]
+  fallbackPlacements?: Placement[];
 }
 
 export type Anchor = '' | 'top' | 'left' | 'bottom' | 'right';

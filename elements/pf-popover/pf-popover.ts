@@ -285,8 +285,6 @@ export class PfPopover extends LitElement {
   @query('#popover') private _popover!: HTMLDialogElement;
   @query('#trigger') private _slottedTrigger?: HTMLElement | null;
   @query('#arrow') private _arrow!: HTMLDivElement;
-  @query('#content') private _content!: HTMLDivElement;
-  @query('#close-button') private _closeButton!: HTMLButtonElement;
 
   #referenceTrigger?: HTMLElement | null = null;
 

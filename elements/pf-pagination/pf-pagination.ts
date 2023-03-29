@@ -3,10 +3,13 @@ import { property } from 'lit/decorators/property.js';
 import { state } from 'lit/decorators/state.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { query } from 'lit/decorators/query.js';
+import { queryAll } from 'lit/decorators/query-all.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { bound, observed } from '@patternfly/pfe-core/decorators.js';
+import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
+
 import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-pagination.css';
@@ -70,15 +73,20 @@ export class PfPagination extends LitElement {
   @property({ type: Number, reflect: true }) page = 1;
 
   @query('#menu-toggle') private menuToggle!: HTMLButtonElement;
+  @query('#menu-list') private menuList!: HTMLUListElement;
+  @queryAll('.menu-item') private menuItems!: HTMLButtonElement[];
   @query('#page-select-input') private input!: HTMLInputElement;
 
   @state() _expanded = false;
+
+  #tabindex = new RovingTabindexController(this);
 
   connectedCallback() {
     super.connectedCallback();
     document.addEventListener('click', this._outsideClick);
     this.addEventListener('click', this.#onClick);
     this.addEventListener('keydown', this.#onKeydown);
+    this.#init();
   }
 
   render() {
@@ -192,6 +200,11 @@ export class PfPagination extends LitElement {
     if (!path.includes(this.menuToggle) && this._expanded) {
       this._expanded = false;
     }
+  }
+
+  async #init() {
+    await this.updateComplete;
+    this.#tabindex.initItems([...this.menuItems], this.menuList);
   }
 
   #firstOfPage() {

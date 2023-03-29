@@ -44,14 +44,17 @@
   --pf-cta--Color: #06c;
 }
 
+#home-header a.cta.primary:hover, 
+#home-header a.cta.primary:focus {
+  --pf-cta--BackgroundColor: transparent;
+}
+
 #home-header a.cta.primary:hover {
   --pf-cta--Color--hover: var(--pf-theme--color--white, #fff);
-  --pf-cta--BackgroundColor: transparent;
-  color: var(--pf-theme--color--white, #fff);
 }
 
 #home-header a.cta.primary:focus {
-  color: var(--pf-theme--color--accent, #0066cc);
+  --pf-cta--Color--focus: var(--pf-theme--color--white, #fff);
 }
 
 #home-header a.cta.secondary:hover {

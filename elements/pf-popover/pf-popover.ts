@@ -56,7 +56,7 @@ export class PopoverShownEvent extends ComposedEvent {
 /**
  * A Popover displays content in a non-modal dialog and adds contextual information or provides resources via text and links.
  *
- * Unlike the Patternfly React pattern, this component does not trap focus in the popover dialog.
+ * Unlike the Patternfly React implementation, this component does not trap focus in the popover dialog.
  * If you woud like to trap focus, consider using a modal dialog instead.
  *
  * @summary Toggle the visiblity of helpful or contextual information.

@@ -71,9 +71,9 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
   // but 11ty already did that, so let's delete the html file.
   eleventyConfig.on('eleventy.after', async function({ runMode, dir }) {
     const { getPfeConfig } = await import('../../config.js');
-    const { subpath = 'components' } = { ...getPfeConfig(), ...pluginOpts };
+    const options = { ...getPfeConfig(), ...pluginOpts };
     if (runMode === 'build') {
-      const files = await glob(`${dir.output}/${subpath}/*/demo/*`);
+      const files = await glob(`${dir.output}/${options.site.componentSubpath}/*/demo/*`);
       const htmls = files.filter(x => x.endsWith('.html') && !x.endsWith('/index.html'));
       for (const file of htmls) {
         const dir = file.replace(/\.html$/, '');

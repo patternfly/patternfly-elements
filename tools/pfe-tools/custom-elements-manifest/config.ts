@@ -14,7 +14,7 @@ import { getPfeConfig, type PfeConfig } from '../config.js';
 
 import Chalk from 'chalk';
 
-type Options = Config & Pick<PfeConfig, 'sourceControlURLPrefix' | 'demoURLPrefix'>;
+type Options = Config & Pick<PfeConfig, 'sourceControlURLPrefix' | 'demoURLPrefix'> & { rootDir?: string };
 
 /**
  * PFE Default custom-elements-manifest analyzer config
@@ -22,7 +22,7 @@ type Options = Config & Pick<PfeConfig, 'sourceControlURLPrefix' | 'demoURLPrefi
  */
 export function pfeCustomElementsManifestConfig(options?: Options): Config {
   console.log(`${Chalk.yellow(`pfeCustomElementsManifestConfig is ${Chalk.bold('deprecated')}`)}`);
-  const config = getPfeConfig();
+  const config = getPfeConfig(options?.rootDir);
   const { demoURLPrefix, sourceControlURLPrefix, dev } = { ...config, ...options ?? {} };
   return {
     globs: options?.globs ?? ['src/**/*.ts'],
@@ -43,7 +43,7 @@ export function pfeCustomElementsManifestConfig(options?: Options): Config {
       deprecatedDescriptionInlineTagPlugin(),
       dedentDescriptionsPlugin(),
       summaryPlugin(),
-      demosPlugin({ demoURLPrefix, sourceControlURLPrefix }),
+      demosPlugin({ ...options, demoURLPrefix, sourceControlURLPrefix }),
       ecmaPrivateClassMembersPlugin(),
       versionStaticFieldPlugin(),
 

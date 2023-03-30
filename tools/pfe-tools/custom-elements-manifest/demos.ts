@@ -27,7 +27,8 @@ import slugify from 'slugify';
  * `/elements/pf-jazz-hands/pf-jazz-hands.js`
  */
 export function demosPlugin(options?: PfeConfig): Plugin {
-  const config = { ...getPfeConfig(), ...options };
+  const fileOptions = getPfeConfig(options?.rootDir);
+  const config = { ...fileOptions, ...options };
   const subpath = config.site.componentSubpath ?? 'components';
   const { rootDir, demoURLPrefix, sourceControlURLPrefix } = config;
   return {

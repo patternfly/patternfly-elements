@@ -39,7 +39,7 @@ export function demosPlugin(options?: PfeConfig): Plugin {
 
       for (const moduleDoc of customElementsManifest.modules) {
         const primaryElementName = moduleDoc.path.split(sep).find(x => x !== 'elements') ?? '';
-        let demoPath = join(rootDir, primaryElementName, 'demo');
+        let demoPath = join(rootDir, 'elements', primaryElementName, 'demo');
 
         if (!existsSync(demoPath)) {
           demoPath = join('elements', primaryElementName, 'demo');

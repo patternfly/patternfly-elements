@@ -116,9 +116,15 @@ export abstract class BaseAccordion extends LitElement {
 
   async firstUpdated() {
     const { headers } = this;
-    for (const header of headers.filter(x => x.expanded)) {
-      await this.expand(headers.indexOf(header));
-    }
+    headers.forEach((header, index) => {
+      if (header.expanded) {
+        this.#expandHeader(header, index);
+        const panel = this.#panelForHeader(header);
+        if (panel) {
+          this.#expandPanel(panel);
+        }
+      }
+    });
   }
 
   /**
@@ -350,6 +356,7 @@ export abstract class BaseAccordion extends LitElement {
 
   /**
    * Accepts a 0-based index value (integer) for the set of accordion items to expand.
+   * Accepts an optional parent accordion to search for headers and panels.
    */
   public async expand(index: number, parentAccordion?: BaseAccordion) {
     if (index === -1) {

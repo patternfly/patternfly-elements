@@ -44,13 +44,9 @@ export class PfAccordion extends BaseAccordion {
 
   @property({ type: Boolean, reflect: true }) fixed = false;
 
-  override async expand(index: number, parentAccordion?: BaseAccordion, focus?: boolean) {
+  override async expand(index: number, parentAccordion?: BaseAccordion) {
     if (index === -1) {
       return;
-    }
-
-    if (focus === undefined) {
-      focus = true;
     }
 
     const allHeaders: Array<BaseAccordionHeader> = this.headers;
@@ -61,7 +57,8 @@ export class PfAccordion extends BaseAccordion {
         ...allHeaders.map((header, index) => header.expanded && this.collapse(index)),
       ]);
     }
-    await super.expand(index, parentAccordion, focus);
+
+    await super.expand(index, parentAccordion);
   }
 }
 

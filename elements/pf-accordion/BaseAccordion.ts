@@ -116,9 +116,11 @@ export abstract class BaseAccordion extends LitElement {
 
   async firstUpdated() {
     const { headers } = this;
-    for (const header of headers.filter(x => x.expanded)) {
-      await this.expand(headers.indexOf(header), this, false);
-    }
+    headers.forEach((header, index) => {
+      if (header.expanded) {
+        this.#expandHeader(header, index);
+      }
+    });
   }
 
   /**
@@ -351,9 +353,8 @@ export abstract class BaseAccordion extends LitElement {
   /**
    * Accepts a 0-based index value (integer) for the set of accordion items to expand.
    * Accepts an optional parent accordion to search for headers and panels.
-   * Accepts an optional boolean to focus the header after expanding.
    */
-  public async expand(index: number, parentAccordion?: BaseAccordion, focus?: boolean) {
+  public async expand(index: number, parentAccordion?: BaseAccordion) {
     if (index === -1) {
       return;
     }
@@ -374,7 +375,7 @@ export abstract class BaseAccordion extends LitElement {
     this.#expandHeader(header, index),
     this.#expandPanel(panel),
 
-    focus && header.focus();
+    header.focus();
 
     this.dispatchEvent(new AccordionExpandEvent(header, panel));
 

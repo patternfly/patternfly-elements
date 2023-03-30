@@ -74,7 +74,7 @@ export class DocsPage implements DocsPageRenderer {
     private options?: DocsPageOptions) {
     this.tagName = options?.tagName ?? '';
     this.title = options?.title ?? Manifest.prettyTag(this.tagName);
-    this.slug = slugify(options?.aliases?.[this.tagName] ?? this.tagName.replace(/^\w+-/, '')).toLowerCase();
+    this.slug = slugify(options?.aliases?.[this.tagName] ?? this.tagName.replace(/^\w+-/, ''), { strict: true, lower: true });
     this.summary = this.manifest.getSummary(this.tagName);
     this.description = this.manifest.getDescription(this.tagName);
     this.templates = nunjucks.configure(DocsPage.#templatesDir);

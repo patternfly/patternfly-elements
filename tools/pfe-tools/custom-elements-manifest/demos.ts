@@ -28,6 +28,7 @@ import slugify from 'slugify';
  */
 export function demosPlugin(options?: PfeConfig): Plugin {
   const config = { ...getPfeConfig(), ...options };
+  const subpath = config.site.subpath ?? 'components';
   const { rootDir, demoURLPrefix, sourceControlURLPrefix } = config;
   return {
     name: 'demos-plugin',
@@ -52,19 +53,19 @@ export function demosPlugin(options?: PfeConfig): Plugin {
               const { tagName } = decl;
               for (const demo of allDemos) {
                 const demoName = demo.replace(/\.html$/, '');
-                const slug = slugify(alias).toLowerCase();
+                const slug = slugify(alias, { strict: true, lower: true });
                 const href = new URL(`elements/${primaryElementName}/demo/${demo}/`, sourceControlURLPrefix || '/').href.replace(/\/$/, '');
                 if (demoName === tagName && demoName === primaryElementName) {
                 // case: elements/pf-jazz-hands/demo/pf-jazz-hands.html
-                  const { href: url } = new URL(`/components/${slug}/demo/`, demoURLPrefix || '/');
+                  const { href: url } = new URL(`/${subpath}/${slug}/demo/`, demoURLPrefix || '/');
                   decl.demos.push({ url, source: { href } });
                 } else if (allTagNames.includes(demoName) && demoName === tagName) {
                 // case: elements/pf-jazz-hands/demo/pf-jazz-shimmy.html
-                  const { href: url } = new URL(`/components/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
+                  const { href: url } = new URL(`/${subpath}/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
                   decl.demos.push({ url, source: { href } });
                 } else if (tagName === primaryElementName && !allTagNames.includes(demoName)) {
                 // case: elements/pf-jazz-hands/demo/ack.html
-                  const { href: url } = new URL(`/components/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
+                  const { href: url } = new URL(`/${subpath}/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
                   decl.demos.push({ url, source: { href } });
                 }
               }

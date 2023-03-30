@@ -13,6 +13,8 @@ interface SiteOptions {
   stylesheets?: string[];
   /** Title for main page of the demo */
   title?: string;
+  /** Site subpath for components. e.g. 'elements'. default: 'components' */
+  subpath?: string;
 }
 
 export interface PfeConfig {
@@ -37,7 +39,8 @@ const SITE_DEFAULTS: Required<SiteOptions> = {
   favicon: '/docs/images/logo/pfe-icon-blue.svg',
   logoUrl: '/docs/images/pfe-logo-inverse-white.svg',
   stylesheets: [],
-  title: 'PatternFly Elements'
+  title: 'PatternFly Elements',
+  subpath: 'components',
 };
 
 const DEFAULT_CONFIG: PfeConfig = {

@@ -1,5 +1,12 @@
 # @patternfly/pfe-tools
 
+## 1.2.0
+
+### Minor Changes
+
+- 69e7f5b9e: Added `site.componentSubpath` config to `.pfe.config.json`, representing the
+  site subpath for component pages and demos. Default is `'components'`.
+
 ## 1.1.1
 
 ### Patch Changes

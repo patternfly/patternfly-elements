@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.1.1
+
+### Patch Changes
+
+- 90b3ade12: Removes special characters from component slugs ie. `special (characters)` becomes `special-characters`
+
 ## 1.1.0
 
 ### Minor Changes

@@ -94,57 +94,46 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
-      app.use(new Router()
-        .get(/\/pf-icon\/icons\/.*\.js$/, (ctx, next) => {
-          ctx.type = 'application/javascript';
-          return next();
-        })
-        .get('/elements/:tagName/:fileName.js', async ctx => {
-          return ctx.redirect(`/elements/${ctx.params.tagName}/${ctx.params.fileName}.ts`);
-        })
-        .get('/tools/pfe-tools/environment.js(.js)?', async ctx => {
-          ctx.body = await makeDemoEnv(options.rootDir);
-          ctx.type = 'application/javascript';
-        })
-        // redirect /components/jazz-hands/pf-jazz-hands/index.html to /elements/pf-jazz-hands/demo/pf-jazz-hands.html
-        // redirect /components/jazz-hands/index.html to /elements/pf-jazz-hands/demo/pf-jazz-hands.html
-        .get('/components/:slug/demo/:sub?/:fileName', (ctx, next) => {
-          const { slug, fileName } = ctx.params;
-          if (fileName.includes('.')) {
-            const tagName = deslugify(slug, options.rootDir);
-            const redir = `/elements/${tagName}/demo/${fileName === 'index.html' ? tagName : fileName}`;
-            ctx.redirect(redir);
-          }
-          return next();
-        })
-        // redirect /components/jazz-hands/pf-jazz-hands-lightdom.css to /elements/pf-jazz-hands/pf-jazz-hands-lightdom.css
-        .get('/components/:slug/demo/:sub?/:fileName.css', (ctx, next) => {
-          // FIXME: will probably break if one component links to another's lightdom css.
-          //        better to find out why it's requesting from /components/ in the first place
-          const { slug, fileName } = ctx.params;
-          const tagName = deslugify(slug);
-          if (tagName && fileName.includes('-lightdom')) {
-            return ctx.redirect(`/elements/${tagName}/${fileName}.css`);
-          } else {
-            return next();
-          }
-        })
-        // redirect /components/jazz-hands/demo/demo.css to /elements/pf-jazz-hands/demo/demo.css
-        // redirect /components/jazz-hands/demo/special-demo/demo.css to /elements/pf-jazz-hands/demo/demo.css
-        .get('/components/:slug/demo/:sub?/:fileName.:ext', (ctx, next) => {
-          // FIXME: will probably break if one component links to another's lightdom css.
-          //        better to find out why it's requesting from /components/ in the first place
-          const { slug, fileName, ext } = ctx.params;
-          const tagName = deslugify(slug);
-          const lastDir = ctx.originalUrl.split('/').at(-2);
-          if (tagName && lastDir !== 'demo') {
-            return ctx.redirect(`/elements/${tagName}/demo/${fileName}.${ext}`);
-          } else {
-            return next();
-          }
-        })
-        .routes());
+      const { componentSubpath } = options.site;
+      const subPath = componentSubpath === 'components' ? 'elements' : componentSubpath;
 
+      const { tagPrefix } = options;
+
+      const router =
+        new Router()
+          .get(/\/pf-icon\/icons\/.*\.js$/, (ctx, next) => {
+            ctx.type = 'application/javascript';
+            return next();
+          })
+          .get('/tools/pfe-tools/environment.js(.js)?', async ctx => {
+            ctx.body = await makeDemoEnv(options.rootDir);
+            ctx.type = 'application/javascript';
+          })
+          .get(`/${subPath}/:tagName/:fileName.js`, async ctx => {
+            return ctx.redirect(`/${subPath}/${ctx.params.tagName}/${ctx.params.fileName}.ts`);
+          })
+          .get(`/${subPath}/:slug/:demo?/:fileName.css`, async (ctx, next) => {
+            const { slug, fileName } = ctx.params;
+            if (slug.includes(`${tagPrefix}-`)) {
+              return next();
+            }
+            const tagName = deslugify(slug);
+            if (tagName && fileName.includes('-lightdom')) {
+              return ctx.redirect(`/${componentSubpath}/${tagName}/${fileName}.css`);
+            } else {
+              return next();
+            }
+          })
+          .get(`/${componentSubpath}/:slug/demo/:sub?/:fileName.:ext`, (ctx, next) => {
+            const { slug, fileName, ext } = ctx.params;
+            if (slug.includes(`${tagPrefix}-`)) {
+              return next();
+            }
+            const tagName = deslugify(slug);
+            return ctx.redirect(`/${subPath}/${tagName}/demo/${fileName}.${ext}`);
+          });
+
+      app.use(router.routes());
       const files = await glob(options.watchFiles, { cwd: process.cwd() });
       for (const file of files) {
         fileWatcher.add(file);
@@ -152,6 +141,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
     }
   };
 }
+
 
 function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInternalConfig {
   const config = { ...getPfeConfig(), ...options ?? {} };

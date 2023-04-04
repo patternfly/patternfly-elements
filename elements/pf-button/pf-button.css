@@ -570,7 +570,7 @@ button:hover {
 :host([block]) button {
   display: flex;
   width: 100%;
-  justify-content: var(--pf-c-button--JustifyContent, center);
+  justify-content: center;
 }
 
 /******************************

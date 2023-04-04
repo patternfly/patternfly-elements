@@ -112,7 +112,6 @@
 
 #container #options-menu #menu-list .menu-item {
   white-space: nowrap;
-  --pf-c-button--JustifyContent: start;
   --pf-c-button--PaddingTop: var(--pf-c-options-menu__menu-item--PaddingTop, var(--pf-global--spacer--sm, .5rem));
   --pf-c-button--PaddingRight: var(--pf-c-options-menu__menu-item--PaddingRight, var(--pf-global--spacer--md, 1rem));
   --pf-c-button--PaddingBottom: var(--pf-c-options-menu__menu-item--PaddingBottom, var(--pf-global--spacer--sm, .5rem));

@@ -7,7 +7,7 @@ import { BaseTooltip } from './BaseTooltip.js';
 import styles from './pf-tooltip.css';
 
 /**
- * A tooltip is in-app messaging used to identify elements on a page with short,
+ * A **tooltip** is in-app messaging used to identify elements on a page with short,
  * clarifying text.
  *
  * @summary Toggle the visibility of helpful or contextual information.

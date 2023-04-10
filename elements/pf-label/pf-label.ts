@@ -28,7 +28,7 @@ export type LabelColor = (
 )
 
 /**
- * The label component allows users to add specific element captions for user
+ * The **label** component allows users to add specific element captions for user
  * clarity and convenience.
  *
  * @summary Allows users to display meta data in a stylized form.

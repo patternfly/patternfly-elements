@@ -90,7 +90,7 @@
   </pf-accordion>
   ```
 
-  ### Single Expanded Behavior
+  ### Single Expanded Behavior {class="anuj"}
   <pf-accordion single>
     <pf-accordion-header>
       <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>

@@ -2,5 +2,8 @@
 
 <section class="band">
   <h{{level}}>{{ header | innerMD | safe }}</h{{level}}>
-  {{ content | innerMD | safe }}
+  <div class="example-preview">
+    {{ content | innerMD | safe }}
+  </div>
+  
 </section>

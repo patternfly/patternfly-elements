@@ -6,7 +6,7 @@ import { BaseSpinner } from './BaseSpinner.js';
 import styles from './pf-spinner.css';
 
 /**
- * A spinner is used to indicate to users that an action is in progress. For actions
+ * A **spinner** is used to indicate to users that an action is in progress. For actions
  * that may take a long time, use a progress bar instead.
  *
  * @cssprop {<length>} --pf-c-spinner--diameter                      {@default `3.375rem`}

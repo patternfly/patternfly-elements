@@ -282,7 +282,7 @@ header.band h1 {
   margin-top: 0;
 }
 
-.example-preview:not(pf-*) {
+.example-preview {
   padding: var(--pf-global--spacer--md, 1rem);
   background-color: var(--pf-global--BackgroundColor--100, #fff);
   border-bottom: var(--pf-global--BorderWidth--sm, 1px) solid var(--pf-global--BorderColor--300, #f0f0f0);

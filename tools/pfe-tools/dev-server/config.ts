@@ -95,8 +95,6 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
       const { componentSubpath } = options.site;
-      const subPath = componentSubpath === 'components' ? 'elements' : componentSubpath;
-
       const { tagPrefix } = options;
 
       const router =
@@ -109,30 +107,32 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
             ctx.body = await makeDemoEnv(options.rootDir);
             ctx.type = 'application/javascript';
           })
-          .get(`/${subPath}/:tagName/:fileName.js`, async ctx => {
-            return ctx.redirect(`/${subPath}/${ctx.params.tagName}/${ctx.params.fileName}.ts`);
+          // Redirect `elements/jazz-hands/*.js` to `elements/pf-pf-jazz-hands/*.ts`
+          .get(`/${componentSubpath}/:componentDir/:fileName.js`, async ctx => {
+            ctx.redirect(`/${componentSubpath}/${ctx.params.componentDir}/${ctx.params.fileName}.ts`);
           })
-          .get(`/${subPath}/:slug/:demo?/:fileName.css`, async (ctx, next) => {
-            const { slug, fileName } = ctx.params;
-            if (slug.includes(`${tagPrefix}-`)) {
-              return next();
-            }
-            const tagName = deslugify(slug);
-            if (tagName && fileName.includes('-lightdom')) {
-              return ctx.redirect(`/${componentSubpath}/${tagName}/${fileName}.css`);
+          // Redirect `elements/jazz-hands/demo/*.js|css` to `elements/pf-jazz-hands/demo/*.js|css`
+          .get(`/${componentSubpath}/:componentDir/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
+            if (!ctx.params.componentDir.includes(tagPrefix)) {
+              const demoSubDir = ctx.params.demoSubDir ? `${ctx.params.demoSubDir}/` : '';
+              ctx.redirect(`/${componentSubpath}/${tagPrefix}-${ctx.params.componentDir}/demo/${demoSubDir}${ctx.params.fileName}.${ctx.params.ext}`);
             } else {
               return next();
             }
           })
-          .get(`/${componentSubpath}/:slug/demo/:sub?/:fileName.:ext`, (ctx, next) => {
-            const { slug, fileName, ext } = ctx.params;
-            if (slug.includes(`${tagPrefix}-`)) {
+          // Redirect `elements/jazz-hands/*` to `elements/pf-jazz-hands/*` not previously handled
+          .get(`/${componentSubpath}/:componentDir/:any*`, async (ctx, next) => {
+            if (ctx.params.any === 'demo') {
+              /* if its the demo directory return */
               return next();
             }
-            const tagName = deslugify(slug);
-            return ctx.redirect(`/${subPath}/${tagName}/demo/${fileName}.${ext}`);
+            if (!ctx.params.componentDir.includes(tagPrefix)) {
+              console.log(`redirecting ${ctx.request.url} to /${componentSubpath}/${tagPrefix}-${ctx.params.componentDir}/${ctx.params.any}`);
+              ctx.redirect(`/${componentSubpath}/${tagPrefix}-${ctx.params.componentDir}/${ctx.params.any}`);
+            } else {
+              return next();
+            }
           });
-
       app.use(router.routes());
       const files = await glob(options.watchFiles, { cwd: process.cwd() });
       for (const file of files) {

@@ -40,7 +40,7 @@ const SITE_DEFAULTS: Required<SiteOptions> = {
   logoUrl: '/docs/images/pfe-logo-inverse-white.svg',
   stylesheets: [],
   title: 'PatternFly Elements',
-  componentSubpath: 'components',
+  componentSubpath: 'elements',
 };
 
 const DEFAULT_CONFIG: PfeConfig = {

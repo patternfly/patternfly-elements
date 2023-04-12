@@ -29,7 +29,7 @@ import slugify from 'slugify';
 export function demosPlugin(options?: PfeConfig): Plugin {
   const fileOptions = getPfeConfig(options?.rootDir);
   const config = { ...fileOptions, ...options };
-  const subpath = config.site.componentSubpath ?? 'components';
+  const subpath = config.site.docsComponentSubpath ?? 'components';
   const { rootDir, demoURLPrefix, sourceControlURLPrefix } = config;
   return {
     name: 'demos-plugin',

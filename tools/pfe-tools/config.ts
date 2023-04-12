@@ -13,8 +13,10 @@ interface SiteOptions {
   stylesheets?: string[];
   /** Title for main page of the demo */
   title?: string;
-  /** Site subpath for components. e.g. 'elements'. default: 'components' */
+  /** Site subpath for components. e.g. 'elements'. default: 'elements' */
   componentSubpath?: string;
+  //* Docs site subpath for components. e.g. 'components'. default: 'components' */
+  docsComponentSubpath?: string;
 }
 
 export interface PfeConfig {
@@ -41,6 +43,7 @@ const SITE_DEFAULTS: Required<SiteOptions> = {
   stylesheets: [],
   title: 'PatternFly Elements',
   componentSubpath: 'elements',
+  docsComponentSubpath: 'components',
 };
 
 const DEFAULT_CONFIG: PfeConfig = {

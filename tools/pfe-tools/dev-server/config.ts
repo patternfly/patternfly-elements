@@ -114,26 +114,29 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
             ctx.type = 'application/javascript';
           })
           // Redirect `elements/jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts`
-          .get(`/${componentSubpath}/:componentDir/:fileName.js`, async ctx => {
-            ctx.redirect(`/${componentSubpath}/${ctx.params.componentDir}/${ctx.params.fileName}.ts`);
+          .get(`/${componentSubpath}/:element/:fileName.js`, async ctx => {
+            const { element, fileName } = ctx.params;
+            ctx.redirect(`/${componentSubpath}/${element}/${fileName}.ts`);
           })
           // Redirect `elements/jazz-hands/demo/*.js|css` to `elements/pf-jazz-hands/demo/*.js|css`
           // If request is `elements/jazz-hands/demo/some-other-demo/*.js|css redirect files to `elements/pf-jazz-hands/demo/*.js|css`
-          .get(`/${componentSubpath}/:componentDir/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
-            if (!ctx.params.componentDir.includes(tagPrefix)) {
-              ctx.redirect(`/${componentSubpath}/${tagPrefix}-${ctx.params.componentDir}/demo/${ctx.params.fileName}.${ctx.params.ext}`);
+          .get(`/${componentSubpath}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
+            const { element, fileName, ext } = ctx.params;
+            if (!element.includes(tagPrefix)) {
+              ctx.redirect(`/${componentSubpath}/${tagPrefix}-${element}/demo/${fileName}.${ext}`);
             } else {
               return next();
             }
           })
           // Redirect `elements/jazz-hands/*` to `elements/pf-jazz-hands/*` for files not previously handled
-          .get(`/${componentSubpath}/:componentDir/:any*`, async (ctx, next) => {
-            if (ctx.params.any.includes('demo')) {
+          .get(`/${componentSubpath}/:element/:splatPath*`, async (ctx, next) => {
+            const { element, splatPath } = ctx.params;
+            if (splatPath.includes('demo')) {
               /* if its the demo directory return */
               return next();
             }
-            if (!ctx.params.componentDir.includes(tagPrefix)) {
-              ctx.redirect(`/${componentSubpath}/${tagPrefix}-${ctx.params.componentDir}/${ctx.params.any}`);
+            if (!element.includes(tagPrefix)) {
+              ctx.redirect(`/${componentSubpath}/${tagPrefix}-${element}/${splatPath}`);
             } else {
               return next();
             }

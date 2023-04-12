@@ -75,6 +75,12 @@ async function renderURL(context: Context, options: PfeDevServerInternalConfig):
   const demos = manifests
     .flatMap(manifest => manifest.getTagNames()
       .flatMap(tagName => manifest.getDemoMetadata(tagName, options as PfeDevServerInternalConfig)));
+  /* Rewrite the permalink to match location of the dev server componentSubpath */
+  demos.forEach(demo => {
+    if (demo?.permalink) {
+      demo.permalink = demo.permalink.replace(options.site.docsComponentSubpath, options.site.componentSubpath);
+    }
+  });
   const demo = demos.find(x => x.permalink === url.pathname);
   const manifest = demo?.manifest;
 

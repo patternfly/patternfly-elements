@@ -118,22 +118,21 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
             ctx.redirect(`/${componentSubpath}/${ctx.params.componentDir}/${ctx.params.fileName}.ts`);
           })
           // Redirect `elements/jazz-hands/demo/*.js|css` to `elements/pf-jazz-hands/demo/*.js|css`
+          // If request is `elements/jazz-hands/demo/some-other-demo/*.js|css redirect files to `elements/pf-jazz-hands/demo/*.js|css`
           .get(`/${componentSubpath}/:componentDir/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
             if (!ctx.params.componentDir.includes(tagPrefix)) {
-              const demoSubDir = ctx.params.demoSubDir ? `${ctx.params.demoSubDir}/` : '';
-              ctx.redirect(`/${componentSubpath}/${tagPrefix}-${ctx.params.componentDir}/demo/${demoSubDir}${ctx.params.fileName}.${ctx.params.ext}`);
+              ctx.redirect(`/${componentSubpath}/${tagPrefix}-${ctx.params.componentDir}/demo/${ctx.params.fileName}.${ctx.params.ext}`);
             } else {
               return next();
             }
           })
           // Redirect `elements/jazz-hands/*` to `elements/pf-jazz-hands/*` for files not previously handled
           .get(`/${componentSubpath}/:componentDir/:any*`, async (ctx, next) => {
-            if (ctx.params.any === 'demo') {
+            if (ctx.params.any.includes('demo')) {
               /* if its the demo directory return */
               return next();
             }
             if (!ctx.params.componentDir.includes(tagPrefix)) {
-              console.log(`redirecting ${ctx.request.url} to /${componentSubpath}/${tagPrefix}-${ctx.params.componentDir}/${ctx.params.any}`);
               ctx.redirect(`/${componentSubpath}/${tagPrefix}-${ctx.params.componentDir}/${ctx.params.any}`);
             } else {
               return next();

@@ -107,7 +107,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
             ctx.body = await makeDemoEnv(options.rootDir);
             ctx.type = 'application/javascript';
           })
-          // Redirect `elements/jazz-hands/*.js` to `elements/pf-pf-jazz-hands/*.ts`
+          // Redirect `elements/jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts`
           .get(`/${componentSubpath}/:componentDir/:fileName.js`, async ctx => {
             ctx.redirect(`/${componentSubpath}/${ctx.params.componentDir}/${ctx.params.fileName}.ts`);
           })
@@ -120,7 +120,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
               return next();
             }
           })
-          // Redirect `elements/jazz-hands/*` to `elements/pf-jazz-hands/*` not previously handled
+          // Redirect `elements/jazz-hands/*` to `elements/pf-jazz-hands/*` for files not previously handled
           .get(`/${componentSubpath}/:componentDir/:any*`, async (ctx, next) => {
             if (ctx.params.any === 'demo') {
               /* if its the demo directory return */

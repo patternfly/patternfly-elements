@@ -78,7 +78,7 @@ async function renderURL(context: Context, options: PfeDevServerInternalConfig):
   /* Rewrite the permalink to match location of the dev server componentSubpath */
   demos.forEach(demo => {
     if (demo?.permalink) {
-      demo.permalink = demo.permalink.replace(options.site.docsComponentSubpath, options.site.componentSubpath);
+      demo.permalink = demo.permalink.replace(options.site.componentSubpath, options.elementsDir);
     }
   });
   const demo = demos.find(x => x.permalink === url.pathname);
@@ -100,8 +100,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
-      const { componentSubpath } = options.site;
-      const { tagPrefix } = options;
+      const { elementsDir, tagPrefix } = options;
 
       const router =
         new Router()
@@ -114,29 +113,29 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
             ctx.type = 'application/javascript';
           })
           // Redirect `elements/jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts`
-          .get(`/${componentSubpath}/:element/:fileName.js`, async ctx => {
+          .get(`/${elementsDir}/:element/:fileName.js`, async ctx => {
             const { element, fileName } = ctx.params;
-            ctx.redirect(`/${componentSubpath}/${element}/${fileName}.ts`);
+            ctx.redirect(`/${elementsDir}/${element}/${fileName}.ts`);
           })
           // Redirect `elements/jazz-hands/demo/*.js|css` to `elements/pf-jazz-hands/demo/*.js|css`
           // If request is `elements/jazz-hands/demo/some-other-demo/*.js|css redirect files to `elements/pf-jazz-hands/demo/*.js|css`
-          .get(`/${componentSubpath}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
+          .get(`/${elementsDir}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
             const { element, fileName, ext } = ctx.params;
             if (!element.includes(tagPrefix)) {
-              ctx.redirect(`/${componentSubpath}/${tagPrefix}-${element}/demo/${fileName}.${ext}`);
+              ctx.redirect(`/${elementsDir}/${tagPrefix}-${element}/demo/${fileName}.${ext}`);
             } else {
               return next();
             }
           })
           // Redirect `elements/jazz-hands/*` to `elements/pf-jazz-hands/*` for files not previously handled
-          .get(`/${componentSubpath}/:element/:splatPath*`, async (ctx, next) => {
+          .get(`/${elementsDir}/:element/:splatPath*`, async (ctx, next) => {
             const { element, splatPath } = ctx.params;
             if (splatPath.includes('demo')) {
               /* if its the demo directory return */
               return next();
             }
             if (!element.includes(tagPrefix)) {
-              ctx.redirect(`/${componentSubpath}/${tagPrefix}-${element}/${splatPath}`);
+              ctx.redirect(`/${elementsDir}/${tagPrefix}-${element}/${splatPath}`);
             } else {
               return next();
             }

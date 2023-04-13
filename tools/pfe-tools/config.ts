@@ -15,8 +15,6 @@ interface SiteOptions {
   title?: string;
   /** Site subpath for components. e.g. 'elements'. default: 'elements' */
   componentSubpath?: string;
-  //* Docs site subpath for components. e.g. 'components'. default: 'components' */
-  docsComponentSubpath?: string;
 }
 
 export interface PfeConfig {
@@ -42,13 +40,13 @@ const SITE_DEFAULTS: Required<SiteOptions> = {
   logoUrl: '/docs/images/pfe-logo-inverse-white.svg',
   stylesheets: [],
   title: 'PatternFly Elements',
-  componentSubpath: 'elements',
-  docsComponentSubpath: 'components',
+  componentSubpath: 'components',
 };
 
 const DEFAULT_CONFIG: PfeConfig = {
   demoURLPrefix: 'https://patternflyelements.org/',
   sourceControlURLPrefix: 'https://github.com/patternfly/patternfly-elements/tree/main/',
+  elementsDir: 'elements',
   tagPrefix: 'pf',
   aliases: {},
 };

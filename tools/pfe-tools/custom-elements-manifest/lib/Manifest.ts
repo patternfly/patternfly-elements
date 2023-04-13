@@ -274,7 +274,7 @@ export class Manifest {
        * > **ANY** (_>= 0x_)
        * `/demo`
        */
-      const DEMO_PATH_RE = new RegExp(`/${options.site.docsComponentSubpath}/(.*)/demo`);
+      const DEMO_PATH_RE = new RegExp(`/${options.site.componentSubpath}/(.*)/demo`);
       let [, slug = ''] = permalink.match(DEMO_PATH_RE) ?? [];
       // strict removes all special characters from slug
       slug = slugify(slug, { strict: true, lower: true });

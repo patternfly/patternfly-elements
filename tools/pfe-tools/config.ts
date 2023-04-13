@@ -13,7 +13,7 @@ interface SiteOptions {
   stylesheets?: string[];
   /** Title for main page of the demo */
   title?: string;
-  /** Site subpath for components. e.g. 'elements'. default: 'elements' */
+  /** Site subpath for components. e.g. 'elements'. default: 'components' */
   componentSubpath?: string;
 }
 

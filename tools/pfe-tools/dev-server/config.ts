@@ -149,7 +149,6 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
   };
 }
 
-
 function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInternalConfig {
   const config = { ...getPfeConfig(), ...options ?? {} };
   config.site = { ...config.site, ...options?.site ?? {} };

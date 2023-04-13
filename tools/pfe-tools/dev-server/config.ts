@@ -127,7 +127,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
               return next();
             }
           })
-          // Redirect `elements/jazz-hands/*` to `elements/pf-jazz-hands/*` for files not previously handled
+          // Redirect `elements/jazz-hands/*` to `elements/pf-jazz-hands/*` for requests not previously handled
           .get(`/${elementsDir}/:element/:splatPath*`, async (ctx, next) => {
             const { element, splatPath } = ctx.params;
             if (splatPath.includes('demo')) {

@@ -92,9 +92,9 @@
     </pf-accordion-panel>
   </pf-accordion>
   ```
-{% endband %}
 
-{% band header="Single Expanded Behavior", level="4" %}
+
+### Single Expanded Behavior
   <div class="example-preview">
     <pf-accordion single>
       <pf-accordion-header>
@@ -156,9 +156,8 @@
     </pf-accordion-panel>
   </pf-accordion>
   ```
-{% endband %}
 
-  {% band header="Fixed with multiple expand behavior", level="4" %}
+  ### Fixed with multiple expand behavior
   <div class="example-preview">
   <pf-accordion >
     <pf-accordion-header>
@@ -220,9 +219,8 @@
     </pf-accordion-panel>
   </pf-accordion>
   ```
-{% endband %}
-
-{% band header="Bordered", level="4" %}
+  
+### Bordered
   <div class="example-preview">
   <pf-accordion bordered>
     <pf-accordion-header>

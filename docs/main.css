@@ -83,15 +83,6 @@ header.band {
   box-shadow: var(--pf-c-page--section--m-sticky-top--BoxShadow, var(--pf-global--BoxShadow--sm-bottom, 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)));
 }
 
-#overview-content {
-  background-color:
-  var(
-    --pf-c-page__main-section--BackgroundColor,
-    var(
-      --pf-c-page__main-section--m-light-100--BackgroundColor,
-      var(--pf-global--BackgroundColor--150, #fafafa)));
-} 
-
 /* Not an ideal selector... hacking away */
 section.band:not(#component-list):not(#lightw):not(#univ):not(.accent):not(.small) {
   max-width: 1020px;

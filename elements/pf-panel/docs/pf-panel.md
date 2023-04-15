@@ -7,10 +7,12 @@
 {% band header="Usage" %}
 
 <h3>Header</h3>
+<div class="example-preview">
 <pf-panel>
   <h3 slot="header">Header content</h3>
   <p>Main content</p>
 </pf-panel>
+</div>
 
 ```html
 <pf-panel>
@@ -20,10 +22,12 @@
 ```
 
 <h3>Header</h3>
+<div class="example-preview">
 <pf-panel>
   <p>Main content</p>
   <p slot="footer">Footer content</p>
 </pf-panel>
+</div>
 
 ```html
 <pf-panel>
@@ -33,11 +37,13 @@
 ```
 
 <h3>Header and footer</h3>
+<div class="example-preview">
 <pf-panel>
   <h3 slot="header">Header content</h3>
   <p>Main content</p>
   <p slot="footer">Footer content</p>
 </pf-panel>
+</div>
 
 ```html
 <pf-panel>
@@ -48,9 +54,11 @@
 ```
 
 <h3>Raised</h3>
+<div class="example-preview">
 <pf-panel variant="raised">
   <p>Main content</p>
 </pf-panel>
+</div>
 
 ```html
 <pf-panel variant="raised">
@@ -59,9 +67,11 @@
 ```
 
 <h3>Bordered</h3>
+<div class="example-preview">
 <pf-panel variant="bordered">
   <p>Main content</p>
 </pf-panel>
+</div>
 
 ```html
 <pf-panel variant="bordered">
@@ -70,6 +80,7 @@
 ```
 
 <h3>Scrollable</h3>
+<div class="example-preview">
 <pf-panel scrollable>
   <p>
   A couple of years ago the Computer Science Club at Bishop's University
@@ -102,6 +113,7 @@
   being closed.
   </p>
 </pf-panel>
+</div>
 
 ```html
 <pf-panel scrollable>
@@ -112,6 +124,7 @@
 ```
 
 <h3>Scrollable with header and footer</h3>
+<div class="example-preview">
 <pf-panel scrollable>
 <h3 slot="header">Header content</h3>
   <p>
@@ -146,6 +159,7 @@
   </p>
   <p slot="footer">Footer content</p>
 </pf-panel>
+</div>
 
 ```html
 <pf-panel scrollable>

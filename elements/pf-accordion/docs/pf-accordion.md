@@ -30,34 +30,37 @@
 {% endrenderOverview %}
 
 {% band header="Usage" %}
-  <pf-accordion>
-    <pf-accordion-header>
-      <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
-    </pf-accordion-header>
-    <pf-accordion-panel>
-      <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
-      <a href="#">Call to action</a>
-    </pf-accordion-panel>
-    <pf-accordion-header>
-      <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
-    </pf-accordion-header>
-    <pf-accordion-panel>
-      <p><a href="#">Ullamco ullamco sint</a> ex id magna elit deserunt dolore nostrud eu et dolore est Lorem. Esse laborum do ut consectetur occaecat proident et nostrud ut nostrud veniam officia Lorem.</p>
-    </pf-accordion-panel>
-    <pf-accordion-header>
-      <h3>Nostrud ad sit commodo nostrud?</h3>
-    </pf-accordion-header>
-    <pf-accordion-panel>
-      <p>Nisi veniam tempor reprehenderit laboris amet laborum et do ut. Veniam eiusmod aliquip ullamco quis esse laborum Lorem exercitation consequat.</p>
-    </pf-accordion-panel>
-    <pf-accordion-header>
-      <h3>Reprehenderit cupidatat labore?</h3>
-    </pf-accordion-header>
-    <pf-accordion-panel>
-      <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
-      <a href="#">Call to action</a>
-    </pf-accordion-panel>
-  </pf-accordion>
+  <div class="example-preview">
+    <pf-accordion>
+      <pf-accordion-header>
+        <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
+      </pf-accordion-header>
+      <pf-accordion-panel>
+        <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
+        <a href="#">Call to action</a>
+      </pf-accordion-panel>
+      <pf-accordion-header>
+        <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
+      </pf-accordion-header>
+      <pf-accordion-panel>
+        <p><a href="#">Ullamco ullamco sint</a> ex id magna elit deserunt dolore nostrud eu et dolore est Lorem. Esse laborum do ut consectetur occaecat proident et nostrud ut nostrud veniam officia Lorem.</p>
+      </pf-accordion-panel>
+      <pf-accordion-header>
+        <h3>Nostrud ad sit commodo nostrud?</h3>
+      </pf-accordion-header>
+      <pf-accordion-panel>
+        <p>Nisi veniam tempor reprehenderit laboris amet laborum et do ut. Veniam eiusmod aliquip ullamco quis esse laborum Lorem exercitation consequat.</p>
+      </pf-accordion-panel>
+      <pf-accordion-header>
+        <h3>Reprehenderit cupidatat labore?</h3>
+      </pf-accordion-header>
+      <pf-accordion-panel>
+        <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
+        <a href="#">Call to action</a>
+      </pf-accordion-panel>
+    </pf-accordion>
+  </div>
+  
 
   ```html
   <pf-accordion>
@@ -89,36 +92,39 @@
     </pf-accordion-panel>
   </pf-accordion>
   ```
+{% endband %}
 
-  ### Single Expanded Behavior {class="anuj"}
-  <pf-accordion single>
-    <pf-accordion-header>
-      <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
-    </pf-accordion-header>
-    <pf-accordion-panel>
-      <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
-      <a href="#">Call to action</a>
-    </pf-accordion-panel>
-    <pf-accordion-header expanded>
-      <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
-    </pf-accordion-header>
-    <pf-accordion-panel>
-      <p><a href="#">Ullamco ullamco sint</a> ex id magna elit deserunt dolore nostrud eu et dolore est Lorem. Esse laborum do ut consectetur occaecat proident et nostrud ut nostrud veniam officia Lorem.</p>
-    </pf-accordion-panel>
-    <pf-accordion-header>
-      <h3>Nostrud ad sit commodo nostrud?</h3>
-    </pf-accordion-header>
-    <pf-accordion-panel>
-      <p>Nisi veniam tempor reprehenderit laboris amet laborum et do ut. Veniam eiusmod aliquip ullamco quis esse laborum Lorem exercitation consequat.</p>
-    </pf-accordion-panel>
-    <pf-accordion-header>
-      <h3>Reprehenderit cupidatat labore?</h3>
-    </pf-accordion-header>
-    <pf-accordion-panel>
-      <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
-      <a href="#">Call to action</a>
-    </pf-accordion-panel>
-  </pf-accordion>
+{% band header="Single Expanded Behavior", level="4" %}
+  <div class="example-preview">
+    <pf-accordion single>
+      <pf-accordion-header>
+        <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
+      </pf-accordion-header>
+      <pf-accordion-panel>
+        <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
+        <a href="#">Call to action</a>
+      </pf-accordion-panel>
+      <pf-accordion-header expanded>
+        <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
+      </pf-accordion-header>
+      <pf-accordion-panel>
+        <p><a href="#">Ullamco ullamco sint</a> ex id magna elit deserunt dolore nostrud eu et dolore est Lorem. Esse laborum do ut consectetur occaecat proident et nostrud ut nostrud veniam officia Lorem.</p>
+      </pf-accordion-panel>
+      <pf-accordion-header>
+        <h3>Nostrud ad sit commodo nostrud?</h3>
+      </pf-accordion-header>
+      <pf-accordion-panel>
+        <p>Nisi veniam tempor reprehenderit laboris amet laborum et do ut. Veniam eiusmod aliquip ullamco quis esse laborum Lorem exercitation consequat.</p>
+      </pf-accordion-panel>
+      <pf-accordion-header>
+        <h3>Reprehenderit cupidatat labore?</h3>
+      </pf-accordion-header>
+      <pf-accordion-panel>
+        <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
+        <a href="#">Call to action</a>
+      </pf-accordion-panel>
+    </pf-accordion>
+  </div>
  
   ```html
   <pf-accordion single>
@@ -150,9 +156,10 @@
     </pf-accordion-panel>
   </pf-accordion>
   ```
+{% endband %}
 
-
-  ### Fixed with multiple expand behavior
+  {% band header="Fixed with multiple expand behavior", level="4" %}
+  <div class="example-preview">
   <pf-accordion >
     <pf-accordion-header>
       <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
@@ -181,6 +188,7 @@
       <a href="#">Call to action</a>
     </pf-accordion-panel>
   </pf-accordion>
+  </div>
  
   ```html
   <pf-accordion>
@@ -212,9 +220,10 @@
     </pf-accordion-panel>
   </pf-accordion>
   ```
+{% endband %}
 
-
-  ### Bordered
+{% band header="Bordered", level="4" %}
+  <div class="example-preview">
   <pf-accordion bordered>
     <pf-accordion-header>
       <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
@@ -243,6 +252,7 @@
       <a href="#">Call to action</a>
     </pf-accordion-panel>
   </pf-accordion>
+ </div>
  
   ```html
   <pf-accordion bordered>
@@ -274,7 +284,6 @@
     </pf-accordion-panel>
   </pf-accordion>
   ```
-
 {% endband %}
 
 {% renderSlots %}

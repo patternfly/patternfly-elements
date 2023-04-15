@@ -9,9 +9,11 @@ A switch toggles the state of a setting (between on and off). Switches provide a
 {% band header="Usage" %}
 
 ### Basic
+<div class="example-preview">
 <pf-switch id="color-scheme-toggle" checked></pf-switch>
 <label for="color-scheme-toggle" data-state="on">Message when on</label>
 <label for="color-scheme-toggle" data-state="off" hidden>Message when off</label>
+</div>
 
 ```html
 <pf-switch id="color-scheme-toggle"></pf-switch>
@@ -21,16 +23,20 @@ A switch toggles the state of a setting (between on and off). Switches provide a
 
 
 ### Without label
+<div class="example-preview">
 <pf-switch checked></pf-switch>
+</div>
 
 ```html
 <pf-switch></pf-switch>
 ```
 
 ### Checked with label
+<div class="example-preview">
 <pf-switch id="checked" checked show-check-icon></pf-switch>
 <label for="checked" data-state="on">Message when on</label>
 <label for="checked" data-state="off">Message when off</label>
+</div>
 
 ```html
 <pf-switch id="checked" checked show-check-icon></pf-switch>
@@ -39,6 +45,7 @@ A switch toggles the state of a setting (between on and off). Switches provide a
 ```
 
 ### Disabled
+<div class="example-preview">
 <form>
   <fieldset>
     <legend>Checked and Disabled</legend>
@@ -52,6 +59,7 @@ A switch toggles the state of a setting (between on and off). Switches provide a
     <label for="default-disabled" data-state="off">Message when off</label>
   </fieldset>
 </form>
+</div>
 
 ```html
 <form>

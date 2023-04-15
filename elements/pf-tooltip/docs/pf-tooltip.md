@@ -11,12 +11,14 @@
 {% band header="Usage" %}
 
 ### Left Tooltip
-<pf-tooltip position="left">
-  <pf-button>Tooltip</pf-button>
-  <div slot="content">
-    This is some content
-  </div>
-</pf-tooltip>
+<div class="example-preview">
+  <pf-tooltip position="left">
+    <pf-button>Tooltip</pf-button>
+    <div slot="content">
+      This is some content
+    </div>
+  </pf-tooltip>
+</div>
 
 ```html
 <pf-tooltip position="left">
@@ -28,12 +30,14 @@
 ```
 
 ### Left-Start Tooltip
+<div class="example-preview">
 <pf-tooltip position="left-start">
   <pf-button>Tooltip</pf-button>
   <div slot="content">
     This is some content
   </div>
 </pf-tooltip>
+</div>
 
 ```html
 <pf-tooltip position="left-start">
@@ -45,12 +49,14 @@
 ```
 
 ### Left-End Tooltip
+<div class="example-preview">
 <pf-tooltip position="left-end">
   <pf-button>Tooltip</pf-button>
   <div slot="content">
     This is some content
   </div>
 </pf-tooltip>
+</div>
 
 ```html
 <pf-tooltip position="left-end">
@@ -62,12 +68,14 @@
 ```
 
 ### Right Tooltip
+<div class="example-preview">
 <pf-tooltip position="right">
   <pf-button>Tooltip</pf-button>
   <div slot="content">
     This is some content
   </div>
 </pf-tooltip>
+</div>
 
 ```html
 <pf-tooltip position="right">
@@ -79,12 +87,14 @@
 ```
 
 ### Right-Start Tooltip
+<div class="example-preview">
 <pf-tooltip position="right-start">
   <pf-button>Tooltip</pf-button>
   <div slot="content">
     This is some content
   </div>
 </pf-tooltip>
+</div>
 
 ```html
 <pf-tooltip position="right-start">
@@ -96,12 +106,14 @@
 ```
 
 ### Right-End Tooltip
+<div class="example-preview">
 <pf-tooltip position="right-end">
   <pf-button>Tooltip</pf-button>
   <div slot="content">
     This is some content
   </div>
 </pf-tooltip>
+</div>
 
 ```html
 <pf-tooltip position="right-end">
@@ -113,12 +125,14 @@
 ```
 
 ### Top Tooltip
+<div class="example-preview">
 <pf-tooltip position="top">
   <pf-button>Tooltip</pf-button>
   <div slot="content">
      This is some content
   </div>
 </pf-tooltip>
+</div>
 
 ```html
 <pf-tooltip position="top">
@@ -130,12 +144,14 @@
 ```
 
 ### Top-Start Tooltip
+<div class="example-preview">
 <pf-tooltip position="top-start">
   <pf-button>Tooltip</pf-button>
   <div slot="content">
     This is some content
   </div>
 </pf-tooltip>
+</div>
 
 ```html
 <pf-tooltip position="top-start">
@@ -147,12 +163,14 @@
 ```
 
 ### Top-End Tooltip
+<div class="example-preview">
 <pf-tooltip position="top-end">
   <pf-button>Tooltip</pf-button>
   <div slot="content">
     This is some content
   </div>
 </pf-tooltip>
+</div>
 
 ```html
 <pf-tooltip position="top-end">
@@ -164,12 +182,14 @@
 ```
 
 ### Bottom Tooltip
+<div class="example-preview">
 <pf-tooltip position="bottom">
   <pf-button>Tooltip</pf-button>
   <div slot="content">
   This is some content
   </div>
 </pf-tooltip>
+</div>
 
 ```html
 <pf-tooltip position="bottom">
@@ -181,12 +201,14 @@
 ```
 
 ### Bottom-Start Tooltip
+<div class="example-preview">
 <pf-tooltip position="bottom-start">
   <pf-button>Tooltip</pf-button>
   <div slot="content">
     This is some content
   </div>
 </pf-tooltip>
+</div>
 
 ```html
 <pf-tooltip position="bottom-start">
@@ -198,12 +220,14 @@
 ```
 
 ### Bottom-End Tooltip
+<div class="example-preview">
 <pf-tooltip position="bottom-end">
   <pf-button>Tooltip</pf-button>
   <div slot="content">
     This is some content
   </div>
 </pf-tooltip>
+</div>
 
 ```html
 <pf-tooltip position="bottom-end">

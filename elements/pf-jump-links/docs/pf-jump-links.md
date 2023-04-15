@@ -14,11 +14,13 @@
 
 <section>
   <h2>With centered list</h2>
+  <div class="example-preview">
   <pf-jump-links centered>
     <pf-jump-links-item href="#heading-1">Inactive section</pf-jump-links-item>
     <pf-jump-links-item href="#heading-2" active>Active section</pf-jump-links-item>
     <pf-jump-links-item href="#heading-3">Inactive section</pf-jump-links-item>
   </pf-jump-links>
+  </div>
 </section>
 
 ```html
@@ -31,11 +33,13 @@
 
 <section>
   <h2>With label</h2>
+  <div class="example-preview">
   <pf-jump-links label="Jump to section">
     <pf-jump-links-item href="#heading-1">Inactive section</pf-jump-links-item>
     <pf-jump-links-item href="#heading-2" active>Active section</pf-jump-links-item>
     <pf-jump-links-item href="#heading-3">Inactive section</pf-jump-links-item>
   </pf-jump-links>
+  </div>
 </section>
 
 ```html
@@ -48,11 +52,13 @@
 
 <section>
   <h2>Vertical</h2>
+  <div class="example-preview">
   <pf-jump-links vertical>
     <pf-jump-links-item href="#heading-1">Inactive section</pf-jump-links-item>
     <pf-jump-links-item href="#heading-2" active>Active section</pf-jump-links-item>
     <pf-jump-links-item href="#heading-3">Inactive section</pf-jump-links-item>
   </pf-jump-links>
+  </div>
 </section>
 
 ```html
@@ -66,6 +72,7 @@
 
 <section>
   <h2>Expandable vertical with subsection</h2>
+  <div class="example-preview">
   <pf-jump-links vertical expandable label="Jump to section">
     <pf-jump-links-item href="#heading-1">Inactive section</pf-jump-links-item>
     <pf-jump-links-item href="#heading-2">
@@ -80,6 +87,7 @@
     <pf-jump-links-item href="#heading-4">Inactive section</pf-jump-links-item>
   </pf-jump-links>
 </section>
+</div>
 
 ```html
 <pf-jump-links vertical expandable label="Jump to section">
@@ -98,6 +106,7 @@
 ```
 <section>
   <h2>Expandable vertical with Scrollspy</h2>
+  <div class="example-preview">
   <pf-jump-links vertical
                   expandable
                   expanded
@@ -109,6 +118,7 @@
     <pf-jump-links-item id="4" href="#heading-4">Heading 4</pf-jump-links-item>
     <pf-jump-links-item id="5" href="#heading-5">Heading 5</pf-jump-links-item>
   </pf-jump-links>
+  </div>
 </section>
 
 ```html

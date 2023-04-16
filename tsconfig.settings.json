@@ -25,7 +25,7 @@
     "inlineSources": true,
     "module": "es2020",
     "moduleResolution": "Node",
-    "preserveValueImports": true,
+    "verbatimModuleSyntax": true,
     "rootDir": ".",
     "sourceMap": true,
     "strict": true,

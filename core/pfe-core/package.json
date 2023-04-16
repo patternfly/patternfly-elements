@@ -50,8 +50,8 @@
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.2.3",
-    "lit": "2.6.1"
+    "@floating-ui/dom": "^1.2.6",
+    "lit": "^2.7.2"
   },
   "repository": {
     "type": "git",

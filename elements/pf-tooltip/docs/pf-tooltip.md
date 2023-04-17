@@ -11,22 +11,13 @@
 {% band header="Usage" %}
 
 ### Left Tooltip
-<pf-tooltip position="left">
-  <pf-button>Tooltip</pf-button>
-  <div slot="content">
-    This is some content
-  </div>
-</pf-tooltip>
-
 {% htmlexample %}
-```html
 <pf-tooltip position="left">
   <pf-button>Tooltip</pf-button>
   <div slot="content">
     This is some content
   </div>
 </pf-tooltip>
-```
 {% endhtmlexample %}
 
 ### Left-Start Tooltip

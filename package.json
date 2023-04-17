@@ -92,7 +92,7 @@
       ]
     },
     "build:elements": {
-      "command": "ttsc --build elements --pretty",
+      "command": "tspc --build elements --pretty",
       "clean": "if-file-deleted",
       "dependencies": [
         "build:core",
@@ -129,7 +129,7 @@
       ]
     },
     "build:core": {
-      "command": "ttsc --build ./core/pfe-core --pretty",
+      "command": "tspc --build ./core/pfe-core --pretty",
       "clean": "if-file-deleted",
       "dependencies": [
         "build:tools"

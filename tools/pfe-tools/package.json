@@ -119,7 +119,7 @@
     "ttypescript": "^1.5.15",
     "typescript": "4.9.5",
     "urlpattern-polyfill": "^7.0.0",
-    "web-dev-server-plugin-lit-css": "^2.0.4"
+    "web-dev-server-plugin-lit-css": "^2.0.5"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0"

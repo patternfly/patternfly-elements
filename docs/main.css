@@ -737,7 +737,13 @@ pf-card > h3 {
 }
 
 blockquote {
-  background-color: #bee1f4;
+  border-inline-start: 3px solid #d2d2d2;
+  padding: 1rem 1.5rem;
+  margin-block: 2rem;
+}
+
+.callout {
+  background-color: var(--pf-global--active-color--200, #bee1f4);
   margin-left: 0;
   margin-right: 0;
   padding: 1.5rem;
@@ -859,7 +865,8 @@ nav.toc li {
     display: grid;
     position: relative;
     grid-template-areas: 'header header' 'content toc';
-    grid-template-columns: auto 300px;
+    grid-template-columns: auto 18rem;
+    grid-template-rows: min-content;
   }
 
   main.blog > header.band {
@@ -868,6 +875,7 @@ nav.toc li {
 
   main.blog > .block-toc {
     grid-area: toc;
+    padding: 1rem 2rem;
   }
 
   main.blog > .band:not(header) {
@@ -876,8 +884,7 @@ nav.toc li {
 
   aside.block-toc > nav.toc {
     position: sticky;
-    top: 60px;
-    padding: 10px 16px;
+    top: 126px;
   }
 
   aside.block-toc > h2 {
@@ -895,7 +902,7 @@ nav.toc li {
     transition: opacity 0.2s ease-in-out;
     position: absolute;
     left: -1.2em;
-    top: .2em;
+    top: 0.35em;
   }
 
   nav.toc .active::after {

@@ -954,7 +954,7 @@ describe('<pf-accordion>', function() {
       [header, secondHeader] = headers;
       [panel, secondPanel] = panels;
       await allUpdates(element);
-      await nextFrame();
+      await aTimeout(100);
     });
     it('hides the first panel', function() {
       expect(panel).to.not.have.attribute('expanded');
@@ -966,6 +966,7 @@ describe('<pf-accordion>', function() {
       expect(panels[2]).to.not.have.attribute('expanded');
     });
   });
+
   describe('with no h* tag in heading lightdom', function() {
     beforeEach(async function() {
       element = await createFixture<PfAccordion>(html`
@@ -1088,4 +1089,3 @@ describe('<pf-accordion>', function() {
     });
   });
 });
-

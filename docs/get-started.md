@@ -29,34 +29,57 @@ title: Get started
 {% band header="Include PatternFly Elements JavaScript" %}
   There are a few options for including PatternFly Elements into your site or app.
 
-  ### In HTML
-  You may load the JavaScript via `<script type="module">`. List out all the 
-  components you may include on your page, and the browser will fetch the 
-  dependencies dynamically on load.
-  [Learn more about JavaScript modules][modules].
-
-  In this example, we load the [card](/components/card/) modules from 
-  [JSPM](https://jspm.dev).
-
-  ```html
-  <script type="module" src="https://jspm.dev/@patternfly/elements/pf-card/pf-card.js"></script>
-  ```
-
-  <a id="in-an-app"></a>
-
   ### In JavaScript modules
 
   Include the PatternFly Element web component and its dependencies within the app.
   When using a bundler such as [esbuild](https://esbuild.github.io/) or [rollup](https://rollupjs.org)
   with [@rollup/plugin-node-resolve](https://www.npmjs.com/package/@rollup/plugin-node-resolve), use
-  [bare module specifiers](https://lit.dev/docs/tools/requirements/) to import the components.
+  [bare module specifiers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#importing_modules_as_bare_names) to import the components.
 
   ```javascript
   import '@patternfly/elements/pf-card/pf-card.js';
   ```
-{% endband %}
 
-{% band header="Add PatternFly Elements markup" %}
+  ### In HTML
+  To load the PatternFly Element web components in HTML you will need to use an importmap type script tag:
+  `<script type="importmap"> ... </script>` and module type script tag `<script type="module"> ... </script>`. 
+
+  In this example, we load the [card](/components/card/) modules using an importmap from JSPM.
+
+  ```html
+  <!--
+    JSPM Generator Import Map
+    Edit URL: https://generator.jspm.io/#U2NgYGBkDM0rySzJSU1hcChILClJLcpLy6nUT81JzU3NKyl2MNIz0DPQL0jTTU4sSoHRelnFAN524ZI8AA
+  -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@patternfly/elements/pf-card/pf-card.js": "https://ga.jspm.io/npm:@patternfly/elements@2.0.0/pf-card/pf-card.js"
+    },
+    "scopes": {
+      "https://ga.jspm.io/": {
+        "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/reactive-element.js",
+        "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/decorators/",
+        "@patternfly/pfe-core/controllers/slot-controller.js": "https://ga.jspm.io/npm:@patternfly/pfe-core@2.0.0/controllers/slot-controller.js",
+        "lit": "https://ga.jspm.io/npm:lit@2.6.1/index.js",
+        "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.2.2/lit-element.js",
+        "lit-html": "https://ga.jspm.io/npm:lit-html@2.6.1/lit-html.js",
+        "lit-html/": "https://ga.jspm.io/npm:lit-html@2.6.1/",
+        "lit/": "https://ga.jspm.io/npm:lit@2.6.1/",
+        "tslib": "https://ga.jspm.io/npm:tslib@2.5.0/modules/index.js"
+      }
+    }
+  }
+  </script>
+  
+  <script type="module">
+    import "@patternfly/elements/pf-card/pf-card.js";
+  </script>
+  ```
+
+  To learn more about how to create importmaps, read our [creating an import map](/docs/develop/import-maps/) section, and go into more detail at [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) or the [import map specification](https://html.spec.whatwg.org/multipage/webappapis.html#import-maps). 
+  
+  ### Add PatternFly Elements markup
   Add a [card component](/components/card).
 
   ```html
@@ -97,7 +120,7 @@ title: Get started
 
 {% band header="Use CSS variables to customize or theme your components" %}
   CSS variables are subject to the normal cascade, so consider where you want 
-  these overrides to propogate.
+  these overrides to propagate.
 
   ### Page-level CSS, theme variables
   Theme variables will impact all components on the page where this CSS is 
@@ -106,10 +129,10 @@ title: Get started
   ```css
   /* your-page.css */
   :root {
-    --pf-c-card--BackgroundColor: cornflowerblue;
+    --pf-c-card--BackgroundColor: var(--pf-global--active-color--200, #bee1f4);
   }
   ```
-  <pf-card flat rounded style="--pf-c-card--BackgroundColor: cornflowerblue;">
+  <pf-card flat rounded style="--pf-c-card--BackgroundColor: var(--pf-global--active-color--200, #bee1f4);">
     <h3 slot="header">Card header</h3>
     <p>This is the pf-card body.</p>
     <pf-button slot="footer">OK</pf-button>

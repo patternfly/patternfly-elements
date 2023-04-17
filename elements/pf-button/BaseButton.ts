@@ -57,10 +57,11 @@ export abstract class BaseButton extends LitElement {
   override render() {
     const { hasIcon } = this;
     return html`
-      <button type="${ifDefined(this.type)}"
+      <button aria-label="${ifDefined(this.label)}"
               class="${classMap({ hasIcon })}"
+              part="button"
+              type="${ifDefined(this.type)}"
               value="${ifDefined(this.value)}"
-              aria-label="${ifDefined(this.label)}"
               @click="${this.#onClick}"
               ?disabled="${this.disabled || this.#internals.formDisabled}">
         <slot id="icon" part="icon" aria-hidden="true" name="icon">${this.renderDefaultIcon()}</slot>

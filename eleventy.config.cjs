@@ -84,12 +84,16 @@ module.exports = function(eleventyConfig) {
   });
 
   eleventyConfig.addPairedShortcode('htmlexample', function(content) {
-    const id = Math.random().toString(36).at(2, 9);
     return `
-    <details class="html-example">
-      <summary>&lt;HTML&gt;</summary>
-      ${content}
-    </details>`;
+${content}
+<details class="html-example">
+  <summary>&lt;HTML&gt;</summary>
+
+~~~html
+${content.trim()}
+~~~
+
+</details>`;
   });
 
   return {

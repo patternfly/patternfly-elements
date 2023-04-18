@@ -83,14 +83,20 @@ module.exports = function(eleventyConfig) {
     warningFileSize: 400 * 1000,
   });
 
+  function dedent(str) {
+    const stripped = str.replace(/^\n/, '');
+    const match = stripped.match(/^\s+/);
+    return match ? stripped.replace(new RegExp(`^${match[0]}`, 'gm'), '') : str;
+  }
+
   eleventyConfig.addPairedShortcode('htmlexample', function(content, kwargs) {
     return `
 ${content}
-<details class="html-example ${kwargs.class}"${!kwargs.style ? '' : ` style="${kwargs.style}"`}>
-  <summary>&lt;HTML&gt;</summary>
+<details class="html-example ${kwargs?.class ?? ''}"${!kwargs?.style ? '' : ` style="${kwargs.style}"`}>
+  <summary>View HTML Source</summary>
 
 ~~~html
-${content.trim()}
+${dedent(content)}
 ~~~
 
 </details>`;

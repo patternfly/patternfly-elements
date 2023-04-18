@@ -75,12 +75,6 @@ async function renderURL(context: Context, options: PfeDevServerInternalConfig):
   const demos = manifests
     .flatMap(manifest => manifest.getTagNames()
       .flatMap(tagName => manifest.getDemoMetadata(tagName, options as PfeDevServerInternalConfig)));
-  /* Rewrite the permalink to match location of the dev server componentSubpath */
-  demos.forEach(demo => {
-    if (demo?.permalink) {
-      demo.permalink = demo.permalink.replace(options.site.componentSubpath, options.elementsDir);
-    }
-  });
   const demo = demos.find(x => x.permalink === url.pathname);
   const manifest = demo?.manifest;
 
@@ -101,7 +95,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
       const { elementsDir, tagPrefix } = options;
-
+      const { componentSubpath } = options.site;
       const router =
         new Router()
           .get(/\/pf-icon\/icons\/.*\.js$/, (ctx, next) => {
@@ -112,14 +106,19 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
             ctx.body = await makeDemoEnv(options.rootDir);
             ctx.type = 'application/javascript';
           })
+          // Redirect `components/jazz-hands/*.js` to `components/pf-jazz-hands/*.ts`
+          .get(`/${componentSubpath}/:element/:fileName.js`, async ctx => {
+            const { element, fileName } = ctx.params;
+            ctx.redirect(`/${elementsDir}/${element}/${fileName}.ts`);
+          })
           // Redirect `elements/jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts`
           .get(`/${elementsDir}/:element/:fileName.js`, async ctx => {
             const { element, fileName } = ctx.params;
             ctx.redirect(`/${elementsDir}/${element}/${fileName}.ts`);
           })
-          // Redirect `elements/jazz-hands/demo/*.js|css` to `elements/pf-jazz-hands/demo/*.js|css`
-          // If request is `elements/jazz-hands/demo/some-other-demo/*.js|css redirect files to `elements/pf-jazz-hands/demo/*.js|css`
-          .get(`/${elementsDir}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
+          // Redirect `components/jazz-hands/demo/*.js|css` to `components/pf-jazz-hands/demo/*.js|css`
+          // If request is `components/jazz-hands/demo/some-other-demo/*.js|css redirect files to `components/pf-jazz-hands/demo/*.js|css`
+          .get(`/${componentSubpath}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
             const { element, fileName, ext } = ctx.params;
             if (!element.includes(tagPrefix)) {
               ctx.redirect(`/${elementsDir}/${tagPrefix}-${element}/demo/${fileName}.${ext}`);
@@ -127,8 +126,8 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
               return next();
             }
           })
-          // Redirect `elements/jazz-hands/*` to `elements/pf-jazz-hands/*` for requests not previously handled
-          .get(`/${elementsDir}/:element/:splatPath*`, async (ctx, next) => {
+          // Redirect `components/jazz-hands/*` to `components/pf-jazz-hands/*` for requests not previously handled
+          .get(`/${componentSubpath}/:element/:splatPath*`, async (ctx, next) => {
             const { element, splatPath } = ctx.params;
             if (splatPath.includes('demo')) {
               /* if its the demo directory return */

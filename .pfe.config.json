@@ -1,6 +1,3 @@
 {
-  "renderTitleInOverview": false,
-  "site": {
-    "renderTitleInOverview": false
-  }
+  "renderTitleInOverview": false
 }

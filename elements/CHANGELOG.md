@@ -1,5 +1,11 @@
 # @patternfly/elements
 
+## 2.0.5
+
+### Patch Changes
+
+- 0895f5078: `<pf-accordion>`: prevented `expanded` accordion headers from stealing focus when the page loads.
+
 ## 2.0.4
 
 ### Patch Changes

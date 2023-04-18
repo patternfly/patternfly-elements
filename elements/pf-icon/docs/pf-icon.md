@@ -19,36 +19,22 @@
   with `aria-hidden="true"` or `role="presentation"`, if its content is merely
   presentational and expressed using accessible text copy elsewhere.
 
-  <pf-icon icon="user" aria-label="user"></pf-icon>
-  <pf-icon icon="lock" aria-label="lock"></pf-icon>
-  <pf-icon icon="laptop" aria-label="laptop"></pf-icon>
-  <pf-icon icon="cloud" aria-label="cloud"></pf-icon>
-
   {% htmlexample %}
-  ```html
   <pf-icon icon="user" aria-label="user"></pf-icon>
   <pf-icon icon="lock" aria-label="lock"></pf-icon>
   <pf-icon icon="laptop" aria-label="laptop"></pf-icon>
   <pf-icon icon="cloud" aria-label="cloud"></pf-icon>
-  ```
   {% endhtmlexample %}
 
   ### Size
   The default size is 1em, so icon size matches text size.  `2x`, etc, are
   multiples of font size.  `sm`, `md`, etc are fixed pixel-based sizes.
 
-  <pf-icon icon="user" size="sm"></pf-icon>
-  <pf-icon icon="user" size="md"></pf-icon>
-  <pf-icon icon="user" size="lg"></pf-icon>
-  <pf-icon icon="user" size="xl"></pf-icon>
-
   {% htmlexample %}
-  ```html
   <pf-icon icon="user" size="sm"></pf-icon>
   <pf-icon icon="user" size="md"></pf-icon>
   <pf-icon icon="user" size="lg"></pf-icon>
   <pf-icon icon="user" size="xl"></pf-icon>
-  ```
   {% endhtmlexample %}
 {% endband %}
 

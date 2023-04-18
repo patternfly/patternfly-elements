@@ -83,10 +83,10 @@ module.exports = function(eleventyConfig) {
     warningFileSize: 400 * 1000,
   });
 
-  eleventyConfig.addPairedShortcode('htmlexample', function(content) {
+  eleventyConfig.addPairedShortcode('htmlexample', function(content, kwargs) {
     return `
 ${content}
-<details class="html-example">
+<details class="html-example ${kwargs.class}"${!kwargs.style ? '' : ` style="${kwargs.style}"`}>
   <summary>&lt;HTML&gt;</summary>
 
 ~~~html

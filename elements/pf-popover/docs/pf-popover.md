@@ -6,6 +6,8 @@
 
 {% endrenderOverview %}
 
+<p>Unlike the Patternfly React implementation, this component does not trap focus in the popover dialog. If you woud like to trap focus, consider using a modal dialog instead.</p>
+
 {% band header="Usage" %}
 
   ```html

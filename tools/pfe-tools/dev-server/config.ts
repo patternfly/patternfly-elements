@@ -117,7 +117,6 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
             ctx.redirect(`/${elementsDir}/${element}/${fileName}.ts`);
           })
           // Redirect `components/jazz-hands/demo/*.js|css` to `components/pf-jazz-hands/demo/*.js|css`
-          // If request is `components/jazz-hands/demo/some-other-demo/*.js|css redirect files to `components/pf-jazz-hands/demo/*.js|css`
           .get(`/${componentSubpath}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
             const { element, fileName, ext } = ctx.params;
             if (!element.includes(tagPrefix)) {

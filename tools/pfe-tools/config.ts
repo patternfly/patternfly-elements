@@ -13,7 +13,7 @@ interface SiteOptions {
   stylesheets?: string[];
   /** Title for main page of the demo */
   title?: string;
-  /** Site subpath for components. e.g. 'components'. default: 'components' */
+  /** Site subpath for components. default: 'components' i.e. 'https://patternflyelements.org/components' */
   componentSubpath?: string;
 }
 

@@ -24,22 +24,7 @@ Script text content will be automatically dedented.
 
 To add copy-to-clipboard functionality, be sure to import `@patternfly/pf-clipboard` and add the `pf-clipboard` to the `action` slot.
 
-<div class="example-preview">
-  <pf-code-block id="basic">
-    <script type="application/openshift">
-      apiVersion: helm.openshift.io/v1beta1/
-      kind: HelmChartRepository
-      metadata:
-      name: azure-sample-repo
-      spec:
-      connectionConfig:
-      url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
-    </script>
-    <pf-clipboard slot="actions" copy-from="#basic"></pf-clipboard>
-  </pf-code-block>
-</div>
-
-```html
+{% htmlexample %}
 <pf-code-block id="basic">
   <script type="application/openshift">
     apiVersion: helm.openshift.io/v1beta1/
@@ -52,7 +37,7 @@ To add copy-to-clipboard functionality, be sure to import `@patternfly/pf-clipbo
   </script>
   <pf-clipboard slot="actions" copy-from="#basic"></pf-clipboard>
 </pf-code-block>
-```
+{% endhtmlexample %}
 
 ### Expandable
 
@@ -62,7 +47,7 @@ It is important that you place the span right next to the `<script type="applica
 the whitespace will be handled. Failing to do this can result in unwanted line 
 breaks. 
 
-<div class="example-preview">
+{% htmlexample %}
 <pf-code-block id="expandable-code">
   <script type="application/openshift">
     apiVersion: helm.openshift.io/v1beta1/
@@ -75,22 +60,7 @@ breaks.
   </script>
   <pf-clipboard slot="actions" copy-from="#expandable-code"></pf-clipboard>
 </pf-code-block>
-</div>
-
-```html
-<pf-code-block id="expandable-code">
-  <script type="application/openshift">
-    apiVersion: helm.openshift.io/v1beta1/
-    kind: HelmChartRepository
-    metadata:
-    name: azure-sample-repo</script><script type="application/openshift" data-expand>
-    spec:
-    connectionConfig:
-    url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
-  </script>
-  <pf-clipboard slot="actions" copy-from="#expandable-code"></pf-clipboard>
-</pf-code-block>
-```
+{% endhtmlexample %}
 {% endband %}
 
 {% renderSlots %}{% endrenderSlots %}

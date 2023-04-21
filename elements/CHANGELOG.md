@@ -1,5 +1,26 @@
 # @patternfly/elements
 
+## 2.0.5
+
+### Patch Changes
+
+- 0895f5078: `<pf-accordion>`: prevented `expanded` accordion headers from stealing focus when the page loads.
+
+## 2.0.4
+
+### Patch Changes
+
+- 83024fe5e: `<pf-tabs>`: improved keyboard navigation so it correctly activates the focused tab
+- Updated dependencies [83024fe5e]
+- Updated dependencies [83024fe5e]
+  - @patternfly/pfe-core@2.2.0
+
+## 2.0.3
+
+### Patch Changes
+
+- 9fd329e21: `<pf-panel>`: fixed raised and bordered variants
+
 ## 2.0.2
 
 ### Patch Changes

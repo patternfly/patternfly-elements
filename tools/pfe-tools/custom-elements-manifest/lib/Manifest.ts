@@ -20,6 +20,7 @@ import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
 
 import { getAllPackages } from './get-all-packages.js';
+import slugify from 'slugify';
 import { deslugify } from '@patternfly/pfe-tools/config.js';
 
 type PredicateFn = (x: unknown) => boolean;
@@ -266,7 +267,17 @@ export class Manifest {
     const { prettyTag } = Manifest;
     return this.getDemos(tagName).map(demo => {
       const permalink = demo.url.replace(options.demoURLPrefix, '/');
-      const [, slug = ''] = permalink.match(/\/components\/(.*)\/demo/) ?? [];
+
+      /**
+       * `/components/`
+       * capture group 1:
+       * > **ANY** (_>= 0x_)
+       * `/demo`
+       */
+      const DEMO_PATH_RE = new RegExp(`/${options.site.componentSubpath}/(.*)/demo`);
+      let [, slug = ''] = permalink.match(DEMO_PATH_RE) ?? [];
+      // strict removes all special characters from slug
+      slug = slugify(slug, { strict: true, lower: true });
       const primaryElementName = deslugify(slug, options.rootDir);
       const filePath = demo.source?.href.replace(options.sourceControlURLPrefix, `${options.rootDir}/`) ?? '';
       const [last = ''] = filePath.split('/').reverse();

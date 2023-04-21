@@ -61,7 +61,7 @@ export abstract class BaseTabs extends LitElement {
 
   @query('[part="tabs"]') private tabList!: HTMLElement;
 
-  #tabindex = new RovingTabindexController(this);
+  #tabindex = new RovingTabindexController<BaseTab>(this);
 
   #overflow = new OverflowController(this);
 
@@ -104,7 +104,7 @@ export abstract class BaseTabs extends LitElement {
 
     if (index === -1) {
       this.#logger.warn(`No active tab found, setting first focusable tab to active`);
-      const first = this.#tabindex.firstItem as BaseTab;
+      const first = this.#tabindex.firstItem;
       this.#tabindex.updateActiveItem(first);
       index = this.#activeItemIndex;
     }
@@ -140,13 +140,23 @@ export abstract class BaseTabs extends LitElement {
   override connectedCallback() {
     super.connectedCallback();
     this.addEventListener('expand', this.#onTabExpand);
-    this.addEventListener('keydown', this.#onKeydown);
     BaseTabs.#instances.add(this);
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     BaseTabs.#instances.delete(this);
+  }
+
+  override willUpdate(): void {
+    const { activeItem } = this.#tabindex;
+    // If RTI has an activeItem, update the roving tabindex controller
+    if (!this.manual &&
+        activeItem &&
+        activeItem !== this.#activeTab &&
+        activeItem.ariaDisabled !== 'true') {
+      activeItem.active = true;
+    }
   }
 
   async firstUpdated() {
@@ -210,13 +220,14 @@ export abstract class BaseTabs extends LitElement {
 
   #onTabExpand = (event: Event): void => {
     if (!(event instanceof TabExpandEvent) ||
-        this.#allTabs.length === 0 || this.#allPanels.length === 0) {
+        !this.#allTabs.length ||
+        !this.#allPanels.length) {
       return;
     }
 
-    const target = event as TabExpandEvent;
-    if (target.active) {
-      this.activeIndex = this.#allTabs.findIndex(tab => tab === target.tab);
+    if (event.active) {
+      this.activeIndex = this.#allTabs.findIndex(tab => tab === event.tab);
+      this.#tabindex.updateActiveItem(this.#activeTab);
     }
   };
 
@@ -225,21 +236,17 @@ export abstract class BaseTabs extends LitElement {
     this.#allPanels.forEach((panel, i) => panel.hidden = i !== index);
   }
 
-  get #firstFocusable(): BaseTab {
-    return this.#tabindex.firstItem as BaseTab;
+  get #firstFocusable(): BaseTab | undefined {
+    return this.#tabindex.firstItem;
   }
 
-  get #lastFocusable(): BaseTab {
-    return this.#tabindex.lastItem as BaseTab;
-  }
-
-  get #firstTab(): BaseTab {
+  get #firstTab(): BaseTab | undefined {
     const [tab] = this.#allTabs;
     return tab;
   }
 
-  get #lastTab(): BaseTab {
-    return this.#allTabs.at(-1) as BaseTab;
+  get #lastTab(): BaseTab | undefined {
+    return this.#allTabs.at(-1);
   }
 
   get #activeItemIndex() {
@@ -247,55 +254,9 @@ export abstract class BaseTabs extends LitElement {
     return this.#allTabs.findIndex(t => t === activeItem);
   }
 
-  #activate(selectedTab: BaseTab): void {
-    if (selectedTab.ariaDisabled !== 'true') {
-      selectedTab.active = true;
-    }
-  }
-
-  async #select(selectedTab: BaseTab): Promise<void> {
-    if (!this.manual) {
-      this.#activate(selectedTab);
-    }
-  }
-
-  // RTI: will handle key events
-  #onKeydown = (event: KeyboardEvent): void => {
-    const foundTab = this.#allTabs.find(tab => tab === event.target);
-    if (!foundTab) {
-      return;
-    }
-    switch (event.key) {
-      case 'ArrowUp':
-      case 'ArrowLeft':
-        event.preventDefault();
-        this.#select(this.#tabindex.activeItem as BaseTab);
-        break;
-
-      case 'ArrowDown':
-      case 'ArrowRight':
-        event.preventDefault();
-        this.#select(this.#tabindex.activeItem as BaseTab);
-        break;
-
-      case 'Home':
-        event.preventDefault();
-        this.#select(this.#firstFocusable);
-        break;
-
-      case 'End':
-        event.preventDefault();
-        this.#select(this.#lastFocusable);
-        break;
-
-      default:
-        return;
-    }
-  };
-
   #firstLastClasses() {
-    this.#firstTab.classList.add('first');
-    this.#lastTab.classList.add('last');
+    this.#firstTab?.classList.add('first');
+    this.#lastTab?.classList.add('last');
   }
 
   #scrollLeft() {

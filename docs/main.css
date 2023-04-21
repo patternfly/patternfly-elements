@@ -707,6 +707,51 @@ code {
   font-size: 14px;
 }
 
+
+.html-example {
+  display: flex;
+  padding-block: 6px;
+}
+
+.html-example:hover summary {
+  color: var(--pf-c-expandable-section__toggle--hover--Color, var(--pf-global--link--Color--hover, #004080));
+}
+
+.html-example summary {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--pf-c-expandable-section__toggle--Color, var(--pf-global--link--Color, #06c));
+}
+
+.html-example > summary::-webkit-details-marker,
+.html-example > summary::marker {
+  display: none;
+}
+
+.html-example > summary::before {
+  content: "";
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 256 512' aria-hidden='true' role='img' style='vertical-align: -0.125em;'%3E%3Cpath d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'%3E%3C/path%3E%3C/svg%3E");
+  background-size: 1rem 1rem;
+  height: 1rem;
+  width: 1rem;
+  transition: all .2s ease-in;
+}
+
+.html-example[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.html-example p:empty {
+  display: none;
+}
+
+.html-example pre[class*="language-"] {
+  margin: 0;
+}
+
 .push-top {
   margin-top: var(--pf-theme--container-spacer, 0.83em);
 }
@@ -728,7 +773,13 @@ pf-card > h3 {
 }
 
 blockquote {
-  background-color: #bee1f4;
+  border-inline-start: 3px solid #d2d2d2;
+  padding: 1rem 1.5rem;
+  margin-block: 2rem;
+}
+
+.callout {
+  background-color: var(--pf-global--active-color--200, #bee1f4);
   margin-left: 0;
   margin-right: 0;
   padding: 1.5rem;
@@ -850,7 +901,8 @@ nav.toc li {
     display: grid;
     position: relative;
     grid-template-areas: 'header header' 'content toc';
-    grid-template-columns: auto 300px;
+    grid-template-columns: auto 18rem;
+    grid-template-rows: min-content;
   }
 
   main.blog > header.band {
@@ -859,6 +911,7 @@ nav.toc li {
 
   main.blog > .block-toc {
     grid-area: toc;
+    padding: 1rem 2rem;
   }
 
   main.blog > .band:not(header) {
@@ -867,8 +920,7 @@ nav.toc li {
 
   aside.block-toc > nav.toc {
     position: sticky;
-    top: 60px;
-    padding: 10px 16px;
+    top: 126px;
   }
 
   aside.block-toc > h2 {
@@ -886,7 +938,7 @@ nav.toc li {
     transition: opacity 0.2s ease-in-out;
     position: absolute;
     left: -1.2em;
-    top: .2em;
+    top: 0.35em;
   }
 
   nav.toc .active::after {

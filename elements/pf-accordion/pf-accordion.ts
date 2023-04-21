@@ -44,6 +44,24 @@ export class PfAccordion extends BaseAccordion {
 
   @property({ type: Boolean, reflect: true }) fixed = false;
 
+  async firstUpdated() {
+    let index: number | null = null;
+    if (this.single) {
+      const allHeaders = [...this.querySelectorAll('pf-accordion-header')];
+      const lastExpanded = allHeaders.filter(x => x.hasAttribute('expanded')).pop();
+      if (lastExpanded) {
+        index = allHeaders.indexOf(lastExpanded);
+      }
+    }
+    await super.firstUpdated();
+    if (index !== null) {
+      this.headers.forEach((_, i) => {
+        this.headers.at(i)?.toggleAttribute('expanded', i === index);
+        this.panels.at(i)?.toggleAttribute('expanded', i === index);
+      });
+    }
+  }
+
   override async expand(index: number, parentAccordion?: BaseAccordion) {
     if (index === -1) {
       return;
@@ -57,6 +75,7 @@ export class PfAccordion extends BaseAccordion {
         ...allHeaders.map((header, index) => header.expanded && this.collapse(index)),
       ]);
     }
+
     await super.expand(index, parentAccordion);
   }
 }

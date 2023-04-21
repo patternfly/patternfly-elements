@@ -13,6 +13,8 @@ interface SiteOptions {
   stylesheets?: string[];
   /** Title for main page of the demo */
   title?: string;
+  /** Site subpath for components. e.g. 'elements'. default: 'components' */
+  componentSubpath?: string;
 }
 
 export interface PfeConfig {
@@ -37,7 +39,8 @@ const SITE_DEFAULTS: Required<SiteOptions> = {
   favicon: '/docs/images/logo/pfe-icon-blue.svg',
   logoUrl: '/docs/images/pfe-logo-inverse-white.svg',
   stylesheets: [],
-  title: 'PatternFly Elements'
+  title: 'PatternFly Elements',
+  componentSubpath: 'components',
 };
 
 const DEFAULT_CONFIG: PfeConfig = {
@@ -70,7 +73,8 @@ export function getPfeConfig(rootDir = process.cwd()): Required<PfeConfig> {
 
 const slugsConfigMap = new Map<string, { config: PfeConfig; slugs: Map<string, string> }>();
 const reverseSlugifyObject = ([k, v]: [string, string]): [string, string] =>
-  [slugify(v).toLowerCase(), k];
+  [slugify(v, { lower: true }), k];
+
 function getSlugsMap(rootDir: string) {
   if (!slugsConfigMap.get(rootDir)) {
     const config = getPfeConfig(rootDir);

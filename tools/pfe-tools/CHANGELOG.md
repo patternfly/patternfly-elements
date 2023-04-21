@@ -1,5 +1,51 @@
 # @patternfly/pfe-tools
 
+## 1.2.0
+
+### Minor Changes
+
+- 69e7f5b9e: Added `site.componentSubpath` config to `.pfe.config.json`, representing the
+  site subpath for component pages and demos. Default is `'components'`.
+
+## 1.1.1
+
+### Patch Changes
+
+- 90b3ade12: Removes special characters from component slugs ie. `special (characters)` becomes `special-characters`
+
+## 1.1.0
+
+### Minor Changes
+
+- 79f30b8f6: `11ty/plugins/custom-elements-manifest.cjs`: added `renderTitleInOverview`
+  option, a boolean flag which defaults to `true`.
+
+  When true, this option renders an `<h1>` in the element's docs page's "Overview"
+  section.
+
+  Note: the next major release will switch this option to `false` by default, so
+  to prepare your docs pages, add your own headings:
+
+  BEFORE:
+
+  ```md
+  {% renderOverview %}
+  <pf-jazz-hands></pf-jazz-hands>
+  {% endrenderOverview %}
+  ```
+
+  AFTER:
+
+  ```md
+  <section class="band">
+    <h1 id="jazz-hands">Jazz Hands</h1>
+  </section>
+
+  {% renderOverview %}
+  <pf-jazz-hands></pf-jazz-hands>
+  {% endrenderOverview %}
+  ```
+
 ## 1.0.1
 
 ### Patch Changes

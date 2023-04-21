@@ -8,37 +8,25 @@
   To provide context to your badge, it is highly encouraged that you also include an `aria-label` attribute in your markup.
 
   ### Default
-  <div class="example-preview">
-    <pf-badge aria-label="2 unread messages" number="2">2</pf-badge>
-  </div>
-  
-
-  ```html
+  {% htmlexample %}
   <pf-badge aria-label="2 unread messages" number="2">2</pf-badge>
-  ```
+  {% endhtmlexample %}
 
   ### With a threshold
   This adds a "+" next to the number once the threshold value has been passed.
-  <div class="example-preview">
-    <pf-badge aria-label="2 unread messages" number="20" threshold="10">20</pf-badge>
-  </div>
 
-  ```html
+  {% htmlexample %}
   <pf-badge aria-label="2 unread messages" number="20" threshold="10">20</pf-badge>
-  ```
+  {% endhtmlexample %}
 
   ### With a state
   This adds a background color to the badge based on the state.
 
-  <div class="example-preview">
-    <pf-badge state="read" number="10">10</pf-badge>
-    <pf-badge state="unread" number="20">20</pf-badge>
-  </div>
-
-  ```html
+  {% htmlexample %}
   <pf-badge state="read" number="10">10</pf-badge>
   <pf-badge state="unread" number="20">20</pf-badge>
-  ```
+  {% endhtmlexample %}
+{% endband %}
 
 {% endband %}
 {% renderSlots %}{% endrenderSlots %}

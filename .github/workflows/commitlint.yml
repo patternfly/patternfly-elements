@@ -61,7 +61,7 @@ jobs:
           script: |
             const results = ${{ steps.commitlint.outputs.results }};
             const titleGood = ${{ steps.prTitle.outputs.success }};
-            const { format } = await import('./scripts/format-commitlint-messages.js');
+            const { format } = await import('${{ github.workspace }}/scripts/format-commitlint-messages.js');
             return format({ core, results, titleGood });
 
       - name: Notify PR

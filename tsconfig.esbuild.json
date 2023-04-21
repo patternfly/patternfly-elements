@@ -26,6 +26,12 @@
     "module": "es2020",
     "moduleResolution": "Node",
     "verbatimModuleSyntax": true,
+    "preserveValueImports": true,
+    // Although TS 5.5 deprecates `preserveValueImports`, in favour of `verbatimModuleSyntax`,
+    // [see docs](https://www.typescriptlang.org/tsconfig#preserveValueImports)
+    // esbuild is not yet ready to remove it, which affects our tests and dev server
+    // [see issue](https://github.com/evanw/esbuild/issues/3019)
+    "ignoreDeprecations": "5.0",
     "rootDir": ".",
     "sourceMap": true,
     "strict": true,

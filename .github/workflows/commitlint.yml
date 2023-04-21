@@ -30,6 +30,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      # https://github.com/wagoid/commitlint-github-action/issues/560#issuecomment-1277659864
+      - run: rm tsconfig.json
+
       - uses: wagoid/commitlint-github-action@v5
         id: commitlint
         continue-on-error: true
@@ -56,10 +59,10 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const results = '${{ steps.commitlint.outputs.results }}';
-            const titleGood = '${{ steps.prTitle.outputs.success }}';
-            const {format} = await import('./scripts/format-commit-messages.js');
-            await format({ core, results, titleGood });
+            const results = ${{ steps.commitlint.outputs.results }};
+            const titleGood = ${{ steps.prTitle.outputs.success }};
+            const { format } = await import('./scripts/format-commitlint-messages.js');
+            return format({ core, results, titleGood });
 
       - name: Notify PR
         if: ${{ steps.commitlint.outcome == 'failure' && steps.prTitle.outputs.success == 'false' }}
@@ -69,7 +72,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           header: commitlint
           message: |
-            ${{ steps.format.outputs.comment }}
+            ${{ steps.format.outputs.result }}
 
       - name: Fail Job on Error
         if: ${{ steps.commitlint.outcome == 'failure' && steps.prTitle.outputs.success == 'false' }}

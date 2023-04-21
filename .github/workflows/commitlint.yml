@@ -57,7 +57,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const results = ${{ steps.commitlint.outputs.results }};
-            const titleGood = ${{ steps.prTitle.outputs.success }};
+            const titleGood = '${{ steps.prTitle.outputs.success }}';
 
             const totalErrors = results.reduce((a, r) => a + r.errors.length, 0);
             const totalWarnings = results.reduce((a, r) => a + r.warnings.length, 0);

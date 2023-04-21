@@ -80,7 +80,7 @@
     "@types/yargs": "^17.0.22",
     "@web/dev-server": "^0.1.35",
     "@web/dev-server-esbuild": "^0.3.3",
-    "@web/dev-server-import-maps": "^0.0.7",
+    "@web/dev-server-import-maps": "^0.0.8",
     "@web/dev-server-rollup": "^0.3.21",
     "@web/test-runner": "^0.15.1",
     "@web/test-runner-commands": "^0.6.5",

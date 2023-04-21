@@ -9,7 +9,7 @@ import styles from './BaseButton.css';
 
 /**
  * Base button class
- * @csspart button - Button element
+ * @csspart button - Internal button element
  * @csspart icon - Container for the icon slot
  * @slot icon
  *       Contains the button's icon or state indicator, e.g. a spinner.

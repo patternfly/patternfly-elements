@@ -56,8 +56,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const results = ${{ steps.commitlint.outputs.results }};
-            const titleGood = ${{ steps.prTitle.outputs.success }};
+            const results = '${{ steps.commitlint.outputs.results }}';
+            const titleGood = '${{ steps.prTitle.outputs.success }}';
             const {format} = await import('./scripts/format-commit-messages.js');
             await format({ core, results, titleGood });
 

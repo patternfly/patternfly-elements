@@ -26,6 +26,11 @@
     "module": "es2020",
     "moduleResolution": "Node",
     "verbatimModuleSyntax": true,
+    // Although typescript 5.5 will deprecated this,
+    // esbuild is not yet ready to remove it
+    // which affects our tests and dev server
+    // see https://github.com/evanw/esbuild/issues/3019
+    "preserveValueImports": true,
     "rootDir": ".",
     "sourceMap": true,
     "strict": true,

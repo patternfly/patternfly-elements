@@ -3,17 +3,22 @@ import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 
-import { PfJumpLinks } from '@patternfly/elements/pf-jump-links/pf-jump-links.js';
+import '@patternfly/elements/pf-jump-links/pf-jump-links.js';
+
+import { PfJumpLinks } from '../pf-jump-links.js';
 import { PfJumpLinksItem } from '../pf-jump-links-item.js';
 import { PfJumpLinksList } from '../pf-jump-links-list.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
 
 async function allUpdates(element: ReactiveElement) {
+  if (!(element.updateComplete instanceof Promise)) {
+    throw new Error(`${element.localName} does not appear to be a ReactiveElement`);
+  }
   let count = 0;
   do {
     if (count > 100) {
-      throw new Error('Too Many Updates');
+      throw new Error(`Too Many Updates: ${element.localName} did not finish updating after ${count - 1} tries.`);
     }
     await element.updateComplete;
     count++;

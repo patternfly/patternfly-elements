@@ -9,7 +9,7 @@
   </tr>
 {%- endmacro -%}
 
-<section class="api band css-custom-properties">
+<section class="api band css-custom-properties api-properties">
   <a id="styling-hooks"></a>
   <h{{level}}>{{ header | innerMD | safe }}</h{{level}}> {% if not content and not cssProperties.length %}
 
@@ -60,9 +60,7 @@
 </section>
 
 <style>
-table.css-custom-properties {
-  background-color: var(--pf-global--BackgroundColor--100, #fff);
-}
+
 table.css-custom-properties code[data-color] {
   display: inline-flex;
   align-items: center;

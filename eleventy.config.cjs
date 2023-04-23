@@ -91,7 +91,9 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addPairedShortcode('htmlexample', function(content, kwargs) {
     return `
-${content}
+<div class="example-preview">
+  ${content}
+</div>
 <details class="html-example ${kwargs?.class ?? ''}"${!kwargs?.style ? '' : ` style="${kwargs.style}"`}>
   <summary>View HTML Source</summary>
 

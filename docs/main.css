@@ -280,6 +280,15 @@ header.band h1 {
   transition: width .2s ease-in-out;
 }
 
+section.api.band.api-properties dl {
+  padding: var(--pf-global--spacer--md, 1rem);
+  background-color: var(--pf-global--BackgroundColor--100, #fff);
+}
+
+section.api.band.api-properties table {
+  background-color: var(--pf-global--BackgroundColor--100, #fff);
+}
+
 main.basic,
 main.blog {
   margin-top: 6.5rem;
@@ -681,7 +690,6 @@ th, td {
 }
 
 code:not([class*="language-"]) {
-  background-color: rgba(27,31,35,.05);
   padding: .2em .4em;
   border-radius: 6px;
   font-family: "Overpass Mono", monospace;

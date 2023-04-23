@@ -1,16 +1,11 @@
-<header class="band">
-  <h1>{{ title }}</h1>
-  {{ description | innerMD | safe }}
-</header>
+<section class="band overview">
+  <h2>Overview</h2>
 
-  <section class="band overview">
-    <h2>Overview</h2>
-    <div class="example-preview">
-      {{ content | safe }}
-    </div>
-  </section>
+  <div class="example-preview">
+    {{ content | safe }}
+  </div>
 
-
+</section>
 
 <section class="band">
   <h2>Installation</h2>

@@ -17,6 +17,7 @@
 
 <header class="band">
   <h1>{{element.title}}</h1>
+  <p>{{ element.description | safe}}</p>
 </header>
 
 {% renderFile element.docsTemplatePath, element %}

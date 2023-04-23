@@ -28,7 +28,6 @@
   {% endhtmlexample %}
 {% endband %}
 
-{% endband %}
 {% renderSlots %}{% endrenderSlots %}
 
 {% renderAttributes %}{% endrenderAttributes %}

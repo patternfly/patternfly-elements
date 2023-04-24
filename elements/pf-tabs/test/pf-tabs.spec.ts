@@ -233,8 +233,8 @@ describe('<pf-tabs>', function() {
         expect(firstTab.active).to.be.true;
         expect(secondTab.active).to.be.false;
         expect(initialFocus).to.be.ok
-          .and.to.not.equal(afterFocus)
-          .and.to.not.equal(secondTab);
+          .and.to.not.equal(afterFocus);
+        expect(initialFocus).to.not.equal(secondTab);
       });
       describe('then pressing enter', function() {
         beforeEach(async function() {
@@ -245,9 +245,9 @@ describe('<pf-tabs>', function() {
         it('should activate second tab', async function() {
           expect(firstTab.active).to.be.false;
           expect(secondTab.active).to.be.true;
-          expect(afterFocus).to.equal(secondTab)
-            .and.to.not.equal(initialFocus)
-            .and.to.not.equal(firstTab);
+          expect(afterFocus).to.equal(secondTab);
+          expect(afterFocus).to.not.equal(initialFocus);
+          expect(afterFocus).to.not.equal(firstTab);
         });
       });
     });

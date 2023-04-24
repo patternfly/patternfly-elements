@@ -137,7 +137,7 @@ describe('<pf-card>', function() {
 
     describe('accessible', function() {
       it('should be accessible in both the light and shadow dom', async function() {
-        expect(element).to.be.accessible();
+        await expect(element).to.be.accessible();
       });
       // TODO: this has been flaky. revisit later
       // it('should have an article element wrapper in the shadow dom', async function() {

@@ -21,15 +21,15 @@
     "@patternfly/eslint-plugin-elements": "^1.1.0"
   },
   "dependencies": {
-    "@types/eslint": "^8.21.1",
-    "@typescript-eslint/eslint-plugin": "^5.54.0",
-    "@typescript-eslint/parser": "^5.54.0",
+    "@types/eslint": "^8.37.0",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
     "eslint": "^8.35.0",
     "eslint-config-google": "0.14.0",
     "eslint-plugin-html": "7.1.0",
-    "eslint-plugin-json-schema-validator": "^4.0.3",
-    "eslint-plugin-jsonc": "^2.6.0",
-    "eslint-plugin-lit-a11y": "^2.3.0",
+    "eslint-plugin-json-schema-validator": "^4.4.0",
+    "eslint-plugin-jsonc": "^2.7.0",
+    "eslint-plugin-lit-a11y": "^2.4.1",
     "eslint-plugin-no-only-tests": "^3.1.0",
     "eslint-plugin-unicorn": "46.0.0"
   }

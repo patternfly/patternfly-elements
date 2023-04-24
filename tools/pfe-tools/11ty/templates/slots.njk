@@ -1,7 +1,7 @@
 {% set level = level or 2 %}
 {% set header = header or 'Slots' %}
 
-<section class="api band slots">
+<section class="api band slots api-properties">
   <h{{level}}>{{ header | innerMD | safe }}</h{{level}}> {% if not content and not slots.length %}
 
   <em>None</em> {%- else -%}

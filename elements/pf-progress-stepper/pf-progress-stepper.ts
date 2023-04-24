@@ -11,7 +11,7 @@ import { InternalsController } from '@patternfly/pfe-core/controllers/internals-
 import '@patternfly/elements/pf-icon/pf-icon.js';
 
 /**
- * A progress stepper displays a timeline of tasks in a workflow and tracks the user's current progress through this workflow.
+ * A **progress stepper** displays a timeline of tasks in a workflow and tracks the user's current progress through this workflow.
  */
 @customElement('pf-progress-stepper')
 export class PfProgressStepper extends LitElement {

@@ -3,5 +3,8 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "module": "esnext"
+  },
+  "ts-node": {
+    "esm": true
   }
 }

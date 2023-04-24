@@ -116,7 +116,7 @@
     "sinon": "^15.0.3",
     "ts-lit-plugin": "^1.2.1",
     "ts-node": "^10.9.1",
-    "ts-patch": "^3.0.0-beta3",
+    "ts-patch": "3.0.0-beta3",
     "typescript": "5.0.4",
     "urlpattern-polyfill": "^7.0.0",
     "web-dev-server-plugin-lit-css": "^2.0.5"

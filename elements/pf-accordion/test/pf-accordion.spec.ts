@@ -10,17 +10,7 @@ import { PfAccordion, PfAccordionPanel, PfAccordionHeader } from '@patternfly/el
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
-
-async function allUpdates(element: ReactiveElement) {
-  let count = 0;
-  do {
-    if (count > 100) {
-      throw new Error('Too Many Updates');
-    }
-    await element.updateComplete;
-    count++;
-  } while (!await element.updateComplete);
-}
+import { allUpdates } from '@patternfly/pfe-tools/test/utils.js';
 
 describe('<pf-accordion>', function() {
   let element: PfAccordion;
@@ -1019,7 +1009,7 @@ describe('<pf-accordion>', function() {
               <pf-accordion-panel id="panel-2-2" data-index="1-1"></pf-accordion-panel>
             </pf-accordion>
           </pf-accordion-panel>
-        
+
           <pf-accordion-header id="header-3" data-index="2"></pf-accordion-header>
           <pf-accordion-panel id="panel-3" data-index="2"></pf-accordion-panel>
         </pf-accordion>

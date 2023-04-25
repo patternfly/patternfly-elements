@@ -6,7 +6,7 @@ import { BaseBadge } from './BaseBadge.js';
 import styles from './pf-badge.css';
 
 /**
- * A badge is used to annotate other information like a label or an object name.
+ * A **badge** is used to annotate other information like a label or an object name.
  *
  * @cssprop {<length>} --pf-c-badge--BorderRadius               {@default `180em`}
  *

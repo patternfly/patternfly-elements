@@ -12,7 +12,7 @@ import './pf-jump-links-item.js';
 import style from './pf-jump-links.css';
 
 /**
- * Jump links allow users to navigate to sections within a page.
+ * **Jump links** allow users to navigate to sections within a page.
  *
  * @fires toggle - when the `expanded` disclosure widget is toggled
  * @slot - Place pf-jump-links-items here

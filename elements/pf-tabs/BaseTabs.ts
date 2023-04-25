@@ -227,7 +227,6 @@ export abstract class BaseTabs extends LitElement {
 
     if (event.active) {
       this.activeIndex = this.#allTabs.findIndex(tab => tab === event.tab);
-      this.#tabindex.updateActiveItem(this.#activeTab);
     }
   };
 

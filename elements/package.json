@@ -69,7 +69,7 @@
   },
   "wireit": {
     "build": {
-      "command": "ttsc -b . --pretty",
+      "command": "tspc -b . --pretty",
       "dependencies": [
         "analyze"
       ]

@@ -78,12 +78,7 @@ strong {
 }
 
 header.band {
-  background-color:
-    var(
-      --pf-c-page__main-section--BackgroundColor,
-      var(
-        --pf-c-page__main-section--m-light-100--BackgroundColor,
-        var(--pf-global--BackgroundColor--150, #fafafa)));
+  background-color: var(--pf-global--BackgroundColor--100, #fff);
   padding: var(--pf-global--spacer--md, 1rem) var(--pf-global--spacer--md, 1rem);
   box-shadow: var(--pf-c-page--section--m-sticky-top--BoxShadow, var(--pf-global--BoxShadow--sm-bottom, 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)));
 }
@@ -278,11 +273,33 @@ header.band h1 {
   margin-top: 0;
 }
 
+.example-preview {
+  padding: var(--pf-global--spacer--md, 1rem);
+  background-color: var(--pf-global--BackgroundColor--100, #fff);
+  border-bottom: var(--pf-global--BorderWidth--sm, 1px) solid var(--pf-global--BorderColor--300, #f0f0f0);
+  transition: width .2s ease-in-out;
+}
+
+section.api.band.api-properties dl {
+  padding: var(--pf-global--spacer--md, 1rem);
+  background-color: var(--pf-global--BackgroundColor--100, #fff);
+}
+
+section.api.band.api-properties table {
+  background-color: var(--pf-global--BackgroundColor--100, #fff);
+}
+
 main.basic,
 main.blog {
   margin-top: 6.5rem;
   margin-bottom: 3.75rem;
   flex-grow: 1;
+  background-color:
+  var(
+    --pf-c-page__main-section--BackgroundColor,
+    var(
+      --pf-c-page__main-section--m-light-100--BackgroundColor,
+      var(--pf-global--BackgroundColor--150, #fafafa)));
 }
 
 #home-title img {
@@ -673,7 +690,6 @@ th, td {
 }
 
 code:not([class*="language-"]) {
-  background-color: rgba(27,31,35,.05);
   padding: .2em .4em;
   border-radius: 6px;
   font-family: "Overpass Mono", monospace;
@@ -702,10 +718,38 @@ code {
 
 .html-example {
   display: flex;
+  padding-block: 6px;
+}
+
+.html-example:hover summary {
+  color: var(--pf-c-expandable-section__toggle--hover--Color, var(--pf-global--link--Color--hover, #004080));
 }
 
 .html-example summary {
+  display: flex;
   cursor: pointer;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--pf-c-expandable-section__toggle--Color, var(--pf-global--link--Color, #06c));
+}
+
+.html-example > summary::-webkit-details-marker,
+.html-example > summary::marker {
+  display: none;
+}
+
+.html-example > summary::before {
+  content: "";
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 256 512' aria-hidden='true' role='img' style='vertical-align: -0.125em;'%3E%3Cpath d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'%3E%3C/path%3E%3C/svg%3E");
+  background-size: 1rem 1rem;
+  height: 1rem;
+  width: 1rem;
+  transition: all .2s ease-in;
+}
+
+.html-example[open] > summary::before {
+  transform: rotate(90deg);
 }
 
 .html-example p:empty {

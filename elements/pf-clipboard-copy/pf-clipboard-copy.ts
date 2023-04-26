@@ -15,7 +15,7 @@ import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
 const sleep = (ms?: number) => new Promise(r => setTimeout(r, ms));
 
 /**
- * The clipboard copy component allows users to quickly and easily copy content to their clipboard.
+ * The **clipboard copy** component allows users to quickly and easily copy content to their clipboard.
  *
  * @slot - Place content to copy here, or use the `value` attribute
  * @slot actions - Place additional action buttons here

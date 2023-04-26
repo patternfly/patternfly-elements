@@ -14,7 +14,7 @@ export interface PfeTestRunnerConfigOptions extends PfeDevServerConfigOptions {
 
 const isWatchMode = process.argv.some(x => x.match(/-w|--watch/));
 
-const testRunnerHtml: TestRunnerConfig['testRunnerHtml'] = testFramework => `
+const testRunnerHtml: TestRunnerConfig['testRunnerHtml'] = testFramework => /* html */`
   <html>
     <head>
       <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
@@ -74,7 +74,7 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
     groups: [
       {
         name: 'with-vue',
-        testRunnerHtml: testFramework => `
+        testRunnerHtml: testFramework => /* html */`
           <html>
             <head>
               <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
@@ -89,7 +89,7 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
       },
       {
         name: 'with-react',
-        testRunnerHtml: testFramework => `
+        testRunnerHtml: testFramework => /* html */`
           <html>
             <head>
               <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
@@ -113,4 +113,3 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
     ]
   };
 }
-

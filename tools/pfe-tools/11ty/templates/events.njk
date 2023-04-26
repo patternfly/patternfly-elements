@@ -1,7 +1,7 @@
 {% set level = level or 2 %}
 {% set header = header or 'Events' %}
 
-<section class="api band events">
+<section class="api band events api-properties">
   <h{{level}}>{{ header | innerMD | safe }}</h{{level}}> {% if not content and not events.length %}
 
   <em>None</em> {% else %}

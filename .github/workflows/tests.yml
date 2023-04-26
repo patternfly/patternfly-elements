@@ -79,8 +79,10 @@ jobs:
     strategy:
       matrix:
         node:
-          - 18
-          - 19
+          - '18'
+          - '19'
+          # https://github.com/TypeStrong/ts-node/issues/1997
+          # - '20'
     if: |
       github.event_name == 'workflow_dispatch'
       ||   github.event_name == 'push'

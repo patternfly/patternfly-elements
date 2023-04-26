@@ -33,7 +33,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(CustomElementsManifestPlugin);
 
   /** Collections to organize alphabetically instead of by date */
-  eleventyConfig.addPlugin(OrderTagsPlugin, { tags: ['component'], order: 'alphabetically' });
+  eleventyConfig.addPlugin(OrderTagsPlugin, { tags: ['component'], order: 'alphabetical' });
 
   /** Collections to organize by order instead of date */
   eleventyConfig.addPlugin(OrderTagsPlugin, { tags: ['develop'] });
@@ -91,7 +91,9 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addPairedShortcode('htmlexample', function(content, kwargs) {
     return `
-${content}
+<div class="example-preview">
+  ${content}
+</div>
 <details class="html-example ${kwargs?.class ?? ''}"${!kwargs?.style ? '' : ` style="${kwargs.style}"`}>
   <summary>View HTML Source</summary>
 

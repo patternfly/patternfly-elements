@@ -3,7 +3,7 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 import type { StyleInfo } from 'lit/directives/style-map.js';
 import type { Options as Offset } from '@floating-ui/core/src/middleware/offset';
 
-export { Placement };
+export type { Placement };
 
 import {
   autoUpdate,

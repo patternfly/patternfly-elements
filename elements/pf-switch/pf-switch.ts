@@ -4,7 +4,7 @@ import { BaseSwitch } from './BaseSwitch.js';
 import styles from './pf-switch.css';
 
 /**
- * A switch toggles the state of a setting (between on and off). Switches and
+ * A **switch** toggles the state of a setting (between on and off). Switches and
  * checkboxes can often be used interchangeably, but the switch provides a more
  * explicit, visible representation on a setting.
  *

@@ -7,7 +7,7 @@ import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller
 import styles from './pf-panel.css';
 
 /**
- * The panel component is a container that supports flexible content layouts. It can
+ * The **panel** component is a container that supports flexible content layouts. It can
  * be used to house other components such as fields, forms, videos, buttons, and more.
  * The panel should not be confused with the [drawer](https://www.patternfly.org/v4/components/drawer/design-guidelines/)
  * component, which allows you to surface information via a collapsable container.

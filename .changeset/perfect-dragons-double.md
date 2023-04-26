@@ -3,5 +3,5 @@
 ---
 
 `BaseTabs`: 
- - fixes Safari focus issue on keyboard navigation
- - fixes Safari focus issue on tab mouse click
+ - fixed Safari focus issue on keyboard navigation
+ - fixed Safari focus issue on mouse click

@@ -66,6 +66,7 @@ export abstract class BaseTab extends LitElement {
   #clickHandler() {
     if (!this.disabled && this.#internals.ariaDisabled !== 'true' && this.ariaDisabled !== 'true') {
       this.active = true;
+      this.focus(); // safari fix
     }
   }
 

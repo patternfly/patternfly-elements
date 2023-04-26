@@ -63,9 +63,14 @@ export abstract class BaseTab extends LitElement {
     }
   }
 
+  focus() {
+    this.button.focus();
+  }
+
   #clickHandler() {
     if (!this.disabled && this.#internals.ariaDisabled !== 'true' && this.ariaDisabled !== 'true') {
       this.active = true;
+      this.focus(); // safari fix
     }
   }
 

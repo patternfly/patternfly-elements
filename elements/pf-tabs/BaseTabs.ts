@@ -226,8 +226,10 @@ export abstract class BaseTabs extends LitElement {
     }
 
     if (event.active) {
+      if (event.tab !== this.#tabindex.activeItem) {
+        this.#tabindex.updateActiveItem(event.tab);
+      }
       this.activeIndex = this.#allTabs.findIndex(tab => tab === event.tab);
-      this.#tabindex.updateActiveItem(this.#activeTab);
     }
   };
 

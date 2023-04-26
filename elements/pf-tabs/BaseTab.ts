@@ -37,8 +37,6 @@ export abstract class BaseTab extends LitElement {
 
   #internals = this.attachInternals();
 
-  id: string = this.id || getRandomId(this.localName);
-
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('click', this.#clickHandler);

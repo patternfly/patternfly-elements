@@ -11,8 +11,6 @@ export abstract class BaseTabPanel extends LitElement {
 
   #internals = this.attachInternals();
 
-  id: string = this.id || getRandomId(this.localName);
-
   render() {
     return html`
       <slot></slot>

@@ -6,8 +6,6 @@ import { query } from 'lit/decorators/query.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-
 import style from './BaseTab.css';
 
 export class TabExpandEvent extends ComposedEvent {

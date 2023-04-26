@@ -1,5 +1,7 @@
 import { LitElement, html } from 'lit';
 
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+
 import style from './BaseTabPanel.css';
 
 export abstract class BaseTabPanel extends LitElement {
@@ -8,6 +10,8 @@ export abstract class BaseTabPanel extends LitElement {
   hidden = true;
 
   #internals = this.attachInternals();
+
+  id: string = this.id || getRandomId(this.localName);
 
   render() {
     return html`

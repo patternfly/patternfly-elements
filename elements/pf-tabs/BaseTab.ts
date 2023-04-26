@@ -6,6 +6,8 @@ import { query } from 'lit/decorators/query.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
 
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+
 import style from './BaseTab.css';
 
 export class TabExpandEvent extends ComposedEvent {
@@ -34,6 +36,8 @@ export abstract class BaseTab extends LitElement {
   abstract disabled: boolean;
 
   #internals = this.attachInternals();
+
+  id: string = this.id || getRandomId(this.localName);
 
   connectedCallback() {
     super.connectedCallback();

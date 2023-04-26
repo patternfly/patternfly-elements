@@ -62,7 +62,7 @@ export class OverflowController implements ReactiveController {
       return;
     }
     const leftScroll = this.#container.scrollLeft - this.#container.clientWidth;
-    this.#container.scroll({ left: leftScroll });
+    this.#container.scroll({ left: leftScroll, behavior: 'smooth' });
     this.#setOverflowState();
   }
 
@@ -71,7 +71,7 @@ export class OverflowController implements ReactiveController {
       return;
     }
     const leftScroll = this.#container.scrollLeft + this.#container.clientWidth;
-    this.#container.scroll({ left: leftScroll });
+    this.#container.scroll({ left: leftScroll, behavior: 'smooth' });
     this.#setOverflowState();
   }
 

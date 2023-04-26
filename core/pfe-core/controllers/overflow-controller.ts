@@ -42,7 +42,12 @@ export class OverflowController implements ReactiveController {
     }
     this.overflowLeft = !this.#hideOverflowButtons && !isElementInView(this.#container, this.firstItem);
     this.overflowRight = !this.#hideOverflowButtons && !isElementInView(this.#container, this.lastItem);
-    this.showScrollButtons = !this.#hideOverflowButtons && (this.overflowLeft || this.overflowRight);
+    let scrollButtonsWidth = 0;
+    if (this.overflowLeft || this.overflowRight) {
+      scrollButtonsWidth = (this.#container.parentElement?.querySelector('button')?.getBoundingClientRect().width || 0) * 2;
+    }
+    this.showScrollButtons = !this.#hideOverflowButtons &&
+    this.#container.scrollWidth > (this.#container.clientWidth + scrollButtonsWidth);
     this.host.requestUpdate();
   }
 

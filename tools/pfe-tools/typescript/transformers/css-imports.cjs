@@ -1,5 +1,5 @@
 // @ts-check
-const ts = require('typescript');
+const ts = require('typescript/lib/typescript');
 const fs = require('node:fs');
 const { pathToFileURL } = require('node:url');
 

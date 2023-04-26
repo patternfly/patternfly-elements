@@ -1,7 +1,7 @@
 {% set level = level or 2 %}
 {% set header = header or 'Attributes' %}
 
-<section class="band api attributes">
+<section class="band api attributes api-properties">
   <h{{level}}>{{ header | innerMD | safe }}</h{{level}}> {% if not content and not attributes.length %}
 
   <em>None</em> {%- else -%}

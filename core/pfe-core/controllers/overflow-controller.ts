@@ -61,17 +61,8 @@ export class OverflowController implements ReactiveController {
     if (!this.#container) {
       return;
     }
-    let firstElementInView: HTMLElement | undefined;
-    let lastElementOutOfView: HTMLElement | undefined;
-    for (let i = 0; i < this.#items.length && !firstElementInView; i++) {
-      if (isElementInView(this.#container, this.#items[i] as HTMLElement, false)) {
-        firstElementInView = this.#items[i];
-        lastElementOutOfView = this.#items[i - 1];
-      }
-    }
-    if (lastElementOutOfView) {
-      this.#container.scrollLeft -= lastElementOutOfView.scrollWidth;
-    }
+    const leftScroll = this.#container.scrollLeft - this.#container.clientWidth;
+    this.#container.scroll({ left: leftScroll });
     this.#setOverflowState();
   }
 
@@ -79,17 +70,8 @@ export class OverflowController implements ReactiveController {
     if (!this.#container) {
       return;
     }
-    let lastElementInView: HTMLElement | undefined;
-    let firstElementOutOfView: HTMLElement | undefined;
-    for (let i = this.#items.length - 1; i >= 0 && !lastElementInView; i--) {
-      if (isElementInView(this.#container, this.#items[i] as HTMLElement, false)) {
-        lastElementInView = this.#items[i];
-        firstElementOutOfView = this.#items[i + 1];
-      }
-    }
-    if (firstElementOutOfView) {
-      this.#container.scrollLeft += firstElementOutOfView.scrollWidth;
-    }
+    const leftScroll = this.#container.scrollLeft + this.#container.clientWidth;
+    this.#container.scroll({ left: leftScroll });
     this.#setOverflowState();
   }
 

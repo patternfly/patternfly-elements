@@ -1,7 +1,5 @@
 import { customElement } from 'lit/decorators/custom-element.js';
 
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-
 import styles from './pf-tab-panel.css';
 
 import { BaseTabPanel } from './BaseTabPanel.js';
@@ -16,11 +14,6 @@ import { BaseTabPanel } from './BaseTabPanel.js';
 @customElement('pf-tab-panel')
 export class PfTabPanel extends BaseTabPanel {
   static readonly styles = [...BaseTabPanel.styles, styles];
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.id ||= getRandomId('pf-tab-panel');
-  }
 }
 
 declare global {

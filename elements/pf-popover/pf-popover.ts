@@ -301,7 +301,7 @@ export class PfPopover extends LitElement {
   /**
    * The ID of the element to attach the popover to.
    */
-  @observed
+  @observed('triggerChanged')
   @property({ reflect: true }) trigger?: string;
 
   @query('#popover') private _popover!: HTMLDialogElement;
@@ -420,10 +420,8 @@ export class PfPopover extends LitElement {
   /**
    * Removes event listeners from the old trigger element and attaches
    * them to the new trigger element.
-   * @param oldValue
-   * @param newValue
    */
-  protected _triggerChanged(oldValue?: string, newValue?: string) {
+  triggerChanged(oldValue?: string, newValue?: string) {
     if (oldValue) {
       this.#referenceTrigger?.removeEventListener('click', this.show);
       this.#referenceTrigger?.removeEventListener('keydown', this.onKeydown);

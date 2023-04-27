@@ -58,15 +58,23 @@ export class PopoverShownEvent extends ComposedEvent {
  *
  * @summary Toggle the visibility of helpful or contextual information.
  *
- * @slot - This slot wraps around the element that should be used to invoke the popover content to display. Typically this would be an icon, button, or other small sized element.
- * @slot heading - This slot renders the content that will be displayed inside of the header of the popover. Typically this would be a heading element.
- * @slot icon - This slot renders the icon that will be displayed inside the header of the popover, before the heading.
- * @slot body - This slot renders the content that will be displayed inside of the body of the popover.
- * @slot footer - This slot renders the content that will be displayed inside of the footer of the popover.
+ * @slot -
+ *         The default slot holds invoking element.
+ *         Typically this would be an icon, button, or other small sized element.
+ * @slot heading
+ *       This slot renders the content that will be displayed inside of the header of the popover.
+ *       Typically this would be a heading element.
+ * @slot icon
+ *       This slot renders the icon that will be displayed inside the header of the popover,
+ *       before the heading.
+ * @slot body
+ *       This slot renders the content that will be displayed inside of the body of the popover.
+ * @slot footer
+ *       This slot renders the content that will be displayed inside of the footer of the popover.
  *
  * @csspart container - The component wrapper
  * @csspart content - The content wrapper
- * @csspart header - The header element; only visible if both an icon and heading are provided.
+ * @csspart header - The header element; only visible if both an icon annd heading are provided.
  * @csspart heading - The heading element
  * @csspart icon - The header icon
  * @csspart close-button - The close button
@@ -186,7 +194,7 @@ export class PfPopover extends LitElement {
   private static _instances = new Set<PfPopover>();
 
   /**
-   * `position` inidicates the initial popover position.
+   * Indicates the initial popover position.
    * There are 12 options: `top`, `bottom`, `left`, `right`, `top-start`, `top-end`,
    * `bottom-start`, `bottom-end`, `left-start`, `left-end`,`right-start`, `right-end`.
    * The default is `top`.
@@ -199,9 +207,9 @@ export class PfPopover extends LitElement {
   @property({ reflect: true }) heading?: string;
 
   /**
-   * The content rendered in the popover's body. The default is `''`.
+   * The content rendered in the popover's body.
    */
-  @property({ reflect: true }) body = '';
+  @property({ reflect: true }) body?: string;
 
   /**
    * The content rendered in the popover's footer.
@@ -229,12 +237,15 @@ export class PfPopover extends LitElement {
    * `bottom-start`, `bottom-end`, `left-start`, `left-end`,`right-start`, `right-end`.
    * The default is [oppositePlacement], where only the opposite placement is tried.
    */
-  @property({ attribute: 'flip-behavior', converter: StringListConverter }) flipBehavior?: Placement[];
+  @property({
+    attribute: 'flip-behavior',
+    converter: StringListConverter,
+  }) flipBehavior?: Placement[];
 
   /**
    * Disable the flip behavior. The default is `false`.
    */
-  @property({ type: Boolean, reflect: true, attribute: 'no-flip' }) noFlip?: boolean;
+  @property({ type: Boolean, reflect: true, attribute: 'no-flip' }) noFlip = false;
 
   /**
    * The heading level to use for the popover's header. The default is `h6`.
@@ -242,7 +253,8 @@ export class PfPopover extends LitElement {
   @property({ type: Number, reflect: true, attribute: 'heading-level' }) headingLevel?: HeadingLevel;
 
   /**
-   * Indicates which icon set to use for the header's icon. The default is `fas` (Font Awesome Free Solid).
+   * Indicates which icon set to use for the header's icon.
+   * The default is `fas` (Font Awesome Free Solid).
    */
   @property({ reflect: true, attribute: 'icon-set' }) iconSet?: string;
 
@@ -252,8 +264,8 @@ export class PfPopover extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'hide-close' }) hideClose?: boolean;
 
   /**
-   * Indicates the severity variant to use for the alert popover. There are five options: `default`, `info`,
-   * `warning`, `success`, and `danger`.
+   * Indicates the severity variant to use for the alert popover.
+   * There are five options: `default`, `info`, `warning`, `success`, and `danger`.
    */
   @property({ reflect: true, attribute: 'alert-severity' }) alertSeverity?: AlertSeverity;
 
@@ -264,14 +276,18 @@ export class PfPopover extends LitElement {
 
   /**
    * The text announced by the screen reader to indicate the popover's severity.
-   * The default is `{alertSeverity} alert:`.
+   * The default is `${alertSeverity} alert:`.
    */
   @property({ reflect: true, attribute: 'alert-severity-text' }) alertSeverityText?: string;
 
   /**
    * Don't hide the popover when clicking ouside of it.
    */
-  @property({ type: Boolean, reflect: true, attribute: 'no-outside-click' }) noOutsideClick?: boolean;
+  @property({
+    type: Boolean,
+    reflect: true,
+    attribute: 'no-outside-click',
+  }) noOutsideClick?: boolean;
 
   /**
    * The ID of the element to attach the popover to.
@@ -355,7 +371,7 @@ export class PfPopover extends LitElement {
               </svg>
             </pf-button>
             ${header}
-            <slot id="body" part="body" name="body">${this.body}</slot>
+            <slot id="body" part="body" name="body">${this.body ?? ''}</slot>
             <footer part="footer" ?hidden=${!hasFooter}>
               <slot name="footer">${this.footer}</slot>
             </footer>
@@ -430,7 +446,7 @@ export class PfPopover extends LitElement {
     await this.#float.show({
       offset: this.distance ?? 25,
       placement: this.position,
-      flip: !(this.noFlip ?? false),
+      flip: !this.noFlip,
       fallbackPlacements: this.flipBehavior,
     });
     this._popover?.show();

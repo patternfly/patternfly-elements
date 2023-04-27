@@ -341,42 +341,34 @@ export class PfPopover extends LitElement {
       >${unsafeStatic(`<h${headingLevel}>${this.heading ?? ''}</h${headingLevel}>`)}</slot
     >`;
     const asHeader = hasHeading && hasIcon;
-    const header = asHeader ?
-      html`
-          <header part="header">
-            <span part="icon">
-              <slot name="icon"><pf-icon icon=${fallbackIcon} set=${ifDefined(this.iconSet)} size="md"></pf-icon></slot>
-            </span>
-            ${screenReaderText} ${heading}
-          </header>
-        `
-      : html`${heading}`;
+    const header = !asHeader ? heading : html`
+      <header part="header">
+        <span part="icon">
+          <slot name="icon"><pf-icon icon="${fallbackIcon}" set="${ifDefined(this.iconSet)}" size="md"></pf-icon></slot>
+        </span>
+        ${screenReaderText} ${heading}
+      </header>
+    `;
 
     const hasFooter = this.#slots.hasSlotted('footer') || !!this.footer;
 
     return html`
-      <div
-        id="container"
-        style="${styleMap(styles)}"
-        class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}"
-      >
+      <div id="container"
+           style="${styleMap(styles)}"
+           class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}">
         <slot id="trigger" @keydown=${this._onKeydown} @click=${this.toggle}></slot>
         <dialog id="popover" aria-labelledby="heading" aria-describedby="body" aria-label=${ifDefined(this.label)}>
           <div id="arrow"></div>
           <div id="content" part="content">
-            <pf-button
-              id="close-button"
-              label=${this.closeButtonLabel ?? 'Close popover'}
-              part="close-button"
-              plain
-              @click=${this.hide}
-              @keydown=${this._onKeydown}
-              ?hidden=${this.hideClose}
-            >
+            <pf-button id="close-button"
+                       part="close-button"
+                       plain
+                       label="${this.closeButtonLabel ?? 'Close popover'}"
+                       @click="${this.hide}"
+                       @keydown="${this._onKeydown}"
+                       ?hidden="${this.hideClose}">
               <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
-                <path
-                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                ></path>
+                <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
               </svg>
             </pf-button>
             ${header}

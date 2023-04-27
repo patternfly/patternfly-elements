@@ -1,9 +1,29 @@
-section {
+form {
   padding: 0 2rem;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 8px;
+}
+
+form h2 {
+  width: 100%;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+}
+
+fieldset label {
+  display: grid;
+  align-content: center;
+  display: contents;
 }
 
 select {
   display: block;
+  margin-inline-end: auto;
+  flex-basis: 100%;
 }
 
 #alert-select {

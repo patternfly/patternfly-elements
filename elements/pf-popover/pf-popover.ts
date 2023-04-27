@@ -306,9 +306,9 @@ export class PfPopover extends LitElement {
     const hasIcon = this.#slots.hasSlotted('icon') || !!this.icon || !!this.alertSeverity;
     const fallbackIcon = this.icon ?? (this.alertSeverity ? alertIcons[this.alertSeverity] : nothing);
 
-    const screenReaderText = this.alertSeverity ?
-      html`<span class="sr-only">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>`
-      : nothing;
+    const screenReaderText = !this.alertSeverity ? nothing : html`
+      <span class="visually-hidden">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>
+    `;
 
     const hasHeading = this.#slots.hasSlotted('heading') || !!this.heading;
     const headingLevel = headingLevels.find(level => level === this.headingLevel) ?? 6;

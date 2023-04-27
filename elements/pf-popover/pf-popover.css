@@ -7,7 +7,7 @@
   --_z-index: var(--pf-popover--z-index, 9999);
 }
 
-.sr-only {
+.visually-hidden {
   position: fixed;
   top: 0;
   left: 0;
@@ -18,7 +18,7 @@
 }
 
 [hidden] {
-  visibility: hidden;
+  display: none !important;
 }
 
 #container {

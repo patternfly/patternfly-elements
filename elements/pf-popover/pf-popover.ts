@@ -1,5 +1,4 @@
-import { LitElement, nothing } from 'lit';
-import { html, unsafeStatic } from 'lit/static-html.js';
+import { LitElement, nothing, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -14,14 +13,6 @@ import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 import styles from './pf-popover.css';
-
-const alertIcons: Record<AlertSeverity, string> = {
-  default: 'bell',
-  info: 'circle-info',
-  success: 'circle-check',
-  warning: 'triangle-exclamation',
-  danger: 'circle-exclamation',
-};
 
 const headingLevels = [2, 3, 4, 5, 6] as const;
 
@@ -193,6 +184,14 @@ export class PfPopover extends LitElement {
 
   private static instances = new Set<PfPopover>();
 
+  private static alertIcons = new Map(Object.entries({
+    default: 'bell',
+    info: 'circle-info',
+    success: 'circle-check',
+    warning: 'triangle-exclamation',
+    danger: 'circle-exclamation',
+  } satisfies Record<AlertSeverity, string>) as [AlertSeverity, string][]);
+
   static {
     document.addEventListener('click', function(event) {
       for (const instance of PfPopover.instances) {
@@ -321,42 +320,48 @@ export class PfPopover extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('keydown', this._onKeydown);
+    this.addEventListener('keydown', this.onKeydown);
     PfPopover.instances.add(this);
   }
 
   render() {
     const { alignment, anchor, styles } = this.#float;
-
+    const hasFooter = this.#slots.hasSlotted('footer') || !!this.footer;
+    const hasHeading = this.#slots.hasSlotted('heading') || !!this.heading;
     const hasIcon = this.#slots.hasSlotted('icon') || !!this.icon || !!this.alertSeverity;
-    const fallbackIcon = this.icon ?? (this.alertSeverity ? alertIcons[this.alertSeverity] : nothing);
 
-    const screenReaderText = !this.alertSeverity ? nothing : html`
-      <span class="visually-hidden">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>
+    // https://github.com/asyncLiz/minify-html-literals/issues/37
+    let headingContent = html`<h6>${this.heading ?? ''}</h6>`;
+    switch (this.headingLevel) {
+      case 2: headingContent = html`<h2>${this.heading ?? ''}</h2>`; break;
+      case 3: headingContent = html`<h3>${this.heading ?? ''}</h3>`; break;
+      case 4: headingContent = html`<h4>${this.heading ?? ''}</h4>`; break;
+      case 5: headingContent = html`<h5>${this.heading ?? ''}</h5>`; break;
+    }
+
+    const headingSlotWithFallback = html`
+      <slot id="heading" name="heading" part="heading" ?hidden=${!hasHeading}>${headingContent}</slot>
     `;
 
-    const hasHeading = this.#slots.hasSlotted('heading') || !!this.heading;
-    const headingLevel = headingLevels.find(level => level === this.headingLevel) ?? 6;
-    const heading = html`<slot id="heading" name="heading" part="heading" ?hidden=${!hasHeading}
-      >${unsafeStatic(`<h${headingLevel}>${this.heading ?? ''}</h${headingLevel}>`)}</slot
-    >`;
-    const asHeader = hasHeading && hasIcon;
-    const header = !asHeader ? heading : html`
+    const header = !(hasHeading && hasIcon) ? headingSlotWithFallback : html`
       <header part="header">
         <span part="icon">
-          <slot name="icon"><pf-icon icon="${fallbackIcon}" set="${ifDefined(this.iconSet)}" size="md"></pf-icon></slot>
-        </span>
-        ${screenReaderText} ${heading}
+          <slot name="icon">
+            <pf-icon icon="${this.icon ?? PfPopover.alertIcons.get(this.alertSeverity as AlertSeverity) ?? ''}"
+                     set="${ifDefined(this.iconSet)}"
+                     size="md"></pf-icon>
+          </slot>
+        </span>${!this.alertSeverity ? nothing : html`
+        <span class="visually-hidden">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>`}
+        ${headingSlotWithFallback}
       </header>
     `;
-
-    const hasFooter = this.#slots.hasSlotted('footer') || !!this.footer;
 
     return html`
       <div id="container"
            style="${styleMap(styles)}"
            class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}">
-        <slot id="trigger" @keydown=${this._onKeydown} @click=${this.toggle}></slot>
+        <slot id="trigger" @keydown=${this.onKeydown} @click=${this.toggle}></slot>
         <dialog id="popover" aria-labelledby="heading" aria-describedby="body" aria-label=${ifDefined(this.label)}>
           <div id="arrow"></div>
           <div id="content" part="content">
@@ -365,7 +370,7 @@ export class PfPopover extends LitElement {
                        plain
                        label="${this.closeButtonLabel ?? 'Close popover'}"
                        @click="${this.hide}"
-                       @keydown="${this._onKeydown}"
+                       @keydown="${this.onKeydown}"
                        ?hidden="${this.hideClose}">
               <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
                 <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
@@ -386,10 +391,10 @@ export class PfPopover extends LitElement {
     super.disconnectedCallback();
     PfPopover.instances.delete(this);
     this.#referenceTrigger?.removeEventListener('click', this.show);
-    this.#referenceTrigger?.removeEventListener('keydown', this._onKeydown);
+    this.#referenceTrigger?.removeEventListener('keydown', this.onKeydown);
   }
 
-  @bound private _onKeydown(event: KeyboardEvent) {
+  @bound private onKeydown(event: KeyboardEvent) {
     switch (event.key) {
       case 'Escape':
       case 'Esc':
@@ -421,12 +426,12 @@ export class PfPopover extends LitElement {
   protected _triggerChanged(oldValue?: string, newValue?: string) {
     if (oldValue) {
       this.#referenceTrigger?.removeEventListener('click', this.show);
-      this.#referenceTrigger?.removeEventListener('keydown', this._onKeydown);
+      this.#referenceTrigger?.removeEventListener('keydown', this.onKeydown);
     }
     if (newValue) {
       this.#referenceTrigger = (this.getRootNode() as Document | ShadowRoot).getElementById(newValue);
       this.#referenceTrigger?.addEventListener('click', this.show);
-      this.#referenceTrigger?.addEventListener('keydown', this._onKeydown);
+      this.#referenceTrigger?.addEventListener('keydown', this.onKeydown);
     }
   }
 

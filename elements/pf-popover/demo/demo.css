@@ -26,6 +26,10 @@ select {
   flex-basis: 100%;
 }
 
+#position-select {
+  margin: 1rem 0;
+}
+
 #alert-select {
   margin-bottom: 1rem;
 }

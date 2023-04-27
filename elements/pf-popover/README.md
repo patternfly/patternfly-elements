@@ -28,7 +28,7 @@ import '@patternfly/elements/pf-popover/pf-popover.js';
 
 ## Usage
 
-### Basic Tooltip
+### Basic Popover
 
 ```html
 <pf-popover heading="Popover heading"

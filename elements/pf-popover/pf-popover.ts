@@ -191,7 +191,17 @@ export class PopoverShownEvent extends ComposedEvent {
 export class PfPopover extends LitElement {
   static readonly styles = [styles];
 
-  private static _instances = new Set<PfPopover>();
+  private static instances = new Set<PfPopover>();
+
+  static {
+    document.addEventListener('click', function(event) {
+      for (const instance of PfPopover.instances) {
+        if (!instance.noOutsideClick) {
+          instance.#outsideClick(event);
+        }
+      }
+    });
+  }
 
   /**
    * Indicates the initial popover position.
@@ -312,8 +322,7 @@ export class PfPopover extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('keydown', this._onKeydown);
-    !this.noOutsideClick && document.addEventListener('click', this._outsideClick);
-    PfPopover._instances.add(this);
+    PfPopover.instances.add(this);
   }
 
   render() {
@@ -383,8 +392,7 @@ export class PfPopover extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('click', this._outsideClick);
-    PfPopover._instances.delete(this);
+    PfPopover.instances.delete(this);
     this.#referenceTrigger?.removeEventListener('click', this.show);
     this.#referenceTrigger?.removeEventListener('keydown', this._onKeydown);
   }
@@ -405,7 +413,7 @@ export class PfPopover extends LitElement {
     }
   }
 
-  @bound private _outsideClick(event: MouseEvent) {
+  #outsideClick(event: MouseEvent) {
     const path = event.composedPath();
     if (!path.includes(this) && !path.includes(this.#referenceTrigger as HTMLElement)) {
       this.hide();

@@ -1,5 +1,34 @@
 # @patternfly/elements
 
+## 2.1.0
+
+### Minor Changes
+
+- 78c8e4416: ✨ Added `<pf-popover>`
+
+  ```html
+  <pf-popover
+    heading="Popover heading"
+    body="Popovers are triggered by click rather than hover."
+    footer="Popover footer"
+  >
+    <pf-button>Toggle popover</pf-button>
+  </pf-popover>
+  ```
+
+- 9266ee5de: `<pf-button>`: expose `button` part for styling the internal button element
+
+### Patch Changes
+
+- 5a6683bf9: `<pf-tabs>`: improved accessibility for elements extending `BaseTab` and
+  `BaseTabPanel` by assigning random IDs when no exists.
+- 32eecd6c1: `BaseTab`:
+  - fixed Safari focus issue on keyboard navigation
+  - fixed Safari focus issue on mouse click
+- Updated dependencies [78c8e4416]
+- Updated dependencies [37c23c398]
+  - @patternfly/pfe-core@2.3.0
+
 ## 2.0.5
 
 ### Patch Changes

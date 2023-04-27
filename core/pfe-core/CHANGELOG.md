@@ -1,5 +1,17 @@
 # @patternfly/pfe-core
 
+## 2.3.0
+
+### Minor Changes
+
+- 78c8e4416: Added `StringListConverter` for managing comma-separated list attributes.
+
+### Patch Changes
+
+- 37c23c398: `overflow-controller`:
+  - improves display calculations for overflow scroll buttons
+  - adds smooth scroll behavior
+
 ## 2.2.0
 
 ### Minor Changes

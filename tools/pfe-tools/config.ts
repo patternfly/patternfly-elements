@@ -13,7 +13,7 @@ interface SiteOptions {
   stylesheets?: string[];
   /** Title for main page of the demo */
   title?: string;
-  /** Site subpath for components. e.g. 'elements'. default: 'components' */
+  /** Site subpath for components. default: 'components' i.e. 'https://patternflyelements.org/components' */
   componentSubpath?: string;
 }
 
@@ -46,6 +46,7 @@ const SITE_DEFAULTS: Required<SiteOptions> = {
 const DEFAULT_CONFIG: PfeConfig = {
   demoURLPrefix: 'https://patternflyelements.org/',
   sourceControlURLPrefix: 'https://github.com/patternfly/patternfly-elements/tree/main/',
+  elementsDir: 'elements',
   tagPrefix: 'pf',
   aliases: {},
 };

@@ -11,11 +11,9 @@ describe('<pf-popover>', function() {
 
   beforeEach(async function() {
     element = await fixture<PfPopover>(html`
-      <pf-popover
-        heading="Popover heading"
-        body="Popovers are triggered by click rather than hover."
-        footer="Popover footer"
-      >
+      <pf-popover heading="Popover heading"
+                  body="Popovers are triggered by click rather than hover."
+                  footer="Popover footer">
         <pf-button>Toggle popover</pf-button>
       </pf-popover>
     `);
@@ -27,8 +25,8 @@ describe('<pf-popover>', function() {
     expect(element).to.be.an.instanceOf(klass).and.to.be.an.instanceOf(PfPopover);
   });
 
-  it('should be accessible', function() {
-    expect(element).shadowDom.to.be.accessible();
+  it('should be accessible', async function() {
+    await expect(element).shadowDom.to.be.accessible();
   });
 
   it('should hide popover content from assistive technology', function() {

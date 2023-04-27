@@ -31,11 +31,9 @@ import '@patternfly/elements/pf-popover/pf-popover.js';
 ### Basic Tooltip
 
 ```html
-<pf-popover
-  heading="Popover heading"
-  body="Popovers are triggered by click rather than hover."
-  footer="Popover footer"
->
+<pf-popover heading="Popover heading"
+            body="Popovers are triggered by click rather than hover."
+            footer="Popover footer">
   <pf-button>Toggle popover</pf-button>
 </pf-popover>
 ```

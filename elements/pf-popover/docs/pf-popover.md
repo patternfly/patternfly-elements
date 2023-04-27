@@ -1,20 +1,25 @@
 {% renderOverview %}
 
-<pf-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer">
+<pf-popover heading="Popover heading"
+            body="Popovers are triggered by click rather than hover."
+            footer="Popover footer">
   <pf-button>Toggle popover</pf-button>
 </pf-popover>
 
 {% endrenderOverview %}
 
-Unlike the Patternfly React implementation, this component does not trap focus in the popover dialog. If you would like to trap focus, consider using a modal dialog instead.
-
 {% band header="Usage" %}
-
-  ```html
-  <pf-popover heading="Popover heading" body="Popovers are triggered by click rather than hover." footer="Popover footer">
+  {% htmlexample %}
+  <pf-popover heading="Popover heading"
+              body="Popovers are triggered by click rather than hover."
+              footer="Popover footer">
     <button>Toggle popover</button>
   </pf-popover>
-  ```
+  {% endhtmlexample %}
+
+  **Note**: Unlike the [Patternfly React implementation][withfocustrap], this 
+  component does not trap focus in the popover dialog. If you would like to trap 
+  focus, consider using a modal dialog instead.
 {% endband %}
 
 {% renderSlots %}{% endrenderSlots %}
@@ -28,3 +33,5 @@ Unlike the Patternfly React implementation, this component does not trap focus i
 {% renderCssCustomProperties %}{% endrenderCssCustomProperties %}
 
 {% renderCssParts %}{% endrenderCssParts %}
+
+[withfocustrap]: https://www.patternfly.org/v4/components/popover#:~:textwithfocustrap

@@ -54,9 +54,9 @@ export class PopoverShownEvent extends ComposedEvent {
 }
 
 /**
- * A Popover displays content in a non-modal dialog and adds contextual information or provides resources via text and links.
+ * A **Popover** displays content in a non-modal dialog and adds contextual information or provides resources via text and links.
  *
- * @summary Toggle the visiblity of helpful or contextual information.
+ * @summary Toggle the visibility of helpful or contextual information.
  *
  * @slot - This slot wraps around the element that should be used to invoke the popover content to display. Typically this would be an icon, button, or other small sized element.
  * @slot heading - This slot renders the content that will be displayed inside of the header of the popover. Typically this would be a heading element.

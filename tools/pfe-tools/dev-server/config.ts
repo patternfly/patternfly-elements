@@ -116,6 +116,19 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
             const { element, fileName } = ctx.params;
             ctx.redirect(`/${elementsDir}/${element}/${fileName}.ts`);
           })
+          // Redirect `components/pf-jazz-hands|jazz-hands/demo/*-lightdom.css` to `components/pf-jazz-hands/*-lightdom.css`
+          .get(`/${componentSubpath}/:element/demo/:demoSubDir?/:fileName.css`, async (ctx, next) => {
+            const { element, fileName, ext } = ctx.params;
+            let prefixedElement = element;
+            if (!element.includes(tagPrefix)) {
+              prefixedElement = `${tagPrefix}-${element}`;
+            }
+            if (fileName.includes('-lightdom')) {
+              ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.css`);
+            } else {
+              return next();
+            }
+          })
           // Redirect `components/jazz-hands/demo/*.js|css` to `components/pf-jazz-hands/demo/*.js|css`
           .get(`/${componentSubpath}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
             const { element, fileName, ext } = ctx.params;

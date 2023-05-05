@@ -2,4 +2,4 @@
 "@patternfly/pfe-tools": patch
 ---
 
-`pfe-tools`: fixes `*-lightdom.css` support in dev server config`
+**Dev Server**: fixes `*-lightdom.css` support in config

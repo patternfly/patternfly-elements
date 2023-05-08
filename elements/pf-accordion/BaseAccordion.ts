@@ -103,7 +103,7 @@ export abstract class BaseAccordion extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('change', this.#onChange as EventListener);
-    this.addEventListener('keydown', this.#onKeydown);
+    this.#headerIndex.initItems(this.headers);
     this.#mo.observe(this, { childList: true });
     this.#init();
   }
@@ -135,6 +135,8 @@ export abstract class BaseAccordion extends LitElement {
    */
   async #init() {
     this.#initialized ||= !!await this.updateComplete;
+    // Event listener to the accordion header after the accordion has been initialized to add the roving tabindex
+    this.addEventListener('focusin', this.#updateActiveHeader as EventListener);
     this.updateAccessibility();
   }
 

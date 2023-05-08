@@ -113,12 +113,9 @@ export abstract class BaseAccordion extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('change', this.#onChange as EventListener);
-    // Add this to fix the RTI activeIndex event issue
-    // this.addEventListener('focusin', this.#updateActiveHeader as EventListener);
     this.#headerIndex.initItems(this.headers);
     this.#mo.observe(this, { childList: true });
     this.#init();
-    this.requestUpdate();
   }
 
   render(): TemplateResult {

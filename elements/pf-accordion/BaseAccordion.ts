@@ -148,6 +148,8 @@ export abstract class BaseAccordion extends LitElement {
    */
   async #init() {
     this.#initialized ||= !!await this.updateComplete;
+    // Event listener to the accordion header after the accordion has been initialized to add the roving tabindex
+    this.addEventListener('focusin', this.#updateActiveHeader as EventListener);
     this.updateAccessibility();
   }
 

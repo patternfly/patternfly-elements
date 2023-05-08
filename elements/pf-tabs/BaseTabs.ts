@@ -73,8 +73,6 @@ export abstract class BaseTabs extends LitElement {
 
   #activeIndex = 0;
 
-  id: string = this.id || getRandomId(this.localName);
-
   /**
    * Tab activation
    * Tabs can be either [automatic](https://w3c.github.io/aria-practices/examples/tabs/tabs-automatic.html) activated
@@ -139,6 +137,7 @@ export abstract class BaseTabs extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
+    this.id ||= getRandomId(this.localName);
     this.addEventListener('expand', this.#onTabExpand);
     BaseTabs.#instances.add(this);
   }

@@ -116,11 +116,18 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
             const { element, fileName } = ctx.params;
             ctx.redirect(`/${elementsDir}/${element}/${fileName}.ts`);
           })
+          // Redirect `components/pf-jazz-hands|jazz-hands/demo/*-lightdom.css` to `components/pf-jazz-hands/*-lightdom.css`
           // Redirect `components/jazz-hands/demo/*.js|css` to `components/pf-jazz-hands/demo/*.js|css`
           .get(`/${componentSubpath}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
             const { element, fileName, ext } = ctx.params;
+            let prefixedElement = element;
             if (!element.includes(tagPrefix)) {
-              ctx.redirect(`/${elementsDir}/${tagPrefix}-${element}/demo/${fileName}.${ext}`);
+              prefixedElement = `${tagPrefix}-${element}`;
+            }
+            if (fileName.includes('-lightdom') && ext === 'css') {
+              ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.${ext}`);
+            } else if (!element.includes(tagPrefix)) {
+              ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${fileName}.${ext}`);
             } else {
               return next();
             }
@@ -152,7 +159,12 @@ function normalizeOptions(options?: PfeDevServerConfigOptions): PfeDevServerInte
   config.site = { ...config.site, ...options?.site ?? {} };
   config.loadDemo ??= true;
   config.watchFiles ??= '{elements,core}/**/*.{css,html}';
-  config.litcssOptions ??= { include: /\.css$/, exclude: /((fonts|demo)|(demo\/.*))\.css$/ };
+
+  config.litcssOptions ??= {
+    include: /\.css$/,
+    exclude: /(((fonts|demo)|(demo\/.*))\.css$)|(.*(-lightdom.css$))/
+  };
+
   return config as PfeDevServerInternalConfig;
 }
 

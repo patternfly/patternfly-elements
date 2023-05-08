@@ -11,8 +11,6 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { AccordionHeaderChangeEvent, BaseAccordionHeader } from './BaseAccordionHeader.js';
 import { BaseAccordionPanel } from './BaseAccordionPanel.js';
 
-import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
-
 import style from './BaseAccordion.css';
 
 const CSS_TIMING_UNITS_RE = /^[0-9.]+(?<unit>[a-zA-Z]+)/g;
@@ -50,8 +48,6 @@ export abstract class BaseAccordion extends LitElement {
     return target instanceof BaseAccordionPanel;
   }
 
-  #headerIndex = new RovingTabindexController<BaseAccordionHeader>(this);
-
   /**
    * Sets and reflects the currently expanded accordion 0-based indexes.
    * Use commas to separate multiple indexes.
@@ -82,12 +78,6 @@ export abstract class BaseAccordion extends LitElement {
     return this.#allPanels();
   }
 
-  get activeHeader() {
-    const { headers } = this;
-    const index = headers.findIndex(header => header.matches(':focus,:focus-within'));
-    return headers.at(index);
-  }
-
   protected expandedSets = new Set<number>();
 
   #logger = new Logger(this);
@@ -113,12 +103,9 @@ export abstract class BaseAccordion extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('change', this.#onChange as EventListener);
-    // Add this to fix the RTI activeIndex event issue
-    // this.addEventListener('focusin', this.#updateActiveHeader as EventListener);
-    this.#headerIndex.initItems(this.headers);
+    this.addEventListener('keydown', this.#onKeydown);
     this.#mo.observe(this, { childList: true });
     this.#init();
-    this.requestUpdate();
   }
 
   render(): TemplateResult {
@@ -250,13 +237,6 @@ export abstract class BaseAccordion extends LitElement {
     }
   }
 
-  #updateActiveHeader() {
-    const { activeHeader } = this;
-    if (activeHeader) {
-      this.#headerIndex.updateActiveItem(activeHeader);
-    }
-  }
-
   #onChange(event: AccordionHeaderChangeEvent) {
     if (this.classList.contains('animating')) {
       return;
@@ -271,12 +251,66 @@ export abstract class BaseAccordion extends LitElement {
     }
   }
 
+  /**
+   * @see https://www.w3.org/TR/wai-aria-practices/#accordion
+   */
+  async #onKeydown(evt: KeyboardEvent) {
+    const currentHeader = evt.target as Element;
+
+    if (!BaseAccordion.isHeader(currentHeader)) {
+      return;
+    }
+
+    let newHeader: BaseAccordionHeader | undefined;
+
+    switch (evt.key) {
+      case 'ArrowDown':
+        evt.preventDefault();
+        newHeader = this.#nextHeader();
+        break;
+      case 'ArrowUp':
+        evt.preventDefault();
+        newHeader = this.#previousHeader();
+        break;
+      case 'Home':
+        evt.preventDefault();
+        newHeader = this.#firstHeader();
+        break;
+      case 'End':
+        evt.preventDefault();
+        newHeader = this.#lastHeader();
+        break;
+    }
+
+    newHeader?.focus?.();
+  }
+
   #allHeaders(accordion: BaseAccordion = this): BaseAccordionHeader[] {
     return Array.from(accordion.children).filter(BaseAccordion.isHeader);
   }
 
   #allPanels(accordion: BaseAccordion = this): BaseAccordionPanel[] {
     return Array.from(accordion.children).filter(BaseAccordion.isPanel);
+  }
+
+  #previousHeader() {
+    const { headers } = this;
+    const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) - 1;
+    return headers[(newIndex + headers.length) % headers.length];
+  }
+
+  #nextHeader() {
+    const { headers } = this;
+    const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) + 1;
+    return headers[newIndex % headers.length];
+  }
+
+  #firstHeader() {
+    return this.headers.at(0);
+  }
+
+  #lastHeader() {
+    return this.headers.at(-1);
   }
 
   #getIndex(el: Element | null) {

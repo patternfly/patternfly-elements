@@ -374,12 +374,6 @@ describe('<pf-accordion>', function() {
           });
         });
 
-        describe('Tab', function() {
-          beforeEach(press('Tab'));
-          it('moves focus to the second header', function() {
-            expect(document.activeElement).to.equal(header2);
-          });
-        });
 
         describe('Shift+Tab', function() {
           beforeEach(press('Shift+Tab'));
@@ -461,12 +455,6 @@ describe('<pf-accordion>', function() {
           });
         });
 
-        describe('Tab', function() {
-          beforeEach(press('Tab'));
-          it('moves focus to the last header', function() {
-            expect(document.activeElement).to.equal(header3);
-          });
-        });
 
         describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
@@ -537,12 +525,6 @@ describe('<pf-accordion>', function() {
           });
         });
 
-        describe('Shift+Tab', function() {
-          beforeEach(press('Shift+Tab'));
-          it('moves focus to the link in middle header', function() {
-            expect(document.activeElement).to.equal(header2);
-          });
-        });
 
         describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
@@ -605,9 +587,6 @@ describe('<pf-accordion>', function() {
             });
             describe('Tab', function() {
               beforeEach(press('Tab'));
-              it('moves focus to the second header', function() {
-                expect(document.activeElement).to.equal(header2);
-              });
               describe('Shift+Tab', function() {
                 beforeEach(press('Shift+Tab'));
                 it('keeps focus on the link in the first panel', function() {
@@ -787,8 +766,8 @@ describe('<pf-accordion>', function() {
             });
           });
 
-          describe('Shift+Tab', function() {
-            beforeEach(press('Shift+Tab'));
+          describe('ArrowUp', function() {
+            beforeEach(press('ArrowUp'));
             it('moves focus to the first header', function() {
               expect(document.activeElement).to.equal(header1);
             });

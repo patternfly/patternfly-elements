@@ -11,6 +11,8 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { AccordionHeaderChangeEvent, BaseAccordionHeader } from './BaseAccordionHeader.js';
 import { BaseAccordionPanel } from './BaseAccordionPanel.js';
 
+import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
+
 import style from './BaseAccordion.css';
 
 const CSS_TIMING_UNITS_RE = /^[0-9.]+(?<unit>[a-zA-Z]+)/g;
@@ -48,6 +50,8 @@ export abstract class BaseAccordion extends LitElement {
     return target instanceof BaseAccordionPanel;
   }
 
+  #headerIndex = new RovingTabindexController<BaseAccordionHeader>(this);
+
   /**
    * Sets and reflects the currently expanded accordion 0-based indexes.
    * Use commas to separate multiple indexes.
@@ -78,6 +82,12 @@ export abstract class BaseAccordion extends LitElement {
     return this.#allPanels();
   }
 
+  get activeHeader() {
+    const { headers } = this;
+    const index = headers.findIndex(header => header.matches(':focus,:focus-within'));
+    return headers.at(index);
+  }
+
   protected expandedSets = new Set<number>();
 
   #logger = new Logger(this);
@@ -103,7 +113,6 @@ export abstract class BaseAccordion extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('change', this.#onChange as EventListener);
-    this.#headerIndex.initItems(this.headers);
     this.#mo.observe(this, { childList: true });
     this.#init();
   }
@@ -135,9 +144,17 @@ export abstract class BaseAccordion extends LitElement {
    */
   async #init() {
     this.#initialized ||= !!await this.updateComplete;
+    this.#headerIndex.initItems(this.headers);
     // Event listener to the accordion header after the accordion has been initialized to add the roving tabindex
     this.addEventListener('focusin', this.#updateActiveHeader as EventListener);
     this.updateAccessibility();
+  }
+
+  #updateActiveHeader() {
+    const { activeHeader } = this;
+    if (activeHeader) {
+      this.#headerIndex.updateActiveItem(activeHeader);
+    }
   }
 
   #panelForHeader(header: BaseAccordionHeader) {

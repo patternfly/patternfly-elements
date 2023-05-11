@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-dropdown.js"></script>
+<script type="module" src="pf-dropdown-item.js"></script>
+<script type="module" src="pf-dropdown-items-group.js"></script>
+
+<pf-dropdown close-on-outside-click value="dropdown" id="demo1dropdown">
+    <pf-button slot="trigger">Toggle popover</pf-button>
+    <pf-dropdown-item value="value4">item4</pf-dropdown-item>
+    <pf-dropdown-item divider></pf-dropdown-item>
+    <pf-dropdown-items-group label="Group 1">
+        <pf-dropdown-item value="value1">item1</pf-dropdown-item>
+        <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+        <pf-dropdown-item divider></pf-dropdown-item>
+        <pf-dropdown-item value="value3">item3</pf-dropdown-item>
+    </pf-dropdown-items-group>
+    <pf-dropdown-items-group label="Group 2">
+        <pf-dropdown-item value="value1">item1</pf-dropdown-item>
+        <pf-dropdown-item  value="value2">item2</pf-dropdown-item>
+        <pf-dropdown-item  value="value3">item3</pf-dropdown-item>
+    </pf-dropdown-items-group>
+</pf-dropdown>

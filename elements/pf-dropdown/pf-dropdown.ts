@@ -75,12 +75,37 @@ export class PfDropdown extends LitElement {
   @bound async show() {
     await this.updateComplete;
     await this.#float.show();
-    this.#triggerElement = document.activeElement as HTMLElement;
+    // default trigger button
+    if (document.activeElement?.localName === 'pf-dropdown') {
+      const defaultButton = this.shadowRoot?.querySelector('slot[name="trigger"]')?.children[0] as HTMLElement;
+      this.#triggerElement = defaultButton;
+    } else {
+      this.#triggerElement = document.activeElement as HTMLElement;
+    }
+    this.#triggerElement?.setAttribute('aria-expanded', 'true');
+    this.#triggerElement?.setAttribute('aria-haspopup', 'listbox');
     this.#focusSelectedItem(0);
     // add event listener for outside click
     if (this.closeOnOutsideClick) {
       document.addEventListener('click', this.#outsideClick);
     }
+  }
+
+  /**
+   * Closes the popover
+   */
+  @bound async hide() {
+    await this.#float.hide();
+    this.#triggerElement?.focus();
+    document.removeEventListener('click', this.#outsideClick);
+    // accessibility update
+    this.#triggerElement?.setAttribute('aria-expanded', 'false');
+    this.#liElements?.forEach(li => {
+      if (li?.localName === 'pf-dropdown-item') {
+        const liElement = li?.shadowRoot?.querySelector('li');
+        liElement?.setAttribute('tabindex', '-1');
+      }
+    });
   }
 
   #focusSelectedItem(index: number) {
@@ -93,7 +118,15 @@ export class PfDropdown extends LitElement {
     }
 
     const liElement = this.#liElements[this.#activeIndex]?.shadowRoot?.querySelector('li');
-    liElement?.focus();
+    if (liElement) {
+      const currentElement = document.activeElement;
+      if (currentElement?.localName === 'pf-dropdown-item') {
+        const previousLiElement = currentElement?.shadowRoot?.querySelector('li');
+        previousLiElement?.setAttribute('tabindex', '-1');
+      }
+      liElement?.focus();
+      liElement?.setAttribute('tabindex', '0');
+    }
   }
 
   #handleSlotChange() {
@@ -112,15 +145,6 @@ export class PfDropdown extends LitElement {
     this.#liElements = pfDropdownItems;
   }
 
-  /**
-   * Closes the popover
-   */
-  @bound async hide() {
-    await this.#float.hide();
-    this.#triggerElement?.focus();
-    document.removeEventListener('click', this.#outsideClick);
-  }
-
   handleSelect(event: Event & { target: HTMLLIElement }) {
     this.hide();
     this.dispatchEvent(new DropdownSelectEvent(event, `${event?.target?.value}`));
@@ -128,6 +152,14 @@ export class PfDropdown extends LitElement {
 
   @bound private onKeydown(event: KeyboardEvent) {
     switch (event.key) {
+      case 'Home':
+        event.preventDefault();
+        this.#focusSelectedItem(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        this.#focusSelectedItem(this.#liElements.length - 1);
+        break;
       case 'ArrowUp':
         event.preventDefault();
         this.#focusSelectedItem(this.#activeIndex - 1);
@@ -138,6 +170,7 @@ export class PfDropdown extends LitElement {
         break;
       case 'Escape':
       case 'Esc':
+      case 'Tab':
         event.preventDefault();
         this.hide();
         break;
@@ -151,45 +184,15 @@ export class PfDropdown extends LitElement {
     }
   }
 
-  @bound private handleDropdownButton() {
-    // console.log('event', event.key, event.target);
-    // switch (event.key) {
-    //   case 'ArrowDown':
-    //     event.preventDefault();
-    //     console.log('ArrowDown', event.target, event.key);
-    //     const ul1 = this.shadowRoot.querySelector('ul');
-    //     console.log('ul onKeydown', ul1);
-    //     ul1.setAttribute('tabindex', '0');
-    //     ul1.focus();
-    //     console.log('li elemnet', ul1?.shadowRoot?.querySelector('pf-dropdown-item'), ul1?.querySelector('slot'), ul1?.querySelector('li'));
-    //     break;
-    //   case 'Escape':
-    //   case 'Esc':
-    //     event.preventDefault();
-    //     this.hide();
-    //     break;
-    //   case 'Enter':
-    //     // event.preventDefault();
-    //     // const ulElement = this.shadowRoot.querySelector('ul');
-    //     this.show();
-    //     const ul = this.shadowRoot.querySelector('ul');
-    //     console.log('ul', ul);
-    //     ul.setAttribute('tabindex', '0');
-    //     ul.focus();
-    //     const firstLi = ul?.querySelector('pf-dropdown-item');
-    //     console.log('firstLi', firstLi, ul?.children, ul?.querySelector('pf-dropdown-item'), ul?.querySelector('li'));
-    //     // firstLi.setAttribute('tabindex', '0');
-    //     // firstLi.focus();
-    //     break;
-    //   default:
-    //     break;
-    // }
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  @bound private handleDropdownButton() {}
 
   render() {
     return html`
-      <slot @keydown=${this.handleDropdownButton} name="trigger" id="trigger" @click=${this.toggleMenu}></slot>
-      <ul class="dropdown-menu ${this.#float.open ? 'show' : ''}" class="dropdown-menu" role="listbox" tabindex=${this.#float.open ? '0' : '-1'} @keydown=${this.onKeydown} @click="${this.handleSelect}" id="dropdown-menu">
+      <slot @keydown=${this.handleDropdownButton} name="trigger" id="trigger" @click=${this.toggleMenu}>
+        <pf-button>Dropdown</pf-button>
+      </slot>
+      <ul class="dropdown-menu ${this.#float.open ? 'show' : ''}" role="listbox" tabindex=${this.#float.open ? '0' : '-1'} @keydown=${this.onKeydown} @click="${this.handleSelect}" id="dropdown-menu">
         <slot @slotchange=${this.#handleSlotChange}></slot>
       </ul>
     `;

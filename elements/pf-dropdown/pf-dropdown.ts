@@ -189,7 +189,7 @@ export class PfDropdown extends LitElement {
 
   render() {
     return html`
-      <slot @keydown=${this.handleDropdownButton} name="trigger" id="trigger" @click=${this.toggleMenu}>
+      <slot name="trigger" id="trigger" @keydown=${this.handleDropdownButton} @click=${this.toggleMenu}>
         <pf-button>Dropdown</pf-button>
       </slot>
       <ul class="dropdown-menu ${this.#float.open ? 'show' : ''}" role="listbox" tabindex=${this.#float.open ? '0' : '-1'} @keydown=${this.onKeydown} @click="${this.handleSelect}" id="dropdown-menu">

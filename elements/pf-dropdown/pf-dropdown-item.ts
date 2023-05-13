@@ -13,6 +13,11 @@ export class PfDropdownItem extends LitElement {
 
   /**
    *
+  */
+  @property({ reflect: true }) value?: string;
+
+  /**
+   *
    */
   @property({ type: Boolean, reflect: true }) divider = false;
 

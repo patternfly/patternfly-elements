@@ -21,9 +21,14 @@ export class PfDropdownItem extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) divider = false;
 
+  /**
+   *
+   */
+  @property({ type: Boolean, reflect: true }) disabled = false;
+
   render() {
     return html`
-      <li tabindex="-1" class="dropdown-item">
+      <li tabindex="-1" class="dropdown-item" ?disabled="${this.disabled}">
         <slot></slot>
         <hr role="presentation" ?hidden="${!this.divider}">
       </li>

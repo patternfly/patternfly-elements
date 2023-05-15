@@ -25,9 +25,9 @@
             Selected Value: 
             <div id="dropdownDefaultTriggerSelectedItem"></div>
         </div>
-      </fieldset>
+    </fieldset>
 
-      <fieldset>
+    <fieldset>
         <legend>Dropdown with custom trigger element</legend>
         <pf-dropdown id="dropdownCustomTrigger">
             <pf-button slot="trigger">Toggle popover</pf-button>
@@ -43,29 +43,81 @@
                 <pf-dropdown-item value="value1">item1</pf-dropdown-item>
                 <pf-dropdown-item  value="value2">item2</pf-dropdown-item>
                 <pf-dropdown-item  value="value3">item3</pf-dropdown-item>
+                <pf-dropdown-item disabled value="disabled">disabled</pf-dropdown-item>
             </pf-dropdown-items-group>
         </pf-dropdown>
         <div class="selected-value">
             Selected Value: 
             <div id="dropdownCustomTriggerSelectedItem"></div>
         </div>
-      </fieldset>
-      
+    </fieldset>
+
+    <fieldset>
+        <legend>Dropdown with disabled item</legend>
+        <pf-dropdown id="dropdownWithDisabledItem">
+            <pf-button slot="trigger">Toggle popover</pf-button>
+            <pf-dropdown-item value="value4">item4</pf-dropdown-item>
+            <pf-dropdown-item divider></pf-dropdown-item>
+            <pf-dropdown-items-group label="Group 1">
+                <pf-dropdown-item value="value1">item1</pf-dropdown-item>
+                <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+                <pf-dropdown-item divider></pf-dropdown-item>
+                <pf-dropdown-item value="value3">item3</pf-dropdown-item>
+            </pf-dropdown-items-group>
+            <pf-dropdown-item disabled value="disabled">disabled item</pf-dropdown-item>
+        </pf-dropdown>
+        <div class="selected-value">
+            Selected Value: 
+            <div id="dropdownWithDisabledItemSelectedItem"></div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>No hide on outside click</legend>
+        <pf-dropdown no-outside-click id="noHideOnOutsideClickTrigger">
+            <pf-dropdown-item value="value1">item1</pf-dropdown-item>
+            <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+        </pf-dropdown>
+        <div class="selected-value">
+            Selected Value: 
+            <div id="noHideOnOutsideClickTriggerSelectedItem"></div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Trigger Icon</legend>
+        <pf-dropdown id="iconClickTrigger">
+            <pf-button slot="trigger" plain label="Action">
+                <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
+                  <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
+                </svg>
+            </pf-button>
+            <pf-dropdown-item value="value1">item1</pf-dropdown-item>
+            <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+        </pf-dropdown>
+        <div class="selected-value">
+            Selected Value: 
+            <div id="iconClickTriggerSelectedItem"></div>
+        </div>
+    </fieldset>
 </form>
 
-<pf-dropdown close-on-outside-click id="dropdownCustomTrigger">
-    <pf-button slot="trigger">Toggle popover</pf-button>
-    <pf-dropdown-item value="value4">item4</pf-dropdown-item>
-    <pf-dropdown-item divider></pf-dropdown-item>
-    <pf-dropdown-items-group label="Group 1">
-        <pf-dropdown-item value="value1">item1</pf-dropdown-item>
-        <pf-dropdown-item value="value2">item2</pf-dropdown-item>
-        <pf-dropdown-item divider></pf-dropdown-item>
-        <pf-dropdown-item value="value3">item3</pf-dropdown-item>
-    </pf-dropdown-items-group>
-    <pf-dropdown-items-group label="Group 2">
-        <pf-dropdown-item value="value1">item1</pf-dropdown-item>
-        <pf-dropdown-item  value="value2">item2</pf-dropdown-item>
-        <pf-dropdown-item  value="value3">item3</pf-dropdown-item>
-    </pf-dropdown-items-group>
-</pf-dropdown>
+<form id="basic">
+    <h2>Disabled Dropdown</h2>
+    <fieldset>
+        <legend>Dropdown with disabled default toggles</legend>
+        <pf-dropdown disabled id="dropdownDefaultTrigger">
+            <pf-dropdown-item value="value1">item1</pf-dropdown-item>
+            <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+        </pf-dropdown>
+    </fieldset>
+
+    <fieldset>
+        <legend>Dropdown with disabled custom toggles</legend>
+        <pf-dropdown disabled id="dropdownDefaultTrigger">
+            <pf-button slot="trigger">Toggle popover</pf-button>
+            <pf-dropdown-item value="value1">item1</pf-dropdown-item>
+            <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+        </pf-dropdown>
+    </fieldset>
+</form>

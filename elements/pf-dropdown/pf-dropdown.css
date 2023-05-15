@@ -8,6 +8,11 @@
   --pf-c-dropdown__menu--BoxShadow: var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
 }
 
+slot[name="trigger"][disabled] {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 .dropdown-menu {
   display: none;
   position: absolute;

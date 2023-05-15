@@ -10,16 +10,30 @@ for (const form of document.querySelectorAll('form')) {
 const dropdownDefaultTrigger = document.getElementById('dropdownDefaultTrigger');
 const dropdownDefaultTriggerSelectedItem = document.getElementById('dropdownDefaultTriggerSelectedItem');
 dropdownDefaultTrigger.addEventListener('select', event => {
-  // eslint-disable-next-line no-console
-  console.log('event on select', event?.selectedValue);
   dropdownDefaultTriggerSelectedItem.innerText = event?.selectedValue;
 });
 
 const dropdownCustomTrigger = document.getElementById('dropdownCustomTrigger');
 const dropdownCustomTriggerSelectedItem = document.getElementById('dropdownCustomTriggerSelectedItem');
 dropdownCustomTrigger.addEventListener('select', event => {
-  // eslint-disable-next-line no-console
-  console.log('event on select', event?.selectedValue);
   dropdownCustomTriggerSelectedItem.innerText = event?.selectedValue;
+});
+
+const dropdownWithDisabledItem = document.getElementById('dropdownWithDisabledItem');
+const dropdownWithDisabledItemSelectedItem = document.getElementById('dropdownWithDisabledItemSelectedItem');
+dropdownWithDisabledItem.addEventListener('select', event => {
+  dropdownWithDisabledItemSelectedItem.innerText = event?.selectedValue;
+});
+
+const noHideOnOutsideClickTrigger = document.getElementById('noHideOnOutsideClickTrigger');
+const noHideOnOutsideClickTriggerSelectedItem = document.getElementById('noHideOnOutsideClickTriggerSelectedItem');
+noHideOnOutsideClickTrigger.addEventListener('select', event => {
+  noHideOnOutsideClickTriggerSelectedItem.innerText = event?.selectedValue;
+});
+
+const iconClickTrigger = document.getElementById('iconClickTrigger');
+const iconClickTriggerSelectedItem = document.getElementById('iconClickTriggerSelectedItem');
+iconClickTrigger.addEventListener('select', event => {
+  iconClickTriggerSelectedItem.innerText = event?.selectedValue;
 });
 

@@ -1,29 +1,49 @@
 :host {
+  --pf-c-dropdown__menu-item--Color: var(--pf-global--Color--dark-100, #151515);
+  --pf-c-dropdown__menu-item--BackgroundColor: transparent;
+  --pf-c-dropdown__menu-item--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
+  --pf-c-dropdown__menu-item--PaddingRight: var(--pf-global--spacer--md, 1rem);
+  --pf-c-dropdown__menu-item--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
+  --pf-c-dropdown__menu-item--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+  --pf-c-dropdown__menu-item--FontSize: var(--pf-global--FontSize--md, 1rem);
+  --pf-c-dropdown__menu-item--FontWeight: var(--pf-global--FontWeight--normal, 400);
+  --pf-c-dropdown__menu-item--LineHeight: var(--pf-global--LineHeight--md, 1.5);
+  --pf-c-dropdown__menu-item--disabled--Color: var(--pf-global--Color--dark-200, #6a6e73);
+  --pf-c-dropdown__menu-item--hover--Color: var(--pf-global--Color--dark-100, #151515);
+  --pf-c-dropdown__menu-item--hover--BackgroundColor: var(--pf-global--BackgroundColor--light-300, #f0f0f0);
   display: block;
   width: 100%;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #151515;
   text-align: left;
   white-space: nowrap;
-  background-color: transparent;
   border: none;
   cursor: pointer;
+  font-size: var(--pf-c-dropdown__menu-item--FontSize, 1rem);
+  font-weight: var(--pf-c-dropdown__menu-item--FontWeight, 400);
+  line-height: var(--pf-c-dropdown__menu-item--LineHeight, 1.5);
+  color: var(--pf-c-dropdown__menu-item--Color, #151515);
+  background-color: var(--pf-c-dropdown__menu-item--BackgroundColor, transparent);
 }
 
 :host li {
-  padding: 0.5rem 1rem 0.5rem 1rem;
+  padding: var(--pf-c-dropdown__menu-item--PaddingTop, 0.5rem) var(--pf-c-dropdown__menu-item--PaddingRight, 1rem) var(--pf-c-dropdown__menu-item--PaddingBottom, 0.5rem) var(--pf-c-dropdown__menu-item--PaddingLeft, 1rem);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:host([disabled]) {
+  pointer-events: none;
+  cursor: not-allowed;
+  --pf-c-dropdown__menu-item--Color: var(--pf-c-dropdown__menu-item--disabled--Color, #6a6e73);
+  --pf-c-dropdown__menu-item--BackgroundColor: var(--pf-c-dropdown__menu-item--disabled--BackgroundColor, transparent);
 }
 
 :host(:hover) {
-  background-color: #f1f1f1;
+  --pf-c-dropdown__menu-item--Color: var(--pf-c-dropdown__menu-item--hover--Color, #151515);
+  --pf-c-dropdown__menu-item--BackgroundColor: var(--pf-c-dropdown__menu-item--hover--BackgroundColor, #f0f0f0);
+  text-decoration: none;
 }
-:host([selected]) {
-  background-color: #ddd;
-}
-
-
 
 hr {
   --pf-c-divider--BorderWidth--base: var(--pf-global--BorderWidth--sm, 1px);
@@ -68,8 +88,4 @@ hr::after {
   padding: 0;
   margin: 0;
   flex-basis: calc(var(--pf-c-divider--after--FlexBasis) - var(--pf-c-divider--after--Inset) * 2);
-}
-
-[hidden] {
-  display: none !important;
 }

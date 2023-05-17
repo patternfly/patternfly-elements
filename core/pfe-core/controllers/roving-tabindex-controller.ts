@@ -93,9 +93,12 @@ export class RovingTabindexController<
    * handles keyboard navigation
    */
   #onKeydown = (event: KeyboardEvent) => {
-    const composed = event.composedPath();
-    const targetIsFocusable = () => this.#focusableItems.filter(x=>composed.includes(x))?.length > 0;
-    if (event.ctrlKey || event.altKey || event.metaKey || this.#focusableItems.length < 1 || !targetIsFocusable()) {
+    if (event.ctrlKey ||
+        event.altKey ||
+        event.metaKey ||
+        !this.#focusableItems.length ||
+        !event.composedPath().some(x =>
+          this.#focusableItems.includes(x as ItemType))) {
       return;
     }
     const item = this.activeItem;

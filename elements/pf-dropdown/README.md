@@ -1,8 +1,10 @@
 # Dropdown
-Add a description of the component here.
+
+A dropdown presents a menu of actions or links in a constrained space that will trigger a process or navigate to a new location.
 
 ## Usage
-Describe how best to use this web component along with best practices.
+
+Read more about dropdown in the [PatternFly Elements Dropdown documentation](https://patternflyelements.org/components/dropdown)
 
 ```html
 <pf-dropdown>

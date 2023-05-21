@@ -7,6 +7,7 @@ import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { query } from 'lit/decorators/query.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+import './pf-dropdown-item.js';
 
 interface MyCustomElement extends HTMLElement {
   __divider?: boolean;
@@ -54,6 +55,17 @@ export class DropdownSelectEvent extends ComposedEvent {
 @customElement('pf-dropdown')
 export class PfDropdown extends LitElement {
   static readonly styles = [styles];
+  private static instances = new Set<PfDropdown>();
+
+  static {
+    document.addEventListener('click', function(event) {
+      for (const instance of PfDropdown.instances) {
+        if (!instance.noOutsideClick) {
+          instance.#outsideClick(event);
+        }
+      }
+    });
+  }
 
   /**
    * Don't hide the dropdown when clicking ouside of it.
@@ -68,10 +80,9 @@ export class PfDropdown extends LitElement {
   #activeIndex = 0;
   #liElements: Element[] = [];
   #triggerElement: HTMLElement | null = null;
-  #outsideClick = this.handleOutsideClick.bind(this);
 
   @query('slot[name="trigger"]') private triggerSlot!: HTMLSlotElement;
-  @queryAssignedElements({ flatten: true }) ulAssignedElements!: Array<HTMLElement>;
+  @queryAssignedElements({ flatten: true }) private ulAssignedElements!: Array<HTMLElement>;
 
   #float = new FloatingDOMController(this, {
     content: (): HTMLElement | undefined | null => this.shadowRoot?.querySelector('#dropdown-menu'),
@@ -83,10 +94,21 @@ export class PfDropdown extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('click', this.#outsideClick);
+    PfDropdown.instances.delete(this);
   }
 
-  handleOutsideClick(event: MouseEvent) {
+  render() {
+    return html`
+      <slot part="dropdown-trigger" ?disabled="${this.disabled}" name="trigger" id="trigger" @keydown=${this.handleDropdownButton} @click=${this.toggleMenu}>
+        <pf-button ?disabled="${this.disabled}">Dropdown</pf-button>
+      </slot>
+      <ul part="dropdown-menu" class="dropdown-menu ${this.#float.open && !this.disabled ? 'show' : ''}" role="listbox" tabindex=${this.#float.open ? '0' : '-1'} @keydown=${this.onKeydown} @click="${this.handleSelect}" id="dropdown-menu">
+        <slot @slotchange=${this.#handleSlotChange}></slot>
+      </ul>
+    `;
+  }
+
+  #outsideClick(event: MouseEvent) {
     const path = event?.composedPath();
     if (!path?.includes(this)) {
       this.hide();
@@ -120,10 +142,7 @@ export class PfDropdown extends LitElement {
     this.#triggerElement?.setAttribute('aria-expanded', 'true');
     this.#triggerElement?.setAttribute('aria-haspopup', 'listbox');
     this.#focusSelectedItem(0);
-    // add event listener for outside click
-    if (!this.noOutsideClick) {
-      document.addEventListener('click', this.#outsideClick);
-    }
+    PfDropdown.instances.add(this);
   }
 
   /**
@@ -132,7 +151,7 @@ export class PfDropdown extends LitElement {
   @bound async hide() {
     await this.#float.hide();
     this.#triggerElement?.focus();
-    document.removeEventListener('click', this.#outsideClick);
+    PfDropdown.instances.delete(this);
     // accessibility update
     this.#triggerElement?.setAttribute('aria-expanded', 'false');
     this.#liElements?.forEach(li => {
@@ -165,9 +184,6 @@ export class PfDropdown extends LitElement {
   }
 
   #handleSlotChange() {
-    // const ulElement = this.shadowRoot?.querySelector('.dropdown-menu');
-    // const slotElement = ulElement?.querySelector('slot');
-    // const assignedNodes = slotElement?.assignedElements();
     let pfDropdownItems: Element[] = [];
     this.ulAssignedElements?.forEach(node => {
       if (node?.localName === 'pf-dropdown-item') {
@@ -228,17 +244,6 @@ export class PfDropdown extends LitElement {
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   @bound private handleDropdownButton() {}
-
-  render() {
-    return html`
-      <slot part="dropdown-trigger" ?disabled="${this.disabled}" name="trigger" id="trigger" @keydown=${this.handleDropdownButton} @click=${this.toggleMenu}>
-        <pf-button ?disabled="${this.disabled}">Dropdown</pf-button>
-      </slot>
-      <ul part="dropdown-menu" class="dropdown-menu ${this.#float.open && !this.disabled ? 'show' : ''}" role="listbox" tabindex=${this.#float.open ? '0' : '-1'} @keydown=${this.onKeydown} @click="${this.handleSelect}" id="dropdown-menu">
-        <slot @slotchange=${this.#handleSlotChange}></slot>
-      </ul>
-    `;
-  }
 }
 
 declare global {

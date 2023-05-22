@@ -82,7 +82,7 @@ export abstract class BaseAccordion extends LitElement {
     return this.#allPanels();
   }
 
-  get activeHeader() {
+  get #activeHeader() {
     const { headers } = this;
     const index = headers.findIndex(header => header.matches(':focus,:focus-within'));
     return headers.at(index);
@@ -151,9 +151,8 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   #updateActiveHeader() {
-    const { activeHeader } = this;
-    if (activeHeader) {
-      this.#headerIndex.updateActiveItem(activeHeader);
+    if (this.#activeHeader) {
+      this.#headerIndex.updateActiveItem(this.#activeHeader);
     }
   }
 

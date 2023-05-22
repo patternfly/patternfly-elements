@@ -7,12 +7,8 @@ import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { query } from 'lit/decorators/query.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
-import './pf-dropdown-item.js';
-
-interface MyCustomElement extends HTMLElement {
-  __divider?: boolean;
-  __disabled?: boolean;
-}
+import { PfDropdownItem } from './pf-dropdown-item.js';
+import { PfDropdownItemsGroup } from './pf-dropdown-items-group.js';
 
 export class DropdownSelectEvent extends ComposedEvent {
   constructor(
@@ -78,11 +74,12 @@ export class PfDropdown extends LitElement {
   @property({ type: Boolean, reflect: true }) disabled = false;
 
   #activeIndex = 0;
-  #liElements: Element[] = [];
+  #liElements: PfDropdownItem[] = [];
   #triggerElement: HTMLElement | null = null;
 
   @query('slot[name="trigger"]') private triggerSlot!: HTMLSlotElement;
-  @queryAssignedElements({ flatten: true }) private ulAssignedElements!: Array<HTMLElement>;
+  @queryAssignedElements({ flatten: true }) private ulAssignedElements!: PfDropdownItem[] | PfDropdownItemsGroup[];
+  // @queryAll('pf-dropdown-item') listItems!: NodeListOf<any>;
 
   #float = new FloatingDOMController(this, {
     content: (): HTMLElement | undefined | null => this.shadowRoot?.querySelector('#dropdown-menu'),
@@ -184,15 +181,16 @@ export class PfDropdown extends LitElement {
   }
 
   #handleSlotChange() {
-    let pfDropdownItems: Element[] = [];
+    let pfDropdownItems: PfDropdownItem[] = [];
     this.ulAssignedElements?.forEach(node => {
       if (node?.localName === 'pf-dropdown-item') {
-        pfDropdownItems.push(node);
+        pfDropdownItems.push(node as PfDropdownItem);
       } else if (node?.localName === 'pf-dropdown-items-group') {
-        pfDropdownItems.push(...node.children);
+        const pfItems = [...node.children] as PfDropdownItem[];
+        pfDropdownItems.push(...pfItems);
       }
     });
-    pfDropdownItems = pfDropdownItems?.filter(n => ((n as MyCustomElement)?.__divider === false && (n as MyCustomElement)?.__disabled === false));
+    pfDropdownItems = pfDropdownItems?.filter(n => (n?.divider === false && n?.disabled === false));
     this.#liElements = pfDropdownItems;
 
     if (this.disabled) {

@@ -1,6 +1,5 @@
 import '@patternfly/elements/pf-button/pf-button.js';
 import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
-import '@patternfly/elements/pf-dropdown/pf-dropdown-items-group.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
 
 for (const form of document.querySelectorAll('form')) {

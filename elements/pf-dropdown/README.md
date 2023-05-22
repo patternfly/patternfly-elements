@@ -12,12 +12,6 @@ Load `<pf-dropdown>` via CDN:
 <script src="https://jspm.dev/@patternfly/elements/pf-dropdown/pf-dropdown.js"></script>
 ```
 
-Use the `pf-dropdown-items-group` element to group sets of related dropdown items together.
-
-```html
-<script src="https://jspm.dev/@patternfly/elements/pf-dropdown/pf-dropdown-items-group.js"></script>
-```
-
 Or, if you are using [NPM](https://npm.im), install it
 
 ```bash
@@ -28,12 +22,6 @@ Then once installed, import it to your application:
 
 ```js
 import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
-```
-
-If you want to use `pf-dropdown-items-group` element. Import it to your application:
-
-```js
-import '@patternfly/elements/pf-dropdown/pf-dropdown-items-group.js';
 ```
 
 ## Usage

@@ -147,11 +147,7 @@
       ]
     },
     "build:icons": {
-      "command": "ts-node --esm --project tsconfig.icons.json ./scripts/icons/build.ts",
-      "dependencies": [
-        "build:core",
-        "build:tools"
-      ],
+      "command": "ts-node --esm ./scripts/icons.ts",
       "output": [
         "elements/pf-icon/icons/*/*.js"
       ]

@@ -191,6 +191,7 @@
         "build:core",
         "build:tools",
         "build:icons",
+        "build:elements",
         "analyze"
       ]
     },

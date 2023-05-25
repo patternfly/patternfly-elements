@@ -65,7 +65,7 @@ preloads: [
 }
 ---
 <!DOCTYPE html>
-<html lang="en" dir="ltr" style="height: 100%">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -90,14 +90,17 @@ preloads: [
     PfIcon.addIconSet('far', get);
     PfIcon.addIconSet('fab', get);
     </script>
+    <style>
+      html, body, main { min-height: 100%; }
+    </style>
     <noscript>
       <style>
         :not(:defined) { opacity: 1; }
       </style>
     </noscript>
   </head>
-  <body style="height: 100%">
-    <main style="height: 100%">
+  <body>
+    <main>
       <div data-demo="{{demo.tagName}}">{% if demo.filePath %}
         {%- include demo.filePath -%}{% endif %}
       </div>

@@ -289,6 +289,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@jspm/generator": "^1.1.6",
+    "@lit-labs/ssr": "^3.1.2",
     "@octokit/core": "^4.2.0",
     "@patternfly/patternfly": "^4.224.2",
     "@rhds/elements": "^1.0.0",

@@ -28,6 +28,13 @@
   <title>{{ title }}</title>
   <link rel="stylesheet" href="/node_modules/@patternfly/pfe-tools/dev-server/fonts.css">
   <link rel="stylesheet" href="/node_modules/@patternfly/pfe-tools/dev-server/demo.css">
+  <noscript>
+    <style>
+    html[unresolved] {
+      opacity: 1;
+    }
+    </style>
+  </noscript>
   {% for sheet in options.site.stylesheets %}
   <link rel="stylesheet" href="{{sheet}}">
   {% endfor %}
@@ -54,8 +61,11 @@
       <a href="/" aria-label="{{title}} Home">
         <img src="{{ options.site.logoUrl }}" alt="{{title}}">
       </a>
+
+      <noscript><strong class="noscript">JavaScript is disabled</strong></noscript>
+
       <a href="{{ options.sourceControlURLPrefix.replace('tree/main/', '') }}{{ ('tree/main' + manifest.path.replace(context.cwd, '').replace('/custom-elements.json', '/')) if manifest else ''}}" id="source-control">
-        
+
         {% if options.sourceControlURLPrefix %}<span>Contribute on {{ repoHost }}</span>{% endif %}
         {% if repoHost === 'GitHub' %}
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">

@@ -19,9 +19,14 @@ import { importMapsPlugin } from '@web/dev-server-import-maps';
 import { promisify } from 'node:util';
 
 import Router from '@koa/router';
+
+import { render } from '@lit-labs/ssr';
+import { RenderResultReadable } from '@lit-labs/ssr/lib/render-result-readable.js';
+
 import { Manifest, type DemoRecord } from '../custom-elements-manifest/lib/Manifest.js';
 import { makeDemoEnv } from '../environment.js';
 import { getPfeConfig, deslugify, type PfeConfig } from '../config.js';
+import { html } from 'lit';
 
 const glob = promisify(_glob);
 const replace = fromRollup(rollupReplace);
@@ -146,6 +151,17 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
             }
           });
       app.use(router.routes());
+      app.use(async (ctx, next) => {
+        if (ctx.path.endsWith('/ssr/')) {
+          await import('../../../elements' + '/pf-card/pf-card.js');
+          // @ts-ignore
+          const arr: TemplateStringsArray = [ctx.body]; arr.raw = ctx.body;
+          const ssrResult = render(html(arr));
+          ctx.type = 'text/html';
+          ctx.body = new RenderResultReadable(ssrResult);
+        }
+        await next();
+      });
       const files = await glob(options.watchFiles, { cwd: process.cwd() });
       for (const file of files) {
         fileWatcher.add(file);

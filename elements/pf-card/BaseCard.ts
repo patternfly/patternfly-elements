@@ -25,7 +25,12 @@ import style from './BaseCard.css';
 export abstract class BaseCard extends LitElement {
   static readonly styles = [style];
 
-  protected slots = new SlotController(this, 'header', null, 'footer');
+  protected slots = new SlotController(
+    this,
+    'header',
+    SlotController.anonymous,
+    'footer',
+  );
 
   render() {
     return html`
@@ -37,7 +42,7 @@ export abstract class BaseCard extends LitElement {
         </header>
         <div id="body"
              part="body"
-             class="${classMap({ empty: !this.querySelector(':not([slot])') })}">
+             class="${classMap({ empty: !this.slots.hasSlotted(SlotController.anonymous) })}">
           <slot></slot>
         </div>
         <footer id="footer"

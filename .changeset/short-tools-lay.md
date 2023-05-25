@@ -2,4 +2,4 @@
 "@patternfly/elements": minor
 ---
 
-Changed the `getTimeRelative` function to use `Intl.RelativeTimeFormat` and added a few extra demo samples
+`<pf-timestamp>`: improved performance by using browser-standard features to calculate relative time

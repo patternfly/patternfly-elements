@@ -2,6 +2,8 @@ const { EleventyRenderPlugin } = require('@11ty/eleventy');
 const SyntaxHighlightPlugin = require('@11ty/eleventy-plugin-syntaxhighlight');
 const DirectoryOutputPlugin = require('@11ty/eleventy-plugin-directory-output');
 
+const LitSSRPlugin = require('@lit-labs/eleventy-plugin-lit');
+
 const PfeAssetsPlugin = require('./docs/_plugins/pfe-assets.cjs');
 const EmptyParagraphPlugin = require('./docs/_plugins/empty-p.cjs');
 
@@ -40,6 +42,12 @@ module.exports = function(eleventyConfig) {
 
   /** list todos */
   eleventyConfig.addPlugin(TodosPlugin);
+
+  eleventyConfig.addPlugin(LitSSRPlugin, {
+    componentModules: [
+      'elements/pf-card/pf-card.js',
+    ],
+  });
 
   /** format date strings */
   eleventyConfig.addFilter('prettyDate', function(dateStr, options = {}) {

@@ -158,12 +158,30 @@ describe('<pf-timestamp>', function() {
     expect(element.time).to.equal(expected);
   });
 
-  it('should show relative time', async function() {
+  it('should show relative time of the moment', async function() {
+    const date = new Date();
+    const element = await createFixture<PfTimestamp>(html`
+      <pf-timestamp date="${date.toString()}" relative></pf-timestamp>
+    `);
+
+    expect(element.time).to.match(/just now/);
+  });
+
+  it('should show relative time in the past', async function() {
     const date = new Date(2015, 7, 9, 14, 57, 0);
     const element = await createFixture<PfTimestamp>(html`
       <pf-timestamp date="${date.toString()}" relative></pf-timestamp>
     `);
 
     expect(element.time).to.match(/\d+ years ago/);
+  });
+
+  it('should show relative time in the future', async function() {
+    const date = new Date(2099, 7, 9, 14, 57, 0);
+    const element = await createFixture<PfTimestamp>(html`
+      <pf-timestamp date="${date.toString()}" relative></pf-timestamp>
+    `);
+
+    expect(element.time).to.match(/in \d+ years/);
   });
 });

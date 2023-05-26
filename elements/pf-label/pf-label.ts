@@ -144,6 +144,9 @@ export class PfLabel extends BaseLabel {
   /** Text label for a removable label's close button */
   @property({ attribute: 'close-button-label' }) closeButtonLabel?: string;
 
+  /** Renders an anchor element with the same `href` value */
+  @property() href?: string;
+
   override render() {
     const { compact, truncated } = this;
     return html`

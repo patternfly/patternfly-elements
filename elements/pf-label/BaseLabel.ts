@@ -7,7 +7,7 @@ import styles from './BaseLabel.css';
 
 /**
  * Base label class
-*/
+ */
 export abstract class BaseLabel extends LitElement {
   static readonly styles = [styles];
 
@@ -17,17 +17,18 @@ export abstract class BaseLabel extends LitElement {
 
   abstract icon?: string;
 
+  abstract href?: string;
+
   /** Represents the state of the anonymous and icon slots */
   protected slots = new SlotController(this, null, 'icon');
 
   override render() {
     const { variant, color, icon } = this;
     const hasIcon = !!icon || this.slots.hasSlotted('icon');
+    const slots = html`<slot name="icon" part="icon">${this.renderDefaultIcon?.()}</slot><slot id="text"></slot>`;
     return html`
-      <span id="container"
-            class=${classMap({ hasIcon, [variant ?? '']: !!variant, [color ?? '']: !!color })}>
-        <slot name="icon" part="icon">${this.renderDefaultIcon?.()}</slot>
-        <slot id="text"></slot>
+      <span id="container" class=${classMap({ hasIcon, [variant ?? '']: !!variant, [color ?? '']: !!color })}>
+        ${!this.href ? slots : html`<a href=${this.href}>${slots}</a>`}
         ${this.renderSuffix?.() ?? ''}
       </span>
     `;

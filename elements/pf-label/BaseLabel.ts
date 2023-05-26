@@ -25,10 +25,10 @@ export abstract class BaseLabel extends LitElement {
   override render() {
     const { variant, color, icon } = this;
     const hasIcon = !!icon || this.slots.hasSlotted('icon');
-    const slots = html`<slot name="icon" part="icon">${this.renderDefaultIcon?.()}</slot><slot id="text"></slot>`;
+    const content = html`<slot name="icon" part="icon">${this.renderDefaultIcon?.()}</slot><slot id="text"></slot>`;
     return html`
       <span id="container" class=${classMap({ hasIcon, [variant ?? '']: !!variant, [color ?? '']: !!color })}>
-        ${!this.href ? slots : html`<a href=${this.href}>${slots}</a>`}
+        ${!this.href ? content : html`<a id="link" href=${this.href}>${content}</a>`}
         ${this.renderSuffix?.() ?? ''}
       </span>
     `;

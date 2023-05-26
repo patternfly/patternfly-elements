@@ -8,8 +8,14 @@ pf-icon, ::slotted(pf-icon) {
   color: currentColor;
 }
 
+#link {
+  text-decoration: none;
+  color: currentColor;
+}
+
 :host,
-#container {
+#container, 
+#link {
   display: inline-flex;
   align-items: center;
   vertical-align: middle;

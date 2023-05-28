@@ -93,10 +93,14 @@ export class RovingTabindexController<
    * handles keyboard navigation
    */
   #onKeydown = (event: KeyboardEvent) => {
-    if (event.ctrlKey || event.altKey || event.metaKey || this.#focusableItems.length < 1) {
+    if (event.ctrlKey ||
+        event.altKey ||
+        event.metaKey ||
+        !this.#focusableItems.length ||
+        !event.composedPath().some(x =>
+          this.#focusableItems.includes(x as ItemType))) {
       return;
     }
-
     const item = this.activeItem;
     let shouldPreventDefault = false;
     const horizontalOnly =

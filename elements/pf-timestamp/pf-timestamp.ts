@@ -78,40 +78,38 @@ export class PfTimestamp extends LitElement {
    * https://github.com/github/time-elements/blob/master/src/relative-time.js
    */
   #getTimeRelative(date: Date) {
+    const rtf = new Intl.RelativeTimeFormat(this.locale, { localeMatcher: 'best fit', numeric: 'auto', style: 'long' });
     const ms: number = date.getTime() - Date.now();
-    const tense = ms > 0 ? 'until' : 'ago';
-    let str = 'just now';
+    const tense = ms > 0 ? 1 : -1;
+    let qty = 0;
+    let units: Intl.RelativeTimeFormatUnit | undefined;
     const s = Math.round(Math.abs(ms) / 1000);
     const min = Math.round(s / 60);
     const h = Math.round(min / 60);
     const d = Math.round(h / 24);
     const m = Math.round(d / 30);
     const y = Math.round(m / 12);
-    if (m >= 18) {
-      str = `${y} years`;
-    } else if (m >= 12) {
-      str = 'a year';
-    } else if (d >= 45) {
-      str = `${m} months`;
+    if (m >= 12) {
+      qty = y;
+      units = 'year';
     } else if (d >= 30) {
-      str = 'a month';
-    } else if (h >= 36) {
-      str = `${d} days`;
+      qty = m;
+      units = 'month';
     } else if (h >= 24) {
-      str = 'a day';
-    } else if (min >= 90) {
-      str = `${h} hours`;
+      qty = d;
+      units = 'day';
     } else if (min >= 45) {
-      str = 'an hour';
-    } else if (s >= 90) {
-      str = `${min} minutes`;
+      qty = h;
+      units = 'hour';
     } else if (s >= 45) {
-      str = 'a minute';
+      qty = min;
+      units = 'minute';
     } else if (s >= 10) {
-      str = `${s} seconds`;
+      qty = s;
+      units = 'second';
     }
 
-    return str !== 'just now' ? `${str} ${tense}` : str;
+    return typeof (units) !== 'undefined' ? rtf.format(tense * qty, units) : 'just now';
   }
 }
 

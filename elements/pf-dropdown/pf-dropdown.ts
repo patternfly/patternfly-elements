@@ -130,7 +130,7 @@ export class PfDropdown extends LitElement {
   }
 
   /**
-   * Toggle the popover
+   * Toggle the dropdown
    */
   @bound async toggleMenu() {
     this.#float.open ? this.hide() : this.show();
@@ -147,7 +147,7 @@ export class PfDropdown extends LitElement {
   }
 
   /**
-   * Opens the popover
+   * Opens the dropdown
    */
   @bound async show() {
     await this.updateComplete;
@@ -160,7 +160,7 @@ export class PfDropdown extends LitElement {
   }
 
   /**
-   * Closes the popover
+   * Closes the dropdown
    */
   @bound async hide() {
     await this.#float.hide();

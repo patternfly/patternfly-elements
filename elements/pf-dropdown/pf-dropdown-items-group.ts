@@ -4,16 +4,17 @@ import { property } from 'lit/decorators/property.js';
 import styles from './pf-dropdown-items-group.css';
 
 /**
- * Dropdown item groups
- * @slot - Place element content here
+ * Represents a group of items for a dropdown component.
+ * @slot
+ *     Content for the group of dropdown items
  */
 @customElement('pf-dropdown-items-group')
 export class PfDropdownItemsGroup extends LitElement {
   static readonly styles = [styles];
 
   /**
-   *
-  */
+   * The label for the group of dropdown items.
+   */
   @property({ reflect: true }) label?: string;
 
   render() {

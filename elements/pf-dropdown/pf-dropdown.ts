@@ -13,7 +13,7 @@ import { PfDropdownItemsGroup } from './pf-dropdown-items-group.js';
 export class DropdownSelectEvent extends ComposedEvent {
   constructor(
     public event: Event | KeyboardEvent,
-    public selectedValue: string,
+    public selectedValue: string
   ) {
     super('select');
   }
@@ -78,11 +78,13 @@ export class PfDropdown extends LitElement {
   #triggerElement: HTMLElement | null = null;
 
   @query('slot[name="trigger"]') private triggerSlot!: HTMLSlotElement;
-  @queryAssignedElements({ flatten: true }) private ulAssignedElements!: PfDropdownItem[] | PfDropdownItemsGroup[];
-  // @queryAll('pf-dropdown-item') listItems!: NodeListOf<any>;
+  @queryAssignedElements({ flatten: true }) private ulAssignedElements!:
+    | PfDropdownItem[]
+    | PfDropdownItemsGroup[];
 
   #float = new FloatingDOMController(this, {
-    content: (): HTMLElement | undefined | null => this.shadowRoot?.querySelector('#dropdown-menu'),
+    content: (): HTMLElement | undefined | null =>
+      this.shadowRoot?.querySelector('#dropdown-menu'),
   });
 
   connectedCallback() {
@@ -96,10 +98,25 @@ export class PfDropdown extends LitElement {
 
   render() {
     return html`
-      <slot part="dropdown-trigger" ?disabled="${this.disabled}" name="trigger" id="trigger" @keydown=${this.handleDropdownButton} @click=${this.toggleMenu}>
+      <slot
+        part="dropdown-trigger"
+        ?disabled="${this.disabled}"
+        name="trigger"
+        id="trigger"
+        @keydown=${this.handleDropdownButton}
+        @click=${this.toggleMenu}
+      >
         <pf-button ?disabled="${this.disabled}">Dropdown</pf-button>
       </slot>
-      <ul part="dropdown-menu" class="dropdown-menu ${this.#float.open && !this.disabled ? 'show' : ''}" role="listbox" tabindex=${this.#float.open ? '0' : '-1'} @keydown=${this.onKeydown} @click="${this.handleSelect}" id="dropdown-menu">
+      <ul
+        part="dropdown-menu"
+        class="${this.#float.open && !this.disabled ? 'show' : ''}"
+        role="listbox"
+        tabindex=${this.#float.open ? '0' : '-1'}
+        @keydown=${this.onKeydown}
+        @click="${this.handleSelect}"
+        id="dropdown-menu"
+      >
         <slot @slotchange=${this.#handleSlotChange}></slot>
       </ul>
     `;
@@ -168,11 +185,13 @@ export class PfDropdown extends LitElement {
       this.#activeIndex = 0;
     }
 
-    const liElement = this.#liElements[this.#activeIndex]?.shadowRoot?.querySelector('li');
+    const liElement =
+      this.#liElements[this.#activeIndex]?.shadowRoot?.querySelector('li');
     if (liElement) {
       const currentElement = document.activeElement;
       if (currentElement?.localName === 'pf-dropdown-item') {
-        const previousLiElement = currentElement?.shadowRoot?.querySelector('li');
+        const previousLiElement =
+          currentElement?.shadowRoot?.querySelector('li');
         previousLiElement?.setAttribute('tabindex', '-1');
       }
       liElement?.setAttribute('tabindex', '0');
@@ -190,11 +209,14 @@ export class PfDropdown extends LitElement {
         pfDropdownItems.push(...pfItems);
       }
     });
-    pfDropdownItems = pfDropdownItems?.filter(n => (n?.divider === false && n?.disabled === false));
+    pfDropdownItems = pfDropdownItems?.filter(
+      n => n?.divider === false && n?.disabled === false
+    );
     this.#liElements = pfDropdownItems;
 
     if (this.disabled) {
-      const triggeredNode = this.triggerSlot?.assignedNodes()?.[0] as HTMLButtonElement;
+      const triggeredNode =
+        this.triggerSlot?.assignedNodes()?.[0] as HTMLButtonElement;
       if (triggeredNode) {
         triggeredNode.disabled = this.disabled;
       }
@@ -203,7 +225,9 @@ export class PfDropdown extends LitElement {
 
   handleSelect(event: Event & { target: HTMLLIElement }) {
     this.hide();
-    this.dispatchEvent(new DropdownSelectEvent(event, `${event?.target?.value}`));
+    this.dispatchEvent(
+      new DropdownSelectEvent(event, `${event?.target?.value}`)
+    );
   }
 
   @bound private onKeydown(event: KeyboardEvent) {
@@ -232,7 +256,12 @@ export class PfDropdown extends LitElement {
         break;
       case 'Enter':
         event.preventDefault();
-        this.dispatchEvent(new DropdownSelectEvent(event, `${(event?.target as HTMLLIElement)?.value}`));
+        this.dispatchEvent(
+          new DropdownSelectEvent(
+            event,
+            `${(event?.target as HTMLLIElement)?.value}`
+          )
+        );
         this.hide();
         break;
       default:

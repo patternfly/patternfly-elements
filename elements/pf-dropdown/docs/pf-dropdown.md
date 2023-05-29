@@ -83,6 +83,8 @@
 {% endband %}
 
 {% renderSlots %}{% endrenderSlots %}
+{% renderSlots for="pf-dropdown-item", level=3, header="Slots on `pf-dropdown-item`" %}{% endrenderSlots %}
+{% renderSlots for="pf-dropdown-items-group", level=3, header="Slots on `pf-dropdown-items-group`" %}{% endrenderSlots %}
 
 {% renderAttributes %}{% endrenderAttributes %}
 
@@ -91,5 +93,8 @@
 {% renderEvents %}{% endrenderEvents %}
 
 {% renderCssCustomProperties %}{% endrenderCssCustomProperties %}
+{% renderCssCustomProperties for="pf-dropdown-item", level=3, header="CSS Properties on `pf-dropdown-item`" %}{% endrenderCssCustomProperties %}
+{% renderCssCustomProperties for="pf-dropdown-items-group", level=3, header="CSS Properties on `pf-dropdown-items-group`" %}{% endrenderCssCustomProperties %}
 
 {% renderCssParts %}{% endrenderCssParts %}
+{% renderCssParts for="pf-dropdown-item", level=3, header="Parts on `pf-dropdown-item`" %}{% endrenderCssParts %}

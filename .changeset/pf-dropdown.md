@@ -5,7 +5,7 @@
 
 ```html
 <pf-dropdown>
-  <pf-button slot="trigger">Toggle popover</pf-button>
+  <pf-button slot="trigger">Toggle dropdown</pf-button>
   <pf-dropdown-item value="value4">item4</pf-dropdown-item>
   <pf-dropdown-item value="value3">item3</pf-dropdown-item>
   <pf-dropdown-items-group label="Group 1">

@@ -12,7 +12,7 @@
     body="Popovers are triggered by click rather than hover."
     footer="Popover footer"
   >
-    <pf-button>Toggle popover</pf-button>
+    <pf-button>Toggle dropdown</pf-button>
   </pf-popover>
   ```
 

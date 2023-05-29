@@ -49,7 +49,7 @@ import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
 
 ```html
 <pf-dropdown id="dropdownCustomTrigger">
-    <pf-button slot="trigger">Toggle popover</pf-button>
+    <pf-button slot="trigger">Toggle dropdown</pf-button>
     <pf-dropdown-item value="value4">item4</pf-dropdown-item>
     <pf-dropdown-item divider></pf-dropdown-item>
     <pf-dropdown-items-group label="Group 1">

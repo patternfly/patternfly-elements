@@ -22,6 +22,11 @@
   border: var(--pf-c-label__content--before--BorderWidth, 1px) solid var(--pf-c-label__content--before--BorderColor, var(--pf-global--palette--black-300, #d2d2d2));
 }
 
+#link:hover {
+  --pf-c-label__content--before--BorderWidth: 2px;
+  --pf-c-label__content--before--BorderColor: #06c;
+}
+
 .compact {
   --pf-c-label--PaddingTop: var(--pf-c-label--m-compact--PaddingTop, 0);
   --pf-c-label--PaddingRight: var(--pf-c-label--m-compact--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
@@ -29,7 +34,6 @@
   --pf-c-label--PaddingLeft: var(--pf-c-label--m-compact--PaddingLeft, var(--pf-global--spacer--sm, 0.5rem));
   --pf-global--icon--FontSize--sm: 12px;
 }
-
 
 .blue {
   --pf-c-label__content--Color: var(--pf-c-label--m-blue__content--Color, var(--pf-global--info-color--200, #002952));
@@ -113,7 +117,7 @@
 }
 
 .blue .hasIcon [part=icon] {
-  color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-blue__icon--Color, var(--pf-global--primary-color--100, #06c)));
+  color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-blue__ficon--Color, var(--pf-global--primary-color--100, #06c)));
 }
 
 .cyan .hasIcon [part=icon] {

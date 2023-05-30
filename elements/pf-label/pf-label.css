@@ -117,7 +117,7 @@
 }
 
 .blue .hasIcon [part=icon] {
-  color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-blue__ficon--Color, var(--pf-global--primary-color--100, #06c)));
+  color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-blue__icon--Color, var(--pf-global--primary-color--100, #06c)));
 }
 
 .cyan .hasIcon [part=icon] {

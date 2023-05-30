@@ -143,7 +143,54 @@ describe('<pf-dropdown>', function() {
     expect(snapshot.children).to.deep.equal([{ focused: true, name: 'Toggle dropdown', role: 'button' }]);
   });
 
-  it('should be closeable on select focusable item', async function() {
+  it('should disable trigger button', async function() {
+    fixtureCleanup();
+    await fixture(html`
+      <div>
+        <pf-dropdown disabled>
+            <pf-button slot="trigger">Toggle dropdown</pf-button>
+            <pf-dropdown-item value="value1">item1</pf-dropdown-item>
+            <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+        </pf-dropdown>
+      </div>
+    `);
+    snapshot = await a11ySnapshot();
+    expect(snapshot.children).to.deep.equal([{ role: 'button', name: 'Toggle dropdown', disabled: true }]);
+  });
+
+  it('should show default trigger button', async function() {
+    fixtureCleanup();
+    await fixture(html`
+      <div>
+        <pf-dropdown>
+            <pf-dropdown-item value="value1">item1</pf-dropdown-item>
+            <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+        </pf-dropdown>
+      </div>
+    `);
+    snapshot = await a11ySnapshot();
+    expect(snapshot.children).to.deep.equal([{ role: 'button', name: 'Dropdown' }]);
+  });
+
+  it('should be focusable first list for default trigger button', async function() {
+    fixtureCleanup();
+    await fixture(html`
+      <div>
+        <pf-dropdown>
+            <pf-dropdown-item value="value1">item1</pf-dropdown-item>
+            <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+        </pf-dropdown>
+      </div>
+    `);
+    await sendKeys({ press: 'Tab' });
+    await sendKeys({ press: 'Enter' });
+    snapshot = await a11ySnapshot();
+    // eslint-disable-next-line prefer-destructuring
+    const listItems = snapshot.children[1];
+    expect(listItems.children[0]).to.deep.equal({ role: 'listitem', name: 'item1', focused: true, level: 1 });
+  });
+
+  it('should properly clean up event handlers', async function() {
     const expectClose = () =>
       expect(snapshot.children).to.deep.equal([
         { role: 'button', name: 'Toggle dropdown 1' },

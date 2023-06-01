@@ -144,7 +144,7 @@
   {% htmlexample class="overflow-tab-wrapper" %}
   <pf-tabs>
     <pf-tab slot="tab">
-      <pf-icon set="fas" icon="users" size="sm" loading="idle"></pf-icon>
+      <pf-icon slot="icon" set="fas" icon="users" size="md" loading="idle"></pf-icon>
       Users
     </pf-tab>
     <pf-tab-panel>Users</pf-tab-panel>

@@ -3,8 +3,16 @@ import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import styles from './pf-progress.css';
+
+const ICONS = new Map(Object.entries({
+  success: { icon: 'circle-check' },
+  danger: { icon: 'circle-xmark' },
+  warning: { icon: 'triangle-exclamation' }
+}));
 
 /**
  * Progress
@@ -35,8 +43,8 @@ export class PfProgress extends LitElement {
   @query('#bar')
     bar!: HTMLElement;
 
-  showStatus(status: Array<string>) {
-    return status.includes(this.measureLocation);
+  #showInsideStatus() {
+    return this.measureLocation === 'inside';
   }
 
   async #updateAccessibility() {
@@ -45,7 +53,7 @@ export class PfProgress extends LitElement {
     const { bar, value } = this;
     bar.setAttribute('aria-valuenow', `${value}`);
     if (this.title.length > 0 && this.bar !== null) {
-      this.bar.setAttribute('aria-labelledby', 'description');
+      this.bar.setAttribute('aria-labelledby', 'title');
     } else if (this.bar !== null) {
       this.bar.setAttribute('aria-label', this.label);
     }
@@ -57,25 +65,25 @@ export class PfProgress extends LitElement {
   }
 
   render() {
-    const { size, measureLocation, variant } = this;
-    const singleLine = this.title.length === 0 ? 'singleline' : '';
+    const { size, measureLocation, variant, value, title } = this;
+    const icon = variant && ICONS.get(variant)?.icon;
+    const singleLine = title.length === 0 ? 'singleline' : '';
+
     return html`
       <div class="container ${classMap({ [size]: !!size, [measureLocation]: !!measureLocation, [variant]: !!variant, [singleLine]: !!singleLine })}">
-        <div id="description" class="description">${this.title}</div>
+        <div id="title" class="title">${title}</div>
         <div class="status">
-          ${this.showStatus(['outside', '']) ? html`${this.value}%` : html``}
-          ${this.variant ?
-              html`<pf-icon set="fas" icon="${this.variant === 'success' ? 'circle-check'
-                      : this.variant === 'warning' ? 'triangle-exclamation'
-                      : this.variant === 'danger' ? 'circle-xmark'
-                    : ''
-              }" size="md"></pf-icon>`
-          : html``
-}
+          ${html`${!this.#showInsideStatus() ? `${value}%` : ''}`}
+          <pf-icon set="fas"
+                   size="md"
+                   ?hidden="${!icon}"
+                   icon="${ifDefined(icon)}"></pf-icon>
         </div>
-        <div id="bar" class="bar" role="progressbar">
-          <div class="indicator" style="width: ${this.value}%">
-            <div class="measure">${this.showStatus(['inside']) ? html`${this.value}%` : html``}</div>
+        <div id="bar" role="progressbar">
+          <div class="indicator" style="${styleMap({ 'width': `${value}%` })}">
+            <div class="measure">
+              ${html`${this.#showInsideStatus() ? `${value}%` : ''}`}
+            </div>
           </div>
         </div>
       </div>

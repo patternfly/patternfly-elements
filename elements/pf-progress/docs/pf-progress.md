@@ -1,5 +1,5 @@
 {% renderOverview %}
-  <pf-progress></pf-progress>
+    <pf-progress title="Default" value="33"></pf-progress>
 {% endrenderOverview %}
 
 {% band header="Usage" %}{% endband %}

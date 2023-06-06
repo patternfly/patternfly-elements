@@ -8,6 +8,8 @@
  *    then overwrite any files with similar names using fa 5, by copying over the files from `@patternfly/icons`
  */
 import { $ } from 'execa';
+import { cp } from 'node:fs/promises';
+import { join } from 'node:path';
 
 async function build(setName: string, icons: import('@fortawesome/free-solid-svg-icons').IconPack) {
   const { mkdir, writeFile } = await import('node:fs/promises');
@@ -37,13 +39,22 @@ async function build(setName: string, icons: import('@fortawesome/free-solid-svg
 }
 
 (async function() {
+  const cwd = process.cwd();
   // 1: build deprecated fa 6 icons
   await build('fab', await import('@fortawesome/free-brands-svg-icons').then(x => x.fab));
   await build('far', await import('@fortawesome/free-regular-svg-icons').then(x => x.far));
   await build('fas', await import('@fortawesome/free-solid-svg-icons').then(x => x.fas));
   // 2: overwrite with icons from `@patternfly/icons`
   const $$ = $({ cwd: process.cwd() });
-  await $$`cp -R node_modules/@patternfly/icons/ elements/pf-icon/`;
+
+  // macos cp -R isn't POSIX compliant
+  // cp -R node_modules/@patternfly/icons elements/pf-icon/
+  await cp(
+    join(cwd, 'node_modules/@patternfly/icons'),
+    join(cwd, 'elements/pf-icon/icons'),
+    { recursive: true },
+  );
+
   await $$`rm -rf elements/pf-icon/icons/.changeset`;
   await $$`rm -f elements/pf-icon/icons/README.md`;
   await $$`rm -f elements/pf-icon/icons/package.json`;

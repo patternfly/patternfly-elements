@@ -1,11 +1,34 @@
 # Progress
-Add a description of the component here.
 
-## Usage
-Describe how best to use this web component along with best practices.
+A progress bar gives the user a visual representation of their completion status of an ongoing process or task.
+
+Read more about Progress Stepper in the [PatternFly Elements Progress 
+documentation][docs].
+
+##  Installation
+
+Load `<pf-progress>` via CDN:
 
 ```html
-<pf-progress>
-
-</pf-progress>
+<script src="https://jspm.dev/@patternfly/elements/pf-progress/pf-progress.js"></script>
 ```
+
+Or, if you are using [NPM](https://npm.im), install it
+
+```bash
+npm install @patternfly/elements
+```
+
+Then once installed, import it to your application:
+
+```js
+import '@patternfly/elements/pf-progress/pf-progress.js';
+```
+
+## Usage
+
+```html
+<pf-progress title="Default" value="33"></pf-progress>
+```
+
+[docs]: https://patternflyelements.org/components/progress

@@ -3,13 +3,11 @@
   --pf-c-progress__bar--before--BackgroundColor: var(--pf-global--primary-color--100, #06c);
   --pf-c-progress__bar--Height: var(--pf-global--spacer--md, 1rem);
   --pf-c-progress__bar--BackgroundColor: var(--pf-global--BackgroundColor--light-100, #ffffff);
-  --pf-c-progress__measure--m-static-width--MinWidth: 4.5ch;
   --pf-c-progress__status-icon--Color: var(--pf-global--Color--100, #151515);
   --pf-c-progress__status-icon--MarginLeft: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-progress__bar--before--Opacity: .2;
   --pf-c-progress__indicator--Height: var(--pf-c-progress__bar--Height);
   --pf-c-progress__indicator--BackgroundColor: var(--pf-c-progress__bar--before--BackgroundColor);
-  --pf-c-progress__helper-text--MarginTop: calc(var(--pf-global--spacer--xs, 0.25rem) - var(--pf-c-progress--GridGap));
   --pf-c-progress--m-success__bar--BackgroundColor: var(--pf-global--success-color--100, #3e8635);
   --pf-c-progress--m-warning__bar--BackgroundColor: var(--pf-global--warning-color--100, #f0ab00);
   --pf-c-progress--m-danger__bar--BackgroundColor: var(--pf-global--danger-color--100, #c9190b);
@@ -19,7 +17,6 @@
   --pf-c-progress--m-inside__indicator--MinWidth: var(--pf-global--spacer--xl, 2rem);
   --pf-c-progress--m-inside__measure--Color: var(--pf-global--Color--light-100, #ffffff);
   --pf-c-progress--m-success--m-inside__measure--Color: var(--pf-global--Color--light-100, #ffffff);
-  --pf-c-progress--m-warning--m-inside__measure--Color: var(--pf-global--Color--dark-100);
   --pf-c-progress--m-inside__measure--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
   --pf-c-progress--m-outside__measure--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
   --pf-c-progress--m-sm__bar--Height: var(--pf-global--spacer--sm, 0.5rem);
@@ -68,10 +65,6 @@
 .outside .measure {
   display: inline-block;
   font-size: var(--pf-c-progress--m-outside__measure--FontSize);
-}
-.outside __measure.pf-m-static-width {
-  min-width: var(--pf-c-progress__measure--m-static-width--MinWidth);
-  text-align: left;
 }
 .outside #bar,
 .outside .indicator {
@@ -156,14 +149,4 @@ pf-icon {
   left: 0;
   height: var(--pf-c-progress__indicator--Height);
   background-color: var(--pf-c-progress__indicator--BackgroundColor);
-}
-__helper-text {
-  grid-column: 1/3;
-  grid-row: 3/4;
-  margin-top: var(--pf-c-progress__helper-text--MarginTop);
-}
-:where(.pf-theme-dark)  {
-  --pf-c-progress--m-inside__measure--Color: var(--pf-global--palette--black-900);
-  --pf-c-progress--m-success--m-inside__measure--Color: var(--pf-global--palette--black-900);
-  --pf-c-progress--m-warning--m-inside__measure--Color: var(--pf-global--palette--black-900);
 }

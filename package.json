@@ -147,11 +147,7 @@
       ]
     },
     "build:icons": {
-      "command": "ts-node --esm --project tsconfig.icons.json ./scripts/icons/build.ts",
-      "dependencies": [
-        "build:core",
-        "build:tools"
-      ],
+      "command": "ts-node --esm ./scripts/icons.ts",
       "output": [
         "elements/pf-icon/icons/*/*.js"
       ]
@@ -234,6 +230,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
+        "build:core",
         "build:icons"
       ]
     },
@@ -252,6 +249,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
+        "build:core",
         "build:icons"
       ]
     },
@@ -297,6 +295,7 @@
     "@types/prismjs": "^1.26.0",
     "@types/prompts": "^2.4.4",
     "commitlint": "^17.6.1",
+    "execa": "^7.1.1",
     "fuse.js": "^6.6.2",
     "husky": "^8.0.3",
     "leasot": "^13.3.0",

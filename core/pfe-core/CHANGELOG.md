@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 2.3.1
+
+### Patch Changes
+
+- c5d95880c: **roving-tabindex-controller**: fixes arrow keydown event listeners
+
 ## 2.3.0
 
 ### Minor Changes

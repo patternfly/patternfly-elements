@@ -58,11 +58,11 @@ Icons are JavaScript module which export a [lit renderable][renderable],
 typically an inline SVG element [template literal][template-literals] tagged
 with the Lit [`svg`][svg-tag] template tag. To register a new icon set, call
 the static `addIconSet` method with the set name and a getter function. The
-getter function takes the icon set and icon name and returns a URL object that
-points to the icon's JavaScript module.
+getter function takes the icon set and icon name and returns a URL object or a 
+string that points to the icon's JavaScript module.
 
 ```ts
-type getter = (set: string, icon: string) => URL
+type getter = (set: string, icon: string) => URL | string
 ```
 
 ```javascript
@@ -98,7 +98,7 @@ PfIcon.addIconSet('patternfly', (set, icon) => {
 ### Override the Default Icon Sets
 
 Icons are [loaded lazily](#loading) by default, so there's no performance
-penalty for keeping the default icon sets arond and unused. However, if you'd
+penalty for keeping the default icon sets around and unused. However, if you'd
 like to override the default icon sets across the entire page, you can use
 `addIconSet` with the `fas`, `far`, and `patternfly` set names:
 
@@ -115,8 +115,9 @@ To change the default set name, you can also override `PfIcon.defaultIconSet`
 PfIcon.defaultIconSet = 'patternfly';
 ```
 
-Now when `<pf-icon>` is used, it will automatically load icon modules from
-`https://static.redhat.com/icons/js/patternfly/...`.
+Now when `<pf-icon>` is loaded from the [RedHat DX 
+CDN](https://redhatstatic.com/dx/), it will automatically load icon modules from 
+the CDN as well.
 
 {% endband %}
 

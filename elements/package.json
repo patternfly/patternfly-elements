@@ -117,6 +117,7 @@
     "Wes Ruvalcaba"
   ],
   "dependencies": {
+    "@patternfly/icons": "^1.0.2",
     "@patternfly/pfe-core": "^2.3.0",
     "lit": "2.6.1",
     "tslib": "^2.4.1"

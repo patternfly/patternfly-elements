@@ -22,8 +22,11 @@ async function copy(event) {
 }
 
 function renderIcons(results) {
+  render(repeat(iconSets, ([setName, icons]) => repeat(icons, icon => `${setName}-${icon}`, icon => html`
+    <option value="${icon}">${setName} - ${icon}</option>
+  `)), list);
   render(repeat(iconSets, ([setName, icons]) => html`
-    <h3 id=${setName}>${names.get(setName)}</h3>
+    <h2 id=${setName}>${names.get(setName)}</h2>
     <ul>${repeat(icons, icon => `${setName}-${icon}`, icon => html`
       <li ?hidden=${(typeof results === 'string' ? icon !== results : (results && !results[setName]?.[icon]))}>
         <button title="${icon}"
@@ -47,22 +50,18 @@ const search = document.getElementById('icon-search');
 
 const list = document.getElementById('icons-list');
 
-search.autocompleteRequest = function({ query }, cb) {
-  const results = fuse.search(query);
-  cb(results.map(x => x.item.icon));
-  renderIcons(results.reduce((acc, { item: { set, icon } }) => ({
-    ...acc,
-    [set]: {
-      ...acc[set],
-      [icon]: true
-    }
-  }), {}));
-};
-
-search.addEventListener('input', e => renderIcons(e.target.value || undefined));
+search.addEventListener('input', /** @this{HTMLInputElement}*/function() {
+  renderIcons(!this.value ? undefined : fuse
+    .search(this.value)
+    .reduce((acc, { item: { set, icon } }) => ({
+      ...acc,
+      [set]: {
+        ...acc[set],
+        [icon]: true
+      }
+    }), {}));
+});
 
 renderIcons(search.value || undefined);
 
-render(repeat(iconSets, ([setName, icons]) => repeat(icons, icon => `${setName}-${icon}`, icon => html`
-  <option value="${icon}">${setName} - ${icon}</option>
-`)), list);
+document.querySelector('form').addEventListener('submit', e => e.preventDefault());

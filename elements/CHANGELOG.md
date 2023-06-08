@@ -1,5 +1,24 @@
 # @patternfly/elements
 
+## 2.2.0
+
+### Minor Changes
+
+- 12c59e9ac: `<pf-icon>`: allow `getIconUrl` to return a string, permitting users to import
+  icons from 'bare module specifiers'.
+
+### Patch Changes
+
+- c5d95880c: `<pf-accordion>`: fixed keyboard navigation inside of nested accordions
+- a2e88b511: `<pf-tabs>`: fix vertical alignment of slotted icons
+- 12c59e9ac: `<pf-icon>`: use fontawesome 5 icons. **NOTE**: imports from
+  `@patternfly/elements/pf-icon/icons/` are deprecated and will be removed in the
+  next major version.
+- 6adf530c4: `<pf-tabs>`: prevent error when using in certain javascript frameworks
+- 881c8a505: `<pf-timestamp>`: improved performance by using browser-standard features to calculate relative time
+- Updated dependencies [c5d95880c]
+  - @patternfly/pfe-core@2.3.1
+
 ## 2.1.0
 
 ### Minor Changes

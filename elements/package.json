@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/elements",
   "license": "MIT",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -117,7 +117,8 @@
     "Wes Ruvalcaba"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.3.0",
+    "@patternfly/icons": "^1.0.2",
+    "@patternfly/pfe-core": "^2.3.1",
     "lit": "2.6.1",
     "tslib": "^2.4.1"
   }

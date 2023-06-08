@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.3.1
+
+### Patch Changes
+
+- d5c6c199f: **Dev Server**: fixes `*-lightdom.css` support in config
+
 ## 1.3.0
 
 ### Minor Changes

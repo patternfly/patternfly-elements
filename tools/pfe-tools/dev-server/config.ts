@@ -86,6 +86,26 @@ async function renderURL(context: Context, options: PfeDevServerInternalConfig):
   }
 }
 
+function kebabCase(string: string) {
+  return string
+    .replace(/([a-z])([A-Z])/g, '$1-$2') // Replace capital letters with lowercase
+    .replace(/[\s_]+/g, '-') // Replace spaces and underscores with -
+    .replace(/[^-a-zA-Z]/g, '') // Remove all chars not letters, numbers or -
+    .toLowerCase();
+}
+
+function convertAliases(aliases: Record<string, string>, tagPrefix: string) {
+  const keyedAliases = {} as Record<string, string>;
+  for (const key in aliases) {
+    if ({}.hasOwnProperty.call(aliases, key)) {
+      const newKey = kebabCase(aliases[key]);
+      const preFixedKey = `${tagPrefix}-${newKey}`;
+      keyedAliases[preFixedKey] = key;
+    }
+  }
+  return keyedAliases;
+}
+
 /**
  * Generate HTML for each component by rendering a nunjucks template
  * Watch repository source files and reload the page when they change
@@ -94,8 +114,18 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
-      const { elementsDir, tagPrefix } = options;
+      const { elementsDir, tagPrefix, aliases } = options;
       const { componentSubpath } = options.site;
+
+      const keyedAliases = convertAliases(aliases, tagPrefix);
+
+      const prefixTag = (tag: string) => {
+        if (!tag.startsWith(tagPrefix)) {
+          return `${tagPrefix}-${tag}`;
+        }
+        return tag;
+      };
+
       const router =
         new Router()
           .get(/\/pf-icon\/icons\/.*\.js$/, (ctx, next) => {
@@ -109,21 +139,29 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           // Redirect `components/jazz-hands/*.js` to `components/pf-jazz-hands/*.ts`
           .get(`/${componentSubpath}/:element/:fileName.js`, async ctx => {
             const { element, fileName } = ctx.params;
-            ctx.redirect(`/${elementsDir}/${element}/${fileName}.ts`);
+
+            let prefixedElement = prefixTag(element);
+            prefixedElement = keyedAliases[prefixedElement] ?? prefixedElement;
+
+            ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.ts`);
           })
           // Redirect `elements/jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts`
           .get(`/${elementsDir}/:element/:fileName.js`, async ctx => {
             const { element, fileName } = ctx.params;
-            ctx.redirect(`/${elementsDir}/${element}/${fileName}.ts`);
+
+            let prefixedElement = prefixTag(element);
+            prefixedElement = keyedAliases[prefixedElement] ?? prefixedElement;
+
+            ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.ts`);
           })
           // Redirect `components/pf-jazz-hands|jazz-hands/demo/*-lightdom.css` to `components/pf-jazz-hands/*-lightdom.css`
           // Redirect `components/jazz-hands/demo/*.js|css` to `components/pf-jazz-hands/demo/*.js|css`
           .get(`/${componentSubpath}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
             const { element, fileName, ext } = ctx.params;
-            let prefixedElement = element;
-            if (!element.includes(tagPrefix)) {
-              prefixedElement = `${tagPrefix}-${element}`;
-            }
+
+            let prefixedElement = prefixTag(element);
+            prefixedElement = keyedAliases[prefixedElement] ?? prefixedElement;
+
             if (fileName.includes('-lightdom') && ext === 'css') {
               ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.${ext}`);
             } else if (!element.includes(tagPrefix)) {

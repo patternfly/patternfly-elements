@@ -94,13 +94,12 @@ function kebabCase(string: string) {
     .toLowerCase();
 }
 
-function convertAliases(aliases: Record<string, string>, tagPrefix: string) {
+function convertAliases(aliases: Record<string, string>) {
   const keyedAliases = {} as Record<string, string>;
   for (const key in aliases) {
     if ({}.hasOwnProperty.call(aliases, key)) {
       const newKey = kebabCase(aliases[key]);
-      const preFixedKey = `${tagPrefix}-${newKey}`;
-      keyedAliases[preFixedKey] = key;
+      keyedAliases[newKey] = key;
     }
   }
   return keyedAliases;
@@ -117,7 +116,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
       const { elementsDir, tagPrefix, aliases } = options;
       const { componentSubpath } = options.site;
 
-      const keyedAliases = convertAliases(aliases, tagPrefix);
+      const keyedAliases = convertAliases(aliases);
 
       const prefixTag = (tag: string) => {
         if (!tag.startsWith(tagPrefix)) {
@@ -140,8 +139,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           .get(`/${componentSubpath}/:element/:fileName.js`, async ctx => {
             const { element, fileName } = ctx.params;
 
-            let prefixedElement = prefixTag(element);
-            prefixedElement = keyedAliases[prefixedElement] ?? prefixedElement;
+            const prefixedElement = keyedAliases[element] ?? prefixTag(element);
 
             ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.ts`);
           })
@@ -149,8 +147,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           .get(`/${elementsDir}/:element/:fileName.js`, async ctx => {
             const { element, fileName } = ctx.params;
 
-            let prefixedElement = prefixTag(element);
-            prefixedElement = keyedAliases[prefixedElement] ?? prefixedElement;
+            const prefixedElement = keyedAliases[element] ?? prefixTag(element);
 
             ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.ts`);
           })
@@ -159,8 +156,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           .get(`/${componentSubpath}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
             const { element, fileName, ext } = ctx.params;
 
-            let prefixedElement = prefixTag(element);
-            prefixedElement = keyedAliases[prefixedElement] ?? prefixedElement;
+            const prefixedElement = keyedAliases[element] ?? prefixTag(element);
 
             if (fileName.includes('-lightdom') && ext === 'css') {
               ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.${ext}`);

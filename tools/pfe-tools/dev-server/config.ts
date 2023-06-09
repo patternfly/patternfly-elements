@@ -88,9 +88,10 @@ async function renderURL(context: Context, options: PfeDevServerInternalConfig):
 
 function kebabCase(string: string) {
   return string
-    .replace(/([a-z])([A-Z])/g, '$1-$2') // Replace capital letters with lowercase
+    .replace(/[^a-zA-Z0-9\s]/g, '') // Remove all characters not letters, numbers or spaces
     .replace(/[\s_]+/g, '-') // Replace spaces and underscores with -
-    .replace(/[^-a-zA-Z]/g, '') // Remove all chars not letters, numbers or -
+    .replace(/-+/g, '-') // Replace multiple - with single -
+    .replace(/^-+|-+$/g, '') // Remove leading and trailing -
     .toLowerCase();
 }
 

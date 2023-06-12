@@ -86,26 +86,6 @@ async function renderURL(context: Context, options: PfeDevServerInternalConfig):
   }
 }
 
-function kebabCase(string: string) {
-  return string
-    .replace(/[^a-zA-Z0-9\s]/g, '') // Remove all characters not letters, numbers or spaces
-    .replace(/[\s_]+/g, '-') // Replace spaces and underscores with -
-    .replace(/-+/g, '-') // Replace multiple - with single -
-    .replace(/^-+|-+$/g, '') // Remove leading and trailing -
-    .toLowerCase();
-}
-
-function convertAliases(aliases: Record<string, string>) {
-  const keyedAliases = {} as Record<string, string>;
-  for (const key in aliases) {
-    if ({}.hasOwnProperty.call(aliases, key)) {
-      const newKey = kebabCase(aliases[key]);
-      keyedAliases[newKey] = key;
-    }
-  }
-  return keyedAliases;
-}
-
 /**
  * Generate HTML for each component by rendering a nunjucks template
  * Watch repository source files and reload the page when they change
@@ -116,15 +96,6 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
     async serverStart({ fileWatcher, app }) {
       const { elementsDir, tagPrefix, aliases } = options;
       const { componentSubpath } = options.site;
-
-      const keyedAliases = convertAliases(aliases);
-
-      const prefixTag = (tag: string) => {
-        if (!tag.startsWith(tagPrefix)) {
-          return `${tagPrefix}-${tag}`;
-        }
-        return tag;
-      };
 
       const router =
         new Router()
@@ -139,16 +110,14 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           // Redirect `components/jazz-hands/*.js` to `components/pf-jazz-hands/*.ts`
           .get(`/${componentSubpath}/:element/:fileName.js`, async ctx => {
             const { element, fileName } = ctx.params;
-
-            const prefixedElement = keyedAliases[element] ?? prefixTag(element);
+            const prefixedElement = deslugify(element);
 
             ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.ts`);
           })
           // Redirect `elements/jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts`
           .get(`/${elementsDir}/:element/:fileName.js`, async ctx => {
             const { element, fileName } = ctx.params;
-
-            const prefixedElement = keyedAliases[element] ?? prefixTag(element);
+            const prefixedElement = deslugify(element);
 
             ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.ts`);
           })
@@ -156,8 +125,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           // Redirect `components/jazz-hands/demo/*.js|css` to `components/pf-jazz-hands/demo/*.js|css`
           .get(`/${componentSubpath}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
             const { element, fileName, ext } = ctx.params;
-
-            const prefixedElement = keyedAliases[element] ?? prefixTag(element);
+            const prefixedElement = deslugify(element);
 
             if (fileName.includes('-lightdom') && ext === 'css') {
               ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.${ext}`);
@@ -170,12 +138,14 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           // Redirect `components/jazz-hands/*` to `components/pf-jazz-hands/*` for requests not previously handled
           .get(`/${componentSubpath}/:element/:splatPath*`, async (ctx, next) => {
             const { element, splatPath } = ctx.params;
+            const prefixedElement = deslugify(element);
+
             if (splatPath.includes('demo')) {
               /* if its the demo directory return */
               return next();
             }
             if (!element.includes(tagPrefix)) {
-              ctx.redirect(`/${elementsDir}/${tagPrefix}-${element}/${splatPath}`);
+              ctx.redirect(`/${elementsDir}/${prefixedElement}/${splatPath}`);
             } else {
               return next();
             }

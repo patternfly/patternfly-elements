@@ -19,6 +19,12 @@ jobs:
       - run: npm ci --prefer-offline
       - run: npm run docs
       - run: cat _site/components/icon/demo/custom-icon-sets/index.html
+      
+      - name: Verify JSPM URL
+        run: curl -I https://ga.jspm.io/npm:@floating-ui/core
+        
+      - name: POP Debug Info
+        run: curl https://cachefly.cachefly.net/CacheFlyDebug
 
       - name: Publish to Netlify
         env:

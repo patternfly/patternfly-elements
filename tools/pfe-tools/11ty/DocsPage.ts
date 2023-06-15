@@ -85,6 +85,8 @@ export class DocsPage implements DocsPageRenderer {
     this.templates.addFilter('log', DocsPage.#log);
     this.templates.addFilter('type', DocsPage.#type);
     this.templates.addFilter('innerMD', DocsPage.#innerMD);
+    this.templates.addFilter('mdHeading', (header, length = 2) =>
+      DocsPage.#innerMD(`${Array.from({ length }, () => '#').join('')} ${header}`));
     this.templates.addFilter('stringifyParams', DocsPage.#stringifyParams);
     this.docsTemplatePath = options?.docsTemplatePath;
   }

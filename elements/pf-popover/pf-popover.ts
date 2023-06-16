@@ -321,7 +321,6 @@ export class PfPopover extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('keydown', this.onKeydown);
-    PfPopover.instances.add(this);
   }
 
   render() {
@@ -454,6 +453,7 @@ export class PfPopover extends LitElement {
     });
     this._popover?.show();
     this.dispatchEvent(new PopoverShownEvent());
+    PfPopover.instances.add(this);
   }
 
   /**
@@ -464,6 +464,7 @@ export class PfPopover extends LitElement {
     await this.#float.hide();
     this._popover?.close();
     this.dispatchEvent(new PopoverHiddenEvent());
+    PfPopover.instances.delete(this);
   }
 }
 

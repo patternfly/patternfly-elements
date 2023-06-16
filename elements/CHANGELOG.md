@@ -1,5 +1,12 @@
 # @patternfly/elements
 
+## 2.2.1
+
+### Patch Changes
+
+- 78f3333c5: `<pf-tabs>`: fixed style regression on tab when a slotted icon is not present
+- 2ba0b4360: `<pf-popover>`: prevent memory leak by removing event listeners event on popover close
+
 ## 2.2.0
 
 ### Minor Changes

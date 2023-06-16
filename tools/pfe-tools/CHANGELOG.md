@@ -1,5 +1,12 @@
 # @patternfly/pfe-tools
 
+## 1.3.2
+
+### Patch Changes
+
+- cdd1d4232: `DocsPage`: renders headings as markdown ([PR](https://github.com/patternfly/patternfly-elements/pull/2516))
+- d7dd0353b: `dev-server`: Corrects aliased elements redirects
+
 ## 1.3.1
 
 ### Patch Changes

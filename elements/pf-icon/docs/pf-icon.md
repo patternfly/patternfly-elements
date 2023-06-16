@@ -78,7 +78,7 @@ PfIcon.addIconSet('local', (set, icon) =>
 ### Updating an Existing Icon Set
 
 To updating an existing icon set, you use the same `addIconSet` function. By
-defaulting back to then existing `getIconURL` method, you  you can add a new
+defaulting back to then existing `getIconUrl` method, you  you can add a new
 icon to an existing set:
 
 ```js
@@ -105,7 +105,7 @@ like to override the default icon sets across the entire page, you can use
 ```js
 import { PfIcon } from '@patternfly/pf-icon';
 
-PfIcon.getIconURL = (set, icon) =>
+PfIcon.getIconUrl = (set, icon) =>
   new URL(`/icons/js/${set}/${icon}.js`, 'https://static.redhat.com');
 ```
 

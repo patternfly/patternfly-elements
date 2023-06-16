@@ -86,7 +86,11 @@ function getSlugsMap(rootDir: string) {
   return slugsConfigMap.get(rootDir)!;
 }
 
+/**
+ * Returns the prefixed custom element name for a given slug
+ */
 export function deslugify(slug: string, rootDir = process.cwd()): string {
   const { slugs, config } = getSlugsMap(rootDir);
-  return slugs.get(slug) ?? `${config.tagPrefix}-${slug}`;
+  const prefixedSlug = (slug.startsWith(`${config.tagPrefix}-`)) ? slug : `${config.tagPrefix}-${slug}`;
+  return slugs.get(slug) ?? prefixedSlug;
 }

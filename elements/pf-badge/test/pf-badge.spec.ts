@@ -13,6 +13,10 @@ const states = {
 const element = html`<pf-badge number="10">10</pf-badge>`;
 
 describe('<pf-badge>', function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-badge')).to.be.an.instanceof(PfBadge);
+  });
+
   it('should upgrade', async function() {
     const el = await createFixture<PfBadge>(element);
     expect(el, 'pf-badge should be an instance of PfBadge')

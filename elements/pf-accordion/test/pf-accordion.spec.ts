@@ -63,6 +63,12 @@ describe('<pf-accordion>', function() {
     };
   }
 
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-accordion')).to.be.an.instanceof(PfAccordion);
+    expect(document.createElement('pf-accordion-header')).to.be.an.instanceof(PfAccordionHeader);
+    expect(document.createElement('pf-accordion-panel')).to.be.an.instanceof(PfAccordionPanel);
+  });
+
   it('simply instantiating', async function() {
     element = await createFixture<PfAccordion>(html`<pf-accordion></pf-accordion>`);
     expect(element, 'pf-accordion should be an instance of PfAccordion')

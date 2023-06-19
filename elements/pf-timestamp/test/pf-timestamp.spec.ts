@@ -3,6 +3,10 @@ import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfTimestamp } from '@patternfly/elements/pf-timestamp/pf-timestamp.js';
 
 describe('<pf-timestamp>', function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-timestamp')).to.be.an.instanceof(PfTimestamp);
+  });
+
   it('should upgrade', async function() {
     const element = await createFixture<PfTimestamp>(html`<pf-timestamp></pf-timestamp>`);
     expect(element, 'the <pf-timestamp> should be an instance of PfTimestamp')

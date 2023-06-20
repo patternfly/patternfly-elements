@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 1.0.2
+
+### Patch Changes
+
+- 5f2e653c1: Tests: check for imperative element instantiation
+
 ## 1.0.1
 
 ### Patch Changes

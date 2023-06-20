@@ -5,6 +5,10 @@ import '@patternfly/pfe-tools/test/stub-logger.js';
 import { PfCard } from '@patternfly/elements/pf-card/pf-card.js';
 
 describe('<pf-card>', function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-card')).to.be.an.instanceof(PfCard);
+  });
+
   it('should upgrade', async function() {
     expect(await createFixture<PfCard>(html`<pf-card></pf-card>`))
       .to.be.an.instanceof(customElements.get('pf-card'))

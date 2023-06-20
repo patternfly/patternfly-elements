@@ -6,6 +6,10 @@ import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { PfSwitch } from '@patternfly/elements/pf-switch/pf-switch.js';
 
 describe('<pf-switch>', function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-switch')).to.be.an.instanceof(PfSwitch);
+  });
+
   describe('simply instantiating', function() {
     let element: PfSwitch;
     let snapshot: A11yTreeSnapshot;

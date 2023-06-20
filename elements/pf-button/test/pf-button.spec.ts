@@ -7,6 +7,10 @@ import { PfButton } from '@patternfly/elements/pf-button/pf-button.js';
 import '@patternfly/pfe-tools/test/stub-logger.js';
 
 describe('<pf-button>', function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-button')).to.be.an.instanceof(PfButton);
+  });
+
   it('should upgrade', async function() {
     const el = await createFixture(html`<pf-button>Button</pf-button>`);
     expect(el, 'pf-button should be an instance of PfButton')

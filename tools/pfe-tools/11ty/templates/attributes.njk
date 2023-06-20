@@ -2,7 +2,7 @@
 {% set header = header or 'Attributes' %}
 
 <section class="band api attributes api-properties">
-  <h{{level}}>{{ header | innerMD | safe }}</h{{level}}> {% if not content and not attributes.length %}
+  {{ header | mdHeading(level) | safe }} {% if not content and not attributes.length %}
 
   <em>None</em> {%- else -%}
 
@@ -20,9 +20,7 @@
   </dl> {%- endif -%} {%- if deprecated.length -%}
 
   <details>
-    <summary>
-      <h{{level+1}}>{{ ('Deprecated ' + header) | innerMD | safe }}</h{{level+1}}>
-    </summary>
+    <summary>{{ ('Deprecated ' + header) | mdHeading(level + 1) | safe }}</summary>
     <dl> {%- for attribute in deprecated -%}
       <dt><strong><code>{{ attribute.name }}</code></strong></dt>
       <dd>

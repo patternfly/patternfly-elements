@@ -65,7 +65,7 @@
     "@11ty/eleventy-plugin-directory-output": "^1.0.1",
     "@11ty/eleventy-plugin-syntaxhighlight": "^4.2.0",
     "@changesets/cli": "^2.26.1",
-    "@custom-elements-manifest/analyzer": "^0.5.7",
+    "@custom-elements-manifest/analyzer": "^0.8.3",
     "@koa/router": "^12.0.0",
     "@open-wc/testing": "^3.1.8",
     "@playwright/test": "^1.32.3",

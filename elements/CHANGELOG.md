@@ -1,5 +1,11 @@
 # @patternfly/elements
 
+## 2.2.2
+
+### Patch Changes
+
+- 5f2e653c1: `<pf-tabs>`: prevent error when using tabs-panel with certain frameworks or imperative javascript code
+
 ## 2.2.1
 
 ### Patch Changes

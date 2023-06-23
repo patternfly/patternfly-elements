@@ -28,6 +28,30 @@
   </div>
 </div>
 
+<div class="example">
+    <h2>Incorrect usage of panel locations</h2>
+
+    <pf-tabs detached>
+      <pf-tab id="users" slot="tab" for="oddball-panel-1">Users</pf-tab>
+      <pf-tab slot="tab" for="oddball-panel-2">Containers</pf-tab>
+      <pf-tab slot="tab" for="oddball-panel-3">Database</pf-tab>
+    </pf-tabs>
+
+    <pf-tab-panel id="oddball-panel-1">Users</pf-tab-panel>
+
+    <div>Some text here</div>
+
+    <pf-tab-panel id="oddball-panel-2">
+      <a href="#">Focusable element</a>
+    </pf-tab-panel>
+
+    <div>Some text there with a <a href="#">link</a></div>
+
+    <div>A panel wrapped in a div
+      <pf-tab-panel id="oddball-panel-3">Database</pf-tab-panel>
+    </div>
+</div>
+
 
 
 

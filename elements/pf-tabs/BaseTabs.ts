@@ -80,6 +80,8 @@ export abstract class BaseTabs extends LitElement {
    */
   @property({ reflect: true, type: Boolean }) manual = false;
 
+  @property({ reflect: true, type: Boolean }) detached = false;
+
   @property({ attribute: false })
   get activeIndex() {
     return this.#activeIndex;
@@ -192,19 +194,43 @@ export abstract class BaseTabs extends LitElement {
   #onSlotchange(event: { target: { name: string } }) {
     if (event.target.name === 'tab') {
       this.#allTabs = this.tabs;
+      if (this.detached) {
+        const panels: BaseTabPanel[] = [];
+        this.#allTabs.forEach(tab => {
+          const panelID = tab.getAttribute('for');
+          if (!panelID) {
+            this.#logger.error(`Detached Tabs must have a for attribute`);
+            return;
+          }
+          const panel = document.getElementById(`${panelID}`);
+          if (panel) {
+            panels.push(panel as BaseTabPanel);
+          }
+        });
+        this.#allPanels = panels;
+      }
     } else {
-      this.#allPanels = this.panels;
+      if (!this.detached) {
+        this.#allPanels = this.panels;
+      }
     }
 
     if ((this.#allTabs.length === this.#allPanels.length) &&
       (this.#allTabs.length !== 0 || this.#allPanels.length !== 0)) {
-      this.#updateAccessibility();
-      this.#firstLastClasses();
-      this.#tabindex.initItems(this.#allTabs);
-      this.activeIndex = this.#allTabs.findIndex(tab => tab.active);
-      this.#tabindex.updateActiveItem(this.#activeTab);
-      this.#overflow.init(this.tabList, this.#allTabs);
+      this.#matchingTabsAndPanelsUpgrade();
+    } else {
+      this.#logger.warn(this.#allTabs, this.#allPanels);
+      this.#logger.warn(`The number of tabs and panels do not match`);
     }
+  }
+
+  #matchingTabsAndPanelsUpgrade() {
+    this.#updateAccessibility();
+    this.#firstLastClasses();
+    this.#tabindex.initItems(this.#allTabs);
+    this.activeIndex = this.#allTabs.findIndex(tab => tab.active);
+    this.#tabindex.updateActiveItem(this.#activeTab);
+    this.#overflow.init(this.tabList, this.#allTabs);
   }
 
   #updateAccessibility(): void {

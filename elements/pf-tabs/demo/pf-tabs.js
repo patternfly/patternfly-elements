@@ -1,6 +1,9 @@
 import '@patternfly/elements/pf-icon/pf-icon.js';
 import '@patternfly/elements/pf-switch/pf-switch.js';
 import '@patternfly/elements/pf-tabs/pf-tabs.js';
+import '@patternfly/elements/pf-code-block/pf-code-block.js';
+import '@patternfly/elements/pf-clipboard-copy/pf-clipboard-copy.js';
+
 
 const toggleVariant = document.getElementById('toggle-variant');
 const resize = document.getElementById('overflow');

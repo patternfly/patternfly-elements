@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="demo.css">
+<link rel="stylesheet" href="detatched.css">
+<script type="module" src="detached.js"></script>
+
+<div class="example">
+  <h2>Default</h2>
+
+  <div class="grid-layout">
+
+    <pf-tabs detached>
+      <pf-tab id="users" slot="tab" for="users-panel">Users</pf-tab>
+      <pf-tab slot="tab" for="containers-panel">Containers</pf-tab>
+      <pf-tab slot="tab" for="databases-panel">Database</pf-tab>
+    </pf-tabs>
+
+    <div class="panels">
+      <pf-tab-panel id="users-panel">Users</pf-tab-panel>
+      <pf-tab-panel id="containers-panel">
+        <a href="#">Focusable element</a>
+      </pf-tab-panel>
+      <pf-tab-panel id="databases-panel">Database</pf-tab-panel>
+    </div>
+
+    <div class="actions">
+      <pf-button>Button</pf-button>
+      <pf-button>Button</pf-button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+

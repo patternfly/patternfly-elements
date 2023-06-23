@@ -1,0 +1,31 @@
+.grid-layout {
+  display: grid;
+  grid-template-areas: 'tabs tabs'
+                       'panels panels'
+                       'actions actions';
+  grid-template-columns: 1fr max-content;
+}
+
+.grid-layout > .actions {
+  grid-area: actions;
+}
+
+.grid-layout > pf-tabs {
+  grid-area: tabs;
+}
+
+.grid-layout > .panels {
+  grid-area: panels;
+}
+
+
+@media (min-width: 768px) {
+  .grid-layout {
+    grid-template-areas: 'tabs actions'
+                         'panels panels';
+  }
+
+  .grid-layout > .actions {
+    border-block-end: 1px solid var(--pf-c-tabs--before--BorderColor, var(--pf-global--BorderColor--100, #d2d2d2));
+  }
+}

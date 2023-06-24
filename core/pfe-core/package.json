@@ -28,6 +28,7 @@
     "./controllers/scroll-spy-controller.js": "./controllers/scroll-spy-controller.js",
     "./controllers/slot-controller.js": "./controllers/slot-controller.js",
     "./controllers/style-controller.js": "./controllers/style-controller.js",
+    "./controllers/timestamp-controller.js": "./controllers/timestamp-controller.js",
     "./decorators/bound.js": "./decorators/bound.js",
     "./decorators/cascades.js": "./decorators/cascades.js",
     "./decorators/deprecation.js": "./decorators/deprecation.js",

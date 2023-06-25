@@ -1,0 +1,18 @@
+<div class="example">
+  <h2>Tabs first in markup</h2>
+  <pf-tabs id="tabs-first">
+    <pf-tab slot="tab">Users</pf-tab>
+    <pf-tab slot="tab">Containers</pf-tab>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab slot="tab" disabled active>Disabled</pf-tab>
+    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab-panel>Disabled</pf-tab-panel>
+    <pf-tab-panel>Aria Disabled</pf-tab-panel>
+  </pf-tabs>
+</div>
+
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-tabs.js"></script>

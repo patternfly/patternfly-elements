@@ -1,0 +1,28 @@
+<div class="example">
+  <h2>Default overflow</h2>
+    <pf-tabs id="overflow">
+      <pf-tab slot="tab">Users</pf-tab>
+      <pf-tab-panel>Users</pf-tab-panel>
+      <pf-tab slot="tab">Containers</pf-tab>
+      <pf-tab-panel>Containers</pf-tab-panel>
+      <pf-tab slot="tab">Database</pf-tab>
+      <pf-tab-panel>Database</pf-tab-panel>
+      <pf-tab slot="tab" active>Server</pf-tab>
+      <pf-tab-panel>Server</pf-tab-panel>
+      <pf-tab slot="tab">System</pf-tab>
+      <pf-tab-panel>System</pf-tab-panel>
+      <pf-tab slot="tab">Network</pf-tab>
+      <pf-tab-panel>Network</pf-tab-panel>
+    </pf-tabs>
+
+  <form>
+    Box variant:
+    <label for="toggle-resize" data-state="on">Dark</label>
+    <label for="toggle-resize" data-state="off">None</label>
+    <pf-switch id="toggle-resize"></pf-switch>
+  </form>
+</div>
+
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-tabs.js"></script>
+

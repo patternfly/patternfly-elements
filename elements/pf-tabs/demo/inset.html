@@ -1,0 +1,29 @@
+<div class="example">
+  <h2>Inset</h2>
+  <pf-tabs class="inset-md" id="inset">
+    <pf-tab slot="tab" active>Users</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab slot="tab">Containers</pf-tab>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab slot="tab" disabled>Disabled</pf-tab>
+    <pf-tab-panel>Disabled</pf-tab-panel>
+    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+    <pf-tab-panel>Aria Disabled</pf-tab-panel>
+  </pf-tabs>
+
+  <form class="input">
+    <p>Inset size: </p>
+    <label><input type="radio" name="toggle-inset" value="inset-sm"> Small</label>
+    <label><input type="radio" name="toggle-inset" value="inset-md" checked> Medium </label>
+    <label><input type="radio" name="toggle-inset" value="inset-lg"> Large</label>
+    <label><input type="radio" name="toggle-inset" value="inset-xl"> X-Large</label>
+    <label><input type="radio" name="toggle-inset" value="inset-2xl"> 2X-Large</label>
+    <label><input type="radio" name="toggle-inset" value="page"> Page</label>
+  </form>
+</div>
+
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-tabs.js"></script>
+

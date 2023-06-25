@@ -1,0 +1,26 @@
+<div class="example">
+  <h2>Vertical</h2>
+  <pf-tabs vertical>
+    <pf-tab slot="tab">Users</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab slot="tab" active>Containers</pf-tab>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab slot="tab" disabled>Disabled</pf-tab>
+    <pf-tab-panel>Disabled</pf-tab-panel>
+    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+    <pf-tab-panel>Aria Disabled</pf-tab-panel>
+  </pf-tabs>
+
+  <form>
+    Box variant:
+    <label for="toggle-vertical" data-state="on">Dark</label>
+    <label for="toggle-vertical" data-state="off">None</label>
+    <pf-switch id="toggle-vertical">
+  </form>
+</div>
+
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-tabs.js"></script>
+

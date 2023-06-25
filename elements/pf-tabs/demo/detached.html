@@ -1,61 +1,44 @@
-<link rel="stylesheet" href="demo.css">
-<link rel="stylesheet" href="detatched.css">
-<script type="module" src="detached.js"></script>
+<custom-panel-holder>
+  <pf-tab id="for-a" for="a" slot="tabs" disabled>A</pf-tab>
+  <pf-tab id="for-b" for="b" slot="tabs">B</pf-tab>
+  <pf-tab id="for-c" for="c" slot="tabs">C</pf-tab>
 
-<div class="example">
-  <h2>Default</h2>
+  <pf-tabs>
+    <pf-tab id="for-d" slot="tab">D</pf-tab>
+    <pf-tab-panel id="a">A</pf-tab-panel>
+    <pf-tab-panel id="b">B</pf-tab-panel>
+    <pf-tab-panel id="c">C</pf-tab-panel>
+    <pf-tab-panel id="d">D</pf-tab-panel>
+    <pf-tab-panel id="e">E</pf-tab-panel>
+  </pf-tabs>
 
-  <div class="grid-layout">
-
-    <pf-tabs detached>
-      <pf-tab id="users" slot="tab" for="users-panel">Users</pf-tab>
-      <pf-tab slot="tab" for="containers-panel">Containers</pf-tab>
-      <pf-tab slot="tab" for="databases-panel">Database</pf-tab>
-    </pf-tabs>
-
-    <div class="panels">
-      <pf-tab-panel id="users-panel">Users</pf-tab-panel>
-      <pf-tab-panel id="containers-panel">
-        <a href="#">Focusable element</a>
-      </pf-tab-panel>
-      <pf-tab-panel id="databases-panel">Database</pf-tab-panel>
-    </div>
-
-    <div class="actions">
-      <pf-button>Button</pf-button>
-      <pf-button>Button</pf-button>
-    </div>
-  </div>
-</div>
-
-<div class="example">
-    <h2>Incorrect usage of panel locations</h2>
-
-    <pf-tabs detached>
-      <pf-tab id="users" slot="tab" for="oddball-panel-1">Users</pf-tab>
-      <pf-tab slot="tab" for="oddball-panel-2">Containers</pf-tab>
-      <pf-tab slot="tab" for="oddball-panel-3">Database</pf-tab>
-    </pf-tabs>
-
-    <pf-tab-panel id="oddball-panel-1">Users</pf-tab-panel>
-
-    <div>Some text here</div>
-
-    <pf-tab-panel id="oddball-panel-2">
-      <a href="#">Focusable element</a>
-    </pf-tab-panel>
-
-    <div>Some text there with a <a href="#">link</a></div>
-
-    <div>A panel wrapped in a div
-      <pf-tab-panel id="oddball-panel-3">Database</pf-tab-panel>
-    </div>
-</div>
+  <pf-tab id="for-e" for="e" slot="tabs">E</pf-tab>
+</custom-panel-holder>
 
 
+<template id="tpl">
+  <style>
+    :host { display: grid; }
+    header { display: flex; }
+  </style>
 
+  <header>
+    <slot name="tabs"></slot>
+  </header>
+  <slot></slot>
+</template>
 
-
-
-
+<script type="module">
+  import '@patternfly/elements/pf-tabs/pf-tabs.js';
+  customElements.define('custom-panel-holder', class extends HTMLElement {
+    constructor() {
+      super()
+        .attachShadow({ mode: 'open' })
+        .append(document
+          .getElementById('tpl')
+          .content
+          .cloneNode(true));
+    }
+  })
+</script>
 

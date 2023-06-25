@@ -64,8 +64,6 @@ export abstract class BaseTabs extends LitElement {
     });
   }
 
-  @query('[part="tabs"]') private tabList!: HTMLElement;
-
   /**
    * Tab activation
    * Tabs can be either [automatic](https://w3c.github.io/aria-practices/examples/tabs/tabs-automatic.html) activated
@@ -160,7 +158,8 @@ export abstract class BaseTabs extends LitElement {
               @click="${this.#scrollLeft}">
             <pf-icon icon="${scrollIconLeft}" set="${scrollIconSet}" loading="eager"></pf-icon>
           </button>`}
-          <slot name="tab"
+          <slot id="tabs"
+                name="tab"
                 part="tabs"
                 role="tablist"
                 @scroll="${this.#overflow.onScroll}"
@@ -239,15 +238,19 @@ export abstract class BaseTabs extends LitElement {
     }
   }
 
-  async #onSlotchange(event: Event & { target: HTMLSlotElement }) {
-    if (event.target.name === 'tab') {
+  #rebuilding = false;
+
+  async #onSlotchange() {
+    if (!this.#rebuilding) {
+      this.#rebuilding = true;
       const tabSlot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=tab]');
       const panelSlot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
       this.#slottedPanels = panelSlot?.assignedElements().filter(BaseTabs.isPanel) ?? [];
       this.#slottedTabs = tabSlot?.assignedElements().filter(BaseTabs.isTab) ?? [];
       this.#resetTabs();
-      await this.updateComplete;
       this.#matchingTabsAndPanelsUpgrade();
+      await this.updateComplete;
+      this.#rebuilding = false;
     }
   }
 
@@ -259,7 +262,10 @@ export abstract class BaseTabs extends LitElement {
     this.#tabindex.initItems(tabs);
     this.activeIndex = tabs.findIndex(tab => tab.active);
     this.#tabindex.updateActiveItem(this.#activeTab);
-    this.#overflow.init(this.tabList, tabs);
+    const tabsList = this.shadowRoot?.getElementById('tabs');
+    if (tabsList) {
+      this.#overflow.init(tabsList, tabs);
+    }
   }
 
   #updateAccessibility(): void {

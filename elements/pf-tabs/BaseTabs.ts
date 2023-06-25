@@ -2,7 +2,6 @@ import { LitElement, html } from 'lit';
 
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 
 import { classMap } from 'lit/directives/class-map.js';
 
@@ -11,6 +10,8 @@ import { OverflowController } from '@patternfly/pfe-core/controllers/overflow-co
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+
+import '@patternfly/elements/pf-icon/pf-icon.js';
 
 import { BaseTab, TabExpandEvent } from './BaseTab.js';
 import { BaseTabPanel } from './BaseTabPanel.js';
@@ -27,20 +28,23 @@ import styles from './BaseTabs.css';
 export abstract class BaseTabs extends LitElement {
   static readonly styles = [styles];
 
-  static isTab(element: BaseTab): element is BaseTab {
+  static isTab(element?: Node): element is BaseTab {
     return element instanceof BaseTab;
   }
 
-  static isPanel(element: BaseTabPanel): element is BaseTabPanel {
+  static isPanel(element?: Node): element is BaseTabPanel {
     return element instanceof BaseTabPanel;
   }
 
   /** Time in milliseconds to debounce between scroll events and updating scroll button state */
   protected static readonly scrollTimeoutDelay: number = 0;
+
   /** Icon name to use for the scroll left button */
   protected static readonly scrollIconLeft: string = 'angle-left';
+
   /** Icon name to use for the scroll right button */
   protected static readonly scrollIconRight: string = 'angle-right';
+
   /** Icon set to use for the scroll buttons */
   protected static readonly scrollIconSet: string = 'fas';
 
@@ -53,25 +57,14 @@ export abstract class BaseTabs extends LitElement {
         instance.#overflow.onScroll();
       }
     }, { capture: false });
+    window.addEventListener('expand', event => {
+      for (const instance of this.#instances) {
+        instance.#onTabExpand(event);
+      }
+    });
   }
 
-  @queryAssignedElements({ slot: 'tab' }) private tabs!: BaseTab[];
-
-  @queryAssignedElements() private panels!: BaseTabPanel[];
-
   @query('[part="tabs"]') private tabList!: HTMLElement;
-
-  #tabindex = new RovingTabindexController<BaseTab>(this);
-
-  #overflow = new OverflowController(this);
-
-  #logger = new Logger(this);
-
-  #_allTabs: BaseTab[] = [];
-
-  #_allPanels: BaseTabPanel[] = [];
-
-  #activeIndex = 0;
 
   /**
    * Tab activation
@@ -80,8 +73,6 @@ export abstract class BaseTabs extends LitElement {
    */
   @property({ reflect: true, type: Boolean }) manual = false;
 
-  @property({ reflect: true, type: Boolean }) detached = false;
-
   @property({ attribute: false })
   get activeIndex() {
     return this.#activeIndex;
@@ -89,16 +80,14 @@ export abstract class BaseTabs extends LitElement {
 
   set activeIndex(index: number) {
     const oldIndex = this.activeIndex;
-    const tab = this.#allTabs[index];
+    const tab = [...this.#tabs.keys()][index];
     if (tab) {
       if (tab.disabled) {
         this.#logger.warn(`Disabled tabs can not be active, setting first focusable tab to active`);
         this.#tabindex.updateActiveItem(this.#firstFocusable);
         index = this.#activeItemIndex;
-      } else if (!tab.active) {
-        // if the activeIndex was set through the CLI e.g.`$0.activeIndex = 2`
+      } else {
         tab.active = true;
-        return;
       }
     }
 
@@ -108,39 +97,39 @@ export abstract class BaseTabs extends LitElement {
       this.#tabindex.updateActiveItem(first);
       index = this.#activeItemIndex;
     }
+
     this.#activeIndex = index;
     this.requestUpdate('activeIndex', oldIndex);
 
-    this.#allPanels[this.#activeIndex].hidden = false;
     // close all tabs that are not the activeIndex
     this.#deactivateExcept(this.#activeIndex);
   }
 
+  #tabindex = new RovingTabindexController<BaseTab>(this);
+
+  #overflow = new OverflowController(this);
+
+  #logger = new Logger(this);
+
+  #activeIndex = 0;
+
+  #slottedPanels: BaseTabPanel[] = [];
+
+  #slottedTabs: BaseTab[] = [];
+
+  #tabs = new Map<BaseTab, BaseTabPanel>();
+
   get #activeTab() {
-    const [tab] = this.#_allTabs.filter(tab => tab.active);
-    return tab;
+    return [...this.#tabs.keys()].find(tab => tab.active);
   }
 
-  get #allTabs() {
-    return this.#_allTabs;
-  }
-
-  set #allTabs(tabs: BaseTab[]) {
-    this.#_allTabs = tabs.filter(tab => (this.constructor as typeof BaseTabs).isTab(tab));
-  }
-
-  get #allPanels() {
-    return this.#_allPanels;
-  }
-
-  set #allPanels(panels: BaseTabPanel[]) {
-    this.#_allPanels = panels.filter(panel => (this.constructor as typeof BaseTabs).isPanel(panel));
+  get #root(): Document | ShadowRoot {
+    return this.getRootNode() as Document | ShadowRoot;
   }
 
   override connectedCallback() {
     super.connectedCallback();
     this.id ||= getRandomId(this.localName);
-    this.addEventListener('expand', this.#onTabExpand);
     BaseTabs.#instances.add(this);
   }
 
@@ -160,10 +149,6 @@ export abstract class BaseTabs extends LitElement {
     }
   }
 
-  async firstUpdated() {
-    this.tabList.addEventListener('scroll', this.#overflow.onScroll.bind(this));
-  }
-
   override render() {
     const { scrollIconSet, scrollIconLeft, scrollIconRight } = this.constructor as typeof BaseTabs;
     return html`
@@ -178,6 +163,7 @@ export abstract class BaseTabs extends LitElement {
           <slot name="tab"
                 part="tabs"
                 role="tablist"
+                @scroll="${this.#overflow.onScroll}"
                 @slotchange="${this.#onSlotchange}"></slot> ${!this.#overflow.showScrollButtons ? '' : html`
           <button id="nextTab" tabindex="-1"
               aria-label="${this.getAttribute('label-scroll-right') ?? 'Scroll right'}"
@@ -191,51 +177,93 @@ export abstract class BaseTabs extends LitElement {
     `;
   }
 
-  #onSlotchange(event: { target: { name: string } }) {
-    if (event.target.name === 'tab') {
-      this.#allTabs = this.tabs;
-      if (this.detached) {
-        const panels: BaseTabPanel[] = [];
-        this.#allTabs.forEach(tab => {
-          const panelID = tab.getAttribute('for');
-          if (!panelID) {
-            this.#logger.error(`Detached Tabs must have a for attribute`);
-            return;
-          }
-          const panel = document.getElementById(`${panelID}`);
-          if (panel) {
-            panels.push(panel as BaseTabPanel);
-          }
-        });
-        this.#allPanels = panels;
-      }
+  #queryPanelForTab(tab: BaseTab): HTMLElement | undefined {
+    if (tab.hasAttribute('for')) {
+      const panelID = tab.getAttribute('for');
+      return this.#root.getElementById(`${panelID}`) ?? undefined;
+    } else if (tab.compareDocumentPosition(this) & Node.DOCUMENT_POSITION_CONTAINS) {
+      const index = this.#slottedTabs.indexOf(tab);
+      const panelsWithoutDetachedTabs = this.#slottedPanels.filter(panel =>
+        !BaseTabs.isTab(this.#root.querySelector(`[for="${panel.id}"]`) ?? undefined));
+      return panelsWithoutDetachedTabs.at(index);
+    }
+  }
+
+  #addPairForTab(tab: BaseTab) {
+    const panel = this.#queryPanelForTab(tab);
+    if (BaseTabs.isPanel(panel)) {
+      this.#tabs.set(tab, panel);
     } else {
-      if (!this.detached) {
-        this.#allPanels = this.panels;
+      this.#logger.warn(`Tab and panel do not match`, tab, panel);
+    }
+  }
+
+  #registerSlottedTabs() {
+    for (const slotted of this.#slottedTabs) {
+      this.#addPairForTab(slotted);
+    }
+  }
+
+  /**
+   * Interleave slotted and detached tabs, such that `this.#tabs` reflects the DOM order
+   * @example combined tabs
+   *          ```html
+   *          <pf-tab id="for-a" for="a" slot="tabs">A</pf-tab>
+   *          <pf-tabs>
+   *            <pf-tab id="for-b" slot="tab">D</pf-tab>
+   *            <pf-tab-panel id="a">A</pf-tab-panel>
+   *            <pf-tab-panel id="b">B</pf-tab-panel>
+   *            <pf-tab-panel id="c">C</pf-tab-panel>
+   *          </pf-tabs>
+   *          <pf-tab id="for-c" for="c" slot="tabs">C</pf-tab>
+   *          ```
+   *          ```js
+   *          console.log(#this.tabs.keys())
+   *          // => #for-a, #for-b, #for-c
+   *          ```
+   */
+  #resetTabs() {
+    this.#tabs.clear();
+    let arrivedAtBaseTabs = false;
+    for (const node of this.#root.querySelectorAll('[for]')) {
+      if (BaseTabs.isTab(node)) {
+        if (!arrivedAtBaseTabs && !(node.compareDocumentPosition(this) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+          this.#registerSlottedTabs();
+          arrivedAtBaseTabs = true;
+        }
+        this.#addPairForTab(node);
       }
     }
+    if (!arrivedAtBaseTabs) {
+      this.#registerSlottedTabs();
+    }
+  }
 
-    if ((this.#allTabs.length === this.#allPanels.length) &&
-      (this.#allTabs.length !== 0 || this.#allPanels.length !== 0)) {
+  async #onSlotchange(event: Event & { target: HTMLSlotElement }) {
+    if (event.target.name === 'tab') {
+      const tabSlot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=tab]');
+      const panelSlot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+      this.#slottedPanels = panelSlot?.assignedElements().filter(BaseTabs.isPanel) ?? [];
+      this.#slottedTabs = tabSlot?.assignedElements().filter(BaseTabs.isTab) ?? [];
+      this.#resetTabs();
+      await this.updateComplete;
       this.#matchingTabsAndPanelsUpgrade();
-    } else {
-      this.#logger.warn(this.#allTabs, this.#allPanels);
-      this.#logger.warn(`The number of tabs and panels do not match`);
     }
   }
 
   #matchingTabsAndPanelsUpgrade() {
     this.#updateAccessibility();
-    this.#firstLastClasses();
-    this.#tabindex.initItems(this.#allTabs);
-    this.activeIndex = this.#allTabs.findIndex(tab => tab.active);
+    this.#slottedTabs?.at(0)?.classList.add('first');
+    this.#slottedTabs?.at(-1)?.classList.add('last');
+    const tabs = [...this.#tabs.keys()];
+    this.#tabindex.initItems(tabs);
+    this.activeIndex = tabs.findIndex(tab => tab.active);
     this.#tabindex.updateActiveItem(this.#activeTab);
-    this.#overflow.init(this.tabList, this.#allTabs);
+    this.#overflow.init(this.tabList, tabs);
   }
 
   #updateAccessibility(): void {
-    this.#allTabs.forEach((tab, index) => {
-      const panel = this.#allPanels[index];
+    [...this.#tabs].forEach(([tab, panel]) => {
       if (!panel.hasAttribute('aria-labelledby')) {
         panel.setAttribute('aria-labelledby', tab.id);
       }
@@ -244,9 +272,7 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #onTabExpand = (event: Event): void => {
-    if (!(event instanceof TabExpandEvent) ||
-        !this.#allTabs.length ||
-        !this.#allPanels.length) {
+    if (!(event instanceof TabExpandEvent) || !this.#tabs.has(event.tab)) {
       return;
     }
 
@@ -254,36 +280,24 @@ export abstract class BaseTabs extends LitElement {
       if (event.tab !== this.#tabindex.activeItem) {
         this.#tabindex.updateActiveItem(event.tab);
       }
-      this.activeIndex = this.#allTabs.findIndex(tab => tab === event.tab);
+      this.activeIndex = [...this.#tabs.keys()].findIndex(tab => tab === event.tab);
     }
   };
 
-  #deactivateExcept(index: number) {
-    this.#allTabs.forEach((tab, i) => tab.active = i === index);
-    this.#allPanels.forEach((panel, i) => panel.hidden = i !== index);
+  #deactivateExcept(indexToKeep: number) {
+    [...this.#tabs].forEach(([tab, panel], currentIndex) => {
+      tab.active = currentIndex === indexToKeep;
+      panel.hidden = currentIndex !== indexToKeep;
+    });
   }
 
   get #firstFocusable(): BaseTab | undefined {
     return this.#tabindex.firstItem;
   }
 
-  get #firstTab(): BaseTab | undefined {
-    const [tab] = this.#allTabs;
-    return tab;
-  }
-
-  get #lastTab(): BaseTab | undefined {
-    return this.#allTabs.at(-1);
-  }
-
   get #activeItemIndex() {
     const { activeItem } = this.#tabindex;
-    return this.#allTabs.findIndex(t => t === activeItem);
-  }
-
-  #firstLastClasses() {
-    this.#firstTab?.classList.add('first');
-    this.#lastTab?.classList.add('last');
+    return [...this.#tabs.keys()].findIndex(t => t === activeItem);
   }
 
   #scrollLeft() {

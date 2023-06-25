@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit';
 
 import { property } from 'lit/decorators/property.js';
-import { query } from 'lit/decorators/query.js';
 
 import { classMap } from 'lit/directives/class-map.js';
 

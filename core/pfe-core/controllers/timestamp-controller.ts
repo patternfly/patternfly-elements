@@ -1,19 +1,44 @@
 import type { ReactiveController, ReactiveElement } from 'lit';
 
+export type Format = 'full' | 'long' | 'medium' | 'short';
+
+type FormatOptions = Partial<[Format, Format, object, string, string, boolean, boolean, boolean]>;
+
 export class TimestampController implements ReactiveController {
+  get date() {
+    return this.#date.toLocaleString();
+  }
+
+  set date(string) {
+    this.#date = new Date(string);
+    this.#isoString = this.#date.toISOString();
+  }
+
+  get isoString() {
+    return this.#isoString;
+  }
+
+  #date = new Date();
+  #isoString = this.#date.toISOString();
+
   constructor(host: ReactiveElement) {
     host.addController(this);
   }
 
-  hostConnected(): void {
-    //
+  hostConnected?(): void
+
+  time([dateStyle, timeStyle, customFormat, displaySuffix, locale, relative, utc, hour12]: FormatOptions) {
+    const timeZone = utc ? 'UTC' : undefined;
+    const formatOptions = customFormat || { hour12, dateStyle, timeStyle, timeZone };
+    const formattedDate = this.#date.toLocaleString(locale, formatOptions);
+    return relative ? this.#getTimeRelative(this.#date, locale) : `${formattedDate}${displaySuffix ? ` ${displaySuffix}` : ''}`;
   }
 
   /**
    * Based off of Github Relative Time
    * https://github.com/github/time-elements/blob/master/src/relative-time.js
    */
-  getTimeRelative(date: Date, locale?: string) {
+  #getTimeRelative(date: Date, locale?: string) {
     const rtf = new Intl.RelativeTimeFormat(locale, { localeMatcher: 'best fit', numeric: 'auto', style: 'long' });
     const ms: number = date.getTime() - Date.now();
     const tense = ms > 0 ? 1 : -1;

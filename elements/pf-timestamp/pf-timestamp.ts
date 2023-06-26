@@ -4,6 +4,7 @@ import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { TimestampController } from '@patternfly/pfe-core/controllers/timestamp-controller.js';
+import type { Format } from '@patternfly/pfe-core/controllers/timestamp-controller.js';
 
 import style from './pf-timestamp.css';
 
@@ -22,17 +23,16 @@ export class PfTimestamp extends LitElement {
 
   @property({ reflect: true })
   get date() {
-    return this.#date.toLocaleString();
+    return this.#controller.date;
   }
 
   set date(string) {
-    this.#date = new Date(string);
-    this.#isoString = this.#date.toISOString();
+    this.#controller.date = string;
   }
 
-  @property({ reflect: true, attribute: 'date-format' }) dateFormat?: 'full' | 'long' | 'medium' | 'short';
+  @property({ reflect: true, attribute: 'date-format' }) dateFormat?: Format;
 
-  @property({ reflect: true, attribute: 'time-format' }) timeFormat?: 'full' | 'long' | 'medium' | 'short';
+  @property({ reflect: true, attribute: 'time-format' }) timeFormat?: Format;
 
   @property({ attribute: false }) customFormat?: object;
 
@@ -46,23 +46,15 @@ export class PfTimestamp extends LitElement {
 
   @property({ reflect: true, attribute: 'hour-12', converter: BooleanStringConverter }) hour12?: boolean;
 
-  #controller = new TimestampController(this);
-
-  #date = new Date();
-
-  #isoString = this.#date.toISOString();
-
   get isoString() {
-    return this.#isoString;
+    return this.#controller.isoString;
   }
 
   get time() {
-    const { hour12, customFormat, dateFormat: dateStyle, timeFormat: timeStyle, utc } = this;
-    const timeZone = utc ? 'UTC' : undefined;
-    const formatOptions = customFormat || { hour12, dateStyle, timeStyle, timeZone };
-    const formattedDate = this.#date.toLocaleString(this.locale, formatOptions);
-    return this.relative ? this.#controller.getTimeRelative(this.#date, this.locale) : `${formattedDate}${this.displaySuffix ? ` ${this.displaySuffix}` : ''}`;
+    return this.#controller.time([this.dateFormat, this.timeFormat, this.customFormat, this.displaySuffix, this.locale, this.relative, this.utc, this.hour12]);
   }
+
+  #controller = new TimestampController(this);
 
   willUpdate() {
     if (!this.displaySuffix && this.utc) {

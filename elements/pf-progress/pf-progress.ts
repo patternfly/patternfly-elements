@@ -136,6 +136,9 @@ export class PfProgress extends LitElement {
     measureLocation: '' | 'outside' | 'inside' | 'none' = '';
 
   @property({ reflect: true })
+    markdown: 'html' | 'progress' | 'meter' = 'html';
+
+  @property({ reflect: true })
     variant: '' | 'success' | 'danger' | 'warning' = '';
 
   @query('#bar')
@@ -163,7 +166,7 @@ export class PfProgress extends LitElement {
   }
 
   render() {
-    const { size, measureLocation, variant, value, title } = this;
+    const { size, measureLocation, variant, value, title, markdown } = this;
     const icon = variant && ICONS.get(variant)?.icon;
     const singleLine = title.length === 0 ? 'singleline' : '';
 
@@ -177,13 +180,25 @@ export class PfProgress extends LitElement {
                    ?hidden="${!icon}"
                    icon="${ifDefined(icon)}"></pf-icon>
         </div>
-        <div id="bar" role="progressbar">
-          <div class="indicator" style="${styleMap({ 'width': `${value}%` })}">
-            <div class="measure">
-              ${html`${this.#showInsideStatus() ? `${value}%` : ''}`}
+          ${markdown === 'html' ? html`
+          <div id="bar" role="progressbar">
+            <div class="indicator" style="${styleMap({ 'width': `${value}%` })}">
+              <div class="measure">
+                ${html`${this.#showInsideStatus() ? `${value}%` : ''}`}
+              </div>
             </div>
           </div>
-        </div>
+          ` : markdown === 'progress' ?
+                html`<progress></progress>`
+            : html`
+              <meter min="0" max="100" value="${value}">
+                <div class="measure">
+                  <span style="${styleMap({ 'width': `${value}%` })}">
+                    ${html`${this.#showInsideStatus() ? `${value}%` : ''}`}
+                  </span>
+                </div>
+              </meter>
+          `}
       </div>
     `;
   }

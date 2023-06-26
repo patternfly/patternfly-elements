@@ -1,6 +1,6 @@
 .container {
   --pf-c-progress--GridGap: var(--pf-global--spacer--md, 1rem);
-  --pf-c-progress__bar--before--BackgroundColor: var(--pf-global--primary-color--100, #06c);
+  --pf-c-progress__bar--before--BackgroundColor: var(--pf-global--primary-color--100, #0066cc);
   --pf-c-progress__bar--Height: var(--pf-global--spacer--md, 1rem);
   --pf-c-progress__bar--BackgroundColor: var(--pf-global--BackgroundColor--light-100, #ffffff);
   --pf-c-progress__status-icon--Color: var(--pf-global--Color--100, #151515);
@@ -150,3 +150,45 @@ pf-icon {
   height: var(--pf-c-progress__indicator--Height);
   background-color: var(--pf-c-progress__indicator--BackgroundColor);
 }
+
+meter {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: var(--pf-c-progress__bar--Height);
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  background: none;
+  background-color: #0066cc33;
+}
+
+meter::-webkit-meter-bar {
+  background: none;
+  background-color: blue;
+  /* box-shadow: 0 5px 5px -5px #333 inset; */
+}
+
+meter::-moz-meter-bar {
+  background: none;
+  background-color: green;
+  background-size: 100% 100%;
+}
+
+.measure {
+  width: 100%;
+  height: var(--pf-c-progress__bar--Height);
+
+  display: block;
+}
+
+.measure > span {
+  height: inherit;
+  background-color: var(--pf-c-progress__bar--before--BackgroundColor);
+  background-size: 100% 100%;
+  display: block;
+  text-index: -9999px;
+}
+

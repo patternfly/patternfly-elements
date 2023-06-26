@@ -1,9 +1,9 @@
 <custom-panel-holder>
-  <pf-tab id="for-a" for="a" slot="tabs" disabled>A</pf-tab>
-  <pf-tab id="for-b" for="b" slot="tabs">B</pf-tab>
-  <pf-tab id="for-c" for="c" slot="tabs">C</pf-tab>
+  <pf-tab id="for-a" for="a" disabled>A</pf-tab>
 
   <pf-tabs>
+    <pf-tab id="for-b" slot="tab">B</pf-tab>
+    <pf-tab id="for-c" slot="tab">C</pf-tab>
     <pf-tab id="for-d" slot="tab">D</pf-tab>
     <pf-tab-panel id="a">A</pf-tab-panel>
     <pf-tab-panel id="b">B</pf-tab-panel>
@@ -12,19 +12,20 @@
     <pf-tab-panel id="e">E</pf-tab-panel>
   </pf-tabs>
 
-  <pf-tab id="for-e" for="e" slot="tabs">E</pf-tab>
+  <pf-tab id="for-e" for="e">E</pf-tab>
 </custom-panel-holder>
 
 
 <template id="tpl">
   <style>
-    :host { display: grid; }
-    header { display: flex; }
+    :host {
+      display: grid;
+      grid-template-columns: min-content auto min-content;
+      grid-template-rows: 1fr;
+      width: min-content;
+    }
   </style>
 
-  <header>
-    <slot name="tabs"></slot>
-  </header>
   <slot></slot>
 </template>
 
@@ -42,3 +43,8 @@
   })
 </script>
 
+<style>
+#for-a {
+  height: 100%;
+}
+</style>

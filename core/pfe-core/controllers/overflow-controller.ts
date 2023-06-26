@@ -21,6 +21,17 @@ export class OverflowController implements ReactiveController {
   overflowLeft = false;
   overflowRight = false;
 
+  static #instances = new Set<OverflowController>();
+
+  static {
+    // on resize check for overflows to add or remove scroll buttons
+    window.addEventListener('resize', () => {
+      for (const instance of this.#instances) {
+        instance.onScroll();
+      }
+    }, { capture: false });
+  }
+
   get firstItem(): HTMLElement | undefined {
     return this.#items.at(0);
   }
@@ -34,6 +45,19 @@ export class OverflowController implements ReactiveController {
     if (options?.hideOverflowButtons) {
       this.#hideOverflowButtons = options?.hideOverflowButtons;
     }
+    if (host.isConnected) {
+      OverflowController.#instances.add(this);
+    }
+  }
+
+  hostConnected() {
+    OverflowController.#instances.add(this);
+    this.onScroll();
+    this.#setOverflowState();
+  }
+
+  hostDisconnected() {
+    OverflowController.#instances.delete(this);
   }
 
   #setOverflowState(): void {
@@ -81,11 +105,6 @@ export class OverflowController implements ReactiveController {
   }
 
   update() {
-    this.#setOverflowState();
-  }
-
-  hostConnected(): void {
-    this.onScroll();
     this.#setOverflowState();
   }
 }

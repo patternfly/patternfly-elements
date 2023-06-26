@@ -3,10 +3,16 @@ import { property } from 'lit/decorators/property.js';
 
 import { cascades } from '@patternfly/pfe-core/decorators.js';
 
-import { BaseTabs } from './BaseTabs.js';
 import { PfTab } from './pf-tab.js';
 import { PfTabPanel } from './pf-tab-panel.js';
 
+import { TabsController } from './TabsController.js';
+import { OverflowController } from '@patternfly/pfe-core/controllers/overflow-controller.js';
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+import { html, LitElement } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
+
+import BaseStyles from './BaseTabs.css';
 import styles from './pf-tabs.css';
 
 /**
@@ -60,18 +66,8 @@ import styles from './pf-tabs.css';
  * @cssprop     {<color>} --pf-c-tabs__scroll-button--disabled--Color                 {@default `#d2d2d2`}
  */
 @customElement('pf-tabs')
-export class PfTabs extends BaseTabs {
-  static readonly styles = [...BaseTabs.styles, styles];
-
-  protected static readonly scrollTimeoutDelay = 150;
-
-  static isTab(element: HTMLElement): element is PfTab {
-    return element instanceof PfTab;
-  }
-
-  static isPanel(element: HTMLElement): element is PfTabPanel {
-    return element instanceof PfTabPanel;
-  }
+export class PfTabs extends LitElement {
+  static readonly styles = [BaseStyles, styles];
 
   @cascades('pf-tab', 'pf-tab-panel')
   @property({ reflect: true }) box: 'light' | 'dark' | null = null;
@@ -85,8 +81,65 @@ export class PfTabs extends BaseTabs {
   @cascades('pf-tab')
   @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'true';
 
-  protected get canShowScrollButtons(): boolean {
-    return !this.vertical;
+  /**
+   * Tab activation
+   * Tabs can be either [automatic](https://w3c.github.io/aria-practices/examples/tabs/tabs-automatic.html) activated
+   * or [manual](https://w3c.github.io/aria-practices/examples/tabs/tabs-manual.html)
+   */
+  @property({ reflect: true, type: Boolean }) manual = false;
+
+  #tabs = new TabsController(this, {
+    isTab: (x?: Node): x is PfTab => x instanceof PfTab,
+    isPanel: (x?: Node): x is PfTabPanel => x instanceof PfTabPanel,
+  });
+
+  #overflow = new OverflowController(this);
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.id ||= getRandomId(this.localName);
+  }
+
+  updated() {
+    const tabsList = this.shadowRoot?.getElementById('tabs');
+    if (tabsList) {
+      this.#overflow.init(tabsList, this.#tabs.tabs);
+    }
+  }
+
+  override render() {
+    return html`
+      <div part="container" class="${classMap({ overflow: this.#overflow.showScrollButtons })}">
+        <div part="tabs-container">${!this.#overflow.showScrollButtons ? '' : html`
+          <button id="previousTab" tabindex="-1"
+              aria-label="${this.getAttribute('label-scroll-left') ?? 'Scroll left'}"
+              ?disabled="${!this.#overflow.overflowLeft}"
+              @click="${this.#scrollLeft}">
+            <pf-icon icon="angle-left" set="fas" loading="eager"></pf-icon>
+          </button>`}
+          <slot id="tabs"
+                name="tab"
+                part="tabs"
+                role="tablist"
+                @scroll="${this.#overflow.onScroll}"></slot> ${!this.#overflow.showScrollButtons ? '' : html`
+          <button id="nextTab" tabindex="-1"
+              aria-label="${this.getAttribute('label-scroll-right') ?? 'Scroll right'}"
+              ?disabled="${!this.#overflow.overflowRight}"
+              @click="${this.#scrollRight}">
+            <pf-icon icon="angle-right" set="fas" loading="eager"></pf-icon>
+          </button>`}
+        </div>
+        <slot part="panels"></slot>
+      </div>
+    `;
+  }
+
+  #scrollLeft() {
+    this.#overflow.scrollLeft();
+  }
+
+  #scrollRight() {
+    this.#overflow.scrollRight();
   }
 }
 

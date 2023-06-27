@@ -23,11 +23,11 @@ export class PfTimestamp extends LitElement {
 
   @property({ reflect: true })
   get date() {
-    return this.#controller.date;
+    return this.timestamp.date;
   }
 
   set date(string) {
-    this.#controller.date = string;
+    this.timestamp.date = string;
   }
 
   @property({ reflect: true, attribute: 'date-format' }) dateFormat?: DateTimeFormat;
@@ -47,14 +47,14 @@ export class PfTimestamp extends LitElement {
   @property({ reflect: true, attribute: 'hour-12', converter: BooleanStringConverter }) hour12?: boolean;
 
   get isoString() {
-    return this.#controller.isoString;
+    return this.timestamp.isoString;
   }
 
   get time() {
-    return this.#controller.time;
+    return this.timestamp.time;
   }
 
-  #timestamp = new TimestampController(this);
+  timestamp = new TimestampController(this);
 
   willUpdate() {
     if (!this.displaySuffix && this.utc) {

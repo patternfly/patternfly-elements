@@ -24,6 +24,24 @@ export interface RenderKwargs {
   level?: number;
 }
 
+export class DocsMethodCounter {
+  counts: WeakMap<object, number>;
+
+  constructor() {
+    this.counts = new WeakMap();
+  }
+
+  increment(method: object) {
+    const methodCount = this.counts.get(method) || 0;
+    this.counts.set(method, methodCount + 1);
+  }
+
+  getCount(method: object) {
+    return this.counts.get(method);
+  }
+}
+
+
 export declare class DocsPageRenderer {
   public tagName: string;
   public manifest: Manifest;
@@ -68,6 +86,7 @@ export class DocsPage implements DocsPageRenderer {
   description?: string | null;
   summary?: string | null;
   docsTemplatePath?: string;
+  counter: DocsMethodCounter;
 
   constructor(
     public manifest: Manifest,
@@ -89,6 +108,7 @@ export class DocsPage implements DocsPageRenderer {
       DocsPage.#innerMD(`${Array.from({ length }, () => '#').join('')} ${header}`));
     this.templates.addFilter('stringifyParams', DocsPage.#stringifyParams);
     this.docsTemplatePath = options?.docsTemplatePath;
+    this.counter = new DocsMethodCounter();
   }
 
   #packageTagName(kwargs: RenderKwargs = {}): string {
@@ -136,13 +156,15 @@ export class DocsPage implements DocsPageRenderer {
     return this.templates.render('properties.njk', { content, properties, deprecated, ...kwargs });
   }
 
-  /** Render a talbe of element CSS Custom Properties */
+  /** Render a table of element CSS Custom Properties */
   renderCssCustomProperties(content: string, kwargs: RenderKwargs = {}) {
+    this.counter.increment(this.renderCssCustomProperties);
+    const count = this.counter.getCount(this.renderCssCustomProperties);
     const allCssProperties = this.manifest.getCssCustomProperties(this.#packageTagName(kwargs)) ?? [];
     const cssProperties = allCssProperties.filter(x => !x.deprecated);
     const deprecated = allCssProperties.filter(x => x.deprecated);
 
-    return this.templates.render('css-custom-properties.njk', { content, cssProperties, deprecated, ...kwargs });
+    return this.templates.render('css-custom-properties.njk', { content, cssProperties, deprecated, count, ...kwargs });
   }
 
   /** Render the list of element CSS Shadow Parts */
@@ -152,7 +174,7 @@ export class DocsPage implements DocsPageRenderer {
     const parts = allParts.filter(x => !x.deprecated);
     const deprecated = allParts.filter(x => x.deprecated);
 
-    return this.templates.render('css-shadow-parts.njk', { parts, deprecated, content, ...kwargs, });
+    return this.templates.render('css-shadow-parts.njk', { parts, deprecated, content, ...kwargs });
   }
 
   /** Render the list of events for the element */

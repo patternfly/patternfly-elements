@@ -183,21 +183,17 @@ export class PfProgress extends LitElement {
           ${markdown === 'html' ? html`
           <div id="bar" role="progressbar">
             <div class="indicator" style="${styleMap({ 'width': `${value}%` })}">
-              <div class="measure">
                 ${html`${this.#showInsideStatus() ? `${value}%` : ''}`}
-              </div>
             </div>
           </div>
           ` : markdown === 'progress' ?
-                html`<progress></progress>`
+                html`<progress min="0" max="100" value="${value}"></progress>`
             : html`
               <meter min="0" max="100" value="${value}">
-                <div class="measure">
-                  <span style="${styleMap({ 'width': `${value}%` })}">
-                    ${html`${this.#showInsideStatus() ? `${value}%` : ''}`}
-                  </span>
-                </div>
-              </meter>
+                  </meter>
+              <span style="${styleMap({ 'width': `${value}%` })}" data-value="${value}">
+                ${html`${this.#showInsideStatus() ? `${value}%` : ''}`}
+              </span>
           `}
       </div>
     `;

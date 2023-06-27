@@ -4,7 +4,7 @@ import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { TimestampController } from '@patternfly/pfe-core/controllers/timestamp-controller.js';
-import type { Format } from '@patternfly/pfe-core/controllers/timestamp-controller.js';
+import type { DateTimeFormat } from '@patternfly/pfe-core/controllers/timestamp-controller.js';
 
 import style from './pf-timestamp.css';
 
@@ -30,9 +30,9 @@ export class PfTimestamp extends LitElement {
     this.#controller.date = string;
   }
 
-  @property({ reflect: true, attribute: 'date-format' }) dateFormat?: Format;
+  @property({ reflect: true, attribute: 'date-format' }) dateFormat?: DateTimeFormat;
 
-  @property({ reflect: true, attribute: 'time-format' }) timeFormat?: Format;
+  @property({ reflect: true, attribute: 'time-format' }) timeFormat?: DateTimeFormat;
 
   @property({ attribute: false }) customFormat?: object;
 

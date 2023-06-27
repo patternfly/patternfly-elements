@@ -1,8 +1,8 @@
 import type { ReactiveController, ReactiveElement } from 'lit';
 
-export type Format = 'full' | 'long' | 'medium' | 'short';
+export type DateTimeFormat = 'full' | 'long' | 'medium' | 'short';
 
-type FormatOptions = Partial<[Format, Format, object, string, string, boolean, boolean, boolean]>;
+type FormatOptions = Partial<[DateTimeFormat, DateTimeFormat, object, string, string, boolean, boolean, boolean]>;
 
 export class TimestampController implements ReactiveController {
   get date() {

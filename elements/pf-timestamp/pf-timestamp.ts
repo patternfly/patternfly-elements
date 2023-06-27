@@ -54,7 +54,7 @@ export class PfTimestamp extends LitElement {
     return this.#controller.time([this.dateFormat, this.timeFormat, this.customFormat, this.displaySuffix, this.locale, this.relative, this.utc, this.hour12]);
   }
 
-  #controller = new TimestampController(this);
+  #timestamp = new TimestampController(this);
 
   willUpdate() {
     if (!this.displaySuffix && this.utc) {

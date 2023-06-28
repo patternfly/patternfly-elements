@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import type { ComplexAttributeConverter } from 'lit';
 
 import { LitElement, html } from 'lit';
@@ -56,9 +57,16 @@ export class PfTimestamp extends LitElement {
 
   #timestamp = new TimestampController(this);
 
-  willUpdate() {
+  willUpdate(changedProperties: Map<string, any>) {
     if (!this.displaySuffix && this.utc) {
       this.displaySuffix = 'UTC';
+    }
+
+    for (const [prop] of changedProperties) {
+      if (this.#timestamp.isConfigOption(prop)) {
+        // @ts-ignore
+        this.#timestamp[prop] = this[prop];
+      }
     }
   }
 
@@ -66,15 +74,6 @@ export class PfTimestamp extends LitElement {
     return html`
       <time datetime="${this.isoString}">${this.time}</time>
     `;
-  }
-
-  updated(changedProperties: Map<string, string | object | boolean>) {
-    for (const [prop] of changedProperties) {
-      // @todo
-      // if (isTimestampProp(prop)) {
-      //   this.timestamp[prop]= this[prop];
-      // }
-    }
   }
 }
 

@@ -2,6 +2,10 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 
 export type DateTimeFormat = 'full' | 'long' | 'medium' | 'short';
 
+const options = ['dateFormat', 'timeFormat', 'customFormat', 'displaySuffix', 'locale', 'relative', 'utc', 'hour12'] as const;
+
+type ConfigOption = (typeof options)[number];
+
 export class TimestampController implements ReactiveController {
   #date = new Date();
   #isoString = this.#date.toISOString();
@@ -20,16 +24,16 @@ export class TimestampController implements ReactiveController {
   }
 
   get time() {
-    const { dateStyle, timeStyle, customFormat, displaySuffix, locale, relative, utc, hour12 } = this;
+    const { dateFormat: dateStyle, timeFormat: timeStyle, customFormat, displaySuffix, locale, relative, utc, hour12 } = this;
     const timeZone = utc ? 'UTC' : undefined;
     const formatOptions = customFormat || { hour12, dateStyle, timeStyle, timeZone };
     const formattedDate = this.#date.toLocaleString(locale, formatOptions);
     return relative ? this.#getTimeRelative(this.#date, locale) : `${formattedDate}${displaySuffix ? ` ${displaySuffix}` : ''}`;
   }
 
-  // Config
-  dateStyle?: DateTimeFormat;
-  timeStyle?: DateTimeFormat;
+  // Config options
+  dateFormat?: DateTimeFormat;
+  timeFormat?: DateTimeFormat;
   customFormat?: object;
   displaySuffix?: string;
   locale?: string;
@@ -42,6 +46,10 @@ export class TimestampController implements ReactiveController {
   }
 
   hostConnected?(): void
+
+  isConfigOption(prop: any): prop is ConfigOption {
+    return options.includes(prop);
+  }
 
   /**
    * Based off of Github Relative Time

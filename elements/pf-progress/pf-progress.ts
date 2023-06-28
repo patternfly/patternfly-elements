@@ -6,6 +6,8 @@ import { query } from 'lit/decorators/query.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
+
 import styles from './pf-progress.css';
 
 const ICONS = new Map(Object.entries({
@@ -120,83 +122,102 @@ const ICONS = new Map(Object.entries({
 export class PfProgress extends LitElement {
   static readonly styles = [styles];
 
+  static readonly formAssociated = true;
+
+  #calculatedPercentage = 0;
+
+  #logger = new Logger(this);
+
   @property({ reflect: true, type: Number })
     value = 0;
 
-  @property({ reflect: true })
+  @property()
     title = '';
 
-  @property({ reflect: true })
-    label = '';
+  @property({ attribute: 'aria-label' })
+    ariaLabel = '';
 
-  @property({ reflect: true })
+  @property({ type: Number })
+    max = 100;
+
+  @property({ type: Number })
+    min = 0;
+
+  @property()
     size: 'sm' | 'lg' | '' = '';
 
   @property({ reflect: true, attribute: 'measure-location' })
     measureLocation: '' | 'outside' | 'inside' | 'none' = '';
 
-  @property({ reflect: true })
-    markdown: 'html' | 'progress' | 'meter' = 'html';
-
-  @property({ reflect: true })
+  @property()
     variant: '' | 'success' | 'danger' | 'warning' = '';
 
-  @query('#bar')
-    bar!: HTMLElement;
+  @query('progress')
+    progressElement!: HTMLProgressElement;
 
   #showInsideStatus() {
     return this.measureLocation === 'inside';
   }
 
-  async #updateAccessibility() {
-    !!await this.updateComplete;
-
-    const { bar, value } = this;
-    bar.setAttribute('aria-valuenow', `${value}`);
-    if (this.title.length > 0 && this.bar !== null) {
-      this.bar.setAttribute('aria-labelledby', 'title');
-    } else if (this.bar !== null) {
-      this.bar.setAttribute('aria-label', this.label);
+  #calculatePercentage() {
+    const { value, max, min } = this;
+    if (value === null ) {
+      this.#logger.warn(`A progress element requires a value attribute.`);
+      return;
     }
+    const percentage = (value - min) / (max - min);
+    this.#calculatedPercentage = Math.round(percentage * 100);
   }
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
+    this.#calculatePercentage();
     this.#updateAccessibility();
   }
 
+  #updateAccessibility() {
+    const { value, title, ariaLabel, max, progressElement } = this;
+    if (progressElement) {
+      progressElement.setAttribute('aria-valuemin', '0');
+      if (title || ariaLabel) {
+        progressElement.setAttribute('aria-label', `${title ? title : ariaLabel}`);
+      }
+      if (max != null) {
+        progressElement.setAttribute('aria-valuemax', `${max}`);
+      }
+      if (value) {
+        progressElement.setAttribute('aria-valuenow', `${value}`);
+      }
+    }
+  }
+
   render() {
-    const { size, measureLocation, variant, value, title, markdown } = this;
+    const { size, measureLocation, variant, title } = this;
     const icon = variant && ICONS.get(variant)?.icon;
     const singleLine = title.length === 0 ? 'singleline' : '';
 
     return html`
-      <div part="container" class="container ${classMap({ [size]: !!size, [measureLocation]: !!measureLocation, [variant]: !!variant, [singleLine]: !!singleLine })}">
-        <div id="title" class="title">${title}</div>
-        <div class="status">
-          ${html`${!this.#showInsideStatus() ? `${value}%` : ''}`}
-          <pf-icon set="fas"
-                   size="md"
-                   ?hidden="${!icon}"
-                   icon="${ifDefined(icon)}"></pf-icon>
-        </div>
-          ${markdown === 'html' ? html`
-          <div id="bar" role="progressbar">
-            <div class="indicator" style="${styleMap({ 'width': `${value}%` })}">
-                ${html`${this.#showInsideStatus() ? `${value}%` : ''}`}
-            </div>
-          </div>
-          ` : markdown === 'progress' ?
-                html`<progress min="0" max="100" value="${value}"></progress>`
-            : html`
-              <meter min="0" max="100" value="${value}">
-                  </meter>
-              <span style="${styleMap({ 'width': `${value}%` })}" data-value="${value}">
-                ${html`${this.#showInsideStatus() ? `${value}%` : ''}`}
-              </span>
-          `}
-      </div>
-    `;
+      <div
+        class="container ${classMap({ [size]: !!size, [measureLocation]: !!measureLocation, [variant]: !!variant, [singleLine]: !!singleLine })}">
+        
+        ${title ?
+          html`
+          <div id="title" class="title">${title}</div>` : ''}
+          
+          ${measureLocation !== 'none' ? html`<div class="status">
+            ${html`${!this.#showInsideStatus() ? `${this.#calculatedPercentage}%` : ''}`}
+            <pf-icon set="fas"
+                  size="md"
+                  ?hidden="${!icon}"
+                  icon="${ifDefined(icon)}"></pf-icon>
+          </div>` : ''}
+            
+          <progress tabindex="0" max="100" value="${this.#calculatedPercentage}"></progress>
+            
+          ${this.#showInsideStatus() ? html`
+            <span class="progress-span" style="${styleMap({ 'width': `${this.#calculatedPercentage}%` })}" data-value="${this.#calculatedPercentage}%"></span>`
+            : ''}    
+      </div>`;
   }
 }
 

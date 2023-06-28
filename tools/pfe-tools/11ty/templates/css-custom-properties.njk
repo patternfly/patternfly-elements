@@ -10,7 +10,7 @@
 {%- endmacro -%}
 
 <section class="api band css-custom-properties api-properties">
-  <a id="styling-hooks"></a>
+  {% if not hasStylingHooks %}<a id="styling-hooks"></a>{% endif %}
   {{ header | mdHeading(level) | safe }} {% if not content and not cssProperties.length %}
 
   <em>None</em> {%- else -%}

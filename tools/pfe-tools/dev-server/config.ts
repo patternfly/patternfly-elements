@@ -4,9 +4,9 @@ import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsP
 import type { Context, Next } from 'koa';
 
 import { existsSync } from 'node:fs';
-import { dirname } from 'node:path';
+import { dirname, resolve } from 'node:path';
 import { readFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import rollupReplace from '@rollup/plugin-replace';
 import nunjucks from 'nunjucks';
@@ -19,9 +19,15 @@ import { importMapsPlugin } from '@web/dev-server-import-maps';
 import { promisify } from 'node:util';
 
 import Router from '@koa/router';
+
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { render } from '@lit-labs/ssr';
+import { RenderResultReadable } from '@lit-labs/ssr/lib/render-result-readable.js';
+
 import { Manifest, type DemoRecord } from '../custom-elements-manifest/lib/Manifest.js';
 import { makeDemoEnv } from '../environment.js';
 import { getPfeConfig, deslugify, type PfeConfig } from '../config.js';
+import { html } from 'lit';
 
 const glob = promisify(_glob);
 const replace = fromRollup(rollupReplace);
@@ -44,6 +50,8 @@ export interface PfeDevServerConfigOptions extends Base {
   loadDemo?: boolean;
   plugins?: Plugin[];
   watchFiles?: string;
+  /** modules to import at ssr time, relative to cwd */
+  ssrModules?: string[];
 }
 
 type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & { site: Required<PfeConfig['site']> };
@@ -151,6 +159,16 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
             }
           });
       app.use(router.routes());
+      app.use(async (ctx, next) => {
+        if (ctx.path.endsWith('/ssr/')) {
+          await Promise.all(options.ssrModules?.map(x =>
+            import(pathToFileURL(resolve(process.cwd(), x)).href)));
+          const ssrResult = render(unsafeHTML(ctx.body));
+          ctx.type = 'text/html';
+          ctx.body = new RenderResultReadable(ssrResult);
+        }
+        await next();
+      });
       const files = await glob(options.watchFiles, { cwd: process.cwd() });
       for (const file of files) {
         fileWatcher.add(file);

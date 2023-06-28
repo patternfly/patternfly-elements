@@ -1,4 +1,5 @@
 import type { ReactiveController, ReactiveElement } from 'lit';
+import { isServer } from 'lit';
 
 import { bound } from '../decorators/bound.js';
 import { Logger } from './logger.js';
@@ -33,7 +34,7 @@ export interface SlotsConfig {
   deprecations?: Record<string, string>;
 }
 
-function isObjectConfigSpread(config: ([SlotsConfig] | (string | null)[])): config is [SlotsConfig] {
+function isObjectConfigSpread(config: ([SlotsConfig] | SlotName[])): config is [SlotsConfig] {
   return config.length === 1 && typeof config[0] === 'object' && config[0] !== null;
 }
 
@@ -42,28 +43,34 @@ function isObjectConfigSpread(config: ([SlotsConfig] | (string | null)[])): conf
  * for the default slot, look for direct children not assigned to a slot
  */
 const isSlot =
-  <T extends Element = Element>(n: string | typeof SlotController.anonymous) =>
+  <T extends Element = Element>(n: SlotName) =>
     (child: Element): child is T =>
         n === SlotController.anonymous ? !child.hasAttribute('slot')
       : child.getAttribute('slot') === n;
 
+type SlotName = string | null | symbol;
+
 export class SlotController implements ReactiveController {
   public static anonymous = Symbol('anonymous slot');
 
-  private nodes = new Map<string | typeof SlotController.anonymous, Slot>();
+  private nodes = new Map<SlotName, Slot>();
 
   private logger: Logger;
 
   private firstUpdated = false;
 
-  private mo = new MutationObserver(this.onMutation);
+  private mo?: MutationObserver;
 
-  private slotNames: (string | null)[];
+  private slotNames: SlotName[];
 
   private deprecations: Record<string, string> = {};
 
-  constructor(public host: ReactiveElement, ...config: ([SlotsConfig] | (string | null)[])) {
+  constructor(public host: ReactiveElement, ...config: ([SlotsConfig] | SlotName[])) {
     this.logger = new Logger(this.host);
+    // TODO: server export assertion
+    if (!isServer) {
+      this.mo = new MutationObserver(this.onMutation);
+    }
 
     if (isObjectConfigSpread(config)) {
       const [{ slots, deprecations }] = config;
@@ -83,7 +90,7 @@ export class SlotController implements ReactiveController {
   hostConnected() {
     this.host.addEventListener('slotchange', this.onSlotChange as EventListener);
     this.firstUpdated = false;
-    this.mo.observe(this.host, { childList: true });
+    this.mo?.observe(this.host, { childList: true });
     this.init();
   }
 
@@ -95,19 +102,31 @@ export class SlotController implements ReactiveController {
   }
 
   hostDisconnected() {
-    this.mo.disconnect();
+    this.mo?.disconnect();
   }
 
   /**
    * Returns a boolean statement of whether or not any of those slots exists in the light DOM.
    *
-   * @param {String|Array} name The slot name.
-   * @example this.hasSlotted("header");
+   * @example this.hasSlotted('header');
    */
-  hasSlotted(...names: string[]): boolean {
+  hasSlotted(...names: SlotName[]): boolean {
     if (!names.length) {
       this.logger.warn(`Please provide at least one slot name for which to search.`);
       return false;
+    } else if (isServer) {
+      // TODO: anonymous slot
+      const attrSlotted: Set<SlotName> =
+        new Set(this.host.getAttribute('has-slotted')?.split(',').map(x => {
+          const trimmed = x.trim();
+          if (trimmed === 'anonymous') {
+            return SlotController.anonymous;
+          } else {
+            return trimmed;
+          }
+        }));
+      return names.some(name =>
+        attrSlotted.has(name));
     } else {
       return names.some(x =>
         this.nodes.get(x)?.hasContent ?? false);
@@ -163,18 +182,18 @@ export class SlotController implements ReactiveController {
     }
   }
 
-  private getChildrenForSlot<T extends Element = Element>(name: string | typeof SlotController.anonymous): T[] {
+  private getChildrenForSlot<T extends Element = Element>(name: SlotName): T[] {
     const children = Array.from(this.host.children) as T[];
     return children.filter(isSlot(name));
   }
 
-  @bound private initSlot(slotName: string | null) {
+  @bound private initSlot(slotName: SlotName) {
     const name = slotName || SlotController.anonymous;
     const elements = this.nodes.get(name)?.slot?.assignedElements?.() ?? this.getChildrenForSlot(name);
-    const selector = slotName ? `slot[name="${slotName}"]` : 'slot:not([name])';
+    const selector = typeof slotName === 'string' ? `slot[name="${slotName}"]` : 'slot:not([name])';
     const slot = this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
     const hasContent = !!elements.length;
-    this.nodes.set(name, { elements, name: slotName ?? '', hasContent, slot });
+    this.nodes.set(name, { elements, name: typeof slotName === 'symbol' || !slotName ? '' : slotName, hasContent, slot });
     this.logger.log(slotName, hasContent);
   }
 

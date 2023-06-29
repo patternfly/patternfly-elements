@@ -1,12 +1,12 @@
+import type { PropertyValues } from 'lit';
 import { LitElement, html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { query } from 'lit/decorators/query.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
 import styles from './pf-progress.css';
 
@@ -45,10 +45,6 @@ const ICONS = new Map(Object.entries({
  *          Margin left of the status icon.
  *          {@default `0.5rem`}
  *
- * @cssprop {<length>} --pf-c-progress__bar--before--Opacity
- *          Opacity of the progress bar.
- *          {@default `.2`}
- *
  * @cssprop {<length>} --pf-c-progress__indicator--Height
  *          Height of the progress bar indicator.
  *          {@default `1rem`}
@@ -81,21 +77,9 @@ const ICONS = new Map(Object.entries({
  *          Color of the status icon when variant is danger.
  *          {@default `#c9190b`}
  *
- * @cssprop {<length>} --pf-c-progress--m-inside__indicator--MinWidth
- *          Minimum width of the progress bar indicator when measure location is inside.
- *          {@default `2rem`}
- *
- * @cssprop {<color>} --pf-c-progress--m-inside__measure--Color
- *          Color of the progress bar measure when measure location is inside.
- *          {@default `#ffffff`}
- *
  * @cssprop {<color>} --pf-c-progress--m-success--m-inside__measure--Color
  *          Color of the progress bar measure when variant is success and measure location is inside.
  *          {@default `#ffffff`}
- *
- * @cssprop {<length>} --pf-c-progress--m-inside__measure--FontSize
- *          Font size of the progress bar measure when measure location is inside.
- *          {@default `0.875rem`}
  *
  * @cssprop {<length>} --pf-c-progress--m-outside__measure--FontSize
  *          Font size of the progress bar measure when measure location is outside.
@@ -109,10 +93,6 @@ const ICONS = new Map(Object.entries({
  *          Font size of the progress bar description when the size is small.
  *          {@default `0.875rem`}
  *
- * @cssprop {<length>} --pf-c-progress--m-sm__measure--FontSize
- *          Font size of the progress bar measure when the size is small.
- *          {@default `0.875rem`}
- *
  * @cssprop {<length>} --pf-c-progress--m-lg__bar--Height
  *          Height of the progress bar when the size is large.
  *          {@default `1.5rem`}
@@ -124,70 +104,52 @@ export class PfProgress extends LitElement {
 
   static readonly formAssociated = true;
 
-  #calculatedPercentage = 0;
+  #internals = new InternalsController(this);
 
-  #logger = new Logger(this);
-
+  /** Represents the value of the progress bar */
   @property({ reflect: true, type: Number })
     value = 0;
 
+  /** Title above the progress bar */
   @property()
     title = '';
 
-  @property({ attribute: 'aria-label' })
-    ariaLabel = '';
-
-  @property({ type: Number })
+  /** Maximum value for the progress bar */
+  @property({ type: Number, reflect: true })
     max = 100;
 
-  @property({ type: Number })
+  /** Minimum value for the progress bar */
+  @property({ type: Number, reflect: true })
     min = 0;
 
+  /** Size of the progress bar (height) */
   @property()
     size: 'sm' | 'lg' | '' = '';
 
+  /** Where the percentage will be displayed with the progress element */
   @property({ reflect: true, attribute: 'measure-location' })
     measureLocation: '' | 'outside' | 'inside' | 'none' = '';
 
+  /** Variant of the progress bar */
   @property()
     variant: '' | 'success' | 'danger' | 'warning' = '';
 
-  @query('progress')
-    progressElement!: HTMLProgressElement;
-
-  #showInsideStatus() {
-    return this.measureLocation === 'inside';
-  }
-
-  #calculatePercentage() {
-    const { value, max, min } = this;
-    if (value === null ) {
-      this.#logger.warn(`A progress element requires a value attribute.`);
-      return;
+  get #calculatedPercentage(): number {
+    const { value, min, max } = this;
+    const percentage = Math.round((value - min) / (max - min) * 100);
+    if (isNaN(percentage) || percentage < 0) {
+      return 0;
     }
-    const percentage = (value - min) / (max - min);
-    this.#calculatedPercentage = Math.round(percentage * 100);
+    if (percentage > 100) {
+      return 100;
+    }
+    return percentage;
   }
 
-  connectedCallback(): void {
-    super.connectedCallback();
-    this.#calculatePercentage();
-    this.#updateAccessibility();
-  }
-
-  #updateAccessibility() {
-    const { value, title, ariaLabel, max, progressElement } = this;
-    if (progressElement) {
-      progressElement.setAttribute('aria-valuemin', '0');
-      if (title || ariaLabel) {
-        progressElement.setAttribute('aria-label', `${title ? title : ariaLabel}`);
-      }
-      if (max != null) {
-        progressElement.setAttribute('aria-valuemax', `${max}`);
-      }
-      if (value) {
-        progressElement.setAttribute('aria-valuenow', `${value}`);
-      }
+  willUpdate(_changedProperties: PropertyValues<this>) {
+    super.willUpdate(_changedProperties);
+    if ( _changedProperties.has('value') ) {
+      this.#internals.setFormValue(String(this.value));
     }
   }
 
@@ -199,24 +161,40 @@ export class PfProgress extends LitElement {
     return html`
       <div
         class="container ${classMap({ [size]: !!size, [measureLocation]: !!measureLocation, [variant]: !!variant, [singleLine]: !!singleLine })}">
-        
+
         ${title ?
           html`
-          <div id="title" class="title">${title}</div>` : ''}
-          
-          ${measureLocation !== 'none' ? html`<div class="status">
-            ${html`${!this.#showInsideStatus() ? `${this.#calculatedPercentage}%` : ''}`}
+          <div 
+            id="title" 
+            class="title" 
+            aria-hidden="true">
+              ${title}
+          </div>` : ''}
+
+          ${measureLocation !== 'none' ? html`<div class="status" aria-hidden="true">
+            ${html`${measureLocation === 'inside' ? `${this.#calculatedPercentage}%` : ''}`}
             <pf-icon set="fas"
                   size="md"
                   ?hidden="${!icon}"
                   icon="${ifDefined(icon)}"></pf-icon>
           </div>` : ''}
-            
-          <progress tabindex="0" max="100" value="${this.#calculatedPercentage}"></progress>
-            
-          ${this.#showInsideStatus() ? html`
-            <span class="progress-span" style="${styleMap({ 'width': `${this.#calculatedPercentage}%` })}" data-value="${this.#calculatedPercentage}%"></span>`
-            : ''}    
+
+          <progress 
+            tabindex="0" 
+            max="100" 
+            value="${this.#calculatedPercentage}" 
+            aria-valuemin="0" 
+            aria-valuenow="${this.#calculatedPercentage}" 
+            aria-valuemax="100" 
+            aria-labelledby="title">
+          </progress>
+
+          ${measureLocation === 'inside' ? html`
+            <span 
+              class="progress-span" 
+              style="${styleMap({ 'width': `${this.#calculatedPercentage}%` })}" 
+              data-value="${this.#calculatedPercentage}%"></span>`
+            : ''}
       </div>`;
   }
 }

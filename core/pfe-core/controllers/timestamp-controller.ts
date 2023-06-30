@@ -2,12 +2,33 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 
 export type DateTimeFormat = 'full' | 'long' | 'medium' | 'short';
 
-const options = ['dateFormat', 'timeFormat', 'customFormat', 'displaySuffix', 'locale', 'relative', 'utc', 'hour12'] as const;
+interface Options {
+  dateFormat?: DateTimeFormat;
+  timeFormat?: DateTimeFormat;
+  customFormat?: object;
+  displaySuffix?: string;
+  locale?: string;
+  relative?: boolean;
+  utc?: boolean;
+  hour12?: boolean;
+}
 
-type ConfigOption = (typeof options)[number];
+const defaults: Options = {
+  dateFormat: 'short',
+  timeFormat: 'short',
+  customFormat: {},
+  displaySuffix: '',
+  locale: '',
+  relative: false,
+  utc: false,
+  hour12: false
+};
+
+type Option = keyof Options;
 
 export class TimestampController implements ReactiveController {
   #date = new Date();
+
   #isoString = this.#date.toISOString();
 
   get date() {
@@ -24,31 +45,39 @@ export class TimestampController implements ReactiveController {
   }
 
   get time() {
-    const { dateFormat: dateStyle, timeFormat: timeStyle, customFormat, displaySuffix, locale, relative, utc, hour12 } = this;
+    const { dateFormat: dateStyle, timeFormat: timeStyle, customFormat, displaySuffix, locale, relative, utc, hour12 } = this.options;
     const timeZone = utc ? 'UTC' : undefined;
     const formatOptions = customFormat || { hour12, dateStyle, timeStyle, timeZone };
     const formattedDate = this.#date.toLocaleString(locale, formatOptions);
     return relative ? this.#getTimeRelative(this.#date, locale) : `${formattedDate}${displaySuffix ? ` ${displaySuffix}` : ''}`;
   }
 
-  // Config options
-  dateFormat?: DateTimeFormat;
-  timeFormat?: DateTimeFormat;
-  customFormat?: object;
-  displaySuffix?: string;
-  locale?: string;
-  relative?: boolean;
-  utc?: boolean;
-  hour12?: boolean;
+  options: Options;
 
-  constructor(host: ReactiveElement) {
+  constructor(host: ReactiveElement, options?: Options) {
     host.addController(this);
+    this.options = {};
+    for (const [name, value] of Object.entries(defaults)) {
+      if (this.isOption(name)) {
+        this.options[name] = options?.[name] ?? value;
+      }
+      // @todo create decorator?
+      Object.defineProperty(this.options, name, {
+        get() {
+          return this.options?.[name];
+        },
+        set(value) {
+          this.options[name] = value;
+          host.requestUpdate();
+        },
+      });
+    }
   }
 
   hostConnected?(): void
 
-  isConfigOption(prop: any): prop is ConfigOption {
-    return options.includes(prop);
+  isOption(prop: string): prop is Option {
+    return prop in defaults;
   }
 
   /**

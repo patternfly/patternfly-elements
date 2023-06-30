@@ -63,9 +63,9 @@ export class PfTimestamp extends LitElement {
     }
 
     for (const [prop] of changedProperties) {
-      if (this.#timestamp.isConfigOption(prop)) {
+      if (this.#timestamp.isOption(prop)) {
         // @ts-ignore
-        this.#timestamp[prop] = this[prop];
+        this.#timestamp.options[prop] = this[prop];
       }
     }
   }

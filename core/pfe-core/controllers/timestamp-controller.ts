@@ -27,6 +27,10 @@ const defaults: Options = {
 type Option = keyof Options;
 
 export class TimestampController implements ReactiveController {
+  static #isOption(prop: string): prop is Option {
+    return prop in defaults;
+  }
+
   #date = new Date();
 
   #isoString = this.#date.toISOString();
@@ -45,29 +49,29 @@ export class TimestampController implements ReactiveController {
   }
 
   get time() {
-    const { dateFormat: dateStyle, timeFormat: timeStyle, customFormat, displaySuffix, locale, relative, utc, hour12 } = this.options;
+    const { dateFormat: dateStyle, timeFormat: timeStyle, customFormat, displaySuffix, locale, relative, utc, hour12 } = this.#options;
     const timeZone = utc ? 'UTC' : undefined;
     const formatOptions = customFormat || { hour12, dateStyle, timeStyle, timeZone };
     const formattedDate = this.#date.toLocaleString(locale, formatOptions);
     return relative ? this.#getTimeRelative(this.#date, locale) : `${formattedDate}${displaySuffix ? ` ${displaySuffix}` : ''}`;
   }
 
-  options: Options;
+  #options: Options;
 
   constructor(host: ReactiveElement, options?: Options) {
     host.addController(this);
-    this.options = {};
+    this.#options = {};
     for (const [name, value] of Object.entries(defaults)) {
-      if (this.isOption(name)) {
-        this.options[name] = options?.[name] ?? value;
+      if (TimestampController.#isOption(name)) {
+        this.#options[name] = options?.[name] ?? value;
       }
       // @todo create decorator?
-      Object.defineProperty(this.options, name, {
+      Object.defineProperty(this, name, {
         get() {
-          return this.options?.[name];
+          return this.#options?.[name];
         },
         set(value) {
-          this.options[name] = value;
+          this.#options[name] = value;
           host.requestUpdate();
         },
       });
@@ -75,10 +79,6 @@ export class TimestampController implements ReactiveController {
   }
 
   hostConnected?(): void
-
-  isOption(prop: string): prop is Option {
-    return prop in defaults;
-  }
 
   /**
    * Based off of Github Relative Time

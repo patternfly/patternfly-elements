@@ -1,11 +1,13 @@
-/* eslint-disable no-debugger */
-import type { ComplexAttributeConverter } from 'lit';
+import type { ComplexAttributeConverter, PropertyValues } from 'lit';
 
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { TimestampController } from '@patternfly/pfe-core/controllers/timestamp-controller.js';
-import type { DateTimeFormat } from '@patternfly/pfe-core/controllers/timestamp-controller.js';
+
+import {
+  TimestampController,
+  type DateTimeFormat,
+} from '@patternfly/pfe-core/controllers/timestamp-controller.js';
 
 import style from './pf-timestamp.css';
 
@@ -21,15 +23,6 @@ const BooleanStringConverter: ComplexAttributeConverter = {
 @customElement('pf-timestamp')
 export class PfTimestamp extends LitElement {
   static readonly styles = [style];
-
-  @property({ reflect: true })
-  get date() {
-    return this.#timestamp.date;
-  }
-
-  set date(string) {
-    this.#timestamp.date = string;
-  }
 
   @property({ reflect: true, attribute: 'date-format' }) dateFormat?: DateTimeFormat;
 
@@ -47,6 +40,15 @@ export class PfTimestamp extends LitElement {
 
   @property({ reflect: true, attribute: 'hour-12', converter: BooleanStringConverter }) hour12?: boolean;
 
+  @property({ reflect: true })
+  get date() {
+    return this.#timestamp.date;
+  }
+
+  set date(string) {
+    this.#timestamp.date = string;
+  }
+
   get isoString() {
     return this.#timestamp.isoString;
   }
@@ -57,22 +59,15 @@ export class PfTimestamp extends LitElement {
 
   #timestamp = new TimestampController(this);
 
-  willUpdate(changedProperties: Map<string, any>) {
-    if (!this.displaySuffix && this.utc) {
-      this.displaySuffix = 'UTC';
-    }
-
+  willUpdate(changedProperties: PropertyValues<this>) {
     for (const [prop] of changedProperties) {
-      if (this.#timestamp.isOption(prop)) {
-        // @ts-ignore
-        this.#timestamp.options[prop] = this[prop];
-      }
+      this.#timestamp.set(prop, this[prop as keyof this]);
     }
   }
 
   render() {
     return html`
-      <time datetime="${this.isoString}">${this.time}</time>
+      <time datetime="${this.#timestamp.isoString}">${this.#timestamp.time}</time>
     `;
   }
 }

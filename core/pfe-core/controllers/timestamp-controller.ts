@@ -1,33 +1,31 @@
-import type { ReactiveController, ReactiveElement } from 'lit';
+import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
 export type DateTimeFormat = 'full' | 'long' | 'medium' | 'short';
 
-interface Options {
-  dateFormat?: DateTimeFormat;
-  timeFormat?: DateTimeFormat;
-  customFormat?: object;
-  displaySuffix?: string;
-  locale?: string;
-  relative?: boolean;
-  utc?: boolean;
-  hour12?: boolean;
+export interface TimestampOptions {
+  dateFormat: DateTimeFormat;
+  timeFormat: DateTimeFormat;
+  customFormat?: Intl.DateTimeFormatOptions;
+  displaySuffix: string;
+  locale: Intl.LocalesArgument;
+  relative: boolean;
+  utc: boolean;
+  hour12: boolean;
 }
 
-const defaults: Options = {
+const defaults = {
   dateFormat: 'short',
   timeFormat: 'short',
-  customFormat: {},
+  customFormat: undefined,
   displaySuffix: '',
-  locale: '',
+  locale: undefined,
   relative: false,
   utc: false,
   hour12: false
-};
-
-type Option = keyof Options;
+} as const;
 
 export class TimestampController implements ReactiveController {
-  static #isOption(prop: string): prop is Option {
+  static #isTimestampOptionKey(prop: PropertyKey): prop is keyof TimestampOptions {
     return prop in defaults;
   }
 
@@ -35,8 +33,12 @@ export class TimestampController implements ReactiveController {
 
   #isoString = this.#date.toISOString();
 
+  #options: TimestampOptions = defaults;
+
+  #host: ReactiveControllerHost;
+
   get date() {
-    return this.#date.toLocaleString();
+    return this.#date.toLocaleString(this.#options.locale);
   }
 
   set date(string) {
@@ -48,33 +50,35 @@ export class TimestampController implements ReactiveController {
     return this.#isoString;
   }
 
-  get time() {
-    const { dateFormat: dateStyle, timeFormat: timeStyle, customFormat, displaySuffix, locale, relative, utc, hour12 } = this.#options;
-    const timeZone = utc ? 'UTC' : undefined;
-    const formatOptions = customFormat || { hour12, dateStyle, timeStyle, timeZone };
-    const formattedDate = this.#date.toLocaleString(locale, formatOptions);
-    return relative ? this.#getTimeRelative(this.#date, locale) : `${formattedDate}${displaySuffix ? ` ${displaySuffix}` : ''}`;
+  get #timeOptions(): Intl.DateTimeFormatOptions {
+    if (this.#options.customFormat) {
+      return this.#options.customFormat;
+    } else {
+      const { dateFormat: dateStyle, timeFormat: timeStyle, utc, hour12 } = this.#options;
+      const timeZone = utc ? 'UTC' : undefined;
+      return { hour12, dateStyle, timeStyle, timeZone };
+    }
   }
 
-  #options: Options;
-
-  constructor(host: ReactiveElement, options?: Options) {
-    host.addController(this);
-    this.#options = {};
-    for (const [name, value] of Object.entries(defaults)) {
-      if (TimestampController.#isOption(name)) {
-        this.#options[name] = options?.[name] ?? value;
+  get time() {
+    if (this.#options.relative) {
+      return this.#getTimeRelative();
+    } else {
+      let { displaySuffix, locale } = this.#options;
+      if (this.#options.utc) {
+        displaySuffix ||= 'UTC';
       }
-      // @todo create decorator?
-      Object.defineProperty(this, name, {
-        get() {
-          return this.#options?.[name];
-        },
-        set(value) {
-          this.#options[name] = value;
-          host.requestUpdate();
-        },
-      });
+      return `${this.#date.toLocaleString(locale, this.#timeOptions)} ${displaySuffix ?? ''}`
+        .trim();
+    }
+  }
+
+  constructor(host: ReactiveControllerHost, options?: Partial<TimestampOptions>) {
+    this.#host = host;
+    host.addController(this);
+    for (const [name, value] of Object.entries(this.#options)) {
+      // @ts-expect-error: seems typescript compiler isn't up to the task here
+      this.#options[name] = options?.[name] ?? value;
     }
   }
 
@@ -84,8 +88,10 @@ export class TimestampController implements ReactiveController {
    * Based off of Github Relative Time
    * https://github.com/github/time-elements/blob/master/src/relative-time.js
    */
-  #getTimeRelative(date: Date, locale?: string) {
-    const rtf = new Intl.RelativeTimeFormat(locale, { localeMatcher: 'best fit', numeric: 'auto', style: 'long' });
+  #getTimeRelative() {
+    const date = this.#date;
+    const { locale } = this.#options;
+    const rtf = new Intl.RelativeTimeFormat(locale as string, { localeMatcher: 'best fit', numeric: 'auto', style: 'long' });
     const ms: number = date.getTime() - Date.now();
     const tense = ms > 0 ? 1 : -1;
     let qty = 0;
@@ -117,5 +123,13 @@ export class TimestampController implements ReactiveController {
     }
 
     return typeof (units) !== 'undefined' ? rtf.format(tense * qty, units) : 'just now';
+  }
+
+  set(prop: PropertyKey, value: unknown) {
+    if (TimestampController.#isTimestampOptionKey(prop)) {
+      // @ts-expect-error: seems typescript compiler isn't up to the task here
+      this.#options[prop] = value;
+      this.#host.requestUpdate();
+    }
   }
 }

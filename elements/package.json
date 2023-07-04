@@ -55,7 +55,8 @@
     "./pf-timestamp/pf-timestamp.js": "./pf-timestamp/pf-timestamp.js",
     "./pf-tooltip/BaseTooltip.js": "./pf-tooltip/BaseTooltip.js",
     "./pf-tooltip/pf-tooltip.js": "./pf-tooltip/pf-tooltip.js",
-    "./pf-popover/pf-popover.js": "./pf-popover/pf-popover.js"
+    "./pf-popover/pf-popover.js": "./pf-popover/pf-popover.js",
+    "./react/*": "./react/*"
   },
   "publishConfig": {
     "access": "public",

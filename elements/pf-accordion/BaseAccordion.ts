@@ -3,8 +3,6 @@ import type { TemplateResult } from 'lit';
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
 
-import { observed } from '@patternfly/pfe-core/decorators.js';
-
 import { NumberListConverter, ComposedEvent } from '@patternfly/pfe-core';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -52,6 +50,8 @@ export abstract class BaseAccordion extends LitElement {
 
   #headerIndex = new RovingTabindexController<BaseAccordionHeader>(this);
 
+  #expandedIndex: number[] = [];
+
   /**
    * Sets and reflects the currently expanded accordion 0-based indexes.
    * Use commas to separate multiple indexes.
@@ -61,18 +61,26 @@ export abstract class BaseAccordion extends LitElement {
    * </pf-accordion>
    * ```
    */
-  @observed(async function expandedIndexChanged(this: BaseAccordion, oldVal: unknown, newVal: unknown) {
-    if (oldVal && oldVal !== newVal) {
-      await this.collapseAll();
-      for (const i of this.expandedIndex) {
-        await this.expand(i, this);
-      }
-    }
-  })
   @property({
     attribute: 'expanded-index',
     converter: NumberListConverter
-  }) expandedIndex: number[] = [];
+  })
+  get expandedIndex() {
+    return this.#expandedIndex;
+  }
+
+  set expandedIndex(value) {
+    const old = this.#expandedIndex;
+    this.#expandedIndex = value;
+    if (JSON.stringify(old) !== JSON.stringify(value)) {
+      this.requestUpdate('expandedIndex', old);
+      this.collapseAll().then(async () => {
+        for (const i of this.expandedIndex) {
+          await this.expand(i, this);
+        }
+      });
+    }
+  }
 
   get headers() {
     return this.#allHeaders();
@@ -168,6 +176,7 @@ export abstract class BaseAccordion extends LitElement {
   #expandHeader(header: BaseAccordionHeader, index = this.#getIndex(header)) {
     // If this index is not already listed in the expandedSets array, add it
     this.expandedSets.add(index);
+    this.#expandedIndex = [...this.expandedSets as Set<number>];
     header.expanded = true;
   }
 

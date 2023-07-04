@@ -3,8 +3,6 @@ import type { TemplateResult } from 'lit';
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
 
-import { observed } from '@patternfly/pfe-core/decorators.js';
-
 import { NumberListConverter, ComposedEvent } from '@patternfly/pfe-core';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 

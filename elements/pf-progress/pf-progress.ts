@@ -140,10 +140,7 @@ export class PfProgress extends LitElement {
     if (isNaN(percentage) || percentage < 0) {
       return 0;
     }
-    if (percentage > 100) {
-      return 100;
-    }
-    return percentage;
+    return Math.min(percentage, 100);
   }
 
   willUpdate(_changedProperties: PropertyValues<this>) {

@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-core",
-  "version": "2.3.1",
+  "version": "2.4.1",
   "license": "MIT",
   "description": "PatternFly Elements Core Library",
   "customElements": "custom-elements.json",
@@ -28,6 +28,7 @@
     "./controllers/scroll-spy-controller.js": "./controllers/scroll-spy-controller.js",
     "./controllers/slot-controller.js": "./controllers/slot-controller.js",
     "./controllers/style-controller.js": "./controllers/style-controller.js",
+    "./controllers/timestamp-controller.js": "./controllers/timestamp-controller.js",
     "./decorators/bound.js": "./decorators/bound.js",
     "./decorators/cascades.js": "./decorators/cascades.js",
     "./decorators/deprecation.js": "./decorators/deprecation.js",

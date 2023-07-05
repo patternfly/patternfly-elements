@@ -27,6 +27,8 @@ pfe.min.js
 *.tsbuildinfo
 test-results
 
+/elements/react
+
 elements/**/_temp
 core/**/_temp
 tools/**/_temp

@@ -1,5 +1,27 @@
 # @patternfly/pfe-tools
 
+## 1.4.0
+
+### Minor Changes
+
+- f4a7ae7d7: **React**: adds `@patternfly/pfe-tools/react/generate-wrappers.js`
+
+  Use this to generate React component wrappers for Lit custom elements,
+  based on their `custom-elements.json` manifest.
+
+  ```js
+  import { generateReactWrappers } from "@patternfly/pfe-tools/react/generate-wrappers.js";
+
+  const inURL = new URL("../elements/custom-elements.json", import.meta.url);
+  const outURL = new URL("../elements/react/", import.meta.url);
+
+  await generateReactWrappers(inURL, outURL);
+  ```
+
+### Patch Changes
+
+- 699a812bf: `11ty`: prevent duplicate IDs on code pages when multiple elements are documented
+
 ## 1.3.2
 
 ### Patch Changes

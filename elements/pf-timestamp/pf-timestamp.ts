@@ -1,8 +1,13 @@
-import type { ComplexAttributeConverter } from 'lit';
+import type { ComplexAttributeConverter, PropertyValues } from 'lit';
 
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+
+import {
+  TimestampController,
+  type DateTimeFormat,
+} from '@patternfly/pfe-core/controllers/timestamp-controller.js';
 
 import style from './pf-timestamp.css';
 
@@ -19,19 +24,9 @@ const BooleanStringConverter: ComplexAttributeConverter = {
 export class PfTimestamp extends LitElement {
   static readonly styles = [style];
 
-  @property({ reflect: true })
-  get date() {
-    return this.#date.toLocaleString();
-  }
+  @property({ reflect: true, attribute: 'date-format' }) dateFormat?: DateTimeFormat;
 
-  set date(string) {
-    this.#date = new Date(string);
-    this.#isoString = this.#date.toISOString();
-  }
-
-  @property({ reflect: true, attribute: 'date-format' }) dateFormat?: 'full' | 'long' | 'medium' | 'short';
-
-  @property({ reflect: true, attribute: 'time-format' }) timeFormat?: 'full' | 'long' | 'medium' | 'short';
+  @property({ reflect: true, attribute: 'time-format' }) timeFormat?: DateTimeFormat;
 
   @property({ attribute: false }) customFormat?: object;
 
@@ -45,71 +40,42 @@ export class PfTimestamp extends LitElement {
 
   @property({ reflect: true, attribute: 'hour-12', converter: BooleanStringConverter }) hour12?: boolean;
 
-  #date = new Date();
+  @property({ reflect: true })
+  get date() {
+    return this.#timestamp.localeString;
+  }
 
-  #isoString = this.#date.toISOString();
+  set date(string) {
+    this.#timestamp.date = new Date(string);
+  }
 
   get isoString() {
-    return this.#isoString;
+    return this.#timestamp.isoString;
   }
 
   get time() {
-    const { hour12, customFormat, dateFormat: dateStyle, timeFormat: timeStyle, utc } = this;
-    const timeZone = utc ? 'UTC' : undefined;
-    const formatOptions = customFormat || { hour12, dateStyle, timeStyle, timeZone };
-    const formattedDate = this.#date.toLocaleString(this.locale, formatOptions);
-    return this.relative ? this.#getTimeRelative(this.#date) : `${formattedDate}${this.displaySuffix ? ` ${this.displaySuffix}` : ''}`;
+    return this.#timestamp.time;
   }
 
-  willUpdate() {
-    if (!this.displaySuffix && this.utc) {
-      this.displaySuffix = 'UTC';
+  #timestamp = new TimestampController(this);
+
+  connectedCallback() {
+    super.connectedCallback();
+    if (this.hasAttribute('date')) {
+      this.#timestamp.date = new Date(this.getAttribute('date')!);
+    }
+  }
+
+  willUpdate(changedProperties: PropertyValues<this>) {
+    for (const [prop] of changedProperties) {
+      this.#timestamp.set(prop, this[prop as keyof this]);
     }
   }
 
   render() {
     return html`
-      <time datetime="${this.isoString}">${this.time}</time>
+      <time datetime="${this.#timestamp.isoString}">${this.#timestamp.time}</time>
     `;
-  }
-
-  /**
-   * Based off of Github Relative Time
-   * https://github.com/github/time-elements/blob/master/src/relative-time.js
-   */
-  #getTimeRelative(date: Date) {
-    const rtf = new Intl.RelativeTimeFormat(this.locale, { localeMatcher: 'best fit', numeric: 'auto', style: 'long' });
-    const ms: number = date.getTime() - Date.now();
-    const tense = ms > 0 ? 1 : -1;
-    let qty = 0;
-    let units: Intl.RelativeTimeFormatUnit | undefined;
-    const s = Math.round(Math.abs(ms) / 1000);
-    const min = Math.round(s / 60);
-    const h = Math.round(min / 60);
-    const d = Math.round(h / 24);
-    const m = Math.round(d / 30);
-    const y = Math.round(m / 12);
-    if (m >= 12) {
-      qty = y;
-      units = 'year';
-    } else if (d >= 30) {
-      qty = m;
-      units = 'month';
-    } else if (h >= 24) {
-      qty = d;
-      units = 'day';
-    } else if (min >= 45) {
-      qty = h;
-      units = 'hour';
-    } else if (s >= 45) {
-      qty = min;
-      units = 'minute';
-    } else if (s >= 10) {
-      qty = s;
-      units = 'second';
-    }
-
-    return typeof (units) !== 'undefined' ? rtf.format(tense * qty, units) : 'just now';
   }
 }
 

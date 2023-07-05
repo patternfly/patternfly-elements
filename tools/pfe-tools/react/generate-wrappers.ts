@@ -66,12 +66,11 @@ async function writeReactWrapper(
       });
 
     `, 'utf8');
-    await writeFile(outPath.replace('.js', '.d.ts'), typescript`// ${path}
-      declare module '@patternfly/elements/react/pf-button/pf-button.js' {
-          import type { ReactWebComponent } from '@lit-labs/react';
-          import type { ${Class} } from '@patternfly/elements/${module.path}';
-          export const ${reactComponentName}: ReactWebComponent<${Class}, ${eventsInterface}>;
-      }
+    await writeFile(outPath.replace('.js', '.d.ts'), typescript`
+      // ${path}
+      import type { ReactWebComponent } from '@lit-labs/react';
+      import type { ${Class} } from '@patternfly/elements/${module.path}';
+      export const ${reactComponentName}: ReactWebComponent<${Class}, ${eventsInterface}>;
 
     `, 'utf8');
     return { tagName, outPath };

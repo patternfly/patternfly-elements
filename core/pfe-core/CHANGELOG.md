@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 2.4.1
+
+### Patch Changes
+
+- 5b16b3b04: `SlotController`: ensure first render is correct when used in certain javascript frameworks
+
 ## 2.4.0
 
 ### Minor Changes

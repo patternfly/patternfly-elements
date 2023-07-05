@@ -1,5 +1,11 @@
 # @patternfly/elements
 
+## 2.3.1
+
+### Patch Changes
+
+- 1924229ea: Generate TypeScript typings for React wrapper components
+
 ## 2.3.0
 
 ### Minor Changes

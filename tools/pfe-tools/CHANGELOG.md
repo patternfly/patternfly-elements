@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.4.1
+
+### Patch Changes
+
+- 1924229ea: Generate TypeScript typings for React wrapper components
+
 ## 1.4.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 1.4.2
+
+### Patch Changes
+
+- 91850fbf8: fixed TypeScript typings for react wrappers
+
 ## 1.4.1
 
 ### Patch Changes

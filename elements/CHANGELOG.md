@@ -1,5 +1,11 @@
 # @patternfly/elements
 
+## 2.3.2
+
+### Patch Changes
+
+- 91850fbf8: fixed TypeScript typings for react wrappers
+
 ## 2.3.1
 
 ### Patch Changes

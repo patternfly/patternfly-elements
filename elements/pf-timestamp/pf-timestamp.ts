@@ -42,11 +42,11 @@ export class PfTimestamp extends LitElement {
 
   @property({ reflect: true })
   get date() {
-    return this.#timestamp.date;
+    return this.#timestamp.localeString;
   }
 
   set date(string) {
-    this.#timestamp.date = string;
+    this.#timestamp.date = new Date(string);
   }
 
   get isoString() {
@@ -58,6 +58,13 @@ export class PfTimestamp extends LitElement {
   }
 
   #timestamp = new TimestampController(this);
+
+  connectedCallback() {
+    super.connectedCallback();
+    if (this.hasAttribute('date')) {
+      this.#timestamp.date = new Date(this.getAttribute('date')!);
+    }
+  }
 
   willUpdate(changedProperties: PropertyValues<this>) {
     for (const [prop] of changedProperties) {

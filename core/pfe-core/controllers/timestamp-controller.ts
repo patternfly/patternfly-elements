@@ -3,8 +3,8 @@ import type { ReactiveController, ReactiveControllerHost } from 'lit';
 export type DateTimeFormat = 'full' | 'long' | 'medium' | 'short';
 
 export interface TimestampOptions {
-  dateFormat: DateTimeFormat;
-  timeFormat: DateTimeFormat;
+  dateFormat?: DateTimeFormat;
+  timeFormat?: DateTimeFormat;
   customFormat?: Intl.DateTimeFormatOptions;
   displaySuffix: string;
   locale: Intl.LocalesArgument;
@@ -14,14 +14,14 @@ export interface TimestampOptions {
 }
 
 const defaults = {
-  dateFormat: 'short',
-  timeFormat: 'short',
+  dateFormat: undefined,
+  timeFormat: undefined,
   customFormat: undefined,
   displaySuffix: '',
   locale: undefined,
   relative: false,
   utc: false,
-  hour12: false
+  hour12: false,
 } as const;
 
 export class TimestampController implements ReactiveController {
@@ -31,33 +31,24 @@ export class TimestampController implements ReactiveController {
 
   #date = new Date();
 
-  #isoString = this.#date.toISOString();
-
-  #options: TimestampOptions = defaults;
+  #options: TimestampOptions = {} as TimestampOptions;
 
   #host: ReactiveControllerHost;
 
-  get date() {
+  get localeString() {
     return this.#date.toLocaleString(this.#options.locale);
+  }
+
+  get date() {
+    return this.#date;
   }
 
   set date(string) {
     this.#date = new Date(string);
-    this.#isoString = this.#date.toISOString();
   }
 
   get isoString() {
-    return this.#isoString;
-  }
-
-  get #timeOptions(): Intl.DateTimeFormatOptions {
-    if (this.#options.customFormat) {
-      return this.#options.customFormat;
-    } else {
-      const { dateFormat: dateStyle, timeFormat: timeStyle, utc, hour12 } = this.#options;
-      const timeZone = utc ? 'UTC' : undefined;
-      return { hour12, dateStyle, timeStyle, timeZone };
-    }
+    return this.#date.toISOString();
   }
 
   get time() {
@@ -68,8 +59,14 @@ export class TimestampController implements ReactiveController {
       if (this.#options.utc) {
         displaySuffix ||= 'UTC';
       }
-      return `${this.#date.toLocaleString(locale, this.#timeOptions)} ${displaySuffix ?? ''}`
-        .trim();
+      const localeString = this.#date.toLocaleString(locale, this.#options.customFormat ?? {
+        hour12: this.#options.hour12,
+        timeStyle: this.#options.timeFormat,
+        dateStyle: this.#options.dateFormat,
+        ...this.#options.utc && { timeZone: 'UTC' },
+      });
+
+      return `${localeString} ${displaySuffix ?? ''}`.trim();
     }
   }
 

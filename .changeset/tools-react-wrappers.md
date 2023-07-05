@@ -1,52 +1,16 @@
 ---
 "@patternfly/pfe-tools": minor
-"@patternfly/elements": minor
 ---
-PatternFly elements are now available wrapped in React components. While it was 
-always possible to use PatternFly elements (or any other custom elements) in 
-React apps, this release makes it easier to integrate them into React without 
-the need for cumbersome workarounds to React's [poor HTML and DOM support][cee].
+**React**: adds `@patternfly/pfe-tools/react/generate-wrappers.js`
 
-Before:
+Use this to generate React component wrappers for Lit custom elements, 
+based on their `custom-elements.json` manifest.
 
-```jsx
-import { useEffect, useState, useRef } from 'react';
-import '@patternfly/elements/pf-switch/pf-switch.js'
+```js
+import { generateReactWrappers } from '@patternfly/pfe-tools/react/generate-wrappers.js';
 
-function App () {
-  const [checked, setChecked] = useState(false);
-  const switchRef = useRef(null);
-  useEffect(() => {
-    switchRef.current.checked = checked;
-  }, [switchRef.current, checked]);
-  useEffect(() => {
-    switchRef.current.addEventListener('change', () =>
-      setChecked(switchRef.current.checked));
-  }, [switchRef.current]);
-  return (
-    <>
-      <pf-switch ref={switchRef}></pf-switch>
-    </>
-  );
-}
+const inURL = new URL('../elements/custom-elements.json', import.meta.url);
+const outURL = new URL('../elements/react/', import.meta.url);
+
+await generateReactWrappers(inURL, outURL);
 ```
-
-After:
-
-```jsx
-import { useState } from 'react';
-import { Switch } from '@patternfly/elements/react/pf-switch/pf-switch.js';
-
-function App () {
-  const [checked, setChecked] = useState(false);
-  return (
-    <>
-      <Switch checked={checked}
-              onChange={({ target }) =>
-                setChecked(target.checked)}/>
-    </>
-  );
-}
-```
-
-[cee]: https://custom-elements-everywhere.com/#react

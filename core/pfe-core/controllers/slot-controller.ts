@@ -1,6 +1,5 @@
 import type { ReactiveController, ReactiveElement } from 'lit';
 
-import { bound } from '../decorators/bound.js';
 import { Logger } from './logger.js';
 
 interface AnonymousSlot {
@@ -50,52 +49,60 @@ const isSlot =
 export class SlotController implements ReactiveController {
   public static anonymous = Symbol('anonymous slot');
 
-  private nodes = new Map<string | typeof SlotController.anonymous, Slot>();
+  #nodes = new Map<string | typeof SlotController.anonymous, Slot>();
 
-  private logger: Logger;
+  #logger: Logger;
 
-  private firstUpdated = false;
+  #firstUpdated = false;
 
-  private mo = new MutationObserver(this.onMutation);
+  #mo = new MutationObserver(records => this.#onMutation(records));
 
-  private slotNames: (string | null)[];
+  #slotNames: (string | null)[];
 
-  private deprecations: Record<string, string> = {};
+  #deprecations: Record<string, string> = {};
 
   constructor(public host: ReactiveElement, ...config: ([SlotsConfig] | (string | null)[])) {
-    this.logger = new Logger(this.host);
+    this.#logger = new Logger(this.host);
 
     if (isObjectConfigSpread(config)) {
       const [{ slots, deprecations }] = config;
-      this.slotNames = slots;
-      this.deprecations = deprecations ?? {};
+      this.#slotNames = slots;
+      this.#deprecations = deprecations ?? {};
     } else if (config.length >= 1) {
-      this.slotNames = config;
-      this.deprecations = {};
+      this.#slotNames = config;
+      this.#deprecations = {};
     } else {
-      this.slotNames = [null];
+      this.#slotNames = [null];
     }
 
 
     host.addController(this);
   }
 
-  hostConnected() {
-    this.host.addEventListener('slotchange', this.onSlotChange as EventListener);
-    this.firstUpdated = false;
-    this.mo.observe(this.host, { childList: true });
-    this.init();
+  async hostConnected() {
+    this.host.addEventListener('slotchange', this.#onSlotChange as EventListener);
+    this.#firstUpdated = false;
+    this.#mo.observe(this.host, { childList: true });
+    // Map the defined slots into an object that is easier to query
+    this.#nodes.clear();
+    // Loop over the properties provided by the schema
+    this.#slotNames.forEach(this.#initSlot);
+    Object.values(this.#deprecations).forEach(this.#initSlot);
+    this.host.requestUpdate();
+    // insurance for framework integrations
+    await this.host.updateComplete;
+    this.host.requestUpdate();
   }
 
   hostUpdated() {
-    if (!this.firstUpdated) {
-      this.slotNames.forEach(this.initSlot);
-      this.firstUpdated = true;
+    if (!this.#firstUpdated) {
+      this.#slotNames.forEach(this.#initSlot);
+      this.#firstUpdated = true;
     }
   }
 
   hostDisconnected() {
-    this.mo.disconnect();
+    this.#mo.disconnect();
   }
 
   /**
@@ -106,11 +113,11 @@ export class SlotController implements ReactiveController {
    */
   hasSlotted(...names: string[]): boolean {
     if (!names.length) {
-      this.logger.warn(`Please provide at least one slot name for which to search.`);
+      this.#logger.warn(`Please provide at least one slot name for which to search.`);
       return false;
     } else {
       return names.some(x =>
-        this.nodes.get(x)?.hasContent ?? false);
+        this.#nodes.get(x)?.hasContent ?? false);
     }
   }
 
@@ -135,57 +142,44 @@ export class SlotController implements ReactiveController {
    */
   getSlotted<T extends Element = Element>(...slotNames: string[]): T[] {
     if (!slotNames.length) {
-      return (this.nodes.get(SlotController.anonymous)?.elements ?? []) as T[];
+      return (this.#nodes.get(SlotController.anonymous)?.elements ?? []) as T[];
     } else {
       return slotNames.flatMap(slotName =>
-        this.nodes.get(slotName)?.elements ?? []) as T[];
+        this.#nodes.get(slotName)?.elements ?? []) as T[];
     }
   }
 
-  @bound private onSlotChange(event: Event & { target: HTMLSlotElement }) {
+  #onSlotChange = (event: Event & { target: HTMLSlotElement }) => {
     const slotName = event.target.name;
-    this.initSlot(slotName);
+    this.#initSlot(slotName);
     this.host.requestUpdate();
-  }
+  };
 
-  @bound private async onMutation(records: MutationRecord[]) {
+  #onMutation = async (records: MutationRecord[]) => {
     const changed = [];
     for (const { addedNodes, removedNodes } of records) {
       for (const node of [...addedNodes, ...removedNodes]) {
         if (node instanceof HTMLElement && node.slot) {
-          this.initSlot(node.slot);
+          this.#initSlot(node.slot);
           changed.push(node.slot);
         }
       }
     }
-    if (changed.length) {
-      this.host.requestUpdate();
-    }
-  }
+    this.host.requestUpdate();
+  };
 
-  private getChildrenForSlot<T extends Element = Element>(name: string | typeof SlotController.anonymous): T[] {
+  #getChildrenForSlot<T extends Element = Element>(name: string | typeof SlotController.anonymous): T[] {
     const children = Array.from(this.host.children) as T[];
     return children.filter(isSlot(name));
   }
 
-  @bound private initSlot(slotName: string | null) {
+  #initSlot = (slotName: string | null) => {
     const name = slotName || SlotController.anonymous;
-    const elements = this.nodes.get(name)?.slot?.assignedElements?.() ?? this.getChildrenForSlot(name);
+    const elements = this.#nodes.get(name)?.slot?.assignedElements?.() ?? this.#getChildrenForSlot(name);
     const selector = slotName ? `slot[name="${slotName}"]` : 'slot:not([name])';
     const slot = this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
     const hasContent = !!elements.length;
-    this.nodes.set(name, { elements, name: slotName ?? '', hasContent, slot });
-    this.logger.log(slotName, hasContent);
-  }
-
-  /**
-   * Maps the defined slots into an object that is easier to query
-   */
-  @bound private init() {
-    this.nodes.clear();
-    // Loop over the properties provided by the schema
-    this.slotNames.forEach(this.initSlot);
-    Object.values(this.deprecations).forEach(this.initSlot);
-    this.host.requestUpdate();
-  }
+    this.#nodes.set(name, { elements, name: slotName ?? '', hasContent, slot });
+    this.#logger.log(slotName, hasContent);
+  };
 }

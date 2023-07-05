@@ -144,7 +144,6 @@ export class PfProgress extends LitElement {
   }
 
   willUpdate(_changedProperties: PropertyValues<this>) {
-    super.willUpdate(_changedProperties);
     if ( _changedProperties.has('value') ) {
       this.#internals.setFormValue(String(this.value));
     }

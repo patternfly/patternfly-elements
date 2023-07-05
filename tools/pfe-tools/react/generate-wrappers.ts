@@ -1,5 +1,5 @@
 import type * as CEM from 'custom-elements-manifest';
-import javascript from 'dedent';
+import dedent from 'dedent';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -40,6 +40,8 @@ async function writeReactWrapper(
   if (!tagName) {
     throw new NonCriticalError(`declaration does not have a tag name: ${decl.name}`);
   } else {
+    const javascript = dedent;
+    const typescript = dedent;
     const { name: Class } = ceExport;
     const events = decl.events ?? [];
     const outDirPath =
@@ -47,18 +49,29 @@ async function writeReactWrapper(
       : fileURLToPath(outDirPathOrURL);
     const outPath = join(outDirPath, path);
     await mkdir(dirname(outPath), { recursive: true });
+    const reactComponentName = getDeprefixedClassName(Class);
+    const eventsMap = `{${events.map(event => `
+          ${getEventReactPropName(event)}: '${event.name}'`).join(',')}${events.length ? `,
+        ` : ''}}`;
+    const eventsInterface = eventsMap.replace(/\s+/g, ' ').replaceAll(',', ';').replace('; }', ' }');
     await writeFile(outPath, javascript`// ${path}
       import { createComponent } from '@lit-labs/react';
       import react from 'react';
       import { ${Class} as elementClass } from '@patternfly/elements/${module.path}';
-      export const ${getDeprefixedClassName(Class)} = createComponent({
+      export const ${reactComponentName} = createComponent({
         tagName: '${decl.tagName}',
         elementClass,
         react,
-        events: {${events.map(event => `
-          ${getEventReactPropName(event)}: '${event.name}'`).join(',')}${events.length ? `,
-        ` : ''}},
+        events: ${eventsMap},
       });
+
+    `, 'utf8');
+    await writeFile(outPath.replace('.js', '.d.ts'), typescript`// ${path}
+      declare module '@patternfly/elements/react/pf-button/pf-button.js' {
+          import type { ReactWebComponent } from '@lit-labs/react';
+          import type { ${Class} } from '@patternfly/elements/${module.path}';
+          export const ${reactComponentName}: ReactWebComponent<${Class}, ${eventsInterface}>;
+      }
 
     `, 'utf8');
     return { tagName, outPath };

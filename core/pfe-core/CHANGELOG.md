@@ -1,5 +1,15 @@
 # @patternfly/pfe-core
 
+## 2.4.0
+
+### Minor Changes
+
+- a81bcb133: **Controllers**: Added timestamp controller
+
+### Patch Changes
+
+- 7055add74: `FloatingDOMController`: fixed an incorrect typescript import
+
 ## 2.3.1
 
 ### Patch Changes

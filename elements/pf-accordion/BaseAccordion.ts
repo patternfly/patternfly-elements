@@ -426,6 +426,9 @@ export abstract class BaseAccordion extends LitElement {
    * Accepts a 0-based index value (integer) for the set of accordion items to collapse.
    */
   public async collapse(index: number) {
+    if (index === -1) {
+      return;
+    }
     const header = this.headers.at(index);
     const panel = this.panels.at(index);
 

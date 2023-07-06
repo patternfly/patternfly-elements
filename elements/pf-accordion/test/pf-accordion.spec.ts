@@ -1321,4 +1321,66 @@ describe('<pf-accordion>', function() {
       });
     });
   });
+
+  describe('with a single header and panel', function() {
+    let accordionPanelOne: PfAccordionPanel;
+
+    describe('with a checkbox input inside the panel and the first header is expanded', function() {
+      beforeEach(async function() {
+        await createFixture<HTMLElement>(html`
+        <div>
+          <pf-accordion>
+            <pf-accordion-header expanded id="header-1-1" data-index="0"></pf-accordion-header>
+            <pf-accordion-panel id="panel-1-1" data-index="0"></pf-accordion-panel>
+          </pf-accordion>
+        </div>
+        `);
+        document.getElementById('header-1-1') as PfAccordionHeader;
+
+        accordionPanelOne = document.getElementById('panel-1-1') as PfAccordionPanel;
+      });
+
+      describe('when the checkbox is checked', function() {
+        it('does not collapse the panel', async function() {
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          accordionPanelOne.appendChild(checkbox);
+          checkbox.click();
+          await nextFrame();
+          expect(accordionPanelOne.expanded).to.be.true;
+        });
+      });
+    });
+  });
+
+  describe('with a single header and panel', function() {
+    let accordionPanelOne: PfAccordionPanel;
+
+    describe('with a checkbox input inside the panel and the first header is expanded', function() {
+      beforeEach(async function() {
+        await createFixture<HTMLElement>(html`
+        <div>
+          <pf-accordion>
+            <pf-accordion-header expanded id="header-1-1" data-index="0"></pf-accordion-header>
+            <pf-accordion-panel id="panel-1-1" data-index="0"></pf-accordion-panel>
+          </pf-accordion>
+        </div>
+        `);
+        document.getElementById('header-1-1') as PfAccordionHeader;
+
+        accordionPanelOne = document.getElementById('panel-1-1') as PfAccordionPanel;
+      });
+
+      describe('when the checkbox is checked', function() {
+        it('does not collapse the panel', async function() {
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          accordionPanelOne.appendChild(checkbox);
+          checkbox.click();
+          await nextFrame();
+          expect(accordionPanelOne.expanded).to.be.true;
+        });
+      });
+    });
+  });
 });

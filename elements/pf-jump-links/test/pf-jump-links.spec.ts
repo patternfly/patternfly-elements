@@ -3,22 +3,12 @@ import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 
-import { PfJumpLinks } from '@patternfly/elements/pf-jump-links/pf-jump-links.js';
+import { PfJumpLinks } from '../pf-jump-links.js';
 import { PfJumpLinksItem } from '../pf-jump-links-item.js';
 import { PfJumpLinksList } from '../pf-jump-links-list.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
-
-async function allUpdates(element: ReactiveElement) {
-  let count = 0;
-  do {
-    if (count > 100) {
-      throw new Error('Too Many Updates');
-    }
-    await element.updateComplete;
-    count++;
-  } while (!await element.updateComplete);
-}
+import { allUpdates } from '@patternfly/pfe-tools/test/utils.js';
 
 describe('<pf-jump-links>', function() {
   let element: PfJumpLinks;
@@ -35,6 +25,12 @@ describe('<pf-jump-links>', function() {
     `);
     await allUpdates(element);
     [firstItem, secondItem] = element.querySelectorAll<PfJumpLinksItem>('pf-jump-links-item');
+  });
+
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-jump-links')).to.be.an.instanceof(PfJumpLinks);
+    expect(document.createElement('pf-jump-links-item')).to.be.an.instanceof(PfJumpLinksItem);
+    expect(document.createElement('pf-jump-links-list')).to.be.an.instanceof(PfJumpLinksList);
   });
 
   describe('tabbing to first item', function() {

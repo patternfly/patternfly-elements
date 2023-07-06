@@ -45,6 +45,10 @@ describe('<pf-label>', function() {
     });
   });
 
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-label')).to.be.an.instanceof(PfLabel);
+  });
+
   it('should upgrade', async function() {
     const el = await createFixture<PfLabel>(example);
     const klass = customElements.get('pf-label');

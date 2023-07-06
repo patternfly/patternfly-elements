@@ -13,7 +13,7 @@ interface SiteOptions {
   stylesheets?: string[];
   /** Title for main page of the demo */
   title?: string;
-  /** Site subpath for components. e.g. 'elements'. default: 'components' */
+  /** Site subpath for components. default: 'components' i.e. 'https://patternflyelements.org/components' */
   componentSubpath?: string;
 }
 
@@ -46,6 +46,7 @@ const SITE_DEFAULTS: Required<SiteOptions> = {
 const DEFAULT_CONFIG: PfeConfig = {
   demoURLPrefix: 'https://patternflyelements.org/',
   sourceControlURLPrefix: 'https://github.com/patternfly/patternfly-elements/tree/main/',
+  elementsDir: 'elements',
   tagPrefix: 'pf',
   aliases: {},
 };
@@ -85,7 +86,11 @@ function getSlugsMap(rootDir: string) {
   return slugsConfigMap.get(rootDir)!;
 }
 
+/**
+ * Returns the prefixed custom element name for a given slug
+ */
 export function deslugify(slug: string, rootDir = process.cwd()): string {
   const { slugs, config } = getSlugsMap(rootDir);
-  return slugs.get(slug) ?? `${config.tagPrefix}-${slug}`;
+  const prefixedSlug = (slug.startsWith(`${config.tagPrefix}-`)) ? slug : `${config.tagPrefix}-${slug}`;
+  return slugs.get(slug) ?? prefixedSlug;
 }

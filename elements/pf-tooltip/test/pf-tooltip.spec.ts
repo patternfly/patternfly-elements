@@ -12,6 +12,11 @@ describe('<pf-tooltip>', function() {
   beforeEach(async function() {
     await setViewport({ width: 1000, height: 1000 });
   });
+
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-tooltip')).to.be.an.instanceof(PfTooltip);
+  });
+
   it('should upgrade', async function() {
     element = await fixture<PfTooltip>(html`<pf-tooltip></pf-tooltip>`);
     const klass = customElements.get('pf-tooltip');
@@ -55,4 +60,3 @@ describe('<pf-tooltip>', function() {
     });
   });
 });
-

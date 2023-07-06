@@ -2,10 +2,10 @@ import { LitElement, html } from 'lit';
 
 import style from './BaseTabPanel.css';
 
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+
 export abstract class BaseTabPanel extends LitElement {
   static readonly styles = [style];
-
-  hidden = true;
 
   #internals = this.attachInternals();
 
@@ -17,7 +17,10 @@ export abstract class BaseTabPanel extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    this.id ||= getRandomId('pf-tab-panel');
+    this.hidden ??= true;
     this.#internals.role = 'tabpanel';
+
     /*
      To make it easy for screen reader users to navigate from a tab
      to the beginning of content in the active tabpanel, the tabpanel

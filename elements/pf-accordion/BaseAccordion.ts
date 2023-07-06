@@ -3,13 +3,13 @@ import type { TemplateResult } from 'lit';
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
 
-import { observed } from '@patternfly/pfe-core/decorators.js';
-
 import { NumberListConverter, ComposedEvent } from '@patternfly/pfe-core';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import { AccordionHeaderChangeEvent, BaseAccordionHeader } from './BaseAccordionHeader.js';
 import { BaseAccordionPanel } from './BaseAccordionPanel.js';
+
+import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
 import style from './BaseAccordion.css';
 
@@ -48,6 +48,10 @@ export abstract class BaseAccordion extends LitElement {
     return target instanceof BaseAccordionPanel;
   }
 
+  #headerIndex = new RovingTabindexController<BaseAccordionHeader>(this);
+
+  #expandedIndex: number[] = [];
+
   /**
    * Sets and reflects the currently expanded accordion 0-based indexes.
    * Use commas to separate multiple indexes.
@@ -57,18 +61,26 @@ export abstract class BaseAccordion extends LitElement {
    * </pf-accordion>
    * ```
    */
-  @observed(async function expandedIndexChanged(this: BaseAccordion, oldVal: unknown, newVal: unknown) {
-    if (oldVal && oldVal !== newVal) {
-      await this.collapseAll();
-      for (const i of this.expandedIndex) {
-        await this.expand(i, this);
-      }
-    }
-  })
   @property({
     attribute: 'expanded-index',
     converter: NumberListConverter
-  }) expandedIndex: number[] = [];
+  })
+  get expandedIndex() {
+    return this.#expandedIndex;
+  }
+
+  set expandedIndex(value) {
+    const old = this.#expandedIndex;
+    this.#expandedIndex = value;
+    if (JSON.stringify(old) !== JSON.stringify(value)) {
+      this.requestUpdate('expandedIndex', old);
+      this.collapseAll().then(async () => {
+        for (const i of this.expandedIndex) {
+          await this.expand(i, this);
+        }
+      });
+    }
+  }
 
   get headers() {
     return this.#allHeaders();
@@ -76,6 +88,12 @@ export abstract class BaseAccordion extends LitElement {
 
   get panels() {
     return this.#allPanels();
+  }
+
+  get #activeHeader() {
+    const { headers } = this;
+    const index = headers.findIndex(header => header.matches(':focus,:focus-within'));
+    return headers.at(index);
   }
 
   protected expandedSets = new Set<number>();
@@ -103,7 +121,6 @@ export abstract class BaseAccordion extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('change', this.#onChange as EventListener);
-    this.addEventListener('keydown', this.#onKeydown);
     this.#mo.observe(this, { childList: true });
     this.#init();
   }
@@ -135,7 +152,16 @@ export abstract class BaseAccordion extends LitElement {
    */
   async #init() {
     this.#initialized ||= !!await this.updateComplete;
+    this.#headerIndex.initItems(this.headers);
+    // Event listener to the accordion header after the accordion has been initialized to add the roving tabindex
+    this.addEventListener('focusin', this.#updateActiveHeader as EventListener);
     this.updateAccessibility();
+  }
+
+  #updateActiveHeader() {
+    if (this.#activeHeader) {
+      this.#headerIndex.updateActiveItem(this.#activeHeader);
+    }
   }
 
   #panelForHeader(header: BaseAccordionHeader) {
@@ -150,6 +176,7 @@ export abstract class BaseAccordion extends LitElement {
   #expandHeader(header: BaseAccordionHeader, index = this.#getIndex(header)) {
     // If this index is not already listed in the expandedSets array, add it
     this.expandedSets.add(index);
+    this.#expandedIndex = [...this.expandedSets as Set<number>];
     header.expanded = true;
   }
 

@@ -4,6 +4,10 @@ import { PfAvatar } from '@patternfly/elements/pf-avatar/pf-avatar.js';
 import { AvatarLoadEvent } from '../BaseAvatar';
 
 describe('<pf-avatar>', function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-avatar')).to.be.an.instanceof(PfAvatar);
+  });
+
   it('should upgrade', async function() {
     const el = await createFixture(html`<pf-avatar></pf-avatar>`);
     expect(el, 'pf-badge should be an instance of PfAvatar')

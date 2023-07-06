@@ -1,0 +1,47 @@
+form {
+  padding: 0 2rem;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 8px;
+}
+
+form h2 {
+  width: 100%;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+}
+
+fieldset label {
+  display: grid;
+  align-content: center;
+  display: contents;
+}
+
+select {
+  display: block;
+  margin-inline-end: auto;
+  flex-basis: 100%;
+}
+
+#position-select {
+  margin: 1rem 0;
+}
+
+#alert-select {
+  margin-bottom: 1rem;
+}
+
+#no-padding pf-popover::part(content) {
+  --pf-c-popover__content--PaddingTop: 0px;
+  --pf-c-popover__content--PaddingRight: 0px;
+  --pf-c-popover__content--PaddingBottom: 0px;
+  --pf-c-popover__content--PaddingLeft: 0px;
+}
+
+#auto-width pf-popover::part(content) {
+  --pf-c-popover--MaxWidth: none;
+  --pf-c-popover--MinWidth: auto;
+}

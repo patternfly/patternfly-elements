@@ -48,6 +48,10 @@ const expandElementByDefault = html`
 `;
 
 describe('<pf-code-block>', function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-code-block')).to.be.an.instanceof(PfCodeBlock);
+  });
+
   it('should upgrade', async function() {
     const el = await createFixture <PfCodeBlock>(element);
     const klass = customElements.get('pf-code-block');

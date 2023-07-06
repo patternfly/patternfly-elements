@@ -1,8 +1,8 @@
 {% set level = level or 2 %}
 {% set header = header or 'CSS Shadow Parts' %}
 
-<section class="api band css-shadow-parts">
-  <h{{level}}>{{ header | innerMD | safe }}</h{{level}}> {% if not content and not parts.length %}
+<section class="api band css-shadow-parts api-properties">
+  {{ header | mdHeading(level) | safe }} {% if not content and not parts.length %}
 
   <em>None</em> {%- else -%}
 
@@ -14,9 +14,7 @@
   </dl> {%- endif -%} {%- if deprecated.length -%}
 
   <details>
-    <summary>
-      <h{{level+1}}>{{ ('Deprecated '+header) | innerMD | safe }}</h{{level+1}}>
-    </summary>
+    <summary>{{ ('Deprecated ' + header) | mdHeading(level + 1) | safe }}</summary>
     <dl> {% for part in deprecated -%}
       <dt><strong><code>{{ part.name }}</code></strong></dt>
       <dd>

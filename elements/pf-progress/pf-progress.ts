@@ -6,8 +6,6 @@ import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
-
 import styles from './pf-progress.css';
 
 const ICONS = new Map(Object.entries({
@@ -104,8 +102,6 @@ export class PfProgress extends LitElement {
 
   static readonly formAssociated = true;
 
-  #internals = new InternalsController(this);
-
   /** Represents the value of the progress bar */
   @property({ reflect: true, type: Number })
     value = 0;
@@ -134,9 +130,6 @@ export class PfProgress extends LitElement {
   @property()
     variant: '' | 'success' | 'danger' | 'warning' = '';
 
-  @property()
-    label = '';
-
   get #calculatedPercentage(): number {
     const { value, min, max } = this;
     const percentage = Math.round((value - min) / (max - min) * 100);
@@ -146,14 +139,8 @@ export class PfProgress extends LitElement {
     return Math.min(percentage, 100);
   }
 
-  willUpdate(_changedProperties: PropertyValues<this>) {
-    if ( _changedProperties.has('value') ) {
-      this.#internals.setFormValue(String(this.value));
-    }
-  }
-
   render() {
-    const { size, measureLocation, variant, title, value, max, label } = this;
+    const { size, measureLocation, variant, title } = this;
     const icon = variant && ICONS.get(variant)?.icon;
     const singleLine = title.length === 0 ? 'singleline' : '';
 
@@ -170,13 +157,6 @@ export class PfProgress extends LitElement {
               ${title}
           </div>` : ''}
 
-          ${html`
-            <span 
-              id="progstatus" 
-              aria-live="polite">
-                ${label !== '' ? label : `Current Progress: ${value} of ${max}`} 
-          </span>`}
-
           ${measureLocation !== 'none' ? html`<div class="status" aria-hidden="true">
             ${html`${measureLocation === 'inside' ? `${this.#calculatedPercentage}%` : ''}`}
             <pf-icon set="fas"
@@ -188,10 +168,9 @@ export class PfProgress extends LitElement {
           <progress
             max="100" 
             value="${this.#calculatedPercentage}"
-            aria-hidden="true"
             aria-valuemin="0" 
-            aria-valuemax="100" 
-            aria-labelledby="progstatus">
+            aria-valuenow="${this.#calculatedPercentage}"
+            aria-valuemax="100">
           </progress>
 
           ${measureLocation === 'inside' ? html`

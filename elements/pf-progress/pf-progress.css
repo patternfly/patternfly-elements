@@ -126,7 +126,6 @@ progress {
   background-color: var(--pf-c-progress__indicator--BackgroundColor);
 }
 
-
 .indicator {
   width: 100%;
   height: var(--pf-c-progress__bar--Height);

@@ -127,12 +127,15 @@ export class PfProgress extends LitElement {
     size: 'sm' | 'lg' | '' = '';
 
   /** Where the percentage will be displayed with the progress element */
-  @property({ reflect: true, attribute: 'measure-location' })
+  @property({ attribute: 'measure-location' })
     measureLocation: '' | 'outside' | 'inside' | 'none' = '';
 
   /** Variant of the progress bar */
   @property()
     variant: '' | 'success' | 'danger' | 'warning' = '';
+
+  @property()
+    label = '';
 
   get #calculatedPercentage(): number {
     const { value, min, max } = this;
@@ -150,7 +153,7 @@ export class PfProgress extends LitElement {
   }
 
   render() {
-    const { size, measureLocation, variant, title } = this;
+    const { size, measureLocation, variant, title, value, max, label } = this;
     const icon = variant && ICONS.get(variant)?.icon;
     const singleLine = title.length === 0 ? 'singleline' : '';
 
@@ -162,10 +165,17 @@ export class PfProgress extends LitElement {
           html`
           <div 
             id="title" 
-            class="title" 
+            class="title"
             aria-hidden="true">
               ${title}
           </div>` : ''}
+
+          ${html`
+            <span 
+              id="progstatus" 
+              aria-live="polite">
+                ${label !== '' ? label : `Current Progress: ${value} of ${max}`} 
+          </span>`}
 
           ${measureLocation !== 'none' ? html`<div class="status" aria-hidden="true">
             ${html`${measureLocation === 'inside' ? `${this.#calculatedPercentage}%` : ''}`}
@@ -175,14 +185,13 @@ export class PfProgress extends LitElement {
                   icon="${ifDefined(icon)}"></pf-icon>
           </div>` : ''}
 
-          <progress 
-            tabindex="0" 
+          <progress
             max="100" 
-            value="${this.#calculatedPercentage}" 
+            value="${this.#calculatedPercentage}"
+            aria-hidden="true"
             aria-valuemin="0" 
-            aria-valuenow="${this.#calculatedPercentage}" 
             aria-valuemax="100" 
-            aria-labelledby="title">
+            aria-labelledby="progstatus">
           </progress>
 
           ${measureLocation === 'inside' ? html`

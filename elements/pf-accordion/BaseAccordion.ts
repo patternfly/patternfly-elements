@@ -265,11 +265,11 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   #onChange(event: AccordionHeaderChangeEvent) {
-    if (this.classList.contains('animating')) {
+    if (this.classList.contains('animating') || !(event.target instanceof BaseAccordionHeader || event.target instanceof BaseAccordionPanel)) {
       return;
     }
 
-    const index = this.#getIndex(event.target as Element);
+    const index = this.#getIndex(event.target as BaseAccordionHeader | BaseAccordionPanel);
 
     if (event.expanded) {
       this.expand(index, event.accordion);
@@ -278,66 +278,12 @@ export abstract class BaseAccordion extends LitElement {
     }
   }
 
-  /**
-   * @see https://www.w3.org/TR/wai-aria-practices/#accordion
-   */
-  async #onKeydown(evt: KeyboardEvent) {
-    const currentHeader = evt.target as Element;
-
-    if (!BaseAccordion.isHeader(currentHeader)) {
-      return;
-    }
-
-    let newHeader: BaseAccordionHeader | undefined;
-
-    switch (evt.key) {
-      case 'ArrowDown':
-        evt.preventDefault();
-        newHeader = this.#nextHeader();
-        break;
-      case 'ArrowUp':
-        evt.preventDefault();
-        newHeader = this.#previousHeader();
-        break;
-      case 'Home':
-        evt.preventDefault();
-        newHeader = this.#firstHeader();
-        break;
-      case 'End':
-        evt.preventDefault();
-        newHeader = this.#lastHeader();
-        break;
-    }
-
-    newHeader?.focus?.();
-  }
-
   #allHeaders(accordion: BaseAccordion = this): BaseAccordionHeader[] {
     return Array.from(accordion.children).filter(BaseAccordion.isHeader);
   }
 
   #allPanels(accordion: BaseAccordion = this): BaseAccordionPanel[] {
     return Array.from(accordion.children).filter(BaseAccordion.isPanel);
-  }
-
-  #previousHeader() {
-    const { headers } = this;
-    const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) - 1;
-    return headers[(newIndex + headers.length) % headers.length];
-  }
-
-  #nextHeader() {
-    const { headers } = this;
-    const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) + 1;
-    return headers[newIndex % headers.length];
-  }
-
-  #firstHeader() {
-    return this.headers.at(0);
-  }
-
-  #lastHeader() {
-    return this.headers.at(-1);
   }
 
   #getIndex(el: Element | null) {
@@ -386,10 +332,6 @@ export abstract class BaseAccordion extends LitElement {
    * Accepts an optional parent accordion to search for headers and panels.
    */
   public async expand(index: number, parentAccordion?: BaseAccordion) {
-    if (index === -1) {
-      return;
-    }
-
     const allHeaders: Array<BaseAccordionHeader> = this.#allHeaders(parentAccordion);
 
     const header = allHeaders[index];
@@ -426,9 +368,6 @@ export abstract class BaseAccordion extends LitElement {
    * Accepts a 0-based index value (integer) for the set of accordion items to collapse.
    */
   public async collapse(index: number) {
-    if (index === -1) {
-      return;
-    }
     const header = this.headers.at(index);
     const panel = this.panels.at(index);
 

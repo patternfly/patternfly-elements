@@ -48,7 +48,7 @@ export abstract class BaseAccordion extends LitElement {
     return target instanceof BaseAccordionPanel;
   }
 
-  static isAccordionChangeEvent(event: Event): event is AccordionHeaderChangeEvent {
+  static #isAccordionChangeEvent(event: Event): event is AccordionHeaderChangeEvent {
     return event instanceof AccordionHeaderChangeEvent;
   }
 
@@ -269,16 +269,13 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   #onChange(event: AccordionHeaderChangeEvent) {
-    if (!BaseAccordion.isAccordionChangeEvent(event) || this.classList.contains('animating')) {
-      return;
-    }
-
-    const index = this.#getIndex(event.target);
-
-    if (event.expanded) {
-      this.expand(index, event.accordion);
-    } else {
-      this.collapse(index);
+    if (BaseAccordion.#isAccordionChangeEvent(event) && !this.classList.contains('animating')) {
+      const index = this.#getIndex(event.target);
+      if (event.expanded) {
+        this.expand(index, event.accordion);
+      } else {
+        this.collapse(index);
+      }
     }
   }
 

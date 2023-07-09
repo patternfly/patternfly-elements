@@ -1,11 +1,10 @@
-import type { ReactiveElement } from 'lit';
-
 import { expect, html, aTimeout, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 
 // Import the element we're testing.
 import { PfAccordion, PfAccordionPanel, PfAccordionHeader } from '@patternfly/elements/pf-accordion/pf-accordion.js';
+import { PfSwitch } from '@patternfly/elements/pf-switch/pf-switch.js';
 
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -1322,64 +1321,53 @@ describe('<pf-accordion>', function() {
     });
   });
 
-  describe('with a single header and panel', function() {
+  describe('with a single expanded header and panel containing a checkbox and a switch', function() {
+    let element: PfAccordion;
+    let headers: NodeListOf<PfAccordionHeader>;
+    let panels: NodeListOf<PfAccordionPanel>;
+    let checkbox: HTMLInputElement;
+    let pfswitch: PfSwitch;
     let accordionPanelOne: PfAccordionPanel;
 
-    describe('with a checkbox input inside the panel and the first header is expanded', function() {
-      beforeEach(async function() {
-        await createFixture<HTMLElement>(html`
-        <div>
+    beforeEach(async function() {
+      element = await createFixture<PfAccordion>(html`
           <pf-accordion>
             <pf-accordion-header expanded id="header-1-1" data-index="0"></pf-accordion-header>
-            <pf-accordion-panel id="panel-1-1" data-index="0"></pf-accordion-panel>
+            <pf-accordion-panel id="panel-1-1" data-index="0">
+              <pf-switch></pf-switch>
+              <input type="checkbox">
+            </pf-accordion-panel>
           </pf-accordion>
-        </div>
         `);
-        document.getElementById('header-1-1') as PfAccordionHeader;
+      headers = document.querySelectorAll('pf-accordion-header');
+      panels = document.querySelectorAll('pf-accordion-panel');
+      checkbox = element.querySelector('input')!;
+      pfswitch = element.querySelector('pf-switch')!;
+      expect(checkbox).to.be.ok;
+      expect(pfswitch).to.be.ok;
+      [accordionPanelOne] = panels;
+    });
 
-        accordionPanelOne = document.getElementById('panel-1-1') as PfAccordionPanel;
+    describe('clicking the checkbox', function() {
+      beforeEach(async function() {
+        checkbox.click();
+        await element.updateComplete;
       });
-
-      describe('when the checkbox is checked', function() {
-        it('does not collapse the panel', async function() {
-          const checkbox = document.createElement('input');
-          checkbox.type = 'checkbox';
-          accordionPanelOne.appendChild(checkbox);
-          checkbox.click();
-          await nextFrame();
-          expect(accordionPanelOne.expanded).to.be.true;
-        });
+      it('does not collapse the panel', function() {
+        expect(accordionPanelOne.expanded).to.be.true;
       });
     });
-  });
 
-  describe('with a single header and panel', function() {
-    let accordionPanelOne: PfAccordionPanel;
-
-    describe('with a checkbox input inside the panel and the first header is expanded', function() {
+    describe('clicking the switch', function() {
       beforeEach(async function() {
-        await createFixture<HTMLElement>(html`
-        <div>
-          <pf-accordion>
-            <pf-accordion-header expanded id="header-1-1" data-index="0"></pf-accordion-header>
-            <pf-accordion-panel id="panel-1-1" data-index="0"></pf-accordion-panel>
-          </pf-accordion>
-        </div>
-        `);
-        document.getElementById('header-1-1') as PfAccordionHeader;
-
-        accordionPanelOne = document.getElementById('panel-1-1') as PfAccordionPanel;
+        const { checked } = pfswitch;
+        pfswitch.click();
+        await element.updateComplete;
+        await pfswitch.updateComplete;
+        expect(pfswitch.checked).to.not.equal(checked);
       });
-
-      describe('when the checkbox is checked', function() {
-        it('does not collapse the panel', async function() {
-          const checkbox = document.createElement('input');
-          checkbox.type = 'checkbox';
-          accordionPanelOne.appendChild(checkbox);
-          checkbox.click();
-          await nextFrame();
-          expect(accordionPanelOne.expanded).to.be.true;
-        });
+      it('does not collapse the panel', function() {
+        expect(accordionPanelOne.expanded).to.be.true;
       });
     });
   });

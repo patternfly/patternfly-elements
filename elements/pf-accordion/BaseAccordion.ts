@@ -48,6 +48,10 @@ export abstract class BaseAccordion extends LitElement {
     return target instanceof BaseAccordionPanel;
   }
 
+  static isAccordionChangeEvent(event: Event): event is AccordionHeaderChangeEvent {
+    return event instanceof AccordionHeaderChangeEvent;
+  }
+
   #headerIndex = new RovingTabindexController<BaseAccordionHeader>(this);
 
   #expandedIndex: number[] = [];
@@ -265,11 +269,11 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   #onChange(event: AccordionHeaderChangeEvent) {
-    if (this.classList.contains('animating') || !(event.target instanceof BaseAccordionHeader || event.target instanceof BaseAccordionPanel)) {
+    if (!BaseAccordion.isAccordionChangeEvent(event) || this.classList.contains('animating')) {
       return;
     }
 
-    const index = this.#getIndex(event.target as BaseAccordionHeader | BaseAccordionPanel);
+    const index = this.#getIndex(event.target);
 
     if (event.expanded) {
       this.expand(index, event.accordion);

@@ -2,4 +2,4 @@
 "@patternfly/elements": patch
 ---
 
-`pf-accordion`: fixed issue related to panel collapsing when an internal element is clicked.  Removing deprecated code now handled by RovingTabIndex controller.
+`<pf-accordion>`: fixed bug which would collapse a panel if it contained a checkbox which got toggled.

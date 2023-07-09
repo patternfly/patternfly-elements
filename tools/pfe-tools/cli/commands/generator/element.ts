@@ -5,12 +5,15 @@ import Chalk from 'chalk';
 import prompts from 'prompts';
 import { $ } from 'execa';
 
+import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, relative } from 'node:path';
 import * as path from 'node:path';
 
-import { exists, mkdirp, processTemplate, readFile, writeFile } from './files.js';
-import { memoize } from './fp.js';
+
+import { processTemplate } from './template.js';
+import { memoize } from '../../lib/fp.js';
+import { exists, mkdirp } from '../../lib/fs.js';
 
 const { blue, green, greenBright, red, yellow } = Chalk;
 

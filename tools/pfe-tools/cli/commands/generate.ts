@@ -3,10 +3,10 @@ import type Yargs from 'yargs';
 import Banner from '../banner.js';
 
 import prompts from 'prompts';
-import { readJson } from './generator/files.js';
 import { join } from 'node:path';
 
 import { generateElement } from './generator/element.js';
+import { readJson } from '../lib/fs.js';
 
 export interface BaseOptions {
   /** Should console output be omitted? */
@@ -102,13 +102,13 @@ export async function builder(yargs: Yargs.Argv) {
       description: 'Which type of CSS files to output',
     }
   })
-    .check(({ name }) => {
-      if (typeof name === 'string' && !name.includes('-')) {
+    .check(function validateCustomElementTagName({ tagName }) {
+      if (typeof tagName === 'string' && !tagName.includes('-')) {
         throw new Error(ERR_BAD_CE_TAG_NAME);
       } else {
         return true;
       }
-    }) as Yargs.Argv<GenerateElementOptions>;
+    });
 }
 
 export const command = {

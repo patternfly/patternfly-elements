@@ -4,12 +4,12 @@ import Glob from 'glob';
 
 import { promisify } from 'node:util';
 import { join } from 'node:path';
-import { readFile, writeFile, stat } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
+import { exists } from '../lib/fs.js';
+
 import chalk from 'chalk';
 
 const glob = promisify(Glob);
-
-const exists = (p: string) => stat(p).then(() => true, () => false);
 
 interface Opts {
   glob: string;

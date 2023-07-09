@@ -15,6 +15,7 @@ const isPorHeader =
     el instanceof HTMLElement && !!el.tagName.match(/P|^H[1-6]/);
 
 export class AccordionHeaderChangeEvent extends ComposedEvent {
+  declare target: BaseAccordionHeader;
   constructor(
     public expanded: boolean,
     public toggle: BaseAccordionHeader,

@@ -190,7 +190,7 @@ export class PfPopover extends LitElement {
     success: 'circle-check',
     warning: 'triangle-exclamation',
     danger: 'circle-exclamation',
-  } satisfies Record<AlertSeverity, string>) as [AlertSeverity, string][]);
+  }) as [AlertSeverity, string][]);
 
   static {
     document.addEventListener('click', function(event) {

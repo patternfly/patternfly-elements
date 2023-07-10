@@ -4,6 +4,23 @@ function isARIAMixinProp(key: string): key is keyof ARIAMixin {
   return key === 'role' || key.startsWith('aria');
 }
 
+/** `@lit-labs/analyzer` uses typescript 4.7, which has an out-of-date DOM lib */
+declare global {
+  interface ARIAMixin {
+    role: string | null;
+    ariaInvalid: string | null;
+  }
+  interface ElementInternals {
+    setValidity(...args: any[]): void;
+    // disabling warning because this block is a workaround for analyzer quirks, see above
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore: interop ts4.7/5.1
+    validity: ValidityState;
+    checkValidity(...args: any[]): ValidityState;
+    reportValidity(...args: any[]): ValidityState;
+  }
+}
+
 export class InternalsController implements ReactiveController, ARIAMixin {
   declare role: ARIAMixin['role'];
   declare ariaAtomic: ARIAMixin['ariaAtomic'];

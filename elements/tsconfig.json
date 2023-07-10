@@ -11,10 +11,6 @@
     "custom-elements-manifest.config.js",
     "react"
   ],
-  "compilerOptions": {
-    "outDir": ".",
-    "rootDir": "."
-  },
   "references": [
     {
       "path": "../core/pfe-core"

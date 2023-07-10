@@ -1,13 +1,12 @@
 import type Yargs from 'yargs';
 
 import Glob from 'glob';
+import Chalk from 'chalk';
 
 import { promisify } from 'node:util';
 import { join } from 'node:path';
 import { readFile, writeFile } from 'node:fs/promises';
 import { exists } from '../lib/fs.js';
-
-import chalk from 'chalk';
 
 const glob = promisify(Glob);
 
@@ -60,11 +59,11 @@ export async function handler(argv: Opts) {
 
   if (!argv.quiet) {
     for (const [, x] of missing) {
-      console.log(chalk.red`missing export`, x);
+      console.log(Chalk.red`missing export`, x);
     }
 
     for (const [k, x] of noTarget) {
-      console.log(`${chalk.red`target`} ${chalk.yellow(x)} for export ${chalk.blue(k)} ${chalk.red`doesn't exist`}`);
+      console.log(`${Chalk.red`target`} ${Chalk.yellow(x)} for export ${Chalk.blue(k)} ${Chalk.red`doesn't exist`}`);
     }
   }
 

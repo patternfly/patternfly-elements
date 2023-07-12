@@ -361,12 +361,10 @@ main.blog {
   translate: 6px;
 }
 
-
 .logo-bar {
-  --pf-navigation--Height--actual: 70px;
   display: flex;
+  --pf-navigation--Height--actual: 70px;
   align-items: center;
-  gap: 1em;
   height: 4.375rem; /* old: 3.75rem */
   padding-inline-start: var(--pf-c-masthead--PaddingLeft, var(--pf-c-masthead--inset, 24px));
   padding-inline-end: var(--pf-c-masthead--PaddingRight, var(--pf-c-masthead--inset, 24px));
@@ -376,19 +374,32 @@ main.blog {
   background: var(--pf-theme--color--accent, #0066cc);
 }
 
-.logo-bar > a {
+.logo-flex-wrap {
+  display: flex;
+  gap: 1em;
+  width: 100%;
+  height: 100%;
+}
+
+.logo-flex-wrap > .placeholder {
+  /* 25px is the width of the hamburger */
+  width: 25px;
+  height: 57px;
+}
+
+.logo-flex-wrap > a {
   display: flex;
   align-items: center;
   color: white;
   text-decoration: none;
   font-size: 1.25rem;
   font-weight: bold;
-  margin-left: calc(1.5rem + 16px);
-  height: 100%;
+  gap: 1rem;
 }
 
-.logo-bar > a img {
-  display: none;
+.logo-flex-wrap > a > picture,
+.logo-flex-wrap > a > picture > img {
+  width: 100%;
   height: 100%;
 }
 
@@ -472,7 +483,6 @@ main.blog {
 .l-header__mobile-menu-toggle {
   width: 1.5rem;
   height: 4.375rem;
-  margin-right: 16px;
   color: #fff;
   z-index: 200;
   position: fixed;
@@ -816,6 +826,14 @@ blockquote {
     padding-inline: var(--pf-global--spacer--3xl, 4rem)
   }
 
+  .logo-flex-wrap {
+    gap: 0;
+  }
+
+  .logo-flex-wrap .placeholder:empty {
+    display: none;
+  }
+
   #component-list {
     padding: var(--pf-global--spacer--3xl, 4rem) var(--pf-global--spacer--3xl, 4rem);
   }
@@ -842,11 +860,11 @@ blockquote {
     top: 2rem;
   }
 
-  .logo-bar > a {
+  .logo-flex-wrap > a {
     margin-left: 16px;
   }
 
-  .logo-bar > a img {
+  .logo-flex-wrap > a > picture > img {
     display: inline-block;
     position: relative;
     left: -1rem;

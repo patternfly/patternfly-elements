@@ -34,6 +34,27 @@ p:empty {
   display: none;
 }
 
+.skip-to-content-link {
+  background: var(--pf-global--BackgroundColor--100, #fff);
+  border-bottom-left-radius: var(--pf-global--BorderRadius--sm, 0.25rem);
+  border-bottom-right-radius: var(--pf-global--BorderRadius--sm, 0.25rem);
+  display: flex;
+  padding-inline: var(--pf-global--spacer--md, 1rem);
+  padding-block: var(--pf-global--spacer--xs, 0.25rem);
+  position: absolute;
+  transform: translateY(-1000%);
+  transition: transform 0.2s;
+  width: max-content;
+  /* Header bar is set to z-index: 300 */
+  z-index: 301;
+}
+
+.skip-to-content-link:focus {
+  transform: translateY(0%);
+  position: fixed;
+  top: 0;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

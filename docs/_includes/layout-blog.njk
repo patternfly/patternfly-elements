@@ -1,9 +1,10 @@
 ---
 layout: layout-base.njk
 ---
+{% include '_skip-link.njk' %}
 {% include '_nav.njk' %}
 
-<main class="blog">
+<main id="main" class="blog">
   <header class="band header">
     <h1>{{ title }}</h1>
     {% if tagline %}<p class="tagline">{{ tagline }}</p>{% endif %} 

@@ -1,10 +1,10 @@
 ---
 layout: layout-base.njk
 ---
+{% include '_skip-link.njk' %}
 {% include '_nav.njk' %}
 
-
-<main class="basic">
+<main id="main"class="basic">
   {{ content | safe }}
 
   <div class="posts">

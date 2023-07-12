@@ -493,6 +493,8 @@ main.blog {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  /* header-bar is set to z-index: 300 */
+  z-index: 301;
 }
 
 .l-header__burger-icon {

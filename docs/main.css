@@ -36,13 +36,14 @@ p:empty {
 
 .skip-to-content-link {
   background: var(--pf-global--BackgroundColor--100, #fff);
+  border: 0px;
   border-bottom-left-radius: var(--pf-global--BorderRadius--sm, 0.25rem);
   border-bottom-right-radius: var(--pf-global--BorderRadius--sm, 0.25rem);
   display: flex;
   padding-inline: var(--pf-global--spacer--md, 1rem);
   padding-block: var(--pf-global--spacer--xs, 0.25rem);
   position: absolute;
-  transform: translateY(-1000%);
+  transform: translateY(-101%);
   transition: transform 0.2s;
   width: max-content;
   /* Header bar is set to z-index: 300 */

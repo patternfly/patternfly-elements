@@ -386,7 +386,6 @@ describe('<pf-accordion>', function() {
           });
         });
 
-
         describe('Shift+Tab', function() {
           beforeEach(press('Shift+Tab'));
           it('moves focus to the body', function() {
@@ -614,7 +613,7 @@ describe('<pf-accordion>', function() {
             describe('Tab', function() {
               beforeEach(press('Tab'));
               it('moves focus to the body', function() {
-                expect(document.activeElement).to.equal(header3);
+                expect(document.activeElement).to.equal(document.body);
               });
               describe('Shift+Tab', function() {
                 beforeEach(press('Shift+Tab'));
@@ -1189,7 +1188,7 @@ describe('<pf-accordion>', function() {
 
         describe('Navigating from parent to child accordion', function() {
           describe('Opening the panel containing the nested accordion and pressing TAB', function() {
-            beforeEach(press(' '));
+            beforeEach(press('Space'));
             beforeEach(press('Tab'));
             it('moves focus to the nested accordion header', function() {
               expect(document.activeElement).to.equal(nestedHeaderOne);
@@ -1225,8 +1224,8 @@ describe('<pf-accordion>', function() {
 
             describe('Tab', function() {
               beforeEach(press('Tab'));
-              it('should move focus back to the parent accordion', function() {
-                expect(document.activeElement).to.equal(topLevelHeaderThree);
+              it('should move focus back to the body', function() {
+                expect(document.activeElement).to.equal(document.body);
               });
             });
           });

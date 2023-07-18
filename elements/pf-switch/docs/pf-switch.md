@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
   A switch toggles the state of a setting (between on and off). Switches 
   provide a more explicit, visible representation on a setting.

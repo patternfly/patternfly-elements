@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 <style>
   .overflow-tab-wrapper {
     width: 94vw;

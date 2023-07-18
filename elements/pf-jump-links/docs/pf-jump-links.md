@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
 <section>
   <h2>Basic</h2>

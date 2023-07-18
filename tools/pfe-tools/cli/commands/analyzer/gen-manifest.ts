@@ -51,24 +51,43 @@ const convertPackage = (pkg: Analyzer.Package): CEM.Package => {
   };
 };
 
+const convertExportName = (name: string, module: Analyzer.Module) => {
+  console.group('convertExportName', name);
+  const exportObj = convertJavascriptExport(name, module.getExportReference(name));
+  console.log(exportObj);
+  console.groupEnd();
+  return exportObj;
+};
+
 const convertModule = (module: Analyzer.Module): CEM.Module => {
-  console.log('convertModule', module.jsPath);
-  return {
+  console.group('convertModule', module.jsPath);
+  const description = ifNotEmpty(module.description);
+  console.log({ description });
+  const summary = ifNotEmpty(module.summary);
+  console.log({ summary });
+  const deprecated = ifNotEmpty(module.deprecated);
+  console.log({ deprecated });
+  const declarations = transformIfNotEmpty(module.declarations, d =>
+    d.map(convertDeclaration)
+  );
+  console.log({ declarations });
+  const exports = ifNotEmpty([
+    ...module.exportNames.map(name => convertExportName(name, module)),
+    ...module.getCustomElementExports().map(convertCustomElementExport),
+  ]);
+  console.log({ exports });
+  const m = {
     kind: 'javascript-module',
     path: module.jsPath,
-    description: ifNotEmpty(module.description),
-    summary: ifNotEmpty(module.summary),
-    deprecated: ifNotEmpty(module.deprecated),
-    declarations: transformIfNotEmpty(module.declarations, d =>
-      d.map(convertDeclaration)
-    ),
-    exports: ifNotEmpty([
-      ...module.exportNames.map(name =>
-        convertJavascriptExport(name, module.getExportReference(name))
-      ),
-      ...module.getCustomElementExports().map(convertCustomElementExport),
-    ]),
+    description,
+    summary,
+    deprecated,
+    declarations,
+    exports,
   };
+  console.log('succeeded');
+  console.groupEnd();
+  return m as CEM.Module;
 };
 
 const convertCommonInfo = (info: Analyzer.DeprecatableDescribed) => {
@@ -87,16 +106,26 @@ const convertCommonDeclarationInfo = (declaration: Analyzer.Declaration) => {
 };
 
 const convertDeclaration = (declaration: Analyzer.Declaration): CEM.Declaration => {
-  console.log('convertDeclaration', declaration.name);
+  console.group('convertDeclaration', declaration.name);
   if (declaration.isLitElementDeclaration()) {
+    console.log('isLitElementDeclaration');
+    console.groupEnd();
     return convertLitElementDeclaration(declaration);
   } else if (declaration.isClassDeclaration()) {
+    console.log('isClassDeclaration');
+    console.groupEnd();
     return convertClassDeclaration(declaration);
   } else if (declaration.isVariableDeclaration()) {
+    console.log('isVariableDeclaration');
+    console.groupEnd();
     return convertVariableDeclaration(declaration);
   } else if (declaration.isFunctionDeclaration()) {
+    console.log('isFunctionDeclaration');
+    console.groupEnd();
     return convertFunctionDeclaration(declaration);
   } else {
+    console.log('failed');
+    console.groupEnd();
     // TODO: MixinDeclaration
     // TODO: CustomElementMixinDeclaration;
     throw new Error(
@@ -109,23 +138,30 @@ const convertJavascriptExport = (
   name: string,
   reference: Analyzer.Reference
 ): CEM.JavaScriptExport => {
-  return {
+  console.group('convertJavascriptExport', name);
+  const e = {
     kind: 'js',
     name,
     declaration: convertReference(reference),
   };
+  console.groupEnd();
+  return e as CEM.JavaScriptExport;
 };
 
 const convertCustomElementExport = (
   declaration: Analyzer.LitElementExport
 ): CEM.CustomElementExport => {
-  return {
+  console.group('convertCustomElementExport', declaration.name);
+  const d = {
     kind: 'custom-element-definition',
     name: declaration.tagname,
     declaration: {
       name: declaration.name,
     },
   };
+  console.log(d);
+  console.groupEnd();
+  return d as CEM.CustomElementExport;
 };
 
 const convertLitElementDeclaration = (
@@ -300,6 +336,7 @@ const convertTypeReferences = (
 };
 
 const convertReference = (reference: Analyzer.Reference): CEM.TypeReference => {
+  console.group('convertReference', reference.name);
   const refObj: CEM.TypeReference = {
     name: reference.name,
   };
@@ -311,5 +348,7 @@ const convertReference = (reference: Analyzer.Reference): CEM.TypeReference => {
   if (reference.module !== undefined) {
     refObj.module = reference.module;
   }
+  console.log(refObj);
+  console.groupEnd();
   return refObj;
 };

@@ -1,4 +1,4 @@
-import type { ComplexAttributeConverter, PropertyValues } from 'lit';
+import type { PropertyValues } from 'lit';
 
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
@@ -8,14 +8,9 @@ import {
   TimestampController,
   type DateTimeFormat,
 } from '@patternfly/pfe-core/controllers/timestamp-controller.js';
+import { BooleanStringConverter } from '@patternfly/pfe-core';
 
 import style from './pf-timestamp.css';
-
-const BooleanStringConverter: ComplexAttributeConverter = {
-  fromAttribute(value) {
-    return !value || value === 'true';
-  },
-};
 
 /**
  * A **timestamp** provides consistent formats for displaying date and time values.

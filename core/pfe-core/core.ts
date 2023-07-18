@@ -44,6 +44,12 @@ function makeConverter<T>(f: (x: string, type?: unknown) => T): ComplexAttribute
   };
 }
 
+export const BooleanStringConverter: ComplexAttributeConverter = {
+  fromAttribute(value) {
+    return !value || value === 'true';
+  },
+};
+
 /**
  * A LitElement property converter which represents a list of numbers as a comma separated string
  * @see https://lit.dev/docs/components/properties/#conversion-converter
@@ -57,6 +63,7 @@ export const NumberListConverter =
  */
 export const StringListConverter =
   makeConverter(x => x.trim());
+
 
 /**
  * A composed, bubbling event for UI interactions

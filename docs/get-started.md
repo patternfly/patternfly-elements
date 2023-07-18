@@ -21,7 +21,7 @@ title: Get started
   npm install --save @patternfly/elements
   ```
 
-  This will install not only the pf-card, but also the core utilities and 
+  This will install not only the web components, but also the core utilities and 
   styles,
   and will save it to your package.json.
 {% endband %}
@@ -41,7 +41,7 @@ title: Get started
   ```
 
   ### In HTML
-  To load the PatternFly Element web components in HTML you will need to use an importmap type script tag:
+  Alternatively, to load the PatternFly Elements web components in HTML you will need to use an importmap type script tag:
   `<script type="importmap"> ... </script>` and module type script tag `<script type="module"> ... </script>`. 
 
   In this example, we load the [card](/components/card/) modules using an importmap from JSPM.
@@ -80,7 +80,7 @@ title: Get started
   To learn more about how to create importmaps, read our [creating an import map](/docs/develop/import-maps/) section, and go into more detail at [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) or the [import map specification](https://html.spec.whatwg.org/multipage/webappapis.html#import-maps). 
   
   ### Add PatternFly Elements markup
-  Add a [card component](/components/card).
+  Then, when you have the import map script loaded on the page, you can add a [card component](/components/card) using html like this.
 
   ```html
   <pf-card>
@@ -90,11 +90,9 @@ title: Get started
   </pf-card>
   ```
 
-  <pf-card>
-    <h3 slot="header">Card header</h3>
-    <p>This is the pf-card body.</p>
-    <pf-button slot="footer">OK</pf-button>
-  </pf-card>
+  ### Putting it all together
+
+  Altogether your import map code could look something like this [Lit Playground Demo](https://lit.dev/playground/#project=W3sibmFtZSI6ImluZGV4Lmh0bWwiLCJjb250ZW50IjoiPCFET0NUWVBFIGh0bWw-XG48aGVhZD5cbjwvaGVhZD5cbjxib2R5PlxuICAgIDxwZi1jYXJkPlxuICAgIDxoMyBzbG90PVwiaGVhZGVyXCI-Q2FyZCBoZWFkZXI8L2gzPlxuICAgIDxwPlRoaXMgaXMgdGhlIHBmLWNhcmQgYm9keS48L3A-XG4gICAgPHBmLWJ1dHRvbiBzbG90PVwiZm9vdGVyXCI-T0s8L3BmLWJ1dHRvbj5cbiAgPC9wZi1jYXJkPlxuICAgIDxzY3JpcHQgdHlwZT1cImltcG9ydG1hcFwiPlxuICAgIHtcbiAgICBcImltcG9ydHNcIjoge1xuICAgICAgXCJAcGF0dGVybmZseS9lbGVtZW50cy9wZi1jYXJkL3BmLWNhcmQuanNcIjogXCJodHRwczovL2dhLmpzcG0uaW8vbnBtOkBwYXR0ZXJuZmx5L2VsZW1lbnRzQDIuMC4wL3BmLWNhcmQvcGYtY2FyZC5qc1wiXG4gICAgfSxcbiAgICBcInNjb3Blc1wiOiB7XG4gICAgICBcImh0dHBzOi8vZ2EuanNwbS5pby9cIjoge1xuICAgICAgICBcIkBsaXQvcmVhY3RpdmUtZWxlbWVudFwiOiBcImh0dHBzOi8vZ2EuanNwbS5pby9ucG06QGxpdC9yZWFjdGl2ZS1lbGVtZW50QDEuNi4xL3JlYWN0aXZlLWVsZW1lbnQuanNcIixcbiAgICAgICAgXCJAbGl0L3JlYWN0aXZlLWVsZW1lbnQvZGVjb3JhdG9ycy9cIjogXCJodHRwczovL2dhLmpzcG0uaW8vbnBtOkBsaXQvcmVhY3RpdmUtZWxlbWVudEAxLjYuMS9kZWNvcmF0b3JzL1wiLFxuICAgICAgICBcIkBwYXR0ZXJuZmx5L3BmZS1jb3JlL2NvbnRyb2xsZXJzL3Nsb3QtY29udHJvbGxlci5qc1wiOiBcImh0dHBzOi8vZ2EuanNwbS5pby9ucG06QHBhdHRlcm5mbHkvcGZlLWNvcmVAMi4wLjAvY29udHJvbGxlcnMvc2xvdC1jb250cm9sbGVyLmpzXCIsXG4gICAgICAgIFwibGl0XCI6IFwiaHR0cHM6Ly9nYS5qc3BtLmlvL25wbTpsaXRAMi42LjEvaW5kZXguanNcIixcbiAgICAgICAgXCJsaXQtZWxlbWVudC9saXQtZWxlbWVudC5qc1wiOiBcImh0dHBzOi8vZ2EuanNwbS5pby9ucG06bGl0LWVsZW1lbnRAMy4yLjIvbGl0LWVsZW1lbnQuanNcIixcbiAgICAgICAgXCJsaXQtaHRtbFwiOiBcImh0dHBzOi8vZ2EuanNwbS5pby9ucG06bGl0LWh0bWxAMi42LjEvbGl0LWh0bWwuanNcIixcbiAgICAgICAgXCJsaXQtaHRtbC9cIjogXCJodHRwczovL2dhLmpzcG0uaW8vbnBtOmxpdC1odG1sQDIuNi4xL1wiLFxuICAgICAgICBcImxpdC9cIjogXCJodHRwczovL2dhLmpzcG0uaW8vbnBtOmxpdEAyLjYuMS9cIixcbiAgICAgICAgXCJ0c2xpYlwiOiBcImh0dHBzOi8vZ2EuanNwbS5pby9ucG06dHNsaWJAMi41LjAvbW9kdWxlcy9pbmRleC5qc1wiXG4gICAgICB9XG4gICAgfVxuICB9XG4gICAgPC9zY3JpcHQ-XG4gIFxuICA8c2NyaXB0IHR5cGU9XCJtb2R1bGVcIj5cbiAgICBpbXBvcnQgXCJAcGF0dGVybmZseS9lbGVtZW50cy9wZi1jYXJkL3BmLWNhcmQuanNcIjtcbiAgPC9zY3JpcHQ-XG48L2JvZHk-XG4ifSx7Im5hbWUiOiJwYWNrYWdlLmpzb24iLCJjb250ZW50Ijoie1xuICBcImRlcGVuZGVuY2llc1wiOiB7XG4gICAgXCJsaXRcIjogXCJeMi4wLjBcIixcbiAgICBcIkBsaXQvcmVhY3RpdmUtZWxlbWVudFwiOiBcIl4xLjAuMFwiLFxuICAgIFwibGl0LWVsZW1lbnRcIjogXCJeMy4wLjBcIixcbiAgICBcImxpdC1odG1sXCI6IFwiXjIuMC4wXCJcbiAgfVxufSIsImhpZGRlbiI6dHJ1ZX1d).
 
 {% endband %}
 

@@ -35,6 +35,7 @@ export declare class DocsPageRenderer {
   public tagName: string;
   public manifest: Manifest;
   renderOverview(content: string, kwargs?: RenderKwargs): string;
+  renderInstallation(content: string, kwargs?: RenderKwargs): string;
   renderAttributes(content: string, kwargs?: RenderKwargs): string;
   renderProperties(content: string, kwargs?: RenderKwargs): string;
   renderCssCustomProperties(content: string, kwargs?: RenderKwargs): string;
@@ -95,6 +96,11 @@ export class DocsPage implements DocsPageRenderer {
     this.templates.addFilter('mdHeading', (header, length = 2) =>
       DocsPage.#innerMD(`${Array.from({ length }, () => '#').join('')} ${header}`));
     this.templates.addFilter('stringifyParams', DocsPage.#stringifyParams);
+    this.templates.addFilter('debugger', (...args) => {
+      console.log('---debugger---');
+      console.log(...args);
+      console.log('---debugger end---');
+    });
     this.docsTemplatePath = options?.docsTemplatePath;
   }
 
@@ -110,6 +116,11 @@ export class DocsPage implements DocsPageRenderer {
   renderBand(content: string, kwargs?: RenderKwargs) {
     return this.templates.render('band.njk', { content, ...kwargs });
   }
+
+  renderInstallation(content: string, kwargs: RenderKwargs = {}) {
+    return `${this.templates.render('installation.njk', { content, ...kwargs })}`;
+  }
+
 
   /** Render the overview of a component page */
   renderOverview(content: string, kwargs: RenderKwargs = {}) {

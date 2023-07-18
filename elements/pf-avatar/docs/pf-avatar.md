@@ -1,3 +1,6 @@
+{% renderInstallation %}
+{% endrenderInstallation %}
+
 {% renderOverview %}
   <pf-avatar alt="Libbie Koscinski"></pf-avatar>
 {% endrenderOverview %}

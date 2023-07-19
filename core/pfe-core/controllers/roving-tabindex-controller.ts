@@ -101,20 +101,31 @@ export class RovingTabindexController<
           this.#focusableItems.includes(x as ItemType))) {
       return;
     }
+
+    const role = this.host.getAttribute('role');
+    const orientation = this.host.getAttribute('aria-orientation');
+
     const item = this.activeItem;
     let shouldPreventDefault = false;
     const horizontalOnly =
         !item ? false
       : item.tagName === 'SELECT' ||
-        item.getAttribute('role') === 'spinbutton';
+        item.getAttribute('role') === 'spinbutton' || orientation === 'horizontal';
+    const verticalOnly = orientation === 'vertical';
 
 
     switch (event.key) {
       case 'ArrowLeft':
+        if (verticalOnly) {
+          return;
+        }
         this.focusOnItem(this.prevItem);
         shouldPreventDefault = true;
         break;
       case 'ArrowRight':
+        if (verticalOnly) {
+          return;
+        }
         this.focusOnItem(this.nextItem);
         shouldPreventDefault = true;
         break;

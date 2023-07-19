@@ -147,21 +147,7 @@ export class RovingTabindexController<
         this.focusOnItem(this.firstItem);
         shouldPreventDefault = true;
         break;
-      case 'PageUp':
-        if (horizontalOnly) {
-          return;
-        }
-        this.focusOnItem(this.firstItem);
-        shouldPreventDefault = true;
-        break;
       case 'End':
-        this.focusOnItem(this.lastItem);
-        shouldPreventDefault = true;
-        break;
-      case 'PageDown':
-        if (horizontalOnly) {
-          return;
-        }
         this.focusOnItem(this.lastItem);
         shouldPreventDefault = true;
         break;

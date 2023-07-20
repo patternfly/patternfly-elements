@@ -38,6 +38,8 @@ export class PfListbox extends LitElement {
 
   #hasFocus = false;
 
+  #shiftStartingItem: PfListboxOption | null = null;
+
   get isHorizontal(): boolean {
     return this?.getAttribute('aria-orientation') === 'horizontal';
   }
@@ -66,11 +68,7 @@ export class PfListbox extends LitElement {
     this.options.forEach(option => {
       const textContent = (option.textContent || '').toLowerCase();
       const selected = this.isMultiselectable ? selectedItems?.includes(textContent) : firstItem === textContent;
-      if (selected) {
-        option.setAttribute('aria-selected', 'true');
-      } else {
-        option.removeAttribute('aria-selected');
-      }
+      option.ariaSelected = `${selected}`;
     });
     if (oldValue !== this.value) {
       this.#fireInput();
@@ -78,7 +76,7 @@ export class PfListbox extends LitElement {
   }
 
   get value() {
-    const selectedItems = this.options.filter(option=>option.hasAttribute('aria-selected')).map(option => option.textContent);
+    const selectedItems = this.options.filter(option=>option.ariaSelected).map(option => option.textContent);
     return selectedItems.join(',');
   }
 
@@ -96,7 +94,8 @@ export class PfListbox extends LitElement {
         @optionfocus="${this.#onOptionFocus}"
         @optionblur="${this.#onOptionBlur}"
         @click="${this.#onOptionClick}"
-        @keydown="${this.#onOptionKeydown}">
+        @keydown="${this.#onOptionKeydown}"
+        @keyup="${this.#onOptionKeyup}">
       </slot>
     `;
   }
@@ -128,8 +127,10 @@ export class PfListbox extends LitElement {
         break;
       case 'Enter':
       case ' ':
+        // enter and space are only applicable if a listbox option is clicked
+        // an external text input should not trigger multiselect
         if (target) {
-          this.#updateMultiselect(target);
+          this.#updateMultiselect(target, event.shiftKey);
         }
         stopEvent = true;
         break;
@@ -165,23 +166,21 @@ export class PfListbox extends LitElement {
 
   #updateSingleselect() {
     if (!this.isMultiselectable) {
-      this.options.forEach(option => {
-        if (option.id === this.#internals.ariaActivedescendant) {
-          option.setAttribute('aria-selected', 'true');
-        } else {
-          option.removeAttribute('aria-selected');
-        }
-      });
+      this.options.forEach(option => option.ariaSelected = `${option.id === this.#internals.ariaActivedescendant}`);
       this.#fireChange();
     }
   }
 
-  #updateMultiselect(option: PfListboxOption) {
+  #updateMultiselect(option: PfListboxOption, shiftKey = false, startingItem = this.activeItem) {
     if (this.isMultiselectable) {
-      if (!option.hasAttribute('aria-selected')) {
-        option.setAttribute('aria-selected', 'true');
+      if (shiftKey) {
+        // toggle target
+        option.ariaSelected = `${!option.ariaSelected}`;
       } else {
-        option.removeAttribute('aria-selected');
+        // select all options between active descendant and target
+        const [start, end] = [this.options.indexOf(startingItem), this.options.indexOf(option)].sort();
+        const options = [...this.options].slice(start, end + 1);
+        options.forEach(option => option.ariaSelected = 'true');
       }
       this.#fireChange();
     }
@@ -231,26 +230,11 @@ export class PfListbox extends LitElement {
 
   #onOptionClick(event: MouseEvent) {
     const target = event.target as PfListboxOption;
-    const sel = (option: PfListboxOption, selected = false) => {
-      if (selected) {
-        option.setAttribute('aria-selected', 'true');
-      } else {
-        option.removeAttribute('aria-selected');
-      }
-    };
     if (this.isMultiselectable) {
-      if (!event.shiftKey) {
-        // toggle target
-        this.#updateMultiselect(target);
-      } else {
-        // select all options between active descendant and target
-        const [start, end] = [this.options.indexOf(this.activeItem), this.options.indexOf(target)].sort();
-        const options = [...this.options].slice(start, end + 1);
-        options.forEach(option=>sel(option, true));
-      }
+      this.#updateMultiselect(target, event.shiftKey);
     } else {
       // select target and deselect all other options
-      this.options.forEach(option => sel(option, option === target));
+      this.options.forEach(option => option.ariaSelected = `${option === target}`);
     }
     if (target !== this.#tabindex.activeItem) {
       this.#tabindex.focusOnItem(target);
@@ -259,8 +243,21 @@ export class PfListbox extends LitElement {
     }
   }
 
+  #onOptionKeyup(event: KeyboardEvent) {
+    if (event.shiftKey) {
+      if (this.#shiftStartingItem && this.activeItem) {
+        this.#updateMultiselect(this.activeItem, true, this.#shiftStartingItem);
+      }
+      this.#shiftStartingItem = null;
+    }
+  }
+
   #onOptionKeydown(event: KeyboardEvent) {
     const { filter } = this;
+    // need to set for keyboard support of multiselect
+    if (event.shiftKey) {
+      this.#shiftStartingItem = this.activeItem;
+    }
     this.filterByKeyboardEvent(event);
     // only change focus if keydown occurred when option has focus
     // (as opposed to an external text input and if filter has changed

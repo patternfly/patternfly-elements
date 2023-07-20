@@ -1,4 +1,3 @@
-import type { PropertyValues } from 'lit';
 import { LitElement, html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
@@ -150,8 +149,8 @@ export class PfProgress extends LitElement {
 
         ${title ?
           html`
-          <div 
-            id="title" 
+          <div
+            id="title"
             class="title"
             aria-hidden="true">
               ${title}
@@ -166,17 +165,17 @@ export class PfProgress extends LitElement {
           </div>` : ''}
 
           <progress
-            max="100" 
+            max="100"
             value="${this.#calculatedPercentage}"
-            aria-valuemin="0" 
+            aria-valuemin="0"
             aria-valuenow="${this.#calculatedPercentage}"
             aria-valuemax="100">
           </progress>
 
           ${measureLocation === 'inside' ? html`
-            <span 
-              class="progress-span" 
-              style="${styleMap({ 'width': `${this.#calculatedPercentage}%` })}" 
+            <span
+              class="progress-span"
+              style="${styleMap({ 'width': `${this.#calculatedPercentage}%` })}"
               data-value="${this.#calculatedPercentage}%"></span>`
             : ''}
       </div>`;

@@ -108,38 +108,54 @@ export class PfListbox extends LitElement {
    */
   filterByKeyboardEvent(event: KeyboardEvent) {
     const target = event.target as PfListboxOption;
+    const oldValue = this.value;
     let stopEvent = false;
-    if (event.ctrlKey ||
-        event.altKey ||
+    if (event.altKey ||
         event.metaKey) {
       return;
-    }
-
-    switch (event.key) {
-      case 'Backspace':
-      case 'Delete':
-        this.filter = this.filter.slice(0, this.filter.length - 2);
+    } else if (event.ctrlKey) {
+      if (event.key?.match(/^[aA]$/)?.input && this.#tabindex.firstItem) {
+        this.#updateMultiselect(this.#tabindex.firstItem, this.#tabindex.lastItem);
         stopEvent = true;
-        break;
-      case event.key?.match(/^[\w]$/)?.input:
-        this.filter += event.key?.toLowerCase();
-        stopEvent = true;
-        break;
-      case 'Enter':
-      case ' ':
-        // enter and space are only applicable if a listbox option is clicked
-        // an external text input should not trigger multiselect
-        if (target) {
-          this.#updateMultiselect(target, event.shiftKey);
-        }
-        stopEvent = true;
-        break;
-      default:
-        break;
+      } else {
+        return;
+      }
+    } else {
+      switch (event.key) {
+        case 'Backspace':
+        case 'Delete':
+          this.filter = this.filter.slice(0, this.filter.length - 2);
+          stopEvent = true;
+          break;
+        case event.key?.match(/^[\w]$/)?.input:
+          this.filter += event.key?.toLowerCase();
+          stopEvent = true;
+          break;
+        case 'Enter':
+        case ' ':
+          // enter and space are only applicable if a listbox option is clicked
+          // an external text input should not trigger multiselect
+          if (target) {
+            if (this.isMultiselectable) {
+              if (event.shiftKey) {
+                this.#updateMultiselect(target);
+              } else {
+                target.ariaSelected = `${target.ariaSelected !== 'true'}`;
+              }
+              stopEvent = true;
+            }
+          }
+          break;
+        default:
+          break;
+      }
     }
     if (stopEvent) {
       event.stopPropagation();
       event.preventDefault();
+    }
+    if (oldValue !== this.value) {
+      this.#fireChange();
     }
   }
 
@@ -171,18 +187,15 @@ export class PfListbox extends LitElement {
     }
   }
 
-  #updateMultiselect(option: PfListboxOption, shiftKey = false, startingItem = this.activeItem) {
+  #updateMultiselect(currentItem: PfListboxOption, referenceitem = this.activeItem) {
     if (this.isMultiselectable) {
-      if (shiftKey) {
-        // toggle target
-        option.ariaSelected = `${!option.ariaSelected}`;
-      } else {
-        // select all options between active descendant and target
-        const [start, end] = [this.options.indexOf(startingItem), this.options.indexOf(option)].sort();
-        const options = [...this.options].slice(start, end + 1);
-        options.forEach(option => option.ariaSelected = 'true');
-      }
-      this.#fireChange();
+      // select all options between active descendant and target
+      const [start, end] = [this.options.indexOf(referenceitem), this.options.indexOf(currentItem)].sort();
+      const options = [...this.options].slice(start, end + 1);
+      // if all items in range are toggled, remove toggle
+      const toggle = options.filter(option => option.ariaSelected !== 'true')?.length !== 0;
+      options.forEach(option => option.ariaSelected = `${toggle}`);
+      this.#shiftStartingItem = currentItem;
     }
   }
 
@@ -198,7 +211,7 @@ export class PfListbox extends LitElement {
   /**
    * handles element value change similar to HTMLSelectElement events
    * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
-   * @fires change
+   * @fires input
    */
   #fireInput() {
     this.dispatchEvent(new Event('input', { bubbles: true }));
@@ -230,8 +243,16 @@ export class PfListbox extends LitElement {
 
   #onOptionClick(event: MouseEvent) {
     const target = event.target as PfListboxOption;
+    const oldValue = this.value;
     if (this.isMultiselectable) {
-      this.#updateMultiselect(target, event.shiftKey);
+      if (!event.shiftKey) {
+        target.ariaSelected = `${target.ariaSelected !== 'true'}`;
+      } else {
+        if (this.#shiftStartingItem && target) {
+          this.#updateMultiselect(target, this.#shiftStartingItem);
+          this.#fireChange();
+        }
+      }
     } else {
       // select target and deselect all other options
       this.options.forEach(option => option.ariaSelected = `${option === target}`);
@@ -239,23 +260,29 @@ export class PfListbox extends LitElement {
     if (target !== this.#tabindex.activeItem) {
       this.#tabindex.focusOnItem(target);
       this.#updateActiveDescendant();
+    }
+    if (oldValue !== this.value) {
       this.#fireChange();
     }
   }
 
   #onOptionKeyup(event: KeyboardEvent) {
-    if (event.shiftKey) {
-      if (this.#shiftStartingItem && this.activeItem) {
-        this.#updateMultiselect(this.activeItem, true, this.#shiftStartingItem);
+    const target = event.target as PfListboxOption;
+    if (event.shiftKey && this.isMultiselectable) {
+      if (this.#shiftStartingItem && target) {
+        this.#updateMultiselect(target, this.#shiftStartingItem);
+        this.#fireChange();
       }
-      this.#shiftStartingItem = null;
+      if (event.key === 'Shift') {
+        this.#shiftStartingItem = null;
+      }
     }
   }
 
   #onOptionKeydown(event: KeyboardEvent) {
     const { filter } = this;
     // need to set for keyboard support of multiselect
-    if (event.shiftKey) {
+    if (event.key === 'Shift' && this.isMultiselectable) {
       this.#shiftStartingItem = this.activeItem;
     }
     this.filterByKeyboardEvent(event);

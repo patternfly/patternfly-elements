@@ -7,6 +7,11 @@
   display: none !important;
 }
 
-:host([aria-selected="true"]) {
-  background-color: #ddd;
+:host:before {
+  content: '\2713 ';
+  opacity: 0;
+}
+
+:host([aria-selected="true"]):before {
+  opacity: 1;
 }

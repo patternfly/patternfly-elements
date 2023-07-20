@@ -37,8 +37,6 @@ export class PfListbox extends LitElement {
 
   #_allOptions: PfListboxOption[] = [];
 
-  #hasFocus = false;
-
   #shiftStartingItem: PfListboxOption | null = null;
 
   get isHorizontal(): boolean {
@@ -93,7 +91,6 @@ export class PfListbox extends LitElement {
         class="${this.isHorizontal ? 'horizontal' : 'vertical'}"
         @slotchange="${this.#onSlotchange}" 
         @optionfocus="${this.#onOptionFocus}"
-        @optionblur="${this.#onOptionBlur}"
         @click="${this.#onOptionClick}"
         @keydown="${this.#onOptionKeydown}"
         @keyup="${this.#onOptionKeyup}">
@@ -229,12 +226,7 @@ export class PfListbox extends LitElement {
     }
   }
 
-  #onOptionBlur() {
-    this.#hasFocus = false;
-  }
-
   #onOptionFocus(event: FocusEvent) {
-    this.#hasFocus = true;
     const target = event.target as PfListboxOption;
     if (target !== this.#tabindex.activeItem) {
       this.#tabindex.updateActiveItem(target);

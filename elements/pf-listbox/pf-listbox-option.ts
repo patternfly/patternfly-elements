@@ -20,6 +20,7 @@ export class PfListboxOption extends LitElement {
   override connectedCallback() {
     super.connectedCallback();
     this.addEventListener('focus', this.#onFocus);
+    this.addEventListener('blur', this.#onBlur);
     this.id = this.id || getRandomId();
   }
 
@@ -50,8 +51,11 @@ export class PfListboxOption extends LitElement {
   }
 
   #onFocus() {
-    // console.log('focus');
-    // this.dispatchEvent(new Event('focus', { bubbles: true }));
+    this.dispatchEvent(new Event('optionfocus', { bubbles: true }));
+  }
+
+  #onBlur() {
+    this.dispatchEvent(new Event('optionblur', { bubbles: true }));
   }
 }
 

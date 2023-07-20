@@ -7,6 +7,7 @@
   display: none !important;
 }
 
+:host:after,
 :host:before {
   content: '\2713 ';
   opacity: 0;

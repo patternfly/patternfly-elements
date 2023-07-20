@@ -49,24 +49,24 @@ title: Get started
   ```html
   <!--
     JSPM Generator Import Map
-    Edit URL: https://generator.jspm.io/#U2NgYGBkDM0rySzJSU1hcChILClJLcpLy6nUT81JzU3NKyl2MNIz0DPQL0jTTU4sSoHRelnFAN524ZI8AA
+    Edit URL: https://generator.jspm.io/#U2VhYGBkDM0rySzJSU1hcChILClJLcpLy6nUT81JzU3NKyl2MNIz1jPSL0jTTU4sSoHRelnFAEcpE5s8AA
   -->
-  <script type="importmap">
+   <script type="importmap">
   {
     "imports": {
-      "@patternfly/elements/pf-card/pf-card.js": "https://ga.jspm.io/npm:@patternfly/elements@2.0.0/pf-card/pf-card.js"
+      "@patternfly/elements/pf-card/pf-card.js": "https://ga.jspm.io/npm:@patternfly/elements@2.3.2/pf-card/pf-card.js"
     },
     "scopes": {
       "https://ga.jspm.io/": {
-        "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/reactive-element.js",
-        "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/decorators/",
-        "@patternfly/pfe-core/controllers/slot-controller.js": "https://ga.jspm.io/npm:@patternfly/pfe-core@2.0.0/controllers/slot-controller.js",
+        "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.2/development/reactive-element.js",
+        "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.2/development/decorators/",
+        "@patternfly/pfe-core/controllers/slot-controller.js": "https://ga.jspm.io/npm:@patternfly/pfe-core@2.4.1/controllers/slot-controller.js",
         "lit": "https://ga.jspm.io/npm:lit@2.6.1/index.js",
-        "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.2.2/lit-element.js",
-        "lit-html": "https://ga.jspm.io/npm:lit-html@2.6.1/lit-html.js",
-        "lit-html/": "https://ga.jspm.io/npm:lit-html@2.6.1/",
+        "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.3.2/development/lit-element.js",
+        "lit-html": "https://ga.jspm.io/npm:lit-html@2.7.5/development/lit-html.js",
+        "lit-html/": "https://ga.jspm.io/npm:lit-html@2.7.5/development/",
         "lit/": "https://ga.jspm.io/npm:lit@2.6.1/",
-        "tslib": "https://ga.jspm.io/npm:tslib@2.5.0/modules/index.js"
+        "tslib": "https://ga.jspm.io/npm:tslib@2.6.0/tslib.es6.mjs"
       }
     }
   }
@@ -98,7 +98,7 @@ title: Get started
 
 ### Importmap and Markup
 
-Altogether your import map code could look something like this [Lit Playground Demo](https://lit.dev/playground/#project=W3sibmFtZSI6ImluZGV4Lmh0bWwiLCJjb250ZW50IjoiPCFET0NUWVBFIGh0bWw-XG48aGVhZD5cbjwvaGVhZD5cbjxib2R5PlxuICAgIDxwZi1jYXJkPlxuICAgIDxoMyBzbG90PVwiaGVhZGVyXCI-Q2FyZCBoZWFkZXI8L2gzPlxuICAgIDxwPlRoaXMgaXMgdGhlIHBmLWNhcmQgYm9keS48L3A-XG4gICAgPHBmLWJ1dHRvbiBzbG90PVwiZm9vdGVyXCI-T0s8L3BmLWJ1dHRvbj5cbiAgPC9wZi1jYXJkPlxuICAgIDxzY3JpcHQgdHlwZT1cImltcG9ydG1hcFwiPlxuICAgIHtcbiAgICBcImltcG9ydHNcIjoge1xuICAgICAgXCJAcGF0dGVybmZseS9lbGVtZW50cy9wZi1jYXJkL3BmLWNhcmQuanNcIjogXCJodHRwczovL2dhLmpzcG0uaW8vbnBtOkBwYXR0ZXJuZmx5L2VsZW1lbnRzQDIuMC4wL3BmLWNhcmQvcGYtY2FyZC5qc1wiXG4gICAgfSxcbiAgICBcInNjb3Blc1wiOiB7XG4gICAgICBcImh0dHBzOi8vZ2EuanNwbS5pby9cIjoge1xuICAgICAgICBcIkBsaXQvcmVhY3RpdmUtZWxlbWVudFwiOiBcImh0dHBzOi8vZ2EuanNwbS5pby9ucG06QGxpdC9yZWFjdGl2ZS1lbGVtZW50QDEuNi4xL3JlYWN0aXZlLWVsZW1lbnQuanNcIixcbiAgICAgICAgXCJAbGl0L3JlYWN0aXZlLWVsZW1lbnQvZGVjb3JhdG9ycy9cIjogXCJodHRwczovL2dhLmpzcG0uaW8vbnBtOkBsaXQvcmVhY3RpdmUtZWxlbWVudEAxLjYuMS9kZWNvcmF0b3JzL1wiLFxuICAgICAgICBcIkBwYXR0ZXJuZmx5L3BmZS1jb3JlL2NvbnRyb2xsZXJzL3Nsb3QtY29udHJvbGxlci5qc1wiOiBcImh0dHBzOi8vZ2EuanNwbS5pby9ucG06QHBhdHRlcm5mbHkvcGZlLWNvcmVAMi4wLjAvY29udHJvbGxlcnMvc2xvdC1jb250cm9sbGVyLmpzXCIsXG4gICAgICAgIFwibGl0XCI6IFwiaHR0cHM6Ly9nYS5qc3BtLmlvL25wbTpsaXRAMi42LjEvaW5kZXguanNcIixcbiAgICAgICAgXCJsaXQtZWxlbWVudC9saXQtZWxlbWVudC5qc1wiOiBcImh0dHBzOi8vZ2EuanNwbS5pby9ucG06bGl0LWVsZW1lbnRAMy4yLjIvbGl0LWVsZW1lbnQuanNcIixcbiAgICAgICAgXCJsaXQtaHRtbFwiOiBcImh0dHBzOi8vZ2EuanNwbS5pby9ucG06bGl0LWh0bWxAMi42LjEvbGl0LWh0bWwuanNcIixcbiAgICAgICAgXCJsaXQtaHRtbC9cIjogXCJodHRwczovL2dhLmpzcG0uaW8vbnBtOmxpdC1odG1sQDIuNi4xL1wiLFxuICAgICAgICBcImxpdC9cIjogXCJodHRwczovL2dhLmpzcG0uaW8vbnBtOmxpdEAyLjYuMS9cIixcbiAgICAgICAgXCJ0c2xpYlwiOiBcImh0dHBzOi8vZ2EuanNwbS5pby9ucG06dHNsaWJAMi41LjAvbW9kdWxlcy9pbmRleC5qc1wiXG4gICAgICB9XG4gICAgfVxuICB9XG4gICAgPC9zY3JpcHQ-XG4gIFxuICA8c2NyaXB0IHR5cGU9XCJtb2R1bGVcIj5cbiAgICBpbXBvcnQgXCJAcGF0dGVybmZseS9lbGVtZW50cy9wZi1jYXJkL3BmLWNhcmQuanNcIjtcbiAgPC9zY3JpcHQ-XG48L2JvZHk-XG4ifSx7Im5hbWUiOiJwYWNrYWdlLmpzb24iLCJjb250ZW50Ijoie1xuICBcImRlcGVuZGVuY2llc1wiOiB7XG4gICAgXCJsaXRcIjogXCJeMi4wLjBcIixcbiAgICBcIkBsaXQvcmVhY3RpdmUtZWxlbWVudFwiOiBcIl4xLjAuMFwiLFxuICAgIFwibGl0LWVsZW1lbnRcIjogXCJeMy4wLjBcIixcbiAgICBcImxpdC1odG1sXCI6IFwiXjIuMC4wXCJcbiAgfVxufSIsImhpZGRlbiI6dHJ1ZX1d).
+Altogether your import map code could look something like this [Lit Playground Demo](https://lit.dev/playground/#gist=453dc9f83854ff7ba09d02a0fc6a79d5).
 
 
 {% endband %}

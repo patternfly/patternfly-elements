@@ -146,7 +146,8 @@ production.
     </section>
   </main>
 </body>
-</html>```
+</html>
+```
 
 [Lit Playground](https://lit.dev/playground/#gist=77a0cb2d080de958f4415a4716908bf9) example of the HTML above
 

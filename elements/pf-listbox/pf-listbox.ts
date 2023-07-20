@@ -112,10 +112,7 @@ export class PfListbox extends LitElement {
     let stopEvent = false;
     if (event.ctrlKey ||
         event.altKey ||
-        event.metaKey ||
-        !event.composedPath().some(x =>
-          this.options.includes(x as PfListboxOption))) {
-      this.filter = '';
+        event.metaKey) {
       return;
     }
 
@@ -131,7 +128,9 @@ export class PfListbox extends LitElement {
         break;
       case 'Enter':
       case ' ':
-        this.#updateMultiselect(target);
+        if (target) {
+          this.#updateMultiselect(target);
+        }
         stopEvent = true;
         break;
       default:

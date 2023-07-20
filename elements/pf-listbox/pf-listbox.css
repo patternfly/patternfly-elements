@@ -1,3 +1,16 @@
 :host {
   display: block;
 }
+
+slot {
+  display: flex;
+  flex-direction: column;
+}
+
+:host([aria-orientation="horizontal"]) slot {
+  flex-direction: row;
+}
+
+::slotted(*) {
+  margin: 2px 10px;
+}

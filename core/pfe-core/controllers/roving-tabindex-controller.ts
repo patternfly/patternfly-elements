@@ -102,7 +102,6 @@ export class RovingTabindexController<
       return;
     }
 
-    const role = this.host.getAttribute('role');
     const orientation = this.host.getAttribute('aria-orientation');
 
     const item = this.activeItem;
@@ -112,8 +111,6 @@ export class RovingTabindexController<
       : item.tagName === 'SELECT' ||
         item.getAttribute('role') === 'spinbutton' || orientation === 'horizontal';
     const verticalOnly = orientation === 'vertical';
-
-
     switch (event.key) {
       case 'ArrowLeft':
         if (verticalOnly) {
@@ -165,8 +162,8 @@ export class RovingTabindexController<
    * sets tabindex of item based on whether or not it is active
    */
   updateActiveItem(item?: ItemType): void {
-    if (item) {
-      if (!!this.#activeItem && item !== this.#activeItem) {
+    if (item && item !== this.#activeItem) {
+      if (this.#activeItem) {
         this.#activeItem.tabIndex = -1;
       }
       item.tabIndex = 0;

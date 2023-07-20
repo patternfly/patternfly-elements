@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import styles from './pf-listbox-option.css';
 
@@ -16,6 +17,27 @@ export class PfListboxOption extends LitElement {
     role: 'option'
   });
 
+  override connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('focus', this.#onFocus);
+    this.id = this.id || getRandomId();
+  }
+
+  getUpdateByFilter(filter = '') {
+    if (filter === '' || (this.textContent || '').toLowerCase().match(filter)) {
+      this.removeAttribute('hidden-by-filter');
+    } else {
+      this.setAttribute('hidden-by-filter', 'hidden-by-filter');
+    }
+    return !this.hasAttribute('hidden-by-filter');
+  }
+
+  render() {
+    return html`
+      <slot></slot>
+    `;
+  }
+
   updateSet(setSize?: number | null, posInSet?: number | null) {
     if (!setSize || !posInSet) {
       this.#internals.ariaSetSize = null;
@@ -27,10 +49,9 @@ export class PfListboxOption extends LitElement {
     }
   }
 
-  render() {
-    return html`
-      <slot></slot>
-    `;
+  #onFocus() {
+    // console.log('focus');
+    // this.dispatchEvent(new Event('focus', { bubbles: true }));
   }
 }
 

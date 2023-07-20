@@ -2,7 +2,7 @@
   display: inline-flex;
   border: 1px solid #ddd;
   border-radius: 3px;
-  padding: 10px;
+  --_active-descendant-color: transparent;
 }
 
 slot {
@@ -14,10 +14,7 @@ slot {
   flex-direction: row;
 }
 
-::slotted(pf-listobx-option) {
-  padding: 2px 10px;
-}
-
-:host(:focus-within) ::slotted([active-descendant]) {
-  background-color: #e8f7ff;
+:host(:focus-within) {
+  border: 1px solid blue;
+  --_active-descendant-color: #e1f4fe;
 }

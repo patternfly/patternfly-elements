@@ -1,23 +1,14 @@
 :host {
   display: block;
-  margin: 0 -10px;
 }
 
-:host(:first-child) {
-  margin-top: -10px;
-}
-
-:host(:last-child) {
-  margin-bottom: -10px;
+slot {
+  padding: 10px;
 }
 
 slot[name="group-heading"] {
   background-color: #f0f0f0;
   display: block;
-  padding: 0 10px;
   font-weight: bold;
-}
-
-::slotted(pf-listobx-option) {
-  padding: 2px 10px;
+  padding: 0 10px;
 }

@@ -1,5 +1,6 @@
 :host {
   display: block;
+  padding: 2px 10px;
 }
 
 :host([hidden]),
@@ -15,4 +16,8 @@
 
 :host([aria-selected="true"]):before {
   opacity: 1;
+}
+
+:host([active-descendant]) {
+  background-color: var(--_active-descendant-color, transparent);
 }

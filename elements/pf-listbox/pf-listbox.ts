@@ -82,11 +82,6 @@ export class PfListbox extends LitElement {
     return selectedItems.join(',');
   }
 
-  override connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('focus', this.#onOptionFocus);
-  }
-
   updated(changed: PropertyValues<this>) {
     if (changed.has('filter')) {
       this.#onFilterChange();
@@ -98,8 +93,8 @@ export class PfListbox extends LitElement {
       <slot 
         class="${this.isHorizontal ? 'horizontal' : 'vertical'}"
         @slotchange="${this.#onSlotchange}" 
-        @focus="${this.#onOptionFocus}"
-        @blur="${this.#onOptionBlur}"
+        @optionfocus="${this.#onOptionFocus}"
+        @optionblur="${this.#onOptionBlur}"
         @click="${this.#onOptionClick}"
         @keydown="${this.#onOptionKeydown}">
       </slot>
@@ -153,16 +148,26 @@ export class PfListbox extends LitElement {
   }
 
   #updateActiveDescendant() {
-    const [desc] = this.#allOptions.filter(option => option === this.#tabindex.activeItem);
-    this.#internals.ariaActivedescendant = desc?.id;
+    let found = false;
+    this.#allOptions.forEach(option => {
+      if (option === this.#tabindex.activeItem) {
+        this.#internals.ariaActivedescendant = option.id;
+        option.setAttribute('active-descendant', 'active-descendant');
+        found = true;
+      } else {
+        option.removeAttribute('active-descendant');
+      }
+    });
+    if (!found) {
+      this.#internals.ariaActivedescendant = null;
+    }
     this.#updateSingleselect();
-    // TODO: set this.#value and fire events
   }
 
   #updateSingleselect() {
     if (!this.isMultiselectable) {
       this.options.forEach(option => {
-        if (option === this.#tabindex.activeItem) {
+        if (option.id === this.#internals.ariaActivedescendant) {
           option.setAttribute('aria-selected', 'true');
         } else {
           option.removeAttribute('aria-selected');
@@ -183,17 +188,6 @@ export class PfListbox extends LitElement {
     }
   }
 
-  #onFilterChange() {
-    const oldValue = this.value;
-    this.#allOptions = this.options;
-    const all = this.#allOptions;
-    this.#tabindex.updateItems(all);
-    this.#updateActiveDescendant();
-    if (oldValue !== this.value) {
-      this.#fireInput();
-    }
-  }
-
   /**
    * handles user user selection change similar to HTMLSelectElement events
    * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
@@ -210,6 +204,17 @@ export class PfListbox extends LitElement {
    */
   #fireInput() {
     this.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  #onFilterChange() {
+    const oldValue = this.value;
+    this.#allOptions = this.options;
+    const all = this.#allOptions;
+    this.#tabindex.updateItems(all);
+    this.#updateActiveDescendant();
+    if (oldValue !== this.value) {
+      this.#fireInput();
+    }
   }
 
   #onOptionBlur() {
@@ -237,7 +242,7 @@ export class PfListbox extends LitElement {
     if (this.isMultiselectable) {
       if (!event.shiftKey) {
         // toggle target
-        this.#updateMultiselect(event.target);
+        this.#updateMultiselect(target);
       } else {
         // select all options between active descendant and target
         const [start, end] = [this.options.indexOf(this.activeItem), this.options.indexOf(target)].sort();

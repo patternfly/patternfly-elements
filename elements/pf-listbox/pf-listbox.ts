@@ -6,9 +6,10 @@ import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { PfListboxOption } from './pf-listbox-option.js';
-import './pf-listbox-group.js';
+import { PfListboxGroup, type PfListboxGroupOrOption } from './pf-listbox-group.js';
 
 import styles from './pf-listbox.css';
+import type { PfJumpLinksItem } from '../pf-jump-links/pf-jump-links-item.js';
 
 /**
  * List of selectable items
@@ -26,7 +27,7 @@ export class PfListbox extends LitElement {
   @property() filter = '';
   @property({ reflect: true, attribute: 'disable-filter' }) disableFilter = '';
 
-  @queryAssignedElements() private options!: PfListboxOption[];
+  @queryAssignedElements() private groupsOrOptions!: PfListboxGroupOrOption[];
 
   #internals = new InternalsController(this, {
     role: 'listbox'
@@ -291,6 +292,20 @@ export class PfListbox extends LitElement {
     if (filter !== this.filter) {
       this.#tabindex.focusOnItem(this.activeItem);
     }
+  }
+
+  get options() {
+    const extractItems = (group: PfListboxGroupOrOption[]) => group.flatMap((item: PfListboxGroupOrOption) => {
+      let options: PfListboxOption[];
+      if (item instanceof PfListboxGroup) {
+        const group = item as PfListboxGroup;
+        options = extractItems(group.options);
+      } else {
+        options = [item];
+      }
+      return options;
+    });
+    return extractItems(this.groupsOrOptions);
   }
 
   #onSlotchange() {

@@ -14,3 +14,7 @@ slot {
 ::slotted(*) {
   margin: 2px 10px;
 }
+
+:host(:focus-within) ::slotted([active-descendant]) {
+  background-color: #e8f7ff;
+}

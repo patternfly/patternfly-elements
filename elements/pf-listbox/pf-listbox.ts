@@ -29,9 +29,12 @@ export class PfListbox extends LitElement {
   @property() filter = '';
 
   /**
-   * disable filtering feature
+   * determines how filtering will be handled:
+   * - "" (default): will show all options until filter text is not ""
+   * - "required": will hide all options until filter text is not ""
+   * - "disabled": will not hide options at all, regardless of filtering
    */
-  @property({ reflect: true, attribute: 'disable-filter' }) disableFilter = '';
+  @property({ reflect: true, attribute: 'filter-mode' }) filterMode: '' | 'required' | 'disabled' = '';
 
   /**
    * whether list items are arranged vertically or horizontally;
@@ -80,7 +83,7 @@ export class PfListbox extends LitElement {
   }
 
   set #allOptions(options: PfListboxOption[]) {
-    this.#_allOptions = options.filter(option => (this.constructor as typeof PfListbox).isOption(option) && (this.disableFilter || option.getUpdateByFilter(this.filter)));
+    this.#_allOptions = this.filterMode === 'required' && this.filter === '' ? [] : options.filter(option => (this.constructor as typeof PfListbox).isOption(option) && (this.filterMode === 'disabled' || option.getUpdateByFilter(this.filter)));
   }
 
   set value(items: string | null) {
@@ -98,8 +101,20 @@ export class PfListbox extends LitElement {
   }
 
   get value() {
-    const selectedItems = this.options.filter(option=>option.ariaSelected).map(option => option.textContent);
+    const selectedItems = this.options.filter(option=>option.ariaSelected === 'true').map(option => option.textContent);
     return selectedItems.join(',');
+  }
+
+  get validOptions() {
+    return this.options;
+  }
+
+  isValid(val: string | null) {
+    const vals = val?.split(',') || [];
+    const options = this.options.map(option => option.textContent);
+    return vals.every(val => {
+      return options.includes(val);
+    });
   }
 
   updated(changed: PropertyValues<this>) {
@@ -202,7 +217,8 @@ export class PfListbox extends LitElement {
       }
     });
     if (!found) {
-      this.#internals.ariaActivedescendant = null;
+      this.#tabindex.updateActiveItem(this.#tabindex.firstItem);
+      this.#internals.ariaActivedescendant = this.#tabindex.firstItem?.id || null;
     }
     this.#updateSingleselect();
   }

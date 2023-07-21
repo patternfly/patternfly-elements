@@ -8,9 +8,14 @@
 slot {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
-:host([aria-orientation="horizontal"]) slot {
+:host([orientation="horizontal"]) {
+  overflow: scroll;
+}
+
+:host([orientation="horizontal"]) slot {
   flex-direction: row;
 }
 

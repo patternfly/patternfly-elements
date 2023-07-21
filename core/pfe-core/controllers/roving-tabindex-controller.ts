@@ -186,6 +186,7 @@ export class RovingTabindexController<
   updateItems(items: ItemType[]) {
     const sequence = [...items.slice(this.#itemIndex), ...items.slice(0, this.#itemIndex)];
     const first = sequence.find(item => this.#focusableItems.includes(item));
+    this.#items = items ?? [];
     this.focusOnItem(first || this.firstItem);
   }
 

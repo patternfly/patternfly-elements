@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="demo.css">
 <script type="module" src="pf-listbox.js"></script>
 
-<!--h2>filter-mode="disabled"</h2>
+<h2>filter-mode="disabled"</h2>
 <p>
   Any arrow keys work. 
   Only one option can be selected. 
@@ -15,7 +15,7 @@
   <pf-listbox-option>Pink</pf-listbox-option>
   <pf-listbox-option>Red</pf-listbox-option>
   <pf-listbox-option>Yellow</pf-listbox-option>
-</pf-listbox-->
+</pf-listbox>
 
 <h2>filter-mode="required": combobox example</h2>
 <p>
@@ -23,21 +23,21 @@
   Only one option can be selected. 
   Listbox wont appear until input has text.
 </p>
-<div id="combo">
-<input id="text"
-  aria-controls="listbox"
-  aria-role="combobox" 
-  aria-autocomplete="both" 
-  aria-expanded="false"
-  aria-labelledby="listbox"/>
-<pf-listbox id="listbox" filter-mode="required" aria-label="Colors">
-  <pf-listbox-option>Blue</pf-listbox-option>
-  <pf-listbox-option>Green</pf-listbox-option>
-  <pf-listbox-option>Magenta</pf-listbox-option>
-  <pf-listbox-option>Orange</pf-listbox-option>
-  <pf-listbox-option>Purple</pf-listbox-option>
-  <pf-listbox-option>Pink</pf-listbox-option>
-  <pf-listbox-option>Red</pf-listbox-option>
-  <pf-listbox-option>Yellow</pf-listbox-option>
-</pf-listbox>
-</div>
+<label id="combo">
+  Pick a color:
+  <input id="text"
+    aria-controls="listbox"
+    aria-role="combobox" 
+    aria-autocomplete="both" 
+    aria-expanded="false"/>
+  <pf-listbox id="listbox" filter-mode="required">
+    <pf-listbox-option>Blue</pf-listbox-option>
+    <pf-listbox-option>Green</pf-listbox-option>
+    <pf-listbox-option>Magenta</pf-listbox-option>
+    <pf-listbox-option>Orange</pf-listbox-option>
+    <pf-listbox-option>Purple</pf-listbox-option>
+    <pf-listbox-option>Pink</pf-listbox-option>
+    <pf-listbox-option>Red</pf-listbox-option>
+    <pf-listbox-option>Yellow</pf-listbox-option>
+  </pf-listbox>
+</label>

@@ -50,6 +50,11 @@ export class PfListboxOption extends LitElement {
     }
   }
 
+  updateSetSizeAndPosition(setSize: number | null, posInSet: number | null) {
+    this.#internals.ariaSetSize = setSize !== null ? `${setSize}` : null;
+    this.#internals.ariaPosInSet = posInSet !== null ? `${posInSet}` : null;
+  }
+
   #onFocus() {
     this.dispatchEvent(new Event('optionfocus', { bubbles: true }));
   }

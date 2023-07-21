@@ -9,7 +9,6 @@ import { PfListboxOption } from './pf-listbox-option.js';
 import { PfListboxGroup, type PfListboxGroupOrOption } from './pf-listbox-group.js';
 
 import styles from './pf-listbox.css';
-import type { PfJumpLinksItem } from '../pf-jump-links/pf-jump-links-item.js';
 
 /**
  * List of selectable items
@@ -24,9 +23,30 @@ export class PfListbox extends LitElement {
     return element instanceof PfListboxOption;
   }
 
+  /**
+   * filter options that start with a string (case-insensitive)
+   */
   @property() filter = '';
+
+  /**
+   * disable filtering feature
+   */
   @property({ reflect: true, attribute: 'disable-filter' }) disableFilter = '';
 
+  /**
+   * whether list items are arranged vertically or horizontally;
+   * limits arrow keys based on orientation
+   */
+  @property({ reflect: true, attribute: 'orientation', type: String }) orientation = '';
+
+  /**
+   * whether multiple items can be selected
+   */
+  @property({ reflect: true, attribute: 'multiple', type: Boolean }) multiple = false;
+
+  /**
+   * all slotted listbox options and/or groups of options
+   */
   @queryAssignedElements() private groupsOrOptions!: PfListboxGroupOrOption[];
 
   #internals = new InternalsController(this, {
@@ -35,16 +55,19 @@ export class PfListbox extends LitElement {
 
   #tabindex = new RovingTabindexController<PfListboxOption>(this);
 
+  /**
+   * all options that will not be hidden by a filter
+   * */
   #_allOptions: PfListboxOption[] = [];
 
   #shiftStartingItem: PfListboxOption | null = null;
 
   get isHorizontal(): boolean {
-    return this?.getAttribute('aria-orientation') === 'horizontal';
+    return this.#internals.ariaOrientation === 'horizontal';
   }
 
   get isMultiselectable(): boolean {
-    return this?.getAttribute('aria-multiselectable') === 'true';
+    return this.#internals.ariaMultiSelectable === 'true';
   }
 
   get activeItem() {
@@ -83,6 +106,12 @@ export class PfListbox extends LitElement {
     if (changed.has('filter')) {
       this.#onFilterChange();
     }
+    if (changed.has('orientation')) {
+      this.#internals.ariaOrientation = ['vertical', 'horizontal'].includes(this.orientation) ? this.orientation : null;
+    }
+    if (changed.has('multiple')) {
+      this.#internals.ariaMultiSelectable = this.multiple ? 'true' : 'false';
+    }
   }
 
   render() {
@@ -113,7 +142,7 @@ export class PfListbox extends LitElement {
       return;
     } else if (event.ctrlKey) {
       if (event.key?.match(/^[aA]$/)?.input && this.#tabindex.firstItem) {
-        this.#updateMultiselect(this.#tabindex.firstItem, this.#tabindex.lastItem);
+        this.#updateMultiselect(this.#tabindex.firstItem, this.#tabindex.lastItem, true);
         stopEvent = true;
       } else {
         return;
@@ -185,13 +214,14 @@ export class PfListbox extends LitElement {
     }
   }
 
-  #updateMultiselect(currentItem: PfListboxOption, referenceitem = this.activeItem) {
+  #updateMultiselect(currentItem: PfListboxOption, referenceItem = this.activeItem, ctrlKey = false) {
     if (this.isMultiselectable) {
       // select all options between active descendant and target
-      const [start, end] = [this.options.indexOf(referenceitem), this.options.indexOf(currentItem)].sort();
+      const [start, end] = [this.options.indexOf(referenceItem), this.options.indexOf(currentItem)].sort();
       const options = [...this.options].slice(start, end + 1);
       // if all items in range are toggled, remove toggle
-      const toggle = options.filter(option => option.ariaSelected !== 'true')?.length !== 0;
+      const allSelected = ctrlKey && options.filter(option => option.ariaSelected !== 'true')?.length === 0;
+      const toggle = ctrlKey && allSelected ? false : ctrlKey ? true : referenceItem.ariaSelected === 'true';
       options.forEach(option => option.ariaSelected = `${toggle}`);
       this.#shiftStartingItem = currentItem;
     }
@@ -304,10 +334,7 @@ export class PfListbox extends LitElement {
     this.#allOptions = this.options;
     const all = this.#allOptions;
     const setSize = this.options.length;
-    this.options.forEach((option, i) => {
-      option.setAttribute('aria-setsize', `${setSize}`);
-      option.setAttribute('aria-posinset', `${i + 1}`);
-    });
+    this.options.forEach((option, i) => option.updateSetSizeAndPosition(setSize, i));
     this.#tabindex.initItems(all, this);
   }
 }

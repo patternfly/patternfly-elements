@@ -24,9 +24,9 @@ export class PfListboxOption extends LitElement {
     this.id = this.id || getRandomId();
   }
 
-  getUpdateByFilter(filter = '', caseSensitve = false) {
-    const search = caseSensitve ? filter : filter.toLowerCase();
-    const text = caseSensitve ? (this.textContent || '') : (this.textContent || '');
+  getUpdateByFilter(filter = '', caseSensitive = false) {
+    const search = caseSensitive ? filter : filter.toLowerCase();
+    const text = caseSensitive ? (this.textContent || '') : (this.textContent || '');
     if (search === '' || text.match(search)) {
       this.removeAttribute('hidden-by-filter');
     } else {

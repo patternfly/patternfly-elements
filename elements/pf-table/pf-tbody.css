@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  border-top: .5rem solid #f0f0f0;
+}
+
+@media (min-width: 768px) {
+  :host {
+    display: table-row-group;
+    border-top: unset;
+    vertical-align: middle;
+    border-color: inherit;
+  }
+}

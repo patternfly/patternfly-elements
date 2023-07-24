@@ -1,0 +1,33 @@
+:host {
+  grid-column: 1;
+  grid-column-gap: 1rem;
+  grid-template-columns: 1fr minmax(0, 1.5fr);
+  align-items: start;
+}
+
+:host(*):before {
+  font-weight: bold;
+  text-align: left;
+  content: attr(data-label);
+}
+
+::slotted(*) {
+  overflow-wrap: break-word;
+  vertical-align: baseline;
+  grid-column: 2;
+}
+
+@media (min-width: 768px) {
+  :host {
+    display: table-cell;
+    vertical-align: inherit;
+  }
+
+  ::slotted(*) {
+    display: table-cell;
+  }
+
+  :host(*):before {
+    all: unset;
+  }
+}

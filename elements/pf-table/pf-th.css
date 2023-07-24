@@ -1,0 +1,55 @@
+:host {
+  display: table-cell;
+  vertical-align: inherit;
+  font-weight: bold;
+  text-align: -internal-center;
+}
+
+:host(:hover) {
+  --_sort-indicator-color: #151515;
+}
+
+#sort-button {
+  --pf-c-button--PaddingTop: 0;
+  --pf-c-button--PaddingRight: 0;
+  --pf-c-button--PaddingBottom: 0;
+  --pf-c-button--PaddingLeft: 0;
+  --pf-c-button--FontWeight: var(--pf-c-table--cell--FontWeight);
+  --pf-c-button--FontSize:  var(--pf-c-table--cell--FontSize);
+  --pf-c-button--m-plain--Color: #151515;
+}
+
+#button-content {
+  display: grid;
+  align-items: end;
+  justify-content: start;
+  grid-template-columns: auto max-content;
+}
+
+#text {
+  display: block;
+  width: auto;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  word-break: normal;
+  max-width: 100%;
+  min-width: 0;
+}
+
+#sort-indicator {
+  grid-column: 2;
+  margin-left: 1rem;
+  color: var(--_sort-indicator-color, #d2d2d2);
+  pointer-events: none
+}
+
+.selected, .selected:active, .selected:hover, .selected:focus {
+  --pf-c-button--m-plain--Color: #0066cc !important;
+  --pf-c-button--m-plain--active--Color: #0066cc;
+  --pf-c-button--m-plain--hover--Color: #0066cc;
+  --pf-c-button--m-plain--focus--Color: #0066cc;
+  --_sort-indicator-color: #0066cc;
+}
+
+

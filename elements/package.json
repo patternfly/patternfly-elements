@@ -56,6 +56,7 @@
     "./pf-tooltip/BaseTooltip.js": "./pf-tooltip/BaseTooltip.js",
     "./pf-tooltip/pf-tooltip.js": "./pf-tooltip/pf-tooltip.js",
     "./pf-popover/pf-popover.js": "./pf-popover/pf-popover.js",
+    "./pf-table/pf-table.js": "./pf-table/pf-table.js",
     "./react/*": "./react/*"
   },
   "publishConfig": {

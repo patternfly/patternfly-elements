@@ -29,6 +29,11 @@ export class PfListbox extends LitElement {
   @property() filter = '';
 
   /**
+   * whetehr filtering (if enabled) will be case-sensitive
+   */
+  @property({ reflect: true, attribute: 'case-sensitive' }) caseSensitive = false;
+
+  /**
    * determines how filtering will be handled:
    * - "" (default): will show all options until filter text is not ""
    * - "required": will hide all options until filter text is not ""
@@ -83,7 +88,7 @@ export class PfListbox extends LitElement {
   }
 
   set #allOptions(options: PfListboxOption[]) {
-    this.#_allOptions = this.filterMode === 'required' && this.filter === '' ? [] : options.filter(option => (this.constructor as typeof PfListbox).isOption(option) && (this.filterMode === 'disabled' || option.getUpdateByFilter(this.filter)));
+    this.#_allOptions = this.filterMode === 'required' && this.filter === '' ? [] : options.filter(option => (this.constructor as typeof PfListbox).isOption(option) && (this.filterMode === 'disabled' || option.getUpdateByFilter(this.filter, this.caseSensitive)));
   }
 
   set value(items: string | null) {
@@ -118,7 +123,7 @@ export class PfListbox extends LitElement {
   }
 
   updated(changed: PropertyValues<this>) {
-    if (changed.has('filter')) {
+    if (changed.has('filter') || changed.has('caseSensitive') || changed.has('filterMode') || changed.has('filterMode')) {
       this.#onFilterChange();
     }
     if (changed.has('orientation')) {

@@ -8,7 +8,7 @@
   border-bottom: .5rem solid #f0f0f0;
 }
 
-[hidden] {
+:host([hidden]) {
   display: none !important;
 }
 

@@ -8,6 +8,10 @@
   border-bottom: .5rem solid #f0f0f0;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 :host(:last-child) {
   border-bottom-width: 1px;
 }

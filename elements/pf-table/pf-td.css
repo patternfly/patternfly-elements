@@ -17,6 +17,14 @@
   grid-column: 2;
 }
 
+#icon {
+  transition: .2s ease-in 0s;
+}
+
+#button[aria-expanded="true"] #icon {
+  transform: rotate(90deg);
+}
+
 @media (min-width: 768px) {
   :host {
     display: table-cell;

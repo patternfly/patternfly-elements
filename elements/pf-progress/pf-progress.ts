@@ -141,7 +141,7 @@ export class PfProgress extends LitElement {
   render() {
     const { size, measureLocation, variant, title } = this;
     const icon = variant && ICONS.get(variant)?.icon;
-    const singleLine = title.length === 0 ? 'singleline' : '';
+    const singleline = title.length === 0;
 
     return html`
       <div

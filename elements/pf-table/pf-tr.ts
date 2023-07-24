@@ -14,6 +14,8 @@ export class PfTr extends LitElement {
 
   @property({ reflect: true }) role = 'row';
 
+  @property({ type: Boolean, reflect: true }) expanded = false;
+
   render() {
     return html`
       <slot></slot>

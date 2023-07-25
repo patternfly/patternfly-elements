@@ -45,10 +45,6 @@ production.
       import * as Elements from "@patternfly/elements";
     </script>
   {% endgenerateImportMap %}
-  
-  <script type="module">
-    import * as Elements from "@patternfly/elements";
-  </script>
 </head>
 <body>
   <header>

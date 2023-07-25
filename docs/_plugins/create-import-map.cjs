@@ -1,5 +1,5 @@
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addPairedAsyncShortcode('generateImportMap', async (content) => {
+  eleventyConfig.addPairedAsyncShortcode('generateImportMap', async content => {
     const { Generator } = await import('@jspm/generator');
 
     const generator = new Generator({
@@ -9,8 +9,9 @@ module.exports = function(eleventyConfig) {
 
     const pins = await generator.addMappings(content);
 
-    const html = await generator.htmlInject('', { pins, esModuleShims: true, whitespace: true });
+    const html = await generator.htmlInject(content, { pins, esModuleShims: true, whitespace: true });
 
     return html;
   });
-}
+};
+

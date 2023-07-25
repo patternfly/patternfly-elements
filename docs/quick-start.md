@@ -39,8 +39,12 @@ production.
     h1, h2, h3, h4 {
       font-family: "Red Hat Display";
     }
-  </style>
-  {{ quickStart | safe }} 
+  </style> 
+  {% generateImportMap %}
+    <script type="module">
+      import * as Elements from "@patternfly/elements";
+    </script>
+  {% endgenerateImportMap %}
   
   <script type="module">
     import * as Elements from "@patternfly/elements";

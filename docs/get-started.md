@@ -51,26 +51,12 @@ title: Get started
     JSPM Generator Import Map
     Edit URL: https://generator.jspm.io/#U2VhYGBkDM0rySzJSU1hcChILClJLcpLy6nUT81JzU3NKyl2MNIz1jPSL0jTTU4sSoHRelnFAEcpE5s8AA
   -->
-   <script type="importmap">
-  {
-    "imports": {
-      "@patternfly/elements/pf-card/pf-card.js": "https://ga.jspm.io/npm:@patternfly/elements@2.3.2/pf-card/pf-card.js"
-    },
-    "scopes": {
-      "https://ga.jspm.io/": {
-        "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.2/development/reactive-element.js",
-        "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.2/development/decorators/",
-        "@patternfly/pfe-core/controllers/slot-controller.js": "https://ga.jspm.io/npm:@patternfly/pfe-core@2.4.1/controllers/slot-controller.js",
-        "lit": "https://ga.jspm.io/npm:lit@2.6.1/index.js",
-        "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.3.2/development/lit-element.js",
-        "lit-html": "https://ga.jspm.io/npm:lit-html@2.7.5/development/lit-html.js",
-        "lit-html/": "https://ga.jspm.io/npm:lit-html@2.7.5/development/",
-        "lit/": "https://ga.jspm.io/npm:lit@2.6.1/",
-        "tslib": "https://ga.jspm.io/npm:tslib@2.6.0/tslib.es6.mjs"
-      }
-    }
-  }
-  </script>
+
+  {% generateImportMap %}
+    <script type="module">
+      import "@patternfly/elements/pf-card/pf-card.js";
+    </script>
+  {% endgenerateImportMap %}
   
   <script type="module">
     import "@patternfly/elements/pf-card/pf-card.js";

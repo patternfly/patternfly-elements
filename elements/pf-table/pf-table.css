@@ -1,4 +1,4 @@
-:host {
+/* :host {
   display: grid;
   border: none;
 }
@@ -11,5 +11,15 @@
     box-sizing: border-box;
     text-indent: initial;
     border-color: gray;
+  }
+} */
+
+:host {
+  display: grid;
+}
+
+@media (min-width: 768px) {
+  :host {
+    grid-auto-rows: min-content;
   }
 }

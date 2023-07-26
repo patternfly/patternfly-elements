@@ -1,0 +1,8 @@
+#icon {
+    transition: .2s ease-in 0s;
+    vertical-align: -0.125em;
+}
+  
+#button[aria-expanded="true"] #icon {
+    transform: rotate(90deg);
+}

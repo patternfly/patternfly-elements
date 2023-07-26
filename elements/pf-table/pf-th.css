@@ -1,4 +1,4 @@
-:host {
+/* :host {
   display: table-cell;
   vertical-align: inherit;
   font-weight: bold;
@@ -51,5 +51,13 @@
   --pf-c-button--m-plain--focus--Color: #0066cc;
   --_sort-indicator-color: #0066cc;
 }
+*/
 
+:host {
+  font-weight: bold;
+  padding: 1rem;
+}
 
+:host(:empty) {
+  padding: 0;
+}

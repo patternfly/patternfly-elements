@@ -1,4 +1,4 @@
-:host {
+/* :host {
   display: none;
   visibility: hidden;
 
@@ -12,5 +12,17 @@
     visibility: visible;
     vertical-align: middle;
     border-color: inherit;
+  }
+} */
+
+:host {
+  display: none;
+  visibility: hidden;
+}
+
+@media (min-width: 768px) {
+  :host {
+    display: grid;
+    visibility: visible;
   }
 }

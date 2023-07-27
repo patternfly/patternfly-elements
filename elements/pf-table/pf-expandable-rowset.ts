@@ -29,12 +29,14 @@ export class PfExpandableRowset extends PfTbody {
 
   #onChange(event: ExpandChangeEvent) {
     const { expanded } = event;
+    this.expanded = expanded;
 
     const expandableRow = Array.from(this.children)?.[1] as PfExpandableRow;
-
     if (expandableRow) {
       expandableRow.expanded = expanded;
     }
+
+    event.stopPropagation();
   }
 }
 

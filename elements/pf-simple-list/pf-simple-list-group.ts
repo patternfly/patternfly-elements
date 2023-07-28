@@ -2,14 +2,14 @@ import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
-import styles from './pf-listbox-group.css';
+import styles from './pf-simple-list-group.css';
 
 /**
  * Group of options within a listbox
  * @slot - Place element content here
  */
-@customElement('pf-listbox-group')
-export class PfListboxGroup extends LitElement {
+@customElement('pf-simple-list-group')
+export class PfSimpleListGroup extends LitElement {
   static readonly styles = [styles];
 
   #internals = new InternalsController(this, {
@@ -30,6 +30,6 @@ export class PfListboxGroup extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-listbox-group': PfListboxGroup;
+    'pf-simple-list-group': PfSimpleListGroup;
   }
 }

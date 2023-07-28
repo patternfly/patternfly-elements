@@ -3,14 +3,14 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
-import styles from './pf-listbox-option.css';
+import styles from './pf-simple-list-option.css';
 
 /**
  * Option within a listbox
  * @slot - Place element content here
  */
-@customElement('pf-listbox-option')
-export class PfListboxOption extends LitElement {
+@customElement('pf-simple-list-option')
+export class PfSimpleListOption extends LitElement {
   static readonly styles = [styles];
 
   #internals = new InternalsController(this, {
@@ -42,6 +42,6 @@ export class PfListboxOption extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-listbox-option': PfListboxOption;
+    'pf-simple-list-option': PfSimpleListOption;
   }
 }

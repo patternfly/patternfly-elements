@@ -44,9 +44,9 @@ export class ListboxController<
 
   /**
    * determines how filtering will be handled:
-   * - "" (default): will show all options until filter text is not ""
-   * - "required": will hide all options until filter text is not ""
-   * - "disabled": will not hide options at all, regardless of filtering
+   * - "" (default): will show only options that match filter or in no options match will show all options
+   * - "required": all listbox options are hidden _until_ option matches filter
+   * - "disabled": all listbox options are visible; ignores filter
    */
   #filterMode: ListboxFilterMode = '';
 
@@ -75,18 +75,13 @@ export class ListboxController<
    * */
   #options: HTMLElement[] = [];
 
-  /**
-   * all options that will not be hidden by a filter
-   * */
-  #visibleOptions: HTMLElement[] = [];
-
   get activeItem() {
     const [active] = this.options.filter(option => option.getAttribute('id') === this.#internals.ariaActivedescendant);
     return active || this.#tabindex.firstItem;
   }
 
-  set filter(filtertext: string) {
-    this.filter = filtertext;
+  set filter(filterText: string) {
+    this.#filter = filterText;
     this.#onFilterChange();
   }
 
@@ -144,27 +139,11 @@ export class ListboxController<
 
   set options(options: HTMLElement[]) {
     const setSize = options.length;
-    const filterOptions = (option: HTMLElement, posInSet: number) => {
+    options.forEach((option, posInSet) => {
       option.ariaSetSize = setSize !== null ? `${setSize}` : null;
       option.ariaPosInSet = posInSet !== null ? `${posInSet}` : null;
-      if (this.#filterMode === 'required' && this.#filter === '') {
-        return false;
-      } else if (this.#filterMode === 'disabled') {
-        return true;
-      } else {
-        const search = this.#matchAnywhere ? '' : '^';
-        const text = option.textContent || '';
-        const regex = new RegExp(`${search}${this.#filter}`, this.#caseSensitive ? 'i' : '');
-        if (search === '' || text.match(regex)) {
-          option.removeAttribute('hidden-by-filter');
-        } else {
-          option.setAttribute('hidden-by-filter', 'hidden-by-filter');
-        }
-        return !option.hasAttribute('hidden-by-filter');
-      }
-    };
-    this.#tabindex.initItems(this.#visibleOptions);
-    this.#visibleOptions = options.filter((option, i) => filterOptions(option, i));
+    });
+    this.#tabindex.initItems(this.visibleOptions);
     this.#options = options;
   }
 
@@ -188,7 +167,42 @@ export class ListboxController<
   }
 
   get visibleOptions() {
-    return this.#visibleOptions;
+    let matchedOptions = this.options;
+    if (this.filterMode !== 'disabled') {
+      if (this.#filterMode === 'required' && this.filter === '') {
+        matchedOptions = [];
+      } else {
+        matchedOptions = this.options.filter(option => {
+          if (this.filterMode === 'disabled' || this.filter === '*') {
+            return true;
+          } else {
+            const search = this.matchAnywhere ? '' : '^';
+            const text = option.textContent || '';
+            const regex = new RegExp(`${search}${this.filter}`, this.caseSensitive ? '' : 'i');
+            if (this.filter === '' || text.match(regex)) {
+              return true;
+            } else {
+              return false;
+            }
+          }
+        });
+      }
+    }
+
+    // unless filter mode is required,
+    // ensure there is at least one option showing,
+    // regardless of matches
+    if (this.#filterMode !== 'required' && matchedOptions.length < 1) {
+      matchedOptions = this.options;
+    }
+    this.options.forEach(option => {
+      if (matchedOptions.includes(option)) {
+        option.removeAttribute('hidden-by-filter');
+      } else {
+        option.setAttribute('hidden-by-filter', 'hidden-by-filter');
+      }
+    });
+    return matchedOptions;
   }
 
   constructor(public host: ReactiveControllerHost & HTMLElement, options: ListboxOptions) {
@@ -198,7 +212,7 @@ export class ListboxController<
     });
     this.#tabindex = new RovingTabindexController<HTMLElement>(this.host);
     this.#caseSensitive = options.caseSensitive || false;
-    this.#filterMode = options.filterMode || '';
+    this.filterMode = options.filterMode || '';
   }
 
   /**
@@ -232,20 +246,17 @@ export class ListboxController<
   }
 
   #updateActiveDescendant() {
-    let found = false;
     this.options.forEach(option => {
-      if (option === this.#tabindex.activeItem) {
+      if (option === this.#tabindex.activeItem && this.visibleOptions.includes(option)) {
         this.#internals.ariaActivedescendant = option.id;
         option.setAttribute('active-descendant', 'active-descendant');
-        found = true;
       } else {
+        if (this.#internals.ariaActivedescendant === option.id) {
+          this.#internals.ariaActivedescendant = null;
+        }
         option.removeAttribute('active-descendant');
       }
     });
-    if (!found) {
-      this.#tabindex.updateActiveItem(this.#tabindex.firstItem);
-      this.#internals.ariaActivedescendant = this.#tabindex.firstItem?.id || null;
-    }
     this.#updateSingleselect();
   }
 
@@ -302,7 +313,7 @@ export class ListboxController<
    */
   #onFilterChange() {
     const oldValue = this.value;
-    this.#tabindex.updateItems(this.#visibleOptions);
+    this.#tabindex.initItems(this.visibleOptions);
     this.#updateActiveDescendant();
     if (oldValue !== this.value) {
       this.#fireInput();
@@ -402,13 +413,17 @@ export class ListboxController<
       }
     } else {
       switch (event.key) {
+        case '*':
+          this.filter = '*';
+          stopEvent = true;
+          break;
         case 'Backspace':
         case 'Delete':
-          this.#filter = this.#filter.slice(0, this.#filter.length - 2);
+          this.filter = '';
           stopEvent = true;
           break;
         case event.key?.match(/^[\w]$/)?.input:
-          this.#filter += event.key?.toLowerCase();
+          this.filter = event.key;
           stopEvent = true;
           break;
         case 'Enter':
@@ -439,7 +454,7 @@ export class ListboxController<
     }
     // only change focus if keydown occurred when option has focus
     // (as opposed to an external text input and if filter has changed
-    if (filter !== this.#filter) {
+    if (filter !== this.filter) {
       this.#tabindex.focusOnItem(this.activeItem);
     }
   }

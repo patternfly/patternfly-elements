@@ -85,8 +85,8 @@ export class ListboxController<
     return active || this.#tabindex.firstItem;
   }
 
-  set filter(str: string) {
-    this.filter = str;
+  set filter(filtertext: string) {
+    this.filter = filtertext;
     this.#onFilterChange();
   }
 
@@ -103,8 +103,8 @@ export class ListboxController<
     return this.#caseSensitive;
   }
 
-  set filterMode(str: ListboxFilterMode) {
-    this.#filterMode = str;
+  set filterMode(filterMode: ListboxFilterMode) {
+    this.#filterMode = filterMode;
     this.#onFilterChange();
   }
 
@@ -163,7 +163,7 @@ export class ListboxController<
         return !option.hasAttribute('hidden-by-filter');
       }
     };
-    this.#tabindex.initItems(this.#visibleOptions, this.host);
+    this.#tabindex.initItems(this.#visibleOptions);
     this.#visibleOptions = options.filter((option, i) => filterOptions(option, i));
     this.#options = options;
   }
@@ -173,9 +173,9 @@ export class ListboxController<
     return selectedItems.join(',');
   }
 
-  set value(items: string | null) {
+  set value(optionsList: string | null) {
     const oldValue = this.value;
-    const selectedItems = items?.toLowerCase().split(',');
+    const selectedItems = optionsList?.toLowerCase().split(',');
     const [firstItem] = selectedItems || [null];
     this.options.forEach(option => {
       const textContent = (option.textContent || '').replace('\\,', ',').toLowerCase();
@@ -227,24 +227,166 @@ export class ListboxController<
     });
   }
 
-  #updateOption(option: HTMLElement) {
-    const search = this.#caseSensitive ? this.#filter : this.#filter.toLowerCase();
-    const text = this.#caseSensitive ? (option.textContent || '') : (option.textContent || '');
-    if (search === '' || text.match(search)) {
-      option.removeAttribute('hidden-by-filter');
-    } else {
-      option.setAttribute('hidden-by-filter', 'hidden-by-filter');
+  focus() {
+    this.#tabindex.focusOnItem(this.activeItem);
+  }
+
+  #updateActiveDescendant() {
+    let found = false;
+    this.options.forEach(option => {
+      if (option === this.#tabindex.activeItem) {
+        this.#internals.ariaActivedescendant = option.id;
+        option.setAttribute('active-descendant', 'active-descendant');
+        found = true;
+      } else {
+        option.removeAttribute('active-descendant');
+      }
+    });
+    if (!found) {
+      this.#tabindex.updateActiveItem(this.#tabindex.firstItem);
+      this.#internals.ariaActivedescendant = this.#tabindex.firstItem?.id || null;
     }
-    return !option.hasAttribute('hidden-by-filter');
+    this.#updateSingleselect();
+  }
+
+  #updateSingleselect() {
+    if (!this.multiSelectable) {
+      this.options.forEach(option => option.ariaSelected = `${option.id === this.#internals.ariaActivedescendant}`);
+      this.#fireChange();
+    }
   }
 
   /**
+   * for listboxes that are multiselectable, updates listbox option selections:
+   * toggles all options between active descendant and target
+   * @param currentItem
+   * @param referenceItem
+   * @param ctrlKey
+   */
+  #updateMultiselect(currentItem: HTMLElement, referenceItem = this.activeItem, ctrlKey = false) {
+    if (this.multiSelectable) {
+      // select all options between active descendant and target
+      const [start, end] = [this.options.indexOf(referenceItem), this.options.indexOf(currentItem)].sort();
+      const options = [...this.options].slice(start, end + 1);
+      // if all items in range are toggled, remove toggle
+      const allSelected = ctrlKey && options.filter(option => option.ariaSelected !== 'true')?.length === 0;
+      const toggle = ctrlKey && allSelected ? false : ctrlKey ? true : referenceItem.ariaSelected === 'true';
+      options.forEach(option => option.ariaSelected = `${toggle}`);
+      this.#shiftStartingItem = currentItem;
+    }
+  }
+
+  /**
+   * handles user user selection change similar to HTMLSelectElement events
+   * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
+   * @fires change
+   */
+  #fireChange() {
+    this.host.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  /**
+   * handles element value change similar to HTMLSelectElement events
+   * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
+   * @fires input
+   */
+  #fireInput() {
+    this.host.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  /**
+   * handles updates to filter text:
+   * hides options that do not match filter settings
+   * and updates active descendant based on which options are still visible
+   * @returns void
+   */
+  #onFilterChange() {
+    const oldValue = this.value;
+    this.#tabindex.updateItems(this.#visibleOptions);
+    this.#updateActiveDescendant();
+    if (oldValue !== this.value) {
+      this.#fireInput();
+    }
+  }
+
+  /**
+   * handles focusing on an option:
+   * updates roving tabindex and active descendant
+   * @param event {FocusEvent}
+   * @returns void
+   */
+  #onOptionFocus(event: FocusEvent) {
+    const target = event.target as HTMLElement;
+    if (target !== this.#tabindex.activeItem) {
+      this.#tabindex.updateActiveItem(target);
+    }
+    this.#updateActiveDescendant();
+  }
+
+  /**
+   * handles clicking on a listbox option:
+   * which selects an item by default
+   * or toggles selection if multiselectable
+   * @param event {MouseEvent}
+   * @returns void
+   */
+  #onOptionClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const oldValue = this.value;
+    if (this.multiSelectable) {
+      if (!event.shiftKey) {
+        target.ariaSelected = `${target.ariaSelected !== 'true'}`;
+      } else {
+        if (this.#shiftStartingItem && target) {
+          this.#updateMultiselect(target, this.#shiftStartingItem);
+          this.#fireChange();
+        }
+      }
+    } else {
+      // select target and deselect all other options
+      this.options.forEach(option => option.ariaSelected = `${option === target}`);
+    }
+    if (target !== this.#tabindex.activeItem) {
+      this.#tabindex.focusOnItem(target);
+      this.#updateActiveDescendant();
+    }
+    if (oldValue !== this.value) {
+      this.#fireChange();
+    }
+  }
+
+  /**
+   * handles keyup:
+   * track whether shift key is being used for multiselectable listbox
+   * @param event {KeyboardEvent}
+   * @returns void
+   */
+  #onOptionKeyup(event: KeyboardEvent) {
+    const target = event.target as HTMLElement;
+    if (event.shiftKey && this.multiSelectable) {
+      if (this.#shiftStartingItem && target) {
+        this.#updateMultiselect(target, this.#shiftStartingItem);
+        this.#fireChange();
+      }
+      if (event.key === 'Shift') {
+        this.#shiftStartingItem = null;
+      }
+    }
+  }
+
+  /**
+   * handles keydown:
    * filters listbox by keboard event when slotted option has focus,
    * or by external element such as a text field
-   * @param event
-   * @returns { void }
+   * @param event {KeyboardEvent}
+   * @returns void
    */
-  filterByKeyboardEvent(event: KeyboardEvent) {
+  #onOptionKeydown(event: KeyboardEvent) {
+    const { filter } = this;
+    // need to set for keyboard support of multiselect
+    if (event.key === 'Shift' && this.multiSelectable) {
+      this.#shiftStartingItem = this.activeItem;
+    }
     const target = event.target as HTMLElement;
     const oldValue = this.value;
     let stopEvent = false;
@@ -295,130 +437,6 @@ export class ListboxController<
     if (oldValue !== this.value) {
       this.#fireChange();
     }
-  }
-
-  focus() {
-    this.#tabindex.focusOnItem(this.activeItem);
-  }
-
-  #updateActiveDescendant() {
-    let found = false;
-    this.options.forEach(option => {
-      if (option === this.#tabindex.activeItem) {
-        this.#internals.ariaActivedescendant = option.id;
-        option.setAttribute('active-descendant', 'active-descendant');
-        found = true;
-      } else {
-        option.removeAttribute('active-descendant');
-      }
-    });
-    if (!found) {
-      this.#tabindex.updateActiveItem(this.#tabindex.firstItem);
-      this.#internals.ariaActivedescendant = this.#tabindex.firstItem?.id || null;
-    }
-    this.#updateSingleselect();
-  }
-
-  #updateSingleselect() {
-    if (!this.multiSelectable) {
-      this.options.forEach(option => option.ariaSelected = `${option.id === this.#internals.ariaActivedescendant}`);
-      this.#fireChange();
-    }
-  }
-
-  #updateMultiselect(currentItem: HTMLElement, referenceItem = this.activeItem, ctrlKey = false) {
-    if (this.multiSelectable) {
-      // select all options between active descendant and target
-      const [start, end] = [this.options.indexOf(referenceItem), this.options.indexOf(currentItem)].sort();
-      const options = [...this.options].slice(start, end + 1);
-      // if all items in range are toggled, remove toggle
-      const allSelected = ctrlKey && options.filter(option => option.ariaSelected !== 'true')?.length === 0;
-      const toggle = ctrlKey && allSelected ? false : ctrlKey ? true : referenceItem.ariaSelected === 'true';
-      options.forEach(option => option.ariaSelected = `${toggle}`);
-      this.#shiftStartingItem = currentItem;
-    }
-  }
-
-  /**
-   * handles user user selection change similar to HTMLSelectElement events
-   * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
-   * @fires change
-   */
-  #fireChange() {
-    this.host.dispatchEvent(new Event('change', { bubbles: true }));
-  }
-
-  /**
-   * handles element value change similar to HTMLSelectElement events
-   * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
-   * @fires input
-   */
-  #fireInput() {
-    this.host.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-
-  #onFilterChange() {
-    const oldValue = this.value;
-    this.#tabindex.updateItems(this.#visibleOptions);
-    this.#updateActiveDescendant();
-    if (oldValue !== this.value) {
-      this.#fireInput();
-    }
-  }
-
-  #onOptionFocus(event: FocusEvent) {
-    const target = event.target as HTMLElement;
-    if (target !== this.#tabindex.activeItem) {
-      this.#tabindex.updateActiveItem(target);
-    }
-    this.#updateActiveDescendant();
-  }
-
-  #onOptionClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    const oldValue = this.value;
-    if (this.multiSelectable) {
-      if (!event.shiftKey) {
-        target.ariaSelected = `${target.ariaSelected !== 'true'}`;
-      } else {
-        if (this.#shiftStartingItem && target) {
-          this.#updateMultiselect(target, this.#shiftStartingItem);
-          this.#fireChange();
-        }
-      }
-    } else {
-      // select target and deselect all other options
-      this.options.forEach(option => option.ariaSelected = `${option === target}`);
-    }
-    if (target !== this.#tabindex.activeItem) {
-      this.#tabindex.focusOnItem(target);
-      this.#updateActiveDescendant();
-    }
-    if (oldValue !== this.value) {
-      this.#fireChange();
-    }
-  }
-
-  #onOptionKeyup(event: KeyboardEvent) {
-    const target = event.target as HTMLElement;
-    if (event.shiftKey && this.multiSelectable) {
-      if (this.#shiftStartingItem && target) {
-        this.#updateMultiselect(target, this.#shiftStartingItem);
-        this.#fireChange();
-      }
-      if (event.key === 'Shift') {
-        this.#shiftStartingItem = null;
-      }
-    }
-  }
-
-  #onOptionKeydown(event: KeyboardEvent) {
-    const { filter } = this;
-    // need to set for keyboard support of multiselect
-    if (event.key === 'Shift' && this.multiSelectable) {
-      this.#shiftStartingItem = this.activeItem;
-    }
-    this.filterByKeyboardEvent(event);
     // only change focus if keydown occurred when option has focus
     // (as opposed to an external text input and if filter has changed
     if (filter !== this.#filter) {

@@ -22,6 +22,10 @@ export class PfListboxGroup extends LitElement {
 
   @queryAssignedElements() private _options!: PfListboxOption[];
 
+  override connectedCallback() {
+    this.#internals;
+  }
+
   render() {
     return html`
       <slot name="group-heading" role="presentation"></slot>

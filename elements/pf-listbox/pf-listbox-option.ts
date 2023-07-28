@@ -22,39 +22,13 @@ export class PfListboxOption extends LitElement {
     this.addEventListener('focus', this.#onFocus);
     this.addEventListener('blur', this.#onBlur);
     this.id = this.id || getRandomId();
-  }
-
-  getUpdateByFilter(filter = '', caseSensitive = false) {
-    const search = caseSensitive ? filter : filter.toLowerCase();
-    const text = caseSensitive ? (this.textContent || '') : (this.textContent || '');
-    if (search === '' || text.match(search)) {
-      this.removeAttribute('hidden-by-filter');
-    } else {
-      this.setAttribute('hidden-by-filter', 'hidden-by-filter');
-    }
-    return !this.hasAttribute('hidden-by-filter');
+    this.#internals;
   }
 
   render() {
     return html`
       <slot></slot>
     `;
-  }
-
-  updateSet(setSize?: number | null, posInSet?: number | null) {
-    if (!setSize || !posInSet) {
-      this.#internals.ariaSetSize = null;
-      this.#internals.ariaPosInSet = null;
-    } else {
-      const parsedSize = Math.max(-1, setSize);
-      this.#internals.ariaSetSize = `${parsedSize}`;
-      this.#internals.ariaPosInSet = `${Math.min(Math.max(1, posInSet), parsedSize)}`;
-    }
-  }
-
-  updateSetSizeAndPosition(setSize: number | null, posInSet: number | null) {
-    this.#internals.ariaSetSize = setSize !== null ? `${setSize}` : null;
-    this.#internals.ariaPosInSet = posInSet !== null ? `${posInSet}` : null;
   }
 
   #onFocus() {

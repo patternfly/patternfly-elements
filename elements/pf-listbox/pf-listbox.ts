@@ -2,10 +2,9 @@ import { LitElement, html } from 'lit';
 import type { PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { ListboxController, type ListboxFilterMode, type ListboxOrientation } from '@patternfly/pfe-core/controllers/listbox-controller.js';
-import { PfListboxOption } from './pf-listbox-option.js';
-import { PfListboxGroup, type PfListboxGroupOrOption } from './pf-listbox-group.js';
+import './pf-listbox-option.js';
+import './pf-listbox-group.js';
 
 import styles from './pf-listbox.css';
 
@@ -17,10 +16,6 @@ import styles from './pf-listbox.css';
 @customElement('pf-listbox')
 export class PfListbox extends LitElement {
   static readonly styles = [styles];
-
-  static isOption(element: PfListboxOption): element is PfListboxOption {
-    return element instanceof PfListboxOption;
-  }
 
   /**
    * filter options that start with a string (case-insensitive)
@@ -57,16 +52,6 @@ export class PfListbox extends LitElement {
    */
   @property({ reflect: true, attribute: 'orientation', type: String }) orientation: ListboxOrientation = '';
 
-  /**
-   * value of listbox as a string
-   */
-  @property({ reflect: true, attribute: 'value' }) value?: string = undefined;
-
-  /**
-   * all slotted listbox options and/or groups of options
-   */
-  @queryAssignedElements() private groupsOrOptions!: PfListboxGroupOrOption[];
-
   #listbox = new ListboxController(this, {
     caseSensitive: this.caseSensitive,
     filterMode: this.filterMode,
@@ -75,8 +60,16 @@ export class PfListbox extends LitElement {
     orientation: this.orientation
   });
 
-  updated(changed: PropertyValues<this>) {
-    // console.log(changed);
+  get options() {
+    return [...this.querySelectorAll('pf-listbox-option')];
+  }
+
+  set value(optionsList: string | null) {
+    this.#listbox.value = optionsList;
+  }
+
+  get value() {
+    return this.#listbox.value;
   }
 
   render() {
@@ -88,23 +81,31 @@ export class PfListbox extends LitElement {
     `;
   }
 
-  focus() {
-    this.#listbox.focus();
+  constructor() {
+    super();
+    this.#listbox.options = this.options;
   }
 
-  get options() {
-    const extractItems = (group: PfListboxGroupOrOption[]) => group.flatMap((item: PfListboxGroupOrOption) => {
-      let options: PfListboxOption[];
-      if (item instanceof PfListboxGroup) {
-        const group = item as PfListboxGroup;
-        options = extractItems(group.options);
-      } else {
-        options = [item];
-      }
-      return options;
-    });
-    // console.log(this.querySelectorAll('pf-listbox-option'), extractItems(this.groupsOrOptions));
-    return extractItems(this.groupsOrOptions);
+  updated(changed: PropertyValues<this>) {
+    if (changed.has('caseSensitive')) {
+      this.#listbox.caseSensitive = this.caseSensitive;
+    }
+    if (changed.has('filterMode')) {
+      this.#listbox.filterMode = this.filterMode;
+    }
+    if (changed.has('matchAnywhere')) {
+      this.#listbox.matchAnywhere = this.matchAnywhere;
+    }
+    if (changed.has('multiSelectable')) {
+      this.#listbox.multiSelectable = this.multiSelectable;
+    }
+    if (changed.has('orientation')) {
+      this.#listbox.orientation = this.orientation;
+    }
+  }
+
+  focus() {
+    this.#listbox.focus();
   }
 
   #onSlotchange() {

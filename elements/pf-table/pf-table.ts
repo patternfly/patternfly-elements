@@ -25,7 +25,13 @@ export class PfTable extends LitElement {
   @property({ reflect: true }) role = 'table';
 
   render() {
-    return html`<slot></slot>`;
+    return html`<slot @slotchange=${this.#onSlotchange}></slot>`;
+  }
+
+  #onSlotchange() {
+    const firstRow = this.querySelector('pf-tr');
+    this.style.setProperty('--pf-table--number-of-columns', `${firstRow?.querySelectorAll('pf-th')?.length || 0}`);
+    this.requestUpdate();
   }
 }
 

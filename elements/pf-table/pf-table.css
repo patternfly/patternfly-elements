@@ -15,7 +15,7 @@
 } */
 
 :host {
-  display: grid;
+  display: inline-grid;
 }
 
 @media (min-width: 768px) {

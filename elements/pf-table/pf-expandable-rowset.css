@@ -1,5 +1,17 @@
+:host {
+    position: relative;
+}
+
 ::slotted(*) {
     position: relative;
+}
+
+pf-expand-toggle {
+    z-index: 2;
+}
+
+::slotted(pf-tr) {
+    padding-inline-start: 50px;
 }
 
 :host([expanded]) ::slotted(*)::before {

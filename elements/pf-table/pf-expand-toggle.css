@@ -1,5 +1,7 @@
 :host {
     padding-left: 1.5rem;
+    position: absolute;
+    left: 0;
 }
 
 #icon {

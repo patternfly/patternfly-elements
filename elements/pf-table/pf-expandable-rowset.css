@@ -10,4 +10,5 @@
     left: 0;
     content: "";
     border-left: 3px solid #06c;
+    pointer-events: none;
 }

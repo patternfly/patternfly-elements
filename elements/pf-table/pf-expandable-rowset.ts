@@ -23,6 +23,7 @@ export class PfExpandableRowset extends PfTbody {
 
   render() {
     return html`
+      <pf-expand-toggle></pf-expand-toggle>
       <slot></slot>
     `;
   }

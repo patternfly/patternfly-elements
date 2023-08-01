@@ -56,7 +56,8 @@
         "build:lightdom",
         "build:elements",
         "build:create",
-        "build:bundle"
+        "build:bundle",
+        "build:react"
       ]
     },
     "analyze": {
@@ -92,7 +93,7 @@
       ]
     },
     "build:elements": {
-      "command": "ttsc --build elements --pretty",
+      "command": "tspc --build elements --pretty",
       "clean": "if-file-deleted",
       "dependencies": [
         "build:core",
@@ -129,7 +130,7 @@
       ]
     },
     "build:core": {
-      "command": "ttsc --build ./core/pfe-core --pretty",
+      "command": "tspc --build ./core/pfe-core --pretty",
       "clean": "if-file-deleted",
       "dependencies": [
         "build:tools"
@@ -147,11 +148,7 @@
       ]
     },
     "build:icons": {
-      "command": "ts-node --esm --project tsconfig.icons.json ./scripts/icons/build.ts",
-      "dependencies": [
-        "build:core",
-        "build:tools"
-      ],
+      "command": "ts-node --esm ./scripts/icons.ts",
       "output": [
         "elements/pf-icon/icons/*/*.js"
       ]
@@ -170,6 +167,22 @@
       ],
       "output": [
         "elements/pfe.min.js"
+      ]
+    },
+    "build:react": {
+      "command": "ts-node --esm scripts/generate-react-wrappers.ts",
+      "dependencies": [
+        "build:core",
+        "build:tools",
+        "analyze"
+      ],
+      "files": [
+        "elements/custom-elements.json",
+        "scripts/generate-react-wrappers.ts",
+        "tools/pfe-tools/react/generate-wrappers.ts"
+      ],
+      "output": [
+        "react/**/*"
       ]
     },
     "build:lightdom": {
@@ -234,6 +247,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
+        "build:core",
         "build:icons"
       ]
     },
@@ -252,6 +266,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
+        "build:core",
         "build:icons"
       ]
     },
@@ -283,20 +298,21 @@
     "@actions/core": "^1.10.0",
     "@actions/exec": "^1.1.1",
     "@actions/glob": "^0.4.0",
-    "@commitlint/cli": "^17.4.4",
-    "@commitlint/config-conventional": "^17.4.4",
-    "@fortawesome/free-brands-svg-icons": "^6.3.0",
-    "@fortawesome/free-regular-svg-icons": "^6.3.0",
-    "@fortawesome/free-solid-svg-icons": "^6.3.0",
-    "@jspm/generator": "^1.0.4",
+    "@commitlint/cli": "^17.6.1",
+    "@commitlint/config-conventional": "^17.6.1",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/free-regular-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@jspm/generator": "^1.1.6",
     "@octokit/core": "^4.2.0",
     "@patternfly/patternfly": "^4.224.2",
-    "@rhds/elements": "^1.0.0-beta.32",
+    "@rhds/elements": "^1.0.0",
     "@types/koa__router": "^12.0.0",
     "@types/numeral": "^2.0.2",
     "@types/prismjs": "^1.26.0",
-    "@types/prompts": "^2.4.2",
-    "commitlint": "^17.4.4",
+    "@types/prompts": "^2.4.4",
+    "commitlint": "^17.6.1",
+    "execa": "^7.1.1",
     "fuse.js": "^6.6.2",
     "husky": "^8.0.3",
     "leasot": "^13.3.0",
@@ -308,5 +324,8 @@
     "./core/*",
     "./elements",
     "./tools/*"
-  ]
+  ],
+  "dependencies": {
+    "@lit-labs/react": "^1.2.0"
+  }
 }

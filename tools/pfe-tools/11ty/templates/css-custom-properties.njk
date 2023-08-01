@@ -9,9 +9,9 @@
   </tr>
 {%- endmacro -%}
 
-<section class="api band css-custom-properties">
-  <a id="styling-hooks"></a>
-  <h{{level}}>{{ header | innerMD | safe }}</h{{level}}> {% if not content and not cssProperties.length %}
+<section class="api band css-custom-properties api-properties">
+  {% if not hasStylingHooks %}<a id="styling-hooks"></a>{% endif %}
+  {{ header | mdHeading(level) | safe }} {% if not content and not cssProperties.length %}
 
   <em>None</em> {%- else -%}
 
@@ -37,9 +37,7 @@
   </table> {%- endif -%} {%- if deprecated.length -%}
 
   <details>
-    <summary>
-      <h{{level+1}}>{{ ('Deprecated ' + header) | innerMD | safe }}</h{{level+1}}>
-    </summary>
+    <summary>{{ ('Deprecated ' + header) | mdHeading(level + 1) | safe }}</summary>
     <table>
       <thead>
         <tr>
@@ -60,6 +58,7 @@
 </section>
 
 <style>
+
 table.css-custom-properties code[data-color] {
   display: inline-flex;
   align-items: center;

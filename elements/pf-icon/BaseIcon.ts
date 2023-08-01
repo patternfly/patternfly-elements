@@ -7,7 +7,7 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import style from './BaseIcon.css';
 
-export type URLGetter = (set: string, icon: string) => URL;
+export type URLGetter = (set: string, icon: string) => URL | string;
 
 /** requestIdleCallback when available, requestAnimationFrame when not */
 const ric = window.requestIdleCallback ?? window.requestAnimationFrame;
@@ -82,7 +82,7 @@ export abstract class BaseIcon extends LitElement {
    * - `idle`: wait for the browser to attain an idle state before loading
    * - `lazy` (default): wait for the element to enter the viewport before loading
    */
-  @property() loading?: 'idle'|'lazy'|'eager' = 'lazy';
+  @property() loading?: 'idle' | 'lazy' | 'eager' = 'lazy';
 
   /** Icon content. Any value that lit can render */
   @state() private content?: unknown;
@@ -140,16 +140,21 @@ export abstract class BaseIcon extends LitElement {
   protected async load() {
     const { set, icon, } = this;
     const getter = this.#class.getters.get(set) ?? this.#class.getIconUrl;
-    let pathname = 'UNKNOWN ICON';
+    let spec = 'UNKNOWN ICON';
     if (set && icon) {
       try {
-        ({ pathname } = getter(set, icon));
-        const mod = await import(pathname);
+        const gotten = getter(set, icon);
+        if (gotten instanceof URL) {
+          spec = gotten.pathname;
+        } else {
+          spec = gotten;
+        }
+        const mod = await import(spec);
         this.content = mod.default instanceof Node ? mod.default.cloneNode(true) : mod.default;
         await this.updateComplete;
         this.dispatchEvent(new Event('load', { bubbles: true }));
       } catch (error: unknown) {
-        const event = new IconLoadError(pathname, error as Error);
+        const event = new IconLoadError(spec, error as Error);
         this.#logger.error((error as IconLoadError).message);
         this.dispatchEvent(event);
       }

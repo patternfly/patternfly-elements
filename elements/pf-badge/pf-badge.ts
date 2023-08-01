@@ -6,7 +6,7 @@ import { BaseBadge } from './BaseBadge.js';
 import styles from './pf-badge.css';
 
 /**
- * A badge is used to annotate other information like a label or an object name.
+ * A **badge** is used to annotate other information like a label or an object name.
  *
  * @cssprop {<length>} --pf-c-badge--BorderRadius               {@default `180em`}
  *
@@ -38,7 +38,7 @@ export class PfBadge extends BaseBadge {
    * Denotes the state-of-affairs this badge represents
    * Options include read and unread
    */
-  @property({ reflect: true }) state?: 'unread'|'read';
+  @property({ reflect: true }) state?: 'unread' | 'read';
 
   @property({ reflect: true, type: Number }) number?: number;
 

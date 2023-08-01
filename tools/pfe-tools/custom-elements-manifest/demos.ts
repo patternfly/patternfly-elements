@@ -27,7 +27,9 @@ import slugify from 'slugify';
  * `/elements/pf-jazz-hands/pf-jazz-hands.js`
  */
 export function demosPlugin(options?: PfeConfig): Plugin {
-  const config = { ...getPfeConfig(), ...options };
+  const fileOptions = getPfeConfig(options?.rootDir);
+  const config = { ...fileOptions, ...options };
+  const subpath = config.site.componentSubpath ?? 'components';
   const { rootDir, demoURLPrefix, sourceControlURLPrefix } = config;
   return {
     name: 'demos-plugin',
@@ -37,7 +39,7 @@ export function demosPlugin(options?: PfeConfig): Plugin {
 
       for (const moduleDoc of customElementsManifest.modules) {
         const primaryElementName = moduleDoc.path.split(sep).find(x => x !== 'elements') ?? '';
-        let demoPath = join(rootDir, primaryElementName, 'demo');
+        let demoPath = join(rootDir, 'elements', primaryElementName, 'demo');
 
         if (!existsSync(demoPath)) {
           demoPath = join('elements', primaryElementName, 'demo');
@@ -52,19 +54,19 @@ export function demosPlugin(options?: PfeConfig): Plugin {
               const { tagName } = decl;
               for (const demo of allDemos) {
                 const demoName = demo.replace(/\.html$/, '');
-                const slug = slugify(alias).toLowerCase();
+                const slug = slugify(alias, { strict: true, lower: true });
                 const href = new URL(`elements/${primaryElementName}/demo/${demo}/`, sourceControlURLPrefix || '/').href.replace(/\/$/, '');
                 if (demoName === tagName && demoName === primaryElementName) {
                 // case: elements/pf-jazz-hands/demo/pf-jazz-hands.html
-                  const { href: url } = new URL(`/components/${slug}/demo/`, demoURLPrefix || '/');
+                  const { href: url } = new URL(`/${subpath}/${slug}/demo/`, demoURLPrefix || '/');
                   decl.demos.push({ url, source: { href } });
                 } else if (allTagNames.includes(demoName) && demoName === tagName) {
                 // case: elements/pf-jazz-hands/demo/pf-jazz-shimmy.html
-                  const { href: url } = new URL(`/components/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
+                  const { href: url } = new URL(`/${subpath}/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
                   decl.demos.push({ url, source: { href } });
                 } else if (tagName === primaryElementName && !allTagNames.includes(demoName)) {
                 // case: elements/pf-jazz-hands/demo/ack.html
-                  const { href: url } = new URL(`/components/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
+                  const { href: url } = new URL(`/${subpath}/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
                   decl.demos.push({ url, source: { href } });
                 }
               }

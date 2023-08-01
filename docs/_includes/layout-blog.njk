@@ -1,12 +1,13 @@
 ---
 layout: layout-base.njk
 ---
+{% include '_skip-link.njk' %}
 {% include '_nav.njk' %}
 
-<main class="blog">
+<main id="main" class="blog">
   <header class="band header">
-    <h1>{{ title }}</h1>{% if tagline %}
-    <p class="tagline">{{ tagline }}</p>{% endif %}
+    <h1>{{ title }}</h1>
+    {% if tagline %}<p class="tagline">{{ tagline }}</p>{% endif %} 
     <time datetime="{{ page.date }}">{{ page.date | prettyDate }}</time>
   </header>
 
@@ -16,15 +17,16 @@ layout: layout-base.njk
   </aside>
 
   {% band %}
-  <details class="inline-toc">
-    <summary>Contents</summary>
-    {{- content | toc | safe -}}
-  </details>
+    <details class="inline-toc">
+      <summary>Contents</summary>
+      {{- content | toc | safe -}}
+    </details>
   {% endband %}
 
-  {%- band -%}
+  <section class="band">
     {{ content | safe }}
-  {%- endband -%}
+  </section>
+
 </main>
 
 {% include '_foot.njk' %}
@@ -67,10 +69,3 @@ layout: layout-base.njk
 
 </script>
 
-<style>
-main.blog > header.band {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-}
-</style>

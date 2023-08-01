@@ -1,5 +1,19 @@
 # @patternfly/eslint-config-elements
 
+## 2.0.1
+
+### Patch Changes
+
+- c2e901f81: Added more formatting rules (infix spacing and type annotation spacing).
+
+## 2.0.0
+
+### Patch Changes
+
+- abf2a7c89: Added lint rule: `no-missing-package-exports`
+- Updated dependencies [abf2a7c89]
+  - @patternfly/eslint-plugin-elements@1.1.0
+
 ## 1.0.0
 
 ### Patch Changes

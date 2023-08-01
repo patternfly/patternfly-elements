@@ -4,6 +4,7 @@ import { LitElement, html } from 'lit';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { query } from 'lit/decorators/query.js';
 
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
 
 import style from './BaseTab.css';
@@ -37,6 +38,7 @@ export abstract class BaseTab extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    this.id ||= getRandomId(this.localName);
     this.addEventListener('click', this.#clickHandler);
     this.#internals.role = 'tab';
   }
@@ -63,9 +65,14 @@ export abstract class BaseTab extends LitElement {
     }
   }
 
+  focus() {
+    this.button.focus();
+  }
+
   #clickHandler() {
     if (!this.disabled && this.#internals.ariaDisabled !== 'true' && this.ariaDisabled !== 'true') {
       this.active = true;
+      this.focus(); // safari fix
     }
   }
 

@@ -1,0 +1,14 @@
+::slotted(*) {
+    position: relative;
+}
+
+:host([expanded]) ::slotted(*)::before {
+    position: absolute;
+    top: -1px;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    content: "";
+    border-left: 3px solid #06c;
+    pointer-events: none;
+}

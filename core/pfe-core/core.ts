@@ -13,7 +13,7 @@ export interface PfeConfig {
 const noPref = Symbol();
 
 /** Retrieve an HTML metadata item */
-function getMeta(name: string): string|undefined {
+function getMeta(name: string): string | undefined {
   return document.head.querySelector<HTMLMetaElement>(`meta[name="${name}"]`)?.content;
 }
 
@@ -29,22 +29,34 @@ export function trackPerformance(preference: boolean | typeof noPref = noPref) {
   return window.PfeConfig.trackPerformance;
 }
 
+function makeConverter<T>(f: (x: string, type?: unknown) => T): ComplexAttributeConverter<null | T[]> {
+  return {
+    fromAttribute(value: string) {
+      if (typeof value !== 'string') {
+        return null;
+      } else {
+        return value.split(',').map(f);
+      }
+    },
+    toAttribute(value: T[]) {
+      return value.join(',');
+    },
+  };
+}
+
 /**
  * A LitElement property converter which represents a list of numbers as a comma separated string
  * @see https://lit.dev/docs/components/properties/#conversion-converter
  */
-export const NumberListConverter: ComplexAttributeConverter<null|number[]> = {
-  fromAttribute(value: string) {
-    if (typeof value !== 'string') {
-      return null;
-    } else {
-      return value.split(',').map(x => x.trim()).map(x => parseInt(x, 10));
-    }
-  },
-  toAttribute(value: number[]) {
-    return value.join(',');
-  },
-};
+export const NumberListConverter =
+  makeConverter(x => parseInt(x?.trim(), 10));
+
+/**
+ * A LitElement property converter which represents a list of strings as a comma separated string
+ * @see https://lit.dev/docs/components/properties/#conversion-converter
+ */
+export const StringListConverter =
+  makeConverter(x => x.trim());
 
 /**
  * A composed, bubbling event for UI interactions

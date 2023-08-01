@@ -13,6 +13,8 @@ interface SiteOptions {
   stylesheets?: string[];
   /** Title for main page of the demo */
   title?: string;
+  /** Site subpath for components. default: 'components' i.e. 'https://patternflyelements.org/components' */
+  componentSubpath?: string;
 }
 
 export interface PfeConfig {
@@ -34,15 +36,17 @@ export interface PfeConfig {
 
 const SITE_DEFAULTS: Required<SiteOptions> = {
   description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
-  favicon: '/brand/logo/svg/pfe-icon-blue.svg',
-  logoUrl: '/brand/logo/svg/pfe-icon-white-shaded.svg',
+  favicon: '/docs/images/logo/pfe-icon-blue.svg',
+  logoUrl: '/docs/images/pfe-logo-inverse-white.svg',
   stylesheets: [],
   title: 'PatternFly Elements',
+  componentSubpath: 'components',
 };
 
 const DEFAULT_CONFIG: PfeConfig = {
   demoURLPrefix: 'https://patternflyelements.org/',
   sourceControlURLPrefix: 'https://github.com/patternfly/patternfly-elements/tree/main/',
+  elementsDir: 'elements',
   tagPrefix: 'pf',
   aliases: {},
 };
@@ -68,9 +72,10 @@ export function getPfeConfig(rootDir = process.cwd()): Required<PfeConfig> {
   };
 }
 
-const slugsConfigMap = new Map<string, { config: PfeConfig, slugs: Map<string, string> }>();
+const slugsConfigMap = new Map<string, { config: PfeConfig; slugs: Map<string, string> }>();
 const reverseSlugifyObject = ([k, v]: [string, string]): [string, string] =>
-  [slugify(v).toLowerCase(), k];
+  [slugify(v, { lower: true }), k];
+
 function getSlugsMap(rootDir: string) {
   if (!slugsConfigMap.get(rootDir)) {
     const config = getPfeConfig(rootDir);
@@ -81,7 +86,11 @@ function getSlugsMap(rootDir: string) {
   return slugsConfigMap.get(rootDir)!;
 }
 
+/**
+ * Returns the prefixed custom element name for a given slug
+ */
 export function deslugify(slug: string, rootDir = process.cwd()): string {
   const { slugs, config } = getSlugsMap(rootDir);
-  return slugs.get(slug) ?? `${config.tagPrefix}-${slug}`;
+  const prefixedSlug = (slug.startsWith(`${config.tagPrefix}-`)) ? slug : `${config.tagPrefix}-${slug}`;
+  return slugs.get(slug) ?? prefixedSlug;
 }

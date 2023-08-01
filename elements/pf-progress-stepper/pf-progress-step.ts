@@ -44,7 +44,7 @@ export class PfProgressStep extends LitElement {
   @property({ attribute: 'icon-set' }) iconSet?: string;
 
   /** Describes the state of the current item */
-  @property({ reflect: true }) variant?: 'pending'|'info'|'success'|'warning'|'danger';
+  @property({ reflect: true }) variant?: 'pending' | 'info' | 'success' | 'warning' | 'danger';
 
   /** Indicates if this item is the current active item. */
   @property({ type: Boolean, reflect: true }) current = false;

@@ -19,32 +19,23 @@
   with `aria-hidden="true"` or `role="presentation"`, if its content is merely
   presentational and expressed using accessible text copy elsewhere.
 
+  {% htmlexample %}
   <pf-icon icon="user" aria-label="user"></pf-icon>
   <pf-icon icon="lock" aria-label="lock"></pf-icon>
   <pf-icon icon="laptop" aria-label="laptop"></pf-icon>
   <pf-icon icon="cloud" aria-label="cloud"></pf-icon>
-  ```html
-  <pf-icon icon="user" aria-label="user"></pf-icon>
-  <pf-icon icon="lock" aria-label="lock"></pf-icon>
-  <pf-icon icon="laptop" aria-label="laptop"></pf-icon>
-  <pf-icon icon="cloud" aria-label="cloud"></pf-icon>
-  ```
+  {% endhtmlexample %}
 
   ### Size
   The default size is 1em, so icon size matches text size.  `2x`, etc, are
   multiples of font size.  `sm`, `md`, etc are fixed pixel-based sizes.
 
+  {% htmlexample %}
   <pf-icon icon="user" size="sm"></pf-icon>
   <pf-icon icon="user" size="md"></pf-icon>
   <pf-icon icon="user" size="lg"></pf-icon>
   <pf-icon icon="user" size="xl"></pf-icon>
-
-  ```html
-  <pf-icon icon="user" size="sm"></pf-icon>
-  <pf-icon icon="user" size="md"></pf-icon>
-  <pf-icon icon="user" size="lg"></pf-icon>
-  <pf-icon icon="user" size="xl"></pf-icon>
-  ```
+  {% endhtmlexample %}
 {% endband %}
 
 {% band header="Icon sets" %}
@@ -67,11 +58,11 @@ Icons are JavaScript module which export a [lit renderable][renderable],
 typically an inline SVG element [template literal][template-literals] tagged
 with the Lit [`svg`][svg-tag] template tag. To register a new icon set, call
 the static `addIconSet` method with the set name and a getter function. The
-getter function takes the icon set and icon name and returns a URL object that
-points to the icon's JavaScript module.
+getter function takes the icon set and icon name and returns a URL object or a 
+string that points to the icon's JavaScript module.
 
 ```ts
-type getter = (set: string, icon: string) => URL
+type getter = (set: string, icon: string) => URL | string
 ```
 
 ```javascript
@@ -87,7 +78,7 @@ PfIcon.addIconSet('local', (set, icon) =>
 ### Updating an Existing Icon Set
 
 To updating an existing icon set, you use the same `addIconSet` function. By
-defaulting back to then existing `getIconURL` method, you  you can add a new
+defaulting back to then existing `getIconUrl` method, you  you can add a new
 icon to an existing set:
 
 ```js
@@ -107,14 +98,14 @@ PfIcon.addIconSet('patternfly', (set, icon) => {
 ### Override the Default Icon Sets
 
 Icons are [loaded lazily](#loading) by default, so there's no performance
-penalty for keeping the default icon sets arond and unused. However, if you'd
+penalty for keeping the default icon sets around and unused. However, if you'd
 like to override the default icon sets across the entire page, you can use
 `addIconSet` with the `fas`, `far`, and `patternfly` set names:
 
 ```js
 import { PfIcon } from '@patternfly/pf-icon';
 
-PfIcon.getIconURL = (set, icon) =>
+PfIcon.getIconUrl = (set, icon) =>
   new URL(`/icons/js/${set}/${icon}.js`, 'https://static.redhat.com');
 ```
 
@@ -124,8 +115,9 @@ To change the default set name, you can also override `PfIcon.defaultIconSet`
 PfIcon.defaultIconSet = 'patternfly';
 ```
 
-Now when `<pf-icon>` is used, it will automatically load icon modules from
-`https://static.redhat.com/icons/js/patternfly/...`.
+Now when `<pf-icon>` is loaded from the [RedHat DX 
+CDN](https://redhatstatic.com/dx/), it will automatically load icon modules from 
+the CDN as well.
 
 {% endband %}
 

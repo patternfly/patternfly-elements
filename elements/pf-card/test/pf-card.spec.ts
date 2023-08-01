@@ -5,6 +5,10 @@ import '@patternfly/pfe-tools/test/stub-logger.js';
 import { PfCard } from '@patternfly/elements/pf-card/pf-card.js';
 
 describe('<pf-card>', function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-card')).to.be.an.instanceof(PfCard);
+  });
+
   it('should upgrade', async function() {
     expect(await createFixture<PfCard>(html`<pf-card></pf-card>`))
       .to.be.an.instanceof(customElements.get('pf-card'))
@@ -137,7 +141,7 @@ describe('<pf-card>', function() {
 
     describe('accessible', function() {
       it('should be accessible in both the light and shadow dom', async function() {
-        expect(element).to.be.accessible();
+        await expect(element).to.be.accessible();
       });
       // TODO: this has been flaky. revisit later
       // it('should have an article element wrapper in the shadow dom', async function() {

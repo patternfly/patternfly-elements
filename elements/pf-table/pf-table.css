@@ -1,3 +1,25 @@
+/* :host {
+  display: grid;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  :host {
+    display: table;
+    border-spacing: 0;
+    border-collapse: collapse;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-color: gray;
+  }
+} */
+
 :host {
-  display: block;
+  display: inline-grid;
+}
+
+@media (min-width: 768px) {
+  :host {
+    grid-auto-rows: min-content;
+  }
 }

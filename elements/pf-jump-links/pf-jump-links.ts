@@ -1,19 +1,18 @@
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 
 import { ScrollSpyController } from '@patternfly/pfe-core/controllers/scroll-spy-controller.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
-import './pf-jump-links-item.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
 
+import './pf-jump-links-item.js';
+
 import style from './pf-jump-links.css';
-import { PfJumpLinksItem } from './pf-jump-links-item.js';
 
 /**
- * Jump links allow users to navigate to sections within a page.
+ * **Jump links** allow users to navigate to sections within a page.
  *
  * @fires toggle - when the `expanded` disclosure widget is toggled
  * @slot - Place pf-jump-links-items here
@@ -64,22 +63,26 @@ import { PfJumpLinksItem } from './pf-jump-links-item.js';
 export class PfJumpLinks extends LitElement {
   static readonly styles = [style];
 
-  @queryAssignedElements() _items!:PfJumpLinksItem[];
-
+  /** Whether the element features a disclosure widget around the nav items */
   @property({ reflect: true, type: Boolean }) expandable = false;
 
+  /** Whether the expandable element's disclosure widget is expanded */
   @property({ reflect: true, type: Boolean }) expanded = false;
 
+  /** Whether the layout of children is vertical or horizontal. */
   @property({ reflect: true, type: Boolean }) vertical = false;
 
+  /** Whether to center children. */
   @property({ reflect: true, type: Boolean }) centered = false;
 
+  /** Offset to add to the scroll position, potentially for a masthead which content scrolls under. */
   @property({ type: Number }) offset = 0;
 
+  /** Label to add to nav element. */
   @property() label?: string;
 
-  #items!:PfJumpLinksItem[];
-  #init = false;
+  #initialized = false;
+
   #rovingTabindexController = new RovingTabindexController(this);
 
   #spy = new ScrollSpyController(this, {
@@ -106,22 +109,25 @@ export class PfJumpLinks extends LitElement {
             <pf-icon icon="chevron-right"></pf-icon>
             <span id="label">${this.label}</span>
           </summary>
-          <slot role="listbox" @slotchange="${this.#onSlotchange}"></slot>
+          <slot role="listbox" @slotchange="${this.#updateItems}"></slot>
         </details>` : html`
         <span id="label">${this.label}</span>
-        <slot role="listbox" @slotchange="${this.#onSlotchange}"></slot>`}
+        <slot role="listbox" @slotchange="${this.#updateItems}"></slot>`}
       </nav>
     `;
   }
 
-  #onSlotchange() {
-    this.#items = this._items;
-    const items = this.#items?.map(item=>item.link);
-    if (this.#init) {
+  #updateItems() {
+    const items = Array.from(this.querySelectorAll(':is(pf-jump-links-item, pf-jump-links-list)'))
+      .flatMap(i => [
+        ...i.shadowRoot?.querySelectorAll('a') ?? [],
+        ...i.querySelectorAll('a') ?? [],
+      ]);
+    if (this.#initialized) {
       this.#rovingTabindexController.updateItems(items);
     } else {
       this.#rovingTabindexController.initItems(items);
-      this.#init = true;
+      this.#initialized = true;
     }
   }
 

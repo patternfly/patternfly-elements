@@ -3,7 +3,7 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 import { Logger } from './logger.js';
 
 export interface Options {
-  observe?: boolean|MutationObserverInit;
+  observe?: boolean | MutationObserverInit;
   emptyWarning?: string;
 }
 

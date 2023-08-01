@@ -1,5 +1,122 @@
 # @patternfly/pfe-tools
 
+## 1.4.2
+
+### Patch Changes
+
+- 91850fbf8: fixed TypeScript typings for react wrappers
+
+## 1.4.1
+
+### Patch Changes
+
+- 1924229ea: Generate TypeScript typings for React wrapper components
+
+## 1.4.0
+
+### Minor Changes
+
+- f4a7ae7d7: **React**: adds `@patternfly/pfe-tools/react/generate-wrappers.js`
+
+  Use this to generate React component wrappers for Lit custom elements,
+  based on their `custom-elements.json` manifest.
+
+  ```js
+  import { generateReactWrappers } from "@patternfly/pfe-tools/react/generate-wrappers.js";
+
+  const inURL = new URL("../elements/custom-elements.json", import.meta.url);
+  const outURL = new URL("../elements/react/", import.meta.url);
+
+  await generateReactWrappers(inURL, outURL);
+  ```
+
+### Patch Changes
+
+- 699a812bf: `11ty`: prevent duplicate IDs on code pages when multiple elements are documented
+
+## 1.3.2
+
+### Patch Changes
+
+- cdd1d4232: `DocsPage`: renders headings as markdown ([PR](https://github.com/patternfly/patternfly-elements/pull/2516))
+- d7dd0353b: `dev-server`: Corrects aliased elements redirects
+
+## 1.3.1
+
+### Patch Changes
+
+- d5c6c199f: **Dev Server**: fixes `*-lightdom.css` support in config
+
+## 1.3.0
+
+### Minor Changes
+
+- 4832b29ab: **Test Helpers**: Added `allUpdates` test helper, which waits until an element
+  completely finishes updating.
+
+  ```js
+  const element = await fixture(html`<my-el></my-el>`);
+  await allUpdates(element);
+  ```
+
+### Patch Changes
+
+- a4c20b70d: **Dev Server**: updates router to use project subpath configuration
+
+## 1.2.0
+
+### Minor Changes
+
+- 69e7f5b9e: Added `site.componentSubpath` config to `.pfe.config.json`, representing the
+  site subpath for component pages and demos. Default is `'components'`.
+
+## 1.1.1
+
+### Patch Changes
+
+- 90b3ade12: Removes special characters from component slugs ie. `special (characters)` becomes `special-characters`
+
+## 1.1.0
+
+### Minor Changes
+
+- 79f30b8f6: `11ty/plugins/custom-elements-manifest.cjs`: added `renderTitleInOverview`
+  option, a boolean flag which defaults to `true`.
+
+  When true, this option renders an `<h1>` in the element's docs page's "Overview"
+  section.
+
+  Note: the next major release will switch this option to `false` by default, so
+  to prepare your docs pages, add your own headings:
+
+  BEFORE:
+
+  ```md
+  {% renderOverview %}
+  <pf-jazz-hands></pf-jazz-hands>
+  {% endrenderOverview %}
+  ```
+
+  AFTER:
+
+  ```md
+  <section class="band">
+    <h1 id="jazz-hands">Jazz Hands</h1>
+  </section>
+
+  {% renderOverview %}
+  <pf-jazz-hands></pf-jazz-hands>
+  {% endrenderOverview %}
+  ```
+
+## 1.0.1
+
+### Patch Changes
+
+- cfc5913c6: `pfe-tools`:
+  - Updated dev server header styles to match look and feel of 11ty documentation site
+  - Added `repoHost` to `PfeConfig` which enables customizing the dev server repository host name and icon
+
 ## 1.0.0
 
 ### Major Changes

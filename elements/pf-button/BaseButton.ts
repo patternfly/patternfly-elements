@@ -9,7 +9,7 @@ import styles from './BaseButton.css';
 
 /**
  * Base button class
- *
+ * @csspart button - Internal button element
  * @csspart icon - Container for the icon slot
  * @slot icon
  *       Contains the button's icon or state indicator, e.g. a spinner.
@@ -26,7 +26,7 @@ export abstract class BaseButton extends LitElement {
   /** Disables the button */
   @property({ reflect: true, type: Boolean }) disabled = false;
 
-  @property({ reflect: true }) type?: 'button'|'submit'|'reset';
+  @property({ reflect: true }) type?: 'button' | 'submit' | 'reset';
 
   /** Accessible name for the button, use when the button does not have slotted text */
   @property() label?: string;
@@ -57,14 +57,15 @@ export abstract class BaseButton extends LitElement {
   override render() {
     const { hasIcon } = this;
     return html`
-      <button type="${ifDefined(this.type)}"
+      <button aria-label="${ifDefined(this.label)}"
               class="${classMap({ hasIcon })}"
+              part="button"
+              type="${ifDefined(this.type)}"
               value="${ifDefined(this.value)}"
-              aria-label="${ifDefined(this.label)}"
               @click="${this.#onClick}"
               ?disabled="${this.disabled || this.#internals.formDisabled}">
         <slot id="icon" part="icon" aria-hidden="true" name="icon">${this.renderDefaultIcon()}</slot>
-        <slot id="text" aria-hidden=${String(!!this.label) as 'true'|'false'}></slot>
+        <slot id="text" aria-hidden=${String(!!this.label) as 'true' | 'false'}></slot>
       </button>
     `;
   }

@@ -5,7 +5,7 @@ import { property } from 'lit/decorators/property.js';
 import style from './pf-icon.css';
 
 /**
- * An icon component is a container that allows for icons of varying dimensions to
+ * An **icon** component is a container that allows for icons of varying dimensions to
  * seamlessly replace each other without shifting surrounding content.
  *
  * @slot - Slotted content is used as a fallback in case the icon doesn't load
@@ -20,7 +20,7 @@ export class PfIcon extends BaseIcon {
   public static defaultIconSet = 'fas';
 
   /** Size of the icon */
-  @property({ reflect: true }) size: 'sm'|'md'|'lg'|'xl' = 'sm';
+  @property({ reflect: true }) size: 'sm' | 'md' | 'lg' | 'xl' = 'sm';
 }
 
 declare global {

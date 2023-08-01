@@ -1,5 +1,52 @@
 # @patternfly/pfe-core
 
+## 2.4.1
+
+### Patch Changes
+
+- 5b16b3b04: `SlotController`: ensure first render is correct when used in certain javascript frameworks
+
+## 2.4.0
+
+### Minor Changes
+
+- a81bcb133: **Controllers**: Added timestamp controller
+
+### Patch Changes
+
+- 7055add74: `FloatingDOMController`: fixed an incorrect typescript import
+
+## 2.3.1
+
+### Patch Changes
+
+- c5d95880c: **roving-tabindex-controller**: fixes arrow keydown event listeners
+
+## 2.3.0
+
+### Minor Changes
+
+- 78c8e4416: Added `StringListConverter` for managing comma-separated list attributes.
+
+### Patch Changes
+
+- 37c23c398: `overflow-controller`:
+  - improves display calculations for overflow scroll buttons
+  - adds smooth scroll behavior
+
+## 2.2.0
+
+### Minor Changes
+
+- 83024fe5e: `roving-tabindex-controller`: notify the host when the focused item changes.
+- 83024fe5e: `roving-tabindex-controller`: allow component authors to specify the type of items.
+
+## 2.1.0
+
+### Minor Changes
+
+- e45f5eb5a: `roving-tabindex-controller`: enabled controller to be used by aria-expanded elements
+
 ## 2.0.0
 
 ### Major Changes

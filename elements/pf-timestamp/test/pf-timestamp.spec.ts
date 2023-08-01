@@ -3,6 +3,10 @@ import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfTimestamp } from '@patternfly/elements/pf-timestamp/pf-timestamp.js';
 
 describe('<pf-timestamp>', function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-timestamp')).to.be.an.instanceof(PfTimestamp);
+  });
+
   it('should upgrade', async function() {
     const element = await createFixture<PfTimestamp>(html`<pf-timestamp></pf-timestamp>`);
     expect(element, 'the <pf-timestamp> should be an instance of PfTimestamp')
@@ -158,12 +162,30 @@ describe('<pf-timestamp>', function() {
     expect(element.time).to.equal(expected);
   });
 
-  it('should show relative time', async function() {
+  it('should show relative time of the moment', async function() {
+    const date = new Date();
+    const element = await createFixture<PfTimestamp>(html`
+      <pf-timestamp date="${date.toString()}" relative></pf-timestamp>
+    `);
+
+    expect(element.time).to.match(/just now/);
+  });
+
+  it('should show relative time in the past', async function() {
     const date = new Date(2015, 7, 9, 14, 57, 0);
     const element = await createFixture<PfTimestamp>(html`
       <pf-timestamp date="${date.toString()}" relative></pf-timestamp>
     `);
 
     expect(element.time).to.match(/\d+ years ago/);
+  });
+
+  it('should show relative time in the future', async function() {
+    const date = new Date(2099, 7, 9, 14, 57, 0);
+    const element = await createFixture<PfTimestamp>(html`
+      <pf-timestamp date="${date.toString()}" relative></pf-timestamp>
+    `);
+
+    expect(element.time).to.match(/in \d+ years/);
   });
 });

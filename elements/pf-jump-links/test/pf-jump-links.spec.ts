@@ -3,48 +3,45 @@ import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 
-import { PfJumpLinks } from '@patternfly/elements/pf-jump-links/pf-jump-links.js';
+import { PfJumpLinks } from '../pf-jump-links.js';
 import { PfJumpLinksItem } from '../pf-jump-links-item.js';
 import { PfJumpLinksList } from '../pf-jump-links-list.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
-
-async function allUpdates(element: ReactiveElement) {
-  let count = 0;
-  do {
-    if (count > 100) {
-      throw new Error('Too Many Updates');
-    }
-    await element.updateComplete;
-    count++;
-  } while (!await element.updateComplete);
-}
+import { allUpdates } from '@patternfly/pfe-tools/test/utils.js';
 
 describe('<pf-jump-links>', function() {
   let element: PfJumpLinks;
+  let firstItem: PfJumpLinksItem;
+  let secondItem: PfJumpLinksItem;
 
   beforeEach(async function() {
     element = await createFixture<PfJumpLinks>(html`
       <pf-jump-links>
         <pf-jump-links-item id="first">Inactive section</pf-jump-links-item>
-        <pf-jump-links-item id="second">Active section</pf-jump-links-item>
+        <pf-jump-links-item id="second" active>Active section</pf-jump-links-item>
         <pf-jump-links-item id="third">Inactive section</pf-jump-links-item>
       </pf-jump-links>
     `);
     await allUpdates(element);
+    [firstItem, secondItem] = element.querySelectorAll<PfJumpLinksItem>('pf-jump-links-item');
+  });
+
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-jump-links')).to.be.an.instanceof(PfJumpLinks);
+    expect(document.createElement('pf-jump-links-item')).to.be.an.instanceof(PfJumpLinksItem);
+    expect(document.createElement('pf-jump-links-list')).to.be.an.instanceof(PfJumpLinksList);
   });
 
   describe('tabbing to first item', function() {
-    let firstItem: PfJumpLinksItem;
-    let secondItem: PfJumpLinksItem;
-    let initialActiveElement: Element|null;
+    let initialActiveElement: Element | null;
     beforeEach(async function() {
-      [firstItem, secondItem] = element.querySelectorAll<PfJumpLinksItem>('pf-jump-links-item');
-      await sendKeys({ press: 'Tab' });
       initialActiveElement = document.activeElement;
+      await sendKeys({ press: 'Tab' });
+      await nextFrame();
     });
 
-    it('should focus a this first jump-links-item', function() {
+    it('should focus the first jump-links-item', function() {
       expect(document.activeElement).to.equal(firstItem);
     });
 

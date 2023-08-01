@@ -13,6 +13,8 @@ interface DocsPageOptions extends PfeConfig {
   docsTemplatePath?: string;
   tagName?: string;
   title?: string;
+  /** When true, renders an <h1> with the element's title in the element docs overview */
+  renderTitleInOverview?: boolean;
 }
 
 export interface RenderKwargs {
@@ -21,6 +23,13 @@ export interface RenderKwargs {
   header?: string;
   level?: number;
 }
+
+/**
+ * docs pages contain a #styling-hooks anchor as back compat for older versions of the page
+ * to prevent this id from rendering more than once, we track the number of times each page
+ * renders css custom properties.
+ */
+const cssStylingHookIdTracker = new WeakSet();
 
 export declare class DocsPageRenderer {
   public tagName: string;
@@ -63,16 +72,16 @@ export class DocsPage implements DocsPageRenderer {
   title: string;
   slug: string;
   templates: Environment;
-  description?: string|null;
-  summary?: string|null;
+  description?: string | null;
+  summary?: string | null;
   docsTemplatePath?: string;
 
   constructor(
     public manifest: Manifest,
-    options?: DocsPageOptions) {
+    private options?: DocsPageOptions) {
     this.tagName = options?.tagName ?? '';
     this.title = options?.title ?? Manifest.prettyTag(this.tagName);
-    this.slug = slugify(options?.aliases?.[this.tagName] ?? this.tagName.replace(/^\w+-/, '')).toLowerCase();
+    this.slug = slugify(options?.aliases?.[this.tagName] ?? this.tagName.replace(/^\w+-/, ''), { strict: true, lower: true });
     this.summary = this.manifest.getSummary(this.tagName);
     this.description = this.manifest.getDescription(this.tagName);
     this.templates = nunjucks.configure(DocsPage.#templatesDir);
@@ -83,6 +92,8 @@ export class DocsPage implements DocsPageRenderer {
     this.templates.addFilter('log', DocsPage.#log);
     this.templates.addFilter('type', DocsPage.#type);
     this.templates.addFilter('innerMD', DocsPage.#innerMD);
+    this.templates.addFilter('mdHeading', (header, length = 2) =>
+      DocsPage.#innerMD(`${Array.from({ length }, () => '#').join('')} ${header}`));
     this.templates.addFilter('stringifyParams', DocsPage.#stringifyParams);
     this.docsTemplatePath = options?.docsTemplatePath;
   }
@@ -103,7 +114,13 @@ export class DocsPage implements DocsPageRenderer {
   /** Render the overview of a component page */
   renderOverview(content: string, kwargs: RenderKwargs = {}) {
     const description = this.manifest.getDescription(this.#packageTagName(kwargs));
-    return this.templates.render('overview.njk', { description, content, ...kwargs });
+    const header = kwargs.title ?? this.title;
+    // TODO: switch to false in next major
+    const { renderTitleInOverview = true } = this.options ?? {};
+    const renderedTitle =
+        !renderTitleInOverview ? ''
+      : this.renderBand('', { level: 1, header });
+    return `${renderedTitle}\n${this.templates.render('overview.njk', { description, content, ...kwargs })}`;
   }
 
   /** Render the list of element attributes */
@@ -126,13 +143,15 @@ export class DocsPage implements DocsPageRenderer {
     return this.templates.render('properties.njk', { content, properties, deprecated, ...kwargs });
   }
 
-  /** Render a talbe of element CSS Custom Properties */
+  /** Render a table of element CSS Custom Properties */
   renderCssCustomProperties(content: string, kwargs: RenderKwargs = {}) {
+    const hasStylingHooks = cssStylingHookIdTracker.has(this);
+    cssStylingHookIdTracker.add(this);
     const allCssProperties = this.manifest.getCssCustomProperties(this.#packageTagName(kwargs)) ?? [];
     const cssProperties = allCssProperties.filter(x => !x.deprecated);
     const deprecated = allCssProperties.filter(x => x.deprecated);
 
-    return this.templates.render('css-custom-properties.njk', { content, cssProperties, deprecated, ...kwargs });
+    return this.templates.render('css-custom-properties.njk', { content, cssProperties, deprecated, hasStylingHooks, ...kwargs });
   }
 
   /** Render the list of element CSS Shadow Parts */
@@ -142,7 +161,7 @@ export class DocsPage implements DocsPageRenderer {
     const parts = allParts.filter(x => !x.deprecated);
     const deprecated = allParts.filter(x => x.deprecated);
 
-    return this.templates.render('css-shadow-parts.njk', { parts, deprecated, content, ...kwargs, });
+    return this.templates.render('css-shadow-parts.njk', { parts, deprecated, content, ...kwargs });
   }
 
   /** Render the list of events for the element */

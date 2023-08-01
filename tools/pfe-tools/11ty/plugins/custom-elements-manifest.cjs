@@ -1,6 +1,6 @@
 // @ts-check
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
-const { join, dirname } = require('node:path');
+const { join } = require('node:path');
 const { existsSync } = require('node:fs');
 const glob = require('node:util').promisify(require('glob'));
 const { stat, rm } = require('node:fs/promises');
@@ -70,8 +70,10 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
   // Netlify tends to turn html files into directories with index.html,
   // but 11ty already did that, so let's delete the html file.
   eleventyConfig.on('eleventy.after', async function({ runMode, dir }) {
+    const { getPfeConfig } = await import('../../config.js');
+    const options = { ...getPfeConfig(), ...pluginOpts };
     if (runMode === 'build') {
-      const files = await glob(`${dir.output}/components/*/demo/*`);
+      const files = await glob(`${dir.output}/${options.site.componentSubpath}/*/demo/*`);
       const htmls = files.filter(x => x.endsWith('.html') && !x.endsWith('/index.html'));
       for (const file of htmls) {
         const dir = file.replace(/\.html$/, '');

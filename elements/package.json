@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/elements",
   "license": "MIT",
-  "version": "2.0.0",
+  "version": "2.3.2",
   "description": "PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -54,7 +54,10 @@
     "./pf-tile/pf-tile.js": "./pf-tile/pf-tile.js",
     "./pf-timestamp/pf-timestamp.js": "./pf-timestamp/pf-timestamp.js",
     "./pf-tooltip/BaseTooltip.js": "./pf-tooltip/BaseTooltip.js",
-    "./pf-tooltip/pf-tooltip.js": "./pf-tooltip/pf-tooltip.js"
+    "./pf-tooltip/pf-tooltip.js": "./pf-tooltip/pf-tooltip.js",
+    "./pf-popover/pf-popover.js": "./pf-popover/pf-popover.js",
+    "./pf-table/pf-table.js": "./pf-table/pf-table.js",
+    "./react/*": "./react/*"
   },
   "publishConfig": {
     "access": "public",
@@ -68,7 +71,7 @@
   },
   "wireit": {
     "build": {
-      "command": "ttsc -b . --pretty",
+      "command": "tspc -b . --pretty",
       "dependencies": [
         "analyze"
       ]
@@ -116,7 +119,8 @@
     "Wes Ruvalcaba"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.0.0",
+    "@patternfly/icons": "^1.0.2",
+    "@patternfly/pfe-core": "^2.4.0",
     "lit": "2.6.1",
     "tslib": "^2.4.1"
   }

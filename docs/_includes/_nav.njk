@@ -2,9 +2,15 @@
   <div class="header-bar">
    {% include "../_snippets/pf-bar-html.md" %}
     <div class="logo-bar">
-      <a href="{{ '/' | url }}" aria-label="PatternFly Elements Home">
-        <img src="{{ '/images/pfe-logo-inverse-white.svg' | url }}" alt="PatternFly Elements">
-      </a>
+      <div class="logo-flex-wrap">
+        <div class="placeholder"></div>
+        <a href="{{ '/' | url }}" aria-label="PatternFly Elements Home">
+          <picture>
+            <source media="(min-width: 420px)" srcset="{{ '/images/pfe-logo-inverse-white.svg' | url }}">
+            <img alt="PatternFly Elements" src="{{ '/images/pfe-logo-icon-white.svg' | url }}">
+          </picture>  
+        </a>
+      </div>
       {# TODO: implement pf-dropdown
       <pf-dropdown id="docs-versions-dropdown" aria-label="Docs Versions" label="Docs Versions">
         {% for version in versions %}
@@ -47,15 +53,12 @@
     </div>
   </div>
 
-  <input id="mobile-menu-toggle" class="menu-toggle element-invisible" type="checkbox"
-    aria-controls="mobile-menu-menu-container" autocomplete="off">
-
+  <input id="mobile-menu-toggle" class="menu-toggle element-invisible" type="checkbox" aria-controls="mobile-menu-menu-container" autocomplete="off">
   <label class="menu-toggle__button l-header__mobile-menu-toggle" for="mobile-menu-toggle"
     data-controls="mobile-menu-menu-container">
     <span class="l-header__burger-icon"></span>
     <span class="menu-toggle-assistive-text element-invisible">Toggle menu visibility</span>
-  </label>
-
+  </label>  
   <div class="menu-toggle__toggleable site-navigation__outer-wrapper">
     <nav class="l-header__site-navigation site-navigation menu-toggle__toggleable-content-wrapper">
       <ul class="site-navigation__wrapper">
@@ -112,6 +115,9 @@
             </ul>
             </details>
         </li>
+        <li class="site-navigation__item">
+          <a class="site-navigation__link{% if page.url == "/blog/" %} site-navigation__link--active{% endif %}" href="/blog/">Blog</a>
+        </li>       
         <!-- <li class="site-navigation__item">
             <a class="site-navigation__link{% if page.url == "/about/" %} site-navigation__link--active{% endif %}" href="/about/">About PatternFly Elements</a>
           </li> -->

@@ -1,5 +1,6 @@
 import { pfeDevServerConfig } from '@patternfly/pfe-tools/dev-server/config.js';
 
 export default pfeDevServerConfig({
-  tsconfig: 'tsconfig.settings.json',
+  // workaround for https://github.com/evanw/esbuild/issues/3019
+  tsconfig: 'tsconfig.esbuild.json',
 });

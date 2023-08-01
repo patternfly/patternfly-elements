@@ -20,7 +20,6 @@ export abstract class BaseTooltip extends LitElement {
   abstract position?: Placement;
 
   #float = new FloatingDOMController(this, {
-    arrow: true,
     content: (): HTMLElement | undefined | null => this.shadowRoot?.querySelector('#tooltip'),
   });
 
@@ -55,7 +54,7 @@ export abstract class BaseTooltip extends LitElement {
         <slot id="invoker" role="tooltip" aria-labelledby="tooltip"></slot>
         <slot id="tooltip"
               name="content"
-              aria-hidden="${String(!open) as 'true'|'false'}">${this.content}</slot>
+              aria-hidden="${String(!open) as 'true' | 'false'}">${this.content}</slot>
       </div>
     `;
   }

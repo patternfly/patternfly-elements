@@ -15,7 +15,7 @@ export interface DemoRecord {
 
 export interface PluginOptions extends PfeConfig {
   /** list of extra demo records not included in the custom-elements-manifest. Default [] */
-  extraDemos?: DemoRecord[]
+  extraDemos?: DemoRecord[];
 }
 
 export interface EleventyPage {
@@ -42,12 +42,12 @@ export interface EleventyContext {
 }
 
 export type RendererName = `render${
-  |'Attributes'
-  |'CssCustomProperties'
-  |'CssParts'
-  |'Events'
-  |'Methods'
-  |'Overview'
-  |'Properties'
-  |'Slots'
+  | 'Attributes'
+  | 'CssCustomProperties'
+  | 'CssParts'
+  | 'Events'
+  | 'Methods'
+  | 'Overview'
+  | 'Properties'
+  | 'Slots'
 }`[];

@@ -6,6 +6,7 @@ import { setViewport, sendKeys } from '@web/test-runner-commands';
 import { BaseTab } from '../BaseTab.js';
 import { PfTabs } from '../pf-tabs.js';
 import { PfTab } from '../pf-tab.js';
+import { PfTabPanel } from '../pf-tab-panel.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
 
@@ -40,6 +41,12 @@ const DISABLED = html`
 `;
 
 describe('<pf-tabs>', function() {
+  it('instantiates imperatively', function() {
+    expect(document.createElement('pf-tabs')).to.be.an.instanceof(PfTabs);
+    expect(document.createElement('pf-tab')).to.be.an.instanceof(PfTab);
+    expect(document.createElement('pf-tab-panel')).to.be.an.instanceof(PfTabPanel);
+  });
+
   it('should upgrade', async function() {
     const el = await createFixture<PfTabs>(TEMPLATE);
     expect(el, 'pf-tabs should be an instance of PfeTabs')
@@ -198,8 +205,8 @@ describe('<pf-tabs>', function() {
     let element: PfTabs;
     let firstTab: PfTab;
     let secondTab: PfTab;
-    let initialFocus: Element|null;
-    let afterFocus: Element|null;
+    let initialFocus: Element | null;
+    let afterFocus: Element | null;
     beforeEach(async function() {
       element = await createFixture<PfTabs>(html`
         <pf-tabs manual>
@@ -233,8 +240,8 @@ describe('<pf-tabs>', function() {
         expect(firstTab.active).to.be.true;
         expect(secondTab.active).to.be.false;
         expect(initialFocus).to.be.ok
-          .and.to.not.equal(afterFocus)
-          .and.to.not.equal(secondTab);
+          .and.to.not.equal(afterFocus);
+        expect(initialFocus).to.not.equal(secondTab);
       });
       describe('then pressing enter', function() {
         beforeEach(async function() {
@@ -245,9 +252,9 @@ describe('<pf-tabs>', function() {
         it('should activate second tab', async function() {
           expect(firstTab.active).to.be.false;
           expect(secondTab.active).to.be.true;
-          expect(afterFocus).to.equal(secondTab)
-            .and.to.not.equal(initialFocus)
-            .and.to.not.equal(firstTab);
+          expect(afterFocus).to.equal(secondTab);
+          expect(afterFocus).to.not.equal(initialFocus);
+          expect(afterFocus).to.not.equal(firstTab);
         });
       });
     });

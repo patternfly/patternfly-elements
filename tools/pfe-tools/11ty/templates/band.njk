@@ -1,6 +1,6 @@
 {% set level = level or 2 %}
 
 <section class="band">
-  <h{{level}}>{{ header | innerMD | safe }}</h{{level}}>
+  {{ header | mdHeading(level) | safe }}
   {{ content | innerMD | safe }}
 </section>

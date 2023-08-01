@@ -15,4 +15,11 @@
 }
 ---
 
+<header class="band">
+  <h1>{{element.title}}</h1>
+
+  {{ element.description | safe}}
+
+</header>
+
 {% renderFile element.docsTemplatePath, element %}

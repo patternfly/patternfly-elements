@@ -33,6 +33,10 @@ const TEMPLATES = {
 };
 
 describe('<pf-modal>', function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-modal')).to.be.an.instanceof(PfModal);
+  });
+
   it('should upgrade', async function() {
     const el = await createFixture<PfModal>(TEMPLATES.testElement);
     expect(el, 'pf-modal should be an instance of PfModal')

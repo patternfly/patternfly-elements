@@ -1,37 +1,42 @@
 ---
 layout: layout-base.njk
 ---
+{% include '_skip-link.njk' %}
 {% include '_nav.njk' %}
 
+<main id="main"class="basic">
+  {{ content | safe }}
 
-<main class="basic">
-  <header class="band">
-    <h1>{{ title }}</h1>
-  </header>
-  <section class="band">{% if content.trim().length %}
-    <div id="content">{{ content | safe }}</div>{% endif %}{% for post in collections.blog %}
-    <pf-card>
-      <h2 slot="header">{{ post.data.title }}</h2>{% if post.data.tagline %}
-        <p class="tagline">{{ post.data.tagline }}</p>{% endif %}
-      {% if post.data.description %}
-        {{ post.data.description }}
-      {% endif %}
-      <a class="cta" slot="footer" href="{{ post.data.page.url }}">Read Post</a>
-    </pf-card>{% endfor %}
-  </section>
+  <div class="posts">
+    {% for post in collections.blog | reverse %}
+      <pf-card>
+        <h2 slot="header">{{ post.data.title }}</h2>
+        {% if post.data.tagline %}
+          <p class="tagline"><a href="{{ post.data.page.url }}">{{ post.data.tagline }}</a></p>{% endif %}
+        {% if post.data.description %}
+          {{ post.data.description }}
+        {% endif %}
+        <a slot="footer" class="cta" href="{{ post.data.page.url }}">Read Post</a>
+        <time slot="footer" datetime="{{ post.data.page.date }}">{{ post.data.page.date | prettyDate }}</time>
+      </pf-card>
+    {% endfor %}
+  </div>
 </main>
+
 
 {% include '_foot.njk' %}
 
 <style>
-section.band {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-}
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    padding: var(--pf-global--spacer--3xl, 4rem);
+    gap: 2rem;
+  }
 
-h1,
-#content {
-  grid-column: -1/1;
-}
+  pf-card::part(footer) {
+    justify-content: space-between;
+    align-items: center;
+  }
 </style>
 

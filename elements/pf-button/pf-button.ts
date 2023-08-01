@@ -19,7 +19,7 @@ export type ButtonVariant = (
 );
 
 /**
- * A button is a box area or text that communicates and triggers user actions when
+ * A **button** is a box area or text that communicates and triggers user actions when
  * clicked or selected. Buttons can be used to communicate and immediately trigger
  * actions a user can take in an application, like submitting a form, canceling a
  * process, or creating a new object. Buttons can also be used to take a user to a
@@ -163,7 +163,7 @@ export class PfButton extends BaseButton {
   /** Not as urgent as danger */
   @property({ type: Boolean, reflect: true }) warning = false;
 
-  @property({ reflect: true }) size?: 'small'|'large';
+  @property({ reflect: true }) size?: 'small' | 'large';
 
   /** Icon set for the `icon` property */
   @property({ attribute: 'icon-set' }) iconSet?: string;

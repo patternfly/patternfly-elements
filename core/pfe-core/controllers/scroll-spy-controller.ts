@@ -22,7 +22,7 @@ export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
    * function to call on link children to get their URL hash (i.e. id to scroll to)
    * @default el => el.getAttribute('href');
    */
-  getHash?: (el: Element) => string|null;
+  getHash?: (el: Element) => string | null;
 }
 
 export class ScrollSpyController implements ReactiveController {
@@ -42,10 +42,10 @@ export class ScrollSpyController implements ReactiveController {
 
   #root: ScrollSpyControllerOptions['root'];
   #rootMargin?: string;
-  #threshold: number|number[];
+  #threshold: number | number[];
 
   #rootNode: Node;
-  #getHash: (el: Element) => string|null;
+  #getHash: (el: Element) => string | null;
 
   get #linkChildren(): Element[] {
     return Array.from(this.host.querySelectorAll(this.#tagNames.join(',')))
@@ -122,7 +122,7 @@ export class ScrollSpyController implements ReactiveController {
     }
   }
 
-  #setActive(link?: EventTarget|null) {
+  #setActive(link?: EventTarget | null) {
     for (const child of this.#linkChildren) {
       child.toggleAttribute(this.#activeAttribute, child === link);
     }
@@ -154,7 +154,7 @@ export class ScrollSpyController implements ReactiveController {
   }
 
   /** Explicitly set the active item */
-  public async setActive(link: EventTarget|null) {
+  public async setActive(link: EventTarget | null) {
     this.#force = true;
     this.#setActive(link);
     let sawActive = false;

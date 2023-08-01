@@ -27,6 +27,8 @@ pfe.min.js
 *.tsbuildinfo
 test-results
 
+/elements/react
+
 elements/**/_temp
 core/**/_temp
 tools/**/_temp
@@ -63,6 +65,7 @@ tools/*/test/**/*.png
 !core/*/demo/*
 !tools/*/demo/*
 
+elements/pf-icon/icons
 !elements/pf-icon/demo/icons/**/*.js
 
 !scripts/**/*.js

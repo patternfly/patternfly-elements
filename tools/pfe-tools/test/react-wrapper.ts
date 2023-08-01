@@ -46,9 +46,11 @@ const markupRuiner = (_: unknown, css: string) =>
  * @param  code The element code you'd like to inject into React.
  *
  * @returns  Returns the new web component rendered within React.
+ *
+ * @deprecated use react wrapper components
  */
 export async function fixture<T extends Element = HTMLElement>(
-  testCase: string|TemplateResult
+  testCase: string | TemplateResult
 ): Promise<T> {
   const code = (typeof testCase === 'string') ? testCase : renderToString(testCase);
   const appRoot = document.getElementById('root');

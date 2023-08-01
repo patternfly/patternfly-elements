@@ -23,6 +23,10 @@ describe('<pf-clipboard-copy>', function() {
     `);
   });
 
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-clipboard-copy')).to.be.an.instanceof(PfClipboardCopy);
+  });
+
   it('should upgrade', async function() {
     const klass = customElements.get('pf-clipboard-copy');
     expect(element)

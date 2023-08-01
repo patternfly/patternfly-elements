@@ -33,7 +33,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(CustomElementsManifestPlugin);
 
   /** Collections to organize alphabetically instead of by date */
-  eleventyConfig.addPlugin(OrderTagsPlugin, { tags: ['component'], order: 'alphabetically' });
+  eleventyConfig.addPlugin(OrderTagsPlugin, { tags: ['component'], order: 'alphabetical' });
 
   /** Collections to organize by order instead of date */
   eleventyConfig.addPlugin(OrderTagsPlugin, { tags: ['develop'] });
@@ -81,6 +81,27 @@ module.exports = function(eleventyConfig) {
 
     // Will show in yellow if greater than this number of bytes
     warningFileSize: 400 * 1000,
+  });
+
+  function dedent(str) {
+    const stripped = str.replace(/^\n/, '');
+    const match = stripped.match(/^\s+/);
+    return match ? stripped.replace(new RegExp(`^${match[0]}`, 'gm'), '') : str;
+  }
+
+  eleventyConfig.addPairedShortcode('htmlexample', function(content, kwargs) {
+    return `
+<div class="example-preview">
+  ${content}
+</div>
+<details class="html-example ${kwargs?.class ?? ''}"${!kwargs?.style ? '' : ` style="${kwargs.style}"`}>
+  <summary>View HTML Source</summary>
+
+~~~html
+${dedent(content)}
+~~~
+
+</details>`;
   });
 
   return {

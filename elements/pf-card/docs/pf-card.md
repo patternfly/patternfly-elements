@@ -11,79 +11,50 @@
 
 {% band header="Usage" %}
 
-  <h3 slot="header">Compact card</h3>
+  ### Compact card
+  {% htmlexample %}
   <pf-card size="compact">
     <h3 slot="header">Header</h3>
     <p>This is the compact card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
+  {% endhtmlexample %}
 
-  ```html
-  <pf-card size="compact">
-    <h3 slot="header">Header</h3>
-    <p>This is the compact card</p>
-    <a slot="footer" href="#">Link in the footer</a>
-  </pf-card>
-  ```
-  <h3 slot="header">Rounded card</h3>
+  ### Rounded card
+  {% htmlexample %}
   <pf-card rounded>
     <h3 slot="header">Header</h3>
     <p>This is the rounded card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
+  {% endhtmlexample %}
 
-  ```html
-  <pf-card rounded>
-    <h3 slot="header">Header</h3>
-    <p>This is the rounded card</p>
-    <a slot="footer" href="#">Link in the footer</a>
-  </pf-card>
-  ```
-
-  <h3 slot="header">Large card</h3>
+  ### Large card
+  {% htmlexample %}
   <pf-card size="large">
     <h3 slot="header">Large card</h3>
     <p>This is the large card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
+  {% endhtmlexample %}
 
-  ```html
-  <pf-card size="large">
-    <h3 slot="header">Large card</h3>
-    <p>This is the large card</p>
-    <a slot="footer" href="#">Link in the footer</a>
-  </pf-card>
-  ```
-
-  <h3 slot="header">Full Height card</h3>
+  ### Full Height card
+  {% htmlexample %}
   <pf-card fullHeight>
     <h3 slot="header">Header</h3>
     <p>This is the full height card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
+  {% endhtmlexample %}
 
-  ```html
-  <pf-card fullHeight>
-    <h3 slot="header">Header</h3>
-    <p>This is the full height card</p>
-    <a slot="footer" href="#">Link in the footer</a>
-  </pf-card>
-  ```
-
-  <h3 slot="header">Plain card</h3>
+  ### Plain card
+  {% htmlexample %}
   <pf-card plain>
     <h3 slot="header">Header</h3>
     <p>This is the plain card</p>
     <a slot="footer" href="#">Link in the footer</a>
   </pf-card>
-
-  ```html
-  <pf-card plain>
-    <h3 slot="header">Header</h3>
-    <p>This is the plain card</p>
-    <a slot="footer" href="#">Link in the footer</a>
-  </pf-card>
-  ```  
+  {% endhtmlexample %}
 {% endband %}
 
 {% renderSlots %}

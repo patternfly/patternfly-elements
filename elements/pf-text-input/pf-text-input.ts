@@ -4,6 +4,15 @@ import { property } from 'lit/decorators/property.js';
 
 import styles from './pf-text-input.css';
 
+function getLabelText(label: HTMLElement) {
+  if (label.hidden) {
+    return '';
+  } else {
+    const ariaLabel = label.getAttribute?.('aria-label');
+    return ariaLabel ?? label.textContent;
+  }
+}
+
 /**
  * Text Input
  * @slot - Place element content here
@@ -13,6 +22,8 @@ export class PfTextInput extends LitElement {
   static readonly styles = [styles];
 
   static readonly formAssociated = true;
+
+  static override shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @property({ type: Boolean, reflect: true }) disabled = false;
 
@@ -26,11 +37,25 @@ export class PfTextInput extends LitElement {
 
   #internals = this.attachInternals();
 
+  #derivedLabel = '';
+
+  willUpdate() {
+    /** A best-attempt based on observed behaviour in FireFox 115 on fedora 38 */
+    this.#derivedLabel =
+      this.getAttribute('aria-label') ||
+      this.#internals.ariaLabel ||
+      Array.from(this.#internals.labels as NodeListOf<HTMLElement>)
+        .reduce((acc, label) =>
+          `${acc}${getLabelText(label)}`, '');
+  }
+
   render() {
     return html`
       <input id="input"
              ?disabled="${this.disabled}"
              ?readonly="${this.readonly}"
+             aria-label="${this.#derivedLabel}"
+             @input="${this.#onInput}"
              .value="${this.value}">
     `;
   }
@@ -45,6 +70,12 @@ export class PfTextInput extends LitElement {
 
   reportValidity() {
     return this.#internals.reportValidity();
+  }
+
+  #onInput(event: Event & { target: HTMLInputElement }) {
+    const { value } = event.target;
+    this.value = value;
+    this.#internals.setFormValue(value);
   }
 }
 

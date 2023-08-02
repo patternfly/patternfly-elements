@@ -56,7 +56,6 @@ export class PfTh extends LitElement {
 
   diconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('keydown', this.onKeydown);
     this.removeEventListener('click', this.onClick);
   }
 

@@ -59,7 +59,7 @@
   position: relative;
 }
 
-:host([sortable]) {
+:host([sortable]) slot {
   padding-inline-end: 2em;
 }
 

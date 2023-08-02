@@ -2,3 +2,7 @@
 pf-expandable-row pf-table {
   margin-bottom: -1px;
 }
+
+section {
+  padding: 15px 30px;
+}

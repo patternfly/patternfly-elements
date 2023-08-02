@@ -32,10 +32,6 @@
   }
 } */
 
-:host {
-  
-}
-
 :host(:empty) {
   padding: 0;
 }

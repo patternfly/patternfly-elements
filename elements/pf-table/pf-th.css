@@ -56,8 +56,36 @@
 :host {
   font-weight: bold;
   padding: 1rem;
+  position: relative;
+}
+
+:host([sortable]) {
+  padding-inline-end: 2em;
 }
 
 :host(:empty) {
   padding: 0;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+pf-button,
+pf-button::part(button) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+pf-button {
+  display: block;
+  height: auto;
+  z-index: 2;
 }

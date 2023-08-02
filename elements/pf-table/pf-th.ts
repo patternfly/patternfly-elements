@@ -26,7 +26,7 @@ const SVG = {
 export class PfTh extends LitElement {
   static readonly styles = [styles];
 
-  @property({ reflect: true }) role = 'columnheader';
+  @property({ reflect: true }) role = 'rowheader';
   @property({ type: Boolean }) sortable?: boolean = false;
   @property({ type: Boolean }) selected?: boolean = false;
   @property({ reflect: true, attribute: 'sort-direction' }) sortDirection!: 'asc' | 'desc';
@@ -42,14 +42,15 @@ export class PfTh extends LitElement {
 
   render() {
     return html`
-      ${this.sortable ?
+      ${this.role === 'columnheader' && this.sortable ?
         html`
-            <pf-button id="sort-button" part="sort-button" plain class="${classMap({ selected: !!this.selected })}">
-              <div id="button-content">
-                <span id="text"><slot></slot></span>
-                <span id="sort-indicator"> ${SVG[this.sortDirection ?? 'sort']} </span>
-              </div>
-            </pf-button>`
+          <slot class="sortable"></slot>${!this.sortDirection ? '' : html`
+            <span class="offscreen">(sorted ${this.sortDirection === 'asc' ? 'ascending' : 'descending'})</span>
+          `}
+          <span id="sort-indicator">${SVG[this.sortDirection ?? 'sort']}</span>
+          <pf-button id="sort-button" part="sort-button" plain class="${classMap({ selected: !!this.selected })}">
+            <span class="offscreen">Sort</span>
+          </pf-button>`
         : html`<slot></slot>`}
     `;
   }

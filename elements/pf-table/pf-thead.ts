@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-
+import { PfTh } from './pf-th.js';
 import styles from './pf-thead.css';
 
 /**
@@ -16,8 +16,12 @@ export class PfThead extends LitElement {
 
   render() {
     return html`
-      <slot></slot>
+      <slot @slotchange=${this.#onSlotchange}></slot>
     `;
+  }
+
+  #onSlotchange() {
+    [...this.querySelectorAll('pf-th[role="rowheader"]')].forEach(th => th.setAttribute('role', 'columnheader'));
   }
 }
 

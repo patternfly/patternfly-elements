@@ -6,10 +6,6 @@ pf-expand-toggle {
     z-index: 2;
 }
 
-::slotted(pf-tr) {
-    padding-inline-start: 50px;
-}
-
 ::slotted(*) {
     position: relative;
 }

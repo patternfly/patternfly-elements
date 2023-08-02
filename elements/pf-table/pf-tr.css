@@ -76,6 +76,7 @@
 :host {
   display: grid;
   align-items: center;
+  padding-inline-start: calc(50px * var(--pf-table--expanable-rows, 0));
 }
 
 ::slotted(*) {

@@ -59,20 +59,34 @@
   position: relative;
 }
 
-:host([sortable]) slot {
-  padding-inline-end: 2em;
-}
-
 :host(:empty) {
   padding: 0;
 }
 
+.sortable {
+  padding-inline-end: 1.5em;
+}
+
+.sortable slot {
+  display: inline;
+  margin-inline-end: 1.5em;
+}
+
+#sort-indicator {
+  width: 0;
+  margin-inline-start: -1em;
+  overflow: visible;
+}
 .offscreen {
   position: absolute;
   left: -9999;
   width: 0;
   height: 0;
   overflow: hidden;
+}
+
+pf-button {
+  background-position: right;
 }
 
 pf-button,

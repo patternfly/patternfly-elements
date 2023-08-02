@@ -43,10 +43,12 @@ export class PfTh extends LitElement {
     return html`
       ${this.role === 'columnheader' && this.sortable ?
         html`
-          <slot class="sortable"></slot>${!this.sortDirection ? '' : html`
-            <span class="offscreen">(sorted ${this.sortDirection === 'asc' ? 'ascending' : 'descending'})</span>
-          `}
-          <span id="sort-indicator">${SVG[this.sortDirection ?? 'sort']}</span>
+          <div class="sortable">
+            <slot></slot>${!this.sortDirection ? '' : html`
+              <span class="offscreen">(sorted ${this.sortDirection === 'asc' ? 'ascending' : 'descending'})</span>
+            `}
+            <span id="sort-indicator">${SVG[this.sortDirection ?? 'sort']}</span>
+          </div>
           <pf-button id="sort-button" part="sort-button" plain class="${classMap({ selected: !!this.selected })}">
             <span class="offscreen">Sort</span>
           </pf-button>`

@@ -35,7 +35,6 @@ export class PfTh extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     if (this.sortable) {
-      this.addEventListener('keydown', this.onKeydown);
       this.addEventListener('click', this.onClick);
     }
   }
@@ -63,14 +62,6 @@ export class PfTh extends LitElement {
 
   onClick() {
     this.sort();
-  }
-
-  onKeydown(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'Enter':
-        this.sort();
-        return;
-    }
   }
 
   toggleDirection() {

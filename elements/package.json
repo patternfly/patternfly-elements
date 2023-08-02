@@ -50,6 +50,7 @@
     "./pf-tabs/pf-tab-panel.js": "./pf-tabs/pf-tab-panel.js",
     "./pf-tabs/pf-tab.js": "./pf-tabs/pf-tab.js",
     "./pf-tabs/pf-tabs.js": "./pf-tabs/pf-tabs.js",
+    "./pf-text-input/pf-text-input.js": "./pf-text-input/pf-text-input.js",
     "./pf-tile/BaseTile.js": "./pf-tile/BaseTile.js",
     "./pf-tile/pf-tile.js": "./pf-tile/pf-tile.js",
     "./pf-timestamp/pf-timestamp.js": "./pf-timestamp/pf-timestamp.js",

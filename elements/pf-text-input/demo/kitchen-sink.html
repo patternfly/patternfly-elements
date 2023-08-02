@@ -1,0 +1,28 @@
+<fieldset>
+  <pf-text-input></pf-text-input>
+</fieldset>
+
+<fieldset>
+  <legend>Disabled</legend>
+  <pf-text-input disabled value="disabled text input example"></pf-text-input>
+</fieldset>
+
+<fieldset>
+  <legend>Left Truncated</legend>
+  <pf-text-input left-truncated
+                 value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."></pf-text-input>
+</fieldset>
+
+<fieldset>
+  <legend>Read only</legend>
+  <pf-text-input readonly value="read only text input example"></pf-text-input>
+  <label>
+    <pf-switch onchange="this.closest('fieldset').querySelector('pf-text-input').plain=this.checked;"></pf-switch>
+    Plain read only variant
+  </label>
+</fieldset>
+
+<script type="module">
+  import '@patternfly/elements/pf-text-input/pf-text-input.js';
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+</script>

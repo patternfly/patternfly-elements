@@ -132,7 +132,7 @@ export class PfProgress extends LitElement {
   get #calculatedPercentage(): number {
     const { value, min, max } = this;
     const percentage = Math.round((value - min) / (max - min) * 100);
-    if (isNaN(percentage) || percentage < 0) {
+    if (Number.isNaN(percentage) || percentage < 0) {
       return 0;
     }
     return Math.min(percentage, 100);

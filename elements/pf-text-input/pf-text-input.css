@@ -199,11 +199,11 @@ input::placeholder {
 }
 
 :host([icon]),
-:host([custom-icon]) {
+:host([custom-icon-url]) {
 	--pf-c-form-control--PaddingRight: var(--pf-c-form-control--m-icon--PaddingRight);
 }
 :host([icon]) input,
-:host([custom-icon]) input {
+:host([custom-icon-url]) input {
 	background-image: var(--pf-c-form-control--m-icon--BackgroundUrl);
 	background-position: var(--pf-c-form-control--m-icon--BackgroundPositionX) var(--pf-c-form-control--m-icon--BackgroundPositionY);
 	background-size: var(--pf-c-form-control--m-icon--BackgroundSizeX) var(--pf-c-form-control--m-icon--BackgroundSizeY);
@@ -217,21 +217,6 @@ input::placeholder {
   --pf-c-form-control--m-icon--BackgroundUrl: var(--pf-c-form-control--m-clock--BackgroundUrl);
 }
 
-
-:host([icon-sprite]) {
-	--pf-c-form-control--success--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--success--BackgroundUrl);
-	--pf-c-form-control--m-warning--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-warning--BackgroundUrl);
-	--pf-c-form-control--invalid--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--invalid--BackgroundUrl);
-	--pf-c-form-control__select--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite__select--BackgroundUrl);
-	--pf-c-form-control--m-search--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-search--BackgroundUrl);
-	--pf-c-form-control--m-calendar--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-calendar--BackgroundUrl);
-	--pf-c-form-control--m-clock--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-clock--BackgroundUrl);
-	--pf-c-form-control__select--BackgroundSize: var(--pf-c-form-control--m-icon-sprite__select--BackgroundSize);
-	--pf-c-form-control__select--BackgroundPositionX: var(--pf-c-form-control--m-icon-sprite__select--BackgroundPositionX);
-	--pf-c-form-control__select--success--BackgroundPosition: var(--pf-c-form-control--m-icon-sprite__select--success--BackgroundPosition);
-	--pf-c-form-control__select--m-warning--BackgroundPosition: var(--pf-c-form-control--m-icon-sprite__select--m-warning--BackgroundPosition);
-	--pf-c-form-control__select--invalid--BackgroundPosition: var(--pf-c-form-control--m-icon-sprite__select--invalid--BackgroundPosition);
-}
 :host([validated="success"]) {
 	--pf-c-form-control--PaddingRight: var(--pf-c-form-control--success--PaddingRight);
 	--pf-c-form-control--BorderBottomColor: var(--pf-c-form-control--success--BorderBottomColor);
@@ -258,6 +243,7 @@ input::placeholder {
 	border-bottom-width: var(--pf-c-form-control--m-warning--BorderBottomWidth);
 }
 
+/* TBD if we'll implement this
 :host([icon-sprite]) {
 	--pf-c-form-control--success--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--success--BackgroundUrl);
 	--pf-c-form-control--m-warning--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-warning--BackgroundUrl);
@@ -272,3 +258,4 @@ input::placeholder {
 	--pf-c-form-control__select--m-warning--BackgroundPosition: var(--pf-c-form-control--m-icon-sprite__select--m-warning--BackgroundPosition);
 	--pf-c-form-control__select--invalid--BackgroundPosition: var(--pf-c-form-control--m-icon-sprite__select--invalid--BackgroundPosition);
 }
+*/

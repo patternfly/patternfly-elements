@@ -1,22 +1,30 @@
 <fieldset>
-  <label for="default">Labelled input</label>
-  <pf-text-input id="default"></pf-text-input>
+  <label for="default-input">Labelled input</label>
+  <pf-text-input id="default-input"></pf-text-input>
 </fieldset>
 
 <fieldset>
   <legend>Disabled</legend>
-  <pf-text-input disabled value="disabled text input example"></pf-text-input>
+  <label for="disabled-input">Disabled input</label>
+  <pf-text-input id="disabled-input"
+                 disabled
+                 value="disabled text input example"></pf-text-input>
 </fieldset>
 
 <fieldset>
   <legend>Left Truncated</legend>
-  <pf-text-input left-truncated
+  <label for="left-truncated-input">Truncated input</label>
+  <pf-text-input id="left-truncated-input"
+                 left-truncated
                  value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."></pf-text-input>
 </fieldset>
 
 <fieldset>
   <legend>Read only</legend>
-  <pf-text-input readonly value="read only text input example"></pf-text-input>
+  <label for="read-only-input">Read only input</label>
+  <pf-text-input id="read-only-input"
+                 readonly
+                 value="read only text input example"></pf-text-input>
   <label>
     <pf-switch onchange="this.closest('fieldset').querySelector('pf-text-input').plain=this.checked;"></pf-switch>
     Plain read only variant
@@ -25,18 +33,20 @@
 
 <fieldset>
   <legend>Invalid</legend>
+  <label for="invalid-input">Invalid input</label>
   <pf-text-input id="invalid-input" required></pf-text-input>
 </fieldset>
 
 <fieldset>
   <legend>Icon variants</legend>
-  <pf-text-input validated="success"></pf-text-input>
-  <pf-text-input validated="warning"></pf-text-input>
-  <pf-text-input required></pf-text-input>
-  <pf-text-input icon="calendar"></pf-text-input>
-  <pf-text-input icon="clock"></pf-text-input>
-  <pf-text-input icon="search"></pf-text-input>
-  <pf-text-input custom-icon='data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"%3E%3Cpath fill="%23a18fff" d="M158.87.15c-16.16-1.52-31.2 8.42-35.33 24.12l-14.81 56.27c187.62 5.49 314.54 130.61 322.48 317l56.94-15.78c15.72-4.36 25.49-19.68 23.62-35.9C490.89 165.08 340.78 17.32 158.87.15zm-58.47 112L.55 491.64a16.21 16.21 0 0 0 20 19.75l379-105.1c-4.27-174.89-123.08-292.14-299.15-294.1zM128 416a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm48-152a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm104 104a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"/%3E%3C/svg%3E'
+  <pf-text-input accessible-label="success" validated="success"></pf-text-input>
+  <pf-text-input accessible-label="warning" validated="warning"></pf-text-input>
+  <pf-text-input accessible-label="invalid" required></pf-text-input>
+  <pf-text-input accessible-label="calendar" icon="calendar"></pf-text-input>
+  <pf-text-input accessible-label="clock" icon="clock"></pf-text-input>
+  <pf-text-input accessible-label="search" icon="search"></pf-text-input>
+  <pf-text-input accessible-label="custom"
+                 custom-icon-url='data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"%3E%3Cpath fill="%23a18fff" d="M158.87.15c-16.16-1.52-31.2 8.42-35.33 24.12l-14.81 56.27c187.62 5.49 314.54 130.61 322.48 317l56.94-15.78c15.72-4.36 25.49-19.68 23.62-35.9C490.89 165.08 340.78 17.32 158.87.15zm-58.47 112L.55 491.64a16.21 16.21 0 0 0 20 19.75l379-105.1c-4.27-174.89-123.08-292.14-299.15-294.1zM128 416a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm48-152a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm104 104a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"/%3E%3C/svg%3E'
                  custom-icon-dimensions="24px 24px"></pf-text-input>
 </fieldset>
 
@@ -66,14 +76,6 @@
     await input.updateComplete;
     input.checkValidity();
   }
-  </script>
 </script>
 
-<style>
-  fieldset {
-    max-width: 832px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--pf-global--spacer--md, 1rem);
-  }
-</style>
+<link rel="stylesheet" href="demo.css">

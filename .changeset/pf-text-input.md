@@ -1,5 +1,7 @@
-# Text Input
-A **text input** is used to gather free-form text from a user.
+---
+"@patternfly/elements": minor
+---
+✨ Added `<pf-text-input>`
 
 ```html
 <label>

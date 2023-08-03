@@ -145,7 +145,7 @@ export class PfProgress extends LitElement {
 
     return html`
       <div
-        class="container ${classMap({ [size]: !!size, [measureLocation]: !!measureLocation, [variant]: !!variant, ['singleLine']: !!singleLine })}">
+        class="container ${classMap({ [size]: !!size, [measureLocation]: !!measureLocation, [variant]: !!variant, singleLine })}">
 
         ${title ?
           html`

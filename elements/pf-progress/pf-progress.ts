@@ -141,11 +141,11 @@ export class PfProgress extends LitElement {
   render() {
     const { size, measureLocation, variant, title } = this;
     const icon = variant && ICONS.get(variant)?.icon;
-    const singleline = title.length === 0;
+    const singleLine = title.length === 0;
 
     return html`
       <div
-        class="container ${classMap({ [size]: !!size, [measureLocation]: !!measureLocation, [variant]: !!variant, [singleLine]: !!singleLine })}">
+        class="container ${classMap({ [size]: !!size, [measureLocation]: !!measureLocation, [variant]: !!variant, ['singleLine']: !!singleLine })}">
 
         ${title ?
           html`

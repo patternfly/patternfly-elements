@@ -31,19 +31,21 @@ export class PfTextInput extends LitElement {
 
   @property({ reflect: true }) validated?: 'success' | 'warning';
 
-  @property({ reflect: true }) icon?: 'calendar' | 'clock';
+  @property({ reflect: true }) icon?: 'calendar' | 'clock' | 'search';
 
   @property({ reflect: true, attribute: 'custom-icon' }) customIcon?: string;
 
   @property({ reflect: true, attribute: 'custom-icon-dimensions' }) customIconDimensions?: string;
+
+  @property({ type: Boolean, reflect: true }) plain = false;
+
+  @property({ reflect: true }) type?: 'text' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'search' | 'tel' | 'time' | 'url';
 
   @property({ type: Boolean, reflect: true }) disabled = false;
 
   @property({ type: Boolean, reflect: true }) required = false;
 
   @property({ type: Boolean, reflect: true }) readonly = false;
-
-  @property({ type: Boolean, reflect: true }) plain = false;
 
   @property() value = '';
 
@@ -68,11 +70,12 @@ export class PfTextInput extends LitElement {
   render() {
     return html`
       <input id="input"
+             @input="${this.#onInput}"
              ?disabled="${this.disabled}"
              ?readonly="${this.readonly}"
              ?required="${this.required}"
              aria-label="${this.#derivedLabel}"
-             @input="${this.#onInput}"
+             type="${ifDefined(this.type)}"
              .value="${this.value}"
              style="${ifDefined(this.customIcon && styleMap({
                backgroundImage: `url('${this.customIcon}')`,

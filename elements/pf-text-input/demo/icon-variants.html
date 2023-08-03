@@ -14,6 +14,10 @@
 
 <script type="module">
   import '@patternfly/elements/pf-text-input/pf-text-input.js';
+  const input = document.querySelector('pf-text-input[required]');
+  await customElements.whenDefined(input.localName);
+  await input.updateComplete;
+  input.checkValidity();
 </script>
 
 <link rel="stylesheet" href="demo.css">

@@ -1,5 +1,4 @@
 :host {
-  display: inline-block;
 	--pf-c-form-control--Color: var(--pf-global--Color--100, #151515);
 	--pf-c-form-control--FontSize: var(--pf-global--FontSize--md, 1rem);
 	--pf-c-form-control--LineHeight: var(--pf-global--LineHeight--md, 1.5);
@@ -125,6 +124,10 @@
 	--pf-c-form-control--m-icon-sprite__select--success--BackgroundPosition: calc(100% - var(--pf-global--spacer--md, 1rem) + 1px - var(--pf-global--spacer--lg, 1.5rem));
 	--pf-c-form-control--m-icon-sprite__select--m-warning--BackgroundPosition: calc(100% - var(--pf-global--spacer--md, 1rem) - var(--pf-global--spacer--lg, 1.5rem) + 0.0625rem);
 	--pf-c-form-control--m-icon-sprite__select--invalid--BackgroundPosition: calc(100% - var(--pf-global--spacer--md, 1rem) - var(--pf-global--spacer--lg, 1.5rem));
+
+  display: inline-block;
+  /* adjust the host to fit the input */
+  max-width: calc(100% - var(--pf-c-form-control--PaddingRight) - var(--pf-c-form-control--PaddingLeft));
 }
 
 input {

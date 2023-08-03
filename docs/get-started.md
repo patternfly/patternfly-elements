@@ -48,9 +48,9 @@ title: Get started
 
   ```html
   {% generateImportMap %}
-    <script type="module">
-      import "@patternfly/elements/pf-card/pf-card.js";
-    </script>
+  <script type="module">
+    import "@patternfly/elements/pf-card/pf-card.js";
+  </script>
   {% endgenerateImportMap %}
   ```
 

@@ -41,9 +41,9 @@ production.
     }
   </style> 
   {% generateImportMap %}
-    <script type="module">
-      import * as Elements from "@patternfly/elements";
-    </script>
+  <script type="module">
+    import '@patternfly/elements';
+  </script>
   {% endgenerateImportMap %}
 </head>
 <body>

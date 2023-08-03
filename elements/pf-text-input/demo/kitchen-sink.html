@@ -22,6 +22,17 @@
   </label>
 </fieldset>
 
+<fieldset>
+  <legend>Invalid</legend>
+  <pf-text-input id="invalid-input" required></pf-text-input>
+  <script type="module">
+    const input = document.getElementById('invalid-input');
+    await customElements.whenDefined('pf-text-input');
+    await input.updateComplete;
+    input.checkValidity();
+  </script>
+</fieldset>
+
 <script type="module">
   import '@patternfly/elements/pf-text-input/pf-text-input.js';
   import '@patternfly/elements/pf-switch/pf-switch.js';

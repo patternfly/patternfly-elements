@@ -25,9 +25,11 @@ export class PfTextInput extends LitElement {
 
   static override shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
+  @property({ type: Boolean, reflect: true, attribute: 'left-truncated' }) leftTruncated = false;
+
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  @property({ type: Boolean, reflect: true, attribute: 'left-truncated' }) leftTruncated = false;
+  @property({ type: Boolean, reflect: true }) required = false;
 
   @property({ type: Boolean, reflect: true }) readonly = false;
 
@@ -38,6 +40,10 @@ export class PfTextInput extends LitElement {
   #internals = this.attachInternals();
 
   #derivedLabel = '';
+
+  get #input() {
+    return this.shadowRoot?.getElementById('input') as HTMLInputElement ?? null;
+  }
 
   willUpdate() {
     /** A best-attempt based on observed behaviour in FireFox 115 on fedora 38 */
@@ -54,10 +60,18 @@ export class PfTextInput extends LitElement {
       <input id="input"
              ?disabled="${this.disabled}"
              ?readonly="${this.readonly}"
+             ?required="${this.required}"
              aria-label="${this.#derivedLabel}"
              @input="${this.#onInput}"
              .value="${this.value}">
     `;
+  }
+
+  #setValidityFromInput() {
+    this.#internals.setValidity(
+      this.#input?.validity,
+      this.#input.validationMessage,
+    );
   }
 
   setCustomValidity(message: string) {
@@ -65,10 +79,12 @@ export class PfTextInput extends LitElement {
   }
 
   checkValidity() {
+    this.#setValidityFromInput();
     return this.#internals.checkValidity();
   }
 
   reportValidity() {
+    this.#setValidityFromInput();
     return this.#internals.reportValidity();
   }
 

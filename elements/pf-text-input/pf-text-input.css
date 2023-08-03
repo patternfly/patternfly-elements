@@ -164,15 +164,6 @@ input::placeholder {
   position: relative;
 }
 
-/* :host([left-truncated])::before { */
-/*   display: inline; */
-/*   content: '\02026'; */
-/*   position: absolute; */
-/*   z-index: 1; */
-/*   left: var(--pf-c-form-control--PaddingLeft); */
-/*   top: calc(0.4em + var(--pf-c-form-control--PaddingLeft)); */
-/* } */
-
 :host([left-truncated]) input:not(:focus) {
   direction: rtl;
   text-overflow: ellipsis;
@@ -190,3 +181,17 @@ input::placeholder {
 :host([readonly][plain]) input {
 	border-color: transparent;
 }
+
+:host(:invalid) {
+  --pf-c-form-control--PaddingRight: var(--pf-c-form-control--invalid--PaddingRight);
+  --pf-c-form-control--BorderBottomColor: var(--pf-c-form-control--invalid--BorderBottomColor);
+}
+
+:host(:invalid) input {
+  padding-bottom: var(--pf-c-form-control--invalid--PaddingBottom);
+  background-image: var(--pf-c-form-control--invalid--BackgroundUrl);
+  background-position: var(--pf-c-form-control--invalid--BackgroundPosition);
+  background-size: var(--pf-c-form-control--invalid--BackgroundSize);
+  border-bottom-width: var(--pf-c-form-control--invalid--BorderBottomWidth);
+}
+

@@ -1,6 +1,8 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import styles from './pf-text-input.css';
 
@@ -26,6 +28,14 @@ export class PfTextInput extends LitElement {
   static override shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @property({ type: Boolean, reflect: true, attribute: 'left-truncated' }) leftTruncated = false;
+
+  @property({ reflect: true }) validated?: 'success' | 'warning';
+
+  @property({ reflect: true }) icon?: 'calendar' | 'clock';
+
+  @property({ reflect: true, attribute: 'custom-icon' }) customIcon?: string;
+
+  @property({ reflect: true, attribute: 'custom-icon-dimensions' }) customIconDimensions?: string;
 
   @property({ type: Boolean, reflect: true }) disabled = false;
 
@@ -63,7 +73,11 @@ export class PfTextInput extends LitElement {
              ?required="${this.required}"
              aria-label="${this.#derivedLabel}"
              @input="${this.#onInput}"
-             .value="${this.value}">
+             .value="${this.value}"
+             style="${ifDefined(this.customIcon && styleMap({
+               backgroundImage: `url('${this.customIcon}')`,
+               backgroundSize: this.customIconDimensions,
+             }))}">
     `;
   }
 

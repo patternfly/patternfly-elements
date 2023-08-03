@@ -45,7 +45,7 @@
 	--pf-c-form-control--success--BackgroundSizeX: var(--pf-c-form-control--FontSize);
 	--pf-c-form-control--success--BackgroundSizeY: var(--pf-c-form-control--FontSize);
 	--pf-c-form-control--success--BackgroundSize: var(--pf-c-form-control--success--BackgroundSizeX) var(--pf-c-form-control--success--BackgroundSizeY);
-	--pf-c-form-control--success--BackgroundUrl: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%235ba352' d='M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z'/%3E%3C/svg%3E");
+	--pf-c-form-control--success--BackgroundUrl: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"%3E%3Cpath fill="%235ba352" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/%3E%3C/svg%3E');
 	--pf-c-form-control--m-warning--BorderBottomWidth: var(--pf-global--BorderWidth--md, 2px);
 	--pf-c-form-control--m-warning--PaddingBottom: calc(var(--pf-global--spacer--form-element, 0.375rem) - var(--pf-c-form-control--m-warning--BorderBottomWidth));
 	--pf-c-form-control--m-warning--BorderBottomColor: var(--pf-global--warning-color--100, #f0ab00);
@@ -198,3 +198,77 @@ input::placeholder {
   border-bottom-width: var(--pf-c-form-control--invalid--BorderBottomWidth);
 }
 
+:host([icon]),
+:host([custom-icon]) {
+	--pf-c-form-control--PaddingRight: var(--pf-c-form-control--m-icon--PaddingRight);
+}
+:host([icon]) input,
+:host([custom-icon]) input {
+	background-image: var(--pf-c-form-control--m-icon--BackgroundUrl);
+	background-position: var(--pf-c-form-control--m-icon--BackgroundPositionX) var(--pf-c-form-control--m-icon--BackgroundPositionY);
+	background-size: var(--pf-c-form-control--m-icon--BackgroundSizeX) var(--pf-c-form-control--m-icon--BackgroundSizeY);
+}
+
+:host([icon="calendar"]) {
+  --pf-c-form-control--m-icon--BackgroundUrl: var(--pf-c-form-control--m-calendar--BackgroundUrl);
+}
+
+:host([icon="clock"]) {
+  --pf-c-form-control--m-icon--BackgroundUrl: var(--pf-c-form-control--m-clock--BackgroundUrl);
+}
+
+
+:host([icon-sprite]) {
+	--pf-c-form-control--success--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--success--BackgroundUrl);
+	--pf-c-form-control--m-warning--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-warning--BackgroundUrl);
+	--pf-c-form-control--invalid--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--invalid--BackgroundUrl);
+	--pf-c-form-control__select--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite__select--BackgroundUrl);
+	--pf-c-form-control--m-search--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-search--BackgroundUrl);
+	--pf-c-form-control--m-calendar--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-calendar--BackgroundUrl);
+	--pf-c-form-control--m-clock--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-clock--BackgroundUrl);
+	--pf-c-form-control__select--BackgroundSize: var(--pf-c-form-control--m-icon-sprite__select--BackgroundSize);
+	--pf-c-form-control__select--BackgroundPositionX: var(--pf-c-form-control--m-icon-sprite__select--BackgroundPositionX);
+	--pf-c-form-control__select--success--BackgroundPosition: var(--pf-c-form-control--m-icon-sprite__select--success--BackgroundPosition);
+	--pf-c-form-control__select--m-warning--BackgroundPosition: var(--pf-c-form-control--m-icon-sprite__select--m-warning--BackgroundPosition);
+	--pf-c-form-control__select--invalid--BackgroundPosition: var(--pf-c-form-control--m-icon-sprite__select--invalid--BackgroundPosition);
+}
+:host([validated="success"]) {
+	--pf-c-form-control--PaddingRight: var(--pf-c-form-control--success--PaddingRight);
+	--pf-c-form-control--BorderBottomColor: var(--pf-c-form-control--success--BorderBottomColor);
+}
+
+:host([validated="success"]) input {
+	padding-bottom: var(--pf-c-form-control--success--PaddingBottom);
+	background-image: var(--pf-c-form-control--success--BackgroundUrl);
+	background-position: var(--pf-c-form-control--success--BackgroundPosition);
+	background-size: var(--pf-c-form-control--success--BackgroundSize);
+	border-bottom-width: var(--pf-c-form-control--success--BorderBottomWidth);
+}
+
+:host([validated="warning"]) {
+	--pf-c-form-control--PaddingRight: var(--pf-c-form-control--m-warning--PaddingRight);
+	--pf-c-form-control--BorderBottomColor: var(--pf-c-form-control--m-warning--BorderBottomColor);
+}
+
+:host([validated="warning"]) input {
+	padding-bottom: var(--pf-c-form-control--m-warning--PaddingBottom);
+	background-image: var(--pf-c-form-control--m-warning--BackgroundUrl);
+	background-position: var(--pf-c-form-control--m-warning--BackgroundPosition);
+	background-size: var(--pf-c-form-control--m-warning--BackgroundSize);
+	border-bottom-width: var(--pf-c-form-control--m-warning--BorderBottomWidth);
+}
+
+:host([icon-sprite]) {
+	--pf-c-form-control--success--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--success--BackgroundUrl);
+	--pf-c-form-control--m-warning--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-warning--BackgroundUrl);
+	--pf-c-form-control--invalid--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--invalid--BackgroundUrl);
+	--pf-c-form-control__select--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite__select--BackgroundUrl);
+	--pf-c-form-control--m-search--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-search--BackgroundUrl);
+	--pf-c-form-control--m-calendar--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-calendar--BackgroundUrl);
+	--pf-c-form-control--m-clock--BackgroundUrl: var(--pf-c-form-control--m-icon-sprite--m-clock--BackgroundUrl);
+	--pf-c-form-control__select--BackgroundSize: var(--pf-c-form-control--m-icon-sprite__select--BackgroundSize);
+	--pf-c-form-control__select--BackgroundPositionX: var(--pf-c-form-control--m-icon-sprite__select--BackgroundPositionX);
+	--pf-c-form-control__select--success--BackgroundPosition: var(--pf-c-form-control--m-icon-sprite__select--success--BackgroundPosition);
+	--pf-c-form-control__select--m-warning--BackgroundPosition: var(--pf-c-form-control--m-icon-sprite__select--m-warning--BackgroundPosition);
+	--pf-c-form-control__select--invalid--BackgroundPosition: var(--pf-c-form-control--m-icon-sprite__select--invalid--BackgroundPosition);
+}

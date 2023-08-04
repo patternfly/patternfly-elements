@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 <style>
 pf-button + pf-button {
   margin-inline-start: 4px;

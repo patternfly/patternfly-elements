@@ -1,0 +1,27 @@
+{% set level = level or 2 %}
+{% set header = header or 'Installation' %}
+
+<section class="band">
+  {{ header | mdHeading(level) | safe }} {% if not content and not slots.length %}
+
+  <em>None</em> {%- else -%}
+
+We recommend loading elements via a CDN such as [JSPM](https://jspm.dev) and using an import map to manage your dependencies. 
+
+For more information on import maps and how to use them, see the [import map reference on MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap/).
+
+If you are using node and NPM, you can install this component using npm:
+
+```shell
+npm install {{ package.name }}
+```
+
+Then import this component into your project by using a [bare module specifier](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules):
+```js
+import '@patternfly/elements/{{ tagName }}/{{ tagName }}.js'
+```
+
+<strong>Please Note:</strong> You should either load elements via a CDN or install them locally through NPM. <em>Do not do both.</em>
+
+</section>
+{%- endif -%}

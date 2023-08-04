@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
   Code Block is a component that contains two or more lines of read-only code. The code in a code block can be copied to the clipboard.
 

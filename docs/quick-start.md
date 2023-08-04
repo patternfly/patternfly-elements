@@ -39,38 +39,12 @@ production.
     h1, h2, h3, h4 {
       font-family: "Red Hat Display";
     }
-  </style>
-  <!--
-    JSPM Generator Import Map
-    Edit URL: https://generator.jspm.io/#U2VhYGBkDM0rySzJSU1hcChILClJLcpLy6nUT81JzU3NKyl2MNIz0DMAADWC5vEpAA
-  -->
-  <script type="importmap">
-  {
-    "imports": {
-      "@patternfly/elements": "https://ga.jspm.io/npm:@patternfly/elements@2.0.0/pfe.min.js"
-    },
-    "scopes": {
-      "https://ga.jspm.io/": {
-        "@floating-ui/core": "https://ga.jspm.io/npm:@floating-ui/core@1.2.3/dist/floating-ui.core.browser.mjs",
-        "@floating-ui/dom": "https://ga.jspm.io/npm:@floating-ui/dom@1.2.4/dist/floating-ui.dom.browser.mjs",
-        "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/development/reactive-element.js",
-        "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/development/decorators/",
-        "lit": "https://ga.jspm.io/npm:lit@2.6.1/index.js",
-        "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.2.2/development/lit-element.js",
-        "lit-html": "https://ga.jspm.io/npm:lit-html@2.6.1/development/lit-html.js",
-        "lit-html/": "https://ga.jspm.io/npm:lit-html@2.6.1/development/",
-        "lit/": "https://ga.jspm.io/npm:lit@2.6.1/",
-        "tslib": "https://ga.jspm.io/npm:tslib@2.5.0/tslib.es6.js"
-      }
-    }
-  }
-  </script>
-  <!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support (all except Chrome 89+) -->
-  <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous"></script>
-  
+  </style> 
+  {% generateImportMap %}
   <script type="module">
-    import * as Elements from "@patternfly/elements";
+    import '@patternfly/elements';
   </script>
+  {% endgenerateImportMap %}
 </head>
 <body>
   <header>
@@ -148,6 +122,6 @@ production.
 </html>
 ```
 
-[Lit Playground](https://lit.dev/playground/#gist=1540e63845ed8eeb88957a11ec234674&view-mode=code) example of the HTML above
+[Lit Playground](https://lit.dev/playground/#gist=77a0cb2d080de958f4415a4716908bf9) example of the HTML above
 
 </section>

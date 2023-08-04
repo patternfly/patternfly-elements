@@ -136,6 +136,7 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
     'renderMethods',
     'renderOverview',
     'renderProperties',
+    'renderInstallation',
     'renderSlots',
   ];
 

@@ -21,7 +21,7 @@ title: Get started
   npm install --save @patternfly/elements
   ```
 
-  This will install not only the pf-card, but also the core utilities and 
+  This will install not only the web components, but also the core utilities and 
   styles,
   and will save it to your package.json.
 {% endband %}
@@ -41,46 +41,23 @@ title: Get started
   ```
 
   ### In HTML
-  To load the PatternFly Element web components in HTML you will need to use an importmap type script tag:
+  Alternatively, to load the PatternFly Elements web components in HTML you will need to use an importmap type script tag:
   `<script type="importmap"> ... </script>` and module type script tag `<script type="module"> ... </script>`. 
 
   In this example, we load the [card](/components/card/) modules using an importmap from JSPM.
 
   ```html
-  <!--
-    JSPM Generator Import Map
-    Edit URL: https://generator.jspm.io/#U2NgYGBkDM0rySzJSU1hcChILClJLcpLy6nUT81JzU3NKyl2MNIz0DPQL0jTTU4sSoHRelnFAN524ZI8AA
-  -->
-  <script type="importmap">
-  {
-    "imports": {
-      "@patternfly/elements/pf-card/pf-card.js": "https://ga.jspm.io/npm:@patternfly/elements@2.0.0/pf-card/pf-card.js"
-    },
-    "scopes": {
-      "https://ga.jspm.io/": {
-        "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/reactive-element.js",
-        "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/decorators/",
-        "@patternfly/pfe-core/controllers/slot-controller.js": "https://ga.jspm.io/npm:@patternfly/pfe-core@2.0.0/controllers/slot-controller.js",
-        "lit": "https://ga.jspm.io/npm:lit@2.6.1/index.js",
-        "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.2.2/lit-element.js",
-        "lit-html": "https://ga.jspm.io/npm:lit-html@2.6.1/lit-html.js",
-        "lit-html/": "https://ga.jspm.io/npm:lit-html@2.6.1/",
-        "lit/": "https://ga.jspm.io/npm:lit@2.6.1/",
-        "tslib": "https://ga.jspm.io/npm:tslib@2.5.0/modules/index.js"
-      }
-    }
-  }
-  </script>
-  
+  {% generateImportMap %}
   <script type="module">
     import "@patternfly/elements/pf-card/pf-card.js";
   </script>
+  {% endgenerateImportMap %}
   ```
 
   To learn more about how to create importmaps, read our [creating an import map](/docs/develop/import-maps/) section, and go into more detail at [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) or the [import map specification](https://html.spec.whatwg.org/multipage/webappapis.html#import-maps). 
   
   ### Add PatternFly Elements markup
-  Add a [card component](/components/card).
+  When you have the import map script loaded on the page, you can add a [card component](/components/card) using html.
 
   ```html
   <pf-card>
@@ -95,6 +72,11 @@ title: Get started
     <p>This is the pf-card body.</p>
     <pf-button slot="footer">OK</pf-button>
   </pf-card>
+
+### Importmap and Markup
+
+Altogether your import map code could look something like this [Lit Playground Demo](https://lit.dev/playground/#gist=453dc9f83854ff7ba09d02a0fc6a79d5).
+
 
 {% endband %}
 

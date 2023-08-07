@@ -1,5 +1,3 @@
-{% renderInstallation %} {% endrenderInstallation %}
-
 <style>
 pf-button + pf-button {
   margin-inline-start: 4px;
@@ -8,8 +6,11 @@ pf-button + pf-button {
 </style>
 
 <script type="module">
-import '@patternfly/elements/pf-icon/pf-icon.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+  import '@patternfly/elements/pf-tabs/pf-tabs.js';
 </script>
+
+{% renderInstallation %} {% endrenderInstallation %}
 
 {% renderOverview %}
 
@@ -70,6 +71,49 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
   <pf-button>Medium Button</pf-button>
   <pf-button size="large">Large Button</pf-button>
   {% endhtmlexample %}
+
+  ### Click listeners
+
+<pf-tabs class="html-lit-react-snippets">
+  <pf-tab slot="tab">HTML</pf-tab>
+  <pf-tab-panel>
+
+```html
+<script type="module">
+  import '@patternfly/elements/pf-button/pf-button.js';
+</script>
+<pf-button onclick="console.log('clicked!');">
+  Click me!
+</pf-button>
+```
+
+  </pf-tab-panel>
+  <pf-tab slot="tab">Lit</pf-tab>
+  <pf-tab-panel>
+
+```js
+import '@patternfly/elements/pf-button/pf-button.js';
+html`
+  <pf-button @click="${() => console.log('clicked!');}">
+    Click me!
+  </pf-button>
+`;
+```
+
+  </pf-tab-panel>
+  <pf-tab slot="tab">React</pf-tab>
+  <pf-tab-panel>
+
+```jsx
+import { Button } from '@patternfly/elements/react/pf-button/pf-button.js';
+<Button onClick={() => console.log('clicked!');}>
+  Click me!
+</Button>
+```
+
+  </pf-tab-panel>
+</pf-tabs>
+
 {% endband %}
 
 {% renderSlots %}{% endrenderSlots %}

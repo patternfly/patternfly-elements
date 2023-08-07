@@ -4,7 +4,7 @@ const DirectoryOutputPlugin = require('@11ty/eleventy-plugin-directory-output');
 
 const PfeAssetsPlugin = require('./docs/_plugins/pfe-assets.cjs');
 const EmptyParagraphPlugin = require('./docs/_plugins/empty-p.cjs');
-const createImportMapPlugin = require('./docs/_plugins/create-import-map.cjs');
+const CreateImportMapPlugin = require('./docs/_plugins/create-import-map.cjs');
 
 const AnchorsPlugin = require('@patternfly/pfe-tools/11ty/plugins/anchors.cjs');
 const CustomElementsManifestPlugin = require('@patternfly/pfe-tools/11ty/plugins/custom-elements-manifest.cjs');
@@ -66,7 +66,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EmptyParagraphPlugin);
 
   /** Create import maps from script tags */
-  eleventyConfig.addPlugin(createImportMapPlugin);
+  eleventyConfig.addPlugin(CreateImportMapPlugin);
 
   /** Add IDs to heading elements */
   eleventyConfig.addPlugin(AnchorsPlugin, {

@@ -50,7 +50,17 @@ module.exports = function(eleventyConfig) {
   });
 
   /** fancy syntax highlighting with diff support */
-  eleventyConfig.addPlugin(SyntaxHighlightPlugin);
+  eleventyConfig.addPlugin(SyntaxHighlightPlugin, {
+    init() {
+      const register = require('prismjs/components/index');
+      register([
+        'html',
+        'regex',
+        'js-templates',
+        'javascript',
+      ]);
+    },
+  });
 
   /** Strip empty paragraphs */
   eleventyConfig.addPlugin(EmptyParagraphPlugin);

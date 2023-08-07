@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
     <pf-progress title="Default" value="33"></pf-progress>
 {% endrenderOverview %}

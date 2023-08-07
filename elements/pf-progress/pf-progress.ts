@@ -1,3 +1,4 @@
+import type { PropertyValues } from 'lit';
 import { LitElement, html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
@@ -6,7 +7,6 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import styles from './pf-progress.css';
-import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
 const ICONS = new Map(Object.entries({
   success: { icon: 'circle-check' },
@@ -100,6 +100,8 @@ const ICONS = new Map(Object.entries({
 export class PfProgress extends LitElement {
   static readonly styles = [styles];
 
+  #internals = this.attachInternals();
+
   /** Represents the value of the progress bar */
   @property({ reflect: true, type: Number })
     value = 0;
@@ -128,12 +130,6 @@ export class PfProgress extends LitElement {
   @property()
     variant: '' | 'success' | 'danger' | 'warning' = '';
 
-  #mo = new MutationObserver(() => this.#onMutation());
-
-  #onMutation() {
-    this.#internals.ariaValueNow = this.#calculatedPercentage.toString();
-  }
-
   get #calculatedPercentage(): number {
     const { value, min, max } = this;
     const percentage = Math.round((value - min) / (max - min) * 100);
@@ -143,13 +139,10 @@ export class PfProgress extends LitElement {
     return Math.min(percentage, 100);
   }
 
-  #internals = new InternalsController(this, {
-    ariaValueNow: this.#calculatedPercentage.toString()
-  });
-
-  connectedCallback(): void {
-    super.connectedCallback();
-    this.#mo.observe(this, { attributes: true });
+  willUpdate(changed: PropertyValues<this>) {
+    if (changed.has('value') || changed.has('min') || changed.has('max')) {
+      this.#internals.ariaValueNow = this.#calculatedPercentage.toString();
+    }
   }
 
   render() {

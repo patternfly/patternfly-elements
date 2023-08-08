@@ -204,3 +204,7 @@ progress[value]::-webkit-progress-value {
     var(--pf-c-progress__bar--before--BackgroundColor) 100%
   );
 }
+
+pf-tooltip {
+  height: 0.01px;
+}

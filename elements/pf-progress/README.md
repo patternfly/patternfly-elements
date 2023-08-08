@@ -2,8 +2,7 @@
 
 A progress bar gives the user a visual representation of their completion status of an ongoing process or task.
 
-Read more about Progress Stepper in the [PatternFly Elements Progress 
-documentation][docs].
+Read more about Progress in the [PatternFly Elements Progress documentation][docs].
 
 ##  Installation
 

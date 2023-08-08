@@ -226,11 +226,22 @@ export class PfTextInput extends LitElement {
     `;
   }
 
+  #onInput(event: Event & { target: HTMLInputElement }) {
+    const { value } = event.target;
+    this.value = value;
+    this.#internals.setFormValue(value);
+  }
+
   #setValidityFromInput() {
     this.#internals.setValidity(
       this.#input?.validity,
       this.#input.validationMessage,
     );
+  }
+
+  async formDisabledCallback() {
+    await this.updateComplete;
+    this.requestUpdate();
   }
 
   setCustomValidity(message: string) {
@@ -245,12 +256,6 @@ export class PfTextInput extends LitElement {
   reportValidity() {
     this.#setValidityFromInput();
     return this.#internals.reportValidity();
-  }
-
-  #onInput(event: Event & { target: HTMLInputElement }) {
-    const { value } = event.target;
-    this.value = value;
-    this.#internals.setFormValue(value);
   }
 }
 

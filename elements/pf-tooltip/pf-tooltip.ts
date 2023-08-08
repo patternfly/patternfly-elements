@@ -1,3 +1,4 @@
+import type { PropertyValues } from 'lit';
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
@@ -140,13 +141,23 @@ export class PfTooltip extends LitElement {
     return this.shadowRoot?.querySelector('#tooltip') ?? null;
   }
 
-  #blockInvoker: boolean;
+  #blockInvoker = false;
 
   #referenceTrigger?: HTMLElement | null;
 
   #float = new FloatingDOMController(this, {
     content: (): HTMLElement | null | undefined => this.#content,
-    invoker: (): HTMLElement | null | undefined => this.#referenceTrigger ?? this.#invoker,
+    invoker: (): HTMLElement | null | undefined => {
+      if (this.#referenceTrigger) {
+        return this.#referenceTrigger;
+      }
+      if (this.#invoker !== null && this.#invoker instanceof HTMLSlotElement && this.#invoker.assignedElements().length > 0) {
+        return this.#invoker.assignedElements().at(0) as HTMLElement;
+      } else if (this.#invoker !== null) {
+        return this.#invoker;
+      }
+      return undefined;
+    },
   });
 
   override connectedCallback() {
@@ -189,13 +200,13 @@ export class PfTooltip extends LitElement {
   }
 
   #getReferenceTrigger() {
-    return (this.getRootNode() as Document | ShadowRoot).getElementById(this.trigger);
+    return (this.getRootNode() as Document | ShadowRoot).getElementById(this.trigger?.normalize() ?? '');
   }
 
   #updateTrigger() {
     const oldReferenceTrigger = this.#referenceTrigger;
     this.#referenceTrigger =
-        this.trigger instanceof Element ? this.trigger
+        this.trigger instanceof HTMLElement ? this.trigger
       : typeof this.trigger === 'string' ? this.#getReferenceTrigger()
       : null;
     for (const evt of EnterEvents) {

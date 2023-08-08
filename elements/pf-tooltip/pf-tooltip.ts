@@ -132,14 +132,21 @@ export class PfTooltip extends LitElement {
     converter: StringListConverter,
   }) flipBehavior?: Placement[];
 
-  #referenceTrigger?: Element | null;
+  get #invoker(): HTMLSlotElement | null {
+    return this.shadowRoot?.querySelector('#invoker') ?? null;
+  }
+
+  get #content(): HTMLElement | null {
+    return this.shadowRoot?.querySelector('#tooltip') ?? null;
+  }
+
+  #blockInvoker: boolean;
+
+  #referenceTrigger?: HTMLElement | null;
 
   #float = new FloatingDOMController(this, {
-    content: (): HTMLElement | undefined | null =>
-      this.shadowRoot?.querySelector('#tooltip'),
-    invoker: () => this.#referenceTrigger ??
-        this.shadowRoot?.querySelector('#invoker')
-          ?.assignedElements().at(0),
+    content: (): HTMLElement | null | undefined => this.#content,
+    invoker: (): HTMLElement | null | undefined => this.#referenceTrigger ?? this.#invoker,
   });
 
   override connectedCallback() {
@@ -152,6 +159,7 @@ export class PfTooltip extends LitElement {
    * them to the new trigger element.
    */
   override willUpdate(changed: PropertyValues<this>) {
+    this.#blockInvoker = this.#invoker?.assignedElements().length === 0 && this.#invoker?.assignedNodes().length > 0;
     if (changed.has('trigger')) {
       this.#updateTrigger();
     }
@@ -160,13 +168,19 @@ export class PfTooltip extends LitElement {
   override render() {
     const { alignment, anchor, open, styles } = this.#float;
 
+    const block = this.#blockInvoker;
+
     return html`
       <div id="container"
            style="${styleMap(styles)}"
            class="${classMap({ open,
                                [anchor]: !!anchor,
                                [alignment]: !!alignment })}">
-        <slot id="invoker" role="tooltip" aria-labelledby="tooltip"></slot>
+        <slot id="invoker"
+              class="${classMap({ block })}"
+              @slotchange="${() => this.requestUpdate()}"
+              role="tooltip"
+              aria-labelledby="tooltip"></slot>
         <slot id="tooltip"
               name="content"
               aria-hidden="${String(!open) as 'true' | 'false'}">${this.content}</slot>

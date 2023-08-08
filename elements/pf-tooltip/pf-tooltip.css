@@ -13,10 +13,15 @@
   --_floating-arrow-size: var(--pf-c-tooltip__arrow--Width, 0.5rem);
 }
 
+#invoker.block {
+  display: block;
+}
+
 #tooltip,
 #tooltip::after {
   position: absolute;
 }
+
 #tooltip {
   --_timestamp-text-decoration: none;
   --_timestamp-text-underline-offset: initial;

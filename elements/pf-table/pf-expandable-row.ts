@@ -18,7 +18,9 @@ export class PfExpandableRow extends PfTr {
 
   render() {
     return html`
-      <slot></slot>
+      <div id="container">
+        <slot></slot>
+      </div>
     `;
   }
 }

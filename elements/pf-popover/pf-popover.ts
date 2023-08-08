@@ -1,4 +1,4 @@
-import { LitElement, nothing, html } from 'lit';
+import { LitElement, nothing, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -9,7 +9,6 @@ import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent, StringListConverter } from '@patternfly/pfe-core/core.js';
-import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 import styles from './pf-popover.css';
@@ -301,7 +300,6 @@ export class PfPopover extends LitElement {
   /**
    * The ID of the element to attach the popover to.
    */
-  @observed('triggerChanged')
   @property({ reflect: true }) trigger?: string;
 
   @query('#popover') private _popover!: HTMLDialogElement;
@@ -420,15 +418,15 @@ export class PfPopover extends LitElement {
    * Removes event listeners from the old trigger element and attaches
    * them to the new trigger element.
    */
-  triggerChanged(oldValue?: string, newValue?: string) {
-    if (oldValue) {
+  override willUpdate(changed: PropertyValues<this>) {
+    if (changed.has('trigger')) {
       this.#referenceTrigger?.removeEventListener('click', this.show);
       this.#referenceTrigger?.removeEventListener('keydown', this.onKeydown);
-    }
-    if (newValue) {
-      this.#referenceTrigger = (this.getRootNode() as Document | ShadowRoot).getElementById(newValue);
-      this.#referenceTrigger?.addEventListener('click', this.show);
-      this.#referenceTrigger?.addEventListener('keydown', this.onKeydown);
+      if (this.trigger) {
+        this.#referenceTrigger = (this.getRootNode() as Document | ShadowRoot).getElementById(this.trigger);
+        this.#referenceTrigger?.addEventListener('click', this.show);
+        this.#referenceTrigger?.addEventListener('keydown', this.onKeydown);
+      }
     }
   }
 

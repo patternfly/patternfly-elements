@@ -84,7 +84,11 @@ describe('<pf-popover>', function() {
     expect(snapshot.children).to.deep.equal([{ focused: true, name: 'Toggle popover', role: 'button' }]);
   });
 
-  it('should properly clean up event handlers', async () => {
+  describe('with a trigger and a sibling button', function() {
+    let snapshot: A11yTreeSnapshot;
+    let popover: PfPopover;
+    let btn1: HTMLButtonElement;
+    let btn2: HTMLButtonElement;
     const expectClose = () =>
       expect(snapshot.children).to.deep.equal([
         {
@@ -126,38 +130,64 @@ describe('<pf-popover>', function() {
           role: 'button',
         },
       ]);
-    fixtureCleanup();
-    const container = await fixture(html`
-      <div>
-        <pf-popover
-          id="popover"
-          trigger="btn-1"
-          heading="Popover heading"
-          body="Popovers are triggered by click rather than hover."
-          footer="Popover footer"
-        >
-        </pf-popover>
-        <button id="btn-1">Toggle popover 1</button>
-        <button id="btn-2">Toggle popover 2</button>
-      </div>
-    `);
-    snapshot = await a11ySnapshot();
-    const popover: PfPopover | null = container.querySelector('pf-popover');
-    const btn1: HTMLButtonElement | null = container.querySelector('#btn-1');
-    const btn2: HTMLButtonElement | null = container.querySelector('#btn-2');
-    expectClose();
-    btn1?.click();
-    snapshot = await a11ySnapshot();
-    expectOpen();
-    // Close the popover
-    await sendKeys({ press: 'Enter' });
-    // Update trigger element
-    popover?.setAttribute('trigger', 'btn-2');
-    btn1?.click();
-    snapshot = await a11ySnapshot();
-    expectClose();
-    btn2?.click();
-    snapshot = await a11ySnapshot();
-    expectOpen();
+    beforeEach(async function() {
+      fixtureCleanup();
+      const container = await fixture(html`
+        <div>
+          <pf-popover
+            id="popover"
+            trigger="btn-1"
+            heading="Popover heading"
+            body="Popovers are triggered by click rather than hover."
+            footer="Popover footer"
+          >
+          </pf-popover>
+          <button id="btn-1">Toggle popover 1</button>
+          <button id="btn-2">Toggle popover 2</button>
+        </div>
+      `);
+      popover = container.querySelector('pf-popover')!;
+      btn1 = container.querySelector('#btn-1')!;
+      btn2 = container.querySelector('#btn-2')!;
+      snapshot = await a11ySnapshot();
+    });
+    it('starts closed', expectClose);
+    describe('clicking the trigger', function() {
+      beforeEach(async function() {
+        btn1.click();
+        await popover.updateComplete;
+        snapshot = await a11ySnapshot();
+      });
+      it('shows the popover', expectOpen);
+      describe('then pressing the Enter key', function() {
+        beforeEach(async function() {
+          // Close the popover
+          await sendKeys({ press: 'Enter' });
+        });
+        it('closes the popover', expectClose);
+        describe('then setting the trigger to the sibling button', function() {
+          beforeEach(async function() {
+            // Update trigger element
+            popover.setAttribute('trigger', 'btn-2');
+            await popover.updateComplete;
+            snapshot = await a11ySnapshot();
+          });
+          describe('clicking the first button', function() {
+            beforeEach(async function() {
+              btn1.click();
+            });
+            it('remains closed', expectClose);
+          });
+          describe('clicking the sibling button', function() {
+            beforeEach(async function() {
+              btn2.click();
+              await popover.updateComplete;
+              snapshot = await a11ySnapshot();
+            });
+            it('shows the popup', expectOpen);
+          });
+        });
+      });
+    });
   });
 });

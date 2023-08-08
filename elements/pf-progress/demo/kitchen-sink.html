@@ -10,8 +10,8 @@
 <h3>Value</h3>
 <pf-progress value="86"></pf-progress>
 
-<h3>Title</h3>
-<pf-progress value="75" title="Title"></pf-progress>
+<h3>Description</h3>
+<pf-progress value="75" description="Description"></pf-progress>
 
 <h3>Aria-label</h3>
 <pf-progress value="90" aria-label="Aria-label"></pf-progress>
@@ -75,7 +75,7 @@
 <pf-progress value="40" variant="warning" size="lg" measure-location="outside"></pf-progress>
 <pf-progress value="41" variant="warning" size="lg" measure-location="none"></pf-progress>
 
-<h2>Label w/ no title</h2>
+<h2>Label w/ no description</h2>
 
 <h3>Value</h3>
 
@@ -128,4 +128,11 @@
 
 <label for="progress14">Variant (Warning) and Size (lg)</label>
 <pf-progress id="progress14" value="29" variant="warning" size="lg"></pf-progress>
+
+<h3>Truncated description</h3>
+<pf-progress
+    value="29"
+    description-truncated
+    description="Very very very very very very very very very very very long description which should be truncated if it does not fit onto one line above the progress bar"
+></pf-progress>
 

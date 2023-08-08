@@ -1,10 +1,23 @@
-import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
-
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { BaseTooltip } from './BaseTooltip.js';
+import { styleMap } from 'lit/directives/style-map.js';
+import { classMap } from 'lit/directives/class-map.js';
+
+import {
+  FloatingDOMController,
+  type Placement,
+} from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
+import { bound } from '@patternfly/pfe-core/decorators/bound.js';
+
+import { StringListConverter } from '@patternfly/pfe-core';
+
 
 import styles from './pf-tooltip.css';
+
+const EnterEvents = ['focusin', 'tap', 'click', 'mouseenter'];
+const ExitEvents = ['focusout', 'blur', 'mouseleave'];
 
 /**
  * A **tooltip** is in-app messaging used to identify elements on a page with short,
@@ -94,13 +107,120 @@ import styles from './pf-tooltip.css';
  *              {@default `45deg`}
  */
 @customElement('pf-tooltip')
-export class PfTooltip extends BaseTooltip {
-  static readonly styles = [...BaseTooltip.styles, styles];
+export class PfTooltip extends LitElement {
+  static readonly styles = [styles];
 
+  /** The position of the tooltip, relative to the invoking content */
   @property() position: Placement = 'top';
 
   /** Tooltip content. Overridden by the content slot */
   @property() content?: string;
+
+  /** If false, prevents the tooltip from trying to remain in view by flipping itself when necessary */
+  @property({ type: Boolean, attribute: 'no-flip' }) noFlip = false;
+
+  @property() trigger?: string | Element;
+
+  /**
+   * The flip order when flip is enabled and the initial position is not possible.
+   * There are 12 options: `top`, `bottom`, `left`, `right`, `top-start`, `top-end`,
+   * `bottom-start`, `bottom-end`, `left-start`, `left-end`,`right-start`, `right-end`.
+   * The default is [oppositePlacement], where only the opposite placement is tried.
+   */
+  @property({
+    attribute: 'flip-behavior',
+    converter: StringListConverter,
+  }) flipBehavior?: Placement[];
+
+  #referenceTrigger?: Element | null;
+
+  #float = new FloatingDOMController(this, {
+    content: (): HTMLElement | undefined | null =>
+      this.shadowRoot?.querySelector('#tooltip'),
+    invoker: () => this.#referenceTrigger ??
+        this.shadowRoot?.querySelector('#invoker')
+          ?.assignedElements().at(0),
+  });
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.#updateTrigger();
+  }
+
+  /**
+   * Removes event listeners from the old trigger element and attaches
+   * them to the new trigger element.
+   */
+  override willUpdate(changed: PropertyValues<this>) {
+    if (changed.has('trigger')) {
+      this.#updateTrigger();
+    }
+  }
+
+  override render() {
+    const { alignment, anchor, open, styles } = this.#float;
+
+    return html`
+      <div id="container"
+           style="${styleMap(styles)}"
+           class="${classMap({ open,
+                               [anchor]: !!anchor,
+                               [alignment]: !!alignment })}">
+        <slot id="invoker" role="tooltip" aria-labelledby="tooltip"></slot>
+        <slot id="tooltip"
+              name="content"
+              aria-hidden="${String(!open) as 'true' | 'false'}">${this.content}</slot>
+      </div>
+    `;
+  }
+
+  #getReferenceTrigger() {
+    return (this.getRootNode() as Document | ShadowRoot).getElementById(this.trigger);
+  }
+
+  #updateTrigger() {
+    const oldReferenceTrigger = this.#referenceTrigger;
+    this.#referenceTrigger =
+        this.trigger instanceof Element ? this.trigger
+      : typeof this.trigger === 'string' ? this.#getReferenceTrigger()
+      : null;
+    for (const evt of EnterEvents) {
+      if (this.#referenceTrigger) {
+        this.removeEventListener(evt, this.show);
+        this.#referenceTrigger.addEventListener(evt, this.show);
+      } else {
+        oldReferenceTrigger?.removeEventListener(evt, this.show);
+        this.addEventListener(evt, this.show);
+      }
+    }
+    for (const evt of ExitEvents) {
+      if (this.#referenceTrigger) {
+        this.removeEventListener(evt, this.hide);
+        this.#referenceTrigger.addEventListener(evt, this.hide);
+      } else {
+        oldReferenceTrigger?.removeEventListener(evt, this.hide);
+        this.addEventListener(evt, this.hide);
+      }
+    }
+  }
+
+  @bound async show() {
+    await this.updateComplete;
+    const placement = this.position;
+    const offset =
+        !placement?.match(/top|bottom/) ? 15
+      : { mainAxis: 15, alignmentAxis: -4 };
+    await this.#float.show({
+      offset,
+      placement,
+      flip: !this.noFlip,
+      fallbackPlacements: this.flipBehavior,
+    });
+  }
+
+  @bound async hide() {
+    await this.#float.hide();
+  }
 }
 
 declare global {

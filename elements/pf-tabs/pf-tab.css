@@ -13,9 +13,9 @@
   --pf-c-tabs__link--before--BorderBottomColor: var(--pf-c-tabs__link--BackgroundColor, transparent);
 }
 
-:host(.first[box][active]) #current::before {
+/* :host(.first[box][active]) #current::before {
   left: calc(var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)) * -1);
-}
+} */
 
 button {
   align-items: center;
@@ -93,7 +93,7 @@ button:active {
   top: calc(var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)) * -1);
 }
 
-:host(.first[box][vertical]) button::after,
+:host([box][vertical]:first-of-type) button::after,
 :host([box][vertical][active]) button::after {
   top: 0;
 }
@@ -104,12 +104,12 @@ button:active {
   --pf-c-tabs__link--before--BorderBottomColor: var(--pf-c-tabs__link--before--border-color--base, var(--pf-global--BorderColor--100, #d2d2d2));
 }
 
-:host(.first[box][active]) button::before {
+:host([box][active]:first-of-type) button::before {
   border-block-start-width: var(--pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderTopWidth,  var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
   border-inline-start-width: var(--pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderLeftWidth,  var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
 }
 
-:host(.last[box][active]) button::before {
+:host([box][active]:last-of-type) button::before {
   border-inline-end-width: var(--pf-c-tabs--m-box__item--m-current--last-child__link--before--BorderRightWidth, var(--pf-c-tabs--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
 }
 

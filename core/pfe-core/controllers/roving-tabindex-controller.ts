@@ -198,13 +198,15 @@ export class RovingTabindexController<
   /**
    * from array of HTML items, and sets active items
    */
-  initItems(items: ItemType[], itemsContainer: HTMLElement = this.host) {
+  initItems(items: ItemType[], itemsContainer: HTMLElement = this.host, setActiveItem = true) {
     this.#items = items ?? [];
     const focusableItems = this.#focusableItems;
     const [focusableItem] = focusableItems;
-    this.#activeItem = focusableItem;
-    for (const item of focusableItems) {
-      item.tabIndex = this.#activeItem === item ? 0 : -1;
+    if (setActiveItem) {
+      this.#activeItem = focusableItem;
+      for (const item of focusableItems) {
+        item.tabIndex = this.#activeItem === item ? 0 : -1;
+      }
     }
     /**
      * removes listener on previous contained and applies it to new container

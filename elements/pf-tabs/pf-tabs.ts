@@ -1,12 +1,19 @@
+import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { query } from 'lit/decorators/query.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+import { classMap } from 'lit/directives/class-map.js';
 
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { cascades } from '@patternfly/pfe-core/decorators.js';
+import { OverflowController } from '@patternfly/pfe-core/controllers/overflow-controller.js';
 
-import { BaseTabs } from './BaseTabs.js';
+import { TabsController } from './TabsController.js';
 import { PfTab } from './pf-tab.js';
 import { PfTabPanel } from './pf-tab-panel.js';
 
+import BaseStyles from './BaseTabs.css';
 import styles from './pf-tabs.css';
 
 /**
@@ -60,18 +67,10 @@ import styles from './pf-tabs.css';
  * @cssprop     {<color>} --pf-c-tabs__scroll-button--disabled--Color                 {@default `#d2d2d2`}
  */
 @customElement('pf-tabs')
-export class PfTabs extends BaseTabs {
-  static readonly styles = [...BaseTabs.styles, styles];
+export class PfTabs extends LitElement {
+  static readonly styles = [BaseStyles, styles];
 
   protected static readonly scrollTimeoutDelay = 150;
-
-  static isTab(element: HTMLElement): element is PfTab {
-    return element instanceof PfTab;
-  }
-
-  static isPanel(element: HTMLElement): element is PfTabPanel {
-    return element instanceof PfTabPanel;
-  }
 
   @cascades('pf-tab', 'pf-tab-panel')
   @property({ reflect: true }) box: 'light' | 'dark' | null = null;
@@ -85,8 +84,81 @@ export class PfTabs extends BaseTabs {
   @cascades('pf-tab')
   @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'true';
 
+  @cascades('pf-tab')
+  @property({ reflect: true, type: Boolean }) manual = false;
+
+  @property({ reflect: false, attribute: 'label-scroll-left' }) labelScrollLeft = 'Scroll left';
+
+  @property({ reflect: false, attribute: 'label-scroll-right' }) labelScrollRight = 'Scroll left';
+
+  @query('#tabs') private _tabsContainer!: HTMLElement;
+
+  @queryAssignedElements({ slot: 'tab' }) private _tabs?: PfTab[];
+
   protected get canShowScrollButtons(): boolean {
     return !this.vertical;
+  }
+
+  #overflow = new OverflowController(this, { scrollTimeoutDelay: 200 });
+
+  #tabs = new TabsController(this, {
+    isTab: (x?: Node): x is PfTab => x instanceof PfTab,
+    isPanel: (x?: Node): x is PfTabPanel => x instanceof PfTabPanel,
+  });
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.id ||= getRandomId(this.localName);
+  }
+
+  willUpdate(): void {
+    this.#overflow.update();
+  }
+
+  render() {
+    return html`
+      <div part="container" class="${classMap({ overflow: this.#overflow.showScrollButtons })}">
+        <div part="tabs-container">${!this.#overflow.showScrollButtons ? '' : html`
+          <button id="previousTab" tabindex="-1"
+              aria-label="${this.labelScrollLeft}"
+              ?disabled="${!this.#overflow.overflowLeft}"
+              @click="${this.#scrollLeft}">
+            <pf-icon icon="angle-left" set="fas" loading="eager"></pf-icon>
+          </button>`}
+          <slot id="tabs"
+                name="tab"
+                part="tabs"
+                role="tablist"
+                @slotchange="${this.#onSlotChange}"
+                @scroll="${this.#overflow.onScroll}"></slot> ${!this.#overflow.showScrollButtons ? '' : html`
+          <button id="nextTab" tabindex="-1"
+              aria-label="${this.labelScrollRight}"
+              ?disabled="${!this.#overflow.overflowRight}"
+              @click="${this.#scrollRight}">
+            <pf-icon icon="angle-right" set="fas" loading="eager"></pf-icon>
+          </button>`}
+        </div>
+        <slot part="panels"></slot>
+      </div>
+    `;
+  }
+
+  set activeIndex(index: number) {
+    this.#tabs.activeIndex = index;
+  }
+
+  #scrollLeft() {
+    this.#overflow.scrollLeft();
+  }
+
+  #scrollRight() {
+    this.#overflow.scrollRight();
+  }
+
+  #onSlotChange() {
+    if (this._tabs) {
+      this.#overflow.init(this._tabsContainer, this._tabs);
+    }
   }
 }
 

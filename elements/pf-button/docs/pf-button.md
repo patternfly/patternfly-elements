@@ -81,10 +81,12 @@ pf-button + pf-button {
 ```html
 <script type="module">
   import '@patternfly/elements/pf-button/pf-button.js';
+  document.querySelector('pf-button')
+    .addEventListener('click', function() {
+      console.log('clicked!');
+    });
 </script>
-<pf-button onclick="console.log('clicked!');">
-  Click me!
-</pf-button>
+<pf-button>Click me!</pf-button>
 ```
 
   </pf-tab-panel>
@@ -92,12 +94,14 @@ pf-button + pf-button {
   <pf-tab-panel>
 
 ```js
+import { html, render } from 'lit';
 import '@patternfly/elements/pf-button/pf-button.js';
-html`
+
+render(html`
   <pf-button @click="${() => console.log('clicked!');}">
     Click me!
   </pf-button>
-`;
+`, document.getElementById('container'));
 ```
 
   </pf-tab-panel>
@@ -106,9 +110,13 @@ html`
 
 ```jsx
 import { Button } from '@patternfly/elements/react/pf-button/pf-button.js';
-<Button onClick={() => console.log('clicked!');}>
-  Click me!
-</Button>
+export function Clicker() {
+  return (
+    <Button onClick={() => console.log('clicked!');}>
+      Click me!
+    </Button>
+  )
+}
 ```
 
   </pf-tab-panel>

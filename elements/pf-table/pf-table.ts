@@ -11,6 +11,7 @@ export * from './pf-td.js';
 
 import styles from './pf-table.css';
 import { PfTh, type ThSortEvent } from './pf-th.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 const rowQuery = [
   ':scope > pf-tbody > pf-tr',
@@ -44,7 +45,18 @@ export class PfTable extends LitElement {
   }
 
   render() {
-    return html`<slot @slotchange=${this.#onSlotchange} @sort=${this.#onSort}></slot>`;
+    const firstRow = this.querySelector('pf-tr');
+    const coeffRows = this.#hasExpandableRows ? '1' : '0';
+    const numCols = `${firstRow?.querySelectorAll('pf-th')?.length ?? 0}`;
+    return html`
+      <slot @slotchange="${this.#onSlotchange}"
+            @sort="${this.#onSort}"
+            style="${styleMap({
+              '--_pf-table--expandable-rows': coeffRows,
+              '--_pf-table--number-of-columns': numCols,
+            })}"
+      ></slot>
+    `;
   }
 
   #onSlotchange() {
@@ -52,10 +64,7 @@ export class PfTable extends LitElement {
     if (!this.sortDirection || this.#defaultRows.length !== sortableRows.length) {
       this.#defaultRows = sortableRows;
     }
-    const firstRow = this.querySelector('pf-tr');
     this.#hasExpandableRows = !!this.querySelector('pf-tbody[expandable]');
-    this.style.setProperty('--_pf-table--expandable-rows', this.#hasExpandableRows ? '1' : '0');
-    this.style.setProperty('--_pf-table--number-of-columns', `${firstRow?.querySelectorAll('pf-th')?.length || 0}`);
     this.requestUpdate();
   }
 

@@ -1,14 +1,18 @@
-import { ComposedEvent } from '@patternfly/pfe-core/core.js';
 import { LitElement, html, svg } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 
+import '@patternfly/elements/pf-button/pf-button.js';
+
 import styles from './pf-th.css';
 
-export class ThSortEvent extends ComposedEvent {
-  constructor(public key: string, public direction: 'asc' | 'desc') {
-    super('sort');
+export class ThSortEvent extends Event {
+  constructor(
+    public key: string,
+    public direction: 'asc' | 'desc',
+  ) {
+    super('sort', { bubbles: true, cancelable: true });
   }
 }
 
@@ -26,11 +30,14 @@ const paths = new Map(Object.entries({
 export class PfTh extends LitElement {
   static readonly styles = [styles];
 
-  @property({ type: Boolean }) sortable?: boolean = false;
+  @property({ type: Boolean, reflect: true }) sortable?: boolean = false;
 
-  @property({ type: Boolean }) selected?: boolean = false;
+  @property({ type: Boolean, reflect: true }) selected?: boolean = false;
 
-  @property({ reflect: true, attribute: 'sort-direction' }) sortDirection!: 'asc' | 'desc';
+  @property({
+    reflect: true,
+    attribute: 'sort-direction',
+  }) sortDirection!: 'asc' | 'desc';
 
   @property() key!: string;
 
@@ -47,9 +54,12 @@ export class PfTh extends LitElement {
   }
 
   render() {
-    return this.role === 'columnheader' && this.sortable ?
+    const selected = !!this.selected;
+    return this.sortable ?
       html`
-        <div class="sortable">
+        <button id="sort-button"
+                class="sortable ${classMap({ selected })}"
+                part="sort-button">
           <slot></slot>
           <span class="visually-hidden">${!this.sortDirection ? '' : `(sorted ${this.sortDirection === 'asc' ? 'ascending' : 'descending'})`}</span>
           <span id="sort-indicator">
@@ -57,11 +67,8 @@ export class PfTh extends LitElement {
               <path d="${paths.get(this.sortDirection ?? 'sort')}"></path>`}
             </svg>
           </span>
-        </div>
-        <pf-button id="sort-button" part="sort-button" plain class="${classMap({ selected: !!this.selected })}">
-          <span class="offscreen">Sort</span>
-        </pf-button>`
-      : html`
+        </button>
+      ` : html`
         <slot></slot>
       `;
   }

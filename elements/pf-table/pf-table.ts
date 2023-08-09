@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
-import { property } from 'lit/decorators/property.js';
 
 export * from './pf-caption.js';
 export * from './pf-thead.js';
@@ -10,11 +9,12 @@ export * from './pf-th.js';
 export * from './pf-td.js';
 
 import styles from './pf-table.css';
+import type { PfTr } from './pf-tr.js';
 import { PfTh, type ThSortEvent } from './pf-th.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 const rowQuery = [
-  ':scope > pf-tbody > pf-tr',
+  ':scope > pf-tbody:not([expandable]) > pf-tr',
   ':scope > pf-tbody > pf-tbody[expandable]',
   ':scope > pf-tr',
   ':scope > pf-tbody[expandable]',
@@ -28,25 +28,19 @@ const rowQuery = [
 export class PfTable extends LitElement {
   static readonly styles = [styles];
 
-  @property({ reflect: true, attribute: 'sort-direction' }) sortDirection!: 'asc' | 'desc';
-
-  get sortableRows() {
-    return [...this.querySelectorAll(rowQuery)];
+  get rows() {
+    return this.querySelectorAll<PfTr>(rowQuery);
   }
 
-  #hasExpandableRows = false;
-  #defaultRows!: Element[];
-  #sortDirection!: 'asc' | 'desc';
-  #sortColumn!: PfTh | null;
-
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
     this.setAttribute('role', 'table');
   }
 
   render() {
     const firstRow = this.querySelector('pf-tr');
-    const coeffRows = this.#hasExpandableRows ? '1' : '0';
+    const hasExpandableRow = !!this.querySelector('pf-tbody[expandable]');
+    const coeffRows = hasExpandableRow ? '1' : '0';
     const numCols = `${firstRow?.querySelectorAll('pf-th')?.length ?? 0}`;
     return html`
       <slot @slotchange="${this.#onSlotchange}"
@@ -60,42 +54,44 @@ export class PfTable extends LitElement {
   }
 
   #onSlotchange() {
-    const { sortableRows } = this;
-    if (!this.sortDirection || this.#defaultRows.length !== sortableRows.length) {
-      this.#defaultRows = sortableRows;
-    }
-    this.#hasExpandableRows = !!this.querySelector('pf-tbody[expandable]');
     this.requestUpdate();
   }
 
   #onSort(event: ThSortEvent) {
-    if (this.#sortColumn !== event.target) {
-      if (this.#sortColumn) {
-        this.#sortColumn.removeAttribute('sort-direction');
+    for (const col of this.querySelectorAll<PfTh>('pf-th[sortable]')) {
+      col.selected = col === event.target;
+      if (col !== event.target) {
+        col.removeAttribute('sort-direction');
       }
-      this.#sortColumn = event.target as PfTh;
     }
-    this.#sortDirection = event.direction;
-    if (this.#sortColumn?.parentElement?.children) {
-      const index = [...this.#sortColumn.parentElement.children].indexOf(this.#sortColumn);
-      const { sortableRows: rows } = this;
-      const sorted = rows.sort((a, b) => {
-        const pfTh = `:is(pf-th, pf-td):nth-child(${index + 1})`;
-        const thQuery = [
-          `:scope > ${pfTh}`,
-          `:scope > pf-tr > ${pfTh}`
-        ].join();
-        const content = (cell: Element) => {
-          return cell.querySelector(thQuery)?.textContent?.trim()?.toLowerCase() || '';
-        };
-        const aTh = content(a);
-        const bTh = content(b);
-        return this.#sortDirection === 'asc' ? (aTh < bTh ? -1 : 0) : (bTh < aTh ? -1 : 0);
-      });
-      sorted.forEach((row, i) => {
-        const sortedRow = rows.at(i);
-        if (sortedRow) {
-          this.insertBefore(row, sortedRow);
+    if (!event.defaultPrevented &&
+        event.target instanceof PfTh) {
+      this.#performSort(event.direction, event.target);
+    }
+  }
+
+  #performSort(direction: 'asc' | 'desc', column: PfTh) {
+    const children = column.parentElement?.children;
+    if (children) {
+      const columnIndexToSort = [...children].indexOf(column);
+      Array.from(this.rows, node => {
+        const content = node.querySelector(`
+          :scope > :is(pf-th, pf-td):nth-child(${columnIndexToSort + 1}),
+          :scope > pf-tr > :is(pf-th, pf-td):nth-child(${columnIndexToSort + 1})
+        `.trim())?.textContent?.trim()?.toLowerCase() ?? '';
+        return { node, content };
+      }).sort((a, b) => {
+        if (direction === 'asc') {
+          return (a.content < b.content ? -1 : a.content > b.content ? 1 : 0);
+        } else {
+          return (b.content < a.content ? -1 : b.content > a.content ? 1 : 0);
+        }
+      }).forEach(({ node }, index) => {
+        const target = this.rows[index];
+        if (this.rows[index] !== node) {
+          const position: InsertPosition =
+              direction === 'desc' ? 'afterend' : 'beforebegin';
+          target.insertAdjacentElement(position, node);
         }
       });
     }

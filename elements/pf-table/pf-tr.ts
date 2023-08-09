@@ -12,11 +12,14 @@ import styles from './pf-tr.css';
 export class PfTr extends LitElement {
   static readonly styles = [styles];
 
-  @property({ reflect: true }) role = 'row';
-
   @property({ type: Boolean, reflect: true }) expandable = false;
 
   @property({ type: Boolean, reflect: true }) expanded = false;
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.setAttribute('role', 'row');
+  }
 
   render() {
     return html`

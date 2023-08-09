@@ -26,42 +26,45 @@ const SVG = {
 export class PfTh extends LitElement {
   static readonly styles = [styles];
 
-  @property({ reflect: true }) role = 'rowheader';
   @property({ type: Boolean }) sortable?: boolean = false;
+
   @property({ type: Boolean }) selected?: boolean = false;
+
   @property({ reflect: true, attribute: 'sort-direction' }) sortDirection!: 'asc' | 'desc';
+
   @property() key!: string;
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
+    this.setAttribute('role', 'rowheader');
     if (this.sortable) {
-      this.addEventListener('click', this.onClick);
+      this.addEventListener('click', this.#onClick);
     }
   }
 
   render() {
-    return html`
-      ${this.role === 'columnheader' && this.sortable ?
-        html`
-          <div class="sortable">
-            <slot></slot>${!this.sortDirection ? '' : html`
-              <span class="offscreen">(sorted ${this.sortDirection === 'asc' ? 'ascending' : 'descending'})</span>
-            `}
-            <span id="sort-indicator">${SVG[this.sortDirection ?? 'sort']}</span>
-          </div>
-          <pf-button id="sort-button" part="sort-button" plain class="${classMap({ selected: !!this.selected })}">
-            <span class="offscreen">Sort</span>
-          </pf-button>`
-        : html`<slot></slot>`}
-    `;
+    return this.role === 'columnheader' && this.sortable ?
+      html`
+        <div class="sortable">
+          <slot></slot>${!this.sortDirection ? '' : html`
+            <span class="offscreen">(sorted ${this.sortDirection === 'asc' ? 'ascending' : 'descending'})</span>
+          `}
+          <span id="sort-indicator">${SVG[this.sortDirection ?? 'sort']}</span>
+        </div>
+        <pf-button id="sort-button" part="sort-button" plain class="${classMap({ selected: !!this.selected })}">
+          <span class="offscreen">Sort</span>
+        </pf-button>`
+      : html`
+        <slot></slot>
+      `;
   }
 
   diconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('click', this.onClick);
+    this.removeEventListener('click', this.#onClick);
   }
 
-  onClick() {
+  #onClick() {
     this.sort();
   }
 

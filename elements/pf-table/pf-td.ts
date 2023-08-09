@@ -12,7 +12,10 @@ import styles from './pf-td.css';
 export class PfTd extends LitElement {
   static readonly styles = [styles];
 
-  @property({ reflect: true }) role = 'cell';
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.setAttribute('role', 'cell');
+  }
 
   render() {
     return html`

@@ -358,7 +358,10 @@ export class PfPopover extends LitElement {
       <div id="container"
            style="${styleMap(styles)}"
            class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}">
-        <slot id="trigger" @keydown=${this.onKeydown} @click=${this.toggle}></slot>
+        <slot id="trigger"
+              @slotchange="${this.#triggerChanged}"
+              @keydown=${this.onKeydown}
+              @click=${this.toggle}></slot>
         <dialog id="popover" aria-labelledby="heading" aria-describedby="body" aria-label=${ifDefined(this.label)}>
           <div id="arrow"></div>
           <div id="content" part="content">
@@ -391,6 +394,23 @@ export class PfPopover extends LitElement {
     this.#referenceTrigger?.removeEventListener('keydown', this.onKeydown);
   }
 
+  #getReferenceTrigger() {
+    const root = this.getRootNode() as Document | ShadowRoot;
+    return !this.trigger ? null : root.getElementById(this.trigger);
+  }
+
+
+  #triggerChanged() {
+    const oldReferenceTrigger = this.#referenceTrigger;
+    this.#referenceTrigger = this.#getReferenceTrigger();
+    if (oldReferenceTrigger !== this.#referenceTrigger) {
+      oldReferenceTrigger?.removeEventListener('click', this.show);
+      oldReferenceTrigger?.removeEventListener('keydown', this.onKeydown);
+      this.#referenceTrigger?.addEventListener('click', this.show);
+      this.#referenceTrigger?.addEventListener('keydown', this.onKeydown);
+    }
+  }
+
   @bound private onKeydown(event: KeyboardEvent) {
     switch (event.key) {
       case 'Escape':
@@ -420,13 +440,7 @@ export class PfPopover extends LitElement {
    */
   override willUpdate(changed: PropertyValues<this>) {
     if (changed.has('trigger')) {
-      this.#referenceTrigger?.removeEventListener('click', this.show);
-      this.#referenceTrigger?.removeEventListener('keydown', this.onKeydown);
-      if (this.trigger) {
-        this.#referenceTrigger = (this.getRootNode() as Document | ShadowRoot).getElementById(this.trigger);
-        this.#referenceTrigger?.addEventListener('click', this.show);
-        this.#referenceTrigger?.addEventListener('keydown', this.onKeydown);
-      }
+      this.#triggerChanged();
     }
   }
 

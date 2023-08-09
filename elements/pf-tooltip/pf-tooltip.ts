@@ -150,18 +150,17 @@ export class PfTooltip extends LitElement {
     invoker: (): HTMLElement | null | undefined => {
       if (this.#referenceTrigger) {
         return this.#referenceTrigger;
-      }
-      if (this.#invoker !== null && this.#invoker instanceof HTMLSlotElement && this.#invoker.assignedElements().length > 0) {
+      } else if (this.#invoker instanceof HTMLSlotElement && this.#invoker.assignedElements().length > 0) {
         return this.#invoker.assignedElements().at(0) as HTMLElement;
-      } else if (this.#invoker !== null) {
+      } else {
         return this.#invoker;
       }
-      return undefined;
     },
   });
 
   override connectedCallback() {
     super.connectedCallback();
+    this.#invokerChanged();
     this.#updateTrigger();
   }
 
@@ -170,7 +169,6 @@ export class PfTooltip extends LitElement {
    * them to the new trigger element.
    */
   override willUpdate(changed: PropertyValues<this>) {
-    this.#blockInvoker = this.#invoker?.assignedElements().length === 0 && this.#invoker?.assignedNodes().length > 0;
     if (changed.has('trigger')) {
       this.#updateTrigger();
     }
@@ -189,7 +187,7 @@ export class PfTooltip extends LitElement {
                                [alignment]: !!alignment })}">
         <slot id="invoker"
               class="${classMap({ block })}"
-              @slotchange="${() => this.requestUpdate()}"
+              @slotchange="${this.#invokerChanged}"
               role="tooltip"
               aria-labelledby="tooltip"></slot>
         <slot id="tooltip"
@@ -197,6 +195,14 @@ export class PfTooltip extends LitElement {
               aria-hidden="${String(!open) as 'true' | 'false'}">${this.content}</slot>
       </div>
     `;
+  }
+
+  /** the invoker slot should render at block level if it only has text nodes */
+  #invokerChanged() {
+    this.#blockInvoker =
+      this.#invoker?.assignedElements().length === 0 &&
+      this.#invoker?.assignedNodes().length > 0;
+    this.requestUpdate();
   }
 
   #getReferenceTrigger() {

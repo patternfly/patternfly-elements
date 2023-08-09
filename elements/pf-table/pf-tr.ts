@@ -14,11 +14,15 @@ export class PfTr extends LitElement {
 
   @property({ reflect: true }) role = 'row';
 
+  @property({ type: Boolean, reflect: true }) expandable = false;
+
   @property({ type: Boolean, reflect: true }) expanded = false;
 
   render() {
     return html`
-      <slot></slot>
+      <div id="container">
+        <slot></slot>
+      </div>
     `;
   }
 }

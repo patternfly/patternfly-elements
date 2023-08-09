@@ -1,0 +1,115 @@
+<pf-table id="expandable">
+  <pf-thead>
+    <pf-tr>
+      <pf-th>Dependency</pf-th>
+      <pf-th sortable># Direct Vulnerabilities</pf-th>
+      <pf-th sortable># Transitive Vulnerabilities</pf-th>
+      <pf-th sortable>Highest CVSS Score</pf-th>
+      <pf-th sortable>Highest Severity</pf-th>
+      <pf-th>Red Hat Remediation Available</pf-th>
+    </pf-tr>
+  </pf-thead>
+  <pf-expandable-rowset>
+    <pf-tr>
+      <pf-td>
+        <a href="#" target="_blank">io.quarkus:quarkus-hibernate-orm</a>
+      </pf-td>
+      <pf-td>1</pf-td>
+      <pf-td>6</pf-td>
+      <pf-td>7.4/10</pf-td>
+      <pf-td>
+        <a href="#" target="_blank">SNYK-JAVA-ORGGRAALVMSDK-5457933</a>
+      </pf-td>
+      <pf-td>
+        <pf-icon icon="circle-check" size="md"></pf-icon>
+      </pf-td>
+    </pf-tr>
+    <pf-tr expandable>
+      <p>Details of the dependency: <strong>io.quarkus:quarkus-hibernate-orm</strong></p>
+      <pf-table>
+        <pf-tr>
+          <pf-th>Severity</pf-th>
+          <pf-th>Description</pf-th>
+          <pf-th>CVSS Score</pf-th>
+          <pf-th>ID</pf-th>
+          <pf-th>Remediation</pf-th>
+        </pf-tr>
+        <pf-tr>
+          <pf-td>
+            <pf-label color="orange">Medium</pf-label>
+          </pf-td>
+          <pf-td>Information Exposure</pf-td>
+          <pf-td>5.1/10</pf-td>
+          <pf-td>CVE-20222-41678</pf-td>
+          <pf-td>
+            <div class="icon-container">
+              <pf-icon icon="circle-check" size="md"></pf-icon>
+              <a href="#">1.2.3-redhat-003</a>
+              <pf-icon icon="question-circle" size="md"></pf-icon>
+            </div>
+          </pf-td>
+        </pf-tr>
+        <pf-tr>
+          <pf-td>
+            <pf-label color="red">Critical</pf-label>
+          </pf-td>
+          <pf-td>Information Exposure</pf-td>
+          <pf-td>5.1/10</pf-td>
+          <pf-td>CVE-20222-41678</pf-td>
+          <pf-td>
+            <div class="icon-container">
+              <pf-icon icon="circle-check" size="md"></pf-icon>
+              <a href="#">1.2.3-redhat-003</a>
+              <pf-icon icon="question-circle" size="md"></pf-icon>
+            </div>
+          </pf-td>
+        </pf-tr>
+        <pf-expandable-rowset>
+          <pf-tr>
+            <pf-td>
+              Show Transitives with Vulnerabilities
+            </pf-td>
+          </pf-tr>
+          <pf-tr expandable>
+            <pf-td>
+              Additional details...
+            </pf-td>
+          </pf-tr>
+        </pf-expandable-rowset>
+      </pf-table>
+    </pf-tr>
+  </pf-expandable-rowset>
+  <pf-tr>
+    <pf-td>
+      <a href="#" target="_blank">io.quarkus:quarkus-orm</a>
+    </pf-td>
+    <pf-td>2</pf-td>
+    <pf-td>6</pf-td>
+    <pf-td>5.1/10</pf-td>
+    <pf-td>
+      <a href="#" target="_blank">ANYK-JAVA-ORGGRAALVMSDK-5457933</a>
+    </pf-td>
+    <pf-td>
+      <pf-icon icon="circle-check" size="md"></pf-icon>
+    </pf-td>
+  </pf-tr>
+  <pf-tr>
+    <pf-td>
+      <a href="#" target="_blank">io.quarkus:quarkus</a>
+    </pf-td>
+    <pf-td>1</pf-td>
+    <pf-td>7</pf-td>
+    <pf-td>6.4/10</pf-td>
+    <pf-td>
+      <a href="#" target="_blank">ZNYK-JAVA-ORGGRAALVMSDK-5457933</a>
+    </pf-td>
+    <pf-td>
+      <pf-icon icon="circle-check" size="md"></pf-icon>
+    </pf-td>
+  </pf-tr>
+</pf-table>
+
+<script type="module">
+  import '@patternfly/elements/pf-table/pf-table.js';
+  import '@patternfly/elements/pf-label/pf-label.js';
+</script>

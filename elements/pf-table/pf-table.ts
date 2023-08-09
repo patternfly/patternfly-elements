@@ -9,8 +9,6 @@ export * from './pf-tr.js';
 export * from './pf-th.js';
 export * from './pf-td.js';
 export * from './pf-expandable-rowset.js';
-export * from './pf-expandable-row.js';
-export * from './pf-expand-toggle.js';
 
 import styles from './pf-table.css';
 import { PfTh, type ThSortEvent } from './pf-th.js';
@@ -30,7 +28,6 @@ export class PfTable extends LitElement {
   #defaultRows!: Element[];
   #sortDirection!: 'asc' | 'desc';
   #sortColumn!: PfTh | null;
-  #sortIndex = -1;
 
   render() {
     return html`<slot @slotchange=${this.#onSlotchange} @sort=${this.#onSort}></slot>`;

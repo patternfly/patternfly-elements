@@ -65,7 +65,7 @@
   }
 
   ::slotted(*) {
-    padding: 1.5rem 1rem;    
+    padding: 1.5rem 1rem;
   }
 
   ::slotted([data-label]) {
@@ -89,4 +89,18 @@
     grid-template-columns: repeat(var(--pf-table--number-of-columns), 1fr);
     border-bottom: 1px solid #d2d2d2;
   }
+}
+
+#container {
+  display: contents;
+}
+
+:host([expandable]) {
+  grid-auto-flow: row;
+  grid-template-columns: auto;
+  padding: 0 1.5rem;
+}
+
+:host([expandable]:not([expanded])) {
+  display: none;
 }

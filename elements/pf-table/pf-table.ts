@@ -8,10 +8,16 @@ export * from './pf-tbody.js';
 export * from './pf-tr.js';
 export * from './pf-th.js';
 export * from './pf-td.js';
-export * from './pf-expandable-rowset.js';
 
 import styles from './pf-table.css';
 import { PfTh, type ThSortEvent } from './pf-th.js';
+
+const rowQuery = [
+  ':scope > pf-tbody > pf-tr',
+  ':scope > pf-tbody > pf-tbody[expandable]',
+  ':scope > pf-tr',
+  ':scope > pf-tbody[expandable]',
+].join();
 
 /**
  * Table
@@ -21,38 +27,36 @@ import { PfTh, type ThSortEvent } from './pf-th.js';
 export class PfTable extends LitElement {
   static readonly styles = [styles];
 
-  @property({ reflect: true }) role = 'table';
   @property({ reflect: true, attribute: 'sort-direction' }) sortDirection!: 'asc' | 'desc';
+
+  get sortableRows() {
+    return [...this.querySelectorAll(rowQuery)];
+  }
 
   #hasExpandableRows = false;
   #defaultRows!: Element[];
   #sortDirection!: 'asc' | 'desc';
   #sortColumn!: PfTh | null;
 
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute('role', 'table');
+  }
+
   render() {
     return html`<slot @slotchange=${this.#onSlotchange} @sort=${this.#onSort}></slot>`;
   }
 
   #onSlotchange() {
-    const sortableRows = [...this.sortableRows];
+    const { sortableRows } = this;
     if (!this.sortDirection || this.#defaultRows.length !== sortableRows.length) {
       this.#defaultRows = sortableRows;
     }
     const firstRow = this.querySelector('pf-tr');
-    this.#hasExpandableRows = !!this.querySelector('pf-expandable-rowset');
-    this.style.setProperty('--pf-table--expanable-rows', this.#hasExpandableRows ? '1' : '0');
-    this.style.setProperty('--pf-table--number-of-columns', `${firstRow?.querySelectorAll('pf-th')?.length || 0}`);
+    this.#hasExpandableRows = !!this.querySelector('pf-tbody[expandable]');
+    this.style.setProperty('--_pf-table--expandable-rows', this.#hasExpandableRows ? '1' : '0');
+    this.style.setProperty('--_pf-table--number-of-columns', `${firstRow?.querySelectorAll('pf-th')?.length || 0}`);
     this.requestUpdate();
-  }
-
-  get sortableRows() {
-    const rowQuery = [
-      ':scope > pf-tbody > pf-tr',
-      ':scope > pf-tbody > pf-expandable-rowset',
-      ':scope > pf-tr',
-      ':scope > pf-expandable-rowset',
-    ].join();
-    return [...this.querySelectorAll(rowQuery)];
   }
 
   #onSort(event: ThSortEvent) {
@@ -65,7 +69,7 @@ export class PfTable extends LitElement {
     this.#sortDirection = event.direction;
     if (this.#sortColumn?.parentElement?.children) {
       const index = [...this.#sortColumn.parentElement.children].indexOf(this.#sortColumn);
-      const rows = [...this.sortableRows];
+      const { sortableRows: rows } = this;
       const sorted = rows.sort((a, b) => {
         const pfTh = `:is(pf-th, pf-td):nth-child(${index + 1})`;
         const thQuery = [
@@ -80,7 +84,10 @@ export class PfTable extends LitElement {
         return this.#sortDirection === 'asc' ? (aTh < bTh ? -1 : 0) : (bTh < aTh ? -1 : 0);
       });
       sorted.forEach((row, i) => {
-        this.insertBefore(row, [...this.sortableRows][i]);
+        const sortedRow = rows.at(i);
+        if (sortedRow) {
+          this.insertBefore(row, sortedRow);
+        }
       });
     }
   }

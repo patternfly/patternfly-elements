@@ -1,23 +1,43 @@
-/* :host {
-  display: block;
-  border-top: .5rem solid #f0f0f0;
+:host([expandable]),
+:host([expandable][expanded]) ::slotted(*) {
+  position: relative;
 }
 
-@media (min-width: 768px) {
-  :host {
-    display: table-row-group;
-    border-top: unset;
-    vertical-align: middle;
-    border-color: inherit;
-  }
-} */
+:host([expandable][expanded]) ::slotted(*)::before {
+  position: absolute;
+  inset-block-start: -1px;
+  inset-inline-end: 0;
+  inset-block-end: -1px;
+  inset-inline-start: 0;
+  content: "";
+  border-inline-start: 3px solid #06c;
+  pointer-events: none;
+}
 
-:host {
+:host([expandable]) ::slotted(pf-table) {
+  margin-block-end: -1px;
+}
 
+#toggle-cell {
+  z-index: 2;
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 1.5rem;
+  padding: 0;
+}
+
+#toggle-icon {
+  transition: .2s ease-in 0s;
+  vertical-align: -0.125em;
+}
+
+:host([expanded]) #toggle-icon {
+  transform: rotate(90deg);
 }
 
 @media (min-width: 768px) {
   :host {
     display: grid;
   }
-} 
+}
+

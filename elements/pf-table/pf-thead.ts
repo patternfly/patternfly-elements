@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { PfTh } from './pf-th.js';
+
 import styles from './pf-thead.css';
 
 /**
@@ -12,7 +12,10 @@ import styles from './pf-thead.css';
 export class PfThead extends LitElement {
   static readonly styles = [styles];
 
-  @property({ reflect: true }) role = 'rowgroup';
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute('role', 'rowgroup');
+  }
 
   render() {
     return html`

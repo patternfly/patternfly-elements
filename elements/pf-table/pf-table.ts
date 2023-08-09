@@ -15,9 +15,9 @@ import { styleMap } from 'lit/directives/style-map.js';
 
 const rowQuery = [
   ':scope > pf-tbody:not([expandable]) > pf-tr',
-  ':scope > pf-tbody > pf-tbody[expandable]',
+  ':scope > pf-tbody > pf-tr[expandable]',
   ':scope > pf-tr',
-  ':scope > pf-tbody[expandable]',
+  ':scope > pf-tr[expandable]',
 ].join();
 
 /**
@@ -39,7 +39,7 @@ export class PfTable extends LitElement {
 
   render() {
     const firstRow = this.querySelector('pf-tr');
-    const hasExpandableRow = !!this.querySelector('pf-tbody[expandable]');
+    const hasExpandableRow = !!this.querySelector('pf-tr[expandable]');
     const coeffRows = hasExpandableRow ? '1' : '0';
     const numCols = `${firstRow?.querySelectorAll('pf-th')?.length ?? 0}`;
     return html`

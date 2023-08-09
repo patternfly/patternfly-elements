@@ -3,29 +3,30 @@
     <pf-tr>
       <pf-th>Dependency</pf-th>
       <pf-th sortable># Direct Vulnerabilities</pf-th>
-      <pf-th sortable># Transitive Vulnerabilities</pf-th>
-      <pf-th sortable>Highest CVSS Score</pf-th>
-      <pf-th sortable>Highest Severity</pf-th>
+      <pf-th># Transitive Vulnerabilities</pf-th>
+      <pf-th>Highest CVSS Score</pf-th>
+      <pf-th>Highest Severity</pf-th>
       <pf-th>Red Hat Remediation Available</pf-th>
     </pf-tr>
   </pf-thead>
-  <pf-tbody expandable>
-    <pf-tr>
-      <pf-td>
-        <a href="#" target="_blank">io.quarkus:quarkus-hibernate-orm</a>
-      </pf-td>
-      <pf-td>1</pf-td>
-      <pf-td>6</pf-td>
-      <pf-td>7.4/10</pf-td>
-      <pf-td>
-        <a href="#" target="_blank">SNYK-JAVA-ORGGRAALVMSDK-5457933</a>
-      </pf-td>
-      <pf-td>
-        <pf-icon icon="circle-check" size="md"></pf-icon>
-      </pf-td>
-    </pf-tr>
-    <pf-tr expandable>
-      <p>Details of the dependency: <strong>io.quarkus:quarkus-hibernate-orm</strong></p>
+
+  <pf-tr id="1" expandable>
+    <pf-td>
+      <a href="#" target="_blank">io.quarkus:quarkus-hibernate-orm</a>
+    </pf-td>
+    <pf-td>1</pf-td>
+    <pf-td>6</pf-td>
+    <pf-td>7.4/10</pf-td>
+    <pf-td>
+      <a href="#" target="_blank">SNYK-JAVA-ORGGRAALVMSDK-5457933</a>
+    </pf-td>
+    <pf-td>
+      <pf-icon icon="circle-check" size="md"></pf-icon>
+    </pf-td>
+
+    <pf-td slot="expansion">
+
+      <p>Details of the dependency: <strong>io.quarkus:quarkus-hibernate-orm</strong></pf-td>
       <pf-table>
         <pf-tr>
           <pf-th>Severity</pf-th>
@@ -77,9 +78,14 @@
           </pf-tr>
         </pf-tbody>
       </pf-table>
-    </pf-tr>
-  </pf-tbody>
-  <pf-tr>
+
+
+    </pf-td>
+
+  </pf-tr>
+  <pf-tr id="ex-expandable-row" expandable></pf-tr>
+
+  <pf-tr id="2">
     <pf-td>
       <a href="#" target="_blank">io.quarkus:quarkus-orm</a>
     </pf-td>
@@ -93,7 +99,7 @@
       <pf-icon icon="circle-check" size="md"></pf-icon>
     </pf-td>
   </pf-tr>
-  <pf-tr>
+  <pf-tr id="3">
     <pf-td>
       <a href="#" target="_blank">io.quarkus:quarkus</a>
     </pf-td>

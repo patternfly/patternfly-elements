@@ -25,7 +25,3 @@
   grid-template-columns: auto;
   padding: 0 1.5rem;
 }
-
-:host([expandable]:not([expanded])) {
-  display: none;
-}

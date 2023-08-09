@@ -1,8 +1,9 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type ComplexAttributeConverter, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
 import styles from './pf-tr.css';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 /**
  * Table row
@@ -12,21 +13,49 @@ import styles from './pf-tr.css';
 export class PfTr extends LitElement {
   static readonly styles = [styles];
 
-  @property({ type: Boolean, reflect: true }) expandable = false;
+  @property({ reflect: true, converter: {
+    fromAttribute(value) {
+      if (value === 'compound') {
+        return value;
+      } else {
+        return value != null;
+      }
+    },
+    toAttribute(value) {
+      if (!value) {
+        return null;
+      } else {
+        return value;
+      }
+    }
+  } }) expandable: boolean | 'compound' = false;
 
   @property({ type: Boolean, reflect: true }) expanded = false;
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.setAttribute('role', 'row');
+    this.#expandableChanged();
+  }
+
+  willUpdate(changed: PropertyValues<this>) {
+    if (changed.has('expandable')) {
+      this.#expandableChanged();
+    }
   }
 
   render() {
     return html`
       <div id="container">
-        <slot></slot>
+        <slot role="${ifDefined(this.expandable ? 'row' : undefined)}"></slot>
+        ${!this.expandable ? '' : html`
+        <slot name="expansion" role="row"></slot>
+        `}
       </div>
     `;
+  }
+
+  #expandableChanged() {
+    this.setAttribute('role', this.expandable ? 'rowgroup' : 'row');
   }
 }
 

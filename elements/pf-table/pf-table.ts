@@ -97,26 +97,40 @@ export class PfTable extends LitElement {
     const children = header.parentElement?.children;
     if (children) {
       const columnIndexToSort = [...children].indexOf(header);
-      Array.from(this.rows, node => {
-        const content = node.querySelector(`
-          :scope > :is(pf-th, pf-td):nth-child(${columnIndexToSort + 1}),
-          :scope > pf-tr > :is(pf-th, pf-td):nth-child(${columnIndexToSort + 1})
-        `.trim())?.textContent?.trim()?.toLowerCase() ?? '';
-        return { node, content };
-      }).sort((a, b) => {
-        if (direction === 'asc') {
-          return (a.content < b.content ? -1 : a.content > b.content ? 1 : 0);
-        } else {
-          return (b.content < a.content ? -1 : b.content > a.content ? 1 : 0);
-        }
-      }).forEach(({ node }, index) => {
-        const target = this.rows[index];
-        if (this.rows[index] !== node) {
-          const position: InsertPosition =
-              direction === 'desc' ? 'afterend' : 'beforebegin';
-          target.insertAdjacentElement(position, node);
-        }
-      });
+      Array
+        .from(this.rows, node => PfTable.getNodeContentForSort(columnIndexToSort, node))
+        .sort((a, b) => PfTable.sortByContent(direction, a, b))
+        .forEach(({ node }, index) => {
+          const target = this.rows[index];
+          if (this.rows[index] !== node) {
+            const position: InsertPosition =
+                direction === 'desc' ? 'afterend' : 'beforebegin';
+            target.insertAdjacentElement(position, node);
+          }
+        });
+    }
+  }
+
+  private static getNodeContentForSort(
+    columnIndexToSort: number,
+    node: Element,
+  ) {
+    const content = node.querySelector(`
+      :scope > :is(pf-th, pf-td):nth-child(${columnIndexToSort + 1}),
+      :scope > pf-tr > :is(pf-th, pf-td):nth-child(${columnIndexToSort + 1})
+    `.trim())?.textContent?.trim()?.toLowerCase() ?? '';
+    return { node, content };
+  }
+
+  private static sortByContent(
+    direction: 'asc' | 'desc',
+    a: { content: string },
+    b: { content: string },
+  ) {
+    if (direction === 'asc') {
+      return (a.content < b.content ? -1 : a.content > b.content ? 1 : 0);
+    } else {
+      return (b.content < a.content ? -1 : b.content > a.content ? 1 : 0);
     }
   }
 }

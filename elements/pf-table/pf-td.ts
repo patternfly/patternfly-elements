@@ -1,7 +1,9 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
 
 import styles from './pf-td.css';
+import { RequestExpandEvent } from './pf-tr.js';
 
 /**
  * Table data cell
@@ -11,15 +13,32 @@ import styles from './pf-td.css';
 export class PfTd extends LitElement {
   static readonly styles = [styles];
 
+  @property({ attribute: 'compound-expand' }) compoundExpand?: string;
+
+  @property({ type: Boolean, reflect: true }) expanded = false;
+
   override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('role', 'cell');
   }
 
   render() {
-    return html`
+    return this.compoundExpand ? html`
+      <button @click="${this.#onClick}">
+        <slot></slot>
+      </button>
+    ` : html`
       <slot></slot>
     `;
+  }
+
+  #onClick() {
+    const row = this.closest('pf-tr');
+    const cell = this.compoundExpand;
+    const event =
+        !row ? new RequestExpandEvent()
+      : new RequestExpandEvent(row.expanded === cell || cell || false, row);
+    this.dispatchEvent(event);
   }
 }
 

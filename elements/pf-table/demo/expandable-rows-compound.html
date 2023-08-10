@@ -1,0 +1,45 @@
+<pf-table>
+  <pf-thead>
+    <pf-tr>
+      <pf-th>Repositories</pf-th>
+      <pf-th>Branches</pf-th>
+      <pf-th>Pull requests</pf-th>
+      <pf-th>Workspaces</pf-th>
+      <pf-th>Last commit</pf-th>
+      <pf-th></pf-th>
+    </pf-tr>
+  </pf-thead>
+
+  <pf-tr expandable="compound">
+    <pf-td>
+      <a href="#">siemur/test-space</a>
+    </pf-td>
+    <pf-td compound-expand="branches">
+      <pf-icon set="fas" icon="code-branch"></pf-icon>
+      10
+    </pf-td>
+    <p slot="branches">Branches...</p>
+    <pf-td compound-expand="pull-requests">
+      <pf-icon set="fas" icon="code-pull-request"></pf-icon>
+      4
+    </pf-td>
+    <p slot="pull-requests">Pull requests...</p>
+    <pf-td compound-expand="workspaces">
+      <pf-icon set="fas" icon="cube"></pf-icon>
+      4
+    </pf-td>
+    <p slot="workspaces">Workspaces</p>
+    <pf-td>
+      <time>20 minutes ago</time>
+    </pf-td>
+    <pf-td>
+      <a href="#">Open in GitHub</a>
+    </pf-td>
+  </pf-tr>
+
+</pf-table>
+
+<script type="module">
+  import '@patternfly/elements/pf-table/pf-table.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+</script>

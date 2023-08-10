@@ -1,5 +1,10 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
+import { styleMap } from 'lit/directives/style-map.js';
+import { state } from 'lit/decorators/state.js';
+
+import { RequestExpandEvent, PfTr } from './pf-tr.js';
+import { PfTh, type ThSortEvent } from './pf-th.js';
 
 export * from './pf-caption.js';
 export * from './pf-thead.js';
@@ -9,15 +14,13 @@ export * from './pf-th.js';
 export * from './pf-td.js';
 
 import styles from './pf-table.css';
-import type { PfTr } from './pf-tr.js';
-import { PfTh, type ThSortEvent } from './pf-th.js';
-import { styleMap } from 'lit/directives/style-map.js';
+import { PfTd } from './pf-td.js';
 
 const rowQuery = [
   ':scope > pf-tbody:not([expandable]) > pf-tr',
-  ':scope > pf-tbody > pf-tbody[expandable]',
+  ':scope > pf-tbody > pf-tr[expandable]',
   ':scope > pf-tr',
-  ':scope > pf-tbody[expandable]',
+  ':scope > pf-tr[expandable]',
 ].join();
 
 /**
@@ -32,28 +35,47 @@ export class PfTable extends LitElement {
     return this.querySelectorAll<PfTr>(rowQuery);
   }
 
+  @state() private columns = 0;
+
   override connectedCallback() {
     super.connectedCallback();
     this.setAttribute('role', 'table');
+    this.#onSlotchange();
   }
 
   render() {
-    const firstRow = this.querySelector('pf-tr');
-    const hasExpandableRow = !!this.querySelector('pf-tbody[expandable]');
+    const hasExpandableRow = !!this.querySelector('pf-tr[expandable]');
     const coeffRows = hasExpandableRow ? '1' : '0';
-    const numCols = `${firstRow?.querySelectorAll('pf-th')?.length ?? 0}`;
     return html`
       <slot @slotchange="${this.#onSlotchange}"
             @sort="${this.#onSort}"
+            @request-expand="${this.#onRequestExpand}"
             style="${styleMap({
               '--_pf-table--expandable-rows': coeffRows,
-              '--_pf-table--number-of-columns': numCols,
+              '--_pf-table--number-of-columns': this.columns,
             })}"
       ></slot>
     `;
   }
 
+  #onRequestExpand(event: Event) {
+    if (event instanceof RequestExpandEvent &&
+        !event.defaultPrevented) {
+      event.stopPropagation();
+      if (event.target instanceof PfTr &&
+          event.target.expandable) {
+        event.target.expanded = event.compoundExpanded ?? true;
+      } else if (event.target instanceof PfTd && event.row) {
+        event.row.expanded = event.compoundExpanded;
+        for (const cell of event.row.querySelectorAll('pf-td')) {
+          cell.expanded = event.compoundExpanded === cell.compoundExpand;
+        }
+      }
+    }
+  }
+
   #onSlotchange() {
+    this.columns = this.querySelector('pf-tr')?.querySelectorAll('pf-th')?.length ?? 0;
     this.requestUpdate();
   }
 

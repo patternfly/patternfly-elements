@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
   <pf-badge state="read" number="17">17</pf-badge>
   <pf-badge number="900" threshold="100">900</pf-badge>

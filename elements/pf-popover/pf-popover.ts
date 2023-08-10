@@ -390,7 +390,7 @@ export class PfPopover extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     PfPopover.instances.delete(this);
-    this.#referenceTrigger?.removeEventListener('click', this.show);
+    this.#referenceTrigger?.removeEventListener('click', this.toggle);
     this.#referenceTrigger?.removeEventListener('keydown', this.onKeydown);
   }
 
@@ -404,9 +404,9 @@ export class PfPopover extends LitElement {
     const oldReferenceTrigger = this.#referenceTrigger;
     this.#referenceTrigger = this.#getReferenceTrigger();
     if (oldReferenceTrigger !== this.#referenceTrigger) {
-      oldReferenceTrigger?.removeEventListener('click', this.show);
+      oldReferenceTrigger?.removeEventListener('click', this.toggle);
       oldReferenceTrigger?.removeEventListener('keydown', this.onKeydown);
-      this.#referenceTrigger?.addEventListener('click', this.show);
+      this.#referenceTrigger?.addEventListener('click', this.toggle);
       this.#referenceTrigger?.addEventListener('keydown', this.onKeydown);
     }
   }

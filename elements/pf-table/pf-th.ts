@@ -7,12 +7,17 @@ import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-th.css';
 
-export class ThSortEvent extends Event {
+const DIRECTIONS = { asc: 'desc', desc: 'asc' } as const;
+
+export class RequestSortEvent extends Event {
   constructor(
     public key: string,
     public direction: 'asc' | 'desc',
   ) {
-    super('sort', { bubbles: true, cancelable: true });
+    super('request-sort', {
+      bubbles: true,
+      cancelable: true,
+    });
   }
 }
 
@@ -37,7 +42,7 @@ export class PfTh extends LitElement {
   @property({
     reflect: true,
     attribute: 'sort-direction',
-  }) sortDirection!: 'asc' | 'desc';
+  }) sortDirection?: 'asc' | 'desc';
 
   @property() key!: string;
 
@@ -48,9 +53,6 @@ export class PfTh extends LitElement {
     const isChildOfThead = !!closestThead && !!closestTable?.contains(closestThead);
     const role = isChildOfThead ? 'colheader' : 'rowheader';
     this.setAttribute('role', role);
-    if (this.sortable) {
-      this.addEventListener('click', this.#onClick);
-    }
   }
 
   render() {
@@ -59,7 +61,8 @@ export class PfTh extends LitElement {
       html`
         <button id="sort-button"
                 class="sortable ${classMap({ selected })}"
-                part="sort-button">
+                part="sort-button"
+                @click="${this.#onClick}">
           <slot></slot>
           <span class="visually-hidden">${!this.sortDirection ? '' : `(sorted ${this.sortDirection === 'asc' ? 'ascending' : 'descending'})`}</span>
           <span id="sort-indicator">
@@ -73,22 +76,15 @@ export class PfTh extends LitElement {
       `;
   }
 
-  diconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener('click', this.#onClick);
-  }
-
   #onClick() {
-    this.sort();
-  }
-
-  toggleDirection() {
-    this.sortDirection = !this.sortDirection ? 'asc' : this.sortDirection === 'asc' ? 'desc' : 'asc';
+    if (this.sortable) {
+      this.sort();
+    }
   }
 
   sort() {
-    this.toggleDirection();
-    this.dispatchEvent(new ThSortEvent(this.key, this.sortDirection));
+    const next = DIRECTIONS[this.sortDirection ?? 'asc'];
+    this.dispatchEvent(new RequestSortEvent(this.key, next));
   }
 }
 

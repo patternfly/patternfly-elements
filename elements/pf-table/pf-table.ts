@@ -3,8 +3,8 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { state } from 'lit/decorators/state.js';
 
-import { RequestExpandEvent, PfTr } from './pf-tr.js';
-import { PfTh, type ThSortEvent } from './pf-th.js';
+import { PfTh, RequestSortEvent } from './pf-th.js';
+import { PfTr, RequestExpandEvent } from './pf-tr.js';
 
 export * from './pf-caption.js';
 export * from './pf-thead.js';
@@ -48,8 +48,8 @@ export class PfTable extends LitElement {
     const coeffRows = hasExpandableRow ? '1' : '0';
     return html`
       <slot @slotchange="${this.#onSlotchange}"
-            @sort="${this.#onSort}"
             @request-expand="${this.#onRequestExpand}"
+            @request-sort="${this.#onRequestSort}"
             style="${styleMap({
               '--_pf-table--expandable-rows': coeffRows,
               '--_pf-table--number-of-columns': this.columns,
@@ -78,23 +78,25 @@ export class PfTable extends LitElement {
     this.requestUpdate();
   }
 
-  #onSort(event: ThSortEvent) {
-    for (const col of this.querySelectorAll<PfTh>('pf-th[sortable]')) {
-      col.selected = col === event.target;
-      if (col !== event.target) {
-        col.removeAttribute('sort-direction');
+  #onRequestSort(event: Event) {
+    if (event instanceof RequestSortEvent) {
+      for (const col of this.querySelectorAll<PfTh>('pf-th[sortable]')) {
+        col.selected = col === event.target;
+        if (col !== event.target) {
+          col.removeAttribute('sort-direction');
+        }
       }
-    }
-    if (!event.defaultPrevented &&
-        event.target instanceof PfTh) {
-      this.#performSort(event.direction, event.target);
+      if (!event.defaultPrevented && event.target instanceof PfTh) {
+        event.target.sortDirection = event.direction;
+        this.#performSort(event.target, event.direction);
+      }
     }
   }
 
-  #performSort(direction: 'asc' | 'desc', column: PfTh) {
-    const children = column.parentElement?.children;
+  #performSort(header: PfTh, direction: 'asc' | 'desc') {
+    const children = header.parentElement?.children;
     if (children) {
-      const columnIndexToSort = [...children].indexOf(column);
+      const columnIndexToSort = [...children].indexOf(header);
       Array.from(this.rows, node => {
         const content = node.querySelector(`
           :scope > :is(pf-th, pf-td):nth-child(${columnIndexToSort + 1}),

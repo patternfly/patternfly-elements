@@ -162,11 +162,7 @@ export class PfTr extends LitElement {
   }
 
   #onClick() {
-    if (this.expanded) {
-      this.expanded = false;
-    } else {
-      this.dispatchEvent(new RequestExpandEvent());
-    }
+    this.dispatchEvent(new RequestExpandEvent());
   }
 }
 

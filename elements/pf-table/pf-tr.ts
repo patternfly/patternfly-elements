@@ -9,11 +9,28 @@ import '@patternfly/elements/pf-button/pf-button.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
 
 export class RequestExpandEvent extends Event {
-  constructor() {
+  /**
+   * if provided, the slot name for the compound-expanded cell
+   */
+  public compoundExpanded: string | boolean = false;
+
+  /**
+   * if compoundExpanded is provided, a reference to the row
+   * must also be provided.
+   */
+  public row?: PfTr;
+
+  constructor();
+  constructor(compoundExpanded: string | boolean, row: PfTr);
+  constructor(compoundExpanded?: string | boolean, row?: PfTr) {
     super('request-expand', {
       bubbles: true,
       cancelable: true,
     });
+    if (row) {
+      this.compoundExpanded = compoundExpanded ?? false;
+      this.row = row;
+    }
   }
 }
 
@@ -39,6 +56,21 @@ function BooleanEnumConverter(...allowedAttributes: string[]): ComplexAttributeC
   };
 }
 
+const StringOrBooleanConverter: ComplexAttributeConverter = {
+  fromAttribute(value) {
+    return value || value !== null;
+  },
+  toAttribute(value) {
+    if (!value) {
+      return null;
+    } else if (typeof value === 'string') {
+      return value;
+    } else {
+      return '';
+    }
+  }
+};
+
 /**
  * Table row
  * @slot - Place element content here
@@ -52,7 +84,10 @@ export class PfTr extends LitElement {
     converter: BooleanEnumConverter('compound'),
   }) expandable: boolean | 'compound' = false;
 
-  @property({ type: Boolean, reflect: true }) expanded = false;
+  @property({
+    reflect: true,
+    converter: StringOrBooleanConverter
+  }) expanded: boolean | string = false;
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -70,10 +105,10 @@ export class PfTr extends LitElement {
 
   render() {
     return [
-      !this.expandable ? '' : html`
+      !(this.expandable && this.expandable !== 'compound') ? '' : html`
         <pf-td id="toggle-cell">
           <pf-button id="toggle-button"
-                     aria-expanded=${this.expanded}
+                     aria-expanded=${String(this.expanded) as 'true' | 'false'}
                      plain
                      @click=${this.#onClick}>
             <pf-icon id="toggle-icon"
@@ -88,12 +123,17 @@ export class PfTr extends LitElement {
           <slot role="${ifDefined(this.expandable ? 'row' : undefined)}"></slot>
         </div>
       `,
-      !(this.expandable && this.expanded) ? '' : html`
+      !(this.expandable !== 'compound' && this.expanded) ? '' : html`
         <slot id="expansion"
               name="expansion"
               role="row"
         ></slot>
-      `
+      `,
+      this.expandable !== 'compound' ? '' : html`
+        <div id="expansion">${!this.expanded ? '' : html`
+          <slot name="${this.expanded}"></slot>`}
+        </div>
+      `,
     ];
   }
 
@@ -105,7 +145,17 @@ export class PfTr extends LitElement {
   }
 
   #expandableChanged() {
-    this.setAttribute('role', this.expandable ? 'rowgroup' : 'row');
+    switch (this.expandable) {
+      case 'compound': {
+        // TODO: do we need tab roles now?
+        break;
+      }
+      case true:
+        this.setAttribute('role', 'rowgroup');
+        break;
+      default:
+        this.setAttribute('role', 'row');
+    }
   }
 
   #onClick() {

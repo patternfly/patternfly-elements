@@ -10,7 +10,7 @@ import styles from './pf-select-option.css';
  * @slot - Place element content here
  */
 @customElement('pf-select-option')
-export class PfSimpleListOption extends LitElement {
+export class PfSelectOption extends LitElement {
   static readonly styles = [styles];
 
   #internals = new InternalsController(this, {
@@ -42,6 +42,6 @@ export class PfSimpleListOption extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-select-option': PfSimpleListOption;
+    'pf-select-option': PfSelectOption;
   }
 }

@@ -1,65 +1,13 @@
 <link rel="stylesheet" href="demo.css">
 <script type="module" src="pf-select.js"></script>
 
-<h2>case-sensitive</h2>
-<p>
-  Any arrow keys work.
-  Only one option can be selected.
-  Filter is case sensisitve.</p>
-<pf-select case-sensitive>
-  <pf-select-option>Blue</pf-select-option>
-  <pf-select-option>Green</pf-select-option>
-  <pf-select-option>Magenta</pf-select-option>
-  <pf-select-option>Orange</pf-select-option>
-  <pf-select-option>Purple</pf-select-option>
-  <pf-select-option>Pink</pf-select-option>
-  <pf-select-option>Red</pf-select-option>
-  <pf-select-option>Yellow</pf-select-option>
-</pf-select>
-
-<h2>match-anywhere</h2>
-<p>
-  Any arrow keys work.
-  Only one option can be selected.
-  Filter matches anywhere in option text.</p>
-<pf-select match-anywhere>
-  <pf-select-option>Blue</pf-select-option>
-  <pf-select-option>Green</pf-select-option>
-  <pf-select-option>Magenta</pf-select-option>
-  <pf-select-option>Orange</pf-select-option>
-  <pf-select-option>Purple</pf-select-option>
-  <pf-select-option>Pink</pf-select-option>
-  <pf-select-option>Red</pf-select-option>
-  <pf-select-option>Yellow</pf-select-option>
-</pf-select>
-
-<h2>filter-mode="disabled"</h2>
-<p>
-  Any arrow keys work.
-  Only one option can be selected.
-  Filter is disabled.</p>
-<pf-select filter-mode="disabled">
-  <pf-select-option>Blue</pf-select-option>
-  <pf-select-option>Green</pf-select-option>
-  <pf-select-option>Magenta</pf-select-option>
-  <pf-select-option>Orange</pf-select-option>
-  <pf-select-option>Purple</pf-select-option>
-  <pf-select-option>Pink</pf-select-option>
-  <pf-select-option>Red</pf-select-option>
-  <pf-select-option>Yellow</pf-select-option>
-</pf-select>
-
-<h2>filter-mode="required": combobox example</h2>
-<p>
-  Any arrow keys work.
-  Only one option can be selected.
-  Listbox wont appear until input has text.
-  Type <code>*</code> to show all options.
-</p>
-<label id="combo">
-  Pick a color:
-  <input id="text" aria-controls="listbox" aria-role="combobox" aria-autocomplete="both" aria-expanded="false" />
-  <pf-select id="listbox" filter-mode="required">
+<section>
+  <h2>case-sensitive</h2>
+  <p>
+    Any arrow keys work.
+    Only one option can be selected.
+    Filter is case sensisitve.</p>
+  <pf-select-listbox case-sensitive>
     <pf-select-option>Blue</pf-select-option>
     <pf-select-option>Green</pf-select-option>
     <pf-select-option>Magenta</pf-select-option>
@@ -68,5 +16,64 @@
     <pf-select-option>Pink</pf-select-option>
     <pf-select-option>Red</pf-select-option>
     <pf-select-option>Yellow</pf-select-option>
-  </pf-select>
-</label>
+  </pf-select-listbox>
+</section>
+<section>
+  <h2>match-anywhere</h2>
+  <p>
+    Any arrow keys work.
+    Only one option can be selected.
+    Filter matches anywhere in option text.</p>
+  <pf-select-listbox match-anywhere>
+    <pf-select-option>Blue</pf-select-option>
+    <pf-select-option>Green</pf-select-option>
+    <pf-select-option>Magenta</pf-select-option>
+    <pf-select-option>Orange</pf-select-option>
+    <pf-select-option>Purple</pf-select-option>
+    <pf-select-option>Pink</pf-select-option>
+    <pf-select-option>Red</pf-select-option>
+    <pf-select-option>Yellow</pf-select-option>
+  </pf-select-listbox>
+</section>
+
+<section>
+  <h2>filter-mode="disabled"</h2>
+  <p>
+    Any arrow keys work.
+    Only one option can be selected.
+    Filter is disabled.</p>
+  <pf-select-listbox filter-mode="disabled">
+    <pf-select-option>Blue</pf-select-option>
+    <pf-select-option>Green</pf-select-option>
+    <pf-select-option>Magenta</pf-select-option>
+    <pf-select-option>Orange</pf-select-option>
+    <pf-select-option>Purple</pf-select-option>
+    <pf-select-option>Pink</pf-select-option>
+    <pf-select-option>Red</pf-select-option>
+    <pf-select-option>Yellow</pf-select-option>
+  </pf-select-listbox>
+</section>
+
+<section>
+  <h2>filter-mode="required": combobox example</h2>
+  <p>
+    Any arrow keys work.
+    Only one option can be selected.
+    Listbox wont appear until input has text.
+    Type <code>*</code> to show all options.
+  </p>
+  <label id="combo">
+    Pick a color:
+    <input id="text" aria-controls="listbox" aria-role="combobox" aria-autocomplete="both" aria-expanded="false" />
+    <pf-select-listbox id="listbox" filter-mode="required">
+      <pf-select-option>Blue</pf-select-option>
+      <pf-select-option>Green</pf-select-option>
+      <pf-select-option>Magenta</pf-select-option>
+      <pf-select-option>Orange</pf-select-option>
+      <pf-select-option>Purple</pf-select-option>
+      <pf-select-option>Pink</pf-select-option>
+      <pf-select-option>Red</pf-select-option>
+      <pf-select-option>Yellow</pf-select-option>
+    </pf-select-listbox>
+  </label>
+</section>

@@ -9,7 +9,7 @@ import styles from './pf-select-group.css';
  * @slot - Place element content here
  */
 @customElement('pf-select-group')
-export class PfSimpleListGroup extends LitElement {
+export class PfSelectGroup extends LitElement {
   static readonly styles = [styles];
 
   #internals = new InternalsController(this, {
@@ -30,6 +30,6 @@ export class PfSimpleListGroup extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-select-group': PfSimpleListGroup;
+    'pf-select-group': PfSelectGroup;
   }
 }

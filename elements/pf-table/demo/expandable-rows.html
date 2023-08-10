@@ -24,63 +24,52 @@
       <pf-icon icon="circle-check" size="md"></pf-icon>
     </pf-td>
 
-    <pf-td slot="expansion">
-
-      <p>Details of the dependency: <strong>io.quarkus:quarkus-hibernate-orm</strong></p>
-      <pf-table>
-        <pf-tr>
-          <pf-th>Severity</pf-th>
-          <pf-th>Description</pf-th>
-          <pf-th>CVSS Score</pf-th>
-          <pf-th>ID</pf-th>
-          <pf-th>Remediation</pf-th>
-        </pf-tr>
-        <pf-tr>
-          <pf-td>
-            <pf-label color="orange">Medium</pf-label>
-          </pf-td>
-          <pf-td>Information Exposure</pf-td>
-          <pf-td>5.1/10</pf-td>
-          <pf-td>CVE-20222-41678</pf-td>
-          <pf-td>
-            <div class="icon-container">
-              <pf-icon icon="circle-check" size="md"></pf-icon>
-              <a href="#">1.2.3-redhat-003</a>
-              <pf-icon icon="question-circle" size="md"></pf-icon>
-            </div>
-          </pf-td>
-        </pf-tr>
-        <pf-tr>
-          <pf-td>
-            <pf-label color="red">Critical</pf-label>
-          </pf-td>
-          <pf-td>Information Exposure</pf-td>
-          <pf-td>5.1/10</pf-td>
-          <pf-td>CVE-20222-41678</pf-td>
-          <pf-td>
-            <div class="icon-container">
-              <pf-icon icon="circle-check" size="md"></pf-icon>
-              <a href="#">1.2.3-redhat-003</a>
-              <pf-icon icon="question-circle" size="md"></pf-icon>
-            </div>
-          </pf-td>
-        </pf-tr>
-        <pf-tbody expandable>
-          <pf-tr>
-            <pf-td>
-              Show Transitives with Vulnerabilities
-            </pf-td>
-          </pf-tr>
-          <pf-tr expandable>
-            <pf-td>
-              Additional details...
-            </pf-td>
-          </pf-tr>
-        </pf-tbody>
-      </pf-table>
-
-
-    </pf-td>
+    <p slot="expansion">Details of the dependency: <strong>io.quarkus:quarkus-hibernate-orm</strong></p>
+    <pf-table slot="expansion">
+      <pf-tr>
+        <pf-th>Severity</pf-th>
+        <pf-th>Description</pf-th>
+        <pf-th>CVSS Score</pf-th>
+        <pf-th>ID</pf-th>
+        <pf-th>Remediation</pf-th>
+      </pf-tr>
+      <pf-tr>
+        <pf-td>
+          <pf-label color="orange">Medium</pf-label>
+        </pf-td>
+        <pf-td>Information Exposure</pf-td>
+        <pf-td>5.1/10</pf-td>
+        <pf-td>CVE-20222-41678</pf-td>
+        <pf-td>
+          <div class="icon-container">
+            <pf-icon icon="circle-check" size="md"></pf-icon>
+            <a href="#">1.2.3-redhat-003</a>
+            <pf-icon icon="question-circle" size="md"></pf-icon>
+          </div>
+        </pf-td>
+      </pf-tr>
+      <pf-tr>
+        <pf-td>
+          <pf-label color="red">Critical</pf-label>
+        </pf-td>
+        <pf-td>Information Exposure</pf-td>
+        <pf-td>5.1/10</pf-td>
+        <pf-td>CVE-20222-41678</pf-td>
+        <pf-td>
+          <div class="icon-container">
+            <pf-icon icon="circle-check" size="md"></pf-icon>
+            <a href="#">1.2.3-redhat-003</a>
+            <pf-icon icon="question-circle" size="md"></pf-icon>
+          </div>
+        </pf-td>
+      </pf-tr>
+      <pf-tr id="child" expandable>
+        <pf-td>
+          Show Transitives with Vulnerabilities
+        </pf-td>
+        <p slot="expansion">Additional details...</p>
+      </pf-tr>
+    </pf-table>
 
   </pf-tr>
 

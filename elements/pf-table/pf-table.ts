@@ -9,7 +9,7 @@ export * from './pf-th.js';
 export * from './pf-td.js';
 
 import styles from './pf-table.css';
-import type { PfTr } from './pf-tr.js';
+import { RequestExpandEvent, PfTr } from './pf-tr.js';
 import { PfTh, type ThSortEvent } from './pf-th.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
@@ -45,12 +45,23 @@ export class PfTable extends LitElement {
     return html`
       <slot @slotchange="${this.#onSlotchange}"
             @sort="${this.#onSort}"
+            @request-expand="${this.#onRequestExpand}"
             style="${styleMap({
               '--_pf-table--expandable-rows': coeffRows,
               '--_pf-table--number-of-columns': numCols,
             })}"
       ></slot>
     `;
+  }
+
+  #onRequestExpand(event: Event) {
+    if (event instanceof RequestExpandEvent &&
+        !event.defaultPrevented &&
+        event.target instanceof PfTr &&
+        event.target.expandable) {
+      event.target.expanded = true;
+      event.stopPropagation();
+    }
   }
 
   #onSlotchange() {

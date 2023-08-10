@@ -5,9 +5,15 @@ import { property } from 'lit/decorators/property.js';
 import styles from './pf-tr.css';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-export class ExpandChangeEvent extends Event {
-  constructor(public expanded: boolean) {
-    super('change', { bubbles: true });
+import '@patternfly/elements/pf-button/pf-button.js';
+import '@patternfly/elements/pf-icon/pf-icon.js';
+
+export class RequestExpandEvent extends Event {
+  constructor() {
+    super('request-expand', {
+      bubbles: true,
+      cancelable: true,
+    });
   }
 }
 
@@ -72,7 +78,8 @@ export class PfTr extends LitElement {
                      @click=${this.#onClick}>
             <pf-icon id="toggle-icon"
                      icon="angle-right"
-                     size="md"></pf-icon>
+                     size="md"
+            ></pf-icon>
           </pf-button>
         </pf-td>
       `,
@@ -94,21 +101,19 @@ export class PfTr extends LitElement {
     // disallow setting `expanded` unless `expandable` is also set
     if (this.expanded && !this.expandable) {
       this.expanded = false;
-    } else {
-      const expandableRow = this.querySelector<PfTr>('pf-tr[expandable]');
-      if (expandableRow) {
-        expandableRow.expanded = this.expanded;
-      }
     }
-  }
-
-  #onClick() {
-    this.expanded = !this.expanded;
-    this.dispatchEvent(new ExpandChangeEvent(this.expanded));
   }
 
   #expandableChanged() {
     this.setAttribute('role', this.expandable ? 'rowgroup' : 'row');
+  }
+
+  #onClick() {
+    if (this.expanded) {
+      this.expanded = false;
+    } else {
+      this.dispatchEvent(new RequestExpandEvent());
+    }
   }
 }
 

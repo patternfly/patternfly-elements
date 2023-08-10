@@ -1,58 +1,37 @@
-<link rel="stylesheet" href="demo.css"/>
-<script type="module" src="pf-table.js"></script>
-
 <pf-table>
   <pf-thead>
     <pf-tr>
-      <pf-th>Dependency</pf-th>
-      <pf-th># Direct Vulnerabilities</pf-th>
-      <pf-th># Transitive Vulnerabilities</pf-th>
-      <pf-th>Highest CVSS Score</pf-th>
-      <pf-th>Highest Severity</pf-th>
-      <pf-th>Red Hat Remediation Available</pf-th>
+      <pf-th>Repositories</pf-th>
+      <pf-th>Branches</pf-th>
+      <pf-th>Pull requests</pf-th>
+      <pf-th>Workspaces</pf-th>
+      <pf-th>Last commit</pf-th>
     </pf-tr>
   </pf-thead>
   <pf-tr>
-    <pf-th>
-      <a href="#" target="_blank">io.quarkus:quarkus-hibernate-orm</a>
-    </pf-th>
-    <pf-td>1</pf-td>
-    <pf-td>6</pf-td>
-    <pf-td>7.4/10</pf-td>
-    <pf-td>
-      <a href="#" target="_blank">SNYK-JAVA-ORGGRAALVMSDK-5457933</a>
-    </pf-td>
-    <pf-td>
-      <pf-icon icon="circle-check" size="md"></pf-icon>
-    </pf-td>
+    <pf-th>one</pf-th>
+    <pf-td>two</pf-td>
+    <pf-td>three</pf-td>
+    <pf-td>four</pf-td>
+    <pf-td>five</pf-td>
   </pf-tr>
   <pf-tr>
-    <pf-th>
-      <a href="#" target="_blank">io.quarkus:quarkus-orm</a>
-    </pf-th>
-    <pf-td>2</pf-td>
-    <pf-td>6</pf-td>
-    <pf-td>5.1/10</pf-td>
-    <pf-td>
-      <a href="#" target="_blank">ANYK-JAVA-ORGGRAALVMSDK-5457933</a>
-    </pf-td>
-    <pf-td>
-      <pf-icon icon="circle-check" size="md"></pf-icon>
-    </pf-td>
+    <pf-th>one - 2</pf-th>
+    <pf-td></pf-td>
+    <pf-td></pf-td>
+    <pf-td>four - 2</pf-td>
+    <pf-td>five - 2</pf-td>
   </pf-tr>
   <pf-tr>
-    <pf-th>
-      <a href="#" target="_blank">io.quarkus:quarkus</a>
-    </pf-th>
-    <pf-td>1</pf-td>
-    <pf-td>7</pf-td>
-    <pf-td>6.4/10</pf-td>
-    <pf-td>
-      <a href="#" target="_blank">ZNYK-JAVA-ORGGRAALVMSDK-5457933</a>
-    </pf-td>
-    <pf-td>
-      <pf-icon icon="circle-check" size="md"></pf-icon>
-    </pf-td>
-  </pf-tr>
+    <pf-th>one - 3</pf-th>
+    <pf-td>two - 3</pf-td>
+    <pf-td>three - 3</pf-td>
+    <pf-td>four - 3</pf-td>
+    <pf-td>five - 3</pf-td>
+</pf-tr>
 </pf-table>
+
+<script type="module">
+  import '@patternfly/elements/pf-table/pf-table.js';
+</script>
 

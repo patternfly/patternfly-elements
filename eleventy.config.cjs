@@ -4,7 +4,8 @@ const DirectoryOutputPlugin = require('@11ty/eleventy-plugin-directory-output');
 
 const PfeAssetsPlugin = require('./docs/_plugins/pfe-assets.cjs');
 const EmptyParagraphPlugin = require('./docs/_plugins/empty-p.cjs');
-const createImportMapPlugin = require('./docs/_plugins/create-import-map.cjs');
+const CreateImportMapPlugin = require('./docs/_plugins/create-import-map.cjs');
+const HTMLExamplePlugin = require('./docs/_plugins/html-example.cjs');
 
 const AnchorsPlugin = require('@patternfly/pfe-tools/11ty/plugins/anchors.cjs');
 const CustomElementsManifestPlugin = require('@patternfly/pfe-tools/11ty/plugins/custom-elements-manifest.cjs');
@@ -56,7 +57,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(EmptyParagraphPlugin);
 
   /** Create import maps from script tags */
-  eleventyConfig.addPlugin(createImportMapPlugin);
+  eleventyConfig.addPlugin(CreateImportMapPlugin);
 
   /** Add IDs to heading elements */
   eleventyConfig.addPlugin(AnchorsPlugin, {
@@ -76,37 +77,21 @@ module.exports = function(eleventyConfig) {
     },
   });
 
-  eleventyConfig.addPlugin(DirectoryOutputPlugin, {
-    // Customize columns
-    columns: {
-      filesize: true, // Use `false` to disable
-      benchmark: true, // Use `false` to disable
-    },
+  if (!process.argv.some(arg =>
+    arg.match(/--((w)(atch)?)|((s)(erve))?/))) {
+    eleventyConfig.addPlugin(DirectoryOutputPlugin, {
+      // Customize columns
+      columns: {
+        filesize: true, // Use `false` to disable
+        benchmark: true, // Use `false` to disable
+      },
 
-    // Will show in yellow if greater than this number of bytes
-    warningFileSize: 400 * 1000,
-  });
-
-  function dedent(str) {
-    const stripped = str.replace(/^\n/, '');
-    const match = stripped.match(/^\s+/);
-    return match ? stripped.replace(new RegExp(`^${match[0]}`, 'gm'), '') : str;
+      // Will show in yellow if greater than this number of bytes
+      warningFileSize: 400 * 1000,
+    });
   }
 
-  eleventyConfig.addPairedShortcode('htmlexample', function(content, kwargs) {
-    return `
-<div class="example-preview">
-  ${content}
-</div>
-<details class="html-example ${kwargs?.class ?? ''}"${!kwargs?.style ? '' : ` style="${kwargs.style}"`}>
-  <summary>View HTML Source</summary>
-
-~~~html
-${dedent(content)}
-~~~
-
-</details>`;
-  });
+  eleventyConfig.addPlugin(HTMLExamplePlugin);
 
   return {
     dir: {

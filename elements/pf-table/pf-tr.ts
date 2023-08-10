@@ -105,7 +105,7 @@ export class PfTr extends LitElement {
 
   render() {
     return [
-      !(this.expandable && this.expandable !== 'compound') ? '' : html`
+      this.expandable && this.expandable !== 'compound' && html`
         <pf-td id="toggle-cell">
           <pf-button id="toggle-button"
                      aria-expanded=${String(this.expanded) as 'true' | 'false'}
@@ -118,23 +118,26 @@ export class PfTr extends LitElement {
           </pf-button>
         </pf-td>
       `,
+
       html`
         <div id="container">
           <slot role="${ifDefined(this.expandable ? 'row' : undefined)}"></slot>
         </div>
       `,
-      !(this.expandable !== 'compound' && this.expanded) ? '' : html`
+
+      this.expandable && this.expandable !== 'compound' && this.expanded && html`
         <slot id="expansion"
               name="expansion"
               role="row"
         ></slot>
       `,
-      this.expandable !== 'compound' ? '' : html`
+
+      this.expandable === 'compound' && html`
         <div id="expansion">${!this.expanded ? '' : html`
           <slot name="${this.expanded}"></slot>`}
         </div>
-      `,
-    ];
+      `
+    ].filter(Boolean);
   }
 
   #expandedChanged() {

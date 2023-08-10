@@ -62,9 +62,8 @@ export class PfTable extends LitElement {
     if (event instanceof RequestExpandEvent &&
         !event.defaultPrevented) {
       event.stopPropagation();
-      if (event.target instanceof PfTr &&
-          event.target.expandable) {
-        event.target.expanded = event.compoundExpanded ?? true;
+      if (event.target instanceof PfTr) {
+        event.target.expanded = !!event.target.expandable && !event.target.expanded;
       } else if (event.target instanceof PfTd && event.row) {
         event.row.expanded = event.compoundExpanded;
         for (const cell of event.row.querySelectorAll('pf-td')) {

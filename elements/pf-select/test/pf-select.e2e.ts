@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 import { PfeDemoPage } from '@patternfly/pfe-tools/test/playwright/PfeDemoPage.js';
 
-const tagName = 'pf-simple-list';
+const tagName = 'pf-select';
 
 test.describe(tagName, () => {
   test('snapshot', async ({ page }) => {

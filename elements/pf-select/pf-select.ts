@@ -3,17 +3,17 @@ import type { PropertyValueMap, PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ListboxController, type ListboxFilterMode, type ListboxOrientation } from '@patternfly/pfe-core/controllers/listbox-controller.js';
-import './pf-simple-list-option.js';
-import './pf-simple-list-group.js';
+import './pf-select-option.js';
+import './pf-select-group.js';
 
-import styles from './pf-simple-list.css';
+import styles from './pf-select.css';
 
 /**
  * List of selectable items
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/listbox/|WAI-ARIA Listbox Pattern}
  * @slot - Place element content here
  */
-@customElement('pf-simple-list')
+@customElement('pf-select')
 export class PfSimpleList extends LitElement {
   static readonly styles = [styles];
 
@@ -50,7 +50,7 @@ export class PfSimpleList extends LitElement {
   #listbox?: ListboxController;
 
   get options() {
-    return [...this.querySelectorAll('pf-simple-list-option')];
+    return [...this.querySelectorAll('pf-select-option')];
   }
 
   set filter(filterText: string) {
@@ -129,6 +129,6 @@ export class PfSimpleList extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-simple-list': PfSimpleList;
+    'pf-select': PfSimpleList;
   }
 }

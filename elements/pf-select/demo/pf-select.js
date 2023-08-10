@@ -1,7 +1,7 @@
-import '@patternfly/elements/pf-simple-list/pf-simple-list.js';
+import '@patternfly/elements/pf-select/pf-select.js';
 
 /**
- * pf-simple-list in a combox box
+ * pf-select in a combox box
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-both/|WAI ARIA Examples: Combobox with ARIAutocomplete}
  */
 const input = document.querySelector('#text');

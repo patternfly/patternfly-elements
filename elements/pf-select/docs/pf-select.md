@@ -1,5 +1,5 @@
 {% renderOverview %}
-  <pf-simple-list></pf-simple-list>
+  <pf-select></pf-select>
 {% endrenderOverview %}
 
 {% band header="Usage" %}{% endband %}

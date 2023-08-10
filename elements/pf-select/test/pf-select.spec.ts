@@ -1,17 +1,17 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfSimpleList } from '@patternfly/elements/pf-simple-list/pf-simple-list.js';
+import { PfSimpleList } from '@patternfly/elements/pf-select/pf-select.js';
 
-describe('<pf-simple-list>', function() {
+describe('<pf-select>', function() {
   describe('simply instantiating', function() {
     let element: PfSimpleList;
     it('imperatively instantiates', function() {
-      expect(document.createElement('pf-simple-list')).to.be.an.instanceof(PfSimpleList);
+      expect(document.createElement('pf-select')).to.be.an.instanceof(PfSimpleList);
     });
 
     it('should upgrade', async function() {
-      element = await createFixture<PfSimpleList>(html`<pf-simple-list></pf-simple-list>`);
-      const klass = customElements.get('pf-simple-list');
+      element = await createFixture<PfSimpleList>(html`<pf-select></pf-select>`);
+      const klass = customElements.get('pf-select');
       expect(element)
         .to.be.an.instanceOf(klass)
         .and

@@ -1,0 +1,13 @@
+[data-demo="pf-simple-list"] {
+  padding: 20px;
+}
+
+#combo {
+  display: inline-flex;
+  align-items: stretch;
+  flex-direction: column;
+}
+
+#listbox {
+  display: flex;
+}

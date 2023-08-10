@@ -101,20 +101,28 @@ export class RovingTabindexController<
           this.#focusableItems.includes(x as ItemType))) {
       return;
     }
+
+    const orientation = this.host.getAttribute('aria-orientation');
+
     const item = this.activeItem;
     let shouldPreventDefault = false;
     const horizontalOnly =
         !item ? false
       : item.tagName === 'SELECT' ||
-        item.getAttribute('role') === 'spinbutton';
-
-
+        item.getAttribute('role') === 'spinbutton' || orientation === 'horizontal';
+    const verticalOnly = orientation === 'vertical';
     switch (event.key) {
       case 'ArrowLeft':
+        if (verticalOnly) {
+          return;
+        }
         this.focusOnItem(this.prevItem);
         shouldPreventDefault = true;
         break;
       case 'ArrowRight':
+        if (verticalOnly) {
+          return;
+        }
         this.focusOnItem(this.nextItem);
         shouldPreventDefault = true;
         break;
@@ -136,21 +144,7 @@ export class RovingTabindexController<
         this.focusOnItem(this.firstItem);
         shouldPreventDefault = true;
         break;
-      case 'PageUp':
-        if (horizontalOnly) {
-          return;
-        }
-        this.focusOnItem(this.firstItem);
-        shouldPreventDefault = true;
-        break;
       case 'End':
-        this.focusOnItem(this.lastItem);
-        shouldPreventDefault = true;
-        break;
-      case 'PageDown':
-        if (horizontalOnly) {
-          return;
-        }
         this.focusOnItem(this.lastItem);
         shouldPreventDefault = true;
         break;
@@ -168,8 +162,8 @@ export class RovingTabindexController<
    * sets tabindex of item based on whether or not it is active
    */
   updateActiveItem(item?: ItemType): void {
-    if (item) {
-      if (!!this.#activeItem && item !== this.#activeItem) {
+    if (item && item !== this.#activeItem) {
+      if (this.#activeItem) {
         this.#activeItem.tabIndex = -1;
       }
       item.tabIndex = 0;
@@ -192,6 +186,7 @@ export class RovingTabindexController<
   updateItems(items: ItemType[]) {
     const sequence = [...items.slice(this.#itemIndex), ...items.slice(0, this.#itemIndex)];
     const first = sequence.find(item => this.#focusableItems.includes(item));
+    this.#items = items ?? [];
     this.focusOnItem(first || this.firstItem);
   }
 

@@ -8,6 +8,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   declare role: ARIAMixin['role'];
   declare ariaAtomic: ARIAMixin['ariaAtomic'];
   declare ariaAutoComplete: ARIAMixin['ariaAutoComplete'];
+  declare ariaActivedescendant: string | null;
   declare ariaBusy: ARIAMixin['ariaBusy'];
   declare ariaChecked: ARIAMixin['ariaChecked'];
   declare ariaColCount: ARIAMixin['ariaColCount'];

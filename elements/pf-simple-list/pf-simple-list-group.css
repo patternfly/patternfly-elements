@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+slot {
+  padding: 10px;
+}
+
+slot[name="group-heading"] {
+  background-color: #f0f0f0;
+  display: block;
+  font-weight: bold;
+  padding: 0 10px;
+}

@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-simple-list.js"></script>
+
+<h2>case-sensitive</h2>
+<p>
+  Any arrow keys work. 
+  Only one option can be selected. 
+  Filter is case sensisitve.</p>
+<pf-simple-list case-sensitive>
+  <pf-simple-list-option>Blue</pf-simple-list-option>
+  <pf-simple-list-option>Green</pf-simple-list-option>
+  <pf-simple-list-option>Magenta</pf-simple-list-option>
+  <pf-simple-list-option>Orange</pf-simple-list-option>
+  <pf-simple-list-option>Purple</pf-simple-list-option>
+  <pf-simple-list-option>Pink</pf-simple-list-option>
+  <pf-simple-list-option>Red</pf-simple-list-option>
+  <pf-simple-list-option>Yellow</pf-simple-list-option>
+</pf-simple-list>
+
+<h2>match-anywhere</h2>
+<p>
+  Any arrow keys work. 
+  Only one option can be selected. 
+  Filter matches anywhere in option text.</p>
+<pf-simple-list match-anywhere>
+  <pf-simple-list-option>Blue</pf-simple-list-option>
+  <pf-simple-list-option>Green</pf-simple-list-option>
+  <pf-simple-list-option>Magenta</pf-simple-list-option>
+  <pf-simple-list-option>Orange</pf-simple-list-option>
+  <pf-simple-list-option>Purple</pf-simple-list-option>
+  <pf-simple-list-option>Pink</pf-simple-list-option>
+  <pf-simple-list-option>Red</pf-simple-list-option>
+  <pf-simple-list-option>Yellow</pf-simple-list-option>
+</pf-simple-list>
+
+<h2>filter-mode="disabled"</h2>
+<p>
+  Any arrow keys work. 
+  Only one option can be selected. 
+  Filter is disabled.</p>
+<pf-simple-list filter-mode="disabled">
+  <pf-simple-list-option>Blue</pf-simple-list-option>
+  <pf-simple-list-option>Green</pf-simple-list-option>
+  <pf-simple-list-option>Magenta</pf-simple-list-option>
+  <pf-simple-list-option>Orange</pf-simple-list-option>
+  <pf-simple-list-option>Purple</pf-simple-list-option>
+  <pf-simple-list-option>Pink</pf-simple-list-option>
+  <pf-simple-list-option>Red</pf-simple-list-option>
+  <pf-simple-list-option>Yellow</pf-simple-list-option>
+</pf-simple-list>
+
+<h2>filter-mode="required": combobox example</h2>
+<p>
+  Any arrow keys work. 
+  Only one option can be selected. 
+  Listbox wont appear until input has text. 
+  Type <code>*</code> to show all options.
+</p>
+<label id="combo">
+  Pick a color:
+  <input id="text"
+    aria-controls="listbox"
+    aria-role="combobox" 
+    aria-autocomplete="both" 
+    aria-expanded="false"/>
+  <pf-simple-list id="listbox" filter-mode="required">
+    <pf-simple-list-option>Blue</pf-simple-list-option>
+    <pf-simple-list-option>Green</pf-simple-list-option>
+    <pf-simple-list-option>Magenta</pf-simple-list-option>
+    <pf-simple-list-option>Orange</pf-simple-list-option>
+    <pf-simple-list-option>Purple</pf-simple-list-option>
+    <pf-simple-list-option>Pink</pf-simple-list-option>
+    <pf-simple-list-option>Red</pf-simple-list-option>
+    <pf-simple-list-option>Yellow</pf-simple-list-option>
+  </pf-simple-list>
+</label>

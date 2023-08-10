@@ -5,17 +5,17 @@ import { property } from 'lit/decorators/property.js';
 import styles from './pf-tr.css';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-/**
- * Table row
- * @slot - Place element content here
- */
-@customElement('pf-tr')
-export class PfTr extends LitElement {
-  static readonly styles = [styles];
+export class ExpandChangeEvent extends Event {
+  constructor(public expanded: boolean) {
+    super('change', { bubbles: true });
+  }
+}
 
-  @property({ reflect: true, converter: {
+function BooleanEnumConverter(...allowedAttributes: string[]): ComplexAttributeConverter {
+  const values = new Set(allowedAttributes);
+  return {
     fromAttribute(value) {
-      if (value === 'compound') {
+      if (value && values.has(value.toLowerCase())) {
         return value;
       } else {
         return value != null;
@@ -24,11 +24,27 @@ export class PfTr extends LitElement {
     toAttribute(value) {
       if (!value) {
         return null;
-      } else {
+      } else if (value === 'compound') {
         return value;
+      } else {
+        return '';
       }
     }
-  } }) expandable: boolean | 'compound' = false;
+  };
+}
+
+/**
+ * Table row
+ * @slot - Place element content here
+ */
+@customElement('pf-tr')
+export class PfTr extends LitElement {
+  static readonly styles = [styles];
+
+  @property({
+    reflect: true,
+    converter: BooleanEnumConverter('compound'),
+  }) expandable: boolean | 'compound' = false;
 
   @property({ type: Boolean, reflect: true }) expanded = false;
 
@@ -37,21 +53,58 @@ export class PfTr extends LitElement {
     this.#expandableChanged();
   }
 
-  willUpdate(changed: PropertyValues<this>) {
+  override willUpdate(changed: PropertyValues<this>) {
     if (changed.has('expandable')) {
       this.#expandableChanged();
+    }
+    if (changed.has('expanded')) {
+      this.#expandedChanged();
     }
   }
 
   render() {
-    return html`
-      <div id="container">
-        <slot role="${ifDefined(this.expandable ? 'row' : undefined)}"></slot>
-        ${!this.expandable ? '' : html`
-        <slot name="expansion" role="row"></slot>
-        `}
-      </div>
-    `;
+    return [
+      !this.expandable ? '' : html`
+        <pf-td id="toggle-cell">
+          <pf-button id="toggle-button"
+                     aria-expanded=${this.expanded}
+                     plain
+                     @click=${this.#onClick}>
+            <pf-icon id="toggle-icon"
+                     icon="angle-right"
+                     size="md"></pf-icon>
+          </pf-button>
+        </pf-td>
+      `,
+      html`
+        <div id="container">
+          <slot role="${ifDefined(this.expandable ? 'row' : undefined)}"></slot>
+        </div>
+      `,
+      !(this.expandable && this.expanded) ? '' : html`
+        <slot id="expansion"
+              name="expansion"
+              role="row"
+        ></slot>
+      `
+    ];
+  }
+
+  #expandedChanged() {
+    // disallow setting `expanded` unless `expandable` is also set
+    if (this.expanded && !this.expandable) {
+      this.expanded = false;
+    } else {
+      const expandableRow = this.querySelector<PfTr>('pf-tr[expandable]');
+      if (expandableRow) {
+        expandableRow.expanded = this.expanded;
+      }
+    }
+  }
+
+  #onClick() {
+    this.expanded = !this.expanded;
+    this.dispatchEvent(new ExpandChangeEvent(this.expanded));
   }
 
   #expandableChanged() {

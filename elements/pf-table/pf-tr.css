@@ -12,7 +12,7 @@
   :host {
     /* TODO: provide ability to override */
     grid-template-columns: repeat(var(--_pf-table--number-of-columns), 1fr);
-    border-bottom: 1px solid #d2d2d2;
+    border-block-end: 1px solid #d2d2d2;
   }
 }
 
@@ -21,11 +21,27 @@
 }
 
 :host([expandable]),
-:host([expandable][expanded]) #expansion::slotted(*) {
+#expansion {
   position: relative;
 }
 
-:host([expandable][expanded]) #expansion::slotted(*)::before {
+#expansion {
+  display: block;
+  margin-inline-start: calc(-1 * 50px * var(--_pf-table--expandable-rows, 0));
+  grid-auto-flow: row;
+  grid-template-columns: auto;
+  padding: 0px 1.5rem;
+  display: grid;
+  grid-column: 1/-1;
+  border-block-start: 1px solid #d2d2d2;
+}
+
+#expansion::slotted(pf-td) {
+  padding-block-start: 0;
+  padding-inline-start: 0;
+}
+
+:host([expandable][expanded]) #container::before {
   position: absolute;
   inset-block-start: -1px;
   inset-inline-end: 0;
@@ -36,7 +52,7 @@
   pointer-events: none;
 }
 
-:host([expandable]) #expansion::slotted(pf-table) {
+#expansion::slotted(pf-table) {
   margin-block-end: -1px;
 }
 
@@ -55,12 +71,4 @@
 
 :host([expanded]) #toggle-icon {
   transform: rotate(90deg);
-}
-
-:host([expandable]) #expansion {
-  grid-auto-flow: row;
-  grid-template-columns: auto;
-  padding: 0px 1.5rem;
-  display: grid;
-  grid-column: 1/-1;
 }

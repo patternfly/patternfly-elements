@@ -144,13 +144,13 @@ describe('<pf-tabs>', function() {
       await setViewport({ width: 320, height: 640 });
     });
 
-    it('should aria-disable the tab if disabled', async function() {
+    it('should disable the tab button if disabled attr is present', async function() {
       const el = await createFixture<PfTabs>(TEMPLATE);
       const disabledTab = el.querySelector('pf-tab:nth-of-type(2)')! as PfTab;
       disabledTab.disabled = true;
       await nextFrame();
       const tab = (await a11ySnapshot()).children.find(x => x.role === 'tab' && x.name === 'Containers');
-      expect(tab?.disabled).to.be.true;
+      expect(tab?.children.find(x => x.role === 'button')?.disabled).to.equal(true);
     });
 
     it('should have disabled css styles if disabled', async function() {

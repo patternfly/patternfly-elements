@@ -37,6 +37,7 @@
     "./pf-label/BaseLabel.js": "./pf-label/BaseLabel.js",
     "./pf-label/pf-label.js": "./pf-label/pf-label.js",
     "./pf-select/pf-select.js": "./pf-select/pf-select.js",
+    "./pf-select/pf-select-listbox.js": "./pf-select/pf-select.js",
     "./pf-select/pf-select-group.js": "./pf-select/pf-select-group.js",
     "./pf-select/pf-select-option.js": "./pf-select/pf-select-option.js",
     "./pf-modal/pf-modal.js": "./pf-modal/pf-modal.js",
@@ -116,6 +117,7 @@
     "Mark Caron <mark@redhat.com> (https://github.com/markcaron)",
     "Michael Clayton <mclayton@redhat.com>",
     "Michael Potter",
+    "Nikki Massaro Kauffman <nmassaro@redhat.com>",
     "Steven Spriggs <sspriggs@redhat.com",
     "castastrophe (https://github.com/castastrophe)",
     "Wes Ruvalcaba"

@@ -1,7 +1,8 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { type ListboxFilterMode, type ListboxOptionElement, type ListboxOrientation, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
+import type { PropertyValues } from 'lit';
+import { type ListboxFilterMode, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 import { PfSelectListbox } from './pf-select-listbox.js';
 
 import styles from './pf-select.css';
@@ -111,8 +112,8 @@ export class PfSelect extends LitElement {
         aria-haspopup="listbox"
         ?disabled=${this.disabled}
         @click="${this.#onToggleClick}">
-        ${this.#valueText !== '' ? this.#valueText : this.nullText} 
-        ${this.hasCheckboxes && this.#selectedOptions.length > 0 ? `(${this.#selectedOptions.length})` : ''}
+        ${this.#valueText !== '' ? this.#valueText : this.nullText}
+        ${this.hasCheckboxes && this.#selectedOptions.length > 0 ? html`<span><pf-badge number="${this.#selectedOptions.length}">${this.#selectedOptions.length}</pf-badge></span> ` : ''}
         <svg viewBox="0 0 320 512" 
           fill="currentColor" 
           aria-hidden="true">
@@ -134,6 +135,12 @@ export class PfSelect extends LitElement {
         <slot></slot>
       </pf-select-listbox>
     `;
+  }
+
+  updated(changed: PropertyValues<this>) {
+    if (changed.has('hasCheckboxes') && this.hasCheckboxes) {
+      import('@patternfly/elements/pf-badge/pf-badge.js');
+    }
   }
 
   focus() {

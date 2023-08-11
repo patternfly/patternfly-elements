@@ -41,9 +41,20 @@
   border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
 }
 
+#toggle span {
+  flex: 1 0 auto;
+  margin-inline-start: 0.25em;
+}
+
+pf-badge {
+  padding: 0;
+}
+
 #toggle svg {
   width: 1em;
   height: 1em;
+  flex: 0 0 auto;
+  margin-inline-start: 1em;
 }
 
 .show-checkboxes {

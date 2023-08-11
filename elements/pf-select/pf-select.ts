@@ -25,7 +25,12 @@ export class PfSelect extends LitElement {
   /**
    * listbox button text when listbox selected option has no text
    */
-  @property({ attribute: 'null-text', type: String }) nullText = 'Select an option';
+  @property({ attribute: 'default-text', type: String }) defaultText = 'Options';
+
+  /**
+   * listbox button text when listbox selected option has no text
+   */
+  @property({ attribute: 'items-selected-text', type: String }) itemsSelectedText = 'items selected';
 
   /**
    * whether listbox is always open
@@ -72,6 +77,7 @@ export class PfSelect extends LitElement {
   @property({ reflect: true, attribute: 'multi-selectable', type: Boolean }) multiSelectable = false;
 
   #valueText = '';
+  #valueTextArray: string[] = [];
   #selectedOptions: PfSelectOption[] = [];
 
   get options() {
@@ -80,6 +86,10 @@ export class PfSelect extends LitElement {
 
   get #listbox(): PfSelectListbox | null | undefined {
     return this.shadowRoot?.querySelector('#listbox');
+  }
+
+  get #input(): HTMLInputElement | null | undefined {
+    return this.shadowRoot?.querySelector('#toggle-input');
   }
 
   set filter(filterText: string) {
@@ -102,24 +112,58 @@ export class PfSelect extends LitElement {
     return this.#listbox?.value;
   }
 
+  get #valueTextList() {
+    return this.#valueTextArray.map(txt => txt.replace(',', '\\,')).join(', ');
+  }
+
+  get #buttonLabel() {
+    return this.multiSelectable ?
+      `${this.#valueTextArray.length} ${this.itemsSelectedText}`
+      : !this.hasCheckboxes && this.multiSelectable && this.#valueTextList.length > 0 ?
+        this.#valueTextList
+        : !this.hasCheckboxes && !this.multiSelectable && this.#valueText.length > 0 ?
+          this.#valueText
+          : this.defaultText;
+  }
+
   render() {
     return html`
-    ${this.typeahead ? '' : this.alwaysOpen ? '' : html`
-      <button 
-        id="toggle" 
-        aria-expanded="${!this.expanded ? 'false' : 'true'}" 
-        aria-controls="listbox" 
-        aria-haspopup="listbox"
-        ?disabled=${this.disabled}
-        @click="${this.#onToggleClick}">
-        ${this.#valueText !== '' ? this.#valueText : this.nullText}
-        ${this.hasCheckboxes && this.#selectedOptions.length > 0 ? html`<span><pf-badge number="${this.#selectedOptions.length}">${this.#selectedOptions.length}</pf-badge></span> ` : ''}
-        <svg viewBox="0 0 320 512" 
-          fill="currentColor" 
-          aria-hidden="true">
-            <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
-        </svg>
-      </button>
+    ${this.alwaysOpen ? '' : html`
+      <div id="toggle" 
+        ?disabled=${this.disabled} 
+        ?expanded=${this.expanded}>
+        ${!this.typeahead ? '' : html`
+          <input 
+            id="toggle-input" 
+            type="text" 
+            aria-controls="listbox" 
+            aria-autocomplete="both" 
+            aria-expanded="${!this.expanded ? 'false' : 'true'}" 
+            placeholder="${this.#buttonLabel}"
+            role="combobox"
+            @input=${this.#onTypeaheadInput}>
+        `}
+        <button 
+          id="toggle-button" 
+          aria-expanded="${!this.expanded ? 'false' : 'true'}" 
+          aria-controls="listbox" 
+          aria-haspopup="listbox"
+          ?disabled=${this.disabled}
+          @click="${this.#onToggleClick}">
+          <span id="toggle-text" class="${this.typeahead ? 'offscreen' : ''}">
+            ${this.#buttonLabel}
+          </span>
+          ${this.hasCheckboxes && this.#selectedOptions.length > 0 ? html`
+            <span id="toggle-badge">
+              <pf-badge number="${this.#selectedOptions.length}">${this.#selectedOptions.length}</pf-badge>
+            </span> ` : ''}
+          <svg viewBox="0 0 320 512" 
+            fill="currentColor" 
+            aria-hidden="true">
+              <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
+          </svg>
+        </button>
+      </div>
     `}
       <pf-select-listbox 
         id="listbox" 
@@ -150,10 +194,18 @@ export class PfSelect extends LitElement {
   }
 
   #updateValueText() {
-    this.#selectedOptions = this.#listbox?.selectedOptions as PfSelectOption[];
-    const [selectedOption] = this.#selectedOptions;
-    this.#valueText = selectedOption?.optionText || '';
+    this.#selectedOptions = (this.#listbox?.selectedOptions || []) as PfSelectOption[];
+    this.#valueTextArray = this.#selectedOptions.map(option => option.optionText || '');
+    const [selectedOption] = this.#valueTextArray;
+    this.#valueText = selectedOption || '';
     this.requestUpdate();
+  }
+
+  #onTypeaheadInput() {
+    // update the filter
+    if (this.#listbox && this.#input?.value && !this.#valueTextArray.includes(this.#input?.value) && this.filter !== this.#input?.value) {
+      this.filter = this.#input?.value || '';
+    }
   }
 
   #onListboxInput() {
@@ -162,6 +214,17 @@ export class PfSelect extends LitElement {
 
   #onListboxChange() {
     this.#updateValueText();
+    if (this.#input && this.#listbox) {
+      if (!this.multiSelectable && this.#valueText !== this.#input?.value) {
+        this.filter = this.#valueText.slice(0, this.#input.value.length);
+        this.#input.value = this.#valueText;
+        this.#input.focus();
+        this.#input.setSelectionRange(
+          this.filter.length,
+          this.#valueText.length
+        );
+      }
+    }
   }
 
   #onToggleClick() {

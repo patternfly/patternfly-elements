@@ -14,23 +14,23 @@
 }
 
 #toggle {
+  border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
+  border-bottom-color: var(--pf-theme--color--text, #151515);
+}
+
+#toggle,
+#toggle-button,
+#toggle-input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: transparent;
-  border: none;
-  text-align: left;
-  line-height: 1.6;
   font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
   font-size: var(--pf-global--FontSize--md, 16px);
   font-weight: var(--pf-global--FontWeight--normal, 400);
-  padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem);
-  border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
-  border-bottom-color: var(--pf-theme--color--text, #151515);
-  border-radius: 0;
+  line-height: 1.6;
 }
 
-#toggle[aria-expanded="true"] {
+#toggle[expanded] {
   border-bottom-width: 2px;
   border-bottom-color: var(--pf-theme--color--accent, #0066cc);
 }
@@ -41,7 +41,17 @@
   border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
 }
 
-#toggle span {
+#toggle-input,
+#toggle-button {
+  background: transparent;
+  border: none;
+  text-align: left;
+  border-radius: 0;
+  padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem);
+  flex: 1 0 auto;
+}
+
+#toggle-badge {
   flex: 1 0 auto;
   margin-inline-start: 0.25em;
 }
@@ -55,6 +65,15 @@ pf-badge {
   height: 1em;
   flex: 0 0 auto;
   margin-inline-start: 1em;
+}
+
+.offscreen {
+  position: absolute;
+  left: -99999;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
 }
 
 .show-checkboxes {

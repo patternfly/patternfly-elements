@@ -1,12 +1,13 @@
 :host {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: var(--pf-global--spacer--sm, 0.5rem) var(--pf-global--spacer--md, 1rem);
 }
 
 :host([hidden]),
-:host([hidden-by-filter]) {
+:host([hidden-by-filter]),
+*[hidden] {
   display: none !important;
 }
 
@@ -15,21 +16,26 @@
   background-color: var(--pf-theme--color--surface--lighter, #f0f0f0);
 }
 
+:host([active-descendant]) {
+  background-color: var(--_active-descendant-color, var(--pf-global--BorderColor--100, #d2d2d2));
+}
+
+input[type="checkbox"] {
+  margin-inline-end: 1em;
+  display: var(--_pf-select-checkboxes-display, none);
+  pointer-events: none;
+  flex: 0 0 auto;
+}
+
+span {
+  flex: 1 1 auto;
+}
+
 svg {
   color: var(--pf-theme--color--accent, #0066cc);
   width: 1em;
   height: 1em;
-  display: none;
-}
-
-:host([aria-selected="true"]) svg {
-  display: inline;
-}
-
-:host([active-descendant]) {
-  background-color: var(--_active-descendant-color, transparent);
-}
-
-input[type="checkbox"] {
-  display: var(--_pf-select-checkboxes-display, none);
+  margin-inline-start: 1em;
+  text-align: right;
+  flex: 0 0 auto;
 }

@@ -32,6 +32,9 @@ export interface ListboxConfigOptions {
 
 export interface ListboxOptionElement extends HTMLElement {
   value: unknown;
+  selected?: boolean;
+  posInSet?: number;
+  setSize?: number;
 }
 
 /**
@@ -150,18 +153,20 @@ export class ListboxController<
   set options(options: ListboxOptionElement[]) {
     const setSize = options.length;
     options.forEach((option, posInSet) => {
-      option.ariaSetSize = setSize !== null ? `${setSize}` : null;
-      option.ariaPosInSet = posInSet !== null ? `${posInSet}` : null;
+      option.setSize = setSize;
+      option.posInSet = posInSet;
     });
     this.#tabindex.initItems(this.visibleOptions);
     this.#options = options;
   }
 
+  get selectedOptions() {
+    return this.options.filter(option => option.selected);
+  }
+
   get value() {
-    const selectedItems = this.options.filter(option => option.ariaSelected === 'true').map(option => {
-      return option.value;
-    });
-    return selectedItems;
+    const [firstItem] = this.selectedOptions;
+    return this.multiSelectable ? this.selectedOptions : firstItem;
   }
 
   set value(optionsList: ListboxValue) {
@@ -174,16 +179,11 @@ export class ListboxController<
     }
     this.options.forEach(option => {
       const selected = this.multiSelectable && Array.isArray(optionsList) ? optionsList?.includes(option.value) : firstItem === option;
-      option.ariaSelected = `${selected}`;
+      option.selected = selected;
     });
     if (oldValue !== this.value) {
       this.#fireInput();
     }
-  }
-
-  get valueText() {
-    const selectedItems = this.options.filter(option => option.ariaSelected === 'true').map(option => option.textContent?.replace(',', '\\,'));
-    return selectedItems.join(',');
   }
 
   get visibleOptions() {
@@ -282,7 +282,7 @@ export class ListboxController<
 
   #updateSingleselect() {
     if (!this.multiSelectable) {
-      this.options.forEach(option => option.ariaSelected = `${option.id === this.#internals.ariaActivedescendant}`);
+      this.options.forEach(option => option.selected = option.id === this.#internals.ariaActivedescendant);
       this.#fireChange();
     }
   }
@@ -300,9 +300,9 @@ export class ListboxController<
       const [start, end] = [this.options.indexOf(referenceItem), this.options.indexOf(currentItem)].sort();
       const options = [...this.options].slice(start, end + 1);
       // if all items in range are toggled, remove toggle
-      const allSelected = ctrlKey && options.filter(option => option.ariaSelected !== 'true')?.length === 0;
-      const toggle = ctrlKey && allSelected ? false : ctrlKey ? true : referenceItem.ariaSelected === 'true';
-      options.forEach(option => option.ariaSelected = `${toggle}`);
+      const allSelected = ctrlKey && options.filter(option => !option.selected)?.length === 0;
+      const toggle = ctrlKey && allSelected ? false : ctrlKey ? true : referenceItem.selected;
+      options.forEach(option => option.selected = toggle);
       this.#shiftStartingItem = currentItem;
     }
   }
@@ -347,7 +347,7 @@ export class ListboxController<
    * @returns void
    */
   #onOptionFocus(event: FocusEvent) {
-    const target = event.target as HTMLElement;
+    const target = event.target as ListboxOptionElement;
     if (target !== this.#tabindex.activeItem) {
       this.#tabindex.updateActiveItem(target);
     }
@@ -366,7 +366,7 @@ export class ListboxController<
     const oldValue = this.value;
     if (this.multiSelectable) {
       if (!event.shiftKey) {
-        target.ariaSelected = `${target.ariaSelected !== 'true'}`;
+        target.selected = !target.selected;
       } else {
         if (this.#shiftStartingItem && target) {
           this.#updateMultiselect(target, this.#shiftStartingItem);
@@ -375,7 +375,7 @@ export class ListboxController<
       }
     } else {
       // select target and deselect all other options
-      this.options.forEach(option => option.ariaSelected = `${option === target}`);
+      this.options.forEach(option => option.selected = option === target);
     }
     if (target !== this.#tabindex.activeItem) {
       this.#tabindex.focusOnItem(target);
@@ -455,7 +455,7 @@ export class ListboxController<
               if (event.shiftKey) {
                 this.#updateMultiselect(target);
               } else {
-                target.ariaSelected = `${target.ariaSelected !== 'true'}`;
+                target.selected = !target.selected;
               }
               stopEvent = true;
             }

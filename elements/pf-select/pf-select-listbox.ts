@@ -1,13 +1,12 @@
 import { LitElement, html } from 'lit';
-import type { PropertyValueMap, PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import type { PropertyValueMap, PropertyValues } from 'lit';
 import { ListboxController, type ListboxFilterMode, type ListboxOptionElement, type ListboxOrientation, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
-import './pf-select-option.js';
-import './pf-select-group.js';
+import { PfSelectGroup } from './pf-select-group.js';
+import { PfSelectOption } from './pf-select-option.js';
 
 import styles from './pf-select-listbox.css';
-
 /**
  * List of selectable items
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/listbox/|WAI-ARIA Listbox Pattern}
@@ -50,7 +49,19 @@ export class PfSelectListbox extends LitElement {
   #listbox?: ListboxController;
 
   get options() {
-    return [...this.querySelectorAll('pf-select-option')];
+    const slotted = this.querySelector('slot')?.assignedElements() || [...this.querySelectorAll('pf-select-option')];
+    const options = slotted?.map(element => {
+      if (element instanceof PfSelectOption) {
+        return element;
+      } else if (element instanceof PfSelectGroup) {
+        return [...element.querySelectorAll('pf-select-option')];
+      }
+    }).flat();
+    return options;
+  }
+
+  get selectedOptions() {
+    return this.#listbox?.selectedOptions;
   }
 
   set filter(filterText: string) {
@@ -71,10 +82,6 @@ export class PfSelectListbox extends LitElement {
 
   get value() {
     return this.#listbox?.value;
-  }
-
-  get #valueText() {
-    return this.#listbox?.valueText || null;
   }
 
   render() {

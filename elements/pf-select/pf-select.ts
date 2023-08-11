@@ -1,9 +1,8 @@
 import { LitElement, html } from 'lit';
-import type { PropertyValueMap, PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
-import { ListboxController, type ListboxFilterMode, type ListboxOrientation, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 import { property } from 'lit/decorators/property.js';
-import './pf-select-listbox.js';
+import { type ListboxFilterMode, type ListboxOrientation, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
+import { PfSelectListbox } from './pf-select-listbox.js';
 
 import styles from './pf-select.css';
 
@@ -18,7 +17,7 @@ export class PfSelect extends LitElement {
   /**
    * listbox button text when listbox selected option has no text
    */
-  @property({ attribute: 'null-text', type: Boolean }) nullText = false;
+  @property({ attribute: 'null-text', type: Boolean }) nullText = 'Select an option';
 
   /**
    * whether listbox is always open
@@ -70,10 +69,14 @@ export class PfSelect extends LitElement {
    */
   @property({ reflect: true, attribute: 'orientation', type: String }) orientation: ListboxOrientation = '';
 
-  #listbox?: ListboxController;
+  #valueText = '';
 
   get options() {
-    return [...this.querySelectorAll('pf-select-option')];
+    return this.#listbox?.options;
+  }
+
+  get #listbox(): PfSelectListbox | null | undefined {
+    return this.shadowRoot?.querySelector('#listbox');
   }
 
   set filter(filterText: string) {
@@ -96,10 +99,6 @@ export class PfSelect extends LitElement {
     return this.#listbox?.value;
   }
 
-  get #valueText() {
-    return (this.#listbox?.valueText || '').length > 0 ? this.#listbox?.valueText : null;
-  }
-
   render() {
     return html`
     ${this.typeahead ? '' : this.alwaysOpen ? '' : html`
@@ -108,8 +107,8 @@ export class PfSelect extends LitElement {
         aria-expanded="${!this.expanded ? 'false' : 'true'}" 
         aria-controls="listbox" 
         aria-haspopup="listbox"
-        @click="${this.#onClick}">
-        ${!this.multiSelectable && !!this.#valueText ? this.#valueText : this.nullText} 
+        @click="${this.#onToggleClick}">
+        ${this.#valueText !== '' ? this.#valueText : this.nullText} 
         <svg viewBox="0 0 320 512" 
           fill="currentColor" 
           aria-hidden="true">
@@ -125,7 +124,9 @@ export class PfSelect extends LitElement {
         filterMode="${this.filterMode}"
         ?matchAnywhere=${this.matchAnywhere}
         ?multiSelectable=${this.multiSelectable || this.hasCheckboxes}
-        orientation="${this.orientation}">
+        orientation="${this.orientation}"
+        @input=${this.#onListboxInput}
+        @change=${this.#onListboxChange}>
         <slot></slot>
       </pf-select-listbox>
     `;
@@ -137,7 +138,22 @@ export class PfSelect extends LitElement {
     (toggle || listbox)?.focus();
   }
 
-  #onClick() {
+  #updateValueText() {
+    const selectedOptions = this.#listbox?.selectedOptions || [];
+    const [selectedOption] = selectedOptions;
+    this.#valueText = selectedOption?.textContent || '';
+    this.requestUpdate();
+  }
+
+  #onListboxInput() {
+    this.#updateValueText();
+  }
+
+  #onListboxChange() {
+    this.#updateValueText();
+  }
+
+  #onToggleClick() {
     this.expanded = !this.expanded;
   }
 }

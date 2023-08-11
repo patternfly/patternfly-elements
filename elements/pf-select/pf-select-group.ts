@@ -17,6 +17,7 @@ export class PfSelectGroup extends LitElement {
   });
 
   override connectedCallback() {
+    super.connectedCallback();
     this.#internals;
   }
 

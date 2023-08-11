@@ -1,15 +1,15 @@
 :host {
   display: block;
-  padding: 2px 10px;
+  border-bottom: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
 }
 
 slot {
-  padding: 10px;
+  display: block;
+  padding: var(--pf-global--spacer--md, 1rem) 0;
 }
 
 slot[name="group-heading"] {
-  background-color: #f0f0f0;
-  display: block;
-  font-weight: bold;
-  padding: 0 10px;
+  font-size: var(--pf-global--FontSize--xs, 0.75rem);
+  color: var(--pf-global--Color--dark-200, #6a6e73);
+  padding: var(--pf-global--spacer--md, 1rem) var(--pf-global--spacer--md, 1rem) 0;
 }

@@ -1,4 +1,5 @@
 :host {
+  display: block;
   padding: var(--pf-global--spacer--sm, 0.5rem) var(--pf-global--spacer--md, 1rem);
 }
 

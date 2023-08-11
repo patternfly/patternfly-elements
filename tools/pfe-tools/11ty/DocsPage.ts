@@ -39,6 +39,7 @@ export declare class DocsPageRenderer {
   renderProperties(content: string, kwargs?: RenderKwargs): string;
   renderCssCustomProperties(content: string, kwargs?: RenderKwargs): string;
   renderEvents(content: string, kwargs?: RenderKwargs): string;
+  renderInstallation(content: string, kwargs?: RenderKwargs): string;
   renderCssParts(content: string, kwargs?: RenderKwargs): string;
   renderMethods(content: string, kwargs?: RenderKwargs): string;
   renderSlots(content: string, kwargs?: RenderKwargs): string;
@@ -172,6 +173,11 @@ export class DocsPage implements DocsPageRenderer {
     const events = _events.filter(x => !x.deprecated);
 
     return this.templates.render('events.njk', { content, events, deprecated, ...kwargs });
+  }
+
+  /** Render the installation instructions for the element */
+  renderInstallation(content: string, kwargs: RenderKwargs = {}) {
+    return `${this.templates.render('install.njk', { content, ...kwargs })}`;
   }
 
   /** Render the list of element methods */

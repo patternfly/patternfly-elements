@@ -12,7 +12,7 @@ tags:
   }
 </style>
 
-{% band %}
+{% band header="" %}
 
 Import maps provide a way for developers to use shorter and more descriptive module specifiers in their code, which can improve code readability and maintainability. Instead of having to remember and type out lengthy URLs for each module, developers can use simple and memorable module specifiers that map to the correct URLs in the import map. Developers can still use tools like bundlers and minifiers, but now they can ship bare modules specifiers to production, and map those specifiers to the original source or to minified bundles.
 

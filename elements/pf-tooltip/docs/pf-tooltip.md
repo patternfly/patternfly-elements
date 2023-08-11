@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
   ### Default <pf-tooltip>
     <pf-button>Tooltip</pf-button>

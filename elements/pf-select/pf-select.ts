@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { type ListboxFilterMode, type ListboxOrientation, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
+import { type ListboxFilterMode, type ListboxOptionElement, type ListboxOrientation, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 import { PfSelectListbox } from './pf-select-listbox.js';
 
 import styles from './pf-select.css';
@@ -70,13 +70,8 @@ export class PfSelect extends LitElement {
    */
   @property({ reflect: true, attribute: 'multi-selectable', type: Boolean }) multiSelectable = false;
 
-  /**
-   * whether list items are arranged vertically or horizontally;
-   * limits arrow keys based on orientation
-   */
-  @property({ reflect: true, attribute: 'orientation', type: String }) orientation: ListboxOrientation = '';
-
   #valueText = '';
+  #selectedOptions: PfSelectOption[] = [];
 
   get options() {
     return this.#listbox?.options;
@@ -117,6 +112,7 @@ export class PfSelect extends LitElement {
         ?disabled=${this.disabled}
         @click="${this.#onToggleClick}">
         ${this.#valueText !== '' ? this.#valueText : this.nullText} 
+        ${this.hasCheckboxes && this.#selectedOptions.length > 0 ? `(${this.#selectedOptions.length})` : ''}
         <svg viewBox="0 0 320 512" 
           fill="currentColor" 
           aria-hidden="true">
@@ -129,11 +125,10 @@ export class PfSelect extends LitElement {
         class="${this.hasCheckboxes ? 'show-checkboxes' : ''}"
         ?disabled=${this.disabled}
         ?hidden=${!this.alwaysOpen && (!this.expanded || this.disabled)}
-        ?caseSensitive=${this.caseSensitive}
-        filterMode="${this.filterMode}"
-        ?matchAnywhere=${this.matchAnywhere}
-        ?multiSelectable=${this.multiSelectable || this.hasCheckboxes}
-        orientation="${this.orientation}"
+        ?case-sensitive=${this.caseSensitive}
+        filter-mode="${this.filterMode}"
+        ?match-anywhere=${this.matchAnywhere}
+        ?multi-selectable=${this.multiSelectable || this.hasCheckboxes}
         @input=${this.#onListboxInput}
         @change=${this.#onListboxChange}>
         <slot></slot>
@@ -148,8 +143,8 @@ export class PfSelect extends LitElement {
   }
 
   #updateValueText() {
-    const selectedOptions = this.#listbox?.selectedOptions || [];
-    const [selectedOption] = selectedOptions as PfSelectOption[];
+    this.#selectedOptions = this.#listbox?.selectedOptions as PfSelectOption[];
+    const [selectedOption] = this.#selectedOptions;
     this.#valueText = selectedOption?.optionText || '';
     this.requestUpdate();
   }

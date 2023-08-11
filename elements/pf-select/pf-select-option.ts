@@ -64,7 +64,11 @@ export class PfSelectOption extends LitElement {
   render() {
     return html`
       <div>
-        <input type="checkbox" aria-hidden="true" ?checked="${this.selected}">
+        <input 
+          type="checkbox" 
+          aria-hidden="true" 
+          ?checked=${this.selected}
+          ?disabled=${this.disabled}>
         <slot name="icon"></slot>
         <span><slot></slot></span>
         <svg 

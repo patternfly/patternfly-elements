@@ -45,12 +45,6 @@ export class PfSelectListbox extends LitElement {
    */
   @property({ reflect: true, attribute: 'multi-selectable', type: Boolean }) multiSelectable = false;
 
-  /**
-   * whether list items are arranged vertically or horizontally;
-   * limits arrow keys based on orientation
-   */
-  @property({ reflect: true, attribute: 'orientation', type: String }) orientation: ListboxOrientation = '';
-
   #listbox?: ListboxController;
 
   get options() {
@@ -92,7 +86,6 @@ export class PfSelectListbox extends LitElement {
   render() {
     return html`
         <slot 
-          class="${this.orientation}"
           @slotchange="${this.#onSlotchange}">
         </slot>
     `;
@@ -104,7 +97,7 @@ export class PfSelectListbox extends LitElement {
       filterMode: this.filterMode,
       matchAnywhere: this.matchAnywhere,
       multiSelectable: this.multiSelectable,
-      orientation: this.orientation
+      orientation: 'vertical'
     });
     this.#listbox.options = this.options as ListboxOptionElement[];
     super.firstUpdated(changed);
@@ -123,9 +116,6 @@ export class PfSelectListbox extends LitElement {
       }
       if (changed.has('multiSelectable')) {
         this.#listbox.multiSelectable = this.multiSelectable;
-      }
-      if (changed.has('orientation')) {
-        this.#listbox.orientation = this.orientation;
       }
       if (changed.has('disabled')) {
         this.#listbox.disabled = this.disabled;

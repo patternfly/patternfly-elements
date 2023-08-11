@@ -18,16 +18,8 @@
   --_pf-select-option-svg-color: var(--pf-theme--color--ui-base, #6a6e73) !important;
 }
 
-:host([orientation="horizontal"]) {
-  overflow: scroll;
-}
-
 slot {
   display: flex;
   flex-direction: column;
   width: 100%;
-}
-
-:host([orientation="horizontal"]) slot {
-  flex-direction: row;
 }

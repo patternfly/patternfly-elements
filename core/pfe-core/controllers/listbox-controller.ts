@@ -16,12 +16,22 @@ export type ListboxFilterMode = '' | 'required' | 'disabled';
  */
 export type ListboxOrientation = '' | 'horizontal' | 'vertical';
 
-export interface ListboxOptions {
+
+/**
+ * value of listbox
+ */
+export type ListboxValue = unknown | unknown[];
+
+export interface ListboxConfigOptions {
   caseSensitive?: boolean;
   filterMode?: ListboxFilterMode;
   matchAnywhere?: boolean;
   multiSelectable?: boolean;
   orientation?: ListboxOrientation;
+}
+
+export interface ListboxOptionElement extends HTMLElement {
+  value: unknown;
 }
 
 /**
@@ -66,14 +76,14 @@ export class ListboxController<
    */
   #matchAnywhere = false;
 
-  #shiftStartingItem: HTMLElement | null = null;
+  #shiftStartingItem: ListboxOptionElement | null = null;
 
   #tabindex: RovingTabindexController;
 
   /**
    * all options that will not be hidden by a filter
    * */
-  #options: HTMLElement[] = [];
+  #options: ListboxOptionElement[] = [];
 
   get activeItem() {
     const [active] = this.options.filter(option => option.getAttribute('id') === this.#internals.ariaActivedescendant);
@@ -137,7 +147,7 @@ export class ListboxController<
     return this.#options;
   }
 
-  set options(options: HTMLElement[]) {
+  set options(options: ListboxOptionElement[]) {
     const setSize = options.length;
     options.forEach((option, posInSet) => {
       option.ariaSetSize = setSize !== null ? `${setSize}` : null;
@@ -148,22 +158,32 @@ export class ListboxController<
   }
 
   get value() {
-    const selectedItems = this.options.filter(option=>option.ariaSelected === 'true').map(option => option.textContent?.replace(',', '\\,'));
-    return selectedItems.join(',');
+    const selectedItems = this.options.filter(option => option.ariaSelected === 'true').map(option => {
+      return option.value;
+    });
+    return selectedItems;
   }
 
-  set value(optionsList: string | null) {
+  set value(optionsList: ListboxValue) {
     const oldValue = this.value;
-    const selectedItems = optionsList?.toLowerCase().split(',');
-    const [firstItem] = selectedItems || [null];
+    let firstItem: unknown;
+    if (Array.isArray(optionsList)) {
+      [firstItem] = optionsList || [null];
+    } else {
+      firstItem = optionsList;
+    }
     this.options.forEach(option => {
-      const textContent = (option.textContent || '').replace('\\,', ',').toLowerCase();
-      const selected = this.multiSelectable ? selectedItems?.includes(textContent) : firstItem === textContent;
+      const selected = this.multiSelectable && Array.isArray(optionsList) ? optionsList?.includes(option.value) : firstItem === option;
       option.ariaSelected = `${selected}`;
     });
     if (oldValue !== this.value) {
       this.#fireInput();
     }
+  }
+
+  get valueText() {
+    const selectedItems = this.options.filter(option => option.ariaSelected === 'true').map(option => option.textContent?.replace(',', '\\,'));
+    return selectedItems.join(',');
   }
 
   get visibleOptions() {
@@ -205,7 +225,7 @@ export class ListboxController<
     return matchedOptions;
   }
 
-  constructor(public host: ReactiveControllerHost & HTMLElement, options: ListboxOptions) {
+  constructor(public host: ReactiveControllerHost & HTMLElement, options: ListboxConfigOptions) {
     this.host.addController(this);
     this.#internals = new InternalsController(this.host, {
       role: 'listbox'
@@ -274,7 +294,7 @@ export class ListboxController<
    * @param referenceItem
    * @param ctrlKey
    */
-  #updateMultiselect(currentItem: HTMLElement, referenceItem = this.activeItem, ctrlKey = false) {
+  #updateMultiselect(currentItem: ListboxOptionElement, referenceItem = this.activeItem, ctrlKey = false) {
     if (this.multiSelectable) {
       // select all options between active descendant and target
       const [start, end] = [this.options.indexOf(referenceItem), this.options.indexOf(currentItem)].sort();
@@ -342,7 +362,7 @@ export class ListboxController<
    * @returns void
    */
   #onOptionClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
+    const target = event.target as ListboxOptionElement;
     const oldValue = this.value;
     if (this.multiSelectable) {
       if (!event.shiftKey) {
@@ -373,7 +393,7 @@ export class ListboxController<
    * @returns void
    */
   #onOptionKeyup(event: KeyboardEvent) {
-    const target = event.target as HTMLElement;
+    const target = event.target as ListboxOptionElement;
     if (event.shiftKey && this.multiSelectable) {
       if (this.#shiftStartingItem && target) {
         this.#updateMultiselect(target, this.#shiftStartingItem);
@@ -398,15 +418,15 @@ export class ListboxController<
     if (event.key === 'Shift' && this.multiSelectable) {
       this.#shiftStartingItem = this.activeItem;
     }
-    const target = event.target as HTMLElement;
+    const target = event.target as ListboxOptionElement;
     const oldValue = this.value;
     let stopEvent = false;
     if (event.altKey ||
-        event.metaKey) {
+      event.metaKey) {
       return;
     } else if (event.ctrlKey) {
       if (event.key?.match(/^[aA]$/)?.input && this.#tabindex.firstItem) {
-        this.#updateMultiselect(this.#tabindex.firstItem, this.#tabindex.lastItem, true);
+        this.#updateMultiselect(this.#tabindex.firstItem as ListboxOptionElement, this.#tabindex.lastItem as ListboxOptionElement, true);
         stopEvent = true;
       } else {
         return;

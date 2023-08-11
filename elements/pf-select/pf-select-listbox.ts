@@ -2,7 +2,7 @@ import { LitElement, html } from 'lit';
 import type { PropertyValueMap, PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { ListboxController, type ListboxFilterMode, type ListboxOrientation } from '@patternfly/pfe-core/controllers/listbox-controller.js';
+import { ListboxController, type ListboxFilterMode, type ListboxOptionElement, type ListboxOrientation, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 import './pf-select-option.js';
 import './pf-select-group.js';
 
@@ -63,22 +63,26 @@ export class PfSelectListbox extends LitElement {
     return this.#listbox?.filter || '';
   }
 
-  set value(optionsList: string | null) {
+  set value(optionsList: ListboxValue) {
     if (this.#listbox) {
       this.#listbox.value = optionsList;
     }
   }
 
   get value() {
-    return this.#listbox?.value || null;
+    return this.#listbox?.value;
+  }
+
+  get #valueText() {
+    return this.#listbox?.valueText || null;
   }
 
   render() {
     return html`
-      <slot 
-        class="${this.orientation}"
-        @slotchange="${this.#onSlotchange}">
-      </slot>
+        <slot 
+          class="${this.orientation}"
+          @slotchange="${this.#onSlotchange}">
+        </slot>
     `;
   }
 
@@ -90,7 +94,7 @@ export class PfSelectListbox extends LitElement {
       multiSelectable: this.multiSelectable,
       orientation: this.orientation
     });
-    this.#listbox.options = this.options;
+    this.#listbox.options = this.options as ListboxOptionElement[];
     super.firstUpdated(changed);
   }
 
@@ -122,7 +126,7 @@ export class PfSelectListbox extends LitElement {
 
   #onSlotchange() {
     if (this.#listbox) {
-      this.#listbox.options = this.options;
+      this.#listbox.options = this.options as ListboxOptionElement[];
     }
   }
 }

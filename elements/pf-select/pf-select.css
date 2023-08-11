@@ -1,0 +1,45 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
+  font-size: var(--pf-global--FontSize--md, 16px);
+  font-weight: var(--pf-global--FontWeight--normal, 400);
+  --_pf-select-checkboxes-display: none;
+}
+
+:host([hidden]),
+*[hidden] {
+  display: none !important;
+}
+
+#toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  text-align: left;
+  line-height: 1.6;
+  font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
+  font-size: var(--pf-global--FontSize--md, 16px);
+  font-weight: var(--pf-global--FontWeight--normal, 400);
+  padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem);
+  border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
+  border-bottom-color: var(--pf-theme--color--text, #151515);
+  border-radius: 0;
+}
+
+#toggle[aria-expanded="true"] {
+  border-bottom-width: 2px;
+  border-bottom-color: var(--pf-theme--color--accent, #0066cc);
+}
+
+#toggle svg {
+  width: 1em;
+  height: 1em;
+}
+
+.show-checkboxes {
+  --_pf-select-checkboxes-display: inline;
+}

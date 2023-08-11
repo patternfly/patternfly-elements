@@ -5,21 +5,21 @@
   --_active-descendant-color: transparent;
 }
 
-slot {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+:host([hidden]),
+*[hidden] {
+  display: none !important;
 }
 
 :host([orientation="horizontal"]) {
   overflow: scroll;
 }
 
-:host([orientation="horizontal"]) slot {
-  flex-direction: row;
+slot {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-:host(:focus-within) {
-  border: 1px solid blue;
-  --_active-descendant-color: #e1f4fe;
+:host([orientation="horizontal"]) slot {
+  flex-direction: row;
 }

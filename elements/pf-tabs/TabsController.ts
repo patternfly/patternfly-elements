@@ -102,7 +102,7 @@ export class TabsController implements ReactiveController {
   }
 
   get #activeTab() {
-    return this.#tabindex.activeItem;
+    return this._tabs.find(tab => tab.active);
   }
 
   constructor(host: ReactiveElement, options?: Options) {
@@ -115,9 +115,9 @@ export class TabsController implements ReactiveController {
       TabsController.#instances.add(this);
     }
     this.#observer = new MutationObserver(this.#mutationsCallback);
+    (this.#host = host).addController(this);
     this.#observer.observe(host, { attributes: true, childList: true, subtree: true });
     host.addEventListener('slotchange', this.#onSlotchange);
-    (this.#host = host).addController(this);
   }
 
   hostConnected() {
@@ -139,9 +139,13 @@ export class TabsController implements ReactiveController {
 
   #mutationsCallback = async (mutations: MutationRecord[]): Promise<void> => {
     for (const mutation of mutations) {
-      if (mutation.type === 'childList' && this.#isTab(mutation.target)) {
-        /* this will run when tabs added and deleted */
-        this.#rebuild();
+      if (mutation.type === 'childList') {
+        if (this.#isTab(mutation.addedNodes[0])) {
+          this.#rebuild();
+        }
+        if (this.#isTab(mutation.removedNodes[0])) {
+          this.#rebuild();
+        }
       }
     }
   };
@@ -197,7 +201,6 @@ export class TabsController implements ReactiveController {
   }
 
   #setActiveTab() {
-    // check for an active tab, if not set one
     if (!this.#activeTab) {
       this.#logger.warn('No active tab found. Setting to first focusable tab.');
       this.#setFirstFocusableTabActive();
@@ -208,6 +211,7 @@ export class TabsController implements ReactiveController {
       this.#setFirstFocusableTabActive();
       return;
     }
+
     // update RTI with active tab and deactivate others
     this.#tabindex.updateActiveItem(this.#activeTab);
     this.#deactivateExcept(this._tabs.indexOf(this.#activeTab));

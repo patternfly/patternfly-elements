@@ -120,6 +120,14 @@ export class ListboxController<
     return this.#filterMode || '';
   }
 
+  set disabled(disabled: boolean) {
+    this.#internals.ariaDisabled = disabled ? 'true' : 'false';
+  }
+
+  get disabled(): boolean {
+    return this.#internals.ariaDisabled === 'true';
+  }
+
   set multiSelectable(multiSelectable: boolean) {
     this.#internals.ariaMultiSelectable = multiSelectable ? 'true' : 'false';
   }
@@ -332,6 +340,9 @@ export class ListboxController<
    * @returns void
    */
   #onFilterChange() {
+    if (this.disabled) {
+      return;
+    }
     const oldValue = this.value;
     this.#tabindex.initItems(this.visibleOptions);
     this.#updateActiveDescendant();

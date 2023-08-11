@@ -1,7 +1,4 @@
 :host {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
   padding: var(--pf-global--spacer--sm, 0.5rem) var(--pf-global--spacer--md, 1rem);
 }
 
@@ -17,12 +14,23 @@
 }
 
 :host([active-descendant]) {
-  background-color: var(--_active-descendant-color, var(--pf-global--BorderColor--100, #d2d2d2));
+  background-color: var(--_pf-select-option-active-descendant-color, var(--pf-global--BorderColor--100, #d2d2d2));
+}
+
+:host([disabled]) {
+  color: var(--pf-global--Color--dark-200, #6a6e73);
+  pointer-events: none;
+}
+
+div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 input[type="checkbox"] {
   margin-inline-end: 1em;
-  display: var(--_pf-select-checkboxes-display, none);
+  display: var(--_pf-select-option-checkboxes-display, none);
   pointer-events: none;
   flex: 0 0 auto;
 }
@@ -32,10 +40,15 @@ span {
 }
 
 svg {
-  color: var(--pf-theme--color--accent, #0066cc);
+  color: var(--_pf-select-option-svg-color, var(--pf-theme--color--accent, #0066cc));
   width: 1em;
   height: 1em;
   margin-inline-start: 1em;
   text-align: right;
   flex: 0 0 auto;
+}
+
+slot[name="description"] {
+  font-size: var(--pf-global--FontSize--xs, 0.75rem);
+  color: var(--pf-global--Color--dark-200, #6a6e73);
 }

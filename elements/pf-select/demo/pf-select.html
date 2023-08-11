@@ -30,13 +30,16 @@
     to remove filtering altogether.
   </p>
   <pf-select always-open>
-    <pf-select-option>Select a value</pf-select-option>
+    <pf-select-option disabled>Select a value</pf-select-option>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
     <pf-select-option value="Orange">Orange</pf-select-option>
     <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
+    <pf-select-option value="Pink">
+      <span>Pink</span>
+      <span slot="description">A lightish red</span>
+    </pf-select-option>
     <pf-select-option value="Red">Red</pf-select-option>
     <pf-select-option value="Yellow">Yellow</pf-select-option>
   </pf-select>

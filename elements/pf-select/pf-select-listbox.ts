@@ -17,6 +17,11 @@ export class PfSelectListbox extends LitElement {
   static readonly styles = [styles];
 
   /**
+   * whether listbox is disabled
+   */
+  @property({ reflect: true, attribute: 'disabled', type: Boolean }) disabled = false;
+
+  /**
    * whether filtering (if enabled) will be case-sensitive
    */
   @property({ reflect: true, attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
@@ -121,6 +126,9 @@ export class PfSelectListbox extends LitElement {
       }
       if (changed.has('orientation')) {
         this.#listbox.orientation = this.orientation;
+      }
+      if (changed.has('disabled')) {
+        this.#listbox.disabled = this.disabled;
       }
     }
   }

@@ -5,6 +5,7 @@ import { type ListboxFilterMode, type ListboxOrientation, type ListboxValue } fr
 import { PfSelectListbox } from './pf-select-listbox.js';
 
 import styles from './pf-select.css';
+import type { PfSelectOption } from './pf-select-option.js';
 
 /**
  * List of selectable items
@@ -14,10 +15,16 @@ import styles from './pf-select.css';
 @customElement('pf-select')
 export class PfSelect extends LitElement {
   static readonly styles = [styles];
+
+  /**
+   * whether select is disabled
+   */
+  @property({ reflect: true, attribute: 'disabled', type: Boolean }) disabled = false;
+
   /**
    * listbox button text when listbox selected option has no text
    */
-  @property({ attribute: 'null-text', type: Boolean }) nullText = 'Select an option';
+  @property({ attribute: 'null-text', type: String }) nullText = 'Select an option';
 
   /**
    * whether listbox is always open
@@ -107,6 +114,7 @@ export class PfSelect extends LitElement {
         aria-expanded="${!this.expanded ? 'false' : 'true'}" 
         aria-controls="listbox" 
         aria-haspopup="listbox"
+        ?disabled=${this.disabled}
         @click="${this.#onToggleClick}">
         ${this.#valueText !== '' ? this.#valueText : this.nullText} 
         <svg viewBox="0 0 320 512" 
@@ -119,7 +127,8 @@ export class PfSelect extends LitElement {
       <pf-select-listbox 
         id="listbox" 
         class="${this.hasCheckboxes ? 'show-checkboxes' : ''}"
-        ?hidden=${!this.alwaysOpen && !this.expanded}
+        ?disabled=${this.disabled}
+        ?hidden=${!this.alwaysOpen && (!this.expanded || this.disabled)}
         ?caseSensitive=${this.caseSensitive}
         filterMode="${this.filterMode}"
         ?matchAnywhere=${this.matchAnywhere}
@@ -140,8 +149,8 @@ export class PfSelect extends LitElement {
 
   #updateValueText() {
     const selectedOptions = this.#listbox?.selectedOptions || [];
-    const [selectedOption] = selectedOptions;
-    this.#valueText = selectedOption?.textContent || '';
+    const [selectedOption] = selectedOptions as PfSelectOption[];
+    this.#valueText = selectedOption?.optionText || '';
     this.requestUpdate();
   }
 

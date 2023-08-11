@@ -190,29 +190,29 @@ describe('<pf-popover>', function() {
         await element.updateComplete;
       });
       it('shows the popover', expectOpen);
-      describe('then setting the trigger to the sibling button', function() {
+    });
+    describe('then setting the trigger to the sibling button', function() {
+      beforeEach(async function() {
+        await element.updateComplete;
+        // Update trigger element
+        element.setAttribute('trigger', 'btn-2');
+        await element.updateComplete;
+      });
+      describe('clicking the first button', function() {
         beforeEach(async function() {
           await element.updateComplete;
-          // Update trigger element
-          element.setAttribute('trigger', 'btn-2');
+          await clickElementCenter(btn1);
           await element.updateComplete;
         });
-        describe('clicking the first button', function() {
-          beforeEach(async function() {
-            await element.updateComplete;
-            await clickElementCenter(btn1);
-            await element.updateComplete;
-          });
-          it('remains closed', expectClose);
+        it('remains closed', expectClose);
+      });
+      describe('clicking the sibling button', function() {
+        beforeEach(async function() {
+          await element.updateComplete;
+          await clickElementCenter(btn2);
+          await element.updateComplete;
         });
-        describe('clicking the sibling button', function() {
-          beforeEach(async function() {
-            await element.updateComplete;
-            await clickElementCenter(btn2);
-            await element.updateComplete;
-          });
-          it('shows the popup', expectOpen);
-        });
+        it('shows the popup', expectOpen);
       });
     });
     describe('then pressing the Enter key', function() {

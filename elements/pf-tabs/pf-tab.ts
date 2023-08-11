@@ -1,9 +1,12 @@
+import type { PropertyValues } from 'lit';
+
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { query } from 'lit/decorators/query.js';
 
+import { observed } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { TabExpandEvent } from './TabsController.js';
@@ -84,13 +87,14 @@ export class PfTab extends LitElement {
 
   @property({ type: Boolean }) manual = false;
 
+  @observed
   @property({ reflect: true, type: Boolean }) active = false;
 
   @property({ reflect: true, type: Boolean }) disabled = false;
 
   #internals = this.attachInternals();
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
     this.id ||= getRandomId(this.localName);
     this.#internals.role = 'tab';
@@ -116,6 +120,7 @@ export class PfTab extends LitElement {
       return;
     }
     this.#activate();
+    this.button.focus();
   }
 
   #onFocus() {
@@ -127,8 +132,12 @@ export class PfTab extends LitElement {
 
   #activate() {
     this.active = true;
-    this.button.focus();
-    this.dispatchEvent(new TabExpandEvent(this));
+  }
+
+  private _activeChanged() {
+    if (this.active) {
+      this.dispatchEvent(new TabExpandEvent(this));
+    }
   }
 
   #setInternalsAriaDisabled() {

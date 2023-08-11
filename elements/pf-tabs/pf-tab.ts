@@ -134,8 +134,8 @@ export class PfTab extends LitElement {
     this.active = true;
   }
 
-  private _activeChanged() {
-    if (this.active) {
+  private _activeChanged(oldVal: boolean, newVal: boolean) {
+    if (oldVal !== newVal && newVal === true) {
       this.dispatchEvent(new TabExpandEvent(this));
     }
   }

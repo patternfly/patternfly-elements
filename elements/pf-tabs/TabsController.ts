@@ -7,9 +7,17 @@ import { ComposedEvent } from '@patternfly/pfe-core';
 
 export class TabExpandEvent extends ComposedEvent {
   constructor(
-    public tab: HTMLElement,
+    public tab: Tab,
   ) {
     super('expand');
+  }
+}
+
+export class TabDisabledEvent extends ComposedEvent {
+  constructor(
+    public tab: Tab,
+  ) {
+    super('disabled');
   }
 }
 
@@ -50,6 +58,12 @@ export class TabsController implements ReactiveController {
         instance.#onTabExpand(event as TabExpandEvent);
       }
     });
+
+    window.addEventListener('disabled', event => {
+      for (const instance of this.#instances) {
+        instance.#onTabDisabled(event as TabDisabledEvent);
+      }
+    });
   }
 
   #logger: Logger;
@@ -87,7 +101,7 @@ export class TabsController implements ReactiveController {
       error = true;
       this.#logger.warn(`The index provided is out of bounds: 0 - ${this._tabs.length - 1}. Setting to first focusable tab.`);
     }
-    if (this._tabs[index].disabled) {
+    if (this._tabs[index].disabled || this._tabs[index].hasAttribute('aria-disabled')) {
       error = true;
       this.#logger.warn(`The tab at index ${index} is disabled. Setting to first focusable tab.`);
     }
@@ -157,11 +171,11 @@ export class TabsController implements ReactiveController {
     this.#slottedTabs = tabSlot?.assignedElements().filter(this.#isTab) ?? [];
 
     this.#tabs.clear();
-    this.#registerSlottedTabs();
+    await this.#registerSlottedTabs();
 
     if (this._tabs.length > 0) {
       this.#updateAccessibility();
-      this.#tabindex.initItems(this._tabs, this.#host);
+      await this.#tabindex.initItems(this._tabs, this.#host);
       this.#setActiveTab();
     }
 
@@ -178,10 +192,17 @@ export class TabsController implements ReactiveController {
     }
   }
 
-  #registerSlottedTabs() {
+  async #onTabDisabled(event: TabDisabledEvent) {
+    if (event instanceof TabDisabledEvent && this.#tabs.has(event.tab)) {
+      await this.#rebuild();
+    }
+  }
+
+  async #registerSlottedTabs(): Promise<null> {
     for (const [index, slotted] of this.#slottedTabs.entries()) {
       this.#addPairForTab(index, slotted);
     }
+    return null;
   }
 
   #addPairForTab(index: number, tab: Tab) {
@@ -201,6 +222,7 @@ export class TabsController implements ReactiveController {
   }
 
   #setActiveTab() {
+    // check for an active tab, if not set one
     if (!this.#activeTab) {
       this.#logger.warn('No active tab found. Setting to first focusable tab.');
       this.#setFirstFocusableTabActive();

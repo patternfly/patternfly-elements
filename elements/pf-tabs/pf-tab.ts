@@ -1,5 +1,3 @@
-import type { PropertyValues } from 'lit';
-
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
@@ -9,7 +7,7 @@ import { query } from 'lit/decorators/query.js';
 import { observed } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
-import { TabExpandEvent } from './TabsController.js';
+import { TabExpandEvent, TabDisabledEvent } from './TabsController.js';
 
 import BaseStyles from './BaseTab.css';
 import styles from './pf-tab.css';
@@ -90,6 +88,7 @@ export class PfTab extends LitElement {
   @observed
   @property({ reflect: true, type: Boolean }) active = false;
 
+  @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
 
   #internals = this.attachInternals();
@@ -138,6 +137,10 @@ export class PfTab extends LitElement {
     if (oldVal !== newVal && newVal === true) {
       this.dispatchEvent(new TabExpandEvent(this));
     }
+  }
+
+  private _disabledChanged() {
+    this.dispatchEvent(new TabDisabledEvent(this));
   }
 
   #setInternalsAriaDisabled() {

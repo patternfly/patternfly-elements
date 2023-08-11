@@ -3,7 +3,6 @@ import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { setViewport, sendKeys } from '@web/test-runner-commands';
 
-import { BaseTab } from '../BaseTab.js';
 import { PfTabs } from '../pf-tabs.js';
 import { PfTab } from '../pf-tab.js';
 import { PfTabPanel } from '../pf-tab-panel.js';
@@ -147,7 +146,7 @@ describe('<pf-tabs>', function() {
 
     it('should aria-disable the tab if disabled', async function() {
       const el = await createFixture<PfTabs>(TEMPLATE);
-      const disabledTab = el.querySelector('pf-tab:nth-of-type(2)')! as BaseTab;
+      const disabledTab = el.querySelector('pf-tab:nth-of-type(2)')! as PfTab;
       disabledTab.disabled = true;
       await nextFrame();
       const tab = (await a11ySnapshot()).children.find(x => x.role === 'tab' && x.name === 'Containers');

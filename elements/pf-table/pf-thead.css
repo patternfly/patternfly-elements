@@ -7,13 +7,13 @@
   --pf-c-table--cell--FontSize: var(--pf-c-table--thead--cell--FontSize, var(--pf-global--FontSize--sm, 0.875rem));
   --pf-c-table--cell--FontWeight: var(--pf-c-table--thead--cell--FontWeight, var(--pf-global--FontWeight--bold, 700));
   vertical-align: bottom;
-  display: none;
-  visibility: hidden;
+  display: grid;
+  visibility: visible;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   :host {
-    display: grid;
-    visibility: visible;
+    display: none;
+    visibility: hidden;
   }
 }

@@ -1,21 +1,12 @@
-/* :host {
-  display: none;
-  visibility: hidden;
-
+:host {
+  --pf-c-table--cell--MinWidth: var(--pf-c-table--m-truncate--cell--MinWidth);
+  --pf-c-table--cell--MaxWidth: var(--pf-c-table--m-truncate--cell--MaxWidth);
+  --pf-c-table--cell--Overflow: hidden;
+  --pf-c-table--cell--TextOverflow: ellipsis;
+  --pf-c-table--cell--WhiteSpace: nowrap;
   --pf-c-table--cell--FontSize: var(--pf-c-table--thead--cell--FontSize, var(--pf-global--FontSize--sm, 0.875rem));
   --pf-c-table--cell--FontWeight: var(--pf-c-table--thead--cell--FontWeight, var(--pf-global--FontWeight--bold, 700));
-}
-
-@media (min-width: 768px) {
-  :host {
-    display: table-header-group;
-    visibility: visible;
-    vertical-align: middle;
-    border-color: inherit;
-  }
-} */
-
-:host {
+  vertical-align: bottom;
   display: none;
   visibility: hidden;
 }

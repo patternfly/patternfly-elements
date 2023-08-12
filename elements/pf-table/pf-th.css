@@ -79,6 +79,7 @@ button.selected {
   width: 0;
   margin-inline-start: -1em;
   overflow: visible;
+  color: var(--pf-c-table__sort-indicator--Color);
 }
 
 .visually-hidden {

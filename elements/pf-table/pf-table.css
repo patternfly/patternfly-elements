@@ -202,13 +202,22 @@
 	--pf-c-table--thead--m-nested-column-header--tr--PaddingBottom: var(--pf-global--spacer--xs, 0.25rem);
 	--pf-c-table__subhead--Color: var(--pf-global--Color--200, #6a6e73);
 	--pf-c-table--m-striped__tr--BackgroundColor: var(--pf-global--BackgroundColor--light-200);
-
 	color: var(--pf-global--Color--100);
-  display: inline-grid;
+  	display: inline-grid;
+	grid-auto-rows: min-content;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   :host {
-    grid-auto-rows: min-content;
+    --pf-c-table--cell--PaddingTop: var(--pf-c-table--m-grid--cell--PaddingTop, 0);
+    --pf-c-table--cell--PaddingRight: var(--pf-c-table--m-grid--cell--PaddingRight, 0);
+    --pf-c-table--cell--PaddingBottom: var(--pf-c-table--m-grid--cell--PaddingBottom, 0);
+    --pf-c-table--cell--PaddingLeft: var(--pf-c-table--m-grid--cell--PaddingLeft, 0);
+    --pf-c-table__favorite--c-button--MarginTop: auto;
+    --pf-c-table__favorite--c-button--MarginRight: auto;
+    --pf-c-table__favorite--c-button--MarginBottom: auto;
+    --pf-c-table__favorite--c-button--MarginLeft: auto;
+    display: grid;
+    border: none;
   }
 }

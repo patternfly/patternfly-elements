@@ -82,7 +82,7 @@ export class TabsController implements ReactiveController {
 
   #tabindex: RovingTabindexController<Tab>;
 
-  #observer: MutationObserver;
+  #mo = new MutationObserver(this.#mutationsCallback.bind(this));
 
   #rebuilding: Promise<null> | null = null;
 
@@ -128,9 +128,8 @@ export class TabsController implements ReactiveController {
     if (host.isConnected) {
       TabsController.#instances.add(this);
     }
-    this.#observer = new MutationObserver(this.#mutationsCallback);
     (this.#host = host).addController(this);
-    this.#observer.observe(host, { attributes: true, childList: true, subtree: true });
+    this.#mo.observe(host, { attributes: true, childList: true, subtree: true });
     host.addEventListener('slotchange', this.#onSlotchange);
   }
 
@@ -151,7 +150,7 @@ export class TabsController implements ReactiveController {
     this.#init++;
   }
 
-  #mutationsCallback = async (mutations: MutationRecord[]): Promise<void> => {
+  async #mutationsCallback(mutations: MutationRecord[]): Promise<void> {
     for (const mutation of mutations) {
       if (mutation.type === 'childList') {
         if (this.#isTab(mutation.addedNodes[0])) {
@@ -162,7 +161,7 @@ export class TabsController implements ReactiveController {
         }
       }
     }
-  };
+  }
 
   async #rebuild() {
     const tabSlot = this.#host.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=tab]');

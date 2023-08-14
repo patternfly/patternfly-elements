@@ -1,4 +1,4 @@
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import type { ReactiveController, ReactiveElement } from 'lit';
 
 import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.js';
 
@@ -25,6 +25,7 @@ export class OverflowController implements ReactiveController {
     }, { capture: false });
   }
 
+  #host: ReactiveElement;
   /** Overflow container */
   #container?: HTMLElement;
   /** Children that can overflow */
@@ -35,6 +36,9 @@ export class OverflowController implements ReactiveController {
 
   /** Default state */
   #hideOverflowButtons: boolean;
+
+  #mo = new MutationObserver(this.#mutationsCallback.bind(this));
+
   showScrollButtons = false;
   overflowLeft = false;
   overflowRight = false;
@@ -47,12 +51,22 @@ export class OverflowController implements ReactiveController {
     return this.#items.at(-1);
   }
 
-  constructor(public host: ReactiveControllerHost & Element, private options?: Options) {
-    this.host.addController(this);
+  constructor(public host: ReactiveElement, private options?: Options) {
     this.#hideOverflowButtons = options?.hideOverflowButtons ?? false;
     this.#scrollTimeoutDelay = options?.scrollTimeoutDelay ?? 0;
     if (host.isConnected) {
       OverflowController.#instances.add(this);
+    }
+    (this.#host = host).addController(this);
+    this.#mo.observe(host, { attributes: false, childList: true, subtree: true });
+  }
+
+  async #mutationsCallback(mutations: MutationRecord[]): Promise<void> {
+    for (const mutation of mutations) {
+      if (mutation.type === 'childList') {
+        this.#setOverflowState();
+        this.#host.requestUpdate();
+      }
     }
   }
 

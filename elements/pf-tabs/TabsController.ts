@@ -187,6 +187,7 @@ export class TabsController implements ReactiveController {
 
   #onTabExpand(event: TabExpandEvent) {
     if (event instanceof TabExpandEvent && this.#tabs.has(event.tab)) {
+      this.#tabindex.updateActiveItem(event.tab);
       this.#deactivateExcept(this._tabs.indexOf(event.tab));
     }
   }

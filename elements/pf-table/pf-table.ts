@@ -24,8 +24,44 @@ const rowQuery = [
 ].join();
 
 /**
- * Table
- * @slot - Place element content here
+ * A **table** is used to display large data sets that can be easily laid out in a simple grid with column headers.
+ *
+ * @slot
+ *       The default slot can hold an optional `pf-caption` element and a combination of `pf-tr`, `pf-thead`, or `pf-tbody` elements.
+ *
+ * @cssprop {<color>} --pf-c-table--BackgroundColor
+ *          Table background color
+ *          {@default `#fff`}
+ * @cssprop {<color>} --pf-c-table--BorderColor
+ *          Table border color
+ *          {@default `#d2d2d2`}
+ * @cssprop {<dimension>} --pf-c-table--border-width--base
+ *          Table border color
+ *          {@default `1px`}
+ * @cssprop {<dimension>} --pf-c-table-caption--FontSize
+ *          Table caption font size
+ *          {@default `0.875rem`}
+ * @cssprop {<color>} --pf-c-table-caption--Color
+ *          Table caption color
+ *          {@default `#6a6e73`}
+ * @cssprop {<dimension>} --pf-c-table-caption--PaddingTop
+ *          Table caption top padding
+ *          {@default `1rem`}
+ * @cssprop {<dimension>} --pf-c-table-caption--PaddingRight
+ *          Table caption right padding
+ *          {@default `1.5rem`}
+ * @cssprop {<dimension>} --pf-c-table-caption--PaddingBottom
+ *          Table caption bottom padding
+ *          {@default `1rem`}
+ * @cssprop {<dimension>} --pf-c-table-caption--PaddingLeft
+ *          Table caption left padding
+ *          {@default `1.5rem`}
+ * @cssprop {<length>} --pf-c-table-caption--xl--PaddingRight
+ *          Table XL caption right padding
+ *          {@default `1rem`}
+ * @cssprop {<dimension>} --pf-c-table-caption--xl--PaddingLeft
+ *          Table XL caption left padding
+ *          {@default `1rem`}
  */
 @customElement('pf-table')
 export class PfTable extends LitElement {

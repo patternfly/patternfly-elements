@@ -101,6 +101,54 @@ const rowQuery = [
  * @cssprop {<dimension>} --pf-c-table--cell--PaddingLeft
  *          Table cell left padding
  *          {@default `1rem`}
+ * @cssprop {<dimension>} --pf-c-table--cell--first-last-child--PaddingLeft
+ *
+ *          {@default `1rem`}
+ * @cssprop {<dimension>} --pf-c-table--cell--first-last-child--PaddingRight
+ *
+ *          {@default `1rem`}
+ * @cssprop {<dimension>} --pf-c-table--cell--first-last-child--xl--PaddingLeft
+ *
+ *          {@default `1.5rem`}
+ * @cssprop {<dimension>} --pf-c-table--cell--first-last-child--xl--PaddingRight
+ *
+ *          {@default `1.5rem`}
+ * @cssprop {<dimension>} --pf-c-table--tr--m-first-cell-offset-reset--cell--PaddingLeft
+ *
+ *          {@default `1rem`}
+ * @cssprop {<number>} --pf-c-table--cell--MinWidth
+ *          Table cell min width
+ *          {@default `0`}
+ * @cssprop {<>} --pf-c-table--cell--MaxWidth
+ *          Table cell max width
+ *          {@default `none`}
+ * @cssprop {<>} --pf-c-table--cell--Width
+ *          Table cell width
+ *          {@default `auto}
+ * @cssprop {<>} --pf-c-table--cell--Overflow
+ *          Table cell overflow
+ *          {@default `visible`}
+ * @cssprop {<>} --pf-c-table--cell--TextOverflow
+ *          Table cell text overflow
+ *          {@default `clip`}
+ * @cssprop {<dimension>} --pf-c-table--cell--WhiteSpace
+ *          Table cell white space
+ *          {@default `normal`}
+ * @cssprop {<dimension>} --pf-c-table--cell--WordBreak
+ *          Table cell word break
+ *          {@default `normal`}
+ * @cssprop {<dimension>} --pf-c-table--cell--m-border-right--before--BorderRightWidth
+ *
+ *          {@default `1px`}
+ * @cssprop {<color>} --pf-c-table--cell--m-border-right--before--BorderRightColor
+ *
+ *          {@default `#d2d2d2`}
+ * @cssprop {<dimension>} --pf-c-table--cell--m-border-left--before--BorderLeftWidth
+ *
+ *          {@default `1px`}
+ * @cssprop {<color>} --pf-c-table--cell--m-border-left--before--BorderLeftColor
+ *
+ *          {@default `#d2d2d2`}
  */
 @customElement('pf-table')
 export class PfTable extends LitElement {

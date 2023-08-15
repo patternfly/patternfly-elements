@@ -62,6 +62,45 @@ const rowQuery = [
  * @cssprop {<dimension>} --pf-c-table-caption--xl--PaddingLeft
  *          Table XL caption left padding
  *          {@default `1rem`}
+ * @cssprop {<dimension>} --pf-c-table--thead--cell--FontSize
+ *          Table head cell font size
+ *          {@default `0.875rem`}
+ * @cssprop {<number>} --pf-c-table--thead--cell--FontWeight
+ *          Table head cell font weight
+ *          {@default `700`}
+ * @cssprop {<dimension>} --pf-c-table--tbody--cell--PaddingTop
+ *          Table body cell padding top
+ *          {@default `1.5rem`}
+ * @cssprop {<dimension>} --pf-c-table--tbody--cell--PaddingBottom
+ *          Table body cell padding bottom
+ *          {@default `1.5rem`}
+ * @cssprop {<>} --pf-c-table--tr--BoxShadow--top--base
+ *          Table row box shadow top base
+ *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)`}
+ * @cssprop {<dimension>} --pf-c-table--cell--Padding--base
+ *          Table cell padding base
+ *          {@default `1rem`}
+ * @cssprop {<dimension>} --pf-c-table--cell--FontSize
+ *          Table cell font size
+ *          {@default `1rem`}
+ * @cssprop {<number>} --pf-c-table--cell--FontWeight
+ *          Table cell font weight
+ *          {@default `400`}
+ * @cssprop {<color>} --pf-c-table--cell--Color
+ *          Table cell color
+ *          {@default `#151515`}
+ * @cssprop {<dimension>} --pf-c-table--cell--PaddingTop
+ *          Table cell top padding
+ *          {@default `1rem`}
+ * @cssprop {<dimension>} --pf-c-table--cell--PaddingRight
+ *          Table cell right padding
+ *          {@default `1rem`}
+ * @cssprop {<dimension>} --pf-c-table--cell--PaddingBottom
+ *          Table cell bottom padding
+ *          {@default `1rem`}
+ * @cssprop {<dimension>} --pf-c-table--cell--PaddingLeft
+ *          Table cell left padding
+ *          {@default `1rem`}
  */
 @customElement('pf-table')
 export class PfTable extends LitElement {

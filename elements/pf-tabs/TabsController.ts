@@ -129,7 +129,7 @@ export class TabsController implements ReactiveController {
       TabsController.#instances.add(this);
     }
     (this.#host = host).addController(this);
-    this.#mo.observe(host, { attributes: true, childList: true, subtree: true });
+    this.#mo.observe(host, { attributes: false, childList: true, subtree: false });
     host.addEventListener('slotchange', this.#onSlotchange);
   }
 

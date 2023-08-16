@@ -20,7 +20,7 @@ export type BannerVariant = (
  * A banner is a 1-line, full color, full width container that can be used to communicate short snippets of information to users.
  * Banners are un-intrusive and non-dismissible.
  *
- * @summary Display a stylized banner.
+ * @summary Allows users to display a stylized banner.
  *
  * @cssprop {<length>} --pf-c-banner--PaddingTop  {@default `0.25rem`}
  * @cssprop {<length>} --pf-c-banner--PaddingRight  {@default `1rem`}

@@ -68,6 +68,10 @@
   margin-inline-start: 0.25em;
 }
 
+#toggle-text {
+  flex: 1 1 auto;
+}
+
 pf-badge {
   padding: 0;
 }

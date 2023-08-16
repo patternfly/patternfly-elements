@@ -129,7 +129,7 @@ Any arrow keys work. Only one option can be selected. Filter by typing a letter.
   </pf-select>
 {% endhtmlexample %}
 
-### Case-sensitive, filtering
+### Case-sensitive filtering
 
 Any arrow keys work. Only one option can be selected. Filter is case sensisitve.
 
@@ -168,7 +168,7 @@ Any arrow keys work. Only one option can be selected. Filter is disabled.
 
 <p>Any arrow keys work. Only one option can be selected. Listbox wont appear until input has text. Type <code>*</code> to show all options.</p>
 
-{% htmlexample %} d
+{% htmlexample %}
 <label id="combo">
   Pick a color:
   <pf-select id="listbox" filter-mode="required" typeahead>

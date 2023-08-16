@@ -91,6 +91,15 @@ export class PfTabs extends LitElement {
 
   @property({ reflect: false, attribute: 'label-scroll-right' }) labelScrollRight = 'Scroll left';
 
+  @property({ attribute: false })
+  get activeIndex() {
+    return this.#tabs.activeIndex;
+  }
+
+  set activeIndex(index: number) {
+    this.#tabs.activeIndex = index;
+  }
+
   @query('#tabs') private _tabsContainer!: HTMLElement;
 
   @queryAssignedElements({ slot: 'tab' }) private _tabs?: PfTab[];
@@ -141,10 +150,6 @@ export class PfTabs extends LitElement {
         <slot part="panels"></slot>
       </div>
     `;
-  }
-
-  set activeIndex(index: number) {
-    this.#tabs.activeIndex = index;
   }
 
   #scrollLeft() {

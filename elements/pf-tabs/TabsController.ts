@@ -88,6 +88,13 @@ export class TabsController implements ReactiveController {
 
   #init = 0;
 
+  get activeIndex() {
+    if (!this.#activeTab) {
+      return -1;
+    }
+    return this._tabs.indexOf(this.#activeTab);
+  }
+
   // Setting active tab from js/console (ie: $0.activeIndex = 2)
   set activeIndex(index: number) {
     const firstFocusableTab = this.#tabindex.firstItem;

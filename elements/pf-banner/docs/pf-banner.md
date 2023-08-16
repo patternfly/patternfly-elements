@@ -9,7 +9,7 @@
 
 
   ### With a variant
-  Available variants are: grey (default), info, danger, success, warning
+  Available variants are: default, info, danger, success, warning
 
   {% htmlexample %}
   <pf-banner variant="default">Default</pf-banner>

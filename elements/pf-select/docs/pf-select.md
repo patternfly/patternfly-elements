@@ -5,8 +5,22 @@ import '@patternfly/elements/pf-icon/pf-select.js';
 </script>
 
 {% renderOverview %}
+  <pf-select>
+    <pf-select-option>Select a value</pf-select-option>
+    <pf-select-option value="Blue">Blue</pf-select-option>
+    <pf-select-option value="Green">Green</pf-select-option>
+    <pf-select-option value="Magenta">Magenta</pf-select-option>
+    <pf-select-option value="Orange">Orange</pf-select-option>
+    <pf-select-option value="Purple">Purple</pf-select-option>
+    <pf-select-option value="Pink">Pink</pf-select-option>
+    <pf-select-option value="Red">Red</pf-select-option>
+    <pf-select-option value="Yellow">Yellow</pf-select-option>
+  </pf-select>
+{% endrenderOverview %}
 
-#### Default - Medium size
+{% band header="Usage" %}
+
+#### Default
 
 <p>
   Any arrow keys work.
@@ -28,10 +42,6 @@ import '@patternfly/elements/pf-icon/pf-select.js';
     <pf-select-option value="Yellow">Yellow</pf-select-option>
   </pf-select>
 {% endhtmlexample %}
-
-{% endrenderOverview %}
-
-{% band header="Usage" %}
 
 ### Typeahead
 

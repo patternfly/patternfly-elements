@@ -1,3 +1,8 @@
-pf-chip#longchip::part(text) {
+#longchip::part(text) {
   max-width: 10em;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  text-wrap: nowrap;
 }

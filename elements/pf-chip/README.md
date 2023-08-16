@@ -1,11 +1,11 @@
 # Chip
-Add a description of the component here.
+
+A **chip** is used to communicate a value or a set of attribute-value pairs within workflows that involve filtering a set of objects.
 
 ## Usage
+
 Describe how best to use this web component along with best practices.
 
 ```html
-<pf-chip>
-
-</pf-chip>
+<pf-chip>Chip 1</pf-chip>
 ```

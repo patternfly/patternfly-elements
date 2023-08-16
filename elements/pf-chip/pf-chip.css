@@ -46,6 +46,8 @@ button {
   background-color: transparent;
   border: none;
   color: var(--pf-theme--color--ui-base, #6a6e73);
+  display: inline-flex;
+  align-items: center;
 }
 
 #overflow-button {
@@ -65,16 +67,7 @@ svg {
   height: var(--pf-global--FontSize--xs, 12px);
 }
 
-.chip-text {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  text-wrap: nowrap;
-}
-
 ::slotted(pf-badge) {
-  padding: 0 !important;
   font-size: var(--pf-global--FontSize--xs, 12px);
   margin: 0 0 0 var(--pf-global--spacer--xs, 0.25rem) !important;
 }

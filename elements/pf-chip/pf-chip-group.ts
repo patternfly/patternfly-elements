@@ -2,14 +2,20 @@ import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import type { PropertyValues } from 'lit';
-import { query } from 'lit/decorators/query.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
-import { PfChip, type TooltipPosition } from './pf-chip.js';
+import { PfChip } from './pf-chip.js';
 
 import styles from './pf-chip-group.css';
 /**
- * Chip
- * @slot - Place element content here
+ * A **chip group** is a collection of chips that can be grouped by category and used to represent one or more values assigned to a single attribute. When the value of numChips is exceeded, additional chips will be hidden using an overflow chip.
+ *
+ * @slot category-name
+ *      Category name text for the chip group category. If this prop is supplied the chip group with have a label and category styling applied
+ *
+ * @slot
+ *      Should be <Chip> elements.
+ *
+ * @fires { Event } overflow-chip-click - when close button is clicked
  */
 @customElement('pf-chip-group')
 export class PfChipGroup extends LitElement {
@@ -60,14 +66,7 @@ export class PfChipGroup extends LitElement {
    */
   @property({ reflect: true, attribute: 'open', type: Boolean }) open = false;
 
-  /**
-   * Position of the tooltip which is displayed if text is longer
-   */
-  @property({ attribute: 'tooltip-position', type: String }) tooltipPosition: TooltipPosition = 'top';
-
   @queryAssignedNodes({ slot: 'category-name', flatten: true }) private _categorySlotted?: Node[];
-
-  @query('#category') private _categoryText?: HTMLElement | null;
 
   #chips: PfChip[] = [];
 
@@ -96,15 +95,16 @@ export class PfChipGroup extends LitElement {
       `}
       ${!this.closeable && (this.hasCategory || this.label !== '') ? '' : html`
         <button id="close-button" @click=${this.#onCloseClick} aria-describedby="category">
-          <svg aria-label="${this.closeLabel}" fill="currentColor" viewBox="0 0 352 512">
-            <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"></path></svg>
+          <svg aria-label="${this.closeLabel}" fill="currentColor" viewBox="0 0 496 496">
+            <path d="m248,0C111,0,0,111,0,248s111,248,248,248,248-111,248-248S385,0,248,0Zm121.6,313.1c4.7,4.7,4.7,12.3,0,17l-39.6,39.5c-4.7,4.7-12.3,4.7-17,0l-65-65.6-65.1,65.6c-4.7,4.7-12.3,4.7-17,0l-39.5-39.6c-4.7-4.7-4.7-12.3,0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3,0-17l39.6-39.6c4.7-4.7,12.3-4.7,17,0l65,65.7,65.1-65.6c4.7-4.7,12.3-4.7,17,0l39.6,39.6c4.7,4.7,4.7,12.3,0,17l-65.7,65,65.6,65.1Z"/>
+          </svg>
         </button>
       `}
     `;
   }
 
   updated(changed: PropertyValues<this>) {
-    if (changed.has('closeLabel') || changed.has('tooltipPosition') || changed.has('numChips')) {
+    if (changed.has('closeLabel') || changed.has('numChips')) {
       this.#updateChips();
     }
     if (changed.has('label')) {
@@ -115,7 +115,6 @@ export class PfChipGroup extends LitElement {
   #updateChips() {
     this.#chips.forEach((chip, i) => {
       chip.closeLabel = this.closeLabel;
-      chip.tooltipPosition = this.tooltipPosition;
       const overflowHidden = i >= this.numChips;
       if (overflowHidden) {
         chip.setAttribute('overflow-hidden', 'overflow-hidden');
@@ -147,8 +146,10 @@ export class PfChipGroup extends LitElement {
     this.#updateChips();
   }
 
-  #onMoreClick() {
+  #onMoreClick(event: Event) {
     this.open = !this.open;
+    event.stopPropagation();
+    this.dispatchEvent(new Event('overflow-chip-click', event));
   }
 
   #onCloseClick() {

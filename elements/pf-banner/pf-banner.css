@@ -36,6 +36,13 @@
   --pf-c-banner--BackgroundColor: var(--pf-c-banner--m-warning--BackgroundColor, var(--pf-global--warning-color--100, #f0ab00));
 }
 
+#container.hasIcon {
+  display: var(--pf-l-flex--Display, flex);
+  flex-wrap: var(--pf-l-flex--FlexWrap, wrap);
+  align-items: var(--pf-l-flex--AlignItems, baseline);
+  gap: var(--pf-l-flex--spacer, var(--pf-l-flex--spacer--sm, var(--pf-global--spacer--sm, 0.5rem)));
+}
+
 :host([sticky]) {
   position: sticky;
   top: 0;

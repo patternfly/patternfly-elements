@@ -54,16 +54,6 @@ export class PfChipGroup extends LitElement {
   @property({ reflect: true, attribute: 'num-chips', type: Number }) numChips = 3;
 
   /**
-   * Flag indicating if the chip is an overflow chip
-   */
-  @property({ reflect: true, attribute: 'overflow-chip', type: Boolean }) overflowChip = false;
-
-  /**
-   * Flag indicating if the chip is an overflow chip
-   */
-  @property({ reflect: true, attribute: 'read-only', type: Boolean }) readOnly = false;
-
-  /**
    * Flag indicating if overflow chips are visible
    */
   @property({ reflect: true, attribute: 'open', type: Boolean }) open = false;

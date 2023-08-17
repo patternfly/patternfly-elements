@@ -30,7 +30,7 @@ export class PfChip extends LitElement {
   @property({ reflect: true, attribute: 'overflow-chip', type: Boolean }) overflowChip = false;
 
   /**
-   * Flag indicating if the chip is an overflow chip
+   * Flag indicating if the chip is read-only and cannot be removed
    */
   @property({ reflect: true, attribute: 'read-only', type: Boolean }) readOnly = false;
 

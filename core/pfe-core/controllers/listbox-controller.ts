@@ -160,14 +160,14 @@ export class ListboxController<
   }
 
   set options(options: ListboxOptionElement[]) {
-    if (options.length !== this.#options.length || !options.every((element, index) => element === this.#options[index])) {
-      const setSize = options.length;
+    const setSize = options.length;
+    if (setSize !== this.#options.length || !options.every((element, index) => element === this.#options[index])) {
       options.forEach((option, posInSet) => {
         option.setSize = setSize;
         option.posInSet = posInSet;
       });
-      this.#tabindex.initItems(this.visibleOptions);
       this.#options = options;
+      this.#tabindex.initItems(this.visibleOptions);
     }
   }
 
@@ -198,20 +198,16 @@ export class ListboxController<
   }
 
   get visibleOptions() {
-    let matchedOptions = this.options;
-    if (!this.disableFilter || !this.#showAllOptions) {
+    let matchedOptions: ListboxOptionElement[] = [];
+    if (!(this.disableFilter || this.filter === '*' || this.#showAllOptions)) {
       matchedOptions = this.options.filter(option => {
-        if (!this.disableFilter || this.filter === '*') {
+        const search = this.matchAnywhere ? '' : '^';
+        const text = option.textContent || '';
+        const regex = new RegExp(`${search}${this.filter}`, this.caseSensitive ? '' : 'i');
+        if (this.filter === '' || text.match(regex)) {
           return true;
         } else {
-          const search = this.matchAnywhere ? '' : '^';
-          const text = option.textContent || '';
-          const regex = new RegExp(`${search}${this.filter}`, this.caseSensitive ? '' : 'i');
-          if (this.filter === '' || text.match(regex)) {
-            return true;
-          } else {
-            return false;
-          }
+          return false;
         }
       });
     }

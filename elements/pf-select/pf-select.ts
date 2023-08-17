@@ -105,6 +105,10 @@ export class PfSelect extends LitElement {
     return this.shadowRoot?.querySelector('#toggle-input');
   }
 
+  get #toggle(): HTMLButtonElement | null | undefined {
+    return this.shadowRoot?.querySelector('#toggle-button');
+  }
+
   set filter(filterText: string) {
     if (this.#listbox) {
       this.#listbox.filter = filterText;
@@ -163,7 +167,7 @@ export class PfSelect extends LitElement {
         ?disabled=${this.disabled} 
         ?expanded=${this.open}>
         ${!this.hasChips ? '' : html`
-          <pf-chip-group label="option-selected">
+          <pf-chip-group>
             ${this.#valueTextArray.map(txt => html`
               <pf-chip id="chip-${txt}" @click="${() => this.#onChipClick(txt)}">${txt}</pf-chip>
             `)}
@@ -213,7 +217,9 @@ export class PfSelect extends LitElement {
         ?match-anywhere=${this.matchAnywhere}
         ?multi-selectable=${this.multiSelectable || this.hasCheckboxes}
         @input=${this.#onListboxInput}
-        @change=${this.#onListboxChange}>
+        @change=${this.#onListboxChange}
+        @select=${this.#onListboxSelect}
+        @keydown=${this.#onListboxKeydown}>
         <slot></slot>
       </pf-select-listbox>
     `;
@@ -273,10 +279,6 @@ export class PfSelect extends LitElement {
     }
   }
 
-  #onListboxInput() {
-    this.#updateValueText();
-  }
-
   #onListboxChange() {
     this.#updateValueText();
     if (this.#input && this.#listbox) {
@@ -292,8 +294,30 @@ export class PfSelect extends LitElement {
     }
   }
 
+  #onListboxInput() {
+    this.#updateValueText();
+  }
+
+  #onListboxKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.close();
+    }
+  }
+
+  close() {
+    this.open = false;
+    (this.#input || this.#toggle)?.focus();
+  }
+
+  #onListboxSelect() {
+    if (!this.multiSelectable && !this.hasCheckboxes) {
+      this.close();
+    }
+  }
+
   #onToggleClick() {
     this.open = !this.open;
+    this.#listbox?.focus();
   }
 
   #onTypeaheadInputFocus() {

@@ -52,6 +52,20 @@ export class RovingTabindexController<
   }
 
   /**
+   * all items from array
+   */
+  get items() {
+    return this.#items;
+  }
+
+  /**
+   * all focusable items from array
+   */
+  get focusableItems() {
+    return this.#focusableItems;
+  }
+
+  /**
    * first item in array of focusable items
    */
   get firstItem(): ItemType | undefined {
@@ -70,8 +84,8 @@ export class RovingTabindexController<
    */
   get nextItem(): ItemType | undefined {
     return (
-        this.#activeIndex >= this.#focusableItems.length - 1 ? this.firstItem
-      : this.#focusableItems[this.#activeIndex + 1]
+      this.#activeIndex >= this.#focusableItems.length - 1 ? this.firstItem
+        : this.#focusableItems[this.#activeIndex + 1]
     );
   }
 
@@ -80,8 +94,8 @@ export class RovingTabindexController<
    */
   get prevItem(): ItemType | undefined {
     return (
-        this.#activeIndex > 0 ? this.#focusableItems[this.#activeIndex - 1]
-      : this.lastItem
+      this.#activeIndex > 0 ? this.#focusableItems[this.#activeIndex - 1]
+        : this.lastItem
     );
   }
 
@@ -94,11 +108,11 @@ export class RovingTabindexController<
    */
   #onKeydown = (event: KeyboardEvent) => {
     if (event.ctrlKey ||
-        event.altKey ||
-        event.metaKey ||
-        !this.#focusableItems.length ||
-        !event.composedPath().some(x =>
-          this.#focusableItems.includes(x as ItemType))) {
+      event.altKey ||
+      event.metaKey ||
+      !this.#focusableItems.length ||
+      !event.composedPath().some(x =>
+        this.#focusableItems.includes(x as ItemType))) {
       return;
     }
 
@@ -107,8 +121,8 @@ export class RovingTabindexController<
     const item = this.activeItem;
     let shouldPreventDefault = false;
     const horizontalOnly =
-        !item ? false
-      : item.tagName === 'SELECT' ||
+      !item ? false
+        : item.tagName === 'SELECT' ||
         item.getAttribute('role') === 'spinbutton' || orientation === 'horizontal';
     const verticalOnly = orientation === 'vertical';
     switch (event.key) {

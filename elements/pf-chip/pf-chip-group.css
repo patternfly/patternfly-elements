@@ -20,10 +20,6 @@
   column-gap: 4px;
 }
 
-::slotted([overflow-hidden]) {
-  display: none !important;
-}
-
 button {
   background-color: transparent;
   border: none;

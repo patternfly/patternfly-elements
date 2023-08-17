@@ -37,12 +37,12 @@
 </section>
 
 <section>
-  <h2>filter-mode="disabled"</h2>
+  <h2>disable-filter</h2>
   <p>
     Any arrow keys work.
     Only one option can be selected.
     Filter is disabled.</p>
-  <pf-select filter-mode="disabled">
+  <pf-select disable-filter>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -55,16 +55,16 @@
 </section>
 
 <section>
-  <h2>filter-mode="required": combobox example</h2>
+  <h2>Typeahead example</h2>
   <p>
     Any arrow keys work.
     Only one option can be selected.
     Listbox wont appear until input has text.
     Type <code>*</code> to show all options.
   </p>
-  <label id="combo">
+  <label>
     Pick a color:
-    <pf-select id="listbox" filter-mode="required" typeahead>
+    <pf-select typeahead>
       <pf-select-option value="Blue">Blue</pf-select-option>
       <pf-select-option value="Green">Green</pf-select-option>
       <pf-select-option value="Magenta">Magenta</pf-select-option>

@@ -72,6 +72,10 @@
   flex: 1 1 auto;
 }
 
+#toggle-text.badge {
+  flex: 0 1 auto;
+}
+
 pf-badge {
   padding: 0;
 }

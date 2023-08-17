@@ -139,7 +139,7 @@ export class PfChipGroup extends LitElement {
     return shadow?.host as PfChip;
   }
 
-  set activeChip(chip: PfChip) {
+  set activeChip(chip: HTMLElement) {
     const button = chip.shadowRoot?.querySelector('button') as HTMLElement;
     this.#tabindex.updateActiveItem(button);
   }
@@ -161,7 +161,7 @@ export class PfChipGroup extends LitElement {
   /**
    * makes chip active and sets focus on it
    */
-  focusOnChip(chip: PfChip) {
+  focusOnChip(chip: HTMLElement) {
     const button = chip.shadowRoot?.querySelector('button') as HTMLElement;
     this.#tabindex.focusOnItem(button);
   }

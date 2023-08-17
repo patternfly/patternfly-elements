@@ -3,14 +3,6 @@ import { InternalsController } from '@patternfly/pfe-core/controllers/internals-
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
 /**
- * how filtering will be handled:
- * - "" (default): will show all options until filter text is not ""
- * - "required": will hide all options until filter text is not ""
- * - "disabled": will not hide options at all, regardless of filtering
- */
-export type ListboxFilterMode = '' | 'required' | 'disabled';
-
-/**
  * whether list items are arranged vertically or horizontally;
  * limits arrow keys based on orientation
  */
@@ -24,7 +16,7 @@ export type ListboxValue = unknown | unknown[];
 
 export interface ListboxConfigOptions {
   caseSensitive?: boolean;
-  filterMode?: ListboxFilterMode;
+  disableFilter?: boolean;
   matchAnywhere?: boolean;
   multiSelectable?: boolean;
   orientation?: ListboxOrientation;
@@ -49,6 +41,10 @@ export class ListboxController<
    * filter options that start with a string (case-insensitive)
    */
   #filter = '';
+  /**
+   * whether `*` has been pressed to show all options
+   */
+  #showAllOptions = false;
 
   /**
    * whether filtering (if enabled) will be case-sensitive
@@ -56,12 +52,9 @@ export class ListboxController<
   #caseSensitive = false;
 
   /**
-   * determines how filtering will be handled:
-   * - "" (default): will show only options that match filter or in no options match will show all options
-   * - "required": all listbox options are hidden _until_ option matches filter
-   * - "disabled": all listbox options are visible; ignores filter
+   * whether option filtering is disabled
    */
-  #filterMode: ListboxFilterMode = '';
+  #disableFilter = false;
 
   #internals: InternalsController;
 
@@ -94,8 +87,10 @@ export class ListboxController<
   }
 
   set filter(filterText: string) {
-    this.#filter = filterText;
-    this.#onFilterChange();
+    if (this.#filter !== filterText) {
+      this.#filter = filterText;
+      this.#onFilterChange();
+    }
   }
 
   get filter() {
@@ -103,21 +98,25 @@ export class ListboxController<
   }
 
   set caseSensitive(caseSensitive: boolean) {
-    this.#caseSensitive = caseSensitive;
-    this.#onFilterChange();
+    if (this.#caseSensitive !== caseSensitive) {
+      this.#caseSensitive = caseSensitive;
+      this.#onFilterChange();
+    }
   }
 
   get caseSensitive() {
     return this.#caseSensitive;
   }
 
-  set filterMode(filterMode: ListboxFilterMode) {
-    this.#filterMode = filterMode;
-    this.#onFilterChange();
+  set disableFilter(disableFilter: boolean) {
+    if (this.#disableFilter !== disableFilter) {
+      this.#disableFilter = disableFilter;
+      this.#onFilterChange();
+    }
   }
 
-  get filterMode(): ListboxFilterMode {
-    return this.#filterMode || '';
+  get disableFilter(): boolean {
+    return !!this.#disableFilter;
   }
 
   set disabled(disabled: boolean) {
@@ -137,8 +136,10 @@ export class ListboxController<
   }
 
   set matchAnywhere(matchAnywhere: boolean) {
-    this.#matchAnywhere = matchAnywhere;
-    this.#onFilterChange();
+    if (this.#matchAnywhere !== matchAnywhere) {
+      this.#matchAnywhere = matchAnywhere;
+      this.#onFilterChange();
+    }
   }
 
   get matchAnywhere() {
@@ -159,13 +160,15 @@ export class ListboxController<
   }
 
   set options(options: ListboxOptionElement[]) {
-    const setSize = options.length;
-    options.forEach((option, posInSet) => {
-      option.setSize = setSize;
-      option.posInSet = posInSet;
-    });
-    this.#tabindex.initItems(this.visibleOptions);
-    this.#options = options;
+    if (options.length !== this.#options.length || !options.every((element, index) => element === this.#options[index])) {
+      const setSize = options.length;
+      options.forEach((option, posInSet) => {
+        option.setSize = setSize;
+        option.posInSet = posInSet;
+      });
+      this.#tabindex.initItems(this.visibleOptions);
+      this.#options = options;
+    }
   }
 
   get selectedOptions() {
@@ -196,31 +199,26 @@ export class ListboxController<
 
   get visibleOptions() {
     let matchedOptions = this.options;
-    if (this.filterMode !== 'disabled') {
-      if (this.#filterMode === 'required' && this.filter === '') {
-        matchedOptions = [];
-      } else {
-        matchedOptions = this.options.filter(option => {
-          if (this.filterMode === 'disabled' || this.filter === '*') {
+    if (!this.disableFilter || !this.#showAllOptions) {
+      matchedOptions = this.options.filter(option => {
+        if (!this.disableFilter || this.filter === '*') {
+          return true;
+        } else {
+          const search = this.matchAnywhere ? '' : '^';
+          const text = option.textContent || '';
+          const regex = new RegExp(`${search}${this.filter}`, this.caseSensitive ? '' : 'i');
+          if (this.filter === '' || text.match(regex)) {
             return true;
           } else {
-            const search = this.matchAnywhere ? '' : '^';
-            const text = option.textContent || '';
-            const regex = new RegExp(`${search}${this.filter}`, this.caseSensitive ? '' : 'i');
-            if (this.filter === '' || text.match(regex)) {
-              return true;
-            } else {
-              return false;
-            }
+            return false;
           }
-        });
-      }
+        }
+      });
     }
 
-    // unless filter mode is required,
     // ensure there is at least one option showing,
     // regardless of matches
-    if (this.#filterMode !== 'required' && matchedOptions.length < 1) {
+    if (matchedOptions.length < 1) {
       matchedOptions = this.options;
     }
     this.options.forEach(option => {
@@ -240,7 +238,7 @@ export class ListboxController<
     });
     this.#tabindex = new RovingTabindexController<HTMLElement>(this.host);
     this.#caseSensitive = options.caseSensitive || false;
-    this.filterMode = options.filterMode || '';
+    this.disableFilter = !!options.disableFilter;
   }
 
   /**
@@ -425,6 +423,8 @@ export class ListboxController<
    */
   #onOptionKeydown(event: KeyboardEvent) {
     const { filter } = this;
+    this.#showAllOptions = false;
+
     // need to set for keyboard support of multiselect
     if (event.key === 'Shift' && this.multiSelectable) {
       this.#shiftStartingItem = this.activeItem;
@@ -445,6 +445,7 @@ export class ListboxController<
     } else {
       switch (event.key) {
         case '*':
+          this.#showAllOptions = this.filter === '';
           this.filter = '*';
           stopEvent = true;
           break;

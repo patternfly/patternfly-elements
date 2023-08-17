@@ -1,12 +1,15 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { query } from 'lit/decorators/query.js';
 import type { PropertyValues } from 'lit';
-import { type ListboxFilterMode, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 import { PfSelectListbox } from './pf-select-listbox.js';
 
 import styles from './pf-select.css';
 import type { PfSelectOption } from './pf-select-option.js';
+import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
 
 /**
  * List of selectable items
@@ -38,7 +41,7 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'always-open', type: Boolean }) alwaysOpen = false;
 
   /**
-   * whether listbox is has checkboxes
+   * whether listbox is has checkboxes when `multi-select` is enabled
    */
   @property({ attribute: 'has-checkboxes', type: Boolean }) hasCheckboxes = false;
 
@@ -47,10 +50,6 @@ export class PfSelect extends LitElement {
    */
   @property({ attribute: 'expanded', type: Boolean }) expanded = false;
 
-  /**
-   * whether listbox is a combobox that supports typing
-   */
-  @property({ attribute: 'typeahead', type: Boolean }) typeahead = false;
 
   /**
    * whether filtering (if enabled) will be case-sensitive
@@ -58,12 +57,9 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
 
   /**
-   * determines how filtering will be handled:
-   * - "" (default): will show only options that match filter or in no options match will show all options
-   * - "required": all listbox options are hidden _until_ option matches filter
-   * - "disabled": all listbox options are visible; ignores filter
+   * whether option filtering is disabled
    */
-  @property({ reflect: true, attribute: 'filter-mode', type: String }) filterMode: ListboxFilterMode = '';
+  @property({ reflect: true, attribute: 'disable-filter', type: Boolean }) disableFilter = false;
 
   /**
    * whether filtering (if enabled) will look for filter match anywhere in option text
@@ -75,6 +71,14 @@ export class PfSelect extends LitElement {
    * whether multiple items can be selected
    */
   @property({ reflect: true, attribute: 'multi-selectable', type: Boolean }) multiSelectable = false;
+
+  /**
+   * whether listbox is a combobox that supports typing
+   */
+  @property({ attribute: 'typeahead', type: Boolean }) typeahead = false;
+
+  @query('pf-chip-group') private _chipGroup?: PfChipGroup;
+
 
   #valueText = '';
   #valueTextArray: string[] = [];
@@ -126,13 +130,31 @@ export class PfSelect extends LitElement {
           : this.defaultText;
   }
 
+  get hasBadge() {
+    return !this.typeahead && this.hasCheckboxes && this.#selectedOptions.length > 0;
+  }
+
+  get hasChips() {
+    return this.typeahead && this.multiSelectable;
+  }
+
   render() {
+    const { hasBadge, typeahead } = this;
+    const offscreen = typeahead ? 'offscreen' : false;
+    const badge = hasBadge ? 'badge' : false;
     return html`
     ${this.alwaysOpen ? '' : html`
       <div id="toggle" 
         ?disabled=${this.disabled} 
         ?expanded=${this.expanded}>
-        ${!this.typeahead ? '' : html`
+        ${!this.hasChips ? '' : html`
+          <pf-chip-group label="option-selected">
+            ${this.#valueTextArray.map(txt => html`
+              <pf-chip id="chip-${txt}" @click="${() => this.#onChipClick(txt)}">${txt}</pf-chip>
+            `)}
+          </pf-chip-group>
+        `}
+        ${!typeahead ? '' : html`
           <input 
             id="toggle-input" 
             type="text" 
@@ -141,7 +163,8 @@ export class PfSelect extends LitElement {
             aria-expanded="${!this.expanded ? 'false' : 'true'}" 
             placeholder="${this.#buttonLabel}"
             role="combobox"
-            @input=${this.#onTypeaheadInput}>
+            @input=${this.#onTypeaheadInput}
+            @focus="${this.#onTypeaheadInputFocus}">
         `}
         <button 
           id="toggle-button" 
@@ -150,10 +173,10 @@ export class PfSelect extends LitElement {
           aria-haspopup="listbox"
           ?disabled=${this.disabled}
           @click="${this.#onToggleClick}">
-          <span id="toggle-text" class="${this.typeahead ? 'offscreen' : ''}">
+          <span id="toggle-text" class="${classMap({ offscreen, badge })}">
             ${this.#buttonLabel}
           </span>
-          ${this.hasCheckboxes && this.#selectedOptions.length > 0 ? html`
+          ${hasBadge ? html`
             <span id="toggle-badge">
               <pf-badge number="${this.#selectedOptions.length}">${this.#selectedOptions.length}</pf-badge>
             </span> ` : ''}
@@ -171,7 +194,7 @@ export class PfSelect extends LitElement {
         ?disabled=${this.disabled}
         ?hidden=${!this.alwaysOpen && (!this.expanded || this.disabled)}
         ?case-sensitive=${this.caseSensitive}
-        filter-mode="${this.filterMode}"
+        ?disable-filter="${this.disableFilter}"
         ?match-anywhere=${this.matchAnywhere}
         ?multi-selectable=${this.multiSelectable || this.hasCheckboxes}
         @input=${this.#onListboxInput}
@@ -199,6 +222,26 @@ export class PfSelect extends LitElement {
     const [selectedOption] = this.#valueTextArray;
     this.#valueText = selectedOption || '';
     this.requestUpdate();
+
+    // reset input if chip has been added
+    if (this.hasChips && this.#input?.value) {
+      const chip = this.shadowRoot?.querySelector(`pf-chip#chip-${this.#input?.value}`) as HTMLElement;
+      this.#input.value = '';
+      if (chip && this._chipGroup) {
+        this._chipGroup.focusOnChip(chip);
+      } else {
+        this.#input.focus();
+      }
+    }
+  }
+
+  #onChipClick(txt: string) {
+    const [opt] = this.#selectedOptions.filter(option => option.optionText === txt);
+    // remove chip value from select value
+    if (Array.isArray(this.value)) {
+      this.value = this.value.filter(option => option !== opt);
+      this.#input?.focus();
+    }
   }
 
   #onTypeaheadInput() {
@@ -229,6 +272,10 @@ export class PfSelect extends LitElement {
 
   #onToggleClick() {
     this.expanded = !this.expanded;
+  }
+
+  #onTypeaheadInputFocus() {
+    this.expanded = true;
   }
 }
 

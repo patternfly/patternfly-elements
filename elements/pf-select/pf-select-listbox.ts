@@ -2,7 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import type { PropertyValueMap, PropertyValues } from 'lit';
-import { ListboxController, type ListboxFilterMode, type ListboxOptionElement, type ListboxOrientation, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
+import { ListboxController, type ListboxOptionElement, type ListboxOrientation, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 import { PfSelectGroup } from './pf-select-group.js';
 import { PfSelectOption } from './pf-select-option.js';
 
@@ -27,12 +27,9 @@ export class PfSelectListbox extends LitElement {
   @property({ reflect: true, attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
 
   /**
-   * determines how filtering will be handled:
-   * - "" (default): will show only options that match filter or in no options match will show all options
-   * - "required": all listbox options are hidden _until_ option matches filter
-   * - "disabled": all listbox options are visible; ignores filter
+   * whether option filtering is disabled
    */
-  @property({ reflect: true, attribute: 'filter-mode', type: String }) filterMode: ListboxFilterMode = '';
+  @property({ reflect: true, attribute: 'disable-filter', type: Boolean }) disableFilter = false;
 
   /**
    * whether filtering (if enabled) will look for filter match anywhere in option text
@@ -94,7 +91,7 @@ export class PfSelectListbox extends LitElement {
   firstUpdated(changed: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     this.#listbox = new ListboxController(this, {
       caseSensitive: this.caseSensitive,
-      filterMode: this.filterMode,
+      disableFilter: this.disableFilter,
       matchAnywhere: this.matchAnywhere,
       multiSelectable: this.multiSelectable,
       orientation: 'vertical'
@@ -108,8 +105,8 @@ export class PfSelectListbox extends LitElement {
       if (changed.has('caseSensitive')) {
         this.#listbox.caseSensitive = this.caseSensitive;
       }
-      if (changed.has('filterMode')) {
-        this.#listbox.filterMode = this.filterMode;
+      if (changed.has('disableFilter')) {
+        this.#listbox.disableFilter = this.disableFilter;
       }
       if (changed.has('matchAnywhere')) {
         this.#listbox.matchAnywhere = this.matchAnywhere;

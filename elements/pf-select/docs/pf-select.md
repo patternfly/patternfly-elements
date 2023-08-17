@@ -43,31 +43,6 @@ import '@patternfly/elements/pf-icon/pf-select.js';
   </pf-select>
 {% endhtmlexample %}
 
-### Typeahead
-
-<p>
-  Any arrow keys work.
-  Only one option can be selected.
-  Listbox wont appear until input has text.
-  Type <code>*</code> to show all options.
-</p>
-
-{% htmlexample %}
-  <label id="combo">
-    Pick a color:
-    <pf-select id="listbox" typeahead>
-      <pf-select-option value="Blue">Blue</pf-select-option>
-      <pf-select-option value="Green">Green</pf-select-option>
-      <pf-select-option value="Magenta">Magenta</pf-select-option>
-      <pf-select-option value="Orange">Orange</pf-select-option>
-      <pf-select-option value="Purple">Purple</pf-select-option>
-      <pf-select-option value="Pink">Pink</pf-select-option>
-      <pf-select-option value="Red">Red</pf-select-option>
-      <pf-select-option value="Yellow">Yellow</pf-select-option>
-    </pf-select>
-  </label>
-{% endhtmlexample %}
-
 ### Multi-selectable
 
 <p>
@@ -106,6 +81,51 @@ Filter by typing a letter.</p>
     <pf-select-option value="Red">Red</pf-select-option>
     <pf-select-option value="Yellow">Yellow</pf-select-option>
   </pf-select>
+{% endhtmlexample %}
+
+### Typeahead
+
+<p>
+  Any arrow keys work.
+  Only one option can be selected.
+  Listbox wont appear until input has text.
+  Type <code>*</code> to show all options.
+</p>
+
+{% htmlexample %}
+  <label>
+    Pick a color:
+    <pf-select typeahead>
+      <pf-select-option value="Blue">Blue</pf-select-option>
+      <pf-select-option value="Green">Green</pf-select-option>
+      <pf-select-option value="Magenta">Magenta</pf-select-option>
+      <pf-select-option value="Orange">Orange</pf-select-option>
+      <pf-select-option value="Purple">Purple</pf-select-option>
+      <pf-select-option value="Pink">Pink</pf-select-option>
+      <pf-select-option value="Red">Red</pf-select-option>
+      <pf-select-option value="Yellow">Yellow</pf-select-option>
+    </pf-select>
+  </label>
+{% endhtmlexample %}
+
+#### Typeahead, multi-selectable (with chips)
+
+<p>Any arrow keys work. Only one option can be selected. Listbox wont appear until input has text. Type <code>*</code> to show all options.</p>
+
+{% htmlexample %}
+<label>
+  Pick a color:
+  <pf-select typeahead>
+    <pf-select-option value="Blue">Blue</pf-select-option>
+    <pf-select-option value="Green">Green</pf-select-option>
+    <pf-select-option value="Magenta">Magenta</pf-select-option>
+    <pf-select-option value="Orange">Orange</pf-select-option>
+    <pf-select-option value="Purple">Purple</pf-select-option>
+    <pf-select-option value="Pink">Pink</pf-select-option>
+    <pf-select-option value="Red">Red</pf-select-option>
+    <pf-select-option value="Yellow">Yellow</pf-select-option>
+  </pf-select>
+</label>
 {% endhtmlexample %}
 
 ### Grouped Options
@@ -152,7 +172,7 @@ Any arrow keys work. Only one option can be selected. Filter is disabled.
 
 {% htmlexample %}
   <p></p>
-  <pf-select filter-mode="disabled">
+  <pf-select disable-filter>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -162,26 +182,6 @@ Any arrow keys work. Only one option can be selected. Filter is disabled.
     <pf-select-option value="Red">Red</pf-select-option>
     <pf-select-option value="Yellow">Yellow</pf-select-option>
   </pf-select>
-{% endhtmlexample %}
-
-### Require filtering to show options
-
-<p>Any arrow keys work. Only one option can be selected. Listbox wont appear until input has text. Type <code>*</code> to show all options.</p>
-
-{% htmlexample %}
-<label id="combo">
-  Pick a color:
-  <pf-select id="listbox" filter-mode="required" typeahead>
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
-  </pf-select>
-</label>
 {% endhtmlexample %}
 {% endband %}
 

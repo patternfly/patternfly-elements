@@ -17,13 +17,23 @@ import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
   <pf-chip>Chip <pf-badge number="7">7</pf-badge></pf-chip>
 {% endhtmlexample %}
 
-### Read-only
+### Chip variants
+
+Chips can be removable or read-only. The Overflow chip is a special chip that is used to expand or collapse the content of a chip group.
+
+#### Read-only
 
 {% htmlexample %}
   <pf-chip read-only>Read-only chip</pf-chip>
 {% endhtmlexample %}
 
-### Max-width
+#### Overflow chip
+
+{% htmlexample %}
+  <pf-chip overflow-chip>Overflow-chip</pf-chip>
+{% endhtmlexample %}
+
+#### Max-width
 
 {% htmlexample %}
   <pf-tooltip position="top">
@@ -44,7 +54,11 @@ import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
 
 ### Chip group
 
-A **chip group** is a collection of chips that can be grouped by category and used to represent one or more values assigned to a single attribute. When the value of numChips is exceeded, additional chips will be hidden using an overflow chip.
+A **chip group** is a collection of chips that can be grouped by category and used to represent one or more values assigned to a single attribute. When the value of `numChips` is exceeded, additional chips will be hidden using an overflow chip.
+
+Chip groups are typically used in filter and selection use cases to indicate to the user what selections they have made. They separate selections by attribute, for added clarity. An OR relationship is implied between values in the group. Chip groups also give users the ability to either delete an entire chip group at once using the group X, or delete individual chips at a time.
+
+Chip groups are useful to express complex filters to a data set, for example.
 
 {% htmlexample %}
   <pf-chip-group>

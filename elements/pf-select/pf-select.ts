@@ -12,9 +12,14 @@ import type { PfSelectOption } from './pf-select-option.js';
 import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
 
 /**
- * List of selectable items
- * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/listbox/|WAI-ARIA Listbox Pattern}
- * @slot - Place element content here
+ * A select list enables users to select one or more items from a list.
+ * Use a select list when options are dynamic or variable.
+ *
+ * A select component consists of a toggle control to open and close a menu of actions or links.
+ * Selects differ from dropdowns in that they persist selection,
+ * whereas dropdowns are typically used to present a list of actions or links.
+ *
+ * @slot - insert `pf-select-option` and/or `pf-select-groups` here
  */
 @customElement('pf-select')
 export class PfSelect extends LitElement {
@@ -46,12 +51,6 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'has-checkboxes', type: Boolean }) hasCheckboxes = false;
 
   /**
-   * whether listbox is always expanded
-   */
-  @property({ attribute: 'expanded', type: Boolean }) expanded = false;
-
-
-  /**
    * whether filtering (if enabled) will be case-sensitive
    */
   @property({ attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
@@ -73,7 +72,17 @@ export class PfSelect extends LitElement {
   @property({ reflect: true, attribute: 'multi-selectable', type: Boolean }) multiSelectable = false;
 
   /**
-   * whether listbox is a combobox that supports typing
+   * whether listbox is always open
+   */
+  @property({ attribute: 'open', type: Boolean }) open = false;
+
+  /**
+   * whether listbox is plain
+   */
+  @property({ attribute: 'plain', type: Boolean }) plain = false;
+
+  /**
+   * whether listbox contrlled by combobox that supports typing
    */
   @property({ attribute: 'typeahead', type: Boolean }) typeahead = false;
 
@@ -106,14 +115,19 @@ export class PfSelect extends LitElement {
     return this.#listbox?.filter || '';
   }
 
-  set value(optionsList: ListboxValue) {
+  set selected(optionsList: ListboxValue) {
     if (this.#listbox) {
-      this.#listbox.value = optionsList;
+      this.#listbox.selected = optionsList;
     }
   }
 
-  get value() {
-    return this.#listbox?.value;
+  /**
+   * Single select option value for single select menus,
+   * or array of select option values for multi select.
+   * You can also specify `isSelected` on the `SelectOption`.
+   */
+  get selected() {
+    return this.#listbox?.selected;
   }
 
   get #valueTextList() {
@@ -139,14 +153,15 @@ export class PfSelect extends LitElement {
   }
 
   render() {
-    const { hasBadge, typeahead } = this;
+    const { hasBadge, typeahead, plain } = this;
     const offscreen = typeahead ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
+    const checkboxes = this.hasCheckboxes ? 'show-checkboxes' : false;
     return html`
     ${this.alwaysOpen ? '' : html`
       <div id="toggle" 
         ?disabled=${this.disabled} 
-        ?expanded=${this.expanded}>
+        ?expanded=${this.open}>
         ${!this.hasChips ? '' : html`
           <pf-chip-group label="option-selected">
             ${this.#valueTextArray.map(txt => html`
@@ -160,7 +175,7 @@ export class PfSelect extends LitElement {
             type="text" 
             aria-controls="listbox" 
             aria-autocomplete="both" 
-            aria-expanded="${!this.expanded ? 'false' : 'true'}" 
+            aria-expanded="${!this.open ? 'false' : 'true'}" 
             placeholder="${this.#buttonLabel}"
             role="combobox"
             @input=${this.#onTypeaheadInput}
@@ -168,7 +183,7 @@ export class PfSelect extends LitElement {
         `}
         <button 
           id="toggle-button" 
-          aria-expanded="${!this.expanded ? 'false' : 'true'}" 
+          aria-expanded="${!this.open ? 'false' : 'true'}" 
           aria-controls="listbox" 
           aria-haspopup="listbox"
           ?disabled=${this.disabled}
@@ -190,9 +205,9 @@ export class PfSelect extends LitElement {
     `}
       <pf-select-listbox 
         id="listbox" 
-        class="${this.hasCheckboxes ? 'show-checkboxes' : ''}"
+        class="${classMap({ plain, checkboxes })}"
         ?disabled=${this.disabled}
-        ?hidden=${!this.alwaysOpen && (!this.expanded || this.disabled)}
+        ?hidden=${!this.alwaysOpen && (!this.open || this.disabled)}
         ?case-sensitive=${this.caseSensitive}
         ?disable-filter="${this.disableFilter}"
         ?match-anywhere=${this.matchAnywhere}
@@ -207,6 +222,13 @@ export class PfSelect extends LitElement {
   updated(changed: PropertyValues<this>) {
     if (changed.has('hasCheckboxes') && this.hasCheckboxes) {
       import('@patternfly/elements/pf-badge/pf-badge.js');
+    }
+
+    if (changed.has('open')) {
+      /**
+       * @fires open-change
+       */
+      this.dispatchEvent(new Event('open-change'));
     }
   }
 
@@ -238,8 +260,8 @@ export class PfSelect extends LitElement {
   #onChipClick(txt: string) {
     const [opt] = this.#selectedOptions.filter(option => option.optionText === txt);
     // remove chip value from select value
-    if (Array.isArray(this.value)) {
-      this.value = this.value.filter(option => option !== opt);
+    if (Array.isArray(this.selected)) {
+      this.selected = this.selected.filter(option => option !== opt);
       this.#input?.focus();
     }
   }
@@ -271,11 +293,11 @@ export class PfSelect extends LitElement {
   }
 
   #onToggleClick() {
-    this.expanded = !this.expanded;
+    this.open = !this.open;
   }
 
   #onTypeaheadInputFocus() {
-    this.expanded = true;
+    this.open = true;
   }
 }
 

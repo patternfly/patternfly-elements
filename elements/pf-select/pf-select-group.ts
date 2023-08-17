@@ -23,7 +23,7 @@ export class PfSelectGroup extends LitElement {
 
   render() {
     return html`
-      <slot name="group-heading" role="presentation"></slot>
+      <slot name="label" role="presentation"></slot>
       <slot></slot>
     `;
   }

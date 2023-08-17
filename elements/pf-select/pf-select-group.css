@@ -8,7 +8,7 @@ slot {
   padding: var(--pf-global--spacer--md, 1rem) 0;
 }
 
-slot[name="group-heading"] {
+slot[name="label"] {
   font-size: var(--pf-global--FontSize--xs, 0.75rem);
   color: var(--pf-global--Color--dark-200, #6a6e73);
   padding: var(--pf-global--spacer--md, 1rem) var(--pf-global--spacer--md, 1rem) 0;

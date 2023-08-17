@@ -8,9 +8,11 @@ import { PfSelectOption } from './pf-select-option.js';
 
 import styles from './pf-select-listbox.css';
 /**
- * List of selectable items
+ * Listbox for select options.
+ *
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/listbox/|WAI-ARIA Listbox Pattern}
- * @slot - Place element content here
+ *
+ * @slot - insert `pf-select-option` and/or `pf-select-groups` here
  */
 @customElement('pf-select-listbox')
 export class PfSelectListbox extends LitElement {
@@ -42,7 +44,7 @@ export class PfSelectListbox extends LitElement {
    */
   @property({ reflect: true, attribute: 'multi-selectable', type: Boolean }) multiSelectable = false;
 
-  #listbox?: ListboxController;
+  #listboxController?: ListboxController;
 
   get options() {
     const slotted = this.querySelector('slot')?.assignedElements() || [...this.querySelectorAll('pf-select-option')];
@@ -57,27 +59,27 @@ export class PfSelectListbox extends LitElement {
   }
 
   get selectedOptions() {
-    return this.#listbox?.selectedOptions;
+    return this.#listboxController?.selectedOptions;
   }
 
   set filter(filterText: string) {
-    if (this.#listbox) {
-      this.#listbox.filter = filterText;
+    if (this.#listboxController) {
+      this.#listboxController.filter = filterText;
     }
   }
 
   get filter() {
-    return this.#listbox?.filter || '';
+    return this.#listboxController?.filter || '';
   }
 
-  set value(optionsList: ListboxValue) {
-    if (this.#listbox) {
-      this.#listbox.value = optionsList;
+  set selected(optionsList: ListboxValue) {
+    if (this.#listboxController) {
+      this.#listboxController.value = optionsList;
     }
   }
 
-  get value() {
-    return this.#listbox?.value;
+  get selected() {
+    return this.#listboxController?.value;
   }
 
   render() {
@@ -89,46 +91,46 @@ export class PfSelectListbox extends LitElement {
   }
 
   firstUpdated(changed: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    this.#listbox = new ListboxController(this, {
+    this.#listboxController = new ListboxController(this, {
       caseSensitive: this.caseSensitive,
       disableFilter: this.disableFilter,
       matchAnywhere: this.matchAnywhere,
       multiSelectable: this.multiSelectable,
       orientation: 'vertical'
     });
-    this.#listbox.options = this.options as ListboxOptionElement[];
+    this.#listboxController.options = this.options as ListboxOptionElement[];
     super.firstUpdated(changed);
   }
 
   updated(changed: PropertyValues<this>) {
-    if (this.#listbox) {
+    if (this.#listboxController) {
       if (changed.has('caseSensitive')) {
-        this.#listbox.caseSensitive = this.caseSensitive;
+        this.#listboxController.caseSensitive = this.caseSensitive;
       }
       if (changed.has('disableFilter')) {
-        this.#listbox.disableFilter = this.disableFilter;
+        this.#listboxController.disableFilter = this.disableFilter;
       }
       if (changed.has('matchAnywhere')) {
-        this.#listbox.matchAnywhere = this.matchAnywhere;
+        this.#listboxController.matchAnywhere = this.matchAnywhere;
       }
       if (changed.has('multiSelectable')) {
-        this.#listbox.multiSelectable = this.multiSelectable;
+        this.#listboxController.multiSelectable = this.multiSelectable;
       }
       if (changed.has('disabled')) {
-        this.#listbox.disabled = this.disabled;
+        this.#listboxController.disabled = this.disabled;
       }
     }
   }
 
   focus() {
-    if (this.#listbox) {
-      this.#listbox.focus();
+    if (this.#listboxController) {
+      this.#listboxController.focus();
     }
   }
 
   #onSlotchange() {
-    if (this.#listbox) {
-      this.#listbox.options = this.options as ListboxOptionElement[];
+    if (this.#listboxController) {
+      this.#listboxController.options = this.options as ListboxOptionElement[];
     }
   }
 }

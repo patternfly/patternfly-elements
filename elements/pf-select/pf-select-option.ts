@@ -10,7 +10,12 @@ import styles from './pf-select-option.css';
 
 /**
  * Option within a listbox
- * @slot - Place element content here
+ * @slot -
+ *        option text
+ * @slot icon
+ *        optional icon
+ * @slot description
+ *        optional description
  */
 @customElement('pf-select-option')
 export class PfSelectOption extends LitElement {
@@ -99,14 +104,23 @@ export class PfSelectOption extends LitElement {
   }
 
   #onClick() {
-    this.dispatchEvent(new Event('optionclick', { bubbles: true }));
+    /**
+     * @fires select
+     */
+    this.dispatchEvent(new Event('select', { bubbles: true }));
   }
 
   #onFocus() {
+    /**
+     * @fires optionfocus
+     */
     this.dispatchEvent(new Event('optionfocus', { bubbles: true }));
   }
 
   #onBlur() {
+    /**
+     * @fires optionblur
+     */
     this.dispatchEvent(new Event('optionblur', { bubbles: true }));
   }
 }

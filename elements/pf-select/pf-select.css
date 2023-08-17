@@ -30,7 +30,7 @@
   justify-content: space-between;
 }
 
-#toggle[expanded] {
+#toggle[open] {
   border-bottom-width: 2px;
   border-bottom-color: var(--pf-theme--color--accent, #0066cc);
 }

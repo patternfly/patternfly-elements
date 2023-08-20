@@ -203,7 +203,7 @@
 	--pf-c-table__subhead--Color: var(--pf-global--Color--200, #6a6e73);
 	--pf-c-table--m-striped__tr--BackgroundColor: var(--pf-global--BackgroundColor--light-200);
 	color: var(--pf-global--Color--100);
-  	display: inline-grid;
+  display: inline-grid;
 	grid-auto-rows: min-content;
 }
 

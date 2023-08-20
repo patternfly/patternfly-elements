@@ -105,10 +105,15 @@ export class PfProgress extends LitElement {
   /** Represents the value of the progress bar */
   @property({ reflect: true, type: Number }) value = 0;
 
-  /** Title above the progress bar */
+  /** Description (title) above the progress bar */
   @property() description?: string;
 
-  @property({ type: Boolean, reflect: true, attribute: 'description-truncated' }) descriptionTruncated = false;
+  /** Indicate whether to truncate the string description (title) */
+  @property({
+    type: Boolean,
+    reflect: true,
+    attribute: 'description-truncated',
+  }) descriptionTruncated = false;
 
   /** Maximum value for the progress bar */
   @property({ type: Number, reflect: true }) max = 100;
@@ -157,10 +162,6 @@ export class PfProgress extends LitElement {
     const pct = this.#calculatedPercentage;
     const width = `${pct}%`;
 
-    const descriptionTemplate = (description ?? '') && html`
-      <div id="description" aria-hidden="true">${description}</div>
-    `;
-
     return html`
       <div id="container" class="${classMap({
           [size ?? '']: !!size,
@@ -171,6 +172,7 @@ export class PfProgress extends LitElement {
         })}">
 
         <div id="description" aria-hidden="true">${description ?? ''}</div>
+
         ${!descriptionTruncated ? '' : html`
         <pf-tooltip content="${this.description ?? ''}"
                     trigger="description"></pf-tooltip>

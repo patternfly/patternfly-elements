@@ -65,7 +65,7 @@ import styles from './pf-tab.css';
  *
  * @cssprop     {<length>} --pf-c-tabs__link--child--MarginRight  {@default `1rem`}
  *
- * @fires { TabExpandEvent } tab-expand - when a tab expands
+ * @fires { TabExpandEvent } expand - when a tab expands
  */
 @customElement('pf-tab')
 export class PfTab extends BaseTab {

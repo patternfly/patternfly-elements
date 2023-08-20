@@ -67,38 +67,6 @@ describe('<pf-popover>', function() {
   afterEach(fixtureCleanup);
 
   describe('simply instantiating', function() {
-    /** Setup the a11y tree snapshot expected results for this suite */
-    const snapshots = {
-      opened: [
-        {
-          name: 'Toggle popover',
-          role: 'button',
-        },
-        {
-          name: 'Close popover',
-          role: 'button',
-        },
-        {
-          name: 'Popover heading',
-          role: 'heading',
-        },
-        {
-          name: 'Popovers are triggered by click rather than hover.',
-          role: 'text',
-        },
-        {
-          name: 'Popover footer',
-          role: 'text',
-        },
-      ],
-      closed: [
-        {
-          name: 'Toggle popover',
-          role: 'button',
-        }
-      ],
-    };
-
     beforeEach(setupSimpleInstance);
     it('should upgrade', async function() {
       const klass = customElements.get('pf-popover');

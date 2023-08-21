@@ -1,3 +1,10 @@
+---
+"@patternfly/elements": minor
+---
+
+✨ Added `<pf-table>`
+
+```html
 <pf-table>
   <pf-thead>
     <pf-tr>
@@ -30,8 +37,4 @@
     <pf-td>five - 3</pf-td>
   </pf-tr>
 </pf-table>
-
-<script type="module">
-  import '@patternfly/elements/pf-table/pf-table.js';
-</script>
-
+```

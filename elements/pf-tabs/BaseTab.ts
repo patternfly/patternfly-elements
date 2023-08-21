@@ -18,6 +18,9 @@ export class TabExpandEvent extends ComposedEvent {
   }
 }
 
+/**
+ * @fires {TabExpandEvent} expand - when a tab is selected
+ */
 export abstract class BaseTab extends LitElement {
   static readonly styles = [style];
 

@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 <style>
   main.basic pf-icon[circled] {
     margin-right: 8px;

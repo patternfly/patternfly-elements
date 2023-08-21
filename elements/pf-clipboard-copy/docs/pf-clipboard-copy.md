@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
   <pf-clipboard-copy value="This is editable"></pf-clipboard-copy>
 {% endrenderOverview %}

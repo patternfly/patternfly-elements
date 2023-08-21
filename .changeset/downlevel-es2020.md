@@ -1,4 +1,4 @@
 ---
-"@patternfly/element": patch
+"@patternfly/elements": patch
 ---
-Supports Safari 16.3 (compiles element outputs to es2020)
+Restores support for Safari 16.3 (by compiling element sources to ECMAScript 2020)

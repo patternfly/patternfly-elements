@@ -39,7 +39,7 @@
 
   {% htmlexample %} 
 <pf-banner>
-  <pf-icon slot="icon" icon="info-circle" set="fas"></pf-icon>
+  <pf-icon slot="icon" icon="info-circle"></pf-icon>
   Info
 </pf-banner>
   {% endhtmlexample %}

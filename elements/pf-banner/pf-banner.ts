@@ -78,7 +78,7 @@ export class PfBanner extends LitElement {
       <div id="container" part="container"
             class=${classMap({ hasIcon, [variant ?? '']: !!variant })}>
         <slot name="icon" part="icon">${!this.icon ? '' : html`
-          <pf-icon icon="${this.icon}" size="sm"></pf-icon>`}
+          <pf-icon icon="${this.icon}"></pf-icon>`}
         </slot>
         <slot id="text"></slot>
       </div>

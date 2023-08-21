@@ -29,7 +29,7 @@
     "rootDir": ".",
     "sourceMap": true,
     "strict": true,
-    "target": "es2022",
+    "target": "es2020",
     "useDefineForClassFields": false,
     "typeRoots": [
       "./node_modules/@types",

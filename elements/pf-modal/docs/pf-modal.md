@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
   <pf-modal trigger="overview-trigger">
     <h2 slot="header">Modal with a header</h2>

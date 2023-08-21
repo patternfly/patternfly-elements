@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
 <pf-accordion>
   <pf-accordion-header>

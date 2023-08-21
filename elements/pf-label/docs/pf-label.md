@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
   <pf-label>Default</pf-label>
 {% endrenderOverview %}

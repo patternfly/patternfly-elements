@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
   A spinner is used to indicate to users that an action is in progress.
 

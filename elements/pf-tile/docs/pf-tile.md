@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
   <pf-tile>
     <h3 slot="title">Default</h3>

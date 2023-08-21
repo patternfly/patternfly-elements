@@ -1,5 +1,5 @@
 {% renderOverview %}
-  <pf-table></pf-table>
+  Use the `<pf-table>` elements the way you would native HTML table elements.
 {% endrenderOverview %}
 
 {% band header="Usage" %}

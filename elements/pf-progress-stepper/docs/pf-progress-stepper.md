@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 {% renderOverview %}
 <pf-progress-stepper>
   <pf-progress-step variant="success">Completed</pf-progress-step>

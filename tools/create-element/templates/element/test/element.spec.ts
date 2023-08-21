@@ -5,6 +5,10 @@ import { <%= className %> } from '<%= importSpecifier %>';
 describe('<<%= tagName %>>', function() {
   describe('simply instantiating', function() {
     let element: <%= className %>;
+    it('imperatively instantiates', function() {
+      expect(document.createElement('<%= tagName %>')).to.be.an.instanceof(<%= className %>);
+    });
+
     it('should upgrade', async function() {
       element = await createFixture<<%= className %>>(html`<<%= tagName %>></<%= tagName %>>`);
       const klass = customElements.get('<%= tagName %>');

@@ -6,6 +6,7 @@ import { setViewport, sendKeys } from '@web/test-runner-commands';
 import { BaseTab } from '../BaseTab.js';
 import { PfTabs } from '../pf-tabs.js';
 import { PfTab } from '../pf-tab.js';
+import { PfTabPanel } from '../pf-tab-panel.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
 
@@ -40,6 +41,12 @@ const DISABLED = html`
 `;
 
 describe('<pf-tabs>', function() {
+  it('instantiates imperatively', function() {
+    expect(document.createElement('pf-tabs')).to.be.an.instanceof(PfTabs);
+    expect(document.createElement('pf-tab')).to.be.an.instanceof(PfTab);
+    expect(document.createElement('pf-tab-panel')).to.be.an.instanceof(PfTabPanel);
+  });
+
   it('should upgrade', async function() {
     const el = await createFixture<PfTabs>(TEMPLATE);
     expect(el, 'pf-tabs should be an instance of PfeTabs')

@@ -94,8 +94,9 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
-      const { elementsDir, tagPrefix } = options;
+      const { elementsDir, tagPrefix, aliases } = options;
       const { componentSubpath } = options.site;
+
       const router =
         new Router()
           .get(/\/pf-icon\/icons\/.*\.js$/, (ctx, next) => {
@@ -109,21 +110,23 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           // Redirect `components/jazz-hands/*.js` to `components/pf-jazz-hands/*.ts`
           .get(`/${componentSubpath}/:element/:fileName.js`, async ctx => {
             const { element, fileName } = ctx.params;
-            ctx.redirect(`/${elementsDir}/${element}/${fileName}.ts`);
+            const prefixedElement = deslugify(element);
+
+            ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.ts`);
           })
           // Redirect `elements/jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts`
           .get(`/${elementsDir}/:element/:fileName.js`, async ctx => {
             const { element, fileName } = ctx.params;
-            ctx.redirect(`/${elementsDir}/${element}/${fileName}.ts`);
+            const prefixedElement = deslugify(element);
+
+            ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.ts`);
           })
           // Redirect `components/pf-jazz-hands|jazz-hands/demo/*-lightdom.css` to `components/pf-jazz-hands/*-lightdom.css`
           // Redirect `components/jazz-hands/demo/*.js|css` to `components/pf-jazz-hands/demo/*.js|css`
           .get(`/${componentSubpath}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
             const { element, fileName, ext } = ctx.params;
-            let prefixedElement = element;
-            if (!element.includes(tagPrefix)) {
-              prefixedElement = `${tagPrefix}-${element}`;
-            }
+            const prefixedElement = deslugify(element);
+
             if (fileName.includes('-lightdom') && ext === 'css') {
               ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.${ext}`);
             } else if (!element.includes(tagPrefix)) {
@@ -135,12 +138,14 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
           // Redirect `components/jazz-hands/*` to `components/pf-jazz-hands/*` for requests not previously handled
           .get(`/${componentSubpath}/:element/:splatPath*`, async (ctx, next) => {
             const { element, splatPath } = ctx.params;
+            const prefixedElement = deslugify(element);
+
             if (splatPath.includes('demo')) {
               /* if its the demo directory return */
               return next();
             }
             if (!element.includes(tagPrefix)) {
-              ctx.redirect(`/${elementsDir}/${tagPrefix}-${element}/${splatPath}`);
+              ctx.redirect(`/${elementsDir}/${prefixedElement}/${splatPath}`);
             } else {
               return next();
             }

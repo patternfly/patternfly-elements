@@ -2,7 +2,7 @@
   "extends": "./tsconfig.settings.json",
   "compilerOptions": {
     "resolveJsonModule": true,
-    "module": "esnext"
+    "module": "nodenext"
   },
   "ts-node": {
     "esm": true

@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-tools",
-  "version": "1.3.0",
+  "version": "1.4.2",
   "type": "module",
   "description": "Development and build tools for PatternFly Elements and related projects",
   "keywords": [
@@ -32,6 +32,7 @@
     "./11ty/plugins/order-tags.cjs": "./11ty/plugins/order-tags.cjs",
     "./11ty/plugins/table-of-contents.cjs": "./11ty/plugins/table-of-contents.cjs",
     "./11ty/plugins/todos.cjs": "./11ty/plugins/todos.cjs",
+    "./react/generate-wrappers.js": "./react/generate-wrappers.js",
     "./test/a11y-snapshot.js": "./test/a11y-snapshot.js",
     "./test/config.js": "./test/config.js",
     "./test/create-fixture.js": "./test/create-fixture.js",

@@ -1,5 +1,111 @@
 # @patternfly/elements
 
+## 2.3.2
+
+### Patch Changes
+
+- 91850fbf8: fixed TypeScript typings for react wrappers
+
+## 2.3.1
+
+### Patch Changes
+
+- 1924229ea: Generate TypeScript typings for React wrapper components
+
+## 2.3.0
+
+### Minor Changes
+
+- c4170a595: PatternFly elements are now available wrapped in React components. While it was
+  always possible to use PatternFly elements (or any other custom elements) in
+  React apps, this release makes it easier to integrate them into React without
+  the need for cumbersome workarounds to React's [poor HTML and DOM support][cee].
+
+  Before:
+
+  ```jsx
+  import { useEffect, useState, useRef } from "react";
+  import "@patternfly/elements/pf-switch/pf-switch.js";
+
+  function App() {
+    const [checked, setChecked] = useState(false);
+    const switchRef = useRef(null);
+    useEffect(() => {
+      switchRef.current.checked = checked;
+    }, [switchRef.current, checked]);
+    useEffect(() => {
+      switchRef.current.addEventListener("change", () =>
+        setChecked(switchRef.current.checked)
+      );
+    }, [switchRef.current]);
+    return (
+      <>
+        <pf-switch ref={switchRef}></pf-switch>
+      </>
+    );
+  }
+  ```
+
+  After:
+
+  ```jsx
+  import { useState } from "react";
+  import { Switch } from "@patternfly/elements/react/pf-switch/pf-switch.js";
+
+  function App() {
+    const [checked, setChecked] = useState(false);
+    return (
+      <>
+        <Switch
+          checked={checked}
+          onChange={({ target }) => setChecked(target.checked)}
+        />
+      </>
+    );
+  }
+  ```
+
+  [cee]: https://custom-elements-everywhere.com/#react
+
+### Patch Changes
+
+- f4a7ae7d7: `<pf-accordion>`: update the `expandedIndex` DOM property on change
+- Updated dependencies [7055add74]
+- Updated dependencies [a81bcb133]
+  - @patternfly/pfe-core@2.4.0
+
+## 2.2.2
+
+### Patch Changes
+
+- 5f2e653c1: `<pf-tabs>`: prevent error when using tabs-panel with certain frameworks or imperative javascript code
+
+## 2.2.1
+
+### Patch Changes
+
+- 78f3333c5: `<pf-tabs>`: fixed style regression on tab when a slotted icon is not present
+- 2ba0b4360: `<pf-popover>`: prevent memory leak by removing event listeners event on popover close
+
+## 2.2.0
+
+### Minor Changes
+
+- 12c59e9ac: `<pf-icon>`: allow `getIconUrl` to return a string, permitting users to import
+  icons from 'bare module specifiers'.
+
+### Patch Changes
+
+- c5d95880c: `<pf-accordion>`: fixed keyboard navigation inside of nested accordions
+- a2e88b511: `<pf-tabs>`: fix vertical alignment of slotted icons
+- 12c59e9ac: `<pf-icon>`: use fontawesome 5 icons. **NOTE**: imports from
+  `@patternfly/elements/pf-icon/icons/` are deprecated and will be removed in the
+  next major version.
+- 6adf530c4: `<pf-tabs>`: prevent error when using in certain javascript frameworks
+- 881c8a505: `<pf-timestamp>`: improved performance by using browser-standard features to calculate relative time
+- Updated dependencies [c5d95880c]
+  - @patternfly/pfe-core@2.3.1
+
 ## 2.1.0
 
 ### Minor Changes

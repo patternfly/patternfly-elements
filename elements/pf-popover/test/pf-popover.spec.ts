@@ -20,6 +20,10 @@ describe('<pf-popover>', function() {
     snapshot = await a11ySnapshot();
   });
 
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-popover')).to.be.an.instanceof(PfPopover);
+  });
+
   it('should upgrade', async function() {
     const klass = customElements.get('pf-popover');
     expect(element).to.be.an.instanceOf(klass).and.to.be.an.instanceOf(PfPopover);

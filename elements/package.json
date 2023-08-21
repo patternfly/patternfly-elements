@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/elements",
   "license": "MIT",
-  "version": "2.1.0",
+  "version": "2.3.2",
   "description": "PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -55,7 +55,8 @@
     "./pf-timestamp/pf-timestamp.js": "./pf-timestamp/pf-timestamp.js",
     "./pf-tooltip/BaseTooltip.js": "./pf-tooltip/BaseTooltip.js",
     "./pf-tooltip/pf-tooltip.js": "./pf-tooltip/pf-tooltip.js",
-    "./pf-popover/pf-popover.js": "./pf-popover/pf-popover.js"
+    "./pf-popover/pf-popover.js": "./pf-popover/pf-popover.js",
+    "./react/*": "./react/*"
   },
   "publishConfig": {
     "access": "public",
@@ -117,7 +118,8 @@
     "Wes Ruvalcaba"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^2.3.0",
+    "@patternfly/icons": "^1.0.2",
+    "@patternfly/pfe-core": "^2.4.0",
     "lit": "2.6.1",
     "tslib": "^2.4.1"
   }

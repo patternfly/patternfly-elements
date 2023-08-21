@@ -25,6 +25,10 @@ describe('<pf-icon>', function() {
     element = await fixture(html`<pf-icon></pf-icon>`);
   });
 
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-icon')).to.be.an.instanceof(PfIcon);
+  });
+
   it('should upgrade', function() {
     expect(element, 'pf-icon should be an instance of PfIcon')
       .to.be.an.instanceOf(customElements.get('pf-icon'))

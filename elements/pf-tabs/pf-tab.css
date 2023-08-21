@@ -18,6 +18,8 @@
 }
 
 button {
+  align-items: center;
+  gap: var(--pf-c-tabs__link--child--MarginRight, var(--pf-global--spacer--md, 1rem));
   line-height: var(--pf-global--LineHeight--md, 1.5);
   color: var(--pf-global--Color--100, #151515);
   padding:
@@ -122,11 +124,11 @@ button:active {
 }
 
 [part="icon"] {
-  margin-inline-end: var(--pf-c-tabs__link--child--MarginRight, var(--pf-global--spacer--md, 1rem));
+  display: flex !important;
 }
 
-[part="icon"]:last-child {
-  --pf-c-tabs__link--child--MarginRight: 0;
+[part="icon"][hidden] {
+  display: none !important;
 }
 
 :host([disabled][border-bottom="false"]) button,

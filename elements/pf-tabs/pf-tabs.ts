@@ -4,6 +4,7 @@ import { property } from 'lit/decorators/property.js';
 import { cascades } from '@patternfly/pfe-core/decorators.js';
 
 import { BaseTabs } from './BaseTabs.js';
+import { TabExpandEvent } from './BaseTab.js';
 import { PfTab } from './pf-tab.js';
 import { PfTabPanel } from './pf-tab-panel.js';
 
@@ -71,6 +72,10 @@ export class PfTabs extends BaseTabs {
 
   static isPanel(element: HTMLElement): element is PfTabPanel {
     return element instanceof PfTabPanel;
+  }
+
+  static isExpandEvent(event: Event): event is TabExpandEvent {
+    return event instanceof TabExpandEvent;
   }
 
   @cascades('pf-tab', 'pf-tab-panel')

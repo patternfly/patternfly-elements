@@ -1,3 +1,15 @@
+<pf-banner id="beta-table" variant="warning" icon="exclamation-triangle" sticky>
+  This is an initial release, with a subset of upstream
+  PatternFly's features.
+  APIs can be expected to change.
+</pf-banner>
+
+<style>
+#beta-table {
+  inset-block-start: calc(4.375rem + 2.125rem);/*109.2px;*/
+}
+</style>
+
 {% renderOverview %}
   Use the `<pf-table>` elements the way you would native HTML table elements.
 {% endrenderOverview %}

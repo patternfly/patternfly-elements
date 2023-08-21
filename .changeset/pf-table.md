@@ -38,3 +38,6 @@
   </pf-tr>
 </pf-table>
 ```
+
+This is an initial release, that implements a subset of the features of upstream
+PatternFly's table component. APIs can be expected to change.

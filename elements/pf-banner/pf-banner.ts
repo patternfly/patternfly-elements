@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
@@ -53,9 +53,7 @@ export type BannerVariant = (
 export class PfBanner extends LitElement {
   static readonly styles = [styles];
 
-  /**
-   * Changes the visual appearance of the banner.
-   */
+  /** Changes the visual appearance of the banner. */
   @property({ reflect: true }) variant?: BannerVariant;
 
   /** Shorthand for the `icon` slot, the value is icon name */
@@ -65,23 +63,25 @@ export class PfBanner extends LitElement {
   @property({ type: Boolean }) sticky = false;
 
   /** Represents the state of the anonymous and icon slots */
-  protected slots = new SlotController(this, null, 'icon');
+  #slots = new SlotController(this, null, 'icon');
 
-  render() {
+  override willUpdate(changed: PropertyValues<this>) {
+    if (changed.has('icon') && this.icon) {
+      import('@patternfly/elements/pf-icon/pf-icon.js');
+    }
+  }
+
+  override render() {
     const { variant, icon } = this;
-    const hasIcon = !!icon || this.slots.hasSlotted('icon');
+    const hasIcon = !!icon || this.#slots.hasSlotted('icon');
     return html`
       <div id="container" part="container"
             class=${classMap({ hasIcon, [variant ?? '']: !!variant })}>
-        <slot name="icon" part="icon">${this.renderDefaultIcon?.()}</slot>
+        <slot name="icon" part="icon">${!this.icon ? '' : html`
+          <pf-icon icon="${this.icon}" size="sm"></pf-icon>`}
+        </slot>
         <slot id="text"></slot>
       </div>
-    `;
-  }
-
-  protected renderDefaultIcon() {
-    return !this.icon ? '' : html`
-      <pf-icon icon="${this.icon}" size="sm"></pf-icon>
     `;
   }
 }

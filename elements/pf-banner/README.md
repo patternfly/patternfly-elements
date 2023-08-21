@@ -4,7 +4,7 @@ A banner is a 1-line, full color, full width container that can be used to commu
 Read more about Button in the [PatternFly Elements Banner documentation](https://patternflyelements.org/components/banner)
 
 ## Installation
-Load <pf-banner> via CDN:
+Load `<pf-banner>` via CDN:
 
 ```html
 <script src="https://jspm.dev/@patternfly/elements/pf-banner/pf-banner.js"></script>
@@ -54,7 +54,7 @@ Banners can have an icon attribute for a shorthand to Patternfly Icons. To see a
 Banners can be sticky, so they stick to the top of the parent. 
 
 ```html
-<pf-bannersticky>
+<pf-banner sticky>
   Sticky banner
 </pf-banner>
 ```

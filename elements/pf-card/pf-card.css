@@ -1,4 +1,7 @@
 :host {
+  display: flex;
+  flex-direction: column;
+
   background-color: var(--pf-c-card--BackgroundColor, var(--pf-global--BackgroundColor--100, #ffffff));
   box-shadow: var(--pf-c-card--BoxShadow, var(--pf-global--BoxShadow--sm, 0 0.0625rem 0.125rem 0 rgba(3, 3, 3, 0.12), 0 0 0.125rem 0 rgba(3, 3, 3, 0.06)));
 }
@@ -49,9 +52,23 @@
   padding-block-end: var(--_pf-c-card--child--PaddingBottom, var(--pf-global--spacer--lg, 1.5rem));
 }
 
+[part="header"] {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 [part="body"] {
   font-size: var(--_pf-c-card__body--FontSize, var(--pf-global--FontSize--md, 1rem));
   flex: var(--_pf-c-card__body--FullHeight--Flex, initial);
+}
+
+[part=body] ::slotted(:not([slot]):first-of-type) {
+  margin-block-start: 0 !important;
+}
+
+[part=body] ::slotted(:not([slot]):last-of-type) {
+  margin-block-end: 0 !important;
 }
 
 header {
@@ -60,14 +77,29 @@ header {
 }
 
 header ::slotted(*) {
+  margin-block: 0 !important;
+
   font-family: var(--pf-c-card__title--FontFamily, var(--pf-global--FontFamily--heading--sans-serif, "RedHatDisplayUpdated", helvetica, arial, sans-serif)) !important;
   font-size: var(--pf-c-card__title--FontSize, var(--pf-global--FontSize--md, 1rem)) !important;
   font-weight: var(--pf-c-card__title--FontWeight, var(--pf-global--FontWeight--bold, 700)) !important;
-  margin-block: 0 !important;
 }
 
 [part="footer"] {
-  font-size: var(--_pf-c-card__footer--FontSize, var(--pf-global--FontSize--md, 1rem));
   margin-block-start: auto;
+  display: flex;
+  gap: 0.5em;
+  inset-block-end: 0;
+
+  font-size: var(--_pf-c-card__footer--FontSize, var(--pf-global--FontSize--md, 1rem));
 }
 
+article {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.empty {
+  display: none;
+}

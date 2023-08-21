@@ -90,19 +90,19 @@
   grid-template-columns: 1fr fit-content(50%);
 }
 
-.success {
+#container.success {
   --pf-c-progress__bar--before--BackgroundColor: var(--pf-c-progress--m-success__bar--BackgroundColor);
   --_pf-c-progress__bar--before--BackgroundColorWithOpacity: var(--_pf-c-progress--m-success__bar--BackgroundColorWithOpacity);
   --pf-c-progress__status-icon--Color: var(--pf-c-progress--m-success__status-icon--Color);
 }
 
-.warning {
+#container.warning {
   --pf-c-progress__bar--before--BackgroundColor: var(--pf-c-progress--m-warning__bar--BackgroundColor);
   --_pf-c-progress__bar--before--BackgroundColorWithOpacity: var(--_pf-c-progress--m-warning__bar--BackgroundColorWithOpacity);
   --pf-c-progress__status-icon--Color: var(--pf-c-progress--m-warning__status-icon--Color);
 }
 
-.danger {
+#container.danger {
   --pf-c-progress__bar--before--BackgroundColor: var(--pf-c-progress--m-danger__bar--BackgroundColor);
   --_pf-c-progress__bar--before--BackgroundColorWithOpacity: var(--_pf-c-progress--m-danger__bar--BackgroundColorWithOpacity);
   --pf-c-progress__status-icon--Color: var(--pf-c-progress--m-danger__status-icon--Color);

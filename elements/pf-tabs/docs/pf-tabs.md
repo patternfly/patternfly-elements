@@ -1,3 +1,5 @@
+{% renderInstallation %} {% endrenderInstallation %}
+
 <style>
   .overflow-tab-wrapper {
     width: 94vw;
@@ -40,6 +42,90 @@
     <pf-tab-panel>Database</pf-tab-panel>
   </pf-tabs>
   {% endhtmlexample %}
+
+  ### Reacting to changes
+  Listen for the `expand` event to react when a tab is selected.
+
+<pf-tabs class="html-lit-react-snippets">
+  <pf-tab slot="tab">HTML</pf-tab>
+  <pf-tab-panel>
+
+```html
+<script type="module">
+  import { PfTabs } from '@patternfly/elements/pf-tabs/pf-tabs.js'};
+
+  document.querySelector('pf-tabs')
+    .addEventListener('expand', function(event) {
+      if (PfTabs.isExpandEvent(event)) {
+        const pfTabs = event.target.closest('pf-tabs');
+        const activeTab = pfTabs.tabs.at(pfTabs.activeTab)
+        console.log(`${activeTab.textContent} tab activated!`);
+      }
+    });
+</script>
+
+<pf-tabs>
+  <pf-tab slot="tab">GPL</pf-tab>
+  <pf-tab-panel>Copyleft</pf-tab-panel>
+  <pf-tab slot="tab">MIT</pf-tab>
+  <pf-tab-panel>Open source</pf-tab-panel>
+</pf-tabs>
+```
+
+  </pf-tab-panel>
+  <pf-tab slot="tab">Lit</pf-tab>
+  <pf-tab-panel>
+
+```js
+import { html, render } from 'lit';
+import { PfTabs } from '@patternfly/elements/pf-tabs/pf-tabs.js'};
+
+function onExpand(event) {
+  if (PfTabs.isExpandEvent(event)) {
+    const pfTabs = event.target.closest('pf-tabs');
+    const activeTab = pfTabs.tabs.at(pfTabs.activeTab)
+    console.log(`${activeTab.textContent} tab activated!`);
+  }
+}
+
+render(html`
+  <pf-tabs @expand="${onExpand}">
+    <pf-tab slot="tab">GPL</pf-tab>
+    <pf-tab-panel>Copyleft</pf-tab-panel>
+    <pf-tab slot="tab">MIT</pf-tab>
+    <pf-tab-panel>Open source</pf-tab-panel>
+  </pf-tabs>
+`, document.getElementById('container'));
+```
+
+  </pf-tab-panel>
+  <pf-tab slot="tab">React</pf-tab>
+  <pf-tab-panel>
+
+```jsx
+import { Tabs, Tab, TabPanel } from '@patternfly/elements/react/pf-tabs/pf-tabs.js';
+import { PfTabs } from '@patternfly/elements/pf-tabs/pf-tabs.js';
+
+function onExpand(event) {
+  if (PfTabs.isExpandEvent(event)) {
+    const pfTabs = event.target.closest('pf-tabs');
+    const activeTab = pfTabs.tabs.at(pfTabs.activeTab)
+    console.log(`${activeTab.textContent} tab activated!`);
+  }
+}
+
+export const Expander = () => (
+  <Tabs onExpand={onExpand}>
+    <Tab slot="tab">GPL</Tab>
+    <TabPanel>Copyleft</TabPanel>
+    <Tab slot="tab">MIT</Tab>
+    <TabPanel>Open source</TabPanel>
+  </Tabs>
+)
+```
+
+  </pf-tab-panel>
+</pf-tabs>
 {% endband %}
 
 {% band header="Variants" %}

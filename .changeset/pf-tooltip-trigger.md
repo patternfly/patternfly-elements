@@ -1,5 +1,5 @@
 ---
-"@patternfly/element": minor
+"@patternfly/elements": minor
 ---
 `<pf-tooltip>` added the `trigger` attribute to specify a tooltip-invoking 
 element outside of the tooltip's children.

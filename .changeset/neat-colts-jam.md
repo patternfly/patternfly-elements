@@ -2,4 +2,4 @@
 "@patternfly/elements": patch
 ---
 
-`<pf-accordion>`: fixed bug which would collapse a panel if it contained a checkbox which got toggled.
+`<pf-accordion>`: fixed issue with panels collapsing when a child checkbox was toggled.

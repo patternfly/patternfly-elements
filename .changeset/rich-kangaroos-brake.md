@@ -5,5 +5,5 @@
 ✨ Added `<pf-progress>`
 
 ```html
-<pf-progress title="Default" value="33"></pf-progress>
+<pf-progress description="Default" value="33"></pf-progress>
 ```

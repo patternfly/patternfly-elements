@@ -1,3 +1,4 @@
+import { sendMouse } from '@web/test-runner-commands';
 import type { ReactiveElement } from 'lit';
 
 export type Position = [x: number, y: number];
@@ -9,6 +10,11 @@ export function getElementPosition(element: Element): Position {
     Math.floor(x + window.pageXOffset + width / 2),
     Math.floor(y + window.pageYOffset + height / 2),
   ];
+}
+
+export async function clickElementCenter(element: Element): Promise<void> {
+  const position = getElementPosition(element);
+  await sendMouse({ type: 'click', position });
 }
 
 /**

@@ -1,0 +1,138 @@
+<script type="module" src="pf-progress.js"></script>
+<link rel="stylesheet" href="kitchen-sink.css">
+
+<h1>pf-progress</h1>
+
+<h2>Default States</h2>
+
+<pf-progress></pf-progress>
+
+<h3>Value</h3>
+<pf-progress value="86"></pf-progress>
+
+<h3>Description</h3>
+<pf-progress value="75" description="Description"></pf-progress>
+
+<h3>Aria-label</h3>
+<pf-progress value="90" aria-label="Aria-label"></pf-progress>
+
+<h3>Max</h3>
+<pf-progress value="25" max="50"></pf-progress>
+
+<h3>Min</h3>
+<pf-progress value="75" min="50"></pf-progress>
+
+<h3>Size (sm, lg)</h3>
+<pf-progress value="24" size="sm"></pf-progress>
+<pf-progress value="25" size="lg"></pf-progress>
+
+<h3>Measure Location (Inside, Outside, None)</h3>
+<pf-progress value="24" measure-location="inside"></pf-progress>
+<pf-progress value="25" measure-location="outside"></pf-progress>
+<pf-progress value="26" measure-location="none"></pf-progress>
+
+<h3>Variant (Sucess, danger, warning)</h3>
+<pf-progress value="24" variant="success"></pf-progress>
+<pf-progress value="25" variant="danger"></pf-progress>
+<pf-progress value="26" variant="warning"></pf-progress>
+
+<h3>Variant (Success, Danger, Warning) and Size (sm, lg)</h3>
+<pf-progress value="24" variant="success" size="sm"></pf-progress>
+<pf-progress value="25" variant="success" size="lg"></pf-progress>
+<pf-progress value="26" variant="danger" size="sm"></pf-progress>
+<pf-progress value="27" variant="danger" size="lg"></pf-progress>
+<pf-progress value="28" variant="warning" size="sm"></pf-progress>
+<pf-progress value="29" variant="warning" size="lg"></pf-progress>
+
+<h3>Variant (Success, Danger, Warning) and Measure Location (Inside, Outside, None)</h3>
+<pf-progress value="24" variant="success" measure-location="inside"></pf-progress>
+<pf-progress value="25" variant="success" measure-location="outside"></pf-progress>
+<pf-progress value="25" variant="success" measure-location="none"></pf-progress>
+<pf-progress value="26" variant="danger" measure-location="inside"></pf-progress>
+<pf-progress value="27" variant="danger" measure-location="outside"></pf-progress>
+<pf-progress value="27" variant="danger" measure-location="none"></pf-progress>
+<pf-progress value="28" variant="warning" measure-location="inside"></pf-progress>
+<pf-progress value="29" variant="warning" measure-location="outside"></pf-progress>
+<pf-progress value="29" variant="warning" measure-location="none"></pf-progress>
+
+<h3>Variant (Success, Danger, Warning), Size (sm, lg) and Measure Location (Inside, Outside, None)</h3>
+<pf-progress value="24" variant="success" size="sm" measure-location="inside"></pf-progress>
+<pf-progress value="25" variant="success" size="sm" measure-location="outside"></pf-progress>
+<pf-progress value="26" variant="success" size="sm" measure-location="none"></pf-progress>
+<pf-progress value="27" variant="success" size="lg" measure-location="inside"></pf-progress>
+<pf-progress value="28" variant="success" size="lg" measure-location="outside"></pf-progress>
+<pf-progress value="29" variant="success" size="lg" measure-location="inside"></pf-progress>
+<pf-progress value="30" variant="danger" size="sm" measure-location="inside"></pf-progress>
+<pf-progress value="31" variant="danger" size="sm" measure-location="outside"></pf-progress>
+<pf-progress value="32" variant="danger" size="sm" measure-location="none"></pf-progress>
+<pf-progress value="33" variant="danger" size="lg" measure-location="inside"></pf-progress>
+<pf-progress value="34" variant="danger" size="lg" measure-location="outside"></pf-progress>
+<pf-progress value="35" variant="danger" size="lg" measure-location="none"></pf-progress>
+<pf-progress value="36" variant="warning" size="sm" measure-location="inside"></pf-progress>
+<pf-progress value="37" variant="warning" size="sm" measure-location="outside"></pf-progress>
+<pf-progress value="38" variant="warning" size="sm" measure-location="none"></pf-progress>
+<pf-progress value="39" variant="warning" size="lg" measure-location="inside"></pf-progress>
+<pf-progress value="40" variant="warning" size="lg" measure-location="outside"></pf-progress>
+<pf-progress value="41" variant="warning" size="lg" measure-location="none"></pf-progress>
+
+<h2>Label w/ no description</h2>
+
+<h3>Value</h3>
+
+<label for="progress1">Value</label>
+<pf-progress id="progress1" value="86"></pf-progress>
+
+<h3>Size (sm, lg)</h3>
+
+<label for="progress2">Size (sm)</label>
+<pf-progress id="progress2" value="24" size="sm"></pf-progress>
+
+<label for="progress3">Size (lg)</label>
+<pf-progress id="progress3" value="25" size="lg"></pf-progress>
+
+<h3>Measure Location (Inside, Outside)</h3>
+
+<label for="progress4">Measure Location (Inside)</label>
+<pf-progress id="progress4" value="24" measure-location="inside"></pf-progress>
+
+<label for="progress5">Measure Location (Outside)</label>
+<pf-progress id="progress5" value="25" measure-location="outside"></pf-progress>
+
+<h3>Variant (Sucess, danger, warning)</h3>
+
+<label for="progress6">Variant (Success)</label>
+<pf-progress id="progress6" value="24" variant="success"></pf-progress>
+
+<label for="progress7">Variant (Danger)</label>
+<pf-progress id="progress7" value="25" variant="danger"></pf-progress>
+
+<label for="progress8">Variant (Warning)</label>
+<pf-progress id="progress8" value="26" variant="warning"></pf-progress>
+
+<h3>Variant (Success, Danger, Warning) and Size (sm, lg)</h3>
+
+<label for="progress9">Variant (Success) and Size (sm)</label>
+<pf-progress id="progress9" value="24" variant="success" size="sm"></pf-progress>
+
+<label for="progress10">Variant (Success) and Size (lg)</label>
+<pf-progress id="progress10" value="25" variant="success" size="lg"></pf-progress>
+
+<label for="progress11">Variant (Danger) and Size (sm)</label>
+<pf-progress id="progress11" value="26" variant="danger" size="sm"></pf-progress>
+
+<label for="progress12">Variant (Danger) and Size (lg)</label>
+<pf-progress id="progress12" value="27" variant="danger" size="lg"></pf-progress>
+
+<label for="progress13">Variant (Warning) and Size (sm)</label>
+<pf-progress id="progress13" value="28" variant="warning" size="sm"></pf-progress>
+
+<label for="progress14">Variant (Warning) and Size (lg)</label>
+<pf-progress id="progress14" value="29" variant="warning" size="lg"></pf-progress>
+
+<h3>Truncated description</h3>
+<pf-progress
+    value="29"
+    description-truncated
+    description="Very very very very very very very very very very very long description which should be truncated if it does not fit onto one line above the progress bar"
+></pf-progress>
+

@@ -1,4 +1,9 @@
 import { customElement } from 'lit/decorators/custom-element.js';
+import { LitElement, html } from 'lit';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
+
+import { classMap } from 'lit/directives/class-map.js';
+
 import { property } from 'lit/decorators/property.js';
 
 import style from './pf-card.css';
@@ -50,8 +55,8 @@ import { BaseCard } from './BaseCard.js';
  * @cssproperty {<color>} --pf-c-card__title--FontWeight {@default `700`}
  */
 @customElement('pf-card')
-export class PfCard extends BaseCard {
-  static readonly styles = [...BaseCard.styles, style];
+export class PfCard extends LitElement {
+  static readonly styles = [style];
 
   /**
    * Optionally provide a size for the card and the card contents.
@@ -75,6 +80,30 @@ export class PfCard extends BaseCard {
    * Optionally remove the border on the card container.
    */
   @property({ type: Boolean, reflect: true }) plain = false;
+
+  protected slots = new SlotController(this, 'header', null, 'footer');
+
+  render() {
+    return html`
+      <article>
+        <header id="header"
+                part="header"
+                class="${classMap({ empty: !this.slots.hasSlotted('header') })}">
+          <slot name="header"></slot>
+        </header>
+        <div id="body"
+             part="body"
+             class="${classMap({ empty: !this.querySelector(':not([slot])') })}">
+          <slot></slot>
+        </div>
+        <footer id="footer"
+                part="footer"
+                class="${classMap({ empty: !this.slots.hasSlotted('footer') })}">
+          <slot name="footer"></slot>
+        </footer>
+      </article>
+    `;
+  }
 }
 
 declare global {

@@ -12,11 +12,11 @@ select.addEventListener('change', event =>
 
 // Close popover from content
 const closeButton = document.getElementById('close-button');
-closeButton.addEventListener('click', event => event.target.closest('pf-popover').hide());
+closeButton?.addEventListener('click', event => event.target.closest('pf-popover').hide());
 
 // Alert variants
 const alert = document.getElementById('alert');
-alert.addEventListener('change', event =>
+alert?.addEventListener('change', event =>
   alert
     .querySelector('pf-popover')
     .setAttribute('alert-severity', event.target.closest('form').elements.severity.value));

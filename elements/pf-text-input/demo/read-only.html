@@ -1,0 +1,18 @@
+<fieldset>
+  <legend>Read only</legend>
+  <label for="read-only-input">Read only input</label>
+  <pf-text-input id="read-only-input"
+                 readonly
+                 value="read only text input example"></pf-text-input>
+  <label>
+    <pf-switch onchange="this.closest('fieldset').querySelector('pf-text-input').plain=this.checked;"></pf-switch>
+    Plain read only variant
+  </label>
+</fieldset>
+
+<script type="module">
+  import '@patternfly/elements/pf-text-input/pf-text-input.js';
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+</script>
+
+<link rel="stylesheet" href="demo.css">

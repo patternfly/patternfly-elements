@@ -1,0 +1,14 @@
+<fieldset>
+  <legend>Invalid</legend>
+  <pf-text-input id="invalid-input" required></pf-text-input>
+</fieldset>
+
+<script type="module">
+  import '@patternfly/elements/pf-text-input/pf-text-input.js';
+  await customElements.whenDefined('pf-text-input');
+  const input = document.querySelector('pf-text-input[required]');
+  await input.updateComplete;
+  input.checkValidity();
+</script>
+
+<link rel="stylesheet" href="demo.css">

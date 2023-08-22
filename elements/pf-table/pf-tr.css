@@ -1,0 +1,87 @@
+:host {
+  display: grid;
+  align-items: center;
+  padding-inline-start: calc(50px * var(--_pf-table--expandable-rows, 0));
+}
+
+::slotted(*) {
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  :host {
+    /* TODO: provide ability to override */
+    grid-template-columns: repeat(var(--_pf-table--number-of-columns), 1fr);
+  }
+}
+
+#container {
+  display: contents;
+}
+
+:host([expandable]),
+#expansion {
+  position: relative;
+}
+
+#expansion {
+  display: block;
+  margin-inline-start: calc(-1 * 50px * var(--_pf-table--expandable-rows, 0));
+  grid-auto-flow: row;
+  grid-template-columns: auto;
+  padding: 0px 1.5rem;
+  display: grid;
+  grid-column: 1/-1;
+}
+
+:host(:not([expanded])),
+:host([expanded]) #expansion {
+  border-block-end: 1px solid #d2d2d2;
+}
+
+:host([expanded]) #expansion::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-block-start: 1px solid #d2d2d2;
+  inset-block-start: -1px;
+}
+
+
+#expansion::slotted(pf-td) {
+  padding-block-start: 0;
+  padding-inline-start: 0;
+}
+
+:host([expandable][expanded])::before {
+  position: absolute;
+  inset-block-start: -1px;
+  inset-inline-end: 0;
+  inset-block-end: -1px;
+  inset-inline-start: 0;
+  content: "";
+  border-inline-start: 3px solid #06c;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#expansion::slotted(pf-table) {
+  margin-block-end: -1px;
+}
+
+#toggle-cell {
+  z-index: 2;
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 1.5rem;
+  padding: 0;
+}
+
+#toggle-icon {
+  transition: .2s ease-in 0s;
+  vertical-align: -0.125em;
+}
+
+:host([expanded]) #toggle-icon {
+  transform: rotate(90deg);
+}

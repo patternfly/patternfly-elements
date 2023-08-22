@@ -48,6 +48,10 @@ export abstract class BaseAccordion extends LitElement {
     return target instanceof BaseAccordionPanel;
   }
 
+  static #isAccordionChangeEvent(event: Event): event is AccordionHeaderChangeEvent {
+    return event instanceof AccordionHeaderChangeEvent;
+  }
+
   #headerIndex = new RovingTabindexController<BaseAccordionHeader>(this);
 
   #expandedIndex: number[] = [];
@@ -93,7 +97,7 @@ export abstract class BaseAccordion extends LitElement {
   get #activeHeader() {
     const { headers } = this;
     const index = headers.findIndex(header => header.matches(':focus,:focus-within'));
-    return headers.at(index);
+    return index > -1 ? headers.at(index) : undefined;
   }
 
   protected expandedSets = new Set<number>();
@@ -158,7 +162,7 @@ export abstract class BaseAccordion extends LitElement {
     this.updateAccessibility();
   }
 
-  #updateActiveHeader() {
+  #updateActiveHeader(event: FocusEvent) {
     if (this.#activeHeader) {
       this.#headerIndex.updateActiveItem(this.#activeHeader);
     }
@@ -265,51 +269,14 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   #onChange(event: AccordionHeaderChangeEvent) {
-    if (this.classList.contains('animating')) {
-      return;
+    if (BaseAccordion.#isAccordionChangeEvent(event) && !this.classList.contains('animating')) {
+      const index = this.#getIndex(event.target);
+      if (event.expanded) {
+        this.expand(index, event.accordion);
+      } else {
+        this.collapse(index);
+      }
     }
-
-    const index = this.#getIndex(event.target as Element);
-
-    if (event.expanded) {
-      this.expand(index, event.accordion);
-    } else {
-      this.collapse(index);
-    }
-  }
-
-  /**
-   * @see https://www.w3.org/TR/wai-aria-practices/#accordion
-   */
-  async #onKeydown(evt: KeyboardEvent) {
-    const currentHeader = evt.target as Element;
-
-    if (!BaseAccordion.isHeader(currentHeader)) {
-      return;
-    }
-
-    let newHeader: BaseAccordionHeader | undefined;
-
-    switch (evt.key) {
-      case 'ArrowDown':
-        evt.preventDefault();
-        newHeader = this.#nextHeader();
-        break;
-      case 'ArrowUp':
-        evt.preventDefault();
-        newHeader = this.#previousHeader();
-        break;
-      case 'Home':
-        evt.preventDefault();
-        newHeader = this.#firstHeader();
-        break;
-      case 'End':
-        evt.preventDefault();
-        newHeader = this.#lastHeader();
-        break;
-    }
-
-    newHeader?.focus?.();
   }
 
   #allHeaders(accordion: BaseAccordion = this): BaseAccordionHeader[] {
@@ -318,26 +285,6 @@ export abstract class BaseAccordion extends LitElement {
 
   #allPanels(accordion: BaseAccordion = this): BaseAccordionPanel[] {
     return Array.from(accordion.children).filter(BaseAccordion.isPanel);
-  }
-
-  #previousHeader() {
-    const { headers } = this;
-    const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) - 1;
-    return headers[(newIndex + headers.length) % headers.length];
-  }
-
-  #nextHeader() {
-    const { headers } = this;
-    const newIndex = headers.findIndex(header => header.matches(':focus,:focus-within')) + 1;
-    return headers[newIndex % headers.length];
-  }
-
-  #firstHeader() {
-    return this.headers.at(0);
-  }
-
-  #lastHeader() {
-    return this.headers.at(-1);
   }
 
   #getIndex(el: Element | null) {
@@ -386,10 +333,6 @@ export abstract class BaseAccordion extends LitElement {
    * Accepts an optional parent accordion to search for headers and panels.
    */
   public async expand(index: number, parentAccordion?: BaseAccordion) {
-    if (index === -1) {
-      return;
-    }
-
     const allHeaders: Array<BaseAccordionHeader> = this.#allHeaders(parentAccordion);
 
     const header = allHeaders[index];

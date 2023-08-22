@@ -1,0 +1,210 @@
+* {
+  box-sizing: border-box;
+}
+
+#container {
+  --_pf-c-progress__bar--before--BackgroundColorWithOpacity: #0066cc33; /* WARNING: not a recognized token value */
+  --_pf-c-progress--m-success__bar--BackgroundColorWithOpacity: #3e863533;  /* WARNING: not a recognized token value */
+  --_pf-c-progress--m-warning__bar--BackgroundColorWithOpacity: #f0ab0033;  /* WARNING: not a recognized token value */
+  --_pf-c-progress--m-danger__bar--BackgroundColorWithOpacity: #c9190b33;  /* WARNING: not a recognized token value */
+
+  --pf-c-progress--GridGap: var(--pf-global--spacer--md, 1rem);
+  --pf-c-progress__bar--before--BackgroundColor: var(--pf-global--primary-color--100, #0066cc);
+  --pf-c-progress__bar--Height: var(--pf-global--spacer--md, 1rem);
+  --pf-c-progress__bar--BackgroundColor: var(--pf-global--BackgroundColor--light-100, #ffffff);
+  --pf-c-progress__status-icon--Color: var(--pf-global--Color--100, #151515);
+  --pf-c-progress__status-icon--MarginLeft: var(--pf-global--spacer--sm, 0.5rem);
+  --pf-c-progress__indicator--Height: var(--pf-c-progress__bar--Height);
+  --pf-c-progress__indicator--BackgroundColor: var(--pf-c-progress__bar--before--BackgroundColor);
+  --pf-c-progress--m-success__bar--BackgroundColor: var(--pf-global--success-color--100, #3e8635);
+  --pf-c-progress--m-warning__bar--BackgroundColor: var(--pf-global--warning-color--100, #f0ab00);
+  --pf-c-progress--m-danger__bar--BackgroundColor: var(--pf-global--danger-color--100, #c9190b);
+  --pf-c-progress--m-success__status-icon--Color: var(--pf-global--success-color--100, #3e8635);
+  --pf-c-progress--m-warning__status-icon--Color: var(--pf-global--warning-color--100, #f0ab00);
+  --pf-c-progress--m-danger__status-icon--Color: var(--pf-global--danger-color--100, #c9190b);
+  --pf-c-progress--m-success--m-inside__measure--Color: var(--pf-global--Color--light-100, #ffffff);
+  --pf-c-progress--m-outside__measure--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  --pf-c-progress--m-sm__bar--Height: var(--pf-global--spacer--sm, 0.5rem);
+  --pf-c-progress--m-sm__description--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  --pf-c-progress--m-lg__bar--Height: var(--pf-global--spacer--lg, 1.5rem);
+  display: grid;
+  align-items: end;
+  grid-gap: var(--pf-c-progress--GridGap);
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+  width: 100%;
+}
+
+.sm {
+  --pf-c-progress__bar--Height: var(--pf-c-progress--m-sm__bar--Height);
+  --pf-c-progress__indicator--Height: var(--pf-c-progress--m-sm__bar--Height);
+}
+
+.sm #description {
+  font-size: var(--pf-c-progress--m-sm__description--FontSize);
+}
+
+.lg {
+  --pf-c-progress__bar--Height: var(--pf-c-progress--m-lg__bar--Height);
+  --pf-c-progress__indicator--Height: var(--pf-c-progress--m-lg__bar--Height);
+}
+
+.outside #description {
+  grid-column: 1/3;
+}
+
+.outside #status {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  align-self: center;
+}
+
+.outside progress,
+.outside span {
+  display: inline-block;
+  font-size: var(--pf-c-progress--m-outside__measure--FontSize);
+  grid-column: 1/2;
+}
+
+.singleline {
+  grid-template-rows: 1fr;
+}
+
+.singleline #description {
+  display: none;
+  visibility: hidden;
+}
+
+.singleline progress,
+.singleline span {
+  grid-row: 1/2;
+  grid-column: 1/2;
+}
+
+.singleline #status {
+  grid-row: 1/2;
+  grid-column: 2/3;
+}
+
+.outside, .singleline {
+  grid-template-columns: 1fr fit-content(50%);
+}
+
+#container.success {
+  --pf-c-progress__bar--before--BackgroundColor: var(--pf-c-progress--m-success__bar--BackgroundColor);
+  --_pf-c-progress__bar--before--BackgroundColorWithOpacity: var(--_pf-c-progress--m-success__bar--BackgroundColorWithOpacity);
+  --pf-c-progress__status-icon--Color: var(--pf-c-progress--m-success__status-icon--Color);
+}
+
+#container.warning {
+  --pf-c-progress__bar--before--BackgroundColor: var(--pf-c-progress--m-warning__bar--BackgroundColor);
+  --_pf-c-progress__bar--before--BackgroundColorWithOpacity: var(--_pf-c-progress--m-warning__bar--BackgroundColorWithOpacity);
+  --pf-c-progress__status-icon--Color: var(--pf-c-progress--m-warning__status-icon--Color);
+}
+
+#container.danger {
+  --pf-c-progress__bar--before--BackgroundColor: var(--pf-c-progress--m-danger__bar--BackgroundColor);
+  --_pf-c-progress__bar--before--BackgroundColorWithOpacity: var(--_pf-c-progress--m-danger__bar--BackgroundColorWithOpacity);
+  --pf-c-progress__status-icon--Color: var(--pf-c-progress--m-danger__status-icon--Color);
+}
+
+#description {
+  word-break: break-word;
+  grid-column: 1/2;
+}
+
+.descriptionTruncated #description {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#status {
+  grid-column: 2/3;
+  grid-row: 1/2;
+  text-align: right;
+  word-break: break-word;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+pf-icon {
+  margin-left: var(--pf-c-progress__status-icon--MarginLeft);
+  color: var(--pf-c-progress__status-icon--Color);
+}
+
+progress {
+  position: relative;
+  grid-column: 1/3;
+  grid-row: 2/3;
+  align-self: center;
+  height: var(--pf-c-progress__bar--Height);
+  background-color: var(--pf-c-progress__bar--BackgroundColor);
+}
+
+.indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: var(--pf-c-progress__indicator--Height);
+  background-color: var(--pf-c-progress__indicator--BackgroundColor);
+}
+
+.indicator {
+  width: 100%;
+  height: var(--pf-c-progress__bar--Height);
+
+  display: block;
+}
+
+span {
+  grid-column: 1/3;
+  grid-row: 2/3;
+  text-align: center;
+  color: var(--pf-c-progress--m-success--m-inside__measure--Color);
+}
+
+span::after {
+  content: attr(data-value);
+  position: relative;
+  height: 100%;
+}
+
+progress[value] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  background: var(--_pf-c-progress__bar--before--BackgroundColorWithOpacity);
+
+  width: 100%;
+  height: var(--pf-c-progress__bar--Height);
+}
+
+progress:not([value]) {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+progress[value]::-webkit-progress-bar {
+  background: var(--_pf-c-progress__bar--before--BackgroundColorWithOpacity);
+}
+
+progress[value]::-moz-progress-bar {
+  background: var(--pf-c-progress__bar--before--BackgroundColor);
+}
+
+progress[value]::-webkit-progress-value {
+  background-size: 100% 100%;
+  background-image: linear-gradient(
+    90deg,
+    var(--pf-c-progress__bar--before--BackgroundColor) 100%,
+    var(--pf-c-progress__bar--before--BackgroundColor) 100%
+  );
+}
+
+pf-tooltip {
+  height: 0.01px;
+}

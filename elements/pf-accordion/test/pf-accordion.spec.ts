@@ -1,11 +1,10 @@
-import type { ReactiveElement } from 'lit';
-
 import { expect, html, aTimeout, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 
 // Import the element we're testing.
 import { PfAccordion, PfAccordionPanel, PfAccordionHeader } from '@patternfly/elements/pf-accordion/pf-accordion.js';
+import { PfSwitch } from '@patternfly/elements/pf-switch/pf-switch.js';
 
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -387,7 +386,6 @@ describe('<pf-accordion>', function() {
           });
         });
 
-
         describe('Shift+Tab', function() {
           beforeEach(press('Shift+Tab'));
           it('moves focus to the body', function() {
@@ -615,7 +613,7 @@ describe('<pf-accordion>', function() {
             describe('Tab', function() {
               beforeEach(press('Tab'));
               it('moves focus to the body', function() {
-                expect(document.activeElement).to.equal(header3);
+                expect(document.activeElement).to.equal(document.body);
               });
               describe('Shift+Tab', function() {
                 beforeEach(press('Shift+Tab'));
@@ -1190,7 +1188,7 @@ describe('<pf-accordion>', function() {
 
         describe('Navigating from parent to child accordion', function() {
           describe('Opening the panel containing the nested accordion and pressing TAB', function() {
-            beforeEach(press(' '));
+            beforeEach(press('Space'));
             beforeEach(press('Tab'));
             it('moves focus to the nested accordion header', function() {
               expect(document.activeElement).to.equal(nestedHeaderOne);
@@ -1226,8 +1224,8 @@ describe('<pf-accordion>', function() {
 
             describe('Tab', function() {
               beforeEach(press('Tab'));
-              it('should move focus back to the parent accordion', function() {
-                expect(document.activeElement).to.equal(topLevelHeaderThree);
+              it('should move focus back to the body', function() {
+                expect(document.activeElement).to.equal(document.body);
               });
             });
           });
@@ -1318,6 +1316,57 @@ describe('<pf-accordion>', function() {
             });
           });
         });
+      });
+    });
+  });
+
+  describe('with a single expanded header and panel containing a checkbox and a switch', function() {
+    let element: PfAccordion;
+    let headers: NodeListOf<PfAccordionHeader>;
+    let panels: NodeListOf<PfAccordionPanel>;
+    let checkbox: HTMLInputElement;
+    let pfswitch: PfSwitch;
+    let accordionPanelOne: PfAccordionPanel;
+
+    beforeEach(async function() {
+      element = await createFixture<PfAccordion>(html`
+          <pf-accordion>
+            <pf-accordion-header expanded id="header-1-1" data-index="0"></pf-accordion-header>
+            <pf-accordion-panel id="panel-1-1" data-index="0">
+              <pf-switch></pf-switch>
+              <input type="checkbox">
+            </pf-accordion-panel>
+          </pf-accordion>
+        `);
+      headers = document.querySelectorAll('pf-accordion-header');
+      panels = document.querySelectorAll('pf-accordion-panel');
+      checkbox = element.querySelector('input')!;
+      pfswitch = element.querySelector('pf-switch')!;
+      expect(checkbox).to.be.ok;
+      expect(pfswitch).to.be.ok;
+      [accordionPanelOne] = panels;
+    });
+
+    describe('clicking the checkbox', function() {
+      beforeEach(async function() {
+        checkbox.click();
+        await element.updateComplete;
+      });
+      it('does not collapse the panel', function() {
+        expect(accordionPanelOne.expanded).to.be.true;
+      });
+    });
+
+    describe('clicking the switch', function() {
+      beforeEach(async function() {
+        const { checked } = pfswitch;
+        pfswitch.click();
+        await element.updateComplete;
+        await pfswitch.updateComplete;
+        expect(pfswitch.checked).to.not.equal(checked);
+      });
+      it('does not collapse the panel', function() {
+        expect(accordionPanelOne.expanded).to.be.true;
       });
     });
   });

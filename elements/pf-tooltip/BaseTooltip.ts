@@ -11,6 +11,9 @@ import style from './BaseTooltip.css';
 const enterEvents = ['focusin', 'tap', 'click', 'mouseenter'];
 const exitEvents = ['focusout', 'blur', 'mouseleave'];
 
+/**
+ * @deprecated - Will be removed in the next major version. Use FloatingDOMController
+ */
 export abstract class BaseTooltip extends LitElement {
   static readonly styles = [style];
 
@@ -48,9 +51,9 @@ export abstract class BaseTooltip extends LitElement {
     return html`
       <div id="container"
            style="${styleMap(styles)}"
-        class="${classMap({ open,
-                            [anchor]: !!anchor,
-                            [alignment]: !!alignment })}">
+           class="${classMap({ open,
+                               [anchor]: !!anchor,
+                               [alignment]: !!alignment })}">
         <slot id="invoker" role="tooltip" aria-labelledby="tooltip"></slot>
         <slot id="tooltip"
               name="content"

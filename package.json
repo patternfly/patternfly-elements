@@ -108,9 +108,18 @@
         "!tools/pfe-cli/**/*.d.ts"
       ],
       "output": [
-        "tools/pfe-cli/**/*.js",
-        "tools/pfe-cli/**/*.map",
-        "tools/pfe-cli/**/*.d.ts",
+        "!tools/pfe-cli/node_modules/**/*.js",
+        "!tools/pfe-cli/node_modules/**/*.map",
+        "!tools/pfe-cli/node_modules/**/*.d.ts",
+        "tools/pfe-cli/*.js",
+        "tools/pfe-cli/*.map",
+        "tools/pfe-cli/*.d.ts",
+        "tools/pfe-cli/lib/**/*.js",
+        "tools/pfe-cli/lib/**/*.map",
+        "tools/pfe-cli/lib/**/*.d.ts",
+        "tools/pfe-cli/commands/**/*.js",
+        "tools/pfe-cli/commands/**/*.map",
+        "tools/pfe-cli/commands/**/*.d.ts",
         "tools/pfe-cli/*.tsbuildinfo"
       ]
     },
@@ -124,6 +133,9 @@
         "!tools/pfe-tools/**/*.d.ts"
       ],
       "output": [
+        "!tools/pfe-tools/node_modules/**/*.js",
+        "!tools/pfe-tools/node_modules/**/*.map",
+        "!tools/pfe-tools/node_modules/**/*.d.ts",
         "tools/pfe-tools/**/*.js",
         "tools/pfe-tools/**/*.map",
         "tools/pfe-tools/**/*.d.ts",

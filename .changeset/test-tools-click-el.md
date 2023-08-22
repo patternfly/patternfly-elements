@@ -1,4 +1,4 @@
 ---
 "@patternfly/pfe-tools": minor
 ---
-Test: add `clickElementCenter` utility function for tests
+Test: add `clickElementAtCenter` utility function for tests

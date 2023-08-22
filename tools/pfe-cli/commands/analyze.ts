@@ -1,52 +1,5 @@
 import type Yargs from 'yargs';
-
-import type { AbsolutePath } from '@lit-labs/analyzer';
-
-import { createPackageAnalyzer } from '@lit-labs/analyzer/package-analyzer.js';
-
-import { fileURLToPath } from 'node:url';
-import { join } from 'node:path';
-import { formatDiagnostics } from '../lib/ts.js';
-import { generateManifest } from './analyzer/gen-manifest.js';
-
-interface Opts {
-  packagePath: string | URL;
-  quiet: boolean;
-}
-
-function getPackage(packagePath: string | URL) {
-  const path = packagePath instanceof URL ? fileURLToPath(packagePath) : join(process.cwd(), packagePath);
-  const analyzer = createPackageAnalyzer(path as AbsolutePath, {
-    exclude: [
-      '**/*.spec.ts',
-      '**/*.e2e.ts',
-      '**/*.d.ts',
-      '**/*.js',
-    ],
-  });
-  try {
-    const p = analyzer.getPackage();
-    console.log('DONE getPackage')
-    return p;
-  } catch (e: any) {
-    console.group(`Error analyzing package ${packagePath}`);
-    if (Array.isArray(e.diagnostics)) {
-      console.log(e.diagnostics.at(0));
-      const formattedDiagnostics = formatDiagnostics(e.diagnostics);
-      console.log(`${formattedDiagnostics}\n${e.diagnostics.length} errors`);
-    } else {
-      console.error(e);
-    }
-    console.groupEnd();
-    process.exit(1);
-  }
-}
-
-function getManifest(argv: Opts) {
-  const { packagePath } = argv;
-  const pkg = getPackage(packagePath);
-  return generateManifest(pkg);
-}
+import { writeManifest } from './analyze/write-manifest.js';
 
 export const command = {
   command: 'analyze [opts] <packagePath>',
@@ -57,9 +10,9 @@ export const command = {
       argv.showHelp();
     } else {
       try {
-        const manifest = getManifest(argv);
-        console.log(manifest);
+        await writeManifest(argv);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         process.exit(1);
       }

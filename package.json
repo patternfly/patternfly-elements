@@ -314,7 +314,7 @@
     "@types/prismjs": "^1.26.0",
     "@types/prompts": "^2.4.4",
     "commitlint": "^17.6.1",
-    "execa": "^7.1.1",
+    "execa": "^7.2.0",
     "fuse.js": "^6.6.2",
     "husky": "^8.0.3",
     "leasot": "^13.3.0",

@@ -33,9 +33,7 @@ const env = nunjucks
   .addFilter('isElementGroup', (group: DemoRecord[], primary) =>
     group.every(x => !!primary && x.primaryElementName === primary));
 
-type Base = (DevServerConfig & PfeConfig);
-
-export interface PfeDevServerConfigOptions extends Base {
+export interface PfeDevServerConfigOptions extends DevServerConfig, PfeConfig {
   hostname?: string;
   importMap?: InjectSetting['importMap'];
   litcssOptions?: LitCSSOptions;

@@ -1,9 +1,8 @@
 import type Yargs from 'yargs';
 
-import {
-  type AbsolutePath,
-  createPackageAnalyzer,
-} from '@lit-labs/analyzer';
+import type { AbsolutePath } from '@lit-labs/analyzer';
+
+import { createPackageAnalyzer } from '@lit-labs/analyzer/package-analyzer.js';
 
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
@@ -26,7 +25,9 @@ function getPackage(packagePath: string | URL) {
     ],
   });
   try {
-    return analyzer.getPackage();
+    const p = analyzer.getPackage();
+    console.log('DONE getPackage')
+    return p;
   } catch (e: any) {
     console.group(`Error analyzing package ${packagePath}`);
     if (Array.isArray(e.diagnostics)) {

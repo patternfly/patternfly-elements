@@ -41,7 +41,7 @@
   </pf-background-image>
   {% endhtmlexample %} 
 
-  Examples above require additional CSS to be shown in a container.  View the [demo](demo/) to see default example.
+  Examples above require additional CSS to be shown in a container.  View the [demo](demo/) to see the full screen example.
   ```css
   pf-background-image {
     height: 350px;

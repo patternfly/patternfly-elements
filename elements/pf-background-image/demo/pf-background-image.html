@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-background-image.js"></script>
+
+<pf-background-image filter
+  src="https://miro.medium.com/v2/resize:fit:720/format:webp/0*IkntanVdFVM5Ujip.jpg"
+  src-2x="https://miro.medium.com/v2/resize:fit:720/0*bkgSOwI5PQ-kLKqV"
+  src-sm="https://miro.medium.com/v2/resize:fit:720/0*Gy14UJRJ-QyF4c0C"
+  src-sm-2x="https://miro.medium.com/v2/resize:fit:720/0*34QuYnldEksEfyAI"
+  src-lg="https://miro.medium.com/v2/resize:fit:700/0*IagzTu5HGD2YYLil"
+>
+  <svg slot="filter" xmlns="http://www.w3.org/2000/svg">
+    <filter id="filter">
+      <feComponentTransfer>
+          <feFuncR type="table" tableValues="0 0.5 0 1" />
+          <feFuncG type="table" tableValues="0 0.5 0 1" />
+          <feFuncB type="table" tableValues="0 0.5 0 1" />
+          <feFuncA type="table" tableValues="0 0.5 0 1" />
+      </feComponentTransfer>
+    </filter>
+  </svg>
+</pf-background-image>

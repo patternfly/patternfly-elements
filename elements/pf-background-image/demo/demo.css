@@ -1,0 +1,5 @@
+/* override demo chrome styles */
+html, body {
+  background-color: transparent;
+}
+

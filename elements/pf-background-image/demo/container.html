@@ -1,0 +1,85 @@
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-background-image.js"></script>
+
+<style>
+.example {
+  padding: var(--pf-global--spacer--md, 1rem);
+}
+
+.example + .example {
+  margin-top: var(--pf-global--spacer--md, 1rem);
+}
+
+.example pf-background-image {
+  height: 350px;
+}
+
+.example pf-background-image::part(container) {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.example pf-background-image::part(container)::after {
+  position: absolute;
+  background-size: cover;
+  z-index: 0;
+}
+</style>
+
+<h2>Backgrounds in containers</h2>
+
+<h3>Default filter</h3>
+<div class="example">
+  <pf-background-image filter
+    src="/docs/images/elements/pf-background-image/pfbg.jpg"
+    src-2x="/docs/images/elements/pf-background-image/pfbg_576.jpg"
+    src-sm="/docs/images/elements/pf-background-image/pfbg_768.jpg"
+    src-sm-2x="/docs/images/elements/pf-background-image/pfbg_768@2x.jpg"
+    src-lg="/docs/images/elements/pf-background-image/pfbg_1200.jpg"
+  >
+  </pf-background-image>
+</div>
+
+<h3>SVG Filter override</h3>
+<div class="example">
+  <pf-background-image filter
+      src="/docs/images/elements/pf-background-image/pfbg.jpg"
+      src-2x="/docs/images/elements/pf-background-image/pfbg_576.jpg"
+      src-sm="/docs/images/elements/pf-background-image/pfbg_768.jpg"
+      src-sm-2x="/docs/images/elements/pf-background-image/pfbg_768@2x.jpg"
+      src-lg="/docs/images/elements/pf-background-image/pfbg_1200.jpg"
+    >
+    <svg slot="filter" xmlns="http://www.w3.org/2000/svg">
+      <filter id="filter">
+        <feMorphology in="SourceGraphic" operator="dilate" radius="5"></feMorphology>
+      </filter>
+    </svg>
+  </pf-background-image>
+</div>
+
+<h3>Slotted content</h3>
+<div class="example">
+  <pf-background-image
+    src="/docs/images/elements/pf-background-image/pfbg.jpg"
+    src-2x="/docs/images/elements/pf-background-image/pfbg_576.jpg"
+    src-sm="/docs/images/elements/pf-background-image/pfbg_768.jpg"
+    src-sm-2x="/docs/images/elements/pf-background-image/pfbg_768@2x.jpg"
+    src-lg="/docs/images/elements/pf-background-image/pfbg_1200.jpg"
+  >
+    <p>Slotted Content</p>
+    <pf-button>Button</pf-button>
+  </pf-background-image>
+</div>
+
+<h3>External images</h3>
+<div class="example">
+  <pf-background-image
+    src="https://miro.medium.com/v2/resize:fit:720/format:webp/0*IkntanVdFVM5Ujip.jpg"
+    src-2x="https://miro.medium.com/v2/resize:fit:720/0*bkgSOwI5PQ-kLKqV"
+    src-sm="https://miro.medium.com/v2/resize:fit:720/0*Gy14UJRJ-QyF4c0C"
+    src-sm-2x="https://miro.medium.com/v2/resize:fit:720/0*34QuYnldEksEfyAI"
+    src-lg="https://miro.medium.com/v2/resize:fit:700/0*IagzTu5HGD2YYLil"
+    >
+  </pf-background-image>
+</div>

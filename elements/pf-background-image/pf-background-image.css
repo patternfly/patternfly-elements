@@ -1,0 +1,63 @@
+:host {
+  display: flex;
+}
+
+:host svg {
+  display: none;
+}
+
+#container {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+}
+
+#container::after {
+  display: block;
+  position: fixed;
+  top:  0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-color: var(--pf-c-background-image--BackgroundColor, var(--pf-global--BackgroundColor--dark-100, #151515));
+  background-image: var(--pf-c-background-image--BackgroundImage);
+  filter: var(--pf-c-background-image--Filter, url("#filter"));
+  background-repeat:  no-repeat;
+  background-size: cover;
+}
+
+slot[name="filter"] {
+  display: none;
+}
+
+[part="content"] {
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #container::after {
+    --pf-c-background-image--BackgroundImage: var(--pf-c-background-image--BackgroundImage-2x);
+  }
+}
+
+@media screen and (min-width: 576px) {
+  #container::after {
+    --pf-c-background-image--BackgroundImage: var(--pf-c-background-image--BackgroundImage--sm);
+  }
+}
+
+@media screen and (min-width: 576px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 576px) and (min-resolution: 192dpi) {
+  #container::after {
+    --pf-c-background-image--BackgroundImage: var(--pf-c-background-image--BackgroundImage--sm-2x);
+  }
+}
+
+@media screen and (min-width: 992px) {
+  #container::after {
+    --pf-c-background-image--BackgroundImage: var(--pf-c-background-image--BackgroundImage--lg);
+  }
+}

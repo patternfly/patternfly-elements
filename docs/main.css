@@ -283,6 +283,22 @@ header.band h1 {
   transition: width .2s ease-in-out;
 }
 
+.example-preview pf-background-image {
+  height: 350px;
+}
+
+.example-preview pf-background-image::part(container) {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.example-preview pf-background-image::part(container)::after {
+  position: absolute;
+  background-size: cover;
+  z-index: 0;
+}
+
 section.api.band.api-properties dl {
   padding: var(--pf-global--spacer--md, 1rem);
   background-color: var(--pf-global--BackgroundColor--100, #fff);

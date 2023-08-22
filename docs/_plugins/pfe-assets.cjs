@@ -73,6 +73,7 @@ async function bundle() {
 module.exports = {
   configFunction(eleventyConfig, options) {
     eleventyConfig.addPassthroughCopy('docs/images/favicon.ico');
+    eleventyConfig.addPassthroughCopy({ 'docs/images/elements/': 'images/elements/' });
     eleventyConfig.addPassthroughCopy('docs/bundle.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/pfe.min.{map,css}');
     eleventyConfig.addPassthroughCopy({ 'elements/pfe.min.*': '/' } );

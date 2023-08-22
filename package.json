@@ -48,6 +48,7 @@
     "build": {
       "dependencies": [
         "build:tools",
+        "build:cli",
         "analyze",
         "docs",
         "build:core",
@@ -72,8 +73,8 @@
         "core/pfe-core/custom-elements.json"
       ],
       "dependencies": [
-        "build:core",
-        "build:tools"
+        "build:tools",
+        "build:cli"
       ]
     },
     "build:elements": {
@@ -97,6 +98,22 @@
         "elements/*.tsbuildinfo"
       ]
     },
+    "build:cli": {
+      "command": "tsc --build tools/pfe-cli --pretty",
+      "clean": "if-file-deleted",
+      "files": [
+        "tools/pfe-cli/*.ts",
+        "tools/pfe-cli/**/*.ts",
+        "!tools/pfe-cli/*.d.ts",
+        "!tools/pfe-cli/**/*.d.ts"
+      ],
+      "output": [
+        "tools/pfe-cli/**/*.js",
+        "tools/pfe-cli/**/*.map",
+        "tools/pfe-cli/**/*.d.ts",
+        "tools/pfe-cli/*.tsbuildinfo"
+      ]
+    },
     "build:tools": {
       "command": "tsc --build tools/pfe-tools --pretty",
       "clean": "if-file-deleted",
@@ -110,6 +127,7 @@
         "tools/pfe-tools/**/*.js",
         "tools/pfe-tools/**/*.map",
         "tools/pfe-tools/**/*.d.ts",
+        "tools/pfe-tools/*.tsbuildinfo",
         "tools/*.tsbuildinfo"
       ]
     },

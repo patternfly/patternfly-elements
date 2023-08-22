@@ -1,4 +1,4 @@
-import type { Plugin } from '@custom-elements-manifest/analyzer';
+import type { Package } from 'custom-elements-manifest';
 import type { PfeConfig } from '../config.js';
 
 import { isCustomElement } from './lib/Manifest.js';
@@ -26,59 +26,56 @@ import slugify from 'slugify';
  * `/elements/pf-jazz-hands/demo/accessibility.html` would be associated with
  * `/elements/pf-jazz-hands/pf-jazz-hands.js`
  */
-export function demosPlugin(options?: PfeConfig): Plugin {
+export function appendDemosToCEM(options?: PfeConfig) {
   const fileOptions = getPfeConfig(options?.rootDir);
   const config = { ...fileOptions, ...options };
   const subpath = config.site.componentSubpath ?? 'components';
   const { rootDir, demoURLPrefix, sourceControlURLPrefix } = config;
-  return {
-    name: 'demos-plugin',
-    packageLinkPhase({ customElementsManifest }) {
-      const allTagNames = customElementsManifest.modules.flatMap(x => !x.declarations ? []
-        : x.declarations.flatMap(y => (y as { tagName: string }).tagName)).filter(Boolean);
+  return function appendDemosToSpecificCEM(customElementsManifest: Package) {
+    const allTagNames = customElementsManifest.modules.flatMap(x => !x.declarations ? []
+      : x.declarations.flatMap(y => (y as { tagName: string }).tagName)).filter(Boolean);
 
-      for (const moduleDoc of customElementsManifest.modules) {
-        const primaryElementName = moduleDoc.path.split(sep).find(x => x !== 'elements') ?? '';
-        let demoPath = join(rootDir, 'elements', primaryElementName, 'demo');
+    for (const moduleDoc of customElementsManifest.modules) {
+      const primaryElementName = moduleDoc.path.split(sep).find(x => x !== 'elements') ?? '';
+      let demoPath = join(rootDir, 'elements', primaryElementName, 'demo');
 
-        if (!existsSync(demoPath)) {
-          demoPath = join('elements', primaryElementName, 'demo');
-        }
+      if (!existsSync(demoPath)) {
+        demoPath = join('elements', primaryElementName, 'demo');
+      }
 
-        if (primaryElementName && existsSync(demoPath)) {
-          const alias = config.aliases[primaryElementName] ?? primaryElementName.replace(/^\w+-/, '');
-          const allDemos = readdirSync(demoPath).filter(x => x.endsWith('.html'));
-          for (const decl of moduleDoc.declarations ?? []) {
-            if (isCustomElement(decl) && decl.tagName) {
-              decl.demos ??= [];
-              const { tagName } = decl;
-              for (const demo of allDemos) {
-                const demoName = demo.replace(/\.html$/, '');
-                const slug = slugify(alias, { strict: true, lower: true });
-                const href = new URL(`elements/${primaryElementName}/demo/${demo}/`, sourceControlURLPrefix || '/').href.replace(/\/$/, '');
-                if (demoName === tagName && demoName === primaryElementName) {
-                // case: elements/pf-jazz-hands/demo/pf-jazz-hands.html
-                  const { href: url } = new URL(`/${subpath}/${slug}/demo/`, demoURLPrefix || '/');
-                  decl.demos.push({ url, source: { href } });
-                } else if (allTagNames.includes(demoName) && demoName === tagName) {
-                // case: elements/pf-jazz-hands/demo/pf-jazz-shimmy.html
-                  const { href: url } = new URL(`/${subpath}/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
-                  decl.demos.push({ url, source: { href } });
-                } else if (tagName === primaryElementName && !allTagNames.includes(demoName)) {
-                // case: elements/pf-jazz-hands/demo/ack.html
-                  const { href: url } = new URL(`/${subpath}/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
-                  decl.demos.push({ url, source: { href } });
-                }
+      if (primaryElementName && existsSync(demoPath)) {
+        const alias = config.aliases[primaryElementName] ?? primaryElementName.replace(/^\w+-/, '');
+        const allDemos = readdirSync(demoPath).filter(x => x.endsWith('.html'));
+        for (const decl of moduleDoc.declarations ?? []) {
+          if (isCustomElement(decl) && decl.tagName) {
+            decl.demos ??= [];
+            const { tagName } = decl;
+            for (const demo of allDemos) {
+              const demoName = demo.replace(/\.html$/, '');
+              const slug = slugify(alias, { strict: true, lower: true });
+              const href = new URL(`elements/${primaryElementName}/demo/${demo}/`, sourceControlURLPrefix || '/').href.replace(/\/$/, '');
+              if (demoName === tagName && demoName === primaryElementName) {
+              // case: elements/pf-jazz-hands/demo/pf-jazz-hands.html
+                const { href: url } = new URL(`/${subpath}/${slug}/demo/`, demoURLPrefix || '/');
+                decl.demos.push({ url, source: { href } });
+              } else if (allTagNames.includes(demoName) && demoName === tagName) {
+              // case: elements/pf-jazz-hands/demo/pf-jazz-shimmy.html
+                const { href: url } = new URL(`/${subpath}/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
+                decl.demos.push({ url, source: { href } });
+              } else if (tagName === primaryElementName && !allTagNames.includes(demoName)) {
+              // case: elements/pf-jazz-hands/demo/ack.html
+                const { href: url } = new URL(`/${subpath}/${slug}/demo/${demoName}/`, demoURLPrefix || '/');
+                decl.demos.push({ url, source: { href } });
               }
-              if (!decl.demos.length) {
-                delete decl.demos;
-              } else {
-                decl.demos.sort(a => a.url.endsWith('/demo/') ? -1 : 0);
-              }
+            }
+            if (!decl.demos.length) {
+              delete decl.demos;
+            } else {
+              decl.demos.sort(a => a.url.endsWith('/demo/') ? -1 : 0);
             }
           }
         }
       }
-    },
+    }
   };
 }

@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "include": [
+    "./**/*"
+  ],
+  "exclude": [
+    "commands/generator/templates",
+    "dev-server/bundle.ts"
+  ],
+  "compilerOptions": {
+    "module": "ES2022",
+    "target": "es2022",
+    "composite": true,
+    "allowJs": false,
+    "checkJs": false
+  }
+}

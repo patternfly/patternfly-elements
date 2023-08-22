@@ -1,14 +1,11 @@
 import type Yargs from 'yargs';
 
-import Glob from 'glob';
+import { glob } from 'glob';
 import Chalk from 'chalk';
 
-import { promisify } from 'node:util';
 import { join } from 'node:path';
 import { readFile, writeFile } from 'node:fs/promises';
 import { exists } from '../lib/fs.js';
-
-const glob = promisify(Glob);
 
 interface Opts {
   glob: string;

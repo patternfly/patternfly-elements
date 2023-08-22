@@ -40,6 +40,6 @@ tools/**/*.js
 !elements/*/demo/*.js
 elements/*/demo/*.html
 
-tools/pfe-tools/cli/commands/generator/templates/**/*
+tools/pfe-cli/commands/generator/templates/**/*
 node_modules
 node_modules/**/*

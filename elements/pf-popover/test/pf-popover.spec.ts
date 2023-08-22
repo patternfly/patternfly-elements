@@ -1,6 +1,6 @@
 import { expect, html, fixture, fixtureCleanup } from '@open-wc/testing';
 import { a11ySnapshot, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
-import { clickElementCenter } from '@patternfly/pfe-tools/test/utils.js';
+import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 import { sendKeys, resetMouse } from '@web/test-runner-commands';
 import { PfPopover } from '@patternfly/elements/pf-popover/pf-popover.js';
 import { PfButton } from '@patternfly/elements/pf-button/pf-button.js';
@@ -196,12 +196,12 @@ describe('<pf-popover>', function() {
     };
 
     async function clickButton1() {
-      await clickElementCenter(btn1);
+      await clickElementAtCenter(btn1);
       await resetMouse();
     }
 
     async function clickButton2() {
-      await clickElementCenter(btn2);
+      await clickElementAtCenter(btn2);
       await resetMouse();
     }
 

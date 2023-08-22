@@ -26,7 +26,7 @@ export class PfBackgroundImage extends LitElement {
   static readonly styles = [styles];
 
   /**
-   * The image shown on mobile
+   * The URL for the image shown on mobile
    */
   @property({ reflect: true }) src?: string;
 
@@ -36,20 +36,23 @@ export class PfBackgroundImage extends LitElement {
   @property({ reflect: true, attribute: 'src-2x' }) src2x?: string;
 
   /**
-   * The image shown on small screens (min-width: 576px)
+   * The URL for the image shown on small screens (min-width: 576px)
    */
   @property({ reflect: true, attribute: 'src-sm' }) srcSm?: string;
 
   /**
-   * The image shown on small screens (min-width: 576px) with 2x DPI
+   * The URL for the image shown on small screens (min-width: 576px) with 2x DPI
    */
   @property({ reflect: true, attribute: 'src-sm-2x' }) srcSm2x?: string;
 
   /**
-   * The image shown on large screens (min-width: 992px)
+   * The URL for the image shown on large screens (min-width: 992px)
    */
   @property({ reflect: true, attribute: 'src-lg' }) srcLg?: string;
 
+  /**
+   * Apply SVG Filter to the image
+   */
   @property({ type: Boolean, reflect: true }) filter = false;
 
   @queryAssignedElements({ slot: 'filter', selector: 'svg' }) private _svg?: SVGElement[];

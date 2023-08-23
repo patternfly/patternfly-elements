@@ -5,6 +5,7 @@
   --_background-image-2x: var(--pf-c-background-image--BackgroundImage-2x);
   --_background-image-sm: var(--pf-c-background-image--BackgroundImage--sm);
   --_background-image-sm-2x: var(--pf-c-background-image--BackgroundImage--sm-2x);
+  --_background-image-lg: var(--pf-c-background-image--BackgroundImage--lg);
 }
 
 svg {

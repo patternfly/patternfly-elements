@@ -1,8 +1,13 @@
 :host {
   display: flex;
+
+  --_background-image: var(--pf-c-background-image--BackgroundImage);
+  --_background-image-2x: var(--pf-c-background-image--BackgroundImage-2x);
+  --_background-image-sm: var(--pf-c-background-image--BackgroundImage--sm);
+  --_background-image-sm-2x: var(--pf-c-background-image--BackgroundImage--sm-2x);
 }
 
-:host svg {
+svg {
   display: none;
 }
 
@@ -22,7 +27,7 @@
   height: 100%;
   content: "";
   background-color: var(--pf-c-background-image--BackgroundColor, var(--pf-global--BackgroundColor--dark-100, #151515));
-  background-image: var(--pf-c-background-image--BackgroundImage);
+  background-image: var(--_background-image);
   filter: var(--pf-c-background-image--Filter, url("#filter"));
   background-repeat:  no-repeat;
   background-size: cover;
@@ -32,7 +37,8 @@ slot[name="filter"] {
   display: none;
 }
 
-[part="content"] {
+slot[part="content"] {
+  display: block;
   position: relative;
   z-index: 1;
   color: white;
@@ -40,24 +46,24 @@ slot[name="filter"] {
 
 @media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #container::after {
-    --pf-c-background-image--BackgroundImage: var(--pf-c-background-image--BackgroundImage-2x);
+    --_background-image: var(--_background-image-2x);
   }
 }
 
 @media screen and (min-width: 576px) {
   #container::after {
-    --pf-c-background-image--BackgroundImage: var(--pf-c-background-image--BackgroundImage--sm);
+    --_background-image: var(--_background-image-sm);
   }
 }
 
 @media screen and (min-width: 576px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 576px) and (min-resolution: 192dpi) {
   #container::after {
-    --pf-c-background-image--BackgroundImage: var(--pf-c-background-image--BackgroundImage--sm-2x);
+    --_background-image: var(--_background-image-sm-2x);
   }
 }
 
 @media screen and (min-width: 992px) {
   #container::after {
-    --pf-c-background-image--BackgroundImage: var(--pf-c-background-image--BackgroundImage--lg);
+    --_background-image: var(--_background-image-lg);
   }
 }

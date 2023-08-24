@@ -1,12 +1,12 @@
 import type Yargs from 'yargs';
 
-import Banner from '../banner.js';
+import Banner from '../../banner.js';
 
 import prompts from 'prompts';
 import { join } from 'node:path';
 
-import { generateElement } from './generator/element.js';
-import { readJson } from '../lib/fs.js';
+import { generateElement } from './element.js';
+import { readJson } from '../../lib/fs.js';
 
 export interface BaseOptions {
   /** Should console output be omitted? */

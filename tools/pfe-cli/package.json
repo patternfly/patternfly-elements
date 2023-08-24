@@ -41,7 +41,7 @@
   },
   "files": [
     "!*.ts",
-    "commands/generator/templates/**/*",
+    "commands/generate/templates/**/*",
     "**/*.LEGAL.txt",
     "**/*.{njk,html,md,css,woff,woff2}",
     "**/*.{js,cjs,d.ts,map}"

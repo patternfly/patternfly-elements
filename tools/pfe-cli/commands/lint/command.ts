@@ -5,7 +5,7 @@ import Chalk from 'chalk';
 
 import { join } from 'node:path';
 import { readFile, writeFile } from 'node:fs/promises';
-import { exists } from '../lib/fs.js';
+import { exists } from '../../lib/fs.js';
 
 interface Opts {
   glob: string;

@@ -17,9 +17,6 @@ interface Opts {
   quiet: boolean;
 }
 
-// logging diagnostics and such is good
-/* eslint-disable no-console */
-
 function getPackage(packagePath: string | URL) {
   const path = packagePath instanceof URL ? fileURLToPath(packagePath) : join(process.cwd(), packagePath);
   const analyzer = createPackageAnalyzer(path as AbsolutePath, {

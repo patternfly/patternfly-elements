@@ -1,5 +1,5 @@
 import type Yargs from 'yargs';
-import { writeManifest } from './analyze/write-manifest.js';
+import { writeManifest } from './write-manifest.js';
 
 export const command = {
   command: 'analyze [opts] <packagePath>',
@@ -12,7 +12,6 @@ export const command = {
       try {
         await writeManifest(argv);
       } catch (e) {
-        // eslint-disable-next-line no-console
         console.error(e);
         process.exit(1);
       }

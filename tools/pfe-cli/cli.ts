@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import Yargs from 'yargs';
-import * as Generate from './commands/generate.js';
-import * as Lint from './commands/lint.js';
-import * as Analyze from './commands/analyze.js';
+import * as Generate from './commands/generate/command.js';
+import * as Lint from './commands/lint/command.js';
+import * as Analyze from './commands/analyze/command.js';
 
 const { argv } = await Promise.resolve(Yargs(process.argv.slice(2))
   .scriptName('pfe')

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import Yargs from 'yargs';
-import { command } from '@patternfly/pfe-tools/cli/commands/generate.js';
+import { command } from '@patternfly/pfe-tools/cli/commands/generate/command.js';
 
 (async function() {
   try {

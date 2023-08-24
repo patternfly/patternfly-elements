@@ -15,7 +15,7 @@
       "@patternfly/pfe-core": [
         "../core/pfe-core/core.ts"
       ],
-      "@scope/name/*": [
+      "@patternfly/pfe-core/*": [
         "../core/pfe-core/*"
       ]
     }

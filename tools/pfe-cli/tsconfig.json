@@ -13,5 +13,10 @@
     "composite": true,
     "allowJs": false,
     "checkJs": false
-  }
+  },
+  "references": [
+    {
+      "path": "../tools/pfe-tools"
+    }
+  ]
 }

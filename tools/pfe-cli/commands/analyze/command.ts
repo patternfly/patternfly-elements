@@ -1,6 +1,11 @@
 import type Yargs from 'yargs';
 import { writeManifest } from './write-manifest.js';
 
+export interface Opts {
+  packagePath: string | URL;
+  quiet: boolean;
+}
+
 export const command = {
   command: 'analyze [opts] <packagePath>',
   aliases: ['analyze'],

@@ -280,23 +280,36 @@ header.band h1 {
   padding: var(--pf-global--spacer--md, 1rem);
   background-color: var(--pf-global--BackgroundColor--100, #fff);
   border-bottom: var(--pf-global--BorderWidth--sm, 1px) solid var(--pf-global--BorderColor--300, #f0f0f0);
-  transition: width .2s ease-in-out;
 }
 
-.example-preview pf-background-image {
+.example-preview.pf-background-image {
+  position: relative;
+  z-index: 0;
   height: 350px;
+  overflow: hidden;
+  color: var(--pf-theme--color--white, #fff);
 }
 
-.example-preview pf-background-image::part(container) {
-  height: 100%;
-  width: 100%;
+.example-preview.pf-background-image pf-background-image {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+}
+
+.example-preview.pf-background-image pf-background-image::part(container) {
   position: relative;
 }
 
-.example-preview pf-background-image::part(container)::after {
+.example-preview.pf-background-image pf-background-image,
+.example-preview.pf-background-image pf-background-image::part(container) {
+  height: 100%;
+  width: 100%;
+}
+
+.example-preview.pf-background-image pf-background-image::part(container)::after {
   position: absolute;
   background-size: cover;
-  z-index: 0;
 }
 
 section.api.band.api-properties dl {
@@ -746,6 +759,7 @@ code {
 .html-example {
   display: flex;
   padding-block: 6px;
+  transition: width .2s ease-in-out;
 }
 
 .html-example:hover summary {

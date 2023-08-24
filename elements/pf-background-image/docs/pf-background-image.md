@@ -1,38 +1,42 @@
 {% renderOverview %}
-  {% htmlexample %}
-    <pf-background-image filter
+  {% htmlexample class="pf-background-image" %}
+  <pf-background-image filter
       src="/images/elements/pf-background-image/pfbg.jpg"
       src-2x="/images/elements/pf-background-image/pfbg_576.jpg"
       src-sm="/images/elements/pf-background-image/pfbg_768.jpg"
       src-sm-2x="/images/elements/pf-background-image/pfbg_768@2x.jpg"
       src-lg="/images/elements/pf-background-image/pfbg_1200.jpg"
-    ></pf-background-image>
+  />
   {% endhtmlexample %} 
 {% endrenderOverview %}
 
 {% band header="Usage" %}
-  ### Slotted content
-  {% htmlexample %}<pf-background-image 
-      src="/images/elements/pf-background-image/pfbg.jpg"
-      src-2x="/images/elements/pf-background-image/pfbg_576.jpg"
-      src-sm="/images/elements/pf-background-image/pfbg_768.jpg"
-      src-sm-2x="/images/elements/pf-background-image/pfbg_768@2x.jpg"
-      src-lg="/images/elements/pf-background-image/pfbg_1200.jpg"
-    >
-      <p>Slotted Content</p>
-      <pf-button>Button</pf-button>
-    </pf-background-image>
+  ### Sibling content w/ no filter
+  {% htmlexample class="pf-background-image" %}
+  <pf-background-image 
+    src="/images/elements/pf-background-image/pfbg.jpg"
+    src-2x="/images/elements/pf-background-image/pfbg_576.jpg"
+    src-sm="/images/elements/pf-background-image/pfbg_768.jpg"
+    src-sm-2x="/images/elements/pf-background-image/pfbg_768@2x.jpg"
+    src-lg="/images/elements/pf-background-image/pfbg_1200.jpg"
+  ></pf-background-image>
+  <p>Sibling Content</p>
+  <pf-button>Button</pf-button>
   {% endhtmlexample %} 
 
 
   ### Override SVG Filter
-  {% htmlexample %}<pf-background-image  filter
-      src="/images/elements/pf-background-image/pfbg.jpg"
-      src-2x="/images/elements/pf-background-image/pfbg_576.jpg"
-      src-sm="/images/elements/pf-background-image/pfbg_768.jpg"
-      src-sm-2x="/images/elements/pf-background-image/pfbg_768@2x.jpg"
-      src-lg="/images/elements/pf-background-image/pfbg_1200.jpg"
-    >
+
+  [MDN documentation for `<filter>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/filter)
+
+  {% htmlexample class="pf-background-image" %}
+  <pf-background-image filter
+    src="/images/elements/pf-background-image/pfbg.jpg"
+    src-2x="/images/elements/pf-background-image/pfbg_576.jpg"
+    src-sm="/images/elements/pf-background-image/pfbg_768.jpg"
+    src-sm-2x="/images/elements/pf-background-image/pfbg_768@2x.jpg"
+    src-lg="/images/elements/pf-background-image/pfbg_1200.jpg"
+  >
     <svg slot="filter" xmlns="http://www.w3.org/2000/svg">
       <filter id="filter">
         <feMorphology in="SourceGraphic" operator="dilate" radius="5"></feMorphology>
@@ -41,24 +45,39 @@
   </pf-background-image>
   {% endhtmlexample %} 
 
-  Examples above require additional CSS to be shown in a container.  View the [demo](demo/) to see the full screen example.
+  To be used in a container, additional CSS is needed.  
   ```css
-  pf-background-image {
-    height: 350px;
+  /* Example CSS */
+  .container {
+    position: relative;
+    z-index: 0;
   }
 
-  pf-background-image::part(container) {
-    height: 100%;
-    width: 100%;
+  .container pf-background-image {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+  }
+
+  .container pf-background-image::part(container) {
     position: relative;
   }
 
-  pf-background-image::part(container)::after {
+  .container pf-background-image,
+  .container pf-background-image::part(container)  {
+    height: 100%;
+    width: 100%;
+  }
+
+  .container pf-background-image::part(container)::after {
     position: absolute;
     background-size: cover;
-    z-index: 0;
   }
+
   ```
+ View the [demo](demo/) to see the full screen example not in a container.
+
 {% endband %}
 
 {% renderSlots %}{% endrenderSlots %}

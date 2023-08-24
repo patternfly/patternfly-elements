@@ -100,7 +100,7 @@
     "esbuild": "^0.18.11",
     "esbuild-plugin-lit-css": "^2.0.4",
     "esbuild-plugin-minify-html-literals": "^1.0.5",
-    "eslint": "^8.46.0",
+    "eslint": "8.47.0",
     "glob": "^10.3.3",
     "html-include-element": "^0.3.0",
     "koa-send": "^5.0.1",

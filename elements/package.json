@@ -123,8 +123,8 @@
     "Michael Clayton <mclayton@redhat.com>",
     "Michael Potter",
     "Steven Spriggs <sspriggs@redhat.com",
-    "castastrophe (https://github.com/castastrophe)",
-    "Wes Ruvalcaba"
+    "Wes Ruvalcaba",
+    "castastrophe (https://github.com/castastrophe)"
   ],
   "dependencies": {
     "@patternfly/icons": "^1.0.2",
@@ -133,4 +133,3 @@
     "tslib": "^2.6.2"
   }
 }
-

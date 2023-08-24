@@ -23,11 +23,17 @@ export const command = {
     }
   },
   builder(yargs: Yargs.Argv) {
-    return yargs.options({
-      quiet: {
-        type: 'boolean',
-        describe: 'Whether to suppress output messages',
-      },
-    }).check(argv => !!argv.packagePath);
+    return yargs
+      .positional('packagePath', {
+        describe: 'relative path to the package root folder. If a tsconfig.json is found or specified as the path, the project will be analyzed as TypeScript',
+        type: 'string',
+      })
+      .options({
+        quiet: {
+          type: 'boolean',
+          describe: 'Whether to suppress output messages',
+        },
+      })
+      .check(argv => !!argv.packagePath);
   },
 };

@@ -40,6 +40,11 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'items-selected-text', type: String }) itemsSelectedText = 'items selected';
 
   /**
+   * ARIA label for chip group used to describe chips
+   */
+  @property({ attribute: 'current-selections-label', type: String }) currentSelectionsLabel = 'Current selections';
+
+  /**
    * whether listbox is always open
    */
   @property({ attribute: 'always-open', type: Boolean }) alwaysOpen = false;
@@ -138,8 +143,9 @@ export class PfSelect extends LitElement {
   }
 
   get #buttonLabel() {
+    const multiSelectableText = `${this.#valueTextArray.length} ${this.itemsSelectedText}`;
     return this.multiSelectable ?
-      `${this.#valueTextArray.length} ${this.itemsSelectedText}`
+      multiSelectableText
       : !this.hasCheckboxes && this.multiSelectable && this.#valueTextList.length > 0 ?
         this.#valueTextList
         : !this.hasCheckboxes && !this.multiSelectable && this.#valueText.length > 0 ?
@@ -166,7 +172,7 @@ export class PfSelect extends LitElement {
         ?disabled=${this.disabled} 
         ?expanded=${this.open}>
         ${!this.hasChips ? '' : html`
-          <pf-chip-group>
+          <pf-chip-group label="${this.currentSelectionsLabel}">
             ${this.#valueTextArray.map(txt => html`
               <pf-chip id="chip-${txt}" @click="${() => this.#onChipClick(txt)}">${txt}</pf-chip>
             `)}
@@ -217,8 +223,9 @@ export class PfSelect extends LitElement {
         ?multi-selectable=${this.multiSelectable || this.hasCheckboxes}
         @input=${this.#onListboxInput}
         @change=${this.#onListboxChange}
-        @select=${this.#onListboxSelect}
-        @keydown=${this.#onListboxKeydown}>
+        @keydown=${this.#onListboxKeydown}
+        @listboxoptions=${this.#updateValueText}
+        @select=${this.#onListboxSelect}>
         <slot></slot>
       </pf-select-listbox>
     `;
@@ -235,6 +242,10 @@ export class PfSelect extends LitElement {
        */
       this.dispatchEvent(new Event('open-change'));
     }
+  }
+
+  firstUpdated() {
+    this.#updateValueText();
   }
 
   focus() {

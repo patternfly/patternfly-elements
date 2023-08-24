@@ -132,6 +132,7 @@ export class PfSelectListbox extends LitElement {
     if (this.#listboxController) {
       this.#listboxController.options = this.options as ListboxOptionElement[];
     }
+    this.dispatchEvent(new Event('listboxoptions', { bubbles: true }));
   }
 }
 

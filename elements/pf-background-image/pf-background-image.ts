@@ -1,9 +1,10 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { property } from 'lit/decorators/property.js';
 
-import { styleMap } from 'lit/directives/style-map.js';
+
+import { styleMap, type StyleInfo } from 'lit/directives/style-map.js';
 
 import styles from './pf-background-image.css';
 
@@ -64,12 +65,22 @@ export class PfBackgroundImage extends LitElement {
 
   render() {
     const cssProps = {
-      '--_background-image': this.src ? `url(${this.src})` : ``,
-      '--_background-image-2x': this.src2x ? `url(${this.src2x})` : ``,
-      '--_background-image-sm': this.srcSm ? `url(${this.srcSm})` : ``,
-      '--_background-image-sm-2x': this.srcSm2x ? `url(${this.srcSm2x})` : ``,
-      '--_background-image-lg': this.srcLg ? `url(${this.srcLg})` : ``
-    };
+      '--_background-image': this.src,
+      '--_background-image-2x': this.src2x,
+      '--_background-image-sm': this.srcSm,
+      '--_background-image-sm-2x': this.srcSm2x,
+      '--_background-image-lg': this.srcLg
+    } as StyleInfo;
+
+    Object.entries(cssProps).forEach(([key, value]) => {
+      // if the value is undefined, remove the css property
+      if (!value) {
+        delete cssProps[key];
+      } else {
+        // otherwise, add the css property
+        cssProps[key] = `url(${value})`;
+      }
+    });
 
     return html`
       <div id="container" part="container" style="${styleMap(cssProps)}">

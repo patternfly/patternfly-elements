@@ -1,10 +1,11 @@
-# Simple List
+# Select
 
-A simple list provides a list of selectable items that can be shown within a page. Each item is described by a text label. The list may be divided into logical sections by introducing group headers.
+A select list enables users to select one or more items from a list.
 
 ## Usage
 
-A simple list is used when the information presented does not follow a specific pattern, or does not require bullets to differentiate one list item from another.
+A select component consists of a toggle control to open and close a menu of actions or links.
+Selects differ from dropdowns in that they persist selection, whereas dropdowns are typically used to present a list of actions or links.
 
 ```html
 <pf-select>

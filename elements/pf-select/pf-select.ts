@@ -13,7 +13,6 @@ import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
 
 /**
  * A select list enables users to select one or more items from a list.
- * Use a select list when options are dynamic or variable.
  *
  * A select component consists of a toggle control to open and close a menu of actions or links.
  * Selects differ from dropdowns in that they persist selection,

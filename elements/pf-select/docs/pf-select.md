@@ -6,7 +6,7 @@ import '@patternfly/elements/pf-icon/pf-select.js';
 
 {% renderOverview %}
   <pf-select>
-    <pf-select-option>Select a value</pf-select-option>
+    <pf-select-option disabled selected="true">Select a color</pf-select-option>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -31,7 +31,7 @@ import '@patternfly/elements/pf-icon/pf-select.js';
 
 {% htmlexample %}
   <pf-select>
-    <pf-select-option>Select a value</pf-select-option>
+    <pf-select-option disabled selected="true">Select a color</pf-select-option>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -133,7 +133,7 @@ Filter by typing a letter.</p>
 Any arrow keys work. Only one option can be selected. Filter by typing a letter. Headings are not selectable.
 
 {% htmlexample %}
-  <pf-select default-text="Select an item">
+  <pf-select default-text="Select item from our menu">
     <pf-select-group>
       <span slot="group-heading">Breakfast</span>
       <pf-select-option value="Eggs">Eggs</pf-select-option>
@@ -171,7 +171,6 @@ Any arrow keys work. Only one option can be selected. Filter is case sensisitve.
 Any arrow keys work. Only one option can be selected. Filter is disabled.
 
 {% htmlexample %}
-  <p></p>
   <pf-select disable-filter>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
@@ -183,14 +182,44 @@ Any arrow keys work. Only one option can be selected. Filter is disabled.
     <pf-select-option value="Yellow">Yellow</pf-select-option>
   </pf-select>
 {% endhtmlexample %}
+
+### Option variations
+
+Below are option variants:
+
+{% htmlexample %}
+  <pf-select always-open>
+    <pf-select-option value="Basic">Basic option</pf-select-option>
+    <pf-select-option value="Description">
+      <span>Option with description</span>
+      <span slot="description">This is a description</span>
+    </pf-select-option>
+    <pf-select-option value="Icon">
+      <pf-icon size="md" icon="paint-brush" set="fas" slot="icon"></pf-icon>
+      Option with icon
+    </pf-select-option>
+    <pf-select-option value="Disabled" disabled>Disabled option</pf-select-option>
+  </pf-select>
+{% endhtmlexample %}
 {% endband %}
 
-{% renderSlots %}{% endrenderSlots %}
+{% renderSlots for="pf-select", header="Slots on `pf-select`" %}{% endrenderSlots %}
+{% renderAttributes for="pf-select", header="Attributes on `pf-select`" %}{% endrenderAttributes %}
+{% renderMethods for="pf-select", header="Methods on `pf-select`" %}{% endrenderMethods %}
+{% renderEvents for="pf-select", header="Events on `pf-select`" %}{% endrenderEvents %}
+{% renderCssCustomProperties for="pf-select", header="CSS Custom Properties on `pf-select`" %}{% endrenderCssCustomProperties %}
+{% renderCssParts for="pf-select", header="CSS Parts on `pf-select`" %}{% endrenderCssParts %}
 
-{% renderAttributes %}{% endrenderAttributes %}
+{% renderSlots for="pf-select-group", header="Slots on `pf-select-group`" %}{% endrenderSlots %}
+{% renderAttributes for="pf-select-group", header="Attributes on `pf-select-group`" %}{% endrenderAttributes %}
+{% renderMethods for="pf-select-group", header="Methods on `pf-select-group`" %}{% endrenderMethods %}
+{% renderEvents for="pf-select-group", header="Events on `pf-select-group`" %}{% endrenderEvents %}
+{% renderCssCustomProperties for="pf-select-group", header="CSS Custom Properties on `pf-select-group`" %}{% endrenderCssCustomProperties %}
+{% renderCssParts for="pf-select-group", header="CSS Parts on `pf-select-group`" %}{% endrenderCssParts %}
 
-{% renderMethods %}{% endrenderMethods %}
-
-{% renderEvents %}{% endrenderEvents %}
-
-{% renderCssCustomProperties %}{% endrenderCssCustomProperties %}
+{% renderSlots for="pf-select-option", header="Slots on `pf-select-option`" %}{% endrenderSlots %}
+{% renderAttributes for="pf-select-option", header="Attributes on `pf-select-option`" %}{% endrenderAttributes %}
+{% renderMethods for="pf-select-option", header="Methods on `pf-select-option`" %}{% endrenderMethods %}
+{% renderEvents for="pf-select-option", header="Events on `pf-select-option`" %}{% endrenderEvents %}
+{% renderCssCustomProperties for="pf-select-option", header="CSS Custom Properties on `pf-select-option`" %}{% endrenderCssCustomProperties %}
+{% renderCssParts for="pf-select-option", header="CSS Parts on `pf-select-option`" %}{% endrenderCssParts %}

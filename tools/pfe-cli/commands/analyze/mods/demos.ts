@@ -57,6 +57,5 @@ export async function demos(manifest: Package) {
     }
   }
 
-  console.log('added demos');
   return manifest;
 }

@@ -2,14 +2,16 @@ import type { Package } from 'custom-elements-manifest';
 import type { AbsolutePath } from '@lit-labs/analyzer';
 import type { Opts } from './command.js';
 
-import { createPackageAnalyzer } from '@lit-labs/analyzer/package-analyzer.js';
-
 import { fileURLToPath } from 'node:url';
 import { join, relative } from 'node:path';
 import { writeFile } from 'node:fs/promises';
 
-import { formatDiagnostics } from '../../lib/ts.js';
+import { createPackageAnalyzer } from '@lit-labs/analyzer/package-analyzer.js';
 import { generateManifest } from '@lit-labs/gen-manifest';
+
+import chalk from 'chalk';
+
+import { formatDiagnostics } from '../../lib/ts.js';
 
 import { notImplemented } from './mods/not-implemented.js';
 import { ecmaPrivate } from './mods/ecma-private.js';
@@ -49,7 +51,6 @@ function getManifest(argv: Opts) {
 }
 
 async function modify(manifest: Package): Promise<Package> {
-  // TODO: implement mods e.g. demos, css props, etc
   return (Promise.resolve(manifest)
     .then(notImplemented)
     .then(ecmaPrivate)
@@ -63,5 +64,5 @@ export async function writeManifest(options: Opts): Promise<void> {
   const packagePath = typeof options.packagePath === 'string' ? options.packagePath : options.packagePath.pathname;
   const outPath = join(process.cwd(), packagePath, filename);
   await writeFile(outPath, JSON.stringify(await modify(manifest), null, 2));
-  console.log(`Wrote ${relative(process.cwd(), outPath)}`);
+  console.log(`✏️  Wrote ${chalk.blue(relative(process.cwd(), outPath))}`);
 }

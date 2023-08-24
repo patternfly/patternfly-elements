@@ -11,7 +11,7 @@ Initially provides two commands:
 pfe [<cmd>] [args]
 
 Commands:
-  pfe lint-exports <package>  Ensure package.json contains the required package
+  pfe analyze <packagePath>  Ensure package.json contains the required package
                               exports
   pfe generate [args]         Generate an element                 [aliases: new]
 

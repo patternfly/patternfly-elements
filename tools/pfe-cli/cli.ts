@@ -1,13 +1,11 @@
 #!/usr/bin/env node
 import Yargs from 'yargs';
 import * as Generate from './commands/generate/command.js';
-import * as Lint from './commands/lint/command.js';
 import * as Analyze from './commands/analyze/command.js';
 
 const { argv } = await Promise.resolve(Yargs(process.argv.slice(2))
   .scriptName('pfe')
   .usage('$0 [<cmd>] [args]')
-  .command(Lint.command)
   .command(Generate.command)
   .command(Analyze.command)
   .showHelpOnFail(true)

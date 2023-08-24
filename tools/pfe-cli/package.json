@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-cli",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "type": "module",
   "description": "Command line utilities for development with PatternFly Elements core and tools",
   "bin": {

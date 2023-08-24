@@ -123,5 +123,11 @@
     "urlpattern-polyfill": "^9.0.0",
     "web-dev-server-plugin-lit-css": "^2.0.5",
     "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "remark": "^14.0.3",
+    "remark-cli": "^11.0.0",
+    "remark-frontmatter": "^4.0.1",
+    "remark-lint-frontmatter-schema": "^3.15.2"
   }
 }

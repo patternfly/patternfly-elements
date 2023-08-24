@@ -1,3 +1,2 @@
 #!/bin/sh
 npx lint-staged
-npx ts-node --esm tools/pfe-cli/cli.ts lint exports elements --fix

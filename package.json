@@ -34,7 +34,7 @@
     "⚙️--UTIL": "❓ Manages the repo",
     "postinstall": "wireit",
     "clean": "git clean -fX",
-    "lint": "eslint .",
+    "lint": "wireit",
     "patch": "patch-package",
     "husky": "npx husky install"
   },
@@ -42,7 +42,8 @@
     "postinstall": {
       "dependencies": [
         "patch",
-        "husky"
+        "husky",
+        "changeset-schema"
       ]
     },
     "build": {
@@ -58,6 +59,9 @@
         "build:bundle",
         "build:react"
       ]
+    },
+    "changeset-schema": {
+      "command": "node scripts/update-changeset-schema.js"
     },
     "analyze": {
       "command": "npm run -ws --if-present analyze",
@@ -228,6 +232,18 @@
         "build:tools"
       ]
     },
+    "lint": {
+      "dependencies": [
+        "lint:eslint",
+        "lint:remark"
+      ]
+    },
+    "lint:eslint": {
+      "command": "eslint ."
+    },
+    "lint:remark": {
+      "command": "remark .changeset --frail"
+    },
     "watch:analyze": {
       "service": true,
       "command": "npm run -ws --if-present analyze -- --watch",
@@ -306,7 +322,8 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts}": "eslint --fix"
+    "*.{js,ts}": "eslint --fix",
+    ".changeset/*.md": "remark --frail"
   },
   "devDependencies": {
     "@actions/core": "^1.10.0",

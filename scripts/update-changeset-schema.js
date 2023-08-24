@@ -19,6 +19,6 @@ const schema = {
 
 await writeFile(
   new URL('./pfe-changesets.schema.json', import.meta.url),
-  JSON.stringify(schema, null, 2),
+  `${JSON.stringify(schema, null, 2)}\n`,
   'utf8'
 );

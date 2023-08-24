@@ -8,4 +8,10 @@
   src-sm-2x="pfbg_768@2x.jpg"
   src-lg="pfbg_1200.jpg"
   >
+  <svg slot="filter" xmlns="http://www.w3.org/2000/svg">
+    <filter id="filter">
+      <feMorphology in="SourceGraphic" operator="dilate" radius="5"></feMorphology>
+    </filter>
+  </svg>
 </pf-background-image>
+

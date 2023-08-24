@@ -7,7 +7,10 @@
       src-sm-2x="/components/background-image/demo/pfbg_768@2x.jpg"
       src-lg="/components/background-image/demo/pfbg_1200.jpg"
   />
-  {% endhtmlexample %} 
+  {% endhtmlexample %}
+
+  View the [full screen demo](/components/background-image/demo/).
+
 {% endrenderOverview %}
 
 {% band header="Usage" %}
@@ -22,8 +25,9 @@
   ></pf-background-image>
   <p>Sibling Content</p>
   <pf-button>Button</pf-button>
-  {% endhtmlexample %} 
+  {% endhtmlexample %}
 
+  View the [full screen demo](/components/background-image/demo/sibling-content/). 
 
   ### Override SVG Filter
 
@@ -45,38 +49,7 @@
   </pf-background-image>
   {% endhtmlexample %} 
 
-  To be used in a container, additional CSS is needed.  
-  ```css
-  /* Example CSS */
-  .container {
-    position: relative;
-    z-index: 0;
-  }
-
-  .container pf-background-image {
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-  }
-
-  .container pf-background-image::part(container) {
-    position: relative;
-  }
-
-  .container pf-background-image,
-  .container pf-background-image::part(container)  {
-    height: 100%;
-    width: 100%;
-  }
-
-  .container pf-background-image::part(container)::after {
-    position: absolute;
-    background-size: cover;
-  }
-
-  ```
- View the [demo](demo/) to see the full screen example not in a container.
+  View the [full screen demo](/components/background-image/demo/filter-override/).
 
 {% endband %}
 

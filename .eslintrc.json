@@ -3,7 +3,7 @@
   "overrides": [
     {
       "files": [
-        "./tools/create-element/**/*"
+        "./tools/pfe-cli/**/*.ts"
       ],
       "rules": {
         "no-console": "off"

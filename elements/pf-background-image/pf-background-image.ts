@@ -12,7 +12,6 @@ import styles from './pf-background-image.css';
  * @summary Allows users to place an image in the background of your page or area of a page.
  *
  * @slot filter - Overrides the default svg filter for the background image.
- * @slot - Default content slot.
  *
  * @cssprop {<color>} --pf-c-background-image--BackgroundColor {@default `#151515`}
  * @cssprop --pf-c-background-image--BackgroundImage
@@ -91,7 +90,6 @@ export class PfBackgroundImage extends LitElement {
             `}
           </slot>
         `}
-        <slot part="content"></slot>
       </div>
     `;
   }

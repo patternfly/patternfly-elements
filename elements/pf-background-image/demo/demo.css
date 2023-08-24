@@ -3,3 +3,10 @@ html, body {
   background-color: transparent;
 }
 
+h1 {
+  color: var(--pf-theme--color--ui-base--text, #fff)
+}
+
+section {
+  padding: var(--pf-global--spacer--xl, 2rem);
+}

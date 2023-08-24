@@ -8,10 +8,6 @@
   --_background-image-lg: var(--pf-c-background-image--BackgroundImage--lg);
 }
 
-svg {
-  display: none;
-}
-
 #container {
   padding: 0;
   margin: 0;

@@ -25,7 +25,7 @@
   content: "";
   background-color: var(--pf-c-background-image--BackgroundColor, var(--pf-global--BackgroundColor--dark-100, #151515));
   background-image: var(--_background-image);
-  filter: var(--pf-c-background-image--Filter, url("#filter"));
+  filter: var(--pf-c-background-image--Filter, url("#image_overlay"));
   background-repeat:  no-repeat;
   background-size: cover;
 }

@@ -19,7 +19,7 @@ import styles from './pf-background-image.css';
  * @cssprop --pf-c-background-image--BackgroundImage--sm
  * @cssprop --pf-c-background-image--BackgroundImage--sm-2x
  * @cssprop --pf-c-background-image--BackgroundImage--lg
- * @cssprop --pf-c-background-image--Filter {@default `url("#filter")`}
+ * @cssprop --pf-c-background-image--Filter {@default `url("#image_overlay")`}
  *
  */
 @customElement('pf-background-image')

@@ -47,8 +47,8 @@ export class PfSwitch extends BaseSwitch {
   static readonly styles = [...BaseSwitch.styles, styles];
 }
 
-  declare global {
-    interface HTMLElementTagNameMap {
-      'pf-switch': PfSwitch;
+declare global {
+  interface HTMLElementTagNameMap {
+    'pf-switch': PfSwitch;
   }
 }

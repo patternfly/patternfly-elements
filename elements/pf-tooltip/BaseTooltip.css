@@ -6,12 +6,8 @@
 #container {
   display: inline-flex;
   position: relative;
+  max-width: 100%;
   --_floating-arrow-size: 0.5rem;
-}
-
-#invoker {
-  display: inline-block;
-  position: relative;
 }
 
 #tooltip,

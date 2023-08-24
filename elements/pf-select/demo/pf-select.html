@@ -9,7 +9,7 @@
     to remove filtering altogether.
   </p>
   <pf-select>
-    <pf-select-option>Select a value</pf-select-option>
+    <pf-select-option disabled selected="true">Select a color</pf-select-option>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -30,7 +30,10 @@
     to remove filtering altogether.
   </p>
   <pf-select always-open>
-    <pf-select-option disabled>Select a value</pf-select-option>
+    <pf-select-option disabled>
+      <pf-icon size="md" icon="paint-brush" set="fas" slot="icon"></pf-icon>
+      Select a color
+    </pf-select-option>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>

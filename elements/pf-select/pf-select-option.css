@@ -11,11 +11,11 @@
 
 :host(:focus),
 :host(:hover) {
-  background-color: var(--pf-theme--color--surface--lighter, #f0f0f0);
+  background-color: #e0e0e0;
 }
 
 :host([active-descendant]) {
-  background-color: var(--_pf-select-option-active-descendant-color, var(--pf-global--BorderColor--100, #d2d2d2));
+  background-color: var(--_pf-select-option-active-descendant-color, var(--pf-theme--color--surface--lighter, #f0f0f0));
 }
 
 :host([disabled]) {
@@ -53,3 +53,8 @@ slot[name="description"] {
   font-size: var(--pf-global--FontSize--xs, 0.75rem);
   color: var(--pf-global--Color--dark-200, #6a6e73);
 }
+
+::slotted([slot="icon"]) {
+  margin-inline-end: 0.5em;
+}
+

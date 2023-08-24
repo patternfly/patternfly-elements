@@ -234,15 +234,11 @@
     },
     "lint": {
       "dependencies": [
-        "lint:eslint",
-        "lint:remark"
+        "lint:eslint"
       ]
     },
     "lint:eslint": {
       "command": "eslint ."
-    },
-    "lint:remark": {
-      "command": "remark .changeset --frail"
     },
     "watch:analyze": {
       "service": true,
@@ -322,8 +318,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts}": "eslint --fix",
-    ".changeset/*.md": "remark --frail"
+    "*.{js,ts}": "eslint --fix"
   },
   "devDependencies": {
     "@actions/core": "^1.10.0",

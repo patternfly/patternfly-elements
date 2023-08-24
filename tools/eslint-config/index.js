@@ -39,6 +39,10 @@ const TSCONFIG_FILES = [
   '**/tsconfig.*.json',
 ];
 
+const MARKDOWN_FILES = [
+  './changeset/*.md',
+];
+
 /** @type{import('eslint').Linter.Config} */
 const config = {
 
@@ -195,6 +199,9 @@ const config = {
         },
       }],
     },
+  }, {
+    files: MARKDOWN_FILES,
+    extends: ['plugin:mdx/recommended']
   }, {
     files: TEST_FILES,
     env: { node: true, mocha: true },

@@ -1,9 +1,5 @@
 :host {
-  padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem) !important;
-  background-color: var(--pf-theme--color--surface--lightest, #fff);
-  color: var(--pf-theme--color--text, #151515);
-  border-radius: var(--pf-global--BorderRadius--sm, 3px);
-  border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
+  display: inline-flex;
 }
 
 *[hidden],
@@ -12,13 +8,24 @@
   display: none !important;
 }
 
+#outer {
+  max-width: 100%;
+  display: inline-flex;
+  padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem) !important;
+  background-color: var(--pf-theme--color--surface--lightest, #fff);
+  color: var(--pf-theme--color--text, #151515);
+  border-radius: var(--pf-global--BorderRadius--sm, 3px);
+  border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
+  position: relative;
+}
 
-:host(:focus-within) {
+
+:host(:focus-within) #outer {
   border-color: var(--pf-theme--color--accent, #0066cc);
 }
 
 
-:host([overflow-chip]) {
+:host([overflow-chip]) #outer {
   padding: 0 !important;
 }
 
@@ -33,6 +40,13 @@
   font-size: var(--pf-global--FontSize--xs, 12px);
   font-weight: var(--pf-global--FontWeight--normal, 400);
   line-height: 1.6;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  text-wrap: nowrap;
+  white-space: nowrap;
+  flex: 1 0 calc(100% - 20px);
 }
 
 :host([read-only]) .chip-content {
@@ -49,6 +63,15 @@ button {
   color: var(--pf-theme--color--ui-base, #6a6e73);
   display: inline-flex;
   align-items: center;
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 
 #overflow-button {
@@ -71,4 +94,5 @@ svg {
 ::slotted(pf-badge) {
   font-size: var(--pf-global--FontSize--xs, 12px);
   margin: 0 0 0 var(--pf-global--spacer--xs, 0.25rem) !important;
+  min-width: unset;
 }

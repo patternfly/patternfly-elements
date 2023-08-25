@@ -36,20 +36,20 @@ Chips can be removable or read-only. The Overflow chip is a special chip that is
 #### Max-width
 
 {% htmlexample %}
-  <pf-tooltip position="top">
-    <pf-chip>Really long chip that goes on and on</pf-chip>
+  <pf-tooltip id="longtooltip" position="top">
+    <pf-chip id="longchip">Really long chip that goes on and on</pf-chip>
     <span slot="content">Really long chip that goes on and on</span>
   </pf-tooltip>
   <style>
-    pf-chip::part(text) {
+    pf-chip {
       max-width: 10em;
-      overflow-x: hidden;
-      overflow-y: hidden;
-      text-overflow: ellipsis;
-      display: inline-block;
-      text-wrap: nowrap;
     }
   </style>
+  <script>
+    const longtooltip = document.getElementById('longtooltip');
+    const longchip = document.getElementById('longchip');
+    longchip.addEventListener('click', () => longtooltip.remove());
+  </script>
 {% endhtmlexample %}
 
 ### Chip group

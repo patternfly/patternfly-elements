@@ -44,6 +44,7 @@ export class PfChip extends LitElement {
 
   render() {
     return html`
+      <div id="outer">
         ${this.overflowChip ? html`
           <button id="overflow-button" class="chip-content" ?disabled="${this.overflowHidden}">
             <span id="chip-text" part="text"><slot></slot></span>
@@ -60,6 +61,7 @@ export class PfChip extends LitElement {
             </button>
           `}
         `}
+      </div>
     `;
   }
 

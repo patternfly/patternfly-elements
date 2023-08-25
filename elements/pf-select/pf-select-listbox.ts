@@ -46,6 +46,22 @@ export class PfSelectListbox extends LitElement {
 
   #listboxController?: ListboxController;
 
+  /**
+   * filter string for visible options
+   */
+  set filter(filterText: string) {
+    if (this.#listboxController) {
+      this.#listboxController.filter = filterText;
+    }
+  }
+
+  get filter() {
+    return this.#listboxController?.filter || '';
+  }
+
+  /**
+   * array of slotted options
+   */
   get options() {
     const slotted = this.querySelector('slot')?.assignedElements() || [...this.querySelectorAll('pf-select-option')];
     const options = slotted?.map(element => {
@@ -58,20 +74,9 @@ export class PfSelectListbox extends LitElement {
     return options;
   }
 
-  get selectedOptions() {
-    return this.#listboxController?.selectedOptions;
-  }
-
-  set filter(filterText: string) {
-    if (this.#listboxController) {
-      this.#listboxController.filter = filterText;
-    }
-  }
-
-  get filter() {
-    return this.#listboxController?.filter || '';
-  }
-
+  /**
+   * listbox value based by selecting option(s)
+   */
   set selected(optionsList: ListboxValue) {
     if (this.#listboxController) {
       this.#listboxController.value = optionsList;
@@ -80,6 +85,20 @@ export class PfSelectListbox extends LitElement {
 
   get selected() {
     return this.#listboxController?.value;
+  }
+
+  /**
+   * array of selected options
+   */
+  get selectedOptions() {
+    return this.#listboxController?.selectedOptions;
+  }
+
+  /**
+   * array of visible options
+   */
+  get visibleOptions() {
+    return this.#listboxController?.visibleOptions;
   }
 
   render() {
@@ -122,12 +141,31 @@ export class PfSelectListbox extends LitElement {
     }
   }
 
+  /**
+   * sets focus
+   */
   focus() {
     if (this.#listboxController) {
       this.#listboxController.focus();
     }
   }
 
+  /**
+   * allows new options to be inserted
+   * @param option option to be inserted
+   * @param insertBefore optional: reference option before which new will be inserted; if blank new option inserted at end of list
+   */
+  insertOption(option: PfSelectOption, insertBefore?: PfSelectOption) {
+    if (insertBefore) {
+      this.insertBefore(option, insertBefore);
+    } else {
+      this.appendChild(option);
+    }
+  }
+
+  /**
+   * @fires listboxoptions to indicate slotted listbox options ahve changed
+   */
   #onSlotchange() {
     if (this.#listboxController) {
       this.#listboxController.options = this.options as ListboxOptionElement[];

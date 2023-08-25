@@ -128,7 +128,7 @@ import '@patternfly/elements/pf-icon/pf-select.js';
 {% htmlexample %}
 <label>
   Pick a color:
-  <pf-select typeahead create-option-text="Create option">
+  <pf-select id="pfselect" typeahead>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -139,6 +139,34 @@ import '@patternfly/elements/pf-icon/pf-select.js';
     <pf-select-option value="Yellow">Yellow</pf-select-option>
   </pf-select>
 </label>
+  <script>
+    const pfselect = document.getElementById('pfselect');
+    let option;
+    const addCreateOption = () => {
+      option = document.createElement('pf-select-option');
+      updateOption();
+      option.onclick = () => {
+        option.innerHTML = option.value;
+        pfselect.filter = '';
+        addCreateOption();
+      };
+      pfselect.appendChild(option);
+    };
+    const updateOption = () => {
+      if (option) {
+        let filter = pfselect.filter || '';
+        if (filter === '*') {
+          filter = '';
+        }
+        console.log(filter);
+        option.value = filter;
+        option.hidden = option.disabled = filter === '';
+        option.innerHTML = `Create option: "${filter}"`;
+      }
+    }
+    addCreateOption();
+    pfselect.addEventListener('typeaheadinput', updateOption);
+  </script>
 {% endhtmlexample %}
 
 ### Grouped Options

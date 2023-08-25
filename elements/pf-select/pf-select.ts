@@ -35,7 +35,7 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'default-text', type: String }) defaultText = 'Options';
 
   /**
-   * listbox button text when listbox selected option has no text
+   * multi-selectable listbox button text
    */
   @property({ attribute: 'items-selected-text', type: String }) itemsSelectedText = 'items selected';
 
@@ -86,19 +86,25 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'plain', type: Boolean }) plain = false;
 
   /**
-   * whether listbox contrlled by combobox that supports typing
+   * whether listbox controlled by combobox that supports typing
    */
   @property({ attribute: 'typeahead', type: Boolean }) typeahead = false;
 
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
 
-
+  #selectedOptions: PfSelectOption[] = [];
   #valueText = '';
   #valueTextArray: string[] = [];
-  #selectedOptions: PfSelectOption[] = [];
 
-  get options() {
-    return this.#listbox?.options;
+  get #buttonLabel() {
+    const multiSelectableText = `${this.#valueTextArray.length} ${this.itemsSelectedText}`;
+    return this.multiSelectable ?
+      multiSelectableText
+      : !this.hasCheckboxes && this.multiSelectable && this.#valueTextList.length > 0 ?
+        this.#valueTextList
+        : !this.hasCheckboxes && !this.multiSelectable && this.#valueText.length > 0 ?
+          this.#valueText
+          : this.defaultText;
   }
 
   get #listbox(): PfSelectListbox | null | undefined {
@@ -113,6 +119,13 @@ export class PfSelect extends LitElement {
     return this.shadowRoot?.querySelector('#toggle-button');
   }
 
+  get #valueTextList() {
+    return this.#valueTextArray.map(txt => txt.replace(',', '\\,')).join(', ');
+  }
+
+  /**
+   * filter string for visible options
+   */
   set filter(filterText: string) {
     if (this.#listbox) {
       this.#listbox.filter = filterText;
@@ -121,6 +134,27 @@ export class PfSelect extends LitElement {
 
   get filter() {
     return this.#listbox?.filter || '';
+  }
+
+  /**
+   * whether select has badge for number of selected items
+   */
+  get hasBadge() {
+    return !this.typeahead && this.hasCheckboxes && this.#selectedOptions.length > 0;
+  }
+
+  /**
+   * whether select has removable chips for selected items
+   */
+  get hasChips() {
+    return this.typeahead && this.multiSelectable;
+  }
+
+  /**
+   * all listbox options
+   */
+  get options() {
+    return this.#listbox?.options;
   }
 
   set selected(optionsList: ListboxValue) {
@@ -138,34 +172,12 @@ export class PfSelect extends LitElement {
     return this.#listbox?.selected;
   }
 
-  get #valueTextList() {
-    return this.#valueTextArray.map(txt => txt.replace(',', '\\,')).join(', ');
-  }
-
-  get #buttonLabel() {
-    const multiSelectableText = `${this.#valueTextArray.length} ${this.itemsSelectedText}`;
-    return this.multiSelectable ?
-      multiSelectableText
-      : !this.hasCheckboxes && this.multiSelectable && this.#valueTextList.length > 0 ?
-        this.#valueTextList
-        : !this.hasCheckboxes && !this.multiSelectable && this.#valueText.length > 0 ?
-          this.#valueText
-          : this.defaultText;
-  }
-
-  get hasBadge() {
-    return !this.typeahead && this.hasCheckboxes && this.#selectedOptions.length > 0;
-  }
-
-  get hasChips() {
-    return this.typeahead && this.multiSelectable;
-  }
-
   render() {
     const { hasBadge, typeahead, plain } = this;
     const offscreen = typeahead ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
     const checkboxes = this.hasCheckboxes ? 'show-checkboxes' : false;
+    const autocomplete = this.disableFilter ? 'none' : 'both';
     return html`
     ${this.alwaysOpen ? '' : html`
       <div id="toggle" 
@@ -183,7 +195,7 @@ export class PfSelect extends LitElement {
             id="toggle-input" 
             type="text" 
             aria-controls="listbox" 
-            aria-autocomplete="both" 
+            aria-autocomplete="${autocomplete}" 
             aria-expanded="${!this.open ? 'false' : 'true'}" 
             placeholder="${this.#buttonLabel}"
             role="combobox"
@@ -248,12 +260,27 @@ export class PfSelect extends LitElement {
     this.#updateValueText();
   }
 
+  /**
+   * sets focus
+   */
   focus() {
     const listbox = this.shadowRoot?.querySelector('pf-select-listbox');
     const toggle = this.shadowRoot?.querySelector('button');
     (toggle || listbox)?.focus();
   }
 
+  /**
+   * allows new options to be inserted
+   * @param option option to be inserted
+   * @param insertBefore optional: reference option before which new will be inserted; if blank new option inserted at end of list
+   */
+  insertOption(option: PfSelectOption, insertBefore?: PfSelectOption) {
+    this.#listbox?.insertOption(option, insertBefore);
+  }
+
+  /**
+   * updates text indicating current value(s)
+   */
   #updateValueText() {
     this.#selectedOptions = (this.#listbox?.selectedOptions || []) as PfSelectOption[];
     this.#valueTextArray = this.#selectedOptions.map(option => option.optionText || '');
@@ -273,6 +300,10 @@ export class PfSelect extends LitElement {
     }
   }
 
+  /**
+   * handles chip's remove button clicking
+   * @param txt chip text to be removed from values
+   */
   #onChipClick(txt: string) {
     const [opt] = this.#selectedOptions.filter(option => option.optionText === txt);
     // remove chip value from select value
@@ -282,13 +313,9 @@ export class PfSelect extends LitElement {
     }
   }
 
-  #onTypeaheadInput() {
-    // update the filter
-    if (this.#listbox && this.#input?.value && !this.#valueTextArray.includes(this.#input?.value) && this.filter !== this.#input?.value) {
-      this.filter = this.#input?.value || '';
-    }
-  }
-
+  /**
+   * handles listbox change event
+   */
   #onListboxChange() {
     this.#updateValueText();
     if (this.#input && this.#listbox) {
@@ -304,32 +331,56 @@ export class PfSelect extends LitElement {
     }
   }
 
+  /**
+   * handles listbox input event
+   */
   #onListboxInput() {
     this.#updateValueText();
   }
 
+  /**
+   * handles listbox keydown event
+   */
   #onListboxKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape') {
-      this.close();
+      this.open = false;
+      (this.#input || this.#toggle)?.focus();
     }
   }
 
-  close() {
-    this.open = false;
-    (this.#input || this.#toggle)?.focus();
-  }
-
+  /**
+   * handles listbox select event
+   */
   #onListboxSelect() {
     if (!this.multiSelectable && !this.hasCheckboxes) {
-      this.close();
+      this.open = false;
+      (this.#input || this.#toggle)?.focus();
     }
   }
 
+  /**
+   * handles toggle button click event
+   */
   #onToggleClick() {
     this.open = !this.open;
-    this.#listbox?.focus();
   }
 
+  /**
+   * handles typeahead combobox input event
+   * @fires typeaheadinput
+   */
+  #onTypeaheadInput() {
+    // update the filter
+    if (this.#listbox && this.#input?.value && !this.#valueTextArray.includes(this.#input?.value) && this.filter !== this.#input?.value) {
+      this.filter = this.#input?.value || '';
+    }
+
+    this.dispatchEvent(new Event('typeaheadinput', { bubbles: true }));
+  }
+
+  /**
+   * handles typeahead combobox focus event
+   */
   #onTypeaheadInputFocus() {
     this.open = true;
   }

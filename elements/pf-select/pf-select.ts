@@ -104,14 +104,9 @@ export class PfSelect extends LitElement {
   #valueTextArray: string[] = [];
 
   get #buttonLabel() {
-    const multiSelectableText = `${this.#valueTextArray.length} ${this.itemsSelectedText}`;
-    return this.multiSelectable ?
-      multiSelectableText
-      : !this.hasCheckboxes && this.multiSelectable && this.#valueTextList.length > 0 ?
-        this.#valueTextList
-        : !this.hasCheckboxes && !this.multiSelectable && this.#valueText.length > 0 ?
-          this.#valueText
-          : this.defaultText;
+    return (this.multiSelectable || this.hasCheckboxes) && !this.hasBadge && !this.hasChips ?
+      `${this.#valueTextArray.length} ${this.itemsSelectedText}` : this.#valueText.length > 0 && !this.hasChips ?
+        this.#valueText : this.defaultText;
   }
 
   get #listbox(): PfSelectListbox | null | undefined {
@@ -147,7 +142,7 @@ export class PfSelect extends LitElement {
    * whether select has badge for number of selected items
    */
   get hasBadge() {
-    return !this.typeahead && this.hasCheckboxes && this.#selectedOptions.length > 0;
+    return !this.typeahead && this.#selectedOptions.length > 0 && this.multiSelectable;
   }
 
   /**
@@ -183,7 +178,7 @@ export class PfSelect extends LitElement {
     const { hasBadge, typeahead, plain } = this;
     const offscreen = typeahead ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
-    const checkboxes = this.hasCheckboxes ? 'show-checkboxes' : false;
+    const checkboxes = this.hasCheckboxes ? 'checkboxes' : false;
     const autocomplete = this.disableFilter ? 'none' : 'both';
     return html`
     ${this.alwaysOpen ? '' : html`
@@ -353,7 +348,7 @@ export class PfSelect extends LitElement {
   #onListboxChange() {
     this.#updateValueText();
     if (this.#input && this.#listbox) {
-      if (!this.multiSelectable && this.#valueText !== this.#input?.value) {
+      if (!this.multiSelectable && !this.hasCheckboxes && this.#valueText !== this.#input?.value) {
         this.filter = this.#valueText.slice(0, this.#input.value.length);
         this.#input.value = this.#valueText;
         this.#input.focus();
@@ -385,7 +380,7 @@ export class PfSelect extends LitElement {
   /**
    * handles listbox select event
    */
-  #onListboxSelect(event: Event) {
+  #onListboxSelect() {
     if (!this.multiSelectable && !this.hasCheckboxes) {
       this.open = false;
       (this.#input || this.#toggle)?.focus();

@@ -8,6 +8,10 @@
   --_pf-select-option-checkboxes-display: none;
 }
 
+:host([has-checkboxes]) {
+  --_pf-select-option-checkboxes-display: inline;
+}
+
 :host([hidden]),
 *[hidden] {
   display: none !important;
@@ -94,8 +98,4 @@ pf-badge {
   height: 0;
   opacity: 0;
   overflow: hidden;
-}
-
-.show-checkboxes {
-  --_pf-select-option-checkboxes-display: inline;
 }

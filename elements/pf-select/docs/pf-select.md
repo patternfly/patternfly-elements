@@ -67,8 +67,12 @@ import '@patternfly/elements/pf-icon/pf-select.js';
 
 #### Multi-selectable with checkboxes
 
-<p>Multiple options, displayed as checkboxes, can be selected. Any arrow keys work. <kbd>Shift</kbd> will toggling off multiple items. <kbd>Ctrl+A</kbd> will toggle selection on all items.
-Filter by typing a letter.</p>
+<p>
+  Multiple options, displayed as checkboxes, can be selected.
+  Any arrow keys work. <kbd>Shift</kbd> will toggling off multiple items.
+  <kbd>Ctrl+A</kbd> will toggle selection on all items.
+  Filter by typing a letter.
+</p>
 
 {% htmlexample %}
   <pf-select has-checkboxes>
@@ -84,13 +88,6 @@ Filter by typing a letter.</p>
 {% endhtmlexample %}
 
 ### Typeahead
-
-<p>
-  Any arrow keys work.
-  Only one option can be selected.
-  Listbox wont appear until input has text.
-  Type <code>*</code> to show all options.
-</p>
 
 {% htmlexample %}
   <label>
@@ -110,8 +107,6 @@ Filter by typing a letter.</p>
 
 #### Typeahead, multi-selectable (with chips)
 
-<p>Any arrow keys work. Only one option can be selected. Listbox wont appear until input has text. Type <code>*</code> to show all options.</p>
-
 {% htmlexample %}
 <label>
   Pick a color:
@@ -128,9 +123,25 @@ Filter by typing a letter.</p>
 </label>
 {% endhtmlexample %}
 
-### Grouped Options
+#### Typeahead with create option
 
-Any arrow keys work. Only one option can be selected. Filter by typing a letter. Headings are not selectable.
+{% htmlexample %}
+<label>
+  Pick a color:
+  <pf-select typeahead create-option-text="Create option">
+    <pf-select-option value="Blue">Blue</pf-select-option>
+    <pf-select-option value="Green">Green</pf-select-option>
+    <pf-select-option value="Magenta">Magenta</pf-select-option>
+    <pf-select-option value="Orange">Orange</pf-select-option>
+    <pf-select-option value="Purple">Purple</pf-select-option>
+    <pf-select-option value="Pink">Pink</pf-select-option>
+    <pf-select-option value="Red">Red</pf-select-option>
+    <pf-select-option value="Yellow">Yellow</pf-select-option>
+  </pf-select>
+</label>
+{% endhtmlexample %}
+
+### Grouped Options
 
 {% htmlexample %}
   <pf-select default-text="Select item from our menu">
@@ -149,7 +160,11 @@ Any arrow keys work. Only one option can be selected. Filter by typing a letter.
   </pf-select>
 {% endhtmlexample %}
 
-### Case-sensitive filtering
+### Filtering
+
+By default, filtering is __**enabled**__ and __**not**__ case sensitive. However, filtering can be set to case sensitive or disabled altogether.
+
+#### Case-sensitive filtering
 
 Any arrow keys work. Only one option can be selected. Filter is case sensisitve.
 
@@ -166,7 +181,7 @@ Any arrow keys work. Only one option can be selected. Filter is case sensisitve.
   </pf-select>
 {% endhtmlexample %}
 
-### Disable filtering
+#### Disable filtering
 
 Any arrow keys work. Only one option can be selected. Filter is disabled.
 

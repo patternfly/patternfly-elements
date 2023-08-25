@@ -5,8 +5,7 @@ import '@patternfly/elements/pf-icon/pf-select.js';
 </script>
 
 {% renderOverview %}
-  <pf-select>
-    <pf-select-option disabled selected="true">Select a color</pf-select-option>
+  <pf-select default-text="Select a value">
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -30,8 +29,7 @@ import '@patternfly/elements/pf-icon/pf-select.js';
 </p>
 
 {% htmlexample %}
-  <pf-select>
-    <pf-select-option disabled selected="true">Select a color</pf-select-option>
+  <pf-select default-text="Select a value">
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -120,21 +118,6 @@ Below are option variants:
 {% endhtmlexample %}
 
 #### Checkbox
-
-{% htmlexample %}
-  <pf-select has-checkboxes>
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
-  </pf-select>
-{% endhtmlexample %}
-
-#### Multi-selectable with checkboxes
 
 <p>
   Multiple options, displayed as checkboxes, can be selected.

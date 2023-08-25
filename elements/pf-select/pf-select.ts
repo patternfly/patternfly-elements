@@ -179,7 +179,7 @@ export class PfSelect extends LitElement {
     const offscreen = typeahead ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
     const checkboxes = this.hasCheckboxes ? 'checkboxes' : false;
-    const autocomplete = this.disableFilter ? 'none' : 'both';
+    const autocomplete = this.disableFilter ? 'none' : 'list';
     return html`
     ${this.alwaysOpen ? '' : html`
       <div id="toggle" 
@@ -320,7 +320,6 @@ export class PfSelect extends LitElement {
     // reset input if chip has been added
     if (this.hasChips && this.#input?.value) {
       const chip = this.shadowRoot?.querySelector(`pf-chip#chip-${this.#input?.value}`) as HTMLElement;
-      this.#input.value = '';
       if (chip && this._chipGroup) {
         this._chipGroup.focusOnChip(chip);
       } else {
@@ -347,17 +346,6 @@ export class PfSelect extends LitElement {
    */
   #onListboxChange() {
     this.#updateValueText();
-    if (this.#input && this.#listbox) {
-      if (!this.multiSelectable && !this.hasCheckboxes && this.#valueText !== this.#input?.value) {
-        this.filter = this.#valueText.slice(0, this.#input.value.length);
-        this.#input.value = this.#valueText;
-        this.#input.focus();
-        this.#input.setSelectionRange(
-          this.filter.length,
-          this.#valueText.length
-        );
-      }
-    }
   }
 
   /**

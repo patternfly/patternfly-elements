@@ -190,7 +190,7 @@ export class PfSelect extends LitElement {
       <div id="toggle" 
         ?disabled=${this.disabled} 
         ?expanded=${this.open}>
-        ${!this.hasChips ? '' : html`
+        ${!this.hasChips || this.#valueTextArray.length < 1 ? '' : html`
           <pf-chip-group label="${this.currentSelectionsLabel}">
             ${this.#valueTextArray.map(txt => html`
               <pf-chip id="chip-${txt}" @click="${() => this.#onChipClick(txt)}">${txt}</pf-chip>

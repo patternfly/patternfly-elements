@@ -40,7 +40,7 @@
     "./pf-label/BaseLabel.js": "./pf-label/BaseLabel.js",
     "./pf-label/pf-label.js": "./pf-label/pf-label.js",
     "./pf-select/pf-select.js": "./pf-select/pf-select.js",
-    "./pf-select/pf-select-listbox.js": "./pf-select/pf-select.js",
+    "./pf-select/pf-select-list.js": "./pf-select/pf-select.js",
     "./pf-select/pf-select-group.js": "./pf-select/pf-select-group.js",
     "./pf-select/pf-select-option.js": "./pf-select/pf-select-option.js",
     "./pf-modal/pf-modal.js": "./pf-modal/pf-modal.js",

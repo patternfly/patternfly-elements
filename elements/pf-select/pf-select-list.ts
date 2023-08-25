@@ -6,7 +6,7 @@ import { ListboxController, type ListboxOptionElement, type ListboxValue } from 
 import { PfSelectGroup } from './pf-select-group.js';
 import { PfSelectOption } from './pf-select-option.js';
 
-import styles from './pf-select-listbox.css';
+import styles from './pf-select-list.css';
 /**
  * Listbox for select options.
  *
@@ -14,8 +14,8 @@ import styles from './pf-select-listbox.css';
  *
  * @slot - insert `pf-select-option` and/or `pf-select-groups` here
  */
-@customElement('pf-select-listbox')
-export class PfSelectListbox extends LitElement {
+@customElement('pf-select-list')
+export class PfSelectList extends LitElement {
   static readonly styles = [styles];
 
   /**
@@ -176,6 +176,6 @@ export class PfSelectListbox extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-select-listbox': PfSelectListbox;
+    'pf-select-list': PfSelectList;
   }
 }

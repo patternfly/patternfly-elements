@@ -5,7 +5,7 @@ import { query } from 'lit/decorators/query.js';
 import type { PropertyValues } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
-import { PfSelectListbox } from './pf-select-listbox.js';
+import { PfSelectList } from './pf-select-list.js';
 
 import styles from './pf-select.css';
 import type { PfSelectOption } from './pf-select-option.js';
@@ -109,7 +109,7 @@ export class PfSelect extends LitElement {
         this.#valueText : this.defaultText;
   }
 
-  get #listbox(): PfSelectListbox | null | undefined {
+  get #listbox(): PfSelectList | null | undefined {
     return this.shadowRoot?.querySelector('#listbox');
   }
 
@@ -226,7 +226,7 @@ export class PfSelect extends LitElement {
         </button>
       </div>
     `}
-      <pf-select-listbox 
+      <pf-select-list 
         id="listbox" 
         class="${classMap({ plain, checkboxes })}"
         ?disabled=${this.disabled}
@@ -242,7 +242,7 @@ export class PfSelect extends LitElement {
         @select=${this.#onListboxSelect}
         @optioncreated="${this.#onOptionCreated}">
         <slot></slot>
-      </pf-select-listbox>
+      </pf-select-list>
     `;
   }
 
@@ -272,7 +272,7 @@ export class PfSelect extends LitElement {
    * sets focus
    */
   focus() {
-    const listbox = this.shadowRoot?.querySelector('pf-select-listbox');
+    const listbox = this.shadowRoot?.querySelector('pf-select-list');
     const toggle = this.shadowRoot?.querySelector('button');
     (toggle || listbox)?.focus();
   }

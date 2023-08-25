@@ -110,7 +110,7 @@ import '@patternfly/elements/pf-icon/pf-select.js';
 {% htmlexample %}
 <label>
   Pick a color:
-  <pf-select typeahead>
+  <pf-select typeahead multi-selectable>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -128,7 +128,7 @@ import '@patternfly/elements/pf-icon/pf-select.js';
 {% htmlexample %}
 <label>
   Pick a color:
-  <pf-select id="pfselect" typeahead>
+  <pf-select id="pfselect" typeahead create-option-text="Create option">
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -139,34 +139,42 @@ import '@patternfly/elements/pf-icon/pf-select.js';
     <pf-select-option value="Yellow">Yellow</pf-select-option>
   </pf-select>
 </label>
-  <script>
-    const pfselect = document.getElementById('pfselect');
-    let option;
-    const addCreateOption = () => {
-      option = document.createElement('pf-select-option');
-      updateOption();
-      option.onclick = () => {
-        option.innerHTML = option.value;
-        pfselect.filter = '';
-        addCreateOption();
-      };
-      pfselect.appendChild(option);
-    };
-    const updateOption = () => {
-      if (option) {
-        let filter = pfselect.filter || '';
-        if (filter === '*') {
-          filter = '';
-        }
-        console.log(filter);
-        option.value = filter;
-        option.hidden = option.disabled = filter === '';
-        option.innerHTML = `Create option: "${filter}"`;
-      }
-    }
-    addCreateOption();
-    pfselect.addEventListener('typeaheadinput', updateOption);
-  </script>
+{% endhtmlexample %}
+
+#### Typeahead, multi-selectable (with create option)
+
+{% htmlexample %}
+<label>
+  Pick a color:
+  <pf-select id="pfselect" typeahead multi-selectable create-option-text="Create option">
+    <pf-select-option value="Blue">Blue</pf-select-option>
+    <pf-select-option value="Green">Green</pf-select-option>
+    <pf-select-option value="Magenta">Magenta</pf-select-option>
+    <pf-select-option value="Orange">Orange</pf-select-option>
+    <pf-select-option value="Purple">Purple</pf-select-option>
+    <pf-select-option value="Pink">Pink</pf-select-option>
+    <pf-select-option value="Red">Red</pf-select-option>
+    <pf-select-option value="Yellow">Yellow</pf-select-option>
+  </pf-select>
+</label>
+{% endhtmlexample %}
+
+#### Typeahead, multi-selectable (with checkboxes)
+
+{% htmlexample %}
+<label>
+  Pick a color:
+  <pf-select id="pfselect" typeahead multi-selectable has-checkboxes>
+    <pf-select-option value="Blue">Blue</pf-select-option>
+    <pf-select-option value="Green">Green</pf-select-option>
+    <pf-select-option value="Magenta">Magenta</pf-select-option>
+    <pf-select-option value="Orange">Orange</pf-select-option>
+    <pf-select-option value="Purple">Purple</pf-select-option>
+    <pf-select-option value="Pink">Pink</pf-select-option>
+    <pf-select-option value="Red">Red</pf-select-option>
+    <pf-select-option value="Yellow">Yellow</pf-select-option>
+  </pf-select>
+</label>
 {% endhtmlexample %}
 
 ### Grouped Options

@@ -39,7 +39,7 @@ export class PfSelectOption extends LitElement {
   /**
    * whether option is selected
    */
-  @property({ type: Boolean }) selected = false;
+  @property({ attribute: 'selected', type: Boolean }) selected = false;
 
   /**
   * total number of options
@@ -53,6 +53,8 @@ export class PfSelectOption extends LitElement {
 
   @queryAssignedNodes({ slot: '', flatten: true }) private _slottedText!: Node[];
 
+  #createOptionText = '';
+  #createdOption = false;
 
   override connectedCallback() {
     super.connectedCallback();
@@ -66,6 +68,14 @@ export class PfSelectOption extends LitElement {
     return this._slottedText.map(node => node.textContent).join('').trim();
   }
 
+  set createOptionText(str: string) {
+    if (!this.#createdOption) {
+      this.#createOptionText = str || '';
+      this.disabled = str === '';
+      this.hidden = str === '';
+    }
+  }
+
   render() {
     return html`
       <div>
@@ -75,7 +85,7 @@ export class PfSelectOption extends LitElement {
           ?checked=${this.selected}
           ?disabled=${this.disabled}>
         <slot name="icon"></slot>
-        <span><slot></slot></span>
+        <span>${this.#createOptionText === '' ? '' : `${this.#createOptionText}: `}<slot></slot></span>
         <svg 
           ?hidden=${!this.selected}
           viewBox="0 0 512 512" 
@@ -90,6 +100,9 @@ export class PfSelectOption extends LitElement {
 
   updated(changed: PropertyValues<this>) {
     if (changed.has('selected')) {
+      if (this.selected) {
+        this.#createOption();
+      }
       this.#internals.ariaSelected = this.selected ? 'true' : 'false';
     }
     if (changed.has('posInSet')) {
@@ -103,24 +116,37 @@ export class PfSelectOption extends LitElement {
     }
   }
 
+  /**
+   * handles when a "create option" is selected
+   * @fires optioncreated
+   */
+  #createOption() {
+    this.#createOptionText = '';
+    this.#createdOption = true;
+    this.dispatchEvent(new Event('optioncreated', { bubbles: true }));
+  }
+
+  /**
+   * handles option click
+   * @fires select
+   */
   #onClick() {
-    /**
-     * @fires select
-     */
     this.dispatchEvent(new Event('select', { bubbles: true }));
   }
 
+  /**
+   * handles option focus
+   * @fires optionfocus
+   */
   #onFocus() {
-    /**
-     * @fires optionfocus
-     */
     this.dispatchEvent(new Event('optionfocus', { bubbles: true }));
   }
 
+  /**
+   * handles option blur
+   * @fires optionblur
+   */
   #onBlur() {
-    /**
-     * @fires optionblur
-     */
     this.dispatchEvent(new Event('optionblur', { bubbles: true }));
   }
 }

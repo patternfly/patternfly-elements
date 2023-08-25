@@ -40,6 +40,12 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'items-selected-text', type: String }) itemsSelectedText = 'items selected';
 
   /**
+   * text for a special option that allows user to create an option from typeahead input text;
+   * set to '' in order to disable this feature
+   */
+  @property({ attribute: 'create-option-text', type: String }) createOptionText = '';
+
+  /**
    * ARIA label for chip group used to describe chips
    */
   @property({ attribute: 'current-selections-label', type: String }) currentSelectionsLabel = 'Current selections';
@@ -92,6 +98,7 @@ export class PfSelect extends LitElement {
 
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
 
+  #createOption!: PfSelectOption;
   #selectedOptions: PfSelectOption[] = [];
   #valueText = '';
   #valueTextArray: string[] = [];
@@ -237,7 +244,8 @@ export class PfSelect extends LitElement {
         @change=${this.#onListboxChange}
         @keydown=${this.#onListboxKeydown}
         @listboxoptions=${this.#updateValueText}
-        @select=${this.#onListboxSelect}>
+        @select=${this.#onListboxSelect}
+        @optioncreated="${this.#onOptionCreated}">
         <slot></slot>
       </pf-select-listbox>
     `;
@@ -246,6 +254,10 @@ export class PfSelect extends LitElement {
   updated(changed: PropertyValues<this>) {
     if (changed.has('hasCheckboxes') && this.hasCheckboxes) {
       import('@patternfly/elements/pf-badge/pf-badge.js');
+    }
+
+    if (changed.has('typeahead') || changed.has('createOptionText')) {
+      this.#updateCreateOptionText();
     }
 
     if (changed.has('open')) {
@@ -257,6 +269,7 @@ export class PfSelect extends LitElement {
   }
 
   firstUpdated() {
+    this.#addCreateOption();
     this.#updateValueText();
   }
 
@@ -276,6 +289,27 @@ export class PfSelect extends LitElement {
    */
   insertOption(option: PfSelectOption, insertBefore?: PfSelectOption) {
     this.#listbox?.insertOption(option, insertBefore);
+  }
+
+  #addCreateOption() {
+    this.#createOption = document.createElement('pf-select-option');
+    this.#updateCreateOptionValue();
+    this.appendChild(this.#createOption);
+  }
+
+  #updateCreateOptionText() {
+    this.#createOption.innerHTML = `${this.#createOption.value}`;
+    const createOptionText = !this.typeahead || this.#createOption.value === '' ? '' : this.createOptionText;
+    this.#createOption.createOptionText = createOptionText;
+  }
+
+  #updateCreateOptionValue() {
+    let filter = this.filter || '';
+    if (filter === '*') {
+      filter = '';
+    }
+    this.#createOption.value = filter;
+    this.#updateCreateOptionText();
   }
 
   /**
@@ -351,11 +385,20 @@ export class PfSelect extends LitElement {
   /**
    * handles listbox select event
    */
-  #onListboxSelect() {
+  #onListboxSelect(event: Event) {
     if (!this.multiSelectable && !this.hasCheckboxes) {
       this.open = false;
       (this.#input || this.#toggle)?.focus();
     }
+  }
+
+  /**
+   * handles listbox option being created and creates a new "create option"
+   */
+  #onOptionCreated() {
+    this.#addCreateOption();
+    this.filter = '';
+    this.#updateCreateOptionValue();
   }
 
   /**
@@ -367,7 +410,6 @@ export class PfSelect extends LitElement {
 
   /**
    * handles typeahead combobox input event
-   * @fires typeaheadinput
    */
   #onTypeaheadInput() {
     // update the filter
@@ -375,7 +417,7 @@ export class PfSelect extends LitElement {
       this.filter = this.#input?.value || '';
     }
 
-    this.dispatchEvent(new Event('typeaheadinput', { bubbles: true }));
+    this.#updateCreateOptionValue();
   }
 
   /**

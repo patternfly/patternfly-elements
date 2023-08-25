@@ -12,16 +12,6 @@
   border-inline-start-width: var(--pf-c-tabs--before--BorderLeftWidth, 0);
 }
 
-/* workaround to disable scroll right button when last tab is aria-disabled */
-:host(:not([vertical])) ::slotted(pf-tab[aria-disabled=true]:last-of-type) {
-  translate: calc(-1 * var(--pf-c-tabs__link--disabled--before--BorderRightWidth, 1px)) 0;
-}
-
-/* workaround to disable scroll left button when first tab is aria-disabled */
-:host(:not([vertical])) ::slotted(pf-tab[aria-disabled=true]:first-of-type) {
-  translate: var(--pf-c-tabs__link--disabled--before--BorderRightWidth, 1px) 0;
-}
-
 :host([box]) [part="tabs-container"] {
   --pf-c-tabs__link--BackgroundColor: var(--pf-c-tabs--m-box__link--BackgroundColor, var(--pf-global--BackgroundColor--200, #f0f0f0));
   --pf-c-tabs__link--disabled--BackgroundColor: var(--pf-c-tabs--m-box__link--disabled--BackgroundColor, var(--pf-global--disabled-color--200, #d2d2d2));
@@ -49,6 +39,7 @@
   --pf-c-tabs__item--m-current__link--BackgroundColor: var(--pf-c-tabs--m-color-scheme--light-300__item--m-current__link--BackgroundColor, var(--pf-global--BackgroundColor--light-300, #f0f0f0));
   --pf-c-tabs__link--disabled--BackgroundColor: var(--pf-c-tabs--m-color-scheme--light-300__link--disabled--BackgroundColor, var(--pf-global--palette--black-150, #f5f5f5));
 }
+
 
 :host([vertical]) [part="tabs-container"] {
   --pf-c-tabs--Width: var(--pf-c-tabs--m-vertical--Width, 100%);

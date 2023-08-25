@@ -135,13 +135,13 @@ Any arrow keys work. Only one option can be selected. Filter by typing a letter.
 {% htmlexample %}
   <pf-select default-text="Select item from our menu">
     <pf-select-group>
-      <span slot="group-heading">Breakfast</span>
+      <span slot="label">Breakfast</span>
       <pf-select-option value="Eggs">Eggs</pf-select-option>
       <pf-select-option value="Toast">Toast</pf-select-option>
       <pf-select-option value="Waffles">Waffles</pf-select-option>
     </pf-select-group>
     <pf-select-group>
-      <span slot="group-heading">Lunch</span>
+      <span slot="label">Lunch</span>
       <pf-select-option value="Salad">Salad</pf-select-option>
       <pf-select-option value="Sandwich">Sandwich</pf-select-option>
       <pf-select-option value="Soup">Soup</pf-select-option>

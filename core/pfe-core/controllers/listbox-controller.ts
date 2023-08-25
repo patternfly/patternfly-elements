@@ -339,7 +339,6 @@ export class ListboxController<
     }
     const oldValue = this.value;
     this.#tabindex.initItems(this.visibleOptions);
-    this.#updateActiveDescendant();
     if (oldValue !== this.value) {
       this.#fireInput();
     }

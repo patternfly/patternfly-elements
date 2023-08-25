@@ -77,7 +77,7 @@ export class PfBackgroundImage extends LitElement {
       if (!value) {
         delete cssProps[key];
       } else {
-        // otherwise, add the css property
+        // otherwise, add the value with the url() css function
         cssProps[key] = `url(${value})`;
       }
     });

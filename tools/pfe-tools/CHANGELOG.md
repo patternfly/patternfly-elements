@@ -1,5 +1,12 @@
 # @patternfly/pfe-tools
 
+## 1.5.0
+
+### Minor Changes
+
+- 57b7dba20: Test: add `clickElementAtOffset` utility function for tests
+- dcdbce66d: Test: add `clickElementAtCenter` utility function for tests
+
 ## 1.4.2
 
 ### Patch Changes

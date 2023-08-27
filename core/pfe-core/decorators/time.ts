@@ -15,17 +15,17 @@ export function time(tag?: string) {
       const END_TAG = `end-${TAG}`;
 
       if (window.PfeConfig.trackPerformance) {
-        performance.mark(START_TAG);
+        window.performance.mark(START_TAG);
       }
 
       const x = f.call(this, ...args);
 
       const ret = () => {
         if (window.PfeConfig.trackPerformance) {
-          performance.mark(END_TAG);
-          performance.measure(TAG, START_TAG, END_TAG);
+          window.performance.mark(END_TAG);
+          window.performance.measure(TAG, START_TAG, END_TAG);
           // eslint-disable-next-line no-console
-          console.log(Array.from(performance.getEntriesByName(TAG)).pop());
+          console.log(Array.from(window.performance.getEntriesByName(TAG)).pop());
         }
         return x;
       };

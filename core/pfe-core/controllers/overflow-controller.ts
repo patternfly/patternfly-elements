@@ -13,7 +13,7 @@ export class OverflowController implements ReactiveController {
   #items: HTMLElement[] = [];
 
   #scrollTimeoutDelay = 0;
-  #scrollTimeout?: ReturnType<typeof setTimeout>;
+  #scrollTimeout?: number;
 
   /** Default state */
   #hideOverflowButtons = false;
@@ -59,7 +59,7 @@ export class OverflowController implements ReactiveController {
 
   onScroll = () => {
     clearTimeout(this.#scrollTimeout);
-    this.#scrollTimeout = setTimeout(() => this.#setOverflowState(), this.#scrollTimeoutDelay);
+    this.#scrollTimeout = window.setTimeout(() => this.#setOverflowState(), this.#scrollTimeoutDelay);
   };
 
   scrollLeft() {

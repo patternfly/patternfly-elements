@@ -47,7 +47,7 @@
   },
   "scripts": {
     "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
-    "analyze": "node ../../tools/pfe-cli/cli.js analyze tsconfig.json",
+    "analyze": "pfe analyze .",
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },
   "dependencies": {

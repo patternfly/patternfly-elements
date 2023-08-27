@@ -1,5 +1,5 @@
-import type Yargs from 'yargs';
-import { writeManifest } from './write-manifest.js';
+import type * as Yargs from 'yargs';
+import { writeManifest } from './lib/write-manifest.js';
 
 export interface Opts {
   packagePath: string | URL;

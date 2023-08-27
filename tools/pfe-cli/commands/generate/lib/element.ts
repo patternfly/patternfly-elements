@@ -1,4 +1,4 @@
-import type { GenerateElementOptions } from '../generate.js';
+import type { GenerateElementOptions } from '../command.js';
 
 import Case from 'case';
 import Chalk from 'chalk';
@@ -12,8 +12,8 @@ import * as path from 'node:path';
 
 
 import { processTemplate } from './template.js';
-import { memoize } from '../../lib/fp.js';
-import { exists, mkdirp } from '../../lib/fs.js';
+import { memoize } from '#lib/fp.js';
+import { exists, mkdirp } from '#lib/fs.js';
 
 const { blue, green, greenBright, red, yellow } = Chalk;
 

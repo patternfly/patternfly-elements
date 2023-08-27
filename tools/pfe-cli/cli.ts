@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 import Yargs from 'yargs';
 import * as Generate from './commands/generate/command.js';
 import * as Analyze from './commands/analyze/command.js';

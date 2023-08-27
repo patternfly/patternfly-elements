@@ -74,7 +74,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "analyze": "node ../tools/pfe-cli/cli.js analyze .",
+    "analyze": "pfe analyze .",
     "build": "wireit",
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },

@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Command line utilities for development with PatternFly Elements core and tools",
   "bin": {
-    "pfe": "cli.js"
+    "pfe": "./cli.js"
   },
   "main": "cli.js",
   "module": "cli.js",
@@ -13,6 +13,9 @@
       "default": "./cli.js",
       "typescript": "./cli.ts"
     }
+  },
+  "imports": {
+    "#lib/*": "./lib/*"
   },
   "keywords": [
     "patternfly",

@@ -1,13 +1,18 @@
 import type { Package } from 'custom-elements-manifest';
 
+import _slugify from 'slugify';
+
+// typescript nonsense
+const slugify = _slugify as unknown as typeof _slugify.default;
+
 import { readdir } from 'node:fs/promises';
 import { join, sep } from 'node:path';
 import { getPfeConfig } from '@patternfly/pfe-tools/config.js';
-import slugify from 'slugify';
-import { exists } from '../../../lib/fs.js';
+
+import { exists } from '#lib/fs.js';
 import { isCustomElementDeclaration } from '../tools/predicates.js';
 
-export async function demos(manifest: Package) {
+export async function addDemosToManifest(manifest: Package) {
   const { aliases, rootDir, demoURLPrefix, site, sourceControlURLPrefix } = getPfeConfig();
   const subpath = site.componentSubpath ?? 'components';
 

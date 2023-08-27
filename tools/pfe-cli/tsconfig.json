@@ -4,19 +4,20 @@
     "./**/*"
   ],
   "exclude": [
-    "commands/generator/templates",
+    "commands/generate/templates",
     "dev-server/bundle.ts"
   ],
   "compilerOptions": {
     "module": "ES2022",
-    "target": "es2022",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
     "composite": true,
     "allowJs": false,
     "checkJs": false
   },
   "references": [
     {
-      "path": "../tools/pfe-tools"
+      "path": "../pfe-tools"
     }
   ]
 }

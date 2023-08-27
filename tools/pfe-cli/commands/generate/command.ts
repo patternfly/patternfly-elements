@@ -1,12 +1,11 @@
-import type Yargs from 'yargs';
+import type * as Yargs from 'yargs';
 
-import Banner from '../../banner.js';
+import Banner from '#lib/banner.js';
 
 import prompts from 'prompts';
-import { join } from 'node:path';
 
-import { generateElement } from './element.js';
-import { readJson } from '../../lib/fs.js';
+import { generateElement } from './lib/element.js';
+import { getDefaultPackageName } from './lib/utils.js';
 
 export interface BaseOptions {
   /** Should console output be omitted? */
@@ -31,13 +30,6 @@ export type PromptOptions<T> =
 const ERR_BAD_CE_TAG_NAME =
   'Custom element tag names must contain a hyphen (-)';
 
-interface PackageJSON {
-  customElements?: string;
-  name: string;
-  version: string;
-  workspaces?: string;
-}
-
 export async function promptForElementGeneratorOptions(
   options?: PromptOptions<GenerateElementOptions>
 ): Promise<GenerateElementOptions> {
@@ -53,13 +45,6 @@ export async function promptForElementGeneratorOptions(
       validate: name => name.includes('-') || ERR_BAD_CE_TAG_NAME,
     }]),
   } as GenerateElementOptions;
-}
-
-const readJsonOrVoid = (path: string) => readJson(path).catch(() => void 0);
-
-async function getDefaultPackageName() {
-  return (await readJsonOrVoid(join(process.cwd(), 'elements', 'package.json')) as PackageJSON)?.name ??
-         (await readJsonOrVoid(join(process.cwd(), 'package.json')) as PackageJSON)?.name ?? '';
 }
 
 export async function handler(argv: GenerateElementOptions) {

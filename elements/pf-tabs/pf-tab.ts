@@ -9,7 +9,6 @@ import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { TabExpandEvent, TabDisabledEvent } from './TabsController.js';
 
-import BaseStyles from './BaseTab.css';
 import styles from './pf-tab.css';
 
 /**
@@ -74,7 +73,7 @@ import styles from './pf-tab.css';
  */
 @customElement('pf-tab')
 export class PfTab extends LitElement {
-  static readonly styles = [BaseStyles, styles];
+  static readonly styles = [styles];
 
   static override shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 

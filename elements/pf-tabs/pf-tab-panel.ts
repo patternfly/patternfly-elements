@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 
-import BaseStyles from './BaseTabPanel.css';
 import styles from './pf-tab-panel.css';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
@@ -15,7 +14,7 @@ import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
  */
 @customElement('pf-tab-panel')
 export class PfTabPanel extends LitElement {
-  static readonly styles = [BaseStyles, styles];
+  static readonly styles = [styles];
 
   #internals = this.attachInternals();
 

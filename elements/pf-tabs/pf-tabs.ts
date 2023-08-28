@@ -13,7 +13,6 @@ import { TabsController } from './TabsController.js';
 import { PfTab } from './pf-tab.js';
 import { PfTabPanel } from './pf-tab-panel.js';
 
-import BaseStyles from './BaseTabs.css';
 import styles from './pf-tabs.css';
 
 /**
@@ -68,7 +67,7 @@ import styles from './pf-tabs.css';
  */
 @customElement('pf-tabs')
 export class PfTabs extends LitElement {
-  static readonly styles = [BaseStyles, styles];
+  static readonly styles = [styles];
 
   protected static readonly scrollTimeoutDelay = 150;
 

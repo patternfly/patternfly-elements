@@ -161,13 +161,14 @@ export class TabsController implements ReactiveController {
 
   async #mutationsCallback(mutations: MutationRecord[]): Promise<void> {
     for (const mutation of mutations) {
-      if (mutation.type === 'childList') {
-        if (this.#isTab(mutation.addedNodes[0])) {
-          this.#rebuild();
-        }
-        if (this.#isTab(mutation.removedNodes[0])) {
-          this.#rebuild();
-        }
+      if ([...mutation.addedNodes.values()].some(node => this.#isTab(node))) {
+        this.#rebuild();
+        break;
+      }
+
+      if ([...mutation.removedNodes.values()].some(node => this.#isTab(node))) {
+        this.#rebuild();
+        break;
       }
     }
   }

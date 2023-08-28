@@ -95,7 +95,10 @@ export class TabsController implements ReactiveController {
     return this._tabs.indexOf(this.#activeTab);
   }
 
-  // Setting active tab from js/console (ie: $0.activeIndex = 2)
+  /**
+   * Sets the active index of the tabs element which will set the active tab.
+   * document.querySelector('tabs-element-selector').activeIndex = 0
+   */
   set activeIndex(index: number) {
     const firstFocusableTab = this.#tabindex.firstItem;
     if (!firstFocusableTab) {

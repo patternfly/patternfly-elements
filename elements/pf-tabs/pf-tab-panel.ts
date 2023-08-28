@@ -24,7 +24,7 @@ export class PfTabPanel extends LitElement {
     `;
   }
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
     this.id ||= getRandomId('pf-tab-panel');
     this.hidden ??= true;

@@ -14,14 +14,15 @@
 
 - 🔥 Tabs base classes have been removed.  These class files are no longer exported
 by the project. `<pf-tabs>` implements the new `TabsController`. Downstream
-consumers will need to update their code to use the new `TabsController` class, and 
-other inherited methods.
+consumers that import `BaseTabs` will need to update their code to use the new 
+`TabsController` class, and other inherited methods.
 - 🔥 TabExpandEvent has moved from `BaseTabs` to `TabsController`.  Downstream
-consumers will need to update their code to reimplement the import.
+consumers that import `BaseTabs` will need to update their code to reimplement the import.
 - 🔥 Tabs base CSS files have been removed. The CSS files are no longer exported by
 the project. The CSS rules contained have moved into the Patternfly Elements
 implementation files `pf-tabs.css`, `pf-tab.css` and `pf-tab-panel.css` Downstream
-consumers will need to update their code to implement these base styles if needed.
+consumers that import `BaseTabs` will need to update their code to implement these 
+base styles if needed.
 - 🔥 Tabs overflow: `OverflowController` implementation has moved from the `BaseTabs` 
 to the implemented tabs class: `pf-tabs.ts`. Downstream consumers will need to update 
 their code to reimplement overflow features.  

@@ -106,11 +106,10 @@ export class TabsController implements ReactiveController {
     let error = false;
     if (this._tabs[index] === undefined) {
       error = true;
-      this.#logger.warn(`The index provided is out of bounds: 0 - ${this._tabs.length - 1}. Setting to first focusable tab.`);
-    }
-    if (this._tabs[index].disabled || this._tabs[index].hasAttribute('aria-disabled')) {
+      this.#logger.warn(`The index provided is out of bounds: ${index} in 0 - ${this._tabs.length - 1}. Setting first focusable tab active.`);
+    } else if (this._tabs[index].disabled || this._tabs[index].hasAttribute('aria-disabled')) {
       error = true;
-      this.#logger.warn(`The tab at index ${index} is disabled. Setting to first focusable tab.`);
+      this.#logger.warn(`The tab at index ${index} is disabled. Setting first focusable tab active.`);
     }
     if (error) {
       index = this._tabs.indexOf(firstFocusableTab);

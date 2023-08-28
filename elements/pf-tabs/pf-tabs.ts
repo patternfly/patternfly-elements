@@ -18,8 +18,6 @@ import styles from './pf-tabs.css';
 /**
  * **Tabs** allow users to navigate between views within the same page or context.
  *
- * @attr {number} active-key - DOM Property: `activeKey` {@default `0`}
- *
  * @csspart container - outer container
  * @csspart tabs-container - tabs container
  * @csspart tabs - tablist
@@ -114,9 +112,9 @@ export class PfTabs extends LitElement {
   @property({ reflect: false, attribute: 'label-scroll-right' }) labelScrollRight = 'Scroll left';
 
   /**
-   * The index of the active tab.
+   * The index of the active tab
    */
-  @property({ attribute: false })
+  @property({ attribute: 'active-key', reflect: true, type: Number })
   get activeIndex() {
     return this.#tabs.activeIndex;
   }

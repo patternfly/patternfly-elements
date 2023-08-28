@@ -140,24 +140,32 @@ describe('<pf-tabs>', function() {
   });
 
   describe('disabled tabs', function() {
-    beforeEach(async function() {
-      await setViewport({ width: 320, height: 640 });
+    it('should disable the tab button if disabled attr is present', async function() {
+      await createFixture<PfTabs>(TEMPLATE);
+      const disabledTab = (await a11ySnapshot()).children.find(x => x.disabled === true);
+      expect(disabledTab?.children.find(x => x.role === 'button')?.disabled).to.equal(true);
     });
 
-    it('should disable the tab button if disabled attr is present', async function() {
+    it('should not activate if clicked', async function() {
       const el = await createFixture<PfTabs>(TEMPLATE);
-      const disabledTab = el.querySelector('pf-tab:nth-of-type(2)')! as PfTab;
-      disabledTab.disabled = true;
+      const disabledTab = el.querySelector('pf-tab[disabled]')! as PfTab;
+      disabledTab.click();
       await nextFrame();
-      const tab = (await a11ySnapshot()).children.find(x => x.role === 'tab' && x.name === 'Containers');
-      expect(tab?.children.find(x => x.role === 'button')?.disabled).to.equal(true);
+      expect(disabledTab.hasAttribute('active')).to.be.false;
+    });
+
+    it('should not activate if index is set', async function() {
+      const el = await createFixture<PfTabs>(TEMPLATE);
+      const disabledTab = el.querySelector('pf-tab[disabled]')! as PfTab;
+      const index = 3;
+      el.activeIndex = index;
+      await nextFrame();
+      expect(disabledTab.hasAttribute('active')).to.be.false;
     });
 
     it('should have disabled css styles if disabled', async function() {
       const el = await createFixture<PfTabs>(TEMPLATE);
-      const disabledTab = el.querySelector('pf-tab:first-of-type')!;
-      disabledTab.setAttribute('disabled', 'disabled');
-      await nextFrame();
+      const disabledTab = el.querySelector('pf-tab[disabled]')!;
       const button = disabledTab!.shadowRoot!.firstElementChild!;
       const disabledStyles = getComputedStyle(button).backgroundColor;
       expect(disabledStyles).to.equal('rgb(245, 245, 245)');
@@ -165,9 +173,7 @@ describe('<pf-tabs>', function() {
 
     it('should have disabled css styles if aria-disabled attribute is true', async function() {
       const el = await createFixture<PfTabs>(TEMPLATE);
-      const disabledTab = el.querySelector('pf-tab:first-of-type')!;
-      disabledTab.setAttribute('aria-disabled', 'true');
-      await nextFrame();
+      const disabledTab = el.querySelector('pf-tab[aria-disabled="true"]')!;
       const button = disabledTab!.shadowRoot!.firstElementChild!;
       const disabledStyles = getComputedStyle(button).backgroundColor;
       expect(disabledStyles).to.equal('rgb(245, 245, 245)');

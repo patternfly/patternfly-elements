@@ -138,12 +138,12 @@ export class PfTabs extends LitElement {
     isPanel: (x?: Node): x is PfTabPanel => x instanceof PfTabPanel,
   });
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
     this.id ||= getRandomId(this.localName);
   }
 
-  willUpdate(): void {
+  override willUpdate(): void {
     this.#overflow.update();
   }
 

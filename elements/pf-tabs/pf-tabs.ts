@@ -71,25 +71,51 @@ export class PfTabs extends LitElement {
 
   protected static readonly scrollTimeoutDelay = 150;
 
+  /**
+   * Box styling on tabs. Defaults to null
+   */
   @cascades('pf-tab', 'pf-tab-panel')
   @property({ reflect: true }) box: 'light' | 'dark' | null = null;
 
+  /**
+   * Set to true to enable vertical tab styling.
+   */
   @cascades('pf-tab', 'pf-tab-panel')
   @property({ reflect: true, type: Boolean }) vertical = false;
 
+  /**
+   * Set to true to enable filled tab styling.
+   */
   @cascades('pf-tab')
   @property({ reflect: true, type: Boolean }) fill = false;
 
+  /**
+   * Border bottom tab styling on tabs. To remove the bottom border, set this prop to false.
+   */
   @cascades('pf-tab')
   @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'true';
 
+  /**
+   * Set's the tabs to be manually activated. This means that the tabs will not automatically select
+   * unless a user clicks on them or uses the keyboard space or enter key to select them.  Roving
+   * tabindex will still update allowing user to keyboard navigate through the tabs with arrow keys.
+   */
   @cascades('pf-tab')
   @property({ reflect: true, type: Boolean }) manual = false;
 
+  /**
+   * Aria Label for the left scroll button
+   */
   @property({ reflect: false, attribute: 'label-scroll-left' }) labelScrollLeft = 'Scroll left';
 
+  /**
+   * Aria Label for the right scroll button
+   */
   @property({ reflect: false, attribute: 'label-scroll-right' }) labelScrollRight = 'Scroll left';
 
+  /**
+   * The index of the active tab.
+   */
   @property({ attribute: false })
   get activeIndex() {
     return this.#tabs.activeIndex;

@@ -287,9 +287,11 @@ export class PfSelect extends LitElement {
   }
 
   #addCreateOption() {
-    this.#createOption = document.createElement('pf-select-option');
-    this.#updateCreateOptionValue();
-    this.appendChild(this.#createOption);
+    if (!this.#createOption || this.#createOption?.userCreatedOption) {
+      this.#createOption = document.createElement('pf-select-option');
+      this.#updateCreateOptionValue();
+      this.appendChild(this.#createOption);
+    }
   }
 
   #updateCreateOptionText() {
@@ -378,7 +380,7 @@ export class PfSelect extends LitElement {
   /**
    * handles listbox option being created and creates a new "create option"
    */
-  #onOptionCreated() {
+  #onOptionCreated(event: Event) {
     this.#addCreateOption();
     this.filter = '';
     this.#updateCreateOptionValue();

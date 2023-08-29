@@ -54,7 +54,7 @@ export class PfSelectOption extends LitElement {
   @queryAssignedNodes({ slot: '', flatten: true }) private _slottedText!: Node[];
 
   #createOptionText = '';
-  #createdOption = false;
+  #userCreatedOption = false;
 
   override connectedCallback() {
     super.connectedCallback();
@@ -69,11 +69,18 @@ export class PfSelectOption extends LitElement {
   }
 
   set createOptionText(str: string) {
-    if (!this.#createdOption) {
+    if (!this.#userCreatedOption) {
       this.#createOptionText = str || '';
       this.disabled = str === '';
       this.hidden = str === '';
     }
+  }
+
+  /**
+   * whether option is user created option
+   */
+  get userCreatedOption() {
+    return this.#userCreatedOption;
   }
 
   render() {
@@ -122,7 +129,7 @@ export class PfSelectOption extends LitElement {
    */
   #createOption() {
     this.#createOptionText = '';
-    this.#createdOption = true;
+    this.#userCreatedOption = true;
     this.dispatchEvent(new Event('optioncreated', { bubbles: true }));
   }
 

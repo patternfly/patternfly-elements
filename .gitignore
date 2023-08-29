@@ -61,6 +61,7 @@ tools/*/test/**/*.png
 !core/**/*.config.js
 !tools/**/*.config.js
 
+!elements/declaration.d.ts
 !elements/*/demo/*
 !core/*/demo/*
 !tools/*/demo/*

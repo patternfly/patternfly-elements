@@ -139,6 +139,21 @@ Below are option variants:
   </pf-select>
 {% endhtmlexample %}
 
+#### Checkbox, with badge
+
+{% htmlexample %}
+  <pf-select has-checkboxes selected-items-display="badge">
+    <pf-select-option value="Blue">Blue</pf-select-option>
+    <pf-select-option value="Green">Green</pf-select-option>
+    <pf-select-option value="Magenta">Magenta</pf-select-option>
+    <pf-select-option value="Orange">Orange</pf-select-option>
+    <pf-select-option value="Purple">Purple</pf-select-option>
+    <pf-select-option value="Pink">Pink</pf-select-option>
+    <pf-select-option value="Red">Red</pf-select-option>
+    <pf-select-option value="Yellow">Yellow</pf-select-option>
+  </pf-select>
+{% endhtmlexample %}
+
 ### Typeahead
 
 {% htmlexample %}
@@ -180,7 +195,7 @@ Below are option variants:
 {% htmlexample %}
 <label>
   Pick a color:
-  <pf-select typeahead multi-selectable>
+  <pf-select typeahead multi-selectable selected-items-display="chips">
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>

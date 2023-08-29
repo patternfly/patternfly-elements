@@ -11,6 +11,7 @@ import styles from './pf-select.css';
 import type { PfSelectOption } from './pf-select-option.js';
 import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
 
+export type PfSelectItemsDisplay = '' | 'badge' | 'chips';
 /**
  * A select list enables users to select one or more items from a list.
  *
@@ -58,7 +59,15 @@ export class PfSelect extends LitElement {
   /**
    * whether listbox is has checkboxes when `multi-select` is enabled
    */
-  @property({ attribute: 'has-checkboxes', type: Boolean }) hasCheckboxes = false;
+  @property({ reflect: true, attribute: 'has-checkboxes', type: Boolean }) hasCheckboxes = false;
+
+  /**
+   * how listbox will display multiple items in the toggle area:
+   * 'badge' for a badge with item count,
+   * 'chips' for a group of chips,
+   * '' for # itmes selected text (default)
+   */
+  @property({ attribute: 'selected-items-display', type: String }) selectedItemsDisplay: PfSelectItemsDisplay = '';
 
   /**
    * whether filtering (if enabled) will be case-sensitive
@@ -104,8 +113,8 @@ export class PfSelect extends LitElement {
   #valueTextArray: string[] = [];
 
   get #buttonLabel() {
-    return (this.multiSelectable || this.hasCheckboxes) && !this.hasBadge && !this.hasChips ?
-      `${this.#valueTextArray.length} ${this.itemsSelectedText}` : this.#valueText.length > 0 && !this.hasChips ?
+    return this.#isMulti && this.selectedItemsDisplay === '' ?
+      `${this.#valueTextArray.length} ${this.itemsSelectedText}` : this.#valueText.length > 0 ?
         this.#valueText : this.defaultText;
   }
 
@@ -121,7 +130,10 @@ export class PfSelect extends LitElement {
     return this.shadowRoot?.querySelector('#toggle-button');
   }
 
-  get #valueTextList() {
+  /**
+   * list of values as comma separated list
+   */
+  get selectedList() {
     return this.#valueTextArray.map(txt => txt.replace(',', '\\,')).join(', ');
   }
 
@@ -138,18 +150,22 @@ export class PfSelect extends LitElement {
     return this.#listbox?.filter || '';
   }
 
+  get #isMulti() {
+    return this.multiSelectable || this.hasCheckboxes;
+  }
+
   /**
    * whether select has badge for number of selected items
    */
   get hasBadge() {
-    return !this.typeahead && this.#selectedOptions.length > 0 && this.multiSelectable;
+    return this.#isMulti && this.selectedItemsDisplay === 'badge';
   }
 
   /**
    * whether select has removable chips for selected items
    */
   get hasChips() {
-    return this.typeahead && this.multiSelectable;
+    return this.#isMulti && this.selectedItemsDisplay === 'chips';
   }
 
   /**
@@ -234,7 +250,7 @@ export class PfSelect extends LitElement {
         ?case-sensitive=${this.caseSensitive}
         ?disable-filter="${this.disableFilter}"
         ?match-anywhere=${this.matchAnywhere}
-        ?multi-selectable=${this.multiSelectable || this.hasCheckboxes}
+        ?multi-selectable=${this.#isMulti}
         @input=${this.#onListboxInput}
         @change=${this.#onListboxChange}
         @keydown=${this.#onListboxKeydown}
@@ -371,7 +387,7 @@ export class PfSelect extends LitElement {
    * handles listbox select event
    */
   #onListboxSelect() {
-    if (!this.multiSelectable && !this.hasCheckboxes) {
+    if (!this.#isMulti) {
       this.open = false;
       (this.#input || this.#toggle)?.focus();
     }
@@ -380,7 +396,7 @@ export class PfSelect extends LitElement {
   /**
    * handles listbox option being created and creates a new "create option"
    */
-  #onOptionCreated(event: Event) {
+  #onOptionCreated() {
     this.#addCreateOption();
     this.filter = '';
     this.#updateCreateOptionValue();
@@ -398,7 +414,7 @@ export class PfSelect extends LitElement {
    */
   #onTypeaheadInput() {
     // update the filter
-    if (this.#listbox && this.#input?.value && !this.#valueTextArray.includes(this.#input?.value) && this.filter !== this.#input?.value) {
+    if (this.#listbox && this.filter !== this.#input?.value) {
       this.filter = this.#input?.value || '';
     }
 

@@ -49,7 +49,7 @@ describe('<pf-chip>', async function() {
 
     beforeEach(async function() {
       element = await createFixture<PfChip>(html`<pf-chip></pf-chip>`);
-      button = await element.shadowRoot?.querySelector('button');
+      button = await element.shadowRoot?.querySelector('button') as HTMLElement;
     });
 
     it('should focus programatically', async function() {
@@ -83,7 +83,7 @@ describe('<pf-chip>', async function() {
 
     beforeEach(async function() {
       element = await createFixture<PfChip>(html`<pf-chip overflow-chip>Overflow</pf-chip>`);
-      button = await element.shadowRoot?.querySelector('button');
+      button = await element.shadowRoot?.querySelector('button') as HTMLElement;
     });
 
     it('should be accessible', async function() {
@@ -137,7 +137,7 @@ describe('<pf-chip>', async function() {
 
     beforeEach(async function() {
       element = await createFixture<PfChip>(html`<pf-chip overflow-hidden></pf-chip>`);
-      button = await element.shadowRoot?.querySelector('button');
+      button = await element.shadowRoot?.querySelector('button') as HTMLElement;
     });
 
     it('should be accessible', async function() {

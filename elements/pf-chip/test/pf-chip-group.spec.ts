@@ -30,7 +30,6 @@ function isVisible(chip: HTMLElement) {
 
 describe('<pf-chip-group>', async function() {
   let element: PfChipGroup;
-  let chips: HTMLElement[];
   let chip1: HTMLElement;
   let chip2: HTMLElement;
   let chip3: HTMLElement;
@@ -60,11 +59,11 @@ describe('<pf-chip-group>', async function() {
   describe('with 3 chips (default)', function() {
     beforeEach(async function() {
       element = await createFixture<PfChipGroup>(html`<pf-chip-group>${chipHTML}</pf-chip-group>`);
-      chip1 = await document.getElementById('chip1');
-      chip2 = await document.getElementById('chip2');
-      chip3 = await document.getElementById('chip3');
-      chip4 = await document.getElementById('chip4');
-      overflow = await element?.shadowRoot?.querySelector('pf-chip[overflow-chip]');
+      chip1 = await document.getElementById('chip1') as HTMLElement;
+      chip2 = await document.getElementById('chip2') as HTMLElement;
+      chip3 = await document.getElementById('chip3') as HTMLElement;
+      chip4 = await document.getElementById('chip4') as HTMLElement;
+      overflow = await element?.shadowRoot?.querySelector('pf-chip[overflow-chip]') as HTMLElement;
     });
 
     it('chip 1 is visible', function() {
@@ -81,9 +80,12 @@ describe('<pf-chip-group>', async function() {
     });
 
     describe('should be accessible', function() {
-      /* describe('should work with keyboard', function() {
-        it()
-      });*/
+      describe('should work with keyboard', function() {
+        it('should focus when tab is pressed', async function() {
+          await tab();
+          await element.updateComplete;
+        });
+      });
       it('is accessible', async function() {
         await expect(element).to.be.accessible();
       });
@@ -104,10 +106,10 @@ describe('<pf-chip-group>', async function() {
   describe('setting `num-chips` to 2', function() {
     beforeEach(async function() {
       element = await createFixture<PfChipGroup>(html`<pf-chip-group num-chips="2">${chipHTML}</pf-chip-group>`);
-      chip1 = await document.getElementById('chip1');
-      chip2 = await document.getElementById('chip2');
-      chip3 = await document.getElementById('chip3');
-      chip4 = await document.getElementById('chip4');
+      chip1 = await document.getElementById('chip1') as HTMLElement;
+      chip2 = await document.getElementById('chip2') as HTMLElement;
+      chip3 = await document.getElementById('chip3') as HTMLElement;
+      chip4 = await document.getElementById('chip4') as HTMLElement;
     });
     it('chip 1 is visible', function() {
       expect(isVisible(chip1)).to.be.true;
@@ -126,10 +128,10 @@ describe('<pf-chip-group>', async function() {
   describe('setting `num-chips` to 4', function() {
     beforeEach(async function() {
       element = await createFixture<PfChipGroup>(html`<pf-chip-group num-chips="4">${chipHTML}</pf-chip-group>`);
-      chip1 = await document.getElementById('chip1');
-      chip2 = await document.getElementById('chip2');
-      chip3 = await document.getElementById('chip3');
-      chip4 = await document.getElementById('chip4');
+      chip1 = await document.getElementById('chip1') as HTMLElement;
+      chip2 = await document.getElementById('chip2') as HTMLElement;
+      chip3 = await document.getElementById('chip3') as HTMLElement;
+      chip4 = await document.getElementById('chip4') as HTMLElement;
     });
     it('chip 1 is visible', function() {
       expect(isVisible(chip1)).to.be.true;

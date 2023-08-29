@@ -77,7 +77,7 @@ export class PfChipGroup extends LitElement {
   render() {
     let collapsedText = `${this.collapsedText}`;
     if (this.collapsedText.match(/\$\{remaining\}/)) {
-      collapsedText = this.collapsedText.split('${remaining}').join(` ${this.remaining}`);
+      collapsedText = this.collapsedText.split('${remaining}').join(`${this.remaining}`);
     }
     return html`  
       ${this.label === '' ? html`
@@ -100,8 +100,8 @@ export class PfChipGroup extends LitElement {
         </pf-chip>
       `}
       ${!this.closeable ? '' : html`
-        <button id="close-button" @click=${this.#onCloseClick} aria-describedby="category">
-          <svg aria-label="${this.closeLabel}" fill="currentColor" viewBox="0 0 496 496">
+        <button id="close-button" @click=${this.#onCloseClick} aria-describedby="category" aria-label="${this.closeLabel}">
+          <svg fill="currentColor" viewBox="0 0 496 496">
             <path d="m248,0C111,0,0,111,0,248s111,248,248,248,248-111,248-248S385,0,248,0Zm121.6,313.1c4.7,4.7,4.7,12.3,0,17l-39.6,39.5c-4.7,4.7-12.3,4.7-17,0l-65-65.6-65.1,65.6c-4.7,4.7-12.3,4.7-17,0l-39.5-39.6c-4.7-4.7-4.7-12.3,0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3,0-17l39.6-39.6c4.7-4.7,12.3-4.7,17,0l65,65.7,65.1-65.6c4.7-4.7,12.3-4.7,17,0l39.6,39.6c4.7,4.7,4.7,12.3,0,17l-65.7,65,65.6,65.1Z"/>
           </svg>
         </button>

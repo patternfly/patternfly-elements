@@ -27,12 +27,6 @@ async function arrowRight() {
   await element.updateComplete;
 }
 
-async function enter() {
-  await element.updateComplete;
-  await sendKeys({ press: 'Enter' });
-  await element.updateComplete;
-}
-
 async function click(element: HTMLElement) {
   const { x, y, width, height } = element.getBoundingClientRect();
   const position = [x + width / 2, y + height / 2].map(Math.round) as [number, number];

@@ -351,10 +351,11 @@ export class PfSelect extends LitElement {
    * @param txt chip text to be removed from values
    */
   #onChipClick(txt: string) {
-    const [opt] = this.#selectedOptions.filter(option => option.optionText === txt);
-    // remove chip value from select value
-    if (Array.isArray(this.selected)) {
-      this.selected = this.selected.filter(option => option !== opt);
+    const [opt] = this.#selectedOptions.filter(option => option.optionText === txt.trim());
+    if (opt) {
+      // deselect chip
+      opt.selected = false;
+      this.requestUpdate();
       this.#input?.focus();
     }
   }

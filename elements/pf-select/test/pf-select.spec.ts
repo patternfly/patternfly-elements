@@ -5,7 +5,6 @@ import { PfSelectOption } from '../pf-select-option.js';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 
 const OPTIONS = html`
-  <pf-select-option disabled selected>Select a color</pf-select-option>
   <pf-select-option value="Blue">Blue</pf-select-option>
   <pf-select-option value="Green">Green</pf-select-option>
   <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -24,9 +23,18 @@ let fourth: HTMLElement;
 let fifth: HTMLElement;
 let sixth: HTMLElement;
 
-async function p() {
-  await sendKeys({ press: 'p' });
-  await element.updateComplete;
+async function shiftHold() {
+  await sendKeys({ down: 'Shift' });
+}
+
+async function shiftRelease() {
+  await sendKeys({ up: 'Shift' });
+}
+async function ctrlA() {
+  await sendKeys({ down: 'Control' });
+  await sendKeys({ down: 'a' });
+  await sendKeys({ up: 'a' });
+  await sendKeys({ up: 'Control' });
 }
 
 async function tab() {
@@ -66,9 +74,13 @@ describe('<pf-select>', function() {
         .to.be.an.instanceOf(PfSelect);
     });
 
-    describe('select with `always-open`', function() {
+    describe('single select `always-open`', function() {
       beforeEach(async function() {
-        element = await createFixture<PfSelect>(html`<pf-select always-open>${OPTIONS}</pf-select>`);
+        element = await createFixture<PfSelect>(html`
+          <pf-select always-open>
+            <pf-select-option disabled selected>Select a color</pf-select-option>
+            ${OPTIONS}
+          </pf-select>`);
         optionsList = [...element.querySelectorAll('pf-select-option:not([disabled])')];
         [first, second, third, fourth, fifth, sixth] = optionsList as HTMLElement[];
         await element.updateComplete;
@@ -130,6 +142,68 @@ describe('<pf-select>', function() {
           const visible = optionsList.filter(opt => isVisible(opt as HTMLElement));
           expect(visible.length).to.be.equal(optionsList.length);
         });
+      });
+
+      describe('single select', function() {
+        it('updates selected option on focus', async function() {
+          third.focus();
+          await element.updateComplete;
+          expect(element.selected).to.equal(third);
+        });
+        it('updates selected option on click', async function() {
+          await click(fifth);
+          expect(element.selected).to.equal(fifth);
+        });
+      });
+    });
+
+    describe('multiple select `always-open`', function() {
+      beforeEach(async function() {
+        element = await createFixture<PfSelect>(html`<pf-select multi-selectable always-open>${OPTIONS}</pf-select>`);
+        optionsList = [...element.querySelectorAll('pf-select-option:not([disabled])')];
+        [first, second, third, fourth, fifth, sixth] = optionsList as HTMLElement[];
+        await click(first);
+        await click(fifth);
+        await element.updateComplete;
+      });
+      it('adds options on click', async function() {
+        await click(fourth);
+        await click(sixth);
+        await element.updateComplete;
+        const selected = element.selected as HTMLElement[];
+        const correct = selected.includes(fourth) && selected.includes(sixth);
+        expect(correct).to.be.true;
+      });
+      it('removes toggled option on click', async function() {
+        await click(fifth);
+        const selected = element.selected as HTMLElement[];
+        const correct = !selected.includes(fifth);
+        await element.updateComplete;
+        expect(correct).to.be.true;
+      });
+      it('selects multiple options', async function() {
+        await click(second);
+        await shiftHold();
+        await click(sixth);
+        await shiftRelease();
+        await element.updateComplete;
+        const selected = element.selected as HTMLElement[];
+        expect(selected.length).to.equal(6);
+      });
+      it('deselects multiple options', async function() {
+        await click(first);
+        await shiftHold();
+        await click(sixth);
+        await shiftRelease();
+        await element.updateComplete;
+        const selected = element.selected as HTMLElement[];
+        expect(selected.length).to.equal(0);
+      });
+      it('selects all options', async function() {
+        await ctrlA();
+        await element.updateComplete;
+        const selected = element.selected as HTMLElement[];
+        expect(selected.length).to.equal(8);
       });
     });
   });

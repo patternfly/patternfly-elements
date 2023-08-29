@@ -1,6 +1,6 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
+import { PfChipGroup } from '../pf-chip-group.js';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 
 

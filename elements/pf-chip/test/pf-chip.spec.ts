@@ -45,11 +45,12 @@ describe('<pf-chip>', async function() {
   });
 
   describe('default behavior', function() {
-    let element: PfChip; let parent: HTMLElement; let button: HTMLButtonElement;
+    let element: PfChip;
+    let button: HTMLButtonElement;
 
     beforeEach(async function() {
       element = await createFixture<PfChip>(html`<pf-chip></pf-chip>`);
-      button = await element.shadowRoot?.querySelector('button') as HTMLElement;
+      button = await element.shadowRoot?.querySelector('button') as HTMLButtonElement;
     });
 
     it('should focus programatically', async function() {
@@ -79,11 +80,12 @@ describe('<pf-chip>', async function() {
   });
 
   describe('overflow-chip', function() {
-    let element: PfChip; let parent: HTMLElement; let button: HTMLButtonElement;
+    let element: PfChip;
+    let button: HTMLButtonElement;
 
     beforeEach(async function() {
       element = await createFixture<PfChip>(html`<pf-chip overflow-chip>Overflow</pf-chip>`);
-      button = await element.shadowRoot?.querySelector('button') as HTMLElement;
+      button = await element.shadowRoot?.querySelector('button') as HTMLButtonElement;
     });
 
     it('should be accessible', async function() {
@@ -117,11 +119,12 @@ describe('<pf-chip>', async function() {
   });
 
   describe('read-only', async function() {
-    let element: PfChip; let parent: HTMLElement; let button: HTMLButtonElement;
+    let element: PfChip;
+    let button: HTMLButtonElement;
 
     beforeEach(async function() {
       element = await createFixture<PfChip>(html`<pf-chip read-only></pf-chip>`);
-      button = await element.shadowRoot?.querySelector('button');
+      button = await element.shadowRoot?.querySelector('button') as HTMLButtonElement;
     });
 
     it('should be accessible', async function() {
@@ -133,11 +136,12 @@ describe('<pf-chip>', async function() {
   });
 
   describe('overflow-hidden', async function() {
-    let element: PfChip; let parent: HTMLElement; let button: HTMLButtonElement;
+    let element: PfChip;
+    let button: HTMLButtonElement;
 
     beforeEach(async function() {
       element = await createFixture<PfChip>(html`<pf-chip overflow-hidden></pf-chip>`);
-      button = await element.shadowRoot?.querySelector('button') as HTMLElement;
+      button = await element.shadowRoot?.querySelector('button') as HTMLButtonElement;
     });
 
     it('should be accessible', async function() {

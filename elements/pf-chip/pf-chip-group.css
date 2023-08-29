@@ -42,3 +42,7 @@ svg {
   opacity: 0;
   overflow: hidden;
 }
+
+::slotted([overflow-hidden]) {
+  display: none !important;
+}

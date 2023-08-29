@@ -2,6 +2,7 @@ import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfSelect } from '../pf-select.js';
 import { PfSelectOption } from '../pf-select-option.js';
+import { PfChip } from '../../pf-chip/pf-chip.js';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 
 const OPTIONS = html`
@@ -15,6 +16,7 @@ const OPTIONS = html`
   <pf-select-option value="Yellow">Yellow</pf-select-option>`;
 
 let element: PfSelect;
+let typeahead: HTMLInputElement;
 let optionsList: Element[];
 let first: HTMLElement;
 let second: HTMLElement;
@@ -163,6 +165,22 @@ describe('<pf-select>', function() {
           await click(fifth);
           expect(element.selected).to.equal(fifth);
         });
+        it('opens when toggle is clicked', async function() {
+          element.alwaysOpen = false;
+          element.open = false;
+          await element.updateComplete;
+          const button = element?.shadowRoot?.querySelector('#toggle-button') as HTMLElement;
+          await click(button);
+          expect(element.open).to.be.true;
+        });
+        it('closes when toggle is clicked', async function() {
+          element.alwaysOpen = false;
+          element.open = true;
+          await element.updateComplete;
+          const button = element?.shadowRoot?.querySelector('#toggle-button') as HTMLElement;
+          await click(button);
+          expect(element.open).to.be.false;
+        });
       });
     });
 
@@ -258,6 +276,22 @@ describe('<pf-select>', function() {
           const chips = [...(element?.shadowRoot?.querySelectorAll('pf-chip') || [])] as HTMLElement[];
           expect(chips.length).to.equal(selectedList().length);
         });
+
+        it('clicking a chip deselects its option', async function() {
+          const chips = [...(element?.shadowRoot?.querySelectorAll('pf-chip') || [])] as PfChip[];
+          const [firstChip] = chips;
+          const count = chips.length;
+          await click(firstChip);
+          await expect(count - 1).to.equal(selectedList().length);
+        });
+
+        it('clicking an option adds its chip', async function() {
+          await click(third);
+          element.requestUpdate();
+          const chips = [...(element?.shadowRoot?.querySelectorAll('pf-chip') || [])] as PfChip[];
+          const [firstChip] = chips.filter(chip=>chip?.textContent?.trim() === first?.textContent?.trim());
+          await expect(firstChip).to.not.be.null;
+        });
       });
 
       describe('setting `has-checkboxes` to true', function() {
@@ -269,6 +303,51 @@ describe('<pf-select>', function() {
         it('checkboxes are visible', async function() {
           const checkbox = first?.shadowRoot?.querySelector('input[type="checkbox"') as HTMLElement;
           expect(isVisible(checkbox)).to.equal(true);
+        });
+      });
+    });
+
+    describe('typeahead', function() {
+      beforeEach(async function() {
+        element = await createFixture<PfSelect>(html`
+          <pf-select typeahead>${OPTIONS}</pf-select>`);
+        setOptions();
+        typeahead = element?.shadowRoot?.querySelector('#toggle-input') as HTMLInputElement;
+        await element.updateComplete;
+      });
+
+      it('has a text input for typeahead', function() {
+        expect(typeahead).to.not.be.null;
+      });
+
+      describe('changing input value to `p`', function() {
+        beforeEach(async function() {
+          typeahead.value = '';
+          await click(typeahead);
+          await sendKeys({ press: 'p' });
+          await element.updateComplete;
+        });
+
+        it('`Pink` is visible', function() {
+          expect(isVisible(sixth)).to.equal(true);
+        });
+
+        it('`Blue` is hidden', function() {
+          expect(isVisible(first)).to.equal(false);
+        });
+      });
+
+      describe('changing input value to ``', function() {
+        beforeEach(async function() {
+          typeahead.value = 'p';
+          await click(typeahead);
+          await sendKeys({ press: 'Backspace' });
+          await element.updateComplete;
+        });
+
+        it('all options are visible', function() {
+          const visible = optionsList.filter(opt => isVisible(opt as HTMLElement));
+          expect(visible.length).to.be.equal(optionsList.length);
         });
       });
     });

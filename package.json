@@ -66,10 +66,18 @@
     "analyze": {
       "command": "npm run -ws --if-present analyze",
       "files": [
+        "elements/package.json",
+        "elements/tsconfig.json",
+        "elements/tsconfig.tsbuildinfo",
         "elements/*/demo/*.html",
         "elements/**/*.ts",
         "elements/**/*.css",
+        "core/*/package.json",
+        "core/*/tsconfig.json",
+        "core/**/tsconfig.tsbuildinfo",
         "core/**/*.ts",
+        "core/*/package.json",
+        "core/*/tsconfig.json",
         "tools/**/*.ts"
       ],
       "output": [

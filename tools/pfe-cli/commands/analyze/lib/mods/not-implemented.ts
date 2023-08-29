@@ -1,12 +1,16 @@
-import type { Package } from 'custom-elements-manifest';
+import type { Analysis } from '../modify.js';
 
 /**
  * Guard against weird lit-labs/analyzer artifacts.
  * Probably remove when analyzer goes 1.0
  */
-export function elideNotImplementedModules(manifest: Package): Package {
+export function elideNotImplementedModules(analysis: Analysis): Analysis {
   return {
-    ...manifest,
-    modules: manifest.modules.filter(x => x.path !== 'not/implemented'),
+    ...analysis,
+    manifest: {
+      ...analysis.manifest,
+      modules: analysis.manifest.modules.filter(x =>
+        x.path !== 'not/implemented'),
+    }
   };
 }

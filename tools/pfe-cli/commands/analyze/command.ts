@@ -1,4 +1,5 @@
 import type * as Yargs from 'yargs';
+
 import { writeManifest } from './lib/write-manifest.js';
 
 export interface Opts {

@@ -1,9 +1,8 @@
-import type { Analyzer } from '@lit-labs/analyzer';
-import type { Package } from 'custom-elements-manifest';
+import type { Analysis } from '../modify.js';
 
 async function deresolve(
   path: string,
-  packageJson: ReturnType<Analyzer['getPackage']>['packageJson'],
+  packageJson: Analysis['packageJson'],
 ) {
   // TODO: somehow deresolve export paths to disk paths,
   // until a general solution is found, fall back on convention
@@ -14,13 +13,17 @@ async function deresolve(
   }
 }
 
-export async function deresolveDiskPathsToExportMapPaths(manifest: Package, analyzer: Analyzer): Promise<Package> {
-  const { packageJson } = analyzer.getPackage();
-  return {
-    ...manifest,
-    modules: await Promise.all(manifest.modules.map(async module => ({
+export async function deresolveDiskPathsToExportMapPaths(
+  analysis: Analysis
+): Promise<Analysis> {
+  const modules =
+    await Promise.all(analysis.manifest.modules.map(async module => ({
       ...module,
-      path: await deresolve(module.path, packageJson),
-    })))
+      path: await deresolve(module.path, analysis.packageJson),
+    })));
+
+  return {
+    ...analysis,
+    manifest: { ...analysis.manifest, modules }
   };
 }

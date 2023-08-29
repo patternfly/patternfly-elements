@@ -11,15 +11,16 @@ import { getPfeConfig } from '@patternfly/pfe-tools/config.js';
 
 import { exists } from '#lib/fs.js';
 import { isCustomElementDeclaration } from '../tools/predicates.js';
+import type { Analysis } from '../modify.js';
 
-export async function addDemosToManifest(manifest: Package) {
+export async function addDemosToManifest(analysis: Analysis) {
   const { aliases, rootDir, demoURLPrefix, site, sourceControlURLPrefix } = getPfeConfig();
   const subpath = site.componentSubpath ?? 'components';
 
-  const allTagNames = manifest.modules.flatMap(x => !x.declarations ? []
+  const allTagNames = analysis.manifest.modules.flatMap(x => !x.declarations ? []
     : x.declarations.flatMap(y => (y as { tagName: string }).tagName)).filter(Boolean);
 
-  for (const moduleDoc of manifest.modules) {
+  for (const moduleDoc of analysis.manifest.modules) {
     const primaryElementName = moduleDoc.path.split(sep).find(x => x !== 'elements') ?? '';
     let demoPath = join(rootDir, 'elements', primaryElementName, 'demo');
 
@@ -62,5 +63,5 @@ export async function addDemosToManifest(manifest: Package) {
     }
   }
 
-  return manifest;
+  return analysis;
 }

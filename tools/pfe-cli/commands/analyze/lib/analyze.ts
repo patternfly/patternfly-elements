@@ -8,9 +8,11 @@ import { createPackageAnalyzer } from '@lit-labs/analyzer/package-analyzer.js';
 import { generateManifest } from '@lit-labs/gen-manifest';
 
 import { formatDiagnostics } from '#lib/ts.js';
+import { modify, type Analysis } from './modify.js';
 
 async function getPackage(packagePath: string | URL) {
   const path = packagePath instanceof URL ? fileURLToPath(packagePath) : join(process.cwd(), packagePath);
+
   const analyzer = createPackageAnalyzer(path as AbsolutePath, {
     exclude: [
       '**/*.spec.ts',
@@ -19,9 +21,9 @@ async function getPackage(packagePath: string | URL) {
       '**/*.js',
     ],
   });
+
   try {
-    const p = await analyzer.getPackage();
-    return p;
+    return analyzer.getPackage();
   } catch (e: any) {
     console.group(`Error analyzing package ${packagePath}`);
     if (Array.isArray(e.diagnostics)) {
@@ -31,13 +33,15 @@ async function getPackage(packagePath: string | URL) {
     } else {
       console.error(e);
     }
-    console.groupEnd();
     process.exit(1);
   }
 }
 
-export async function genManifest(argv: Opts): ReturnType<typeof generateManifest> {
+export async function analyze(argv: Opts): Promise<Analysis> {
   const { packagePath } = argv;
   const pkg = await getPackage(packagePath);
-  return generateManifest(pkg);
+  const { rootDir, packageJson } = pkg;
+  const [[filename, fileTreeOrString]] = Object.entries(await generateManifest(pkg));
+  const manifest = (typeof fileTreeOrString === 'string') ? JSON.parse(fileTreeOrString) : fileTreeOrString;
+  return modify({ manifest, filename, packageJson, rootDir });
 }

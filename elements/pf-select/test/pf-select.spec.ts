@@ -47,6 +47,16 @@ async function arrowRight() {
   await element.updateComplete;
 }
 
+function selectedList() {
+  const selectedEls = element.selected as HTMLElement[];
+  return selectedEls;
+}
+
+function setOptions() {
+  optionsList = [...element.querySelectorAll('pf-select-option:not([disabled])')];
+  [first, second, third, fourth, fifth, sixth] = optionsList as HTMLElement[];
+}
+
 function isVisible(el: HTMLElement) {
   const comp = window.getComputedStyle(el);
   const display = comp.getPropertyValue('display');
@@ -81,8 +91,7 @@ describe('<pf-select>', function() {
             <pf-select-option disabled selected>Select a color</pf-select-option>
             ${OPTIONS}
           </pf-select>`);
-        optionsList = [...element.querySelectorAll('pf-select-option:not([disabled])')];
-        [first, second, third, fourth, fifth, sixth] = optionsList as HTMLElement[];
+        setOptions();
         await element.updateComplete;
       });
 
@@ -160,8 +169,7 @@ describe('<pf-select>', function() {
     describe('multiple select `always-open`', function() {
       beforeEach(async function() {
         element = await createFixture<PfSelect>(html`<pf-select multi-selectable always-open>${OPTIONS}</pf-select>`);
-        optionsList = [...element.querySelectorAll('pf-select-option:not([disabled])')];
-        [first, second, third, fourth, fifth, sixth] = optionsList as HTMLElement[];
+        setOptions();
         await click(first);
         await click(fifth);
         await element.updateComplete;
@@ -170,16 +178,14 @@ describe('<pf-select>', function() {
         await click(fourth);
         await click(sixth);
         await element.updateComplete;
-        const selected = element.selected as HTMLElement[];
+        const selected = selectedList();
         const correct = selected.includes(fourth) && selected.includes(sixth);
         expect(correct).to.be.true;
       });
       it('removes toggled option on click', async function() {
         await click(fifth);
-        const selected = element.selected as HTMLElement[];
-        const correct = !selected.includes(fifth);
         await element.updateComplete;
-        expect(correct).to.be.true;
+        expect(selectedList().includes(fifth)).to.be.false;
       });
       it('selects multiple options', async function() {
         await click(second);
@@ -187,8 +193,7 @@ describe('<pf-select>', function() {
         await click(sixth);
         await shiftRelease();
         await element.updateComplete;
-        const selected = element.selected as HTMLElement[];
-        expect(selected.length).to.equal(6);
+        expect(selectedList().length).to.equal(6);
       });
       it('deselects multiple options', async function() {
         await click(first);
@@ -202,8 +207,69 @@ describe('<pf-select>', function() {
       it('selects all options', async function() {
         await ctrlA();
         await element.updateComplete;
-        const selected = element.selected as HTMLElement[];
-        expect(selected.length).to.equal(8);
+        expect(selectedList().length).to.equal(8);
+      });
+    });
+
+    describe('multiple select', function() {
+      beforeEach(async function() {
+        element = await createFixture<PfSelect>(html`
+          <pf-select multi-selectable selected-items-display="badge">
+            <pf-select-option value="Amethyst" selected>Amethyst</pf-select-option>
+            <pf-select-option value="Aqua" selected>Aqua</pf-select-option>
+            ${OPTIONS}
+          </pf-select>`);
+        setOptions();
+        await element.updateComplete;
+      });
+
+      describe('setting `selected-items-display` to `badge`', function() {
+        beforeEach(async function() {
+          element.selectedItemsDisplay = '';
+          await element.updateComplete;
+        });
+
+        it('toggle text has correct number', function() {
+          const text = element.shadowRoot?.querySelector('#toggle-text') as HTMLElement;
+          expect(text.textContent?.trim()).to.equal(`${selectedList().length} items selected`);
+        });
+      });
+
+      describe('setting `selected-items-display` to `badge`', function() {
+        beforeEach(async function() {
+          element.selectedItemsDisplay = 'badge';
+          await element.updateComplete;
+        });
+
+        it('badge has correct number', function() {
+          const badge = element?.shadowRoot?.querySelector('pf-badge') as HTMLElement;
+          const text = badge?.textContent?.trim() || '';
+          expect(parseInt(text)).to.equal(selectedList().length);
+        });
+      });
+
+      describe('setting `selected-items-display` to `chips`', function() {
+        beforeEach(async function() {
+          element.selectedItemsDisplay = 'chips';
+          await element.updateComplete;
+        });
+
+        it('chips have correct number', function() {
+          const chips = [...(element?.shadowRoot?.querySelectorAll('pf-chip') || [])] as HTMLElement[];
+          expect(chips.length).to.equal(selectedList().length);
+        });
+      });
+
+      describe('setting `has-checkboxes` to true', function() {
+        beforeEach(async function() {
+          element.hasCheckboxes = true;
+          await element.updateComplete;
+        });
+
+        it('checkboxes are visible', async function() {
+          const checkbox = first?.shadowRoot?.querySelector('input[type="checkbox"') as HTMLElement;
+          expect(isVisible(checkbox)).to.equal(true);
+        });
       });
     });
   });

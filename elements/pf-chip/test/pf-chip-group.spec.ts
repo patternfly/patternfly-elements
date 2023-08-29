@@ -3,17 +3,36 @@ import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfChipGroup } from '../pf-chip-group.js';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 
+let element: PfChipGroup;
+let chip1: HTMLElement;
+let chip2: HTMLElement;
+let chip3: HTMLElement;
+let chip4: HTMLElement;
+let overflow: HTMLElement;
+const chipHTML = html`
+  <pf-chip id="chip1">Chip 1</pf-chip>
+  <pf-chip id="chip2">Chip 2</pf-chip>
+  <pf-chip id="chip3">Chip 3</pf-chip>
+  <pf-chip id="chip4">Chip 4</pf-chip>`;
 
 async function tab() {
   await sendKeys({ press: 'Tab' });
+  await element.updateComplete;
 }
 
-async function arrowRight() {
+async function arrowRight(startingChip: HTMLElement) {
+  if (document.activeElement !== startingChip) {
+    startingChip.focus();
+    await element.updateComplete;
+  }
   await sendKeys({ down: 'ArrowRight' });
+  await element.updateComplete;
 }
 
 async function enter() {
+  await element.updateComplete;
   await sendKeys({ press: 'Enter' });
+  await element.updateComplete;
 }
 
 async function click(element: HTMLElement) {
@@ -29,18 +48,6 @@ function isVisible(chip: HTMLElement) {
 }
 
 describe('<pf-chip-group>', async function() {
-  let element: PfChipGroup;
-  let chip1: HTMLElement;
-  let chip2: HTMLElement;
-  let chip3: HTMLElement;
-  let chip4: HTMLElement;
-  let overflow: HTMLElement;
-  const chipHTML = html`
-    <pf-chip id="chip1">Chip 1</pf-chip>
-    <pf-chip id="chip2">Chip 2</pf-chip>
-    <pf-chip id="chip3">Chip 3</pf-chip>
-    <pf-chip id="chip4">Chip 4</pf-chip>`;
-
   describe('simply instantiating', function() {
     it('imperatively instantiates', function() {
       expect(document.createElement('pf-chip-group')).to.be.an.instanceof(PfChipGroup);
@@ -81,9 +88,17 @@ describe('<pf-chip-group>', async function() {
 
     describe('should be accessible', function() {
       describe('should work with keyboard', function() {
-        it('should focus when tab is pressed', async function() {
+        it('should focus when `Tab` is pressed', async function() {
           await tab();
-          await element.updateComplete;
+          expect(document.activeElement).to.equal(chip1);
+        });
+        it('should move to chip2 when `ArrowRight` is pressed', async function() {
+          await arrowRight(chip1);
+          expect(document.activeElement).to.equal(chip2);
+        });
+        it('should move to chip3 when `ArrowRight` is pressed', async function() {
+          await arrowRight(chip2);
+          expect(document.activeElement).to.equal(chip3);
         });
       });
       it('is accessible', async function() {

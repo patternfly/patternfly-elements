@@ -40,10 +40,6 @@ export class TabsController implements ReactiveController {
   static #tabClasses = new WeakSet();
   static #panelClasses = new WeakSet();
 
-  static isTabs(node?: Node) {
-    return !!node && TabsController.#tabsClasses.has(node.constructor);
-  }
-
   static isTab(node?: Node): node is Tab {
     return !!node && TabsController.#tabClasses.has(node.constructor);
   }
@@ -54,14 +50,24 @@ export class TabsController implements ReactiveController {
 
   static {
     window.addEventListener('expand', event => {
+      if (!(event instanceof TabExpandEvent)) {
+        return;
+      }
       for (const instance of this.#instances) {
-        instance.#onTabExpand(event as TabExpandEvent);
+        if (instance.#tabs.has(event.tab)) {
+          instance.#onTabExpand(event.tab);
+        }
       }
     });
 
     window.addEventListener('disabled', event => {
+      if (!(event instanceof TabDisabledEvent)) {
+        return;
+      }
       for (const instance of this.#instances) {
-        instance.#onTabDisabled(event as TabDisabledEvent);
+        if (instance.#tabs.has(event.tab)) {
+          instance.#onTabDisabled();
+        }
       }
     });
   }
@@ -195,17 +201,13 @@ export class TabsController implements ReactiveController {
     this.#host.requestUpdate();
   }
 
-  #onTabExpand(event: TabExpandEvent) {
-    if (event instanceof TabExpandEvent && this.#tabs.has(event.tab)) {
-      this.#tabindex.updateActiveItem(event.tab);
-      this.#deactivateExcept(this._tabs.indexOf(event.tab));
-    }
+  #onTabExpand(tab: Tab) {
+    this.#tabindex.updateActiveItem(tab);
+    this.#deactivateExcept(this._tabs.indexOf(tab));
   }
 
-  async #onTabDisabled(event: TabDisabledEvent) {
-    if (event instanceof TabDisabledEvent && this.#tabs.has(event.tab)) {
-      await this.#rebuild();
-    }
+  async #onTabDisabled() {
+    await this.#rebuild();
   }
 
   async #registerSlottedTabs(): Promise<null> {

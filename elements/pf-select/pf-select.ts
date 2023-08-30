@@ -29,19 +29,14 @@ export class PfSelect extends LitElement {
   static readonly styles = [styles];
 
   /**
-   * whether select is disabled
+   * whether listbox is always open
    */
-  @property({ reflect: true, attribute: 'disabled', type: Boolean }) disabled = false;
+  @property({ attribute: 'always-open', type: Boolean }) alwaysOpen = false;
 
   /**
-   * listbox button text when listbox selected option has no text
+   * whether filtering (if enabled) will be case-sensitive
    */
-  @property({ attribute: 'default-text', type: String }) defaultText = 'Options';
-
-  /**
-   * multi-selectable listbox button text
-   */
-  @property({ attribute: 'items-selected-text', type: String }) itemsSelectedText = 'items selected';
+  @property({ attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
 
   /**
    * text for a special option that allows user to create an option from typeahead input text;
@@ -55,9 +50,19 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'current-selections-label', type: String }) currentSelectionsLabel = 'Current selections';
 
   /**
-   * whether listbox is always open
+   * listbox button text when single-select listbox has no selected option text
    */
-  @property({ attribute: 'always-open', type: Boolean }) alwaysOpen = false;
+  @property({ attribute: 'default-text', type: String }) defaultText = 'Options';
+
+  /**
+   * whether select is disabled
+   */
+  @property({ reflect: true, attribute: 'disabled', type: Boolean }) disabled = false;
+
+  /**
+   * whether option filtering is disabled
+   */
+  @property({ reflect: true, attribute: 'disable-filter', type: Boolean }) disableFilter = false;
 
   /**
    * enable to flip the listbox when it reaches the boundary
@@ -70,14 +75,9 @@ export class PfSelect extends LitElement {
   @property({ reflect: true, attribute: 'has-checkboxes', type: Boolean }) hasCheckboxes = false;
 
   /**
-   * whether filtering (if enabled) will be case-sensitive
+   * multi-selectable listbox button text
    */
-  @property({ attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
-
-  /**
-   * whether option filtering is disabled
-   */
-  @property({ reflect: true, attribute: 'disable-filter', type: Boolean }) disableFilter = false;
+  @property({ attribute: 'items-selected-text', type: String }) itemsSelectedText = 'items selected';
 
   /**
    * whether filtering (if enabled) will look for filter match anywhere in option text
@@ -100,12 +100,7 @@ export class PfSelect extends LitElement {
    * There are 6 options: `bottom`, `top`, `top-start`, `top-end`, `bottom-start`, `bottom-end`.
    * The default is `bottom`.
    */
-  @property({ reflect: true }) position: Placement = 'bottom';
-
-  /**
-   * whether listbox is plain
-   */
-  @property({ attribute: 'plain', type: Boolean }) plain = false;
+  @property({ reflect: true, attribute: 'position' }) position: Placement = 'bottom';
 
   /**
    * how listbox will display multiple items in the toggle area:
@@ -122,13 +117,10 @@ export class PfSelect extends LitElement {
 
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
   @query('pf-select-list') private _listbox?: PfSelectList;
-  @query('_toggle-input') private _input?: HTMLInputElement;
-  @query('_toggle-button') private _toggle?: HTMLButtonElement;
+  @query('#toggle-input') private _input?: HTMLInputElement;
+  @query('#toggle-button') private _toggle?: HTMLButtonElement;
 
   #createOption!: PfSelectOption;
-  #selectedOptions: PfSelectOption[] = [];
-  #valueText = '';
-  #valueTextArray: string[] = [];
   #float = new FloatingDOMController(this, {
     content: (): HTMLElement | undefined | null => this._listbox
   });
@@ -137,7 +129,8 @@ export class PfSelect extends LitElement {
    * label for toggle button
    */
   get #buttonLabel() {
-    return this.#isMulti && this.selectedItemsDisplay === '' ?
+    return this.hasBadge ?
+      this.defaultText : this.#isMulti ?
       `${this.#valueTextArray.length} ${this.itemsSelectedText}` : this.#valueText.length > 0 ?
         this.#valueText : this.defaultText;
   }
@@ -153,7 +146,6 @@ export class PfSelect extends LitElement {
    * listbox template
    */
   get #selectList() {
-    const { plain } = this;
     const checkboxes = this.hasCheckboxes ? 'checkboxes' : false;
     const { height, width } = this.getBoundingClientRect() || {};
     const styles = this.alwaysOpen ? '' : `margin-top: ${height || 0}px;width: ${width || 'auto'}px`;
@@ -161,7 +153,7 @@ export class PfSelect extends LitElement {
       <pf-select-list 
         id="listbox" 
         style="${styles}"
-        class="${classMap({ plain, checkboxes })}"
+        class="${classMap({ checkboxes })}"
         ?disabled=${this.disabled}
         ?hidden=${!this.alwaysOpen && (!this.open || this.disabled)}
         ?case-sensitive=${this.caseSensitive}
@@ -176,6 +168,28 @@ export class PfSelect extends LitElement {
         @optioncreated="${this.#onOptionCreated}">
         <slot></slot>
       </pf-select-list>`;
+  }
+
+  /**
+   * listbox's array of selected options
+   */
+  get #selectedOptions() {
+    return (this._listbox?.selectedOptions || []) as PfSelectOption[];
+  }
+
+  /**
+   * array of text content from listbox's array of selected options
+   */
+  get #valueTextArray() {
+    return this.#selectedOptions.map(option => option.optionText || '');
+  }
+
+  /**
+   * text content from listbox's first selected option
+   */
+  get #valueText() {
+    const [text] = this.#valueTextArray;
+    return text || '';
   }
 
   /**
@@ -464,10 +478,6 @@ export class PfSelect extends LitElement {
    * updates text indicating current value(s)
    */
   #updateValueText() {
-    this.#selectedOptions = (this._listbox?.selectedOptions || []) as PfSelectOption[];
-    this.#valueTextArray = this.#selectedOptions.map(option => option.optionText || '');
-    const [selectedOption] = this.#valueTextArray;
-    this.#valueText = selectedOption || '';
     this.requestUpdate();
 
     // reset input if chip has been added

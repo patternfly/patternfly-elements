@@ -2,8 +2,10 @@ import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
+import { styleMap } from 'lit/directives/style-map.js';
 import type { PropertyValues } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 import { PfSelectList } from './pf-select-list.js';
 
@@ -12,6 +14,7 @@ import type { PfSelectOption } from './pf-select-option.js';
 import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
 
 export type PfSelectItemsDisplay = '' | 'badge' | 'chips';
+export type Placement = 'bottom' | 'top' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end';
 /**
  * A select list enables users to select one or more items from a list.
  *
@@ -57,17 +60,14 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'always-open', type: Boolean }) alwaysOpen = false;
 
   /**
+   * enable to flip the listbox when it reaches the boundary
+   */
+  @property({ attribute: 'enable-flip', type: Boolean }) enableFlip = false;
+
+  /**
    * whether listbox is has checkboxes when `multi-select` is enabled
    */
   @property({ reflect: true, attribute: 'has-checkboxes', type: Boolean }) hasCheckboxes = false;
-
-  /**
-   * how listbox will display multiple items in the toggle area:
-   * 'badge' for a badge with item count,
-   * 'chips' for a group of chips,
-   * '' for # itmes selected text (default)
-   */
-  @property({ attribute: 'selected-items-display', type: String }) selectedItemsDisplay: PfSelectItemsDisplay = '';
 
   /**
    * whether filtering (if enabled) will be case-sensitive
@@ -93,7 +93,14 @@ export class PfSelect extends LitElement {
   /**
    * whether listbox is always open
    */
-  @property({ attribute: 'open', type: Boolean }) open = false;
+  @property({ reflect: true, attribute: 'open', type: Boolean }) open = false;
+
+  /**
+   * Indicates the initial popover position.
+   * There are 6 options: `bottom`, `top`, `top-start`, `top-end`, `bottom-start`, `bottom-end`.
+   * The default is `bottom`.
+   */
+  @property({ reflect: true }) position: Placement = 'bottom';
 
   /**
    * whether listbox is plain
@@ -101,33 +108,74 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'plain', type: Boolean }) plain = false;
 
   /**
+   * how listbox will display multiple items in the toggle area:
+   * 'badge' for a badge with item count,
+   * 'chips' for a group of chips,
+   * '' for # itmes selected text (default)
+   */
+  @property({ attribute: 'selected-items-display', type: String }) selectedItemsDisplay: PfSelectItemsDisplay = '';
+
+  /**
    * whether listbox controlled by combobox that supports typing
    */
   @property({ attribute: 'typeahead', type: Boolean }) typeahead = false;
 
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
+  @query('pf-select-list') private _listbox?: PfSelectList;
+  @query('_toggle-input') private _input?: HTMLInputElement;
+  @query('_toggle-button') private _toggle?: HTMLButtonElement;
 
   #createOption!: PfSelectOption;
   #selectedOptions: PfSelectOption[] = [];
   #valueText = '';
   #valueTextArray: string[] = [];
+  #float = new FloatingDOMController(this, {
+    content: (): HTMLElement | undefined | null => this._listbox
+  });
 
+  /**
+   * label for toggle button
+   */
   get #buttonLabel() {
     return this.#isMulti && this.selectedItemsDisplay === '' ?
       `${this.#valueTextArray.length} ${this.itemsSelectedText}` : this.#valueText.length > 0 ?
         this.#valueText : this.defaultText;
   }
 
-  get #listbox(): PfSelectList | null | undefined {
-    return this.shadowRoot?.querySelector('#listbox');
+  /**
+   * whether listbox is aria-multiselectable
+   */
+  get #isMulti() {
+    return this.multiSelectable || this.hasCheckboxes;
   }
 
-  get #input(): HTMLInputElement | null | undefined {
-    return this.shadowRoot?.querySelector('#toggle-input');
-  }
-
-  get #toggle(): HTMLButtonElement | null | undefined {
-    return this.shadowRoot?.querySelector('#toggle-button');
+  /**
+   * listbox template
+   */
+  get #selectList() {
+    const { plain } = this;
+    const checkboxes = this.hasCheckboxes ? 'checkboxes' : false;
+    const { height, width } = this.getBoundingClientRect() || {};
+    const styles = this.alwaysOpen ? '' : `margin-top: ${height || 0}px;width: ${width || 'auto'}px`;
+    return html`
+      <pf-select-list 
+        id="listbox" 
+        style="${styles}"
+        class="${classMap({ plain, checkboxes })}"
+        ?disabled=${this.disabled}
+        ?hidden=${!this.alwaysOpen && (!this.open || this.disabled)}
+        ?case-sensitive=${this.caseSensitive}
+        ?disable-filter="${this.disableFilter}"
+        ?match-anywhere=${this.matchAnywhere}
+        ?multi-selectable=${this.#isMulti}
+        @input=${this.#onListboxInput}
+        @change=${this.#onListboxChange}
+        @keydown=${this.#onListboxKeydown}
+        @listboxoptions=${this.#updateValueText}
+        @select=${this.#onListboxSelect}
+        @optioncreated="${this.#onOptionCreated}">
+        <slot></slot>
+      </pf-select-list>`;
   }
 
   /**
@@ -137,21 +185,17 @@ export class PfSelect extends LitElement {
     return this.#valueTextArray.map(txt => txt.replace(',', '\\,')).join(', ');
   }
 
-  /**
-   * filter string for visible options
-   */
   set filter(filterText: string) {
-    if (this.#listbox) {
-      this.#listbox.filter = filterText;
+    if (this._listbox) {
+      this._listbox.filter = filterText;
     }
   }
 
+  /**
+   * filter string for visible options
+   */
   get filter() {
-    return this.#listbox?.filter || '';
-  }
-
-  get #isMulti() {
-    return this.multiSelectable || this.hasCheckboxes;
+    return this._listbox?.filter || '';
   }
 
   /**
@@ -172,12 +216,12 @@ export class PfSelect extends LitElement {
    * all listbox options
    */
   get options() {
-    return this.#listbox?.options;
+    return this._listbox?.options;
   }
 
   set selected(optionsList: ListboxValue) {
-    if (this.#listbox) {
-      this.#listbox.selected = optionsList;
+    if (this._listbox) {
+      this._listbox.selected = optionsList;
     }
   }
 
@@ -187,78 +231,64 @@ export class PfSelect extends LitElement {
    * You can also specify `isSelected` on the `SelectOption`.
    */
   get selected() {
-    return this.#listbox?.selected;
+    return this._listbox?.selected;
   }
 
   render() {
-    const { hasBadge, typeahead, plain } = this;
+    const { hasBadge, typeahead } = this;
     const offscreen = typeahead ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
-    const checkboxes = this.hasCheckboxes ? 'checkboxes' : false;
     const autocomplete = this.disableFilter ? 'none' : 'list';
-    return html`
-    ${this.alwaysOpen ? '' : html`
-      <div id="toggle" 
-        ?disabled=${this.disabled} 
-        ?expanded=${this.open}>
-        ${!this.hasChips || this.#valueTextArray.length < 1 ? '' : html`
-          <pf-chip-group label="${this.currentSelectionsLabel}">
-            ${this.#valueTextArray.map(txt => html`
-              <pf-chip id="chip-${txt}" @click="${() => this.#onChipClick(txt)}">${txt}</pf-chip>
-            `)}
-          </pf-chip-group>
-        `}
-        ${!typeahead ? '' : html`
-          <input 
-            id="toggle-input" 
-            type="text" 
-            aria-controls="listbox" 
-            aria-autocomplete="${autocomplete}" 
+    const { alignment, anchor, styles, open } = this.#float;
+    return this.alwaysOpen ? html`${this.#selectList}` : html`
+      <div id="outer" 
+        style="${styleMap(styles)}"
+        class="${classMap({ open, [anchor]: !!anchor, [alignment]: !!alignment })}">
+        <div id="toggle" 
+          ?disabled=${this.disabled} 
+          ?expanded=${this.open}>
+          ${!this.hasChips || this.#valueTextArray.length < 1 ? '' : html`
+            <pf-chip-group label="${this.currentSelectionsLabel}">
+              ${this.#valueTextArray.map(txt => html`
+                <pf-chip id="chip-${txt}" @click="${() => this.#onChipClick(txt)}">${txt}</pf-chip>
+              `)}
+            </pf-chip-group>
+          `}
+          ${!typeahead ? '' : html`
+            <input 
+              id="toggle-input" 
+              type="text" 
+              aria-controls="listbox" 
+              aria-autocomplete="${autocomplete}" 
+              aria-expanded="${!this.open ? 'false' : 'true'}" 
+              placeholder="${this.#buttonLabel}"
+              role="combobox"
+              @input=${this.#onTypeaheadInput}
+              @focus="${this.#onTypeaheadInputFocus}">
+          `}
+          <button 
+            id="toggle-button" 
             aria-expanded="${!this.open ? 'false' : 'true'}" 
-            placeholder="${this.#buttonLabel}"
-            role="combobox"
-            @input=${this.#onTypeaheadInput}
-            @focus="${this.#onTypeaheadInputFocus}">
-        `}
-        <button 
-          id="toggle-button" 
-          aria-expanded="${!this.open ? 'false' : 'true'}" 
-          aria-controls="listbox" 
-          aria-haspopup="listbox"
-          ?disabled=${this.disabled}
-          @click="${this.#onToggleClick}">
-          <span id="toggle-text" class="${classMap({ offscreen, badge })}">
-            ${this.#buttonLabel}
-          </span>
-          ${hasBadge ? html`
-            <span id="toggle-badge">
-              <pf-badge number="${this.#selectedOptions.length}">${this.#selectedOptions.length}</pf-badge>
-            </span> ` : ''}
-          <svg viewBox="0 0 320 512" 
-            fill="currentColor" 
-            aria-hidden="true">
-              <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
-          </svg>
-        </button>
+            aria-controls="listbox" 
+            aria-haspopup="listbox"
+            ?disabled=${this.disabled}
+            @click="${this.#onToggleClick}">
+            <span id="toggle-text" class="${classMap({ offscreen, badge })}">
+              ${this.#buttonLabel}
+            </span>
+            ${hasBadge ? html`
+              <span id="toggle-badge">
+                <pf-badge number="${this.#selectedOptions.length}">${this.#selectedOptions.length}</pf-badge>
+              </span> ` : ''}
+            <svg viewBox="0 0 320 512" 
+              fill="currentColor" 
+              aria-hidden="true">
+                <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
+            </svg>
+          </button>
+        </div>
+        ${this.#selectList}
       </div>
-    `}
-      <pf-select-list 
-        id="listbox" 
-        class="${classMap({ plain, checkboxes })}"
-        ?disabled=${this.disabled}
-        ?hidden=${!this.alwaysOpen && (!this.open || this.disabled)}
-        ?case-sensitive=${this.caseSensitive}
-        ?disable-filter="${this.disableFilter}"
-        ?match-anywhere=${this.matchAnywhere}
-        ?multi-selectable=${this.#isMulti}
-        @input=${this.#onListboxInput}
-        @change=${this.#onListboxChange}
-        @keydown=${this.#onListboxKeydown}
-        @listboxoptions=${this.#updateValueText}
-        @select=${this.#onListboxSelect}
-        @optioncreated="${this.#onOptionCreated}">
-        <slot></slot>
-      </pf-select-list>
     `;
   }
 
@@ -272,10 +302,7 @@ export class PfSelect extends LitElement {
     }
 
     if (changed.has('open')) {
-      /**
-       * @fires open-change
-       */
-      this.dispatchEvent(new Event('open-change'));
+      this.#onOpenChanged();
     }
   }
 
@@ -299,50 +326,17 @@ export class PfSelect extends LitElement {
    * @param insertBefore optional: reference option before which new will be inserted; if blank new option inserted at end of list
    */
   insertOption(option: PfSelectOption, insertBefore?: PfSelectOption) {
-    this.#listbox?.insertOption(option, insertBefore);
+    this._listbox?.insertOption(option, insertBefore);
   }
 
+  /**
+   * inserts a create option into listbox
+   */
   #addCreateOption() {
     if (!this.#createOption || this.#createOption?.userCreatedOption) {
       this.#createOption = document.createElement('pf-select-option');
       this.#updateCreateOptionValue();
       this.appendChild(this.#createOption);
-    }
-  }
-
-  #updateCreateOptionText() {
-    this.#createOption.innerHTML = `${this.#createOption.value}`;
-    const createOptionText = !this.typeahead || this.#createOption.value === '' ? '' : this.createOptionText;
-    this.#createOption.createOptionText = createOptionText;
-  }
-
-  #updateCreateOptionValue() {
-    let filter = this.filter || '';
-    if (filter === '*') {
-      filter = '';
-    }
-    this.#createOption.value = filter;
-    this.#updateCreateOptionText();
-  }
-
-  /**
-   * updates text indicating current value(s)
-   */
-  #updateValueText() {
-    this.#selectedOptions = (this.#listbox?.selectedOptions || []) as PfSelectOption[];
-    this.#valueTextArray = this.#selectedOptions.map(option => option.optionText || '');
-    const [selectedOption] = this.#valueTextArray;
-    this.#valueText = selectedOption || '';
-    this.requestUpdate();
-
-    // reset input if chip has been added
-    if (this.hasChips && this.#input?.value) {
-      const chip = this.shadowRoot?.querySelector(`pf-chip#chip-${this.#input?.value}`) as HTMLElement;
-      if (chip && this._chipGroup) {
-        this._chipGroup.focusOnChip(chip);
-      } else {
-        this.#input.focus();
-      }
     }
   }
 
@@ -356,7 +350,7 @@ export class PfSelect extends LitElement {
       // deselect chip
       opt.selected = false;
       this.requestUpdate();
-      this.#input?.focus();
+      this._input?.focus();
     }
   }
 
@@ -380,7 +374,7 @@ export class PfSelect extends LitElement {
   #onListboxKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape') {
       this.open = false;
-      (this.#input || this.#toggle)?.focus();
+      (this._input || this._toggle)?.focus();
     }
   }
 
@@ -390,8 +384,24 @@ export class PfSelect extends LitElement {
   #onListboxSelect() {
     if (!this.#isMulti) {
       this.open = false;
-      (this.#input || this.#toggle)?.focus();
+      (this._input || this._toggle)?.focus();
     }
+  }
+
+  async #onOpenChanged() {
+    if (this.open && !this.alwaysOpen) {
+      await this.#float.show({
+        placement: this.position,
+        flip: this.enableFlip,
+      });
+    } else {
+      await this.#float.hide();
+    }
+
+    /**
+     * @fires open-change
+     */
+    this.dispatchEvent(new Event('open-change'));
   }
 
   /**
@@ -415,8 +425,8 @@ export class PfSelect extends LitElement {
    */
   #onTypeaheadInput() {
     // update the filter
-    if (this.#listbox && this.filter !== this.#input?.value) {
-      this.filter = this.#input?.value || '';
+    if (this._listbox && this.filter !== this._input?.value) {
+      this.filter = this._input?.value || '';
     }
 
     this.#updateCreateOptionValue();
@@ -427,6 +437,48 @@ export class PfSelect extends LitElement {
    */
   #onTypeaheadInputFocus() {
     this.open = true;
+  }
+
+  /**
+   * updates create option text to match input value
+   */
+  #updateCreateOptionText() {
+    this.#createOption.innerHTML = `${this.#createOption.value}`;
+    const createOptionText = !this.typeahead || this.#createOption.value === '' ? '' : this.createOptionText;
+    this.#createOption.createOptionText = createOptionText;
+  }
+
+  /**
+   * updates create option value to match current filter
+   */
+  #updateCreateOptionValue() {
+    let filter = this.filter || '';
+    if (filter === '*') {
+      filter = '';
+    }
+    this.#createOption.value = filter;
+    this.#updateCreateOptionText();
+  }
+
+  /**
+   * updates text indicating current value(s)
+   */
+  #updateValueText() {
+    this.#selectedOptions = (this._listbox?.selectedOptions || []) as PfSelectOption[];
+    this.#valueTextArray = this.#selectedOptions.map(option => option.optionText || '');
+    const [selectedOption] = this.#valueTextArray;
+    this.#valueText = selectedOption || '';
+    this.requestUpdate();
+
+    // reset input if chip has been added
+    if (this.hasChips && this._input?.value) {
+      const chip = this.shadowRoot?.querySelector(`pf-chip#chip-${this._input?.value}`) as HTMLElement;
+      if (chip && this._chipGroup) {
+        this._chipGroup.focusOnChip(chip);
+      } else {
+        this._input.focus();
+      }
+    }
   }
 }
 

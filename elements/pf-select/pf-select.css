@@ -1,10 +1,8 @@
 :host {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
   font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
   font-size: var(--pf-global--FontSize--md, 16px);
   font-weight: var(--pf-global--FontWeight--normal, 400);
+  color: var(--pf-theme--color--text, #151515);
   --_pf-select-option-checkboxes-display: none;
 }
 
@@ -12,9 +10,30 @@
   --_pf-select-option-checkboxes-display: inline;
 }
 
+:host, #outer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
 :host([hidden]),
 *[hidden] {
   display: none !important;
+}
+
+#outer {
+  position: relative;
+}
+
+#outer pf-select-list {
+  position: absolute;
+  background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
+  opacity: 0;
+}
+
+#outer.open pf-select-list {
+  opacity: 1;
+  z-index: 9999 !important;
 }
 
 #toggle,
@@ -23,6 +42,7 @@
   display: flex;
   align-items: center;
   font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
+  background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
   font-size: var(--pf-global--FontSize--md, 16px);
   font-weight: var(--pf-global--FontWeight--normal, 400);
   line-height: 1.6;

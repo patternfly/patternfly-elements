@@ -286,6 +286,7 @@ export class PfSelect extends LitElement {
             aria-controls="listbox" 
             aria-haspopup="listbox"
             ?disabled=${this.disabled}
+            @keydown="${this.#onToggleKeydown}"
             @click="${this.#onToggleClick}">
             <span id="toggle-text" class="${classMap({ offscreen, badge })}">
               ${this.#buttonLabel}
@@ -427,11 +428,23 @@ export class PfSelect extends LitElement {
     this.#updateCreateOptionValue();
   }
 
+  #onToggleKeydown(event: KeyboardEvent) {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      this.#onToggleClick();
+    }
+  }
+
   /**
    * handles toggle button click event
    */
-  #onToggleClick() {
+  async #onToggleClick() {
     this.open = !this.open;
+    if (this.open && this._listbox) {
+      await this.updateComplete;
+      this._listbox.focus();
+    }
   }
 
   /**

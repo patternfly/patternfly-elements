@@ -7,7 +7,6 @@ import { classMap } from 'lit/directives/class-map.js';
 import { property } from 'lit/decorators/property.js';
 
 import style from './pf-card.css';
-import { BaseCard } from './BaseCard.js';
 
 /**
  * A **card** is a square or rectangular container that can contain any kind of content.

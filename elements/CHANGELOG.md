@@ -1,5 +1,102 @@
 # @patternfly/elements
 
+## 2.4.0
+
+### Minor Changes
+
+- cf5abb548: ✨ Added `<pf-banner>`
+
+  ```html
+  <pf-banner variant="info" icon="info" sticky>
+    Important information.
+  </pf-banner>
+  ```
+
+- 23bf9b278: ✨ Added `<pf-table>`
+
+  ```html
+  <pf-table>
+    <pf-thead>
+      <pf-tr>
+        <pf-th>Repositories</pf-th>
+        <pf-th>Branches</pf-th>
+        <pf-th>Pull requests</pf-th>
+        <pf-th>Workspaces</pf-th>
+        <pf-th>Last commit</pf-th>
+      </pf-tr>
+    </pf-thead>
+    <pf-tr>
+      <pf-th>one</pf-th>
+      <pf-td>two</pf-td>
+      <pf-td>three</pf-td>
+      <pf-td>four</pf-td>
+      <pf-td>five</pf-td>
+    </pf-tr>
+    <pf-tr>
+      <pf-th>one - 2</pf-th>
+      <pf-td></pf-td>
+      <pf-td></pf-td>
+      <pf-td>four - 2</pf-td>
+      <pf-td>five - 2</pf-td>
+    </pf-tr>
+    <pf-tr>
+      <pf-th>one - 3</pf-th>
+      <pf-td>two - 3</pf-td>
+      <pf-td>three - 3</pf-td>
+      <pf-td>four - 3</pf-td>
+      <pf-td>five - 3</pf-td>
+    </pf-tr>
+  </pf-table>
+  ```
+
+  This is an initial release, that implements a subset of the features of upstream
+  PatternFly's table component. APIs can be expected to change.
+
+- c07281813: ✨ Added `<pf-text-input>`
+
+  ```html
+  <label>
+    Text Input
+    <pf-text-input></pf-text-input>
+  </label>
+  ```
+
+- dcdbce66d: `<pf-tooltip>`: added `no-flip` and `flip-behaviour` attributes as in `<pf-popover>`
+- dcdbce66d: `<pf-tooltip>` added the `trigger` attribute to specify a tooltip-invoking
+  element outside of the tooltip's children.
+
+  ```html
+  <pf-button id="button">Button</pf-button>
+  <pf-tooltip trigger="button" content="I'm a button!"></pf-tooltip>
+  ```
+
+- dcdbce66d: ✨ Added `<pf-progress>`
+
+  ```html
+  <pf-progress description="Default" value="33"></pf-progress>
+  ```
+
+- b9f86f8af: `<pf-tabs>`: add `isExpandEvent` static method, to help prevent name conflicts
+
+  ```js
+  import { PfTabs } from "@patternfly/elements/pf-tabs/pf-tabs.js";
+  document.addEventListener("expand", function (event) {
+    if (PfTabs.isExpandEvent(event)) {
+      // a pf-tabs' tab has expanded
+    }
+  });
+  ```
+
+### Patch Changes
+
+- 69021bbb4: Restores support for Safari 16.3 (by compiling element sources to ECMAScript 2020)
+- dd2d5b713: `<pf-accordion>`: fixed focus event triggering incorrect tabindex
+- da84c1019: `<pf-accordion>`: fixed issue with panels collapsing when a child checkbox was toggled.
+- 343d5979f: `<pf-card>`: improved slotted content layout
+- dcdbce66d: `<pf-tooltip>`: marks `BaseTooltip` and it's stylesheet as deprecated.
+  The files will remain in place until the next major version.
+- 1723146e6: `<pf-tabs>`: corrected the name of the `expand` event in the custom elements manifest
+
 ## 2.3.2
 
 ### Patch Changes

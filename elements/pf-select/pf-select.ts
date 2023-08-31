@@ -330,9 +330,7 @@ export class PfSelect extends LitElement {
    * sets focus
    */
   focus() {
-    const listbox = this.shadowRoot?.querySelector('pf-select-list');
-    const toggle = this.shadowRoot?.querySelector('button');
-    (toggle || listbox)?.focus();
+    (this._input || this._toggle || this._listbox)?.focus();
   }
 
   /**
@@ -387,9 +385,11 @@ export class PfSelect extends LitElement {
    * handles listbox keydown event
    */
   #onListboxKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      event.stopImmediatePropagation();
       this.open = false;
-      (this._input || this._toggle)?.focus();
+      this._toggle?.focus();
     }
   }
 
@@ -428,20 +428,26 @@ export class PfSelect extends LitElement {
     this.#updateCreateOptionValue();
   }
 
-  #onToggleKeydown(event: KeyboardEvent) {
+  async #onToggleKeydown(event: KeyboardEvent) {
     if (event.key === 'ArrowDown') {
       event.preventDefault();
       event.stopImmediatePropagation();
-      this.#onToggleClick();
+      this.open = !this.open;
+      if (this.open && this._listbox) {
+        await this.updateComplete;
+        this._listbox.focus();
+      }
     }
   }
 
   /**
    * handles toggle button click event
    */
-  async #onToggleClick() {
+  async #onToggleClick(event: MouseEvent) {
     this.open = !this.open;
     if (this.open && this._listbox) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
       await this.updateComplete;
       this._listbox.focus();
     }

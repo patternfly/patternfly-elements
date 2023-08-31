@@ -131,6 +131,8 @@ export class PfSelectOption extends LitElement {
     this.#createOptionText = '';
     this.#userCreatedOption = true;
     this.dispatchEvent(new Event('optioncreated', { bubbles: true }));
+    this.selected = true;
+    this.dispatchEvent(new Event('select', { bubbles: true }));
   }
 
   /**

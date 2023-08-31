@@ -277,8 +277,9 @@ export class PfSelect extends LitElement {
               aria-expanded="${!this.open ? 'false' : 'true'}" 
               placeholder="${this.#buttonLabel}"
               role="combobox"
+              @keydown="${this.#onToggleKeydown}"
               @input=${this.#onTypeaheadInput}
-              @focus="${this.#onTypeaheadInputFocus}">
+              @focus="${this.#onTypeaheadFocus}">
           `}
           <button 
             id="toggle-button" 
@@ -399,7 +400,14 @@ export class PfSelect extends LitElement {
   #onListboxSelect() {
     if (!this.#isMulti) {
       this.open = false;
-      (this._input || this._toggle)?.focus();
+
+      if (this._input) {
+        this._input.value = this.#valueText;
+        this._input?.focus();
+        this._input?.setSelectionRange(this.#valueText.length, this.#valueText.length);
+      } else {
+        this._toggle?.focus();
+      }
     }
   }
 
@@ -432,7 +440,7 @@ export class PfSelect extends LitElement {
     if (event.key === 'ArrowDown') {
       event.preventDefault();
       event.stopImmediatePropagation();
-      this.open = !this.open;
+      this.open = true;
       if (this.open && this._listbox) {
         await this.updateComplete;
         this._listbox.focus();
@@ -454,6 +462,13 @@ export class PfSelect extends LitElement {
   }
 
   /**
+   * handles typeahead combobox focus event
+   */
+  #onTypeaheadFocus() {
+    this.open = true;
+  }
+
+  /**
    * handles typeahead combobox input event
    */
   #onTypeaheadInput() {
@@ -463,13 +478,6 @@ export class PfSelect extends LitElement {
     }
 
     this.#updateCreateOptionValue();
-  }
-
-  /**
-   * handles typeahead combobox focus event
-   */
-  #onTypeaheadInputFocus() {
-    this.open = true;
   }
 
   /**

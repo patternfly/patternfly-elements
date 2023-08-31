@@ -403,6 +403,9 @@ export class PfSelect extends LitElement {
       }
 
       this.open = false;
+    } else if (this._input) {
+      this._input.value = '';
+      this._input?.focus();
     }
   }
 
@@ -500,14 +503,16 @@ export class PfSelect extends LitElement {
   /**
    * updates text indicating current value(s)
    */
-  #updateValueText() {
+  async #updateValueText() {
     this.requestUpdate();
+    await this.updateComplete;
 
     // reset input if chip has been added
     if (this.hasChips && this._input?.value) {
       const chip = this.shadowRoot?.querySelector(`pf-chip#chip-${this._input?.value}`) as HTMLElement;
       if (chip && this._chipGroup) {
         this._chipGroup.focusOnChip(chip);
+        this._input.value = '';
       } else {
         this._input.focus();
       }

@@ -134,8 +134,8 @@ export class PfTabs extends LitElement {
   #overflow = new OverflowController(this, { scrollTimeoutDelay: 200 });
 
   #tabs = new TabsController(this, {
-    isTab: (x?: Node): x is PfTab => x instanceof PfTab,
-    isPanel: (x?: Node): x is PfTabPanel => x instanceof PfTabPanel,
+    isTab: (x: Node): x is PfTab => x instanceof PfTab,
+    isPanel: (x: Node): x is PfTabPanel => x instanceof PfTabPanel,
   });
 
   override connectedCallback() {

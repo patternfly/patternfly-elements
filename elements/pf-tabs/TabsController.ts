@@ -22,31 +22,21 @@ export class TabDisabledEvent extends ComposedEvent {
 }
 
 export interface Tab extends HTMLElement {
-  active?: boolean;
-  disabled?: boolean;
+  active: boolean;
+  disabled: boolean;
 }
 
 export type Panel = HTMLElement
 
-export interface Options {
-  isTab?: (node?: Node) => node is Tab;
-  isPanel?: (node?: Node) => node is Panel;
+export interface Validations {
+  isTab: (node: Node) => node is Tab;
+  isPanel: (node: Node) => node is Panel;
 }
 
 export class TabsController implements ReactiveController {
   static #instances = new Set<TabsController>();
 
   static #tabsClasses = new WeakSet();
-  static #tabClasses = new WeakSet();
-  static #panelClasses = new WeakSet();
-
-  static isTab(node?: Node): node is Tab {
-    return !!node && TabsController.#tabClasses.has(node.constructor);
-  }
-
-  static isPanel(node?: Node): node is Panel {
-    return !!node && TabsController.#panelClasses.has(node.constructor);
-  }
 
   static {
     window.addEventListener('expand', event => {
@@ -54,7 +44,7 @@ export class TabsController implements ReactiveController {
         return;
       }
       for (const instance of this.#instances) {
-        if (instance.#tabs.has(event.tab)) {
+        if (instance.#isTab(event.tab) && instance.#tabs.has(event.tab)) {
           instance.#onTabExpand(event.tab);
         }
       }
@@ -65,7 +55,7 @@ export class TabsController implements ReactiveController {
         return;
       }
       for (const instance of this.#instances) {
-        if (instance.#tabs.has(event.tab)) {
+        if (instance.#isTab(event.tab) && instance.#tabs.has(event.tab)) {
           instance.#onTabDisabled();
         }
       }
@@ -78,9 +68,9 @@ export class TabsController implements ReactiveController {
 
   #tabs = new Map<Tab, Panel>();
 
-  #isTab: Required<Options>['isTab'];
+  #isTab: Required<Validations>['isTab'];
 
-  #isPanel: Required<Options>['isPanel'];
+  #isPanel: Required<Validations>['isPanel'];
 
   #slottedTabs: Tab[] = [];
 
@@ -134,11 +124,19 @@ export class TabsController implements ReactiveController {
     return this._tabs.find(tab => tab.active);
   }
 
-  constructor(host: ReactiveElement, options?: Options) {
+  /**
+   * @param host - The host element of the tabs.
+   * @param validations - A set of methods (isTab, isPanel) to validate tabs and panels.
+   * @example new TabsController(this, {
+   *    isTab: (x: Node): x is PfTab => x instanceof PfTab,
+   *    isPanel: (x: Node): x is PfTabPanel => x instanceof PfTabPanel
+   * });
+   */
+  constructor(host: ReactiveElement, validations: Validations) {
     this.#tabindex = new RovingTabindexController(host);
     this.#logger = new Logger(host);
-    this.#isTab = options?.isTab ?? TabsController.isTab;
-    this.#isPanel = options?.isPanel ?? TabsController.isPanel;
+    this.#isTab = validations.isTab;
+    this.#isPanel = validations.isPanel;
     TabsController.#tabsClasses.add(host.constructor);
     if (host.isConnected) {
       TabsController.#instances.add(this);

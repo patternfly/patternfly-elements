@@ -474,10 +474,9 @@ export class PfSelect extends LitElement {
   #onTypeaheadInput() {
     // update the filter
     if (this._listbox && this.filter !== this._input?.value) {
+      this.#updateCreateOptionValue(this._input?.value || '');
       this.filter = this._input?.value || '';
     }
-
-    this.#updateCreateOptionValue();
   }
 
   /**
@@ -492,12 +491,12 @@ export class PfSelect extends LitElement {
   /**
    * updates create option value to match current filter
    */
-  #updateCreateOptionValue() {
-    let filter = this.filter || '';
-    if (filter === '*') {
-      filter = '';
+  #updateCreateOptionValue(inputValue: string = this.filter) {
+    let optionValue = inputValue || '';
+    if (optionValue === '*') {
+      optionValue = '';
     }
-    this.#createOption.value = filter;
+    this.#createOption.value = optionValue;
     this.#updateCreateOptionText();
   }
 

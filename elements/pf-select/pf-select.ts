@@ -386,11 +386,8 @@ export class PfSelect extends LitElement {
    * handles listbox keydown event
    */
   #onListboxKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      event.stopImmediatePropagation();
+    if (event.key === 'Escape' || (!this.#isMulti && ['Enter', ' '].includes(event.key))) {
       this.open = false;
-      this._toggle?.focus();
     }
   }
 
@@ -399,15 +396,13 @@ export class PfSelect extends LitElement {
    */
   #onListboxSelect() {
     if (!this.#isMulti) {
-      this.open = false;
-
       if (this._input) {
         this._input.value = this.#valueText;
         this._input?.focus();
         this._input?.setSelectionRange(this.#valueText.length, this.#valueText.length);
-      } else {
-        this._toggle?.focus();
       }
+
+      this.open = false;
     }
   }
 
@@ -440,9 +435,11 @@ export class PfSelect extends LitElement {
     if (event.key === 'ArrowDown') {
       event.preventDefault();
       event.stopImmediatePropagation();
-      this.open = true;
-      if (this.open && this._listbox) {
+      if (!this.open) {
+        this.open = true;
         await this.updateComplete;
+      }
+      if (this.open && this._listbox) {
         this._listbox.focus();
       }
     }

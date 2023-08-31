@@ -264,7 +264,7 @@ export class ListboxController<
   }
 
   focus() {
-    this.#tabindex.focusOnItem(this.activeItem);
+    this.#tabindex.focusOnItem(this.#tabindex.activeItem);
   }
 
   #updateActiveDescendant() {
@@ -279,7 +279,6 @@ export class ListboxController<
         option.removeAttribute('active-descendant');
       }
     });
-    this.#updateSingleselect();
   }
 
   #updateSingleselect() {
@@ -465,6 +464,8 @@ export class ListboxController<
                 target.selected = !target.selected;
               }
               stopEvent = true;
+            } else {
+              this.#updateSingleselect();
             }
           }
           break;

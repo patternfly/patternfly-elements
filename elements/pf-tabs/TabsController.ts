@@ -116,6 +116,23 @@ export class TabsController implements ReactiveController {
     this._tabs[index].active = true;
   }
 
+  get activeTab(): Tab | undefined {
+    if (!this.#activeTab) {
+      return undefined;
+    }
+    return this.#activeTab;
+  }
+
+  set activeTab(tab: Tab) {
+    if (!this.#tabs.has(tab)) {
+      this.#logger.warn(`The tab provided is not a valid tab.`);
+      return;
+    }
+    // get tab index
+    const index = this._tabs.indexOf(tab);
+    this.activeIndex = index;
+  }
+
   protected get _tabs() {
     return [...this.#tabs.keys()] as Tab[];
   }

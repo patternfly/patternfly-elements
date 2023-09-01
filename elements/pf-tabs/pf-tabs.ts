@@ -114,13 +114,21 @@ export class PfTabs extends LitElement {
   /**
    * The index of the active tab
    */
-  @property({ attribute: 'active-key', reflect: true, type: Number })
+  @property({ attribute: 'active-index', reflect: true, type: Number })
   get activeIndex() {
     return this.#tabs.activeIndex;
   }
 
   set activeIndex(index: number) {
     this.#tabs.activeIndex = index;
+  }
+
+  get activeTab(): PfTab {
+    return this.#tabs.activeTab as PfTab;
+  }
+
+  set activeTab(tab: PfTab) {
+    this.#tabs.activeTab = tab;
   }
 
   @query('#tabs') private _tabsContainer!: HTMLElement;
@@ -186,6 +194,14 @@ export class PfTabs extends LitElement {
   #onSlotChange() {
     if (this._tabs) {
       this.#overflow.init(this._tabsContainer, this._tabs);
+    }
+  }
+
+  select(option: PfTab | number) {
+    if (typeof option === 'number') {
+      this.#tabs.activeIndex = option;
+    } else {
+      this.activeTab = option;
     }
   }
 }

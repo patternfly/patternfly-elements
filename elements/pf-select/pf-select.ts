@@ -168,8 +168,9 @@ export class PfSelect extends LitElement {
         @keydown=${this.#onListboxKeydown}
         @listboxoptions=${this.#updateValueText}
         @select=${this.#onListboxSelect}
+        @optionfocus=${this.#onSelectFocus}
         @optionblur=${this.#onSelectBlur}
-        @optioncreated="${this.#onOptionCreated}">
+        @optioncreated=${this.#onOptionCreated}>
         <slot></slot>
       </pf-select-list>`;
   }
@@ -272,7 +273,7 @@ export class PfSelect extends LitElement {
           ${!this.hasChips || this.#valueTextArray.length < 1 ? '' : html`
             <pf-chip-group label="${this.currentSelectionsLabel}">
               ${this.#valueTextArray.map(txt => html`
-                <pf-chip id="chip-${txt}" @click="${() => this.#onChipClick(txt)}">${txt}</pf-chip>
+                <pf-chip id="chip-${txt}" @click=${() => this.#onChipClick(txt)}>${txt}</pf-chip>
               `)}
             </pf-chip-group>
           `}
@@ -295,8 +296,8 @@ export class PfSelect extends LitElement {
             aria-controls="listbox" 
             aria-haspopup="listbox"
             ?disabled=${this.disabled}
-            @keydown="${this.#onToggleKeydown}"
-            @click="${this.#onToggleClick}">
+            @keydown=${this.#onToggleKeydown}
+            @click=${this.#onToggleClick}>
             <span id="toggle-text" class="${classMap({ offscreen, badge })}">
               ${this.#buttonLabel}
             </span>

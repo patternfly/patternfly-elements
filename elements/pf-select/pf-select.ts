@@ -387,14 +387,27 @@ export class PfSelect extends LitElement {
    */
   #onListboxKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape' || (!this.#isMulti && ['Enter', ' '].includes(event.key))) {
-      this.open = false;
+      event.preventDefault();
+      if (event.key === 'Escape') {
+        event.stopImmediatePropagation();
+        this.#close();
+      }
     }
+  }
+
+  /**
+   * closes listbox and sets focus
+   */
+  async #close() {
+    this.open = false;
+    await this.updateComplete;
+    this.focus();
   }
 
   /**
    * handles listbox select event
    */
-  #onListboxSelect() {
+  #onListboxSelect(event: KeyboardEvent) {
     if (!this.#isMulti) {
       if (this._input) {
         this._input.value = this.#valueText;
@@ -402,10 +415,17 @@ export class PfSelect extends LitElement {
         this._input?.setSelectionRange(this.#valueText.length, this.#valueText.length);
       }
 
-      this.open = false;
+      // prevent toggle firing a click event when focus is rest to it
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      this.#close();
     } else if (this._input) {
       this._input.value = '';
-      this._input?.focus();
+
+      // set focus on input when a new chip is added
+      if (this.hasChips) {
+        this._input?.focus();
+      }
     }
   }
 
@@ -434,6 +454,10 @@ export class PfSelect extends LitElement {
     this.#updateCreateOptionValue();
   }
 
+  /**
+   * handles toggle keydown event
+   * @param event {KeyboardEvent}
+   */
   async #onToggleKeydown(event: KeyboardEvent) {
     if (event.key === 'ArrowDown') {
       event.preventDefault();

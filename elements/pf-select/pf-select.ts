@@ -406,7 +406,8 @@ export class PfSelect extends LitElement {
    * closes listbox and sets focus
    */
   async #close(force = false) {
-    if (force || (!this.#focused && !this.#hovered)) {
+    const hasFocus = this.#focused || this.#hovered;
+    if (!this.alwaysOpen && (force || !hasFocus)) {
       this.open = false;
       await this.updateComplete;
       this.focus();

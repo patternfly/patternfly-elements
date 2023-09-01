@@ -465,7 +465,7 @@ export class PfSelect extends LitElement {
 
   #onSelectBlur() {
     this.#focused = false;
-    setTimeout(this.#close.bind(this, true), 300);
+    setTimeout(this.#close.bind(this, false), 300);
   }
 
   #onSelectFocus() {

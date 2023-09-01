@@ -463,10 +463,10 @@ export class ListboxController<
               } else {
                 target.selected = !target.selected;
               }
-              stopEvent = true;
             } else {
               this.#updateSingleselect();
             }
+            stopEvent = true;
           }
           break;
         default:

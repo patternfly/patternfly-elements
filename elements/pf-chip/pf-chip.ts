@@ -67,6 +67,9 @@ export class PfChip extends LitElement {
 
   protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     super.updated(_changedProperties);
+    /**
+     * @fires chip-ready
+     */
     this.dispatchEvent(new Event('chip-ready', { bubbles: true }));
   }
 
@@ -75,6 +78,10 @@ export class PfChip extends LitElement {
   }
 
   #onClick() {
+    /**
+     * @fires chip-remove
+     */
+    this.dispatchEvent(new Event('chip-remove', { bubbles: true }));
     this.remove();
   }
 }

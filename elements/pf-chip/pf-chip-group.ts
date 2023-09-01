@@ -113,6 +113,7 @@ export class PfChipGroup extends LitElement {
     super();
     this.#tabindex = new RovingTabindexController<HTMLElement>(this);
     this.addEventListener('chip-ready', this.#onChipReady);
+    this.addEventListener('chip-remove', this.#onChipRemoved);
   }
 
   updated(changed: PropertyValues<this>) {
@@ -160,7 +161,7 @@ export class PfChipGroup extends LitElement {
     this.#tabindex.focusOnItem(button);
   }
 
-  #onChipReady() {
+  #handleChipsChanged() {
     const oldButtons = [...(this.#buttons || [])];
     this.#chips = [...this.querySelectorAll('pf-chip:not([slot]):not([overflow-chip])')] as PfChip[];
     const button = this._overflowChip?.button as HTMLElement;
@@ -172,13 +173,30 @@ export class PfChipGroup extends LitElement {
     this.#updateChips();
   }
 
+  #onChipReady() {
+    this.#handleChipsChanged();
+  }
+
+  async #onChipRemoved(event: Event) {
+    await this.updateComplete;
+    this.#handleChipsChanged();
+    this.focusOnChip(this.activeChip);
+  }
+
   #onCloseClick() {
+    /**
+     * @fires chip-group-remove
+     */
+    this.dispatchEvent(new Event('chip-group-remove', { bubbles: true }));
     this.remove();
   }
 
   #onMoreClick(event: Event) {
     this.open = !this.open;
     event.stopPropagation();
+    /**
+     * @fires overflow-chip-click
+     */
     this.dispatchEvent(new Event('overflow-chip-click', event));
   }
 

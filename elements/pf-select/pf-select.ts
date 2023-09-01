@@ -409,8 +409,10 @@ export class PfSelect extends LitElement {
     const hasFocus = this.#focused || this.#hovered;
     if (!this.alwaysOpen && (force || !hasFocus)) {
       this.open = false;
-      await this.updateComplete;
-      this.focus();
+      if (!force) {
+        await this.updateComplete;
+        this.focus();
+      }
     }
   }
 

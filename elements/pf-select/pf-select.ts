@@ -125,6 +125,9 @@ export class PfSelect extends LitElement {
     content: (): HTMLElement | undefined | null => this._listbox
   });
 
+  #hovered = false;
+  #focused = false;
+
   /**
    * label for toggle button
    */
@@ -165,6 +168,7 @@ export class PfSelect extends LitElement {
         @keydown=${this.#onListboxKeydown}
         @listboxoptions=${this.#updateValueText}
         @select=${this.#onListboxSelect}
+        @optionblur=${this.#onSelectBlur}
         @optioncreated="${this.#onOptionCreated}">
         <slot></slot>
       </pf-select-list>`;
@@ -257,7 +261,11 @@ export class PfSelect extends LitElement {
     return this.alwaysOpen ? html`${this.#selectList}` : html`
       <div id="outer" 
         style="${styleMap(styles)}"
-        class="${classMap({ open, [anchor]: !!anchor, [alignment]: !!alignment })}">
+        class="${classMap({ open, [anchor]: !!anchor, [alignment]: !!alignment })}"
+        @mouseover=${this.#onSelectMouseover}
+        @mouseout=${this.#onSelectMouseout}
+        @focus=${this.#onSelectFocus}
+        @blur=${this.#onSelectBlur}>
         <div id="toggle" 
           ?disabled=${this.disabled} 
           ?expanded=${this.open}>
@@ -386,22 +394,22 @@ export class PfSelect extends LitElement {
    * handles listbox keydown event
    */
   #onListboxKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape' || (!this.#isMulti && ['Enter', ' '].includes(event.key))) {
+    if (event.key === 'Escape') {
       event.preventDefault();
-      if (event.key === 'Escape') {
-        event.stopImmediatePropagation();
-        this.#close();
-      }
+      event.stopImmediatePropagation();
+      this.#close(true);
     }
   }
 
   /**
    * closes listbox and sets focus
    */
-  async #close() {
-    this.open = false;
-    await this.updateComplete;
-    this.focus();
+  async #close(force = false) {
+    if (force || (!this.#focused && !this.#hovered)) {
+      this.open = false;
+      await this.updateComplete;
+      this.focus();
+    }
   }
 
   /**
@@ -418,7 +426,7 @@ export class PfSelect extends LitElement {
       // prevent toggle firing a click event when focus is rest to it
       event.preventDefault();
       event.stopImmediatePropagation();
-      this.#close();
+      this.#close(true);
     } else if (this._input) {
       this._input.value = '';
 
@@ -452,6 +460,24 @@ export class PfSelect extends LitElement {
     this.#addCreateOption();
     this.filter = '';
     this.#updateCreateOptionValue();
+  }
+
+  #onSelectBlur() {
+    this.#focused = false;
+    setTimeout(this.#close.bind(this, true), 300);
+  }
+
+  #onSelectFocus() {
+    this.#focused = true;
+  }
+
+  #onSelectMouseout() {
+    this.#hovered = false;
+    setTimeout(this.#close.bind(this, false), 300);
+  }
+
+  #onSelectMouseover() {
+    this.#hovered = true;
   }
 
   /**

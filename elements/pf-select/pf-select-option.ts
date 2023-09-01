@@ -51,6 +51,11 @@ export class PfSelectOption extends LitElement {
   */
   @property({ type: Number }) posInSet!: number;
 
+  /**
+   * whether option is hidden by listbox filtering
+   */
+  @property({ reflect: true, attribute: 'hidden-by-filter', type: Boolean }) hiddenByFilter = false;
+
   @queryAssignedNodes({ slot: '', flatten: true }) private _slottedText!: Node[];
 
   #createOptionText = '';
@@ -60,6 +65,7 @@ export class PfSelectOption extends LitElement {
     super.connectedCallback();
     this.id = this.id || getRandomId();
     this.addEventListener('click', this.#onClick);
+    this.addEventListener('keydown', this.#onKeydown);
     this.addEventListener('focus', this.#onFocus);
     this.addEventListener('blur', this.#onBlur);
   }
@@ -121,6 +127,9 @@ export class PfSelectOption extends LitElement {
     if (changed.has('disabled')) {
       this.#internals.ariaDisabled = this.disabled ? 'true' : 'false';
     }
+    if (changed.has('hiddenByFilter')) {
+      this.#onHiddenByFilter();
+    }
   }
 
   /**
@@ -144,11 +153,29 @@ export class PfSelectOption extends LitElement {
   }
 
   /**
+   * handles option click
+   * @fires select
+   */
+  #onKeydown(event: KeyboardEvent) {
+    if (['Enter', ' '].includes(event.key)) {
+      this.dispatchEvent(new Event('select', { bubbles: true }));
+    }
+  }
+
+  /**
    * handles option focus
    * @fires optionfocus
    */
   #onFocus() {
     this.dispatchEvent(new Event('optionfocus', { bubbles: true }));
+  }
+
+  /**
+   * handles option hidden by filter
+   * @fires optionfiltered
+   */
+  #onHiddenByFilter() {
+    this.dispatchEvent(new Event('optionfiltered', { bubbles: true }));
   }
 
   /**

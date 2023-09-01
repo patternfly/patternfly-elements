@@ -81,6 +81,8 @@ export class ListboxController<
    * */
   #options: ListboxOptionElement[] = [];
 
+  #updateFocus = false;
+
   get activeItem() {
     const [active] = this.options.filter(option => option.getAttribute('id') === this.#internals.ariaActivedescendant);
     return active || this.#tabindex.firstItem;
@@ -221,6 +223,9 @@ export class ListboxController<
       if (matchedOptions.includes(option)) {
         option.removeAttribute('hidden-by-filter');
       } else {
+        if (document.activeElement === option) {
+          this.#updateFocus = true;
+        }
         option.setAttribute('hidden-by-filter', 'hidden-by-filter');
       }
     });
@@ -337,7 +342,13 @@ export class ListboxController<
       return;
     }
     const oldValue = this.value;
-    this.#tabindex.initItems(this.visibleOptions);
+
+    if (this.#updateFocus) {
+      this.#tabindex.updateItems(this.visibleOptions);
+      this.#updateFocus = false;
+    } else {
+      this.#tabindex.initItems(this.visibleOptions);
+    }
     if (oldValue !== this.value) {
       this.#fireInput();
     }

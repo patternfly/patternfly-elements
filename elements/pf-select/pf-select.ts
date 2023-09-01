@@ -277,9 +277,9 @@ export class PfSelect extends LitElement {
               aria-expanded="${!this.open ? 'false' : 'true'}" 
               placeholder="${this.#buttonLabel}"
               role="combobox"
-              @keydown="${this.#onToggleKeydown}"
+              @keydown=${this.#onToggleKeydown}
               @input=${this.#onTypeaheadInput}
-              @focus="${this.#onTypeaheadFocus}">
+              @focus=${this.#onTypeaheadFocus}>
           `}
           <button 
             id="toggle-button" 
@@ -473,8 +473,8 @@ export class PfSelect extends LitElement {
    */
   #onTypeaheadInput() {
     // update the filter
+    this.#updateCreateOptionValue(this._input?.value || '');
     if (this._listbox && this.filter !== this._input?.value) {
-      this.#updateCreateOptionValue(this._input?.value || '');
       this.filter = this._input?.value || '';
     }
   }
@@ -483,8 +483,13 @@ export class PfSelect extends LitElement {
    * updates create option text to match input value
    */
   #updateCreateOptionText() {
-    this.#createOption.innerHTML = `${this.#createOption.value}`;
-    const createOptionText = !this.typeahead || this.#createOption.value === '' ? '' : this.createOptionText;
+    const optionText = `${this.#createOption.getAttribute('value') || ''}`;
+    this.#createOption.innerHTML = optionText;
+    const [optionExists] = (this.options || []).filter(option => {
+      return option !== this.#createOption &&
+        (optionText === option?.textContent || this.#createOption.getAttribute('value') === option?.getAttribute('value'));
+    });
+    const createOptionText = !this.typeahead || optionText === '' || !!optionExists ? '' : this.createOptionText;
     this.#createOption.createOptionText = createOptionText;
   }
 
@@ -496,7 +501,7 @@ export class PfSelect extends LitElement {
     if (optionValue === '*') {
       optionValue = '';
     }
-    this.#createOption.value = optionValue;
+    this.#createOption.setAttribute('value', optionValue);
     this.#updateCreateOptionText();
   }
 

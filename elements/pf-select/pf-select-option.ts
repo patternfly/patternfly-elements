@@ -70,10 +70,18 @@ export class PfSelectOption extends LitElement {
     this.addEventListener('blur', this.#onBlur);
   }
 
+  /**
+   * text content within option (used for filtering)
+   */
   get optionText() {
     return this._slottedText.map(node => node.textContent).join('').trim();
   }
 
+  /**
+   * used for typeahead to determine if
+   * a create option should be shown
+   * by setting the text for create option
+   */
   set createOptionText(str: string) {
     if (!this.#userCreatedOption) {
       this.#createOptionText = str || '';

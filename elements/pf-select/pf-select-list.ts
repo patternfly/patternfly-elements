@@ -35,7 +35,7 @@ export class PfSelectList extends LitElement {
 
   /**
    * whether filtering (if enabled) will look for filter match anywhere in option text
-   * (by default it will only match if the option starts with filter)
+   * (by default it will only match if option starts with filter)
    */
   @property({ reflect: true, attribute: 'match-anywhere', type: Boolean }) matchAnywhere = false;
 
@@ -142,7 +142,7 @@ export class PfSelectList extends LitElement {
   }
 
   /**
-   * sets focus
+   * sets focus on active item
    */
   focus() {
     if (this.#listboxController) {

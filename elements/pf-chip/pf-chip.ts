@@ -25,17 +25,17 @@ export class PfChip extends LitElement {
   @property({ attribute: 'close-label', type: String }) closeLabel = 'Close';
 
   /**
-   * Flag indicating if the chip is an overflow chip
+   * Flag indicating if chip is an overflow chip
    */
   @property({ reflect: true, attribute: 'overflow-chip', type: Boolean }) overflowChip = false;
 
   /**
-   * Flag indicating if the chip is read-only and cannot be removed
+   * Flag indicating if chip is read-only and cannot be removed
    */
   @property({ reflect: true, attribute: 'read-only', type: Boolean }) readOnly = false;
 
   /**
-   * Flag indicating if the chip is hidden.
+   * Flag indicating if chip is hidden.
    * Chip group will set this property based on number of chips to display.
    */
   @property({ reflect: true, attribute: 'overflow-hidden', type: Boolean }) overflowHidden = false;
@@ -73,10 +73,16 @@ export class PfChip extends LitElement {
     this.dispatchEvent(new Event('chip-ready', { bubbles: true }));
   }
 
+  /**
+   * sets focus on chip's button
+   */
   focus() {
     this.button?.focus();
   }
 
+  /**
+   * handles chip's button click event
+   */
   #onClick() {
     /**
      * @fires chip-remove

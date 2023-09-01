@@ -65,7 +65,7 @@ export class PfSelect extends LitElement {
   @property({ reflect: true, attribute: 'disable-filter', type: Boolean }) disableFilter = false;
 
   /**
-   * enable to flip the listbox when it reaches the boundary
+   * enable to flip listbox when it reaches boundary
    */
   @property({ attribute: 'enable-flip', type: Boolean }) enableFlip = false;
 
@@ -81,7 +81,7 @@ export class PfSelect extends LitElement {
 
   /**
    * whether filtering (if enabled) will look for filter match anywhere in option text
-   * (by default it will only match if the option starts with filter)
+   * (by default it will only match if option starts with filter)
    */
   @property({ reflect: true, attribute: 'match-anywhere', type: Boolean }) matchAnywhere = false;
 
@@ -96,14 +96,14 @@ export class PfSelect extends LitElement {
   @property({ reflect: true, attribute: 'open', type: Boolean }) open = false;
 
   /**
-   * Indicates the initial popover position.
+   * Indicates initial popover position.
    * There are 6 options: `bottom`, `top`, `top-start`, `top-end`, `bottom-start`, `bottom-end`.
-   * The default is `bottom`.
+   * Default is `bottom`.
    */
   @property({ reflect: true, attribute: 'position' }) position: Placement = 'bottom';
 
   /**
-   * how listbox will display multiple items in the toggle area:
+   * how listbox will display multiple items in toggle area:
    * 'badge' for a badge with item count,
    * 'chips' for a group of chips,
    * '' for # itmes selected text (default)
@@ -247,7 +247,7 @@ export class PfSelect extends LitElement {
   /**
    * Single select option value for single select menus,
    * or array of select option values for multi select.
-   * You can also specify `isSelected` on the `SelectOption`.
+   * You can also specify `isSelected` on `SelectOption`.
    */
   get selected() {
     return this._listbox?.selected;
@@ -407,8 +407,11 @@ export class PfSelect extends LitElement {
    */
   async #close(force = false) {
     const hasFocus = this.#focused || this.#hovered;
+    // only close if listbox is not set to always open
+    // and it does not currently have focus/hover
     if (!this.alwaysOpen && (force || !hasFocus)) {
       this.open = false;
+      // only re-set focus if close was forced by select itself
       if (!force) {
         await this.updateComplete;
         this.focus();
@@ -441,6 +444,10 @@ export class PfSelect extends LitElement {
     }
   }
 
+  /**
+   * handles opening of listbox
+   * and floating DOM controller
+   */
   async #onOpenChanged() {
     if (this.open && !this.alwaysOpen) {
       await this.#float.show({
@@ -466,20 +473,38 @@ export class PfSelect extends LitElement {
     this.#updateCreateOptionValue();
   }
 
+  /**
+   * sets focus and tests for closing
+   * when any part of select loses focus
+   */
   #onSelectBlur() {
     this.#focused = false;
+    // wait for immediate focus or hover event;
+    // then test if listbox can be closed
     setTimeout(this.#close.bind(this, false), 300);
   }
 
+  /**
+   * sets indicator when any part of select gets focus
+   */
   #onSelectFocus() {
     this.#focused = true;
   }
 
+  /**
+   * sets focus and tests for closing
+   * when any part of select loses hover
+   */
   #onSelectMouseout() {
     this.#hovered = false;
+    // wait for immediate focus or hover event;
+    // then test if listbox can be closed
     setTimeout(this.#close.bind(this, false), 300);
   }
 
+  /**
+   * sets indicator when any part of select gets hover
+   */
   #onSelectMouseover() {
     this.#hovered = true;
   }
@@ -526,7 +551,7 @@ export class PfSelect extends LitElement {
    * handles typeahead combobox input event
    */
   #onTypeaheadInput() {
-    // update the filter
+    // update filter
     this.#updateCreateOptionValue(this._input?.value || '');
     if (this._listbox && this.filter !== this._input?.value) {
       this.filter = this._input?.value || '';

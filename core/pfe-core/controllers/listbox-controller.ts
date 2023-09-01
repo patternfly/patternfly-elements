@@ -14,6 +14,9 @@ export type ListboxOrientation = '' | 'horizontal' | 'vertical';
  */
 export type ListboxValue = unknown | unknown[];
 
+/**
+ * filtering, multiselect, and orientation options for listbox
+ */
 export interface ListboxConfigOptions {
   caseSensitive?: boolean;
   disableFilter?: boolean;
@@ -22,6 +25,9 @@ export interface ListboxConfigOptions {
   orientation?: ListboxOrientation;
 }
 
+/**
+ * properties for listbox option elements
+ */
 export interface ListboxOptionElement extends HTMLElement {
   value: unknown;
   selected?: boolean;
@@ -68,10 +74,13 @@ export class ListboxController<
 
   /**
    * whether filtering (if enabled) will look for filter match anywhere in option text
-   * (by default it will only match if the option starts with filter)
+   * (by default it will only match if option starts with filter)
    */
   #matchAnywhere = false;
 
+  /**
+   * current active descendant when shift key is pressed
+   */
   #shiftStartingItem: ListboxOptionElement | null = null;
 
   #tabindex: RovingTabindexController;
@@ -81,13 +90,22 @@ export class ListboxController<
    * */
   #options: ListboxOptionElement[] = [];
 
+  /**
+   * whether or not focus should be updated after filtering
+   */
   #updateFocus = false;
 
+  /**
+   * current active descendant in listbox
+   */
   get activeItem() {
     const [active] = this.options.filter(option => option.getAttribute('id') === this.#internals.ariaActivedescendant);
     return active || this.#tabindex.firstItem;
   }
 
+  /**
+   * text for filtering options
+   */
   set filter(filterText: string) {
     if (this.#filter !== filterText) {
       this.#filter = filterText;
@@ -99,6 +117,9 @@ export class ListboxController<
     return this.#filter;
   }
 
+  /**
+   * whether filtering is case sensitive
+   */
   set caseSensitive(caseSensitive: boolean) {
     if (this.#caseSensitive !== caseSensitive) {
       this.#caseSensitive = caseSensitive;
@@ -110,6 +131,10 @@ export class ListboxController<
     return this.#caseSensitive;
   }
 
+  /**
+   * whether filtering is disabled;
+   * default is filtering enabled
+   */
   set disableFilter(disableFilter: boolean) {
     if (this.#disableFilter !== disableFilter) {
       this.#disableFilter = disableFilter;
@@ -121,6 +146,9 @@ export class ListboxController<
     return !!this.#disableFilter;
   }
 
+  /**
+   * whether listbox is disabled
+   */
   set disabled(disabled: boolean) {
     this.#internals.ariaDisabled = disabled ? 'true' : 'false';
   }
@@ -129,6 +157,10 @@ export class ListboxController<
     return this.#internals.ariaDisabled === 'true';
   }
 
+  /**
+   * whether listbox is multiselectable;
+   * default is single-select
+   */
   set multiSelectable(multiSelectable: boolean) {
     this.#internals.ariaMultiSelectable = multiSelectable ? 'true' : 'false';
   }
@@ -137,6 +169,10 @@ export class ListboxController<
     return this.#internals.ariaMultiSelectable === 'true';
   }
 
+  /**
+   * whether filtering matches anywhere in option text;
+   * default is only options starting with filter
+  */
   set matchAnywhere(matchAnywhere: boolean) {
     if (this.#matchAnywhere !== matchAnywhere) {
       this.#matchAnywhere = matchAnywhere;
@@ -148,6 +184,10 @@ export class ListboxController<
     return this.#matchAnywhere;
   }
 
+  /**
+   * listbox orientation;
+   * default is vertical
+   */
   set orientation(orientation: ListboxOrientation) {
     this.#internals.ariaOrientation = orientation;
   }
@@ -157,10 +197,9 @@ export class ListboxController<
     return orientation as ListboxOrientation;
   }
 
-  get options() {
-    return this.#options;
-  }
-
+  /**
+   * array of listbox option elements
+   */
   set options(options: ListboxOptionElement[]) {
     const setSize = options.length;
     if (setSize !== this.#options.length || !options.every((element, index) => element === this.#options[index])) {
@@ -173,15 +212,20 @@ export class ListboxController<
     }
   }
 
+  get options() {
+    return this.#options;
+  }
+
+  /**
+   * array of options which are selected
+   */
   get selectedOptions() {
     return this.options.filter(option => option.selected);
   }
 
-  get value() {
-    const [firstItem] = this.selectedOptions;
-    return this.multiSelectable ? this.selectedOptions : firstItem;
-  }
-
+  /**
+   * listbox value based on selected options
+   */
   set value(optionsList: ListboxValue) {
     const oldValue = this.value;
     let firstItem: unknown;
@@ -199,6 +243,15 @@ export class ListboxController<
     }
   }
 
+  get value() {
+    const [firstItem] = this.selectedOptions;
+    return this.multiSelectable ? this.selectedOptions : firstItem;
+  }
+
+  /**
+   * array of options that match filter;
+   * (or all options if no options match or if no filter)
+   */
   get visibleOptions() {
     let matchedOptions: ListboxOptionElement[] = [];
     if (!(this.disableFilter || this.filter === '*' || this.#showAllOptions)) {
@@ -260,6 +313,9 @@ export class ListboxController<
     }
   }
 
+  /**
+   * verfies that selected options are limited to exisiting listbox options
+   */
   isValid(val: string | null) {
     const vals = val?.split(',') || [];
     const options = this.options.map(option => option.textContent);
@@ -268,10 +324,16 @@ export class ListboxController<
     });
   }
 
+  /**
+   * sets focus on last active item
+   */
   focus() {
     this.#tabindex.focusOnItem(this.#tabindex.activeItem);
   }
 
+  /**
+   * updates active descendant when focus changes
+   */
   #updateActiveDescendant() {
     this.options.forEach(option => {
       if (option === this.#tabindex.activeItem && this.visibleOptions.includes(option)) {
@@ -286,6 +348,9 @@ export class ListboxController<
     });
   }
 
+  /**
+   * updates option selections for single select listbox
+   */
   #updateSingleselect() {
     if (!this.multiSelectable) {
       this.options.forEach(option => option.selected = option.id === this.#internals.ariaActivedescendant);
@@ -294,7 +359,7 @@ export class ListboxController<
   }
 
   /**
-   * for listboxes that are multiselectable, updates listbox option selections:
+   * updates option selections for multiselectable listbox:
    * toggles all options between active descendant and target
    * @param currentItem
    * @param referenceItem
@@ -442,6 +507,7 @@ export class ListboxController<
       return;
     } else if (event.ctrlKey) {
       if (event.key?.match(/^[aA]$/)?.input && this.#tabindex.firstItem) {
+        // ctrl+A selects all options
         this.#updateMultiselect(this.#tabindex.firstItem as ListboxOptionElement, this.#tabindex.lastItem as ListboxOptionElement, true);
         stopEvent = true;
       } else {
@@ -450,16 +516,19 @@ export class ListboxController<
     } else {
       switch (event.key) {
         case '*':
+          // shows all options when filter contains no other chars
           this.#showAllOptions = this.filter === '';
           this.filter = '*';
           stopEvent = true;
           break;
         case 'Backspace':
         case 'Delete':
+          // removes filter
           this.filter = '';
           stopEvent = true;
           break;
         case event.key?.match(/^[\w]$/)?.input:
+          // sets filter to character
           this.filter = event.key;
           stopEvent = true;
           break;

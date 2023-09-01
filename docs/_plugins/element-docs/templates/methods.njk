@@ -1,0 +1,28 @@
+{% set level = level or 2 %}
+{% set header = header or 'Methods' %}
+
+{# TODO: inline code highlighting for type and default: render the markdown to html and extract the `<code>` from the `<pre>` #}
+
+<section class="api band methods api-properties">
+  {{ header | cemMdHeading(level) | safe }} {% if not content and not events.length %}
+
+  <em>None</em> {% else %}
+
+  {{ content | cemInnerMD | safe }}
+  <dl> {%- for method in methods -%}
+    <dt><strong><code>{{ method.name }}({{ method | stringifyParams }})</code></strong></dt>
+    <dd>{{- method.description | cemInnerMD | safe -}}</dd> {%- endfor -%}
+  </dl> {%- endif -%} {%- if deprecated.length -%}
+
+  <details>
+    <summary>{{ ('Deprecated ' + header) | cemMdHeading(level + 1) | safe }}</summary>
+    <dl> {%- for method in deprecated -%}
+      <dt><strong><code>{{ method.name }}({{ method | stringifyParams }})</code></strong></dt>
+      <dd>
+        {{- method.description | cemInnerMD | safe -}}
+        <em>Node: {{ method.name }} is deprecated. {{- method.deprecated | cemInnerMD | safe -}}</em>
+      </dd> {%- endfor -%}
+    </dl>
+
+  </details> {%- endif -%}
+</section>

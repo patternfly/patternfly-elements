@@ -16,7 +16,6 @@ import { litCss, type LitCSSOptions } from 'web-dev-server-plugin-lit-css';
 import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { importMapsPlugin } from '@web/dev-server-import-maps';
-import { promisify } from 'node:util';
 
 import Router from '@koa/router';
 import { Manifest, type DemoRecord } from '../custom-elements-manifest/lib/Manifest.js';

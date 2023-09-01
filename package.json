@@ -111,6 +111,15 @@
       ]
     },
     "build:cli": {
+      "command": "node -e \"require('fs').chmodSync(require('path').join(process.cwd(), 'tools', 'pfe-cli', 'cli.js'), 0555)\"",
+      "dependencies": [
+        "build:cli:compile"
+      ],
+      "files": [
+        "tools/pfe-cli/cli.js"
+      ]
+    },
+    "build:cli:compile": {
       "command": "tsc --build tools/pfe-cli --pretty",
       "clean": "if-file-deleted",
       "files": [

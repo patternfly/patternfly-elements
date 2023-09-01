@@ -1,0 +1,39 @@
+{% set level = level or 2 %}
+{% set header = header or 'DOM Properties' %}
+
+{# TODO: inline code highlighting for type and default: render the markdown to html and extract the `<code>` from the `<pre>` #}
+
+<section class="api band properties api-properties">
+  {{ header | cemMdHeading(level) | safe }} {% if not content and not properties.length %}
+
+  <em>None</em> {% else %}
+
+  {{ content | cemInnerMD | safe }}
+
+  <dl> {%- for property in properties -%}
+    <dt><strong><code>{{ property.name }}</code></strong></dt>
+    <dd>
+      {{- property.description | cemInnerMD | safe -}}
+      <dl class="member">
+        <dt>Type</dt> <dd class="inline-type"> {{- (property.type.text or 'unknown') | cemType | safe -}} </dd>
+        <dt>Default</dt> <dd class="inline-type"> {{- (property.default or 'unknown') | cemType | safe -}} </dd>
+      </dl>
+    </dd> {%- endfor -%}
+  </dl> {% endif %} {%- if deprecated.length -%}
+
+  <details>
+    <summary>{{ ('Deprecated ' + header) | cemMdHeading(level + 1) | safe }}</summary>
+    <dl> {%- for property in deprecated -%}
+      <dt><strong><code>{{ property.name }}</code></strong></dt>
+      <dd>
+        {{- property.description | cemInnerMD | safe -}}
+        <em>Note: {{ property.name }} is deprecated. {{- property.deprecated | cemInnerMD | safe -}}</em>
+        <dl class="member">
+          <dt>Type</dt> <dd class="inline-type"> {{- (property.type.text or 'unknown') | cemType | safe -}} </dd>
+          <dt>Default</dt> <dd class="inline-type"> {{- (property.default or 'unknown') | cemType | safe -}} </dd>
+        </dl>
+      </dd> {%- endfor -%}
+    </dl>
+
+  </details> {%- endif -%}
+</section>

@@ -8,15 +8,19 @@ import { glob } from 'glob';
 import CleanCSS from 'clean-css';
 
 const resolveDir = join(fileURLToPath(import.meta.url), '../../elements');
-const entryPoints = (await glob('./pf-*/pf-*.ts', { cwd: resolveDir })).map(x => x.replace('.ts', '.js'));
-const contents = entryPoints.map(x => `export * from '${x}';`).join('\n');
+const files = await glob('./pf-*/pf-*.ts', { cwd: resolveDir });
+const contents = files
+  .filter(x => !x.endsWith('.d.ts'))
+  .map(x => `export * from '@patternfly/elements/${x.replace('.ts', '.js')}';`).join('\n');
 
 const cleanCSS = new CleanCSS({
   sourceMap: true,
   returnPromise: true,
 });
 
-export async function bundle({ outfile = 'elements/pfe.min.js' } = {}) {
+export async function bundle({
+  outfile = 'elements/pfe.min.js',
+} = {}) {
   await build({
     stdin: {
       contents,

@@ -1,8 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { promisify } = require('node:util');
-const Glob = require('glob');
-const glob = promisify(Glob);
+const { glob } = require('glob');
 
 const packageLock = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'package-lock.json')));
 

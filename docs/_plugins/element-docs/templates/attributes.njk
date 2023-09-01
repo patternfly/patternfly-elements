@@ -1,0 +1,37 @@
+{% set level = level or 2 %}
+{% set header = header or 'Attributes' %}
+
+<section class="band api attributes api-properties">
+  {{ header | cemMdHeading(level) | safe }} {% if not content and not attributes.length %}
+
+  <em>None</em> {%- else -%}
+
+  {{ content | cemInnerMD | safe }}
+  <dl> {%- for attribute in attributes -%}
+    <dt><strong><code>{{ attribute.name }}</code></strong></dt>
+    <dd>
+      {{- attribute.description | cemInnerMD | safe -}}
+      <dl class="member"> {%- if attribute.fieldName -%}
+        <dt>DOM Property</dt> <dd><code>{{ attribute.fieldName }}</code></dd> {%- endif -%}
+        <dt>Type</dt> <dd class="inline-type"> {{- (attribute.type.text or 'unknown') | cemType | safe -}} </dd>
+        <dt>Default</dt> <dd class="inline-type">{{- (attribute.default or 'unknown') | cemType | safe -}}</dd>
+      </dl>
+    </dd> {%- endfor -%}
+  </dl> {%- endif -%} {%- if deprecated.length -%}
+
+  <details>
+    <summary>{{ ('Deprecated ' + header) | cemMdHeading(level + 1) | safe }}</summary>
+    <dl> {%- for attribute in deprecated -%}
+      <dt><strong><code>{{ attribute.name }}</code></strong></dt>
+      <dd>
+        {{- attribute.description | cemInnerMD | safe -}}
+        <em>Note: {{ attribute.name }} is deprecated. {{ item.deprecated | cemInnerMD | safe }}</em>
+        <dl class="member"> {%- if attribute.fieldName -%}
+          <dt>DOM Property</dt> <dd><code>{{ attribute.fieldName }}</code></dd> {%- endif -%}
+          <dt>Type</dt> <dd class="inline-type"> {{- (attribute.type.text or 'unknown') | cemType | safe -}} </dd>
+          <dt>Default</dt> <dd class="inline-type"> {{- (attribute.default or 'unknown') | cemType | safe -}} </dd>
+        </dl>
+      </dd> {%- endfor -%}
+    </dl>
+  </details>{%- endif -%}
+</section>

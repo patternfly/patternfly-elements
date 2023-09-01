@@ -50,6 +50,8 @@
     "**/*.{js,cjs,d.ts,map}"
   ],
   "dependencies": {
+    "@lit-labs/analyzer": "^0.9.2",
+    "@lit-labs/gen-manifest": "^0.2.5",
     "@types/yargs": "^17.0.24",
     "case": "1.6.3",
     "chalk": "^5.3.0",

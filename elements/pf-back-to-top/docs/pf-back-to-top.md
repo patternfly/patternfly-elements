@@ -63,7 +63,7 @@
           <pf-icon icon="arrow-down"></pf-icon> Scroll down to end of cyan box, 400px (default).
         </div>
       </div>
-      <pf-back-to-top scrollable-selector="#scrollable-selector-example" href="#scrollable-selector-example">Back to Top</pf-back-to-top>
+      <pf-back-to-top scrollable-selector="#scrollable-selector-example" href="#main">Back to Top</pf-back-to-top>
     </div>
   {% endhtmlexample %}
 
@@ -75,7 +75,7 @@
           <pf-icon icon="arrow-down"></pf-icon> Scroll down to end of cyan box, 100px.
         </div>
       </div>
-      <pf-back-to-top scroll-distance="100" scrollable-selector="#scroll-distance-example" href="#scroll-distance-example">Back to Top</pf-back-to-top>
+      <pf-back-to-top scroll-distance="100" scrollable-selector="#scroll-distance-example" href="#main">Back to Top</pf-back-to-top>
     </div>
   {% endhtmlexample %}
 

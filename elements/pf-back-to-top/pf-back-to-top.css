@@ -18,7 +18,7 @@ pf-button {
 }
 
 a {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--pf-c-button--m-primary--Color, var(--pf-global--Color--light-100, #fff));

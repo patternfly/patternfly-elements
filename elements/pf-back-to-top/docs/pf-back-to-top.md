@@ -48,10 +48,10 @@
 {% band header="Usage" %}
 
   ### Default
-  {% htmlexample %}<pf-back-to-top>Back to Top</pf-back-to-top>{% endhtmlexample %}
+  {% htmlexample %}<pf-back-to-top href="#top">Back to Top</pf-back-to-top>{% endhtmlexample %}
 
   ### Title attribute
-  {% htmlexample %}<pf-back-to-top title="Back to Top"></pf-back-to-top>{% endhtmlexample %}
+  {% htmlexample %}<pf-back-to-top title="Back to Top" href="#top"></pf-back-to-top>{% endhtmlexample %}
 
   <div class="override">
 
@@ -63,7 +63,7 @@
           <pf-icon icon="arrow-down"></pf-icon> Scroll down to end of cyan box, 400px (default).
         </div>
       </div>
-      <pf-back-to-top scrollable-selector="#scrollable-selector-example">Back to Top</pf-back-to-top>
+      <pf-back-to-top scrollable-selector="#scrollable-selector-example" href="#scrollable-selector-example">Back to Top</pf-back-to-top>
     </div>
   {% endhtmlexample %}
 
@@ -75,7 +75,7 @@
           <pf-icon icon="arrow-down"></pf-icon> Scroll down to end of cyan box, 100px.
         </div>
       </div>
-      <pf-back-to-top scroll-distance="100" scrollable-selector="#scroll-distance-example">Back to Top</pf-back-to-top>
+      <pf-back-to-top scroll-distance="100" scrollable-selector="#scroll-distance-example" href="#scroll-distance-example">Back to Top</pf-back-to-top>
     </div>
   {% endhtmlexample %}
 

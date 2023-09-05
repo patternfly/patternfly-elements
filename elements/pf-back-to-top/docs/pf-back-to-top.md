@@ -42,7 +42,7 @@
 </style>
 
 {% renderOverview %}
-  <pf-back-to-top>Back to Top</pf-back-to-top>
+  <pf-back-to-top href="#main">Back to Top</pf-back-to-top>
 {% endrenderOverview %}
 
 {% band header="Usage" %}

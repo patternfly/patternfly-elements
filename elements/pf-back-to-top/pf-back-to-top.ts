@@ -47,18 +47,27 @@ export class PfBackToTop extends LitElement {
   @property({ reflect: true, attribute: 'scrollable-selector' }) scrollableSelector?: string;
 
   /** Distance from the top of the scrollable element to trigger the visibility of the back to top button */
-  @property({ type: Number, reflect: true, attribute: 'scroll-distance' }) scrollDistance = 400;
+  @property({ type: Number, attribute: 'scroll-distance' }) scrollDistance = 400;
+
+  /** Page fragment link to element, must include hash (#) */
+  @property({ reflect: true }) href?: string;
 
   override connectedCallback(): void {
     super.connectedCallback();
+
     this.#scrollSpy = Boolean(this.scrollableSelector);
+
+    if (!!this.scrollableSelector && this.scrollableSelector.trim() === '') {
+      this.#logger.error(`scrollable-selector attribute cannot be empty`);
+      return;
+    }
+
     if (this.#scrollSpy && !!this.scrollableSelector) {
       const selector = document.querySelector(this.scrollableSelector) as HTMLElement;
       if (!selector) {
-        this.#logger.warn(`Unable to find element with selector ${this.scrollableSelector}`);
+        this.#logger.error(`Unable to find element with selector ${this.scrollableSelector}`);
         return;
       }
-
       this.#scrollElement = selector;
     } else {
       this.#scrollElement = window;
@@ -69,7 +78,22 @@ export class PfBackToTop extends LitElement {
 
   render() {
     const classes = { 'visually-hidden': !this.#visible };
-    return html`
+
+    // ensure href has a hash
+    if (this.href && !this.href.includes('#')) {
+      this.href = `#${this.href}`;
+      this.#logger.warn(`missing hash in href fragment link`);
+    }
+
+    return this.href ? html`
+      <a href="${this.href}" class="${classMap(classes)}">
+        <slot name="icon"></slot>
+        <slot>${ifDefined(this.title)}</slot>
+        <span>
+          <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path></svg>
+        </span>
+      </a>
+      ` : html`
       <pf-button icon="${ifDefined(this.icon)}" icon-set="${ifDefined(this.iconSet)}" class="${classMap(classes)}" part="button">
         <slot name="icon" slot="icon"></slot>
         <slot>${ifDefined(this.title)}</slot>

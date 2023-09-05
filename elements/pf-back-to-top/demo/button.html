@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="demo.css">
+<script type="module" src="pf-back-to-top.js"></script>
+<script type="module">
+  import '@patternfly/elements/pf-banner/pf-banner.js';
+</script>
+<script type="module" src="button-listener.js"></script>
+
+<pf-banner variant="info">
+  <pf-icon icon="info-circle" slot="icon"></pf-icon>
+  <strong>Accessibility Warning</strong> Button/JS implementation must focus element in which it is scrolled to.
+</pf-banner>
+<a id="top"></a>
+<div class="scroll-indicator">
+  <h2>Button with JS event implementation</h2>
+  <pf-icon icon="arrow-down"></pf-icon> Scroll down to end of cyan box, 400px (default).
+</div>
+<pf-back-to-top scrollable-selector="main">Back to Top</pf-back-to-top>

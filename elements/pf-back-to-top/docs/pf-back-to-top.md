@@ -48,10 +48,10 @@
 {% band header="Usage" %}
 
   ### Default
-  {% htmlexample %}<pf-back-to-top href="#top">Back to Top</pf-back-to-top>{% endhtmlexample %}
+  {% htmlexample %}<pf-back-to-top href="#main">Back to Top</pf-back-to-top>{% endhtmlexample %}
 
   ### Title attribute
-  {% htmlexample %}<pf-back-to-top title="Back to Top" href="#top"></pf-back-to-top>{% endhtmlexample %}
+  {% htmlexample %}<pf-back-to-top title="Back to Top" href="#main"></pf-back-to-top>{% endhtmlexample %}
 
   <div class="override">
 

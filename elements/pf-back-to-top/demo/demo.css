@@ -12,3 +12,7 @@ main {
   padding: var(--pf-global--spacer--md, 1rem);
   background-color: var(--pf-global--palette--cyan-50, #f2f9f9) !important;
 }
+
+.scroll-indicator > a + h2 {
+  display: inline-block;
+}

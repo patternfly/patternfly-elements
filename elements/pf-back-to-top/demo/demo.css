@@ -1,0 +1,14 @@
+div[data-demo] {
+  height: 200vh;
+}
+
+main {
+  /* ensure main is scrollable depending on demo view point */
+  overflow-y: scroll;
+}
+
+.scroll-indicator {
+  height: 400px;
+  padding: var(--pf-global--spacer--md, 1rem);
+  background-color: var(--pf-global--palette--cyan-50, #f2f9f9) !important;
+}

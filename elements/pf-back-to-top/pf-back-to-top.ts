@@ -86,7 +86,7 @@ export class PfBackToTop extends LitElement {
     }
 
     return this.href ? html`
-      <a href="${this.href}" class="${classMap(classes)}">
+      <a href="${this.href}" class="${classMap(classes)}" part="button">
         <slot name="icon"></slot>
         <slot>${ifDefined(this.title)}</slot>
         <span>

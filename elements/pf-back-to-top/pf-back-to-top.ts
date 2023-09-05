@@ -1,17 +1,22 @@
-import { LitElement, html, type PropertyValueMap } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { classMap } from 'lit/directives/class-map.js';
+
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-back-to-top.css';
-import { property } from 'lit/decorators/property.js';
 
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 /**
  * The **back to top** component is a shortcut that allows users to quickly navigate to the top of a lengthy content page.
  * @summary A shortcut that allows users to quickly navigate to the top of a lengthy content page.
+ *
+ * @csspart button - The button element
+ *
  * @slot icon
  *       Contains the button's icon or state indicator, e.g. a spinner.
  * @slot
@@ -22,6 +27,8 @@ export class PfBackToTop extends LitElement {
   static readonly styles = [styles];
 
   #scrollSpy = false;
+
+  #visible = false;
 
   #scrollElement?: HTMLElement | Window;
 
@@ -61,8 +68,9 @@ export class PfBackToTop extends LitElement {
   }
 
   render() {
+    const classes = { 'visually-hidden': !this.#visible };
     return html`
-      <pf-button icon="${ifDefined(this.icon)}" icon-set="${ifDefined(this.iconSet)}">
+      <pf-button icon="${ifDefined(this.icon)}" icon-set="${ifDefined(this.iconSet)}" class="${classMap(classes)}" part="button">
         <slot name="icon" slot="icon"></slot>
         <slot>${ifDefined(this.title)}</slot>
         <span>
@@ -73,20 +81,14 @@ export class PfBackToTop extends LitElement {
   }
 
   #toggleVisibility() {
+    const previousVisibility = this.#visible;
     if (this.#scrollElement) {
       const scrolled = (this.#scrollElement instanceof Window) ? this.#scrollElement.scrollY : this.#scrollElement.scrollTop;
-      if (!this.alwaysVisible) {
-        if (scrolled > this.scrollDistance) {
-          this.#setVisible(true);
-        } else {
-          this.#setVisible(false);
-        }
+      this.#visible = this.alwaysVisible ? true : (scrolled > this.scrollDistance);
+      if (previousVisibility !== this.#visible) {
+        this.requestUpdate();
       }
     }
-  }
-
-  #setVisible(visible: boolean) {
-    this.hidden = !visible;
   }
 }
 

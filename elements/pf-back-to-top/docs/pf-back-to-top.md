@@ -3,8 +3,13 @@
     position: static !important;
   }
 
-  :not(.override) > .example-preview pf-back-to-top[hidden] {
-    display: block !important;
+  :not(.override) > .example-preview pf-back-to-top::part(button) {
+    position: static !important;
+    left: unset;
+    top: unset;
+    width: unset;
+    height: unset;
+    overflow: unset;
   }
 
   .override > .example-preview :is(#scrollable-selector-example, #scroll-distance-example) {

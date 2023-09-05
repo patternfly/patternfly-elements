@@ -5,10 +5,6 @@
   bottom: var(--pf-c-back-to-top--Bottom, var(--pf-global--spacer--lg, 1.5rem));
 }
 
-:host([hidden]) {
-  display: none;
-}
-
 pf-button {
   box-shadow: var(--pf-c-back-to-top--c-button--BoxShadow, var(--pf-global--BoxShadow--lg-bottom, 0 0.75rem 0.75rem -0.5rem rgba(3, 3, 3, 0.18)));
 
@@ -18,6 +14,15 @@ pf-button {
   --pf-c-button--PaddingRight: var(--pf-c-back-to-top--c-button--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
   --pf-c-button--PaddingBottom: var(--pf-c-back-to-top--c-button--PaddingBottom, var(--pf-global--spacer--xs, 0.25rem));
   --pf-c-button--PaddingLeft: var(--pf-c-back-to-top--c-button--PaddingLeft, var(--pf-global--spacer--sm, 0.5rem));
+}
+
+pf-button.visually-hidden {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 span {

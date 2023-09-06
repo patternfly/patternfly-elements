@@ -22,10 +22,8 @@ import '@patternfly/elements/pf-icon/pf-select.js';
 #### Single
 
 <p>
-  Any arrow keys work.
-  Only one option can be selected.
-  Filter by typing any letter. Type <code>*</code>
-  to remove filtering altogether.
+  Focus on options using arrow keys or
+  by typing the first character of an option.
 </p>
 
 {% htmlexample %}
@@ -101,7 +99,6 @@ Below are option variants:
   Multiple options can be selected. Any arrow keys work.
   <kbd>Shift</kbd> will toggling off multiple items.
   <kbd>Ctrl+A</kbd> will toggle selection on all items.
-  Filter by typing a letter.
 </p>
 
 {% htmlexample %}
@@ -121,9 +118,8 @@ Below are option variants:
 
 <p>
   Multiple options, displayed as checkboxes, can be selected.
-  Any arrow keys work. <kbd>Shift</kbd> will toggling off multiple items.
+  <kbd>Shift</kbd> will toggling off multiple items.
   <kbd>Ctrl+A</kbd> will toggle selection on all items.
-  Filter by typing a letter.
 </p>
 
 {% htmlexample %}
@@ -250,10 +246,26 @@ By default, filtering is __**enabled**__ and __**not**__ case sensitive. However
 
 #### Case-sensitive filtering
 
-Any arrow keys work. Only one option can be selected. Filter is case sensisitve.
+{% htmlexample %}
+  <pf-select case-sensitive typeahead>
+    <pf-select-option value="Blue">Blue</pf-select-option>
+    <pf-select-option value="Green">Green</pf-select-option>
+    <pf-select-option value="Magenta">Magenta</pf-select-option>
+    <pf-select-option value="Orange">Orange</pf-select-option>
+    <pf-select-option value="Purple">Purple</pf-select-option>
+    <pf-select-option value="Pink">Pink</pf-select-option>
+    <pf-select-option value="Red">Red</pf-select-option>
+    <pf-select-option value="Yellow">Yellow</pf-select-option>
+  </pf-select>
+{% endhtmlexample %}
+
+#### Match anywhere
+
+Filter options that match input text anywhere 
+rather than just options that start with the input text.
 
 {% htmlexample %}
-  <pf-select case-sensitive>
+  <pf-select match-anywhere typeahead>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -267,10 +279,8 @@ Any arrow keys work. Only one option can be selected. Filter is case sensisitve.
 
 #### Disable filtering
 
-Any arrow keys work. Only one option can be selected. Filter is disabled.
-
 {% htmlexample %}
-  <pf-select disable-filter>
+  <pf-select disable-filter typeahead>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>

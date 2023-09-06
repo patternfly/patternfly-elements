@@ -492,7 +492,6 @@ export class ListboxController<
    * @returns void
    */
   #onOptionKeydown(event: KeyboardEvent) {
-    const { filter } = this;
     this.#showAllOptions = false;
 
     // need to set for keyboard support of multiselect
@@ -502,6 +501,7 @@ export class ListboxController<
     const target = event.target as ListboxOptionElement;
     const oldValue = this.value;
     let stopEvent = false;
+    let focusEvent: ListboxOptionElement | undefined;
     if (event.altKey ||
       event.metaKey) {
       return;
@@ -515,21 +515,8 @@ export class ListboxController<
       }
     } else {
       switch (event.key) {
-        case '*':
-          // shows all options when filter contains no other chars
-          this.#showAllOptions = this.filter === '';
-          this.filter = '*';
-          stopEvent = true;
-          break;
-        case 'Backspace':
-        case 'Delete':
-          // removes filter
-          this.filter = '';
-          stopEvent = true;
-          break;
         case event.key?.match(/^[\w]$/)?.input:
-          // sets filter to character
-          this.filter = event.key;
+          focusEvent = this.#nextMatchingItem(event.key);
           stopEvent = true;
           break;
         case 'Enter':
@@ -562,8 +549,20 @@ export class ListboxController<
     }
     // only change focus if keydown occurred when option has focus
     // (as opposed to an external text input and if filter has changed
-    if (filter !== this.filter) {
-      this.#tabindex.focusOnItem(this.activeItem);
+    if (focusEvent) {
+      this.#tabindex.focusOnItem(focusEvent);
     }
+  }
+
+  #nextMatchingItem(key: string) {
+    const items = [...this.visibleOptions];
+    const index = !this.activeItem ? items.indexOf(this.activeItem) : -1;
+    const sequence = [...items.slice(index), ...items.slice(0, index)];
+    const regex = new RegExp(`^${key}`, this.#caseSensitive ? '' : 'i');
+    const first = sequence.find(item => {
+      const option = item as ListboxOptionElement;
+      return !option.hasAttribute('disabled') && !option.hidden && option.textContent?.match(regex);
+    });
+    return first || undefined;
   }
 }

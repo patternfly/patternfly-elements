@@ -4,10 +4,10 @@
 <section>
   <h2>case-sensitive</h2>
   <p>
-    Any arrow keys work.
-    Only one option can be selected.
-    Filter is case sensisitve.</p>
-  <pf-select case-sensitive>
+    Focus on options using arrow keys or 
+    by typing the first character (case sensisitve) of an option. 
+    Filter is also case-sensistive.</p>
+  <pf-select case-sensitive typeahead>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -21,10 +21,8 @@
 <section>
   <h2>match-anywhere</h2>
   <p>
-    Any arrow keys work.
-    Only one option can be selected.
-    Filter matches anywhere in option text.</p>
-  <pf-select match-anywhere>
+    For typeahead, matches anywhere.</p>
+  <pf-select match-anywhere typeahead>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -39,9 +37,7 @@
 <section>
   <h2>disable-filter</h2>
   <p>
-    Any arrow keys work.
-    Only one option can be selected.
-    Filter is disabled.</p>
+    Focus on options using arrow keys only.</p>
   <pf-select disable-filter>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>

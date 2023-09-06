@@ -412,7 +412,7 @@ export class PfSelect extends LitElement {
     if (!this.alwaysOpen && (force || !hasFocus)) {
       this.open = false;
       // only re-set focus if close was forced by select itself
-      if (!force) {
+      if (!force && hasFocus) {
         await this.updateComplete;
         this.focus();
       }
@@ -555,6 +555,7 @@ export class PfSelect extends LitElement {
     this.#updateCreateOptionValue(this._input?.value || '');
     if (this._listbox && this.filter !== this._input?.value) {
       this.filter = this._input?.value || '';
+      this.open = true;
     }
   }
 

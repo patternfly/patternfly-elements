@@ -6,6 +6,7 @@ function isARIAMixinProp(key: string): key is keyof ARIAMixin {
 
 export class InternalsController implements ReactiveController, ARIAMixin {
   declare role: ARIAMixin['role'];
+  declare ariaActivedescendant: string | null;
   declare ariaAtomic: ARIAMixin['ariaAtomic'];
   declare ariaAutoComplete: ARIAMixin['ariaAutoComplete'];
   declare ariaBusy: ARIAMixin['ariaBusy'];

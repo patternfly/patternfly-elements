@@ -1,14 +1,13 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValueMap } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import styles from './pf-dropdown-item.css';
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
 /**
  * Represents an item for a dropdown component.
  * @slot
  *      Content for the dropdown item
- *
- * @csspart dropdown-item - Dropdown item element
  *
  * @cssprop {<length>} --pf-c-dropdown__menu-item--FontSize
  *          Dropdown item font size
@@ -49,10 +48,9 @@ export class PfDropdownItem extends LitElement {
   @property({ reflect: true }) value?: string;
 
   /**
-   * Indicates whether the dropdown item is a divider.
-   * A divider visually separates groups of dropdown items.
+   * Flag indicating whether the item is active
    */
-  @property({ type: Boolean, reflect: true }) divider = false;
+  @property({ type: Boolean, reflect: true }) active = false;
 
   /**
    * Indicates whether the dropdown item is disabled.
@@ -60,13 +58,55 @@ export class PfDropdownItem extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
+  /**
+   * Flag indicating if the option is selected
+   */
+  @property({ type: Boolean, reflect: true }) favorited = false;
+
+  /**
+   * Flag indicating if the option is selected
+   */
+  @property({ type: String }) icon = '';
+
+  /**
+   * Flag indicating the item has favorite icon
+   */
+  @property({ type: Boolean, reflect: true }) hasFavorite = false;
+
+  #internals: InternalsController;
+
+  constructor() {
+    super();
+    this.#internals = new InternalsController(this, {
+      role: 'menuitem'
+    });
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('focus', this.#onFocus);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('focus', this.#onFocus);
+  }
+
   render() {
     return html`
-      <li tabindex="-1" part="dropdown-item" ?disabled="${this.disabled}">
+      <div id="menuitem">
+        ${this.icon && this.icon !== '' ? html`<pf-icon icon="${this.icon}"></pf-icon>` : ''}
         <slot></slot>
-        <hr role="presentation" ?hidden="${!this.divider}">
-      </li>
-      `;
+        <slot name="description"></slot>
+      </div>`;
+  }
+
+  /**
+   * handles option focus
+   * @fires optionfocus
+   */
+  #onFocus() {
+    this.dispatchEvent(new Event('dropdownitemfocus', { bubbles: true }));
   }
 }
 

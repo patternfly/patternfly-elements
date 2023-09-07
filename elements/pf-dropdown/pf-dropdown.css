@@ -12,7 +12,7 @@ slot[name="trigger"][disabled] {
   cursor: not-allowed;
 }
 
-[part="dropdown-menu"] {
+pf-dropdown-menu {
   display: none;
   position: absolute;
   top: var(
@@ -44,13 +44,7 @@ slot[name="trigger"][disabled] {
   min-width: 100%;
   margin: 0;
 }
-[part="dropdown-menu"].show {
-  display: block;
-}
 
-[part="dropdown-menu"],
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+pf-dropdown-menu.show {
+  display: block;
 }

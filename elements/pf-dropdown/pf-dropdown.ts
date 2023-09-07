@@ -6,9 +6,7 @@ import styles from './pf-dropdown.css';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { query } from 'lit/decorators/query.js';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
-import { PfDropdownItem } from './pf-dropdown-item.js';
-import { PfDropdownItemsGroup } from './pf-dropdown-items-group.js';
+import './pf-dropdown-menu.js';
 
 export class DropdownSelectEvent extends ComposedEvent {
   constructor(
@@ -73,22 +71,20 @@ export class PfDropdown extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  #activeIndex = 0;
-  #liElements: PfDropdownItem[] = [];
   #triggerElement: HTMLElement | null = null;
 
   @query('slot[name="trigger"]') private triggerSlot!: HTMLSlotElement;
-  @queryAssignedElements({ flatten: true }) private ulAssignedElements!:
-    | PfDropdownItem[]
-    | PfDropdownItemsGroup[];
+  @query('pf-dropdown-menu') private menuElement!: HTMLElement;
 
   #float = new FloatingDOMController(this, {
     content: (): HTMLElement | undefined | null =>
-      this.shadowRoot?.querySelector('#dropdown-menu'),
+      this.shadowRoot?.querySelector('pf-dropdown-menu'),
   });
 
   connectedCallback() {
     super.connectedCallback();
+    this.#triggerElement?.setAttribute('aria-haspopup', 'menu');
+    this.#triggerElement?.setAttribute('aria-controls', 'dropdown-menu');
   }
 
   disconnectedCallback() {
@@ -108,18 +104,23 @@ export class PfDropdown extends LitElement {
       >
         <pf-button ?disabled="${this.disabled}">Dropdown</pf-button>
       </slot>
-      <ul
+      <pf-dropdown-menu
         part="dropdown-menu"
         class="${this.#float.open && !this.disabled ? 'show' : ''}"
-        role="listbox"
-        tabindex=${this.#float.open ? '0' : '-1'}
         @keydown=${this.onKeydown}
         @click="${this.handleSelect}"
         id="dropdown-menu"
       >
-        <slot @slotchange=${this.#handleSlotChange}></slot>
-      </ul>
+        <slot></slot>
+      </dpf-dropdown-menuiv>
     `;
+  }
+
+  /**
+   * sets focus on trigger element
+   */
+  focus() {
+    this.menuElement?.focus();
   }
 
   #outsideClick(event: MouseEvent) {
@@ -154,8 +155,7 @@ export class PfDropdown extends LitElement {
     await this.#float.show();
     this.#setTriggerElement();
     this.#triggerElement?.setAttribute('aria-expanded', 'true');
-    this.#triggerElement?.setAttribute('aria-haspopup', 'listbox');
-    this.#focusSelectedItem(0);
+    this.menuElement?.focus();
     PfDropdown.instances.add(this);
   }
 
@@ -168,59 +168,6 @@ export class PfDropdown extends LitElement {
     PfDropdown.instances.delete(this);
     // accessibility update
     this.#triggerElement?.setAttribute('aria-expanded', 'false');
-    this.#liElements?.forEach(li => {
-      if (li?.localName === 'pf-dropdown-item') {
-        const liElement = li?.shadowRoot?.querySelector('li');
-        liElement?.setAttribute('tabindex', '-1');
-      }
-    });
-  }
-
-  #focusSelectedItem(index: number) {
-    if (index > 0 && index < this.#liElements.length) {
-      this.#activeIndex = index;
-    } else if (index < 0) {
-      this.#activeIndex = this.#liElements.length - 1;
-    } else {
-      this.#activeIndex = 0;
-    }
-
-    const liElement =
-      this.#liElements[this.#activeIndex]?.shadowRoot?.querySelector('li');
-    if (liElement) {
-      const currentElement = document.activeElement;
-      if (currentElement?.localName === 'pf-dropdown-item') {
-        const previousLiElement =
-          currentElement?.shadowRoot?.querySelector('li');
-        previousLiElement?.setAttribute('tabindex', '-1');
-      }
-      liElement?.setAttribute('tabindex', '0');
-      liElement?.focus();
-    }
-  }
-
-  #handleSlotChange() {
-    let pfDropdownItems: PfDropdownItem[] = [];
-    this.ulAssignedElements?.forEach(node => {
-      if (node?.localName === 'pf-dropdown-item') {
-        pfDropdownItems.push(node as PfDropdownItem);
-      } else if (node?.localName === 'pf-dropdown-items-group') {
-        const pfItems = [...node.children] as PfDropdownItem[];
-        pfDropdownItems.push(...pfItems);
-      }
-    });
-    pfDropdownItems = pfDropdownItems?.filter(
-      n => n?.divider === false && n?.disabled === false
-    );
-    this.#liElements = pfDropdownItems;
-
-    if (this.disabled) {
-      const triggeredNode =
-        this.triggerSlot?.assignedNodes()?.[0] as HTMLButtonElement;
-      if (triggeredNode) {
-        triggeredNode.disabled = this.disabled;
-      }
-    }
   }
 
   handleSelect(event: Event & { target: HTMLLIElement }) {
@@ -232,22 +179,6 @@ export class PfDropdown extends LitElement {
 
   @bound private onKeydown(event: KeyboardEvent) {
     switch (event.key) {
-      case 'Home':
-        event.preventDefault();
-        this.#focusSelectedItem(0);
-        break;
-      case 'End':
-        event.preventDefault();
-        this.#focusSelectedItem(this.#liElements.length - 1);
-        break;
-      case 'ArrowUp':
-        event.preventDefault();
-        this.#focusSelectedItem(this.#activeIndex - 1);
-        break;
-      case 'ArrowDown':
-        event.preventDefault();
-        this.#focusSelectedItem(this.#activeIndex + 1);
-        break;
       case 'Escape':
       case 'Esc':
       case 'Tab':

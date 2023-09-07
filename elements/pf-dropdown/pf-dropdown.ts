@@ -83,7 +83,7 @@ export class PfDropdown extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.#triggerElement?.setAttribute('aria-haspopup', 'menu');
+    this.#triggerElement?.setAttribute('aria-haspopup', 'true');
     this.#triggerElement?.setAttribute('aria-controls', 'dropdown-menu');
   }
 

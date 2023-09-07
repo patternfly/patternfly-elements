@@ -11,7 +11,7 @@ import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
     <pf-dropdown-item disabled>Disabled Action</pf-dropdown-item>
     <pf-dropdown-item disabled href="#">Link</pf-dropdown-item>
     <pf-dropdown-item aria-disabled="true" href="#">Aria-disabled Link</pf-dropdown-item>
-    <hr role="separator">
+    <div role="separator"></div>
     <pf-dropdown-item>Separated Action</pf-dropdown-item>
     <pf-dropdown-item href="#">Separated Link</pf-dropdown-item>
   </pf-dropdown>
@@ -35,7 +35,7 @@ This example also uses an `hr role=”separator”` to split the menu into 2 sec
     <pf-dropdown-item disabled>Disabled Action</pf-dropdown-item>
     <pf-dropdown-item disabled href="#">Link</pf-dropdown-item>
     <pf-dropdown-item aria-disabled="true" href="#">Aria-disabled Link</pf-dropdown-item>
-    <hr role="separator">
+    <div role="separator"></div>
     <pf-dropdown-item>Separated Action</pf-dropdown-item>
     <pf-dropdown-item href="#">Separated Link</pf-dropdown-item>
   </pf-dropdown>
@@ -53,7 +53,7 @@ This example also uses an `hr role=”separator”` to split the menu into 2 sec
     <pf-dropdown-item disabled>Disabled Action</pf-dropdown-item>
     <pf-dropdown-item disabled href="#">Link</pf-dropdown-item>
     <pf-dropdown-item aria-disabled="true" href="#">Aria-disabled Link</pf-dropdown-item>
-    <hr role="separator">
+    <div role="separator"></div>
     <pf-dropdown-item>Separated Action</pf-dropdown-item>
     <pf-dropdown-item href="#">Separated Link</pf-dropdown-item>
   </pf-dropdown>
@@ -73,7 +73,7 @@ When there isn't enough space for a labeled button, a kebab icon can be used to 
     <pf-dropdown-item disabled>Disabled Action</pf-dropdown-item>
     <pf-dropdown-item disabled href="#">Link</pf-dropdown-item>
     <pf-dropdown-item aria-disabled="true" href="#">Aria-disabled Link</pf-dropdown-item>
-    <hr role="separator">
+    <div role="separator"></div>
     <pf-dropdown-item>Separated Action</pf-dropdown-item>
     <pf-dropdown-item href="#">Separated Link</pf-dropdown-item>
   </pf-dropdown>
@@ -89,12 +89,12 @@ To group sets of related dropdown items together, use a `pf-dropdown-group`. Whe
       <pf-dropdown-item>Action</pf-dropdown-item>
       <pf-dropdown-item href="#">Link</pf-dropdown-item>
     </pf-dropdown-group>
-    <hr role="separator">
+    <div role="separator"></div>
     <pf-dropdown-group label="Group 2">
       <pf-dropdown-item>Group 2 action</pf-dropdown-item>
       <pf-dropdown-item href="#">Group 2 link</pf-dropdown-item>
     </pf-dropdown-group>
-    <hr role="separator">
+    <div role="separator"></div>
     <pf-dropdown-group label="Group 3">
       <pf-dropdown-item>Group 3 action</pf-dropdown-item>
       <pf-dropdown-item href="#">Group 3 link</pf-dropdown-item>
@@ -134,7 +134,7 @@ To provide users with more context about a `pf-dropdown-item`, pass a short mess
     <pf-dropdown-item disabled>Disabled Action</pf-dropdown-item>
     <pf-dropdown-item disabled href="#">Link</pf-dropdown-item>
     <pf-dropdown-item aria-disabled="true" href="#">Aria-disabled Link</pf-dropdown-item>
-    <hr role="separator">
+    <div role="separator"></div>
     <pf-dropdown-item>Separated Action</pf-dropdown-item>
     <pf-dropdown-item href="#">Separated Link</pf-dropdown-item>
   </pf-dropdown>
@@ -148,7 +148,7 @@ To provide users with more context about a `pf-dropdown-item`, pass a short mess
     <pf-dropdown-item disabled>Disabled Action</pf-dropdown-item>
     <pf-dropdown-item disabled href="#">Link</pf-dropdown-item>
     <pf-dropdown-item aria-disabled="true" href="#">Aria-disabled Link</pf-dropdown-item>
-    <hr role="separator">
+    <div role="separator"></div>
     <pf-dropdown-item>Separated Action</pf-dropdown-item>
     <pf-dropdown-item href="#">Separated Link</pf-dropdown-item>
   </pf-dropdown>

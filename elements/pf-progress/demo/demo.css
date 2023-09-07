@@ -1,0 +1,6 @@
+[data-demo="pf-progress"] {
+  max-width: 600px;
+}
+pf-progress {
+  width: 100%;
+}

@@ -56,7 +56,8 @@
         "build:lightdom",
         "build:elements",
         "build:create",
-        "build:bundle"
+        "build:bundle",
+        "build:react"
       ]
     },
     "analyze": {
@@ -147,11 +148,7 @@
       ]
     },
     "build:icons": {
-      "command": "ts-node --esm --project tsconfig.icons.json ./scripts/icons/build.ts",
-      "dependencies": [
-        "build:core",
-        "build:tools"
-      ],
+      "command": "ts-node --esm ./scripts/icons.ts",
       "output": [
         "elements/pf-icon/icons/*/*.js"
       ]
@@ -170,6 +167,22 @@
       ],
       "output": [
         "elements/pfe.min.js"
+      ]
+    },
+    "build:react": {
+      "command": "ts-node --esm scripts/generate-react-wrappers.ts",
+      "dependencies": [
+        "build:core",
+        "build:tools",
+        "analyze"
+      ],
+      "files": [
+        "elements/custom-elements.json",
+        "scripts/generate-react-wrappers.ts",
+        "tools/pfe-tools/react/generate-wrappers.ts"
+      ],
+      "output": [
+        "react/**/*"
       ]
     },
     "build:lightdom": {
@@ -234,6 +247,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
+        "build:core",
         "build:icons"
       ]
     },
@@ -252,6 +266,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
+        "build:core",
         "build:icons"
       ]
     },
@@ -297,6 +312,7 @@
     "@types/prismjs": "^1.26.0",
     "@types/prompts": "^2.4.4",
     "commitlint": "^17.6.1",
+    "execa": "^7.1.1",
     "fuse.js": "^6.6.2",
     "husky": "^8.0.3",
     "leasot": "^13.3.0",
@@ -308,5 +324,8 @@
     "./core/*",
     "./elements",
     "./tools/*"
-  ]
+  ],
+  "dependencies": {
+    "@lit-labs/react": "^1.2.0"
+  }
 }

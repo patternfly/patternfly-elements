@@ -3,6 +3,10 @@ import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfSpinner } from '@patternfly/elements/pf-spinner/pf-spinner.js';
 
 describe('<pf-spinner>', function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-spinner')).to.be.an.instanceof(PfSpinner);
+  });
+
   it('should upgrade', async function() {
     const element = await createFixture<PfSpinner>(html`<pf-spinner>Loading...</pf-spinner>`);
     expect(element, 'pf-spinner should be an instance of PfeSpinner')

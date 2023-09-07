@@ -8,6 +8,11 @@ describe('<pf-panel>', function() {
     beforeEach(async function() {
       element = await createFixture <PfPanel>(html`<pf-panel></pf-panel>`);
     });
+
+    it('imperatively instantiates', function() {
+      expect(document.createElement('pf-panel')).to.be.an.instanceof(PfPanel);
+    });
+
     it('should upgrade', function() {
       const klass = customElements.get('pf-panel');
       expect(element)

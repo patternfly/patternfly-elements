@@ -1,0 +1,96 @@
+:host {
+  display: block;
+  --pf-c-banner--PaddingTop: var(--pf-global--spacer--xs, 0.25rem);
+  --pf-c-banner--PaddingRight: var(--pf-global--spacer--md, 1rem);
+  --pf-c-banner--md--PaddingRight: var(--pf-global--spacer--lg, 1.5rem);
+  --pf-c-banner--PaddingBottom: var(--pf-global--spacer--xs, 0.25rem);
+  --pf-c-banner--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+  --pf-c-banner--md--PaddingLeft: var(--pf-global--spacer--lg, 1.5rem);
+  --pf-c-banner--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  --pf-c-banner--Color: var(--pf-global--Color--100, #151515);
+  --pf-c-banner--BackgroundColor: var(--pf-global--BackgroundColor--dark-400, #4f5255);
+  --pf-c-banner--link--Color: var(--pf-c-banner--Color);
+  --pf-c-banner--link--TextDecoration: underline;
+  --pf-c-banner--link--hover--Color: var(--pf-c-banner--Color);
+  --pf-c-banner--link--hover--FontWeight: var(--pf-global--FontWeight--semi-bold, 700);
+  --pf-c-banner--link--disabled--Color: var(--pf-c-banner--Color);
+  --pf-c-banner--link--disabled--TextDecoration: none;
+  --pf-c-banner--m-info--BackgroundColor: var(--pf-global--palette--blue-200, #73bcf7);
+  --pf-c-banner--m-danger--BackgroundColor: var(--pf-global--danger-color--100, #c9190b);
+  --pf-c-banner--m-success--BackgroundColor: var(--pf-global--success-color--100, #3e8635);
+  --pf-c-banner--m-warning--BackgroundColor: var(--pf-global--warning-color--100, #f0ab00);
+  --pf-c-banner--m-sticky--ZIndex: var(--pf-global--ZIndex--md, 300);
+  --pf-c-banner--m-sticky--BoxShadow: var(--pf-global--BoxShadow--md-bottom);
+}
+
+#container,
+#container.default {
+  color: var(--pf-global--Color--100, var(--pf-global--Color--light-100, #ffffff));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding:
+    var(--pf-c-banner--PaddingTop, var(--pf-global--spacer--xs, 0.25rem))
+    var(--pf-c-banner--PaddingRight, var(--pf-global--spacer--md, 1rem))
+    var(--pf-c-banner--PaddingBottom, var(--pf-global--spacer--xs, 0.25rem))
+    var(--pf-c-banner--PaddingLeft, var(--pf-global--spacer--md, 1rem));
+  font-size: var(--pf-c-banner--FontSize, var(--pf-global--FontSize--sm, 0.875rem));
+  color: var(--pf-global--Color--100, var(--pf-global--Color--light-100, #ffffff));
+  white-space: nowrap;
+  background-color: var(--pf-c-banner--BackgroundColor, var(--pf-global--BackgroundColor--dark-400, #4f5255));
+
+  --pf-icon--size: 1em;
+}
+
+#container.info {
+  color: var(--pf-global--Color--100, var(--pf-global--Color--dark-100, #151515));
+  --pf-c-banner--BackgroundColor: var(--pf-c-banner--m-info--BackgroundColor, var(--pf-global--palette--blue-200, #73bcf7));
+}
+
+#container.danger {
+  --pf-c-banner--BackgroundColor: var(--pf-c-banner--m-danger--BackgroundColor, var(--pf-global--danger-color--100, #c9190b));
+}
+
+#container.success {
+  --pf-c-banner--BackgroundColor: var(--pf-c-banner--m-success--BackgroundColor, var(--pf-global--success-color--100, #3e8635));
+}
+
+#container.warning {
+  color: var(--pf-global--Color--100, var(--pf-global--Color--dark-100, #151515));
+  --pf-c-banner--BackgroundColor: var(--pf-c-banner--m-warning--BackgroundColor, var(--pf-global--warning-color--100, #f0ab00));
+}
+
+#container.hasIcon {
+  display: var(--pf-l-flex--Display, flex);
+  flex-wrap: var(--pf-l-flex--FlexWrap, wrap);
+  align-items: var(--pf-l-flex--AlignItems, baseline);
+  gap: var(--pf-l-flex--spacer, var(--pf-l-flex--spacer--sm, var(--pf-global--spacer--sm, 0.5rem)));
+}
+
+:host([sticky]) {
+  position: sticky;
+  top: 0;
+  z-index: var(--pf-c-banner--m-sticky--ZIndex, var(--pf-global--ZIndex--md, 300));
+  box-shadow:
+    var(--pf-c-banner--m-sticky--BoxShadow,
+    var(--pf-global--BoxShadow--md-bottom, 0 0.5rem 0.5rem -0.375rem rgba(3, 3, 3, 0.18)));
+}
+
+pf-icon,
+::slotted(pf-icon),
+::slotted(svg) {
+  position: relative;
+  inset-block-start: 0.125em;
+}
+
+::slotted(svg) {
+  height: 1em;
+  width: 1em;
+  fill: currentcolor;
+}
+
+@media (min-width: 768px) {
+  #container {
+    --pf-c-banner--PaddingRight: var(--pf-c-banner--md--PaddingRight, var(--pf-global--spacer--lg, 1.5rem));
+    --pf-c-banner--PaddingLeft: var(--pf-c-banner--md--PaddingLeft, var(--pf-global--spacer--lg, 1.5rem));
+  }
+}

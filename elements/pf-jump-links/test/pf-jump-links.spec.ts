@@ -27,6 +27,12 @@ describe('<pf-jump-links>', function() {
     [firstItem, secondItem] = element.querySelectorAll<PfJumpLinksItem>('pf-jump-links-item');
   });
 
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-jump-links')).to.be.an.instanceof(PfJumpLinks);
+    expect(document.createElement('pf-jump-links-item')).to.be.an.instanceof(PfJumpLinksItem);
+    expect(document.createElement('pf-jump-links-list')).to.be.an.instanceof(PfJumpLinksList);
+  });
+
   describe('tabbing to first item', function() {
     let initialActiveElement: Element | null;
     beforeEach(async function() {

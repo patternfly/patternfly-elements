@@ -12,6 +12,10 @@ const TEMPLATE = html`
 
 
 describe('<pf-tile>', function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-tile')).to.be.an.instanceof(PfTile);
+  });
+
   it('should upgrade', async function() {
     const el = await createFixture <PfTile>(TEMPLATE);
     const klass = customElements.get('pf-tile');

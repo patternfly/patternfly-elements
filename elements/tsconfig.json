@@ -8,7 +8,8 @@
     "pf-icon/icons/**/*",
     "*/demo/*.js",
     "pf-icon/test/rh-icon*.js",
-    "custom-elements-manifest.config.js"
+    "custom-elements-manifest.config.js",
+    "react"
   ],
   "compilerOptions": {
     "outDir": ".",

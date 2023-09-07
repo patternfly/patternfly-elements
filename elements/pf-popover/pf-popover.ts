@@ -1,4 +1,4 @@
-import { LitElement, nothing, html } from 'lit';
+import { LitElement, nothing, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -9,7 +9,6 @@ import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent, StringListConverter } from '@patternfly/pfe-core/core.js';
-import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 import styles from './pf-popover.css';
@@ -301,7 +300,6 @@ export class PfPopover extends LitElement {
   /**
    * The ID of the element to attach the popover to.
    */
-  @observed('triggerChanged')
   @property({ reflect: true }) trigger?: string;
 
   @query('#popover') private _popover!: HTMLDialogElement;
@@ -321,7 +319,6 @@ export class PfPopover extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('keydown', this.onKeydown);
-    PfPopover.instances.add(this);
   }
 
   render() {
@@ -361,7 +358,10 @@ export class PfPopover extends LitElement {
       <div id="container"
            style="${styleMap(styles)}"
            class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}">
-        <slot id="trigger" @keydown=${this.onKeydown} @click=${this.toggle}></slot>
+        <slot id="trigger"
+              @slotchange="${this.#triggerChanged}"
+              @keydown=${this.onKeydown}
+              @click=${this.toggle}></slot>
         <dialog id="popover" aria-labelledby="heading" aria-describedby="body" aria-label=${ifDefined(this.label)}>
           <div id="arrow"></div>
           <div id="content" part="content">
@@ -390,8 +390,25 @@ export class PfPopover extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     PfPopover.instances.delete(this);
-    this.#referenceTrigger?.removeEventListener('click', this.show);
+    this.#referenceTrigger?.removeEventListener('click', this.toggle);
     this.#referenceTrigger?.removeEventListener('keydown', this.onKeydown);
+  }
+
+  #getReferenceTrigger() {
+    const root = this.getRootNode() as Document | ShadowRoot;
+    return !this.trigger ? null : root.getElementById(this.trigger);
+  }
+
+
+  #triggerChanged() {
+    const oldReferenceTrigger = this.#referenceTrigger;
+    this.#referenceTrigger = this.#getReferenceTrigger();
+    if (oldReferenceTrigger !== this.#referenceTrigger) {
+      oldReferenceTrigger?.removeEventListener('click', this.toggle);
+      oldReferenceTrigger?.removeEventListener('keydown', this.onKeydown);
+      this.#referenceTrigger?.addEventListener('click', this.toggle);
+      this.#referenceTrigger?.addEventListener('keydown', this.onKeydown);
+    }
   }
 
   @bound private onKeydown(event: KeyboardEvent) {
@@ -421,15 +438,9 @@ export class PfPopover extends LitElement {
    * Removes event listeners from the old trigger element and attaches
    * them to the new trigger element.
    */
-  triggerChanged(oldValue?: string, newValue?: string) {
-    if (oldValue) {
-      this.#referenceTrigger?.removeEventListener('click', this.show);
-      this.#referenceTrigger?.removeEventListener('keydown', this.onKeydown);
-    }
-    if (newValue) {
-      this.#referenceTrigger = (this.getRootNode() as Document | ShadowRoot).getElementById(newValue);
-      this.#referenceTrigger?.addEventListener('click', this.show);
-      this.#referenceTrigger?.addEventListener('keydown', this.onKeydown);
+  override willUpdate(changed: PropertyValues<this>) {
+    if (changed.has('trigger')) {
+      this.#triggerChanged();
     }
   }
 
@@ -454,6 +465,7 @@ export class PfPopover extends LitElement {
     });
     this._popover?.show();
     this.dispatchEvent(new PopoverShownEvent());
+    PfPopover.instances.add(this);
   }
 
   /**
@@ -464,6 +476,7 @@ export class PfPopover extends LitElement {
     await this.#float.hide();
     this._popover?.close();
     this.dispatchEvent(new PopoverHiddenEvent());
+    PfPopover.instances.delete(this);
   }
 }
 

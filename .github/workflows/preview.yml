@@ -16,6 +16,12 @@ jobs:
           node-version: '18'
           cache: npm
 
+      - name: Verify JSPM URL
+        run: curl -I https://ga.jspm.io/npm:@floating-ui/core
+
+      - name: POP Debug Info
+        run: curl https://cachefly.cachefly.net/CacheFlyDebug
+
       - run: npm ci --prefer-offline
       - run: npm run docs
       - run: cat _site/components/icon/demo/custom-icon-sets/index.html
@@ -24,7 +30,12 @@ jobs:
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: npx netlify-cli deploy --alias=deploy-preview-${{github.event.number}} --dir=_site
+          NETLIFY_DEPLOY_ALIAS: deploy-preview-${{github.event.number}}
+        run: >
+              npx netlify-cli deploy
+              --dir _site
+              --filter @patternfly/elements
+              --alias $NETLIFY_DEPLOY_ALIAS
 
       - name: Post Previews
         uses: actions/github-script@v6

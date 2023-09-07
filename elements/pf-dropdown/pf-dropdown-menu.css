@@ -1,3 +1,65 @@
 :host {
   background: var(--pf-c-dropdown__menu--BackgroundColor, #fff);
 }
+
+:host([hidden]),
+[hidden] {
+  display: none !important;
+}
+
+::slotted(hr) {
+  --pf-c-divider--BorderWidth--base: var(--pf-global--BorderWidth--sm, 1px);
+  --pf-c-divider--BorderColor--base: var(--pf-c-divider--BackgroundColor);
+  --pf-c-divider--Height: var(--pf-c-divider--BorderWidth--base);
+  --pf-c-divider--BackgroundColor: var(--pf-global--BorderColor--100, #d2d2d2);
+  --pf-c-divider--after--BackgroundColor: var(
+    --pf-c-divider--BorderColor--base
+  );
+  --pf-c-divider--after--FlexBasis: 100%;
+  --pf-c-divider--after--Inset: 0%;
+  --pf-c-divider--m-vertical--after--FlexBasis: 100%;
+  --pf-c-divider--m-horizontal--Display: flex;
+  --pf-c-divider--m-horizontal--FlexDirection: row;
+  --pf-c-divider--m-horizontal--after--Height: var(--pf-c-divider--Height);
+  --pf-c-divider--m-horizontal--after--Width: auto;
+  --pf-c-divider--m-vertical--Display: inline-flex;
+  --pf-c-divider--m-vertical--FlexDirection: column;
+  --pf-c-divider--m-vertical--after--Height: auto;
+  --pf-c-divider--m-vertical--after--Width: var(
+    --pf-c-divider--BorderWidth--base
+  );
+  --pf-hidden-visible--visible--Display: var(--pf-c-divider--Display);
+  --pf-c-divider--Display: var(--pf-c-divider--m-horizontal--Display);
+  --pf-c-divider--FlexDirection: var(
+    --pf-c-divider--m-horizontal--FlexDirection
+  );
+  --pf-c-divider--after--Width: var(--pf-c-divider--m-horizontal--after--Width);
+  --pf-c-divider--after--Height: var(
+    --pf-c-divider--m-horizontal--after--Height
+  );
+  width: 100%;
+  height: auto;
+  display: var(--pf-c-divider--Display);
+  flex-direction: var(--pf-c-divider--FlexDirection);
+  align-items: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  justify-content: center;
+  border: 0;
+}
+
+::slotted(hr)::after {
+  align-self: stretch;
+  width: var(--pf-c-divider--after--Width);
+  height: var(--pf-c-divider--after--Height);
+  content: "";
+  background-color: var(--pf-c-divider--after--BackgroundColor);
+  justify-self: center;
+  padding: 0;
+  margin: 0;
+  flex-basis: calc(
+    var(--pf-c-divider--after--FlexBasis) - var(--pf-c-divider--after--Inset) *
+      2
+  );
+}
+

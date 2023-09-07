@@ -48,6 +48,11 @@ export class PfDropdownItem extends LitElement {
   @property({ reflect: true }) value?: string;
 
   /**
+   * href for links
+  */
+  @property({ reflect: false, attribute: 'href' }) href?: string;
+
+  /**
    * Flag indicating whether the item is active
    */
   @property({ type: Boolean, reflect: true }) active = false;
@@ -57,21 +62,6 @@ export class PfDropdownItem extends LitElement {
    * A disabled item cannot be selected or interacted with.
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
-
-  /**
-   * Flag indicating if the option is selected
-   */
-  @property({ type: Boolean, reflect: true }) favorited = false;
-
-  /**
-   * Flag indicating if the option is selected
-   */
-  @property({ type: String }) icon = '';
-
-  /**
-   * Flag indicating the item has favorite icon
-   */
-  @property({ type: Boolean, reflect: true }) hasFavorite = false;
 
   #internals: InternalsController;
 
@@ -95,8 +85,7 @@ export class PfDropdownItem extends LitElement {
   render() {
     return html`
       <div id="menuitem">
-        ${this.icon && this.icon !== '' ? html`<pf-icon icon="${this.icon}"></pf-icon>` : ''}
-        <slot></slot>
+        ${this.href && this.href !== '' ? html`<a href="${this.href}"><slot></slot></a>` : html`<slot></slot>`}
         <slot name="description"></slot>
       </div>`;
   }

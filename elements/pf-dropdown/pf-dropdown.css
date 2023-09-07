@@ -1,6 +1,31 @@
 :host {
   display: inline-block;
   position: relative;
+  --_font-size: var(
+    --pf-c-dropdown__menu-item--FontSize,
+    var(--pf-global--FontSize--md, 1rem)
+  );
+  --_font-weight: var(
+    --pf-c-dropdown__menu-item--FontWeight,
+    var(--pf-global--FontWeight--normal, 400)
+  );
+  --_line-height: var(
+    --pf-c-dropdown__menu-item--LineHeight,
+    var(--pf-global--LineHeight--md, 1.5)
+  );
+  --_color: var(
+    --pf-c-dropdown__menu-item--Color,
+    var(--pf-global--Color--dark-100, #151515)
+  );
+  --_background-color: var(
+    --pf-c-dropdown__menu-item--BackgroundColor,
+    transparent
+  );
+}
+
+:host([hidden]),
+[hidden] {
+  display: none !important;
 }
 
 slot[name="trigger"] {
@@ -47,4 +72,10 @@ pf-dropdown-menu {
 
 pf-dropdown-menu.show {
   display: block;
+}
+
+pf-button {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }

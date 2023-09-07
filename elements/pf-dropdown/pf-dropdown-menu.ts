@@ -5,7 +5,7 @@ import styles from './pf-dropdown-menu.css';
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { PfDropdownItem } from './pf-dropdown-item.js';
-import { PfDropdownItemsGroup } from './pf-dropdown-items-group.js';
+import { PfDropdownGroup } from './pf-dropdown-group.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
@@ -24,7 +24,7 @@ export class DropdownSelectEvent extends ComposedEvent {
  * @slot trigger
  *       This slot renders the trigger element that will be used to open and close the dropdown menu.
  *
- * @slot - Must contain one or more `<pf-dropdown-item>` or `pf-dropdown-items-group`
+ * @slot - Must contain one or more `<pf-dropdown-item>` or `pf-dropdown-group`
  *
  * @csspart dropdown-trigger - Dropdown Trigger element
  * @csspart dropdown-menu - The dropdown menu wrapper
@@ -61,7 +61,7 @@ export class PfDropdownMenu extends LitElement {
 
   @queryAssignedElements({ flatten: true }) private menuAssignedElements!:
     | PfDropdownItem[]
-    | PfDropdownItemsGroup[];
+    | PfDropdownGroup[];
 
   /** event listeners for host element */
   #listeners = {
@@ -125,7 +125,7 @@ export class PfDropdownMenu extends LitElement {
     this.menuAssignedElements?.forEach(node => {
       if (node?.localName === 'pf-dropdown-item') {
         pfDropdownItems.push(node as PfDropdownItem);
-      } else if (node?.localName === 'pf-dropdown-items-group') {
+      } else if (node?.localName === 'pf-dropdown-group') {
         const pfItems = [...node.children] as PfDropdownItem[];
         pfDropdownItems.push(...pfItems);
       }

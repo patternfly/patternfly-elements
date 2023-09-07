@@ -83,27 +83,27 @@ When there isn't enough space for a labeled button, a kebab icon can be used to 
 
 ### With groups of items
 
-To group sets of related dropdown items together, use a `pf-dropdown-items-group`. When more than 1 `pf-dropdown-items-group` is created in a menu, use the label and labelHeadingLevel properties to assign a name and heading level to each group.
+To group sets of related dropdown items together, use a `pf-dropdown-group`. When more than 1 `pf-dropdown-group` is created in a menu, use the label and labelHeadingLevel properties to assign a name and heading level to each group.
 
 {% htmlexample %}
   <pf-dropdown>
     <button slot="trigger">
       Dropdown <svg class="pf-v5-svg" viewBox="0 0 320 512" fill="currentColor" aria-hidden="true" role="img" width="1em" height="1em"><path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
     </button>
-    <pf-dropdown-items-group>
+    <pf-dropdown-group>
       <pf-dropdown-item>Action</pf-dropdown-item>
       <pf-dropdown-item><a href="#">Link</a></pf-dropdown-item>
-    </pf-dropdown-items-group>
+    </pf-dropdown-group>
     <hr role="separator">
-    <pf-dropdown-items-group label="Group 2">
+    <pf-dropdown-group label="Group 2">
       <pf-dropdown-item>Group 2 action</pf-dropdown-item>
       <pf-dropdown-item><a href="#">Group 2 link</a></pf-dropdown-item>
-    </pf-dropdown-items-group>
+    </pf-dropdown-group>
     <hr role="separator">
-    <pf-dropdown-items-group label="Group 3">
+    <pf-dropdown-group label="Group 3">
       <pf-dropdown-item>Group 3 action</pf-dropdown-item>
       <pf-dropdown-item><a href="#">Group 3 link</a></pf-dropdown-item>
-    </pf-dropdown-items-group>
+    </pf-dropdown-group>
   </pf-dropdown>
 {% endhtmlexample %}
 
@@ -156,24 +156,24 @@ To provide users with more context about a `pf-dropdown-item`, pass a short mess
 
 {% renderSlots %}{% endrenderSlots %}
 {% renderSlots for="pf-dropdown-item", level=3, header="Slots on `pf-dropdown-item`" %}{% endrenderSlots %}
-{% renderSlots for="pf-dropdown-items-group", level=3, header="Slots on `pf-dropdown-items-group`" %}{% endrenderSlots %}
+{% renderSlots for="pf-dropdown-group", level=3, header="Slots on `pf-dropdown-group`" %}{% endrenderSlots %}
 
 {% renderAttributes %}{% endrenderAttributes %}
 {% renderAttributes for="pf-dropdown-item", level=3, header="Slots on `pf-dropdown-item`" %}{% endrenderAttributes %}
-{% renderAttributes for="pf-dropdown-items-group", level=3, header="Slots on `pf-dropdown-items-group`" %}{% endrenderAttributes %}
+{% renderAttributes for="pf-dropdown-group", level=3, header="Slots on `pf-dropdown-group`" %}{% endrenderAttributes %}
 
 {% renderMethods %}{% endrenderMethods %}
 {% renderMethods for="pf-dropdown-item", level=3, header="Slots on `pf-dropdown-item`" %}{% endrenderMethods %}
-{% renderMethods for="pf-dropdown-items-group", level=3, header="Slots on `pf-dropdown-items-group`" %}{% endrenderMethods %}
+{% renderMethods for="pf-dropdown-group", level=3, header="Slots on `pf-dropdown-group`" %}{% endrenderMethods %}
 
 {% renderEvents %}{% endrenderEvents %}
 {% renderEvents for="pf-dropdown-item", level=3, header="Slots on `pf-dropdown-item`" %}{% endrenderEvents %}
-{% renderEvents for="pf-dropdown-items-group", level=3, header="Slots on `pf-dropdown-items-group`" %}{% endrenderEvents %}
+{% renderEvents for="pf-dropdown-group", level=3, header="Slots on `pf-dropdown-group`" %}{% endrenderEvents %}
 
 {% renderCssCustomProperties %}{% endrenderCssCustomProperties %}
 {% renderCssCustomProperties for="pf-dropdown-item", level=3, header="CSS Properties on `pf-dropdown-item`" %}{% endrenderCssCustomProperties %}
-{% renderCssCustomProperties for="pf-dropdown-items-group", level=3, header="CSS Properties on `pf-dropdown-items-group`" %}{% endrenderCssCustomProperties %}
+{% renderCssCustomProperties for="pf-dropdown-group", level=3, header="CSS Properties on `pf-dropdown-group`" %}{% endrenderCssCustomProperties %}
 
 {% renderCssParts %}{% endrenderCssParts %}
 {% renderCssParts for="pf-dropdown-item", level=3, header="Parts on `pf-dropdown-item`" %}{% endrenderCssParts %}
-{% renderCssParts for="pf-dropdown-items-group", level=3, header="Parts on `pf-dropdown-items-group`" %}{% endrenderCssParts %}
+{% renderCssParts for="pf-dropdown-group", level=3, header="Parts on `pf-dropdown-group`" %}{% endrenderCssParts %}

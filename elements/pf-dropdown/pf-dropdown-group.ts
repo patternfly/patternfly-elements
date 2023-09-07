@@ -1,15 +1,15 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import styles from './pf-dropdown-items-group.css';
+import styles from './pf-dropdown-group.css';
 
 /**
  * Represents a group of items for a dropdown component.
  * @slot
  *     Content for the group of dropdown items
  */
-@customElement('pf-dropdown-items-group')
-export class PfDropdownItemsGroup extends LitElement {
+@customElement('pf-dropdown-group')
+export class PfDropdownGroup extends LitElement {
   static readonly styles = [styles];
 
   /**
@@ -27,6 +27,6 @@ export class PfDropdownItemsGroup extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-dropdown-items-group': PfDropdownItemsGroup;
+    'pf-dropdown-group': PfDropdownGroup;
   }
 }

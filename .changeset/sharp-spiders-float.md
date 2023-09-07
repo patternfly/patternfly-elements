@@ -2,6 +2,4 @@
 "@patternfly/elements": minor
 ---
 
-`BaseCard`: Deprecating BaseCard
-
-`pf-card`: Removing dependency on BaseCard.  Moved styles and logic into `pf-card` element.
+`<pf-card>`: Removes `BaseCard` base class. If your project extends `BaseCard`, we recommend extending `LitElement` instead and re-implementing card's properties. Alternately, extend from `PfCard`.

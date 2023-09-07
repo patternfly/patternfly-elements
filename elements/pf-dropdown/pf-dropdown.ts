@@ -23,7 +23,7 @@ export class DropdownSelectEvent extends ComposedEvent {
  * @slot trigger
  *       This slot renders the trigger element that will be used to open and close the dropdown menu.
  *
- * @slot - Must contain one or more `<pf-dropdown-item>` or `pf-dropdown-group`
+ * @slot - Must contain one or more `<pf-dropdown-item>` or `<pf-dropdown-group>`
  *
  * @csspart dropdown-trigger - Dropdown Trigger element
  * @csspart dropdown-menu - The dropdown menu wrapper

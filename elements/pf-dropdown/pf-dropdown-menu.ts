@@ -9,43 +9,10 @@ import { PfDropdownGroup } from './pf-dropdown-group.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
-export class DropdownSelectEvent extends ComposedEvent {
-  constructor(
-    public event: Event | KeyboardEvent,
-    public selectedValue: string
-  ) {
-    super('select');
-  }
-}
-
 /**
  * A **dropdown** presents a menu of actions or links in a constrained space that will trigger a process or navigate to a new location.
  *
- * @slot trigger
- *       This slot renders the trigger element that will be used to open and close the dropdown menu.
- *
- * @slot - Must contain one or more `<pf-dropdown-item>` or `pf-dropdown-group`
- *
- * @csspart dropdown-trigger - Dropdown Trigger element
- * @csspart dropdown-menu - The dropdown menu wrapper
- *
- * @cssprop {<length>} --pf-c-dropdown__menu--PaddingTop
- *          Dropdown top padding
- *          {@default `0.5rem`}
- * @cssprop {<length>} --pf-c-tooltip__content--PaddingRight
- *          Dropdown right padding
- *          {@default `0.5rem`}
- * @cssprop {<length>} --pf-c-dropdown__menu--ZIndex
- *          Dropdown z-index
- *          {@default `200`}
- * @cssprop --pf-c-dropdown__menu--BoxShadow
- *          Dropdown box shadow
- *          {@default `0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06)`}
- * @cssprop {<length>} --pf-c-dropdown__menu--Top
- *          Dropdown top
- *          {@default `100% + 0.25rem`}
- *
- * @fires { DropdownSelectEvent } select - when a user select dropdown value
+ * @slot - Must contain one or more `<pf-dropdown-item>` or `<pf-dropdown-group>`
  */
 @customElement('pf-dropdown-menu')
 export class PfDropdownMenu extends LitElement {

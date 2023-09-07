@@ -1,7 +1,7 @@
 {% renderInstallation %} {% endrenderInstallation %}
 
 <script type="module">
-import '@patternfly/elements/pf-icon/pf-select.js';
+import '@patternfly/elements/pf-select/pf-select.js';
 </script>
 
 {% renderOverview %}

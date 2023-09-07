@@ -19,7 +19,7 @@ export class PfDropdownGroup extends LitElement {
 
   render() {
     return html`
-      <h1>${this.label}</h1>
+      ${this.label && this.label !== '' ? html`<p role="presentation">${this.label}</p>` : ''}
       <slot></slot>
     `;
   }

@@ -1,8 +1,9 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValueMap, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import type { PropertyValueMap, PropertyValues } from 'lit';
+
 import { ListboxController, type ListboxOptionElement, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
+
 import { PfSelectGroup } from './pf-select-group.js';
 import { PfSelectOption } from './pf-select-option.js';
 

@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+  color: #777;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #6a6e73;
+}

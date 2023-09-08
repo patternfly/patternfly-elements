@@ -1,6 +1,7 @@
 import { LitElement, html, type PropertyValueMap, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 
 import { ListboxController, type ListboxOptionElement, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 
@@ -45,6 +46,8 @@ export class PfSelectList extends LitElement {
    */
   @property({ reflect: true, attribute: 'multi-selectable', type: Boolean }) multiSelectable = false;
 
+  @queryAssignedElements({ flatten: true }) private _slottedElements?: Array<HTMLElement>;
+
   #listboxController?: ListboxController;
 
   /**
@@ -61,17 +64,19 @@ export class PfSelectList extends LitElement {
   }
 
   /**
-   * array of slotted options
-   */
+     * array of slotted options
+     */
   get options() {
-    const slotted = this.querySelector('slot')?.assignedElements() || [...this.querySelectorAll('pf-select-option')];
-    const options = slotted?.map(element => {
+    if (!this._slottedElements || this._slottedElements.length === 0) {
+      return;
+    }
+    const options = this._slottedElements.flatMap((element: HTMLElement) => {
       if (element instanceof PfSelectOption) {
         return element;
       } else if (element instanceof PfSelectGroup) {
         return [...element.querySelectorAll('pf-select-option')];
       }
-    }).flat();
+    });
     return options;
   }
 

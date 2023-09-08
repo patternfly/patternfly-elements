@@ -1,6 +1,5 @@
 :host {
   display: block;
-  padding: var(--pf-global--spacer--sm, 0.5rem) var(--pf-global--spacer--md, 1rem);
 }
 
 :host([hidden]),
@@ -23,10 +22,14 @@
   pointer-events: none;
 }
 
-div {
+#outer {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
+  padding: var(--pf-global--spacer--sm, 0.5rem) var(--pf-global--spacer--md, 1rem);
+  min-height: calc(44px - 2 * var(--pf-global--spacer--sm, 0.5rem));
+  min-width: calc(44px - 2 * var(--pf-global--spacer--md, 1rem));
 }
 
 input[type="checkbox"] {
@@ -48,6 +51,12 @@ svg {
   margin-inline-start: 1em;
   text-align: right;
   flex: 0 0 auto;
+  display: var(--_pf-select-option-svg-display, block);
+}
+
+#description {
+  display: block;
+  flex: 1 0 100%;
 }
 
 slot[name="description"] {

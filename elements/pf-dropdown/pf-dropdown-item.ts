@@ -48,9 +48,9 @@ export class PfDropdownItem extends LitElement {
   @property({ reflect: true }) value?: string;
 
   /**
-   * href for links
+   * uri for links
   */
-  @property({ reflect: false, attribute: 'href' }) href?: string;
+  @property({ reflect: false, attribute: 'to' }) to?: string;
 
   /**
    * Flag indicating whether the item is active
@@ -85,7 +85,7 @@ export class PfDropdownItem extends LitElement {
   render() {
     return html`
       <div id="menuitem">
-        ${this.href && this.href !== '' ? html`<a href="${this.href}"><slot></slot></a>` : html`<slot></slot>`}
+        ${this.to && this.to !== '' ? html`<a href="${this.to}"><slot></slot></a>` : html`<slot></slot>`}
         <slot name="description"></slot>
       </div>`;
   }

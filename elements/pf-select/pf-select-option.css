@@ -41,6 +41,7 @@ span {
 }
 
 svg {
+  font-size: var(--pf-c-select__menu-item-icon--FontSize, var(--pf-global--icon--FontSize--sm, 0.675rem));
   color: var(--_pf-select-option-svg-color, var(--pf-theme--color--accent, #0066cc));
   width: 1em;
   height: 1em;

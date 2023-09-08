@@ -90,12 +90,16 @@ a:link {
 }
 
 slot:not([name]){
-  flex: 1 1 auto;
+  flex: 1 0 44px;
+  min-height: 44px;
+}
+
+#description {
+  display: block;
+  flex: 1 0 100%;
 }
 
 slot[name="description"] {
-  display: block;
-  flex: 1 0 100%;
   font-size: var(
     --pf-c-dropdown__menu-item-description--FontSize, var(
       --pf-global--FontSize--sm, 0.75rem
@@ -108,3 +112,4 @@ slot[name="description"] {
   );
   word-break: break-all;
 }
+

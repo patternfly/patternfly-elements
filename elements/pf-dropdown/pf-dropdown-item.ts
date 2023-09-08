@@ -86,7 +86,7 @@ export class PfDropdownItem extends LitElement {
     return html`
       <div id="menuitem">
         ${this.to && this.to !== '' ? html`<a href="${this.to}"><slot></slot></a>` : html`<slot></slot>`}
-        <slot name="description"></slot>
+        <div id="description"><slot name="description"></slot></div>
       </div>`;
   }
 

@@ -74,10 +74,19 @@ pf-dropdown-menu.show {
   display: block;
 }
 
-pf-button {
+pf-button::part(button) {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+pf-button svg {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  margin-inline-start: 1em;
 }
 
 ::slotted([role="separator"]) {

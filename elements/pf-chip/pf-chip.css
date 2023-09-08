@@ -9,9 +9,13 @@
 }
 
 #outer {
+  min-height: 44px;
+  min-width: 44px;
   max-width: 100%;
   display: inline-flex;
-  padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem) !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 !important;
   background-color: var(--pf-theme--color--surface--lightest, #fff);
   color: var(--pf-theme--color--text, #151515);
   border-radius: var(--pf-global--BorderRadius--sm, 3px);
@@ -22,11 +26,6 @@
 
 :host(:focus-within) #outer {
   border-color: var(--pf-theme--color--accent, #0066cc);
-}
-
-
-:host([overflow-chip]) #outer {
-  padding: 0 !important;
 }
 
 :host,
@@ -46,7 +45,8 @@
   display: inline-block;
   text-wrap: nowrap;
   white-space: nowrap;
-  flex: 1 0 calc(100% - 20px);
+  margin: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem);
+  flex: 1 0 calc(100% - 44px);
 }
 
 :host([read-only]) .chip-content {
@@ -55,6 +55,7 @@
 
 :host([overflow-chip]) .chip-content {
   color: var(--pf-theme--color--accent, #0066cc);
+  margin: 0 var(--pf-global--spacer--sm, 0.5rem);
 }
 
 button {
@@ -63,6 +64,8 @@ button {
   color: var(--pf-theme--color--ui-base, #6a6e73);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-height: 44px;
 }
 
 button::after {
@@ -74,14 +77,6 @@ button::after {
   bottom: 0;
 }
 
-#overflow-button {
-  padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem) !important;
-}
-
-#close-button {
-  padding: 0 0 0 var(--pf-global--spacer--sm, 0.5rem) !important;
-}
-
 button:focus {
   outline: none !important;
 }
@@ -89,6 +84,7 @@ button:focus {
 svg {
   width: var(--pf-global--FontSize--xs, 12px);
   height: var(--pf-global--FontSize--xs, 12px);
+  margin: var(--pf-global--spacer--xs, 0.25rem) 0;
 }
 
 ::slotted(pf-badge) {

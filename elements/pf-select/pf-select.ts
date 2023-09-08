@@ -1,17 +1,18 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import type { PropertyValues } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
 import { type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
+import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
+import type { PfSelectOption } from './pf-select-option.js';
+import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
 import { PfSelectList } from './pf-select-list.js';
 
 import styles from './pf-select.css';
-import type { PfSelectOption } from './pf-select-option.js';
-import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
 
 export type PfSelectItemsDisplay = '' | 'badge' | 'chips';
 export type Placement = 'bottom' | 'top' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end';

@@ -10,7 +10,6 @@ import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-back-to-top.css';
 
-
 /**
  * The **back to top** component is a shortcut that allows users to quickly navigate to the top of a lengthy content page.
  * @summary A shortcut that allows users to quickly navigate to the top of a lengthy content page.
@@ -49,7 +48,7 @@ export class PfBackToTop extends LitElement {
   /** Distance from the top of the scrollable element to trigger the visibility of the back to top button */
   @property({ type: Number, attribute: 'scroll-distance' }) scrollDistance = 400;
 
-  /** Page fragment link to element, must include hash (#) */
+  /** Page fragment link to target element, must include hash ex: #top */
   @property({ reflect: true }) href?: string;
 
   override connectedCallback(): void {

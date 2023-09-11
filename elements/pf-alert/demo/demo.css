@@ -2,3 +2,14 @@ pf-alert {
   padding: 0.5rem;
   display: block;
 }
+
+pf-button {
+  display: block;
+  padding-block: 1em;
+}
+
+#timeout-alerts {
+  min-height: 200px;
+  border: 1px solid #000;
+  margin: 0.5rem;
+}

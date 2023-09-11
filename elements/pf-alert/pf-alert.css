@@ -340,6 +340,20 @@ footer {
   --pf-c-alert--BackgroundColor: var(--pf-c-alert--m-inline--BackgroundColor);
 }
 
+#container.truncateTitle  {
+  display: block;
+}
+
+.truncateTitle #middle-column {
+  display: block;
+}
+
+.truncateTitle #header {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 #container {
   color: var(--pf-global--Color--100, #151515);
   position: relative;
@@ -353,7 +367,7 @@ footer {
   border-block: solid var(--pf-c-alert--BorderTopColor, #009596);
   border-block-width: var(--pf-c-alert--BorderTopWidth, 2px) 0;
   box-shadow: var(--pf-c-alert--BoxShadow, 0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08));
-  
+
    font-family:
       var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,
         "RedHatTextUpdated",
@@ -405,7 +419,7 @@ header ::slotted(*) {
   color: var(--pf-c-alert__icon--Color, var(--pf-global--default-color--200, #009596));
 }
 
-#icon > svg { 
+#icon > svg {
   font-size: var(--pf-c-alert__icon--FontSize, var(--pf-global--icon--FontSize--md, 1.125rem));
 }
 

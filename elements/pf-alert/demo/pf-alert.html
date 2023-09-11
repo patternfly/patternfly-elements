@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="demo.css">
 <script type="module" src="pf-alert.js"></script>
 
-<pf-alert title="Default alert title"></pf-alert>
+<pf-alert title="Custom alert title"></pf-alert>
 <pf-alert variant="info" title="Info alert title"></pf-alert>
 <pf-alert variant="success" title="Success alert title"></pf-alert>
 <pf-alert variant="warning" title="Warning alert title"></pf-alert>
@@ -11,8 +11,27 @@
     Inline
 </h1>
 
-<pf-alert title="Default inline alert title" inline></pf-alert>
+<pf-alert title="Custom inline alert title" inline></pf-alert>
 <pf-alert variant="info" title="Info inline alert title" inline></pf-alert>
 <pf-alert variant="success" title="Success inline alert title" inline></pf-alert>
 <pf-alert variant="warning" title="Warning inline alert title" inline></pf-alert>
 <pf-alert variant="danger" title="Danger inline alert title" inline></pf-alert>
+
+<h1>
+  Truncated Title
+</h1>
+
+<pf-alert style="width:100px;" truncate-title title="It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of light, it was the season of darkness, it was the spring of hope, it was the winter of despair."></pf-alert>
+
+<h1>
+  Timeout
+</h1>
+
+<pf-button id="create-timeout-alert">Create default timeout alert</pf-button>
+<pf-button id="create-timeout-inline-alert">Create inline timeout alert</pf-button>
+
+<input type="range" id="timeout-range" min="0" max="10000" step="100" value="1000" />
+<label for="timeout-range">Timeout: <span id="timeout-value">1000</span>ms</label>
+<pf-button id="create-custom-timeout-alert">Create custom timeout alert</pf-button>
+
+<section id="timeout-alerts"></section>

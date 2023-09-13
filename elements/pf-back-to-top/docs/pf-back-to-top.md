@@ -3,7 +3,7 @@
     position: static !important;
   }
 
-  :not(.override) > .example-preview pf-back-to-top::part(button) {
+  :not(.override) > .example-preview pf-back-to-top::part(trigger) {
     position: static !important;
     left: unset;
     top: unset;

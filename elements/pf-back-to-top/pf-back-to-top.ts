@@ -20,6 +20,20 @@ import styles from './pf-back-to-top.css';
  *       Contains the button's icon or state indicator, e.g. a spinner.
  * @slot
  *       Must contain exactly one `<button>` element as the only content not assigned to a named slot.
+ *
+ * @cssprop {<length>} --pf-c-back-to-top--Right {@default `3rem``}
+ * @cssprop {<length>} --pf-c-back-to-top--Bottom {@default `1.5rem``}
+ * @cssprop --pf-c-back-to-top--c-button--BoxShadow {@default `0 0.75rem 0.75rem -0.5rem rgba(3, 3, 3, 0.18)`}
+ * @cssprop {<length>} --pf-c-button--FontSize {@default `0.75rem`}
+ * @cssprop {<length>|<percentage>}  --pf-c-button--BorderRadius {@default `30em`}
+ * @cssprop {<length>} --pf-c-button--PaddingTop {@default `0.25rem`}
+ * @cssprop {<length>} --pf-c-button--PaddingRight {@default `0.5rem`}
+ * @cssprop {<length>} --pf-c-button--PaddingBottom {@default `0.25rem`}
+ * @cssprop {<length>} --pf-c-button--PaddingLeft {@default `0.5rem`}
+ * @cssprop {<color>} --pf-c-button--m-primary--Color {@default `#fff`}
+ * @cssprop {<color>} --pf-c-button--m-primary--BackgroundColor {@default `#06c`}
+ * @cssprop {<length>} --pf-c-button__icon--m-end--MarginLeft {@default `0.25rem`}
+ *
  */
 @customElement('pf-back-to-top')
 export class PfBackToTop extends LitElement {

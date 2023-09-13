@@ -17,9 +17,9 @@ import styles from './pf-back-to-top.css';
  * @csspart trigger - The `<a>` or `<pf-button>` element
  *
  * @slot icon
- *       Contains the button's icon or state indicator, e.g. a spinner.
+ *       Contains the prefix icon to display before the link or button.
  * @slot
- *       Must contain exactly one `<button>` element as the only content not assigned to a named slot.
+ *       Text to display inside the link or button.
  *
  * @cssprop {<length>} --pf-c-back-to-top--Right {@default `3rem``}
  * @cssprop {<length>} --pf-c-back-to-top--Bottom {@default `1.5rem``}

@@ -32,7 +32,7 @@ export class PfDropdownMenu extends LitElement {
   /** event listeners for host element */
   #listeners = {
     'keydown': this.#onMenuitemKeydown.bind(this),
-    'dropdownitemfocus': this.#onMenuitemFocus.bind(this),
+    'focusin': this.#onMenuitemFocusin.bind(this),
     'click': this.#onMenuitemClick.bind(this),
   };
 
@@ -109,7 +109,7 @@ export class PfDropdownMenu extends LitElement {
    * @param event {FocusEvent}
    * @returns void
    */
-  #onMenuitemFocus(event: FocusEvent) {
+  #onMenuitemFocusin(event: FocusEvent) {
     const target = event.target as PfDropdownItem;
     if (target !== this.#tabindex.activeItem) {
       this.#tabindex.updateActiveItem(target);

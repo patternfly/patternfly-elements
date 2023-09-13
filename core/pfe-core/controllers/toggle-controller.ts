@@ -7,7 +7,7 @@ export type Placement = 'bottom' | 'top' | 'top-start' | 'top-end' | 'bottom-sta
  * properties for popup option elements
  */
 export interface ToggleHost extends HTMLElement {
-  open: boolean;
+  expanded: boolean;
 }
 
 export type HasPopupType = 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
@@ -145,7 +145,6 @@ export class ToggleController<
    * adds event listeners to items container
    */
   hostConnected() {
-    const capture = (eventname: string) => ['focus', 'blur'].includes(eventname);
     for (const [event, listener] of Object.entries(this.#hostListeners)) {
       this.host?.addEventListener(event, listener as (event: Event | null) => void);
     }
@@ -155,6 +154,9 @@ export class ToggleController<
    * removes event listeners from items container
    */
   hostDisconnected() {
+    if (this.#float) {
+      this.host.removeController(this.#float);
+    }
     for (const [event, listener] of Object.entries(this.#hostListeners)) {
       this.host?.removeEventListener(event, listener as (event: Event | null) => void);
     }
@@ -240,10 +242,11 @@ export class ToggleController<
   async open(focus = false) {
     const { expanded } = this;
     if (this.#popupElement && this.float) {
-      await this.float.open({
+      await this.float.show({
         placement: this.position || 'bottom',
         flip: !!this.enableFlip,
       });
+      this.host.expanded = true;
       await this.host.updateComplete;
       if (expanded !== this.expanded) {
         this.#fireOpenChanged();
@@ -267,7 +270,8 @@ export class ToggleController<
     // only close if popup is not set to always open
     // and it does not currently have focus/hover
     if (this.float && (force || !hasFocus)) {
-      this.float.close();
+      await this.float.hide();
+      this.host.expanded = false;
       await this.host.updateComplete;
       if (expanded !== this.expanded) {
         this.#fireOpenChanged();

@@ -8,8 +8,8 @@ import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
-import type { PfDropdownItem } from './pf-dropdown-item';
-import type { PfDropdownMenu } from './pf-dropdown-menu.js';
+import { PfDropdownItem } from './pf-dropdown-item.js';
+import { PfDropdownMenu } from './pf-dropdown-menu.js';
 import styles from './pf-dropdown.css';
 
 export class DropdownSelectEvent extends ComposedEvent {
@@ -142,21 +142,21 @@ export class PfDropdown extends LitElement {
   /**
    * Opens the dropdown
    */
-  @bound async show() {
-    this.#toggle?.open(true);
+  @bound async open() {
+    await this.#toggle?.open(true);
   }
 
   /**
    * Closes the dropdown
    */
-  @bound async hide() {
-    this.#toggle?.close(true);
+  @bound async close() {
+    await this.#toggle?.close(true);
   }
 
   #handleSelect(event: KeyboardEvent | Event & { target: PfDropdownItem }) {
     const menu = this._menuElement as PfDropdownMenu;
     const target = event.target as PfDropdownItem || menu.activeItem;
-    this.hide();
+    this.close();
     this.dispatchEvent(
       new DropdownSelectEvent(event, `${target?.value}`)
     );

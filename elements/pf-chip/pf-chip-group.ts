@@ -157,7 +157,7 @@ export class PfChipGroup extends LitElement {
    * makes chip active and sets focus on it
    */
   focusOnChip(chip: HTMLElement) {
-    const button = chip.shadowRoot?.querySelector('button') as HTMLElement;
+    const button = chip?.shadowRoot?.querySelector('button') as HTMLElement;
     this.#tabindex.focusOnItem(button);
   }
 

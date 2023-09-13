@@ -60,7 +60,7 @@ import '@patternfly/elements/pf-select/pf-select.js';
 Below are option variants:
 
 {% htmlexample %}
-  <pf-select always-open>
+  <pf-select always-expanded>
     <pf-select-option value="Basic">Basic option</pf-select-option>
     <pf-select-option value="Description">
       <span>Option with description</span>

@@ -6,7 +6,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
-import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
 
 import type { PfSelectOption } from './pf-select-option.js';
 import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
@@ -30,9 +30,9 @@ export class PfSelect extends LitElement {
   static readonly styles = [styles];
 
   /**
-   * whether listbox is always open
+   * whether listbox is always expanded
    */
-  @property({ attribute: 'always-open', type: Boolean }) alwaysOpen = false;
+  @property({ attribute: 'always-expanded', type: Boolean }) alwaysExpanded = false;
 
   /**
    * whether filtering (if enabled) will be case-sensitive
@@ -92,9 +92,9 @@ export class PfSelect extends LitElement {
   @property({ reflect: true, attribute: 'multi-selectable', type: Boolean }) multiSelectable = false;
 
   /**
-   * whether listbox is always open
+   * whether listbox is always expanded
    */
-  @property({ reflect: true, attribute: 'open', type: Boolean }) open = false;
+  @property({ reflect: true, attribute: 'expanded', type: Boolean }) expanded = false;
 
   /**
    * Indicates initial popover position.
@@ -122,12 +122,8 @@ export class PfSelect extends LitElement {
   @query('#toggle-button') private _toggle?: HTMLButtonElement;
 
   #createOption!: PfSelectOption;
-  #float = new FloatingDOMController(this, {
-    content: (): HTMLElement | undefined | null => this._listbox
-  });
 
-  #hovered = false;
-  #focused = false;
+  #toggle?: ToggleController;
 
   /**
    * label for toggle button
@@ -152,25 +148,22 @@ export class PfSelect extends LitElement {
   get #selectList() {
     const checkboxes = this.hasCheckboxes ? 'checkboxes' : false;
     const { height, width } = this.getBoundingClientRect() || {};
-    const styles = this.alwaysOpen ? '' : `margin-top: ${height || 0}px;width: ${width || 'auto'}px`;
+    const styles = this.alwaysExpanded ? '' : `margin-top: ${height || 0}px;width: ${width || 'auto'}px`;
     return html`
       <pf-select-list 
         id="listbox" 
         style="${styles}"
         class="${classMap({ checkboxes })}"
         ?disabled=${this.disabled}
-        ?hidden=${!this.alwaysOpen && (!this.open || this.disabled)}
+        ?hidden=${!this.alwaysExpanded && (!this.expanded || this.disabled)}
         ?case-sensitive=${this.caseSensitive}
         ?disable-filter="${this.disableFilter}"
         ?match-anywhere=${this.matchAnywhere}
         ?multi-selectable=${this.#isMulti}
         @input=${this.#onListboxInput}
         @change=${this.#onListboxChange}
-        @keydown=${this.#onListboxKeydown}
         @listboxoptions=${this.#updateValueText}
         @select=${this.#onListboxSelect}
-        @optionfocus=${this.#onSelectFocus}
-        @optionblur=${this.#onSelectBlur}
         @optioncreated=${this.#onOptionCreated}>
         <slot></slot>
       </pf-select-list>`;
@@ -255,50 +248,47 @@ export class PfSelect extends LitElement {
   }
 
   render() {
-    const { hasBadge, typeahead } = this;
+    const { hasBadge, typeahead, alwaysExpanded } = this;
+    const toggles = !alwaysExpanded ? 'toggles' : false;
     const offscreen = typeahead ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
     const autocomplete = this.disableFilter ? 'none' : 'list';
-    const { alignment, anchor, styles, open } = this.#float;
-    return this.alwaysOpen ? html`${this.#selectList}` : html`
+    let classes = { };
+    if (this.#toggle && !alwaysExpanded) {
+      const { expanded, anchor, alignment } = this.#toggle;
+      classes = { toggles, expanded, [anchor]: !!anchor, [alignment]: !!alignment };
+    }
+    return html`
       <div id="outer" 
-        style="${styleMap(styles)}"
-        class="${classMap({ open, [anchor]: !!anchor, [alignment]: !!alignment })}"
-        @mouseover=${this.#onSelectMouseover}
-        @mouseout=${this.#onSelectMouseout}
-        @focus=${this.#onSelectFocus}
-        @blur=${this.#onSelectBlur}>
+        style="${this.#toggle?.styles ? styleMap(this.#toggle.styles) : ''}"
+        class="${classMap(classes)}">
         <div id="toggle" 
           ?disabled=${this.disabled} 
-          ?expanded=${this.open}>
-          ${!this.hasChips || this.#valueTextArray.length < 1 ? '' : html`
+          ?expanded=${this.expanded}
+          ?hidden=${this.alwaysExpanded}>
+          ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
             <pf-chip-group label="${this.currentSelectionsLabel}">
-              ${this.#valueTextArray.map(txt => html`
-                <pf-chip id="chip-${txt}" @click=${() => this.#onChipClick(txt)}>${txt}</pf-chip>
+              ${this.#selectedOptions.map(opt => html`
+                <pf-chip id="chip-${opt.textContent}" @chip-remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>
               `)}
             </pf-chip-group>
           `}
-          ${!typeahead ? '' : html`
-            <input 
-              id="toggle-input" 
-              type="text" 
-              aria-controls="listbox" 
-              aria-autocomplete="${autocomplete}" 
-              aria-expanded="${!this.open ? 'false' : 'true'}" 
-              placeholder="${this.#buttonLabel}"
-              role="combobox"
-              @keydown=${this.#onToggleKeydown}
-              @input=${this.#onTypeaheadInput}
-              @focus=${this.#onTypeaheadFocus}>
-          `}
+          <input 
+            id="toggle-input" 
+            type="text" 
+            aria-controls="listbox" 
+            aria-autocomplete="${autocomplete}" 
+            aria-expanded="${!this.expanded ? 'false' : 'true'}"
+            ?hidden=${!this.typeahead} 
+            placeholder="${this.#buttonLabel}"
+            role="combobox"
+            @input=${this.#onTypeaheadInput}>
           <button 
             id="toggle-button" 
-            aria-expanded="${!this.open ? 'false' : 'true'}" 
+            aria-expanded="${!this.expanded ? 'false' : 'true'}" 
             aria-controls="listbox" 
             aria-haspopup="listbox"
-            ?disabled=${this.disabled}
-            @keydown=${this.#onToggleKeydown}
-            @click=${this.#onToggleClick}>
+            ?disabled=${this.disabled}>
             <span id="toggle-text" class="${classMap({ offscreen, badge })}">
               ${this.#buttonLabel}
             </span>
@@ -318,6 +308,11 @@ export class PfSelect extends LitElement {
     `;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    this.#toggle = new ToggleController(this, 'listbox');
+  }
+
   updated(changed: PropertyValues<this>) {
     if (changed.has('hasCheckboxes') && this.hasCheckboxes) {
       import('@patternfly/elements/pf-badge/pf-badge.js');
@@ -327,8 +322,22 @@ export class PfSelect extends LitElement {
       this.#updateCreateOptionText();
     }
 
-    if (changed.has('open')) {
-      this.#onOpenChanged();
+    if (changed.has('alwaysExpanded')) {
+      this.#setToggle();
+    }
+  }
+
+  #setToggle() {
+    if (!this.alwaysExpanded) {
+      if (!this.#toggle) {
+        this.#toggle = new ToggleController(this, 'menu');
+      }
+      this.#toggle?.setPopupElement(this._listbox);
+      this.#toggle?.addTriggerElement(this._input);
+      this.#toggle?.addTriggerElement(this._toggle);
+    } else if (this.#toggle) {
+      this.removeController(this.#toggle);
+      this.#toggle = undefined;
     }
   }
 
@@ -338,10 +347,20 @@ export class PfSelect extends LitElement {
   }
 
   /**
+   * opens the dropdown
+   */
+  async open() {
+    await this.#toggle?.open(true);
+  }
+
+  /**
    * sets focus
    */
   focus() {
-    (this._input || this._toggle || this._listbox)?.focus();
+    const element = this._input && !this._input.hidden ? this._input
+      : this._toggle && !this._toggle.hidden ? this._toggle
+      : this._listbox;
+    element?.focus();
   }
 
   /**
@@ -351,6 +370,13 @@ export class PfSelect extends LitElement {
    */
   insertOption(option: PfSelectOption, insertBefore?: PfSelectOption) {
     this._listbox?.insertOption(option, insertBefore);
+  }
+
+  /**
+   * closes listbox and sets focus
+   */
+  async close() {
+    await this.#toggle?.close(true);
   }
 
   /**
@@ -368,14 +394,15 @@ export class PfSelect extends LitElement {
    * handles chip's remove button clicking
    * @param txt chip text to be removed from values
    */
-  #onChipClick(txt: string) {
-    const [opt] = this.#selectedOptions.filter(option => option.optionText === txt.trim());
-    if (opt) {
-      // deselect chip
-      opt.selected = false;
-      this.requestUpdate();
-      this._input?.focus();
-    }
+  #onChipRemove(event: Event, opt: PfSelectOption) {
+    setTimeout(() => {
+      if (opt) {
+        // deselect option
+        opt.selected = false;
+        this.requestUpdate();
+        this._input?.focus();
+      }
+    }, 1);
   }
 
   /**
@@ -393,34 +420,6 @@ export class PfSelect extends LitElement {
   }
 
   /**
-   * handles listbox keydown event
-   */
-  #onListboxKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      this.#close(true);
-    }
-  }
-
-  /**
-   * closes listbox and sets focus
-   */
-  async #close(force = false) {
-    const hasFocus = this.#focused || this.#hovered;
-    // only close if listbox is not set to always open
-    // and it does not currently have focus/hover
-    if (!this.alwaysOpen && (force || !hasFocus)) {
-      this.open = false;
-      // only re-set focus if close was forced by select itself
-      if (!force && hasFocus) {
-        await this.updateComplete;
-        this.focus();
-      }
-    }
-  }
-
-  /**
    * handles listbox select event
    */
   #onListboxSelect(event: KeyboardEvent) {
@@ -434,7 +433,7 @@ export class PfSelect extends LitElement {
       // prevent toggle firing a click event when focus is rest to it
       event.preventDefault();
       event.stopImmediatePropagation();
-      this.#close(true);
+      this.close();
     } else if (this._input) {
       this._input.value = '';
 
@@ -443,26 +442,6 @@ export class PfSelect extends LitElement {
         this._input?.focus();
       }
     }
-  }
-
-  /**
-   * handles opening of listbox
-   * and floating DOM controller
-   */
-  async #onOpenChanged() {
-    if (this.open && !this.alwaysOpen) {
-      await this.#float.show({
-        placement: this.position,
-        flip: this.enableFlip,
-      });
-    } else {
-      await this.#float.hide();
-    }
-
-    /**
-     * @fires open-change
-     */
-    this.dispatchEvent(new Event('open-change'));
   }
 
   /**
@@ -475,80 +454,6 @@ export class PfSelect extends LitElement {
   }
 
   /**
-   * sets focus and tests for closing
-   * when any part of select loses focus
-   */
-  #onSelectBlur() {
-    this.#focused = false;
-    // wait for immediate focus or hover event;
-    // then test if listbox can be closed
-    setTimeout(this.#close.bind(this, false), 300);
-  }
-
-  /**
-   * sets indicator when any part of select gets focus
-   */
-  #onSelectFocus() {
-    this.#focused = true;
-  }
-
-  /**
-   * sets focus and tests for closing
-   * when any part of select loses hover
-   */
-  #onSelectMouseout() {
-    this.#hovered = false;
-    // wait for immediate focus or hover event;
-    // then test if listbox can be closed
-    setTimeout(this.#close.bind(this, false), 300);
-  }
-
-  /**
-   * sets indicator when any part of select gets hover
-   */
-  #onSelectMouseover() {
-    this.#hovered = true;
-  }
-
-  /**
-   * handles toggle keydown event
-   * @param event {KeyboardEvent}
-   */
-  async #onToggleKeydown(event: KeyboardEvent) {
-    if (event.key === 'ArrowDown') {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      if (!this.open) {
-        this.open = true;
-        await this.updateComplete;
-      }
-      if (this.open && this._listbox) {
-        this._listbox.focus();
-      }
-    }
-  }
-
-  /**
-   * handles toggle button click event
-   */
-  async #onToggleClick(event: MouseEvent) {
-    this.open = !this.open;
-    if (this.open && this._listbox) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      await this.updateComplete;
-      this._listbox.focus();
-    }
-  }
-
-  /**
-   * handles typeahead combobox focus event
-   */
-  #onTypeaheadFocus() {
-    this.open = true;
-  }
-
-  /**
    * handles typeahead combobox input event
    */
   #onTypeaheadInput() {
@@ -556,7 +461,7 @@ export class PfSelect extends LitElement {
     this.#updateCreateOptionValue(this._input?.value || '');
     if (this._listbox && this.filter !== this._input?.value) {
       this.filter = this._input?.value || '';
-      this.open = true;
+      this.expanded = true;
     }
   }
 

@@ -26,6 +26,9 @@ export class ToggleController<
   /** pop-up that is toggled */
   #popupElement?: HTMLElement;
 
+  /** whether host is connected */
+  #connected = false;
+
   /** whether host is hovered */
   #hovered = false;
 
@@ -133,11 +136,24 @@ export class ToggleController<
   ) {
     this.host.addController(this);
     this.#popupType = popupType || 'menu';
-    this.#float = new FloatingDOMController(this.host, {
-      content: (): HTMLElement | undefined | null => this.popupElement
-    });
-    for (const [event, listener] of Object.entries(this.#hostListeners)) {
-      this.host?.addEventListener(event, listener as (event: Event | null) => void);
+    this.#connectFloat();
+    this.host?.requestUpdate();
+  }
+
+  #connectFloat() {
+    if (!this.#connected) {
+      if (!this.#float) {
+        this.#float = new FloatingDOMController(this.host, {
+          content: (): HTMLElement | undefined | null => this.popupElement
+        });
+      }
+      if (this.#float) {
+        this.host?.addController(this.#float);
+        this.host?.requestUpdate();
+      }
+      for (const [event, listener] of Object.entries(this.#hostListeners)) {
+        this.host?.addEventListener(event, listener as (event: Event | null) => void);
+      }
     }
   }
 
@@ -145,20 +161,21 @@ export class ToggleController<
    * adds event listeners to items container
    */
   hostConnected() {
-    for (const [event, listener] of Object.entries(this.#hostListeners)) {
-      this.host?.addEventListener(event, listener as (event: Event | null) => void);
-    }
+    this.#connectFloat();
   }
 
   /**
    * removes event listeners from items container
    */
   hostDisconnected() {
-    if (this.#float) {
-      this.host.removeController(this.#float);
-    }
-    for (const [event, listener] of Object.entries(this.#hostListeners)) {
-      this.host?.removeEventListener(event, listener as (event: Event | null) => void);
+    if (this.#connected) {
+      if (this.#float) {
+        this.host?.removeController(this.#float);
+        this.host?.requestUpdate();
+      }
+      for (const [event, listener] of Object.entries(this.#hostListeners)) {
+        this.host?.removeEventListener(event, listener as (event: Event | null) => void);
+      }
     }
   }
 

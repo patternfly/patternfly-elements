@@ -1,13 +1,12 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import styles from './pf-dropdown-menu.css';
-import { ComposedEvent } from '@patternfly/pfe-core';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
-import { PfDropdownItem } from './pf-dropdown-item.js';
-import { PfDropdownGroup } from './pf-dropdown-group.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+import { PfDropdownItem } from './pf-dropdown-item.js';
+import { PfDropdownGroup } from './pf-dropdown-group.js';
+import styles from './pf-dropdown-menu.css';
 
 /**
  * A **dropdown** presents a menu of actions or links in a constrained space that will trigger a process or navigate to a new location.

@@ -1,12 +1,16 @@
 import { LitElement, html } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
-import styles from './pf-dropdown.css';
+import { query } from 'lit/decorators/query.js';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
-import { query } from 'lit/decorators/query.js';
-import './pf-dropdown-menu.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
+import type { PfDropdownItem } from './pf-dropdown-item';
+import type { PfDropdownMenu } from './pf-dropdown-menu.js';
+import styles from './pf-dropdown.css';
 
 export class DropdownSelectEvent extends ComposedEvent {
   constructor(
@@ -49,60 +53,57 @@ export class DropdownSelectEvent extends ComposedEvent {
 @customElement('pf-dropdown')
 export class PfDropdown extends LitElement {
   static readonly styles = [styles];
-  private static instances = new Set<PfDropdown>();
-
-  static {
-    document.addEventListener('click', function(event) {
-      for (const instance of PfDropdown.instances) {
-        if (!instance.noOutsideClick) {
-          instance.#outsideClick(event);
-        }
-      }
-    });
-  }
-
-  /**
-   * Don't hide the dropdown when clicking ouside of it.
-   */
-  @property({ type: Boolean, reflect: true, attribute: 'no-outside-click' }) noOutsideClick = false;
 
   /**
    * Disable the dropdown trigger element
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
+  /**
+   * Flag to indicate if menu is opened.
+   */
+  @property({ type: Boolean, reflect: true }) expanded = false;
+
   #triggerElement: HTMLElement | null = null;
 
-  @query('slot[name="trigger"]') private triggerSlot!: HTMLSlotElement;
-  @query('pf-dropdown-menu') private menuElement!: HTMLElement;
+  @queryAssignedElements({ slot: 'trigger' }) private _slottedTrigger!: HTMLElement[];
 
-  #float = new FloatingDOMController(this, {
-    content: (): HTMLElement | undefined | null =>
-      this.shadowRoot?.querySelector('pf-dropdown-menu'),
-  });
+  @query('#default-button') private _defaultTrigger!: HTMLButtonElement;
+
+  @query('pf-dropdown-menu') private _menuElement!: HTMLElement;
+
+  #toggle?: ToggleController;
 
   connectedCallback() {
     super.connectedCallback();
-    this.#triggerElement?.setAttribute('aria-haspopup', 'true');
-    this.#triggerElement?.setAttribute('aria-controls', 'dropdown-menu');
+    this.#toggle = new ToggleController(this, 'menu');
+    this.#setTriggerElement();
   }
 
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    PfDropdown.instances.delete(this);
+  firstUpdated() {
+    this.#setTriggerElement();
+    this.#toggle?.setPopupElement(this._menuElement);
   }
 
   render() {
+    let classes = {};
+    if (this.#toggle) {
+      const { expanded, anchor, alignment } = this.#toggle;
+      classes = { expanded, [anchor]: !!anchor, [alignment]: !!alignment };
+    }
     return html`
+    <div 
+      style="${this.#toggle?.styles ? styleMap(this.#toggle.styles) : ''}"
+      class="${this.#toggle ? classMap(classes) : ''}">
       <slot
         part="dropdown-trigger"
         ?disabled="${this.disabled}"
         name="trigger"
         id="trigger"
         @keydown=${this.handleDropdownButton}
-        @click=${this.toggleMenu}
+        @slotchange=${this.#setTriggerElement}
       >
-        <pf-button ?disabled="${this.disabled}" variant="control">
+        <pf-button id="default-button" ?disabled="${this.disabled}" variant="control">
           Dropdown 
           <svg viewBox="0 0 320 512" fill="currentColor" aria-hidden="true" width="1em" height="1em">
             <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
@@ -111,44 +112,30 @@ export class PfDropdown extends LitElement {
       </slot>
       <pf-dropdown-menu
         part="dropdown-menu"
-        class="${this.#float.open && !this.disabled ? 'show' : ''}"
+        class="${this.#toggle?.expanded && !this.disabled ? 'show' : ''}"
         @keydown=${this.onKeydown}
-        @click="${this.handleSelect}"
+        @click="${this.#handleSelect}"
         id="dropdown-menu"
       >
         <slot></slot>
-      </dpf-dropdown-menuiv>
-    `;
+      </pf-dropdown-menu>
+    </div>`;
   }
 
   /**
    * sets focus on trigger element
    */
   focus() {
-    this.menuElement?.focus();
-  }
-
-  #outsideClick(event: MouseEvent) {
-    const path = event?.composedPath();
-    if (!path?.includes(this)) {
-      this.hide();
-    }
-  }
-
-  /**
-   * Toggle the dropdown
-   */
-  @bound async toggleMenu() {
-    this.#float.open ? this.hide() : this.show();
+    this._menuElement?.focus();
   }
 
   #setTriggerElement() {
-    const hasAssignedNodes = this.triggerSlot?.assignedNodes()?.length > 0;
-    if (!hasAssignedNodes) {
-      const defaultButton = this.triggerSlot?.children[0] as HTMLElement;
-      this.#triggerElement = defaultButton;
-    } else {
-      this.#triggerElement = document.activeElement as HTMLElement;
+    const [slottedTrigger] = this._slottedTrigger;
+    const trigger = slottedTrigger || this._defaultTrigger;
+    if (this.#triggerElement !== trigger) {
+      this.#toggle?.removeTriggerElement(this.#triggerElement);
+      this.#triggerElement = trigger;
+      this.#toggle?.addTriggerElement(this.#triggerElement);
     }
   }
 
@@ -156,52 +143,29 @@ export class PfDropdown extends LitElement {
    * Opens the dropdown
    */
   @bound async show() {
-    await this.updateComplete;
-    await this.#float.show();
-    this.#setTriggerElement();
-    this.#triggerElement?.setAttribute('aria-expanded', 'true');
-    this.menuElement?.focus();
-    PfDropdown.instances.add(this);
+    this.#toggle?.open(true);
   }
 
   /**
    * Closes the dropdown
    */
   @bound async hide() {
-    await this.#float.hide();
-    this.#triggerElement?.focus();
-    PfDropdown.instances.delete(this);
-    // accessibility update
-    this.#triggerElement?.setAttribute('aria-expanded', 'false');
+    this.#toggle?.close(true);
   }
 
-  handleSelect(event: Event & { target: HTMLLIElement }) {
+  #handleSelect(event: KeyboardEvent | Event & { target: PfDropdownItem }) {
+    const menu = this._menuElement as PfDropdownMenu;
+    const target = event.target as PfDropdownItem || menu.activeItem;
     this.hide();
     this.dispatchEvent(
-      new DropdownSelectEvent(event, `${event?.target?.value}`)
+      new DropdownSelectEvent(event, `${target?.value}`)
     );
   }
 
   @bound private onKeydown(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'Escape':
-      case 'Esc':
-      case 'Tab':
-        event.preventDefault();
-        this.hide();
-        break;
-      case 'Enter':
-        event.preventDefault();
-        this.dispatchEvent(
-          new DropdownSelectEvent(
-            event,
-            `${(event?.target as HTMLLIElement)?.value}`
-          )
-        );
-        this.hide();
-        break;
-      default:
-        break;
+    if (event.key === 'Enter' || event.key === 'Space') {
+      event.preventDefault();
+      this.#handleSelect(event);
     }
   }
 

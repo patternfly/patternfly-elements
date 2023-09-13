@@ -1,8 +1,8 @@
-import { LitElement, html, type PropertyValueMap } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import styles from './pf-dropdown-item.css';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+import styles from './pf-dropdown-item.css';
 
 /**
  * Represents an item for a dropdown component.
@@ -70,16 +70,7 @@ export class PfDropdownItem extends LitElement {
     this.#internals = new InternalsController(this, {
       role: 'menuitem'
     });
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('focus', this.#onFocus);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener('focus', this.#onFocus);
+    this.#internals;
   }
 
   render() {
@@ -88,14 +79,6 @@ export class PfDropdownItem extends LitElement {
         ${this.to && this.to !== '' ? html`<a href="${this.to}"><slot></slot></a>` : html`<slot></slot>`}
         <div id="description"><slot name="description"></slot></div>
       </div>`;
-  }
-
-  /**
-   * handles option focus
-   * @fires optionfocus
-   */
-  #onFocus() {
-    this.dispatchEvent(new Event('dropdownitemfocus', { bubbles: true }));
   }
 }
 

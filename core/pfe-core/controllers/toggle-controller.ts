@@ -72,7 +72,7 @@ export class ToggleController<
     return this.float?.alignment || 'center';
   }
 
-  get open() {
+  get expanded() {
     return !!this.float?.open;
   }
 
@@ -103,17 +103,10 @@ export class ToggleController<
     return this.#enableFlip;
   }
 
-  get #documentListeners() {
-    return {
-      'keyup': this.#updateFocused.bind(this),
-      'click': this.#updateFocused.bind(this)
-    };
-  }
-
   get #hostListeners() {
     return {
-      'focus': this.#onHostFocus.bind(this),
-      'blur': this.#onHostBlur.bind(this),
+      'focusin': this.#onHostFocusin.bind(this),
+      'focusout': this.#onHostFocusout.bind(this),
       'mouseover': this.#onHostMouseover.bind(this),
       'mouseout': this.#onHostMouseout.bind(this),
     };
@@ -152,9 +145,7 @@ export class ToggleController<
    * adds event listeners to items container
    */
   hostConnected() {
-    for (const [event, listener] of Object.entries(this.#documentListeners)) {
-      document.addEventListener(event, listener as (event: Event | null) => void);
-    }
+    const capture = (eventname: string) => ['focus', 'blur'].includes(eventname);
     for (const [event, listener] of Object.entries(this.#hostListeners)) {
       this.host?.addEventListener(event, listener as (event: Event | null) => void);
     }
@@ -164,9 +155,6 @@ export class ToggleController<
    * removes event listeners from items container
    */
   hostDisconnected() {
-    for (const [event, listener] of Object.entries(this.#documentListeners)) {
-      document.removeEventListener(event, listener as (event: Event | null) => void);
-    }
     for (const [event, listener] of Object.entries(this.#hostListeners)) {
       this.host?.removeEventListener(event, listener as (event: Event | null) => void);
     }
@@ -215,7 +203,7 @@ export class ToggleController<
       }
       triggerElement?.setAttribute('aria-haspopup', this.#popupType);
       triggerElement?.setAttribute('aria-controls', this.#popupElement?.id || '');
-      triggerElement?.setAttribute('aria-expanded', this.open ? 'true' : 'false');
+      triggerElement?.setAttribute('aria-expanded', this.expanded ? 'true' : 'false');
     }
   }
 
@@ -242,22 +230,22 @@ export class ToggleController<
    * toggles popup based on current state
    */
   async toggle() {
-    this.open ? await this.hide(true) : await this.show();
+    this.expanded ? await this.close(true) : await this.open();
   }
 
   /**
-   * shows popup and sets focus
+   * opens popup and sets focus
    * @param focus {boolean} whether popup element should recieve focus
    */
-  async show(focus = false) {
-    const { open } = this;
+  async open(focus = false) {
+    const { expanded } = this;
     if (this.#popupElement && this.float) {
-      await this.float.show({
+      await this.float.open({
         placement: this.position || 'bottom',
         flip: !!this.enableFlip,
       });
       await this.host.updateComplete;
-      if (open !== this.open) {
+      if (expanded !== this.expanded) {
         this.#fireOpenChanged();
       }
       this.#triggerElements?.forEach(element => {
@@ -271,23 +259,23 @@ export class ToggleController<
   }
 
   /**
-   * hides popup and sets focus
+   * closes popup and sets focus
    */
-  async hide(force = false) {
-    const { open } = this;
+  async close(force = false) {
+    const { expanded } = this;
     const hasFocus = this.#focused || this.#hovered;
-    // only hide if popup is not set to always open
+    // only close if popup is not set to always open
     // and it does not currently have focus/hover
     if (this.float && (force || !hasFocus)) {
-      this.float.hide();
+      this.float.close();
       await this.host.updateComplete;
-      if (open !== this.open) {
+      if (expanded !== this.expanded) {
         this.#fireOpenChanged();
       }
       this.#triggerElements?.forEach(element => {
         element.setAttribute('aria-expanded', 'false');
       });
-      // only re-set focus if hide was forced by select itself
+      // only re-set focus if close was forced by select itself
       if (!force && hasFocus) {
         this.host.focus();
       }
@@ -307,7 +295,7 @@ export class ToggleController<
     const focusedShadowDOM = this.host?.shadowRoot?.activeElement && !!this.host.shadowRoot?.contains(this.host?.shadowRoot?.activeElement);
     this.focused = !!focusedLightDOM || !!focusedShadowDOM;
     if (!this.focused) {
-      setTimeout( this.hide.bind(this), 300);
+      setTimeout( this.close.bind(this), 300);
     }
   }
 
@@ -315,17 +303,17 @@ export class ToggleController<
    * sets focus and tests for closing
    * when any part of select loses focus
    */
-  #onHostBlur() {
+  #onHostFocusout() {
     this.focused = false;
     // wait for immediate focus or hover event;
     // then test if popup can be closed
-    setTimeout(this.hide.bind(this), 300);
+    setTimeout(this.close.bind(this), 300);
   }
 
   /**
    * sets indicator when any part of select gets focus
    */
-  #onHostFocus() {
+  #onHostFocusin() {
     this.focused = true;
   }
 
@@ -337,7 +325,7 @@ export class ToggleController<
     this.hovered = false;
     // wait for immediate focus or hover event;
     // then test if popup can be closed
-    setTimeout( this.hide.bind(this), 300);
+    setTimeout( this.close.bind(this), 300);
   }
 
   /**
@@ -354,7 +342,7 @@ export class ToggleController<
     if (event.key === 'Escape' || event.key === 'Esc') {
       event.preventDefault();
       event.stopImmediatePropagation();
-      await this.hide(true);
+      await this.close(true);
     }
     this.#updateFocused;
   }
@@ -367,7 +355,7 @@ export class ToggleController<
     if (event.key === 'ArrowDown') {
       event.preventDefault();
       event.stopImmediatePropagation();
-      await this.show(true);
+      await this.open(true);
     }
   }
 

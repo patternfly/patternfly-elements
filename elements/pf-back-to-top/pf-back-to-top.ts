@@ -14,7 +14,7 @@ import styles from './pf-back-to-top.css';
  * The **back to top** component is a shortcut that allows users to quickly navigate to the top of a lengthy content page.
  * @summary A shortcut that allows users to quickly navigate to the top of a lengthy content page.
  *
- * @csspart button - The button element
+ * @csspart trigger - The `<a>` or `<pf-button>` element
  *
  * @slot icon
  *       Contains the button's icon or state indicator, e.g. a spinner.
@@ -85,7 +85,7 @@ export class PfBackToTop extends LitElement {
     }
 
     return this.href ? html`
-      <a href="${this.href}" class="${classMap(classes)}" part="button">
+      <a href="${this.href}" class="${classMap(classes)}" part="trigger">
         <slot name="icon"></slot>
         <slot>${ifDefined(this.title)}</slot>
         <span>
@@ -93,7 +93,7 @@ export class PfBackToTop extends LitElement {
         </span>
       </a>
       ` : html`
-      <pf-button icon="${ifDefined(this.icon)}" icon-set="${ifDefined(this.iconSet)}" class="${classMap(classes)}" part="button">
+      <pf-button icon="${ifDefined(this.icon)}" icon-set="${ifDefined(this.iconSet)}" class="${classMap(classes)}" part="trigger">
         <slot name="icon" slot="icon"></slot>
         <slot>${ifDefined(this.title)}</slot>
         <span>

@@ -252,7 +252,7 @@ export class ToggleController implements ReactiveController {
 
   /**
    * opens popup and sets focus
-   * @param focus {boolean} whether popup element should recieve focus
+   * @param focus {boolean} whether popup element should receive focus
    */
   async open(focus = false) {
     const { expanded } = this;

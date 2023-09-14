@@ -296,8 +296,8 @@ export class ToggleController<
       this.#triggerElements?.forEach(element => {
         element.setAttribute('aria-expanded', 'false');
       });
-      // only re-set focus if close was forced by select itself
-      if (!force && hasFocus) {
+      // only re-set focus if host had focus
+      if (this.#focused) {
         this.host.focus();
       }
       this.host?.dispatchEvent(new CustomEvent('close'));

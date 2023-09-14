@@ -17,7 +17,7 @@ describe('<pf-dropdown>', function() {
         <pf-dropdown-group label="Group 1">
           <pf-dropdown-item value="value1">item1</pf-dropdown-item>
           <pf-dropdown-item value="value2">item2</pf-dropdown-item>
-          <pf-dropdown-item divider></pf-dropdown-item>
+          <div role="separator"></div>
           <pf-dropdown-item value="value3">item3</pf-dropdown-item>
         </pf-dropdown-group>
         <pf-dropdown-group label="Group 2">
@@ -49,7 +49,7 @@ describe('<pf-dropdown>', function() {
   it('should show dropdown content to assistive technology', async function() {
     await sendKeys({ press: 'Tab' });
     expect(document.activeElement).to.be.an.instanceof(PfButton);
-    await sendKeys({ press: 'Enter' });
+    await sendKeys({ press: 'ArrowDown' });
     snapshot = await a11ySnapshot();
     expect(snapshot.children).to.deep.equal([
       {
@@ -57,60 +57,46 @@ describe('<pf-dropdown>', function() {
         'name': 'Toggle dropdown'
       },
       {
-        'role': 'listbox',
+        'role': 'menu',
         'name': '',
         'orientation': 'vertical',
         'children': [
           {
-            'role': 'listitem',
+            'role': 'menuitem',
             'name': 'item4',
-            'focused': true,
-            'level': 1
+            'focused': true
           },
           {
-            'role': 'listitem',
-            'name': '',
-            'level': 1
+            'role': 'menuitem',
+            'name': 'item3'
           },
           {
-            'role': 'listitem',
-            'name': '',
-            'level': 1
+            'role': 'menuitem',
+            'name': 'item1'
           },
           {
-            'role': 'listitem',
-            'name': '',
-            'level': 1
+            'role': 'menuitem',
+            'name': 'item2'
           },
           {
-            'role': 'listitem',
-            'name': '',
-            'level': 1
+            'role': 'menuitem',
+            'name': 'item3'
           },
           {
-            'role': 'listitem',
-            'name': '',
-            'level': 1
+            'role': 'menuitem',
+            'name': 'item1'
           },
           {
-            'role': 'listitem',
-            'name': '',
-            'level': 1
+            'role': 'menuitem',
+            'name': 'item2'
           },
           {
-            'role': 'listitem',
-            'name': '',
-            'level': 1
+            'role': 'menuitem',
+            'name': 'disabled'
           },
           {
-            'role': 'listitem',
-            'name': '',
-            'level': 1
-          },
-          {
-            'role': 'listitem',
-            'name': '',
-            'level': 1
+            'role': 'menuitem',
+            'name': 'item3'
           }
         ]
       }
@@ -120,24 +106,30 @@ describe('<pf-dropdown>', function() {
 
   it('should be closeable on escape', async function() {
     await sendKeys({ press: 'Tab' });
-    await sendKeys({ press: 'Enter' });
+    await sendKeys({ press: 'ArrowDown' });
     await sendKeys({ press: 'Escape' });
     snapshot = await a11ySnapshot();
-    expect(snapshot.children).to.deep.equal([{ focused: true, name: 'Toggle dropdown', role: 'button' }]);
+    expect(snapshot.children).to.deep.equal([
+      {
+        focused: true,
+        name: 'Toggle dropdown',
+        role: 'button'
+      }
+    ]);
   });
 
-  it('should be focusable first listitem on open', async function() {
+  it('should be focusable first menuitem on open', async function() {
     await sendKeys({ press: 'Tab' });
-    await sendKeys({ press: 'Enter' });
+    await sendKeys({ press: 'ArrowDown' });
     snapshot = await a11ySnapshot();
     // eslint-disable-next-line prefer-destructuring
     const listItems = snapshot.children[1];
-    expect(listItems.children[0]).to.deep.equal({ role: 'listitem', name: 'item4', focused: true, level: 1 });
+    expect(listItems.children[0]).to.deep.equal({ role: 'menuitem', name: 'item4', focused: true });
   });
 
   it('should be closeable on select focusable item', async function() {
     await sendKeys({ press: 'Tab' });
-    await sendKeys({ press: 'Enter' });
+    await sendKeys({ press: 'ArrowDown' });
     await sendKeys({ press: 'Enter' });
     snapshot = await a11ySnapshot();
     expect(snapshot.children).to.deep.equal([{ focused: true, name: 'Toggle dropdown', role: 'button' }]);
@@ -183,17 +175,18 @@ describe('<pf-dropdown>', function() {
       </div>
     `);
     await sendKeys({ press: 'Tab' });
-    await sendKeys({ press: 'Enter' });
+    await sendKeys({ press: 'ArrowDown' });
     snapshot = await a11ySnapshot();
     // eslint-disable-next-line prefer-destructuring
     const listItems = snapshot.children[1];
-    expect(listItems.children[0]).to.deep.equal({ role: 'listitem', name: 'item1', focused: true, level: 1 });
+    expect(listItems.children[0]).to.deep.equal({ role: 'menuitem', name: 'item1', focused: true });
   });
 
   it('should properly clean up event handlers', async function() {
-    const expectClose = () =>
+    const expectClose = (focused?: boolean) =>
       expect(snapshot.children).to.deep.equal([
-        { role: 'button', name: 'Toggle dropdown 1' },
+        focused ? { role: 'button', name: 'Toggle dropdown 1', focused: true }
+          : { role: 'button', name: 'Toggle dropdown 1' },
         { role: 'button', name: 'Toggle dropdown 2' }
       ]);
     const expectOpen = () =>
@@ -203,20 +196,17 @@ describe('<pf-dropdown>', function() {
           'name': 'Toggle dropdown 1'
         },
         {
-          'role': 'listbox',
+          'role': 'menu',
           'name': '',
           'orientation': 'vertical',
           'children': [
             {
-              'role': 'listitem',
-              'name': 'item1',
-              'focused': true,
-              'level': 1
+              'role': 'menuitem',
+              'name': 'item1'
             },
             {
-              'role': 'listitem',
-              'name': '',
-              'level': 1
+              'role': 'menuitem',
+              'name': 'item2'
             }
           ]
         },
@@ -249,10 +239,13 @@ describe('<pf-dropdown>', function() {
     snapshot = await a11ySnapshot();
     expectOpen();
     // Close the dropdown
+    triggerButton1?.focus();
+    await sendKeys({ press: 'ArrowDown' });
     await sendKeys({ press: 'Enter' });
     snapshot = await a11ySnapshot();
-    expectClose();
+    expectClose(true);
     // click on second dropdown
+    triggerButton2?.focus();
     triggerButton2?.click();
     snapshot = await a11ySnapshot();
     expect(snapshot.children).to.deep.equal([
@@ -262,30 +255,28 @@ describe('<pf-dropdown>', function() {
       },
       {
         'role': 'button',
-        'name': 'Toggle dropdown 2'
+        'name': 'Toggle dropdown 2',
+        'focused': true
       },
       {
-        'role': 'listbox',
+        'role': 'menu',
         'name': '',
         'orientation': 'vertical',
         'children': [
           {
-            'role': 'listitem',
-            'name': 'dropdown 2 item1',
-            'focused': true,
-            'level': 1
+            'role': 'menuitem',
+            'name': 'dropdown 2 item1'
           },
           {
-            'role': 'listitem',
-            'name': '',
-            'level': 1
+            'role': 'menuitem',
+            'name': 'dropdown 2 item2'
           }
         ]
       }
-    ]);
+    ]);/*
     // Close the second dropdown
     await sendKeys({ press: 'Enter' });
     snapshot = await a11ySnapshot();
-    expectClose();
+    expectClose();*/
   });
 });

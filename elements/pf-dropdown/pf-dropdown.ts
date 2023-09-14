@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValueMap } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
@@ -80,6 +80,12 @@ export class PfDropdown extends LitElement {
     this.#setTriggerElement();
   }
 
+  protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    if (_changedProperties.has('disabled')) {
+      this.#updateDisabled();
+    }
+  }
+
   firstUpdated() {
     this.#setTriggerElement();
     this.#toggle?.setPopupElement(this._menuElement);
@@ -126,7 +132,19 @@ export class PfDropdown extends LitElement {
    * sets focus on trigger element
    */
   focus() {
-    this._menuElement?.focus();
+    if (this.#toggle?.expanded) {
+      this._menuElement?.focus();
+    } else {
+      this.#triggerElement?.focus();
+    }
+  }
+
+  #updateDisabled() {
+    if (this.disabled) {
+      this.#triggerElement?.setAttribute('disabled', 'disabled');
+    } else if (this.#triggerElement?.hasAttribute('disabled')) {
+      this.#triggerElement?.removeAttribute('disabled');
+    }
   }
 
   #setTriggerElement() {
@@ -137,6 +155,7 @@ export class PfDropdown extends LitElement {
       this.#triggerElement = trigger;
       this.#toggle?.addTriggerElement(this.#triggerElement);
     }
+    this.#updateDisabled();
   }
 
   /**

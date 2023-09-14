@@ -64,8 +64,6 @@ export class PfDropdown extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) expanded = false;
 
-  #triggerElement: HTMLElement | null = null;
-
   @queryAssignedElements({ slot: 'trigger' }) private _slottedTrigger!: HTMLElement[];
 
   @query('#default-button') private _defaultTrigger!: HTMLButtonElement;
@@ -73,6 +71,8 @@ export class PfDropdown extends LitElement {
   @query('pf-dropdown-menu') private _menuElement!: HTMLElement;
 
   #toggle?: ToggleController;
+
+  #triggerElement: HTMLElement | null = null;
 
   connectedCallback() {
     super.connectedCallback();

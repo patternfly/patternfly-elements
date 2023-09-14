@@ -17,9 +17,7 @@ export type HasPopupType = 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dial
  * Components Using a Roving
  * tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
  */
-export class ToggleController<
-  ItemType extends HTMLElement = HTMLElement,
-> implements ReactiveController {
+export class ToggleController implements ReactiveController {
   /** element that triggers aria-haspopup content open or closed */
   #triggerElements?: HTMLElement[];
 

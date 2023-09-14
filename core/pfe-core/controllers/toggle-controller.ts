@@ -178,7 +178,7 @@ export class ToggleController implements ReactiveController {
   }
 
   /**
-   * sets popup event listneres and floating DOM controllers
+   * sets popup event listeners and floating DOM controllers
   */
   setPopupElement(popupElement?: HTMLElement | null) {
     if (popupElement && this.#popupElement !== popupElement) {

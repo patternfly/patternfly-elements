@@ -103,6 +103,35 @@ Chip groups are useful to express complex filters to a data set, for example.
 
 {% endband %}
 
+{% band header="Accessibility" %}
+
+The select uses the [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) recommendations from the WAI AIRA [Authoring Best Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg).
+
+#### Chips
+
+When focus is on an individual chip that is not `readonly`, the following keyboard interactions apply:
+
+| Key                    | Function                                                                            |
+| ---------------------- | ----------------------------------------------------------------------------------- |
+| <kbd>Enter</kbd>       | On an overflow chip, shows/hides additional chips. Otherwise removes a chip.        |
+| <kbd>Space</kbd>       | On an overflow chip, shows/hides additional chips. Otherwise removes a chip.        |
+
+#### Chip groups
+
+Chip groups use the [APG's Roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) recommendation. When focus in a chip group, the following keyboard interactions apply:
+
+| Key                    | Function                                                                            |
+| ---------------------- | ----------------------------------------------------------------------------------- |
+| <kbd>Enter</kbd>       | When focus is on a group's remove botton, removes the group.                        |
+| <kbd>Space</kbd>       | When focus is on a group's remove botton, removes the group.                        |
+| <kbd>Up Arrow</kbd>    | Moves focus to the previous item, optionally wrapping from the first to the last.   |
+| <kbd>Down Arrow</kbd>  | Moves focus to the next item, optionally wrapping from the last to the first.       |
+| <kbd>Left Arrow</kbd>  | Moves focus to the previous item, optionally wrapping from the first to the last.   |
+| <kbd>Right Arrow</kbd> | Moves focus to the next item, optionally wrapping from the last to the first.       |
+| <kbd>Home</kbd>        | Moves focus to the first item in the current group.                                 |
+
+{% endband %}
+
 {% renderSlots for="pf-chip", header="Slots on `pf-chip`" %}{% endrenderSlots %}
 {% renderAttributes for="pf-chip", header="Attributes on `pf-chip`" %}{% endrenderAttributes %}
 {% renderMethods for="pf-chip", header="Methods on `pf-chip`" %}{% endrenderMethods %}

@@ -155,6 +155,41 @@ To provide users with more context about a `pf-dropdown-item`, pass a short mess
   {% endhtmlexample %}
 
 {% endband %}
+{% band header="Accessibility" %}
+
+The dropdown uses the [Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) recommendations from the WAI AIRA [Authoring Best Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg).
+
+#### Menu button
+
+When focus is on the menu button, the following keyboard interactions apply:
+
+| Key                   | Function                                                                              |
+| --------------------- | ------------------------------------------------------------------------------------- |
+| <kbd>Enter</kbd>      | Opens the menu.                                                                       |
+| <kbd>Space</kbd>      | Opens the menu.                                                                       |
+| <kbd>Down arrow</kbd> | Opens the menu and moves focus to the first menu item.                                |
+| <kbd>Tab</kbd>        | Moves focus out of dropdown element onto the next focusable item and closes menu.     |
+| <kbd>Shift+Tab</kbd>  | Moves focus out of dropdown element onto the previous focusable item and closes menu. |
+
+#### Menu items
+
+Menu items use the [APG's Roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) recommendation. When focus is on the menu items, the following keyboard interactions apply:
+
+| Key                    | Function                                                                          |
+| ---------------------- | --------------------------------------------------------------------------------- |
+| <kbd>Enter</kbd>       | Activates the item and closes the menu.                                           |
+| <kbd>Space</kbd>       | Activates the item and closes the menu.                                           |
+| <kbd>Tab</kbd>         | Moves focus out of dropdown element onto the next focusable item and closes menu. |
+| <kbd>Shift+Tab</kbd>   | Moves focus to the menu button and closes menu.                                   |
+| <kbd>Up Arrow</kbd>    | Moves focus to the previous item, optionally wrapping from the first to the last. |
+| <kbd>Down Arrow</kbd>  | Moves focus to the next item, optionally wrapping from the last to the first.     |
+| <kbd>Left Arrow</kbd>  | Moves focus to the previous item, optionally wrapping from the first to the last. |
+| <kbd>Right Arrow</kbd> | Moves focus to the next item, optionally wrapping from the last to the first.     |
+| <kbd>Home</kbd>        | Moves focus to the first item in the current menu.                                |
+| <kbd>End</kbd>         | Moves focus to the last item in the current menu.                                 |
+| <kbd>Escape</kbd>      | Close the menu that contains focus and return focus to the menu button.           |
+
+{% endband %}
 
 {% renderSlots %}{% endrenderSlots %}
 {% renderSlots for="pf-dropdown-item", level=3, header="Slots on `pf-dropdown-item`" %}{% endrenderSlots %}

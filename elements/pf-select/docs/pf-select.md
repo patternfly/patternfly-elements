@@ -293,6 +293,45 @@ rather than just options that start with the input text.
 {% endhtmlexample %}
 {% endband %}
 
+{% band header="Accessibility" %}
+
+The select uses the [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) recommendations from the WAI AIRA [Authoring Best Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg).
+
+#### Toggle button and typeahead input
+
+When focus is on the toggle button, the following keyboard interactions apply:
+
+| Key                    | Function                                                                               |
+| ---------------------- | -------------------------------------------------------------------------------------- |
+| <kbd>Enter</kbd>       | Opens the listbox.                                                                     |
+| <kbd>Space</kbd>       | Opens the listbox.                                                                     |
+| <kbd>Down Arrow</kbd>  | Opens the listbox and moves focus to the first listbox item.                           |
+| <kbd>Tab</kbd>         | Moves focus out of select element onto the next focusable item and closes listbox.     |
+| <kbd>Shift + Tab</kbd> | Moves focus out of select element onto the previous focusable item and closes listbox. |
+
+#### Listbox options
+
+Listbox options use the [APG's Roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) recommendation. When focus is on the listbox, the following keyboard interactions apply:
+
+| Key                    | Function                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------- |
+| <kbd>Enter</kbd>       | Selects the options and closes the listbox.                                           |
+| <kbd>Space</kbd>       | Selects the options and closes the listbox.                                           |
+| <kbd>Shift</kbd>       | Enables multiselect.                                                                  |
+| <kbd>Control + A</kbd> | Selects all options.                                                                  |
+| <kbd>Tab</kbd>         | Moves focus out of select element onto the next focusable options and closes listbox. |
+| <kbd>Shift + Tab</kbd> | Moves focus to the toggle button and closes listbox.                                  |
+| <kbd>Up Arrow</kbd>    | Moves focus to the previous option, optionally wrapping from the first to the last.   |
+| <kbd>Down Arrow</kbd>  | Moves focus to the next option, optionally wrapping from the last to the first.       |
+| <kbd>Left Arrow</kbd>  | Moves focus to the previous option, optionally wrapping from the first to the last.   |
+| <kbd>Right Arrow</kbd> | Moves focus to the next option, optionally wrapping from the last to the first.       |
+| <kbd>Home</kbd>        | Moves focus to the first option in the current listbox.                               |
+| <kbd>End</kbd>         | Moves focus to the last option in the current listbox.                                |
+| <kbd>Escape</kbd>      | Close the listbox that contains focus and return focus to the toggle button.          |
+| <kbd>Any letter</kbd>  | Navigates to the next option that starts with the letter.                             |
+
+{% endband %}
+
 {% renderSlots for="pf-select", header="Slots on `pf-select`" %}{% endrenderSlots %}
 {% renderAttributes for="pf-select", header="Attributes on `pf-select`" %}{% endrenderAttributes %}
 {% renderMethods for="pf-select", header="Methods on `pf-select`" %}{% endrenderMethods %}

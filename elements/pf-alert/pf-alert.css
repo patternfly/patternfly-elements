@@ -338,6 +338,16 @@ footer {
 
 :host([inline]) {
   --pf-c-alert--BackgroundColor: var(--pf-c-alert--m-inline--BackgroundColor);
+  --pf-c-alert--BoxShadow: 0;
+}
+
+:host([plain]) {
+  --pf-c-alert--PaddingTop: 0;
+  --pf-c-alert--PaddingLeft: 0;
+  --pf-c-alert--PaddingRight: 0;
+  --pf-c-alert--PaddingBottom: 0;
+  --pf-c-alert--BackgroundColor: transparent;
+  --pf-c-alert--BorderTopColor: transparent;
 }
 
 #container.truncateTitle  {
@@ -419,8 +429,10 @@ header ::slotted(*) {
   color: var(--pf-c-alert__icon--Color, var(--pf-global--default-color--200, #009596));
 }
 
+#icon,
 #icon > svg {
   font-size: var(--pf-c-alert__icon--FontSize, var(--pf-global--icon--FontSize--md, 1.125rem));
+  --pf-global--icon--FontSize--sm: var(--pf-c-alert__icon--FontSize, var(--pf-global--icon--FontSize--md, 1.125rem));
 }
 
 #close-button {

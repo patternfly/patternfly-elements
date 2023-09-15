@@ -68,6 +68,8 @@ export class PfAlert extends LitElement {
 
   @property({ reflect: true, type: Boolean }) inline = false;
 
+  @property({ reflect: true, type: Boolean }) plain = false;
+
   @property({ reflect: true, type: Boolean }) dismissable = false;
 
   @property({
@@ -111,7 +113,7 @@ export class PfAlert extends LitElement {
     return html`
        <div id="container" role="alert" aria-hidden="false"  class="${classMap({ truncateTitle })}">
         <div id="left-column">
-          <div id="icon">${icon}</div>
+          <slot name="icon" id="icon">${icon}</slot>
         </div>
         <div id="middle-column">
           <header>

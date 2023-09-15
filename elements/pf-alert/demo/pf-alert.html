@@ -1,21 +1,61 @@
 <link rel="stylesheet" href="demo.css">
 <script type="module" src="pf-alert.js"></script>
 
-<pf-alert title="Custom alert title"></pf-alert>
-<pf-alert variant="info" title="Info alert title"></pf-alert>
-<pf-alert variant="success" title="Success alert title"></pf-alert>
-<pf-alert variant="warning" title="Warning alert title"></pf-alert>
-<pf-alert variant="danger" title="Danger alert title"></pf-alert>
+<pf-alert title="Default"></pf-alert>
+<pf-alert variant="info" title="Info"></pf-alert>
+<pf-alert variant="success" title="Success"></pf-alert>
+<pf-alert variant="warning" title="Warning"></pf-alert>
+<pf-alert variant="danger" title="Danger"></pf-alert>
+
+<h1>
+    Default Icons
+</h1>
+
+<pf-alert title="Custom icon">
+  <pf-icon slot="icon" set="fas" icon="users" loading="idle"></pf-icon>
+</pf-alert>
+<pf-alert title="Custom info icon" variant="info">
+  <pf-icon slot="icon" set="fas" icon="box" loading="idle"></pf-icon>
+</pf-alert>
+<pf-alert title="Custom success icon" variant="success">
+  <pf-icon slot="icon" set="fas" icon="database" loading="idle"></pf-icon>
+</pf-alert>
+<pf-alert title="Custom warning icon" variant="warning">
+  <pf-icon slot="icon" set="fas" icon="server" loading="idle"></pf-icon>
+</pf-alert>
+<pf-alert title="Custom danger icon" variant="danger">
+  <pf-icon slot="icon" set="fas" icon="laptop" loading="idle"></pf-icon>
+</pf-alert>
+
+<h1>
+    Plain
+</h1>
+
+<pf-alert title="Default plain" plain></pf-alert>
+<pf-alert variant="info" title="Info plain" plain></pf-alert>
+<pf-alert variant="success" title="Success plain" plain></pf-alert>
+<pf-alert variant="warning" title="Warning plain" plain></pf-alert>
+<pf-alert variant="danger" title="Danger plain" plain></pf-alert>
 
 <h1>
     Inline
 </h1>
 
-<pf-alert title="Custom inline alert title" inline></pf-alert>
-<pf-alert variant="info" title="Info inline alert title" inline></pf-alert>
-<pf-alert variant="success" title="Success inline alert title" inline></pf-alert>
-<pf-alert variant="warning" title="Warning inline alert title" inline></pf-alert>
-<pf-alert variant="danger" title="Danger inline alert title" inline></pf-alert>
+<pf-alert title="Default inline" inline></pf-alert>
+<pf-alert variant="info" title="Info inline" inline></pf-alert>
+<pf-alert variant="success" title="Success inline" inline></pf-alert>
+<pf-alert variant="warning" title="Warning inline" inline></pf-alert>
+<pf-alert variant="danger" title="Danger inline" inline></pf-alert>
+
+<h1>
+    Inline
+</h1>
+
+<pf-alert title="Default inline" inline plain></pf-alert>
+<pf-alert variant="info" title="Info inline" inline plain></pf-alert>
+<pf-alert variant="success" title="Success inline" inline plain></pf-alert>
+<pf-alert variant="warning" title="Warning inline" inline plain></pf-alert>
+<pf-alert variant="danger" title="Danger inline" inline plain></pf-alert>
 
 <h1>
   Truncated Title
@@ -32,6 +72,6 @@
 
 <input type="range" id="timeout-range" min="0" max="10000" step="100" value="1000" />
 <label for="timeout-range">Timeout: <span id="timeout-value">1000</span>ms</label>
-<pf-button id="create-custom-timeout-alert">Create custom timeout alert</pf-button>
+<pf-button id="create-Default-timeout-alert">Create Default timeout alert</pf-button>
 
 <section id="timeout-alerts"></section>

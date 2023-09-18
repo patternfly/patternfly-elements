@@ -40,7 +40,9 @@ export async function bundle({ outfile = 'elements/pfe.min.js' } = {}) {
     external: [
       'lit',
       'tslib',
-      '@floating-ui*'
+      '@floating-ui*',
+      'preact',
+      '@patternfly/react-core'
     ],
 
     plugins: [

@@ -13,6 +13,7 @@
     "**/test/*_e2e*"
   ],
   "compilerOptions": {
+    "skipLibCheck": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",

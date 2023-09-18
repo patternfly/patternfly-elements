@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/elements",
   "license": "MIT",
-  "version": "2.4.0",
+  "version": "5.0.9",
   "description": "PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -66,6 +66,12 @@
     "./pf-tooltip/BaseTooltip.js": "./pf-tooltip/BaseTooltip.js",
     "./pf-tooltip/pf-tooltip.js": "./pf-tooltip/pf-tooltip.js",
     "./pf-popover/pf-popover.js": "./pf-popover/pf-popover.js",
+    "./pf-x-accordion-content/pf-x-accordion-content.js": "./pf-x-accordion-content/pf-x-accordion-content.js",
+    "./pf-x-accordion-item/pf-x-accordion-item.js": "./pf-x-accordion-item/pf-x-accordion-item.js",
+    "./pf-x-accordion-toggle/pf-x-accordion-toggle.js": "./pf-x-accordion-toggle/pf-x-accordion-toggle.js",
+    "./pf-x-accordion/pf-x-accordion.js": "./pf-x-accordion/pf-x-accordion.js",
+    "./pf-x-alert/pf-x-alert.js": "./pf-x-alert/pf-x-alert.js",
+    "./pf-x-button/pf-x-button.js": "./pf-x-button/pf-x-button.js",
     "./react/*": "./react/*"
   },
   "publishConfig": {

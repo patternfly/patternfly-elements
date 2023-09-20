@@ -25,6 +25,10 @@
     --pf-c-dropdown__menu-item--BackgroundColor,
     transparent
   );
+  border: 3px solid var(
+    --pf-c-dropdown__menu-item--BackgroundColor,
+    transparent
+  );
 }
 
 :host([hidden]),
@@ -82,12 +86,29 @@
     );
 }
 
-a:link {
+a {
   color: var(
     --pf-c-dropdown__menu-item--Color,
     var(--pf-global--Color--dark-100, #151515)
   ) !important;
   text-decoration: none !important;
+}
+
+[role="menuitem"]:focus {
+  outline: none;
+}
+
+:host(:focus-within) {
+  border: 3px solid var(--pf-global--link--Color, #0066cc);
+}
+
+[role="menuitem"]::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 
 slot:not([name]){

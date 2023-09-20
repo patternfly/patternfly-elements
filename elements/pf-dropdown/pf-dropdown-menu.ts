@@ -22,7 +22,8 @@ export class PfDropdownMenu extends LitElement {
    */
   @property({ reflect: true, attribute: 'aria-disabled', type: String }) ariaDisabled = 'false';
 
-  #menuitems: PfDropdownItem[] = [];
+  #menuitems: HTMLElement[] = [];
+  #itemsInit = false;
   #tabindex: RovingTabindexController;
   #internals: InternalsController;
 
@@ -61,7 +62,7 @@ export class PfDropdownMenu extends LitElement {
 
   render() {
     return html`
-      <slot @slotchange=${this.#handleSlotChange}></slot>
+      <slot @slotchange=${this.#handleSlotChange} @menuitemchange=${this.#handleSlotChange}></slot>
     `;
   }
 
@@ -100,8 +101,13 @@ export class PfDropdownMenu extends LitElement {
     pfDropdownItems = pfDropdownItems?.filter(
       n => n.hidden === false
     );
-    this.#menuitems = pfDropdownItems;
-    this.#tabindex.initItems(this.#menuitems);
+    this.#menuitems = pfDropdownItems.map(drop => drop.menuItem as HTMLElement).filter(item => !!item);
+    if (this.#itemsInit) {
+      this.#tabindex.updateItems(this.#menuitems);
+    } else {
+      this.#tabindex.initItems(this.#menuitems);
+    }
+    this.#itemsInit = true;
   }
 
   /**
@@ -112,8 +118,9 @@ export class PfDropdownMenu extends LitElement {
    */
   #onMenuitemFocusin(event: FocusEvent) {
     const target = event.target as PfDropdownItem;
-    if (target !== this.#tabindex.activeItem) {
-      this.#tabindex.updateActiveItem(target);
+    const menuitem = target.menuItem;
+    if (menuitem !== this.#tabindex.activeItem) {
+      this.#tabindex.updateActiveItem(menuitem);
     }
     this.#updateActiveDescendant();
   }
@@ -127,8 +134,9 @@ export class PfDropdownMenu extends LitElement {
    */
   #onMenuitemClick(event: MouseEvent) {
     const target = event.target as PfDropdownItem;
-    if (target !== this.#tabindex.activeItem) {
-      this.#tabindex.focusOnItem(target);
+    const menuitem = target.menuItem;
+    if (menuitem !== this.#tabindex.activeItem) {
+      this.#tabindex.focusOnItem(menuitem);
       this.#updateActiveDescendant();
     }
   }
@@ -141,7 +149,7 @@ export class PfDropdownMenu extends LitElement {
    * @returns void
    */
   #onMenuitemKeydown(event: KeyboardEvent) {
-    let focusEvent: PfDropdownItem | undefined;
+    let focusEvent: HTMLElement | undefined;
     if (event.key?.match(/^[\w]$/)) {
       focusEvent = this.#nextMatchingItem(event.key);
       event.stopPropagation();
@@ -160,7 +168,7 @@ export class PfDropdownMenu extends LitElement {
     const sequence = [...items.slice(index), ...items.slice(0, index)];
     const regex = new RegExp(`^${key}`, 'i');
     const first = sequence.find(item => {
-      const option = item as PfDropdownItem;
+      const option = item as HTMLElement;
       return !option.hidden && option.textContent?.match(regex);
     });
     return first || undefined;

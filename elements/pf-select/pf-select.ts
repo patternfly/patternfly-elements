@@ -58,7 +58,7 @@ export class PfSelect extends LitElement {
   /**
    * whether select is disabled
    */
-  @property({ reflect: true, attribute: 'aria-disabled', type: String }) ariaDisabled = 'false';
+  @property({ reflect: true, attribute: 'disabled', type: Boolean }) disabled = false;
 
   /**
    * whether option filtering is disabled
@@ -154,7 +154,7 @@ export class PfSelect extends LitElement {
         id="listbox" 
         style="${styles}"
         class="${classMap({ checkboxes })}"
-        aria-disabled="${this.ariaDisabled}"
+        aria-disabled="${this.disabled ? 'true' : 'false'}"
         ?hidden=${!this.alwaysExpanded && !this.expanded}
         ?case-sensitive=${this.caseSensitive}
         ?disable-filter="${this.disableFilter}"
@@ -266,9 +266,9 @@ export class PfSelect extends LitElement {
           ?expanded=${this.expanded}
           ?hidden=${this.alwaysExpanded}>
           ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
-            <pf-chip-group label="${this.currentSelectionsLabel}" ?closeable=${this.ariaDisabled !== 'true'}>
+            <pf-chip-group label="${this.currentSelectionsLabel}" ?closeable=${!this.disabled}>
               ${this.#selectedOptions.map(opt => html`
-                <pf-chip id="chip-${opt.textContent}" ?read-only=${this.ariaDisabled === 'true'} @chip-remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>
+                <pf-chip id="chip-${opt.textContent}" ?read-only=${this.disabled} @chip-remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>
               `)}
             </pf-chip-group>
           `}
@@ -278,7 +278,7 @@ export class PfSelect extends LitElement {
             aria-controls="listbox" 
             aria-autocomplete="${autocomplete}" 
             aria-expanded="${!this.expanded ? 'false' : 'true'}"
-            ?disabled=${this.ariaDisabled === 'true'}
+            ?disabled=${this.disabled}
             ?hidden=${!this.typeahead} 
             placeholder="${this.#buttonLabel}"
             role="combobox"

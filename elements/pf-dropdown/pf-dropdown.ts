@@ -80,12 +80,6 @@ export class PfDropdown extends LitElement {
     this.#setTriggerElement();
   }
 
-  protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    if (_changedProperties.has('disabled')) {
-      this.#updateDisabled();
-    }
-  }
-
   firstUpdated() {
     this.#setTriggerElement();
     this.#toggle?.setPopupElement(this._menuElement);
@@ -103,13 +97,15 @@ export class PfDropdown extends LitElement {
       class="${this.#toggle ? classMap(classes) : ''}">
       <slot
         part="dropdown-trigger"
-        ?disabled="${this.disabled}"
         name="trigger"
         id="trigger"
         @keydown=${this.handleDropdownButton}
         @slotchange=${this.#setTriggerElement}
       >
-        <pf-button id="default-button" ?disabled="${this.disabled}" variant="control">
+        <pf-button 
+          id="default-button" 
+          variant="control"
+          class="${this.disabled ? 'disabled' : ''}">
           Dropdown 
           <svg viewBox="0 0 320 512" fill="currentColor" aria-hidden="true" width="1em" height="1em">
             <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
@@ -118,7 +114,8 @@ export class PfDropdown extends LitElement {
       </slot>
       <pf-dropdown-menu
         part="dropdown-menu"
-        class="${this.#toggle?.expanded && !this.disabled ? 'show' : ''}"
+        aria-disabled="${this.disabled ? 'true' : 'false'}"
+        class="${this.#toggle?.expanded ? 'show' : ''}"
         @keydown=${this.onKeydown}
         @click="${this.#handleSelect}"
         id="dropdown-menu"
@@ -139,14 +136,6 @@ export class PfDropdown extends LitElement {
     }
   }
 
-  #updateDisabled() {
-    if (this.disabled) {
-      this.#triggerElement?.setAttribute('disabled', 'disabled');
-    } else if (this.#triggerElement?.hasAttribute('disabled')) {
-      this.#triggerElement?.removeAttribute('disabled');
-    }
-  }
-
   #setTriggerElement() {
     const [slottedTrigger] = this._slottedTrigger;
     const trigger = slottedTrigger || this._defaultTrigger;
@@ -155,7 +144,6 @@ export class PfDropdown extends LitElement {
       this.#triggerElement = trigger;
       this.#toggle?.addTriggerElement(this.#triggerElement);
     }
-    this.#updateDisabled();
   }
 
   /**

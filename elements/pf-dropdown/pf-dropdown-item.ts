@@ -59,9 +59,9 @@ export class PfDropdownItem extends LitElement {
 
   /**
    * Indicates whether the dropdown item is disabled.
-   * A disabled item cannot be selected or interacted with.
+   * A disabled item cannot be selected.
    */
-  @property({ type: Boolean, reflect: true }) disabled = false;
+  @property({ reflect: true, attribute: 'aria-disabled', type: String }) ariaDisabled = 'false';
 
   #internals: InternalsController;
 

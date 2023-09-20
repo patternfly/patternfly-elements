@@ -1,6 +1,21 @@
 :host {
   display: block;
 }
+
+:host([disabled]),
+:host([aria-disabled="true"]) {
+  pointer-events: none;
+  cursor: not-allowed;
+  --pf-c-dropdown__menu-item--Color: var(
+    --pf-c-dropdown__menu-item--disabled--Color,
+    var(--pf-global--Color--dark-200, #6a6e73)
+  ) !important;
+  --pf-c-dropdown__menu-item--BackgroundColor: var(
+    --pf-c-dropdown__menu-item--disabled--BackgroundColor,
+    transparent
+  ) !important;
+}
+
 p {
   margin: 0;
   font-size: 14px;
@@ -13,4 +28,16 @@ p {
   font-size: 0.75rem;
   font-weight: 400;
   color: #6a6e73;
+}
+
+::slotted([role="separator"]) {
+  --pf-c-divider--BackgroundColor: var(--pf-global--BorderColor--100, #d2d2d2);
+  width: 100%;
+  height: 1px;
+  background-color: var(--pf-c-divider--BackgroundColor);
+  padding: 0px;
+  margin: 0px;
+  border: 0;
+  display: block;
+  pointer-events: none;
 }

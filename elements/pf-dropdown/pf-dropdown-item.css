@@ -32,7 +32,8 @@
   display: none !important;
 }
 
-:host([disabled]) {
+:host([disabled]),
+:host([aria-disabled="true"]) {
   pointer-events: none;
   cursor: not-allowed;
   --pf-c-dropdown__menu-item--Color: var(

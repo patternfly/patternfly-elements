@@ -159,6 +159,8 @@ To provide users with more context about a `pf-dropdown-item`, pass a short mess
 
 The dropdown uses the [Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) recommendations from the WAI AIRA [Authoring Best Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg).
 
+**Note:** [WAI-ARIA recommends](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols) elements of a larger composite widget remain focusable.  Because items are part of the larger `pf-dropdown` element, use `aria-disabled="true"` instead of `disabled` so that screenreader users know the option exists and is disabled.
+
 #### Menu button
 
 When focus is on the menu button, the following keyboard interactions apply:

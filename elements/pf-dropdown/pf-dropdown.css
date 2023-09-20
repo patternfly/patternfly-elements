@@ -23,6 +23,11 @@
   );
 }
 
+:host([disabled]),
+:host([aria-disabled="true"]) {
+  color: var(--pf-global--Color--dark-200, #6a6e73);
+}
+
 :host([hidden]),
 [hidden] {
   display: none !important;
@@ -30,11 +35,6 @@
 
 slot[name="trigger"] {
   cursor: pointer;
-}
-
-slot[name="trigger"][disabled] {
-  pointer-events: none;
-  cursor: not-allowed;
 }
 
 pf-dropdown-menu {
@@ -70,8 +70,21 @@ pf-dropdown-menu {
   margin: 0;
 }
 
+:host([disabled]) pf-dropdown-menu {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 pf-dropdown-menu.show {
   display: block;
+}
+
+pf-button.disabled::part(button),
+:host([disabled]) ::slotted([slot="trigger"]),
+:host([aria-disabled="true"]) ::slotted([slot="trigger"]) {
+  color: var(--pf-theme--color--ui-base, #6a6e73) !important;
+  background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+  border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
 }
 
 pf-button::part(button) {

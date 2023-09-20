@@ -79,6 +79,15 @@ describe('<pf-dropdown>', function() {
             'name': 'item2'
           },
           {
+            'name': '',
+            'role': 'separator',
+            'orientation': 'horizontal',
+            'value': 50,
+            'valuemax': 100,
+            'valuemin': 0,
+            'valuetext': '',
+          },
+          {
             'role': 'menuitem',
             'name': 'item3'
           },
@@ -135,7 +144,7 @@ describe('<pf-dropdown>', function() {
     expect(snapshot.children).to.deep.equal([{ focused: true, name: 'Toggle dropdown', role: 'button' }]);
   });
 
-  it('should disable trigger button', async function() {
+  it('should not disable trigger button', async function() {
     fixtureCleanup();
     await fixture(html`
       <div>
@@ -147,7 +156,7 @@ describe('<pf-dropdown>', function() {
       </div>
     `);
     snapshot = await a11ySnapshot();
-    expect(snapshot.children).to.deep.equal([{ role: 'button', name: 'Toggle dropdown', disabled: true }]);
+    expect(snapshot.children).to.deep.equal([{ role: 'button', name: 'Toggle dropdown' }]);
   });
 
   it('should show default trigger button', async function() {

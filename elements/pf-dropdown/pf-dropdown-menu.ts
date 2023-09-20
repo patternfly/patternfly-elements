@@ -18,9 +18,10 @@ export class PfDropdownMenu extends LitElement {
   static readonly styles = [styles];
 
   /**
-   * Disable the dropdown trigger element
+   * whether listbox is disabled
    */
-  @property({ type: Boolean, reflect: true }) disabled = false;
+  @property({ reflect: true, attribute: 'aria-disabled', type: String }) ariaDisabled = 'false';
+
   #menuitems: PfDropdownItem[] = [];
   #tabindex: RovingTabindexController;
   #internals: InternalsController;
@@ -97,7 +98,7 @@ export class PfDropdownMenu extends LitElement {
       }
     });
     pfDropdownItems = pfDropdownItems?.filter(
-      n => n?.disabled === false
+      n => n.hidden === false
     );
     this.#menuitems = pfDropdownItems;
     this.#tabindex.initItems(this.#menuitems);
@@ -160,7 +161,7 @@ export class PfDropdownMenu extends LitElement {
     const regex = new RegExp(`^${key}`, 'i');
     const first = sequence.find(item => {
       const option = item as PfDropdownItem;
-      return !option.hasAttribute('disabled') && !option.hidden && option.textContent?.match(regex);
+      return !option.hidden && option.textContent?.match(regex);
     });
     return first || undefined;
   }

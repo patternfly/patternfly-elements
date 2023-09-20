@@ -2,6 +2,22 @@
   background: var(--pf-c-dropdown__menu--BackgroundColor, #fff);
 }
 
+
+:host([disabled]),
+:host([aria-disabled="true"]) {
+  background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+  pointer-events: none;
+  cursor: not-allowed;
+  --pf-c-dropdown__menu-item--Color: var(
+    --pf-c-dropdown__menu-item--disabled--Color,
+    var(--pf-global--Color--dark-200, #6a6e73)
+  ) !important;
+  --pf-c-dropdown__menu-item--BackgroundColor: var(
+    --pf-c-dropdown__menu-item--disabled--BackgroundColor,
+    transparent
+  ) !important;
+}
+
 :host([hidden]),
 [hidden] {
   display: none !important;
@@ -16,5 +32,6 @@
   margin: 0px;
   border: 0;
   display: block;
+  pointer-events: none;
 }
 

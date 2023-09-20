@@ -17,9 +17,7 @@ export type HasPopupType = 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dial
  * Components Using a Roving
  * tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
  */
-export class ToggleController<
-  ItemType extends HTMLElement = HTMLElement,
-> implements ReactiveController {
+export class ToggleController implements ReactiveController {
   /** element that triggers aria-haspopup content open or closed */
   #triggerElements?: HTMLElement[];
 
@@ -180,7 +178,7 @@ export class ToggleController<
   }
 
   /**
-   * sets popup event listneres and floating DOM controllers
+   * sets popup event listeners and floating DOM controllers
   */
   setPopupElement(popupElement?: HTMLElement | null) {
     if (popupElement && this.#popupElement !== popupElement) {
@@ -254,7 +252,7 @@ export class ToggleController<
 
   /**
    * opens popup and sets focus
-   * @param focus {boolean} whether popup element should recieve focus
+   * @param focus {boolean} whether popup element should receive focus
    */
   async open(focus = false) {
     const { expanded } = this;

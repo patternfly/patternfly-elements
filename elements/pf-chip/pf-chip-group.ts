@@ -70,6 +70,8 @@ export class PfChipGroup extends LitElement {
 
   #tabindex: RovingTabindexController;
 
+  #itemsInit = false;
+
   get remaining() {
     return this.#chips.length - this.numChips;
   }
@@ -171,8 +173,13 @@ export class PfChipGroup extends LitElement {
     const buttons = this.#chips.map(chip => chip.button as HTMLElement);
     this.#buttons = [...buttons, button, this.button] as HTMLElement[];
     if (oldButtons.length !== this.#buttons.length || !oldButtons.every((element, index) => element === this.#buttons[index])) {
-      this.#tabindex.initItems(this.#buttons);
+      if (this.#itemsInit) {
+        this.#tabindex.updateItems(this.#buttons);
+      } else {
+        this.#tabindex.initItems(this.#buttons);
+      }
     }
+    this.#itemsInit = true;
     this.#updateChips();
   }
 
@@ -206,9 +213,11 @@ export class PfChipGroup extends LitElement {
   /**
    * handles overflow chip's click event
    */
-  #onMoreClick(event: Event) {
-    this.open = !this.open;
+  async #onMoreClick(event: Event) {
     event.stopPropagation();
+    this.open = !this.open;
+    await this.updateComplete;
+    this.#handleChipsChanged();
     /**
      * @fires overflow-chip-click
      */

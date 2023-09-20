@@ -352,7 +352,7 @@ export class ListboxController<
    * updates option selections for single select listbox
    */
   #updateSingleselect() {
-    if (!this.multiSelectable) {
+    if (!this.multiSelectable && !this.disabled && !this.host.ariaDisabled) {
       this.options.forEach(option => option.selected = option.id === this.#internals.ariaActivedescendant);
       this.#fireChange();
     }
@@ -366,7 +366,7 @@ export class ListboxController<
    * @param ctrlKey
    */
   #updateMultiselect(currentItem: ListboxOptionElement, referenceItem = this.activeItem, ctrlKey = false) {
-    if (this.multiSelectable) {
+    if (this.multiSelectable && !this.disabled && !this.host.ariaDisabled) {
       // select all options between active descendant and target
       const [start, end] = [this.options.indexOf(referenceItem), this.options.indexOf(currentItem)].sort();
       const options = [...this.options].slice(start, end + 1);
@@ -527,7 +527,7 @@ export class ListboxController<
             if (this.multiSelectable) {
               if (event.shiftKey) {
                 this.#updateMultiselect(target);
-              } else {
+              } else if (!this.disabled && !this.host.ariaDisabled) {
                 target.selected = !target.selected;
               }
             } else {

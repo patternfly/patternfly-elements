@@ -40,10 +40,8 @@ import '@patternfly/elements/pf-select/pf-select.js';
 {% endhtmlexample %}
 
 #### Disabled
-
 {% htmlexample %}
-  <pf-select disabled>
-    <pf-select-option disabled selected="true">Select a color</pf-select-option>
+  <pf-select disabled default-text="Select a color">
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -70,9 +68,11 @@ Below are option variants:
       <pf-icon size="md" icon="paint-brush" set="fas" slot="icon"></pf-icon>
       Option with icon
     </pf-select-option>
-    <pf-select-option value="Disabled" disabled>Disabled option</pf-select-option>
+    <pf-select-option value="aria-disabled" aria-disabled="true">Aria-disabled option</pf-select-option>
   </pf-select>
 {% endhtmlexample %}
+
+**Note:** [WAI-ARIA recommends](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols) elements of a larger composite widget remain focusable.  Because options are part of the larger `pf-select` element, use `aria-disabled="true"` instead of `disabled` so that screenreader users know the option exists and is disabled.
 
 ### Grouped Options
 

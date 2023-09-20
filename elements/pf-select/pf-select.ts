@@ -58,7 +58,7 @@ export class PfSelect extends LitElement {
   /**
    * whether select is disabled
    */
-  @property({ reflect: true, attribute: 'disabled', type: Boolean }) disabled = false;
+  @property({ reflect: true, attribute: 'aria-disabled', type: String }) ariaDisabled = 'false';
 
   /**
    * whether option filtering is disabled
@@ -129,7 +129,7 @@ export class PfSelect extends LitElement {
    * label for toggle button
    */
   get #buttonLabel() {
-    return this.hasBadge ?
+    return this.hasBadge || this.hasChips ?
       this.defaultText : this.#isMulti ?
       `${this.#valueTextArray.length} ${this.itemsSelectedText}` : this.#valueText.length > 0 ?
         this.#valueText : this.defaultText;
@@ -154,8 +154,8 @@ export class PfSelect extends LitElement {
         id="listbox" 
         style="${styles}"
         class="${classMap({ checkboxes })}"
-        ?disabled=${this.disabled}
-        ?hidden=${!this.alwaysExpanded && (!this.expanded || this.disabled)}
+        aria-disabled="${this.ariaDisabled}"
+        ?hidden=${!this.alwaysExpanded && !this.expanded}
         ?case-sensitive=${this.caseSensitive}
         ?disable-filter="${this.disableFilter}"
         ?match-anywhere=${this.matchAnywhere}
@@ -263,13 +263,12 @@ export class PfSelect extends LitElement {
         style="${this.#toggle?.styles ? styleMap(this.#toggle.styles) : ''}"
         class="${classMap(classes)}">
         <div id="toggle" 
-          ?disabled=${this.disabled} 
           ?expanded=${this.expanded}
           ?hidden=${this.alwaysExpanded}>
           ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
-            <pf-chip-group label="${this.currentSelectionsLabel}">
+            <pf-chip-group label="${this.currentSelectionsLabel}" ?closeable=${this.ariaDisabled !== 'true'}>
               ${this.#selectedOptions.map(opt => html`
-                <pf-chip id="chip-${opt.textContent}" @chip-remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>
+                <pf-chip id="chip-${opt.textContent}" ?read-only=${this.ariaDisabled === 'true'} @chip-remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>
               `)}
             </pf-chip-group>
           `}
@@ -279,6 +278,7 @@ export class PfSelect extends LitElement {
             aria-controls="listbox" 
             aria-autocomplete="${autocomplete}" 
             aria-expanded="${!this.expanded ? 'false' : 'true'}"
+            ?disabled=${this.ariaDisabled === 'true'}
             ?hidden=${!this.typeahead} 
             placeholder="${this.#buttonLabel}"
             role="combobox"
@@ -287,8 +287,7 @@ export class PfSelect extends LitElement {
             id="toggle-button" 
             aria-expanded="${!this.expanded ? 'false' : 'true'}" 
             aria-controls="listbox" 
-            aria-haspopup="listbox"
-            ?disabled=${this.disabled}>
+            aria-haspopup="listbox">
             <span id="toggle-text" class="${classMap({ offscreen, badge })}">
               ${this.#buttonLabel}
             </span>

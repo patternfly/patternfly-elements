@@ -9,11 +9,14 @@
   display: none !important;
 }
 
-:host([disabled]) {
+
+:host([disabled]),
+:host([aria-disabled="true"]) {
   color: var(--pf-theme--color--ui-base, #6a6e73) !important;
   background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   pointer-events: none;
+  cursor: not-allowed;
   --_pf-select-option-active-descendant-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   --_pf-select-option-svg-color: var(--pf-theme--color--ui-base, #6a6e73) !important;
 }

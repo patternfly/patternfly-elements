@@ -28,7 +28,7 @@ export class PfSelectOption extends LitElement {
   /**
    * whether option is disabled
    */
-  @property({ reflect: true, attribute: 'disabled', type: Boolean }) disabled = false;
+  @property({ reflect: true, attribute: 'aria-disabled', type: String }) ariaDisabled = 'false';
 
   /**
    * whether list items are arranged vertically or horizontally;
@@ -85,7 +85,7 @@ export class PfSelectOption extends LitElement {
   set createOptionText(str: string) {
     if (!this.#userCreatedOption) {
       this.#createOptionText = str || '';
-      this.disabled = str === '';
+      this.ariaDisabled = str === '' ? 'true' : 'false';
       this.hidden = str === '';
     }
   }
@@ -104,7 +104,7 @@ export class PfSelectOption extends LitElement {
           type="checkbox" 
           aria-hidden="true" 
           ?checked=${this.selected}
-          ?disabled=${this.disabled}>
+          ?disabled=${this.ariaDisabled === 'true'}>
         <slot name="icon"></slot>
         <span>${this.#createOptionText === '' ? '' : `${this.#createOptionText}: `}<slot></slot></span>
         <svg 
@@ -131,9 +131,6 @@ export class PfSelectOption extends LitElement {
     }
     if (changed.has('setSize')) {
       this.#internals.ariaSetSize = this.setSize ? `${this.setSize}` : null;
-    }
-    if (changed.has('disabled')) {
-      this.#internals.ariaDisabled = this.disabled ? 'true' : 'false';
     }
     if (changed.has('hiddenByFilter')) {
       this.#onHiddenByFilter();

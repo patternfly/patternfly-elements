@@ -23,7 +23,7 @@ export class PfSelectList extends LitElement {
   /**
    * whether listbox is disabled
    */
-  @property({ reflect: true, attribute: 'disabled', type: Boolean }) disabled = false;
+  @property({ reflect: true, attribute: 'aria-disabled', type: String }) ariaDisabled = 'false';
 
   /**
    * whether filtering (if enabled) will be case-sensitive
@@ -140,9 +140,6 @@ export class PfSelectList extends LitElement {
       }
       if (changed.has('multiSelectable')) {
         this.#listboxController.multiSelectable = this.multiSelectable;
-      }
-      if (changed.has('disabled')) {
-        this.#listboxController.disabled = this.disabled;
       }
     }
   }

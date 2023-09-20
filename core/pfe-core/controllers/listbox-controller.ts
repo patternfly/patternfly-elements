@@ -403,7 +403,7 @@ export class ListboxController<
    * @returns void
    */
   #onFilterChange() {
-    if (this.disabled) {
+    if (this.disabled || this.host.ariaDisabled) {
       return;
     }
     const oldValue = this.value;

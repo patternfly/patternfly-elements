@@ -17,9 +17,11 @@
   background-color: var(--_pf-select-option-active-descendant-color, var(--pf-theme--color--surface--lighter, #f0f0f0));
 }
 
-:host([disabled]) {
+:host([disabled]),
+:host([aria-disabled="true"]) {
   color: var(--pf-global--Color--dark-200, #6a6e73);
   pointer-events: none;
+  cursor: not-allowed;
 }
 
 #outer {

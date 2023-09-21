@@ -70,19 +70,14 @@ export class PfDropdown extends LitElement {
 
   @query('pf-dropdown-menu') private _menuElement!: HTMLElement;
 
-  #toggle?: ToggleController;
-
   #triggerElement: HTMLElement | null = null;
+
+  #toggle?: ToggleController;
 
   connectedCallback() {
     super.connectedCallback();
     this.#toggle = new ToggleController(this, 'menu');
     this.#setTriggerElement();
-  }
-
-  firstUpdated() {
-    this.#setTriggerElement();
-    this.#toggle?.setPopupElement(this._menuElement);
   }
 
   render() {
@@ -99,7 +94,6 @@ export class PfDropdown extends LitElement {
         part="dropdown-trigger"
         name="trigger"
         id="trigger"
-        @keydown=${this.handleDropdownButton}
         @slotchange=${this.#setTriggerElement}
       >
         <pf-button 
@@ -125,15 +119,18 @@ export class PfDropdown extends LitElement {
     </div>`;
   }
 
-  /**
-   * sets focus on trigger element
-   */
-  focus() {
-    if (this.#toggle?.expanded) {
-      this._menuElement?.focus();
-    } else {
-      this.#triggerElement?.focus();
-    }
+  firstUpdated() {
+    this.#setTriggerElement();
+    this.#toggle?.setPopupElement(this._menuElement);
+  }
+
+  #handleSelect(event: KeyboardEvent | Event & { target: PfDropdownItem }) {
+    const menu = this._menuElement as PfDropdownMenu;
+    const target = event.target as PfDropdownItem || menu.activeItem;
+    this.close();
+    this.dispatchEvent(
+      new DropdownSelectEvent(event, `${target?.value}`)
+    );
   }
 
   #setTriggerElement() {
@@ -143,6 +140,24 @@ export class PfDropdown extends LitElement {
       this.#toggle?.removeTriggerElement(this.#triggerElement);
       this.#triggerElement = trigger;
       this.#toggle?.addTriggerElement(this.#triggerElement);
+    }
+  }
+
+  @bound private onKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === 'Space') {
+      event.preventDefault();
+      this.#handleSelect(event);
+    }
+  }
+
+  /**
+   * sets focus on trigger element
+   */
+  focus() {
+    if (this.#toggle?.expanded) {
+      this._menuElement?.focus();
+    } else {
+      this.#triggerElement?.focus();
     }
   }
 
@@ -159,25 +174,6 @@ export class PfDropdown extends LitElement {
   @bound async close() {
     await this.#toggle?.close(true);
   }
-
-  #handleSelect(event: KeyboardEvent | Event & { target: PfDropdownItem }) {
-    const menu = this._menuElement as PfDropdownMenu;
-    const target = event.target as PfDropdownItem || menu.activeItem;
-    this.close();
-    this.dispatchEvent(
-      new DropdownSelectEvent(event, `${target?.value}`)
-    );
-  }
-
-  @bound private onKeydown(event: KeyboardEvent) {
-    if (event.key === 'Enter' || event.key === 'Space') {
-      event.preventDefault();
-      this.#handleSelect(event);
-    }
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  @bound private handleDropdownButton() {}
 }
 
 declare global {

@@ -22,11 +22,6 @@ export class PfDropdownMenu extends LitElement {
    */
   @property({ reflect: true, attribute: 'aria-disabled', type: String }) ariaDisabled = 'false';
 
-  #menuitems: HTMLElement[] = [];
-  #itemsInit = false;
-  #tabindex: RovingTabindexController;
-  #internals: InternalsController;
-
   @queryAssignedElements({ flatten: true }) private menuAssignedElements!:
     | PfDropdownItem[]
     | PfDropdownGroup[];
@@ -37,6 +32,11 @@ export class PfDropdownMenu extends LitElement {
     'focusin': this.#onMenuitemFocusin.bind(this),
     'click': this.#onMenuitemClick.bind(this),
   };
+
+  #menuitems: HTMLElement[] = [];
+  #itemsInit = false;
+  #tabindex: RovingTabindexController;
+  #internals: InternalsController;
 
   constructor() {
     super();
@@ -53,17 +53,17 @@ export class PfDropdownMenu extends LitElement {
     }
   }
 
+  render() {
+    return html`
+      <slot @slotchange=${this.#handleSlotChange} @menuitemchange=${this.#handleSlotChange}></slot>
+    `;
+  }
+
   disconnectedCallback() {
     super.disconnectedCallback();
     for (const [event, listener] of Object.entries(this.#listeners)) {
       this.removeEventListener(event, listener as (event: Event | null) => void);
     }
-  }
-
-  render() {
-    return html`
-      <slot @slotchange=${this.#handleSlotChange} @menuitemchange=${this.#handleSlotChange}></slot>
-    `;
   }
 
   /**
@@ -79,13 +79,6 @@ export class PfDropdownMenu extends LitElement {
    */
   get activeIndex() {
     return this.#menuitems.indexOf(this.activeItem) || 0;
-  }
-
-  /**
-   * sets focus on last active item
-   */
-  focus() {
-    this.#tabindex.focusOnItem(this.#tabindex.activeItem);
   }
 
   #handleSlotChange() {
@@ -108,6 +101,18 @@ export class PfDropdownMenu extends LitElement {
       this.#tabindex.initItems(this.#menuitems);
     }
     this.#itemsInit = true;
+  }
+
+  #nextMatchingItem(key: string) {
+    const items = [...this.#menuitems];
+    const index = !this.activeItem ? items.indexOf(this.activeItem) : -1;
+    const sequence = [...items.slice(index), ...items.slice(0, index)];
+    const regex = new RegExp(`^${key}`, 'i');
+    const first = sequence.find(item => {
+      const option = item as HTMLElement;
+      return !option.hidden && option.textContent?.match(regex);
+    });
+    return first || undefined;
   }
 
   /**
@@ -162,18 +167,6 @@ export class PfDropdownMenu extends LitElement {
     }
   }
 
-  #nextMatchingItem(key: string) {
-    const items = [...this.#menuitems];
-    const index = !this.activeItem ? items.indexOf(this.activeItem) : -1;
-    const sequence = [...items.slice(index), ...items.slice(0, index)];
-    const regex = new RegExp(`^${key}`, 'i');
-    const first = sequence.find(item => {
-      const option = item as HTMLElement;
-      return !option.hidden && option.textContent?.match(regex);
-    });
-    return first || undefined;
-  }
-
   /**
    * updates active descendant when focus changes
    */
@@ -189,6 +182,13 @@ export class PfDropdownMenu extends LitElement {
         item.removeAttribute('active-descendant');
       }
     });
+  }
+
+  /**
+   * sets focus on last active item
+   */
+  focus() {
+    this.#tabindex.focusOnItem(this.#tabindex.activeItem);
   }
 }
 

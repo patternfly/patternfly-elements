@@ -290,7 +290,7 @@ export class ListboxController<
       role: 'listbox'
     });
     this.#tabindex = new RovingTabindexController<HTMLElement>(this.host);
-    this.#caseSensitive = options.caseSensitive || false;
+    this.caseSensitive = options.caseSensitive || false;
     this.disableFilter = !!options.disableFilter;
   }
 
@@ -496,10 +496,6 @@ export class ListboxController<
       }
     } else {
       switch (event.key) {
-        case event.key?.match(/^[\w]$/)?.input:
-          focusEvent = this.#nextMatchingItem(event.key);
-          stopEvent = true;
-          break;
         case 'Enter':
         case ' ':
           // enter and space are only applicable if a listbox option is clicked
@@ -533,18 +529,6 @@ export class ListboxController<
     if (focusEvent) {
       this.#tabindex.focusOnItem(focusEvent);
     }
-  }
-
-  #nextMatchingItem(key: string) {
-    const items = [...this.visibleOptions];
-    const index = !this.activeItem ? items.indexOf(this.activeItem) : -1;
-    const sequence = [...items.slice(index), ...items.slice(0, index)];
-    const regex = new RegExp(`^${key}`, this.#caseSensitive ? '' : 'i');
-    const first = sequence.find(item => {
-      const option = item as ListboxOptionElement;
-      return !option.hasAttribute('disabled') && !option.hidden && option.textContent?.match(regex);
-    });
-    return first || undefined;
   }
 
   /**

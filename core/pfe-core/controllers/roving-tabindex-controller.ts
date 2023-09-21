@@ -17,11 +17,29 @@ export class RovingTabindexController<
   /** active focusable element */
   #activeItem?: ItemType;
 
+  /**
+   * whether filtering (if enabled) will be case-sensitive
+   */
+  #caseSensitive = false;
+
   /** closest ancestor containing items */
   #itemsContainer?: HTMLElement;
 
   /** array of all focusable elements */
   #items: ItemType[] = [];
+
+  /**
+   * whether filtering is case sensitive
+   */
+  set caseSensitive(caseSensitive: boolean) {
+    if (this.#caseSensitive !== caseSensitive) {
+      this.#caseSensitive = caseSensitive;
+    }
+  }
+
+  get caseSensitive() {
+    return this.#caseSensitive;
+  }
 
   /**
    * finds focusable items from a group of items
@@ -103,6 +121,17 @@ export class RovingTabindexController<
     this.host.addController(this);
   }
 
+  #nextMatchingItem(key: string) {
+    const items = [...this.#focusableItems];
+    const sequence = [...items.slice(this.#itemIndex - 1), ...items.slice(0, this.#itemIndex - 1)];
+    const regex = new RegExp(`^${key}`, this.#caseSensitive ? '' : 'i');
+    const first = sequence.find(item => {
+      const option = item as HTMLElement;
+      return !option.hasAttribute('disabled') && !option.hidden && option.textContent?.match(regex);
+    });
+    return first || undefined;
+  }
+
   /**
    * handles keyboard navigation
    */
@@ -126,6 +155,10 @@ export class RovingTabindexController<
         item.getAttribute('role') === 'spinbutton' || orientation === 'horizontal';
     const verticalOnly = orientation === 'vertical';
     switch (event.key) {
+      case event.key?.match(/^[\w\d]$/)?.input:
+        this.focusOnItem(this.#nextMatchingItem(event.key));
+        shouldPreventDefault = true;
+        break;
       case 'ArrowLeft':
         if (verticalOnly) {
           return;

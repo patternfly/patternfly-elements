@@ -188,6 +188,9 @@ export class PfTextInput extends LitElement {
   /** Flag to show if the input is read only. */
   @property({ type: Boolean, reflect: true }) readonly = false;
 
+  /** Input placeholder. */
+  @property() placeholder?: string;
+
   /** Value of the input. */
   @property() value = '';
 
@@ -217,6 +220,7 @@ export class PfTextInput extends LitElement {
              ?readonly="${this.readonly}"
              ?required="${this.required}"
              aria-label="${this.#derivedLabel}"
+             placeholder="${ifDefined(this.placeholder)}"
              type="${ifDefined(this.type)}"
              .value="${this.value}"
              style="${ifDefined(this.customIconUrl && styleMap({

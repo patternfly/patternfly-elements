@@ -62,8 +62,6 @@ export class ListboxController<
    */
   #disableFilter = false;
 
-  #internals: InternalsController;
-
   /** event listeners for host element */
   #listeners = {
     'keydown': this.#onOptionKeydown.bind(this),
@@ -83,8 +81,6 @@ export class ListboxController<
    */
   #shiftStartingItem: ListboxOptionElement | null = null;
 
-  #tabindex: RovingTabindexController;
-
   /**
    * all options that will not be hidden by a filter
    * */
@@ -94,6 +90,9 @@ export class ListboxController<
    * whether or not focus should be updated after filtering
    */
   #updateFocus = false;
+
+  #tabindex: RovingTabindexController;
+  #internals: InternalsController;
 
   /**
    * current active descendant in listbox
@@ -311,24 +310,6 @@ export class ListboxController<
     for (const [event, listener] of Object.entries(this.#listeners)) {
       this.host?.removeEventListener(event, listener as (event: Event | null) => void);
     }
-  }
-
-  /**
-   * verfies that selected options are limited to exisiting listbox options
-   */
-  isValid(val: string | null) {
-    const vals = val?.split(',') || [];
-    const options = this.options.map(option => option.textContent);
-    return vals.every(val => {
-      return options.includes(val);
-    });
-  }
-
-  /**
-   * sets focus on last active item
-   */
-  focus() {
-    this.#tabindex.focusOnItem(this.#tabindex.activeItem);
   }
 
   /**
@@ -564,5 +545,23 @@ export class ListboxController<
       return !option.hasAttribute('disabled') && !option.hidden && option.textContent?.match(regex);
     });
     return first || undefined;
+  }
+
+  /**
+   * verfies that selected options are limited to exisiting listbox options
+   */
+  isValid(val: string | null) {
+    const vals = val?.split(',') || [];
+    const options = this.options.map(option => option.textContent);
+    return vals.every(val => {
+      return options.includes(val);
+    });
+  }
+
+  /**
+   * sets focus on last active item
+   */
+  focus() {
+    this.#tabindex.focusOnItem(this.#tabindex.activeItem);
   }
 }

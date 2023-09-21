@@ -33,13 +33,13 @@ export class ToggleController implements ReactiveController {
   /** whether host is focused */
   #focused = false;
 
-  #float?: FloatingDOMController;
-
   #position: Placement = 'bottom-start';
 
   #enableFlip = false;
 
   #popupType: HasPopupType = 'true';
+
+  #float?: FloatingDOMController;
 
   get focused() {
     return this.#focused;
@@ -138,23 +138,6 @@ export class ToggleController implements ReactiveController {
     this.host?.requestUpdate();
   }
 
-  #connectFloat() {
-    if (!this.#connected) {
-      if (!this.#float) {
-        this.#float = new FloatingDOMController(this.host, {
-          content: (): HTMLElement | undefined | null => this.popupElement
-        });
-      }
-      if (this.#float) {
-        this.host?.addController(this.#float);
-        this.host?.requestUpdate();
-      }
-      for (const [event, listener] of Object.entries(this.#hostListeners)) {
-        this.host?.addEventListener(event, listener as (event: Event | null) => void);
-      }
-    }
-  }
-
   /**
    * adds event listeners to items container
    */
@@ -175,6 +158,109 @@ export class ToggleController implements ReactiveController {
         this.host?.removeEventListener(event, listener as (event: Event | null) => void);
       }
     }
+  }
+
+  #connectFloat() {
+    if (!this.#connected) {
+      if (!this.#float) {
+        this.#float = new FloatingDOMController(this.host, {
+          content: (): HTMLElement | undefined | null => this.popupElement
+        });
+      }
+      if (this.#float) {
+        this.host?.addController(this.#float);
+        this.host?.requestUpdate();
+      }
+      for (const [event, listener] of Object.entries(this.#hostListeners)) {
+        this.host?.addEventListener(event, listener as (event: Event | null) => void);
+      }
+    }
+  }
+
+  #fireOpenChanged() {
+    /**
+     * @fires open-change
+     */
+    this.host?.dispatchEvent(new Event('open-change'));
+  }
+
+  #updateFocused() {
+    const focusedLightDOM = document.activeElement && !!this.host?.contains(document.activeElement);
+    const focusedShadowDOM = this.host?.shadowRoot?.activeElement && !!this.host.shadowRoot?.contains(this.host?.shadowRoot?.activeElement);
+    this.focused = !!focusedLightDOM || !!focusedShadowDOM;
+    if (!this.focused) {
+      setTimeout( this.close.bind(this), 300);
+    }
+  }
+
+  /**
+   * sets focus and tests for closing
+   * when any part of select loses focus
+   */
+  #onHostFocusout() {
+    this.focused = false;
+    // wait for immediate focus or hover event;
+    // then test if popup can be closed
+    setTimeout(this.close.bind(this), 300);
+  }
+
+  /**
+   * sets indicator when any part of select gets focus
+   */
+  #onHostFocusin() {
+    this.focused = true;
+  }
+
+  /**
+   * sets focus and tests for closing
+   * when any part of select loses hover
+   */
+  #onHostMouseout() {
+    this.hovered = false;
+    // wait for immediate focus or hover event;
+    // then test if popup can be closed
+    setTimeout( this.close.bind(this), 300);
+  }
+
+  /**
+   * sets indicator when any part of select gets hover
+   */
+  #onHostMouseover() {
+    this.hovered = true;
+  }
+
+  /**
+   * handles listbox keydown event
+   */
+  async #onPopupKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape' || event.key === 'Esc') {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      await this.close(true);
+    }
+    this.#updateFocused;
+  }
+
+  /**
+   * handles toggle keydown event
+   * @param event {KeyboardEvent}
+   */
+  async #onTriggerKeydown(event: KeyboardEvent) {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      await this.open(true);
+    }
+  }
+
+  /**
+   * handles toggle button click event
+   */
+  async #onTriggerClick(event: MouseEvent) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    await this.toggle();
+    this.#updateFocused();
   }
 
   /**
@@ -300,91 +386,5 @@ export class ToggleController implements ReactiveController {
       }
       this.host?.dispatchEvent(new CustomEvent('close'));
     }
-  }
-
-  #fireOpenChanged() {
-    /**
-     * @fires open-change
-     */
-    this.host?.dispatchEvent(new Event('open-change'));
-  }
-
-  #updateFocused() {
-    const focusedLightDOM = document.activeElement && !!this.host?.contains(document.activeElement);
-    const focusedShadowDOM = this.host?.shadowRoot?.activeElement && !!this.host.shadowRoot?.contains(this.host?.shadowRoot?.activeElement);
-    this.focused = !!focusedLightDOM || !!focusedShadowDOM;
-    if (!this.focused) {
-      setTimeout( this.close.bind(this), 300);
-    }
-  }
-
-  /**
-   * sets focus and tests for closing
-   * when any part of select loses focus
-   */
-  #onHostFocusout() {
-    this.focused = false;
-    // wait for immediate focus or hover event;
-    // then test if popup can be closed
-    setTimeout(this.close.bind(this), 300);
-  }
-
-  /**
-   * sets indicator when any part of select gets focus
-   */
-  #onHostFocusin() {
-    this.focused = true;
-  }
-
-  /**
-   * sets focus and tests for closing
-   * when any part of select loses hover
-   */
-  #onHostMouseout() {
-    this.hovered = false;
-    // wait for immediate focus or hover event;
-    // then test if popup can be closed
-    setTimeout( this.close.bind(this), 300);
-  }
-
-  /**
-   * sets indicator when any part of select gets hover
-   */
-  #onHostMouseover() {
-    this.hovered = true;
-  }
-
-  /**
-   * handles listbox keydown event
-   */
-  async #onPopupKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape' || event.key === 'Esc') {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      await this.close(true);
-    }
-    this.#updateFocused;
-  }
-
-  /**
-   * handles toggle keydown event
-   * @param event {KeyboardEvent}
-   */
-  async #onTriggerKeydown(event: KeyboardEvent) {
-    if (event.key === 'ArrowDown') {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      await this.open(true);
-    }
-  }
-
-  /**
-   * handles toggle button click event
-   */
-  async #onTriggerClick(event: MouseEvent) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    await this.toggle();
-    this.#updateFocused();
   }
 }

@@ -4,10 +4,8 @@ import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
-
 import { type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
-
 import type { PfSelectOption } from './pf-select-option.js';
 import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
 import { PfSelectList } from './pf-select-list.js';
@@ -121,9 +119,9 @@ export class PfSelect extends LitElement {
   @query('#toggle-input') private _input?: HTMLInputElement;
   @query('#toggle-button') private _toggle?: HTMLButtonElement;
 
-  #createOption!: PfSelectOption;
-
   #toggle?: ToggleController;
+
+  #createOption!: PfSelectOption;
 
   /**
    * label for toggle button
@@ -326,6 +324,11 @@ export class PfSelect extends LitElement {
     }
   }
 
+  firstUpdated() {
+    this.#addCreateOption();
+    this.#updateValueText();
+  }
+
   #setToggle() {
     if (!this.alwaysExpanded) {
       if (!this.#toggle) {
@@ -338,44 +341,6 @@ export class PfSelect extends LitElement {
       this.removeController(this.#toggle);
       this.#toggle = undefined;
     }
-  }
-
-  firstUpdated() {
-    this.#addCreateOption();
-    this.#updateValueText();
-  }
-
-  /**
-   * opens the dropdown
-   */
-  async open() {
-    await this.#toggle?.open(true);
-  }
-
-  /**
-   * sets focus
-   */
-  focus() {
-    const element = this._input && !this._input.hidden ? this._input
-      : this._toggle && !this._toggle.hidden ? this._toggle
-      : this._listbox;
-    element?.focus();
-  }
-
-  /**
-   * allows new options to be inserted
-   * @param option option to be inserted
-   * @param insertBefore optional: reference option before which new will be inserted; if blank new option inserted at end of list
-   */
-  insertOption(option: PfSelectOption, insertBefore?: PfSelectOption) {
-    this._listbox?.insertOption(option, insertBefore);
-  }
-
-  /**
-   * closes listbox and sets focus
-   */
-  async close() {
-    await this.#toggle?.close(true);
   }
 
   /**
@@ -507,6 +472,39 @@ export class PfSelect extends LitElement {
         this._input.focus();
       }
     }
+  }
+
+  /**
+   * opens the dropdown
+   */
+  async open() {
+    await this.#toggle?.open(true);
+  }
+
+  /**
+   * sets focus
+   */
+  focus() {
+    const element = this._input && !this._input.hidden ? this._input
+      : this._toggle && !this._toggle.hidden ? this._toggle
+      : this._listbox;
+    element?.focus();
+  }
+
+  /**
+   * allows new options to be inserted
+   * @param option option to be inserted
+   * @param insertBefore optional: reference option before which new will be inserted; if blank new option inserted at end of list
+   */
+  insertOption(option: PfSelectOption, insertBefore?: PfSelectOption) {
+    this._listbox?.insertOption(option, insertBefore);
+  }
+
+  /**
+   * closes listbox and sets focus
+   */
+  async close() {
+    await this.#toggle?.close(true);
   }
 }
 

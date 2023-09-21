@@ -21,10 +21,6 @@ import styles from './pf-select-option.css';
 export class PfSelectOption extends LitElement {
   static readonly styles = [styles];
 
-  #internals = new InternalsController(this, {
-    role: 'option'
-  });
-
   /**
    * whether option is disabled
    */
@@ -61,6 +57,10 @@ export class PfSelectOption extends LitElement {
   #createOptionText = '';
   #userCreatedOption = false;
 
+  #internals = new InternalsController(this, {
+    role: 'option'
+  });
+
   override connectedCallback() {
     super.connectedCallback();
     this.id = this.id || getRandomId();
@@ -68,33 +68,6 @@ export class PfSelectOption extends LitElement {
     this.addEventListener('keydown', this.#onKeydown);
     this.addEventListener('focus', this.#onFocus);
     this.addEventListener('blur', this.#onBlur);
-  }
-
-  /**
-   * text content within option (used for filtering)
-   */
-  get optionText() {
-    return this._slottedText.map(node => node.textContent).join('').trim();
-  }
-
-  /**
-   * used for typeahead to determine if
-   * a create option should be shown
-   * by setting the text for create option
-   */
-  set createOptionText(str: string) {
-    if (!this.#userCreatedOption) {
-      this.#createOptionText = str || '';
-      this.ariaDisabled = str === '' ? 'true' : 'false';
-      this.hidden = str === '';
-    }
-  }
-
-  /**
-   * whether option is user created option
-   */
-  get userCreatedOption() {
-    return this.#userCreatedOption;
   }
 
   render() {
@@ -135,6 +108,33 @@ export class PfSelectOption extends LitElement {
     if (changed.has('hiddenByFilter')) {
       this.#onHiddenByFilter();
     }
+  }
+
+  /**
+   * text content within option (used for filtering)
+   */
+  get optionText() {
+    return this._slottedText.map(node => node.textContent).join('').trim();
+  }
+
+  /**
+   * used for typeahead to determine if
+   * a create option should be shown
+   * by setting the text for create option
+   */
+  set createOptionText(str: string) {
+    if (!this.#userCreatedOption) {
+      this.#createOptionText = str || '';
+      this.ariaDisabled = str === '' ? 'true' : 'false';
+      this.hidden = str === '';
+    }
+  }
+
+  /**
+   * whether option is user created option
+   */
+  get userCreatedOption() {
+    return this.#userCreatedOption;
   }
 
   /**

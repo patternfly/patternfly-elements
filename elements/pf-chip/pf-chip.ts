@@ -74,13 +74,6 @@ export class PfChip extends LitElement {
   }
 
   /**
-   * sets focus on chip's button
-   */
-  focus() {
-    this.button?.focus();
-  }
-
-  /**
    * handles chip's button click event
    */
   #onClick() {
@@ -89,6 +82,13 @@ export class PfChip extends LitElement {
      */
     this.dispatchEvent(new Event('chip-remove', { bubbles: true }));
     this.remove();
+  }
+
+  /**
+   * sets focus on chip's button
+   */
+  focus() {
+    this.button?.focus();
   }
 }
 

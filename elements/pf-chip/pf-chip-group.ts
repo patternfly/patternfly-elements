@@ -68,12 +68,15 @@ export class PfChipGroup extends LitElement {
 
   #buttons: HTMLElement[] = [];
 
-  #tabindex: RovingTabindexController;
-
   #itemsInit = false;
 
-  get remaining() {
-    return this.#chips.length - this.numChips;
+  #tabindex: RovingTabindexController;
+
+  constructor() {
+    super();
+    this.#tabindex = new RovingTabindexController<HTMLElement>(this);
+    this.addEventListener('chip-ready', this.#onChipReady);
+    this.addEventListener('chip-remove', this.#onChipRemoved);
   }
 
   render() {
@@ -111,13 +114,6 @@ export class PfChipGroup extends LitElement {
     `;
   }
 
-  constructor() {
-    super();
-    this.#tabindex = new RovingTabindexController<HTMLElement>(this);
-    this.addEventListener('chip-ready', this.#onChipReady);
-    this.addEventListener('chip-remove', this.#onChipRemoved);
-  }
-
   updated(changed: PropertyValues<this>) {
     if (changed.has('closeLabel') || changed.has('numChips') || changed.has('open')) {
       this.#updateChips();
@@ -148,19 +144,8 @@ export class PfChipGroup extends LitElement {
     return (this._categorySlotted || []).length > 0;
   }
 
-  /**
-   * sets focus on active chip
-   */
-  focus() {
-    this.#tabindex.focusOnItem(this.#tabindex.activeItem);
-  }
-
-  /**
-   * makes chip active and sets focus on it
-   */
-  focusOnChip(chip: HTMLElement) {
-    const button = chip?.shadowRoot?.querySelector('button') as HTMLElement;
-    this.#tabindex.focusOnItem(button);
+  get remaining() {
+    return this.#chips.length - this.numChips;
   }
 
   /**
@@ -253,6 +238,21 @@ export class PfChipGroup extends LitElement {
     } else {
       this.removeAttribute('has-category');
     }
+  }
+
+  /**
+   * sets focus on active chip
+   */
+  focus() {
+    this.#tabindex.focusOnItem(this.#tabindex.activeItem);
+  }
+
+  /**
+   * makes chip active and sets focus on it
+   */
+  focusOnChip(chip: HTMLElement) {
+    const button = chip?.shadowRoot?.querySelector('button') as HTMLElement;
+    this.#tabindex.focusOnItem(button);
   }
 }
 

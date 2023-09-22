@@ -1,25 +1,26 @@
 #!/usr/bin/env node
 /* eslint-env node */
 import { build } from 'esbuild';
-import { promisify } from 'node:util';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { litCssPlugin } from 'esbuild-plugin-lit-css';
-import Glob from 'glob';
+import { glob } from 'glob';
 import CleanCSS from 'clean-css';
 
-const glob = promisify(Glob);
-
 const resolveDir = join(fileURLToPath(import.meta.url), '../../elements');
-const entryPoints = (await glob('./pf-*/pf-*.ts', { cwd: resolveDir })).map(x => x.replace('.ts', '.js'));
-const contents = entryPoints.map(x => `export * from '${x}';`).join('\n');
+const files = await glob('./pf-*/pf-*.ts', { cwd: resolveDir });
+const contents = files
+  .filter(x => !x.endsWith('.d.ts'))
+  .map(x => `export * from '@patternfly/elements/${x.replace('.ts', '.js')}';`).join('\n');
 
 const cleanCSS = new CleanCSS({
   sourceMap: true,
   returnPromise: true,
 });
 
-export async function bundle({ outfile = 'elements/pfe.min.js' } = {}) {
+export async function bundle({
+  outfile = 'elements/pfe.min.js',
+} = {}) {
   await build({
     stdin: {
       contents,

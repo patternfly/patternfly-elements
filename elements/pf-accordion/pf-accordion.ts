@@ -22,9 +22,8 @@ import style from './pf-accordion.css';
  * @slot
  *       Place the `pf-accordion-header` and `pf-accordion-panel` elements here.
  *
- * @cssproperty {<color>} --accordion__bordered--Color
- *              Color for the borders between accordion headers when using bordered or large attributes
- *              {@default `var(--rh-color-black-300, #d2d2d2)`}
+ * @cssproperty [--accordion__bordered--Color=var(--rh-color-black-300, #d2d2d2)] {<color>} -
+ * Color for the borders between accordion headers when using bordered or large attributes
  */
 @customElement('pf-accordion')
 export class PfAccordion extends BaseAccordion {

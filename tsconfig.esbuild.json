@@ -8,7 +8,6 @@
     "**/demo/*.js",
     "**/demo/*.d.ts",
     "**/_temp/**/*",
-    "**/custom-elements-manifest.config.js",
     "**/*.story.*",
     "**/test/*_e2e*"
   ],
@@ -65,12 +64,6 @@
       "ScriptHost"
     ],
     "paths": {
-      "@custom-elements-manifest/analyzer": [
-        "@types/custom-elements-manifest__analyzer"
-      ],
-      "@custom-elements-manifest/analyzer/*": [
-        "@types/custom-elements-manifest__analyzer/*"
-      ],
       "@patternfly/elements/*": [
         "./elements/*"
       ],

@@ -23,7 +23,7 @@ import { getAllPackages } from './get-all-packages.js';
 import slugify from 'slugify';
 import { deslugify } from '@patternfly/pfe-tools/config.js';
 
-type PredicateFn = (x: unknown) => boolean;
+type PredicateFn<T> = (x: T) => boolean;
 
 export interface PackageJSON {
   customElements?: string;
@@ -45,9 +45,9 @@ export interface DemoRecord extends Demo {
   manifest: Manifest;
 }
 
-const all = (...ps: PredicateFn[]) => (x: unknown) => ps.every(p => p(x));
-const not = (p: PredicateFn) => (x: unknown) => !p(x);
-const and = (p: PredicateFn, q: PredicateFn) => (x: unknown) => p(x) && q(x);
+const all = <T>(...ps: PredicateFn<T>[]) => (x: T) => ps.every(p => p(x));
+const not = <T>(p: PredicateFn<T>) => (x: T) => !p(x);
+const and = <T>(p: PredicateFn<T>, q: PredicateFn<T>) => (x: T) => p(x) && q(x);
 
 export const isField = (x: ClassMember): x is ClassField => x.kind === 'field';
 export const isMethod = (x: ClassMember): x is ClassMethod => x.kind === 'method';
@@ -55,9 +55,9 @@ export const isStatic = (x: ClassMember): x is ClassMethod & { static: true } =>
 export const isPublic = (x: ClassMember): boolean => !x.privacy || !x.privacy?.match?.(/private|protected/);
 
 export const isPublicInstanceField: (x: ClassMember) => x is ClassField =
-  all(isField as PredicateFn, not(isStatic as PredicateFn), isPublic as PredicateFn) as (x: ClassMember) => x is ClassField;
+  all(isField, not(isStatic), isPublic) as (x: ClassMember) => x is ClassField;
 export const isPublicInstanceMethod: (x: ClassMember) => x is ClassMethod =
-  all(isMethod as PredicateFn, not(isStatic as PredicateFn), isPublic as PredicateFn) as (x: ClassMember) => x is ClassMethod;
+  all(isMethod, not(isStatic), isPublic) as (x: ClassMember) => x is ClassMethod;
 
 export const isCustomElement = (x: Declaration): x is CustomElementDeclaration => 'tagName' in x;
 export const isTheField = (x: ClassField) => (y: Attribute) => y.fieldName === x.name;
@@ -121,7 +121,8 @@ class ManifestCustomElement {
     this.description = this.declaration?.description ?? '';
     this.events = this.declaration?.events ?? [];
     this.methods = this.declaration?.members?.filter?.(isPublicInstanceMethod) ?? [];
-    this.properties = this.declaration?.members?.filter?.(and(isPublicInstanceField as PredicateFn, isAnAttr as PredicateFn) as (typeof isField)) ?? [];
+    this.properties = this.declaration?.members
+      ?.filter?.(and(isPublicInstanceField, isAnAttr) as (typeof isField)) ?? [];
     this.slots = this.declaration?.slots ?? [];
     this.demos = this.declaration?.demos ?? [];
     this.summary = this.declaration?.summary ?? '';

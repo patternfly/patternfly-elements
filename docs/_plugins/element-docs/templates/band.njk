@@ -1,0 +1,6 @@
+{% set level = level or 2 %}
+
+<section class="band">
+  {{ header | cemMdHeading(level) | safe }}
+  {{ content | cemInnerMD | safe }}
+</section>

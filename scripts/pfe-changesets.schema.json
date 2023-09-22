@@ -1,0 +1,115 @@
+{
+  "$id": "https://patternflyelements.org/changeset.schema.json",
+  "title": "PatternFly Elements changeset",
+  "description": "a changelog entry for PatternFly Elements",
+  "type": "object",
+  "properties": {
+    "@patternfly/pfe-core": {
+      "type": "string",
+      "enum": [
+        "patch",
+        "minor",
+        "major"
+      ]
+    },
+    "@patternfly/elements": {
+      "type": "string",
+      "enum": [
+        "patch",
+        "minor",
+        "major"
+      ]
+    },
+    "@patternfly/create-element": {
+      "type": "string",
+      "enum": [
+        "patch",
+        "minor",
+        "major"
+      ]
+    },
+    "@patternfly/eslint-config-elements": {
+      "type": "string",
+      "enum": [
+        "patch",
+        "minor",
+        "major"
+      ]
+    },
+    "@patternfly/eslint-plugin-elements": {
+      "type": "string",
+      "enum": [
+        "patch",
+        "minor",
+        "major"
+      ]
+    },
+    "@patternfly/pfe-cli": {
+      "type": "string",
+      "enum": [
+        "patch",
+        "minor",
+        "major"
+      ]
+    },
+    "@patternfly/pfe-tools": {
+      "type": "string",
+      "enum": [
+        "patch",
+        "minor",
+        "major"
+      ]
+    },
+    "netlify-plugin-github-actions": {
+      "type": "string",
+      "enum": [
+        "patch",
+        "minor",
+        "major"
+      ]
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "@patternfly/pfe-core"
+      ]
+    },
+    {
+      "required": [
+        "@patternfly/elements"
+      ]
+    },
+    {
+      "required": [
+        "@patternfly/create-element"
+      ]
+    },
+    {
+      "required": [
+        "@patternfly/eslint-config-elements"
+      ]
+    },
+    {
+      "required": [
+        "@patternfly/eslint-plugin-elements"
+      ]
+    },
+    {
+      "required": [
+        "@patternfly/pfe-cli"
+      ]
+    },
+    {
+      "required": [
+        "@patternfly/pfe-tools"
+      ]
+    },
+    {
+      "required": [
+        "netlify-plugin-github-actions"
+      ]
+    }
+  ],
+  "additionalProperties": false
+}

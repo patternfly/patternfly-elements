@@ -220,7 +220,7 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   #getAnimationDuration(): number {
-    if ('computedStyleMap' in this) {
+    if ('computedStyleMap' in (this as HTMLElement)) {
       // @ts-expect-error: https://caniuse.com/?search=computedStyleMap
       return this.computedStyleMap().get('transition-duration')?.to('ms').value;
     } else {

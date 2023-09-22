@@ -10,20 +10,18 @@ import { fileURLToPath } from 'node:url';
 
 import rollupReplace from '@rollup/plugin-replace';
 import nunjucks from 'nunjucks';
-import _glob from 'glob';
+import { glob } from 'glob';
 
 import { litCss, type LitCSSOptions } from 'web-dev-server-plugin-lit-css';
 import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { importMapsPlugin } from '@web/dev-server-import-maps';
-import { promisify } from 'node:util';
 
 import Router from '@koa/router';
 import { Manifest, type DemoRecord } from '../custom-elements-manifest/lib/Manifest.js';
 import { makeDemoEnv } from '../environment.js';
 import { getPfeConfig, deslugify, type PfeConfig } from '../config.js';
 
-const glob = promisify(_glob);
 const replace = fromRollup(rollupReplace);
 
 const env = nunjucks
@@ -33,9 +31,7 @@ const env = nunjucks
   .addFilter('isElementGroup', (group: DemoRecord[], primary) =>
     group.every(x => !!primary && x.primaryElementName === primary));
 
-type Base = (DevServerConfig & PfeConfig);
-
-export interface PfeDevServerConfigOptions extends Base {
+export interface PfeDevServerConfigOptions extends DevServerConfig, PfeConfig {
   hostname?: string;
   importMap?: InjectSetting['importMap'];
   litcssOptions?: LitCSSOptions;

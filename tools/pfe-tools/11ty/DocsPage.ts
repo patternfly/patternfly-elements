@@ -34,14 +34,23 @@ const cssStylingHookIdTracker = new WeakSet();
 export declare class DocsPageRenderer {
   public tagName: string;
   public manifest: Manifest;
+  /** @deprecated: render your own templates. To be removed in version 3 */
   renderOverview(content: string, kwargs?: RenderKwargs): string;
+  /** @deprecated: render your own templates. To be removed in version 3 */
   renderAttributes(content: string, kwargs?: RenderKwargs): string;
+  /** @deprecated: render your own templates. To be removed in version 3 */
   renderProperties(content: string, kwargs?: RenderKwargs): string;
+  /** @deprecated: render your own templates. To be removed in version 3 */
   renderCssCustomProperties(content: string, kwargs?: RenderKwargs): string;
+  /** @deprecated: render your own templates. To be removed in version 3 */
   renderEvents(content: string, kwargs?: RenderKwargs): string;
+  /** @deprecated: render your own templates. To be removed in version 3 */
   renderInstallation(content: string, kwargs?: RenderKwargs): string;
+  /** @deprecated: render your own templates. To be removed in version 3 */
   renderCssParts(content: string, kwargs?: RenderKwargs): string;
+  /** @deprecated: render your own templates. To be removed in version 3 */
   renderMethods(content: string, kwargs?: RenderKwargs): string;
+  /** @deprecated: render your own templates. To be removed in version 3 */
   renderSlots(content: string, kwargs?: RenderKwargs): string;
 }
 
@@ -99,7 +108,7 @@ export class DocsPage implements DocsPageRenderer {
     this.docsTemplatePath = options?.docsTemplatePath;
   }
 
-  #packageTagName(kwargs: RenderKwargs = {}): string {
+  packageTagName(kwargs: RenderKwargs = {}): string {
     if (kwargs.for && !kwargs.for.match(/@/)) {
       return kwargs.for;
     } else {
@@ -108,13 +117,19 @@ export class DocsPage implements DocsPageRenderer {
     }
   }
 
+  /** @deprecated: render your own templates. To be removed in version 3 */
   renderBand(content: string, kwargs?: RenderKwargs) {
+    console.log('DocsPage#renderBand is deprecated');
     return this.templates.render('band.njk', { content, ...kwargs });
   }
 
-  /** Render the overview of a component page */
+  /**
+   * Render the overview of a component page
+   * @deprecated: render your own templates. To be removed in version 3
+   */
   renderOverview(content: string, kwargs: RenderKwargs = {}) {
-    const description = this.manifest.getDescription(this.#packageTagName(kwargs));
+    console.log('DocsPage#renderOverview is deprecated');
+    const description = this.manifest.getDescription(this.packageTagName(kwargs));
     const header = kwargs.title ?? this.title;
     // TODO: switch to false in next major
     const { renderTitleInOverview = true } = this.options ?? {};
@@ -124,9 +139,13 @@ export class DocsPage implements DocsPageRenderer {
     return `${renderedTitle}\n${this.templates.render('overview.njk', { description, content, ...kwargs })}`;
   }
 
-  /** Render the list of element attributes */
+  /**
+   * Render the list of element attributes
+   * @deprecated: render your own templates. To be removed in version 3
+   */
   renderAttributes(content: string, kwargs: RenderKwargs = {}) {
-    const _attrs = this.manifest.getAttributes(this.#packageTagName(kwargs)) ?? [];
+    console.log('DocsPage#renderAttributes is deprecated');
+    const _attrs = this.manifest.getAttributes(this.packageTagName(kwargs)) ?? [];
 
     const deprecated = _attrs.filter(x => x.deprecated);
     const attributes = _attrs.filter(x => !x.deprecated);
@@ -134,9 +153,13 @@ export class DocsPage implements DocsPageRenderer {
     return this.templates.render('attributes.njk', { content, attributes, deprecated, ...kwargs });
   }
 
-  /** Render the list of element DOM properties */
+  /**
+   * Render the list of element DOM properties
+   * @deprecated: render your own templates. To be removed in version 3
+   */
   renderProperties(content: string, kwargs: RenderKwargs = {}) {
-    const allProperties = this.manifest.getProperties(this.#packageTagName(kwargs)) ?? [];
+    console.log('DocsPage#renderProperties is deprecated');
+    const allProperties = this.manifest.getProperties(this.packageTagName(kwargs)) ?? [];
 
     const deprecated = allProperties.filter(x => x.deprecated);
     const properties = allProperties.filter(x => !x.deprecated);
@@ -144,20 +167,28 @@ export class DocsPage implements DocsPageRenderer {
     return this.templates.render('properties.njk', { content, properties, deprecated, ...kwargs });
   }
 
-  /** Render a table of element CSS Custom Properties */
+  /**
+   * Render a table of element CSS Custom Properties
+   * @deprecated: render your own templates. To be removed in version 3
+   */
   renderCssCustomProperties(content: string, kwargs: RenderKwargs = {}) {
+    console.log('DocsPage#renderCssCustomProperties is deprecated');
     const hasStylingHooks = cssStylingHookIdTracker.has(this);
     cssStylingHookIdTracker.add(this);
-    const allCssProperties = this.manifest.getCssCustomProperties(this.#packageTagName(kwargs)) ?? [];
+    const allCssProperties = this.manifest.getCssCustomProperties(this.packageTagName(kwargs)) ?? [];
     const cssProperties = allCssProperties.filter(x => !x.deprecated);
     const deprecated = allCssProperties.filter(x => x.deprecated);
 
     return this.templates.render('css-custom-properties.njk', { content, cssProperties, deprecated, hasStylingHooks, ...kwargs });
   }
 
-  /** Render the list of element CSS Shadow Parts */
+  /**
+   * Render the list of element CSS Shadow Parts
+   * @deprecated: render your own templates. To be removed in version 3
+   */
   renderCssParts(content: string, kwargs: RenderKwargs = {}) {
-    const allParts = this.manifest.getCssParts(this.#packageTagName(kwargs)) ?? [];
+    console.log('DocsPage#renderCssParts is deprecated');
+    const allParts = this.manifest.getCssParts(this.packageTagName(kwargs)) ?? [];
 
     const parts = allParts.filter(x => !x.deprecated);
     const deprecated = allParts.filter(x => x.deprecated);
@@ -165,9 +196,13 @@ export class DocsPage implements DocsPageRenderer {
     return this.templates.render('css-shadow-parts.njk', { parts, deprecated, content, ...kwargs });
   }
 
-  /** Render the list of events for the element */
+  /**
+   * Render the list of events for the element
+   * @deprecated: render your own templates. To be removed in version 3
+   */
   renderEvents(content: string, kwargs: RenderKwargs = {}) {
-    const _events = this.manifest.getEvents(this.#packageTagName(kwargs)) ?? [];
+    console.log('DocsPage#renderEvents is deprecated');
+    const _events = this.manifest.getEvents(this.packageTagName(kwargs)) ?? [];
 
     const deprecated = _events.filter(x => x.deprecated);
     const events = _events.filter(x => !x.deprecated);
@@ -175,23 +210,35 @@ export class DocsPage implements DocsPageRenderer {
     return this.templates.render('events.njk', { content, events, deprecated, ...kwargs });
   }
 
-  /** Render the installation instructions for the element */
+  /**
+   * Render the installation instructions for the element
+   * @deprecated: render your own templates. To be removed in version 3
+   */
   renderInstallation(content: string, kwargs: RenderKwargs = {}) {
+    console.log('DocsPage#renderInstallation is deprecated');
     return `${this.templates.render('install.njk', { content, ...kwargs })}`;
   }
 
-  /** Render the list of element methods */
+  /**
+   * Render the list of element methods
+   * @deprecated: render your own templates. To be removed in version 3
+   */
   renderMethods(content: string, kwargs: RenderKwargs = {}) {
-    const allMethods = this.manifest.getMethods(this.#packageTagName(kwargs)) ?? [];
+    console.log('DocsPage#renderMethods is deprecated');
+    const allMethods = this.manifest.getMethods(this.packageTagName(kwargs)) ?? [];
     const deprecated = allMethods.filter(x => x.deprecated);
     const methods = allMethods.filter(x => !x.deprecated);
 
     return this.templates.render('methods.njk', { content, methods, deprecated, ...kwargs });
   }
 
-  /** Render the list of the element's slots */
+  /**
+   * Render the list of the element's slots
+   * @deprecated: render your own templates. To be removed in version 3
+   */
   renderSlots(content: string, kwargs: RenderKwargs = {}) {
-    const allSlots = this.manifest.getSlots(this.#packageTagName(kwargs)) ?? [];
+    console.log('DocsPage#renderSlots is deprecated');
+    const allSlots = this.manifest.getSlots(this.packageTagName(kwargs)) ?? [];
     const slots = allSlots.filter(x => !x.deprecated);
     const deprecated = allSlots.filter(x => x.deprecated);
 

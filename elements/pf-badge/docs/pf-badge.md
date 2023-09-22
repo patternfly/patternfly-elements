@@ -34,6 +34,8 @@
 
 {% renderAttributes %}{% endrenderAttributes %}
 
+{% renderProperties %}{% endrenderProperties %}
+
 {% renderMethods %}{% endrenderMethods %}
 
 {% renderEvents %}{% endrenderEvents %}

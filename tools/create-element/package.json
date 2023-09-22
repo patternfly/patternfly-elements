@@ -4,10 +4,9 @@
   "description": "Scaffold web components monorepos based on PatternFly Elements",
   "author": "Benny Powers <bennyp@redhat.com>",
   "license": "MIT",
-  "main": "main.js",
-  "module": "main.js",
+  "main": "bin/main.js",
+  "module": "bin/main.js",
   "type": "module",
-  "typings": "./main.d.ts",
   "bin": {
     "create-app": "bin/main.js"
   },
@@ -25,31 +24,19 @@
     "registry": "https://registry.npmjs.org/"
   },
   "files": [
-    "bin/**/*",
-    "**/*.js",
-    "**/*.d.ts",
-    "templates/**/*"
+    "bin/main.js"
   ],
-  "scripts": {
-    "test": "echo 'unit tests for PFE generator not written yet'"
-  },
   "bugs": {
-    "url": "git+ssh://git@github.com/patternfly/pfe-tools/issues"
+    "url": "git+ssh://git@github.com/patternfly/patternfly-elements/issues"
   },
   "homepage": "https://patternflyelements.org/",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/patternfly/pfe-tools.git",
-    "directory": "packages/create-element"
+    "url": "git+ssh://git@github.com/patternfly/patternfly-elements.git",
+    "directory": "tools/create-element"
   },
   "dependencies": {
-    "case": "1.6.3",
-    "chalk": "5.0.1",
-    "execa": "^7.1.0",
-    "ncp": "2.0.0",
-    "prompts": "2.4.2",
-    "tslib": "2.5.0",
-    "yargs": "17.7.1"
+    "@patternfly/pfe-tools": "^1.2.0"
   },
   "directories": {
     "test": "test"

@@ -8,12 +8,17 @@
     "pf-icon/icons/**/*",
     "*/demo/*.js",
     "pf-icon/test/rh-icon*.js",
-    "custom-elements-manifest.config.js",
     "react"
   ],
   "compilerOptions": {
-    "outDir": ".",
-    "rootDir": "."
+    "paths": {
+      "@patternfly/pfe-core": [
+        "../core/pfe-core/core.ts"
+      ],
+      "@patternfly/pfe-core/*": [
+        "../core/pfe-core/*"
+      ]
+    }
   },
   "references": [
     {

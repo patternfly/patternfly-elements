@@ -1,0 +1,27 @@
+{% set level = level or 2 %}
+{% set header = header or 'CSS Shadow Parts' %}
+
+<section class="api band css-shadow-parts api-properties">
+  {{ header | cemMdHeading(level) | safe }} {% if not content and not parts.length %}
+
+  <em>None</em> {%- else -%}
+
+  {{ content | cemInnerMD | safe }}
+
+  <dl> {% for part in parts -%}
+    <dt><strong><code>{{ part.name }}</code></strong></dt>
+    <dd>{{- part.description | cemInnerMD | safe -}}</dd> {% endfor %}
+  </dl> {%- endif -%} {%- if deprecated.length -%}
+
+  <details>
+    <summary>{{ ('Deprecated ' + header) | cemMdHeading(level + 1) | safe }}</summary>
+    <dl> {% for part in deprecated -%}
+      <dt><strong><code>{{ part.name }}</code></strong></dt>
+      <dd>
+        {{- part.description | cemInnerMD | safe -}}
+        <em>Note: {{ part.name }} is deprecated. {{- part.deprecated | cemInnerMD | safe -}}</em>
+      </dd> {% endfor %}
+    </dl>
+
+  </details> {%- endif -%}
+</section>

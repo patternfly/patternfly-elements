@@ -6,3 +6,7 @@
 !custom-elements-manifest/declaration.d.ts
 !_scripts/dev.js
 !dev-server/*.css
+
+!cli/commands/generator/templates/**/*.js
+!cli/commands/generator/templates/**/*.d.ts
+!cli/commands/generator/templates/**/*.css

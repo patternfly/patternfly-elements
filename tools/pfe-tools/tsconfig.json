@@ -4,9 +4,11 @@
     "./**/*"
   ],
   "exclude": [
+    "cli/commands/generator/templates",
     "dev-server/bundle.ts"
   ],
   "compilerOptions": {
+    "module": "ES2022",
     "target": "es2022",
     "composite": true,
     "allowJs": false,

@@ -47,12 +47,12 @@
   },
   "scripts": {
     "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
-    "analyze": "cem analyze",
+    "analyze": "pfe analyze .",
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.2.6",
-    "lit": "^2.7.2"
+    "lit": "^2.8.0"
   },
   "repository": {
     "type": "git",
@@ -69,7 +69,6 @@
     "**/*.d.ts",
     "**/*.js",
     "**/*.js.map",
-    "!custom-elements-manifest.config.js",
     "custom-elements.json",
     "!demo/*",
     "!docs/*",

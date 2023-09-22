@@ -74,7 +74,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "analyze": "cem analyze",
+    "analyze": "pfe analyze .",
     "build": "wireit",
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },
@@ -107,7 +107,6 @@
     "**/*.d.ts",
     "**/*.js",
     "**/*.js.map",
-    "!custom-elements-manifest.config.js",
     "!demo/*",
     "!docs/*",
     "!test/*"
@@ -124,13 +123,13 @@
     "Michael Clayton <mclayton@redhat.com>",
     "Michael Potter",
     "Steven Spriggs <sspriggs@redhat.com",
-    "castastrophe (https://github.com/castastrophe)",
-    "Wes Ruvalcaba"
+    "Wes Ruvalcaba",
+    "castastrophe (https://github.com/castastrophe)"
   ],
   "dependencies": {
     "@patternfly/icons": "^1.0.2",
     "@patternfly/pfe-core": "^2.4.0",
-    "lit": "2.6.1",
-    "tslib": "^2.4.1"
+    "lit": "2.8.0",
+    "tslib": "^2.6.2"
   }
 }

@@ -16,11 +16,10 @@
     "dev": "wireit",
     "🚧-BUILD": "❓ Make packages and artifacts",
     "build": "wireit",
-    "build:create": "wireit",
     "analyze": "wireit",
     "docs": "wireit",
     "site": "npm run build",
-    "new": "npm run build:create && ./tools/create-element/bin/main.js",
+    "new": "wireit",
     "🧪-TEST": "❓ Test packages",
     "test": "wireit",
     "test:ci": "wireit",
@@ -35,7 +34,7 @@
     "⚙️--UTIL": "❓ Manages the repo",
     "postinstall": "wireit",
     "clean": "git clean -fX",
-    "lint": "eslint .",
+    "lint": "wireit",
     "patch": "patch-package",
     "husky": "npx husky install"
   },
@@ -43,30 +42,42 @@
     "postinstall": {
       "dependencies": [
         "patch",
-        "husky"
+        "husky",
+        "changeset-schema"
       ]
     },
     "build": {
       "dependencies": [
         "build:tools",
+        "build:cli",
         "analyze",
         "docs",
         "build:core",
         "build:icons",
         "build:lightdom",
         "build:elements",
-        "build:create",
         "build:bundle",
         "build:react"
       ]
     },
+    "changeset-schema": {
+      "command": "node scripts/update-changeset-schema.js"
+    },
     "analyze": {
       "command": "npm run -ws --if-present analyze",
       "files": [
+        "elements/package.json",
+        "elements/tsconfig.json",
+        "elements/tsconfig.tsbuildinfo",
         "elements/*/demo/*.html",
         "elements/**/*.ts",
         "elements/**/*.css",
+        "core/*/package.json",
+        "core/*/tsconfig.json",
+        "core/**/tsconfig.tsbuildinfo",
         "core/**/*.ts",
+        "core/*/package.json",
+        "core/*/tsconfig.json",
         "tools/**/*.ts"
       ],
       "output": [
@@ -74,22 +85,8 @@
         "core/pfe-core/custom-elements.json"
       ],
       "dependencies": [
-        "build:core",
-        "build:tools"
-      ]
-    },
-    "build:create": {
-      "command": "tsc -b tools/create-element",
-      "files": [
-        "tools/create-element/*.ts",
-        "tools/create-element/generator/**/*.ts"
-      ],
-      "output": [
-        "tools/create-element/*.tsbuildinfo"
-      ],
-      "dependencies": [
-        "build:core",
-        "build:tools"
+        "build:tools",
+        "build:cli"
       ]
     },
     "build:elements": {
@@ -113,6 +110,40 @@
         "elements/*.tsbuildinfo"
       ]
     },
+    "build:cli": {
+      "command": "node -e \"require('fs').chmodSync(require('path').join(process.cwd(), 'tools', 'pfe-cli', 'cli.js'), 0555)\"",
+      "dependencies": [
+        "build:cli:compile"
+      ],
+      "files": [
+        "tools/pfe-cli/cli.js"
+      ]
+    },
+    "build:cli:compile": {
+      "command": "tsc --build tools/pfe-cli --pretty",
+      "clean": "if-file-deleted",
+      "files": [
+        "tools/pfe-cli/*.ts",
+        "tools/pfe-cli/**/*.ts",
+        "!tools/pfe-cli/*.d.ts",
+        "!tools/pfe-cli/**/*.d.ts"
+      ],
+      "output": [
+        "!tools/pfe-cli/node_modules/**/*.js",
+        "!tools/pfe-cli/node_modules/**/*.map",
+        "!tools/pfe-cli/node_modules/**/*.d.ts",
+        "tools/pfe-cli/*.js",
+        "tools/pfe-cli/*.map",
+        "tools/pfe-cli/*.d.ts",
+        "tools/pfe-cli/lib/**/*.js",
+        "tools/pfe-cli/lib/**/*.map",
+        "tools/pfe-cli/lib/**/*.d.ts",
+        "tools/pfe-cli/commands/**/*.js",
+        "tools/pfe-cli/commands/**/*.map",
+        "tools/pfe-cli/commands/**/*.d.ts",
+        "tools/pfe-cli/*.tsbuildinfo"
+      ]
+    },
     "build:tools": {
       "command": "tsc --build tools/pfe-tools --pretty",
       "clean": "if-file-deleted",
@@ -123,9 +154,13 @@
         "!tools/pfe-tools/**/*.d.ts"
       ],
       "output": [
+        "!tools/pfe-tools/node_modules/**/*.js",
+        "!tools/pfe-tools/node_modules/**/*.map",
+        "!tools/pfe-tools/node_modules/**/*.d.ts",
         "tools/pfe-tools/**/*.js",
         "tools/pfe-tools/**/*.map",
         "tools/pfe-tools/**/*.d.ts",
+        "tools/pfe-tools/*.tsbuildinfo",
         "tools/*.tsbuildinfo"
       ]
     },
@@ -214,6 +249,14 @@
         "build:tools"
       ]
     },
+    "lint": {
+      "dependencies": [
+        "lint:eslint"
+      ]
+    },
+    "lint:eslint": {
+      "command": "eslint ."
+    },
     "watch:analyze": {
       "service": true,
       "command": "npm run -ws --if-present analyze -- --watch",
@@ -254,7 +297,7 @@
     "new": {
       "command": "./tools/create-element/bin/main.js",
       "dependencies": [
-        "build:create"
+        "build:tools"
       ]
     },
     "test:ci": {
@@ -312,7 +355,7 @@
     "@types/prismjs": "^1.26.0",
     "@types/prompts": "^2.4.4",
     "commitlint": "^17.6.1",
-    "execa": "^7.1.1",
+    "execa": "^7.2.0",
     "fuse.js": "^6.6.2",
     "husky": "^8.0.3",
     "leasot": "^13.3.0",
@@ -326,6 +369,7 @@
     "./tools/*"
   ],
   "dependencies": {
-    "@lit-labs/react": "^1.2.0"
+    "@lit-labs/react": "^1.2.0",
+    "typescript": "^5.1.6"
   }
 }

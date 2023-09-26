@@ -12,21 +12,21 @@ describe('<pf-dropdown>', function() {
     element = await fixture<PfDropdown>(html`
       <pf-dropdown>
         <pf-button slot="trigger">Toggle dropdown</pf-button>
-        <pf-dropdown-item value="value4">item4</pf-dropdown-item>
-        <pf-dropdown-item value="value3">item3</pf-dropdown-item>
+        <pf-dropdown-item>item4</pf-dropdown-item>
+        <pf-dropdown-item>item3</pf-dropdown-item>
         <pf-dropdown-group label="Group 1">
-          <pf-dropdown-item value="value1">item1</pf-dropdown-item>
-          <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+          <pf-dropdown-item>item1</pf-dropdown-item>
+          <pf-dropdown-item>item2</pf-dropdown-item>
           <div role="separator"></div>
-          <pf-dropdown-item value="value3">item3</pf-dropdown-item>
+          <pf-dropdown-item>item3</pf-dropdown-item>
         </pf-dropdown-group>
         <pf-dropdown-group label="Group 2">
-          <pf-dropdown-item value="value1">item1</pf-dropdown-item>
-          <pf-dropdown-item value="value2">item2</pf-dropdown-item>
-          <pf-dropdown-item disabled value="disabled"
+          <pf-dropdown-item>item1</pf-dropdown-item>
+          <pf-dropdown-item>item2</pf-dropdown-item>
+          <pf-dropdown-item disabled
             >disabled</pf-dropdown-item
           >
-          <pf-dropdown-item value="value3">item3</pf-dropdown-item>
+          <pf-dropdown-item>item3</pf-dropdown-item>
         </pf-dropdown-group>
       </pf-dropdown>
     `);
@@ -150,8 +150,8 @@ describe('<pf-dropdown>', function() {
       <div>
         <pf-dropdown disabled>
             <pf-button slot="trigger">Toggle dropdown</pf-button>
-            <pf-dropdown-item value="value1">item1</pf-dropdown-item>
-            <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+            <pf-dropdown-item>item1</pf-dropdown-item>
+            <pf-dropdown-item>item2</pf-dropdown-item>
         </pf-dropdown>
       </div>
     `);
@@ -164,8 +164,8 @@ describe('<pf-dropdown>', function() {
     await fixture(html`
       <div>
         <pf-dropdown>
-            <pf-dropdown-item value="value1">item1</pf-dropdown-item>
-            <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+            <pf-dropdown-item>item1</pf-dropdown-item>
+            <pf-dropdown-item>item2</pf-dropdown-item>
         </pf-dropdown>
       </div>
     `);
@@ -178,8 +178,8 @@ describe('<pf-dropdown>', function() {
     await fixture(html`
       <div>
         <pf-dropdown>
-            <pf-dropdown-item value="value1">item1</pf-dropdown-item>
-            <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+            <pf-dropdown-item>item1</pf-dropdown-item>
+            <pf-dropdown-item>item2</pf-dropdown-item>
         </pf-dropdown>
       </div>
     `);
@@ -229,13 +229,13 @@ describe('<pf-dropdown>', function() {
       <div>
         <pf-dropdown id="dropdown-1">
           <pf-button id="btn-1" slot="trigger">Toggle dropdown 1</pf-button>
-          <pf-dropdown-item value="value1">item1</pf-dropdown-item>
-          <pf-dropdown-item value="value2">item2</pf-dropdown-item>
+          <pf-dropdown-item>item1</pf-dropdown-item>
+          <pf-dropdown-item>item2</pf-dropdown-item>
         </pf-dropdown>
         <pf-dropdown id="dropdown-2">
           <pf-button id="btn-2" slot="trigger">Toggle dropdown 2</pf-button>
-          <pf-dropdown-item value="value1">dropdown 2 item1</pf-dropdown-item>
-          <pf-dropdown-item value="value2">dropdown 2 item2</pf-dropdown-item>
+          <pf-dropdown-item>dropdown 2 item1</pf-dropdown-item>
+          <pf-dropdown-item>dropdown 2 item2</pf-dropdown-item>
         </pf-dropdown>
       </div>
     `);

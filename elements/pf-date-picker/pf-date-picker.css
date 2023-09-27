@@ -1,3 +1,150 @@
 :host {
   display: block;
 }
+
+.datepicker {
+  position: relative;
+  display: inline-block;
+  font-family: var(--rh-font-family-body-text, RedHatText, "Red Hat Text", "Noto Sans Arabic", "Noto Sans Hebrew", "Noto Sans JP", "Noto Sans KR", "Noto Sans Malayalam", "Noto Sans SC", "Noto Sans TC", "Noto Sans Thai", Helvetica, Arial, sans-serif);
+}
+
+.calendar {
+  width: auto;
+  min-width: 330px;
+  max-width: 330px;
+  background-color: var(--rh-color-white, #ffffff);
+  padding: var(--rh-space-md, 8px);
+  padding-bottom: 0;
+  box-sizing: border-box;
+}
+
+.date-picker-table {
+  display: block;         
+  width: 100%;                
+}
+
+.date-picker-table-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.date-picker-table-main-header {
+  justify-content: space-around;
+}
+
+.date-picker-table-col {
+  height: 39px;
+  width: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  font-size: var(--rh-font-size-body-text-sm, 0.875rem);
+  font-style: normal;
+  font-weight: var(--rh-font-weight-body-text-regular, 400);
+  line-height: 21px;    
+}
+
+.date-picker-table-month-year {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: fit-content;
+}
+
+.date-picker-week-days {
+  border-bottom: 1px solid #D2D2D2;
+  margin-bottom: var(--rh-space-md, 8px);
+  margin-top: var(--rh-space-md, 8px);
+}
+
+#date-input {
+  padding: 9px 10px;
+  border-radius: 0;
+  background-color: transparent;
+  cursor:text;
+  position: relative;
+  border: 1px solid #f0f0f0;
+  border-bottom: 1px solid #8b8d90;
+  border-right: none;
+  box-sizing: border-box;
+  width: 150px;
+  z-index: 1;
+  font-family: var(--rh-font-family-body-text, RedHatText, "Red Hat Text", "Noto Sans Arabic", "Noto Sans Hebrew", "Noto Sans JP", "Noto Sans KR", "Noto Sans Malayalam", "Noto Sans SC", "Noto Sans TC", "Noto Sans Thai", Helvetica, Arial, sans-serif);
+  font-size: var(--rh-font-size-body-text-md, 1rem);
+  font-style: normal;
+  font-weight: var(--rh-font-weight-body-text-regular, 400);
+  line-height: 24px;
+  height: 36px;
+}
+
+#date-input:focus {
+  border-color: var(--rh-color-accent-base-on-light, #0066cc);
+  outline: var(--rh-color-accent-base-on-light, #0066cc) auto 2px;
+}
+
+.date-input-box {
+  width: 192px;
+  background-color: transparent;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.date-input-box-container {
+  position: relative;
+}
+
+.isDateInvalid {
+  position: absolute;
+  top: 50%;
+  right: var(--rh-space-md, 8px);
+  transform: translateY(-50%);
+  color: #c9190b;
+  display: block;
+}
+
+.invalidDateInput {
+  border-bottom: 2px solid #c9190b !important;
+}
+
+.showInvalidText {
+  display: block;
+  color: #a30000;
+  font-size: var(--rh-font-size-body-text-sm, 0.875rem);
+  font-family: var(--rh-font-family-body-text, RedHatText, "Red Hat Text", "Noto Sans Arabic", "Noto Sans Hebrew", "Noto Sans JP", "Noto Sans KR", "Noto Sans Malayalam", "Noto Sans SC", "Noto Sans TC", "Noto Sans Thai", Helvetica, Arial, sans-serif);
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+  white-space: nowrap;
+}
+
+.hidden {
+  display: none;
+}
+
+:host .date-picker-toggle-container pf-button::part(button) {
+  padding: 9px 12px 3px;
+  height: 36px;
+}
+
+.date-picker-container pf-popover::part(content) {
+  min-width: 330px;
+}
+
+.disable-popover {
+  pointer-events: none;
+}
+
+pf-button::part(button):focus, pf-button::part(button):focus-visible {
+  outline: var(--rh-color-accent-base-on-light, #0066cc) auto 2px;
+}
+
+:host .date-picker-toggle-container pf-button.date-picker-calendar-icon::part(button):focus {
+  outline: none;
+}
+
+:host .date-picker-toggle-container pf-button.date-picker-calendar-icon::part(button):focus-visible {
+  outline: var(--rh-color-accent-base-on-light, #0066cc) auto 2px;
+}

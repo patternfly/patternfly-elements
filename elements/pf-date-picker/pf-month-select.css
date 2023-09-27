@@ -1,3 +1,82 @@
 :host {
   display: block;
 }
+
+.month-select-container {
+  font-family: var(--rh-font-family-body-text, RedHatText, "Red Hat Text", "Noto Sans Arabic", "Noto Sans Hebrew", "Noto Sans JP", "Noto Sans KR", "Noto Sans Malayalam", "Noto Sans SC", "Noto Sans TC", "Noto Sans Thai", Helvetica, Arial, sans-serif);
+  position: relative;
+  width: 140px;
+}
+
+pf-button#date-picker-month-select::part(button) {
+  width: 140px;
+  background: transparent;
+  font-family: var(--rh-font-family-body-text, RedHatText, "Red Hat Text", "Noto Sans Arabic", "Noto Sans Hebrew", "Noto Sans JP", "Noto Sans KR", "Noto Sans Malayalam", "Noto Sans SC", "Noto Sans TC", "Noto Sans Thai", Helvetica, Arial, sans-serif);
+  text-align: left;
+}
+
+pf-button#date-picker-month-select:before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: 0;
+  width: 36px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.date-month-select-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 16px;
+  width: 36px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div#date-picker-month-select-popup {
+  width: 140px;
+  background: var(--rh-color-white, #ffffff);
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06);
+  position: absolute;
+  top: 36px;
+  left: 0;
+  z-index: 1;
+}
+
+div#date-picker-month-select-popup ul {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding-inline-start: 0;
+  list-style: none;
+  padding: 8px 0;
+}
+
+div#date-picker-month-select-popup pf-button {
+  --pf-c-button--m-plain--Color: var(--rh-color-canvas-black, #151515);
+  --pf-c-button--m-plain--hover--BackgroundColor: var(--rh-color-blue-50, #e7f1fa);
+  
+  width: 100%;
+  margin-bottom: .125rem;
+}
+
+div#date-picker-month-select-popup pf-button::part(button) {
+  background: var(--rh-color-white, #ffffff);
+  text-align: left;
+  font-family: var(--rh-font-family-body-text, RedHatText, "Red Hat Text", "Noto Sans Arabic", "Noto Sans Hebrew", "Noto Sans JP", "Noto Sans KR", "Noto Sans Malayalam", "Noto Sans SC", "Noto Sans TC", "Noto Sans Thai", Helvetica, Arial, sans-serif);
+  width: 100%;
+  border-radius: 0;
+}
+
+div#date-picker-month-select-popup pf-button::part(button):hover {
+  background:#f0f0f0;
+}
+
+pf-button::part(button):focus, pf-button::part(button):focus-visible {
+  outline: var(--rh-color-accent-base-on-light, #0066cc) auto 2px;
+}

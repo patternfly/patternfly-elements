@@ -1,3 +1,21 @@
 :host {
   display: block;
 }
+
+.date-year-input-container input {
+  height: 36px;
+  box-sizing: border-box;
+  border-radius: 0;
+  border: 1px solid #f0f0f0;
+  border-left: none;
+  border-bottom: 1px solid #8b8d90;
+  padding: 6px 8px;
+  font-size: var(--rh-font-size-body-text-md, 1rem);
+  font-family: var(--rh-font-family-body-text, RedHatText, "Red Hat Text", "Noto Sans Arabic", "Noto Sans Hebrew", "Noto Sans JP", "Noto Sans KR", "Noto Sans Malayalam", "Noto Sans SC", "Noto Sans TC", "Noto Sans Thai", Helvetica, Arial, sans-serif);
+  width: 80px;
+}
+
+.date-year-input-container input:focus-visible {
+  border-left: 2px;
+  outline: var(--rh-color-accent-base-on-light, #0066cc) auto 2px;
+}

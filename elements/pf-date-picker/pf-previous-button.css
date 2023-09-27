@@ -1,3 +1,19 @@
 :host {
   display: block;
 }
+
+.date-previous-next-button::part(button) {
+  --pf-c-button--m-plain--Color: #6a6e73;
+  
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--rh-color-white, #ffffff);
+  border: none;
+}
+
+pf-button::part(button):focus, pf-button::part(button):focus-visible {
+  outline: var(--rh-color-accent-base-on-light, #0066cc) auto 2px;
+}

@@ -224,7 +224,9 @@ export abstract class BaseAccordion extends LitElement {
       // @ts-expect-error: https://caniuse.com/?search=computedStyleMap
       return this.computedStyleMap().get('transition-duration')?.to('ms').value;
     } else {
-      const { transitionDuration } = this.#styles;
+      const { transitionDuration } =
+        // @ts-expect-error: seems ts is choking on the discriminating if above
+        this.#styles;
 
       const groups = CSS_TIMING_UNITS_RE.exec(transitionDuration)?.groups;
 

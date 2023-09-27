@@ -65,28 +65,43 @@ export class PfBackToTop extends LitElement {
   /** Page fragment link to target element, must include hash ex: #top */
   @property({ reflect: true }) href?: string;
 
+  get #rootNode(): Document | ShadowRoot {
+    const root = this.getRootNode();
+    if (root instanceof Document || root instanceof ShadowRoot) {
+      return root;
+    } else {
+      return document;
+    }
+  }
+
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this.#scrollSpy = Boolean(this.scrollableSelector);
+    this.#scrollSpy = !!this.scrollableSelector;
 
-    if (!!this.scrollableSelector && this.scrollableSelector.trim() === '') {
+    if (this.scrollableSelector?.trim() === '') {
       this.#logger.error(`scrollable-selector attribute cannot be empty`);
       return;
     }
 
     if (this.#scrollSpy && !!this.scrollableSelector) {
-      const selector = document.querySelector(this.scrollableSelector) as HTMLElement;
-      if (!selector) {
+      const scrollableElement = this.#rootNode.querySelector(this.scrollableSelector) as HTMLElement;
+      if (!scrollableElement) {
         this.#logger.error(`Unable to find element with selector ${this.scrollableSelector}`);
         return;
       }
-      this.#scrollElement = selector;
+      this.#scrollElement = scrollableElement;
     } else {
       this.#scrollElement = window;
     }
-    this.#scrollElement.addEventListener('scroll', this.#toggleVisibility.bind(this));
+
+    this.#scrollElement.addEventListener('scroll', this.#toggleVisibility, { passive: true });
     this.#toggleVisibility();
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback?.();
+    this.#scrollElement?.removeEventListener('scroll', this.#toggleVisibility);
   }
 
   render() {
@@ -117,7 +132,7 @@ export class PfBackToTop extends LitElement {
     `;
   }
 
-  #toggleVisibility() {
+  #toggleVisibility = () => {
     const previousVisibility = this.#visible;
     if (this.#scrollElement) {
       const scrolled =
@@ -129,7 +144,7 @@ export class PfBackToTop extends LitElement {
         this.requestUpdate();
       }
     }
-  }
+  };
 }
 
 declare global {

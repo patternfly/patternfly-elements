@@ -120,7 +120,10 @@ export class PfBackToTop extends LitElement {
   #toggleVisibility() {
     const previousVisibility = this.#visible;
     if (this.#scrollElement) {
-      const scrolled = (this.#scrollElement instanceof Window) ? this.#scrollElement.scrollY : this.#scrollElement.scrollTop;
+      const scrolled =
+          (this.#scrollElement instanceof Window) ?
+          this.#scrollElement.scrollY
+        : this.#scrollElement.scrollTop;
       this.#visible = this.alwaysVisible ? true : (scrolled > this.scrollDistance);
       if (previousVisibility !== this.#visible) {
         this.requestUpdate();

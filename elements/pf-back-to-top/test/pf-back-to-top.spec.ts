@@ -21,7 +21,7 @@ describe('<pf-back-to-top>', function() {
       await fixture<HTMLElement>(html`<div style="height: 2000px;"></div>`);
       element = await createFixture<PfBackToTop>(html`<pf-back-to-top href="#top">Back to Top</pf-back-to-top>`);
       await allUpdates(element);
-      link = element.shadowRoot!.querySelector('a');
+      link = element.shadowRoot!.querySelector('a')!;
     });
 
     it('imperatively instantiates', function() {

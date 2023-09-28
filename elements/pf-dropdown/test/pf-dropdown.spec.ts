@@ -79,15 +79,6 @@ describe('<pf-dropdown>', function() {
             'name': 'item2'
           },
           {
-            'name': '',
-            'role': 'separator',
-            'orientation': 'horizontal',
-            'value': 50,
-            'valuemax': 100,
-            'valuemin': 0,
-            'valuetext': '',
-          },
-          {
             'role': 'menuitem',
             'name': 'item3'
           },
@@ -100,6 +91,7 @@ describe('<pf-dropdown>', function() {
             'name': 'item2'
           },
           {
+            'disabled': true,
             'role': 'menuitem',
             'name': 'disabled'
           },

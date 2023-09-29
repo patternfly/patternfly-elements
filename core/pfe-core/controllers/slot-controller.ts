@@ -121,6 +121,10 @@ export class SlotController implements ReactiveController {
     }
   }
 
+  hasAnonymousSlot(): boolean {
+    return this.#nodes.get(SlotController.anonymous)?.hasContent ?? false;
+  }
+
   /**
    * Given a slot name or slot names, returns elements assigned to the requested slots as an array.
    * If no value is provided, it returns all children not assigned to a slot (without a slot attribute).

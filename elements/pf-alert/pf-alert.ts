@@ -1,6 +1,6 @@
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
-import { LitElement, html, svg, type PropertyValues } from 'lit';
+import { LitElement, html, svg } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -110,12 +110,14 @@ export class PfAlert extends LitElement {
   render() {
     const { truncateTitle, title, icon, dismissable } = this;
     const hasActions = this.#slots.hasSlotted('actions');
+    const hasContent = this.#slots.hasAnonymousSlot();
+
     return html`
        <div id="container" role="alert" aria-hidden="false"  class="${classMap({ truncateTitle })}">
-        <div id="left-column">
+        <div id="left-column" part="left-column">
           <slot name="icon" id="icon">${icon}</slot>
         </div>
-        <div id="middle-column">
+        <div id="middle-column" part="middle-column">
           <header>
             ${!truncateTitle ? '' : html`
               <pf-tooltip content="${title ?? ''}" trigger="header"></pf-tooltip>
@@ -130,10 +132,10 @@ export class PfAlert extends LitElement {
                   @click=${this.#closeHandler}>${ICONS.get('close')}</button>
             </div>`}
           </header>
-          <div id="description">
+          <div id="description" class="${classMap({ hasContent })}" part="description">
             <slot></slot>
           </div>
-          <footer class="${classMap({ hasActions })}">
+          <footer class="${classMap({ hasActions })}" part="footer">
             <slot name="actions"></slot>
           </footer>
         </div>

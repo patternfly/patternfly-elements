@@ -1,11 +1,45 @@
 <link rel="stylesheet" href="demo.css">
 <script type="module" src="pf-alert.js"></script>
 
-<pf-alert title="Default"></pf-alert>
-<pf-alert variant="info" title="Info"></pf-alert>
-<pf-alert variant="success" title="Success"></pf-alert>
-<pf-alert variant="warning" title="Warning"></pf-alert>
-<pf-alert variant="danger" title="Danger"></pf-alert>
+<pf-alert title="Default alert title"></pf-alert>
+<pf-alert variant="info" title="Info alert title"></pf-alert>
+<pf-alert variant="success" title="Success alert title"></pf-alert>
+<pf-alert variant="warning" title="Warning alert title"></pf-alert>
+<pf-alert variant="danger" title="Danger alert title"></pf-alert>
+
+<h1>
+    Alert Variations 
+</h1>
+
+<pf-alert title="Success alert title" variant="success" dismissable>
+  <p>Success alert description. This should tell the user more information about the alert.</p>
+  <button slot="actions">View details</button>
+  <button slot="actions">Ignore</button>
+</pf-alert>
+
+<pf-alert title="Success alert title" variant="success" dismissable>
+  <p>Success alert description. This should tell the user more information about the alert. <a href="#">This is a link.</a></p>
+  <p>Success alert description. This should tell the user more information about the alert. <a href="#">This is a link.</a></p>
+</pf-alert>
+
+<pf-alert title="Success alert title" variant="success" dismissable>
+  <button slot="actions">View details</button>
+  <button slot="actions">Ignore</button>
+</pf-alert>
+
+<pf-alert title="Success alert title" variant="success" dismissable>
+
+  <p>Success alert description. This should tell the user more information about the alert. <a href="#">This is a link.</a></p>
+  <p>Success alert description. This should tell the user more information about the alert. <a href="#">This is a link.</a></p>
+  <button slot="actions">View details</button>
+  <button slot="actions">Ignore</button>
+  <button slot="actions">Ignore</button>
+  <button slot="actions">Ignore</button>
+  <button slot="actions">Ignore</button>
+  <button slot="actions">Ignore</button>
+</pf-alert>
+
+<pf-alert title="Success alert title" variant="success" dismissable></pf-alert>
 
 <h1>
     Default Icons
@@ -33,7 +67,10 @@
 
 <pf-alert title="Default plain" plain></pf-alert>
 <pf-alert variant="info" title="Info plain" plain></pf-alert>
-<pf-alert variant="success" title="Success plain" plain></pf-alert>
+<pf-alert variant="success" title="Success plain" plain dismissable>
+  <p>Success alert description. This should tell the user more information about the alert. <a href="#">This is a link.</a></p>
+  <button slot="actions">Ignore</button>
+</pf-alert>
 <pf-alert variant="warning" title="Warning plain" plain></pf-alert>
 <pf-alert variant="danger" title="Danger plain" plain></pf-alert>
 
@@ -48,7 +85,17 @@
 <pf-alert variant="danger" title="Danger inline" inline></pf-alert>
 
 <h1>
-    Inline
+    Plain
+</h1>
+
+<pf-alert title="Default inline" plain></pf-alert>
+<pf-alert variant="info" title="Info inline" plain></pf-alert>
+<pf-alert variant="success" title="Success inline" plain></pf-alert>
+<pf-alert variant="warning" title="Warning inline" plain></pf-alert>
+<pf-alert variant="danger" title="Danger inline" plain></pf-alert>
+
+<h1>
+    Inline Plain
 </h1>
 
 <pf-alert title="Default inline" inline plain></pf-alert>

@@ -129,6 +129,9 @@ export class PfSelectList extends LitElement {
 
   updated(changed: PropertyValues<this>) {
     if (this.#listboxController) {
+      if (changed.has('ariaDisabled')) {
+        this.#listboxController.disabled = this.ariaDisabled === 'true';
+      }
       if (changed.has('caseSensitive')) {
         this.#listboxController.caseSensitive = this.caseSensitive;
       }

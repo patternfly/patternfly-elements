@@ -157,6 +157,7 @@ export class PfChipGroup extends LitElement {
     const button = this._overflowChip?.button as HTMLElement;
     const buttons = this.#chips.map(chip => chip.button as HTMLElement);
     this.#buttons = [...buttons, button, this.button] as HTMLElement[];
+    this.#buttons = this.#buttons.filter(button => !!button);
     if (oldButtons.length !== this.#buttons.length || !oldButtons.every((element, index) => element === this.#buttons[index])) {
       if (this.#itemsInit) {
         this.#tabindex.updateItems(this.#buttons);

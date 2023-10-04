@@ -206,6 +206,15 @@ export class RovingTabindexController<
   };
 
   /**
+   * sets tabindex on each item based on whether or not it is active
+   */
+  #updateTabindex() {
+    for (const item of this.#focusableItems) {
+      item.tabIndex = this.#activeItem === item ? 0 : -1;
+    }
+  }
+
+  /**
    * sets tabindex of item based on whether or not it is active
    */
   updateActiveItem(item?: ItemType): void {
@@ -235,6 +244,7 @@ export class RovingTabindexController<
     const first = sequence.find(item => this.#focusableItems.includes(item));
     this.#items = items ?? [];
     this.focusOnItem(first || this.firstItem);
+    this.#updateTabindex();
   }
 
   /**
@@ -245,9 +255,7 @@ export class RovingTabindexController<
     const focusableItems = this.#focusableItems;
     const [focusableItem] = focusableItems;
     this.#activeItem = focusableItem;
-    for (const item of focusableItems) {
-      item.tabIndex = this.#activeItem === item ? 0 : -1;
-    }
+    this.#updateTabindex();
     /**
      * removes listener on previous contained and applies it to new container
      */

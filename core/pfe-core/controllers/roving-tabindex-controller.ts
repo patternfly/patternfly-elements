@@ -225,6 +225,7 @@ export class RovingTabindexController<
       item.tabIndex = 0;
       this.#activeItem = item;
     }
+    this.host.requestUpdate();
   }
 
   /**
@@ -240,10 +241,16 @@ export class RovingTabindexController<
    * Focuses next focusable item
    */
   updateItems(items: ItemType[]) {
+    const hasActive = document.activeElement && this.host.contains(document.activeElement);
     const sequence = [...items.slice(this.#itemIndex - 1), ...items.slice(0, this.#itemIndex - 1)];
     const first = sequence.find(item => this.#focusableItems.includes(item));
     this.#items = items ?? [];
-    this.focusOnItem(first || this.firstItem);
+    const activeItem = first || this.firstItem;
+    if (hasActive) {
+      this.focusOnItem(activeItem);
+    } else {
+      this.updateActiveItem(activeItem);
+    }
     this.#updateTabindex();
   }
 

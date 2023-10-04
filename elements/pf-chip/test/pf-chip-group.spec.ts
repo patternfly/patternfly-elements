@@ -55,6 +55,44 @@ describe('<pf-chip-group>', async function() {
     });
   });
 
+  describe('should be accessible', async function() {
+    const collapsedExp = 'show ${remaining} more';
+    const expanded = 'show fewer';
+    const label = 'My Chip Group';
+
+    beforeEach(async function() {
+      element = await createFixture<PfChipGroup>(html`
+        <pf-chip-group collapsed-text="${collapsedExp}" expanded-text="${expanded}" label="${label}">
+          ${chipHTML}
+        </pf-chip-group>
+      `);
+      await element.updateComplete;
+      chip1 = await document.getElementById('chip1') as PfChip;
+      chip2 = await document.getElementById('chip2') as PfChip;
+    });
+
+    it('should focus when `Tab` is pressed', async function() {
+      await tab();
+      expect(document.activeElement).to.equal(chip1);
+    });
+
+    it('should move to chip2 when `ArrowRight` is pressed', async function() {
+      chip1.focus();
+      await chip1.updateComplete;
+      await arrowRight();
+      expect(document.activeElement).to.equal(chip2);
+    });
+
+    it('has accesssible label', function() {
+      const offscreen = element.shadowRoot?.querySelector('slot .offscreen')?.textContent?.trim();
+      expect(offscreen).to.equal(label);
+    });
+
+    it('is accessible', async function() {
+      await expect(element).to.be.accessible();
+    });
+  });
+
   describe('with 3 chips (default)', function() {
     const collapsedExp = 'show ${remaining} more';
     const collapsed = collapsedExp.replace('${remaining}', '1');
@@ -86,28 +124,6 @@ describe('<pf-chip-group>', async function() {
     });
     it('chip 4 is not visible', function() {
       expect(isVisible(chip4)).to.be.false;
-    });
-
-    describe('should be accessible', function() {
-      describe('should work with keyboard', function() {
-        it('should focus when `Tab` is pressed', async function() {
-          await tab();
-          expect(document.activeElement).to.equal(chip1);
-        });
-        it('should move to chip2 when `ArrowRight` is pressed', async function() {
-          chip1.focus();
-          await chip1.updateComplete;
-          await arrowRight();
-          expect(document.activeElement).to.equal(chip2);
-        });
-      });
-      it('has accesssible label', function() {
-        const offscreen = element.shadowRoot?.querySelector('slot .offscreen')?.textContent?.trim();
-        expect(offscreen).to.equal(label);
-      });
-      it('is accessible', async function() {
-        await expect(element).to.be.accessible();
-      });
     });
 
     describe('should have functional overflow chip', function() {

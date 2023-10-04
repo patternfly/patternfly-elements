@@ -108,24 +108,24 @@ export class ToggleController implements ReactiveController {
     return {
       'focusin': this.#onHostFocusin.bind(this),
       'focusout': this.#onHostFocusout.bind(this),
-      'mouseover': this.#onHostMouseover.bind(this),
       'mouseout': this.#onHostMouseout.bind(this),
+      'mouseover': this.#onHostMouseover.bind(this)
     };
   }
 
   get #popupListeners() {
     return {
+      'click': this.#onPopupClick.bind(this),
       'keydown': this.#onPopupKeydown.bind(this),
-      'keyup': this.#updateFocused.bind(this),
-      'click': this.#updateFocused.bind(this)
+      'keyup': this.#onPopupKeyup.bind(this)
     };
   }
 
   get #triggerListeners() {
     return {
+      'click': this.#onTriggerClick.bind(this),
       'keydown': this.#onTriggerKeydown.bind(this),
-      'keyup': this.#updateFocused.bind(this),
-      'click': this.#onTriggerClick.bind(this)
+      'keyup': this.#onTriggerKeyup.bind(this)
     };
   }
 
@@ -230,7 +230,14 @@ export class ToggleController implements ReactiveController {
   }
 
   /**
-   * handles listbox keydown event
+   * handles listbox click event
+   */
+  #onPopupClick() {
+    this.#updateFocused();
+  }
+
+  /**
+   * handles listbox ≈ event
    */
   async #onPopupKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape' || event.key === 'Esc') {
@@ -238,7 +245,24 @@ export class ToggleController implements ReactiveController {
       event.stopImmediatePropagation();
       await this.close(true);
     }
-    this.#updateFocused;
+    this.#updateFocused();
+  }
+
+  /**
+   * handles listbox keyup event
+   */
+  #onPopupKeyup() {
+    this.#updateFocused();
+  }
+
+  /**
+   * handles toggle button click event
+   */
+  async #onTriggerClick(event: MouseEvent) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    await this.toggle();
+    this.#updateFocused();
   }
 
   /**
@@ -254,12 +278,9 @@ export class ToggleController implements ReactiveController {
   }
 
   /**
-   * handles toggle button click event
+   * handles listbox keyup event
    */
-  async #onTriggerClick(event: MouseEvent) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    await this.toggle();
+  #onTriggerKeyup() {
     this.#updateFocused();
   }
 

@@ -124,7 +124,7 @@ export class PfChipGroup extends LitElement {
   }
 
   /**
-   * active chip that recieves focus when grooup receives focus
+   * active chip that recieves focus when group receives focus
    */
   get activeChip() {
     const button = this.#tabindex.activeItem as HTMLElement;

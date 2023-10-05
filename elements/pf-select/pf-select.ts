@@ -280,7 +280,6 @@ export class PfSelect extends LitElement {
             ?hidden=${!this.typeahead} 
             placeholder="${this.#buttonLabel}"
             role="combobox"
-            @focus=${this.expanded = true}
             @input=${this.#onTypeaheadInput}>
           <button 
             id="toggle-button" 
@@ -426,7 +425,9 @@ export class PfSelect extends LitElement {
     this.#updateCreateOptionValue(this._input?.value || '');
     if (this._listbox && this.filter !== this._input?.value) {
       this.filter = this._input?.value || '';
-      this.expanded = true;
+      if (this.#toggle) {
+        this.#toggle.open();
+      }
     }
   }
 

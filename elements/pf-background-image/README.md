@@ -4,10 +4,10 @@ A **background image** allows you to place an image in the background of your pa
 
 
 ##  Installation
-Load `<pf-back-ground-image>` via CDN:
+Load `<pf-background-image>` via CDN:
 
 ```html
-<script src="https://jspm.dev/@patternfly/elements/pf-back-ground-image/pf-back-ground-image.js"></script>
+<script src="https://jspm.dev/@patternfly/elements/pf-background-image/pf-background-image.js"></script>
 
 
 Or, if you are using [NPM](https://npm.im), install it
@@ -19,7 +19,7 @@ npm install @patternfly/elements
 Then once installed, import it to your application:
 
 ```js
-import '@patternfly/elements/pf-back-ground-image/pf-back-ground-image.js';
+import '@patternfly/elements/pf-background-image/pf-background-image.js';
 ```
 
 ## Usage
@@ -34,4 +34,4 @@ import '@patternfly/elements/pf-back-ground-image/pf-back-ground-image.js';
 ></pf-background-image>
 ```
 
-[docs]: https://patternflyelements.org/components/back-ground-image
+[docs]: https://patternflyelements.org/components/background-image

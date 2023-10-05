@@ -105,7 +105,7 @@ export class PfSelect extends LitElement {
    * how listbox will display multiple items in toggle area:
    * 'badge' for a badge with item count,
    * 'chips' for a group of chips,
-   * '' for # itmes selected text (default)
+   * '' for # items selected text (default)
    */
   @property({ attribute: 'selected-items-display', type: String }) selectedItemsDisplay: PfSelectItemsDisplay = '';
 

@@ -100,13 +100,11 @@ describe('<pf-select>', function() {
       describe('should be accessible', function() {
         it('`Tab` key focuses on first focusable option', async function() {
           await tab();
-          await element.updateComplete;
           await expect(document.activeElement).to.equal(first);
         });
         it('`ArrowRight` key focuses on second focusable option', async function() {
           first.focus();
           await arrowRight();
-          await element.updateComplete;
           await expect(document.activeElement).to.equal(second);
         });
         it('is accessible', async function() {

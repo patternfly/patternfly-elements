@@ -264,7 +264,7 @@ export class PfSelect extends LitElement {
           ?expanded=${this.expanded}
           ?hidden=${this.alwaysExpanded}>
           ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
-            <pf-chip-group label="${this.currentSelectionsLabel}" ?closeable=${!this.disabled}>
+            <pf-chip-group label="${this.currentSelectionsLabel}">
               ${this.#selectedOptions.map(opt => html`
                 <pf-chip id="chip-${opt.textContent}" ?read-only=${this.disabled} @chip-remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>
               `)}

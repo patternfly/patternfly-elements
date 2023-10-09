@@ -114,7 +114,7 @@
     "playwright-lighthouse": "^2.2.2",
     "pwa-helpers": "^0.9.1",
     "rollup-plugin-lit-css": "^4.0.1",
-    "sinon": "^15.0.3",
+    "sinon": "^16.1.0",
     "ts-lit-plugin": "^1.2.1",
     "ts-node": "^10.9.1",
     "ts-patch": "3.0.0-beta3",

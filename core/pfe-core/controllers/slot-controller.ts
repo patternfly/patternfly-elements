@@ -41,15 +41,15 @@ function isObjectConfigSpread(config: ([SlotsConfig] | (string | null)[])): conf
  * for the default slot, look for direct children not assigned to a slot
  */
 const isSlot =
-  <T extends Element = Element>(n: string | typeof SlotController.anonymous) =>
+  <T extends Element = Element>(n: string | typeof SlotController.default) =>
     (child: Element): child is T =>
-        n === SlotController.anonymous ? !child.hasAttribute('slot')
+        n === SlotController.default ? !child.hasAttribute('slot')
       : child.getAttribute('slot') === n;
 
 export class SlotController implements ReactiveController {
-  public static anonymous = Symbol('anonymous slot');
+  public static default = Symbol('default slot');
 
-  #nodes = new Map<string | typeof SlotController.anonymous, Slot>();
+  #nodes = new Map<string | typeof SlotController.default, Slot>();
 
   #logger: Logger;
 
@@ -113,8 +113,7 @@ export class SlotController implements ReactiveController {
    */
   hasSlotted(...names: string[]): boolean {
     if (!names.length) {
-      this.#logger.warn(`Please provide at least one slot name for which to search.`);
-      return false;
+      return this.#nodes.get(SlotController.default)?.hasContent ?? false;
     } else {
       return names.some(x =>
         this.#nodes.get(x)?.hasContent ?? false);
@@ -142,12 +141,30 @@ export class SlotController implements ReactiveController {
    */
   getSlotted<T extends Element = Element>(...slotNames: string[]): T[] {
     if (!slotNames.length) {
-      return (this.#nodes.get(SlotController.anonymous)?.elements ?? []) as T[];
+      return (this.#nodes.get(SlotController.default)?.elements ?? []) as T[];
     } else {
       return slotNames.flatMap(slotName =>
         this.#nodes.get(slotName)?.elements ?? []) as T[];
     }
   }
+
+  /**
+   * Returns a boolean statement of whether or not the requested slot is empty.
+   *
+   * @param {String} slotName The slot name.  If no value is provided, it returns the default slot.
+   * @example this.isEmpty("header");
+   * @example this.isEmpty();
+   * @returns {Boolean}
+   */
+
+  isEmpty(slotName?: string): boolean {
+    if (!slotName) {
+      return !this.#nodes.get(SlotController.default)?.hasContent ?? true;
+    } else {
+      return !this.#nodes.get(slotName)?.hasContent ?? true;
+    }
+  }
+
 
   #onSlotChange = (event: Event & { target: HTMLSlotElement }) => {
     const slotName = event.target.name;
@@ -168,13 +185,13 @@ export class SlotController implements ReactiveController {
     this.host.requestUpdate();
   };
 
-  #getChildrenForSlot<T extends Element = Element>(name: string | typeof SlotController.anonymous): T[] {
+  #getChildrenForSlot<T extends Element = Element>(name: string | typeof SlotController.default): T[] {
     const children = Array.from(this.host.children) as T[];
     return children.filter(isSlot(name));
   }
 
   #initSlot = (slotName: string | null) => {
-    const name = slotName || SlotController.anonymous;
+    const name = slotName || SlotController.default;
     const elements = this.#nodes.get(name)?.slot?.assignedElements?.() ?? this.#getChildrenForSlot(name);
     const selector = slotName ? `slot[name="${slotName}"]` : 'slot:not([name])';
     const slot = this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;

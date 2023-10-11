@@ -110,7 +110,7 @@ export class PfAlert extends LitElement {
   render() {
     const { truncateTitle, title, icon, dismissable } = this;
     const hasActions = this.#slots.hasSlotted('actions');
-    const hasContent = this.#slots.hasAnonymousSlot();
+    const hasDescriptionContent = this.#slots.hasSlotted();
 
     return html`
        <div id="container" role="alert" aria-hidden="false"  class="${classMap({ truncateTitle })}">
@@ -132,7 +132,7 @@ export class PfAlert extends LitElement {
                   @click=${this.#closeHandler}>${ICONS.get('close')}</button>
             </div>`}
           </header>
-          <div id="description" class="${classMap({ hasContent })}" part="description">
+          <div id="description" class="${classMap({ hasDescriptionContent })}" part="description">
             <slot></slot>
           </div>
           <footer class="${classMap({ hasActions })}" part="footer">

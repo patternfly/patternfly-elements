@@ -170,7 +170,7 @@ header ::slotted(*) {
   padding: var(--pf-alert-description-slotted-padding, 0) !important;
 }
 
-#description.hasContent { 
+#description.hasDescriptionContent { 
   padding-top: var(--pf-alert-description-padding-top, var(--pf-global--spacer--xs, 0.25rem)) !important;
 }
 

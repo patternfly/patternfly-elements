@@ -48,6 +48,7 @@ const isSlot =
 
 export class SlotController implements ReactiveController {
   public static default = Symbol('default slot');
+  public static anonymous = this.default;
 
   #nodes = new Map<string | typeof SlotController.default, Slot>();
 
@@ -118,10 +119,6 @@ export class SlotController implements ReactiveController {
       return names.some(x =>
         this.#nodes.get(x)?.hasContent ?? false);
     }
-  }
-
-  hasAnonymousSlot(): boolean {
-    return this.#nodes.get(SlotController.anonymous)?.hasContent ?? false;
   }
 
   /**

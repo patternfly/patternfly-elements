@@ -149,21 +149,32 @@ export class SlotController implements ReactiveController {
   }
 
   /**
-   * Returns a boolean statement of whether or not the requested slot is empty.
+   * Returns a boolean statement of whether or not any of those slots exists in the light DOM.
    *
-   * @param {String} slotName The slot name.  If no value is provided, it returns the default slot.
-   * @example this.isEmpty("header");
+   * @param names The slot names to check.
+   * @example this.hasSlotted('header');
+   */
+  hasSlotted(...names: (string | null | undefined)[]): boolean {
+    const { anonymous } = SlotController;
+    const slotNames = Array.from(names, x => x == null ? anonymous : x);
+    if (!slotNames.length) {
+      slotNames.push(anonymous);
+    }
+    return slotNames.some(x => this.#nodes.get(x)?.hasContent ?? false);
+  }
+
+  /**
+   * Whether or not all the requested slots are empty.
+   *
+   * @param  slots The slot name.  If no value is provided, it returns the default slot.
+   * @example this.isEmpty('header', 'footer');
    * @example this.isEmpty();
    * @returns {Boolean}
    */
-
-  isEmpty(slotName?: string): boolean {
-    if (!slotName) {
-      return !this.#nodes.get(SlotController.default)?.hasContent ?? true;
-    } else {
-      return !this.#nodes.get(slotName)?.hasContent ?? true;
-    }
+  isEmpty(...names: (string | null | undefined)[]): boolean {
+    return !this.hasSlotted(...names);
   }
+
 
 
   #onSlotChange = (event: Event & { target: HTMLSlotElement }) => {

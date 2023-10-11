@@ -48,6 +48,7 @@ const isSlot =
 
 export class SlotController implements ReactiveController {
   public static default = Symbol('default slot');
+  public static anonymous = this.default;
 
   #nodes = new Map<string | typeof SlotController.default, Slot>();
 
@@ -106,21 +107,6 @@ export class SlotController implements ReactiveController {
   }
 
   /**
-   * Returns a boolean statement of whether or not any of those slots exists in the light DOM.
-   *
-   * @param {String|Array} name The slot name.
-   * @example this.hasSlotted("header");
-   */
-  hasSlotted(...names: string[]): boolean {
-    if (!names.length) {
-      return this.#nodes.get(SlotController.default)?.hasContent ?? false;
-    } else {
-      return names.some(x =>
-        this.#nodes.get(x)?.hasContent ?? false);
-    }
-  }
-
-  /**
    * Given a slot name or slot names, returns elements assigned to the requested slots as an array.
    * If no value is provided, it returns all children not assigned to a slot (without a slot attribute).
    *
@@ -174,8 +160,6 @@ export class SlotController implements ReactiveController {
   isEmpty(...names: (string | null | undefined)[]): boolean {
     return !this.hasSlotted(...names);
   }
-
-
 
   #onSlotChange = (event: Event & { target: HTMLSlotElement }) => {
     const slotName = event.target.name;

@@ -122,7 +122,7 @@ export class PfBackToTop extends LitElement {
         </span>
       </a>
       ` : html`
-      <pf-button icon="${ifDefined(this.icon)}" icon-set="${ifDefined(this.iconSet)}" class="${classMap(classes)}" part="trigger">
+      <pf-button icon="${ifDefined(this.icon)}" icon-set="${ifDefined(this.iconSet)}" class="${classMap(visuallyHiddenClass)}" part="trigger">
         <slot name="icon" slot="icon"></slot>
         <slot>${ifDefined(this.title)}</slot>
         <span>

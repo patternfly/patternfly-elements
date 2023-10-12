@@ -105,7 +105,7 @@ export class PfBackToTop extends LitElement {
   }
 
   render() {
-    const classes = { 'visually-hidden': !this.#visible };
+    const visuallyHiddenClass = { 'visually-hidden': !this.#visible };
 
     // ensure href has a hash
     if (this.href && !this.href.includes('#')) {
@@ -114,7 +114,7 @@ export class PfBackToTop extends LitElement {
     }
 
     return this.href ? html`
-      <a href="${this.href}" class="${classMap(classes)}" part="trigger">
+      <a href="${this.href}" class="${classMap(visuallyHiddenClass)}" part="trigger">
         <slot name="icon"></slot>
         <slot>${ifDefined(this.title)}</slot>
         <span>

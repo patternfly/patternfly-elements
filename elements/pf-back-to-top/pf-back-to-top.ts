@@ -39,14 +39,6 @@ import styles from './pf-back-to-top.css';
 export class PfBackToTop extends LitElement {
   static readonly styles = [styles];
 
-  #scrollSpy = false;
-
-  #visible = false;
-
-  #scrollElement?: Element | Window;
-
-  #logger = new Logger(this);
-
   /** Shorthand for the `icon` slot, the value is icon name */
   @property({ reflect: true }) icon?: string;
 
@@ -64,6 +56,14 @@ export class PfBackToTop extends LitElement {
 
   /** Page fragment link to target element, must include hash ex: #top */
   @property({ reflect: true }) href?: string;
+
+  #scrollSpy = false;
+
+  #visible = false;
+
+  #scrollElement?: Element | Window;
+
+  #logger = new Logger(this);
 
   get #rootNode(): Document | ShadowRoot {
     const root = this.getRootNode();

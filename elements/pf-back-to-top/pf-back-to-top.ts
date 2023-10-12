@@ -43,7 +43,7 @@ export class PfBackToTop extends LitElement {
 
   #visible = false;
 
-  #scrollElement?: HTMLElement | Window;
+  #scrollElement?: Element | Window;
 
   #logger = new Logger(this);
 
@@ -85,7 +85,7 @@ export class PfBackToTop extends LitElement {
     }
 
     if (this.#scrollSpy && !!this.scrollableSelector) {
-      const scrollableElement = this.#rootNode.querySelector(this.scrollableSelector) as HTMLElement;
+      const scrollableElement = this.#rootNode.querySelector(this.scrollableSelector);
       if (!scrollableElement) {
         this.#logger.error(`Unable to find element with selector ${this.scrollableSelector}`);
         return;

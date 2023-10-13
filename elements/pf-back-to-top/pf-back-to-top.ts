@@ -74,6 +74,11 @@ export class PfBackToTop extends LitElement {
     }
   }
 
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#setScrollListener();
+  }
+
   override disconnectedCallback(): void {
     super.disconnectedCallback?.();
     this.#scrollElement?.removeEventListener('scroll', this.#toggleVisibility);
@@ -118,7 +123,8 @@ export class PfBackToTop extends LitElement {
     `;
   }
 
-  #setScrollListener() {
+  async #setScrollListener() {
+    await this.updateComplete;
     this.#scrollSpy = !!this.scrollableSelector;
 
     if (this.scrollableSelector?.trim() === '') {

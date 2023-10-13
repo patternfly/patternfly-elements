@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -46,13 +46,13 @@ export class PfBackToTop extends LitElement {
   @property({ attribute: 'icon-set' }) iconSet?: string;
 
   /** Flag to always show back to top button, defaults to false. */
-  @property({ type: Boolean, reflect: true, attribute: 'always-visible' }) alwaysVisible = false;
+  @property({ reflect: true, type: Boolean, attribute: 'always-visible' }) alwaysVisible = false;
 
   /** Element selector to spy on for scrolling. Not passing a selector defaults to spying on window scroll events */
   @property({ reflect: true, attribute: 'scrollable-selector' }) scrollableSelector?: string;
 
   /** Distance from the top of the scrollable element to trigger the visibility of the back to top button */
-  @property({ type: Number, attribute: 'scroll-distance' }) scrollDistance = 400;
+  @property({ reflect: true, type: Number, attribute: 'scroll-distance' }) scrollDistance = 400;
 
   /** Page fragment link to target element, must include hash ex: #top */
   @property({ reflect: true }) href?: string;
@@ -74,34 +74,20 @@ export class PfBackToTop extends LitElement {
     }
   }
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    this.#scrollSpy = !!this.scrollableSelector;
-
-    if (this.scrollableSelector?.trim() === '') {
-      this.#logger.error(`scrollable-selector attribute cannot be empty`);
-      return;
-    }
-
-    if (this.#scrollSpy && !!this.scrollableSelector) {
-      const scrollableElement = this.#rootNode.querySelector(this.scrollableSelector);
-      if (!scrollableElement) {
-        this.#logger.error(`Unable to find element with selector ${this.scrollableSelector}`);
-        return;
-      }
-      this.#scrollElement = scrollableElement;
-    } else {
-      this.#scrollElement = window;
-    }
-
-    this.#scrollElement.addEventListener('scroll', this.#toggleVisibility, { passive: true });
-    this.#toggleVisibility();
-  }
-
   override disconnectedCallback(): void {
     super.disconnectedCallback?.();
     this.#scrollElement?.removeEventListener('scroll', this.#toggleVisibility);
+  }
+
+  override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+    if (changed.has('scrollableSelector')) {
+      if (changed.get('scrollableSelector') === undefined) {
+        this.#scrollElement?.removeEventListener('scroll', this.#toggleVisibility);
+      } else {
+        this.#setScrollListener();
+      }
+    }
   }
 
   render() {
@@ -130,6 +116,29 @@ export class PfBackToTop extends LitElement {
         </span>
       </pf-button>
     `;
+  }
+
+  #setScrollListener() {
+    this.#scrollSpy = !!this.scrollableSelector;
+
+    if (this.scrollableSelector?.trim() === '') {
+      this.#logger.error(`scrollable-selector attribute cannot be empty`);
+      return;
+    }
+
+    if (this.#scrollSpy && !!this.scrollableSelector) {
+      const scrollableElement = this.#rootNode.querySelector(this.scrollableSelector);
+      if (!scrollableElement) {
+        this.#logger.error(`unable to find element with selector ${this.scrollableSelector}`);
+        return;
+      }
+      this.#scrollElement = scrollableElement;
+    } else {
+      this.#scrollElement = window;
+    }
+
+    this.#scrollElement.addEventListener('scroll', this.#toggleVisibility, { passive: true });
+    this.#toggleVisibility();
   }
 
   #toggleVisibility = () => {

@@ -12,10 +12,10 @@ const isFocusableElement = (el: Element): el is HTMLElement =>
  * tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
  */
 export class RovingTabindexController<
-  ItemType extends HTMLElement = HTMLElement,
+  Item extends HTMLElement = HTMLElement,
 > implements ReactiveController {
   /** active focusable element */
-  #activeItem?: ItemType;
+  #activeItem?: Item;
 
   /**
    * whether filtering (if enabled) will be case-sensitive
@@ -26,25 +26,12 @@ export class RovingTabindexController<
   #itemsContainer?: HTMLElement;
 
   /** array of all focusable elements */
-  #items: ItemType[] = [];
-
-  /**
-   * whether filtering is case sensitive
-   */
-  set caseSensitive(caseSensitive: boolean) {
-    if (this.#caseSensitive !== caseSensitive) {
-      this.#caseSensitive = caseSensitive;
-    }
-  }
-
-  get caseSensitive() {
-    return this.#caseSensitive;
-  }
+  #items: Item[] = [];
 
   /**
    * finds focusable items from a group of items
    */
-  get #focusableItems(): ItemType[] {
+  get #focusableItems(): Item[] {
     return this.#items.filter(isFocusableElement);
   }
 
@@ -65,7 +52,7 @@ export class RovingTabindexController<
   /**
    * active item of array of items
    */
-  get activeItem(): ItemType | undefined {
+  get activeItem(): Item | undefined {
     return this.#activeItem;
   }
 
@@ -86,21 +73,21 @@ export class RovingTabindexController<
   /**
    * first item in array of focusable items
    */
-  get firstItem(): ItemType | undefined {
+  get firstItem(): Item | undefined {
     return this.#focusableItems[0];
   }
 
   /**
    * last item in array of focusable items
    */
-  get lastItem(): ItemType | undefined {
+  get lastItem(): Item | undefined {
     return this.#focusableItems.at(-1);
   }
 
   /**
    * next item  after active item in array of focusable items
    */
-  get nextItem(): ItemType | undefined {
+  get nextItem(): Item | undefined {
     return (
       this.#activeIndex >= this.#focusableItems.length - 1 ? this.firstItem
         : this.#focusableItems[this.#activeIndex + 1]
@@ -110,11 +97,24 @@ export class RovingTabindexController<
   /**
    * previous item  after active item in array of focusable items
    */
-  get prevItem(): ItemType | undefined {
+  get prevItem(): Item | undefined {
     return (
       this.#activeIndex > 0 ? this.#focusableItems[this.#activeIndex - 1]
         : this.lastItem
     );
+  }
+
+  /**
+   * whether filtering is case sensitive
+   */
+  set caseSensitive(caseSensitive: boolean) {
+    if (this.#caseSensitive !== caseSensitive) {
+      this.#caseSensitive = caseSensitive;
+    }
+  }
+
+  get caseSensitive() {
+    return this.#caseSensitive;
   }
 
   constructor(public host: ReactiveControllerHost & HTMLElement) {
@@ -141,7 +141,7 @@ export class RovingTabindexController<
       event.metaKey ||
       !this.#focusableItems.length ||
       !event.composedPath().some(x =>
-        this.#focusableItems.includes(x as ItemType))) {
+        this.#focusableItems.includes(x as Item))) {
       return;
     }
 
@@ -217,7 +217,7 @@ export class RovingTabindexController<
   /**
    * sets tabindex of item based on whether or not it is active
    */
-  updateActiveItem(item?: ItemType): void {
+  updateActiveItem(item?: Item): void {
     if (item && item !== this.#activeItem) {
       if (this.#activeItem) {
         this.#activeItem.tabIndex = -1;
@@ -231,7 +231,7 @@ export class RovingTabindexController<
   /**
    * focuses on an item and sets it as active
    */
-  focusOnItem(item?: ItemType): void {
+  focusOnItem(item?: Item): void {
     this.updateActiveItem(item || this.firstItem);
     this.#activeItem?.focus();
     this.host.requestUpdate();
@@ -240,7 +240,7 @@ export class RovingTabindexController<
   /**
    * Focuses next focusable item
    */
-  updateItems(items: ItemType[]) {
+  updateItems(items: Item[]) {
     const hasActive = document.activeElement && this.host.contains(document.activeElement);
     const sequence = [...items.slice(this.#itemIndex - 1), ...items.slice(0, this.#itemIndex - 1)];
     const first = sequence.find(item => this.#focusableItems.includes(item));
@@ -257,7 +257,7 @@ export class RovingTabindexController<
   /**
    * from array of HTML items, and sets active items
    */
-  initItems(items: ItemType[], itemsContainer: HTMLElement = this.host) {
+  initItems(items: Item[], itemsContainer: HTMLElement = this.host) {
     this.#items = items ?? [];
     const focusableItems = this.#focusableItems;
     const [focusableItem] = focusableItems;

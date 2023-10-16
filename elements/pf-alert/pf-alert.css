@@ -1,7 +1,7 @@
 :host {
-  --alert-title-color: var(--alert-title-color, var(--pf-global--default-color--300, #003737));
-  --alert-icon-color: var(--alert-icon-color, var(--pf-global--default-color--200, #009596));
-  --alert-inline-background-color: var(--pf-global--palette--cyan-50, #f2f9f9);
+  --_alert-title-color: var(--_alert-title-color, var(--pf-global--default-color--300, #003737));
+  --_alert-icon-color: var(--_alert-icon-color, var(--pf-global--default-color--200, #009596));
+  --_alert-inline-background-color: var(--pf-global--palette--cyan-50, #f2f9f9);
 }
 
 :host([hidden]) {
@@ -9,57 +9,57 @@
 }
 
 :host([variant="info"]) {
-  --alert-border-top-color: var(--pf-global--info-color--100, #2b9af3);
-  --alert-icon-color: var(--pf-global--info-color--100, #2b9af3);
-  --alert-title-color: var(--pf-global--info-color--200, #002952);
+  --_alert-border-top-color: var(--pf-global--info-color--100, #2b9af3);
+  --_alert-icon-color: var(--pf-global--info-color--100, #2b9af3);
+  --_alert-title-color: var(--pf-global--info-color--200, #002952);
 }
 
 :host([variant="info"][inline]) {
-  --alert-inline-background-color: var(--pf-global--palette--blue-50, #e7f1fa);
+  --_alert-inline-background-color: var(--pf-global--palette--blue-50, #e7f1fa);
 }
 
 :host([variant="success"]) {
-  --alert-border-top-color: var(--pf-global--success-color--100, #3e8635);
-  --alert-icon-color: var(--pf-global--success-color--100, #3e8635);
-  --alert-title-color: var(--pf-global--success-color--200, #1e4f18);
+  --_alert-border-top-color: var(--pf-global--success-color--100, #3e8635);
+  --_alert-icon-color: var(--pf-global--success-color--100, #3e8635);
+  --_alert-title-color: var(--pf-global--success-color--200, #1e4f18);
 }
 
 :host([variant="success"][inline]) {
-  --alert-inline-background-color: var(--pf-global--palette--green-50, #f3faf2);
+  --_alert-inline-background-color: var(--pf-global--palette--green-50, #f3faf2);
 }
 
 :host([variant="warning"]) {
-  --alert-border-top-color: var(--pf-global--warning-color--100, #f0ab00);
-  --alert-icon-color: var(--pf-global--warning-color--100, #f0ab00);
-  --alert-title-color: var(--pf-global--warning-color--200, #795600);
+  --_alert-border-top-color: var(--pf-global--warning-color--100, #f0ab00);
+  --_alert-icon-color: var(--pf-global--warning-color--100, #f0ab00);
+  --_alert-title-color: var(--pf-global--warning-color--200, #795600);
 }
 
 :host([variant="warning"][inline]) {
-  --alert-inline-background-color: var(--pf-global--palette--gold-50, #fdf7e7);
+  --_alert-inline-background-color: var(--pf-global--palette--gold-50, #fdf7e7);
 }
 
 :host([variant="danger"]) {
-  --alert-border-top-color: var(--pf-global--danger-color--100, #c9190b);
-  --alert-icon-color: var(--pf-global--danger-color--100, #c9190b);
-  --alert-title-color: var(--pf-global--danger-color--200, #7d1007);
+  --_alert-border-top-color: var(--pf-global--danger-color--100, #c9190b);
+  --_alert-icon-color: var(--pf-global--danger-color--100, #c9190b);
+  --_alert-title-color: var(--pf-global--danger-color--200, #7d1007);
 }
 
 :host([variant="danger"][inline]) {
-  --alert-inline-background-color: var(--pf-global--palette--blue-50, #faeae8);
+  --_alert-inline-background-color: var(--pf-global--palette--blue-50, #faeae8);
 }
 
 :host([inline]) {
-  --alert-background-color: var(--alert-inline-background-color);
-  --alert-box-shadow: 0;
+  --_alert-background-color: var(--_alert-inline-background-color);
+  --_alert-box-shadow: 0;
 }
 
 :host([plain]) {
-  --alert-padding-top: 0;
-  --alert-padding-left: 0;
-  --alert-padding-right: 0;
-  --alert-padding-bottom: 0;
-  --alert-background-color: transparent;
-  --alert-border-top-color: transparent;
+  --_alert-padding-top: 0;
+  --_alert-padding-left: 0;
+  --_alert-padding-right: 0;
+  --_alert-padding-bottom: 0;
+  --_alert-background-color: transparent;
+  --_alert-border-top-color: transparent;
 }
 
 #container.truncateTitle  {
@@ -83,13 +83,13 @@
   box-sizing: border-box;
   grid-template-columns: min-content 1fr;
   gap: var(--pf-global--spacer--xs, 0.25rem);
-  padding: var(--alert-padding-top, 1rem) var(--alert-padding-right, 1rem) var(--alert-padding-bottom, 1rem) var(--alert-padding-left, 1rem);
-  font-size: var(--alert-font-size, 0.875rem) !important;
-  background-color: var(--alert-background-color, #ffffff);
+  padding: var(--_alert-padding-top, 1rem) var(--_alert-padding-right, 1rem) var(--_alert-padding-bottom, 1rem) var(--_alert-padding-left, 1rem);
+  font-size: var(--_alert-font-size, 0.875rem) !important;
+  background-color: var(--_alert-background-color, #ffffff);
   border-width: 0;
-  border-block: solid var(--alert-border-top-color, #009596);
-  border-block-width: var(--alert-border-top-width, 2px) 0;
-  box-shadow: var(--alert-box-shadow, 0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08));
+  border-block: solid var(--_alert-border-top-color, #009596);
+  border-block-width: var(--_alert-border-top-width, 2px) 0;
+  box-shadow: var(--_alert-box-shadow, 0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08));
 
   font-family:
     var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,
@@ -119,10 +119,10 @@ header {
 
 header ::slotted(*) {
   font-family: var(--_font-family) !important;
-  font-size: var(--alert-font-size, var(--pf-global--font-size--sm, 0.875rem)) !important;
+  font-size: var(--_alert-font-size, var(--pf-global--font-size--sm, 0.875rem)) !important;
   font-weight: var(--pf-global--FontWeight--bold, 700) !important;
-  margin: var(--alert-header-slotted-margin, 0) !important;
-  padding-block: var(--alert-header-slotted-padding-block, 2px 4px) !important;
+  margin: var(--_alert-header-slotted-margin, 0) !important;
+  padding-block: var(--_alert-header-slotted-padding-block, 2px 4px) !important;
 }
 
 #header-actions {
@@ -130,7 +130,7 @@ header ::slotted(*) {
 }
 
 #header {
-  color: var(--alert-title-color);
+  color: var(--_alert-title-color);
 }
 
 #icon {
@@ -139,13 +139,13 @@ header ::slotted(*) {
   justify-content: center;
   width: var(--pf-global--spacer--lg, 1.5rem);
   height: var(--pf-global--spacer--lg, 1.5rem);
-  color: var(--alert-icon-color, var(--pf-global--default-color--200, #009596));
+  color: var(--_alert-icon-color, var(--pf-global--default-color--200, #009596));
 }
 
 #icon,
 #icon > svg {
-  font-size: var(--alert-icon-font-size, var(--pf-global--icon--font-size--md, 1.125rem));
-  --pf-global--icon--font-size--sm: var(--alert-icon-font-size, var(--pf-global--icon--font-size--md, 1.125rem));
+  font-size: var(--_alert-icon-font-size, var(--pf-global--icon--font-size--md, 1.125rem));
+  --pf-global--icon--font-size--sm: var(--_alert-icon-font-size, var(--pf-global--icon--font-size--md, 1.125rem));
 }
 
 #icon ::slotted(pf-icon),
@@ -167,43 +167,43 @@ header ::slotted(*) {
 }
 
 #description {
-  font-size: var(--alert-font-size, var(--pf-global--font-size--sm, 0.875rem));
+  font-size: var(--_alert-font-size, var(--pf-global--font-size--sm, 0.875rem));
 }
 
 #description > ::slotted(*) {
-  margin-block: var(--alert-description-slotted-margin-block, 0) !important;
-  padding: var(--alert-description-slotted-padding, 0) !important;
+  margin-block: var(--_alert-description-slotted-margin-block, 0) !important;
+  padding: var(--_alert-description-slotted-padding, 0) !important;
 }
 
-#description.hasDescriptionContent { 
+#description.hasDescriptionContent {
   padding-top: var(--pf-global--spacer--xs, 0.25rem) !important;
 }
 
 footer.hasActions {
-  margin-top: var(--alert-description-action-group-padding-top, 1rem);
+  margin-top: var(--_alert-description-action-group-padding-top, 1rem);
 }
 
 footer ::slotted([slot="actions"]) {
-  padding: var(--alert-footer-slotted-actions-padding, 0) !important;
-  border: var(--alert-footer-slotted-actions-border, none) !important;
-  background-color: var(--alert-footer-slotted-actions-background-color, transparent) !important;
+  padding: var(--_alert-footer-slotted-actions-padding, 0) !important;
+  border: var(--_alert-footer-slotted-actions-border, none) !important;
+  background-color: var(--_alert-footer-slotted-actions-background-color, transparent) !important;
   color: var(--pf-global--link--Color, var(--pf-global--link--Color--dark, #0066cc)) !important;
-  font-size: var(--alert-font-size, var(--pf-global--font-size--sm, 0.875rem)) !important;
+  font-size: var(--_alert-font-size, var(--pf-global--font-size--sm, 0.875rem)) !important;
   font-family: var(--_font-family) !important;
 }
 
 footer ::slotted(*:not(:last-child)) {
-  margin-inline-end: var(--alert-action-group-not-last-child-margin-right, var(--pf-global--spacer--lg, 1.5rem)) !important;
+  margin-inline-end: var(--_alert-action-group-not-last-child-margin-right, var(--pf-global--spacer--lg, 1.5rem)) !important;
 }
 
 footer ::slotted([slot="actions"]:focus) {
-  text-decoration: var(--alert-footer-slotted-actions-text-decoration-focus, underline) !important;
+  text-decoration: var(--_alert-footer-slotted-actions-text-decoration-focus, underline) !important;
   color: var(--pf-global--link--Color--hover, var(--pf-global--link--Color--dark--hover, #004080)) !important;
 }
 
 footer ::slotted([slot="actions"]:hover) {
-  cursor: var(--alert-footer-slotted-actions-cursor-hover, pointer) !important;
-  text-decoration: var(--alert-footer-slotted-actions-text-decoration-hover, underline) !important;
+  cursor: var(--_alert-footer-slotted-actions-cursor-hover, pointer) !important;
+  text-decoration: var(--_alert-footer-slotted-actions-text-decoration-hover, underline) !important;
   color: var(--pf-global--link--Color--hover, var(--pf-global--link--Color--dark--hover, #004080)) !important;
 }
 

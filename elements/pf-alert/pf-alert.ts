@@ -177,8 +177,6 @@ export class PfAlert extends LitElement {
 
   #slots = new SlotController(this, 'header', null, 'actions');
 
-  #icon = ICONS.get(this.variant) ?? ``;
-
   override willUpdate() {
     if (this.truncateTitle) {
       import('@patternfly/elements/pf-tooltip/pf-tooltip.js');
@@ -204,14 +202,16 @@ export class PfAlert extends LitElement {
   }
 
   render() {
-    const { truncateTitle, header, dismissable } = this;
+    const { truncateTitle, header, dismissable, variant } = this;
     const hasActions = this.#slots.hasSlotted('actions');
     const hasDescriptionContent = this.#slots.hasSlotted();
 
     return html`
        <div id="container" role="alert" aria-hidden="false"  class="${classMap({ truncateTitle })}">
         <div id="left-column" part="left-column">
-          <slot name="icon" id="icon">${this.#icon}</slot>
+          <slot name="icon" id="icon">
+             ${ICONS.get(variant) ?? ''}
+         </slot>
         </div>
         <div id="middle-column" part="middle-column">
           <header>

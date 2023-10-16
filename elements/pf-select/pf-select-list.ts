@@ -3,7 +3,7 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 
-import { ListboxController, type ListboxOptionElement, type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
+import { ListboxController, type ListboxOptionElement } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 
 import { PfSelectGroup } from './pf-select-group.js';
 import { PfSelectOption } from './pf-select-option.js';
@@ -29,11 +29,6 @@ export class PfSelectList extends LitElement {
    * whether filtering (if enabled) will be case-sensitive
    */
   @property({ reflect: true, attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
-
-  /**
-   * whether option filtering is disabled
-   */
-  @property({ reflect: true, attribute: 'disable-filter', type: Boolean }) disableFilter = false;
 
   /**
    * whether filtering (if enabled) will look for filter match anywhere in option text
@@ -83,7 +78,7 @@ export class PfSelectList extends LitElement {
   /**
    * listbox value based by selecting option(s)
    */
-  set selected(optionsList: ListboxValue) {
+  set selected(optionsList: unknown | unknown[]) {
     if (this.#listboxController) {
       this.#listboxController.value = optionsList;
     }
@@ -118,7 +113,6 @@ export class PfSelectList extends LitElement {
   firstUpdated(changed: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     this.#listboxController = new ListboxController(this, {
       caseSensitive: this.caseSensitive,
-      disableFilter: this.disableFilter,
       matchAnywhere: this.matchAnywhere,
       multiSelectable: this.multiSelectable,
       orientation: 'vertical'
@@ -134,9 +128,6 @@ export class PfSelectList extends LitElement {
       }
       if (changed.has('caseSensitive')) {
         this.#listboxController.caseSensitive = this.caseSensitive;
-      }
-      if (changed.has('disableFilter')) {
-        this.#listboxController.disableFilter = this.disableFilter;
       }
       if (changed.has('matchAnywhere')) {
         this.#listboxController.matchAnywhere = this.matchAnywhere;

@@ -4,7 +4,6 @@ import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { type ListboxValue } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
 import type { PfSelectOption } from './pf-select-option.js';
 import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
@@ -59,14 +58,14 @@ export class PfSelect extends LitElement {
   @property({ reflect: true, attribute: 'disabled', type: Boolean }) disabled = false;
 
   /**
-   * whether option filtering is disabled
-   */
-  @property({ reflect: true, attribute: 'disable-filter', type: Boolean }) disableFilter = false;
-
-  /**
    * enable to flip listbox when it reaches boundary
    */
   @property({ attribute: 'enable-flip', type: Boolean }) enableFlip = false;
+
+  /**
+   * listbox filter
+   */
+  @property({ attribute: 'filter', type: String }) filter = '';
 
   /**
    * whether listbox is has checkboxes when `multi-select` is enabled
@@ -155,9 +154,9 @@ export class PfSelect extends LitElement {
         aria-disabled="${this.disabled ? 'true' : 'false'}"
         ?hidden=${!this.alwaysExpanded && !this.expanded}
         ?case-sensitive=${this.caseSensitive}
-        ?disable-filter="${this.disableFilter}"
         ?match-anywhere=${this.matchAnywhere}
         ?multi-selectable=${this.#isMulti}
+        filter="${this.filter || ''}"
         @input=${this.#onListboxInput}
         @change=${this.#onListboxChange}
         @listboxoptions=${this.#updateValueText}
@@ -196,19 +195,6 @@ export class PfSelect extends LitElement {
     return this.#valueTextArray.map(txt => txt.replace(',', '\\,')).join(', ');
   }
 
-  set filter(filterText: string) {
-    if (this._listbox) {
-      this._listbox.filter = filterText;
-    }
-  }
-
-  /**
-   * filter string for visible options
-   */
-  get filter() {
-    return this._listbox?.filter || '';
-  }
-
   /**
    * whether select has badge for number of selected items
    */
@@ -230,7 +216,7 @@ export class PfSelect extends LitElement {
     return this._listbox?.options;
   }
 
-  set selected(optionsList: ListboxValue) {
+  set selected(optionsList: unknown | unknown[]) {
     if (this._listbox) {
       this._listbox.selected = optionsList;
     }
@@ -250,7 +236,6 @@ export class PfSelect extends LitElement {
     const toggles = !alwaysExpanded ? 'toggles' : false;
     const offscreen = typeahead ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
-    const autocomplete = this.disableFilter ? 'none' : 'list';
     let classes = { };
     if (this.#toggle && !alwaysExpanded) {
       const { expanded, anchor, alignment } = this.#toggle;
@@ -274,7 +259,7 @@ export class PfSelect extends LitElement {
             id="toggle-input" 
             type="text" 
             aria-controls="listbox" 
-            aria-autocomplete="${autocomplete}" 
+            aria-autocomplete="both" 
             aria-expanded="${!this.expanded ? 'false' : 'true'}"
             ?disabled=${this.disabled}
             ?hidden=${!this.typeahead} 

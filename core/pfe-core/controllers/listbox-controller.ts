@@ -6,20 +6,13 @@ import { RovingTabindexController } from '@patternfly/pfe-core/controllers/rovin
  * whether list items are arranged vertically or horizontally;
  * limits arrow keys based on orientation
  */
-export type ListboxOrientation = '' | 'horizontal' | 'vertical';
-
-
-/**
- * value of listbox
- */
-export type ListboxValue = unknown | unknown[];
+export type ListboxOrientation = 'undefined' | 'horizontal' | 'vertical';
 
 /**
  * filtering, multiselect, and orientation options for listbox
  */
 export interface ListboxConfigOptions {
   caseSensitive?: boolean;
-  disableFilter?: boolean;
   matchAnywhere?: boolean;
   multiSelectable?: boolean;
   orientation?: ListboxOrientation;
@@ -47,6 +40,7 @@ export class ListboxController<
    * filter options that start with a string (case-insensitive)
    */
   #filter = '';
+
   /**
    * whether `*` has been pressed to show all options
    */
@@ -56,11 +50,6 @@ export class ListboxController<
    * whether filtering (if enabled) will be case-sensitive
    */
   #caseSensitive = false;
-
-  /**
-   * whether option filtering is disabled
-   */
-  #disableFilter = false;
 
   /** event listeners for host element */
   #listeners = {
@@ -128,21 +117,6 @@ export class ListboxController<
 
   get caseSensitive() {
     return this.#caseSensitive;
-  }
-
-  /**
-   * whether filtering is disabled;
-   * default is filtering enabled
-   */
-  set disableFilter(disableFilter: boolean) {
-    if (this.#disableFilter !== disableFilter) {
-      this.#disableFilter = disableFilter;
-      this.#onFilterChange();
-    }
-  }
-
-  get disableFilter(): boolean {
-    return !!this.#disableFilter;
   }
 
   /**
@@ -225,7 +199,7 @@ export class ListboxController<
   /**
    * listbox value based on selected options
    */
-  set value(optionsList: ListboxValue) {
+  set value(optionsList: unknown | unknown[]) {
     const oldValue = this.value;
     let firstItem: unknown;
     if (Array.isArray(optionsList)) {
@@ -253,7 +227,7 @@ export class ListboxController<
    */
   get visibleOptions() {
     let matchedOptions: ListboxOptionElement[] = [];
-    if (!(this.disableFilter || this.filter === '*' || this.#showAllOptions)) {
+    if (!(this.filter === '' || this.filter === '*' || this.#showAllOptions)) {
       matchedOptions = this.options.filter(option => {
         const search = this.matchAnywhere ? '' : '^';
         const text = option.textContent || '';
@@ -291,7 +265,6 @@ export class ListboxController<
     });
     this.#tabindex = new RovingTabindexController<HTMLElement>(this.host);
     this.caseSensitive = options.caseSensitive || false;
-    this.disableFilter = !!options.disableFilter;
   }
 
   /**

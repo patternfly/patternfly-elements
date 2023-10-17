@@ -75,23 +75,18 @@ export class PfBackToTop extends LitElement {
   }
 
   override connectedCallback(): void {
-    super.connectedCallback();
-    this.#setScrollListener();
+    super.connectedCallback?.();
+    this.#toggleVisibility();
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback?.();
-    this.#scrollElement?.removeEventListener('scroll', this.#toggleVisibility);
+    this.#removeScrollListener();
   }
 
-  override updated(changed: PropertyValues<this>): void {
-    super.updated(changed);
+  override willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('scrollableSelector')) {
-      if (changed.get('scrollableSelector') === undefined) {
-        this.#scrollElement?.removeEventListener('scroll', this.#toggleVisibility);
-      } else {
-        this.#setScrollListener();
-      }
+      this.#addScrollListener();
     }
   }
 
@@ -104,29 +99,37 @@ export class PfBackToTop extends LitElement {
       this.#logger.warn(`missing hash in href fragment link`);
     }
 
-    return this.href ? html`
-      <a href="${this.href}" class="${classMap(visuallyHiddenClass)}" part="trigger">
-        <slot name="icon"></slot>
-        <slot>${ifDefined(this.title)}</slot>
-        <span>
-          <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path></svg>
-        </span>
-      </a>
-      ` : html`
-      <pf-button icon="${ifDefined(this.icon)}" icon-set="${ifDefined(this.iconSet)}" class="${classMap(visuallyHiddenClass)}" part="trigger">
-        <slot name="icon" slot="icon"></slot>
-        <slot>${ifDefined(this.title)}</slot>
-        <span>
-          <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path></svg>
-        </span>
-      </pf-button>
-    `;
+    if (this.href) {
+      return html`
+        <a href="${this.href}" class="${classMap(visuallyHiddenClass)}" part="trigger">
+          <slot name="icon"></slot>
+          <slot>${ifDefined(this.title)}</slot>
+          <span>
+            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path></svg>
+          </span>
+        </a>
+      `;
+    } else {
+      return html`
+        <pf-button icon="${ifDefined(this.icon)}" icon-set="${ifDefined(this.iconSet)}" class="${classMap(visuallyHiddenClass)}" part="trigger">
+          <slot name="icon" slot="icon"></slot>
+          <slot>${ifDefined(this.title)}</slot>
+          <span>
+            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path></svg>
+          </span>
+        </pf-button>
+      `;
+    }
   }
 
-  async #setScrollListener() {
-    await this.updateComplete;
-    this.#scrollSpy = !!this.scrollableSelector;
+  #removeScrollListener() {
+    this.#scrollElement?.removeEventListener('scroll', this.#toggleVisibility);
+  }
 
+  #addScrollListener() {
+    this.#removeScrollListener();
+
+    this.#scrollSpy = !!this.scrollableSelector;
     if (this.scrollableSelector?.trim() === '') {
       this.#logger.error(`scrollable-selector attribute cannot be empty`);
       return;
@@ -148,13 +151,17 @@ export class PfBackToTop extends LitElement {
   }
 
   #toggleVisibility = () => {
+    if (this.alwaysVisible) {
+      this.#visible = this.alwaysVisible;
+      return;
+    }
     const previousVisibility = this.#visible;
     if (this.#scrollElement) {
       const scrolled =
           (this.#scrollElement instanceof Window) ?
           this.#scrollElement.scrollY
         : this.#scrollElement.scrollTop;
-      this.#visible = this.alwaysVisible ? true : (scrolled > this.scrollDistance);
+      this.#visible = (scrolled > this.scrollDistance);
       if (previousVisibility !== this.#visible) {
         this.requestUpdate();
       }

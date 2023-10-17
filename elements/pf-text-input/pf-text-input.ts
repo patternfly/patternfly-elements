@@ -274,6 +274,17 @@ export class PfTextInput extends LitElement {
     this.requestUpdate();
   }
 
+  async formStateRestoreCallback(state: string, mode: string) {
+    if (mode === 'restore') {
+      const [controlMode, value] = state.split('/');
+      this.value = value ?? controlMode;
+      this.requestUpdate();
+      await this.updateComplete;
+      this.#setValidityFromInput();
+    }
+  }
+
+
   async formDisabledCallback() {
     await this.updateComplete;
     this.requestUpdate();

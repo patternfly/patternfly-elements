@@ -168,6 +168,7 @@ input::placeholder {
 #error-text {
   color: var(--pf-c-form-control__error-text--m-status--Color);
 }
+
 :host([left-truncated]) {
   position: relative;
 }

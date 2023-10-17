@@ -1,6 +1,5 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
-import type { PropertyValues } from 'lit';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { property } from 'lit/decorators/property.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
@@ -24,7 +23,7 @@ export class PfSelectOption extends LitElement {
   /**
    * whether option is disabled
    */
-  @property({ reflect: true, attribute: 'aria-disabled', type: String }) ariaDisabled = 'false';
+  @property({ type: Boolean }) disabled = false;
 
   /**
    * whether list items are arranged vertically or horizontally;
@@ -35,7 +34,7 @@ export class PfSelectOption extends LitElement {
   /**
    * whether option is selected
    */
-  @property({ attribute: 'selected', type: Boolean }) selected = false;
+  @property({ type: Boolean }) selected = false;
 
   /**
   * total number of options
@@ -72,12 +71,12 @@ export class PfSelectOption extends LitElement {
 
   render() {
     return html`
-      <div id="outer">
+      <div id="outer" class="${this.disabled ? 'disabled' : ''}">
         <input 
           type="checkbox" 
           aria-hidden="true" 
           ?checked=${this.selected}
-          ?disabled=${this.ariaDisabled === 'true'}>
+          ?disabled=${this.disabled}>
         <slot name="icon"></slot>
         <span>${this.#createOptionText === '' ? '' : `${this.#createOptionText}: `}<slot></slot></span>
         <svg 
@@ -102,6 +101,9 @@ export class PfSelectOption extends LitElement {
     if (changed.has('posInSet')) {
       this.#internals.ariaPosInSet = this.posInSet ? `${this.posInSet}` : null;
     }
+    if (changed.has('disabled')) {
+      this.#internals.ariaDisabled = String(!!this.disabled);
+    }
     if (changed.has('setSize')) {
       this.#internals.ariaSetSize = this.setSize ? `${this.setSize}` : null;
     }
@@ -125,7 +127,7 @@ export class PfSelectOption extends LitElement {
   set createOptionText(str: string) {
     if (!this.#userCreatedOption) {
       this.#createOptionText = str || '';
-      this.ariaDisabled = str === '' ? 'true' : 'false';
+      this.disabled = str === '';
       this.hidden = str === '';
     }
   }

@@ -55,7 +55,7 @@ export class PfSelect extends LitElement {
   /**
    * whether select is disabled
    */
-  @property({ reflect: true, attribute: 'disabled', type: Boolean }) disabled = false;
+  @property({ type: Boolean }) disabled = false;
 
   /**
    * enable to flip listbox when it reaches boundary
@@ -151,7 +151,7 @@ export class PfSelect extends LitElement {
         id="listbox" 
         style="${styles}"
         class="${classMap({ checkboxes })}"
-        aria-disabled="${this.disabled ? 'true' : 'false'}"
+        ?disabled="${this.disabled}"
         ?hidden=${!this.alwaysExpanded && !this.expanded}
         ?case-sensitive=${this.caseSensitive}
         ?match-anywhere=${this.matchAnywhere}
@@ -232,14 +232,14 @@ export class PfSelect extends LitElement {
   }
 
   render() {
-    const { hasBadge, typeahead, alwaysExpanded } = this;
+    const { hasBadge, typeahead, disabled, alwaysExpanded } = this;
     const toggles = !alwaysExpanded ? 'toggles' : false;
     const offscreen = typeahead ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
     let classes = { };
     if (this.#toggle && !alwaysExpanded) {
       const { expanded, anchor, alignment } = this.#toggle;
-      classes = { toggles, expanded, [anchor]: !!anchor, [alignment]: !!alignment };
+      classes = { disabled, toggles, expanded, [anchor]: !!anchor, [alignment]: !!alignment };
     }
     return html`
       <div id="outer" 

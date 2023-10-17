@@ -9,9 +9,13 @@
   display: none !important;
 }
 
+slot {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
-:host([disabled]),
-:host([aria-disabled="true"]) {
+slot.disabled {
   color: var(--pf-theme--color--ui-base, #6a6e73) !important;
   background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
@@ -19,10 +23,4 @@
   cursor: not-allowed;
   --_pf-select-option-active-descendant-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   --_pf-select-option-svg-color: var(--pf-theme--color--ui-base, #6a6e73) !important;
-}
-
-slot {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
 }

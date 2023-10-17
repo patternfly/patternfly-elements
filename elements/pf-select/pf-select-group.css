@@ -3,8 +3,7 @@
   border-bottom: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
 }
 
-:host([disabled]),
-:host([aria-disabled="true"]) {
+.disabled{
   pointer-events: none;
   cursor: not-allowed;
   --_pf-select-option-active-descendant-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;

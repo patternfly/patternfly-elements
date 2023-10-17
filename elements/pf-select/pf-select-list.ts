@@ -23,7 +23,7 @@ export class PfSelectList extends LitElement {
   /**
    * whether listbox is disabled
    */
-  @property({ reflect: true, attribute: 'aria-disabled', type: String }) ariaDisabled = 'false';
+  @property({ type: Boolean }) disabled = false;
 
   /**
    * whether filtering (if enabled) will be case-sensitive
@@ -104,7 +104,8 @@ export class PfSelectList extends LitElement {
 
   render() {
     return html`
-        <slot 
+        <slot
+          class="${this.disabled ? 'disabled' : ''}" 
           @slotchange="${this.#onSlotchange}">
         </slot>
     `;
@@ -123,8 +124,8 @@ export class PfSelectList extends LitElement {
 
   updated(changed: PropertyValues<this>) {
     if (this.#listboxController) {
-      if (changed.has('ariaDisabled')) {
-        this.#listboxController.disabled = this.ariaDisabled === 'true';
+      if (changed.has('disabled')) {
+        this.#listboxController.disabled = this.disabled;
       }
       if (changed.has('caseSensitive')) {
         this.#listboxController.caseSensitive = this.caseSensitive;

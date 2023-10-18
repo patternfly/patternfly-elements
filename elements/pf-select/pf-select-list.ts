@@ -144,7 +144,7 @@ export class PfSelectList extends LitElement {
    */
   focus() {
     if (this.#listboxController) {
-      this.#listboxController.focus();
+      this.#listboxController.focusActiveItem();
     }
   }
 

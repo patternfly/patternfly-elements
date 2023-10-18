@@ -322,6 +322,7 @@ export class ListboxController<
       // whether options will be selected (true) or deselected (false)
       const selected = ctrlA ? !allSelected : referenceItem.selected;
       options.forEach(option => option.selected = selected);
+      this.#fireChange();
 
       // update starting item for other multiselect
       this.#shiftStartingItem = currentItem;
@@ -445,12 +446,10 @@ export class ListboxController<
     if (event.altKey || event.metaKey) {
       return;
     }
+
     const target = event.target as ListboxOptionElement;
-    const oldValue = this.value;
     const first = this.#tabindex.firstItem as ListboxOptionElement;
     const last = this.#tabindex.lastItem as ListboxOptionElement;
-    let stopEvent = false;
-    let focusEvent: ListboxOptionElement | undefined;
 
     // need to set for keyboard support of multiselect
     if (event.key === 'Shift' && this.multi) {
@@ -463,7 +462,8 @@ export class ListboxController<
         if (event.ctrlKey) {
           // ctrl+A selects all options
           this.#updateMultiselect(first, last, true);
-          stopEvent = true;
+          event.stopPropagation();
+          event.preventDefault();
         }
         break;
       case 'Enter':
@@ -480,23 +480,12 @@ export class ListboxController<
           } else {
             this.#updateSingleselect();
           }
-          stopEvent = true;
+          event.stopPropagation();
+          event.preventDefault();
         }
         break;
       default:
         break;
-    }
-    if (stopEvent) {
-      event.stopPropagation();
-      event.preventDefault();
-    }
-    if (oldValue !== this.value) {
-      this.#fireChange();
-    }
-    // only change focus if keydown occurred when option has focus
-    // (as opposed to an external text input and if filter has changed
-    if (focusEvent) {
-      this.#tabindex.focusOnItem(focusEvent);
     }
   }
 
@@ -550,7 +539,7 @@ export class ListboxController<
   /**
    * sets focus on last active item
    */
-  focus() {
+  focusActiveItem() {
     this.#tabindex.focusOnItem(this.#tabindex.activeItem);
   }
 }

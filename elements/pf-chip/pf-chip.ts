@@ -5,6 +5,18 @@ import { query } from 'lit/decorators/query.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-chip.css';
+
+export class ChipReadyEvent extends Event {
+  constructor() {
+    super('ready', { bubbles: true, composed: true });
+  }
+}
+export class ChipRemoveEvent extends Event {
+  constructor() {
+    super('remove', { bubbles: true, composed: true });
+  }
+}
+
 /**
  * A **chip** is used to communicate a value or a set of attribute-value pairs within workflows that involve filtering a set of objects.
  *
@@ -61,20 +73,36 @@ export class PfChip extends LitElement {
 
   protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     super.updated(_changedProperties);
-    /**
-     * @fires chip-ready
-     */
-    this.dispatchEvent(new Event('chip-ready', { bubbles: true }));
+    if (_changedProperties.has('overflowChip') || _changedProperties.has('readOnly')) {
+      this.#handleChipReady();
+    }
+  }
+
+  disconnectedCallback(): void {
+    this.#handleChipRemove();
+    super.disconnectedCallback();
+  }
+
+  /**
+   * @fires chip-ready
+   */
+  async #handleChipReady() {
+    await this.updateComplete;
+    this.dispatchEvent(new ChipReadyEvent());
+  }
+
+  /**
+   * @fires chip-ready
+   */
+  #handleChipRemove() {
+    this.dispatchEvent(new ChipRemoveEvent());
   }
 
   /**
    * handles chip's button click event
    */
   #onClick() {
-    /**
-     * @fires chip-remove
-     */
-    this.dispatchEvent(new Event('chip-remove', { bubbles: true }));
+    this.#handleChipRemove();
     this.remove();
   }
 

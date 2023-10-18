@@ -5,7 +5,7 @@ import type { PropertyValues } from 'lit';
 import { query } from 'lit/decorators/query.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
-import { PfChip } from './pf-chip.js';
+import { PfChip, ChipReadyEvent, ChipRemoveEvent } from './pf-chip.js';
 
 import styles from './pf-chip-group.css';
 /**
@@ -75,8 +75,8 @@ export class PfChipGroup extends LitElement {
   constructor() {
     super();
     this.#tabindex = new RovingTabindexController<HTMLElement>(this);
-    this.addEventListener('chip-ready', this.#onChipReady);
-    this.addEventListener('chip-remove', this.#onChipRemoved);
+    this.addEventListener('ready', this.#onChipReady);
+    this.addEventListener('remove', this.#onChipRemoved);
   }
 
   render() {
@@ -94,7 +94,7 @@ export class PfChipGroup extends LitElement {
             <span class="offscreen">${this.label}</span>
           </slot>
         `}
-        <slot id="chips"></slot>
+        <slot id="chips" @slotchange=${this.#onSlotchange}></slot>
         ${this.remaining < 1 ? '' : html`
           <pf-chip 
             id="overflow"
@@ -155,7 +155,9 @@ export class PfChipGroup extends LitElement {
     const oldButtons = [...(this.#buttons || [])];
     this.#chips = [...this.querySelectorAll('pf-chip:not([slot]):not([overflow-chip])')] as PfChip[];
     const button = this._overflowChip?.button as HTMLElement;
-    const buttons = this.#chips.map(chip => chip.button as HTMLElement);
+    const max = this.open ? this.#chips.length : Math.min(this.#chips.length, this.numChips);
+    const visibleChips = this.#chips.slice(0, max);
+    const buttons = visibleChips.map(chip => chip.button as HTMLElement);
     this.#buttons = [...buttons, button, this.button] as HTMLElement[];
     this.#buttons = this.#buttons.filter(button => !!button);
     if (oldButtons.length !== this.#buttons.length || !oldButtons.every((element, index) => element === this.#buttons[index])) {
@@ -172,17 +174,21 @@ export class PfChipGroup extends LitElement {
   /**
    * handles a new chip's `chip-ready` event
    */
-  #onChipReady() {
-    this.#handleChipsChanged();
+  #onChipReady(event: Event) {
+    if (event instanceof ChipReadyEvent) {
+      this.#handleChipsChanged();
+    }
   }
 
   /**
    * handles a chip's `chip-remove` event
    */
   async #onChipRemoved(event: Event) {
-    await this.updateComplete;
-    this.#handleChipsChanged();
-    this.focusOnChip(this.activeChip);
+    if (event instanceof ChipRemoveEvent) {
+      await this.updateComplete;
+      this.#handleChipsChanged();
+      this.focusOnChip(this.activeChip);
+    }
   }
 
   /**

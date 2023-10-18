@@ -14,7 +14,7 @@ export type ListboxOrientation = 'undefined' | 'horizontal' | 'vertical';
 export interface ListboxConfigOptions {
   caseSensitive?: boolean;
   matchAnywhere?: boolean;
-  multiSelectable?: boolean;
+  multi?: boolean;
   orientation?: ListboxOrientation;
 }
 
@@ -87,7 +87,7 @@ export class ListboxController<
    * current active descendant in listbox
    */
   get activeItem() {
-    const [active] = this.options.filter(option => option.getAttribute('id') === this.#internals.ariaActivedescendant);
+    const [active] = this.options.filter(option => option.id === this.#internals.ariaActivedescendant);
     return active || this.#tabindex.firstItem;
   }
 
@@ -123,7 +123,7 @@ export class ListboxController<
    * whether listbox is disabled
    */
   set disabled(disabled: boolean) {
-    this.#internals.ariaDisabled = disabled ? 'true' : 'false';
+    this.#internals.ariaDisabled = String(!!disabled);
   }
 
   get disabled(): boolean {
@@ -134,11 +134,11 @@ export class ListboxController<
    * whether listbox is multiselectable;
    * default is single-select
    */
-  set multiSelectable(multiSelectable: boolean) {
-    this.#internals.ariaMultiSelectable = multiSelectable ? 'true' : 'false';
+  set multi(multi: boolean) {
+    this.#internals.ariaMultiSelectable = multi ? 'true' : 'false';
   }
 
-  get multiSelectable(): boolean {
+  get multi(): boolean {
     return this.#internals.ariaMultiSelectable === 'true';
   }
 
@@ -162,7 +162,7 @@ export class ListboxController<
    * default is vertical
    */
   set orientation(orientation: ListboxOrientation) {
-    this.#internals.ariaOrientation = orientation;
+    this.#internals.ariaOrientation = orientation || '';
   }
 
   get orientation(): ListboxOrientation {
@@ -174,15 +174,9 @@ export class ListboxController<
    * array of listbox option elements
    */
   set options(options: ListboxOptionElement[]) {
-    const setSize = options.length;
-    if (setSize !== this.#options.length || !options.every((element, index) => element === this.#options[index])) {
-      options.forEach((option, posInSet) => {
-        option.setSize = setSize;
-        option.posInSet = posInSet;
-      });
-      this.#options = options;
-      this.#tabindex.initItems(this.visibleOptions);
-    }
+    const oldOptions: ListboxOptionElement[] = [...this.#options];
+    this.#options = options;
+    this.#optionsChanged(oldOptions);
   }
 
   get options() {
@@ -200,32 +194,55 @@ export class ListboxController<
    * listbox value based on selected options
    */
   set value(optionsList: unknown | unknown[]) {
-    const oldValue = this.value;
-    let firstItem: unknown;
-    if (Array.isArray(optionsList)) {
-      [firstItem] = optionsList || [null];
-    } else {
-      firstItem = optionsList;
-    }
-    this.options.forEach(option => {
-      const selected = this.multiSelectable && Array.isArray(optionsList) ? optionsList?.includes(option.value) : firstItem === option;
-      option.selected = selected;
-    });
-    if (oldValue !== this.value) {
-      this.#fireInput();
-    }
+    // value is set by selecting matching options
+    this.#selectOptions(optionsList);
   }
 
   get value() {
     const [firstItem] = this.selectedOptions;
-    return this.multiSelectable ? this.selectedOptions : firstItem;
+    return this.multi ? this.selectedOptions : firstItem;
   }
 
   /**
    * array of options that match filter;
    * (or all options if no options match or if no filter)
    */
-  get visibleOptions() {
+  get visibleOptions(): ListboxOptionElement[] {
+    return this.#getMatchingOptions();
+  }
+
+  constructor(public host: ReactiveControllerHost & HTMLElement, options: ListboxConfigOptions) {
+    this.host.addController(this);
+    this.#internals = new InternalsController(this.host, {
+      role: 'listbox'
+    });
+    this.#tabindex = new RovingTabindexController<HTMLElement>(this.host);
+    this.caseSensitive = options.caseSensitive || false;
+  }
+
+  /**
+   * adds event listeners to host
+   */
+  hostConnected() {
+    for (const [event, listener] of Object.entries(this.#listeners)) {
+      this.host?.addEventListener(event, listener as (event: Event | null) => void);
+    }
+  }
+
+  /**
+   * removes event listeners from host
+   */
+  hostDisconnected() {
+    for (const [event, listener] of Object.entries(this.#listeners)) {
+      this.host?.removeEventListener(event, listener as (event: Event | null) => void);
+    }
+  }
+
+  /**
+   * gets matching options by filter value
+   * @returns {ListboxOptionElement[]}
+   */
+  #getMatchingOptions() {
     let matchedOptions: ListboxOptionElement[] = [];
     if (!(this.filter === '' || this.filter === '*' || this.#showAllOptions)) {
       matchedOptions = this.options.filter(option => {
@@ -258,33 +275,6 @@ export class ListboxController<
     return matchedOptions;
   }
 
-  constructor(public host: ReactiveControllerHost & HTMLElement, options: ListboxConfigOptions) {
-    this.host.addController(this);
-    this.#internals = new InternalsController(this.host, {
-      role: 'listbox'
-    });
-    this.#tabindex = new RovingTabindexController<HTMLElement>(this.host);
-    this.caseSensitive = options.caseSensitive || false;
-  }
-
-  /**
-   * adds event listeners to host
-   */
-  hostConnected() {
-    for (const [event, listener] of Object.entries(this.#listeners)) {
-      this.host?.addEventListener(event, listener as (event: Event | null) => void);
-    }
-  }
-
-  /**
-   * removes event listeners from host
-   */
-  hostDisconnected() {
-    for (const [event, listener] of Object.entries(this.#listeners)) {
-      this.host?.removeEventListener(event, listener as (event: Event | null) => void);
-    }
-  }
-
   /**
    * updates active descendant when focus changes
    */
@@ -306,7 +296,7 @@ export class ListboxController<
    * updates option selections for single select listbox
    */
   #updateSingleselect() {
-    if (!this.multiSelectable && !this.disabled) {
+    if (!this.multi && !this.disabled) {
       this.options.forEach(option => option.selected = option.id === this.#internals.ariaActivedescendant);
       this.#fireChange();
     }
@@ -319,15 +309,21 @@ export class ListboxController<
    * @param referenceItem
    * @param ctrlKey
    */
-  #updateMultiselect(currentItem: ListboxOptionElement, referenceItem = this.activeItem, ctrlKey = false) {
-    if (this.multiSelectable && !this.disabled) {
+  #updateMultiselect(currentItem: ListboxOptionElement, referenceItem = this.activeItem, ctrlA = false) {
+    if (this.multi && !this.disabled) {
       // select all options between active descendant and target
       const [start, end] = [this.options.indexOf(referenceItem), this.options.indexOf(currentItem)].sort();
       const options = [...this.options].slice(start, end + 1);
-      // if all items in range are toggled, remove toggle
-      const allSelected = ctrlKey && options.filter(option => !option.selected)?.length === 0;
-      const toggle = ctrlKey && allSelected ? false : ctrlKey ? true : referenceItem.selected;
-      options.forEach(option => option.selected = toggle);
+
+      // by default CTRL+A will select all options
+      // if all options are selected, CTRL+A will deselect all options
+      const allSelected = options.filter(option => !option.selected)?.length === 0;
+
+      // whether options will be selected (true) or deselected (false)
+      const selected = ctrlA ? !allSelected : referenceItem.selected;
+      options.forEach(option => option.selected = selected);
+
+      // update starting item for other multiselect
       this.#shiftStartingItem = currentItem;
     }
   }
@@ -397,14 +393,12 @@ export class ListboxController<
   #onOptionClick(event: MouseEvent) {
     const target = event.target as ListboxOptionElement;
     const oldValue = this.value;
-    if (this.multiSelectable) {
+    if (this.multi) {
       if (!event.shiftKey) {
         target.selected = !target.selected;
-      } else {
-        if (this.#shiftStartingItem && target) {
-          this.#updateMultiselect(target, this.#shiftStartingItem);
-          this.#fireChange();
-        }
+      } else if (this.#shiftStartingItem && target) {
+        this.#updateMultiselect(target, this.#shiftStartingItem);
+        this.#fireChange();
       }
     } else {
       // select target and deselect all other options
@@ -427,7 +421,7 @@ export class ListboxController<
    */
   #onOptionKeyup(event: KeyboardEvent) {
     const target = event.target as ListboxOptionElement;
-    if (event.shiftKey && this.multiSelectable) {
+    if (event.shiftKey && this.multi) {
       if (this.#shiftStartingItem && target) {
         this.#updateMultiselect(target, this.#shiftStartingItem);
         this.#fireChange();
@@ -449,46 +443,47 @@ export class ListboxController<
     this.#showAllOptions = false;
 
     // need to set for keyboard support of multiselect
-    if (event.key === 'Shift' && this.multiSelectable) {
+    if (event.key === 'Shift' && this.multi) {
       this.#shiftStartingItem = this.activeItem;
     }
     const target = event.target as ListboxOptionElement;
     const oldValue = this.value;
+    const first = this.#tabindex.firstItem as ListboxOptionElement;
+    const last = this.#tabindex.lastItem as ListboxOptionElement;
     let stopEvent = false;
     let focusEvent: ListboxOptionElement | undefined;
     if (event.altKey ||
       event.metaKey) {
       return;
-    } else if (event.ctrlKey) {
-      if (event.key?.match(/^[aA]$/)?.input && this.#tabindex.firstItem) {
-        // ctrl+A selects all options
-        this.#updateMultiselect(this.#tabindex.firstItem as ListboxOptionElement, this.#tabindex.lastItem as ListboxOptionElement, true);
-        stopEvent = true;
-      } else {
-        return;
-      }
-    } else {
-      switch (event.key) {
-        case 'Enter':
-        case ' ':
-          // enter and space are only applicable if a listbox option is clicked
-          // an external text input should not trigger multiselect
-          if (target) {
-            if (this.multiSelectable) {
-              if (event.shiftKey) {
-                this.#updateMultiselect(target);
-              } else if (!this.disabled) {
-                target.selected = !target.selected;
-              }
-            } else {
-              this.#updateSingleselect();
+    }
+    switch (event.key) {
+      case 'a':
+      case 'A':
+        if (event.ctrlKey) {
+          // ctrl+A selects all options
+          this.#updateMultiselect(first, last, true);
+          stopEvent = true;
+        }
+        break;
+      case 'Enter':
+      case ' ':
+        // enter and space are only applicable if a listbox option is clicked
+        // an external text input should not trigger multiselect
+        if (target) {
+          if (this.multi) {
+            if (event.shiftKey) {
+              this.#updateMultiselect(target);
+            } else if (!this.disabled) {
+              target.selected = !target.selected;
             }
-            stopEvent = true;
+          } else {
+            this.#updateSingleselect();
           }
-          break;
-        default:
-          break;
-      }
+          stopEvent = true;
+        }
+        break;
+      default:
+        break;
     }
     if (stopEvent) {
       event.stopPropagation();
@@ -501,6 +496,42 @@ export class ListboxController<
     // (as opposed to an external text input and if filter has changed
     if (focusEvent) {
       this.#tabindex.focusOnItem(focusEvent);
+    }
+  }
+
+  /**
+   * handles change to options given previous options array
+   * @param oldOptions {ListboxOptionElement[]}
+   */
+  #optionsChanged(oldOptions: ListboxOptionElement[]) {
+    const setSize = oldOptions.length;
+    if (setSize !== this.#options.length || !oldOptions.every((element, index) => element === this.#options[index])) {
+      oldOptions.forEach((option, posInSet) => {
+        option.setSize = setSize;
+        option.posInSet = posInSet;
+      });
+      this.#tabindex.initItems(this.visibleOptions);
+    }
+  }
+
+  /**
+   * handles change in value given a list of selected values
+   * @param optionsList {unknown | unknown[]}
+   */
+  #selectOptions(optionsList: unknown | unknown[]) {
+    const oldValue = this.value;
+    let firstItem: unknown;
+    if (Array.isArray(optionsList)) {
+      [firstItem] = optionsList || [null];
+    } else {
+      firstItem = optionsList;
+    }
+    this.options.forEach(option => {
+      const selected = this.multi && Array.isArray(optionsList) ? optionsList?.includes(option.value) : firstItem === option;
+      option.selected = selected;
+    });
+    if (oldValue !== this.value) {
+      this.#fireInput();
     }
   }
 

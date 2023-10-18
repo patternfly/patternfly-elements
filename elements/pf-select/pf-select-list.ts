@@ -115,7 +115,7 @@ export class PfSelectList extends LitElement {
     this.#listboxController = new ListboxController(this, {
       caseSensitive: this.caseSensitive,
       matchAnywhere: this.matchAnywhere,
-      multiSelectable: this.multiSelectable,
+      multi: this.multiSelectable,
       orientation: 'vertical'
     });
     this.#listboxController.options = this.options as ListboxOptionElement[];
@@ -134,7 +134,7 @@ export class PfSelectList extends LitElement {
         this.#listboxController.matchAnywhere = this.matchAnywhere;
       }
       if (changed.has('multiSelectable')) {
-        this.#listboxController.multiSelectable = this.multiSelectable;
+        this.#listboxController.multi = this.multiSelectable;
       }
     }
   }

@@ -9,11 +9,6 @@
   position: relative;
 }
 
-:host(.animating) {
-  display: block;
-  transition: height 0.3s ease-in-out;
-}
-
 :host([fixed]) {
   overflow-y: auto;
 }

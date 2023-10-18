@@ -12,7 +12,7 @@
   --pf-c-check__body--MarginTop: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-check__label-required--MarginLeft: var(--pf-global--spacer--xs, 0.25rem);
   --pf-c-check__label-required--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
-  --pf-c-check__label-required--Color: var(--pf-global--danger-color--100);
+  --pf-c-check__label-required--Color: var(--pf-global--danger-color--100, #c9190b);
   display: grid;
   grid-template-columns: auto 1fr;
   grid-gap: var(--pf-c-check--GridGap);
@@ -52,3 +52,13 @@ label {
   color: var(--pf-c-check__label--Color);
 }
 
+label.disabled {
+  color: var(--pf-c-check__label--disabled--Color);
+}
+
+
+#required {
+  margin-left: var(--pf-c-check__label-required--MarginLeft);
+  font-size: var(--pf-c-check__label-required--FontSize);
+  color: var(--pf-c-check__label-required--Color);
+}

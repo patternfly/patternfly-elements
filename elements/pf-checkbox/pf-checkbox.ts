@@ -1,10 +1,12 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 
-import styles from './pf-checkbox.css';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
+import { classMap } from 'lit/directives/class-map.js';
+
+import styles from './pf-checkbox.css';
 
 export class RestoreEvent extends Event {
   constructor(public element: PfCheckbox) {
@@ -16,11 +18,14 @@ export class RestoreEvent extends Event {
  * A **checkbox** is used to select a single item or multiple items, typically to choose elements to perform an action or to reflect a binary setting.
  *
  * @slot - Place nested (i.e. 'controlled') patternfly form-control elements here
- * @slot description - Description text
- * @slot body - Body text
+ * @slot description - Description text of the checkbox.
+ * @slot body - Body text of the checkbox.
+ *
  * @fires {RestoreEvent} restore - when the form state is restored.
- * @cssprop --pf-c-check--GridGap {@default var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem)}
- * @cssprop --pf-c-check__label--disabled--Color {@default var(--pf-global--disabled-color--100, #6a6e73)}
+ * @fires change - An event for when the checkbox selection changes.
+ *
+ * @attr name - Form name of the checkbox
+ *
  * @cssprop --pf-c-check__label--Color {@default var(--pf-global--Color--100, #151515)}
  * @cssprop --pf-c-check__label--FontWeight {@default var(--pf-global--FontWeight--normal, 400)}
  * @cssprop --pf-c-check__label--FontSize {@default var(--pf-global--FontSize--md, 1rem)}
@@ -42,17 +47,41 @@ export class PfCheckbox extends LitElement {
 
   static shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
+  /**
+   * Label text of the checkbox.
+   */
   @property() label?: string;
 
+  /**
+   * Form value of the checkbox
+   */
   @property() value = '';
 
   @property({ type: Boolean, reflect: true }) indeterminate = false;
 
+  /**
+   * Flag to show if the checkbox is checked.
+   */
   @property({ type: Boolean, reflect: true }) checked = false;
 
+  /**
+   * Flag to show if the checkbox is disabled.
+   */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
+  /**
+   * Flag to show if the checkbox is required.
+   */
+  @property({ type: Boolean, reflect: true }) required = false;
+
   @queryAssignedElements() private nestedElements?: HTMLElement[];
+
+  /**
+   * Flag to show if the checkbox selection is valid or invalid.
+   */
+  get valid() {
+    return this.#internals.validity.valid;
+  }
 
   #internals = this.attachInternals();
 
@@ -71,6 +100,7 @@ export class PfCheckbox extends LitElement {
   }
 
   override render() {
+    const { checked, disabled, indeterminate, required } = this;
     const emptyNested = !this.#slots.hasSlotted(SlotController.anonymous as unknown as string);
     const emptyDescription = !this.#slots.hasSlotted('description');
     const emptyBody = !this.#slots.hasSlotted('body');
@@ -79,9 +109,14 @@ export class PfCheckbox extends LitElement {
              type="checkbox"
              aria-labelledby="accessibleLabel"
              @input="${this.#onChange}"
-             .checked="${this.checked}"
-             .indeterminate="${this.indeterminate}">
-      <label for="checkbox">${this.label ?? this.#internals.ariaLabel}</label>
+             .disabled="${disabled}"
+             .checked="${checked}"
+             .indeterminate="${indeterminate}">
+      <label for="checkbox"
+             class="${classMap({ disabled })}">
+        ${this.label ?? this.#internals.ariaLabel}
+        <span id="required" aria-hidden="true" ?hidden="${!required}">*</span>
+      </label>
       <slot id="nested"
             @input="${this.#onSlottedChange}"
             ?hidden="${emptyNested}"></slot>

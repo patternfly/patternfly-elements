@@ -118,7 +118,8 @@ export class PfSelect extends LitElement {
   @query('#toggle-input') private _input?: HTMLInputElement;
   @query('#toggle-button') private _toggle?: HTMLButtonElement;
 
-  #toggle?: ToggleController;
+  #toggle = new ToggleController(this, 'listbox');
+  #controllerOn = true;
 
   #createOption!: PfSelectOption;
 
@@ -239,15 +240,17 @@ export class PfSelect extends LitElement {
     const badge = hasBadge ? 'badge' : false;
     return html`
       <div id="outer" 
-        style="${this.#toggle?.styles ? styleMap(this.#toggle.styles) : ''}"
-        class="${classMap({ disabled, toggles, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
+          style="${this.#toggle?.styles ? styleMap(this.#toggle.styles) : ''}"
+          class="${classMap({ disabled, toggles, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
         <div id="toggle" 
-          ?expanded=${this.expanded}
-          ?hidden=${this.alwaysExpanded}>
+            ?expanded="${this.expanded}"
+            ?hidden="${this.alwaysExpanded}">
           ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
             <pf-chip-group label="${this.currentSelectionsLabel}">
               ${this.#selectedOptions.map(opt => html`
-                <pf-chip id="chip-${opt.textContent}" ?read-only=${this.disabled} @chip-remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>
+                <pf-chip id="chip-${opt.textContent}" 
+                  .readOnly="${this.disabled}"
+                  @chip-remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>
               `)}
             </pf-chip-group>
           `}
@@ -257,51 +260,47 @@ export class PfSelect extends LitElement {
             aria-controls="listbox" 
             aria-autocomplete="both" 
             aria-expanded="${!this.expanded ? 'false' : 'true'}"
-            ?disabled=${this.disabled}
-            ?hidden=${!this.typeahead} 
+            ?disabled="${this.disabled}"
+            ?hidden="${!this.typeahead}" 
             placeholder="${this.#buttonLabel}"
             role="combobox"
             @input=${this.#onTypeaheadInput}>
-          <button 
-            id="toggle-button" 
-            aria-expanded="${!this.expanded ? 'false' : 'true'}" 
-            aria-controls="listbox" 
-            aria-haspopup="listbox">
-            <span id="toggle-text" class="${classMap({ offscreen, badge })}">
-              ${this.#buttonLabel}
-            </span>
-            ${hasBadge ? html`
-              <span id="toggle-badge">
-                <pf-badge number="${this.#selectedOptions.length}">${this.#selectedOptions.length}</pf-badge>
-              </span> ` : ''}
-            <svg viewBox="0 0 320 512" 
-              fill="currentColor" 
-              aria-hidden="true">
-                <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
-            </svg>
-          </button>
+            <button id="toggle-button" 
+              aria-expanded="${!this.expanded ? 'false' : 'true'}" 
+              aria-controls="listbox" 
+              aria-haspopup="listbox">
+              <span id="toggle-text" class="${classMap({ offscreen, badge })}">
+                ${this.#buttonLabel}
+              </span>
+              ${hasBadge ? html`
+                <span id="toggle-badge">
+                  <pf-badge number="${this.#selectedOptions.length}">${this.#selectedOptions.length}</pf-badge>
+                </span> ` : ''}
+              <svg viewBox="0 0 320 512" 
+                fill="currentColor" 
+                aria-hidden="true">
+                  <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
+              </svg>
+            </button>
+          </div>
+          ${this.#selectList}
         </div>
-        ${this.#selectList}
-      </div>
     `;
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.#toggle = new ToggleController(this, 'listbox');
+  willUpdate(changed: PropertyValues<this>) {
+    if (changed.has('hasCheckboxes') && this.hasCheckboxes) {
+      import('@patternfly/elements/pf-badge/pf-badge.js');
+    }
   }
 
   updated(changed: PropertyValues<this>) {
-    if (changed.has('hasCheckboxes') && this.hasCheckboxes) {
-      import('@patternfly/elements/pf-badge/pf-badge.js');
+    if (changed.has('alwaysExpanded')) {
+      this.#setToggle();
     }
 
     if (changed.has('typeahead') || changed.has('createOptionText')) {
       this.#updateCreateOptionText();
-    }
-
-    if (changed.has('alwaysExpanded')) {
-      this.#setToggle();
     }
   }
 
@@ -312,15 +311,16 @@ export class PfSelect extends LitElement {
 
   #setToggle() {
     if (!this.alwaysExpanded) {
-      if (!this.#toggle) {
-        this.#toggle = new ToggleController(this, 'menu');
+      if (!this.#controllerOn) {
+        this.addController(this.#toggle);
+        this.#controllerOn = true;
       }
       this.#toggle?.setPopupElement(this._listbox);
       this.#toggle?.addTriggerElement(this._input);
       this.#toggle?.addTriggerElement(this._toggle);
     } else if (this.#toggle) {
       this.removeController(this.#toggle);
-      this.#toggle = undefined;
+      this.#controllerOn = false;
     }
   }
 
@@ -378,7 +378,7 @@ export class PfSelect extends LitElement {
       // prevent toggle firing a click event when focus is rest to it
       event.preventDefault();
       event.stopImmediatePropagation();
-      this.close();
+      this.hide();
     } else if (this._input) {
       this._input.value = '';
 
@@ -406,7 +406,7 @@ export class PfSelect extends LitElement {
     this.#updateCreateOptionValue(this._input?.value || '');
     if (this._listbox && this.filter !== this._input?.value) {
       this.filter = this._input?.value || '';
-      this.open();
+      this.show();
     }
   }
 
@@ -458,7 +458,7 @@ export class PfSelect extends LitElement {
   /**
    * opens the dropdown
    */
-  async open() {
+  async show() {
     await this.#toggle?.show(true);
   }
 
@@ -484,7 +484,7 @@ export class PfSelect extends LitElement {
   /**
    * closes listbox and sets focus
    */
-  async close() {
+  async hide() {
     await this.#toggle?.hide(true);
   }
 }

@@ -20,6 +20,7 @@
 
 #outer.disabled {
   color: var(--pf-global--Color--dark-200, #6a6e73) !important;
+  pointer-events: none;
 }
 
 #outer.toggles {

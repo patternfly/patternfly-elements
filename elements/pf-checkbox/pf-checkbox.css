@@ -1,0 +1,64 @@
+:host {
+  --pf-c-check--GridGap: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem);
+  --pf-c-check__label--disabled--Color: var(--pf-global--disabled-color--100, #6a6e73);
+  --pf-c-check__label--Color: var(--pf-global--Color--100, #151515);
+  --pf-c-check__label--FontWeight: var(--pf-global--FontWeight--normal, 400);
+  --pf-c-check__label--FontSize: var(--pf-global--FontSize--md, 1rem);
+  --pf-c-check__label--LineHeight: var(--pf-global--LineHeight--sm, 1.3);
+  --pf-c-check__input--Height: var(--pf-c-check__label--FontSize);
+  --pf-c-check__input--MarginTop: calc(((var(--pf-c-check__label--FontSize) * var(--pf-c-check__label--LineHeight)) - var(--pf-c-check__input--Height)) / 2);
+  --pf-c-check__description--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  --pf-c-check__description--Color: var(--pf-global--Color--200, #6a6e73);
+  --pf-c-check__body--MarginTop: var(--pf-global--spacer--sm, 0.5rem);
+  --pf-c-check__label-required--MarginLeft: var(--pf-global--spacer--xs, 0.25rem);
+  --pf-c-check__label-required--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  --pf-c-check__label-required--Color: var(--pf-global--danger-color--100);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: var(--pf-c-check--GridGap);
+  align-items: start;
+  justify-items: start;
+}
+
+[hidden] { display: none !important; }
+
+::slotted(pf-checkbox) {
+  margin-inline-start: var(--pf-global--spacer--md, 1rem);
+  grid-column: -1/1;
+}
+
+#description {
+  display: inline;
+  grid-column: 2;
+  font-size: var(--pf-c-check__description--FontSize);
+  color: var(--pf-c-check__description--Color);
+}
+
+#body {
+  display: inline;
+  grid-column: 2;
+  margin-top: var(--pf-c-check__body--MarginTop);
+}
+
+input {
+  height: var(--pf-c-check__input--Height);
+  margin-block-start: var(--pf-c-check__input--MarginTop);
+}
+
+label {
+  font-size: var(--pf-c-check__label--FontSize);
+  font-weight: var(--pf-c-check__label--FontWeight);
+  line-height: var(--pf-c-check__label--LineHeight);
+  color: var(--pf-c-check__label--Color);
+}
+
+.visually-hidden {
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+

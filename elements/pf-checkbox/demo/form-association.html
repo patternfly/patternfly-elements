@@ -1,0 +1,41 @@
+
+<form id="face">
+  <pf-checkbox label="Parent"
+               name="options"
+               value="parent">
+    <pf-checkbox label="Child 1"
+                 name="options"
+                 value="child1"></pf-checkbox>
+    <pf-checkbox label="Child 2"
+                 name="options"
+                 value="child2"></pf-checkbox>
+  </pf-checkbox>
+  <pf-checkbox label="Sibling"
+               name="options"
+               value="sibling"></pf-checkbox>
+  <pf-button>Submit and Log Results</pf-button>
+  <fieldset>
+    <legend>FormData</legend>
+    <output name="output"></output>
+  </fieldset>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-checkbox/pf-checkbox.js';
+  const form = document.getElementById('face')
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const formdata = new FormData(form);
+    console.log(event);
+    console.log(formdata)
+    const fields = Array.from(formdata.entries()).reduce((acc, [key, val]) => ({ ...acc,
+      [key]: key in acc ?  [acc[key], val].flat() : val
+    }), {});
+
+    delete fields.output;
+
+    form.elements.output.textContent = JSON.stringify(fields);
+  })
+</script>
+
+

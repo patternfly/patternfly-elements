@@ -1,16 +1,20 @@
 :host {
-  display: inline-flex;
-  column-gap: var(--pf-global--spacer--xs, 0.25rem);
-  align-items: center;
-  border-radius: var(--pf-global--BorderRadius--sm, 3px);
-  padding: 0 !important;
+  display: flex;
   font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
   font-size: var(--pf-global--FontSize--sm, 14px);
   font-weight: var(--pf-global--FontWeight--normal, 400);
   line-height: 1.6;
 }
 
-:host([has-category]) {
+#outer {
+  display: inline-flex;
+  column-gap: var(--pf-global--spacer--xs, 0.25rem);
+  align-items: center;
+  border-radius: var(--pf-global--BorderRadius--sm, 3px);
+  padding: 0 !important;
+}
+
+#outer.has-category {
   padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem) !important;
   background-color: var(--pf-theme--color--surface--lighter, #f0f0f0);
 }

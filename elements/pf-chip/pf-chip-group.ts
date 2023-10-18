@@ -26,7 +26,7 @@ export class PfChipGroup extends LitElement {
   /**
    * ARIA label for chip group that does not have a category name
    */
-  @property({ attribute: 'label', type: String }) label = '';
+  @property({ type: String }) label = '';
 
   /**
    * ARIA label for close button
@@ -36,7 +36,7 @@ export class PfChipGroup extends LitElement {
   /**
    * Flag if chip group can be closed
    */
-  @property({ attribute: 'closeable', type: Boolean }) closeable = false;
+  @property({ type: Boolean }) closeable = false;
 
   /**
    * Customizeable "more" template string. Use variable "${remaining}" for overflow chip count.
@@ -51,12 +51,12 @@ export class PfChipGroup extends LitElement {
   /**
    * Set number of chips to show before overflow
    */
-  @property({ reflect: true, attribute: 'num-chips', type: Number }) numChips = 3;
+  @property({ attribute: 'num-chips', type: Number }) numChips = 3;
 
   /**
    * Flag indicating if overflow chips are visible
    */
-  @property({ reflect: true, attribute: 'open', type: Boolean }) open = false;
+  @property({ reflect: true, type: Boolean }) open = false;
 
   @query('#overflow') private _overflowChip?: PfChip;
 
@@ -80,46 +80,46 @@ export class PfChipGroup extends LitElement {
   }
 
   render() {
+    const category = this.hasCategory ? 'has-category' : '';
     let collapsedText = `${this.collapsedText}`;
     if (this.collapsedText.match(/\$\{remaining\}/)) {
       collapsedText = this.collapsedText.split('${remaining}').join(`${this.remaining}`);
     }
-    return html`  
-      ${this.label === '' ? html`
-        <slot id="category" name="category-name" @slotchange=${this.#onSlotchange}></slot>
-      ` : html`
-        <slot id="category" name="category-name" @slotchange=${this.#onSlotchange}>
-          <span class="offscreen">${this.label}</span>
-        </slot>
-      `}
-      <slot id="chips"></slot>
-      ${this.remaining < 1 ? '' : html`
-        <pf-chip 
-          id="overflow"
-          overflow-chip 
-          aria-controls="chips" 
-          aria-expanded=${this.open}
-          @click="${this.#onMoreClick}"
-          @chip-ready="${this.#onChipReady}">
-          ${this.open ? this.expandedText : collapsedText}
-        </pf-chip>
-      `}
-      ${!this.closeable ? '' : html`
-        <button id="close-button" @click=${this.#onCloseClick} aria-describedby="category" aria-label="${this.closeLabel}">
-          <svg fill="currentColor" viewBox="0 0 496 496">
-            <path d="m248,0C111,0,0,111,0,248s111,248,248,248,248-111,248-248S385,0,248,0Zm121.6,313.1c4.7,4.7,4.7,12.3,0,17l-39.6,39.5c-4.7,4.7-12.3,4.7-17,0l-65-65.6-65.1,65.6c-4.7,4.7-12.3,4.7-17,0l-39.5-39.6c-4.7-4.7-4.7-12.3,0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3,0-17l39.6-39.6c4.7-4.7,12.3-4.7,17,0l65,65.7,65.1-65.6c4.7-4.7,12.3-4.7,17,0l39.6,39.6c4.7,4.7,4.7,12.3,0,17l-65.7,65,65.6,65.1Z"/>
-          </svg>
-        </button>
-      `}
+    return html`
+      <div id="outer" class="${category}">  
+        ${this.label === '' ? html`
+          <slot id="category" name="category-name" @slotchange=${this.#onSlotchange}></slot>
+        ` : html`
+          <slot id="category" name="category-name" @slotchange=${this.#onSlotchange}>
+            <span class="offscreen">${this.label}</span>
+          </slot>
+        `}
+        <slot id="chips"></slot>
+        ${this.remaining < 1 ? '' : html`
+          <pf-chip 
+            id="overflow"
+            overflow-chip 
+            aria-controls="chips" 
+            aria-expanded=${this.open}
+            @click="${this.#onMoreClick}"
+            @chip-ready="${this.#onChipReady}">
+            ${this.open ? this.expandedText : collapsedText}
+          </pf-chip>
+        `}
+        ${!this.closeable ? '' : html`
+          <button id="close-button" @click=${this.#onCloseClick} aria-describedby="category" aria-label="${this.closeLabel}">
+            <svg fill="currentColor" viewBox="0 0 496 496">
+              <path d="m248,0C111,0,0,111,0,248s111,248,248,248,248-111,248-248S385,0,248,0Zm121.6,313.1c4.7,4.7,4.7,12.3,0,17l-39.6,39.5c-4.7,4.7-12.3,4.7-17,0l-65-65.6-65.1,65.6c-4.7,4.7-12.3,4.7-17,0l-39.5-39.6c-4.7-4.7-4.7-12.3,0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3,0-17l39.6-39.6c4.7-4.7,12.3-4.7,17,0l65,65.7,65.1-65.6c4.7-4.7,12.3-4.7,17,0l39.6,39.6c4.7,4.7,4.7,12.3,0,17l-65.7,65,65.6,65.1Z"/>
+            </svg>
+          </button>
+        `}
+      </div>
     `;
   }
 
   updated(changed: PropertyValues<this>) {
     if (changed.has('closeLabel') || changed.has('numChips') || changed.has('open')) {
       this.#updateChips();
-    }
-    if (changed.has('label')) {
-      this.#updateHasCategory();
     }
   }
 
@@ -211,7 +211,7 @@ export class PfChipGroup extends LitElement {
   }
 
   #onSlotchange() {
-    this.#updateHasCategory();
+    this.requestUpdate();
   }
 
   /**
@@ -228,17 +228,6 @@ export class PfChipGroup extends LitElement {
       }
     });
     this.requestUpdate();
-  }
-
-  /**
-   * updates whether chip group has a category
-   */
-  #updateHasCategory() {
-    if (this.hasCategory) {
-      this.setAttribute('has-category', 'has-category');
-    } else {
-      this.removeAttribute('has-category');
-    }
   }
 
   /**

@@ -57,6 +57,9 @@ export class PfCheckbox extends LitElement {
    */
   @property() value = '';
 
+  /**
+   * Flag to show if the checkbox is indeterminate.
+   */
   @property({ type: Boolean, reflect: true }) indeterminate = false;
 
   /**

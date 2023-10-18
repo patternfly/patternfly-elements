@@ -20,7 +20,7 @@ export class PfChip extends LitElement {
   static readonly styles = [styles];
 
   /**
-   * ARIA label for close button
+   * Accessible label for close button
    */
   @property({ attribute: 'close-label', type: String }) closeLabel = 'Close';
 

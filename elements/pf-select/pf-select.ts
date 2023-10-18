@@ -43,7 +43,7 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'create-option-text', type: String }) createOptionText = '';
 
   /**
-   * ARIA label for chip group used to describe chips
+   * Accessible label for chip group used to describe chips
    */
   @property({ attribute: 'current-selections-label', type: String }) currentSelectionsLabel = 'Current selections';
 

@@ -24,12 +24,12 @@ export class PfChipGroup extends LitElement {
   static readonly styles = [styles];
 
   /**
-   * ARIA label for chip group that does not have a category name
+   * Accessible label for chip group that does not have a category name
    */
   @property({ type: String }) label = '';
 
   /**
-   * ARIA label for close button
+   * Accessible label for close button
    */
   @property({ attribute: 'close-label', type: String }) closeLabel = 'Close';
 

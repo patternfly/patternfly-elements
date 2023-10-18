@@ -1,5 +1,5 @@
 {% renderOverview %}
-  <pf-checkbox></pf-checkbox>
+  <pf-checkbox label="Checkbox"></pf-checkbox>
 {% endrenderOverview %}
 
 {% band header="Usage" %}{% endband %}

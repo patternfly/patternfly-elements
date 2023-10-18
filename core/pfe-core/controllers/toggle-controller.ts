@@ -10,7 +10,7 @@ export interface ToggleHost extends HTMLElement {
   expanded: boolean;
 }
 
-export type HasPopupType = 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
+export type PopupKind = 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
 
 /**
  * Implements roving tabindex, as described in WAI-ARIA practices, [Managing Focus Within
@@ -18,7 +18,7 @@ export type HasPopupType = 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dial
  * tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
  */
 export class ToggleController implements ReactiveController {
-  /** element that triggers aria-haspopup content open or closed */
+  /** element that toggles popup */
   #triggerElements?: HTMLElement[];
 
   /** pop-up that is toggled */
@@ -37,7 +37,7 @@ export class ToggleController implements ReactiveController {
 
   #enableFlip = false;
 
-  #popupType: HasPopupType = 'true';
+  #popupType: PopupKind = 'menu';
 
   #float?: FloatingDOMController;
 
@@ -81,7 +81,7 @@ export class ToggleController implements ReactiveController {
     return this.#popupElement;
   }
 
-  set popupType(popupType: HasPopupType) {
+  set popupType(popupType: PopupKind) {
     if (this.#popupType !== popupType) {
       this.#popupType = popupType;
       this.#triggerElements?.forEach(element => element.setAttribute('aria-haspopup', this.#popupType));
@@ -130,7 +130,7 @@ export class ToggleController implements ReactiveController {
   }
 
   constructor(
-    public host: ReactiveControllerHost & ToggleHost & ReactiveElement, popupType?: HasPopupType
+    public host: ReactiveControllerHost & ToggleHost & ReactiveElement, popupType?: PopupKind
   ) {
     this.host.addController(this);
     this.#popupType = popupType || 'menu';
@@ -189,7 +189,7 @@ export class ToggleController implements ReactiveController {
     const focusedShadowDOM = this.host?.shadowRoot?.activeElement && !!this.host.shadowRoot?.contains(this.host?.shadowRoot?.activeElement);
     this.focused = !!focusedLightDOM || !!focusedShadowDOM;
     if (!this.focused) {
-      setTimeout( this.close.bind(this), 300);
+      setTimeout( this.hide.bind(this), 300);
     }
   }
 
@@ -201,7 +201,7 @@ export class ToggleController implements ReactiveController {
     this.focused = false;
     // wait for immediate focus or hover event;
     // then test if popup can be closed
-    setTimeout(this.close.bind(this), 300);
+    setTimeout(this.hide.bind(this), 300);
   }
 
   /**
@@ -219,7 +219,7 @@ export class ToggleController implements ReactiveController {
     this.hovered = false;
     // wait for immediate focus or hover event;
     // then test if popup can be closed
-    setTimeout( this.close.bind(this), 300);
+    setTimeout( this.hide.bind(this), 300);
   }
 
   /**
@@ -240,10 +240,13 @@ export class ToggleController implements ReactiveController {
    * handles listbox ≈ event
    */
   async #onPopupKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape' || event.key === 'Esc') {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      await this.close(true);
+    switch (event.key) {
+      case 'Escape':
+      case 'Esc':
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        await this.hide(true);
+        break;
     }
     this.#updateFocused();
   }
@@ -273,7 +276,7 @@ export class ToggleController implements ReactiveController {
     if (event.key === 'ArrowDown') {
       event.preventDefault();
       event.stopImmediatePropagation();
-      await this.open(true);
+      await this.show(true);
     }
   }
 
@@ -289,12 +292,13 @@ export class ToggleController implements ReactiveController {
   */
   setPopupElement(popupElement?: HTMLElement | null) {
     if (popupElement && this.#popupElement !== popupElement) {
+      const listeners = Object.entries({
+        ...this.#popupListeners,
+        ...this.#hostListeners,
+      });
       // remove old listener
       if (this.#popupElement) {
-        for (const [event, listener] of Object.entries(this.#popupListeners)) {
-          this.#popupElement?.removeEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
-        }
-        for (const [event, listener] of Object.entries(this.#hostListeners)) {
+        for (const [event, listener] of listeners) {
           this.#popupElement?.removeEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
         }
       }
@@ -302,10 +306,7 @@ export class ToggleController implements ReactiveController {
       this.#popupElement = popupElement;
       this.#popupElement.id = getRandomId(this.host.localName);
       // add new listeners
-      for (const [event, listener] of Object.entries(this.#popupListeners)) {
-        this.#popupElement?.addEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
-      }
-      for (const [event, listener] of Object.entries(this.#hostListeners)) {
+      for (const [event, listener] of listeners) {
         this.#popupElement?.addEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
       }
     }
@@ -354,14 +355,14 @@ export class ToggleController implements ReactiveController {
    * toggles popup based on current state
    */
   async toggle() {
-    this.expanded ? await this.close(true) : await this.open();
+    this.expanded ? await this.hide(true) : await this.show();
   }
 
   /**
-   * opens popup and sets focus
+   * shows popup and sets focus
    * @param focus {boolean} whether popup element should receive focus
    */
-  async open(focus = false) {
+  async show(focus = false) {
     const { expanded } = this;
     if (this.#popupElement && this.float) {
       await this.float.show({
@@ -384,9 +385,9 @@ export class ToggleController implements ReactiveController {
   }
 
   /**
-   * closes popup and sets focus
+   * hides popup and sets focus
    */
-  async close(force = false) {
+  async hide(force = false) {
     const { expanded } = this;
     const hasFocus = this.#focused || this.#hovered;
     // only close if popup is not set to always open

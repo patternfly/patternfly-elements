@@ -410,9 +410,7 @@ export class PfSelect extends LitElement {
     this.#updateCreateOptionValue(this._input?.value || '');
     if (this._listbox && this.filter !== this._input?.value) {
       this.filter = this._input?.value || '';
-      if (this.#toggle) {
-        this.#toggle.open();
-      }
+      this.open();
     }
   }
 
@@ -465,7 +463,7 @@ export class PfSelect extends LitElement {
    * opens the dropdown
    */
   async open() {
-    await this.#toggle?.open(true);
+    await this.#toggle?.show(true);
   }
 
   /**
@@ -491,7 +489,7 @@ export class PfSelect extends LitElement {
    * closes listbox and sets focus
    */
   async close() {
-    await this.#toggle?.close(true);
+    await this.#toggle?.hide(true);
   }
 }
 

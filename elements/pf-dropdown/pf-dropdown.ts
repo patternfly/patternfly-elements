@@ -165,14 +165,14 @@ export class PfDropdown extends LitElement {
    * Opens the dropdown
    */
   @bound async open() {
-    await this.#toggle?.open(true);
+    await this.#toggle?.show(true);
   }
 
   /**
    * Closes the dropdown
    */
   @bound async close() {
-    await this.#toggle?.close(true);
+    await this.#toggle?.hide(true);
   }
 }
 

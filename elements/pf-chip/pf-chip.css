@@ -1,10 +1,10 @@
 :host {
+  align-items: center;
   display: inline-flex;
 }
 
 *[hidden],
-:host([hidden]),
-:host([overflow-hidden]) {
+:host([hidden]) {
   display: none !important;
 }
 
@@ -28,7 +28,6 @@
   border-color: var(--pf-theme--color--accent, #0066cc);
 }
 
-:host,
 .chip-content {
   display: inline-flex;
   align-items: center;

@@ -222,9 +222,9 @@ export class PfChipGroup extends LitElement {
       chip.closeLabel = this.closeLabel;
       const overflowHidden = i >= this.numChips && !this.open;
       if (overflowHidden) {
-        chip.setAttribute('overflow-hidden', 'overflow-hidden');
+        chip.style.setProperty('display', 'none');
       } else {
-        chip.removeAttribute('overflow-hidden');
+        chip.style.removeProperty('display');
       }
     });
     this.requestUpdate();

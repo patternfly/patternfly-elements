@@ -180,6 +180,6 @@ export class SlotController implements ReactiveController {
     const slot = this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
     const hasContent = !!elements.length;
     this.#nodes.set(name, { elements, name: slotName ?? '', hasContent, slot });
-    this.#logger.log(slotName, hasContent);
+    this.#logger.debug(slotName, hasContent);
   };
 }

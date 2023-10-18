@@ -442,9 +442,8 @@ export class ListboxController<
   #onOptionKeydown(event: KeyboardEvent) {
     this.#showAllOptions = false;
 
-    // need to set for keyboard support of multiselect
-    if (event.key === 'Shift' && this.multi) {
-      this.#shiftStartingItem = this.activeItem;
+    if (event.altKey || event.metaKey) {
+      return;
     }
     const target = event.target as ListboxOptionElement;
     const oldValue = this.value;
@@ -452,10 +451,12 @@ export class ListboxController<
     const last = this.#tabindex.lastItem as ListboxOptionElement;
     let stopEvent = false;
     let focusEvent: ListboxOptionElement | undefined;
-    if (event.altKey ||
-      event.metaKey) {
-      return;
+
+    // need to set for keyboard support of multiselect
+    if (event.key === 'Shift' && this.multi) {
+      this.#shiftStartingItem = this.activeItem;
     }
+
     switch (event.key) {
       case 'a':
       case 'A':

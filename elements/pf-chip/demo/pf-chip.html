@@ -1,12 +1,22 @@
 <link rel="stylesheet" href="demo.css">
 <script type="module" src="pf-chip.js"></script>
 
-<pf-chip>Chip 1</pf-chip><br><br>
-<pf-tooltip>
-  <pf-chip id="longchip">Really long chip that goes on and on</pf-chip>
-  <span slot="content">Really long chip that goes on and on</span>
-</pf-tooltip>
-<br><br>
-<pf-chip>Chip <pf-badge number="7">7</pf-badge></pf-chip><br><br>
-<pf-chip read-only>Read-only chip</pf-chip><br><br>
-<pf-chip overflow-chip>Overflow chip</pf-chip><br><br>
+<div>
+  <h2>Chip</h2>
+  <pf-chip>Chip 1</pf-chip>
+
+  <h2>Long chip with tooltip</h2>
+  <pf-tooltip>
+    <pf-chip id="longchip">Really long chip that goes on and on</pf-chip>
+    <span slot="content">Really long chip that goes on and on</span>
+  </pf-tooltip>
+
+  <h2>Chip with badge</h2>
+  <pf-chip>Chip <pf-badge number="7">7</pf-badge></pf-chip>
+
+  <h2>Read-only chip</h2>
+  <pf-chip read-only>Read-only chip</pf-chip>
+
+  <h2>Overflow chip</h2>
+  <pf-chip overflow-chip>Overflow chip</pf-chip> 
+</div>

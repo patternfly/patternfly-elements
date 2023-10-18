@@ -1,31 +1,37 @@
 <link rel="stylesheet" href="demo.css">
 <script type="module" src="pf-chip.js"></script>
-<pf-chip-group>
-  <pf-chip>Chip 1</pf-chip>
-  <pf-chip>Chip 2</pf-chip>
-  <pf-chip>Chip 3</pf-chip>
-  <pf-chip>Chip 4</pf-chip>
-</pf-chip-group>
-<br><br>
-<pf-chip-group num-chips="2" label="Category one">
-  <pf-chip>Chip 1</pf-chip>
-  <pf-chip>Chip 2</pf-chip>
-  <pf-chip>Chip 3</pf-chip>
-  <pf-chip>Chip 4</pf-chip>
-</pf-chip-group>
-<br><br>
-<pf-chip-group open>
-  <span slot="category-name">Category two</span>
-  <pf-chip>Chip 1</pf-chip>
-  <pf-chip>Chip 2</pf-chip>
-  <pf-chip>Chip 3</pf-chip>
-  <pf-chip>Chip 4</pf-chip>
-</pf-chip-group>
-<br><br>
-<pf-chip-group num-chips="2" closeable>
-  <span slot="category-name">Category three</span>
-  <pf-chip>Chip 1</pf-chip>
-  <pf-chip>Chip 2</pf-chip>
-  <pf-chip>Chip 3</pf-chip>
-  <pf-chip>Chip 4</pf-chip>
-</pf-chip-group>
+<div>
+  <h2>Chip group</h2>
+  <pf-chip-group>
+    <pf-chip>Chip 1</pf-chip>
+    <pf-chip>Chip 2</pf-chip>
+    <pf-chip>Chip 3</pf-chip>
+    <pf-chip>Chip 4</pf-chip>
+  </pf-chip-group>
+  
+  <h2>Chip group, with label attribute and custom number of chips</h2>
+  <pf-chip-group num-chips="2" label="Category one">
+    <pf-chip>Chip 1</pf-chip>
+    <pf-chip>Chip 2</pf-chip>
+    <pf-chip>Chip 3</pf-chip>
+    <pf-chip>Chip 4</pf-chip>
+  </pf-chip-group>
+  
+  <h2>Chip group, with slotted category name, displaying all chips</h2>
+  <pf-chip-group open>
+    <span slot="category-name">Category two</span>
+    <pf-chip>Chip 1</pf-chip>
+    <pf-chip>Chip 2</pf-chip>
+    <pf-chip>Chip 3</pf-chip>
+    <pf-chip>Chip 4</pf-chip>
+  </pf-chip-group>
+
+  <h2>Chip group, closeable, with custom number of chips</h2>
+  <pf-chip-group num-chips="2" closeable>
+    <span slot="category-name">Category three</span>
+    <pf-chip>Chip 1</pf-chip>
+    <pf-chip>Chip 2</pf-chip>
+    <pf-chip>Chip 3</pf-chip>
+    <pf-chip>Chip 4</pf-chip>
+  </pf-chip-group>
+</div>

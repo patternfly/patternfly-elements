@@ -1,3 +1,11 @@
+div {
+  padding: 0 15px 15px;
+}
+
+pf-chip-group {
+  margin-bottom: 15px;
+}
+
 #longchip::part(text) {
   max-width: 10em;
   overflow-x: hidden;

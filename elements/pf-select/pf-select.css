@@ -7,11 +7,6 @@
   --_pf-select-option-svg-display: block;
 }
 
-:host([has-checkboxes]) {
-  --_pf-select-option-checkboxes-display: inline;
-  --_pf-select-option-svg-display: none;
-}
-
 :host, #outer.toggles {
   display: flex;
   flex-direction: column;
@@ -63,7 +58,7 @@
   justify-content: space-between;
 }
 
-#toggle[open] {
+#toggle[expanded] {
   border-bottom-width: 2px;
   border-bottom-color: var(--pf-theme--color--accent, #0066cc);
 }
@@ -101,7 +96,7 @@
   padding: var(--pf-global--spacer--sm, 0.5rem);
 }
 
-:host([typeahead]) #toggle-button {
+#outer.typeahead #toggle-button {
   flex: 0 0 auto;
 }
 
@@ -127,6 +122,11 @@ pf-badge {
   height: 1em;
   flex: 0 0 auto;
   margin-inline-start: 1em;
+}
+
+pf-select-list.checkboxes {
+  --_pf-select-option-checkboxes-display: inline;
+  --_pf-select-option-svg-display: none;
 }
 
 .offscreen {

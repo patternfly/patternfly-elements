@@ -11,7 +11,7 @@ import { PfSelectList } from './pf-select-list.js';
 
 import styles from './pf-select.css';
 
-export type PfSelectItemsDisplay = '' | 'badge' | 'chips';
+export type PfSelectItemsDisplay = 'default' | 'badge' | 'chips';
 export type Placement = 'bottom' | 'top' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end';
 /**
  * A select list enables users to select one or more items from a list.
@@ -65,7 +65,7 @@ export class PfSelect extends LitElement {
   /**
    * listbox filter
    */
-  @property({ attribute: 'filter', type: String }) filter = '';
+  @property({ type: String }) filter = '';
 
   /**
    * whether listbox is has checkboxes when `multi-select` is enabled
@@ -91,14 +91,14 @@ export class PfSelect extends LitElement {
   /**
    * whether listbox is always expanded
    */
-  @property({ reflect: true, attribute: 'expanded', type: Boolean }) expanded = false;
+  @property({ reflect: true, type: Boolean }) expanded = false;
 
   /**
    * Indicates initial popover position.
    * There are 6 options: `bottom`, `top`, `top-start`, `top-end`, `bottom-start`, `bottom-end`.
    * Default is `bottom`.
    */
-  @property({ reflect: true, attribute: 'position' }) position: Placement = 'bottom';
+  @property({ reflect: true }) position: Placement = 'bottom';
 
   /**
    * how listbox will display multiple items in toggle area:
@@ -106,12 +106,12 @@ export class PfSelect extends LitElement {
    * 'chips' for a group of chips,
    * '' for # items selected text (default)
    */
-  @property({ attribute: 'selected-items-display', type: String }) selectedItemsDisplay: PfSelectItemsDisplay = '';
+  @property({ attribute: 'selected-items-display', type: String }) selectedItemsDisplay: PfSelectItemsDisplay = 'default';
 
   /**
    * whether listbox controlled by combobox that supports typing
    */
-  @property({ attribute: 'typeahead', type: Boolean }) typeahead = false;
+  @property({ type: Boolean }) typeahead = false;
 
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
   @query('pf-select-list') private _listbox?: PfSelectList;
@@ -233,18 +233,14 @@ export class PfSelect extends LitElement {
 
   render() {
     const { hasBadge, typeahead, disabled, alwaysExpanded } = this;
+    const { expanded, anchor, alignment } = this.#toggle || { 'expanded': true, 'anchor': 'bottom', 'alignment': 'start' };
     const toggles = !alwaysExpanded ? 'toggles' : false;
     const offscreen = typeahead ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
-    let classes = { };
-    if (this.#toggle && !alwaysExpanded) {
-      const { expanded, anchor, alignment } = this.#toggle;
-      classes = { disabled, toggles, expanded, [anchor]: !!anchor, [alignment]: !!alignment };
-    }
     return html`
       <div id="outer" 
         style="${this.#toggle?.styles ? styleMap(this.#toggle.styles) : ''}"
-        class="${classMap(classes)}">
+        class="${classMap({ disabled, toggles, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
         <div id="toggle" 
           ?expanded=${this.expanded}
           ?hidden=${this.alwaysExpanded}>

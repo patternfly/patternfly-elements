@@ -1,5 +1,0 @@
-:host {
-  transition-property: box-shadow, border;
-  transition-timing-function: ease-out;
-  transition-duration: 1ms;
-}

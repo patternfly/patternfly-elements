@@ -1,11 +1,6 @@
 # Checkbox
-Add a description of the component here.
-
-## Usage
-Describe how best to use this web component along with best practices.
+A **checkbox** is used to select a single item or multiple items, typically to choose elements to perform an action or to reflect a binary setting.
 
 ```html
-<pf-checkbox>
-
-</pf-checkbox>
+<pf-checkbox label="Checkbox"></pf-checkbox>
 ```

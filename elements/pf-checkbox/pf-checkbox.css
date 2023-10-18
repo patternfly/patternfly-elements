@@ -22,7 +22,7 @@
 
 [hidden] { display: none !important; }
 
-::slotted(pf-checkbox) {
+#nested::slotted(*) {
   margin-inline-start: var(--pf-global--spacer--md, 1rem);
   grid-column: -1/1;
 }
@@ -50,15 +50,5 @@ label {
   font-weight: var(--pf-c-check__label--FontWeight);
   line-height: var(--pf-c-check__label--LineHeight);
   color: var(--pf-c-check__label--Color);
-}
-
-.visually-hidden {
-  position: fixed;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 

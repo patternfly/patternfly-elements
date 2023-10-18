@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 
 import styles from './pf-checkbox.css';
@@ -13,10 +13,26 @@ export class RestoreEvent extends Event {
 }
 
 /**
- * Checkbox
- * @slot - Place nested (i.e. 'controlled') pf-checkbox elements here
+ * A **checkbox** is used to select a single item or multiple items, typically to choose elements to perform an action or to reflect a binary setting.
+ *
+ * @slot - Place nested (i.e. 'controlled') patternfly form-control elements here
  * @slot description - Description text
  * @slot body - Body text
+ * @fires {RestoreEvent} restore - when the form state is restored.
+ * @cssprop --pf-c-check--GridGap {@default var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem)}
+ * @cssprop --pf-c-check__label--disabled--Color {@default var(--pf-global--disabled-color--100, #6a6e73)}
+ * @cssprop --pf-c-check__label--Color {@default var(--pf-global--Color--100, #151515)}
+ * @cssprop --pf-c-check__label--FontWeight {@default var(--pf-global--FontWeight--normal, 400)}
+ * @cssprop --pf-c-check__label--FontSize {@default var(--pf-global--FontSize--md, 1rem)}
+ * @cssprop --pf-c-check__label--LineHeight {@default var(--pf-global--LineHeight--sm, 1.3)}
+ * @cssprop --pf-c-check__input--Height {@default var(--pf-c-check__label--FontSize)}
+ * @cssprop --pf-c-check__input--MarginTop {@default calc(((var(--pf-c-check__label--FontSize) * var(--pf-c-check__label--LineHeight)) - var(--pf-c-check__input--Height)) / 2)}
+ * @cssprop --pf-c-check__description--FontSize {@default var(--pf-global--FontSize--sm, 0.875rem)}
+ * @cssprop --pf-c-check__description--Color {@default var(--pf-global--Color--200, #6a6e73)}
+ * @cssprop --pf-c-check__body--MarginTop {@default var(--pf-global--spacer--sm, 0.5rem)}
+ * @cssprop --pf-c-check__label-required--MarginLeft {@default var(--pf-global--spacer--xs, 0.25rem)}
+ * @cssprop --pf-c-check__label-required--FontSize {@default var(--pf-global--FontSize--sm, 0.875rem)}
+ * @cssprop --pf-c-check__label-required--Color {@default var(--pf-global--danger-color--100)}
  */
 @customElement('pf-checkbox')
 export class PfCheckbox extends LitElement {
@@ -51,6 +67,7 @@ export class PfCheckbox extends LitElement {
 
   override willUpdate() {
     this.#internals.setFormValue(this.checked ? this.value : null);
+    this.#setDisabledStateOnNestedControls();
   }
 
   override render() {
@@ -66,7 +83,7 @@ export class PfCheckbox extends LitElement {
              .indeterminate="${this.indeterminate}">
       <label for="checkbox">${this.label ?? this.#internals.ariaLabel}</label>
       <slot id="nested"
-            @input="${this.#onSlottedCheckboxChange}"
+            @input="${this.#onSlottedChange}"
             ?hidden="${emptyNested}"></slot>
       <slot id="description" name="description" ?hidden="${emptyDescription}"></slot>
       <slot id="body" name="body" ?hidden="${emptyBody}"></slot>
@@ -88,18 +105,6 @@ export class PfCheckbox extends LitElement {
     }
   }
 
-  setCustomValidity(message: string) {
-    this.#internals.setValidity({}, message);
-  }
-
-  checkValidity() {
-    return this.#internals.checkValidity();
-  }
-
-  reportValidity() {
-    return this.#internals.reportValidity();
-  }
-
   #onChange(event: Event) {
     this.checked = (event.target as HTMLInputElement).checked;
     this.#toggleAll(this.checked);
@@ -108,11 +113,12 @@ export class PfCheckbox extends LitElement {
   async #onRestore(event: Event) {
     if (event instanceof RestoreEvent && event.element !== this) {
       await this.updateComplete;
-      this.#onSlottedCheckboxChange();
+      this.#onSlottedChange();
+      this.#setDisabledStateOnNestedControls();
     }
   }
 
-  #onSlottedCheckboxChange() {
+  async #onSlottedChange() {
     if (this.#batching) {
       return;
     }
@@ -128,6 +134,22 @@ export class PfCheckbox extends LitElement {
     this.indeterminate = checked && unchecked;
   }
 
+  async #setDisabledStateOnNestedControls() {
+    const controls = this.nestedElements?.filter(x => !(x instanceof PfCheckbox)) ?? [];
+    if (controls.length) {
+      await Promise.race([
+        new Promise(r => setTimeout(r, 1000)),
+        Promise.all(controls.map(x =>
+          customElements.whenDefined(x.localName)))
+      ]);
+      for (const control of controls) {
+        if ('disabled' in control) {
+          control.disabled = !this.checked;
+        }
+      }
+    }
+  }
+
   #toggleAll(force: boolean) {
     this.#batching = true;
     for (const el of this.nestedElements ?? []) {
@@ -136,6 +158,18 @@ export class PfCheckbox extends LitElement {
       }
     }
     this.#batching = false;
+  }
+
+  setCustomValidity(message: string) {
+    this.#internals.setValidity({}, message);
+  }
+
+  checkValidity() {
+    return this.#internals.checkValidity();
+  }
+
+  reportValidity() {
+    return this.#internals.reportValidity();
   }
 }
 

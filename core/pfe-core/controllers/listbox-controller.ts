@@ -162,11 +162,11 @@ export class ListboxController<
    * default is vertical
    */
   set orientation(orientation: ListboxOrientation) {
-    this.#internals.ariaOrientation = orientation || '';
+    this.#internals.ariaOrientation = orientation || 'undefined';
   }
 
   get orientation(): ListboxOrientation {
-    const orientation = this.#internals.ariaOrientation || '';
+    const orientation = this.#internals.ariaOrientation || 'undefined';
     return orientation as ListboxOrientation;
   }
 
@@ -442,12 +442,12 @@ export class ListboxController<
    */
   #onOptionKeydown(event: KeyboardEvent) {
     this.#showAllOptions = false;
+    const target = event.target ? event.target as ListboxOptionElement : undefined;
 
-    if (event.altKey || event.metaKey) {
+    if (event.altKey || event.metaKey || !target || !this.options.includes(target)) {
       return;
     }
 
-    const target = event.target as ListboxOptionElement;
     const first = this.#tabindex.firstItem as ListboxOptionElement;
     const last = this.#tabindex.lastItem as ListboxOptionElement;
 
@@ -470,19 +470,17 @@ export class ListboxController<
       case ' ':
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
-        if (target) {
-          if (this.multi) {
-            if (event.shiftKey) {
-              this.#updateMultiselect(target);
-            } else if (!this.disabled) {
-              target.selected = !target.selected;
-            }
-          } else {
-            this.#updateSingleselect();
+        if (this.multi) {
+          if (event.shiftKey) {
+            this.#updateMultiselect(target);
+          } else if (!this.disabled) {
+            target.selected = !target.selected;
           }
-          event.stopPropagation();
-          event.preventDefault();
+        } else {
+          this.#updateSingleselect();
         }
+        event.stopPropagation();
+        event.preventDefault();
         break;
       default:
         break;
@@ -526,9 +524,9 @@ export class ListboxController<
   }
 
   /**
-   * verfies that selected options are limited to exisiting listbox options
+   * verfies that selected options are limited to existing listbox options
    */
-  isValid(val: string | null) {
+  hasValue(val: string | null) {
     const vals = val?.split(',') || [];
     const options = this.options.map(option => option.textContent);
     return vals.every(val => {

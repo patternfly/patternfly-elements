@@ -1,7 +1,6 @@
 import { html, expect, oneEvent, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfAvatar } from '@patternfly/elements/pf-avatar/pf-avatar.js';
-import { AvatarLoadEvent } from '../BaseAvatar';
+import { PfAvatar, AvatarLoadEvent } from '@patternfly/elements/pf-avatar/pf-avatar.js';
 
 describe('<pf-avatar>', function() {
   it('imperatively instantiates', function() {

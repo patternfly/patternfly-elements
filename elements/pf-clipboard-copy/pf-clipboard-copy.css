@@ -3,6 +3,12 @@
   flex-direction: column;
 }
 
+[hidden],
+[inert],
+[inert]::slotted(*) {
+  display: none !important;
+}
+
 #input-group,
 #wrapper,
 pf-tooltip,

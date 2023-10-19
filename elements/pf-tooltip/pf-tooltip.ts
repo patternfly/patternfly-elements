@@ -14,7 +14,6 @@ import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 
 import { StringListConverter } from '@patternfly/pfe-core';
 
-
 import styles from './pf-tooltip.css';
 
 const EnterEvents = ['focusin', 'tap', 'click', 'mouseenter'];

@@ -18,7 +18,6 @@
     "./pf-accordion/pf-accordion.js": "./pf-accordion/pf-accordion.js",
     "./pf-avatar/BaseAvatar.js": "./pf-avatar/BaseAvatar.js",
     "./pf-avatar/pf-avatar.js": "./pf-avatar/pf-avatar.js",
-    "./pf-badge/BaseBadge.js": "./pf-badge/BaseBadge.js",
     "./pf-badge/pf-badge.js": "./pf-badge/pf-badge.js",
     "./pf-banner/pf-banner.js": "./pf-banner/pf-banner.js",
     "./pf-button/BaseButton.js": "./pf-button/BaseButton.js",

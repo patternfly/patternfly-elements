@@ -1,3 +1,15 @@
+:host {
+  display: inline-block;
+}
+
+svg {
+  fill: currentcolor;
+}
+
+[hidden] {
+  display: none !important;
+}
+
 :host([checked]) #container {
   color: var(--pf-c-switch__input--checked__label--Color,
     var(--pf-global--Color--dark-100, #151515));
@@ -8,6 +20,27 @@
 :host([checked]) #container::before {
   translate: var(--pf-c-switch__input--checked__toggle--before--TranslateX,
     calc(100% + var(--pf-c-switch__toggle-icon--Offset, 0.125rem)));
+}
+
+:host(:focus-within) #container {
+  outline: var(--pf-c-switch__input--focus__toggle--OutlineWidth,
+    var(--pf-global--BorderWidth--md, 2px)) solid var(--pf-c-switch__input--focus__toggle--OutlineColor,
+      var(--pf-global--primary-color--100, #06c));
+  outline-offset: var(--pf-c-switch__input--focus__toggle--OutlineOffset,
+    var(--pf-global--spacer--sm, 0.5rem));
+}
+
+:host(:disabled) {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+:host(:disabled) #container {
+  cursor: not-allowed;
+}
+
+:host(:disabled:focus-within) #container {
+  outline: none;
 }
 
 :host(:disabled) #container {
@@ -28,6 +61,9 @@
 }
 
 #container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
   width: var(--pf-c-switch__toggle--Width,
     calc(var(--pf-c-switch__toggle--Height,
       calc(var(--pf-c-switch--FontSize,
@@ -48,6 +84,9 @@
 }
 
 #container::before {
+  position: absolute;
+  display: block;
+  content: "";
   top: var(--pf-c-switch__toggle--before--Top,
     calc((var(--pf-c-switch__toggle--Height,
       calc(var(--pf-c-switch--FontSize,
@@ -80,14 +119,6 @@
     var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06)));
   transition: var(--pf-c-switch__toggle--before--Transition,
     var(--pf-c-switch__toggle--before--Transition, translate .25s ease 0s)); ;
-}
-
-:host(:focus-within) #container {
-  outline: var(--pf-c-switch__input--focus__toggle--OutlineWidth,
-    var(--pf-global--BorderWidth--md, 2px)) solid var(--pf-c-switch__input--focus__toggle--OutlineColor,
-      var(--pf-global--primary-color--100, #06c));
-  outline-offset: var(--pf-c-switch__input--focus__toggle--OutlineOffset,
-    var(--pf-global--spacer--sm, 0.5rem));
 }
 
 svg {

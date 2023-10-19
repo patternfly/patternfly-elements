@@ -26,7 +26,8 @@ main.blog {
   opacity: 0;
 }
 
-:defined {
+/* exclude demos */
+[class^="layout-"] :defined {
   transition: opacity 0.2s ease;
 }
 

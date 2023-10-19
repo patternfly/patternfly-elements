@@ -28,9 +28,7 @@ module.exports = function(eleventyConfig) {
       content = await renderFromFile.call(this, dedent(content), kwargs);
     }
     return /* html */`
-<div class="example-preview">
-  ${content}
-</div>
+<div class="example-preview ${kwargs?.class ?? ''}">${content.trim()}</div>
 <details class="html-example ${kwargs?.class ?? ''}"${!kwargs?.style ? '' : ` style="${kwargs.style}"`}>
   <summary>View HTML Source</summary>
 

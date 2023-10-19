@@ -11,7 +11,7 @@ import styles from './pf-label.css';
 
 export class LabelCloseEvent extends Event {
   constructor() {
-    super('close', { bubbles: true });
+    super('close', { bubbles: true, cancelable: true });
   }
 }
 

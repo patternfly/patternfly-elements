@@ -26,11 +26,11 @@ import '@patternfly/elements/pf-background-image/pf-background-image.js';
 
 ```html
 <pf-background-image
-  src="/path/to/image.jpg"
-  src-2x="/path/to/image-576.jpg"
-  src-sm="/path/to/image-768.jpg"
-  src-sm-2x="/path/to/image-768@2x.jpg"
-  src-lg="/path/to/image-1200.jpg"
+    src="image.jpg"
+    src-2x="image-576.jpg"
+    src-sm="image-768.jpg"
+    src-sm-2x="image-768@2x.jpg"
+    src-lg="image-1200.jpg"
 ></pf-background-image>
 ```
 

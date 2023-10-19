@@ -6,7 +6,7 @@
       src-sm="/components/background-image/demo/pfbg_768.jpg"
       src-sm-2x="/components/background-image/demo/pfbg_768@2x.jpg"
       src-lg="/components/background-image/demo/pfbg_1200.jpg"
-  />
+  ></pf-background-image>
   {% endhtmlexample %}
 
   View the [full screen demo](/components/background-image/demo/).
@@ -17,11 +17,11 @@
   ### Sibling content w/ no filter
   {% htmlexample class="pf-background-image" %}
   <pf-background-image 
-    src="/components/background-image/demo/pfbg.jpg"
-    src-2x="/components/background-image/demo/pfbg_576.jpg"
-    src-sm="/components/background-image/demo/pfbg_768.jpg"
-    src-sm-2x="/components/background-image/demo/pfbg_768@2x.jpg"
-    src-lg="/components/background-image/demo/pfbg_1200.jpg"
+      src="/components/background-image/demo/pfbg.jpg"
+      src-2x="/components/background-image/demo/pfbg_576.jpg"
+      src-sm="/components/background-image/demo/pfbg_768.jpg"
+      src-sm-2x="/components/background-image/demo/pfbg_768@2x.jpg"
+      src-lg="/components/background-image/demo/pfbg_1200.jpg"
   ></pf-background-image>
   <p>Sibling Content</p>
   <pf-button>Button</pf-button>
@@ -35,12 +35,11 @@
 
   {% htmlexample class="pf-background-image" %}
   <pf-background-image filter
-    src="/components/background-image/demo/pfbg.jpg"
-    src-2x="/components/background-image/demo/pfbg_576.jpg"
-    src-sm="/components/background-image/demo/pfbg_768.jpg"
-    src-sm-2x="/components/background-image/demo/pfbg_768@2x.jpg"
-    src-lg="/components/background-image/demo/pfbg_1200.jpg"
-  >
+      src="/components/background-image/demo/pfbg.jpg"
+      src-2x="/components/background-image/demo/pfbg_576.jpg"
+      src-sm="/components/background-image/demo/pfbg_768.jpg"
+      src-sm-2x="/components/background-image/demo/pfbg_768@2x.jpg"
+      src-lg="/components/background-image/demo/pfbg_1200.jpg" >
     <svg slot="filter" xmlns="http://www.w3.org/2000/svg">
       <filter id="image_overlay">
         <feMorphology in="SourceGraphic" operator="dilate" radius="5"></feMorphology>

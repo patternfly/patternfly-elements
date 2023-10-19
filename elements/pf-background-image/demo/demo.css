@@ -1,9 +1,0 @@
-/* override demo chrome styles */
-html, body {
-  background-color: transparent;
-}
-
-section {
-  color: var(--pf-theme--color--ui-base--text, #fff);
-  padding: var(--pf-global--spacer--xl, 2rem);
-}

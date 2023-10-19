@@ -35,7 +35,6 @@
     "./pf-jump-links/pf-jump-links-item.js": "./pf-jump-links/pf-jump-links-item.js",
     "./pf-jump-links/pf-jump-links-list.js": "./pf-jump-links/pf-jump-links-list.js",
     "./pf-jump-links/pf-jump-links.js": "./pf-jump-links/pf-jump-links.js",
-    "./pf-label/BaseLabel.js": "./pf-label/BaseLabel.js",
     "./pf-label/pf-label.js": "./pf-label/pf-label.js",
     "./pf-modal/pf-modal.js": "./pf-modal/pf-modal.js",
     "./pf-panel/pf-panel.js": "./pf-panel/pf-panel.js",

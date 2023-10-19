@@ -1,8 +1,7 @@
-import { html } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { BaseCodeBlock } from './BaseCodeBlock.js';
 import styles from './pf-code-block.css';
 
 /**
@@ -28,18 +27,32 @@ import styles from './pf-code-block.css';
  * @cssprop {<string>} --pf-c-code-block__pre--FontFamily {@default `"Liberation Mono", consolas, "SFMono-Regular", menlo, monaco, "Courier New", monospace`}
  */
 
+function dedent(str: string): string {
+  const stripped = str.replace(/^\n/, '');
+  const match = stripped.match(/^\s+/);
+  return match ? stripped.replace(new RegExp(`^${match[0]}`, 'gm'), '') : str;
+}
+
 @customElement('pf-code-block')
-export class PfCodeBlock extends BaseCodeBlock {
-  static readonly styles = [...BaseCodeBlock.styles, styles];
+export class PfCodeBlock extends LitElement {
+  static readonly styles = [styles];
 
+  /** Flag for whether the code block is expanded */
   @property({ type: Boolean, reflect: true }) expanded = false;
-
-  #toggle() {
-    this.expanded = !this.expanded;
-  }
 
   get #expandedContent(): string {
     return this.querySelector('script[data-expand]')?.textContent ?? '';
+  }
+
+  get #content() {
+    const script = this.querySelector<HTMLScriptElement>('script[type]');
+    if (
+      script?.type !== 'text/javascript-sample' &&
+      !!script?.type.match(/(j(ava)?|ecma|live)script/)) {
+      return '';
+    } else {
+      return dedent(script?.textContent ?? '');
+    }
   }
 
   override render() {
@@ -51,8 +64,8 @@ export class PfCodeBlock extends BaseCodeBlock {
         </div>
       </div>
       <div id="container" class="${classMap({ expanded })}">
-        <pre><code id="content">${this.content}</code><code id="code-block-expand"
-          ?hidden="${!expanded}">${this.#expandedContent}</code></pre>
+        <pre><code id="content">${this.#content}</code><code id="code-block-expand"
+            ?hidden="${!expanded}">${this.#expandedContent}</code></pre>
         <button ?hidden="${!this.#expandedContent}"
                 @click=${this.#toggle}
                 aria-expanded=${this.expanded}
@@ -62,6 +75,10 @@ export class PfCodeBlock extends BaseCodeBlock {
         </button>
       </div>
     `;
+  }
+
+  #toggle() {
+    this.expanded = !this.expanded;
   }
 }
 

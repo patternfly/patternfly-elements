@@ -304,7 +304,7 @@ export class ToggleController implements ReactiveController {
       }
       // set popup element
       this.#popupElement = popupElement;
-      this.#popupElement.id = this.#popupElement.id || getRandomId(this.host.localName);
+      this.#popupElement.id ||= getRandomId(this.host.localName);
       // add new listeners
       for (const [event, listener] of listeners) {
         this.#popupElement?.addEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);

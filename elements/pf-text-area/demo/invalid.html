@@ -1,0 +1,8 @@
+<pf-text-area required></pf-text-area>
+
+<script type="module">
+  import '@patternfly/elements/pf-text-area/pf-text-area.js';
+  await customElements.whenDefined('pf-text-area');
+  document.querySelector('pf-text-area').checkValidity();
+</script>
+

@@ -6,6 +6,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
 import styles from './pf-text-area.css';
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 /**
  * A **text area** component is used for entering a paragraph of text that is longer than one line.
@@ -51,6 +52,8 @@ export class PfTextArea extends LitElement {
   /** Sets the orientation to limit the resize to */
   @property({ type: Boolean, attribute: 'auto-resize' }) autoResize = false;
 
+  #logger = new Logger(this);
+
   #internals = new InternalsController(this);
 
   #derivedLabel = '';
@@ -65,29 +68,35 @@ export class PfTextArea extends LitElement {
 
   override render() {
     return html`
-      <textarea id="input"
+      <textarea id="textarea"
                 @input="${this.#onInput}"
                 ?disabled="${this.matches(':disabled') || this.disabled}"
                 ?readonly="${this.readonly}"
                 ?required="${this.required}"
-                aria-label="${this.#derivedLabel}"
+                aria-label="${ifDefined(this.#derivedLabel)}"
                 placeholder="${ifDefined(this.placeholder)}"
                 .value="${this.value}"
       ></textarea>
     `;
   }
 
-  #onInput(event: Event & { target: HTMLInputElement }) {
-    const { value } = event.target;
-    this.value = value;
-    this.#internals.setFormValue(value);
+  #onInput(event: Event) {
+    if (event.target instanceof HTMLTextAreaElement) {
+      const { value } = event.target;
+      this.value = value;
+      this.#internals.setFormValue(value);
+    }
   }
 
   #setValidityFromInput() {
-    this.#internals.setValidity(
-      this.#input?.validity,
-      this.#input.validationMessage,
-    );
+    if (!this.#input) {
+      this.#logger.warn('await updateComplete before validating');
+    } else {
+      this.#internals.setValidity(
+        this.#input.validity,
+        this.#input.validationMessage,
+      );
+    }
   }
 
   async formDisabledCallback() {

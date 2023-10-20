@@ -2,7 +2,8 @@
 
 <script type="module">
   import '@patternfly/elements/pf-text-area/pf-text-area.js';
-  await customElements.whenDefined('pf-text-area');
-  document.querySelector('pf-text-area').checkValidity();
+  const textarea = document.querySelector('pf-text-area');
+  await textarea.updateComplete;
+        textarea.checkValidity();
 </script>
 

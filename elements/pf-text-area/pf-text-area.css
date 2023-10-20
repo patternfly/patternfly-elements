@@ -1,15 +1,5 @@
 :host {
   display: block;
-}
-
-textarea::placeholder {
-  --pf-c-form-control--success--BackgroundPositionY: var(--pf-c-form-control--textarea--success--BackgroundPositionY);
-  --pf-c-form-control--invalid--BackgroundPositionY: var(--pf-c-form-control--textarea--invalid--BackgroundPositionY);
-  --pf-c-form-control--m-warning--BackgroundPositionY: var(--pf-c-form-control--textarea--m-warning--BackgroundPositionY);
-  color: var(--pf-c-form-control--placeholder--Color);
-  width: var(--pf-c-form-control--textarea--Width);
-  height: var(--pf-c-form-control--textarea--Height);
-  vertical-align: bottom;
 
   /* .pf-c-form-control */
   --pf-c-form-control--Color: var(--pf-global--Color--100, #151515);
@@ -137,6 +127,16 @@ textarea::placeholder {
   --pf-c-form-control--m-icon-sprite__select--success--BackgroundPosition: calc(100% - var(--pf-global--spacer--md, 1rem) + 1px - var(--pf-global--spacer--lg));
   --pf-c-form-control--m-icon-sprite__select--m-warning--BackgroundPosition: calc(100% - var(--pf-global--spacer--md, 1rem) - var(--pf-global--spacer--lg) + 0.0625rem);
   --pf-c-form-control--m-icon-sprite__select--invalid--BackgroundPosition: calc(100% - var(--pf-global--spacer--md, 1rem) - var(--pf-global--spacer--lg));
+}
+
+textarea {
+  --pf-c-form-control--success--BackgroundPositionY: var(--pf-c-form-control--textarea--success--BackgroundPositionY);
+  --pf-c-form-control--invalid--BackgroundPositionY: var(--pf-c-form-control--textarea--invalid--BackgroundPositionY);
+  --pf-c-form-control--m-warning--BackgroundPositionY: var(--pf-c-form-control--textarea--m-warning--BackgroundPositionY);
+
+  width: var(--pf-c-form-control--textarea--Width);
+  height: var(--pf-c-form-control--textarea--Height);
+  vertical-align: bottom;
   color: var(--pf-c-form-control--Color);
   width: var(--pf-c-form-control--Width);
   padding: var(--pf-c-form-control--PaddingTop) var(--pf-c-form-control--PaddingRight) var(--pf-c-form-control--PaddingBottom) var(--pf-c-form-control--PaddingLeft);
@@ -150,9 +150,25 @@ textarea::placeholder {
   appearance: none;
 }
 
+textarea::placeholder {
+  color: var(--pf-c-form-control--placeholder--Color);
+}
+
+textarea:hover {
+  --pf-c-form-control--BorderBottomColor: var(--pf-c-form-control--hover--BorderBottomColor);
+}
+
+textarea:focus {
+  --pf-c-form-control--BorderBottomColor: var(--pf-c-form-control--focus--BorderBottomColor);
+
+  padding-bottom: var(--pf-c-form-control--focus--PaddingBottom);
+  border-bottom-width: var(--pf-c-form-control--focus--BorderBottomWidth);
+}
+
 textarea:invalid {
   --pf-c-form-control--PaddingRight: var(--pf-c-form-control--invalid--PaddingRight);
   --pf-c-form-control--BorderBottomColor: var(--pf-c-form-control--invalid--BorderBottomColor);
+
   padding-bottom: var(--pf-c-form-control--invalid--PaddingBottom);
   background-image: var(--pf-c-form-control--invalid--BackgroundUrl);
   background-position: var(--pf-c-form-control--invalid--BackgroundPosition);
@@ -168,7 +184,7 @@ textarea:disabled {
 }
 
 textarea[readonly] {
-background-color: var(--pf-c-form-control--readonly--BackgroundColor);
+  background-color: var(--pf-c-form-control--readonly--BackgroundColor);
 }
 
 .vertical { resize: vertical; }

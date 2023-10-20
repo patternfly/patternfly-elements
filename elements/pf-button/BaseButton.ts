@@ -70,7 +70,7 @@ export abstract class BaseButton extends LitElement {
     `;
   }
 
-  protected async formDisabledCallback() {
+  async formDisabledCallback() {
     await this.updateComplete;
     this.requestUpdate();
   }

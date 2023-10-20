@@ -30,8 +30,6 @@ export class AccordionCollapseEvent extends ComposedEvent {
 }
 
 export abstract class BaseAccordion extends LitElement {
-  static readonly styles = [];
-
   static isAccordion(target: EventTarget | null): target is BaseAccordion {
     return target instanceof BaseAccordion;
   }

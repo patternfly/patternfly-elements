@@ -1,5 +1,5 @@
 :host {
-  display: block;
+  display: inline-block;
   position: absolute;
   right: var(--pf-c-back-to-top--Right, var(--pf-global--spacer--2xl, 3rem));
   bottom: var(--pf-c-back-to-top--Bottom, var(--pf-global--spacer--lg, 1.5rem));
@@ -8,7 +8,7 @@
 [part="trigger"] {
   box-shadow: var(--pf-c-back-to-top--c-button--BoxShadow, var(--pf-global--BoxShadow--lg-bottom, 0 0.75rem 0.75rem -0.5rem rgba(3, 3, 3, 0.18)));
 
-  --pf-c-button--FontSize: var(--pf-c-back-to-top--c-button--FontSize, var(--pf-global--FontSize--xs,0.75rem));
+  --pf-c-button--FontSize: var(--pf-c-back-to-top--c-button--FontSize, var(--pf-global--FontSize--xs, 0.75rem));
   --pf-c-button--BorderRadius: var(--pf-c-back-to-top--c-button--BorderRadius,  var(--pf-global--BorderRadius--lg, 30em));
   --pf-c-button--PaddingTop: var(--pf-c-back-to-top--c-button--PaddingTop, var(--pf-global--spacer--xs, 0.25rem));
   --pf-c-button--PaddingRight: var(--pf-c-back-to-top--c-button--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
@@ -26,23 +26,27 @@ a {
   font-size: var(--pf-c-button--FontSize);
   padding: var(--pf-c-button--PaddingTop) var(--pf-c-button--PaddingRight) var(--pf-c-button--PaddingBottom) var(--pf-c-button--PaddingLeft);
   border-radius: var(--pf-c-button--BorderRadius);
+  gap: var(--pf-c-button__icon--m-end--MarginLeft, var(--pf-global--spacer--xs, 0.25rem));
 }
 
-.visually-hidden {
-  position: absolute;
-  left: -10000px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+[part="trigger"][hidden] {
+  display: none;
+}
+
+pf-icon {
+  /* override icon size as default sm variant is incorrect */
+  --pf-icon--size: var(--pf-c-button--FontSize);
 }
 
 span {
-  margin-inline-start: var(--pf-c-button__icon--m-end--MarginLeft, var(--pf-global--spacer--xs, 0.25rem));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pf-c-button__icon--m-end--MarginLeft, var(--pf-global--spacer--xs, 0.25rem));
 }
 
 @media (min-width: 768px) {
   :host {
-    --pf-c-back-to-top--Bottom: var(--pf-c-back-to-top--md--Bottom);
+    --pf-c-back-to-top--Bottom: var(--pf-c-back-to-top--md--Bottom, var(--pf-global--spacer--2xl, 3rem));
   }
 }

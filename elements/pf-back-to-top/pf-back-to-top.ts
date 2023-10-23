@@ -2,11 +2,11 @@ import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { classMap } from 'lit/directives/class-map.js';
 
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import '@patternfly/elements/pf-button/pf-button.js';
+import '@patternfly/elements/pf-icon/pf-icon.js';
 
 import styles from './pf-back-to-top.css';
 
@@ -52,7 +52,10 @@ export class PfBackToTop extends LitElement {
   @property({ reflect: true, attribute: 'scrollable-selector' }) scrollableSelector?: string;
 
   /** Distance from the top of the scrollable element to trigger the visibility of the back to top button */
-  @property({ reflect: true, type: Number, attribute: 'scroll-distance' }) scrollDistance = 400;
+  @property({ type: Number, attribute: 'scroll-distance' }) scrollDistance = 400;
+
+  /** Accessible name for the link/button, alternative to slotted text */
+  @property() label?: string;
 
   /** Page fragment link to target element, must include hash ex: #top */
   @property({ reflect: true }) href?: string;
@@ -62,6 +65,10 @@ export class PfBackToTop extends LitElement {
   #visible = false;
 
   #scrollElement?: Element | Window;
+
+  #hasText = false;
+
+  #noTextLabel?: string;
 
   #logger = new Logger(this);
 
@@ -75,12 +82,12 @@ export class PfBackToTop extends LitElement {
   }
 
   override connectedCallback(): void {
-    super.connectedCallback?.();
-    this.#toggleVisibility();
+    super.connectedCallback();
+    this.#addScrollListener();
   }
 
   override disconnectedCallback(): void {
-    super.disconnectedCallback?.();
+    super.disconnectedCallback();
     this.#removeScrollListener();
   }
 
@@ -88,38 +95,56 @@ export class PfBackToTop extends LitElement {
     if (changed.has('scrollableSelector')) {
       this.#addScrollListener();
     }
+    if (changed.has('alwaysVisible')) {
+      this.#toggleVisibility();
+    }
+    if (changed.has('label')) {
+      this.#hasText = !!this.label ?? false;
+    }
+
+    this.#noTextLabel = !this.#hasText ? 'Back to top' : undefined;
   }
 
   render() {
-    const visuallyHiddenClass = { 'visually-hidden': !this.#visible };
-
     // ensure href has a hash
-    if (this.href && !this.href.includes('#')) {
+    if (this.href && this.href.charAt(0) !== '#') {
       this.href = `#${this.href}`;
       this.#logger.warn(`missing hash in href fragment link`);
     }
 
     if (this.href) {
       return html`
-        <a href="${this.href}" class="${classMap(visuallyHiddenClass)}" part="trigger">
+        <a href="${this.href}" ?hidden="${!this.#visible}" part="trigger" aria-label="${ifDefined(this.#noTextLabel)}">
           <slot name="icon"></slot>
-          <slot>${ifDefined(this.title)}</slot>
-          <span>
-            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path></svg>
-          </span>
+          <slot @slotchange="${this.#onSlotchange}"></slot>
+          <pf-icon icon="angle-up" set="fas"></pf-icon>
         </a>
       `;
     } else {
       return html`
-        <pf-button icon="${ifDefined(this.icon)}" icon-set="${ifDefined(this.iconSet)}" class="${classMap(visuallyHiddenClass)}" part="trigger">
+        <pf-button
+            icon="${ifDefined(this.icon)}"
+            icon-set="${ifDefined(this.iconSet)}"
+            ?hidden="${!this.#visible}"
+            tabindex="${this.#visible ? '0' : '-1'}"
+            part="trigger"
+            label="${ifDefined(this.#noTextLabel)}"
+          >
           <slot name="icon" slot="icon"></slot>
-          <slot>${ifDefined(this.title)}</slot>
           <span>
-            <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 320 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path></svg>
+            <slot></slot>
+            <pf-icon icon="angle-up" set="fas"></pf-icon>
           </span>
         </pf-button>
       `;
     }
+  }
+
+  #onSlotchange(event: Event) {
+    const slot = event.currentTarget as HTMLSlotElement;
+    const nodes = slot.assignedNodes();
+    this.#hasText = nodes.length > 0 ? true : false;
+    this.requestUpdate();
   }
 
   #removeScrollListener() {
@@ -129,13 +154,13 @@ export class PfBackToTop extends LitElement {
   #addScrollListener() {
     this.#removeScrollListener();
 
-    this.#scrollSpy = !!this.scrollableSelector;
     if (this.scrollableSelector?.trim() === '') {
       this.#logger.error(`scrollable-selector attribute cannot be empty`);
       return;
     }
 
-    if (this.#scrollSpy && !!this.scrollableSelector) {
+    this.#scrollSpy = !!this.scrollableSelector;
+    if (this.#scrollSpy && this.scrollableSelector) {
       const scrollableElement = this.#rootNode.querySelector(this.scrollableSelector);
       if (!scrollableElement) {
         this.#logger.error(`unable to find element with selector ${this.scrollableSelector}`);
@@ -152,7 +177,8 @@ export class PfBackToTop extends LitElement {
 
   #toggleVisibility = () => {
     if (this.alwaysVisible) {
-      this.#visible = this.alwaysVisible;
+      this.#visible = true;
+      this.requestUpdate();
       return;
     }
     const previousVisibility = this.#visible;

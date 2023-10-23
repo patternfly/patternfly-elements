@@ -1,18 +1,25 @@
-div[data-demo] {
-  height: 200vh;
+:root {
+  --_scroll-distance: 400px;
 }
 
 main {
-  /* ensure main is scrollable depending on demo view point */
-  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.scroll-distance {
+  --_scroll-distance: 200px;
+}
+
+.outer-container {
+  height: calc(100vh - var(--pf-demo-header-height) + var(--_scroll-distance));
+}
+
+.padded {
+  padding: var(--pf-global--spacer--md, 1rem);
 }
 
 .scroll-indicator {
-  height: 400px;
-  padding: var(--pf-global--spacer--md, 1rem);
+  height: var(--_scroll-distance);
   background-color: var(--pf-global--palette--cyan-50, #f2f9f9) !important;
 }
 
-.scroll-indicator > a + h2 {
-  display: inline-block;
-}

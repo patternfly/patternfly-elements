@@ -116,7 +116,7 @@ export class PfBackToTop extends LitElement {
       return html`
         <a href="${this.href}" ?hidden="${!this.#visible}" part="trigger" aria-label="${ifDefined(this.#noTextLabel)}">
           <slot name="icon"></slot>
-          <slot @slotchange="${this.#onSlotchange}"></slot>
+          <slot @slotchange="${this.#onSlotchange}">${ifDefined(this.label)}</slot>
           <pf-icon icon="angle-up" set="fas"></pf-icon>
         </a>
       `;
@@ -132,7 +132,7 @@ export class PfBackToTop extends LitElement {
           >
           <slot name="icon" slot="icon"></slot>
           <span>
-            <slot></slot>
+            <slot>${ifDefined(this.label)}</slot>
             <pf-icon icon="angle-up" set="fas"></pf-icon>
           </span>
         </pf-button>

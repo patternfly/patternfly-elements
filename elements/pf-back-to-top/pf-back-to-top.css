@@ -36,6 +36,7 @@ a {
 pf-icon {
   /* override icon size as default sm variant is incorrect */
   --pf-icon--size: var(--pf-c-button--FontSize);
+  vertical-align: -0.125rem;
 }
 
 span {

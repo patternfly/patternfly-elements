@@ -2,6 +2,7 @@ import { LitElement, html, type PropertyValueMap, type PropertyValues } from 'li
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { ListboxController, type ListboxOptionElement } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 
@@ -108,9 +109,10 @@ export class PfSelectList extends LitElement {
   }
 
   render() {
+    const { disabled } = this;
     return html`
         <slot
-          class="${this.disabled ? 'disabled' : ''}" 
+          class="${classMap({ disabled })}" 
           @slotchange="${this.#onSlotchange}">
         </slot>
     `;

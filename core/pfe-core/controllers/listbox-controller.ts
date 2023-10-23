@@ -26,6 +26,7 @@ export interface ListboxOptionElement extends HTMLElement {
   selected?: boolean;
   posInSet?: number;
   setSize?: number;
+  active?: boolean;
 }
 
 /**
@@ -269,14 +270,13 @@ export class ListboxController<
    */
   #updateActiveDescendant() {
     this.options.forEach(option => {
-      if (option === this.#tabindex.activeItem && this.visibleOptions.includes(option)) {
+      option.active = option === this.#tabindex.activeItem && this.visibleOptions.includes(option);
+      if (option.active) {
         this.#internals.ariaActivedescendant = option.id;
-        option.setAttribute('active-descendant', 'active-descendant');
       } else {
         if (this.#internals.ariaActivedescendant === option.id) {
           this.#internals.ariaActivedescendant = null;
         }
-        option.removeAttribute('active-descendant');
       }
     });
   }

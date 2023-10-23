@@ -1,7 +1,6 @@
 import type { ReactiveController, ReactiveControllerHost, ReactiveElement } from 'lit';
-import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import { FloatingDOMController, type Placement, } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { getRandomId } from '../functions/random.js';
-export type Placement = 'bottom' | 'top' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end';
 
 /**
  * properties for popup option elements

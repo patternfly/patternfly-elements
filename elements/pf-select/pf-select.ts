@@ -5,6 +5,7 @@ import { query } from 'lit/decorators/query.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { type Placement, } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
 import { PfSelectOption, PfSelectOptionCreatedEvent } from './pf-select-option.js';
 import { ChipRemoveEvent } from '@patternfly/elements/pf-chip/pf-chip.js';
@@ -15,7 +16,6 @@ import { PfSelectList, PfSelectListRefreshEvent } from './pf-select-list.js';
 import styles from './pf-select.css';
 
 export type PfSelectItemsDisplay = 'default' | 'badge' | 'chips';
-export type Placement = 'bottom' | 'top' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end';
 /**
  * A select list enables users to select one or more items from a list.
  *
@@ -300,6 +300,10 @@ export class PfSelect extends LitElement {
   updated(changed: PropertyValues<this>) {
     if (changed.has('alwaysExpanded')) {
       this.#setToggle();
+    }
+
+    if (changed.has('position') && this.#toggle) {
+      this.#toggle.position = this.position;
     }
 
     if (changed.has('typeahead') || changed.has('createOptionText')) {

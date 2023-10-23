@@ -2,6 +2,7 @@ import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { property } from 'lit/decorators/property.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
@@ -57,7 +58,7 @@ export class PfSelectOption extends LitElement {
   /**
    * whether option is disabled
    */
-  @property({ type: Boolean }) disabled = false;
+  @property({ type: Boolean, reflect: true }) disabled = false;
 
   /**
    * value of options
@@ -69,9 +70,15 @@ export class PfSelectOption extends LitElement {
    */
   @property({ type: Boolean }) selected = false;
 
+  /**
+   * whether option is active deswcendant
+   */
+  @property({ type: Boolean }) active = false;
+
 
   @queryAssignedNodes({ slot: '', flatten: true }) private _slottedText!: Node[];
 
+  #active = false;
   #createOptionText = '';
   #userCreatedOption = false;
 
@@ -107,8 +114,9 @@ export class PfSelectOption extends LitElement {
   }
 
   render() {
+    const { disabled, active } = this;
     return html`
-      <div id="outer" class="${this.disabled ? 'disabled' : ''}">
+      <div id="outer" class="${classMap({ active, disabled })}">
         <input 
           type="checkbox" 
           aria-hidden="true" 

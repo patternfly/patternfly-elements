@@ -7,13 +7,9 @@
   display: none !important;
 }
 
-:host(:focus),
-:host(:hover) {
+:host(:focus) #outer,
+:host(:hover) #outer {
   background-color: #e0e0e0;
-}
-
-:host([active-descendant]) {
-  background-color: var(--_pf-select-option-active-descendant-color, var(--pf-theme--color--surface--lighter, #f0f0f0));
 }
 
 #outer {
@@ -24,6 +20,10 @@
   padding: var(--pf-global--spacer--sm, 0.5rem) var(--pf-global--spacer--md, 1rem);
   min-height: calc(44px - 2 * var(--pf-global--spacer--sm, 0.5rem));
   min-width: calc(44px - 2 * var(--pf-global--spacer--md, 1rem));
+}
+
+#outer.active {
+  background-color: var(--_active-descendant-color, var(--pf-theme--color--surface--lighter, #f0f0f0));
 }
 
 #outer.disabled {
@@ -45,7 +45,7 @@ span {
 
 svg {
   font-size: var(--pf-c-select__menu-item-icon--FontSize, var(--pf-global--icon--FontSize--sm, 0.675rem));
-  color: var(--_pf-select-option-svg-color, var(--pf-theme--color--accent, #0066cc));
+  color: var(--_svg-color, var(--pf-theme--color--accent, #0066cc));
   width: 1em;
   height: 1em;
   margin-inline-start: 1em;

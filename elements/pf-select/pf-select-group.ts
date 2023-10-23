@@ -18,9 +18,7 @@ export class PfSelectGroup extends LitElement {
    */
   @property({ type: Boolean }) disabled = false;
 
-  #internals = new InternalsController(this, {
-    role: 'group'
-  });
+  #internals = new InternalsController(this, { role: 'group' });
 
   override connectedCallback() {
     super.connectedCallback();

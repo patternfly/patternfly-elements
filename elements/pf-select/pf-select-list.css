@@ -1,7 +1,7 @@
 :host {
   display: inline-flex;
   border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
-  --_active-descendant-color: transparent;
+  --_active-descendant-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important
 }
 
 :host([hidden]),
@@ -20,7 +20,7 @@ slot.disabled {
   background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   pointer-events: none;
-  cursor: not-allowed;
-  --_pf-select-option-active-descendant-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
-  --_pf-select-option-svg-color: var(--pf-theme--color--ui-base, #6a6e73) !important;
+  cursor: not-allowed;;
+  --_active-descendant-color: transparent;
+  --_svg-color: var(--pf-theme--color--ui-base, #6a6e73) !important;
 }

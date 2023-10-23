@@ -54,7 +54,7 @@ export class PfBackToTop extends LitElement {
   /** Distance from the top of the scrollable element to trigger the visibility of the back to top button */
   @property({ type: Number, attribute: 'scroll-distance' }) scrollDistance = 400;
 
-  /** Accessible name for the link/button, alternative to slotted text */
+  /** Alternative to slotted text */
   @property() label?: string;
 
   /** Page fragment link to target element, must include hash ex: #top */

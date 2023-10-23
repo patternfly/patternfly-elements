@@ -473,7 +473,7 @@ export class PfSelect extends LitElement {
    * opens the dropdown
    */
   async show() {
-    await this.#toggle?.show(true);
+    await this.#toggle?.show();
   }
 
   /**

@@ -80,17 +80,6 @@ export class PfSelectOption extends LitElement {
   });
 
   /**
-   * whether option is hidden by listbox filtering
-   */
-  set filtered(filtered: boolean) {
-    this.toggleAttribute('filtered', filtered);
-  }
-
-  get filtered() {
-    return !!this.getAttribute('filtered');
-  }
-
-  /**
   * option's position amoun the other options
   */
   set posInSet(posInSet: string | null) {

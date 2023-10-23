@@ -224,7 +224,7 @@ export class ListboxController<
    * adds event listeners to host
    */
   hostConnected() {
-    this.#internals.role = 'listbox';
+    this.#listeners;
   }
 
   /**
@@ -238,7 +238,7 @@ export class ListboxController<
         const search = this.matchAnywhere ? '' : '^';
         const text = option.textContent || '';
         const regex = new RegExp(`${search}${this.filter}`, this.caseSensitive ? '' : 'i');
-        if (this.filter === '' || text.match(regex)) {
+        if (text.match(regex)) {
           return true;
         } else {
           return false;
@@ -253,12 +253,12 @@ export class ListboxController<
     }
     this.options.forEach(option => {
       if (matchedOptions.includes(option)) {
-        option.removeAttribute('filtered');
+        option.removeAttribute('hidden');
       } else {
         if (document.activeElement === option) {
           this.#updateFocus = true;
         }
-        option.setAttribute('filtered', 'filtered');
+        option.setAttribute('hidden', 'hidden');
       }
     });
     return matchedOptions;

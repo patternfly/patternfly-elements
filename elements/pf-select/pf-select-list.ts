@@ -40,13 +40,19 @@ export class PfSelectList extends LitElement {
   /**
    * whether filtering (if enabled) will be case-sensitive
    */
-  @property({ reflect: true, attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
+  @property({ attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
 
   /**
    * whether filtering (if enabled) will look for filter match anywhere in option text
    * (by default it will only match if option starts with filter)
    */
-  @property({ reflect: true, attribute: 'match-anywhere', type: Boolean }) matchAnywhere = false;
+  @property({ attribute: 'match-anywhere', type: Boolean }) matchAnywhere = false;
+
+  /**
+   * filter text
+   */
+  @property({ attribute: 'filter', type: String }) filter = '';
+
 
   /**
    * whether multiple items can be selected
@@ -56,19 +62,6 @@ export class PfSelectList extends LitElement {
   @queryAssignedElements({ flatten: true }) private _slottedElements?: Array<HTMLElement>;
 
   #listboxController?: ListboxController;
-
-  /**
-   * filter string for visible options
-   */
-  set filter(filterText: string) {
-    if (this.#listboxController) {
-      this.#listboxController.filter = filterText;
-    }
-  }
-
-  get filter() {
-    return this.#listboxController?.filter || '';
-  }
 
   /**
      * array of slotted options
@@ -128,10 +121,11 @@ export class PfSelectList extends LitElement {
       caseSensitive: this.caseSensitive,
       matchAnywhere: this.matchAnywhere,
       multi: this.multi,
-      orientation: 'vertical'
+      orientation: 'vertical',
     });
     const options: unknown[] = this.options || [];
     this.#listboxController.options = options as ListboxOptionElement[];
+    this.#listboxController.filter = this.filter;
     super.firstUpdated(changed);
   }
 
@@ -148,6 +142,9 @@ export class PfSelectList extends LitElement {
       }
       if (changed.has('multi')) {
         this.#listboxController.multi = this.multi;
+      }
+      if (changed.has('filter')) {
+        this.#listboxController.filter = this.filter;
       }
     }
   }

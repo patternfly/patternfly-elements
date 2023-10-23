@@ -16,7 +16,7 @@
   }
 
   .override > .example-preview :is(#scrollable-selector-example, #scroll-distance-example) pf-back-to-top {
-    position: relative !important;
+    position: sticky !important;
     left: 100%;
     bottom: 0;
   }

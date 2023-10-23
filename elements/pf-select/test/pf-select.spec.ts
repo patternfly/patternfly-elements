@@ -186,7 +186,7 @@ describe('<pf-select>', function() {
 
   describe('multiple select `always-expanded`', function() {
     beforeEach(async function() {
-      element = await createFixture<PfSelect>(html`<pf-select multi-selectable always-expanded>${OPTIONS}</pf-select>`);
+      element = await createFixture<PfSelect>(html`<pf-select multi always-expanded>${OPTIONS}</pf-select>`);
       setOptions();
       await click(first);
       await click(fifth);
@@ -229,7 +229,7 @@ describe('<pf-select>', function() {
   describe('multiple select `selected-items-display`', function() {
     beforeEach(async function() {
       element = await createFixture<PfSelect>(html`
-        <pf-select multi-selectable selected-items-display="badge">
+        <pf-select multi selected-items-display="badge">
           <pf-select-option value="Amethyst" selected>Amethyst</pf-select-option>
           <pf-select-option value="Aqua" selected>Aqua</pf-select-option>
           ${OPTIONS}

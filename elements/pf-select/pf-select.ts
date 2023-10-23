@@ -2,12 +2,15 @@ import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
-import type { PfSelectOption } from './pf-select-option.js';
+import { PfSelectOption, PfSelectOptionCreatedEvent } from './pf-select-option.js';
+import { ChipRemoveEvent } from '@patternfly/elements/pf-chip/pf-chip.js';
 import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
-import { PfSelectList } from './pf-select-list.js';
+import { PfSelectList, PfSelectListRefreshEvent } from './pf-select-list.js';
+
 
 import styles from './pf-select.css';
 
@@ -73,7 +76,7 @@ export class PfSelect extends LitElement {
   @property({ reflect: true, attribute: 'has-checkboxes', type: Boolean }) hasCheckboxes = false;
 
   /**
-   * multi-selectable listbox button text
+   * multi listbox button text
    */
   @property({ attribute: 'items-selected-text', type: String }) itemsSelectedText = 'items selected';
 
@@ -86,7 +89,7 @@ export class PfSelect extends LitElement {
   /**
    * whether multiple items can be selected
    */
-  @property({ reflect: true, attribute: 'multi-selectable', type: Boolean }) multiSelectable = false;
+  @property({ reflect: true, attribute: 'multi', type: Boolean }) multi = false;
 
   /**
    * whether listbox is always expanded
@@ -137,7 +140,15 @@ export class PfSelect extends LitElement {
    * whether listbox is aria-multiselectable
    */
   get #isMulti() {
-    return this.multiSelectable || this.hasCheckboxes;
+    return this.multi || this.hasCheckboxes;
+  }
+
+  /**
+   * listbox's array of selected options
+   */
+  get #selectedOptions() {
+    const options: unknown[] = this._listbox?.selectedOptions || [];
+    return options as PfSelectOption[];
   }
 
   /**
@@ -156,22 +167,15 @@ export class PfSelect extends LitElement {
         ?hidden=${!this.alwaysExpanded && !this.expanded}
         ?case-sensitive=${this.caseSensitive}
         ?match-anywhere=${this.matchAnywhere}
-        ?multi-selectable=${this.#isMulti}
+        ?multi=${this.#isMulti}
         filter="${this.filter || ''}"
         @input=${this.#onListboxInput}
         @change=${this.#onListboxChange}
-        @listboxoptions=${this.#updateValueText}
+        @refresh=${this.#onListboxRefresh}
         @select=${this.#onListboxSelect}
-        @optioncreated=${this.#onOptionCreated}>
+        @created=${this.#onOptionCreated}>
         <slot></slot>
       </pf-select-list>`;
-  }
-
-  /**
-   * listbox's array of selected options
-   */
-  get #selectedOptions() {
-    return (this._listbox?.selectedOptions || []) as PfSelectOption[];
   }
 
   /**
@@ -187,13 +191,6 @@ export class PfSelect extends LitElement {
   get #valueText() {
     const [text] = this.#valueTextArray;
     return text || '';
-  }
-
-  /**
-   * list of values as comma separated list
-   */
-  get selectedList() {
-    return this.#valueTextArray.map(txt => txt.replace(',', '\\,')).join(', ');
   }
 
   /**
@@ -232,6 +229,13 @@ export class PfSelect extends LitElement {
     return this._listbox?.selected;
   }
 
+  /**
+   * list of values as comma separated list
+   */
+  get selectedList() {
+    return this.#valueTextArray.map(txt => txt.replace(',', '\\,')).join(', ');
+  }
+
   render() {
     const { hasBadge, typeahead, disabled, alwaysExpanded } = this;
     const { expanded, anchor, alignment } = this.#toggle || { 'expanded': true, 'anchor': 'bottom', 'alignment': 'start' };
@@ -247,27 +251,26 @@ export class PfSelect extends LitElement {
             ?hidden="${this.alwaysExpanded}">
           ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
             <pf-chip-group label="${this.currentSelectionsLabel}">
-              ${this.#selectedOptions.map(opt => html`
-                <pf-chip id="chip-${opt.textContent}" 
-                  .readOnly="${this.disabled}"
-                  @chip-remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>
-              `)}
+              ${repeat(this.#selectedOptions, opt => opt.id, opt => html`<pf-chip id="chip-${opt.textContent}" 
+              .readOnly="${this.disabled}"
+              @remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>`)}
             </pf-chip-group>
           `}
           <input 
             id="toggle-input" 
             type="text" 
-            aria-controls="listbox" 
             aria-autocomplete="both" 
+            aria-controls="listbox" 
             aria-expanded="${!this.expanded ? 'false' : 'true'}"
+            aria-haspopup="listbox" 
             ?disabled="${this.disabled}"
             ?hidden="${!this.typeahead}" 
             placeholder="${this.#buttonLabel}"
             role="combobox"
             @input=${this.#onTypeaheadInput}>
             <button id="toggle-button" 
-              aria-expanded="${!this.expanded ? 'false' : 'true'}" 
               aria-controls="listbox" 
+              aria-expanded="${!this.expanded ? 'false' : 'true'}" 
               aria-haspopup="listbox">
               <span id="toggle-text" class="${classMap({ offscreen, badge })}">
                 ${this.#buttonLabel}
@@ -340,14 +343,13 @@ export class PfSelect extends LitElement {
    * @param txt chip text to be removed from values
    */
   #onChipRemove(event: Event, opt: PfSelectOption) {
-    setTimeout(() => {
-      if (opt) {
+    if (event instanceof ChipRemoveEvent && opt) {
+      setTimeout(() => {
         // deselect option
         opt.selected = false;
-        this.requestUpdate();
         this._input?.focus();
-      }
-    }, 1);
+      }, 1);
+    }
   }
 
   /**
@@ -362,6 +364,16 @@ export class PfSelect extends LitElement {
    */
   #onListboxInput() {
     this.#updateValueText();
+  }
+
+  /**
+   * handles listbox options refresh
+   * @param event {PfSelectListRefreshEvent}
+   */
+  #onListboxRefresh(event: PfSelectListRefreshEvent) {
+    if (event instanceof PfSelectListRefreshEvent) {
+      this.#updateValueText();
+    }
   }
 
   /**
@@ -384,7 +396,7 @@ export class PfSelect extends LitElement {
 
       // set focus on input when a new chip is added
       if (this.hasChips) {
-        this._input?.focus();
+        this.requestUpdate();
       }
     }
   }
@@ -392,10 +404,12 @@ export class PfSelect extends LitElement {
   /**
    * handles listbox option being created and creates a new "create option"
    */
-  #onOptionCreated() {
-    this.#addCreateOption();
-    this.filter = '';
-    this.#updateCreateOptionValue();
+  #onOptionCreated(event: Event) {
+    if (event instanceof PfSelectOptionCreatedEvent) {
+      this.#addCreateOption();
+      this.filter = '';
+      this.#updateCreateOptionValue();
+    }
   }
 
   /**

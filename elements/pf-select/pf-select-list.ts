@@ -8,7 +8,19 @@ import { ListboxController, type ListboxOptionElement } from '@patternfly/pfe-co
 import { PfSelectGroup } from './pf-select-group.js';
 import { PfSelectOption } from './pf-select-option.js';
 
+
 import styles from './pf-select-list.css';
+
+/**
+ * event when slotted options are updated
+ * @first refresh
+ */
+export class PfSelectListRefreshEvent extends Event {
+  constructor(public originalEvent: Event) {
+    super('refresh', { bubbles: true, composed: true });
+  }
+}
+
 /**
  * Listbox for select options.
  *
@@ -39,7 +51,7 @@ export class PfSelectList extends LitElement {
   /**
    * whether multiple items can be selected
    */
-  @property({ reflect: true, attribute: 'multi-selectable', type: Boolean }) multiSelectable = false;
+  @property({ reflect: true, attribute: 'multi', type: Boolean }) multi = false;
 
   @queryAssignedElements({ flatten: true }) private _slottedElements?: Array<HTMLElement>;
 
@@ -115,10 +127,11 @@ export class PfSelectList extends LitElement {
     this.#listboxController = new ListboxController(this, {
       caseSensitive: this.caseSensitive,
       matchAnywhere: this.matchAnywhere,
-      multi: this.multiSelectable,
+      multi: this.multi,
       orientation: 'vertical'
     });
-    this.#listboxController.options = this.options as ListboxOptionElement[];
+    const options: unknown[] = this.options || [];
+    this.#listboxController.options = options as ListboxOptionElement[];
     super.firstUpdated(changed);
   }
 
@@ -133,8 +146,8 @@ export class PfSelectList extends LitElement {
       if (changed.has('matchAnywhere')) {
         this.#listboxController.matchAnywhere = this.matchAnywhere;
       }
-      if (changed.has('multiSelectable')) {
-        this.#listboxController.multi = this.multiSelectable;
+      if (changed.has('multi')) {
+        this.#listboxController.multi = this.multi;
       }
     }
   }
@@ -162,13 +175,15 @@ export class PfSelectList extends LitElement {
   }
 
   /**
-   * @fires listboxoptions to indicate slotted listbox options ahve changed
+   * handles slot change to indicate slotted listbox options have changed
+   * @param event {Event}
    */
-  #onSlotchange() {
+  #onSlotchange(event: Event) {
     if (this.#listboxController) {
-      this.#listboxController.options = this.options as ListboxOptionElement[];
+      const options: unknown[] = this.options || [];
+      this.#listboxController.options = options as ListboxOptionElement[];
     }
-    this.dispatchEvent(new Event('listboxoptions', { bubbles: true }));
+    this.dispatchEvent(new PfSelectListRefreshEvent(event));
   }
 }
 

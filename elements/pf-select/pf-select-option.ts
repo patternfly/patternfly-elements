@@ -5,7 +5,41 @@ import { property } from 'lit/decorators/property.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
+
 import styles from './pf-select-option.css';
+
+
+export class PfSelectOptionCreatedEvent extends Event {
+  constructor() {
+    super('created', { bubbles: true, composed: true });
+  }
+}
+
+export class PfSelectOptionSelectEvent extends Event {
+  constructor(public originalEvent?: Event) {
+    super('select', { bubbles: true, composed: true });
+  }
+}
+
+/**
+ * focus custom event for listbox options
+ * @fires focus
+ */
+export class PfSelectOptionFocusEvent extends Event {
+  constructor(public originalEvent: Event) {
+    super('focus', { bubbles: true, composed: true });
+  }
+}
+
+/**
+ * blur custom event for listbox options
+ * @fires blur
+ */
+export class PfSelectOptionBlurEvent extends Event {
+  constructor(public originalEvent: Event) {
+    super('blur', { bubbles: true, composed: true });
+  }
+}
 
 /**
  * Option within a listbox
@@ -26,8 +60,7 @@ export class PfSelectOption extends LitElement {
   @property({ type: Boolean }) disabled = false;
 
   /**
-   * whether list items are arranged vertically or horizontally;
-   * limits arrow keys based on orientation
+   * value of options
    */
   @property({ attribute: false, reflect: true }) value: unknown;
 
@@ -36,20 +69,6 @@ export class PfSelectOption extends LitElement {
    */
   @property({ type: Boolean }) selected = false;
 
-  /**
-  * total number of options
-  */
-  @property({ type: Number }) setSize!: number;
-
-  /**
-  * option's position amoun the other options
-  */
-  @property({ type: Number }) posInSet!: number;
-
-  /**
-   * whether option is hidden by listbox filtering
-   */
-  @property({ reflect: true, attribute: 'hidden-by-filter', type: Boolean }) hiddenByFilter = false;
 
   @queryAssignedNodes({ slot: '', flatten: true }) private _slottedText!: Node[];
 
@@ -60,13 +79,42 @@ export class PfSelectOption extends LitElement {
     role: 'option'
   });
 
+  /**
+   * whether option is hidden by listbox filtering
+   */
+  set filtered(filtered: boolean) {
+    this.toggleAttribute('filtered', filtered);
+  }
+
+  get filtered() {
+    return !!this.getAttribute('filtered');
+  }
+
+  /**
+  * option's position amoun the other options
+  */
+  set posInSet(posInSet: string | null) {
+    this.#internals.ariaPosInSet = `${Math.max(0, parseInt(posInSet || '0'))}`;
+  }
+
+  get posInSet() {
+    return this.#internals.ariaPosInSet;
+  }
+
+  /**
+  * total number of options
+  */
+  set setSize(setSize: string | null) {
+    this.#internals.ariaSetSize = `${Math.max(0, parseInt(setSize || '0'))}`;
+  }
+
+  get setSize() {
+    return this.#internals.ariaSetSize;
+  }
+
   override connectedCallback() {
     super.connectedCallback();
-    this.id = this.id || getRandomId();
-    this.addEventListener('click', this.#onClick);
-    this.addEventListener('keydown', this.#onKeydown);
-    this.addEventListener('focus', this.#onFocus);
-    this.addEventListener('blur', this.#onBlur);
+    this.id ||= getRandomId();
   }
 
   render() {
@@ -97,18 +145,10 @@ export class PfSelectOption extends LitElement {
         this.#createOption();
       }
       this.#internals.ariaSelected = this.selected ? 'true' : 'false';
-    }
-    if (changed.has('posInSet')) {
-      this.#internals.ariaPosInSet = this.posInSet ? `${this.posInSet}` : null;
+      this.dispatchEvent(new PfSelectOptionSelectEvent());
     }
     if (changed.has('disabled')) {
       this.#internals.ariaDisabled = String(!!this.disabled);
-    }
-    if (changed.has('setSize')) {
-      this.#internals.ariaSetSize = this.setSize ? `${this.setSize}` : null;
-    }
-    if (changed.has('hiddenByFilter')) {
-      this.#onHiddenByFilter();
     }
   }
 
@@ -146,51 +186,8 @@ export class PfSelectOption extends LitElement {
   #createOption() {
     this.#createOptionText = '';
     this.#userCreatedOption = true;
-    this.dispatchEvent(new Event('optioncreated', { bubbles: true }));
+    this.dispatchEvent(new PfSelectOptionCreatedEvent());
     this.selected = true;
-    this.dispatchEvent(new Event('select', { bubbles: true }));
-  }
-
-  /**
-   * handles option click
-   * @fires select
-   */
-  #onClick() {
-    this.dispatchEvent(new Event('select', { bubbles: true }));
-  }
-
-  /**
-   * handles option click
-   * @fires select
-   */
-  #onKeydown(event: KeyboardEvent) {
-    if (['Enter', ' '].includes(event.key)) {
-      this.dispatchEvent(new Event('select', { bubbles: true }));
-    }
-  }
-
-  /**
-   * handles option focus
-   * @fires optionfocus
-   */
-  #onFocus() {
-    this.dispatchEvent(new Event('optionfocus', { bubbles: true }));
-  }
-
-  /**
-   * handles option hidden by filter
-   * @fires optionfiltered
-   */
-  #onHiddenByFilter() {
-    this.dispatchEvent(new Event('optionfiltered', { bubbles: true }));
-  }
-
-  /**
-   * handles option blur
-   * @fires optionblur
-   */
-  #onBlur() {
-    this.dispatchEvent(new Event('optionblur', { bubbles: true }));
   }
 }
 

@@ -53,10 +53,10 @@ export class ListboxController<
 
   /** event listeners for host element */
   #listeners = {
+    'click': this.#onOptionClick.bind(this),
+    'focus': this.#onOptionFocus.bind(this),
     'keydown': this.#onOptionKeydown.bind(this),
     'keyup': this.#onOptionKeyup.bind(this),
-    'optionfocus': this.#onOptionFocus.bind(this),
-    'click': this.#onOptionClick.bind(this),
   };
 
   /**
@@ -224,18 +224,7 @@ export class ListboxController<
    * adds event listeners to host
    */
   hostConnected() {
-    for (const [event, listener] of Object.entries(this.#listeners)) {
-      this.host?.addEventListener(event, listener as (event: Event | null) => void);
-    }
-  }
-
-  /**
-   * removes event listeners from host
-   */
-  hostDisconnected() {
-    for (const [event, listener] of Object.entries(this.#listeners)) {
-      this.host?.removeEventListener(event, listener as (event: Event | null) => void);
-    }
+    this.#internals.role = 'listbox';
   }
 
   /**
@@ -264,12 +253,12 @@ export class ListboxController<
     }
     this.options.forEach(option => {
       if (matchedOptions.includes(option)) {
-        option.removeAttribute('hidden-by-filter');
+        option.removeAttribute('filtered');
       } else {
         if (document.activeElement === option) {
           this.#updateFocus = true;
         }
-        option.setAttribute('hidden-by-filter', 'hidden-by-filter');
+        option.setAttribute('filtered', 'filtered');
       }
     });
     return matchedOptions;
@@ -492,11 +481,16 @@ export class ListboxController<
    * @param oldOptions {ListboxOptionElement[]}
    */
   #optionsChanged(oldOptions: ListboxOptionElement[]) {
-    const setSize = oldOptions.length;
-    if (setSize !== this.#options.length || !oldOptions.every((element, index) => element === this.#options[index])) {
-      oldOptions.forEach((option, posInSet) => {
-        option.setSize = setSize;
-        option.posInSet = posInSet;
+    const setSize = this.#options.length;
+    if (setSize !== oldOptions.length || !oldOptions.every((element, index) => element === this.#options[index])) {
+      this.#options.forEach((option, posInSet) => {
+        if (!oldOptions.includes(option)) {
+          option.setSize = setSize;
+          option.posInSet = posInSet;
+          for (const [event, listener] of Object.entries(this.#listeners)) {
+            option?.addEventListener(event, listener as (event: Event | null) => void);
+          }
+        }
       });
       this.#tabindex.initItems(this.visibleOptions);
     }

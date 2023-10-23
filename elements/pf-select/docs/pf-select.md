@@ -102,7 +102,7 @@ Below are option variants:
 </p>
 
 {% htmlexample %}
-  <pf-select multi-selectable>
+  <pf-select multi>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -186,12 +186,12 @@ Below are option variants:
 </label>
 {% endhtmlexample %}
 
-#### Typeahead, multi-selectable with chips
+#### Typeahead, multi with chips
 
 {% htmlexample %}
 <label>
   Pick a color:
-  <pf-select typeahead multi-selectable selected-items-display="chips">
+  <pf-select typeahead multi selected-items-display="chips">
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -204,12 +204,12 @@ Below are option variants:
 </label>
 {% endhtmlexample %}
 
-#### Typeahead, multi-selectable with create option
+#### Typeahead, multi with create option
 
 {% htmlexample %}
 <label>
   Pick a color:
-  <pf-select id="pfselect" typeahead multi-selectable create-option-text="Create option">
+  <pf-select id="pfselect" typeahead multi create-option-text="Create option">
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>

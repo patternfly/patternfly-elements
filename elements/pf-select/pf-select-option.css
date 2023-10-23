@@ -3,7 +3,6 @@
 }
 
 :host([hidden]),
-:host([hidden-by-filter]),
 *[hidden] {
   display: none !important;
 }

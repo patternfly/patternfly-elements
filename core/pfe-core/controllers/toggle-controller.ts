@@ -323,9 +323,6 @@ export class ToggleController implements ReactiveController {
       for (const [event, listener] of Object.entries(this.#triggerListeners)) {
         triggerElement?.addEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
       }
-      for (const [event, listener] of Object.entries(this.#hostListeners)) {
-        triggerElement?.addEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
-      }
       triggerElement?.setAttribute('aria-haspopup', this.#popupType);
       triggerElement?.setAttribute('aria-controls', this.#popupElement?.id || '');
       triggerElement?.setAttribute('aria-expanded', this.expanded ? 'true' : 'false');
@@ -340,9 +337,6 @@ export class ToggleController implements ReactiveController {
     if (triggerElement && !this.#triggerElements?.includes(triggerElement)) {
       this.#triggerElements = this.#triggerElements?.filter(el => el !== triggerElement);
       for (const [event, listener] of Object.entries(this.#triggerListeners)) {
-        triggerElement?.removeEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
-      }
-      for (const [event, listener] of Object.entries(this.#hostListeners)) {
         triggerElement?.removeEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
       }
       triggerElement?.removeAttribute('aria-haspopup');

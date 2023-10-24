@@ -54,7 +54,7 @@ import { Card } from "@patternfly/elements/react/pf-card/pf-card.js";
 import "./App.css";
 ```
 
-Let’s use [Button (pf-button)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/button/) and [Card (pf-card)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/card/) component in the `App` function in the `App.tsx` file to see that our Card and Button are working. We are updating local state and show in the UI after click on the button.
+Let’s use [Button (pf-button)](https://patternflyelements.org/components/button/) and [Card (pf-card)](https://patternflyelements.org/components/card/) component in the `App` function in the `App.tsx` file to see that our Card and Button are working. We are updating local state and show in the UI after click on the button.
 
 ```js
 function App() {
@@ -77,7 +77,7 @@ function App() {
 {% endband %}
 
 {% band header="Add Switch (pf-switch) component" %}
-Now we have a card and a button component, let's add [Switch (pf-switch)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/switch/) web component in our app. We will enable/disable button by click on switch button.
+Now we have a card and a button component, let's add [Switch (pf-switch)](https://patternflyelements.org/components/switch/) web component in our app. We will enable/disable button by click on switch button.
 
 ```js
 import { useState } from "react";
@@ -122,7 +122,7 @@ export default App;
 {% endband %}
 
 {% band header="Add Tooltip (pf-tooltip) component" %}
-Now we have a card, button and switch component, let's add [Tooltip (pf-tooltip)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/tooltip/) web component in our app. We will show tooltip text on mouse over.
+Now we have a card, button and switch component, let's add [Tooltip (pf-tooltip)](https://patternflyelements.org/components/tooltip/) web component in our app. We will show tooltip text on mouse over.
 
 ```js
 import { useState } from "react";
@@ -179,7 +179,7 @@ export default App;
 {% band header="Interacting with our web components API" %}
 React relies on [synthetic events](https://react.dev/reference/react-dom/components/common#react-event-object) and its own event system. Web components use standard DOM events. React cannot listen for DOM events coming from Custom Elements. We need to manually bridge the gap between React's synthetic events and native DOM events to ensure proper event handling. React needs to be aware of these event handlers so that React can easily handle events within the React component tree. We can use React `useRef` hook to reference the Custom Elements and manually attach event listeners with addEventListener.
 
-Now we will add [Popover (pf-popover)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/popover/) web component and open popover on mouse over of the button. We will use `useRef` hook to keep reference of the button.
+Now we will add [Popover (pf-popover)](https://patternflyelements.org/components/popover/) web component and open popover on mouse over of the button. We will use `useRef` hook to keep reference of the button.
 
 > 👉 **Note**: [React 18@experimental](https://react.dev/reference/react-dom/components#custom-html-elements) provides support for HTML, so the `useEffect`/`useRef`
 > workaround is no longer needed for property setting and event listeners
@@ -325,5 +325,5 @@ I realize that may have been a lot. So let’s recap what we did.
 {% endband %}
 
 {% band header="Wrap up" %}
-So there you have it. We’ve added web components to our React app and gained the benefits of using portable, pre-made components that can also be used in other frameworks like Angular and Vue. If your app is written in Angular or Vue, check out our other two posts: “Using PatternFly Elements in your Angular App” and “Using PatternFly Elements in your Vue App.”
+So there you have it. We’ve added web components to our React app and gained the benefits of using portable, pre-made components that can also be used in other frameworks like Angular and Vue. If your app is written in Angular or Vue, check out our other two posts: Using [PatternFly Elements in your Angular App](https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-angular-app-4b18b1c9c363) and Using [PatternFly Elements in your Vue App](https://patternflyelements.org/framework-integration/vue/).
 {% endband %}

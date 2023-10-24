@@ -16,8 +16,12 @@ We have created React wrapper for each web component by using [@lit/react](https
 
 - Initial setup
 - Adding PatternFly Elements
+- Add Switch (pf-switch) component
+- Add Tooltip (pf-tooltip) component
 - Interacting with our web components API
-- Adding icing on the cake
+- Codesandbox example
+- Github repo
+- Recap
 
 Each section will show you exactly what you need to do with code snippets.
 {% endband %}
@@ -278,15 +282,18 @@ Below is the accompanying CodeSandbox to see that our setup is correct and that 
 
 {% endband %}
 
-{% band %}
+{% band header="Recap" %}
 I realize that may have been a lot. So let’s recap what we did.
 
-1. Initial Setup: Added the web component polyfills
-2. Adding PatternFly Elements (web components): Added the following web components as dependencies in our app: pf-card, and pf-accordion
-3. Adding PatternFly Elements (web components): Imported the web components into our `index.js` file
-4. Adding PatternFly Elements (web components): Added the markup for our components in `index.js`
-5. Interacting with our web components API: Created a reference to the accordion so we could open the first panel after the page loads
-   {% endband %}
+1. Initial setup: Created React project (TypeScript + Vite).
+2. Added PatternFly Elements: Installed @lit-labs/react and @patternfly/elements libraries.
+3. Added Switch (pf-switch) component: Enable/disable button by click on switch button.
+4. Add Tooltip (pf-tooltip) component: Show tooltip text on mouse over.
+5. Interacting with our web components API: Created a reference to the popover so we can open popover on mouse over of the button.
+6. Codesandbox example
+7. Github repo
+
+{% endband %}
 
 {% band header="Wrap up" %}
 So there you have it. We’ve added web components to our React app and gained the benefits of using portable, pre-made components that can also be used in other frameworks like Angular and Vue. If your app is written in Angular or Vue, check out our other two posts: “Using PatternFly Elements in your Angular App” and “Using PatternFly Elements in your Vue App.”

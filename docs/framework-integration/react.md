@@ -71,10 +71,16 @@ function App() {
 
 {% endband %}
 
-{% band %}
-Now we have a card and a button, let's add [Switch (pf-switch)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/switch/) web component in our app. We will enable/disable button by click on switch button.
+{% band header="Add Switch (pf-switch) component" %}
+Now we have a card and a button component, let's add [Switch (pf-switch)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/switch/) web component in our app. We will enable/disable button by click on switch button.
 
 ```js
+import { useState } from "react";
+import { Button } from "@patternfly/elements/react/pf-button/pf-button.js";
+import { Card } from "@patternfly/elements/react/pf-card/pf-card.js";
+import { Switch } from "@patternfly/elements/react/pf-switch/pf-switch.js";
+import "./App.css";
+
 function App() {
   const [count, setCount] = useState(0);
   const [allowDec, setAllowDec] = useState(false);
@@ -104,6 +110,63 @@ function App() {
     </div>
   );
 }
+
+export default App;
+```
+
+{% endband %}
+
+{% band header="Add Tooltip (pf-tooltip) component" %}
+Now we have a card, button and switch component, let's add [Tooltip (pf-tooltip)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/tooltip/) web component in our app. We will show tooltip text on mouse over.
+
+```js
+import { useState } from "react";
+import { Button } from "@patternfly/elements/react/pf-button/pf-button.js";
+import { Card } from "@patternfly/elements/react/pf-card/pf-card.js";
+import { Switch } from "@patternfly/elements/react/pf-switch/pf-switch.js";
+import { Tooltip } from "@patternfly/elements/react/pf-tooltip/pf-tooltip.js";
+import "./App.css";
+
+function App() {
+  const [count, setCount] = useState(0);
+  const [allowDec, setAllowDec] = useState(false);
+  const toggle = () => setAllowDec(!allowDec);
+
+  return (
+    <div className="card">
+      <Card id="card" rounded>
+        <h1 slot="header">React + PatternFly Elements</h1>
+        <div>count is {count}</div>
+        <label>
+          Allow decrement?
+          <Switch checked={allowDec} onChange={toggle} />
+        </label>
+        <p>
+          <Tooltip
+            id="tooltip"
+            content={`
+            Tooltip text`}
+          >
+            <span>show tooltip on mouse over</span>
+          </Tooltip>
+        </p>
+        <Button slot="footer" onClick={() => setCount((count) => count + 1)}>
+          Increment
+        </Button>
+        <Button
+          slot="footer"
+          danger={allowDec}
+          disabled={!allowDec}
+          onClick={() => setCount((count) => count - 1)}
+        >
+          Decrement
+        </Button>
+      </Card>
+    </div>
+  );
+}
+
+export default App;
 ```
 
 {% endband %}

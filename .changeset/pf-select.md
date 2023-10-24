@@ -2,7 +2,7 @@
 "@patternfly/elements": minor
 ---
 
-Added `<pf-select>`.
+✨ Added `<pf-select>`
 
 A select list enables users to select one or more items from a list.
 

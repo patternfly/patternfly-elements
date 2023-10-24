@@ -48,7 +48,7 @@
   flex: 1 0 calc(100% - 44px);
 }
 
-:host([read-only]) .chip-content {
+:host([readonly]) .chip-content {
   color: var(--pf-theme--color--ui-base, #6a6e73);
 }
 

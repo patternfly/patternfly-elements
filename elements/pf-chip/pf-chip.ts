@@ -45,22 +45,22 @@ export class PfChip extends LitElement {
   /**
    * Flag indicating if chip is read-only and cannot be removed
    */
-  @property({ reflect: true, attribute: 'read-only', type: Boolean }) readOnly = false;
+  @property({ reflect: true, type: Boolean }) readonly = false;
 
   @query('button') button?: HTMLButtonElement;
 
   render() {
     return html`
       <div id="outer">
-        ${this.overflowChip && !this.readOnly ? html`
+        ${this.overflowChip && !this.readonly ? html`
           <button id="overflow-button" class="chip-content">
-            <span id="chip-text" part="text"><slot></slot></span>
+            <slot id="chip-text" part="text"></slot>
           </button>
         ` : html`
           <span class="chip-content">
-            <span id="chip-text" part="text"><slot></slot></span>
+            <slot id="chip-text" part="text"></slot>
           </span>
-          ${this.readOnly ? '' : html`
+          ${this.readonly ? '' : html`
             <button id="close-button" @click=${this.#onClick} aria-describedby="chip-text" aria-label="${this.accessibleCloseLabel}">
               <svg aria-hidden="true" fill="currentColor" viewBox="0 0 352 512">
                 <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
@@ -74,7 +74,7 @@ export class PfChip extends LitElement {
 
   protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     super.updated(_changedProperties);
-    if (_changedProperties.has('overflowChip') || _changedProperties.has('readOnly')) {
+    if (_changedProperties.has('overflowChip') || _changedProperties.has('readonly')) {
       this.#handleChipReady();
     }
   }
@@ -96,15 +96,16 @@ export class PfChip extends LitElement {
    * @fires chip-ready
    */
   #handleChipRemove() {
-    this.dispatchEvent(new ChipRemoveEvent());
+    return this.dispatchEvent(new ChipRemoveEvent());
   }
 
   /**
    * handles chip's button click event
    */
   #onClick() {
-    this.#handleChipRemove();
-    this.remove();
+    if (this.#handleChipRemove()) {
+      this.remove();
+    }
   }
 }
 

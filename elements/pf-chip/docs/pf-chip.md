@@ -24,7 +24,7 @@ Chips can be removable or read-only. The Overflow chip is a special chip that is
 #### Read-only
 
 {% htmlexample %}
-  <pf-chip read-only>Read-only chip</pf-chip>
+  <pf-chip readonly>Read-only chip</pf-chip>
 {% endhtmlexample %}
 
 #### Overflow chip

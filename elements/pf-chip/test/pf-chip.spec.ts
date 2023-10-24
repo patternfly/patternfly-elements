@@ -123,7 +123,7 @@ describe('<pf-chip>', async function() {
     let button: HTMLButtonElement;
 
     beforeEach(async function() {
-      element = await createFixture<PfChip>(html`<pf-chip read-only></pf-chip>`);
+      element = await createFixture<PfChip>(html`<pf-chip readonly></pf-chip>`);
       button = await element.shadowRoot?.querySelector('button') as HTMLButtonElement;
     });
 

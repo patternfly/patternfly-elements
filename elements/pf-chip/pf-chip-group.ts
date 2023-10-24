@@ -22,6 +22,7 @@ import styles from './pf-chip-group.css';
 @customElement('pf-chip-group')
 export class PfChipGroup extends LitElement {
   static readonly styles = [styles];
+  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
    * Accessible label for chip group that does not have a category name
@@ -230,13 +231,6 @@ export class PfChipGroup extends LitElement {
       chip.hidden = overflowHidden;
     });
     this.requestUpdate();
-  }
-
-  /**
-   * sets focus on active chip
-   */
-  focus() {
-    this.#tabindex.focusOnItem(this.#tabindex.activeItem);
   }
 
   /**

@@ -30,6 +30,7 @@ export class ChipRemoveEvent extends Event {
 @customElement('pf-chip')
 export class PfChip extends LitElement {
   static readonly styles = [styles];
+  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
    * Accessible label for close button
@@ -104,13 +105,6 @@ export class PfChip extends LitElement {
   #onClick() {
     this.#handleChipRemove();
     this.remove();
-  }
-
-  /**
-   * sets focus on chip's button
-   */
-  focus() {
-    this.button?.focus();
   }
 }
 

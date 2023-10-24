@@ -2,7 +2,7 @@
 "@patternfly/elements": minor
 ---
 
-Added `<pf-dropdown>`.
+✨ Added `<pf-dropdown>`
 
 A **dropdown** presents a menu of actions or links in a constrained space that will trigger a process or navigate to a new location.
 

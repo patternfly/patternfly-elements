@@ -34,9 +34,7 @@ export interface ListboxOptionElement extends HTMLElement {
  * Components Using a Roving
  * tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
  */
-export class ListboxController<
-  ItemType extends HTMLElement = HTMLElement,
-> implements ReactiveController {
+export class ListboxController implements ReactiveController {
   /**
    * filter options that start with a string (case-insensitive)
    */
@@ -212,12 +210,19 @@ export class ListboxController<
     return this.#getMatchingOptions();
   }
 
+  private static hosts = new WeakMap<ReactiveControllerHost & HTMLElement, ListboxController>();
+
   constructor(public host: ReactiveControllerHost & HTMLElement, options: ListboxConfigOptions) {
-    this.host.addController(this);
     this.#internals = new InternalsController(this.host, {
       role: 'listbox'
     });
-    this.#tabindex = new RovingTabindexController<HTMLElement>(this.host);
+    this.#tabindex = new RovingTabindexController(this.host);
+    const instance = ListboxController.hosts.get(host);
+    if (instance) {
+      return instance;
+    }
+    ListboxController.hosts.set(host, this);
+    this.host.addController(this);
     this.caseSensitive = options.caseSensitive || false;
   }
 

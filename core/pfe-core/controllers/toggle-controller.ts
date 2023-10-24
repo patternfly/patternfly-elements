@@ -128,9 +128,16 @@ export class ToggleController implements ReactiveController {
     };
   }
 
+  private static hosts = new WeakMap<ReactiveControllerHost & ToggleHost & ReactiveElement, ToggleController>();
+
   constructor(
     public host: ReactiveControllerHost & ToggleHost & ReactiveElement, popupType?: PopupKind
   ) {
+    const instance = ToggleController.hosts.get(host);
+    if (instance) {
+      return instance;
+    }
+    ToggleController.hosts.set(host, this);
     this.host.addController(this);
     this.#popupType = popupType || 'menu';
     this.#connectFloat();

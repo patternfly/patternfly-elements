@@ -66,11 +66,18 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     return this.#internals.validity;
   }
 
+  private static hosts = new WeakMap<ReactiveControllerHost, InternalsController>();
+
   constructor(
     public host: ReactiveControllerHost & HTMLElement,
     options?: Partial<ARIAMixin>
   ) {
     this.#internals = host.attachInternals();
+    const instance = InternalsController.hosts.get(host);
+    if (instance) {
+      return instance;
+    }
+    InternalsController.hosts.set(host, this);
     // We need to polyfill :disabled
     // see https://github.com/calebdwilliams/element-internals-polyfill/issues/88
     const orig = (host as HTMLElement & { formDisabledCallback?(disabled: boolean): void }).formDisabledCallback;

@@ -8,12 +8,12 @@ import styles from './pf-chip.css';
 
 export class ChipReadyEvent extends Event {
   constructor() {
-    super('ready', { bubbles: true, composed: true });
+    super('ready', { bubbles: true });
   }
 }
 export class ChipRemoveEvent extends Event {
   constructor() {
-    super('remove', { bubbles: true, composed: true });
+    super('remove', { bubbles: true });
   }
 }
 

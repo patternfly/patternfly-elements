@@ -171,273 +171,105 @@ export default App;
 
 {% endband %}
 
+{% band header="Interacting with our web components API" %}
+React relies on [synthetic events](https://react.dev/reference/react-dom/components/common#react-event-object) and its own event system. Web components use standard DOM events. React cannot listen for DOM events coming from Custom Elements. We need to manually bridge the gap between React's synthetic events and native DOM events to ensure proper event handling. React needs to be aware of these event handlers so that React can easily handle events within the React component tree. We can use React `useRef` hook to reference the Custom Elements and manually attach event listeners with addEventListener.
+
+Now we will add [Popover (pf-popover)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/popover/) web component and open popover on mouse over of the button. We will use `useRef` hook to keep reference of the button.
+
+> 👉 **Note**: [React 18@experimental](https://react.dev/reference/react-dom/components#custom-html-elements) provides support for HTML, so the `useEffect`/`useRef`
+> workaround is no longer needed for property setting and event listeners
+
+```js
+import { useEffect, useRef, useState } from "react";
+import reactLogo from "./assets/react.svg";
+
+import { Button } from "@patternfly/elements/react/pf-button/pf-button.js";
+import { Card } from "@patternfly/elements/react/pf-card/pf-card.js";
+import { Switch } from "@patternfly/elements/react/pf-switch/pf-switch.js";
+import { Popover } from "@patternfly/elements/react/pf-popover/pf-popover.js";
+import "./App.css";
+
+function App() {
+  const [count, setCount] = useState(0);
+  const [allowDec, setAllowDec] = useState(false);
+  const toggle = () => setAllowDec(!allowDec);
+  const reactLogoRef = useRef < HTMLImageElement > null;
+  const popoverRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  useEffect(() => {
+    const [anim] = reactLogoRef.current?.getAnimations() ?? [];
+    console.log(anim, reactLogoRef.current);
+    if (anim) {
+      anim.playbackRate = count;
+    }
+  }, [count]);
+
+  const onMouseover = () => {
+    popoverRef.current?.show();
+  };
+
+  const onMousehide = () => {
+    popoverRef.current?.hide();
+  };
+
+  return (
+    <div className="card">
+      <Button
+        ref={buttonRef}
+        onMouseOver={onMouseover}
+        onMouseLeave={onMousehide}
+      >
+        Hover to Cite
+      </Button>
+      <Popover ref={popoverRef}>
+        <cite slot="body">Popover body</cite>
+        <q>Popover</q>
+      </Popover>
+      <Card id="card" rounded>
+        <h1 slot="header">React + PatternFly Elements</h1>
+        <div>count is {count}</div>
+        <label>
+          Allow decrement?
+          <Switch checked={allowDec} onChange={toggle} />
+        </label>
+        <Button slot="footer" onClick={() => setCount((count) => count + 1)}>
+          Increment
+        </Button>
+        <Button
+          slot="footer"
+          danger={allowDec}
+          disabled={!allowDec}
+          onClick={() => setCount((count) => count - 1)}
+        >
+          Decrement
+        </Button>
+      </Card>
+      <div>
+        <a href="https://reactjs.org" target="_blank">
+          <img
+            src={reactLogo}
+            ref={reactLogoRef}
+            className="logo react"
+            alt="React logo"
+          />
+        </a>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+```
+
+{% endband %}
+
 {% band header="Codesandbox example" %}
 
 Below is the accompanying CodeSandbox to see that our setup is correct and that we’ve successfully added our web components to our app.
 
   <iframe src="https://codesandbox.io/p/sandbox/pfe-react-wrappers-3g6x6r?autoresize=1&fontsize=14&hidenavigation=1&moduleview=1&theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="PatternFly Elements with React"></iframe>
 
-{% endband %}
-
-{% band %}
-Now that we have a card and a call-to-action, let’s add an accordion (pf-accordion) to our app to spice things up a bit.
-If we were building this app locally, we’d install our dependencies from npm using yarn.
-
-```bash
-yarn add @patternfly/elements
-```
-
-If you’re using CodeSandbox, just search for “@patternfly/elements”.
-
-After installing pf-accordion, add the markup to the `App` function in the `index.js` file.
-
-```html
-<pf-accordion>
-  <pf-accordion-header>
-    <h3>Why do wizards need money if they could just create it?</h3>
-  </pf-accordion-header>
-  <pf-accordion-panel>
-    <p>
-      There is legislation that decides what you can conjure and what you can
-      not. Because things that you conjure out of thin air will not last, it is
-      illegal in the wizarding world.
-    </p>
-  </pf-accordion-panel>
-  <pf-accordion-header>
-    <h3>Why doesn't Harry have a portrait of his parents?</h3>
-  </pf-accordion-header>
-  <pf-accordion-panel>
-    <p>
-      <a href="#">The characters in the portraits</a> are not actually ghosts.
-      They mainly are there just to repeat common phrases or serve as a general
-      <a href="foobarbaz.com">representation of the individual</a> they depict.
-      A portrait of his parents would not be of much help to Harry.
-    </p>
-  </pf-accordion-panel>
-  <pf-accordion-header>
-    <h3>
-      Why is Harry considered a half-blood if both of his parents could use
-      magic?
-    </h3>
-  </pf-accordion-header>
-  <pf-accordion-panel>
-    <p>
-      Because Harry's grandparents were not able to do magic. This is generally
-      frowned upon by those who consider themselves pure, such as the Malfoy's
-      or other antagonists.
-    </p>
-  </pf-accordion-panel>
-  <pf-accordion-header>
-    <h3>Is Hogwarts the only wizarding school?</h3>
-  </pf-accordion-header>
-  <pf-accordion-panel>
-    <p>
-      No! It has been revealed that there are actually 11 long established and
-      prestigious schools around the globe. These include Castelobruxo in the
-      rainforest of Brazil, Durmstrang Institute (whereas nobody is certain of
-      it’s whereabouts), and Ilvermorny, right here in the United States.
-    </p>
-  </pf-accordion-panel>
-  <pf-accordion-header>
-    <h3>Where do the main characters work as adults?</h3>
-  </pf-accordion-header>
-  <pf-accordion-panel>
-    <p>
-      Harry and Hermione are at the Ministry: he ends up leading the Auror
-      department. Ron helps George at the joke shop and does very well. Ginny
-      becomes a professional Quidditch player and then sportswriter for the
-      Daily Prophet.
-    </p>
-    <p>
-      <a href="https://www.pottermore.com/collection/characters" target="blank"
-        >Read more about the characters</a
-      >
-    </p>
-  </pf-accordion-panel>
-</pf-accordion>
-```
-
-And we have to import pf-accordion in `index.js`.
-
-```js
-import React from "react";
-import ReactDOM from "react-dom";
-
-import "@patternfly/elements/pf-card/pf-card.js";
-import "@patternfly/elements/pf-accordion/pf-accordion.js";
-
-import "./styles.css";
-```
-
-Below is the accompanying CodeSandbox for adding pf-accordion to our app.
-
-  <iframe src="https://codesandbox.io/embed/patternfly-elements-with-react-adding-pf-accordion-3po3u?fontsize=14&hidenavigation=1&theme=dark"
-          style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
-          title="PatternFly Elements with React (adding pf-accordion)"
-          allow="
-            accelerometer;
-            ambient-light-sensor;
-            camera;
-            encrypted-media;
-            geolocation;
-            gyroscope;
-            hid;
-            microphone;
-            midi;
-            payment;
-            usb;
-            vr;
-            xr-spatial-tracking"
-            sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
-{% endband %}
-
-{% band header="Interacting with our web components API" %}
-After adding our accordion, let’s say that we’d like to have the first panel of the accordion
-open up after the page loads. To work with the accordion, there are a few things that we need to
-hook up.
-
-> 👉 **Note**: React 18@experimental provides support for HTML, so the `useEffect`/`useRef`
-> workaround is no longer needed for property setting and event listeners
-
-First, let’s import `useRef` and `useEffect`.
-
-```js
-import React, { useRef, useEffect } from "react";
-```
-
-Now let’s create a React Ref so we can work with the pf-accordion DOM API. To learn more about
-Refs and the DOM in React,
-[check out their documentation](https://reactjs.org/docs/refs-and-the-dom.html). We’ll start by
-creating a new ref inside our `App` function.
-
-```js
-const accordion = useRef();
-```
-
-We'll add a `useEffect` callback and call the `toggle` method on the ref's current element
-(our `<pf-accordion>`), so we can open the first panel of the accordion when the page loads.
-
-```js
-useEffect(() => {
-  accordion.current.toggle(0);
-});
-```
-
-Next, let’s add all of our markup from the `App` function we had previously to our `return` method.
-We’ll also want to add a ref attribute to the opening tag of pf-accordion and set it equal to `{accordion}`.
-
-```js
-function App() {
-  const accordion = useRef();
-
-  useEffect(() => {
-    accordion.current.toggle(0);
-  });
-
-  return (
-    <div className="App">
-      <h1>PatternFly Elements with React</h1>
-      <section>
-        <pf-card rounded>
-          <img
-            alt="From https://picsum.photos/"
-            src="https://picsum.photos/id/1019/300/200"
-          />
-          <p>
-            This is the light pf-card and <a href="#">a link</a>.
-          </p>
-          <p>
-            Leverage agile frameworks to provide a robust synopsis for high
-            level overviews. Iterative approaches to corporate strategy foster
-            collaborative thinking to further the overall value proposition.
-          </p>
-          <p>
-            Organically grow the holistic world view of disruptive innovation
-            via workplace diversity and empowerment.
-          </p>
-          <a class="cta" slot="footer" href="#">
-            Learn more
-          </a>
-        </pf-card>
-      </section>
-      <section>
-        <pf-accordion ref={accordion}>
-          <pf-accordion-header>
-            <h3>Why do wizards need money if they could just create it?</h3>
-          </pf-accordion-header>
-          <pf-accordion-panel>
-            <p>
-              There is legislation that decides what you can conjure and what
-              you can not. Because things that you conjure out of thin air will
-              not last, it is illegal in the wizarding world.
-            </p>
-          </pf-accordion-panel>
-          <pf-accordion-header>
-            <h3>Why doesn't Harry have a portrait of his parents?</h3>
-          </pf-accordion-header>
-          <pf-accordion-panel>
-            <p>
-              <a href="#">The characters in the portraits</a> are not actually
-              ghosts. They mainly are there just to repeat common phrases or
-              serve as a general
-              <a href="foobarbaz.com">representation of the individual</a> they depict.
-              A portrait of his parents would not be of much help to Harry.
-            </p>
-          </pf-accordion-panel>
-          <pf-accordion-header>
-            <h3>
-              Why is Harry considered a half-blood if both of his parents could
-              use magic?
-            </h3>
-          </pf-accordion-header>
-          <pf-accordion-panel>
-            <p>
-              Because Harry's grandparents were not able to do magic. This is
-              generally frowned upon by those who consider themselves pure, such
-              as the Malfoy's or other antagonists.
-            </p>
-          </pf-accordion-panel>
-          <pf-accordion-header>
-            <h3>Is Hogwarts the only wizarding school?</h3>
-          </pf-accordion-header>
-          <pf-accordion-panel>
-            <p>
-              No! It has been revealed that there are actually 11 long
-              established and prestigious schools around the globe. These
-              include Castelobruxo in the rainforest of Brazil, Durmstrang
-              Institute (whereas nobody is certain of it’s whereabouts), and
-              Ilvermorny, right here in the United States.
-            </p>
-          </pf-accordion-panel>
-          <pf-accordion-header>
-            <h3>Where do the main characters work as adults?</h3>
-          </pf-accordion-header>
-          <pf-accordion-panel>
-            <p>
-              Harry and Hermione are at the Ministry: he ends up leading the
-              Auror department. Ron helps George at the joke shop and does very
-              well. Ginny becomes a professional Quidditch player and then
-              sportswriter for the Daily Prophet.
-            </p>
-            <p>
-              <a
-                href="https://www.pottermore.com/collection/characters"
-                target="blank"
-              >
-                Read more about the characters
-              </a>
-            </p>
-          </pf-accordion-panel>
-        </pf-accordion>
-      </section>
-    </div>
-  );
-}
-```
-
-Now, when the page loads, the accordion will have the first panel opened. Below is the accompanying CodeSandbox.
-
-  <iframe src="https://codesandbox.io/embed/patternfly-elements-with-react-pf-accordion-api-5clsc?fontsize=14&hidenavigation=1&theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="PatternFly Elements with React (pf-accordion api)" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
 {% endband %}
 
 {% band %}

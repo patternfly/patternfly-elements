@@ -55,7 +55,7 @@ describe('<pf-chip>', async function() {
 
     it('should focus programatically', async function() {
       element.focus();
-      await expect(activeElement(element)?.getAttribute('aria-label')).to.equal(element.closeLabel);
+      await expect(activeElement(element)?.getAttribute('aria-label')).to.equal(element.accessibleCloseLabel);
     });
 
     it('should close using mouse', async function() {
@@ -66,7 +66,7 @@ describe('<pf-chip>', async function() {
     describe('should work with a keyboard', function() {
       it('focuses using `Tab` key', async function() {
         await tab();
-        await expect(activeElement(element)?.getAttribute('aria-label')).to.equal(element.closeLabel);
+        await expect(activeElement(element)?.getAttribute('aria-label')).to.equal(element.accessibleCloseLabel);
 
         describe('should close using `Enter` key', async function() {
           it('closes', async function() {
@@ -93,7 +93,7 @@ describe('<pf-chip>', async function() {
     });
 
     it('should not have a close button', async function() {
-      await expect(button?.ariaLabel).to.not.equal(element.closeLabel);
+      await expect(button?.ariaLabel).to.not.equal(element.accessibleCloseLabel);
     });
 
     it('should focus programatically', async function() {

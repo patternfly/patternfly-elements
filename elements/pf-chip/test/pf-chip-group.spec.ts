@@ -149,19 +149,19 @@ describe('<pf-chip-group>', async function() {
 
     describe('closing function', function() {
       it('has no close button by default', function() {
-        close = element.shadowRoot?.querySelector(`[aria-label="${element.closeLabel}"]`) as HTMLButtonElement;
+        close = element.shadowRoot?.querySelector(`[aria-label="${element.accessibleCloseLabel}"]`) as HTMLButtonElement;
         expect(close).to.not.exist;
       });
       it('has close button when `closeable`', async function() {
         element.closeable = true;
         await element.updateComplete;
-        close = element.shadowRoot?.querySelector(`[aria-label="${element.closeLabel}"]`) as HTMLButtonElement;
+        close = element.shadowRoot?.querySelector(`[aria-label="${element.accessibleCloseLabel}"]`) as HTMLButtonElement;
         expect(close).to.exist;
       });
       it('close button removes element', async function() {
         element.closeable = true;
         await element.updateComplete;
-        close = element.shadowRoot?.querySelector(`[aria-label="${element.closeLabel}"]`) as HTMLButtonElement;
+        close = element.shadowRoot?.querySelector(`[aria-label="${element.accessibleCloseLabel}"]`) as HTMLButtonElement;
         await click(close as HTMLElement);
         expect(document.querySelector('pf-chip-group')).to.be.null;
       });

@@ -19,7 +19,7 @@ We have created React wrapper for each web component by using [@lit/react](https
 - Interacting with our web components API
 - Adding icing on the cake
 
-Each section will show you exactly what you need to do with code snippets and an accompanying CodeSandbox that you can edit or fork.
+Each section will show you exactly what you need to do with code snippets.
 {% endband %}
 
 {% band header="Initial setup" %}
@@ -40,7 +40,7 @@ With the setup complete, You need to install @lit-labs/react and @patternfly/ele
 npm install @lit-labs/react @patternfly/elements
 ```
 
-In our `App.tsx` file in the `/src/` directory, let’s import Button component.
+In our `App.tsx` file in the `/src/` directory, let’s import Button and Card components.
 
 ```js
 import { useState } from "react";
@@ -49,7 +49,7 @@ import { Card } from "@patternfly/elements/react/pf-card/pf-card.js";
 import "./App.css";
 ```
 
-Let’s use [Button (pf-button)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/button/) and [Card (pf-card)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/card/) component in the `App` function in the `App.tsx` file to see that our Card and Button is working. Click on the button, we are updating local state and show in the UI.
+Let’s use [Button (pf-button)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/button/) and [Card (pf-card)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/card/) component in the `App` function in the `App.tsx` file to see that our Card and Button are working. We are updating local state and show in the UI after click on the button.
 
 ```js
 function App() {

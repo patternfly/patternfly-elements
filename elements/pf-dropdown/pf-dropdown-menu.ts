@@ -16,6 +16,7 @@ import styles from './pf-dropdown-menu.css';
 @customElement('pf-dropdown-menu')
 export class PfDropdownMenu extends LitElement {
   static readonly styles = [styles];
+  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
    * whether listbox is disabled
@@ -182,13 +183,6 @@ export class PfDropdownMenu extends LitElement {
         item.removeAttribute('active-descendant');
       }
     });
-  }
-
-  /**
-   * sets focus on last active item
-   */
-  focus() {
-    this.#tabindex.focusOnItem(this.#tabindex.activeItem);
   }
 }
 

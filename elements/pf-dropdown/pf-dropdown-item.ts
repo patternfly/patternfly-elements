@@ -42,6 +42,7 @@ import styles from './pf-dropdown-item.css';
 @customElement('pf-dropdown-item')
 export class PfDropdownItem extends LitElement {
   static readonly styles = [styles];
+  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
    * The value associated with the dropdown item.
@@ -99,10 +100,6 @@ export class PfDropdownItem extends LitElement {
 
   get menuItem() {
     return this.shadowRoot?.querySelector('[role="menuitem"') as HTMLElement | undefined;
-  }
-
-  focus() {
-    this.menuItem?.focus();
   }
 }
 

@@ -53,6 +53,7 @@ export class DropdownSelectEvent extends ComposedEvent {
 @customElement('pf-dropdown')
 export class PfDropdown extends LitElement {
   static readonly styles = [styles];
+  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
    * Disable the dropdown trigger element
@@ -147,17 +148,6 @@ export class PfDropdown extends LitElement {
     if (event.key === 'Enter' || event.key === 'Space') {
       event.preventDefault();
       this.#handleSelect(event);
-    }
-  }
-
-  /**
-   * sets focus on trigger element
-   */
-  focus() {
-    if (this.#toggle?.expanded) {
-      this._menuElement?.focus();
-    } else {
-      this.#triggerElement?.focus();
     }
   }
 

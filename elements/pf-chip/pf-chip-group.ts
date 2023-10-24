@@ -61,7 +61,7 @@ export class PfChipGroup extends LitElement {
 
   @query('#overflow') private _overflowChip?: PfChip;
 
-  @query('#close-button') button?: HTMLButtonElement;
+  @query('#close-button') private _button?: HTMLButtonElement;
 
   @queryAssignedNodes({ slot: 'category-name', flatten: true }) private _categorySlotted?: Node[];
 
@@ -75,7 +75,7 @@ export class PfChipGroup extends LitElement {
 
   constructor() {
     super();
-    this.#tabindex = new RovingTabindexController<HTMLElement>(this);
+    this.#tabindex = new RovingTabindexController(this);
     this.addEventListener('ready', this.#onChipReady);
     this.addEventListener('remove', this.#onChipRemoved);
   }
@@ -159,7 +159,7 @@ export class PfChipGroup extends LitElement {
     const max = this.open ? this.#chips.length : Math.min(this.#chips.length, this.numChips);
     const visibleChips = this.#chips.slice(0, max);
     const buttons = visibleChips.map(chip => chip.button as HTMLElement);
-    this.#buttons = [...buttons, button, this.button] as HTMLElement[];
+    this.#buttons = [...buttons, button, this._button] as HTMLElement[];
     this.#buttons = this.#buttons.filter(button => !!button);
     if (oldButtons.length !== this.#buttons.length || !oldButtons.every((element, index) => element === this.#buttons[index])) {
       if (this.#itemsInit) {

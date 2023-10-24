@@ -49,7 +49,7 @@ import { Card } from "@patternfly/elements/react/pf-card/pf-card.js";
 import "./App.css";
 ```
 
-Let’s use Button and Card component in the `App` function in the `App.tsx` file to see that our Card and Button is working.
+Let’s use [Button (pf-button)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/button/) and [Card (pf-card)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/card/) component in the `App` function in the `App.tsx` file to see that our Card and Button is working. Click on the button, we are updating local state and show in the UI.
 
 ```js
 function App() {
@@ -69,10 +69,48 @@ function App() {
 }
 ```
 
-Below is the accompanying CodeSandbox to see that our initial setup is correct and that we’ve successfully added our web components to our app.
+{% endband %}
+
+{% band %}
+Now we have a card and a button, let's add [Switch (pf-switch)](https://deploy-preview-2641--patternfly-elements.netlify.app/components/switch/) web component in our app. We will enable/disable button by click on switch button.
+
+```js
+function App() {
+  const [count, setCount] = useState(0);
+  const [allowDec, setAllowDec] = useState(false);
+  const toggle = () => setAllowDec(!allowDec);
+
+  return (
+    <div className="card">
+      <Card id="card" rounded>
+        <h1 slot="header">React + PatternFly Elements</h1>
+        <div>count is {count}</div>
+        <label>
+          Allow decrement?
+          <Switch checked={allowDec} onChange={toggle} />
+        </label>
+        <Button slot="footer" onClick={() => setCount((count) => count + 1)}>
+          Increment
+        </Button>
+        <Button
+          slot="footer"
+          danger={allowDec}
+          disabled={!allowDec}
+          onClick={() => setCount((count) => count - 1)}
+        >
+          Decrement
+        </Button>
+      </Card>
+    </div>
+  );
+}
+```
+
 {% endband %}
 
 {% band header="Codesandbox example" %}
+
+Below is the accompanying CodeSandbox to see that our setup is correct and that we’ve successfully added our web components to our app.
 
   <iframe src="https://codesandbox.io/p/sandbox/pfe-react-wrappers-3g6x6r?autoresize=1&fontsize=14&hidenavigation=1&moduleview=1&theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="PatternFly Elements with React"></iframe>
 

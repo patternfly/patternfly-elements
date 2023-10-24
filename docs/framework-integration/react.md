@@ -72,10 +72,9 @@ function App() {
 Below is the accompanying CodeSandbox to see that our initial setup is correct and that we’ve successfully added our web components to our app.
 {% endband %}
 
-{% band %}
+{% band header="Codesandbox example" %}
 
-  <iframe src="https://codesandbox.io/p/sandbox/pfe-react-wrappers-3g6x6r?file=%2Fpackage.json%3A1%2C1&embed=1" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="PatternFly Elements with React">
-  </iframe>
+  <iframe src="https://codesandbox.io/p/sandbox/pfe-react-wrappers-3g6x6r?autoresize=1&fontsize=14&hidenavigation=1&moduleview=1&theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="PatternFly Elements with React"></iframe>
 
 {% endband %}
 

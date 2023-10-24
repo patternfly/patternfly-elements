@@ -21,6 +21,7 @@ We have created React wrapper for each web component by using [@lit/react](https
 - Interacting with our web components API
 - Codesandbox example
 - Github repo
+- Why does react need special treatment?
 - Recap
 
 Each section will show you exactly what you need to do with code snippets.
@@ -279,6 +280,34 @@ Below is the accompanying CodeSandbox to see that our setup is correct and that 
 {% band header="Github repo" %}
 
 [Github repo](https://github.com/anujsingla/react-patternfly-elements)
+
+{% endband %}
+
+{% band header="Why does react need special treatment?" %}
+
+Web components are a set of web platform APIs that help to create reusable and encapsulated UI elements. They consist of Custom Elements, Shadow DOM, and HTML Templates.
+React is a JavaScript library for making user interfaces. React uses a virtual DOM to optimize updates and minimize the number of changes that need to be made to the actual DOM.
+React needs special treatment when integrating with web components because of the design philosophies and lifecycles. There are multiple libraries available to fill the gap between React components and web components, like @lit/react. This library helps us to create the wrapper for web components and we can use it with React components.
+
+Here are some key reasons:
+
+1. React's Virtual DOM vs. Web Component Shadow DOM:
+   Web component uses shadow DOM to encapsulate styles and functionality within a component.
+   React uses a virtual DOM to manage and update the DOM. React is aware of any changes made to the actual DOM.
+   When we use React components with web components, these different encapsulation mechanisms can conflict. Special care is needed to ensure that styles, state, and event handling work as expected. React must be aware of any changes to the web components to update the virtual DOM accordingly.
+
+2. Event Handling:
+   Web components use standard DOM events. React relies on [synthetic events](https://react.dev/reference/react-dom/components/common#react-event-object) and its own event system. When using React components within web components, you may need to manually bridge the gap between React's synthetic events and native DOM events to ensure proper event handling. React needs to be aware of these event handlers so that React can easily handle events within the React component tree.
+
+3. Lifecycle Methods:
+   Web components have their own [lifecycle method](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements#custom_element_lifecycle_callbacks) like connectedCallback, disconnectedCallback and React has its own [lifecycle methods](https://legacy.reactjs.org/docs/state-and-lifecycle.html), such as componentDidMount, componentDidUpdate which are used to handle the events when the component is added, updated or removed from the DOM. When we use web components with React, these lifecycle methods are properly handled and integrated into the React component tree.
+
+4. Data Flow:
+   Web components use properties and attributes to handle the data and custom events to communicate between components. React uses props and states for data flow in the components. When integrating React with web components, We need to establish clear data communication channels between them.
+
+5. Reactivity:
+   Web components are not automatically reactive, but we can do it manually by listening for changes to the properties or attributes. We can also use libraries like Lit. React automatically updates the UI whenever the props or state changes in the component.
+   Bridging this reactivity gap requires additional code and consideration.
 
 {% endband %}
 

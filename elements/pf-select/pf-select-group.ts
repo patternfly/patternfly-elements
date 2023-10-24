@@ -20,11 +20,6 @@ export class PfSelectGroup extends LitElement {
 
   #internals = new InternalsController(this, { role: 'group' });
 
-  override connectedCallback() {
-    super.connectedCallback();
-    this.#internals;
-  }
-
   render() {
     const disabled = this.disabled ? 'disabled' : '';
     return html`

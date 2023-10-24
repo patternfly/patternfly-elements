@@ -7,6 +7,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent, StringListConverter } from '@patternfly/pfe-core/core.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
@@ -280,6 +281,13 @@ export class PfPopover extends LitElement {
   /**
    * The accessible label for the popover's close button. The default is `Close popover`.
    */
+  @property({ reflect: true, attribute: 'accessible-close-label' }) accessibleCloseLabel?: string;
+
+  // START DEPRECATION WARNING
+  /* note: remove ColorPalette type, and property decorator import above */
+  /**
+   * @deprecated do not use the color-palette attribute, which was added by mistake. use context-providing containers (e.g. rh-card) instead
+   */
   @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel?: string;
 
   /**
@@ -316,9 +324,13 @@ export class PfPopover extends LitElement {
 
   #slots = new SlotController(this, null, 'icon', 'heading', 'body', 'footer');
 
+  #logger = new Logger(this);
+  #mo = new MutationObserver(() => this.#onMutation());
+
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('keydown', this.onKeydown);
+    this.#mo.observe(this, { attributes: true, attributeFilter: ['close-label'] });
   }
 
   render() {
@@ -368,7 +380,7 @@ export class PfPopover extends LitElement {
             <pf-button id="close-button"
                        part="close-button"
                        plain
-                       label="${this.closeButtonLabel ?? 'Close popover'}"
+                       label="${this.accessibleCloseLabel ?? this.closeButtonLabel ?? 'Close popover'}"
                        @click="${this.hide}"
                        @keydown="${this.onKeydown}"
                        ?hidden="${this.hideClose}">
@@ -392,11 +404,16 @@ export class PfPopover extends LitElement {
     PfPopover.instances.delete(this);
     this.#referenceTrigger?.removeEventListener('click', this.toggle);
     this.#referenceTrigger?.removeEventListener('keydown', this.onKeydown);
+    this.#mo.disconnect();
   }
 
   #getReferenceTrigger() {
     const root = this.getRootNode() as Document | ShadowRoot;
     return !this.trigger ? null : root.getElementById(this.trigger);
+  }
+
+  #onMutation() {
+    this.#logger.warn('The close-label attribute is deprecated and will be replaced with accessible-close-label in a future release.');
   }
 
 

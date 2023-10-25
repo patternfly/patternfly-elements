@@ -53,7 +53,7 @@ export class PfChip extends LitElement {
     return html`
       <div id="outer">
         ${this.overflowChip && !this.readonly ? html`
-          <button id="overflow-button" class="chip-content">
+          <button id="overflow-button" class="chip-content" aria-labelledby="chip-text">
             <slot id="chip-text" part="text"></slot>
           </button>
         ` : html`

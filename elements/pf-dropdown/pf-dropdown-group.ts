@@ -19,10 +19,10 @@ export class PfDropdownGroup extends LitElement {
    * The label for the group of dropdown items.
    */
   @property({ reflect: true }) label?: string;
-  @queryAssignedElements({ selector: 'pf-dropdown-item' }) private _slottedElements!: Array<PfDropdownItem>;
+  @queryAssignedElements({ selector: 'pf-dropdown-item' }) dropdownItems!: Array<PfDropdownItem>;
 
   get menuItems() {
-    return this._slottedElements.map(el => el.menuItem);
+    return this.dropdownItems.map(el => el.menuItem);
   }
 
   render() {

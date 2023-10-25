@@ -38,13 +38,14 @@ describe('<pf-chip-group>', async function() {
     });
   });
 
-  describe('should be accessible', async function() {
+  describe('checking accessibilty', async function() {
     const collapsedExp = 'show ${remaining} more';
     const expanded = 'show fewer';
     const label = 'My Chip Group';
     let chip1: PfChip;
     let chip2: PfChip;
     let element: PfChipGroup;
+    let snapshot: A11yTreeSnapshot;
 
     beforeEach(async function() {
       element = await createFixture<PfChipGroup>(html`
@@ -58,23 +59,32 @@ describe('<pf-chip-group>', async function() {
       await element.updateComplete;
       chip1 = await document.getElementById('chip1') as PfChip;
       chip2 = await document.getElementById('chip2') as PfChip;
+      snapshot = await a11ySnapshot();
     });
 
-    it('should focus when `Tab` is pressed', async function() {
-      await tab(element);
-      expect(document.activeElement).to.equal(chip1);
+    describe('pressing `Tab`', function() {
+      beforeEach(async function() {
+        await tab(element);
+      });
+      it('should focus', function() {
+        expect(document.activeElement).to.equal(chip1);
+      });
     });
 
-    it('should move to chip2 when `ArrowRight` is pressed', async function() {
-      chip1.focus();
-      await chip1.updateComplete;
-      await arrowRight(element);
-      expect(document.activeElement).to.equal(chip2);
+    describe('pressing `ArrowRight`', function() {
+      beforeEach(async function() {
+        chip1.focus();
+        await chip1.updateComplete;
+        await arrowRight(element);
+      });
+      it('should move to chip2', function() {
+        expect(document.activeElement).to.equal(chip2);
+      });
     });
 
-    it('has accesssible label', function() {
-      const offscreen = element.shadowRoot?.querySelector('slot .offscreen')?.textContent?.trim();
-      expect(offscreen).to.equal(label);
+    it('has accessible label', function() {
+      const [offscreen] = snapshot.children;
+      expect(offscreen?.name).to.equal(label);
     });
 
     it('is accessible', async function() {
@@ -106,7 +116,7 @@ describe('<pf-chip-group>', async function() {
       snapshot = await a11ySnapshot();
     });
 
-    it('only 3 chips visible', function() {
+    it('only 3 chips should be visible', function() {
       expect(snapshot.children).to.deep.equal([
         { role: 'text', name: 'My Chip Group' },
         { role: 'text', name: 'Chip 1' },
@@ -119,61 +129,76 @@ describe('<pf-chip-group>', async function() {
       ]);
     });
 
-    describe('should have functional overflow chip', function() {
-      it('has overflow chip', function() {
+    describe('overflow behavior', function() {
+      it('should have overflow chip', function() {
         expect(overflow).to.exist;
       });
 
-      it('chip expanded-text is set', function() {
+      it('should have chip expanded-text', function() {
         expect(overflow?.textContent?.trim()).to.be.equal(collapsed);
       });
 
-      it('shows all chips', async function() {
-        await click(overflow);
-        snapshot = await a11ySnapshot();
-        expect(snapshot.children).to.deep.equal( [
-          { role: 'text', name: 'My Chip Group' },
-          { role: 'text', name: 'Chip 1' },
-          {
-            role: 'button',
-            name: 'Close',
-            description: 'Chip 1',
-            focused: true
-          },
-          { role: 'text', name: 'Chip 2' },
-          { role: 'button', name: 'Close', description: 'Chip 2' },
-          { role: 'text', name: 'Chip 3' },
-          { role: 'button', name: 'Close', description: 'Chip 3' },
-          { role: 'text', name: 'Chip 4' },
-          { role: 'button', name: 'Close', description: 'Chip 4' },
-          { role: 'button', name: 'show fewer' }
-        ]);
+      describe('clicking overflow chip', function() {
+        beforeEach(async function() {
+          await click(overflow);
+          snapshot = await a11ySnapshot();
+        });
+        it('should show all chips', function() {
+          expect(snapshot.children).to.deep.equal( [
+            { role: 'text', name: 'My Chip Group' },
+            { role: 'text', name: 'Chip 1' },
+            {
+              role: 'button',
+              name: 'Close',
+              description: 'Chip 1',
+              focused: true
+            },
+            { role: 'text', name: 'Chip 2' },
+            { role: 'button', name: 'Close', description: 'Chip 2' },
+            { role: 'text', name: 'Chip 3' },
+            { role: 'button', name: 'Close', description: 'Chip 3' },
+            { role: 'text', name: 'Chip 4' },
+            { role: 'button', name: 'Close', description: 'Chip 4' },
+            { role: 'button', name: 'show fewer' }
+          ]);
+        });
       });
 
-      it('chip expanded-text is set', async function() {
-        element.open = true;
-        await element.updateComplete;
-        expect(overflow?.textContent?.trim()).to.be.equal(expanded);
+      describe('opening element programatically', function() {
+        beforeEach(async function() {
+          element.open = true;
+          await element.updateComplete;
+        });
+        it('should have chip expanded-text', function() {
+          expect(overflow?.textContent?.trim()).to.be.equal(expanded);
+        });
       });
     });
 
-    describe('closing function', function() {
-      it('has no close button by default', function() {
+    describe('closing behavior', function() {
+      it('should have no close button by default', function() {
         close = element.shadowRoot?.querySelector(`[aria-label="${element.accessibleCloseLabel}"]`) as HTMLButtonElement;
         expect(close).to.not.exist;
       });
-      it('has close button when `closeable`', async function() {
-        element.closeable = true;
-        await element.updateComplete;
-        close = element.shadowRoot?.querySelector(`[aria-label="${element.accessibleCloseLabel}"]`) as HTMLButtonElement;
-        expect(close).to.exist;
-      });
-      it('close button removes element', async function() {
-        element.closeable = true;
-        await element.updateComplete;
-        close = element.shadowRoot?.querySelector(`[aria-label="${element.accessibleCloseLabel}"]`) as HTMLButtonElement;
-        await click(close as HTMLElement);
-        expect(document.querySelector('pf-chip-group')).to.be.null;
+
+      describe('setting closeable to `true`', function() {
+        beforeEach(async function() {
+          element.closeable = true;
+          await element.updateComplete;
+          close = element.shadowRoot?.querySelector(`[aria-label="${element.accessibleCloseLabel}"]`) as HTMLButtonElement;
+        });
+        it('should have close button', function() {
+          expect(close).to.exist;
+        });
+
+        describe('clicking close button', function() {
+          beforeEach(async function() {
+            await click(close as HTMLElement);
+          });
+          it('should remove element', async function() {
+            expect(document.querySelector('pf-chip-group')).to.be.null;
+          });
+        });
       });
     });
   });
@@ -194,7 +219,7 @@ describe('<pf-chip-group>', async function() {
       await element.updateComplete;
       snapshot = await a11ySnapshot();
     });
-    it('only 2 chips visible', function() {
+    it('only 2 chips should be visible', function() {
       expect(snapshot.children).to.deep.equal([
         { role: 'text', name: 'Chip 1' },
         { role: 'button', name: 'Close', description: 'Chip 1' },
@@ -222,7 +247,7 @@ describe('<pf-chip-group>', async function() {
       snapshot = await a11ySnapshot();
     });
 
-    it('all 4 chips visible', function() {
+    it('all 4 chips should be visible', function() {
       expect(snapshot.children).to.deep.equal([
         { role: 'text', name: 'Chip 1' },
         { role: 'button', name: 'Close', description: 'Chip 1' },

@@ -59,8 +59,7 @@ describe('<pf-chip>', async function() {
         element.focus();
         active = await activeElement(element)?.getAttribute('aria-label');
       });
-      it('should focus programatically', function() {
-        element.focus();
+      it('should focus', function() {
         expect(active).to.equal(element.accessibleCloseLabel);
       });
     });
@@ -74,21 +73,21 @@ describe('<pf-chip>', async function() {
       });
     });
 
-    describe('should work with a keyboard', function() {
+    describe('pressing `Tab` key', function() {
       let active: string | null | undefined;
       beforeEach(async function() {
         await tab();
         active = await activeElement(element)?.getAttribute('aria-label');
       });
-      it('focuses using `Tab` key', function() {
+      it('should focus', function() {
         expect(active).to.equal(element.accessibleCloseLabel);
 
-        describe('should close using `Enter` key', async function() {
+        describe('pressing `Enter` key', async function() {
           beforeEach(async function() {
             await element.focus();
             await enter();
           });
-          it('closes', function() {
+          it('should close', function() {
             expect(document.querySelector('pf-chip')).to.be.null;
           });
         });
@@ -96,7 +95,7 @@ describe('<pf-chip>', async function() {
     });
   });
 
-  describe('overflow-chip', function() {
+  describe('with `overflow-chip` attribute', function() {
     let element: PfChip;
     let button: HTMLButtonElement;
 
@@ -122,16 +121,16 @@ describe('<pf-chip>', async function() {
       });
     });
 
-    describe('focusing using tab key', function() {
+    describe('pressing `Tab` key', function() {
       beforeEach(async function() {
         await tab();
       });
-      it('should focus using tab key', function() {
+      it('should focus', function() {
         expect(activeElement(element)).to.exist;
       });
     });
 
-    describe('using `Enter` key', function() {
+    describe('pressing `Enter` key', function() {
       beforeEach(async function() {
         element.focus();
         await enter();
@@ -141,17 +140,17 @@ describe('<pf-chip>', async function() {
       });
     });
 
-    describe('using mouse', function() {
+    describe('clicking element', function() {
       beforeEach(async function() {
         await click(element);
       });
-      it('should NOT close using mouse', function() {
+      it('should NOT close', function() {
         expect(document.querySelector('pf-chip')).to.not.be.null;
       });
     });
   });
 
-  describe('read-only', async function() {
+  describe('with `read-only` attribute', async function() {
     let element: PfChip;
     let button: HTMLButtonElement;
 
@@ -164,23 +163,6 @@ describe('<pf-chip>', async function() {
       await expect(element).to.be.accessible();
     });
     it('should not have a button', function() {
-      expect(button).to.be.null;
-    });
-  });
-
-  describe('overflow-hidden', async function() {
-    let element: PfChip;
-    let button: HTMLButtonElement;
-
-    beforeEach(async function() {
-      element = await createFixture<PfChip>(html`<pf-chip overflow-chip></pf-chip>`);
-      button = await element.shadowRoot?.querySelector('button#close-button') as HTMLButtonElement;
-    });
-
-    it('should be accessible', async function() {
-      await expect(element).to.be.accessible();
-    });
-    it('should not have a close button', function() {
       expect(button).to.be.null;
     });
   });

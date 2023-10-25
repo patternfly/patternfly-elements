@@ -5,12 +5,6 @@ import { PfChipGroup } from '../pf-chip-group.js';
 import { PfChip } from '../pf-chip.js';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 
-const chipHTML = html`
-  <pf-chip id="chip1">Chip 1</pf-chip>
-  <pf-chip id="chip2">Chip 2</pf-chip>
-  <pf-chip id="chip3">Chip 3</pf-chip>
-  <pf-chip id="chip4">Chip 4</pf-chip>`;
-
 async function tab(element: PfChipGroup) {
   await sendKeys({ press: 'Tab' });
   await element.updateComplete;
@@ -55,7 +49,10 @@ describe('<pf-chip-group>', async function() {
     beforeEach(async function() {
       element = await createFixture<PfChipGroup>(html`
         <pf-chip-group collapsed-text="${collapsedExp}" expanded-text="${expanded}" label="${label}">
-          ${chipHTML}
+          <pf-chip id="chip1">Chip 1</pf-chip>
+          <pf-chip id="chip2">Chip 2</pf-chip>
+          <pf-chip id="chip3">Chip 3</pf-chip>
+          <pf-chip id="chip4">Chip 4</pf-chip>
         </pf-chip-group>
       `);
       await element.updateComplete;
@@ -98,7 +95,10 @@ describe('<pf-chip-group>', async function() {
     beforeEach(async function() {
       element = await createFixture<PfChipGroup>(html`
         <pf-chip-group collapsed-text="${collapsedExp}" expanded-text="${expanded}" label="${label}">
-          ${chipHTML}
+          <pf-chip id="chip1">Chip 1</pf-chip>
+          <pf-chip id="chip2">Chip 2</pf-chip>
+          <pf-chip id="chip3">Chip 3</pf-chip>
+          <pf-chip id="chip4">Chip 4</pf-chip>
         </pf-chip-group>
       `);
       await element.updateComplete;
@@ -183,7 +183,14 @@ describe('<pf-chip-group>', async function() {
     let snapshot: A11yTreeSnapshot;
 
     beforeEach(async function() {
-      element = await createFixture<PfChipGroup>(html`<pf-chip-group num-chips="2">${chipHTML}</pf-chip-group>`);
+      element = await createFixture<PfChipGroup>(html`
+        <pf-chip-group num-chips="2">
+          <pf-chip id="chip1">Chip 1</pf-chip>
+          <pf-chip id="chip2">Chip 2</pf-chip>
+          <pf-chip id="chip3">Chip 3</pf-chip>
+          <pf-chip id="chip4">Chip 4</pf-chip>
+        </pf-chip-group>
+      `);
       await element.updateComplete;
       snapshot = await a11ySnapshot();
     });
@@ -203,7 +210,14 @@ describe('<pf-chip-group>', async function() {
     let snapshot: A11yTreeSnapshot;
 
     beforeEach(async function() {
-      element = await createFixture<PfChipGroup>(html`<pf-chip-group num-chips="4">${chipHTML}</pf-chip-group>`);
+      element = await createFixture<PfChipGroup>(html`
+        <pf-chip-group num-chips="4">
+          <pf-chip id="chip1">Chip 1</pf-chip>
+          <pf-chip id="chip2">Chip 2</pf-chip>
+          <pf-chip id="chip3">Chip 3</pf-chip>
+          <pf-chip id="chip4">Chip 4</pf-chip>
+        </pf-chip-group>
+      `);
       await element.updateComplete;
       snapshot = await a11ySnapshot();
     });

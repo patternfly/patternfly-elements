@@ -167,12 +167,7 @@ export default App;
 {% endband %}
 
 {% band header="Interacting with our web components API" %}
-React relies on [synthetic events](https://react.dev/reference/react-dom/components/common#react-event-object) and its own event system. Web components use standard DOM events. React cannot listen for DOM events coming from Custom Elements. We need to manually bridge the gap between React's synthetic events and native DOM events to ensure proper event handling. React needs to be aware of these event handlers so that React can easily handle events within the React component tree. We can use React `useRef` hook to reference the Custom Elements and manually attach event listeners with addEventListener.
-
-Now we will add [Popover (pf-popover)](https://patternflyelements.org/components/popover/) web component and open popover on mouse over of the button. We will use `useRef` hook to keep reference of the button.
-
-> 👉 **Note**: [React 18@experimental](https://react.dev/reference/react-dom/components#custom-html-elements) provides support for HTML, so the `useEffect`/`useRef`
-> workaround is no longer needed for property setting and event listeners
+Now we will add [Popover (pf-popover)](https://patternflyelements.org/components/popover/) web component and open popover on mouse over of the button. We will activate programmatically use `show()` and `hide()` popover method for show and hide the popover.
 
 ```js
 import { useRef, useState } from "react";
@@ -200,41 +195,39 @@ function App() {
   };
 
   return (
-    <>
-      <Card id="card" rounded>
-        <h1 slot="header">React + PatternFly Elements</h1>
-        <div>count is {count}</div>
-        <label>
-          Allow decrement?
-          <Switch checked={allowDec} onChange={toggle} />
-        </label>
-        <p>
-          <Tooltip id="tooltip" content="Tooltip text">
-            <span>show tooltip on mouse over</span>
-          </Tooltip>
-        </p>
-        <p>
-          <Button onMouseOver={onMouseover} onMouseLeave={onMousehide}>
-            Open Popover
-          </Button>
-          <Popover ref={popoverRef} body="Popover body" heading="Heading">
-            <span>popover</span>
-          </Popover>
-        </p>
+    <Card id="card" rounded>
+      <h1 slot="header">React + PatternFly Elements</h1>
+      <div>count is {count}</div>
+      <label>
+        Allow decrement?
+        <Switch checked={allowDec} onChange={toggle} />
+      </label>
+      <p>
+        <Tooltip id="tooltip" content="Tooltip text">
+          <span>show tooltip on mouse over</span>
+        </Tooltip>
+      </p>
+      <p>
+        <Button onMouseOver={onMouseover} onMouseLeave={onMousehide}>
+          Open Popover
+        </Button>
+        <Popover ref={popoverRef} body="Popover body" heading="Heading">
+          <span>popover</span>
+        </Popover>
+      </p>
 
-        <Button slot="footer" onClick={() => setCount((count) => count + 1)}>
-          Increment
-        </Button>
-        <Button
-          slot="footer"
-          danger={allowDec}
-          disabled={!allowDec}
-          onClick={() => setCount((count) => count - 1)}
-        >
-          Decrement
-        </Button>
-      </Card>
-    </>
+      <Button slot="footer" onClick={() => setCount((count) => count + 1)}>
+        Increment
+      </Button>
+      <Button
+        slot="footer"
+        danger={allowDec}
+        disabled={!allowDec}
+        onClick={() => setCount((count) => count - 1)}
+      >
+        Decrement
+      </Button>
+    </Card>
   );
 }
 
@@ -261,7 +254,7 @@ Below is the accompanying CodeSandbox to see that our setup is correct and that 
 
 Web components are a set of web platform APIs that help to create reusable and encapsulated UI elements. They consist of Custom Elements, Shadow DOM, and HTML Templates.
 React is a JavaScript library for making user interfaces. React uses a virtual DOM to optimize updates and minimize the number of changes that need to be made to the actual DOM.
-React needs special treatment when integrating with web components because of the design philosophies and lifecycles. There are multiple libraries available to fill the gap between React components and web components, like @lit/react. This library helps us to create the wrapper for web components and we can use it with React components.
+React needs special treatment when integrating with web components because of the design philosophies and lifecycles. There are multiple libraries available to fill the gap between React components and web components, like [@lit/react](https://github.com/lit/lit/tree/main/packages/react#litreact). This library helps us to create the wrapper for web components and we can use it with React components. [Custom Elements Everywhere](https://custom-elements-everywhere.com/) project runs a suite of tests against each framework to identify interoperability issues, and highlight potential fixes already implemented in other frameworks.
 
 Here are some key reasons:
 

@@ -61,15 +61,13 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="card">
-      <Card id="card" rounded>
-        <h1 slot="header">React + PatternFly Elements</h1>
-        <div>count is {count}</div>
-        <Button slot="footer" onClick={() => setCount((count) => count + 1)}>
-          Increment
-        </Button>
-      </Card>
-    </div>
+    <Card id="card" rounded>
+      <h1 slot="header">React + PatternFly Elements</h1>
+      <div>count is {count}</div>
+      <Button slot="footer" onClick={() => setCount((count) => count + 1)}>
+        Increment
+      </Button>
+    </Card>
   );
 }
 ```
@@ -92,27 +90,25 @@ function App() {
   const toggle = () => setAllowDec(!allowDec);
 
   return (
-    <div className="card">
-      <Card id="card" rounded>
-        <h1 slot="header">React + PatternFly Elements</h1>
-        <div>count is {count}</div>
-        <label>
-          Allow decrement?
-          <Switch checked={allowDec} onChange={toggle} />
-        </label>
-        <Button slot="footer" onClick={() => setCount((count) => count + 1)}>
-          Increment
-        </Button>
-        <Button
-          slot="footer"
-          danger={allowDec}
-          disabled={!allowDec}
-          onClick={() => setCount((count) => count - 1)}
-        >
-          Decrement
-        </Button>
-      </Card>
-    </div>
+    <Card id="card" rounded>
+      <h1 slot="header">React + PatternFly Elements</h1>
+      <div>count is {count}</div>
+      <label>
+        Allow decrement?
+        <Switch checked={allowDec} onChange={toggle} />
+      </label>
+      <Button slot="footer" onClick={() => setCount((count) => count + 1)}>
+        Increment
+      </Button>
+      <Button
+        slot="footer"
+        danger={allowDec}
+        disabled={!allowDec}
+        onClick={() => setCount((count) => count - 1)}
+      >
+        Decrement
+      </Button>
+    </Card>
   );
 }
 
@@ -138,36 +134,30 @@ function App() {
   const toggle = () => setAllowDec(!allowDec);
 
   return (
-    <div className="card">
-      <Card id="card" rounded>
-        <h1 slot="header">React + PatternFly Elements</h1>
-        <div>count is {count}</div>
-        <label>
-          Allow decrement?
-          <Switch checked={allowDec} onChange={toggle} />
-        </label>
-        <p>
-          <Tooltip
-            id="tooltip"
-            content={`
-            Tooltip text`}
-          >
-            <span>show tooltip on mouse over</span>
-          </Tooltip>
-        </p>
-        <Button slot="footer" onClick={() => setCount((count) => count + 1)}>
-          Increment
-        </Button>
-        <Button
-          slot="footer"
-          danger={allowDec}
-          disabled={!allowDec}
-          onClick={() => setCount((count) => count - 1)}
-        >
-          Decrement
-        </Button>
-      </Card>
-    </div>
+    <Card id="card" rounded>
+      <h1 slot="header">React + PatternFly Elements</h1>
+      <div>count is {count}</div>
+      <label>
+        Allow decrement?
+        <Switch checked={allowDec} onChange={toggle} />
+      </label>
+      <p>
+        <Tooltip id="tooltip" content="Tooltip text">
+          <span>show tooltip on mouse over</span>
+        </Tooltip>
+      </p>
+      <Button slot="footer" onClick={() => setCount((count) => count + 1)}>
+        Increment
+      </Button>
+      <Button
+        slot="footer"
+        danger={allowDec}
+        disabled={!allowDec}
+        onClick={() => setCount((count) => count - 1)}
+      >
+        Decrement
+      </Button>
+    </Card>
   );
 }
 
@@ -185,30 +175,21 @@ Now we will add [Popover (pf-popover)](https://patternflyelements.org/components
 > workaround is no longer needed for property setting and event listeners
 
 ```js
-import { useEffect, useRef, useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { useRef, useState } from "react";
 
 import { Button } from "@patternfly/elements/react/pf-button/pf-button.js";
 import { Card } from "@patternfly/elements/react/pf-card/pf-card.js";
 import { Switch } from "@patternfly/elements/react/pf-switch/pf-switch.js";
 import { Popover } from "@patternfly/elements/react/pf-popover/pf-popover.js";
+import { Tooltip } from "@patternfly/elements/react/pf-tooltip/pf-tooltip.js";
+
 import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
   const [allowDec, setAllowDec] = useState(false);
   const toggle = () => setAllowDec(!allowDec);
-  const reactLogoRef = useRef < HTMLImageElement > null;
   const popoverRef = useRef(null);
-  const buttonRef = useRef(null);
-
-  useEffect(() => {
-    const [anim] = reactLogoRef.current?.getAnimations() ?? [];
-    console.log(anim, reactLogoRef.current);
-    if (anim) {
-      anim.playbackRate = count;
-    }
-  }, [count]);
 
   const onMouseover = () => {
     popoverRef.current?.show();
@@ -219,18 +200,7 @@ function App() {
   };
 
   return (
-    <div className="card">
-      <Button
-        ref={buttonRef}
-        onMouseOver={onMouseover}
-        onMouseLeave={onMousehide}
-      >
-        Hover to Cite
-      </Button>
-      <Popover ref={popoverRef}>
-        <cite slot="body">Popover body</cite>
-        <q>Popover</q>
-      </Popover>
+    <>
       <Card id="card" rounded>
         <h1 slot="header">React + PatternFly Elements</h1>
         <div>count is {count}</div>
@@ -238,6 +208,20 @@ function App() {
           Allow decrement?
           <Switch checked={allowDec} onChange={toggle} />
         </label>
+        <p>
+          <Tooltip id="tooltip" content="Tooltip text">
+            <span>show tooltip on mouse over</span>
+          </Tooltip>
+        </p>
+        <p>
+          <Button onMouseOver={onMouseover} onMouseLeave={onMousehide}>
+            Open Popover
+          </Button>
+          <Popover ref={popoverRef} body="Popover body" heading="Heading">
+            <span>popover</span>
+          </Popover>
+        </p>
+
         <Button slot="footer" onClick={() => setCount((count) => count + 1)}>
           Increment
         </Button>
@@ -250,17 +234,7 @@ function App() {
           Decrement
         </Button>
       </Card>
-      <div>
-        <a href="https://reactjs.org" target="_blank">
-          <img
-            src={reactLogo}
-            ref={reactLogoRef}
-            className="logo react"
-            alt="React logo"
-          />
-        </a>
-      </div>
-    </div>
+    </>
   );
 }
 
@@ -297,7 +271,7 @@ Here are some key reasons:
    When we use React components with web components, these different encapsulation mechanisms can conflict. Special care is needed to ensure that styles, state, and event handling work as expected. React must be aware of any changes to the web components to update the virtual DOM accordingly.
 
 2. Event Handling:
-   Web components use standard DOM events. React relies on [synthetic events](https://react.dev/reference/react-dom/components/common#react-event-object) and its own event system. When using React components within web components, you may need to manually bridge the gap between React's synthetic events and native DOM events to ensure proper event handling. React needs to be aware of these event handlers so that React can easily handle events within the React component tree.
+   React relies on [synthetic events](https://react.dev/reference/react-dom/components/common#react-event-object) and its own event system. Web components use standard DOM events. React cannot listen for DOM events coming from Custom Elements. We need to manually bridge the gap between React's synthetic events and native DOM events to ensure proper event handling. React needs to be aware of these event handlers so that React can easily handle events within the React component tree. We can use React `useRef` hook to reference the Custom Elements and manually attach event listeners with addEventListener.
 
 3. Lifecycle Methods:
    Web components have their own [lifecycle method](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements#custom_element_lifecycle_callbacks) like connectedCallback, disconnectedCallback and React has its own [lifecycle methods](https://legacy.reactjs.org/docs/state-and-lifecycle.html), such as componentDidMount, componentDidUpdate which are used to handle the events when the component is added, updated or removed from the DOM. When we use web components with React, these lifecycle methods are properly handled and integrated into the React component tree.

@@ -16,7 +16,9 @@ export type PopupKind = 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
  * Components Using a Roving
  * tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
  */
-export class ToggleController implements ReactiveController {
+export class ToggleController<
+Item extends HTMLElement = HTMLElement,
+> implements ReactiveController {
   /** element that toggles popup */
   #triggerElements?: HTMLElement[];
 

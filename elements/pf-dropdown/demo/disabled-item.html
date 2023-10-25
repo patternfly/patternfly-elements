@@ -3,8 +3,9 @@
     import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
 </script>
 
-<h2>Basic dropdown</h2>
+<h2>Dropdown with disabled item</h2>
 <pf-dropdown>
+    <pf-button slot="trigger">Toggle dropdown</pf-button>
     <pf-dropdown-item>item4</pf-dropdown-item>
     <hr>
     <pf-dropdown-group label="Group 1">
@@ -13,8 +14,5 @@
         <hr>
         <pf-dropdown-item>item3</pf-dropdown-item>
     </pf-dropdown-group>
-    <pf-dropdown-group label="Group 2">
-        <pf-dropdown-item>item1</pf-dropdown-item>
-        <pf-dropdown-item >item2</pf-dropdown-item>
-    </pf-dropdown-group>
+    <pf-dropdown-item disabled>disabled item</pf-dropdown-item>
 </pf-dropdown>

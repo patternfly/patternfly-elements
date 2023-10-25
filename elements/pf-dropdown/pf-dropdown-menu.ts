@@ -1,10 +1,10 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValueMap } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
-import { PfDropdownItem } from './pf-dropdown-item.js';
+import { PfDropdownItem, DropdownItemChange } from './pf-dropdown-item.js';
 import { PfDropdownGroup } from './pf-dropdown-group.js';
 import styles from './pf-dropdown-menu.css';
 
@@ -21,7 +21,7 @@ export class PfDropdownMenu extends LitElement {
   /**
    * whether listbox is disabled
    */
-  @property({ reflect: true, attribute: 'aria-disabled', type: String }) ariaDisabled = 'false';
+  @property({ reflect: true, type: Boolean }) disabled = false;
 
   @queryAssignedElements({ flatten: true }) private menuAssignedElements!:
     | PfDropdownItem[]
@@ -34,17 +34,42 @@ export class PfDropdownMenu extends LitElement {
     'click': this.#onMenuitemClick.bind(this),
   };
 
-  #menuitems: HTMLElement[] = [];
   #itemsInit = false;
-  #tabindex: RovingTabindexController;
-  #internals: InternalsController;
 
-  constructor() {
-    super();
-    this.#tabindex = new RovingTabindexController<HTMLElement>(this);
-    this.#internals = new InternalsController(this, {
-      role: 'menu'
+  #tabindex = new RovingTabindexController(this);
+
+  #internals = new InternalsController(this, { role: 'menu' });
+
+  /**
+   * current active descendant in menu
+   */
+  get activeItem() {
+    const [active] = this.#menuitems.filter(menuitem => menuitem.getAttribute('id') === this.#internals.ariaActivedescendant);
+    return active ?? this.#tabindex.firstItem;
+  }
+
+  /**
+   * index of current active descendant in menu
+   */
+  get activeIndex() {
+    return this.#menuitems.indexOf(this.activeItem) || 0;
+  }
+
+  get #dropdownItems() {
+    const dropdownItems: PfDropdownItem[] = [];
+    this.menuAssignedElements?.forEach(node => {
+      if (node instanceof PfDropdownItem) {
+        dropdownItems.push(node);
+      } else if (node instanceof PfDropdownGroup) {
+        const pfItems = node.dropdownItems;
+        dropdownItems.push(...pfItems);
+      }
     });
+    return dropdownItems;
+  }
+
+  get #menuitems() {
+    return this.#dropdownItems.map(item => item.menuItem);
   }
 
   connectedCallback() {
@@ -54,9 +79,15 @@ export class PfDropdownMenu extends LitElement {
     }
   }
 
+  protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    if (_changedProperties.has('disabled')) {
+      this.#internals.ariaDisabled = `${!this.disabled}`;
+    }
+  }
+
   render() {
     return html`
-      <slot @slotchange=${this.#handleSlotChange} @menuitemchange=${this.#handleSlotChange}></slot>
+      <slot @slotchange="${this.#handleSlotChange}" @change="${this.#handleItemChange}"></slot>
     `;
   }
 
@@ -68,40 +99,20 @@ export class PfDropdownMenu extends LitElement {
   }
 
   /**
-   * current active descendant in menu
+   * handles a change event from a dropdown item
+   * @param event {Event}
    */
-  get activeItem() {
-    const [active] = this.#menuitems.filter(menuitem => menuitem.getAttribute('id') === this.#internals.ariaActivedescendant);
-    return active || this.#tabindex.firstItem;
+  #handleItemChange(event: Event) {
+    if (event instanceof DropdownItemChange) {
+      this.#updateItems();
+    }
   }
 
   /**
-   * index of current active descendant in menu
+   * handles slot change event
    */
-  get activeIndex() {
-    return this.#menuitems.indexOf(this.activeItem) || 0;
-  }
-
   #handleSlotChange() {
-    let pfDropdownItems: PfDropdownItem[] = [];
-    this.menuAssignedElements?.forEach(node => {
-      if (node?.localName === 'pf-dropdown-item') {
-        pfDropdownItems.push(node as PfDropdownItem);
-      } else if (node?.localName === 'pf-dropdown-group') {
-        const pfItems = [...node.children] as PfDropdownItem[];
-        pfDropdownItems.push(...pfItems);
-      }
-    });
-    pfDropdownItems = pfDropdownItems?.filter(
-      n => n.hidden === false
-    );
-    this.#menuitems = pfDropdownItems.map(drop => drop.menuItem as HTMLElement).filter(item => !!item);
-    if (this.#itemsInit) {
-      this.#tabindex.updateItems(this.#menuitems);
-    } else {
-      this.#tabindex.initItems(this.#menuitems);
-    }
-    this.#itemsInit = true;
+    this.#updateItems();
   }
 
   #nextMatchingItem(key: string) {
@@ -110,10 +121,10 @@ export class PfDropdownMenu extends LitElement {
     const sequence = [...items.slice(index), ...items.slice(0, index)];
     const regex = new RegExp(`^${key}`, 'i');
     const first = sequence.find(item => {
-      const option = item as HTMLElement;
+      const option = item;
       return !option.hidden && option.textContent?.match(regex);
     });
-    return first || undefined;
+    return first;
   }
 
   /**
@@ -164,6 +175,7 @@ export class PfDropdownMenu extends LitElement {
       // (as opposed to an external text input and if filter has changed
       if (focusEvent) {
         this.#tabindex.focusOnItem(focusEvent);
+        this.#updateActiveDescendant();
       }
     }
   }
@@ -172,17 +184,28 @@ export class PfDropdownMenu extends LitElement {
    * updates active descendant when focus changes
    */
   #updateActiveDescendant() {
-    this.#menuitems.forEach(item => {
-      if (item === this.#tabindex.activeItem && this.#menuitems.includes(item)) {
+    this.#dropdownItems.forEach(item => {
+      item.active = item.menuItem === this.#tabindex.activeItem && this.#menuitems.includes(item.menuItem);
+      if (item.active) {
         this.#internals.ariaActivedescendant = item.id;
-        item.setAttribute('active-descendant', 'active-descendant');
       } else {
         if (this.#internals.ariaActivedescendant === item.id) {
           this.#internals.ariaActivedescendant = null;
         }
-        item.removeAttribute('active-descendant');
       }
     });
+  }
+
+  /**
+   * updates menu items list
+   */
+  #updateItems() {
+    if (this.#itemsInit) {
+      this.#tabindex.updateItems(this.#menuitems);
+    } else {
+      this.#tabindex.initItems(this.#menuitems);
+    }
+    this.#itemsInit = true;
   }
 }
 

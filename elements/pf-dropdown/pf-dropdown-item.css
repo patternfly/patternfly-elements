@@ -36,8 +36,7 @@
   display: none !important;
 }
 
-:host([disabled]),
-:host([aria-disabled="true"]) {
+:host([disabled]) {
   pointer-events: none;
   cursor: not-allowed;
   --pf-c-dropdown__menu-item--Color: var(
@@ -94,6 +93,11 @@ a {
   text-decoration: none !important;
 }
 
+[role="menuitem"] {
+  display: flex;
+  align-items: center;
+}
+
 [role="menuitem"]:focus {
   outline: none;
 }
@@ -135,3 +139,6 @@ slot[name="description"] {
   word-break: break-all;
 }
 
+::slotted([slot="icon"]) {
+  margin-inline-end: 0.5em;
+}

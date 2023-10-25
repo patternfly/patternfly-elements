@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValueMap } from 'lit';
+import { LitElement, html } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
@@ -17,7 +17,7 @@ export class DropdownSelectEvent extends ComposedEvent {
     public event: Event | KeyboardEvent,
     public selectedValue: string
   ) {
-    super('select');
+    super('select', { bubbles: true });
   }
 }
 
@@ -29,8 +29,8 @@ export class DropdownSelectEvent extends ComposedEvent {
  *
  * @slot - Must contain one or more `<pf-dropdown-item>` or `<pf-dropdown-group>`
  *
- * @csspart dropdown-trigger - Dropdown Trigger element
- * @csspart dropdown-menu - The dropdown menu wrapper
+ * @csspart trigger - Dropdown Trigger element
+ * @csspart menu - The dropdown menu wrapper
  *
  * @cssprop {<length>} --pf-c-dropdown__menu--PaddingTop
  *          Dropdown top padding
@@ -73,34 +73,30 @@ export class PfDropdown extends LitElement {
 
   #triggerElement: HTMLElement | null = null;
 
-  #toggle?: ToggleController;
+  #toggle = new ToggleController(this, 'menu');
 
   connectedCallback() {
     super.connectedCallback();
-    this.#toggle = new ToggleController(this, 'menu');
     this.#setTriggerElement();
   }
 
   render() {
-    let classes = {};
-    if (this.#toggle) {
-      const { expanded, anchor, alignment } = this.#toggle;
-      classes = { expanded, [anchor]: !!anchor, [alignment]: !!alignment };
-    }
+    const { expanded, anchor, alignment } = this.#toggle;
+    const { disabled } = this;
     return html`
     <div 
       style="${this.#toggle?.styles ? styleMap(this.#toggle.styles) : ''}"
-      class="${this.#toggle ? classMap(classes) : ''}">
+      class="${this.#toggle ? classMap({ expanded, [anchor]: !!anchor, [alignment]: !!alignment }) : ''}">
       <slot
-        part="dropdown-trigger"
+        part="trigger"
         name="trigger"
         id="trigger"
-        @slotchange=${this.#setTriggerElement}
+        @slotchange="${this.#setTriggerElement}"
       >
         <pf-button 
           id="default-button" 
           variant="control"
-          class="${this.disabled ? 'disabled' : ''}">
+          class="${classMap({ disabled })}">
           Dropdown 
           <svg viewBox="0 0 320 512" fill="currentColor" aria-hidden="true" width="1em" height="1em">
             <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
@@ -108,12 +104,12 @@ export class PfDropdown extends LitElement {
         </pf-button>
       </slot>
       <pf-dropdown-menu
-        part="dropdown-menu"
-        aria-disabled="${this.disabled ? 'true' : 'false'}"
-        class="${this.#toggle?.expanded ? 'show' : ''}"
-        @keydown=${this.onKeydown}
+        id="menu"
+        part="menu"
+        class="${classMap({ show: expanded })}"
+        ?disabled="${this.disabled}"
+        @keydown="${this.onKeydown}"
         @click="${this.#handleSelect}"
-        id="dropdown-menu"
       >
         <slot></slot>
       </pf-dropdown-menu>
@@ -128,10 +124,10 @@ export class PfDropdown extends LitElement {
   #handleSelect(event: KeyboardEvent | Event & { target: PfDropdownItem }) {
     const menu = this._menuElement as PfDropdownMenu;
     const target = event.target as PfDropdownItem || menu.activeItem;
-    this.close();
     this.dispatchEvent(
       new DropdownSelectEvent(event, `${target?.value}`)
     );
+    this.hide();
   }
 
   #setTriggerElement() {
@@ -145,23 +141,26 @@ export class PfDropdown extends LitElement {
   }
 
   @bound private onKeydown(event: KeyboardEvent) {
-    if (event.key === 'Enter' || event.key === 'Space') {
-      event.preventDefault();
-      this.#handleSelect(event);
+    switch (event.key) {
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        this.#handleSelect(event);
+        break;
     }
   }
 
   /**
    * Opens the dropdown
    */
-  @bound async open() {
+  @bound async show() {
     await this.#toggle?.show(true);
   }
 
   /**
    * Closes the dropdown
    */
-  @bound async close() {
+  @bound async hide() {
     await this.#toggle?.hide(true);
   }
 }

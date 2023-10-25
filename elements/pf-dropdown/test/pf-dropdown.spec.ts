@@ -1,9 +1,8 @@
 import { expect, html, fixture, fixtureCleanup } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { PfDropdown } from '@patternfly/elements/pf-dropdown/pf-dropdown.js';
-import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { a11ySnapshot, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { PfButton } from '@patternfly/elements/pf-button/pf-button.js';
-import type { A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 describe('<pf-dropdown>', function() {
   let element: PfDropdown;

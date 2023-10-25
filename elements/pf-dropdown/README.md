@@ -26,8 +26,6 @@ import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
 
 ## Usage
 
-### Default Trigger element
-
 ```html
 <pf-dropdown>
     <pf-dropdown-item>item4</pf-dropdown-item>
@@ -41,28 +39,6 @@ import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
     <pf-dropdown-group label="Group 2">
         <pf-dropdown-item>item1</pf-dropdown-item>
         <pf-dropdown-item >item2</pf-dropdown-item>
-    </pf-dropdown-group>
-</pf-dropdown>
-```
-
-### Custom Trigger element
-
-```html
-<pf-dropdown>
-    <pf-button slot="trigger">Toggle dropdown</pf-button>
-    <pf-dropdown-item>item4</pf-dropdown-item>
-    <hr>
-    <pf-dropdown-group label="Group 1">
-        <pf-dropdown-item>item1</pf-dropdown-item>
-        <pf-dropdown-item>item2</pf-dropdown-item>
-        <hr>
-        <pf-dropdown-item>item3</pf-dropdown-item>
-    </pf-dropdown-group>
-    <pf-dropdown-group label="Group 2">
-        <pf-dropdown-item>item1</pf-dropdown-item>
-        <pf-dropdown-item >item2</pf-dropdown-item>
-        <pf-dropdown-item >item3</pf-dropdown-item>
-        <pf-dropdown-item disabled>disabled</pf-dropdown-item>
     </pf-dropdown-group>
 </pf-dropdown>
 ```

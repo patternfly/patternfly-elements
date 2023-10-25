@@ -38,7 +38,7 @@ describe('<pf-chip-group>', async function() {
     });
   });
 
-  describe('should be accessible', async function() {
+  describe('with collapsed-text, expanded-text, and label attributes', async function() {
     const collapsedExp = 'show ${remaining} more';
     const expanded = 'show fewer';
     const label = 'My Chip Group';

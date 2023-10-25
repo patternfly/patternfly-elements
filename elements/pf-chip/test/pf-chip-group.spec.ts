@@ -38,7 +38,7 @@ describe('<pf-chip-group>', async function() {
     });
   });
 
-  describe('with collapsed-text, expanded-text, and label attributes', async function() {
+  describe('with `collapsed-text`, `expanded-text`, and `label` attributes', async function() {
     const collapsedExp = 'show ${remaining} more';
     const expanded = 'show fewer';
     const label = 'My Chip Group';
@@ -134,7 +134,7 @@ describe('<pf-chip-group>', async function() {
         expect(overflow).to.exist;
       });
 
-      it('should have chip expanded-text', function() {
+      it('should have chip `expanded-text`', function() {
         expect(overflow?.textContent?.trim()).to.be.equal(collapsed);
       });
 
@@ -169,35 +169,32 @@ describe('<pf-chip-group>', async function() {
           element.open = true;
           await element.updateComplete;
         });
-        it('should have chip expanded-text', function() {
+        it('should have chip `expanded-text`', function() {
           expect(overflow?.textContent?.trim()).to.be.equal(expanded);
         });
       });
     });
+    it('should have no close button by default', function() {
+      close = element.shadowRoot?.querySelector(`[aria-label="${element.accessibleCloseLabel}"]`) as HTMLButtonElement;
+      expect(close).to.not.exist;
+    });
 
-    describe('closing behavior', function() {
-      it('should have no close button by default', function() {
+    describe('with `closeable` attribute', function() {
+      beforeEach(async function() {
+        element.closeable = true;
+        await element.updateComplete;
         close = element.shadowRoot?.querySelector(`[aria-label="${element.accessibleCloseLabel}"]`) as HTMLButtonElement;
-        expect(close).to.not.exist;
+      });
+      it('should have close button', function() {
+        expect(close).to.exist;
       });
 
-      describe('setting closeable to `true`', function() {
+      describe('clicking close button', function() {
         beforeEach(async function() {
-          element.closeable = true;
-          await element.updateComplete;
-          close = element.shadowRoot?.querySelector(`[aria-label="${element.accessibleCloseLabel}"]`) as HTMLButtonElement;
+          await click(close as HTMLElement);
         });
-        it('should have close button', function() {
-          expect(close).to.exist;
-        });
-
-        describe('clicking close button', function() {
-          beforeEach(async function() {
-            await click(close as HTMLElement);
-          });
-          it('should remove element', async function() {
-            expect(document.querySelector('pf-chip-group')).to.be.null;
-          });
+        it('should remove element', async function() {
+          expect(document.querySelector('pf-chip-group')).to.be.null;
         });
       });
     });

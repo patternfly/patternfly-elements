@@ -328,17 +328,20 @@ Item extends HTMLElement = HTMLElement,
    * (multiple trigger elements, such as an input and a button, can be added)
    * @param popup {HTMLElement}
    */
-  addTriggerElement( triggerElement?: HTMLElement | null ) {
+  addTriggerElement( triggerElement?: HTMLElement | null, role?: string ) {
     if (triggerElement && !this.#triggerElements?.includes(triggerElement)) {
-      const host = triggerElement as ReactiveControllerHost & HTMLElement;
+      const customElement = triggerElement as ReactiveControllerHost & HTMLElement;
       this.#triggerElements?.push(triggerElement);
 
       // use internals, if possible
-      if (host) {
-        const internals = new InternalsController(host, {
+      if (customElement && customElements.get(customElement.localName)) {
+        const internals = new InternalsController(customElement, {
           ariaExpanded: this.expanded ? 'true' : 'false',
-          ariaHasPopup: this.#popupType,
+          ariaHasPopup: this.#popupType
         });
+        // make sure the element has a role
+        const internalrole = internals.role || role || customElement.getAttribute('role') || 'button';
+        internals.role = internalrole;
         this.#triggerInternals.set(triggerElement, internals);
       } else {
         // otherwise, set attributes
@@ -362,9 +365,15 @@ Item extends HTMLElement = HTMLElement,
       for (const [event, listener] of Object.entries(this.#triggerListeners)) {
         triggerElement?.removeEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
       }
-      triggerElement?.removeAttribute('aria-haspopup');
-      triggerElement?.removeAttribute('aria-controls');
-      triggerElement?.removeAttribute('aria-expanded');
+      const internals = this.#triggerInternals.get(triggerElement);
+      if (internals) {
+        internals.ariaHasPopup = null;
+        internals.ariaExpanded = null;
+      } else {
+        triggerElement.removeAttribute('aria-haspopup');
+        triggerElement?.removeAttribute('aria-expanded');
+      }
+      triggerElement?.removeAttribute('controls');
     }
   }
 

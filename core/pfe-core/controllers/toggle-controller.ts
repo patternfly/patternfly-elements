@@ -332,7 +332,7 @@ Item extends HTMLElement = HTMLElement,
    * (multiple trigger elements, such as an input and a button, can be added)
    * @param popup {HTMLElement}
    */
-  addTriggerElement( triggerElement?: HTMLElement | null, role?: string ) {
+  addTriggerElement( triggerElement?: HTMLElement | null ) {
     if (triggerElement && !this.#triggerElements.includes(triggerElement)) {
       const customElement = triggerElement as ReactiveControllerHost & HTMLElement;
 
@@ -342,16 +342,9 @@ Item extends HTMLElement = HTMLElement,
           ariaExpanded: this.expanded ? 'true' : 'false',
           ariaHasPopup: this.#popupType
         });
-        // make sure the element has a role
-        const internalrole = internals.role || role || customElement.getAttribute('role') || 'button';
-        internals.role = internalrole;
-        triggerElement.role = internalrole;
         this.#triggerInternals.set(triggerElement, internals);
       } else {
         // otherwise, set attributes
-        if (!['button', 'input'].includes(triggerElement.localName) && !triggerElement.getAttribute('role')) {
-          triggerElement?.setAttribute('role', role || 'button');
-        }
         triggerElement?.setAttribute('aria-haspopup', this.#popupType);
         triggerElement?.setAttribute('aria-expanded', this.expanded ? 'true' : 'false');
       }

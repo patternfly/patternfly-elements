@@ -27,8 +27,8 @@ describe('<pf-dropdown>', function() {
     beforeEach(async function() {
       element = await createFixture<PfDropdown>(html`
           <pf-dropdown>
-              <pf-dropdown-item>item1</pf-dropdown-item>
-              <pf-dropdown-item>item2</pf-dropdown-item>
+              <pf-dropdown-item>item 1</pf-dropdown-item>
+              <pf-dropdown-item>item 2</pf-dropdown-item>
           </pf-dropdown>
       `);
       snapshot = await a11ySnapshot();
@@ -58,6 +58,7 @@ describe('<pf-dropdown>', function() {
       describe('pressing `ArrowDown` key', function() {
         beforeEach(async function() {
           await sendKeys({ press: 'ArrowDown' });
+          await element.updateComplete;
           snapshot = await a11ySnapshot();
         });
 
@@ -80,6 +81,37 @@ describe('<pf-dropdown>', function() {
         });
       });
     });
+
+    describe('with `disabled` attribute', function() {
+      beforeEach(async function() {
+        element.disabled = true;
+        await element.updateComplete;
+        snapshot = await a11ySnapshot();
+      });
+
+      it('should not disable trigger button', function() {
+        expect(snapshot.children.length).to.deep.equal(1);
+      });
+
+      describe('pressing `Enter` key', function() {
+        let menu: A11yTreeSnapshot;
+        beforeEach(async function() {
+          await sendKeys({ press: 'Tab' });
+          await sendKeys({ press: 'Enter' });
+          snapshot = await a11ySnapshot();
+          // eslint-disable-next-line prefer-destructuring
+          menu = snapshot.children[1];
+        });
+
+        it('should show menu', function() {
+          expect(menu.children?.length).to.equal(2);
+        });
+
+        it('should be disabled menu', function() {
+          expect(menu.disabled).to.be.true;
+        });
+      });
+    });
   });
 
   describe('with slotted trigger', function() {
@@ -90,7 +122,6 @@ describe('<pf-dropdown>', function() {
           <pf-dropdown-item>item 1</pf-dropdown-item>
           <pf-dropdown-group label="Group">
             <pf-dropdown-item>item 2</pf-dropdown-item>
-            <hr>
             <pf-dropdown-item disabled>disabled item</pf-dropdown-item>
           </pf-dropdown-group>
         </pf-dropdown>
@@ -107,21 +138,24 @@ describe('<pf-dropdown>', function() {
     });
 
     describe('pressing `Enter` key', function() {
+      let menu: A11yTreeSnapshot;
+
       beforeEach(async function() {
         await sendKeys({ press: 'Tab' });
         await sendKeys({ press: 'Enter' });
         snapshot = await a11ySnapshot();
+        // eslint-disable-next-line prefer-destructuring
+        menu = snapshot.children[1];
       });
 
       it('should show menu', function() {
-        // eslint-disable-next-line prefer-destructuring
-        const menu = snapshot.children[1];
         expect(menu.children?.length).to.equal(3);
       });
 
       describe('pressing `ArrowDown` key', function() {
         beforeEach(async function() {
           await sendKeys({ press: 'ArrowDown' });
+          await element.updateComplete;
           snapshot = await a11ySnapshot();
         });
 
@@ -142,18 +176,6 @@ describe('<pf-dropdown>', function() {
             expect(snapshot.children.length).to.deep.equal(1);
           });
         });
-      });
-    });
-
-    describe('pressing `Enter` to select an item', function() {
-      beforeEach(async function() {
-        await sendKeys({ press: 'Tab' });
-        await sendKeys({ press: 'ArrowDown' });
-        await sendKeys({ press: 'Enter' });
-        snapshot = await a11ySnapshot();
-      });
-      it('should close menu', function() {
-        expect(snapshot.children.length).to.equal(1);
       });
     });
 

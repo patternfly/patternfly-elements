@@ -10,6 +10,7 @@ import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js
 import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
 import { PfDropdownItem } from './pf-dropdown-item.js';
 import { PfDropdownMenu } from './pf-dropdown-menu.js';
+import '@patternfly/elements/pf-button/pf-button.js';
 import styles from './pf-dropdown.css';
 
 export class DropdownSelectEvent extends ComposedEvent {

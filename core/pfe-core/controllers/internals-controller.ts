@@ -67,15 +67,20 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   }
 
   private static hosts = new WeakMap<ReactiveControllerHost, InternalsController>();
+  private static internals = new WeakMap<ReactiveControllerHost, ElementInternals>();
 
   constructor(
     public host: ReactiveControllerHost & HTMLElement,
     options?: Partial<ARIAMixin>
   ) {
-    this.#internals = host.attachInternals();
     const instance = InternalsController.hosts.get(host);
-    if (instance) {
+    const internals = InternalsController.internals.get(host);
+    if (instance && internals) {
+      this.#internals = internals;
       return instance;
+    } else {
+      this.#internals = host.attachInternals();
+      InternalsController.internals.set(host, this.#internals);
     }
     InternalsController.hosts.set(host, this);
     // We need to polyfill :disabled

@@ -77,7 +77,6 @@ export class PfDropdown extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.#setTriggerElement();
   }
 
   render() {
@@ -86,7 +85,7 @@ export class PfDropdown extends LitElement {
     return html`
     <div 
       style="${this.#toggle?.styles ? styleMap(this.#toggle.styles) : ''}"
-      class="${this.#toggle ? classMap({ expanded, [anchor]: !!anchor, [alignment]: !!alignment }) : ''}">
+      class="${classMap(this.#toggle ? { expanded, [anchor]: !!anchor, [alignment]: !!alignment } : {})}">
       <slot
         part="trigger"
         name="trigger"
@@ -117,8 +116,8 @@ export class PfDropdown extends LitElement {
   }
 
   firstUpdated() {
-    this.#setTriggerElement();
     this.#toggle?.setPopupElement(this._menuElement);
+    this.#setTriggerElement();
   }
 
   #handleSelect(event: KeyboardEvent | Event & { target: PfDropdownItem }) {

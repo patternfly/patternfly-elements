@@ -21,7 +21,7 @@ export class ToggleController<
 Item extends HTMLElement = HTMLElement,
 > implements ReactiveController {
   /** element that toggles popup */
-  #triggerElements?: HTMLElement[];
+  #triggerElements: HTMLElement[] = [];
 
   /** pop-up that is toggled */
   #popupElement?: HTMLElement;
@@ -88,7 +88,7 @@ Item extends HTMLElement = HTMLElement,
   set popupType(popupType: PopupKind) {
     if (this.#popupType !== popupType) {
       this.#popupType = popupType;
-      this.#triggerElements?.forEach(element => {
+      this.#triggerElements.forEach(element => {
         const internals = this.#triggerInternals.get(element);
         if (internals) {
           internals.ariaHasPopup = this.#popupType;
@@ -316,6 +316,10 @@ Item extends HTMLElement = HTMLElement,
       // set popup element
       this.#popupElement = popupElement;
       this.#popupElement.id ||= getRandomId(this.host.localName);
+      if (this.#popupElement?.id) {
+        const id = this.#popupElement?.id;
+        this.#triggerElements.forEach(triggerElement => triggerElement?.setAttribute('controls', id));
+      }
       // add new listeners
       for (const [event, listener] of listeners) {
         this.#popupElement?.addEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
@@ -329,9 +333,8 @@ Item extends HTMLElement = HTMLElement,
    * @param popup {HTMLElement}
    */
   addTriggerElement( triggerElement?: HTMLElement | null, role?: string ) {
-    if (triggerElement && !this.#triggerElements?.includes(triggerElement)) {
+    if (triggerElement && !this.#triggerElements.includes(triggerElement)) {
       const customElement = triggerElement as ReactiveControllerHost & HTMLElement;
-      this.#triggerElements?.push(triggerElement);
 
       // use internals, if possible
       if (customElement && customElements.get(customElement.localName)) {
@@ -342,16 +345,23 @@ Item extends HTMLElement = HTMLElement,
         // make sure the element has a role
         const internalrole = internals.role || role || customElement.getAttribute('role') || 'button';
         internals.role = internalrole;
+        triggerElement.role = internalrole;
         this.#triggerInternals.set(triggerElement, internals);
       } else {
         // otherwise, set attributes
+        if (!['button', 'input'].includes(triggerElement.localName) && !triggerElement.getAttribute('role')) {
+          triggerElement?.setAttribute('role', role || 'button');
+        }
         triggerElement?.setAttribute('aria-haspopup', this.#popupType);
         triggerElement?.setAttribute('aria-expanded', this.expanded ? 'true' : 'false');
       }
-      triggerElement?.setAttribute('controls', this.#popupElement?.id || '');
+      if (this.#popupElement?.id) {
+        triggerElement?.setAttribute('controls', this.#popupElement?.id);
+      }
       for (const [event, listener] of Object.entries(this.#triggerListeners)) {
         triggerElement?.addEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
       }
+      this.#triggerElements.push(triggerElement);
     }
   }
 
@@ -360,8 +370,8 @@ Item extends HTMLElement = HTMLElement,
    * @param popup {HTMLElement}
    */
   removeTriggerElement( triggerElement?: HTMLElement | null ) {
-    if (triggerElement && !this.#triggerElements?.includes(triggerElement)) {
-      this.#triggerElements = this.#triggerElements?.filter(el => el !== triggerElement);
+    if (triggerElement && !this.#triggerElements.includes(triggerElement)) {
+      this.#triggerElements = this.#triggerElements.filter(el => el !== triggerElement);
       for (const [event, listener] of Object.entries(this.#triggerListeners)) {
         triggerElement?.removeEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
       }
@@ -400,7 +410,7 @@ Item extends HTMLElement = HTMLElement,
       if (expanded !== this.expanded) {
         this.#fireOpenChanged();
       }
-      this.#triggerElements?.forEach(element => {
+      this.#triggerElements.forEach(element => {
         const internals = this.#triggerInternals.get(element);
         if (internals) {
           internals.ariaExpanded = 'true';
@@ -431,7 +441,7 @@ Item extends HTMLElement = HTMLElement,
       if (expanded !== this.expanded) {
         this.#fireOpenChanged();
       }
-      this.#triggerElements?.forEach(element => {
+      this.#triggerElements.forEach(element => {
         const internals = this.#triggerInternals.get(element);
         if (internals) {
           internals.ariaExpanded = 'false';

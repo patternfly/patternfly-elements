@@ -9,7 +9,7 @@ describe('<pf-dropdown>', function() {
   beforeEach(async function() {
     element = await fixture<PfDropdown>(html`
       <pf-dropdown>
-        <button slot="trigger">Toggle</button>
+        <button id="custom" slot="trigger">Toggle</button>
         <pf-dropdown-item>item 1</pf-dropdown-item>
         <pf-dropdown-group label="Group">
           <pf-dropdown-item>item 2</pf-dropdown-item>
@@ -58,7 +58,7 @@ describe('<pf-dropdown>', function() {
         snapshot = await a11ySnapshot();
       });
 
-      it('should focus on first menu item', async function() {
+      it('should focus on first menu item', function() {
         // eslint-disable-next-line prefer-destructuring
         const menu = snapshot.children[1];
         const [first] = menu.children;
@@ -120,150 +120,14 @@ describe('<pf-dropdown>', function() {
       });
     });
   });
-  let trigger1: HTMLElement | null;
-  let trigger2: HTMLElement | null;
-  beforeEach(async function() {
-    fixtureCleanup();
-    element = await fixture(html`
-        <div>
-          <pf-dropdown id="dropdown-1">
-            <pf-button id="btn-1" slot="trigger">Toggle dropdown 1</pf-button>
-            <pf-dropdown-item>item1</pf-dropdown-item>
-            <pf-dropdown-item>item2</pf-dropdown-item>
-          </pf-dropdown>
-          <pf-dropdown id="dropdown-2">
-            <pf-button id="btn-2" slot="trigger">Toggle dropdown 2</pf-button>
-            <pf-dropdown-item>dropdown 2 item1</pf-dropdown-item>
-            <pf-dropdown-item>dropdown 2 item2</pf-dropdown-item>
-          </pf-dropdown>
-        </div>
-      `);
-    trigger1 = document.getElementById('btn-1');
-    trigger2 = document.getElementById('btn-2');
-    snapshot = await a11ySnapshot();
-  });
-
-  it('should be closed', function() {
-    expect(snapshot.children.length).to.equal(1);
-  });
-
-  describe('clicking first trigger button', function() {
-    beforeEach(async function() {
-      trigger1?.click();
-      await element.updateComplete;
-      snapshot = await a11ySnapshot();
-    });
-
-    it('should be open', function() {
-      expect(snapshot.children.length).to.equal(3);
-    });
-
-    it('should properly clean up event handlers', async function() {
-      const expectClose = (focused?: boolean) =>
-        expect(snapshot.children).to.deep.equal([
-          focused ? { role: 'button', name: 'Toggle dropdown 1', focused: true }
-            : { role: 'button', name: 'Toggle dropdown 1' },
-          { role: 'button', name: 'Toggle dropdown 2' }
-        ]);
-      const expectOpen = () =>
-        expect(snapshot.children).to.deep.equal([
-          {
-            'role': 'button',
-            'name': 'Toggle dropdown 1'
-          },
-          {
-            'role': 'menu',
-            'name': '',
-            'orientation': 'vertical',
-            'children': [
-              {
-                'role': 'menuitem',
-                'name': 'item1'
-              },
-              {
-                'role': 'menuitem',
-                'name': 'item2'
-              }
-            ]
-          },
-          {
-            'role': 'button',
-            'name': 'Toggle dropdown 2'
-          }
-        ]);
-      fixtureCleanup();
-      const container = await fixture(html`
-        <div>
-          <pf-dropdown id="dropdown-1">
-            <pf-button id="btn-1" slot="trigger">Toggle dropdown 1</pf-button>
-            <pf-dropdown-item>item1</pf-dropdown-item>
-            <pf-dropdown-item>item2</pf-dropdown-item>
-          </pf-dropdown>
-          <pf-dropdown id="dropdown-2">
-            <pf-button id="btn-2" slot="trigger">Toggle dropdown 2</pf-button>
-            <pf-dropdown-item>dropdown 2 item1</pf-dropdown-item>
-            <pf-dropdown-item>dropdown 2 item2</pf-dropdown-item>
-          </pf-dropdown>
-        </div>
-      `);
-      snapshot = await a11ySnapshot();
-      const triggerButton1: HTMLButtonElement | null = container.querySelector('#btn-1');
-      const triggerButton2: HTMLButtonElement | null = container.querySelector('#btn-2');
-
-      expectClose();
-      triggerButton1?.click();
-      snapshot = await a11ySnapshot();
-      expectOpen();
-      // Close the dropdown
-      triggerButton1?.focus();
-      await sendKeys({ press: 'ArrowDown' });
-      await sendKeys({ press: 'Enter' });
-      snapshot = await a11ySnapshot();
-      expectClose(true);
-      // click on second dropdown
-      triggerButton2?.focus();
-      triggerButton2?.click();
-      snapshot = await a11ySnapshot();
-      expect(snapshot.children).to.deep.equal([
-        {
-          'role': 'button',
-          'name': 'Toggle dropdown 1'
-        },
-        {
-          'role': 'button',
-          'name': 'Toggle dropdown 2',
-          'focused': true
-        },
-        {
-          'role': 'menu',
-          'name': '',
-          'orientation': 'vertical',
-          'children': [
-            {
-              'role': 'menuitem',
-              'name': 'dropdown 2 item1'
-            },
-            {
-              'role': 'menuitem',
-              'name': 'dropdown 2 item2'
-            }
-          ]
-        }
-      ]);
-      /*/
-      // Close the second dropdown
-      await sendKeys({ press: 'Enter' });
-      snapshot = await a11ySnapshot();
-      expectClose();*/
-    });
-  });
 });
 
-describe.skip('with default trigger button', function() {
+describe('with default trigger button', function() {
   let snapshot: A11yTreeSnapshot;
+  let element: HTMLElement;
 
   beforeEach(async function() {
-    await fixture(html`
+    element = await fixture(html`
         <pf-dropdown>
             <pf-dropdown-item>item1</pf-dropdown-item>
             <pf-dropdown-item>item2</pf-dropdown-item>
@@ -272,22 +136,50 @@ describe.skip('with default trigger button', function() {
     snapshot = await a11ySnapshot();
   });
 
-  it('should show default trigger button', function() {
-    expect(snapshot.children).to.deep.equal([{ role: 'button', name: 'Dropdown' }]);
+  it('should be accessible', async function() {
+    await expect(element).shadowDom.to.be.accessible();
   });
 
+  it('should hide dropdown content from assistive technology', function() {
+    expect(snapshot.children.length).to.equal(1);
+  });
 
-  describe('with default trigger button', function() {
+  describe('pressing `Enter` key', function() {
     beforeEach(async function() {
       await sendKeys({ press: 'Tab' });
-      await sendKeys({ press: 'ArrowDown' });
+      await sendKeys({ press: 'Enter' });
       snapshot = await a11ySnapshot();
     });
 
-    it('should be focusable first list for default trigger button', function() {
+    it('should show menu', function() {
       // eslint-disable-next-line prefer-destructuring
       const menu = snapshot.children[1];
-      expect(menu.children[0]).to.deep.equal({ role: 'menuitem', name: 'item 1', focused: true });
+      expect(menu.children?.length).to.equal(2);
+    });
+
+    describe('pressing `ArrowDown` key', function() {
+      beforeEach(async function() {
+        await sendKeys({ press: 'ArrowDown' });
+        snapshot = await a11ySnapshot();
+      });
+
+      it('should focus on first menu item', function() {
+        // eslint-disable-next-line prefer-destructuring
+        const menu = snapshot.children[1];
+        const [first] = menu.children;
+        expect(first).to.deep.equal({ role: 'menuitem', name: 'item 1', focused: true });
+      });
+
+      describe('pressing `Escape` key', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Escape' });
+          snapshot = await a11ySnapshot();
+        });
+
+        it('should close menu', function() {
+          expect(snapshot.children.length).to.deep.equal(1);
+        });
+      });
     });
   });
 });

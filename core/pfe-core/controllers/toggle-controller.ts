@@ -1,6 +1,7 @@
 import type { ReactiveController, ReactiveControllerHost, ReactiveElement } from 'lit';
 import { FloatingDOMController, type Placement, } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { getRandomId } from '../functions/random.js';
+import { InternalsController } from './internals-controller.js';
 
 /**
  * properties for popup option elements
@@ -41,6 +42,8 @@ Item extends HTMLElement = HTMLElement,
   #popupType: PopupKind = 'menu';
 
   #float?: FloatingDOMController;
+
+  #triggerInternals = new WeakMap<HTMLElement, InternalsController>;
 
   get focused() {
     return this.#focused;
@@ -85,7 +88,14 @@ Item extends HTMLElement = HTMLElement,
   set popupType(popupType: PopupKind) {
     if (this.#popupType !== popupType) {
       this.#popupType = popupType;
-      this.#triggerElements?.forEach(element => element.setAttribute('aria-haspopup', this.#popupType));
+      this.#triggerElements?.forEach(element => {
+        const internals = this.#triggerInternals.get(element);
+        if (internals) {
+          internals.ariaHasPopup = this.#popupType;
+        } else {
+          element.setAttribute('aria-haspopup', this.#popupType);
+        }
+      });
     }
   }
 
@@ -327,13 +337,25 @@ Item extends HTMLElement = HTMLElement,
    */
   addTriggerElement( triggerElement?: HTMLElement | null ) {
     if (triggerElement && !this.#triggerElements?.includes(triggerElement)) {
+      const host = triggerElement as ReactiveControllerHost & HTMLElement;
       this.#triggerElements?.push(triggerElement);
+
+      // use internals, if possible
+      if (host) {
+        const internals = new InternalsController(host, {
+          ariaExpanded: this.expanded ? 'true' : 'false',
+          ariaHasPopup: this.#popupType,
+        });
+        this.#triggerInternals.set(triggerElement, internals);
+      } else {
+        // otherwise, set attributes
+        triggerElement?.setAttribute('aria-haspopup', this.#popupType);
+        triggerElement?.setAttribute('aria-expanded', this.expanded ? 'true' : 'false');
+      }
+      triggerElement?.setAttribute('controls', this.#popupElement?.id || '');
       for (const [event, listener] of Object.entries(this.#triggerListeners)) {
         triggerElement?.addEventListener(event, listener as (event: KeyboardEvent | MouseEvent | Event | null) => void);
       }
-      triggerElement?.setAttribute('aria-haspopup', this.#popupType);
-      triggerElement?.setAttribute('aria-controls', this.#popupElement?.id || '');
-      triggerElement?.setAttribute('aria-expanded', this.expanded ? 'true' : 'false');
     }
   }
 
@@ -377,7 +399,12 @@ Item extends HTMLElement = HTMLElement,
         this.#fireOpenChanged();
       }
       this.#triggerElements?.forEach(element => {
-        element.setAttribute('aria-expanded', 'true');
+        const internals = this.#triggerInternals.get(element);
+        if (internals) {
+          internals.ariaExpanded = 'true';
+        } else {
+          element.setAttribute('aria-expanded', 'true');
+        }
       });
       if (focus) {
         this.#popupElement?.focus();
@@ -391,7 +418,8 @@ Item extends HTMLElement = HTMLElement,
    */
   async hide(force = false) {
     const { expanded } = this;
-    const hasFocus = this.#focused || this.#hovered;
+    const focused = this.#focused;
+    const hasFocus = focused || this.#hovered;
     // only close if popup is not set to always open
     // and it does not currently have focus/hover
     if (this.float && (force || !hasFocus)) {
@@ -402,10 +430,15 @@ Item extends HTMLElement = HTMLElement,
         this.#fireOpenChanged();
       }
       this.#triggerElements?.forEach(element => {
-        element.setAttribute('aria-expanded', 'false');
+        const internals = this.#triggerInternals.get(element);
+        if (internals) {
+          internals.ariaExpanded = 'false';
+        } else {
+          element.setAttribute('aria-expanded', 'false');
+        }
       });
       // only re-set focus if host had focus
-      if (this.#focused) {
+      if (focused) {
         this.host.focus();
       }
       this.host?.dispatchEvent(new CustomEvent('close'));

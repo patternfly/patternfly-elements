@@ -86,7 +86,7 @@ export class PfDropdownItem extends LitElement {
       this.dispatchEvent(new DropdownItemChange());
     }
     if (_changedProperties.has('disabled')) {
-      this.#internals.ariaDisabled = `${!this.disabled}`;
+      this.#internals.ariaDisabled = `${!!this.disabled}`;
     }
   }
 

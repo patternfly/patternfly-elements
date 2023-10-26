@@ -81,7 +81,7 @@ export class PfDropdownMenu extends LitElement {
 
   protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (_changedProperties.has('disabled')) {
-      this.#internals.ariaDisabled = `${!this.disabled}`;
+      this.#internals.ariaDisabled = `${!!this.disabled}`;
     }
   }
 

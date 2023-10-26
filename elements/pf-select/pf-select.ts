@@ -8,7 +8,6 @@ import { classMap } from 'lit/directives/class-map.js';
 import { type Placement, } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
 import { PfSelectOption, PfSelectOptionCreatedEvent } from './pf-select-option.js';
-import { ChipRemoveEvent } from '@patternfly/elements/pf-chip/pf-chip.js';
 import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
 import { PfSelectList, PfSelectListRefreshEvent } from './pf-select-list.js';
 
@@ -252,7 +251,7 @@ export class PfSelect extends LitElement {
           ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
             <pf-chip-group label="${this.currentSelectionsLabel}">
               ${repeat(this.#selectedOptions, opt => opt.id, opt => html`<pf-chip id="chip-${opt.textContent}" 
-              .readOnly="${this.disabled}"
+              .readonly="${this.disabled}"
               @remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>`)}
             </pf-chip-group>
           `}
@@ -347,7 +346,7 @@ export class PfSelect extends LitElement {
    * @param txt chip text to be removed from values
    */
   #onChipRemove(event: Event, opt: PfSelectOption) {
-    if (event instanceof ChipRemoveEvent && opt) {
+    if (opt) {
       setTimeout(() => {
         // deselect option
         opt.selected = false;

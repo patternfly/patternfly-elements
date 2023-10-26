@@ -34,7 +34,9 @@ export interface ListboxOptionElement extends HTMLElement {
  * Components Using a Roving
  * tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
  */
-export class ListboxController implements ReactiveController {
+export class ListboxController<
+Item extends HTMLElement = HTMLElement,
+> implements ReactiveController {
   /**
    * filter options that start with a string (case-insensitive)
    */

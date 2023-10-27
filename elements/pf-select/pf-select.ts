@@ -7,14 +7,21 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { type Placement, } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
-import { PfSelectOption, PfSelectOptionCreatedEvent } from './pf-select-option.js';
+import { PfSelectOption, PfSelectOptionSelectEvent } from './pf-select-option.js';
 import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
 import { PfSelectList, PfSelectListRefreshEvent } from './pf-select-list.js';
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 
 import styles from './pf-select.css';
 
 export type PfSelectItemsDisplay = 'default' | 'badge' | 'chips';
+
+export interface PfSelectUserOptions {
+  id: string;
+  value: string;
+  selected: boolean;
+}
 /**
  * A select list enables users to select one or more items from a list.
  *
@@ -27,6 +34,7 @@ export type PfSelectItemsDisplay = 'default' | 'badge' | 'chips';
 @customElement('pf-select')
 export class PfSelect extends LitElement {
   static readonly styles = [styles];
+  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
    * whether listbox is always expanded
@@ -72,7 +80,7 @@ export class PfSelect extends LitElement {
   /**
    * whether listbox is has checkboxes when `multi-select` is enabled
    */
-  @property({ reflect: true, attribute: 'has-checkboxes', type: Boolean }) hasCheckboxes = false;
+  @property({ reflect: true, attribute: 'checkboxes', type: Boolean }) checkboxes = false;
 
   /**
    * multi listbox button text
@@ -123,7 +131,7 @@ export class PfSelect extends LitElement {
   #toggle = new ToggleController(this, 'listbox');
   #controllerOn = true;
 
-  #createOption!: PfSelectOption;
+  #userCreatedOptions: PfSelectUserOptions[] = [];
 
   /**
    * label for toggle button
@@ -139,7 +147,7 @@ export class PfSelect extends LitElement {
    * whether listbox is aria-multiselectable
    */
   get #isMulti() {
-    return this.multi || this.hasCheckboxes;
+    return this.multi || this.checkboxes;
   }
 
   /**
@@ -154,7 +162,7 @@ export class PfSelect extends LitElement {
    * listbox template
    */
   get #selectList() {
-    const checkboxes = this.hasCheckboxes ? 'checkboxes' : false;
+    const checkboxes = this.checkboxes ? 'checkboxes' : false;
     const { height, width } = this.getBoundingClientRect() || {};
     const styles = this.alwaysExpanded ? '' : `margin-top: ${height || 0}px;width: ${width || 'auto'}px`;
     return html`
@@ -171,9 +179,18 @@ export class PfSelect extends LitElement {
         @input=${this.#onListboxInput}
         @change=${this.#onListboxChange}
         @refresh=${this.#onListboxRefresh}
-        @select=${this.#onListboxSelect}
-        @created=${this.#onOptionCreated}>
+        @select=${this.#onListboxSelect}>
         <slot></slot>
+        ${repeat(this.#userCreatedOptions, opt => opt.id, opt => html`
+          <pf-select-option id="${opt.id}">${opt.value}</pf-select-option>
+        `)}
+        ${this.createOptionText === '' || this.filter === '' ? '' : html`
+          <pf-select-option id="suggested-option" 
+            value="${this.filter}"
+            @select="${this.#onCreateConfirm}">
+            <span slot="create">${this.createOptionText}: </span>${this.filter}
+          </pf-select-option>
+        `}
       </pf-select-list>`;
   }
 
@@ -291,7 +308,7 @@ export class PfSelect extends LitElement {
   }
 
   willUpdate(changed: PropertyValues<this>) {
-    if (changed.has('hasCheckboxes') && this.hasCheckboxes) {
+    if (changed.has('checkboxes') && this.checkboxes) {
       import('@patternfly/elements/pf-badge/pf-badge.js');
     }
   }
@@ -311,7 +328,6 @@ export class PfSelect extends LitElement {
   }
 
   firstUpdated() {
-    this.#addCreateOption();
     this.#updateValueText();
   }
 
@@ -333,11 +349,15 @@ export class PfSelect extends LitElement {
   /**
    * inserts a create option into listbox
    */
-  #addCreateOption() {
-    if (!this.#createOption || this.#createOption?.userCreatedOption) {
-      this.#createOption = document.createElement('pf-select-option');
-      this.#updateCreateOptionValue();
-      this.appendChild(this.#createOption);
+  #createOption(event: Event) {
+    const target = event?.target;
+    if (target instanceof PfSelectOption && event instanceof PfSelectOptionSelectEvent) {
+      target.selected = false;
+      this.#userCreatedOptions.push({
+        id: getRandomId(),
+        value: this.filter,
+        selected: true
+      });
     }
   }
 
@@ -407,12 +427,9 @@ export class PfSelect extends LitElement {
   /**
    * handles listbox option being created and creates a new "create option"
    */
-  #onOptionCreated(event: Event) {
-    if (event instanceof PfSelectOptionCreatedEvent) {
-      this.#addCreateOption();
-      this.filter = '';
-      this.#updateCreateOptionValue();
-    }
+  #onCreateConfirm() {
+    this.#createOption();
+    this.filter = '';
   }
 
   /**

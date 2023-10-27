@@ -9,13 +9,10 @@ import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import styles from './pf-select-option.css';
 
-
-export class PfSelectOptionCreatedEvent extends Event {
-  constructor() {
-    super('created', { bubbles: true, composed: true });
-  }
-}
-
+/**
+ * select custom event for listbox options
+ * @fires select
+ */
 export class PfSelectOptionSelectEvent extends Event {
   constructor(public originalEvent?: Event) {
     super('select', { bubbles: true, composed: true });
@@ -63,7 +60,7 @@ export class PfSelectOption extends LitElement {
   /**
    * value of options
    */
-  @property({ attribute: false, reflect: true }) value: unknown;
+  @property({ attribute: false, reflect: true, type: String }) value!: string;
 
   /**
    * whether option is selected
@@ -79,8 +76,6 @@ export class PfSelectOption extends LitElement {
   @queryAssignedNodes({ slot: '', flatten: true }) private _slottedText!: Node[];
 
   #active = false;
-  #createOptionText = '';
-  #userCreatedOption = false;
 
   #internals = new InternalsController(this, {
     role: 'option'
@@ -123,7 +118,7 @@ export class PfSelectOption extends LitElement {
           ?checked=${this.selected}
           ?disabled=${this.disabled}>
         <slot name="icon"></slot>
-        <span>${this.#createOptionText === '' ? '' : `${this.#createOptionText}: `}<slot></slot></span>
+        <span><slot name="create"></slot><slot></slot></span>
         <svg 
           ?hidden=${!this.selected}
           viewBox="0 0 512 512" 
@@ -138,9 +133,6 @@ export class PfSelectOption extends LitElement {
 
   updated(changed: PropertyValues<this>) {
     if (changed.has('selected')) {
-      if (this.selected) {
-        this.#createOption();
-      }
       this.#internals.ariaSelected = this.selected ? 'true' : 'false';
       this.dispatchEvent(new PfSelectOptionSelectEvent());
     }
@@ -154,37 +146,6 @@ export class PfSelectOption extends LitElement {
    */
   get optionText() {
     return this._slottedText.map(node => node.textContent).join('').trim();
-  }
-
-  /**
-   * used for typeahead to determine if
-   * a create option should be shown
-   * by setting the text for create option
-   */
-  set createOptionText(str: string) {
-    if (!this.#userCreatedOption) {
-      this.#createOptionText = str || '';
-      this.disabled = str === '';
-      this.hidden = str === '';
-    }
-  }
-
-  /**
-   * whether option is user created option
-   */
-  get userCreatedOption() {
-    return this.#userCreatedOption;
-  }
-
-  /**
-   * handles when a "create option" is selected
-   * @fires optioncreated
-   */
-  #createOption() {
-    this.#createOptionText = '';
-    this.#userCreatedOption = true;
-    this.dispatchEvent(new PfSelectOptionCreatedEvent());
-    this.selected = true;
   }
 }
 

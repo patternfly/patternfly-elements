@@ -293,7 +293,7 @@ describe('<pf-select>', function() {
       });
     });
 
-    describe('setting `has-checkboxes` to true', function() {
+    describe('setting `checkboxes` to true', function() {
       beforeEach(async function() {
         element.hasCheckboxes = true;
         await element.updateComplete;

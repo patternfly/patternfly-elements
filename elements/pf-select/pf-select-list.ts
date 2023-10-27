@@ -32,6 +32,7 @@ export class PfSelectListRefreshEvent extends Event {
 @customElement('pf-select-list')
 export class PfSelectList extends LitElement {
   static readonly styles = [styles];
+  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
    * whether listbox is disabled
@@ -148,15 +149,6 @@ export class PfSelectList extends LitElement {
       if (changed.has('filter')) {
         this.#listboxController.filter = this.filter;
       }
-    }
-  }
-
-  /**
-   * sets focus on active item
-   */
-  focus() {
-    if (this.#listboxController) {
-      this.#listboxController.focusActiveItem();
     }
   }
 

@@ -123,7 +123,7 @@ Below are option variants:
 </p>
 
 {% htmlexample %}
-  <pf-select has-checkboxes>
+  <pf-select checkboxes>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -138,7 +138,7 @@ Below are option variants:
 #### Checkbox, with badge
 
 {% htmlexample %}
-  <pf-select has-checkboxes selected-items-display="badge">
+  <pf-select checkboxes selected-items-display="badge">
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -227,7 +227,7 @@ Below are option variants:
 {% htmlexample %}
 <label>
   Pick a color:
-  <pf-select id="pfselect" typeahead has-checkboxes>
+  <pf-select id="pfselect" typeahead checkboxes>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>

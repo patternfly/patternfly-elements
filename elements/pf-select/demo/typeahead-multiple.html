@@ -3,10 +3,10 @@
   import '@patternfly/elements/pf-select/pf-select.js';
   import '@patternfly/elements/pf-icon/pf-icon.js';
 </script>
-<h2>Typeahead example</h2>
+<h2>Typeahead, multiple</h2>
 <label>
   Pick a color:
-  <pf-select typeahead>
+  <pf-select id="pfselect" typeahead multi>
     <pf-select-option value="Blue">Blue</pf-select-option>
     <pf-select-option value="Green">Green</pf-select-option>
     <pf-select-option value="Magenta">Magenta</pf-select-option>
@@ -16,4 +16,4 @@
     <pf-select-option value="Red">Red</pf-select-option>
     <pf-select-option value="Yellow">Yellow</pf-select-option>
   </pf-select>
-</label>
+  </label>

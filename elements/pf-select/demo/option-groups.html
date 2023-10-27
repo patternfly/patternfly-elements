@@ -1,23 +1,19 @@
 <link rel="stylesheet" href="demo.css">
-<script type="module" src="pf-select.js"></script>
-<section>
-  <p>
-    Focus on options using arrow keys or 
-    by typing the first character of an option.
-    Headings are not selectable.
-  </p>
-  <pf-select default-text="Select item from our menu">
-    <pf-select-group>
-      <span slot="label">Breakfast</span>
-      <pf-select-option value="Eggs">Eggs</pf-select-option>
-      <pf-select-option value="Toast">Toast</pf-select-option>
-      <pf-select-option value="Waffles">Waffles</pf-select-option>
-    </pf-select-group>
-    <pf-select-group>
-      <span slot="label">Lunch</span>
-      <pf-select-option value="Salad">Salad</pf-select-option>
-      <pf-select-option value="Sandwich">Sandwich</pf-select-option>
-      <pf-select-option value="Soup">Soup</pf-select-option>
-    </pf-select-group>
+<script type="module">
+  import '@patternfly/elements/pf-select/pf-select.js';
+</script>
+<h2>Groups of options</h2>
+<pf-select default-text="Select item from our menu">
+  <pf-select-group>
+    <span slot="label">Breakfast</span>
+    <pf-select-option value="Eggs">Eggs</pf-select-option>
+    <pf-select-option value="Toast">Toast</pf-select-option>
+    <pf-select-option value="Waffles">Waffles</pf-select-option>
+  </pf-select-group>
+  <pf-select-group>
+    <span slot="label">Lunch</span>
+    <pf-select-option value="Salad">Salad</pf-select-option>
+    <pf-select-option value="Sandwich">Sandwich</pf-select-option>
+    <pf-select-option value="Soup">Soup</pf-select-option>
+  </pf-select-group>
   </pf-select>
-</section>

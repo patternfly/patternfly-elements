@@ -3,15 +3,17 @@
   import '@patternfly/elements/pf-select/pf-select.js';
   import '@patternfly/elements/pf-icon/pf-icon.js';
 </script>
-<h2>Select</h2>
-<pf-select>
-  <pf-select-option disabled selected>Select a color</pf-select-option>
+<h2>Always expanded</h2>
+<pf-select always-expanded>
   <pf-select-option value="Blue">Blue</pf-select-option>
   <pf-select-option value="Green">Green</pf-select-option>
   <pf-select-option value="Magenta">Magenta</pf-select-option>
   <pf-select-option value="Orange">Orange</pf-select-option>
   <pf-select-option value="Purple">Purple</pf-select-option>
-  <pf-select-option value="Pink">Pink</pf-select-option>
+  <pf-select-option value="Pink">
+    <span>Pink</span>
+    <span slot="description">A lightish red</span>
+  </pf-select-option>
   <pf-select-option value="Red">Red</pf-select-option>
   <pf-select-option value="Yellow">Yellow</pf-select-option>
 </pf-select>

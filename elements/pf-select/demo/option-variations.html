@@ -1,20 +1,21 @@
 <link rel="stylesheet" href="demo.css">
-<script type="module" src="pf-select.js"></script>
-<section>
-  <h2>Option variations</h2>
-  <p>
-    Below are the option variants:
-  </p>
-  <pf-select always-expanded>
-    <pf-select-option value="Basic">Basic option</pf-select-option>
-    <pf-select-option value="Description">
-      <span>Option with description</span>
-      <span slot="description">This is a description</span>
-    </pf-select-option>
-    <pf-select-option value="Icon">
-      <pf-icon size="md" icon="paint-brush" set="fas" slot="icon"></pf-icon>
-      Option with icon
-    </pf-select-option>
-    <pf-select-option value="Disabled" disabled>Disabled option</pf-select-option>
-  </pf-select>
-</section>
+<script type="module">
+  import '@patternfly/elements/pf-select/pf-select.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+</script>
+<h2>Option variations</h2>
+<p>
+  Below are the option variants:
+</p>
+<pf-select always-expanded>
+  <pf-select-option value="Basic">Basic option</pf-select-option>
+  <pf-select-option value="Description">
+    <span>Option with description</span>
+    <span slot="description">This is a description</span>
+  </pf-select-option>
+  <pf-select-option value="Icon">
+    <pf-icon size="md" icon="paint-brush" set="fas" slot="icon"></pf-icon>
+    Option with icon
+  </pf-select-option>
+  <pf-select-option value="Disabled" disabled>Disabled option</pf-select-option>
+</pf-select>

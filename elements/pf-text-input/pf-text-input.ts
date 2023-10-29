@@ -193,7 +193,7 @@ export class PfTextInput extends LitElement {
   @property({ type: Boolean, reflect: true }) readonly = false;
 
   /** Helper text is text below a form field that helps a user provide the right information, like "Enter a unique name". */
-  @property() helperText?: string;
+  @property({ attribute: 'helper-text' }) helperText?: string;
 
   /** If set to 'blur', will validate when focus leaves the input */
   @property({ attribute: 'validate-on' }) validateOn?: 'blur';

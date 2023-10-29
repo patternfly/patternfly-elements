@@ -29,6 +29,30 @@ export class Logger implements ReactiveController {
     }
   }
 
+  /* eslint-disable no-console */
+
+  /**
+   * A logging wrapper which checks the debugLog boolean and prints to the console if true.
+   *
+   * @example Logger.debug("Hello");
+   */
+  static debug(...msgs: unknown[]) {
+    if (Logger.debugLog()) {
+      console.debug(...msgs);
+    }
+  }
+
+  /**
+   * A logging wrapper which checks the debugLog boolean and prints to the console if true.
+   *
+   * @example Logger.info("Hello");
+   */
+  static info(...msgs: unknown[]) {
+    if (Logger.debugLog()) {
+      console.info(...msgs);
+    }
+  }
+
   /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    *
@@ -36,7 +60,6 @@ export class Logger implements ReactiveController {
    */
   static log(...msgs: unknown[]) {
     if (Logger.debugLog()) {
-      // eslint-disable-next-line no-console
       console.log(...msgs);
     }
   }
@@ -47,7 +70,7 @@ export class Logger implements ReactiveController {
    * @example Logger.warn("Hello");
    */
   static warn(...msgs: unknown[]) {
-    console.warn(...msgs); // eslint-disable-line no-console
+    console.warn(...msgs);
   }
 
   /**
@@ -56,7 +79,27 @@ export class Logger implements ReactiveController {
    * @example Logger.error("Hello");
    */
   static error(...msgs: unknown[]) {
-    console.error([...msgs].join(' ')); // eslint-disable-line no-console
+    console.error([...msgs].join(' '));
+  }
+
+  /* eslint-enable no-console */
+
+  /**
+   * Debug logging that outputs the tag name as a prefix automatically
+   *
+   * @example this.logger.log("Hello");
+   */
+  debug(...msgs: unknown[]) {
+    Logger.debug(this.prefix, ...msgs);
+  }
+
+  /**
+   * Info logging that outputs the tag name as a prefix automatically
+   *
+   * @example this.logger.log("Hello");
+   */
+  info(...msgs: unknown[]) {
+    Logger.info(this.prefix, ...msgs);
   }
 
   /**
@@ -96,6 +139,6 @@ export class Logger implements ReactiveController {
   }
 
   hostConnected() {
-    this.log('connected');
+    this.debug('connected');
   }
 }

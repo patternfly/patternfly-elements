@@ -64,6 +64,9 @@
   <div class="override">
 
   ### Scrollable Selector
+  
+  See [scrollable-selector](#attributes) in Attributes section below for more information.
+
   {% htmlexample %}
     <div id="scrollable-selector-example">
       <div class="overflow" tabindex="0">
@@ -76,6 +79,9 @@
   {% endhtmlexample %}
 
   ### Scroll Distance
+
+  See [scroll-distance](#attributes) in Attributes section below for more information.
+
   {% htmlexample %}
     <div id="scroll-distance-example">
       <div class="overflow" tabindex="0">

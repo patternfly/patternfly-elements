@@ -85,12 +85,6 @@
 
   </div>
 
-  ### Content guidelines
-  - The button should consistently be placed on the lower right side of the page.
-  - Only use 1 back to top component per page, avoid using multiple buttons in different sections.
-  - Keep the button stationary. Once the button reveals itself, it should not move on the page.
-  - Include proper spacing around the button, see CSS variables under React and HTML tabs.
-
 {% endband %}
 
 {% renderSlots %}{% endrenderSlots %}

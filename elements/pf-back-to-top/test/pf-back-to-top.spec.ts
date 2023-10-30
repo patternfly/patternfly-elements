@@ -22,7 +22,7 @@ describe('<pf-back-to-top>', function() {
       element = await createFixture<PfBackToTop>(html`<pf-back-to-top></pf-back-to-top>`);
     });
 
-    it('should upgrade', async function() {
+    it('should upgrade', function() {
       const klass = customElements.get('pf-back-to-top');
       expect(element)
         .to.be.an.instanceOf(klass)
@@ -51,17 +51,22 @@ describe('<pf-back-to-top>', function() {
       await allUpdates(element);
     });
 
-    it('should be hidden on init', async function() {
+    it('should be hidden on init', function() {
       const { children } = snapshot;
       expect(children).to.be.undefined;
     });
 
-    it('should be visible after scrolling 401px', async function() {
-      window.scrollTo({ top: 401, behavior: 'instant' });
-      await nextFrame();
-      await allUpdates(element);
-      snapshot = await a11ySnapshot();
-      expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+    describe('when scrolled 401px', function() {
+      beforeEach(async function() {
+        window.scrollTo({ top: 401, behavior: 'instant' });
+        await nextFrame();
+        await allUpdates(element);
+        snapshot = await a11ySnapshot();
+      });
+
+      it('should be visible', function() {
+        expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+      });
     });
 
     describe('when the always visible property is true', function() {
@@ -73,7 +78,7 @@ describe('<pf-back-to-top>', function() {
         snapshot = await a11ySnapshot();
       });
 
-      it('should always be visible', async function() {
+      it('should always be visible', function() {
         expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
       });
     });
@@ -85,17 +90,22 @@ describe('<pf-back-to-top>', function() {
         snapshot = await a11ySnapshot();
       });
 
-      it('should be hidden', async function() {
+      it('should be hidden', function() {
         const { children } = snapshot;
         expect(children).to.be.undefined;
       });
 
-      it('should be visible after scrolling 1001px', async function() {
-        window.scrollTo({ top: 1001, behavior: 'instant' });
-        await nextFrame();
-        await allUpdates(element);
-        snapshot = await a11ySnapshot();
-        expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+      describe('when scrolled 1001px', function() {
+        beforeEach(async function() {
+          window.scrollTo({ top: 1001, behavior: 'instant' });
+          await nextFrame();
+          await allUpdates(element);
+          snapshot = await a11ySnapshot();
+        });
+
+        it('should be visible', function() {
+          expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+        });
       });
     });
   });
@@ -119,18 +129,23 @@ describe('<pf-back-to-top>', function() {
       await allUpdates(element);
     });
 
-    it('should be hidden on init', async function() {
+    it('should be hidden on init', function() {
       const { children } = snapshot;
       expect(children).to.be.undefined;
     });
 
-    it('should be visible after scrolling 401px', async function() {
-      const scrollableElement = document.querySelector('#top')!;
-      scrollableElement.scrollTo({ top: 401, behavior: 'instant' });
-      await nextFrame();
-      await allUpdates(element);
-      snapshot = await a11ySnapshot();
-      expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+    describe('when scrolled 401px', function() {
+      beforeEach(async function() {
+        const scrollableElement = document.querySelector('#top')!;
+        scrollableElement.scrollTo({ top: 401, behavior: 'instant' });
+        await nextFrame();
+        await allUpdates(element);
+        snapshot = await a11ySnapshot();
+      });
+
+      it('should be visible', function() {
+        expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+      });
     });
   });
 
@@ -153,12 +168,17 @@ describe('<pf-back-to-top>', function() {
         await allUpdates(element);
       });
 
-      it('should have a label of "Back to top"', async function() {
-        window.scrollTo({ top: 401, behavior: 'instant' });
-        await nextFrame();
-        await allUpdates(element);
-        snapshot = await a11ySnapshot();
-        expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+      describe('when scrolled', function() {
+        beforeEach(async function() {
+          window.scrollTo({ top: 401, behavior: 'instant' });
+          await nextFrame();
+          await allUpdates(element);
+          snapshot = await a11ySnapshot();
+        });
+
+        it('should have a label of "Back to top"', function() {
+          expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+        });
       });
     });
 
@@ -177,12 +197,17 @@ describe('<pf-back-to-top>', function() {
         await allUpdates(element);
       });
 
-      it('should have a label of "Back to top"', async function() {
-        window.scrollTo({ top: 401, behavior: 'instant' });
-        await nextFrame();
-        await allUpdates(element);
-        snapshot = await a11ySnapshot();
-        expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'button', name: 'Back to top' }]);
+      describe('when scrolled', function() {
+        beforeEach(async function() {
+          window.scrollTo({ top: 401, behavior: 'instant' });
+          await nextFrame();
+          await allUpdates(element);
+          snapshot = await a11ySnapshot();
+        });
+
+        it('should have a label of "Back to top"', function() {
+          expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'button', name: 'Back to top' }]);
+        });
       });
     });
   });

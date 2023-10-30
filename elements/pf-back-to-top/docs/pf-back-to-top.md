@@ -42,6 +42,7 @@
 </style>
 
 {% renderOverview %}
+  Back to top button is designed to only be used once per page. 
   <pf-back-to-top href="#main">Back to top</pf-back-to-top>
 {% endrenderOverview %}
 
@@ -51,11 +52,14 @@
   {% htmlexample %}<pf-back-to-top href="#main">Back to top</pf-back-to-top>{% endhtmlexample %}
 
   ### Label attribute
-  {% htmlexample %}<pf-back-to-top href="#main" label="Back to top"></pf-back-to-top>{% endhtmlexample %}
+  {% htmlexample %}<pf-back-to-top href="#main" label="Return to top"></pf-back-to-top>{% endhtmlexample %}
 
-
-  ### No text 
-  {% htmlexample %}<pf-back-to-top href="#main"></pf-back-to-top>{% endhtmlexample %}
+  ### No text or label attribute
+  `[aria-label]` attribute defaults to text 'Back to top'
+  {% htmlexample %}
+ 
+  <pf-back-to-top href="#main"></pf-back-to-top>
+  {% endhtmlexample %}
 
   <div class="override">
 

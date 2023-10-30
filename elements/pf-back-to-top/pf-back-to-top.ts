@@ -54,7 +54,7 @@ export class PfBackToTop extends LitElement {
   /** Distance from the top of the scrollable element to trigger the visibility of the back to top button */
   @property({ type: Number, attribute: 'scroll-distance' }) scrollDistance = 400;
 
-  /** Alternative to slotted text */
+  /** Accessible name for the back-to-top link, use when component does not have slotted text */
   @property() label?: string;
 
   /** Page fragment link to target element, must include hash ex: #top */
@@ -66,9 +66,7 @@ export class PfBackToTop extends LitElement {
 
   #scrollElement?: Element | Window;
 
-  #hasText = false;
-
-  #noTextLabel?: string;
+  #hasSlottedText = false;
 
   #logger = new Logger(this);
 
@@ -79,6 +77,13 @@ export class PfBackToTop extends LitElement {
     } else {
       return document;
     }
+  }
+
+  get #ariaLabel(): string | undefined {
+    if (this.#hasSlottedText) {
+      return undefined;
+    }
+    return this.label ?? 'Back to top';
   }
 
   override connectedCallback(): void {
@@ -98,11 +103,6 @@ export class PfBackToTop extends LitElement {
     if (changed.has('alwaysVisible')) {
       this.#toggleVisibility();
     }
-    if (changed.has('label')) {
-      this.#hasText = !!this.label ?? false;
-    }
-
-    this.#noTextLabel = !this.#hasText ? 'Back to top' : undefined;
   }
 
   render() {
@@ -114,9 +114,9 @@ export class PfBackToTop extends LitElement {
 
     if (this.href) {
       return html`
-        <a href="${this.href}" ?hidden="${!this.#visible}" part="trigger" aria-label="${ifDefined(this.#noTextLabel)}">
+        <a href="${this.href}" ?hidden="${!this.#visible}" part="trigger" aria-label="${ifDefined(this.#ariaLabel)}">
           <slot name="icon"></slot>
-          <slot @slotchange="${this.#onSlotchange}">${ifDefined(this.label)}</slot>
+          <slot @slotchange="${this.#onSlotchange}"></slot>
           <pf-icon icon="angle-up" set="fas"></pf-icon>
         </a>
       `;
@@ -128,11 +128,11 @@ export class PfBackToTop extends LitElement {
             ?hidden="${!this.#visible}"
             tabindex="${this.#visible ? '0' : '-1'}"
             part="trigger"
-            label="${ifDefined(this.#noTextLabel)}"
+            aria-label="${ifDefined(this.#ariaLabel)}"
           >
           <slot name="icon" slot="icon"></slot>
           <span>
-            <slot>${ifDefined(this.label)}</slot>
+            <slot></slot>
             <pf-icon icon="angle-up" set="fas"></pf-icon>
           </span>
         </pf-button>
@@ -143,7 +143,7 @@ export class PfBackToTop extends LitElement {
   #onSlotchange(event: Event) {
     const slot = event.currentTarget as HTMLSlotElement;
     const nodes = slot.assignedNodes();
-    this.#hasText = nodes.length > 0 ? true : false;
+    this.#hasSlottedText = nodes.length > 0 ? true : false;
     this.requestUpdate();
   }
 

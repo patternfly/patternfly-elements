@@ -1,6 +1,6 @@
 import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { setViewport } from '@web/test-runner-commands';
+import { setViewport, sendKeys } from '@web/test-runner-commands';
 
 import { allUpdates } from '@patternfly/pfe-tools/test/utils.js';
 
@@ -56,6 +56,10 @@ describe('<pf-back-to-top>', function() {
       expect(children).to.be.undefined;
     });
 
+    it('should not be accessible', function() {
+      expect(element).to.not.be.accessible;
+    });
+
     describe('when scrolled 401px', function() {
       beforeEach(async function() {
         window.scrollTo({ top: 401, behavior: 'instant' });
@@ -66,6 +70,22 @@ describe('<pf-back-to-top>', function() {
 
       it('should be visible', function() {
         expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+      });
+
+      it('should be accessible', function() {
+        expect(element).to.be.accessible;
+      });
+
+      describe('pressing the tab key', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Tab' });
+          await allUpdates(element);
+          await nextFrame();
+        });
+
+        it('should focus the component', function() {
+          expect(document.activeElement).to.equal(element);
+        });
       });
     });
 
@@ -78,8 +98,23 @@ describe('<pf-back-to-top>', function() {
         snapshot = await a11ySnapshot();
       });
 
-      it('should always be visible', function() {
+      it('should be visible', function() {
         expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+      });
+
+      it('should be accessible', function() {
+        expect(element).to.be.accessible;
+      });
+
+      describe('pressing the tab key', function() {
+        beforeEach(async function() {
+          await sendKeys({ press: 'Tab' });
+          await allUpdates(element);
+          await nextFrame();
+        });
+        it('should focus the component', function() {
+          expect(document.activeElement).to.equal(element);
+        });
       });
     });
 

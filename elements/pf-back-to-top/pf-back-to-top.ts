@@ -128,7 +128,7 @@ export class PfBackToTop extends LitElement {
             ?hidden="${!this.#visible}"
             tabindex="${this.#visible ? '0' : '-1'}"
             part="trigger"
-            aria-label="${ifDefined(this.#ariaLabel)}"
+            label="${ifDefined(this.#ariaLabel)}"
           >
           <slot name="icon" slot="icon"></slot>
           <span>

@@ -149,7 +149,7 @@ describe('<pf-back-to-top>', function() {
     });
   });
 
-  describe('when no text is provided in slot or title attribute', function() {
+  describe('when no text is provided', function() {
     let element: PfBackToTop;
     let snapshot: A11yTreeSnapshot;
 
@@ -211,4 +211,68 @@ describe('<pf-back-to-top>', function() {
       });
     });
   });
+
+  describe('when a label is provided', function() {
+    let element: PfBackToTop;
+    let snapshot: A11yTreeSnapshot;
+
+    describe('as a link', function() {
+      beforeEach(async function() {
+        await setViewport({ width: 320, height: 640 });
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        await nextFrame();
+        const container = await createFixture<PfBackToTop>(html`
+          <div id="top">
+            <div style="height: 2000px;"></div>
+            <pf-back-to-top href="#top" label="Return to top"></pf-back-to-top>
+          </div>
+        `);
+        element = container.querySelector('pf-back-to-top')!;
+        await allUpdates(element);
+      });
+
+      describe('when scrolled', function() {
+        beforeEach(async function() {
+          window.scrollTo({ top: 401, behavior: 'instant' });
+          await nextFrame();
+          await allUpdates(element);
+          snapshot = await a11ySnapshot();
+        });
+
+        it('should have a label of "Return to top"', function() {
+          expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Return to top' }]);
+        });
+      });
+    });
+
+    describe('as a button', function() {
+      beforeEach(async function() {
+        await setViewport({ width: 320, height: 640 });
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        await nextFrame();
+        const container = await createFixture<PfBackToTop>(html`
+          <div id="top">
+            <div style="height: 2000px;"></div>
+            <pf-back-to-top label="Return to top"></pf-back-to-top>
+          </div>
+        `);
+        element = container.querySelector('pf-back-to-top')!;
+        await allUpdates(element);
+      });
+
+      describe('when scrolled', function() {
+        beforeEach(async function() {
+          window.scrollTo({ top: 401, behavior: 'instant' });
+          await nextFrame();
+          await allUpdates(element);
+          snapshot = await a11ySnapshot();
+        });
+
+        it('should have a label of "Return to top"', function() {
+          expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'button', name: 'Return to top' }]);
+        });
+      });
+    });
+  });
 });
+

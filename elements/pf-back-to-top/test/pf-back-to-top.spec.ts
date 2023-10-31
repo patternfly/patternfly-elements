@@ -72,8 +72,8 @@ describe('<pf-back-to-top>', function() {
         expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
       });
 
-      it('should be accessible', function() {
-        expect(element).to.be.accessible;
+      it('should be accessible', async function() {
+        await expect(element).to.be.accessible;
       });
 
       describe('pressing the tab key', function() {
@@ -102,8 +102,8 @@ describe('<pf-back-to-top>', function() {
         expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
       });
 
-      it('should be accessible', function() {
-        expect(element).to.be.accessible;
+      it('should be accessible', async function() {
+        await expect(element).to.be.accessible;
       });
 
       describe('pressing the tab key', function() {

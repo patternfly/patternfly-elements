@@ -57,7 +57,7 @@ describe('<pf-back-to-top>', function() {
     });
 
     it('should not be accessible', function() {
-      expect(element).to.not.be.accessible;
+      expect(snapshot.children).to.be.undefined;
     });
 
     describe('when scrolled 401px', function() {

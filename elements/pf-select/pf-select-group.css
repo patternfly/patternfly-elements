@@ -3,9 +3,12 @@
   border-bottom: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
 }
 
-.disabled{
+:host([disabled]) {
   pointer-events: none;
   cursor: not-allowed;
+  color: var(--pf-theme--color--ui-base, #6a6e73) !important;
+  background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+  border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   --_active-descendant-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   --_svg-color: var(--pf-theme--color--ui-base, #6a6e73) !important;
 }

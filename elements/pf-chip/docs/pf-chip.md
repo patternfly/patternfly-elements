@@ -100,7 +100,7 @@ Chip groups are useful to express complex filters to a data set, for example.
 
 {% band header="Accessibility" %}
 
-The select uses the [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) recommendations from the WAI AIRA [Authoring Best Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg).
+The select uses the [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) recommendations from the WAI ARIA [Authoring Best Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg).
 
 #### Chips
 

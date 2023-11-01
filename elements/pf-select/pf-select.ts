@@ -363,9 +363,9 @@ export class PfSelect extends LitElement {
         });
         this.requestUpdate();
         await this.updateComplete;
-        const option = this.shadowRoot.querySelector(`#${id}`);
+        const option: HTMLElement | null | undefined = this.shadowRoot?.querySelector(`#${id}`);
         option?.focus();
-        this.#onListboxSelect(event);
+        this.#onListboxSelect();
       }
     }
   }
@@ -411,7 +411,7 @@ export class PfSelect extends LitElement {
   /**
    * handles listbox select event
    */
-  #onListboxSelect(event: KeyboardEvent) {
+  #onListboxSelect(event?: KeyboardEvent) {
     if (!this.#isMulti) {
       if (this._input) {
         this._input.value = this.#valueText;
@@ -420,8 +420,8 @@ export class PfSelect extends LitElement {
       }
 
       // prevent toggle firing a click event when focus is rest to it
-      event.preventDefault();
-      event.stopImmediatePropagation();
+      event?.preventDefault();
+      event?.stopImmediatePropagation();
       this.hide();
     } else if (this._input) {
       this._input.value = '';

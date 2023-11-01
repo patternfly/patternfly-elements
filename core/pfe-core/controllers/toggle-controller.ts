@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost, ReactiveElement } from 'lit';
-import { FloatingDOMController, type Placement, } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import { FloatingDOMController, type Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { getRandomId } from '../functions/random.js';
 import { InternalsController } from './internals-controller.js';
 

@@ -5,7 +5,7 @@ import { query } from 'lit/decorators/query.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { type Placement, } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import { type Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
 import { PfSelectOption, PfSelectOptionSelectEvent } from './pf-select-option.js';
 import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
@@ -20,7 +20,6 @@ export type PfSelectItemsDisplay = 'default' | 'badge' | 'chips';
 export interface PfSelectUserOptions {
   id: string;
   value: string;
-  selected: boolean;
 }
 /**
  * A select list enables users to select one or more items from a list.
@@ -125,6 +124,7 @@ export class PfSelect extends LitElement {
 
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
   @query('pf-select-list') private _listbox?: PfSelectList;
+  @query('#suggested-option') private _suggestedOption?: PfSelectOption;
   @query('#toggle-input') private _input?: HTMLInputElement;
   @query('#toggle-button') private _toggle?: HTMLButtonElement;
 
@@ -162,7 +162,7 @@ export class PfSelect extends LitElement {
    * listbox template
    */
   get #selectList() {
-    const checkboxes = this.checkboxes ? 'checkboxes' : false;
+    const { caseSensitive, checkboxes, createOptionText, disabled, expanded, filter, matchAnywhere } = this;
     const { height, width } = this.getBoundingClientRect() || {};
     const styles = this.alwaysExpanded ? '' : `margin-top: ${height || 0}px;width: ${width || 'auto'}px`;
     return html`
@@ -170,25 +170,29 @@ export class PfSelect extends LitElement {
         id="listbox" 
         style="${styles}"
         class="${classMap({ checkboxes })}"
-        ?disabled="${this.disabled}"
-        ?hidden=${!this.alwaysExpanded && !this.expanded}
-        ?case-sensitive=${this.caseSensitive}
-        ?match-anywhere=${this.matchAnywhere}
+        ?disabled="${disabled}"
+        ?hidden=${!this.alwaysExpanded && !expanded}
+        ?case-sensitive=${caseSensitive}
+        ?match-anywhere=${matchAnywhere}
         ?multi=${this.#isMulti}
-        filter="${this.filter || ''}"
+        filter="${filter || ''}"
         @input=${this.#onListboxInput}
         @change=${this.#onListboxChange}
         @refresh=${this.#onListboxRefresh}
         @select=${this.#onListboxSelect}>
         <slot></slot>
-        ${repeat(this.#userCreatedOptions, opt => opt.id, opt => html`
-          <pf-select-option id="${opt.id}">${opt.value}</pf-select-option>
+        ${repeat(this.#userCreatedOptions, opt => opt.id, opt => opt.value === '' ? '' : html`
+          <pf-select-option id="${opt.id}" ?selected="${this.#valueTextArray.includes(opt.value)}">${opt.value}</pf-select-option>
         `)}
-        ${this.createOptionText === '' || this.filter === '' ? '' : html`
+        ${!this.typeahead || createOptionText === '' || filter.length === 0 ? '' : html`
           <pf-select-option id="suggested-option" 
-            value="${this.filter}"
-            @select="${this.#onCreateConfirm}">
-            <span slot="create">${this.createOptionText}: </span>${this.filter}
+            value="${filter}"
+            ?selected="${this.#valueTextArray.includes(filter)}"        
+            @select="${this.#createOption}">
+            ${this.#valueTextArray.includes(filter) ? '' : html`
+              <span slot="create">${createOptionText}: </span>
+            `}
+            ${filter}
           </pf-select-option>
         `}
       </pf-select-list>`;
@@ -253,8 +257,8 @@ export class PfSelect extends LitElement {
   }
 
   render() {
-    const { hasBadge, typeahead, disabled, alwaysExpanded } = this;
-    const { expanded, anchor, alignment } = this.#toggle || { 'expanded': true, 'anchor': 'bottom', 'alignment': 'start' };
+    const { alwaysExpanded, typeahead, disabled, expanded, hasBadge } = this;
+    const { anchor, alignment } = this.#toggle || { 'expanded': true, 'anchor': 'bottom', 'alignment': 'start' };
     const toggles = !alwaysExpanded ? 'toggles' : false;
     const offscreen = typeahead ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
@@ -262,9 +266,7 @@ export class PfSelect extends LitElement {
       <div id="outer" 
           style="${this.#toggle?.styles ? styleMap(this.#toggle.styles) : ''}"
           class="${classMap({ disabled, toggles, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
-        <div id="toggle" 
-            ?expanded="${this.expanded}"
-            ?hidden="${this.alwaysExpanded}">
+        <div id="toggle" ?hidden="${!typeahead && alwaysExpanded}">
           ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
             <pf-chip-group label="${this.currentSelectionsLabel}">
               ${repeat(this.#selectedOptions, opt => opt.id, opt => html`<pf-chip id="chip-${opt.textContent}" 
@@ -277,16 +279,17 @@ export class PfSelect extends LitElement {
             type="text" 
             aria-autocomplete="both" 
             aria-controls="listbox" 
-            aria-expanded="${!this.expanded ? 'false' : 'true'}"
+            aria-expanded="${!!expanded}"
             aria-haspopup="listbox" 
-            ?disabled="${this.disabled}"
-            ?hidden="${!this.typeahead}" 
+            ?disabled="${disabled}"
+            ?hidden="${!typeahead}" 
             placeholder="${this.#buttonLabel}"
             role="combobox"
             @input=${this.#onTypeaheadInput}>
             <button id="toggle-button" 
+              ?hidden="${alwaysExpanded}"
               aria-controls="listbox" 
-              aria-expanded="${!this.expanded ? 'false' : 'true'}" 
+              aria-expanded="${!!expanded}" 
               aria-haspopup="listbox">
               <span id="toggle-text" class="${classMap({ offscreen, badge })}">
                 ${this.#buttonLabel}
@@ -321,10 +324,6 @@ export class PfSelect extends LitElement {
     if (changed.has('position') && this.#toggle) {
       this.#toggle.position = this.position;
     }
-
-    if (changed.has('typeahead') || changed.has('createOptionText')) {
-      this.#updateCreateOptionText();
-    }
   }
 
   firstUpdated() {
@@ -349,15 +348,25 @@ export class PfSelect extends LitElement {
   /**
    * inserts a create option into listbox
    */
-  #createOption(event: Event) {
+  async #createOption(event: Event) {
     const target = event?.target;
-    if (target instanceof PfSelectOption && event instanceof PfSelectOptionSelectEvent) {
-      target.selected = false;
-      this.#userCreatedOptions.push({
-        id: getRandomId(),
-        value: this.filter,
-        selected: true
-      });
+    const val = this.filter;
+    const selected = target instanceof PfSelectOption && target.selected;
+    event.preventDefault();
+    event.stopPropagation();
+    if (selected && event instanceof PfSelectOptionSelectEvent && val.length > 0) {
+      if (target.selected) {
+        const id = getRandomId();
+        this.#userCreatedOptions.push({
+          id: id,
+          value: val
+        });
+        this.requestUpdate();
+        await this.updateComplete;
+        const option = this.shadowRoot.querySelector(`#${id}`);
+        option?.focus();
+        this.#onListboxSelect(event);
+      }
     }
   }
 
@@ -416,6 +425,7 @@ export class PfSelect extends LitElement {
       this.hide();
     } else if (this._input) {
       this._input.value = '';
+      this.filter = '';
 
       // set focus on input when a new chip is added
       if (this.hasChips) {
@@ -425,49 +435,14 @@ export class PfSelect extends LitElement {
   }
 
   /**
-   * handles listbox option being created and creates a new "create option"
-   */
-  #onCreateConfirm() {
-    this.#createOption();
-    this.filter = '';
-  }
-
-  /**
    * handles typeahead combobox input event
    */
   #onTypeaheadInput() {
     // update filter
-    this.#updateCreateOptionValue(this._input?.value || '');
     if (this._listbox && this.filter !== this._input?.value) {
       this.filter = this._input?.value || '';
       this.show();
     }
-  }
-
-  /**
-   * updates create option text to match input value
-   */
-  #updateCreateOptionText() {
-    const optionText = `${this.#createOption.getAttribute('value') || ''}`;
-    this.#createOption.innerHTML = optionText;
-    const [optionExists] = (this.options || []).filter(option => {
-      return option !== this.#createOption &&
-        (optionText === option?.textContent || this.#createOption.getAttribute('value') === option?.getAttribute('value'));
-    });
-    const createOptionText = !this.typeahead || optionText === '' || !!optionExists ? '' : this.createOptionText;
-    this.#createOption.createOptionText = createOptionText;
-  }
-
-  /**
-   * updates create option value to match current filter
-   */
-  #updateCreateOptionValue(inputValue: string = this.filter) {
-    let optionValue = inputValue || '';
-    if (optionValue === '*') {
-      optionValue = '';
-    }
-    this.#createOption.setAttribute('value', optionValue);
-    this.#updateCreateOptionText();
   }
 
   /**
@@ -494,16 +469,6 @@ export class PfSelect extends LitElement {
    */
   async show() {
     await this.#toggle?.show();
-  }
-
-  /**
-   * sets focus
-   */
-  focus() {
-    const element = this._input && !this._input.hidden ? this._input
-      : this._toggle && !this._toggle.hidden ? this._toggle
-      : this._listbox;
-    element?.focus();
   }
 
   /**

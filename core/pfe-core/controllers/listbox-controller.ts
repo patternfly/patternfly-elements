@@ -235,6 +235,10 @@ Item extends HTMLElement = HTMLElement,
     this.#listeners;
   }
 
+  #getEnabledOptions(options = this.options) {
+    return options.filter(option => !option.ariaDisabled && !option.closest('[disabled]'));
+  }
+
   /**
    * gets matching options by filter value
    * @returns {ListboxOptionElement[]}
@@ -286,43 +290,6 @@ Item extends HTMLElement = HTMLElement,
         }
       }
     });
-  }
-
-  /**
-   * updates option selections for single select listbox
-   */
-  #updateSingleselect() {
-    if (!this.multi && !this.disabled) {
-      this.options.forEach(option => option.selected = option.id === this.#internals.ariaActivedescendant);
-      this.#fireChange();
-    }
-  }
-
-  /**
-   * updates option selections for multiselectable listbox:
-   * toggles all options between active descendant and target
-   * @param currentItem
-   * @param referenceItem
-   * @param ctrlKey
-   */
-  #updateMultiselect(currentItem: ListboxOptionElement, referenceItem = this.activeItem, ctrlA = false) {
-    if (this.multi && !this.disabled) {
-      // select all options between active descendant and target
-      const [start, end] = [this.options.indexOf(referenceItem), this.options.indexOf(currentItem)].sort();
-      const options = [...this.options].slice(start, end + 1);
-
-      // by default CTRL+A will select all options
-      // if all options are selected, CTRL+A will deselect all options
-      const allSelected = options.filter(option => !option.selected)?.length === 0;
-
-      // whether options will be selected (true) or deselected (false)
-      const selected = ctrlA ? !allSelected : referenceItem.selected;
-      options.forEach(option => option.selected = selected);
-      this.#fireChange();
-
-      // update starting item for other multiselect
-      this.#shiftStartingItem = currentItem;
-    }
   }
 
   /**
@@ -521,6 +488,43 @@ Item extends HTMLElement = HTMLElement,
     });
     if (oldValue !== this.value) {
       this.#fireInput();
+    }
+  }
+
+  /**
+   * updates option selections for single select listbox
+   */
+  #updateSingleselect() {
+    if (!this.multi && !this.disabled) {
+      this.#getEnabledOptions().forEach(option => option.selected = option.id === this.#internals.ariaActivedescendant);
+      this.#fireChange();
+    }
+  }
+
+  /**
+   * updates option selections for multiselectable listbox:
+   * toggles all options between active descendant and target
+   * @param currentItem
+   * @param referenceItem
+   * @param ctrlKey
+   */
+  #updateMultiselect(currentItem: ListboxOptionElement, referenceItem = this.activeItem, ctrlA = false) {
+    if (this.multi && !this.disabled) {
+      // select all options between active descendant and target
+      const [start, end] = [this.options.indexOf(referenceItem), this.options.indexOf(currentItem)].sort();
+      const options = [...this.options].slice(start, end + 1);
+
+      // by default CTRL+A will select all options
+      // if all options are selected, CTRL+A will deselect all options
+      const allSelected = this.#getEnabledOptions(options).filter(option => !option.selected)?.length === 0;
+
+      // whether options will be selected (true) or deselected (false)
+      const selected = ctrlA ? !allSelected : referenceItem.selected;
+      this.#getEnabledOptions(options).forEach(option => option.selected = selected);
+      this.#fireChange();
+
+      // update starting item for other multiselect
+      this.#shiftStartingItem = currentItem;
     }
   }
 

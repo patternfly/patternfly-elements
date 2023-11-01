@@ -398,7 +398,7 @@ Item extends HTMLElement = HTMLElement,
 
   /**
    * handles keydown:
-   * filters listbox by keboard event when slotted option has focus,
+   * filters listbox by keyboard event when slotted option has focus,
    * or by external element such as a text field
    * @param event {KeyboardEvent}
    * @returns void

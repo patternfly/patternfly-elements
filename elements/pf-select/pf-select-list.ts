@@ -7,16 +7,16 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ListboxController, type ListboxOptionElement } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 
 import { PfSelectGroup } from './pf-select-group.js';
-import { PfSelectOption } from './pf-select-option.js';
+import { PfOption } from './pf-option.js';
 
 
-import styles from './pf-select-list.css';
+import styles from './pf-listbox.css';
 
 /**
  * event when slotted options are updated
  * @first refresh
  */
-export class PfSelectListRefreshEvent extends Event {
+export class PfListboxRefreshEvent extends Event {
   constructor(public originalEvent: Event) {
     super('refresh', { bubbles: true, composed: true });
   }
@@ -27,10 +27,10 @@ export class PfSelectListRefreshEvent extends Event {
  *
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/listbox/|WAI-ARIA Listbox Pattern}
  *
- * @slot - insert `pf-select-option` and/or `pf-select-groups` here
+ * @slot - insert `pf-option` and/or `pf-select-groups` here
  */
-@customElement('pf-select-list')
-export class PfSelectList extends LitElement {
+@customElement('pf-listbox')
+export class PfListbox extends LitElement {
   static readonly styles = [styles];
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
@@ -73,10 +73,10 @@ export class PfSelectList extends LitElement {
       return;
     }
     const options = this._slottedElements.flatMap((element: HTMLElement) => {
-      if (element instanceof PfSelectOption) {
+      if (element instanceof PfOption) {
         return element;
       } else if (element instanceof PfSelectGroup) {
-        return [...element.querySelectorAll('pf-select-option')];
+        return [...element.querySelectorAll('pf-option')];
       }
     });
     return options;
@@ -157,7 +157,7 @@ export class PfSelectList extends LitElement {
    * @param option option to be inserted
    * @param insertBefore optional: reference option before which new will be inserted; if blank new option inserted at end of list
    */
-  insertOption(option: PfSelectOption, insertBefore?: PfSelectOption) {
+  insertOption(option: PfOption, insertBefore?: PfOption) {
     if (insertBefore) {
       this.insertBefore(option, insertBefore);
     } else {
@@ -174,12 +174,12 @@ export class PfSelectList extends LitElement {
       const options: unknown[] = this.options || [];
       this.#listboxController.options = options as ListboxOptionElement[];
     }
-    this.dispatchEvent(new PfSelectListRefreshEvent(event));
+    this.dispatchEvent(new PfListboxRefreshEvent(event));
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-select-list': PfSelectList;
+    'pf-listbox': PfListbox;
   }
 }

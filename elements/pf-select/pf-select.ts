@@ -7,9 +7,9 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { type Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
-import { PfSelectOption, PfSelectOptionSelectEvent } from './pf-select-option.js';
+import { PfOption, PfOptionSelectEvent } from './pf-option.js';
 import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
-import { PfSelectList, PfSelectListRefreshEvent } from './pf-select-list.js';
+import { PfListbox, PfListboxRefreshEvent } from './pf-listbox.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 
@@ -28,7 +28,7 @@ export interface PfSelectUserOptions {
  * Selects differ from dropdowns in that they persist selection,
  * whereas dropdowns are typically used to present a list of actions or links.
  *
- * @slot - insert `pf-select-option` and/or `pf-select-groups` here
+ * @slot - insert `pf-option` and/or `pf-select-groups` here
  */
 @customElement('pf-select')
 export class PfSelect extends LitElement {
@@ -123,8 +123,8 @@ export class PfSelect extends LitElement {
   @property({ type: Boolean }) typeahead = false;
 
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
-  @query('pf-select-list') private _listbox?: PfSelectList;
-  @query('#suggested-option') private _suggestedOption?: PfSelectOption;
+  @query('pf-listbox') private _listbox?: PfListbox;
+  @query('#suggested-option') private _suggestedOption?: PfOption;
   @query('#toggle-input') private _input?: HTMLInputElement;
   @query('#toggle-button') private _toggle?: HTMLButtonElement;
 
@@ -155,7 +155,7 @@ export class PfSelect extends LitElement {
    */
   get #selectedOptions() {
     const options: unknown[] = this._listbox?.selectedOptions || [];
-    return options as PfSelectOption[];
+    return options as PfOption[];
   }
 
   /**
@@ -166,7 +166,7 @@ export class PfSelect extends LitElement {
     const { height, width } = this.getBoundingClientRect() || {};
     const styles = this.alwaysExpanded ? '' : `margin-top: ${height || 0}px;width: ${width || 'auto'}px`;
     return html`
-      <pf-select-list 
+      <pf-listbox 
         id="listbox" 
         style="${styles}"
         class="${classMap({ checkboxes })}"
@@ -182,10 +182,10 @@ export class PfSelect extends LitElement {
         @select=${this.#onListboxSelect}>
         <slot></slot>
         ${repeat(this.#userCreatedOptions, opt => opt.id, opt => opt.value === '' ? '' : html`
-          <pf-select-option id="${opt.id}" ?selected="${this.#valueTextArray.includes(opt.value)}">${opt.value}</pf-select-option>
+          <pf-option id="${opt.id}" ?selected="${this.#valueTextArray.includes(opt.value)}">${opt.value}</pf-option>
         `)}
         ${!this.typeahead || createOptionText === '' || filter.length === 0 ? '' : html`
-          <pf-select-option id="suggested-option" 
+          <pf-option id="suggested-option" 
             value="${filter}"
             ?selected="${this.#valueTextArray.includes(filter)}"        
             @select="${this.#createOption}">
@@ -193,9 +193,9 @@ export class PfSelect extends LitElement {
               <span slot="create">${createOptionText}: </span>
             `}
             ${filter}
-          </pf-select-option>
+          </pf-option>
         `}
-      </pf-select-list>`;
+      </pf-listbox>`;
   }
 
   /**
@@ -351,10 +351,10 @@ export class PfSelect extends LitElement {
   async #createOption(event: Event) {
     const target = event?.target;
     const val = this.filter;
-    const selected = target instanceof PfSelectOption && target.selected;
+    const selected = target instanceof PfOption && target.selected;
     event.preventDefault();
     event.stopPropagation();
-    if (selected && event instanceof PfSelectOptionSelectEvent && val.length > 0) {
+    if (selected && event instanceof PfOptionSelectEvent && val.length > 0) {
       if (target.selected) {
         const id = getRandomId();
         this.#userCreatedOptions.push({
@@ -374,7 +374,7 @@ export class PfSelect extends LitElement {
    * handles chip's remove button clicking
    * @param txt chip text to be removed from values
    */
-  #onChipRemove(event: Event, opt: PfSelectOption) {
+  #onChipRemove(event: Event, opt: PfOption) {
     if (opt) {
       setTimeout(() => {
         // deselect option
@@ -400,10 +400,10 @@ export class PfSelect extends LitElement {
 
   /**
    * handles listbox options refresh
-   * @param event {PfSelectListRefreshEvent}
+   * @param event {PfListboxRefreshEvent}
    */
-  #onListboxRefresh(event: PfSelectListRefreshEvent) {
-    if (event instanceof PfSelectListRefreshEvent) {
+  #onListboxRefresh(event: PfListboxRefreshEvent) {
+    if (event instanceof PfListboxRefreshEvent) {
       this.#updateValueText();
     }
   }
@@ -476,7 +476,7 @@ export class PfSelect extends LitElement {
    * @param option option to be inserted
    * @param insertBefore optional: reference option before which new will be inserted; if blank new option inserted at end of list
    */
-  insertOption(option: PfSelectOption, insertBefore?: PfSelectOption) {
+  insertOption(option: PfOption, insertBefore?: PfOption) {
     this._listbox?.insertOption(option, insertBefore);
   }
 

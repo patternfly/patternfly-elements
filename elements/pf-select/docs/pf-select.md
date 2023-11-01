@@ -6,14 +6,14 @@ import '@patternfly/elements/pf-select/pf-select.js';
 
 {% renderOverview %}
   <pf-select default-text="Select a value">
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 {% endrenderOverview %}
 
@@ -28,28 +28,28 @@ import '@patternfly/elements/pf-select/pf-select.js';
 
 {% htmlexample %}
   <pf-select default-text="Select a value">
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 {% endhtmlexample %}
 
 #### Disabled
 {% htmlexample %}
   <pf-select disabled default-text="Select a color">
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 {% endhtmlexample %}
 
@@ -59,16 +59,16 @@ Below are option variants:
 
 {% htmlexample %}
   <pf-select always-expanded>
-    <pf-select-option value="Basic">Basic option</pf-select-option>
-    <pf-select-option value="Description">
+    <pf-option value="Basic">Basic option</pf-option>
+    <pf-option value="Description">
       <span>Option with description</span>
       <span slot="description">This is a description</span>
-    </pf-select-option>
-    <pf-select-option value="Icon">
+    </pf-option>
+    <pf-option value="Icon">
       <pf-icon size="md" icon="paint-brush" set="fas" slot="icon"></pf-icon>
       Option with icon
-    </pf-select-option>
-    <pf-select-option value="aria-disabled" aria-disabled="true">Aria-disabled option</pf-select-option>
+    </pf-option>
+    <pf-option value="aria-disabled" aria-disabled="true">Aria-disabled option</pf-option>
   </pf-select>
 {% endhtmlexample %}
 
@@ -80,15 +80,15 @@ Below are option variants:
   <pf-select default-text="Select item from our menu">
     <pf-select-group>
       <span slot="label">Breakfast</span>
-      <pf-select-option value="Eggs">Eggs</pf-select-option>
-      <pf-select-option value="Toast">Toast</pf-select-option>
-      <pf-select-option value="Waffles">Waffles</pf-select-option>
+      <pf-option value="Eggs">Eggs</pf-option>
+      <pf-option value="Toast">Toast</pf-option>
+      <pf-option value="Waffles">Waffles</pf-option>
     </pf-select-group>
     <pf-select-group>
       <span slot="label">Lunch</span>
-      <pf-select-option value="Salad">Salad</pf-select-option>
-      <pf-select-option value="Sandwich">Sandwich</pf-select-option>
-      <pf-select-option value="Soup">Soup</pf-select-option>
+      <pf-option value="Salad">Salad</pf-option>
+      <pf-option value="Sandwich">Sandwich</pf-option>
+      <pf-option value="Soup">Soup</pf-option>
     </pf-select-group>
   </pf-select>
 {% endhtmlexample %}
@@ -103,14 +103,14 @@ Below are option variants:
 
 {% htmlexample %}
   <pf-select multi>
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 {% endhtmlexample %}
 
@@ -124,14 +124,14 @@ Below are option variants:
 
 {% htmlexample %}
   <pf-select checkboxes>
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 {% endhtmlexample %}
 
@@ -139,14 +139,14 @@ Below are option variants:
 
 {% htmlexample %}
   <pf-select checkboxes selected-items-display="badge">
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 {% endhtmlexample %}
 
@@ -156,14 +156,14 @@ Below are option variants:
   <label>
     Pick a color:
     <pf-select typeahead>
-      <pf-select-option value="Blue">Blue</pf-select-option>
-      <pf-select-option value="Green">Green</pf-select-option>
-      <pf-select-option value="Magenta">Magenta</pf-select-option>
-      <pf-select-option value="Orange">Orange</pf-select-option>
-      <pf-select-option value="Purple">Purple</pf-select-option>
-      <pf-select-option value="Pink">Pink</pf-select-option>
-      <pf-select-option value="Red">Red</pf-select-option>
-      <pf-select-option value="Yellow">Yellow</pf-select-option>
+      <pf-option value="Blue">Blue</pf-option>
+      <pf-option value="Green">Green</pf-option>
+      <pf-option value="Magenta">Magenta</pf-option>
+      <pf-option value="Orange">Orange</pf-option>
+      <pf-option value="Purple">Purple</pf-option>
+      <pf-option value="Pink">Pink</pf-option>
+      <pf-option value="Red">Red</pf-option>
+      <pf-option value="Yellow">Yellow</pf-option>
     </pf-select>
   </label>
 {% endhtmlexample %}
@@ -174,14 +174,14 @@ Below are option variants:
 <label>
   Pick a color:
   <pf-select id="pfselect" typeahead create-option-text="Create option">
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 </label>
 {% endhtmlexample %}
@@ -192,14 +192,14 @@ Below are option variants:
 <label>
   Pick a color:
   <pf-select typeahead multi selected-items-display="chips">
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 </label>
 {% endhtmlexample %}
@@ -210,14 +210,14 @@ Below are option variants:
 <label>
   Pick a color:
   <pf-select id="pfselect" typeahead multi create-option-text="Create option">
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 </label>
 {% endhtmlexample %}
@@ -228,14 +228,14 @@ Below are option variants:
 <label>
   Pick a color:
   <pf-select id="pfselect" typeahead checkboxes>
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 </label>
 {% endhtmlexample %}
@@ -248,14 +248,14 @@ By default, filtering is __**enabled**__ and __**not**__ case sensitive. However
 
 {% htmlexample %}
   <pf-select case-sensitive typeahead>
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 {% endhtmlexample %}
 
@@ -266,14 +266,14 @@ rather than just options that start with the input text.
 
 {% htmlexample %}
   <pf-select match-anywhere typeahead>
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 {% endhtmlexample %}
 
@@ -281,21 +281,21 @@ rather than just options that start with the input text.
 
 {% htmlexample %}
   <pf-select disable-filter typeahead>
-    <pf-select-option value="Blue">Blue</pf-select-option>
-    <pf-select-option value="Green">Green</pf-select-option>
-    <pf-select-option value="Magenta">Magenta</pf-select-option>
-    <pf-select-option value="Orange">Orange</pf-select-option>
-    <pf-select-option value="Purple">Purple</pf-select-option>
-    <pf-select-option value="Pink">Pink</pf-select-option>
-    <pf-select-option value="Red">Red</pf-select-option>
-    <pf-select-option value="Yellow">Yellow</pf-select-option>
+    <pf-option value="Blue">Blue</pf-option>
+    <pf-option value="Green">Green</pf-option>
+    <pf-option value="Magenta">Magenta</pf-option>
+    <pf-option value="Orange">Orange</pf-option>
+    <pf-option value="Purple">Purple</pf-option>
+    <pf-option value="Pink">Pink</pf-option>
+    <pf-option value="Red">Red</pf-option>
+    <pf-option value="Yellow">Yellow</pf-option>
   </pf-select>
 {% endhtmlexample %}
 {% endband %}
 
 {% band header="Accessibility" %}
 
-The select uses the [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) recommendations from the WAI AIRA [Authoring Best Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg).
+The select uses the [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) recommendations from the WAI ARIA [Authoring Best Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg).
 
 When the dropdown is disabled it follows [WAI ARIA focusability recommendations](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols) for composite widget elements, where dropdown items are still focusable even when the dropdown is disabled.
 
@@ -348,9 +348,9 @@ Listbox options use the [APG's Roving tabindex](https://www.w3.org/WAI/ARIA/apg/
 {% renderCssCustomProperties for="pf-select-group", header="CSS Custom Properties on `pf-select-group`" %}{% endrenderCssCustomProperties %}
 {% renderCssParts for="pf-select-group", header="CSS Parts on `pf-select-group`" %}{% endrenderCssParts %}
 
-{% renderSlots for="pf-select-option", header="Slots on `pf-select-option`" %}{% endrenderSlots %}
-{% renderAttributes for="pf-select-option", header="Attributes on `pf-select-option`" %}{% endrenderAttributes %}
-{% renderMethods for="pf-select-option", header="Methods on `pf-select-option`" %}{% endrenderMethods %}
-{% renderEvents for="pf-select-option", header="Events on `pf-select-option`" %}{% endrenderEvents %}
-{% renderCssCustomProperties for="pf-select-option", header="CSS Custom Properties on `pf-select-option`" %}{% endrenderCssCustomProperties %}
-{% renderCssParts for="pf-select-option", header="CSS Parts on `pf-select-option`" %}{% endrenderCssParts %}
+{% renderSlots for="pf-option", header="Slots on `pf-option`" %}{% endrenderSlots %}
+{% renderAttributes for="pf-option", header="Attributes on `pf-option`" %}{% endrenderAttributes %}
+{% renderMethods for="pf-option", header="Methods on `pf-option`" %}{% endrenderMethods %}
+{% renderEvents for="pf-option", header="Events on `pf-option`" %}{% endrenderEvents %}
+{% renderCssCustomProperties for="pf-option", header="CSS Custom Properties on `pf-option`" %}{% endrenderCssCustomProperties %}
+{% renderCssParts for="pf-option", header="CSS Parts on `pf-option`" %}{% endrenderCssParts %}

@@ -34,7 +34,7 @@
 
 input[type="checkbox"] {
   margin-inline-end: 1em;
-  display: var(--_pf-select-option-checkboxes-display, none);
+  display: var(--_pf-option-checkboxes-display, none);
   pointer-events: none;
   flex: 0 0 auto;
 }
@@ -51,7 +51,7 @@ svg {
   margin-inline-start: 1em;
   text-align: right;
   flex: 0 0 auto;
-  display: var(--_pf-select-option-svg-display, block);
+  display: var(--_pf-option-svg-display, block);
 }
 
 #description {

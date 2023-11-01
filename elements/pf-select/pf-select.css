@@ -3,8 +3,8 @@
   font-size: var(--pf-global--FontSize--md, 16px);
   font-weight: var(--pf-global--FontWeight--normal, 400);
   color: var(--pf-theme--color--text, #151515);
-  --_pf-select-option-checkboxes-display: none;
-  --_pf-select-option-svg-display: block;
+  --_pf-option-checkboxes-display: none;
+  --_pf-option-svg-display: block;
 }
 
 :host, #outer.toggles {
@@ -31,13 +31,13 @@
   position: relative;
 }
 
-#outer.toggles pf-select-list {
+#outer.toggles pf-listbox {
   position: absolute;
   background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
   opacity: 0;
 }
 
-#outer.toggles.expanded pf-select-list {
+#outer.toggles.expanded pf-listbox {
   opacity: 1;
   z-index: 9999 !important;
 }
@@ -129,9 +129,9 @@ pf-badge {
   margin-inline-start: 1em;
 }
 
-pf-select-list.checkboxes {
-  --_pf-select-option-checkboxes-display: inline;
-  --_pf-select-option-svg-display: none;
+pf-listbox.checkboxes {
+  --_pf-option-checkboxes-display: inline;
+  --_pf-option-svg-display: none;
 }
 
 .offscreen {

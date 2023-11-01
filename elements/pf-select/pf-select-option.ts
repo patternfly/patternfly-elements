@@ -7,13 +7,13 @@ import { InternalsController } from '@patternfly/pfe-core/controllers/internals-
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 
-import styles from './pf-select-option.css';
+import styles from './pf-option.css';
 
 /**
  * select custom event for listbox options
  * @fires select
  */
-export class PfSelectOptionSelectEvent extends Event {
+export class PfOptionSelectEvent extends Event {
   constructor(public originalEvent?: Event) {
     super('select', { bubbles: true, composed: true });
   }
@@ -23,7 +23,7 @@ export class PfSelectOptionSelectEvent extends Event {
  * focus custom event for listbox options
  * @fires focus
  */
-export class PfSelectOptionFocusEvent extends Event {
+export class PfOptionFocusEvent extends Event {
   constructor(public originalEvent: Event) {
     super('focus', { bubbles: true, composed: true });
   }
@@ -33,7 +33,7 @@ export class PfSelectOptionFocusEvent extends Event {
  * blur custom event for listbox options
  * @fires blur
  */
-export class PfSelectOptionBlurEvent extends Event {
+export class PfOptionBlurEvent extends Event {
   constructor(public originalEvent: Event) {
     super('blur', { bubbles: true, composed: true });
   }
@@ -48,8 +48,8 @@ export class PfSelectOptionBlurEvent extends Event {
  * @slot description
  *        optional description
  */
-@customElement('pf-select-option')
-export class PfSelectOption extends LitElement {
+@customElement('pf-option')
+export class PfOption extends LitElement {
   static readonly styles = [styles];
 
   /**
@@ -134,7 +134,7 @@ export class PfSelectOption extends LitElement {
   updated(changed: PropertyValues<this>) {
     if (changed.has('selected')) {
       this.#internals.ariaSelected = this.selected ? 'true' : 'false';
-      this.dispatchEvent(new PfSelectOptionSelectEvent());
+      this.dispatchEvent(new PfOptionSelectEvent());
     }
     if (changed.has('disabled')) {
       this.#internals.ariaDisabled = String(!!this.disabled);
@@ -151,6 +151,6 @@ export class PfSelectOption extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-select-option': PfSelectOption;
+    'pf-option': PfOption;
   }
 }

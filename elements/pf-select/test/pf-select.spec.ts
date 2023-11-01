@@ -1,19 +1,19 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfSelect } from '../pf-select.js';
-import { PfSelectOption } from '../pf-select-option.js';
+import { PfOption } from '../pf-option.js';
 import { PfChip } from '../../pf-chip/pf-chip.js';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 
 const OPTIONS = html`
-  <pf-select-option value="Blue">Blue</pf-select-option>
-  <pf-select-option value="Green">Green</pf-select-option>
-  <pf-select-option value="Magenta">Magenta</pf-select-option>
-  <pf-select-option value="Orange">Orange</pf-select-option>
-  <pf-select-option value="Purple">Purple</pf-select-option>
-  <pf-select-option value="Pink">Pink</pf-select-option>
-  <pf-select-option value="Red">Red</pf-select-option>
-  <pf-select-option value="Yellow">Yellow</pf-select-option>`;
+  <pf-option value="Blue">Blue</pf-option>
+  <pf-option value="Green">Green</pf-option>
+  <pf-option value="Magenta">Magenta</pf-option>
+  <pf-option value="Orange">Orange</pf-option>
+  <pf-option value="Purple">Purple</pf-option>
+  <pf-option value="Pink">Pink</pf-option>
+  <pf-option value="Red">Red</pf-option>
+  <pf-option value="Yellow">Yellow</pf-option>`;
 
 let element: PfSelect;
 let typeahead: HTMLInputElement;
@@ -55,7 +55,7 @@ function selectedList() {
 }
 
 function setOptions() {
-  optionsList = [...element.querySelectorAll('pf-select-option:not([disabled])')];
+  optionsList = [...element.querySelectorAll('pf-option:not([disabled])')];
   [first, second, third, fourth, fifth, sixth] = optionsList as HTMLElement[];
 }
 
@@ -91,7 +91,7 @@ describe('<pf-select>', function() {
     beforeEach(async function() {
       element = await createFixture<PfSelect>(html`
         <pf-select always-expanded>
-          <pf-select-option disabled selected>Select a color</pf-select-option>
+          <pf-option disabled selected>Select a color</pf-option>
           ${OPTIONS}
         </pf-select>`);
       setOptions();
@@ -165,7 +165,7 @@ describe('<pf-select>', function() {
     beforeEach(async function() {
       element = await createFixture<PfSelect>(html`
         <pf-select>
-          <pf-select-option disabled selected>Select a color</pf-select-option>
+          <pf-option disabled selected>Select a color</pf-option>
           ${OPTIONS}
         </pf-select>`);
       setOptions();
@@ -230,8 +230,8 @@ describe('<pf-select>', function() {
     beforeEach(async function() {
       element = await createFixture<PfSelect>(html`
         <pf-select multi selected-items-display="badge">
-          <pf-select-option value="Amethyst" selected>Amethyst</pf-select-option>
-          <pf-select-option value="Aqua" selected>Aqua</pf-select-option>
+          <pf-option value="Amethyst" selected>Amethyst</pf-option>
+          <pf-option value="Aqua" selected>Aqua</pf-option>
           ${OPTIONS}
         </pf-select>`);
       setOptions();

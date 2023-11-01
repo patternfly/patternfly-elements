@@ -7,7 +7,7 @@ import { query } from 'lit/decorators/query.js';
 import { observed } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
-import { TabExpandEvent, TabDisabledEvent } from './TabsController.js';
+import { TabExpandEvent, TabDisabledEvent } from '@patternfly/pfe-core/controllers/tabs-controller.js';
 
 import styles from './pf-tab.css';
 

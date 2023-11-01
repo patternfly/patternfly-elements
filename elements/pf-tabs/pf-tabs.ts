@@ -5,11 +5,12 @@ import { query } from 'lit/decorators/query.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { classMap } from 'lit/directives/class-map.js';
 
+import { OverflowController } from '@patternfly/pfe-core/controllers/overflow-controller.js';
+import { TabsController } from '@patternfly/pfe-core/controllers/tabs-controller.js';
+
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { cascades } from '@patternfly/pfe-core/decorators.js';
-import { OverflowController } from '@patternfly/pfe-core/controllers/overflow-controller.js';
 
-import { TabsController } from './TabsController.js';
 import { PfTab } from './pf-tab.js';
 import { PfTabPanel } from './pf-tab-panel.js';
 

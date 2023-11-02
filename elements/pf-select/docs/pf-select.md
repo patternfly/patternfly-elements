@@ -21,10 +21,8 @@ import '@patternfly/elements/pf-select/pf-select.js';
 
 #### Single
 
-<p>
-  Focus on options using arrow keys or
-  by typing the first character of an option.
-</p>
+Focus on options using arrow keys or
+by typing the first character of an option.
 
 {% htmlexample %}
   <pf-select default-text="Select a value">
@@ -72,7 +70,8 @@ Below are option variants:
   </pf-select>
 {% endhtmlexample %}
 
-**Note:** [WAI-ARIA recommends](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols) elements of a larger composite widget remain focusable.  Because options are part of the larger `pf-select` element, use `aria-disabled="true"` instead of `disabled` so that screenreader users know the option exists and is disabled.
+
+{% renderFile "./docs/_snippets/wai-aria-disabled.md" %}  Because options are part of the larger `pf-select` element, use `aria-disabled="true"` instead of `disabled` so that screenreader users know the option exists and is disabled.
 
 ### Grouped Options
 
@@ -95,11 +94,9 @@ Below are option variants:
 
 ### Multi-selectable
 
-<p>
-  Multiple options can be selected. Any arrow keys work.
-  <kbd>Shift</kbd> will toggling off multiple items.
-  <kbd>Ctrl+A</kbd> will toggle selection on all items.
-</p>
+Multiple options can be selected. Any arrow keys work.
+<kbd>Shift</kbd> will toggling off multiple items.
+<kbd>Ctrl+A</kbd> will toggle selection on all items.
 
 {% htmlexample %}
   <pf-select multi>
@@ -116,11 +113,9 @@ Below are option variants:
 
 #### Checkbox
 
-<p>
-  Multiple options, displayed as checkboxes, can be selected.
-  <kbd>Shift</kbd> will toggling off multiple items.
-  <kbd>Ctrl+A</kbd> will toggle selection on all items.
-</p>
+Multiple options, displayed as checkboxes, can be selected.
+<kbd>Shift</kbd> will toggling off multiple items.
+<kbd>Ctrl+A</kbd> will toggle selection on all items.
 
 {% htmlexample %}
   <pf-select checkboxes>

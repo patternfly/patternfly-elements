@@ -63,7 +63,12 @@ export class PfListbox extends LitElement {
 
   @queryAssignedElements({ flatten: true }) private _slottedElements?: Array<HTMLElement>;
 
-  #listboxController?: ListboxController;
+  #listboxController = new ListboxController(this, {
+    caseSensitive: this.caseSensitive,
+    matchAnywhere: this.matchAnywhere,
+    multi: false,
+    orientation: 'vertical',
+  });
 
   /**
      * array of slotted options
@@ -92,21 +97,21 @@ export class PfListbox extends LitElement {
   }
 
   get selected() {
-    return this.#listboxController?.value;
+    return this.#listboxController.value;
   }
 
   /**
    * array of selected options
    */
   get selectedOptions() {
-    return this.#listboxController?.selectedOptions;
+    return this.#listboxController.selectedOptions;
   }
 
   /**
    * array of visible options
    */
   get visibleOptions() {
-    return this.#listboxController?.visibleOptions;
+    return this.#listboxController.visibleOptions;
   }
 
   render() {
@@ -120,19 +125,13 @@ export class PfListbox extends LitElement {
   }
 
   firstUpdated(changed: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    this.#listboxController = new ListboxController(this, {
-      caseSensitive: this.caseSensitive,
-      matchAnywhere: this.matchAnywhere,
-      multi: this.multi,
-      orientation: 'vertical',
-    });
     const options: unknown[] = this.options || [];
     this.#listboxController.options = options as ListboxOptionElement[];
     this.#listboxController.filter = this.filter;
     super.firstUpdated(changed);
   }
 
-  updated(changed: PropertyValues<this>) {
+  willUpdate(changed: PropertyValues<this>) {
     if (this.#listboxController) {
       if (changed.has('disabled')) {
         this.#listboxController.disabled = this.disabled;

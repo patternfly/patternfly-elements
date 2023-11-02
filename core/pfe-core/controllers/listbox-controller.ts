@@ -143,6 +143,10 @@ Item extends HTMLElement = HTMLElement,
     return this.#internals.ariaMultiSelectable === 'true';
   }
 
+  // TODO @nikkimk work with @bennyp on the following:
+  // "all these reactive accessor pairs are just fine the way they are,
+  // but i'm just floating the option to write a decorator for class fields instead"
+
   /**
    * whether filtering matches anywhere in option text;
    * default is only options starting with filter

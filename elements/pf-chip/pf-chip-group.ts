@@ -4,6 +4,7 @@ import { property } from 'lit/decorators/property.js';
 import type { PropertyValues } from 'lit';
 import { query } from 'lit/decorators/query.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { PfChip, ChipReadyEvent, ChipRemoveEvent } from './pf-chip.js';
 
@@ -99,7 +100,7 @@ export class PfChipGroup extends LitElement {
         ${this.remaining < 1 ? '' : html`
           <pf-chip 
             id="overflow"
-            overflow-chip 
+            overflow-chip
             aria-controls="chips" 
             aria-expanded=${this.open}
             @click="${this.#onMoreClick}"
@@ -119,8 +120,8 @@ export class PfChipGroup extends LitElement {
   }
 
   updated(changed: PropertyValues<this>) {
-    if (changed.has('accessibleCloseLabel') || changed.has('numChips') || changed.has('open')) {
-      this.#updateChips();
+    if (changed.has('accessibleCloseLabel') || changed.has('numChips') || changed.has('open') || changed.has('closeable')) {
+      this.#handleChipsChanged();
     }
   }
 
@@ -152,24 +153,25 @@ export class PfChipGroup extends LitElement {
   /**
    * updates chips when they change
    */
-  #handleChipsChanged() {
-    const oldButtons = [...(this.#buttons || [])];
-    this.#chips = [...this.querySelectorAll('pf-chip:not([slot]):not([overflow-chip])')] as PfChip[];
-    const button = this._overflowChip?.button as HTMLElement;
-    const max = this.open ? this.#chips.length : Math.min(this.#chips.length, this.numChips);
-    const visibleChips = this.#chips.slice(0, max);
-    const buttons = visibleChips.map(chip => chip.button as HTMLElement);
-    this.#buttons = [...buttons, button, this._button] as HTMLElement[];
-    this.#buttons = this.#buttons.filter(button => !!button);
-    if (oldButtons.length !== this.#buttons.length || !oldButtons.every((element, index) => element === this.#buttons[index])) {
-      if (this.#itemsInit) {
-        this.#tabindex.updateItems(this.#buttons);
-      } else {
-        this.#tabindex.initItems(this.#buttons);
+  async #handleChipsChanged() {
+    if (this.#chips.length > 0) {
+      const oldButtons = [...(this.#buttons || [])];
+      const button = this._overflowChip?.button as HTMLElement;
+      const max = this.open ? this.#chips.length : Math.min(this.#chips.length, this.numChips);
+      const visibleChips = this.#chips.slice(0, max);
+      const buttons = visibleChips.map(chip => chip.button as HTMLElement);
+      this.#buttons = [...buttons, button, this._button] as HTMLElement[];
+      this.#buttons = this.#buttons.filter(button => !!button);
+      if (oldButtons.length !== this.#buttons.length || !oldButtons.every((element, index) => element === this.#buttons[index])) {
+        if (this.#itemsInit) {
+          this.#tabindex.updateItems(this.#buttons);
+        } else {
+          this.#tabindex.initItems(this.#buttons);
+        }
       }
+      this.#itemsInit = true;
+      this.#updateOverflow();
     }
-    this.#itemsInit = true;
-    this.#updateChips();
   }
 
   /**
@@ -177,7 +179,7 @@ export class PfChipGroup extends LitElement {
    */
   #onChipReady(event: Event) {
     if (event instanceof ChipReadyEvent) {
-      this.#handleChipsChanged();
+      this.#updateChips();
     }
   }
 
@@ -187,7 +189,7 @@ export class PfChipGroup extends LitElement {
   async #onChipRemoved(event: Event) {
     if (event instanceof ChipRemoveEvent) {
       await this.updateComplete;
-      this.#handleChipsChanged();
+      this.#updateChips();
       this.focusOnChip(this.activeChip);
     }
   }
@@ -222,15 +224,25 @@ export class PfChipGroup extends LitElement {
   }
 
   /**
+   * updates which chips variable
+   */
+  async #updateChips() {
+    this.#chips = [...this.querySelectorAll('pf-chip:not([slot]):not([overflow-chip])')] as PfChip[];
+    this.requestUpdate();
+    await this.updateComplete;
+    this.#handleChipsChanged();
+    return this.#chips;
+  }
+
+  /**
    * updates which chips are hidden
    */
-  #updateChips() {
+  #updateOverflow() {
     this.#chips.forEach((chip, i) => {
       chip.accessibleCloseLabel = this.accessibleCloseLabel;
       const overflowHidden = i >= this.numChips && !this.open;
       chip.hidden = overflowHidden;
     });
-    this.requestUpdate();
   }
 
   /**

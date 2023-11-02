@@ -77,18 +77,18 @@ Below are option variants:
 
 {% htmlexample %}
   <pf-select default-text="Select item from our menu">
-    <pf-select-group>
+    <pf-option-group>
       <span slot="label">Breakfast</span>
       <pf-option value="Eggs">Eggs</pf-option>
       <pf-option value="Toast">Toast</pf-option>
       <pf-option value="Waffles">Waffles</pf-option>
-    </pf-select-group>
-    <pf-select-group>
+    </pf-option-group>
+    <pf-option-group>
       <span slot="label">Lunch</span>
       <pf-option value="Salad">Salad</pf-option>
       <pf-option value="Sandwich">Sandwich</pf-option>
       <pf-option value="Soup">Soup</pf-option>
-    </pf-select-group>
+    </pf-option-group>
   </pf-select>
 {% endhtmlexample %}
 
@@ -336,12 +336,12 @@ Listbox options use the [APG's Roving tabindex](https://www.w3.org/WAI/ARIA/apg/
 {% renderCssCustomProperties for="pf-select", header="CSS Custom Properties on `pf-select`" %}{% endrenderCssCustomProperties %}
 {% renderCssParts for="pf-select", header="CSS Parts on `pf-select`" %}{% endrenderCssParts %}
 
-{% renderSlots for="pf-select-group", header="Slots on `pf-select-group`" %}{% endrenderSlots %}
-{% renderAttributes for="pf-select-group", header="Attributes on `pf-select-group`" %}{% endrenderAttributes %}
-{% renderMethods for="pf-select-group", header="Methods on `pf-select-group`" %}{% endrenderMethods %}
-{% renderEvents for="pf-select-group", header="Events on `pf-select-group`" %}{% endrenderEvents %}
-{% renderCssCustomProperties for="pf-select-group", header="CSS Custom Properties on `pf-select-group`" %}{% endrenderCssCustomProperties %}
-{% renderCssParts for="pf-select-group", header="CSS Parts on `pf-select-group`" %}{% endrenderCssParts %}
+{% renderSlots for="pf-option-group", header="Slots on `pf-option-group`" %}{% endrenderSlots %}
+{% renderAttributes for="pf-option-group", header="Attributes on `pf-option-group`" %}{% endrenderAttributes %}
+{% renderMethods for="pf-option-group", header="Methods on `pf-option-group`" %}{% endrenderMethods %}
+{% renderEvents for="pf-option-group", header="Events on `pf-option-group`" %}{% endrenderEvents %}
+{% renderCssCustomProperties for="pf-option-group", header="CSS Custom Properties on `pf-option-group`" %}{% endrenderCssCustomProperties %}
+{% renderCssParts for="pf-option-group", header="CSS Parts on `pf-option-group`" %}{% endrenderCssParts %}
 
 {% renderSlots for="pf-option", header="Slots on `pf-option`" %}{% endrenderSlots %}
 {% renderAttributes for="pf-option", header="Attributes on `pf-option`" %}{% endrenderAttributes %}

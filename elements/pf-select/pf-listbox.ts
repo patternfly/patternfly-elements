@@ -6,7 +6,7 @@ import { classMap } from 'lit/directives/class-map.js';
 
 import { ListboxController, type ListboxOptionElement } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 
-import { PfSelectGroup } from './pf-select-group.js';
+import { PfOptionGroup } from './pf-option-group.js';
 import { PfOption } from './pf-option.js';
 
 
@@ -27,7 +27,7 @@ export class PfListboxRefreshEvent extends Event {
  *
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/listbox/|WAI-ARIA Listbox Pattern}
  *
- * @slot - insert `pf-option` and/or `pf-select-groups` here
+ * @slot - insert `pf-option` and/or `pf-option-groups` here
  */
 @customElement('pf-listbox')
 export class PfListbox extends LitElement {
@@ -75,7 +75,7 @@ export class PfListbox extends LitElement {
     const options = this._slottedElements.flatMap((element: HTMLElement) => {
       if (element instanceof PfOption) {
         return element;
-      } else if (element instanceof PfSelectGroup) {
+      } else if (element instanceof PfOptionGroup) {
         return [...element.querySelectorAll('pf-option')];
       }
     });

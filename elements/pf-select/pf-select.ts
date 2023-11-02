@@ -28,7 +28,7 @@ export interface PfSelectUserOptions {
  * Selects differ from dropdowns in that they persist selection,
  * whereas dropdowns are typically used to present a list of actions or links.
  *
- * @slot - insert `pf-option` and/or `pf-select-groups` here
+ * @slot - insert `pf-option` and/or `pf-option-groups` here
  */
 @customElement('pf-select')
 export class PfSelect extends LitElement {

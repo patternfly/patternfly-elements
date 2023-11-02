@@ -237,7 +237,7 @@ Multiple options, displayed as checkboxes, can be selected.
 
 ### Filtering
 
-By default, filtering is __**enabled**__ and __**not**__ case sensitive. However, filtering can be set to case sensitive or disabled altogether.
+By default, filtering is **enabled** and **not** case sensitive. However, filtering can be set to case sensitive or disabled altogether.
 
 #### Case-sensitive filtering
 

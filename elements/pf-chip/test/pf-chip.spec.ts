@@ -2,6 +2,7 @@ import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfChip } from '../pf-chip.js';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
+import { a11ySnapshot, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 
 async function tab() {
@@ -46,11 +47,12 @@ describe('<pf-chip>', async function() {
 
   describe('default behavior', function() {
     let element: PfChip;
-    let button: HTMLButtonElement;
+    let snapshot: A11yTreeSnapshot;
 
     beforeEach(async function() {
       element = await createFixture<PfChip>(html`<pf-chip></pf-chip>`);
-      button = await element.shadowRoot?.querySelector('button') as HTMLButtonElement;
+      await element.updateComplete;
+      snapshot = await a11ySnapshot();
     });
 
     describe('focusing programatically', function() {
@@ -66,7 +68,7 @@ describe('<pf-chip>', async function() {
 
     describe('clicking close button', function() {
       beforeEach(async function() {
-        await click(button);
+        await click(element);
       });
       it('should close', function() {
         expect(document.querySelector('pf-chip')).to.be.null;
@@ -97,11 +99,11 @@ describe('<pf-chip>', async function() {
 
   describe('with `overflow-chip` attribute', function() {
     let element: PfChip;
-    let button: HTMLButtonElement;
+    let snapshot: A11yTreeSnapshot;
 
     beforeEach(async function() {
       element = await createFixture<PfChip>(html`<pf-chip overflow-chip>Overflow</pf-chip>`);
-      button = await element.shadowRoot?.querySelector('button') as HTMLButtonElement;
+      snapshot = await a11ySnapshot();
     });
 
     it('should be accessible', async function() {
@@ -109,7 +111,7 @@ describe('<pf-chip>', async function() {
     });
 
     it('should not have a close button', function() {
-      expect(button?.ariaLabel).to.not.equal(element.accessibleCloseLabel);
+      expect(snapshot.children).to.deep.equal([{ role: 'button', name: 'Overflow' }]);
     });
 
     describe('focusing programatically', function() {
@@ -152,18 +154,18 @@ describe('<pf-chip>', async function() {
 
   describe('with `read-only` attribute', async function() {
     let element: PfChip;
-    let button: HTMLButtonElement;
+    let snapshot: A11yTreeSnapshot;
 
     beforeEach(async function() {
       element = await createFixture<PfChip>(html`<pf-chip readonly></pf-chip>`);
-      button = await element.shadowRoot?.querySelector('button') as HTMLButtonElement;
+      snapshot = await a11ySnapshot();
     });
 
     it('should be accessible', async function() {
       await expect(element).to.be.accessible();
     });
     it('should not have a button', function() {
-      expect(button).to.be.null;
+      expect(snapshot.children).to.be.undefined;
     });
   });
 });

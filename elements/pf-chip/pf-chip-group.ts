@@ -96,7 +96,7 @@ export class PfChipGroup extends LitElement {
             <span class="offscreen">${this.label}</span>
           </slot>
         `}
-        <slot id="chips" @slotchange=${this.#onSlotchange}></slot>
+        <slot id="chips" @slotchange=${this.#onSlotchange} @remove="${this.#updateChips}"></slot>
         ${this.remaining < 1 ? '' : html`
           <pf-chip 
             id="overflow"
@@ -156,10 +156,10 @@ export class PfChipGroup extends LitElement {
   async #handleChipsChanged() {
     if (this.#chips.length > 0) {
       const oldButtons = [...(this.#buttons || [])];
-      const button = this._overflowChip?.button as HTMLElement;
+      const button = this._overflowChip as HTMLElement;
       const max = this.open ? this.#chips.length : Math.min(this.#chips.length, this.numChips);
       const visibleChips = this.#chips.slice(0, max);
-      const buttons = visibleChips.map(chip => chip.button as HTMLElement);
+      const buttons = visibleChips as HTMLElement[];
       this.#buttons = [...buttons, button, this._button] as HTMLElement[];
       this.#buttons = this.#buttons.filter(button => !!button);
       if (oldButtons.length !== this.#buttons.length || !oldButtons.every((element, index) => element === this.#buttons[index])) {
@@ -189,8 +189,8 @@ export class PfChipGroup extends LitElement {
   async #onChipRemoved(event: Event) {
     if (event instanceof ChipRemoveEvent) {
       await this.updateComplete;
-      this.#updateChips();
-      this.focusOnChip(this.activeChip);
+      await this.#updateChips();
+      this.#tabindex.focusOnItem(this.#tabindex.activeItem);
     }
   }
 
@@ -249,8 +249,7 @@ export class PfChipGroup extends LitElement {
    * makes chip active and sets focus on it
    */
   focusOnChip(chip: HTMLElement) {
-    const button = chip?.shadowRoot?.querySelector('button') as HTMLElement;
-    this.#tabindex.focusOnItem(button);
+    this.#tabindex.focusOnItem(chip);
   }
 }
 

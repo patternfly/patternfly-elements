@@ -136,7 +136,7 @@ Item extends HTMLElement = HTMLElement,
       const option = item as HTMLElement;
       return !option.hasAttribute('disabled') && !option.hidden && option.textContent?.match(regex);
     });
-    return first || undefined;
+    return first;
   }
 
   /**

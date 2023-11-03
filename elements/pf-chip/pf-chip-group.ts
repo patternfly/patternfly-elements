@@ -4,21 +4,32 @@ import { property } from 'lit/decorators/property.js';
 import type { PropertyValues } from 'lit';
 import { query } from 'lit/decorators/query.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { PfChip, ChipReadyEvent, ChipRemoveEvent } from './pf-chip.js';
 
 import styles from './pf-chip-group.css';
+
+export class ChipGroupExpandEvent extends Event {
+  constructor() {
+    super('expand', { bubbles: true });
+  }
+}
+export class ChipGroupRemoveEvent extends Event {
+  constructor() {
+    super('remove', { bubbles: true });
+  }
+}
 /**
  * A **chip group** is a collection of chips that can be grouped by category and used to represent one or more values assigned to a single attribute. When value of numChips is exceeded, additional chips will be hidden using an overflow chip.
+ *
+ * @fires expand - Fires when chip group is expanded to show all chips
+ * @fires remove - Fires when chip group is closed/removed
  *
  * @slot category-name
  *      Category name text for chip group category. If this prop is supplied chip group with have a label and category styling applied
  *
  * @slot
  *      Should be <Chip> elements.
- *
- * @fires { Event } overflow-chip-click - when close button is clicked
  */
 @customElement('pf-chip-group')
 export class PfChipGroup extends LitElement {
@@ -198,9 +209,9 @@ export class PfChipGroup extends LitElement {
    */
   #onCloseClick() {
     /**
-     * @fires chip-group-remove
+     * @fires expand
      */
-    this.dispatchEvent(new Event('chip-group-remove', { bubbles: true }));
+    this.dispatchEvent(new ChipGroupRemoveEvent());
     this.remove();
   }
 
@@ -218,7 +229,7 @@ export class PfChipGroup extends LitElement {
     /**
      * @fires overflow-chip-click
      */
-    this.dispatchEvent(new Event('overflow-chip-click', event));
+    this.dispatchEvent(new ChipGroupExpandEvent());
   }
 
   #onSlotchange() {

@@ -20,6 +20,8 @@ export class ChipRemoveEvent extends Event {
 /**
  * A **chip** is used to communicate a value or a set of attribute-value pairs within workflows that involve filtering a set of objects.
  *
+ * @fires ready - Fires when chip is ready
+ * @fires remove - Fires when chip is removed
  * @slot
  *      chip text
  *

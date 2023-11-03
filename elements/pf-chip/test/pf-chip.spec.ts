@@ -55,7 +55,7 @@ describe('<pf-chip>', async function() {
       snapshot = await a11ySnapshot();
     });
 
-    describe('focusing programatically', function() {
+    describe('calling focus', function() {
       let active: string | null | undefined;
       beforeEach(async function() {
         element.focus();
@@ -97,7 +97,7 @@ describe('<pf-chip>', async function() {
     });
   });
 
-  describe('with `overflow-chip` attribute', function() {
+  describe('overflow-chip', function() {
     let element: PfChip;
     let snapshot: A11yTreeSnapshot;
 
@@ -114,7 +114,7 @@ describe('<pf-chip>', async function() {
       expect(snapshot.children).to.deep.equal([{ role: 'button', name: 'Overflow' }]);
     });
 
-    describe('focusing programatically', function() {
+    describe('calling focus', function() {
       beforeEach(async function() {
         element.focus();
       });
@@ -152,7 +152,7 @@ describe('<pf-chip>', async function() {
     });
   });
 
-  describe('with `read-only` attribute', async function() {
+  describe('readonly', async function() {
     let element: PfChip;
     let snapshot: A11yTreeSnapshot;
 

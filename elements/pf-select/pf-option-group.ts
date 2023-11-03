@@ -16,7 +16,7 @@ export class PfOptionGroup extends LitElement {
   /**
    * whether group is disabled
    */
-  @property({ type: Boolean }) disabled = false;
+  @property({ type: Boolean, reflect: true }) disabled = false;
 
   #internals = new InternalsController(this, { role: 'group' });
 

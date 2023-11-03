@@ -41,6 +41,10 @@ export class PfOptionBlurEvent extends Event {
 
 /**
  * Option within a listbox
+ *
+ * @fires select - Fired on option select/deselect
+ * @fires focus - Fired on option focus
+ * @fires blur - Fired on option blur
  * @slot -
  *        option text
  * @slot icon
@@ -72,18 +76,15 @@ export class PfOption extends LitElement {
    */
   @property({ type: Boolean }) active = false;
 
-
   @queryAssignedNodes({ slot: '', flatten: true }) private _slottedText!: Node[];
-
-  #active = false;
 
   #internals = new InternalsController(this, {
     role: 'option'
   });
 
   /**
-  * option's position amoun the other options
-  */
+   * this option's position relative to the other options
+   */
   set posInSet(posInSet: string | null) {
     this.#internals.ariaPosInSet = `${Math.max(0, parseInt(posInSet || '0'))}`;
   }
@@ -93,8 +94,8 @@ export class PfOption extends LitElement {
   }
 
   /**
-  * total number of options
-  */
+   * total number of options
+   */
   set setSize(setSize: string | null) {
     this.#internals.ariaSetSize = `${Math.max(0, parseInt(setSize || '0'))}`;
   }
@@ -113,25 +114,25 @@ export class PfOption extends LitElement {
     return html`
       <div id="outer" class="${classMap({ active, disabled })}">
         <input 
-          type="checkbox" 
-          aria-hidden="true" 
-          ?checked=${this.selected}
-          ?disabled=${this.disabled}>
+            type="checkbox" 
+            aria-hidden="true" 
+            ?checked="${this.selected}"
+            ?disabled="${this.disabled}">
         <slot name="icon"></slot>
         <span><slot name="create"></slot><slot></slot></span>
         <svg 
-          ?hidden=${!this.selected}
-          viewBox="0 0 512 512" 
-          fill="currentColor" 
-          aria-hidden="true">
-          <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path>
+            ?hidden="${!this.selected}"
+            viewBox="0 0 512 512" 
+            fill="currentColor" 
+            aria-hidden="true">
+            <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path>
         </svg>
         <div id="description"><slot name="description"></slot></div>
       </div>
     `;
   }
 
-  updated(changed: PropertyValues<this>) {
+  willUpdate(changed: PropertyValues<this>) {
     if (changed.has('selected')) {
       this.#internals.ariaSelected = this.selected ? 'true' : 'false';
       this.dispatchEvent(new PfOptionSelectEvent());

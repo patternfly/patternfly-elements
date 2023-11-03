@@ -64,7 +64,7 @@ export class PfSelect extends LitElement {
   /**
    * whether select is disabled
    */
-  @property({ type: Boolean }) disabled = false;
+  @property({ type: Boolean, reflect: true }) disabled = false;
 
   /**
    * enable to flip listbox when it reaches boundary
@@ -171,15 +171,15 @@ export class PfSelect extends LitElement {
         style="${styles}"
         class="${classMap({ checkboxes })}"
         ?disabled="${disabled}"
-        ?hidden=${!this.alwaysExpanded && !expanded}
-        ?case-sensitive=${caseSensitive}
-        ?match-anywhere=${matchAnywhere}
-        ?multi=${this.#isMulti}
+        ?hidden="${!this.alwaysExpanded && !expanded}"
+        ?case-sensitive="${caseSensitive}"
+        ?match-anywhere="${matchAnywhere}"
+        ?multi="${this.#isMulti}"
         filter="${filter || ''}"
-        @input=${this.#onListboxInput}
-        @change=${this.#onListboxChange}
-        @refresh=${this.#onListboxRefresh}
-        @select=${this.#onListboxSelect}>
+        @input="${this.#onListboxInput}"
+        @change="${this.#onListboxChange}"
+        @refresh="${this.#onListboxRefresh}"
+        @select="${this.#onListboxSelect}">
         <slot></slot>
         ${repeat(this.#userCreatedOptions, opt => opt.id, opt => opt.value === '' ? '' : html`
           <pf-option id="${opt.id}" ?selected="${this.#valueTextArray.includes(opt.value)}">${opt.value}</pf-option>
@@ -349,7 +349,7 @@ export class PfSelect extends LitElement {
    * inserts a create option into listbox
    */
   async #createOption(event: Event) {
-    const target = event?.target;
+    const target = event?.target as PfOption;
     const val = this.filter;
     const selected = target instanceof PfOption && target.selected;
     event.preventDefault();

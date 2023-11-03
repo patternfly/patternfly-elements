@@ -14,8 +14,7 @@
 }
 
 :host([hidden]),
-*[hidden],
-#suggested-option[disabled] {
+*[hidden] {
   display: none !important;
 }
 

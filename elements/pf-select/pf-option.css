@@ -7,6 +7,11 @@
   display: none !important;
 }
 
+:host([disabled]) {
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
+
 :host(:focus) #outer,
 :host(:hover) #outer {
   background-color: #e0e0e0;
@@ -26,10 +31,8 @@
   background-color: var(--_active-descendant-color, var(--pf-theme--color--surface--lighter, #f0f0f0));
 }
 
-#outer.disabled {
+:host([disabled]) #outer {
   color: var(--pf-global--Color--dark-200, #6a6e73) !important;
-  pointer-events: none !important;
-  cursor: not-allowed !important;
 }
 
 input[type="checkbox"] {

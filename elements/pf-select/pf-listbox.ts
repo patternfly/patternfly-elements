@@ -27,6 +27,7 @@ export class PfListboxRefreshEvent extends Event {
  *
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/listbox/|WAI-ARIA Listbox Pattern}
  *
+ * @fires refresh - Fired when slotted options are updated
  * @slot - insert `pf-option` and/or `pf-option-groups` here
  */
 @customElement('pf-listbox')
@@ -152,6 +153,18 @@ export class PfListbox extends LitElement {
   }
 
   /**
+   * handles slot change to indicate slotted listbox options have changed
+   * @param event {Event}
+   */
+  #onSlotchange(event: Event) {
+    if (this.#listboxController) {
+      const options: unknown[] = this.options || [];
+      this.#listboxController.options = options as ListboxOptionElement[];
+    }
+    this.dispatchEvent(new PfListboxRefreshEvent(event));
+  }
+
+  /**
    * allows new options to be inserted
    * @param option option to be inserted
    * @param insertBefore optional: reference option before which new will be inserted; if blank new option inserted at end of list
@@ -162,18 +175,6 @@ export class PfListbox extends LitElement {
     } else {
       this.appendChild(option);
     }
-  }
-
-  /**
-   * handles slot change to indicate slotted listbox options have changed
-   * @param event {Event}
-   */
-  #onSlotchange(event: Event) {
-    if (this.#listboxController) {
-      const options: unknown[] = this.options || [];
-      this.#listboxController.options = options as ListboxOptionElement[];
-    }
-    this.dispatchEvent(new PfListboxRefreshEvent(event));
   }
 }
 

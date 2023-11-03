@@ -75,7 +75,7 @@ describe('<pf-chip>', async function() {
       });
     });
 
-    describe('pressing `Tab` key', function() {
+    describe('pressing Tab', function() {
       let active: string | null | undefined;
       beforeEach(async function() {
         await tab();
@@ -84,7 +84,7 @@ describe('<pf-chip>', async function() {
       it('should focus', function() {
         expect(active).to.equal(element.accessibleCloseLabel);
 
-        describe('pressing `Enter` key', async function() {
+        describe('pressing Enter', async function() {
           beforeEach(async function() {
             await element.focus();
             await enter();
@@ -123,7 +123,7 @@ describe('<pf-chip>', async function() {
       });
     });
 
-    describe('pressing `Tab` key', function() {
+    describe('pressing Tab', function() {
       beforeEach(async function() {
         await tab();
       });
@@ -132,7 +132,7 @@ describe('<pf-chip>', async function() {
       });
     });
 
-    describe('pressing `Enter` key', function() {
+    describe('pressing Enter', function() {
       beforeEach(async function() {
         element.focus();
         await enter();

@@ -27,7 +27,7 @@ export class PfListboxRefreshEvent extends Event {
  *
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/listbox/|WAI-ARIA Listbox Pattern}
  *
- * @fires refresh - Fired when slotted options are updated
+ * @fires { PfListboxRefreshEvent } refresh - Fired when slotted options are updated
  * @slot - insert `pf-option` and/or `pf-option-groups` here
  */
 @customElement('pf-listbox')

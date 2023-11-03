@@ -42,9 +42,9 @@ export class PfOptionBlurEvent extends Event {
 /**
  * Option within a listbox
  *
- * @fires select - Fired on option select/deselect
- * @fires focus - Fired on option focus
- * @fires blur - Fired on option blur
+ * @fires { PfOptionSelectEvent } select - Fired on option select/deselect
+ * @fires { PfOptionFocusEvent } focus - Fired on option focus
+ * @fires { PfOptionBlurEvent } blur - Fired on option blur
  * @slot -
  *        option text
  * @slot icon

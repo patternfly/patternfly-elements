@@ -102,7 +102,6 @@ export class PfChipGroup extends LitElement {
             id="overflow"
             overflow-chip
             aria-controls="chips" 
-            aria-expanded=${this.open}
             @click="${this.#onMoreClick}"
             @chip-ready="${this.#onChipReady}">
             ${this.open ? this.expandedText : collapsedText}
@@ -213,6 +212,9 @@ export class PfChipGroup extends LitElement {
     this.open = !this.open;
     await this.updateComplete;
     this.#handleChipsChanged();
+    if (this._overflowChip) {
+      this.focusOnChip(this._overflowChip);
+    }
     /**
      * @fires overflow-chip-click
      */

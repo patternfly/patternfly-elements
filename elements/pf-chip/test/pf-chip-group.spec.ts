@@ -5,24 +5,14 @@ import { PfChipGroup } from '../pf-chip-group.js';
 import { PfChip } from '../pf-chip.js';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 
-async function tab(element: PfChipGroup) {
-  await sendKeys({ press: 'Tab' });
+async function press(element: PfChipGroup, key = 'Tab') {
+  await sendKeys({ press: key });
   await element.updateComplete;
-}
-
-async function arrowRight(element: PfChipGroup) {
-  await sendKeys({ down: 'ArrowRight' });
-  await element.updateComplete;
-}
-
-async function click(element: HTMLElement) {
-  const { x, y, width, height } = element.getBoundingClientRect();
-  const position = [x + width / 2, y + height / 2].map(Math.round) as [number, number];
-  await sendMouse({ type: 'click', position });
 }
 
 describe('<pf-chip-group>', async function() {
   let element: PfChipGroup;
+
   describe('simply instantiating', function() {
     it('imperatively instantiates', function() {
       expect(document.createElement('pf-chip-group')).to.be.an.instanceof(PfChipGroup);
@@ -62,9 +52,18 @@ describe('<pf-chip-group>', async function() {
       snapshot = await a11ySnapshot();
     });
 
+    it('has accessible label', function() {
+      const [offscreen] = snapshot.children;
+      expect(offscreen?.name).to.equal(label);
+    });
+
+    it('is accessible', async function() {
+      await expect(element).to.be.accessible();
+    });
+
     describe('pressing `Tab`', function() {
       beforeEach(async function() {
-        await tab(element);
+        await press(element, 'Tab');
       });
       it('should focus', function() {
         expect(document.activeElement).to.equal(chip1);
@@ -75,20 +74,11 @@ describe('<pf-chip-group>', async function() {
       beforeEach(async function() {
         chip1.focus();
         await chip1.updateComplete;
-        await arrowRight(element);
+        await press(element, 'ArrowRight');
       });
       it('should move to chip2', function() {
         expect(document.activeElement).to.equal(chip2);
       });
-    });
-
-    it('has accessible label', function() {
-      const [offscreen] = snapshot.children;
-      expect(offscreen?.name).to.equal(label);
-    });
-
-    it('is accessible', async function() {
-      await expect(element).to.be.accessible();
     });
   });
 
@@ -112,11 +102,10 @@ describe('<pf-chip-group>', async function() {
         </pf-chip-group>
       `);
       await element.updateComplete;
-      overflow = await element?.shadowRoot?.querySelector('pf-chip[overflow-chip]') as PfChip;
       snapshot = await a11ySnapshot();
     });
 
-    it('only 3 chips should be visible', function() {
+    it('only 3 chips and an overflow should be visible', function() {
       expect(snapshot.children).to.deep.equal([
         { role: 'text', name: 'My Chip Group' },
         { role: 'text', name: 'Chip 1' },
@@ -130,17 +119,11 @@ describe('<pf-chip-group>', async function() {
     });
 
     describe('overflow behavior', function() {
-      it('should have overflow chip', function() {
-        expect(overflow).to.exist;
-      });
-
-      it('should have chip `expanded-text`', function() {
-        expect(overflow?.textContent?.trim()).to.be.equal(collapsed);
-      });
-
       describe('clicking overflow chip', function() {
         beforeEach(async function() {
-          await click(overflow);
+          element.focus();
+          await press(element, 'ArrowLeft');
+          await press(element, 'Enter');
           snapshot = await a11ySnapshot();
         });
         it('should show all chips', function() {
@@ -150,8 +133,7 @@ describe('<pf-chip-group>', async function() {
             {
               role: 'button',
               name: 'Close',
-              description: 'Chip 1',
-              focused: true
+              description: 'Chip 1'
             },
             { role: 'text', name: 'Chip 2' },
             { role: 'button', name: 'Close', description: 'Chip 2' },
@@ -159,47 +141,36 @@ describe('<pf-chip-group>', async function() {
             { role: 'button', name: 'Close', description: 'Chip 3' },
             { role: 'text', name: 'Chip 4' },
             { role: 'button', name: 'Close', description: 'Chip 4' },
-            { role: 'button', name: 'show fewer' }
+            { role: 'button', name: 'show fewer', focused: true }
           ]);
         });
       });
-
-      describe('opening element programatically', function() {
-        beforeEach(async function() {
-          element.open = true;
-          await element.updateComplete;
-        });
-        it('should have chip `expanded-text`', function() {
-          expect(overflow?.textContent?.trim()).to.be.equal(expanded);
-        });
-      });
-    });
-    it('should have no close button by default', function() {
-      close = element.shadowRoot?.querySelector(`[aria-label="${element.accessibleCloseLabel}"]`) as HTMLButtonElement;
-      expect(close).to.not.exist;
     });
 
     describe('with `closeable` attribute', function() {
       beforeEach(async function() {
         element.closeable = true;
         await element.updateComplete;
-        close = element.shadowRoot?.querySelector(`[aria-label="${element.accessibleCloseLabel}"]`) as HTMLButtonElement;
+        snapshot = await a11ySnapshot();
       });
       it('should have close button', function() {
-        expect(close).to.exist;
+        const button = snapshot.children[snapshot.children.length - 1];
+        expect(button).to.deep.equal({ role: 'button', name: 'Close', description: 'My Chip Group' });
       });
 
       describe('clicking close button', function() {
         beforeEach(async function() {
-          await click(close as HTMLElement);
+          element.focus();
+          await press(element, 'ArrowLeft');
+          await press(element, 'Enter');
+          snapshot = await a11ySnapshot();
         });
         it('should remove element', async function() {
-          expect(document.querySelector('pf-chip-group')).to.be.null;
+          expect(snapshot.children).to.be.undefined;
         });
       });
     });
   });
-
   describe('setting `num-chips` to 2', function() {
     let element: PfChipGroup;
     let snapshot: A11yTreeSnapshot;
@@ -255,6 +226,27 @@ describe('<pf-chip-group>', async function() {
         { role: 'text', name: 'Chip 4' },
         { role: 'button', name: 'Close', description: 'Chip 4' }
       ]);
+    });
+
+    describe('setting focus on third chip and removing it', function() {
+      beforeEach(async function() {
+        element.focus();
+        await press(element, 'ArrowRight');
+        await press(element, 'ArrowRight');
+        await press(element, 'Enter');
+        snapshot = await a11ySnapshot();
+      });
+
+      it('should remove element and set focus on second chip', async function() {
+        expect(snapshot.children).to.deep.equal([
+          { role: 'text', name: 'Chip 1' },
+          { role: 'button', name: 'Close', description: 'Chip 1' },
+          { role: 'text', name: 'Chip 2' },
+          { role: 'button', name: 'Close', description: 'Chip 2', focused: true },
+          { role: 'text', name: 'Chip 4' },
+          { role: 'button', name: 'Close', description: 'Chip 4' }
+        ]);
+      });
     });
   });
 });

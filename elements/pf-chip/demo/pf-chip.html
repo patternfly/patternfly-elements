@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="demo.css">
 <script type="module">
   import '@patternfly/elements/pf-chip/pf-chip.js';
   import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
@@ -13,6 +12,17 @@
   <pf-chip id="longchip">Really long chip that goes on and on</pf-chip>
   <span slot="content">Really long chip that goes on and on</span>
 </pf-tooltip>
+
+<style>
+  #longchip::part(text) {
+    max-width: 10em;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    text-wrap: nowrap;
+  }
+</style>
 
 <h2>Chip with badge</h2>
 <pf-chip>Chip <pf-badge number="7">7</pf-badge></pf-chip>

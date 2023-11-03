@@ -140,6 +140,7 @@ Item extends HTMLElement = HTMLElement,
     };
   }
 
+  // TODO @bennyp: "we may need to make all of these controllers work with ReactiveControllerHost that isn't an element. See useController hook in lit/react"
   constructor(
     public host: ReactiveControllerHost & ToggleHost & ReactiveElement, popupType?: PopupKind
   ) {

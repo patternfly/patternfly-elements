@@ -128,7 +128,6 @@ describe('<pf-select>', function() {
       });
       it('`disable-filter` shows all options', async function() {
         element.filter = 'p';
-        element.disableFilter = true;
         element.caseSensitive = false;
         element.matchAnywhere = false;
         await element.updateComplete;
@@ -136,7 +135,6 @@ describe('<pf-select>', function() {
         expect(hiddenOptions.length).to.be.equal(0);
       });
       it('`t` shows "Magenta" option when match anywhere', async function() {
-        element.disableFilter = false;
         element.caseSensitive = false;
         element.matchAnywhere = true;
         element.filter = 't';
@@ -144,7 +142,6 @@ describe('<pf-select>', function() {
         expect(isVisible(third)).to.be.true;
       });
       it('`g` hides "Green" option when case sensitive', async function() {
-        element.disableFilter = false;
         element.caseSensitive = true;
         element.matchAnywhere = true;
         element.filter = 'p';
@@ -152,7 +149,6 @@ describe('<pf-select>', function() {
         expect(isVisible(second)).to.be.false;
       });
       it('`*` shows all options', async function() {
-        element.disableFilter = false;
         element.filter = '*';
         await element.updateComplete;
         const hiddenOptions = optionsList.filter(opt => !isVisible(opt as HTMLElement) && opt.innerHTML !== '');
@@ -239,7 +235,7 @@ describe('<pf-select>', function() {
 
     describe('multiple select `selected-items-display` default', function() {
       beforeEach(async function() {
-        element.selectedItemsDisplay = '';
+        element.selectedItemsDisplay = 'default';
         await element.updateComplete;
       });
 
@@ -295,7 +291,7 @@ describe('<pf-select>', function() {
 
     describe('setting `checkboxes` to true', function() {
       beforeEach(async function() {
-        element.hasCheckboxes = true;
+        element.checkboxes = true;
         await element.updateComplete;
       });
 

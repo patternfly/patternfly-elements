@@ -82,7 +82,7 @@ describe('<pf-dropdown>', function() {
       });
     });
 
-    describe('with `disabled` attribute', function() {
+    describe('disabled', function() {
       beforeEach(async function() {
         element.disabled = true;
         await element.updateComplete;
@@ -179,7 +179,7 @@ describe('<pf-dropdown>', function() {
       });
     });
 
-    describe('with `disabled` attribute', function() {
+    describe('disabled', function() {
       beforeEach(async function() {
         element.disabled = true;
         await element.updateComplete;

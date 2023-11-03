@@ -24,7 +24,7 @@ import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
 The following example shows a few different states of dropdown items. As shown in this example, dropdown items may:
 
 - Use the `disabled` property to disable an item.
-- Use the `to` property to make the item a link.
+- Use the `href` property to make the item a link.
 
 This example also uses an `hr` to split the menu into 2 sections with a horizontal line.
 

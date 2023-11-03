@@ -14,7 +14,11 @@ export class DropdownItemChange extends Event {
 
 /**
  * Represents an item for a dropdown component.
- * @slot
+ * @slot icon
+ *      Optional slot for an icon
+ * @slot description
+ *      Optional slot for item description
+ * @slot -
  *      Content for the dropdown item
  *
  * @cssprop {<length>} --pf-c-dropdown__menu-item--FontSize

@@ -20,14 +20,14 @@ export class ChipRemoveEvent extends Event {
 /**
  * A **chip** is used to communicate a value or a set of attribute-value pairs within workflows that involve filtering a set of objects.
  *
- * @fires ready - Fires when chip is ready
- * @fires remove - Fires when chip is removed
+ * @fires { ChipReadyEvent } ready - Fires when chip is ready
+ * @fires { ChipRemoveEvent } remove - Fires when chip is removed
+ * @fires { Event } click - when close button is clicked
+ *
  * @slot
  *      chip text
  *
  * @csspart text - span container for chip text
- *
- * @fires { Event } click - when close button is clicked
  */
 @customElement('pf-chip')
 export class PfChip extends LitElement {

@@ -42,7 +42,7 @@ describe('<pf-dropdown>', function() {
       expect(snapshot.children.length).to.equal(1);
     });
 
-    describe('pressing `Enter` key', function() {
+    describe('pressing Enter', function() {
       beforeEach(async function() {
         await sendKeys({ press: 'Tab' });
         await sendKeys({ press: 'Enter' });
@@ -55,7 +55,7 @@ describe('<pf-dropdown>', function() {
         expect(menu.children?.length).to.equal(2);
       });
 
-      describe('pressing `ArrowDown` key', function() {
+      describe('pressing ArrowDown', function() {
         beforeEach(async function() {
           await sendKeys({ press: 'ArrowDown' });
           await element.updateComplete;
@@ -69,7 +69,7 @@ describe('<pf-dropdown>', function() {
           expect(first).to.deep.equal({ role: 'menuitem', name: 'item 1', focused: true });
         });
 
-        describe('pressing `Escape` key', function() {
+        describe('pressing Escape', function() {
           beforeEach(async function() {
             await sendKeys({ press: 'Escape' });
             snapshot = await a11ySnapshot();
@@ -93,7 +93,7 @@ describe('<pf-dropdown>', function() {
         expect(snapshot.children.length).to.deep.equal(1);
       });
 
-      describe('pressing `Enter` key', function() {
+      describe('pressing Enter', function() {
         let menu: A11yTreeSnapshot;
         beforeEach(async function() {
           await sendKeys({ press: 'Tab' });
@@ -137,7 +137,7 @@ describe('<pf-dropdown>', function() {
       expect(snapshot.children.length).to.equal(1);
     });
 
-    describe('pressing `Enter` key', function() {
+    describe('pressing Enter', function() {
       let menu: A11yTreeSnapshot;
 
       beforeEach(async function() {
@@ -152,7 +152,7 @@ describe('<pf-dropdown>', function() {
         expect(menu.children?.length).to.equal(3);
       });
 
-      describe('pressing `ArrowDown` key', function() {
+      describe('pressing ArrowDown', function() {
         beforeEach(async function() {
           await sendKeys({ press: 'ArrowDown' });
           await element.updateComplete;
@@ -166,7 +166,7 @@ describe('<pf-dropdown>', function() {
           expect(first).to.deep.equal({ role: 'menuitem', name: 'item 1', focused: true });
         });
 
-        describe('pressing `Escape` key', function() {
+        describe('pressing Escape', function() {
           beforeEach(async function() {
             await sendKeys({ press: 'Escape' });
             snapshot = await a11ySnapshot();
@@ -190,7 +190,7 @@ describe('<pf-dropdown>', function() {
         expect(snapshot.children.length).to.deep.equal(1);
       });
 
-      describe('pressing `Enter` key', function() {
+      describe('pressing Enter', function() {
         let menu: A11yTreeSnapshot;
         beforeEach(async function() {
           await sendKeys({ press: 'Tab' });

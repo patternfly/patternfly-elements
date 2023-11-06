@@ -5,17 +5,17 @@ import { query } from 'lit/decorators/query.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { type Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
-import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
-import { PfOption, PfOptionSelectEvent } from './pf-option.js';
-import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
-import { PfListbox, PfListboxRefreshEvent } from './pf-listbox.js';
+
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
+import { type Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
+import { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
+
+import { PfOption, PfOptionSelectEvent } from './pf-option.js';
+import { PfListbox, PfListboxRefreshEvent } from './pf-listbox.js';
 
 import styles from './pf-select.css';
-
-export type PfSelectItemsDisplay = 'default' | 'badge' | 'chips';
 
 export interface PfSelectUserOptions {
   id: string;
@@ -115,7 +115,7 @@ export class PfSelect extends LitElement {
    * 'chips' for a group of chips,
    * '' for # items selected text (default)
    */
-  @property({ attribute: 'selected-items-display', type: String }) selectedItemsDisplay: PfSelectItemsDisplay = 'default';
+  @property({ attribute: 'selected-items-display', type: String }) selectedItemsDisplay: 'default' | 'badge' | 'chips' = 'default';
 
   /**
    * whether listbox controlled by combobox that supports typing
@@ -124,7 +124,6 @@ export class PfSelect extends LitElement {
 
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
   @query('pf-listbox') private _listbox?: PfListbox;
-  @query('#suggested-option') private _suggestedOption?: PfOption;
   @query('#toggle-input') private _input?: HTMLInputElement;
   @query('#toggle-button') private _toggle?: HTMLButtonElement;
 
@@ -156,46 +155,6 @@ export class PfSelect extends LitElement {
   get #selectedOptions() {
     const options: unknown[] = this._listbox?.selectedOptions || [];
     return options as PfOption[];
-  }
-
-  /**
-   * listbox template
-   */
-  get #selectList() {
-    const { caseSensitive, checkboxes, createOptionText, disabled, expanded, filter, matchAnywhere } = this;
-    const { height, width } = this.getBoundingClientRect() || {};
-    const styles = this.alwaysExpanded ? '' : `margin-top: ${height || 0}px;width: ${width || 'auto'}px`;
-    return html`
-      <pf-listbox 
-        id="listbox" 
-        style="${styles}"
-        class="${classMap({ checkboxes })}"
-        ?disabled="${disabled}"
-        ?hidden="${!this.alwaysExpanded && !expanded}"
-        ?case-sensitive="${caseSensitive}"
-        ?match-anywhere="${matchAnywhere}"
-        ?multi="${this.#isMulti}"
-        filter="${filter || ''}"
-        @input="${this.#onListboxInput}"
-        @change="${this.#onListboxChange}"
-        @refresh="${this.#onListboxRefresh}"
-        @select="${this.#onListboxSelect}">
-        <slot></slot>
-        ${repeat(this.#userCreatedOptions, opt => opt.id, opt => opt.value === '' ? '' : html`
-          <pf-option id="${opt.id}" ?selected="${this.#valueTextArray.includes(opt.value)}">${opt.value}</pf-option>
-        `)}
-        ${!this.typeahead || createOptionText === '' || filter.length === 0 ? '' : html`
-          <pf-option id="suggested-option" 
-            value="${filter}"
-            ?selected="${this.#valueTextArray.includes(filter)}"        
-            @select="${this.#createOption}">
-            ${this.#valueTextArray.includes(filter) ? '' : html`
-              <span slot="create">${createOptionText}: </span>
-            `}
-            ${filter}
-          </pf-option>
-        `}
-      </pf-listbox>`;
   }
 
   /**
@@ -257,60 +216,103 @@ export class PfSelect extends LitElement {
   }
 
   render() {
-    const { alwaysExpanded, typeahead, disabled, expanded, hasBadge } = this;
+    const {
+      alwaysExpanded,
+      typeahead,
+      disabled,
+      expanded,
+      hasBadge,
+      caseSensitive,
+      checkboxes,
+      createOptionText,
+      filter,
+      matchAnywhere,
+    } = this;
+    const { height, width } = this.getBoundingClientRect() || {};
     const { anchor, alignment } = this.#toggle || { 'expanded': true, 'anchor': 'bottom', 'alignment': 'start' };
     const toggles = !alwaysExpanded ? 'toggles' : false;
     const offscreen = typeahead ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
+
     return html`
-      <div id="outer" 
-          style="${this.#toggle?.styles ? styleMap(this.#toggle.styles) : ''}"
-          class="${classMap({ disabled, toggles, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
+      <div id="outer"
+           style="${styleMap(this.#toggle.styles ?? {})}"
+           class="${classMap({ disabled, toggles, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
         <div id="toggle" ?hidden="${!typeahead && alwaysExpanded}">
           ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
             <pf-chip-group label="${this.currentSelectionsLabel}">
-              ${repeat(this.#selectedOptions, opt => opt.id, opt => html`<pf-chip id="chip-${opt.textContent}" 
-              .readonly="${this.disabled}"
-              @remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>`)}
+              ${repeat(this.#selectedOptions, opt => opt.id, opt => html`
+              <pf-chip id="chip-${opt.textContent}"
+                       .readonly="${this.disabled}"
+                       @remove=${(e: Event) => this.#onChipRemove(e, opt)}>${opt.textContent}</pf-chip>`)}
             </pf-chip-group>
           `}
-          <input 
-            id="toggle-input" 
-            type="text" 
-            aria-autocomplete="both" 
-            aria-controls="listbox" 
-            aria-expanded="${!!expanded}"
-            aria-haspopup="listbox" 
-            ?disabled="${disabled}"
-            ?hidden="${!typeahead}" 
-            placeholder="${this.#buttonLabel}"
-            role="combobox"
-            @input=${this.#onTypeaheadInput}>
-            <button id="toggle-button" 
-              ?hidden="${alwaysExpanded}"
-              aria-controls="listbox" 
-              aria-expanded="${!!expanded}" 
-              aria-haspopup="listbox">
-              <span id="toggle-text" class="${classMap({ offscreen, badge })}">
+          <input id="toggle-input"
+                 aria-autocomplete="both"
+                 aria-controls="listbox"
+                 aria-expanded="${!!expanded}"
+                 aria-haspopup="listbox"
+                 ?disabled="${disabled}"
+                 ?hidden="${!typeahead}"
+                 placeholder="${this.#buttonLabel}"
+                 role="combobox"
+                @input=${this.#onTypeaheadInput}>
+            <button id="toggle-button"
+                    ?hidden="${alwaysExpanded}"
+                      aria-controls="listbox"
+                      aria-expanded="${!!expanded}"
+                      aria-haspopup="listbox">
+                <span id="toggle-text" class="${classMap({ offscreen, badge })}">
                 ${this.#buttonLabel}
               </span>
               ${hasBadge ? html`
                 <span id="toggle-badge">
                   <pf-badge number="${this.#selectedOptions.length}">${this.#selectedOptions.length}</pf-badge>
                 </span> ` : ''}
-              <svg viewBox="0 0 320 512" 
-                fill="currentColor" 
-                aria-hidden="true">
-                  <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
+              <svg viewBox="0 0 320 512"
+                  fill="currentColor"
+                  aria-hidden="true">
+                <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
               </svg>
             </button>
           </div>
-          ${this.#selectList}
+          <pf-listbox id="listbox"
+              class="${classMap({ checkboxes })}"
+              style="${styleMap(this.alwaysExpanded ? {} : {
+                marginTop: `${height || 0}px`,
+                width: width ? `${width}px` : 'auto',
+              })}"
+              ?disabled="${disabled}"
+              ?hidden="${!this.alwaysExpanded && !expanded}"
+              ?case-sensitive="${caseSensitive}"
+              ?match-anywhere="${matchAnywhere}"
+              ?multi="${this.#isMulti}"
+              filter="${filter || ''}"
+              @input="${this.#onListboxInput}"
+              @change="${this.#onListboxChange}"
+              @refresh="${this.#onListboxRefresh}"
+              @select="${this.#onListboxSelect}">
+            <slot></slot>
+            ${repeat(this.#userCreatedOptions, opt => opt.id, opt => opt.value === '' ? '' : html`
+            <pf-option id="${opt.id}" ?selected="${this.#valueTextArray.includes(opt.value)}">${opt.value}</pf-option>
+            `)}
+            ${!this.typeahead || createOptionText === '' || filter.length === 0 ? '' : html`
+              <pf-option id="suggested-option"
+                  value="${filter}"
+                  ?selected="${this.#valueTextArray.includes(filter)}"
+                  @select="${this.#createOption}">
+                ${this.#valueTextArray.includes(filter) ? '' : html`
+                <span slot="create">${createOptionText}: </span>
+                `}
+                ${filter}
+              </pf-option>
+            `}
+          </pf-listbox>
         </div>
     `;
   }
 
-  willUpdate(changed: PropertyValues<this>) {
+  override willUpdate(changed: PropertyValues<this>) {
     if (changed.has('checkboxes') && this.checkboxes) {
       import('@patternfly/elements/pf-badge/pf-badge.js');
     }

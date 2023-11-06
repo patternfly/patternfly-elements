@@ -3,15 +3,14 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
 import styles from './pf-option.css';
 
 /**
- * select custom event for listbox options
- * @fires select
+ * select event for listbox options
  */
 export class PfOptionSelectEvent extends Event {
   constructor(public originalEvent?: Event) {
@@ -20,8 +19,7 @@ export class PfOptionSelectEvent extends Event {
 }
 
 /**
- * focus custom event for listbox options
- * @fires focus
+ * focus event for listbox options
  */
 export class PfOptionFocusEvent extends Event {
   constructor(public originalEvent: Event) {
@@ -30,8 +28,7 @@ export class PfOptionFocusEvent extends Event {
 }
 
 /**
- * blur custom event for listbox options
- * @fires blur
+ * blur event for listbox options
  */
 export class PfOptionBlurEvent extends Event {
   constructor(public originalEvent: Event) {
@@ -78,9 +75,7 @@ export class PfOption extends LitElement {
 
   @queryAssignedNodes({ slot: '', flatten: true }) private _slottedText!: Node[];
 
-  #internals = new InternalsController(this, {
-    role: 'option'
-  });
+  #internals = new InternalsController(this, { role: 'option' });
 
   /**
    * this option's position relative to the other options
@@ -113,17 +108,17 @@ export class PfOption extends LitElement {
     const { disabled, active } = this;
     return html`
       <div id="outer" class="${classMap({ active, disabled })}">
-        <input 
-            type="checkbox" 
-            aria-hidden="true" 
+        <input
+            type="checkbox"
+            aria-hidden="true"
             ?checked="${this.selected}"
             ?disabled="${this.disabled}">
         <slot name="icon"></slot>
         <span><slot name="create"></slot><slot></slot></span>
-        <svg 
+        <svg
             ?hidden="${!this.selected}"
-            viewBox="0 0 512 512" 
-            fill="currentColor" 
+            viewBox="0 0 512 512"
+            fill="currentColor"
             aria-hidden="true">
             <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path>
         </svg>

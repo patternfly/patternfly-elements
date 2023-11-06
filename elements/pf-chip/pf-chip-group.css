@@ -25,13 +25,32 @@
   min-height: 44px;
 }
 
-button {
-  background-color: transparent;
-  border: none;
-  color: var(--pf-theme--color--ui-base, #6a6e73);
+#close-button {
+  font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
+  font-size: var(--pf-global--FontSize--xs, 12px);
+  font-weight: var(--pf-global--FontWeight--normal, 400);
+  line-height: 1.6;
+  background-color: var(--pf-theme--color--surface--lightest, #fff);
+  color: var(--pf-theme--color--accent, #0066cc);
+  border-radius: var(--pf-global--BorderRadius--sm, 3px);
+  border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
   padding: 0;
+  margin: 0 var(--pf-global--spacer--sm, 0.5rem);
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  max-width: 100%;
+  flex: 1 0 calc(100% - 44px);
+}
+
+#close-button:focus {
+  border-color: var(--pf-theme--color--accent, #0066cc);
+}
+
+#overflow {
+  align-items: center;
+  display: inline-flex;
 }
 
 svg {

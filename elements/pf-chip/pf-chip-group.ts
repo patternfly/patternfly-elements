@@ -39,7 +39,7 @@ export class PfChipGroup extends LitElement {
   /**
    * Accessible label for chip group that does not have a category name
    */
-  @property({ type: String }) label = '';
+  @property({ attribute: 'accessible-label', type: String }) accessibleLabel = '';
 
   /**
    * Accessible label for close button
@@ -71,7 +71,7 @@ export class PfChipGroup extends LitElement {
    */
   @property({ reflect: true, type: Boolean }) open = false;
 
-  @query('#overflow') private _overflowChip?: PfChip;
+  @query('#overflow') private _overflowChip?: HTMLButtonElement;
 
   @query('#close-button') private _button?: HTMLButtonElement;
 
@@ -100,23 +100,21 @@ export class PfChipGroup extends LitElement {
     }
     return html`
       <div id="outer" class="${category}">  
-        ${this.label === '' ? html`
+        ${this.accessibleLabel === '' ? html`
           <slot id="category" name="category-name" @slotchange=${this.#onSlotchange}></slot>
         ` : html`
           <slot id="category" name="category-name" @slotchange=${this.#onSlotchange}>
-            <span class="offscreen">${this.label}</span>
+            <span class="offscreen">${this.accessibleLabel}</span>
           </slot>
         `}
         <slot id="chips" @slotchange=${this.#onSlotchange} @remove="${this.#updateChips}"></slot>
         ${this.remaining < 1 ? '' : html`
-          <pf-chip 
-            id="overflow"
-            overflow-chip
-            aria-controls="chips" 
-            @click="${this.#onMoreClick}"
-            @chip-ready="${this.#onChipReady}">
+          <button id="overflow"
+            aria-controls="chips"
+            class="chip-content"
+            @click="${this.#onMoreClick}>
             ${this.open ? this.expandedText : collapsedText}
-          </pf-chip>
+          </button>
         `}
         ${!this.closeable ? '' : html`
           <button id="close-button" @click=${this.#onCloseClick} aria-describedby="category" aria-label="${this.accessibleCloseLabel}">

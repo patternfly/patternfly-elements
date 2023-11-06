@@ -65,11 +65,6 @@ export class PfDropdown extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  /**
-   * Flag to indicate if menu is opened.
-   */
-  @property({ type: Boolean, reflect: true }) expanded = false;
-
   @queryAssignedElements({ slot: 'trigger' }) private _slottedTrigger!: HTMLElement[];
 
   @query('#default-button') private _defaultTrigger!: HTMLButtonElement;
@@ -78,7 +73,7 @@ export class PfDropdown extends LitElement {
 
   #triggerElement: HTMLElement | null = null;
 
-  #toggle = new ToggleController(this, 'menu');
+  #toggle = new ToggleController(this, { kind: 'menu' });
 
   render() {
     const { expanded, anchor, alignment } = this.#toggle;

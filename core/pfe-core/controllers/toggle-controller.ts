@@ -1,4 +1,4 @@
-import type { ReactiveController, ReactiveControllerHost, ReactiveElement } from 'lit';
+import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import { FloatingDOMController, type Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { getRandomId } from '../functions/random.js';
 import { InternalsController } from './internals-controller.js';
@@ -12,14 +12,17 @@ export interface ToggleHost extends HTMLElement {
 
 export type PopupKind = 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
 
+export interface ToggleControllerOptions {
+  kind?: PopupKind;
+  getTogglableElement?: () => Element;
+}
+
 /**
  * Implements roving tabindex, as described in WAI-ARIA practices, [Managing Focus Within
  * Components Using a Roving
  * tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
  */
-export class ToggleController<
-Item extends HTMLElement = HTMLElement,
-> implements ReactiveController {
+export class ToggleController implements ReactiveController {
   /** element that toggles popup */
   #triggerElements: HTMLElement[] = [];
 
@@ -44,6 +47,8 @@ Item extends HTMLElement = HTMLElement,
   #float?: FloatingDOMController;
 
   #triggerInternals = new WeakMap<HTMLElement, InternalsController>;
+
+  #getToggleElement: () => Element | null;
 
   get focused() {
     return this.#focused;
@@ -140,12 +145,11 @@ Item extends HTMLElement = HTMLElement,
     };
   }
 
-  // TODO @bennyp: "we may need to make all of these controllers work with ReactiveControllerHost that isn't an element. See useController hook in lit/react"
-  constructor(
-    public host: ReactiveControllerHost & ToggleHost & ReactiveElement, popupType?: PopupKind
-  ) {
+  constructor(public host: ReactiveControllerHost, options?: ToggleControllerOptions) {
+    this.#getToggleElement = options?.getTogglableElement ?? (() =>
+      (host instanceof Element) ? host : null);
     this.host.addController(this);
-    this.#popupType = popupType || 'menu';
+    this.#popupType = options?.kind ?? 'menu';
     this.#connectFloat();
     this.host?.requestUpdate();
   }
@@ -167,7 +171,7 @@ Item extends HTMLElement = HTMLElement,
         this.host?.requestUpdate();
       }
       for (const [event, listener] of Object.entries(this.#hostListeners)) {
-        this.host?.removeEventListener(event, listener as (event: Event | null) => void);
+        this.#getToggleElement()?.removeEventListener(event, listener as (event: Event | null) => void);
       }
     }
   }
@@ -184,24 +188,27 @@ Item extends HTMLElement = HTMLElement,
         this.host?.requestUpdate();
       }
       for (const [event, listener] of Object.entries(this.#hostListeners)) {
-        this.host?.addEventListener(event, listener as (event: Event | null) => void);
+        this.#getToggleElement()?.addEventListener(event, listener as (event: Event | null) => void);
       }
     }
   }
 
   #fireOpenChanged() {
-    /**
-     * @fires open-change
-     */
-    this.host?.dispatchEvent(new Event('open-change'));
+    this.#getToggleElement()?.dispatchEvent(new Event('open-change'));
   }
 
   #updateFocused() {
-    const focusedLightDOM = document.activeElement && !!this.host?.contains(document.activeElement);
-    const focusedShadowDOM = this.host?.shadowRoot?.activeElement && !!this.host.shadowRoot?.contains(this.host?.shadowRoot?.activeElement);
-    this.focused = !!focusedLightDOM || !!focusedShadowDOM;
-    if (!this.focused) {
-      setTimeout( this.hide.bind(this), 300);
+    const el = this.#getToggleElement();
+    if (el) {
+      const focusedLightDOM =
+        document.activeElement && !!el.contains(document.activeElement);
+      const focusedShadowDOM =
+          el?.shadowRoot?.activeElement &&
+        !!el?.shadowRoot?.contains(el?.shadowRoot?.activeElement);
+      this.focused = !!focusedLightDOM || !!focusedShadowDOM;
+      if (!this.focused) {
+        setTimeout( this.hide.bind(this), 300);
+      }
     }
   }
 
@@ -301,9 +308,10 @@ Item extends HTMLElement = HTMLElement,
 
   /**
    * sets popup event listeners and floating DOM controllers
-  */
+   */
   setPopupElement(popupElement?: HTMLElement | null) {
-    if (popupElement && this.#popupElement !== popupElement) {
+    const el = this.#getToggleElement();
+    if (el && popupElement && this.#popupElement !== popupElement) {
       const listeners = Object.entries({
         ...this.#popupListeners,
         ...this.#hostListeners,
@@ -316,7 +324,7 @@ Item extends HTMLElement = HTMLElement,
       }
       // set popup element
       this.#popupElement = popupElement;
-      this.#popupElement.id ||= getRandomId(this.host.localName);
+      this.#popupElement.id ||= getRandomId(el.localName);
       if (this.#popupElement?.id) {
         const id = this.#popupElement?.id;
         this.#triggerElements.forEach(triggerElement => triggerElement?.setAttribute('controls', id));
@@ -331,9 +339,8 @@ Item extends HTMLElement = HTMLElement,
   /**
    * connects a trigger element
    * (multiple trigger elements, such as an input and a button, can be added)
-   * @param popup {HTMLElement}
    */
-  addTriggerElement( triggerElement?: HTMLElement | null ) {
+  addTriggerElement(triggerElement?: HTMLElement | null ) {
     if (triggerElement && !this.#triggerElements.includes(triggerElement)) {
       const customElement = triggerElement as ReactiveControllerHost & HTMLElement;
 
@@ -361,9 +368,8 @@ Item extends HTMLElement = HTMLElement,
 
   /**
    * disconnects a trigger element
-   * @param popup {HTMLElement}
    */
-  removeTriggerElement( triggerElement?: HTMLElement | null ) {
+  removeTriggerElement(triggerElement?: HTMLElement | null) {
     if (triggerElement && !this.#triggerElements.includes(triggerElement)) {
       this.#triggerElements = this.#triggerElements.filter(el => el !== triggerElement);
       for (const [event, listener] of Object.entries(this.#triggerListeners)) {
@@ -390,7 +396,7 @@ Item extends HTMLElement = HTMLElement,
 
   /**
    * shows popup and sets focus
-   * @param focus {boolean} whether popup element should receive focus
+   * @param focus whether popup element should receive focus
    */
   async show(focus = false) {
     const { expanded } = this;
@@ -415,7 +421,7 @@ Item extends HTMLElement = HTMLElement,
       if (focus) {
         this.#popupElement?.focus();
       }
-      this.host?.dispatchEvent(new CustomEvent('open'));
+      this.#getToggleElement()?.dispatchEvent(new CustomEvent('open'));
     }
   }
 
@@ -443,11 +449,12 @@ Item extends HTMLElement = HTMLElement,
           element.setAttribute('aria-expanded', 'false');
         }
       });
+      const el = this.#getToggleElement();
       // only re-set focus if host had focus
       if (focused) {
-        this.host.focus();
+        (el as HTMLElement)?.focus();
       }
-      this.host?.dispatchEvent(new CustomEvent('close'));
+      el?.dispatchEvent(new CustomEvent('close'));
     }
   }
 }

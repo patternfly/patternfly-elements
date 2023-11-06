@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValueMap } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -63,9 +63,9 @@ export class PfChip extends LitElement {
     `;
   }
 
-  protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    super.updated(_changedProperties);
-    if (_changedProperties.has('readonly')) {
+  protected updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+    if (changed.has('readonly')) {
       this.#handleChipReady();
     }
   }

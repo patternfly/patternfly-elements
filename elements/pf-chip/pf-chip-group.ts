@@ -11,12 +11,12 @@ import styles from './pf-chip-group.css';
 
 export class ChipGroupExpandEvent extends Event {
   constructor() {
-    super('expand', { bubbles: true });
+    super('expand', { bubbles: true, cancelable: true });
   }
 }
 export class ChipGroupRemoveEvent extends Event {
   constructor() {
-    super('remove', { bubbles: true });
+    super('remove', { bubbles: true, cancelable: true });
   }
 }
 /**
@@ -34,6 +34,7 @@ export class ChipGroupRemoveEvent extends Event {
 @customElement('pf-chip-group')
 export class PfChipGroup extends LitElement {
   static readonly styles = [styles];
+
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
@@ -148,7 +149,7 @@ export class PfChipGroup extends LitElement {
   }
 
   /**
-   * @readonly whether or not group has a category
+   * whether or not group has a category
    */
   get hasCategory() {
     return (this._categorySlotted || []).length > 0;
@@ -206,9 +207,6 @@ export class PfChipGroup extends LitElement {
    * handles chip group close
    */
   #onCloseClick() {
-    /**
-     * @fires expand
-     */
     this.dispatchEvent(new ChipGroupRemoveEvent());
     this.remove();
   }
@@ -224,9 +222,6 @@ export class PfChipGroup extends LitElement {
     if (this._overflowChip) {
       this.focusOnChip(this._overflowChip);
     }
-    /**
-     * @fires overflow-chip-click
-     */
     this.dispatchEvent(new ChipGroupExpandEvent());
   }
 

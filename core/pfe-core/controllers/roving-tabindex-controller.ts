@@ -12,10 +12,12 @@ const isFocusableElement = (el: Element): el is HTMLElement =>
  * tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
  */
 export class RovingTabindexController<
-Item extends HTMLElement = HTMLElement,
+  Item extends HTMLElement = HTMLElement,
 > implements ReactiveController {
+  private static hosts = new WeakMap<ReactiveControllerHost, RovingTabindexController>();
+
   /** active focusable element */
-  #activeItem?: HTMLElement;
+  #activeItem?: Item;
 
   /**
    * whether filtering (if enabled) will be case-sensitive
@@ -23,15 +25,17 @@ Item extends HTMLElement = HTMLElement,
   #caseSensitive = false;
 
   /** closest ancestor containing items */
-  #itemsContainer?: HTMLElement;
+  #itemsContainer?: Element;
 
   /** array of all focusable elements */
-  #items: HTMLElement[] = [];
+  #items: Item[] = [];
+
+  #getElement: () => Element | null;
 
   /**
    * finds focusable items from a group of items
    */
-  get #focusableItems(): HTMLElement[] {
+  get #focusableItems(): Item[] {
     return this.#items.filter(isFocusableElement);
   }
 
@@ -52,7 +56,7 @@ Item extends HTMLElement = HTMLElement,
   /**
    * active item of array of items
    */
-  get activeItem(): HTMLElement | undefined {
+  get activeItem(): Item | undefined {
     return this.#activeItem;
   }
 
@@ -73,21 +77,21 @@ Item extends HTMLElement = HTMLElement,
   /**
    * first item in array of focusable items
    */
-  get firstItem(): HTMLElement | undefined {
+  get firstItem(): Item | undefined {
     return this.#focusableItems[0];
   }
 
   /**
    * last item in array of focusable items
    */
-  get lastItem(): HTMLElement | undefined {
+  get lastItem(): Item | undefined {
     return this.#focusableItems.at(-1);
   }
 
   /**
    * next item  after active item in array of focusable items
    */
-  get nextItem(): HTMLElement | undefined {
+  get nextItem(): Item | undefined {
     return (
       this.#activeIndex >= this.#focusableItems.length - 1 ? this.firstItem
         : this.#focusableItems[this.#activeIndex + 1]
@@ -97,7 +101,7 @@ Item extends HTMLElement = HTMLElement,
   /**
    * previous item  after active item in array of focusable items
    */
-  get prevItem(): HTMLElement | undefined {
+  get prevItem(): Item | undefined {
     return (
       this.#activeIndex > 0 ? this.#focusableItems[this.#activeIndex - 1]
         : this.lastItem
@@ -117,12 +121,13 @@ Item extends HTMLElement = HTMLElement,
     return this.#caseSensitive;
   }
 
-  private static hosts = new WeakMap<ReactiveControllerHost & HTMLElement, RovingTabindexController>();
-
-  constructor(public host: ReactiveControllerHost & HTMLElement) {
+  constructor(public host: ReactiveControllerHost, options?: {
+    getElement: () => Element;
+  }) {
+    this.#getElement = options?.getElement ?? (() => host instanceof Element ? host : null);
     const instance = RovingTabindexController.hosts.get(host);
     if (instance) {
-      return instance;
+      return instance as RovingTabindexController<Item>;
     }
     RovingTabindexController.hosts.set(host, this);
     this.host.addController(this);
@@ -133,7 +138,7 @@ Item extends HTMLElement = HTMLElement,
     const sequence = [...items.slice(this.#itemIndex - 1), ...items.slice(0, this.#itemIndex - 1)];
     const regex = new RegExp(`^${key}`, this.#caseSensitive ? '' : 'i');
     const first = sequence.find(item => {
-      const option = item as HTMLElement;
+      const option = item;
       return !option.hasAttribute('disabled') && !option.hidden && option.textContent?.match(regex);
     });
     return first;
@@ -142,17 +147,17 @@ Item extends HTMLElement = HTMLElement,
   /**
    * handles keyboard navigation
    */
-  #onKeydown = (event: KeyboardEvent) => {
-    if (event.ctrlKey ||
+  #onKeydown = (event: Event) => {
+    if (!(event instanceof KeyboardEvent) || event.ctrlKey ||
       event.altKey ||
       event.metaKey ||
       !this.#focusableItems.length ||
       !event.composedPath().some(x =>
-        this.#focusableItems.includes(x as HTMLElement))) {
+        this.#focusableItems.includes(x as Item))) {
       return;
     }
 
-    const orientation = this.host.getAttribute('aria-orientation');
+    const orientation = this.#getElement()?.getAttribute('aria-orientation');
 
     const item = this.activeItem;
     let shouldPreventDefault = false;
@@ -224,7 +229,7 @@ Item extends HTMLElement = HTMLElement,
   /**
    * sets tabindex of item based on whether or not it is active
    */
-  updateActiveItem(item?: HTMLElement): void {
+  updateActiveItem(item?: Item): void {
     if (item && item !== this.#activeItem) {
       if (this.#activeItem) {
         this.#activeItem.tabIndex = -1;
@@ -238,7 +243,7 @@ Item extends HTMLElement = HTMLElement,
   /**
    * focuses on an item and sets it as active
    */
-  focusOnItem(item?: HTMLElement): void {
+  focusOnItem(item?: Item): void {
     this.updateActiveItem(item || this.firstItem);
     this.#activeItem?.focus();
     this.host.requestUpdate();
@@ -247,8 +252,8 @@ Item extends HTMLElement = HTMLElement,
   /**
    * Focuses next focusable item
    */
-  updateItems(items: HTMLElement[]) {
-    const hasActive = document.activeElement && this.host.contains(document.activeElement);
+  updateItems(items: Item[]) {
+    const hasActive = document.activeElement && this.#getElement()?.contains(document.activeElement);
     const sequence = [...items.slice(this.#itemIndex - 1), ...items.slice(0, this.#itemIndex - 1)];
     const first = sequence.find(item => this.#focusableItems.includes(item));
     this.#items = items ?? [];
@@ -264,12 +269,15 @@ Item extends HTMLElement = HTMLElement,
   /**
    * from array of HTML items, and sets active items
    */
-  initItems(items: HTMLElement[], itemsContainer: HTMLElement = this.host) {
+  initItems(items: Item[], itemsContainer?: Element) {
     this.#items = items ?? [];
     const focusableItems = this.#focusableItems;
     const [focusableItem] = focusableItems;
     this.#activeItem = focusableItem;
     this.#updateTabindex();
+
+    itemsContainer ??= this.#getElement() ?? undefined;
+
     /**
      * removes listener on previous contained and applies it to new container
      */

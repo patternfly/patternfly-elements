@@ -5,106 +5,90 @@ function isARIAMixinProp(key: string): key is keyof ARIAMixin {
 }
 
 export class InternalsController implements ReactiveController, ARIAMixin {
-  declare role: ARIAMixin['role'];
-  declare ariaAtomic: ARIAMixin['ariaAtomic'];
-  declare ariaAutoComplete: ARIAMixin['ariaAutoComplete'];
-  declare ariaActivedescendant: string | null;
-  declare ariaBusy: ARIAMixin['ariaBusy'];
-  declare ariaChecked: ARIAMixin['ariaChecked'];
-  declare ariaColCount: ARIAMixin['ariaColCount'];
-  declare ariaColIndex: ARIAMixin['ariaColIndex'];
-  declare ariaColIndexText: string | null;
-  declare ariaColSpan: ARIAMixin['ariaColSpan'];
-  declare ariaCurrent: ARIAMixin['ariaCurrent'];
-  declare ariaDisabled: ARIAMixin['ariaDisabled'];
-  declare ariaExpanded: ARIAMixin['ariaExpanded'];
-  declare ariaHasPopup: ARIAMixin['ariaHasPopup'];
-  declare ariaHidden: ARIAMixin['ariaHidden'];
-  declare ariaInvalid: ARIAMixin['ariaInvalid'];
-  declare ariaKeyShortcuts: ARIAMixin['ariaKeyShortcuts'];
-  declare ariaLabel: ARIAMixin['ariaLabel'];
-  declare ariaLevel: ARIAMixin['ariaLevel'];
-  declare ariaLive: ARIAMixin['ariaLive'];
-  declare ariaModal: ARIAMixin['ariaModal'];
-  declare ariaMultiLine: ARIAMixin['ariaMultiLine'];
-  declare ariaMultiSelectable: ARIAMixin['ariaMultiSelectable'];
-  declare ariaOrientation: ARIAMixin['ariaOrientation'];
-  declare ariaPlaceholder: ARIAMixin['ariaPlaceholder'];
-  declare ariaPosInSet: ARIAMixin['ariaPosInSet'];
-  declare ariaPressed: ARIAMixin['ariaPressed'];
-  declare ariaReadOnly: ARIAMixin['ariaReadOnly'];
-  declare ariaRequired: ARIAMixin['ariaRequired'];
-  declare ariaRoleDescription: ARIAMixin['ariaRoleDescription'];
-  declare ariaRowCount: ARIAMixin['ariaRowCount'];
-  declare ariaRowIndex: ARIAMixin['ariaRowIndex'];
-  declare ariaRowIndexText: string | null;
-  declare ariaRowSpan: ARIAMixin['ariaRowSpan'];
-  declare ariaSelected: ARIAMixin['ariaSelected'];
-  declare ariaSetSize: ARIAMixin['ariaSetSize'];
-  declare ariaSort: ARIAMixin['ariaSort'];
-  declare ariaValueMax: ARIAMixin['ariaValueMax'];
-  declare ariaValueMin: ARIAMixin['ariaValueMin'];
-  declare ariaValueNow: ARIAMixin['ariaValueNow'];
-  declare ariaValueText: ARIAMixin['ariaValueText'];
+  private static hosts = new WeakMap<ReactiveControllerHost, InternalsController>();
 
-  #internals: ElementInternals;
+  @aria role: string | null = null;
+  @aria ariaActivedescendant: string | null = null;
+  @aria ariaAtomic: string | null = null;
+  @aria ariaAutoComplete: string | null = null;
+  @aria ariaBusy: string | null = null;
+  @aria ariaChecked: string | null = null;
+  @aria ariaColCount: string | null = null;
+  @aria ariaColIndex: string | null = null;
+  @aria ariaColIndexText: string | null = null;
+  @aria ariaColSpan: string | null = null;
+  @aria ariaCurrent: string | null = null;
+  @aria ariaDisabled: string | null = null;
+  @aria ariaExpanded: string | null = null;
+  @aria ariaHasPopup: string | null = null;
+  @aria ariaHidden: string | null = null;
+  @aria ariaInvalid: string | null = null;
+  @aria ariaKeyShortcuts: string | null = null;
+  @aria ariaLabel: string | null = null;
+  @aria ariaLevel: string | null = null;
+  @aria ariaLive: string | null = null;
+  @aria ariaModal: string | null = null;
+  @aria ariaMultiLine: string | null = null;
+  @aria ariaMultiSelectable: string | null = null;
+  @aria ariaOrientation: string | null = null;
+  @aria ariaPlaceholder: string | null = null;
+  @aria ariaPosInSet: string | null = null;
+  @aria ariaPressed: string | null = null;
+  @aria ariaReadOnly: string | null = null;
+  @aria ariaRequired: string | null = null;
+  @aria ariaRoleDescription: string | null = null;
+  @aria ariaRowCount: string | null = null;
+  @aria ariaRowIndex: string | null = null;
+  @aria ariaRowIndexText: string | null = null;
+  @aria ariaRowSpan: string | null = null;
+  @aria ariaSelected: string | null = null;
+  @aria ariaSetSize: string | null = null;
+  @aria ariaSort: string | null = null;
+  @aria ariaValueMax: string | null = null;
+  @aria ariaValueMin: string | null = null;
+  @aria ariaValueNow: string | null = null;
+  @aria ariaValueText: string | null = null;
 
-  #formDisabled = false;
+  private internals!: ElementInternals;
+
+  private _formDisabled = false;
 
   /** True when the control is disabled via it's containing fieldset element */
   get formDisabled() {
-    return this.host.matches(':disabled') || this.#formDisabled;
+    return this.host.matches(':disabled') || this._formDisabled;
   }
 
-  static protos = new WeakMap();
-
   get labels() {
-    return this.#internals.labels;
+    return this.internals.labels;
   }
 
   get validity() {
-    return this.#internals.validity;
+    return this.internals.validity;
   }
-
-  private static hosts = new WeakMap<ReactiveControllerHost, InternalsController>();
-  private static internals = new WeakMap<ReactiveControllerHost, ElementInternals>();
 
   constructor(
     public host: ReactiveControllerHost & HTMLElement,
     options?: Partial<ARIAMixin>
   ) {
     const instance = InternalsController.hosts.get(host);
-    const internals = InternalsController.internals.get(host);
-    if (instance && internals) {
-      this.#internals = internals;
+    if (instance) {
       return instance;
-    } else {
-      this.#internals = host.attachInternals();
-      InternalsController.internals.set(host, this.#internals);
     }
+    this.internals ??= host.attachInternals();
     InternalsController.hosts.set(host, this);
+    // START polyfill-disabled
     // We need to polyfill :disabled
     // see https://github.com/calebdwilliams/element-internals-polyfill/issues/88
     const orig = (host as HTMLElement & { formDisabledCallback?(disabled: boolean): void }).formDisabledCallback;
     (host as HTMLElement & { formDisabledCallback?(disabled: boolean): void }).formDisabledCallback = disabled => {
-      this.#formDisabled = disabled;
+      this._formDisabled = disabled;
       orig?.call(host, disabled);
     };
-    // proxy the internals object's aria prototype
-    for (const key of Object.keys(Object.getPrototypeOf(this.#internals))) {
-      if (isARIAMixinProp(key)) {
-        Object.defineProperty(this, key, {
-          get() {
-            return this.#internals[key];
-          },
-          set(value) {
-            this.#internals[key] = value;
-            this.host.requestUpdate();
-          }
-        });
-      }
-    }
+    // END polyfill-disabled
+    this.initializeAriaOptions(options);
+  }
 
+  private initializeAriaOptions(options?: Partial<ARIAMixin>) {
     for (const [key, val] of Object.entries(options ?? {})) {
       if (isARIAMixinProp(key)) {
         this[key] = val;
@@ -115,26 +99,48 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   hostConnected?(): void
 
   setFormValue(...args: Parameters<ElementInternals['setFormValue']>) {
-    return this.#internals.setFormValue(...args);
+    return this.internals.setFormValue(...args);
   }
 
   setValidity(...args: Parameters<ElementInternals['setValidity']>) {
-    return this.#internals.setValidity(...args);
+    return this.internals.setValidity(...args);
   }
 
   checkValidity(...args: Parameters<ElementInternals['checkValidity']>) {
-    return this.#internals.checkValidity(...args);
+    return this.internals.checkValidity(...args);
   }
 
   reportValidity(...args: Parameters<ElementInternals['reportValidity']>) {
-    return this.#internals.reportValidity(...args);
+    return this.internals.reportValidity(...args);
   }
 
   submit() {
-    this.#internals.form?.requestSubmit();
+    this.internals.form?.requestSubmit();
   }
 
   reset() {
-    this.#internals.form?.reset();
+    this.internals.form?.reset();
   }
+}
+
+/** reactively forward the internals object's aria mixin prototype */
+function aria(
+  target: InternalsController,
+  key: keyof InternalsController,
+) {
+  if (!isARIAMixinProp(key)) {
+    throw new Error('@aria can only be called on ARIAMixin properties');
+  }
+  Object.defineProperty(target, key, {
+    enumerable: true,
+    configurable: false,
+    get() {
+      return this.internals[key];
+    },
+    set(value) {
+      this.internals ??= this.host.attachInternals();
+      this.internals[key] = value;
+      this.host.requestUpdate();
+    }
+  });
 }

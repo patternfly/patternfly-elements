@@ -49,9 +49,9 @@
     "build": {
       "dependencies": [
         "build:tools",
+        "build:core",
         "analyze",
         "docs",
-        "build:core",
         "build:icons",
         "build:lightdom",
         "build:elements",

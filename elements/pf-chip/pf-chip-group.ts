@@ -11,12 +11,12 @@ import styles from './pf-chip-group.css';
 
 export class ChipGroupExpandEvent extends Event {
   constructor() {
-    super('expand', { bubbles: true });
+    super('expand', { bubbles: true, cancelable: true });
   }
 }
 export class ChipGroupRemoveEvent extends Event {
   constructor() {
-    super('remove', { bubbles: true });
+    super('remove', { bubbles: true, cancelable: true });
   }
 }
 /**
@@ -34,6 +34,7 @@ export class ChipGroupRemoveEvent extends Event {
 @customElement('pf-chip-group')
 export class PfChipGroup extends LitElement {
   static readonly styles = [styles];
+
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
@@ -99,7 +100,7 @@ export class PfChipGroup extends LitElement {
       collapsedText = this.collapsedText.split('${remaining}').join(`${this.remaining}`);
     }
     return html`
-      <div id="outer" class="${category}">  
+      <div id="outer" class="${category}">
         ${this.label === '' ? html`
           <slot id="category" name="category-name" @slotchange=${this.#onSlotchange}></slot>
         ` : html`
@@ -109,12 +110,11 @@ export class PfChipGroup extends LitElement {
         `}
         <slot id="chips" @slotchange=${this.#onSlotchange} @remove="${this.#updateChips}"></slot>
         ${this.remaining < 1 ? '' : html`
-          <pf-chip 
-            id="overflow"
-            overflow-chip
-            aria-controls="chips" 
-            @click="${this.#onMoreClick}"
-            @chip-ready="${this.#onChipReady}">
+          <pf-chip id="overflow"
+                   overflow-chip
+                   aria-controls="chips"
+                   @click="${this.#onMoreClick}"
+                   @chip-ready="${this.#onChipReady}">
             ${this.open ? this.expandedText : collapsedText}
           </pf-chip>
         `}
@@ -150,7 +150,7 @@ export class PfChipGroup extends LitElement {
   }
 
   /**
-   * @readonly whether or not group has a category
+   * whether or not group has a category
    */
   get hasCategory() {
     return (this._categorySlotted || []).length > 0;
@@ -208,9 +208,6 @@ export class PfChipGroup extends LitElement {
    * handles chip group close
    */
   #onCloseClick() {
-    /**
-     * @fires expand
-     */
     this.dispatchEvent(new ChipGroupRemoveEvent());
     this.remove();
   }
@@ -226,9 +223,6 @@ export class PfChipGroup extends LitElement {
     if (this._overflowChip) {
       this.focusOnChip(this._overflowChip);
     }
-    /**
-     * @fires overflow-chip-click
-     */
     this.dispatchEvent(new ChipGroupExpandEvent());
   }
 

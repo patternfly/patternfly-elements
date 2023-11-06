@@ -14,6 +14,8 @@ const isFocusableElement = (el: Element): el is HTMLElement =>
 export class RovingTabindexController<
   Item extends HTMLElement = HTMLElement,
 > implements ReactiveController {
+  private static hosts = new WeakMap<ReactiveControllerHost, RovingTabindexController>();
+
   /** active focusable element */
   #activeItem?: Item;
 
@@ -23,10 +25,12 @@ export class RovingTabindexController<
   #caseSensitive = false;
 
   /** closest ancestor containing items */
-  #itemsContainer?: HTMLElement;
+  #itemsContainer?: Element;
 
   /** array of all focusable elements */
   #items: Item[] = [];
+
+  #getElement: () => Element | null;
 
   /**
    * finds focusable items from a group of items
@@ -117,9 +121,10 @@ export class RovingTabindexController<
     return this.#caseSensitive;
   }
 
-  private static hosts = new WeakMap<ReactiveControllerHost & HTMLElement, RovingTabindexController>();
-
-  constructor(public host: ReactiveControllerHost & HTMLElement) {
+  constructor(public host: ReactiveControllerHost, options?: {
+    getElement: () => Element;
+  }) {
+    this.#getElement = options?.getElement ?? (() => host instanceof Element ? host : null);
     const instance = RovingTabindexController.hosts.get(host);
     if (instance) {
       return instance as RovingTabindexController<Item>;
@@ -142,8 +147,8 @@ export class RovingTabindexController<
   /**
    * handles keyboard navigation
    */
-  #onKeydown = (event: KeyboardEvent) => {
-    if (event.ctrlKey ||
+  #onKeydown = (event: Event) => {
+    if (!(event instanceof KeyboardEvent) || event.ctrlKey ||
       event.altKey ||
       event.metaKey ||
       !this.#focusableItems.length ||
@@ -152,7 +157,7 @@ export class RovingTabindexController<
       return;
     }
 
-    const orientation = this.host.getAttribute('aria-orientation');
+    const orientation = this.#getElement()?.getAttribute('aria-orientation');
 
     const item = this.activeItem;
     let shouldPreventDefault = false;
@@ -248,7 +253,7 @@ export class RovingTabindexController<
    * Focuses next focusable item
    */
   updateItems(items: Item[]) {
-    const hasActive = document.activeElement && this.host.contains(document.activeElement);
+    const hasActive = document.activeElement && this.#getElement()?.contains(document.activeElement);
     const sequence = [...items.slice(this.#itemIndex - 1), ...items.slice(0, this.#itemIndex - 1)];
     const first = sequence.find(item => this.#focusableItems.includes(item));
     this.#items = items ?? [];
@@ -264,12 +269,15 @@ export class RovingTabindexController<
   /**
    * from array of HTML items, and sets active items
    */
-  initItems(items: Item[], itemsContainer: HTMLElement = this.host) {
+  initItems(items: Item[], itemsContainer?: Element) {
     this.#items = items ?? [];
     const focusableItems = this.#focusableItems;
     const [focusableItem] = focusableItems;
     this.#activeItem = focusableItem;
     this.#updateTabindex();
+
+    itemsContainer ??= this.#getElement() ?? undefined;
+
     /**
      * removes listener on previous contained and applies it to new container
      */

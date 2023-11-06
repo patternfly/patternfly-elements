@@ -46,6 +46,11 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
 
   /**
+   * whether listbox is has checkboxes when `multi-select` is enabled
+   */
+  @property({ reflect: true, attribute: 'checkboxes', type: Boolean }) checkboxes = false;
+
+  /**
    * text for a special option that allows user to create an option from typeahead input text;
    * set to '' in order to disable this feature
    */
@@ -77,11 +82,6 @@ export class PfSelect extends LitElement {
   @property({ type: String }) filter = '';
 
   /**
-   * whether listbox is has checkboxes when `multi-select` is enabled
-   */
-  @property({ reflect: true, attribute: 'checkboxes', type: Boolean }) checkboxes = false;
-
-  /**
    * multi listbox button text
    */
   @property({ attribute: 'items-selected-text', type: String }) itemsSelectedText = 'items selected';
@@ -96,11 +96,6 @@ export class PfSelect extends LitElement {
    * whether multiple items can be selected
    */
   @property({ reflect: true, attribute: 'multi', type: Boolean }) multi = false;
-
-  /**
-   * whether listbox is always expanded
-   */
-  @property({ reflect: true, type: Boolean }) expanded = false;
 
   /**
    * Indicates initial popover position.
@@ -127,7 +122,7 @@ export class PfSelect extends LitElement {
   @query('#toggle-input') private _input?: HTMLInputElement;
   @query('#toggle-button') private _toggle?: HTMLButtonElement;
 
-  #toggle = new ToggleController(this, 'listbox');
+  #toggle = new ToggleController(this, { kind: 'listbox' });
   #controllerOn = true;
 
   #userCreatedOptions: PfSelectUserOptions[] = [];
@@ -220,7 +215,6 @@ export class PfSelect extends LitElement {
       alwaysExpanded,
       typeahead,
       disabled,
-      expanded,
       hasBadge,
       caseSensitive,
       checkboxes,
@@ -229,7 +223,7 @@ export class PfSelect extends LitElement {
       matchAnywhere,
     } = this;
     const { height, width } = this.getBoundingClientRect() || {};
-    const { anchor, alignment } = this.#toggle || { 'expanded': true, 'anchor': 'bottom', 'alignment': 'start' };
+    const { anchor, alignment, expanded } = this.#toggle || { 'expanded': true, 'anchor': 'bottom', 'alignment': 'start' };
     const toggles = !alwaysExpanded ? 'toggles' : false;
     const offscreen = typeahead ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;

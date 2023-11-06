@@ -145,7 +145,7 @@ export class ToggleController implements ReactiveController {
     };
   }
 
-  constructor(public host: ReactiveControllerHost, options?: ToggleControllerOptions) {
+  constructor(public host: ReactiveControllerHost & HTMLElement, options?: ToggleControllerOptions) {
     this.#getToggleElement = options?.getTogglableElement ?? (() =>
       (host instanceof Element) ? host : null);
     this.host.addController(this);
@@ -405,7 +405,6 @@ export class ToggleController implements ReactiveController {
         placement: this.position || 'bottom',
         flip: !!this.enableFlip,
       });
-      this.host.expanded = true;
       await this.host.updateComplete;
       if (expanded !== this.expanded) {
         this.#fireOpenChanged();
@@ -436,7 +435,6 @@ export class ToggleController implements ReactiveController {
     // and it does not currently have focus/hover
     if (this.float && (force || !hasFocus)) {
       await this.float.hide();
-      this.host.expanded = false;
       await this.host.updateComplete;
       if (expanded !== this.expanded) {
         this.#fireOpenChanged();

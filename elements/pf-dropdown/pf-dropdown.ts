@@ -57,6 +57,7 @@ export class DropdownSelectEvent extends Event {
 @customElement('pf-dropdown')
 export class PfDropdown extends LitElement {
   static readonly styles = [styles];
+
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**

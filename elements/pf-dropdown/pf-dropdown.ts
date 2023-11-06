@@ -4,13 +4,17 @@ import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent } from '@patternfly/pfe-core';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
+
 import { PfDropdownItem } from './pf-dropdown-item.js';
 import { PfDropdownMenu } from './pf-dropdown-menu.js';
+
 import '@patternfly/elements/pf-button/pf-button.js';
+
 import styles from './pf-dropdown.css';
 
 export class DropdownSelectEvent extends ComposedEvent {
@@ -84,7 +88,7 @@ export class PfDropdown extends LitElement {
     const { expanded, anchor, alignment } = this.#toggle;
     const { disabled } = this;
     return html`
-    <div 
+    <div
       style="${this.#toggle?.styles ? styleMap(this.#toggle.styles) : ''}"
       class="${classMap(this.#toggle ? { expanded, [anchor]: !!anchor, [alignment]: !!alignment } : {})}">
       <slot
@@ -93,11 +97,11 @@ export class PfDropdown extends LitElement {
         id="trigger"
         @slotchange="${this.#setTriggerElement}"
       >
-        <pf-button 
-          id="default-button" 
+        <pf-button
+          id="default-button"
           variant="control"
           class="${classMap({ disabled })}">
-          Dropdown 
+          Dropdown
           <svg viewBox="0 0 320 512" fill="currentColor" aria-hidden="true" width="1em" height="1em">
             <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
           </svg>

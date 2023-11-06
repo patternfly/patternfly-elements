@@ -129,6 +129,7 @@ export class PfChipGroup extends LitElement {
   }
 
   updated(changed: PropertyValues<this>) {
+    super.updated(changed);
     if (changed.has('accessibleCloseLabel') || changed.has('numChips') || changed.has('open') || changed.has('closeable')) {
       this.#handleChipsChanged();
     }

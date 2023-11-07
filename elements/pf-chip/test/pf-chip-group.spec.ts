@@ -29,7 +29,7 @@ describe('<pf-chip-group>', async function() {
     });
   });
 
-  describe('with 3 chips (default)', function() {
+  describe('with 3 chips', function() {
     let element: PfChipGroup;
     const updateComplete = () => element.updateComplete;
 
@@ -54,27 +54,25 @@ describe('<pf-chip-group>', async function() {
       ]);
     });
 
-    describe('overflow behavior', function() {
-      describe('clicking overflow chip', function() {
-        beforeEach(() => element.focus());
-        beforeEach(press('ArrowLeft'));
-        beforeEach(press('Enter'));
-        beforeEach(updateComplete);
-        it('should show all chips', async function() {
-          const snapshot = await a11ySnapshot();
-          expect(snapshot.children).to.deep.equal( [
-            { role: 'text', name: 'Chip 1' }, { role: 'button', name: 'Close' },
-            { role: 'text', name: 'Chip 2' }, { role: 'button', name: 'Close' },
-            { role: 'text', name: 'Chip 3' }, { role: 'button', name: 'Close' },
-            { role: 'text', name: 'Chip 4' }, { role: 'button', name: 'Close' },
-            { role: 'button', name: 'show less', focused: true }
-          ]);
-        });
+    describe('clicking overflow chip', function() {
+      beforeEach(() => element.focus());
+      beforeEach(press('ArrowLeft'));
+      beforeEach(press('Enter'));
+      beforeEach(updateComplete);
+      it('should show all chips', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot.children).to.deep.equal( [
+          { role: 'text', name: 'Chip 1' }, { role: 'button', name: 'Close' },
+          { role: 'text', name: 'Chip 2' }, { role: 'button', name: 'Close' },
+          { role: 'text', name: 'Chip 3' }, { role: 'button', name: 'Close' },
+          { role: 'text', name: 'Chip 4' }, { role: 'button', name: 'Close' },
+          { role: 'button', name: 'show less', focused: true }
+        ]);
       });
     });
   });
 
-  describe('with `closeable` attribute', function() {
+  describe('with 4 chips and `closeable` attribute', function() {
     let element: PfChipGroup;
     const updateComplete = () => element.updateComplete;
     beforeEach(async function() {
@@ -110,7 +108,7 @@ describe('<pf-chip-group>', async function() {
     });
   });
 
-  describe('with `collapsed-text`, `expanded-text`, and `label` attributes', async function() {
+  describe('with 4 chips and `collapsed-text`, `expanded-text`, and `label` attributes', async function() {
     let chip1: PfChip;
     let chip2: PfChip;
     let element: PfChipGroup;
@@ -159,7 +157,7 @@ describe('<pf-chip-group>', async function() {
     });
   });
 
-  describe('with `num-chips="2"` attribute', function() {
+  describe('with 4 chips and `num-chips="2"` attribute', function() {
     beforeEach(async function() {
       await createFixture<PfChipGroup>(html`
         <pf-chip-group num-chips="2">
@@ -182,7 +180,7 @@ describe('<pf-chip-group>', async function() {
     });
   });
 
-  describe('with `num-chips="4"` attribute', function() {
+  describe('with 4 chips and `num-chips="4"` attribute', function() {
     let element: PfChipGroup;
     const updateComplete = () => element.updateComplete;
 

@@ -1,10 +1,11 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import type { PropertyValues } from 'lit';
 import { query } from 'lit/decorators/query.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
+
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
+
 import { PfChip, ChipReadyEvent, ChipRemoveEvent } from './pf-chip.js';
 
 import styles from './pf-chip-group.css';
@@ -100,7 +101,7 @@ export class PfChipGroup extends LitElement {
       collapsedText = this.collapsedText.split('${remaining}').join(`${this.remaining}`);
     }
     return html`
-      <div id="outer" class="${category}">  
+      <div id="outer" class="${category}">
         ${this.accessibleLabel === '' ? html`
           <slot id="category" name="category-name" @slotchange=${this.#onSlotchange}></slot>
         ` : html`
@@ -128,8 +129,7 @@ export class PfChipGroup extends LitElement {
     `;
   }
 
-  updated(changed: PropertyValues<this>) {
-    super.updated(changed);
+  override updated(changed: PropertyValues<this>) {
     if (changed.has('accessibleCloseLabel') || changed.has('numChips') || changed.has('open') || changed.has('closeable')) {
       this.#handleChipsChanged();
     }

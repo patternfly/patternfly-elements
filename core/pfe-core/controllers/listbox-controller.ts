@@ -3,13 +3,13 @@ import { InternalsController } from '@patternfly/pfe-core/controllers/internals-
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
 /**
- * whether list items are arranged vertically or horizontally;
+ * Whether list items are arranged vertically or horizontally;
  * limits arrow keys based on orientation
  */
 export type ListboxOrientation = 'undefined' | 'horizontal' | 'vertical';
 
 /**
- * filtering, multiselect, and orientation options for listbox
+ * Filtering, multiselect, and orientation options for listbox
  */
 export interface ListboxConfigOptions {
   caseSensitive?: boolean;
@@ -18,9 +18,6 @@ export interface ListboxConfigOptions {
   orientation?: ListboxOrientation;
 }
 
-/**
- * properties for listbox option elements
- */
 export interface ListboxOptionElement extends HTMLElement {
   value: unknown;
   selected?: boolean;
@@ -29,30 +26,41 @@ export interface ListboxOptionElement extends HTMLElement {
   active?: boolean;
 }
 
+type FilterPropKey = 'filter' | 'caseSensitive' | 'matchAnywhere';
+type FilterPropValue = ListboxController[FilterPropKey];
+
 /**
  * Implements roving tabindex, as described in WAI-ARIA practices, [Managing Focus Within
  * Components Using a Roving
  * tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
  */
 export class ListboxController<
-Item extends HTMLElement = HTMLElement,
+  Item extends ListboxOptionElement = ListboxOptionElement
 > implements ReactiveController {
-  /**
-   * filter options that start with a string (case-insensitive)
-   */
-  #filter = '';
+  private static filter<T extends ListboxOptionElement>(
+    target: ListboxController<T>,
+    key: FilterPropKey,
+  ) {
+    // typescript experimental decorator
+    Object.defineProperty(target, key, {
+      get(this: ListboxController<T>) {
+        return this.#filterStorage.get(key);
+      },
+      set(this: ListboxController<T>, value: FilterPropValue) {
+        if (this.#filterStorage.get(key) !== value) {
+          this.#filterStorage.set(key, value);
+          this.#onFilterChange();
+        }
+      }
+    });
+  }
 
-  /**
-   * whether `*` has been pressed to show all options
-   */
+  #filterStorage = new Map<FilterPropKey, FilterPropValue>();
+
+  /** Whether `*` has been pressed to show all options */
   #showAllOptions = false;
 
-  /**
-   * whether filtering (if enabled) will be case-sensitive
-   */
-  #caseSensitive = false;
-
-  /** event listeners for host element */
+  /** Event listeners for host element */
   #listeners = {
     'click': this.#onOptionClick.bind(this),
     'focus': this.#onOptionFocus.bind(this),
@@ -60,69 +68,32 @@ Item extends HTMLElement = HTMLElement,
     'keyup': this.#onOptionKeyup.bind(this),
   };
 
-  /**
-   * whether filtering (if enabled) will look for filter match anywhere in option text
-   * (by default it will only match if option starts with filter)
-   */
-  #matchAnywhere = false;
+  /** Current active descendant when shift key is pressed */
+  #shiftStartingItem: Item | null = null;
 
-  /**
-   * current active descendant when shift key is pressed
-   */
-  #shiftStartingItem: ListboxOptionElement | null = null;
+  /** All options that will not be hidden by a filter */
+  #options: Item[] = [];
 
-  /**
-   * all options that will not be hidden by a filter
-   * */
-  #options: ListboxOptionElement[] = [];
-
-  /**
-   * whether or not focus should be updated after filtering
-   */
+  /** Whether or not focus should be updated after filtering */
   #updateFocus = false;
 
-  #tabindex: RovingTabindexController;
-  #internals: InternalsController;
+  #tabindex!: RovingTabindexController<Item>;
 
-  /**
-   * current active descendant in listbox
-   */
+  #internals!: InternalsController;
+
+  /** Current active descendant in listbox */
   get activeItem() {
     const [active] = this.options.filter(option => option.id === this.#internals.ariaActivedescendant);
     return active || this.#tabindex.firstItem;
   }
 
-  /**
-   * text for filtering options
-   */
-  set filter(filterText: string) {
-    if (this.#filter !== filterText) {
-      this.#filter = filterText;
-      this.#onFilterChange();
-    }
-  }
+  /** Filter options that start with this string (case-insensitive) */
+  @ListboxController.filter filter = '';
 
-  get filter() {
-    return this.#filter;
-  }
+  /** Whether filtering is case sensitive */
+  @ListboxController.filter caseSensitive = false;
 
-  /**
-   * whether filtering is case sensitive
-   */
-  set caseSensitive(caseSensitive: boolean) {
-    if (this.#caseSensitive !== caseSensitive) {
-      this.#caseSensitive = caseSensitive;
-      this.#onFilterChange();
-    }
-  }
-
-  get caseSensitive() {
-    return this.#caseSensitive;
-  }
-
-  /**
-   * whether listbox is disabled
-   */
+  /** Whether listbox is disabled */
   set disabled(disabled: boolean) {
     this.#internals.ariaDisabled = String(!!disabled);
   }
@@ -131,10 +102,7 @@ Item extends HTMLElement = HTMLElement,
     return this.#internals.ariaDisabled === 'true';
   }
 
-  /**
-   * whether listbox is multiselectable;
-   * default is single-select
-   */
+  /** Whether listbox is multiselectable. */
   set multi(multi: boolean) {
     this.#internals.ariaMultiSelectable = multi ? 'true' : 'false';
   }
@@ -143,24 +111,11 @@ Item extends HTMLElement = HTMLElement,
     return this.#internals.ariaMultiSelectable === 'true';
   }
 
-  // TODO @nikkimk work with @bennyp on the following:
-  // "all these reactive accessor pairs are just fine the way they are,
-  // but i'm just floating the option to write a decorator for class fields instead"
-
   /**
-   * whether filtering matches anywhere in option text;
+   * Whether filtering matches anywhere in option text;
    * default is only options starting with filter
-  */
-  set matchAnywhere(matchAnywhere: boolean) {
-    if (this.#matchAnywhere !== matchAnywhere) {
-      this.#matchAnywhere = matchAnywhere;
-      this.#onFilterChange();
-    }
-  }
-
-  get matchAnywhere() {
-    return this.#matchAnywhere;
-  }
+   */
+  @ListboxController.filter matchAnywhere = false;
 
   /**
    * listbox orientation;
@@ -178,8 +133,8 @@ Item extends HTMLElement = HTMLElement,
   /**
    * array of listbox option elements
    */
-  set options(options: ListboxOptionElement[]) {
-    const oldOptions: ListboxOptionElement[] = [...this.#options];
+  set options(options: Item[]) {
+    const oldOptions = [...this.#options];
     this.#options = options;
     this.#optionsChanged(oldOptions);
   }
@@ -198,9 +153,9 @@ Item extends HTMLElement = HTMLElement,
   /**
    * listbox value based on selected options
    */
-  set value(optionsList: unknown | unknown[]) {
+  set value(value: Item | Item[]) {
     // value is set by selecting matching options
-    this.#selectOptions(optionsList);
+    this.#selectOptions(value);
   }
 
   get value() {
@@ -212,21 +167,19 @@ Item extends HTMLElement = HTMLElement,
    * array of options that match filter;
    * (or all options if no options match or if no filter)
    */
-  get visibleOptions(): ListboxOptionElement[] {
+  get visibleOptions(): Item[] {
     return this.#getMatchingOptions();
   }
 
   private static hosts = new WeakMap<ReactiveControllerHost & HTMLElement, ListboxController>();
 
   constructor(public host: ReactiveControllerHost & HTMLElement, options: ListboxConfigOptions) {
-    this.#internals = new InternalsController(this.host, {
-      role: 'listbox'
-    });
-    this.#tabindex = new RovingTabindexController(this.host);
     const instance = ListboxController.hosts.get(host);
     if (instance) {
-      return instance;
+      return instance as ListboxController<Item>;
     }
+    this.#internals = new InternalsController(this.host, { role: 'listbox' });
+    this.#tabindex = new RovingTabindexController<Item>(this.host);
     ListboxController.hosts.set(host, this);
     this.host.addController(this);
     this.caseSensitive = options.caseSensitive || false;
@@ -245,10 +198,9 @@ Item extends HTMLElement = HTMLElement,
 
   /**
    * gets matching options by filter value
-   * @returns {ListboxOptionElement[]}
    */
   #getMatchingOptions() {
-    let matchedOptions: ListboxOptionElement[] = [];
+    let matchedOptions: Item[] = [];
     if (!(this.filter === '' || this.filter === '*' || this.#showAllOptions)) {
       matchedOptions = this.options.filter(option => {
         const search = this.matchAnywhere ? '' : '^';
@@ -340,11 +292,9 @@ Item extends HTMLElement = HTMLElement,
   /**
    * handles focusing on an option:
    * updates roving tabindex and active descendant
-   * @param event {FocusEvent}
-   * @returns void
    */
   #onOptionFocus(event: FocusEvent) {
-    const target = event.target as ListboxOptionElement;
+    const target = event.target as Item;
     if (target !== this.#tabindex.activeItem) {
       this.#tabindex.updateActiveItem(target);
     }
@@ -355,11 +305,9 @@ Item extends HTMLElement = HTMLElement,
    * handles clicking on a listbox option:
    * which selects an item by default
    * or toggles selection if multiselectable
-   * @param event {MouseEvent}
-   * @returns void
    */
   #onOptionClick(event: MouseEvent) {
-    const target = event.target as ListboxOptionElement;
+    const target = event.target as Item;
     const oldValue = this.value;
     if (this.multi) {
       if (!event.shiftKey) {
@@ -384,11 +332,9 @@ Item extends HTMLElement = HTMLElement,
   /**
    * handles keyup:
    * track whether shift key is being used for multiselectable listbox
-   * @param event {KeyboardEvent}
-   * @returns void
    */
   #onOptionKeyup(event: KeyboardEvent) {
-    const target = event.target as ListboxOptionElement;
+    const target = event.target as Item;
     if (event.shiftKey && this.multi) {
       if (this.#shiftStartingItem && target) {
         this.#updateMultiselect(target, this.#shiftStartingItem);
@@ -404,19 +350,17 @@ Item extends HTMLElement = HTMLElement,
    * handles keydown:
    * filters listbox by keyboard event when slotted option has focus,
    * or by external element such as a text field
-   * @param event {KeyboardEvent}
-   * @returns void
    */
   #onOptionKeydown(event: KeyboardEvent) {
     this.#showAllOptions = false;
-    const target = event.target ? event.target as ListboxOptionElement : undefined;
+    const target = event.target ? event.target as Item : undefined;
 
     if (event.altKey || event.metaKey || !target || !this.options.includes(target)) {
       return;
     }
 
-    const first = this.#tabindex.firstItem as ListboxOptionElement;
-    const last = this.#tabindex.lastItem as ListboxOptionElement;
+    const first = this.#tabindex.firstItem;
+    const last = this.#tabindex.lastItem;
 
     // need to set for keyboard support of multiselect
     if (event.key === 'Shift' && this.multi) {
@@ -456,9 +400,8 @@ Item extends HTMLElement = HTMLElement,
 
   /**
    * handles change to options given previous options array
-   * @param oldOptions {ListboxOptionElement[]}
    */
-  #optionsChanged(oldOptions: ListboxOptionElement[]) {
+  #optionsChanged(oldOptions: Item[]) {
     const setSize = this.#options.length;
     if (setSize !== oldOptions.length || !oldOptions.every((element, index) => element === this.#options[index])) {
       this.#options.forEach((option, posInSet) => {
@@ -476,20 +419,16 @@ Item extends HTMLElement = HTMLElement,
 
   /**
    * handles change in value given a list of selected values
-   * @param optionsList {unknown | unknown[]}
    */
-  #selectOptions(optionsList: unknown | unknown[]) {
+  #selectOptions(value: Item | Item[]) {
     const oldValue = this.value;
-    let firstItem: unknown;
-    if (Array.isArray(optionsList)) {
-      [firstItem] = optionsList || [null];
-    } else {
-      firstItem = optionsList;
+    const [firstItem = null] = Array.isArray(value) ? value : [value];
+    for (const option of this.options) {
+      option.selected = (
+          !!this.multi && Array.isArray(value) ? value?.includes(option)
+        : firstItem === option
+      );
     }
-    this.options.forEach(option => {
-      const selected = this.multi && Array.isArray(optionsList) ? optionsList?.includes(option.value) : firstItem === option;
-      option.selected = selected;
-    });
     if (oldValue !== this.value) {
       this.#fireInput();
     }
@@ -508,12 +447,9 @@ Item extends HTMLElement = HTMLElement,
   /**
    * updates option selections for multiselectable listbox:
    * toggles all options between active descendant and target
-   * @param currentItem
-   * @param referenceItem
-   * @param ctrlKey
    */
-  #updateMultiselect(currentItem: ListboxOptionElement, referenceItem = this.activeItem, ctrlA = false) {
-    if (this.multi && !this.disabled) {
+  #updateMultiselect(currentItem?: Item, referenceItem = this.activeItem, ctrlA = false) {
+    if (this.multi && !this.disabled && currentItem) {
       // select all options between active descendant and target
       const [start, end] = [this.options.indexOf(referenceItem), this.options.indexOf(currentItem)].sort();
       const options = [...this.options].slice(start, end + 1);
@@ -544,7 +480,7 @@ Item extends HTMLElement = HTMLElement,
   }
 
   /**
-   * sets focus on last active item
+   * Sets focus on last active item
    */
   focusActiveItem() {
     this.#tabindex.focusOnItem(this.#tabindex.activeItem);

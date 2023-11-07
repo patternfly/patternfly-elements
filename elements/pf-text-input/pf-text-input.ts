@@ -235,6 +235,7 @@ export class PfTextInput extends LitElement {
              .value="${this.value}"
              .pattern="${this.pattern as string}"
              @input="${this.#onInput}"
+             @keydown="${this.#onKeydown}"
              @blur="${this.#onBlur}"
              ?disabled="${this.matches(':disabled') || this.disabled}"
              ?readonly="${this.readonly}"
@@ -258,6 +259,13 @@ export class PfTextInput extends LitElement {
       this.#onBlur();
     }
     this.#touched = true;
+  }
+
+  #onKeydown(event: Event) {
+    switch ((event as KeyboardEvent).key) {
+      case 'Enter':
+        this.#internals.form?.requestSubmit(null);
+    }
   }
 
   #onBlur() {

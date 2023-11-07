@@ -6,6 +6,12 @@ function isARIAMixinProp(key: string): key is keyof ARIAMixin {
 
 const protos = new WeakMap();
 
+let constructingAllowed = false;
+
+interface InternalsControllerOptions extends Partial<ARIAMixin> {
+  getHTMLElement?(): HTMLElement;
+}
+
 /** reactively forward the internals object's aria mixin prototype */
 function aria(
   target: InternalsController,
@@ -25,11 +31,11 @@ function aria(
     enumerable: true,
     configurable: false,
     get(this: InternalsController) {
-      // @ts-expect-error: i'm bad, i'm bad, shamone
+      // @ts-expect-error: because i'm bad, i'm bad
       return this.attach()[key];
     },
     set(this: InternalsController, value: string | null) {
-      // @ts-expect-error: who's bad?
+      // @ts-expect-error: shamone!
       this.attach()[key] = value;
       this.host.requestUpdate();
     }
@@ -39,6 +45,15 @@ function aria(
 
 export class InternalsController implements ReactiveController, ARIAMixin {
   private static instances = new WeakMap<ReactiveControllerHost, InternalsController>();
+
+  public static for(host: ReactiveControllerHost, options?: InternalsControllerOptions): InternalsController {
+    constructingAllowed = true;
+    const instance: InternalsController =
+      InternalsController.instances.get(host) ?? new InternalsController(host, options);
+    instance.initializeAriaOptions(options);
+    constructingAllowed = false;
+    return instance;
+  }
 
   @aria role: string | null = null;
   @aria ariaActivedescendant: string | null = null;
@@ -82,10 +97,6 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   @aria ariaValueNow: string | null = null;
   @aria ariaValueText: string | null = null;
 
-  private internals!: ElementInternals;
-
-  private _formDisabled = false;
-
   /** True when the control is disabled via it's containing fieldset element */
   get formDisabled() {
     return this.element?.matches(':disabled') || this._formDisabled;
@@ -103,20 +114,22 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     return this.host instanceof HTMLElement ? this.host : this.options?.getHTMLElement?.();
   }
 
-  constructor(
+  private internals!: ElementInternals;
+
+  private _formDisabled = false;
+
+  private constructor(
     public host: ReactiveControllerHost,
-    private options?: Partial<ARIAMixin> & {
-      getHTMLElement?(): HTMLElement;
-    }
+    private options?: InternalsControllerOptions
   ) {
-    const instance = InternalsController.instances.get(host);
-    if (instance) {
-      return instance;
+    if (!constructingAllowed) {
+      throw new Error('InternalsController must be constructed with `InternalsController.for()`');
     }
     if (!this.element) {
       throw new Error('InternalsController must be instantiated with an HTMLElement or a `getHTMLElement` function');
     }
     this.attach();
+    this.initializeAriaOptions(options);
     InternalsController.instances.set(host, this);
     // START polyfill-disabled
     // We need to polyfill :disabled
@@ -127,18 +140,11 @@ export class InternalsController implements ReactiveController, ARIAMixin {
       orig?.call(host, disabled);
     };
     // END polyfill-disabled
-    this.initializeAriaOptions(options);
   }
 
   private attach() {
-    if (!InternalsController.instances.has(this.host)) {
-      if (!this.element) {
-        throw new Error('InternalsController must be instantiated with an HTMLElement or a `getHTMLElement` function');
-      }
-      this.internals = this.element.attachInternals();
-      InternalsController.instances.set(this.host, this);
-    }
-    return InternalsController.instances.get(this.host)!.internals;
+    this.internals ??= this.element!.attachInternals();
+    return this.internals;
   }
 
   private initializeAriaOptions(options?: Partial<ARIAMixin>) {

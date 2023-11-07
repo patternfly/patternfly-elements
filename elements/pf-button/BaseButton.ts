@@ -49,7 +49,7 @@ export abstract class BaseButton extends LitElement {
    */
   abstract danger: unknown;
 
-  #internals = new InternalsController(this);
+  #internals = InternalsController.for(this);
 
   protected get hasIcon() {
     return !!this.icon;

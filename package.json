@@ -46,20 +46,6 @@
         "husky"
       ]
     },
-    "build": {
-      "dependencies": [
-        "build:tools",
-        "build:core",
-        "analyze",
-        "docs",
-        "build:icons",
-        "build:lightdom",
-        "build:elements",
-        "build:create",
-        "build:bundle",
-        "build:react"
-      ]
-    },
     "analyze": {
       "command": "npm run -ws --if-present analyze",
       "files": [
@@ -76,6 +62,20 @@
       "dependencies": [
         "build:core",
         "build:tools"
+      ]
+    },
+    "build": {
+      "dependencies": [
+        "build:tools",
+        "build:core",
+        "analyze",
+        "docs",
+        "build:icons",
+        "build:lightdom",
+        "build:elements",
+        "build:create",
+        "build:bundle",
+        "build:react"
       ]
     },
     "build:create": {

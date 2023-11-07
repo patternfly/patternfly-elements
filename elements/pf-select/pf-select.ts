@@ -33,6 +33,7 @@ export interface PfSelectUserOptions {
 @customElement('pf-select')
 export class PfSelect extends LitElement {
   static readonly styles = [styles];
+
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
@@ -117,12 +118,22 @@ export class PfSelect extends LitElement {
    */
   @property({ type: Boolean }) typeahead = false;
 
+  @property({ type: Boolean, reflect: true })
+  get expanded() {
+    return this.#toggle.expanded;
+  }
+
+  set expanded(expanded: boolean) {
+    this.#toggle.toggle(expanded);
+  }
+
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
   @query('pf-listbox') private _listbox?: PfListbox;
   @query('#toggle-input') private _input?: HTMLInputElement;
   @query('#toggle-button') private _toggle?: HTMLButtonElement;
 
   #toggle = new ToggleController(this, { kind: 'listbox' });
+
   #controllerOn = true;
 
   #userCreatedOptions: PfSelectUserOptions[] = [];
@@ -368,9 +379,9 @@ export class PfSelect extends LitElement {
 
   /**
    * handles chip's remove button clicking
-   * @param txt chip text to be removed from values
+   * @param opt chip text to be removed from values
    */
-  #onChipRemove(event: Event, opt: PfOption) {
+  #onChipRemove(_event: Event, opt: PfOption) {
     if (opt) {
       setTimeout(() => {
         // deselect option

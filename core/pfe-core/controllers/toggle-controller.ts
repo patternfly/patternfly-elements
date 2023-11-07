@@ -348,7 +348,7 @@ export class ToggleController implements ReactiveController {
     if (triggerElement && !this.#triggerElements.includes(triggerElement)) {
       // use internals, if possible
       if (isReactiveControllerHost(triggerElement)) {
-        const internals = new InternalsController(triggerElement);
+        const internals = InternalsController.for(triggerElement);
         internals.ariaExpanded = this.expanded ? 'true' : 'false';
         internals.ariaHasPopup = this.#popupType;
         this.#triggerInternals.set(triggerElement, internals);
@@ -391,8 +391,9 @@ export class ToggleController implements ReactiveController {
   /**
    * toggles popup based on current state
    */
-  async toggle() {
-    this.expanded ? await this.hide(true) : await this.show();
+  async toggle(force?: boolean) {
+    force ??= !this.expanded;
+    await (force ? this.show() : this.hide(true));
   }
 
   /**

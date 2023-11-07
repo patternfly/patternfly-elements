@@ -28,17 +28,17 @@ export interface ListboxOptionElement extends HTMLElement {
 }
 
 type FilterPropKey = 'filter' | 'caseSensitive' | 'matchAnywhere';
-type FilterPropValue = ListboxController[FilterPropKey];
+type FilterPropValue = ListboxController<any>[FilterPropKey];
+
+let constructingAllowed = false;
 
 /**
  * Implements roving tabindex, as described in WAI-ARIA practices, [Managing Focus Within
  * Components Using a Roving
  * tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
  */
-export class ListboxController<
-  Item extends ListboxOptionElement = ListboxOptionElement
-> implements ReactiveController {
-  private static instances = new WeakMap<ReactiveControllerHost, ListboxController>();
+export class ListboxController<Item extends ListboxOptionElement> implements ReactiveController {
+  private static instances = new WeakMap<ReactiveControllerHost, ListboxController<any>>();
 
   private static filter<T extends ListboxOptionElement>(
     target: ListboxController<T>,
@@ -176,22 +176,34 @@ export class ListboxController<
     return this.host instanceof HTMLElement ? this.host : this.controllerOptions.getHTMLElement?.() as HTMLElement;
   }
 
-  private internals = new InternalsController(this.host, { role: 'listbox' });
+  private internals: InternalsController;
 
   private tabindex = new RovingTabindexController<Item>(this.host);
 
-  constructor(
+  public static for<Item extends ListboxOptionElement = ListboxOptionElement>(
+    host: ReactiveControllerHost,
+    controllerOptions: ListboxConfigOptions,
+  ): ListboxController<Item> {
+    constructingAllowed = true;
+    const instance: ListboxController<Item> =
+      ListboxController.instances.get(host) ?? new ListboxController<Item>(host, controllerOptions);
+    constructingAllowed = false;
+    return instance;
+  }
+
+  private constructor(
     public host: ReactiveControllerHost,
     private controllerOptions: ListboxConfigOptions,
   ) {
-    const instance = ListboxController.instances.get(host);
-    if (instance) {
-      return instance as ListboxController<Item>;
+    if (!constructingAllowed) {
+      throw new Error('ListboxController must be constructed with `ListboxController.for()`');
     }
     if (!(host instanceof HTMLElement) && typeof controllerOptions.getHTMLElement !== 'function') {
       throw new Error('ListboxController requires the host to be an HTMLElement, or for the initializer to include a `getHTMLElement()` function');
     }
     ListboxController.instances.set(host, this);
+    this.internals = InternalsController.for(this.host, { getHTMLElement: controllerOptions?.getHTMLElement });
+    this.internals.role = 'listbox';
     this.host.addController(this);
     this.caseSensitive = controllerOptions.caseSensitive || false;
     this.#onFilterChange();

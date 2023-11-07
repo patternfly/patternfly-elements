@@ -77,7 +77,7 @@ export class PfDropdownItem extends LitElement {
   @property({ reflect: true, type: Boolean }) disabled = false;
   @query('[role="menuitem"]') menuItem!: HTMLElement;
 
-  #internals = new InternalsController(this, { role: 'none' });
+  #internals = InternalsController.for(this, { role: 'none' });
   #id: string;
 
   constructor() {

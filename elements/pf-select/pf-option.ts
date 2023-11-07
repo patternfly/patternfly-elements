@@ -75,7 +75,7 @@ export class PfOption extends LitElement {
 
   @queryAssignedNodes({ slot: '', flatten: true }) private _slottedText!: Node[];
 
-  #internals = new InternalsController(this, { role: 'option' });
+  #internals = InternalsController.for(this, { role: 'option' });
 
   /**
    * this option's position relative to the other options

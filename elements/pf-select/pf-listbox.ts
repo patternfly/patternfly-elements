@@ -64,7 +64,7 @@ export class PfListbox extends LitElement {
 
   @queryAssignedElements({ flatten: true }) private _slottedElements?: Array<HTMLElement>;
 
-  #listboxController = new ListboxController(this, {
+  #listboxController = ListboxController.for(this, {
     caseSensitive: this.caseSensitive,
     matchAnywhere: this.matchAnywhere,
     multi: false,
@@ -119,7 +119,7 @@ export class PfListbox extends LitElement {
     const { disabled } = this;
     return html`
         <slot
-          class="${classMap({ disabled })}" 
+          class="${classMap({ disabled })}"
           @slotchange="${this.#onSlotchange}">
         </slot>
     `;

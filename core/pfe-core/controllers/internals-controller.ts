@@ -48,6 +48,9 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   public static for(host: ReactiveControllerHost, options?: InternalsControllerOptions): InternalsController {
     constructingAllowed = true;
+    // implement the singleton pattern
+    // using a public static constructor method is much easier to manage,
+    // due to the quirks of our typescript config
     const instance: InternalsController =
       InternalsController.instances.get(host) ?? new InternalsController(host, options);
     instance.initializeAriaOptions(options);
@@ -142,6 +145,15 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     // END polyfill-disabled
   }
 
+  /**
+   * Typescript (with experimental decorators) will compile the class
+   * such that the order of operations is:
+   * 1. set up constructor parameter fields
+   * 2. run decorated field setters with initializers as the value
+   * 3. run the rest of the constructor
+   * Because of that, `this.internals` may not be available in the decorator setter
+   * so we cheat here with nullish coalescing assignment operator `??=`;
+   */
   private attach() {
     this.internals ??= this.element!.attachInternals();
     return this.internals;
@@ -181,4 +193,3 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     this.internals.form?.reset();
   }
 }
-

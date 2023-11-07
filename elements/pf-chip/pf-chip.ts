@@ -57,8 +57,7 @@ export class PfChip extends LitElement {
                    plain
                    ?hidden="${this.readonly}"
                    @click="${this.#onClick}"
-                   aria-describedby="chip-text"
-                   aria-label="${this.accessibleCloseLabel}">
+                   label="${this.accessibleCloseLabel}">
           <svg aria-hidden="true"
                height="1em"
                width="1em"

@@ -29,6 +29,87 @@ describe('<pf-chip-group>', async function() {
     });
   });
 
+  describe('with 3 chips (default)', function() {
+    let element: PfChipGroup;
+    const updateComplete = () => element.updateComplete;
+
+    beforeEach(async function() {
+      element = await createFixture<PfChipGroup>(html`
+        <pf-chip-group>
+          <pf-chip>Chip 1</pf-chip>
+          <pf-chip>Chip 2</pf-chip>
+          <pf-chip>Chip 3</pf-chip>
+          <pf-chip>Chip 4</pf-chip>
+        </pf-chip-group>
+      `);
+    });
+
+    it('only 3 chips and an overflow should be visible', async function() {
+      const snapshot = await a11ySnapshot();
+      expect(snapshot.children).to.deep.equal([
+        { role: 'text', name: 'Chip 1' }, { role: 'button', name: 'Close' },
+        { role: 'text', name: 'Chip 2' }, { role: 'button', name: 'Close' },
+        { role: 'text', name: 'Chip 3' }, { role: 'button', name: 'Close' },
+        { role: 'button', name: '1 more' }
+      ]);
+    });
+
+    describe('overflow behavior', function() {
+      describe('clicking overflow chip', function() {
+        beforeEach(() => element.focus());
+        beforeEach(press('ArrowLeft'));
+        beforeEach(press('Enter'));
+        beforeEach(updateComplete);
+        it('should show all chips', async function() {
+          const snapshot = await a11ySnapshot();
+          expect(snapshot.children).to.deep.equal( [
+            { role: 'text', name: 'Chip 1' }, { role: 'button', name: 'Close' },
+            { role: 'text', name: 'Chip 2' }, { role: 'button', name: 'Close' },
+            { role: 'text', name: 'Chip 3' }, { role: 'button', name: 'Close' },
+            { role: 'text', name: 'Chip 4' }, { role: 'button', name: 'Close' },
+            { role: 'button', name: 'show less', focused: true }
+          ]);
+        });
+      });
+    });
+  });
+
+  describe('with `closeable` attribute', function() {
+    let element: PfChipGroup;
+    const updateComplete = () => element.updateComplete;
+    beforeEach(async function() {
+      element = await createFixture<PfChipGroup>(html`
+        <pf-chip-group closeable>
+          <pf-chip>Chip 1</pf-chip>
+          <pf-chip>Chip 2</pf-chip>
+          <pf-chip>Chip 3</pf-chip>
+          <pf-chip>Chip 4</pf-chip>
+        </pf-chip-group>
+      `);
+    });
+
+    beforeEach(updateComplete);
+    it('should have close button', async function() {
+      const snapshot = await a11ySnapshot();
+      const [button] = snapshot.children.reverse();
+      expect(button).to.deep.equal({
+        role: 'button',
+        name: 'Close',
+      });
+    });
+
+    describe('clicking close button', function() {
+      beforeEach(() => element.focus());
+      beforeEach(press('ArrowLeft'));
+      beforeEach(press('Enter'));
+      beforeEach(updateComplete);
+      it('should remove element', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot.children).to.be.undefined;
+      });
+    });
+  });
+
   describe('with `collapsed-text`, `expanded-text`, and `label` attributes', async function() {
     let chip1: PfChip;
     let chip2: PfChip;
@@ -78,130 +159,14 @@ describe('<pf-chip-group>', async function() {
     });
   });
 
-  describe('with 3 chips (default)', function() {
-    const expanded = 'show fewer';
-    const label = 'My Chip Group';
-    let element: PfChipGroup;
-    const updateComplete = () => element.updateComplete;
-
-    beforeEach(async function() {
-      element = await createFixture<PfChipGroup>(html`
-        <pf-chip-group collapsed-text="show $\{remaining} more"
-                       expanded-text="${expanded}"
-                       accessible-label="${label}">
-          <pf-chip id="chip1">Chip 1</pf-chip>
-          <pf-chip id="chip2">Chip 2</pf-chip>
-          <pf-chip id="chip3">Chip 3</pf-chip>
-          <pf-chip id="chip4">Chip 4</pf-chip>
-        </pf-chip-group>
-      `);
-    });
-
-    it('only 3 chips and an overflow should be visible', async function() {
-      const snapshot = await a11ySnapshot();
-      expect(snapshot.children).to.deep.equal([
-        { role: 'text', name: 'My Chip Group' },
-        { role: 'text', name: 'Chip 1' },
-        { role: 'button', name: 'Close', description: 'Chip 1' },
-        { role: 'text', name: 'Chip 2' },
-        { role: 'button', name: 'Close', description: 'Chip 2' },
-        { role: 'text', name: 'Chip 3' },
-        { role: 'button', name: 'Close', description: 'Chip 3' },
-        { role: 'button', name: 'show 1 more' }
-      ]);
-    });
-
-    describe('overflow behavior', function() {
-      describe('clicking overflow chip', function() {
-        beforeEach(() => element.focus());
-        beforeEach(press('ArrowLeft'));
-        beforeEach(press('Enter'));
-        beforeEach(updateComplete);
-        it('should show all chips', async function() {
-          const snapshot = await a11ySnapshot();
-          expect(snapshot.children).to.deep.equal( [
-            {
-              role: 'text',
-              name: 'Chip 1',
-            },
-            {
-              role: 'button',
-              name: 'Close',
-              description: 'Chip 1'
-            },
-            {
-              role: 'text',
-              name: 'Chip 2',
-            },
-            {
-              role: 'button',
-              name: 'Close',
-              description: 'Chip 2',
-              focused: true,
-            },
-            {
-              role: 'text',
-              name: 'Chip 3',
-            },
-            {
-              role: 'button',
-              name: 'Close',
-              description: 'Chip 3',
-            },
-            {
-              role: 'text',
-              name: 'Chip 4',
-            },
-            {
-              role: 'button',
-              name: 'Close',
-              description: 'Chip 4',
-            },
-            {
-              role: 'button',
-              name: 'show fewer',
-              focused: true,
-            }
-          ]);
-        });
-      });
-    });
-
-    describe('with `closeable` attribute', function() {
-      beforeEach(async function() {
-        element.closeable = true;
-      });
-      beforeEach(updateComplete);
-      it('should have close button', async function() {
-        const snapshot = await a11ySnapshot();
-        const [button] = snapshot.children.reverse();
-        expect(button).to.deep.equal({
-          role: 'button',
-          name: 'Close',
-        });
-      });
-
-      describe('clicking close button', function() {
-        beforeEach(async function() {
-          element.focus();
-          await press(element, 'ArrowLeft');
-          await press(element, 'Enter');
-        });
-        it('should remove element', async function() {
-          const snapshot = await a11ySnapshot();
-          expect(snapshot.children).to.be.undefined;
-        });
-      });
-    });
-  });
-  describe('setting `num-chips` to 2', function() {
+  describe('with `num-chips="2"` attribute', function() {
     beforeEach(async function() {
       await createFixture<PfChipGroup>(html`
         <pf-chip-group num-chips="2">
-          <pf-chip id="chip1">Chip 1</pf-chip>
-          <pf-chip id="chip2">Chip 2</pf-chip>
-          <pf-chip id="chip3">Chip 3</pf-chip>
-          <pf-chip id="chip4">Chip 4</pf-chip>
+          <pf-chip>Chip 1</pf-chip>
+          <pf-chip>Chip 2</pf-chip>
+          <pf-chip>Chip 3</pf-chip>
+          <pf-chip>Chip 4</pf-chip>
         </pf-chip-group>
       `);
     });
@@ -209,23 +174,25 @@ describe('<pf-chip-group>', async function() {
       const snapshot = await a11ySnapshot();
       expect(snapshot.children).to.deep.equal([
         { role: 'text', name: 'Chip 1' },
-        { role: 'button', name: 'Close', description: 'Chip 1' },
+        { role: 'button', name: 'Close' },
         { role: 'text', name: 'Chip 2' },
-        { role: 'button', name: 'Close', description: 'Chip 2' },
+        { role: 'button', name: 'Close' },
+        { role: 'button', name: '2 more' },
       ]);
     });
   });
 
-  describe('setting `num-chips` to 4', function() {
+  describe('with `num-chips="4"` attribute', function() {
     let element: PfChipGroup;
+    const updateComplete = () => element.updateComplete;
 
     beforeEach(async function() {
       element = await createFixture<PfChipGroup>(html`
         <pf-chip-group num-chips="4">
-          <pf-chip id="chip1">Chip 1</pf-chip>
-          <pf-chip id="chip2">Chip 2</pf-chip>
-          <pf-chip id="chip3">Chip 3</pf-chip>
-          <pf-chip id="chip4">Chip 4</pf-chip>
+          <pf-chip>Chip 1</pf-chip>
+          <pf-chip>Chip 2</pf-chip>
+          <pf-chip>Chip 3</pf-chip>
+          <pf-chip>Chip 4</pf-chip>
         </pf-chip-group>
       `);
     });
@@ -233,34 +200,26 @@ describe('<pf-chip-group>', async function() {
     it('all 4 chips should be visible', async function() {
       const snapshot = await a11ySnapshot();
       expect(snapshot.children).to.deep.equal([
-        { role: 'text', name: 'Chip 1' },
-        { role: 'button', name: 'Close', description: 'Chip 1' },
-        { role: 'text', name: 'Chip 2' },
-        { role: 'button', name: 'Close', description: 'Chip 2' },
-        { role: 'text', name: 'Chip 3' },
-        { role: 'button', name: 'Close', description: 'Chip 3' },
-        { role: 'text', name: 'Chip 4' },
-        { role: 'button', name: 'Close', description: 'Chip 4' }
+        { role: 'text', name: 'Chip 1' }, { role: 'button', name: 'Close' },
+        { role: 'text', name: 'Chip 2' }, { role: 'button', name: 'Close' },
+        { role: 'text', name: 'Chip 3' }, { role: 'button', name: 'Close' },
+        { role: 'text', name: 'Chip 4' }, { role: 'button', name: 'Close' }
       ]);
     });
 
     describe('setting focus on third chip and removing it', function() {
-      beforeEach(async function() {
-        element.focus();
-        await press(element, 'ArrowRight');
-        await press(element, 'ArrowRight');
-        await press(element, 'Enter');
-      });
+      beforeEach(() => element.focus());
+      beforeEach(press('ArrowRight'));
+      beforeEach(press('ArrowRight'));
+      beforeEach(press('Enter'));
+      beforeEach(updateComplete);
 
       it('should remove element and set focus on second chip', async function() {
         const snapshot = await a11ySnapshot();
         expect(snapshot.children).to.deep.equal([
-          { role: 'text', name: 'Chip 1' },
-          { role: 'button', name: 'Close', description: 'Chip 1' },
-          { role: 'text', name: 'Chip 2' },
-          { role: 'button', name: 'Close', description: 'Chip 2', focused: true },
-          { role: 'text', name: 'Chip 4' },
-          { role: 'button', name: 'Close', description: 'Chip 4' }
+          { role: 'text', name: 'Chip 1' }, { role: 'button', name: 'Close' },
+          { role: 'text', name: 'Chip 2' }, { role: 'button', name: 'Close', focused: true },
+          { role: 'text', name: 'Chip 4' }, { role: 'button', name: 'Close' }
         ]);
       });
     });

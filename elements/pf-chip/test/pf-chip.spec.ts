@@ -1,8 +1,10 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfChip } from '../pf-chip.js';
-import { sendKeys, sendMouse } from '@web/test-runner-commands';
-import { a11ySnapshot, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { sendKeys } from '@web/test-runner-commands';
+
+import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 
 
 async function tab() {
@@ -13,139 +15,112 @@ async function enter() {
   await sendKeys({ press: 'Enter' });
 }
 
-async function click(element: HTMLElement) {
-  const { x, y, width, height } = element.getBoundingClientRect();
-  const position = [x + width / 2, y + height / 2].map(Math.round) as [number, number];
-  await sendMouse({ type: 'click', position });
-}
-
 function activeElement(element: HTMLElement) {
   return element.shadowRoot?.activeElement;
 }
 
 describe('<pf-chip>', async function() {
+  it('imperatively instantiates', function() {
+    expect(document.createElement('pf-chip')).to.be.an.instanceof(PfChip);
+  });
+
+  it('should upgrade', async function() {
+    const klass = customElements.get('pf-chip');
+    expect(await createFixture<PfChip>(html`<pf-chip></pf-chip>`))
+      .to.be.an.instanceOf(klass)
+      .and
+      .to.be.an.instanceOf(PfChip);
+  });
+
   describe('simply instantiating', function() {
     let element: PfChip;
-    it('imperatively instantiates', function() {
-      expect(document.createElement('pf-chip')).to.be.an.instanceof(PfChip);
-    });
-
-    it('should upgrade', async function() {
-      element = await createFixture<PfChip>(html`<pf-chip></pf-chip>`);
-      const klass = customElements.get('pf-chip');
-      expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfChip);
-    });
-  });
-
-  it('should be accessible', async function() {
-    const element = await createFixture<PfChip>(html`<pf-chip></pf-chip>`);
-    await expect(element).to.be.accessible();
-  });
-
-  describe('default behavior', function() {
-    let element: PfChip;
-    let snapshot: A11yTreeSnapshot;
 
     beforeEach(async function() {
-      element = await createFixture<PfChip>(html`<pf-chip></pf-chip>`);
-      await element.updateComplete;
-      snapshot = await a11ySnapshot();
-    });
-
-    describe('calling focus', function() {
-      let active: string | null | undefined;
-      beforeEach(async function() {
-        element.focus();
-        active = await activeElement(element)?.getAttribute('aria-label');
-      });
-      it('should focus', function() {
-        expect(active).to.equal(element.accessibleCloseLabel);
-      });
-    });
-
-    describe('clicking close button', function() {
-      beforeEach(async function() {
-        await click(element);
-      });
-      it('should close', function() {
-        expect(document.querySelector('pf-chip')).to.be.null;
-      });
-    });
-
-    describe('pressing Tab', function() {
-      let active: string | null | undefined;
-      beforeEach(async function() {
-        await tab();
-        active = await activeElement(element)?.getAttribute('aria-label');
-      });
-      it('should focus', function() {
-        expect(active).to.equal(element.accessibleCloseLabel);
-
-        describe('pressing Enter', async function() {
-          beforeEach(async function() {
-            await element.focus();
-            await enter();
-          });
-          it('should close', function() {
-            expect(document.querySelector('pf-chip')).to.be.null;
-          });
-        });
-      });
-    });
-  });
-
-  describe('overflow-chip', function() {
-    let element: PfChip;
-    let snapshot: A11yTreeSnapshot;
-
-    beforeEach(async function() {
-      element = await createFixture<PfChip>(html`<pf-chip overflow-chip>Overflow</pf-chip>`);
-      snapshot = await a11ySnapshot();
+      element = await createFixture<PfChip>(html`
+        <pf-chip></pf-chip>
+      `);
     });
 
     it('should be accessible', async function() {
       await expect(element).to.be.accessible();
     });
 
-    it('should not have a close button', function() {
-      expect(snapshot.children).to.deep.equal([{ role: 'button', name: 'Overflow' }]);
+    describe('calling focus', function() {
+      beforeEach(() => element.focus());
+      it('should focus', function() {
+        expect(activeElement(element)?.getAttribute('aria-label'))
+          .to.equal(element.accessibleCloseLabel);
+      });
+    });
+
+    describe('clicking close button', function() {
+      beforeEach(() => clickElementAtCenter(element));
+      it('should close', function() {
+        expect(document.querySelector('pf-chip')).to.be.null;
+      });
+    });
+
+    describe('pressing Tab', function() {
+      beforeEach(tab);
+      it('should focus', function() {
+        expect(activeElement(element)?.getAttribute('aria-label'))
+          .to.equal(element.accessibleCloseLabel);
+      });
+
+      describe('pressing Enter', async function() {
+        beforeEach(() => element.focus());
+        beforeEach(enter);
+        it('should close', function() {
+          expect(document.querySelector('pf-chip')).to.be.null;
+        });
+      });
+    });
+  });
+
+  describe('with `overflow-chip` attributge', function() {
+    let element: PfChip;
+
+    beforeEach(async function() {
+      element = await createFixture<PfChip>(html`
+        <pf-chip overflow-chip>Overflow</pf-chip>
+      `);
+    });
+
+    it('should be accessible', async function() {
+      await expect(element).to.be.accessible();
+    });
+
+    it('should not have a close button', async function() {
+      const snapshot = await a11ySnapshot();
+      expect(snapshot.children).to.deep.equal([
+        { role: 'text', name: 'Overflow' },
+      ]);
     });
 
     describe('calling focus', function() {
-      beforeEach(async function() {
-        element.focus();
-      });
+      beforeEach(() => element.focus());
       it('should focus', function() {
         expect(activeElement(element)).to.exist;
       });
     });
 
     describe('pressing Tab', function() {
-      beforeEach(async function() {
-        await tab();
-      });
+      beforeEach(tab);
       it('should focus', function() {
         expect(activeElement(element)).to.exist;
       });
     });
 
     describe('pressing Enter', function() {
-      beforeEach(async function() {
-        element.focus();
-        await enter();
-      });
+      beforeEach(() => element.focus());
+      beforeEach(enter);
       it('should NOT close', function() {
         expect(document.querySelector('pf-chip')).to.not.be.null;
       });
     });
 
     describe('clicking element', function() {
-      beforeEach(async function() {
-        await click(element);
-      });
+      beforeEach(() => clickElementAtCenter(element));
       it('should NOT close', function() {
         expect(document.querySelector('pf-chip')).to.not.be.null;
       });
@@ -154,17 +129,19 @@ describe('<pf-chip>', async function() {
 
   describe('readonly', async function() {
     let element: PfChip;
-    let snapshot: A11yTreeSnapshot;
 
     beforeEach(async function() {
-      element = await createFixture<PfChip>(html`<pf-chip readonly></pf-chip>`);
-      snapshot = await a11ySnapshot();
+      element = await createFixture<PfChip>(html`
+        <pf-chip readonly></pf-chip>
+      `);
     });
 
     it('should be accessible', async function() {
       await expect(element).to.be.accessible();
     });
-    it('should not have a button', function() {
+
+    it('should not have a button', async function() {
+      const snapshot = await a11ySnapshot();
       expect(snapshot.children).to.be.undefined;
     });
   });

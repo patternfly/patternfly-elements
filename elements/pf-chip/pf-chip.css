@@ -103,6 +103,10 @@
   --pf-c-button--disabled--BackgroundColor: var(--pf-c-button--m-plain--disabled--BackgroundColor);
 }
 
+:host([overflow-chip]) #close-button {
+  display: none !important;
+}
+
 #close-button:focus {
   outline: none !important;
 }

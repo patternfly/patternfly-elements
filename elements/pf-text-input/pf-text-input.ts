@@ -156,7 +156,8 @@ export class PfTextInput extends LitElement {
   /** Trim text on left */
   @property({ type: Boolean, reflect: true, attribute: 'left-truncated' }) leftTruncated = false;
 
-  /** Value to indicate if the input is modified to show that validation state.
+  /**
+   * Value to indicate if the input is modified to show that validation state.
    * If set to success, input will be modified to indicate valid state.
    * If set to warning,  input will be modified to indicate warning state.
    * Invalid inputs will display an error state

@@ -1,6 +1,43 @@
 :host {
-  align-items: center;
-  display: inline-flex;
+	--pf-c-chip--PaddingTop: var(--pf-global--spacer--xs, 0.25rem);
+	--pf-c-chip--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
+	--pf-c-chip--PaddingBottom: var(--pf-global--spacer--xs, 0.25rem);
+	--pf-c-chip--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
+	--pf-c-chip--BackgroundColor: var(--pf-global--Color--light-100, #fff);
+	--pf-c-chip--BorderRadius: var(--pf-global--BorderRadius--sm, 3px);
+	--pf-c-chip--before--BorderColor: var(--pf-global--BorderColor--300, #f0f0f0);
+	--pf-c-chip--before--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
+	--pf-c-chip--before--BorderRadius: var(--pf-c-chip--BorderRadius);
+	--pf-c-chip--m-overflow__text--Color: var(--pf-global--primary-color--100, #06c);
+	--pf-c-chip--m-draggable--BackgroundColor: var(--pf-global--BackgroundColor--200, #f0f0f0);
+	--pf-c-chip--m-draggable--BoxShadow: var(--pf-global--BoxShadow--sm, 0 0.0625rem 0.125rem 0 rgba(3, 3, 3, 0.12), 0 0 0.125rem 0 rgba(3, 3, 3, 0.06));
+	--pf-c-chip--m-draggable__icon--FontSize: var(--pf-global--icon--FontSize--sm, 0.625rem);
+	--pf-c-chip__text--FontSize: var(--pf-global--FontSize--xs, 0.75rem);
+	--pf-c-chip__text--Color: var(--pf-global--Color--100, #151515);
+	--pf-c-chip__text--MaxWidth: 16ch;
+	--pf-c-chip__c-button--PaddingTop: var(--pf-global--spacer--xs, 0.25rem);
+	--pf-c-chip__c-button--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
+	--pf-c-chip__c-button--PaddingBottom: var(--pf-global--spacer--xs, 0.25rem);
+	--pf-c-chip__c-button--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
+	--pf-c-chip__c-button--MarginTop: calc(var(--pf-c-chip--PaddingTop) * -1);
+	--pf-c-chip__c-button--MarginRight: calc(var(--pf-c-chip--PaddingRight) / 2 * -1);
+	--pf-c-chip__c-button--MarginBottom: calc(var(--pf-c-chip--PaddingBottom) * -1);
+	--pf-c-chip__c-button--FontSize: var(--pf-global--FontSize--xs, 0.75rem);
+	--pf-c-chip__c-badge--MarginLeft: var(--pf-global--spacer--xs, 0.25rem);
+	--pf-c-chip__icon--MarginLeft: var(--pf-global--spacer--sm, 0.5rem);
+	color: var(--pf-global--Color--100, #151515);
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	min-width: 0;
+	padding:
+    var(--pf-c-chip--PaddingTop)
+    var(--pf-c-chip--PaddingRight)
+    var(--pf-c-chip--PaddingBottom)
+    var(--pf-c-chip--PaddingLeft);
+	list-style: none;
+	background-color: var(--pf-c-chip--BackgroundColor);
+	border-radius: var(--pf-c-chip--BorderRadius);
 }
 
 *[hidden],
@@ -9,20 +46,19 @@
 }
 
 #outer {
-  min-height: 44px;
-  min-width: 44px;
-  max-width: 100%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 !important;
-  background-color: var(--pf-theme--color--surface--lightest, #fff);
-  color: var(--pf-theme--color--text, #151515);
-  border-radius: var(--pf-global--BorderRadius--sm, 3px);
-  border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
-  position: relative;
+  display: contents;
 }
 
+:host::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: "";
+  border: var(--pf-c-chip--before--BorderWidth) solid var(--pf-c-chip--before--BorderColor);
+  border-radius: var(--pf-c-chip--before--BorderRadius);
+}
 
 :host(:focus-within) #outer {
   border-color: var(--pf-theme--color--accent, #0066cc);
@@ -57,33 +93,22 @@
   margin: 0 var(--pf-global--spacer--sm, 0.5rem);
 }
 
-button {
-  background-color: transparent;
-  border: none;
-  color: var(--pf-theme--color--ui-base, #6a6e73);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
+#close-button {
+  --pf-c-button--PaddingTop: var(--pf-c-chip__c-button--PaddingTop);
+  --pf-c-button--PaddingRight: var(--pf-c-chip__c-button--PaddingRight);
+  --pf-c-button--PaddingBottom: var(--pf-c-chip__c-button--PaddingBottom);
+  --pf-c-button--PaddingLeft: var(--pf-c-chip__c-button--PaddingLeft);
+  --pf-c-button--FontSize: var(--pf-c-chip__c-button--FontSize);
+  --pf-c-button--disabled--Color: var(--pf-c-button--m-plain--disabled--Color);
+  --pf-c-button--disabled--BackgroundColor: var(--pf-c-button--m-plain--disabled--BackgroundColor);
 }
 
-button::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-
-button:focus {
+#close-button:focus {
   outline: none !important;
 }
 
 svg {
-  width: var(--pf-global--FontSize--xs, 12px);
-  height: var(--pf-global--FontSize--xs, 12px);
-  margin: var(--pf-global--spacer--xs, 0.25rem) 0;
+  vertical-align: -0.125em;
 }
 
 ::slotted(pf-badge) {

@@ -20,6 +20,16 @@ export class ChipGroupRemoveEvent extends Event {
     super('remove', { bubbles: true, cancelable: true });
   }
 }
+
+/**
+ * `${`
+ * **WS** (_>= 0x_)
+ * `remaining`
+ * **WS** (_>= 0x_)
+ * `}`
+ */
+const REMAINING_RE = /\$\{\s*remaining\s*\}/g;
+
 /**
  * A **chip group** is a collection of chips that can be grouped by category and used to represent one or more values assigned to a single attribute. When value of numChips is exceeded, additional chips will be hidden using an overflow chip.
  *
@@ -85,46 +95,45 @@ export class PfChipGroup extends LitElement {
 
   #itemsInit = false;
 
-  #tabindex: RovingTabindexController;
+  #tabindex = new RovingTabindexController(this);
 
   constructor() {
     super();
-    this.#tabindex = new RovingTabindexController(this);
     this.addEventListener('ready', this.#onChipReady);
     this.addEventListener('remove', this.#onChipRemoved);
   }
 
   render() {
     const category = this.hasCategory ? 'has-category' : '';
-    let collapsedText = `${this.collapsedText}`;
-    if (this.collapsedText.match(/\$\{remaining\}/)) {
-      collapsedText = this.collapsedText.split('${remaining}').join(`${this.remaining}`);
-    }
     return html`
       <div id="outer" class="${category}">
-        ${this.accessibleLabel === '' ? html`
-          <slot id="category" name="category-name" @slotchange=${this.#onSlotchange}></slot>
-        ` : html`
-          <slot id="category" name="category-name" @slotchange=${this.#onSlotchange}>
-            <span class="offscreen">${this.accessibleLabel}</span>
-          </slot>
-        `}
-        <slot id="chips" @slotchange=${this.#onSlotchange} @remove="${this.#updateChips}"></slot>
-        ${this.remaining < 1 ? '' : html`
-          <button id="overflow"
-            aria-controls="chips"
-            class="chip-content"
-            @click="${this.#onMoreClick}>
-            ${this.open ? this.expandedText : collapsedText}
-          </button>
-        `}
-        ${!this.closeable ? '' : html`
-          <button id="close-button" @click=${this.#onCloseClick} aria-describedby="category" aria-label="${this.accessibleCloseLabel}">
-            <svg fill="currentColor" viewBox="0 0 496 496">
-              <path d="m248,0C111,0,0,111,0,248s111,248,248,248,248-111,248-248S385,0,248,0Zm121.6,313.1c4.7,4.7,4.7,12.3,0,17l-39.6,39.5c-4.7,4.7-12.3,4.7-17,0l-65-65.6-65.1,65.6c-4.7,4.7-12.3,4.7-17,0l-39.5-39.6c-4.7-4.7-4.7-12.3,0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3,0-17l39.6-39.6c4.7-4.7,12.3-4.7,17,0l65,65.7,65.1-65.6c4.7-4.7,12.3-4.7,17,0l39.6,39.6c4.7,4.7,4.7,12.3,0,17l-65.7,65,65.6,65.1Z"/>
-            </svg>
-          </button>
-        `}
+        <slot id="category"
+              name="category-name"
+              @slotchange="${this.#onSlotchange}">
+          <span class="offscreen"
+                ?hidden="${!this.accessibleLabel}">${this.accessibleLabel ?? ''}</span>
+        </slot>
+        <slot id="chips"
+              @slotchange="${this.#onSlotchange}"
+              @remove="${this.#updateChips}"
+        ></slot>
+        <button id="overflow"
+                ?hidden="${this.remaining < 1}"
+                aria-controls="chips"
+                class="chip-content"
+                @click="${this.#onMoreClick}"
+        >${this.remaining < 1 ? ''
+         : this.open ? this.expandedText
+         : this.collapsedText.replace(REMAINING_RE, this.remaining.toString())}</button>
+        <button id="close-button"
+                ?hidden="${!this.closeable}"
+                @click="${this.#onCloseClick}"
+                aria-describedby="category"
+                aria-label="${this.accessibleCloseLabel}">
+          <svg fill="currentColor" viewBox="0 0 496 496">
+            <path d="m248,0C111,0,0,111,0,248s111,248,248,248,248-111,248-248S385,0,248,0Zm121.6,313.1c4.7,4.7,4.7,12.3,0,17l-39.6,39.5c-4.7,4.7-12.3,4.7-17,0l-65-65.6-65.1,65.6c-4.7,4.7-12.3,4.7-17,0l-39.5-39.6c-4.7-4.7-4.7-12.3,0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3,0-17l39.6-39.6c4.7-4.7,12.3-4.7,17,0l65,65.7,65.1-65.6c4.7-4.7,12.3-4.7,17,0l39.6,39.6c4.7,4.7,4.7,12.3,0,17l-65.7,65,65.6,65.1Z"/>
+          </svg>
+        </button>
       </div>
     `;
   }

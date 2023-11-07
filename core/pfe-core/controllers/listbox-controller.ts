@@ -16,6 +16,7 @@ export interface ListboxConfigOptions {
   matchAnywhere?: boolean;
   multi?: boolean;
   orientation?: ListboxOrientation;
+  getHTMLElement?(): HTMLElement;
 }
 
 export interface ListboxOptionElement extends HTMLElement {
@@ -37,6 +38,8 @@ type FilterPropValue = ListboxController[FilterPropKey];
 export class ListboxController<
   Item extends ListboxOptionElement = ListboxOptionElement
 > implements ReactiveController {
+  private static instances = new WeakMap<ReactiveControllerHost, ListboxController>();
+
   private static filter<T extends ListboxOptionElement>(
     target: ListboxController<T>,
     key: FilterPropKey,
@@ -49,7 +52,9 @@ export class ListboxController<
       set(this: ListboxController<T>, value: FilterPropValue) {
         if (this.#filterStorage.get(key) !== value) {
           this.#filterStorage.set(key, value);
-          this.#onFilterChange();
+          if (this.internals) {
+            this.#onFilterChange();
+          }
         }
       }
     });
@@ -77,15 +82,11 @@ export class ListboxController<
   /** Whether or not focus should be updated after filtering */
   #updateFocus = false;
 
-  #tabindex!: RovingTabindexController<Item>;
-
-  #internals!: InternalsController;
-
-  /** Current active descendant in listbox */
-  get activeItem() {
-    const [active] = this.options.filter(option => option.id === this.#internals.ariaActivedescendant);
-    return active || this.#tabindex.firstItem;
-  }
+  /**
+   * Whether filtering matches anywhere in option text;
+   * default is only options starting with filter
+   */
+  @ListboxController.filter matchAnywhere = false;
 
   /** Filter options that start with this string (case-insensitive) */
   @ListboxController.filter filter = '';
@@ -93,40 +94,40 @@ export class ListboxController<
   /** Whether filtering is case sensitive */
   @ListboxController.filter caseSensitive = false;
 
+  /** Current active descendant in listbox */
+  get activeItem() {
+    const [active] = this.options.filter(option => option.id === this.internals.ariaActivedescendant);
+    return active || this.tabindex.firstItem;
+  }
+
   /** Whether listbox is disabled */
   set disabled(disabled: boolean) {
-    this.#internals.ariaDisabled = String(!!disabled);
+    this.internals.ariaDisabled = String(!!disabled);
   }
 
   get disabled(): boolean {
-    return this.#internals.ariaDisabled === 'true';
+    return this.internals.ariaDisabled === 'true';
   }
 
   /** Whether listbox is multiselectable. */
   set multi(multi: boolean) {
-    this.#internals.ariaMultiSelectable = multi ? 'true' : 'false';
+    this.internals.ariaMultiSelectable = multi ? 'true' : 'false';
   }
 
   get multi(): boolean {
-    return this.#internals.ariaMultiSelectable === 'true';
+    return this.internals.ariaMultiSelectable === 'true';
   }
-
-  /**
-   * Whether filtering matches anywhere in option text;
-   * default is only options starting with filter
-   */
-  @ListboxController.filter matchAnywhere = false;
 
   /**
    * listbox orientation;
    * default is vertical
    */
   set orientation(orientation: ListboxOrientation) {
-    this.#internals.ariaOrientation = orientation || 'undefined';
+    this.internals.ariaOrientation = orientation || 'undefined';
   }
 
   get orientation(): ListboxOrientation {
-    const orientation = this.#internals.ariaOrientation || 'undefined';
+    const orientation = this.internals.ariaOrientation || 'undefined';
     return orientation as ListboxOrientation;
   }
 
@@ -171,18 +172,29 @@ export class ListboxController<
     return this.#getMatchingOptions();
   }
 
-  private static hosts = new WeakMap<ReactiveControllerHost & HTMLElement, ListboxController>();
+  private get element() {
+    return this.host instanceof HTMLElement ? this.host : this.controllerOptions.getHTMLElement?.() as HTMLElement;
+  }
 
-  constructor(public host: ReactiveControllerHost & HTMLElement, options: ListboxConfigOptions) {
-    const instance = ListboxController.hosts.get(host);
+  private internals = new InternalsController(this.host, { role: 'listbox' });
+
+  private tabindex = new RovingTabindexController<Item>(this.host);
+
+  constructor(
+    public host: ReactiveControllerHost,
+    private controllerOptions: ListboxConfigOptions,
+  ) {
+    const instance = ListboxController.instances.get(host);
     if (instance) {
       return instance as ListboxController<Item>;
     }
-    this.#internals = new InternalsController(this.host, { role: 'listbox' });
-    this.#tabindex = new RovingTabindexController<Item>(this.host);
-    ListboxController.hosts.set(host, this);
+    if (!(host instanceof HTMLElement) && typeof controllerOptions.getHTMLElement !== 'function') {
+      throw new Error('ListboxController requires the host to be an HTMLElement, or for the initializer to include a `getHTMLElement()` function');
+    }
+    ListboxController.instances.set(host, this);
     this.host.addController(this);
-    this.caseSensitive = options.caseSensitive || false;
+    this.caseSensitive = controllerOptions.caseSensitive || false;
+    this.#onFilterChange();
   }
 
   /**
@@ -237,12 +249,12 @@ export class ListboxController<
    */
   #updateActiveDescendant() {
     this.options.forEach(option => {
-      option.active = option === this.#tabindex.activeItem && this.visibleOptions.includes(option);
+      option.active = option === this.tabindex.activeItem && this.visibleOptions.includes(option);
       if (option.active) {
-        this.#internals.ariaActivedescendant = option.id;
+        this.internals.ariaActivedescendant = option.id;
       } else {
-        if (this.#internals.ariaActivedescendant === option.id) {
-          this.#internals.ariaActivedescendant = null;
+        if (this.internals.ariaActivedescendant === option.id) {
+          this.internals.ariaActivedescendant = null;
         }
       }
     });
@@ -254,7 +266,7 @@ export class ListboxController<
    * @fires change
    */
   #fireChange() {
-    this.host.dispatchEvent(new Event('change', { bubbles: true }));
+    this.element.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   /**
@@ -263,7 +275,7 @@ export class ListboxController<
    * @fires input
    */
   #fireInput() {
-    this.host.dispatchEvent(new Event('input', { bubbles: true }));
+    this.element.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
   /**
@@ -279,10 +291,10 @@ export class ListboxController<
     const oldValue = this.value;
 
     if (this.#updateFocus) {
-      this.#tabindex.updateItems(this.visibleOptions);
+      this.tabindex.updateItems(this.visibleOptions);
       this.#updateFocus = false;
     } else {
-      this.#tabindex.initItems(this.visibleOptions);
+      this.tabindex.initItems(this.visibleOptions);
     }
     if (oldValue !== this.value) {
       this.#fireInput();
@@ -295,8 +307,8 @@ export class ListboxController<
    */
   #onOptionFocus(event: FocusEvent) {
     const target = event.target as Item;
-    if (target !== this.#tabindex.activeItem) {
-      this.#tabindex.updateActiveItem(target);
+    if (target !== this.tabindex.activeItem) {
+      this.tabindex.updateActiveItem(target);
     }
     this.#updateActiveDescendant();
   }
@@ -320,8 +332,8 @@ export class ListboxController<
       // select target and deselect all other options
       this.options.forEach(option => option.selected = option === target);
     }
-    if (target !== this.#tabindex.activeItem) {
-      this.#tabindex.focusOnItem(target);
+    if (target !== this.tabindex.activeItem) {
+      this.tabindex.focusOnItem(target);
       this.#updateActiveDescendant();
     }
     if (oldValue !== this.value) {
@@ -359,8 +371,8 @@ export class ListboxController<
       return;
     }
 
-    const first = this.#tabindex.firstItem;
-    const last = this.#tabindex.lastItem;
+    const first = this.tabindex.firstItem;
+    const last = this.tabindex.lastItem;
 
     // need to set for keyboard support of multiselect
     if (event.key === 'Shift' && this.multi) {
@@ -413,7 +425,7 @@ export class ListboxController<
           }
         }
       });
-      this.#tabindex.initItems(this.visibleOptions);
+      this.tabindex.initItems(this.visibleOptions);
     }
   }
 
@@ -439,7 +451,7 @@ export class ListboxController<
    */
   #updateSingleselect() {
     if (!this.multi && !this.disabled) {
-      this.#getEnabledOptions().forEach(option => option.selected = option.id === this.#internals.ariaActivedescendant);
+      this.#getEnabledOptions().forEach(option => option.selected = option.id === this.internals.ariaActivedescendant);
       this.#fireChange();
     }
   }
@@ -483,6 +495,6 @@ export class ListboxController<
    * Sets focus on last active item
    */
   focusActiveItem() {
-    this.#tabindex.focusOnItem(this.#tabindex.activeItem);
+    this.tabindex.focusOnItem(this.tabindex.activeItem);
   }
 }

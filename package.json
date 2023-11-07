@@ -211,8 +211,14 @@
       "command": "web-dev-server --open --watch",
       "service": true,
       "dependencies": [
-        "build:tools"
+        "build:tools",
+        "build:core",
+        "watch:core"
       ]
+    },
+    "watch:core": {
+      "service": true,
+      "command": "tspc --build --watch ./core/pfe-core --pretty"
     },
     "watch:analyze": {
       "service": true,

@@ -3,6 +3,10 @@ import { FloatingDOMController, type Placement } from '@patternfly/pfe-core/cont
 import { getRandomId } from '../functions/random.js';
 import { InternalsController } from './internals-controller.js';
 
+function isReactiveControllerHost(element: HTMLElement): element is HTMLElement & ReactiveControllerHost {
+  return 'addController' in element && typeof element.addController === 'function';
+}
+
 /**
  * properties for popup option elements
  */
@@ -342,14 +346,11 @@ export class ToggleController implements ReactiveController {
    */
   addTriggerElement(triggerElement?: HTMLElement | null ) {
     if (triggerElement && !this.#triggerElements.includes(triggerElement)) {
-      const customElement = triggerElement as ReactiveControllerHost & HTMLElement;
-
       // use internals, if possible
-      if (customElement && customElements.get(customElement.localName)) {
-        const internals = new InternalsController(customElement, {
-          ariaExpanded: this.expanded ? 'true' : 'false',
-          ariaHasPopup: this.#popupType
-        });
+      if (isReactiveControllerHost(triggerElement)) {
+        const internals = new InternalsController(triggerElement);
+        internals.ariaExpanded = this.expanded ? 'true' : 'false';
+        internals.ariaHasPopup = this.#popupType;
         this.#triggerInternals.set(triggerElement, internals);
       } else {
         // otherwise, set attributes

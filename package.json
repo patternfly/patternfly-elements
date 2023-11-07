@@ -24,7 +24,7 @@
     "🧪-TEST": "❓ Test packages",
     "test": "wireit",
     "test:ci": "wireit",
-    "test:watch": "wtr --watch",
+    "test:watch": "wtr --watch --group default",
     "test:vue": "wtr --watch --group with-vue",
     "test:react": "wtr --watch --group with-react",
     "e2e": "wireit",

@@ -59,6 +59,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   }
 
   @aria role: string | null = null;
+
   @aria ariaActivedescendant: string | null = null;
   @aria ariaAtomic: string | null = null;
   @aria ariaAutoComplete: string | null = null;
@@ -99,6 +100,15 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   @aria ariaValueMin: string | null = null;
   @aria ariaValueNow: string | null = null;
   @aria ariaValueText: string | null = null;
+
+  @aria ariaActiveDescendantElement: Element | null = null;
+  @aria ariaControlsElements: Element | null = null;
+  @aria ariaDescribedByElements: Element | null = null;
+  @aria ariaDetailsElements: Element | null = null;
+  @aria ariaErrorMessageElements: Element | null = null;
+  @aria ariaFlowToElements: Element | null = null;
+  @aria ariaLabelledByElements: Element | null = null;
+  @aria ariaOwnsElements: Element | null = null;
 
   /** True when the control is disabled via it's containing fieldset element */
   get formDisabled() {

@@ -33,9 +33,13 @@ type FilterPropValue = ListboxController<any>[FilterPropKey];
 let constructingAllowed = false;
 
 /**
- * Implements roving tabindex, as described in WAI-ARIA practices, [Managing Focus Within
- * Components Using a Roving
- * tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
+ * Implements roving tabindex, as described in WAI-ARIA practices,
+ * [Managing Focus Within Components Using a Roving tabindex][rti]
+ *
+ * [rti]: https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex
+ *
+ * @fires change
+ * @fires input
  */
 export class ListboxController<Item extends ListboxOptionElement> implements ReactiveController {
   private static instances = new WeakMap<ReactiveControllerHost, ListboxController<any>>();
@@ -96,7 +100,7 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
 
   /** Current active descendant in listbox */
   get activeItem() {
-    const [active] = this.options.filter(option => option.id === this.internals.ariaActivedescendant);
+    const [active] = this.options.filter(option => option === this.internals.ariaActiveDescendantElement);
     return active || this.tabindex.firstItem;
   }
 
@@ -256,17 +260,20 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
     return matchedOptions;
   }
 
+  // TODO(bennypowers): create ActiveDescendantController if/when a third use case becomes apparent
+
   /**
    * updates active descendant when focus changes
    */
   #updateActiveDescendant() {
     this.options.forEach(option => {
-      option.active = option === this.tabindex.activeItem && this.visibleOptions.includes(option);
+      option.active = option === this.tabindex.activeItem &&
+        this.visibleOptions.includes(option);
       if (option.active) {
-        this.internals.ariaActivedescendant = option.id;
+        this.internals.ariaActiveDescendantElement = option;
       } else {
-        if (this.internals.ariaActivedescendant === option.id) {
-          this.internals.ariaActivedescendant = null;
+        if (this.internals.ariaActiveDescendantElement === option) {
+          this.internals.ariaActiveDescendantElement = null;
         }
       }
     });
@@ -275,7 +282,6 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
   /**
    * handles user user selection change similar to HTMLSelectElement events
    * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
-   * @fires change
    */
   #fireChange() {
     this.element.dispatchEvent(new Event('change', { bubbles: true }));
@@ -284,7 +290,6 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
   /**
    * handles element value change similar to HTMLSelectElement events
    * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
-   * @fires input
    */
   #fireInput() {
     this.element.dispatchEvent(new Event('input', { bubbles: true }));
@@ -294,7 +299,6 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
    * handles updates to filter text:
    * hides options that do not match filter settings
    * and updates active descendant based on which options are still visible
-   * @returns void
    */
   #onFilterChange() {
     if (this.disabled) {
@@ -463,7 +467,9 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
    */
   #updateSingleselect() {
     if (!this.multi && !this.disabled) {
-      this.#getEnabledOptions().forEach(option => option.selected = option.id === this.internals.ariaActivedescendant);
+      this.#getEnabledOptions()
+        .forEach(option =>
+          option.selected = option === this.internals.ariaActiveDescendantElement);
       this.#fireChange();
     }
   }

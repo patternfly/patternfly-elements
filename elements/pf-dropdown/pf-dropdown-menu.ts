@@ -1,11 +1,14 @@
-import { LitElement, html, type PropertyValueMap } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+
 import { PfDropdownItem, DropdownItemChange } from './pf-dropdown-item.js';
 import { PfDropdownGroup } from './pf-dropdown-group.js';
+
 import styles from './pf-dropdown-menu.css';
 
 /**
@@ -16,16 +19,16 @@ import styles from './pf-dropdown-menu.css';
 @customElement('pf-dropdown-menu')
 export class PfDropdownMenu extends LitElement {
   static readonly styles = [styles];
+
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
-   * whether listbox is disabled
+   * Whether the menu is disabled
    */
-  @property({ reflect: true, type: Boolean }) disabled = false;
+  @property({ type: Boolean, reflect: true }) disabled = false;
 
-  @queryAssignedElements({ flatten: true }) private menuAssignedElements!:
-    | PfDropdownItem[]
-    | PfDropdownGroup[];
+  @queryAssignedElements({ flatten: true })
+  private menuAssignedElements!: PfDropdownItem[] | PfDropdownGroup[];
 
   /** event listeners for host element */
   #listeners = {
@@ -44,7 +47,8 @@ export class PfDropdownMenu extends LitElement {
    * current active descendant in menu
    */
   get activeItem() {
-    const [active] = this.#menuitems.filter(menuitem => menuitem.getAttribute('id') === this.#internals.ariaActivedescendant);
+    const [active] = this.#menuitems.filter(menuitem =>
+      menuitem === this.#internals.ariaActiveDescendantElement);
     return active ?? this.#tabindex.firstItem;
   }
 
@@ -56,16 +60,15 @@ export class PfDropdownMenu extends LitElement {
   }
 
   get #dropdownItems() {
-    const dropdownItems: PfDropdownItem[] = [];
-    this.menuAssignedElements?.forEach(node => {
+    return this.menuAssignedElements?.flatMap(node => {
       if (node instanceof PfDropdownItem) {
-        dropdownItems.push(node);
+        return [node];
       } else if (node instanceof PfDropdownGroup) {
-        const pfItems = node.dropdownItems;
-        dropdownItems.push(...pfItems);
+        return Array.from(node.querySelectorAll('pf-dropdown-item'));
+      } else {
+        return [];
       }
     });
-    return dropdownItems;
   }
 
   get #menuitems() {
@@ -79,15 +82,16 @@ export class PfDropdownMenu extends LitElement {
     }
   }
 
-  protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    if (_changedProperties.has('disabled')) {
+  protected updated(changed: PropertyValues<this>): void {
+    if (changed.has('disabled')) {
       this.#internals.ariaDisabled = `${!!this.disabled}`;
     }
   }
 
   render() {
     return html`
-      <slot @slotchange="${this.#handleSlotChange}" @change="${this.#handleItemChange}"></slot>
+      <slot @slotchange="${this.#handleSlotChange}"
+            @change="${this.#handleItemChange}"></slot>
     `;
   }
 
@@ -185,12 +189,14 @@ export class PfDropdownMenu extends LitElement {
    */
   #updateActiveDescendant() {
     this.#dropdownItems.forEach(item => {
-      item.active = item.menuItem === this.#tabindex.activeItem && this.#menuitems.includes(item.menuItem);
+      item.active =
+        item.menuItem ===
+          this.#tabindex.activeItem && this.#menuitems.includes(item.menuItem);
       if (item.active) {
-        this.#internals.ariaActivedescendant = item.id;
+        this.#internals.ariaActiveDescendantElement = item;
       } else {
-        if (this.#internals.ariaActivedescendant === item.id) {
-          this.#internals.ariaActivedescendant = null;
+        if (this.#internals.ariaActiveDescendantElement === item) {
+          this.#internals.ariaActiveDescendantElement = null;
         }
       }
     });

@@ -65,11 +65,14 @@ export class PfDropdown extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  @queryAssignedElements({ slot: 'trigger' }) private _slottedTrigger!: HTMLElement[];
+  @queryAssignedElements({ slot: 'trigger' })
+  private _slottedTrigger!: HTMLElement[];
 
-  @query('#default-button') private _defaultTrigger!: HTMLButtonElement;
+  @query('#default-button')
+  private _defaultTrigger!: HTMLButtonElement;
 
-  @query('pf-dropdown-menu') private _menuElement!: HTMLElement;
+  @query('pf-dropdown-menu')
+  private _menuElement!: HTMLElement;
 
   #triggerElement: HTMLElement | null = null;
 
@@ -87,7 +90,7 @@ export class PfDropdown extends LitElement {
             @slotchange="${this.#setTriggerElement}">
         <pf-button id="default-button"
                    variant="control"
-                   class="${classMap({ disabled })}">
+                   ?disabled="${disabled}">
           Dropdown
           <svg viewBox="0 0 320 512" fill="currentColor" aria-hidden="true" width="1em" height="1em">
             <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>

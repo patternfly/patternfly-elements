@@ -1,14 +1,15 @@
-import { LitElement, html, type PropertyValueMap } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
+
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+
 import styles from './pf-dropdown-item.css';
 
 export class DropdownItemChange extends Event {
   constructor() {
-    super('change', { bubbles: true });
+    super('change', { bubbles: true, cancelable: true });
   }
 }
 
@@ -52,17 +53,18 @@ export class DropdownItemChange extends Event {
 @customElement('pf-dropdown-item')
 export class PfDropdownItem extends LitElement {
   static readonly styles = [styles];
+
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
    * The value associated with the dropdown item.
    * This value can be used to identify the selected item
-  */
+   */
   @property({ reflect: true }) value?: string;
 
   /**
-   * uri for links
-  */
+   * href for link dropdown items
+   */
   @property({ attribute: 'href' }) href?: string;
 
   /**
@@ -74,38 +76,38 @@ export class PfDropdownItem extends LitElement {
    * Indicates whether the dropdown item is disabled.
    * A disabled item cannot be selected.
    */
-  @property({ reflect: true, type: Boolean }) disabled = false;
-  @query('[role="menuitem"]') menuItem!: HTMLElement;
+  @property({ type: Boolean, reflect: true }) disabled = false;
+
+  /** Item description; overridden by `description` slot */
+  @property() description?: string;
 
   #internals = InternalsController.for(this, { role: 'none' });
-  #id: string;
 
-  constructor() {
-    super();
-    this.#id = getRandomId();
-  }
+  /** @internal */
+  @query('#item') menuItem!: HTMLElement;
 
-  protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    if (_changedProperties.has('href')) {
+  protected updated(changed: PropertyValues<this>): void {
+    if (changed.has('href')) {
       this.dispatchEvent(new DropdownItemChange());
     }
-    if (_changedProperties.has('disabled')) {
+    if (changed.has('disabled')) {
       this.#internals.ariaDisabled = `${!!this.disabled}`;
     }
   }
 
   render() {
     return html`
-      <div id="menuitem" role="none">
-        ${this.href && this.href !== '' ? html`<a id="${this.#id}" role="menuitem" href="${this.href}">
-              <slot name="icon"></slot>
-              <slot></slot>
-            </a>`
-          : html`<div id="${this.#id}" role="menuitem">
-            <slot name="icon"></slot>
-            <slot></slot>
-          </div>`}
-        <div id="description"><slot name="description"></slot></div>
+      <div id="menuitem" role="none">${this.href ? html`
+        <a id="item" role="menuitem" href="${this.href}">
+          <slot name="icon"></slot>
+          <slot></slot>
+        </a>
+        ` : html`
+        <div id="item" role="menuitem">
+          <slot name="icon"></slot>
+          <slot></slot>
+        </div>`}
+        <slot id="description" name="description">${this.description ?? ''}</slot>
       </div>`;
   }
 }

@@ -2,7 +2,6 @@
   background: var(--pf-c-dropdown__menu--BackgroundColor, #fff);
 }
 
-
 :host([disabled]) {
   background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   pointer-events: none;

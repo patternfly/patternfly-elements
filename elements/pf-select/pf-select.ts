@@ -49,23 +49,23 @@ export class PfSelect extends LitElement {
   /**
    * whether listbox is has checkboxes when `multi-select` is enabled
    */
-  @property({ reflect: true, attribute: 'checkboxes', type: Boolean }) checkboxes = false;
+  @property({ type: Boolean, reflect: true }) checkboxes = false;
 
   /**
    * text for a special option that allows user to create an option from typeahead input text;
    * set to '' in order to disable this feature
    */
-  @property({ attribute: 'create-option-text', type: String }) createOptionText = '';
+  @property({ attribute: 'create-option-text' }) createOptionText = '';
 
   /**
    * Accessible label for chip group used to describe chips
    */
-  @property({ attribute: 'current-selections-label', type: String }) currentSelectionsLabel = 'Current selections';
+  @property({ attribute: 'current-selections-label' }) currentSelectionsLabel = 'Current selections';
 
   /**
    * listbox button text when single-select listbox has no selected option text
    */
-  @property({ attribute: 'default-text', type: String }) defaultText = 'Options';
+  @property({ attribute: 'default-text' }) defaultText = 'Options';
 
   /**
    * whether select is disabled
@@ -80,23 +80,23 @@ export class PfSelect extends LitElement {
   /**
    * listbox filter
    */
-  @property({ type: String }) filter = '';
+  @property() filter = '';
 
   /**
    * multi listbox button text
    */
-  @property({ attribute: 'items-selected-text', type: String }) itemsSelectedText = 'items selected';
+  @property({ attribute: 'items-selected-text' }) itemsSelectedText = 'items selected';
 
   /**
    * whether filtering (if enabled) will look for filter match anywhere in option text
    * (by default it will only match if option starts with filter)
    */
-  @property({ reflect: true, attribute: 'match-anywhere', type: Boolean }) matchAnywhere = false;
+  @property({ attribute: 'match-anywhere', reflect: true, type: Boolean }) matchAnywhere = false;
 
   /**
    * whether multiple items can be selected
    */
-  @property({ reflect: true, attribute: 'multi', type: Boolean }) multi = false;
+  @property({ type: Boolean, reflect: true }) multi = false;
 
   /**
    * Indicates initial popover position.
@@ -111,13 +111,17 @@ export class PfSelect extends LitElement {
    * 'chips' for a group of chips,
    * '' for # items selected text (default)
    */
-  @property({ attribute: 'selected-items-display', type: String }) selectedItemsDisplay: 'default' | 'badge' | 'chips' = 'default';
+  @property({ attribute: 'selected-items-display' }) selectedItemsDisplay: 'default' | 'badge' | 'chips' = 'default';
 
   /**
    * whether listbox controlled by combobox that supports typing
    */
   @property({ type: Boolean }) typeahead = false;
 
+  /**
+   * Whether the select listbox is expanded
+   *
+   */
   @property({ type: Boolean, reflect: true })
   get expanded() {
     return this.#toggle.expanded;
@@ -261,13 +265,14 @@ export class PfSelect extends LitElement {
                  ?hidden="${!typeahead}"
                  placeholder="${this.#buttonLabel}"
                  role="combobox"
-                @input=${this.#onTypeaheadInput}>
+                 @input="${this.#onTypeaheadInput}">
             <button id="toggle-button"
                     ?hidden="${alwaysExpanded}"
                       aria-controls="listbox"
                       aria-expanded="${!!expanded}"
                       aria-haspopup="listbox">
-                <span id="toggle-text" class="${classMap({ offscreen, badge })}">
+                <span id="toggle-text"
+                      class="${classMap({ offscreen, badge })}">
                 ${this.#buttonLabel}
               </span>
               ${hasBadge ? html`
@@ -275,37 +280,37 @@ export class PfSelect extends LitElement {
                   <pf-badge number="${this.#selectedOptions.length}">${this.#selectedOptions.length}</pf-badge>
                 </span> ` : ''}
               <svg viewBox="0 0 320 512"
-                  fill="currentColor"
-                  aria-hidden="true">
+                   fill="currentColor"
+                   aria-hidden="true">
                 <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
               </svg>
             </button>
           </div>
           <pf-listbox id="listbox"
-              class="${classMap({ checkboxes })}"
-              style="${styleMap(this.alwaysExpanded ? {} : {
-                marginTop: `${height || 0}px`,
-                width: width ? `${width}px` : 'auto',
-              })}"
-              ?disabled="${disabled}"
-              ?hidden="${!this.alwaysExpanded && !expanded}"
-              ?case-sensitive="${caseSensitive}"
-              ?match-anywhere="${matchAnywhere}"
-              ?multi="${this.#isMulti}"
-              filter="${filter || ''}"
-              @input="${this.#onListboxInput}"
-              @change="${this.#onListboxChange}"
-              @refresh="${this.#onListboxRefresh}"
-              @select="${this.#onListboxSelect}">
+                      class="${classMap({ checkboxes })}"
+                      style="${styleMap(this.alwaysExpanded ? {} : {
+                        marginTop: `${height || 0}px`,
+                        width: width ? `${width}px` : 'auto',
+                      })}"
+                      ?disabled="${disabled}"
+                      ?hidden="${!this.alwaysExpanded && !expanded}"
+                      ?case-sensitive="${caseSensitive}"
+                      ?match-anywhere="${matchAnywhere}"
+                      ?multi="${this.#isMulti}"
+                      filter="${filter || ''}"
+                      @input="${this.#onListboxInput}"
+                      @change="${this.#onListboxChange}"
+                      @refresh="${this.#onListboxRefresh}"
+                      @select="${this.#onListboxSelect}">
             <slot></slot>
             ${repeat(this.#userCreatedOptions, opt => opt.id, opt => opt.value === '' ? '' : html`
             <pf-option id="${opt.id}" ?selected="${this.#valueTextArray.includes(opt.value)}">${opt.value}</pf-option>
             `)}
             ${!this.typeahead || createOptionText === '' || filter.length === 0 ? '' : html`
               <pf-option id="suggested-option"
-                  value="${filter}"
-                  ?selected="${this.#valueTextArray.includes(filter)}"
-                  @select="${this.#createOption}">
+                         value="${filter}"
+                         ?selected="${this.#valueTextArray.includes(filter)}"
+                         @select="${this.#createOption}">
                 ${this.#valueTextArray.includes(filter) ? '' : html`
                 <span slot="create">${createOptionText}: </span>
                 `}
@@ -323,7 +328,7 @@ export class PfSelect extends LitElement {
     }
   }
 
-  updated(changed: PropertyValues<this>) {
+  override updated(changed: PropertyValues<this>) {
     if (changed.has('alwaysExpanded')) {
       this.#setToggle();
     }
@@ -407,7 +412,6 @@ export class PfSelect extends LitElement {
 
   /**
    * handles listbox options refresh
-   * @param event {PfListboxRefreshEvent}
    */
   #onListboxRefresh(event: PfListboxRefreshEvent) {
     if (event instanceof PfListboxRefreshEvent) {
@@ -472,14 +476,14 @@ export class PfSelect extends LitElement {
   }
 
   /**
-   * opens the dropdown
+   * Opens the dropdown
    */
   async show() {
     await this.#toggle?.show();
   }
 
   /**
-   * allows new options to be inserted
+   * Allows new options to be inserted
    * @param option option to be inserted
    * @param insertBefore optional: reference option before which new will be inserted; if blank new option inserted at end of list
    */
@@ -488,7 +492,7 @@ export class PfSelect extends LitElement {
   }
 
   /**
-   * closes listbox and sets focus
+   * Closes listbox and sets focus
    */
   async hide() {
     await this.#toggle?.hide(true);

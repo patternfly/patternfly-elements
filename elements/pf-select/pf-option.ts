@@ -14,7 +14,7 @@ import styles from './pf-option.css';
  */
 export class PfOptionSelectEvent extends Event {
   constructor(public originalEvent?: Event) {
-    super('select', { bubbles: true, composed: true });
+    super('select', { bubbles: true, cancelable: true });
   }
 }
 
@@ -23,7 +23,7 @@ export class PfOptionSelectEvent extends Event {
  */
 export class PfOptionFocusEvent extends Event {
   constructor(public originalEvent: Event) {
-    super('focus', { bubbles: true, composed: true });
+    super('focus', { bubbles: true, cancelable: true });
   }
 }
 
@@ -32,7 +32,7 @@ export class PfOptionFocusEvent extends Event {
  */
 export class PfOptionBlurEvent extends Event {
   constructor(public originalEvent: Event) {
-    super('blur', { bubbles: true, composed: true });
+    super('blur', { bubbles: true, cancelable: true });
   }
 }
 
@@ -53,39 +53,34 @@ export class PfOptionBlurEvent extends Event {
 export class PfOption extends LitElement {
   static readonly styles = [styles];
 
-  /**
-   * whether option is disabled
-   */
+  /** whether option is disabled */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  /**
-   * value of options
-   */
-  @property({ attribute: false, reflect: true, type: String }) value!: string;
+  /** form value for this option */
+  @property({ reflect: true }) value = '';
 
-  /**
-   * whether option is selected
-   */
+  /** whether option is selected */
   @property({ type: Boolean }) selected = false;
 
-  /**
-   * whether option is active deswcendant
-   */
+  /** whether option is active descendant */
   @property({ type: Boolean }) active = false;
 
-  @queryAssignedNodes({ slot: '', flatten: true }) private _slottedText!: Node[];
+  /** Optional option description; overridden by description slot. */
+  @property() description = '';
 
-  #internals = InternalsController.for(this, { role: 'option' });
+  @queryAssignedNodes({ slot: '', flatten: true })
+  private _slottedText!: Node[];
 
   /**
    * this option's position relative to the other options
    */
-  set posInSet(posInSet: string | null) {
-    this.#internals.ariaPosInSet = `${Math.max(0, parseInt(posInSet || '0'))}`;
+  set posInSet(posInSet: number | null) {
+    this.#internals.ariaPosInSet = `${Math.max(0, posInSet ?? 0)}`;
   }
 
   get posInSet() {
-    return this.#internals.ariaPosInSet;
+    const parsed = parseInt(this.#internals.ariaPosInSet ?? '0');
+    return Number.isNaN(parsed) ? null : parsed;
   }
 
   /**
@@ -99,6 +94,8 @@ export class PfOption extends LitElement {
     return this.#internals.ariaSetSize;
   }
 
+  #internals = InternalsController.for(this, { role: 'option' });
+
   override connectedCallback() {
     super.connectedCallback();
     this.id ||= getRandomId();
@@ -108,21 +105,22 @@ export class PfOption extends LitElement {
     const { disabled, active } = this;
     return html`
       <div id="outer" class="${classMap({ active, disabled })}">
-        <input
-            type="checkbox"
-            aria-hidden="true"
-            ?checked="${this.selected}"
-            ?disabled="${this.disabled}">
+        <input type="checkbox"
+               aria-hidden="true"
+               ?checked="${this.selected}"
+               ?disabled="${this.disabled}">
         <slot name="icon"></slot>
-        <span><slot name="create"></slot><slot></slot></span>
-        <svg
-            ?hidden="${!this.selected}"
-            viewBox="0 0 512 512"
-            fill="currentColor"
-            aria-hidden="true">
-            <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path>
+        <span>
+          <slot name="create"></slot>
+          <slot></slot>
+        </span>
+        <svg ?hidden="${!this.selected}"
+             viewBox="0 0 512 512"
+             fill="currentColor"
+             aria-hidden="true">
+          <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path>
         </svg>
-        <div id="description"><slot name="description"></slot></div>
+        <slot id="description" name="description">${this.description ?? ''}</slot>
       </div>
     `;
   }

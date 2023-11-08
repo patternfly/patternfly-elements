@@ -9,7 +9,6 @@ import { ListboxController, type ListboxOptionElement } from '@patternfly/pfe-co
 import { PfOptionGroup } from './pf-option-group.js';
 import { PfOption } from './pf-option.js';
 
-
 import styles from './pf-listbox.css';
 
 /**
@@ -18,7 +17,7 @@ import styles from './pf-listbox.css';
  */
 export class PfListboxRefreshEvent extends Event {
   constructor(public originalEvent: Event) {
-    super('refresh', { bubbles: true, composed: true });
+    super('refresh', { bubbles: true });
   }
 }
 
@@ -35,14 +34,10 @@ export class PfListbox extends LitElement {
   static readonly styles = [styles];
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
-  /**
-   * whether listbox is disabled
-   */
-  @property({ type: Boolean }) disabled = false;
+  /** whether listbox is disabled */
+  @property({ type: Boolean, reflect: true }) disabled = false;
 
-  /**
-   * whether filtering (if enabled) will be case-sensitive
-   */
+  /** whether filtering (if enabled) will be case-sensitive */
   @property({ attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
 
   /**
@@ -51,29 +46,18 @@ export class PfListbox extends LitElement {
    */
   @property({ attribute: 'match-anywhere', type: Boolean }) matchAnywhere = false;
 
-  /**
-   * filter text
-   */
-  @property({ attribute: 'filter', type: String }) filter = '';
+  /** filter text */
+  @property() filter = '';
 
 
   /**
    * whether multiple items can be selected
    */
-  @property({ reflect: true, attribute: 'multi', type: Boolean }) multi = false;
-
-  @queryAssignedElements({ flatten: true }) private _slottedElements?: Array<HTMLElement>;
-
-  #listboxController = ListboxController.for(this, {
-    caseSensitive: this.caseSensitive,
-    matchAnywhere: this.matchAnywhere,
-    multi: false,
-    orientation: 'vertical',
-  });
+  @property({ type: Boolean, reflect: true }) multi = false;
 
   /**
-     * array of slotted options
-     */
+   * array of slotted options
+   */
   get options() {
     if (!this._slottedElements || this._slottedElements.length === 0) {
       return;
@@ -91,7 +75,7 @@ export class PfListbox extends LitElement {
   /**
    * listbox value based by selecting option(s)
    */
-  set selected(optionsList: unknown | unknown[]) {
+  set selected(optionsList: PfOption | PfOption[]) {
     if (this.#listboxController) {
       this.#listboxController.value = optionsList;
     }
@@ -114,6 +98,16 @@ export class PfListbox extends LitElement {
   get visibleOptions() {
     return this.#listboxController.visibleOptions;
   }
+
+  @queryAssignedElements({ flatten: true })
+  private _slottedElements?: Array<HTMLElement>;
+
+  #listboxController = ListboxController.for(this, {
+    caseSensitive: this.caseSensitive,
+    matchAnywhere: this.matchAnywhere,
+    multi: false,
+    orientation: 'vertical',
+  });
 
   render() {
     const { disabled } = this;

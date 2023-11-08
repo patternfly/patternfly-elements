@@ -213,7 +213,9 @@
       "dependencies": [
         "build:tools",
         "build:core",
-        "watch:core"
+        "analyze",
+        "watch:core",
+        "watch:analyze"
       ]
     },
     "watch:core": {

@@ -167,10 +167,9 @@ export class PfLabel extends LitElement {
   }
 
   #onClickClose() {
-    if (this.removable) {
-      return;
+    if (this.removable && this.dispatchEvent(new LabelCloseEvent())) {
+      this.remove();
     }
-    this.dispatchEvent(new LabelCloseEvent());
   }
 }
 

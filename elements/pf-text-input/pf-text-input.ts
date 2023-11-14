@@ -234,7 +234,7 @@ export class PfTextInput extends LitElement {
       <input id="input"
              .placeholder="${this.placeholder ?? ''}"
              .value="${this.value}"
-             .pattern="${this.pattern as string}"
+             pattern="${ifDefined(this.pattern)}"
              @input="${this.#onInput}"
              @keydown="${this.#onKeydown}"
              @blur="${this.#onBlur}"
@@ -265,7 +265,9 @@ export class PfTextInput extends LitElement {
   #onKeydown(event: Event) {
     switch ((event as KeyboardEvent).key) {
       case 'Enter':
-        this.#internals.form?.requestSubmit(null);
+        if (this.reportValidity()) {
+          this.#internals.form?.requestSubmit(null);
+        }
     }
   }
 

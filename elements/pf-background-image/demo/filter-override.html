@@ -1,0 +1,23 @@
+<pf-background-image filter
+    src="/components/background-image/demo/pfbg.jpg"
+    src-2x="/components/background-image/demo/pfbg_576.jpg"
+    src-sm="/components/background-image/demo/pfbg_768.jpg"
+    src-sm-2x="/components/background-image/demo/pfbg_768@2x.jpg"
+    src-lg="/components/background-image/demo/pfbg_1200.jpg">
+  <svg slot="filter" xmlns="http://www.w3.org/2000/svg">
+    <filter id="image_overlay">
+      <feMorphology in="SourceGraphic" operator="dilate" radius="5"></feMorphology>
+    </filter>
+  </svg>
+</pf-background-image>
+
+<script type="module">
+  import '@patternfly/elements/pf-background-image/pf-background-image.js';
+</script>
+
+<style>
+  /* override demo chrome styles */
+  html, body {
+    background-color: transparent;
+  }
+</style>

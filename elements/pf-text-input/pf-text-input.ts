@@ -143,6 +143,7 @@ function getLabelText(label: HTMLElement) {
  * @cssprop --pf-c-form-control--m-icon-sprite__select--success--BackgroundPosition - {@default calc(100% - var(--pf-global--spacer--md, 1rem) + 1px - var(--pf-global--spacer--lg, 1.5rem))}
  * @cssprop --pf-c-form-control--m-icon-sprite__select--m-warning--BackgroundPosition - {@default calc(100% - var(--pf-global--spacer--md, 1rem) - var(--pf-global--spacer--lg, 1.5rem) + 0.0625rem)}
  * @cssprop --pf-c-form-control--m-icon-sprite__select--invalid--BackgroundPosition - {@default calc(100% - var(--pf-global--spacer--md, 1rem) - var(--pf-global--spacer--lg, 1.5rem))}
+ * @cssprop --pf-c-form-control__error-text--m-status--Color - {@default var(--pf-global--danger-color--100, #c9190b)}
  */
 @customElement('pf-text-input')
 export class PfTextInput extends LitElement {
@@ -185,8 +186,20 @@ export class PfTextInput extends LitElement {
   /** Flag to show if the input is required. */
   @property({ type: Boolean, reflect: true }) required = false;
 
+  /** Validation pattern, like `<input>` */
+  @property() pattern?: string;
+
   /** Flag to show if the input is read only. */
   @property({ type: Boolean, reflect: true }) readonly = false;
+
+  /** Helper text is text below a form field that helps a user provide the right information, like "Enter a unique name". */
+  @property({ attribute: 'helper-text' }) helperText?: string;
+
+  /** If set to 'blur', will validate when focus leaves the input */
+  @property({ attribute: 'validate-on' }) validateOn?: 'blur';
+
+  /** Displayed when validation fails */
+  @property({ attribute: 'error-text' }) errorText?: string;
 
   /** Input placeholder. */
   @property() placeholder?: string;
@@ -197,6 +210,8 @@ export class PfTextInput extends LitElement {
   #internals = this.attachInternals();
 
   #derivedLabel = '';
+
+  #touched = false;
 
   get #input() {
     return this.shadowRoot?.getElementById('input') as HTMLInputElement ?? null;
@@ -213,20 +228,25 @@ export class PfTextInput extends LitElement {
   }
 
   override render() {
+    const { valid } = this.#internals.validity;
     return html`
       <input id="input"
+             .placeholder="${this.placeholder ?? ''}"
+             .value="${this.value}"
+             .pattern="${this.pattern as string}"
              @input="${this.#onInput}"
+             @blur="${this.#onBlur}"
              ?disabled="${this.matches(':disabled') || this.disabled}"
              ?readonly="${this.readonly}"
              ?required="${this.required}"
              aria-label="${this.#derivedLabel}"
-             placeholder="${ifDefined(this.placeholder)}"
              type="${ifDefined(this.type)}"
-             .value="${this.value}"
              style="${ifDefined(this.customIconUrl && styleMap({
                backgroundImage: `url('${this.customIconUrl}')`,
                backgroundSize: this.customIconDimensions,
              }))}">
+        <span id="helper-text" ?hidden="${!this.helperText ?? valid}">${this.helperText}</span>
+        <span id="error-text" ?hidden="${valid}">${this.#internals.validationMessage}</span>
     `;
   }
 
@@ -234,14 +254,36 @@ export class PfTextInput extends LitElement {
     const { value } = event.target;
     this.value = value;
     this.#internals.setFormValue(value);
+    if (this.#touched && !this.#internals.validity.valid) {
+      this.#onBlur();
+    }
+    this.#touched = true;
+  }
+
+  #onBlur() {
+    if (this.validateOn === 'blur') {
+      this.checkValidity();
+    }
   }
 
   #setValidityFromInput() {
     this.#internals.setValidity(
       this.#input?.validity,
-      this.#input.validationMessage,
+      this.errorText ?? this.#input.validationMessage,
     );
+    this.requestUpdate();
   }
+
+  async formStateRestoreCallback(state: string, mode: string) {
+    if (mode === 'restore') {
+      const [controlMode, value] = state.split('/');
+      this.value = value ?? controlMode;
+      this.requestUpdate();
+      await this.updateComplete;
+      this.#setValidityFromInput();
+    }
+  }
+
 
   async formDisabledCallback() {
     await this.updateComplete;
@@ -250,11 +292,14 @@ export class PfTextInput extends LitElement {
 
   setCustomValidity(message: string) {
     this.#internals.setValidity({}, message);
+    this.requestUpdate();
   }
 
   checkValidity() {
     this.#setValidityFromInput();
-    return this.#internals.checkValidity();
+    const validity = this.#internals.checkValidity();
+    this.requestUpdate();
+    return validity;
   }
 
   reportValidity() {

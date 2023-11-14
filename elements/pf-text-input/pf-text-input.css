@@ -124,6 +124,8 @@
 	--pf-c-form-control--m-icon-sprite__select--success--BackgroundPosition: calc(100% - var(--pf-global--spacer--md, 1rem) + 1px - var(--pf-global--spacer--lg, 1.5rem));
 	--pf-c-form-control--m-icon-sprite__select--m-warning--BackgroundPosition: calc(100% - var(--pf-global--spacer--md, 1rem) - var(--pf-global--spacer--lg, 1.5rem) + 0.0625rem);
 	--pf-c-form-control--m-icon-sprite__select--invalid--BackgroundPosition: calc(100% - var(--pf-global--spacer--md, 1rem) - var(--pf-global--spacer--lg, 1.5rem));
+  /* NB: this var doesn't exist in pf react */
+  --pf-c-form-control__error-text--m-status--Color: var(--pf-global--danger-color--100, #c9190b);
 
   display: inline-block;
   /* adjust the host to fit the input */
@@ -161,6 +163,10 @@ input:hover {
 
 input::placeholder {
   color: var(--pf-c-form-control--placeholder--Color);
+}
+
+#error-text {
+  color: var(--pf-c-form-control__error-text--m-status--Color);
 }
 
 :host([left-truncated]) {

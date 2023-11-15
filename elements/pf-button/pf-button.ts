@@ -1,14 +1,14 @@
-import { html } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-
-import { BaseButton } from './BaseButton.js';
 
 import '@patternfly/elements/pf-icon/pf-icon.js';
 import '@patternfly/elements/pf-spinner/pf-spinner.js';
 
 import styles from './pf-button.css';
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 export type ButtonVariant = (
   | 'primary'
@@ -151,24 +151,27 @@ export type ButtonVariant = (
  *
  */
 @customElement('pf-button')
-export class PfButton extends BaseButton {
-  static readonly styles = [...BaseButton.styles, styles];
+export class PfButton extends LitElement {
+  static readonly styles = [styles];
 
-  /** Represents the state of a stateful button */
-  @property({ type: Boolean, reflect: true }) loading = false;
+  static readonly formAssociated = true;
 
-  /** Applies plain styles */
-  @property({ type: Boolean, reflect: true }) plain = false;
+  static readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
-  /** Not as urgent as danger */
-  @property({ type: Boolean, reflect: true }) warning = false;
+  /** Form type for the button */
+  @property({ reflect: true }) type?: 'button' | 'submit' | 'reset';
 
-  @property({ reflect: true }) size?: 'small' | 'large';
+  /** Form value for the button */
+  @property() value?: string;
 
-  /** Icon set for the `icon` property */
-  @property({ attribute: 'icon-set' }) iconSet?: string;
+  /** Form name for the button */
+  @property() name?: string;
 
-  @property({ type: Boolean, reflect: true }) danger = false;
+  /** Disables the button */
+  @property({ reflect: true, type: Boolean }) disabled = false;
+
+  /** Accessible name for the button, use when the button does not have slotted text */
+  @property() label?: string;
 
   /**
    * Changes the style of the button.
@@ -182,21 +185,70 @@ export class PfButton extends BaseButton {
    */
   @property({ reflect: true }) variant: ButtonVariant = 'primary';
 
-  protected override get hasIcon() {
-    return !!this.icon || !!this.loading;
+  /** Not as urgent as danger */
+  @property({ type: Boolean, reflect: true }) warning = false;
+
+  /**
+   * Use danger buttons for actions a user can take that are potentially
+   * destructive or difficult/impossible to undo, like deleting or removing
+   * user data.
+   */
+  @property({ type: Boolean, reflect: true }) danger = false;
+
+  /** Applies plain styles */
+  @property({ type: Boolean, reflect: true }) plain = false;
+
+  /** Changes the size of the button. */
+  @property({ reflect: true }) size?: 'small' | 'large';
+
+  /** Icon set for the `icon` property */
+  @property({ attribute: 'icon-set' }) iconSet?: string;
+
+  /** Shorthand for the `icon` slot, the value is icon name */
+  @property() icon?: string;
+
+  /** Represents the state of a stateful button */
+  @property({ type: Boolean, reflect: true }) loading = false;
+
+  #internals = new InternalsController(this);
+
+  override render() {
+    const hasIcon = !!this.icon || !!this.loading;
+    return html`
+      <button aria-label="${ifDefined(this.label)}"
+              class="${classMap({ hasIcon })}"
+              part="button"
+              type="${ifDefined(this.type)}"
+              value="${ifDefined(this.value)}"
+              @click="${this.#onClick}"
+              ?disabled="${this.disabled || this.#internals.formDisabled}">
+        <slot id="icon" part="icon" aria-hidden="true" name="icon">
+          <pf-icon
+              icon="${ifDefined(this.icon)}"
+              set="${ifDefined(this.iconSet)}"
+              ?hidden="${!this.icon}"></pf-icon>
+          <pf-spinner
+              ?hidden="${!this.loading}"
+              size="md"
+              aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pf-spinner>
+        </slot>
+        <slot id="text" aria-hidden=${String(!!this.label) as 'true' | 'false'}></slot>
+      </button>
+    `;
   }
 
-  protected override renderDefaultIcon() {
-    return html`
-      <pf-icon
-          icon="${ifDefined(this.icon)}"
-          set="${ifDefined(this.iconSet)}"
-          ?hidden="${!this.icon}"></pf-icon>
-      <pf-spinner
-          ?hidden="${!this.loading}"
-          size="md"
-          aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pf-spinner>
-    `;
+  protected async formDisabledCallback() {
+    await this.updateComplete;
+    this.requestUpdate();
+  }
+
+  #onClick() {
+    switch (this.type) {
+      case 'reset':
+        return this.#internals.reset();
+      default:
+        return this.#internals.submit();
+    }
   }
 }
 

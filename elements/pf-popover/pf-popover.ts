@@ -12,6 +12,7 @@ import { ComposedEvent, StringListConverter } from '@patternfly/pfe-core/core.js
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 import styles from './pf-popover.css';
+import { deprecation } from '@patternfly/pfe-core/decorators/deprecation.js';
 
 const headingLevels = [2, 3, 4, 5, 6] as const;
 
@@ -45,9 +46,7 @@ export class PopoverShownEvent extends ComposedEvent {
 
 /**
  * A **Popover** displays content in a non-modal dialog and adds contextual information or provides resources via text and links.
- *
  * @summary Toggle the visibility of helpful or contextual information.
- *
  * @slot -
  *         The default slot holds invoking element.
  *         Typically this would be an icon, button, or other small sized element.
@@ -61,7 +60,6 @@ export class PopoverShownEvent extends ComposedEvent {
  *       This slot renders the content that will be displayed inside of the body of the popover.
  * @slot footer
  *       This slot renders the content that will be displayed inside of the footer of the popover.
- *
  * @csspart container - The component wrapper
  * @csspart content - The content wrapper
  * @csspart header - The header element; only visible if both an icon annd heading are provided.
@@ -70,7 +68,6 @@ export class PopoverShownEvent extends ComposedEvent {
  * @csspart close-button - The close button
  * @csspart body - The container for the body content
  * @csspart footer - The container for the footer content
- *
  * @cssprop {<length>} --pf-c-popover__arrow--Height
  *          Height of the arrow
  *          {@default `1.5625rem`}
@@ -258,7 +255,11 @@ export class PfPopover extends LitElement {
   /**
    * The heading level to use for the popover's header. The default is `h6`.
    */
-  @property({ type: Number, reflect: true, attribute: 'heading-level' }) headingLevel?: HeadingLevel;
+  @property({
+    type: Number,
+    reflect: true,
+    attribute: 'heading-level',
+  }) headingLevel?: HeadingLevel;
 
   /**
    * Indicates which icon set to use for the header's icon.
@@ -280,7 +281,15 @@ export class PfPopover extends LitElement {
   /**
    * The accessible label for the popover's close button. The default is `Close popover`.
    */
-  @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel?: string;
+  @property({ reflect: true, attribute: 'accessible-close-label' }) accessibleCloseLabel?: string;
+
+  /**
+   * @deprecated do not use the color-palette attribute, which was added by mistake. use context-providing containers (e.g. rh-card) instead
+   */
+  @deprecation({
+    alias: 'accessible-close-label',
+    attribute: 'close-label',
+  }) closeButtonLabel?: string;
 
   /**
    * The text announced by the screen reader to indicate the popover's severity.
@@ -306,6 +315,9 @@ export class PfPopover extends LitElement {
   @query('#trigger') private _slottedTrigger?: HTMLElement | null;
   @query('#arrow') private _arrow!: HTMLDivElement;
 
+  /** True before the show animation begins and after the hide animation ends */
+  #hideDialog = true;
+
   #referenceTrigger?: HTMLElement | null = null;
 
   #float = new FloatingDOMController(this, {
@@ -316,9 +328,9 @@ export class PfPopover extends LitElement {
 
   #slots = new SlotController(this, null, 'icon', 'heading', 'body', 'footer');
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('keydown', this.onKeydown);
+  constructor() {
+    super();
+    this.addEventListener('keydown', this.#onKeydown);
   }
 
   render() {
@@ -340,19 +352,9 @@ export class PfPopover extends LitElement {
       <slot id="heading" name="heading" part="heading" ?hidden=${!hasHeading}>${headingContent}</slot>
     `;
 
-    const header = !(hasHeading && hasIcon) ? headingSlotWithFallback : html`
-      <header part="header">
-        <span part="icon">
-          <slot name="icon">
-            <pf-icon icon="${this.icon ?? PfPopover.alertIcons.get(this.alertSeverity as AlertSeverity) ?? ''}"
-                     set="${ifDefined(this.iconSet)}"
-                     size="md"></pf-icon>
-          </slot>
-        </span>${!this.alertSeverity ? nothing : html`
-        <span class="visually-hidden">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>`}
-        ${headingSlotWithFallback}
-      </header>
-    `;
+    const headerIcon = this.icon
+      ?? PfPopover.alertIcons.get(this.alertSeverity as AlertSeverity)
+      ?? '';
 
     return html`
       <div id="container"
@@ -360,23 +362,38 @@ export class PfPopover extends LitElement {
            class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}">
         <slot id="trigger"
               @slotchange="${this.#triggerChanged}"
-              @keydown=${this.onKeydown}
-              @click=${this.toggle}></slot>
-        <dialog id="popover" aria-labelledby="heading" aria-describedby="body" aria-label=${ifDefined(this.label)}>
+              @keydown="${this.#onKeydown}"
+              @click="${this.toggle}"></slot>
+        <dialog id="popover"
+                ?hidden="${this.#hideDialog}"
+                aria-labelledby="heading"
+                aria-describedby="body"
+                aria-label=${ifDefined(this.label)}>
           <div id="arrow"></div>
           <div id="content" part="content">
             <pf-button id="close-button"
                        part="close-button"
                        plain
-                       label="${this.closeButtonLabel ?? 'Close popover'}"
+                       label="${this.accessibleCloseLabel ?? this.closeButtonLabel ?? 'Close popover'}"
                        @click="${this.hide}"
-                       @keydown="${this.onKeydown}"
+                       @keydown="${this.#onKeydown}"
                        ?hidden="${this.hideClose}">
               <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
                 <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
               </svg>
             </pf-button>
-            ${header}
+            ${!(hasHeading && hasIcon) ? headingSlotWithFallback : html`
+            <header part="header">
+              <span part="icon">
+                <slot name="icon">
+                  <pf-icon icon="${headerIcon}"
+                           set="${ifDefined(this.iconSet)}"
+                           size="md"></pf-icon>
+                </slot>
+              </span>${!this.alertSeverity ? nothing : html`
+              <span class="visually-hidden">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>`}
+              ${headingSlotWithFallback}
+            </header>`}
             <slot id="body" part="body" name="body">${this.body ?? ''}</slot>
             <footer part="footer" ?hidden=${!hasFooter}>
               <slot name="footer">${this.footer}</slot>
@@ -391,7 +408,7 @@ export class PfPopover extends LitElement {
     super.disconnectedCallback();
     PfPopover.instances.delete(this);
     this.#referenceTrigger?.removeEventListener('click', this.toggle);
-    this.#referenceTrigger?.removeEventListener('keydown', this.onKeydown);
+    this.#referenceTrigger?.removeEventListener('keydown', this.#onKeydown);
   }
 
   #getReferenceTrigger() {
@@ -399,19 +416,18 @@ export class PfPopover extends LitElement {
     return !this.trigger ? null : root.getElementById(this.trigger);
   }
 
-
   #triggerChanged() {
     const oldReferenceTrigger = this.#referenceTrigger;
     this.#referenceTrigger = this.#getReferenceTrigger();
     if (oldReferenceTrigger !== this.#referenceTrigger) {
       oldReferenceTrigger?.removeEventListener('click', this.toggle);
-      oldReferenceTrigger?.removeEventListener('keydown', this.onKeydown);
+      oldReferenceTrigger?.removeEventListener('keydown', this.#onKeydown);
       this.#referenceTrigger?.addEventListener('click', this.toggle);
-      this.#referenceTrigger?.addEventListener('keydown', this.onKeydown);
+      this.#referenceTrigger?.addEventListener('keydown', this.#onKeydown);
     }
   }
 
-  @bound private onKeydown(event: KeyboardEvent) {
+  #onKeydown = (event: KeyboardEvent) => {
     switch (event.key) {
       case 'Escape':
       case 'Esc':
@@ -425,7 +441,7 @@ export class PfPopover extends LitElement {
         }
         return;
     }
-  }
+  };
 
   #outsideClick(event: MouseEvent) {
     const path = event.composedPath();
@@ -455,6 +471,8 @@ export class PfPopover extends LitElement {
    * Opens the popover
    */
   @bound async show() {
+    this.#hideDialog = false;
+    this.requestUpdate();
     this.dispatchEvent(new PopoverShowEvent());
     await this.updateComplete;
     await this.#float.show({
@@ -477,6 +495,8 @@ export class PfPopover extends LitElement {
     this._popover?.close();
     this.dispatchEvent(new PopoverHiddenEvent());
     PfPopover.instances.delete(this);
+    this.#hideDialog = true;
+    this.requestUpdate();
   }
 }
 

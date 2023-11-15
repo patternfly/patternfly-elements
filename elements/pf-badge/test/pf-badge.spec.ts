@@ -20,10 +20,10 @@ describe('<pf-badge>', function() {
   it('should upgrade', async function() {
     const el = await createFixture<PfBadge>(element);
     expect(el, 'pf-badge should be an instance of PfBadge')
-      .to.be.an
-      .instanceOf(customElements.get('pf-badge'))
-      .and
-      .to.be.an.instanceof(PfBadge);
+        .to.be.an
+        .instanceOf(customElements.get('pf-badge'))
+        .and
+        .to.be.an.instanceof(PfBadge);
   });
 
   it('should display text equivalent to the number attribute', async function() {

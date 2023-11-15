@@ -1,3 +1,5 @@
+// we will remove this file for 3.0
+/* eslint-disable lit-a11y/no-aria-slot */
 import { LitElement, html } from 'lit';
 
 import { property } from 'lit/decorators/property.js';
@@ -19,10 +21,8 @@ import styles from './BaseTabs.css';
 
 /**
  * BaseTabs
- *
  * @attr [label-scroll-left="Scroll left"] - accessible label for the tab panel's scroll left button.
  * @attr [label-scroll-right="Scroll right"] - accessible label for the tab panel's scroll right button.
- *
  */
 export abstract class BaseTabs extends LitElement {
   static readonly styles = [styles];
@@ -61,15 +61,17 @@ export abstract class BaseTabs extends LitElement {
 
   @query('[part="tabs"]') private tabList!: HTMLElement;
 
-  #tabindex = new RovingTabindexController<BaseTab>(this);
+  #tabindex = new RovingTabindexController<BaseTab>(this, {
+    getItems: () => this.#allTabs,
+  });
 
   #overflow = new OverflowController(this);
 
   #logger = new Logger(this);
 
-  #_allTabs: BaseTab[] = [];
+  #allTabs: BaseTab[] = [];
 
-  #_allPanels: BaseTabPanel[] = [];
+  #allPanels: BaseTabPanel[] = [];
 
   #activeIndex = 0;
 
@@ -91,20 +93,20 @@ export abstract class BaseTabs extends LitElement {
     if (tab) {
       if (tab.disabled) {
         this.#logger.warn(`Disabled tabs can not be active, setting first focusable tab to active`);
-        this.#tabindex.updateActiveItem(this.#firstFocusable);
+        this.#tabindex.setActiveItem(this.#firstFocusable);
         index = this.#activeItemIndex;
-      } else if (!tab.active) {
-        // if the activeIndex was set through the CLI e.g.`$0.activeIndex = 2`
-        tab.active = true;
         return;
+      } else {
+        tab.active = true;
       }
     }
 
     if (index === -1) {
       this.#logger.warn(`No active tab found, setting first focusable tab to active`);
-      const first = this.#tabindex.firstItem;
-      this.#tabindex.updateActiveItem(first);
+      this.#tabindex.setActiveItem(this.#tabindex.firstItem);
       index = this.#activeItemIndex;
+    } else {
+      this.#tabindex.setActiveItem(tab);
     }
     this.#activeIndex = index;
     this.requestUpdate('activeIndex', oldIndex);
@@ -115,24 +117,8 @@ export abstract class BaseTabs extends LitElement {
   }
 
   get #activeTab() {
-    const [tab] = this.#_allTabs.filter(tab => tab.active);
+    const [tab] = this.#allTabs.filter(tab => tab.active);
     return tab;
-  }
-
-  get #allTabs() {
-    return this.#_allTabs;
-  }
-
-  set #allTabs(tabs: BaseTab[]) {
-    this.#_allTabs = tabs.filter(tab => (this.constructor as typeof BaseTabs).isTab(tab));
-  }
-
-  get #allPanels() {
-    return this.#_allPanels;
-  }
-
-  set #allPanels(panels: BaseTabPanel[]) {
-    this.#_allPanels = panels.filter(panel => (this.constructor as typeof BaseTabs).isPanel(panel));
   }
 
   override connectedCallback() {
@@ -150,10 +136,10 @@ export abstract class BaseTabs extends LitElement {
   override willUpdate(): void {
     const { activeItem } = this.#tabindex;
     // If RTI has an activeItem, update the roving tabindex controller
-    if (!this.manual &&
-        activeItem &&
-        activeItem !== this.#activeTab &&
-        activeItem.ariaDisabled !== 'true') {
+    if (!this.manual
+        && activeItem
+        && activeItem !== this.#activeTab
+        && activeItem.ariaDisabled !== 'true') {
       activeItem.active = true;
     }
   }
@@ -191,18 +177,19 @@ export abstract class BaseTabs extends LitElement {
 
   #onSlotchange(event: { target: { name: string } }) {
     if (event.target.name === 'tab') {
-      this.#allTabs = this.tabs;
+      this.#allTabs = this.tabs.filter(tab => (this.constructor as typeof BaseTabs).isTab(tab));
     } else {
-      this.#allPanels = this.panels;
+      this.#allPanels = this.panels
+          .filter(panel => (this.constructor as typeof BaseTabs).isPanel(panel));
     }
+    this.#tabindex.updateItems();
 
-    if ((this.#allTabs.length === this.#allPanels.length) &&
-      (this.#allTabs.length !== 0 || this.#allPanels.length !== 0)) {
+    if ((this.#allTabs.length === this.#allPanels.length)
+      && (this.#allTabs.length !== 0 || this.#allPanels.length !== 0)) {
       this.#updateAccessibility();
       this.#firstLastClasses();
-      this.#tabindex.initItems(this.#allTabs);
       this.activeIndex = this.#allTabs.findIndex(tab => tab.active);
-      this.#tabindex.updateActiveItem(this.#activeTab);
+      this.#tabindex.setActiveItem(this.#activeTab);
       this.#overflow.init(this.tabList, this.#allTabs);
     }
   }
@@ -218,16 +205,13 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #onTabExpand = (event: Event): void => {
-    if (!(event instanceof TabExpandEvent) ||
-        !this.#allTabs.length ||
-        !this.#allPanels.length) {
+    if (!(event instanceof TabExpandEvent)
+        || !this.#allTabs.length
+        || !this.#allPanels.length) {
       return;
     }
 
     if (event.active) {
-      if (event.tab !== this.#tabindex.activeItem) {
-        this.#tabindex.updateActiveItem(event.tab);
-      }
       this.activeIndex = this.#allTabs.findIndex(tab => tab === event.tab);
     }
   };

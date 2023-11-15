@@ -1,0 +1,20 @@
+<article>
+  <p>JavaScript snippets <strong>must</strong> use the <code>text/javascript-sample</code> script type.</p>
+  <pf-code-block id="javascript-sample" expanded>
+    <script type="text/javascript-sample">
+      console.log("If this appears in console, something's broken");
+    </script>
+    <pf-clipboard-copy slot="actions" copy-from="#javascript-sample"></pf-clipboard-copy>
+  </pf-code-block>
+</article>
+
+<script type="module">
+  import '@patternfly/elements/pf-code-block/pf-code-block.js';
+  import '@patternfly/elements/pf-clipboard-copy/pf-clipboard-copy.js';
+</script>
+
+<style>
+article {
+  margin-inline: 4em;
+}
+</style>

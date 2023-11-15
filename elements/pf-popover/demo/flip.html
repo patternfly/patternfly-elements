@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="demo.css">
-<script type="module" src="pf-popover.js"></script>
-
 <form id="basic">
   <fieldset>
     <legend>No flip</legend>
@@ -39,3 +36,82 @@
     </pf-popover>
   </fieldset>
 </form>
+
+<script type="module">
+  import '@patternfly/elements/pf-popover/pf-popover.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+
+  // Positions
+  const select = document.getElementById('position-select');
+  select.addEventListener('change', event =>
+    event.target
+      .closest('fieldset')
+      .querySelector('pf-popover')
+      .setAttribute('position', event.target.value));
+
+  // Close popover from content
+  const closeButton = document.getElementById('close-button');
+  closeButton?.addEventListener('click', event => event.target.closest('pf-popover').hide());
+
+  // Alert variants
+  const alert = document.getElementById('alert');
+  alert?.addEventListener('change', event =>
+    alert
+      .querySelector('pf-popover')
+      .setAttribute('alert-severity', event.target.closest('form').elements.severity.value));
+
+  document.addEventListener('submit', function(event) {
+    event.preventDefault();
+  });
+</script>
+
+<style>
+  form {
+    padding: 0 2rem;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 8px;
+  }
+
+  form h2 {
+    width: 100%;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  fieldset label {
+    display: grid;
+    align-content: center;
+    display: contents;
+  }
+
+  select {
+    display: block;
+    margin-inline-end: auto;
+    flex-basis: 100%;
+  }
+
+  #position-select {
+    margin: 1rem 0;
+  }
+
+  #alert-select {
+    margin-bottom: 1rem;
+  }
+
+  #no-padding pf-popover::part(content) {
+    --pf-c-popover__content--PaddingTop: 0px;
+    --pf-c-popover__content--PaddingRight: 0px;
+    --pf-c-popover__content--PaddingBottom: 0px;
+    --pf-c-popover__content--PaddingLeft: 0px;
+  }
+
+  #auto-width pf-popover::part(content) {
+    --pf-c-popover--MaxWidth: none;
+    --pf-c-popover--MinWidth: auto;
+  }
+</style>

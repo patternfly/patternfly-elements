@@ -6,8 +6,8 @@ export default pfeTestRunnerConfig({
   tsconfig: 'tsconfig.esbuild.json',
   files: ['!tools/create-element/templates/**/*'],
   // uncomment to get default wtr reporter
-  // reporter: 'default',
+  reporter: 'default',
   plugins: [
-    a11ySnapshotPlugin()
+    a11ySnapshotPlugin(),
   ],
 });

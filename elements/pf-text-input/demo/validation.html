@@ -1,0 +1,26 @@
+<fieldset>
+  <legend>Invalid</legend>
+  <label>Validate on Blur? <pf-switch id="onblur"></pf-switch></label>
+  <pf-text-input id="validated"
+                 error-text="Enter a three digit integer"
+                 pattern="\d{3}"
+                 required></pf-text-input>
+  <pf-button id="validate">Validate</pf-button>
+</fieldset>
+
+<script type="module">
+  import '@patternfly/elements/pf-button/pf-button.js';
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+  import '@patternfly/elements/pf-text-input/pf-text-input.js';
+  const onblur = document.getElementById('onblur');
+  const input = document.getElementById('validated');
+  const validate = document.getElementById('validate');
+  onblur.addEventListener('change', function() {
+    validated.validateOn = this.checked ? 'blur' : null;
+  });
+  validate.addEventListener('click', function() {
+    validated.checkValidity();
+  });
+</script>
+
+<link rel="stylesheet" href="demo.css">

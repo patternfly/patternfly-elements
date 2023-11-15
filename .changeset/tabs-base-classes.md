@@ -4,7 +4,6 @@
 
 ### Breaking Changes
 
-- ✨ Added `TabsController.ts`
 - ❌ Removed `BaseTabs.ts`
 - ❌ Removed `BaseTab.ts`
 - ❌ Removed `BaseTabPanel.ts`
@@ -24,7 +23,4 @@ consumers that import `BaseTabs` will need to update their code to implement the
 base styles if needed.
 - 🔥 Tabs overflow: `OverflowController` implementation has moved from the `BaseTabs` 
 to the implemented tabs class: `pf-tabs.ts`. Downstream consumers will need to update 
-their code to reimplement overflow features.  
-
-
-
+their code to reimplement overflow features.

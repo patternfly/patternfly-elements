@@ -5,8 +5,8 @@ window.ZeroMdConfig = {
     'https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js',
   ],
   cssUrls: [
-    'https://raw.githubusercontent.com/PrismJS/prism-themes/master/themes/prism-material-light.css'
-  ]
+    'https://raw.githubusercontent.com/PrismJS/prism-themes/master/themes/prism-material-light.css',
+  ],
 };
 
 import 'https://jspm.dev/zero-md';

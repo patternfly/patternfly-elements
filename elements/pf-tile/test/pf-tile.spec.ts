@@ -20,9 +20,9 @@ describe('<pf-tile>', function() {
     const el = await createFixture <PfTile>(TEMPLATE);
     const klass = customElements.get('pf-tile');
     expect(el)
-      .to.be.an.instanceOf(klass)
-      .and
-      .to.be.an.instanceOf(PfTile);
+        .to.be.an.instanceOf(klass)
+        .and
+        .to.be.an.instanceOf(PfTile);
   });
 
   it('should have a selected styles when selected', async function() {

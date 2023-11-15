@@ -1,0 +1,17 @@
+<section>
+  <pf-button block>Block level button</pf-button>
+</section>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-button/pf-button.js';
+  for (const button of document.querySelectorAll('pf-button')) {
+    // eslint-disable-next-line no-console
+    button.addEventListener('click', console.log);
+  }
+</script>
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

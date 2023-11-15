@@ -1,0 +1,30 @@
+
+<pf-background-image
+  src="/components/background-image/demo/pfbg.jpg"
+  src-2x="/components/background-image/demo/pfbg_576.jpg"
+  src-sm="/components/background-image/demo/pfbg_768.jpg"
+  src-sm-2x="/components/background-image/demo/pfbg_768@2x.jpg"
+  src-lg="/components/background-image/demo/pfbg_1200.jpg"
+></pf-background-image>
+
+<section>
+  <h1>Sibling Content</h1>
+  <pf-button>Button</pf-button>
+</section>
+
+
+<style>
+  /* override demo chrome styles */
+  html, body {
+    background-color: transparent;
+  }
+  section {
+    color: var(--pf-global--palette--white, #fff);
+    padding: var(--pf-global--spacer--xl, 2rem);
+  }
+</style>
+
+
+<script type="module">
+  import '@patternfly/elements/pf-background-image/pf-background-image.js';
+</script>

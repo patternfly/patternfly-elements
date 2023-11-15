@@ -1,23 +1,44 @@
+[hidden] {
+  display: none !important;
+}
+
 :host {
+  display: flex;
+  flex: none;
+  outline: none;
   scroll-snap-align: var(--pf-c-tabs__item--ScrollSnapAlign, end);
 }
 
-:host([active]) {
+.active {
   --pf-c-tabs__link--Color: var(--pf-c-tabs__item--m-current__link--Color,  var(--pf-global--Color--100, #151515));
   --pf-c-tabs__link--after--BorderColor: var(--pf-c-tabs__item--m-current__link--after--BorderColor, var(--pf-global--active-color--100, #06c));
   --pf-c-tabs__link--after--BorderWidth: var(--pf-c-tabs__item--m-current__link--after--BorderWidth, var(--pf-global--BorderWidth--lg, 3px));
 }
 
-:host([box][active]) {
+.box.active {
   --pf-c-tabs__link--BackgroundColor: var(--pf-c-tabs__item--m-current__link--BackgroundColor, var(--pf-global--BackgroundColor--100, #ffffff));
   --pf-c-tabs__link--before--BorderBottomColor: var(--pf-c-tabs__link--BackgroundColor, transparent);
 }
 
-:host(.first[box][active]) #current::before {
-  left: calc(var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)) * -1);
+.vertical [part="text"] {
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
-button {
+slot[name="icon"] {
+  display: block;
+}
+
+#button {
+  margin: 0;
+  font-family: inherit;
+  font-size: 100%;
+  border: 0;
+  position: relative;
+  display: flex;
+  flex: 1;
+  text-decoration: none;
+  cursor: pointer;
   align-items: center;
   gap: var(--pf-c-tabs__link--child--MarginRight, var(--pf-global--spacer--md, 1rem));
   line-height: var(--pf-global--LineHeight--md, 1.5);
@@ -34,7 +55,22 @@ button {
   background-color: var(--pf-c-tabs__link--BackgroundColor, transparent);
 }
 
-button::before {
+#button::before,
+#button::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: "";
+  border-style: solid;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+#button::before {
   border-block-start-width: var(--pf-c-tabs__link--before--BorderTopWidth, 0);
   border-inline-end-width: var(--pf-c-tabs__link--before--BorderRightWidth, 0);
   border-block-end-width: var(--pf-c-tabs__link--before--BorderBottomWidth, 0);
@@ -45,7 +81,7 @@ button::before {
   border-inline-start-color: var(--pf-c-tabs__link--before--BorderLeftColor,  var(--pf-c-tabs__link--before--border-color--base, var(--pf-global--BorderColor--100, #d2d2d2)));
 }
 
-button::after {
+#button::after {
   top: var(--pf-c-tabs__link--after--Top, auto);
   right: var(--pf-c-tabs__link--after--Right, 0);
   bottom: var(--pf-c-tabs__link--after--Bottom, 0);
@@ -57,31 +93,44 @@ button::after {
   border-inline-start-width: var(--pf-c-tabs__link--after--BorderLeftWidth);
 }
 
-button:hover {
+:host(:hover) #button {
   --pf-c-tabs__link-toggle-icon--Color: var(--pf-c-tabs__link--hover__toggle-icon--Color);
   --pf-c-tabs__link--after--BorderWidth: var(--pf-c-tabs__link--hover--after--BorderWidth, var(--pf-global--BorderWidth--lg, 3px));
 }
 
-button:focus,
-button:focus-visible {
+:host(:is(:focus, :focus-visible)) #button {
+  outline-width: 1px;
+  outline-style: auto;
   outline-color: var(--pf-c-tabs__link--after--BorderColor, #06c);
   --pf-c-tabs__link--after--BorderWidth: var(--pf-c-tabs__link--focus--after--BorderWidth, var(--pf-global--BorderWidth--lg, 3px));
 }
 
-button:active {
+:host(:active) #button {
   --pf-c-tabs__link--after--BorderWidth: var(--pf-c-tabs__link--active--after--BorderWidth, var(--pf-global--BorderWidth--lg, 3px));
 }
 
-:host([box]) button {
+.fill #button {
+  flex-basis: 100%;
+  justify-content: center;
+}
+
+:host(:disabled) #button {
+  pointer-events: none;
+}
+
+:host([aria-disabled="true"]) #button {
+  cursor: default;
+}
+
+.box #button {
   --pf-c-tabs__link--after--BorderTopWidth: var(--pf-c-tabs__link--after--BorderWidth, 0);
 }
 
-:host([box]) button,
-:host([vertical]) button {
+:is(.box, .vertical) #button {
   --pf-c-tabs__link--after--BorderBottomWidth: 0;
 }
 
-:host([vertical]) button {
+.vertical #button {
   --pf-c-tabs__link--after--Bottom: 0;
   --pf-c-tabs__link--after--BorderTopWidth: 0;
   --pf-c-tabs__link--after--BorderLeftWidth: var(--pf-c-tabs__link--after--BorderWidth, 0);
@@ -89,32 +138,32 @@ button:active {
   text-align: left;
 }
 
-:host([box][vertical]) button::after {
+.box.vertical #button::after {
   top: calc(var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)) * -1);
 }
 
-:host(.first[box][vertical]) button::after,
-:host([box][vertical][active]) button::after {
+:host(:first-of-type) .box.vertical #button::after,
+.box.vertical.active #button::after {
   top: 0;
 }
 
-:host([box][vertical][active]) button::before {
+.box.vertical.active #button::before {
   --pf-c-tabs__link--before--BorderRightColor: var(--pf-c-tabs__item--m-current__link--BackgroundColor, var(--pf-global--BackgroundColor--100, #ffffff));
   --pf-c-tabs__link--before--BorderBottomWidth: var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px));
   --pf-c-tabs__link--before--BorderBottomColor: var(--pf-c-tabs__link--before--border-color--base, var(--pf-global--BorderColor--100, #d2d2d2));
 }
 
-:host(.first[box][active]) button::before {
+:host(:first-of-type) .box.active #button::before {
   border-block-start-width: var(--pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderTopWidth,  var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
   border-inline-start-width: var(--pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderLeftWidth,  var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
 }
 
-:host(.last[box][active]) button::before {
+:host(:last-of-type) .box.active #button::before {
   border-inline-end-width: var(--pf-c-tabs--m-box__item--m-current--last-child__link--before--BorderRightWidth, var(--pf-c-tabs--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
 }
 
-:host([disabled]) button,
-:host([aria-disabled="true"]) button {
+:host([disabled]) #button,
+:host([aria-disabled="true"]) #button {
   --pf-c-tabs__link--Color: var(--pf-c-tabs__link--disabled--Color,  var(--pf-global--disabled-color--100, #6a6e73));
   --pf-c-tabs__link--BackgroundColor: var(--pf-c-tabs__link--disabled--BackgroundColor, var(--pf-global--palette--black-150, #f5f5f5));
   --pf-c-tabs__link--before--BorderRightWidth: var(--pf-c-tabs__link--disabled--before--BorderRightWidth, 0);
@@ -131,7 +180,7 @@ button:active {
   display: none !important;
 }
 
-:host([disabled][border-bottom="false"]) button,
-:host([aria-disabled="true"][border-bottom="false"]) button {
+:host([disabled][border-bottom="false"]) #button,
+:host([aria-disabled="true"][border-bottom="false"]) #button {
   --pf-c-tabs__link--before--BorderBottomWidth: 0;
 }

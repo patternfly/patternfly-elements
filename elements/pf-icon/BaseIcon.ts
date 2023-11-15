@@ -25,7 +25,6 @@ class IconLoadError extends ErrorEvent {
 
 /**
  * Icon component lazy-loads icons and allows custom icon sets
- *
  * @slot - Slotted content is used as a fallback in case the icon doesn't load
  * @fires load - Fired when an icon is loaded and rendered
  * @fires error - Fired when an icon fails to load
@@ -46,7 +45,7 @@ export abstract class BaseIcon extends LitElement {
   }
 
   public static getIconUrl: URLGetter = (set: string, icon: string) =>
-    new URL(`./icons/${set}/${icon}.js`, import.meta.url);
+    `@patternfly/icons/${set}/${icon}.js`;
 
   private static onIntersect: IntersectionObserverCallback = records =>
     records.forEach(({ isIntersecting, target }) => {
@@ -127,18 +126,18 @@ export abstract class BaseIcon extends LitElement {
   }
 
   render() {
-    const content = this.content ?? ''; /* eslint-disable indent */
+    const content = this.content ?? '';
     return html`
       <div id="container" aria-hidden="true">${content
-       }<span part="fallback" ?hidden=${!!content}>
+}<span part="fallback" ?hidden=${!!content}>
           <slot></slot>
         </span>
       </div>
-    `;/* eslint-enable indent */
+    `;
   }
 
   protected async load() {
-    const { set, icon, } = this;
+    const { set, icon } = this;
     const getter = this.#class.getters.get(set) ?? this.#class.getIconUrl;
     let spec = 'UNKNOWN ICON';
     if (set && icon) {

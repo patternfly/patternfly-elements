@@ -15,5 +15,5 @@ export class CssVariableController implements ReactiveController {
     return this.style.getPropertyValue(this.parseProperty(name)).trim() || null;
   }
 
-  hostConnected?(): void
+  hostConnected?(): void;
 }

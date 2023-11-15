@@ -3,13 +3,17 @@ module.exports = function(eleventyConfig) {
     const { Generator } = await import('@jspm/generator');
 
     const generator = new Generator({
-      defaultProvider: 'jspm',
-      env: ['production', 'browser', 'module']
+      defaultProvider: 'jspm.io',
+      env: ['production', 'browser', 'module'],
     });
 
     const pins = await generator.addMappings(content);
 
-    const html = await generator.htmlInject(content, { pins, esModuleShims: true, whitespace: true });
+    const html = await generator.htmlInject(content, {
+      pins,
+      esModuleShims: true,
+      whitespace: true,
+    });
 
     return html;
   });

@@ -13,9 +13,9 @@ describe('<pf-text-input>', function() {
       element = await createFixture<PfTextInput>(html`<pf-text-input></pf-text-input>`);
       const klass = customElements.get('pf-text-input');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfTextInput);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfTextInput);
     });
   });
 });

@@ -1,0 +1,27 @@
+<section>
+  <h3>JSON object (pre-formatted code)</h3>
+  <pf-clipboard-copy code expandable expanded>
+    { "menu": {
+      "id": "file",
+      "value": "File",
+      "popup": {
+        "menuitem": [
+          {"value": "New", "onclick": "CreateNewDoc()"},
+          {"value": "Open", "onclick": "OpenDoc()"},
+          {"value": "Close", "onclick": "CloseDoc()"}
+        ]
+      }
+    }}
+  </pf-clipboard-copy>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-clipboard-copy/pf-clipboard-copy.js';
+</script>
+
+<style>
+section {
+  padding: 1em;
+  max-width: 832px;
+}
+</style>

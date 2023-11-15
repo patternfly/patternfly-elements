@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 const normalizeWorkspace = x =>
   fs.readdirSync(path.join(__dirname, x)).map(x => x.replace('pf-', ''));
 
@@ -23,5 +23,5 @@ module.exports = {
       ...normalizeWorkspace('core'),
       ...normalizeWorkspace('tools'),
     ]],
-  }
+  },
 };

@@ -6,7 +6,7 @@ import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js
 import { classMap } from 'lit/directives/class-map.js';
 
 import { OverflowController } from '@patternfly/pfe-core/controllers/overflow-controller.js';
-import { TabsController } from '@patternfly/pfe-core/controllers/tabs-controller.js';
+import { TabExpandEvent, TabsController } from '@patternfly/pfe-core/controllers/tabs-controller.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { cascades } from '@patternfly/pfe-core/decorators.js';
@@ -146,6 +146,10 @@ export class PfTabs extends LitElement {
     isTab: (x: Node): x is PfTab => x instanceof PfTab,
     isPanel: (x: Node): x is PfTabPanel => x instanceof PfTabPanel,
   });
+
+  static isExpandEvent(event: Event): event is TabExpandEvent {
+    return event instanceof TabExpandEvent;
+  }
 
   override connectedCallback() {
     super.connectedCallback();

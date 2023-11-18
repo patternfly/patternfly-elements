@@ -1,0 +1,123 @@
+<link rel="stylesheet" href="demo.css"><script type="module" src="pf-alert.js"></script>
+
+<pf-alert header="Default alert title"></pf-alert>
+<pf-alert variant="info" header="Info alert title"></pf-alert>
+<pf-alert variant="success" header="Success alert title"></pf-alert>
+<pf-alert variant="warning" header="Warning alert title"></pf-alert>
+<pf-alert variant="danger" header="Danger alert title"></pf-alert>
+
+<h2>
+    Alert Variations
+</h2>
+
+<pf-alert header="Success alert title" variant="success" dismissable>
+  <p>Success alert description. This should tell the user more information about the alert.</p>
+  <button slot="actions">View details</button>
+  <button slot="actions">Ignore</button>
+</pf-alert>
+
+<pf-alert header="Success alert title" variant="success" dismissable>
+  <p>Success alert description. This should tell the user more information about the alert. <a href="#">This is a link.</a></p>
+  <p>Success alert description. This should tell the user more information about the alert. <a href="#">This is a link.</a></p>
+</pf-alert>
+
+<pf-alert header="Success alert title" variant="success" dismissable>
+  <button slot="actions">View details</button>
+  <button slot="actions">Ignore</button>
+</pf-alert>
+
+<pf-alert header="Success alert title" variant="success" dismissable>
+
+  <p>Success alert description. This should tell the user more information about the alert. <a href="#">This is a link.</a></p>
+  <p>Success alert description. This should tell the user more information about the alert. <a href="#">This is a link.</a></p>
+  <button slot="actions">View details</button>
+  <button slot="actions">Ignore</button>
+  <button slot="actions">Ignore</button>
+  <button slot="actions">Ignore</button>
+  <button slot="actions">Ignore</button>
+  <button slot="actions">Ignore</button>
+</pf-alert>
+
+<pf-alert header="Success alert title" variant="success" dismissable></pf-alert>
+
+<h2>
+    Default Icons
+</h2>
+
+<pf-alert header="Custom icon">
+  <pf-icon slot="icon" set="fas" icon="users" loading="idle"></pf-icon>
+</pf-alert>
+<pf-alert header="Custom info icon" variant="info">
+  <pf-icon slot="icon" set="fas" icon="box" loading="idle"></pf-icon>
+</pf-alert>
+<pf-alert header="Custom success icon" variant="success">
+  <pf-icon slot="icon" set="fas" icon="database" loading="idle"></pf-icon>
+</pf-alert>
+<pf-alert header="Custom warning icon" variant="warning">
+  <pf-icon slot="icon" set="fas" icon="server" loading="idle"></pf-icon>
+</pf-alert>
+<pf-alert header="Custom danger icon" variant="danger">
+  <pf-icon slot="icon" set="fas" icon="laptop" loading="idle"></pf-icon>
+</pf-alert>
+
+<h2>
+    Plain
+</h2>
+
+<pf-alert header="Default plain" plain></pf-alert>
+<pf-alert variant="info" header="Info plain" plain></pf-alert>
+<pf-alert variant="success" header="Success plain" plain dismissable>
+  <p>Success alert description. This should tell the user more information about the alert. <a href="#">This is a link.</a></p>
+  <button slot="actions">Ignore</button>
+</pf-alert>
+<pf-alert variant="warning" header="Warning plain" plain></pf-alert>
+<pf-alert variant="danger" header="Danger plain" plain></pf-alert>
+
+<h2>
+    Inline
+</h2>
+
+<pf-alert header="Default inline" inline></pf-alert>
+<pf-alert variant="info" header="Info inline" inline></pf-alert>
+<pf-alert variant="success" header="Success inline" inline></pf-alert>
+<pf-alert variant="warning" header="Warning inline" inline></pf-alert>
+<pf-alert variant="danger" header="Danger inline" inline></pf-alert>
+
+<h2>
+    Plain
+</h2>
+
+<pf-alert header="Default inline" plain></pf-alert>
+<pf-alert variant="info" header="Info inline" plain></pf-alert>
+<pf-alert variant="success" header="Success inline" plain></pf-alert>
+<pf-alert variant="warning" header="Warning inline" plain></pf-alert>
+<pf-alert variant="danger" header="Danger inline" plain></pf-alert>
+
+<h2>
+    Inline Plain
+</h2>
+
+<pf-alert header="Default inline" inline plain></pf-alert>
+<pf-alert variant="info" header="Info inline" inline plain></pf-alert>
+<pf-alert variant="success" header="Success inline" inline plain></pf-alert>
+<pf-alert variant="warning" header="Warning inline" inline plain></pf-alert>
+<pf-alert variant="danger" header="Danger inline" inline plain></pf-alert>
+
+<h2>
+  Truncated Title
+</h2>
+
+<pf-alert style="width:100px;" truncate-title header="It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of light, it was the season of darkness, it was the spring of hope, it was the winter of despair."></pf-alert>
+
+<h2>
+  Timeout
+</h2>
+
+<pf-button id="create-timeout-alert">Create default timeout alert</pf-button>
+<pf-button id="create-timeout-inline-alert">Create inline timeout alert</pf-button>
+
+<input type="range" id="timeout-range" min="0" max="10000" step="100" value="1000" />
+<label for="timeout-range">Timeout: <span id="timeout-value">1000</span>ms</label>
+<pf-button id="create-Default-timeout-alert">Create Default timeout alert</pf-button>
+
+<section id="timeout-alerts"></section>

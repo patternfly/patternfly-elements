@@ -1,0 +1,214 @@
+:host {
+  --_alert-title-color: var(--_alert-title-color, var(--pf-global--default-color--300, #003737));
+  --_alert-icon-color: var(--_alert-icon-color, var(--pf-global--default-color--200, #009596));
+  --_alert-inline-background-color: var(--pf-global--palette--cyan-50, #f2f9f9);
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host([variant="info"]) {
+  --_alert-border-top-color: var(--pf-global--info-color--100, #2b9af3);
+  --_alert-icon-color: var(--pf-global--info-color--100, #2b9af3);
+  --_alert-title-color: var(--pf-global--info-color--200, #002952);
+}
+
+:host([variant="info"][inline]) {
+  --_alert-inline-background-color: var(--pf-global--palette--blue-50, #e7f1fa);
+}
+
+:host([variant="success"]) {
+  --_alert-border-top-color: var(--pf-global--success-color--100, #3e8635);
+  --_alert-icon-color: var(--pf-global--success-color--100, #3e8635);
+  --_alert-title-color: var(--pf-global--success-color--200, #1e4f18);
+}
+
+:host([variant="success"][inline]) {
+  --_alert-inline-background-color: var(--pf-global--palette--green-50, #f3faf2);
+}
+
+:host([variant="warning"]) {
+  --_alert-border-top-color: var(--pf-global--warning-color--100, #f0ab00);
+  --_alert-icon-color: var(--pf-global--warning-color--100, #f0ab00);
+  --_alert-title-color: var(--pf-global--warning-color--200, #795600);
+}
+
+:host([variant="warning"][inline]) {
+  --_alert-inline-background-color: var(--pf-global--palette--gold-50, #fdf7e7);
+}
+
+:host([variant="danger"]) {
+  --_alert-border-top-color: var(--pf-global--danger-color--100, #c9190b);
+  --_alert-icon-color: var(--pf-global--danger-color--100, #c9190b);
+  --_alert-title-color: var(--pf-global--danger-color--200, #7d1007);
+}
+
+:host([variant="danger"][inline]) {
+  --_alert-inline-background-color: var(--pf-global--palette--blue-50, #faeae8);
+}
+
+:host([inline]) {
+  --_alert-background-color: var(--_alert-inline-background-color);
+  --_alert-box-shadow: 0;
+}
+
+:host([plain]) {
+  --_alert-padding-top: 0;
+  --_alert-padding-left: 0;
+  --_alert-padding-right: 0;
+  --_alert-padding-bottom: 0;
+  --_alert-background-color: transparent;
+  --_alert-border-top-color: transparent;
+}
+
+#container.truncateTitle  {
+  display: block;
+}
+
+.truncateTitle #middle-column {
+  display: block;
+}
+
+.truncateTitle #header {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#container {
+  color: var(--pf-global--Color--100, #151515);
+  position: relative;
+  display: grid;
+  box-sizing: border-box;
+  grid-template-columns: min-content 1fr;
+  gap: var(--pf-global--spacer--xs, 0.25rem);
+  padding: var(--_alert-padding-top, 1rem) var(--_alert-padding-right, 1rem) var(--_alert-padding-bottom, 1rem) var(--_alert-padding-left, 1rem);
+  font-size: var(--_alert-font-size, 0.875rem) !important;
+  background-color: var(--_alert-background-color, #ffffff);
+  border-width: 0;
+  border-block: solid var(--_alert-border-top-color, #009596);
+  border-block-width: var(--_alert-border-top-width, 2px) 0;
+  box-shadow: var(--_alert-box-shadow, 0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08));
+
+  font-family:
+    var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,
+      "RedHatTextUpdated",
+      helvetica,
+      arial,
+      sans-serif);
+}
+
+#left-column {
+  display: inline-block;
+  vertical-align: top;
+}
+
+#middle-column {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: var(--pf-global--FontWeight--bold, 700);
+}
+
+header ::slotted(*) {
+  font-family: var(--_font-family) !important;
+  font-size: var(--_alert-font-size, var(--pf-global--font-size--sm, 0.875rem)) !important;
+  font-weight: var(--pf-global--FontWeight--bold, 700) !important;
+  margin: var(--_alert-header-slotted-margin, 0) !important;
+  padding-block: var(--_alert-header-slotted-padding-block, 2px 4px) !important;
+}
+
+#header-actions {
+  margin-right: var(--pf-global--spacer--xs, 0.25rem);
+}
+
+#header {
+  color: var(--_alert-title-color);
+}
+
+#icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--pf-global--spacer--lg, 1.5rem);
+  height: var(--pf-global--spacer--lg, 1.5rem);
+  color: var(--_alert-icon-color, var(--pf-global--default-color--200, #009596));
+}
+
+#icon,
+#icon > svg {
+  font-size: var(--_alert-icon-font-size, var(--pf-global--icon--font-size--md, 1.125rem));
+  --pf-global--icon--font-size--sm: var(--_alert-icon-font-size, var(--pf-global--icon--font-size--md, 1.125rem));
+}
+
+#icon ::slotted(pf-icon),
+#icon > pf-icon {
+  --pf-global--icon--FontSize--md: 18.5px;
+}
+
+#close-button {
+  color: var(--pf-global--Color--dark-200, #6a6e73);
+  background-color: transparent;
+  border: none;
+  height: var(--pf-global--spacer--lg, 1.5rem);
+  width: var(--pf-global--spacer--lg, 1.5rem);
+  cursor: pointer;
+}
+
+#close-button:hover {
+  color: var(--pf-global--Color--100, var(--pf-global--Color--dark-100, #151515));
+}
+
+#description {
+  font-size: var(--_alert-font-size, var(--pf-global--font-size--sm, 0.875rem));
+}
+
+#description > ::slotted(*) {
+  margin-block: var(--_alert-description-slotted-margin-block, 0) !important;
+  padding: var(--_alert-description-slotted-padding, 0) !important;
+}
+
+#description.hasDescriptionContent {
+  padding-top: var(--pf-global--spacer--xs, 0.25rem) !important;
+}
+
+footer.hasActions {
+  margin-top: var(--_alert-description-action-group-padding-top, 1rem);
+}
+
+footer ::slotted([slot="actions"]) {
+  padding: var(--_alert-footer-slotted-actions-padding, 0) !important;
+  border: var(--_alert-footer-slotted-actions-border, none) !important;
+  background-color: var(--_alert-footer-slotted-actions-background-color, transparent) !important;
+  color: var(--pf-global--link--Color, var(--pf-global--link--Color--dark, #0066cc)) !important;
+  font-size: var(--_alert-font-size, var(--pf-global--font-size--sm, 0.875rem)) !important;
+  font-family: var(--_font-family) !important;
+}
+
+footer ::slotted(*:not(:last-child)) {
+  margin-inline-end: var(--_alert-action-group-not-last-child-margin-right, var(--pf-global--spacer--lg, 1.5rem)) !important;
+}
+
+footer ::slotted([slot="actions"]:focus) {
+  text-decoration: var(--_alert-footer-slotted-actions-text-decoration-focus, underline) !important;
+  color: var(--pf-global--link--Color--hover, var(--pf-global--link--Color--dark--hover, #004080)) !important;
+}
+
+footer ::slotted([slot="actions"]:hover) {
+  cursor: var(--_alert-footer-slotted-actions-cursor-hover, pointer) !important;
+  text-decoration: var(--_alert-footer-slotted-actions-text-decoration-hover, underline) !important;
+  color: var(--pf-global--link--Color--hover, var(--pf-global--link--Color--dark--hover, #004080)) !important;
+}
+
+:host(:not([variant])) #container {
+  border-left: 0;
+  border-bottom: none;
+  border-right: 0;
+}

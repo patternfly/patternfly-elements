@@ -1,0 +1,33 @@
+<section>
+  <p><code>pf-icon</code> or <code>svgs</code></p>
+  <pf-tile>
+    <pf-icon slot="icon" set="fas" icon="plus" size="md" loading="eager"></pf-icon>
+    <h3 slot="title">Default</h3>
+    <p>Subtext goes here</p>
+  </pf-tile>
+  <pf-tile selected>
+    <svg slot="icon" fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>
+    <h3 slot="title">Selected</h3>
+    <p>Subtext goes here</p>
+  </pf-tile>
+  <pf-tile disabled>
+    <svg slot="icon" fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>
+    <h3 slot="title">Disabled</h3>
+    <p>Subtext goes here</p>
+  </pf-tile>
+</section>
+
+
+<script type="module">
+  import '@patternfly/elements/pf-tile/pf-tile.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+</script>
+
+<style>
+  section {
+    margin: 0 auto;
+    padding: 0 16px 32px;
+    width: 100%;
+    max-width: 1008px;
+  }
+</style>

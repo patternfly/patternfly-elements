@@ -1,0 +1,48 @@
+<section>
+  <form>
+    <fieldset>
+      <legend>Checked and Disabled</legend>
+      <pf-switch id="checked-disabled" checked disabled></pf-switch>
+      <label for="checked-disabled">
+        <span data-state="on">Message when on</span>
+        <span data-state="off" hidden>Message when off</span>
+      </label>
+    </fieldset>
+    <fieldset>
+      <pf-switch id="default-disabled" disabled></pf-switch>
+      <label for="default-disabled">
+        <span data-state="on">Message when on</span>
+        <span data-state="off" hidden>Message when off</span>
+      </label>
+    </fieldset>
+  </form>
+</section>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+
+  fieldset {
+    display: grid;
+    grid-template-columns: min-content max-content;
+    gap: var(--pf-c-switch--ColumnGap, var(--pf-c-switch__label--PaddingLeft, 1rem));
+    &:has(#reversed) {
+      grid-template-columns: max-content min-content;
+    }
+  }
+
+  label {
+    color: var(--pf-c-switch__label--Color, var(--pf-global--Color--dark-100, #151515));
+  }
+
+  pf-switch:not([checked]) ~ label,
+  label:has(~ pf-switch:not([checked])) {
+    color: var(--pf-c-switch__input--not-checked__label--Color, var(--pf-global--disabled-color--100, #6a6e73));
+  }
+</style>

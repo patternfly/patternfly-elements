@@ -40,6 +40,27 @@ jobs:
   #   steps:
   #     - name: Debugging context variables
   #       run: echo "$GITHUB_CONTEXT"
+  lint:
+    name: Lint files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline
+
+      - name: Lint
+        id: lint
+        run: npm run lint
+
 
   test:
     name: Run test suite (Web Test Runner)
@@ -52,23 +73,20 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
           cache: npm
 
       - name: Install dependencies
         run: npm ci --prefer-offline
 
-      - name: Lint
-        id: lint
-        run: npm run lint
+      - name: install playwright
+        run: npx playwright install
 
       - name: Run tests
         run: npm test
-        if: ${{ always() }}
 
       - name: JUnit Report Action
         uses: mikepenz/action-junit-report@v2.8.2
-        if: ${{ always() }}
         with:
           report_paths: test-results/test-results.xml
           fail_on_failure: true # fail the actions run if the tests failed
@@ -79,10 +97,8 @@ jobs:
     strategy:
       matrix:
         node:
-          - '18'
-          - '19'
-          # https://github.com/TypeStrong/ts-node/issues/1997
-          # - '20'
+          - '20'
+          - '21'
     if: |
       github.event_name == 'workflow_dispatch'
       ||   github.event_name == 'push'
@@ -126,8 +142,9 @@ jobs:
   validate:
     name: Validate successful build on main
     needs:
-      - build
+      - lint
       - test
+      - build
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:

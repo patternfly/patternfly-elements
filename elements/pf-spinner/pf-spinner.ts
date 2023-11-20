@@ -1,8 +1,8 @@
-import { html } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import { property } from 'lit/decorators/property.js';
 
-import { BaseSpinner } from './BaseSpinner.js';
 import styles from './pf-spinner.css';
 
 /**
@@ -26,10 +26,23 @@ import styles from './pf-spinner.css';
  */
 
 @customElement('pf-spinner')
-export class PfSpinner extends BaseSpinner {
-  static readonly styles = [...BaseSpinner.styles, styles];
-  render() {
-    return html`<div style=${styleMap({ '--pf-c-spinner--diameter': this.diameter })}>${super.render()}</div>`;
+export class PfSpinner extends LitElement {
+  static readonly styles = [styles];
+
+  /** Preset sizes for the spinner */
+  @property({ reflect: true }) size: 'sm' | 'md' | 'lg' | 'xl' = 'xl';
+
+  /** Custom diameter of spinner set as CSS variable */
+  @property({ reflect: true }) diameter?: `${string}${'px' | '%' | 'rem' | 'em' | 'fr' | 'pt'}`;
+
+  override render() {
+    return html`
+      <svg role="progressbar"
+           viewBox="0 0 100 100"
+           style="${styleMap({ '--pf-c-spinner--diameter': this.diameter })}">
+        <circle cx="50" cy="50" r="45" fill="none" />
+      </svg>
+    `;
   }
 }
 

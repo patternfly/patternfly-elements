@@ -52,7 +52,7 @@ function BooleanEnumConverter(...allowedAttributes: string[]): ComplexAttributeC
       } else {
         return '';
       }
-    }
+    },
   };
 }
 
@@ -68,7 +68,7 @@ const StringOrBooleanConverter: ComplexAttributeConverter = {
     } else {
       return '';
     }
-  }
+  },
 };
 
 /**
@@ -86,7 +86,7 @@ export class PfTr extends LitElement {
 
   @property({
     reflect: true,
-    converter: StringOrBooleanConverter
+    converter: StringOrBooleanConverter,
   }) expanded: boolean | string = false;
 
   override connectedCallback(): void {
@@ -120,23 +120,20 @@ export class PfTr extends LitElement {
       `,
 
       html`
-        <div id="container">
-          <slot role="${ifDefined(this.expandable ? 'row' : undefined)}"></slot>
+        <div id="container" role="${ifDefined(this.expandable ? 'row' : undefined)}">
+          <slot></slot>
         </div>
       `,
 
       this.expandable && this.expandable !== 'compound' && this.expanded && html`
-        <slot id="expansion"
-              name="expansion"
-              role="row"
-        ></slot>
+        <div id="expansion" role="row"><slot name="expansion"></slot></div>
       `,
 
       this.expandable === 'compound' && html`
         <div id="expansion">${!this.expanded ? '' : html`
           <slot name="${this.expanded}"></slot>`}
         </div>
-      `
+      `,
     ].filter(Boolean);
   }
 

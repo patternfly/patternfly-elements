@@ -52,12 +52,22 @@ const and = (p: PredicateFn, q: PredicateFn) => (x: unknown) => p(x) && q(x);
 export const isField = (x: ClassMember): x is ClassField => x.kind === 'field';
 export const isMethod = (x: ClassMember): x is ClassMethod => x.kind === 'method';
 export const isStatic = (x: ClassMember): x is ClassMethod & { static: true } => !!x.static;
-export const isPublic = (x: ClassMember): boolean => !x.privacy || !x.privacy?.match?.(/private|protected/);
+export const isPublic = (x: ClassMember): boolean =>
+  !x.privacy || !x.privacy?.match?.(/private|protected/);
 
 export const isPublicInstanceField: (x: ClassMember) => x is ClassField =
-  all(isField as PredicateFn, not(isStatic as PredicateFn), isPublic as PredicateFn) as (x: ClassMember) => x is ClassField;
+  all(
+    isField as PredicateFn,
+    not(isStatic as PredicateFn),
+    isPublic as PredicateFn,
+  ) as (x: ClassMember) => x is ClassField;
+
 export const isPublicInstanceMethod: (x: ClassMember) => x is ClassMethod =
-  all(isMethod as PredicateFn, not(isStatic as PredicateFn), isPublic as PredicateFn) as (x: ClassMember) => x is ClassMethod;
+  all(
+    isMethod as PredicateFn,
+    not(isStatic as PredicateFn),
+    isPublic as PredicateFn,
+  ) as (x: ClassMember) => x is ClassMethod;
 
 export const isCustomElement = (x: Declaration): x is CustomElementDeclaration => 'tagName' in x;
 export const isTheField = (x: ClassField) => (y: Attribute) => y.fieldName === x.name;
@@ -121,14 +131,17 @@ class ManifestCustomElement {
     this.description = this.declaration?.description ?? '';
     this.events = this.declaration?.events ?? [];
     this.methods = this.declaration?.members?.filter?.(isPublicInstanceMethod) ?? [];
-    this.properties = this.declaration?.members?.filter?.(and(isPublicInstanceField as PredicateFn, isAnAttr as PredicateFn) as (typeof isField)) ?? [];
+    this.properties = this.declaration?.members?.filter?.(and(
+      isPublicInstanceField as PredicateFn,
+      isAnAttr as PredicateFn,
+    ) as (typeof isField)) ?? [];
     this.slots = this.declaration?.slots ?? [];
     this.demos = this.declaration?.demos ?? [];
     this.summary = this.declaration?.summary ?? '';
     this.export = manifest.manifest
-      ?.modules
-      ?.flatMap(x => x.exports ?? [])
-      ?.find(z => z.declaration.name === this.declaration.name);
+        ?.modules
+        ?.flatMap(x => x.exports ?? [])
+        ?.find(z => z.declaration.name === this.declaration.name);
   }
 }
 
@@ -139,7 +152,10 @@ export class Manifest {
     return new Manifest(null, null);
   }
 
-  public static from({ package: packageJson, location }: { package: PackageJSON; location: string }): Manifest {
+  public static from({
+    package: packageJson,
+    location,
+  }: { package: PackageJSON; location: string }): Manifest {
     if (!Manifest.#instances.has(packageJson)) {
       const manifestPath = join(location, packageJson?.customElements ?? '');
       const json = readJsonSync(manifestPath);
@@ -153,11 +169,14 @@ export class Manifest {
       !x.package.customElements ? [] : [Manifest.from(x)]);
   }
 
-  public static prettyTag = (tagName: string, aliases?: Record<string, string>) => aliases?.[tagName] ?? tagName
-    .replace(/^\w+-/, '')
-    .toLowerCase()
-    .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
-    .replace(/-/g, ' ');
+  public static prettyTag = (
+    tagName: string,
+    aliases?: Record<string, string>,
+  ) => aliases?.[tagName] ?? tagName
+      .replace(/^\w+-/, '')
+      .toLowerCase()
+      .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
+      .replace(/-/g, ' ');
 
   declarations = new Map<string, ManifestCustomElement>();
 
@@ -175,7 +194,10 @@ export class Manifest {
     for (const mod of manifest?.modules ?? []) {
       for (const declaration of mod.declarations ?? []) {
         if (isCustomElement(declaration) && declaration.tagName) {
-          this.declarations.set(declaration.tagName, new ManifestCustomElement(declaration, mod, this));
+          this.declarations.set(
+            declaration.tagName,
+            new ManifestCustomElement(declaration, mod, this),
+          );
         }
       }
     }
@@ -189,9 +211,9 @@ export class Manifest {
    */
   getTagNames(): string[] {
     return this.manifest?.modules
-      ?.flatMap?.(m => m.exports
-        ?.filter?.(x => x.kind === 'custom-element-definition')
-        ?.map?.(x => x.name)) as string[] ?? [];
+        ?.flatMap?.(m => m.exports
+            ?.filter?.(x => x.kind === 'custom-element-definition')
+            ?.map?.(x => x.name)) as string[] ?? [];
   }
 
   /**
@@ -256,9 +278,9 @@ export class Manifest {
 
   getAllDemos(): Demo[] {
     return this.manifest?.modules
-      ?.flatMap?.(m => m.declarations)
-      ?.filter?.((x): x is CustomElementDeclaration => !!x && isCustomElement(x))
-      ?.flatMap?.(x => x?.demos ?? []) ?? [];
+        ?.flatMap?.(m => m.declarations)
+        ?.filter?.((x): x is CustomElementDeclaration => !!x && isCustomElement(x))
+        ?.flatMap?.(x => x?.demos ?? []) ?? [];
   }
 
   getDemoMetadata(tagName: string, options: Required<PfeConfig>): DemoRecord[] {
@@ -284,9 +306,9 @@ export class Manifest {
       const filename = last.replace('.html', '');
       const isMainElementDemo = this.getTagNames().includes(filename);
       const title = isMainElementDemo ? options.aliases[tagName] ?? prettyTag(tagName) : last
-        .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
-        .replace(/-/g, ' ')
-        .replace('.html', '');
+          .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
+          .replace(/-/g, ' ')
+          .replace('.html', '');
       return {
         tagName,
         primaryElementName,
@@ -295,7 +317,7 @@ export class Manifest {
         title,
         filePath,
         manifest,
-        ...demo
+        ...demo,
       };
     });
   }

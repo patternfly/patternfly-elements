@@ -1,5 +1,5 @@
 import type { Placement } from '@floating-ui/dom';
-import type { ReactiveController, ReactiveElement } from 'lit';
+import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import type { StyleInfo } from 'lit/directives/style-map.js';
 import type { OffsetOptions as Offset } from '@floating-ui/core';
 
@@ -11,7 +11,7 @@ import {
   offset as offsetMiddleware,
   shift as shiftMiddleware,
   flip as flipMiddleware,
-  arrow as arrowMiddleware
+  arrow as arrowMiddleware,
 } from '@floating-ui/dom';
 
 type Lazy<T> = T | (() => T | null | undefined);
@@ -46,7 +46,7 @@ export class FloatingDOMController implements ReactiveController {
   #alignment?: Alignment;
   #styles?: StyleInfo;
   #placement?: Placement;
-  #options: Required<FloatingDOMControllerOptions>;
+  #options: FloatingDOMControllerOptions;
 
   get #invoker() {
     const { invoker } = this.#options;
@@ -95,20 +95,27 @@ export class FloatingDOMController implements ReactiveController {
   }
 
   constructor(
-    private host: ReactiveElement,
+    private host: ReactiveControllerHost,
     options: FloatingDOMControllerOptions
   ) {
     host.addController(this);
-    this.#options = options as Required<FloatingDOMControllerOptions>;
-    this.#options.invoker ??= host;
-    this.#options.shift ??= true;
+    this.#options = {
+      invoker: (host instanceof HTMLElement ? () => host : () => undefined),
+      shift: true,
+      ...options,
+    };
   }
 
   hostDisconnected() {
     this.#cleanup?.();
   }
 
-  async #update(placement: Placement = 'top', offset?: Offset, flip = true, fallbackPlacements?: Placement[]) {
+  async #update(
+    placement: Placement = 'top',
+    offset?: Offset,
+    flip = true,
+    fallbackPlacements?: Placement[],
+  ) {
     const { padding, shift } = this.#options;
 
     const invoker = this.#invoker;
@@ -117,7 +124,12 @@ export class FloatingDOMController implements ReactiveController {
     if (!invoker || !content) {
       return;
     }
-    const { x, y, placement: _placement, middlewareData } = await computePosition(invoker, content, {
+    const {
+      x,
+      y,
+      placement: _placement,
+      middlewareData,
+    } = await computePosition(invoker, content, {
       strategy: 'absolute',
       placement,
       middleware: [
@@ -125,7 +137,7 @@ export class FloatingDOMController implements ReactiveController {
         shift && shiftMiddleware({ padding }),
         arrow && arrowMiddleware({ element: arrow, padding: arrow.offsetHeight / 2 }),
         flip && flipMiddleware({ padding, fallbackPlacements }),
-      ].filter(Boolean)
+      ].filter(Boolean),
     });
 
     if (arrow) {

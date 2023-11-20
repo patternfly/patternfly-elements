@@ -1,22 +1,53 @@
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import type { ReactiveController, ReactiveElement } from 'lit';
 
 import { isElementInView } from '@patternfly/pfe-core/functions/isElementInView.js';
 
 export interface Options {
+  /**
+   * Force hide the scroll buttons regardless of overflow
+   */
   hideOverflowButtons?: boolean;
+  /**
+   * Delay in ms to wait before checking for overflow
+   */
+  scrollTimeoutDelay?: number;
 }
 
 export class OverflowController implements ReactiveController {
+  static #instances = new Set<OverflowController>();
+
+  static {
+    // on resize check for overflows to add or remove scroll buttons
+    window.addEventListener('resize', () => {
+      for (const instance of this.#instances) {
+        instance.onScroll();
+      }
+    }, { capture: false, passive: true });
+  }
+
   /** Overflow container */
   #container?: HTMLElement;
   /** Children that can overflow */
   #items: HTMLElement[] = [];
 
-  #scrollTimeoutDelay = 0;
+  #scrollTimeoutDelay: number;
   #scrollTimeout?: ReturnType<typeof setTimeout>;
 
   /** Default state */
-  #hideOverflowButtons = false;
+  #hideOverflowButtons: boolean;
+
+  #mo = new MutationObserver(mutations => {
+    for (const mutation of mutations) {
+      if (mutation.type === 'childList') {
+        this.#setOverflowState();
+      }
+    }
+  });
+
+  #ro = new ResizeObserver(() => {
+    this.#setOverflowState();
+  });
+
   showScrollButtons = false;
   overflowLeft = false;
   overflowRight = false;
@@ -29,10 +60,19 @@ export class OverflowController implements ReactiveController {
     return this.#items.at(-1);
   }
 
-  constructor(public host: ReactiveControllerHost & Element, private options?: Options) {
-    this.host.addController(this);
-    if (options?.hideOverflowButtons) {
-      this.#hideOverflowButtons = options?.hideOverflowButtons;
+  constructor(
+    // TODO: widen this type to ReactiveControllerHost
+    public host: ReactiveElement,
+    private options?: Options,
+  ) {
+    this.#hideOverflowButtons = options?.hideOverflowButtons ?? false;
+    this.#scrollTimeoutDelay = options?.scrollTimeoutDelay ?? 0;
+    if (host.isConnected) {
+      OverflowController.#instances.add(this);
+    }
+    host.addController(this);
+    if (host.isConnected) {
+      this.hostConnected();
     }
   }
 
@@ -40,15 +80,26 @@ export class OverflowController implements ReactiveController {
     if (!this.firstItem || !this.lastItem || !this.#container) {
       return;
     }
-    this.overflowLeft = !this.#hideOverflowButtons && !isElementInView(this.#container, this.firstItem);
-    this.overflowRight = !this.#hideOverflowButtons && !isElementInView(this.#container, this.lastItem);
+    const prevLeft = this.overflowLeft;
+    const prevRight = this.overflowRight;
+
+    this.overflowLeft = !this.#hideOverflowButtons
+      && !isElementInView(this.#container, this.firstItem);
+    this.overflowRight = !this.#hideOverflowButtons
+      && !isElementInView(this.#container, this.lastItem);
     let scrollButtonsWidth = 0;
     if (this.overflowLeft || this.overflowRight) {
-      scrollButtonsWidth = (this.#container.parentElement?.querySelector('button')?.getBoundingClientRect().width || 0) * 2;
+      scrollButtonsWidth =
+        (this.#container.parentElement?.querySelector('button')?.getBoundingClientRect().width || 0)
+      * 2;
     }
-    this.showScrollButtons = !this.#hideOverflowButtons &&
-    this.#container.scrollWidth > (this.#container.clientWidth + scrollButtonsWidth);
-    this.host.requestUpdate();
+    this.showScrollButtons = !this.#hideOverflowButtons
+    && this.#container.scrollWidth > (this.#container.clientWidth + scrollButtonsWidth);
+
+    // only request update if there has been a change
+    if ((prevLeft !== this.overflowLeft) || (prevRight !== this.overflowRight)) {
+      this.host.requestUpdate();
+    }
   }
 
   init(container: HTMLElement, items: HTMLElement[]) {
@@ -85,6 +136,8 @@ export class OverflowController implements ReactiveController {
   }
 
   hostConnected(): void {
+    this.#mo.observe(this.host, { attributes: false, childList: true, subtree: true });
+    this.#ro.observe(this.host);
     this.onScroll();
     this.#setOverflowState();
   }

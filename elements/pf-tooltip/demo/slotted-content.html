@@ -1,0 +1,42 @@
+<header>
+  <h2>Toggle Container Width</h2>
+  <pf-switch id="width-toggle"></pf-switch>
+  <label for="width-toggle" data-state="off">Full width</label>
+  <label for="width-toggle" data-state="on">Narrow</label>
+</header>
+
+<section id="slotted">
+  <p>A tooltip may contain
+    <pf-tooltip tabindex="0">
+      <samp>HTML content</samp>
+      <span slot="content">
+        Slotted content can be <mark>formatted</mark>, using HTML
+        tags like <em>em</em>, <strong>strong</strong>, or <code>code</code>.
+      </span>
+    </pf-tooltip> by using the <code>content</code> slot.
+    Slotted content must be phrasing content, so no <code>&lt;p&gt;</code>s.
+  </p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+  import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
+  document.getElementById('width-toggle').addEventListener('change', function(event) {
+    document.querySelector('[data-demo]').classList.toggle('narrow', event.target.checked);
+  });
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+
+  .narrow :is(p, ul) {
+    max-width: 400px;
+    margin-inline: auto;
+  }
+
+  samp {
+    font-weight: bold;
+  }
+</style>

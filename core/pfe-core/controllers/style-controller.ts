@@ -1,8 +1,14 @@
-import type { ReactiveController, ReactiveElement, CSSResultGroup, CSSResultOrNative, CSSResult } from 'lit';
+import type {
+  ReactiveController,
+  ReactiveElement,
+  CSSResultGroup,
+  CSSResultOrNative,
+  CSSResult,
+} from 'lit';
 import { getCompatibleStyle, supportsAdoptingStyleSheets } from 'lit';
 
 declare global {
-   interface ShadowRoot {
+  interface ShadowRoot {
     adoptedStyleSheets: CSSStyleSheet[];
   }
 }
@@ -28,7 +34,9 @@ export class StyleController implements ReactiveController {
       return;
     }
 
-    const styles = [this.styles].flatMap(x => getCompatibleStyle(x as CSSResultOrNative)).filter(x => !!x);
+    const styles = [this.styles]
+        .flatMap(x => getCompatibleStyle(x as CSSResultOrNative))
+        .filter(x => !!x);
 
     if (supportsAdoptingStyleSheets) {
       this.host.renderRoot.adoptedStyleSheets = [

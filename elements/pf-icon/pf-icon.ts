@@ -39,6 +39,21 @@ export class PfIcon extends LitElement {
 
   public static defaultIconSet = 'fas';
 
+  /**
+   * Register a new icon set
+   * @param setName - The name of the icon set
+   * @param getter - A function that returns the URL of an icon
+   * @example returning a URL object
+   *          ```js
+   *          PfIcon.addIconSet('rh', (set, icon) =>
+   *            new URL(`./icons/${set}/${icon}.js`, import.meta.url));
+   *          ```
+   * @example returning a string
+   *          ```js
+   *          PfIcon.addIconSet('rh', (set, icon) =>
+   *            `/assets/icons/${set}/${icon}.js`);
+   *          ```
+   */
   public static addIconSet(setName: string, getter: URLGetter) {
     if (typeof getter !== 'function') {
       Logger.warn(`[${this.name}.addIconSet(setName, getter)]: getter must be a function`);

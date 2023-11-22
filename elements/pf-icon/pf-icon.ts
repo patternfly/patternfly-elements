@@ -65,6 +65,22 @@ export class PfIcon extends LitElement {
     }
   }
 
+  /**
+   * Gets the URL of an icon. Override this to customize how icon URLs are resolved.
+   * @param set - The name of the icon set
+   * @param icon - The name of the icon
+   * @returns The URL of the icon
+   * @example returning a URL object
+   *          ```js
+   *          PfIcon.getIconUrl = (set, icon) =>
+   *            new URL(`./icons/${set}/${icon}.js`, import.meta.url);
+   *          ```
+   * @example returning a string
+   *          ```js
+   *          PfIcon.getIconUrl = (set, icon) =>
+   *            `/assets/icons/${set}/${icon}.js`;
+   *          ```
+   */
   public static getIconUrl: URLGetter = (set: string, icon: string) =>
     new URL(`./icons/${set}/${icon}.js`, import.meta.url);
 

@@ -211,11 +211,7 @@
       "command": "web-dev-server --open --watch",
       "service": true,
       "dependencies": [
-        "build:tools",
-        "build:core",
-        "analyze",
-        "watch:core",
-        "watch:analyze"
+        "build:tools"
       ]
     },
     "watch:core": {

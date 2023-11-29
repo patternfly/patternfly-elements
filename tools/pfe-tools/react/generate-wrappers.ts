@@ -8,11 +8,13 @@ function isCustomElementDeclaration(declaration: CEM.Declaration): declaration i
   return !!(declaration as CEM.CustomElementDeclaration).customElement;
 }
 
-function getDeprefixedClassName(className: string) {
-  const upper = className.replace('Pf', '');
-  return `${upper.charAt(0).toUpperCase()}${upper.slice(1)}`;
+/** Remove a prefix from a class name */
+function getDeprefixedClassName(className: string, prefix: string) {
+  const [fst, ...tail] = className.replace(prefix, '');
+  return `${fst.toUpperCase()}${tail.join('')}`;
 }
 
+/** simple function to convert string from dash to camel case */
 function camel(str: string): string {
   return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
 }
@@ -27,6 +29,9 @@ async function writeReactWrapper(
   module: CEM.Module,
   decl: CEM.CustomElementDeclaration,
   outDirPathOrURL: string | URL,
+  packageName: string,
+  elementPrefix: string,
+  classPrefix: string,
 ) {
   const { path, exports } = module;
   if (!exports) {
@@ -49,15 +54,15 @@ async function writeReactWrapper(
       : fileURLToPath(outDirPathOrURL);
     const outPath = join(outDirPath, path);
     await mkdir(dirname(outPath), { recursive: true });
-    const reactComponentName = getDeprefixedClassName(Class);
+    const reactComponentName = getDeprefixedClassName(Class, classPrefix);
     const eventsMap = `{${events.map(event => `
           ${getEventReactPropName(event)}: '${event.name}'`).join(',')}${events.length ? `,
         ` : ''}}`;
     const eventsInterface = eventsMap.replace(/\s+/g, ' ').replaceAll(',', ';').replace('; }', ' }');
     await writeFile(outPath, javascript`// ${path}
-      import { createComponent } from '@lit-labs/react';
+      import { createComponent } from '@lit/react';
       import react from 'react';
-      import { ${Class} as elementClass } from '@patternfly/elements/${module.path}';
+      import { ${Class} as elementClass } from '${packageName}/${module.path}';
       export const ${reactComponentName} = createComponent({
         tagName: '${decl.tagName}',
         elementClass,
@@ -68,8 +73,8 @@ async function writeReactWrapper(
     `, 'utf8');
     await writeFile(outPath.replace('.js', '.d.ts'), typescript`
       // ${path}
-      import type { ReactWebComponent } from '@lit-labs/react';
-      import type { ${Class} } from '@patternfly/elements/${module.path}';
+      import type { ReactWebComponent } from '@lit/react';
+      import type { ${Class} } from '${packageName}/${module.path}';
       export const ${reactComponentName}: ReactWebComponent<${Class}, ${eventsInterface}>;
 
     `, 'utf8');
@@ -100,6 +105,9 @@ async function parseManifest(maybeManifest: unknown): Promise<CEM.Package> {
 export async function generateReactWrappers(
   customElementsManifestOrPathOrURL: CEM.Package | string | URL,
   outDirPathOrURL: string | URL,
+  packageName = '@patternfly/elements',
+  elementPrefix = 'pf',
+  classPrefix = `${elementPrefix.charAt(0).toUpperCase()}${elementPrefix.slice(1)}`,
 ) {
   const manifest = await parseManifest(customElementsManifestOrPathOrURL);
   const written = [];
@@ -107,7 +115,14 @@ export async function generateReactWrappers(
     for (const module of manifest.modules) {
       for (const decl of module.declarations ?? []) {
         if (isCustomElementDeclaration(decl)) {
-          written.push(await writeReactWrapper(module, decl, outDirPathOrURL));
+          written.push(await writeReactWrapper(
+            module,
+            decl,
+            outDirPathOrURL,
+            packageName,
+            elementPrefix,
+            classPrefix,
+          ));
         }
       }
     }

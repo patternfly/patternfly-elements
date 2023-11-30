@@ -88,11 +88,6 @@
   color: var(--pf-theme--color--ui-base, #6a6e73);
 }
 
-:host([overflow-chip]) .chip-content {
-  color: var(--pf-theme--color--accent, #0066cc);
-  margin: 0 var(--pf-global--spacer--sm, 0.5rem);
-}
-
 #close-button {
   --pf-c-button--PaddingTop: var(--pf-c-chip__c-button--PaddingTop);
   --pf-c-button--PaddingRight: var(--pf-c-chip__c-button--PaddingRight);
@@ -103,8 +98,13 @@
   --pf-c-button--disabled--BackgroundColor: var(--pf-c-button--m-plain--disabled--BackgroundColor);
 }
 
-:host([overflow-chip]) #close-button {
-  display: none !important;
+#close-button:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: "";
 }
 
 #close-button:focus {

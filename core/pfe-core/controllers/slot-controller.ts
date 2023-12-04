@@ -48,6 +48,7 @@ const isSlot =
 
 export class SlotController implements ReactiveController {
   public static default = Symbol('default slot');
+  /** @deprecated use `default` */
   public static anonymous = this.default;
 
   #nodes = new Map<string | typeof SlotController.default, Slot>();

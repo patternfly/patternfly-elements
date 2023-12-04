@@ -1,33 +1,45 @@
-<link rel="stylesheet" href="demo.css">
+<pf-tabs>
+  <pf-tab id="users" slot="tab">Users</pf-tab>
+  <pf-tab-panel>Users</pf-tab-panel>
+  <pf-tab slot="tab">Containers</pf-tab>
+  <pf-tab-panel>Containers <a href="#">Focusable element</a></pf-tab-panel>
+  <pf-tab active slot="tab">Database</pf-tab>
+  <pf-tab-panel>
+    <pf-tabs>
+      <pf-tab id="users2" slot="tab">Users 2</pf-tab>
+      <pf-tab-panel>Users 2 </pf-tab-panel>
+      <pf-tab active slot="tab">Containers 2</pf-tab>
+      <pf-tab-panel>Containers 2<a href="#">Focusable element</a></pf-tab-panel>
+      <pf-tab slot="tab">Database 2</pf-tab>
+      <pf-tab-panel>Database 2</pf-tab-panel>
+      <pf-tab slot="tab" disabled>Disabled 2</pf-tab>
+      <pf-tab-panel>Disabled 2</pf-tab-panel>
+      <pf-tab slot="tab" aria-disabled="true" id="aria-disabled">Aria Disabled 2</pf-tab>
+      <pf-tab-panel>Aria Disabled 2</pf-tab-panel>
+    </pf-tabs>
+  </pf-tab-panel>
+  <pf-tab slot="tab" disabled>Disabled</pf-tab>
+  <pf-tab-panel>Disabled</pf-tab-panel>
+  <pf-tab slot="tab" aria-disabled="true" id="aria-disabled">Aria Disabled</pf-tab>
+  <pf-tab-panel>Aria Disabled</pf-tab-panel>
+</pf-tabs>
+
 <script type="module">
   import '@patternfly/elements/pf-tabs/pf-tabs.js';
 </script>
 
-<div class="example">
-  <h2>Default</h2>
-  <pf-tabs>
-    <pf-tab id="users" slot="tab">Users</pf-tab>
-    <pf-tab-panel>Users</pf-tab-panel>
-    <pf-tab slot="tab">Containers</pf-tab>
-    <pf-tab-panel>Containers <a href="#">Focusable element</a></pf-tab-panel>
-    <pf-tab active slot="tab">Database</pf-tab>
-    <pf-tab-panel>
-      <pf-tabs>
-        <pf-tab id="users2" slot="tab">Users 2</pf-tab>
-        <pf-tab-panel>Users 2 </pf-tab-panel>
-        <pf-tab active slot="tab">Containers 2</pf-tab>
-        <pf-tab-panel>Containers 2<a href="#">Focusable element</a></pf-tab-panel>
-        <pf-tab slot="tab">Database 2</pf-tab>
-        <pf-tab-panel>Database 2</pf-tab-panel>
-        <pf-tab slot="tab" disabled>Disabled 2</pf-tab>
-        <pf-tab-panel>Disabled 2</pf-tab-panel>
-        <pf-tab slot="tab" aria-disabled="true" id="aria-disabled">Aria Disabled 2</pf-tab>
-        <pf-tab-panel>Aria Disabled 2</pf-tab-panel>
-      </pf-tabs>
-    </pf-tab-panel>
-    <pf-tab slot="tab" disabled>Disabled</pf-tab>
-    <pf-tab-panel>Disabled</pf-tab-panel>
-    <pf-tab slot="tab" aria-disabled="true" id="aria-disabled">Aria Disabled</pf-tab>
-    <pf-tab-panel>Aria Disabled</pf-tab-panel>
-  </pf-tabs>
-</div>
+<style>
+main {
+  margin: 0 auto;
+  padding: 0 16px 32px;
+  width: 100%;
+  max-width: 1008px;
+  @media (min-width: 768px) {
+    padding: 0 32px 32px;
+  }
+  & [data-demo] {
+    display: contents;
+  }
+}
+</style>
+

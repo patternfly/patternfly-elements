@@ -1,0 +1,49 @@
+<pf-tabs id="overflow">
+  <pf-tab slot="tab">Users</pf-tab>
+  <pf-tab-panel>Users</pf-tab-panel>
+  <pf-tab slot="tab">Containers</pf-tab>
+  <pf-tab-panel>Containers</pf-tab-panel>
+  <pf-tab slot="tab">Database</pf-tab>
+  <pf-tab-panel>Database</pf-tab-panel>
+  <pf-tab slot="tab" active>Server</pf-tab>
+  <pf-tab-panel>Server</pf-tab-panel>
+  <pf-tab slot="tab">System</pf-tab>
+  <pf-tab-panel>System</pf-tab-panel>
+  <pf-tab slot="tab">Network</pf-tab>
+  <pf-tab-panel>Network</pf-tab-panel>
+</pf-tabs>
+
+<form class="input">
+  <label for="toggle">Dark Box Toggle</label>
+  <pf-switch id="toggle"></pf-switch>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+  import '@patternfly/elements/pf-tabs/pf-tabs.js';
+  document
+    .getElementById('toggle')
+    .addEventListener('change', function (event) {
+      if (event.target.checked) {
+        document.querySelector('pf-tabs').setAttribute('box', 'dark');
+      } else {
+        document.querySelector('pf-tabs').removeAttribute('box');
+      }
+    });
+</script>
+
+<style>
+main {
+  margin: 0 auto;
+  padding: 0 16px 32px;
+  width: 100%;
+  max-width: 1008px;
+  @media (min-width: 768px) {
+    padding: 0 32px 32px;
+  }
+  & [data-demo] {
+    display: contents;
+  }
+}
+</style>
+

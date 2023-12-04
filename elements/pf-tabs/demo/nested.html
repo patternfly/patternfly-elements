@@ -3,8 +3,21 @@
   <pf-tab-panel>Users</pf-tab-panel>
   <pf-tab slot="tab">Containers</pf-tab>
   <pf-tab-panel>Containers <a href="#">Focusable element</a></pf-tab-panel>
-  <pf-tab slot="tab">Database</pf-tab>
-  <pf-tab-panel>Database</pf-tab-panel>
+  <pf-tab active slot="tab">Database</pf-tab>
+  <pf-tab-panel>
+    <pf-tabs>
+      <pf-tab id="users2" slot="tab">Users 2</pf-tab>
+      <pf-tab-panel>Users 2 </pf-tab-panel>
+      <pf-tab active slot="tab">Containers 2</pf-tab>
+      <pf-tab-panel>Containers 2<a href="#">Focusable element</a></pf-tab-panel>
+      <pf-tab slot="tab">Database 2</pf-tab>
+      <pf-tab-panel>Database 2</pf-tab-panel>
+      <pf-tab slot="tab" disabled>Disabled 2</pf-tab>
+      <pf-tab-panel>Disabled 2</pf-tab-panel>
+      <pf-tab slot="tab" aria-disabled="true" id="aria-disabled">Aria Disabled 2</pf-tab>
+      <pf-tab-panel>Aria Disabled 2</pf-tab-panel>
+    </pf-tabs>
+  </pf-tab-panel>
   <pf-tab slot="tab" disabled>Disabled</pf-tab>
   <pf-tab-panel>Disabled</pf-tab-panel>
   <pf-tab slot="tab" aria-disabled="true" id="aria-disabled">Aria Disabled</pf-tab>
@@ -29,6 +42,4 @@ main {
   }
 }
 </style>
-
-
 

@@ -1,0 +1,43 @@
+<pf-tabs box="light">
+  <pf-tab slot="tab" active>Users</pf-tab>
+  <pf-tab-panel>Users</pf-tab-panel>
+  <pf-tab slot="tab">Containers</pf-tab>
+  <pf-tab-panel>Containers</pf-tab-panel>
+  <pf-tab slot="tab">Database</pf-tab>
+  <pf-tab-panel>Database</pf-tab-panel>
+  <pf-tab slot="tab" disabled>Disabled</pf-tab>
+  <pf-tab-panel>Disabled</pf-tab-panel>
+  <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+  <pf-tab-panel>Aria Disabled</pf-tab-panel>
+</pf-tabs>
+
+<form class="input">
+  <label for="toggle">Dark Box Type</label>
+  <pf-switch id="toggle"></pf-switch>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+  import '@patternfly/elements/pf-tabs/pf-tabs.js';
+  document
+    .getElementById('toggle')
+    .addEventListener('change', function (event) {
+      document.querySelector('pf-tabs').box =
+        event.target.checked ? 'dark' : 'light';
+    });
+</script>
+
+<style>
+main {
+  margin: 0 auto;
+  padding: 0 16px 32px;
+  width: 100%;
+  max-width: 1008px;
+  @media (min-width: 768px) {
+    padding: 0 32px 32px;
+  }
+  & form {
+    margin-block-start: 16px;
+  }
+}
+</style>

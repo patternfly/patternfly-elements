@@ -28,7 +28,7 @@ import style from './pf-accordion.css';
  */
 @customElement('pf-accordion')
 export class PfAccordion extends BaseAccordion {
-  static readonly styles = [...BaseAccordion.styles, style];
+  static readonly styles = [style];
 
   /** When true, only one accordion panel may be expanded at a time */
   @property({ reflect: true, type: Boolean }) single = false;

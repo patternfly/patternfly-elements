@@ -15,10 +15,6 @@
   --pf-c-tabs__link--before--BorderBottomColor: var(--pf-c-tabs__link--BackgroundColor, transparent);
 }
 
-/* :host(.first[box][active]) #current::before {
-  left: calc(var(--pf-c-tabs__link--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)) * -1);
-} */
-
 :host([vertical]) [part="text"] {
   max-width: 100%;
   overflow-wrap: break-word;

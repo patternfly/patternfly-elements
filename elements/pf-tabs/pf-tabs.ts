@@ -14,6 +14,8 @@ import { cascades } from '@patternfly/pfe-core/decorators.js';
 import { PfTab } from './pf-tab.js';
 import { PfTabPanel } from './pf-tab-panel.js';
 
+import '@patternfly/elements/pf-icon/pf-icon.js';
+
 import styles from './pf-tabs.css';
 
 /**
@@ -69,6 +71,10 @@ export class PfTabs extends LitElement {
   static readonly styles = [styles];
 
   protected static readonly scrollTimeoutDelay = 150;
+
+  static isExpandEvent(event: Event): event is TabExpandEvent {
+    return event instanceof TabExpandEvent;
+  }
 
   /**
    * Box styling on tabs. Defaults to null
@@ -132,24 +138,16 @@ export class PfTabs extends LitElement {
     this.#tabs.activeTab = tab;
   }
 
-  @query('#tabs') private _tabsContainer!: HTMLElement;
+  @query('#tabs') private tabsContainer!: HTMLElement;
 
-  @queryAssignedElements({ slot: 'tab' }) private _tabs?: PfTab[];
-
-  protected get canShowScrollButtons(): boolean {
-    return !this.vertical;
-  }
+  @queryAssignedElements({ slot: 'tab' }) private tabs?: PfTab[];
 
   #overflow = new OverflowController(this, { scrollTimeoutDelay: 200 });
 
   #tabs = new TabsController(this, {
-    isTab: (x: Node): x is PfTab => x instanceof PfTab,
-    isPanel: (x: Node): x is PfTabPanel => x instanceof PfTabPanel,
+    isTab: (x): x is PfTab => x instanceof PfTab,
+    isPanel: (x): x is PfTabPanel => x instanceof PfTabPanel,
   });
-
-  static isExpandEvent(event: Event): event is TabExpandEvent {
-    return event instanceof TabExpandEvent;
-  }
 
   override connectedCallback() {
     super.connectedCallback();
@@ -197,8 +195,8 @@ export class PfTabs extends LitElement {
   }
 
   #onSlotChange() {
-    if (this._tabs) {
-      this.#overflow.init(this._tabsContainer, this._tabs);
+    if (this.tabs) {
+      this.#overflow.init(this.tabsContainer, this.tabs);
     }
   }
 

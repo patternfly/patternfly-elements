@@ -11,8 +11,11 @@ export interface Tab extends HTMLElement {
 export type Panel = HTMLElement
 
 export interface TabsControllerOptions {
+  /** Add an `isTab` predicate to ensure this tabs instance' state does not leak into parent tabs' state */
   isTab: (node: unknown) => node is Tab;
+  /** Add an `isPanel` predicate to ensure this tabs instance' state does not leak into parent tabs' state */
   isPanel: (node: unknown) => node is Panel;
+  /** If the controller host is not an element, pass a getter to supply the tabs container element */
   getHTMLElement?: () => HTMLElement;
 }
 
@@ -142,12 +145,13 @@ export class TabsController implements ReactiveController {
   }
 
   /**
-   * @param host - The host element of the tabs.
-   * @param validations - A set of methods (isTab, isPanel) to validate tabs and panels.
-   * @example new TabsController(this, {
-   *    isTab: (x: Node): x is PfTab => x instanceof PfTab,
-   *    isPanel: (x: Node): x is PfTabPanel => x instanceof PfTabPanel
-   * });
+   * @example Usage in PfTab
+   *          ```ts
+   *          new TabsController(this, {
+   *             isTab: (x): x is PfTab => x instanceof PfTab,
+   *             isPanel: (x): x is PfTabPanel => x instanceof PfTabPanel
+   *          });
+   *          ```
    */
   constructor(host: ReactiveControllerHost, options: TabsControllerOptions) {
     this.#logger = new Logger(host);

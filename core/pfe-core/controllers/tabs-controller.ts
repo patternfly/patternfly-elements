@@ -1,25 +1,7 @@
-import type { ReactiveController, ReactiveElement } from 'lit';
+import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
-
-import { ComposedEvent } from '@patternfly/pfe-core';
-
-export class TabExpandEvent extends ComposedEvent {
-  constructor(
-    public tab: Tab,
-  ) {
-    super('expand');
-  }
-}
-
-export class TabDisabledEvent extends ComposedEvent {
-  constructor(
-    public tab: Tab,
-  ) {
-    super('disabled');
-  }
-}
 
 export interface Tab extends HTMLElement {
   active: boolean;
@@ -28,9 +10,30 @@ export interface Tab extends HTMLElement {
 
 export type Panel = HTMLElement
 
-export interface Validations {
-  isTab: (node: Node) => node is Tab;
-  isPanel: (node: Node) => node is Panel;
+export interface TabsControllerOptions {
+  isTab: (node: unknown) => node is Tab;
+  isPanel: (node: unknown) => node is Panel;
+  getHTMLElement?: () => HTMLElement;
+}
+
+function isReactiveControllerHost(element: HTMLElement): element is HTMLElement & ReactiveControllerHost {
+  return 'addController' in element;
+}
+
+export class TabExpandEvent extends Event {
+  constructor(
+    public tab: Tab,
+  ) {
+    super('expand', { bubbles: true, cancelable: true });
+  }
+}
+
+export class TabDisabledEvent extends Event {
+  constructor(
+    public tab: Tab,
+  ) {
+    super('disabled', { bubbles: true, cancelable: true });
+  }
 }
 
 export class TabsController implements ReactiveController {
@@ -40,23 +43,21 @@ export class TabsController implements ReactiveController {
 
   static {
     window.addEventListener('expand', event => {
-      if (!(event instanceof TabExpandEvent)) {
-        return;
-      }
-      for (const instance of this.#instances) {
-        if (instance.#isTab(event.tab) && instance.#tabs.has(event.tab)) {
-          instance.#onTabExpand(event.tab);
+      if (event instanceof TabExpandEvent) {
+        for (const instance of this.#instances) {
+          if (instance.#isTab(event.tab) && instance.#tabPanelMap.has(event.tab)) {
+            instance.#onTabExpand(event.tab);
+          }
         }
       }
     });
 
     window.addEventListener('disabled', event => {
-      if (!(event instanceof TabDisabledEvent)) {
-        return;
-      }
-      for (const instance of this.#instances) {
-        if (instance.#isTab(event.tab) && instance.#tabs.has(event.tab)) {
-          instance.#onTabDisabled();
+      if (event instanceof TabDisabledEvent) {
+        for (const instance of this.#instances) {
+          if (instance.#isTab(event.tab) && instance.#tabPanelMap.has(event.tab)) {
+            instance.#onTabDisabled();
+          }
         }
       }
     });
@@ -64,13 +65,15 @@ export class TabsController implements ReactiveController {
 
   #logger: Logger;
 
-  #host: ReactiveElement;
+  #host: ReactiveControllerHost;
 
-  #tabs = new Map<Tab, Panel>();
+  #element: HTMLElement;
 
-  #isTab: Required<Validations>['isTab'];
+  #tabPanelMap = new Map<Tab, Panel>();
 
-  #isPanel: Required<Validations>['isPanel'];
+  #isTab: TabsControllerOptions['isTab'];
+
+  #isPanel: TabsControllerOptions['isPanel'];
 
   #slottedTabs: Tab[] = [];
 
@@ -121,7 +124,7 @@ export class TabsController implements ReactiveController {
   }
 
   set activeTab(tab: Tab | undefined) {
-    if (tab === undefined || !this.#tabs.has(tab)) {
+    if (tab === undefined || !this.#tabPanelMap.has(tab)) {
       this.#logger.warn(`The tab provided is not a valid tab.`);
       return;
     }
@@ -131,7 +134,7 @@ export class TabsController implements ReactiveController {
   }
 
   protected get _tabs() {
-    return [...this.#tabs.keys()] as Tab[];
+    return [...this.#tabPanelMap.keys()] as Tab[];
   }
 
   get #activeTab(): Tab | undefined {
@@ -146,18 +149,32 @@ export class TabsController implements ReactiveController {
    *    isPanel: (x: Node): x is PfTabPanel => x instanceof PfTabPanel
    * });
    */
-  constructor(host: ReactiveElement, validations: Validations) {
-    this.#tabindex = new RovingTabindexController(host);
+  constructor(host: ReactiveControllerHost, options: TabsControllerOptions) {
     this.#logger = new Logger(host);
-    this.#isTab = validations.isTab;
-    this.#isPanel = validations.isPanel;
+    if (host instanceof HTMLElement) {
+      this.#element = host;
+      this.#tabindex = new RovingTabindexController(host);
+    } else {
+      const element = options.getHTMLElement?.();
+      if (!element) {
+        throw new Error('TabsController must be instantiated with an HTMLElement of a `getHTMLElement` function');
+      }
+      // TODO(bennypowers): remove after #2570, by forwarding the `getHTMLElement` options
+      if (!isReactiveControllerHost(element)) {
+        throw new Error('TabsController\'s host HTMLElement must be a controller host as well');
+      }
+      this.#element = element;
+      this.#tabindex = new RovingTabindexController(element);
+    }
+    this.#isTab = options.isTab;
+    this.#isPanel = options.isPanel;
     TabsController.#tabsClasses.add(host.constructor);
-    if (host.isConnected) {
+    if (this.#element.isConnected) {
       TabsController.#instances.add(this);
     }
     (this.#host = host).addController(this);
-    this.#mo.observe(host, { attributes: false, childList: true, subtree: false });
-    host.addEventListener('slotchange', this.#onSlotchange);
+    this.#mo.observe(this.#element, { attributes: false, childList: true, subtree: false });
+    this.#element.addEventListener('slotchange', this.#onSlotchange);
   }
 
   hostConnected() {
@@ -192,17 +209,18 @@ export class TabsController implements ReactiveController {
   }
 
   async #rebuild() {
-    const tabSlot = this.#host.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=tab]');
-    const panelSlot = this.#host.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+    const tabSlot = this.#element.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=tab]');
+    const panelSlot = this.#element.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
     this.#slottedPanels = panelSlot?.assignedElements().filter(this.#isPanel) ?? [];
     this.#slottedTabs = tabSlot?.assignedElements().filter(this.#isTab) ?? [];
 
-    this.#tabs.clear();
+    this.#tabPanelMap.clear();
     await this.#registerSlottedTabs();
 
     if (this._tabs.length > 0) {
       this.#updateAccessibility();
-      await this.#tabindex.initItems(this._tabs, this.#host);
+      // TODO(bennypowers): adjust to fit, in or after #2570
+      this.#tabindex.initItems(this._tabs, this.#element);
       this.#setActiveTab();
     }
 
@@ -232,14 +250,14 @@ export class TabsController implements ReactiveController {
   #addPairForTab(index: number, tab: Tab) {
     const panel = this.#slottedPanels[index];
     if (this.#isPanel(panel)) {
-      this.#tabs.set(tab, panel);
+      this.#tabPanelMap.set(tab, panel);
     } else {
       this.#logger.warn(`Tab and panel do not match`, tab, panel);
     }
   }
 
   #deactivateExcept(indexToKeep: number) {
-    [...this.#tabs].forEach(([tab, panel], currentIndex) => {
+    [...this.#tabPanelMap].forEach(([tab, panel], currentIndex) => {
       tab.active = currentIndex === indexToKeep;
       panel.hidden = currentIndex !== indexToKeep;
     });
@@ -276,7 +294,7 @@ export class TabsController implements ReactiveController {
   }
 
   #updateAccessibility(): void {
-    for (const [tab, panel] of this.#tabs) {
+    for (const [tab, panel] of this.#tabPanelMap) {
       if (!panel.hasAttribute('aria-labelledby')) {
         panel.setAttribute('aria-labelledby', tab.id);
       }

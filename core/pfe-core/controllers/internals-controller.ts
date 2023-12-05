@@ -110,10 +110,6 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   #formDisabled = false;
 
-  static {
-
-  }
-
   /** True when the control is disabled via it's containing fieldset element */
   get formDisabled() {
     return this.host.matches(':disabled') || this.#formDisabled;
@@ -150,7 +146,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   /** Reflect the internals object's aria prototype */
   #defineInternalsProps() {
-    // TODO: can we define these statically on the prototype instead?
+    // TODO(bennypowers): can we define these statically on the prototype instead?
     for (const key in this.#internals) {
       if (isARIAMixinProp(key)) {
         this.#defineARIAMixinProp(key);
@@ -160,12 +156,6 @@ export class InternalsController implements ReactiveController, ARIAMixin {
         this.#defineMethod(key);
       }
     }
-
-    // for (const [key, val] of Object.entries(this.options ?? {})) {
-    //   if (isARIAMixinProp(key)) {
-    //     this[key] = val;
-    //   }
-    // }
   }
 
   #defineARIAMixinProp(key: keyof ARIAMixin) {

@@ -189,4 +189,5 @@ textarea[readonly] {
 
 .vertical { resize: vertical; }
 .horizontal { resize: horizontal; }
+.both { resize: both; }
 

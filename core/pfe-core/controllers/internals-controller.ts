@@ -57,6 +57,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   declare readonly states: unknown;
   declare readonly validity: ElementInternals['validity'];
   declare readonly willValidate: ElementInternals['willValidate'];
+  declare readonly validationMessage: ElementInternals['validationMessage'];
 
   declare role: ARIAMixin['role'];
   declare ariaAtomic: ARIAMixin['ariaAtomic'];

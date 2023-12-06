@@ -8,7 +8,7 @@ import type { PackageJSON } from './Manifest';
 
 import { join } from 'node:path';
 import { existsSync, readFileSync } from 'node:fs';
-import glob from 'glob';
+import { globSync, hasMagic } from 'glob';
 
 interface PackageRecord {
   location: string;
@@ -33,8 +33,8 @@ function loadPackage(packagePath: string): PackageJSON | void {
 function findPackages(packageSpecs: string[], rootDirectory: string): PackageRecord[] {
   return packageSpecs
     .flatMap(pkgGlob =>
-      (glob.hasMagic(pkgGlob) ?
-          glob.sync(join(rootDirectory, pkgGlob), { nodir: false })
+      (hasMagic(pkgGlob) ?
+          globSync(join(rootDirectory, pkgGlob), { nodir: false })
           : [join(rootDirectory, pkgGlob)]))
     .map(location => ({ location, package: loadPackage(location) }))
     .filter((x): x is PackageRecord => !!x.package?.name);

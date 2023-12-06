@@ -132,8 +132,8 @@
   ],
   "dependencies": {
     "@patternfly/icons": "^1.0.2",
-    "@patternfly/pfe-core": "^2.4.0",
+    "@patternfly/pfe-core": "^2.4.1",
     "lit": "2.6.1",
-    "tslib": "^2.4.1"
+    "tslib": "^2.6.2"
   }
 }

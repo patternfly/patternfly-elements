@@ -1,0 +1,9 @@
+<pf-text-area required></pf-text-area>
+
+<script type="module">
+  import '@patternfly/elements/pf-text-area/pf-text-area.js';
+  const textarea = document.querySelector('pf-text-area');
+  await textarea.updateComplete;
+        textarea.checkValidity();
+</script>
+

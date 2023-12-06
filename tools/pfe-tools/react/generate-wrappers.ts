@@ -3,6 +3,8 @@ import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 
+import Chalk from 'chalk';
+
 interface ReactWrapperData {
   Class: string;
   reactComponentName: string;
@@ -138,7 +140,7 @@ export async function generateReactWrappers(
 ) {
   const manifest = await parseManifest(customElementsManifestOrPathOrURL);
   const written = [];
-  console.group('Writing React Wrappers');
+  console.group(Chalk.green`Writing React Wrappers`);
   try {
     for (const module of manifest.modules) {
       if (!module.exports) {
@@ -150,16 +152,18 @@ export async function generateReactWrappers(
   } catch (error) {
     if (error instanceof NonCriticalError) {
       // eslint-disable-next-line no-console
-      console.info(error.message);
+      console.info(`⚠️ ${error.message}`);
     } else {
       throw error;
     }
   } finally {
     console.groupEnd();
   }
-  console.group('Wrote React Wrappers');
+  console.group(Chalk.greenBright`Wrote React Wrappers`);
   for (const { tagNames, outPath } of written) {
-    console.log(`${tagNames.join()}: ${relative(process.cwd(), outPath)}`);
+    const names = tagNames.map(x => Chalk.blue`${x}`).join().replace(', ', '');
+    const path = relative(process.cwd(), outPath);
+    console.log(`${names}: ${path}`);
   }
   console.groupEnd();
 }

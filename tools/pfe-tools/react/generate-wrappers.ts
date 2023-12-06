@@ -37,17 +37,18 @@ async function writeReactWrapper(
   if (!exports) {
     throw new Error(`module has no exports: ${path}`);
   }
-  const ceExport = exports.find(ex => ex.declaration.name === decl.name);
+  const ceExport = exports.find(ex =>
+    ex.kind === 'custom-element-definition' &&
+    ex.declaration.name === decl.name);
   if (!ceExport) {
     throw new Error(`module does not export custom element class: ${decl.name}`);
   }
-  const { tagName } = decl;
+  const { tagName, name: Class } = decl;
   if (!tagName) {
     throw new NonCriticalError(`declaration does not have a tag name: ${decl.name}`);
   } else {
     const javascript = dedent;
     const typescript = dedent;
-    const { name: Class } = ceExport;
     const events = decl.events ?? [];
     const outDirPath =
         typeof outDirPathOrURL === 'string' ? outDirPathOrURL

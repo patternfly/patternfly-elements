@@ -1,8 +1,18 @@
 import type * as CEM from 'custom-elements-manifest';
-import dedent from 'dedent';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
+
+interface ReactWrapperData {
+  Class: string;
+  reactComponentName: string;
+  eventsMap: string;
+  eventsInterface: string;
+  tagName: string;
+}
+
+const javascript = String.raw;
+const typescript = String.raw;
 
 function isCustomElementDeclaration(declaration: CEM.Declaration): declaration is CEM.CustomElementDeclaration {
   return !!(declaration as CEM.CustomElementDeclaration).customElement;
@@ -25,67 +35,83 @@ function getEventReactPropName(event: CEM.Event) {
 
 class NonCriticalError extends Error { }
 
-async function writeReactWrapper(
-  module: CEM.Module,
-  decl: CEM.CustomElementDeclaration,
-  outDirPathOrURL: string | URL,
-  packageName: string,
-  elementPrefix: string,
-  classPrefix: string,
-) {
-  const { path, exports } = module;
-  if (!exports) {
-    throw new Error(`module has no exports: ${path}`);
-  }
-  const ceExport = exports.find(ex =>
-    ex.kind === 'custom-element-definition' &&
-    ex.declaration.name === decl.name);
-  if (!ceExport) {
-    throw new Error(`module does not export custom element class: ${decl.name}`);
-  }
-  const { tagName, name: Class } = decl;
-  if (!tagName) {
-    throw new NonCriticalError(`declaration does not have a tag name: ${decl.name}`);
-  } else {
-    const javascript = dedent;
-    const typescript = dedent;
-    const events = decl.events ?? [];
-    const outDirPath =
-        typeof outDirPathOrURL === 'string' ? outDirPathOrURL
-      : fileURLToPath(outDirPathOrURL);
-    const outPath = join(outDirPath, path);
-    await mkdir(dirname(outPath), { recursive: true });
-    const reactComponentName = getDeprefixedClassName(Class, classPrefix);
-    const eventsMap = `{${events.map(event => `
-          ${getEventReactPropName(event)}: '${event.name}'`).join(',')}${events.length ? `,
-        ` : ''}}`;
-    const eventsInterface = eventsMap.replace(/\s+/g, ' ').replaceAll(',', ';').replace('; }', ' }');
-    await writeFile(outPath, javascript`// ${path}
-      import { createComponent } from '@lit/react';
-      import react from 'react';
-      import { ${Class} as elementClass } from '${packageName}/${module.path}';
-      export const ${reactComponentName} = createComponent({
-        tagName: '${decl.tagName}',
-        elementClass,
-        react,
-        events: ${eventsMap},
-      });
-
-    `, 'utf8');
-    await writeFile(outPath.replace('.js', '.d.ts'), typescript`
-      // ${path}
-      import type { ReactWebComponent } from '@lit/react';
-      import type { ${Class} } from '${packageName}/${module.path}';
-      export const ${reactComponentName}: ReactWebComponent<${Class}, ${eventsInterface}>;
-
-    `, 'utf8');
-    return { tagName, outPath };
-  }
-}
-
 function isPackage(manifest: unknown): manifest is CEM.Package {
   const maybeManifest = (manifest as CEM.Package);
   return Array.isArray(maybeManifest?.modules) && !!maybeManifest.schemaVersion;
+}
+
+const getReactWrapperData = (module: CEM.Module, classPrefix: string, elPrefix: string) =>
+  (decl: CEM.CustomElementDeclaration) => {
+    const ceExport = module.exports?.find(ex => ex.declaration.name === decl.name);
+    if (!ceExport) {
+      throw new Error(`module ${module.path} does not export custom element class: ${decl.name}`);
+    }
+    if (!decl.tagName) {
+      throw new NonCriticalError(`declaration does not have a tag name: ${decl.name}`);
+    }
+    const { tagName, name: Class } = decl;
+    const events = decl.events ?? [];
+    const reactComponentName = getDeprefixedClassName(Class, classPrefix);
+    const eventsMap = `{${events.map(event => `
+    ${getEventReactPropName(event)}: '${event.name}'`).join(',')}${events.length ? `,
+  ` : ''}}`;
+    const eventsInterface = eventsMap.replace(/\s+/g, ' ').replaceAll(',', ';').replace('; }', ' }');
+    return {
+      Class: decl.name,
+      reactComponentName,
+      eventsMap,
+      eventsInterface,
+      tagName,
+    };
+  };
+
+function genJavascriptModule(module: CEM.Module, pkgName: string, data: ReactWrapperData[]) {
+  return javascript`// ${module.path}
+import { createComponent } from '@lit/react';
+import react from 'react';${data.map(x => javascript`
+import { ${x.Class} as elementClass } from '${pkgName}/${module.path}';`)}${data.map(x => javascript`
+export const ${x.reactComponentName} = createComponent({
+  tagName: '${x.tagName}',
+  elementClass,
+  react,
+  events: ${x.eventsMap},
+});`).join('\n')}
+`;
+}
+
+function genTypescriptModule(module: CEM.Module, pkgName: string, data: ReactWrapperData[]) {
+  return typescript`// ${module.path}
+import type { ReactWebComponent } from '@lit/react';${data.map(x => typescript`
+import type { ${x.Class} } from '${pkgName}/${module.path}';`)}${data.map(x => typescript`
+export const ${x.reactComponentName}: ReactWebComponent<${x.Class}, ${x.eventsInterface}>;`)}
+  `;
+}
+
+function genWrapperModules(module: CEM.Module, pkgName: string, elPrefix: string, classPrefix: string) {
+  const data: ReactWrapperData[] = (module.declarations ?? [])
+    .filter(isCustomElementDeclaration)
+    .map(getReactWrapperData(module, classPrefix, elPrefix));
+  const js = genJavascriptModule(module, pkgName, data);
+  const ts = genTypescriptModule(module, pkgName, data);
+  const tagNames = data.map(x => x.tagName);
+  return { js, ts, tagNames };
+}
+
+async function writeReactWrappers(
+  js: string,
+  ts: string,
+  tagNames: string[],
+  path: string,
+  outDirPathOrURL: string | URL,
+) {
+  const outDirPath =
+      typeof outDirPathOrURL === 'string' ? outDirPathOrURL
+    : fileURLToPath(outDirPathOrURL);
+  const outPath = join(outDirPath, path);
+  await mkdir(dirname(outPath), { recursive: true });
+  await writeFile(outPath, js, 'utf8');
+  await writeFile(outPath.replace('.js', '.d.ts'), ts, 'utf8');
+  return { tagNames, outPath };
 }
 
 async function parseManifest(maybeManifest: unknown): Promise<CEM.Package> {
@@ -107,25 +133,19 @@ export async function generateReactWrappers(
   customElementsManifestOrPathOrURL: CEM.Package | string | URL,
   outDirPathOrURL: string | URL,
   packageName = '@patternfly/elements',
-  elementPrefix = 'pf',
-  classPrefix = `${elementPrefix.charAt(0).toUpperCase()}${elementPrefix.slice(1)}`,
+  elPrefix = 'pf',
+  classPrefix = `${elPrefix.charAt(0).toUpperCase()}${elPrefix.slice(1)}`,
 ) {
   const manifest = await parseManifest(customElementsManifestOrPathOrURL);
   const written = [];
+  console.group('Writing React Wrappers');
   try {
     for (const module of manifest.modules) {
-      for (const decl of module.declarations ?? []) {
-        if (isCustomElementDeclaration(decl)) {
-          written.push(await writeReactWrapper(
-            module,
-            decl,
-            outDirPathOrURL,
-            packageName,
-            elementPrefix,
-            classPrefix,
-          ));
-        }
+      if (!module.exports) {
+        throw new Error(`module has no exports: ${module.path}`);
       }
+      const { js, ts, tagNames } = genWrapperModules(module, packageName, elPrefix, classPrefix);
+      written.push(await writeReactWrappers(js, ts, tagNames, module.path, outDirPathOrURL));
     }
   } catch (error) {
     if (error instanceof NonCriticalError) {
@@ -134,10 +154,12 @@ export async function generateReactWrappers(
     } else {
       throw error;
     }
+  } finally {
+    console.groupEnd();
   }
   console.group('Wrote React Wrappers');
-  for (const { tagName, outPath } of written) {
-    console.log(`${tagName}: ${relative(process.cwd(), outPath)}`);
+  for (const { tagNames, outPath } of written) {
+    console.log(`${tagNames.join()}: ${relative(process.cwd(), outPath)}`);
   }
   console.groupEnd();
 }

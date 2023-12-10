@@ -86,7 +86,7 @@ describe('<pf-tabs>', function() {
     tab!.setAttribute('active', '');
     await nextFrame();
     expect(tab!.hasAttribute('active'), 'active attr').to.equal(true);
-    const panel = (await a11ySnapshot()).children.find(x => x.role === 'tabpanel');
+    const panel = (await a11ySnapshot())?.children?.find(x => x.role === 'tabpanel');
     expect(panel?.name, 'active panel').to.equal('Database');
   });
 
@@ -98,7 +98,7 @@ describe('<pf-tabs>', function() {
     await nextFrame();
     const tab = el.querySelector('pf-tab:first-of-type');
     expect(tab!.hasAttribute('active')).to.equal(true);
-    const panel = (await a11ySnapshot()).children.find(x => x.role === 'tabpanel');
+    const panel = (await a11ySnapshot())?.children?.find(x => x.role === 'tabpanel');
     expect(panel?.name, 'active panel').to.equal('Users');
   });
 
@@ -150,7 +150,7 @@ describe('<pf-tabs>', function() {
       const disabledTab = el.querySelector('pf-tab:nth-of-type(2)')! as BaseTab;
       disabledTab.disabled = true;
       await nextFrame();
-      const tab = (await a11ySnapshot()).children.find(x => x.role === 'tab' && x.name === 'Containers');
+      const tab = (await a11ySnapshot())?.children?.find(x => x.role === 'tab' && x.name === 'Containers');
       expect(tab?.disabled).to.be.true;
     });
 

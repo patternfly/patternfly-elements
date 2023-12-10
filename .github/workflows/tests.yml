@@ -52,7 +52,7 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
           cache: npm
 
       - name: Install dependencies
@@ -79,8 +79,8 @@ jobs:
     strategy:
       matrix:
         node:
-          - '18'
-          - '19'
+          - '20'
+          - '21'
           # https://github.com/TypeStrong/ts-node/issues/1997
           # - '20'
     if: |

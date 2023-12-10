@@ -8,7 +8,7 @@
     "url": "github:patternfly/patternfly-elements"
   },
   "engines": {
-    "node": ">=16 <=19"
+    "node": "^20"
   },
   "scripts": {
     "🐒-DEV": "❓ Development aids",

@@ -2,7 +2,8 @@
   "extends": "./tsconfig.settings.json",
   "compilerOptions": {
     "resolveJsonModule": true,
-    "module": "nodenext"
+    "module": "nodenext",
+    "moduleResolution": "nodenext"
   },
   "ts-node": {
     "esm": true

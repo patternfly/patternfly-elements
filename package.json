@@ -148,7 +148,7 @@
       ]
     },
     "build:icons": {
-      "command": "ts-node --esm ./scripts/icons.ts",
+      "command": "node --loader ts-node/esm ./scripts/icons.ts",
       "output": [
         "elements/pf-icon/icons/*/*.js"
       ]
@@ -170,7 +170,7 @@
       ]
     },
     "build:react": {
-      "command": "ts-node --esm scripts/generate-react-wrappers.ts",
+      "command": "node --loader ts-node/esm scripts/generate-react-wrappers.ts",
       "dependencies": [
         "build:core",
         "build:tools",

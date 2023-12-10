@@ -120,16 +120,14 @@ export class PfTr extends LitElement {
       `,
 
       html`
-        <div id="container">
-          <slot role="${ifDefined(this.expandable ? 'row' : undefined)}"></slot>
+        <div id="container" role="${ifDefined(this.expandable ? 'row' : undefined)}">
+          <slot></slot>
         </div>
       `,
 
+      // todo: move styles to css file after ux review
       this.expandable && this.expandable !== 'compound' && this.expanded && html`
-        <slot id="expansion"
-              name="expansion"
-              role="row"
-        ></slot>
+        <div role="row" style="display:block;"><slot id="expansion" name="expansion"></slot></div>
       `,
 
       this.expandable === 'compound' && html`

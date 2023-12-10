@@ -92,7 +92,7 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
   return {
     name: 'pfe-dev-server',
     async serverStart({ fileWatcher, app }) {
-      const { elementsDir, tagPrefix, aliases } = options;
+      const { elementsDir, tagPrefix } = options;
       const { componentSubpath } = options.site;
 
       const router =

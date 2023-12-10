@@ -13,11 +13,9 @@ export class PfJumpLinksList extends LitElement {
   static readonly styles = [style];
 
   render() {
-    return html`
-      <div id="container" role="listbox">
-        <slot></slot>
-      </div>
-    `;
+    // TODO: add label
+    // eslint-disable-next-line lit-a11y/accessible-name
+    return html`<div id="container" role="listbox"><slot></slot></div>`;
   }
 }
 

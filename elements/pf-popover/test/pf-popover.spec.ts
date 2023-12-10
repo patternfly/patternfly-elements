@@ -68,6 +68,14 @@ describe('<pf-popover>', function() {
   });
 
   describe('with a slotted trigger; and with heading, body, and footer attributes', function() {
+    // these tests are flaky, soo...
+    beforeEach(resetElement);
+    beforeEach(nextFrame);
+    beforeEach(resetElement);
+    beforeEach(nextFrame);
+    beforeEach(resetElement);
+    beforeEach(nextFrame);
+
     /** create a test fixture with slotted trigger and content attrs */
     beforeEach(async function setupPopoverWithSlottedTriggerAndContentAttrs() {
       element = await fixture<PfPopover>(html`

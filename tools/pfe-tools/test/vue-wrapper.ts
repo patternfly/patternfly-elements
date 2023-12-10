@@ -81,7 +81,7 @@ export async function fixture<T extends Element = HTMLElement>(
   });
 
   // Make sure Vue is ready and our component is rendered.
-  await oneEvent(window, 'vue-ready');
+  await oneEvent(window, 'vue-ready', false);
 
   // Select the newly rendered component and make sure it's finished updating.
   // We use the parent <div id="vue-wrapper" /> for the selector. We need everything

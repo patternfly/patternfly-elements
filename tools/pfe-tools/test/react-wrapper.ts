@@ -18,7 +18,7 @@ declare global {
 /* eslint-enable @typescript-eslint/no-namespace */
 
 function camel(str: string): string {
-  return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+  return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase());
 }
 
 const cssRuleMangler = (cssInJs: Record<string, string>, propertyText: string) => {
@@ -59,7 +59,7 @@ export async function fixture<T extends Element = HTMLElement>(
   }
 
   // Add a listener so we know when React is ready.
-  const isReactReady = oneEvent(appRoot, 'react-ready');
+  const isReactReady = oneEvent(appRoot, 'react-ready', false);
 
   // react gonna react
   const intentionallyCorruptedMarkup = (
@@ -78,7 +78,7 @@ export async function fixture<T extends Element = HTMLElement>(
   //    We could use a normal <div> but this avoids
   //    littering the DOM with extra divs.
   // 1. Insert web component into JSX string.
-  const wrapReact = `ReactDOM.render(
+  const wrapReact = /* js */`ReactDOM.render(
     <div id="react-wrapper">${intentionallyCorruptedMarkup}</div>,
     document.getElementById('root'),
     () => document.getElementById('root').dispatchEvent(new Event("react-ready"))

@@ -311,6 +311,7 @@
     "@types/numeral": "^2.0.5",
     "@types/prismjs": "^1.26.3",
     "@types/prompts": "^2.4.9",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
     "commitlint": "^18.4.3",
     "execa": "^8.0.1",
     "fuse.js": "^7.0.0",
@@ -326,6 +327,6 @@
     "./tools/*"
   ],
   "dependencies": {
-    "@lit-labs/react": "^1.2.0"
+    "@lit/react": "^1.0.0"
   }
 }

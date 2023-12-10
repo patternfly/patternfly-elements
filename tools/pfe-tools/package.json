@@ -117,7 +117,6 @@
     "rollup-plugin-lit-css": "^4.0.1",
     "sinon": "^17.0.1",
     "ts-lit-plugin": "^2.0.1",
-    "ts-node": "^10.9.2",
     "ts-patch": "3.0.2",
     "typescript": "^5.3.3",
     "urlpattern-polyfill": "^9.0.0",

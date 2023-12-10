@@ -4,8 +4,5 @@
     "resolveJsonModule": true,
     "module": "nodenext",
     "moduleResolution": "nodenext"
-  },
-  "ts-node": {
-    "esm": true
   }
 }

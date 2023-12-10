@@ -1,4 +1,4 @@
-import { expect, html, fixture, fixtureCleanup } from '@open-wc/testing';
+import { expect, html, fixture, fixtureCleanup, nextFrame } from '@open-wc/testing';
 import { a11ySnapshot, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 import { sendKeys, resetMouse } from '@web/test-runner-commands';
@@ -42,8 +42,8 @@ describe('<pf-popover>', function() {
   }
 
   function resetElement() {
-    // @ts-expect-error: resetting test state, so we don't mind the ts error.
     document.querySelectorAll('pf-popover').forEach(e => e.remove());
+    // @ts-expect-error: resetting test state, so we don't mind the ts error.
     element = undefined;
   }
 
@@ -80,6 +80,7 @@ describe('<pf-popover>', function() {
     });
 
     it('should be accessible', expectA11yAxe);
+
     it('should hide popover content from assistive technology', () => expectA11ySnapshot({
       role: 'WebArea',
       name: '',
@@ -87,6 +88,17 @@ describe('<pf-popover>', function() {
     }));
 
     describe('tabbing to the trigger', function() {
+      beforeEach(resetElement);
+      beforeEach(async function setupPopoverWithSlottedTriggerAndContentAttrs() {
+        element = await fixture<PfPopover>(html`
+          <pf-popover heading="Popover heading"
+                      body="Popovers are triggered by click rather than hover."
+                      footer="Popover footer">
+            <pf-button>Toggle popover</pf-button>
+          </pf-popover>
+        `);
+      });
+
       beforeEach(updateComplete);
       beforeEach(press('Tab'));
       beforeEach(updateComplete);
@@ -99,23 +111,26 @@ describe('<pf-popover>', function() {
         beforeEach(updateComplete);
         beforeEach(press('Enter'));
         beforeEach(updateComplete);
-        it('should show popover content to assistive technology', () => expectA11ySnapshot({
-          role: 'WebArea',
-          name: '',
-          children: [
-            { role: 'button', name: 'Toggle popover' },
-            {
-              name: '',
-              role: 'dialog',
-              children: [
-                { role: 'button', name: 'Close popover', focused: true },
-                { role: 'heading', name: 'Popover heading', level: 6 },
-                { role: 'text', name: 'Popovers are triggered by click rather than hover.' },
-                { role: 'text', name: 'Popover footer' },
-              ],
-            },
-          ],
-        }));
+        it('should show popover content to assistive technology', async function() {
+          const snapshot = await a11ySnapshot();
+          expect(snapshot).to.deep.equal({
+            role: 'WebArea',
+            name: '',
+            children: [
+              { role: 'button', name: 'Toggle popover' },
+              {
+                name: '',
+                role: 'dialog',
+                children: [
+                  { role: 'button', name: 'Close popover', focused: true },
+                  { role: 'heading', name: 'Popover heading', level: 6 },
+                  { role: 'text', name: 'Popovers are triggered by click rather than hover.' },
+                  { role: 'text', name: 'Popover footer' },
+                ],
+              },
+            ],
+          });
+        });
         describe('then pressing Enter again', function() {
           beforeEach(updateComplete);
           beforeEach(press('Enter'));

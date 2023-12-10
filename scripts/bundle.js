@@ -9,7 +9,7 @@ import CleanCSS from 'clean-css';
 
 const resolveDir = join(fileURLToPath(import.meta.url), '../../elements');
 const entryPoints = (await glob('./pf-*/pf-*.ts', { cwd: resolveDir })).map(x => x.replace('.ts', '.js'));
-const contents = entryPoints.map(x => `export * from '${x}';`).join('\n');
+const contents = entryPoints.map(x => `export * from './${x}';`).join('\n');
 
 const cleanCSS = new CleanCSS({
   sourceMap: true,

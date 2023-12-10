@@ -40,9 +40,8 @@ jobs:
   #   steps:
   #     - name: Debugging context variables
   #       run: echo "$GITHUB_CONTEXT"
-
-  test:
-    name: Run test suite (Web Test Runner)
+  lint:
+    name: Lint files
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -62,13 +61,32 @@ jobs:
         id: lint
         run: npm run lint
 
+
+  test:
+    name: Run test suite (Web Test Runner)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline
+
+      - name: install playwright
+        run: npx playwright install
+
       - name: Run tests
         run: npm test
-        if: ${{ always() }}
 
       - name: JUnit Report Action
         uses: mikepenz/action-junit-report@v2.8.2
-        if: ${{ always() }}
         with:
           report_paths: test-results/test-results.xml
           fail_on_failure: true # fail the actions run if the tests failed
@@ -126,8 +144,9 @@ jobs:
   validate:
     name: Validate successful build on main
     needs:
-      - build
+      - lint
       - test
+      - build
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:

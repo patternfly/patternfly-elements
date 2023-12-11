@@ -125,7 +125,6 @@ export class PfTr extends LitElement {
         </div>
       `,
 
-      // todo: move styles to css file after ux review
       this.expandable && this.expandable !== 'compound' && this.expanded && html`
         <div id="expansion" role="row"><slot name="expansion"></slot></div>
       `,

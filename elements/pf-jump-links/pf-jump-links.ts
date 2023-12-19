@@ -109,10 +109,14 @@ export class PfJumpLinks extends LitElement {
             <pf-icon icon="chevron-right"></pf-icon>
             <span id="label">${this.label}</span>
           </summary>
-          <slot role="listbox" @slotchange="${this.#updateItems}"></slot>
+          <div role="listbox" aria-labelledby="label">
+            <slot @slotchange="${this.#updateItems}"></slot>
+          </div>
         </details>` : html`
         <span id="label">${this.label}</span>
-        <slot role="listbox" @slotchange="${this.#updateItems}"></slot>`}
+        <div role="listbox" aria-labelledby="label">
+          <slot @slotchange="${this.#updateItems}"></slot>
+        </div>`}
       </nav>
     `;
   }

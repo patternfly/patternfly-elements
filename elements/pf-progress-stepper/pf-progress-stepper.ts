@@ -29,8 +29,7 @@ export class PfProgressStepper extends LitElement {
 
   /** Whether to use the compact layout */
   @observed(function(this: PfProgressStepper) {
-    const { childTagName } = (this.constructor as typeof PfProgressStepper);
-    this.querySelectorAll<PfProgressStep>(childTagName).forEach(step => step.requestUpdate());
+    this.querySelectorAll('pf-progress-step').forEach(step => step.requestUpdate());
   })
   @property({ type: Boolean, reflect: true }) compact = false;
 
@@ -59,9 +58,9 @@ export class PfProgressStepper extends LitElement {
   }
 
   render() {
-    return html`
-      <slot role="listbox"></slot>
-    `;
+    // TODO: add label prop
+    // eslint-disable-next-line lit-a11y/accessible-name
+    return html`<div role="listbox" style="display:contents;"><slot></slot></div>`;
   }
 }
 

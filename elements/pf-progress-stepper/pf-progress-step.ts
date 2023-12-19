@@ -56,7 +56,7 @@ export class PfProgressStep extends LitElement {
   });
 
   render() {
-    const hasDescription = !!this.description ?? this.#slots.hasSlotted('description');
+    const hasDescription = !!(this.description ?? this.#slots.hasSlotted('description'));
     const icon = this.icon ?? ICONS.get(this.variant ?? 'default')?.icon;
     const set = this.iconSet ?? ICONS.get(this.variant ?? 'default')?.set;
     const { parentTagName } = (this.constructor as typeof PfProgressStep);

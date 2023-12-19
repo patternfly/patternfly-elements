@@ -1,8 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { promisify } = require('node:util');
-const Glob = require('glob');
-const glob = promisify(Glob);
+const { glob } = require('glob');
 
 const packageLock = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'package-lock.json')));
 
@@ -46,11 +44,16 @@ const LIT_DEPS = [
       './decorators.js',
       './directive.js',
       './directive-helpers.js',
-      './experimental-hydrate-support.js',
-      './experimental-hydrate.js',
       './html.js',
       './polyfill-support.js',
       './static-html.js',
+    ]
+  },
+  {
+    target: `@lit-labs/ssr-client`,
+    subpaths: [
+      '.',
+      './lit-element-hydrate-support.js',
     ]
   }
 ];
@@ -69,7 +72,7 @@ module.exports = async function() {
   const { Generator } = await import('@jspm/generator');
 
   const generator = new Generator({
-    defaultProvider: 'jspm',
+    defaultProvider: 'jspm.io',
     env: ['production', 'browser', 'module']
   });
 

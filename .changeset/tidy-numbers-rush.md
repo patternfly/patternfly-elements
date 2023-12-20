@@ -1,9 +1,6 @@
 ---
 "@patternfly/pfe-tools": patch
 "@patternfly/pfe-core": patch
-"@patternfly/elements": patch
----
-
 "@patternfly/elements": major
 ---
 

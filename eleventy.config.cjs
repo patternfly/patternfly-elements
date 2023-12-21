@@ -6,6 +6,7 @@ const PfeAssetsPlugin = require('./docs/_plugins/pfe-assets.cjs');
 const EmptyParagraphPlugin = require('./docs/_plugins/empty-p.cjs');
 const CreateImportMapPlugin = require('./docs/_plugins/create-import-map.cjs');
 const HTMLExamplePlugin = require('./docs/_plugins/html-example.cjs');
+const CEMRenderPlugin = require('./docs/_plugins/cem-render.cjs');
 
 const AnchorsPlugin = require('@patternfly/pfe-tools/11ty/plugins/anchors.cjs');
 const CustomElementsManifestPlugin = require('@patternfly/pfe-tools/11ty/plugins/custom-elements-manifest.cjs');
@@ -33,6 +34,9 @@ module.exports = function(eleventyConfig) {
 
   /** Generate and consume custom elements manifests */
   eleventyConfig.addPlugin(CustomElementsManifestPlugin);
+
+  /** Render docs based on custom elements manifests */
+  eleventyConfig.addPlugin(CEMRenderPlugin);
 
   /** Collections to organize alphabetically instead of by date */
   eleventyConfig.addPlugin(OrderTagsPlugin, { tags: ['component'], order: 'alphabetical' });

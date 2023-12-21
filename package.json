@@ -25,8 +25,6 @@
     "test": "wireit",
     "test:ci": "wireit",
     "test:watch": "wtr --watch",
-    "test:vue": "wtr --watch --group with-vue",
-    "test:react": "wtr --watch --group with-react",
     "e2e": "wireit",
     "e2e:update": "wireit",
     "🚚-DIST": "❓ Publish packages",
@@ -147,12 +145,6 @@
         "*.tsbuildinfo"
       ]
     },
-    "build:icons": {
-      "command": "npx tsx ./scripts/icons.ts",
-      "output": [
-        "elements/pf-icon/icons/*/*.js"
-      ]
-    },
     "build:bundle": {
       "command": "scripts/bundle.js",
       "dependencies": [
@@ -239,7 +231,7 @@
       ]
     },
     "test": {
-      "command": "wtr --group default",
+      "command": "wtr",
       "files": [
         "**/*.ts",
         "**/*.css"

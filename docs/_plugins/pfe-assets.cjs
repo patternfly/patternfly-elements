@@ -81,6 +81,12 @@ module.exports = {
     eleventyConfig.addPassthroughCopy({
       'node_modules/@rhds/elements': '/assets/@rhds'
     });
+    eleventyConfig.addPassthroughCopy({
+      'node_modules/@patternfly/icons/fab': '/assets/@patternfly/icons/fab',
+      'node_modules/@patternfly/icons/far': '/assets/@patternfly/icons/far',
+      'node_modules/@patternfly/icons/fas': '/assets/@patternfly/icons/fas',
+      'node_modules/@patternfly/icons/patternfly': '/assets/@patternfly/icons/patternfly'
+    });
     eleventyConfig.addPassthroughCopy('brand/**/*');
     const filesToCopy = getFilesToCopy(options);
 

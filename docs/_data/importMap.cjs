@@ -109,5 +109,14 @@ module.exports = async function() {
   map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
 
 
+  // add imports for all icon files in /node_modules/@patternfly/icons/{far, fas, fab, patternfly}/
+  const iconsImports = (await glob('./{far,fas,fab,patternfly}/*.js', { cwd: path.join(__dirname, '../../node_modules/@patternfly/icons') }))
+    .filter(x => !x.endsWith('.d.ts'))
+    .map(x => x);
+
+  for (const icon of iconsImports) {
+    map.imports[`@patternfly/icons/${icon}`] = `/assets/@patternfly/icons/${icon}`;
+  }
+
   return map;
 };

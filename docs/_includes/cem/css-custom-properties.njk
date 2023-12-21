@@ -1,0 +1,76 @@
+{% set level = level or 2 %}
+{% set header = header or 'CSS Custom Properties' %}
+
+{%- macro propRow(prop, deprecated=false) -%}
+  <tr>
+    <td style="text-align:left"><code>{{ prop.name }}</code></td>
+    <td style="text-align:left">{{ prop.description | innerMD | safe }}</td>
+    <td style="text-align:left">{{ (prop.default or '—') | innerMD | safe }}</td>
+  </tr>
+{%- endmacro -%}
+
+<section class="api band css-custom-properties api-properties">
+  {% if not hasStylingHooks %}<a id="styling-hooks"></a>{% endif %}
+  {{ header | mdHeading(level) | safe }} {% if not content and not cssProperties.length %}
+
+  <em>None</em> {%- else -%}
+
+  {{ content | innerMD | safe }}
+  <table class=css-custom-properties>
+    <thead>
+      <tr>
+        <th style="text-align:left">CSS Property</th>
+        <th style="text-align:left">Description</th>
+        <th style="text-align:left">Default</th>
+      </tr>
+    </thead>
+    <tbody> {% for prop in cssProperties -%}
+      <tr>
+        <td style="text-align:left"><code>{{ prop.name }}</code></td>
+        <td style="text-align:left">{{ prop.description | innerMD | safe }}</td>
+        <td style="text-align:left"><code{{
+            (' data-color='+prop.default+' style=--color:'+(prop.default|safe)) if
+            prop.default and prop.default.startsWith('#')
+        }}>{{ (prop.default or '—') | safe }}</code></td>
+      </tr> {% endfor %}
+    </tbody>
+  </table> {%- endif -%} {%- if deprecated.length -%}
+
+  <details>
+    <summary>{{ ('Deprecated ' + header) | mdHeading(level + 1) | safe }}</summary>
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:left">CSS Property</th>
+          <th style="text-align:left">Description</th>
+          <th style="text-align:left">Default</th>
+        </tr>
+      </thead>
+      <tbody> {% for prop in deprecated -%}
+        <tr>
+          <td style="text-align:left"><code>{{ prop.name }}</code></td>
+          <td style="text-align:left">{{ prop.description | innerMD | safe }}</td>
+          <td style="text-align:left">{{ (prop.default or '—') | innerMD | safe }}</td>
+        </tr> {% endfor %}
+      </tbody>
+    </table>
+  </details> {%- endif -%}
+</section>
+
+<style>
+
+table.css-custom-properties code[data-color] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+table.css-custom-properties code[data-color]:after {
+  content: '';
+  background: var(--color);
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 1rem;
+  inset-inline-end: -1rem;
+}
+</style>

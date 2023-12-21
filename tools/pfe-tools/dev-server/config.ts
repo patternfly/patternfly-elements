@@ -22,6 +22,8 @@ import { Manifest, type DemoRecord } from '../custom-elements-manifest/lib/Manif
 import { makeDemoEnv } from '../environment.js';
 import { getPfeConfig, deslugify, type PfeConfig } from '../config.js';
 
+import { importMap as defaultImportMap } from './importMap.js';
+
 const replace = fromRollup(rollupReplace);
 
 const env = nunjucks
@@ -199,6 +201,7 @@ function nunjucksMiddleware(options: PfeDevServerInternalConfig) {
   };
 }
 
+
 /**
  * Creates a default config for PFE's dev server.
  */
@@ -220,6 +223,8 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
 
   const tsconfig = options?.tsconfig;
 
+  const combinedImportMap = { ...defaultImportMap().imports, ...options?.importMap?.imports };
+
   return {
     rootDir,
 
@@ -237,7 +242,15 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
     plugins: [
       ...options?.plugins ?? [],
 
-      ...options?.importMap ? [importMapsPlugin({ inject: { importMap: options.importMap } })] : [],
+      importMapsPlugin({
+        inject: [
+          {
+            importMap: {
+              imports: combinedImportMap
+            }
+          }
+        ]
+      }),
 
       // serve typescript sources as javascript
       esbuildPlugin({

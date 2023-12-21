@@ -36,7 +36,6 @@
     import 'element-internals-polyfill';
     import '@patternfly/elements/pf-button/pf-button.js';
     import '@patternfly/elements/pf-card/pf-card.js';
-    import '@patternfly/elements/pf-icon/pf-icon.js';
     import '@patternfly/pfe-tools/dev-server/demo.js';
   </script>
 </head>
@@ -55,7 +54,7 @@
         <img src="{{ options.site.logoUrl }}" alt="{{title}}">
       </a>
       <a href="{{ options.sourceControlURLPrefix.replace('tree/main/', '') }}{{ ('tree/main' + manifest.path.replace(context.cwd, '').replace('/custom-elements.json', '/')) if manifest else ''}}" id="source-control">
-        
+
         {% if options.sourceControlURLPrefix %}<span>Contribute on {{ repoHost }}</span>{% endif %}
         {% if repoHost === 'GitHub' %}
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">

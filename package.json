@@ -50,7 +50,6 @@
         "analyze",
         "docs",
         "build:core",
-        "build:icons",
         "build:lightdom",
         "build:elements",
         "build:create",
@@ -195,7 +194,6 @@
       "dependencies": [
         "build:core",
         "build:tools",
-        "build:icons",
         "analyze"
       ]
     },
@@ -224,7 +222,6 @@
       "dependencies": [
         "build:core",
         "build:tools",
-        "build:icons",
         "analyze",
         "watch:analyze",
         "dev"
@@ -239,8 +236,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
-        "build:core",
-        "build:icons"
+        "build:core"
       ]
     },
     "new": {
@@ -258,8 +254,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
-        "build:core",
-        "build:icons"
+        "build:core"
       ]
     },
     "e2e": {

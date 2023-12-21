@@ -46,7 +46,7 @@ export abstract class BaseIcon extends LitElement {
   }
 
   public static getIconUrl: URLGetter = (set: string, icon: string) =>
-    new URL(`./icons/${set}/${icon}.js`, import.meta.url);
+    `@patternfly/icons/${set}/${icon}.js`;
 
   private static onIntersect: IntersectionObserverCallback = records =>
     records.forEach(({ isIntersecting, target }) => {

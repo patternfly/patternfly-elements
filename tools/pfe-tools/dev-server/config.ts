@@ -97,10 +97,6 @@ function pfeDevServerPlugin(options: PfeDevServerInternalConfig): Plugin {
 
       const router =
         new Router()
-          .get(/\/pf-icon\/icons\/.*\.js$/, (ctx, next) => {
-            ctx.type = 'application/javascript';
-            return next();
-          })
           .get('/tools/pfe-tools/environment.js(.js)?', async ctx => {
             ctx.body = await makeDemoEnv(options.rootDir);
             ctx.type = 'application/javascript';

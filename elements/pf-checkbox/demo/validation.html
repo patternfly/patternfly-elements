@@ -1,0 +1,10 @@
+<pf-checkbox label="Required" required></pf-checkbox>
+
+<script type="module">
+  import '@patternfly/elements/pf-checkbox/pf-checkbox.js';
+  const x = document.querySelector('pf-checkbox')
+  await x.updateComplete;
+  x.checkValidity();
+</script>
+
+

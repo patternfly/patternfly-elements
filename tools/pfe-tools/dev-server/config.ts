@@ -1,6 +1,5 @@
 import type { Plugin } from '@web/dev-server-core';
 import type { DevServerConfig } from '@web/dev-server';
-import type { InjectSetting } from '@web/dev-server-import-maps/dist/importMapsPlugin';
 import type { Context, Next } from 'koa';
 
 import { fileURLToPath } from 'node:url';
@@ -12,7 +11,7 @@ import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 
 import { getPfeConfig, type PfeConfig } from '../config.js';
-import { importMapGeneratorPlugin } from './plugins/import-map-generator.js';
+import { importMapGeneratorPlugin, type Options as ImportMapOptions } from './plugins/import-map-generator.js';
 
 import { pfeDevServerPlugin } from './plugins/pfe-dev-server.js';
 
@@ -21,19 +20,20 @@ const replace = fromRollup(rollupReplace);
 type BaseConfig = DevServerConfig & PfeConfig;
 export interface PfeDevServerConfigOptions extends BaseConfig {
   hostname?: string;
-  importMap?: InjectSetting['importMap'];
   litcssOptions?: LitCSSOptions;
   tsconfig?: string;
   /** Extra dev server plugins */
   loadDemo?: boolean;
   plugins?: Plugin[];
   watchFiles?: string;
-  /** JSPM generator providers for packages. Defaults necessary for the dev server are provided */
-  providers: Record<string, string>;
+  importMapOptions?: ImportMapOptions;
 }
 
 function normalizeOptions(options?: PfeDevServerConfigOptions) {
-  const config = { providers: {}, ...getPfeConfig(), ...options ?? {} };
+  const config: PfeDevServerConfigOptions = {
+    ...getPfeConfig(),
+    ...options ?? {},
+  };
   /**
    * Plain case: this file is running from `/node_modules/@patternfly/pfe-tools`.
    *             two dirs up from here is `node_modules`, so we just shear it clean off the path string
@@ -46,7 +46,8 @@ function normalizeOptions(options?: PfeDevServerConfigOptions) {
     .replace(/node_modules\/$/, '/')
     .replace(/\/node_modules$/, '/')
     .replace('//', '/');
-  config.providers ??= {};
+  config.importMapOptions ??= {} as PfeDevServerConfigOptions['importMapOptions'];
+  config.importMapOptions!.providers ??= {};
   config.site = { ...config.site, ...options?.site ?? {} };
   config.loadDemo ??= true;
   config.watchFiles ??= '{elements,core}/**/*.{css,html}';
@@ -98,8 +99,6 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       // Dev server app which loads component demo files
       pfeDevServerPlugin(config),
 
-      ...config?.plugins ?? [],
-
       // serve typescript sources as javascript
       esbuildPlugin({
         ts: true,
@@ -115,30 +114,28 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       litCss(config.litcssOptions),
 
       importMapGeneratorPlugin({
+        ...config.importMapOptions,
         providers: {
           'construct-style-sheets-polyfill': 'nodemodules',
           'element-internals-polyfill': 'nodemodules',
           'lit-html': 'nodemodules',
           'lit': 'nodemodules',
           '@lit/reactive-element': 'nodemodules',
-          ...config?.providers,
+          ...config.importMapOptions?.providers,
         },
-        importMap: config.importMap,
-        // importMap: {
-        //   ...options?.importMap,
-        //   imports: {
-        //     'construct-style-sheets-polyfill': '/node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js',
-        //     'element-internals-polyfill': '/node_modules/element-internals-polyfill/dist/index.js',
-        //     'lit-html': '/node_modules/lit-html/index.js',
-        //     'lit-html/': '/node_modules/lit-html/',
-        //     'lit': '/node_modules/lit/index.js',
-        //     'lit/': '/node_modules/lit/',
-        //     '@lit/reactive-element': '/node_modules/@lit/reactive-element/reactive-element.js',
-        //     '@lit/reactive-element/': '/node_modules/@lit/reactive-element/',
-        //     ...options?.importMap?.imports,
-        //   },
-        // }
+        resolveHtmlUrl(fileUrl, rootUrl) {
+          const override = config.importMapOptions.resolveHtmlUrl?.(fileUrl, rootUrl);
+          if (override) {
+            return override;
+          } else {
+            console.log(fileUrl);
+            const fromRoot = fileUrl.replace(rootUrl, '');
+            return fileUrl.replace('/components/', '/elements/pf-');
+          }
+        },
       }),
+
+      ...config?.plugins ?? [],
 
     ],
   };

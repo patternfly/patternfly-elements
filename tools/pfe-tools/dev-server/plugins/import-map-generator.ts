@@ -10,8 +10,9 @@ import { Generator } from '@jspm/generator';
 
 import { glob } from 'glob';
 
-interface Options extends Exclude<GeneratorOptions, 'inputMap'> {
+export interface Options extends Exclude<GeneratorOptions, 'inputMap'> {
   importMap: GeneratorOptions['inputMap'];
+  resolveHtmlUrl?: (fileUrl: string, rootUrl: string) => string;
 }
 
 const exists = async (path: string) => {
@@ -74,15 +75,25 @@ function getProvider(packages: Map<string, string>): Provider {
   };
 }
 
-function generatorMiddleware(generator: Generator): Middleware {
+function generatorMiddleware(generator: Generator, options?: Partial<Options>): Middleware {
   return async function injectMiddleware(ctx, next) {
     if (ctx.path.endsWith('.html') || ctx.path.endsWith('/')) {
       if (ctx.body?.length) {
-        ctx.body = await generator.htmlInject(ctx.body, {
-          trace: true,
-          whitespace: true,
-          esModuleShims: true,
-        });
+        const rootUrl = `file://${process.cwd()}/`;
+        const fileUrl = `${rootUrl.replace(/\/$/, '')}${ctx.url}`;
+        const htmlUrl = options?.resolveHtmlUrl?.(fileUrl, rootUrl) ?? fileUrl;
+        console.log({ htmlUrl, rootUrl });
+        try {
+          ctx.body = await generator.htmlInject(ctx.body, {
+            // htmlUrl,
+            rootUrl,
+            trace: true,
+            whitespace: true,
+            esModuleShims: true,
+          });
+        } catch (e) {
+          console.error(e);
+        }
       }
     }
     return next();
@@ -90,6 +101,7 @@ function generatorMiddleware(generator: Generator): Middleware {
 }
 
 export function importMapGeneratorPlugin(options?: Partial<Options>): Plugin {
+  console.log(options?.providers);
   return {
     name: 'import-map-inject',
     async serverStart(args) {
@@ -98,9 +110,9 @@ export function importMapGeneratorPlugin(options?: Partial<Options>): Plugin {
         defaultProvider: 'nodemodules',
         env: ['development', 'production', 'browser', 'module'],
         providers: options?.providers,
-        inputMap: options?.importMap,
+        inputMap: options?.inputMap,
         customProviders: { monorepotypescript },
-      })));
+      }), options));
     },
   };
 }

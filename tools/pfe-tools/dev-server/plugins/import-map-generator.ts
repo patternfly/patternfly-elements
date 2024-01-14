@@ -25,24 +25,21 @@ const exists = async (path: string) => {
 async function resolveMonorepoPackages() {
   const cwd = process.cwd();
 
-  const { name, workspaces } = JSON.parse(await readFile(join(cwd, 'package.json'), 'utf-8'));
+  const { workspaces } = JSON.parse(await readFile(join(cwd, 'package.json'), 'utf-8'));
 
-  if (!Array.isArray(workspaces)) {
-    throw new Error(`Not an NPM monorepo: ${name}`);
-  }
-
-  // TODO: do we need to recurse?
   const potentialPackageDirs =
-    (await Promise.all(workspaces.map(x => glob(join(cwd, x))))).flat();
+    (await Promise.all((workspaces ?? []).map((x: string) =>
+      glob(join(cwd, x))))).flat();
 
-  const packages = await potentialPackageDirs.reduce(async (map, dir) => {
+  const packages = new Map();
+
+  for (const dir of [cwd, ...potentialPackageDirs]) {
     const pkgPath = join(dir, 'package.json');
     if (await exists(pkgPath)) {
       const { name } = JSON.parse(await readFile(pkgPath, 'utf-8'));
-      (await map).set(name, dir);
+      packages.set(name, dir);
     }
-    return map;
-  }, Promise.resolve(new Map()));
+  }
 
   return packages;
 }

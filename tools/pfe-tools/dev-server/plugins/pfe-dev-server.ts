@@ -4,7 +4,7 @@ import type { PfeDevServerConfigOptions } from '../config.js';
 
 import { dirname, join } from 'node:path';
 import { existsSync } from 'node:fs';
-import { readFile } from 'node:fs/promises';
+import { readFile, stat } from 'node:fs/promises';
 
 import { fileURLToPath } from 'node:url';
 
@@ -21,6 +21,15 @@ type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & {
 
 function isPFEManifest(x: Manifest) {
   return x.packageJson?.name === '@patternfly/elements';
+}
+
+async function isDir(path: string) {
+  try {
+    const s = await stat(path);
+    return s.isDirectory();
+  } catch {
+    return false;
+  }
 }
 
 /** cludge to ensure the dev server starts up only after the manifests are generated */
@@ -89,20 +98,6 @@ function getRouter(options: PfeDevServerInternalConfig) {
       ctx.type = 'application/javascript';
     })
 
-    // Redirect `components/jazz-hands/*.js` to `components/pf-jazz-hands/*.ts`
-    .get(`/${componentSubpath}/:element/:fileName.js`, async ctx => {
-      const { element, fileName } = ctx.params;
-      const prefixedElement = deslugify(element);
-      ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.ts`);
-    })
-
-    // Redirect `elements/jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts`
-    .get(`/${elementsDir}/:element/:fileName.js`, async ctx => {
-      const { element, fileName } = ctx.params;
-      const prefixedElement = deslugify(element);
-      ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.ts`);
-    })
-
     // Redirect `components/pf-jazz-hands|jazz-hands/demo/*-lightdom.css` to `components/pf-jazz-hands/*-lightdom.css`
     .get(`/${componentSubpath}/:element/demo/:fileName-lightdom.css`, async ctx => {
       const { element, fileName } = ctx.params;
@@ -125,11 +120,7 @@ function getRouter(options: PfeDevServerInternalConfig) {
     .get(`/${componentSubpath}/:element/:splatPath*`, async (ctx, next) => {
       const { element, splatPath } = ctx.params;
       const prefixedElement = deslugify(element);
-      if (splatPath.includes('demo')) {
-        /* if its the demo directory return */
-        return next();
-      }
-      if (!element.includes(tagPrefix)) {
+      if (await isDir(new URL(`/${elementsDir}/${prefixedElement}`, import.meta.url).href)) {
         ctx.redirect(`/${elementsDir}/${prefixedElement}/${splatPath}`);
       } else {
         return next();

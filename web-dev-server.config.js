@@ -24,7 +24,6 @@ export default pfeDevServerConfig({
       '@patternfly/pfe-tools': 'monorepotypescript',
       '@patternfly/pfe-core': 'monorepotypescript',
     },
-
     inputMap: {
       imports: {
         '@patternfly/pfe-tools/environment.js': './_site/tools/environment.js',

@@ -1,0 +1,18 @@
+<section>
+  <pf-progress-stepper>
+    <pf-progress-step variant="success">Successful completion</pf-progress-step>
+    <pf-progress-step icon="in-progress" icon-set="patternfly" current>In process</pf-progress-step>
+    <pf-progress-step icon="pending" icon-set="patternfly" variant="pending">Pending</pf-progress-step>
+  </pf-progress-stepper>
+</section>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-progress-stepper/pf-progress-stepper.js';
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

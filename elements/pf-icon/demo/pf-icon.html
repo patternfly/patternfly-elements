@@ -16,8 +16,40 @@
   </dl>
 </section>
 
-<link rel="stylesheet" href="demo.css">
 <script type="module">
   import '@patternfly/elements/pf-icon/pf-icon.js';
 </script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+
+  dl {
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--pf-global--spacer--md, 1rem);
+    align-items: end;
+    & div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      & dd, & dt {
+        margin: 0;
+      }
+      & dt {
+        order: 1;
+      }
+    }
+  }
+
+  #colors dt { text-transform: capitalize; }
+  .danger { color: var(--pf-global--danger-color--200, #a30000); }
+  .default { color: var(--pf-global--default-color--200, #009596); }
+  .info { color: var(--pf-global--info-color--100, #2b9af3); }
+  .success { color: var(--pf-global--success-color--100, #3e8635); }
+  .warning { color: var(--pf-global--warning-color--100, #f0ab00); }
+  .disabled { color: var(--pf-global--disabled-color--100, #6a6e73); }
+</style>
 

@@ -1,8 +1,8 @@
-<h2>Styling Icons</h2>
-
-<p>Color the icons with the CSS <code>color</code> property.</p>
-
 <section>
+  <h2>Styling Icons</h2>
+
+  <p>Color the icons with the CSS <code>color</code> property.</p>
+
   <pf-icon set="patternfly" icon="unplugged" size="xl"></pf-icon>
   <pf-icon set="patternfly" icon="info-alt" size="xl"></pf-icon>
   <zero-md manual-render>
@@ -15,16 +15,20 @@
   </zero-md>
 </section>
 
-<style>
-[icon="unplugged"] { color: firebrick; }
-[icon="info-alt"] { color: dodgerblue; }
-section {
-  display: flex;
-  gap: .5em;
-  flex-wrap: wrap;
-  align-items: center;
-}
-</style>
 
-<link rel="stylesheet" href="demo.css">
-<script type="module" src="pf-icon.js"></script>
+<script type="module">
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+  import 'zero-md';
+</script>
+
+<style>
+  [icon="unplugged"] { color: firebrick; }
+  [icon="info-alt"] { color: dodgerblue; }
+  section {
+    padding: 1em;
+    display: flex;
+    gap: .5em;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+</style>

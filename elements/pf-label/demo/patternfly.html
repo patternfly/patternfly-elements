@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="demo.css"/>
-<script type="module" src="pf-label.js"></script>
-
 <section>
   <h2>Filled</h2>
   <pf-label>Grey</pf-label>
@@ -187,3 +184,17 @@
   <pf-label compact href="#filled" removable>Gold link removable</pf-label>
   <pf-label compact icon="info-circle" truncated removable>Gold label with icon that overflows</pf-label>
 </section>
+
+<script type="module">
+  import '@patternfly/elements/pf-label/pf-label.js';
+  const container = document.querySelector('section');
+  container.addEventListener('close', function(event) {
+    event.target.remove();
+  });
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

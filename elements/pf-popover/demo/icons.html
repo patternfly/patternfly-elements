@@ -1,0 +1,53 @@
+<form id="basic">
+  <fieldset>
+    <legend>Icon attribute</legend>
+    <pf-popover heading="Popover heading"
+                body="Popovers are triggered by click rather than hover."
+                footer="Popover footer"
+                icon="bullhorn">
+      <pf-button>Toggle popover</pf-button>
+    </pf-popover>
+  </fieldset>
+
+  <fieldset>
+    <legend>Icon slot</legend>
+    <pf-popover>
+      <pf-icon slot="icon" icon="user"></pf-icon>
+      <h4 slot="heading">Popover with icon</h4>
+      <div slot="body">Popovers are triggered by click rather than hover.</div>
+      <div slot="footer">Popover footer</div>
+      <pf-button>Toggle popover</pf-button>
+    </pf-popover>
+  </fieldset>
+
+  <fieldset>
+    <legend>Custom Icon Set</legend>
+    <pf-popover>
+      <pf-icon slot="icon" icon="package" set="patternfly"></pf-icon>
+      <h5 slot="heading">Popover heading</h5>
+      <div slot="body">
+        Popovers are triggered by click rather than hover.
+      </div>
+      <span slot="footer">Popover footer</span>
+      <pf-button>Toggle popover</pf-button>
+    </pf-popover>
+  </fieldset>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-popover/pf-popover.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+  document.addEventListener('submit', function(event) {
+    event.preventDefault();
+  });
+</script>
+
+<style>
+  form {
+    padding: 0 2rem;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 8px;
+  }
+</style>

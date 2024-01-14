@@ -18,6 +18,13 @@ const testRunnerHtml: TestRunnerConfig['testRunnerHtml'] = testFramework => /* h
   <html>
     <head>
       <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+      <script type="importmap">
+      {
+        "imports": {
+          "@patternfly/icons/": "/node_modules/@patternfly/icons/"
+        }
+      }
+      </script>
     </head>
     <body>
       <script type="module" src="${testFramework}"></script>
@@ -54,6 +61,7 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
 
   return {
     ...devServerConfig,
+    nodeResolve: true,
     files: ['**/*.spec.ts', '!**/*.e2e.ts', ...opts.files ?? [], '!**/node_modules/**/*', '!**/_site/**/*'],
     browsers: [
       playwrightLauncher({

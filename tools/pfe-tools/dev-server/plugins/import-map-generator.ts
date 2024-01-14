@@ -10,8 +10,7 @@ import { Generator } from '@jspm/generator';
 
 import { glob } from 'glob';
 
-export interface Options extends Exclude<GeneratorOptions, 'inputMap'> {
-  importMap: GeneratorOptions['inputMap'];
+export interface Options extends GeneratorOptions {
   resolveHtmlUrl?: (fileUrl: string, rootUrl: string) => string;
 }
 
@@ -82,10 +81,9 @@ function generatorMiddleware(generator: Generator, options?: Partial<Options>): 
         const rootUrl = `file://${process.cwd()}/`;
         const fileUrl = `${rootUrl.replace(/\/$/, '')}${ctx.url}`;
         const htmlUrl = options?.resolveHtmlUrl?.(fileUrl, rootUrl) ?? fileUrl;
-        console.log({ htmlUrl, rootUrl });
         try {
           ctx.body = await generator.htmlInject(ctx.body, {
-            // htmlUrl,
+            htmlUrl,
             rootUrl,
             trace: true,
             whitespace: true,
@@ -101,7 +99,6 @@ function generatorMiddleware(generator: Generator, options?: Partial<Options>): 
 }
 
 export function importMapGeneratorPlugin(options?: Partial<Options>): Plugin {
-  console.log(options?.providers);
   return {
     name: 'import-map-inject',
     async serverStart(args) {
@@ -112,6 +109,7 @@ export function importMapGeneratorPlugin(options?: Partial<Options>): Plugin {
         providers: options?.providers,
         inputMap: options?.inputMap,
         customProviders: { monorepotypescript },
+        resolutions: options?.resolutions,
       }), options));
     },
   };

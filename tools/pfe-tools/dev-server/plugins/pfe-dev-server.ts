@@ -88,31 +88,39 @@ function getRouter(options: PfeDevServerInternalConfig) {
       ctx.body = await makeDemoEnv(options.rootDir);
       ctx.type = 'application/javascript';
     })
+
     // Redirect `components/jazz-hands/*.js` to `components/pf-jazz-hands/*.ts`
     .get(`/${componentSubpath}/:element/:fileName.js`, async ctx => {
       const { element, fileName } = ctx.params;
       const prefixedElement = deslugify(element);
       ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.ts`);
     })
+
     // Redirect `elements/jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts`
     .get(`/${elementsDir}/:element/:fileName.js`, async ctx => {
       const { element, fileName } = ctx.params;
       const prefixedElement = deslugify(element);
       ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.ts`);
     })
+
     // Redirect `components/pf-jazz-hands|jazz-hands/demo/*-lightdom.css` to `components/pf-jazz-hands/*-lightdom.css`
-    // Redirect `components/jazz-hands/demo/*.js|css` to `components/pf-jazz-hands/demo/*.js|css`
-    .get(`/${componentSubpath}/:element/demo/:demoSubDir?/:fileName.:ext`, async (ctx, next) => {
-      const { element, fileName, ext } = ctx.params;
+    .get(`/${componentSubpath}/:element/demo/:fileName-lightdom.css`, async ctx => {
+      const { element, fileName } = ctx.params;
       const prefixedElement = deslugify(element);
-      if (fileName.includes('-lightdom') && ext === 'css') {
-        ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.${ext}`);
-      } else if (!element.includes(tagPrefix)) {
-        ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${fileName}.${ext}`);
+      ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}-lightdom.css`);
+    })
+
+    // Redirect `components/jazz-hands/demo/**/*.js|css` to `components/pf-jazz-hands/demo/**/*.js|css`
+    .get(`/${componentSubpath}/:element/demo/:splat*/:fileName.:ext`, async (ctx, next) => {
+      const { element, splat, fileName, ext } = ctx.params;
+      const prefixedElement = deslugify(element);
+      if (!element.includes(tagPrefix)) {
+        ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${splat}/${fileName}.${ext}`);
       } else {
         return next();
       }
     })
+
     // Redirect `components/jazz-hands/*` to `components/pf-jazz-hands/*` for requests not previously handled
     .get(`/${componentSubpath}/:element/:splatPath*`, async (ctx, next) => {
       const { element, splatPath } = ctx.params;

@@ -309,7 +309,8 @@
     "leasot": "^13.3.0",
     "nunjucks": "^3.2.4",
     "prompts": "^2.4.2",
-    "wireit": "^0.14.1"
+    "wireit": "^0.14.1",
+    "zero-md": "^2.5.3"
   },
   "workspaces": [
     "./core/*",

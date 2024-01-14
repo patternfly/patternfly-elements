@@ -2,6 +2,7 @@ import type { Plugin } from '@web/dev-server-core';
 import type { DevServerConfig } from '@web/dev-server';
 import type { Context, Next } from 'koa';
 
+import { readdir, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 import rollupReplace from '@rollup/plugin-replace';
@@ -128,8 +129,6 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
           if (override) {
             return override;
           } else {
-            console.log(fileUrl);
-            const fromRoot = fileUrl.replace(rootUrl, '');
             return fileUrl.replace('/components/', '/elements/pf-');
           }
         },
@@ -139,4 +138,24 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
 
     ],
   };
+}
+
+/** Returns an import map `imports` section containing the entire `@patternfly/icons` collection, pointing to node_modules */
+export async function getPatternflyIconNodemodulesImports(rootUrl: string) {
+  const files = await readdir(new URL('./node_modules/@patternfly/icons', rootUrl));
+  const dirs = [];
+
+  for (const dir of files) {
+    if (!dir.startsWith('.') && (await stat(new URL(`./node_modules/@patternfly/icons/${dir}`, rootUrl))).isDirectory()) {
+      dirs.push(dir);
+    }
+  }
+
+  const specs = await Promise.all(dirs.flatMap(dir =>
+    readdir(new URL(`./node_modules/@patternfly/icons/${dir}`, rootUrl))
+      .then(files => files.filter(x => x.endsWith('.js')))
+      .then(icons => icons.flatMap(icon => `@patternfly/icons/${dir}/${icon}`))
+  ));
+
+  return Object.fromEntries(specs.flat().map(spec => [spec, `./node_modules/${spec}`]));
 }

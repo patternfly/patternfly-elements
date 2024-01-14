@@ -18,8 +18,8 @@ export default pfeDevServerConfig({
   tsconfig: 'tsconfig.esbuild.json',
   importMapOptions: {
     providers: {
-      '@patternfly/icons': 'nodemodules',
       'zero-md': 'nodemodules',
+      '@patternfly/icons': 'nodemodules',
       '@patternfly/elements': 'monorepotypescript',
       '@patternfly/pfe-tools': 'monorepotypescript',
       '@patternfly/pfe-core': 'monorepotypescript',

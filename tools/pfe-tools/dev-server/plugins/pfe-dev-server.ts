@@ -12,7 +12,7 @@ import Router from '@koa/router';
 import nunjucks, { type Environment } from 'nunjucks';
 
 import { makeDemoEnv } from '../../environment.js';
-import { Manifest, type DemoRecord } from '../../custom-elements-manifest/lib/Manifest.js';
+import { Manifest } from '../../custom-elements-manifest/lib/Manifest.js';
 import { deslugify, type PfeConfig } from '../../config.js';
 
 type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & {
@@ -70,13 +70,7 @@ async function renderURL(
 
 /** Render the demo page whenever there's a trailing slash */
 function nunjucksMiddleware(config: PfeDevServerInternalConfig) {
-  const env = nunjucks
-    .configure(join(dirname(fileURLToPath(import.meta.url)), 'templates'))
-    .addFilter('log', x => (console.log(x, '')))
-    .addFilter('deslugify', x => deslugify(x))
-    .addFilter('isElementGroup', (group: DemoRecord[], primary) =>
-      group.every(x => !!primary && x.primaryElementName === primary));
-
+  const env = nunjucks.configure(join(dirname(fileURLToPath(import.meta.url)), 'templates'));
   return async function(ctx: Context, next: Next) {
     const { method, path } = ctx;
     if (config.loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {

@@ -8,7 +8,7 @@
     "url": "github:patternfly/patternfly-elements"
   },
   "engines": {
-    "node": ">=16 <=19"
+    "node": "^20"
   },
   "scripts": {
     "🐒-DEV": "❓ Development aids",
@@ -148,7 +148,7 @@
       ]
     },
     "build:icons": {
-      "command": "ts-node --esm ./scripts/icons.ts",
+      "command": "npx tsx ./scripts/icons.ts",
       "output": [
         "elements/pf-icon/icons/*/*.js"
       ]
@@ -170,7 +170,7 @@
       ]
     },
     "build:react": {
-      "command": "ts-node --esm scripts/generate-react-wrappers.ts",
+      "command": "npx tsx scripts/generate-react-wrappers.ts",
       "dependencies": [
         "build:core",
         "build:tools",
@@ -299,30 +299,32 @@
     "*.{js,ts}": "eslint --fix"
   },
   "devDependencies": {
-    "@actions/core": "^1.10.0",
+    "@actions/core": "^1.10.1",
     "@actions/exec": "^1.1.1",
     "@actions/glob": "^0.4.0",
-    "@commitlint/cli": "^17.6.1",
-    "@commitlint/config-conventional": "^17.6.1",
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
-    "@jspm/generator": "^1.1.6",
-    "@octokit/core": "^4.2.0",
+    "@jspm/generator": "^2.0.0",
+    "@octokit/core": "^5.0.2",
     "@patternfly/patternfly": "^4.224.2",
-    "@rhds/elements": "^1.0.0",
-    "@types/koa__router": "^12.0.0",
-    "@types/numeral": "^2.0.2",
-    "@types/prismjs": "^1.26.0",
-    "@types/prompts": "^2.4.4",
-    "commitlint": "^17.6.1",
-    "execa": "^7.1.1",
-    "fuse.js": "^6.6.2",
+    "@rhds/elements": "^1.2.0",
+    "@types/koa__router": "^12.0.4",
+    "@types/numeral": "^2.0.5",
+    "@types/prismjs": "^1.26.3",
+    "@types/prompts": "^2.4.9",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "chalk": "^5.3.0",
+    "commitlint": "^18.4.3",
+    "execa": "^8.0.1",
+    "fuse.js": "^7.0.0",
     "husky": "^8.0.3",
     "leasot": "^13.3.0",
-    "nunjucks": "^3.2.3",
+    "nunjucks": "^3.2.4",
     "prompts": "^2.4.2",
-    "wireit": "^0.9.5"
+    "wireit": "^0.14.1"
   },
   "workspaces": [
     "./core/*",
@@ -330,6 +332,6 @@
     "./tools/*"
   ],
   "dependencies": {
-    "@lit-labs/react": "^1.2.0"
+    "@lit/react": "^1.0.2"
   }
 }

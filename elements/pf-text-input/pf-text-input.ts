@@ -4,16 +4,9 @@ import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import styles from './pf-text-input.css';
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
-function getLabelText(label: HTMLElement) {
-  if (label.hidden) {
-    return '';
-  } else {
-    const ariaLabel = label.getAttribute?.('aria-label');
-    return ariaLabel ?? label.textContent;
-  }
-}
+import styles from './pf-text-input.css';
 
 /**
  * A **text input** is used to gather free-form text from a user.
@@ -208,7 +201,7 @@ export class PfTextInput extends LitElement {
   /** Value of the input. */
   @property() value = '';
 
-  #internals = this.attachInternals();
+  #internals = new InternalsController(this);
 
   #derivedLabel = '';
 
@@ -219,13 +212,7 @@ export class PfTextInput extends LitElement {
   }
 
   override willUpdate() {
-    /** A best-attempt based on observed behaviour in FireFox 115 on fedora 38 */
-    this.#derivedLabel =
-      this.accessibleLabel ||
-      this.#internals.ariaLabel ||
-      Array.from(this.#internals.labels as NodeListOf<HTMLElement>)
-        .reduce((acc, label) =>
-          `${acc}${getLabelText(label)}`, '');
+    this.#derivedLabel = this.accessibleLabel || this.#internals.computedLabelText;
   }
 
   override render() {
@@ -247,7 +234,7 @@ export class PfTextInput extends LitElement {
                backgroundImage: `url('${this.customIconUrl}')`,
                backgroundSize: this.customIconDimensions,
              }))}">
-        <span id="helper-text" ?hidden="${!this.helperText ?? valid}">${this.helperText}</span>
+        <span id="helper-text" ?hidden="${!this.helperText || valid}">${this.helperText}</span>
         <span id="error-text" ?hidden="${valid}">${this.#internals.validationMessage}</span>
     `;
   }

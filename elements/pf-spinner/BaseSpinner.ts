@@ -1,3 +1,5 @@
+// will remove file in 2627
+/* eslint-disable lit-a11y/accessible-name */
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
 

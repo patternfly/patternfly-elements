@@ -2,7 +2,7 @@
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
 const { join } = require('node:path');
 const { existsSync } = require('node:fs');
-const glob = require('node:util').promisify(require('glob'));
+const { glob } = require('glob');
 const { stat, rm } = require('node:fs/promises');
 
 /**

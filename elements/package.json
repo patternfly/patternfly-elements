@@ -18,6 +18,7 @@
     "./pf-accordion/pf-accordion.js": "./pf-accordion/pf-accordion.js",
     "./pf-avatar/BaseAvatar.js": "./pf-avatar/BaseAvatar.js",
     "./pf-avatar/pf-avatar.js": "./pf-avatar/pf-avatar.js",
+    "./pf-back-to-top/pf-back-to-top.js": "./pf-back-to-top/pf-back-to-top.js",
     "./pf-background-image/pf-background-image.js": "./pf-background-image/pf-background-image.js",
     "./pf-badge/BaseBadge.js": "./pf-badge/BaseBadge.js",
     "./pf-badge/pf-badge.js": "./pf-badge/pf-badge.js",
@@ -70,6 +71,7 @@
     "./pf-tabs/pf-tab-panel.js": "./pf-tabs/pf-tab-panel.js",
     "./pf-tabs/pf-tab.js": "./pf-tabs/pf-tab.js",
     "./pf-tabs/pf-tabs.js": "./pf-tabs/pf-tabs.js",
+    "./pf-text-area/pf-text-area.js": "./pf-text-area/pf-text-area.js",
     "./pf-text-input/pf-text-input.js": "./pf-text-input/pf-text-input.js",
     "./pf-tile/BaseTile.js": "./pf-tile/BaseTile.js",
     "./pf-tile/pf-tile.js": "./pf-tile/pf-tile.js",
@@ -141,8 +143,8 @@
   ],
   "dependencies": {
     "@patternfly/icons": "^1.0.2",
-    "@patternfly/pfe-core": "^2.4.0",
-    "lit": "2.6.1",
-    "tslib": "^2.4.1"
+    "@patternfly/pfe-core": "^2.4.1",
+    "lit": "^3.1.0",
+    "tslib": "^2.6.2"
   }
 }

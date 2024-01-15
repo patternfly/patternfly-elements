@@ -98,11 +98,15 @@ function getRouter(options: PfeDevServerInternalConfig) {
       ctx.type = 'application/javascript';
     })
 
-    // Redirect `components/pf-jazz-hands|jazz-hands/demo/*-lightdom.css` to `components/pf-jazz-hands/*-lightdom.css`
-    .get(`/${componentSubpath}/:element/demo/:fileName-lightdom.css`, async ctx => {
+    // Redirect `components/jazz-hands/*-lightdom.css` to `elements/pf-jazz-hands/*-lightdom.css`
+    .get(`/${componentSubpath}/:element/:fileName-lightdom.css`, async (ctx, next) => {
       const { element, fileName } = ctx.params;
-      const prefixedElement = deslugify(element);
-      ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}-lightdom.css`);
+      if (!element.startsWith(tagPrefix)) {
+        const prefixedElement = deslugify(element);
+        ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}-lightdom.css`);
+      } else {
+        return next();
+      }
     })
 
     // Redirect `components/jazz-hands/demo/**/*.js|css` to `components/pf-jazz-hands/demo/**/*.js|css`

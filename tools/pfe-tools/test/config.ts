@@ -1,11 +1,13 @@
 import type { TestRunnerConfig } from '@web/test-runner';
 
+import { stat } from 'node:fs/promises';
 import { playwrightLauncher } from '@web/test-runner-playwright';
 import { summaryReporter, defaultReporter } from '@web/test-runner';
 import { junitReporter } from '@web/test-runner-junit-reporter';
 import { a11ySnapshotPlugin } from '@web/test-runner-commands/plugins';
 
 import { pfeDevServerConfig, type PfeDevServerConfigOptions } from '../dev-server/config.js';
+import { getPfeConfig } from '../config.js';
 
 export interface PfeTestRunnerConfigOptions extends PfeDevServerConfigOptions {
   files?: string[];
@@ -32,8 +34,19 @@ const testRunnerHtml: TestRunnerConfig['testRunnerHtml'] = testFramework => /* h
   </html>
 `;
 
+const exists = async (path: string | URL) => {
+  try {
+    await stat(path);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunnerConfig {
   const { open, ...devServerConfig } = pfeDevServerConfig({ ...opts, loadDemo: false });
+
+  const { elementsDir, tagPrefix } = getPfeConfig();
 
   const configuredReporter = opts.reporter ?? 'summary';
 
@@ -85,5 +98,17 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
       ...opts.plugins ?? [],
       a11ySnapshotPlugin(),
     ],
+    middleware: [
+      /** redirect `.js` to `.ts` when the typescript source exists */
+      async function(ctx, next) {
+        if (ctx.path.endsWith('.js') &&
+            ctx.path.startsWith(`/${elementsDir}/${tagPrefix}-`) &&
+            await exists(`./${ctx.path}`.replace('.js', '.ts').replace('//', '/'))) {
+          ctx.redirect(ctx.path.replace('.js', '.ts'));
+        } else {
+          return next();
+        }
+      }
+    ]
   };
 }

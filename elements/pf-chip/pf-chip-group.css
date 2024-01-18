@@ -14,6 +14,7 @@
   --pf-c-chip-group__close--MarginBottom: calc(var(--pf-global--spacer--xs, 0.25rem) * -1);
   --pf-c-chip-group__list-item--MarginRight: var(--pf-global--spacer--xs, 0.25rem);
   --pf-c-chip-group__list-item--MarginBottom: var(--pf-global--spacer--xs, 0.25rem);
+  --_pf-chip-group-target-size: 24px;
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
@@ -68,8 +69,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  min-width: 44px;
+  min-height: var(--_pf-chip-group-target-size);
+  min-width: var(--_pf-chip-group-target-size);
   margin: var(--pf-c-chip__c-button--MarginTop)
     var(--pf-c-chip__c-button--MarginRight)
     var(--pf-c-chip__c-button--MarginBottom)
@@ -117,7 +118,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
+  min-height: var(--_pf-chip-group-target-size);
   margin: 0;
   padding: var(--pf-c-chip--PaddingTop) var(--pf-c-chip--PaddingRight) var(--pf-c-chip--PaddingBottom) var(--pf-c-chip--PaddingLeft);
   list-style: none;

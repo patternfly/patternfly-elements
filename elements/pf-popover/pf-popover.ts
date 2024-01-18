@@ -417,7 +417,7 @@ export class PfPopover extends LitElement {
     }
   }
 
-  @bound private #onKeydown(event: KeyboardEvent) {
+  #onKeydown = (event: KeyboardEvent) => {
     switch (event.key) {
       case 'Escape':
       case 'Esc':

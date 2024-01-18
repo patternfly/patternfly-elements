@@ -206,7 +206,7 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
       throw new Error('ListboxController requires the host to be an HTMLElement, or for the initializer to include a `getHTMLElement()` function');
     }
     ListboxController.instances.set(host, this);
-    this.internals = InternalsController.for(this.host, { getHTMLElement: controllerOptions?.getHTMLElement });
+    this.internals = InternalsController.of(this.host, { getHTMLElement: controllerOptions?.getHTMLElement });
     this.internals.role = 'listbox';
     this.host.addController(this);
     this.caseSensitive = controllerOptions.caseSensitive || false;

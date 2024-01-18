@@ -46,7 +46,7 @@ function aria(
 export class InternalsController implements ReactiveController, ARIAMixin {
   private static instances = new WeakMap<ReactiveControllerHost, InternalsController>();
 
-  public static for(host: ReactiveControllerHost, options?: InternalsControllerOptions): InternalsController {
+  public static of(host: ReactiveControllerHost, options?: InternalsControllerOptions): InternalsController {
     constructingAllowed = true;
     // implement the singleton pattern
     // using a public static constructor method is much easier to manage,

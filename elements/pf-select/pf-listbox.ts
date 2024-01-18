@@ -112,8 +112,8 @@ export class PfListbox extends LitElement {
     isSelected(option) {
       return option.selected;
     },
-    toggle(option) {
-      option.selected = !option.selected;
+    select(option, selected) {
+      option.selected = !!selected;
     },
     optionAdded(option, index, options) {
       option.setSize = options.length;

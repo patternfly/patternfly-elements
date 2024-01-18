@@ -17,7 +17,7 @@ export interface ListboxConfigOptions<T extends HTMLElement> {
   multi?: boolean;
   orientation?: ListboxOrientation;
   getHTMLElement?(): HTMLElement;
-  toggle(option: T, force?: boolean): void;
+  select(option: T, force?: boolean): void;
   isSelected(option: T): boolean;
   optionAdded?(option: T, index: number, options: T[]): void;
 }
@@ -314,14 +314,14 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     const oldValue = this.value;
     if (this.multi) {
       if (!event.shiftKey) {
-        this.controllerOptions.toggle(target);
+        this.controllerOptions.select(target, !this.controllerOptions.isSelected(target));
       } else if (this.#shiftStartingItem && target) {
         this.#updateMultiselect(target, this.#shiftStartingItem);
         this.#fireChange();
       }
     } else {
       // select target and deselect all other options
-      this.options.forEach(option => this.controllerOptions.toggle(option, option === target));
+      this.options.forEach(option => this.controllerOptions.select(option, option === target));
     }
     if (target !== this.tabindex.activeItem) {
       this.tabindex.focusOnItem(target);
@@ -387,7 +387,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
           if (event.shiftKey) {
             this.#updateMultiselect(target);
           } else if (!this.disabled) {
-            this.controllerOptions.toggle(target);
+            this.controllerOptions.select(target, !this.controllerOptions.isSelected(target));
           }
         } else {
           this.#updateSingleselect();
@@ -425,7 +425,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     const oldValue = this.value;
     const [firstItem = null] = Array.isArray(value) ? value : [value];
     for (const option of this.options) {
-      this.controllerOptions.toggle(option, (
+      this.controllerOptions.select(option, (
           !!this.multi && Array.isArray(value) ? value?.includes(option)
         : firstItem === option
       ));
@@ -441,7 +441,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   #updateSingleselect() {
     if (!this.multi && !this.disabled) {
       this.#getEnabledOptions()
-        .forEach(option => this.controllerOptions.toggle(option, option === this.tabindex.activeItem));
+        .forEach(option => this.controllerOptions.select(option, option === this.tabindex.activeItem));
       this.#fireChange();
     }
   }
@@ -462,7 +462,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
       // whether options will be selected (true) or deselected (false)
       const selected = ctrlA ? !allSelected : this.controllerOptions.isSelected(referenceItem);
-      this.#getEnabledOptions(options).forEach(option => this.controllerOptions.toggle(option, selected));
+      this.#getEnabledOptions(options).forEach(option => this.controllerOptions.select(option, selected));
       this.#fireChange();
 
       // update starting item for other multiselect

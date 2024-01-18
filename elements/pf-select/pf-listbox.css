@@ -16,11 +16,11 @@ slot {
 }
 
 slot.disabled {
-  color: var(--pf-theme--color--ui-base, #6a6e73) !important;
+  color: var(--pf-c-list__item-icon--Color, #6a6e73) !important;
   background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   pointer-events: none;
   cursor: not-allowed;;
   --_active-descendant-color: transparent;
-  --_svg-color: var(--pf-theme--color--ui-base, #6a6e73) !important;
+  --_svg-color: var(--pf-c-list__item-icon--Color, #6a6e73) !important;
 }

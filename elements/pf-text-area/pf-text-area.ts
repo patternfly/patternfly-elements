@@ -180,7 +180,7 @@ export class PfTextArea extends LitElement {
 
   #logger = new Logger(this);
 
-  #internals = new InternalsController(this);
+  #internals = InternalsController.of(this);
 
   #derivedLabel = '';
 

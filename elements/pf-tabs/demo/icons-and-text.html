@@ -1,0 +1,36 @@
+<section>
+  <pf-tabs>
+    <pf-tab slot="tab"> Users          <pf-icon slot="icon" icon="users" size="md"></pf-icon></pf-tab>
+    <pf-tab slot="tab"> Containers     <pf-icon slot="icon" icon="box-open" size="md"></pf-icon></pf-tab>
+    <pf-tab slot="tab"> Database       <pf-icon slot="icon" icon="database" size="md"></pf-icon></pf-tab>
+    <pf-tab slot="tab"> Server         <pf-icon slot="icon" icon="server" size="md"></pf-icon></pf-tab>
+    <pf-tab slot="tab"> System         <pf-icon slot="icon" icon="laptop" size="md"></pf-icon></pf-tab>
+    <pf-tab slot="tab" active> Network <pf-icon slot="icon" icon="network-wired" size="md"></pf-icon></pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab-panel>Server</pf-tab-panel>
+    <pf-tab-panel>System</pf-tab-panel>
+    <pf-tab-panel>Network</pf-tab-panel>
+  </pf-tabs>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+  import '@patternfly/elements/pf-tabs/pf-tabs.js';
+</script>
+
+<style>
+  section {
+    margin: 0 auto;
+    padding: 0 16px 32px;
+    width: 100%;
+    max-width: 1008px;
+    &:last-of-type {
+      padding-block-end: 64px;
+    }
+    @media screen and (min-width: 768px) {
+      padding: 0 32px 32px;
+    }
+  }
+</style>

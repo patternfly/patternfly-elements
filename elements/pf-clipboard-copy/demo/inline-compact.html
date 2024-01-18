@@ -1,0 +1,32 @@
+<section>
+  <pf-clipboard-copy inline compact>2.3.4-2-redhat</pf-clipboard-copy>
+  <h2>Inline compact with additional action</h2>
+  <pf-clipboard-copy inline compact>2.3.4-2-redhat
+    <pf-button slot="actions" label="Action" plain variant="primary">
+      <pf-icon icon="play"></pf-icon>
+    </pf-button>
+  </pf-clipboard-copy>
+  <hgroup>
+    <h2>Inline compact in sentence</h2>
+    <h3>Basic</h3>
+  </hgroup>
+  <p>Lorem ipsum <pf-clipboard-copy inline compact>2.3.4-2-redhat</pf-clipboard-copy></p>
+
+  <h3>Long copy string</h3>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <pf-clipboard-copy inline compact>https://app.openshift.io/path/sub-path/sub-sub-path/?runtime=quarkus/12345678901234567890/abcdefghijklmnopqrstuvwxyz1234567890</pf-clipboard-copy> Mauris luctus, libero nec dapibus ultricies, urna purus pretium mauris, ullamcorper pharetra lacus nibh vitae enim.</p>
+
+  <h3>Long copy string in block</h3>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  <pf-clipboard-copy compact block>https://app.openshift.io/path/sub-path/sub-sub-path/?runtime=quarkus/12345678901234567890/abcdefghijklmnopqrstuvwxyz1234567890</pf-clipboard-copy> Mauris luctus, libero nec dapibus ultricies, urna purus pretium mauris, ullamcorper pharetra lacus nibh vitae enim.</p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-clipboard-copy/pf-clipboard-copy.js';
+</script>
+
+<style>
+section {
+  padding: 1em;
+  max-width: 832px;
+}
+</style>

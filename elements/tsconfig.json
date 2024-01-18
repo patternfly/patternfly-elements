@@ -4,8 +4,6 @@
     "**/*.ts"
   ],
   "exclude": [
-    "pf-icon/icons/**/*.js",
-    "pf-icon/icons/**/*",
     "*/demo/*.js",
     "pf-icon/test/rh-icon*.js",
     "custom-elements-manifest.config.js",

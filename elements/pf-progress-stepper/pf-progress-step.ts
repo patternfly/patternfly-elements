@@ -13,9 +13,9 @@ import { InternalsController } from '@patternfly/pfe-core/controllers/internals-
 import style from './pf-progress-step.css';
 
 const ICONS = new Map(Object.entries({
-  success: { icon: 'circle-check' },
-  danger: { icon: 'circle-exclamation' },
-  warning: { icon: 'triangle-exclamation' },
+  success: { icon: 'check-circle' },
+  danger: { icon: 'exclamation-circle' },
+  warning: { icon: 'exclamation-triangle' },
   info: { icon: 'resources-full', set: 'patternfly' },
 }));
 
@@ -51,7 +51,7 @@ export class PfProgressStep extends LitElement {
 
   #slots = new SlotController(this, 'title', 'description');
 
-  #internals = InternalsController.for(this, { role: 'listitem' });
+  #internals = InternalsController.of(this, { role: 'listitem' });
 
   render() {
     const hasDescription = !!(this.description ?? this.#slots.hasSlotted('description'));

@@ -6,7 +6,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
-import { bound, deprecation, initializer, observed } from '@patternfly/pfe-core/decorators.js';
+import { bound, initializer, observed } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
@@ -84,8 +84,6 @@ export class PfModal extends LitElement implements HTMLDialogElement {
    * There are three options: `small`, `medium` and `large`. The default is `large`.
    */
   @property({ reflect: true }) variant?: 'small' | 'medium' | 'large';
-
-  @deprecation({ alias: 'variant', attribute: 'width' }) width?: 'small' | 'medium' | 'large';
 
   /**
    * `position="top"` aligns the dialog with the top of the page

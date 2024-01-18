@@ -1,0 +1,27 @@
+<section>
+  <pf-tile>
+    <h3 slot="title">Default</h3>
+    <p>Subtext goes here</p>
+  </pf-tile>
+  <pf-tile selected>
+    <h3 slot="title">Selected</h3>
+    <p>Subtext goes here</p>
+  </pf-tile>
+  <pf-tile disabled>
+    <h3 slot="title">Disabled</h3>
+    <p>Subtext goes here</p>
+  </pf-tile>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-tile/pf-tile.js';
+</script>
+
+<style>
+  section {
+    margin: 0 auto;
+    padding: 0 16px 32px;
+    width: 100%;
+    max-width: 1008px;
+  }
+</style>

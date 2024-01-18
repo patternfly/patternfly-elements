@@ -100,7 +100,7 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
 
   /** Current active descendant in listbox */
   get activeItem() {
-    const [active] = this.options.filter(option => option === this.internals.ariaActiveDescendantElement);
+    const [active] = this.options.filter(option => option === this.tabindex.activeItem);
     return active || this.tabindex.firstItem;
   }
 
@@ -184,7 +184,7 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
 
   private tabindex = new RovingTabindexController<Item>(this.host);
 
-  public static for<Item extends ListboxOptionElement = ListboxOptionElement>(
+  public static of<Item extends ListboxOptionElement = ListboxOptionElement>(
     host: ReactiveControllerHost,
     controllerOptions: ListboxConfigOptions,
   ): ListboxController<Item> {
@@ -206,7 +206,7 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
       throw new Error('ListboxController requires the host to be an HTMLElement, or for the initializer to include a `getHTMLElement()` function');
     }
     ListboxController.instances.set(host, this);
-    this.internals = InternalsController.for(this.host, { getHTMLElement: controllerOptions?.getHTMLElement });
+    this.internals = InternalsController.of(this.host, { getHTMLElement: controllerOptions?.getHTMLElement });
     this.internals.role = 'listbox';
     this.host.addController(this);
     this.caseSensitive = controllerOptions.caseSensitive || false;
@@ -260,25 +260,6 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
     return matchedOptions;
   }
 
-  // TODO(bennypowers): create ActiveDescendantController if/when a third use case becomes apparent
-
-  /**
-   * updates active descendant when focus changes
-   */
-  #updateActiveDescendant() {
-    this.options.forEach(option => {
-      option.active = option === this.tabindex.activeItem &&
-        this.visibleOptions.includes(option);
-      if (option.active) {
-        this.internals.ariaActiveDescendantElement = option;
-      } else {
-        if (this.internals.ariaActiveDescendantElement === option) {
-          this.internals.ariaActiveDescendantElement = null;
-        }
-      }
-    });
-  }
-
   /**
    * handles user user selection change similar to HTMLSelectElement events
    * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
@@ -326,7 +307,6 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
     if (target !== this.tabindex.activeItem) {
       this.tabindex.updateActiveItem(target);
     }
-    this.#updateActiveDescendant();
   }
 
   /**
@@ -350,7 +330,6 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
     }
     if (target !== this.tabindex.activeItem) {
       this.tabindex.focusOnItem(target);
-      this.#updateActiveDescendant();
     }
     if (oldValue !== this.value) {
       this.#fireChange();
@@ -468,8 +447,7 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
   #updateSingleselect() {
     if (!this.multi && !this.disabled) {
       this.#getEnabledOptions()
-        .forEach(option =>
-          option.selected = option === this.internals.ariaActiveDescendantElement);
+        .forEach(option => option.selected = option === this.tabindex.activeItem);
       this.#fireChange();
     }
   }

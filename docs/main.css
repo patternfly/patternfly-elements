@@ -450,7 +450,6 @@ main.blog {
 
 .logo-flex-wrap > a > picture,
 .logo-flex-wrap > a > picture > img {
-  width: 100%;
   height: 100%;
 }
 

@@ -39,7 +39,7 @@ describe('<pf-dropdown>', function() {
     });
 
     it('should hide dropdown content from assistive technology', function() {
-      expect(snapshot.children.length).to.equal(1);
+      expect(snapshot.children!.length).to.equal(1);
     });
 
     describe('pressing Enter', function() {
@@ -50,8 +50,7 @@ describe('<pf-dropdown>', function() {
       });
 
       it('should show menu', function() {
-        // eslint-disable-next-line prefer-destructuring
-        const menu = snapshot.children[1];
+        const [, menu] = snapshot.children ?? [];
         expect(menu.children?.length).to.equal(2);
       });
 
@@ -63,9 +62,8 @@ describe('<pf-dropdown>', function() {
         });
 
         it('should focus on first menu item', function() {
-          // eslint-disable-next-line prefer-destructuring
-          const menu = snapshot.children[1];
-          const [first] = menu.children;
+          const [, menu] = snapshot.children ?? [];
+          const [first] = menu?.children ?? [];
           expect(first).to.deep.equal({ role: 'menuitem', name: 'item 1', focused: true });
         });
 
@@ -76,7 +74,7 @@ describe('<pf-dropdown>', function() {
           });
 
           it('should close menu', function() {
-            expect(snapshot.children.length).to.deep.equal(1);
+            expect(snapshot.children?.length).to.equal(1);
           });
         });
       });
@@ -90,7 +88,7 @@ describe('<pf-dropdown>', function() {
       });
 
       it('should not disable trigger button', function() {
-        expect(snapshot.children.length).to.deep.equal(1);
+        expect(snapshot.children?.length).to.equal(1);
       });
 
       describe('pressing Enter', function() {
@@ -99,8 +97,7 @@ describe('<pf-dropdown>', function() {
           await sendKeys({ press: 'Tab' });
           await sendKeys({ press: 'Enter' });
           snapshot = await a11ySnapshot();
-          // eslint-disable-next-line prefer-destructuring
-          menu = snapshot.children[1];
+          [, menu] = snapshot.children ?? [];
         });
 
         it('should show menu', function() {
@@ -134,7 +131,7 @@ describe('<pf-dropdown>', function() {
     });
 
     it('should hide dropdown content from assistive technology', function() {
-      expect(snapshot.children.length).to.equal(1);
+      expect(snapshot.children?.length).to.equal(1);
     });
 
     describe('pressing Enter', function() {
@@ -144,8 +141,7 @@ describe('<pf-dropdown>', function() {
         await sendKeys({ press: 'Tab' });
         await sendKeys({ press: 'Enter' });
         snapshot = await a11ySnapshot();
-        // eslint-disable-next-line prefer-destructuring
-        menu = snapshot.children[1];
+        [, menu] = snapshot.children ?? [];
       });
 
       it('should show menu', function() {
@@ -160,9 +156,8 @@ describe('<pf-dropdown>', function() {
         });
 
         it('should focus on first menu item', function() {
-          // eslint-disable-next-line prefer-destructuring
-          const menu = snapshot.children[1];
-          const [first] = menu.children;
+          const [, menu] = snapshot.children ?? [];
+          const [first] = menu.children ?? [];
           expect(first).to.deep.equal({ role: 'menuitem', name: 'item 1', focused: true });
         });
 
@@ -173,7 +168,7 @@ describe('<pf-dropdown>', function() {
           });
 
           it('should close menu', function() {
-            expect(snapshot.children.length).to.deep.equal(1);
+            expect(snapshot.children?.length).to.equal(1);
           });
         });
       });
@@ -187,7 +182,7 @@ describe('<pf-dropdown>', function() {
       });
 
       it('should not disable trigger button', function() {
-        expect(snapshot.children.length).to.deep.equal(1);
+        expect(snapshot.children?.length).to.equal(1);
       });
 
       describe('pressing Enter', function() {
@@ -196,8 +191,7 @@ describe('<pf-dropdown>', function() {
           await sendKeys({ press: 'Tab' });
           await sendKeys({ press: 'Enter' });
           snapshot = await a11ySnapshot();
-          // eslint-disable-next-line prefer-destructuring
-          menu = snapshot.children[1];
+          [, menu] = snapshot.children ?? [];
         });
 
         it('should show menu', function() {

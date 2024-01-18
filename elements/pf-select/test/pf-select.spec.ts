@@ -71,8 +71,8 @@ describe('<pf-select>', function() {
 
     it('should be open', async function() {
       const snapshot = await a11ySnapshot();
-      const [listbox] = snapshot.children;
-      expect(listbox.children).to.deep.equal([
+      const [listbox] = snapshot.children ?? [];
+      expect(listbox?.children?.map(({ role, name }) => ({ role, name }))).to.deep.equal([
         { role: 'option', name: 'Blue' },
         { role: 'option', name: 'Green' },
         { role: 'option', name: 'Magenta' },
@@ -93,8 +93,8 @@ describe('<pf-select>', function() {
 
       it('shows options that start with "r" or "R"', async function() {
         const snapshot = await a11ySnapshot();
-        const [listbox] = snapshot.children;
-        expect(listbox.children).to.deep.equal([{ role: 'option', name: 'Red' }]);
+        const [listbox] = snapshot.children ?? [];
+        expect(listbox?.children).to.deep.equal([{ role: 'option', name: 'Red' }]);
       });
 
       describe('match anywhere', function() {
@@ -104,8 +104,8 @@ describe('<pf-select>', function() {
         });
         it('shows options with "r" anywhere in them', async function() {
           const snapshot = await a11ySnapshot();
-          const [listbox] = snapshot.children;
-          expect(listbox.children).to.deep.equal([
+          const [listbox] = snapshot.children ?? [];
+          expect(listbox?.children).to.deep.equal([
             { role: 'option', name: 'Green' },
             { role: 'option', name: 'Orange' },
             { role: 'option', name: 'Purple' },
@@ -121,8 +121,8 @@ describe('<pf-select>', function() {
         });
         it('shows options that start with "r" or shows full list if none', async function() {
           const snapshot = await a11ySnapshot();
-          const [listbox] = snapshot.children;
-          expect(listbox.children).to.deep.equal([
+          const [listbox] = snapshot.children ?? [];
+          expect(listbox?.children?.map(({ role, name }) => ({ role, name }))).to.deep.equal([
             { role: 'option', name: 'Blue' },
             { role: 'option', name: 'Green' },
             { role: 'option', name: 'Magenta' },
@@ -143,8 +143,8 @@ describe('<pf-select>', function() {
       });
       it('shows all options', async function() {
         const snapshot = await a11ySnapshot();
-        const [listbox] = snapshot.children;
-        expect(listbox.children).to.deep.equal([
+        const [listbox] = snapshot.children ?? [];
+        expect(listbox?.children?.map(({ role, name }) => ({ role, name }))).to.deep.equal([
           { role: 'option', name: 'Blue' },
           { role: 'option', name: 'Green' },
           { role: 'option', name: 'Magenta' },
@@ -183,7 +183,7 @@ describe('<pf-select>', function() {
 
       it('opens', async function() {
         const snapshot = await a11ySnapshot();
-        const [button, listbox] = snapshot.children;
+        const [button, listbox] = snapshot.children ?? [];
         const { expanded } = element;
         expect(expanded).to.be.true;
         expect(button).to.deep.equal({
@@ -201,17 +201,19 @@ describe('<pf-select>', function() {
 
         it('focuses on first option', async function() {
           const snapshot = await a11ySnapshot();
-          const [, listbox] = snapshot.children;
-          const [first] = listbox.children;
-          expect(first).to.deep.equal({ role: 'option', name: 'Blue', focused: true });
+          const [, listbox] = snapshot.children ?? [];
+          const [first] = listbox?.children ?? [];
+          expect(first.role).to.equal('option');
+          expect(first.name).to.equal('Blue');
+          expect(first.focused).to.be.true;
         });
 
         describe('pressing ArrowDown', function() {
           beforeEach(press('ArrowDown'));
           it('focuses on second option', async function() {
             const snapshot = await a11ySnapshot();
-            const [, listbox] = snapshot.children;
-            const [, second] = listbox.children;
+            const [, listbox] = snapshot.children ?? [];
+            const [, second] = listbox?.children ?? [];
             expect(second).to.deep.equal({ role: 'option', name: 'Green', focused: true });
           });
 
@@ -229,7 +231,7 @@ describe('<pf-select>', function() {
         beforeEach(press(' '));
         it('closes', async function() {
           const snapshot = await a11ySnapshot();
-          const [button, listbox] = snapshot.children;
+          const [button, listbox] = snapshot.children ?? [];
           const { expanded } = element;
           expect(expanded).to.be.false;
           expect(button).to.deep.equal({ role: 'button', name: 'Options', focused: true, haspopup: 'listbox' });
@@ -336,7 +338,7 @@ describe('<pf-select>', function() {
 
       it('button text should be "2 items selected"', async function() {
         const snapshot = await a11ySnapshot();
-        const [button] = snapshot.children;
+        const [button] = snapshot.children ?? [];
         expect(button).to.deep.equal({ role: 'button', name: '2 items selected', haspopup: 'listbox' });
       });
     });
@@ -349,7 +351,7 @@ describe('<pf-select>', function() {
 
       it('button text should be "Options 2"', async function() {
         const snapshot = await a11ySnapshot();
-        const [button] = snapshot.children;
+        const [button] = snapshot.children ?? [];
         expect(button).to.deep.equal({ role: 'button', name: 'Options 2', haspopup: 'listbox' });
       });
     });
@@ -382,7 +384,7 @@ describe('<pf-select>', function() {
 
       it('checkboxes should NOT be visible to screen readers', async function() {
         const snapshot = await a11ySnapshot();
-        const [listbox] = snapshot.children;
+        const [listbox] = snapshot.children ?? [];
         expect(listbox.children).to.deep.equal([
           { role: 'option', name: 'Amethyst', selected: true },
           { role: 'option', name: 'Aqua', selected: true },
@@ -409,7 +411,7 @@ describe('<pf-select>', function() {
 
     it('has a text input for typeahead', async function() {
       const snapshot = await a11ySnapshot();
-      const [typeahead] = snapshot.children;
+      const [typeahead] = snapshot.children ?? [];
       expect(typeahead).to.deep.equal({
         role: 'combobox',
         name: 'Options',
@@ -425,7 +427,7 @@ describe('<pf-select>', function() {
 
       it('show listbox items starting with "p"', async function() {
         const snapshot = await a11ySnapshot();
-        const [,, listbox] = snapshot.children;
+        const [,, listbox] = snapshot.children ?? [];
         expect(listbox.children).to.deep.equal([
           { role: 'option', name: 'Purple' },
           { role: 'option', name: 'Pink' }
@@ -437,7 +439,7 @@ describe('<pf-select>', function() {
 
         it('all options are visible', async function() {
           const snapshot = await a11ySnapshot();
-          const [,, listbox] = snapshot.children;
+          const [,, listbox] = snapshot.children ?? [];
           expect(listbox.children).to.deep.equal([
             { role: 'option', name: 'Blue' },
             { role: 'option', name: 'Green' },

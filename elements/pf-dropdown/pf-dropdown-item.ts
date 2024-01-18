@@ -81,7 +81,7 @@ export class PfDropdownItem extends LitElement {
   /** Item description; overridden by `description` slot */
   @property() description?: string;
 
-  #internals = InternalsController.for(this, { role: 'none' });
+  #internals = InternalsController.of(this, { role: 'none' });
 
   /** @internal */
   @query('#item') menuItem!: HTMLElement;

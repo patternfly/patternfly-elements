@@ -7,7 +7,6 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent, StringListConverter } from '@patternfly/pfe-core/core.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
@@ -355,9 +354,12 @@ export class PfPopover extends LitElement {
            class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}">
         <slot id="trigger"
               @slotchange="${this.#triggerChanged}"
-              @keydown="${this.onKeydown}"
+              @keydown="${this.#onKeydown}"
               @click="${this.toggle}"></slot>
-        <dialog id="popover">
+        <dialog id="popover"
+                aria-labelledby="heading"
+                aria-describedby="body"
+                aria-label=${ifDefined(this.label)}>
           <div id="arrow"></div>
           <div id="content" part="content">
             <pf-button id="close-button"
@@ -416,7 +418,7 @@ export class PfPopover extends LitElement {
     }
   }
 
-  @bound private #onKeydown(event: KeyboardEvent) {
+  #onKeydown = (event: KeyboardEvent) => {
     switch (event.key) {
       case 'Escape':
       case 'Esc':
@@ -430,7 +432,7 @@ export class PfPopover extends LitElement {
         }
         return;
     }
-  }
+  };
 
   #outsideClick(event: MouseEvent) {
     const path = event.composedPath();

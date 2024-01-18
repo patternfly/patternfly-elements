@@ -94,7 +94,7 @@ export class PfOption extends LitElement {
     return this.#internals.ariaSetSize;
   }
 
-  #internals = InternalsController.for(this, { role: 'option' });
+  #internals = InternalsController.of(this, { role: 'option' });
 
   override connectedCallback() {
     super.connectedCallback();

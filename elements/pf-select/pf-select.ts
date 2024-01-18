@@ -37,6 +37,11 @@ export class PfSelect extends LitElement {
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
+   * Accessible label for chip group that does not have a category name
+   */
+  @property({ attribute: 'accessible-label', type: String }) accessibleLabel = '';
+
+  /**
    * whether listbox is always expanded
    */
   @property({ attribute: 'always-expanded', type: Boolean }) alwaysExpanded = false;
@@ -203,8 +208,8 @@ export class PfSelect extends LitElement {
     return this._listbox?.options;
   }
 
-  set selected(optionsList: unknown | unknown[]) {
-    if (this._listbox) {
+  set selected(optionsList: undefined | PfOption | PfOption[]) {
+    if (this._listbox && optionsList) {
       this._listbox.selected = optionsList;
     }
   }
@@ -257,6 +262,7 @@ export class PfSelect extends LitElement {
             </pf-chip-group>
           `}
           <input id="toggle-input"
+                 aria-label="${this.accessibleLabel}"
                  aria-autocomplete="both"
                  aria-controls="listbox"
                  aria-expanded="${!!expanded}"

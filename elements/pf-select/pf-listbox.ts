@@ -1,10 +1,10 @@
-import { LitElement, html, type PropertyValueMap, type PropertyValues } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { ListboxController, type ListboxOptionElement } from '@patternfly/pfe-core/controllers/listbox-controller.js';
+import { ListboxController } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 
 import { PfOptionGroup } from './pf-option-group.js';
 import { PfOption } from './pf-option.js';
@@ -58,15 +58,17 @@ export class PfListbox extends LitElement {
   /**
    * array of slotted options
    */
-  get options() {
+  get options(): PfOption[] {
     if (!this._slottedElements || this._slottedElements.length === 0) {
-      return;
+      return [];
     }
     const options = this._slottedElements.flatMap((element: HTMLElement) => {
       if (element instanceof PfOption) {
-        return element;
+        return [element];
       } else if (element instanceof PfOptionGroup) {
         return [...element.querySelectorAll('pf-option')];
+      } else {
+        return [];
       }
     });
     return options;
@@ -77,14 +79,12 @@ export class PfListbox extends LitElement {
    */
   set selected(optionsList: PfOption | PfOption[]) {
     if (this.#listboxController) {
-      // TODO: line these types up better
-      this.#listboxController.value = optionsList as ListboxController<any>['value'];
+      this.#listboxController.value = optionsList;
     }
   }
 
   get selected() {
-    // TODO: line these types up better
-    return this.#listboxController.value as unknown as PfOption | PfOption[];
+    return this.#listboxController.value;
   }
 
   /**
@@ -104,11 +104,21 @@ export class PfListbox extends LitElement {
   @queryAssignedElements({ flatten: true })
   private _slottedElements?: Array<HTMLElement>;
 
-  #listboxController = ListboxController.of(this, {
+  #listboxController: ListboxController<PfOption> = ListboxController.of(this, {
     caseSensitive: this.caseSensitive,
     matchAnywhere: this.matchAnywhere,
     multi: false,
     orientation: 'vertical',
+    isSelected(option) {
+      return option.selected;
+    },
+    toggle(option) {
+      option.selected = !option.selected;
+    },
+    optionAdded(option, index, options) {
+      option.setSize = options.length;
+      option.posInSet = index;
+    }
   });
 
   render() {
@@ -121,9 +131,9 @@ export class PfListbox extends LitElement {
     `;
   }
 
-  firstUpdated(changed: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    const options: unknown[] = this.options || [];
-    this.#listboxController.options = options as ListboxOptionElement[];
+  firstUpdated(changed: PropertyValues<this>): void {
+    const options = this.options || [];
+    this.#listboxController.options = options;
     this.#listboxController.filter = this.filter;
     super.firstUpdated(changed);
   }
@@ -153,10 +163,7 @@ export class PfListbox extends LitElement {
    * @param event {Event}
    */
   #onSlotchange(event: Event) {
-    if (this.#listboxController) {
-      const options: unknown[] = this.options || [];
-      this.#listboxController.options = options as ListboxOptionElement[];
-    }
+    this.#listboxController.options = this.options || [];
     this.dispatchEvent(new PfListboxRefreshEvent(event));
   }
 

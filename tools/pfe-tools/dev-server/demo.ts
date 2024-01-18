@@ -62,4 +62,3 @@ if (!Object.prototype.hasOwnProperty.call(HTMLTemplateElement.prototype, 'shadow
 if (localStorage.getItem(LS_KEY)) {
   toggleNav(false);
 }
-

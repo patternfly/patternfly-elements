@@ -1,0 +1,101 @@
+<section>
+  <p>PatternFly supports several button styling variants to be used in different scenarios as needed. The following button variants can be assigned using the <code>variant</code> property.</p>
+
+  <pf-button>Primary</pf-button>
+  <pf-button variant="secondary">Secondary</pf-button>
+  <pf-button danger variant="secondary">Danger Secondary</pf-button>
+  <pf-button variant="tertiary">Tertiary</pf-button>
+  <pf-button danger>Danger</pf-button>
+  <pf-button warning>Warning</pf-button>
+
+  <h2>Disabled</h2>
+  <pf-button disabled>Primary</pf-button>
+  <pf-button disabled variant="secondary">Secondary</pf-button>
+  <pf-button disabled variant="secondary" danger>Danger Secondary
+  <pf-button disabled variant="tertiary">Tertiary</pf-button>
+  <pf-button disabled danger>Danger</pf-button>
+  <pf-button disabled warning>Warning</pf-button>
+</section>
+
+<section>
+  <h2>Link variant</h2>
+  <pf-button variant="link" icon="plus-circle">Link</pf-button>
+  <pf-button variant="link" icon="link" icon-position="right">Link</pf-button>
+  <pf-button variant="link" inline>Inline Link</pf-button>
+  <pf-button variant="link" danger>Danger Link</pf-button>
+
+  <h3>Disabled</h3>
+  <pf-button disabled
+      variant="link"
+      icon="plus-circle">Link</pf-button>
+  <pf-button disabled
+      variant="link"
+      icon="link"
+      icon-position="right">Link</pf-button>
+  <pf-button disabled
+      variant="link"
+      inline>Inline Link</pf-button>
+  <pf-button disabled
+      variant="link"
+      danger>Danger Link</pf-button>
+</section>
+
+<section>
+  <h2>Plain button</h2>
+  <pf-button plain label="Action">
+    <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
+      <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
+    </svg>
+  </pf-button>
+
+  <h3>Disabled</h3>
+  <pf-button disabled
+      plain
+      label="Action">
+    <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
+      <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
+    </svg>
+  </pf-button>
+</section>
+
+<section>
+  <h2>Control variant</h2>
+  <pf-button variant="control">Control</pf-button>
+  <pf-button variant="control" label="Copy">
+    <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512">
+      <path d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"/>
+    </svg>
+  </pf-button>
+
+  <h3>Disabled</h3>
+  <pf-button disabled variant="control">Control</pf-button>
+  <pf-button disabled variant="control" label="Copy">
+    <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512">
+      <path d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"/>
+    </svg>
+  </pf-button>
+
+  <p>
+    <strong>Note:</strong> when using <code>&lt;pf-button&gt;</code> as an icon-button,
+    <code>&lt;pf-button&gt;</code> must have the <code>label</code> attribute.
+  </p>
+</section>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-button/pf-button.js';
+  for (const button of document.querySelectorAll('pf-button')) {
+    // eslint-disable-next-line no-console
+    button.addEventListener('click', console.log);
+  }
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+
+  section > :not(pf-button) {
+    width: 100%;
+  }
+</style>

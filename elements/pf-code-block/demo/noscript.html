@@ -1,0 +1,51 @@
+<article>
+  <p>To display code snippets when javascript is disabled, use the following HTML snippet:</p>
+  <pf-code-block id="javascript-sample" expanded>
+    <script type="text/html">
+      <noscript>
+        <style>
+          pf-code-block,
+          pf-code-block > script {
+            display: block;
+            white-space: pre;
+            font-family: monospace;
+          }
+        </style>
+      </noscript>
+    </script>
+    <pf-clipboard-copy slot="actions" copy-from="#javascript-sample"></pf-clipboard-copy>
+  </pf-code-block>
+  <iframe sandbox width="100%"></iframe>
+  <script>
+    document.currentScript.previousElementSibling.srcdoc = `
+      <p>Code Block in an iframe with JavaScript disabled</p>
+      <pf-code-block id="javascript-sample" expanded>
+        <script type="text/javascript-sample">
+          console.log("If this appears in console, something's broken");
+        </s` + `cript>
+        <pf-clipboard slot="actions" copy-from="#javascript-sample"></pf-clipboard>
+      </pf-code-block>
+      <noscript>
+        <style>
+          pf-code-block,
+          pf-code-block > script {
+            display: block;
+            white-space: pre;
+            font-family: monospace;
+          }
+        </style>
+      </noscript>
+    `;
+  </script>
+</article>
+
+<script type="module">
+  import '@patternfly/elements/pf-code-block/pf-code-block.js';
+  import '@patternfly/elements/pf-clipboard-copy/pf-clipboard-copy.js';
+</script>
+
+<style>
+article {
+  margin-inline: 4em;
+}
+</style>

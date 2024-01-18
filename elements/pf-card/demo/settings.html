@@ -1,0 +1,94 @@
+<section>
+  <form id="card-settings">
+    <pf-switch id="flat" data-attribute="flat"></pf-switch>
+    <label for="flat">Flat</label>
+
+    <pf-switch id="rounded" data-attribute="rounded"></pf-switch>
+    <label for="rounded">Rounded</label>
+
+    <pf-switch id="plain" data-attribute="plain"></pf-switch>
+    <label for="plain">Plain</label>
+
+    <pf-switch id="full-height" data-attribute="full-height"></pf-switch>
+    <label for="full-height">Full Height</label>
+
+    <pf-switch id="size" data-attribute="size"></pf-switch>
+    <label for="size" data-state="on">Compact</label>
+    <label for="size" data-state="off">Large</label>
+  </form>
+
+  <div id="card-container" class="resize">
+    <pf-card>
+      <h2 slot="header">Lightest card</h2>
+      <p>This is the lightest pf-card and <a href="#">a link</a>, and <a href=".">a visited link</a> with <code>border</code>.</p>
+      <pf-button slot="footer">Try</pf-button>
+      <pf-button slot="footer">Buy</pf-button>
+    </pf-card>
+  </div>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-card/pf-card.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+
+  const form = document.getElementById('card-settings');
+  const card = document.querySelector('pf-card');
+
+  form.addEventListener('change', function(event) {
+    const { checked } = event.target;
+    const { attribute } = event.target.dataset;
+    switch (attribute) {
+      case 'flat':
+      case 'rounded':
+      case 'plain':
+      case 'full-height':
+        card.toggleAttribute(attribute, checked);
+        break;
+      case 'size':
+        card.setAttribute('size', form.querySelector('label[for="size"]:not([hidden])').textContent.toLowerCase());
+        break;
+    }
+  });
+
+</script>
+
+<style>
+section {
+  padding: 2em;
+  background: #eeeeee;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr;
+  @media (min-width: 800px) {
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr;
+  }
+}
+
+form {
+  display: grid;
+  grid-template-columns: max-content auto;
+  grid-auto-rows: max-content;
+  gap: 1em;
+}
+
+pf-card {
+  max-width: 50%;
+  margin: 0 auto;
+}
+
+.resize {
+  padding: 2em;
+  resize: vertical;
+  overflow: auto;
+  min-height: 40vh;
+  background: repeating-linear-gradient(
+    45deg,
+    #fff,
+    #fff 10px,
+    #eee 10px,
+    #eee 20px
+  );
+}
+</style>

@@ -1,0 +1,47 @@
+<section id="keyboard-interaction">
+  <p>See demo source for JavaScript snippet.</p>
+  <div role="listbox" aria-label="Single selection tiles">
+    <pf-tile id="single-select-tile-1" tabindex="0">
+      <h3 slot="title">Tile 1</h3>
+    </pf-tile>
+    <pf-tile id="single-select-tile-2" tabindex="0">
+      <h3 slot="title">Tile 2</h3>
+    </pf-tile>
+    <pf-tile id="single-select-tile-3" disabled>
+      <h3 slot="title">Tile 3</h3>
+    </pf-tile>
+    <pf-tile id="single-select-tile-4" tabindex="0">
+      <h3 slot="title">Tile 4</h3>
+    </pf-tile>
+  </div>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-tile/pf-tile.js';
+  const container = document.getElementById('keyboard-interaction');
+  container.addEventListener('click', function selectByEvent(event) {
+    const tile = event.composedPath().find(node => node.localName === 'pf-tile');
+    if (tile) {
+      for (const child of container.querySelectorAll('pf-tile')) {
+        child.selected = tile === child && !child.disabled;
+      }
+    }
+  });
+  container.addEventListener('keydown', function(event) {
+    switch (event.key) {
+      case ' ':
+      case 'Enter':
+        event.preventDefault();
+        selectByEvent(event);
+    }
+  });
+</script>
+
+<style>
+  section {
+    margin: 0 auto;
+    padding: 0 16px 32px;
+    width: 100%;
+    max-width: 1008px;
+  }
+</style>

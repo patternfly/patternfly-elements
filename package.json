@@ -25,8 +25,6 @@
     "test": "wireit",
     "test:ci": "wireit",
     "test:watch": "wtr --watch",
-    "test:vue": "wtr --watch --group with-vue",
-    "test:react": "wtr --watch --group with-react",
     "e2e": "wireit",
     "e2e:update": "wireit",
     "🚚-DIST": "❓ Publish packages",
@@ -52,7 +50,6 @@
         "analyze",
         "docs",
         "build:core",
-        "build:icons",
         "build:lightdom",
         "build:elements",
         "build:create",
@@ -147,12 +144,6 @@
         "*.tsbuildinfo"
       ]
     },
-    "build:icons": {
-      "command": "npx tsx ./scripts/icons.ts",
-      "output": [
-        "elements/pf-icon/icons/*/*.js"
-      ]
-    },
     "build:bundle": {
       "command": "scripts/bundle.js",
       "dependencies": [
@@ -203,7 +194,6 @@
       "dependencies": [
         "build:core",
         "build:tools",
-        "build:icons",
         "analyze"
       ]
     },
@@ -211,7 +201,9 @@
       "command": "web-dev-server --open --watch",
       "service": true,
       "dependencies": [
-        "build:tools"
+        "build:tools",
+        "build:elements",
+        "analyze"
       ]
     },
     "watch:analyze": {
@@ -232,14 +224,13 @@
       "dependencies": [
         "build:core",
         "build:tools",
-        "build:icons",
         "analyze",
         "watch:analyze",
         "dev"
       ]
     },
     "test": {
-      "command": "wtr --group default",
+      "command": "wtr",
       "files": [
         "**/*.ts",
         "**/*.css"
@@ -247,8 +238,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
-        "build:core",
-        "build:icons"
+        "build:core"
       ]
     },
     "new": {
@@ -266,8 +256,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
-        "build:core",
-        "build:icons"
+        "build:core"
       ]
     },
     "e2e": {
@@ -298,8 +287,8 @@
     "@actions/core": "^1.10.1",
     "@actions/exec": "^1.1.1",
     "@actions/glob": "^0.4.0",
-    "@commitlint/cli": "^18.4.3",
-    "@commitlint/config-conventional": "^18.4.3",
+    "@commitlint/cli": "^18.4.4",
+    "@commitlint/config-conventional": "^18.4.4",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
@@ -311,16 +300,17 @@
     "@types/numeral": "^2.0.5",
     "@types/prismjs": "^1.26.3",
     "@types/prompts": "^2.4.9",
-    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
     "chalk": "^5.3.0",
-    "commitlint": "^18.4.3",
+    "commitlint": "^18.4.4",
     "execa": "^8.0.1",
     "fuse.js": "^7.0.0",
     "husky": "^8.0.3",
     "leasot": "^13.3.0",
     "nunjucks": "^3.2.4",
     "prompts": "^2.4.2",
-    "wireit": "^0.14.1"
+    "wireit": "^0.14.3",
+    "zero-md": "^2.5.3"
   },
   "workspaces": [
     "./core/*",

@@ -1,8 +1,4 @@
-<link rel="stylesheet" href="demo.css">
-<script type="module" src="pf-modal.js"></script>
-
 <section>
-  <h2 slot="header">Basic</h2>
   <pf-modal trigger="simple-modal-header-trigger">
     <h2 slot="header">Simple modal header</h2>
     <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
@@ -16,234 +12,44 @@
   <pf-button id="simple-modal-header-trigger" slot="footer">Show modal</pf-button>
 </section>
 
-<section>
-  <h2>With description</h2>
-  <pf-modal trigger="with-description-trigger">
-    <h2 slot="header">Modal with description</h2>
-    <p slot="description">A description is used when you want to provide more info about the modal than the title is
-      able to describe. The content in the description is static and will not scroll with the rest of the modal body.
-    </p>
-    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-      anim id est laborum.</p>
-    <p>Nullam dapibus, leo quis suscipit semper, nisi sapien ultricies turpis, ac tincidunt ipsum risus in nibh. Ut
-      consequat dolor risus. Vivamus ultricies lacinia ipsum, mattis egestas nisi scelerisque sit amet. Fusce eleifend,
-      sapien vel tempor convallis, magna nisl dapibus tortor, vel lobortis metus turpis vel odio. Suspendisse pharetra
-      ex nec volutpat tristique. Cras posuere et augue id maximus. Duis lobortis rutrum luctus. Integer cursus odio ac
-      enim vehicula sollicitudin. Morbi feugiat urna nulla, vel molestie enim tempus et. Fusce pellentesque ligula a
-      nibh viverra mattis. Vestibulum tincidunt diam quis enim feugiat finibus in eu felis. Morbi ac fringilla ligula.
-      Praesent nec ex nec sapien laoreet suscipit. Nullam sit amet tempor metus, a consequat purus. Pellentesque non
-      maximus nulla, tempus accumsan enim.</p>
-    <p>Etiam semper metus sed urna blandit lacinia. Maecenas nibh nisl, pharetra elementum enim sed, porta vehicula
-      felis. Donec at ante consequat, aliquet urna vitae, imperdiet urna. Nam vel molestie nibh, quis ornare arcu. Donec
-      faucibus enim id accumsan laoreet. Sed laoreet leo id eleifend sagittis. Praesent eget lacinia lectus, sit amet
-      cursus eros. Aenean et augue risus.</p>
-    <p>Aliquam erat volutpat. Integer nisi justo, molestie a dolor ut, ultricies efficitur est. Lorem ipsum dolor sit
-      amet, consectetur adipiscing elit. In et diam dignissim, aliquet odio quis, efficitur erat. Integer cursus
-      convallis ligula, dapibus elementum sem. Mauris blandit vitae risus id pharetra. Donec et diam eros.</p>
-    <p>Curabitur urna est, mollis vitae leo nec, vehicula pharetra dui. Mauris non est viverra, semper lacus in,
-      sollicitudin est. Fusce pharetra neque vel orci congue dignissim. Curabitur ac sem viverra, molestie mauris ac,
-      egestas tortor. Aenean ut aliquet ligula, id gravida metus. Sed semper et quam et sagittis. Pellentesque egestas
-      magna id eros interdum facilisis. Nam dignissim ante quis augue finibus tristique. Donec at augue sem. Nulla
-      mollis risus at ligula finibus, vitae volutpat ex auctor. Morbi vel cursus felis. Maecenas lobortis porttitor
-      odio, non venenatis risus varius vitae. Proin gravida mi odio, sed pretium neque luctus vitae. Mauris ut libero
-      bibendum, finibus dui non, rutrum sapien. Quisque ac bibendum erat. Vestibulum tincidunt risus nisi.</p>
-    <pf-button slot="footer">Confirm</pf-button>
-    <pf-button variant="secondary" slot="footer">Cancel</pf-button>
-  </pf-modal>
-  <pf-button id="with-description-trigger" slot="footer">Show modal</pf-button>
-</section>
+<script type="module">
+  import '@patternfly/elements/pf-button/pf-button.js';
+  import '@patternfly/elements/pf-modal/pf-modal.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
 
-<section>
-  <h2>Top aligned</h2>
-  <pf-modal position="top" trigger="top-aligned-trigger">
-    <h2 slot="header">Top modal header</h2>
-    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-      anim id est laborum.</p>
-    <pf-button slot="footer">Confirm</pf-button>
-    <pf-button variant="secondary" slot="footer">Cancel</pf-button>
-  </pf-modal>
-  <pf-button id="top-aligned-trigger" slot="footer">Show modal</pf-button>
-</section>
+  for (const button of document.querySelectorAll('pf-modal pf-button:not([slot="trigger"])')) {
+    button.addEventListener('click', e => {
+      e.target.closest('pf-modal').close(e.target.textContent.toLowerCase());
+    });
+  }
+</script>
 
-<section>
-  <h2>Small</h2>
-  <pf-modal variant="small" trigger="small-header-trigger">
-    <h2 slot="header">Small modal header</h2>
-    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-      anim id est laborum.</p>
-    <pf-button slot="footer">Confirm</pf-button>
-    <pf-button variant="secondary" slot="footer">Cancel</pf-button>
-  </pf-modal>
-  <pf-button id="small-header-trigger" slot="footer">Show modal</pf-button>
-</section>
+<style>
+  @font-face {
+    font-family: "RedHatDisplayUpdated";
+    src: url(https://patternfly.org/v4/fonts/RedHatDisplay-updated-Regular.woff2) format("woff2");
+    font-style: normal;
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+  }
+  @font-face {
+    font-family: "RedHatDisplayUpdated";
+    src: url(https://patternfly.org/v4/fonts/RedHatDisplay-updated-Medium.woff2) format("woff2");
+    font-style: normal;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+  }
+  @font-face {
+    font-family: "RedHatDisplayUpdated";
+    src: url(https://patternfly.org/v4/fonts/RedHatDisplay-updated-Bold.woff2) format("woff2");
+    font-style: normal;
+    font-weight: 700;
+    text-rendering: optimizeLegibility;
+  }
 
-<section>
-  <h2>Medium</h2>
-  <pf-modal variant="medium" trigger="medium-header-trigger">
-    <h2 slot="header">Medium modal header</h2>
-    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-      anim id est laborum.</p>
-    <pf-button slot="footer">Confirm</pf-button>
-    <pf-button variant="secondary" slot="footer">Cancel</pf-button>
-  </pf-modal>
-  <pf-button id="medium-header-trigger" slot="footer">Show modal</pf-button>
-</section>
-
-<section>
-  <h2>Large</h2>
-  <pf-modal variant="large" trigger="large-modal-header">
-    <h2 slot="header">Large modal header</h2>
-    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-      anim id est laborum.</p>
-    <pf-button slot="footer">Confirm</pf-button>
-    <pf-button variant="secondary" slot="footer">Cancel</pf-button>
-  </pf-modal>
-  <pf-button id="large-modal-header" slot="footer">Show modal</pf-button>
-</section>
-
-<section>
-  <h2><code>--pf-c-modal-box--Width</code> CSS Custom Property</h2>
-  <pf-modal trigger="width-50-trigger" style="--pf-c-modal-box--Width: 50%">
-    <h2 slot="header">Width 50% header</h2>
-    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-      anim id est laborum.</p>
-    <pf-button slot="footer">Confirm</pf-button>
-    <pf-button variant="secondary" slot="footer">Cancel</pf-button>
-  </pf-modal>
-  <pf-button id="width-50-trigger" slot="footer">Show modal</pf-button>
-</section>
-
-<section>
-  <h2>Custom header and footer</h2>
-  <pf-modal trigger="custom-header-footer-trigger" aria-describedby="custom-modal-description">
-    <h2 slot="header">With custom header/footer content.</h2>
-    <p slot="header">Allows for custom content in the header and/or footer by slotting HTML.</p>
-    <p slot="header" id="custom-modal-description">When static text describing the modal is available, it can be wrapped
-      with an ID referring to the
-      modal's aria-describedby value.</p>
-    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-      aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    <h4 slot="footer">
-      <pf-icon icon="warning-triangle" set="patternfly" size="md"></pf-icon>
-      Custom modal footer.
-    </h4>
-  </pf-modal>
-  <pf-button id="custom-header-footer-trigger" slot="footer">Show modal</pf-button>
-</section>
-
-<section>
-  <h2>No header</h2>
-  <pf-modal trigger="no-header-trigger" aria-describedby="custom-modal-description">
-    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-      aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  </pf-modal>
-  <pf-button id="no-header-trigger" slot="footer">Show modal</pf-button>
-</section>
-
-<section>
-  <h2>Custom icon</h2>
-  <pf-modal trigger="custom-icons-trigger" aria-describedby="custom-modal-description">
-    <h2 slot="header">
-      <pf-icon role="presentation" icon="bullhorn" size="lg"></pf-icon>
-      Modal Header
-    </h2>
-    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-      aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  </pf-modal>
-  <pf-button id="custom-icons-trigger" slot="footer">Show modal</pf-button>
-</section>
-
-<section>
-  <h2>Warning alert</h2>
-  <pf-modal trigger="warning-alert-trigger" aria-describedby="custom-modal-description">
-    <h2 slot="header">
-      <pf-icon role="presentation" icon="warning-triangle" set="patternfly" size="lg"></pf-icon>
-      Modal Header
-    </h2>
-    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-      aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  </pf-modal>
-  <pf-button id="warning-alert-trigger" slot="footer">Show modal</pf-button>
-</section>
-
-<section>
-  <h2>With overflowing content</h2>
-  <p>If the content that you're passing to the modal is likely to overflow the modal content area, it is still
-    accessible via keyboard scrolling.</p>
-  <pf-modal trigger="overflowing-content-trigger">
-    <h2 slot="header">Modal with overflowing content</h2>
-    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-      anim id est laborum.</p>
-    <p>Nullam dapibus, leo quis suscipit semper, nisi sapien ultricies turpis, ac tincidunt ipsum risus in nibh. Ut
-      consequat dolor risus. Vivamus ultricies lacinia ipsum, mattis egestas nisi scelerisque sit amet. Fusce eleifend,
-      sapien vel tempor convallis, magna nisl dapibus tortor, vel lobortis metus turpis vel odio. Suspendisse pharetra
-      ex nec volutpat tristique. Cras posuere et augue id maximus. Duis lobortis rutrum luctus. Integer cursus odio ac
-      enim vehicula sollicitudin. Morbi feugiat urna nulla, vel molestie enim tempus et. Fusce pellentesque ligula a
-      nibh viverra mattis. Vestibulum tincidunt diam quis enim feugiat finibus in eu felis. Morbi ac fringilla ligula.
-      Praesent nec ex nec sapien laoreet suscipit. Nullam sit amet tempor metus, a consequat purus. Pellentesque non
-      maximus nulla, tempus accumsan enim.</p>
-    <p>Etiam semper metus sed urna blandit lacinia. Maecenas nibh nisl, pharetra elementum enim sed, porta vehicula
-      felis. Donec at ante consequat, aliquet urna vitae, imperdiet urna. Nam vel molestie nibh, quis ornare arcu. Donec
-      faucibus enim id accumsan laoreet. Sed laoreet leo id eleifend sagittis. Praesent eget lacinia lectus, sit amet
-      cursus eros. Aenean et augue risus.</p>
-    <p>Aliquam erat volutpat. Integer nisi justo, molestie a dolor ut, ultricies efficitur est. Lorem ipsum dolor sit
-      amet, consectetur adipiscing elit. In et diam dignissim, aliquet odio quis, efficitur erat. Integer cursus
-      convallis ligula, dapibus elementum sem. Mauris blandit vitae risus id pharetra. Donec et diam eros.</p>
-    <p>Curabitur urna est, mollis vitae leo nec, vehicula pharetra dui. Mauris non est viverra, semper lacus in,
-      sollicitudin est. Fusce pharetra neque vel orci congue dignissim. Curabitur ac sem viverra, molestie mauris ac,
-      egestas tortor. Aenean ut aliquet ligula, id gravida metus. Sed semper et quam et sagittis. Pellentesque egestas
-      magna id eros interdum facilisis. Nam dignissim ante quis augue finibus tristique. Donec at augue sem. Nulla
-      mollis risus at ligula finibus, vitae volutpat ex auctor. Morbi vel cursus felis. Maecenas lobortis porttitor
-      odio, non venenatis risus varius vitae. Proin gravida mi odio, sed pretium neque luctus vitae. Mauris ut libero
-      bibendum, finibus dui non, rutrum sapien. Quisque ac bibendum erat. Vestibulum tincidunt risus nisi.</p>
-    <pf-button slot="footer">Confirm</pf-button>
-    <pf-button variant="secondary" slot="footer">Cancel</pf-button>
-  </pf-modal>
-  <pf-button id="overflowing-content-trigger" slot="footer">Show modal</pf-button>
-</section>
-
-<section>
-  <h2>External trigger</h2>
-  <p>You may set an external button as the trigger by setting its' ID as the modal's <code>trigger</code> attribute.</p>
-  <pf-modal trigger="external-trigger">
-    <h2 slot="header">External trigger</h2>
-    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-      anim id est laborum.</p>
-    <pf-button slot="footer">Confirm</pf-button>
-    <pf-button variant="secondary" slot="footer">Cancel</pf-button>
-  </pf-modal>
-
-  <p>Arbitrary content can intervene between the external trigger and the modal element, as long as they are within the
-    same root.</p>
-
-  <pf-button id="external-trigger">Show modal with external trigger</pf-button>
-</section>
-
+  body {
+    --pf-modal--MinWidth: 800px;
+    --pf-modal--MaxWidth: 800px;
+    --pf-modal--MaxHeight: 800px;
+  }
+</style>

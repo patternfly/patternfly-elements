@@ -297,6 +297,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@jspm/generator": "^2.0.0",
+    "@lit/react": "^1.0.2",
     "@octokit/core": "^5.0.2",
     "@patternfly/patternfly": "^4.224.2",
     "@rhds/elements": "^1.3.0",
@@ -320,8 +321,5 @@
     "./core/*",
     "./elements",
     "./tools/*"
-  ],
-  "dependencies": {
-    "@lit/react": "^1.0.2"
-  }
+  ]
 }

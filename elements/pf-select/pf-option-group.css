@@ -6,11 +6,11 @@
 :host([disabled]) {
   pointer-events: none;
   cursor: not-allowed;
-  color: var(--pf-global--Color--dark-200, #6a6e73) !important;
+  color: var(--pf-global--Color--200, #6a6e73) !important;
   background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   --_active-descendant-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
-  --_svg-color: var(--pf-global--Color--dark-200, #6a6e73) !important;
+  --_svg-color: var(--pf-global--Color--2000, #6a6e73) !important;
 }
 
 slot {

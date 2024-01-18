@@ -203,8 +203,8 @@ export class PfSelect extends LitElement {
     return this._listbox?.options;
   }
 
-  set selected(optionsList: unknown | unknown[]) {
-    if (this._listbox) {
+  set selected(optionsList: undefined | PfOption | PfOption[]) {
+    if (this._listbox && optionsList) {
       this._listbox.selected = optionsList;
     }
   }

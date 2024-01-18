@@ -18,14 +18,16 @@ export class PfOptionGroup extends LitElement {
   /** whether group is disabled */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  #internals = InternalsController.for(this, { role: 'group' });
+  #internals = InternalsController.of(this, { role: 'group' });
 
   render() {
     const { disabled } = this;
     return html`
-      <slot class="${classMap({ disabled })}"
-            name="label"
-            role="presentation"></slot>
+      <div id="label-container"
+           name="label"
+           role="presentation">
+        <slot class="${classMap({ disabled })}"></slot>
+      </div>
       <slot class="${classMap({ disabled })}"></slot>
     `;
   }

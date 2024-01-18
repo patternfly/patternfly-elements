@@ -432,7 +432,7 @@ export class PfPopover extends LitElement {
         }
         return;
     }
-  }
+  };
 
   #outsideClick(event: MouseEvent) {
     const path = event.composedPath();

@@ -16,6 +16,7 @@ import { importMapGeneratorPlugin, type Options as ImportMapOptions } from './pl
 
 import { pfeDevServerPlugin } from './plugins/pfe-dev-server.js';
 
+// @ts-expect-error: looks like this was broken upstream. remove this expect-error directive when they fix it
 const replace = fromRollup(rollupReplace);
 
 type BaseConfig = DevServerConfig & PfeConfig;

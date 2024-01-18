@@ -41,7 +41,7 @@ export class PfDropdownMenu extends LitElement {
 
   #tabindex = new RovingTabindexController(this);
 
-  #internals = InternalsController.for(this, { role: 'menu' });
+  #internals = InternalsController.of(this, { role: 'menu' });
 
   /**
    * current active descendant in menu

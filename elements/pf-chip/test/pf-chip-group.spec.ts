@@ -89,7 +89,7 @@ describe('<pf-chip-group>', async function() {
     beforeEach(updateComplete);
     it('should have close button', async function() {
       const snapshot = await a11ySnapshot();
-      const [button] = snapshot.children.reverse();
+      const [button] = snapshot.children!.reverse();
       expect(button).to.deep.equal({
         role: 'button',
         name: 'Close',
@@ -131,7 +131,7 @@ describe('<pf-chip-group>', async function() {
     });
 
     it('has accessible label', function() {
-      const [offscreen] = snapshot.children;
+      const [offscreen] = snapshot.children!;
       expect(offscreen?.name).to.equal('My Chip Group');
     });
 

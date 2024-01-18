@@ -201,7 +201,7 @@ export class PfTextInput extends LitElement {
   /** Value of the input. */
   @property() value = '';
 
-  #internals = new InternalsController(this);
+  #internals = InternalsController.of(this);
 
   #derivedLabel = '';
 

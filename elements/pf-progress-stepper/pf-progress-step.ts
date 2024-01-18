@@ -51,7 +51,7 @@ export class PfProgressStep extends LitElement {
 
   #slots = new SlotController(this, 'title', 'description');
 
-  #internals = InternalsController.for(this, { role: 'listitem' });
+  #internals = InternalsController.of(this, { role: 'listitem' });
 
   render() {
     const hasDescription = !!(this.description ?? this.#slots.hasSlotted('description'));

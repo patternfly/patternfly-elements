@@ -184,7 +184,7 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
 
   private tabindex = new RovingTabindexController<Item>(this.host);
 
-  public static for<Item extends ListboxOptionElement = ListboxOptionElement>(
+  public static of<Item extends ListboxOptionElement = ListboxOptionElement>(
     host: ReactiveControllerHost,
     controllerOptions: ListboxConfigOptions,
   ): ListboxController<Item> {

@@ -31,7 +31,7 @@ export class PfJumpLinksItem extends LitElement {
   /** hypertext reference for this link */
   @property({ reflect: true }) href?: string;
 
-  #internals = InternalsController.for(this, { role: 'listitem' });
+  #internals = InternalsController.of(this, { role: 'listitem' });
 
   override connectedCallback() {
     super.connectedCallback();

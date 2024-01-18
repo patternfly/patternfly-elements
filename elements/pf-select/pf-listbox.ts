@@ -77,12 +77,14 @@ export class PfListbox extends LitElement {
    */
   set selected(optionsList: PfOption | PfOption[]) {
     if (this.#listboxController) {
-      this.#listboxController.value = optionsList;
+      // TODO: line these types up better
+      this.#listboxController.value = optionsList as ListboxController<any>['value'];
     }
   }
 
   get selected() {
-    return this.#listboxController.value;
+    // TODO: line these types up better
+    return this.#listboxController.value as unknown as PfOption | PfOption[];
   }
 
   /**
@@ -102,7 +104,7 @@ export class PfListbox extends LitElement {
   @queryAssignedElements({ flatten: true })
   private _slottedElements?: Array<HTMLElement>;
 
-  #listboxController = ListboxController.for(this, {
+  #listboxController = ListboxController.of(this, {
     caseSensitive: this.caseSensitive,
     matchAnywhere: this.matchAnywhere,
     multi: false,

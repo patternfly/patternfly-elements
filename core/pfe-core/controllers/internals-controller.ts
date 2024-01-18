@@ -101,13 +101,21 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   @aria ariaValueNow: string | null = null;
   @aria ariaValueText: string | null = null;
 
+  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaActiveDescendantElement: Element | null = null;
+  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaControlsElements: Element | null = null;
+  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaDescribedByElements: Element | null = null;
+  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaDetailsElements: Element | null = null;
+  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaErrorMessageElements: Element | null = null;
+  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaFlowToElements: Element | null = null;
+  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaLabelledByElements: Element | null = null;
+  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaOwnsElements: Element | null = null;
 
   /** True when the control is disabled via it's containing fieldset element */

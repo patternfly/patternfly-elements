@@ -48,7 +48,7 @@ export class PfDropdownMenu extends LitElement {
    */
   get activeItem() {
     const [active] = this.#menuitems.filter(menuitem =>
-      menuitem === this.#internals.ariaActiveDescendantElement);
+      menuitem === this.#tabindex.activeItem);
     return active ?? this.#tabindex.firstItem;
   }
 
@@ -143,7 +143,6 @@ export class PfDropdownMenu extends LitElement {
     if (menuitem !== this.#tabindex.activeItem) {
       this.#tabindex.updateActiveItem(menuitem);
     }
-    this.#updateActiveDescendant();
   }
 
   /**
@@ -158,7 +157,6 @@ export class PfDropdownMenu extends LitElement {
     const menuitem = target.menuItem;
     if (menuitem !== this.#tabindex.activeItem) {
       this.#tabindex.focusOnItem(menuitem);
-      this.#updateActiveDescendant();
     }
   }
 
@@ -179,27 +177,8 @@ export class PfDropdownMenu extends LitElement {
       // (as opposed to an external text input and if filter has changed
       if (focusEvent) {
         this.#tabindex.focusOnItem(focusEvent);
-        this.#updateActiveDescendant();
       }
     }
-  }
-
-  /**
-   * updates active descendant when focus changes
-   */
-  #updateActiveDescendant() {
-    this.#dropdownItems.forEach(item => {
-      item.active =
-        item.menuItem ===
-          this.#tabindex.activeItem && this.#menuitems.includes(item.menuItem);
-      if (item.active) {
-        this.#internals.ariaActiveDescendantElement = item;
-      } else {
-        if (this.#internals.ariaActiveDescendantElement === item) {
-          this.#internals.ariaActiveDescendantElement = null;
-        }
-      }
-    });
   }
 
   /**

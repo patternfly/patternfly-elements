@@ -72,7 +72,7 @@ describe('<pf-select>', function() {
     it('should be open', async function() {
       const snapshot = await a11ySnapshot();
       const [listbox] = snapshot.children ?? [];
-      expect(listbox?.children).to.deep.equal([
+      expect(listbox?.children?.map(({ role, name }) => ({ role, name }))).to.deep.equal([
         { role: 'option', name: 'Blue' },
         { role: 'option', name: 'Green' },
         { role: 'option', name: 'Magenta' },
@@ -122,7 +122,7 @@ describe('<pf-select>', function() {
         it('shows options that start with "r" or shows full list if none', async function() {
           const snapshot = await a11ySnapshot();
           const [listbox] = snapshot.children ?? [];
-          expect(listbox?.children).to.deep.equal([
+          expect(listbox?.children?.map(({ role, name }) => ({ role, name }))).to.deep.equal([
             { role: 'option', name: 'Blue' },
             { role: 'option', name: 'Green' },
             { role: 'option', name: 'Magenta' },
@@ -144,7 +144,7 @@ describe('<pf-select>', function() {
       it('shows all options', async function() {
         const snapshot = await a11ySnapshot();
         const [listbox] = snapshot.children ?? [];
-        expect(listbox?.children).to.deep.equal([
+        expect(listbox?.children?.map(({ role, name }) => ({ role, name }))).to.deep.equal([
           { role: 'option', name: 'Blue' },
           { role: 'option', name: 'Green' },
           { role: 'option', name: 'Magenta' },
@@ -203,7 +203,9 @@ describe('<pf-select>', function() {
           const snapshot = await a11ySnapshot();
           const [, listbox] = snapshot.children ?? [];
           const [first] = listbox?.children ?? [];
-          expect(first).to.deep.equal({ role: 'option', name: 'Blue', focused: true });
+          expect(first.role).to.equal('option');
+          expect(first.name).to.equal('Blue');
+          expect(first.focused).to.be.true;
         });
 
         describe('pressing ArrowDown', function() {

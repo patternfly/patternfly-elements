@@ -22,9 +22,68 @@ import style from './pf-accordion.css';
  * @slot
  *       Place the `pf-accordion-header` and `pf-accordion-panel` elements here.
  *
- * @cssproperty {<color>} --accordion__bordered--Color
- *              Color for the borders between accordion headers when using bordered or large attributes
- *              {@default `var(--rh-color-black-300, #d2d2d2)`}
+ * @cssprop --pf-c-accordion--BackgroundColor {@default var(--pf-global--BackgroundColor--100, #fff)}
+ * @cssprop --pf-c-accordion__toggle--PaddingTop {@default var(--pf-global--spacer--sm, 0.5rem)}
+ * @cssprop --pf-c-accordion__toggle--PaddingRight {@default var(--pf-global--spacer--md, 1rem)}
+ * @cssprop --pf-c-accordion__toggle--PaddingBottom {@default var(--pf-global--spacer--sm, 0.5rem)}
+ * @cssprop --pf-c-accordion__toggle--PaddingLeft {@default var(--pf-global--spacer--md, 1rem)}
+ * @cssprop --pf-c-accordion__toggle--before--BackgroundColor {@default transparent}
+ * @cssprop --pf-c-accordion__toggle--before--Top {@default 0}
+ * @cssprop --pf-c-accordion__toggle--hover--BackgroundColor {@default var(--pf-global--BackgroundColor--200, #f0f0f0)}
+ * @cssprop --pf-c-accordion__toggle--focus--BackgroundColor {@default var(--pf-global--BackgroundColor--200, #f0f0f0)}
+ * @cssprop --pf-c-accordion__toggle--active--BackgroundColor {@default var(--pf-global--BackgroundColor--200, #f0f0f0)}
+ * @cssprop --pf-c-accordion__toggle--before--Width {@default var(--pf-global--BorderWidth--lg, 3px)}
+ * @cssprop --pf-c-accordion__toggle--m-expanded--before--BackgroundColor {@default var(--pf-global--primary-color--100, #06c)}
+ * @cssprop --pf-c-accordion__toggle-text--MaxWidth {@default calc(100% - var(--pf-global--spacer--lg, 1.5rem))}
+ * @cssprop --pf-c-accordion__toggle--hover__toggle-text--Color {@default var(--pf-global--link--Color, #06c)}
+ * @cssprop --pf-c-accordion__toggle--active__toggle-text--Color {@default var(--pf-global--link--Color, #06c)}
+ * @cssprop --pf-c-accordion__toggle--active__toggle-text--FontWeight {@default var(--pf-global--FontWeight--semi-bold, 700)}
+ * @cssprop --pf-c-accordion__toggle--focus__toggle-text--Color {@default var(--pf-global--link--Color, #06c)}
+ * @cssprop --pf-c-accordion__toggle--focus__toggle-text--FontWeight {@default var(--pf-global--FontWeight--semi-bold, 700)}
+ * @cssprop --pf-c-accordion__toggle--m-expanded__toggle-text--Color {@default var(--pf-global--link--Color, #06c)}
+ * @cssprop --pf-c-accordion__toggle--m-expanded__toggle-text--FontWeight {@default var(--pf-global--FontWeight--semi-bold, 700)}
+ * @cssprop --pf-c-accordion__toggle-icon--Transition {@default .2s ease-in 0s}
+ * @cssprop --pf-c-accordion__toggle--m-expanded__toggle-icon--Rotate {@default 90deg}
+ * @cssprop --pf-c-accordion__expanded-content--Color {@default var(--pf-global--Color--200, #6a6e73)}
+ * @cssprop --pf-c-accordion__expanded-content--FontSize {@default var(--pf-global--FontSize--sm, 0.875rem)}
+ * @cssprop --pf-c-accordion__expanded-content--m-expanded__expanded-content-body--before--BackgroundColor {@default var(--pf-global--primary-color--100, #06c)}
+ * @cssprop --pf-c-accordion__expanded-content--m-fixed--MaxHeight {@default 9.375rem}
+ * @cssprop --pf-c-accordion__expanded-content-body--PaddingTop {@default var(--pf-global--spacer--sm, 0.5rem)}
+ * @cssprop --pf-c-accordion__expanded-content-body--PaddingRight {@default var(--pf-global--spacer--md, 1rem)}
+ * @cssprop --pf-c-accordion__expanded-content-body--PaddingBottom {@default var(--pf-global--spacer--sm, 0.5rem)}
+ * @cssprop --pf-c-accordion__expanded-content-body--PaddingLeft {@default var(--pf-global--spacer--md, 1rem)}
+ * @cssprop --pf-c-accordion__expanded-content-body--expanded-content-body--PaddingTop {@default 0}
+ * @cssprop --pf-c-accordion__expanded-content-body--before--BackgroundColor {@default transparent}
+ * @cssprop --pf-c-accordion__expanded-content-body--before--Width {@default var(--pf-global--BorderWidth--lg, 3px)}
+ * @cssprop --pf-c-accordion__expanded-content-body--before--Top {@default 0}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--PaddingTop {@default var(--pf-global--spacer--md, 1rem)}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--PaddingRight {@default var(--pf-global--spacer--md, 1rem)}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--PaddingBottom {@default var(--pf-global--spacer--md, 1rem)}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--PaddingLeft {@default var(--pf-global--spacer--lg, 1.5rem)}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--FontFamily {@default var(--pf-global--FontFamily--heading--sans-serif, "RedHatDisplay", "Overpass", overpass, helvetica, arial, sans-serif)}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--FontSize {@default var(--pf-global--FontSize--xl, 1.25rem)}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--hover__toggle-text--Color {@default var(--pf-global--Color--100, #151515)}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--active__toggle-text--Color {@default var(--pf-global--Color--100, #151515)}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--active__toggle-text--FontWeight {@default var(--pf-global--FontWeight--normal, 400)}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--focus__toggle-text--Color {@default var(--pf-global--Color--100, #151515)}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--focus__toggle-text--FontWeight {@default var(--pf-global--FontWeight--normal, 400)}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--m-expanded__toggle-text--Color {@default var(--pf-global--Color--100, #151515)}
+ * @cssprop --pf-c-accordion--m-display-lg__toggle--m-expanded__toggle-text--FontWeight {@default var(--pf-global--FontWeight--normal, 400)}
+ * @cssprop --pf-c-accordion--m-display-lg__expanded-content--FontSize {@default var(--pf-global--FontSize--md, 1rem)}
+ * @cssprop --pf-c-accordion--m-display-lg__expanded-content--Color {@default var(--pf-global--Color--100, #151515)}
+ * @cssprop --pf-c-accordion--m-display-lg__expanded-content-body--PaddingTop {@default 0}
+ * @cssprop --pf-c-accordion--m-display-lg__expanded-content-body--PaddingRight {@default var(--pf-global--spacer--md, 1rem)}
+ * @cssprop --pf-c-accordion--m-display-lg__expanded-content-body--PaddingBottom {@default var(--pf-global--spacer--md, 1rem)}
+ * @cssprop --pf-c-accordion--m-display-lg__expanded-content-body--last-child--PaddingBottom {@default var(--pf-global--spacer--lg, 1.5rem)}
+ * @cssprop --pf-c-accordion--m-display-lg__expanded-content-body--PaddingLeft {@default var(--pf-global--spacer--lg, 1.5rem)}
+ * @cssprop --pf-c-accordion--m-bordered--BorderTopWidth {@default var(--pf-global--BorderWidth--sm, 1px)}
+ * @cssprop --pf-c-accordion--m-bordered--BorderTopColor {@default var(--pf-global--BorderColor--100, #d2d2d2)}
+ * @cssprop --pf-c-accordion--m-bordered__toggle--before--Top {@default calc(-1 * var(--pf-global--BorderWidth--sm, 1px))}
+ * @cssprop --pf-c-accordion--m-bordered__toggle--after--BorderColor {@default var(--pf-global--BorderColor--100, #d2d2d2)}
+ * @cssprop --pf-c-accordion--m-bordered__toggle--after--BorderTopWidth {@default 0}
+ * @cssprop --pf-c-accordion--m-bordered__toggle--after--BorderBottomWidth {@default var(--pf-global--BorderWidth--sm, 1px)}
+ * @cssprop --pf-c-accordion--m-bordered__expanded-content--m-expanded__expanded-content-body--last-child--after--BorderBottomWidth {@default var(--pf-global--BorderWidth--sm, 1px)}
+ * @cssprop --pf-c-accordion--m-bordered__expanded-content--m-expanded__expanded-content-body--last-child--after--BorderBottomColor {@default var(--pf-global--BorderColor--100, #d2d2d2)}
  */
 @customElement('pf-accordion')
 export class PfAccordion extends BaseAccordion {

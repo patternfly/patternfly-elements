@@ -3,7 +3,7 @@ module.exports = function(eleventyConfig) {
     const { Generator } = await import('@jspm/generator');
 
     const generator = new Generator({
-      defaultProvider: 'jspm',
+      defaultProvider: 'jspm.io',
       env: ['production', 'browser', 'module']
     });
 

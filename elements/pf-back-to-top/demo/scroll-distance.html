@@ -1,0 +1,16 @@
+<link rel="stylesheet" href="demo.css">
+
+<div class="outer-container scroll-distance" id="top">
+  <div class="scroll-indicator padded">
+    <h2>Default</h2>
+    <p><a href="#focusable-element-top" id="top">Focusable element (top)</a></p>
+    <pf-icon icon="arrow-down"></pf-icon> Scroll down to end of cyan box, 200px (default).
+  </div>
+</div>
+<a href="#focusable-element-bottom">Focusable element (bottom)</a>
+
+<pf-back-to-top href="#top" scrollable-selector="main" scroll-distance="200">Back to top</pf-back-to-top>
+
+<script type="module">
+  import '@patternfly/elements/pf-back-to-top/pf-back-to-top.js';
+</script>

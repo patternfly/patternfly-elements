@@ -1,23 +1,55 @@
 <section id="sizes">
   <h2>Icon Sizes and Colours</h2>
   <dl>
-    <div><dt>Small</dt><dd><pf-icon icon="circle-play" size="sm"></pf-icon></dd></div>
-    <div><dt>Medium</dt><dd><pf-icon icon="circle-play" size="md"></pf-icon></dd></div>
-    <div><dt>Large</dt><dd><pf-icon icon="circle-play" size="lg"></pf-icon></dd></div>
-    <div><dt>X-Large</dt><dd><pf-icon icon="circle-play" size="xl"></pf-icon></dd></div>
+    <div><dt>Small</dt><dd><pf-icon icon="play-circle" size="sm"></pf-icon></dd></div>
+    <div><dt>Medium</dt><dd><pf-icon icon="play-circle" size="md"></pf-icon></dd></div>
+    <div><dt>Large</dt><dd><pf-icon icon="play-circle" size="lg"></pf-icon></dd></div>
+    <div><dt>X-Large</dt><dd><pf-icon icon="play-circle" size="xl"></pf-icon></dd></div>
   </dl>
   <dl id="colors">
-    <div><dt>danger</dt><dd><pf-icon class="danger" icon="circle-play" size="lg"></pf-icon></dd></div>
-    <div><dt>default</dt><dd><pf-icon class="default" icon="circle-play" size="lg"></pf-icon></dd></div>
-    <div><dt>info</dt><dd><pf-icon class="info" icon="circle-play" size="lg"></pf-icon></dd></div>
-    <div><dt>success</dt><dd><pf-icon class="success" icon="circle-play" size="lg"></pf-icon></dd></div>
-    <div><dt>warning</dt><dd><pf-icon class="warning" icon="circle-play" size="lg"></pf-icon></dd></div>
-    <div><dt>disabled</dt><dd><pf-icon class="disabled" icon="circle-play" size="lg"></pf-icon></dd></div>
+    <div><dt>danger</dt><dd><pf-icon class="danger" icon="play-circle" size="lg"></pf-icon></dd></div>
+    <div><dt>default</dt><dd><pf-icon class="default" icon="play-circle" size="lg"></pf-icon></dd></div>
+    <div><dt>info</dt><dd><pf-icon class="info" icon="play-circle" size="lg"></pf-icon></dd></div>
+    <div><dt>success</dt><dd><pf-icon class="success" icon="play-circle" size="lg"></pf-icon></dd></div>
+    <div><dt>warning</dt><dd><pf-icon class="warning" icon="play-circle" size="lg"></pf-icon></dd></div>
+    <div><dt>disabled</dt><dd><pf-icon class="disabled" icon="play-circle" size="lg"></pf-icon></dd></div>
   </dl>
 </section>
 
-<link rel="stylesheet" href="demo.css">
 <script type="module">
   import '@patternfly/elements/pf-icon/pf-icon.js';
 </script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+
+  dl {
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--pf-global--spacer--md, 1rem);
+    align-items: end;
+    & div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      & dd, & dt {
+        margin: 0;
+      }
+      & dt {
+        order: 1;
+      }
+    }
+  }
+
+  #colors dt { text-transform: capitalize; }
+  .danger { color: var(--pf-global--danger-color--200, #a30000); }
+  .default { color: var(--pf-global--default-color--200, #009596); }
+  .info { color: var(--pf-global--info-color--100, #2b9af3); }
+  .success { color: var(--pf-global--success-color--100, #3e8635); }
+  .warning { color: var(--pf-global--warning-color--100, #f0ab00); }
+  .disabled { color: var(--pf-global--disabled-color--100, #6a6e73); }
+</style>
 

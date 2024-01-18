@@ -214,13 +214,13 @@ const config = {
   }, {
     files: ['*.mjs'],
     parserOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2022,
       sourceType: 'module',
     },
   }, {
     files: ['*.cjs'],
     parserOptions: {
-      ecmaVersion: 2021,
+      ecmaVersion: 2022,
       sourceType: 'script',
     },
     env: { node: true },

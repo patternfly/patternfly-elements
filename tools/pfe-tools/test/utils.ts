@@ -12,9 +12,6 @@ export function getElementCenterPosition(element: Element): Position {
   ];
 }
 
-/** @deprecated - use `getElementCenterPosition` */
-export const getElementPosition = getElementCenterPosition;
-
 /**
  * Click an element at approximate center, using playwright's sendMouse command
  */

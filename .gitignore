@@ -65,7 +65,6 @@ tools/*/test/**/*.png
 !core/*/demo/*
 !tools/*/demo/*
 
-elements/pf-icon/icons
 !elements/pf-icon/demo/icons/**/*.js
 
 !scripts/**/*.js

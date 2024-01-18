@@ -7,7 +7,6 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
-import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent, StringListConverter } from '@patternfly/pfe-core/core.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
@@ -347,19 +346,7 @@ export class PfPopover extends LitElement {
       <slot id="heading" name="heading" part="heading" ?hidden=${!hasHeading}>${headingContent}</slot>
     `;
 
-    const header = !(hasHeading && hasIcon) ? headingSlotWithFallback : html`
-      <header part="header">
-        <span part="icon">
-          <slot name="icon">
-            <pf-icon icon="${this.icon ?? PfPopover.alertIcons.get(this.alertSeverity as AlertSeverity) ?? ''}"
-                     set="${ifDefined(this.iconSet)}"
-                     size="md"></pf-icon>
-          </slot>
-        </span>${!this.alertSeverity ? nothing : html`
-        <span class="visually-hidden">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>`}
-        ${headingSlotWithFallback}
-      </header>
-    `;
+    const headerIcon = this.icon ?? PfPopover.alertIcons.get(this.alertSeverity as AlertSeverity) ?? '';
 
     return html`
       <div id="container"
@@ -369,7 +356,10 @@ export class PfPopover extends LitElement {
               @slotchange="${this.#triggerChanged}"
               @keydown="${this.#onKeydown}"
               @click="${this.toggle}"></slot>
-        <dialog id="popover" aria-labelledby="heading" aria-describedby="body" aria-label=${ifDefined(this.label)}>
+        <dialog id="popover"
+                aria-labelledby="heading"
+                aria-describedby="body"
+                aria-label=${ifDefined(this.label)}>
           <div id="arrow"></div>
           <div id="content" part="content">
             <pf-button id="close-button"
@@ -383,7 +373,18 @@ export class PfPopover extends LitElement {
                 <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
               </svg>
             </pf-button>
-            ${header}
+            ${!(hasHeading && hasIcon) ? headingSlotWithFallback : html`
+            <header part="header">
+              <span part="icon">
+                <slot name="icon">
+                  <pf-icon icon="${headerIcon}"
+                           set="${ifDefined(this.iconSet)}"
+                           size="md"></pf-icon>
+                </slot>
+              </span>${!this.alertSeverity ? nothing : html`
+              <span class="visually-hidden">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>`}
+              ${headingSlotWithFallback}
+            </header>`}
             <slot id="body" part="body" name="body">${this.body ?? ''}</slot>
             <footer part="footer" ?hidden=${!hasFooter}>
               <slot name="footer">${this.footer}</slot>

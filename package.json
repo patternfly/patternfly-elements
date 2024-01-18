@@ -8,7 +8,7 @@
     "url": "github:patternfly/patternfly-elements"
   },
   "engines": {
-    "node": ">=16 <=19"
+    "node": "^20"
   },
   "scripts": {
     "🐒-DEV": "❓ Development aids",
@@ -24,9 +24,7 @@
     "🧪-TEST": "❓ Test packages",
     "test": "wireit",
     "test:ci": "wireit",
-    "test:watch": "wtr --watch --group default",
-    "test:vue": "wtr --watch --group with-vue",
-    "test:react": "wtr --watch --group with-react",
+    "test:watch": "wtr --watch",
     "e2e": "wireit",
     "e2e:update": "wireit",
     "🚚-DIST": "❓ Publish packages",
@@ -46,6 +44,19 @@
         "husky"
       ]
     },
+    "build": {
+      "dependencies": [
+        "build:tools",
+        "analyze",
+        "docs",
+        "build:core",
+        "build:lightdom",
+        "build:elements",
+        "build:create",
+        "build:bundle",
+        "build:react"
+      ]
+    },
     "analyze": {
       "command": "npm run -ws --if-present analyze",
       "files": [
@@ -62,20 +73,6 @@
       "dependencies": [
         "build:core",
         "build:tools"
-      ]
-    },
-    "build": {
-      "dependencies": [
-        "build:tools",
-        "build:core",
-        "analyze",
-        "docs",
-        "build:icons",
-        "build:lightdom",
-        "build:elements",
-        "build:create",
-        "build:bundle",
-        "build:react"
       ]
     },
     "build:create": {
@@ -147,12 +144,6 @@
         "*.tsbuildinfo"
       ]
     },
-    "build:icons": {
-      "command": "ts-node --esm ./scripts/icons.ts",
-      "output": [
-        "elements/pf-icon/icons/*/*.js"
-      ]
-    },
     "build:bundle": {
       "command": "scripts/bundle.js",
       "dependencies": [
@@ -170,7 +161,7 @@
       ]
     },
     "build:react": {
-      "command": "ts-node --esm scripts/generate-react-wrappers.ts",
+      "command": "npx tsx scripts/generate-react-wrappers.ts",
       "dependencies": [
         "build:core",
         "build:tools",
@@ -203,7 +194,6 @@
       "dependencies": [
         "build:core",
         "build:tools",
-        "build:icons",
         "analyze"
       ]
     },
@@ -211,7 +201,9 @@
       "command": "web-dev-server --open --watch",
       "service": true,
       "dependencies": [
-        "build:tools"
+        "build:tools",
+        "build:elements",
+        "analyze"
       ]
     },
     "watch:core": {
@@ -236,14 +228,13 @@
       "dependencies": [
         "build:core",
         "build:tools",
-        "build:icons",
         "analyze",
         "watch:analyze",
         "dev"
       ]
     },
     "test": {
-      "command": "wtr --group default",
+      "command": "wtr",
       "files": [
         "**/*.ts",
         "**/*.css"
@@ -251,8 +242,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
-        "build:core",
-        "build:icons"
+        "build:core"
       ]
     },
     "new": {
@@ -270,8 +260,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
-        "build:core",
-        "build:icons"
+        "build:core"
       ]
     },
     "e2e": {
@@ -299,30 +288,33 @@
     "*.{js,ts}": "eslint --fix"
   },
   "devDependencies": {
-    "@actions/core": "^1.10.0",
+    "@actions/core": "^1.10.1",
     "@actions/exec": "^1.1.1",
     "@actions/glob": "^0.4.0",
-    "@commitlint/cli": "^17.6.1",
-    "@commitlint/config-conventional": "^17.6.1",
+    "@commitlint/cli": "^18.4.4",
+    "@commitlint/config-conventional": "^18.4.4",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
-    "@jspm/generator": "^1.1.6",
-    "@octokit/core": "^4.2.0",
+    "@jspm/generator": "^2.0.0",
+    "@octokit/core": "^5.0.2",
     "@patternfly/patternfly": "^4.224.2",
-    "@rhds/elements": "^1.0.0",
-    "@types/koa__router": "^12.0.0",
-    "@types/numeral": "^2.0.2",
-    "@types/prismjs": "^1.26.0",
-    "@types/prompts": "^2.4.4",
-    "commitlint": "^17.6.1",
-    "execa": "^7.1.1",
-    "fuse.js": "^6.6.2",
+    "@rhds/elements": "^1.2.0",
+    "@types/koa__router": "^12.0.4",
+    "@types/numeral": "^2.0.5",
+    "@types/prismjs": "^1.26.3",
+    "@types/prompts": "^2.4.9",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "chalk": "^5.3.0",
+    "commitlint": "^18.4.4",
+    "execa": "^8.0.1",
+    "fuse.js": "^7.0.0",
     "husky": "^8.0.3",
     "leasot": "^13.3.0",
-    "nunjucks": "^3.2.3",
+    "nunjucks": "^3.2.4",
     "prompts": "^2.4.2",
-    "wireit": "^0.9.5"
+    "wireit": "^0.14.3",
+    "zero-md": "^2.5.3"
   },
   "workspaces": [
     "./core/*",
@@ -330,6 +322,6 @@
     "./tools/*"
   ],
   "dependencies": {
-    "@lit-labs/react": "^1.2.0"
+    "@lit/react": "^1.0.2"
   }
 }

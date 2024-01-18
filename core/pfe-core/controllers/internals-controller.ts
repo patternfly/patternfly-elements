@@ -43,8 +43,25 @@ function aria(
   protos.get(target).add(key);
 }
 
+function getLabelText(label: HTMLElement) {
+  if (label.hidden) {
+    return '';
+  } else {
+    const ariaLabel = label.getAttribute?.('aria-label');
+    return ariaLabel ?? label.textContent;
+  }
+}
+
 export class InternalsController implements ReactiveController, ARIAMixin {
   private static instances = new WeakMap<ReactiveControllerHost, InternalsController>();
+
+  declare readonly form: ElementInternals['form'];
+  declare readonly shadowRoot: ElementInternals['shadowRoot'];
+
+  // https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/states
+  declare readonly states: unknown;
+  declare readonly willValidate: ElementInternals['willValidate'];
+  declare readonly validationMessage: ElementInternals['validationMessage'];
 
   public static of(host: ReactiveControllerHost, options?: InternalsControllerOptions): InternalsController {
     constructingAllowed = true;
@@ -53,7 +70,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     // due to the quirks of our typescript config
     const instance: InternalsController =
       InternalsController.instances.get(host) ?? new InternalsController(host, options);
-    instance.initializeAriaOptions(options);
+    instance.initializeAriaMixinPropertyValues(options);
     constructingAllowed = false;
     return instance;
   }
@@ -131,6 +148,14 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     return this.internals.validity;
   }
 
+  /** A best-attempt based on observed behaviour in FireFox 115 on fedora 38 */
+  get computedLabelText() {
+    return this.internals.ariaLabel ||
+      Array.from(this.internals.labels as NodeListOf<HTMLElement>)
+        .reduce((acc, label) =>
+          `${acc}${getLabelText(label)}`, '');
+  }
+
   private get element() {
     return this.host instanceof HTMLElement ? this.host : this.options?.getHTMLElement?.();
   }
@@ -141,7 +166,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   private constructor(
     public host: ReactiveControllerHost,
-    private options?: InternalsControllerOptions
+    private options?: InternalsControllerOptions,
   ) {
     if (!constructingAllowed) {
       throw new Error('InternalsController must be constructed with `InternalsController.for()`');
@@ -150,17 +175,25 @@ export class InternalsController implements ReactiveController, ARIAMixin {
       throw new Error('InternalsController must be instantiated with an HTMLElement or a `getHTMLElement` function');
     }
     this.attach();
-    this.initializeAriaOptions(options);
+    this.initializeAriaMixinPropertyValues(options);
     InternalsController.instances.set(host, this);
+    this.#polyfillDisabledPseudo();
+  }
+
+  /**
+   * We need to polyfill :disabled
+   * see https://github.com/calebdwilliams/element-internals-polyfill/issues/88
+   */
+  #polyfillDisabledPseudo() {
     // START polyfill-disabled
     // We need to polyfill :disabled
     // see https://github.com/calebdwilliams/element-internals-polyfill/issues/88
     const orig = (this.element as HTMLElement & { formDisabledCallback?(disabled: boolean): void }).formDisabledCallback;
     (this.element as HTMLElement & { formDisabledCallback?(disabled: boolean): void }).formDisabledCallback = disabled => {
       this._formDisabled = disabled;
-      orig?.call(host, disabled);
-    };
+      orig?.call(this.host, disabled);
     // END polyfill-disabled
+    };
   }
 
   /**
@@ -177,7 +210,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     return this.internals;
   }
 
-  private initializeAriaOptions(options?: Partial<ARIAMixin>) {
+  private initializeAriaMixinPropertyValues(options?: Partial<ARIAMixin>) {
     for (const [key, val] of Object.entries(options ?? {})) {
       if (isARIAMixinProp(key)) {
         this[key] = val;

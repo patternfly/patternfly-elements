@@ -1,0 +1,25 @@
+:root {
+  --_scroll-distance: 400px;
+}
+
+main {
+  scroll-behavior: smooth;
+}
+
+.scroll-distance {
+  --_scroll-distance: 200px;
+}
+
+.outer-container {
+  height: calc(100vh - var(--pf-demo-header-height) + var(--_scroll-distance));
+}
+
+.padded {
+  padding: var(--pf-global--spacer--md, 1rem);
+}
+
+.scroll-indicator {
+  height: var(--_scroll-distance);
+  background-color: var(--pf-global--palette--cyan-50, #f2f9f9) !important;
+}
+

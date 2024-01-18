@@ -1,0 +1,57 @@
+<section>
+  <form id="nested-label">
+    <fieldset>
+      <legend>Nested in a label</legend>
+      <label> Status
+        <pf-switch name="status"></pf-switch>
+      </label>
+      <pf-button type="submit">Submit</pf-button>
+      <output>Submit to read status</output>
+    </fieldset>
+  </form>
+</section>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+
+  document.getElementById('nested-label').addEventListener('submit', /** @this {HTMLFormElement} */function(event) {
+    event.preventDefault();
+    this.querySelector('output').textContent = `Dark mode ${this.elements.status.checked ? 'on' : 'off'}`;
+  });
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+
+  fieldset {
+    display: grid;
+    grid-template-columns: min-content max-content;
+    gap: var(--pf-c-switch--ColumnGap, var(--pf-c-switch__label--PaddingLeft, 1rem));
+    &:has(#reversed) {
+      grid-template-columns: max-content min-content;
+    }
+  }
+
+  label {
+    color: var(--pf-c-switch__label--Color, var(--pf-global--Color--dark-100, #151515));
+  }
+
+  pf-switch:not([checked]) ~ label,
+  label:has(~ pf-switch:not([checked])) {
+    color: var(--pf-c-switch__input--not-checked__label--Color, var(--pf-global--disabled-color--100, #6a6e73));
+  }
+
+  #nested-label fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  #nested-label output {
+    width: 100%;
+  }
+</style>

@@ -1,4 +1,3 @@
-<script type="module" src="pf-background-image.js"></script>
 
 <pf-background-image
   src="/components/background-image/demo/pfbg.jpg"
@@ -20,7 +19,12 @@
     background-color: transparent;
   }
   section {
-    color: var(--pf-theme--color--ui-base--text, #fff);
+    color: var(--pf-global--palette--white, #fff);
     padding: var(--pf-global--spacer--xl, 2rem);
   }
 </style>
+
+
+<script type="module">
+  import '@patternfly/elements/pf-background-image/pf-background-image.js';
+</script>

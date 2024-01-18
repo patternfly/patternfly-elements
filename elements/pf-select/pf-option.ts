@@ -86,12 +86,21 @@ export class PfOption extends LitElement {
   /**
    * total number of options
    */
-  set setSize(setSize: string | null) {
-    this.#internals.ariaSetSize = `${Math.max(0, parseInt(setSize || '0'))}`;
+  set setSize(setSize: number | null) {
+    this.#internals.ariaSetSize = `${Math.max(0, setSize ?? 0)}`;
   }
 
   get setSize() {
-    return this.#internals.ariaSetSize;
+    try {
+      const int = parseInt(this.#internals.ariaSetSize ?? '0');
+      if (Number.isNaN(int)) {
+        return 0;
+      } else {
+        return int;
+      }
+    } catch {
+      return 0;
+    }
   }
 
   #internals = InternalsController.of(this, { role: 'option' });

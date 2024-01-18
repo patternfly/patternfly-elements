@@ -11,20 +11,15 @@ export type ListboxOrientation = 'undefined' | 'horizontal' | 'vertical';
 /**
  * Filtering, multiselect, and orientation options for listbox
  */
-export interface ListboxConfigOptions {
+export interface ListboxConfigOptions<T extends HTMLElement> {
   caseSensitive?: boolean;
   matchAnywhere?: boolean;
   multi?: boolean;
   orientation?: ListboxOrientation;
   getHTMLElement?(): HTMLElement;
-}
-
-export interface ListboxOptionElement extends HTMLElement {
-  value: unknown;
-  selected?: boolean;
-  posInSet?: number;
-  setSize?: number;
-  active?: boolean;
+  toggle(option: T, force?: boolean): void;
+  isSelected(option: T): boolean;
+  optionAdded?(option: T, index: number, options: T[]): void;
 }
 
 type FilterPropKey = 'filter' | 'caseSensitive' | 'matchAnywhere';
@@ -41,10 +36,10 @@ let constructingAllowed = false;
  * @fires change
  * @fires input
  */
-export class ListboxController<Item extends ListboxOptionElement> implements ReactiveController {
+export class ListboxController<Item extends HTMLElement> implements ReactiveController {
   private static instances = new WeakMap<ReactiveControllerHost, ListboxController<any>>();
 
-  private static filter<T extends ListboxOptionElement>(
+  private static filter<T extends HTMLElement>(
     target: ListboxController<T>,
     key: FilterPropKey,
   ) {
@@ -152,7 +147,7 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
    * array of options which are selected
    */
   get selectedOptions() {
-    return this.options.filter(option => option.selected);
+    return this.options.filter(option => this.controllerOptions.isSelected(option));
   }
 
   /**
@@ -184,9 +179,9 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
 
   private tabindex = new RovingTabindexController<Item>(this.host);
 
-  public static of<Item extends ListboxOptionElement = ListboxOptionElement>(
+  public static of<Item extends HTMLElement>(
     host: ReactiveControllerHost,
-    controllerOptions: ListboxConfigOptions,
+    controllerOptions: ListboxConfigOptions<Item>,
   ): ListboxController<Item> {
     constructingAllowed = true;
     const instance: ListboxController<Item> =
@@ -197,7 +192,7 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
 
   private constructor(
     public host: ReactiveControllerHost,
-    private controllerOptions: ListboxConfigOptions,
+    private controllerOptions: ListboxConfigOptions<Item>,
   ) {
     if (!constructingAllowed) {
       throw new Error('ListboxController must be constructed with `ListboxController.for()`');
@@ -319,14 +314,14 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
     const oldValue = this.value;
     if (this.multi) {
       if (!event.shiftKey) {
-        target.selected = !target.selected;
+        this.controllerOptions.toggle(target);
       } else if (this.#shiftStartingItem && target) {
         this.#updateMultiselect(target, this.#shiftStartingItem);
         this.#fireChange();
       }
     } else {
       // select target and deselect all other options
-      this.options.forEach(option => option.selected = option === target);
+      this.options.forEach(option => this.controllerOptions.toggle(option, option === target));
     }
     if (target !== this.tabindex.activeItem) {
       this.tabindex.focusOnItem(target);
@@ -392,7 +387,7 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
           if (event.shiftKey) {
             this.#updateMultiselect(target);
           } else if (!this.disabled) {
-            target.selected = !target.selected;
+            this.controllerOptions.toggle(target);
           }
         } else {
           this.#updateSingleselect();
@@ -411,10 +406,9 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
   #optionsChanged(oldOptions: Item[]) {
     const setSize = this.#options.length;
     if (setSize !== oldOptions.length || !oldOptions.every((element, index) => element === this.#options[index])) {
-      this.#options.forEach((option, posInSet) => {
+      this.#options.forEach((option, index, arr) => {
         if (!oldOptions.includes(option)) {
-          option.setSize = setSize;
-          option.posInSet = posInSet;
+          this.controllerOptions.optionAdded?.(option, index, [...arr]);
           for (const [event, listener] of Object.entries(this.#listeners)) {
             option?.addEventListener(event, listener as (event: Event | null) => void);
           }
@@ -431,10 +425,10 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
     const oldValue = this.value;
     const [firstItem = null] = Array.isArray(value) ? value : [value];
     for (const option of this.options) {
-      option.selected = (
+      this.controllerOptions.toggle(option, (
           !!this.multi && Array.isArray(value) ? value?.includes(option)
         : firstItem === option
-      );
+      ));
     }
     if (oldValue !== this.value) {
       this.#fireInput();
@@ -447,7 +441,7 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
   #updateSingleselect() {
     if (!this.multi && !this.disabled) {
       this.#getEnabledOptions()
-        .forEach(option => option.selected = option === this.tabindex.activeItem);
+        .forEach(option => this.controllerOptions.toggle(option, option === this.tabindex.activeItem));
       this.#fireChange();
     }
   }
@@ -464,11 +458,11 @@ export class ListboxController<Item extends ListboxOptionElement> implements Rea
 
       // by default CTRL+A will select all options
       // if all options are selected, CTRL+A will deselect all options
-      const allSelected = this.#getEnabledOptions(options).filter(option => !option.selected)?.length === 0;
+      const allSelected = this.#getEnabledOptions(options).filter(option => !this.controllerOptions.isSelected(option))?.length === 0;
 
       // whether options will be selected (true) or deselected (false)
-      const selected = ctrlA ? !allSelected : referenceItem.selected;
-      this.#getEnabledOptions(options).forEach(option => option.selected = selected);
+      const selected = ctrlA ? !allSelected : this.controllerOptions.isSelected(referenceItem);
+      this.#getEnabledOptions(options).forEach(option => this.controllerOptions.toggle(option, selected));
       this.#fireChange();
 
       // update starting item for other multiselect

@@ -71,7 +71,7 @@
 }
 
 :host([readonly]) .chip-content {
-  color: var(--pf-theme--color--ui-base, #6a6e73);
+  color: var(--pf-global--Color--200, #6a6e73);
 }
 
 #close-button {

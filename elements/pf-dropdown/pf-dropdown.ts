@@ -87,6 +87,9 @@ export class PfDropdown extends LitElement {
 
   render() {
     const { expanded, anchor, alignment } = this.#toggle ?? {};
+    /**
+     * Note: For accessibility compliance, trigger button should never be disabled.
+     */
     const { disabled } = this;
     return html`
     <div class="${classMap({ expanded, [anchor ?? '']: !!anchor, [alignment ?? '']: !!alignment })}"
@@ -96,8 +99,7 @@ export class PfDropdown extends LitElement {
             name="trigger"
             @slotchange="${this.#setTriggerElement}">
         <pf-button id="default-button"
-                   variant="control"
-                   ?disabled="${disabled}">
+                   variant="control">
           Dropdown
           <svg viewBox="0 0 320 512" fill="currentColor" aria-hidden="true" width="1em" height="1em">
             <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
@@ -107,7 +109,7 @@ export class PfDropdown extends LitElement {
       <pf-dropdown-menu id="menu"
                         part="menu"
                         class="${classMap({ show: expanded })}"
-                        ?disabled="${this.disabled}"
+                        ?disabled="${disabled}"
                         @keydown="${this.onKeydown}"
                         @click="${this.#handleSelect}">
         <slot></slot>

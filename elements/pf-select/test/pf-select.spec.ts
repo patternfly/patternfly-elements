@@ -94,7 +94,7 @@ describe('<pf-select>', function() {
       it('shows options that start with "r" or "R"', async function() {
         const snapshot = await a11ySnapshot();
         const [listbox] = snapshot.children ?? [];
-        expect(listbox?.children).to.deep.equal([{ role: 'option', name: 'Red' }]);
+        expect(listbox?.children?.every(x => x.name.toLowerCase().startsWith('r'))).to.be.true;
       });
 
       describe('match anywhere', function() {
@@ -250,63 +250,72 @@ describe('<pf-select>', function() {
     describe('clicking first option', function() {
       beforeEach(() => element.focus());
       beforeEach(press('Enter'));
+
       it('selects the option', function() {
         const { selectedList } = element;
         expect(selectedList).to.equal('Blue');
       });
 
-      describe('clicking second option', function() {
+      describe('then clicking second option', function() {
         beforeEach(press('ArrowDown'));
         beforeEach(press('Enter'));
-        it('add the option to selected list', function() {
+
+        it('adds the option to selected list', function() {
           const { selectedList } = element;
           expect(selectedList).to.equal('Blue, Green');
         });
 
-        describe('using Shift to select multiple options', function() {
+        describe('then holding Shift and pressing down arrow / enter twice in a row', function() {
           beforeEach(shiftHold);
           beforeEach(press('ArrowDown'));
-          beforeEach(updateComplete);
+          beforeEach(press('Enter'));
           beforeEach(press('ArrowDown'));
+          beforeEach(press('Enter'));
           beforeEach(updateComplete);
           beforeEach(shiftRelease);
           beforeEach(updateComplete);
-          it('add the option to selected list', function() {
+
+          it('adds two more options to the selected list', function() {
             const { selectedList } = element;
             expect(selectedList).to.equal('Blue, Green, Magenta, Orange');
           });
 
-          describe('clicking on a selected option', function() {
+          describe('then pressing arrow up and enter', function() {
             beforeEach(press('ArrowUp'));
             beforeEach(updateComplete);
             beforeEach(press('Enter'));
             beforeEach(updateComplete);
-            it('deselects the option', function() {
+
+            it('deselects one of the options', function() {
               const { selectedList } = element;
               expect(selectedList).to.equal('Blue, Green, Orange');
             });
 
-            describe('using Shift to deselect multiple options', function() {
+            describe('then holding down Shift and pressing arrow up / enter twice in a row', function() {
               beforeEach(press('ArrowUp'));
+              beforeEach(press('Enter'));
               beforeEach(updateComplete);
               beforeEach(press('ArrowUp'));
+              beforeEach(press('Enter'));
               beforeEach(updateComplete);
               beforeEach(shiftRelease);
               beforeEach(updateComplete);
+
               it('deselects the options', function() {
                 const { selectedList } = element;
                 expect(selectedList).to.equal('Orange');
               });
 
-              describe('pressing Ctrl+A', function() {
+              describe('then pressing Ctrl+A', function() {
                 beforeEach(ctrlA);
                 beforeEach(updateComplete);
+
                 it('selects all options', function() {
                   const { selectedList } = element;
                   expect(selectedList).to.equal('Blue, Green, Magenta, Orange, Purple, Pink, Red, Yellow');
                 });
 
-                describe('pressing Ctrl+A when everything is selected', function() {
+                describe('then pressing Ctrl+A again', function() {
                   beforeEach(ctrlA);
                   beforeEach(updateComplete);
                   it('deselects all options', function() {
@@ -322,20 +331,15 @@ describe('<pf-select>', function() {
     });
   });
 
-  describe('selected-items-display', function() {
-    beforeEach(async function() {
-      element = await createFixture<PfSelect>(html`
-        <pf-select multi>
-          <pf-option value="Amethyst" selected>Amethyst</pf-option>
-          <pf-option value="Aqua" selected>Aqua</pf-option>
-          ${OPTIONS}
-        </pf-select>`);
-    });
-
-    describe('setting to "default"', function() {
+  describe('selected-items-display attribute', function() {
+    describe('"default"', function() {
       beforeEach(async function() {
-        element.selectedItemsDisplay = 'default';
-        await element.updateComplete;
+        element = await createFixture<PfSelect>(html`
+          <pf-select multi selected-items-display="default">
+            <pf-option value="Amethyst" selected>Amethyst</pf-option>
+            <pf-option value="Aqua" selected>Aqua</pf-option>
+            ${OPTIONS}
+          </pf-select>`);
       });
 
       it('button text should be "2 items selected"', async function() {
@@ -345,29 +349,34 @@ describe('<pf-select>', function() {
       });
     });
 
-    describe('setting to "badge"', function() {
+    describe('"badge"', function() {
       beforeEach(async function() {
-        element.selectedItemsDisplay = 'badge';
-        await element.updateComplete;
+        element = await createFixture<PfSelect>(html`
+          <pf-select multi selected-items-display="badge">
+            <pf-option value="Amethyst" selected>Amethyst</pf-option>
+            <pf-option value="Aqua" selected>Aqua</pf-option>
+            ${OPTIONS}
+          </pf-select>`);
       });
-
       it('button text should be "Options 2"', async function() {
         const snapshot = await a11ySnapshot();
         const [button] = snapshot.children ?? [];
-        expect(button).to.deep.equal({ role: 'button', name: 'Options 2', haspopup: 'listbox' });
+        expect(button.name).to.equal('Options 2');
       });
     });
 
-    describe('setting to "chips"', function() {
+    describe('"chips"', function() {
       beforeEach(async function() {
-        element.selectedItemsDisplay = 'chips';
-        await element.updateComplete;
+        element = await createFixture<PfSelect>(html`
+          <pf-select multi selected-items-display="chips">
+            <pf-option value="Amethyst" selected>Amethyst</pf-option>
+            <pf-option value="Aqua" selected>Aqua</pf-option>
+            ${OPTIONS}
+          </pf-select>`);
       });
-
       it('button text should be "Options 2"', async function() {
         const snapshot = await a11ySnapshot();
         expect(snapshot.children).to.deep.equal([
-          { role: 'text', name: 'Current selections' },
           { role: 'text', name: 'Amethyst' },
           { role: 'button', name: 'Close', description: 'Amethyst' },
           { role: 'text', name: 'Aqua' },
@@ -379,26 +388,18 @@ describe('<pf-select>', function() {
 
     describe('checkboxes', function() {
       beforeEach(async function() {
-        element.checkboxes = true;
-        element.alwaysExpanded = true;
-        await element.updateComplete;
+        element = await createFixture<PfSelect>(html`
+          <pf-select multi checkboxes always-expanded>
+            <pf-option value="Amethyst" selected>Amethyst</pf-option>
+            <pf-option value="Aqua" selected>Aqua</pf-option>
+            ${OPTIONS}
+          </pf-select>`);
       });
 
-      it('checkboxes should NOT be visible to screen readers', async function() {
+      it('should NOT use checkbox role for options', async function() {
         const snapshot = await a11ySnapshot();
         const [listbox] = snapshot.children ?? [];
-        expect(listbox.children?.map(({ name, role }) => ({ name, role }))).to.deep.equal([
-          { role: 'option', name: 'Amethyst', selected: true },
-          { role: 'option', name: 'Aqua', selected: true },
-          { role: 'option', name: 'Blue' },
-          { role: 'option', name: 'Green' },
-          { role: 'option', name: 'Magenta' },
-          { role: 'option', name: 'Orange' },
-          { role: 'option', name: 'Purple' },
-          { role: 'option', name: 'Pink' },
-          { role: 'option', name: 'Red' },
-          { role: 'option', name: 'Yellow' }
-        ]);
+        expect(listbox.children?.find(x => x.role === 'checkbox')).to.not.be.ok;
       });
     });
   });

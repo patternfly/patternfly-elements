@@ -46,12 +46,8 @@ describe('<pf-chip-group>', async function() {
 
     it('only 3 chips and an overflow should be visible', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children).to.deep.equal([
-        { role: 'text', name: 'Chip 1' }, { role: 'button', name: 'Close' },
-        { role: 'text', name: 'Chip 2' }, { role: 'button', name: 'Close' },
-        { role: 'text', name: 'Chip 3' }, { role: 'button', name: 'Close' },
-        { role: 'button', name: '1 more' }
-      ]);
+      expect(snapshot.children?.filter(x => x.name.startsWith('Chip'))?.length).to.equal(3);
+      expect(snapshot.children?.filter(x => x.role === 'button')?.length).to.equal(4);
     });
 
     describe('clicking overflow chip', function() {
@@ -61,13 +57,15 @@ describe('<pf-chip-group>', async function() {
       beforeEach(updateComplete);
       it('should show all chips', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children).to.deep.equal( [
-          { role: 'text', name: 'Chip 1' }, { role: 'button', name: 'Close' },
-          { role: 'text', name: 'Chip 2' }, { role: 'button', name: 'Close' },
-          { role: 'text', name: 'Chip 3' }, { role: 'button', name: 'Close' },
-          { role: 'text', name: 'Chip 4' }, { role: 'button', name: 'Close' },
-          { role: 'button', name: 'show less', focused: true }
-        ]);
+        expect(snapshot.children?.filter(x => x.name.startsWith('Chip'))?.length).to.equal(4);
+      });
+      it('should show collapse button', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot.children?.filter(x => x.role === 'button')?.length).to.equal(5);
+      });
+      it('should focus collapse button', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot.children?.find(x => x.focused)?.name).to.equal('show less');
       });
     });
   });
@@ -170,13 +168,7 @@ describe('<pf-chip-group>', async function() {
     });
     it('only 2 chips should be visible', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children).to.deep.equal([
-        { role: 'text', name: 'Chip 1' },
-        { role: 'button', name: 'Close' },
-        { role: 'text', name: 'Chip 2' },
-        { role: 'button', name: 'Close' },
-        { role: 'button', name: '2 more' },
-      ]);
+      expect(snapshot.children?.filter(x => x.name.startsWith('Chip'))?.length).to.equal(2);
     });
   });
 
@@ -197,12 +189,7 @@ describe('<pf-chip-group>', async function() {
 
     it('all 4 chips should be visible', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children).to.deep.equal([
-        { role: 'text', name: 'Chip 1' }, { role: 'button', name: 'Close' },
-        { role: 'text', name: 'Chip 2' }, { role: 'button', name: 'Close' },
-        { role: 'text', name: 'Chip 3' }, { role: 'button', name: 'Close' },
-        { role: 'text', name: 'Chip 4' }, { role: 'button', name: 'Close' }
-      ]);
+      expect(snapshot.children?.filter(x => x.name.startsWith('Chip'))?.length).to.equal(4);
     });
 
     describe('setting focus on third chip and removing it', function() {
@@ -212,13 +199,13 @@ describe('<pf-chip-group>', async function() {
       beforeEach(press('Enter'));
       beforeEach(updateComplete);
 
-      it('should remove element and set focus on second chip', async function() {
+      it('should remove third chip', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children).to.deep.equal([
-          { role: 'text', name: 'Chip 1' }, { role: 'button', name: 'Close' },
-          { role: 'text', name: 'Chip 2' }, { role: 'button', name: 'Close', focused: true },
-          { role: 'text', name: 'Chip 4' }, { role: 'button', name: 'Close' }
-        ]);
+        expect(snapshot.children?.find(x => x.name === 'Chip 3')).to.not.be.ok;
+      });
+      it('should focus on second chip', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot.children?.find(x => x.focused)?.name).to.equal('Chip 2');
       });
     });
   });

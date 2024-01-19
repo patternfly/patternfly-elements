@@ -19,6 +19,7 @@ export type PopupKind = 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
 export interface ToggleControllerOptions {
   kind?: PopupKind;
   getTogglableElement?: () => Element;
+  onChange?(bool: boolean): void;
 }
 
 /**
@@ -149,7 +150,7 @@ export class ToggleController implements ReactiveController {
     };
   }
 
-  constructor(public host: ReactiveControllerHost & HTMLElement, options?: ToggleControllerOptions) {
+  constructor(public host: ReactiveControllerHost, private options?: ToggleControllerOptions) {
     this.#getToggleElement = options?.getTogglableElement ?? (() =>
       (host instanceof Element) ? host : null);
     this.host.addController(this);
@@ -195,10 +196,6 @@ export class ToggleController implements ReactiveController {
         this.#getToggleElement()?.addEventListener(event, listener as (event: Event | null) => void);
       }
     }
-  }
-
-  #fireOpenChanged() {
-    this.#getToggleElement()?.dispatchEvent(new Event('open-change'));
   }
 
   #updateFocused() {
@@ -409,7 +406,7 @@ export class ToggleController implements ReactiveController {
       });
       await this.host.updateComplete;
       if (expanded !== this.expanded) {
-        this.#fireOpenChanged();
+        this.options?.onChange?.(this.expanded);
       }
       this.#triggerElements.forEach(element => {
         const internals = this.#triggerInternals.get(element);
@@ -439,7 +436,7 @@ export class ToggleController implements ReactiveController {
       await this.float.hide();
       await this.host.updateComplete;
       if (expanded !== this.expanded) {
-        this.#fireOpenChanged();
+        this.options?.onChange?.(this.expanded);
       }
       this.#triggerElements.forEach(element => {
         const internals = this.#triggerInternals.get(element);

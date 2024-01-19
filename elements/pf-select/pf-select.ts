@@ -29,6 +29,8 @@ export interface PfSelectUserOptions {
  * whereas dropdowns are typically used to present a list of actions or links.
  *
  * @slot - insert `pf-option` and/or `pf-option-groups` here
+ * @fires open - when the menu toggles open
+ * @fires close - when the menu toggles closed
  */
 @customElement('pf-select')
 export class PfSelect extends LitElement {
@@ -141,7 +143,12 @@ export class PfSelect extends LitElement {
   @query('#toggle-input') private _input?: HTMLInputElement;
   @query('#toggle-button') private _toggle?: HTMLButtonElement;
 
-  #toggle = new ToggleController(this, { kind: 'listbox' });
+  #toggle = new ToggleController(this, {
+    kind: 'listbox',
+    onChange: expanded => {
+      this.dispatchEvent(new Event(expanded ? 'open' : 'close'));
+    }
+  });
 
   #controllerOn = true;
 

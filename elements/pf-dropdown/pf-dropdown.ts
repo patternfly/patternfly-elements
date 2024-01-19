@@ -53,6 +53,8 @@ export class DropdownSelectEvent extends Event {
  *          {@default `100% + 0.25rem`}
  *
  * @fires { DropdownSelectEvent } select - when a user select dropdown value
+ * @fires open - when the dropdown toggles open
+ * @fires close - when the dropdown toggles closed
  */
 @customElement('pf-dropdown')
 export class PfDropdown extends LitElement {
@@ -76,7 +78,12 @@ export class PfDropdown extends LitElement {
 
   #triggerElement: HTMLElement | null = null;
 
-  #toggle = new ToggleController(this, { kind: 'menu' });
+  #toggle = new ToggleController(this, {
+    kind: 'menu',
+    onChange: expanded => {
+      this.dispatchEvent(new Event(expanded ? 'open' : 'close'));
+    }
+  });
 
   render() {
     const { expanded, anchor, alignment } = this.#toggle ?? {};

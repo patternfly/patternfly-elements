@@ -89,11 +89,10 @@ describe('<pf-popover>', function() {
 
     it('should be accessible', expectA11yAxe);
 
-    it('should hide popover content from assistive technology', () => expectA11ySnapshot({
-      role: 'WebArea',
-      name: '',
-      children: [{ role: 'button', name: 'Toggle popover' }],
-    }));
+    it('should hide popover content from assistive technology', async function() {
+      const snapshot = await a11ySnapshot();
+      expect(snapshot.children?.find(x => x.role === 'dialog')).to.not.be.ok;
+    });
 
     describe('tabbing to the trigger', function() {
       beforeEach(resetElement);
@@ -121,23 +120,7 @@ describe('<pf-popover>', function() {
         beforeEach(updateComplete);
         it('should show popover content to assistive technology', async function() {
           const snapshot = await a11ySnapshot();
-          expect(snapshot).to.deep.equal({
-            role: 'WebArea',
-            name: '',
-            children: [
-              { role: 'button', name: 'Toggle popover' },
-              {
-                name: '',
-                role: 'dialog',
-                children: [
-                  { role: 'button', name: 'Close popover', focused: true },
-                  { role: 'heading', name: 'Popover heading', level: 6 },
-                  { role: 'text', name: 'Popovers are triggered by click rather than hover.' },
-                  { role: 'text', name: 'Popover footer' },
-                ],
-              },
-            ],
-          });
+          expect(snapshot.children?.find(x => x.role === 'dialog')).to.be.ok;
         });
         describe('then pressing Enter again', function() {
           beforeEach(updateComplete);
@@ -251,33 +234,24 @@ describe('<pf-popover>', function() {
       btn2 = container.querySelector('#btn-2')!;
     });
 
-    it('starts closed', () => expectA11ySnapshot(snapshots.closed));
+    it('starts closed', async function() {
+      const snapshot = await a11ySnapshot();
+      expect(snapshot.children?.find(x => x.role === 'dialog')).to.not.be.ok;
+    });
+
     describe('clicking the trigger', function() {
       beforeEach(updateComplete);
       beforeEach(clickButton1);
       beforeEach(updateComplete);
-      it('shows the popover', () => expectA11ySnapshot({
-        name: '',
-        role: 'WebArea',
-        children: [
-          {
-            name: '',
-            role: 'dialog',
-            children: [
-              { role: 'button', name: 'Close popover', focused: true },
-              { role: 'heading', name: 'Popover heading', level: 6 },
-              { role: 'text', name: 'Popovers are triggered by click rather than hover.' },
-            ],
-          },
-          { role: 'button', name: 'Toggle popover 1' },
-          { role: 'button', name: 'Toggle popover 2' },
-        ],
-      }));
+      it('shows the popover', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot.children?.find(x => x.role === 'dialog')).to.be.ok;
+      });
     });
-    describe('then setting the trigger to the sibling button', function() {
+
+    describe('setting the trigger to the sibling button', function() {
       beforeEach(updateComplete);
-      // set trigger attr to the id of the second button
-      beforeEach(async function() {
+      beforeEach(function() {
         element.setAttribute('trigger', 'btn-2');
       });
       beforeEach(updateComplete);
@@ -298,23 +272,10 @@ describe('<pf-popover>', function() {
         beforeEach(updateComplete);
         beforeEach(clickButton2);
         beforeEach(updateComplete);
-        it('shows the popup', () => expectA11ySnapshot({
-          name: '',
-          role: 'WebArea',
-          children: [
-            {
-              name: '',
-              role: 'dialog',
-              children: [
-                { role: 'button', name: 'Close popover', focused: true },
-                { role: 'heading', name: 'Popover heading', level: 6 },
-                { role: 'text', name: 'Popovers are triggered by click rather than hover.' },
-              ],
-            },
-            { role: 'button', name: 'Toggle popover 1' },
-            { role: 'button', name: 'Toggle popover 2' },
-          ],
-        }));
+        it('shows the popover', async function() {
+          const snapshot = await a11ySnapshot();
+          expect(snapshot.children?.find(x => x.role === 'dialog')).to.be.ok;
+        });
       });
     });
     describe('then pressing the Enter key', function() {

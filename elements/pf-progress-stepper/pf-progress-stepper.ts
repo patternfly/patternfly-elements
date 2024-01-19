@@ -33,7 +33,7 @@ export class PfProgressStepper extends LitElement {
   })
   @property({ type: Boolean, reflect: true }) compact = false;
 
-  #internals = new InternalsController(this, {
+  #internals = InternalsController.of(this, {
     role: 'progressbar',
     ariaValueNow: this.value.toString(),
   });

@@ -12,6 +12,7 @@ import { ComposedEvent, StringListConverter } from '@patternfly/pfe-core/core.js
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 import styles from './pf-popover.css';
+import { deprecation } from '@patternfly/pfe-core/decorators/deprecation.js';
 
 const headingLevels = [2, 3, 4, 5, 6] as const;
 
@@ -280,7 +281,12 @@ export class PfPopover extends LitElement {
   /**
    * The accessible label for the popover's close button. The default is `Close popover`.
    */
-  @property({ reflect: true, attribute: 'close-label' }) closeButtonLabel?: string;
+  @property({ reflect: true, attribute: 'accessible-close-label' }) accessibleCloseLabel?: string;
+
+  /**
+   * @deprecated do not use the color-palette attribute, which was added by mistake. use context-providing containers (e.g. rh-card) instead
+   */
+  @deprecation({ alias: 'accessible-close-label', attribute: 'close-label' }) closeButtonLabel?: string;
 
   /**
    * The text announced by the screen reader to indicate the popover's severity.
@@ -316,9 +322,9 @@ export class PfPopover extends LitElement {
 
   #slots = new SlotController(this, null, 'icon', 'heading', 'body', 'footer');
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('keydown', this.onKeydown);
+  constructor() {
+    super();
+    this.addEventListener('keydown', this.#onKeydown);
   }
 
   render() {
@@ -348,17 +354,20 @@ export class PfPopover extends LitElement {
            class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}">
         <slot id="trigger"
               @slotchange="${this.#triggerChanged}"
-              @keydown="${this.onKeydown}"
+              @keydown="${this.#onKeydown}"
               @click="${this.toggle}"></slot>
-        <dialog id="popover">
+        <dialog id="popover"
+                aria-labelledby="heading"
+                aria-describedby="body"
+                aria-label=${ifDefined(this.label)}>
           <div id="arrow"></div>
           <div id="content" part="content">
             <pf-button id="close-button"
                        part="close-button"
                        plain
-                       label="${this.closeButtonLabel ?? 'Close popover'}"
+                       label="${this.accessibleCloseLabel ?? this.closeButtonLabel ?? 'Close popover'}"
                        @click="${this.hide}"
-                       @keydown="${this.onKeydown}"
+                       @keydown="${this.#onKeydown}"
                        ?hidden="${this.hideClose}">
               <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
                 <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
@@ -390,7 +399,7 @@ export class PfPopover extends LitElement {
     super.disconnectedCallback();
     PfPopover.instances.delete(this);
     this.#referenceTrigger?.removeEventListener('click', this.toggle);
-    this.#referenceTrigger?.removeEventListener('keydown', this.onKeydown);
+    this.#referenceTrigger?.removeEventListener('keydown', this.#onKeydown);
   }
 
   #getReferenceTrigger() {
@@ -398,19 +407,18 @@ export class PfPopover extends LitElement {
     return !this.trigger ? null : root.getElementById(this.trigger);
   }
 
-
   #triggerChanged() {
     const oldReferenceTrigger = this.#referenceTrigger;
     this.#referenceTrigger = this.#getReferenceTrigger();
     if (oldReferenceTrigger !== this.#referenceTrigger) {
       oldReferenceTrigger?.removeEventListener('click', this.toggle);
-      oldReferenceTrigger?.removeEventListener('keydown', this.onKeydown);
+      oldReferenceTrigger?.removeEventListener('keydown', this.#onKeydown);
       this.#referenceTrigger?.addEventListener('click', this.toggle);
-      this.#referenceTrigger?.addEventListener('keydown', this.onKeydown);
+      this.#referenceTrigger?.addEventListener('keydown', this.#onKeydown);
     }
   }
 
-  @bound private onKeydown(event: KeyboardEvent) {
+  #onKeydown = (event: KeyboardEvent) => {
     switch (event.key) {
       case 'Escape':
       case 'Esc':
@@ -424,7 +432,7 @@ export class PfPopover extends LitElement {
         }
         return;
     }
-  }
+  };
 
   #outsideClick(event: MouseEvent) {
     const path = event.composedPath();

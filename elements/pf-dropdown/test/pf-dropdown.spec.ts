@@ -84,28 +84,23 @@ describe('<pf-dropdown>', function() {
       beforeEach(async function() {
         element.disabled = true;
         await element.updateComplete;
-        snapshot = await a11ySnapshot();
       });
 
-      it('should not disable trigger button', function() {
+      it('should disable trigger button', async function() {
+        const snapshot = await a11ySnapshot();
         expect(snapshot.children?.length).to.equal(1);
+        expect(snapshot.children?.at(0)?.disabled).to.be.true;
       });
 
       describe('pressing Enter', function() {
-        let menu: A11yTreeSnapshot;
         beforeEach(async function() {
           await sendKeys({ press: 'Tab' });
           await sendKeys({ press: 'Enter' });
-          snapshot = await a11ySnapshot();
-          [, menu] = snapshot.children ?? [];
         });
 
-        it('should show menu', function() {
-          expect(menu.children?.length).to.equal(2);
-        });
-
-        it('should be disabled menu', function() {
-          expect(menu.disabled).to.be.true;
+        it('should not show menu', async function() {
+          const snapshot = await a11ySnapshot();
+          expect(snapshot.children?.length).to.equal(1);
         });
       });
     });

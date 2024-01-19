@@ -79,11 +79,11 @@ export class PfDropdown extends LitElement {
   #toggle = new ToggleController(this, { kind: 'menu' });
 
   render() {
-    const { expanded, anchor, alignment } = this.#toggle;
+    const { expanded, anchor, alignment } = this.#toggle ?? {};
     const { disabled } = this;
     return html`
-    <div class="${classMap(this.#toggle ? { expanded, [anchor]: !!anchor, [alignment]: !!alignment } : {})}"
-         style="${styleMap(this.#toggle.styles ?? {})}")
+    <div class="${classMap({ expanded, [anchor ?? '']: !!anchor, [alignment ?? '']: !!alignment })}"
+         style="${styleMap(this.#toggle.styles ?? {})}">
       <slot id="trigger"
             part="trigger"
             name="trigger"

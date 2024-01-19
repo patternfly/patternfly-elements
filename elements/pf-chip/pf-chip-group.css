@@ -64,7 +64,7 @@
 #close-button {
   background-color: transparent;
   border: none;
-  color: var(--pf-theme--color--ui-base, #6a6e73);
+  color: var(--pf-global--Color--dark-200, #6a6e73);
   display: inline-flex;
   align-items: center;
   justify-content: center;

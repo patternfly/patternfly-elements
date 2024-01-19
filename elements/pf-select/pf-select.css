@@ -68,7 +68,7 @@
 }
 
 .disabled #toggle {
-  color: var(--pf-theme--color--ui-base, #6a6e73) !important;
+  color: var(--pf-global--Color--dark-200, #6a6e73) !important;
   background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
 }

@@ -45,24 +45,34 @@ export class PfChip extends LitElement {
    */
   @property({ reflect: true, type: Boolean }) readonly = false;
 
+  /**
+   * Flag indicating if chip is read-only and cannot be removed
+   */
+  @property({ attribute: 'overflow-chip', reflect: true, type: Boolean }) overflowChip = false;
+
   @query('button') button?: HTMLButtonElement;
 
   render() {
-    return html`
+    return this.overflowChip ? html`
+      <button id="outer">
+        <span class="chip-content">
+          <slot id="chip-text" part="text"></slot>
+        </span>
+      </button>
+    ` : html`
       <div id="outer">
         <span class="chip-content">
           <slot id="chip-text" part="text"></slot>
         </span>
-          <button 
-            id="close-button" 
-            ?hidden="${this.readonly}" 
-            @click=${this.#onClick} 
-            aria-describedby="chip-text" 
-            aria-label="${this.accessibleCloseLabel}">
-            <svg aria-hidden="true" fill="currentColor" viewBox="0 0 352 512">
-              <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
-            </svg>
-          </button>
+        <button id="close-button"
+                ?hidden="${this.readonly || this.overflowChip}"
+                @click="${this.#onClick}"
+                aria-describedby="chip-text"
+                aria-label="${this.accessibleCloseLabel}">
+          <svg aria-hidden="true" fill="currentColor" viewBox="0 0 352 512">
+            <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
+          </svg>
+        </button>
       </div>
     `;
   }

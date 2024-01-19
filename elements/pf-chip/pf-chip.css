@@ -43,11 +43,15 @@
 	background-color: var(--pf-c-chip--BackgroundColor);
 	border-radius: var(--pf-c-chip--BorderRadius);
   border: var(--pf-c-chip--before--BorderWidth) solid var(--pf-c-chip--before--BorderColor);
-  padding: 
+  padding:
 	  var(--pf-c-chip--PaddingTop)
 	  var(--pf-c-chip--PaddingRight)
 	  var(--pf-c-chip--PaddingBottom)
 	  var(--pf-c-chip--PaddingLeft);
+}
+
+:host([overflow-chip]) {
+  color: var(--pf-c-chip--m-overflow__text--Color);
 }
 
 .chip-content {

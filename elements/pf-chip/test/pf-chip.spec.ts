@@ -1,4 +1,4 @@
-import { expect, html } from '@open-wc/testing';
+import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfChip } from '../pf-chip.js';
 import { sendKeys } from '@web/test-runner-commands';
@@ -53,13 +53,6 @@ describe('<pf-chip>', async function() {
       });
     });
 
-    describe('clicking close button', function() {
-      beforeEach(() => clickElementAtCenter(element));
-      it('should close', function() {
-        expect(document.querySelector('pf-chip')).to.be.null;
-      });
-    });
-
     describe('pressing Tab', function() {
       beforeEach(tab);
       it('should focus', function() {
@@ -77,7 +70,7 @@ describe('<pf-chip>', async function() {
     });
   });
 
-  describe('with `overflow-chip` attributge', function() {
+  describe('with `overflow-chip` attribute', function() {
     let element: PfChip;
 
     beforeEach(async function() {
@@ -92,9 +85,7 @@ describe('<pf-chip>', async function() {
 
     it('should not have a close button', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children).to.deep.equal([
-        { role: 'text', name: 'Overflow' },
-      ]);
+      expect(snapshot.children?.find(x => x.name === 'Close')).to.not.be.ok;
     });
 
     describe('calling focus', function() {

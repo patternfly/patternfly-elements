@@ -175,13 +175,14 @@ export class PfChipGroup extends LitElement {
   async #handleChipsChanged() {
     if (this.#chips.length > 0) {
       const oldButtons = [...(this.#buttons || [])];
-      const button = this._overflowChip as HTMLElement;
       const max = this.open ? this.#chips.length : Math.min(this.#chips.length, this.numChips);
-      const visibleChips = this.#chips.slice(0, max);
-      const buttons = visibleChips as HTMLElement[];
-      this.#buttons = [...buttons, button, this._button] as HTMLElement[];
-      this.#buttons = this.#buttons.filter(button => !!button);
-      if (oldButtons.length !== this.#buttons.length || !oldButtons.every((element, index) => element === this.#buttons[index])) {
+      this.#buttons = [
+        ...this.#chips.slice(0, max),
+        this._overflowChip,
+        this._button,
+      ].filter((x): x is PfChip => !!x);
+      if (oldButtons.length !== this.#buttons.length ||
+          !oldButtons.every((element, index) => element === this.#buttons[index])) {
         if (this.#itemsInit) {
           this.#tabindex.updateItems(this.#buttons);
         } else {
@@ -243,7 +244,7 @@ export class PfChipGroup extends LitElement {
    * updates which chips variable
    */
   async #updateChips() {
-    this.#chips = [...this.querySelectorAll('pf-chip:not([slot]):not([overflow-chip])')] as PfChip[];
+    this.#chips = [...this.querySelectorAll<PfChip>('pf-chip:not([slot]):not([overflow-chip])')];
     this.requestUpdate();
     await this.updateComplete;
     this.#handleChipsChanged();

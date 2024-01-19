@@ -192,7 +192,7 @@ describe('<pf-chip-group>', async function() {
       expect(snapshot.children?.filter(x => x.name.startsWith('Chip'))?.length).to.equal(4);
     });
 
-    describe('setting focus on third chip and removing it', function() {
+    describe('keyboard navigating with arrow keys to third chip and pressing enter', function() {
       beforeEach(() => element.focus());
       beforeEach(press('ArrowRight'));
       beforeEach(press('ArrowRight'));
@@ -203,9 +203,10 @@ describe('<pf-chip-group>', async function() {
         const snapshot = await a11ySnapshot();
         expect(snapshot.children?.find(x => x.name === 'Chip 3')).to.not.be.ok;
       });
-      it('should focus on second chip', async function() {
+
+      it('should focus on close button', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.find(x => x.focused)?.name).to.equal('Chip 2');
+        expect(snapshot.children?.find(x => x.focused)?.name).to.equal('Close');
       });
     });
   });

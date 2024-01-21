@@ -12,12 +12,20 @@ import { PfOption } from './pf-option.js';
 import styles from './pf-listbox.css';
 
 /**
- * event when slotted options are updated
- * @first refresh
+ * when slotted options are updated
  */
 export class PfListboxRefreshEvent extends Event {
   constructor(public originalEvent: Event) {
     super('refresh', { bubbles: true });
+  }
+}
+
+/**
+ * when selected item changes
+ */
+export class PfListboxChangeEvent extends Event {
+  constructor() {
+    super('change', { bubbles: true });
   }
 }
 
@@ -27,6 +35,8 @@ export class PfListboxRefreshEvent extends Event {
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/listbox/|WAI-ARIA Listbox Pattern}
  *
  * @fires { PfListboxRefreshEvent } refresh - Fired when slotted options are updated
+ * @fires change - when selected item changes
+ * @fires input - when filter value changes
  * @slot - insert `pf-option` and/or `pf-option-groups` here
  */
 @customElement('pf-listbox')
@@ -112,22 +122,26 @@ export class PfListbox extends LitElement {
     isSelected(option) {
       return option.selected;
     },
-    select(option, selected) {
+    select(option, selected = true) {
       option.selected = !!selected;
     },
     optionAdded(option, index, options) {
       option.setSize = options.length;
       option.posInSet = index;
+    },
+    onChange: () => this.dispatchEvent(new PfListboxChangeEvent()),
+    onInput: () => {
+      this.options.forEach(option => {
+        option.hidden = !this.#listboxController.visibleOptions.includes(option);
+      });
     }
   });
 
   render() {
     const { disabled } = this;
     return html`
-        <slot
-          class="${classMap({ disabled })}"
-          @slotchange="${this.#onSlotchange}">
-        </slot>
+      <slot class="${classMap({ disabled })}"
+            @slotchange="${this.#onSlotchange}"></slot>
     `;
   }
 

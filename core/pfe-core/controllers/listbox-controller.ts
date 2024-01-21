@@ -20,6 +20,8 @@ export interface ListboxConfigOptions<T extends HTMLElement> {
   select(option: T, force?: boolean): void;
   isSelected(option: T): boolean;
   optionAdded?(option: T, index: number, options: T[]): void;
+  onChange?(): void;
+  onInput?(): void;
 }
 
 type FilterPropKey = 'filter' | 'caseSensitive' | 'matchAnywhere';
@@ -33,8 +35,6 @@ let constructingAllowed = false;
  *
  * [rti]: https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex
  *
- * @fires change
- * @fires input
  */
 export class ListboxController<Item extends HTMLElement> implements ReactiveController {
   private static instances = new WeakMap<ReactiveControllerHost, ListboxController<any>>();
@@ -52,7 +52,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         if (this.#filterStorage.get(key) !== value) {
           this.#filterStorage.set(key, value);
           if (this.internals) {
-            this.#onFilterChange();
+            this.#filterChanged();
           }
         }
       }
@@ -77,9 +77,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
   /** All options that will not be hidden by a filter */
   #options: Item[] = [];
-
-  /** Whether or not focus should be updated after filtering */
-  #updateFocus = false;
 
   /**
    * Whether filtering matches anywhere in option text;
@@ -168,8 +165,10 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * (or all options if no options match or if no filter)
    */
   get visibleOptions(): Item[] {
-    return this.#getMatchingOptions();
+    return this.#visibleOptions;
   }
+
+  #visibleOptions: Item[] = [];
 
   private get element() {
     return this.host instanceof HTMLElement ? this.host : this.controllerOptions.getHTMLElement?.() as HTMLElement;
@@ -205,14 +204,15 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     this.internals.role = 'listbox';
     this.host.addController(this);
     this.caseSensitive = controllerOptions.caseSensitive || false;
-    this.#onFilterChange();
+    this.#filterChanged();
   }
 
   /**
    * adds event listeners to host
    */
   hostConnected() {
-    this.#listeners;
+    this.#optionsChanged([]);
+    this.#filterChanged();
   }
 
   #getEnabledOptions(options = this.options) {
@@ -242,33 +242,8 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     if (matchedOptions.length < 1) {
       matchedOptions = this.options;
     }
-    this.options.forEach(option => {
-      if (matchedOptions.includes(option)) {
-        option.removeAttribute('hidden');
-      } else {
-        if (document.activeElement === option) {
-          this.#updateFocus = true;
-        }
-        option.setAttribute('hidden', 'hidden');
-      }
-    });
+
     return matchedOptions;
-  }
-
-  /**
-   * handles user user selection change similar to HTMLSelectElement events
-   * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
-   */
-  #fireChange() {
-    this.element.dispatchEvent(new Event('change', { bubbles: true }));
-  }
-
-  /**
-   * handles element value change similar to HTMLSelectElement events
-   * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
-   */
-  #fireInput() {
-    this.element.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
   /**
@@ -276,20 +251,17 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * hides options that do not match filter settings
    * and updates active descendant based on which options are still visible
    */
-  #onFilterChange() {
-    if (this.disabled) {
-      return;
-    }
-    const oldValue = this.value;
-
-    if (this.#updateFocus) {
-      this.tabindex.updateItems(this.visibleOptions);
-      this.#updateFocus = false;
-    } else {
-      this.tabindex.initItems(this.visibleOptions);
-    }
-    if (oldValue !== this.value) {
-      this.#fireInput();
+  #filterChanged() {
+    if (!this.disabled) {
+      this.#visibleOptions = this.#getMatchingOptions();
+      const root = this.element.getRootNode();
+      const activeElement = root instanceof Document || root instanceof ShadowRoot ? root.activeElement : null;
+      if (this.#visibleOptions.includes(activeElement as Item)) {
+        this.tabindex.updateItems(this.visibleOptions);
+      } else {
+        this.tabindex.initItems(this.visibleOptions);
+      }
+      this.controllerOptions.onInput?.();
     }
   }
 
@@ -317,7 +289,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         this.controllerOptions.select(target, !this.controllerOptions.isSelected(target));
       } else if (this.#shiftStartingItem && target) {
         this.#updateMultiselect(target, this.#shiftStartingItem);
-        this.#fireChange();
+        this.controllerOptions.onChange?.();
       }
     } else {
       // select target and deselect all other options
@@ -327,7 +299,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       this.tabindex.focusOnItem(target);
     }
     if (oldValue !== this.value) {
-      this.#fireChange();
+      this.controllerOptions.onChange?.();
     }
   }
 
@@ -340,7 +312,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     if (event.shiftKey && this.multi) {
       if (this.#shiftStartingItem && target) {
         this.#updateMultiselect(target, this.#shiftStartingItem);
-        this.#fireChange();
+        this.controllerOptions.onChange?.();
       }
       if (event.key === 'Shift') {
         this.#shiftStartingItem = null;
@@ -422,7 +394,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * handles change in value given a list of selected values
    */
   #selectOptions(value: Item | Item[]) {
-    const oldValue = this.value;
     const [firstItem = null] = Array.isArray(value) ? value : [value];
     for (const option of this.options) {
       this.controllerOptions.select(option, (
@@ -430,9 +401,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         : firstItem === option
       ));
     }
-    if (oldValue !== this.value) {
-      this.#fireInput();
-    }
+    this.controllerOptions.onChange?.();
   }
 
   /**
@@ -442,7 +411,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     if (!this.multi && !this.disabled) {
       this.#getEnabledOptions()
         .forEach(option => this.controllerOptions.select(option, option === this.tabindex.activeItem));
-      this.#fireChange();
+      this.controllerOptions.onChange?.();
     }
   }
 
@@ -463,7 +432,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       // whether options will be selected (true) or deselected (false)
       const selected = ctrlA ? !allSelected : this.controllerOptions.isSelected(referenceItem);
       this.#getEnabledOptions(options).forEach(option => this.controllerOptions.select(option, selected));
-      this.#fireChange();
+      this.controllerOptions.onChange?.();
 
       // update starting item for other multiselect
       this.#shiftStartingItem = currentItem;

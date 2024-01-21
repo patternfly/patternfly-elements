@@ -1,5 +1,5 @@
 ```html
-<script type="module" src="https://jspm.dev/@patternfly/elements/pf-card/pf-card.js"></script>
+<script type="module" src="https://esm.sh/@patternfly/elements/pf-card/pf-card.js"></script>
 
 <pf-card border>
   <h2 slot="header">Card component</h2>

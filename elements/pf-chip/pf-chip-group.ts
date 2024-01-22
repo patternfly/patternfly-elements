@@ -93,9 +93,9 @@ export class PfChipGroup extends LitElement {
 
   #buttons: HTMLElement[] = [];
 
-  #itemsInit = false;
-
-  #tabindex = new RovingTabindexController(this);
+  #tabindex = new RovingTabindexController(this, {
+    getItems: () => this.#buttons,
+  });
 
   constructor() {
     super();
@@ -183,13 +183,8 @@ export class PfChipGroup extends LitElement {
       ].filter((x): x is PfChip => !!x);
       if (oldButtons.length !== this.#buttons.length ||
           !oldButtons.every((element, index) => element === this.#buttons[index])) {
-        if (this.#itemsInit) {
-          this.#tabindex.updateItems(this.#buttons);
-        } else {
-          this.#tabindex.initItems(this.#buttons);
-        }
+        this.#tabindex.updateItems();
       }
-      this.#itemsInit = true;
       this.#updateOverflow();
     }
   }

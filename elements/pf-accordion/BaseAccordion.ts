@@ -46,7 +46,9 @@ export abstract class BaseAccordion extends LitElement {
     return event instanceof AccordionHeaderChangeEvent;
   }
 
-  #headerIndex = new RovingTabindexController<BaseAccordionHeader>(this);
+  #headerIndex = new RovingTabindexController<BaseAccordionHeader>(this, {
+    getItems: () => this.headers,
+  });
 
   #expandedIndex: number[] = [];
 
@@ -146,14 +148,13 @@ export abstract class BaseAccordion extends LitElement {
    */
   async #init() {
     this.#initialized ||= !!await this.updateComplete;
-    this.#headerIndex.initItems(this.headers);
     // Event listener to the accordion header after the accordion has been initialized to add the roving tabindex
     this.addEventListener('focusin', this.#updateActiveHeader);
     this.updateAccessibility();
   }
 
   #updateActiveHeader() {
-    if (this.#activeHeader) {
+    if (this.#activeHeader !== this.#headerIndex.activeItem) {
       this.#headerIndex.updateActiveItem(this.#activeHeader);
     }
   }
@@ -231,6 +232,7 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   public updateAccessibility() {
+    this.#headerIndex.updateItems();
     const { headers } = this;
 
     // For each header in the accordion, attach the aria connections

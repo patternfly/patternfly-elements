@@ -1,5 +1,147 @@
 # @patternfly/elements
 
+## 3.0.0
+
+### Major Changes
+
+- 16d0dd7: `<pf-modal>`: remove deprecated `width` attribute. use `variant` instead
+- de4cfa4: Remove `/elements/pf-icon/icons/**/*`. Use `@patternfly/icons` instead.
+- de4cfa4: `<pf-accordion>`: use patternfly design tokens. removes `--accordion__bordered--Color`
+- 50f462c: Update dependencies, including Lit version 3
+
+### Minor Changes
+
+- 22d7536: ✨ Added `<pf-back-to-top>`
+
+  ```html
+  <pf-back-to-top href="#top" scrollable-selector="main"
+    >Back to Top</pf-back-to-top
+  >
+  ```
+
+- 292d3e9: ✨ Added `<pf-background-image>`
+
+  ```html
+  <pf-background-image
+    src="/path/to/image.jpg"
+    src-2x="/path/to/image@2x.jpg"
+    src-sm="/path/to/image-768.jpg"
+    src-sm-2x="/path/to/image-768@2x.jpg"
+    src-lg="/path/to/image-992.jpg"
+  ></pf-background-image>
+  ```
+
+- 0d92145: ✨ Added `<pf-chip>`
+
+  A **chip** is used to communicate a value or a set of attribute-value pairs within workflows that involve filtering a set of objects.
+
+  ```html
+  <pf-chip-group>
+    <pf-chip>Chip 1</pf-chip>
+    <pf-chip>Chip 2</pf-chip>
+    <pf-chip>Chip 3</pf-chip>
+    <pf-chip>Chip 4</pf-chip>
+  </pf-chip-group>
+  ```
+
+- 0d92145: ✨ Added `<pf-dropdown>`
+
+  A **dropdown** presents a menu of actions or links in a constrained space that will trigger a process or navigate to a new location.
+
+  ```html
+  <pf-dropdown>
+    <pf-dropdown-item>item4</pf-dropdown-item>
+    <div role="separator"></div>
+    <pf-dropdown-group label="Group 1">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <div role="separator"></div>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+    </pf-dropdown-group>
+    <pf-dropdown-group label="Group 2">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+    </pf-dropdown-group>
+  </pf-dropdown>
+  ```
+
+- 0d92145: ✨ Added `<pf-select>`
+
+  A select list enables users to select one or more items from a list.
+
+  ```html
+  <pf-select>
+    <pf-option>Blue</pf-option>
+    <pf-option>Green</pf-option>
+    <pf-option>Magenta</pf-option>
+    <pf-option>Orange</pf-option>
+    <pf-option>Purple</pf-option>
+    <pf-option>Pink</pf-option>
+    <pf-option>Red</pf-option>
+    <pf-option>Yellow</pf-option>
+  </pf-select>
+  ```
+
+- c71bbe5: ✨ Added `<pf-text-area>`
+
+  ```html
+  <form>
+    <pf-text-area
+      id="textarea"
+      name="comments"
+      placeholder="OpenShift enabled our team to..."
+      resize="vertical"
+      auto-resize
+      required
+    ></pf-text-area>
+  </form>
+  ```
+
+- 2c019ac: `<pf-text-input>`: adds `helper-text`, `error-text`, and `validate-on` attributes. Forwards `pattern` attribute
+
+  ```html
+  <pf-text-input
+    id="validated"
+    error-text="Enter a three digit integer"
+    helper-text="How much wood could a woodchuck chuck?"
+    validate-on="blur"
+    pattern="\d{3}"
+    required
+  ></pf-text-input>
+  <pf-button id="validate">Validate</pf-button>
+  ```
+
+- 45a1a27: `<pf-text-input>`: added `placeholder` attribute
+
+### Patch Changes
+
+- 1bdc31a: `<pf-accordion>`: remove animations which are not present in PatternFly specs
+- 3d7ce5a: `<pf-text-input>`: pressing `Enter` will request to submit the form
+- 0d92145: `<pf-popover>`: deprecate `closeButtonLabel` property / `close-label` attribute in favor of `accessibleCloseLabel` property / `accessible-close-label` attribute
+
+  Before:
+
+  ```html
+  <pf-popover close-label="סגירה">...</pf-popover>
+  ```
+
+  After:
+
+  ```html
+  <pf-popover accessible-close-label="סגירה">...</pf-popover>
+  ```
+
+- Updated dependencies [ac0c376]
+- Updated dependencies [c71bbe5]
+- Updated dependencies [c71bbe5]
+- Updated dependencies [0d92145]
+- Updated dependencies [24d43bd]
+- Updated dependencies [de4cfa4]
+- Updated dependencies [0d92145]
+- Updated dependencies [24d43bd]
+- Updated dependencies [50f462c]
+  - @patternfly/pfe-core@3.0.0
+
 ## 2.4.0
 
 ### Minor Changes

@@ -1,5 +1,43 @@
 # @patternfly/pfe-core
 
+## 3.0.0
+
+### Major Changes
+
+- 0d92145: `InternalsController`: made the constructor private. Use `InternalsController.of`
+
+  BEFORE:
+
+  ```js
+  class PfJazzHands extends LitElement {
+    #internals = new InternalsController(this);
+  }
+  ```
+
+  AFTER:
+
+  ```js
+  class PfJazzHands extends LitElement {
+    #internals = InternalsController.of(this);
+  }
+  ```
+
+- de4cfa4: Remove `deprecatedCustomEvent`
+
+### Minor Changes
+
+- ac0c376: `SlotController`: Add `isEmpty` method to check if a slot is empty. If no slot name is provided it will check the default slot. (#2603)
+  `SlotController`: `hasSlotted` method now returns default slot if no slot name is provided. (#2603)
+- c71bbe5: `InternalsController`: added `computedLabelText` read-only property
+- c71bbe5: `InternalsController`: reflect all methods and properties from `ElementInternals`
+- 0d92145: `RovingTabindexController`: keyboard navigation includes first-character navigation.
+
+### Patch Changes
+
+- 24d43bd: `Logger`: add `Logger.info` and `Logger.debug`
+- 24d43bd: `SlotController`: move debug logs to `Logger.debug`
+- 50f462c: Update dependencies, including Lit version 3
+
 ## 2.4.1
 
 ### Patch Changes

@@ -1,3 +1,90 @@
+:host {
+  display: block;
+}
+
+[part="tabs-container"] {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+}
+
+[part="tabs-container"]::before {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-style: solid;
+}
+
+:host button {
+  opacity: 1;
+}
+
+:host button:nth-of-type(1) {
+  margin-inline-end: 0;
+  translate: 0 0;
+}
+
+:host button:nth-of-type(2) {
+  margin-inline-start: 0;
+  translate: 0 0;
+}
+
+[part="tabs"],
+[part="panels"] {
+  display: block;
+}
+
+[part="tabs"] {
+  scrollbar-width: none;
+  position: relative;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+[part="tabs-container"]::before,
+[part="tabs"]::before,
+button::before {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: "";
+  border-style: solid;
+}
+
+[part="tabs"]::before,
+button::before {
+  top: 0;
+}
+
+button,
+[part="tabs"]::before {
+  border: 0;
+}
+
+button {
+  flex: none;
+  line-height: 1;
+  opacity: 0;
+}
+
+button::before {
+  border-block-start-width: 0;
+}
+
+button:nth-of-type(1) {
+  translate: -100% 0;
+}
+
+button:nth-of-type(2) {
+  translate: 100% 0;
+}
+
+button:disabled {
+  pointer-events: none;
+}
+
 [part="tabs-container"] {
   width: var(--pf-c-tabs--Width, auto);
   padding-inline-end: var(--pf-c-tabs--inset, 0);
@@ -10,16 +97,6 @@
   border-inline-end-width: var(--pf-c-tabs--before--BorderRightWidth, 0);
   border-block-end-width:  var(--pf-c-tabs--before--BorderBottomWidth, var(--pf-c-tabs--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
   border-inline-start-width: var(--pf-c-tabs--before--BorderLeftWidth, 0);
-}
-
-/* workaround to disable scroll right button when last tab is aria-disabled */
-:host(:not([vertical])) ::slotted(pf-tab[aria-disabled=true]:last-of-type) {
-  translate: calc(-1 * var(--pf-c-tabs__link--disabled--before--BorderRightWidth, 1px)) 0;
-}
-
-/* workaround to disable scroll left button when first tab is aria-disabled */
-:host(:not([vertical])) ::slotted(pf-tab[aria-disabled=true]:first-of-type) {
-  translate: var(--pf-c-tabs__link--disabled--before--BorderRightWidth, 1px) 0;
 }
 
 :host([box]) [part="tabs-container"] {

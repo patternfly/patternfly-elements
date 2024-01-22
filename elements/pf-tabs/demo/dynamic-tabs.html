@@ -1,0 +1,74 @@
+<section>
+<form>
+  <pf-button id="add">
+    <pf-icon icon="circle-plus"></pf-icon> Add Tab
+  </pf-button>
+
+  <pf-button id="delete" danger>
+    <pf-icon icon="delete-left"></pf-icon>
+    Delete Tab
+  </pf-button>
+</form>
+
+<pf-tabs>
+  <pf-tab id="users" slot="tab">Users</pf-tab>
+  <pf-tab-panel>Users</pf-tab-panel>
+  <pf-tab slot="tab">Containers</pf-tab>
+  <pf-tab-panel>Containers <a href="#">Focusable element</a></pf-tab-panel>
+  <pf-tab slot="tab">Database</pf-tab>
+  <pf-tab-panel>Database</pf-tab-panel>
+  <pf-tab slot="tab" disabled>Disabled</pf-tab>
+  <pf-tab-panel>Disabled</pf-tab-panel>
+  <pf-tab slot="tab" aria-disabled="true" id="aria-disabled">Aria Disabled</pf-tab>
+  <pf-tab-panel>Aria Disabled</pf-tab-panel>
+</pf-tabs>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-button/pf-button.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+  import '@patternfly/elements/pf-tabs/pf-tabs.js';
+  const addButton = document.getElementById('add');
+  const removeButton = document.getElementById('delete');
+  const tabs = document.querySelector('pf-tabs');
+
+  let count = 0;
+
+  function makePair(count) {
+    const tab = document.createElement('pf-tab');
+          tab.textContent = `New Tab ${count}`;
+          tab.slot = 'tab';
+    const panel = document.createElement('pf-tab-panel');
+          panel.textContent = `New Panel ${count}`;
+    return [tab, panel];
+  }
+  document.querySelector('form').addEventListener('submit', e => e.preventDefault());
+
+  addButton.addEventListener('click', function() {
+    tabs.append(...makePair(++count));
+  });
+
+  removeButton.addEventListener('click', function() {
+    tabs.querySelector('pf-tab:last-of-type').remove();
+    tabs.querySelector('pf-tab-panel:last-of-type').remove();
+  });
+
+</script>
+
+<style>
+  main {
+    display: block;
+    scroll-x: unset;
+  }
+
+  section {
+    margin: 0 auto;
+    padding: 0 16px 32px;
+    width: 100%;
+    max-width: 1008px;
+    @media (min-width: 768px) {
+      padding: 0 32px 32px;
+    }
+  }
+</style>
+

@@ -1,19 +1,25 @@
+import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { query } from 'lit/decorators/query.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+import { classMap } from 'lit/directives/class-map.js';
 
+import { OverflowController } from '@patternfly/pfe-core/controllers/overflow-controller.js';
+import { TabExpandEvent, TabsController } from '@patternfly/pfe-core/controllers/tabs-controller.js';
+
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { cascades } from '@patternfly/pfe-core/decorators.js';
 
-import { BaseTabs } from './BaseTabs.js';
-import { TabExpandEvent } from './BaseTab.js';
 import { PfTab } from './pf-tab.js';
 import { PfTabPanel } from './pf-tab-panel.js';
+
+import '@patternfly/elements/pf-icon/pf-icon.js';
 
 import styles from './pf-tabs.css';
 
 /**
  * **Tabs** allow users to navigate between views within the same page or context.
- *
- * @attr {number} active-key - DOM Property: `activeKey` {@default `0`}
  *
  * @csspart container - outer container
  * @csspart tabs-container - tabs container
@@ -61,37 +67,143 @@ import styles from './pf-tabs.css';
  * @cssprop     {<color>} --pf-c-tabs__scroll-button--disabled--Color                 {@default `#d2d2d2`}
  */
 @customElement('pf-tabs')
-export class PfTabs extends BaseTabs {
-  static readonly styles = [...BaseTabs.styles, styles];
+export class PfTabs extends LitElement {
+  static readonly styles = [styles];
 
   protected static readonly scrollTimeoutDelay = 150;
-
-  static isTab(element: HTMLElement): element is PfTab {
-    return element instanceof PfTab;
-  }
-
-  static isPanel(element: HTMLElement): element is PfTabPanel {
-    return element instanceof PfTabPanel;
-  }
 
   static isExpandEvent(event: Event): event is TabExpandEvent {
     return event instanceof TabExpandEvent;
   }
 
+  /**
+   * Box styling on tabs. Defaults to null
+   */
   @cascades('pf-tab', 'pf-tab-panel')
   @property({ reflect: true }) box: 'light' | 'dark' | null = null;
 
+  /**
+   * Set to true to enable vertical tab styling.
+   */
   @cascades('pf-tab', 'pf-tab-panel')
   @property({ reflect: true, type: Boolean }) vertical = false;
 
+  /**
+   * Set to true to enable filled tab styling.
+   */
   @cascades('pf-tab')
   @property({ reflect: true, type: Boolean }) fill = false;
 
+  /**
+   * Border bottom tab styling on tabs. To remove the bottom border, set this prop to false.
+   */
   @cascades('pf-tab')
   @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'true';
 
-  protected get canShowScrollButtons(): boolean {
-    return !this.vertical;
+  /**
+   * Set's the tabs to be manually activated. This means that the tabs will not automatically select
+   * unless a user clicks on them or uses the keyboard space or enter key to select them.  Roving
+   * tabindex will still update allowing user to keyboard navigate through the tabs with arrow keys.
+   */
+  @cascades('pf-tab')
+  @property({ reflect: true, type: Boolean }) manual = false;
+
+  /**
+   * Aria Label for the left scroll button
+   */
+  @property({ reflect: false, attribute: 'label-scroll-left' }) labelScrollLeft = 'Scroll left';
+
+  /**
+   * Aria Label for the right scroll button
+   */
+  @property({ reflect: false, attribute: 'label-scroll-right' }) labelScrollRight = 'Scroll left';
+
+  /**
+   * The index of the active tab
+   */
+  @property({ attribute: 'active-index', reflect: true, type: Number })
+  get activeIndex() {
+    return this.#tabs.activeIndex;
+  }
+
+  set activeIndex(index: number) {
+    this.#tabs.activeIndex = index;
+  }
+
+  get activeTab(): PfTab {
+    return this.#tabs.activeTab as PfTab;
+  }
+
+  set activeTab(tab: PfTab) {
+    this.#tabs.activeTab = tab;
+  }
+
+  @query('#tabs') private tabsContainer!: HTMLElement;
+
+  @queryAssignedElements({ slot: 'tab' }) private tabs?: PfTab[];
+
+  #overflow = new OverflowController(this, { scrollTimeoutDelay: 200 });
+
+  #tabs = new TabsController(this, {
+    isTab: (x): x is PfTab => x instanceof PfTab,
+    isPanel: (x): x is PfTabPanel => x instanceof PfTabPanel,
+  });
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.id ||= getRandomId(this.localName);
+  }
+
+  override willUpdate(): void {
+    this.#overflow.update();
+  }
+
+  render() {
+    return html`
+      <div part="container" class="${classMap({ overflow: this.#overflow.showScrollButtons })}">
+        <div part="tabs-container">${!this.#overflow.showScrollButtons ? '' : html`
+          <button id="previousTab" tabindex="-1"
+              aria-label="${this.labelScrollLeft}"
+              ?disabled="${!this.#overflow.overflowLeft}"
+              @click="${this.#scrollLeft}">
+            <pf-icon icon="angle-left" set="fas" loading="eager"></pf-icon>
+          </button>`}
+          <div id="tabs" part="tabs" role="tablist">
+            <slot name="tab" @slotchange="${this.#onSlotChange}" @scroll="${this.#overflow.onScroll}"></slot>
+          </div>
+          ${!this.#overflow.showScrollButtons ? '' : html`
+          <button id="nextTab" tabindex="-1"
+              aria-label="${this.labelScrollRight}"
+              ?disabled="${!this.#overflow.overflowRight}"
+              @click="${this.#scrollRight}">
+            <pf-icon icon="angle-right" set="fas" loading="eager"></pf-icon>
+          </button>`}
+        </div>
+        <slot part="panels"></slot>
+      </div>
+    `;
+  }
+
+  #scrollLeft() {
+    this.#overflow.scrollLeft();
+  }
+
+  #scrollRight() {
+    this.#overflow.scrollRight();
+  }
+
+  #onSlotChange() {
+    if (this.tabs) {
+      this.#overflow.init(this.tabsContainer, this.tabs);
+    }
+  }
+
+  select(option: PfTab | number) {
+    if (typeof option === 'number') {
+      this.#tabs.activeIndex = option;
+    } else {
+      this.activeTab = option;
+    }
   }
 }
 

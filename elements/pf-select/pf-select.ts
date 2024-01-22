@@ -5,6 +5,7 @@ import { query } from 'lit/decorators/query.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
@@ -41,12 +42,12 @@ export class PfSelect extends LitElement {
   /**
    * Accessible label for the select's typeahead input
    */
-  @property({ attribute: 'accessible-label', type: String }) accessibleLabel = '';
+  @property({ attribute: 'accessible-label' }) accessibleLabel = '';
 
   /**
    * Accessible label for the select's toggle button
    */
-  @property({ attribute: 'accessible-toggle-label', type: String }) accessibleToggleLabel = '';
+  @property({ attribute: 'accessible-toggle-label' }) accessibleToggleLabel?: string;
 
   /**
    * whether listbox is always expanded
@@ -254,7 +255,7 @@ export class PfSelect extends LitElement {
                  @input="${this.#onTypeaheadInput}">
             <button id="toggle-button"
                     ?hidden="${alwaysExpanded}"
-                    aria-label="${this.accessibleToggleLabel}"
+                    aria-label="${ifDefined(this.accessibleToggleLabel)}"
                     aria-controls="listbox"
                     aria-expanded="${!!expanded}"
                     aria-haspopup="listbox">

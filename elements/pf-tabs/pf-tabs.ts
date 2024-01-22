@@ -168,12 +168,10 @@ export class PfTabs extends LitElement {
               @click="${this.#scrollLeft}">
             <pf-icon icon="angle-left" set="fas" loading="eager"></pf-icon>
           </button>`}
-          <slot id="tabs"
-                name="tab"
-                part="tabs"
-                role="tablist"
-                @slotchange="${this.#onSlotChange}"
-                @scroll="${this.#overflow.onScroll}"></slot> ${!this.#overflow.showScrollButtons ? '' : html`
+          <div id="tabs" part="tabs" role="tablist">
+            <slot name="tab" @slotchange="${this.#onSlotChange}" @scroll="${this.#overflow.onScroll}"></slot>
+          </div>
+          ${!this.#overflow.showScrollButtons ? '' : html`
           <button id="nextTab" tabindex="-1"
               aria-label="${this.labelScrollRight}"
               ?disabled="${!this.#overflow.overflowRight}"

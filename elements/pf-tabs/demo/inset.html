@@ -27,10 +27,11 @@
   import '@patternfly/elements/pf-icon/pf-icon.js';
   import '@patternfly/elements/pf-switch/pf-switch.js';
   import '@patternfly/elements/pf-tabs/pf-tabs.js';
+
   const inset = document.querySelector('#inset');
   document.querySelector('form.input')
     .addEventListener('change', function insetToggle(event) {
-    inset.classList = event.elements.inset.value;
+    inset.classList = event.target.value;
   });
 </script>
 

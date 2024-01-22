@@ -1,4 +1,4 @@
-import { expect, html, nextFrame, aTimeout } from '@open-wc/testing';
+import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { a11ySnapshot, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { setViewport, sendKeys } from '@web/test-runner-commands';

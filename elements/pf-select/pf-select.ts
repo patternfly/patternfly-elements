@@ -54,11 +54,6 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
 
   /**
-   * whether listbox is has checkboxes when `multi-select` is enabled
-   */
-  @property({ type: Boolean, reflect: true }) checkboxes = false;
-
-  /**
    * text for a special option that allows user to create an option from typeahead input text;
    * set to '' in order to disable this feature
    */
@@ -101,29 +96,14 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'match-anywhere', reflect: true, type: Boolean }) matchAnywhere = false;
 
   /**
-   * whether multiple items can be selected
-   */
-  @property({ type: Boolean, reflect: true }) multi = false;
-
-  /**
    * Indicates initial popover position.
    * There are 6 options: `bottom`, `top`, `top-start`, `top-end`, `bottom-start`, `bottom-end`.
    * Default is `bottom`.
    */
   @property({ reflect: true }) position: Placement = 'bottom';
 
-  /**
-   * how listbox will display multiple items in toggle area:
-   * 'badge' for a badge with item count,
-   * 'chips' for a group of chips,
-   * '' for # items selected text (default)
-   */
-  @property({ attribute: 'selected-items-display' }) selectedItemsDisplay: 'default' | 'badge' | 'chips' = 'default';
-
-  /**
-   * whether listbox controlled by combobox that supports typing
-   */
-  @property({ type: Boolean }) typeahead = false;
+  /** Variant of rendered Select */
+  @property() variant: 'single' | 'checkbox' | 'typeahead' | 'typeaheadmulti' = 'single';
 
   /**
    * Whether the select listbox is expanded
@@ -136,6 +116,28 @@ export class PfSelect extends LitElement {
 
   set expanded(expanded: boolean) {
     this.#toggle.toggle(expanded);
+  }
+
+  set selected(optionsList: undefined | PfOption | PfOption[]) {
+    if (this._listbox && optionsList) {
+      this._listbox.selected = optionsList;
+    }
+  }
+
+  /**
+   * Single select option value for single select menus,
+   * or array of select option values for multi select.
+   * You can also specify `isSelected` on `SelectOption`.
+   */
+  get selected() {
+    return this._listbox?.selected;
+  }
+
+  /**
+   * list of values as comma separated list
+   */
+  get selectedList() {
+    return this.#valueTextArray.map(txt => txt.replace(',', '\\,')).join(', ');
   }
 
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
@@ -158,17 +160,10 @@ export class PfSelect extends LitElement {
    * label for toggle button
    */
   get #buttonLabel() {
-    return this.hasBadge || this.hasChips ?
-      this.defaultText : this.#isMulti ?
-      `${this.#valueTextArray.length} ${this.itemsSelectedText}` : this.#valueText.length > 0 ?
-        this.#valueText : this.defaultText;
-  }
-
-  /**
-   * whether listbox is aria-multiselectable
-   */
-  get #isMulti() {
-    return this.multi || this.checkboxes;
+    return this.variant === 'checkbox' ? this.defaultText
+        : this.variant === 'typeaheadmulti' ? `${this.#valueTextArray.length} ${this.itemsSelectedText}`
+        : this.#valueText.length > 0 ? this.#valueText
+        : this.defaultText;
   }
 
   /**
@@ -197,63 +192,36 @@ export class PfSelect extends LitElement {
   /**
    * whether select has badge for number of selected items
    */
-  get hasBadge() {
-    return this.#isMulti && this.selectedItemsDisplay === 'badge';
+  private get hasBadge() {
+    return this.variant === 'checkbox';
   }
 
   /**
    * whether select has removable chips for selected items
    */
-  get hasChips() {
-    return this.#isMulti && this.selectedItemsDisplay === 'chips';
-  }
-
-  /**
-   * all listbox options
-   */
-  get options() {
-    return this._listbox?.options;
-  }
-
-  set selected(optionsList: undefined | PfOption | PfOption[]) {
-    if (this._listbox && optionsList) {
-      this._listbox.selected = optionsList;
-    }
-  }
-
-  /**
-   * Single select option value for single select menus,
-   * or array of select option values for multi select.
-   * You can also specify `isSelected` on `SelectOption`.
-   */
-  get selected() {
-    return this._listbox?.selected;
-  }
-
-  /**
-   * list of values as comma separated list
-   */
-  get selectedList() {
-    return this.#valueTextArray.map(txt => txt.replace(',', '\\,')).join(', ');
+  private get hasChips() {
+    return this.variant.startsWith('typeahead');
   }
 
   render() {
     const {
       alwaysExpanded,
-      typeahead,
       disabled,
       hasBadge,
       caseSensitive,
-      checkboxes,
       createOptionText,
       filter,
       matchAnywhere,
+      variant,
     } = this;
     const { height, width } = this.getBoundingClientRect() || {};
     const { anchor, alignment, expanded } = this.#toggle || { 'expanded': true, 'anchor': 'bottom', 'alignment': 'start' };
     const toggles = !alwaysExpanded ? 'toggles' : false;
-    const offscreen = typeahead ? 'offscreen' : false;
+    const offscreen = variant.startsWith('typeahead') ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
+    const multi = variant === 'checkbox' || variant === 'typeaheadmulti';
+    const typeahead = variant.startsWith('typeahead');
+    const checkboxes = variant === 'checkbox';
 
     return html`
       <div id="outer"
@@ -287,11 +255,10 @@ export class PfSelect extends LitElement {
                 <span id="toggle-text"
                       class="${classMap({ offscreen, badge })}">
                 ${this.#buttonLabel}
-              </span>
-              ${hasBadge ? html`
-                <span id="toggle-badge">
-                  <pf-badge number="${this.#selectedOptions.length}">${this.#selectedOptions.length}</pf-badge>
-                </span> ` : ''}
+              </span>${!hasBadge ? '' : html`
+              <span id="toggle-badge">
+                <pf-badge number="${this.#selectedOptions.length}">${this.#selectedOptions.length}</pf-badge>
+              </span>`}
               <svg viewBox="0 0 320 512"
                    fill="currentColor"
                    aria-hidden="true">
@@ -309,7 +276,7 @@ export class PfSelect extends LitElement {
                       ?hidden="${!this.alwaysExpanded && !expanded}"
                       ?case-sensitive="${caseSensitive}"
                       ?match-anywhere="${matchAnywhere}"
-                      ?multi="${this.#isMulti}"
+                      ?multi="${multi}"
                       filter="${filter || ''}"
                       @input="${this.#onListboxInput}"
                       @change="${this.#onListboxChange}"
@@ -319,7 +286,7 @@ export class PfSelect extends LitElement {
             ${repeat(this.#userCreatedOptions, opt => opt.id, opt => opt.value === '' ? '' : html`
             <pf-option id="${opt.id}" ?selected="${this.#valueTextArray.includes(opt.value)}">${opt.value}</pf-option>
             `)}
-            ${!this.typeahead || createOptionText === '' || filter.length === 0 ? '' : html`
+            ${!this.variant.startsWith('typeahead') || createOptionText === '' || filter.length === 0 ? '' : html`
               <pf-option id="suggested-option"
                          value="${filter}"
                          ?selected="${this.#valueTextArray.includes(filter)}"
@@ -335,8 +302,8 @@ export class PfSelect extends LitElement {
     `;
   }
 
-  override willUpdate(changed: PropertyValues<this>) {
-    if (changed.has('checkboxes') && this.checkboxes) {
+  override willUpdate() {
+    if (this.variant === 'checkbox') {
       import('@patternfly/elements/pf-badge/pf-badge.js');
     }
   }
@@ -436,7 +403,7 @@ export class PfSelect extends LitElement {
    * handles listbox select event
    */
   #onListboxSelect(event?: KeyboardEvent) {
-    if (!this.#isMulti) {
+    if (!(this.variant === 'checkbox' || this.variant === 'typeaheadmulti')) {
       if (this._input) {
         this._input.value = this.#valueText;
         this._input?.focus();

@@ -111,7 +111,7 @@
     "nunjucks": "^3.2.4",
     "patch-package": "^8.0.0",
     "playwright": "^1.41.0",
-    "playwright-lighthouse": "^3.2.6",
+    "playwright-lighthouse": "^4.0.0",
     "pwa-helpers": "^0.9.1",
     "rollup-plugin-lit-css": "^4.0.1",
     "sinon": "^17.0.1",

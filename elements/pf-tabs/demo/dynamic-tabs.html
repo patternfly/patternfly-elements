@@ -1,3 +1,4 @@
+<section>
 <form>
   <pf-button id="add">
     <pf-icon icon="circle-plus"></pf-icon> Add Tab
@@ -21,7 +22,7 @@
   <pf-tab slot="tab" aria-disabled="true" id="aria-disabled">Aria Disabled</pf-tab>
   <pf-tab-panel>Aria Disabled</pf-tab-panel>
 </pf-tabs>
-
+</section>
 
 <script type="module">
   import '@patternfly/elements/pf-button/pf-button.js';
@@ -55,15 +56,19 @@
 </script>
 
 <style>
-  margin: 0 auto;
-  padding: 0 16px 32px;
-  width: 100%;
-  max-width: 1008px;
-  @media (min-width: 768px) {
-    padding: 0 32px 32px;
+  main {
+    display: block;
+    scroll-x: unset;
   }
-  & form {
-    margin-block-end: 16px;
+
+  section {
+    margin: 0 auto;
+    padding: 0 16px 32px;
+    width: 100%;
+    max-width: 1008px;
+    @media (min-width: 768px) {
+      padding: 0 32px 32px;
+    }
   }
 </style>
 

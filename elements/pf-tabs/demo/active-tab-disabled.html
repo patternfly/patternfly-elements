@@ -1,30 +1,37 @@
-<pf-tabs id="disabledExample">
-  <pf-tab slot="tab">Users</pf-tab>
-  <pf-tab-panel>Users</pf-tab-panel>
-  <pf-tab slot="tab">Containers</pf-tab>
-  <pf-tab-panel>Containers</pf-tab-panel>
-  <pf-tab slot="tab">Database</pf-tab>
-  <pf-tab-panel>Database</pf-tab-panel>
-  <pf-tab slot="tab" disabled active>Disabled</pf-tab>
-  <pf-tab-panel>Disabled</pf-tab-panel>
-  <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
-  <pf-tab-panel>Aria Disabled</pf-tab-panel>
-</pf-tabs>
+<section>
+  <pf-tabs id="disabledExample">
+    <pf-tab slot="tab">Users</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab slot="tab">Containers</pf-tab>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab slot="tab" disabled active>Disabled</pf-tab>
+    <pf-tab-panel>Disabled</pf-tab-panel>
+    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
+    <pf-tab-panel>Aria Disabled</pf-tab-panel>
+  </pf-tabs>
+</section>
 
 <script type="module">
   import '@patternfly/elements/pf-tabs/pf-tabs.js';
 </script>
 
 <style>
-main {
-  margin: 0 auto;
-  padding: 0 16px 32px;
-  width: 100%;
-  max-width: 1008px;
-  @media (min-width: 768px) {
-    padding: 0 32px 32px;
+  main {
+    display: block;
+    scroll-x: unset;
   }
-}
+
+  section {
+    margin: 0 auto;
+    padding: 0 16px 32px;
+    width: 100%;
+    max-width: 1008px;
+    @media (min-width: 768px) {
+      padding: 0 32px 32px;
+    }
+  }
 </style>
 
 

@@ -39,7 +39,7 @@ describe('<pf-avatar>', function() {
     beforeEach(async function() {
       element = await createFixture(html`<pf-avatar @load="${onLoad}"></pf-avatar>`);
       setTimeout(() => element.src = datauri);
-      await oneEvent(element, 'load');
+      await oneEvent(element, 'load', false);
     });
     it('loads the image', function() {
       expect(loaded).to.equal(datauri);

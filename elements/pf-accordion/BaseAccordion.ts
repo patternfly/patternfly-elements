@@ -11,10 +11,6 @@ import { BaseAccordionPanel } from './BaseAccordionPanel.js';
 
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
-import style from './BaseAccordion.css';
-
-const CSS_TIMING_UNITS_RE = /^[0-9.]+(?<unit>[a-zA-Z]+)/g;
-
 export class AccordionExpandEvent extends ComposedEvent {
   constructor(
     public toggle: BaseAccordionHeader,
@@ -34,8 +30,6 @@ export class AccordionCollapseEvent extends ComposedEvent {
 }
 
 export abstract class BaseAccordion extends LitElement {
-  static readonly styles = [style];
-
   static isAccordion(target: EventTarget | null): target is BaseAccordion {
     return target instanceof BaseAccordion;
   }
@@ -104,10 +98,6 @@ export abstract class BaseAccordion extends LitElement {
 
   #logger = new Logger(this);
 
-  #styles = getComputedStyle(this);
-
-  #transitionDuration = this.#getAnimationDuration();
-
   // actually is read in #init, by the `||=` operator
   #initialized = false;
 
@@ -158,11 +148,11 @@ export abstract class BaseAccordion extends LitElement {
     this.#initialized ||= !!await this.updateComplete;
     this.#headerIndex.initItems(this.headers);
     // Event listener to the accordion header after the accordion has been initialized to add the roving tabindex
-    this.addEventListener('focusin', this.#updateActiveHeader as EventListener);
+    this.addEventListener('focusin', this.#updateActiveHeader);
     this.updateAccessibility();
   }
 
-  #updateActiveHeader(event: FocusEvent) {
+  #updateActiveHeader() {
     if (this.#activeHeader) {
       this.#headerIndex.updateActiveItem(this.#activeHeader);
     }
@@ -184,15 +174,9 @@ export abstract class BaseAccordion extends LitElement {
     header.expanded = true;
   }
 
-  async #expandPanel(panel: BaseAccordionPanel) {
+  #expandPanel(panel: BaseAccordionPanel) {
     panel.expanded = true;
     panel.hidden = false;
-
-    await panel.updateComplete;
-
-    const rect = panel.getBoundingClientRect();
-
-    this.#animate(panel, 0, rect.height);
   }
 
   async #collapseHeader(header: BaseAccordionHeader, index = this.#getIndex(header)) {
@@ -210,66 +194,12 @@ export abstract class BaseAccordion extends LitElement {
       return;
     }
 
-    const rect = panel.getBoundingClientRect();
-
     panel.expanded = false;
     panel.hidden = true;
-
-    this.#animate(panel, rect.height, 0);
-    await panel.updateComplete;
-  }
-
-  #getAnimationDuration(): number {
-    if ('computedStyleMap' in this) {
-      // @ts-expect-error: https://caniuse.com/?search=computedStyleMap
-      return this.computedStyleMap().get('transition-duration')?.to('ms').value;
-    } else {
-      const { transitionDuration } = this.#styles;
-
-      const groups = CSS_TIMING_UNITS_RE.exec(transitionDuration)?.groups;
-
-      if (!groups) {
-        return 0;
-      }
-
-      const parsed = parseFloat(transitionDuration);
-
-      if (groups.unit === 's') {
-        return parsed * 1000;
-      } else {
-        return parsed;
-      }
-    }
-  }
-
-  async #animate(panel: BaseAccordionPanel, start: number, end: number) {
-    if (panel) {
-      const header = panel.previousElementSibling;
-
-      const transitionDuration = this.#getAnimationDuration();
-      if (transitionDuration) {
-        this.#transitionDuration = transitionDuration;
-      }
-
-      const duration = this.#transitionDuration ?? 0;
-
-      header?.classList.add('animating');
-      panel.classList.add('animating');
-
-      const animation = panel.animate({ height: [`${start}px`, `${end}px`] }, { duration });
-      animation.play();
-      await animation.finished;
-
-      header?.classList.remove('animating');
-      panel.classList.remove('animating');
-
-      panel.style.removeProperty('height');
-      panel.hidden = !panel.expanded;
-    }
   }
 
   #onChange(event: AccordionHeaderChangeEvent) {
-    if (BaseAccordion.#isAccordionChangeEvent(event) && !this.classList.contains('animating')) {
+    if (BaseAccordion.#isAccordionChangeEvent(event)) {
       const index = this.#getIndex(event.target);
       if (event.expanded) {
         this.expand(index, event.accordion);

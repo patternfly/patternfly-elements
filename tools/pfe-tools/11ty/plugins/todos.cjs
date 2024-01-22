@@ -1,7 +1,6 @@
-const fs = require('fs/promises');
-const path = require('path');
-const { promisify } = require('util');
-const glob = promisify(require('glob'));
+const { readFile } = require('fs/promises');
+const { extname } = require('path');
+const { glob } = require('glob');
 
 const cache = new Map();
 
@@ -24,8 +23,8 @@ module.exports = function(eleventyConfig) {
     }
 
     for (const filename of files) {
-      const contents = await fs.readFile(filename, 'utf8');
-      const extension = path.extname(filename);
+      const contents = await readFile(filename, 'utf8');
+      const extension = extname(filename);
       const parsed = await parse(contents, { extension, filename });
       const output = await report(parsed, 'raw');
       todos.push(...output);

@@ -1,0 +1,13 @@
+<form>
+  <pf-text-area required></pf-text-area>
+  <pf-button>Validate</pf-button>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-text-area/pf-text-area.js';
+  document.querySelector('form').addEventListener('submit', event => {
+    event.preventDefault();
+    document.querySelector('pf-text-area').checkValidity();
+  });
+</script>
+

@@ -1,10 +1,5 @@
-<link rel="stylesheet" href="demo.css">
-<script type="module" src="pf-switch.js"></script>
-
 <section>
-  <h1>Switch</h1>
   <p>A switch toggles the state of a setting (between on and off). Switches provide a more explicit, visible representation on a setting.</p>
-  <h2>Basic</h2>
   <form>
     <fieldset id="fieldset-a">
       <legend>Option A</legend>
@@ -39,64 +34,38 @@
   </form>
 </section>
 
-<section>
-<form>
-  <fieldset>
-    <legend>Reversed</legend>
-    <label for="reversed" data-state="on">Message when on</label>
-    <label for="reversed" data-state="off">Message when off</label>
-    <pf-switch id="reversed" reversed></pf-switch>
-  </fieldset>
-</form>
-</section>
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
 
-<section>
-<form>
-  <fieldset>
-    <legend>Without label</legend>
-    <pf-switch checked></pf-switch>
-  </fieldset>
-</form>
-</section>
+  document.getElementById('form-disabled').addEventListener('change', /** @this{HTMLFieldsetElement}*/function(event) {
+    const controls = document.getElementById(event.target.getAttribute('aria-controls'));
+    controls.toggleAttribute('disabled', event.target.checked);
+  });
+</script>
 
-<section>
-<form>
-  <fieldset>
-    <legend>Checked with label</legend>
-    <pf-switch id="checked" checked show-check-icon></pf-switch>
-    <label for="checked" data-state="on">Message when on</label>
-    <label for="checked" data-state="off">Message when off</label>
-  </fieldset>
-</form>
-</section>
+<style>
+  section {
+    margin: 2rem;
+  }
 
-<section>
-  <form id="nested-label">
-    <fieldset>
-      <legend>Nested in a label</legend>
-      <label> Status
-        <pf-switch name="status"></pf-switch>
-      </label>
-      <pf-button type="submit">Submit</pf-button>
-      <output>Submit to read status</output>
-    </fieldset>
-  </form>
-</section>
+  fieldset {
+    display: grid;
+    grid-template-columns: min-content max-content;
+    gap: var(--pf-c-switch--ColumnGap, var(--pf-c-switch__label--PaddingLeft, 1rem));
+  }
 
-<section>
-<h2>Disabled</h2>
-<form>
-  <fieldset>
-    <legend>Checked and Disabled</legend>
-    <pf-switch id="checked-disabled" checked disabled></pf-switch>
-    <label for="checked-disabled" data-state="on">Message when on</label>
-    <label for="checked-disabled" data-state="off">Message when off</label>
-  </fieldset>
-  <fieldset>
-    <pf-switch id="default-disabled" disabled></pf-switch>
-    <label for="default-disabled" data-state="on">Message when on</label>
-    <label for="default-disabled" data-state="off">Message when off</label>
-  </fieldset>
-</form>
-</section>
+  fieldset:has(#reversed) {
+    grid-template-columns: max-content min-content;
+  }
 
+  label {
+    color: var(--pf-c-switch__label--Color, var(--pf-global--Color--dark-100, #151515));
+  }
+
+  pf-switch:not([checked]) ~ label,
+  label:has(~ pf-switch:not([checked])) {
+    color: var(--pf-c-switch__input--not-checked__label--Color, var(--pf-global--disabled-color--100, #6a6e73));
+  }
+</style>

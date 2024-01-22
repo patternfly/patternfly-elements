@@ -1,0 +1,147 @@
+:host {
+  font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
+  font-size: var(--pf-global--FontSize--md, 16px);
+  font-weight: var(--pf-global--FontWeight--normal, 400);
+  color: var(--pf-theme--color--text, #151515);
+  --_pf-option-checkboxes-display: none;
+  --_pf-option-svg-display: block;
+}
+
+:host, #outer.toggles {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+:host([hidden]),
+*[hidden] {
+  display: none !important;
+}
+
+:host([disabled]) {
+  pointer-events: none !important;
+}
+
+#outer.disabled {
+  color: var(--pf-global--Color--dark-200, #6a6e73) !important;
+}
+
+#outer.toggles {
+  position: relative;
+}
+
+#outer.toggles pf-listbox {
+  position: absolute;
+  background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
+  opacity: 0;
+}
+
+#outer.toggles.expanded pf-listbox {
+  opacity: 1;
+  z-index: 9999 !important;
+}
+
+#toggle {
+  background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
+}
+
+#toggle,
+#toggle-button,
+#toggle-input {
+  display: flex;
+  align-items: center;
+  font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
+  font-size: var(--pf-global--FontSize--md, 16px);
+  font-weight: var(--pf-global--FontWeight--normal, 400);
+  line-height: 1.6;
+}
+
+#toggle {
+  border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
+  border-bottom-color: var(--pf-theme--color--text, #151515);
+  justify-content: space-between;
+}
+
+.expanded #toggle {
+  border-bottom-width: 2px;
+  border-bottom-color: var(--pf-theme--color--accent, #0066cc);
+}
+
+.disabled #toggle {
+  color: var(--pf-global--Color--dark-200, #6a6e73) !important;
+  background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+  border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+}
+
+#toggle-input,
+#toggle-button {
+  background: transparent;
+  border: none;
+  text-align: left;
+  border-radius: 0;
+  flex: 1 0 auto;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+#toggle-input {
+  justify-content: space-between;
+  padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem);
+}
+
+.disabled #toggle-input {
+  pointer-events: none;
+}
+
+#toggle-button {
+  color: currentColor;
+  background-color: transparent;
+  justify-content: flex-end;
+  padding: var(--pf-global--spacer--sm, 0.5rem);
+}
+
+#outer.typeahead #toggle-button {
+  flex: 0 0 auto;
+}
+
+#toggle-badge {
+  flex: 1 0 auto;
+  margin-inline-start: 0.25em;
+}
+
+#toggle-text {
+  flex: 1 1 auto;
+}
+
+#toggle-text.badge {
+  flex: 0 1 auto;
+}
+
+pf-badge {
+  padding: 0;
+}
+
+#toggle svg {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  margin-inline-start: 1em;
+}
+
+#description {
+  display: block;
+}
+
+pf-listbox.checkboxes {
+  --_pf-option-checkboxes-display: inline;
+  --_pf-option-svg-display: none;
+}
+
+.offscreen {
+  position: absolute;
+  left: -99999;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}

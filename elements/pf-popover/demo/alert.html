@@ -1,0 +1,68 @@
+<form id="alert">
+  <fieldset>
+    <legend>Popover alert severity</legend>
+    <label><input type="radio" name="severity" value="default">default</label>
+    <label><input type="radio" name="severity" value="info">info</label>
+    <label><input type="radio" name="severity" value="success">success</label>
+    <label><input type="radio" name="severity" value="warning">warning</label>
+    <label><input type="radio" name="severity" value="danger">danger</label>
+    <pf-popover heading="Popover heading"
+                body="Popovers are triggered by click rather than hover."
+                footer="Popover footer"
+                alert-severity="default"
+                no-outside-click>
+      <pf-button>Toggle popover</pf-button>
+    </pf-popover>
+  </fieldset>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-popover/pf-popover.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+
+  // Alert variants
+  const alert = document.getElementById('alert');
+  alert?.addEventListener('change', event =>
+    alert
+      .querySelector('pf-popover')
+      .setAttribute('alert-severity', event.target.closest('form').elements.severity.value));
+
+  document.addEventListener('submit', function(event) {
+    event.preventDefault();
+  });
+</script>
+
+<style>
+  form {
+    padding: 0 2rem;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 8px;
+  }
+
+  form h2 {
+    width: 100%;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  fieldset label {
+    display: grid;
+    align-content: center;
+    display: contents;
+  }
+
+  select {
+    display: block;
+    margin-inline-end: auto;
+    flex-basis: 100%;
+  }
+
+  #alert-select {
+    margin-bottom: 1rem;
+  }
+</style>

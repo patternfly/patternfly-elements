@@ -30,10 +30,14 @@ export class PfPanel extends LitElement {
     const hasHeader = this.#slots.hasSlotted('header');
     const hasFooter = this.#slots.hasSlotted('footer');
     return html`
-      <slot name="header" role="region" ?hidden="${!hasHeader}"></slot>
+      <header>
+        <slot name="header" ?hidden="${!hasHeader}"></slot>
+      </header>
       <hr role="presentation" ?hidden="${!hasHeader}">
       <slot></slot>
-      <slot name="footer" role="region" ?hidden="${!hasFooter}"></slot>
+      <footer>
+        <slot name="footer" ?hidden="${!hasFooter}"></slot>
+      </footer>
     `;
   }
 }

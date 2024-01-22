@@ -1,0 +1,22 @@
+<pf-select always-expanded>
+  <pf-option value="Basic">Basic option</pf-option>
+  <pf-option value="Description" description="This is a description">Option with description</pf-option>
+  <pf-option value="Description">
+    Option with slotted description
+    <span slot="description" lang="cz">Toto je popis</span>
+  </pf-option>
+  <pf-option value="Icon">
+    <pf-icon size="md"
+             icon="paint-brush"
+             set="fas"
+             slot="icon"></pf-icon>
+    Option with icon
+  </pf-option>
+  <pf-option value="Disabled"
+             disabled>Disabled option</pf-option>
+</pf-select>
+
+<script type="module">
+  import '@patternfly/elements/pf-select/pf-select.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+</script>

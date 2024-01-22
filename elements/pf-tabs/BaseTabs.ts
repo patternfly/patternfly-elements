@@ -1,3 +1,5 @@
+// we will remove this file for 3.0
+/* eslint-disable lit-a11y/no-aria-slot */
 import { LitElement, html } from 'lit';
 
 import { property } from 'lit/decorators/property.js';

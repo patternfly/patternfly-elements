@@ -1,11 +1,13 @@
 import type { TestRunnerConfig } from '@web/test-runner';
 
+import { stat } from 'node:fs/promises';
 import { playwrightLauncher } from '@web/test-runner-playwright';
 import { summaryReporter, defaultReporter } from '@web/test-runner';
 import { junitReporter } from '@web/test-runner-junit-reporter';
 import { a11ySnapshotPlugin } from '@web/test-runner-commands/plugins';
 
 import { pfeDevServerConfig, type PfeDevServerConfigOptions } from '../dev-server/config.js';
+import { getPfeConfig } from '../config.js';
 
 export interface PfeTestRunnerConfigOptions extends PfeDevServerConfigOptions {
   files?: string[];
@@ -18,6 +20,13 @@ const testRunnerHtml: TestRunnerConfig['testRunnerHtml'] = testFramework => /* h
   <html>
     <head>
       <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+      <script type="importmap">
+      {
+        "imports": {
+          "@patternfly/icons/": "/node_modules/@patternfly/icons/"
+        }
+      }
+      </script>
     </head>
     <body>
       <script type="module" src="${testFramework}"></script>
@@ -25,8 +34,19 @@ const testRunnerHtml: TestRunnerConfig['testRunnerHtml'] = testFramework => /* h
   </html>
 `;
 
+const exists = async (path: string | URL) => {
+  try {
+    await stat(path);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunnerConfig {
   const { open, ...devServerConfig } = pfeDevServerConfig({ ...opts, loadDemo: false });
+
+  const { elementsDir, tagPrefix } = getPfeConfig();
 
   const configuredReporter = opts.reporter ?? 'summary';
 
@@ -54,6 +74,7 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
 
   return {
     ...devServerConfig,
+    nodeResolve: true,
     files: ['**/*.spec.ts', '!**/*.e2e.ts', ...opts.files ?? [], '!**/node_modules/**/*', '!**/_site/**/*'],
     browsers: [
       playwrightLauncher({
@@ -71,45 +92,23 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
       },
     },
     testRunnerHtml,
-    groups: [
-      {
-        name: 'with-vue',
-        testRunnerHtml: testFramework => /* html */`
-          <html>
-            <head>
-              <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-              <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js" crossorigin></script>
-            </head>
-            <body>
-              <div id="root"></div>
-              <script type="module" src="${testFramework}"></script>
-            </body>
-          </html>
-        `,
-      },
-      {
-        name: 'with-react',
-        testRunnerHtml: testFramework => /* html */`
-          <html>
-            <head>
-              <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-              <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-              <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-              <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
-            </head>
-            <body>
-              <div id="root"></div>
-              <script type="module" src="${testFramework}"></script>
-            </body>
-          </html>
-        `,
-      },
-    ],
     reporters,
     plugins: [
       ...devServerConfig.plugins ?? [],
       ...opts.plugins ?? [],
       a11ySnapshotPlugin(),
+    ],
+    middleware: [
+      /** redirect `.js` to `.ts` when the typescript source exists */
+      async function(ctx, next) {
+        if (ctx.path.endsWith('.js') &&
+            ctx.path.startsWith(`/${elementsDir}/${tagPrefix}-`) &&
+            await exists(`./${ctx.path}`.replace('.js', '.ts').replace('//', '/'))) {
+          ctx.redirect(ctx.path.replace('.js', '.ts'));
+        } else {
+          return next();
+        }
+      }
     ]
   };
 }

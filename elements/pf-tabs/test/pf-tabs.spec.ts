@@ -156,7 +156,7 @@ describe('<pf-tabs>', function() {
 
     it('should activate its panel', function() {
       expect(panel.hasAttribute('hidden')).to.be.false;
-      expect(snapshot.children.find(x => x.role === 'tabpanel')?.name).to.equal('Database');
+      expect(snapshot.children?.find(x => x.role === 'tabpanel')?.name).to.equal('Database');
     });
   });
 
@@ -172,8 +172,8 @@ describe('<pf-tabs>', function() {
     });
 
     it('should disable the button', function() {
-      const [disabledTab] = snapshot.children;
-      const tabButton = disabledTab.children.find(x => x.role === 'button')!;
+      const [disabledTab] = snapshot.children!;
+      const tabButton = disabledTab.children!.find(x => x.role === 'button')!;
       expect(tabButton.disabled).to.equal(true);
     });
 

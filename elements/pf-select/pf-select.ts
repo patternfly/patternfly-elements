@@ -39,9 +39,14 @@ export class PfSelect extends LitElement {
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
-   * Accessible label for chip group that does not have a category name
+   * Accessible label for the select's typeahead input
    */
   @property({ attribute: 'accessible-label', type: String }) accessibleLabel = '';
+
+  /**
+   * Accessible label for the select's toggle button
+   */
+  @property({ attribute: 'accessible-toggle-label', type: String }) accessibleToggleLabel = '';
 
   /**
    * whether listbox is always expanded
@@ -249,9 +254,10 @@ export class PfSelect extends LitElement {
                  @input="${this.#onTypeaheadInput}">
             <button id="toggle-button"
                     ?hidden="${alwaysExpanded}"
-                      aria-controls="listbox"
-                      aria-expanded="${!!expanded}"
-                      aria-haspopup="listbox">
+                    aria-label="${this.accessibleToggleLabel}"
+                    aria-controls="listbox"
+                    aria-expanded="${!!expanded}"
+                    aria-haspopup="listbox">
                 <span id="toggle-text"
                       class="${classMap({ offscreen, badge })}">
                 ${this.#buttonLabel}

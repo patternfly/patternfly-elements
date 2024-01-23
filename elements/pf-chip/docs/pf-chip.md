@@ -39,7 +39,7 @@ Chips can be removable or read-only. The Overflow chip is a special chip that is
   <pf-tooltip id="max"
               position="top">
     <pf-chip onclick="this.parentElement.remove()"
-             style="max-width:10em;display:inline-block;">Really long chip that goes on and on</pf-chip>
+             style="max-width:10em;">Really long chip that goes on and on</pf-chip>
     <span slot="content">Really long chip that goes on and on</span>
   </pf-tooltip>
 {% endhtmlexample %}

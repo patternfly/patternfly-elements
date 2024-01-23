@@ -61,6 +61,7 @@ div#outer {
 }
 
 span {
+  display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

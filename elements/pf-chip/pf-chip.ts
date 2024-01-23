@@ -1,7 +1,6 @@
 import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { query } from 'lit/decorators/query.js';
 
 import '@patternfly/elements/pf-button/pf-button.js';
 
@@ -49,8 +48,6 @@ export class PfChip extends LitElement {
    * Flag indicating if chip is read-only and cannot be removed
    */
   @property({ attribute: 'overflow-chip', reflect: true, type: Boolean }) overflowChip = false;
-
-  @query('button') button?: HTMLButtonElement;
 
   render() {
     return this.overflowChip ? html`

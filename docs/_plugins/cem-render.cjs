@@ -34,10 +34,10 @@ function stringifyParams(method) {
     `${p.name}: ${p.type?.text ?? 'unknown'}`).join(', ') ?? '';
 }
 
-function renderBand(content, { level } = {}) {
+function renderBand(content, { level, header = '' } = {}) {
   return html`
       <section class="band">
-        ${mdHeading(content, { level })}
+        ${header && mdHeading(header, { level })}
         ${innerMD(content)}
       </section>`;
 }

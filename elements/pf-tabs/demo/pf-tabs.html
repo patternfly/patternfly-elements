@@ -18,16 +18,17 @@
 </script>
 
 <style>
+  main {
+    display: block;
+    overflow-x: unset;
+  }
+
   section {
-    padding: 1em;
     margin: 0 auto;
     padding: 0 16px 32px;
     width: 100%;
     max-width: 1008px;
-    &:last-of-type {
-      padding-block-end: 64px;
-    }
-    @media screen and (min-width: 768px) {
+    @media (min-width: 768px) {
       padding: 0 32px 32px;
     }
   }

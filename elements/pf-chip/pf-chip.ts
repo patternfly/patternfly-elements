@@ -61,7 +61,7 @@ export class PfChip extends LitElement {
       </button>
     ` : html`
       <div id="outer">
-        <span part="text">
+        <span id="chip-text" part="text">
           <slot></slot>
         </span>
         <pf-button id="close-button"

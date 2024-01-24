@@ -19,6 +19,7 @@ export type PopupKind = 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
 export interface ToggleControllerOptions {
   kind?: PopupKind;
   getTogglableElement?: () => Element;
+  willChange?(old: boolean): void;
   onChange?(bool: boolean): void;
 }
 
@@ -239,7 +240,7 @@ export class ToggleController implements ReactiveController {
     this.hovered = false;
     // wait for immediate focus or hover event;
     // then test if popup can be closed
-    setTimeout( this.hide.bind(this), 300);
+    setTimeout(this.hide.bind(this), 300);
   }
 
   /**
@@ -398,16 +399,16 @@ export class ToggleController implements ReactiveController {
    * @param focus whether popup element should receive focus
    */
   async show(focus = false) {
-    const { expanded } = this;
+    this.options?.willChange?.(this.expanded);
+    if (!this.expanded) {
+      this.options?.onChange?.(this.expanded);
+    }
     if (this.#popupElement && this.float) {
       await this.float.show({
         placement: this.position || 'bottom',
         flip: !!this.enableFlip,
       });
       await this.host.updateComplete;
-      if (expanded !== this.expanded) {
-        this.options?.onChange?.(this.expanded);
-      }
       this.#triggerElements.forEach(element => {
         const internals = this.#triggerInternals.get(element);
         if (internals) {
@@ -426,6 +427,7 @@ export class ToggleController implements ReactiveController {
    * hides popup and sets focus
    */
   async hide(force = false) {
+    this.options?.willChange?.(this.expanded);
     const { expanded } = this;
     const focused = this.#focused;
     const hasFocus = focused || this.#hovered;

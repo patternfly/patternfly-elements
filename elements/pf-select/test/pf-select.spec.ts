@@ -177,70 +177,72 @@ describe('<pf-select>', function() {
         });
       });
 
-      describe('toggling open', function() {
-        beforeEach(async function() {
+      describe('calling focus())', function() {
+        beforeEach(function() {
           element.focus();
-          await element.updateComplete;
         });
-        beforeEach(press('Enter'));
+        beforeEach(updateComplete);
+        describe('pressing Enter', function() {
+          beforeEach(press('Enter'));
 
-        it('opens', async function() {
-          const snapshot = await a11ySnapshot();
-          const [button, listbox] = snapshot.children ?? [];
-          const { expanded } = element;
-          expect(expanded).to.be.true;
-          expect(button).to.deep.equal({
-            role: 'button',
-            name: 'Options',
-            expanded: true,
-            focused: true,
-            haspopup: 'listbox'
-          });
-          expect(listbox).to.exist;
-        });
-
-        describe('pressing ArrowDown', function() {
-          beforeEach(press('ArrowDown'));
-
-          it('focuses on first option', async function() {
+          it('opens', async function() {
             const snapshot = await a11ySnapshot();
-            const [, listbox] = snapshot.children ?? [];
-            const [first] = listbox?.children ?? [];
-            expect(first.role).to.equal('option');
-            expect(first.name).to.equal('Blue');
-            expect(first.focused).to.be.true;
+            const [button, listbox] = snapshot.children ?? [];
+            const { expanded } = element;
+            expect(expanded).to.be.true;
+            expect(button).to.deep.equal({
+              role: 'button',
+              name: 'Options',
+              expanded: true,
+              focused: true,
+              haspopup: 'listbox'
+            });
+            expect(listbox).to.exist;
           });
 
           describe('pressing ArrowDown', function() {
             beforeEach(press('ArrowDown'));
-            it('focuses on second option', async function() {
+
+            it('focuses on first option', async function() {
               const snapshot = await a11ySnapshot();
               const [, listbox] = snapshot.children ?? [];
-              const [, second] = listbox?.children ?? [];
-              expect(second.role).to.equal('option');
-              expect(second.name).to.equal('Green');
-              expect(second.focused).to.be.true;
+              const [first] = listbox?.children ?? [];
+              expect(first.role).to.equal('option');
+              expect(first.name).to.equal('Blue');
+              expect(first.focused).to.be.true;
             });
 
-            describe('clicking the second option', function() {
-              beforeEach(press('Enter'));
-              it('selects it', function() {
-                const { selectedList } = element;
-                expect(selectedList).to.equal('Green');
+            describe('pressing ArrowDown', function() {
+              beforeEach(press('ArrowDown'));
+              it('focuses on second option', async function() {
+                const snapshot = await a11ySnapshot();
+                const [, listbox] = snapshot.children ?? [];
+                const [, second] = listbox?.children ?? [];
+                expect(second.role).to.equal('option');
+                expect(second.name).to.equal('Green');
+                expect(second.focused).to.be.true;
+              });
+
+              describe('pressing Enter', function() {
+                beforeEach(press('Enter'));
+                it('selects it', function() {
+                  const { selectedList } = element;
+                  expect(selectedList).to.equal('Green');
+                });
               });
             });
           });
-        });
 
-        describe('toggling closed', function() {
-          beforeEach(press(' '));
-          it('closes', async function() {
-            const snapshot = await a11ySnapshot();
-            const [button, listbox] = snapshot.children ?? [];
-            const { expanded } = element;
-            expect(expanded).to.be.false;
-            expect(button).to.deep.equal({ role: 'button', name: 'Options', focused: true, haspopup: 'listbox' });
-            expect(listbox).to.be.undefined;
+          describe('pressing Space', function() {
+            beforeEach(press(' '));
+            it('closes', async function() {
+              const snapshot = await a11ySnapshot();
+              const [button, listbox] = snapshot.children ?? [];
+              const { expanded } = element;
+              expect(expanded).to.be.false;
+              expect(button).to.deep.equal({ role: 'button', name: 'Options', focused: true, haspopup: 'listbox' });
+              expect(listbox).to.be.undefined;
+            });
           });
         });
       });
@@ -288,80 +290,83 @@ describe('<pf-select>', function() {
               <pf-option value="Yellow">Yellow</pf-option>
             </pf-select>`);
         });
-        describe('clicking first option', function() {
+        describe('calling focus()', function() {
           beforeEach(() => element.focus());
-          beforeEach(press('Enter'));
-
-          it('selects the option', function() {
-            const { selectedList } = element;
-            expect(selectedList).to.equal('Blue');
-          });
-
-          describe('then clicking second option', function() {
-            beforeEach(press('ArrowDown'));
+          beforeEach(updateComplete);
+          describe('pressing Enter', function() {
             beforeEach(press('Enter'));
 
-            it('adds the option to selected list', function() {
+            it('selects the option', function() {
               const { selectedList } = element;
-              expect(selectedList).to.equal('Blue, Green');
+              expect(selectedList).to.equal('Blue');
             });
 
-            describe('then holding Shift and pressing down arrow / enter twice in a row', function() {
-              beforeEach(shiftHold);
+            describe('pressing ArrowDown then Enter', function() {
               beforeEach(press('ArrowDown'));
               beforeEach(press('Enter'));
-              beforeEach(press('ArrowDown'));
-              beforeEach(press('Enter'));
-              beforeEach(updateComplete);
-              beforeEach(shiftRelease);
-              beforeEach(updateComplete);
 
-              it('adds two more options to the selected list', function() {
+              it('adds the option to selected list', function() {
                 const { selectedList } = element;
-                expect(selectedList).to.equal('Blue, Green, Magenta, Orange');
+                expect(selectedList).to.equal('Blue, Green');
               });
 
-              describe('then pressing arrow up and enter', function() {
-                beforeEach(press('ArrowUp'));
-                beforeEach(updateComplete);
+              describe('then holding Shift and pressing down arrow / enter twice in a row', function() {
+                beforeEach(shiftHold);
+                beforeEach(press('ArrowDown'));
+                beforeEach(press('Enter'));
+                beforeEach(press('ArrowDown'));
                 beforeEach(press('Enter'));
                 beforeEach(updateComplete);
+                beforeEach(shiftRelease);
+                beforeEach(updateComplete);
 
-                it('deselects one of the options', function() {
+                it('adds two more options to the selected list', function() {
                   const { selectedList } = element;
-                  expect(selectedList).to.equal('Blue, Green, Orange');
+                  expect(selectedList).to.equal('Blue, Green, Magenta, Orange');
                 });
 
-                describe('then holding down Shift and pressing arrow up / enter twice in a row', function() {
+                describe('then pressing ArrowUp and Enter', function() {
                   beforeEach(press('ArrowUp'));
-                  beforeEach(press('Enter'));
                   beforeEach(updateComplete);
-                  beforeEach(press('ArrowUp'));
                   beforeEach(press('Enter'));
-                  beforeEach(updateComplete);
-                  beforeEach(shiftRelease);
                   beforeEach(updateComplete);
 
-                  it('deselects the options', function() {
+                  it('deselects one of the options', function() {
                     const { selectedList } = element;
-                    expect(selectedList).to.equal('Orange');
+                    expect(selectedList).to.equal('Blue, Green, Orange');
                   });
 
-                  describe('then pressing Ctrl+A', function() {
-                    beforeEach(ctrlA);
+                  describe('then holding down Shift and pressing arrow up / enter twice in a row', function() {
+                    beforeEach(press('ArrowUp'));
+                    beforeEach(press('Enter'));
+                    beforeEach(updateComplete);
+                    beforeEach(press('ArrowUp'));
+                    beforeEach(press('Enter'));
+                    beforeEach(updateComplete);
+                    beforeEach(shiftRelease);
                     beforeEach(updateComplete);
 
-                    it('selects all options', function() {
+                    it('deselects the options', function() {
                       const { selectedList } = element;
-                      expect(selectedList).to.equal('Blue, Green, Magenta, Orange, Purple, Pink, Red, Yellow');
+                      expect(selectedList).to.equal('Orange');
                     });
 
-                    describe('then pressing Ctrl+A again', function() {
+                    describe('then pressing Ctrl+A', function() {
                       beforeEach(ctrlA);
                       beforeEach(updateComplete);
-                      it('deselects all options', function() {
+
+                      it('selects all options', function() {
                         const { selectedList } = element;
-                        expect(selectedList).to.equal('');
+                        expect(selectedList).to.equal('Blue, Green, Magenta, Orange, Purple, Pink, Red, Yellow');
+                      });
+
+                      describe('then pressing Ctrl+A again', function() {
+                        beforeEach(ctrlA);
+                        beforeEach(updateComplete);
+                        it('deselects all options', function() {
+                          const { selectedList } = element;
+                          expect(selectedList).to.equal('');
+                        });
                       });
                     });
                   });

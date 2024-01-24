@@ -153,12 +153,28 @@ export class PfSelect extends LitElement {
   @query('#toggle-input') private _input?: HTMLInputElement;
   @query('#toggle-button') private _toggle?: HTMLButtonElement;
 
+  #lastSelected = this.selected;
+
   #toggle = new ToggleController(this, {
     kind: 'listbox',
-    onChange: expanded => {
+    willChange: () => {
+      this.#lastSelected = this.selected;
+    },
+    onChange: async expanded => {
       this.dispatchEvent(new Event(expanded ? 'open' : 'close'));
       if (expanded) {
         this.querySelector<PfOption>('pf-option[tabindex="0"]')?.focus();
+      } else {
+        const valueChanged = this.#lastSelected === this.selected;
+        if (this.variant.startsWith('typeahead') && valueChanged) {
+          this._input?.focus();
+        } else {
+          this._toggle?.focus();
+        }
+
+        await this._listbox?.updateComplete;
+        await this.updateComplete;
+        this.#lastSelected = this.selected;
       }
     }
   });

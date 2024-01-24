@@ -111,6 +111,8 @@ export class PfSelect extends LitElement {
   /** Variant of rendered Select */
   @property() variant: 'single' | 'checkbox' | 'typeahead' | 'typeaheadmulti' = 'single';
 
+  /** Flag indicating if selection badge should be hidden for checkbox variant,default false */
+  @property({ attribute: 'hide-badge', type: Boolean }) hideBadge = false;
   /**
    * Whether the select listbox is expanded
    *
@@ -199,14 +201,16 @@ export class PfSelect extends LitElement {
    * whether select has badge for number of selected items
    */
   private get hasBadge() {
-    return this.variant === 'checkbox';
+    // NOTE: revisit this in v5
+    return this.variant === 'checkbox' && !this.hideBadge;
   }
 
   /**
    * whether select has removable chips for selected items
    */
   private get hasChips() {
-    return this.variant.startsWith('typeahead');
+    // NOTE: revisit this in v5
+    return this.variant === 'typeaheadmulti';
   }
 
   render() {

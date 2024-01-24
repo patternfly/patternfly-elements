@@ -300,7 +300,7 @@ export class RovingTabindexController<
     /**
      * removes listener on previous contained and applies it to new container
      */
-    if (!this.#itemsContainer || itemsContainer !== this.#itemsContainer) {
+    if (itemsContainer !== this.#itemsContainer) {
       this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
       this.#itemsContainer = itemsContainer;
       this.hostConnected();

@@ -147,6 +147,9 @@ export class PfSelect extends LitElement {
     kind: 'listbox',
     onChange: expanded => {
       this.dispatchEvent(new Event(expanded ? 'open' : 'close'));
+      if (expanded) {
+        this.querySelector<PfOption>('pf-option[tabindex="0"]')?.focus();
+      }
     }
   });
 

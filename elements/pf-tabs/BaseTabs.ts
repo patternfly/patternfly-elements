@@ -63,15 +63,17 @@ export abstract class BaseTabs extends LitElement {
 
   @query('[part="tabs"]') private tabList!: HTMLElement;
 
-  #tabindex = new RovingTabindexController<BaseTab>(this);
+  #tabindex = new RovingTabindexController<BaseTab>(this, {
+    getItems: () => this.#allTabs,
+  });
 
   #overflow = new OverflowController(this);
 
   #logger = new Logger(this);
 
-  #_allTabs: BaseTab[] = [];
+  #allTabs: BaseTab[] = [];
 
-  #_allPanels: BaseTabPanel[] = [];
+  #allPanels: BaseTabPanel[] = [];
 
   #activeIndex = 0;
 
@@ -117,24 +119,8 @@ export abstract class BaseTabs extends LitElement {
   }
 
   get #activeTab() {
-    const [tab] = this.#_allTabs.filter(tab => tab.active);
+    const [tab] = this.#allTabs.filter(tab => tab.active);
     return tab;
-  }
-
-  get #allTabs() {
-    return this.#_allTabs;
-  }
-
-  set #allTabs(tabs: BaseTab[]) {
-    this.#_allTabs = tabs.filter(tab => (this.constructor as typeof BaseTabs).isTab(tab));
-  }
-
-  get #allPanels() {
-    return this.#_allPanels;
-  }
-
-  set #allPanels(panels: BaseTabPanel[]) {
-    this.#_allPanels = panels.filter(panel => (this.constructor as typeof BaseTabs).isPanel(panel));
   }
 
   override connectedCallback() {
@@ -193,16 +179,16 @@ export abstract class BaseTabs extends LitElement {
 
   #onSlotchange(event: { target: { name: string } }) {
     if (event.target.name === 'tab') {
-      this.#allTabs = this.tabs;
+      this.#allTabs = this.tabs.filter(tab => (this.constructor as typeof BaseTabs).isTab(tab));
     } else {
-      this.#allPanels = this.panels;
+      this.#allPanels = this.panels.filter(panel => (this.constructor as typeof BaseTabs).isPanel(panel));
     }
+    this.#tabindex.updateItems();
 
     if ((this.#allTabs.length === this.#allPanels.length) &&
       (this.#allTabs.length !== 0 || this.#allPanels.length !== 0)) {
       this.#updateAccessibility();
       this.#firstLastClasses();
-      this.#tabindex.initItems(this.#allTabs);
       this.activeIndex = this.#allTabs.findIndex(tab => tab.active);
       this.#tabindex.updateActiveItem(this.#activeTab);
       this.#overflow.init(this.tabList, this.#allTabs);

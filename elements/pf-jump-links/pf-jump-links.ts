@@ -83,7 +83,9 @@ export class PfJumpLinks extends LitElement {
 
   #initialized = false;
 
-  #rovingTabindexController = new RovingTabindexController(this);
+  #rovingTabindexController = new RovingTabindexController<HTMLAnchorElement>(this, {
+    getItems: () => this.#getItems(),
+  });
 
   #spy = new ScrollSpyController(this, {
     rootMargin: `${this.offset}px 0px 0px 0px`,
@@ -121,18 +123,16 @@ export class PfJumpLinks extends LitElement {
     `;
   }
 
-  #updateItems() {
-    const items = Array.from(this.querySelectorAll(':is(pf-jump-links-item, pf-jump-links-list)'))
+  #getItems() {
+    return Array.from(this.querySelectorAll(':is(pf-jump-links-item, pf-jump-links-list)'))
       .flatMap(i => [
         ...i.shadowRoot?.querySelectorAll('a') ?? [],
         ...i.querySelectorAll('a') ?? [],
       ]);
-    if (this.#initialized) {
-      this.#rovingTabindexController.updateItems(items);
-    } else {
-      this.#rovingTabindexController.initItems(items);
-      this.#initialized = true;
-    }
+  }
+
+  #updateItems() {
+    this.#rovingTabindexController.updateItems();
   }
 
   async #onSelect(event: Event) {

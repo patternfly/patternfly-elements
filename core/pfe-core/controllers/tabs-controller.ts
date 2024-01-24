@@ -157,7 +157,9 @@ export class TabsController implements ReactiveController {
     this.#logger = new Logger(host);
     if (host instanceof HTMLElement) {
       this.#element = host;
-      this.#tabindex = new RovingTabindexController(host);
+      this.#tabindex = new RovingTabindexController(host, {
+        getItems: () => this._tabs,
+      });
     } else {
       const element = options.getHTMLElement?.();
       if (!element) {
@@ -223,8 +225,7 @@ export class TabsController implements ReactiveController {
 
     if (this._tabs.length > 0) {
       this.#updateAccessibility();
-      // TODO(bennypowers): adjust to fit, in or after #2570
-      this.#tabindex.initItems(this._tabs, this.#element);
+      this.#tabindex.updateItems();
       this.#setActiveTab();
     }
 

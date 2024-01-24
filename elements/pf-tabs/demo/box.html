@@ -20,9 +20,11 @@
   </form>
 </section>
 
+
 <script type="module">
   import '@patternfly/elements/pf-switch/pf-switch.js';
   import '@patternfly/elements/pf-tabs/pf-tabs.js';
+
   document.getElementById('toggle-variant').addEventListener('change', function(event) {
     document.querySelector('pf-tabs')
       .setAttribute('box', event.target.checked ? 'dark' : 'light');
@@ -30,20 +32,17 @@
 </script>
 
 <style>
-  section {
+  main {
     display: block;
-    grid: unset;
+    overflow-x: unset;
   }
 
-  .example {
+  section {
     margin: 0 auto;
     padding: 0 16px 32px;
     width: 100%;
     max-width: 1008px;
-    &:last-of-type {
-      padding-block-end: 64px;
-    }
-    @media screen and (min-width: 768px) {
+    @media (min-width: 768px) {
       padding: 0 32px 32px;
     }
   }

@@ -29,6 +29,7 @@
     "./controllers/slot-controller.js": "./controllers/slot-controller.js",
     "./controllers/style-controller.js": "./controllers/style-controller.js",
     "./controllers/timestamp-controller.js": "./controllers/timestamp-controller.js",
+    "./controllers/tabs-controller.js": "./controllers/tabs-controller.js",
     "./decorators/bound.js": "./decorators/bound.js",
     "./decorators/cascades.js": "./decorators/cascades.js",
     "./decorators/deprecation.js": "./decorators/deprecation.js",

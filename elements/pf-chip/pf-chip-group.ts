@@ -93,9 +93,9 @@ export class PfChipGroup extends LitElement {
 
   #buttons: HTMLElement[] = [];
 
-  #itemsInit = false;
-
-  #tabindex = new RovingTabindexController(this);
+  #tabindex = new RovingTabindexController(this, {
+    getItems: () => this.#buttons,
+  });
 
   constructor() {
     super();
@@ -106,7 +106,9 @@ export class PfChipGroup extends LitElement {
   render() {
     const category = this.hasCategory ? 'has-category' : '';
     return html`
-      <div id="outer" class="${category}">
+      <div id="outer"
+           class="${category}"
+           role="toolbar">
         <slot id="category"
               name="category-name"
               @slotchange="${this.#onSlotchange}">
@@ -118,9 +120,9 @@ export class PfChipGroup extends LitElement {
               @remove="${this.#updateChips}"
         ></slot>
         <button id="overflow"
-                ?hidden="${this.remaining < 1}"
-                aria-controls="chips"
                 class="chip-content"
+                aria-controls="chips"
+                ?hidden="${this.remaining < 1}"
                 @click="${this.#onMoreClick}"
         >${this.remaining < 1 ? ''
          : this.open ? this.expandedText
@@ -139,7 +141,10 @@ export class PfChipGroup extends LitElement {
   }
 
   override updated(changed: PropertyValues<this>) {
-    if (changed.has('accessibleCloseLabel') || changed.has('numChips') || changed.has('open') || changed.has('closeable')) {
+    if (changed.has('accessibleCloseLabel') ||
+        changed.has('numChips') ||
+        changed.has('closeable') ||
+        changed.has('open')) {
       this.#handleChipsChanged();
     }
   }
@@ -183,13 +188,8 @@ export class PfChipGroup extends LitElement {
       ].filter((x): x is PfChip => !!x);
       if (oldButtons.length !== this.#buttons.length ||
           !oldButtons.every((element, index) => element === this.#buttons[index])) {
-        if (this.#itemsInit) {
-          this.#tabindex.updateItems(this.#buttons);
-        } else {
-          this.#tabindex.initItems(this.#buttons);
-        }
+        this.#tabindex.updateItems();
       }
-      this.#itemsInit = true;
       this.#updateOverflow();
     }
   }
@@ -263,7 +263,7 @@ export class PfChipGroup extends LitElement {
   }
 
   /**
-   * makes chip active and sets focus on it
+   * Activates the specified chip and sets focus on it
    */
   focusOnChip(chip: HTMLElement) {
     this.#tabindex.focusOnItem(chip);

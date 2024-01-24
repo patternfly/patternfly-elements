@@ -177,7 +177,10 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
   private internals: InternalsController;
 
-  private tabindex = new RovingTabindexController<Item>(this.host);
+  private tabindex = new RovingTabindexController<Item>(this.host, {
+    getElement: () => this.controllerOptions.getHTMLElement?.() ?? this.element,
+    getItems: () => this.visibleOptions,
+  });
 
   public static of<Item extends HTMLElement>(
     host: ReactiveControllerHost,
@@ -283,7 +286,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     const oldValue = this.value;
 
     if (this.#updateFocus) {
-      this.tabindex.updateItems(this.visibleOptions);
+      this.tabindex.updateItems();
       this.#updateFocus = false;
     } else {
       this.tabindex.initItems(this.visibleOptions);

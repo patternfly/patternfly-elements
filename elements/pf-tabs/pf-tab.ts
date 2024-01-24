@@ -1,9 +1,13 @@
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+import { query } from 'lit/decorators/query.js';
 
 import { observed } from '@patternfly/pfe-core/decorators.js';
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
-import { BaseTab } from './BaseTab.js';
+import { TabExpandEvent, TabDisabledEvent } from '@patternfly/pfe-core/controllers/tabs-controller.js';
 
 import styles from './pf-tab.css';
 
@@ -68,14 +72,82 @@ import styles from './pf-tab.css';
  * @fires { TabExpandEvent } expand - when a tab expands
  */
 @customElement('pf-tab')
-export class PfTab extends BaseTab {
-  static readonly styles = [...BaseTab.styles, styles];
+export class PfTab extends LitElement {
+  static readonly styles = [styles];
+
+  static override shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+
+  @query('button') private button!: HTMLButtonElement;
+
+  @queryAssignedElements({ slot: 'icon', flatten: true })
+  private icons!: Array<HTMLElement>;
+
+  @property({ type: Boolean }) manual = false;
 
   @observed
   @property({ reflect: true, type: Boolean }) active = false;
 
   @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
+
+  #internals = this.attachInternals();
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.id ||= getRandomId(this.localName);
+    this.#internals.role = 'tab';
+    this.#internals.ariaDisabled = this.#setInternalsAriaDisabled();
+    this.addEventListener('click', this.#onClick);
+    this.addEventListener('focus', this.#onFocus);
+  }
+
+  render() {
+    return html`
+      <button part="button" ?disabled="${this.disabled}">
+        <slot name="icon"
+              part="icon"
+              ?hidden="${!this.icons.length}"
+              @slotchange="${() => this.requestUpdate()}"></slot>
+        <slot part="text"></slot>
+      </button>
+    `;
+  }
+
+  #onClick() {
+    if (this.disabled || this.#internals.ariaDisabled === 'true') {
+      return;
+    }
+    this.#activate();
+    this.button.focus();
+  }
+
+  #onFocus() {
+    if (this.manual || this.#internals.ariaDisabled === 'true') {
+      return;
+    }
+    this.#activate();
+  }
+
+  #activate() {
+    this.active = true;
+  }
+
+  private _activeChanged(oldVal: boolean, newVal: boolean) {
+    if (oldVal !== newVal && newVal === true) {
+      this.dispatchEvent(new TabExpandEvent(this));
+    }
+  }
+
+  private _disabledChanged() {
+    this.dispatchEvent(new TabDisabledEvent(this));
+  }
+
+  #setInternalsAriaDisabled() {
+    if (this.disabled) {
+      return 'true';
+    }
+    return this.ariaDisabled ?? 'false';
+  }
 }
 
 declare global {

@@ -447,12 +447,8 @@ export class PfSelect extends LitElement {
     } else if (this._input) {
       this._input.value = '';
       this.filter = '';
-
-      // set focus on input when a new chip is added
-      if (this.hasChips) {
-        this.requestUpdate();
-      }
     }
+    this.requestUpdate();
   }
 
   /**

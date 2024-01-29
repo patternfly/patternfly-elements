@@ -419,7 +419,6 @@ export class ToggleController implements ReactiveController {
       if (focus) {
         this.#popupElement?.focus();
       }
-      this.#getToggleElement()?.dispatchEvent(new CustomEvent('open'));
     }
   }
 
@@ -451,7 +450,6 @@ export class ToggleController implements ReactiveController {
       if (focused) {
         (el as HTMLElement)?.focus();
       }
-      el?.dispatchEvent(new CustomEvent('close'));
     }
   }
 }

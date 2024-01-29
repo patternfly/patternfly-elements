@@ -37,9 +37,9 @@ export class PfDropdownMenu extends LitElement {
     'click': this.#onMenuitemClick.bind(this),
   };
 
-  #itemsInit = false;
-
-  #tabindex = new RovingTabindexController(this);
+  #tabindex = new RovingTabindexController(this, {
+    getItems: () => this.#menuitems,
+  });
 
   #internals = InternalsController.of(this, { role: 'menu' });
 
@@ -108,7 +108,7 @@ export class PfDropdownMenu extends LitElement {
    */
   #handleItemChange(event: Event) {
     if (event instanceof DropdownItemChange) {
-      this.#updateItems();
+      this.#tabindex.updateItems();
     }
   }
 
@@ -116,7 +116,7 @@ export class PfDropdownMenu extends LitElement {
    * handles slot change event
    */
   #handleSlotChange() {
-    this.#updateItems();
+    this.#tabindex.updateItems();
   }
 
   #nextMatchingItem(key: string) {
@@ -179,18 +179,6 @@ export class PfDropdownMenu extends LitElement {
         this.#tabindex.focusOnItem(focusEvent);
       }
     }
-  }
-
-  /**
-   * updates menu items list
-   */
-  #updateItems() {
-    if (this.#itemsInit) {
-      this.#tabindex.updateItems(this.#menuitems);
-    } else {
-      this.#tabindex.initItems(this.#menuitems);
-    }
-    this.#itemsInit = true;
   }
 }
 

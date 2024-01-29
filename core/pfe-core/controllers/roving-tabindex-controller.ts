@@ -6,6 +6,12 @@ const isFocusableElement = (el: Element): el is HTMLElement =>
   !el.ariaHidden &&
   !el.hasAttribute('hidden');
 
+export interface RovingTabindexControllerOptions<Item extends HTMLElement> {
+  getElement?: () => Element;
+  getItems?: () => Item[];
+  getItemContainer?: () => HTMLElement;
+}
+
 /**
  * Implements roving tabindex, as described in WAI-ARIA practices, [Managing Focus Within
  * Components Using a Roving
@@ -29,8 +35,6 @@ export class RovingTabindexController<
 
   /** array of all focusable elements */
   #items: Item[] = [];
-
-  #getElement: () => Element | null;
 
   /**
    * finds focusable items from a group of items
@@ -121,16 +125,30 @@ export class RovingTabindexController<
     return this.#caseSensitive;
   }
 
-  constructor(public host: ReactiveControllerHost, options?: {
-    getElement: () => Element;
-  }) {
-    this.#getElement = options?.getElement ?? (() => host instanceof Element ? host : null);
+  #options: {
+    getElement(): Element | null;
+    getItems?(): Item[];
+    getItemContainer?(): HTMLElement;
+  };
+
+  constructor(
+    public host: ReactiveControllerHost,
+    options?: RovingTabindexControllerOptions<Item>,
+  ) {
+    this.#options = {
+      getElement: options?.getElement ?? (() => host instanceof HTMLElement ? host : null),
+      getItems: options?.getItems,
+      getItemContainer: options?.getItemContainer,
+    };
     const instance = RovingTabindexController.hosts.get(host);
     if (instance) {
       return instance as RovingTabindexController<Item>;
     }
     RovingTabindexController.hosts.set(host, this);
     this.host.addController(this);
+    if (typeof this.#options?.getItems === 'function') {
+      this.initItems(this.#options.getItems(), this.#options.getItemContainer?.());
+    }
   }
 
   #nextMatchingItem(key: string) {
@@ -157,7 +175,7 @@ export class RovingTabindexController<
       return;
     }
 
-    const orientation = this.#getElement()?.getAttribute('aria-orientation');
+    const orientation = this.#options.getElement()?.getAttribute('aria-orientation');
 
     const item = this.activeItem;
     let shouldPreventDefault = false;
@@ -252,8 +270,8 @@ export class RovingTabindexController<
   /**
    * Focuses next focusable item
    */
-  updateItems(items: Item[]) {
-    const hasActive = document.activeElement && this.#getElement()?.contains(document.activeElement);
+  updateItems(items: Item[] = this.#options.getItems?.() ?? []) {
+    const hasActive = document.activeElement && this.#options.getElement()?.contains(document.activeElement);
     const sequence = [...items.slice(this.#itemIndex - 1), ...items.slice(0, this.#itemIndex - 1)];
     const first = sequence.find(item => this.#focusableItems.includes(item));
     this.#items = items ?? [];
@@ -268,6 +286,7 @@ export class RovingTabindexController<
 
   /**
    * from array of HTML items, and sets active items
+   * @deprecated: use getItems and getItemContainer option functions
    */
   initItems(items: Item[], itemsContainer?: Element) {
     this.#items = items ?? [];
@@ -276,12 +295,12 @@ export class RovingTabindexController<
     this.#activeItem = focusableItem;
     this.#updateTabindex();
 
-    itemsContainer ??= this.#getElement() ?? undefined;
+    itemsContainer ??= this.#options.getElement() ?? undefined;
 
     /**
      * removes listener on previous contained and applies it to new container
      */
-    if (!this.#itemsContainer || itemsContainer !== this.#itemsContainer) {
+    if (itemsContainer !== this.#itemsContainer) {
       this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
       this.#itemsContainer = itemsContainer;
       this.hostConnected();

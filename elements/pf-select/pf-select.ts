@@ -142,6 +142,8 @@ export class PfSelect extends LitElement {
 
   #lastSelected = this.selected;
 
+  #userCreatedOptions: PfSelectUserOptions[] = [];
+
   #toggle = new ToggleController(this, {
     kind: 'listbox',
     willChange: () => {
@@ -165,10 +167,6 @@ export class PfSelect extends LitElement {
       }
     }
   });
-
-  #controllerOn = true;
-
-  #userCreatedOptions: PfSelectUserOptions[] = [];
 
   /**
    * label for toggle button
@@ -322,29 +320,16 @@ export class PfSelect extends LitElement {
   }
 
   override updated(changed: PropertyValues<this>) {
-    this.#setToggle();
-
     if (changed.has('position') && this.#toggle) {
       this.#toggle.position = this.position;
     }
   }
 
   firstUpdated() {
+    this.#toggle.setPopupElement(this._listbox);
+    this.#toggle.addTriggerElement(this._input);
+    this.#toggle.addTriggerElement(this._toggle);
     this.#updateValueText();
-  }
-
-  #setToggle() {
-    if (!this.#controllerOn) {
-      this.addController(this.#toggle);
-      this.#controllerOn = true;
-    }
-    this.#toggle?.setPopupElement(this._listbox);
-    this.#toggle?.addTriggerElement(this._input);
-    this.#toggle?.addTriggerElement(this._toggle);
-    if (this.#toggle) {
-      this.removeController(this.#toggle);
-      this.#controllerOn = false;
-    }
   }
 
   /**

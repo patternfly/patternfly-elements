@@ -3,6 +3,7 @@ import { a11ySnapshot as snap } from '@web/test-runner-commands';
 export interface A11yTreeSnapshot {
   name: string;
   children?: A11yTreeSnapshot[];
+  description?: string;
   focused?: boolean;
   role: string;
   checked?: boolean;

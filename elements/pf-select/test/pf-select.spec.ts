@@ -26,7 +26,7 @@ function press(key = 'Tab') {
 }
 
 function getValues(element: PfSelect) {
-  return [element.selected].flat()?.filter(x => !!x).map(x => x!.value) ?? [];
+  return [element.selected].flat().filter(x => !!x).map(x => x!.value);
 }
 
 describe('<pf-select>', function() {

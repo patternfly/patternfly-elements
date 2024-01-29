@@ -52,6 +52,7 @@ export class PfSelect extends LitElement {
   /**
    * whether listbox is always expanded
    */
+  // TODO(bennypowers): factor out
   @property({ attribute: 'always-expanded', type: Boolean }) alwaysExpanded = false;
 
   /**
@@ -135,17 +136,17 @@ export class PfSelect extends LitElement {
   /**
    * Single select option value for single select menus,
    * or array of select option values for multi select.
-   * You can also specify `isSelected` on `SelectOption`.
    */
   get selected() {
     return this._listbox?.selected;
   }
 
   /**
-   * list of values as comma separated list
+   * list of selected options' values
    */
-  get selectedList() {
-    return this.#valueTextArray.map(txt => txt.replace(',', '\\,')).join(', ');
+  // TODO(bennypowers): factor out
+  get values() {
+    return this.#valueTextArray;
   }
 
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
@@ -197,8 +198,7 @@ export class PfSelect extends LitElement {
    * listbox's array of selected options
    */
   get #selectedOptions() {
-    const options: unknown[] = this._listbox?.selectedOptions || [];
-    return options as PfOption[];
+    return this._listbox?.selectedOptions || [];
   }
 
   /**

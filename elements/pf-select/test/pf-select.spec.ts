@@ -25,6 +25,10 @@ function press(key = 'Tab') {
   };
 }
 
+function getValues(element: PfSelect) {
+  return [element.selected].flat()?.filter(x => !!x).map(x => x!.value) ?? [];
+}
+
 describe('<pf-select>', function() {
   let element: PfSelect;
 
@@ -167,7 +171,7 @@ describe('<pf-select>', function() {
             beforeEach(updateComplete);
 
             it('selects option 2', function() {
-              expect(element.values).to.deep.equal(['2']);
+              expect(getValues(element)).to.deep.equal(['2']);
             });
           });
         });
@@ -192,7 +196,7 @@ describe('<pf-select>', function() {
           });
 
           it('selects option 1', async function() {
-            expect(element.values).to.deep.equal(['1']);
+            expect(getValues(element)).to.deep.equal(['1']);
           });
         });
 
@@ -214,18 +218,6 @@ describe('<pf-select>', function() {
             expect(snapshot.children?.at(0)?.focused).to.be.true;
           });
         });
-      });
-    });
-
-    describe('always-expanded', function() {
-      beforeEach(async function() {
-        element = await createFixture<PfSelect>(html`
-          <pf-select variant="checkbox" always-expanded>
-            <pf-option value="1">1</pf-option>
-          </pf-select>`);
-      });
-      it('is expanded', function() {
-        expect(element.expanded).to.be.true;
       });
     });
   });
@@ -326,7 +318,7 @@ describe('<pf-select>', function() {
           beforeEach(updateComplete);
 
           it('selects option 1', function() {
-            expect(element.values).to.deep.equal(['1']);
+            expect(getValues(element)).to.deep.equal(['1']);
           });
 
           it('remains expanded', async function() {
@@ -347,7 +339,7 @@ describe('<pf-select>', function() {
               beforeEach(press('Enter'));
               beforeEach(updateComplete);
               it('adds option 2 to selection', function() {
-                expect(element.values).to.deep.equal(['1', '2']);
+                expect(getValues(element)).to.deep.equal(['1', '2']);
               });
               it('remains expanded', async function() {
                 expect(element.expanded).to.be.true;
@@ -382,7 +374,7 @@ describe('<pf-select>', function() {
                 beforeEach(updateComplete);
 
                 it('adds options 3 and 4 to the selected list', function() {
-                  expect(element.values).to.deep.equal(['1', '2', '3', '4']);
+                  expect(getValues(element)).to.deep.equal(['1', '2', '3', '4']);
                 });
 
                 describe('then pressing ArrowUp and Enter', function() {
@@ -391,7 +383,7 @@ describe('<pf-select>', function() {
                   beforeEach(updateComplete);
 
                   it('deselects option 3', function() {
-                    expect(element.values).to.deep.equal(['1', '2', '4']);
+                    expect(getValues(element)).to.deep.equal(['1', '2', '4']);
                   });
 
                   describe('then holding down Shift and pressing arrow up / enter twice in a row', function() {
@@ -405,7 +397,7 @@ describe('<pf-select>', function() {
                     beforeEach(updateComplete);
 
                     it('deselects options 1 and 2', function() {
-                      expect(element.values).to.deep.equal(['4']);
+                      expect(getValues(element)).to.deep.equal(['4']);
                     });
 
                     describe('then pressing Ctrl+A', function() {
@@ -413,14 +405,14 @@ describe('<pf-select>', function() {
                       beforeEach(updateComplete);
 
                       it('selects all options', function() {
-                        expect(element.values).to.deep.equal(['1', '2', '3', '4', '5', '6', '7', '8']);
+                        expect(getValues(element)).to.deep.equal(['1', '2', '3', '4', '5', '6', '7', '8']);
                       });
 
                       describe('then pressing Ctrl+A again', function() {
                         beforeEach(ctrlA);
                         beforeEach(updateComplete);
                         it('deselects all options', function() {
-                          expect(element.values).to.deep.equal([]);
+                          expect(getValues(element)).to.deep.equal([]);
                         });
                       });
                     });
@@ -430,18 +422,6 @@ describe('<pf-select>', function() {
             });
           });
         });
-      });
-    });
-
-    describe('always-expanded', function() {
-      beforeEach(async function() {
-        element = await createFixture<PfSelect>(html`
-          <pf-select variant="checkbox" always-expanded>
-            <pf-option value="1">1</pf-option>
-          </pf-select>`);
-      });
-      it('is expanded', function() {
-        expect(element.expanded).to.be.true;
       });
     });
   });
@@ -606,7 +586,7 @@ describe('<pf-select>', function() {
             beforeEach(press('Enter'));
             beforeEach(updateComplete);
             it('selects the second option', function() {
-              expect(element.values).to.deep.equal(['Green']);
+              expect(getValues(element)).to.deep.equal(['Green']);
             });
             it('sets typeahead input to second option value', async function() {
               const snapshot = await a11ySnapshot();
@@ -700,7 +680,7 @@ describe('<pf-select>', function() {
             beforeEach(press('Enter'));
             beforeEach(updateComplete);
             it('selects the second option', function() {
-              expect(element.values).to.deep.equal(['Beryl']);
+              expect(getValues(element)).to.deep.equal(['Beryl']);
             });
             it('sets typeahead input to second option value', async function() {
               const snapshot = await a11ySnapshot();
@@ -735,7 +715,7 @@ describe('<pf-select>', function() {
                 beforeEach(press('Enter'));
                 beforeEach(updateComplete);
                 it('adds second option to selected values', function() {
-                  expect(element.values).to.deep.equal(['Amethyst', 'Beryl']);
+                  expect(getValues(element)).to.deep.equal(['Amethyst', 'Beryl']);
                 });
                 it('accessible combo button label should be "2 items selected"', async function() {
                   const snapshot = await a11ySnapshot();
@@ -778,7 +758,7 @@ describe('<pf-select>', function() {
                       expect(chip1close?.focused).to.be.true;
                     });
                     it('removes the first option from the selected values', function() {
-                      expect(element.values).to.deep.equal(['Beryl']);
+                      expect(getValues(element)).to.deep.equal(['Beryl']);
                     });
                     describe('then pressing Enter', function() {
                       beforeEach(press('Enter'));

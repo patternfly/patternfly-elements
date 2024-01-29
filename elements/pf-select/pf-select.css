@@ -7,7 +7,7 @@
   --_pf-option-svg-display: block;
 }
 
-:host, #outer.toggles {
+:host, #outer {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -26,17 +26,17 @@
   color: var(--pf-global--Color--dark-200, #6a6e73) !important;
 }
 
-#outer.toggles {
+#outer {
   position: relative;
 }
 
-#outer.toggles pf-listbox {
+#outer pf-listbox {
   position: absolute;
   background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
   opacity: 0;
 }
 
-#outer.toggles.expanded pf-listbox {
+#outer.expanded pf-listbox {
   opacity: 1;
   z-index: 9999 !important;
 }

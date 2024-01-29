@@ -50,12 +50,6 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'accessible-toggle-label' }) accessibleToggleLabel?: string;
 
   /**
-   * whether listbox is always expanded
-   */
-  // TODO(bennypowers): factor out
-  @property({ attribute: 'always-expanded', type: Boolean }) alwaysExpanded = false;
-
-  /**
    * whether filtering (if enabled) will be case-sensitive
    */
   @property({ attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
@@ -139,14 +133,6 @@ export class PfSelect extends LitElement {
    */
   get selected() {
     return this._listbox?.selected;
-  }
-
-  /**
-   * list of selected options' values
-   */
-  // TODO(bennypowers): factor out
-  get values() {
-    return this.#valueTextArray;
   }
 
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
@@ -234,7 +220,6 @@ export class PfSelect extends LitElement {
 
   render() {
     const {
-      alwaysExpanded,
       disabled,
       hasBadge,
       caseSensitive,
@@ -245,7 +230,6 @@ export class PfSelect extends LitElement {
     } = this;
     const { height, width } = this.getBoundingClientRect() || {};
     const { anchor, alignment, expanded } = this.#toggle || { 'expanded': true, 'anchor': 'bottom', 'alignment': 'start' };
-    const toggles = !alwaysExpanded ? 'toggles' : false;
     const offscreen = variant.startsWith('typeahead') ? 'offscreen' : false;
     const badge = hasBadge ? 'badge' : false;
     const multi = variant === 'checkbox' || variant === 'typeaheadmulti';
@@ -255,8 +239,8 @@ export class PfSelect extends LitElement {
     return html`
       <div id="outer"
            style="${styleMap(this.#toggle.styles ?? {})}"
-           class="${classMap({ disabled, toggles, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
-        <div id="toggle" ?hidden="${!typeahead && alwaysExpanded}">
+           class="${classMap({ disabled, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
+        <div id="toggle" ?hidden="${!typeahead}">
           ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
             <pf-chip-group label="${this.currentSelectionsLabel}">
               ${repeat(this.#selectedOptions, opt => opt.id, opt => html`
@@ -277,7 +261,6 @@ export class PfSelect extends LitElement {
                  role="combobox"
                  @input="${this.#onTypeaheadInput}">
             <button id="toggle-button"
-                    ?hidden="${alwaysExpanded}"
                     aria-label="${ifDefined(this.accessibleToggleLabel)}"
                     aria-controls="listbox"
                     aria-expanded="${!!expanded}"
@@ -298,12 +281,12 @@ export class PfSelect extends LitElement {
           </div>
           <pf-listbox id="listbox"
                       class="${classMap({ checkboxes })}"
-                      style="${styleMap(this.alwaysExpanded ? {} : {
+                      style="${styleMap({
                         marginTop: `${height || 0}px`,
                         width: width ? `${width}px` : 'auto',
                       })}"
                       ?disabled="${disabled}"
-                      ?hidden="${!this.alwaysExpanded && !expanded}"
+                      ?hidden="${!expanded}"
                       ?case-sensitive="${caseSensitive}"
                       ?match-anywhere="${matchAnywhere}"
                       ?multi="${multi}"
@@ -339,9 +322,7 @@ export class PfSelect extends LitElement {
   }
 
   override updated(changed: PropertyValues<this>) {
-    if (changed.has('alwaysExpanded')) {
-      this.#setToggle();
-    }
+    this.#setToggle();
 
     if (changed.has('position') && this.#toggle) {
       this.#toggle.position = this.position;
@@ -353,15 +334,14 @@ export class PfSelect extends LitElement {
   }
 
   #setToggle() {
-    if (!this.alwaysExpanded) {
-      if (!this.#controllerOn) {
-        this.addController(this.#toggle);
-        this.#controllerOn = true;
-      }
-      this.#toggle?.setPopupElement(this._listbox);
-      this.#toggle?.addTriggerElement(this._input);
-      this.#toggle?.addTriggerElement(this._toggle);
-    } else if (this.#toggle) {
+    if (!this.#controllerOn) {
+      this.addController(this.#toggle);
+      this.#controllerOn = true;
+    }
+    this.#toggle?.setPopupElement(this._listbox);
+    this.#toggle?.addTriggerElement(this._input);
+    this.#toggle?.addTriggerElement(this._toggle);
+    if (this.#toggle) {
       this.removeController(this.#toggle);
       this.#controllerOn = false;
     }

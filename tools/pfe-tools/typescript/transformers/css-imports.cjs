@@ -90,6 +90,11 @@ function minifyCss(stylesheet, filePath) {
  * @return {import('typescript').TransformerFactory<import('typescript').Node>}
  */
 module.exports = function(_program, { inline = false, minify = false } = {}) {
+  // TODO: find duplicated imports and refuse to inline them
+  // i.e. run visitEachChild twice,
+  // 1. to build up a cache of css module specifiers that are imported more than once
+  // 2. to inline every import except the ones in the cache
+  //    (and write the rest to .css.js files)
   return ctx => {
     /**
      * @param {import('typescript').Node} node
@@ -146,4 +151,3 @@ module.exports = function(_program, { inline = false, minify = false } = {}) {
     };
   };
 };
-

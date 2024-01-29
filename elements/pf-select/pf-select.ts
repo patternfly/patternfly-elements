@@ -216,6 +216,13 @@ export class PfSelect extends LitElement {
     return this.variant === 'typeaheadmulti';
   }
 
+  protected override async getUpdateComplete(): Promise<boolean> {
+    return [
+      await super.getUpdateComplete(),
+      await this._listbox?.updateComplete,
+    ].every(x => !!x);
+  }
+
   render() {
     const {
       disabled,
@@ -238,7 +245,7 @@ export class PfSelect extends LitElement {
       <div id="outer"
            style="${styleMap(this.#toggle.styles ?? {})}"
            class="${classMap({ disabled, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
-        <div id="toggle" ?hidden="${!typeahead}">
+        <div id="toggle" ?hidden="${typeahead}">
           ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
             <pf-chip-group label="${this.currentSelectionsLabel}">
               ${repeat(this.#selectedOptions, opt => opt.id, opt => html`

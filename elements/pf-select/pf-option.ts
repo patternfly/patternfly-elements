@@ -57,7 +57,14 @@ export class PfOption extends LitElement {
   @property({ type: Boolean, reflect: true }) disabled = false;
 
   /** form value for this option */
-  @property({ reflect: true }) value = '';
+  @property({ reflect: true })
+  get value() {
+    return this.#value ?? this.textContent;
+  }
+
+  set value(v: string) {
+    this.#value = v;
+  }
 
   /** whether option is selected */
   @property({ type: Boolean }) selected = false;
@@ -102,6 +109,8 @@ export class PfOption extends LitElement {
       return 0;
     }
   }
+
+  #value = '';
 
   #internals = InternalsController.of(this, { role: 'option' });
 

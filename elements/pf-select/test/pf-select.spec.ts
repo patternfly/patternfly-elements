@@ -88,7 +88,8 @@ describe('<pf-select>', function() {
 
         it('focuses on option 1', async function() {
           const snapshot = await a11ySnapshot();
-          expect(snapshot.children?.at(1)?.children?.find(x => x.focused)?.name)
+          const [, listbox] = snapshot.children ?? [];
+          expect(listbox?.children?.find(x => x.focused)?.name)
             .to.equal('1');
         });
       });
@@ -106,7 +107,8 @@ describe('<pf-select>', function() {
 
         it('focuses on option 1', async function() {
           const snapshot = await a11ySnapshot();
-          expect(snapshot.children?.at(1)?.children?.at(0)?.focused).to.be.true;
+          const [, listbox] = snapshot.children ?? [];
+          expect(listbox?.children?.at(0)?.focused).to.be.true;
         });
       });
 
@@ -237,10 +239,10 @@ describe('<pf-select>', function() {
         </pf-select>`);
     });
 
-    it('should have accessible button label "Options 2"', async function() {
+    it('should have accessible button label "Options 0"', async function() {
       const snapshot = await a11ySnapshot();
       const button = snapshot.children?.find(x => x.role === 'button');
-      expect(button?.name).to.equal('Options 2');
+      expect(button?.name).to.equal('Options 0');
     });
 
     it('is accessible', async function() {
@@ -347,6 +349,12 @@ describe('<pf-select>', function() {
                 expect(snapshot.children?.at(1)?.role).to.equal('listbox');
               });
 
+              it('should have accessible button label "Options 2"', async function() {
+                const snapshot = await a11ySnapshot();
+                const button = snapshot.children?.find(x => x.role === 'button');
+                expect(button?.name).to.equal('Options 2');
+              });
+
               describe.skip('badge', function() {
                 // TODO(bennypowers): it's not clear to me how to assert on the state of the badge from the ax tree
                 it('shows a badge with the number 2', async function() {
@@ -441,6 +449,44 @@ describe('<pf-select>', function() {
         </pf-select>`);
     });
 
+    describe('custom filtering', function() {
+      beforeEach(function() {
+        element.customFilter = option => new RegExp(element.filter).test(option.value);
+      });
+
+      beforeEach(function() {
+        element.focus();
+      });
+
+      beforeEach(updateComplete);
+
+      describe('typing "r"', function() {
+        beforeEach(press('r'));
+        beforeEach(updateComplete);
+        it('shows options with "r" anywhere in them', async function() {
+          const snapshot = await a11ySnapshot();
+          const [,, listbox] = snapshot.children ?? [];
+          expect(listbox.children?.map(({ name, role }) => ({ name, role }))).to.deep.equal([
+            { role: 'option', name: 'Green' },
+            { role: 'option', name: 'Orange' },
+            { role: 'option', name: 'Purple' },
+          ]);
+        });
+      });
+
+      describe('typing "R"', function() {
+        beforeEach(press('R'));
+        beforeEach(updateComplete);
+        it('shows options that contain "R"', async function() {
+          const snapshot = await a11ySnapshot();
+          const [, , listbox] = snapshot.children ?? [];
+          expect(listbox?.children?.map(({ role, name }) => ({ role, name }))).to.deep.equal([
+            { role: 'option', name: 'Red' },
+          ]);
+        });
+      });
+    });
+
     describe('calling focus()', function() {
       beforeEach(function() {
         element.focus();
@@ -459,55 +505,14 @@ describe('<pf-select>', function() {
         });
       });
 
-      describe('setting filter to "r"', function() {
-        beforeEach(function() {
-          element.caseSensitive = false;
-          element.filter = 'r';
-        });
+      describe('typing "r"', function() {
+        beforeEach(press('r'));
         beforeEach(updateComplete);
 
         it('shows options that start with "r" or "R"', async function() {
           const snapshot = await a11ySnapshot();
-          const [listbox] = snapshot.children ?? [];
+          const [, , listbox] = snapshot.children ?? [];
           expect(listbox?.children?.every(x => x.name.toLowerCase().startsWith('r'))).to.be.true;
-        });
-
-        describe('match anywhere', function() {
-          beforeEach(function() {
-            element.matchAnywhere = true;
-          });
-          beforeEach(updateComplete);
-          it('shows options with "r" anywhere in them', async function() {
-            const snapshot = await a11ySnapshot();
-            const [listbox] = snapshot.children ?? [];
-            expect(listbox.children?.map(({ name, role }) => ({ name, role }))).to.deep.equal([
-              { role: 'option', name: 'Green' },
-              { role: 'option', name: 'Orange' },
-              { role: 'option', name: 'Purple' },
-              { role: 'option', name: 'Red' }
-            ]);
-          });
-        });
-
-        describe('case sensitive', function() {
-          beforeEach(function() {
-            element.caseSensitive = true;
-          });
-          beforeEach(updateComplete);
-          it('shows options that start with "r" or shows full list if none', async function() {
-            const snapshot = await a11ySnapshot();
-            const [listbox] = snapshot.children ?? [];
-            expect(listbox?.children?.map(({ role, name }) => ({ role, name }))).to.deep.equal([
-              { role: 'option', name: 'Blue' },
-              { role: 'option', name: 'Green' },
-              { role: 'option', name: 'Magenta' },
-              { role: 'option', name: 'Orange' },
-              { role: 'option', name: 'Purple' },
-              { role: 'option', name: 'Pink' },
-              { role: 'option', name: 'Red' },
-              { role: 'option', name: 'Yellow' }
-            ]);
-          });
         });
       });
 
@@ -516,19 +521,10 @@ describe('<pf-select>', function() {
           element.filter = '*';
         });
         beforeEach(updateComplete);
-        it('shows all options', async function() {
+        it('does not error', async function() {
           const snapshot = await a11ySnapshot();
-          const [listbox] = snapshot.children ?? [];
-          expect(listbox?.children?.map(({ role, name }) => ({ role, name }))).to.deep.equal([
-            { role: 'option', name: 'Blue' },
-            { role: 'option', name: 'Green' },
-            { role: 'option', name: 'Magenta' },
-            { role: 'option', name: 'Orange' },
-            { role: 'option', name: 'Purple' },
-            { role: 'option', name: 'Pink' },
-            { role: 'option', name: 'Red' },
-            { role: 'option', name: 'Yellow' }
-          ]);
+          const [, , listbox] = snapshot.children ?? [];
+          expect(listbox?.children).to.not.be.ok;
         });
       });
 
@@ -572,12 +568,13 @@ describe('<pf-select>', function() {
         it('expands', async function() {
           expect(element.expanded).to.be.true;
           const snapshot = await a11ySnapshot();
-          expect(snapshot.children?.at(1)).to.be.ok;
-          expect(snapshot.children?.at(1)?.role).to.equal('listbox');
+          expect(snapshot.children?.at(2)).to.be.ok;
+          expect(snapshot.children?.at(2)?.role).to.equal('listbox');
         });
         it('focuses the first option', async function() {
           const snapshot = await a11ySnapshot();
-          expect(snapshot.children?.at(1)?.children?.at(0)?.focused).to.be.true;
+          const [, , listbox] = snapshot.children ?? [];
+          expect(listbox?.children?.at(0)?.focused).to.be.true;
         });
         describe('then pressing ArrowDown', function() {
           beforeEach(press('ArrowDown'));
@@ -590,16 +587,20 @@ describe('<pf-select>', function() {
             });
             it('sets typeahead input to second option value', async function() {
               const snapshot = await a11ySnapshot();
-              expect(snapshot.children?.at(0)?.valuetext).to.equal('Green');
+              const [combobox] = snapshot.children ?? [];
+              expect(combobox?.value).to.equal('Green');
             });
-            it('focuses on typeahead input', async function() {
+            it('focuses on toggle button', async function() {
               const snapshot = await a11ySnapshot();
-              expect(snapshot.children?.at(0)?.focused).to.be.true;
+              const focused = snapshot.children?.find(x => x.focused);
+              expect(focused?.role).to.equal('button');
+              expect(focused?.haspopup).to.equal('listbox');
             });
             it('closes', async function() {
               expect(element.expanded).to.be.false;
               const snapshot = await a11ySnapshot();
-              expect(snapshot.children?.at(1)).to.be.undefined;
+              const [, , listbox] = snapshot.children ?? [];
+              expect(listbox).to.be.undefined;
             });
           });
         });
@@ -628,6 +629,7 @@ describe('<pf-select>', function() {
         element.focus();
       });
       beforeEach(updateComplete);
+
       it('focuses the typeahead input', async function() {
         const snapshot = await a11ySnapshot();
         const [input] = snapshot.children ?? [];
@@ -639,16 +641,19 @@ describe('<pf-select>', function() {
         beforeEach(press('ArrowDown'));
         beforeEach(updateComplete);
 
-        it('expands', async function() {
+        it('expands', function() {
           expect(element.expanded).to.be.true;
+        });
+
+        it('shows the listbox', async function() {
           const snapshot = await a11ySnapshot();
-          expect(snapshot.children?.at(1)).to.be.ok;
-          expect(snapshot.children?.at(1)?.role).to.equal('listbox');
+          expect(snapshot.children?.find(x => x.role === 'listbox')).to.be.ok;
         });
 
         it('focuses the first option', async function() {
           const snapshot = await a11ySnapshot();
-          expect(snapshot.children?.at(1)?.children?.at(0)?.focused).to.be.true;
+          const listbox = snapshot.children?.find(x => x.role === 'listbox');
+          expect(listbox?.children?.find(x => x.focused)?.name).to.equal('Amethyst');
         });
 
         describe('then pressing Shift+Tab', function() {
@@ -656,20 +661,33 @@ describe('<pf-select>', function() {
           beforeEach(press('Tab'));
           beforeEach(shiftRelease);
           beforeEach(updateComplete);
-          it('closes', async function() {
+          it('closes', function() {
             expect(element.expanded).to.be.false;
           });
 
           it('hides the listbox', async function() {
             const snapshot = await a11ySnapshot();
-            expect(snapshot.children?.at(1)).to.be.undefined;
+            expect(snapshot.children?.find(x => x.role === 'listbox')).to.be.undefined;
           });
 
-          it('focuses the typeahead input', async function() {
+          it('focuses the toggle button', async function() {
             const snapshot = await a11ySnapshot();
-            const [input] = snapshot.children ?? [];
-            expect(input.focused).to.be.true;
-            expect(input.role).to.equal('combobox');
+            const focused = snapshot?.children?.find(x => x.focused);
+            expect(focused?.role).to.equal('button');
+            expect(focused?.haspopup).to.equal('listbox');
+          });
+
+          describe('then pressing Shift+Tab', function() {
+            beforeEach(shiftHold);
+            beforeEach(press('Tab'));
+            beforeEach(shiftRelease);
+            beforeEach(updateComplete);
+            it('focuses the combobox input', async function() {
+              const snapshot = await a11ySnapshot();
+              const focused = snapshot?.children?.find(x => x.focused);
+              expect(focused?.role).to.equal('combobox');
+              expect(focused?.haspopup).to.equal('listbox');
+            });
           });
         });
 
@@ -682,19 +700,16 @@ describe('<pf-select>', function() {
             it('selects the second option', function() {
               expect(getValues(element)).to.deep.equal(['Beryl']);
             });
-            it('sets typeahead input to second option value', async function() {
-              const snapshot = await a11ySnapshot();
-              expect(snapshot.children?.at(0)?.valuetext).to.equal('Beryl');
-            });
             it('focuses on second option', async function() {
               const snapshot = await a11ySnapshot();
-              const [, listbox] = snapshot.children ?? [];
-              expect(listbox.children?.at(1)?.focused).to.be.true;
+              const listbox = snapshot.children?.find(x => x.role === 'listbox');
+              expect(listbox?.children?.find(x => x.focused)?.name).to.equal('Beryl');
             });
             it('remains expanded', async function() {
-              expect(element.expanded).to.be.false;
+              expect(element.expanded).to.be.true;
               const snapshot = await a11ySnapshot();
-              expect(snapshot.children?.at(1)?.role).to.equal('listbox');
+              const listbox = snapshot.children?.find(x => x.role === 'listbox');
+              expect(listbox).to.be.ok;
             });
             it('shows 1 chip', async function() {
               const snapshot = await a11ySnapshot();
@@ -708,8 +723,9 @@ describe('<pf-select>', function() {
               beforeEach(updateComplete);
               it('focuses the first option', async function() {
                 const snapshot = await a11ySnapshot();
-                const [, listbox] = snapshot.children ?? [];
-                expect(listbox.children?.at(0)?.focused).to.be.true;
+                const listbox = snapshot.children?.find(x => x.role === 'listbox');
+                const focused = listbox?.children?.find(x => x.focused);
+                expect(focused?.name).to.equal('Amethyst');
               });
               describe('then pressing Enter', function() {
                 beforeEach(press('Enter'));
@@ -732,47 +748,86 @@ describe('<pf-select>', function() {
                   expect(chip2close?.name).to.equal('Close');
                   expect(chip2close?.description).to.equal('Beryl');
                 });
-                describe('then pressing ...', function() {
-                  it('focuses the first chip\'s close button', async function() {
+                describe('then pressing Shift+Tab', function() {
+                  beforeEach(shiftHold);
+                  beforeEach(press('Tab'));
+                  beforeEach(shiftRelease);
+                  beforeEach(updateComplete);
+                  it('focuses the toggle button', async function() {
                     const snapshot = await a11ySnapshot();
-                    const [, chip1close] = snapshot.children ?? [];
-                    expect(chip1close?.role).to.equal('button');
-                    expect(chip1close?.name).to.equal('Close');
-                    expect(chip1close?.description).to.equal('Amethyst');
-                    expect(chip1close?.focused).to.be.true;
+                    const focused = snapshot.children?.find(x => x.focused);
+                    expect(focused?.role).to.equal('button');
+                    expect(focused?.haspopup).to.equal('listbox');
                   });
-                  describe('then pressing Space', function() {
-                    beforeEach(press(' '));
+                  describe('then pressing Shift+Tab', function() {
+                    beforeEach(shiftHold);
+                    beforeEach(press('Tab'));
+                    beforeEach(shiftRelease);
                     beforeEach(updateComplete);
-                    it('removes the first chip', async function() {
+                    it('focuses the combobox input', async function() {
                       const snapshot = await a11ySnapshot();
-                      const [, chip1close, ...rest] = snapshot.children ?? [];
-                      expect(chip1close?.role).to.equal('button');
-                      expect(chip1close?.name).to.equal('Close');
-                      expect(chip1close?.description).to.equal('Beryl');
-                      expect(rest.filter(x => 'description' in x)?.length).to.equal(0);
+                      const focused = snapshot.children?.find(x => x.focused);
+                      expect(focused?.role).to.equal('combobox');
                     });
-                    it('focuses the remaining chip\'s close button', async function() {
-                      const snapshot = await a11ySnapshot();
-                      const [, chip1close] = snapshot.children ?? [];
-                      expect(chip1close?.focused).to.be.true;
-                    });
-                    it('removes the first option from the selected values', function() {
-                      expect(getValues(element)).to.deep.equal(['Beryl']);
-                    });
-                    describe('then pressing Enter', function() {
-                      beforeEach(press('Enter'));
+                    describe('then pressing Shift+Tab', function() {
+                      beforeEach(shiftHold);
+                      beforeEach(press('Tab'));
+                      beforeEach(shiftRelease);
                       beforeEach(updateComplete);
-                      it('removes all chips', async function() {
+                      it('focuses the last chip\'s close button', async function() {
                         const snapshot = await a11ySnapshot();
-                        expect(snapshot.children?.find(x => x.role === 'button' && x.name === 'Close'))
-                          .to.be.undefined;
+                        const focused = snapshot.children?.find(x => x.focused);
+                        expect(focused?.role).to.equal('button');
+                        expect(focused?.name).to.equal('Close');
+                        expect(focused?.description).to.equal('Beryl');
                       });
-                      it('focuses the typeahead input', async function() {
-                        const snapshot = await a11ySnapshot();
-                        const [input] = snapshot.children ?? [];
-                        expect(input?.focused).to.be.true;
-                        expect(input?.role).to.equal('combobox');
+                      describe('then pressing Space', function() {
+                        beforeEach(updateComplete);
+                        beforeEach(press(' '));
+                        beforeEach(updateComplete);
+                        beforeEach(updateComplete);
+                        it('removes the second chip', async function() {
+                          const snapshot = await a11ySnapshot();
+                          const [, chip1close, ...rest] = snapshot.children ?? [];
+                          expect(chip1close?.role).to.equal('button');
+                          expect(chip1close?.name).to.equal('Close');
+                          expect(chip1close?.description).to.equal('Amethyst');
+                          expect(rest.filter(x => 'description' in x)?.length).to.equal(0);
+                        });
+                        it('removes the second option from the selected values', function() {
+                          expect(getValues(element)).to.deep.equal(['Amethyst']);
+                        });
+                        it('focuses the combobox', async function() {
+                          const snapshot = await a11ySnapshot();
+                          const focused = snapshot.children?.find(x => x.focused);
+                          expect(focused?.role).to.equal('combobox');
+                        });
+                        describe('then pressing Shift+Tab', function() {
+                          beforeEach(shiftHold);
+                          beforeEach(press('Tab'));
+                          beforeEach(shiftRelease);
+                          beforeEach(updateComplete);
+                          it('focuses the first chip', async function() {
+                            const snapshot = await a11ySnapshot();
+                            const focused = snapshot.children?.find(x => x.focused);
+                            expect(focused?.role).to.equal('button');
+                            expect(focused?.description).to.equal('Amethyst');
+                          });
+                          describe('then pressing Space', function() {
+                            beforeEach(press(' '));
+                            beforeEach(updateComplete);
+                            it('removes all chips', async function() {
+                              const snapshot = await a11ySnapshot();
+                              expect(snapshot.children?.find(x => x.role === 'button' && x.name === 'Close'))
+                                .to.be.undefined;
+                            });
+                            it('focuses the typeahead input', async function() {
+                              const snapshot = await a11ySnapshot();
+                              const focused = snapshot.children?.find(x => x.focused);
+                              expect(focused?.role).to.equal('combobox');
+                            });
+                          });
+                        });
                       });
                     });
                   });

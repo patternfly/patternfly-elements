@@ -289,11 +289,10 @@ export class PfSelect extends LitElement {
                         marginTop: `${height || 0}px`,
                         width: width ? `${width}px` : 'auto',
                       })}"
-                      ?disabled="${disabled}"
                       ?hidden="${!expanded}"
-                      ?case-sensitive="${caseSensitive}"
-                      ?multi="${multi}"
-                      filter="${filter || ''}"
+                      .disabled="${disabled}"
+                      .multi="${multi}"
+                      .filter="${filter || ''}"
                       .customFilter="${this.customFilter}"
                       @input="${this.#onListboxInput}"
                       @change="${this.#onListboxChange}"

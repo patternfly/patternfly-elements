@@ -229,6 +229,7 @@ export class ToggleController implements ReactiveController {
     switch (event.key) {
       case 'Escape':
       case 'Esc':
+      case 'Tab':
         event.preventDefault();
         event.stopImmediatePropagation();
         await this.hide(true);

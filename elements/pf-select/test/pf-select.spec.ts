@@ -19,7 +19,7 @@ async function ctrlA() {
   await sendKeys({ up: 'Control' });
 }
 
-function press(key = 'Tab') {
+function press(key: string) {
   return async function() {
     await sendKeys({ press: key });
   };
@@ -202,10 +202,45 @@ describe('<pf-select>', function() {
           });
         });
 
+        describe('then pressing Tab', function() {
+          beforeEach(press('Tab'));
+          beforeEach(updateComplete);
+          it('closes', function() {
+            expect(element.expanded).to.be.false;
+          });
+          it('hides the listbox', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(snapshot.children?.at(1)).to.be.undefined;
+          });
+          it('focuses the button', async function() {
+            const snapshot = await a11ySnapshot();
+            const focused = snapshot.children?.find(x => x.focused);
+            expect(focused?.role).to.equal('button');
+            expect(focused?.haspopup).to.equal('listbox');
+          });
+        });
+
         describe('then pressing Shift+Tab', function() {
           beforeEach(shiftHold);
           beforeEach(press('Tab'));
           beforeEach(shiftRelease);
+          beforeEach(updateComplete);
+          it('closes', function() {
+            expect(element.expanded).to.be.false;
+          });
+          it('hides the listbox', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(snapshot.children?.at(1)).to.be.undefined;
+          });
+          it('focuses the button', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(snapshot.children?.at(0)?.role).to.equal('button');
+            expect(snapshot.children?.at(0)?.focused).to.be.true;
+          });
+        });
+
+        describe('then pressing Escape', function() {
+          beforeEach(press('Escape'));
           beforeEach(updateComplete);
           it('closes', function() {
             expect(element.expanded).to.be.false;
@@ -308,6 +343,41 @@ describe('<pf-select>', function() {
             expect(snapshot.children?.at(1)).to.be.undefined;
           });
 
+          it('focuses the button', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(snapshot.children?.at(0)?.role).to.equal('button');
+            expect(snapshot.children?.at(0)?.focused).to.be.true;
+          });
+        });
+
+        describe('then pressing Tab', function() {
+          beforeEach(press('Tab'));
+          beforeEach(updateComplete);
+          it('closes', function() {
+            expect(element.expanded).to.be.false;
+          });
+          it('hides the listbox', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(snapshot.children?.at(1)).to.be.undefined;
+          });
+          it('focuses the button', async function() {
+            const snapshot = await a11ySnapshot();
+            const focused = snapshot.children?.find(x => x.focused);
+            expect(focused?.role).to.equal('button');
+            expect(focused?.haspopup).to.equal('listbox');
+          });
+        });
+
+        describe('then pressing Escape', function() {
+          beforeEach(press('Escape'));
+          beforeEach(updateComplete);
+          it('closes', function() {
+            expect(element.expanded).to.be.false;
+          });
+          it('hides the listbox', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(snapshot.children?.at(1)).to.be.undefined;
+          });
           it('focuses the button', async function() {
             const snapshot = await a11ySnapshot();
             expect(snapshot.children?.at(0)?.role).to.equal('button');

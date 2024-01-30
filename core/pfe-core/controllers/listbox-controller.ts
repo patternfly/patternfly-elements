@@ -56,14 +56,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
   #visibleOptions?: Item[];
 
-  /** Event listeners for host element */
-  #listeners = {
-    'click': this.#onOptionClick.bind(this),
-    'focus': this.#onOptionFocus.bind(this),
-    'keydown': this.#onOptionKeydown.bind(this),
-    'keyup': this.#onOptionKeyup.bind(this),
-  };
-
   /** Filter options that start with this string (case-insensitive) */
   get filter() {
     return this.#filter;
@@ -197,12 +189,20 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     this.#onFilterChange();
   }
 
-  /**
-   * adds event listeners to host
-   */
   hostConnected() {
-    this.#listeners;
+    this.element.addEventListener('click', this.#onOptionClick);
+    this.element.addEventListener('focus', this.#onOptionFocus);
+    this.element.addEventListener('keydown', this.#onOptionKeydown);
+    this.element.addEventListener('keyup', this.#onOptionKeyup);
   }
+
+  hostDisconnected() {
+    this.element.removeEventListener('click', this.#onOptionClick);
+    this.element.removeEventListener('focus', this.#onOptionFocus);
+    this.element.removeEventListener('keydown', this.#onOptionKeydown);
+    this.element.removeEventListener('keyup', this.#onOptionKeyup);
+  }
+
 
   #getEnabledOptions(options = this.options) {
     return options.filter(option => !option.ariaDisabled && !option.closest('[disabled]'));
@@ -257,7 +257,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
     const oldValue = this.value;
 
-    this.controllerOptions.onFilterChanged?.();
+    this.controllerOptions.onFilterChanged?.(this.filter);
 
     if (this.#updateFocus) {
       this.tabindex.updateItems();
@@ -280,51 +280,58 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     });
   }
 
+  #getEventOption(event: Event): Item | undefined {
+    return event.composedPath().find(node => this.#options.includes(node as Item)) as Item | undefined;
+  }
+
+
   /**
    * handles focusing on an option:
    * updates roving tabindex and active descendant
    */
-  #onOptionFocus(event: FocusEvent) {
-    const target = event.target as Item;
-    if (target !== this.tabindex.activeItem) {
+  #onOptionFocus = (event: FocusEvent) => {
+    const target = this.#getEventOption(event);
+    if (target && target !== this.tabindex.activeItem) {
       this.tabindex.updateActiveItem(target);
     }
-  }
+  };
 
   /**
    * handles clicking on a listbox option:
    * which selects an item by default
    * or toggles selection if multiselectable
    */
-  #onOptionClick(event: MouseEvent) {
-    const target = event.target as Item;
-    const oldValue = this.value;
-    if (this.multi) {
-      if (!event.shiftKey) {
-        this.controllerOptions.select(target, !this.controllerOptions.isSelected(target));
-      } else if (this.#shiftStartingItem && target) {
-        this.#updateMultiselect(target, this.#shiftStartingItem);
+  #onOptionClick = (event: MouseEvent) => {
+    const target = this.#getEventOption(event);
+    if (target) {
+      const oldValue = this.value;
+      if (this.multi) {
+        if (!event.shiftKey) {
+          this.controllerOptions.select(target, !this.controllerOptions.isSelected(target));
+        } else if (this.#shiftStartingItem && target) {
+          this.#updateMultiselect(target, this.#shiftStartingItem);
+          this.#fireChange();
+        }
+      } else {
+        // select target and deselect all other options
+        this.options.forEach(option => this.controllerOptions.select(option, option === target));
+      }
+      if (target !== this.tabindex.activeItem) {
+        this.tabindex.focusOnItem(target);
+      }
+      if (oldValue !== this.value) {
         this.#fireChange();
       }
-    } else {
-      // select target and deselect all other options
-      this.options.forEach(option => this.controllerOptions.select(option, option === target));
     }
-    if (target !== this.tabindex.activeItem) {
-      this.tabindex.focusOnItem(target);
-    }
-    if (oldValue !== this.value) {
-      this.#fireChange();
-    }
-  }
+  };
 
   /**
    * handles keyup:
    * track whether shift key is being used for multiselectable listbox
    */
-  #onOptionKeyup(event: KeyboardEvent) {
-    const target = event.target as Item;
-    if (event.shiftKey && this.multi) {
+  #onOptionKeyup = (event: KeyboardEvent) => {
+    const target = this.#getEventOption(event);
+    if (target && event.shiftKey && this.multi) {
       if (this.#shiftStartingItem && target) {
         this.#updateMultiselect(target, this.#shiftStartingItem);
         this.#fireChange();
@@ -333,20 +340,21 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         this.#shiftStartingItem = null;
       }
     }
-  }
+  };
 
   /**
    * handles keydown:
    * filters listbox by keyboard event when slotted option has focus,
    * or by external element such as a text field
    */
-  #onOptionKeydown(event: KeyboardEvent) {
-    this.#showAllOptions = false;
-    const target = event.target ? event.target as Item : undefined;
+  #onOptionKeydown = (event: KeyboardEvent) => {
+    const target = this.#getEventOption(event);
 
-    if (event.altKey || event.metaKey || !target || !this.options.includes(target)) {
+    if (!target || event.altKey || event.metaKey || !this.options.includes(target)) {
       return;
     }
+
+    this.#showAllOptions = false;
 
     const first = this.tabindex.firstItem;
     const last = this.tabindex.lastItem;
@@ -385,7 +393,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       default:
         break;
     }
-  }
+  };
 
   /**
    * handles change to options given previous options array
@@ -396,9 +404,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       this.#options.forEach((option, index, arr) => {
         if (!oldOptions.includes(option)) {
           this.controllerOptions.optionAdded?.(option, index, [...arr]);
-          for (const [event, listener] of Object.entries(this.#listeners)) {
-            option?.addEventListener(event, listener as (event: Event | null) => void);
-          }
         }
       });
       this.tabindex.initItems(this.visibleOptions);

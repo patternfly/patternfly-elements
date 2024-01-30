@@ -228,7 +228,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   }
 
   /**
-   * handles user user selection change similar to HTMLSelectElement events
+   * dispatch user selection change event similar to HTMLSelectElement events
    * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
    */
   #fireChange() {
@@ -236,7 +236,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   }
 
   /**
-   * handles element value change similar to HTMLSelectElement events
+   * dispatch element value change event similar to HTMLSelectElement events
    * (@see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement#events|MDN: HTMLSelectElement Events})
    */
   #fireInput() {

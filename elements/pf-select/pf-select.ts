@@ -51,20 +51,15 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'accessible-toggle-label' }) accessibleToggleLabel?: string;
 
   /**
-   * whether filtering (if enabled) will be case-sensitive
+   * Accessible label for chip group used to describe chips
    */
-  @property({ attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
+  @property({ attribute: 'accessible-current-selections-label' }) accessibleCurrentSelectionsLabel = 'Current selections';
 
   /**
    * text for a special option that allows user to create an option from typeahead input text;
    * set to '' in order to disable this feature
    */
   @property({ attribute: 'create-option-text' }) createOptionText = '';
-
-  /**
-   * Accessible label for chip group used to describe chips
-   */
-  @property({ attribute: 'current-selections-label' }) currentSelectionsLabel = 'Current selections';
 
   /**
    * listbox button text when single-select listbox has no selected option text
@@ -219,7 +214,6 @@ export class PfSelect extends LitElement {
     const {
       disabled,
       hasBadge,
-      caseSensitive,
       createOptionText,
       filter,
       variant,
@@ -246,7 +240,7 @@ export class PfSelect extends LitElement {
            class="${classMap({ disabled, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
         <div id="toggle">
           ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
-            <pf-chip-group label="${this.currentSelectionsLabel}">
+            <pf-chip-group label="${this.accessibleCurrentSelectionsLabel}">
               ${repeat(this.#selectedOptions, opt => opt.id, opt => html`
               <pf-chip id="chip-${opt.textContent}"
                        .readonly="${this.disabled}"

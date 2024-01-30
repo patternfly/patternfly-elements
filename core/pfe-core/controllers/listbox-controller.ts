@@ -13,19 +13,20 @@ export type ListboxOrientation = 'undefined' | 'horizontal' | 'vertical';
  */
 export interface ListboxConfigOptions<T extends HTMLElement> {
   caseSensitive?: boolean;
-  matchAnywhere?: boolean;
   multi?: boolean;
   orientation?: ListboxOrientation;
   getHTMLElement?(): HTMLElement;
   select(option: T, force?: boolean): void;
   isSelected(option: T): boolean;
   optionAdded?(option: T, index: number, options: T[]): void;
+  onFilterChanged?(value: string): void;
 }
 
-type FilterPropKey = 'filter' | 'caseSensitive' | 'matchAnywhere';
-type FilterPropValue = ListboxController<any>[FilterPropKey];
-
 let constructingAllowed = false;
+
+function escapeRegExp(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
 
 /**
  * Implements roving tabindex, as described in WAI-ARIA practices,
@@ -39,38 +40,8 @@ let constructingAllowed = false;
 export class ListboxController<Item extends HTMLElement> implements ReactiveController {
   private static instances = new WeakMap<ReactiveControllerHost, ListboxController<any>>();
 
-  private static filter<T extends HTMLElement>(
-    target: ListboxController<T>,
-    key: FilterPropKey,
-  ) {
-    // typescript experimental decorator
-    Object.defineProperty(target, key, {
-      get(this: ListboxController<T>) {
-        return this.#filterStorage.get(key);
-      },
-      set(this: ListboxController<T>, value: FilterPropValue) {
-        if (this.#filterStorage.get(key) !== value) {
-          this.#filterStorage.set(key, value);
-          if (this.internals) {
-            this.#onFilterChange();
-          }
-        }
-      }
-    });
-  }
-
-  #filterStorage = new Map<FilterPropKey, FilterPropValue>();
-
   /** Whether `*` has been pressed to show all options */
   #showAllOptions = false;
-
-  /** Event listeners for host element */
-  #listeners = {
-    'click': this.#onOptionClick.bind(this),
-    'focus': this.#onOptionFocus.bind(this),
-    'keydown': this.#onOptionKeydown.bind(this),
-    'keyup': this.#onOptionKeyup.bind(this),
-  };
 
   /** Current active descendant when shift key is pressed */
   #shiftStartingItem: Item | null = null;
@@ -81,17 +52,29 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   /** Whether or not focus should be updated after filtering */
   #updateFocus = false;
 
-  /**
-   * Whether filtering matches anywhere in option text;
-   * default is only options starting with filter
-   */
-  @ListboxController.filter matchAnywhere = false;
+  #filter = '';
+
+  #visibleOptions?: Item[];
+
+  /** Event listeners for host element */
+  #listeners = {
+    'click': this.#onOptionClick.bind(this),
+    'focus': this.#onOptionFocus.bind(this),
+    'keydown': this.#onOptionKeydown.bind(this),
+    'keyup': this.#onOptionKeyup.bind(this),
+  };
 
   /** Filter options that start with this string (case-insensitive) */
-  @ListboxController.filter filter = '';
+  get filter() {
+    return this.#filter;
+  }
 
-  /** Whether filtering is case sensitive */
-  @ListboxController.filter caseSensitive = false;
+  set filter(v: string) {
+    this.#filter = v;
+    if (this.internals) {
+      this.#onFilterChange();
+    }
+  }
 
   /** Current active descendant in listbox */
   get activeItem() {
@@ -168,7 +151,11 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * (or all options if no options match or if no filter)
    */
   get visibleOptions(): Item[] {
-    return this.#getMatchingOptions();
+    return this.#visibleOptions ?? this.#getMatchingOptions();
+  }
+
+  set visibleOptions(items: Item[]) {
+    this.#visibleOptions = items;
   }
 
   private get element() {
@@ -207,7 +194,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     this.internals = InternalsController.of(this.host, { getHTMLElement: controllerOptions?.getHTMLElement });
     this.internals.role = 'listbox';
     this.host.addController(this);
-    this.caseSensitive = controllerOptions.caseSensitive || false;
     this.#onFilterChange();
   }
 
@@ -227,17 +213,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    */
   #getMatchingOptions() {
     let matchedOptions: Item[] = [];
-    if (!(this.filter === '' || this.filter === '*' || this.#showAllOptions)) {
-      matchedOptions = this.options.filter(option => {
-        const search = this.matchAnywhere ? '' : '^';
-        const text = option.textContent || '';
-        const regex = new RegExp(`${search}${this.filter}`, this.caseSensitive ? '' : 'i');
-        if (text.match(regex)) {
-          return true;
-        } else {
-          return false;
-        }
-      });
+    if (!(this.filter === '' || this.#showAllOptions)) {
+      const regex = new RegExp(`^${escapeRegExp(this.filter)}`, 'i');
+      matchedOptions = this.options.filter(option => regex.test(option.textContent || ''));
     }
 
     // ensure there is at least one option showing,
@@ -245,16 +223,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     if (matchedOptions.length < 1) {
       matchedOptions = this.options;
     }
-    this.options.forEach(option => {
-      if (matchedOptions.includes(option)) {
-        option.removeAttribute('hidden');
-      } else {
-        if (document.activeElement === option) {
-          this.#updateFocus = true;
-        }
-        option.setAttribute('hidden', 'hidden');
-      }
-    });
+
     return matchedOptions;
   }
 
@@ -283,7 +252,12 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     if (this.disabled) {
       return;
     }
+
+    this.#visibleOptions = undefined;
+
     const oldValue = this.value;
+
+    this.controllerOptions.onFilterChanged?.();
 
     if (this.#updateFocus) {
       this.tabindex.updateItems();
@@ -294,6 +268,16 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     if (oldValue !== this.value) {
       this.#fireInput();
     }
+    this.options.forEach(option => {
+      if (this.visibleOptions.includes(option)) {
+        option.removeAttribute('hidden');
+      } else {
+        if (document.activeElement === option) {
+          this.#updateFocus = true;
+        }
+        option.setAttribute('hidden', 'hidden');
+      }
+    });
   }
 
   /**

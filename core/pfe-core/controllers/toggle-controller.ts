@@ -3,10 +3,6 @@ import { FloatingDOMController, type Placement } from '@patternfly/pfe-core/cont
 import { getRandomId } from '../functions/random.js';
 import { InternalsController } from './internals-controller.js';
 
-function isReactiveControllerHost(element: HTMLElement): element is HTMLElement & ReactiveControllerHost {
-  return 'addController' in element && typeof element.addController === 'function';
-}
-
 /**
  * properties for popup option elements
  */
@@ -23,6 +19,30 @@ export interface ToggleControllerOptions {
   onChange?(bool: boolean): void;
 }
 
+function isReactiveControllerHost(element: HTMLElement): element is HTMLElement & ReactiveControllerHost {
+  return 'addController' in element && typeof element.addController === 'function';
+}
+
+/**
+ * Whether or not the container contains the node,
+ * and if not, whether the node is contained by any element
+ * slotted in to the container
+ */
+function containsDeep(container: Element, node: Node) {
+  if (container.contains(node)) {
+    return true;
+  } else {
+    for (const slot of container.querySelectorAll('slot') ?? []) {
+      for (const el of slot.assignedElements()) {
+        if (el.contains(node)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+}
+
 /**
  * Implements roving tabindex, as described in WAI-ARIA practices, [Managing Focus Within
  * Components Using a Roving
@@ -35,19 +55,6 @@ export class ToggleController implements ReactiveController {
   /** pop-up that is toggled */
   #popupElement?: HTMLElement;
 
-  /** whether host is connected */
-  #connected = false;
-
-  /** whether host is hovered */
-  #hovered = false;
-
-  /** whether host is focused */
-  #focused = false;
-
-  #position: Placement = 'bottom-start';
-
-  #enableFlip = false;
-
   #popupType: PopupKind = 'menu';
 
   #float?: FloatingDOMController;
@@ -56,40 +63,50 @@ export class ToggleController implements ReactiveController {
 
   #getToggleElement: () => Element | null;
 
-  get focused() {
-    return this.#focused;
-  }
+  #hostListeners = {
+    'focusin': this.#onHostFocusin.bind(this),
+    'focusout': this.#onHostFocusout.bind(this),
+    'mouseout': this.#onHostMouseout.bind(this),
+    'mouseover': this.#onHostMouseover.bind(this),
+  };
 
-  set focused(focused: boolean) {
-    this.#focused = focused;
-  }
+  #popupListeners = {
+    'click': this.#onPopupClick.bind(this),
+    'keydown': this.#onPopupKeydown.bind(this),
+    'keyup': this.#onPopupKeyup.bind(this),
+  };
 
-  get hovered() {
-    return this.#hovered;
-  }
+  #triggerListeners = {
+    'click': this.#onTriggerClick.bind(this),
+    'keydown': this.#onTriggerKeydown.bind(this),
+    'keyup': this.#onTriggerKeyup.bind(this),
+    'focusin': this.#onTriggerFocusin.bind(this),
+  };
 
-  set hovered(hovered: boolean) {
-    this.#hovered = hovered;
-  }
+  /** whether host is focused */
+  focused = false;
 
-  get float() {
-    return this.#float;
-  }
+  /** whether host is hovered */
+  hovered = false;
+
+  enableFlip = false;
+
+  position: Placement = 'bottom-start';
 
   get styles() {
-    return this.float?.styles || {};
+    return this.#float?.styles || {};
   }
 
   get anchor() {
-    return this.float?.anchor || '';
+    return this.#float?.anchor || '';
   }
 
   get alignment() {
-    return this.float?.alignment || 'center';
+    return this.#float?.alignment || 'center';
   }
 
   get expanded() {
-    return !!this.float?.open;
+    return !!this.#float?.open;
   }
 
   get popupElement() {
@@ -110,92 +127,40 @@ export class ToggleController implements ReactiveController {
     }
   }
 
-  set position(position: Placement) {
-    this.#position = position;
-  }
-
-  get position() {
-    return this.#position;
-  }
-
-  set enableFlip(enableFlip: boolean) {
-    this.#enableFlip = !!enableFlip;
-  }
-
-  get enableFlip() {
-    return this.#enableFlip;
-  }
-
-  get #hostListeners() {
-    return {
-      'focusin': this.#onHostFocusin.bind(this),
-      'focusout': this.#onHostFocusout.bind(this),
-      'mouseout': this.#onHostMouseout.bind(this),
-      'mouseover': this.#onHostMouseover.bind(this)
-    };
-  }
-
-  get #popupListeners() {
-    return {
-      'click': this.#onPopupClick.bind(this),
-      'keydown': this.#onPopupKeydown.bind(this),
-      'keyup': this.#onPopupKeyup.bind(this)
-    };
-  }
-
-  get #triggerListeners() {
-    return {
-      'click': this.#onTriggerClick.bind(this),
-      'keydown': this.#onTriggerKeydown.bind(this),
-      'keyup': this.#onTriggerKeyup.bind(this)
-    };
-  }
-
   constructor(public host: ReactiveControllerHost, private options?: ToggleControllerOptions) {
     this.#getToggleElement = options?.getTogglableElement ?? (() =>
       (host instanceof Element) ? host : null);
     this.host.addController(this);
     this.#popupType = options?.kind ?? 'menu';
-    this.#connectFloat();
-    this.host?.requestUpdate();
+    this.hostConnected();
   }
 
   /**
    * adds event listeners to items container
    */
   hostConnected() {
-    this.#connectFloat();
+    this.#float ??= new FloatingDOMController(this.host, {
+      content: () => this.popupElement,
+    });
+    if (this.#float) {
+      this.host?.addController(this.#float);
+      this.host?.requestUpdate();
+    }
+    for (const [event, listener] of Object.entries(this.#hostListeners)) {
+      this.#getToggleElement()?.addEventListener(event, listener as (event: Event | null) => void);
+    }
   }
 
   /**
    * removes event listeners from items container
    */
   hostDisconnected() {
-    if (this.#connected) {
-      if (this.#float) {
-        this.host?.removeController(this.#float);
-        this.host?.requestUpdate();
-      }
-      for (const [event, listener] of Object.entries(this.#hostListeners)) {
-        this.#getToggleElement()?.removeEventListener(event, listener as (event: Event | null) => void);
-      }
+    if (this.#float) {
+      this.host?.removeController(this.#float);
+      this.host?.requestUpdate();
     }
-  }
-
-  #connectFloat() {
-    if (!this.#connected) {
-      if (!this.#float) {
-        this.#float = new FloatingDOMController(this.host, {
-          content: (): HTMLElement | undefined | null => this.popupElement
-        });
-      }
-      if (this.#float) {
-        this.host?.addController(this.#float);
-        this.host?.requestUpdate();
-      }
-      for (const [event, listener] of Object.entries(this.#hostListeners)) {
-        this.#getToggleElement()?.addEventListener(event, listener as (event: Event | null) => void);
-      }
+    for (const [event, listener] of Object.entries(this.#hostListeners)) {
+      this.#getToggleElement()?.removeEventListener(event, listener as (event: Event | null) => void);
     }
   }
 
@@ -209,7 +174,7 @@ export class ToggleController implements ReactiveController {
         !!el?.shadowRoot?.contains(el?.shadowRoot?.activeElement);
       this.focused = !!focusedLightDOM || !!focusedShadowDOM;
       if (!this.focused) {
-        setTimeout( this.hide.bind(this), 300);
+        setTimeout(this.hide.bind(this), 300);
       }
     }
   }
@@ -294,10 +259,13 @@ export class ToggleController implements ReactiveController {
    * @param event {KeyboardEvent}
    */
   async #onTriggerKeydown(event: KeyboardEvent) {
-    if (event.key === 'ArrowDown') {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      await this.show(true);
+    switch (event.key) {
+      case 'ArrowDown':
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        await this.show(true);
     }
   }
 
@@ -306,6 +274,18 @@ export class ToggleController implements ReactiveController {
    */
   #onTriggerKeyup() {
     this.#updateFocused();
+  }
+
+  /**
+   * When a trigger is focused, if the previously focused element
+   * is a child of the popup element, close the popup
+   */
+  #onTriggerFocusin(event: FocusEvent) {
+    if (this.expanded &&
+        !!this.#popupElement &&
+        containsDeep(this.#popupElement, event.relatedTarget as Node)) {
+      this.hide(true);
+    }
   }
 
   /**
@@ -403,8 +383,8 @@ export class ToggleController implements ReactiveController {
     if (!this.expanded) {
       this.options?.onChange?.(this.expanded);
     }
-    if (this.#popupElement && this.float) {
-      await this.float.show({
+    if (this.#popupElement && this.#float) {
+      await this.#float.show({
         placement: this.position || 'bottom',
         flip: !!this.enableFlip,
       });
@@ -428,13 +408,12 @@ export class ToggleController implements ReactiveController {
    */
   async hide(force = false) {
     this.options?.willChange?.(this.expanded);
-    const { expanded } = this;
-    const focused = this.#focused;
-    const hasFocus = focused || this.#hovered;
+    const { expanded, focused, hovered } = this;
+    const hasFocus = focused || hovered;
     // only close if popup is not set to always open
     // and it does not currently have focus/hover
-    if (this.float && (force || !hasFocus)) {
-      await this.float.hide();
+    if (this.#float && (force || !hasFocus)) {
+      await this.#float.hide();
       await this.host.updateComplete;
       if (expanded !== this.expanded) {
         this.options?.onChange?.(this.expanded);

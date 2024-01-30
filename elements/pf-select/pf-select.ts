@@ -32,6 +32,7 @@ export interface PfSelectUserOptions {
  * @slot - insert `pf-option` and/or `pf-option-groups` here
  * @fires open - when the menu toggles open
  * @fires close - when the menu toggles closed
+ * @fires filter - when the filter value changes. used to perform custom filtering
  */
 @customElement('pf-select')
 export class PfSelect extends LitElement {
@@ -91,12 +92,6 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'items-selected-text' }) itemsSelectedText = 'items selected';
 
   /**
-   * whether filtering (if enabled) will look for filter match anywhere in option text
-   * (by default it will only match if option starts with filter)
-   */
-  @property({ attribute: 'match-anywhere', reflect: true, type: Boolean }) matchAnywhere = false;
-
-  /**
    * Indicates initial popover position.
    * There are 6 options: `bottom`, `top`, `top-start`, `top-end`, `bottom-start`, `bottom-end`.
    * Default is `bottom`.
@@ -108,6 +103,9 @@ export class PfSelect extends LitElement {
 
   /** Flag indicating if selection badge should be hidden for checkbox variant,default false */
   @property({ attribute: 'hide-badge', type: Boolean }) hideBadge = false;
+
+  @property({ attribute: false }) customFilter?: (option: PfOption) => boolean;
+
   /**
    * Whether the select listbox is expanded
    *
@@ -146,9 +144,6 @@ export class PfSelect extends LitElement {
 
   #toggle = new ToggleController(this, {
     kind: 'listbox',
-    willChange: () => {
-      this.#lastSelected = this.selected;
-    },
     onChange: async expanded => {
       this.dispatchEvent(new Event(expanded ? 'open' : 'close'));
       if (expanded) {
@@ -160,8 +155,6 @@ export class PfSelect extends LitElement {
         } else {
           this._toggle?.focus();
         }
-
-        await this._listbox?.updateComplete;
         await this.updateComplete;
         this.#lastSelected = this.selected;
       }
@@ -216,11 +209,10 @@ export class PfSelect extends LitElement {
     return this.variant === 'typeaheadmulti';
   }
 
-  protected override async getUpdateComplete(): Promise<boolean> {
-    return [
-      await super.getUpdateComplete(),
-      await this._listbox?.updateComplete,
-    ].every(x => !!x);
+  override willUpdate() {
+    if (this.variant === 'checkbox') {
+      import('@patternfly/elements/pf-badge/pf-badge.js');
+    }
   }
 
   render() {
@@ -230,22 +222,29 @@ export class PfSelect extends LitElement {
       caseSensitive,
       createOptionText,
       filter,
-      matchAnywhere,
       variant,
     } = this;
-    const { height, width } = this.getBoundingClientRect() || {};
-    const { anchor, alignment, expanded } = this.#toggle || { 'expanded': true, 'anchor': 'bottom', 'alignment': 'start' };
-    const offscreen = variant.startsWith('typeahead') ? 'offscreen' : false;
-    const badge = hasBadge ? 'badge' : false;
-    const multi = variant === 'checkbox' || variant === 'typeaheadmulti';
+    const {
+      anchor = 'bottom',
+      alignment = 'start',
+      expanded = true,
+      styles = {},
+    } = this.#toggle;
+    const {
+      height,
+      width,
+    } = this.getBoundingClientRect() || {};
     const typeahead = variant.startsWith('typeahead');
     const checkboxes = variant === 'checkbox';
+    const offscreen = typeahead && 'offscreen';
+    const badge = hasBadge && 'badge';
+    const multi = checkboxes || variant === 'typeaheadmulti';
 
     return html`
       <div id="outer"
-           style="${styleMap(this.#toggle.styles ?? {})}"
+           style="${styleMap(styles)}"
            class="${classMap({ disabled, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
-        <div id="toggle" ?hidden="${typeahead}">
+        <div id="toggle">
           ${!this.hasChips || this.#selectedOptions.length < 1 ? '' : html`
             <pf-chip-group label="${this.currentSelectionsLabel}">
               ${repeat(this.#selectedOptions, opt => opt.id, opt => html`
@@ -293,9 +292,9 @@ export class PfSelect extends LitElement {
                       ?disabled="${disabled}"
                       ?hidden="${!expanded}"
                       ?case-sensitive="${caseSensitive}"
-                      ?match-anywhere="${matchAnywhere}"
                       ?multi="${multi}"
                       filter="${filter || ''}"
+                      .customFilter="${this.customFilter}"
                       @input="${this.#onListboxInput}"
                       @change="${this.#onListboxChange}"
                       @refresh="${this.#onListboxRefresh}"
@@ -320,10 +319,11 @@ export class PfSelect extends LitElement {
     `;
   }
 
-  override willUpdate() {
-    if (this.variant === 'checkbox') {
-      import('@patternfly/elements/pf-badge/pf-badge.js');
-    }
+  protected override async getUpdateComplete(): Promise<boolean> {
+    return [
+      await super.getUpdateComplete(),
+      await this._listbox?.updateComplete,
+    ].every(x => !!x);
   }
 
   override updated(changed: PropertyValues<this>) {

@@ -13,7 +13,6 @@ import styles from './pf-listbox.css';
 
 /**
  * event when slotted options are updated
- * @first refresh
  */
 export class PfListboxRefreshEvent extends Event {
   constructor(public originalEvent: Event) {
@@ -26,29 +25,26 @@ export class PfListboxRefreshEvent extends Event {
  *
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/listbox/|WAI-ARIA Listbox Pattern}
  *
- * @fires { PfListboxRefreshEvent } refresh - Fired when slotted options are updated
+ * @fires {PfListboxFilterEvent} filter - Fired when the filter value changes. Use to perform custom filtering
+ * @fires {PfListboxRefreshEvent} refresh - Fired when slotted options are updated
  * @slot - insert `pf-option` and/or `pf-option-groups` here
  */
 @customElement('pf-listbox')
 export class PfListbox extends LitElement {
   static readonly styles = [styles];
-  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+
+  static override readonly shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /** whether listbox is disabled */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  /** whether filtering (if enabled) will be case-sensitive */
-  @property({ attribute: 'case-sensitive', type: Boolean }) caseSensitive = false;
-
-  /**
-   * whether filtering (if enabled) will look for filter match anywhere in option text
-   * (by default it will only match if option starts with filter)
-   */
-  @property({ attribute: 'match-anywhere', type: Boolean }) matchAnywhere = false;
-
   /** filter text */
   @property() filter = '';
 
+  @property({ attribute: false }) customFilter?: (option: PfOption) => boolean;
 
   /**
    * whether multiple items can be selected
@@ -105,8 +101,6 @@ export class PfListbox extends LitElement {
   private _slottedElements?: Array<HTMLElement>;
 
   #listboxController: ListboxController<PfOption> = ListboxController.of(this, {
-    caseSensitive: this.caseSensitive,
-    matchAnywhere: this.matchAnywhere,
     multi: false,
     orientation: 'vertical',
     isSelected(option) {
@@ -118,36 +112,19 @@ export class PfListbox extends LitElement {
     optionAdded(option, index, options) {
       option.setSize = options.length;
       option.posInSet = index;
-    }
+    },
+    onFilterChanged: () => {
+      if (this.customFilter) {
+        const filter = this.customFilter;
+        this.#listboxController.visibleOptions = this.options.filter(option => filter(option));
+      }
+    },
   });
-
-  render() {
-    const { disabled } = this;
-    return html`
-        <slot
-          class="${classMap({ disabled })}"
-          @slotchange="${this.#onSlotchange}">
-        </slot>
-    `;
-  }
-
-  firstUpdated(changed: PropertyValues<this>): void {
-    const options = this.options || [];
-    this.#listboxController.options = options;
-    this.#listboxController.filter = this.filter;
-    super.firstUpdated(changed);
-  }
 
   willUpdate(changed: PropertyValues<this>) {
     if (this.#listboxController) {
       if (changed.has('disabled')) {
         this.#listboxController.disabled = this.disabled;
-      }
-      if (changed.has('caseSensitive')) {
-        this.#listboxController.caseSensitive = this.caseSensitive;
-      }
-      if (changed.has('matchAnywhere')) {
-        this.#listboxController.matchAnywhere = this.matchAnywhere;
       }
       if (changed.has('multi')) {
         this.#listboxController.multi = this.multi;
@@ -156,6 +133,21 @@ export class PfListbox extends LitElement {
         this.#listboxController.filter = this.filter;
       }
     }
+  }
+
+  render() {
+    const { disabled } = this;
+    return html`
+      <slot class="${classMap({ disabled })}"
+            @slotchange="${this.#onSlotchange}"></slot>
+    `;
+  }
+
+  firstUpdated(changed: PropertyValues<this>): void {
+    const options = this.options || [];
+    this.#listboxController.options = options;
+    this.#listboxController.filter = this.filter;
+    super.firstUpdated(changed);
   }
 
   /**

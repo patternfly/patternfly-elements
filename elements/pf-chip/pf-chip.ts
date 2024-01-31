@@ -6,6 +6,11 @@ import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-chip.css';
 
+import buttonBaseButtonStyles from '../pf-button/BaseButton.css';
+import buttonBaseStyles from '../pf-button/pf-button-base.css';
+import buttonTokenStyles from '../pf-button/pf-button-tokens.css';
+import buttonPlainStyles from '../pf-button/pf-button-plain.css';
+
 export class ChipReadyEvent extends Event {
   constructor() {
     super('ready', { bubbles: true });
@@ -31,7 +36,15 @@ export class ChipRemoveEvent extends Event {
  */
 @customElement('pf-chip')
 export class PfChip extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles = [
+    styles,
+    // TODO(bennypowers): reexamine using `<pf-button>` directly once cross-root aria is solved in browsers
+    buttonBaseButtonStyles,
+    buttonBaseStyles,
+    buttonTokenStyles,
+    buttonPlainStyles,
+  ];
+
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
@@ -61,14 +74,15 @@ export class PfChip extends LitElement {
         <span id="chip-text" part="text">
           <slot></slot>
         </span>
-        <pf-button id="close-button"
-                   plain
-                   icon="close"
-                   icon-set="patternfly"
-                   label="${this.accessibleCloseLabel}"
-                   aria-describedby="chip-text"
-                   ?hidden="${this.readonly || this.overflowChip}"
-                   @click="${this.#onClick}"></pf-button>
+        <button id="close-button"
+                class="pf-button plain hasIcon"
+                aria-label="${this.accessibleCloseLabel}"
+                aria-describedby="chip-text"
+                ?hidden="${this.readonly || this.overflowChip}"
+                @click="${this.#onClick}">
+          <pf-icon icon="close"
+                   set="patternfly"></pf-icon>
+        </button>
       </div>
     `;
   }

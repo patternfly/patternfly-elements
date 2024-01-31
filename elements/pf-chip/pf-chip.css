@@ -40,6 +40,17 @@
 	  var(--pf-c-chip--PaddingLeft);
 }
 
+.pf-button {
+  --pf-c-button--after--BorderWidth: 0 !important;
+  margin-top: var(--pf-c-chip__c-button--MarginTop);
+  margin-right: var(--pf-c-chip__c-button--MarginRight);
+  margin-bottom: var(--pf-c-chip__c-button--MarginBottom);
+}
+
+.pf-button.plain {
+  margin-right: -4px;
+}
+
 [hidden],
 :host([hidden]) {
   display: none !important;

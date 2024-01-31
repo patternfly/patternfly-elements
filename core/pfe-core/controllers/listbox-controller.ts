@@ -40,6 +40,17 @@ function escapeRegExp(string: string) {
 export class ListboxController<Item extends HTMLElement> implements ReactiveController {
   private static instances = new WeakMap<ReactiveControllerHost, ListboxController<any>>();
 
+  public static of<Item extends HTMLElement>(
+    host: ReactiveControllerHost,
+    controllerOptions: ListboxConfigOptions<Item>,
+  ): ListboxController<Item> {
+    constructingAllowed = true;
+    const instance: ListboxController<Item> =
+      ListboxController.instances.get(host) ?? new ListboxController<Item>(host, controllerOptions);
+    constructingAllowed = false;
+    return instance;
+  }
+
   /** Whether `*` has been pressed to show all options */
   #showAllOptions = false;
 
@@ -55,6 +66,8 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   #filter = '';
 
   #visibleOptions?: Item[];
+
+  #listening = false;
 
   /** Filter options that start with this string (case-insensitive) */
   get filter() {
@@ -161,17 +174,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     getItems: () => this.visibleOptions,
   });
 
-  public static of<Item extends HTMLElement>(
-    host: ReactiveControllerHost,
-    controllerOptions: ListboxConfigOptions<Item>,
-  ): ListboxController<Item> {
-    constructingAllowed = true;
-    const instance: ListboxController<Item> =
-      ListboxController.instances.get(host) ?? new ListboxController<Item>(host, controllerOptions);
-    constructingAllowed = false;
-    return instance;
-  }
-
   private constructor(
     public host: ReactiveControllerHost,
     private controllerOptions: ListboxConfigOptions<Item>,
@@ -187,20 +189,25 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     this.internals.role = 'listbox';
     this.host.addController(this);
     this.#onFilterChange();
+    this.hostConnected();
   }
 
   hostConnected() {
-    this.element.addEventListener('click', this.#onOptionClick);
-    this.element.addEventListener('focus', this.#onOptionFocus);
-    this.element.addEventListener('keydown', this.#onOptionKeydown);
-    this.element.addEventListener('keyup', this.#onOptionKeyup);
+    if (!this.#listening) {
+      this.element.addEventListener('click', this.#onClick);
+      this.element.addEventListener('focus', this.#onFocus);
+      this.element.addEventListener('keydown', this.#onKeydown);
+      this.element.addEventListener('keyup', this.#onKeyup);
+      this.#listening = true;
+    }
   }
 
   hostDisconnected() {
-    this.element.removeEventListener('click', this.#onOptionClick);
-    this.element.removeEventListener('focus', this.#onOptionFocus);
-    this.element.removeEventListener('keydown', this.#onOptionKeydown);
-    this.element.removeEventListener('keyup', this.#onOptionKeyup);
+    this.element.removeEventListener('click', this.#onClick);
+    this.element.removeEventListener('focus', this.#onFocus);
+    this.element.removeEventListener('keydown', this.#onKeydown);
+    this.element.removeEventListener('keyup', this.#onKeyup);
+    this.#listening = false;
   }
 
 
@@ -289,7 +296,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * handles focusing on an option:
    * updates roving tabindex and active descendant
    */
-  #onOptionFocus = (event: FocusEvent) => {
+  #onFocus = (event: FocusEvent) => {
     const target = this.#getEventOption(event);
     if (target && target !== this.tabindex.activeItem) {
       this.tabindex.updateActiveItem(target);
@@ -301,7 +308,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * which selects an item by default
    * or toggles selection if multiselectable
    */
-  #onOptionClick = (event: MouseEvent) => {
+  #onClick = (event: MouseEvent) => {
     const target = this.#getEventOption(event);
     if (target) {
       const oldValue = this.value;
@@ -329,7 +336,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * handles keyup:
    * track whether shift key is being used for multiselectable listbox
    */
-  #onOptionKeyup = (event: KeyboardEvent) => {
+  #onKeyup = (event: KeyboardEvent) => {
     const target = this.#getEventOption(event);
     if (target && event.shiftKey && this.multi) {
       if (this.#shiftStartingItem && target) {
@@ -347,7 +354,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * filters listbox by keyboard event when slotted option has focus,
    * or by external element such as a text field
    */
-  #onOptionKeydown = (event: KeyboardEvent) => {
+  #onKeydown = (event: KeyboardEvent) => {
     const target = this.#getEventOption(event);
 
     if (!target || event.altKey || event.metaKey || !this.options.includes(target)) {

@@ -264,6 +264,7 @@ main {
   display: grid;
   grid-template-rows: min-content 1fr;
   height: 100%;
+  overflow: scroll;
   width: 100%;
   max-height: calc(100vh - var(--pf-demo-header-height));
 }

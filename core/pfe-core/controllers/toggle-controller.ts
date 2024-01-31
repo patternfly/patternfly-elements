@@ -403,8 +403,8 @@ export class ToggleController implements ReactiveController {
         // workaround for non-chromium browsers
         // @ts-expect-error(bennypowers): intentional, internal access
         const lists = ListboxController.instances;
-        if (lists.has(this.host)) {
-          lists.get(this.host)?.focusActiveItem();
+        if (lists.has(this.#popupElement as unknown as ReactiveControllerHost)) {
+          lists.get(this.#popupElement as unknown as ReactiveControllerHost)?.focusActiveItem();
         } else {
           this.#popupElement.focus();
         }

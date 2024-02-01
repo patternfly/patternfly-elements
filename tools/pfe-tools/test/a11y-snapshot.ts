@@ -7,6 +7,7 @@ export interface A11yTreeSnapshot {
   role: string;
   checked?: boolean;
   disabled?: boolean;
+  description?: string;
   level?: number;
   value?: number;
   valuetext?: string;

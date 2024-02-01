@@ -2,12 +2,12 @@ import { a11ySnapshot as snap } from '@web/test-runner-commands';
 
 export interface A11yTreeSnapshot {
   name: string;
-  children?: A11yTreeSnapshot[];
-  description?: string;
-  focused?: boolean;
   role: string;
+  children?: A11yTreeSnapshot[];
   checked?: boolean;
   disabled?: boolean;
+  description?: string;
+  focused?: boolean;
   haspopup?: string;
   level?: number;
   value?: number;

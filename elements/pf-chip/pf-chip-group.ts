@@ -119,23 +119,22 @@ export class PfChipGroup extends LitElement {
               @slotchange="${this.#onSlotchange}"
               @remove="${this.#updateChips}"
         ></slot>
-        <button id="overflow"
-                class="chip-content"
-                aria-controls="chips"
-                ?hidden="${this.remaining < 1}"
-                @click="${this.#onMoreClick}"
+        <pf-chip id="overflow"
+                 aria-controls="chips"
+                 overflow-chip
+                 ?hidden="${this.remaining < 1}"
+                 @click="${this.#onMoreClick}"
         >${this.remaining < 1 ? ''
          : this.open ? this.expandedText
-         : this.collapsedText.replace(REMAINING_RE, this.remaining.toString())}</button>
-        <button id="close-button"
-                ?hidden="${!this.closeable}"
-                @click="${this.#onCloseClick}"
-                aria-describedby="category"
-                aria-label="${this.accessibleCloseLabel}">
-          <svg fill="currentColor" viewBox="0 0 496 496">
-            <path d="m248,0C111,0,0,111,0,248s111,248,248,248,248-111,248-248S385,0,248,0Zm121.6,313.1c4.7,4.7,4.7,12.3,0,17l-39.6,39.5c-4.7,4.7-12.3,4.7-17,0l-65-65.6-65.1,65.6c-4.7,4.7-12.3,4.7-17,0l-39.5-39.6c-4.7-4.7-4.7-12.3,0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3,0-17l39.6-39.6c4.7-4.7,12.3-4.7,17,0l65,65.7,65.1-65.6c4.7-4.7,12.3-4.7,17,0l39.6,39.6c4.7,4.7,4.7,12.3,0,17l-65.7,65,65.6,65.1Z"/>
-          </svg>
-        </button>
+         : this.collapsedText.replace(REMAINING_RE, this.remaining.toString())}</pf-chip>
+        <pf-button id="close-button"
+                   plain
+                   icon="times-circle"
+                   icon-set="fas"
+                   label="${this.accessibleCloseLabel}"
+                   aria-describedby="category"
+                   ?hidden="${!this.closeable}"
+                   @click="${this.#onCloseClick}"></pf-button>
       </div>
     `;
   }

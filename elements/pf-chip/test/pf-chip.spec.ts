@@ -45,19 +45,21 @@ describe('<pf-chip>', async function() {
       await expect(element).to.be.accessible();
     });
 
-    describe('calling focus', function() {
+    describe('calling focus() on the element', function() {
       beforeEach(() => element.focus());
-      it('should focus', function() {
-        expect(activeElement(element)?.getAttribute('aria-label'))
-          .to.equal(element.accessibleCloseLabel);
+      it('should focus', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot.children?.at(0)?.name).to.equal(element.accessibleCloseLabel);
+        expect(snapshot.children?.at(0)?.focused).to.be.true;
       });
     });
 
     describe('pressing Tab', function() {
       beforeEach(tab);
-      it('should focus', function() {
-        expect(activeElement(element)?.getAttribute('aria-label'))
-          .to.equal(element.accessibleCloseLabel);
+      it('should focus', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot.children?.at(0)?.name).to.equal(element.accessibleCloseLabel);
+        expect(snapshot.children?.at(0)?.focused).to.be.true;
       });
 
       describe('pressing Enter', async function() {

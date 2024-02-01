@@ -107,93 +107,16 @@ option exists and is disabled.
   {% renderFile "./elements/pf-select/demo/typeahead-multiple.html" %}
 {% endhtmlexample %}
 
-#### Typeahead, multi with create option
+#### Custom filtering
+
+By default, filtering is **enabled** and **not** case sensitive.
+However, filtering can be customized with the `customFilter` option, 
+which is a predicate function that takes an option.
 
 {% htmlexample %}
-<label>
-  Pick a color:
-  <pf-select id="pfselect" typeahead multi create-option-text="Create option">
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-</label>
+  {% renderFile "./elements/pf-select/demo/typeahead-custom-filter.html" %}
 {% endhtmlexample %}
 
-#### Typeahead, with checkboxes
-
-{% htmlexample %}
-<label>
-  Pick a color:
-  <pf-select id="pfselect" typeahead checkboxes>
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-</label>
-{% endhtmlexample %}
-
-### Filtering
-
-By default, filtering is **enabled** and **not** case sensitive. However, filtering can be set to case sensitive or disabled altogether.
-
-#### Case-sensitive filtering
-
-{% htmlexample %}
-  <pf-select case-sensitive typeahead>
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-{% endhtmlexample %}
-
-#### Match anywhere
-
-Filter options that match input text anywhere 
-rather than just options that start with the input text.
-
-{% htmlexample %}
-  <pf-select match-anywhere typeahead>
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-{% endhtmlexample %}
-
-#### Disable filtering
-
-{% htmlexample %}
-  <pf-select disable-filter typeahead>
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-{% endhtmlexample %}
 {% endband %}
 
 {% band header="Accessibility" %}

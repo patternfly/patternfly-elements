@@ -1,5 +1,11 @@
 # @patternfly/eslint-config-elements
 
+## 2.0.2
+
+### Patch Changes
+
+- de4cfa4: Update ecmaVersion to 2022
+
 ## 2.0.1
 
 ### Patch Changes

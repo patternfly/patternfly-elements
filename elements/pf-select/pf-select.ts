@@ -63,6 +63,11 @@ export class PfSelect extends LitElement {
   @property({ attribute: 'default-text' }) defaultText = 'Options';
 
   /**
+   * multi listbox button text
+   */
+  @property({ attribute: 'items-selected-text' }) itemsSelectedText = 'items selected';
+
+  /**
    * whether select is disabled
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
@@ -76,11 +81,6 @@ export class PfSelect extends LitElement {
    * listbox filter
    */
   @property() filter = '';
-
-  /**
-   * multi listbox button text
-   */
-  @property({ attribute: 'items-selected-text' }) itemsSelectedText = 'items selected';
 
   /**
    * Indicates initial popover position.
@@ -392,9 +392,7 @@ export class PfSelect extends LitElement {
    * updates text indicating current value(s)
    */
   async #updateValueText() {
-    this.requestUpdate();
     await this.updateComplete;
-
     // reset input if chip has been added
     if (this.hasChips && this._input?.value) {
       const chip = this.shadowRoot?.querySelector(`pf-chip#chip-${this._input?.value}`) as HTMLElement;

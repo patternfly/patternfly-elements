@@ -59,7 +59,7 @@ export class PfOption extends LitElement {
   /** form value for this option */
   @property({ reflect: true })
   get value() {
-    return this.#value ?? this.textContent;
+    return this.#value ?? this.textContent ?? '';
   }
 
   set value(v: string) {
@@ -110,7 +110,7 @@ export class PfOption extends LitElement {
     }
   }
 
-  #value = '';
+  #value?: string;
 
   #internals = InternalsController.of(this, { role: 'option' });
 
@@ -144,7 +144,9 @@ export class PfOption extends LitElement {
   }
 
   willUpdate(changed: PropertyValues<this>) {
-    if (changed.has('selected')) {
+    if (changed.has('selected') &&
+      // don't fire on initialization
+      !(changed.get('selected') === undefined) && this.selected === false) {
       this.#internals.ariaSelected = this.selected ? 'true' : 'false';
       this.dispatchEvent(new PfOptionSelectEvent());
     }

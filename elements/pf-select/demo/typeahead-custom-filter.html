@@ -1,4 +1,4 @@
-<pf-select variant="typeahead">
+<pf-select variant="typeahead" id="pf-select-custom-filter">
   <pf-option value="Blue">Blue</pf-option>
   <pf-option value="Green">Green</pf-option>
   <pf-option value="Magenta">Magenta</pf-option>
@@ -11,9 +11,8 @@
 
 <script type="module">
   import '@patternfly/elements/pf-select/pf-select.js';
-  const select = document.querySelector('pf-select');
+  const select = document.getElementById('pf-select-custom-filter');
   select.customFilter =
     option =>
       new RegExp(`${select.filter}`).test(option.value);
-
 </script>

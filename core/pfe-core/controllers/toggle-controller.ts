@@ -1,8 +1,8 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import { FloatingDOMController, type Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { InternalsController } from './internals-controller.js';
-import { ListboxController } from './listbox-controller.js';
 import { getRandomId } from '../functions/random.js';
+import { RovingTabindexController } from './roving-tabindex-controller.js';
 
 /**
  * properties for popup option elements
@@ -402,9 +402,11 @@ export class ToggleController implements ReactiveController {
       if (focus) {
         // workaround for non-chromium browsers
         // @ts-expect-error(bennypowers): intentional, internal access
-        const lists = ListboxController.instances;
-        if (lists.has(this.#popupElement as unknown as ReactiveControllerHost)) {
-          lists.get(this.#popupElement as unknown as ReactiveControllerHost)?.focusActiveItem();
+        const rtics = RovingTabindexController.hosts;
+        const host = this.#popupElement as HTMLElement & ReactiveControllerHost;
+        if (rtics.has(host)) {
+          const rtic = rtics.get(host);
+          rtic?.focusOnItem(rtic.activeItem);
         } else {
           this.#popupElement.focus();
         }

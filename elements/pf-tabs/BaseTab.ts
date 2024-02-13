@@ -29,6 +29,8 @@ export abstract class BaseTab extends LitElement {
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private icons!: Array<HTMLElement>;
 
+  private loading: boolean = false;
+
   @query('button') private button!: HTMLButtonElement;
 
   /** `active` should be observed, and true when the tab is selected */
@@ -47,12 +49,14 @@ export abstract class BaseTab extends LitElement {
   }
 
   render() {
+    const busy = `${!this.loading}`;
     return html`
       <button part="button" ?disabled="${this.disabled}">
         <slot name="icon"
               part="icon"
+              ?aria-busy="${busy}"
               ?hidden="${!this.icons.length}"
-              @slotchange="${() => this.requestUpdate()}"></slot>
+              @slotchange="${this.#slotChanged}"></slot>
         <slot part="text"></slot>
       </button>
     `;
@@ -95,5 +99,10 @@ export abstract class BaseTab extends LitElement {
    */
   #disabledChanged() {
     this.#internals.ariaDisabled = String(!!this.disabled);
+  }
+
+  #slotChanged() {
+    this.loading = false;
+    () => this.requestUpdate();
   }
 }

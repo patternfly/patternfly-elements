@@ -10,38 +10,8 @@ import { InternalsController } from '@patternfly/pfe-core/controllers/internals-
 import styles from './pf-option.css';
 
 /**
- * select event for listbox options
- */
-export class PfOptionSelectEvent extends Event {
-  constructor(public originalEvent?: Event) {
-    super('select', { bubbles: true, cancelable: true });
-  }
-}
-
-/**
- * focus event for listbox options
- */
-export class PfOptionFocusEvent extends Event {
-  constructor(public originalEvent: Event) {
-    super('focus', { bubbles: true, cancelable: true });
-  }
-}
-
-/**
- * blur event for listbox options
- */
-export class PfOptionBlurEvent extends Event {
-  constructor(public originalEvent: Event) {
-    super('blur', { bubbles: true, cancelable: true });
-  }
-}
-
-/**
  * Option within a listbox
  *
- * @fires { PfOptionSelectEvent } select - Fired on option select/deselect
- * @fires { PfOptionFocusEvent } focus - Fired on option focus
- * @fires { PfOptionBlurEvent } blur - Fired on option blur
  * @slot -
  *        option text
  * @slot icon
@@ -125,6 +95,8 @@ export class PfOption extends LitElement {
       <div id="outer" class="${classMap({ active, disabled })}">
         <input type="checkbox"
                aria-hidden="true"
+               role="presentation"
+               tabindex="-1"
                ?checked="${this.selected}"
                ?disabled="${this.disabled}">
         <slot name="icon"></slot>
@@ -148,7 +120,6 @@ export class PfOption extends LitElement {
       // don't fire on initialization
       !(changed.get('selected') === undefined) && this.selected === false) {
       this.#internals.ariaSelected = this.selected ? 'true' : 'false';
-      this.dispatchEvent(new PfOptionSelectEvent());
     }
     if (changed.has('disabled')) {
       this.#internals.ariaDisabled = String(!!this.disabled);

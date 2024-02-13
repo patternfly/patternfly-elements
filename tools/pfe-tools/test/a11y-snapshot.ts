@@ -10,6 +10,7 @@ export interface A11yTreeSnapshot {
   focused?: boolean;
   haspopup?: string;
   level?: number;
+  selected?: boolean;
   value?: number;
   valuetext?: string;
   valuemin?: number;

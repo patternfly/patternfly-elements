@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -11,13 +11,8 @@ import buttonBaseStyles from '../pf-button/pf-button-base.css';
 import buttonTokenStyles from '../pf-button/pf-button-tokens.css';
 import buttonPlainStyles from '../pf-button/pf-button-plain.css';
 
-export class ChipReadyEvent extends Event {
-  constructor() {
-    super('ready', { bubbles: true });
-  }
-}
-export class ChipRemoveEvent extends Event {
-  constructor() {
+export class PfChipRemoveEvent extends Event {
+  constructor(public chip: PfChip) {
     super('remove', { bubbles: true });
   }
 }
@@ -25,9 +20,8 @@ export class ChipRemoveEvent extends Event {
 /**
  * A **chip** is used to communicate a value or a set of attribute-value pairs within workflows that involve filtering a set of objects.
  *
- * @fires { ChipReadyEvent } ready - Fires when chip is ready
- * @fires { ChipRemoveEvent } remove - Fires when chip is removed
- * @fires { Event } click - when close button is clicked
+ * @fires {ChipRemoveEvent} remove - Fires when chip is removed
+ * @fires {Event} click - when close button is clicked
  *
  * @slot
  *      chip text
@@ -87,38 +81,8 @@ export class PfChip extends LitElement {
     `;
   }
 
-  protected updated(changed: PropertyValues<this>): void {
-    super.updated(changed);
-    if (changed.has('readonly')) {
-      this.#handleChipReady();
-    }
-  }
-
-  disconnectedCallback(): void {
-    this.#handleChipRemove();
-    super.disconnectedCallback();
-  }
-
-  /**
-   * @fires chip-ready
-   */
-  async #handleChipReady() {
-    await this.updateComplete;
-    this.dispatchEvent(new ChipReadyEvent());
-  }
-
-  /**
-   * @fires chip-ready
-   */
-  #handleChipRemove() {
-    return this.dispatchEvent(new ChipRemoveEvent());
-  }
-
-  /**
-   * handles chip's button click event
-   */
   #onClick() {
-    if (this.#handleChipRemove()) {
+    if (this.dispatchEvent(new PfChipRemoveEvent(this))) {
       this.remove();
     }
   }

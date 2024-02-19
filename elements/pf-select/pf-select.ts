@@ -10,7 +10,8 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { ListboxRTIController } from '@patternfly/pfe-core/controllers/listbox-rti-controller.js';
+import { ListboxController } from '@patternfly/pfe-core/controllers/listbox-controller.js';
+import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 import { FloatingDOMController, type Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
@@ -59,7 +60,7 @@ export class PfSelect extends LitElement {
     content: () => this.#listboxElement,
   });
 
-  #controller?: ListboxRTIController<PfOption>; /* | ListboxActiveDescendantController */
+  #listbox?: ListboxController<PfOption>; /* | ListboxActiveDescendantController */
 
   /**
    * Accessible label for the select
@@ -121,11 +122,11 @@ export class PfSelect extends LitElement {
    * or array of select option values for multi select.
    */
   set selected(optionsList: PfOption | PfOption[]) {
-    this.#controller?.setValue(optionsList);
+    this.#listbox?.setValue(optionsList);
   }
 
   get selected(): PfOption | PfOption[] | undefined {
-    return this.#controller?.value;
+    return this.#listbox?.value;
   }
 
   /**
@@ -159,7 +160,7 @@ export class PfSelect extends LitElement {
    * array of text content from listbox's array of selected options
    */
   get #valueTextArray() {
-    return this.#controller?.selectedOptions.map(option => option.optionText || '') ?? [];
+    return this.#listbox?.selectedOptions.map(option => option.optionText || '') ?? [];
   }
 
   override willUpdate(changed: PropertyValues<this>) {
@@ -173,7 +174,7 @@ export class PfSelect extends LitElement {
       this.#internals.setFormValue(this.value ?? '');
     }
     if (changed.has('disabled')) {
-      this.#controller!.disabled = this.disabled;
+      this.#listbox!.disabled = this.disabled;
     }
     // TODO: handle filtering in the element, not the controller
     // if (changed.has('filter')) {
@@ -187,7 +188,7 @@ export class PfSelect extends LitElement {
     const { computedLabelText } = this.#internals;
     const { height, width } = this.getBoundingClientRect() || {};
     const hasBadge = this.#hasBadge;
-    const selectedOptions = this.#controller?.selectedOptions ?? [];
+    const selectedOptions = this.#listbox?.selectedOptions ?? [];
     const typeahead = variant.startsWith('typeahead');
     const checkboxes = variant === 'checkbox';
     const offscreen = typeahead && 'offscreen';
@@ -291,19 +292,21 @@ export class PfSelect extends LitElement {
   }
 
   #variantChanged() {
-    this.#controller?.hostDisconnected();
+    this.#listbox?.hostDisconnected();
+    const getHTMLElement = () => this.#listboxElement;
     switch (this.variant) {
       // TODO
       // case 'typeahead':
       // case 'typeaheadmulti':
-      //   this.#controller = new ListboxActiveDescendantController(this, {
+      //   this.#controller = new ListboxController.of<PfOption>(this, {
       //     multi: this.variant==='typeaheadmulti',
+      //     a11yController: ActiveDescendantController.of(this)
       //   });
       //   break;
       default:
-        this.#controller = ListboxRTIController.of(this, {
+        this.#listbox = ListboxController.of<PfOption>(this, {
           multi: this.variant === 'checkbox',
-          getHTMLElement: () => this.#listboxElement,
+          getHTMLElement,
           isSelected: option => option.selected,
           requestSelect: (option, selected) => {
             this.#lastSelected = this.selected;
@@ -311,6 +314,10 @@ export class PfSelect extends LitElement {
             this.#selectedChanged();
             return true;
           },
+          a11yController: RovingTabindexController.of(this, {
+            getHTMLElement,
+            getItems: () => this.options,
+          }),
         });
         break;
     }
@@ -321,7 +328,7 @@ export class PfSelect extends LitElement {
     this.dispatchEvent(new Event(will));
     if (this.expanded) {
       await this.#float.show({ placement: this.position || 'bottom', flip: !!this.enableFlip });
-      const focusableItem = this.#controller?.activeItem ?? this.#controller?.nextItem;
+      const focusableItem = this.#listbox?.activeItem ?? this.#listbox?.nextItem;
       focusableItem?.focus();
     } else if (this.#lastSelected === this.selected) {
       await this.#float.hide();
@@ -380,7 +387,7 @@ export class PfSelect extends LitElement {
   }
 
   #onListboxSlotchange() {
-    this.#controller?.setOptions(this.options);
+    this.#listbox?.setOptions(this.options);
     this.options.forEach((option, index, options) => {
       option.setSize = options.length;
       option.posInSet = index;

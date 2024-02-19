@@ -1,12 +1,22 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
-import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
+export interface ListboxAccessibilityController<Item extends HTMLElement> extends ReactiveController {
+  items: Item[];
+  activeItem?: Item;
+  nextItem?: Item;
+  prevItem?: Item;
+  firstItem?: Item;
+  lastItem?: Item;
+  updateItems(items: Item[]): void;
+  setActiveItem(item: Item): void;
+}
 
 /**
  * Filtering, multiselect, and orientation options for listbox
  */
 export interface ListboxConfigOptions<T extends HTMLElement> {
   multi?: boolean;
+  a11yController: ListboxAccessibilityController<T>;
   getHTMLElement(): HTMLElement | null;
   requestSelect(option: T, force?: boolean): boolean;
   isSelected(option: T): boolean;
@@ -15,21 +25,21 @@ export interface ListboxConfigOptions<T extends HTMLElement> {
 let constructingAllowed = false;
 
 /**
- * Implements listbox using the roving tabindex pattern, as described in
- * WAI-ARIA practices, [Managing Focus Within Components Using a Roving tabindex][rti]
- *
- * [rti]: https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex
+ * Implements listbox semantics and accesibility. As there are two recognized
+ * patterns for implementing keyboard interactions with listbox patterns,
+ * provide a secondary controller (either RovingTabindexController or
+ * ActiveDescendantController) to complete the implementation.
  */
-export class ListboxRTIController<Item extends HTMLElement> implements ReactiveController {
-  private static instances = new WeakMap<ReactiveControllerHost, ListboxRTIController<any>>();
+export class ListboxController<Item extends HTMLElement> implements ReactiveController {
+  private static instances = new WeakMap<ReactiveControllerHost, ListboxController<any>>();
 
   public static of<Item extends HTMLElement>(
     host: ReactiveControllerHost,
     options: ListboxConfigOptions<Item>,
-  ): ListboxRTIController<Item> {
+  ): ListboxController<Item> {
     constructingAllowed = true;
-    const instance: ListboxRTIController<Item> =
-      ListboxRTIController.instances.get(host) ?? new ListboxRTIController<Item>(host, options);
+    const instance: ListboxController<Item> =
+      ListboxController.instances.get(host) ?? new ListboxController<Item>(host, options);
     constructingAllowed = false;
     return instance;
   }
@@ -42,12 +52,15 @@ export class ListboxRTIController<Item extends HTMLElement> implements ReactiveC
     private _options: ListboxConfigOptions<Item>,
   ) {
     if (!constructingAllowed) {
-      throw new Error('ListboxController must be constructed with `ListboxController.for()`');
+      throw new Error('ListboxController must be constructed with `ListboxController.of()`');
     }
     if (!(host instanceof HTMLElement) && typeof _options.getHTMLElement !== 'function') {
       throw new Error('ListboxController requires the host to be an HTMLElement, or for the initializer to include a `getHTMLElement()` function');
     }
-    ListboxRTIController.instances.set(host, this);
+    if (!_options.a11yController) {
+      throw new Error('ListboxController requires an additional keyboard accessibility controller. Provide either a RovingTabindexController or an ActiveDescendantController');
+    }
+    ListboxController.instances.set(host, this);
     this.host.addController(this);
     this.hostConnected();
   }
@@ -60,22 +73,17 @@ export class ListboxRTIController<Item extends HTMLElement> implements ReactiveC
 
   #listening = false;
 
-  #tabindex = new RovingTabindexController<Item>(this.host, {
-    getHTMLElement: () => this._options.getHTMLElement() ?? null,
-    getItems: () => this.options,
-  });
-
   /** Whether listbox is disabled */
   disabled = false;
 
   /** Current active descendant in listbox */
   get activeItem() {
     return this.options.find(option =>
-      option === this.#tabindex.activeItem) || this.#tabindex.firstItem;
+      option === this._options.a11yController.activeItem) || this._options.a11yController.firstItem;
   }
 
   get nextItem() {
-    return this.#tabindex.nextItem;
+    return this._options.a11yController.nextItem;
   }
 
   get options() {
@@ -113,8 +121,8 @@ export class ListboxRTIController<Item extends HTMLElement> implements ReactiveC
     this.element?.setAttribute('role', 'listbox');
     this.element?.setAttribute('aria-disabled', String(!!this.disabled));
     this.element?.setAttribute('aria-multi-selectable', String(!!this._options.multi));
-    for (const option of this.#tabindex.items) {
-      if (this.#tabindex.activeItem === option) {
+    for (const option of this._options.a11yController.items) {
+      if (this._options.a11yController.activeItem === option) {
         option.setAttribute('aria-selected', 'true');
       } else {
         option.removeAttribute('aria-selected');
@@ -145,8 +153,8 @@ export class ListboxRTIController<Item extends HTMLElement> implements ReactiveC
    */
   #onFocus = (event: FocusEvent) => {
     const target = this.#getEventOption(event);
-    if (target && target !== this.#tabindex.activeItem) {
-      this.#tabindex.updateActiveItem(target);
+    if (target && target !== this._options.a11yController.activeItem) {
+      this._options.a11yController.setActiveItem(target);
     }
   };
 
@@ -169,8 +177,8 @@ export class ListboxRTIController<Item extends HTMLElement> implements ReactiveC
         // select target and deselect all other options
         this.options.forEach(option => this._options.requestSelect(option, option === target));
       }
-      if (target !== this.#tabindex.activeItem) {
-        this.#tabindex.focusOnItem(target);
+      if (target !== this._options.a11yController.activeItem) {
+        this._options.a11yController.setActiveItem(target);
       }
       if (oldValue !== this.value) {
         this.host.requestUpdate();
@@ -206,8 +214,8 @@ export class ListboxRTIController<Item extends HTMLElement> implements ReactiveC
       return;
     }
 
-    const first = this.#tabindex.firstItem;
-    const last = this.#tabindex.lastItem;
+    const first = this._options.a11yController.firstItem;
+    const last = this._options.a11yController.lastItem;
 
     // need to set for keyboard support of multiselect
     if (event.key === 'Shift' && this._options.multi) {
@@ -249,21 +257,7 @@ export class ListboxRTIController<Item extends HTMLElement> implements ReactiveC
   #optionsChanged(oldOptions: Item[]) {
     const setSize = this.#items.length;
     if (setSize !== oldOptions.length || !oldOptions.every((element, index) => element === this.#items[index])) {
-      this.#tabindex.updateItems(this.options);
-    }
-  }
-
-  /**
-   * handles change in value given a list of selected values
-   */
-  #selectOptions(value: Item | Item[]) {
-    const selected = Array.isArray(value) ? value : [value];
-    const [firstItem = null] = selected;
-    for (const option of this.options) {
-      this._options.requestSelect(option, (
-          !!this._options.multi && Array.isArray(value) ? value?.includes(option)
-        : firstItem === option
-      ));
+      this._options.a11yController.updateItems(this.options);
     }
   }
 
@@ -273,7 +267,7 @@ export class ListboxRTIController<Item extends HTMLElement> implements ReactiveC
   #updateSingleselect() {
     if (!this._options.multi && !this.disabled) {
       this.#getEnabledOptions()
-        .forEach(option => this._options.requestSelect(option, option === this.#tabindex.activeItem));
+        .forEach(option => this._options.requestSelect(option, option === this._options.a11yController.activeItem));
     }
   }
 
@@ -306,26 +300,21 @@ export class ListboxRTIController<Item extends HTMLElement> implements ReactiveC
   }
 
   /**
-   * verfies that selected options are limited to existing listbox options
-   */
-  hasValue(val: string | null) {
-    const vals = val?.split(',') || [];
-    const options = this.options.map(option => option.textContent);
-    return vals.every(val => {
-      return options.includes(val);
-    });
-  }
-
-  /**
-   * listbox value based on selected options
+   * sets the listbox value based on selected options
    */
   setValue(value: Item | Item[]) {
-    // value is set by selecting matching options
-    this.#selectOptions(value);
+    const selected = Array.isArray(value) ? value : [value];
+    const [firstItem = null] = selected;
+    for (const option of this.options) {
+      this._options.requestSelect(option, (
+          !!this._options.multi && Array.isArray(value) ? value?.includes(option)
+        : firstItem === option
+      ));
+    }
   }
 
   /**
-   * array of listbox option elements
+   * register's the host's Item elements as listbox controller items
    */
   setOptions(options: Item[]) {
     const oldOptions = [...this.#items];

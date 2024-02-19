@@ -97,7 +97,7 @@ export class PfDropdownMenu extends LitElement {
   #onMenuitemFocusin(event: FocusEvent) {
     if (event.target instanceof PfDropdownItem &&
         event.target.menuItem !== this.#tabindex.activeItem) {
-      this.#tabindex.updateActiveItem(event.target.menuItem);
+      this.#tabindex.setActiveItem(event.target.menuItem);
     }
   }
 
@@ -109,7 +109,7 @@ export class PfDropdownMenu extends LitElement {
   #onMenuitemClick(event: MouseEvent) {
     if (event.target instanceof PfDropdownItem &&
         event.target.menuItem !== this.#tabindex.activeItem) {
-      this.#tabindex.focusOnItem(event.target.menuItem);
+      this.#tabindex.setActiveItem(event.target.menuItem);
     }
   }
 

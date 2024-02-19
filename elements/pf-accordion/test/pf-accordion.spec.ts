@@ -303,6 +303,7 @@ describe('<pf-accordion>', function() {
         expect(panel.getAttribute('role'), 'role').to.equal('region');
       });
     });
+
     /** @see https://www.w3.org/TR/wai-aria-practices/examples/accordion/accordion.html */
     describe('for assistive technology', function() {
       let header1: PfAccordionHeader;
@@ -346,10 +347,11 @@ describe('<pf-accordion>', function() {
       });
 
       describe('when focus is on the first header', function() {
-        beforeEach(async function() {
+        beforeEach(function() {
           header1.focus();
-          await nextFrame();
         });
+
+        beforeEach(nextFrame);
 
         describe('Space', function() {
           beforeEach(press(' '));

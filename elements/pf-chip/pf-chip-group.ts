@@ -159,7 +159,7 @@ export class PfChipGroup extends LitElement {
 
   set activeChip(chip: HTMLElement) {
     const button = chip.shadowRoot?.querySelector('button') as HTMLElement;
-    this.#tabindex.updateActiveItem(button);
+    this.#tabindex.setActiveItem(button);
   }
 
   /**
@@ -200,7 +200,7 @@ export class PfChipGroup extends LitElement {
     if (event instanceof PfChipRemoveEvent) {
       await this.#updateChips();
       await this.updateComplete;
-      this.#tabindex.focusOnItem(this.#tabindex.activeItem);
+      this.#tabindex.setActiveItem(this.#tabindex.activeItem);
     }
   }
 
@@ -259,7 +259,7 @@ export class PfChipGroup extends LitElement {
    * Activates the specified chip and sets focus on it
    */
   focusOnChip(chip: HTMLElement) {
-    this.#tabindex.focusOnItem(chip);
+    this.#tabindex.setActiveItem(chip);
   }
 }
 

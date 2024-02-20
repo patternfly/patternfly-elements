@@ -113,7 +113,10 @@ export class PfSelect extends LitElement {
   @property() variant: 'single' | 'checkbox' /* | 'typeahead' | 'typeaheadmulti' */ = 'single';
 
   /** Flag indicating if selection badge should be hidden for checkbox variant,default false */
-  @property({ attribute: 'hide-badge', type: Boolean }) hideBadge = false;
+  @property({
+    attribute: 'checkbox-selection-badge-hidden',
+    type: Boolean,
+  }) checkboxSelectionBadgeHidden = false;
 
   // @property({ attribute: false }) customFilter?: (option: PfOption) => boolean;
 
@@ -153,7 +156,7 @@ export class PfSelect extends LitElement {
    */
   get #hasBadge() {
     // NOTE: revisit this in v5
-    return this.variant === 'checkbox' && !this.hideBadge;
+    return this.variant === 'checkbox' && !this.checkboxSelectionBadgeHidden;
   }
 
   /**

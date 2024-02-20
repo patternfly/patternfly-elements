@@ -68,54 +68,35 @@ Below are option variants:
   </pf-select>
 {% endhtmlexample %}
 #}
+When setting the `disabled` attribute on options, they are still focusable, but
+they are not selectable. This is in  order that they remain accessible to screen
+readers. This functions similarly to the `aria-disabled="true"` attribute.
 
 {% renderFile "./docs/_snippets/wai-aria-disabled.md" %}
 
-Because options are part of the larger `pf-select` element, use 
-`aria-disabled="true"` instead of `disabled` so that screenreader users know the 
-option exists and is disabled.
+{# 
+  ### Typeahead
 
-### Typeahead
+  {% htmlexample %}
+    {% renderFile "./elements/pf-select/demo/typeahead.html" %}
+  {% endhtmlexample %}
 
-{% htmlexample %}
-  {% renderFile "./elements/pf-select/demo/typeahead.html" %}
-{% endhtmlexample %}
+  #### Multiple
 
-{# save this for v5, make it a pattern-level thing
-#### Typeahead with create option
+  {% htmlexample %}
+    {% renderFile "./elements/pf-select/demo/typeahead-multiple.html" %}
+  {% endhtmlexample %}
 
-{% htmlexample %}
-<label>
-  Pick a color:
-  <pf-select id="pfselect" typeahead create-option-text="Create option">
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-</label>
-{% endhtmlexample %}
+  #### Custom filtering
+
+  By default, filtering is **enabled** and **not** case sensitive.
+  However, filtering can be customized with the `customFilter` option, 
+  which is a predicate function that takes an option.
+
+  {% htmlexample %}
+    {% renderFile "./elements/pf-select/demo/typeahead-custom-filter.html" %}
+  {% endhtmlexample %}
 #}
-
-#### Multiple
-
-{% htmlexample %}
-  {% renderFile "./elements/pf-select/demo/typeahead-multiple.html" %}
-{% endhtmlexample %}
-
-#### Custom filtering
-
-By default, filtering is **enabled** and **not** case sensitive.
-However, filtering can be customized with the `customFilter` option, 
-which is a predicate function that takes an option.
-
-{% htmlexample %}
-  {% renderFile "./elements/pf-select/demo/typeahead-custom-filter.html" %}
-{% endhtmlexample %}
 
 {% endband %}
 

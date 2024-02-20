@@ -3,6 +3,7 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
@@ -104,10 +105,10 @@ export class PfChipGroup extends LitElement {
   }
 
   render() {
-    const category = this.hasCategory ? 'has-category' : '';
+    const empty = this.#chips.length <= 0;
     return html`
       <div id="outer"
-           class="${category}"
+           class="${classMap({ 'has-category': this.hasCategory, empty })}"
            role="toolbar">
         <slot id="category"
               name="category-name"

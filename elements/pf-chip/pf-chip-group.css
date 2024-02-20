@@ -23,6 +23,7 @@
 }
 
 [hidden],
+.empty,
 ::slotted([overflow-hidden]) {
   display: none !important;
 }

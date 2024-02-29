@@ -5,7 +5,7 @@ import '@patternfly/elements/pf-select/pf-select.js';
 </script>
 
 {% renderOverview %}
-  <pf-select default-text="Select a value">
+  <pf-select placeholder="Select a value">
     <pf-option value="Blue">Blue</pf-option>
     <pf-option value="Green">Green</pf-option>
     <pf-option value="Magenta">Magenta</pf-option>

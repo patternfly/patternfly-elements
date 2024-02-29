@@ -62,7 +62,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     }
     ListboxController.instances.set(host, this);
     this.host.addController(this);
-    this.hostConnected();
+    if (this.element?.isConnected) {
+      this.hostConnected();
+    }
   }
 
   /** Current active descendant when shift key is pressed */

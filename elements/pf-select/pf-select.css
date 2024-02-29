@@ -30,8 +30,8 @@
   position: relative;
 }
 
-
-#listbox {
+/* TODO(bennyp): see if we can get rid of this wrapping node, for perf reasons */
+#listbox-container {
   display: inline-flex;
   border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
   position: absolute;
@@ -40,7 +40,12 @@
   --_active-descendant-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important
 }
 
-#listbox slot {
+#outer.expanded #listbox-container {
+  opacity: 1;
+  z-index: 9999 !important;
+}
+
+#listbox {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -56,11 +61,6 @@
   --_svg-color: var(--pf-c-list__item-icon--Color, #6a6e73) !important;
 }
 
-
-#outer.expanded #listbox {
-  opacity: 1;
-  z-index: 9999 !important;
-}
 
 #toggle {
   background-color: var(--pf-theme--color--surface--lightest, #fff) !important;

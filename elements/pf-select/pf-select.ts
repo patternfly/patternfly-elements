@@ -43,6 +43,7 @@ export class PfSelectChangeEvent extends Event {
  * whereas dropdowns are typically used to present a list of actions or links.
  *
  * @slot - insert `pf-option` and/or `pf-option-groups` here
+ * @slot placeholder - placeholder text for the select. Overrides the `placeholder` attribute.
  * @fires open - when the menu toggles open
  * @fires close - when the menu toggles closed
  */
@@ -57,7 +58,7 @@ export class PfSelect extends LitElement {
   #internals = InternalsController.of(this);
 
   #float = new FloatingDOMController(this, {
-    content: () => this.#listboxElement,
+    content: () => this.shadowRoot?.getElementById('listbox-container') ?? null,
   });
 
   #listbox?: ListboxController<PfOption>; /* | ListboxActiveDescendantController */
@@ -71,11 +72,6 @@ export class PfSelect extends LitElement {
    * Accessible label for chip group used to describe chips
    */
   @property({ attribute: 'accessible-current-selections-label' }) accessibleCurrentSelectionsLabel = 'Current selections';
-
-  /**
-   * listbox button text when single-select listbox has no selected option text
-   */
-  @property({ attribute: 'default-text' }) defaultText = 'Options';
 
   /**
    * multi listbox button text
@@ -101,6 +97,9 @@ export class PfSelect extends LitElement {
 
   /** Current form value */
   @property() value?: string;
+
+  /** Placeholder entry. Overridden by the `placeholder` slot */
+  @property() placeholder = 'Select a value';
 
   /**
    * Indicates initial popover position.
@@ -136,7 +135,13 @@ export class PfSelect extends LitElement {
    * array of slotted options
    */
   get options(): PfOption[] {
-    return Array.from(this.querySelectorAll('pf-option'));
+    const opts = Array.from(this.querySelectorAll('pf-option'));
+    const placeholder = this.shadowRoot?.getElementById('placeholder') as PfOption | null;
+    if (placeholder) {
+      return [placeholder, ...opts];
+    } else {
+      return opts;
+    }
   }
 
   // @query('pf-chip-group') private _chipGroup?: PfChipGroup;
@@ -197,9 +202,11 @@ export class PfSelect extends LitElement {
     const offscreen = typeahead && 'offscreen';
     const badge = hasBadge && 'badge';
 
+
+    const placeholder = this.placeholder || this.querySelector('[slot=placeholder]')?.innerText || '';
     const buttonLabel = (this.variant === 'checkbox' ? null
                       // : this.variant === 'typeaheadmulti' ? `${this.#valueTextArray.length} ${this.itemsSelectedText}`
-                      : this.#valueTextArray.at(0)) ?? this.defaultText;
+                      : this.#valueTextArray.at(0)) ?? placeholder;
 
     return html`
       <div id="outer"
@@ -232,6 +239,7 @@ export class PfSelect extends LitElement {
                   role="combobox"
                   aria-hidden="${typeahead.toString() as 'true' | 'false'}"
                   aria-labelledby="button-text"
+                  aria-describedby="placeholder"
                   aria-controls="listbox"
                   aria-haspopup="listbox"
                   aria-expanded="${String(this.expanded) as 'true' | 'false'}"
@@ -252,16 +260,21 @@ export class PfSelect extends LitElement {
             </svg>
           </button>
         </div>
-        <div id="listbox"
+        <div id="listbox-container"
              ?hidden="${!expanded}"
-             @focusout="${this.#onListboxFocusout}"
-             @keydown="${this.#onListboxKeydown}"
-             class="${classMap({ checkboxes })}"
              style="${styleMap({
                marginTop: `${height || 0}px`,
                width: width ? `${width}px` : 'auto',
              })}">
-          <slot @slotchange="${this.#onListboxSlotchange}"></slot>
+          <div id="listbox"
+               @focusout="${this.#onListboxFocusout}"
+               @keydown="${this.#onListboxKeydown}"
+               class="${classMap({ checkboxes })}">
+            <pf-option id="placeholder" disabled>
+              <slot name="placeholder">${this.placeholder}</slot>
+            </pf-option>
+            <slot @slotchange="${this.#onListboxSlotchange}"></slot>
+          </div>
         </div>
       </div>
     `;
@@ -288,6 +301,8 @@ export class PfSelect extends LitElement {
   }
 
   firstUpdated() {
+    // kick the renderer to that the placeholder gets picked up
+    this.requestUpdate();
     // TODO: don't do filtering in the controller
     // if (this.variant === 'typeaheadmulti') {
     //   this.#listbox.filter = this.filter;
@@ -313,7 +328,7 @@ export class PfSelect extends LitElement {
           isSelected: option => option.selected,
           requestSelect: (option, selected) => {
             this.#lastSelected = this.selected;
-            option.selected = !!selected;
+            option.selected = !option.disabled && !!selected;
             this.#selectedChanged();
             return true;
           },

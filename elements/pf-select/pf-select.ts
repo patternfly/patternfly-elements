@@ -63,6 +63,9 @@ export class PfSelect extends LitElement {
 
   #listbox?: ListboxController<PfOption>; /* | ListboxActiveDescendantController */
 
+  /** Variant of rendered Select */
+  @property() variant: 'single' | 'checkbox' /* | 'typeahead' | 'typeaheadmulti' */ = 'single';
+
   /**
    * Accessible label for the select
    */
@@ -99,7 +102,7 @@ export class PfSelect extends LitElement {
   @property() value?: string;
 
   /** Placeholder entry. Overridden by the `placeholder` slot */
-  @property() placeholder = 'Select a value';
+  @property() placeholder?: string;
 
   /**
    * Indicates initial popover position.
@@ -107,9 +110,6 @@ export class PfSelect extends LitElement {
    * Default is `bottom`.
    */
   @property({ reflect: true }) position: Placement = 'bottom';
-
-  /** Variant of rendered Select */
-  @property() variant: 'single' | 'checkbox' /* | 'typeahead' | 'typeaheadmulti' */ = 'single';
 
   /** Flag indicating if selection badge should be hidden for checkbox variant,default false */
   @property({
@@ -203,7 +203,12 @@ export class PfSelect extends LitElement {
     const badge = hasBadge && 'badge';
 
 
-    const placeholder = this.placeholder || this.querySelector('[slot=placeholder]')?.innerText || '';
+    const placeholder =
+      this.placeholder ||
+      this.querySelector<HTMLSlotElement>('[slot=placeholder]')
+        ?.assignedNodes()
+        ?.reduce((acc, node) => `${acc}${node.textContent}`, '') ||
+      this.variant === 'checkbox' ? 'Options' : 'Select a value';
     const buttonLabel = (this.variant === 'checkbox' ? null
                       // : this.variant === 'typeaheadmulti' ? `${this.#valueTextArray.length} ${this.itemsSelectedText}`
                       : this.#valueTextArray.at(0)) ?? placeholder;

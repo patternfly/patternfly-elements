@@ -2,23 +2,18 @@ import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
-import { query } from 'lit/decorators/query.js';
+import { state } from 'lit/decorators/state.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { consume } from '@lit/context';
 
 import { observed } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
-import {
-  boxContext,
-  fillContext,
-  verticalContext,
-  manualContext,
-  borderBottomContext,
-} from './pf-tabs.js';
+import { activeTabCtx, borderBottomCtx, boxCtx, fillCtx, manualCtx, verticalCtx, } from './context.js';
 
 import styles from './pf-tab.css';
-import { consume } from '@lit/context/lib/decorators/consume.js';
 
 export class TabExpandEvent<Tab> extends Event {
   constructor(
@@ -92,45 +87,47 @@ export class TabExpandEvent<Tab> extends Event {
 export class PfTab extends LitElement {
   static readonly styles = [styles];
 
-  static override shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
-
-  @query('#button') private button!: HTMLButtonElement;
-
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private icons!: Array<HTMLElement>;
 
-  @observed
   @property({ reflect: true, type: Boolean }) active = false;
 
   @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
 
-  @consume({ context: boxContext }) @property({ reflect: true }) box: 'light' | 'dark' | null = null;
+  @consume({ context: boxCtx })
+  @property({ reflect: true }) box: 'light' | 'dark' | null = null;
 
-  @consume({ context: verticalContext }) @property({ type: Boolean, reflect: true }) vertical = false;
+  @consume({ context: verticalCtx })
+  @property({ type: Boolean, reflect: true }) vertical = false;
 
-  @consume({ context: fillContext }) @property({ type: Boolean, reflect: true }) fill = false;
+  @consume({ context: fillCtx })
+  @property({ type: Boolean, reflect: true }) fill = false;
 
-  @consume({ context: manualContext }) @property({ type: Boolean, reflect: true }) manual = false;
+  @consume({ context: manualCtx })
+  @property({ type: Boolean, reflect: true }) manual = false;
 
-  @consume({ context: borderBottomContext }) @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'false';
+  @consume({ context: borderBottomCtx })
+  @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'false';
 
   #internals = InternalsController.of(this, { role: 'tab' });
 
   override connectedCallback() {
     super.connectedCallback();
     this.id ||= getRandomId(this.localName);
+    this.addEventListener('click', this.#onClick);
+    this.addEventListener('keydown', this.#onKeydown);
+    this.addEventListener('focus', this.#onFocus);
   }
 
   render() {
+    const { active, box, vertical, fill } = this;
+    const light = box === 'light';
+    const dark = box === 'dark';
     return html`
       <div id="button"
            part="button"
-           ?disabled="${this.disabled}"
-           tabindex="${this.active ? 0 : -1}"
-           @click="${this.#onClick}"
-           @keydown="${this.#onKeydown}"
-           @focus="${this.#onFocus}">
+           class="${classMap({ active, box: !!box, dark, light, fill, vertical })}">
         <slot name="icon"
               part="icon"
               ?hidden="${!this.icons.length}"
@@ -165,13 +162,7 @@ export class PfTab extends LitElement {
   }
 
   #activate() {
-    this.active = true;
-  }
-
-  private _activeChanged(oldVal: boolean, newVal: boolean) {
-    if (newVal && oldVal !== newVal) {
-      this.dispatchEvent(new TabExpandEvent(this));
-    }
+    this.dispatchEvent(new TabExpandEvent(this));
   }
 
   private _disabledChanged() {

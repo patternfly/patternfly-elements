@@ -3,7 +3,7 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
-import { provide, createContext } from '@lit/context';
+import { provide } from '@lit/context';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { OverflowController } from '@patternfly/pfe-core/controllers/overflow-controller.js';
@@ -15,16 +15,11 @@ import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { PfTab, TabExpandEvent } from './pf-tab.js';
 import { PfTabPanel } from './pf-tab-panel.js';
 
+import { activeTabCtx, boxCtx, fillCtx, verticalCtx, manualCtx, borderBottomCtx } from './context.js';
+
 import '@patternfly/elements/pf-icon/pf-icon.js';
 
 import styles from './pf-tabs.css';
-
-export const activeIndexContext = createContext<number>('pf-tabs-active-index');
-export const boxContext = createContext<'light' | 'dark' | null>('pf-tabs-box');
-export const fillContext = createContext<boolean>('pf-tabs-fill');
-export const verticalContext = createContext<boolean>('pf-tabs-vertical');
-export const manualContext = createContext<boolean>('pf-tabs-manual');
-export const borderBottomContext = createContext<'true' | 'false'>('pf-tabs-border-bottom');
 
 /**
  * **Tabs** allow users to navigate between views within the same page or context.
@@ -85,38 +80,6 @@ export class PfTabs extends LitElement {
   }
 
   /**
-   * Box styling on tabs. Defaults to null
-   */
-  @provide({ context: boxContext })
-  @property({ reflect: true }) box: 'light' | 'dark' | null = null;
-
-  /**
-   * Set to true to enable vertical tab styling.
-   */
-  @provide({ context: verticalContext })
-  @property({ reflect: true, type: Boolean }) vertical = false;
-
-  /**
-   * Set to true to enable filled tab styling.
-   */
-  @provide({ context: fillContext })
-  @property({ reflect: true, type: Boolean }) fill = false;
-
-  /**
-   * Border bottom tab styling on tabs. To remove the bottom border, set this prop to false.
-   */
-  @provide({ context: borderBottomContext })
-  @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'true';
-
-  /**
-   * Set's the tabs to be manually activated. This means that the tabs will not automatically select
-   * unless a user clicks on them or uses the keyboard space or enter key to select them.  Roving
-   * tabindex will still update allowing user to keyboard navigate through the tabs with arrow keys.
-   */
-  @provide({ context: manualContext })
-  @property({ reflect: true, type: Boolean }) manual = false;
-
-  /**
    * Aria Label for the left scroll button
    */
   @property({ reflect: false, attribute: 'label-scroll-left' }) labelScrollLeft = 'Scroll left';
@@ -127,18 +90,43 @@ export class PfTabs extends LitElement {
   @property({ reflect: false, attribute: 'label-scroll-right' }) labelScrollRight = 'Scroll left';
 
   /**
+   * Box styling on tabs. Defaults to null
+   */
+  @provide({ context: boxCtx })
+  @property({ reflect: true }) box: 'light' | 'dark' | null = null;
+
+  /**
+   * Set to true to enable vertical tab styling.
+   */
+  @provide({ context: verticalCtx })
+  @property({ reflect: true, type: Boolean }) vertical = false;
+
+  /**
+   * Set to true to enable filled tab styling.
+   */
+  @provide({ context: fillCtx })
+  @property({ reflect: true, type: Boolean }) fill = false;
+
+  /**
+   * Border bottom tab styling on tabs. To remove the bottom border, set this prop to false.
+   */
+  @provide({ context: borderBottomCtx })
+  @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'true';
+
+  /**
+   * Set's the tabs to be manually activated. This means that the tabs will not automatically select
+   * unless a user clicks on them or uses the keyboard space or enter key to select them.  Roving
+   * tabindex will still update allowing user to keyboard navigate through the tabs with arrow keys.
+   */
+  @provide({ context: manualCtx })
+  @property({ reflect: true, type: Boolean }) manual = false;
+
+  /**
    * The index of the active tab
    */
-  @provide({ context: activeIndexContext })
   @property({ attribute: 'active-index', reflect: true, type: Number }) activeIndex = -1;
 
-  get activeTab(): PfTab | undefined {
-    return this.tabs?.find((_, i) => i === this.activeIndex);
-  }
-
-  set activeTab(tab: PfTab) {
-    this.activeIndex = this.tabs?.indexOf(tab) ?? -1;
-  }
+  @provide({ context: activeTabCtx }) @property({ attribute: false }) activeTab?: PfTab;
 
   @query('#tabs') private tabsContainer!: HTMLElement;
 
@@ -153,6 +141,8 @@ export class PfTabs extends LitElement {
   });
 
   #tabindex = new RovingTabindexController(this, {
+    getHTMLElement: () => this.shadowRoot?.getElementById('tabs') ?? null,
+    getItems: () => this.tabs ?? [],
   });
 
   override connectedCallback() {
@@ -171,23 +161,23 @@ export class PfTabs extends LitElement {
   }
 
   override willUpdate(): void {
-    if (!this.manual) {
-      for (const tab of this.tabs ?? []) {
-        this.#tabs.panelFor(tab)?.toggleAttribute('hidden', !tab.active);
-      }
-    }
+    this.#updateActive();
     this.#overflow.update();
   }
 
-  async firstUpdated() {
-    await this.updateComplete;
-    const active = this.tabs?.at(this.activeIndex);
-    if (active) {
-      this.activeTab = active;
-    }
-    for (const tab of this.tabs ?? []) {
-      tab.active = tab === this.#tabs.activeTab;
-      this.#tabs.panelFor(tab)?.toggleAttribute('hidden', !tab.active);
+  #updateActive() {
+    if (!this.#tabindex.activeItem?.disabled) {
+      this.tabs?.forEach((tab, i) => {
+        if (!this.manual) {
+          const active = tab === this.#tabindex.activeItem;
+          tab.active = active;
+          if (active) {
+            this.activeIndex = i;
+            this.activeTab = tab;
+          }
+          this.#tabs.panelFor(tab)?.toggleAttribute('hidden', !active);
+        }
+      });
     }
   }
 
@@ -233,16 +223,16 @@ export class PfTabs extends LitElement {
   }
 
   #onExpand(event: Event) {
-    if (event instanceof TabExpandEvent && event.tab instanceof PfTab) {
+    if (event instanceof TabExpandEvent && event.tab instanceof PfTab && !event.defaultPrevented) {
       this.select(event.tab);
     }
   }
 
   select(option: PfTab | number) {
     if (typeof option === 'number') {
-      this.activeIndex = option;
+      this.#tabindex.setActiveItem(this.tabs?.at(option));
     } else {
-      this.activeTab = option;
+      this.#tabindex.setActiveItem(option);
     }
   }
 }

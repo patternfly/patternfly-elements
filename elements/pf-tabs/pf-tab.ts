@@ -7,9 +7,26 @@ import { query } from 'lit/decorators/query.js';
 import { observed } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
-import { TabExpandEvent, TabDisabledEvent } from '@patternfly/pfe-core/controllers/tabs-controller.js';
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+
+import {
+  boxContext,
+  fillContext,
+  verticalContext,
+  manualContext,
+  borderBottomContext,
+} from './pf-tabs.js';
 
 import styles from './pf-tab.css';
+import { consume } from '@lit/context/lib/decorators/consume.js';
+
+export class TabExpandEvent<Tab> extends Event {
+  constructor(
+    public tab: Tab,
+  ) {
+    super('expand', { bubbles: true, cancelable: true });
+  }
+}
 
 /**
  * Tab
@@ -69,7 +86,7 @@ import styles from './pf-tab.css';
  *
  * @cssprop     {<length>} --pf-c-tabs__link--child--MarginRight  {@default `1rem`}
  *
- * @fires { TabExpandEvent } expand - when a tab expands
+ * @fires {TabExpandEvent} expand - when a tab expands
  */
 @customElement('pf-tab')
 export class PfTab extends LitElement {
@@ -77,12 +94,10 @@ export class PfTab extends LitElement {
 
   static override shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
-  @query('button') private button!: HTMLButtonElement;
+  @query('#button') private button!: HTMLButtonElement;
 
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private icons!: Array<HTMLElement>;
-
-  @property({ type: Boolean }) manual = false;
 
   @observed
   @property({ reflect: true, type: Boolean }) active = false;
@@ -90,35 +105,56 @@ export class PfTab extends LitElement {
   @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
 
-  #internals = this.attachInternals();
+  @consume({ context: boxContext }) @property({ reflect: true }) box: 'light' | 'dark' | null = null;
+
+  @consume({ context: verticalContext }) @property({ type: Boolean, reflect: true }) vertical = false;
+
+  @consume({ context: fillContext }) @property({ type: Boolean, reflect: true }) fill = false;
+
+  @consume({ context: manualContext }) @property({ type: Boolean, reflect: true }) manual = false;
+
+  @consume({ context: borderBottomContext }) @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'false';
+
+  #internals = InternalsController.of(this, { role: 'tab' });
 
   override connectedCallback() {
     super.connectedCallback();
     this.id ||= getRandomId(this.localName);
-    this.#internals.role = 'tab';
-    this.#internals.ariaDisabled = this.#setInternalsAriaDisabled();
-    this.addEventListener('click', this.#onClick);
-    this.addEventListener('focus', this.#onFocus);
   }
 
   render() {
     return html`
-      <button part="button" ?disabled="${this.disabled}">
+      <div id="button"
+           part="button"
+           ?disabled="${this.disabled}"
+           tabindex="${this.active ? 0 : -1}"
+           @click="${this.#onClick}"
+           @keydown="${this.#onKeydown}"
+           @focus="${this.#onFocus}">
         <slot name="icon"
               part="icon"
               ?hidden="${!this.icons.length}"
               @slotchange="${() => this.requestUpdate()}"></slot>
         <slot part="text"></slot>
-      </button>
+      </div>
     `;
   }
 
   #onClick() {
-    if (this.disabled || this.#internals.ariaDisabled === 'true') {
-      return;
+    if (!this.disabled && this.#internals.ariaDisabled !== 'true') {
+      this.#activate();
+      this.focus();
     }
-    this.#activate();
-    this.button.focus();
+  }
+
+  #onKeydown(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'Enter':
+        if (!this.disabled) {
+          this.#activate();
+          this.focus();
+        }
+    }
   }
 
   #onFocus() {
@@ -133,20 +169,13 @@ export class PfTab extends LitElement {
   }
 
   private _activeChanged(oldVal: boolean, newVal: boolean) {
-    if (oldVal !== newVal && newVal === true) {
+    if (newVal && oldVal !== newVal) {
       this.dispatchEvent(new TabExpandEvent(this));
     }
   }
 
   private _disabledChanged() {
-    this.dispatchEvent(new TabDisabledEvent(this));
-  }
-
-  #setInternalsAriaDisabled() {
-    if (this.disabled) {
-      return 'true';
-    }
-    return this.ariaDisabled ?? 'false';
+    this.#internals.ariaDisabled = this.disabled ? 'true' : this.ariaDisabled ?? 'false';
   }
 }
 

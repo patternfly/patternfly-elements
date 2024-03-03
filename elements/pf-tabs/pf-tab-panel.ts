@@ -1,9 +1,12 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
+import { consume } from '@lit/context/lib/decorators/consume.js';
+import { property } from 'lit/decorators/property.js';
 
 import styles from './pf-tab-panel.css';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+import { boxContext, verticalContext } from './pf-tabs.js';
 
 /**
  * @slot - Tab panel content
@@ -17,6 +20,10 @@ export class PfTabPanel extends LitElement {
   static readonly styles = [styles];
 
   #internals = this.attachInternals();
+
+  @consume({ context: boxContext }) @property({ reflect: true }) box: 'light' | 'dark' | null = null;
+
+  @consume({ context: verticalContext }) @property({ type: Boolean, reflect: true }) vertical = false;
 
   render() {
     return html`

@@ -97,10 +97,9 @@ export abstract class BaseTabs extends LitElement {
         this.#logger.warn(`Disabled tabs can not be active, setting first focusable tab to active`);
         this.#tabindex.setActiveItem(this.#firstFocusable);
         index = this.#activeItemIndex;
-      } else if (!tab.active) {
-        // if the activeIndex was set through the CLI e.g.`$0.activeIndex = 2`
-        tab.active = true;
         return;
+      } else {
+        tab.active = true;
       }
     }
 

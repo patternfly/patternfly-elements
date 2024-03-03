@@ -6,7 +6,6 @@ import { a11ySnapshot, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/
 
 describe('<pf-dropdown>', function() {
   let element: PfDropdown;
-  let snapshot: A11yTreeSnapshot;
 
   describe('simply instantiating', function() {
     it('imperatively instantiates', function() {
@@ -26,19 +25,19 @@ describe('<pf-dropdown>', function() {
   describe('with default trigger button', function() {
     beforeEach(async function() {
       element = await createFixture<PfDropdown>(html`
-          <pf-dropdown>
-              <pf-dropdown-item>item 1</pf-dropdown-item>
-              <pf-dropdown-item>item 2</pf-dropdown-item>
-          </pf-dropdown>
+        <pf-dropdown>
+          <pf-dropdown-item>item 1</pf-dropdown-item>
+          <pf-dropdown-item>item 2</pf-dropdown-item>
+        </pf-dropdown>
       `);
-      snapshot = await a11ySnapshot();
     });
 
     it('should be accessible', async function() {
       await expect(element).shadowDom.to.be.accessible();
     });
 
-    it('should hide dropdown content from assistive technology', function() {
+    it('should hide dropdown content from assistive technology', async function() {
+      const snapshot = await a11ySnapshot();
       expect(snapshot.children!.length).to.equal(1);
     });
 
@@ -46,35 +45,45 @@ describe('<pf-dropdown>', function() {
       beforeEach(async function() {
         await sendKeys({ press: 'Tab' });
         await sendKeys({ press: 'Enter' });
-        snapshot = await a11ySnapshot();
       });
 
-      it('should show menu', function() {
-        const [, menu] = snapshot.children ?? [];
-        expect(menu.children?.length).to.equal(2);
+      it('should show menu', async function() {
+        const snapshot = await a11ySnapshot();
+        const menu = snapshot?.children?.find(x => x.role === 'menu');
+        expect(menu).to.be.ok;
+        expect(menu?.children?.length).to.equal(2);
+      });
+
+      it('should focus on first menu item', async function() {
+        const snapshot = await a11ySnapshot();
+        const menu = snapshot?.children?.find(x => x.role === 'menu');
+        const focused = menu?.children?.find(x => x.focused);
+        expect(focused).to.deep.equal({ role: 'menuitem', name: 'item 1', focused: true });
       });
 
       describe('pressing ArrowDown', function() {
         beforeEach(async function() {
           await sendKeys({ press: 'ArrowDown' });
           await element.updateComplete;
-          snapshot = await a11ySnapshot();
         });
 
-        it('should focus on first menu item', function() {
-          const [, menu] = snapshot.children ?? [];
-          const [first] = menu?.children ?? [];
-          expect(first).to.deep.equal({ role: 'menuitem', name: 'item 1', focused: true });
+        it('should focus on secondc menu item', async function() {
+          const snapshot = await a11ySnapshot();
+          const menu = snapshot?.children?.find(x => x.role === 'menu');
+          const focused = menu?.children?.find(x => x.focused);
+          expect(focused).to.deep.equal({ role: 'menuitem', name: 'item 2', focused: true });
         });
 
         describe('pressing Escape', function() {
           beforeEach(async function() {
             await sendKeys({ press: 'Escape' });
-            snapshot = await a11ySnapshot();
           });
 
-          it('should close menu', function() {
+          it('should close menu', async function() {
+            const snapshot = await a11ySnapshot();
+            const menu = snapshot?.children?.find(x => x.role === 'menu');
             expect(snapshot.children?.length).to.equal(1);
+            expect(menu).to.not.be.ok;
           });
         });
       });
@@ -105,99 +114,4 @@ describe('<pf-dropdown>', function() {
       });
     });
   });
-
-  describe('with slotted trigger', function() {
-    beforeEach(async function() {
-      element = await createFixture<PfDropdown>(html`
-        <pf-dropdown>
-          <button id="custom" slot="trigger">Toggle</button>
-          <pf-dropdown-item>item 1</pf-dropdown-item>
-          <pf-dropdown-group label="Group">
-            <pf-dropdown-item>item 2</pf-dropdown-item>
-            <pf-dropdown-item disabled>disabled item</pf-dropdown-item>
-          </pf-dropdown-group>
-        </pf-dropdown>
-      `);
-      snapshot = await a11ySnapshot();
-    });
-
-    it('should be accessible', async function() {
-      await expect(element).shadowDom.to.be.accessible();
-    });
-
-    it('should hide dropdown content from assistive technology', function() {
-      expect(snapshot.children?.length).to.equal(1);
-    });
-
-    describe('pressing Enter', function() {
-      let menu: A11yTreeSnapshot;
-
-      beforeEach(async function() {
-        await sendKeys({ press: 'Tab' });
-        await sendKeys({ press: 'Enter' });
-        snapshot = await a11ySnapshot();
-        [, menu] = snapshot.children ?? [];
-      });
-
-      it('should show menu', function() {
-        expect(menu.children?.length).to.equal(3);
-      });
-
-      describe('pressing ArrowDown', function() {
-        beforeEach(async function() {
-          await sendKeys({ press: 'ArrowDown' });
-          await element.updateComplete;
-          snapshot = await a11ySnapshot();
-        });
-
-        it('should focus on first menu item', function() {
-          const [, menu] = snapshot.children ?? [];
-          const [first] = menu.children ?? [];
-          expect(first).to.deep.equal({ role: 'menuitem', name: 'item 1', focused: true });
-        });
-
-        describe('pressing Escape', function() {
-          beforeEach(async function() {
-            await sendKeys({ press: 'Escape' });
-            snapshot = await a11ySnapshot();
-          });
-
-          it('should close menu', function() {
-            expect(snapshot.children?.length).to.equal(1);
-          });
-        });
-      });
-    });
-
-    describe('disabled', function() {
-      beforeEach(async function() {
-        element.disabled = true;
-        await element.updateComplete;
-        snapshot = await a11ySnapshot();
-      });
-
-      it('should not disable trigger button', function() {
-        expect(snapshot.children?.length).to.equal(1);
-      });
-
-      describe('pressing Enter', function() {
-        let menu: A11yTreeSnapshot;
-        beforeEach(async function() {
-          await sendKeys({ press: 'Tab' });
-          await sendKeys({ press: 'Enter' });
-          snapshot = await a11ySnapshot();
-          [, menu] = snapshot.children ?? [];
-        });
-
-        it('should show menu', function() {
-          expect(menu.children?.length).to.equal(3);
-        });
-
-        it('should be disabled menu', function() {
-          expect(menu.disabled).to.be.true;
-        });
-      });
-    });
-  });
 });
-

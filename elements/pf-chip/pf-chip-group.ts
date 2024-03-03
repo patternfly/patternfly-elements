@@ -3,19 +3,21 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
-import { PfChip, ChipReadyEvent, ChipRemoveEvent } from './pf-chip.js';
+import { PfChip, PfChipRemoveEvent } from './pf-chip.js';
 
 import styles from './pf-chip-group.css';
 
-export class ChipGroupExpandEvent extends Event {
+export class PfChipGroupExpandEvent extends Event {
   constructor() {
     super('expand', { bubbles: true, cancelable: true });
   }
 }
-export class ChipGroupRemoveEvent extends Event {
+
+export class PfChipGroupRemoveEvent extends Event {
   constructor() {
     super('remove', { bubbles: true, cancelable: true });
   }
@@ -59,11 +61,6 @@ export class PfChipGroup extends LitElement {
   @property({ attribute: 'accessible-close-label', type: String }) accessibleCloseLabel = 'Close';
 
   /**
-   * Flag if chip group can be closed
-   */
-  @property({ type: Boolean }) closeable = false;
-
-  /**
    * Customizeable "more" template string. Use variable "${remaining}" for overflow chip count.
    */
   @property({ attribute: 'collapsed-text', type: String }) collapsedText = '${remaining} more';
@@ -83,6 +80,11 @@ export class PfChipGroup extends LitElement {
    */
   @property({ reflect: true, type: Boolean }) open = false;
 
+  /**
+   * Flag if chip group can be closed
+   */
+  @property({ reflect: true, type: Boolean }) closeable = false;
+
   @query('#overflow') private _overflowChip?: HTMLButtonElement;
 
   @query('#close-button') private _button?: HTMLButtonElement;
@@ -94,20 +96,19 @@ export class PfChipGroup extends LitElement {
   #buttons: HTMLElement[] = [];
 
   #tabindex = new RovingTabindexController(this, {
-    getItems: () => this.#buttons,
+    getItems: () => this.#buttons.filter(x => !x.hidden),
   });
 
   constructor() {
     super();
-    this.addEventListener('ready', this.#onChipReady);
     this.addEventListener('remove', this.#onChipRemoved);
   }
 
   render() {
-    const category = this.hasCategory ? 'has-category' : '';
+    const empty = this.#chips.length <= 0;
     return html`
       <div id="outer"
-           class="${category}"
+           class="${classMap({ 'has-category': this.hasCategory, empty })}"
            role="toolbar">
         <slot id="category"
               name="category-name"
@@ -159,7 +160,7 @@ export class PfChipGroup extends LitElement {
 
   set activeChip(chip: HTMLElement) {
     const button = chip.shadowRoot?.querySelector('button') as HTMLElement;
-    this.#tabindex.updateActiveItem(button);
+    this.#tabindex.setActiveItem(button);
   }
 
   /**
@@ -176,7 +177,7 @@ export class PfChipGroup extends LitElement {
   /**
    * updates chips when they change
    */
-  async #handleChipsChanged() {
+  #handleChipsChanged() {
     if (this.#chips.length > 0) {
       const oldButtons = [...(this.#buttons || [])];
       const max = this.open ? this.#chips.length : Math.min(this.#chips.length, this.numChips);
@@ -194,22 +195,13 @@ export class PfChipGroup extends LitElement {
   }
 
   /**
-   * handles a new chip's `chip-ready` event
-   */
-  #onChipReady(event: Event) {
-    if (event instanceof ChipReadyEvent) {
-      this.#updateChips();
-    }
-  }
-
-  /**
    * handles a chip's `chip-remove` event
    */
   async #onChipRemoved(event: Event) {
-    if (event instanceof ChipRemoveEvent) {
-      await this.updateComplete;
+    if (event instanceof PfChipRemoveEvent) {
       await this.#updateChips();
-      this.#tabindex.focusOnItem(this.#tabindex.activeItem);
+      await this.updateComplete;
+      this.#tabindex.setActiveItem(this.#tabindex.activeItem);
     }
   }
 
@@ -217,7 +209,7 @@ export class PfChipGroup extends LitElement {
    * handles chip group close
    */
   #onCloseClick() {
-    this.dispatchEvent(new ChipGroupRemoveEvent());
+    this.dispatchEvent(new PfChipGroupRemoveEvent());
     this.remove();
   }
 
@@ -232,10 +224,11 @@ export class PfChipGroup extends LitElement {
     if (this._overflowChip) {
       this.focusOnChip(this._overflowChip);
     }
-    this.dispatchEvent(new ChipGroupExpandEvent());
+    this.dispatchEvent(new PfChipGroupExpandEvent());
   }
 
   #onSlotchange() {
+    this.#updateChips();
     this.requestUpdate();
   }
 
@@ -243,9 +236,11 @@ export class PfChipGroup extends LitElement {
    * updates which chips variable
    */
   async #updateChips() {
+    await this.updateComplete;
     this.#chips = [...this.querySelectorAll<PfChip>('pf-chip:not([slot]):not([overflow-chip])')];
     this.requestUpdate();
     await this.updateComplete;
+    this.#tabindex.updateItems(this.#chips);
     this.#handleChipsChanged();
     return this.#chips;
   }
@@ -265,7 +260,7 @@ export class PfChipGroup extends LitElement {
    * Activates the specified chip and sets focus on it
    */
   focusOnChip(chip: HTMLElement) {
-    this.#tabindex.focusOnItem(chip);
+    this.#tabindex.setActiveItem(chip);
   }
 }
 

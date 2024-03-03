@@ -69,8 +69,9 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     // using a public static constructor method is much easier to manage,
     // due to the quirks of our typescript config
     const instance: InternalsController =
-      InternalsController.instances.get(host) ?? new InternalsController(host, options);
-    instance.initializeAriaMixinPropertyValues(options);
+      InternalsController.instances.get(host) ??
+      new InternalsController(host, options);
+    instance.initializeOptions(options);
     constructingAllowed = false;
     return instance;
   }
@@ -175,7 +176,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
       throw new Error('InternalsController must be instantiated with an HTMLElement or a `getHTMLElement` function');
     }
     this.attach();
-    this.initializeAriaMixinPropertyValues(options);
+    this.initializeOptions(options);
     InternalsController.instances.set(host, this);
     this.#polyfillDisabledPseudo();
   }
@@ -210,8 +211,11 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     return this.internals;
   }
 
-  private initializeAriaMixinPropertyValues(options?: Partial<ARIAMixin>) {
-    for (const [key, val] of Object.entries(options ?? {})) {
+  private initializeOptions(options?: Partial<ARIAMixin>) {
+    this.options ??= options ?? {};
+    const { getHTMLElement, ...aria } = this.options;
+    this.options.getHTMLElement ??= getHTMLElement;
+    for (const [key, val] of Object.entries(aria)) {
       if (isARIAMixinProp(key)) {
         this[key] = val;
       }

@@ -237,7 +237,7 @@ export class TabsController implements ReactiveController {
   }
 
   #onTabExpand(tab: Tab) {
-    this.#tabindex.updateActiveItem(tab);
+    this.#tabindex.setActiveItem(tab);
     this.#deactivateExcept(this._tabs.indexOf(tab));
   }
 
@@ -282,7 +282,7 @@ export class TabsController implements ReactiveController {
     }
 
     // update RTI with active tab and deactivate others
-    this.#tabindex.updateActiveItem(this.#activeTab);
+    this.#tabindex.setActiveItem(this.#activeTab);
     this.#deactivateExcept(this._tabs.indexOf(this.#activeTab));
   }
 

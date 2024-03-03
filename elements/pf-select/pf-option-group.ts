@@ -9,11 +9,15 @@ import styles from './pf-option-group.css';
 
 /**
  * Group of options within a listbox
- * @slot - Place element content here
+ * @slot - `<pf-option>` or `<hr>` elements
+ * @slot label - Group label. Overrides the `label` attribute.
  */
 @customElement('pf-option-group')
 export class PfOptionGroup extends LitElement {
   static readonly styles = [styles];
+
+  /** Group description. Overridden by `label` slot. */
+  @property() label?: string;
 
   /** whether group is disabled */
   @property({ type: Boolean, reflect: true }) disabled = false;
@@ -24,9 +28,9 @@ export class PfOptionGroup extends LitElement {
     const { disabled } = this;
     return html`
       <div id="label-container"
-           name="label"
            role="presentation">
-        <slot class="${classMap({ disabled })}"></slot>
+        <slot class="${classMap({ disabled })}"
+              name="label">${this.label}</slot>
       </div>
       <slot class="${classMap({ disabled })}"></slot>
     `;

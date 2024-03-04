@@ -198,9 +198,13 @@ describe('<pf-tabs>', function() {
         await setViewport({ width: 100, height: 640 });
       });
 
+      beforeEach(nextFrame);
+      beforeEach(updateComplete);
+      beforeEach(nextFrame);
       beforeEach(updateComplete);
 
-      it('should have visible scroll buttons if overflowed', async function() {
+
+      it('should have visible scroll buttons if overflowed', function() {
         // Note: overflow buttons are not included in the accessibility tree otherwise we'd test
         // for buttons there. tabindex="-1" is used on the buttons to prevent focus and was a
         // decision made to keep logical keyboard navigation order flow between tabs and panels

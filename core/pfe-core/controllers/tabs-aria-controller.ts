@@ -27,12 +27,12 @@ export class TabsAriaController<
 
   #mo = new MutationObserver(this.#onSlotchange.bind(this));
 
-  get #tabs() {
+  get tabs() {
     return [...this.#tabPanelMap.keys()] as Tab[];
   }
 
   get activeTab(): Tab | undefined {
-    return this.#tabs.find(x => this.#options.isActiveTab(x));
+    return this.tabs.find(x => this.#options.isActiveTab(x));
   }
 
   /**

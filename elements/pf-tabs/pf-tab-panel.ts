@@ -1,10 +1,10 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
+import { state } from 'lit/decorators/state.js';
 import { consume } from '@lit/context';
-import { property } from 'lit/decorators/property.js';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-import { boxCtx, verticalCtx } from './context.js';
+import { type PfTabsContext, context } from './context.js';
 
 import styles from './pf-tab-panel.css';
 
@@ -21,9 +21,8 @@ export class PfTabPanel extends LitElement {
 
   #internals = this.attachInternals();
 
-  @consume({ context: boxCtx }) @property({ reflect: true }) box: 'light' | 'dark' | null = null;
-
-  @consume({ context: verticalCtx }) @property({ type: Boolean, reflect: true }) vertical = false;
+  @consume({ context, subscribe: true })
+  @state() private ctx?: PfTabsContext;
 
   render() {
     return html`
@@ -47,6 +46,16 @@ export class PfTabPanel extends LitElement {
      https://www.w3.org/WAI/ARIA/apg/example-index/tabs/tabs-automatic
     */
     this.tabIndex = 0;
+  }
+
+  override willUpdate() {
+    const { box, vertical } = this.ctx ?? {};
+    this.toggleAttribute('vertical', vertical);
+    if (box) {
+      this.setAttribute('box', box);
+    } else {
+      this.removeAttribute('box');
+    }
   }
 }
 

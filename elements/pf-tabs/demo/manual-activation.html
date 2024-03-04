@@ -1,34 +1,14 @@
-<section>
-  <h2>Manual Activation</h2>
-  <pf-tabs id="tabs-first" manual>
-    <pf-tab slot="tab">Users</pf-tab>
-    <pf-tab slot="tab">Containers</pf-tab>
-    <pf-tab slot="tab">Database</pf-tab>
-    <pf-tab slot="tab" disabled active>Disabled</pf-tab>
-    <pf-tab-panel>Users</pf-tab-panel>
-    <pf-tab-panel>Containers</pf-tab-panel>
-    <pf-tab-panel>Database</pf-tab-panel>
-    <pf-tab-panel>Disabled</pf-tab-panel>
-  </pf-tabs>
-</section>
+<pf-tabs id="tabs-first" manual>
+  <pf-tab slot="tab">Users</pf-tab>
+  <pf-tab slot="tab">Containers</pf-tab>
+  <pf-tab slot="tab">Database</pf-tab>
+  <pf-tab slot="tab" disabled active>Disabled</pf-tab>
+  <pf-tab-panel>Users</pf-tab-panel>
+  <pf-tab-panel>Containers</pf-tab-panel>
+  <pf-tab-panel>Database</pf-tab-panel>
+  <pf-tab-panel>Disabled</pf-tab-panel>
+</pf-tabs>
 
 <script type="module">
   import '@patternfly/elements/pf-tabs/pf-tabs.js';
 </script>
-
-<style>
-  main {
-    display: block;
-    overflow-x: unset;
-  }
-
-  section {
-    margin: 0 auto;
-    padding: 0 16px 32px;
-    width: 100%;
-    max-width: 1008px;
-    @media (min-width: 768px) {
-      padding: 0 32px 32px;
-    }
-  }
-</style>

@@ -69,6 +69,7 @@ describe('<pf-tabs>', function() {
 
     describe('pressing Tab', function() {
       beforeEach(press('Tab'));
+      beforeEach(updateComplete);
       beforeEach(nextFrame);
       it('should activate the first focusable tab', function() {
         expect(element.querySelector('pf-tab')).to.have.attribute('active');
@@ -207,7 +208,6 @@ describe('<pf-tabs>', function() {
         // and would disrupt the expected flow. For keyboard users they are able to scroll using the
         // left and right arrows keys and do not need direct access to the overflow buttons but still
         // exist as visual cues for which direction is overflowed
-        const snapshot = await a11ySnapshot();
         const previousTab = element.shadowRoot!.querySelector('#previousTab')!;
         const nextTab = element.shadowRoot!.querySelector('#nextTab')!;
         expect(previousTab).to.not.be.null;

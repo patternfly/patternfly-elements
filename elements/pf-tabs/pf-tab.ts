@@ -2,7 +2,6 @@ import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
-import { state } from 'lit/decorators/state.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { consume } from '@lit/context';
 
@@ -11,17 +10,9 @@ import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
-import { activeTabCtx, borderBottomCtx, boxCtx, fillCtx, manualCtx, verticalCtx, } from './context.js';
+import { TabExpandEvent, context, type PfTabsContext } from './context.js';
 
 import styles from './pf-tab.css';
-
-export class TabExpandEvent<Tab> extends Event {
-  constructor(
-    public tab: Tab,
-  ) {
-    super('expand', { bubbles: true, cancelable: true });
-  }
-}
 
 /**
  * Tab
@@ -90,25 +81,15 @@ export class PfTab extends LitElement {
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private icons!: Array<HTMLElement>;
 
+  @observed
   @property({ reflect: true, type: Boolean }) active = false;
 
   @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
 
-  @consume({ context: boxCtx })
-  @property({ reflect: true }) box: 'light' | 'dark' | null = null;
-
-  @consume({ context: verticalCtx })
-  @property({ type: Boolean, reflect: true }) vertical = false;
-
-  @consume({ context: fillCtx })
-  @property({ type: Boolean, reflect: true }) fill = false;
-
-  @consume({ context: manualCtx })
-  @property({ type: Boolean, reflect: true }) manual = false;
-
-  @consume({ context: borderBottomCtx })
-  @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'false';
+  @consume({ context, subscribe: true })
+  @property({ attribute: false })
+  private ctx?: PfTabsContext;
 
   #internals = InternalsController.of(this, { role: 'tab' });
 
@@ -120,8 +101,26 @@ export class PfTab extends LitElement {
     this.addEventListener('focus', this.#onFocus);
   }
 
+  override willUpdate() {
+    const { borderBottom, box, fill, manual, vertical } = this.ctx ?? {};
+    this.toggleAttribute('fill', fill);
+    this.toggleAttribute('manual', manual);
+    this.toggleAttribute('vertical', vertical);
+    if (box) {
+      this.setAttribute('box', box);
+    } else {
+      this.removeAttribute('box');
+    }
+    if (borderBottom) {
+      this.setAttribute('border-bottom', borderBottom);
+    } else {
+      this.removeAttribute('border-bottom');
+    }
+  }
+
   render() {
-    const { active, box, vertical, fill } = this;
+    const { active } = this;
+    const { box, fill = false, vertical = false } = this.ctx ?? {};
     const light = box === 'light';
     const dark = box === 'dark';
     return html`
@@ -138,31 +137,33 @@ export class PfTab extends LitElement {
   }
 
   #onClick() {
-    if (!this.disabled && this.#internals.ariaDisabled !== 'true') {
+    if (!this.disabled) {
       this.#activate();
-      this.focus();
     }
   }
 
   #onKeydown(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'Enter':
-        if (!this.disabled) {
-          this.#activate();
-          this.focus();
-        }
+    if (!this.disabled) {
+      switch (event.key) {
+        case 'Enter': this.#activate();
+      }
     }
   }
 
   #onFocus() {
-    if (this.manual || this.#internals.ariaDisabled === 'true') {
-      return;
+    if (!this.ctx?.manual && !this.disabled) {
+      this.#activate();
     }
-    this.#activate();
   }
 
   #activate() {
-    this.dispatchEvent(new TabExpandEvent(this));
+    return this.dispatchEvent(new TabExpandEvent(this));
+  }
+
+  private _activeChanged(old: boolean) {
+    if (this.active && !old) {
+      this.#activate();
+    }
   }
 
   private _disabledChanged() {

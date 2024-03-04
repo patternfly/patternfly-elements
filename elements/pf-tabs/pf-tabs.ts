@@ -1,8 +1,7 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { provide } from '@lit/context';
 import { classMap } from 'lit/directives/class-map.js';
 
@@ -10,12 +9,12 @@ import { OverflowController } from '@patternfly/pfe-core/controllers/overflow-co
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { TabsAriaController } from '@patternfly/pfe-core/controllers/tabs-aria-controller.js';
 
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
-
-import { PfTab, TabExpandEvent } from './pf-tab.js';
+import { PfTab } from './pf-tab.js';
 import { PfTabPanel } from './pf-tab-panel.js';
 
-import { activeTabCtx, boxCtx, fillCtx, verticalCtx, manualCtx, borderBottomCtx } from './context.js';
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+
+import { type PfTabsContext, TabExpandEvent, context } from './context.js';
 
 import '@patternfly/elements/pf-icon/pf-icon.js';
 
@@ -92,25 +91,21 @@ export class PfTabs extends LitElement {
   /**
    * Box styling on tabs. Defaults to null
    */
-  @provide({ context: boxCtx })
   @property({ reflect: true }) box: 'light' | 'dark' | null = null;
 
   /**
    * Set to true to enable vertical tab styling.
    */
-  @provide({ context: verticalCtx })
   @property({ reflect: true, type: Boolean }) vertical = false;
 
   /**
    * Set to true to enable filled tab styling.
    */
-  @provide({ context: fillCtx })
   @property({ reflect: true, type: Boolean }) fill = false;
 
   /**
    * Border bottom tab styling on tabs. To remove the bottom border, set this prop to false.
    */
-  @provide({ context: borderBottomCtx })
   @property({ attribute: 'border-bottom' }) borderBottom: 'true' | 'false' = 'true';
 
   /**
@@ -118,7 +113,6 @@ export class PfTabs extends LitElement {
    * unless a user clicks on them or uses the keyboard space or enter key to select them.  Roving
    * tabindex will still update allowing user to keyboard navigate through the tabs with arrow keys.
    */
-  @provide({ context: manualCtx })
   @property({ reflect: true, type: Boolean }) manual = false;
 
   /**
@@ -126,17 +120,27 @@ export class PfTabs extends LitElement {
    */
   @property({ attribute: 'active-index', reflect: true, type: Number }) activeIndex = -1;
 
-  @provide({ context: activeTabCtx }) @property({ attribute: false }) activeTab?: PfTab;
+  @property({ attribute: false }) activeTab?: PfTab;
+
+  get tabs(): PfTab[] {
+    return this.#tabs.tabs;
+  }
 
   @query('#tabs') private tabsContainer!: HTMLElement;
 
-  @queryAssignedElements({ slot: 'tab' }) private tabs?: PfTab[];
+  get #ctx(): PfTabsContext {
+    const { activeTab, borderBottom, box, fill, manual, vertical } = this;
+    return { activeTab, borderBottom, box, fill, manual, vertical };
+  }
+
+  @provide({ context })
+  private ctx: PfTabsContext = this.#ctx;
 
   #overflow = new OverflowController(this, { scrollTimeoutDelay: 200 });
 
   #tabs = new TabsAriaController<PfTab, PfTabPanel>(this, {
-    isTab: (x): x is PfTab => x instanceof PfTab,
-    isPanel: (x): x is PfTabPanel => x instanceof PfTabPanel,
+    isTab: (x): x is PfTab => (x as HTMLElement).localName === 'pf-tab',
+    isPanel: (x): x is PfTabPanel => (x as HTMLElement).localName === 'pf-tab-panel',
     isActiveTab: x => x.active,
   });
 
@@ -160,24 +164,21 @@ export class PfTabs extends LitElement {
     return here && ps.every(x => !!x);
   }
 
-  override willUpdate(): void {
-    this.#updateActive();
+  override willUpdate(changed: PropertyValues<this>): void {
+    if (changed.has('activeIndex')) {
+      this.select(this.activeIndex);
+    } else if (changed.has('activeTab') && this.activeTab) {
+      this.select(this.activeTab);
+    } else {
+      this.#updateActive();
+    }
     this.#overflow.update();
+    this.ctx = this.#ctx;
   }
 
-  #updateActive() {
-    if (!this.#tabindex.activeItem?.disabled) {
-      this.tabs?.forEach((tab, i) => {
-        if (!this.manual) {
-          const active = tab === this.#tabindex.activeItem;
-          tab.active = active;
-          if (active) {
-            this.activeIndex = i;
-            this.activeTab = tab;
-          }
-          this.#tabs.panelFor(tab)?.toggleAttribute('hidden', !active);
-        }
-      });
+  protected override firstUpdated(): void {
+    if (this.tabs.length && this.activeIndex === -1) {
+      this.select(this.tabs.findIndex(x => !x.disabled));
     }
   }
 
@@ -223,17 +224,35 @@ export class PfTabs extends LitElement {
   }
 
   #onExpand(event: Event) {
-    if (event instanceof TabExpandEvent && event.tab instanceof PfTab && !event.defaultPrevented) {
+    if (event instanceof TabExpandEvent && !event.defaultPrevented) {
       this.select(event.tab);
+    }
+  }
+
+  #updateActive({ force = false } = {}) {
+    if (!this.#tabindex.activeItem?.disabled) {
+      this.tabs?.forEach((tab, i) => {
+        if (force || !this.manual) {
+          const active = tab === this.#tabindex.activeItem;
+          tab.active = active;
+          if (active) {
+            this.activeIndex = i;
+            this.activeTab = tab;
+          }
+        }
+        this.#tabs.panelFor(tab)?.toggleAttribute('hidden', !tab.active);
+      });
     }
   }
 
   select(option: PfTab | number) {
     if (typeof option === 'number') {
-      this.#tabindex.setActiveItem(this.tabs?.at(option));
+      const item = this.tabs[option];
+      this.#tabindex.setActiveItem(item);
     } else {
       this.#tabindex.setActiveItem(option);
     }
+    this.#updateActive({ force: true });
   }
 }
 

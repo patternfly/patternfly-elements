@@ -29,7 +29,7 @@
     "eslint-plugin-html": "7.1.0",
     "eslint-plugin-json-schema-validator": "^4.8.3",
     "eslint-plugin-jsonc": "^2.12.2",
-    "eslint-plugin-lit-a11y": "^4.1.1",
+    "eslint-plugin-lit-a11y": "^4.1.2",
     "eslint-plugin-no-only-tests": "^3.1.0",
     "eslint-plugin-unicorn": "46.0.0"
   }

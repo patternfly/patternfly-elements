@@ -1,6 +1,5 @@
 import { ContextRoot, createContext } from '@lit/context';
 
-
 let root: ContextRoot;
 
 function makeContextRoot() {

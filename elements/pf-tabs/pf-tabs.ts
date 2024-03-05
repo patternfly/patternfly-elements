@@ -5,6 +5,7 @@ import { query } from 'lit/decorators/query.js';
 import { provide } from '@lit/context';
 import { classMap } from 'lit/directives/class-map.js';
 
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { OverflowController } from '@patternfly/pfe-core/controllers/overflow-controller.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { TabsAriaController } from '@patternfly/pfe-core/controllers/tabs-aria-controller.js';
@@ -149,6 +150,8 @@ export class PfTabs extends LitElement {
     getItems: () => this.tabs ?? [],
   });
 
+  #logger = new Logger(this);
+
   override connectedCallback() {
     super.connectedCallback();
     this.addEventListener('expand', this.#onExpand);
@@ -174,6 +177,13 @@ export class PfTabs extends LitElement {
     }
     this.#overflow.update();
     this.ctx = this.#ctx;
+  }
+
+  protected override updated(changed: PropertyValues<this>): void {
+    if (changed.has('activeTab') && this.activeTab?.disabled) {
+      this.#logger.warn('Active tab is disabled. Setting to first focusable tab');
+      this.activeIndex = 0;
+    }
   }
 
   protected override firstUpdated(): void {

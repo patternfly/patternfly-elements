@@ -161,6 +161,7 @@ export class PfTab extends LitElement {
   }
 
   private _activeChanged(old: boolean) {
+    this.#internals.ariaSelected = String(!!this.active);
     if (this.active && !old) {
       this.#activate();
     }

@@ -1,7 +1,9 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import styles from './BaseSwitch.css';
 
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+
+import styles from './BaseSwitch.css';
 /**
  * Switch
  */
@@ -14,7 +16,7 @@ export abstract class BaseSwitch extends LitElement {
 
   declare shadowRoot: ShadowRoot;
 
-  #internals = this.attachInternals();
+  #internals = InternalsController.of(this, { role: 'switch' });
 
   #initiallyDisabled = this.hasAttribute('disabled');
 
@@ -32,7 +34,7 @@ export abstract class BaseSwitch extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.setAttribute('role', 'checkbox');
+
     this.addEventListener('click', this.#onClick);
     this.addEventListener('keyup', this.#onKeyup);
     this.#updateLabels();
@@ -53,7 +55,7 @@ export abstract class BaseSwitch extends LitElement {
     `;
   }
 
-  override updated() {
+  override willUpdate() {
     this.#internals.ariaChecked = String(this.checked);
     this.#internals.ariaDisabled = String(this.disabled);
   }

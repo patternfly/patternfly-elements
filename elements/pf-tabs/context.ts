@@ -4,7 +4,8 @@ import { createContextWithRoot } from '@patternfly/pfe-core/functions/context.js
 
 export interface PfTabsContext {
   activeTab: PfTab | undefined;
-  box: 'light' | 'dark' | null; fill: boolean;
+  box: 'light' | 'dark' | null;
+  fill: boolean;
   vertical: boolean;
   manual: boolean;
   borderBottom: 'true' | 'false';

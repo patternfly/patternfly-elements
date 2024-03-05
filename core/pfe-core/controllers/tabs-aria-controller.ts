@@ -2,7 +2,7 @@ import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
-export interface TabsControllerOptions<Tab, Panel> {
+export interface TabsAriaControllerOptions<Tab, Panel> {
   /** Add an `isTab` predicate to ensure this tabs instance' state does not leak into parent tabs' state */
   isTab: (node: unknown) => node is Tab;
   isActiveTab: (tab: Tab) => boolean;
@@ -23,7 +23,7 @@ export class TabsAriaController<
 
   #tabPanelMap = new Map<Tab, Panel>();
 
-  #options: TabsControllerOptions<Tab, Panel>;
+  #options: TabsAriaControllerOptions<Tab, Panel>;
 
   #mo = new MutationObserver(this.#onSlotchange.bind(this));
 
@@ -46,7 +46,7 @@ export class TabsAriaController<
    */
   constructor(
     host: ReactiveControllerHost,
-    options: TabsControllerOptions<Tab, Panel>,
+    options: TabsAriaControllerOptions<Tab, Panel>,
   ) {
     this.#options = options;
     this.#logger = new Logger(host);

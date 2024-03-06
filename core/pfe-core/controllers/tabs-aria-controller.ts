@@ -73,9 +73,7 @@ export class TabsAriaController<
 
   hostUpdated() {
     for (const [tab, panel] of this.#tabPanelMap) {
-      if (!panel.hasAttribute('aria-labelledby')) {
-        panel.setAttribute('aria-labelledby', tab.id);
-      }
+      panel.setAttribute('aria-labelledby', tab.id);
       tab.setAttribute('aria-controls', panel.id);
     }
   }

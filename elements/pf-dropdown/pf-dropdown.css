@@ -37,7 +37,6 @@ slot[name="trigger"] {
 }
 
 pf-dropdown-menu {
-  display: none;
   position: absolute;
   top: var(
     --pf-c-dropdown__menu--Top,
@@ -69,13 +68,9 @@ pf-dropdown-menu {
   margin: 0;
 }
 
-:host([disabled]) pf-dropdown-menu {
+:host([disabled]) :is(pf-dropdown-menu, ::slotted(pf-dropdown-menu)) {
   pointer-events: none;
   cursor: not-allowed;
-}
-
-pf-dropdown-menu.show {
-  display: block;
 }
 
 pf-button.disabled::part(button),

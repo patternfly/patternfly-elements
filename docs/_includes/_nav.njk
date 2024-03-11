@@ -20,16 +20,18 @@
                    variant="control"
                    icon="caret-down"
                    icon-set="fas">Versions</pf-button>
-        {% for version in versions %}
-        {%- if version.current -%}
-          {%- set prefix = '' -%}
-        {%- else -%}
-          {%- set prefix = '/' + version.slug -%}
-        {%- endif %}
-        <pf-dropdown-item href="{{ prefix }}{{ page.url }}" {{ 'disabled' if version.current }}>
-          {{ version.label }}
-        </pf-dropdown-item>
-        {% endfor %}
+        <pf-dropdown-menu slot="menu">
+          {% for version in versions %}
+          {%- if version.current -%}
+            {%- set prefix = '' -%}
+          {%- else -%}
+            {%- set prefix = '/' + version.slug -%}
+          {%- endif %}
+          <pf-dropdown-item href="{{ prefix }}{{ page.url }}" {{ 'disabled' if version.current }}>
+            {{ version.label }}
+          </pf-dropdown-item>
+          {% endfor %}
+        </pf-dropdown-menu>
       </pf-dropdown>
     </div>
   </div>

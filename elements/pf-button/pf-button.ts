@@ -8,6 +8,11 @@ import { BaseButton } from './BaseButton.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
 import '@patternfly/elements/pf-spinner/pf-spinner.js';
 
+import baseStyles from './pf-button-base.css';
+import tokensStyles from './pf-button-tokens.css';
+import iconStyles from './pf-button-icon.css';
+import plainStyles from './pf-button-plain.css';
+
 import styles from './pf-button.css';
 
 export type ButtonVariant = (
@@ -152,7 +157,14 @@ export type ButtonVariant = (
  */
 @customElement('pf-button')
 export class PfButton extends BaseButton {
-  static readonly styles = [...BaseButton.styles, styles];
+  static readonly styles = [
+    ...BaseButton.styles,
+    tokensStyles,
+    baseStyles,
+    plainStyles,
+    iconStyles,
+    styles,
+  ];
 
   /** Represents the state of a stateful button */
   @property({ type: Boolean, reflect: true }) loading = false;

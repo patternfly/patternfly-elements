@@ -13,7 +13,8 @@
 }
 
 :host(:focus) #outer,
-:host(:hover) #outer {
+:host(:hover) #outer,
+:host([aria-selected="true"]) {
   background-color: #e0e0e0;
 }
 

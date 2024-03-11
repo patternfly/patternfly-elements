@@ -22,10 +22,9 @@ export class OverflowController implements ReactiveController {
       for (const instance of this.#instances) {
         instance.onScroll();
       }
-    }, { capture: false });
+    }, { capture: false, passive: true });
   }
 
-  #host: ReactiveElement;
   /** Overflow container */
   #container?: HTMLElement;
   /** Children that can overflow */
@@ -37,7 +36,17 @@ export class OverflowController implements ReactiveController {
   /** Default state */
   #hideOverflowButtons: boolean;
 
-  #mo = new MutationObserver(this.#mutationsCallback.bind(this));
+  #mo = new MutationObserver(mutations => {
+    for (const mutation of mutations) {
+      if (mutation.type === 'childList') {
+        this.#setOverflowState();
+      }
+    }
+  });
+
+  #ro = new ResizeObserver(() => {
+    this.#setOverflowState();
+  });
 
   showScrollButtons = false;
   overflowLeft = false;
@@ -51,22 +60,19 @@ export class OverflowController implements ReactiveController {
     return this.#items.at(-1);
   }
 
-  constructor(public host: ReactiveElement, private options?: Options) {
+  constructor(
+    // TODO: widen this type to ReactiveControllerHost
+    public host: ReactiveElement,
+    private options?: Options,
+  ) {
     this.#hideOverflowButtons = options?.hideOverflowButtons ?? false;
     this.#scrollTimeoutDelay = options?.scrollTimeoutDelay ?? 0;
     if (host.isConnected) {
       OverflowController.#instances.add(this);
     }
-    (this.#host = host).addController(this);
-    this.#mo.observe(host, { attributes: false, childList: true, subtree: true });
-  }
-
-  async #mutationsCallback(mutations: MutationRecord[]): Promise<void> {
-    for (const mutation of mutations) {
-      if (mutation.type === 'childList') {
-        this.#setOverflowState();
-        this.#host.requestUpdate();
-      }
+    host.addController(this);
+    if (host.isConnected) {
+      this.hostConnected();
     }
   }
 
@@ -126,6 +132,8 @@ export class OverflowController implements ReactiveController {
   }
 
   hostConnected(): void {
+    this.#mo.observe(this.host, { attributes: false, childList: true, subtree: true });
+    this.#ro.observe(this.host);
     this.onScroll();
     this.#setOverflowState();
   }

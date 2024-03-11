@@ -58,10 +58,15 @@ export abstract class BaseButton extends LitElement {
   }
 
   override render() {
-    const { hasIcon } = this;
+    const {
+      disabled,
+      hasIcon,
+      // @ts-expect-error: will no longer be a problem after closing issue #2616
+      plain,
+    } = this;
     return html`
       <button aria-label="${ifDefined(this.label)}"
-              class="${classMap({ hasIcon })}"
+              class="pf-button ${classMap({ disabled, hasIcon, plain })}"
               part="button"
               type="${ifDefined(this.type)}"
               value="${ifDefined(this.value)}"

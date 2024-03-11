@@ -315,6 +315,14 @@ pf-badge {
   --_pf-option-svg-display: none;
 }
 
+::slotted(pf-option-group + hr) {
+  display: none !important;
+}
+
+::slotted(hr:has(+ pf-option-group)) {
+  display: none !important;
+}
+
 .offscreen {
   position: absolute;
   left: -99999;

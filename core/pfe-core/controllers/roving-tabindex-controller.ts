@@ -142,7 +142,7 @@ export class RovingTabindexController<
     }
     RovingTabindexController.hosts.set(host, this);
     this.host.addController(this);
-    this.#init();
+    this.updateItems();
   }
 
   hostUpdated() {
@@ -151,7 +151,7 @@ export class RovingTabindexController<
     if (oldContainer !== newContainer) {
       oldContainer?.removeEventListener('keydown', this.#onKeydown);
       RovingTabindexController.elements.delete(oldContainer!);
-      this.#init();
+      this.updateItems();
     }
     if (newContainer) {
       this.#initContainer(newContainer);
@@ -165,12 +165,6 @@ export class RovingTabindexController<
     this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
     this.#itemsContainer = undefined;
     this.#gainedInitialFocus = false;
-  }
-
-  #init() {
-    if (typeof this.#options?.getItems === 'function') {
-      this.updateItems(this.#options.getItems());
-    }
   }
 
   #initContainer(container: Element) {
@@ -267,21 +261,21 @@ export class RovingTabindexController<
     }
   }
 
-  /** @deprecated use setActiveItem */
-  focusOnItem(item?: Item): void {
-    this.setActiveItem(item);
-  }
-
   /**
    * Focuses next focusable item
    */
-  updateItems(items?: Item[]) {
-    this.#items = items ?? this.#options.getItems?.() ?? [];
+  updateItems(items: Item[] = this.#options.getItems?.() ?? []) {
+    this.#items = items;
     const sequence = [...this.#items.slice(this.#itemIndex - 1), ...this.#items.slice(0, this.#itemIndex - 1)];
     const first = sequence.find(item => this.#focusableItems.includes(item));
     const [focusableItem] = this.#focusableItems;
     const activeItem = focusableItem ?? first ?? this.firstItem;
     this.setActiveItem(activeItem);
+  }
+
+  /** @deprecated use setActiveItem */
+  focusOnItem(item?: Item): void {
+    this.setActiveItem(item);
   }
 
   /**

@@ -2,10 +2,10 @@
 "@patternfly/core": minor
 ---
 
-`TabsController`: Added TabsController. This controller is used to manage the state of the tabs and panels. 
+`TabsAriaController`: Added TabsAriaController, used to manage the accesibility tree for tabs and panels. 
 
 ```ts
-#tabs = new TabsController(this, {
+#tabs = new TabsAriaController(this, {
   isTab: (x: Node): x is PfTab => x instanceof PfTab,
   isPanel: (x: Node): x is PfTabPanel => x instanceof PfTabPanel,
 });

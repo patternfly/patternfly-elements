@@ -123,6 +123,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
           'lit-html': 'nodemodules',
           'lit': 'nodemodules',
           '@lit/reactive-element': 'nodemodules',
+          '@lit/context': 'nodemodules',
           ...config.importMapOptions?.providers,
         },
         resolveHtmlUrl(fileUrl, rootUrl) {

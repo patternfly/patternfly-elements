@@ -155,7 +155,7 @@ export abstract class BaseAccordion extends LitElement {
 
   #updateActiveHeader() {
     if (this.#activeHeader !== this.#headerIndex.activeItem) {
-      this.#headerIndex.updateActiveItem(this.#activeHeader);
+      this.#headerIndex.setActiveItem(this.#activeHeader);
     }
   }
 

@@ -1,7 +1,6 @@
 import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
@@ -27,59 +26,38 @@ export class PfDropdownMenu extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  @queryAssignedElements({ flatten: true })
-  private menuAssignedElements!: PfDropdownItem[] | PfDropdownGroup[];
-
-  /** event listeners for host element */
-  #listeners = {
-    'keydown': this.#onMenuitemKeydown.bind(this),
-    'focusin': this.#onMenuitemFocusin.bind(this),
-    'click': this.#onMenuitemClick.bind(this),
-  };
+  #internals = InternalsController.of(this, { role: 'menu' });
 
   #tabindex = new RovingTabindexController(this, {
-    getItems: () => this.#menuitems,
+    getItems: () => this.items.map(x => x.menuItem),
   });
-
-  #internals = InternalsController.of(this, { role: 'menu' });
 
   /**
    * current active descendant in menu
    */
   get activeItem() {
-    const [active] = this.#menuitems.filter(menuitem =>
-      menuitem === this.#tabindex.activeItem);
-    return active ?? this.#tabindex.firstItem;
+    return this.#tabindex.activeItem ?? this.#tabindex.firstItem;
   }
 
   /**
    * index of current active descendant in menu
    */
   get activeIndex() {
-    return this.#menuitems.indexOf(this.activeItem) || 0;
+    if (!this.#tabindex.activeItem) {
+      return -1;
+    } else {
+      return this.#tabindex.items.indexOf(this.#tabindex.activeItem);
+    }
   }
 
-  get #dropdownItems() {
-    return this.menuAssignedElements?.flatMap(node => {
-      if (node instanceof PfDropdownItem) {
-        return [node];
-      } else if (node instanceof PfDropdownGroup) {
-        return Array.from(node.querySelectorAll('pf-dropdown-item'));
-      } else {
-        return [];
-      }
-    });
-  }
-
-  get #menuitems() {
-    return this.#dropdownItems.map(item => item.menuItem);
+  get items(): PfDropdownItem[] {
+    return this.#getSlottedItems(this.shadowRoot?.querySelector('slot'));
   }
 
   connectedCallback() {
     super.connectedCallback();
-    for (const [event, listener] of Object.entries(this.#listeners)) {
-      this.addEventListener(event, listener as (event: Event | null) => void);
-    }
+    this.addEventListener('focusin', this.#onMenuitemFocusin);
+    this.addEventListener('click', this.#onMenuitemClick);
   }
 
   protected updated(changed: PropertyValues<this>): void {
@@ -90,23 +68,16 @@ export class PfDropdownMenu extends LitElement {
 
   render() {
     return html`
-      <slot @slotchange="${this.#handleSlotChange}"
-            @change="${this.#handleItemChange}"></slot>
+      <slot @slotchange="${this.#onSlotChange}"
+            @change="${this.#onItemChange}"></slot>
     `;
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    for (const [event, listener] of Object.entries(this.#listeners)) {
-      this.removeEventListener(event, listener as (event: Event | null) => void);
-    }
   }
 
   /**
    * handles a change event from a dropdown item
    * @param event {Event}
    */
-  #handleItemChange(event: Event) {
+  #onItemChange(event: Event) {
     if (event instanceof DropdownItemChange) {
       this.#tabindex.updateItems();
     }
@@ -115,33 +86,18 @@ export class PfDropdownMenu extends LitElement {
   /**
    * handles slot change event
    */
-  #handleSlotChange() {
+  #onSlotChange() {
     this.#tabindex.updateItems();
-  }
-
-  #nextMatchingItem(key: string) {
-    const items = [...this.#menuitems];
-    const index = !this.activeItem ? items.indexOf(this.activeItem) : -1;
-    const sequence = [...items.slice(index), ...items.slice(0, index)];
-    const regex = new RegExp(`^${key}`, 'i');
-    const first = sequence.find(item => {
-      const option = item;
-      return !option.hidden && option.textContent?.match(regex);
-    });
-    return first;
   }
 
   /**
    * handles focusing on an option:
    * updates roving tabindex and active descendant
-   * @param event {FocusEvent}
-   * @returns void
    */
   #onMenuitemFocusin(event: FocusEvent) {
-    const target = event.target as PfDropdownItem;
-    const menuitem = target.menuItem;
-    if (menuitem !== this.#tabindex.activeItem) {
-      this.#tabindex.updateActiveItem(menuitem);
+    if (event.target instanceof PfDropdownItem &&
+        event.target.menuItem !== this.#tabindex.activeItem) {
+      this.#tabindex.setActiveItem(event.target.menuItem);
     }
   }
 
@@ -149,36 +105,28 @@ export class PfDropdownMenu extends LitElement {
    * handles clicking on a listbox option:
    * which selects an item by default
    * or toggles selection if multiselectable
-   * @param event {MouseEvent}
-   * @returns void
    */
   #onMenuitemClick(event: MouseEvent) {
-    const target = event.target as PfDropdownItem;
-    const menuitem = target.menuItem;
-    if (menuitem !== this.#tabindex.activeItem) {
-      this.#tabindex.focusOnItem(menuitem);
+    if (event.target instanceof PfDropdownItem &&
+        event.target.menuItem !== this.#tabindex.activeItem) {
+      this.#tabindex.setActiveItem(event.target.menuItem);
     }
   }
 
-  /**
-   * handles keydown:
-   * filters listbox by keyboard event when slotted option has focus,
-   * or by external element such as a text field
-   * @param event {KeyboardEvent}
-   * @returns void
-   */
-  #onMenuitemKeydown(event: KeyboardEvent) {
-    let focusEvent: HTMLElement | undefined;
-    if (event.key?.match(/^[\w]$/)) {
-      focusEvent = this.#nextMatchingItem(event.key);
-      event.stopPropagation();
-      event.preventDefault();
-      // only change focus if keydown occurred when option has focus
-      // (as opposed to an external text input and if filter has changed
-      if (focusEvent) {
-        this.#tabindex.focusOnItem(focusEvent);
-      }
-    }
+  #getSlottedItems(slot?: HTMLSlotElement | null): PfDropdownItem[] {
+    return slot
+      ?.assignedElements()
+      .flatMap(element => {
+        if (element instanceof HTMLSlotElement) {
+          return this.#getSlottedItems(element);
+        } else if (element instanceof PfDropdownItem) {
+          return [element];
+        } else if (element instanceof PfDropdownGroup) {
+          return Array.from(element.querySelectorAll('pf-dropdown-item'));
+        } else {
+          return [];
+        }
+      }) ?? [];
   }
 }
 

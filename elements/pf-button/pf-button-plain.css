@@ -1,0 +1,60 @@
+.plain {
+  --pf-c-button--disabled--BackgroundColor: var(--pf-c-button--m-plain--disabled--BackgroundColor, transparent);
+}
+
+.plain {
+  --pf-c-button--after--BorderWidth: 0 !important;
+  --pf-c-button--after--BorderColor: var(--pf-c-button--m-tertiary--after--BorderColor,
+    var(--pf-global--Color--100, #151515));
+  --pf-c-button--disabled--Color: var(--pf-c-button--m-plain--disabled--Color,
+    var(--pf-global--disabled-color--200, #d2d2d2));
+  color: var(--pf-c-button--m-plain--Color,
+    var(--pf-global--Color--200, #6a6e73));
+  background-color: var(--pf-c-button--m-plain--BackgroundColor,
+    transparent);
+}
+
+.plain:active {
+  --pf-c-button--m-plain--Color: var(--pf-c-button--m-plain--active--Color,
+    var(--pf-global--Color--100, #151515));
+  --pf-c-button--m-plain--BackgroundColor: var(--pf-c-button--m-plain--active--BackgroundColor,
+    tranparent);
+}
+
+.plain:focus {
+  --pf-c-button--m-plain--Color: var(--pf-c-button--m-plain--focus--Color,
+    var(--pf-global--Color--100, #151515));
+  --pf-c-button--m-plain--BackgroundColor: var(--pf-c-button--m-plain--focus--BackgroundColor,
+    transparent);
+}
+
+.plain:hover {
+  --pf-c-button--m-plain--Color: var(--pf-c-button--m-plain--hover--Color,
+    var(--pf-global--Color--100, #151515));
+  --pf-c-button--m-plain--BackgroundColor: var(--pf-c-button--m-plain--hover--BackgroundColor,
+    transparent);
+}
+
+.plain:not(.hasIcon) [part=icon],
+:host([loading]) .plain [part=icon] {
+  left: 16px;
+}
+
+.plain [part=icon] {
+  display: contents;
+}
+
+.plain.disabled,
+:host([variant=link]) .plain.disabled,
+.plain[aria-disabled=true],
+.plain:disabled {
+  color: var(--pf-c-button--disabled--Color,
+    var(--pf-c-button--m-plain--disabled--Color,
+      var(--pf-global--disabled--color--200, #d2d2d2)));
+}
+
+:not(.plain).hasIcon [part=icon] {
+  --pf-icon--size: 16px;
+  position: relative;
+}
+

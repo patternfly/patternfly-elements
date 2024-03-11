@@ -1,13 +1,9 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
-
-import { bound } from '@patternfly/pfe-core/decorators/bound.js';
-import { ToggleController } from '@patternfly/pfe-core/controllers/toggle-controller.js';
 
 import { PfDropdownItem } from './pf-dropdown-item.js';
 import { PfDropdownMenu } from './pf-dropdown-menu.js';
@@ -15,25 +11,23 @@ import { PfDropdownMenu } from './pf-dropdown-menu.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-dropdown.css';
+import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
-export class DropdownSelectEvent extends Event {
+export class PfDropdownSelectEvent extends Event {
   constructor(
     public originalEvent: Event | KeyboardEvent,
-    public selectedValue: string
+    public value: string
   ) {
     super('select', { bubbles: true, cancelable: true });
   }
 }
 
 /**
- * A **dropdown** presents a menu of actions or links in a constrained space that will trigger a process or navigate to a new location.
- *
- * @slot trigger
- *       This slot renders the trigger element that will be used to open and close the dropdown menu.
+ * A **dropdown** presents a menu of actions or links in a constrained space that
+ * will trigger a process or navigate to a new location.
  *
  * @slot - Must contain one or more `<pf-dropdown-item>` or `<pf-dropdown-group>`
  *
- * @csspart trigger - Dropdown Trigger element
  * @csspart menu - The dropdown menu wrapper
  *
  * @cssprop {<length>} --pf-c-dropdown__menu--PaddingTop
@@ -52,7 +46,7 @@ export class DropdownSelectEvent extends Event {
  *          Dropdown top
  *          {@default `100% + 0.25rem`}
  *
- * @fires { DropdownSelectEvent } select - when a user select dropdown value
+ * @fires {PfDropdownSelectEvent} select - when a user select dropdown value
  * @fires open - when the dropdown toggles open
  * @fires close - when the dropdown toggles closed
  */
@@ -67,100 +61,128 @@ export class PfDropdown extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  @queryAssignedElements({ slot: 'trigger' })
-  private _slottedTrigger!: HTMLElement[];
-
-  @query('#default-button')
-  private _defaultTrigger!: HTMLButtonElement;
+  /**
+   * Whether the dropdown is expanded
+   */
+  @property({ type: Boolean, reflect: true }) expanded = false;
 
   @query('pf-dropdown-menu')
-  private _menuElement!: HTMLElement;
+  private _menuElement!: PfDropdownMenu;
 
-  #triggerElement: HTMLElement | null = null;
+  get #triggerElement() {
+    return this.shadowRoot?.getElementById('trigger') ?? null;
+  }
 
-  #toggle = new ToggleController(this, {
-    kind: 'menu',
-    onChange: expanded => {
-      this.dispatchEvent(new Event(expanded ? 'open' : 'close'));
-    }
+  #float = new FloatingDOMController(this, {
+    content: () => this._menuElement,
   });
 
   render() {
-    const { expanded, anchor, alignment } = this.#toggle ?? {};
+    const { expanded } = this;
+    const { anchor, alignment, styles = {} } = this.#float;
     const { disabled } = this;
     return html`
     <div class="${classMap({ expanded, [anchor ?? '']: !!anchor, [alignment ?? '']: !!alignment })}"
-         style="${styleMap(this.#toggle.styles ?? {})}">
-      <slot id="trigger"
-            part="trigger"
-            name="trigger"
-            @slotchange="${this.#setTriggerElement}">
-        <pf-button id="default-button"
-                   variant="control"
-                   ?disabled="${disabled}">
-          Dropdown
-          <svg viewBox="0 0 320 512" fill="currentColor" aria-hidden="true" width="1em" height="1em">
-            <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
-          </svg>
-        </pf-button>
-      </slot>
+         style="${styleMap(styles)}">
+      <pf-button id="trigger"
+                 variant="control"
+                 aria-controls="menu"
+                 aria-haspopup="menu"
+                 aria-expanded="${String(expanded) as 'true' | 'false'}"
+                 ?disabled="${disabled}"
+                 icon="caret-down"
+                 icon-set="fas"
+                 @keydown="${this.#onButtonKeydown}"
+                 @click="${() => this.toggle()}">Dropdown</pf-button>
       <pf-dropdown-menu id="menu"
                         part="menu"
                         class="${classMap({ show: expanded })}"
-                        ?disabled="${this.disabled}"
-                        @keydown="${this.onKeydown}"
-                        @click="${this.#handleSelect}">
+                        ?disabled="${disabled}"
+                        @focusout="${this.#onMenuFocusout}"
+                        @keydown="${this.#onMenuKeydown}"
+                        @click="${this.#onSelect}">
         <slot></slot>
       </pf-dropdown-menu>
     </div>`;
   }
 
-  firstUpdated() {
-    this.#toggle?.setPopupElement(this._menuElement);
-    this.#setTriggerElement();
-  }
-
-  #handleSelect(event: KeyboardEvent | Event & { target: PfDropdownItem }) {
-    const menu = this._menuElement as PfDropdownMenu;
-    const target = event.target as PfDropdownItem || menu.activeItem;
-    this.dispatchEvent(
-      new DropdownSelectEvent(event, `${target?.value}`)
-    );
-    this.hide();
-  }
-
-  #setTriggerElement() {
-    const [slottedTrigger] = this._slottedTrigger;
-    const trigger = slottedTrigger || this._defaultTrigger;
-    if (this.#triggerElement !== trigger) {
-      this.#toggle?.removeTriggerElement(this.#triggerElement);
-      this.#triggerElement = trigger;
-      this.#toggle?.addTriggerElement(this.#triggerElement);
+  updated(changed: PropertyValues<this>) {
+    if (changed.has('expanded')) {
+      this.#expandedChanged();
     }
   }
 
-  @bound private onKeydown(event: KeyboardEvent) {
+  async #expandedChanged() {
+    const will = this.expanded ? 'close' : 'open';
+    this.dispatchEvent(new Event(will));
+    if (this.expanded) {
+      await this.#float.show();
+      this._menuElement.activeItem?.focus();
+    } else {
+      await this.#float.hide();
+    }
+  }
+
+
+  #onSelect(event: KeyboardEvent | Event & { target: PfDropdownItem }) {
+    const menu = this._menuElement;
+    const target = event.target as PfDropdownItem || menu.activeItem;
+    this.dispatchEvent(new PfDropdownSelectEvent(event, `${target?.value}`));
+    this.hide();
+  }
+
+  #onButtonKeydown(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowDown':
+        this.show();
+    }
+  }
+
+  #onMenuFocusout(event: FocusEvent) {
+    if (this.expanded) {
+      const root = this.getRootNode();
+      if (root instanceof ShadowRoot ||
+          root instanceof Document &&
+          event.relatedTarget instanceof PfDropdownItem &&
+          !this._menuElement.items.includes(event.relatedTarget)
+      ) {
+        this.hide();
+      }
+    }
+  }
+
+  #onMenuKeydown(event: KeyboardEvent) {
     switch (event.key) {
       case 'Enter':
       case ' ':
         event.preventDefault();
-        this.#handleSelect(event);
+        this.#onSelect(event);
         break;
+      case 'Escape':
+        this.hide();
+        this.#triggerElement?.focus();
     }
   }
 
   /**
    * Opens the dropdown
    */
-  @bound async show() {
-    await this.#toggle?.show(true);
+  async show() {
+    this.expanded = true;
+    await this.updateComplete;
   }
 
   /**
    * Closes the dropdown
    */
-  @bound async hide() {
-    await this.#toggle?.hide(true);
+  async hide() {
+    this.expanded = false;
+    await this.updateComplete;
+  }
+
+  async toggle() {
+    this.expanded = !this.expanded;
+    await this.updateComplete;
   }
 }
 

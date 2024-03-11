@@ -1,0 +1,19 @@
+<pf-select>
+  <pf-option-group label="Status" key="group1">
+    <pf-option value="0">Running</pf-option>
+    <pf-option value="1">Stopped</pf-option>
+    <pf-option value="2">Down</pf-option>
+    <pf-option value="3">Degraded</pf-option>
+    <pf-option value="4">Needs maintenance</pf-option>
+  </pf-option-group>
+  <hr>
+  <pf-option-group label="Vendor names" key="group2">
+    <pf-option value="5">Dell</pf-option>
+    <pf-option value="6" disabled>Samsung</pf-option>
+    <pf-option value="7">Hewlett-Packard</pf-option>
+  </pf-option-group>
+</pf-select>
+
+<script type="module">
+  import '@patternfly/elements/pf-select/pf-select.js';
+</script>

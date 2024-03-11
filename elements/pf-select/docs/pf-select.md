@@ -5,7 +5,7 @@ import '@patternfly/elements/pf-select/pf-select.js';
 </script>
 
 {% renderOverview %}
-  <pf-select default-text="Select a value">
+  <pf-select placeholder="Select a value">
     <pf-option value="Blue">Blue</pf-option>
     <pf-option value="Green">Green</pf-option>
     <pf-option value="Magenta">Magenta</pf-option>
@@ -25,38 +25,36 @@ Focus on options using arrow keys or
 by typing the first character of an option.
 
 {% htmlexample %}
-  <pf-select default-text="Select a value">
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
+  {% renderFile "./elements/pf-select/demo/pf-select.html" %}
 {% endhtmlexample %}
 
-#### Disabled
+#### Single with description
 {% htmlexample %}
-  <pf-select disabled default-text="Select a color">
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
+  {% renderFile "./elements/pf-select/demo/single-with-description.html" %}
 {% endhtmlexample %}
 
+#### Grouped single
+{% htmlexample %}
+  {% renderFile "./elements/pf-select/demo/grouped-single.html" %}
+{% endhtmlexample %}
+
+#### Checkbox input
+
+Multiple options can be selected. Any arrow keys work.
+<kbd>Shift</kbd> will toggling off multiple items.
+<kbd>Ctrl+A</kbd> will toggle selection on all items.
+
+{% htmlexample %}
+  {% renderFile "./elements/pf-select/demo/checkbox-input.html" %}
+{% endhtmlexample %}
+
+{# save this for v5
 ### Option variations
 
 Below are option variants:
 
 {% htmlexample %}
-  <pf-select always-expanded>
+  <pf-select>
     <pf-option value="Basic">Basic option</pf-option>
     <pf-option value="Description">
       <span>Option with description</span>
@@ -69,223 +67,37 @@ Below are option variants:
     <pf-option value="aria-disabled" aria-disabled="true">Aria-disabled option</pf-option>
   </pf-select>
 {% endhtmlexample %}
+#}
+When setting the `disabled` attribute on options, they are still focusable, but
+they are not selectable. This is in  order that they remain accessible to screen
+readers. This functions similarly to the `aria-disabled="true"` attribute.
 
+{% renderFile "./docs/_snippets/wai-aria-disabled.md" %}
 
-{% renderFile "./docs/_snippets/wai-aria-disabled.md" %}  Because options are part of the larger `pf-select` element, use `aria-disabled="true"` instead of `disabled` so that screenreader users know the option exists and is disabled.
+{# 
+  ### Typeahead
 
-### Grouped Options
+  {% htmlexample %}
+    {% renderFile "./elements/pf-select/demo/typeahead.html" %}
+  {% endhtmlexample %}
 
-{% htmlexample %}
-  <pf-select default-text="Select item from our menu">
-    <pf-option-group>
-      <span slot="label">Breakfast</span>
-      <pf-option value="Eggs">Eggs</pf-option>
-      <pf-option value="Toast">Toast</pf-option>
-      <pf-option value="Waffles">Waffles</pf-option>
-    </pf-option-group>
-    <pf-option-group>
-      <span slot="label">Lunch</span>
-      <pf-option value="Salad">Salad</pf-option>
-      <pf-option value="Sandwich">Sandwich</pf-option>
-      <pf-option value="Soup">Soup</pf-option>
-    </pf-option-group>
-  </pf-select>
-{% endhtmlexample %}
+  #### Multiple
 
-### Multi-selectable
+  {% htmlexample %}
+    {% renderFile "./elements/pf-select/demo/typeahead-multiple.html" %}
+  {% endhtmlexample %}
 
-Multiple options can be selected. Any arrow keys work.
-<kbd>Shift</kbd> will toggling off multiple items.
-<kbd>Ctrl+A</kbd> will toggle selection on all items.
+  #### Custom filtering
 
-{% htmlexample %}
-  <pf-select multi>
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-{% endhtmlexample %}
+  By default, filtering is **enabled** and **not** case sensitive.
+  However, filtering can be customized with the `customFilter` option, 
+  which is a predicate function that takes an option.
 
-#### Checkbox
+  {% htmlexample %}
+    {% renderFile "./elements/pf-select/demo/typeahead-custom-filter.html" %}
+  {% endhtmlexample %}
+#}
 
-Multiple options, displayed as checkboxes, can be selected.
-<kbd>Shift</kbd> will toggling off multiple items.
-<kbd>Ctrl+A</kbd> will toggle selection on all items.
-
-{% htmlexample %}
-  <pf-select checkboxes>
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-{% endhtmlexample %}
-
-#### Checkbox, with badge
-
-{% htmlexample %}
-  <pf-select checkboxes selected-items-display="badge">
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-{% endhtmlexample %}
-
-### Typeahead
-
-{% htmlexample %}
-  <label>
-    Pick a color:
-    <pf-select typeahead>
-      <pf-option value="Blue">Blue</pf-option>
-      <pf-option value="Green">Green</pf-option>
-      <pf-option value="Magenta">Magenta</pf-option>
-      <pf-option value="Orange">Orange</pf-option>
-      <pf-option value="Purple">Purple</pf-option>
-      <pf-option value="Pink">Pink</pf-option>
-      <pf-option value="Red">Red</pf-option>
-      <pf-option value="Yellow">Yellow</pf-option>
-    </pf-select>
-  </label>
-{% endhtmlexample %}
-
-#### Typeahead with create option
-
-{% htmlexample %}
-<label>
-  Pick a color:
-  <pf-select id="pfselect" typeahead create-option-text="Create option">
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-</label>
-{% endhtmlexample %}
-
-#### Typeahead, multi with chips
-
-{% htmlexample %}
-<label>
-  Pick a color:
-  <pf-select typeahead multi selected-items-display="chips">
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-</label>
-{% endhtmlexample %}
-
-#### Typeahead, multi with create option
-
-{% htmlexample %}
-<label>
-  Pick a color:
-  <pf-select id="pfselect" typeahead multi create-option-text="Create option">
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-</label>
-{% endhtmlexample %}
-
-#### Typeahead, with checkboxes
-
-{% htmlexample %}
-<label>
-  Pick a color:
-  <pf-select id="pfselect" typeahead checkboxes>
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-</label>
-{% endhtmlexample %}
-
-### Filtering
-
-By default, filtering is **enabled** and **not** case sensitive. However, filtering can be set to case sensitive or disabled altogether.
-
-#### Case-sensitive filtering
-
-{% htmlexample %}
-  <pf-select case-sensitive typeahead>
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-{% endhtmlexample %}
-
-#### Match anywhere
-
-Filter options that match input text anywhere 
-rather than just options that start with the input text.
-
-{% htmlexample %}
-  <pf-select match-anywhere typeahead>
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-{% endhtmlexample %}
-
-#### Disable filtering
-
-{% htmlexample %}
-  <pf-select disable-filter typeahead>
-    <pf-option value="Blue">Blue</pf-option>
-    <pf-option value="Green">Green</pf-option>
-    <pf-option value="Magenta">Magenta</pf-option>
-    <pf-option value="Orange">Orange</pf-option>
-    <pf-option value="Purple">Purple</pf-option>
-    <pf-option value="Pink">Pink</pf-option>
-    <pf-option value="Red">Red</pf-option>
-    <pf-option value="Yellow">Yellow</pf-option>
-  </pf-select>
-{% endhtmlexample %}
 {% endband %}
 
 {% band header="Accessibility" %}

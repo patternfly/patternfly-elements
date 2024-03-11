@@ -95,20 +95,20 @@ export abstract class BaseTabs extends LitElement {
     if (tab) {
       if (tab.disabled) {
         this.#logger.warn(`Disabled tabs can not be active, setting first focusable tab to active`);
-        this.#tabindex.updateActiveItem(this.#firstFocusable);
+        this.#tabindex.setActiveItem(this.#firstFocusable);
         index = this.#activeItemIndex;
-      } else if (!tab.active) {
-        // if the activeIndex was set through the CLI e.g.`$0.activeIndex = 2`
-        tab.active = true;
         return;
+      } else {
+        tab.active = true;
       }
     }
 
     if (index === -1) {
       this.#logger.warn(`No active tab found, setting first focusable tab to active`);
-      const first = this.#tabindex.firstItem;
-      this.#tabindex.updateActiveItem(first);
+      this.#tabindex.setActiveItem(this.#tabindex.firstItem);
       index = this.#activeItemIndex;
+    } else {
+      this.#tabindex.setActiveItem(tab);
     }
     this.#activeIndex = index;
     this.requestUpdate('activeIndex', oldIndex);
@@ -190,7 +190,7 @@ export abstract class BaseTabs extends LitElement {
       this.#updateAccessibility();
       this.#firstLastClasses();
       this.activeIndex = this.#allTabs.findIndex(tab => tab.active);
-      this.#tabindex.updateActiveItem(this.#activeTab);
+      this.#tabindex.setActiveItem(this.#activeTab);
       this.#overflow.init(this.tabList, this.#allTabs);
     }
   }
@@ -213,9 +213,6 @@ export abstract class BaseTabs extends LitElement {
     }
 
     if (event.active) {
-      if (event.tab !== this.#tabindex.activeItem) {
-        this.#tabindex.updateActiveItem(event.tab);
-      }
       this.activeIndex = this.#allTabs.findIndex(tab => tab === event.tab);
     }
   };

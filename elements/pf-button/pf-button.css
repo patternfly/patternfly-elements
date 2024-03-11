@@ -1,83 +1,6 @@
-/* hi */
-button {
-  color: var(--pf-c-button--m-primary--Color,
-    var(--pf-global--Color--light-100, #fff));
-  background-color: var(--pf-c-button--m-primary--BackgroundColor,
-    var(--pf-global--primary-color--100, #06c));
-  font-size: var(--pf-c-button--FontSize,
-    var(--pf-global--FontSize--md, 1rem));
-  font-weight: var(--pf-c-button--FontWeight,
-    var(--pf-global--FontWeight--normal, 400));
-  line-height: var(--pf-c-button--LineHeight,
-    var(--pf-global--LineHeight--md, 1.5));
-  padding:
-    var(--pf-c-button--PaddingTop,
-      var(--pf-global--spacer--form-element, 0.375rem))
-    var(--pf-c-button--PaddingRight,
-      var(--pf-global--spacer--md, 1rem))
-    var(--pf-c-button--PaddingBottom,
-      var(--pf-global--spacer--form-element, 0.375rem))
-    var(--pf-c-button--PaddingLeft,
-      var(--pf-global--spacer--md, 1rem));
-}
-
-:host, button {
-  border-radius: var(--pf-c-button--BorderRadius,
-    var(--pf-global--BorderRadius--sm, 3px));
-}
-
-pf-icon, ::slotted(pf-icon) {
-  color: currentColor;
-}
-
-button::after {
-  border-color: var(--pf-c-button--after--BorderColor, transparent);
-  border-width: var(--pf-c-button--after--BorderWidth,
-    var(--pf-global--BorderWidth--sm, 1px));
-  border-radius: var(--pf-c-button--after--BorderRadius,
-    var(--pf-global--BorderRadius--sm, 3px));
-}
-
-button:active {
-  --pf-c-button--m-primary--Color: var(--pf-c-button--m-primary--active--Color,
-    var(--pf-global--Color--light-100, #fff));
-  --pf-c-button--m-primary--BackgroundColor: var(--pf-c-button--m-primary--active--BackgroundColor,
-    var(--pf-global--primary-color--200, #004080));
-  --pf-c-button--after--BorderWidth: var(--pf-c-button--active--after--BorderWidth,
-    var(--pf-global--BorderWidth--md, 2px));
-  /* DANGER */
-  --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--active--Color,
-    var(--pf-global--Color--light-100, #fff));
-  --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--active--BackgroundColor,
-    var(--pf-global--danger-color--200, #a30000));
-}
-
-button:focus {
-  --pf-c-button--m-primary--Color: var(--pf-c-button--m-primary--focus--Color,
-    var(--pf-global--Color--light-100, #fff));
-  --pf-c-button--m-primary--BackgroundColor: var(--pf-c-button--m-primary--focus--BackgroundColor,
-    var(--pf-global--primary-color--200, #004080));
-  --pf-c-button--after--BorderWidth: var(--pf-c-button--focus--after--BorderWidth,
-    var(--pf-global--BorderWidth--md, 2px));
-  /* DANGER */
-  --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--focus--Color,
-    var(--pf-global--Color--light-100, #fff));
-  --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--focus--BackgroundColor,
-    var(--pf-global--danger-color--200, #a30000));
-}
-
-button:hover {
-  --pf-c-button--m-primary--Color: var(--pf-c-button--m-primary--hover--Color,
-    var(--pf-global--Color--light-100, #fff));
-  --pf-c-button--m-primary--BackgroundColor: var(--pf-c-button--m-primary--hover--BackgroundColor,
-    var(--pf-global--primary-color--200, #004080));
-  --pf-c-button--after--BorderWidth: var(--pf-c-button--hover--after--BorderWidth,
-    var(--pf-global--BorderWidth--md, 2px));
-  /* DANGER */
-  --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--hover--Color,
-    var(--pf-global--Color--light-100, #fff));
-  --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--hover--BackgroundColor,
-    var(--pf-global--danger-color--200, #a30000));
+:host {
+  display: inline-block;
+  height: max-content;
 }
 
 /******************************
@@ -121,80 +44,6 @@ button:hover {
     var(--pf-global--disabled-color--100, #6a6e73));
   background-color: var(--pf-c-button--disabled--BackgroundColor,
     var(--pf-global--disabled-color--200, #d2d2d2));
-}
-
-/******************************
- *                            *
- *           PLAIN            *
- *                            *
- ******************************/
-
-:host([plain]) {
-  --pf-c-button--disabled--BackgroundColor: var(--pf-c-button--m-plain--disabled--BackgroundColor, transparent);
-}
-
-:host([plain]) button {
-  --pf-c-button--after--BorderWidth: 0;
-  --pf-c-button--after--BorderColor: var(--pf-c-button--m-tertiary--after--BorderColor,
-    var(--pf-global--Color--100, #151515));
-  --pf-c-button--disabled--Color: var(--pf-c-button--m-plain--disabled--Color,
-    var(--pf-global--disabled-color--200, #d2d2d2));
-  color: var(--pf-c-button--m-plain--Color,
-    var(--pf-global--Color--200, #6a6e73));
-  background-color: var(--pf-c-button--m-plain--BackgroundColor,
-    transparent);
-}
-
-:host([plain]) button:active {
-  --pf-c-button--m-plain--Color: var(--pf-c-button--m-plain--active--Color,
-    var(--pf-global--Color--100, #151515));
-  --pf-c-button--m-plain--BackgroundColor: var(--pf-c-button--m-plain--active--BackgroundColor,
-    tranparent);
-}
-
-:host([plain]) button:focus {
-  --pf-c-button--m-plain--Color: var(--pf-c-button--m-plain--focus--Color,
-    var(--pf-global--Color--100, #151515));
-  --pf-c-button--m-plain--BackgroundColor: var(--pf-c-button--m-plain--focus--BackgroundColor,
-    transparent);
-}
-
-:host([plain]) button:hover {
-  --pf-c-button--m-plain--Color: var(--pf-c-button--m-plain--hover--Color,
-    var(--pf-global--Color--100, #151515));
-  --pf-c-button--m-plain--BackgroundColor: var(--pf-c-button--m-plain--hover--BackgroundColor,
-    transparent);
-}
-
-:host([plain]) .hasIcon [part=icon],
-:host([loading][plain]) [part=icon] {
-  left: 16px;
-}
-
-:host([plain][disabled]),
-:host([plain][disabled][variant=link]) button,
-:host([plain][disabled]) button,
-:host([plain]) button[aria-disabled=true],
-:host([plain]) button:disabled {
-  color: var(--pf-c-button--disabled--Color,
-    var(--pf-c-button--m-plain--disabled--Color,
-      var(--pf-global--disabled--color--200, #d2d2d2)));
-}
-
-/******************************
- *                            *
- *            ICON            *
- *                            *
- ******************************/
-
-.hasIcon {
-  gap: calc(2 * var(--pf-c-button__icon--m-start--MarginLeft,
-    var(--pf-global--spacer--xs, 0.25rem)));
-}
-
-.hasIcon [part=icon] {
-  --pf-icon--size: 16px;
-  position: relative;
 }
 
 /******************************
@@ -546,10 +395,9 @@ button:hover {
  *                            *
  ******************************/
 
-:host(:is(:disabled, [aria-disabled=true])),
-:host(:is(:disabled, [aria-disabled=true])) button,
-:host(:is(:disabled, [aria-disabled=true])[danger]) button,
-:host(:is(:disabled, [aria-disabled=true])[variant=link]) button {
+:host(:is(:disabled, [aria-disabled=true])) .pf-button:not(.plain),
+:host(:is(:disabled, [aria-disabled=true])[danger]) .pf-button:not(.plain),
+:host(:is(:disabled, [aria-disabled=true])[variant=link]) .pf-button:not(.plain) {
   color: var(--pf-c-button--disabled--Color,
     var(--pf-global--disabled-color--100, #6a6e73));
   background-color: var(--pf-c-button--disabled--BackgroundColor,

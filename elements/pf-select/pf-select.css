@@ -7,7 +7,7 @@
   --_pf-option-svg-display: block;
 }
 
-:host, #outer.toggles {
+:host, #outer {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -26,20 +26,41 @@
   color: var(--pf-global--Color--dark-200, #6a6e73) !important;
 }
 
-#outer.toggles {
+#outer {
   position: relative;
 }
 
-#outer.toggles pf-listbox {
+/* TODO(bennyp): see if we can get rid of this wrapping node, for perf reasons */
+#listbox-container {
+  display: inline-flex;
+  border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
   position: absolute;
   background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
   opacity: 0;
+  --_active-descendant-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important
 }
 
-#outer.toggles.expanded pf-listbox {
+#outer.expanded #listbox-container {
   opacity: 1;
   z-index: 9999 !important;
 }
+
+#listbox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#listbox slot.disabled {
+  color: var(--pf-c-list__item-icon--Color, #6a6e73) !important;
+  background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+  border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+  pointer-events: none;
+  cursor: not-allowed;;
+  --_active-descendant-color: transparent;
+  --_svg-color: var(--pf-c-list__item-icon--Color, #6a6e73) !important;
+}
+
 
 #toggle {
   background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
@@ -132,7 +153,7 @@ pf-badge {
   display: block;
 }
 
-pf-listbox.checkboxes {
+#listbox.checkboxes {
   --_pf-option-checkboxes-display: inline;
   --_pf-option-svg-display: none;
 }

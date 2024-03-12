@@ -157,6 +157,8 @@ export class PfDropdown extends LitElement {
   async #expandedChanged() {
     const will = this.expanded ? 'close' : 'open';
     const [menu] = this._menuElements;
+    const [button] = this._triggerElements;
+    button.setAttribute('aria-expanded', `${String(this.expanded) as 'true' | 'false'}`);
     this.dispatchEvent(new Event(will));
     if (this.expanded) {
       await this.#float.show();

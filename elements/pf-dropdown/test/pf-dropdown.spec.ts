@@ -2,7 +2,13 @@ import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { PfDropdown } from '@patternfly/elements/pf-dropdown/pf-dropdown.js';
-import { a11ySnapshot, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+
+function press(key: string) {
+  return async function() {
+    await sendKeys({ press: key });
+  };
+}
 
 describe('<pf-dropdown>', function() {
   let element: PfDropdown;
@@ -33,7 +39,12 @@ describe('<pf-dropdown>', function() {
     });
 
     it('should be accessible', async function() {
-      await expect(element).shadowDom.to.be.accessible();
+      await expect(element).to.be.accessible({
+        ignoredRules: [
+          /** @see https://github.com/dequelabs/axe-core/issues/4259 */
+          'aria-allowed-attr',
+        ]
+      });
     });
 
     it('should hide dropdown content from assistive technology', async function() {
@@ -42,10 +53,8 @@ describe('<pf-dropdown>', function() {
     });
 
     describe('pressing Enter', function() {
-      beforeEach(async function() {
-        await sendKeys({ press: 'Tab' });
-        await sendKeys({ press: 'Enter' });
-      });
+      beforeEach(press('Tab'));
+      beforeEach(press('Enter'));
 
       it('should show menu', async function() {
         const snapshot = await a11ySnapshot();

@@ -179,7 +179,7 @@ export class PfChipGroup extends LitElement {
    */
   #handleChipsChanged() {
     if (this.#chips.length > 0) {
-      const oldButtons = [...(this.#buttons || [])];
+      const oldButtons = [...(this.#tabindex.items || [])];
       const max = this.open ? this.#chips.length : Math.min(this.#chips.length, this.numChips);
       this.#buttons = [
         ...this.#chips.slice(0, max),

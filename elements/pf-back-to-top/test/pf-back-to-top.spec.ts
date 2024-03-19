@@ -73,7 +73,7 @@ describe('<pf-back-to-top>', function() {
       });
 
       it('should be accessible', async function() {
-        await expect(element).to.be.accessible;
+        await expect(element).to.be.accessible();
       });
 
       describe('pressing the tab key', function() {
@@ -103,7 +103,7 @@ describe('<pf-back-to-top>', function() {
       });
 
       it('should be accessible', async function() {
-        await expect(element).to.be.accessible;
+        await expect(element).to.be.accessible();
       });
 
       describe('pressing the tab key', function() {
@@ -310,4 +310,3 @@ describe('<pf-back-to-top>', function() {
     });
   });
 });
-

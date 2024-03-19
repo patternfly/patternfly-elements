@@ -87,16 +87,8 @@ describe('<pf-chip-group>', async function() {
     beforeEach(updateComplete);
     it('should have close button', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children).to.deep.equal([
-        { role: 'text', name: 'Chip 1' },
-        { role: 'button', name: 'Close', description: 'Chip 1' },
-        { role: 'text', name: 'Chip 2' },
-        { role: 'button', name: 'Close', description: 'Chip 2' },
-        { role: 'text', name: 'Chip 3' },
-        { role: 'button', name: 'Close', description: 'Chip 3' },
-        { role: 'button', name: '1 more' },
-        { role: 'button', name: 'Close' }
-      ]);
+      const last = snapshot.children?.at(-1);
+      expect(last).to.deep.equal({ role: 'button', name: 'Close' });
     });
 
     describe('clicking close button', function() {

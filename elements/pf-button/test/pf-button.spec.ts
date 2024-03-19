@@ -1,6 +1,7 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
+import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 
 import { PfButton } from '@patternfly/elements/pf-button/pf-button.js';
 
@@ -53,6 +54,13 @@ describe('<pf-button>', function() {
     afterEach(function() {
       // @ts-expect-error: resetting fixture
       submitEvent = undefined;
+    });
+
+    describe('clicking the button', function() {
+      beforeEach(() => clickElementAtCenter(element));
+      it('submits the form', function() {
+        expect(submitEvent).to.be.ok;
+      });
     });
 
     describe('tabbing through', function() {

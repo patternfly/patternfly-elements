@@ -297,7 +297,9 @@ export class PfButton extends LitElement {
     switch (event.key) {
       case ' ':
       case 'Enter':
-        this.#onClick();
+        if (this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }))) {
+          this.#onClick();
+        }
     }
   }
 }

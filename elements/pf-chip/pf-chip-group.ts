@@ -10,6 +10,7 @@ import { RovingTabindexController } from '@patternfly/pfe-core/controllers/rovin
 import { PfChip, PfChipRemoveEvent } from './pf-chip.js';
 
 import styles from './pf-chip-group.css';
+import shared from './pf-chip-shared.css';
 
 export class PfChipGroupExpandEvent extends Event {
   constructor() {
@@ -46,7 +47,7 @@ const REMAINING_RE = /\$\{\s*remaining\s*\}/g;
  */
 @customElement('pf-chip-group')
 export class PfChipGroup extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles = [shared, styles];
 
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 

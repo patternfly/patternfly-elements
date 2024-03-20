@@ -72,6 +72,7 @@
     var(--pf-c-chip__c-button--PaddingRight)
     var(--pf-c-chip__c-button--PaddingBottom)
     var(--pf-c-chip__c-button--PaddingLeft);
+  inset-block-start: 0.125em;
 }
 
 svg {

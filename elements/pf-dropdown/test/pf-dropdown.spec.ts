@@ -45,6 +45,8 @@ describe('<pf-dropdown>', function() {
         ignoredRules: [
           /** @see https://github.com/dequelabs/axe-core/issues/4259 */
           'aria-allowed-attr',
+          /** false positive: the menuitem is projected into a menu in another shadow root */
+          'aria-required-parent',
         ]
       });
     });

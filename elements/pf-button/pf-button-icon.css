@@ -4,7 +4,7 @@
  *                            *
  ******************************/
 
-.pf-button.hasIcon {
+.hasIcon {
   gap: calc(2 * var(--pf-c-button__icon--m-start--MarginLeft,
     var(--pf-global--spacer--xs, 0.25rem)));
 }

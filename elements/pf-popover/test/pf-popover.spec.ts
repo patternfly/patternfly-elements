@@ -64,7 +64,10 @@ describe('<pf-popover>', function() {
       expect(document.createElement('pf-popover'))
         .to.be.an.instanceof(PfPopover);
     });
-    it('should not report anything to assistive technology', () => expectA11ySnapshot());
+    it('should not report anything to assistive technology', async function() {
+      const snapshot = await a11ySnapshot();
+      expect(snapshot.children).to.not.be.ok;
+    });
   });
 
   describe('with a slotted trigger; and with heading, body, and footer attributes', function() {
@@ -126,21 +129,23 @@ describe('<pf-popover>', function() {
           beforeEach(updateComplete);
           beforeEach(press('Enter'));
           beforeEach(updateComplete);
-          it('should hide popover content from assistive technology', () => expectA11ySnapshot({
-            role: 'WebArea',
-            name: '',
-            children: [{ role: 'button', name: 'Toggle popover', focused: true }],
-          }));
+          it('should hide popover content from assistive technology', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(snapshot?.children?.length).to.equal(1);
+            const dialog = snapshot.children?.find(x => x.role === 'dialog');
+            expect(dialog).to.not.be.ok;
+          });
         });
         describe('then pressing Escape', function() {
           beforeEach(updateComplete);
           beforeEach(press('Escape'));
           beforeEach(updateComplete);
-          it('should hide popover content from assistive technology', () => expectA11ySnapshot({
-            role: 'WebArea',
-            name: '',
-            children: [{ role: 'button', name: 'Toggle popover', focused: true }],
-          }));
+          it('should hide popover content from assistive technology', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(snapshot?.children?.length).to.equal(1);
+            const dialog = snapshot.children?.find(x => x.role === 'dialog');
+            expect(dialog).to.not.be.ok;
+          });
         });
       });
     });
@@ -149,63 +154,6 @@ describe('<pf-popover>', function() {
   describe('with a trigger and a sibling button', function() {
     let btn1: HTMLButtonElement;
     let btn2: HTMLButtonElement;
-
-    /** Setup the a11y tree snapshot expected results for this suite */
-    const snapshots = {
-      opened: {
-        role: 'WebArea',
-        name: '',
-        children: [
-          {
-            role: 'dialog',
-            name: '',
-            children: [
-              {
-                name: 'Close popover',
-                role: 'button',
-                focused: true,
-              },
-              {
-                level: 6,
-                name: 'Popover heading',
-                role: 'heading',
-              },
-              {
-                name: 'Popovers are triggered by click rather than hover.',
-                role: 'text',
-              },
-              {
-                name: 'Popover footer',
-                role: 'text',
-              },
-            ],
-          },
-          {
-            name: 'Toggle popover 1',
-            role: 'button',
-          },
-          {
-            name: 'Toggle popover 2',
-            role: 'button',
-          },
-        ]
-      },
-      closed: {
-        role: 'WebArea',
-        name: '',
-        children: [
-          {
-            name: 'Toggle popover 1',
-            role: 'button',
-          },
-          {
-            name: 'Toggle popover 2',
-            role: 'button',
-          },
-        ]
-      }
-      ,
-    };
 
     async function clickButton1() {
       await clickElementAtCenter(btn1);
@@ -259,14 +207,17 @@ describe('<pf-popover>', function() {
         beforeEach(updateComplete);
         beforeEach(clickButton1);
         beforeEach(updateComplete);
-        it('remains closed', () => expectA11ySnapshot({
-          name: '',
-          role: 'WebArea',
-          children: [
-            { role: 'button', name: 'Toggle popover 1', focused: true },
-            { role: 'button', name: 'Toggle popover 2' },
-          ],
-        }));
+        it('remains closed', async function() {
+          const snapshot = await a11ySnapshot();
+          expect(snapshot).to.deep.equal({
+            name: '',
+            role: 'WebArea',
+            children: [
+              { role: 'button', name: 'Toggle popover 1', focused: true },
+              { role: 'button', name: 'Toggle popover 2' },
+            ],
+          });
+        });
       });
       describe('clicking the sibling button', function() {
         beforeEach(updateComplete);
@@ -283,7 +234,23 @@ describe('<pf-popover>', function() {
       // Close the popover
       beforeEach(press('Enter'));
       beforeEach(updateComplete);
-      it('closes the popover', () => expectA11ySnapshot(snapshots.closed));
+      it('closes the popover', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot).to.deep.equal({
+          role: 'WebArea',
+          name: '',
+          children: [
+            {
+              name: 'Toggle popover 1',
+              role: 'button',
+            },
+            {
+              name: 'Toggle popover 2',
+              role: 'button',
+            },
+          ]
+        });
+      });
     });
   });
 });

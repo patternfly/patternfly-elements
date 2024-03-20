@@ -314,6 +314,7 @@
     "leasot": "^13.3.0",
     "lit": "^3.1.2",
     "nunjucks": "^3.2.4",
+    "postcss-nesting": "^12.1.0",
     "prompts": "^2.4.2",
     "wireit": "^0.14.4",
     "zero-md": "^2.5.3"

@@ -1,17 +1,17 @@
-import { html } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { state } from 'lit/decorators/state.js';
 
-import { BaseButton } from './BaseButton.js';
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
 import '@patternfly/elements/pf-icon/pf-icon.js';
 import '@patternfly/elements/pf-spinner/pf-spinner.js';
 
-import baseStyles from './pf-button-base.css';
 import tokensStyles from './pf-button-tokens.css';
 import iconStyles from './pf-button-icon.css';
-import plainStyles from './pf-button-plain.css';
 
 import styles from './pf-button.css';
 
@@ -156,12 +156,11 @@ export type ButtonVariant = (
  *
  */
 @customElement('pf-button')
-export class PfButton extends BaseButton {
+export class PfButton extends LitElement {
+  static readonly formAssociated = true;
+
   static readonly styles = [
-    ...BaseButton.styles,
     tokensStyles,
-    baseStyles,
-    plainStyles,
     iconStyles,
     styles,
   ];
@@ -175,11 +174,17 @@ export class PfButton extends BaseButton {
   /** Not as urgent as danger */
   @property({ type: Boolean, reflect: true }) warning = false;
 
+  /** Changes the size of the button. */
   @property({ reflect: true }) size?: 'small' | 'large';
 
   /** Icon set for the `icon` property */
   @property({ attribute: 'icon-set' }) iconSet?: string;
 
+  /**
+   * Use danger buttons for actions a user can take that are potentially
+   * destructive or difficult/impossible to undo, like deleting or removing
+   * user data.
+   */
   @property({ type: Boolean, reflect: true }) danger = false;
 
   /**
@@ -194,21 +199,108 @@ export class PfButton extends BaseButton {
    */
   @property({ reflect: true }) variant: ButtonVariant = 'primary';
 
-  protected override get hasIcon() {
-    return !!this.icon || !!this.loading;
+  @property({ reflect: true, type: Boolean }) inline = false;
+
+  @property({ reflect: true, type: Boolean }) block = false;
+
+  /** Disables the button */
+  @property({ reflect: true, type: Boolean }) disabled = false;
+
+  @state() private active = false;
+
+  @property({ reflect: true }) type?: 'button' | 'submit' | 'reset';
+
+  /** Accessible name for the button, use when the button does not have slotted text */
+  @property() label?: string;
+
+  @property() value?: string;
+
+  @property() name?: string;
+
+  /** Shorthand for the `icon` slot, the value is icon name */
+  @property() icon?: string;
+
+  #internals = InternalsController.of(this, { role: 'button' });
+
+  get #disabled() {
+    return this.disabled || this.#internals.formDisabled;
   }
 
-  protected override renderDefaultIcon() {
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('click', this.#onClick);
+    this.addEventListener('mousedown', this.#onMouse);
+    this.addEventListener('mouseup', this.#onMouse);
+    this.addEventListener('keydown', this.#onKeydown);
+    this.tabIndex = 0;
+  }
+
+  protected override willUpdate(): void {
+    this.#internals.ariaLabel = this.label || null;
+    this.#internals.ariaDisabled = String(!!this.disabled);
+  }
+
+  protected override render() {
+    const hasIcon = !!this.icon || !!this.loading;
+    const { active, warning, variant, danger, loading, plain, inline, block, size } = this;
+    const disabled = this.#disabled;
     return html`
-      <pf-icon
-          icon="${ifDefined(this.icon)}"
-          set="${ifDefined(this.iconSet)}"
-          ?hidden="${!this.icon}"></pf-icon>
-      <pf-spinner
-          ?hidden="${!this.loading}"
-          size="md"
-          aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pf-spinner>
+      <div id="button"
+           class="${classMap({
+             [variant]: true,
+             [size ?? '']: !!size,
+             active,
+             inline,
+             block,
+             danger,
+             disabled,
+             hasIcon,
+             loading,
+             plain,
+             warning,
+           })}">
+        <slot id="icon" part="icon" name="icon" ?hidden="${!hasIcon}">
+          <pf-icon role="presentation"
+                   icon="${ifDefined(this.icon)}"
+                   set="${ifDefined(this.iconSet)}"
+                   ?hidden="${!this.icon}"></pf-icon>
+          <pf-spinner size="md"
+                      ?hidden="${!this.loading}"
+                      aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pf-spinner>
+        </slot>
+        <slot id="text"></slot>
+      </div>
     `;
+  }
+
+  async formDisabledCallback() {
+    await this.updateComplete;
+    this.requestUpdate();
+  }
+
+  #onClick() {
+    if (!this.#disabled) {
+      switch (this.type) {
+        case 'reset':
+          return this.#internals.reset();
+        default:
+          return this.#internals.submit();
+      }
+    }
+  }
+
+  #onMouse(event: MouseEvent) {
+    this.active = !!Math.max(['mouseup', 'mousedown'].indexOf(event.type), 0);
+  }
+
+  #onKeydown(event: KeyboardEvent) {
+    switch (event.key) {
+      case ' ':
+      case 'Enter':
+        if (this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }))) {
+          this.#onClick();
+        }
+    }
   }
 }
 

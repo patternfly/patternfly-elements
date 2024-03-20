@@ -2,8 +2,7 @@ import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { PfDropdown } from '@patternfly/elements/pf-dropdown/pf-dropdown.js';
-import { a11ySnapshot, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
-
+import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 function press(key: string) {
   return async function() {
@@ -43,30 +42,10 @@ describe('<pf-dropdown>', function() {
 
     it('should be accessible', async function() {
       await expect(element).to.be.accessible({
-        // suspected false positive
-        //       Error: Accessibility Violations
-        // ---
-        // Rule: aria-required-parent
-        // Impact: critical
-        // Certain ARIA roles must be contained by particular parents (https://dequeuniversity.com/rules/axe/4.7/aria-required-parent?application=axeAPI)
-        //
-        // Issue target: pf-dropdown-item:nth-child(1),#item
-        // Context: <div id="item" role="menuitem" tabindex="0">
-        //           <slot name="icon"></slot>
-        //           <slot></slot>
-        //         </div>
-        // Fix any of the following:
-        //   Required ARIA parents role not present: menu, menubar, group
-        //
-        // Issue target: pf-dropdown-item:nth-child(2),#item
-        // Context: <div id="item" role="menuitem" tabindex="-1">
-        //           <slot name="icon"></slot>
-        //           <slot></slot>
-        //         </div>
-        // Fix any of the following:
-        //   Required ARIA parents role not present: menu, menubar, group
-        // ---
-        ignoredRules: ['aria-required-parent'],
+        ignoredRules: [
+          /** @see https://github.com/dequelabs/axe-core/issues/4259 */
+          'aria-allowed-attr',
+        ]
       });
     });
 

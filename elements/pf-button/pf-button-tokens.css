@@ -167,4 +167,7 @@
 	--pf-c-button--disabled__c-badge--BackgroundColor: var(--pf-global--BackgroundColor--200, #f0f0f0);
 	--pf-c-button--m-primary__c-badge--BorderColor: var(--pf-global--BorderColor--300, #f0f0f0);
 	--pf-c-button--m-primary__c-badge--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
+
+  --_button-color: var(--pf-c-button--m-primary--Color);
+  --_button-background-color: var(--pf-c-button--m-primary--BackgroundColor);
 }

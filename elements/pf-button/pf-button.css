@@ -77,21 +77,6 @@ pf-icon,
   position: relative;
 }
 
-.active,
-:host(:active) {
-  --pf-c-button--m-primary--Color: var(--pf-c-button--m-primary--active--Color,
-    var(--pf-global--Color--light-100, #fff));
-  --pf-c-button--m-primary--BackgroundColor: var(--pf-c-button--m-primary--active--BackgroundColor,
-    var(--pf-global--primary-color--200, #004080));
-  --pf-c-button--after--BorderWidth: var(--pf-c-button--active--after--BorderWidth,
-    var(--pf-global--BorderWidth--md, 2px));
-  /* DANGER */
-  --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--active--Color,
-    var(--pf-global--Color--light-100, #fff));
-  --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--active--BackgroundColor,
-    var(--pf-global--danger-color--200, #a30000));
-}
-
 :host(:focus) {
   --pf-c-button--m-primary--Color: var(--pf-c-button--m-primary--focus--Color,
     var(--pf-global--Color--light-100, #fff));
@@ -136,6 +121,24 @@ pf-icon,
     var(--pf-global--Color--100, #151515));
   --pf-c-button--m-plain--BackgroundColor: var(--pf-c-button--m-plain--hover--BackgroundColor,
     transparent);
+}
+
+:host(:active) {
+  --pf-c-button--m-primary--Color: var(--pf-c-button--m-primary--active--Color,
+    var(--pf-global--Color--light-100, #fff));
+  --pf-c-button--m-primary--BackgroundColor: var(--pf-c-button--m-primary--active--BackgroundColor,
+    var(--pf-global--primary-color--200, #004080));
+  --pf-c-button--after--BorderWidth: var(--pf-c-button--active--after--BorderWidth,
+    var(--pf-global--BorderWidth--md, 2px));
+  /* DANGER */
+  --pf-c-button--m-danger--Color: var(--pf-c-button--m-danger--active--Color,
+    var(--pf-global--Color--light-100, #fff));
+  --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--active--BackgroundColor,
+    var(--pf-global--danger-color--200, #a30000));
+  /* LINK */
+  --pf-c-button--m-link--Color: var(--pf-c-button--m-link--active--Color,
+    var(--pf-global--link--Color--hover, #004080));
+  --pf-c-button--m-link--BackgroundColor: var(--pf-c-button--m-link--active--BackgroundColor, transparent);
 }
 
 .hasIcon [part=icon] {
@@ -184,7 +187,7 @@ pf-icon,
     var(--pf-global--Color--200, #6a6e73));
   --_button-background-color: var(--pf-c-button--m-plain--BackgroundColor,
     transparent);
-  &.active {
+  :host(:active) & {
     --pf-c-button--m-plain--Color: var(--pf-c-button--m-plain--active--Color,
       var(--pf-global--Color--100, #151515));
     --pf-c-button--m-plain--BackgroundColor: var(--pf-c-button--m-plain--active--BackgroundColor,
@@ -236,12 +239,6 @@ pf-icon,
     var(--pf-global--Color--dark-100, #151515));
   --_button-background-color: var(--pf-c-button--m-warning--BackgroundColor,
     var(--pf-global--warning-color--100, #f0ab00));
-  &.active {
-    --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--active--Color,
-      var(--pf-global--Color--dark-100, #151515));
-    --pf-c-button--m-warning--BackgroundColor: var(--pf-c-button--m-warning--active--BackgroundColor,
-      var(--pf-global--palette--gold-500, #c58c00));
-  }
   :host(:focus) & {
     --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--focus--Color,
       var(--pf-global--Color--dark-100, #151515));
@@ -252,6 +249,12 @@ pf-icon,
     --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--hover--Color,
       var(--pf-global--Color--dark-100, #151515));
     --pf-c-button--m-warning--BackgroundColor: var(--pf-c-button--m-warning--hover--BackgroundColor,
+      var(--pf-global--palette--gold-500, #c58c00));
+  }
+  :host(:active) & {
+    --pf-c-button--m-warning--Color: var(--pf-c-button--m-warning--active--Color,
+      var(--pf-global--Color--dark-100, #151515));
+    --pf-c-button--m-warning--BackgroundColor: var(--pf-c-button--m-warning--active--BackgroundColor,
       var(--pf-global--palette--gold-500, #c58c00));
   }
   &.disabled {
@@ -321,17 +324,6 @@ pf-icon,
   --_button-background-color: var(--pf-c-button--m-secondary--BackgroundColor, transparent);
   --pf-c-button--after--BorderColor: var(--pf-c-button--m-secondary--after--BorderColor,
     var(--pf-global--primary-color--100, #06c));
-  &.active {
-    --pf-c-button--m-secondary--Color: var(--pf-c-button--m-secondary--active--Color,
-      var(--pf-global--primary-color--100, #06c));
-    --pf-c-button--m-secondary--BackgroundColor: var(--pf-c-button--m-secondary--active--BackgroundColor, transparent);
-    --pf-c-button--after--BorderColor: var(--pf-c-button--m-secondary--active--after--BorderColor,
-      var(--pf-global--primary-color--100, #06c));
-    /* DANGER */
-    --pf-c-button--m-danger--Color: var(--pf-c-button--m-secondary--m-danger--active--Color,
-      var(--pf-global--danger--color--200, #a30000));
-    --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-secondary--m-danger--active--BackgroundColor, transparent);
-  }
   :host(:focus) & {
     --pf-c-button--m-secondary--Color: var(--pf-c-button--m-secondary--focus--Color,
       var(--pf-global--primary-color--100, #06c));
@@ -355,22 +347,33 @@ pf-icon,
       var(--pf-global--danger--color--200, #a30000));
     --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-secondary--m-danger--hover--BackgroundColor, transparent);
   }
+  :host(:active) & {
+    --pf-c-button--m-secondary--Color: var(--pf-c-button--m-secondary--active--Color,
+      var(--pf-global--primary-color--100, #06c));
+    --pf-c-button--m-secondary--BackgroundColor: var(--pf-c-button--m-secondary--active--BackgroundColor, transparent);
+    --pf-c-button--after--BorderColor: var(--pf-c-button--m-secondary--active--after--BorderColor,
+      var(--pf-global--primary-color--100, #06c));
+    /* DANGER */
+    --pf-c-button--m-danger--Color: var(--pf-c-button--m-secondary--m-danger--active--Color,
+      var(--pf-global--danger--color--200, #a30000));
+    --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-secondary--m-danger--active--BackgroundColor, transparent);
+  }
   &.danger {
     --_button-color: var(--pf-c-button--m-secondary--m-danger--Color,
       var(--pf-global--danger--color--100, #c9190b));
     --_button-background-color: var(--pf-c-button--m-secondary--m-danger--BackgroundColor, transparent);
     --pf-c-button--after--BorderColor: var(--pf-c-button--m-secondary--m-danger--after--BorderColor,
       var(--pf-global--danger--color--100, #c9190b));
-    &.active {
-      --pf-c-button--after--BorderColor: var(--pf-c-button--m-secondary--m-danger--active--after--BorderColor,
-        var(--pf-global--danger--color--100, #c9190b));
-    }
     :host(:focus) & {
       --pf-c-button--after--BorderColor: var(--pf-c-button--m-secondary--m-danger--focus--after--BorderColor,
         var(--pf-global--danger--color--100, #c9190b));
     }
     :host(:hover) & {
       --pf-c-button--after--BorderColor: var(--pf-c-button--m-secondary--m-danger--hover--after--BorderColor,
+        var(--pf-global--danger--color--100, #c9190b));
+    }
+    :host(:active) & {
+      --pf-c-button--after--BorderColor: var(--pf-c-button--m-secondary--m-danger--active--after--BorderColor,
         var(--pf-global--danger--color--100, #c9190b));
     }
   }
@@ -388,13 +391,6 @@ pf-icon,
   --_button-color: var(--pf-c-button--m-tertiary--Color,
     var(--pf-global--Color--100, #151515));
   --_button-background-color: var(--pf-c-button--m-tertiary--BackgroundColor, transparent);
-  &.active {
-    --pf-c-button--m-tertiary--Color: var(--pf-c-button--m-tertiary--active--Color,
-      var(--pf-global--Color--100, #151515));
-    --pf-c-button--m-tertiary--BackgroundColor: var(--pf-c-button--m-tertiary--active--BackgroundColor, transparent);
-    --pf-c-button--after--BorderColor: var(--pf-c-button--m-tertiary--active--after--BorderColor,
-      var(--pf-global--Color--100, #151515));
-  }
   :host(:focus) & {
     --pf-c-button--m-tertiary--Color: var(--pf-c-button--m-tertiary--focus--Color,
       var(--pf-global--Color--100, #151515));
@@ -408,6 +404,13 @@ pf-icon,
       var(--pf-global--Color--100, #151515));
     --pf-c-button--m-tertiary--BackgroundColor: var(--pf-c-button--m-tertiary--hover--BackgroundColor, transparent);
     --pf-c-button--after--BorderColor: var(--pf-c-button--m-tertiary--hover--after--BorderColor,
+      var(--pf-global--Color--100, #151515));
+  }
+  :host(:active) & {
+    --pf-c-button--m-tertiary--Color: var(--pf-c-button--m-tertiary--active--Color,
+      var(--pf-global--Color--100, #151515));
+    --pf-c-button--m-tertiary--BackgroundColor: var(--pf-c-button--m-tertiary--active--BackgroundColor, transparent);
+    --pf-c-button--after--BorderColor: var(--pf-c-button--m-tertiary--active--after--BorderColor,
       var(--pf-global--Color--100, #151515));
   }
 }
@@ -438,18 +441,6 @@ pf-icon,
     var(--pf-global--Color--100, #151515));
   --_button-background-color: var(--pf-c-button--m-control--BackgroundColor,
     var(--pf-global--BackgroundColor--100, #fff));
-  &.active {
-    --pf-c-button--m-control--Color: var(--pf-c-button--m-control--active--Color,
-      var(--pf-global--Color--100, #151515));
-    --pf-c-button--m-control--BackgroundColor: var(--pf-c-button--m-control--active--BackgroundColor,
-      var(--pf-global--BackgroundColor--100, #fff));
-    --pf-c-button--m-control--after--BorderBottomColor: var(--pf-c-button--m-control--active--after--BorderBottomColor,
-      var(--pf-global--active-color--100, #06c));
-    &::after {
-      border-block-end-width: var(--pf-c-button--m-control--active--after--BorderBottomWidth,
-        var(--pf-global--BorderWidth--md, 2px));
-    }
-  }
   :host(:focus) & {
     --pf-c-button--m-control--Color: var(--pf-c-button--m-control--focus--Color,
       var(--pf-global--Color--100, #151515));
@@ -474,6 +465,18 @@ pf-icon,
         var(--pf-global--BorderWidth--md, 2px));
     }
   }
+  :host(:active) & {
+    --pf-c-button--m-control--Color: var(--pf-c-button--m-control--active--Color,
+      var(--pf-global--Color--100, #151515));
+    --pf-c-button--m-control--BackgroundColor: var(--pf-c-button--m-control--active--BackgroundColor,
+      var(--pf-global--BackgroundColor--100, #fff));
+    --pf-c-button--m-control--after--BorderBottomColor: var(--pf-c-button--m-control--active--after--BorderBottomColor,
+      var(--pf-global--active-color--100, #06c));
+    &::after {
+      border-block-end-width: var(--pf-c-button--m-control--active--after--BorderBottomWidth,
+        var(--pf-global--BorderWidth--md, 2px));
+    }
+  }
 }
 
 /******************************
@@ -484,13 +487,9 @@ pf-icon,
 
 #button.link {
   --pf-c-button--disabled--BackgroundColor: var(--pf-c-button--m-link--disabled--BackgroundColor, transparent);
-  --pf-c-button--m-link--Color: var(--pf-c-button--m-link--active--Color,
-    var(--pf-global--link--Color--hover, #004080));
-  --pf-c-button--m-link--BackgroundColor: var(--pf-c-button--m-link--active--BackgroundColor, transparent);
-  --_button-color: var(--pf-c-button--m-link--Color,
-    var(--pf-global--link--Color, #06c));
+  --_button-color: var(--pf-c-button--m-link--Color, var(--pf-global--link--Color, #06c));
   --_button-background-color: var(--pf-c-button--m-link--BackgroundColor,
-    var(--pf-c-button--m-link--hover--BackgroundColor, transparent));
+    var(--pf-c-button--m-link--BackgroundColor, transparent));
   &.inline {
     :host(:hover) & {
       text-decoration: var(--pf-c-button--m-link--m-inline--hover--TextDecoration,
@@ -501,11 +500,6 @@ pf-icon,
     --pf-c-button--m-danger--Color: var(--pf-c-button--m-link--m-danger--Color,
         var(--pf-global--danger-color--100, #c9190b));
     --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-link--m-danger--BackgroundColor, transparent);
-    &.active {
-      --pf-c-button--m-link--m-danger--Color: var(--pf-c-button--m-link--m-danger--active--Color,
-        var(--pf-global--danger-color--200, #a30000));
-      --pf-c-button--m-link--m-danger--BackgroundColor: var(--pf-c-button--m-link--m-danger--active--BackgroundColor, transparent);
-    }
     :host(:hover) & {
       --pf-c-button--m-link--m-danger--Color: var(--pf-c-button--m-link--m-danger--hover--Color,
           var(--pf-global--danger-color--200, #a30000));
@@ -515,6 +509,11 @@ pf-icon,
       --pf-c-button--m-link--m-danger--Color: var(--pf-c-button--m-link--m-danger--focus--Color,
         var(--pf-global--danger-color--200, #a30000));
       --pf-c-button--m-link--m-danger--BackgroundColor: var(--pf-c-button--m-link--m-danger--focus--BackgroundColor, transparent);
+    }
+    :host(:active) & {
+      --pf-c-button--m-link--m-danger--Color: var(--pf-c-button--m-link--m-danger--active--Color,
+        var(--pf-global--danger-color--200, #a30000));
+      --pf-c-button--m-link--m-danger--BackgroundColor: var(--pf-c-button--m-link--m-danger--active--BackgroundColor, transparent);
     }
   }
 }

@@ -37,6 +37,7 @@ export abstract class BaseSwitch extends LitElement {
 
     this.addEventListener('click', this.#onClick);
     this.addEventListener('keyup', this.#onKeyup);
+    this.addEventListener('keydown', this.#onKeyDown);
     this.#updateLabels();
   }
 
@@ -83,6 +84,14 @@ export abstract class BaseSwitch extends LitElement {
         event.preventDefault();
         event.stopPropagation();
         this.#toggle();
+    }
+  }
+
+  #onKeyDown(event: KeyboardEvent) {
+    switch (event.key) {
+      case ' ':
+        event.preventDefault();
+        event.stopPropagation();
     }
   }
 

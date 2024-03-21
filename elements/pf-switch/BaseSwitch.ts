@@ -108,10 +108,10 @@ export abstract class BaseSwitch extends LitElement {
   #updateLabels() {
     const labelState = this.checked ? 'on' : 'off';
     this.labels.forEach(label => {
-      const spans = label.querySelectorAll('span');
-      spans.forEach(span => {
-        if (span) {
-          span.hidden = span.dataset.state !== labelState;
+      const states = label.querySelectorAll<HTMLElement>('[data-state]');
+      states.forEach(state => {
+        if (state) {
+          state.hidden = state.dataset.state !== labelState;
         }
       });
     });

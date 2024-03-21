@@ -30,10 +30,10 @@ describe('<pf-switch>', function() {
         .to.be.an.instanceOf(PfSwitch);
     });
     it('has accessible role', function() {
-      expect(snapshot.role).to.equal('checkbox');
+      expect(snapshot.role).to.equal('switch');
     });
     it('has accessible checked field', function() {
-      expect(snapshot.role).to.equal('checkbox');
+      expect(snapshot.role).to.equal('switch');
     });
     it('requires accessible name', function() {
       // Double negative - this would fail an accessibility audit,
@@ -59,7 +59,7 @@ describe('<pf-switch>', function() {
     });
 
     it('is accessible', function() {
-      expect(snapshot.role).to.equal('checkbox');
+      expect(snapshot.role).to.equal('switch');
       expect(snapshot.name).to.be.ok;
       expect(snapshot.checked).to.be.false;
     });
@@ -68,7 +68,7 @@ describe('<pf-switch>', function() {
       expect(snapshot.name).to.equal('Message when off');
     });
 
-    describe('clicking the checkbox', function() {
+    describe('clicking the switch', function() {
       beforeEach(async function() {
         element.click();
         await element.updateComplete;

@@ -1,19 +1,27 @@
+<p>
+  <small>
+    <em>Note:</em> When using a custom trigger, you must slot in a <code>pf-dropdown-menu</code>
+  </small>
+</p>
+
 <pf-dropdown>
   <pf-button slot="trigger">Toggle dropdown</pf-button>
-  <pf-dropdown-item>item4</pf-dropdown-item>
-  <hr>
-  <pf-dropdown-group label="Group 1">
-    <pf-dropdown-item>item1</pf-dropdown-item>
-    <pf-dropdown-item>item2</pf-dropdown-item>
+  <pf-dropdown-menu slot="menu">
+    <pf-dropdown-item>item4</pf-dropdown-item>
     <hr>
-    <pf-dropdown-item>item3</pf-dropdown-item>
-  </pf-dropdown-group>
-  <pf-dropdown-group label="Group 2">
-    <pf-dropdown-item>item1</pf-dropdown-item>
-    <pf-dropdown-item>item2</pf-dropdown-item>
-    <pf-dropdown-item>item3</pf-dropdown-item>
-    <pf-dropdown-item disabled>disabled</pf-dropdown-item>
-  </pf-dropdown-group>
+    <pf-dropdown-group label="Group 1">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <hr>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+    </pf-dropdown-group>
+    <pf-dropdown-group label="Group 2">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+      <pf-dropdown-item disabled>disabled</pf-dropdown-item>
+    </pf-dropdown-group>
+  </pf-dropdown-menu>
 </pf-dropdown>
 
 <script type="module">

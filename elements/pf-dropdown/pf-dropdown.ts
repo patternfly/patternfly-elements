@@ -15,9 +15,6 @@ import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-dropdown.css';
 
-function canBeDisabled(el: HTMLElement): el is HTMLElement & { disabled: boolean } {
-  return 'disabled' in el;
-}
 
 export class PfDropdownSelectEvent extends Event {
   constructor(
@@ -65,7 +62,7 @@ export class PfDropdown extends LitElement {
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
-   * Disable the dropdown trigger element
+   * Disable the dropdown
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
@@ -132,9 +129,6 @@ export class PfDropdown extends LitElement {
     if (changed.has('expanded')) {
       this.#expandedChanged();
     }
-    if (changed.has('disabled')) {
-      this.#disabledChanged();
-    }
   }
 
   #onSlotchange() {
@@ -170,14 +164,6 @@ export class PfDropdown extends LitElement {
     }
   }
 
-  #disabledChanged() {
-    for (const el of this._triggerElements.concat(this._menuElements)) {
-      if (canBeDisabled(el)) {
-        el.disabled = this.disabled;
-      }
-    }
-  }
-
   #onSelect(event: KeyboardEvent | Event & { target: PfDropdownItem }) {
     const [menu] = this._menuElements;
     if (menu instanceof PfDropdownMenu) {
@@ -190,9 +176,7 @@ export class PfDropdown extends LitElement {
   #onButtonKeydown(event: KeyboardEvent) {
     switch (event.key) {
       case 'ArrowDown': {
-        if (!this.disabled) {
-          this.show();
-        }
+        this.show();
       }
     }
   }

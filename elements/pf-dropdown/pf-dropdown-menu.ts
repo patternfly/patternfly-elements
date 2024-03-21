@@ -95,19 +95,25 @@ export class PfDropdownMenu extends LitElement {
    * updates roving tabindex and active descendant
    */
   #onMenuitemFocusin(event: FocusEvent) {
-    if (event.target instanceof PfDropdownItem &&
+    if (this.disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+    } else if (event.target instanceof PfDropdownItem &&
         event.target.menuItem !== this.#tabindex.activeItem) {
       this.#tabindex.setActiveItem(event.target.menuItem);
     }
   }
 
   /**
-   * handles clicking on a listbox option:
+   * handles clicking on a menuitem:
    * which selects an item by default
    * or toggles selection if multiselectable
    */
   #onMenuitemClick(event: MouseEvent) {
-    if (event.target instanceof PfDropdownItem &&
+    if (this.disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+    } else if (event.target instanceof PfDropdownItem &&
         event.target.menuItem !== this.#tabindex.activeItem) {
       this.#tabindex.setActiveItem(event.target.menuItem);
     }

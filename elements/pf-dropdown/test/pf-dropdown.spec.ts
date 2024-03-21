@@ -13,6 +13,8 @@ function press(key: string) {
 describe('<pf-dropdown>', function() {
   let element: PfDropdown;
 
+  const updateComplete = () => element.updateComplete;
+
   describe('simply instantiating', function() {
     it('imperatively instantiates', function() {
       expect(document.createElement('pf-dropdown')).to.be.an.instanceof(PfDropdown);
@@ -43,18 +45,22 @@ describe('<pf-dropdown>', function() {
         ignoredRules: [
           /** @see https://github.com/dequelabs/axe-core/issues/4259 */
           'aria-allowed-attr',
+          /** false positive: the menuitem is projected into a menu in another shadow root */
+          'aria-required-parent',
         ]
       });
     });
 
     it('should hide dropdown content from assistive technology', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children!.length).to.equal(1);
+      const menu = snapshot.children?.find(x => x.role === 'menu');
+      expect(menu).to.not.be.ok;
     });
 
     describe('pressing Enter', function() {
       beforeEach(press('Tab'));
       beforeEach(press('Enter'));
+      beforeEach(updateComplete);
 
       it('should show menu', async function() {
         const snapshot = await a11ySnapshot();

@@ -50,8 +50,10 @@ describe('<pf-switch>', function() {
       const container = await createFixture<PfSwitch>(html`
         <div>
           <pf-switch id="switch"></pf-switch>
-          <label for="switch" data-state="on">Message when on</label>
-          <label for="switch" data-state="off" hidden>Message when off</label>
+          <label for="switch">
+            <span data-state="on">Message when on</span>
+            <span data-state="off" hidden>Message when off</span>
+          </label>
         </div>
         `);
       element = container.querySelector('pf-switch')!;
@@ -106,8 +108,10 @@ describe('<pf-switch>', function() {
       const container = await createFixture<PfSwitch>(html`
         <div>
           <pf-switch id="switch" show-check-icon checked></pf-switch>
-          <label for="switch" data-state="on">Message when on</label>
-          <label for="switch" data-state="off">Message when off</label>
+          <label for="switch">
+            <span data-state="on">Message when on</span>
+            <span data-state="off" hidden>Message when off</span>
+          </label>
         </div>
       `);
       element = container.querySelector('pf-switch')!;
@@ -125,8 +129,10 @@ describe('<pf-switch>', function() {
     beforeEach(async function() {
       element = await createFixture<PfSwitch>(html`
         <pf-switch id="switch" show-check-icon checked></pf-switch>
-        <label for="switch" data-state="on">Message when on</label>
-        <label for="switch" data-state="off">Message when off</label>
+        <label for="switch">
+          <span data-state="on">Message when on</span>
+          <span data-state="off" hidden>Message when off</span>
+        </label>
       `);
     });
     it('should display a check icon', async function() {

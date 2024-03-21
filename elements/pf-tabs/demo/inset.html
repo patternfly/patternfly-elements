@@ -8,8 +8,6 @@
     <pf-tab-panel>Database</pf-tab-panel>
     <pf-tab slot="tab" disabled>Disabled</pf-tab>
     <pf-tab-panel>Disabled</pf-tab-panel>
-    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
-    <pf-tab-panel>Aria Disabled</pf-tab-panel>
   </pf-tabs>
 
   <form class="input">
@@ -27,23 +25,26 @@
   import '@patternfly/elements/pf-icon/pf-icon.js';
   import '@patternfly/elements/pf-switch/pf-switch.js';
   import '@patternfly/elements/pf-tabs/pf-tabs.js';
+
   const inset = document.querySelector('#inset');
   document.querySelector('form.input')
     .addEventListener('change', function insetToggle(event) {
-    inset.classList = event.elements.inset.value;
+    inset.classList = event.target.value;
   });
 </script>
 
 <style>
+  main {
+    display: block;
+    overflow-x: unset;
+  }
+
   section {
     margin: 0 auto;
     padding: 0 16px 32px;
     width: 100%;
     max-width: 1008px;
-    &:last-of-type {
-      padding-block-end: 64px;
-    }
-    @media screen and (min-width: 768px) {
+    @media (min-width: 768px) {
       padding: 0 32px 32px;
     }
   }
@@ -89,3 +90,4 @@
     --pf-c-tabs--inset: var(--pf-c-tabs--m-page-insets--inset, var(--pf-global--spacer--md, 1rem));
   }
 </style>
+

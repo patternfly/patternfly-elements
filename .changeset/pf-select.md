@@ -7,7 +7,7 @@
 A select list enables users to select one or more items from a list.
 
 ```html
-<pf-select>
+<pf-select placeholder="Choose a color">
   <pf-option>Blue</pf-option>
   <pf-option>Green</pf-option>
   <pf-option>Magenta</pf-option>

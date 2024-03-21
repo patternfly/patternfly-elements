@@ -1,19 +1,14 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { query } from 'lit/decorators/query.js';
 
 import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-chip.css';
+import shared from './pf-chip-shared.css';
 
-export class ChipReadyEvent extends Event {
-  constructor() {
-    super('ready', { bubbles: true });
-  }
-}
-export class ChipRemoveEvent extends Event {
-  constructor() {
+export class PfChipRemoveEvent extends Event {
+  constructor(public chip: PfChip) {
     super('remove', { bubbles: true });
   }
 }
@@ -21,18 +16,18 @@ export class ChipRemoveEvent extends Event {
 /**
  * A **chip** is used to communicate a value or a set of attribute-value pairs within workflows that involve filtering a set of objects.
  *
- * @fires { ChipReadyEvent } ready - Fires when chip is ready
- * @fires { ChipRemoveEvent } remove - Fires when chip is removed
- * @fires { Event } click - when close button is clicked
+ * @fires {ChipRemoveEvent} remove - Fires when chip is removed
+ * @fires {Event} click - when close button is clicked
  *
  * @slot
  *      chip text
  *
- * @csspart text - span container for chip text
+ * @csspart text - container for chip text
  */
 @customElement('pf-chip')
 export class PfChip extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles = [shared, styles];
+
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
@@ -50,65 +45,31 @@ export class PfChip extends LitElement {
    */
   @property({ attribute: 'overflow-chip', reflect: true, type: Boolean }) overflowChip = false;
 
-  @query('button') button?: HTMLButtonElement;
-
   render() {
     return this.overflowChip ? html`
       <button id="outer">
-        <span class="chip-content">
-          <slot id="chip-text" part="text"></slot>
+        <span part="text">
+          <slot></slot>
         </span>
       </button>
     ` : html`
       <div id="outer">
-        <span class="chip-content">
-          <slot id="chip-text" part="text"></slot>
+        <span id="chip-text" part="text">
+          <slot></slot>
         </span>
-        <button id="close-button"
-                ?hidden="${this.readonly || this.overflowChip}"
-                @click="${this.#onClick}"
+        <pf-button id="close-button"
+                plain
+                icon="close" icon-set="patternfly"
+                label="${this.accessibleCloseLabel}"
                 aria-describedby="chip-text"
-                aria-label="${this.accessibleCloseLabel}">
-          <svg aria-hidden="true" fill="currentColor" viewBox="0 0 352 512">
-            <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
-          </svg>
-        </button>
+                ?hidden="${this.readonly || this.overflowChip}"
+                @click="${this.#onClick}"></pf-button>
       </div>
     `;
   }
 
-  protected updated(changed: PropertyValues<this>): void {
-    super.updated(changed);
-    if (changed.has('readonly')) {
-      this.#handleChipReady();
-    }
-  }
-
-  disconnectedCallback(): void {
-    this.#handleChipRemove();
-    super.disconnectedCallback();
-  }
-
-  /**
-   * @fires chip-ready
-   */
-  async #handleChipReady() {
-    await this.updateComplete;
-    this.dispatchEvent(new ChipReadyEvent());
-  }
-
-  /**
-   * @fires chip-ready
-   */
-  #handleChipRemove() {
-    return this.dispatchEvent(new ChipRemoveEvent());
-  }
-
-  /**
-   * handles chip's button click event
-   */
   #onClick() {
-    if (this.#handleChipRemove()) {
+    if (this.dispatchEvent(new PfChipRemoveEvent(this))) {
       this.remove();
     }
   }

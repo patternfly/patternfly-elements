@@ -1,4 +1,4 @@
-import { expect, html, nextFrame } from '@open-wc/testing';
+import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfChip } from '../pf-chip.js';
 import { sendKeys } from '@web/test-runner-commands';
@@ -7,12 +7,10 @@ import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 
 
-async function tab() {
-  await sendKeys({ press: 'Tab' });
-}
-
-async function enter() {
-  await sendKeys({ press: 'Enter' });
+function press(key: string) {
+  return async function() {
+    await sendKeys({ press: key });
+  };
 }
 
 function activeElement(element: HTMLElement) {
@@ -45,24 +43,26 @@ describe('<pf-chip>', async function() {
       await expect(element).to.be.accessible();
     });
 
-    describe('calling focus', function() {
+    describe('calling focus() on the element', function() {
       beforeEach(() => element.focus());
-      it('should focus', function() {
-        expect(activeElement(element)?.getAttribute('aria-label'))
-          .to.equal(element.accessibleCloseLabel);
+      it('should focus', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot.children?.at(0)?.name).to.equal(element.accessibleCloseLabel);
+        expect(snapshot.children?.at(0)?.focused).to.be.true;
       });
     });
 
     describe('pressing Tab', function() {
-      beforeEach(tab);
-      it('should focus', function() {
-        expect(activeElement(element)?.getAttribute('aria-label'))
-          .to.equal(element.accessibleCloseLabel);
+      beforeEach(press('Tab'));
+      it('should focus', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot.children?.at(0)?.name).to.equal(element.accessibleCloseLabel);
+        expect(snapshot.children?.at(0)?.focused).to.be.true;
       });
 
       describe('pressing Enter', async function() {
         beforeEach(() => element.focus());
-        beforeEach(enter);
+        beforeEach(press('Enter'));
         it('should close', function() {
           expect(document.querySelector('pf-chip')).to.be.null;
         });
@@ -96,7 +96,7 @@ describe('<pf-chip>', async function() {
     });
 
     describe('pressing Tab', function() {
-      beforeEach(tab);
+      beforeEach(press('Tab'));
       it('should focus', function() {
         expect(activeElement(element)).to.exist;
       });
@@ -104,7 +104,7 @@ describe('<pf-chip>', async function() {
 
     describe('pressing Enter', function() {
       beforeEach(() => element.focus());
-      beforeEach(enter);
+      beforeEach(press('Enter'));
       it('should NOT close', function() {
         expect(document.querySelector('pf-chip')).to.not.be.null;
       });

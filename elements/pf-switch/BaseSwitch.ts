@@ -81,6 +81,7 @@ export abstract class BaseSwitch extends LitElement {
       case ' ':
       case 'Enter':
         event.preventDefault();
+        event.stopPropagation();
         this.#toggle();
     }
   }

@@ -1,6 +1,7 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { sendKeys } from '@web/test-runner-commands';
+import { sendKeys, resetMouse } from '@web/test-runner-commands';
+import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 import { PfDropdown } from '@patternfly/elements/pf-dropdown/pf-dropdown.js';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
@@ -122,9 +123,25 @@ describe('<pf-dropdown>', function() {
           await sendKeys({ press: 'Enter' });
         });
 
-        it('should not show menu', async function() {
+        it('should show menu', async function() {
           const snapshot = await a11ySnapshot();
+          const menu = snapshot?.children?.find(x => x.role === 'menu');
+          expect(menu).to.be.ok;
+          expect(menu?.children?.length).to.equal(2);
+        });
+      });
+
+      describe('clicking trigger', function() {
+        beforeEach(async function() {
+          await clickElementAtCenter(element);
+          await resetMouse();
+        });
+
+        it('should show not menu', async function() {
+          const snapshot = await a11ySnapshot();
+          const menu = snapshot?.children?.find(x => x.role === 'menu');
           expect(snapshot.children?.length).to.equal(1);
+          expect(menu).to.not.be.ok;
         });
       });
     });

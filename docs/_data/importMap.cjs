@@ -100,6 +100,7 @@ module.exports = async function() {
   for (const file of pfeCoreImports) {
     map.imports[path.join('@patternfly/pfe-core', file)] = '/pfe.min.js';
   }
+
   map.imports['@patternfly/pfe-core/decorators.js'] = '/pfe.min.js';
   map.imports['@patternfly/pfe-core'] = '/pfe.min.js';
 
@@ -108,12 +109,13 @@ module.exports = async function() {
     const elementPath = path.join(elementsPath, tagName);
     if (fs.statSync(elementPath).isDirectory()) {
       for (const fileName of fs.readdirSync(elementPath)) {
-        if (fileName.endsWith('.ts') && fileName.replace('.ts', '') !== tagName) {
+        if (fileName.endsWith('.ts') && !fileName.endsWith('.d.ts')) {
           map.imports[`@patternfly/elements/${tagName}/${fileName.replace('.ts', '')}.js`] = `/pfe.min.js`;
         }
       }
     }
   }
+
   map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
 
 

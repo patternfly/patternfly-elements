@@ -206,8 +206,6 @@ export class PfButton extends LitElement {
   /** Disables the button */
   @property({ reflect: true, type: Boolean }) disabled = false;
 
-  @state() private active = false;
-
   @property({ reflect: true }) type?: 'button' | 'submit' | 'reset';
 
   /** Accessible name for the button, use when the button does not have slotted text */
@@ -229,8 +227,6 @@ export class PfButton extends LitElement {
   override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('click', this.#onClick);
-    this.addEventListener('mousedown', this.#onMouse);
-    this.addEventListener('mouseup', this.#onMouse);
     this.addEventListener('keydown', this.#onKeydown);
     this.tabIndex = 0;
   }
@@ -242,14 +238,13 @@ export class PfButton extends LitElement {
 
   protected override render() {
     const hasIcon = !!this.icon || !!this.loading;
-    const { active, warning, variant, danger, loading, plain, inline, block, size } = this;
+    const { warning, variant, danger, loading, plain, inline, block, size } = this;
     const disabled = this.#disabled;
     return html`
       <div id="button"
            class="${classMap({
              [variant]: true,
              [size ?? '']: !!size,
-             active,
              inline,
              block,
              danger,
@@ -287,10 +282,6 @@ export class PfButton extends LitElement {
           return this.#internals.submit();
       }
     }
-  }
-
-  #onMouse(event: MouseEvent) {
-    this.active = !!Math.max(['mouseup', 'mousedown'].indexOf(event.type), 0);
   }
 
   #onKeydown(event: KeyboardEvent) {

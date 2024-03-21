@@ -137,11 +137,11 @@ describe('<pf-dropdown>', function() {
           await resetMouse();
         });
 
-        it('should show not menu', async function() {
+        it('should show menu', async function() {
           const snapshot = await a11ySnapshot();
           const menu = snapshot?.children?.find(x => x.role === 'menu');
-          expect(snapshot.children?.length).to.equal(1);
-          expect(menu).to.not.be.ok;
+          expect(menu).to.be.ok;
+          expect(menu?.children?.length).to.equal(2);
         });
       });
     });

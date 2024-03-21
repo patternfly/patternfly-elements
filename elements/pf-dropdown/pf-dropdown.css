@@ -25,8 +25,6 @@
 
 :host([disabled]) {
   color: var(--pf-global--Color--dark-200, #6a6e73);
-  pointer-events: none;
-  cursor: not-allowed;
 }
 
 :host([hidden]),

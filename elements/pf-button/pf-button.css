@@ -135,6 +135,10 @@ pf-icon,
     var(--pf-global--Color--light-100, #fff));
   --pf-c-button--m-danger--BackgroundColor: var(--pf-c-button--m-danger--active--BackgroundColor,
     var(--pf-global--danger-color--200, #a30000));
+  /* LINK */
+  --pf-c-button--m-link--Color: var(--pf-c-button--m-link--active--Color,
+    var(--pf-global--link--Color--hover, #004080));
+  --pf-c-button--m-link--BackgroundColor: var(--pf-c-button--m-link--active--BackgroundColor, transparent);
 }
 
 .hasIcon [part=icon] {
@@ -483,13 +487,9 @@ pf-icon,
 
 #button.link {
   --pf-c-button--disabled--BackgroundColor: var(--pf-c-button--m-link--disabled--BackgroundColor, transparent);
-  --pf-c-button--m-link--Color: var(--pf-c-button--m-link--active--Color,
-    var(--pf-global--link--Color--hover, #004080));
-  --pf-c-button--m-link--BackgroundColor: var(--pf-c-button--m-link--active--BackgroundColor, transparent);
-  --_button-color: var(--pf-c-button--m-link--Color,
-    var(--pf-global--link--Color, #06c));
+  --_button-color: var(--pf-c-button--m-link--Color, var(--pf-global--link--Color, #06c));
   --_button-background-color: var(--pf-c-button--m-link--BackgroundColor,
-    var(--pf-c-button--m-link--hover--BackgroundColor, transparent));
+    var(--pf-c-button--m-link--BackgroundColor, transparent));
   &.inline {
     :host(:hover) & {
       text-decoration: var(--pf-c-button--m-link--m-inline--hover--TextDecoration,

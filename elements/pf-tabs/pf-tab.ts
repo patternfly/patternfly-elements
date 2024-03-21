@@ -1,9 +1,16 @@
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { consume } from '@lit/context';
 
 import { observed } from '@patternfly/pfe-core/decorators.js';
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
-import { BaseTab } from './BaseTab.js';
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+
+import { TabExpandEvent, context, type PfTabsContext } from './context.js';
 
 import styles from './pf-tab.css';
 
@@ -65,17 +72,104 @@ import styles from './pf-tab.css';
  *
  * @cssprop     {<length>} --pf-c-tabs__link--child--MarginRight  {@default `1rem`}
  *
- * @fires { TabExpandEvent } expand - when a tab expands
+ * @fires {TabExpandEvent} expand - when a tab expands
  */
 @customElement('pf-tab')
-export class PfTab extends BaseTab {
-  static readonly styles = [...BaseTab.styles, styles];
+export class PfTab extends LitElement {
+  static readonly styles = [styles];
+
+  @queryAssignedElements({ slot: 'icon', flatten: true })
+  private icons!: Array<HTMLElement>;
 
   @observed
   @property({ reflect: true, type: Boolean }) active = false;
 
   @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
+
+  @consume({ context, subscribe: true })
+  @property({ attribute: false })
+  private ctx?: PfTabsContext;
+
+  #internals = InternalsController.of(this, { role: 'tab' });
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.id ||= getRandomId(this.localName);
+    this.addEventListener('click', this.#onClick);
+    this.addEventListener('keydown', this.#onKeydown);
+    this.addEventListener('focus', this.#onFocus);
+  }
+
+  override willUpdate() {
+    const { borderBottom, box, fill, manual, vertical } = this.ctx ?? {};
+    this.toggleAttribute('fill', fill);
+    this.toggleAttribute('manual', manual);
+    this.toggleAttribute('vertical', vertical);
+    if (box) {
+      this.setAttribute('box', box);
+    } else {
+      this.removeAttribute('box');
+    }
+    if (borderBottom) {
+      this.setAttribute('border-bottom', borderBottom);
+    } else {
+      this.removeAttribute('border-bottom');
+    }
+  }
+
+  render() {
+    const { active } = this;
+    const { box, fill = false, vertical = false } = this.ctx ?? {};
+    const light = box === 'light';
+    const dark = box === 'dark';
+    return html`
+      <div id="button"
+           part="button"
+           class="${classMap({ active, box: !!box, dark, light, fill, vertical })}">
+        <slot name="icon"
+              part="icon"
+              ?hidden="${!this.icons.length}"
+              @slotchange="${() => this.requestUpdate()}"></slot>
+        <slot part="text"></slot>
+      </div>
+    `;
+  }
+
+  #onClick() {
+    if (!this.disabled) {
+      this.#activate();
+    }
+  }
+
+  #onKeydown(event: KeyboardEvent) {
+    if (!this.disabled) {
+      switch (event.key) {
+        case 'Enter': this.#activate();
+      }
+    }
+  }
+
+  #onFocus() {
+    if (!this.ctx?.manual && !this.disabled) {
+      this.#activate();
+    }
+  }
+
+  #activate() {
+    return this.dispatchEvent(new TabExpandEvent(this));
+  }
+
+  private _activeChanged(old: boolean) {
+    this.#internals.ariaSelected = String(!!this.active);
+    if (this.active && !old) {
+      this.#activate();
+    }
+  }
+
+  private _disabledChanged() {
+    this.#internals.ariaDisabled = this.disabled ? 'true' : this.ariaDisabled ?? 'false';
+  }
 }
 
 declare global {

@@ -10,38 +10,8 @@ import { InternalsController } from '@patternfly/pfe-core/controllers/internals-
 import styles from './pf-option.css';
 
 /**
- * select event for listbox options
- */
-export class PfOptionSelectEvent extends Event {
-  constructor(public originalEvent?: Event) {
-    super('select', { bubbles: true, cancelable: true });
-  }
-}
-
-/**
- * focus event for listbox options
- */
-export class PfOptionFocusEvent extends Event {
-  constructor(public originalEvent: Event) {
-    super('focus', { bubbles: true, cancelable: true });
-  }
-}
-
-/**
- * blur event for listbox options
- */
-export class PfOptionBlurEvent extends Event {
-  constructor(public originalEvent: Event) {
-    super('blur', { bubbles: true, cancelable: true });
-  }
-}
-
-/**
  * Option within a listbox
  *
- * @fires { PfOptionSelectEvent } select - Fired on option select/deselect
- * @fires { PfOptionFocusEvent } focus - Fired on option focus
- * @fires { PfOptionBlurEvent } blur - Fired on option blur
  * @slot -
  *        option text
  * @slot icon
@@ -57,7 +27,14 @@ export class PfOption extends LitElement {
   @property({ type: Boolean, reflect: true }) disabled = false;
 
   /** form value for this option */
-  @property({ reflect: true }) value = '';
+  @property({ reflect: true })
+  get value() {
+    return this.#value ?? this.textContent ?? '';
+  }
+
+  set value(v: string) {
+    this.#value = v;
+  }
 
   /** whether option is selected */
   @property({ type: Boolean }) selected = false;
@@ -103,6 +80,8 @@ export class PfOption extends LitElement {
     }
   }
 
+  #value?: string;
+
   #internals = InternalsController.of(this, { role: 'option' });
 
   override connectedCallback() {
@@ -116,6 +95,8 @@ export class PfOption extends LitElement {
       <div id="outer" class="${classMap({ active, disabled })}">
         <input type="checkbox"
                aria-hidden="true"
+               role="presentation"
+               tabindex="-1"
                ?checked="${this.selected}"
                ?disabled="${this.disabled}">
         <slot name="icon"></slot>
@@ -135,9 +116,10 @@ export class PfOption extends LitElement {
   }
 
   willUpdate(changed: PropertyValues<this>) {
-    if (changed.has('selected')) {
+    if (changed.has('selected') &&
+      // don't fire on initialization
+      !(changed.get('selected') === undefined) && this.selected === false) {
       this.#internals.ariaSelected = this.selected ? 'true' : 'false';
-      this.dispatchEvent(new PfOptionSelectEvent());
     }
     if (changed.has('disabled')) {
       this.#internals.ariaDisabled = String(!!this.disabled);

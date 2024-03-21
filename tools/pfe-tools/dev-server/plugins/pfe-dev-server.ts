@@ -123,6 +123,24 @@ function getRouter(options: PfeDevServerInternalConfig) {
       } else {
         return next();
       }
+    })
+
+    .get(`/${elementsDir}/:element/:splatPath*.(css|js)`, async function(ctx, next) {
+      ctx.response.etag = performance.now().toString();
+      return next();
+    })
+
+    // Redirect `core/pfe-core/controllers/thingy.js` to `core/pfe-core/controllers/thingy.ts` for requests not previously handled
+    .get(`/core/pfe-core/:splatPath*.js`, async ctx => {
+      ctx.redirect(`/core/pfe-core/${ctx.params.splatPath}.ts`);
+    })
+
+    // Redirect `elements/pf-jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts` for requests not previously handled
+    .get(`/${elementsDir}/:element/:splatPath*.js`, async ctx => {
+      const { element, splatPath } = ctx.params;
+      if (element.startsWith(tagPrefix) && !splatPath.includes('/')) {
+        ctx.redirect(`/${elementsDir}/${element}/${splatPath}.ts`);
+      }
     });
 
   return router.routes();

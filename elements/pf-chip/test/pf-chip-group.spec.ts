@@ -87,11 +87,10 @@ describe('<pf-chip-group>', async function() {
     beforeEach(updateComplete);
     it('should have close button', async function() {
       const snapshot = await a11ySnapshot();
-      const [button] = snapshot.children!.reverse();
-      expect(button).to.deep.equal({
-        role: 'button',
-        name: 'Close',
-      });
+      const last = snapshot.children?.at(-1);
+      expect(last?.name).to.equal('Close');
+      expect(last?.role).to.equal('button');
+      expect(last?.description).to.not.be.ok;
     });
 
     describe('clicking close button', function() {

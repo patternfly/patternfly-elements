@@ -84,6 +84,8 @@ pf-dropdown-menu {
   --pf-c-button--m-control--BackgroundColor: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   --pf-c-button--m-control--focus--BackgroundColor: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   --pf-c-button--m-control--after--BorderWidth: 0;
+  --pf-c-button--m-control--hover--after--BorderBottomWidth: 0;
+  --pf-c-button--m-control--after--after--BorderBottomWidth: 0;
   --pf-c-button--m-control--focus--after--BorderBottomWidth: 0;
 }
 

@@ -3,15 +3,21 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { query } from 'lit/decorators/query.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 
+import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { PfDropdownItem } from './pf-dropdown-item.js';
 import { PfDropdownMenu } from './pf-dropdown-menu.js';
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-dropdown.css';
-import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
+function canBeDisabled(el: HTMLElement): el is HTMLElement & { disabled: boolean } {
+  return 'disabled' in el;
+}
 
 export class PfDropdownSelectEvent extends Event {
   constructor(
@@ -27,6 +33,8 @@ export class PfDropdownSelectEvent extends Event {
  * will trigger a process or navigate to a new location.
  *
  * @slot - Must contain one or more `<pf-dropdown-item>` or `<pf-dropdown-group>`
+ * @slot trigger - Custom trigger button
+ * @slot trigger - menu for custom trigger button
  *
  * @csspart menu - The dropdown menu wrapper
  *
@@ -66,16 +74,25 @@ export class PfDropdown extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) expanded = false;
 
-  @query('pf-dropdown-menu')
-  private _menuElement!: PfDropdownMenu;
+  @queryAssignedElements({ slot: 'trigger', flatten: true })
+  private _triggerElements!: HTMLElement[];
 
-  get #triggerElement() {
-    return this.shadowRoot?.getElementById('trigger') ?? null;
-  }
+  @queryAssignedElements({ slot: 'menu', flatten: true })
+  private _menuElements!: HTMLElement[];
+
+  #logger = new Logger(this);
 
   #float = new FloatingDOMController(this, {
-    content: () => this._menuElement,
+    content: () => this._menuElements?.at(0),
   });
+
+  protected override async getUpdateComplete(): Promise<boolean> {
+    const ps = await Promise.all([
+      super.getUpdateComplete(),
+      this._menuElements?.map(x => (x as LitElement).updateComplete),
+    ]);
+    return ps.every(x=>!!x);
+  }
 
   render() {
     const { expanded } = this;
@@ -83,68 +100,112 @@ export class PfDropdown extends LitElement {
     const { disabled } = this;
     return html`
     <div class="${classMap({ expanded, [anchor ?? '']: !!anchor, [alignment ?? '']: !!alignment })}"
-         style="${styleMap(styles)}">
-      <pf-button id="trigger"
-                 variant="control"
-                 aria-controls="menu"
-                 aria-haspopup="menu"
-                 aria-expanded="${String(expanded) as 'true' | 'false'}"
-                 ?disabled="${disabled}"
-                 icon="caret-down"
-                 icon-set="fas"
-                 @keydown="${this.#onButtonKeydown}"
-                 @click="${() => this.toggle()}">Dropdown</pf-button>
-      <pf-dropdown-menu id="menu"
-                        part="menu"
-                        class="${classMap({ show: expanded })}"
-                        ?disabled="${disabled}"
-                        @focusout="${this.#onMenuFocusout}"
-                        @keydown="${this.#onMenuKeydown}"
-                        @click="${this.#onSelect}">
-        <slot></slot>
-      </pf-dropdown-menu>
+         style="${styleMap(styles)}"
+         @slotchange="${this.#onSlotchange}">
+      <slot name="trigger"
+            @keydown="${this.#onButtonKeydown}"
+            @click="${() => this.toggle()}">
+        <pf-button variant="control"
+                   icon="caret-down"
+                   icon-set="fas">Dropdown</pf-button>
+      </slot>
+      <slot name="menu"
+            class="${classMap({ show: expanded })}"
+            ?hidden="${!this.expanded}"
+            @focusout="${this.#onMenuFocusout}"
+            @keydown="${this.#onMenuKeydown}"
+            @click="${this.#onSelect}">
+        <pf-dropdown-menu id="menu"
+                          part="menu"
+                          ?disabled="${disabled}">
+          <slot></slot>
+        </pf-dropdown-menu>
+      </slot>
     </div>`;
+  }
+
+  override firstUpdated() {
+    this.#onSlotchange();
   }
 
   updated(changed: PropertyValues<this>) {
     if (changed.has('expanded')) {
       this.#expandedChanged();
     }
+    if (changed.has('disabled')) {
+      this.#disabledChanged();
+    }
+  }
+
+  #onSlotchange() {
+    const [trigger] = this._triggerElements;
+    const [menu] = this._menuElements;
+    if (!trigger) {
+      this.#logger.warn('no trigger found');
+    } else if (!menu) {
+      this.#logger.warn('no menu found');
+    } else if (![trigger, menu].map(x => this.shadowRoot?.contains(x)).every((p, _, a) => p === a[0])) {
+      this.#logger.warn('trigger and menu must be located in the same root');
+    } else {
+      menu.id ||= getRandomId('menu');
+      trigger.setAttribute('aria-controls', menu.id);
+      trigger.setAttribute('aria-haspopup', menu.id);
+      trigger.setAttribute('aria-expanded', String(this.expanded) as 'true' | 'false');
+    }
   }
 
   async #expandedChanged() {
     const will = this.expanded ? 'close' : 'open';
+    const [menu] = this._menuElements;
+    const [button] = this._triggerElements;
+    button.setAttribute('aria-expanded', `${String(this.expanded) as 'true' | 'false'}`);
     this.dispatchEvent(new Event(will));
     if (this.expanded) {
       await this.#float.show();
-      this._menuElement.activeItem?.focus();
+      if (menu instanceof PfDropdownMenu) {
+        menu.activeItem?.focus();
+      }
     } else {
       await this.#float.hide();
     }
   }
 
+  #disabledChanged() {
+    for (const el of this._triggerElements.concat(this._menuElements)) {
+      if (canBeDisabled(el)) {
+        el.disabled = this.disabled;
+      }
+    }
+  }
 
   #onSelect(event: KeyboardEvent | Event & { target: PfDropdownItem }) {
-    const menu = this._menuElement;
-    const target = event.target as PfDropdownItem || menu.activeItem;
-    this.dispatchEvent(new PfDropdownSelectEvent(event, `${target?.value}`));
-    this.hide();
+    const [menu] = this._menuElements;
+    if (menu instanceof PfDropdownMenu) {
+      const target = event.target as PfDropdownItem || menu.activeItem;
+      this.dispatchEvent(new PfDropdownSelectEvent(event, `${target?.value}`));
+      this.hide();
+    }
   }
 
   #onButtonKeydown(event: KeyboardEvent) {
     switch (event.key) {
-      case 'ArrowDown':
-        this.show();
+      case 'ArrowDown': {
+        if (!this.disabled) {
+          this.show();
+        }
+      }
     }
   }
 
   #onMenuFocusout(event: FocusEvent) {
     if (this.expanded) {
       const root = this.getRootNode();
+      const [menu] = this._menuElements;
       if (root instanceof ShadowRoot ||
           root instanceof Document &&
           event.relatedTarget instanceof PfDropdownItem &&
-          !this._menuElement.items.includes(event.relatedTarget)
+          menu instanceof PfDropdownMenu &&
+          !menu.items.includes(event.relatedTarget)
       ) {
         this.hide();
       }
@@ -160,7 +221,7 @@ export class PfDropdown extends LitElement {
         break;
       case 'Escape':
         this.hide();
-        this.#triggerElement?.focus();
+        this._triggerElements?.at(0)?.focus();
     }
   }
 

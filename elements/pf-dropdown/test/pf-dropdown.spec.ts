@@ -2,10 +2,18 @@ import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { PfDropdown } from '@patternfly/elements/pf-dropdown/pf-dropdown.js';
-import { a11ySnapshot, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+
+function press(key: string) {
+  return async function() {
+    await sendKeys({ press: key });
+  };
+}
 
 describe('<pf-dropdown>', function() {
   let element: PfDropdown;
+
+  const updateComplete = () => element.updateComplete;
 
   describe('simply instantiating', function() {
     it('imperatively instantiates', function() {
@@ -33,19 +41,26 @@ describe('<pf-dropdown>', function() {
     });
 
     it('should be accessible', async function() {
-      await expect(element).shadowDom.to.be.accessible();
+      await expect(element).to.be.accessible({
+        ignoredRules: [
+          /** @see https://github.com/dequelabs/axe-core/issues/4259 */
+          'aria-allowed-attr',
+          /** false positive: the menuitem is projected into a menu in another shadow root */
+          'aria-required-parent',
+        ]
+      });
     });
 
     it('should hide dropdown content from assistive technology', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children!.length).to.equal(1);
+      const menu = snapshot.children?.find(x => x.role === 'menu');
+      expect(menu).to.not.be.ok;
     });
 
     describe('pressing Enter', function() {
-      beforeEach(async function() {
-        await sendKeys({ press: 'Tab' });
-        await sendKeys({ press: 'Enter' });
-      });
+      beforeEach(press('Tab'));
+      beforeEach(press('Enter'));
+      beforeEach(updateComplete);
 
       it('should show menu', async function() {
         const snapshot = await a11ySnapshot();

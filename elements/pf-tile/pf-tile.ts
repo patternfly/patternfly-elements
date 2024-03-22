@@ -1,8 +1,6 @@
-
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-
-import { BaseTile } from './BaseTile.js';
 
 import styles from './pf-tile.css';
 
@@ -54,15 +52,31 @@ export type StackedSize = (
  * @cssprop   {<length>} --pf-c-tile__icon--MarginRight {@default `0`}
  * @cssprop   {<length>} --pf-c-tile__icon--FontSize {@default `1.5rem`}
  *
- * @cssprop   {<lenght>} --pf-c-tile__header--m-stacked__icon--MarginBottom {@default `0.25rem`}
+ * @cssprop   {<length>} --pf-c-tile__header--m-stacked__icon--MarginBottom {@default `0.25rem`}
  */
 @customElement('pf-tile')
-export class PfTile extends BaseTile {
+export class PfTile extends LitElement {
   static readonly styles = [styles];
 
   @property({ reflect: true, type: Boolean }) selected = false;
 
   @property({ reflect: true }) stacked?: StackedSize;
+
+  override render() {
+    return html`
+      <div part="header">
+        <div part="icon">
+          <slot id="icon" name="icon"></slot>
+        </div>
+        <div part="title">
+          <slot id="title" name="title"></slot>
+        </div>
+      </div>
+      <div part="body">
+        <slot id="body"></slot>
+      </div>
+    `;
+  }
 }
 
 declare global {

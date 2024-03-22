@@ -8,7 +8,7 @@ Load `<pf-back-to-top>` via CDN:
 
 ```html
 <script src="https://jspm.dev/@patternfly/elements/pf-back-to-top/pf-back-to-top.js"></script>
-
+```
 
 Or, if you are using [NPM](https://npm.im), install it
 

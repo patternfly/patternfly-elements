@@ -1,3 +1,17 @@
+:host {
+  display: contents;
+}
+
+svg,
+:host([src]) img {
+  display: inline;
+  object-fit: cover;
+}
+
+:host([hidden]), [hidden] {
+  display: none !important;
+}
+
 svg,
 img {
   width: var(--pf-c-avatar--Width, 24px);

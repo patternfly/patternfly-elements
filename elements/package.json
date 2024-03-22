@@ -16,7 +16,6 @@
     "./pf-accordion/pf-accordion-header.js": "./pf-accordion/pf-accordion-header.js",
     "./pf-accordion/pf-accordion-panel.js": "./pf-accordion/pf-accordion-panel.js",
     "./pf-accordion/pf-accordion.js": "./pf-accordion/pf-accordion.js",
-    "./pf-avatar/BaseAvatar.js": "./pf-avatar/BaseAvatar.js",
     "./pf-avatar/pf-avatar.js": "./pf-avatar/pf-avatar.js",
     "./pf-back-to-top/pf-back-to-top.js": "./pf-back-to-top/pf-back-to-top.js",
     "./pf-background-image/pf-background-image.js": "./pf-background-image/pf-background-image.js",

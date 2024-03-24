@@ -144,7 +144,7 @@ export class PfTextArea extends LitElement {
 
   static readonly formAssociated = true;
 
-  static override shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /** Accessible label for the input when no `<label>` element is provided. */
   @property({ reflect: true, attribute: 'accessible-label' }) accessibleLabel?: string;
@@ -160,7 +160,7 @@ export class PfTextArea extends LitElement {
   /** Flag to show if the input is disabled. */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  /** Flag to show if the input is required. */
+  /** Flag to show if the text area is required. */
   @property({ type: Boolean, reflect: true }) required = false;
 
   /** Flag to show if the input is read only. */
@@ -175,8 +175,10 @@ export class PfTextArea extends LitElement {
   /** Sets the orientation to limit the resize to */
   @property() resize?: 'horizontal' | 'vertical' | 'both';
 
-  /** Sets the orientation to limit the resize to */
+  /** Flag to modify height based on contents. */
   @property({ type: Boolean, attribute: 'auto-resize' }) autoResize = false;
+
+  #style?: CSSStyleDeclaration;
 
   #logger = new Logger(this);
 
@@ -198,6 +200,7 @@ export class PfTextArea extends LitElement {
     return html`
       <textarea id="textarea" class="${classMap(classes)}"
                 @input="${this.#onInput}"
+                @change="${this.#onInput}"
                 ?disabled="${this.matches(':disabled') || this.disabled}"
                 ?readonly="${this.readonly}"
                 ?required="${this.required}"
@@ -208,12 +211,32 @@ export class PfTextArea extends LitElement {
     `;
   }
 
+  override firstUpdated(): void {
+    if (this.autoResize) {
+      this.#autoSetHeight();
+    }
+  }
+
   #onInput(event: Event) {
     if (event.target instanceof HTMLTextAreaElement) {
       const { value } = event.target;
       this.value = value;
       this.#internals.setFormValue(value);
     }
+    if (this.autoResize) {
+      this.#autoSetHeight();
+    }
+  }
+
+  #autoSetHeight() {
+    this.#style ??= window.getComputedStyle(this.#input);
+    const height =
+      parseInt(this.#style.getPropertyValue('border-top-width')) +
+      parseInt(this.#style.getPropertyValue('padding-top')) +
+      this.#input.scrollHeight +
+      parseInt(this.#style.getPropertyValue('padding-bottom')) +
+      parseInt(this.#style.getPropertyValue('border-bottom-width'));
+    this.#input.style.setProperty('--pf-c-form-control--textarea--Height', `${Math.max(69, height)}px`);
   }
 
   #setValidityFromInput() {

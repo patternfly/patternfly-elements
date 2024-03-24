@@ -9,7 +9,10 @@ tags:
   <h1>{{ title }}</h1>
 </header>
 
-{%- band header="Using PatternFly Elements in your React app" -%}
+<section class="band">
+
+  ## Using PatternFly Elements in your React app
+
   PatternFly Elements ships with React wrappers for each web component. These 
   wrappers make working with web components
   withing react JSX files more convenient. In this post, we'll create a simple 
@@ -20,9 +23,12 @@ tags:
   [Codesandbox][codesandbox]. For a more advanced example, take a look at [Anuj 
   Singla's example repo on Github][repo], which demonstrates commit-by-commit 
   how you can migrate a react app to all web-components.
-{% endband %}
 
-{% band header="Why Does React Need Special Treatment?" %}
+</section>
+
+<section class="band">
+
+  ## Why Does React Need Special Treatment?
   PatternFly elements are Web components: they're based on a set of web platform 
   APIs that help to create reusable and encapsulated UI elements. Those standards 
   consist of Custom Elements, Shadow DOM, and HTML Templates.
@@ -89,9 +95,11 @@ tags:
   to read the documentation for elements that you use in order to understand 
   which public APIs the authors intended you to use.
 
-{% endband %}
+</section>
 
-{% band header="Initial setup" %}
+<section class="band">
+
+  ## Initial setup
   We'll bootstrap our react app using [Vite][vite]. It's possible to use other 
   tools for this, but that is out of the scope of this tutorial.
 
@@ -99,9 +107,12 @@ tags:
   npm create vite@latest
   ```
   This command will ask you to provide the project name, framework, and variant.
-{% endband %}
 
-{% band header="Adding PatternFly Elements" %}
+</section>
+
+<section class="band">
+
+  ## Adding PatternFly Elements
   With the setup complete, You need to install `@patternfly/elements` and the 
   `@lit/react` library.
 
@@ -228,9 +239,12 @@ tags:
     </Card>
   );
   ```
-{% endband %}
 
-{% band header="Interacting with web components' APIs" %}
+</section>
+
+<section class="band">
+
+  ## Interacting with web components' APIs
   Now we will add the [`pf-popover`][pf-popover] web component and open the 
   popover on the mouse over of the button. We will programmatically use the 
   `show()` and `hide()` popover methods to show and hide the popover. **Note**
@@ -290,32 +304,46 @@ tags:
     );
   }
   ```
-{% endband %}
 
-{% band header="Codesandbox example" %}
-  <iframe src="https://codesandbox.io/p/sandbox/pfe-react-wrappers-3g6x6r?autoresize=1&fontsize=14&hidenavigation=1&moduleview=1&theme=dark"
+</section>
+
+<section class="band">
+
+  ## Codesandbox example
+
+  <iframe src="https://3g6x6r-5173.csb.app/"
           style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
           title="PatternFly Elements with React"></iframe>
-{% endband %}
 
-{% band header="Recap" %}
-Let’s recap what we did.
+  View and edit the source on [Codesandbox][codesandbox].
 
-1. Initial setup: Created React project (TypeScript + Vite).
-2. Added PatternFly Elements: Installed @lit-labs/react and @patternfly/elements libraries.
-3. Added Button, Switch, Card, Tooltip, and Popover components:
-  - Enable/disable a button by clicking the switch button.
-  - Show tooltip text on mouseover.
-  - Created a reference to the popover to open the popover on the mouse-over of the button.
-{% endband %}
+</section>
 
-{% band header="Wrap up" %}
+<section class="band">
+
+  ## Recap
+  Let’s recap what we did.
+
+  1. Initial setup: Created React project (TypeScript + Vite).
+  2. Added PatternFly Elements: Installed @lit-labs/react and @patternfly/elements libraries.
+  3. Added Button, Switch, Card, Tooltip, and Popover components:
+     - Enable/disable a button by clicking the switch button.
+     - Show tooltip text on mouseover.
+     - Created a reference to the popover to open the popover on the mouse-over of the button.
+
+</section>
+
+<section class="band">
+
+  ## Wrap up
+
   So there you have it. We’ve added web components to our React app and gained 
   the benefits of using portable, pre-made components that can also be used in 
   other frameworks like Angular and Vue. If your app is written in Angular or Vue, 
   check out our other two posts: Using [PatternFly Elements in your Angular 
   App][inng] and Using [PatternFly Elements in your Vue App][invue].
-{% endband %}
+
+</section>
 
 [codesandbox]: https://codesandbox.io/p/devbox/pfe-react-wrappers-3g6x6r?file=%2Fsrc%2FApp.tsx
 [repo]: https://github.com/anujsingla/react-patternfly-elements

@@ -99,29 +99,29 @@ export class PfDropdown extends LitElement {
     const { anchor, alignment, styles = {} } = this.#float;
     const { disabled } = this;
     return html`
-    <div class="${classMap({ expanded, [anchor ?? '']: !!anchor, [alignment ?? '']: !!alignment })}"
-         style="${styleMap(styles)}"
-         @slotchange="${this.#onSlotchange}">
-      <slot name="trigger"
-            @keydown="${this.#onButtonKeydown}"
-            @click="${() => this.toggle()}">
-        <pf-button variant="control"
-                   icon="caret-down"
-                   icon-set="fas">Dropdown</pf-button>
-      </slot>
-      <slot name="menu"
-            class="${classMap({ show: expanded })}"
-            ?hidden="${!this.expanded}"
-            @focusout="${this.#onMenuFocusout}"
-            @keydown="${this.#onMenuKeydown}"
-            @click="${this.#onSelect}">
-        <pf-dropdown-menu id="menu"
-                          part="menu"
-                          ?disabled="${disabled}">
-          <slot></slot>
-        </pf-dropdown-menu>
-      </slot>
-    </div>`;
+      <div class="${classMap({ expanded, [anchor ?? '']: !!anchor, [alignment ?? '']: !!alignment })}"
+           style="${styleMap(styles)}"
+           @slotchange="${this.#onSlotchange}">
+        <slot name="trigger"
+              @keydown="${this.#onButtonKeydown}"
+              @click="${() => this.toggle()}">
+          <pf-button variant="control"
+                     icon="caret-down"
+                     icon-set="fas">Dropdown</pf-button>
+        </slot>
+        <slot name="menu"
+              ?hidden="${!this.expanded}"
+              @focusout="${this.#onMenuFocusout}"
+              @keydown="${this.#onMenuKeydown}"
+              @click="${this.#onSelect}">
+          <pf-dropdown-menu id="menu"
+                            part="menu"
+                            ?disabled="${disabled}">
+            <slot></slot>
+          </pf-dropdown-menu>
+        </slot>
+      </div>
+    `;
   }
 
   override firstUpdated() {

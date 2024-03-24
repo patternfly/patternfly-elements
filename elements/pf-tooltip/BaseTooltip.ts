@@ -1,3 +1,5 @@
+// we will remove this file in #2628
+/* eslint-disable lit-a11y/no-aria-slot */
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
 import { LitElement, html } from 'lit';

@@ -1,0 +1,23 @@
+<section>
+  <p><pf-timestamp id="timestamp-custom-format" date="Sat Jan 01 2022 00:00:00 GMT-0500"></pf-timestamp></p>
+
+  <script>
+  document.getElementById('timestamp-custom-format').customFormat = {
+    year: '2-digit',
+    month: 'short',
+    weekday: 'short',
+    day: 'numeric',
+    hour: 'numeric'
+  };
+  </script>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-timestamp/pf-timestamp.js';
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

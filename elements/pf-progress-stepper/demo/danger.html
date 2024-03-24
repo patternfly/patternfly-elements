@@ -1,0 +1,20 @@
+<section>
+  <pf-progress-stepper>
+    <pf-progress-step variant="success">First Step</pf-progress-step>
+    <pf-progress-step variant="success">Second Step</pf-progress-step>
+    <pf-progress-step variant="success">Third Step</pf-progress-step>
+    <pf-progress-step variant="danger" current>Fourth Step</pf-progress-step>
+    <pf-progress-step variant="pending">Fifth Step</pf-progress-step>
+  </pf-progress-stepper>
+</section>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-progress-stepper/pf-progress-stepper.js';
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

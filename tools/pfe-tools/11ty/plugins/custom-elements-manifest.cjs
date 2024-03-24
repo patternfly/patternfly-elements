@@ -2,16 +2,8 @@
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
 const { join } = require('node:path');
 const { existsSync } = require('node:fs');
-const glob = require('node:util').promisify(require('glob'));
+const { glob } = require('glob');
 const { stat, rm } = require('node:fs/promises');
-
-/**
- * @param {unknown} x
- * @return {x is import('../DocsPage').DocsPage}
- */
-function isDocsPage(x) {
-  return (/** @type {typeof import('../DocsPage').DocsPage}*/(x?.constructor))?.isDocsPage ?? false;
-}
 
 const isDir = dir => stat(dir).then(x => x.isDirectory, () => false);
 
@@ -110,53 +102,4 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
     }
     return content;
   });
-
-  /** Rebuild the site in watch mode when the templates for this plugin change */
-  eleventyConfig
-    .addWatchTarget(require.resolve('@patternfly/pfe-tools/11ty')
-      .replace('index.js', '**/*.{js,njk}'));
-
-  // copied from DocsPage
-  eleventyConfig.addPairedAsyncShortcode('band',
-    /**
-     * @param {string} content
-     * @param {import('../DocsPage').RenderKwargs} kwargs
-     */
-    async function(content, kwargs) {
-      const { renderBand } = await import('@patternfly/pfe-tools/11ty');
-      return renderBand(content, kwargs);
-    });
-
-  /** @type {import('./types').RendererName} */
-  const shortCodes = [
-    'renderAttributes',
-    'renderCssCustomProperties',
-    'renderCssParts',
-    'renderEvents',
-    'renderMethods',
-    'renderOverview',
-    'renderProperties',
-    'renderInstallation',
-    'renderSlots',
-  ];
-
-  for (const shortCode of shortCodes) {
-    eleventyConfig.addPairedAsyncShortcode(shortCode,
-      /**
-       * @this {import('./types').EleventyContext}
-       * @param {string} content
-       * @param {import('../DocsPage').RenderKwargs} [kwargs]
-       */
-      async function(content, kwargs) {
-        const docsPage = isDocsPage(this.ctx?._) ? this.ctx?._ : null;
-        if (!docsPage) {
-          console.warn(
-            `{% ${shortCode} %}: No custom elements manifest data found for ${kwargs?.for ?? 'unknown element'}`,
-            `\n  inputPath: ${this.page.inputPath}`,
-            `\n  URL: ${this.page.url}`,
-          );
-        }
-        return docsPage?.[shortCode]?.(content, kwargs) ?? '';
-      });
-  }
 };

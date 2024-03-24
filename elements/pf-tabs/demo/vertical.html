@@ -1,0 +1,51 @@
+<div class="example">
+  <pf-tabs vertical>
+    <pf-tab slot="tab">Users</pf-tab>
+    <pf-tab-panel>Users</pf-tab-panel>
+    <pf-tab slot="tab" active>Containers</pf-tab>
+    <pf-tab-panel>Containers</pf-tab-panel>
+    <pf-tab slot="tab">Database</pf-tab>
+    <pf-tab-panel>Database</pf-tab-panel>
+    <pf-tab slot="tab" disabled>Disabled</pf-tab>
+    <pf-tab-panel>Disabled</pf-tab-panel>
+  </pf-tabs>
+
+  <form>
+    Box variant:
+    <label for="toggle-vertical" data-state="on">Dark</label>
+    <label for="toggle-vertical" data-state="off">None</label>
+    <pf-switch id="toggle-vertical"></pf-switch>
+  </form>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+  import '@patternfly/elements/pf-tabs/pf-tabs.js';
+
+  const toggle = document.getElementById('toggle-vertical');
+  const tabs = document.querySelector('pf-tabs[vertical]');
+  toggle.addEventListener('change', function verticalToggle() {
+    if (toggle.checked) {
+      tabs.setAttribute('box', 'dark');
+    } else {
+      tabs.removeAttribute('box');
+    }
+  });
+</script>
+
+<style>
+  main {
+    display: block;
+    overflow-x: unset;
+  }
+
+  section {
+    margin: 0 auto;
+    padding: 0 16px 32px;
+    width: 100%;
+    max-width: 1008px;
+    @media (min-width: 768px) {
+      padding: 0 32px 32px;
+    }
+  }
+</style>

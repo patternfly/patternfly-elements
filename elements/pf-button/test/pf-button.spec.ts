@@ -1,10 +1,17 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
+import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 
 import { PfButton } from '@patternfly/elements/pf-button/pf-button.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
+
+function press(key: string) {
+  return async function() {
+    await sendKeys({ press: key });
+  };
+}
 
 describe('<pf-button>', function() {
   it('imperatively instantiates', function() {
@@ -22,6 +29,7 @@ describe('<pf-button>', function() {
     let element: PfButton;
     let fieldset: HTMLFieldSetElement;
     let form: HTMLFormElement;
+    let submitEvent: SubmitEvent;
 
     beforeEach(async function() {
       form = await createFixture(html`
@@ -36,17 +44,45 @@ describe('<pf-button>', function() {
       fieldset = form.querySelector('fieldset')!;
       element = form.querySelector('pf-button')!;
       form.querySelector('input')?.focus();
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        submitEvent = event;
+      });
       await element.updateComplete;
     });
 
-    describe('tabbing through', function() {
-      beforeEach(async function() {
-        await sendKeys({ press: 'Tab' });
+    afterEach(function() {
+      // @ts-expect-error: resetting fixture
+      submitEvent = undefined;
+    });
+
+    describe('clicking the button', function() {
+      beforeEach(() => clickElementAtCenter(element));
+      it('submits the form', function() {
+        expect(submitEvent).to.be.ok;
       });
+    });
+
+    describe('tabbing through', function() {
+      beforeEach(press('Tab'));
       it('does focus the button', function() {
         expect(document.activeElement)
           .to
           .be.an.instanceof(PfButton);
+      });
+
+      describe('pressing Space', function() {
+        beforeEach(press(' '));
+        it('submits the form', function() {
+          expect(submitEvent).to.be.ok;
+        });
+      });
+
+      describe('pressing Enter', function() {
+        beforeEach(press('Enter'));
+        it('submits the form', function() {
+          expect(submitEvent).to.be.ok;
+        });
       });
     });
 
@@ -59,9 +95,7 @@ describe('<pf-button>', function() {
         expect(element.matches(':disabled'), 'matches :disabled').to.be.true;
       });
       describe('tabbing through', function() {
-        beforeEach(async function() {
-          await sendKeys({ press: 'Tab' });
-        });
+        beforeEach(press('Tab'));
         it('does not focus the button', function() {
           expect(document.activeElement)
             .to
@@ -86,9 +120,7 @@ describe('<pf-button>', function() {
               await element.updateComplete;
             });
             describe('tabbing through', function() {
-              beforeEach(async function() {
-                await sendKeys({ press: 'Tab' });
-              });
+              beforeEach(press('Tab'));
               it('does focus the button', function() {
                 expect(document.activeElement)
                   .to

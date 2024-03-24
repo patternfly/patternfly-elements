@@ -1,9 +1,0 @@
-article {
-  margin-inline: 4em;
-}
-
-article header {
-  display: flex;
-  align-items: center;
-  gap: 1em;
-}

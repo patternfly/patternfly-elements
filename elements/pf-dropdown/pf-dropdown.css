@@ -1,0 +1,113 @@
+:host {
+  display: inline-block;
+  position: relative;
+  --_font-size: var(
+    --pf-c-dropdown__menu-item--FontSize,
+    var(--pf-global--FontSize--md, 1rem)
+  );
+  --_font-weight: var(
+    --pf-c-dropdown__menu-item--FontWeight,
+    var(--pf-global--FontWeight--normal, 400)
+  );
+  --_line-height: var(
+    --pf-c-dropdown__menu-item--LineHeight,
+    var(--pf-global--LineHeight--md, 1.5)
+  );
+  --_color: var(
+    --pf-c-dropdown__menu-item--Color,
+    var(--pf-global--Color--dark-100, #151515)
+  );
+  --_background-color: var(
+    --pf-c-dropdown__menu-item--BackgroundColor,
+    transparent
+  );
+}
+
+:host([disabled]) {
+  color: var(--pf-global--Color--dark-200, #6a6e73);
+}
+
+:host([hidden]),
+[hidden] {
+  display: none !important;
+}
+
+slot[name="trigger"] {
+  cursor: pointer;
+}
+
+pf-dropdown-menu {
+  position: absolute;
+  top: var(
+    --pf-c-dropdown__menu--Top,
+    calc(100% + var(--pf-global--spacer--xs, 0.25rem))
+  );
+  left: 0;
+  z-index: var(
+    --pf-c-dropdown__menu--ZIndex,
+    var(--pf-global--ZIndex--sm, 200)
+  );
+  padding-top: var(
+    --pf-c-dropdown__menu--PaddingTop,
+    var(--pf-global--spacer--sm, 0.5rem)
+  );
+  padding-bottom: var(
+    --pf-c-dropdown__menu--PaddingBottom,
+    var(--pf-global--spacer--sm, 0.5rem)
+  );
+  background: var(--pf-c-dropdown__menu--BackgroundColor, #fff);
+  background-clip: padding-box;
+  box-shadow: var(
+    --pf-c-dropdown__menu--BoxShadow,
+    var(
+      --pf-global--BoxShadow--md,
+      0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12),
+      0 0 0.25rem 0 rgba(3, 3, 3, 0.06)
+    )
+  );
+  min-width: 100%;
+  margin: 0;
+}
+
+:host([disabled]) :is(pf-dropdown-menu, ::slotted(pf-dropdown-menu)) {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+pf-button.disabled::part(button),
+:host([disabled]) ::slotted([slot="trigger"]) {
+  color: var(---pf-c-dropdown__menu-item--disabled--Color, #6a6e73) !important;
+  background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+  border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+}
+
+pf-button::part(button) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+pf-button svg {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  margin-inline-start: 1em;
+}
+
+::slotted(hr) {
+  margin: 0;
+  border-color: var(--pf-c-divider--BackgroundColor, var(--pf-global--BorderColor--100, #d2d2d2));
+  border-style: solid;
+}
+
+::slotted([role="separator"]:not(hr)) {
+  width: 100%;
+  height: 1px;
+  background-color: var(--pf-c-divider--BackgroundColor, var(--pf-global--BorderColor--100, #d2d2d2));
+  padding: 0px;
+  margin: 0px;
+  border: 0;
+  display: block;
+}

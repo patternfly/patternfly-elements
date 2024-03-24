@@ -65,18 +65,18 @@ Once you've generated your import map and added it to your project, you can use 
 <script type="importmap">
 {
   "imports": {
-    "@patternfly/elements/pf-card/pf-card.js": "https://ga.jspm.io/npm:@patternfly/elements@2.0.0/pf-card/pf-card.js"
+    "@patternfly/elements/pf-card/pf-card.js": "https://ga.jspm.io/npm:@patternfly/elements@2.5.0/pf-card/pf-card.js"
   },
   "scopes": {
     "https://ga.jspm.io/": {
-      "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/reactive-element.js",
-      "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/decorators/",
-      "@patternfly/pfe-core/controllers/slot-controller.js": "https://ga.jspm.io/npm:@patternfly/pfe-core@2.0.0/controllers/slot-controller.js",
-      "lit": "https://ga.jspm.io/npm:lit@2.6.1/index.js",
-      "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.2.2/lit-element.js",
-      "lit-html": "https://ga.jspm.io/npm:lit-html@2.6.1/lit-html.js",
-      "lit-html/": "https://ga.jspm.io/npm:lit-html@2.6.1/",
-      "lit/": "https://ga.jspm.io/npm:lit@2.6.1/",
+      "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@2.0.2/reactive-element.js",
+      "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@2.0.2/decorators/",
+      "@patternfly/pfe-core/controllers/slot-controller.js": "https://ga.jspm.io/npm:@patternfly/pfe-core@2.1.0/controllers/slot-controller.js",
+      "lit": "https://ga.jspm.io/npm:lit@3.1.0/index.js",
+      "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@4.0.2/lit-element.js",
+      "lit-html": "https://ga.jspm.io/npm:lit-html@3.1.0/lit-html.js",
+      "lit-html/": "https://ga.jspm.io/npm:lit-html@3.1.0/",
+      "lit/": "https://ga.jspm.io/npm:lit@3.1.0/",
       "tslib": "https://ga.jspm.io/npm:tslib@2.5.0/modules/index.js"
     }
   }
@@ -86,8 +86,8 @@ Once you've generated your import map and added it to your project, you can use 
 
 ```javascript
 <script type="module">
-  // resolves to https://ga.jspm.io/npm:@patternfly/elements@2.0.0/pf-card/pf-card.js
-  import '@patternfly/elements/pf-card/pf-card.js';  
+  // resolves to https://ga.jspm.io/npm:@patternfly/elements@2.5.0/pf-card/pf-card.js
+  import '@patternfly/elements/pf-card/pf-card.js';
 </script>
 ```
 

@@ -1,0 +1,69 @@
+<dl>
+  <div>
+    <dt>Small</dt>
+    <dd>
+      <pf-avatar
+        dark
+        border="dark"
+        size="sm"
+        alt="Edwardo Lindsey"
+      ></pf-avatar>
+    </dd>
+  </div>
+
+  <div>
+    <dt>Medium</dt>
+    <dd>
+      <pf-avatar
+        dark
+        border="dark"
+        size="md"
+        alt="Edwardo Lindsey"
+      ></pf-avatar>
+    </dd>
+  </div>
+
+  <div>
+    <dt>Large</dt>
+    <dd>
+      <pf-avatar
+        dark
+        border="dark"
+        size="lg"
+        alt="Edwardo Lindsey"
+      ></pf-avatar>
+    </dd>
+  </div>
+
+  <div>
+    <dt>Extra Large</dt>
+    <dd>
+      <pf-avatar
+        dark
+        border="dark"
+        size="xl"
+        alt="Edwardo Lindsey"
+      ></pf-avatar>
+    </dd>
+  </div>
+</dl>
+
+<script type="module">
+  import '@patternfly/elements/pf-avatar/pf-avatar.js';
+</script>
+
+<style>
+dl {
+  padding: 64px 48px;
+  display: flex;
+  gap: 1em;
+  & > div {
+    display: flex;
+    gap: 1em;
+    flex-flow: column;
+  }
+  & dd {
+    margin: 0;
+  }
+}
+</style>

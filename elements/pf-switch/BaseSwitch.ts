@@ -10,15 +10,13 @@ import styles from './BaseSwitch.css';
 export abstract class BaseSwitch extends LitElement {
   static readonly styles = [styles];
 
-  static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true, };
-
   static readonly formAssociated = true;
+
+  static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   declare shadowRoot: ShadowRoot;
 
   #internals = InternalsController.of(this, { role: 'switch' });
-
-  #initiallyDisabled = this.hasAttribute('disabled');
 
   @property({ reflect: true }) label?: string;
 
@@ -26,7 +24,7 @@ export abstract class BaseSwitch extends LitElement {
 
   @property({ reflect: true, type: Boolean }) checked = false;
 
-  disabled = this.#initiallyDisabled;
+  @property({ reflect: true, type: Boolean }) disabled = false;
 
   get labels(): NodeListOf<HTMLLabelElement> {
     return this.#internals.labels as NodeListOf<HTMLLabelElement>;
@@ -34,7 +32,6 @@ export abstract class BaseSwitch extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-
     this.addEventListener('click', this.#onClick);
     this.addEventListener('keyup', this.#onKeyup);
     this.addEventListener('keydown', this.#onKeyDown);
@@ -43,22 +40,27 @@ export abstract class BaseSwitch extends LitElement {
 
   formDisabledCallback(disabled: boolean) {
     this.disabled = disabled;
-    this.requestUpdate();
   }
 
   override render() {
     return html`
       <div id="container" tabindex="0">
-        <svg id="toggle" fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512" aria-hidden="true">
-          <path ?hidden=${!this.showCheckIcon} d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />
+        <svg id="toggle"
+             role="presentation"
+             fill="currentColor"
+             height="1em"
+             width="1em"
+             viewBox="0 0 512 512"
+             ?hidden=${!this.showCheckIcon}>
+          <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />
         </svg>
       </div>
     `;
   }
 
   override willUpdate() {
-    this.#internals.ariaChecked = String(this.checked);
-    this.#internals.ariaDisabled = String(this.disabled);
+    this.ariaChecked = String(!!this.checked);
+    this.ariaDisabled = String(!!this.disabled);
   }
 
   #onClick(event: Event) {

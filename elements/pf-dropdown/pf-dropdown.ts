@@ -112,9 +112,7 @@ export class PfDropdown extends LitElement {
             @focusout="${this.#onMenuFocusout}"
             @keydown="${this.#onMenuKeydown}"
             @click="${this.#onSelect}">
-        <pf-dropdown-menu id="menu"
-                          part="menu"
-                          ?disabled="${disabled}">
+        <pf-dropdown-menu id="menu" part="menu">
           <slot></slot>
         </pf-dropdown-menu>
       </slot>
@@ -129,18 +127,32 @@ export class PfDropdown extends LitElement {
     if (changed.has('expanded')) {
       this.#expandedChanged();
     }
+    if (changed.has('disabled')) {
+      this.#disabledChanged();
+    }
   }
 
-  #onSlotchange() {
+  #validateDOM() {
     const [trigger] = this._triggerElements;
     const [menu] = this._menuElements;
     if (!trigger) {
       this.#logger.warn('no trigger found');
+      return false;
     } else if (!menu) {
       this.#logger.warn('no menu found');
+      return false;
     } else if (![trigger, menu].map(x => this.shadowRoot?.contains(x)).every((p, _, a) => p === a[0])) {
       this.#logger.warn('trigger and menu must be located in the same root');
+      return false;
     } else {
+      return true;
+    }
+  }
+
+  #onSlotchange() {
+    if (this.#validateDOM()) {
+      const [menu] = this._menuElements;
+      const [trigger] = this._triggerElements;
       menu.id ||= getRandomId('menu');
       trigger.setAttribute('aria-controls', menu.id);
       trigger.setAttribute('aria-haspopup', menu.id);
@@ -151,8 +163,8 @@ export class PfDropdown extends LitElement {
   async #expandedChanged() {
     const will = this.expanded ? 'close' : 'open';
     const [menu] = this._menuElements;
-    const [button] = this._triggerElements;
-    button.setAttribute('aria-expanded', `${String(this.expanded) as 'true' | 'false'}`);
+    const [trigger] = this._triggerElements;
+    trigger.setAttribute('aria-expanded', `${String(this.expanded) as 'true' | 'false'}`);
     this.dispatchEvent(new Event(will));
     if (this.expanded) {
       await this.#float.show();
@@ -161,6 +173,19 @@ export class PfDropdown extends LitElement {
       }
     } else {
       await this.#float.hide();
+    }
+  }
+
+  #disabledChanged() {
+    if (this.#validateDOM()) {
+      const [menu] = this._menuElements;
+      const [trigger] = this._triggerElements;
+      if (menu instanceof PfDropdownMenu) {
+        menu.disabled = this.disabled;
+      } else {
+        menu.setAttribute('aria-disabled', String(!!this.disabled));
+      }
+      trigger.setAttribute('aria-disabled', String(!!this.disabled));
     }
   }
 

@@ -31,6 +31,6 @@
     "eslint-plugin-jsonc": "^2.13.0",
     "eslint-plugin-lit-a11y": "^4.1.2",
     "eslint-plugin-no-only-tests": "^3.1.0",
-    "eslint-plugin-unicorn": "46.0.0"
+    "eslint-plugin-unicorn": "51.0.1"
   }
 }

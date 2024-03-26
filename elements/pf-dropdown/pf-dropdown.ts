@@ -102,7 +102,7 @@ export class PfDropdown extends LitElement {
       <slot name="trigger"
             @keydown="${this.#onButtonKeydown}"
             @click="${() => this.toggle()}">
-        <pf-button variant="control"
+        <pf-button id="default-trigger" variant="control"
                    icon="caret-down"
                    icon-set="fas">Dropdown</pf-button>
       </slot>

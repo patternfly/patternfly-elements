@@ -71,22 +71,22 @@ pf-dropdown-menu,
 }
 
 :host([disabled]) :is(pf-dropdown-menu, ::slotted(pf-dropdown-menu)) {
-  pointer-events: none;
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 }
 
-:host([disabled]) pf-button,
-:host([disabled]) ::slotted([slot="trigger"]) {
+:host([disabled]) :is(pf-button#default-trigger, ::slotted([slot="trigger"]),) {
   color: var(---pf-c-dropdown__menu-item--disabled--Color, #6a6e73) !important;
   background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   border-width: 0;
   --pf-c-button--m-control--Color: var(---pf-c-dropdown__menu-item--disabled--Color, #6a6e73) !important;
   --pf-c-button--m-control--focus--Color: var(---pf-c-dropdown__menu-item--disabled--Color, #6a6e73) !important;
   --pf-c-button--m-control--BackgroundColor: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+  --pf-c-button--m-control--hover--BackgroundColor: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+  --pf-c-button--m-control--active--BackgroundColor: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   --pf-c-button--m-control--focus--BackgroundColor: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   --pf-c-button--m-control--after--BorderWidth: 0;
   --pf-c-button--m-control--hover--after--BorderBottomWidth: 0;
-  --pf-c-button--m-control--after--after--BorderBottomWidth: 0;
+  --pf-c-button--m-control--active--after--BorderBottomWidth: 0;
   --pf-c-button--m-control--focus--after--BorderBottomWidth: 0;
 }
 

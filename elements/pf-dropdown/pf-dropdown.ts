@@ -112,7 +112,7 @@ export class PfDropdown extends LitElement {
             @focusout="${this.#onMenuFocusout}"
             @keydown="${this.#onMenuKeydown}"
             @click="${this.#onSelect}">
-        <pf-dropdown-menu id="menu" part="menu">
+        <pf-dropdown-menu id="menu" part="menu" ?disabled="${disabled}">
           <slot></slot>
         </pf-dropdown-menu>
       </slot>

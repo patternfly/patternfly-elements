@@ -36,27 +36,28 @@ slot[name="trigger"] {
   cursor: pointer;
 }
 
-pf-dropdown-menu {
-  position: absolute;
+pf-dropdown-menu,
+::slotted(pf-dropdown-menu) {
+  position: absolute !important;
   top: var(
     --pf-c-dropdown__menu--Top,
     calc(100% + var(--pf-global--spacer--xs, 0.25rem))
-  );
-  left: 0;
+  ) !important;
+  left: 0 !important;
   z-index: var(
     --pf-c-dropdown__menu--ZIndex,
     var(--pf-global--ZIndex--sm, 200)
-  );
+  ) !important;
   padding-top: var(
     --pf-c-dropdown__menu--PaddingTop,
     var(--pf-global--spacer--sm, 0.5rem)
-  );
+  ) !important;
   padding-bottom: var(
     --pf-c-dropdown__menu--PaddingBottom,
     var(--pf-global--spacer--sm, 0.5rem)
-  );
-  background: var(--pf-c-dropdown__menu--BackgroundColor, #fff);
-  background-clip: padding-box;
+  ) !important;
+  background: var(--pf-c-dropdown__menu--BackgroundColor, #fff) !important;
+  background-clip: padding-box !important;
   box-shadow: var(
     --pf-c-dropdown__menu--BoxShadow,
     var(
@@ -64,9 +65,9 @@ pf-dropdown-menu {
       0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12),
       0 0 0.25rem 0 rgba(3, 3, 3, 0.06)
     )
-  );
-  min-width: 100%;
-  margin: 0;
+  ) !important;
+  min-width: 100% !important;
+  margin: 0 !important;
 }
 
 :host([disabled]) :is(pf-dropdown-menu, ::slotted(pf-dropdown-menu)) {

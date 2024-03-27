@@ -36,7 +36,7 @@ export interface PfeConfig {
 
 const SITE_DEFAULTS: Required<SiteOptions> = {
   description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
-  favicon: '/docs/images/logo/pfe-icon-blue.svg',
+  favicon: '/docs/images/favicon.ico',
   logoUrl: '/docs/images/pfe-logo-inverse-white.svg',
   stylesheets: [],
   title: 'PatternFly Elements',

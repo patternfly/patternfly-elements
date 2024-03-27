@@ -1,0 +1,29 @@
+<p>
+  When the viewport is <code>1190</code> pixels wide, (such that the "toggle popover" button appears
+  at the far edge of the viewport, the popover at the far end of the viewport
+  must not cause a horizontal scrollbar which would otherwise not have been there.
+</p>
+<pf-button disabled>Spacer</pf-button>
+<pf-button disabled>Spacer</pf-button>
+<pf-button disabled>Spacer</pf-button>
+<pf-button disabled>Spacer</pf-button>
+<pf-button disabled>Spacer</pf-button>
+<pf-button disabled>Spacer</pf-button>
+<pf-button disabled>Spacer</pf-button>
+<pf-button disabled>Spacer</pf-button>
+<pf-button disabled>Spacer</pf-button>
+<pf-button disabled>Spacer</pf-button>
+<pf-button disabled>Spacer</pf-button>
+<pf-button disabled>Spacer</pf-button>
+<pf-popover heading="Popover heading" footer="Popover footer">
+  <p slot="body">In this popover, the content is quite wide,
+                 so as to force a horizontal scrollbar if the
+                 dialog content is improperly rendered.</p>
+  <pf-button>Toggle popover</pf-button>
+</pf-popover>
+
+
+<script type="module">
+  import '@patternfly/elements/pf-popover/pf-popover.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+</script>

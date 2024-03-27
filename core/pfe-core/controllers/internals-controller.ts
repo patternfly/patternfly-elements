@@ -88,6 +88,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   @aria ariaColIndexText: string | null = null;
   @aria ariaColSpan: string | null = null;
   @aria ariaCurrent: string | null = null;
+  @aria ariaDescription: string | null = null;
   @aria ariaDisabled: string | null = null;
   @aria ariaExpanded: string | null = null;
   @aria ariaHasPopup: string | null = null;

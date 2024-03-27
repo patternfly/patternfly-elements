@@ -62,7 +62,7 @@ export class PfDropdown extends LitElement {
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
-   * Disable the dropdown
+   * When disabled, the dropdown can still be toggled open and closed via keyboard, but menu items cannot be activated.
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
 

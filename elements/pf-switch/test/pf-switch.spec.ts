@@ -89,18 +89,42 @@ describe('<pf-switch>', function() {
 
   describe('when checked attr is present', function() {
     let element: PfSwitch;
+    let snapshot: A11yTreeSnapshot;
     beforeEach(async function() {
       element = await createFixture<PfSwitch>(html`
-        <pf-switch checked></pf-switch>
+        <pf-switch id="switch" checked></pf-switch>
       `);
+
+      await element.updateComplete;
+      await nextFrame();
+      snapshot = await a11ySnapshot({ selector: '#switch' });
     });
-    it('should display a check icon', async function() {
-      // TODO: can we test this without inspecting the private shadowRoot?
-      const svg = element.shadowRoot.querySelector('svg');
-      expect(svg).to.be.ok;
-      expect(svg?.hasAttribute('hidden')).to.be.false;
+
+    it('should be checked', function() {
+      expect(element.checked).to.be.true;
+      expect(snapshot.checked).to.be.true;
     });
   });
+
+  describe('when checked attr is not present', function() {
+    let element: PfSwitch;
+    let snapshot: A11yTreeSnapshot;
+    beforeEach(async function() {
+      element = await createFixture<PfSwitch>(html`
+        <pf-switch id="switch"></pf-switch>
+      `);
+
+      await element.updateComplete;
+      await nextFrame();
+      snapshot = await a11ySnapshot({ selector: '#switch' });
+    });
+
+    it('should be checked', function() {
+      expect(element.checked).to.be.false;
+      expect(snapshot.checked).to.be.false;
+    });
+  });
+
 
   describe('when checked and show-check-icon attrs are present', function() {
     let element: PfSwitch;

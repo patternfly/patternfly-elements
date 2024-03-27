@@ -1,6 +1,8 @@
 import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { provide } from '@lit/context';
+import { context, type PfDropdownMenuContext } from './context.js';
 
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
@@ -25,6 +27,9 @@ export class PfDropdownMenu extends LitElement {
    * Whether the menu is disabled
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
+
+  @provide({ context })
+  private ctx: PfDropdownMenuContext = { disabled: !!this.disabled };
 
   #internals = InternalsController.of(this, { role: 'menu' });
 
@@ -58,6 +63,12 @@ export class PfDropdownMenu extends LitElement {
     super.connectedCallback();
     this.addEventListener('focusin', this.#onMenuitemFocusin);
     this.addEventListener('click', this.#onMenuitemClick);
+  }
+
+  willUpdate(changed: PropertyValues<this>): void {
+    if (changed.has('disabled')) {
+      this.ctx = { disabled: !!this.disabled };
+    }
   }
 
   protected updated(changed: PropertyValues<this>): void {

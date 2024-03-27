@@ -1,7 +1,10 @@
 import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { query } from 'lit/decorators/query.js';
+import { consume } from '@lit/context';
+import { context, type PfDropdownMenuContext } from './context.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
@@ -81,23 +84,33 @@ export class PfDropdownItem extends LitElement {
   /** Item description; overridden by `description` slot */
   @property() description?: string;
 
+  @consume({ context, subscribe: true })
+  @property({ attribute: false })
+  private ctx?: PfDropdownMenuContext;
+
   #internals = InternalsController.of(this, { role: 'none' });
 
   /** @internal */
   @query('#item') menuItem!: HTMLElement;
 
+  get isDisabled() {
+    return !!this.disabled || !!this.ctx?.disabled;
+  }
+
+  willUpdate(): void {
+    this.#internals.ariaDisabled = `${!!this.isDisabled}`;
+  }
+
   protected updated(changed: PropertyValues<this>): void {
     if (changed.has('href')) {
       this.dispatchEvent(new DropdownItemChange());
     }
-    if (changed.has('disabled')) {
-      this.#internals.ariaDisabled = `${!!this.disabled}`;
-    }
   }
 
   render() {
+    const { disabled } = this.ctx ?? { disabled: false };
     return html`
-      <div id="menuitem" role="none">${this.href ? html`
+      <div id="menuitem" role="none" class="${classMap({ disabled })}">${this.href ? html`
         <a id="item" role="menuitem" href="${this.href}">
           <slot name="icon"></slot>
           <slot></slot>

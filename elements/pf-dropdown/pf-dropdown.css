@@ -95,12 +95,6 @@ pf-dropdown-menu,
   outline: 3px solid var(--pf-global--link--Color, #0066cc);
 }
 
-:host([disabled]) ::slotted(pf-dropdown-group), 
-:host([disabled]) ::slotted(pf-dropdown-item) {
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
 pf-button::part(button) {
   display: flex;
   align-items: center;

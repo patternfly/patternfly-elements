@@ -12,8 +12,6 @@ export abstract class BaseSwitch extends LitElement {
 
   static readonly formAssociated = true;
 
-  static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
-
   declare shadowRoot: ShadowRoot;
 
   #internals = InternalsController.of(this, { role: 'switch' });
@@ -81,20 +79,17 @@ export abstract class BaseSwitch extends LitElement {
   }
 
   #onKeyup(event: KeyboardEvent) {
-    switch (event.key) {
-      case ' ':
-      case 'Enter':
-        event.preventDefault();
-        event.stopPropagation();
-        this.#toggle();
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+      this.#toggle();
     }
   }
 
   #onKeyDown(event: KeyboardEvent) {
-    switch (event.key) {
-      case ' ':
-        event.preventDefault();
-        event.stopPropagation();
+    if (event.key === ' ') {
+      event.preventDefault();
+      event.stopPropagation();
     }
   }
 

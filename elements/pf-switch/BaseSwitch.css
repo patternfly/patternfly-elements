@@ -19,7 +19,7 @@ svg {
   cursor: not-allowed;
 }
 
-:host(:disabled:focus-within) #container {
+:host(:disabled:is(:focus,:focus-within)) {
   outline: none;
 }
 

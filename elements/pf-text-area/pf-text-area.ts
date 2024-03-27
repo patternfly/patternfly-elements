@@ -232,7 +232,6 @@ export class PfTextArea extends LitElement {
     this.#input.style.setProperty('--pf-c-form-control--textarea--Height', `auto`);
     this.#input.style.setProperty('--pf-c-form-control--textarea--Height', `${this.#input.scrollHeight}px`);
   }
-  }
 
   #setValidityFromInput() {
     if (!this.#input) {

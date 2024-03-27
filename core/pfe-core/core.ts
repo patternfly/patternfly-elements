@@ -10,6 +10,10 @@ export interface PfeConfig {
   autoReveal?: boolean;
 }
 
+export type RequireProps<T, Ps extends keyof T> = T & {
+  [P in Ps]-?: T[P];
+}
+
 const noPref = Symbol();
 
 /** Retrieve an HTML metadata item */

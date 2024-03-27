@@ -1,0 +1,24 @@
+<form id="pf-form">
+  <label for="input">Input</label>
+  <pf-text-input id="input" required></pf-text-input>
+  <p>Form status: <output name="status">unsubmitted</output></p>
+</form>
+
+<style>
+label {
+  display: block;
+}
+</style>
+
+<script type="module">
+  import '@patternfly/elements/pf-text-input/pf-text-input.js';
+
+  document
+    .querySelector('#pf-form')
+    .addEventListener('submit', function(event) {
+      event.preventDefault();
+      this.elements.status.textContent = 'Submitted';
+    });
+</script>
+
+<link rel="stylesheet" href="demo.css">

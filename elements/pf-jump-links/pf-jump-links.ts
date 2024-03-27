@@ -5,9 +5,9 @@ import { property } from 'lit/decorators/property.js';
 import { ScrollSpyController } from '@patternfly/pfe-core/controllers/scroll-spy-controller.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
-import '@patternfly/elements/pf-icon/pf-icon.js';
+import { PfJumpLinksItem } from './pf-jump-links-item.js';
 
-import './pf-jump-links-item.js';
+import '@patternfly/elements/pf-icon/pf-icon.js';
 
 import style from './pf-jump-links.css';
 
@@ -81,18 +81,42 @@ export class PfJumpLinks extends LitElement {
   /** Label to add to nav element. */
   @property() label?: string;
 
-  #initialized = false;
+  #kids = this.querySelectorAll<LitElement>(':is(pf-jump-links-item, pf-jump-links-list)');
 
-  #rovingTabindexController = new RovingTabindexController(this);
+  #tabindex?: RovingTabindexController<HTMLAnchorElement>;
 
   #spy = new ScrollSpyController(this, {
     rootMargin: `${this.offset}px 0px 0px 0px`,
     tagNames: ['pf-jump-links-item'],
   });
 
+  protected override async getUpdateComplete(): Promise<boolean> {
+    const here = await super.getUpdateComplete();
+    const ps = await Promise.all(Array.from(this.#kids, x => x.updateComplete));
+    return here && ps.every(x => !!x);
+  }
+
   override connectedCallback() {
     super.connectedCallback();
+    this.addEventListener('slotchange', this.#updateItems);
     this.addEventListener('select', this.#onSelect);
+  }
+
+  override firstUpdated() {
+    this.#tabindex = new RovingTabindexController<HTMLAnchorElement>(this, {
+      getItems: () => {
+        const items = Array.from(this.#kids)
+          .flatMap(i => [
+            ...i.shadowRoot?.querySelectorAll('a') ?? [],
+            ...i.querySelectorAll('a') ?? [],
+          ]);
+        return items;
+      }
+    });
+    const active = this.querySelector<PfJumpLinksItem>('pf-jump-links-item[active]');
+    if (active) {
+      this.#setActiveItem(active);
+    }
   }
 
   override updated(changed: Map<string, unknown>) {
@@ -109,30 +133,31 @@ export class PfJumpLinks extends LitElement {
             <pf-icon icon="chevron-right"></pf-icon>
             <span id="label">${this.label}</span>
           </summary>
-          <slot role="listbox" @slotchange="${this.#updateItems}"></slot>
+          <div role="listbox" aria-labelledby="label">
+            <slot></slot>
+          </div>
         </details>` : html`
         <span id="label">${this.label}</span>
-        <slot role="listbox" @slotchange="${this.#updateItems}"></slot>`}
+        <div role="listbox" aria-labelledby="label">
+          <slot></slot>
+        </div>`}
       </nav>
     `;
   }
 
   #updateItems() {
-    const items = Array.from(this.querySelectorAll(':is(pf-jump-links-item, pf-jump-links-list)'))
-      .flatMap(i => [
-        ...i.shadowRoot?.querySelectorAll('a') ?? [],
-        ...i.querySelectorAll('a') ?? [],
-      ]);
-    if (this.#initialized) {
-      this.#rovingTabindexController.updateItems(items);
-    } else {
-      this.#rovingTabindexController.initItems(items);
-      this.#initialized = true;
+    this.#tabindex?.updateItems();
+  }
+
+  #onSelect(event: Event) {
+    if (event.target instanceof PfJumpLinksItem) {
+      this.#setActiveItem(event.target);
     }
   }
 
-  async #onSelect(event: Event) {
-    this.#spy.setActive(event.target);
+  #setActiveItem(item: PfJumpLinksItem) {
+    this.#tabindex?.setActiveItem(item.shadowRoot?.querySelector('a') ?? undefined);
+    this.#spy.setActive(item);
   }
 
   #onToggle(event: Event) {

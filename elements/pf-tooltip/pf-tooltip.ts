@@ -141,8 +141,6 @@ export class PfTooltip extends LitElement {
     return this.shadowRoot?.querySelector('#tooltip') ?? null;
   }
 
-  #blockInvoker = false;
-
   #referenceTrigger?: HTMLElement | null;
 
   #float = new FloatingDOMController(this, {
@@ -177,7 +175,10 @@ export class PfTooltip extends LitElement {
   override render() {
     const { alignment, anchor, open, styles } = this.#float;
 
-    const block = this.#blockInvoker;
+    const blockInvoker =
+      this.#invoker?.assignedElements().length === 0 &&
+      this.#invoker?.assignedNodes().length > 0;
+    const display = blockInvoker ? 'block' : 'contents';
 
     return html`
       <div id="container"
@@ -185,23 +186,20 @@ export class PfTooltip extends LitElement {
            class="${classMap({ open,
                                [anchor]: !!anchor,
                                [alignment]: !!alignment })}">
-        <slot id="invoker"
-              class="${classMap({ block })}"
-              @slotchange="${this.#invokerChanged}"
-              role="tooltip"
-              aria-labelledby="tooltip"></slot>
-        <slot id="tooltip"
-              name="content"
-              aria-hidden="${String(!open) as 'true' | 'false'}">${this.content}</slot>
+        <div role="tooltip"
+             style="${styleMap({ display })}"
+             aria-labelledby="tooltip">
+          <slot id="invoker" @slotchange="${this.#invokerChanged}"></slot>
+        </div>
+        <div aria-hidden="${String(!open) as 'true' | 'false'}">
+          <slot id="tooltip" name="content">${this.content}</slot>
+        </div>
       </div>
     `;
   }
 
   /** the invoker slot should render at block level if it only has text nodes */
   #invokerChanged() {
-    this.#blockInvoker =
-      this.#invoker?.assignedElements().length === 0 &&
-      this.#invoker?.assignedNodes().length > 0;
     this.requestUpdate();
   }
 

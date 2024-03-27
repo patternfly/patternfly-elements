@@ -4,16 +4,9 @@ import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import styles from './pf-text-input.css';
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
-function getLabelText(label: HTMLElement) {
-  if (label.hidden) {
-    return '';
-  } else {
-    const ariaLabel = label.getAttribute?.('aria-label');
-    return ariaLabel ?? label.textContent;
-  }
-}
+import styles from './pf-text-input.css';
 
 /**
  * A **text input** is used to gather free-form text from a user.
@@ -156,7 +149,8 @@ export class PfTextInput extends LitElement {
   /** Trim text on left */
   @property({ type: Boolean, reflect: true, attribute: 'left-truncated' }) leftTruncated = false;
 
-  /** Value to indicate if the input is modified to show that validation state.
+  /**
+   * Value to indicate if the input is modified to show that validation state.
    * If set to success, input will be modified to indicate valid state.
    * If set to warning,  input will be modified to indicate warning state.
    * Invalid inputs will display an error state
@@ -207,7 +201,7 @@ export class PfTextInput extends LitElement {
   /** Value of the input. */
   @property() value = '';
 
-  #internals = this.attachInternals();
+  #internals = InternalsController.of(this);
 
   #derivedLabel = '';
 
@@ -218,13 +212,7 @@ export class PfTextInput extends LitElement {
   }
 
   override willUpdate() {
-    /** A best-attempt based on observed behaviour in FireFox 115 on fedora 38 */
-    this.#derivedLabel =
-      this.accessibleLabel ||
-      this.#internals.ariaLabel ||
-      Array.from(this.#internals.labels as NodeListOf<HTMLElement>)
-        .reduce((acc, label) =>
-          `${acc}${getLabelText(label)}`, '');
+    this.#derivedLabel = this.accessibleLabel || this.#internals.computedLabelText;
   }
 
   override render() {
@@ -233,8 +221,9 @@ export class PfTextInput extends LitElement {
       <input id="input"
              .placeholder="${this.placeholder ?? ''}"
              .value="${this.value}"
-             .pattern="${this.pattern as string}"
+             pattern="${ifDefined(this.pattern)}"
              @input="${this.#onInput}"
+             @keydown="${this.#onKeydown}"
              @blur="${this.#onBlur}"
              ?disabled="${this.matches(':disabled') || this.disabled}"
              ?readonly="${this.readonly}"
@@ -245,7 +234,7 @@ export class PfTextInput extends LitElement {
                backgroundImage: `url('${this.customIconUrl}')`,
                backgroundSize: this.customIconDimensions,
              }))}">
-        <span id="helper-text" ?hidden="${!this.helperText ?? valid}">${this.helperText}</span>
+        <span id="helper-text" ?hidden="${!this.helperText || valid}">${this.helperText}</span>
         <span id="error-text" ?hidden="${valid}">${this.#internals.validationMessage}</span>
     `;
   }
@@ -258,6 +247,15 @@ export class PfTextInput extends LitElement {
       this.#onBlur();
     }
     this.#touched = true;
+  }
+
+  #onKeydown(event: Event) {
+    switch ((event as KeyboardEvent).key) {
+      case 'Enter':
+        if (this.reportValidity()) {
+          this.#internals.form?.requestSubmit(null);
+        }
+    }
   }
 
   #onBlur() {

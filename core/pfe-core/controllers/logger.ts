@@ -1,12 +1,16 @@
-import type { ReactiveController, ReactiveElement } from 'lit';
+import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
 export class Logger implements ReactiveController {
   private static logDebug: boolean;
 
-  private static instances: WeakMap<HTMLElement, Logger> = new WeakMap();
+  private static instances: WeakMap<ReactiveControllerHost, Logger> = new WeakMap();
 
   private get prefix() {
-    return `[${this.host.localName}${this.host.id ? `#${this.host.id}` : ''}]`;
+    if (this.host instanceof HTMLElement) {
+      return `[${this.host.localName}${this.host.id ? `#${this.host.id}` : ''}]`;
+    } else {
+      return `[${this.host.constructor.name}]`;
+    }
   }
 
   /**
@@ -56,7 +60,7 @@ export class Logger implements ReactiveController {
   /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    *
-   * @example Logger.log("Hello");
+     * @example Logger.log("Hello");
    */
   static log(...msgs: unknown[]) {
     if (Logger.debugLog()) {
@@ -129,7 +133,7 @@ export class Logger implements ReactiveController {
     Logger.error(this.prefix, ...msgs);
   }
 
-  constructor(private host: ReactiveElement) {
+  constructor(private host: ReactiveControllerHost) {
     // We only need one logger instance per host
     if (Logger.instances.get(host)) {
       return Logger.instances.get(host) as Logger;

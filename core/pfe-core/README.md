@@ -30,5 +30,4 @@ Utilities for building PatternFly elements.
 ## Functions
 
 - `debounce` - debounce a function
-- `deprecatedCustomEvent` - create (deprecated) composed `CustomEvent`s
 - `getRandomId` - generate a random element ID, optionally with a given prefix

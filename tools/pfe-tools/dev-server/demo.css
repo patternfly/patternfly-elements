@@ -25,10 +25,10 @@ html, body {
   line-height: var(--pf-global--LineHeight--md, 1.5);
   text-align: left;
   background-color: var(--pf-global--BackgroundColor--100, #fff);
+  min-height: 100vh;
 }
 
 body {
-  min-height: 100%;
   display: grid;
   grid-template-rows: var(--pf-demo-header-height, 4.375rem) auto;
   grid-template-columns: 100vw;
@@ -264,7 +264,6 @@ main {
   display: grid;
   grid-template-rows: min-content 1fr;
   height: 100%;
-  overflow: scroll;
   width: 100%;
   max-height: calc(100vh - var(--pf-demo-header-height));
 }

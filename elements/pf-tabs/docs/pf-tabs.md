@@ -23,8 +23,6 @@
       <pf-tab-panel>Database</pf-tab-panel>
       <pf-tab slot="tab" disabled>Disabled</pf-tab>
       <pf-tab-panel>Disabled</pf-tab-panel>
-      <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
-      <pf-tab-panel>Aria Disabled</pf-tab-panel>
     </pf-tabs>
   </div>
 {% endrenderOverview %}
@@ -140,8 +138,6 @@ export const Expander = () => (
     <pf-tab-panel>Database</pf-tab-panel>
     <pf-tab slot="tab" disabled>Disabled</pf-tab>
     <pf-tab-panel>Disabled</pf-tab-panel>
-    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
-    <pf-tab-panel>Aria Disabled</pf-tab-panel>
   </pf-tabs>
   {% endhtmlexample %}
 
@@ -156,8 +152,6 @@ export const Expander = () => (
     <pf-tab-panel>Database</pf-tab-panel>
     <pf-tab slot="tab" disabled>Disabled</pf-tab>
     <pf-tab-panel>Disabled</pf-tab-panel>
-    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
-    <pf-tab-panel>Aria Disabled</pf-tab-panel>
   </pf-tabs>
   {% endhtmlexample %}
 
@@ -172,8 +166,6 @@ export const Expander = () => (
     <pf-tab-panel>Database</pf-tab-panel>
     <pf-tab slot="tab" disabled>Disabled</pf-tab>
     <pf-tab-panel>Disabled</pf-tab-panel>
-    <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
-    <pf-tab-panel>Aria Disabled</pf-tab-panel>
   </pf-tabs>
   {% endhtmlexample %}
 

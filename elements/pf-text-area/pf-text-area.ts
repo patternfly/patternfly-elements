@@ -229,14 +229,9 @@ export class PfTextArea extends LitElement {
   }
 
   #autoSetHeight() {
-    this.#style ??= window.getComputedStyle(this.#input);
-    const height =
-      parseInt(this.#style.getPropertyValue('border-top-width')) +
-      parseInt(this.#style.getPropertyValue('padding-top')) +
-      this.#input.scrollHeight +
-      parseInt(this.#style.getPropertyValue('padding-bottom')) +
-      parseInt(this.#style.getPropertyValue('border-bottom-width'));
-    this.#input.style.setProperty('--pf-c-form-control--textarea--Height', `${Math.max(69, height)}px`);
+    this.#input.style.setProperty('--pf-c-form-control--textarea--Height', `auto`);
+    this.#input.style.setProperty('--pf-c-form-control--textarea--Height', `${this.#input.scrollHeight}px`);
+  }
   }
 
   #setValidityFromInput() {

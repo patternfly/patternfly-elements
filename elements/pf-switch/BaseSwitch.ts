@@ -32,6 +32,7 @@ export abstract class BaseSwitch extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
+    this.tabIndex = 0;
     this.addEventListener('click', this.#onClick);
     this.addEventListener('keyup', this.#onKeyup);
     this.addEventListener('keydown', this.#onKeyDown);
@@ -44,7 +45,7 @@ export abstract class BaseSwitch extends LitElement {
 
   override render() {
     return html`
-      <div id="container" tabindex="0">
+      <div id="container">
         <svg id="toggle"
              role="presentation"
              fill="currentColor"
@@ -59,8 +60,8 @@ export abstract class BaseSwitch extends LitElement {
   }
 
   override willUpdate() {
-    this.ariaChecked = String(!!this.checked);
-    this.ariaDisabled = String(!!this.disabled);
+    this.#internals.ariaChecked = String(!!this.checked);
+    this.#internals.ariaDisabled = String(!!this.disabled);
   }
 
   #onClick(event: Event) {

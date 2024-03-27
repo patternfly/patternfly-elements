@@ -3,7 +3,6 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { state } from 'lit/decorators/state.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 

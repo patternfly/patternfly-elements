@@ -1,7 +1,8 @@
 import { createContextWithRoot } from '@patternfly/pfe-core/functions/context.js';
 
-export interface PfDropdownMenuContext {
+export interface PfDropdownContext {
   disabled: boolean;
 }
 
-export const context = createContextWithRoot<boolean>(Symbol('pf-dropdown-menu-context'));
+export const context =
+  createContextWithRoot<PfDropdownContext >(Symbol('pf-dropdown-menu-context'));

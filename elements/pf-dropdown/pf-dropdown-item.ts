@@ -4,7 +4,7 @@ import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { query } from 'lit/decorators/query.js';
 import { consume } from '@lit/context';
-import { context, type PfDropdownMenuContext } from './context.js';
+import { context, type PfDropdownContext } from './context.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
@@ -86,22 +86,18 @@ export class PfDropdownItem extends LitElement {
 
   @consume({ context, subscribe: true })
   @property({ attribute: false })
-  private ctx?: PfDropdownMenuContext;
+  private ctx?: PfDropdownContext;
 
   #internals = InternalsController.of(this, { role: 'none' });
 
   /** @internal */
   @query('#item') menuItem!: HTMLElement;
 
-  get isDisabled() {
-    return !!this.disabled || !!this.ctx?.disabled;
+  protected override willUpdate(): void {
+    this.#internals.ariaDisabled = String(!!this.disabled || !!this.ctx?.disabled);
   }
 
-  willUpdate(): void {
-    this.#internals.ariaDisabled = `${!!this.isDisabled}`;
-  }
-
-  protected updated(changed: PropertyValues<this>): void {
+  protected override updated(changed: PropertyValues<this>): void {
     if (changed.has('href')) {
       this.dispatchEvent(new DropdownItemChange());
     }

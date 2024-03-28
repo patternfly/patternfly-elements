@@ -4,8 +4,10 @@
     <fieldset id="fieldset-a">
       <legend>Option A</legend>
       <pf-switch id="a" checked></pf-switch>
-      <label for="a" data-state="on">Message when on</label>
-      <label for="a" data-state="off" hidden>Message when off</label>
+      <label for="a">
+        <span data-state="on">Message when on</span>
+        <span data-state="off" hidden>Message when off</span>
+      </label>
     </fieldset>
 
     <fieldset id="fieldset-b">
@@ -16,20 +18,28 @@
     <fieldset id="form-disabled">
       <legend>Form Disabled State</legend>
       <pf-switch id="disable-a" aria-controls="fieldset-a"></pf-switch>
-      <label for="disable-a" data-state="on">Fieldset A is disabled</label>
-      <label for="disable-a" data-state="off" hidden>Fieldset A is enabled</label>
+      <label for="disable-a">
+        <span data-state="on">Fieldset A is disabled</span>
+        <span data-state="off" hidden>Fieldset A is enabled</span>
+      </label>
 
       <pf-switch id="disable-a-switch" aria-controls="a"></pf-switch>
-      <label for="disable-a-switch" data-state="on">Switch A is disabled</label>
-      <label for="disable-a-switch" data-state="off" hidden>Switch A is enabled</label>
+      <label for="disable-a-switch">
+        <span data-state="on">Fieldset A is disabled</span>
+        <span data-state="off" hidden>Fieldset A is enabled</span>
+      </label>
 
       <pf-switch id="disable-b" aria-controls="fieldset-b"></pf-switch>
-      <label for="disable-b" data-state="on">Fieldset B is disabled</label>
-      <label for="disable-b" data-state="off" hidden>Fieldset B is enabled</label>
+      <label for="disable-b">
+        <span data-state="on">Fieldset B is disabled</span>
+        <span data-state="off" hidden>Fieldset B is enabled</span>
+      </label>
 
       <pf-switch id="disable-b-switch" aria-controls="b"></pf-switch>
-      <label for="disable-b-switch" data-state="on">Switch B is disabled</label>
-      <label for="disable-b-switch" data-state="off" hidden>Switch B is enabled</label>
+      <label for="disable-b-switch">
+        <span data-state="on">Switch B is disabled</span>
+        <span data-state="off" hidden>Switch B is enabled</span>
+      </label>
     </fieldset>
   </form>
 </section>

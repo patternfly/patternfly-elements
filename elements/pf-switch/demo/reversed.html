@@ -2,8 +2,10 @@
   <form>
     <fieldset>
       <legend>Reversed</legend>
-      <label for="reversed" data-state="on">Message when on</label>
-      <label for="reversed" data-state="off">Message when off</label>
+      <label for="reversed">
+        <span data-state="on">Message when on</span>
+        <span data-state="off" hidden>Message when off</span>
+      </label>
       <pf-switch id="reversed" reversed></pf-switch>
     </fieldset>
   </form>

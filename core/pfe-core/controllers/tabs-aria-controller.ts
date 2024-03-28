@@ -92,8 +92,10 @@ export class TabsAriaController<
     for (const child of this.#element.children) {
       if (this.#options.isTab(child)) {
         tabs.push(child);
+        child.role ??= 'tab';
       } else if (this.#options.isPanel(child)) {
         panels.push(child);
+        child.role ??= 'tabpanel';
       }
     }
     if (tabs.length > panels.length) {

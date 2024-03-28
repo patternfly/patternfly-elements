@@ -312,6 +312,9 @@ export class PfPopover extends LitElement {
   @query('#trigger') private _slottedTrigger?: HTMLElement | null;
   @query('#arrow') private _arrow!: HTMLDivElement;
 
+  /** True before the show animation begins and after the hide animation ends */
+  #hideDialog = true;
+
   #referenceTrigger?: HTMLElement | null = null;
 
   #float = new FloatingDOMController(this, {
@@ -357,6 +360,7 @@ export class PfPopover extends LitElement {
               @keydown="${this.#onKeydown}"
               @click="${this.toggle}"></slot>
         <dialog id="popover"
+                ?hidden="${this.#hideDialog}"
                 aria-labelledby="heading"
                 aria-describedby="body"
                 aria-label=${ifDefined(this.label)}>
@@ -462,6 +466,8 @@ export class PfPopover extends LitElement {
    * Opens the popover
    */
   @bound async show() {
+    this.#hideDialog = false;
+    this.requestUpdate();
     this.dispatchEvent(new PopoverShowEvent());
     await this.updateComplete;
     await this.#float.show({
@@ -484,6 +490,8 @@ export class PfPopover extends LitElement {
     this._popover?.close();
     this.dispatchEvent(new PopoverHiddenEvent());
     PfPopover.instances.delete(this);
+    this.#hideDialog = true;
+    this.requestUpdate();
   }
 }
 

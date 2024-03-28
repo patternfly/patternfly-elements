@@ -89,14 +89,8 @@ export class PfDropdownItem extends LitElement {
   @property({ attribute: false })
   private ctx?: PfDropdownContext;
 
-  #internals = InternalsController.of(this, { role: 'none' });
-
   /** @internal */
   @query('#item') menuItem!: HTMLElement;
-
-  protected override willUpdate(): void {
-    this.#internals.ariaDisabled = String(!!this.disabled || !!this.ctx?.disabled);
-  }
 
   protected override updated(changed: PropertyValues<this>): void {
     if (changed.has('href')) {
@@ -106,14 +100,15 @@ export class PfDropdownItem extends LitElement {
 
   render() {
     const { disabled } = this.ctx ?? { disabled: false };
+    const isDisabled = !!this.disabled || !!this.ctx?.disabled;
     return html`
       <div id="menuitem" role="none" class="${classMap({ disabled })}">${this.href ? html`
-        <a id="item" role="menuitem" href="${this.href}">
+        <a id="item" role="menuitem" href="${this.href}" aria-disabled="${isDisabled}">
           <slot name="icon"></slot>
           <slot></slot>
         </a>
         ` : html`
-        <div id="item" role="menuitem">
+        <div id="item" role="menuitem" aria-disabled="${isDisabled}">
           <slot name="icon"></slot>
           <slot></slot>
         </div>`}

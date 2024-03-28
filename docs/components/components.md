@@ -16,19 +16,21 @@
 ---
 
 <script type="module">
-  const LS_KEY = 'html-lit-react-snippets-index';
+  const CLASS_KEY = 'html-lit-react-snippets';
+  const LS_KEY = `${CLASS_KEY}-index`;
   document.addEventListener('expand', async function(event) {
     const PfTabs = await customElements.whenDefined('pf-tabs');
     if (PfTabs.isExpandEvent(event)) {
-      const tabs = event.target.closest('pf-tabs');
-      await tabs.updateComplete;
-      debugger;
-      localStorage.setItem(LS_KEY, tabs.activeIndex);
-      update();
+      const tabs = event.tab.closest('pf-tabs');
+      if (tabs.classList.contains(CLASS_KEY)) {
+        await tabs.updateComplete;
+        localStorage.setItem(LS_KEY, tabs.activeIndex);
+        update();
+      }
     }
   });
   async function update() {
-    for (const tabs of document.querySelectorAll('pf-tabs.html-lit-react-snippets')) {
+    for (const tabs of document.querySelectorAll(`pf-tabs.${CLASS_KEY}`)) {
       await tabs.updateComplete;
       tabs.activeIndex = parseInt(localStorage.getItem(LS_KEY) ?? '0');
     }

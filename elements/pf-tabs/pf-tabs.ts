@@ -234,7 +234,8 @@ export class PfTabs extends LitElement {
   }
 
   #onExpand(event: Event) {
-    if (event instanceof TabExpandEvent && !event.defaultPrevented) {
+    if (event instanceof TabExpandEvent &&
+      !event.defaultPrevented && this.tabs.includes(event.tab)) {
       this.select(event.tab);
     }
   }

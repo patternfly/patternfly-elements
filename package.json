@@ -32,7 +32,7 @@
     "leftover-check": "bash scripts/leftover-check.sh",
     "⚙️--UTIL": "❓ Manages the repo",
     "postinstall": "wireit",
-    "clean": "git clean -fX",
+    "clean": "git clean -dfX -e node_modules -e .husky",
     "lint": "eslint .",
     "patch": "patch-package",
     "husky": "husky"
@@ -71,8 +71,7 @@
         "core/pfe-core/custom-elements.json"
       ],
       "dependencies": [
-        "build:core",
-        "build:tools"
+        "build:core"
       ]
     },
     "build:create": {
@@ -91,10 +90,8 @@
     },
     "build:elements": {
       "command": "tspc --build elements --pretty",
-      "clean": "if-file-deleted",
       "dependencies": [
-        "build:core",
-        "build:tools"
+        "build:core"
       ],
       "files": [
         "elements/*/*.ts",
@@ -112,7 +109,6 @@
     },
     "build:tools": {
       "command": "tsc --build tools/pfe-tools --pretty",
-      "clean": "if-file-deleted",
       "files": [
         "tools/pfe-tools/*.ts",
         "tools/pfe-tools/**/*.ts",
@@ -128,7 +124,6 @@
     },
     "build:core": {
       "command": "tspc --build ./core/pfe-core --pretty",
-      "clean": "if-file-deleted",
       "dependencies": [
         "build:tools"
       ],
@@ -147,8 +142,7 @@
     "build:bundle": {
       "command": "scripts/bundle.js",
       "dependencies": [
-        "build:core",
-        "build:tools"
+        "build:core"
       ],
       "files": [
         "elements/**/*.ts",
@@ -164,7 +158,6 @@
       "command": "npx tsx scripts/generate-react-wrappers.ts",
       "dependencies": [
         "build:core",
-        "build:tools",
         "analyze"
       ],
       "files": [
@@ -179,7 +172,7 @@
     "build:lightdom": {
       "command": "npm run build:lightdom --workspaces --if-present",
       "dependencies": [
-        "build:tools"
+        "build:core"
       ]
     },
     "docs": {
@@ -193,7 +186,6 @@
       ],
       "dependencies": [
         "build:core",
-        "build:tools",
         "analyze"
       ]
     },
@@ -201,7 +193,6 @@
       "command": "web-dev-server --open --watch",
       "service": true,
       "dependencies": [
-        "build:tools",
         "build:elements",
         "analyze"
       ]
@@ -222,15 +213,19 @@
         "build:tools"
       ]
     },
-    "start": {
+    "serve": {
       "service": true,
       "command": "eleventy --serve",
       "dependencies": [
         "build:core",
-        "build:tools",
         "analyze",
-        "watch:analyze",
-        "dev"
+        "watch:analyze"
+      ]
+    },
+    "start": {
+      "dependencies": [
+        "dev",
+        "serve"
       ]
     },
     "test": {

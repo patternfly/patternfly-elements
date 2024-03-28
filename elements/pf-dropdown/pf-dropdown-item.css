@@ -36,9 +36,8 @@
   display: none !important;
 }
 
-:host([disabled]), 
+:host([disabled]),
 .disabled {
-  pointer-events: none;
   cursor: not-allowed;
   --pf-c-dropdown__menu-item--Color: var(
     --pf-c-dropdown__menu-item--disabled--Color,

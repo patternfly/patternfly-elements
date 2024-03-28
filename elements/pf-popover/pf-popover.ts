@@ -399,10 +399,6 @@ export class PfPopover extends LitElement {
     `;
   }
 
-  updated() {
-    // this.#hideDialog = !this.#float.open;
-  }
-
   disconnectedCallback() {
     super.disconnectedCallback();
     PfPopover.instances.delete(this);

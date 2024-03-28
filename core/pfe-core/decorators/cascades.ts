@@ -4,6 +4,7 @@ import { CascadeController } from '../controllers/cascade-controller.js';
 
 /**
  * Cascades the decorated attribute to children
+ * @deprecated: use context, especially via `@patternfly/pfe-core/functions/context.js`;
  */
 export function cascades<T extends ReactiveElement>(...items: string[]): PropertyDecorator {
   return function(proto: T, key: string & keyof T) {

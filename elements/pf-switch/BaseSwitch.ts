@@ -1,22 +1,20 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import styles from './BaseSwitch.css';
 
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+
+import styles from './BaseSwitch.css';
 /**
  * Switch
  */
 export abstract class BaseSwitch extends LitElement {
   static readonly styles = [styles];
 
-  static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true, };
-
   static readonly formAssociated = true;
 
   declare shadowRoot: ShadowRoot;
 
-  #internals = this.attachInternals();
-
-  #initiallyDisabled = this.hasAttribute('disabled');
+  #internals = InternalsController.of(this, { role: 'switch' });
 
   @property({ reflect: true }) label?: string;
 
@@ -24,7 +22,7 @@ export abstract class BaseSwitch extends LitElement {
 
   @property({ reflect: true, type: Boolean }) checked = false;
 
-  disabled = this.#initiallyDisabled;
+  @property({ reflect: true, type: Boolean }) disabled = false;
 
   get labels(): NodeListOf<HTMLLabelElement> {
     return this.#internals.labels as NodeListOf<HTMLLabelElement>;
@@ -32,30 +30,36 @@ export abstract class BaseSwitch extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.setAttribute('role', 'checkbox');
+    this.tabIndex = 0;
     this.addEventListener('click', this.#onClick);
     this.addEventListener('keyup', this.#onKeyup);
+    this.addEventListener('keydown', this.#onKeyDown);
     this.#updateLabels();
   }
 
   formDisabledCallback(disabled: boolean) {
     this.disabled = disabled;
-    this.requestUpdate();
   }
 
   override render() {
     return html`
-      <div id="container" tabindex="0">
-        <svg id="toggle" fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512">
-          <path ?hidden=${!this.showCheckIcon} d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />
+      <div id="container">
+        <svg id="toggle"
+             role="presentation"
+             fill="currentColor"
+             height="1em"
+             width="1em"
+             viewBox="0 0 512 512"
+             ?hidden=${!this.showCheckIcon}>
+          <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />
         </svg>
       </div>
     `;
   }
 
-  override updated() {
-    this.#internals.ariaChecked = String(this.checked);
-    this.#internals.ariaDisabled = String(this.disabled);
+  override willUpdate() {
+    this.#internals.ariaChecked = String(!!this.checked);
+    this.#internals.ariaDisabled = String(!!this.disabled);
   }
 
   #onClick(event: Event) {
@@ -75,11 +79,17 @@ export abstract class BaseSwitch extends LitElement {
   }
 
   #onKeyup(event: KeyboardEvent) {
-    switch (event.key) {
-      case ' ':
-      case 'Enter':
-        event.preventDefault();
-        this.#toggle();
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+      this.#toggle();
+    }
+  }
+
+  #onKeyDown(event: KeyboardEvent) {
+    if (event.key === ' ') {
+      event.preventDefault();
+      event.stopPropagation();
     }
   }
 
@@ -95,10 +105,13 @@ export abstract class BaseSwitch extends LitElement {
 
   #updateLabels() {
     const labelState = this.checked ? 'on' : 'off';
-    if (this.labels.length > 1) {
-      for (const label of this.labels) {
-        label.hidden = label.dataset.state !== labelState;
-      }
-    }
+    this.labels.forEach(label => {
+      const states = label.querySelectorAll<HTMLElement>('[data-state]');
+      states.forEach(state => {
+        if (state) {
+          state.hidden = state.dataset.state !== labelState;
+        }
+      });
+    });
   }
 }

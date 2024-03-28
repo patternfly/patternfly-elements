@@ -1,4 +1,3 @@
-import type { PfChipGroup } from '@patternfly/elements/pf-chip/pf-chip-group.js';
 import type { PfChipRemoveEvent } from '@patternfly/elements/pf-chip/pf-chip.js';
 
 import { LitElement, html, type PropertyValues } from 'lit';

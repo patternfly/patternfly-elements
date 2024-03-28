@@ -42,7 +42,11 @@ function isPackage(manifest: unknown): manifest is CEM.Package {
   return Array.isArray(maybeManifest?.modules) && !!maybeManifest.schemaVersion;
 }
 
-const getReactWrapperData = (module: CEM.Module, classPrefix: string, elPrefix: string) =>
+const getReactWrapperData = (
+  module: CEM.Module,
+  classPrefix: string,
+  elPrefix: string,
+) =>
   (decl: CEM.CustomElementDeclaration) => {
     const ceExport = module.exports?.find(ex => ex.declaration.name === decl.name);
     if (!ceExport) {

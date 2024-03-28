@@ -82,7 +82,11 @@
     var(--pf-c-switch__toggle--before--Transition, translate .25s ease 0s)); ;
 }
 
-:host(:focus-within) #container {
+:host {
+  outline: none;
+}
+
+:host(:is(:focus,:focus-within)) #container {
   outline: var(--pf-c-switch__input--focus__toggle--OutlineWidth,
     var(--pf-global--BorderWidth--md, 2px)) solid var(--pf-c-switch__input--focus__toggle--OutlineColor,
       var(--pf-global--primary-color--100, #06c));

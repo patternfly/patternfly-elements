@@ -1,10 +1,13 @@
 <div class="container">
   <section>
-    <h2>Basic</h2>
-    <pre><code>&lt;pf-date-picker&gt;&lt;/pf-date-picker&gt;</code></pre>
-    <pf-date-picker></pf-date-picker>
-    <p>The basic date picker will use the user's locale to determine the date format. The default minimum valid date 
-      is <span>January 1, 1900</span>, and the default maximum valid date is <span>December 31, 9999</span>.</p>
+    <h2>Date Format</h2>
+    <pre><code>&lt;pf-date-picker dateFormatInput="YYYY-DD-MM"&gt;&lt;/pf-date-picker&gt;</code></pre>
+    <pf-date-picker dateFormatInput="YYYY-DD-MM"></pf-date-picker>
+    <p>The date picker supports the following 12 date formats:</p>
+    <p><span>'DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY/MM/DD', 'YYYY/DD/MM', 'DD-MM-YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD',
+       'YYYY-DD-MM', 'DD.MM.YYYY', 'MM.DD.YYYY', 'YYYY.MM.DD', 'YYYY.DD.MM'</span></p>
+    <p>The date format is set globally, independent of the user's locale. 
+      This means that all users will see the same date format, regardless of their language or region.</p>
   </section>
 </div>
 

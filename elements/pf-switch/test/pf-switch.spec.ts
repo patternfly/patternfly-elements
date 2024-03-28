@@ -30,10 +30,10 @@ describe('<pf-switch>', function() {
         .to.be.an.instanceOf(PfSwitch);
     });
     it('has accessible role', function() {
-      expect(snapshot.role).to.equal('checkbox');
+      expect(snapshot.role).to.equal('switch');
     });
     it('has accessible checked field', function() {
-      expect(snapshot.role).to.equal('checkbox');
+      expect(snapshot.role).to.equal('switch');
     });
     it('requires accessible name', function() {
       // Double negative - this would fail an accessibility audit,
@@ -50,8 +50,10 @@ describe('<pf-switch>', function() {
       const container = await createFixture<PfSwitch>(html`
         <div>
           <pf-switch id="switch"></pf-switch>
-          <label for="switch" data-state="on">Message when on</label>
-          <label for="switch" data-state="off" hidden>Message when off</label>
+          <label for="switch">
+            <span data-state="on">Message when on</span>
+            <span data-state="off" hidden>Message when off</span>
+          </label>
         </div>
         `);
       element = container.querySelector('pf-switch')!;
@@ -59,7 +61,7 @@ describe('<pf-switch>', function() {
     });
 
     it('is accessible', function() {
-      expect(snapshot.role).to.equal('checkbox');
+      expect(snapshot.role).to.equal('switch');
       expect(snapshot.name).to.be.ok;
       expect(snapshot.checked).to.be.false;
     });
@@ -68,7 +70,7 @@ describe('<pf-switch>', function() {
       expect(snapshot.name).to.equal('Message when off');
     });
 
-    describe('clicking the checkbox', function() {
+    describe('clicking the switch', function() {
       beforeEach(async function() {
         element.click();
         await element.updateComplete;
@@ -87,18 +89,42 @@ describe('<pf-switch>', function() {
 
   describe('when checked attr is present', function() {
     let element: PfSwitch;
+    let snapshot: A11yTreeSnapshot;
     beforeEach(async function() {
       element = await createFixture<PfSwitch>(html`
-        <pf-switch checked></pf-switch>
+        <pf-switch id="switch" checked></pf-switch>
       `);
+
+      await element.updateComplete;
+      await nextFrame();
+      snapshot = await a11ySnapshot({ selector: '#switch' });
     });
-    it('should display a check icon', async function() {
-      // TODO: can we test this without inspecting the private shadowRoot?
-      const svg = element.shadowRoot.querySelector('svg');
-      expect(svg).to.be.ok;
-      expect(svg?.hasAttribute('hidden')).to.be.false;
+
+    it('should be checked', function() {
+      expect(element.checked).to.be.true;
+      expect(snapshot.checked).to.be.true;
     });
   });
+
+  describe('when checked attr is not present', function() {
+    let element: PfSwitch;
+    let snapshot: A11yTreeSnapshot;
+    beforeEach(async function() {
+      element = await createFixture<PfSwitch>(html`
+        <pf-switch id="switch"></pf-switch>
+      `);
+
+      await element.updateComplete;
+      await nextFrame();
+      snapshot = await a11ySnapshot({ selector: '#switch' });
+    });
+
+    it('should be checked', function() {
+      expect(element.checked).to.be.false;
+      expect(snapshot.checked).to.be.false;
+    });
+  });
+
 
   describe('when checked and show-check-icon attrs are present', function() {
     let element: PfSwitch;
@@ -106,8 +132,10 @@ describe('<pf-switch>', function() {
       const container = await createFixture<PfSwitch>(html`
         <div>
           <pf-switch id="switch" show-check-icon checked></pf-switch>
-          <label for="switch" data-state="on">Message when on</label>
-          <label for="switch" data-state="off">Message when off</label>
+          <label for="switch">
+            <span data-state="on">Message when on</span>
+            <span data-state="off" hidden>Message when off</span>
+          </label>
         </div>
       `);
       element = container.querySelector('pf-switch')!;
@@ -125,8 +153,10 @@ describe('<pf-switch>', function() {
     beforeEach(async function() {
       element = await createFixture<PfSwitch>(html`
         <pf-switch id="switch" show-check-icon checked></pf-switch>
-        <label for="switch" data-state="on">Message when on</label>
-        <label for="switch" data-state="off">Message when off</label>
+        <label for="switch">
+          <span data-state="on">Message when on</span>
+          <span data-state="off" hidden>Message when off</span>
+        </label>
       `);
     });
     it('should display a check icon', async function() {

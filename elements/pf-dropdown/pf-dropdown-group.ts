@@ -14,7 +14,6 @@ export class PfDropdownGroup extends LitElement {
   static readonly styles = [styles];
 
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
-
   /**
    * The label for the group of dropdown items.
    */

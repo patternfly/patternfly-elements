@@ -15,9 +15,6 @@ import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-dropdown.css';
 
-function canBeDisabled(el: HTMLElement): el is HTMLElement & { disabled: boolean } {
-  return 'disabled' in el;
-}
 
 export class PfDropdownSelectEvent extends Event {
   constructor(
@@ -65,7 +62,7 @@ export class PfDropdown extends LitElement {
   static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
-   * Disable the dropdown trigger element
+   * When disabled, the dropdown can still be toggled open and closed via keyboard, but menu items cannot be activated.
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
@@ -99,29 +96,29 @@ export class PfDropdown extends LitElement {
     const { anchor, alignment, styles = {} } = this.#float;
     const { disabled } = this;
     return html`
-      <div class="${classMap({ expanded, [anchor ?? '']: !!anchor, [alignment ?? '']: !!alignment })}"
-           style="${styleMap(styles)}"
-           @slotchange="${this.#onSlotchange}">
-        <slot name="trigger"
-              @keydown="${this.#onButtonKeydown}"
-              @click="${() => this.toggle()}">
-          <pf-button variant="control"
-                     icon="caret-down"
-                     icon-set="fas">Dropdown</pf-button>
-        </slot>
-        <slot name="menu"
-              ?hidden="${!this.expanded}"
-              @focusout="${this.#onMenuFocusout}"
-              @keydown="${this.#onMenuKeydown}"
-              @click="${this.#onSelect}">
-          <pf-dropdown-menu id="menu"
-                            part="menu"
-                            ?disabled="${disabled}">
-            <slot></slot>
-          </pf-dropdown-menu>
-        </slot>
-      </div>
-    `;
+    <div class="${classMap({ expanded,
+                             [anchor ?? '']: !!anchor,
+                             [alignment ?? '']: !!alignment })}"
+         style="${styleMap(styles)}"
+         @slotchange="${this.#onSlotchange}">
+      <slot name="trigger"
+            @keydown="${this.#onButtonKeydown}"
+            @click="${() => this.toggle()}">
+        <pf-button id="default-trigger"
+                   variant="control"
+                   icon="caret-down"
+                   icon-set="fas">Dropdown</pf-button>
+      </slot>
+      <slot name="menu"
+            ?hidden="${!this.expanded}"
+            @focusout="${this.#onMenuFocusout}"
+            @keydown="${this.#onMenuKeydown}"
+            @click="${this.#onSelect}">
+        <pf-dropdown-menu id="menu" part="menu" ?disabled="${disabled}">
+          <slot></slot>
+        </pf-dropdown-menu>
+      </slot>
+    </div>`;
   }
 
   override firstUpdated() {
@@ -137,16 +134,27 @@ export class PfDropdown extends LitElement {
     }
   }
 
-  #onSlotchange() {
+  #validateDOM() {
     const [trigger] = this._triggerElements;
     const [menu] = this._menuElements;
     if (!trigger) {
       this.#logger.warn('no trigger found');
+      return false;
     } else if (!menu) {
       this.#logger.warn('no menu found');
+      return false;
     } else if (![trigger, menu].map(x => this.shadowRoot?.contains(x)).every((p, _, a) => p === a[0])) {
       this.#logger.warn('trigger and menu must be located in the same root');
+      return false;
     } else {
+      return true;
+    }
+  }
+
+  #onSlotchange() {
+    if (this.#validateDOM()) {
+      const [menu] = this._menuElements;
+      const [trigger] = this._triggerElements;
       menu.id ||= getRandomId('menu');
       trigger.setAttribute('aria-controls', menu.id);
       trigger.setAttribute('aria-haspopup', menu.id);
@@ -157,8 +165,8 @@ export class PfDropdown extends LitElement {
   async #expandedChanged() {
     const will = this.expanded ? 'close' : 'open';
     const [menu] = this._menuElements;
-    const [button] = this._triggerElements;
-    button.setAttribute('aria-expanded', `${String(this.expanded) as 'true' | 'false'}`);
+    const [trigger] = this._triggerElements;
+    trigger.setAttribute('aria-expanded', `${String(this.expanded) as 'true' | 'false'}`);
     this.dispatchEvent(new Event(will));
     if (this.expanded) {
       await this.#float.show();
@@ -171,10 +179,15 @@ export class PfDropdown extends LitElement {
   }
 
   #disabledChanged() {
-    for (const el of this._triggerElements.concat(this._menuElements)) {
-      if (canBeDisabled(el)) {
-        el.disabled = this.disabled;
+    if (this.#validateDOM()) {
+      const [menu] = this._menuElements;
+      const [trigger] = this._triggerElements;
+      if (menu instanceof PfDropdownMenu) {
+        menu.disabled = this.disabled;
+      } else {
+        menu.setAttribute('aria-disabled', String(!!this.disabled));
       }
+      trigger.setAttribute('aria-disabled', String(!!this.disabled));
     }
   }
 
@@ -190,9 +203,7 @@ export class PfDropdown extends LitElement {
   #onButtonKeydown(event: KeyboardEvent) {
     switch (event.key) {
       case 'ArrowDown': {
-        if (!this.disabled) {
-          this.show();
-        }
+        this.show();
       }
     }
   }

@@ -124,11 +124,6 @@
   display: none;
 }
 
-:host .date-picker-toggle-container pf-button::part(button) {
-  padding: 9px 12px 3px;
-  height: 36px;
-}
-
 .date-picker-container pf-popover::part(content) {
   min-width: 330px;
 }
@@ -137,14 +132,20 @@
   pointer-events: none;
 }
 
-pf-button::part(button):focus, pf-button::part(button):focus-visible {
+pf-button:focus, pf-button:focus-visible {
   outline: var(--rh-color-accent-base-on-light, #0066cc) auto 2px;
 }
 
-:host .date-picker-toggle-container pf-button.date-picker-calendar-icon::part(button):focus {
+:host .date-picker-toggle-container pf-button.date-picker-calendar-icon {
+  height: 36px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+}
+
+:host .date-picker-toggle-container pf-button.date-picker-calendar-icon:focus {
   outline: none;
 }
 
-:host .date-picker-toggle-container pf-button.date-picker-calendar-icon::part(button):focus-visible {
+:host .date-picker-toggle-container pf-button.date-picker-calendar-icon:focus-visible {
   outline: var(--rh-color-accent-base-on-light, #0066cc) auto 2px;
 }

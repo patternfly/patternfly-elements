@@ -56,7 +56,7 @@ export class PfMonthSelect extends LitElement {
       <div @keydown=${this.#onMonthSelectKeydown} class="month-select-container">
         <div part="toggle">
           <pf-button variant="control" label="Toggle options list" part="toggle-button" aria-expanded=${ifDefined(this.isMonthExpanded || undefined)} @click=${this.#showMonthSelect} class="month-select-input" id="date-picker-month-select" type="button"> 
-            ${this.currentMonthName} <pf-icon class="date-month-select-icon" icon="caret-down" size="md"></pf-icon>
+            <span>${this.currentMonthName}</span> <pf-icon class="date-month-select-icon" icon="caret-down" size="md"></pf-icon>
           </pf-button>
         </div>
         <div part="menu" ?hidden=${!this.isMonthExpanded} id="date-picker-month-select-popup">

@@ -8,35 +8,26 @@
   width: 140px;
 }
 
-pf-button#date-picker-month-select::part(button) {
+pf-button#date-picker-month-select {
   width: 140px;
   background: transparent;
   font-family: var(--rh-font-family-body-text, RedHatText, "Red Hat Text", "Noto Sans Arabic", "Noto Sans Hebrew", "Noto Sans JP", "Noto Sans KR", "Noto Sans Malayalam", "Noto Sans SC", "Noto Sans TC", "Noto Sans Thai", Helvetica, Arial, sans-serif);
   text-align: left;
-}
-
-pf-button#date-picker-month-select:before {
-  content: "";
-  position: absolute;
-  top: 1px;
-  right: 0;
-  width: 36px;
-  height: 34px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  position: relative;
+  box-sizing: border-box;
+  height: 36px;
 }
 
 .date-month-select-icon {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 16px;
+  left: 92px;
   width: 36px;
   height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 div#date-picker-month-select-popup {
@@ -61,22 +52,23 @@ div#date-picker-month-select-popup pf-button {
   --pf-c-button--m-plain--Color: var(--rh-color-canvas-black, #151515);
   --pf-c-button--m-plain--hover--BackgroundColor: var(--rh-color-blue-50, #e7f1fa);
   
-  width: 100%;
+  width: 140px;
   margin-bottom: .125rem;
 }
 
-div#date-picker-month-select-popup pf-button::part(button) {
+div#date-picker-month-select-popup pf-button {
   background: var(--rh-color-white, #ffffff);
   text-align: left;
   font-family: var(--rh-font-family-body-text, RedHatText, "Red Hat Text", "Noto Sans Arabic", "Noto Sans Hebrew", "Noto Sans JP", "Noto Sans KR", "Noto Sans Malayalam", "Noto Sans SC", "Noto Sans TC", "Noto Sans Thai", Helvetica, Arial, sans-serif);
-  width: 100%;
+  width: 140px;
   border-radius: 0;
+  box-sizing: border-box;
 }
 
-div#date-picker-month-select-popup pf-button::part(button):hover {
+div#date-picker-month-select-popup pf-button:hover {
   background:#f0f0f0;
 }
 
-pf-button::part(button):focus, pf-button::part(button):focus-visible {
+pf-button:focus, pf-button:focus-visible {
   outline: var(--rh-color-accent-base-on-light, #0066cc) auto 2px;
 }

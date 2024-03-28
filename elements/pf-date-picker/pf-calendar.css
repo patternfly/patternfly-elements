@@ -18,12 +18,13 @@
   justify-content: center;     
 }
 
-pf-button::part(button):focus, pf-button::part(button):focus-visible {
+pf-button:focus, pf-button:focus-visible {
   border: 2px solid var(--rh-color-accent-base-on-light, #0066cc);
   outline: none;
 }
 
-pf-button.calendar-date-button::part(button) {
+pf-button.calendar-date-button {
+  --pf-c-button--BorderRadius:50%;
   width: 37px;
   height: 37px;
   white-space: nowrap;
@@ -31,6 +32,7 @@ pf-button.calendar-date-button::part(button) {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  box-sizing: border-box;
 }
 
 pf-button.calendar-date-button.isToday {
@@ -52,7 +54,7 @@ pf-button.calendar-date-button.previous-next-date {
   --pf-c-button--m-plain--Color: #6A6E73;
 }
 
-pf-button.calendar-date-button.selected-date::part(button) {
+pf-button.calendar-date-button.selected-date {
   --pf-c-button--m-plain--BackgroundColor: var(--rh-color-accent-base-on-light, #0066cc);
   --pf-c-button--m-plain--Color: var(--rh-color-white, #ffffff);
   --pf-c-button--m-plain--hover--Color: var(--rh-color-white, #ffffff);
@@ -60,7 +62,7 @@ pf-button.calendar-date-button.selected-date::part(button) {
   --pf-c-button--m-plain--focus--BackgroundColor: var(--rh-color-interactive-blue-darkest, #004080);
 } 
 
-pf-button.calendar-date-button.selected-date::part(button):focus { 
+pf-button.calendar-date-button.selected-date:focus { 
   box-shadow: 0 0 0.3125rem var(--rh-color-accent-base-on-light, #0066cc);
   background: var(--rh-color-interactive-blue-darkest, #004080);
   border: none;

@@ -80,14 +80,14 @@ pf-dropdown-menu,
   display: block !important;
 }
 
-pf-button.disabled::part(button),
+pf-button.disabled,
 :host([disabled]) ::slotted([slot="trigger"]) {
   color: var(---pf-c-dropdown__menu-item--disabled--Color, #6a6e73) !important;
   background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
 }
 
-pf-button::part(button) {
+pf-button {
   display: flex;
   align-items: center;
   justify-content: space-between;

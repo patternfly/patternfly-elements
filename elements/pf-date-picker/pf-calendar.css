@@ -41,6 +41,10 @@ pf-button.calendar-date-button.isToday {
   --pf-c-button--m-plain--focus--BackgroundColor: var(--rh-color-blue-50, #e7f1fa);
 }
 
+pf-button.calendar-date-button:focus {
+  --pf-c-button--m-plain--BackgroundColor: var(--rh-color-blue-50, #e7f1fa);
+}
+
 pf-button.calendar-date-button {
   --pf-c-button--m-plain--Color: var(--rh-color-canvas-black, #151515);
   --pf-c-button--m-plain--hover--BackgroundColor: var(--rh-color-blue-50, #e7f1fa);

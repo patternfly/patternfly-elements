@@ -171,9 +171,7 @@ export class PfCalendar extends LitElement {
                     value=${value.day} 
                     .disabled=${isDateDisabled}
                     @click=${(e: Event) => this.#selectDate(e, value.month, value.year)} 
-                    class='${this.selectedDay && isSelectedDay ? 'selected-date' : ''} 
-                      ${!value.isCurrentMonth && 'previous-next-date'}
-                      ${isToday && 'isToday'} calendar-date-button'>
+                    class='${this.selectedDay && isSelectedDay ? 'selected-date' : ''} ${!value.isCurrentMonth ? 'previous-next-date' : ''} ${isToday ? 'isToday' : ''} calendar-date-button'>
                       ${value.day}
                   </pf-button>
                 </div>`;

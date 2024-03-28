@@ -68,7 +68,7 @@ export class PfCalendar extends LitElement {
   @property() maxDate!: Date;
   @property() translationLanguageCode!: string;
   @property() monthNames: string[] = getMonthNamesFromLocale(this.translationLanguageCode);
-  focusDateRef = createRef<HTMLButtonElement>(); // Reference to the button that needs to be focused
+  focusDateRef: any = createRef<HTMLButtonElement>(); // Reference to the button that needs to be focused
 
   constructor() {
     super();
@@ -206,7 +206,7 @@ export class PfCalendar extends LitElement {
 
   // Function to focus date button;
   #setDateFocus() {
-    const date: HTMLButtonElement | undefined = this.focusDateRef.value!;
+    const date: HTMLButtonElement = this.focusDateRef.value!;
     this.focusRef = date;
     setTimeout(() => {
       date?.focus();

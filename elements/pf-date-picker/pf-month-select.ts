@@ -38,7 +38,7 @@ export class PfMonthSelect extends LitElement {
   @property() isMonthExpanded = false;
   @property() monthToBeFocused!: number;
 
-  focusMonthRef = createRef<HTMLButtonElement>(); // Reference to the month that needs to be focused on keyboard navigation
+  focusMonthRef: any = createRef<HTMLButtonElement>(); // Reference to the month that needs to be focused on keyboard navigation
 
   @query('#date-picker-month-select') private datePickerMonthToggle!: HTMLButtonElement;
 

@@ -4,9 +4,10 @@ import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { query } from 'lit/decorators/query.js';
 import { consume } from '@lit/context';
-import { context, type PfDropdownContext } from './context.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+
+import { context, type PfDropdownContext } from './context.js';
 
 import styles from './pf-dropdown-item.css';
 
@@ -57,7 +58,7 @@ export class DropdownItemChange extends Event {
 export class PfDropdownItem extends LitElement {
   static readonly styles = [styles];
 
-  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
    * The value associated with the dropdown item.

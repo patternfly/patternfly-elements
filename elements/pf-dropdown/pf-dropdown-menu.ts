@@ -21,7 +21,7 @@ import styles from './pf-dropdown-menu.css';
 export class PfDropdownMenu extends LitElement {
   static readonly styles = [styles];
 
-  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /**
    * Whether the menu is disabled

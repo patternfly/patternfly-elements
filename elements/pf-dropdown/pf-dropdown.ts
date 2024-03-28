@@ -7,9 +7,10 @@ import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js
 
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
+import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+
 import { PfDropdownItem } from './pf-dropdown-item.js';
 import { PfDropdownMenu } from './pf-dropdown-menu.js';
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import '@patternfly/elements/pf-button/pf-button.js';
 

@@ -85,7 +85,7 @@
 }
 
 .date-input-box {
-  width: 192px;
+  width: auto;
   background-color: transparent;
   display: flex;
   align-items: flex-start;

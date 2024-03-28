@@ -91,6 +91,11 @@ export class PfMonthSelect extends LitElement {
       const month: HTMLButtonElement | undefined = this.focusMonthRef.value!;
       month?.focus();
     }
+
+    if (changedProperties.has('translationLanguageCode')) {
+      this.monthNames = getMonthNamesFromLocale(this.translationLanguageCode);
+      this.currentMonthName = this.monthNames[this.currentMonthIndex];
+    }
   }
 
   // Function to handle closing of month select popup on clicking outside

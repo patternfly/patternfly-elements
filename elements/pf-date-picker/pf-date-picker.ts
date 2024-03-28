@@ -68,17 +68,26 @@ export class PfDatePicker extends LitElement {
   @query('#date-input') _textInput!: HTMLInputElement; // Date picker input box reference
   @query('#popover') private _popover!: PfPopover; // Popover reference
 
-  // ----------- Input properties from parent ------------ //
+  // ------------------------Input properties from parent-------------------------------//
+  // -----------[***Only these properties can be used to pass data from parent***] ------------ //
   @property({ reflect: true }) minDate: Date = new Date(1900, 0, 1); // Default minimum valid date set as 1st January 1900
   @property({ reflect: true }) maxDate: Date = new Date(9999, 11, 31); // Default maximum valid date set as 31st December 9999
-  @property({ reflect: true }) inputDate!: Date; // Handle date value parent value sends to the component
+
+  @property({ reflect: true }) inputDateWithUniqueTimeStamp!: string; // Handle date value with a unique time stamp that parent sends to the component.
+  // The format: inputDateWithUniqueTimeStamp =  (new Date(2024, 3, 2)).toDateString() +'#'+ (Date.now() + Math.random()) //
+
   @property({ reflect: true }) isDisabled = false; // Handles if the date picker is disabled or not
   @property({ reflect: true }) localizationLanguageCode!: string; // Language code for date format based on localization
   @property({ reflect: true }) translationLanguageCode!: string; // Language code for translation of date input and month names
   @property({ reflect: true }) dateFormatInput!: // Date format input from parent
   'DD/MM/YYYY' | 'MM/DD/YYYY' | 'YYYY/MM/DD' | 'YYYY/DD/MM' | 'DD-MM-YYYY' | 'MM-DD-YYYY' | 'YYYY-MM-DD' |
   'YYYY-DD-MM' | 'DD.MM.YYYY' | 'MM.DD.YYYY' | 'YYYY.MM.DD' | 'YYYY.DD.MM';
-  // ------------- //
+
+  @property({ reflect: true }) placeholderTextWithUniqueCode!: string; // Placeholder from parent
+  // The format: placeholderTextWithUniqueCode = 'placeholder-text' + '#' + Math.random();
+
+  // ----------------------Input properties from parent ends--------------------------------- //
+  // -------------------------------------------------------//
 
   // 'current' refers to the temporary values of Month and Year the user selected before day is selected
   // and the input box is updated
@@ -100,6 +109,7 @@ export class PfDatePicker extends LitElement {
   @property() dayToBeFocusedRef!: HTMLButtonElement | undefined; // Reference of the day that needs to be focused
   @property() firstDayToBeFocused!: number; // Handles the day to be focused on popover open
   @property() dateFormat: string = getDatePatternFromLocale(this.localizationLanguageCode, this.dateFormatInput); // Date format
+  @property() inputDate!: Date | null; // Handle and format date input value parent sends to the component
   private minYear: number = new Date(this.minDate).getFullYear(); // Minimum Valid Year
   private maxYear: number = new Date(this.maxDate).getFullYear(); // Maximum Valid Year
 
@@ -119,9 +129,28 @@ export class PfDatePicker extends LitElement {
     }
   }
 
+  willUpdate(changedProperties: Map<string, any>) {
+    if (changedProperties.has('minDate')) {
+      this.minDate = new Date(this.minDate);
+    }
+
+    if (changedProperties.has('maxDate')) {
+      this.maxDate = new Date(this.maxDate);
+    }
+
+    if (changedProperties.has('inputDateWithUniqueTimeStamp')) {
+      // The unique timestamp is used to re-render the date-picker on date set and date reset
+      this.inputDate = new Date(this.inputDateWithUniqueTimeStamp.split('#')[0]);
+      this.#setInputDate();
+    }
+
+    if (changedProperties.has('placeholderTextWithUniqueCode')) {
+      const [placeholder, uniqueCode] = this.placeholderTextWithUniqueCode.split('#');
+      this.dateFormat = placeholder;
+    }
+  }
+
   render() {
-    this.minDate = new Date(this.minDate);
-    this.maxDate = new Date(this.maxDate);
     const invalidIconClasses = { isDateInvalid: !this.isDateValid, hidden: this.isDateValid };
     const invalidTextClasses = { showInvalidText: !this.isDateValid, hidden: this.isDateValid };
     const invalidInputClasses = { invalidDateInput: !this.isDateValid };
@@ -141,6 +170,7 @@ export class PfDatePicker extends LitElement {
                 .disabled=${this.isDisabled}
                 placeholder=${this.dateFormat} 
                 class=${classMap(invalidInputClasses)}
+                part="input"
               />
               <pf-icon class=${classMap(invalidIconClasses)} size="md" icon="exclamation-circle" set="fas"></pf-icon>
               <div class=${classMap(invalidTextClasses)}> ${this.errorMessage} </div>
@@ -155,7 +185,7 @@ export class PfDatePicker extends LitElement {
                   variant="control" 
                   part="toggle-button"
                   class="date-picker-calendar-icon">
-                    <pf-icon icon="calendar-alt" set="far" size="md"></pf-icon>
+                    <pf-icon part="icon" icon="calendar-alt" set="far" size="md"></pf-icon>
                 </pf-button>
               </div>
               <div slot="body">
@@ -171,7 +201,8 @@ export class PfDatePicker extends LitElement {
                       </div>
                       <div class="date-picker-table-col date-picker-table-month-year">
                         <pf-month-select 
-                          .currentMonthName=${this.currentMonthSelection} 
+                          .currentMonthName=${this.currentMonthSelection}
+                          .currentMonthIndex=${this.currentMonthIndex}
                           @currentMonth=${this.#getCurrentMonth}
                           .translationLanguageCode=${this.translationLanguageCode}
                           @monthExpandState=${this.#getMonthExpandState}
@@ -228,6 +259,11 @@ export class PfDatePicker extends LitElement {
 
   async #init() {
     await this.updateComplete;
+    /* The setTimeout function is added to allow the thread to wait until the page has
+    fully loaded before executing the #removePFPopoverDialogFromDOM() function. */
+    setTimeout(()=>{
+      this.#removePFPopoverDialogFromDOM();
+    }, 100);
     this.#setInputDate();
   }
 
@@ -250,7 +286,9 @@ export class PfDatePicker extends LitElement {
 
   // Function to set the date input from parent component
   #setInputDate() {
-    if (this.inputDate) {
+    if (this.inputDate?.toString() === 'Invalid Date') {
+      this.#clearDateSelection();
+    } else if (this.inputDate) {
       this.selectedDay = new Date(this.inputDate).getDate();
       this.selectedMonthIndex = new Date(this.inputDate).getMonth();
       this.selectedYear = new Date(this.inputDate).getFullYear();
@@ -262,6 +300,18 @@ export class PfDatePicker extends LitElement {
       this.#setDayToBeFocused();
       this.#getFormattedDate();
     }
+  }
+
+  // Function to clear date selected
+  #clearDateSelection() {
+    this.selectedDay = null;
+    this.currentMonthIndex = this._currentDate.getMonth();
+    this.currentMonthSelection = this.monthNames[this.currentMonthIndex];
+    this.currentYear = this._currentDate.getFullYear();
+    this.selectedMonthIndex = this._currentDate.getMonth();
+    this.selectedYear = this._currentDate.getFullYear();
+    this.selectedMonthSelection = this.monthNames[this.selectedMonthIndex];
+    this.formattedDate = '';
   }
 
   // Function to get the reference of the button that needs to be focused
@@ -376,6 +426,7 @@ export class PfDatePicker extends LitElement {
 
   // Function to handle opening of Popover
   #openPopover() {
+    this.#addPFPopoverDialogToDOM();
     if (this.isDateValid) {
       this.currentMonthIndex = this.selectedMonthIndex;
       this.currentYear = this.selectedYear;
@@ -523,6 +574,21 @@ export class PfDatePicker extends LitElement {
     }
 
     this.formattedDate = getDateFormat(dd, mm, yyyy, this.localizationLanguageCode, this.dateFormatInput);
+  }
+
+  /* The functions #removePFPopoverDialogFromDOM() and #addPFPopoverDialogToDOM() are added in in order to prevent
+  the responsiveness issue created by pf-popover and can be removed once https://github.com/patternfly/patternfly-elements/issues/2648 is addressed.
+
+  Issue: The pf-popover implementation maintains the popover dialog element in the DOM even when it is not visible or active.
+  This persistent presence in the DOM causes unintended visual effects, including spacing inconsistencies and
+  horizontal scroll issues, particularly when the popover is positioned at the far right edge of the page. */
+
+  #removePFPopoverDialogFromDOM() {
+    this._popover?.shadowRoot?.querySelector('dialog#popover')?.setAttribute('style', 'display:none');
+  }
+
+  #addPFPopoverDialogToDOM() {
+    this._popover?.shadowRoot?.querySelector('dialog#popover')?.setAttribute('style', 'display:block');
   }
 }
 

@@ -47,6 +47,9 @@
 pf-icon,
 ::slotted(pf-icon) {
   color: currentcolor;
+  padding-inline-start: var(--_button-icon-padding-inline-start);
+  padding-inline-end: var(--_button-icon-padding-inline-end);
+  vertical-align: var(--_button-icon-vertical-align);
 }
 
 #button {

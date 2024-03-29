@@ -4,11 +4,13 @@ import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+import { provide } from '@lit/context';
 
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
+import { context, type PfDropdownContext } from './context.js';
 import { PfDropdownItem } from './pf-dropdown-item.js';
 import { PfDropdownMenu } from './pf-dropdown-menu.js';
 
@@ -31,8 +33,8 @@ export class PfDropdownSelectEvent extends Event {
  * will trigger a process or navigate to a new location.
  *
  * @slot - Must contain one or more `<pf-dropdown-item>` or `<pf-dropdown-group>`
- * @slot trigger - Custom trigger button
- * @slot trigger - menu for custom trigger button
+ * @slot toggle - Custom toggle button
+ * @slot menu - when using a custom toggle, you must slot a `<pf-dropdown-menu>` in alongside it
  *
  * @csspart menu - The dropdown menu wrapper
  *
@@ -72,11 +74,13 @@ export class PfDropdown extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) expanded = false;
 
-  @queryAssignedElements({ slot: 'trigger', flatten: true })
-  private _triggerElements!: HTMLElement[];
+  @queryAssignedElements({ slot: 'toggle', flatten: true })
+  private _toggleElements!: HTMLElement[];
 
   @queryAssignedElements({ slot: 'menu', flatten: true })
   private _menuElements!: HTMLElement[];
+
+  @provide({ context }) private ctx: PfDropdownContext = { disabled: false };
 
   #logger = new Logger(this);
 
@@ -92,23 +96,31 @@ export class PfDropdown extends LitElement {
     return ps.every(x=>!!x);
   }
 
+  willUpdate(changed: PropertyValues) {
+    if (changed.has('disabled')) {
+      const { disabled } = this;
+      this.ctx = { disabled };
+    }
+  }
+
   render() {
     const { expanded } = this;
     const { anchor, alignment, styles = {} } = this.#float;
     const { disabled } = this;
     return html`
-    <div class="${classMap({ expanded,
+    <div class="${classMap({ disabled,
+                             expanded,
                              [anchor ?? '']: !!anchor,
                              [alignment ?? '']: !!alignment })}"
          style="${styleMap(styles)}"
          @slotchange="${this.#onSlotchange}">
-      <slot name="trigger"
+      <slot name="toggle"
             @keydown="${this.#onButtonKeydown}"
             @click="${() => this.toggle()}">
-        <pf-button id="default-trigger"
-                   variant="control"
-                   icon="caret-down"
-                   icon-set="fas">Dropdown</pf-button>
+        <pf-button id="default-toggle" variant="control">
+          Dropdown
+          <pf-icon icon="caret-down" size="md"></pf-icon>
+        </pf-button>
       </slot>
       <slot name="menu"
             ?hidden="${!this.expanded}"
@@ -136,16 +148,16 @@ export class PfDropdown extends LitElement {
   }
 
   #validateDOM() {
-    const [trigger] = this._triggerElements;
+    const [toggle] = this._toggleElements;
     const [menu] = this._menuElements;
-    if (!trigger) {
-      this.#logger.warn('no trigger found');
+    if (!toggle) {
+      this.#logger.warn('no toggle found');
       return false;
     } else if (!menu) {
       this.#logger.warn('no menu found');
       return false;
-    } else if (![trigger, menu].map(x => this.shadowRoot?.contains(x)).every((p, _, a) => p === a[0])) {
-      this.#logger.warn('trigger and menu must be located in the same root');
+    } else if (![toggle, menu].map(x => this.shadowRoot?.contains(x)).every((p, _, a) => p === a[0])) {
+      this.#logger.warn('toggle and menu must be located in the same root');
       return false;
     } else {
       return true;
@@ -155,19 +167,19 @@ export class PfDropdown extends LitElement {
   #onSlotchange() {
     if (this.#validateDOM()) {
       const [menu] = this._menuElements;
-      const [trigger] = this._triggerElements;
+      const [toggle] = this._toggleElements;
       menu.id ||= getRandomId('menu');
-      trigger.setAttribute('aria-controls', menu.id);
-      trigger.setAttribute('aria-haspopup', menu.id);
-      trigger.setAttribute('aria-expanded', String(this.expanded) as 'true' | 'false');
+      toggle.setAttribute('aria-controls', menu.id);
+      toggle.setAttribute('aria-haspopup', menu.id);
+      toggle.setAttribute('aria-expanded', String(this.expanded) as 'true' | 'false');
     }
   }
 
   async #expandedChanged() {
     const will = this.expanded ? 'close' : 'open';
     const [menu] = this._menuElements;
-    const [trigger] = this._triggerElements;
-    trigger.setAttribute('aria-expanded', `${String(this.expanded) as 'true' | 'false'}`);
+    const [toggle] = this._toggleElements;
+    toggle.setAttribute('aria-expanded', `${String(this.expanded) as 'true' | 'false'}`);
     this.dispatchEvent(new Event(will));
     if (this.expanded) {
       await this.#float.show();
@@ -182,13 +194,13 @@ export class PfDropdown extends LitElement {
   #disabledChanged() {
     if (this.#validateDOM()) {
       const [menu] = this._menuElements;
-      const [trigger] = this._triggerElements;
+      const [toggle] = this._toggleElements;
       if (menu instanceof PfDropdownMenu) {
         menu.disabled = this.disabled;
       } else {
         menu.setAttribute('aria-disabled', String(!!this.disabled));
       }
-      trigger.setAttribute('aria-disabled', String(!!this.disabled));
+      toggle.setAttribute('aria-disabled', String(!!this.disabled));
     }
   }
 
@@ -233,7 +245,7 @@ export class PfDropdown extends LitElement {
         break;
       case 'Escape':
         this.hide();
-        this._triggerElements?.at(0)?.focus();
+        this._toggleElements?.at(0)?.focus();
     }
   }
 

@@ -31,7 +31,7 @@ describe('<pf-dropdown>', function() {
     });
   });
 
-  describe('with default trigger button', function() {
+  describe('with default toggle button', function() {
     beforeEach(async function() {
       element = await createFixture<PfDropdown>(html`
         <pf-dropdown>
@@ -111,7 +111,7 @@ describe('<pf-dropdown>', function() {
         await element.updateComplete;
       });
 
-      it('should disable trigger button', async function() {
+      it('should disable toggle button', async function() {
         const snapshot = await a11ySnapshot();
         expect(snapshot.children?.length).to.equal(1);
         expect(snapshot.children?.at(0)?.disabled).to.be.true;
@@ -131,7 +131,7 @@ describe('<pf-dropdown>', function() {
         });
       });
 
-      describe('clicking trigger', function() {
+      describe('clicking toggle', function() {
         beforeEach(async function() {
           await clickElementAtCenter(element);
           await resetMouse();

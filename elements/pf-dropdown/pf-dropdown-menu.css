@@ -2,9 +2,7 @@
   background: var(--pf-c-dropdown__menu--BackgroundColor, #fff);
 }
 
-:host([disabled]) {
-  background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
-  cursor: not-allowed;
+.disabled {
   --pf-c-dropdown__menu-item--Color: var(
     --pf-c-dropdown__menu-item--disabled--Color,
     var(--pf-global--Color--dark-200, #6a6e73)

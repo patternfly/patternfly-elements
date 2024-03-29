@@ -1,7 +1,7 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
-import { property } from 'lit/decorators/property.js';
-import { provide } from '@lit/context';
+import { consume } from '@lit/context';
+import { state } from 'lit/decorators/state.js';
 import { context, type PfDropdownContext } from './context.js';
 
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
@@ -11,9 +11,11 @@ import { PfDropdownItem, DropdownItemChange } from './pf-dropdown-item.js';
 import { PfDropdownGroup } from './pf-dropdown-group.js';
 
 import styles from './pf-dropdown-menu.css';
+import { classMap } from 'lit/directives/class-map.js';
 
 /**
- * A **dropdown** presents a menu of actions or links in a constrained space that will trigger a process or navigate to a new location.
+ * A **dropdown** presents a menu of actions or links in a constrained space that will trigger a
+ * process or navigate to a new location.
  *
  * @slot - Must contain one or more `<pf-dropdown-item>` or `<pf-dropdown-group>`
  */
@@ -23,13 +25,9 @@ export class PfDropdownMenu extends LitElement {
 
   static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
-  /**
-   * Whether the menu is disabled
-   */
-  @property({ type: Boolean, reflect: true }) disabled = false;
-
-  @provide({ context })
-  private ctx: PfDropdownContext = { disabled: this.disabled };
+  @consume({ context, subscribe: true })
+  @state()
+  private ctx?: PfDropdownContext;
 
   #internals = InternalsController.of(this, { role: 'menu' });
 
@@ -65,21 +63,15 @@ export class PfDropdownMenu extends LitElement {
     this.addEventListener('click', this.#onMenuitemClick);
   }
 
-  willUpdate(changed: PropertyValues<this>): void {
-    if (changed.has('disabled')) {
-      this.ctx = { disabled: !!this.disabled };
-    }
-  }
-
-  protected updated(changed: PropertyValues<this>): void {
-    if (changed.has('disabled')) {
-      this.#internals.ariaDisabled = String(!!this.disabled);
-    }
+  protected override willUpdate(): void {
+    this.#internals.ariaDisabled = String(!!this.ctx?.disabled);
   }
 
   render() {
+    const { disabled = false } = this.ctx ?? {};
     return html`
-      <slot @slotchange="${this.#onSlotChange}"
+      <slot class="${classMap({ disabled })}"
+            @slotchange="${this.#onSlotChange}"
             @change="${this.#onItemChange}"></slot>
     `;
   }

@@ -39,7 +39,7 @@ ${body}
 - ⚠️ ${warn}`).join('')}`;
     }, header);
 
-    return comment;
+    return comment.replaceAll('\\n', '\n');
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);

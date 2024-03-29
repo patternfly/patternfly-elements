@@ -36,9 +36,11 @@
   display: none !important;
 }
 
-:host([disabled]) {
-  pointer-events: none;
-  cursor: not-allowed;
+:host([disabled]),
+.disabled {
+  &, & a {
+    cursor: not-allowed;
+  }
   --pf-c-dropdown__menu-item--Color: var(
     --pf-c-dropdown__menu-item--disabled--Color,
     var(--pf-global--Color--dark-200, #6a6e73)

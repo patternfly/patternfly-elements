@@ -1,7 +1,13 @@
 <pf-dropdown disabled>
   <pf-dropdown-item>item1</pf-dropdown-item>
   <pf-dropdown-item>item2</pf-dropdown-item>
+  <pf-dropdown-item href="https://redhat.com">nav item</pf-dropdown-item>
 </pf-dropdown>
+
+<p>Interactive content behind the menu should not be activated when a disabled menu item is clicked.</p>
+<details><summary>Should not toggle behind dropdown</summary>
+  <p><strong>OOPS!</strong> I did it again</p>
+</details>
 
 <script type="module">
   import '@patternfly/elements/pf-dropdown/pf-dropdown.js';

@@ -47,6 +47,9 @@
 pf-icon,
 ::slotted(pf-icon) {
   color: currentcolor;
+  padding-inline-start: var(--_button-icon-padding-inline-start);
+  padding-inline-end: var(--_button-icon-padding-inline-end);
+  vertical-align: var(--_button-icon-vertical-align);
 }
 
 #button {
@@ -141,10 +144,6 @@ pf-icon,
   --pf-c-button--m-link--BackgroundColor: var(--pf-c-button--m-link--active--BackgroundColor, transparent);
 }
 
-.hasIcon [part=icon] {
-  cursor: pointer;
-}
-
 .disabled,
 :host(:disabled),
 :host([danger]:disabled),
@@ -154,6 +153,7 @@ pf-icon,
 }
 
 [part=icon] {
+  --pf-icon--size: 16px;
   display: inline-flex;
   align-items: center;
   position: absolute;
@@ -163,6 +163,10 @@ pf-icon,
     height: 16px;
     max-height: 16px;
   }
+}
+
+.hasIcon [part=icon] {
+  cursor: pointer;
 }
 
 .hasIcon #button {
@@ -209,7 +213,6 @@ pf-icon,
 }
 
 .hasIcon:not(.plain) [part=icon] {
-  --pf-icon--size: 16px;
   position: relative;
 }
 

@@ -5,6 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import '@patternfly/elements/pf-icon/pf-icon.js';
 import '@patternfly/elements/pf-spinner/pf-spinner.js';
@@ -219,6 +220,8 @@ export class PfButton extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'button' });
 
+  #slots = new SlotController(this, 'icon', null);
+
   get #disabled() {
     return this.disabled || this.#internals.formDisabled;
   }
@@ -236,7 +239,7 @@ export class PfButton extends LitElement {
   }
 
   protected override render() {
-    const hasIcon = !!this.icon || !!this.loading;
+    const hasIcon = !!this.icon || !!this.loading || this.#slots.hasSlotted('icon');
     const { warning, variant, danger, loading, plain, inline, block, size } = this;
     const disabled = this.#disabled;
     return html`

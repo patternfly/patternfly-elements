@@ -193,13 +193,7 @@ export class PfDropdown extends LitElement {
 
   #disabledChanged() {
     if (this.#validateDOM()) {
-      const [menu] = this._menuElements;
       const [toggle] = this._toggleElements;
-      if (menu instanceof PfDropdownMenu) {
-        menu.disabled = this.disabled;
-      } else {
-        menu.setAttribute('aria-disabled', String(!!this.disabled));
-      }
       toggle.setAttribute('aria-disabled', String(!!this.disabled));
     }
   }

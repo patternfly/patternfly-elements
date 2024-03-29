@@ -5,6 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import '@patternfly/elements/pf-icon/pf-icon.js';
 import '@patternfly/elements/pf-spinner/pf-spinner.js';
@@ -13,7 +14,6 @@ import tokensStyles from './pf-button-tokens.css';
 import iconStyles from './pf-button-icon.css';
 
 import styles from './pf-button.css';
-import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 export type ButtonVariant = (
   | 'primary'

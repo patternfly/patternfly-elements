@@ -13,6 +13,12 @@ import { PfDropdownGroup } from './pf-dropdown-group.js';
 import styles from './pf-dropdown-menu.css';
 import { classMap } from 'lit/directives/class-map.js';
 
+function isDisabledItemClick(event: MouseEvent) {
+  const item: PfDropdownItem | undefined =
+    event.composedPath().find((x): x is PfDropdownItem => x instanceof PfDropdownItem);
+  return !!item?.disabled;
+}
+
 /**
  * A **dropdown** presents a menu of actions or links in a constrained space that will trigger a
  * process or navigate to a new location.
@@ -98,7 +104,7 @@ export class PfDropdownMenu extends LitElement {
    * updates roving tabindex and active descendant
    */
   #onMenuitemFocusin(event: FocusEvent) {
-    if (this.disabled) {
+    if (this.ctx?.disabled) {
       event.preventDefault();
       event.stopPropagation();
     } else if (event.target instanceof PfDropdownItem &&
@@ -113,7 +119,7 @@ export class PfDropdownMenu extends LitElement {
    * or toggles selection if multiselectable
    */
   #onMenuitemClick(event: MouseEvent) {
-    if (this.disabled) {
+    if (this.ctx?.disabled || isDisabledItemClick(event)) {
       event.preventDefault();
       event.stopPropagation();
     } else if (event.target instanceof PfDropdownItem &&

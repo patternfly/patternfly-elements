@@ -13,6 +13,7 @@ import tokensStyles from './pf-button-tokens.css';
 import iconStyles from './pf-button-icon.css';
 
 import styles from './pf-button.css';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 export type ButtonVariant = (
   | 'primary'
@@ -219,6 +220,8 @@ export class PfButton extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'button' });
 
+  #slots = new SlotController(this, 'icon', null);
+
   get #disabled() {
     return this.disabled || this.#internals.formDisabled;
   }
@@ -236,7 +239,7 @@ export class PfButton extends LitElement {
   }
 
   protected override render() {
-    const hasIcon = !!this.icon || !!this.loading;
+    const hasIcon = !!this.icon || !!this.loading || this.#slots.hasSlotted('icon');
     const { warning, variant, danger, loading, plain, inline, block, size } = this;
     const disabled = this.#disabled;
     return html`

@@ -10,6 +10,8 @@
   "types": "./pfe.d.ts",
   "exports": {
     ".": "./pfe.min.js",
+    "./form-control.css": "./form-control.css",
+    "./form-control.css.js": "./form-control.css.js",
     "./pf-accordion/BaseAccordion.js": "./pf-accordion/BaseAccordion.js",
     "./pf-accordion/BaseAccordionHeader.js": "./pf-accordion/BaseAccordionHeader.js",
     "./pf-accordion/BaseAccordionPanel.js": "./pf-accordion/BaseAccordionPanel.js",
@@ -28,7 +30,6 @@
     "./pf-card/pf-card.js": "./pf-card/pf-card.js",
     "./pf-chip/pf-chip.js": "./pf-chip/pf-chip.js",
     "./pf-chip/pf-chip-group.js": "./pf-chip/pf-chip-group.js",
-    "./pf-clipboard-copy/BaseClipboardCopy.js": "./pf-clipboard-copy/BaseClipboardCopy.js",
     "./pf-clipboard-copy/pf-clipboard-copy.js": "./pf-clipboard-copy/pf-clipboard-copy.js",
     "./pf-code-block/BaseCodeBlock.js": "./pf-code-block/BaseCodeBlock.js",
     "./pf-code-block/pf-code-block.js": "./pf-code-block/pf-code-block.js",

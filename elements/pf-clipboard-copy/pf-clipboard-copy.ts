@@ -5,6 +5,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import styles from './pf-clipboard-copy.css';
+import formControlStyles from '../form-control.css';
 
 import '@patternfly/elements/pf-button/pf-button.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
@@ -26,9 +27,9 @@ export class ClipboardCopyCopiedEvent extends Event {
  */
 @customElement('pf-clipboard-copy')
 export class PfClipboardCopy extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles = [formControlStyles, styles];
 
-  static shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   /** Tooltip message to display when clicking the copy button */
   @property({ attribute: 'click-tip' }) clickTip = 'Successfully copied to clipboard!';
@@ -90,33 +91,29 @@ export class PfClipboardCopy extends LitElement {
   render() {
     const { expanded, expandable, inline, compact, code, block, readonly } = this;
     return html`
-      <div class="container ${classMap({ code, expanded, inline, compact, block, })}">
+      <div id="container" class="${classMap({ code, expanded, inline, compact, block })}">
         <div id="input-group">
           <div id="wrapper">
             <pf-button id="expand-button"
-                        plain
-                        variant="control"
-                        label="EXPAND"
-                        ?inert="${!expandable}"
-                        @click="${this.#onClick}">
+                       variant="control"
+                       label="EXPAND"
+                       ?inert="${!expandable}"
+                       @click="${this.#onClick}">
               <pf-icon icon="chevron-right"></pf-icon>
             </pf-button>
           </div>
           <span ?hidden="${!(inline || compact)}">${this.value}</span>
-          <input
-              ?hidden="${inline || compact}"
-              ?disabled="${expanded || readonly}"
-              .value="${this.value}"
-              @input="${this.#onChange}"
-              aria-label="${this.accessibleTextLabel}">
+          <input aria-label="${this.accessibleTextLabel}"
+                 ?hidden="${inline || compact}"
+                 ?disabled="${expanded || readonly}"
+                 .value="${this.value}"
+                 @input="${this.#onChange}">
           <pf-tooltip>
             <pf-button id="copy-button"
-                        plain
-                        variant="${ifDefined(!(inline || compact) ? 'control' : undefined)}"
-                        label="${this.hoverTip}"
-                        size="lg"
-                        @click="${this.copy}">
-              <pf-icon icon="copy"></pf-icon>
+                       icon="copy"
+                       variant="${ifDefined(!(inline || compact) ? 'control' : undefined)}"
+                       label="${this.hoverTip}"
+                       @click="${this.copy}">
             </pf-button>
             <span slot="content">${this.#copied ? this.clickTip : this.hoverTip}</span>
           </pf-tooltip>

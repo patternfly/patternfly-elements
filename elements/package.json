@@ -10,6 +10,8 @@
   "types": "./pfe.d.ts",
   "exports": {
     ".": "./pfe.min.js",
+    "./form-control.css": "./form-control.css",
+    "./form-control.css.js": "./form-control.css.js",
     "./pf-accordion/BaseAccordion.js": "./pf-accordion/BaseAccordion.js",
     "./pf-accordion/BaseAccordionHeader.js": "./pf-accordion/BaseAccordionHeader.js",
     "./pf-accordion/BaseAccordionPanel.js": "./pf-accordion/BaseAccordionPanel.js",

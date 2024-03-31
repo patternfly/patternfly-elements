@@ -1,0 +1,22 @@
+<pf-card>
+  <h2 slot="header">This is a really really really really really really really really really really long header </h2>
+  <pf-dropdown slot="header">
+    <pf-button slot="toggle" plain icon="ellipsis-v"></pf-button>
+    <pf-dropdown-menu slot="menu">
+      <pf-dropdown-item>Action</pf-dropdown-item>
+      <pf-dropdown-item href="#">Link</pf-dropdown-item>
+      <pf-dropdown-item disabled>Disabled Action</pf-dropdown-item>
+      <pf-dropdown-item href="#" disabled>Disabled Link</pf-dropdown-item>
+      <hr>
+      <pf-dropdown-item>Separated Action</pf-dropdown-item>
+      <pf-dropdown-item href="#">Separated Link</pf-dropdown-item>
+    </pf-dropdown-menu>
+  </pf-dropdown>
+  <span>Body</span>
+  <span slot="footer">Footer</span>
+</pf-card>
+
+<script type="module">
+  import '@patternfly/elements/pf-card/pf-card.js';
+  import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
+</script>

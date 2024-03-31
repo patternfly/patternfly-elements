@@ -17,11 +17,17 @@ import style from './pf-card.css';
  * @summary Gives a preview of information in a small layout
  *
  * @slot header
- *       If this slot is used, we expect a heading level tag (h1, h2, h3, h4, h5, h6).
- *       An icon, svg, or use of the icon component are also valid in this region.
- * @slot - Any content that is not designated for the header or footer slot, will go to this slot.
+ *       When included, defines the contents of a card. Card headers can contain images as well as
+ *       the title of a card and an actions menu represented by the right-aligned kebab.
+ *       In most cases, your card should include a header. The only exceptions are when cards being
+ *       used as a layout element to create a white background behind other content.
+ * @slot title
+ *       Communicates the title of a card if it's not included in the header.
+ *       If a card will be utilized as a selectable and clickable card, the title needs to be made as a linked text to trigger action and indicate interaction.
+ * @slot - Body. Provides details about the item. A card body can include any combination of static
+ *         text and/or active content.
  * @slot footer
- *       Use this slot for anything that you want to be stuck to the base of the card.
+ *       Contains external links, actions, or static text at the bottom of a card.
  *
  * @csspart header - The container for *header* content
  * @csspart body - The container for *body* content
@@ -79,7 +85,7 @@ export class PfCard extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) plain = false;
 
-  #slots = new SlotController(this, 'header', null, 'footer');
+  #slots = new SlotController(this, 'header', 'title', null, 'footer');
 
   render() {
     return html`
@@ -88,6 +94,7 @@ export class PfCard extends LitElement {
                 part="header"
                 class="${classMap({ empty: this.#slots.isEmpty('header') })}">
           <slot name="header"></slot>
+          <slot id="title" name="title" ?hidden="${this.#slots.isEmpty('title')}"></slot>
         </header>
         <div id="body"
              part="body"

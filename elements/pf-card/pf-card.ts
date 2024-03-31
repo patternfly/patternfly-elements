@@ -1,10 +1,9 @@
-import { customElement } from 'lit/decorators/custom-element.js';
 import { LitElement, html } from 'lit';
-import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
-
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { property } from 'lit/decorators/property.js';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import style from './pf-card.css';
 
@@ -80,24 +79,24 @@ export class PfCard extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) plain = false;
 
-  protected slots = new SlotController(this, 'header', null, 'footer');
+  #slots = new SlotController(this, 'header', null, 'footer');
 
   render() {
     return html`
       <article>
         <header id="header"
                 part="header"
-                class="${classMap({ empty: !this.slots.hasSlotted('header') })}">
+                class="${classMap({ empty: this.#slots.isEmpty('header') })}">
           <slot name="header"></slot>
         </header>
         <div id="body"
              part="body"
-             class="${classMap({ empty: !this.querySelector(':not([slot])') })}">
+             class="${classMap({ empty: this.#slots.isEmpty(null) })}">
           <slot></slot>
         </div>
         <footer id="footer"
                 part="footer"
-                class="${classMap({ empty: !this.slots.hasSlotted('footer') })}">
+                class="${classMap({ empty: this.#slots.isEmpty('footer') })}">
           <slot name="footer"></slot>
         </footer>
       </article>

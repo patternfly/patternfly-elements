@@ -1,5 +1,5 @@
 ---
-"@patternfly/core": minor
+"@patternfly/pfe-core": minor
 ---
 
 `TabsAriaController`: Added TabsAriaController, used to manage the accesibility tree for tabs and panels. 

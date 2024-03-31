@@ -13,7 +13,7 @@ import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
 
 const sleep = (ms?: number) => new Promise(r => setTimeout(r, ms));
 
-export class ClipboardCopyCopiedEvent extends Event {
+export class PfClipboardCopyCopiedEvent extends Event {
   constructor(public text: string) {
     super('copy', { bubbles: true });
   }
@@ -24,6 +24,7 @@ export class ClipboardCopyCopiedEvent extends Event {
  *
  * @slot - Place content to copy here, or use the `value` attribute
  * @slot actions - Place additional action buttons here
+ * @fires {PfClipboardCopyCopiedEvent} copy - when the text snippet is successfully copied.
  */
 @customElement('pf-clipboard-copy')
 export class PfClipboardCopy extends LitElement {
@@ -156,7 +157,7 @@ export class PfClipboardCopy extends LitElement {
    */
   async copy() {
     await navigator.clipboard.writeText(this.value);
-    this.dispatchEvent(new ClipboardCopyCopiedEvent(this.value));
+    this.dispatchEvent(new PfClipboardCopyCopiedEvent(this.value));
     await sleep(this.entryDelay);
     this.#copied = true;
     this.requestUpdate();

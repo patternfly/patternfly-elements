@@ -39,7 +39,7 @@ We eagerly await the specification and implementation of cross-root <abbr title=
 
 In a perfect world, browser vendors would implement accessibility specs immediately, completely, and uniformly; and assistive technology vendors would implement direct translations of the browser's internal accessibility tree to the end user. Of course, we don't live in such a world. During the development process, we rely on the browser's accessibility developer tools to understand how our complex controls appear to <abbr>AT</abbr>, and we write the majority of our unit tests as assertions against that tree ("When I click the toggle, expect the listbox to appear next to it in the tree").
 
-We've seen again and again that just because something looks good to the developer when they inspect the AX tree, doesn't mean that all users will be able to use it. We were fortunate to have the time, care, and expert testing skills of our Accessibility Producer Greg Gibson during this development cycle. Developers often ask us how to automate accessibility testing. Our answer is always that automation can only get you so far. Cross-browser, cross-platform, manual testing is essential to ensure the widest reach for your products.
+We've seen again and again that just because something looks good to the developer when they inspect the AX tree doesn't mean that all users will be able to use it. We were fortunate to have the time, care, and expert testing skills of our Accessibility Producer Greg Gibson during this development cycle. Developers often ask us how to automate accessibility testing. Our answer is always that automation can only get you so far. Cross-browser, cross-platform, manual testing is essential to ensure the widest reach for your products.
 
 ## New Elements
 
@@ -60,9 +60,9 @@ Select and dropdown in particular, because of their accessibility requirements, 
 
 We also added features and made changes to elements released in previous versions:
 - `<pf-text-input>` gets `helper-text`, `error-text`, and `validate-on` attributes, and now supports the native `pattern` and `placeholder` attributes.
-- `<pf-button>` now acts itself as a button, and doesn't contain a `<button>` element in it's shadow root.
+- `<pf-button>` now acts itself as a button, and doesn't contain a `<button>` element in its shadow root.
 - `<pf-modal>` no longer has a `width` attribute, so use the `variant` attribute instead.
-- `<pf-switch>` uses a slightly different markup for it's labels, improving accessibility.
+- `<pf-switch>` uses a slightly different markup for its labels, improving accessibility.
 
 ### Controllers and Decorators
 The Core and Tools packages received major changes as well. Core no longer recommends the `@cascades` decorator, which was used to set a given attribute on a set of known, named child elements. Instead, we provide some helpers for using the Context Protocol via Lit's `@provide` and `@consume` decorators. We made the constructors for `InternalsController` private, in order to prevent situations in which the user tries to create more than one `ElementInternals` object for a given element (which the browser will not allow).

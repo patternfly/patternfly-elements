@@ -64,12 +64,17 @@ We also added features and made changes to elements released in previous version
 - `<pf-modal>` no longer has a `width` attribute, so use the `variant` attribute instead.
 - `<pf-switch>` uses a slightly different markup for it's labels, improving accessibility.
 
-### Tools and Utilities
+### Controllers and Decorators
 The Core and Tools packages received major changes as well. Core no longer recommends the `@cascades` decorator, which was used to set a given attribute on a set of known, named child elements. Instead, we provide some helpers for using the Context Protocol via Lit's `@provide` and `@consume` decorators. We made the constructors for `InternalsController` private, in order to prevent situations in which the user tries to create more than one `ElementInternals` object for a given element (which the browser will not allow).
 
 Steven Spriggs worked on the new `TabsAriaController`, which simplifies the process of writings tab group components. Brian Ferry added an `isEmpty` method to `SlotController`, which developers can use e.g. to hide part of an element when it has no slotted content.
 
-We hope you emjoy using Patternfly elements in your projects, and that it helps you deliver apps and pages faster to more users.
+### Tools
+Our new version of the PFE dev server no longer uses the node-resolution algorithm, instead it generates an import map to your components. We've made it easier to share CSS between different element's shadow roots using the `lit-css` and `typescript-transformer-lit-css` packages. Our react wrapper generator should now work for more projects, as well.
+
+## Full Release Notes
+
+We hope you enjoy using Patternfly elements in your projects, and that it helps you deliver apps and pages faster to more users.
 
 View the full release notes here:
  - [`@patternfly/elements` 3.0][pfe-release]

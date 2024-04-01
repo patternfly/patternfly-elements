@@ -15,7 +15,7 @@ This week we are pleased to announce the availability of PatternFly Elements 3.0
 - [`@patternfly/pfe-tools@2.0.0`][tools2], utilities for web component library maintainers,
     e.g. dev server configuration, unit test helpers, etc.
 
-These releases include commits from Anuj Singla, Benny Powers, Brian Ferry, Gautam Krishna, Guy Bedford, Ivana Rodriguez, Luke Dary, Mark Caron, Michael Potter, Nikki Massaro Kauffman, and Steven Spriggs. Thank you for your contributions!
+These releases include commits from Anuj Singla, Benny Powers, Brian Ferry, Gautam Krishna, Guy Bedford, Ivana Rodriguez, Luke Dary, Mark Caron, Michael Potter, Nikki Massaro, and Steven Spriggs. Thank you for your contributions!
 
 ## Accessibility
 

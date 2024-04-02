@@ -163,11 +163,22 @@ export class PfSelect extends LitElement {
     return this.variant === 'checkbox' && !this.checkboxSelectionBadgeHidden;
   }
 
-  /**
-   * array of text content from listbox's array of selected options
-   */
-  get #valueTextArray() {
-    return this.#listbox?.selectedOptions.map(option => option.optionText || '') ?? [];
+  get #buttonLabel() {
+    const valueTextArray = this.#listbox?.selectedOptions.map(option => option.optionText || '') ?? [];
+
+    const slottedPlaceholderText = this.querySelector<HTMLSlotElement>('[slot=placeholder]')
+      ?.assignedNodes()
+      ?.reduce((acc, node) => `${acc}${node.textContent}`, '');
+
+    switch (this.variant) {
+      // TODO: implement typeaheadmulti with ActiveDescendantController
+      // case 'typeaheadmulti':
+      //   return `${valueTextArray.length} ${this.itemsSelectedText}`
+      case 'checkbox':
+        return valueTextArray.at(0)?.trim() || this.placeholder || slottedPlaceholderText || 'Options';
+      default:
+        return valueTextArray.at(0)?.trim() || this.placeholder || slottedPlaceholderText || 'Select a value';
+    }
   }
 
   override willUpdate(changed: PropertyValues<this>) {
@@ -191,6 +202,7 @@ export class PfSelect extends LitElement {
 
   render() {
     const { disabled, expanded, variant } = this;
+    const buttonLabel = this.#buttonLabel;
     const { anchor = 'bottom', alignment = 'start', styles = {} } = this.#float;
     const { computedLabelText } = this.#internals;
     const { height, width } = this.getBoundingClientRect() || {};
@@ -200,17 +212,6 @@ export class PfSelect extends LitElement {
     const checkboxes = variant === 'checkbox';
     const offscreen = typeahead && 'offscreen';
     const badge = hasBadge && 'badge';
-
-
-    const placeholder =
-      this.placeholder ||
-      this.querySelector<HTMLSlotElement>('[slot=placeholder]')
-        ?.assignedNodes()
-        ?.reduce((acc, node) => `${acc}${node.textContent}`, '') ||
-      this.variant === 'checkbox' ? 'Options' : 'Select a value';
-    const buttonLabel = (this.variant === 'checkbox' ? null
-                      // : this.variant === 'typeaheadmulti' ? `${this.#valueTextArray.length} ${this.itemsSelectedText}`
-                      : this.#valueTextArray.at(0)) ?? placeholder;
 
     return html`
       <div id="outer"

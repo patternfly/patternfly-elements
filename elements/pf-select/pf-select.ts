@@ -244,7 +244,7 @@ export class PfSelect extends LitElement {
                   role="combobox"
                   aria-hidden="${typeahead.toString() as 'true' | 'false'}"
                   aria-labelledby="${ifDefined(typeahead ? 'toggle-input' : undefined)}"
-                  aria-label="${ifDefined(typeahead ? undefined : computedLabelText)}"
+                  aria-label="${ifDefined(typeahead ? undefined : computedLabelText || undefined)}"
                   aria-describedby="placeholder"
                   aria-controls="listbox"
                   aria-haspopup="listbox"

@@ -168,16 +168,16 @@ export class PfSelect extends LitElement {
 
     const slottedPlaceholderText = this.querySelector<HTMLSlotElement>('[slot=placeholder]')
       ?.assignedNodes()
-      ?.reduce((acc, node) => `${acc}${node.textContent}`, '');
+      ?.reduce((acc, node) => `${acc}${node.textContent}`, '')?.trim();
 
     switch (this.variant) {
       // TODO: implement typeaheadmulti with ActiveDescendantController
       // case 'typeaheadmulti':
       //   return `${valueTextArray.length} ${this.itemsSelectedText}`
       case 'checkbox':
-        return valueTextArray.at(0)?.trim() || this.placeholder || slottedPlaceholderText || 'Options';
+        return valueTextArray.at(0)?.trim() || this.placeholder || slottedPlaceholderText || this.#internals.computedLabelText || 'Options';
       default:
-        return valueTextArray.at(0)?.trim() || this.placeholder || slottedPlaceholderText || 'Select a value';
+        return valueTextArray.at(0)?.trim() || this.placeholder || slottedPlaceholderText || this.#internals.computedLabelText || 'Select a value';
     }
   }
 
@@ -243,8 +243,7 @@ export class PfSelect extends LitElement {
           <button id="toggle-button"
                   role="combobox"
                   aria-hidden="${typeahead.toString() as 'true' | 'false'}"
-                  aria-labelledby="${ifDefined(typeahead ? 'toggle-input' : undefined)}"
-                  aria-label="${ifDefined(typeahead ? undefined : computedLabelText || undefined)}"
+                  aria-labelledby="button-text"
                   aria-describedby="placeholder"
                   aria-controls="listbox"
                   aria-haspopup="listbox"

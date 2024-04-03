@@ -200,12 +200,12 @@ export class PfSelect extends LitElement {
     // }
   }
 
-  render() {
+  override render() {
     const { disabled, expanded, variant } = this;
-    const buttonLabel = this.#buttonLabel;
     const { anchor = 'bottom', alignment = 'start', styles = {} } = this.#float;
     const { computedLabelText } = this.#internals;
     const { height, width } = this.getBoundingClientRect() || {};
+    const buttonLabel = this.#buttonLabel;
     const hasBadge = this.#hasBadge;
     const selectedOptions = this.#listbox?.selectedOptions ?? [];
     const typeahead = variant.startsWith('typeahead');
@@ -243,7 +243,8 @@ export class PfSelect extends LitElement {
           <button id="toggle-button"
                   role="combobox"
                   aria-hidden="${typeahead.toString() as 'true' | 'false'}"
-                  aria-labelledby="button-text"
+                  aria-labelledby="${ifDefined(typeahead ? 'toggle-input' : undefined)}"
+                  aria-label="${ifDefined(typeahead ? undefined : computedLabelText)}"
                   aria-describedby="placeholder"
                   aria-controls="listbox"
                   aria-haspopup="listbox"
@@ -305,7 +306,7 @@ export class PfSelect extends LitElement {
     // }
   }
 
-  firstUpdated() {
+  override firstUpdated() {
     // kick the renderer to that the placeholder gets picked up
     this.requestUpdate();
     // TODO: don't do filtering in the controller

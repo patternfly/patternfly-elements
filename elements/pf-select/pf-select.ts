@@ -175,9 +175,16 @@ export class PfSelect extends LitElement {
       // case 'typeaheadmulti':
       //   return `${valueTextArray.length} ${this.itemsSelectedText}`
       case 'checkbox':
-        return valueTextArray.at(0)?.trim() || this.placeholder || slottedPlaceholderText || this.#internals.computedLabelText || 'Options';
+        return this.placeholder ||
+          slottedPlaceholderText ||
+          this.#internals.computedLabelText ||
+          'Options';
       default:
-        return valueTextArray.at(0)?.trim() || this.placeholder || slottedPlaceholderText || this.#internals.computedLabelText || 'Select a value';
+        return valueTextArray.at(0)?.trim() ||
+          this.placeholder ||
+          slottedPlaceholderText ||
+          this.#internals.computedLabelText ||
+          'Select a value';
     }
   }
 

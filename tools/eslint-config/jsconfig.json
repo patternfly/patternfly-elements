@@ -1,0 +1,6 @@
+{
+  "files": ["./*.js"],
+  "compilerOptions": {
+    "allowJs": true
+  }
+}

@@ -1,0 +1,33 @@
+import globals from 'globals';
+
+export default [
+  {
+    /** These files run in a nodejs context, mostly config files */
+    files: [
+      '*.cjs.js',
+      '*.cjs',
+      '.babelrc.js',
+      'commitlint.config.?([cm])js',
+      'karma.conf.?([cm])js',
+      'postcss.config.?([cm])js',
+      'rollup.config.?([cm])js',
+      'web-*.config.?([cm])js',
+      'workbox-config.?([cm])js',
+      'custom-elements-manifest.config.js',
+      'scripts/build.js',
+    ],
+    languageOptions: {
+      globals: { ...globals.node },
+    },
+  },
+  {
+    files: ['*.cjs'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'script',
+      globals: {
+        ...globals.node,
+      }
+    },
+  },
+];

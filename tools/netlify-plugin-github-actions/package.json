@@ -9,6 +9,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@octokit/core": "^6.0.1"
+    "@octokit/core": "^6.1.1"
   }
 }

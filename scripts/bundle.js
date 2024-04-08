@@ -40,7 +40,6 @@ export async function bundle({ outfile = 'elements/pfe.min.js' } = {}) {
     plugins: [
       litCssPlugin({
         cssnano: false,
-        uglify: false,
         filter: /\.css$/,
         transform: (str, { filePath }) =>
           postcss(postcssNesting())

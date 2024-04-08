@@ -36,6 +36,7 @@
     "eslint-plugin-jsonc": "^2.15.0",
     "eslint-plugin-lit-a11y": "^4.1.2",
     "eslint-plugin-no-only-tests": "^3.1.0",
-    "eslint-plugin-unicorn": "^52.0.0"
+    "eslint-plugin-unicorn": "^52.0.0",
+    "typescript-eslint": "^7.5.0"
   }
 }

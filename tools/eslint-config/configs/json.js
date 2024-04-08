@@ -1,14 +1,19 @@
 import jsonc from 'eslint-plugin-jsonc';
 import jsonSchemaValidator from 'eslint-plugin-json-schema-validator';
 
-import { States, compat } from '../lib.js';
+import { States, assign, compat } from '../lib.js';
 
 const jsonConfig = {
   files: [
     '**/*.json',
+  ],
+  ignores: [
     '!**/package-lock.json'
   ],
-  plugins: { jsonc, jsonSchemaValidator },
+  plugins: {
+    jsonc,
+    jsonSchemaValidator,
+  },
   rules: {
     'max-len': States.OFF,
     'comma-dangle': States.OFF,
@@ -49,5 +54,5 @@ export default [
     },
   },
   ...compat.extends('plugin:jsonc/recommended-with-jsonc')
-    .map(x => ({...x, ...jsonConfig}))
+    .map(assign(jsonConfig))
 ];

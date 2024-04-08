@@ -33,7 +33,7 @@
     "⚙️--UTIL": "❓ Manages the repo",
     "postinstall": "wireit",
     "clean": "git clean -dfX -e node_modules -e .husky",
-    "lint": "eslint .",
+    "lint": "eslint",
     "patch": "patch-package",
     "husky": "husky"
   },

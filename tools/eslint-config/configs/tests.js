@@ -1,6 +1,5 @@
 import globals from 'globals';
-import parser from '@typescript-eslint/parser';
-import typescript from '@typescript-eslint/eslint-plugin';
+import tseslint from 'typescript-eslint';
 import noOnlyTests from 'eslint-plugin-no-only-tests';
 import jsdoc from 'eslint-plugin-jsdoc';
 
@@ -33,13 +32,13 @@ export default [
   {
     files: ['**/*.spec.ts'],
     languageOptions: {
-      parser,
+      parser: tseslint.parser,
     },
     plugins: {
-      typescript,
+      '@typescript-eslint': tseslint.plugin,
     },
     rules: {
-      'typescript/no-non-null-assertion': States.OFF,
+      '@typescript-eslint/no-non-null-assertion': States.OFF,
     },
   },
 ];

@@ -1,39 +1,23 @@
 import pfe from '@patternfly/eslint-config-elements';
 
+import { States } from '@patternfly/eslint-config-elements';
+
 export default [
   ...pfe,
   {
     files: [
-      "./tools/create-element/**/*"
+      './tools/create-element/**/*'
     ],
     rules: {
-      "no-console": "off"
+      'no-console': States.OFF,
     }
   },
   {
     ignores: [
-      '!.eleventy.cjs',
-      '!eleventy.config.js',
-
-      '*.css',
       '*.d.ts',
-      '*.ico',
-      '*.jpeg',
-      '*.jpg',
-      '*.map',
-      '*.patch',
-      '*.png',
-      '*.sh',
       '*.spec.js',
-      '*.svg',
-      '*.toml',
-      '*.tsbuildinfo',
-      '*.txt',
-      '*.yml',
-      '*.yaml',
-      '*.woff*',
 
-      '_site/**/*',
+      '_site',
       'docs/_data/todos.json',
       'docs/demo.js',
       'docs/pfe.min.js',
@@ -41,14 +25,16 @@ export default [
       'docs/core',
       'docs/components',
 
-      'core/**/*.js',
-      'elements/**/*.js',
-      'tools/**/*.js',
+      // 'core/**/*.js',
+      // 'elements/**/*.js',
+      // 'tools/**/*.js',
+
+      'tools/create-element/templates/**/*',
 
       '!core/*/demo/*.js',
       '!elements/*/demo/*.js',
-
-      'tools/create-element/templates/**/*',
+      '!eleventy.config.js',
     ],
   }
 ];
+

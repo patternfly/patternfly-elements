@@ -9,6 +9,8 @@ import JSON_CONFIG from './configs/json.js';
 
 import { compat } from './lib.js';
 
+export { States } from './lib.js';
+
 export default [
   js.configs.recommended,
   ...compat.extends('plugin:lit-a11y/recommended'),

@@ -10,6 +10,7 @@ export default [
   {
 
     ignores: [
+      '.wireit',
       'custom-elements.json',
       'package-lock.json',
       'node_modules',

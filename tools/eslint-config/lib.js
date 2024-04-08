@@ -10,6 +10,11 @@ export const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
+export const assign = obj => target => ({
+  ...target,
+  ...obj,
+});
+
 export const States = {
   OFF: 'off',
   WARNING: 'warn',

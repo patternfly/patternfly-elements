@@ -14,8 +14,8 @@ describe('<pf-progress-stepper>', function() {
   it('it should upgrade', async function() {
     const el = await createFixture<PfProgressStepper>(html`<pf-progress-stepper></pf-progress-stepper>`);
     expect(el)
-      .to.be.an.instanceOf(customElements.get('pf-progress-stepper'))
-      .and
-      .to.be.an.instanceOf(PfProgressStepper);
+        .to.be.an.instanceOf(customElements.get('pf-progress-stepper'))
+        .and
+        .to.be.an.instanceOf(PfProgressStepper);
   });
 });

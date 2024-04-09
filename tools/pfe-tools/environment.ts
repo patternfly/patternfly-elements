@@ -1,3 +1,4 @@
+/* globals process */
 import { readdir, stat } from 'fs/promises';
 import { join } from 'path';
 

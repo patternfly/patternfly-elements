@@ -10,7 +10,7 @@ const defaults = {
   wrapper: 'nav',
   wrapperClass: 'toc',
   headingText: '',
-  headingTag: 'h2'
+  headingTag: 'h2',
 };
 
 function getParent(prev, current) {
@@ -71,8 +71,8 @@ class Toc {
     const $ = cheerio.load(htmlstring);
 
     const headings = $(selector)
-      .filter('[id]')
-      .filter(`:not([${ignoreAttribute}])`);
+        .filter('[id]')
+        .filter(`:not([${ignoreAttribute}])`);
 
     const ignoredElementsSelector = this.options.ignoredElements.join(',');
     headings.find(ignoredElementsSelector).remove();
@@ -114,5 +114,5 @@ module.exports = {
       const toc = new Toc(content, { ...options, ...opts });
       return toc.html();
     });
-  }
+  },
 };

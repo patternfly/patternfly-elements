@@ -25,7 +25,6 @@ export class DropdownItemChange extends Event {
  *      Optional slot for item description
  * @slot -
  *      Content for the dropdown item
- *
  * @cssprop {<length>} --pf-c-dropdown__menu-item--FontSize
  *          Dropdown item font size
  *          {@default `1rem`}
@@ -58,7 +57,10 @@ export class DropdownItemChange extends Event {
 export class PfDropdownItem extends LitElement {
   static readonly styles = [styles];
 
-  static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /**
    * The value associated with the dropdown item.

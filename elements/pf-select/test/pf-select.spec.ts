@@ -45,9 +45,9 @@ describe('<pf-select>', function() {
       element = await createFixture<PfSelect>(html`<pf-select></pf-select>`);
       const klass = customElements.get('pf-select');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfSelect);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfSelect);
     });
   });
 
@@ -320,7 +320,7 @@ describe('<pf-select>', function() {
         it('should NOT use checkbox role for options', async function() {
           const snapshot = await a11ySnapshot();
           expect(snapshot.children?.at(1)?.children?.filter(x => x.role === 'checkbox')?.length)
-            .to.equal(0);
+              .to.equal(0);
         });
       });
 
@@ -573,7 +573,7 @@ describe('<pf-select>', function() {
           name: 'Options',
           focused: true,
           autocomplete: 'both',
-          haspopup: 'listbox'
+          haspopup: 'listbox',
         });
       });
 
@@ -915,7 +915,7 @@ describe('<pf-select>', function() {
                             it('removes all chips', async function() {
                               const snapshot = await a11ySnapshot();
                               expect(snapshot.children?.find(x => x.role === 'button' && x.name === 'Close'))
-                                .to.be.undefined;
+                                  .to.be.undefined;
                             });
                             it('focuses the typeahead input', async function() {
                               const snapshot = await a11ySnapshot();

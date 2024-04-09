@@ -1,4 +1,4 @@
-import { Octokit } from "@octokit/core";
+import { Octokit } from '@octokit/core';
 
 export async function onSuccess({ netlifyConfig, inputs, utils }) {
   const {
@@ -20,25 +20,26 @@ export async function onSuccess({ netlifyConfig, inputs, utils }) {
   const octokit = new Octokit({ auth });
 
   try {
-    await octokit.request('POST /repos/{owner}/{repository}/actions/workflows/{workflowId}/dispatches', {
-      owner,
-      ref,
-      repository,
-      workflowId,
-      inputs: {
-        branch,
-        head,
-        issueNumber,
-        netlifyBuildContext,
-        netlifyBuildId,
-        deployPrimeUrl,
-        deployUrl,
-        url,
-      },
-    });
+    await octokit
+        .request('POST /repos/{owner}/{repository}/actions/workflows/{workflowId}/dispatches', {
+          owner,
+          ref,
+          repository,
+          workflowId,
+          inputs: {
+            branch,
+            head,
+            issueNumber,
+            netlifyBuildContext,
+            netlifyBuildId,
+            deployPrimeUrl,
+            deployUrl,
+            url,
+          },
+        });
   } catch (error) {
     if (error.status === 404) {
-      utils.build.failPlugin(error.response.data.message + '. See' + error.response.data.documentation_url);
+      utils.build.failPlugin(`${error.response.data.message}. See${error.response.data.documentation_url}`);
     } else {
       utils.build.failPlugin(error.message);
     }

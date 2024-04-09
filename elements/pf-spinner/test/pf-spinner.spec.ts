@@ -10,9 +10,9 @@ describe('<pf-spinner>', function() {
   it('should upgrade', async function() {
     const element = await createFixture<PfSpinner>(html`<pf-spinner>Loading...</pf-spinner>`);
     expect(element, 'pf-spinner should be an instance of PfeSpinner')
-      .to.be.an.instanceOf(customElements.get('pf-spinner'))
-      .and
-      .to.be.an.instanceOf(PfSpinner);
+        .to.be.an.instanceOf(customElements.get('pf-spinner'))
+        .and
+        .to.be.an.instanceOf(PfSpinner);
   });
 
   it('should properly initialize the component', async function() {

@@ -19,13 +19,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const $$ = $({ stderr: 'inherit' });
 
 /**
-* Available filenames.
-*
-* To add a new file to the element template,
-* 1. Add a key to this enum
-* 2. Add the template file's path to `TEMPLATE_FILE_PATHS`
-* 3. Add the output path to `getFilePathsRelativeToPackageDir`, interpolating as needed.
-*/
+ * Available filenames.
+ *
+ * To add a new file to the element template,
+ * 1. Add a key to this enum
+ * 2. Add the template file's path to `TEMPLATE_FILE_PATHS`
+ * 3. Add the output path to `getFilePathsRelativeToPackageDir`, interpolating as needed.
+ */
 enum FileKey {
   component = 'component',
   demo = 'demo',
@@ -35,7 +35,7 @@ enum FileKey {
   readme = 'readme',
   style = 'style',
   test = 'test',
-  e2e = 'e2e',
+  e2e = 'e2e'
 }
 
 enum InterpolationKey {
@@ -52,7 +52,7 @@ enum InterpolationKey {
   /** e.g. 'pf-jazz-hands' */
   tagName = 'tagName',
   /** e.g. 'pf' */
-  tagPrefix = 'tagPrefix',
+  tagPrefix = 'tagPrefix'
 }
 
 /** Available interpolation keys */
@@ -141,6 +141,7 @@ async function writeComponentFile(key: FileKey, options: GenerateElementOptions)
   await writeFile(PATH, OUTPUT, 'utf-8');
 
   if (!options.silent) {
+    // eslint-disable-next-line no-console
     console.log(`  ✏️  ${green(relative(options.directory, PATH))}`);
   }
 }
@@ -167,6 +168,7 @@ export class PackageJSONError extends Error {}
  * Generate an Element
  */
 export async function generateElement(options: GenerateElementOptions): Promise<void> {
+  // eslint-disable-next-line no-console
   const log = (...args: unknown[]) => void (!options?.silent && console.log(...args));
   const start = performance.now();
   if (!options || !options.tagName) {
@@ -178,7 +180,8 @@ export async function generateElement(options: GenerateElementOptions): Promise<
   } else if (!await shouldWriteToDir(options)) {
     return log(red`Skipping`, 'file write!');
   } else {
-    const packageJsonPath = await getElementPackageJsonPath(options) ?? './**/package.json ./package.json';
+    const packageJsonPath =
+      await getElementPackageJsonPath(options) ?? './**/package.json ./package.json';
     if (!await exists(packageJsonPath)) {
       throw new PackageJSONError(`Could not find package at ${packageJsonPath}`);
     }

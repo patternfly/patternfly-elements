@@ -15,20 +15,20 @@ export class PfChipRemoveEvent extends Event {
 
 /**
  * A **chip** is used to communicate a value or a set of attribute-value pairs within workflows that involve filtering a set of objects.
- *
  * @fires {ChipRemoveEvent} remove - Fires when chip is removed
  * @fires {Event} click - when close button is clicked
- *
  * @slot
  *      chip text
- *
  * @csspart text - container for chip text
  */
 @customElement('pf-chip')
 export class PfChip extends LitElement {
   static readonly styles = [shared, styles];
 
-  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /**
    * Accessible label for close button

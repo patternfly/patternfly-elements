@@ -35,13 +35,10 @@ const REMAINING_RE = /\$\{\s*remaining\s*\}/g;
 
 /**
  * A **chip group** is a collection of chips that can be grouped by category and used to represent one or more values assigned to a single attribute. When value of numChips is exceeded, additional chips will be hidden using an overflow chip.
- *
  * @fires expand - Fires when chip group is expanded to show all chips
  * @fires remove - Fires when chip group is closed/removed
- *
  * @slot category-name
  *      Category name text for chip group category. If this prop is supplied chip group with have a label and category styling applied
- *
  * @slot
  *      Should be <Chip> elements.
  */
@@ -49,7 +46,10 @@ const REMAINING_RE = /\$\{\s*remaining\s*\}/g;
 export class PfChipGroup extends LitElement {
   static readonly styles = [shared, styles];
 
-  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /**
    * Accessible label for chip group that does not have a category name
@@ -142,10 +142,10 @@ export class PfChipGroup extends LitElement {
   }
 
   override updated(changed: PropertyValues<this>) {
-    if (changed.has('accessibleCloseLabel') ||
-        changed.has('numChips') ||
-        changed.has('closeable') ||
-        changed.has('open')) {
+    if (changed.has('accessibleCloseLabel')
+        || changed.has('numChips')
+        || changed.has('closeable')
+        || changed.has('open')) {
       this.#handleChipsChanged();
     }
   }
@@ -187,8 +187,8 @@ export class PfChipGroup extends LitElement {
         this._overflowChip,
         this._button,
       ].filter((x): x is PfChip => !!x);
-      if (oldButtons.length !== this.#buttons.length ||
-          !oldButtons.every((element, index) => element === this.#buttons[index])) {
+      if (oldButtons.length !== this.#buttons.length
+          || !oldButtons.every((element, index) => element === this.#buttons[index])) {
         this.#tabindex.updateItems();
       }
       this.#updateOverflow();

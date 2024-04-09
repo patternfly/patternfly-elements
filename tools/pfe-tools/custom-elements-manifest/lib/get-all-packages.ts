@@ -32,12 +32,12 @@ function loadPackage(packagePath: string): PackageJSON | void {
 
 function findPackages(packageSpecs: string[], rootDirectory: string): PackageRecord[] {
   return packageSpecs
-    .flatMap(pkgGlob =>
-      (hasMagic(pkgGlob) ?
+      .flatMap(pkgGlob =>
+        (hasMagic(pkgGlob) ?
           globSync(join(rootDirectory, pkgGlob), { nodir: false })
           : [join(rootDirectory, pkgGlob)]))
-    .map(location => ({ location, package: loadPackage(location) }))
-    .filter((x): x is PackageRecord => !!x.package?.name);
+      .map(location => ({ location, package: loadPackage(location) }))
+      .filter((x): x is PackageRecord => !!x.package?.name);
 }
 
 export function getAllPackages(rootDir: string): PackageRecord[] {

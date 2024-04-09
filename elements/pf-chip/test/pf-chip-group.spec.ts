@@ -23,9 +23,9 @@ describe('<pf-chip-group>', async function() {
       element = await createFixture<PfChipGroup>(html`<pf-chip-group></pf-chip-group>`);
       const klass = customElements.get('pf-chip-group');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfChipGroup);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfChipGroup);
     });
   });
 

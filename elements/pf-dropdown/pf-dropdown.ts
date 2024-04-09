@@ -31,13 +31,10 @@ export class PfDropdownSelectEvent extends Event {
 /**
  * A **dropdown** presents a menu of actions or links in a constrained space that
  * will trigger a process or navigate to a new location.
- *
  * @slot - Must contain one or more `<pf-dropdown-item>` or `<pf-dropdown-group>`
  * @slot toggle - Custom toggle button
  * @slot menu - when using a custom toggle, you must slot a `<pf-dropdown-menu>` in alongside it
- *
  * @csspart menu - The dropdown menu wrapper
- *
  * @cssprop {<length>} --pf-c-dropdown__menu--PaddingTop
  *          Dropdown top padding
  *          {@default `0.5rem`}
@@ -53,7 +50,6 @@ export class PfDropdownSelectEvent extends Event {
  * @cssprop {<length>} --pf-c-dropdown__menu--Top
  *          Dropdown top
  *          {@default `100% + 0.25rem`}
- *
  * @fires {PfDropdownSelectEvent} select - when a user select dropdown value
  * @fires open - when the dropdown toggles open
  * @fires close - when the dropdown toggles closed
@@ -62,7 +58,11 @@ export class PfDropdownSelectEvent extends Event {
 export class PfDropdown extends LitElement {
   static readonly styles = [styles];
 
-  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+
 
   /**
    * When disabled, the dropdown can still be toggled open and closed via keyboard, but menu items cannot be activated.
@@ -156,7 +156,8 @@ export class PfDropdown extends LitElement {
     } else if (!menu) {
       this.#logger.warn('no menu found');
       return false;
-    } else if (![toggle, menu].map(x => this.shadowRoot?.contains(x)).every((p, _, a) => p === a[0])) {
+    } else if (![toggle, menu].map(x => this.shadowRoot?.contains(x))
+        .every((p, _, a) => p === a[0])) {
       this.#logger.warn('toggle and menu must be located in the same root');
       return false;
     } else {
@@ -219,11 +220,11 @@ export class PfDropdown extends LitElement {
     if (this.expanded) {
       const root = this.getRootNode();
       const [menu] = this._menuElements;
-      if (root instanceof ShadowRoot ||
-          root instanceof Document &&
-          event.relatedTarget instanceof PfDropdownItem &&
-          menu instanceof PfDropdownMenu &&
-          !menu.items.includes(event.relatedTarget)
+      if (root instanceof ShadowRoot
+          || root instanceof Document
+          && event.relatedTarget instanceof PfDropdownItem
+          && menu instanceof PfDropdownMenu
+          && !menu.items.includes(event.relatedTarget)
       ) {
         this.hide();
       }

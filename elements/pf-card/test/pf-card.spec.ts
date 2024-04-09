@@ -11,9 +11,9 @@ describe('<pf-card>', function() {
 
   it('should upgrade', async function() {
     expect(await createFixture<PfCard>(html`<pf-card></pf-card>`))
-      .to.be.an.instanceof(customElements.get('pf-card'))
-      .and
-      .to.be.an.instanceof(PfCard);
+        .to.be.an.instanceof(customElements.get('pf-card'))
+        .and
+        .to.be.an.instanceof(PfCard);
   });
 
   describe('with header and footer content', function() {
@@ -60,9 +60,9 @@ describe('<pf-card>', function() {
           const { height } = element.getBoundingClientRect();
           expect(origHeight, 'height').to.be.lessThan(height);
           expect(getComputedStyle(element.querySelector('p')!, 'body font-size').getPropertyValue('font-size'))
-            .to.equal('16px');
+              .to.equal('16px');
           expect(getComputedStyle(element.querySelector('[slot=footer]')!, 'footer font-size').getPropertyValue('font-size'))
-            .to.equal('16px');
+              .to.equal('16px');
         });
       });
     });

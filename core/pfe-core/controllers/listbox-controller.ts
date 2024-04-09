@@ -1,6 +1,8 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
-export interface ListboxAccessibilityController<Item extends HTMLElement> extends ReactiveController {
+export interface ListboxAccessibilityController<
+  Item extends HTMLElement
+> extends ReactiveController {
   items: Item[];
   activeItem?: Item;
   nextItem?: Item;
@@ -55,10 +57,14 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       throw new Error('ListboxController must be constructed with `ListboxController.of()`');
     }
     if (!(host instanceof HTMLElement) && typeof _options.getHTMLElement !== 'function') {
-      throw new Error('ListboxController requires the host to be an HTMLElement, or for the initializer to include a `getHTMLElement()` function');
+      throw new Error(
+        `ListboxController requires the host to be an HTMLElement, or for the initializer to include a \`getHTMLElement()\` function`,
+      );
     }
     if (!_options.a11yController) {
-      throw new Error('ListboxController requires an additional keyboard accessibility controller. Provide either a RovingTabindexController or an ActiveDescendantController');
+      throw new Error(
+        `ListboxController requires an additional keyboard accessibility controller. Provide either a RovingTabindexController or an ActiveDescendantController`,
+      );
     }
     ListboxController.instances.set(host, this);
     this.host.addController(this);
@@ -145,7 +151,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   }
 
   #getEventOption(event: Event): Item | undefined {
-    return event.composedPath().find(node => this.#items.includes(node as Item)) as Item | undefined;
+    return event
+        .composedPath()
+        .find(node => this.#items.includes(node as Item)) as Item | undefined;
   }
 
 
@@ -258,7 +266,8 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    */
   #optionsChanged(oldOptions: Item[]) {
     const setSize = this.#items.length;
-    if (setSize !== oldOptions.length || !oldOptions.every((element, index) => element === this.#items[index])) {
+    if (setSize !== oldOptions.length
+     || !oldOptions.every((element, index) => element === this.#items[index])) {
       this._options.a11yController.updateItems(this.options);
     }
   }
@@ -269,7 +278,11 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   #updateSingleselect() {
     if (!this._options.multi && !this.disabled) {
       this.#getEnabledOptions()
-        .forEach(option => this._options.requestSelect(option, option === this._options.a11yController.activeItem));
+          .forEach(option =>
+            this._options.requestSelect(
+              option,
+              option === this._options.a11yController.activeItem,
+            ));
     }
   }
 
@@ -284,12 +297,16 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   ) {
     if (referenceItem && this._options.multi && !this.disabled && currentItem) {
       // select all options between active descendant and target
-      const [start, end] = [this.options.indexOf(referenceItem), this.options.indexOf(currentItem)].sort();
+      const [start, end] = [
+        this.options.indexOf(referenceItem),
+        this.options.indexOf(currentItem),
+      ].sort();
       const options = [...this.options].slice(start, end + 1);
 
       // by default CTRL+A will select all options
       // if all options are selected, CTRL+A will deselect all options
-      const allSelected = this.#getEnabledOptions(options).filter(option => !this._options.isSelected(option))?.length === 0;
+      const allSelected = this.#getEnabledOptions(options)
+          .filter(option => !this._options.isSelected(option))?.length === 0;
 
       // whether options will be selected (true) or deselected (false)
       const selected = ctrlA ? !allSelected : this._options.isSelected(referenceItem);

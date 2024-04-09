@@ -12,7 +12,10 @@ import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 
 import { getPfeConfig, type PfeConfig } from '../config.js';
-import { importMapGeneratorPlugin, type Options as ImportMapOptions } from './plugins/import-map-generator.js';
+import {
+  importMapGeneratorPlugin,
+  type Options as ImportMapOptions,
+} from './plugins/import-map-generator.js';
 
 import { pfeDevServerPlugin } from './plugins/pfe-dev-server.js';
 
@@ -44,9 +47,9 @@ function normalizeOptions(options?: PfeDevServerConfigOptions) {
    * Edge/Corner cases: all other cases must set the `rootDir` option themselves so as to avoid 404s
    */
   config.rootDir = options?.rootDir ?? fileURLToPath(new URL('../../..', import.meta.url))
-    .replace(/node_modules\/$/, '/')
-    .replace(/\/node_modules$/, '/')
-    .replace('//', '/');
+      .replace(/node_modules\/$/, '/')
+      .replace(/\/node_modules$/, '/')
+      .replace('//', '/');
   config.importMapOptions ??= {} as PfeDevServerConfigOptions['importMapOptions'];
   config.importMapOptions!.providers ??= {};
   config.site = { ...config.site, ...options?.site ?? {} };
@@ -54,7 +57,7 @@ function normalizeOptions(options?: PfeDevServerConfigOptions) {
   config.watchFiles ??= '{elements,core}/**/*.{css,html}';
   config.litcssOptions ??= {
     include: /\.css$/,
-    exclude: /(((fonts|demo)|(demo\/.*))\.css$)|(.*(-lightdom.css$))/
+    exclude: /(((fonts|demo)|(demo\/.*))\.css$)|(.*(-lightdom.css$))/,
   };
   return config as Required<PfeDevServerConfigOptions> & { site: Required<PfeConfig['site']> };
 }
@@ -154,8 +157,8 @@ export async function getPatternflyIconNodemodulesImports(rootUrl: string) {
 
   const specs = await Promise.all(dirs.flatMap(dir =>
     readdir(new URL(`./node_modules/@patternfly/icons/${dir}`, rootUrl))
-      .then(files => files.filter(x => x.endsWith('.js')))
-      .then(icons => icons.flatMap(icon => `@patternfly/icons/${dir}/${icon}`))
+        .then(files => files.filter(x => x.endsWith('.js')))
+        .then(icons => icons.flatMap(icon => `@patternfly/icons/${dir}/${icon}`))
   ));
 
   return Object.fromEntries(specs.flat().map(spec => [spec, `./node_modules/${spec}`]));

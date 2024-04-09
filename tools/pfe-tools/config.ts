@@ -1,3 +1,5 @@
+/* globals process */
+
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import slugify from 'slugify';
@@ -35,7 +37,7 @@ export interface PfeConfig {
 }
 
 const SITE_DEFAULTS: Required<SiteOptions> = {
-  description: 'PatternFly Elements: A set of community-created web components based on PatternFly design.',
+  description: `PatternFly Elements: A set of community-created web components based on PatternFly design.`,
   favicon: '/docs/images/favicon.ico',
   logoUrl: '/docs/images/pf-logo-small.svg',
   stylesheets: [],
@@ -67,8 +69,8 @@ export function getPfeConfig(rootDir = process.cwd()): Required<PfeConfig> {
     ...jsonConfig,
     site: {
       ...SITE_DEFAULTS,
-      ...jsonConfig.site ?? {}
-    }
+      ...jsonConfig.site ?? {},
+    },
   };
 }
 
@@ -82,7 +84,7 @@ function getSlugsMap(rootDir: string) {
     const slugs = new Map(Object.entries(config.aliases).map(reverseSlugifyObject));
     slugsConfigMap.set(rootDir, { slugs, config });
   }
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
   return slugsConfigMap.get(rootDir)!;
 }
 

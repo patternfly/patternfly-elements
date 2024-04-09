@@ -1,22 +1,18 @@
-import pfe from '@patternfly/eslint-config-elements';
-
 import { States } from '@patternfly/eslint-config-elements';
 
-export default [
+import tseslint from 'typescript-eslint';
+import pfe from '@patternfly/eslint-config-elements';
+import pfePlugin from '@patternfly/eslint-plugin-elements';
+
+export default tseslint.config(
   ...pfe,
   {
-    files: [
-      './tools/create-element/**/*'
-    ],
-    rules: {
-      'no-console': States.OFF,
-    }
-  },
-  {
+    name: 'local/ignores',
     ignores: [
-      '*.d.ts',
-      '*.spec.js',
-
+      '**/*.d.ts',
+      '**/*.(spec|e2e).js',
+      'elements/**/*.js',
+      'core/**/*.js',
       '_site',
       'docs/_data/todos.json',
       'docs/demo.js',
@@ -24,17 +20,37 @@ export default [
       'docs/bundle.js',
       'docs/core',
       'docs/components',
-
-      // 'core/**/*.js',
-      // 'elements/**/*.js',
-      // 'tools/**/*.js',
-
       'tools/create-element/templates/**/*',
-
-      '!core/*/demo/*.js',
-      '!elements/*/demo/*.js',
-      '!eleventy.config.js',
+      'tools/pfe-tools/*.js',
+      'tools/pfe-tools/custom-elements-manifest/*.js',
+      'tools/pfe-tools/custom-elements-manifest/**/*.js',
+      'tools/pfe-tools/dev-server/*.js',
+      'tools/pfe-tools/dev-server/**/*.js',
+      'tools/pfe-tools/react/*.js',
+      'tools/pfe-tools/react/**/*.js',
+      'tools/pfe-tools/test/*.js',
+      'tools/pfe-tools/test/**/*.js',
     ],
-  }
-];
+  },
+
+  {
+    name: 'local/elements/package.json',
+    files: ['elements/package.json'],
+    plugins: { '@patternfly/elements': pfePlugin },
+    rules: {
+      '@patternfly/elements/no-missing-package-exports': [States.ERROR, {
+        matches: ['elements/*/pf-*.js', 'elements/*/Base*.js'],
+      }],
+    },
+  },
+  {
+    name: 'local/tools/create-element',
+    files: [
+      'tools/create-element/**/*.js',
+    ],
+    rules: {
+      'no-console': States.OFF,
+    },
+  },
+);
 

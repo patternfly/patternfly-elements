@@ -1,22 +1,41 @@
+import js from '@eslint/js';
 import globals from 'globals';
 import litA11y from 'eslint-plugin-lit-a11y';
 import pfe from '@patternfly/eslint-plugin-elements';
 import unicorn from 'eslint-plugin-unicorn';
-import jsdoc from 'eslint-plugin-jsdoc'
+import jsdoc from 'eslint-plugin-jsdoc';
+import stylistic from '@stylistic/eslint-plugin';
 
 import { States } from '../lib.js';
 
 export default [
+  { name: 'eslint/recommended', ...js.configs.recommended },
   {
-
-    ignores: [
-      '.wireit',
-      'custom-elements.json',
-      'package-lock.json',
-      'node_modules',
-      '**/node_modules/**/*',
+    name: 'jsdoc/flat/recommended-typescript',
+    files: ['**/*.ts'],
+    ...jsdoc.configs['flat/recommended-typescript'],
+  },
+  {
+    name: 'jsdoc/flat/recommended-typescript-flavor',
+    files: ['**/*.js', '**/*.cjs', '**/*.mjs'],
+    ...jsdoc.configs['flat/recommended-typescript-flavor'],
+  },
+  {
+    name: '@patternfly/elements',
+    files: [
+      '**/*.js',
+      '**/*.ts',
+      '**/*.jsx',
+      '**/*.tsx',
+      '**/*.mjs',
+      '**/*.mts',
+      '**/*.mjsx',
+      '**/*.mtsx',
+      '**/*.cjs',
+      '**/*.cts',
+      '**/*.cjsx',
+      '**/*.ctsx',
     ],
-
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
@@ -24,117 +43,39 @@ export default [
         ...globals.browser,
       },
     },
-
     plugins: {
       'lit-a11y': litA11y,
+      '@stylistic': stylistic,
+      '@patternfly/elements': pfe,
       jsdoc,
-      pfe,
       unicorn,
     },
-
     rules: {
+      '@patternfly/elements/no-lit-decorators-index-import': States.ERROR,
 
-      'no-cond-assign': States.OFF,
-      'no-irregular-whitespace': States.ERROR,
-      'no-unexpected-multiline': States.ERROR,
-      'jsdoc/valid-jsdoc': [
-        States.ERROR,
-        {
-          requireParamDescription: false,
-          requireReturnDescription: false,
-          requireReturn: false,
-          prefer: {
-            returns: 'return'
-          }
-        }
-      ],
-      'guard-for-in': States.ERROR,
-      'no-caller': States.ERROR,
-      'no-extra-bind': States.ERROR,
-      'no-invalid-this': States.ERROR,
-      'no-multi-spaces': States.ERROR,
-      'no-multi-str': States.ERROR,
-      'no-new-wrappers': States.ERROR,
-      'no-throw-literal': States.ERROR,
-      'no-with': States.ERROR,
-      'array-bracket-newline': States.OFF,
-      'array-bracket-spacing': [ States.ERROR, 'never' ],
-      'array-element-newline': States.OFF,
-      'camelcase': [ States.ERROR, { properties: 'never' } ],
-      'computed-property-spacing': States.ERROR,
-      'eol-last': States.ERROR,
-      'func-call-spacing': States.ERROR,
-
-      'key-spacing': States.ERROR,
-      'keyword-spacing': States.ERROR,
-
-      'no-array-constructor': States.ERROR,
-      'no-mixed-spaces-and-tabs': States.ERROR,
-      'no-multiple-empty-lines': [ States.ERROR, { max: 2 } ],
-      "no-new-object": States.ERROR,
-      'no-tabs': States.ERROR,
-      'no-trailing-spaces': States.ERROR,
-      'one-var': [
-        States.ERROR,
-        {
-          'var': States.NEVER,
-          'let': States.NEVER,
-          'const': States.NEVER
-        }
-      ],
-      'padded-blocks': [ States.ERROR, States.NEVER ],
-      'quote-props': [ States.ERROR, 'consistent' ],
-      'quotes': [
-        States.ERROR,
-        'single',
-        {
-          'allowTemplateLiterals': true
-        }
-      ],
-      'semi': States.ERROR,
-      'semi-spacing': States.ERROR,
-      'space-before-blocks': States.ERROR,
-      'spaced-comment': [ States.ERROR, States.ALWAYS ],
-      'switch-colon-spacing': States.ERROR,
-      'constructor-super': States.ERROR,
-      'generator-star-spacing': [ States.ERROR, 'after' ],
-      'no-new-symbol': States.ERROR,
-      'no-this-before-super': States.ERROR,
-      'prefer-rest-params': States.ERROR,
-      'rest-spread-spacing': States.ERROR,
-      'yield-star-spacing': [ States.ERROR, 'after' ],
-
-      // brevity
-      'arrow-parens': [States.ERROR, 'as-needed'],
-      // brevity
-      'brace-style': [States.ERROR, '1tbs', { allowSingleLine: false }],
-      // clarity
-      'block-spacing': [States.ERROR, States.ALWAYS],
-
-      // git diffs
-      'comma-dangle': [States.ERROR, {
+      '@stylistic/array-bracket-newline': States.OFF,
+      '@stylistic/array-bracket-spacing': [States.ERROR, 'never'],
+      '@stylistic/array-element-newline': States.OFF,
+      '@stylistic/arrow-parens': [States.ERROR, 'as-needed'],
+      '@stylistic/block-spacing': [States.ERROR, States.ALWAYS],
+      '@stylistic/brace-style': [States.ERROR, '1tbs', { allowSingleLine: false }],
+      '@stylistic/comma-dangle': [States.ERROR, {
         arrays: 'always-multiline',
         objects: 'always-multiline',
         imports: 'always-multiline',
         exports: 'always-multiline',
         functions: States.IGNORE,
       }],
-
-      'comma-spacing': States.ERROR,
-      'comma-style': [States.ERROR, 'last'],
-      'curly': [States.ERROR, 'all'],
-      'eqeqeq': [States.ERROR, States.ALWAYS, { null: States.IGNORE }],
-
-      'indent': [States.ERROR, 2, {
-        CallExpression: { arguments: 2 },
-        FunctionDeclaration: {
-          body: 1,
-          parameters: 2,
-        },
-        FunctionExpression: {
-          body: 1,
-          parameters: 2,
-        },
+      '@stylistic/comma-spacing': States.ERROR,
+      '@stylistic/comma-style': [States.ERROR, 'last'],
+      '@stylistic/computed-property-spacing': States.ERROR,
+      '@stylistic/eol-last': States.ERROR,
+      '@stylistic/func-call-spacing': States.ERROR,
+      '@stylistic/generator-star-spacing': [States.ERROR, 'after'],
+      '@stylistic/indent': [States.ERROR, 2, {
+        CallExpression: { arguments: 'first' },
+        FunctionDeclaration: { body: 1, parameters: 'first' },
+        FunctionExpression: { body: 1, parameters: 'first' },
         MemberExpression: 2,
         ObjectExpression: 1,
         flatTernaryExpressions: true,
@@ -147,76 +88,154 @@ export default [
           `TaggedTemplateExpression[tag.name="html"] > TemplateLiteral ArrowFunctionExpression > BlockStatement`,
         ],
       }],
-
-      'linebreak-style': [States.ERROR, 'unix'],
-      'lines-between-class-members': [States.ERROR, States.ALWAYS, { exceptAfterSingleLine: true }],
-
-      'max-len': [States.ERROR, 100, {
+      '@stylistic/key-spacing': States.ERROR,
+      '@stylistic/keyword-spacing': States.ERROR,
+      '@stylistic/linebreak-style': [States.ERROR, 'unix'],
+      '@stylistic/lines-between-class-members': [States.ERROR, States.ALWAYS, {
+        exceptAfterSingleLine: true,
+      }],
+      '@stylistic/max-len': [States.ERROR, 100, {
         tabWidth: 2,
         ignoreComments: true,
         ignoreTemplateLiterals: true,
         ignorePattern: '^import (type )?\\{? ?\\w+ ?\\}? from \'(.*)\';$',
         ignoreUrls: true,
       }],
-
-      'new-cap': States.OFF,
-
-      'no-unused-vars': [States.WARNING, { ignoreRestSiblings: true }],
-      'no-var': States.ERROR,
-      'no-console': States.ERROR,
-      'no-extend-native': States.ERROR,
-
-      'object-curly-spacing': [States.ERROR, States.ALWAYS],
-
-      'operator-linebreak': [States.ERROR, 'after', {
+      '@stylistic/no-mixed-spaces-and-tabs': States.ERROR,
+      '@stylistic/no-multi-spaces': States.ERROR,
+      '@stylistic/no-multiple-empty-lines': [States.ERROR, { max: 2 }],
+      '@stylistic/no-tabs': States.ERROR,
+      '@stylistic/no-trailing-spaces': States.ERROR,
+      '@stylistic/object-curly-spacing': [States.ERROR, States.ALWAYS],
+      '@stylistic/operator-linebreak': [States.ERROR, 'before', {
         overrides: {
+          '=': 'after',
           '?': 'after',
-          ':': 'before'
-        }
+          ':': 'before',
+        },
+      }],
+      '@stylistic/padded-blocks': [States.ERROR, States.NEVER],
+      '@stylistic/quote-props': [States.ERROR, 'consistent'],
+      '@stylistic/quotes': [States.ERROR, 'single', {
+        allowTemplateLiterals: true,
+      }],
+      '@stylistic/rest-spread-spacing': States.ERROR,
+      '@stylistic/semi': States.ERROR,
+      '@stylistic/semi-spacing': States.ERROR,
+      '@stylistic/space-before-blocks': States.ERROR,
+      '@stylistic/space-before-function-paren': [States.ERROR, {
+        asyncArrow: States.ALWAYS,
+        anonymous: States.NEVER,
+        named: States.NEVER,
+      }],
+      '@stylistic/space-infix-ops': States.ERROR,
+      '@stylistic/space-unary-ops': States.ERROR,
+      '@stylistic/spaced-comment': [States.ERROR, States.ALWAYS, { markers: ['/'] }],
+      '@stylistic/switch-colon-spacing': States.ERROR,
+      '@stylistic/template-curly-spacing': States.ERROR,
+      '@stylistic/template-tag-spacing': States.ERROR,
+      '@stylistic/yield-star-spacing': [States.ERROR, 'after'],
+
+      'jsdoc/require-jsdoc': [States.WARNING, {
+        publicOnly: true,
+        enableFixer: false,
+      }],
+      'jsdoc/require-param': [States.WARNING, {
+        enableFixer: false,
+      }],
+      'jsdoc/require-returns': [States.OFF],
+      'jsdoc/check-tag-names': [States.WARNING, {
+        typed: true,
+        definedTags: [
+          'attr',
+          'attribute',
+          'cssprop',
+          'cssproperty',
+          'fires',
+          'slot',
+          'csspart',
+        ],
       }],
 
-      'prefer-const': States.ERROR,
-      'prefer-destructuring': States.ERROR,
-      'prefer-object-spread': States.ERROR,
-      'prefer-promise-reject-errors': States.OFF,
-      'prefer-spread': States.ERROR,
-      'prefer-template': States.ERROR,
-
-      'jsdoc/require-jsdoc': States.OFF,
-
-      'jsdoc/valid-jsdoc': States.OFF,
-
-      'spaced-comment': [States.ERROR, States.ALWAYS, { markers: ['/'] }],
-      'space-before-function-paren': [
-        States.ERROR,
-        {
-          asyncArrow:States.ALWAYS,
-          anonymous: States.NEVER,
-          named: States.NEVER,
-        }
-      ],
-      'space-infix-ops': States.ERROR,
-      'space-unary-ops': States.ERROR,
-
-      'template-tag-spacing': States.ERROR,
-      'template-curly-spacing': States.ERROR,
+      'lit-a11y/accessible-name': States.ERROR,
+      'lit-a11y/alt-text': States.ERROR,
+      'lit-a11y/anchor-is-valid': States.ERROR,
+      'lit-a11y/aria-activedescendant-has-tabindex': States.ERROR,
+      'lit-a11y/aria-attr-valid-value': States.ERROR,
+      'lit-a11y/aria-attrs': States.ERROR,
+      'lit-a11y/aria-role': States.ERROR,
+      'lit-a11y/aria-unsupported-elements': States.ERROR,
+      'lit-a11y/autocomplete-valid': States.ERROR,
+      'lit-a11y/click-events-have-key-events': States.ERROR,
+      'lit-a11y/definition-list': States.ERROR,
+      'lit-a11y/heading-hidden': States.ERROR,
+      'lit-a11y/iframe-title': States.ERROR,
+      'lit-a11y/img-redundant-alt': States.ERROR,
+      'lit-a11y/list': States.ERROR,
+      'lit-a11y/mouse-events-have-key-events': States.ERROR,
+      'lit-a11y/no-access-key': States.ERROR,
+      'lit-a11y/no-aria-slot': States.ERROR,
+      'lit-a11y/no-autofocus': States.ERROR,
+      'lit-a11y/no-distracting-elements': States.ERROR,
+      'lit-a11y/no-invalid-change-handler': States.OFF,
+      'lit-a11y/no-redundant-role': States.ERROR,
+      'lit-a11y/obj-alt': States.ERROR,
+      'lit-a11y/role-has-required-aria-attrs': States.ERROR,
+      'lit-a11y/role-supports-aria-attr': States.ERROR,
+      'lit-a11y/scope': States.ERROR,
+      'lit-a11y/tabindex-no-positive': States.ERROR,
+      'lit-a11y/valid-lang': States.OFF,
 
       'unicorn/no-for-loop': States.ERROR,
       'unicorn/no-instanceof-array': States.ERROR,
       'unicorn/prefer-add-event-listener': States.ERROR,
-      'unicorn/prefer-array-flat-map': States.ERROR,
       'unicorn/prefer-array-flat': States.ERROR,
+      'unicorn/prefer-array-flat-map': States.ERROR,
       'unicorn/prefer-array-some': States.ERROR,
       'unicorn/prefer-includes': States.ERROR,
       'unicorn/prefer-keyboard-event-key': States.ERROR,
       'unicorn/prefer-modern-dom-apis': States.ERROR,
       'unicorn/prefer-object-from-entries': States.ERROR,
 
-      'pfe/no-lit-decorators-index-import': States.ERROR,
+      'camelcase': [States.ERROR, { properties: 'never' }],
+      'constructor-super': States.ERROR,
+      'curly': [States.ERROR, 'all'],
+      'eqeqeq': [States.ERROR, States.ALWAYS, { null: States.IGNORE }],
+      'guard-for-in': States.ERROR,
+      'new-cap': States.OFF,
+      'no-array-constructor': States.ERROR,
+      'no-caller': States.ERROR,
+      'no-cond-assign': States.OFF,
+      'no-console': States.ERROR,
+      'no-extend-native': States.ERROR,
+      'no-extra-bind': States.ERROR,
+      'no-irregular-whitespace': States.ERROR,
+      'no-multi-str': States.ERROR,
+      'no-new-wrappers': States.ERROR,
+      'no-object-constructor': States.ERROR,
+      'no-this-before-super': States.ERROR,
+      'no-throw-literal': States.ERROR,
+      'no-unexpected-multiline': States.ERROR,
+      'no-unused-vars': [States.WARNING, { ignoreRestSiblings: true }],
+      'no-var': States.ERROR,
+      'no-with': States.ERROR,
+      'one-var': [States.ERROR, {
+        var: States.NEVER,
+        let: States.NEVER,
+        const: States.NEVER,
+      }],
+      'prefer-const': States.ERROR,
+      'prefer-destructuring': States.ERROR,
+      'prefer-object-spread': States.ERROR,
+      'prefer-promise-reject-errors': States.OFF,
+      'prefer-rest-params': States.ERROR,
+      'prefer-spread': States.ERROR,
+      'prefer-template': States.ERROR,
     },
   },
   {
-    files: ['*.mjs'],
+    name: '@patternfly/elements/mjs',
+    files: ['*.mjs', '**/*.mjs'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',

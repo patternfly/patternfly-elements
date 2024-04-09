@@ -1,23 +1,39 @@
-import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
 
-import TYPESCRIPT_CONFIG from './configs/typescript.js';
-import TEST_CONFIG from './configs/tests.js';
-import PFE_CONFIG from './configs/pfe.js';
-import HTML_CONFIG from './configs/html.js';
-import NODE_CONFIG from './configs/node.js';
-import JSON_CONFIG from './configs/json.js';
+export { States, makeCompat, assign } from './lib.js';
 
-import { compat } from './lib.js';
+import TYPESCRIPT_CONFIG from '@patternfly/eslint-config-elements/configs/typescript.js';
+import TEST_CONFIG from '@patternfly/eslint-config-elements/configs/tests.js';
+import PFE_CONFIG from '@patternfly/eslint-config-elements/configs/pfe.js';
+import NODE_CONFIG from '@patternfly/eslint-config-elements/configs/node.js';
+import JSON_CONFIG from '@patternfly/eslint-config-elements/configs/json.js';
 
-export { States } from './lib.js';
+// Importing this file, or the 'eslint-plugin-html' plugin anywhere at all, eve
+// if not loaded into the config, is currently broken.
+// See https://github.com/BenoitZugmeyer/eslint-plugin-html/issues/262
+// import HTML_CONFIG from '@patternfly/eslint-config-elements/configs/html.js';
 
-export default [
-  js.configs.recommended,
-  ...compat.extends('plugin:lit-a11y/recommended'),
+export default tseslint.config(
+  {
+    name: '@patternfly/elements/ignores',
+    ignores: [
+      '**/*.(patch|txt|sh|tsbuildinfo)',
+      '**/*.(yaml|yml|toml)',
+      '**/*.(png|jpg|svg|css|ico|woff|woff2)',
+      '**/*.js.map',
+      '.wireit',
+      'custom-elements.json',
+      '**/custom-elements.json',
+      'package-lock.json',
+      '**/package-lock.json',
+      'node_modules',
+      '**/node_modules/**/*',
+    ],
+  },
+
   ...PFE_CONFIG,
-  ...HTML_CONFIG,
   ...NODE_CONFIG,
-  ...TYPESCRIPT_CONFIG,
   ...TEST_CONFIG,
   ...JSON_CONFIG,
-];
+  ...TYPESCRIPT_CONFIG,
+);

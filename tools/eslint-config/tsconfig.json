@@ -2,6 +2,6 @@
   "files": ["**/*.js"],
   "compilerOptions": {
     "allowJs": true,
-    "checkJs": true,
+    "checkJs": true
   }
 }

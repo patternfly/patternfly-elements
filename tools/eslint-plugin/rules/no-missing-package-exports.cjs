@@ -26,7 +26,7 @@ module.exports = {
     ]
   },
   create(context) {
-    if (!context.parserServices.isJSON) {
+    if (!context.getSourceCode().parserServices.isJSON) {
       return {};
     }
     const cwd = context.getCwd();

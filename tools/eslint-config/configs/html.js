@@ -1,11 +1,14 @@
+import globals from 'globals';
 import html from 'eslint-plugin-html';
 
 export default [
   {
+    name: '@patternfly/elements/html',
+
     files: [
-      'elements/**/*.html',
-      'elements/**/*.md',
-      'docs/**/*.njk',
+      '**/*.html',
+      '**/*.md',
+      '**/*.njk',
     ],
 
     plugins: {
@@ -13,8 +16,9 @@ export default [
     },
 
     languageOptions: {
-      ecmaVersion: 2022,
-      sourceType: 'module',
-    }
-  }
-]
+      globals: {
+        ...globals.browser,
+      },
+    },
+  },
+];

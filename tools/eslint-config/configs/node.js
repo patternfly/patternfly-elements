@@ -2,6 +2,7 @@ import globals from 'globals';
 
 export default [
   {
+    name: '@patternfly/elements/node',
     /** These files run in a nodejs context, mostly config files */
     files: [
       '*.cjs.js',
@@ -21,13 +22,14 @@ export default [
     },
   },
   {
-    files: ['*.cjs'],
+    name: '@patternfly/elements/cjs',
+    files: ['*.cjs', '**/*.cjs'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'script',
       globals: {
         ...globals.node,
-      }
+      },
     },
   },
 ];

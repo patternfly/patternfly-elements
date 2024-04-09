@@ -28,7 +28,6 @@
     "e2e": "wireit",
     "e2e:update": "wireit",
     "🚚-DIST": "❓ Publish packages",
-    "license-update": "node scripts/license-update.js",
     "leftover-check": "bash scripts/leftover-check.sh",
     "⚙️--UTIL": "❓ Manages the repo",
     "postinstall": "wireit",

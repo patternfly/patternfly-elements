@@ -192,7 +192,7 @@ describe('<pf-chip-group>', async function() {
     });
 
     describe('keyboard navigating with arrow keys to third chip and pressing enter', function() {
-      beforeEach(() => element.focus());
+      beforeEach(press('Tab'));
       beforeEach(press('ArrowRight'));
       beforeEach(press('ArrowRight'));
       beforeEach(press('Enter'));

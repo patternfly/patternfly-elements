@@ -37,8 +37,10 @@ describe('<pf-card>', function() {
     describe('size', function() {
       describe('unset', function() {
         it('should have default sizing for card parts', function() {
-          expect(getComputedStyle(element.querySelector('p')!, 'body font-size').getPropertyValue('font-size')).to.equal('16px');
-          expect(getComputedStyle(element.querySelector('[slot=footer]')!, 'footer font-size').getPropertyValue('font-size')).to.equal('16px');
+          const bodyFontSize = getComputedStyle(element.querySelector('p')!).getPropertyValue('font-size');
+          const footerFontSize = getComputedStyle(element.querySelector('[slot=footer]')!).getPropertyValue('font-size');
+          expect(bodyFontSize).to.equal('16px');
+          expect(footerFontSize).to.equal('16px');
         });
       });
 
@@ -59,10 +61,10 @@ describe('<pf-card>', function() {
         it('should have larger font sizes for body, footer, more padding for header', function() {
           const { height } = element.getBoundingClientRect();
           expect(origHeight, 'height').to.be.lessThan(height);
-          expect(getComputedStyle(element.querySelector('p')!, 'body font-size').getPropertyValue('font-size'))
-            .to.equal('16px');
-          expect(getComputedStyle(element.querySelector('[slot=footer]')!, 'footer font-size').getPropertyValue('font-size'))
-            .to.equal('16px');
+          const bodyFontSize = getComputedStyle(element.querySelector('p')!).getPropertyValue('font-size');
+          const footerFontSize = getComputedStyle(element.querySelector('[slot=footer]')!).getPropertyValue('font-size');
+          expect(bodyFontSize).to.equal('16px');
+          expect(footerFontSize).to.equal('16px');
         });
       });
     });

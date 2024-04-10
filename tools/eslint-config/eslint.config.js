@@ -7,11 +7,7 @@ import TEST_CONFIG from '@patternfly/eslint-config-elements/configs/tests.js';
 import PFE_CONFIG from '@patternfly/eslint-config-elements/configs/pfe.js';
 import NODE_CONFIG from '@patternfly/eslint-config-elements/configs/node.js';
 import JSON_CONFIG from '@patternfly/eslint-config-elements/configs/json.js';
-
-// Importing this file, or the 'eslint-plugin-html' plugin anywhere at all, eve
-// if not loaded into the config, is currently broken.
-// See https://github.com/BenoitZugmeyer/eslint-plugin-html/issues/262
-// import HTML_CONFIG from '@patternfly/eslint-config-elements/configs/html.js';
+import HTML_CONFIG from '@patternfly/eslint-config-elements/configs/html.js';
 
 export default tseslint.config(
   {
@@ -36,4 +32,5 @@ export default tseslint.config(
   ...TEST_CONFIG,
   ...JSON_CONFIG,
   ...TYPESCRIPT_CONFIG,
+  ...HTML_CONFIG,
 );

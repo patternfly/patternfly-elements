@@ -8,7 +8,8 @@ A select component consists of a toggle control to open and close a menu of acti
 Selects differ from dropdowns in that they persist selection, whereas dropdowns are typically used to present a list of actions or links.
 
 ```html
-<pf-select>
+<label for="select">Colors</label>
+<pf-select id="select">
   <pf-option>Blue</pf-option>
   <pf-option>Green</pf-option>
   <pf-option>Magenta</pf-option>

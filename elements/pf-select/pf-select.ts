@@ -17,6 +17,7 @@ import { FloatingDOMController, type Placement } from '@patternfly/pfe-core/cont
 import { PfOption } from './pf-option.js';
 
 import styles from './pf-select.css';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 export interface PfSelectUserOptions {
   id: string;
@@ -50,7 +51,10 @@ export class PfSelectChangeEvent extends Event {
 export class PfSelect extends LitElement {
   static readonly styles = [styles];
 
-  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   static readonly formAssociated = true;
 
@@ -59,6 +63,8 @@ export class PfSelect extends LitElement {
   #float = new FloatingDOMController(this, {
     content: () => this.shadowRoot?.getElementById('listbox-container') ?? null,
   });
+
+  #slots = new SlotController(this, null, 'placeholder');
 
   #listbox?: ListboxController<PfOption>; /* | ListboxActiveDescendantController */
 
@@ -164,26 +170,21 @@ export class PfSelect extends LitElement {
   }
 
   get #buttonLabel() {
-    const valueTextArray = this.#listbox?.selectedOptions.map(option => option.optionText || '') ?? [];
-
-    const slottedPlaceholderText = this.querySelector<HTMLSlotElement>('[slot=placeholder]')
-      ?.assignedNodes()
-      ?.reduce((acc, node) => `${acc}${node.textContent}`, '')?.trim();
-
     switch (this.variant) {
       // TODO: implement typeaheadmulti with ActiveDescendantController
       // case 'typeaheadmulti':
-      //   return `${valueTextArray.length} ${this.itemsSelectedText}`
+      //   return `${this.#listbox?.selectedOptions?.length ?? 0} ${this.itemsSelectedText}`
       case 'checkbox':
-        return this.placeholder ||
-          slottedPlaceholderText ||
-          this.#internals.computedLabelText ||
+        return this.#listbox
+          ?.selectedOptions
+          ?.map?.(option => option.optionText || '')
+          ?.join(' ')
+          ?.trim() ||
+          this.#computePlaceholderText() ||
           'Options';
       default:
-        return valueTextArray.at(0)?.trim() ||
-          this.placeholder ||
-          slottedPlaceholderText ||
-          this.#internals.computedLabelText ||
+        return (this.selected ? this.value : '') ||
+          this.#computePlaceholderText() ||
           'Select a value';
     }
   }
@@ -250,7 +251,7 @@ export class PfSelect extends LitElement {
           <button id="toggle-button"
                   role="combobox"
                   aria-hidden="${typeahead.toString() as 'true' | 'false'}"
-                  aria-labelledby="button-text"
+                  aria-label="${ifDefined(this.accessibleLabel || this.#internals.computedLabelText || undefined)}"
                   aria-describedby="placeholder"
                   aria-controls="listbox"
                   aria-haspopup="listbox"
@@ -258,7 +259,7 @@ export class PfSelect extends LitElement {
                   @keydown="${this.#onButtonKeydown}"
                   @click="${() => !typeahead && this.toggle()}"
                   tabindex="${ifDefined(typeahead ? -1 : undefined)}">
-            <span style="display: contents;" id="button-text">
+            <span id="button-text" style="display: contents;">
               <span id="toggle-text"
                     class="${classMap({ offscreen, badge })}">${buttonLabel}</span>${!hasBadge ? '' : html`
               <span id="toggle-badge">
@@ -282,7 +283,7 @@ export class PfSelect extends LitElement {
                @focusout="${this.#onListboxFocusout}"
                @keydown="${this.#onListboxKeydown}"
                class="${classMap({ checkboxes })}">
-            <pf-option id="placeholder" disabled>
+            <pf-option id="placeholder" disabled ?hidden="${!this.placeholder && !this.#slots.hasSlotted('placeholder')}">
               <slot name="placeholder">${this.placeholder}</slot>
             </pf-option>
             <slot @slotchange="${this.#onListboxSlotchange}"></slot>
@@ -445,6 +446,17 @@ export class PfSelect extends LitElement {
     //   this.show();
     // }
     // TODO: handle hiding && aria hiding options
+  }
+
+  #computePlaceholderText() {
+    return this.placeholder ||
+      this.querySelector<HTMLSlotElement>('[slot=placeholder]')
+        ?.assignedNodes()
+        ?.reduce((acc, node) => `${acc}${node.textContent}`, '')?.trim() ||
+      this.#listbox?.options
+        ?.filter(x => x !== this.shadowRoot?.getElementById('placeholder'))
+        ?.at(0)?.value ||
+      '';
   }
 
   /**

@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, svg } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -8,9 +8,7 @@ import styles from './pf-switch.css';
  * A **switch** toggles the state of a setting (between on and off). Switches and
  * checkboxes can often be used interchangeably, but the switch provides a more
  * explicit, visible representation on a setting.
- *
  * @fires {Event} change - Fires when the switch selection changes.
- *
  * @cssprop --pf-c-switch--FontSize {@default `1rem`}
  * @cssprop {<length>} --pf-c-switch--ColumnGap {@default `1rem`}
  * @cssprop --pf-c-switch__toggle-icon--FontSize {@default `calc(1rem * .625)`}
@@ -47,9 +45,12 @@ import styles from './pf-switch.css';
 export class PfSwitch extends LitElement {
   static readonly styles = [styles];
 
-  static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true, };
-
   static readonly formAssociated = true;
+
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   declare shadowRoot: ShadowRoot;
 
@@ -94,8 +95,8 @@ export class PfSwitch extends LitElement {
   override render() {
     return html`
       <div id="container" tabindex="0">
-        <svg id="toggle" fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512">
-          <path ?hidden=${!this.showCheckIcon} d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />
+        <svg id="toggle" fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512">${svg`
+          <path ?hidden=${!this.showCheckIcon} d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />`}
         </svg>
       </div>
     `;
@@ -106,11 +107,9 @@ export class PfSwitch extends LitElement {
     const { originalTarget, explicitOriginalTarget } = event;
     if (explicitOriginalTarget) {
       let labels: HTMLLabelElement[];
-      if (
-        originalTarget === event.target &&
-        !(labels = Array.from(this.labels)).includes(explicitOriginalTarget) &&
-        labels.includes(this.closest('label') as HTMLLabelElement)
-      ) {
+      if (originalTarget === event.target
+          && !(labels = Array.from(this.labels)).includes(explicitOriginalTarget)
+          && labels.includes(this.closest('label') as HTMLLabelElement)) {
         return;
       }
     }

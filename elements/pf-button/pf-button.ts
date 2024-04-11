@@ -143,11 +143,6 @@ export type ButtonVariant = (
 export class PfButton extends LitElement {
   static readonly formAssociated = true;
 
-  static override readonly shadowRootOptions = {
-    ...LitElement.shadowRootOptions,
-    delegatesFocus: true,
-  };
-
   static readonly styles = [
     tokensStyles,
     iconStyles,
@@ -252,7 +247,10 @@ export class PfButton extends LitElement {
              plain,
              warning,
            })}">
-        <slot id="icon" part="icon" name="icon" ?hidden="${!hasIcon}">
+        <slot id="icon"
+              part="icon"
+              name="icon"
+              ?hidden="${!hasIcon}">
           <pf-icon role="presentation"
                    icon="${ifDefined(this.icon)}"
                    set="${ifDefined(this.iconSet)}"

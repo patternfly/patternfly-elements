@@ -1,17 +1,20 @@
-<section>
-  <pf-button>Primary</pf-button>
-</section>
+<pf-button id="button">
+  Primary
+  <pf-badge number="0" hidden></pf-badge>
+</pf-button>
 
 <script type="module">
   import 'element-internals-polyfill';
   import '@patternfly/elements/pf-button/pf-button.js';
-  for (const button of document.querySelectorAll('pf-button')) {
-    button.addEventListener('click', console.log);
-  }
+  document.getElementById('button').addEventListener('click', async function() {
+    await import('@patternfly/elements/pf-badge/pf-badge.js');
+    this.querySelector('pf-badge').hidden = false
+    this.querySelector('pf-badge').number += 1
+  })
 </script>
 
 <style>
-  section {
-    padding: 1em;
+  pf-button {
+    margin: 1em;
   }
 </style>

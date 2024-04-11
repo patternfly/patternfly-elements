@@ -7,8 +7,9 @@ export default [
 
     files: [
       '**/*.html',
-      '**/*.md',
-      '**/*.njk',
+      // These have parsing errors with the current plugin version
+      // '**/*.md',
+      // '**/*.njk',
     ],
 
     plugins: {

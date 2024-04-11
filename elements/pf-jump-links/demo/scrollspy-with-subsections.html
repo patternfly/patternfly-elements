@@ -152,7 +152,8 @@ const swtch = document.querySelector('pf-switch');
 const media = matchMedia('(max-width: 600px)');
 
 function sumHeights(...elements) {
-  return elements.reduce((sum, el) => sum + el?.getBoundingClientRect?.().height ?? 0, 0);
+  return elements.reduce((sum, el) =>
+    sum + (el?.getBoundingClientRect?.().height ?? 0), 0);
 }
 
 async function update() {

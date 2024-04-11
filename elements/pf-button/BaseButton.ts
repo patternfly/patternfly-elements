@@ -1,3 +1,5 @@
+// we will shortly remove this file in #2631
+/* eslint-disable lit-a11y/no-aria-slot */
 import type { TemplateResult } from 'lit';
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
@@ -5,6 +7,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+
 import styles from './BaseButton.css';
 
 /**
@@ -21,7 +24,10 @@ export abstract class BaseButton extends LitElement {
 
   static readonly formAssociated = true;
 
-  static readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /** Disables the button */
   @property({ reflect: true, type: Boolean }) disabled = false;
@@ -48,17 +54,22 @@ export abstract class BaseButton extends LitElement {
    */
   abstract danger: unknown;
 
-  #internals = new InternalsController(this);
+  #internals = InternalsController.of(this);
 
   protected get hasIcon() {
     return !!this.icon;
   }
 
   override render() {
-    const { hasIcon } = this;
+    const {
+      disabled,
+      hasIcon,
+      // @ts-expect-error: will no longer be a problem after closing issue #2616
+      plain,
+    } = this;
     return html`
       <button aria-label="${ifDefined(this.label)}"
-              class="${classMap({ hasIcon })}"
+              class="pf-button ${classMap({ disabled, hasIcon, plain })}"
               part="button"
               type="${ifDefined(this.type)}"
               value="${ifDefined(this.value)}"
@@ -70,7 +81,7 @@ export abstract class BaseButton extends LitElement {
     `;
   }
 
-  protected async formDisabledCallback() {
+  async formDisabledCallback() {
     await this.updateComplete;
     this.requestUpdate();
   }
@@ -87,7 +98,6 @@ export abstract class BaseButton extends LitElement {
   /**
    * Fallback content for the icon slot. When the `icon` attribute is set, it
    * should render an icon corresponding to the value.
-   *
    * @example ```html
    *          <base-icon icon=${this.icon}></base-icon>
    *          ```

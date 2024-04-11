@@ -55,7 +55,8 @@ export class TimestampController implements ReactiveController {
     if (this.#options.relative) {
       return this.#getTimeRelative();
     } else {
-      let { displaySuffix, locale } = this.#options;
+      let { displaySuffix } = this.#options;
+      const { locale } = this.#options;
       if (this.#options.utc) {
         displaySuffix ||= 'UTC';
       }
@@ -79,7 +80,7 @@ export class TimestampController implements ReactiveController {
     }
   }
 
-  hostConnected?(): void
+  hostConnected?(): void;
 
   /**
    * Based off of Github Relative Time
@@ -88,7 +89,11 @@ export class TimestampController implements ReactiveController {
   #getTimeRelative() {
     const date = this.#date;
     const { locale } = this.#options;
-    const rtf = new Intl.RelativeTimeFormat(locale as string, { localeMatcher: 'best fit', numeric: 'auto', style: 'long' });
+    const rtf = new Intl.RelativeTimeFormat(locale as string, {
+      localeMatcher: 'best fit',
+      numeric: 'auto',
+      style: 'long',
+    });
     const ms: number = date.getTime() - Date.now();
     const tense = ms > 0 ? 1 : -1;
     let qty = 0;

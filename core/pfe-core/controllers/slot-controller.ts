@@ -32,7 +32,9 @@ export interface SlotsConfig {
   deprecations?: Record<string, string>;
 }
 
-function isObjectConfigSpread(config: ([SlotsConfig] | (string | null)[])): config is [SlotsConfig] {
+function isObjectConfigSpread(
+  config: ([SlotsConfig] | (string | null)[]),
+): config is [SlotsConfig] {
   return config.length === 1 && typeof config[0] === 'object' && config[0] !== null;
 }
 
@@ -41,15 +43,17 @@ function isObjectConfigSpread(config: ([SlotsConfig] | (string | null)[])): conf
  * for the default slot, look for direct children not assigned to a slot
  */
 const isSlot =
-  <T extends Element = Element>(n: string | typeof SlotController.anonymous) =>
+  <T extends Element = Element>(n: string | typeof SlotController.default) =>
     (child: Element): child is T =>
-        n === SlotController.anonymous ? !child.hasAttribute('slot')
+        n === SlotController.default ? !child.hasAttribute('slot')
       : child.getAttribute('slot') === n;
 
 export class SlotController implements ReactiveController {
-  public static anonymous = Symbol('anonymous slot');
+  public static default = Symbol('default slot');
+  /** @deprecated use `default` */
+  public static anonymous = this.default;
 
-  #nodes = new Map<string | typeof SlotController.anonymous, Slot>();
+  #nodes = new Map<string | typeof SlotController.default, Slot>();
 
   #logger: Logger;
 
@@ -106,35 +110,16 @@ export class SlotController implements ReactiveController {
   }
 
   /**
-   * Returns a boolean statement of whether or not any of those slots exists in the light DOM.
-   *
-   * @param {String|Array} name The slot name.
-   * @example this.hasSlotted("header");
-   */
-  hasSlotted(...names: string[]): boolean {
-    if (!names.length) {
-      this.#logger.warn(`Please provide at least one slot name for which to search.`);
-      return false;
-    } else {
-      return names.some(x =>
-        this.#nodes.get(x)?.hasContent ?? false);
-    }
-  }
-
-  /**
    * Given a slot name or slot names, returns elements assigned to the requested slots as an array.
    * If no value is provided, it returns all children not assigned to a slot (without a slot attribute).
-   *
    * @example Get header-slotted elements
    * ```js
    * this.getSlotted('header')
    * ```
-   *
    * @example Get header- and footer-slotted elements
    * ```js
    * this.getSlotted('header', 'footer')
    * ```
-   *
    * @example Get default-slotted elements
    * ```js
    * this.getSlotted();
@@ -142,11 +127,36 @@ export class SlotController implements ReactiveController {
    */
   getSlotted<T extends Element = Element>(...slotNames: string[]): T[] {
     if (!slotNames.length) {
-      return (this.#nodes.get(SlotController.anonymous)?.elements ?? []) as T[];
+      return (this.#nodes.get(SlotController.default)?.elements ?? []) as T[];
     } else {
       return slotNames.flatMap(slotName =>
         this.#nodes.get(slotName)?.elements ?? []) as T[];
     }
+  }
+
+  /**
+   * Returns a boolean statement of whether or not any of those slots exists in the light DOM.
+   * @param names The slot names to check.
+   * @example this.hasSlotted('header');
+   */
+  hasSlotted(...names: (string | null | undefined)[]): boolean {
+    const { anonymous } = SlotController;
+    const slotNames = Array.from(names, x => x == null ? anonymous : x);
+    if (!slotNames.length) {
+      slotNames.push(anonymous);
+    }
+    return slotNames.some(x => this.#nodes.get(x)?.hasContent ?? false);
+  }
+
+  /**
+   * Whether or not all the requested slots are empty.
+   * @param  slots The slot name.  If no value is provided, it returns the default slot.
+   * @example this.isEmpty('header', 'footer');
+   * @example this.isEmpty();
+   * @returns
+   */
+  isEmpty(...names: (string | null | undefined)[]): boolean {
+    return !this.hasSlotted(...names);
   }
 
   #onSlotChange = (event: Event & { target: HTMLSlotElement }) => {
@@ -168,14 +178,17 @@ export class SlotController implements ReactiveController {
     this.host.requestUpdate();
   };
 
-  #getChildrenForSlot<T extends Element = Element>(name: string | typeof SlotController.anonymous): T[] {
+  #getChildrenForSlot<T extends Element = Element>(
+    name: string | typeof SlotController.default,
+  ): T[] {
     const children = Array.from(this.host.children) as T[];
     return children.filter(isSlot(name));
   }
 
   #initSlot = (slotName: string | null) => {
-    const name = slotName || SlotController.anonymous;
-    const elements = this.#nodes.get(name)?.slot?.assignedElements?.() ?? this.#getChildrenForSlot(name);
+    const name = slotName || SlotController.default;
+    const elements = this.#nodes.get(name)?.slot?.assignedElements?.()
+      ?? this.#getChildrenForSlot(name);
     const selector = slotName ? `slot[name="${slotName}"]` : 'slot:not([name])';
     const slot = this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
     const hasContent = !!elements.length;

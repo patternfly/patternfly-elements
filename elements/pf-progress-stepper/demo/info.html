@@ -1,0 +1,37 @@
+<section>
+  <pf-progress-stepper>
+    <pf-progress-step variant="success">First Step</pf-progress-step>
+    <pf-progress-step variant="success">Second Step</pf-progress-step>
+    <pf-progress-step variant="warning">Third Step</pf-progress-step>
+    <pf-progress-step variant="info" current>Fourth Step</pf-progress-step>
+    <pf-progress-step variant="pending">Fifth Step</pf-progress-step>
+  </pf-progress-stepper>
+</section>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+  import '@patternfly/elements/pf-progress-stepper/pf-progress-stepper.js';
+
+  document.querySelector('form').addEventListener('change', /** @this{HTMLFormElement}*/ function onChange() {
+    this.elements.progress.vertical = this.elements.vertical.checked;
+    this.elements.progress.center = this.elements.center.checked;
+  });
+</script>
+
+<style>
+  form,
+  label pf-switch {
+    padding-inline: .5rem;
+  }
+
+  form,
+  label {
+    display: block;
+    padding-block: .5rem;
+  }
+
+  section {
+    padding: 1em;
+  }
+</style>

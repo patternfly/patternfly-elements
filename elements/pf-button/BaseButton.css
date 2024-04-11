@@ -1,8 +1,3 @@
-:host {
-  display: inline-block;
-  height: max-content;
-}
-
 :host([hidden]) {
   display: none !important;
 }
@@ -11,18 +6,18 @@
   display: none !important;
 }
 
-button {
+.pf-button {
   cursor: pointer;
   position: relative;
   font-family: inherit;
 }
 
-button {
+.pf-button {
   border-width: 0;
   border-style: solid;
 }
 
-button::after {
+.pf-button::after {
   position: absolute;
   inset: 0 0 0 0;
   content: "";
@@ -31,9 +26,9 @@ button::after {
 
 :host(:is(:disabled, [aria-disabled=true])),
 :host(:is(:disabled, [aria-disabled=true])) #container,
-:host(:is(:disabled, [aria-disabled=true])) button,
-:host(:is(:disabled, [aria-disabled=true])[danger]) button,
-:host(:is(:disabled, [aria-disabled=true])[variant=link]) button {
+:host(:is(:disabled, [aria-disabled=true])) .pf-button,
+:host(:is(:disabled, [aria-disabled=true])[danger]) .pf-button,
+:host(:is(:disabled, [aria-disabled=true])[variant=link]) .pf-button {
   pointer-events: none;
   cursor: default;
 }
@@ -43,13 +38,13 @@ button::after {
   pointer-events: none;
 }
 
-.hasIcon {
+.pf-button.hasIcon {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.hasIcon [part=icon] {
+.pf-button.hasIcon [part=icon] {
   display: inline-flex;
   align-items: center;
   position: absolute;

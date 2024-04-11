@@ -1,5 +1,3 @@
-<script type="module" src="form-control.js"></script>
-
 <form>
   <h2>Nothing disabled</h2>
   <fieldset>
@@ -35,3 +33,27 @@
   <label>Fieldset Disabled <pf-switch name="fieldset" checked></pf-switch> </label>
   <label>Button Disabled <pf-switch name="button" checked></pf-switch> </label>
 </form>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+
+  for (const form of document.querySelectorAll('form')) {
+    form.addEventListener('submit', e=>e.preventDefault());
+    form.addEventListener('change', sync);
+    sync.call(form);
+  }
+
+  /** @this{HTMLFormElement}*/
+  function sync() {
+    this.querySelector('fieldset').disabled = this.fieldset.checked;
+    this.querySelector('pf-button').disabled = this.button.checked;
+  }
+</script>
+
+<style>
+form {
+  padding: 1em;
+}
+</style>

@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-core",
-  "version": "2.4.1",
+  "version": "3.0.0",
   "license": "MIT",
   "description": "PatternFly Elements Core Library",
   "customElements": "custom-elements.json",
@@ -29,6 +29,7 @@
     "./controllers/slot-controller.js": "./controllers/slot-controller.js",
     "./controllers/style-controller.js": "./controllers/style-controller.js",
     "./controllers/timestamp-controller.js": "./controllers/timestamp-controller.js",
+    "./controllers/tabs-controller.js": "./controllers/tabs-controller.js",
     "./decorators/bound.js": "./decorators/bound.js",
     "./decorators/cascades.js": "./decorators/cascades.js",
     "./decorators/deprecation.js": "./decorators/deprecation.js",
@@ -36,8 +37,9 @@
     "./decorators/observed.js": "./decorators/observed.js",
     "./decorators/time.js": "./decorators/time.js",
     "./decorators/trace.js": "./decorators/trace.js",
+    "./functions/context.js": "./functions/context.js",
+    "./functions/containsDeep.js": "./functions/containsDeep.js",
     "./functions/debounce.js": "./functions/debounce.js",
-    "./functions/deprecatedCustomEvent.js": "./functions/deprecatedCustomEvent.js",
     "./functions/random.js": "./functions/random.js",
     "./functions/isElementInView.js": "./functions/isElementInView.js"
   },
@@ -51,8 +53,9 @@
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.2.6",
-    "lit": "^2.7.2"
+    "@floating-ui/dom": "^1.6.3",
+    "@lit/context": "^1.1.0",
+    "lit": "^3.1.2"
   },
   "repository": {
     "type": "git",

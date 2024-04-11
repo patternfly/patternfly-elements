@@ -49,8 +49,8 @@ export class LightDOMController implements ReactiveController {
    */
   hasLightDOM(): boolean {
     return !!(
-      this.host.children.length > 0 ||
-      (this.host.textContent ?? '').trim().length > 0
+      this.host.children.length > 0
+      || (this.host.textContent ?? '').trim().length > 0
     );
   }
 }

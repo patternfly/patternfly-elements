@@ -16,8 +16,8 @@ export const hexToRgb = (hex: string): RGBTuple => {
 // Gets the rgba value from an element
 export const getColor = (el: Element, prop: string): RGBTuple => {
   const [, r, g, b] = (getComputedStyle(el, null)
-    .getPropertyValue(prop)
-    .match(/rgba?\((\d+),\s+(\d+),\s+(\d+).*\)/) ?? [])
-    .map(n => +n);
+      .getPropertyValue(prop)
+      .match(/rgba?\((\d+),\s+(\d+),\s+(\d+).*\)/) ?? [])
+      .map(n => +n);
   return [r, g, b];
 };

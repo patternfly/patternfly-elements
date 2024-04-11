@@ -11,8 +11,8 @@ describe('<pf-table>', function() {
     const el = await createFixture <PfTable>(element);
     const klass = customElements.get('pf-table');
     expect(el)
-      .to.be.an.instanceOf(klass)
-      .and
-      .to.be.an.instanceOf(PfTable);
+        .to.be.an.instanceOf(klass)
+        .and
+        .to.be.an.instanceOf(PfTable);
   });
 });

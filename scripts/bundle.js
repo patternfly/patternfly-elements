@@ -1,23 +1,21 @@
 #!/usr/bin/env node
-/* eslint-env node */
+/* globals process */
 import { build } from 'esbuild';
-import { promisify } from 'node:util';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { litCssPlugin } from 'esbuild-plugin-lit-css';
-import Glob from 'glob';
-import CleanCSS from 'clean-css';
+import { glob } from 'glob';
 
-const glob = promisify(Glob);
+import postcss from 'postcss';
+import postcssNesting from 'postcss-nesting';
 
 const resolveDir = join(fileURLToPath(import.meta.url), '../../elements');
-const entryPoints = (await glob('./pf-*/pf-*.ts', { cwd: resolveDir })).map(x => x.replace('.ts', '.js'));
-const contents = entryPoints.map(x => `export * from '${x}';`).join('\n');
 
-const cleanCSS = new CleanCSS({
-  sourceMap: true,
-  returnPromise: true,
-});
+const entryPoints =
+  (await glob('./pf-*/pf-*.ts', { cwd: resolveDir }))
+      .map(x => x.replace('.ts', '.js'));
+
+const contents = entryPoints.map(x => `export * from './${x}';`).join('\n');
 
 export async function bundle({ outfile = 'elements/pfe.min.js' } = {}) {
   await build({
@@ -40,13 +38,17 @@ export async function bundle({ outfile = 'elements/pfe.min.js' } = {}) {
     external: [
       'lit',
       'tslib',
-      '@floating-ui*'
+      '@floating-ui*',
     ],
 
     plugins: [
       litCssPlugin({
+        cssnano: false,
         filter: /\.css$/,
-        transform: source => cleanCSS.minify(source).then(x => x.styles)
+        transform: (str, { filePath }) =>
+          postcss(postcssNesting())
+              .process(str, { from: filePath })
+              .css,
       }),
     ],
   });

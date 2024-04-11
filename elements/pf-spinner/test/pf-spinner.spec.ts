@@ -19,8 +19,17 @@ describe('<pf-spinner>', function() {
     const element = await createFixture<PfSpinner>(html`
       <pf-spinner>Loading...</pf-spinner>
     `);
-
     expect(element.getAttribute('size')).to.equal('xl');
+  });
+
+  describe('basic usage', function() {
+    let element: PfSpinner;
+    beforeEach(async function() {
+      element = await createFixture<PfSpinner>(html`<pf-spinner>Loading...</pf-spinner>`);
+    });
+    it('is accessible', async function() {
+      await expect(element).to.be.accessible();
+    });
   });
 
   describe('size attribute', function() {

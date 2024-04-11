@@ -2,13 +2,15 @@ import { html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+
 import { BaseSpinner } from './BaseSpinner.js';
+
 import styles from './pf-spinner.css';
 
 /**
  * A **spinner** is used to indicate to users that an action is in progress. For actions
  * that may take a long time, use a progress bar instead.
- *
  * @cssprop {<length>} --pf-c-spinner--diameter                      {@default `3.375rem`}
  * @cssprop {<length>} --pf-c-spinner--Width                         {@default `3.375rem`}
  * @cssprop {<length>} --pf-c-spinner--Height                        {@default `3.375rem`}
@@ -28,6 +30,10 @@ import styles from './pf-spinner.css';
 @customElement('pf-spinner')
 export class PfSpinner extends BaseSpinner {
   static readonly styles = [...BaseSpinner.styles, styles];
+
+  // eslint-disable-next-line no-unused-private-class-members
+  #internals = InternalsController.of(this, { role: 'progressbar' });
+
   render() {
     return html`<div style=${styleMap({ '--pf-c-spinner--diameter': this.diameter })}>${super.render()}</div>`;
   }

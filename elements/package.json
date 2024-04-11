@@ -50,7 +50,6 @@
     "./pf-progress-stepper/pf-progress-step.js": "./pf-progress-stepper/pf-progress-step.js",
     "./pf-progress-stepper/pf-progress-stepper.js": "./pf-progress-stepper/pf-progress-stepper.js",
     "./pf-progress/pf-progress.js": "./pf-progress/pf-progress.js",
-    "./pf-spinner/BaseSpinner.js": "./pf-spinner/BaseSpinner.js",
     "./pf-spinner/pf-spinner.js": "./pf-spinner/pf-spinner.js",
     "./pf-switch/pf-switch.js": "./pf-switch/pf-switch.js",
     "./pf-table/pf-table.js": "./pf-table/pf-table.js",

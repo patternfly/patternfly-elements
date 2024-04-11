@@ -41,7 +41,6 @@
     "./pf-jump-links/pf-jump-links-item.js": "./pf-jump-links/pf-jump-links-item.js",
     "./pf-jump-links/pf-jump-links-list.js": "./pf-jump-links/pf-jump-links-list.js",
     "./pf-jump-links/pf-jump-links.js": "./pf-jump-links/pf-jump-links.js",
-    "./pf-label/BaseLabel.js": "./pf-label/BaseLabel.js",
     "./pf-label/pf-label.js": "./pf-label/pf-label.js",
     "./pf-select/pf-select.js": "./pf-select/pf-select.js",
     "./pf-select/pf-listbox.js": "./pf-select/pf-listbox.js",

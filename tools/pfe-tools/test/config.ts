@@ -75,7 +75,13 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
   return {
     ...devServerConfig,
     nodeResolve: true,
-    files: ['**/*.spec.ts', '!**/*.e2e.ts', ...opts.files ?? [], '!**/node_modules/**/*', '!**/_site/**/*'],
+    files: [
+      '**/*.spec.ts',
+      '!**/*.e2e.ts',
+      ...opts.files ?? [],
+      '!**/node_modules/**/*',
+      '!**/_site/**/*',
+    ],
     browsers: [
       playwrightLauncher({
         createBrowserContext: async ({ browser }) => {
@@ -101,14 +107,14 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
     middleware: [
       /** redirect `.js` to `.ts` when the typescript source exists */
       async function(ctx, next) {
-        if (ctx.path.endsWith('.js') &&
-            ctx.path.startsWith(`/${elementsDir}/${tagPrefix}-`) &&
-            await exists(`./${ctx.path}`.replace('.js', '.ts').replace('//', '/'))) {
+        if (ctx.path.endsWith('.js')
+            && ctx.path.startsWith(`/${elementsDir}/${tagPrefix}-`)
+            && await exists(`./${ctx.path}`.replace('.js', '.ts').replace('//', '/'))) {
           ctx.redirect(ctx.path.replace('.js', '.ts'));
         } else {
           return next();
         }
-      }
-    ]
+      },
+    ],
   };
 }

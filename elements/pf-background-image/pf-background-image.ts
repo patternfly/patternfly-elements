@@ -11,9 +11,7 @@ import styles from './pf-background-image.css';
 /**
  * A **background image** allows you to place an image in the background of your page or area of a page.
  * @summary Allows users to place an image in the background of your page or area of a page.
- *
  * @slot filter - Overrides the default svg filter for the background image.
- *
  * @cssprop {<color>} --pf-c-background-image--BackgroundColor {@default `#151515`}
  * @cssprop --pf-c-background-image--BackgroundImage
  * @cssprop --pf-c-background-image--BackgroundImage-2x
@@ -21,7 +19,6 @@ import styles from './pf-background-image.css';
  * @cssprop --pf-c-background-image--BackgroundImage--sm-2x
  * @cssprop --pf-c-background-image--BackgroundImage--lg
  * @cssprop --pf-c-background-image--Filter {@default `url("#image_overlay")`}
- *
  */
 @customElement('pf-background-image')
 export class PfBackgroundImage extends LitElement {
@@ -69,7 +66,7 @@ export class PfBackgroundImage extends LitElement {
       '--_background-image-2x': this.src2x,
       '--_background-image-sm': this.srcSm,
       '--_background-image-sm-2x': this.srcSm2x,
-      '--_background-image-lg': this.srcLg
+      '--_background-image-lg': this.srcLg,
     } as StyleInfo;
 
     Object.entries(cssProps).forEach(([key, value]) => {
@@ -106,7 +103,7 @@ export class PfBackgroundImage extends LitElement {
   }
 
   #onSlotChange() {
-    const [svg] = this._svg as Array<SVGElement>;
+    const [svg] = this._svg as SVGElement[];
     if (svg) {
       this.#svg = svg;
       this.#updated = true;

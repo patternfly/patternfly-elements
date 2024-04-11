@@ -21,9 +21,9 @@ describe('<pf-button>', function() {
   it('should upgrade', async function() {
     const el = await createFixture(html`<pf-button>Button</pf-button>`);
     expect(el, 'pf-button should be an instance of PfButton')
-      .to.be.an.instanceOf(customElements.get('pf-button'))
-      .and
-      .to.be.an.instanceOf(PfButton);
+        .to.be.an.instanceOf(customElements.get('pf-button'))
+        .and
+        .to.be.an.instanceOf(PfButton);
   });
   describe('in a fieldset', function() {
     let element: PfButton;
@@ -67,8 +67,8 @@ describe('<pf-button>', function() {
       beforeEach(press('Tab'));
       it('does focus the button', function() {
         expect(document.activeElement)
-          .to
-          .be.an.instanceof(PfButton);
+            .to
+            .be.an.instanceof(PfButton);
       });
 
       describe('pressing Space', function() {
@@ -98,9 +98,9 @@ describe('<pf-button>', function() {
         beforeEach(press('Tab'));
         it('does not focus the button', function() {
           expect(document.activeElement)
-            .to
-            .not
-            .be.an.instanceof(PfButton);
+              .to
+              .not
+              .be.an.instanceof(PfButton);
         });
       });
       // this was a regression spotted by @brianferry
@@ -123,8 +123,8 @@ describe('<pf-button>', function() {
               beforeEach(press('Tab'));
               it('does focus the button', function() {
                 expect(document.activeElement)
-                  .to
-                  .be.an.instanceof(PfButton);
+                    .to
+                    .be.an.instanceof(PfButton);
               });
             });
           });

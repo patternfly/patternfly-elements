@@ -31,9 +31,9 @@ describe('<pf-icon>', function() {
 
   it('should upgrade', function() {
     expect(element, 'pf-icon should be an instance of PfIcon')
-      .to.be.an.instanceOf(customElements.get('pf-icon'))
-      .and
-      .to.be.an.instanceOf(PfIcon);
+        .to.be.an.instanceOf(customElements.get('pf-icon'))
+        .and
+        .to.be.an.instanceOf(PfIcon);
   });
 
   it('should warn if the 2nd argument to addIconSet is not a function', function() {

@@ -56,9 +56,9 @@ describe('<pf-code-block>', function() {
     const el = await createFixture <PfCodeBlock>(element);
     const klass = customElements.get('pf-code-block');
     expect(el)
-      .to.be.an.instanceOf(klass)
-      .and
-      .to.be.an.instanceOf(PfCodeBlock);
+        .to.be.an.instanceOf(klass)
+        .and
+        .to.be.an.instanceOf(PfCodeBlock);
   });
 
   it('should not show a "Show more" button by default', async function() {

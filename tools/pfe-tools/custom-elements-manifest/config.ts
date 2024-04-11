@@ -14,13 +14,16 @@ import { getPfeConfig, type PfeConfig } from '../config.js';
 
 import Chalk from 'chalk';
 
-type Options = Config & Pick<PfeConfig, 'sourceControlURLPrefix' | 'demoURLPrefix'> & { rootDir?: string };
+type Options = Config
+  & Pick<PfeConfig, 'sourceControlURLPrefix' | 'demoURLPrefix'>
+  & { rootDir?: string };
 
 /**
  * PFE Default custom-elements-manifest analyzer config
  * @deprecated
  */
 export function pfeCustomElementsManifestConfig(options?: Options): Config {
+  // eslint-disable-next-line no-console
   console.log(`${Chalk.yellow(`pfeCustomElementsManifestConfig is ${Chalk.bold('deprecated')}`)}`);
   const config = getPfeConfig(options?.rootDir);
   const { demoURLPrefix, sourceControlURLPrefix, dev } = { ...config, ...options ?? {} };

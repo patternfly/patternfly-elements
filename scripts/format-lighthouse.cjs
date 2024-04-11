@@ -34,8 +34,8 @@ module.exports = ({ links, assertionResults }) => {
       pwa,
     } = Object.fromEntries(
       Object.entries(summary)
-        .map(([key, value]) =>
-          [key, Math.round(value * 100)])
+          .map(([key, value]) =>
+            [key, Math.round(value * 100)])
     );
 
     const p = score(performance);

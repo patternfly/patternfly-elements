@@ -53,9 +53,9 @@ describe('<pf-label>', function() {
     const el = await createFixture<PfLabel>(example);
     const klass = customElements.get('pf-label');
     expect(el)
-      .to.be.an.instanceOf(klass)
-      .and
-      .to.be.an.instanceOf(PfLabel);
+        .to.be.an.instanceOf(klass)
+        .and
+        .to.be.an.instanceOf(PfLabel);
   });
 
   it('should display default variant', async function() {

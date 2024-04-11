@@ -10,9 +10,9 @@ describe('<pf-timestamp>', function() {
   it('should upgrade', async function() {
     const element = await createFixture<PfTimestamp>(html`<pf-timestamp></pf-timestamp>`);
     expect(element, 'the <pf-timestamp> should be an instance of PfTimestamp')
-      .to.be.an.instanceof(customElements.get('pf-timestamp'))
-      .and
-      .to.be.an.instanceof(PfTimestamp);
+        .to.be.an.instanceof(customElements.get('pf-timestamp'))
+        .and
+        .to.be.an.instanceof(PfTimestamp);
   });
 
   it('should show the current date by default with default formatting', async function() {
@@ -82,7 +82,7 @@ describe('<pf-timestamp>', function() {
       month: 'short',
       weekday: 'short',
       day: 'numeric',
-      hour: 'numeric'
+      hour: 'numeric',
     };
     const expected = new Date(dateString).toLocaleString('en-US', options);
     const element = await createFixture<PfTimestamp>(html`

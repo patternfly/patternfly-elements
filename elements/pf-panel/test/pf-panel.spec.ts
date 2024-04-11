@@ -16,9 +16,9 @@ describe('<pf-panel>', function() {
     it('should upgrade', function() {
       const klass = customElements.get('pf-panel');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfPanel);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfPanel);
     });
   });
 });

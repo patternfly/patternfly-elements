@@ -12,7 +12,7 @@ export interface PfeConfig {
 
 export type RequireProps<T, Ps extends keyof T> = T & {
   [P in Ps]-?: T[P];
-}
+};
 
 const noPref = Symbol();
 
@@ -33,7 +33,9 @@ export function trackPerformance(preference: boolean | typeof noPref = noPref) {
   return window.PfeConfig.trackPerformance;
 }
 
-function makeConverter<T>(f: (x: string, type?: unknown) => T): ComplexAttributeConverter<null | T[]> {
+function makeConverter<T>(
+  f: (x: string, type?: unknown) => T,
+): ComplexAttributeConverter<null | T[]> {
   return {
     fromAttribute(value: string) {
       if (typeof value !== 'string') {
@@ -71,7 +73,7 @@ export class ComposedEvent extends Event {
     super(type, {
       bubbles: true,
       composed: true,
-      ...init
+      ...init,
     });
   }
 }
@@ -89,7 +91,8 @@ const bodyNoAutoReveal = document.body.hasAttribute('no-auto-reveal');
 
 /** Global patternfly elements config */
 window.PfeConfig = Object.assign(window.PfeConfig ?? {}, {
-  trackPerformance: window.PfeConfig?.trackPerformance ?? getMeta('pf-track-performance') === 'true',
+  trackPerformance: window.PfeConfig?.trackPerformance
+    ?? getMeta('pf-track-performance') === 'true',
   // if the body tag has `no-auto-reveal` attribute, reveal immediately
   // if `<meta name="pf-auto-reveal">` exists, and it's `content` is 'true',
   // then auto-reveal the body

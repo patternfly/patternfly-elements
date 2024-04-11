@@ -30,9 +30,9 @@ describe('<pf-clipboard-copy>', function() {
   it('should upgrade', async function() {
     const klass = customElements.get('pf-clipboard-copy');
     expect(element)
-      .to.be.an.instanceOf(klass)
-      .and
-      .to.be.an.instanceOf(PfClipboardCopy);
+        .to.be.an.instanceOf(klass)
+        .and
+        .to.be.an.instanceOf(PfClipboardCopy);
   });
 
   describe('setting value attribute', function() {

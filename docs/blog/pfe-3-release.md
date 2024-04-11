@@ -191,8 +191,13 @@ should now work for more projects, as well.
 }
 </style>
 <form id="demo-form">
-  <pf-text-area id="textarea" name="textarea" placeholder="PatternFly Version 3.0 Text Area"></pf-text-area>
-  <pf-select id="resize-textarea" name="select" placeholder="Select a direction">
+  <pf-text-area id="textarea"
+                name="textarea"
+                placeholder="PatternFly Version 3.0 Text Area"></pf-text-area>
+  <pf-select id="resize-textarea"
+             name="select"
+             placeholder="Select a direction"
+             accessible-label="direction">
     <pf-option description="The textarea will resize in the both directions"
                value="both">Both</pf-option>
     <pf-option description="The textarea will resize in the horizontal direction only"

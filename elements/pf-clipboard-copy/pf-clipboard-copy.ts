@@ -16,7 +16,6 @@ const sleep = (ms?: number) => new Promise(r => setTimeout(r, ms));
 
 /**
  * The **clipboard copy** component allows users to quickly and easily copy content to their clipboard.
- *
  * @slot - Place content to copy here, or use the `value` attribute
  * @slot actions - Place additional action buttons here
  */
@@ -24,7 +23,10 @@ const sleep = (ms?: number) => new Promise(r => setTimeout(r, ms));
 export class PfClipboardCopy extends BaseClipboardCopy {
   static readonly styles = [...BaseClipboardCopy.styles, styles];
 
-  static shadowRootOptions: ShadowRootInit = { ...BaseClipboardCopy.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...BaseClipboardCopy.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   @property({ attribute: 'click-tip' }) clickTip = 'Copied';
 
@@ -78,7 +80,7 @@ export class PfClipboardCopy extends BaseClipboardCopy {
   render() {
     const { expanded, expandable, inline, compact, code, block, readonly } = this;
     return html`
-      <div class="container ${classMap({ code, expanded, inline, compact, block, })}">
+      <div class="container ${classMap({ code, expanded, inline, compact, block })}">
         <div id="input-group">
           <div id="wrapper">
             <pf-button id="expand-button"
@@ -132,7 +134,7 @@ export class PfClipboardCopy extends BaseClipboardCopy {
     if (this.childNodes.length > 0) {
       this.value = this.getAttribute('value') ?? this.#dedent(Array.from(this.childNodes, child =>
         (child instanceof Element || child instanceof Text) ? (child.textContent ?? '') : '')
-        .join(''));
+          .join(''));
     }
   }
 

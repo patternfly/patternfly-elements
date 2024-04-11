@@ -15,9 +15,9 @@ describe('<pf-text-area>', function() {
       element = await createFixture<PfTextArea>(html`<pf-text-area></pf-text-area>`);
       const klass = customElements.get('pf-text-area');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfTextArea);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfTextArea);
     });
   });
 
@@ -58,9 +58,9 @@ describe('<pf-text-area>', function() {
         });
         it('does not focus the text-area', function() {
           expect(document.activeElement)
-            .to
-            .not
-            .be.an.instanceof(PfTextArea);
+              .to
+              .not
+              .be.an.instanceof(PfTextArea);
         });
       });
 
@@ -85,8 +85,8 @@ describe('<pf-text-area>', function() {
               });
               it('does focus the button', function() {
                 expect(document.activeElement)
-                  .to
-                  .be.an.instanceof(PfTextArea);
+                    .to
+                    .be.an.instanceof(PfTextArea);
               });
             });
           });

@@ -21,10 +21,8 @@ import styles from './BaseTabs.css';
 
 /**
  * BaseTabs
- *
  * @attr [label-scroll-left="Scroll left"] - accessible label for the tab panel's scroll left button.
  * @attr [label-scroll-right="Scroll right"] - accessible label for the tab panel's scroll right button.
- *
  */
 export abstract class BaseTabs extends LitElement {
   static readonly styles = [styles];
@@ -138,10 +136,10 @@ export abstract class BaseTabs extends LitElement {
   override willUpdate(): void {
     const { activeItem } = this.#tabindex;
     // If RTI has an activeItem, update the roving tabindex controller
-    if (!this.manual &&
-        activeItem &&
-        activeItem !== this.#activeTab &&
-        activeItem.ariaDisabled !== 'true') {
+    if (!this.manual
+        && activeItem
+        && activeItem !== this.#activeTab
+        && activeItem.ariaDisabled !== 'true') {
       activeItem.active = true;
     }
   }
@@ -181,12 +179,13 @@ export abstract class BaseTabs extends LitElement {
     if (event.target.name === 'tab') {
       this.#allTabs = this.tabs.filter(tab => (this.constructor as typeof BaseTabs).isTab(tab));
     } else {
-      this.#allPanels = this.panels.filter(panel => (this.constructor as typeof BaseTabs).isPanel(panel));
+      this.#allPanels = this.panels
+          .filter(panel => (this.constructor as typeof BaseTabs).isPanel(panel));
     }
     this.#tabindex.updateItems();
 
-    if ((this.#allTabs.length === this.#allPanels.length) &&
-      (this.#allTabs.length !== 0 || this.#allPanels.length !== 0)) {
+    if ((this.#allTabs.length === this.#allPanels.length)
+      && (this.#allTabs.length !== 0 || this.#allPanels.length !== 0)) {
       this.#updateAccessibility();
       this.#firstLastClasses();
       this.activeIndex = this.#allTabs.findIndex(tab => tab.active);
@@ -206,9 +205,9 @@ export abstract class BaseTabs extends LitElement {
   }
 
   #onTabExpand = (event: Event): void => {
-    if (!(event instanceof TabExpandEvent) ||
-        !this.#allTabs.length ||
-        !this.#allPanels.length) {
+    if (!(event instanceof TabExpandEvent)
+        || !this.#allTabs.length
+        || !this.#allPanels.length) {
       return;
     }
 

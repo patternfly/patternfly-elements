@@ -38,7 +38,11 @@ export class PfTimestamp extends LitElement {
 
   @property({ reflect: true, type: Boolean }) utc?: boolean;
 
-  @property({ reflect: true, attribute: 'hour-12', converter: BooleanStringConverter }) hour12?: boolean;
+  @property({
+    reflect: true,
+    attribute: 'hour-12',
+    converter: BooleanStringConverter,
+  }) hour12?: boolean;
 
   @property({ reflect: true })
   get date() {

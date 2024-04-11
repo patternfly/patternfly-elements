@@ -83,14 +83,18 @@ export class OverflowController implements ReactiveController {
     const prevLeft = this.overflowLeft;
     const prevRight = this.overflowRight;
 
-    this.overflowLeft = !this.#hideOverflowButtons && !isElementInView(this.#container, this.firstItem);
-    this.overflowRight = !this.#hideOverflowButtons && !isElementInView(this.#container, this.lastItem);
+    this.overflowLeft = !this.#hideOverflowButtons
+      && !isElementInView(this.#container, this.firstItem);
+    this.overflowRight = !this.#hideOverflowButtons
+      && !isElementInView(this.#container, this.lastItem);
     let scrollButtonsWidth = 0;
     if (this.overflowLeft || this.overflowRight) {
-      scrollButtonsWidth = (this.#container.parentElement?.querySelector('button')?.getBoundingClientRect().width || 0) * 2;
+      scrollButtonsWidth =
+        (this.#container.parentElement?.querySelector('button')?.getBoundingClientRect().width || 0)
+      * 2;
     }
-    this.showScrollButtons = !this.#hideOverflowButtons &&
-    this.#container.scrollWidth > (this.#container.clientWidth + scrollButtonsWidth);
+    this.showScrollButtons = !this.#hideOverflowButtons
+    && this.#container.scrollWidth > (this.#container.clientWidth + scrollButtonsWidth);
 
     // only request update if there has been a change
     if ((prevLeft !== this.overflowLeft) || (prevRight !== this.overflowRight)) {

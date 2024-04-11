@@ -25,9 +25,9 @@ describe('<pf-dropdown>', function() {
       element = await createFixture<PfDropdown>(html`<pf-dropdown></pf-dropdown>`);
       const klass = customElements.get('pf-dropdown');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfDropdown);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfDropdown);
     });
   });
 
@@ -48,7 +48,7 @@ describe('<pf-dropdown>', function() {
           'aria-allowed-attr',
           /** false positive: the menuitem is projected into a menu in another shadow root */
           'aria-required-parent',
-        ]
+        ],
       });
     });
 

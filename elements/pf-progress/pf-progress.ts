@@ -11,50 +11,39 @@ import styles from './pf-progress.css';
 const ICONS = new Map(Object.entries({
   success: { icon: 'circle-check' },
   danger: { icon: 'circle-xmark' },
-  warning: { icon: 'triangle-exclamation' }
+  warning: { icon: 'triangle-exclamation' },
 }));
 
 /**
  * A progress bar gives the user a visual representation of their completion status of an ongoing process or task.
- *
  * @summary Display completion status of ongoing process or task.
- *
  * @cssprop {<length>} --pf-c-progress--GridGap
  *          Gap between the sections of the progress bar.
  *          {@default `1rem`}
- *
  * @cssprop {<color>} --pf-c-progress__bar--before--BackgroundColor
  *          Color of the progress bar.
  *          {@default `#06c`}
- *
  * @cssprop {<length>} --pf-c-progress__bar--Height
  *          Height of the progress bar.
  *          {@default `1rem`}
- *
  * @cssprop {<color>} --pf-c-progress__bar--BackgroundColor
  *          Background color of the progress bar.
  *          {@default `#ffffff`}
- *
  * @cssprop {<color>} --pf-c-progress__status-icon--Color
  *          Color of the status icon.
  *          {@default `#151515`}
- *
  * @cssprop {<length>} --pf-c-progress__status-icon--MarginLeft
  *          Margin left of the status icon.
  *          {@default `0.5rem`}
- *
  * @cssprop {<length>} --pf-c-progress__indicator--Height
  *          Height of the progress bar indicator.
  *          {@default `1rem`}
- *
  * @cssprop {<color>} --pf-c-progress__indicator--BackgroundColor
  *          Background color of the progress bar indicator.
  *          {@default `#ffffff`}
- *
  * @cssprop {<color>} --pf-c-progress--m-success__bar--BackgroundColor
  *          Background color of the progress bar when variant is success.
  *          {@default `#3e8635`}
- *
  * @cssprop {<color>} --pf-c-progress--m-warning__bar--BackgroundColor
  *          Background color of the progress bar when variant is warning.
  *          {@default `#f0ab00`}

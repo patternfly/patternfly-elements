@@ -25,9 +25,9 @@ describe('<pf-chip>', async function() {
   it('should upgrade', async function() {
     const klass = customElements.get('pf-chip');
     expect(await createFixture<PfChip>(html`<pf-chip></pf-chip>`))
-      .to.be.an.instanceOf(klass)
-      .and
-      .to.be.an.instanceOf(PfChip);
+        .to.be.an.instanceOf(klass)
+        .and
+        .to.be.an.instanceOf(PfChip);
   });
 
   describe('simply instantiating', function() {

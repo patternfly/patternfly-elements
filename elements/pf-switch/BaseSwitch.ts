@@ -68,9 +68,9 @@ export abstract class BaseSwitch extends LitElement {
     if (explicitOriginalTarget) {
       let labels: HTMLLabelElement[];
       if (
-        originalTarget === event.target &&
-        !(labels = Array.from(this.labels)).includes(explicitOriginalTarget) &&
-        labels.includes(this.closest('label') as HTMLLabelElement)
+        originalTarget === event.target
+        && !(labels = Array.from(this.labels)).includes(explicitOriginalTarget)
+        && labels.includes(this.closest('label') as HTMLLabelElement)
       ) {
         return;
       }

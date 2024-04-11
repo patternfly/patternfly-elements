@@ -12,7 +12,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { ListboxController } from '@patternfly/pfe-core/controllers/listbox-controller.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
-import { FloatingDOMController, type Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import {
+  FloatingDOMController,
+  type Placement,
+} from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
 import { PfOption } from './pf-option.js';
 
@@ -41,7 +44,6 @@ export class PfSelectChangeEvent extends Event {
  * A select component consists of a toggle control to open and close a menu of actions or links.
  * Selects differ from dropdowns in that they persist selection,
  * whereas dropdowns are typically used to present a list of actions or links.
- *
  * @slot - insert `pf-option` and/or `pf-option-groups` here
  * @slot placeholder - placeholder text for the select. Overrides the `placeholder` attribute.
  * @fires open - when the menu toggles open
@@ -79,7 +81,9 @@ export class PfSelect extends LitElement {
   /**
    * Accessible label for chip group used to describe chips
    */
-  @property({ attribute: 'accessible-current-selections-label' }) accessibleCurrentSelectionsLabel = 'Current selections';
+  @property({
+    attribute: 'accessible-current-selections-label',
+  }) accessibleCurrentSelectionsLabel = 'Current selections';
 
   /**
    * multi listbox button text
@@ -176,16 +180,16 @@ export class PfSelect extends LitElement {
       //   return `${this.#listbox?.selectedOptions?.length ?? 0} ${this.itemsSelectedText}`
       case 'checkbox':
         return this.#listbox
-          ?.selectedOptions
-          ?.map?.(option => option.optionText || '')
-          ?.join(' ')
-          ?.trim() ||
-          this.#computePlaceholderText() ||
-          'Options';
+            ?.selectedOptions
+            ?.map?.(option => option.optionText || '')
+            ?.join(' ')
+            ?.trim()
+          || this.#computePlaceholderText()
+          || 'Options';
       default:
-        return (this.selected ? this.value : '') ||
-          this.#computePlaceholderText() ||
-          'Select a value';
+        return (this.selected ? this.value : '')
+          || this.#computePlaceholderText()
+          || 'Select a value';
     }
   }
 
@@ -370,10 +374,10 @@ export class PfSelect extends LitElement {
   async #selectedChanged() {
     await this.updateComplete;
     this.value = [this.selected]
-      .flat()
-      .filter(x => !!x)
-      .map(x => x!.value)
-      .join();
+        .flat()
+        .filter(x => !!x)
+        .map(x => x!.value)
+        .join();
     this.dispatchEvent(new PfSelectChangeEvent());
     switch (this.variant) {
       case 'single':
@@ -396,9 +400,9 @@ export class PfSelect extends LitElement {
       case 'checkbox':
         if (this.expanded) {
           const root = this.getRootNode();
-          if (root instanceof ShadowRoot ||
-              root instanceof Document &&
-              !this.options.includes(event.relatedTarget as PfOption)
+          if (root instanceof ShadowRoot
+              || root instanceof Document
+              && !this.options.includes(event.relatedTarget as PfOption)
           ) {
             this.hide();
           }
@@ -449,14 +453,14 @@ export class PfSelect extends LitElement {
   }
 
   #computePlaceholderText() {
-    return this.placeholder ||
-      this.querySelector<HTMLSlotElement>('[slot=placeholder]')
-        ?.assignedNodes()
-        ?.reduce((acc, node) => `${acc}${node.textContent}`, '')?.trim() ||
-      this.#listbox?.options
-        ?.filter(x => x !== this.shadowRoot?.getElementById('placeholder'))
-        ?.at(0)?.value ||
-      '';
+    return this.placeholder
+      || this.querySelector<HTMLSlotElement>('[slot=placeholder]')
+          ?.assignedNodes()
+          ?.reduce((acc, node) => `${acc}${node.textContent}`, '')?.trim()
+      || this.#listbox?.options
+          ?.filter(x => x !== this.shadowRoot?.getElementById('placeholder'))
+          ?.at(0)?.value
+      || '';
   }
 
   /**

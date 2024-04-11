@@ -17,42 +17,39 @@ type TypedFieldDecorator<T> = (proto: T, key: string | keyof T) => void ;
  * Works on any class field. When using on lit observed properties,
  * Make sure `@observed` is to the left (i.e. called after) the `@property`
  * or `@state` decorator.
- *
  * @example observing a lit property
  * ```ts
  * @observed @property() foo = 'bar';
  *
  * protected _fooChanged(oldValue?: string, newValue?: string) {}
  * ```
- *
  * @example using a custom callback
  * ```ts
  * @observed('_myCallback') size = 'lg';
  *
  * _myCallback(_, size) {...}
  * ```
- *
  * @example using an arrow function
  * ```ts
  * @observed((oldVal, newVal) => console.log(`Size changed from ${oldVal} to ${newVal}`))
  * ```
  */
-export function observed<T extends ReactiveElement>(methodName: string): TypedFieldDecorator<T>
-export function observed<T extends ReactiveElement>(cb: ChangeCallback<T>): TypedFieldDecorator<T>
-export function observed<T extends ReactiveElement>(proto: T, key: string): void
+export function observed<T extends ReactiveElement>(methodName: string): TypedFieldDecorator<T>;
+export function observed<T extends ReactiveElement>(cb: ChangeCallback<T>): TypedFieldDecorator<T>;
+export function observed<T extends ReactiveElement>(proto: T, key: string): void;
 export function observed<T extends ReactiveElement>(...as: any[]): void | TypedFieldDecorator<T> {
   /** @observed('_myCustomChangeCallback') */
   if (as.length === 1) {
     const [methodNameOrCallback] = as;
     return function(proto, key) {
       (proto.constructor as typeof ReactiveElement)
-        .addInitializer(x => new PropertyObserverController(x));
+          .addInitializer(x => new PropertyObserverController(x));
       observeProperty(proto, key as string & keyof T, methodNameOrCallback);
     };
   } else {
     const [proto, key] = as;
     (proto.constructor as typeof ReactiveElement)
-      .addInitializer(x => new PropertyObserverController(x));
+        .addInitializer(x => new PropertyObserverController(x));
     observeProperty(proto, key);
   }
 }

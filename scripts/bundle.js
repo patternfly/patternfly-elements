@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* eslint-env node */
+/* globals process */
 import { build } from 'esbuild';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -10,7 +10,11 @@ import postcss from 'postcss';
 import postcssNesting from 'postcss-nesting';
 
 const resolveDir = join(fileURLToPath(import.meta.url), '../../elements');
-const entryPoints = (await glob('./pf-*/pf-*.ts', { cwd: resolveDir })).map(x => x.replace('.ts', '.js'));
+
+const entryPoints =
+  (await glob('./pf-*/pf-*.ts', { cwd: resolveDir }))
+      .map(x => x.replace('.ts', '.js'));
+
 const contents = entryPoints.map(x => `export * from './${x}';`).join('\n');
 
 export async function bundle({ outfile = 'elements/pfe.min.js' } = {}) {
@@ -34,18 +38,17 @@ export async function bundle({ outfile = 'elements/pfe.min.js' } = {}) {
     external: [
       'lit',
       'tslib',
-      '@floating-ui*'
+      '@floating-ui*',
     ],
 
     plugins: [
       litCssPlugin({
         cssnano: false,
-        uglify: false,
         filter: /\.css$/,
         transform: (str, { filePath }) =>
           postcss(postcssNesting())
-            .process(str, { from: filePath })
-            .css
+              .process(str, { from: filePath })
+              .css,
       }),
     ],
   });

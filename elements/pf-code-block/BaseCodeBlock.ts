@@ -12,8 +12,8 @@ export abstract class BaseCodeBlock extends LitElement {
   protected get content() {
     const script = this.querySelector<HTMLScriptElement>('script[type]');
     if (
-      script?.type !== 'text/javascript-sample' &&
-      !!script?.type.match(/(j(ava)?|ecma|live)script/)) {
+      script?.type !== 'text/javascript-sample'
+      && !!script?.type.match(/(j(ava)?|ecma|live)script/)) {
       return '';
     } else {
       return script?.textContent ?? '';

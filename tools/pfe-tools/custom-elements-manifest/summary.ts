@@ -14,16 +14,16 @@ export function summaryPlugin(): Plugin {
           const decl = moduleDoc.declarations?.find?.(x => x.name === name);
           if (decl && !decl.summary) {
             const summary = (node as typeof node & { jsDoc: JSDoc })
-              ?.jsDoc
-              ?.tags
-              ?.find?.(x => x.tagName.getText() === 'summary')
-              ?.comment;
+                ?.jsDoc
+                ?.tags
+                ?.find?.(x => x.tagName.getText() === 'summary')
+                ?.comment;
             if (summary) {
               decl.summary = summary.toString();
             }
           }
         }
       }
-    }
+    },
   };
 }

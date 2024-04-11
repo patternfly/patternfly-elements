@@ -3,7 +3,7 @@ import type { ReactiveController, ReactiveControllerHost } from 'lit';
 export class Logger implements ReactiveController {
   private static logDebug: boolean;
 
-  private static instances: WeakMap<ReactiveControllerHost, Logger> = new WeakMap();
+  private static instances = new WeakMap<ReactiveControllerHost, Logger>();
 
   private get prefix() {
     if (this.host instanceof HTMLElement) {
@@ -37,7 +37,6 @@ export class Logger implements ReactiveController {
 
   /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
-   *
    * @example Logger.debug("Hello");
    */
   static debug(...msgs: unknown[]) {
@@ -48,7 +47,6 @@ export class Logger implements ReactiveController {
 
   /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
-   *
    * @example Logger.info("Hello");
    */
   static info(...msgs: unknown[]) {
@@ -59,8 +57,7 @@ export class Logger implements ReactiveController {
 
   /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
-   *
-     * @example Logger.log("Hello");
+   * @example Logger.log("Hello");
    */
   static log(...msgs: unknown[]) {
     if (Logger.debugLog()) {
@@ -70,7 +67,6 @@ export class Logger implements ReactiveController {
 
   /**
    * A console warning wrapper which formats your output with useful debugging information.
-   *
    * @example Logger.warn("Hello");
    */
   static warn(...msgs: unknown[]) {
@@ -90,7 +86,6 @@ export class Logger implements ReactiveController {
 
   /**
    * Debug logging that outputs the tag name as a prefix automatically
-   *
    * @example this.logger.log("Hello");
    */
   debug(...msgs: unknown[]) {
@@ -99,7 +94,6 @@ export class Logger implements ReactiveController {
 
   /**
    * Info logging that outputs the tag name as a prefix automatically
-   *
    * @example this.logger.log("Hello");
    */
   info(...msgs: unknown[]) {
@@ -108,7 +102,6 @@ export class Logger implements ReactiveController {
 
   /**
    * Local logging that outputs the tag name as a prefix automatically
-   *
    * @example this.logger.log("Hello");
    */
   log(...msgs: unknown[]) {

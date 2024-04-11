@@ -71,9 +71,9 @@ describe('<pf-accordion>', function() {
   it('simply instantiating', async function() {
     element = await createFixture<PfAccordion>(html`<pf-accordion></pf-accordion>`);
     expect(element, 'pf-accordion should be an instance of PfAccordion')
-      .to.be.an.instanceof(customElements.get('pf-accordion'))
-      .and
-      .to.be.an.instanceof(PfAccordion);
+        .to.be.an.instanceof(customElements.get('pf-accordion'))
+        .and
+        .to.be.an.instanceof(PfAccordion);
   });
 
   describe('in typical usage', function() {
@@ -257,21 +257,21 @@ describe('<pf-accordion>', function() {
         const newPanel = panels.at(-1);
         expect(newHeader?.hasAttribute('id'), 'header has an id').to.be.true;
         expect(newHeader?.getAttribute('aria-controls'), 'header has aria-controls')
-          .to.equal(newPanel?.getAttribute('id'));
+            .to.equal(newPanel?.getAttribute('id'));
 
         expect(newPanel?.getAttribute('role'), 'panel has role').to.equal('region');
         expect(newPanel?.hasAttribute('id'), 'panel has id').to.be.true;
         expect(newPanel?.getAttribute('aria-labelledby'), 'panel has aria-labelledby')
-          .to.equal(newHeader?.getAttribute('id'));
+            .to.equal(newHeader?.getAttribute('id'));
       });
     });
 
     describe('<pf-accordion-header>', function() {
       it('should upgrade pf-accordion-header', function() {
         expect(header)
-          .to.be.an.instanceof(customElements.get('pf-accordion-header'))
-          .and
-          .to.be.an.instanceOf(PfAccordionHeader);
+            .to.be.an.instanceof(customElements.get('pf-accordion-header'))
+            .and
+            .to.be.an.instanceOf(PfAccordionHeader);
       });
 
       it('must have an id', function() {
@@ -286,9 +286,9 @@ describe('<pf-accordion>', function() {
     describe('<pf-accordion-panel>', function() {
       it('should upgrade pf-accordion-panel', function() {
         expect(panel)
-          .to.be.an.instanceof(customElements.get('pf-accordion-panel'))
-          .and
-          .to.be.an.instanceOf(PfAccordionPanel);
+            .to.be.an.instanceof(customElements.get('pf-accordion-panel'))
+            .and
+            .to.be.an.instanceOf(PfAccordionPanel);
       });
 
       it('must have an id', function() {
@@ -996,7 +996,7 @@ describe('<pf-accordion>', function() {
     /* CONSOLE VALIDATION */
     it('should warning in the console', function() {
       expect(Logger.warn)
-        .to.have.been.calledOnceWith(`[pf-accordion-header#bad-header-element]`, 'Header should contain at least 1 heading tag for correct semantics.');
+          .to.have.been.calledOnceWith(`[pf-accordion-header#bad-header-element]`, 'Header should contain at least 1 heading tag for correct semantics.');
     });
   });
 

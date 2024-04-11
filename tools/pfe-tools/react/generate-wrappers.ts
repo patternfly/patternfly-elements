@@ -16,7 +16,9 @@ interface ReactWrapperData {
 const javascript = String.raw;
 const typescript = String.raw;
 
-function isCustomElementDeclaration(declaration: CEM.Declaration): declaration is CEM.CustomElementDeclaration {
+function isCustomElementDeclaration(
+  declaration: CEM.Declaration,
+): declaration is CEM.CustomElementDeclaration {
   return !!(declaration as CEM.CustomElementDeclaration).customElement;
 }
 
@@ -61,7 +63,10 @@ const getReactWrapperData = (
     const eventsMap = `{${events.map(event => `
     ${getEventReactPropName(event)}: '${event.name}'`).join(',')}${events.length ? `,
   ` : ''}}`;
-    const eventsInterface = eventsMap.replace(/\s+/g, ' ').replaceAll(',', ';').replace('; }', ' }');
+    const eventsInterface = eventsMap
+        .replace(/\s+/g, ' ')
+        .replaceAll(',', ';')
+        .replace('; }', ' }');
     return {
       Class: decl.name,
       reactComponentName,
@@ -93,10 +98,15 @@ export const ${x.reactComponentName}: ReactWebComponent<${x.Class}, ${x.eventsIn
   `;
 }
 
-function genWrapperModules(module: CEM.Module, pkgName: string, elPrefix: string, classPrefix: string) {
+function genWrapperModules(
+  module: CEM.Module,
+  pkgName: string,
+  elPrefix: string,
+  classPrefix: string,
+) {
   const data: ReactWrapperData[] = (module.declarations ?? [])
-    .filter(isCustomElementDeclaration)
-    .map(getReactWrapperData(module, classPrefix, elPrefix));
+      .filter(isCustomElementDeclaration)
+      .map(getReactWrapperData(module, classPrefix, elPrefix));
   const js = genJavascriptModule(module, pkgName, data);
   const ts = genTypescriptModule(module, pkgName, data);
   const tagNames = data.map(x => x.tagName);
@@ -122,8 +132,8 @@ async function writeReactWrappers(
 
 async function parseManifest(maybeManifest: unknown): Promise<CEM.Package> {
   let manifest;
-  if (maybeManifest instanceof URL ||
-    typeof maybeManifest === 'string') {
+  if (maybeManifest instanceof URL
+    || typeof maybeManifest === 'string') {
     manifest = JSON.parse(await readFile(maybeManifest, 'utf-8'));
   } else {
     manifest = maybeManifest;
@@ -142,6 +152,7 @@ export async function generateReactWrappers(
   elPrefix = 'pf',
   classPrefix = `${elPrefix.charAt(0).toUpperCase()}${elPrefix.slice(1)}`,
 ) {
+  /* eslint-disable no-console */
   const manifest = await parseManifest(customElementsManifestOrPathOrURL);
   const written = [];
   console.group(Chalk.green`Writing React Wrappers`);
@@ -155,7 +166,6 @@ export async function generateReactWrappers(
     }
   } catch (error) {
     if (error instanceof NonCriticalError) {
-      // eslint-disable-next-line no-console
       console.info(`⚠️ ${error.message}`);
     } else {
       throw error;
@@ -170,4 +180,5 @@ export async function generateReactWrappers(
     console.log(`${names}: ${path}`);
   }
   console.groupEnd();
+  /* eslint-enable no-console */
 }

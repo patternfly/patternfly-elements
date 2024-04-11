@@ -13,8 +13,8 @@ module.exports = {
     for (const tag of options?.tags ?? []) {
       eleventyConfig.addCollection(tag, collection =>
         collection
-          .getFilteredByTag(tag)
-          .sort(options.order === 'alphabetical' ? alphabetically : byOrder));
+            .getFilteredByTag(tag)
+            .sort(options.order === 'alphabetical' ? alphabetically : byOrder));
     }
   },
 };

@@ -25,9 +25,9 @@ describe('<pf-back-to-top>', function() {
     it('should upgrade', function() {
       const klass = customElements.get('pf-back-to-top');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfBackToTop);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfBackToTop);
     });
   });
 

@@ -1,8 +1,13 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 const { glob } = require('glob');
 
-const packageLock = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'package-lock.json')));
+const packageLock = JSON.parse(fs.readFileSync(path.join(
+  __dirname,
+  '..',
+  '..',
+  'package-lock.json',
+)));
 
 function readPackageVersion(module) {
   return packageLock.packages[`node_modules/${module}`].version;
@@ -47,15 +52,15 @@ const LIT_DEPS = [
       './html.js',
       './polyfill-support.js',
       './static-html.js',
-    ]
+    ],
   },
   {
     target: `@lit-labs/ssr-client`,
     subpaths: [
       '.',
       './lit-element-hydrate-support.js',
-    ]
-  }
+    ],
+  },
 ];
 
 const PWA_DEPS = [
@@ -63,9 +68,9 @@ const PWA_DEPS = [
     target: `pwa-helpers@${PWA_HELPER_VERSION}`,
     subpaths: [
       '.',
-      './router.js'
-    ]
-  }
+      './router.js',
+    ],
+  },
 ];
 
 module.exports = async function() {
@@ -73,7 +78,7 @@ module.exports = async function() {
 
   const generator = new Generator({
     defaultProvider: 'jspm.io',
-    env: ['production', 'browser', 'module']
+    env: ['production', 'browser', 'module'],
   });
 
   await generator.install([
@@ -86,7 +91,7 @@ module.exports = async function() {
     'element-internals-polyfill',
     `fuse.js@${FUSE_VERSION}`,
     ...LIT_DEPS,
-    ...PWA_DEPS
+    ...PWA_DEPS,
   ]);
 
   const map = generator.getMap();
@@ -94,9 +99,11 @@ module.exports = async function() {
   map.imports['@patternfly/elements'] = '/pfe.min.js';
 
   // add imports for imports under pfe-core
-  const pfeCoreImports = (await glob('./{functions,controllers,decorators}/*.ts', { cwd: path.join(__dirname, '../../core/pfe-core') }))
-    .filter(x => !x.endsWith('.d.ts'))
-    .map(x => x.replace('.ts', '.js'));
+  const pfeCoreImports = (await glob('./{functions,controllers,decorators}/*.ts', {
+    cwd: path.join(__dirname, '../../core/pfe-core'),
+  }))
+      .filter(x => !x.endsWith('.d.ts'))
+      .map(x => x.replace('.ts', '.js'));
   for (const file of pfeCoreImports) {
     map.imports[path.join('@patternfly/pfe-core', file)] = '/pfe.min.js';
   }
@@ -120,9 +127,11 @@ module.exports = async function() {
 
 
   // add imports for all icon files in /node_modules/@patternfly/icons/{far, fas, fab, patternfly}/
-  const iconsImports = (await glob('./{far,fas,fab,patternfly}/*.js', { cwd: path.join(__dirname, '../../node_modules/@patternfly/icons') }))
-    .filter(x => !x.endsWith('.d.ts'))
-    .map(x => x);
+  const iconsImports = (await glob('./{far,fas,fab,patternfly}/*.js', {
+    cwd: path.join(__dirname, '../../node_modules/@patternfly/icons'),
+  }))
+      .filter(x => !x.endsWith('.d.ts'))
+      .map(x => x);
 
   for (const icon of iconsImports) {
     map.imports[`@patternfly/icons/${icon}`] = `/assets/@patternfly/icons/${icon}`;

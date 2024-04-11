@@ -46,7 +46,8 @@ export function demosPlugin(options?: PfeConfig): Plugin {
         }
 
         if (primaryElementName && existsSync(demoPath)) {
-          const alias = config.aliases[primaryElementName] ?? primaryElementName.replace(/^\w+-/, '');
+          const alias =
+            config.aliases[primaryElementName] ?? primaryElementName.replace(/^\w+-/, '');
           const allDemos = readdirSync(demoPath).filter(x => x.endsWith('.html'));
           for (const decl of moduleDoc.declarations ?? []) {
             if (isCustomElement(decl) && decl.tagName) {

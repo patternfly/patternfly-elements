@@ -10,9 +10,9 @@ describe('<pf-avatar>', function() {
   it('should upgrade', async function() {
     const el = await createFixture(html`<pf-avatar></pf-avatar>`);
     expect(el, 'pf-badge should be an instance of PfAvatar')
-      .to.be.an.instanceOf(customElements.get('pf-avatar'))
-      .and
-      .to.be.an.instanceOf(PfAvatar);
+        .to.be.an.instanceOf(customElements.get('pf-avatar'))
+        .and
+        .to.be.an.instanceOf(PfAvatar);
   });
 
   describe('without src attr', function() {

@@ -25,9 +25,9 @@ describe('<pf-switch>', function() {
     it('should upgrade', async function() {
       const klass = customElements.get('pf-switch');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfSwitch);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfSwitch);
     });
     it('has accessible role', function() {
       expect(snapshot.role).to.equal('switch');

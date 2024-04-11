@@ -31,7 +31,7 @@ async function execCommand(exec, command) {
       stderr(data) {
         stderr += data.toString();
       },
-    }
+    },
   });
 
   if (code !== 0) {

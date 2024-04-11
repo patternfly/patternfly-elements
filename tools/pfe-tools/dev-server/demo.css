@@ -58,7 +58,7 @@ body.menu-open {
   padding-inline-end: var(--pf-c-masthead--PaddingRight, var(--pf-c-masthead--inset, 24px));
   padding-block: 8px;
   color: white;
-  background: var(--pf-theme--color--accent, #0066cc);
+  background: black;
 }
 
 .logo-bar > a {
@@ -262,7 +262,6 @@ body.menu-open {
 main {
   grid-area: body;
   display: grid;
-  grid-template-rows: min-content 1fr;
   height: 100%;
   width: 100%;
   max-height: calc(100vh - var(--pf-demo-header-height));

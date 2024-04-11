@@ -5,6 +5,6 @@ export default {
   port: 8080,
   rootDir: '_site',
   plugins: [
-    importMapsPlugin()
+    importMapsPlugin(),
   ],
 };

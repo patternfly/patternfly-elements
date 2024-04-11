@@ -22,6 +22,8 @@ export class PfOptionGroup extends LitElement {
   /** whether group is disabled */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
+  // for the role
+  // eslint-disable-next-line no-unused-private-class-members
   #internals = InternalsController.of(this, { role: 'group' });
 
   render() {

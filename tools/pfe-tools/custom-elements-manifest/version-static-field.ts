@@ -1,4 +1,9 @@
-import type { Declaration, ClassField, ClassDeclaration, ClassMember } from 'custom-elements-manifest/schema';
+import type {
+  Declaration,
+  ClassField,
+  ClassDeclaration,
+  ClassMember,
+} from 'custom-elements-manifest/schema';
 import type { Plugin } from '@custom-elements-manifest/analyzer';
 
 import { readFileSync } from 'node:fs';
@@ -22,9 +27,12 @@ export function versionStaticFieldPlugin(): Plugin {
             const versionField = decl.members?.find(isVersionStatic);
             if (versionField) {
               try {
-                const { version } = JSON.parse(readFileSync(join(process.cwd(), 'package.json'), 'utf-8'));
+                const {
+                  version,
+                } = JSON.parse(readFileSync(join(process.cwd(), 'package.json'), 'utf-8'));
                 versionField.default = version;
               } catch (e) {
+                // eslint-disable-next-line no-console
                 console.error(e);
                 delete versionField.default;
               }

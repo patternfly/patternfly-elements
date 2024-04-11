@@ -21,9 +21,9 @@ describe('<pf-tooltip>', function() {
     element = await fixture<PfTooltip>(html`<pf-tooltip></pf-tooltip>`);
     const klass = customElements.get('pf-tooltip');
     expect(element)
-      .to.be.an.instanceOf(klass)
-      .and
-      .to.be.an.instanceOf(PfTooltip);
+        .to.be.an.instanceOf(klass)
+        .and
+        .to.be.an.instanceOf(PfTooltip);
   });
 
   describe('typical usage', function() {

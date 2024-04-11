@@ -21,7 +21,6 @@ export class PfClipboardCopyCopiedEvent extends Event {
 
 /**
  * The **clipboard copy** component allows users to quickly and easily copy content to their clipboard.
- *
  * @slot - Place content to copy here, or use the `value` attribute
  * @slot actions - Place additional action buttons here
  * @fires {PfClipboardCopyCopiedEvent} copy - when the text snippet is successfully copied.
@@ -30,7 +29,10 @@ export class PfClipboardCopyCopiedEvent extends Event {
 export class PfClipboardCopy extends LitElement {
   static readonly styles = [formControlStyles, styles];
 
-  static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /** Tooltip message to display when clicking the copy button */
   @property({ attribute: 'click-tip' }) clickTip = 'Successfully copied to clipboard!';
@@ -142,7 +144,7 @@ export class PfClipboardCopy extends LitElement {
     if (this.childNodes.length > 0) {
       this.value = this.getAttribute('value') ?? this.#dedent(Array.from(this.childNodes, child =>
         (child instanceof Element || child instanceof Text) ? (child.textContent ?? '') : '')
-        .join(''));
+          .join(''));
     }
   }
 

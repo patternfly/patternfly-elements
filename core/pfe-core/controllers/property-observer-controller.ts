@@ -12,11 +12,11 @@ export type ChangeCallbackName = `_${string}Changed`;
 
 export type PropertyObserverHost<T> = T & Record<ChangeCallbackName, ChangeCallback<T>> & {
   [observedController]: PropertyObserverController;
-}
+};
 
 /** This controller holds a cache of observed property values which were set before the element updated */
 export class PropertyObserverController implements ReactiveController {
-  private static hosts: WeakMap<HTMLElement, PropertyObserverController> = new WeakMap();
+  private static hosts = new WeakMap<HTMLElement, PropertyObserverController>();
 
   private values = new Map<string, [methodName: string, values: [unknown, unknown]]>();
 

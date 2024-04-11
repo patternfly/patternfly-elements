@@ -37,16 +37,12 @@ export class ModalOpenEvent extends ComposedEvent {
 /**
  * A **modal** displays important information to a user without requiring them to navigate
  * to a new page.
- *
  * @summary Displays information or helps a user focus on a task
- *
  * @slot - The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header.
  * @slot header - The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6).
  * @slot footer - Optional footer content. Good place to put action buttons.
- *
  * @fires {ModalOpenEvent} open - Fires when a user clicks on the trigger or manually opens a modal.
  * @fires {ModalCloseEvent} close - Fires when either a user clicks on either the close button or the overlay or manually closes a modal.
- *
  * @csspart overlay - The modal overlay which lies under the dialog and above the page body
  * @csspart dialog - The dialog element
  * @csspart content - The container for the dialog content
@@ -54,7 +50,6 @@ export class ModalOpenEvent extends ComposedEvent {
  * @csspart description - The container for the optional dialog description in the header
  * @csspart close-button - The modal's close button
  * @csspart footer - Actions footer container
- *
  * @cssprop {<length>} --pf-c-modal-box--ZIndex {@default 500}
  * @cssprop {<length>} --pf-c-modal-box--Width - Width of the modal {@default calc(100% - 2rem)}
  * @cssprop {<length>} --pf-c-modal-box--MaxWidth - Max width of the modal {@default calc(100% - 2rem)}
@@ -72,7 +67,10 @@ export class ModalOpenEvent extends ComposedEvent {
  */
 @customElement('pf-modal')
 export class PfModal extends LitElement implements HTMLDialogElement {
-  static readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   static readonly styles = [style];
 
@@ -220,7 +218,8 @@ export class PfModal extends LitElement implements HTMLDialogElement {
 
   protected _triggerChanged() {
     if (this.trigger) {
-      this.#triggerElement = (this.getRootNode() as Document | ShadowRoot).getElementById(this.trigger);
+      this.#triggerElement = (this.getRootNode() as Document | ShadowRoot)
+          .getElementById(this.trigger);
       this.#triggerElement?.addEventListener('click', this.onTriggerClick);
     }
   }
@@ -236,7 +235,7 @@ export class PfModal extends LitElement implements HTMLDialogElement {
     if (open) {
       const path = event.composedPath();
       const { closeOnOutsideClick } = this.constructor as typeof PfModal;
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
       if (closeOnOutsideClick && path.includes(overlay!) && !path.includes(dialog!)) {
         event.preventDefault();
         this.cancel();

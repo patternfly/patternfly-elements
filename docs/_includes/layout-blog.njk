@@ -5,6 +5,7 @@ layout: layout-base.njk
 {% include '_nav.njk' %}
 
 <main id="main" class="blog">
+
   <header class="band header">
     <h1>{{ title }}</h1>
     {% if tagline %}<p class="tagline">{{ tagline }}</p>{% endif %} 
@@ -27,11 +28,13 @@ layout: layout-base.njk
     {{ content | safe }}
   </section>
 
+  <pf-back-to-top id="back-to-top-link">Back to Top</pf-back-to-top>
 </main>
 
 {% include '_foot.njk' %}
 
 <script type="module">
+  import '@patternfly/elements/pf-back-to-top/pf-back-to-top.js';
   const allTocLinks = document.querySelectorAll('nav.toc [href^="#"]')
 
   const activeLinks = document.querySelectorAll('nav.toc li.active');
@@ -65,7 +68,12 @@ layout: layout-base.njk
   for (const el of document.querySelectorAll(':is(h2, h3, h4)[id]')) {
     io.observe(el);
   }
-
-
 </script>
+
+<style>
+#back-to-top-link {
+  position: sticky;
+  justify-self: end;
+}
+</style>
 

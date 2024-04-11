@@ -7,9 +7,7 @@ import Color from 'colorjs.io';
  *
  * - If React is available the fixture will be wrapped in a React app.
  * - By default standard a fixture will be created using lit html.
- *
- * @param element The element code you'd like to generate a fixture for.
- *
+ * @param code The element code you'd like to generate a fixture for.
  * @returns  Returns the new web component fixture rendered and ready for tests.
  */
 export async function createFixture<T extends Element = HTMLElement>(
@@ -20,7 +18,11 @@ export async function createFixture<T extends Element = HTMLElement>(
 }
 
 chai.use(function(_chai) {
-  _chai.Assertion.addMethod('colored', function(this: Chai.AssertionPrototype, expected, msg?: string) {
+  _chai.Assertion.addMethod('colored', function(
+    this: Chai.AssertionPrototype,
+    expected,
+    msg?: string,
+  ) {
     const actual = this._obj;
     const actualParsed = new Color(actual);
     const expectParsed = new Color(expected);
@@ -43,8 +45,10 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Chai {
     interface Assertion {
-    /** Given a CSS color string, assert that it matches the expected value.
-      * Color strings are normalized using colorjs.io */
+      /**
+       * Given a CSS color string, assert that it matches the expected value.
+       * Color strings are normalized using colorjs.io
+       */
       colored(expected: string, msg?: string): void;
     }
   }

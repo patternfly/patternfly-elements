@@ -45,9 +45,9 @@ describe('<pf-select>', function() {
       element = await createFixture<PfSelect>(html`<pf-select></pf-select>`);
       const klass = customElements.get('pf-select');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfSelect);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfSelect);
     });
   });
 
@@ -55,6 +55,7 @@ describe('<pf-select>', function() {
     beforeEach(async function() {
       element = await createFixture<PfSelect>(html`
         <pf-select variant="single"
+                   accessible-label="Choose a number"
                    placeholder="Choose a number">
           <pf-option value="1">1</pf-option>
           <pf-option value="2">2</pf-option>
@@ -69,6 +70,16 @@ describe('<pf-select>', function() {
 
     it('is accessible', async function() {
       await expect(element).to.be.accessible();
+    });
+
+    describe('without accessible label', function() {
+      beforeEach(function() {
+        element.accessibleLabel = undefined;
+      });
+      beforeEach(updateComplete);
+      it('fails accessibility audit', async function() {
+        await expect(element).to.not.be.accessible();
+      });
     });
 
     describe('calling focus())', function() {
@@ -278,7 +289,8 @@ describe('<pf-select>', function() {
   describe('variant="checkbox"', function() {
     beforeEach(async function() {
       element = await createFixture<PfSelect>(html`
-        <pf-select variant="checkbox">
+        <pf-select variant="checkbox"
+                   accessible-label="Check it out">
           <pf-option value="1">1</pf-option>
           <pf-option value="2">2</pf-option>
           <pf-option value="3">3</pf-option>
@@ -288,12 +300,6 @@ describe('<pf-select>', function() {
           <pf-option value="7">7</pf-option>
           <pf-option value="8">8</pf-option>
         </pf-select>`);
-    });
-
-    it('should have accessible button label based on the accessible label', async function() {
-      const snapshot = await a11ySnapshot();
-      const button = snapshot.children?.find(x => x.role === 'combobox');
-      expect(button?.name).to.equal('Options 0');
     });
 
     it('is accessible', async function() {
@@ -320,7 +326,7 @@ describe('<pf-select>', function() {
         it('should NOT use checkbox role for options', async function() {
           const snapshot = await a11ySnapshot();
           expect(snapshot.children?.at(1)?.children?.filter(x => x.role === 'checkbox')?.length)
-            .to.equal(0);
+              .to.equal(0);
         });
       });
 
@@ -405,9 +411,9 @@ describe('<pf-select>', function() {
           beforeEach(press(' '));
           beforeEach(updateComplete);
 
-          it('does not select anything', function() {
+          it('selects option 1', function() {
             // because the placeholder was focused
-            expect(getValues(element)).to.deep.equal([]);
+            expect(getValues(element)).to.deep.equal(['1']);
           });
 
           it('remains expanded', async function() {
@@ -423,25 +429,22 @@ describe('<pf-select>', function() {
               const snapshot = await a11ySnapshot();
               const listbox = snapshot.children?.find(x => x.role === 'listbox');
               const focused = listbox?.children?.find(x => x.focused);
-              expect(focused?.name).to.equal('1');
+              expect(focused?.name).to.equal('2');
             });
             describe('then pressing Enter', function() {
               beforeEach(press('Enter'));
               beforeEach(updateComplete);
-              it('adds option 1 to selection', function() {
-                expect(getValues(element)).to.deep.equal(['1']);
+              it('adds option 2 to selection', function() {
+                expect(getValues(element)).to.deep.equal([
+                  '1',
+                  '2',
+                ]);
               });
 
               it('remains expanded', async function() {
                 expect(element.expanded).to.be.true;
                 const snapshot = await a11ySnapshot();
                 expect(snapshot.children?.at(1)?.role).to.equal('listbox');
-              });
-
-              it('should have accessible button label "Options 1"', async function() {
-                const snapshot = await a11ySnapshot();
-                const button = snapshot.children?.find(x => x.role === 'combobox');
-                expect(button?.name).to.equal('Options 1');
               });
 
               describe('then holding Shift and pressing down arrow / enter twice in a row', function() {
@@ -454,7 +457,12 @@ describe('<pf-select>', function() {
                 beforeEach(updateComplete);
 
                 it('adds options 2 and 3 to the selected list', function() {
-                  expect(getValues(element)).to.deep.equal(['1', '2', '3']);
+                  expect(getValues(element)).to.deep.equal([
+                    '1',
+                    '2',
+                    '3',
+                    '4',
+                  ]);
                 });
 
                 describe('then pressing ArrowUp and Enter', function() {
@@ -462,8 +470,12 @@ describe('<pf-select>', function() {
                   beforeEach(press('Enter'));
                   beforeEach(updateComplete);
 
-                  it('deselects option 2', function() {
-                    expect(getValues(element)).to.deep.equal(['1', '3']);
+                  it('deselects option 3', function() {
+                    expect(getValues(element)).to.deep.equal([
+                      '1',
+                      '2',
+                      '4',
+                    ]);
                   });
 
                   describe('then holding down Shift and pressing arrow up / enter twice in a row', function() {
@@ -477,7 +489,9 @@ describe('<pf-select>', function() {
                     beforeEach(updateComplete);
 
                     it('deselects options 1 and 2', function() {
-                      expect(getValues(element)).to.deep.equal(['3']);
+                      expect(getValues(element)).to.deep.equal([
+                        '4',
+                      ]);
                     });
 
                     describe('then pressing Ctrl+A', function() {
@@ -485,7 +499,16 @@ describe('<pf-select>', function() {
                       beforeEach(updateComplete);
 
                       it('selects all options', function() {
-                        expect(getValues(element)).to.deep.equal(['1', '2', '3', '4', '5', '6', '7', '8']);
+                        expect(getValues(element)).to.deep.equal([
+                          '1',
+                          '2',
+                          '3',
+                          '4',
+                          '5',
+                          '6',
+                          '7',
+                          '8',
+                        ]);
                       });
 
                       describe('then pressing Ctrl+A again', function() {
@@ -573,7 +596,7 @@ describe('<pf-select>', function() {
           name: 'Options',
           focused: true,
           autocomplete: 'both',
-          haspopup: 'listbox'
+          haspopup: 'listbox',
         });
       });
 
@@ -915,7 +938,7 @@ describe('<pf-select>', function() {
                             it('removes all chips', async function() {
                               const snapshot = await a11ySnapshot();
                               expect(snapshot.children?.find(x => x.role === 'button' && x.name === 'Close'))
-                                .to.be.undefined;
+                                  .to.be.undefined;
                             });
                             it('focuses the typeahead input', async function() {
                               const snapshot = await a11ySnapshot();

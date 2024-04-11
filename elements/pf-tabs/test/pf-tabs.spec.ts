@@ -27,9 +27,9 @@ describe('<pf-tabs>', function() {
   it('should upgrade', async function() {
     const el = await createFixture<PfTabs>(html`<pf-tabs></pf-tabs>`);
     expect(el, 'pf-tabs should be an instance of PfeTabs')
-      .to.be.an.instanceOf(customElements.get('pf-tabs'))
-      .and
-      .to.be.an.instanceOf(PfTabs);
+        .to.be.an.instanceOf(customElements.get('pf-tabs'))
+        .and
+        .to.be.an.instanceOf(PfTabs);
   });
 
   describe('with three valid tab pairs', function() {
@@ -143,7 +143,7 @@ describe('<pf-tabs>', function() {
 
       describe('then setting the first tab\'s `disabled` attribute', function() {
         beforeEach(async function() {
-        element.querySelector('pf-tab')!.disabled = true;
+          element.querySelector('pf-tab')!.disabled = true;
         });
 
         beforeEach(updateComplete);
@@ -156,7 +156,7 @@ describe('<pf-tabs>', function() {
 
         describe('and clicking the disabled tab', function() {
           beforeEach(async function() {
-          element.querySelector('pf-tab')!.click();
+            element.querySelector('pf-tab')!.click();
           });
 
           beforeEach(updateComplete);

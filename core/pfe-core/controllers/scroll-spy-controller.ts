@@ -49,7 +49,7 @@ export class ScrollSpyController implements ReactiveController {
 
   get #linkChildren(): Element[] {
     return Array.from(this.host.querySelectorAll(this.#tagNames.join(',')))
-      .filter(this.#getHash);
+        .filter(this.#getHash);
   }
 
   get root() {
@@ -106,11 +106,11 @@ export class ScrollSpyController implements ReactiveController {
       const { rootMargin, threshold, root } = this;
       this.#io = new IntersectionObserver(r => this.#onIo(r), { root, rootMargin, threshold });
       this.#linkChildren
-        .map(x => this.#getHash(x))
-        .filter((x): x is string => !!x)
-        .map(x => rootNode.getElementById(x.replace('#', '')))
-        .filter((x): x is HTMLElement => !!x)
-        .forEach(target => this.#io?.observe(target));
+          .map(x => this.#getHash(x))
+          .filter((x): x is string => !!x)
+          .map(x => rootNode.getElementById(x.replace('#', '')))
+          .filter((x): x is HTMLElement => !!x)
+          .forEach(target => this.#io?.observe(target));
     }
   }
 

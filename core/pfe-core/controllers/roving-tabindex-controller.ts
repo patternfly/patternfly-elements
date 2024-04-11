@@ -2,9 +2,9 @@ import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import type { RequireProps } from '../core.js';
 
 const isFocusableElement = (el: Element): el is HTMLElement =>
-  !!el &&
-  !el.ariaHidden &&
-  !el.hasAttribute('hidden');
+  !!el
+  && !el.ariaHidden
+  && !el.hasAttribute('hidden');
 
 export interface RovingTabindexControllerOptions<Item extends HTMLElement> {
   /** @deprecated use getHTMLElement */
@@ -21,7 +21,7 @@ export interface RovingTabindexControllerOptions<Item extends HTMLElement> {
  * [rti]: https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex
  */
 export class RovingTabindexController<
-  Item extends HTMLElement = HTMLElement,
+  Item extends HTMLElement = HTMLElement
 > implements ReactiveController {
   private static hosts = new WeakMap<ReactiveControllerHost, RovingTabindexController>();
 
@@ -58,7 +58,8 @@ export class RovingTabindexController<
    * index of active item in array of focusable items
    */
   get #activeIndex(): number {
-    return !!this.#focusableItems && !!this.activeItem ? this.#focusableItems.indexOf(this.activeItem) : -1;
+    return !!this.#focusableItems
+      && !!this.activeItem ? this.#focusableItems.indexOf(this.activeItem) : -1;
   }
 
   /**
@@ -130,9 +131,9 @@ export class RovingTabindexController<
     options?: RovingTabindexControllerOptions<Item>,
   ) {
     this.#options = {
-      getHTMLElement: options?.getHTMLElement ??
-        (options?.getElement as (() => HTMLElement | null)) ??
-        (() => host instanceof HTMLElement ? host : null),
+      getHTMLElement: options?.getHTMLElement
+        ?? (options?.getElement as (() => HTMLElement | null))
+        ?? (() => host instanceof HTMLElement ? host : null),
       getItems: options?.getItems,
       getItemContainer: options?.getItemContainer,
     };
@@ -180,12 +181,12 @@ export class RovingTabindexController<
    * handles keyboard navigation
    */
   #onKeydown = (event: Event) => {
-    if (!(event instanceof KeyboardEvent) ||
-        event.ctrlKey ||
-        event.altKey ||
-        event.metaKey ||
-        !this.#focusableItems.length ||
-        !event.composedPath().some(x =>
+    if (!(event instanceof KeyboardEvent)
+        || event.ctrlKey
+        || event.altKey
+        || event.metaKey
+        || !this.#focusableItems.length
+        || !event.composedPath().some(x =>
           this.#focusableItems.includes(x as Item))) {
       return;
     }
@@ -196,8 +197,8 @@ export class RovingTabindexController<
     let shouldPreventDefault = false;
     const horizontalOnly =
       !item ? false
-        : item.tagName === 'SELECT' ||
-        item.getAttribute('role') === 'spinbutton' || orientation === 'horizontal';
+        : item.tagName === 'SELECT'
+        || item.getAttribute('role') === 'spinbutton' || orientation === 'horizontal';
     const verticalOnly = orientation === 'vertical';
     switch (event.key) {
       case 'ArrowLeft':
@@ -266,7 +267,10 @@ export class RovingTabindexController<
    */
   updateItems(items: Item[] = this.#options.getItems?.() ?? []) {
     this.#items = items;
-    const sequence = [...this.#items.slice(this.#itemIndex - 1), ...this.#items.slice(0, this.#itemIndex - 1)];
+    const sequence = [
+      ...this.#items.slice(this.#itemIndex - 1),
+      ...this.#items.slice(0, this.#itemIndex - 1),
+    ];
     const first = sequence.find(item => this.#focusableItems.includes(item));
     const [focusableItem] = this.#focusableItems;
     const activeItem = focusableItem ?? first ?? this.firstItem;
@@ -283,7 +287,9 @@ export class RovingTabindexController<
    * @deprecated: use getItems and getItemContainer option functions
    */
   initItems(items: Item[], itemsContainer?: Element) {
-    const element = itemsContainer ?? this.#options?.getItemContainer?.() ?? this.#options.getHTMLElement();
+    const element = itemsContainer
+      ?? this.#options?.getItemContainer?.()
+      ?? this.#options.getHTMLElement();
     if (element) {
       this.#initContainer(element);
     }

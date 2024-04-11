@@ -224,6 +224,7 @@ export class PfSelect extends LitElement {
     const checkboxes = variant === 'checkbox';
     const offscreen = typeahead && 'offscreen';
     const badge = hasBadge && 'badge';
+    const hasSelection = !!(Array.isArray(this.selected) ? this.selected.length : this.selected);
 
     return html`
       <div id="outer"
@@ -287,7 +288,10 @@ export class PfSelect extends LitElement {
                @focusout="${this.#onListboxFocusout}"
                @keydown="${this.#onListboxKeydown}"
                class="${classMap({ checkboxes })}">
-            <pf-option id="placeholder" disabled ?hidden="${!this.placeholder && !this.#slots.hasSlotted('placeholder')}">
+            <pf-option id="placeholder"
+                       disabled
+                       aria-hidden="${String(hasSelection) as 'true' | 'false'}"
+                       ?hidden="${!this.placeholder && !this.#slots.hasSlotted('placeholder')}">
               <slot name="placeholder">${this.placeholder}</slot>
             </pf-option>
             <slot @slotchange="${this.#onListboxSlotchange}"></slot>

@@ -24,7 +24,10 @@ export abstract class BaseButton extends LitElement {
 
   static readonly formAssociated = true;
 
-  static readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /** Disables the button */
   @property({ reflect: true, type: Boolean }) disabled = false;
@@ -95,7 +98,6 @@ export abstract class BaseButton extends LitElement {
   /**
    * Fallback content for the icon slot. When the `icon` attribute is set, it
    * should render an icon corresponding to the value.
-   *
    * @example ```html
    *          <base-icon icon=${this.icon}></base-icon>
    *          ```

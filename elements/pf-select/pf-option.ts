@@ -11,7 +11,6 @@ import styles from './pf-option.css';
 
 /**
  * Option within a listbox
- *
  * @slot -
  *        option text
  * @slot icon
@@ -116,9 +115,9 @@ export class PfOption extends LitElement {
   }
 
   willUpdate(changed: PropertyValues<this>) {
-    if (changed.has('selected') &&
+    if (changed.has('selected')
       // don't fire on initialization
-      !(changed.get('selected') === undefined) && this.selected === false) {
+      && !(changed.get('selected') === undefined) && this.selected === false) {
       this.#internals.ariaSelected = this.selected ? 'true' : 'false';
     }
     if (changed.has('disabled')) {

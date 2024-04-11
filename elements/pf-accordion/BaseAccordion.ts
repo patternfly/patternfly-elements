@@ -63,7 +63,7 @@ export abstract class BaseAccordion extends LitElement {
    */
   @property({
     attribute: 'expanded-index',
-    converter: NumberListConverter
+    converter: NumberListConverter,
   })
   get expandedIndex() {
     return this.#expandedIndex;
@@ -101,6 +101,7 @@ export abstract class BaseAccordion extends LitElement {
   #logger = new Logger(this);
 
   // actually is read in #init, by the `||=` operator
+  // eslint-disable-next-line no-unused-private-class-members
   #initialized = false;
 
   protected override async getUpdateComplete(): Promise<boolean> {
@@ -265,7 +266,7 @@ export abstract class BaseAccordion extends LitElement {
    * Accepts an optional parent accordion to search for headers and panels.
    */
   public async expand(index: number, parentAccordion?: BaseAccordion) {
-    const allHeaders: Array<BaseAccordionHeader> = this.#allHeaders(parentAccordion);
+    const allHeaders: BaseAccordionHeader[] = this.#allHeaders(parentAccordion);
 
     const header = allHeaders[index];
     if (!header) {

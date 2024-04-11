@@ -22,14 +22,16 @@ function isDisabledItemClick(event: MouseEvent) {
 /**
  * A **dropdown** presents a menu of actions or links in a constrained space that will trigger a
  * process or navigate to a new location.
- *
  * @slot - Must contain one or more `<pf-dropdown-item>` or `<pf-dropdown-group>`
  */
 @customElement('pf-dropdown-menu')
 export class PfDropdownMenu extends LitElement {
   static readonly styles = [styles];
 
-  static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   @consume({ context, subscribe: true })
   @state()
@@ -107,8 +109,8 @@ export class PfDropdownMenu extends LitElement {
     if (this.ctx?.disabled) {
       event.preventDefault();
       event.stopPropagation();
-    } else if (event.target instanceof PfDropdownItem &&
-        event.target.menuItem !== this.#tabindex.activeItem) {
+    } else if (event.target instanceof PfDropdownItem
+        && event.target.menuItem !== this.#tabindex.activeItem) {
       this.#tabindex.setActiveItem(event.target.menuItem);
     }
   }
@@ -122,26 +124,26 @@ export class PfDropdownMenu extends LitElement {
     if (this.ctx?.disabled || isDisabledItemClick(event)) {
       event.preventDefault();
       event.stopPropagation();
-    } else if (event.target instanceof PfDropdownItem &&
-        event.target.menuItem !== this.#tabindex.activeItem) {
+    } else if (event.target instanceof PfDropdownItem
+        && event.target.menuItem !== this.#tabindex.activeItem) {
       this.#tabindex.setActiveItem(event.target.menuItem);
     }
   }
 
   #getSlottedItems(slot?: HTMLSlotElement | null): PfDropdownItem[] {
     return slot
-      ?.assignedElements()
-      .flatMap(element => {
-        if (element instanceof HTMLSlotElement) {
-          return this.#getSlottedItems(element);
-        } else if (element instanceof PfDropdownItem) {
-          return [element];
-        } else if (element instanceof PfDropdownGroup) {
-          return Array.from(element.querySelectorAll('pf-dropdown-item'));
-        } else {
-          return [];
-        }
-      }) ?? [];
+        ?.assignedElements()
+        .flatMap(element => {
+          if (element instanceof HTMLSlotElement) {
+            return this.#getSlottedItems(element);
+          } else if (element instanceof PfDropdownItem) {
+            return [element];
+          } else if (element instanceof PfDropdownGroup) {
+            return Array.from(element.querySelectorAll('pf-dropdown-item'));
+          } else {
+            return [];
+          }
+        }) ?? [];
   }
 }
 

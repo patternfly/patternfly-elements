@@ -55,8 +55,11 @@ async function renderURL(
   const url = new URL(ctx.request.url, `http://${ctx.request.headers.host}`);
   const manifests = await getManifests(config);
   const demos = manifests
-    .flatMap(manifest => manifest.getTagNames()
-      .flatMap(tagName => manifest.getDemoMetadata(tagName, config as PfeDevServerInternalConfig)));
+      .flatMap(manifest =>
+        manifest
+            .getTagNames()
+            .flatMap(tagName =>
+              manifest.getDemoMetadata(tagName, config as PfeDevServerInternalConfig)));
   const demo = demos.find(x => x.permalink === url.pathname);
   const manifest = demo?.manifest;
 
@@ -64,7 +67,14 @@ async function renderURL(
     return env.render('index.html', { context: ctx, options: config, demos });
   } else {
     const templateContent = await readFile(demo.filePath, 'utf8');
-    return env.render('index.html', { context: ctx, options: config, demo, demos, templateContent, manifest });
+    return env.render('index.html', {
+      context: ctx,
+      options: config,
+      demo,
+      demos,
+      templateContent,
+      manifest,
+    });
   }
 }
 
@@ -87,61 +97,61 @@ function getRouter(options: PfeDevServerInternalConfig) {
   const { elementsDir, tagPrefix } = options;
   const { componentSubpath } = options.site;
   const router = new Router()
-    .get('/tools/pfe-tools/environment.js(.js)?', async ctx => {
-      ctx.body = await makeDemoEnv(options.rootDir);
-      ctx.type = 'application/javascript';
-    })
+      .get('/tools/pfe-tools/environment.js(.js)?', async ctx => {
+        ctx.body = await makeDemoEnv(options.rootDir);
+        ctx.type = 'application/javascript';
+      })
 
-    // Redirect `components/jazz-hands/*-lightdom.css` to `elements/pf-jazz-hands/*-lightdom.css`
-    .get(`/${componentSubpath}/:element/:fileName-lightdom.css`, async (ctx, next) => {
-      const { element, fileName } = ctx.params;
-      if (!element.startsWith(tagPrefix)) {
+  // Redirect `components/jazz-hands/*-lightdom.css` to `elements/pf-jazz-hands/*-lightdom.css`
+      .get(`/${componentSubpath}/:element/:fileName-lightdom.css`, async (ctx, next) => {
+        const { element, fileName } = ctx.params;
+        if (!element.startsWith(tagPrefix)) {
+          const prefixedElement = deslugify(element);
+          ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}-lightdom.css`);
+        } else {
+          return next();
+        }
+      })
+
+  // Redirect `components/jazz-hands/demo/**/*.js|css` to `components/pf-jazz-hands/demo/**/*.js|css`
+      .get(`/${componentSubpath}/:element/demo/:splat*/:fileName.:ext`, async (ctx, next) => {
+        const { element, splat, fileName, ext } = ctx.params;
         const prefixedElement = deslugify(element);
-        ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}-lightdom.css`);
-      } else {
+        if (!element.includes(tagPrefix)) {
+          ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${splat}/${fileName}.${ext}`);
+        } else {
+          return next();
+        }
+      })
+
+  // Redirect `components/jazz-hands/*` to `components/pf-jazz-hands/*` for requests not previously handled
+      .get(`/${componentSubpath}/:element/:splatPath*`, async (ctx, next) => {
+        const { element, splatPath } = ctx.params;
+        const prefixedElement = deslugify(element);
+        if (await isDir(new URL(`/${elementsDir}/${prefixedElement}`, import.meta.url).href)) {
+          ctx.redirect(`/${elementsDir}/${prefixedElement}/${splatPath}`);
+        } else {
+          return next();
+        }
+      })
+
+      .get(`/${elementsDir}/:element/:splatPath*.(css|js)`, async function(ctx, next) {
+        ctx.response.etag = performance.now().toString();
         return next();
-      }
-    })
+      })
 
-    // Redirect `components/jazz-hands/demo/**/*.js|css` to `components/pf-jazz-hands/demo/**/*.js|css`
-    .get(`/${componentSubpath}/:element/demo/:splat*/:fileName.:ext`, async (ctx, next) => {
-      const { element, splat, fileName, ext } = ctx.params;
-      const prefixedElement = deslugify(element);
-      if (!element.includes(tagPrefix)) {
-        ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${splat}/${fileName}.${ext}`);
-      } else {
-        return next();
-      }
-    })
+  // Redirect `core/pfe-core/controllers/thingy.js` to `core/pfe-core/controllers/thingy.ts` for requests not previously handled
+      .get(`/core/pfe-core/:splatPath*.js`, async ctx => {
+        ctx.redirect(`/core/pfe-core/${ctx.params.splatPath}.ts`);
+      })
 
-    // Redirect `components/jazz-hands/*` to `components/pf-jazz-hands/*` for requests not previously handled
-    .get(`/${componentSubpath}/:element/:splatPath*`, async (ctx, next) => {
-      const { element, splatPath } = ctx.params;
-      const prefixedElement = deslugify(element);
-      if (await isDir(new URL(`/${elementsDir}/${prefixedElement}`, import.meta.url).href)) {
-        ctx.redirect(`/${elementsDir}/${prefixedElement}/${splatPath}`);
-      } else {
-        return next();
-      }
-    })
-
-    .get(`/${elementsDir}/:element/:splatPath*.(css|js)`, async function(ctx, next) {
-      ctx.response.etag = performance.now().toString();
-      return next();
-    })
-
-    // Redirect `core/pfe-core/controllers/thingy.js` to `core/pfe-core/controllers/thingy.ts` for requests not previously handled
-    .get(`/core/pfe-core/:splatPath*.js`, async ctx => {
-      ctx.redirect(`/core/pfe-core/${ctx.params.splatPath}.ts`);
-    })
-
-    // Redirect `elements/pf-jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts` for requests not previously handled
-    .get(`/${elementsDir}/:element/:splatPath*.js`, async ctx => {
-      const { element, splatPath } = ctx.params;
-      if (element.startsWith(tagPrefix) && !splatPath.includes('/')) {
-        ctx.redirect(`/${elementsDir}/${element}/${splatPath}.ts`);
-      }
-    });
+  // Redirect `elements/pf-jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts` for requests not previously handled
+      .get(`/${elementsDir}/:element/:splatPath*.js`, async ctx => {
+        const { element, splatPath } = ctx.params;
+        if (element.startsWith(tagPrefix) && !splatPath.includes('/')) {
+          ctx.redirect(`/${elementsDir}/${element}/${splatPath}.ts`);
+        }
+      });
 
   return router.routes();
 }

@@ -55,14 +55,14 @@ describe('<pf-popover>', function() {
     it('should upgrade', async function() {
       const klass = customElements.get('pf-popover');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfPopover);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfPopover);
     });
     it('should be accessible', expectA11yAxe);
     it('imperatively instantiates', function() {
       expect(document.createElement('pf-popover'))
-        .to.be.an.instanceof(PfPopover);
+          .to.be.an.instanceof(PfPopover);
     });
     it('should not report anything to assistive technology', async function() {
       const snapshot = await a11ySnapshot();
@@ -248,7 +248,7 @@ describe('<pf-popover>', function() {
               name: 'Toggle popover 2',
               role: 'button',
             },
-          ]
+          ],
         });
       });
     });

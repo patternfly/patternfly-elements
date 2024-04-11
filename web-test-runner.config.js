@@ -8,6 +8,6 @@ export default pfeTestRunnerConfig({
   // uncomment to get default wtr reporter
   reporter: 'default',
   plugins: [
-    a11ySnapshotPlugin()
+    a11ySnapshotPlugin(),
   ],
 });

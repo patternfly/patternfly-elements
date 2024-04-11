@@ -5,7 +5,7 @@ import { Logger } from '../controllers/logger.js';
 export type DeprecationDeclaration<K extends PropertyKey> = PropertyDeclaration & {
   alias: string & K;
   attribute: string;
-}
+};
 
 /**
  * Aliases the decorated field to an existing property, and logs a warning if it is used

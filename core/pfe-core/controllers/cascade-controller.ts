@@ -20,7 +20,7 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
 
   private logger: Logger;
 
-  static instances: WeakMap<ReactiveElement, CascadeController<ReactiveElement>> = new WeakMap();
+  static instances = new WeakMap<ReactiveElement, CascadeController<ReactiveElement>>();
 
   mo = new MutationObserver(this.parse);
 

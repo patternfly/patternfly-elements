@@ -24,10 +24,13 @@ export class TabExpandEvent extends ComposedEvent {
 export abstract class BaseTab extends LitElement {
   static readonly styles = [style];
 
-  static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   @queryAssignedElements({ slot: 'icon', flatten: true })
-  private icons!: Array<HTMLElement>;
+  private icons!: HTMLElement[];
 
   @query('button') private button!: HTMLButtonElement;
 

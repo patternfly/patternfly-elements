@@ -32,11 +32,11 @@ function getFilesToCopy(options) {
   // Copy all component and core files to _site
   if (hasElements) {
     Object.assign(files, Object.fromEntries(tagNames
-      .filter(x => !x.match(/node_modules|tsconfig|README\.md|(?:\.ts$)|(?:config\.js$)/))
-      .map(dir => [
-        `elements/${dir}`,
-        `components/${dir.replace(prefix, '')}`,
-      ])));
+        .filter(x => !x.match(/node_modules|tsconfig|README\.md|(?:\.ts$)|(?:config\.js$)/))
+        .map(dir => [
+          `elements/${dir}`,
+          `components/${dir.replace(prefix, '')}`,
+        ])));
   }
 
   if (hasCore) {
@@ -49,13 +49,17 @@ function getFilesToCopy(options) {
   return files;
 }
 
+const DEMO_PATHS_RE =
+  // eslint-disable-next-line @stylistic/max-len
+  /(?<attr>href|src)="\/(?<workspace>elements|core)\/pf-(?<unprefixed>.*)\/(?<filename>.*)\.(?<extension>[.\w]+)"/g;
+
 /**
  * Replace paths in demo files from the dev SPA's format to 11ty's format
  * @this {EleventyTransformContext}
  */
 function demoPaths(content) {
   if (this.outputPath.match(/(components|core|tools)\/.*\/demo\/index\.html$/)) {
-    return content.replace(/(?<attr>href|src)="\/(?<workspace>elements|core)\/pf-(?<unprefixed>.*)\/(?<filename>.*)\.(?<extension>[.\w]+)"/g, (...args) => {
+    return content.replace(DEMO_PATHS_RE, (...args) => {
       const [{ attr, workspace, unprefixed, filename, extension }] = args.reverse();
       return `${attr}="/${workspace === 'elements' ? 'components' : workspace}/${unprefixed}/${filename}.${extension}"`;
     });
@@ -79,10 +83,10 @@ module.exports = {
     eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/main.mjs');
     eleventyConfig.addPassthroughCopy({
-      'node_modules/@rhds/elements': '/assets/@rhds'
+      'node_modules/@rhds/elements': '/assets/@rhds',
     });
     eleventyConfig.addPassthroughCopy({
-      'node_modules/@patternfly/icons/': '/assets/@patternfly/icons/'
+      'node_modules/@patternfly/icons/': '/assets/@patternfly/icons/',
     });
     eleventyConfig.addPassthroughCopy('brand/**/*');
     const filesToCopy = getFilesToCopy(options);

@@ -4,6 +4,10 @@ function isARIAMixinProp(key: string): key is keyof ARIAMixin {
   return key === 'role' || key.startsWith('aria');
 }
 
+type FACE = HTMLElement & {
+  formDisabledCallback?(disabled: boolean): void;
+};
+
 const protos = new WeakMap();
 
 let constructingAllowed = false;
@@ -38,7 +42,7 @@ function aria(
       // @ts-expect-error: shamone!
       this.attach()[key] = value;
       this.host.requestUpdate();
-    }
+    },
   });
   protos.get(target).add(key);
 }
@@ -63,14 +67,17 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   declare readonly willValidate: ElementInternals['willValidate'];
   declare readonly validationMessage: ElementInternals['validationMessage'];
 
-  public static of(host: ReactiveControllerHost, options?: InternalsControllerOptions): InternalsController {
+  public static of(
+    host: ReactiveControllerHost,
+    options?: InternalsControllerOptions,
+  ): InternalsController {
     constructingAllowed = true;
     // implement the singleton pattern
     // using a public static constructor method is much easier to manage,
     // due to the quirks of our typescript config
     const instance: InternalsController =
-      InternalsController.instances.get(host) ??
-      new InternalsController(host, options);
+      InternalsController.instances.get(host)
+      ?? new InternalsController(host, options);
     instance.initializeOptions(options);
     constructingAllowed = false;
     return instance;
@@ -152,10 +159,10 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   /** A best-attempt based on observed behaviour in FireFox 115 on fedora 38 */
   get computedLabelText() {
-    return this.internals.ariaLabel ||
-      Array.from(this.internals.labels as NodeListOf<HTMLElement>)
-        .reduce((acc, label) =>
-          `${acc}${getLabelText(label)}`, '');
+    return this.internals.ariaLabel
+      || Array.from(this.internals.labels as NodeListOf<HTMLElement>)
+          .reduce((acc, label) =>
+            `${acc}${getLabelText(label)}`, '');
   }
 
   private get element() {
@@ -174,7 +181,9 @@ export class InternalsController implements ReactiveController, ARIAMixin {
       throw new Error('InternalsController must be constructed with `InternalsController.for()`');
     }
     if (!this.element) {
-      throw new Error('InternalsController must be instantiated with an HTMLElement or a `getHTMLElement` function');
+      throw new Error(
+        `InternalsController must be instantiated with an HTMLElement or a \`getHTMLElement\` function`,
+      );
     }
     this.attach();
     this.initializeOptions(options);
@@ -190,8 +199,8 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     // START polyfill-disabled
     // We need to polyfill :disabled
     // see https://github.com/calebdwilliams/element-internals-polyfill/issues/88
-    const orig = (this.element as HTMLElement & { formDisabledCallback?(disabled: boolean): void }).formDisabledCallback;
-    (this.element as HTMLElement & { formDisabledCallback?(disabled: boolean): void }).formDisabledCallback = disabled => {
+    const orig = (this.element as FACE).formDisabledCallback;
+    (this.element as FACE).formDisabledCallback = disabled => {
       this._formDisabled = disabled;
       orig?.call(this.host, disabled);
     // END polyfill-disabled
@@ -223,7 +232,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     }
   }
 
-  hostConnected?(): void
+  hostConnected?(): void;
 
   setFormValue(...args: Parameters<ElementInternals['setFormValue']>) {
     return this.internals.setFormValue(...args);

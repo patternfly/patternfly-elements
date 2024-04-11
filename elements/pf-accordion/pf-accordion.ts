@@ -12,16 +12,11 @@ import style from './pf-accordion.css';
 
 /**
  * An **accordion** is an interactive container that expands and collapses to hide or reveal nested content. It takes advantage of progressive disclosure to help reduce page scrolling, by allowing users to choose whether they want to show or hide more detailed information as needed.
- *
  * @summary Toggle the visibility of sections of content
- *
  * @fires {AccordionExpandEvent} expand - when a panel expands
  * @fires {AccordionCollapseEvent} collapse - when a panel collapses
- *
- *
  * @slot
  *       Place the `pf-accordion-header` and `pf-accordion-panel` elements here.
- *
  * @cssprop --pf-c-accordion--BackgroundColor {@default var(--pf-global--BackgroundColor--100, #fff)}
  * @cssprop --pf-c-accordion__toggle--PaddingTop {@default var(--pf-global--spacer--sm, 0.5rem)}
  * @cssprop --pf-c-accordion__toggle--PaddingRight {@default var(--pf-global--spacer--md, 1rem)}
@@ -126,7 +121,7 @@ export class PfAccordion extends BaseAccordion {
       return;
     }
 
-    const allHeaders: Array<BaseAccordionHeader> = this.headers;
+    const allHeaders: BaseAccordionHeader[] = this.headers;
 
     // Get all the headers and capture the item by index value
     if (this.single) {

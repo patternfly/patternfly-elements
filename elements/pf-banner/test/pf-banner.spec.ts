@@ -15,9 +15,9 @@ describe('<pf-banner>', function() {
       `);
       const klass = customElements.get('pf-banner');
       expect(el)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfBanner);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfBanner);
     });
 
     describe('without variant attribute', function() {

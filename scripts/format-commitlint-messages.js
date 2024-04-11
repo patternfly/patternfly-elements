@@ -1,10 +1,10 @@
-export function format({ core, results, titleGood }) {
+export function format({ results, titleGood }) {
   try {
     const totalErrors = results.reduce((a, r) => a + r.errors.length, 0);
     const totalWarnings = results.reduce((a, r) => a + r.warnings.length, 0);
 
-    const header = `
-## 👕 Commitlint Problems for this PR: ${!titleGood ? '' : `
+    const header = /* markdown */`
+## 👕 Commitlint Problems for this PR: ${!titleGood ? '' : /* markdown */`
 
 **The PR title conforms to conventional commit style**
 
@@ -24,22 +24,22 @@ export function format({ core, results, titleGood }) {
       const body = rest.join('\n').trim();
       const hash = result.hash.substring(0, 8);
 
-      return `${acc} ${!body.length ? '\n\n' : `
+      return `${acc} ${!body.length ? '\n\n' : /* markdown */`
 
 <details><summary>`}
-${hash} - ${firstLine} ${!body.length ? '\n\n' : `\
+${hash} - ${firstLine} ${!body.length ? '\n\n' : /* markdown */`\
 </summary>
 
 ${body}
 
 </details>
 
-`}${result.errors.map(error => `
+`}${result.errors.map(error => /* markdown */`
 - ❌ ${error}`).join('')} ${result.warnings.map(warn => `
 - ⚠️ ${warn}`).join('')}`;
     }, header);
 
-    return comment;
+    return comment.replaceAll('\\n', '\n');
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);

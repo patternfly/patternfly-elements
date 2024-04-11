@@ -46,7 +46,9 @@ export abstract class BaseAccordion extends LitElement {
     return event instanceof AccordionHeaderChangeEvent;
   }
 
-  #headerIndex = new RovingTabindexController<BaseAccordionHeader>(this);
+  #headerIndex = new RovingTabindexController<BaseAccordionHeader>(this, {
+    getItems: () => this.headers,
+  });
 
   #expandedIndex: number[] = [];
 
@@ -61,7 +63,7 @@ export abstract class BaseAccordion extends LitElement {
    */
   @property({
     attribute: 'expanded-index',
-    converter: NumberListConverter
+    converter: NumberListConverter,
   })
   get expandedIndex() {
     return this.#expandedIndex;
@@ -99,6 +101,7 @@ export abstract class BaseAccordion extends LitElement {
   #logger = new Logger(this);
 
   // actually is read in #init, by the `||=` operator
+  // eslint-disable-next-line no-unused-private-class-members
   #initialized = false;
 
   protected override async getUpdateComplete(): Promise<boolean> {
@@ -146,15 +149,14 @@ export abstract class BaseAccordion extends LitElement {
    */
   async #init() {
     this.#initialized ||= !!await this.updateComplete;
-    this.#headerIndex.initItems(this.headers);
     // Event listener to the accordion header after the accordion has been initialized to add the roving tabindex
     this.addEventListener('focusin', this.#updateActiveHeader);
     this.updateAccessibility();
   }
 
   #updateActiveHeader() {
-    if (this.#activeHeader) {
-      this.#headerIndex.updateActiveItem(this.#activeHeader);
+    if (this.#activeHeader !== this.#headerIndex.activeItem) {
+      this.#headerIndex.setActiveItem(this.#activeHeader);
     }
   }
 
@@ -231,6 +233,7 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   public updateAccessibility() {
+    this.#headerIndex.updateItems();
     const { headers } = this;
 
     // For each header in the accordion, attach the aria connections
@@ -263,7 +266,7 @@ export abstract class BaseAccordion extends LitElement {
    * Accepts an optional parent accordion to search for headers and panels.
    */
   public async expand(index: number, parentAccordion?: BaseAccordion) {
-    const allHeaders: Array<BaseAccordionHeader> = this.#allHeaders(parentAccordion);
+    const allHeaders: BaseAccordionHeader[] = this.#allHeaders(parentAccordion);
 
     const header = allHeaders[index];
     if (!header) {

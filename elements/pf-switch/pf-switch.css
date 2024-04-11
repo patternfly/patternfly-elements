@@ -1,5 +1,6 @@
 :host {
   display: inline-block;
+  outline: none;
 }
 
 svg {
@@ -22,7 +23,7 @@ svg {
     calc(100% + var(--pf-c-switch__toggle-icon--Offset, 0.125rem)));
 }
 
-:host(:focus-within) #container {
+:host(:is(:focus,:focus-within)) #container {
   outline: var(--pf-c-switch__input--focus__toggle--OutlineWidth,
     var(--pf-global--BorderWidth--md, 2px)) solid var(--pf-c-switch__input--focus__toggle--OutlineColor,
       var(--pf-global--primary-color--100, #06c));
@@ -37,13 +38,7 @@ svg {
 
 :host(:disabled) #container {
   cursor: not-allowed;
-}
 
-:host(:disabled:focus-within) #container {
-  outline: none;
-}
-
-:host(:disabled) #container {
   color: var(--pf-c-switch__input--disabled__label--Color,
     var(--pf-global--disabled-color--100, #6a6e73));
   background-color: var(--pf-c-switch__input--disabled__toggle--BackgroundColor,
@@ -58,6 +53,10 @@ svg {
 :host([checked]:disabled) #container::before {
   translate: var(--pf-c-switch__input--checked__toggle--before--TranslateX,
     calc(100% + var(--pf-c-switch__toggle-icon--Offset, 0.125rem)));
+}
+
+:host(:disabled:focus-within) #container {
+  outline: none;
 }
 
 #container {

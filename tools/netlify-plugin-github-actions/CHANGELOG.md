@@ -1,5 +1,11 @@
 # netlify-plugin-github-actions
 
+## 2.0.0
+
+### Major Changes
+
+- e6ca914: Package is now `"type": "module"` aka ESM
+
 ## 1.0.0
 
 ### Patch Changes

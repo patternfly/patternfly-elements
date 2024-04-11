@@ -8,7 +8,7 @@
     "url": "github:patternfly/patternfly-elements"
   },
   "engines": {
-    "node": ">=16 <=19"
+    "node": "^20"
   },
   "scripts": {
     "🐒-DEV": "❓ Development aids",
@@ -25,19 +25,16 @@
     "test": "wireit",
     "test:ci": "wireit",
     "test:watch": "wtr --watch",
-    "test:vue": "wtr --watch --group with-vue",
-    "test:react": "wtr --watch --group with-react",
     "e2e": "wireit",
     "e2e:update": "wireit",
     "🚚-DIST": "❓ Publish packages",
-    "license-update": "node scripts/license-update.js",
     "leftover-check": "bash scripts/leftover-check.sh",
     "⚙️--UTIL": "❓ Manages the repo",
     "postinstall": "wireit",
-    "clean": "git clean -fX",
-    "lint": "eslint .",
+    "clean": "git clean -dfX -e node_modules -e .husky",
+    "lint": "eslint",
     "patch": "patch-package",
-    "husky": "npx husky install"
+    "husky": "husky"
   },
   "wireit": {
     "postinstall": {
@@ -52,7 +49,6 @@
         "analyze",
         "docs",
         "build:core",
-        "build:icons",
         "build:lightdom",
         "build:elements",
         "build:create",
@@ -74,8 +70,7 @@
         "core/pfe-core/custom-elements.json"
       ],
       "dependencies": [
-        "build:core",
-        "build:tools"
+        "build:core"
       ]
     },
     "build:create": {
@@ -94,10 +89,8 @@
     },
     "build:elements": {
       "command": "tspc --build elements --pretty",
-      "clean": "if-file-deleted",
       "dependencies": [
-        "build:core",
-        "build:tools"
+        "build:core"
       ],
       "files": [
         "elements/*/*.ts",
@@ -115,7 +108,6 @@
     },
     "build:tools": {
       "command": "tsc --build tools/pfe-tools --pretty",
-      "clean": "if-file-deleted",
       "files": [
         "tools/pfe-tools/*.ts",
         "tools/pfe-tools/**/*.ts",
@@ -131,7 +123,6 @@
     },
     "build:core": {
       "command": "tspc --build ./core/pfe-core --pretty",
-      "clean": "if-file-deleted",
       "dependencies": [
         "build:tools"
       ],
@@ -147,17 +138,10 @@
         "*.tsbuildinfo"
       ]
     },
-    "build:icons": {
-      "command": "ts-node --esm ./scripts/icons.ts",
-      "output": [
-        "elements/pf-icon/icons/*/*.js"
-      ]
-    },
     "build:bundle": {
       "command": "scripts/bundle.js",
       "dependencies": [
-        "build:core",
-        "build:tools"
+        "build:core"
       ],
       "files": [
         "elements/**/*.ts",
@@ -170,10 +154,9 @@
       ]
     },
     "build:react": {
-      "command": "ts-node --esm scripts/generate-react-wrappers.ts",
+      "command": "npx tsx scripts/generate-react-wrappers.ts",
       "dependencies": [
         "build:core",
-        "build:tools",
         "analyze"
       ],
       "files": [
@@ -188,7 +171,7 @@
     "build:lightdom": {
       "command": "npm run build:lightdom --workspaces --if-present",
       "dependencies": [
-        "build:tools"
+        "build:core"
       ]
     },
     "docs": {
@@ -202,8 +185,6 @@
       ],
       "dependencies": [
         "build:core",
-        "build:tools",
-        "build:icons",
         "analyze"
       ]
     },
@@ -211,8 +192,13 @@
       "command": "web-dev-server --open --watch",
       "service": true,
       "dependencies": [
-        "build:tools"
+        "build:elements",
+        "analyze"
       ]
+    },
+    "watch:core": {
+      "service": true,
+      "command": "tspc --build --watch ./core/pfe-core --pretty"
     },
     "watch:analyze": {
       "service": true,
@@ -226,20 +212,23 @@
         "build:tools"
       ]
     },
-    "start": {
+    "serve": {
       "service": true,
       "command": "eleventy --serve",
       "dependencies": [
         "build:core",
-        "build:tools",
-        "build:icons",
         "analyze",
-        "watch:analyze",
-        "dev"
+        "watch:analyze"
+      ]
+    },
+    "start": {
+      "dependencies": [
+        "dev",
+        "serve"
       ]
     },
     "test": {
-      "command": "wtr --group default",
+      "command": "wtr",
       "files": [
         "**/*.ts",
         "**/*.css"
@@ -247,8 +236,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
-        "build:core",
-        "build:icons"
+        "build:core"
       ]
     },
     "new": {
@@ -266,8 +254,7 @@
       "output": [],
       "dependencies": [
         "build:tools",
-        "build:core",
-        "build:icons"
+        "build:core"
       ]
     },
     "e2e": {
@@ -295,37 +282,38 @@
     "*.{js,ts}": "eslint --fix"
   },
   "devDependencies": {
-    "@actions/core": "^1.10.0",
+    "@actions/core": "^1.10.1",
     "@actions/exec": "^1.1.1",
     "@actions/glob": "^0.4.0",
-    "@commitlint/cli": "^17.6.1",
-    "@commitlint/config-conventional": "^17.6.1",
-    "@fortawesome/free-brands-svg-icons": "^6.4.0",
-    "@fortawesome/free-regular-svg-icons": "^6.4.0",
-    "@fortawesome/free-solid-svg-icons": "^6.4.0",
-    "@jspm/generator": "^1.1.6",
-    "@octokit/core": "^4.2.0",
+    "@commitlint/cli": "^19.2.1",
+    "@commitlint/config-conventional": "^19.1.0",
+    "@jspm/generator": "^2.0.1",
+    "@lit/react": "^1.0.4",
+    "@octokit/core": "^6.1.1",
     "@patternfly/patternfly": "^4.224.2",
-    "@rhds/elements": "^1.0.0",
-    "@types/koa__router": "^12.0.0",
-    "@types/numeral": "^2.0.2",
-    "@types/prismjs": "^1.26.0",
-    "@types/prompts": "^2.4.4",
-    "commitlint": "^17.6.1",
-    "execa": "^7.1.1",
-    "fuse.js": "^6.6.2",
-    "husky": "^8.0.3",
+    "@rhds/elements": "^1.3.1",
+    "@types/koa__router": "^12.0.4",
+    "@types/node": "^20.12.7",
+    "@types/numeral": "^2.0.5",
+    "@types/prismjs": "^1.26.3",
+    "@types/prompts": "^2.4.9",
+    "chalk": "^5.3.0",
+    "commitlint": "^19.2.1",
+    "eslint": "^9.0.0",
+    "execa": "^8.0.1",
+    "fuse.js": "^7.0.0",
+    "husky": "^9.0.11",
     "leasot": "^13.3.0",
-    "nunjucks": "^3.2.3",
+    "lit": "^3.1.2",
+    "nunjucks": "^3.2.4",
+    "postcss-nesting": "^12.1.1",
     "prompts": "^2.4.2",
-    "wireit": "^0.9.5"
+    "wireit": "^0.14.4",
+    "zero-md": "^2.5.4"
   },
   "workspaces": [
     "./core/*",
     "./elements",
     "./tools/*"
-  ],
-  "dependencies": {
-    "@lit-labs/react": "^1.2.0"
-  }
+  ]
 }

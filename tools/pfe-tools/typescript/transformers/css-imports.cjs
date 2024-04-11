@@ -1,6 +1,7 @@
 // @ts-check
 const ts = require('typescript/lib/typescript');
 const fs = require('node:fs');
+const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 
 const SEEN_SOURCES = new WeakSet();
@@ -15,8 +16,8 @@ function createLitCssImportStatement(ctx, sourceFile) {
   }
   for (const statement of sourceFile.statements) {
     if (
-      ts.isImportDeclaration(statement) &&
-      statement.moduleSpecifier.getText() === 'lit') {
+      ts.isImportDeclaration(statement)
+      && statement.moduleSpecifier.getText() === 'lit') {
       for (const binding of statement.importClause?.namedBindings?.getChildren() ?? []) {
         if (binding.getText() === 'css') {
           SEEN_SOURCES.add(sourceFile);
@@ -36,7 +37,7 @@ function createLitCssImportStatement(ctx, sourceFile) {
           false,
           undefined,
           ctx.factory.createIdentifier('css')
-        )
+        ),
       ]),
     ),
     ctx.factory.createStringLiteral('lit'),
@@ -61,7 +62,7 @@ function createLitCssTaggedTemplateLiteral(ctx, stylesheet, name) {
           undefined,
           ctx.factory.createNoSubstitutionTemplateLiteral(stylesheet),
         )
-      )
+      ),
     ], ts.NodeFlags.Const)
   );
 }
@@ -78,71 +79,166 @@ function minifyCss(stylesheet, filePath) {
     const { styles } = clean.minify(stylesheet);
     return styles;
   } catch (e) {
+    /* eslint-disable no-console */
     console.log('Could not minify ', filePath);
     console.error(e);
+    /* eslint-enable no-console */
     return stylesheet;
   }
 }
 
 /**
- * Replace .css import specifiers with .css.js import specifiers
- * @param {import('typescript').Program} _program
- * @return {import('typescript').TransformerFactory<import('typescript').Node>}
+ * @param node
+ * @param{import('typescript').ImportDeclaration} node
  */
-module.exports = function(_program, { inline = false, minify = false } = {}) {
+function getImportSpecifier(node) {
+  return node.moduleSpecifier.getText().replace(/^'(.*)'$/, '$1');
+}
+
+/**
+ * @param node
+ * @param{import('typescript').Node} node
+ * @returns {node is import('typescript').ImportDeclaration}
+ */
+function isCssImportNode(node) {
+  if (ts.isImportDeclaration(node) && !node.importClause?.isTypeOnly) {
+    const specifier = getImportSpecifier(node);
+    return specifier.endsWith('.css');
+  } else {
+    return false;
+  }
+}
+
+/** map from (abspath to import spec) to (set of abspaths to importers) */
+const cssImportSpecImporterMap = new Map();
+
+/** map from (abspath to import spec) to (abspaths to manually written transformed module) */
+const cssImportFakeEmitMap = new Map();
+
+// abspath to file
+/**
+ * @param node
+ * @param{import('typescript').ImportDeclaration} node
+ */
+function getImportAbsPathOrBareSpec(node) {
+  const specifier = getImportSpecifier(node);
+  if (!specifier.startsWith('.')) {
+    return specifier;
+  } else {
+    const { fileName } = node.getSourceFile();
+    const specifierRelative = path.resolve(path.dirname(fileName), specifier);
+    return specifierRelative;
+  }
+}
+
+/**
+ * @param {import('typescript').SourceFile} sourceFile
+ */
+function cacheCssImportSpecsAbsolute(sourceFile) {
+  sourceFile.forEachChild(node => {
+    if (isCssImportNode(node)) {
+      const specifierAbs = getImportAbsPathOrBareSpec(node);
+      cssImportSpecImporterMap.set(specifierAbs, new Set([
+        ...cssImportSpecImporterMap.get(specifierAbs) ?? [],
+        node.getSourceFile().fileName,
+      ]));
+    }
+  });
+}
+
+/**
+ * Replace .css import specifiers with .css.js import specifiers
+ * If the inline option is set, remove the import specifier and print the css
+ * object in place, except if that module is imported elsewhere in the project,
+ * in which case leave a `.css.js` import
+ * @param {import('typescript').Program} program
+ * @param root0
+ * @param root0.inline
+ * @param root0.minify
+ * @returns {import('typescript').TransformerFactory<import('typescript').SourceFile>}
+ */
+module.exports = function(program, { inline = false, minify = false } = {}) {
   return ctx => {
+    for (const sourceFileName of program.getRootFileNames()) {
+      const sourceFile = program.getSourceFile(sourceFileName);
+      if (sourceFile && !sourceFile.isDeclarationFile) {
+        cacheCssImportSpecsAbsolute(sourceFile);
+      }
+    }
+
     /**
-     * @param {import('typescript').Node} node
+     * @param node
+     * @param{import('typescript').Node} node
      */
-    function visitor(node) {
-      if (ts.isImportDeclaration(node) && !node.importClause?.isTypeOnly) {
-        const specifier = node.moduleSpecifier.getText().replace(/^'(.*)'$/, '$1');
-        if (specifier.endsWith('.css')) {
-          if (inline) {
-            const { fileName } = node.getSourceFile();
+    function rewriteOrInlineVisitor(node) {
+      if (isCssImportNode(node)) {
+        const { fileName } = node.getSourceFile();
+        const specifier = getImportSpecifier(node);
+        const specifierAbs = getImportAbsPathOrBareSpec(node);
+        if (inline) {
+          const cached = cssImportSpecImporterMap.get(specifierAbs);
+          if (cached?.size === 1) {
             const dir = pathToFileURL(fileName);
             const url = new URL(specifier, dir);
             const content = fs.readFileSync(url, 'utf-8');
             const stylesheet = minify ? minifyCss(content, url.pathname) : content;
             return [
               createLitCssImportStatement(ctx, node.getSourceFile()),
-              createLitCssTaggedTemplateLiteral(ctx, stylesheet, node.importClause?.name?.getText()),
+              createLitCssTaggedTemplateLiteral(
+                ctx,
+                stylesheet,
+                node.importClause?.name?.getText(),
+              ),
             ];
-          } else {
-            return ctx.factory.createImportDeclaration(
-              node.modifiers,
-              node.importClause,
-              ctx.factory.createStringLiteral(`${specifier}.js`)
-            );
+          } else if (!cssImportFakeEmitMap.get(specifierAbs)) {
+            const outPath = `${specifierAbs}.js`;
+            const css = fs.readFileSync(specifierAbs, 'utf8');
+            const stylesheet = minify ? minifyCss(css, specifierAbs) : css;
+            fs.writeFileSync(outPath, `import { css } from 'lit';\nexport default css\`${stylesheet}\`;`, 'utf8');
+            cssImportFakeEmitMap.set(specifierAbs, outPath);
           }
         }
+        return ctx.factory.createImportDeclaration(
+          node.modifiers,
+          node.importClause,
+          ctx.factory.createStringLiteral(`${specifier}.js`)
+        );
       }
-      return ts.visitEachChild(node, visitor, ctx);
+      return ts.visitEachChild(node, rewriteOrInlineVisitor, ctx);
     }
 
     return sourceFile => {
       const children = sourceFile.getChildren();
-      const litImportBindings = /** @type {ts.ImportDeclaration|undefined} */(children.find(x =>
-        !ts.isTypeOnlyImportOrExportDeclaration(x) &&
-        !ts.isNamespaceImport(x) &&
-        ts.isImportDeclaration(x) &&
-        x.moduleSpecifier.getText() === 'lit' &&
-        x.importClause?.namedBindings
-      ))?.importClause?.namedBindings;
+      const litImportBindings =
+        /** @type{import('typescript').ImportDeclaration}*/(children.find(x =>
+          !ts.isTypeOnlyImportOrExportDeclaration(x)
+        && !ts.isNamespaceImport(x)
+        && ts.isImportDeclaration(x)
+        && x.moduleSpecifier.getText() === 'lit'
+        && x.importClause?.namedBindings
+        ))?.importClause?.namedBindings;
 
-      const hasStyleImports = children.find(x => ts.isImportDeclaration(x) && x.moduleSpecifier.getText().endsWith('.css'));
+      const hasStyleImports = children.find(x =>
+        ts.isImportDeclaration(x) && x.moduleSpecifier.getText().endsWith('.css'));
+
       if (hasStyleImports) {
-        if (litImportBindings && ts.isNamedImports(litImportBindings) && !litImportBindings.elements?.some(x => x.getText() === 'css')) {
+        if (litImportBindings
+            && ts.isNamedImports(litImportBindings)
+            && !litImportBindings.elements?.some(x => x.getText() === 'css')) {
           ctx.factory.updateNamedImports(
             litImportBindings,
             [
               ...litImportBindings.elements,
-              ctx.factory.createImportSpecifier(false, undefined, ctx.factory.createIdentifier('css'))
+              ctx.factory.createImportSpecifier(
+                false,
+                undefined,
+                ctx.factory.createIdentifier('css'),
+              ),
             ]
           );
         }
       }
-      return ts.visitEachChild(sourceFile, visitor, ctx);
+      return ts.visitEachChild(sourceFile, rewriteOrInlineVisitor, ctx);
     };
   };
 };

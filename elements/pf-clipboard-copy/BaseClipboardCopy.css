@@ -1,6 +1,0 @@
-[hidden],
-[inert],
-[inert]::slotted(*) {
-  display: none !important;
-}
-

@@ -1,0 +1,60 @@
+<header>
+  <h2>Toggle Container Width</h2>
+  <pf-switch id="width-toggle"></pf-switch>
+  <label for="width-toggle" data-state="off">Full width</label>
+  <label for="width-toggle" data-state="on">Narrow</label>
+</header>
+
+<section id="block">
+  <h2>Block Triggers</h2>
+  <p>Tooltips can wrap block-level elements.
+    Tooltips which wrap focusable content must not have a <code>tabindex</code> greater than <code>-1</code>.
+  </p>
+  <ul>
+    <li><pf-tooltip position="left" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pf-button>Left Tooltip</pf-button></pf-tooltip></li>
+    <li><pf-tooltip position="left-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pf-button>Left Start Tooltip</pf-button></pf-tooltip></li>
+    <li><pf-tooltip position="left-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pf-button>Left End Tooltip</pf-button></pf-tooltip></li>
+    <li><pf-tooltip position="right" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pf-button>Right Tooltip</pf-button></pf-tooltip></li>
+    <li><pf-tooltip position="right-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pf-button>Right Start Tooltip</pf-button></pf-tooltip></li>
+    <li><pf-tooltip position="right-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pf-button>Right End Tooltip</pf-button></pf-tooltip></li>
+    <li><pf-tooltip position="top" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pf-button>Top Tooltip</pf-button></pf-tooltip></li>
+    <li><pf-tooltip position="top-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pf-button>Top Start Tooltip</pf-button></pf-tooltip></li>
+    <li><pf-tooltip position="top-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pf-button>Top End Tooltip</pf-button></pf-tooltip></li>
+    <li><pf-tooltip position="bottom" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pf-button>Bottom Tooltip</pf-button></pf-tooltip></li>
+    <li><pf-tooltip position="bottom-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pf-button>Bottom Start Tooltip</pf-button></pf-tooltip></li>
+    <li><pf-tooltip position="bottom-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices."><pf-button>Bottom End Tooltip</pf-button></pf-tooltip></li>
+  </ul>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+  import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
+  document.getElementById('width-toggle').addEventListener('change', function(event) {
+    document.querySelector('[data-demo]').classList.toggle('narrow', event.target.checked);
+  });
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+
+  .narrow :is(section:not(#block) p, ul) {
+    max-width: 400px;
+    margin-inline: auto;
+  }
+
+  #block ul {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1em;
+    list-style-type: none;
+    padding: 0;
+    margin-inline: 0;
+  }
+
+  #block li {
+    padding: 0;
+    display: block;
+  }
+</style>

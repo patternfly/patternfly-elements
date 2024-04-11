@@ -1,4 +1,3 @@
-import type { ReactiveElement } from 'lit';
 import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
@@ -75,9 +74,9 @@ describe('<pf-jump-links-item>', function() {
 
   it('should upgrade', async function() {
     expect(element)
-      .to.be.an.instanceof(customElements.get('pf-jump-links-item'))
-      .and
-      .to.be.an.instanceof(PfJumpLinksItem);
+        .to.be.an.instanceof(customElements.get('pf-jump-links-item'))
+        .and
+        .to.be.an.instanceof(PfJumpLinksItem);
   });
 });
 
@@ -92,8 +91,8 @@ describe('<pf-jump-links-list>', function() {
 
   it('should upgrade', async function() {
     expect(element)
-      .to.be.an.instanceof(customElements.get('pf-jump-links-list'))
-      .and
-      .to.be.an.instanceof(PfJumpLinksList);
+        .to.be.an.instanceof(customElements.get('pf-jump-links-list'))
+        .and
+        .to.be.an.instanceof(PfJumpLinksList);
   });
 });

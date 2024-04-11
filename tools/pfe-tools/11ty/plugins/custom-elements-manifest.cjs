@@ -2,16 +2,8 @@
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
 const { join } = require('node:path');
 const { existsSync } = require('node:fs');
-const glob = require('node:util').promisify(require('glob'));
+const { glob } = require('glob');
 const { stat, rm } = require('node:fs/promises');
-
-/**
- * @param {unknown} x
- * @return {x is import('../DocsPage').DocsPage}
- */
-function isDocsPage(x) {
-  return (/** @type {typeof import('../DocsPage').DocsPage}*/(x?.constructor))?.isDocsPage ?? false;
-}
 
 const isDir = dir => stat(dir).then(x => x.isDirectory, () => false);
 
@@ -37,8 +29,8 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
     // 4. get demos per tagName
     // 5. generate demo record with tagName, slug, title, and filepath per demo
     return Manifest.getAll(options.rootDir)
-      .flatMap(manifest => manifest.getTagNames()
-        .flatMap(tagName => [...manifest.getDemoMetadata(tagName, options), ...extraDemos]));
+        .flatMap(manifest => manifest.getTagNames()
+            .flatMap(tagName => [...manifest.getDemoMetadata(tagName, options), ...extraDemos]));
   });
 
   eleventyConfig.addGlobalData('elements', async function elements() {
@@ -52,19 +44,19 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
     // 2. get manifests from packages, construct manifest objects, associate packages
     // 3. get all tag names from each manifest. construct docs page for tag names w/ associates manifest and package
     return Manifest.getAll(rootDir)
-      .flatMap(manifest =>
-        Array.from(manifest.declarations.values(), decl => {
-          const { tagName } = decl;
-          const elementsDir = options.elementsDir ?? 'elements';
-          const docsTemplatePath = join(process.cwd(), elementsDir, `${tagName}`, 'docs', `${tagName}.md`);
-          return new DocsPage(manifest, {
-            ...options,
-            tagName,
-            // only include the template if it exists
-            ...Object.fromEntries(Object.entries({ docsTemplatePath }).filter(([, path]) =>
-              existsSync(path)))
-          });
-        }));
+        .flatMap(manifest =>
+          Array.from(manifest.declarations.values(), decl => {
+            const { tagName } = decl;
+            const elementsDir = options.elementsDir ?? 'elements';
+            const docsTemplatePath = join(process.cwd(), elementsDir, `${tagName}`, 'docs', `${tagName}.md`);
+            return new DocsPage(manifest, {
+              ...options,
+              tagName,
+              // only include the template if it exists
+              ...Object.fromEntries(Object.entries({ docsTemplatePath }).filter(([, path]) =>
+                existsSync(path))),
+            });
+          }));
   });
 
   // Netlify tends to turn html files into directories with index.html,
@@ -110,53 +102,4 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
     }
     return content;
   });
-
-  /** Rebuild the site in watch mode when the templates for this plugin change */
-  eleventyConfig
-    .addWatchTarget(require.resolve('@patternfly/pfe-tools/11ty')
-      .replace('index.js', '**/*.{js,njk}'));
-
-  // copied from DocsPage
-  eleventyConfig.addPairedAsyncShortcode('band',
-    /**
-     * @param {string} content
-     * @param {import('../DocsPage').RenderKwargs} kwargs
-     */
-    async function(content, kwargs) {
-      const { renderBand } = await import('@patternfly/pfe-tools/11ty');
-      return renderBand(content, kwargs);
-    });
-
-  /** @type {import('./types').RendererName} */
-  const shortCodes = [
-    'renderAttributes',
-    'renderCssCustomProperties',
-    'renderCssParts',
-    'renderEvents',
-    'renderMethods',
-    'renderOverview',
-    'renderProperties',
-    'renderInstallation',
-    'renderSlots',
-  ];
-
-  for (const shortCode of shortCodes) {
-    eleventyConfig.addPairedAsyncShortcode(shortCode,
-      /**
-       * @this {import('./types').EleventyContext}
-       * @param {string} content
-       * @param {import('../DocsPage').RenderKwargs} [kwargs]
-       */
-      async function(content, kwargs) {
-        const docsPage = isDocsPage(this.ctx?._) ? this.ctx?._ : null;
-        if (!docsPage) {
-          console.warn(
-            `{% ${shortCode} %}: No custom elements manifest data found for ${kwargs?.for ?? 'unknown element'}`,
-            `\n  inputPath: ${this.page.inputPath}`,
-            `\n  URL: ${this.page.url}`,
-          );
-        }
-        return docsPage?.[shortCode]?.(content, kwargs) ?? '';
-      });
-  }
 };

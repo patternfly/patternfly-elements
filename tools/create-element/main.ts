@@ -38,6 +38,7 @@ interface PackageJSON {
 
 /** generated at https://dom111.github.io/image-to-ansi/ */
 function banner() {
+  // eslint-disable-next-line no-console
   console.log(`\x1b[49m                          \x1b[38;5;87;49m▄\x1b[38;5;87;48;5;87m▄\x1b[38;5;87;49m▄\x1b[49m                          \x1b[m
 \x1b[49m                        \x1b[38;5;81;49m▄\x1b[38;5;81;48;5;87m▄▄\x1b[49m \x1b[38;5;81;48;5;87m▄\x1b[38;5;87;48;5;87m▄\x1b[38;5;81;49m▄\x1b[49m                        \x1b[m
 \x1b[49m                      \x1b[38;5;81;49m▄\x1b[38;5;81;48;5;81m▄\x1b[49;38;5;81m▀\x1b[38;5;81;48;5;81m▄▄\x1b[49m \x1b[38;5;81;48;5;81m▄▄\x1b[49;38;5;81m▀\x1b[38;5;81;48;5;81m▄\x1b[38;5;81;49m▄\x1b[49m                      \x1b[m
@@ -88,64 +89,69 @@ export async function promptForElementGeneratorOptions(
 const readJsonOrVoid = (path: string) => readJson(path).catch(() => void 0);
 
 async function getDefaultPackageName() {
-  return (await readJsonOrVoid(join(process.cwd(), 'elements', 'package.json')) as PackageJSON)?.name ??
-         (await readJsonOrVoid(join(process.cwd(), 'package.json')) as PackageJSON)?.name ?? '';
+  return (await readJsonOrVoid(join(
+    process.cwd(),
+    'elements',
+    'package.json',
+  )) as PackageJSON)?.name
+         ?? (await readJsonOrVoid(join(process.cwd(), 'package.json')) as PackageJSON)?.name ?? '';
 }
 
 export async function main(): Promise<void> {
   return Promise.resolve(
     (Yargs(process.argv) as Yargs.Argv<GenerateElementOptions>)
-      .scriptName('npm init @patternfly/element')
-      .usage('$0 [<cmd>] [args]')
-      .option('directory', {
-        type: 'string',
-        default: process.cwd(),
-        demandOption: false,
-        description: 'Output directory',
-      })
-      .option('silent', {
-        type: 'boolean',
-        default: false,
-        description: 'Do not log anything to stdout',
-      })
-      .option('tagName', {
-        alias: 'n',
-        type: 'string',
-        description: 'Custom element tag name. e.g. `pf-button`',
-      })
-      .option('packageName', {
-        alias: 'p',
-        type: 'string',
-        description: 'NPM package name e.g. `@patternfly/elements`',
-        default: await getDefaultPackageName(),
-      })
-      .option('overwrite', {
-        type: 'boolean',
-        default: false,
-        description: 'Overwrite files without prompting',
-      })
-      .option('css', {
-        type: 'boolean',
-        default: 'css',
-        description: 'Which type of CSS files to output',
-      })
-      .help()
-      .check(({ name }) => {
-        if (typeof name === 'string' && !name.includes('-')) {
-          throw new Error(ERR_BAD_CE_TAG_NAME);
+        .scriptName('npm init @patternfly/element')
+        .usage('$0 [<cmd>] [args]')
+        .option('directory', {
+          type: 'string',
+          default: process.cwd(),
+          demandOption: false,
+          description: 'Output directory',
+        })
+        .option('silent', {
+          type: 'boolean',
+          default: false,
+          description: 'Do not log anything to stdout',
+        })
+        .option('tagName', {
+          alias: 'n',
+          type: 'string',
+          description: 'Custom element tag name. e.g. `pf-button`',
+        })
+        .option('packageName', {
+          alias: 'p',
+          type: 'string',
+          description: 'NPM package name e.g. `@patternfly/elements`',
+          default: await getDefaultPackageName(),
+        })
+        .option('overwrite', {
+          type: 'boolean',
+          default: false,
+          description: 'Overwrite files without prompting',
+        })
+        .option('css', {
+          type: 'boolean',
+          default: 'css',
+          description: 'Which type of CSS files to output',
+        })
+        .help()
+        .check(({ name }) => {
+          if (typeof name === 'string' && !name.includes('-')) {
+            throw new Error(ERR_BAD_CE_TAG_NAME);
+          } else {
+            return true;
+          }
+        }))
+      .then(({ argv }) => argv as GenerateElementOptions)
+      .then(promptForElementGeneratorOptions)
+      .then(generateElement)
+      .catch(e => {
+        if (e instanceof PackageJSONError) {
+          // eslint-disable-next-line no-console
+          console.log(e.message);
+          process.exit(1);
         } else {
-          return true;
+          throw e;
         }
-      }))
-    .then(({ argv }) => argv as GenerateElementOptions)
-    .then(promptForElementGeneratorOptions)
-    .then(generateElement)
-    .catch(e => {
-      if (e instanceof PackageJSONError) {
-        console.log(e.message);
-        process.exit(1);
-      } else {
-        throw e;
-      }
-    });
+      });
 }

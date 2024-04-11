@@ -1,6 +1,9 @@
 ```jsx
-import React from "react";
-import "@patternfly/elements/pf-accordion/pf-accordion.js";
+import {
+  Accordion,
+  AccordionPanel,
+  AccordionHeader,
+} from "@patternfly/elements/react/pf-accordion/pf-accordion.js";
 
 export default function App() {
   const data = [
@@ -8,14 +11,14 @@ export default function App() {
     { header: "HTML APIs", panel: <>For more information on how to use each PatternFly element, read the <a href="/components/">component docs</a>.<>}
   ];
   return (
-    <pf-accordion>{data.map(({ header, panel }) => (
-      <pf-accordion-header>
+    <Accordion>{data.map(({ header, panel }) => (
+      <AccordionHeader>
         <h3>{header}</h3>
-      </pf-accordion-header>
-      <pf-accordion-panel>
+      </AccordionHeader>
+      <AccordionPanel>
         <p>{panel}</p>
-      </pf-accordion-panel>))}
-    </pf-accordion>
+      </AccordionPanel>))}
+    </Accordion>
   );
 }
 ```

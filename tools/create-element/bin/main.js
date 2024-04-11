@@ -5,6 +5,8 @@ import { main } from '../main.js';
   try {
     await main();
   } catch (e) {
-    if (e) console.error(e);
+    if (e) {
+      console.error(e);
+    }
   }
 })();

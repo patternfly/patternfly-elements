@@ -1,3 +1,5 @@
+// will remove file in 2627
+/* eslint-disable lit-a11y/accessible-name */
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
 
@@ -12,7 +14,6 @@ export type SpinnerSize = (
 
 /**
  * Base spinner class
- *
  * @cssprop {<length>} --pf-c-spinner--diameter                      {@default `3.375rem`}
  * @cssprop {<length>} --pf-c-spinner--Width                         {@default `3.375rem`}
  * @cssprop {<length>} --pf-c-spinner--Height                        {@default `3.375rem`}

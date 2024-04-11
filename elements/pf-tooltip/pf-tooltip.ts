@@ -23,9 +23,7 @@ const ExitEvents = ['focusout', 'blur', 'mouseleave'];
 /**
  * A **tooltip** is in-app messaging used to identify elements on a page with short,
  * clarifying text.
- *
  * @summary Toggle the visibility of helpful or contextual information.
- *
  * @slot
  *       This slot wraps around the element that should be used to invoke the tooltip content to display.
  *       Typically this would be an icon, button, or other small sized element.
@@ -33,7 +31,6 @@ const ExitEvents = ['focusout', 'blur', 'mouseleave'];
  *       This slot renders the content that will be displayed inside of the tooltip.
  *       Typically this would include a string of text without any additional elements.
  *       This element is wrapped with a div inside of the component to give it the stylings and background colors.
- *
  * @cssprop     {<color>} --pf-c-tooltip__content--BackgroundColor
  *              Sets the background color for the tooltip content.
  *              {@default `#1b1d21`}
@@ -141,8 +138,6 @@ export class PfTooltip extends LitElement {
     return this.shadowRoot?.querySelector('#tooltip') ?? null;
   }
 
-  #blockInvoker = false;
-
   #referenceTrigger?: HTMLElement | null;
 
   #float = new FloatingDOMController(this, {
@@ -150,7 +145,8 @@ export class PfTooltip extends LitElement {
     invoker: (): HTMLElement | null | undefined => {
       if (this.#referenceTrigger) {
         return this.#referenceTrigger;
-      } else if (this.#invoker instanceof HTMLSlotElement && this.#invoker.assignedElements().length > 0) {
+      } else if (this.#invoker instanceof HTMLSlotElement
+              && this.#invoker.assignedElements().length > 0) {
         return this.#invoker.assignedElements().at(0) as HTMLElement;
       } else {
         return this.#invoker;
@@ -177,7 +173,10 @@ export class PfTooltip extends LitElement {
   override render() {
     const { alignment, anchor, open, styles } = this.#float;
 
-    const block = this.#blockInvoker;
+    const blockInvoker =
+      this.#invoker?.assignedElements().length === 0
+      && this.#invoker?.assignedNodes().length > 0;
+    const display = blockInvoker ? 'block' : 'contents';
 
     return html`
       <div id="container"
@@ -185,28 +184,26 @@ export class PfTooltip extends LitElement {
            class="${classMap({ open,
                                [anchor]: !!anchor,
                                [alignment]: !!alignment })}">
-        <slot id="invoker"
-              class="${classMap({ block })}"
-              @slotchange="${this.#invokerChanged}"
-              role="tooltip"
-              aria-labelledby="tooltip"></slot>
-        <slot id="tooltip"
-              name="content"
-              aria-hidden="${String(!open) as 'true' | 'false'}">${this.content}</slot>
+        <div role="tooltip"
+             style="${styleMap({ display })}"
+             aria-labelledby="tooltip">
+          <slot id="invoker" @slotchange="${this.#invokerChanged}"></slot>
+        </div>
+        <div aria-hidden="${String(!open) as 'true' | 'false'}">
+          <slot id="tooltip" name="content">${this.content}</slot>
+        </div>
       </div>
     `;
   }
 
   /** the invoker slot should render at block level if it only has text nodes */
   #invokerChanged() {
-    this.#blockInvoker =
-      this.#invoker?.assignedElements().length === 0 &&
-      this.#invoker?.assignedNodes().length > 0;
     this.requestUpdate();
   }
 
   #getReferenceTrigger() {
-    return (this.getRootNode() as Document | ShadowRoot).getElementById(this.trigger?.normalize() ?? '');
+    return (this.getRootNode() as Document | ShadowRoot)
+        .getElementById(this.trigger?.normalize() ?? '');
   }
 
   #updateTrigger() {

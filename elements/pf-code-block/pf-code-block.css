@@ -48,6 +48,7 @@ button svg {
   color: #151515;
   margin-right: 12px;
   transition: .2s ease-in 0s;
+  vertical-align: -0.125em;
 }
 
 .expanded button svg {

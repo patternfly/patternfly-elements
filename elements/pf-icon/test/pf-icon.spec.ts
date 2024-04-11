@@ -11,7 +11,7 @@ describe('<pf-icon>', function() {
   let element: PfIcon;
 
   async function expectIconsEqual(actualIconUrl: URL) {
-    await oneEvent(element, 'load');
+    await oneEvent(element, 'load', false);
     const tpl = await import(actualIconUrl.pathname).then(x => x.default);
     const rootNode = render(tpl, document.createDocumentFragment());
     const actual = element.shadowRoot?.querySelector('svg');
@@ -31,9 +31,9 @@ describe('<pf-icon>', function() {
 
   it('should upgrade', function() {
     expect(element, 'pf-icon should be an instance of PfIcon')
-      .to.be.an.instanceOf(customElements.get('pf-icon'))
-      .and
-      .to.be.an.instanceOf(PfIcon);
+        .to.be.an.instanceOf(customElements.get('pf-icon'))
+        .and
+        .to.be.an.instanceOf(PfIcon);
   });
 
   it('should warn if the 2nd argument to addIconSet is not a function', function() {
@@ -76,7 +76,7 @@ describe('<pf-icon>', function() {
       element.innerHTML = `<p>Icon failed to load.</p>`;
       // Check that the fallback is hidden when the icon is successfully loaded
       element.icon = 'bike';
-      await oneEvent(element, 'load');
+      await oneEvent(element, 'load', false);
       expect(element).shadowDom.to.equal(`
       <div id="container" aria-hidden="true">
         <span part="fallback" hidden>
@@ -89,7 +89,7 @@ describe('<pf-icon>', function() {
       const newColor = 'rgb(11, 12, 13)';
       element.style.setProperty('color', newColor);
       element.icon = 'atom';
-      await oneEvent(element, 'load');
+      await oneEvent(element, 'load', false);
       const color = getComputedStyle(element.shadowRoot!.querySelector('svg')!).getPropertyValue('color');
       expect(color).to.equal(newColor);
     });
@@ -117,14 +117,14 @@ describe('<pf-icon>', function() {
     element.icon = 'foo';
     await element.updateComplete;
     PfIcon.addIconSet('asdfasdf', () => url);
-    await oneEvent(element, 'load');
+    await oneEvent(element, 'load', false);
     await expectIconsEqual(url);
   });
 
   it(`should show fallback when given a valid icon set but invalid icon name, fallback provided`, async function() {
     element.innerHTML = '<p>Image failed to load.</p>.';
     element.icon = 'no-scrubs';
-    await oneEvent(element, 'error');
+    await oneEvent(element, 'error', false);
     expect(element.shadowRoot!.querySelector('svg')).to.not.be.ok;
     expect(element).shadowDom.to.equal(`
       <div id="container" aria-hidden="true">
@@ -138,7 +138,7 @@ describe('<pf-icon>', function() {
     element.innerHTML = '<p>Image failed to load.</p>.';
     element.set = 'choopee-doopee-pie';
     element.icon = 'bike';
-    await oneEvent(element, 'error');
+    await oneEvent(element, 'error', false);
     expect(element.shadowRoot!.querySelector('svg')).to.not.be.ok;
     expect(element).shadowDom.to.equal(`
       <div id="container" aria-hidden="true">

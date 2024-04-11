@@ -1,0 +1,60 @@
+<section>
+  <p>You may set an external button as the trigger by setting its' ID as the modal's <code>trigger</code> attribute.</p>
+  <pf-modal trigger="external-trigger">
+    <h2 slot="header">External trigger</h2>
+    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt
+      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.</p>
+    <pf-button slot="footer">Confirm</pf-button>
+    <pf-button variant="secondary" slot="footer">Cancel</pf-button>
+  </pf-modal>
+
+  <p>Arbitrary content can intervene between the external trigger and the modal element, as long as they are within the
+    same root.</p>
+
+  <pf-button id="external-trigger">Show modal with external trigger</pf-button>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-button/pf-button.js';
+  import '@patternfly/elements/pf-modal/pf-modal.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+
+  for (const button of document.querySelectorAll('pf-modal pf-button:not([slot="trigger"])')) {
+    button.addEventListener('click', e => {
+      e.target.closest('pf-modal').close(e.target.textContent.toLowerCase());
+    });
+  }
+</script>
+
+<style>
+  @font-face {
+    font-family: "RedHatDisplayUpdated";
+    src: url(https://patternfly.org/v4/fonts/RedHatDisplay-updated-Regular.woff2) format("woff2");
+    font-style: normal;
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+  }
+  @font-face {
+    font-family: "RedHatDisplayUpdated";
+    src: url(https://patternfly.org/v4/fonts/RedHatDisplay-updated-Medium.woff2) format("woff2");
+    font-style: normal;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+  }
+  @font-face {
+    font-family: "RedHatDisplayUpdated";
+    src: url(https://patternfly.org/v4/fonts/RedHatDisplay-updated-Bold.woff2) format("woff2");
+    font-style: normal;
+    font-weight: 700;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    --pf-modal--MinWidth: 800px;
+    --pf-modal--MaxWidth: 800px;
+    --pf-modal--MaxHeight: 800px;
+  }
+</style>

@@ -22,7 +22,10 @@ import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 export class PfJumpLinksItem extends LitElement {
   static readonly styles = [style];
 
-  static readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /** Whether this item is active. */
   @observed('activeChanged')
@@ -31,9 +34,7 @@ export class PfJumpLinksItem extends LitElement {
   /** hypertext reference for this link */
   @property({ reflect: true }) href?: string;
 
-  #internals = new InternalsController(this, {
-    role: 'listitem'
-  });
+  #internals = InternalsController.of(this, { role: 'listitem' });
 
   override connectedCallback() {
     super.connectedCallback();

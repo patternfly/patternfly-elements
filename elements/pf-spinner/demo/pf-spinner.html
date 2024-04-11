@@ -1,20 +1,14 @@
-<link rel="stylesheet" href="demo.css">
-<script type="module" src="pf-spinner.js"></script>
-
 <section>
-  <h3>Basic</h3>
   <pf-spinner>Loading...</pf-spinner>
 </section>
 
-<section>
-  <h3>Size variations</h3>
-  <pf-spinner size="sm">Loading...</pf-spinner>
-  <pf-spinner size="md">Loading...</pf-spinner>
-  <pf-spinner size="lg">Loading...</pf-spinner>
-  <pf-spinner size="xl">Loading...</pf-spinner>
-</section>
+<script type="module">
+  import '@patternfly/elements/pf-card/pf-card.js';
+  import '@patternfly/elements/pf-spinner/pf-spinner.js';
+</script>
 
-<section>
-  <h3>Custom size</h3>
-  <pf-spinner diameter="80px">Loading...</pf-spinner>
-</section>
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

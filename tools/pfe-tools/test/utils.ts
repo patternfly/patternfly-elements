@@ -12,9 +12,6 @@ export function getElementCenterPosition(element: Element): Position {
   ];
 }
 
-/** @deprecated - use `getElementCenterPosition` */
-export const getElementPosition = getElementCenterPosition;
-
 /**
  * Click an element at approximate center, using playwright's sendMouse command
  */
@@ -26,7 +23,10 @@ export async function clickElementAtCenter(element: Element): Promise<void> {
 /**
  * Click an element at an offset from it's top-left corner, using playwright's sendMouse command
  */
-export async function clickElementAtOffset(element: Element, relativeOffset: Position): Promise<void> {
+export async function clickElementAtOffset(
+  element: Element,
+  relativeOffset: Position,
+): Promise<void> {
   const { x, y, right, bottom } = element.getBoundingClientRect();
   const [xOffset, yOffset] = relativeOffset;
   const position = [

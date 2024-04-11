@@ -14,7 +14,6 @@ export type SpinnerSize = (
 
 /**
  * Base spinner class
- *
  * @cssprop {<length>} --pf-c-spinner--diameter                      {@default `3.375rem`}
  * @cssprop {<length>} --pf-c-spinner--Width                         {@default `3.375rem`}
  * @cssprop {<length>} --pf-c-spinner--Height                        {@default `3.375rem`}

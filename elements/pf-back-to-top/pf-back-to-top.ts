@@ -13,14 +13,11 @@ import styles from './pf-back-to-top.css';
 /**
  * The **back to top** component is a shortcut that allows users to quickly navigate to the top of a lengthy content page.
  * @summary A shortcut that allows users to quickly navigate to the top of a lengthy content page.
- *
  * @csspart trigger - The `<a>` or `<pf-button>` element
- *
  * @slot icon
  *       Contains the prefix icon to display before the link or button.
  * @slot
  *       Text to display inside the link or button.
- *
  * @cssprop {<length>} --pf-c-back-to-top--Right {@default `3rem``}
  * @cssprop {<length>} --pf-c-back-to-top--Bottom {@default `1.5rem``}
  * @cssprop --pf-c-back-to-top--c-button--BoxShadow {@default `0 0.75rem 0.75rem -0.5rem rgba(3, 3, 3, 0.18)`}
@@ -33,7 +30,6 @@ import styles from './pf-back-to-top.css';
  * @cssprop {<color>} --pf-c-button--m-primary--Color {@default `#fff`}
  * @cssprop {<color>} --pf-c-button--m-primary--BackgroundColor {@default `#06c`}
  * @cssprop {<length>} --pf-c-button__icon--m-end--MarginLeft {@default `0.25rem`}
- *
  */
 @customElement('pf-back-to-top')
 export class PfBackToTop extends LitElement {

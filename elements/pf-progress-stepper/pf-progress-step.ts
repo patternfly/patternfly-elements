@@ -26,7 +26,6 @@ const ICONS = new Map(Object.entries({
  *       Longer description of the current step.
  * @slot icon
  *       Overrides the icon property
- *
  */
 @customElement('pf-progress-step')
 export class PfProgressStep extends LitElement {

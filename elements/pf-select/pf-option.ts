@@ -28,7 +28,7 @@ export class PfOption extends LitElement {
   /** form value for this option */
   @property({ reflect: true })
   get value() {
-    return this.#value ?? this.textContent ?? '';
+    return (this.#value ?? this.textContent ?? '').trim();
   }
 
   set value(v: string) {

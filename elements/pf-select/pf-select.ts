@@ -290,7 +290,7 @@ export class PfSelect extends LitElement {
                class="${classMap({ checkboxes })}">
             <pf-option id="placeholder"
                        disabled
-                       aria-hidden="${String(hasSelection) as 'true' | 'false'}"
+                       aria-hidden="${ifDefined(hasSelection ? 'true' : undefined)}"
                        ?hidden="${!this.placeholder && !this.#slots.hasSlotted('placeholder')}">
               <slot name="placeholder">${this.placeholder}</slot>
             </pf-option>

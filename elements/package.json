@@ -31,7 +31,6 @@
     "./pf-chip/pf-chip.js": "./pf-chip/pf-chip.js",
     "./pf-chip/pf-chip-group.js": "./pf-chip/pf-chip-group.js",
     "./pf-clipboard-copy/pf-clipboard-copy.js": "./pf-clipboard-copy/pf-clipboard-copy.js",
-    "./pf-code-block/BaseCodeBlock.js": "./pf-code-block/BaseCodeBlock.js",
     "./pf-code-block/pf-code-block.js": "./pf-code-block/pf-code-block.js",
     "./pf-dropdown/pf-dropdown.js": "./pf-dropdown/pf-dropdown.js",
     "./pf-dropdown/pf-dropdown-group.js": "./pf-dropdown/pf-dropdown-group.ts",

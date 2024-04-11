@@ -119,7 +119,6 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--disabled--Color              {@default `#6a6e73`}
  * @cssprop {<color>}  --pf-c-button--disabled--BackgroundColor    {@default `#d2d2d2`}
  * @cssprop {<color>}  --pf-c-button--disabled--after--BorderColor {@default `transparent`}
- *
  * @cssprop {<color>}  --pf-c-button--m-warning--Color                   {@default `#151515`}
  * @cssprop {<color>}  --pf-c-button--m-warning--BackgroundColor         {@default `#f0ab00`}
  * @cssprop {<color>}  --pf-c-button--m-warning--active--Color           {@default `#151515`}
@@ -128,7 +127,6 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--m-warning--focus--BackgroundColor  {@default `#c58c00`}
  * @cssprop {<color>}  --pf-c-button--m-warning--hover--Color            {@default `#151515`}
  * @cssprop {<color>}  --pf-c-button--m-warning--hover--BackgroundColor  {@default `#c58c00`}
- *
  * @cssprop {<color>}  --pf-c-button--m-plain--BackgroundColor         {@default `transparent`}
  * @cssprop {<color>}  --pf-c-button--m-plain--Color                   {@default `#6a6e73`}
  * @cssprop {<color>}  --pf-c-button--m-plain--hover--BackgroundColor  {@default `transparent`}
@@ -137,12 +135,9 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--m-plain--focus--Color            {@default `#151515`}
  * @cssprop {<color>}  --pf-c-button--m-plain--active--BackgroundColor {@default `transparent`}
  * @cssprop {<color>}  --pf-c-button--m-plain--active--Color           {@default `#151515`}
- *
  * @cssprop {<color>}  --pf-c-button--m-plain--disabled--Color           {@default `#d2d2d2`}
  * @cssprop {<color>}  --pf-c-button--m-plain--disabled--BackgroundColor {@default `transparent`}
- *
  * @attr {string} loading-label - ARIA label for the loading indicator {@default `'loading'`}
- *
  */
 @customElement('pf-button')
 export class PfButton extends LitElement {

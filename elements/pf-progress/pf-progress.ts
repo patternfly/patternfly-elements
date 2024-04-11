@@ -47,43 +47,33 @@ const ICONS = new Map(Object.entries({
  * @cssprop {<color>} --pf-c-progress--m-warning__bar--BackgroundColor
  *          Background color of the progress bar when variant is warning.
  *          {@default `#f0ab00`}
- *
  * @cssprop {<color>} --pf-c-progress--m-danger__bar--BackgroundColor
  *          Background color of the progress bar when variant is danger.
  *          {@default `#c9190b`}
- *
  * @cssprop {<color>} --pf-c-progress--m-success__status-icon--Color
  *          Color of the status icon when variant is success.
  *          {@default `#3e8635`}
- *
  * @cssprop {<color>} --pf-c-progress--m-warning__status-icon--Color
  *          Color of the status icon when variant is warning.
  *          {@default `#f0ab00`}
- *
  * @cssprop {<color>} --pf-c-progress--m-danger__status-icon--Color
  *          Color of the status icon when variant is danger.
  *          {@default `#c9190b`}
- *
  * @cssprop {<color>} --pf-c-progress--m-success--m-inside__measure--Color
  *          Color of the progress bar measure when variant is success and measure location is inside.
  *          {@default `#ffffff`}
- *
  * @cssprop {<length>} --pf-c-progress--m-outside__measure--FontSize
  *          Font size of the progress bar measure when measure location is outside.
  *          {@default `0.875rem`}
- *
  * @cssprop {<length>} --pf-c-progress--m-sm__bar--Height
  *          Height of the progress bar when the size is small.
  *          {@default `0.5rem`}
- *
  * @cssprop {<length>} --pf-c-progress--m-sm__description--FontSize
  *          Font size of the progress bar description when the size is small.
  *          {@default `0.875rem`}
- *
  * @cssprop {<length>} --pf-c-progress--m-lg__bar--Height
  *          Height of the progress bar when the size is large.
  *          {@default `1.5rem`}
- *
  */
 @customElement('pf-progress')
 export class PfProgress extends LitElement {

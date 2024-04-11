@@ -42,7 +42,6 @@ export type StackedSize = (
  * @cssprop   {<color>} --pf-c-tile__icon--Color {@default `#06c`}
  * @cssprop   {<length>} --pf-c-tile__icon--MarginRight {@default `0`}
  * @cssprop   {<length>} --pf-c-tile__icon--FontSize {@default `1.5rem`}
- *
  * @cssprop   {<lenght>} --pf-c-tile__header--m-stacked__icon--MarginBottom {@default `0.25rem`}
  */
 @customElement('pf-tile')

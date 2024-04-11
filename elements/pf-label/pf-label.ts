@@ -58,43 +58,34 @@ export type LabelColor = (
  * @cssprop {<color>} --pf-c-label--m-green--BackgroundColor               {@default `#f3faf2`}
  * @cssprop {<color>} --pf-c-label--m-green__content--before--BorderColor  {@default `#bde5b8`}
  * @cssprop {<color>} --pf-c-label--m-outline--m-green__content--Color     {@default `#3e8635`}
- *
  * @cssprop {<color>} --pf-c-label--m-orange__content--Color                {@default `#003737`}
  * @cssprop {<color>} --pf-c-label--m-orange--BackgroundColor               {@default `#fff6ec`}
  * @cssprop {<color>} --pf-c-label--m-orange__content--before--BorderColor  {@default `#f4b678`}
  * @cssprop {<color>} --pf-c-label--m-outline--m-orange__content--Color     {@default `#8f4700`}
- *
  * @cssprop {<color>} --pf-c-label--m-purple__content--Color                {@default `#1f0066`}
  * @cssprop {<color>} --pf-c-label--m-purple--BackgroundColor               {@default `#f2f0fc`}
  * @cssprop {<color>} --pf-c-label--m-purple__content--before--BorderColor  {@default `#cbc1ff`}
  * @cssprop {<color>} --pf-c-label--m-outline--m-purple__content--Color     {@default `#6753ac`}
- *
  * @cssprop {<color>} --pf-c-label--m-red__content--Color                {@default `#7d1007`}
  * @cssprop {<color>} --pf-c-label--m-red--BackgroundColor               {@default `#faeae8`}
  * @cssprop {<color>} --pf-c-label--m-red__content--before--BorderColor  {@default `#c9190b`}
  * @cssprop {<color>} --pf-c-label--m-outline--m-red__content--Color     {@default `#c9190b`}
- *
  * @cssprop {<color>} --pf-c-label--m-gold__content--Color                {@default `#3d2c00`}
  * @cssprop {<color>} --pf-c-label--m-gold--BackgroundColor               {@default `#fdf7e7`}
  * @cssprop {<color>} --pf-c-label--m-gold__content--before--BorderColor  {@default `#f9e0a2`}
  * @cssprop {<color>} --pf-c-label--m-outline--m-gold__content--Color     {@default `#795600`}
-
  * @cssprop {<color>} --pf-c-label--m-blue__icon--Color {@default `#06c`}
  * @cssprop {<color>} --pf-c-label--m-cyan__icon--Color {@default `#009596`}
  * @cssprop {<color>} --pf-c-label--m-green__icon--Color {@default `#3e8635`}
  * @cssprop {<color>} --pf-c-label--m-orange__icon--Color {@default `#ec7a08`}
  * @cssprop {<color>} --pf-c-label--m-red__icon--Color {@default `#c9190b`}
  * @cssprop {<color>} --pf-c-label--m-gold__icon--Color {@default `#f0ab00`}
- *
  * @csspart icon - container for the label icon
  * @csspart close-button - container for removable labels' close button
- *
  * @slot icon
  *       Contains the labels's icon, e.g. web-icon-alert-success.
- *
  * @slot
  *       Must contain the text for the label.
- *
  * @cssprop {<length>} --pf-c-label--m-compact--PaddingTop     {@default `0`}
  * @cssprop {<length>} --pf-c-label--m-compact--PaddingRight   {@default `0.5rem`}
  * @cssprop {<length>} --pf-c-label--m-compact--PaddingBottom  {@default `0`}

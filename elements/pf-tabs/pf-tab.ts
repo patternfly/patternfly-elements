@@ -47,20 +47,15 @@ import styles from './pf-tab.css';
  * @cssprop     {<length>}  --pf-c-tabs__link--FontSize      {@default `1rem`}
  * @cssprop     {<color>}   --pf-c-tabs__link--Color          {@default `#6a6e73`}
  * @cssprop     {<length>}  --pf-c-tabs__link--OutlineOffset {@default `-0.375rem`}
- *
  * @cssprop     {<color>}  --pf-c-tabs__link--after--BorderColor        {@default `#b8bbbe`}
  * @cssprop     {<length>} --pf-c-tabs__link--after--BorderTopWidth     {@default `0`}
  * @cssprop     {<length>} --pf-c-tabs__link--after--BorderRightWidth   {@default `0`}
  * @cssprop     {<length>} --pf-c-tabs__link--after--BorderBottomWidth  {@default `0`}
  * @cssprop     {<length>} --pf-c-tabs__link--after--BorderLeftWidth    {@default `0`}
- *
  * @cssprop     {<color>} --pf-c-tabs__item--m-current__link--Color {@default `#151515`}
- *
  * @cssprop     {<color>}   --pf-c-tabs__item--m-current__link--after--BorderColor {@default `#06c`}
  * @cssprop     {<length>}  --pf-c-tabs__item--m-current__link--after--BorderWidth {@default `3px`}
- *
  * @cssprop     {<length>} --pf-c-tabs__link--child--MarginRight  {@default `1rem`}
- *
  * @fires {TabExpandEvent} expand - when a tab expands
  */
 @customElement('pf-tab')

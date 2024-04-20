@@ -75,10 +75,6 @@ export class PfCalendar extends LitElement {
   @property() monthNames: string[] = getMonthNamesFromLocale(this.translationLanguageCode);
   focusDateRef: any = createRef<HTMLButtonElement>(); // Reference to the button that needs to be focused
 
-  constructor() {
-    super();
-  }
-
   connectedCallback() {
     super.connectedCallback();
     this.#init();

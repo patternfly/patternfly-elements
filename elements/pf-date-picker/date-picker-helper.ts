@@ -11,6 +11,8 @@ export interface InputDate {
 }
 
 export const days: string[] = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+export const defaultWeekdays: number[] = [0, 1, 2, 3, 4, 5, 6]; // S, M, T, W, T, F, S
+export const defaultWeeks: number[] = [0, 1, 2, 3, 4, 5]; // 1 previous month week, 4 current month weeks, 1 next month week
 
 // Function to return date object
 export const getFormattedDate = (date: Date) => {

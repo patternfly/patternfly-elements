@@ -3,7 +3,12 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ref, createRef } from 'lit/directives/ref.js';
 import styles from './pf-calendar.css';
-import { getFormattedDate, getMonthNamesFromLocale } from './date-picker-helper.js';
+import {
+  getFormattedDate,
+  getMonthNamesFromLocale,
+  defaultWeekdays,
+  defaultWeeks
+} from './date-picker-helper.js';
 import { ComposedEvent } from '@patternfly/pfe-core/core.js';
 
 export interface FocusedDateValues{
@@ -51,8 +56,8 @@ export class PfCalendar extends LitElement {
   static readonly styles = [styles];
 
   private currentDate: Date = new Date();
-  private weekdays: number[] = [0, 1, 2, 3, 4, 5, 6]; // S, M, T, W, T, F, S
-  private weeks: number[] = [0, 1, 2, 3, 4, 5]; // 1 previous month week, 4 current month weeks, 1 next month week
+  private weekdays: number[] = defaultWeekdays;
+  private weeks: number[] = defaultWeeks;
 
   // Input properties from the parent
   @property() currentYear: number = this.currentDate.getFullYear();

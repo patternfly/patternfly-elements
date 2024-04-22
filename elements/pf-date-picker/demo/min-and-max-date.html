@@ -1,14 +1,14 @@
 <div class="container">
   <section>
     <h2>Set minimum and maximum date range</h2>
-    <pre><code>&lt;pf-date-picker minDate=${new Date(2023, 0, 2)} minDate=${new Date(2023, 0, 20)} 
+    <pre><code>&lt;pf-date-picker min-date=${new Date(2023, 0, 2)} max-date=${new Date(2023, 0, 20)} 
       inputDate=${new Date(2023, 0, 3)}&gt;&lt;/pf-date-picker&gt;</code></pre>
     <!-- ***** The values for minDate and maxDate must be passed as **DATE TYPE** from parent component (Here the values are passed as string type 
       for demo purpose, as there are some restrictions for adding Date type value in .html file). -->
     <pf-date-picker 
       inputDate="Tue Jan 03 2023 05:30:00 GMT+0530 (India Standard Time)"
-      minDate="Mon Jan 02 2023 00:00:00 GMT+0530 (India Standard Time)"
-      maxDate="Fri Jan 20 2023 00:00:00 GMT+0530 (India Standard Time)">
+      min-date="Mon Jan 02 2023 00:00:00 GMT+0530 (India Standard Time)"
+      max-date="Fri Jan 20 2023 00:00:00 GMT+0530 (India Standard Time)">
     </pf-date-picker>
     <p>The minimum and maximum valid dates can be passed to the date picker to restrict the range of dates that can be selected</p>
     <p>In the above given example, the minimum valid date 

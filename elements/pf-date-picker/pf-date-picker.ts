@@ -70,20 +70,20 @@ export class PfDatePicker extends LitElement {
 
   // ------------------------Input properties from parent-------------------------------//
   // -----------[***Only these properties can be used to pass data from parent***] ------------ //
-  @property({ reflect: true }) minDate: Date = new Date(1900, 0, 1); // Default minimum valid date set as 1st January 1900
-  @property({ reflect: true }) maxDate: Date = new Date(9999, 11, 31); // Default maximum valid date set as 31st December 9999
+  @property({ reflect: true, attribute: 'min-date' }) minDate: Date = new Date(1900, 0, 1); // Default minimum valid date set as 1st January 1900
+  @property({ reflect: true, attribute: 'max-date' }) maxDate: Date = new Date(9999, 11, 31); // Default maximum valid date set as 31st December 9999
 
-  @property({ reflect: true }) inputDateWithUniqueTimeStamp!: string; // Handle date value with a unique time stamp that parent sends to the component.
+  @property({ reflect: true, attribute: 'input-date' }) inputDateWithUniqueTimeStamp!: string; // Handle date value with a unique time stamp that parent sends to the component.
   // The format: inputDateWithUniqueTimeStamp =  (new Date(2024, 3, 2)).toDateString() +'#'+ (Date.now() + Math.random()) //
 
-  @property({ reflect: true }) isDisabled = false; // Handles if the date picker is disabled or not
-  @property({ reflect: true }) localizationLanguageCode!: string; // Language code for date format based on localization
-  @property({ reflect: true }) translationLanguageCode!: string; // Language code for translation of date input and month names
-  @property({ reflect: true }) dateFormatInput!: // Date format input from parent
+  @property({ reflect: true, attribute: 'disabled' }) isDisabled = false; // Handles if the date picker is disabled or not
+  @property({ reflect: true, attribute: 'localization-language-code' }) localizationLanguageCode!: string; // Language code for date format based on localization
+  @property({ reflect: true, attribute: 'translation-language-code' }) translationLanguageCode!: string; // Language code for translation of date input and month names
+  @property({ reflect: true, attribute: 'date-format-input' }) dateFormatInput!: // Date format input from parent
   'DD/MM/YYYY' | 'MM/DD/YYYY' | 'YYYY/MM/DD' | 'YYYY/DD/MM' | 'DD-MM-YYYY' | 'MM-DD-YYYY' | 'YYYY-MM-DD' |
   'YYYY-DD-MM' | 'DD.MM.YYYY' | 'MM.DD.YYYY' | 'YYYY.MM.DD' | 'YYYY.DD.MM';
 
-  @property({ reflect: true }) placeholderTextWithUniqueCode!: string; // Placeholder from parent
+  @property({ reflect: true, attribute: 'placeholder' }) placeholderTextWithUniqueCode!: string; // Placeholder from parent
   // The format: placeholderTextWithUniqueCode = 'placeholder-text' + '#' + Math.random();
 
   // ----------------------Input properties from parent ends--------------------------------- //

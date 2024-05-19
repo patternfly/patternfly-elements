@@ -1,5 +1,12 @@
 # @patternfly/elements
 
+## 3.0.1
+
+### Patch Changes
+
+- afac682: `<pf-select>`: fixed computed button label when the placeholder attribute is present
+- 6aa674a: `<pf-spinner>`: improved screen-reader accessibility
+
 ## 3.0.0
 
 ### Major Changes

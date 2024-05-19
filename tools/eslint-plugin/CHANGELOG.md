@@ -1,5 +1,11 @@
 # @patternfly/eslint-plugin-elements
 
+## 2.0.0
+
+### Major Changes
+
+- 65079fb: Provide ESLint flat config. Upgrade to ESLint 9.0 to use.
+
 ## 1.1.0
 
 ### Minor Changes

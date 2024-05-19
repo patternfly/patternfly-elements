@@ -104,6 +104,11 @@ textarea {
   font-family: inherit;
 }
 
+#input-group {
+  display: flex;
+  height: 100%;
+}
+
 #container.code textarea {
   font-family: var(--pf-global--FontFamily--monospace,
     var(--pf-global--FontFamily--redhat--monospace,
@@ -135,18 +140,18 @@ textarea {
   display: contents;
 }
 
-.container:is(.compact, .inline) #input-group {
+#container:is(.compact, .inline) #input-group {
   background-color: var(--pf-c-button--m-plain--BackgroundColor,
     var(--pf-global--BackgroundColor--200, #f0f0f0));
 }
 
-.container.compact.block {
+#container.compact.block {
   display: block;
   background-color: var(--pf-c-clipboard-copy--m-inline--BackgroundColor);
 }
 
-.container:is(.compact, .inline) #copy-button,
-.container:is(.compact, .inline) slot[name="actions"]::slotted(*) {
+#container:is(.compact, .inline) #copy-button,
+#container:is(.compact, .inline) slot[name="actions"]::slotted(*) {
   --pf-c-button--PaddingTop: var(--pf-c-clipboard-copy__actions-item--button--PaddingTop) !important;
   --pf-c-button--PaddingRight: var(--pf-c-clipboard-copy__actions-item--button--PaddingRight) !important;
   --pf-c-button--PaddingBottom: var(--pf-c-clipboard-copy__actions-item--button--PaddingBottom) !important;

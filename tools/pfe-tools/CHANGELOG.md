@@ -1,5 +1,12 @@
 # @patternfly/pfe-tools
 
+## 2.0.1
+
+### Patch Changes
+
+- d50a651: Dev Server: update icon and theme colours
+- 65079fb: Update typescript types
+
 ## 2.0.0
 
 ### Major Changes

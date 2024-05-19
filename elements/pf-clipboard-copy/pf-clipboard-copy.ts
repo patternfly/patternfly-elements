@@ -114,6 +114,7 @@ export class PfClipboardCopy extends LitElement {
           <pf-tooltip>
             <pf-button id="copy-button"
                        icon="copy"
+                       ?plain="${inline || compact}"
                        variant="${ifDefined(!(inline || compact) ? 'control' : undefined)}"
                        label="${this.hoverTip}"
                        @click="${this.copy}">

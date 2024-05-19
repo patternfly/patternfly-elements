@@ -103,7 +103,8 @@ function getRouter(options: PfeDevServerInternalConfig) {
       })
 
   // Redirect `components/jazz-hands/*-lightdom.css` to `elements/pf-jazz-hands/*-lightdom.css`
-      .get(`/${componentSubpath}/:element/:fileName-lightdom.css`, async (ctx, next) => {
+  // NOTE: don't put subresources in /demo called `*-lightdom.css` , or this will break
+      .get(`/${componentSubpath}/:element/(demo/)?:fileName-lightdom.css`, async (ctx, next) => {
         const { element, fileName } = ctx.params;
         if (!element.startsWith(tagPrefix)) {
           const prefixedElement = deslugify(element);
@@ -118,7 +119,11 @@ function getRouter(options: PfeDevServerInternalConfig) {
         const { element, splat, fileName, ext } = ctx.params;
         const prefixedElement = deslugify(element);
         if (!element.includes(tagPrefix)) {
-          ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${splat}/${fileName}.${ext}`);
+          if (splat) {
+            ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${splat}/${fileName}.${ext}`);
+          } else {
+            ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${fileName}.${ext}`);
+          }
         } else {
           return next();
         }

@@ -1,60 +1,85 @@
 import { expect } from '@playwright/test';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
+import { fileURLToPath, resolve } from 'node:url';
+import { basename } from 'node:path';
 import { renderGlobal } from '../ssr/global.js';
 
 import Koa from 'koa';
 
-import type { Page } from '@playwright/test';
+import type { Browser, Page } from '@playwright/test';
 import type { Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
 
 interface SSRDemoConfig {
-  demoURL: URL;
+  demoDir: URL;
   importSpecifiers: string[];
+  tagName: string;
+  browser: Browser;
 }
+
 
 export class SSRPage {
   private app: Koa;
   private server!: Server;
   private host!: string;
+  private page!: Page;
+  private demoPaths!: string[];
 
   constructor(
-    public tagName: string,
-    public page: Page,
     private config: SSRDemoConfig,
   ) {
     this.app = new Koa();
-  }
-
-  private async serve() {
-    const html = await readFile(this.config.demoURL, 'utf-8');
     this.app.use(async ctx => {
       ctx.type = 'text/html';
-      ctx.response.body = await renderGlobal(html, this.config.importSpecifiers);
+      const origPath = ctx.request.path.replace(/^\//, '');
+      const demoDir = config.demoDir.href;
+      const fileUrl = resolve(demoDir, origPath);
+      ctx.response.body = await renderGlobal(
+        await readFile(fileURLToPath(fileUrl), 'utf-8'),
+        this.config.importSpecifiers,
+      );
     });
-    this.server = this.app.listen(0);
+  }
+
+  private async initPage() {
+    this.page ??= await (await this.config.browser.newContext({ javaScriptEnabled: false }))
+        .newPage();
+  }
+
+  private async initServer() {
+    this.server ??= this.app.listen(0);
     while (!this.server.listening) {
       await new Promise(r => setTimeout(r));
     }
     const { address = 'localhost', port = 0 } = this.server.address() as AddressInfo;
-    this.host = `http://${address.replace('::', 'localhost')}:${port}/`;
+    this.host ??= `http://${address.replace('::', 'localhost')}:${port}/`;
+    this.demoPaths ??= (await readdir(this.config.demoDir)).map(x => new URL(x, this.host).href);
   }
 
   private async close() {
-    await new Promise((res, rej) =>
+    await new Promise<void>((res, rej) =>
       !this.server ? rej('no server') : this.server?.close(e => e ? rej(e) : res()));
   }
 
-  /** Take a snapshot and save it to disk */
-  async snapshot() {
+  async snapshots() {
     try {
-      await this.serve();
-      const path = new URL(new URL(this.config.demoURL).pathname, this.host);
-      const response = await this.page.goto(path.toString(), { waitUntil: 'load' });
-      expect(response?.status(), { message: response?.statusText() }).toEqual(200);
-      expect(await this.page.screenshot({ fullPage: true })).toMatchSnapshot(`${this.tagName}.png`);
+      await Promise.all([
+        this.initServer(),
+        this.initPage(),
+      ]);
+      for (const path of this.demoPaths) {
+        await this.snapshot(path);
+      }
     } finally {
       await this.close();
     }
+  }
+
+  /** Take a snapshot and save it to disk */
+  private async snapshot(url: string) {
+    const response = await this.page.goto(url, { waitUntil: 'load' });
+    expect(response?.status(), { message: response?.statusText() }).toEqual(200);
+    const snapshot = await this.page.screenshot({ fullPage: true });
+    expect(snapshot).toMatchSnapshot(`${this.config.tagName}-${basename(url)}.png`);
   }
 }

@@ -18,6 +18,10 @@ interface SSRDemoConfig {
 }
 
 
+/**
+ * Creates a server which server-renders each html file in the `demoDir` directory,
+ * given a list of importSpecifiers.
+ */
 export class SSRPage {
   private app: Koa;
   private server!: Server;
@@ -29,17 +33,20 @@ export class SSRPage {
     private config: SSRDemoConfig,
   ) {
     this.app = new Koa();
-    this.app.use(async ctx => {
-      ctx.type = 'text/html';
-      const origPath = ctx.request.path.replace(/^\//, '');
-      const demoDir = config.demoDir.href;
-      const fileUrl = resolve(demoDir, origPath);
-      try {
-        const content = await readFile(fileURLToPath(fileUrl), 'utf-8');
-        ctx.response.body = await renderGlobal(content, this.config.importSpecifiers);
-      } catch (e) {
-        ctx.response.status = 500;
-        ctx.response.body = (e as Error).stack;
+    this.app.use(async (ctx, next) => {
+      if (ctx.method === 'GET' && ctx.request.path.endsWith('.html')) {
+        const origPath = ctx.request.path.replace(/^\//, '');
+        const demoDir = config.demoDir.href;
+        const fileUrl = resolve(demoDir, origPath);
+        try {
+          const content = await readFile(fileURLToPath(fileUrl), 'utf-8');
+          ctx.response.body = await renderGlobal(content, this.config.importSpecifiers);
+        } catch (e) {
+          ctx.response.status = 500;
+          ctx.response.body = (e as Error).stack;
+        }
+      } else {
+        return next();
       }
     });
   }
@@ -64,6 +71,9 @@ export class SSRPage {
       !this.server ? rej('no server') : this.server?.close(e => e ? rej(e) : res()));
   }
 
+  /**
+   * Creates visual regression snapshots for each demo in the server's `demoDir`
+   */
   async snapshots() {
     try {
       await Promise.all([
@@ -78,7 +88,10 @@ export class SSRPage {
     }
   }
 
-  /** Take a snapshot and save it to disk */
+  /**
+   * Take a visual regression snapshot and save it to disk
+   * @param url url to the demo file
+   */
   private async snapshot(url: string) {
     const response = await this.page.goto(url, { waitUntil: 'load' });
     expect(response?.status(), { message: await response?.text() }).toEqual(200);

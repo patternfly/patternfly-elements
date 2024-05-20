@@ -212,11 +212,11 @@ export abstract class BaseAccordion extends LitElement {
   }
 
   #allHeaders(accordion: BaseAccordion = this): BaseAccordionHeader[] {
-    return Array.from(accordion.children).filter(BaseAccordion.isHeader);
+    return Array.from(accordion.children ?? []).filter(BaseAccordion.isHeader);
   }
 
   #allPanels(accordion: BaseAccordion = this): BaseAccordionPanel[] {
-    return Array.from(accordion.children).filter(BaseAccordion.isPanel);
+    return Array.from(accordion.children ?? []).filter(BaseAccordion.isPanel);
   }
 
   #getIndex(el: Element | null) {

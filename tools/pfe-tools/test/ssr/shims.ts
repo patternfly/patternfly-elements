@@ -1,4 +1,4 @@
-class ObserverShim {
+export class ObserverShim {
   observe() {
     void 0;
   }

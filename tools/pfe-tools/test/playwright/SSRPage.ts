@@ -34,10 +34,14 @@ export class SSRPage {
       const origPath = ctx.request.path.replace(/^\//, '');
       const demoDir = config.demoDir.href;
       const fileUrl = resolve(demoDir, origPath);
-      ctx.response.body = await renderGlobal(
-        await readFile(fileURLToPath(fileUrl), 'utf-8'),
-        this.config.importSpecifiers,
-      );
+      try {
+        const content = await readFile(fileURLToPath(fileUrl), 'utf-8');
+        ctx.response.body = await renderGlobal(content, this.config.importSpecifiers);
+      } catch (e) {
+        ctx.response.status = 500;
+        ctx.response.message = (e as Error).message;
+        ctx.response.body = (e as Error).stack;
+      }
     });
   }
 
@@ -78,7 +82,7 @@ export class SSRPage {
   /** Take a snapshot and save it to disk */
   private async snapshot(url: string) {
     const response = await this.page.goto(url, { waitUntil: 'load' });
-    expect(response?.status(), { message: response?.statusText() }).toEqual(200);
+    expect(response?.status(), { message: await response?.text() }).toEqual(200);
     const snapshot = await this.page.screenshot({ fullPage: true });
     expect(snapshot).toMatchSnapshot(`${this.config.tagName}-${basename(url)}.png`);
   }

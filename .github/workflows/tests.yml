@@ -111,7 +111,7 @@ jobs:
           npm run build
 
       - name: Run tests
-        run: npx playwright test -g ssr
+        run: npx playwright test -g ssr --update-snapshots
 
   # Validate the build to main was successful; open an issue if not
   build:

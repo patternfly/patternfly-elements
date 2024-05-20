@@ -39,7 +39,6 @@ export class SSRPage {
         ctx.response.body = await renderGlobal(content, this.config.importSpecifiers);
       } catch (e) {
         ctx.response.status = 500;
-        ctx.response.message = (e as Error).message;
         ctx.response.body = (e as Error).stack;
       }
     });

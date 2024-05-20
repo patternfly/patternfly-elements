@@ -61,7 +61,6 @@ jobs:
         id: lint
         run: npm run lint
 
-
   test:
     name: Run test suite (Web Test Runner)
     runs-on: ubuntu-latest
@@ -90,6 +89,28 @@ jobs:
         with:
           report_paths: test-results/test-results.xml
           fail_on_failure: true # fail the actions run if the tests failed
+
+  ssr:
+    name: Run SSR Tests (Playwright)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          npm ci --prefer-offline
+          npx playwright install
+
+      - name: Run tests
+        run: npx playwright test -g ssr
 
   build:
     name: Compile project

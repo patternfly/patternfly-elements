@@ -90,28 +90,6 @@ jobs:
           report_paths: test-results/test-results.xml
           fail_on_failure: true # fail the actions run if the tests failed
 
-  ssr:
-    name: Run SSR Tests (Playwright)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # Configures the node version used on GitHub-hosted runners
-      - name: Configure node version
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-          cache: npm
-
-      - name: Install dependencies
-        run: |
-          npm ci --prefer-offline
-          npx playwright install
-
-      - name: Run tests
-        run: npx playwright test -g ssr
-
   build:
     name: Compile project
     runs-on: ubuntu-latest
@@ -158,6 +136,30 @@ jobs:
       - name: Release Dry Run
         id: release-dry
         run: npm run prepublishOnly -ws --if-present
+
+  ssr:
+    name: Run SSR Tests (Playwright)
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          npm ci --prefer-offline
+          npx playwright install
+
+      - name: Run tests
+        run: npx playwright test -g ssr
 
   # Validate the build to main was successful; open an issue if not
   validate:

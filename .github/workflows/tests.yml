@@ -46,11 +46,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: npm
@@ -67,11 +67,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: npm
@@ -98,11 +98,11 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.44.0-jammy
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: npm
@@ -183,13 +183,13 @@ jobs:
       )
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
           cache: npm

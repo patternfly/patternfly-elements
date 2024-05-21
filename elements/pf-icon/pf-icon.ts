@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, isServer, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { state } from 'lit/decorators/state.js';
@@ -10,7 +10,10 @@ import style from './pf-icon.css';
 export type URLGetter = (set: string, icon: string) => URL | string;
 
 /** requestIdleCallback when available, requestAnimationFrame when not */
-const ric = window.requestIdleCallback ?? window.requestAnimationFrame;
+const ric: typeof globalThis.requestIdleCallback =
+     globalThis.requestIdleCallback
+  ?? globalThis.requestAnimationFrame
+  ?? (async (f: () => void) => Promise.resolve().then(f));
 
 /** Fired when an icon fails to load */
 class IconLoadError extends ErrorEvent {
@@ -184,11 +187,11 @@ export class PfIcon extends LitElement {
         const mod = await import(spec);
         this.content = mod.default instanceof Node ? mod.default.cloneNode(true) : mod.default;
         await this.updateComplete;
-        this.dispatchEvent(new Event('load', { bubbles: true }));
+        isServer && this.dispatchEvent(new Event('load', { bubbles: true }));
       } catch (error: unknown) {
         const event = new IconLoadError(spec, error as Error);
         this.#logger.error((error as IconLoadError).message);
-        this.dispatchEvent(event);
+        isServer && this.dispatchEvent(event);
       }
     }
   }

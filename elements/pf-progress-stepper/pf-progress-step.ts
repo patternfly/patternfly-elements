@@ -57,7 +57,7 @@ export class PfProgressStep extends LitElement {
     const icon = this.icon ?? ICONS.get(this.variant ?? 'default')?.icon;
     const set = this.iconSet ?? ICONS.get(this.variant ?? 'default')?.set;
     const { parentTagName } = (this.constructor as typeof PfProgressStep);
-    const { compact = false } = this.closest<PfProgressStepper>(parentTagName) ?? {};
+    const { compact = false } = this.closest?.<PfProgressStepper>(parentTagName) ?? {};
     return html`
       <div id="connector" class="${classMap({ compact })}">
         <slot id="icon" name="icon">
@@ -74,7 +74,6 @@ export class PfProgressStep extends LitElement {
   }
 
   updated(changed: PropertyValues<this>) {
-    super.updated?.(changed);
     if (changed.has('current')) {
       this.#internals.ariaCurrent = String(!!this.current);
     }

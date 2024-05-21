@@ -17,7 +17,6 @@ interface SSRDemoConfig {
   browser: Browser;
 }
 
-
 /**
  * Creates a server which server-renders each html file in the `demoDir` directory,
  * given a list of importSpecifiers.
@@ -52,7 +51,9 @@ export class SSRPage {
   }
 
   private async initPage() {
-    this.page ??= await (await this.config.browser.newContext({ javaScriptEnabled: false }))
+    this.page ??= await (await this.config.browser.newContext({
+      javaScriptEnabled: false,
+    }))
         .newPage();
   }
 

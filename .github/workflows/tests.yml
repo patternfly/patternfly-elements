@@ -26,6 +26,7 @@ env:
   # Bring color into the GitHub terminal
   FORCE_COLOR: true
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  PLAYWRIGHT_REPORT_DIR: test-results
 
   # https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/
   ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
@@ -93,6 +94,8 @@ jobs:
   ssr:
     name: Run SSR Tests (Playwright)
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.44.0-jammy
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -107,11 +110,52 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci --prefer-offline
-          npx playwright install
           npm run build
 
       - name: Run tests
         run: npx playwright test -g ssr --update-snapshots
+        env:
+          HOME: /root
+
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: test-report
+          path: ${{ env.PLAYWRIGHT_REPORT_DIR }}/
+          retention-days: 30
+
+  publish_report:
+    name: Publish HTML Report
+    # using always() is not ideal here, because it would also run if the workflow was cancelled
+    if: "success() || needs.ssr.result == 'failure'"
+    needs:
+      - ssr
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    env:
+      HTML_REPORT_URL_PATH: reports/${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}
+    steps:
+      - name: Download zipped HTML report
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.PLAYWRIGHT_REPORT_DIR }}
+          path: ${{ env.HTML_REPORT_URL_PATH }}
+      - name: Upload to Github Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ${{ env.PLAYWRIGHT_REPORT_DIR }}
+          target-folder: ${{ env.HTML_REPORT_URL_PATH }}
+      - name: Add comment to PR
+        if: ${{ always() && steps.format.outputs.comment }}
+        id: comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ github.event.inputs.issueNumber }}
+          header: lighthouse
+          message: |
+            **SSR Test Report**: [Run attempt ${{ github.run_attempt }} on ${{ github.ref_name }}][report]
+            [report]: https://patternfly.github.io/patternfly-elements/${{ env.HTML_REPORT_URL_PATH }}
 
   # Validate the build to main was successful; open an issue if not
   build:

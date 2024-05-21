@@ -1,4 +1,4 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, type ReporterDescription } from '@playwright/test';
 
 export default defineConfig({
   testMatch: 'elements/**/*.e2e.ts',
@@ -21,8 +21,11 @@ export default defineConfig({
     toMatchSnapshot: { threshold: 0.2 },
   },
 
-  reporter: process.env.CI ? 'github' : [['html', {
-    open: 'never',
-    outputFolder: 'test-report',
-  }]],
+  reporter: [
+    ['html', {
+      open: 'never',
+      outputFolder: 'test-report',
+    }],
+    ...[process.env.CI ? ['github'] : []] as ReporterDescription[],
+  ],
 });

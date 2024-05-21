@@ -1,5 +1,5 @@
 import type { Placement } from '@floating-ui/dom';
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import type { LitElement, ReactiveController, ReactiveControllerHost } from 'lit';
 import type { StyleInfo } from 'lit/directives/style-map.js';
 import type { OffsetOptions as Offset } from '@floating-ui/core';
 
@@ -100,7 +100,7 @@ export class FloatingDOMController implements ReactiveController {
   ) {
     host.addController(this);
     this.#options = {
-      invoker: (host instanceof HTMLElement ? () => host : () => undefined),
+      invoker: (() => host as LitElement),
       shift: true,
       ...options,
     };

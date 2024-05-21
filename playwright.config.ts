@@ -22,10 +22,13 @@ export default defineConfig({
   },
 
   reporter: [
-    ['html', {
-      open: 'never',
-      outputFolder: 'test-report',
-    }],
-    ...[process.env.CI ? ['github'] : []] as ReporterDescription[],
+    [
+      'html',
+      {
+        open: 'never',
+        outputFolder: 'test-report',
+      },
+    ],
+    process.env.CI ? ['github'] : ['dot'],
   ],
 });

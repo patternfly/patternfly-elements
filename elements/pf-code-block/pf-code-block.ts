@@ -40,11 +40,11 @@ export class PfCodeBlock extends LitElement {
   @property({ type: Boolean, reflect: true }) expanded = false;
 
   get #expandedContent(): string {
-    return this.querySelector('script[data-expand]')?.textContent ?? '';
+    return this.querySelector?.('script[data-expand]')?.textContent ?? '';
   }
 
   get #content() {
-    const script = this.querySelector<HTMLScriptElement>('script[type]');
+    const script = this.querySelector?.<HTMLScriptElement>('script[type]');
     if (script?.type !== 'text/javascript-sample'
         && !!script?.type.match(/(j(ava)?|ecma|live)script/)) {
       return '';

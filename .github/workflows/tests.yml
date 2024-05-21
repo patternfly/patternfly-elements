@@ -146,7 +146,8 @@ jobs:
           number: ${{ github.event.inputs.issueNumber }}
           header: lighthouse
           message: |
-            **SSR Test Report**: [Run attempt ${{ github.run_attempt }} on ${{ github.ref_name }}][report]
+            **SSR Test Report**: [Run attempt ${{ github.run_attempt }} on ${{ github.sha }}][report]
+
             [report]: https://patternfly.github.io/patternfly-elements/${{ env.HTML_REPORT_URL_PATH }}
 
   # Validate the build to main was successful; open an issue if not

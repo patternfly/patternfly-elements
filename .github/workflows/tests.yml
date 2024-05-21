@@ -144,11 +144,9 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.inputs.issueNumber }}
-          header: lighthouse
+          append: true
           message: |
-            **SSR Test Report**: [Run attempt ${{ github.run_attempt }} on ${{ github.sha }}][report]
-
-            [report]: https://patternfly.github.io/patternfly-elements/${{ env.HTML_REPORT_URL_PATH }}
+            **SSR Test Run for ${{ github.sha }}**: [Report](https://patternfly.github.io/patternfly-elements/${{ env.HTML_REPORT_URL_PATH }})
 
   # Validate the build to main was successful; open an issue if not
   build:

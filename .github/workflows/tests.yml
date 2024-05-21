@@ -145,6 +145,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.inputs.issueNumber }}
           append: true
+          header: "${{ github.sha }}"
+          hide: true
           hide_details: true
           message: |
             **SSR Test Run for ${{ github.sha }}**: [Report](https://patternfly.github.io/patternfly-elements/${{ env.HTML_REPORT_URL_PATH }})

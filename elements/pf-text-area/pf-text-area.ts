@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -186,6 +186,10 @@ export class PfTextArea extends LitElement {
 
   #derivedLabel = '';
 
+  get #disabled() {
+    return (!isServer && this.matches(':disabled')) || this.disabled;
+  }
+
   get #input() {
     return this.shadowRoot?.getElementById('textarea') as HTMLTextAreaElement ?? null;
   }
@@ -201,7 +205,7 @@ export class PfTextArea extends LitElement {
       <textarea id="textarea" class="${classMap(classes)}"
                 @input="${this.#onInput}"
                 @change="${this.#onInput}"
-                ?disabled="${this.matches(':disabled') || this.disabled}"
+                ?disabled="${this.#disabled}"
                 ?readonly="${this.readonly}"
                 ?required="${this.required}"
                 aria-label="${ifDefined(this.#derivedLabel)}"

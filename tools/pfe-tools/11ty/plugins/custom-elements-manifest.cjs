@@ -82,7 +82,7 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
   eleventyConfig.addTransform('reroute-special-demo-subresources', function(content) {
     if (this.inputPath.endsWith('/demos.html')) {
       const [, one, , three, four] = this.outputPath.split('/');
-      if ( one === 'components' && three === 'demo' && four !== 'index.html') {
+      if (one === 'components' && three === 'demo' && four !== 'index.html') {
         const cheerio = require('cheerio');
         const $ = cheerio.load(content);
         $('body link').each(function() {
@@ -91,7 +91,7 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
             $(this).attr('href', join('..', href));
           }
         });
-        $('body script').each(function() {
+        $('body script, body img').each(function() {
           const src = $(this).attr('src');
           if (src && !src.startsWith('http')) {
             $(this).attr('src', join('..', src));

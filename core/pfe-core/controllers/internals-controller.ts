@@ -1,4 +1,9 @@
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import {
+  isServer,
+  type ReactiveController,
+  type ReactiveControllerHost,
+  type LitElement,
+} from 'lit';
 
 function isARIAMixinProp(key: string): key is keyof ARIAMixin {
   return key === 'role' || key.startsWith('aria');
@@ -146,7 +151,11 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   /** True when the control is disabled via it's containing fieldset element */
   get formDisabled() {
-    return this.element?.matches(':disabled') || this._formDisabled;
+    if (isServer) {
+      return this._formDisabled;
+    } else {
+      return this.element?.matches(':disabled') || this._formDisabled;
+    }
   }
 
   get labels() {
@@ -166,7 +175,13 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   }
 
   private get element() {
-    return this.host instanceof HTMLElement ? this.host : this.options?.getHTMLElement?.();
+    if (isServer) {
+      // FIXME(bennyp): a little white lie, which may break
+      // when the controller is applied to non-lit frameworks.
+      return this.host as LitElement;
+    } else {
+      return this.host instanceof HTMLElement ? this.host : this.options?.getHTMLElement?.();
+    }
   }
 
   private internals!: ElementInternals;

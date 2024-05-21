@@ -1,4 +1,6 @@
-import { LitElement, nothing, html, type PropertyValues } from 'lit';
+import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
+import { LitElement, nothing, html, type PropertyValues, isServer } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -7,12 +9,13 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
+import { deprecation } from '@patternfly/pfe-core/decorators/deprecation.js';
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent, StringListConverter } from '@patternfly/pfe-core/core.js';
-import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
 import '@patternfly/elements/pf-button/pf-button.js';
+
 import styles from './pf-popover.css';
-import { deprecation } from '@patternfly/pfe-core/decorators/deprecation.js';
 
 const headingLevels = [2, 3, 4, 5, 6] as const;
 
@@ -189,7 +192,7 @@ export class PfPopover extends LitElement {
   } satisfies Record<AlertSeverity, string>) as [AlertSeverity, string][]);
 
   static {
-    document.addEventListener('click', function(event) {
+    !isServer && document.addEventListener('click', function(event) {
       for (const instance of PfPopover.instances) {
         if (!instance.noOutsideClick) {
           instance.#outsideClick(event);
@@ -330,7 +333,7 @@ export class PfPopover extends LitElement {
 
   constructor() {
     super();
-    this.addEventListener('keydown', this.#onKeydown);
+    !isServer && this.addEventListener('keydown', this.#onKeydown);
   }
 
   render() {
@@ -412,8 +415,11 @@ export class PfPopover extends LitElement {
   }
 
   #getReferenceTrigger() {
-    const root = this.getRootNode() as Document | ShadowRoot;
-    return !this.trigger ? null : root.getElementById(this.trigger);
+    if (isServer || !this.trigger) {
+      return null;
+    } else {
+      return (this.getRootNode() as Document | ShadowRoot).getElementById(this.trigger);
+    }
   }
 
   #triggerChanged() {

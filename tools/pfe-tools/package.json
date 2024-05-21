@@ -32,6 +32,7 @@
     "./11ty/plugins/table-of-contents.cjs": "./11ty/plugins/table-of-contents.cjs",
     "./11ty/plugins/todos.cjs": "./11ty/plugins/todos.cjs",
     "./react/generate-wrappers.js": "./react/generate-wrappers.js",
+    "./ssr/*": "./ssr/*",
     "./test/a11y-snapshot.js": "./test/a11y-snapshot.js",
     "./test/config.js": "./test/config.js",
     "./test/create-fixture.js": "./test/create-fixture.js",

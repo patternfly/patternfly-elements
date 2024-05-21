@@ -63,7 +63,7 @@ jobs:
         run: npm run lint
 
   test:
-    name: Run test suite (Web Test Runner)
+    name: Unit Tests (Web Test Runner)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -92,25 +92,18 @@ jobs:
           fail_on_failure: true # fail the actions run if the tests failed
 
   ssr:
-    name: Run SSR Tests (Playwright)
+    name: SSR Tests (Playwright)
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.44.0-jammy
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Configures the node version used on GitHub-hosted runners
-      - name: Configure node version
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: npm
-
-      - name: Install dependencies
-        run: |
-          npm ci --prefer-offline
-          npm run build
+      - run: npm ci --prefer-offline
+      - run: npm run build
 
       - name: Run tests
         run: npx playwright test -g ssr --update-snapshots
@@ -120,12 +113,12 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: test-report
+          name: ${{ env.PLAYWRIGHT_REPORT_DIR }}
           path: ${{ env.PLAYWRIGHT_REPORT_DIR }}/
           retention-days: 30
 
   publish_report:
-    name: Publish HTML Report
+    name: Publish Playwright Report
     # using always() is not ideal here, because it would also run if the workflow was cancelled
     if: "success() || needs.ssr.result == 'failure'"
     needs:
@@ -139,7 +132,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${{ env.PLAYWRIGHT_REPORT_DIR }}
-          path: ${{ env.HTML_REPORT_URL_PATH }}
+          path: ${{ env.PLAYWRIGHT_REPORT_DIR }}/
       - name: Upload to Github Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:

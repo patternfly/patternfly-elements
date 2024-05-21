@@ -118,11 +118,12 @@ function getRouter(options: PfeDevServerInternalConfig) {
       .get(`/${componentSubpath}/:element/demo/:splat*/:fileName.:ext`, async (ctx, next) => {
         const { element, splat, fileName, ext } = ctx.params;
         const prefixedElement = deslugify(element);
+        const demoName = ctx.request.get('Referer').match(/\/demo\/([\w-]+)\/$/)?.at(1) ?? '';
         if (!element.includes(tagPrefix)) {
           if (splat) {
-            ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${splat}/${fileName}.${ext}`);
+            ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${splat}/${fileName}.${ext}`.replace(`/${demoName}`, '/'));
           } else {
-            ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${fileName}.${ext}`);
+            ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${fileName}.${ext}`.replace(`/${demoName}`, '/'));
           }
         } else {
           return next();

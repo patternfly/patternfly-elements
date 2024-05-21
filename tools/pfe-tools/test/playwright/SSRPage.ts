@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath, resolve } from 'node:url';
 import { basename } from 'node:path';
-import { renderGlobal } from '../ssr/global.js';
+import { renderGlobal } from '@patternfly/pfe-tools/ssr/global.js';
 
 import Koa from 'koa';
 
@@ -33,16 +33,24 @@ export class SSRPage {
   ) {
     this.app = new Koa();
     this.app.use(async (ctx, next) => {
-      if (ctx.method === 'GET' && ctx.request.path.endsWith('.html')) {
+      if (ctx.method === 'GET') {
         const origPath = ctx.request.path.replace(/^\//, '');
         const demoDir = config.demoDir.href;
         const fileUrl = resolve(demoDir, origPath);
-        try {
-          const content = await readFile(fileURLToPath(fileUrl), 'utf-8');
-          ctx.response.body = await renderGlobal(content, this.config.importSpecifiers);
-        } catch (e) {
-          ctx.response.status = 500;
-          ctx.response.body = (e as Error).stack;
+        if (ctx.request.path.endsWith('.html')) {
+          try {
+            const content = await readFile(fileURLToPath(fileUrl), 'utf-8');
+            ctx.response.body = await renderGlobal(content, this.config.importSpecifiers);
+          } catch (e) {
+            ctx.response.status = 500;
+            ctx.response.body = (e as Error).stack;
+          }
+        } else {
+          try {
+            ctx.response.body = await readFile(fileURLToPath(fileUrl));
+          } catch (e) {
+            ctx.throw(500, e as Error);
+          }
         }
       } else {
         return next();
@@ -64,7 +72,9 @@ export class SSRPage {
     }
     const { address = 'localhost', port = 0 } = this.server.address() as AddressInfo;
     this.host ??= `http://${address.replace('::', 'localhost')}:${port}/`;
-    this.demoPaths ??= (await readdir(this.config.demoDir)).map(x => new URL(x, this.host).href);
+    this.demoPaths ??= (await readdir(this.config.demoDir))
+        .filter(x => x.endsWith('.html'))
+        .map(x => new URL(x, this.host).href);
   }
 
   private async close() {
@@ -95,8 +105,13 @@ export class SSRPage {
    */
   private async snapshot(url: string) {
     const response = await this.page.goto(url, { waitUntil: 'load' });
-    expect(response?.status(), { message: await response?.text() }).toEqual(200);
+    if (response?.status() === 404) {
+      throw new Error(`Not Found: ${url}`);
+    }
+    expect(response?.status(), await response?.text())
+        .toEqual(200);
     const snapshot = await this.page.screenshot({ fullPage: true });
-    expect(snapshot).toMatchSnapshot(`${this.config.tagName}-${basename(url)}.png`);
+    expect(snapshot, new URL(url).pathname)
+        .toMatchSnapshot(`${this.config.tagName}-${basename(url)}.png`);
   }
 }

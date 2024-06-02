@@ -4,17 +4,23 @@ import { bound } from '../decorators/bound.js';
 import { debounce } from '../functions/debounce.js';
 import { Logger } from './logger.js';
 
+/**
+ * @deprecated: use context, especially via `@patternfly/pfe-core/functions/context.js`;
+ */
 export interface Options<E extends ReactiveElement> {
   properties: Partial<Record<keyof E, string | string[]>>;
   prefix?: string;
 }
 
+/**
+ * @deprecated: use context, especially via `@patternfly/pfe-core/functions/context.js`;
+ */
 export class CascadeController<E extends ReactiveElement> implements ReactiveController {
   private class: typeof ReactiveElement;
 
   private logger: Logger;
 
-  static instances: WeakMap<ReactiveElement, CascadeController<ReactiveElement>> = new WeakMap();
+  static instances = new WeakMap<ReactiveElement, CascadeController<ReactiveElement>>();
 
   mo = new MutationObserver(this.parse);
 

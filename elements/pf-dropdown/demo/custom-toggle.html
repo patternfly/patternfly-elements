@@ -1,0 +1,131 @@
+<p>
+  <small>
+    <em>Note:</em> When using a custom toggle, you must slot in a <code>pf-dropdown-menu</code>.
+  </small>
+  <span id="switch-group">
+    <pf-switch id="disable-all"></pf-switch>
+    <label for="disable-all"><span data-state="on">Enable</span><span data-state="off">Disable</span> all dropdowns</label>
+  </span>
+</p>
+
+<pf-dropdown id="control">
+  <pf-button variant="control" slot="toggle">
+    Control toggle
+    <pf-icon size="md" icon="caret-down"></pf-icon>
+  </pf-button>
+  <pf-dropdown-menu slot="menu">
+    <pf-dropdown-item>item4</pf-dropdown-item>
+    <hr>
+    <pf-dropdown-group label="Group 1">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <hr>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+    </pf-dropdown-group>
+    <pf-dropdown-group label="Group 2">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+      <pf-dropdown-item disabled>disabled</pf-dropdown-item>
+    </pf-dropdown-group>
+  </pf-dropdown-menu>
+</pf-dropdown>
+
+<pf-dropdown id="primary">
+  <pf-button variant="primary" slot="toggle">Primary toggle</pf-button>
+  <pf-dropdown-menu slot="menu">
+    <pf-dropdown-item>item4</pf-dropdown-item>
+    <hr>
+    <pf-dropdown-group label="Group 1">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <hr>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+    </pf-dropdown-group>
+    <pf-dropdown-group label="Group 2">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+      <pf-dropdown-item disabled>disabled</pf-dropdown-item>
+    </pf-dropdown-group>
+  </pf-dropdown-menu>
+</pf-dropdown>
+
+<pf-dropdown id="secondary">
+  <pf-button variant="secondary" slot="toggle">Secondary toggle</pf-button>
+  <pf-dropdown-menu slot="menu">
+    <pf-dropdown-item>item4</pf-dropdown-item>
+    <hr>
+    <pf-dropdown-group label="Group 1">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <hr>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+    </pf-dropdown-group>
+    <pf-dropdown-group label="Group 2">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+      <pf-dropdown-item disabled>disabled</pf-dropdown-item>
+    </pf-dropdown-group>
+  </pf-dropdown-menu>
+</pf-dropdown>
+
+<pf-dropdown id="plain">
+  <pf-button plain slot="toggle">Plain toggle</pf-button>
+  <pf-dropdown-menu slot="menu">
+    <pf-dropdown-item>item4</pf-dropdown-item>
+    <hr>
+    <pf-dropdown-group label="Group 1">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <hr>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+    </pf-dropdown-group>
+    <pf-dropdown-group label="Group 2">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+      <pf-dropdown-item disabled>disabled</pf-dropdown-item>
+    </pf-dropdown-group>
+  </pf-dropdown-menu>
+</pf-dropdown>
+
+<pf-dropdown id="icon">
+  <pf-button plain slot="toggle" icon="ellipsis-v" label="Icon toggle"></pf-button>
+  <pf-dropdown-menu slot="menu">
+    <pf-dropdown-item>item4</pf-dropdown-item>
+    <hr>
+    <pf-dropdown-group label="Group 1">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <hr>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+    </pf-dropdown-group>
+    <pf-dropdown-group label="Group 2">
+      <pf-dropdown-item>item1</pf-dropdown-item>
+      <pf-dropdown-item>item2</pf-dropdown-item>
+      <pf-dropdown-item>item3</pf-dropdown-item>
+      <pf-dropdown-item disabled>disabled</pf-dropdown-item>
+    </pf-dropdown-group>
+  </pf-dropdown-menu>
+</pf-dropdown>
+
+<script type="module">
+  import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+  const sw = document.getElementById('disable-all')
+  sw.addEventListener('click', function() {
+    document.querySelectorAll('main pf-dropdown').forEach(x => x.disabled = sw.checked);
+  })
+</script>
+
+
+<style>
+#switch-group {
+  display: inline-flex;
+  justify-content: center;
+  vertical-align: middle;
+  gap: 8px;
+}
+</style>

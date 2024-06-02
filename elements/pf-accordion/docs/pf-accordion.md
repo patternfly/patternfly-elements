@@ -1,6 +1,7 @@
 {% renderInstallation %} {% endrenderInstallation %}
 
 {% renderOverview %}
+
 <pf-accordion>
   <pf-accordion-header>
     <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
@@ -29,10 +30,12 @@
     <a href="#">Call to action</a>
   </pf-accordion-panel>
 </pf-accordion>
+
 {% endrenderOverview %}
 
 {% band header="Usage" %}
   {% htmlexample %}
+
   <pf-accordion>
     <pf-accordion-header>
       <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
@@ -61,8 +64,8 @@
       <a href="#">Call to action</a>
     </pf-accordion-panel>
   </pf-accordion>
-  {% endhtmlexample %}
 
+  {% endhtmlexample %}
 {% endband %}
 
 {% renderSlots %}

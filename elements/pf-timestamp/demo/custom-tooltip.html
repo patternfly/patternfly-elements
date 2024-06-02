@@ -1,0 +1,25 @@
+<section>
+  <p>
+    <pf-tooltip>
+      <pf-timestamp date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)"></pf-timestamp>
+      <span slot="content">Last updated on <pf-timestamp date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)" date-format="long" time-format="short" utc></pf-timestamp></span>
+    </pf-tooltip>
+  </p>
+  <p>
+    <pf-tooltip>
+      Halloween
+      <pf-timestamp slot="content" date="Mon Oct 31 2022 00:00:00 GMT-0400 (Eastern Daylight Time)" date-format="medium"></pf-timestamp>
+    </pf-tooltip>
+  </p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-timestamp/pf-timestamp.js';
+  import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

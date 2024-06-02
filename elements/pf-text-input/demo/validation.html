@@ -13,7 +13,7 @@
   import '@patternfly/elements/pf-switch/pf-switch.js';
   import '@patternfly/elements/pf-text-input/pf-text-input.js';
   const onblur = document.getElementById('onblur');
-  const input = document.getElementById('validated');
+  const validated = document.getElementById('validated');
   const validate = document.getElementById('validate');
   onblur.addEventListener('change', function() {
     validated.validateOn = this.checked ? 'blur' : null;

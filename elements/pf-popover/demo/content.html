@@ -1,0 +1,65 @@
+<form id="basic">
+  <fieldset>
+    <legend>Content attributes</legend>
+    <pf-popover heading="Popover heading"
+                body="Popovers are triggered by click rather than hover."
+                footer="Popover footer">
+      <pf-button>Toggle popover</pf-button>
+    </pf-popover>
+  </fieldset>
+
+  <fieldset>
+    <legend>Content slots</legend>
+    <pf-popover>
+      <h4 slot="heading">Popover heading</h4>
+      <div slot="body">
+        Popovers are triggered by click rather than hover.
+      </div>
+      <span slot="footer">Popover footer</span>
+      <pf-button>Toggle popover</pf-button>
+    </pf-popover>
+  </fieldset>
+
+  <fieldset>
+    <legend>Custom Heading Level</legend>
+    <pf-popover heading="Popover heading"
+                body="Popovers are triggered by click rather than hover."
+                footer="Popover footer"
+                heading-level="3">
+      <pf-button>Toggle popover</pf-button>
+    </pf-popover>
+  </fieldset>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-popover/pf-popover.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+
+  document.addEventListener('submit', function(event) {
+    event.preventDefault();
+  });
+</script>
+
+<style>
+  form {
+    padding: 0 2rem;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 8px;
+    & h2 {
+      width: 100%;
+    }
+
+    & label {
+      display: flex;
+      flex-direction: column;
+    }
+
+    & fieldset label {
+      display: grid;
+      align-content: center;
+      display: contents;
+    }
+  }
+</style>

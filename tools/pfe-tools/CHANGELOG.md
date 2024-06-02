@@ -1,5 +1,56 @@
 # @patternfly/pfe-tools
 
+## 2.0.1
+
+### Patch Changes
+
+- d50a651: Dev Server: update icon and theme colours
+- 65079fb: Update typescript types
+
+## 2.0.0
+
+### Major Changes
+
+- de4cfa4: Remove `DocsPage` render functions
+- de4cfa4: Dev server config no longer uses `nodeResolution`. Instead you must provide configuration for the import map plugin.
+
+  ```js
+  import {
+    pfeDevServerConfig,
+    getPatternflyIconNodemodulesImports,
+  } from "@patternfly/pfe-tools/dev-server/config.js";
+
+  export default pfeDevServerConfig({
+    importMapOptions: {
+      providers: {
+        "zero-md": "nodemodules",
+        "@patternfly/icons": "nodemodules",
+        "@patternfly/elements": "nodemodules",
+        "@patternfly/pfe-tools": "nodemodules",
+        "@patternfly/pfe-core": "nodemodules",
+      },
+      inputMap: {
+        imports: {
+          ...(await getPatternflyIconNodemodulesImports(import.meta.url)),
+        },
+      },
+    },
+  });
+  ```
+
+- de4cfa4: Remove react and vue test wrapper helpers. Use React wrapper components instead.
+
+### Minor Changes
+
+- 502e931: React wrapper generator: add parameters to support different packages
+
+### Patch Changes
+
+- e6ca914: Update dependencies
+- fd1202d: `typescript/css-imports`: prevent shared css modules from being inlined to files; emit them instead.
+- 22d7536: Update typescript version
+- 50f462c: Update dependencies, including Lit version 3
+
 ## 1.5.0
 
 ### Minor Changes

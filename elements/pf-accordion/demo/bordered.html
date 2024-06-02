@@ -1,0 +1,79 @@
+<article>
+  <header>
+    <h2>Bordered</h2>
+    <pf-switch id="toggle-size" name="toggle-size"></pf-switch>
+    <label for="toggle-size" data-state="on">Size: Large</label>
+    <label for="toggle-size" data-state="off">Size: Normal</label>
+  </header>
+
+  <pf-accordion id="bordered-example" bordered>
+    <pf-accordion-header>
+      <h3>Item one</h3>
+    </pf-accordion-header>
+    <pf-accordion-panel>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua.</p>
+    </pf-accordion-panel>
+    <pf-accordion-header>
+      <h3>Item two</h3>
+    </pf-accordion-header>
+    <pf-accordion-panel>
+      <p>Vivamus et tortor sed arcu congue vehicula eget et diam. Praesent nec dictum lorem. Aliquam id diam ultrices,
+        faucibus erat id, maximus nunc.</p>
+    </pf-accordion-panel>
+    <pf-accordion-header>
+      <h3>Item three</h3>
+    </pf-accordion-header>
+    <pf-accordion-panel>
+      <p>Morbi vitae urna quis nunc convallis hendrerit. Aliquam congue orci quis ultricies tempus.</p>
+    </pf-accordion-panel>
+    <pf-accordion-header>
+      <h3>Item four</h3>
+    </pf-accordion-header>
+    <pf-accordion-panel>
+      <p>
+        Donec vel posuere orci. Phasellus quis tortor a ex hendrerit efficitur. Aliquam lacinia ligula pharetra,
+        sagittis ex ut, pellentesque diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
+        cubilia Curae;
+        Vestibulum ultricies nulla nibh. Etiam vel dui fermentum ligula ullamcorper eleifend non quis tortor. Morbi
+        tempus ornare tempus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        Mauris
+        et velit neque. Donec ultricies condimentum mauris, pellentesque imperdiet libero convallis convallis. Aliquam
+        erat volutpat. Donec rutrum semper tempus. Proin dictum imperdiet nibh, quis dapibus nulla. Integer sed
+        tincidunt
+        lectus, sit amet auctor eros.
+      </p>
+      <pf-cta><a href="#">Call To Action</a></pf-cta>
+    </pf-accordion-panel>
+    <pf-accordion-header>
+      <h3>Item five</h3>
+    </pf-accordion-header>
+    <pf-accordion-panel>
+      <p>Vivamus finibus dictum ex id ultrices. Mauris dictum neque a iaculis blandit.</p>
+    </pf-accordion-panel>
+  </pf-accordion>
+</article>
+
+<script type="module">
+  import '@patternfly/elements/pf-accordion/pf-accordion.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+  import '@patternfly/elements/pf-switch/pf-switch.js';
+
+  const bordered = document.getElementById('bordered-example');
+  const toggle = document.getElementById('toggle-size');
+
+  toggle.addEventListener('change', function() {
+    bordered.toggleAttribute('large', toggle.checked);
+  });
+</script>
+
+<style>
+article {
+  margin-inline: 4em;
+  & header {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+}
+</style>

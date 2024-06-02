@@ -1,0 +1,91 @@
+:host {
+  --pf-c-chip-group__list--MarginBottom: calc(var(--pf-global--spacer--xs, 0.25rem) * -1);
+  --pf-c-chip-group__list--MarginRight: calc(var(--pf-global--spacer--xs, 0.25rem) * -1);
+  --pf-c-chip-group--m-category--PaddingTop: var(--pf-global--spacer--xs, 0.25rem);
+  --pf-c-chip-group--m-category--PaddingRight: var(--pf-global--spacer--xs, 0.25rem);
+  --pf-c-chip-group--m-category--PaddingBottom: var(--pf-global--spacer--xs, 0.25rem);
+  --pf-c-chip-group--m-category--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
+  --pf-c-chip-group--m-category--BorderRadius: var(--pf-global--BorderRadius--sm, 3px);
+  --pf-c-chip-group--m-category--BackgroundColor: var(--pf-global--BackgroundColor--200, #f0f0f0);
+  --pf-c-chip-group__label--MarginRight: var(--pf-global--spacer--sm, 0.5rem);
+  --pf-c-chip-group__label--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  --pf-c-chip-group__label--MaxWidth: 18ch;
+  --pf-c-chip-group__close--MarginTop: calc(var(--pf-global--spacer--xs, 0.25rem) * -1);
+  --pf-c-chip-group__close--MarginBottom: calc(var(--pf-global--spacer--xs, 0.25rem) * -1);
+  --pf-c-chip-group__list-item--MarginRight: var(--pf-global--spacer--xs, 0.25rem);
+  --pf-c-chip-group__list-item--MarginBottom: var(--pf-global--spacer--xs, 0.25rem);
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+  color: var(--pf-global--Color--100, #151515);
+}
+
+[hidden],
+.empty,
+::slotted([overflow-hidden]) {
+  display: none !important;
+}
+
+#outer {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: baseline;
+  min-width: 0;
+  display: inline-flex;
+  column-gap: var(--pf-global--spacer--xs, 0.25rem);
+  align-items: center;
+  border-radius: var(--pf-global--BorderRadius--sm, 3px);
+  padding: 0 !important;
+}
+
+#outer.has-category {
+  padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem) !important;
+  background-color: var(--pf-theme--color--surface--lighter, #f0f0f0);
+}
+
+#chips {
+  margin-right: var(--pf-c-chip-group__list--MarginRight);
+  margin-bottom: var(--pf-c-chip-group__list--MarginBottom);
+  font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
+  font-size: var(--pf-global--FontSize--sm, 14px);
+  font-weight: var(--pf-global--FontWeight--normal, 400);
+  line-height: 1.6;
+}
+
+#chips ::slotted(pf-chip) {
+  display: inline-flex;
+  min-width: 0;
+  margin-right: var(--pf-c-chip-group__list-item--MarginRight);
+  margin-bottom: var(--pf-c-chip-group__list-item--MarginBottom);
+}
+
+#close-button {
+  --pf-icon--size: 16px;
+  margin: var(--pf-c-chip__c-button--MarginTop)
+    var(--pf-c-chip__c-button--MarginRight)
+    var(--pf-c-chip__c-button--MarginBottom)
+    var(--pf-c-chip__c-button--MarginLeft);
+  padding: var(--pf-c-chip__c-button--PaddingTop)
+    var(--pf-c-chip__c-button--PaddingRight)
+    var(--pf-c-chip__c-button--PaddingBottom)
+    var(--pf-c-chip__c-button--PaddingLeft);
+  inset-block-start: 0.125em;
+}
+
+svg {
+  width: var(--pf-global--FontSize--sm, 14px);
+  height: var(--pf-global--FontSize--sm, 14px);
+}
+
+.offscreen {
+  position: absolute;
+  left: -99999;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+

@@ -1,5 +1,128 @@
 # @patternfly/pfe-core
 
+## 3.0.0
+
+### Major Changes
+
+- 1d89f73: `RovingTabindexController`: deprecate the `initItems` method and add `getItems` and `getItemContainer` instead
+
+  BEFORE:
+
+  ```ts
+  #tabindex = new RovingTabindexController(this);
+  constructor() {
+    super();
+    this.#tabindex.initItems(this.#items);
+  }
+  ```
+
+  AFTER:
+
+  ```ts
+  #tabindex = new RovingTabindexController(this, {
+    getItems: () => this.#items,
+  });
+  ```
+
+- 3766961: `@cascades`: deprecated `@cascades` decorator and `CascadeController`. Use context instead.
+
+  **BEFORE**: The element in charge of the context cascades data down to
+  specifically named children.
+
+  ```ts
+  import { LitElement } from "lit";
+  import { property } from "lit/decorators/property.js";
+  import { cascades } from "@patternfly/pfe-core/decorators/cascades.js";
+
+  class MyMood extends LitElement {
+    @cascades("my-eyes", "my-mouth")
+    @property()
+    mood: "happy" | "sad" | "mad" | "glad";
+  }
+  ```
+
+  **AFTER**: children subscribe to updates from the context provider.
+
+  ```ts
+  import { LitElement } from "lit";
+  import { property } from "lit/decorators/property.js";
+  import { provide } from "@lit/context";
+  import { createContextWithRoot } from "@patternfly/pfe-core/functions/context.js";
+
+  export type Mood = "happy" | "sad" | "mad" | "glad";
+
+  export const moodContext = createContextWithRoot<Mood>(Symbol("mood"));
+
+  class MyMood extends LitElement {
+    @provide({ context: moodContext })
+    @property()
+    mood: Mood;
+  }
+  ```
+
+  ```ts
+  import { LitElement } from "lit";
+  import { property } from "lit/decorators/property.js";
+  import { consume } from "@lit/context";
+  import { moodContext, type Mood } from "./my-mood.js";
+
+  class MyEyes extends LitElement {
+    @consume({ context: moodContext, subscribe: true })
+    @state()
+    private mood: Mood;
+  }
+  ```
+
+- 0d92145: `InternalsController`: made the constructor private. Use `InternalsController.of`
+
+  BEFORE:
+
+  ```js
+  class PfJazzHands extends LitElement {
+    #internals = new InternalsController(this);
+  }
+  ```
+
+  AFTER:
+
+  ```js
+  class PfJazzHands extends LitElement {
+    #internals = InternalsController.of(this);
+  }
+  ```
+
+- de4cfa4: Remove `deprecatedCustomEvent`
+
+### Minor Changes
+
+- ac0c376: `SlotController`: Add `isEmpty` method to check if a slot is empty. If no slot name is provided it will check the default slot. (#2603)
+  `SlotController`: `hasSlotted` method now returns default slot if no slot name is provided. (#2603)
+- d4e5411: **Context**: added `createContextWithRoot`. Use this when creating contexts that
+  are shared with child elements.
+- c71bbe5: `InternalsController`: added `computedLabelText` read-only property
+- c71bbe5: `InternalsController`: reflect all methods and properties from `ElementInternals`
+- fa50164: `Logger`: loosen the type of allowed controller hosts
+- fa50164: `OverflowController`: recalculate overflow when the window size changes and when tabs are dynamically created.
+- 0d92145: `RovingTabindexController`: keyboard navigation includes first-character navigation.
+- fa50164: `TabsAriaController`: Added TabsAriaController, used to manage the accesibility tree for tabs and panels.
+
+  ```ts
+  #tabs = new TabsAriaController(this, {
+    isTab: (x: Node): x is PfTab => x instanceof PfTab,
+    isPanel: (x: Node): x is PfTabPanel => x instanceof PfTabPanel,
+  });
+  ```
+
+  Please review the [Tabs 2.4 to 3.0 migration guide](https://patternflyelements.org/migration/3.0/tabs) for more
+  information.
+
+### Patch Changes
+
+- 24d43bd: `Logger`: add `Logger.info` and `Logger.debug`
+- e62244f: `InternalsController`: added missing `ariaDescription` defined by ARIAMixin
+- 24d43bd: `SlotController`: move debug logs to `Logger.debug`
+- 50f462c: Update dependencies, including Lit version 3
+
 ## 2.4.1
 
 ### Patch Changes

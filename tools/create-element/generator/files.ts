@@ -18,7 +18,7 @@ export function processTemplate(template: string, interpolations: Record<string,
   });
 
   return partial
-    .replace(getInterpolationRegExp(), ''); // CYA
+      .replace(getInterpolationRegExp(), ''); // CYA
 }
 
 /** Check if a file exists at a given absolute path */

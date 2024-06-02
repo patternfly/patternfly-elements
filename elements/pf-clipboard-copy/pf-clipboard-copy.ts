@@ -1,12 +1,11 @@
-import { html } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { BaseClipboardCopy } from './BaseClipboardCopy.js';
-
 import styles from './pf-clipboard-copy.css';
+import formControlStyles from '../form-control.css';
 
 import '@patternfly/elements/pf-button/pf-button.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
@@ -14,51 +13,68 @@ import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
 
 const sleep = (ms?: number) => new Promise(r => setTimeout(r, ms));
 
+export class PfClipboardCopyCopiedEvent extends Event {
+  constructor(public text: string) {
+    super('copy', { bubbles: true });
+  }
+}
+
 /**
  * The **clipboard copy** component allows users to quickly and easily copy content to their clipboard.
- *
  * @slot - Place content to copy here, or use the `value` attribute
  * @slot actions - Place additional action buttons here
+ * @fires {PfClipboardCopyCopiedEvent} copy - when the text snippet is successfully copied.
  */
 @customElement('pf-clipboard-copy')
-export class PfClipboardCopy extends BaseClipboardCopy {
-  static readonly styles = [...BaseClipboardCopy.styles, styles];
+export class PfClipboardCopy extends LitElement {
+  static readonly styles = [formControlStyles, styles];
 
-  static shadowRootOptions: ShadowRootInit = { ...BaseClipboardCopy.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
-  @property({ attribute: 'click-tip' }) clickTip = 'Copied';
+  /** Tooltip message to display when clicking the copy button */
+  @property({ attribute: 'click-tip' }) clickTip = 'Successfully copied to clipboard!';
 
-  @property({ attribute: 'hover-tip' }) hoverTip = 'Copy';
+  /** Tooltip message to display when hover the copy button */
+  @property({ attribute: 'hover-tip' }) hoverTip = 'Copy to clipboard';
 
-  @property({ attribute: 'text-label' }) textAriaLabel = 'Copyable input';
+  /** Accessible label to use on the text input. */
+  @property({ attribute: 'accessible-text-label' }) accessibleTextLabel = 'Copyable input';
 
-  @property({ attribute: 'toggle-label' }) toggleAriaLabel = 'Show content';
+  /** Accessible label to use on the toggle button. */
+  @property({ attribute: 'accessible-toggle-label' }) accessibleToggleLabel = 'Show content';
 
+  /** Delay in ms before the tooltip appears. */
   @property({ type: Number, attribute: 'entry-delay' }) entryDelay = 300;
 
+  /** Delay in ms before the tooltip disappears. */
   @property({ type: Number, attribute: 'exit-delay' }) exitDelay = 1500;
 
+  /** Flag to determine if inline clipboard copy should be block styling */
   @property({ type: Boolean, reflect: true }) block = false;
 
+  /** Flag to determine if clipboard copy content includes code */
   @property({ type: Boolean, reflect: true }) code = false;
 
+  /** Flag to determine if clipboard copy is in the expanded state */
   @property({ type: Boolean, reflect: true }) expanded = false;
 
-  /**
-   * Implies not `inline`.
-   */
+  /** Implies not `inline`. */
   @property({ type: Boolean, reflect: true }) expandable = false;
 
+  /** Flag to show if the input is read only. */
   @property({ type: Boolean, reflect: true }) readonly = false;
 
-  /**
-   * Implies not expandable. Overrules `expandable`.
-   */
+  /** Implies not expandable. Overrules `expandable`. */
   @property({ type: Boolean, reflect: true }) inline = false;
 
+  /** Flag to determine if inline clipboard copy should have compact styling */
   @property({ type: Boolean, reflect: true }) compact = false;
 
-  @property() override value = '';
+  /** String to copy */
+  @property() value = '';
 
   #copied = false;
 
@@ -78,33 +94,30 @@ export class PfClipboardCopy extends BaseClipboardCopy {
   render() {
     const { expanded, expandable, inline, compact, code, block, readonly } = this;
     return html`
-      <div class="container ${classMap({ code, expanded, inline, compact, block, })}">
+      <div id="container" class="${classMap({ code, expanded, inline, compact, block })}">
         <div id="input-group">
           <div id="wrapper">
             <pf-button id="expand-button"
-                        plain
-                        variant="control"
-                        label="EXPAND"
-                        ?inert="${!expandable}"
-                        @click="${this.#onClick}">
+                       variant="control"
+                       label="EXPAND"
+                       ?inert="${!expandable}"
+                       @click="${this.#onClick}">
               <pf-icon icon="chevron-right"></pf-icon>
             </pf-button>
           </div>
           <span ?hidden="${!(inline || compact)}">${this.value}</span>
-          <input
-              ?hidden="${inline || compact}"
-              ?disabled="${expanded || readonly}"
-              .value="${this.value}"
-              @input="${this.#onChange}"
-              aria-label="${this.textAriaLabel}">
+          <input aria-label="${this.accessibleTextLabel}"
+                 ?hidden="${inline || compact}"
+                 ?disabled="${expanded || readonly}"
+                 .value="${this.value}"
+                 @input="${this.#onChange}">
           <pf-tooltip>
             <pf-button id="copy-button"
-                        plain
-                        variant="${ifDefined(!(inline || compact) ? 'control' : undefined)}"
-                        label="${this.hoverTip}"
-                        size="lg"
-                        @click="${this.copy}">
-              <pf-icon icon="copy"></pf-icon>
+                       icon="copy"
+                       ?plain="${inline || compact}"
+                       variant="${ifDefined(!(inline || compact) ? 'control' : undefined)}"
+                       label="${this.hoverTip}"
+                       @click="${this.copy}">
             </pf-button>
             <span slot="content">${this.#copied ? this.clickTip : this.hoverTip}</span>
           </pf-tooltip>
@@ -132,7 +145,7 @@ export class PfClipboardCopy extends BaseClipboardCopy {
     if (this.childNodes.length > 0) {
       this.value = this.getAttribute('value') ?? this.#dedent(Array.from(this.childNodes, child =>
         (child instanceof Element || child instanceof Text) ? (child.textContent ?? '') : '')
-        .join(''));
+          .join(''));
     }
   }
 
@@ -142,8 +155,12 @@ export class PfClipboardCopy extends BaseClipboardCopy {
     return match ? stripped.replace(new RegExp(`^${match[0]}`, 'gm'), '') : str;
   }
 
-  override async copy() {
-    await super.copy();
+  /**
+   * Copy the current value to the clipboard.
+   */
+  async copy() {
+    await navigator.clipboard.writeText(this.value);
+    this.dispatchEvent(new PfClipboardCopyCopiedEvent(this.value));
     await sleep(this.entryDelay);
     this.#copied = true;
     this.requestUpdate();

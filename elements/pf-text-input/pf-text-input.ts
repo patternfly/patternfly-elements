@@ -4,20 +4,12 @@ import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import styles from './pf-text-input.css';
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
-function getLabelText(label: HTMLElement) {
-  if (label.hidden) {
-    return '';
-  } else {
-    const ariaLabel = label.getAttribute?.('aria-label');
-    return ariaLabel ?? label.textContent;
-  }
-}
+import styles from './pf-text-input.css';
 
 /**
  * A **text input** is used to gather free-form text from a user.
- *
  * @cssprop --pf-c-form-control--Color - {@default var(--pf-global--Color--100, #151515)}
  * @cssprop --pf-c-form-control--FontSize - {@default var(--pf-global--FontSize--md, 1rem)}
  * @cssprop --pf-c-form-control--LineHeight - {@default var(--pf-global--LineHeight--md, 1.5)}
@@ -151,7 +143,10 @@ export class PfTextInput extends LitElement {
 
   static readonly formAssociated = true;
 
-  static override shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /** Trim text on left */
   @property({ type: Boolean, reflect: true, attribute: 'left-truncated' }) leftTruncated = false;
@@ -179,7 +174,18 @@ export class PfTextInput extends LitElement {
   @property({ type: Boolean, reflect: true }) plain = false;
 
   /** Type that the input accepts. */
-  @property({ reflect: true }) type?: 'text' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'search' | 'tel' | 'time' | 'url';
+  @property({ reflect: true }) type?:
+    | 'text'
+    | 'date'
+    | 'datetime-local'
+    | 'email'
+    | 'month'
+    | 'number'
+    | 'password'
+    | 'search'
+    | 'tel'
+    | 'time'
+    | 'url';
 
   /** Flag to show if the input is disabled. */
   @property({ type: Boolean, reflect: true }) disabled = false;
@@ -208,7 +214,7 @@ export class PfTextInput extends LitElement {
   /** Value of the input. */
   @property() value = '';
 
-  #internals = this.attachInternals();
+  #internals = InternalsController.of(this);
 
   #derivedLabel = '';
 
@@ -219,13 +225,7 @@ export class PfTextInput extends LitElement {
   }
 
   override willUpdate() {
-    /** A best-attempt based on observed behaviour in FireFox 115 on fedora 38 */
-    this.#derivedLabel =
-      this.accessibleLabel ||
-      this.#internals.ariaLabel ||
-      Array.from(this.#internals.labels as NodeListOf<HTMLElement>)
-        .reduce((acc, label) =>
-          `${acc}${getLabelText(label)}`, '');
+    this.#derivedLabel = this.accessibleLabel || this.#internals.computedLabelText;
   }
 
   override render() {
@@ -247,7 +247,7 @@ export class PfTextInput extends LitElement {
                backgroundImage: `url('${this.customIconUrl}')`,
                backgroundSize: this.customIconDimensions,
              }))}">
-        <span id="helper-text" ?hidden="${!this.helperText ?? valid}">${this.helperText}</span>
+        <span id="helper-text" ?hidden="${!this.helperText || valid}">${this.helperText}</span>
         <span id="error-text" ?hidden="${valid}">${this.#internals.validationMessage}</span>
     `;
   }

@@ -26,7 +26,6 @@ class IconLoadError extends ErrorEvent {
 /**
  * An **icon** component is a container that allows for icons of varying dimensions to
  * seamlessly replace each other without shifting surrounding content.
- *
  * @slot - Slotted content is used as a fallback in case the icon doesn't load
  * @fires load - Fired when an icon is loaded and rendered
  * @fires error - Fired when an icon fails to load
@@ -161,18 +160,17 @@ export class PfIcon extends LitElement {
   }
 
   render() {
-    const content = this.content ?? ''; /* eslint-disable indent */
+    const content = this.content ?? '';
     return html`
-      <div id="container" aria-hidden="true">${content
-       }<span part="fallback" ?hidden=${!!content}>
-          <slot></slot>
+      <div id="container" aria-hidden="true">${content}<span part="fallback"
+          ?hidden=${!!content}><slot></slot>
         </span>
       </div>
-    `;/* eslint-enable indent */
+    `;
   }
 
   protected async load() {
-    const { set, icon, } = this;
+    const { set, icon } = this;
     const getter = this.#class.getters.get(set) ?? this.#class.getIconUrl;
     let spec = 'UNKNOWN ICON';
     if (set && icon) {

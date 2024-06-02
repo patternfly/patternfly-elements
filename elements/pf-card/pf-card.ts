@@ -13,9 +13,7 @@ import style from './pf-card.css';
  * users to access more details. For example, in dashboards and catalog views, cards
  * function as a preview of a detailed page. Cards may also be used in data displays
  * like card views, or for positioning content on a page.
- *
  * @summary Gives a preview of information in a small layout
- *
  * @slot header
  *       When included, defines the contents of a card. Card headers can contain images as well as
  *       the title of a card and an actions menu represented by the right-aligned kebab.
@@ -28,12 +26,9 @@ import style from './pf-card.css';
  *         text and/or active content.
  * @slot footer
  *       Contains external links, actions, or static text at the bottom of a card.
- *
  * @csspart header - The container for *header* content
  * @csspart body - The container for *body* content
  * @csspart footer - The container for *footer* content
- *
- *
  * @cssproperty {<color>} --pf-c-card--BackgroundColor {@default `#ffffff`}
  * @cssproperty {<color>} --pf-c-card--BoxShadow {@default `0 0.0625rem 0.125rem 0 rgba(3, 3, 3, 0.12), 0 0 0.125rem 0 rgba(3, 3, 3, 0.06)`}
  * @cssproperty {<color>} --pf-c-card--size-compact__body--FontSize {@default `.875rem`}
@@ -71,13 +66,13 @@ export class PfCard extends LitElement {
   @property({ reflect: true }) size?: 'compact' | 'large';
 
   /**
-  * Optionally apply a border radius for the drop shadow and/or border.
-  */
+   * Optionally apply a border radius for the drop shadow and/or border.
+   */
   @property({ type: Boolean, reflect: true }) rounded = false;
 
   /**
- * Optionally allow the card to take up the full height of the parent element.
- */
+   * Optionally allow the card to take up the full height of the parent element.
+   */
   @property({ type: Boolean, reflect: true, attribute: 'full-height' }) fullHeight = false;
 
   /**

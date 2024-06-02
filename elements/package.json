@@ -33,7 +33,6 @@
     "./pf-dropdown/pf-dropdown-group.js": "./pf-dropdown/pf-dropdown-group.ts",
     "./pf-dropdown/pf-dropdown-menu.js": "./pf-dropdown/pf-dropdown-menu.ts",
     "./pf-dropdown/pf-dropdown-item.js": "./pf-dropdown/pf-dropdown-item.ts",
-    "./pf-icon/BaseIcon.js": "./pf-icon/BaseIcon.js",
     "./pf-icon/pf-icon.js": "./pf-icon/pf-icon.js",
     "./pf-jump-links/pf-jump-links-item.js": "./pf-jump-links/pf-jump-links-item.js",
     "./pf-jump-links/pf-jump-links-list.js": "./pf-jump-links/pf-jump-links-list.js",

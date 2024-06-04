@@ -10,4 +10,11 @@ export default pfeTestRunnerConfig({
   plugins: [
     a11ySnapshotPlugin(),
   ],
+  middleware: [
+    async function(ctx) {
+      if (ctx.path.match(/@patternfly\/icons\/.*\.js/)) {
+        ctx.redirect(`/node_modules/${ctx.path}`);
+      }
+    },
+  ],
 });

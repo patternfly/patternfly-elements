@@ -16,6 +16,7 @@ import api from './rh-icon-api.js';
 import atom from './rh-icon-atom.js';
 // @ts-ignore: don't want to include these
 import bike from './rh-icon-bike.js';
+import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 /* eslint-enable @typescript-eslint/ban-ts-comment */
 
 const TEST_ICONS = { aed, api, atom, bike };
@@ -129,39 +130,41 @@ describe('<pf-icon>', function() {
     }
   });
 
-  it(`should fetch an icon even when the icon set is registered after the element upgrades`, async function() {
-    element.set = 'asdfasdf';
-    element.icon = 'foo';
-    await element.updateComplete;
-    PfIcon.addIconSet('asdfasdf', () => import(`./rh-icon-${'bike'}.js`).then(m => m.default));
-    await oneEvent(element, 'load', false);
-    expect(element.shadowDom);
+  describe('when the icon has a custom set attribute', function() {
+    let element: PfIcon;
+    before(async function() {
+      element = await fixture(html`<pf-icon set="asdfasdf" icon="foo"></pf-icon>`);
+    });
+    describe('then the icon set is registered', function() {
+      beforeEach(async function() {
+        PfIcon.addIconSet('asdfasdf', () =>
+          import(`./rh-icon-${'bike'}.js`)
+              .then(m => m.default));
+        await oneEvent(element, 'load', false);
+      });
+      it(`should render the icon`, function() {
+        expectIconsEqual(element, bike);
+      });
+    });
   });
 
-  it(`should show fallbacg when given a valid icon set but invalid icon name, fallback provided`, async function() {
-    element.innerHTML = '<p>Image failed to load.</p>.';
-    element.icon = 'no-scrubs';
-    await oneEvent(element, 'error', false);
-    expect(element.shadowRoot!.querySelector('svg')).to.not.be.ok;
-    expect(element).shadowDom.to.equal(`
-      <div id="container" aria-hidden="true">
-        <span part="fallback">
-          <slot></slot>
-        </span>
-      </div>`);
-  });
-
-  it('should show fallback when given an invalid icon set, fallback provided', async function() {
-    element.innerHTML = '<p>Image failed to load.</p>.';
-    element.set = 'choopee-doopee-pie';
-    element.icon = 'bike';
-    await oneEvent(element, 'error', false);
-    expect(element.shadowRoot!.querySelector('svg')).to.not.be.ok;
-    expect(element).shadowDom.to.equal(`
-      <div id="container" aria-hidden="true">
-        <span part="fallback">
-          <slot></slot>
-        </span>
-      </div>`);
+  describe('when the icon has a fallback content', function() {
+    let element: PfIcon;
+    before(async function() {
+      element = await fixture(html`
+        <pf-icon icon="no-scrubs">
+          <p>Image failed to load.</p>.
+        </pf-icon>`);
+      await oneEvent(element, 'error', false);
+    });
+    it('should display the fallback', function() {
+      expect(element.shadowRoot!.querySelector('svg')).to.not.be.ok;
+      expect(element).shadowDom.to.equal(`
+        <div id="container" aria-hidden="true">
+          <span part="fallback">
+            <slot></slot>
+          </span>
+        </div>`);
+    });
   });
 });

@@ -41,6 +41,9 @@
         "inline": true
       },
       {
+        "transform": "@patternfly/pfe-tools/typescript/transformers/static-version.cjs"
+      },
+      {
         "name": "typescript-lit-html-plugin"
       },
       {

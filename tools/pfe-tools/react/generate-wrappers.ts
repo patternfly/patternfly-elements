@@ -22,6 +22,12 @@ function isCustomElementDeclaration(
   return !!(declaration as CEM.CustomElementDeclaration).customElement;
 }
 
+function isExported(exports: CEM.Export[] | undefined) {
+  return function(declaration: CEM.Declaration): boolean {
+    return !!exports?.some(exp => exp.kind === 'js' && exp.declaration.name === declaration.name);
+  };
+}
+
 /** Remove a prefix from a class name */
 function getDeprefixedClassName(className: string, prefix: string) {
   const [fst, ...tail] = className.replace(prefix, '');
@@ -80,10 +86,10 @@ function genJavascriptModule(module: CEM.Module, pkgName: string, data: ReactWra
   return javascript`// ${module.path}
 import { createComponent } from '@lit/react';
 import react from 'react';${data.map(x => javascript`
-import { ${x.Class} as elementClass } from '${pkgName}/${module.path}';`).join('')}${data.map(x => javascript`
+import { ${x.Class} } from '${pkgName}/${module.path}';`).join('')}${data.map(x => javascript`
 export const ${x.reactComponentName} = createComponent({
   tagName: '${x.tagName}',
-  elementClass,
+  elementClass: ${x.Class},
   react,
   events: ${x.eventsMap},
 });`).join('\n')}
@@ -106,6 +112,7 @@ function genWrapperModules(
 ) {
   const data: ReactWrapperData[] = (module.declarations ?? [])
       .filter(isCustomElementDeclaration)
+      .filter(isExported(module.exports))
       .map(getReactWrapperData(module, classPrefix, elPrefix));
   const js = genJavascriptModule(module, pkgName, data);
   const ts = genTypescriptModule(module, pkgName, data);

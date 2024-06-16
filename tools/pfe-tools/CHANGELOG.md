@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 2.0.3
+
+### Patch Changes
+
+- aca8409: **React**: ensure that only classes which are exported get wrapped
+
 ## 2.0.2
 
 ### Patch Changes

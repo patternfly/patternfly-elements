@@ -80,7 +80,7 @@ function genJavascriptModule(module: CEM.Module, pkgName: string, data: ReactWra
   return javascript`// ${module.path}
 import { createComponent } from '@lit/react';
 import react from 'react';${data.map(x => javascript`
-import { ${x.Class} as elementClass } from '${pkgName}/${module.path}';`)}${data.map(x => javascript`
+import { ${x.Class} as elementClass } from '${pkgName}/${module.path}';`).join('')}${data.map(x => javascript`
 export const ${x.reactComponentName} = createComponent({
   tagName: '${x.tagName}',
   elementClass,
@@ -93,8 +93,8 @@ export const ${x.reactComponentName} = createComponent({
 function genTypescriptModule(module: CEM.Module, pkgName: string, data: ReactWrapperData[]) {
   return typescript`// ${module.path}
 import type { ReactWebComponent } from '@lit/react';${data.map(x => typescript`
-import type { ${x.Class} } from '${pkgName}/${module.path}';`)}${data.map(x => typescript`
-export const ${x.reactComponentName}: ReactWebComponent<${x.Class}, ${x.eventsInterface}>;`)}
+import type { ${x.Class} } from '${pkgName}/${module.path}';`).join('')}${data.map(x => typescript`
+export const ${x.reactComponentName}: ReactWebComponent<${x.Class}, ${x.eventsInterface}>;`).join('\n')}
   `;
 }
 

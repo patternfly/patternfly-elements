@@ -6,15 +6,21 @@ on:
     types:
       - opened
       - edited
-      - labeled
-      - auto_merge_enabled
       - synchronize
       - reopened
-      - ready_for_review
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
 
   pull_request_review:
     types:
       - submitted
+
+permissions:
+  pull-requests: read
 
 env:
   TOKEN: "${{ secrets.GITHUB_TOKEN }}"
@@ -26,47 +32,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      # https://github.com/wagoid/commitlint-github-action/issues/560#issuecomment-1277659864
-      - run: rm tsconfig.json
-
-      - uses: wagoid/commitlint-github-action@v5
-        id: commitlint
-        continue-on-error: true
+      - uses: actions/setup-node@v4
         with:
-          configFile: .commitlintrc.cjs
+          node-version: 20
+          cache: npm
+      - run: npm ci --prefer-offline
 
-      - name: Validate conventional commit format for title
-        id: prTitle
-        if: ${{ steps.commitlint.outcome == 'failure' }}
-        uses: aslafy-z/conventional-pr-title-action@v2.4.4
-        continue-on-error: true
-        with:
-          success-state: Title follows the conventional commit format.
-          failure-state: Please update the title to use conventional commit format.
-          context-name: conventional-pr-title
-          preset: '@commitlint/config-conventional@latest'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - id: commitlint
+        uses: kevintyj/prlint@v1
 
-      - name: Format commitlint messages
-        id: format
-        if: ${{ steps.commitlint.outcome == 'failure' }}
+      - id: format
         uses: actions/github-script@v6
+        env:
+          LINT_STATUS: ${{ steps.commitlint.outputs.lint-status }}
+          LINT_DETAILS: ${{ steps.commitlint.outputs.lint-details }}
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const results = ${{ steps.commitlint.outputs.results }};
-            const titleGood = ${{ steps.prTitle.outputs.success }};
-            const { format } = await import('${{ github.workspace }}/scripts/format-commitlint-messages.js');
-            return format({ core, results, titleGood });
+          script: return `## ${process.env.LINT_STATUS}\n\n${process.env.LINT_DETAILS}`;
 
-      - name: Notify PR
-        if: ${{ steps.commitlint.outcome == 'failure' && steps.prTitle.outputs.success == 'false' }}
-        id: comment
+      - id: comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -74,10 +60,11 @@ jobs:
           message: |
             ${{ steps.format.outputs.result }}
 
-      - name: Fail Job on Error
-        if: ${{ steps.commitlint.outcome == 'failure' && steps.prTitle.outputs.success == 'false' }}
-        uses: actions/github-script@v6
+      - uses: actions/github-script@v7
+        env:
+          LINT_STATUS: ${{ steps.commitlint.outputs.lint-status }}
         with:
           script: |
-            core.setFailed("There were problems with this PR's commit messages")
+            if (process.env.LINT_STATUS.startsWith('❌'))
+              core.setFailed(process.env.LINT_STATUS)
 

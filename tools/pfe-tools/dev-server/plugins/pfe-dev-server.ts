@@ -5,7 +5,7 @@ import type { SiteOptions } from '../../config.js';
 import { pfeDevServerRouterMiddleware } from './dev-server-router.js';
 import { pfeDevServerTemplateMiddleware } from './dev-server-templates.js';
 
-export type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & {
+type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & {
   site: Required<SiteOptions>;
 };
 

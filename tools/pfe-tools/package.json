@@ -26,6 +26,7 @@
     "./dev-server/config.js": "./dev-server/config.js",
     "./dev-server/demo.js": "./dev-server/demo.js",
     "./environment.js": "./environment.js",
+    "./elements/": "./elements/",
     "./11ty/DocsPage.js": "./11ty/DocsPage.js",
     "./11ty/plugins/anchors.cjs": "./11ty/plugins/anchors.cjs",
     "./11ty/plugins/custom-elements-manifest.cjs": "./11ty/plugins/custom-elements-manifest.cjs",

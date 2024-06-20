@@ -105,7 +105,10 @@
         <li>
           <details {{ 'open' if demo.primaryElementName == primary }}>
             <summary>{{ first.title }}</summary>
-            <ul>{% for d in group %}
+            <ul>
+              <li>
+                <a href="/components/{{ primary.replace('pf-', '') }}/demo/knobs/">Knobs</a>
+              </li>{% for d in group %}
               <li>
                 <a href="{{ d.permalink | replace(demoURLPrefix, '/') }}">{{ d.title }}</a>
               </li>{% endfor %}
@@ -128,7 +131,8 @@
           <a href="{{ first.permalink | replace(demoURLPrefix, '/') }}">
             <img src="/elements/{{ primary }}/docs/screenshot.png" alt="{{ primary }}">
           </a>
-          <ul>{% for d in group %}{% if not loop.first %}
+          <ul>
+            <li><a href="/components/{{ primary.replace('pf-', '') }}/demo/knobs/">Knobs</a></li>{% for d in group %}{% if not loop.first %}
             <li>
               <a href="{{ d.permalink | replace(demoURLPrefix, '/') }}">{{ d.title }}</a>
             </li>{% endif %}{% endfor %}

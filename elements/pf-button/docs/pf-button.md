@@ -43,6 +43,7 @@ pf-button + pf-button {
     Link
   </pf-button>
   <pf-button variant="link" icon-set="patternfly" icon="arrow" icon-position="right">Link</pf-button>
+  <pf-button variant="link"><a href="#">Link</a></pf-button>
   <pf-button variant="link" inline>Inline Link</pf-button>
   <pf-button variant="link" danger>Danger Link</pf-button>
   {% endhtmlexample %}

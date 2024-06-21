@@ -1,5 +1,11 @@
 # @patternfly/elements
 
+## 3.0.2
+
+### Patch Changes
+
+- 9702278: `<pf-clipboard-copy>`: corrected size of copy button
+
 ## 3.0.1
 
 ### Patch Changes

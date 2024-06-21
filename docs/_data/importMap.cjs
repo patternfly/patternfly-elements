@@ -77,7 +77,7 @@ module.exports = async function() {
   const { Generator } = await import('@jspm/generator');
 
   const generator = new Generator({
-    defaultProvider: 'jspm.io',
+    defaultProvider: 'jsdelivr',
     env: ['production', 'browser', 'module'],
   });
 

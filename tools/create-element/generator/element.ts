@@ -29,8 +29,6 @@ const $$ = $({ stderr: 'inherit' });
 enum FileKey {
   component = 'component',
   demo = 'demo',
-  demoCss = 'demoCss',
-  demoScript = 'demoScript',
   docs = 'docs',
   readme = 'readme',
   style = 'style',
@@ -63,8 +61,6 @@ const getFilePathsRelativeToPackageDir =
   memoize((options: GenerateElementOptions): Record<FileKey, string> => ({
     component: `${options.tagName}.ts`,
     demo: `demo/${options.tagName}.html`,
-    demoCss: `demo/demo.css`,
-    demoScript: `demo/${options.tagName}.js`,
     docs: `docs/${options.tagName}.md`,
     readme: 'README.md',
     style: `${options.tagName}.${options.css === 'postcss' ? '.postcss.css' : options.css}`,

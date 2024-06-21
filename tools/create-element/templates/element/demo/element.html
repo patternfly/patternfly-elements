@@ -1,4 +1,12 @@
-<link rel="stylesheet" href="demo.css">
-<script type="module" src="<%= tagName %>.js"></script>
-
 <<%= tagName %>></<%= tagName %>>
+
+<script type="module">
+  import '<%= importSpecifier %>';
+</script>
+
+<style>
+<%= tagName %> {
+  /* insert demo styles */
+}
+</style>
+

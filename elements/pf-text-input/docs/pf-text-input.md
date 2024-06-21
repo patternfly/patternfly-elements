@@ -2,7 +2,12 @@
   <pf-text-input></pf-text-input>
 {% endrenderOverview %}
 
-{% band header="Usage" %}{% endband %}
+{% band header="Usage" %}
+  ### Basic
+  {% htmlexample %}
+  <pf-text-input type="text" placeholder="Placeholder"></pf-text-input> 
+  {% endhtmlexample %}
+{% endband %}
 
 {% renderSlots %}{% endrenderSlots %}
 

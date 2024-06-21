@@ -138,7 +138,8 @@
     "Nikki Massaro Kauffman <nmassaro@redhat.com> (https://github.com/nikkimk)",
     "Steven Spriggs <sspriggs@redhat.com",
     "castastrophe (https://github.com/castastrophe)",
-    "Wes Ruvalcaba"
+    "Wes Ruvalcaba",
+    "Ajinyka Shinde <sajinkya359@gmail.com>"
   ],
   "dependencies": {
     "@lit/context": "^1.1.0",

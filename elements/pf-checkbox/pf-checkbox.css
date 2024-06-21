@@ -1,0 +1,21 @@
+.container  {
+  /* padding: 12px 8px; */
+  margin: 48px;
+}
+
+.container .heading {
+  margin:0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color:#514646;
+}
+
+.container .pf-c-check {
+  padding-left: 16px;
+}
+
+.container .heading__controlled  {
+  margin-top: 8px;
+  margin-bottom: 0px;
+}
+

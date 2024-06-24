@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/elements",
   "license": "MIT",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -125,7 +125,8 @@
     "Nikki Massaro Kauffman <nmassaro@redhat.com> (https://github.com/nikkimk)",
     "Steven Spriggs <sspriggs@redhat.com",
     "castastrophe (https://github.com/castastrophe)",
-    "Wes Ruvalcaba"
+    "Wes Ruvalcaba",
+    "Ajinyka Shinde <sajinkya359@gmail.com>"
   ],
   "dependencies": {
     "@lit/context": "^1.1.0",

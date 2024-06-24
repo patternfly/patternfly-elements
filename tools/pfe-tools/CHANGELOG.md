@@ -1,5 +1,18 @@
 # @patternfly/pfe-tools
 
+## 2.0.3
+
+### Patch Changes
+
+- aca8409: **React**: ensure that only classes which are exported get wrapped
+
+## 2.0.2
+
+### Patch Changes
+
+- c57c5dd: Dev Server: redirect demo links to css lightdom subresources
+- 9995136: **React**: corrected syntax error in some generated modules
+
 ## 2.0.1
 
 ### Patch Changes

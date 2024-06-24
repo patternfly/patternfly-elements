@@ -5,7 +5,8 @@
 {% band header="Usage" %}
   ### Basic
   {% htmlexample %}
-  <pf-text-input type="text" placeholder="Placeholder"></pf-text-input> 
+  <label for="input-box">Input: </label>
+  <pf-text-input id="input-box" type="text" placeholder="Placeholder"></pf-text-input> 
   {% endhtmlexample %}
 {% endband %}
 

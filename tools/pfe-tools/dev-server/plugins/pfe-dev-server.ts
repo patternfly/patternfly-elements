@@ -110,6 +110,12 @@ async function renderURL(
 /** Render the demo page whenever there's a trailing slash */
 function nunjucksMiddleware(config: PfeDevServerInternalConfig) {
   const env = nunjucks.configure(join(dirname(fileURLToPath(import.meta.url)), 'templates'));
+  // eslint-disable-next-line no-console
+  env.addFilter('log', x => (console.log(x), x));
+  // TODO: regexing html is stupid
+  const MOD_STYLE_RE = /(<script type="module">.*<\/script>)|(<style>.*<\/style>)/g;
+  env.addFilter('noModulesOrStyles', x => x.replaceAll(MOD_STYLE_RE, ''));
+  env.addFilter('noElement', (x, tagName) => x.replaceAll(new RegExp(`<${tagName}>.*</${tagName}>`, 'gm'), ''));
   return async function(ctx: Context, next: Next) {
     const { method, path } = ctx;
     if (config.loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {

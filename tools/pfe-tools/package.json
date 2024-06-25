@@ -40,7 +40,8 @@
     "./test/render-to-string.js": "./test/render-to-string.js",
     "./test/stub-logger.js": "./test/stub-logger.js",
     "./test/utils.js": "./test/utils.js",
-    "./typescript/transformers/css-imports.cjs": "./typescript/transformers/css-imports.cjs"
+    "./typescript/transformers/css-imports.cjs": "./typescript/transformers/css-imports.cjs",
+    "./typescript/transformers/static-version.cjs": "./typescript/transformers/static-version.cjs"
   },
   "contributors": [
     "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",

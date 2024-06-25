@@ -1,5 +1,5 @@
 import type { PropertyValues } from 'lit';
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { styleMap } from 'lit/directives/style-map.js';
@@ -206,27 +206,29 @@ export class PfTooltip extends LitElement {
   }
 
   #updateTrigger() {
-    const oldReferenceTrigger = this.#referenceTrigger;
-    this.#referenceTrigger =
-        this.trigger instanceof HTMLElement ? this.trigger
-      : typeof this.trigger === 'string' ? this.#getReferenceTrigger()
-      : null;
-    for (const evt of EnterEvents) {
-      if (this.#referenceTrigger) {
-        this.removeEventListener(evt, this.show);
-        this.#referenceTrigger.addEventListener(evt, this.show);
-      } else {
-        oldReferenceTrigger?.removeEventListener(evt, this.show);
-        this.addEventListener(evt, this.show);
+    if (!isServer) {
+      const oldReferenceTrigger = this.#referenceTrigger;
+      this.#referenceTrigger =
+          this.trigger instanceof HTMLElement ? this.trigger
+        : typeof this.trigger === 'string' ? this.#getReferenceTrigger()
+        : null;
+      for (const evt of EnterEvents) {
+        if (this.#referenceTrigger) {
+          this.removeEventListener(evt, this.show);
+          this.#referenceTrigger.addEventListener(evt, this.show);
+        } else {
+          oldReferenceTrigger?.removeEventListener(evt, this.show);
+          this.addEventListener(evt, this.show);
+        }
       }
-    }
-    for (const evt of ExitEvents) {
-      if (this.#referenceTrigger) {
-        this.removeEventListener(evt, this.hide);
-        this.#referenceTrigger.addEventListener(evt, this.hide);
-      } else {
-        oldReferenceTrigger?.removeEventListener(evt, this.hide);
-        this.addEventListener(evt, this.hide);
+      for (const evt of ExitEvents) {
+        if (this.#referenceTrigger) {
+          this.removeEventListener(evt, this.hide);
+          this.#referenceTrigger.addEventListener(evt, this.hide);
+        } else {
+          oldReferenceTrigger?.removeEventListener(evt, this.hide);
+          this.addEventListener(evt, this.hide);
+        }
       }
     }
   }

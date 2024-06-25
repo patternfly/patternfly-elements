@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, isServer, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -66,9 +66,11 @@ export class PfBackToTop extends LitElement {
 
   #logger = new Logger(this);
 
-  get #rootNode(): Document | ShadowRoot {
-    const root = this.getRootNode();
-    if (root instanceof Document || root instanceof ShadowRoot) {
+  get #rootNode(): Document | ShadowRoot | null {
+    let root = null;
+    if (isServer) {
+      return null;
+    } else if ((root = this.getRootNode()) instanceof Document || root instanceof ShadowRoot) {
       return root;
     } else {
       return document;
@@ -157,7 +159,7 @@ export class PfBackToTop extends LitElement {
 
     this.#scrollSpy = !!this.scrollableSelector;
     if (this.#scrollSpy && this.scrollableSelector) {
-      const scrollableElement = this.#rootNode.querySelector(this.scrollableSelector);
+      const scrollableElement = this.#rootNode?.querySelector?.(this.scrollableSelector);
       if (!scrollableElement) {
         this.#logger.error(`unable to find element with selector ${this.scrollableSelector}`);
         return;

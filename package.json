@@ -24,6 +24,7 @@
     "🧪-TEST": "❓ Test packages",
     "test": "wireit",
     "test:ci": "wireit",
+    "test:ssr": "wireit",
     "test:watch": "wtr --watch",
     "e2e": "wireit",
     "e2e:update": "wireit",
@@ -31,7 +32,8 @@
     "leftover-check": "bash scripts/leftover-check.sh",
     "⚙️--UTIL": "❓ Manages the repo",
     "postinstall": "wireit",
-    "clean": "git clean -dfX -e node_modules -e .husky",
+    "clean": "git clean -dfx -e node_modules -e .husky -e .wireit",
+    "nuke": "git clean -dfx",
     "lint": "eslint",
     "patch": "patch-package",
     "husky": "husky"
@@ -88,7 +90,7 @@
       ]
     },
     "build:elements": {
-      "command": "tspc --build elements --pretty",
+      "command": "tspc --build elements/tsconfig.build.json --pretty",
       "dependencies": [
         "build:core"
       ],
@@ -255,6 +257,15 @@
       "dependencies": [
         "build:tools",
         "build:core"
+      ]
+    },
+    "test:ssr": {
+      "command": "npx playwright test -g ssr --update-snapshots",
+      "dependencies": [
+        "clean",
+        "build:tools",
+        "build:core",
+        "build:elements"
       ]
     },
     "e2e": {

@@ -1,4 +1,4 @@
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import { isServer, type ReactiveController, type ReactiveControllerHost } from 'lit';
 
 export class Logger implements ReactiveController {
   private static logDebug: boolean;
@@ -6,7 +6,7 @@ export class Logger implements ReactiveController {
   private static instances = new WeakMap<ReactiveControllerHost, Logger>();
 
   private get prefix() {
-    if (this.host instanceof HTMLElement) {
+    if (!isServer && this.host instanceof HTMLElement) {
       return `[${this.host.localName}${this.host.id ? `#${this.host.id}` : ''}]`;
     } else {
       return `[${this.host.constructor.name}]`;

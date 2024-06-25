@@ -293,12 +293,12 @@ export class PfAccordion extends LitElement {
   }
 
   #allHeaders(accordion: PfAccordion = this): PfAccordionHeader[] {
-    return Array.from(accordion.children).filter((x): x is PfAccordionHeader =>
+    return Array.from(accordion.children ?? []).filter((x): x is PfAccordionHeader =>
       x instanceof PfAccordionHeader);
   }
 
   #allPanels(accordion: PfAccordion = this): PfAccordionPanel[] {
-    return Array.from(accordion.children).filter((x): x is PfAccordionPanel =>
+    return Array.from(accordion.children ?? []).filter((x): x is PfAccordionPanel =>
       x instanceof PfAccordionPanel);
   }
 

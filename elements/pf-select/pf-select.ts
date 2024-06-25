@@ -1,6 +1,6 @@
 import type { PfChipRemoveEvent } from '@patternfly/elements/pf-chip/pf-chip.js';
 
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, isServer, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -144,12 +144,16 @@ export class PfSelect extends LitElement {
    * array of slotted options
    */
   get options(): PfOption[] {
-    const opts = Array.from(this.querySelectorAll('pf-option'));
-    const placeholder = this.shadowRoot?.getElementById('placeholder') as PfOption | null;
-    if (placeholder) {
-      return [placeholder, ...opts];
+    if (isServer) {
+      return []; // TODO: expose a DOM property to allow setting options in SSR scenarios
     } else {
-      return opts;
+      const opts = Array.from(this.querySelectorAll('pf-option'));
+      const placeholder = this.shadowRoot?.getElementById('placeholder') as PfOption | null;
+      if (placeholder) {
+        return [placeholder, ...opts];
+      } else {
+        return opts;
+      }
     }
   }
 
@@ -216,7 +220,7 @@ export class PfSelect extends LitElement {
     const { disabled, expanded, variant } = this;
     const { anchor = 'bottom', alignment = 'start', styles = {} } = this.#float;
     const { computedLabelText } = this.#internals;
-    const { height, width } = this.getBoundingClientRect() || {};
+    const { height, width } = this.getBoundingClientRect?.() || {};
     const buttonLabel = this.#buttonLabel;
     const hasBadge = this.#hasBadge;
     const selectedOptions = this.#listbox?.selectedOptions ?? [];
@@ -458,7 +462,7 @@ export class PfSelect extends LitElement {
 
   #computePlaceholderText() {
     return this.placeholder
-      || this.querySelector<HTMLSlotElement>('[slot=placeholder]')
+      || this.querySelector?.<HTMLSlotElement>('[slot=placeholder]')
           ?.assignedNodes()
           ?.reduce((acc, node) => `${acc}${node.textContent}`, '')?.trim()
       || this.#listbox?.options

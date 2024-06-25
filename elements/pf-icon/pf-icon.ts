@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, isServer, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { state } from 'lit/decorators/state.js';
@@ -13,7 +13,10 @@ export type IconResolverFunction = (set: string, icon: string) =>
   Renderable | Promise<Renderable>;
 
 /** requestIdleCallback when available, requestAnimationFrame when not */
-const ric = window.requestIdleCallback ?? window.requestAnimationFrame;
+const ric: typeof globalThis.requestIdleCallback =
+     globalThis.requestIdleCallback
+  ?? globalThis.requestAnimationFrame
+  ?? (async (f: () => void) => Promise.resolve().then(f));
 
 /** Fired when an icon fails to load */
 export class IconResolveError extends ErrorEvent {
@@ -212,9 +215,8 @@ export class PfIcon extends LitElement {
         this.content = await resolver(set, icon);
         this.#contentChanged();
       } catch (error: unknown) {
-        const event = new IconResolveError(set, icon, error as Error);
         this.#logger.error((error as IconResolveError).message);
-        this.dispatchEvent(event);
+        this.dispatchEvent(new IconResolveError(set, icon, error as Error));
       }
     }
   }

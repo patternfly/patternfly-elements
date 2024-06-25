@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -220,6 +220,10 @@ export class PfTextInput extends LitElement {
 
   #touched = false;
 
+  get #disabled() {
+    return (!isServer && this.matches(':disabled')) || this.disabled;
+  }
+
   get #input() {
     return this.shadowRoot?.getElementById('input') as HTMLInputElement ?? null;
   }
@@ -238,7 +242,7 @@ export class PfTextInput extends LitElement {
              @input="${this.#onInput}"
              @keydown="${this.#onKeydown}"
              @blur="${this.#onBlur}"
-             ?disabled="${this.matches(':disabled') || this.disabled}"
+             ?disabled="${this.#disabled}"
              ?readonly="${this.readonly}"
              ?required="${this.required}"
              aria-label="${this.#derivedLabel}"

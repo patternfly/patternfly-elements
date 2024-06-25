@@ -104,11 +104,11 @@ function getRouter(options: PfeDevServerInternalConfig) {
 
   // Redirect `components/jazz-hands/*-lightdom.css` to `elements/pf-jazz-hands/*-lightdom.css`
   // NOTE: don't put subresources in /demo called `*-lightdom.css` , or this will break
-      .get(`/${componentSubpath}/:element/(demo/)?:fileName-lightdom.css`, async (ctx, next) => {
+      .get(`/${componentSubpath}/:element/(demo/)?:fileName.css`, async (ctx, next) => {
         const { element, fileName } = ctx.params;
-        if (!element.startsWith(tagPrefix)) {
+        if (!element.startsWith(tagPrefix) && fileName.includes('lightdom')) {
           const prefixedElement = deslugify(element);
-          ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}-lightdom.css`);
+          ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.css`);
         } else {
           return next();
         }

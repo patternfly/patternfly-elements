@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="demo.css">
-
 <div class="outer-container padded" id="top">
   <h2>Always visible</h2>
   <a href="#focusable-element-top" id="top">Focusable element (top)</a>
@@ -10,3 +8,21 @@
 <script type="module">
   import '@patternfly/elements/pf-back-to-top/pf-back-to-top.js';
 </script>
+
+<style>
+  :root {
+    --_scroll-distance: 400px;
+  }
+
+  main {
+    scroll-behavior: smooth;
+  }
+
+  .outer-container {
+    height: calc(100vh - var(--pf-demo-header-height) + var(--_scroll-distance));
+  }
+
+  .padded {
+    padding: var(--pf-global--spacer--md, 1rem);
+  }
+</style>

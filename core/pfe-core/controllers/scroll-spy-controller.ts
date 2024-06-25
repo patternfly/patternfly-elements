@@ -44,7 +44,7 @@ export class ScrollSpyController implements ReactiveController {
   #rootMargin?: string;
   #threshold: number | number[];
 
-  #rootNode: Node;
+  #getRootNode: () => Node;
   #getHash: (el: Element) => string | null;
 
   get #linkChildren(): Element[] {
@@ -92,7 +92,7 @@ export class ScrollSpyController implements ReactiveController {
     this.#rootMargin = options.rootMargin;
     this.#activeAttribute = options.activeAttribute ?? 'active';
     this.#threshold = options.threshold ?? 0.85;
-    this.#rootNode = options.rootNode ?? host.getRootNode();
+    this.#getRootNode = () => options.rootNode ?? host.getRootNode();
     this.#getHash = options?.getHash ?? ((el: Element) => el.getAttribute('href'));
   }
 
@@ -101,7 +101,7 @@ export class ScrollSpyController implements ReactiveController {
   }
 
   #initIo() {
-    const rootNode = this.#rootNode;
+    const rootNode = this.#getRootNode();
     if (rootNode instanceof Document || rootNode instanceof ShadowRoot) {
       const { rootMargin, threshold, root } = this;
       this.#io = new IntersectionObserver(r => this.#onIo(r), { root, rootMargin, threshold });

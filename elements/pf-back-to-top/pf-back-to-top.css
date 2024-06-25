@@ -29,6 +29,16 @@ a {
   gap: var(--pf-c-button__icon--m-end--MarginLeft, var(--pf-global--spacer--xs, 0.25rem));
 }
 
+a:hover {
+  --pf-c-button--m-primary--Color: var(--pf-c-button--m-primary--hover--Color, var(--pf-global--Color--light-100, #fff));
+  --pf-c-button--m-primary--BackgroundColor: var(--pf-c-button--m-primary--hover--BackgroundColor, var(--pf-global--primary-color--200, #004080));
+}
+
+a:focus {
+  --pf-c-button--m-primary--Color: var(--pf-c-button--m-primary--hover--Color, var(--pf-global--Color--light-100,#fff));
+  --pf-c-button--m-primary--BackgroundColor: var(--pf-c-button--m-primary--hover--BackgroundColor, var(--pf-global--primary-color--200, #004080));
+}
+
 [part="trigger"][hidden] {
   display: none;
 }

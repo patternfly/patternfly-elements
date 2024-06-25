@@ -133,11 +133,11 @@ function getRouter(options: PfeDevServerInternalConfig) {
 
   // Redirect `components/jazz-hands/*-lightdom.css` to `elements/pf-jazz-hands/*-lightdom.css`
   // NOTE: don't put subresources in /demo called `*-lightdom.css` , or this will break
-      .get(`/${componentSubpath}/:element/(demo/)?:fileName-lightdom.css`, async (ctx, next) => {
+      .get(`/${componentSubpath}/:element/(demo/)?:fileName.css`, async (ctx, next) => {
         const { element, fileName } = ctx.params;
-        if (!element.startsWith(tagPrefix)) {
+        if (!element.startsWith(tagPrefix) && fileName.includes('lightdom')) {
           const prefixedElement = deslugify(element);
-          ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}-lightdom.css`);
+          ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.css`);
         } else {
           return next();
         }
@@ -147,11 +147,12 @@ function getRouter(options: PfeDevServerInternalConfig) {
       .get(`/${componentSubpath}/:element/demo/:splat*/:fileName.:ext`, async (ctx, next) => {
         const { element, splat, fileName, ext } = ctx.params;
         const prefixedElement = deslugify(element);
+        const demoName = ctx.request.get('Referer').match(/\/demo\/([\w-]+)\/$/)?.at(1) ?? '';
         if (!element.includes(tagPrefix)) {
           if (splat) {
-            ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${splat}/${fileName}.${ext}`);
+            ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${splat}/${fileName}.${ext}`.replace(`/${demoName}`, '/'));
           } else {
-            ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${fileName}.${ext}`);
+            ctx.redirect(`/${elementsDir}/${prefixedElement}/demo/${fileName}.${ext}`.replace(`/${demoName}`, '/'));
           }
         } else {
           return next();

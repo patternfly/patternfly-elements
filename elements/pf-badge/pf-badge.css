@@ -1,4 +1,8 @@
 :host {
+  position: relative;
+  white-space: nowrap;
+  text-align: center;
+  display: inline-block;
   border-radius: var(--pf-c-badge--BorderRadius,
     var(--pf-global--BorderRadius--lg, 180em));
   min-width: var(--pf-c-badge--MinWidth,

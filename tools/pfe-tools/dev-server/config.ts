@@ -154,6 +154,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
           'element-internals-polyfill': 'nodemodules',
           'lit-html': 'nodemodules',
           'lit': 'nodemodules',
+          'zero-md': 'nodemodules',
           '@lit/reactive-element': 'nodemodules',
           '@lit/context': 'nodemodules',
           ...config.importMapOptions?.providers,

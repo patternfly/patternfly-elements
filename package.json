@@ -95,8 +95,7 @@
         "build:core"
       ],
       "files": [
-        "elements/*/*.ts",
-        "!elements/*/*.d.ts",
+        "elements/*/*(!.d).ts",
         "elements/*/*.css",
         "elements/tsconfig.json",
         "tsconfig.settings.json"
@@ -193,13 +192,22 @@
       "command": "web-dev-server --open --watch",
       "service": true,
       "dependencies": [
+        "build:tools",
         "build:elements",
         "analyze"
       ]
     },
     "watch:core": {
       "service": true,
-      "command": "tspc --build --watch ./core/pfe-core --pretty"
+      "command": "tspc --build --watch ./core/pfe-core --pretty",
+      "files": [
+        "core/**/*.ts",
+        "!core/**/*.d.ts",
+        "core/tsconfig.json"
+      ],
+      "output": [
+        "*.tsbuildinfo"
+      ]
     },
     "watch:analyze": {
       "service": true,

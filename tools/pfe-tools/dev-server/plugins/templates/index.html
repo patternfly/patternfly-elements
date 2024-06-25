@@ -122,7 +122,30 @@
     </nav>
   </aside>
   <main>{% if templateContent %}
-    <div data-demo="{{ demo.tagName }}">{{ templateContent | safe }}</div>{% else %}
+    <div data-demo="{{ demo.tagName }}">
+      {#- if it's the primary demo -#}
+      {%- if demo.permalink.endsWith(demo.slug + '/demo/') -%}
+        <script type="module">
+          import '@patternfly/pfe-tools/elements/pft-element-knobs.ts';
+          // TODO: discriminate
+          import '@patternfly/elements/pf-select/pf-select.js';
+          import '@patternfly/elements/pf-switch/pf-switch.js';
+          import '@patternfly/elements/pf-text-input/pf-text-input.js';
+          import '@patternfly/elements/pf-text-area/pf-text-area.js';
+        </script>
+        <pft-element-knobs tag="{{ demo.tagName }}">
+          <template>
+            {{- templateContent | noModulesOrStyles | safe -}}
+          </template>
+            {{- templateContent | noElement(demo.tagName) | safe -}}
+          <script type="application/json" data-package="{{ manifest.packageJson.name }}">
+            {{ manifest.manifest | dump(2) | safe }}
+          </script>
+        </pft-element-knobs>
+      {%- else -%}
+      {{- templateContent | safe -}}
+      {%- endif -%}
+    </div>{% else %}
     <section id="components">
         {% for primary, group in groupeddemos %}
         {% set first = group['0'] %}

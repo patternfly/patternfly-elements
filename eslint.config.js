@@ -39,7 +39,7 @@ export default tseslint.config(
     plugins: { '@patternfly/elements': pfePlugin },
     rules: {
       '@patternfly/elements/no-missing-package-exports': [States.ERROR, {
-        matches: ['elements/*/pf-*.js', 'elements/*/Base*.js'],
+        matches: ['elements/*/pf-*.js'],
       }],
     },
   },

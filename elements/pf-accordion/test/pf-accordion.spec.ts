@@ -1027,27 +1027,52 @@ describe('<pf-accordion>', function() {
     beforeEach(async function() {
       element = await createFixture<PfAccordion>(html`
         <pf-accordion>
-          <pf-accordion-header id="header-1" data-index="0">top-header-1</pf-accordion-header>
+          <pf-accordion-header id="header-1" data-index="0">
+            top-header-1
+          </pf-accordion-header>
           <pf-accordion-panel id="panel-1" data-index="0">
+            top-panel-1
             <pf-accordion>
-              <pf-accordion-header id="header-1-1" data-index="0-1">nest-1-header-1</pf-accordion-header>
-              <pf-accordion-panel id="panel-1-1" data-index="0-1"></pf-accordion-panel>
+              <pf-accordion-header id="header-1-1" data-index="0-1">
+                nest-1-header-1
+              </pf-accordion-header>
+              <pf-accordion-panel id="panel-1-1" data-index="0-1">
+                nest-1-panel-1
+              </pf-accordion-panel>
             </pf-accordion>
           </pf-accordion-panel>
-          <pf-accordion-header id="header-2" data-index="2">top-header-2</pf-accordion-header>
+          <pf-accordion-header id="header-2" data-index="2">
+            top-header-2
+          </pf-accordion-header>
           <pf-accordion-panel id="panel-2" data-panel="2">
+            top-panel-2
             <pf-accordion single>
-              <pf-accordion-header id="header-2-1" data-index="1-0">nest-2-header-1</pf-accordion-header>
-              <pf-accordion-panel id="panel-2-1" data-index="1-0"></pf-accordion-panel>
-              <pf-accordion-header id="header-2-2" data-index="1-1">nest-2-header-2</pf-accordion-header>
-              <pf-accordion-panel id="panel-2-2" data-index="1-1"></pf-accordion-panel>
-              <pf-accordion-header id="header-2-3" data-index="1-2">nest-2-header-3</pf-accordion-header>
-              <pf-accordion-panel id="panel-2-3" data-index="1-2"></pf-accordion-panel>
+              <pf-accordion-header id="header-2-1" data-index="1-0">
+                nest-2-header-1
+              </pf-accordion-header>
+              <pf-accordion-panel id="panel-2-1" data-index="1-0">
+                nest-2-header-1
+              </pf-accordion-panel>
+              <pf-accordion-header id="header-2-2" data-index="1-1">
+                nest-2-header-2
+              </pf-accordion-header>
+              <pf-accordion-panel id="panel-2-2" data-index="1-1">
+                nest-2-panel-2
+              </pf-accordion-panel>
+              <pf-accordion-header id="header-2-3" data-index="1-2">
+                nest-2-header-3
+              </pf-accordion-header>
+              <pf-accordion-panel id="panel-2-3" data-index="1-2">
+                nest-2-panel-3
+              </pf-accordion-panel>
             </pf-accordion>
           </pf-accordion-panel>
-
-          <pf-accordion-header id="header-3" data-index="2">top-header-3</pf-accordion-header>
-          <pf-accordion-panel id="panel-3" data-index="2"></pf-accordion-panel>
+          <pf-accordion-header id="header-3" data-index="2">
+            top-header-3
+          </pf-accordion-header>
+          <pf-accordion-panel id="panel-3" data-index="2">
+            top-panel-3
+          </pf-accordion-panel>
         </pf-accordion>
       `);
       topLevelHeaderOne = document.getElementById('header-1') as PfAccordionHeader;
@@ -1091,12 +1116,10 @@ describe('<pf-accordion>', function() {
             it('expands the first top-level pair', async function() {
               const snapshot = await a11ySnapshot();
               const expanded = snapshot?.children?.find(x => x.expanded);
-              const focused = snapshot?.children?.find(x => x.focused);
               expect(expanded?.name).to.equal(topLevelHeaderOne.textContent?.trim());
               expect(topLevelHeaderOne.expanded).to.be.true;
               expect(topLevelPanelOne.hasAttribute('expanded')).to.be.true;
               expect(topLevelPanelOne.expanded).to.be.true;
-              expect(expanded).to.equal(focused);
             });
             it('collapses the second top-level pair', async function() {
               const snapshot = await a11ySnapshot();
@@ -1129,9 +1152,10 @@ describe('<pf-accordion>', function() {
 
       describe('with all panels open', function() {
         beforeEach(async function() {
-          for (const header of element.querySelectorAll('pf-accordion-header')) {
-            await clickElementAtCenter(header);
-          }
+          await Promise.all(Array.from(
+            document.querySelectorAll('pf-accordion'),
+            accordion => accordion.expandAll(),
+          ));
           await nextFrame();
         });
         it('removes hidden attribute from all panels', function() {

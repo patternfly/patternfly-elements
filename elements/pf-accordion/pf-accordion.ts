@@ -195,17 +195,14 @@ export class PfAccordion extends LitElement {
   }
 
   async firstUpdated() {
-    let index: number | null = null;
-    if (this.single) {
-      const allHeaders = [...this.querySelectorAll('pf-accordion-header')];
-      const lastExpanded = allHeaders.filter(x => x.hasAttribute('expanded')).pop();
-      if (lastExpanded) {
-        index = allHeaders.indexOf(lastExpanded);
-      }
+    let lastExpandedIndex: number;
+    const { headers, single } = this;
+    const lastExpanded = headers.filter(x => x.hasAttribute('expanded')).pop();
+    if (lastExpanded) {
+      lastExpandedIndex = headers.indexOf(lastExpanded);
     }
-    const { headers } = this;
     headers.forEach((header, index) => {
-      if (header.expanded) {
+      if (header.expanded && (!single || index === lastExpandedIndex)) {
         this.#expandHeader(header, index);
         const panel = this.#panelForHeader(header);
         if (panel) {
@@ -213,12 +210,6 @@ export class PfAccordion extends LitElement {
         }
       }
     });
-    if (index !== null) {
-      this.headers.forEach((_, i) => {
-        this.headers.at(i)?.toggleAttribute('expanded', i === index);
-        this.panels.at(i)?.toggleAttribute('expanded', i === index);
-      });
-    }
   }
 
   protected override async getUpdateComplete(): Promise<boolean> {

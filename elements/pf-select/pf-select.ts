@@ -310,7 +310,7 @@ export class PfSelect extends LitElement {
       this.#expandedChanged();
     }
     if (changed.has('value')) {
-      this.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+      this.dispatchEvent(new PfSelectChangeEvent());
     }
     // whether select has removable chips for selected items
     // NOTE: revisit this in v5
@@ -386,7 +386,6 @@ export class PfSelect extends LitElement {
         .filter(x => !!x)
         .map(x => x!.value)
         .join();
-    this.dispatchEvent(new PfSelectChangeEvent());
     switch (this.variant) {
       case 'single':
         this.hide();
@@ -408,8 +407,7 @@ export class PfSelect extends LitElement {
       case 'checkbox':
         if (this.expanded) {
           const root = this.getRootNode();
-          if (root instanceof ShadowRoot
-              || root instanceof Document
+          if ((root instanceof ShadowRoot || root instanceof Document)
               && !this.options.includes(event.relatedTarget as PfOption)
           ) {
             this.hide();

@@ -60,11 +60,11 @@ Icons are JavaScript module which export a [lit renderable][renderable],
 typically an inline SVG element [template literal][template-literals] tagged
 with the Lit [`svg`][svg-tag] template tag. To register a new icon set, call
 the static `addIconSet` method with the set name and a getter function. The
-getter function takes the icon set and icon name and returns a URL object or a 
-string that points to the icon's JavaScript module.
+getter function takes the icon set and icon name and returns a promise containing
+the icon node, or any other [renderable][renderable] value.
 
 ```ts
-type getter = (set: string, icon: string) => URL | string
+type IconResolveFunction = (set: string, icon: string) => Promise<Node> | Node;
 ```
 
 ```javascript
@@ -74,7 +74,8 @@ import { PfIcon } from '@patternfly/pf-icon';
 // const PfIcon = await customElements.whenDefined('pf-icon');
 
 PfIcon.addIconSet('local', (set, icon) =>
-  new URL(`/assets/icons/${set}-${icon}.js`));
+  import(`/assets/icons/${set}-${icon}.js`))
+    .then(mod => mod.default);
 ```
 
 ### Updating an Existing Icon Set
@@ -89,7 +90,8 @@ PfIcon.addIconSet('patternfly', (set, icon) => {
     // add your custom icons
     case 'my-custom-icon':
     case 'other-custom-icon':
-      return new URL(`/icons/patternfly-custom/${icon}.js`, window.location.href);
+      return import(`/icon-overrides/patternfly-custom/${icon}.js`)
+        .then(mod => mod.default);
     // fall back to built-in icons
     default:
       return PfIcon.getIconUrl(set, icon);
@@ -107,14 +109,9 @@ like to override the default icon sets across the entire page, you can use
 ```js
 import { PfIcon } from '@patternfly/pf-icon';
 
-PfIcon.getIconUrl = (set, icon) =>
-  new URL(`/icons/js/${set}/${icon}.js`, 'https://static.redhat.com');
-```
-
-To change the default set name, you can also override `PfIcon.defaultIconSet`
-
-```js
-PfIcon.defaultIconSet = 'patternfly';
+PfIcon.resolve = (set, icon) =>
+  import(`/icons/${set}-${icon}.js`))
+    .then(mod => mod.default);
 ```
 
 Now when `<pf-icon>` is loaded from the [RedHat DX 

@@ -15,8 +15,9 @@
       ```
       ```js
       import { PfIcon } from '@patternfly/elements/pf-icon/pf-icon.js';
-      PfIcon.addIconSet('rh', (set, icon) =>
-        new URL(`./icons/${set}/${icon}.js`, import.meta.url));
+      PfIcon.addIconSet('rh', async (set, icon) =>
+        import(`./icons/${set}/${icon}.js`)
+          .then(mod => mod.default));
       ```
     </script>
   </zero-md>
@@ -25,8 +26,9 @@
 <script type="module">
   import 'zero-md';
   import { PfIcon } from '@patternfly/elements/pf-icon/pf-icon.js';
-  PfIcon.addIconSet('rh', (set, icon) =>
-    new URL(`../icons/${set}/${icon}.js`, import.meta.url));
+    PfIcon.addIconSet('rh', async (set, icon) =>
+      import(`../icons/${set}/${icon}.js`)
+        .then(mod => mod.default));
 </script>
 
 <style>

@@ -7,7 +7,10 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import style from './pf-icon.css';
 
-export type URLGetter = (set: string, icon: string) => URL | string;
+type Renderable = unknown;
+
+export type IconResolverFunction = (set: string, icon: string) =>
+  Renderable | Promise<Renderable>;
 
 /** requestIdleCallback when available, requestAnimationFrame when not */
 const ric: typeof globalThis.requestIdleCallback =
@@ -16,13 +19,14 @@ const ric: typeof globalThis.requestIdleCallback =
   ?? (async (f: () => void) => Promise.resolve().then(f));
 
 /** Fired when an icon fails to load */
-class IconLoadError extends ErrorEvent {
+export class IconResolveError extends ErrorEvent {
   constructor(
-    pathname: string,
+    set: string,
+    icon: string,
     /** The original error when importing the icon module */
     public originalError: Error
   ) {
-    super('error', { message: `Could not load icon at ${pathname}` });
+    super('error', { message: `Could not load icon "${icon}" from set "${set}".` });
   }
 }
 
@@ -39,53 +43,6 @@ class IconLoadError extends ErrorEvent {
 export class PfIcon extends LitElement {
   public static readonly styles = [style];
 
-  public static defaultIconSet = 'fas';
-
-  /**
-   * Register a new icon set
-   * @param setName - The name of the icon set
-   * @param getter - A function that returns the URL of an icon
-   * @example returning a URL object
-   *          ```js
-   *          PfIcon.addIconSet('rh', (set, icon) =>
-   *            new URL(`./icons/${set}/${icon}.js`, import.meta.url));
-   *          ```
-   * @example returning a string
-   *          ```js
-   *          PfIcon.addIconSet('rh', (set, icon) =>
-   *            `/assets/icons/${set}/${icon}.js`);
-   *          ```
-   */
-  public static addIconSet(setName: string, getter: URLGetter) {
-    if (typeof getter !== 'function') {
-      Logger.warn(`[${this.name}.addIconSet(setName, getter)]: getter must be a function`);
-    } else {
-      this.getters.set(setName, getter);
-      for (const instance of this.instances) {
-        instance.load();
-      }
-    }
-  }
-
-  /**
-   * Gets the URL of an icon. Override this to customize how icon URLs are resolved.
-   * @param set - The name of the icon set
-   * @param icon - The name of the icon
-   * @returns The URL of the icon
-   * @example returning a URL object
-   *          ```js
-   *          PfIcon.getIconUrl = (set, icon) =>
-   *            new URL(`./icons/${set}/${icon}.js`, import.meta.url);
-   *          ```
-   * @example returning a string
-   *          ```js
-   *          PfIcon.getIconUrl = (set, icon) =>
-   *            `/assets/icons/${set}/${icon}.js`;
-   *          ```
-   */
-  public static getIconUrl: URLGetter = (set: string, icon: string) =>
-    new URL(`./icons/${set}/${icon}.js`, import.meta.url);
-
   private static onIntersect: IntersectionObserverCallback = records =>
     records.forEach(({ isIntersecting, target }) => {
       const icon = target as PfIcon;
@@ -97,14 +54,90 @@ export class PfIcon extends LitElement {
       });
     });
 
+  private static defaultResolve: IconResolverFunction = (set: string, icon: string): Renderable =>
+    import(`@patternfly/icons/${set}/${icon}.js`)
+        .then(mod => mod.default.cloneNode(true));
+
   private static io = new IntersectionObserver(PfIcon.onIntersect);
 
-  private static getters = new Map<string, URLGetter>();
+  private static resolvers = new Map<string, IconResolverFunction>();
 
   private static instances = new Set<PfIcon>();
 
+  /**
+   * Register a new icon set
+   * @param setName - The name of the icon set
+   * @param resolver - A function that returns the URL of an icon
+   * @example returning a URL object
+   *          ```js
+   *          PfIcon.addIconSet('rh', (set, icon) =>
+   *            new URL(`./icons/${set}/${icon}.js`, import.meta.url));
+   *          ```
+   * @example returning a string
+   *          ```js
+   *          PfIcon.addIconSet('rh', (set, icon) =>
+   *            `/assets/icons/${set}/${icon}.js`);
+   *          ```
+   */
+  public static addIconSet(setName: string, resolver: IconResolverFunction) {
+    if (typeof setName !== 'string') {
+      Logger.warn(`[${this.name}]: the first argument to addIconSet must be a string.`);
+    } else if (typeof resolver !== 'function') {
+      Logger.warn(`[${this.name}]: the second argument to addIconSet must be a function.`);
+    } else {
+      this.resolvers.set(setName, resolver);
+      for (const instance of this.instances) {
+        instance.#load();
+      }
+    }
+  }
+
+  /** Removes all added icon sets and resets resolve function */
+  public static reset() {
+    this.resolvers.clear();
+    this.resolve = this.defaultResolve;
+  }
+
+  /**
+   * Gets a renderable icon. Override this to customize how icons are resolved.
+   * @param set - The name of the icon set
+   * @param icon - The name of the icon
+   * @returns The icon content, a node or anything else which lit-html can render
+   * @example resolving an icon node from an icon module
+   *          ```js
+   *          PfIcon.resolve = (set, icon) =>
+   *            import(`/assets/icons/${set}/${icon}.js`)
+   *              .then(mod => mod.default.cloneNode(true));
+   *          ```
+   * @example resolving a named export from an icon collection module
+   *          ```js
+   *          PfIcon.resolve = (set, icon) =>
+   *            import(`/assets/icons.js`)
+   *              .then(module => module[icon]?.cloneNode(true));
+   *          ```
+   * @example resolving a new node from an svg file
+   *          ```js
+   *          const iconCacne = new Map();
+   *          function getCachedIconOrNewNode(set, icon, svg) {
+   *            const key = `${set}_${icon}`;
+   *            if (!iconCache.has(key)) {
+   *              const template = document.createElement('template');
+   *                    template.innerHTML = svg;
+   *              iconCache.set(key, template);
+   *            }
+   *            return iconCache.get(key);
+   *          }
+   *          PfIcon.resolve = (set, icon) =>
+   *            fetch(`/assets/icons/${set}/${icon}.svg`)
+   *              .then(response => response.text())
+   *              .then(svg => getCachedIconOrNewNode(set, icon, svg))
+   *              .then(node => node.content.cloneNode(true));
+   *          ```
+   */
+  public static resolve = PfIcon.defaultResolve;
+
   /** Icon set */
-  @property() set = this.#class.defaultIconSet;
+  @property() set = 'fas';
 
   /** Icon name */
   @property({ reflect: true }) icon = '';
@@ -127,18 +160,14 @@ export class PfIcon extends LitElement {
 
   #logger = new Logger(this);
 
-  get #class(): typeof PfIcon {
-    return this.constructor as typeof PfIcon;
-  }
-
   #lazyLoad() {
-    this.#class.io.observe(this);
+    PfIcon.io.observe(this);
     if (this.#intersecting) {
       this.load();
     }
   }
 
-  #iconChanged() {
+  #load() {
     switch (this.loading) {
       case 'idle': return void ric(() => this.load());
       case 'lazy': return void this.#lazyLoad();
@@ -146,20 +175,26 @@ export class PfIcon extends LitElement {
     }
   }
 
+  async #contentChanged() {
+    await this.updateComplete;
+    this.dispatchEvent(new Event('load', { bubbles: true }));
+  }
+
   connectedCallback() {
     super.connectedCallback();
-    this.#class.instances.add(this);
+    PfIcon.instances.add(this);
   }
 
   willUpdate(changed: PropertyValues<this>) {
     if (changed.has('icon')) {
-      this.#iconChanged();
+      this.#load();
     }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.#class.instances.delete(this);
+    PfIcon.io.unobserve(this);
+    PfIcon.instances.delete(this);
   }
 
   render() {
@@ -174,24 +209,14 @@ export class PfIcon extends LitElement {
 
   protected async load() {
     const { set, icon } = this;
-    const getter = this.#class.getters.get(set) ?? this.#class.getIconUrl;
-    let spec = 'UNKNOWN ICON';
-    if (set && icon) {
+    const resolver = PfIcon.resolvers.get(set) ?? PfIcon.resolve;
+    if (set && icon && typeof resolver === 'function') {
       try {
-        const gotten = getter(set, icon);
-        if (gotten instanceof URL) {
-          spec = gotten.pathname;
-        } else {
-          spec = gotten;
-        }
-        const mod = await import(spec);
-        this.content = mod.default instanceof Node ? mod.default.cloneNode(true) : mod.default;
-        await this.updateComplete;
-        isServer && this.dispatchEvent(new Event('load', { bubbles: true }));
+        this.content = await resolver(set, icon);
+        this.#contentChanged();
       } catch (error: unknown) {
-        const event = new IconLoadError(spec, error as Error);
-        this.#logger.error((error as IconLoadError).message);
-        isServer && this.dispatchEvent(event);
+        this.#logger.error((error as IconResolveError).message);
+        this.dispatchEvent(new IconResolveError(set, icon, error as Error));
       }
     }
   }

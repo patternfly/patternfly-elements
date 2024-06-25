@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/elements",
   "license": "MIT",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -125,11 +125,13 @@
     "Nikki Massaro Kauffman <nmassaro@redhat.com> (https://github.com/nikkimk)",
     "Steven Spriggs <sspriggs@redhat.com",
     "castastrophe (https://github.com/castastrophe)",
-    "Wes Ruvalcaba"
+    "Wes Ruvalcaba",
+    "Rohit Bharmal (https://github.com/Rohit2601)",
+    "Ajinyka Shinde <sajinkya359@gmail.com>"
   ],
   "dependencies": {
     "@lit/context": "^1.1.0",
-    "@patternfly/icons": "^1.0.2",
+    "@patternfly/icons": "^1.0.3",
     "@patternfly/pfe-core": "^3.0.0",
     "lit": "^3.1.2",
     "tslib": "^2.6.2"

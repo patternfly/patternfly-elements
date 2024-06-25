@@ -2,6 +2,9 @@ import { expect, html, aTimeout, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { sendKeys } from '@web/test-runner-commands';
 
+import { allUpdates, clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
+import { a11ySnapshot, querySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+
 // Import the element we're testing.
 import { PfAccordion, PfAccordionPanel, PfAccordionHeader } from '@patternfly/elements/pf-accordion/pf-accordion.js';
 import { PfSwitch } from '@patternfly/elements/pf-switch/pf-switch.js';
@@ -9,7 +12,6 @@ import { PfSwitch } from '@patternfly/elements/pf-switch/pf-switch.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
-import { allUpdates } from '@patternfly/pfe-tools/test/utils.js';
 
 describe('<pf-accordion>', function() {
   let element: PfAccordion;
@@ -21,12 +23,12 @@ describe('<pf-accordion>', function() {
   let secondPanel: PfAccordionPanel;
 
   async function clickFirstHeader() {
-    header.click();
+    await clickElementAtCenter(header);
     await allUpdates(element);
   }
 
   async function clickSecondHeader() {
-    secondHeader.click();
+    await clickElementAtCenter(secondHeader);
     await allUpdates(element);
   }
 
@@ -126,18 +128,24 @@ describe('<pf-accordion>', function() {
     describe('clicking the first header', function() {
       beforeEach(clickFirstHeader);
 
-      it('expands first pair', function() {
-        expect(header.shadowRoot!.querySelector('button')?.getAttribute('aria-expanded')).to.equal('true');
+      it('expands first pair', async function() {
+        const snapshot = await a11ySnapshot();
+        const expanded = snapshot?.children?.find(x => x.expanded);
+        const focused = snapshot?.children?.find(x => x.focused);
+        expect(expanded?.name).to.equal(header.textContent?.trim());
         expect(header.expanded).to.be.true;
         expect(panel.hasAttribute('expanded')).to.be.true;
         expect(panel.expanded).to.be.true;
+        expect(expanded).to.equal(focused);
       });
 
       describe('then clicking first header again', function() {
         beforeEach(clickFirstHeader);
 
-        it('collapses first pair', function() {
-          expect(header.shadowRoot!.querySelector('button')?.getAttribute('aria-expanded')).to.equal('false');
+        it('collapses first pair', async function() {
+          const snapshot = await a11ySnapshot();
+          const expanded = snapshot?.children?.find(x => x.expanded);
+          expect(expanded).to.not.be.ok;
           expect(header.expanded).to.be.false;
           expect(panel.hasAttribute('expanded')).to.be.false;
           expect(panel.expanded).to.be.false;
@@ -335,7 +343,7 @@ describe('<pf-accordion>', function() {
       describe('with all panels open', function() {
         beforeEach(async function() {
           for (const header of element.querySelectorAll('pf-accordion-header')) {
-            header.click();
+            await clickElementAtCenter(header);
           }
           await nextFrame();
         });
@@ -1019,27 +1027,52 @@ describe('<pf-accordion>', function() {
     beforeEach(async function() {
       element = await createFixture<PfAccordion>(html`
         <pf-accordion>
-          <pf-accordion-header id="header-1" data-index="0"></pf-accordion-header>
+          <pf-accordion-header id="header-1" data-index="0">
+            top-header-1
+          </pf-accordion-header>
           <pf-accordion-panel id="panel-1" data-index="0">
+            top-panel-1
             <pf-accordion>
-              <pf-accordion-header id="header-1-1" data-index="0-1"></pf-accordion-header>
-              <pf-accordion-panel id="panel-1-1" data-index="0-1"></pf-accordion-panel>
+              <pf-accordion-header id="header-1-1" data-index="0-1">
+                nest-1-header-1
+              </pf-accordion-header>
+              <pf-accordion-panel id="panel-1-1" data-index="0-1">
+                nest-1-panel-1
+              </pf-accordion-panel>
             </pf-accordion>
           </pf-accordion-panel>
-          <pf-accordion-header id="header-2" data-index="2"></pf-accordion-header>
+          <pf-accordion-header id="header-2" data-index="2">
+            top-header-2
+          </pf-accordion-header>
           <pf-accordion-panel id="panel-2" data-panel="2">
+            top-panel-2
             <pf-accordion single>
-              <pf-accordion-header id="header-2-1" data-index="1-0"></pf-accordion-header>
-              <pf-accordion-panel id="panel-2-1" data-index="1-0"></pf-accordion-panel>
-              <pf-accordion-header id="header-2-2" data-index="1-1"></pf-accordion-header>
-              <pf-accordion-panel id="panel-2-2" data-index="1-1"></pf-accordion-panel>
-              <pf-accordion-header id="header-2-3" data-index="1-2"></pf-accordion-header>
-              <pf-accordion-panel id="panel-2-3" data-index="1-2"></pf-accordion-panel>
+              <pf-accordion-header id="header-2-1" data-index="1-0">
+                nest-2-header-1
+              </pf-accordion-header>
+              <pf-accordion-panel id="panel-2-1" data-index="1-0">
+                nest-2-header-1
+              </pf-accordion-panel>
+              <pf-accordion-header id="header-2-2" data-index="1-1">
+                nest-2-header-2
+              </pf-accordion-header>
+              <pf-accordion-panel id="panel-2-2" data-index="1-1">
+                nest-2-panel-2
+              </pf-accordion-panel>
+              <pf-accordion-header id="header-2-3" data-index="1-2">
+                nest-2-header-3
+              </pf-accordion-header>
+              <pf-accordion-panel id="panel-2-3" data-index="1-2">
+                nest-2-panel-3
+              </pf-accordion-panel>
             </pf-accordion>
           </pf-accordion-panel>
-
-          <pf-accordion-header id="header-3" data-index="2"></pf-accordion-header>
-          <pf-accordion-panel id="panel-3" data-index="2"></pf-accordion-panel>
+          <pf-accordion-header id="header-3" data-index="2">
+            top-header-3
+          </pf-accordion-header>
+          <pf-accordion-panel id="panel-3" data-index="2">
+            top-panel-3
+          </pf-accordion-panel>
         </pf-accordion>
       `);
       topLevelHeaderOne = document.getElementById('header-1') as PfAccordionHeader;
@@ -1062,47 +1095,44 @@ describe('<pf-accordion>', function() {
 
     describe('clicking the first top-level heading', function() {
       beforeEach(async function() {
-        topLevelHeaderOne.click();
+        await clickElementAtCenter(topLevelHeaderOne);
         await allUpdates(element);
       });
       describe('then clicking the second top-level heading', function() {
         beforeEach(async function() {
-          topLevelHeaderTwo.click();
+          await clickElementAtCenter(topLevelHeaderTwo);
           await allUpdates(element);
         });
         describe('then clicking the first nested heading', function() {
           beforeEach(async function() {
-            nestedHeaderOne.click();
+            await clickElementAtCenter(nestedHeaderOne);
             await allUpdates(element);
           });
           describe('then clicking the second nested heading', function() {
             beforeEach(async function() {
-              nestedHeaderTwo.click();
+              await clickElementAtCenter(nestedHeaderTwo);
               await allUpdates(element);
             });
-            it('expands the first top-level pair', function() {
-              expect(topLevelHeaderOne.shadowRoot!.querySelector('button')?.getAttribute('aria-expanded'), 'top level header 1 button aria-expanded attr').to.equal('true');
-              expect(topLevelHeaderOne.expanded, 'top level header 1 expanded DOM property').to.be.true;
-              expect(topLevelPanelOne.hasAttribute('expanded'), 'top level panel 1 expanded attr').to.be.true;
-              expect(topLevelPanelOne.expanded, 'top level panel 1 DOM property').to.be.true;
+            it('expands the first top-level pair', async function() {
+              const snapshot = await a11ySnapshot();
+              const expanded = snapshot?.children?.find(x => x.expanded);
+              expect(expanded?.name).to.equal(topLevelHeaderOne.textContent?.trim());
+              expect(topLevelHeaderOne.expanded).to.be.true;
+              expect(topLevelPanelOne.hasAttribute('expanded')).to.be.true;
+              expect(topLevelPanelOne.expanded).to.be.true;
             });
-            it('collapses the second top-level pair', function() {
-              expect(topLevelHeaderTwo.shadowRoot!.querySelector('button')?.getAttribute('aria-expanded'), 'top level header 2 button aria-expanded attr').to.equal('true');
-              expect(topLevelHeaderTwo.expanded, 'top level header 2 expanded DOM property').to.be.true;
-              expect(topLevelPanelTwo.hasAttribute('expanded'), 'top level panel 2 expanded attr').to.be.true;
-              expect(topLevelPanelTwo.expanded, 'top level panel 2 expanded DOM property').to.be.true;
+            it('collapses the second top-level pair', async function() {
+              const snapshot = await a11ySnapshot();
+              const header2 = querySnapshot(snapshot, { name: 'top-header-2' });
+              expect(header2).to.have.property('expanded', true);
             });
-            it('collapses the first nested pair', function() {
-              expect(nestedHeaderOne.shadowRoot!.querySelector('button')?.getAttribute('aria-expanded'), 'nested header 1 button aria-expanded attr').to.equal('false');
-              expect(nestedHeaderOne.expanded, 'nested header 1 expanded DOM property').to.be.false;
-              expect(nestedPanelOne.hasAttribute('expanded'), 'nested panel 1 expanded attr').to.be.false;
-              expect(nestedPanelOne.expanded, 'nested panel 1 expanded DOM property').to.be.false;
+            it('collapses the first nested pair', async function() {
+              const snapshot = await a11ySnapshot();
+              expect(querySnapshot(snapshot, { name: 'nest-1-header-1' })).to.not.have.property('expanded');
             });
-            it('collapses the second nested pair', function() {
-              expect(nestedHeaderTwo.shadowRoot!.querySelector('button')?.getAttribute('aria-expanded'), 'nested header 2 button aria-expanded attr').to.equal('true');
-              expect(nestedHeaderTwo.expanded, 'nested header 2 expanded DOM property').to.be.true;
-              expect(nestedPanelTwo.hasAttribute('expanded'), 'nested panel 2 expanded attr').to.be.true;
-              expect(nestedPanelTwo.expanded, 'nested panel 2 expanded DOM property').to.be.true;
+            it('collapses the second nested pair', async function() {
+              const snapshot = await a11ySnapshot();
+              expect(querySnapshot(snapshot, { name: 'nest-2-header-1' })).to.not.have.property('expanded');
             });
           });
         });
@@ -1122,9 +1152,10 @@ describe('<pf-accordion>', function() {
 
       describe('with all panels open', function() {
         beforeEach(async function() {
-          for (const header of element.querySelectorAll('pf-accordion-header')) {
-            header.click();
-          }
+          await Promise.all(Array.from(
+            document.querySelectorAll('pf-accordion'),
+            accordion => accordion.expandAll(),
+          ));
           await nextFrame();
         });
         it('removes hidden attribute from all panels', function() {
@@ -1278,7 +1309,7 @@ describe('<pf-accordion>', function() {
       describe('with all panels open', function() {
         beforeEach(async function() {
           for (const header of multipleAccordionElements.querySelectorAll('pf-accordion-header')) {
-            header.click();
+            await clickElementAtCenter(header);
           }
           await nextFrame();
         });
@@ -1351,7 +1382,7 @@ describe('<pf-accordion>', function() {
 
     describe('clicking the checkbox', function() {
       beforeEach(async function() {
-        checkbox.click();
+        await clickElementAtCenter(checkbox);
         await element.updateComplete;
       });
       it('does not collapse the panel', function() {
@@ -1362,7 +1393,7 @@ describe('<pf-accordion>', function() {
     describe('clicking the switch', function() {
       beforeEach(async function() {
         const { checked } = pfswitch;
-        pfswitch.click();
+        await clickElementAtCenter(pfswitch);
         await element.updateComplete;
         await pfswitch.updateComplete;
         expect(pfswitch.checked).to.not.equal(checked);

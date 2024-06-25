@@ -12,10 +12,22 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 type KnobRenderer<T> = (
   this: PftElementKnobs<HTMLElement>,
-  attribute: T,
-  index: number,
-  array: T[],
+  member: T,
+  info: T extends Attribute ? AttributeKnobInfo : KnobInfo,
 ) => unknown;
+
+interface KnobInfo {
+  knobId: string;
+}
+
+interface AttributeKnobInfo extends KnobInfo {
+  isBoolean: boolean;
+  isEnum: boolean;
+  isNullable: boolean;
+  isNumber: boolean;
+  isOptional: boolean;
+  values: string[];
+}
 
 export type AttributeRenderer = KnobRenderer<Attribute>;
 
@@ -89,37 +101,46 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
     }
   }
 
-  #renderAttribute(attribute: Attribute) {
+  #getAttributeInfo(attribute: Attribute): AttributeKnobInfo {
+    // NOTE: we assume typescript types
+    const type = attribute?.type?.text ?? '';
+    const isUnion = !!type.includes?.('|');
+    const types = type.split('|').map(x => x.trim());
+    const isNullable = types.includes('null');
+    const isOptional = types.includes('undefined');
+    const isNumber = types.includes('number');
+    const isBoolean = types.every(type => type.match(/null|undefined|boolean/));
+    const values = isUnion ? types.filter(x => x !== 'undefined' && x !== 'null') : [];
+    const isEnum = isUnion && values.length > 1;
+    const knobId = `knob-attribute-${attribute.name}`;
+    return {
+      knobId,
+      isBoolean,
+      isEnum,
+      isNullable,
+      isNumber,
+      isOptional,
+      values,
+    };
+  }
+
+  #renderAttribute(attribute: Attribute, info: AttributeKnobInfo) {
+    const { knobId, isEnum, isBoolean, values } = info;
     const QUOTE_RE = /^['"](.*)['"]$/;
-    // TODO: non-typescript types?
-    const isBoolean = attribute?.type?.text === 'boolean';
-    const isUnion = !!attribute?.type?.text?.includes?.('|');
-    let isEnum = false;
-    let values: string[];
-    if (isUnion) {
-      values = attribute?.type?.text
-          .split('|')
-          .map(x => x.trim())
-          .filter(x => x !== 'undefined' && x !== 'null') ?? [];
-      if (values.length > 1) {
-        isEnum = true;
-      }
-    }
-    const id = `knob-attribute-${attribute.name}`;
     return html`
-      <label for="${id}">${attribute.name}</label>${isBoolean ? html`
-      <input id="${id}"
+      <label for="${knobId}">${attribute.name}</label>${isBoolean ? html`
+      <input id="${knobId}"
           type="checkbox"
           ?checked="${attribute.default === 'true'}"
           data-attribute="${attribute.name}">` : isEnum ? html`
-      <pf-select id="${id}"
+      <pf-select id="${knobId}"
                  placeholder="Select a value"
                  data-attribute="${attribute.name}"
                  value="${ifDefined(attribute.default?.replace(QUOTE_RE, '$1'))}">${values!.map(x => html`
         <pf-option>${x.trim().replace(QUOTE_RE, '$1')}</pf-option>`)}
       </pf-select>
       ` : html`
-      <pf-text-input id="${id}"
+      <pf-text-input id="${knobId}"
                      value="${ifDefined(attribute.default?.replace(QUOTE_RE, '$1'))}"
                      helper-text="${ifDefined(attribute.type?.text)}"
                      data-attribute="${attribute.name}"></pf-text-input>`}
@@ -145,7 +166,7 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
           ${!attributes ? '' : html`
           <fieldset @change="${onChange}" @input="${onChange}">
             <legend>Attributes</legend>
-            ${attributes.map(this.renderAttribute, this)}
+            ${attributes.map(attr => this.renderAttribute(attr, this.#getAttributeInfo(attr)))}
           </fieldset>`}
         </form>
       `;

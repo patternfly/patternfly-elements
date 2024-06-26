@@ -666,7 +666,7 @@ export class PfTable extends LitElement {
   static readonly styles = [styles];
 
   get rows() {
-    return this.querySelectorAll<PfTr>(rowQuery);
+    return this.querySelectorAll?.<PfTr>(rowQuery);
   }
 
   @state() private columns = 0;
@@ -678,7 +678,7 @@ export class PfTable extends LitElement {
   }
 
   render() {
-    const hasExpandableRow = !!this.querySelector('pf-tr[expandable]');
+    const hasExpandableRow = !!this.querySelector?.('pf-tr[expandable]');
     const coeffRows = hasExpandableRow ? '1' : '0';
     return html`
       <slot @slotchange="${this.#onSlotchange}"

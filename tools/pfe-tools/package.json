@@ -25,6 +25,7 @@
     "./dev-server/config.js": "./dev-server/config.js",
     "./dev-server/demo.js": "./dev-server/demo.js",
     "./environment.js": "./environment.js",
+    "./elements/": "./elements/",
     "./11ty/DocsPage.js": "./11ty/DocsPage.js",
     "./11ty/plugins/anchors.cjs": "./11ty/plugins/anchors.cjs",
     "./11ty/plugins/custom-elements-manifest.cjs": "./11ty/plugins/custom-elements-manifest.cjs",
@@ -32,6 +33,7 @@
     "./11ty/plugins/table-of-contents.cjs": "./11ty/plugins/table-of-contents.cjs",
     "./11ty/plugins/todos.cjs": "./11ty/plugins/todos.cjs",
     "./react/generate-wrappers.js": "./react/generate-wrappers.js",
+    "./ssr/*": "./ssr/*",
     "./test/a11y-snapshot.js": "./test/a11y-snapshot.js",
     "./test/config.js": "./test/config.js",
     "./test/create-fixture.js": "./test/create-fixture.js",
@@ -40,7 +42,8 @@
     "./test/render-to-string.js": "./test/render-to-string.js",
     "./test/stub-logger.js": "./test/stub-logger.js",
     "./test/utils.js": "./test/utils.js",
-    "./typescript/transformers/css-imports.cjs": "./typescript/transformers/css-imports.cjs"
+    "./typescript/transformers/css-imports.cjs": "./typescript/transformers/css-imports.cjs",
+    "./typescript/transformers/static-version.cjs": "./typescript/transformers/static-version.cjs"
   },
   "contributors": [
     "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",
@@ -66,8 +69,9 @@
     "@custom-elements-manifest/analyzer": "^0.5.7",
     "@jspm/generator": "^2.0.1",
     "@koa/router": "^12.0.1",
+    "@lit-labs/ssr": "^3.2.2",
     "@open-wc/testing": "^4.0.0",
-    "@playwright/test": "^1.43.0",
+    "@playwright/test": "^1.44.0",
     "@rollup/plugin-replace": "^5.0.5",
     "@types/dedent": "^0.7.2",
     "@types/estree": "^1.0.5",
@@ -105,6 +109,7 @@
     "execa": "^8.0.1",
     "glob": "^10.3.12",
     "html-include-element": "^0.3.0",
+    "koa": "^2.15.3",
     "koa-send": "^5.0.1",
     "lit": "^3.1.2",
     "markdown-it-anchor": "^8.6.7",
@@ -122,6 +127,8 @@
     "web-dev-server-plugin-lit-css": "^3.0.0"
   },
   "devDependencies": {
-    "@types/glob": "^8.1.0"
+    "@codemirror/lang-html": "^6.4.9",
+    "@types/glob": "^8.1.0",
+    "codemirror": "^6.0.1"
   }
 }

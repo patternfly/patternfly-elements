@@ -1,10 +1,11 @@
 import { ContextRoot, createContext } from '@lit/context';
+import { isServer } from 'lit';
 
 let root: ContextRoot;
 
 function makeContextRoot() {
-  root = new ContextRoot();
-  root.attach(document.body);
+  const root = new ContextRoot();
+  !isServer && root.attach(document.body);
   return root;
 }
 

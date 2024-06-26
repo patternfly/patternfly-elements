@@ -18,7 +18,7 @@ export class OverflowController implements ReactiveController {
 
   static {
     // on resize check for overflows to add or remove scroll buttons
-    window.addEventListener('resize', () => {
+    globalThis.addEventListener?.('resize', () => {
       for (const instance of this.#instances) {
         instance.onScroll();
       }

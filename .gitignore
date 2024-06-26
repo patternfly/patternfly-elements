@@ -26,6 +26,7 @@ pfe.min.js
 **/*.LEGAL.txt
 *.tsbuildinfo
 test-results
+test-report
 
 /elements/react
 

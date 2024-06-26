@@ -1,10 +1,11 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
+import { defineConfig, type ReporterDescription } from '@playwright/test';
 
-const config: PlaywrightTestConfig = {
-  testMatch: '**/*.e2e.ts',
-  testIgnore: /node_modules|_site|create-element\/templates/,
+export default defineConfig({
+  testMatch: 'elements/**/*.e2e.ts',
   timeout: 120 * 1000,
+
   workers: process.env.CI ? 2 : 8,
+
   webServer: process.env.CI ? undefined : {
     command: 'npx @web/dev-server --config ./docs/demo/web-dev-server.demo.config.js',
     port: 8080,
@@ -19,6 +20,15 @@ const config: PlaywrightTestConfig = {
   expect: {
     toMatchSnapshot: { threshold: 0.2 },
   },
-};
 
-export default config;
+  reporter: [
+    [
+      'html',
+      {
+        open: 'never',
+        outputFolder: 'test-report',
+      },
+    ],
+    process.env.CI ? ['github'] : ['dot'],
+  ],
+});

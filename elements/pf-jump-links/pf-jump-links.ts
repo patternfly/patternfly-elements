@@ -75,7 +75,7 @@ export class PfJumpLinks extends LitElement {
   /** Label to add to nav element. */
   @property() label?: string;
 
-  #kids = this.querySelectorAll<LitElement>(':is(pf-jump-links-item, pf-jump-links-list)');
+  #kids = this.querySelectorAll?.<LitElement>(':is(pf-jump-links-item, pf-jump-links-list)');
 
   #tabindex?: RovingTabindexController<HTMLAnchorElement>;
 
@@ -101,13 +101,13 @@ export class PfJumpLinks extends LitElement {
       getItems: () => {
         const items = Array.from(this.#kids)
             .flatMap(i => [
-              ...i.shadowRoot?.querySelectorAll('a') ?? [],
-              ...i.querySelectorAll('a') ?? [],
+              ...i.shadowRoot?.querySelectorAll?.('a') ?? [],
+              ...i.querySelectorAll?.('a') ?? [],
             ]);
         return items;
       },
     });
-    const active = this.querySelector<PfJumpLinksItem>('pf-jump-links-item[active]');
+    const active = this.querySelector?.<PfJumpLinksItem>('pf-jump-links-item[active]');
     if (active) {
       this.#setActiveItem(active);
     }
@@ -150,7 +150,7 @@ export class PfJumpLinks extends LitElement {
   }
 
   #setActiveItem(item: PfJumpLinksItem) {
-    this.#tabindex?.setActiveItem(item.shadowRoot?.querySelector('a') ?? undefined);
+    this.#tabindex?.setActiveItem(item.shadowRoot?.querySelector?.('a') ?? undefined);
     this.#spy.setActive(item);
   }
 

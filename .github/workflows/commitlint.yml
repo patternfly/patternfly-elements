@@ -40,6 +40,7 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci --prefer-offline
+      - run: npm i @commitlint/load
 
       - id: commitlint
         uses: kevintyj/prlint@v2

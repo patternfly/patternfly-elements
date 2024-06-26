@@ -13,6 +13,8 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import 'zero-md';
 
+import './pft-html-editor.js';
+
 interface KnobInfo<E> {
   element: E;
   knobId: string;
@@ -58,7 +60,7 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
         padding: 1em;
       }
 
-      section,
+      #attributes,
       dl#slot-descriptions {
         display: grid;
         gap: 8px;
@@ -69,10 +71,6 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
         & > h2 {
           grid-column: -1/1;
         }
-      }
-
-      pf-text-area {
-        width: 100%;
       }
     `,
   ];
@@ -201,11 +199,9 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
           <zero-md><script type="text/markdown">${x.description ?? ''}</script></zero-md>
         </dd>`)}
       </dl>
-      <pf-text-area id="${info.knobId}"
-                    resize auto-resize
-                    aria-label="HTML Content"
-                    @input="${this.#onKnobChangedContent}"
-                    .value="${info.element.innerHTML}"></pf-text-area>
+      <pft-html-editor id="${info.knobId}"
+                       @input="${this.#onKnobChangedContent}"
+                       .value="${info.element.innerHTML}"></pft-html-editor>
     `;
   }
 

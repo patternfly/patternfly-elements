@@ -127,6 +127,8 @@
     "web-dev-server-plugin-lit-css": "^3.0.0"
   },
   "devDependencies": {
-    "@types/glob": "^8.1.0"
+    "@codemirror/lang-html": "^6.4.9",
+    "@types/glob": "^8.1.0",
+    "codemirror": "^6.0.1"
   }
 }

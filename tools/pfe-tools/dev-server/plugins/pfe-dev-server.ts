@@ -84,17 +84,6 @@ async function renderURL(
   let templateContent;
   if (demo?.filePath) {
     templateContent = await readFile(demo.filePath, 'utf8');
-  // TODO: parameterize, custom permalinks
-  // maybe use the first demo and double up
-  } else if (url.pathname.includes('/knobs/')) {
-    // TODO: de-urlify, see previous TODO
-    const slug = url.pathname.split('/').at(2);
-    templateContent = env.render('knobs.html', {
-      context: ctx,
-      options: config,
-      tagName: deslugify(slug!, config.rootDir),
-      manifest,
-    });
   }
 
   return env.render('index.html', {

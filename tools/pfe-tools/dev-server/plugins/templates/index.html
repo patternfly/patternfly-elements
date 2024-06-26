@@ -105,10 +105,7 @@
         <li>
           <details {{ 'open' if demo.primaryElementName == primary }}>
             <summary>{{ first.title }}</summary>
-            <ul>
-              <li>
-                <a href="/components/{{ primary.replace('pf-', '') }}/demo/knobs/">Knobs</a>
-              </li>{% for d in group %}
+            <ul>{% for d in group %}
               <li>
                 <a href="{{ d.permalink | replace(demoURLPrefix, '/') }}">{{ d.title }}</a>
               </li>{% endfor %}
@@ -128,6 +125,7 @@
         <script type="module">
           import '@patternfly/pfe-tools/elements/pft-element-knobs.ts';
           // TODO: discriminate
+          import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
           import '@patternfly/elements/pf-select/pf-select.js';
           import '@patternfly/elements/pf-switch/pf-switch.js';
           import '@patternfly/elements/pf-text-input/pf-text-input.js';
@@ -154,8 +152,7 @@
           <a href="{{ first.permalink | replace(demoURLPrefix, '/') }}">
             <img src="/elements/{{ primary }}/docs/screenshot.png" alt="{{ primary }}">
           </a>
-          <ul>
-            <li><a href="/components/{{ primary.replace('pf-', '') }}/demo/knobs/">Knobs</a></li>{% for d in group %}{% if not loop.first %}
+          <ul>{% for d in group %}{% if not loop.first %}
             <li>
               <a href="{{ d.permalink | replace(demoURLPrefix, '/') }}">{{ d.title }}</a>
             </li>{% endif %}{% endfor %}

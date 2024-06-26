@@ -58,12 +58,16 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
         padding: 1em;
       }
 
+      section,
       dl#slot-descriptions {
         display: grid;
         gap: 8px;
         grid-template-columns: max-content auto;
         & dd {
           margin-inline-start: 0;
+        }
+        & > h2 {
+          grid-column: -1/1;
         }
       }
 
@@ -157,23 +161,26 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
          element?.getAttribute(attribute.name)
       ?? attribute.default?.replace(QUOTE_RE, '$1');
     return html`
-      <h3><code>${attribute.name}</code></h3>
-      <zero-md><script type="text/markdown">${attribute.summary ?? ''}</script></zero-md>
-      <zero-md><script type="text/markdown">${attribute.description ?? ''}</script></zero-md>
+      <pf-tooltip>
+        <label for="${knobId}"><code>${attribute.name}</code></label>${[attribute.summary, attribute.description].filter(Boolean).map(x => html`
+        <zero-md slot="content">
+          <template>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown-dark.min.css">
+          </template>
+          <script type="text/markdown">${x}</script>
+        </zero-md>`)}
+      </pf-tooltip>
       ${isBoolean ? html`
-      <label for="${knobId}">Present</label>
       <pf-switch id="${knobId}"
                  ?checked="${attribute.default === 'true'}"
                  data-attribute="${attribute.name}"></pf-switch>` : isEnum ? html`
       <pf-select id="${knobId}"
                  placeholder="Select a value"
-                 aria-label="Value"
                  data-attribute="${attribute.name}"
                  value="${ifDefined(attributeValue)}">${values!.map(x => html`
         <pf-option>${x.trim().replace(QUOTE_RE, '$1')}</pf-option>`)}
       </pf-select>` : html`
       <pf-text-input id="${knobId}"
-                     aria-label="Value"
                      value="${ifDefined(attributeValue)}"
                      type="${ifDefined(isNumber ? 'number' : undefined)}"
                      helper-text="${ifDefined(attribute.type?.text)}"

@@ -42,7 +42,7 @@ jobs:
       - run: npm ci --prefer-offline
 
       - id: commitlint
-        uses: kevintyj/prlint@v1
+        uses: kevintyj/prlint@v2
 
       - id: format
         uses: actions/github-script@v6

@@ -97,24 +97,20 @@ function getRouter(options: PfeDevServerInternalConfig) {
   const { elementsDir, tagPrefix } = options;
   const { componentSubpath } = options.site;
   const router = new Router()
+
+      // PFE TOOLING
       .get('/tools/pfe-tools/environment.js(.js)?', async ctx => {
         ctx.body = await makeDemoEnv(options.rootDir);
         ctx.type = 'application/javascript';
       })
 
-  // Redirect `components/jazz-hands/*-lightdom.css` to `elements/pf-jazz-hands/*-lightdom.css`
-  // NOTE: don't put subresources in /demo called `*-lightdom.css` , or this will break
-      .get(`/${componentSubpath}/:element/(demo/)?:fileName.css`, async (ctx, next) => {
-        const { element, fileName } = ctx.params;
-        if (!element.startsWith(tagPrefix) && fileName.includes('lightdom')) {
-          const prefixedElement = deslugify(element);
-          ctx.redirect(`/${elementsDir}/${prefixedElement}/${fileName}.css`);
-        } else {
-          return next();
-        }
+      // Redirect `core/pfe-core/controllers/thingy.js` to `core/pfe-core/controllers/thingy.ts` for requests not previously handled
+      .get(`/core/pfe-core/:splatPath*.js`, async ctx => {
+        ctx.redirect(`/core/pfe-core/${ctx.params.splatPath}.ts`);
       })
 
-  // Redirect `components/jazz-hands/demo/**/*.js|css` to `components/pf-jazz-hands/demo/**/*.js|css`
+      // COMPONENTS DIR => ELEMENTS DIR REDIRECTS
+      // Redirect `components/jazz-hands/demo/**/*.js|css` to `components/pf-jazz-hands/demo/**/*.js|css`
       .get(`/${componentSubpath}/:element/demo/:splat*/:fileName.:ext`, async (ctx, next) => {
         const { element, splat, fileName, ext } = ctx.params;
         const prefixedElement = deslugify(element);
@@ -129,33 +125,34 @@ function getRouter(options: PfeDevServerInternalConfig) {
         }
       })
 
-  // Redirect `components/jazz-hands/*` to `components/pf-jazz-hands/*` for requests not previously handled
+      // Redirect `components/jazz-hands/*` to `components/pf-jazz-hands/*` for requests not previously handled
       .get(`/${componentSubpath}/:element/:splatPath*`, async (ctx, next) => {
         const { element, splatPath } = ctx.params;
         const prefixedElement = deslugify(element);
+        // if we are passing a folder ie (/elements/pf-jazz-hands/demo/) redirect to the elements dir with splat.
         if (await isDir(new URL(`/${elementsDir}/${prefixedElement}`, import.meta.url).href)) {
+          ctx.redirect(`/${elementsDir}/${prefixedElement}/${splatPath}`);
+        }
+        // If the splat exits and is a lightdom.css | lightdom-shim.css file redirect to the splat path
+        if (splatPath && splatPath.includes('lightdom')) {
           ctx.redirect(`/${elementsDir}/${prefixedElement}/${splatPath}`);
         } else {
           return next();
         }
       })
 
+      // TODO: Discovery to see if this redirect is still needed.
+      // Redirect `components/jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts`
+      .get(`/${componentSubpath}/:element/:splatPath*.js`, async ctx => {
+        const { element, splatPath } = ctx.params;
+        const prefixedElement = deslugify(element);
+        ctx.redirect(`/${elementsDir}/${prefixedElement}/${splatPath}.ts`);
+      })
+
+      // SET ETAG
       .get(`/${elementsDir}/:element/:splatPath*.(css|js)`, async function(ctx, next) {
         ctx.response.etag = performance.now().toString();
         return next();
-      })
-
-  // Redirect `core/pfe-core/controllers/thingy.js` to `core/pfe-core/controllers/thingy.ts` for requests not previously handled
-      .get(`/core/pfe-core/:splatPath*.js`, async ctx => {
-        ctx.redirect(`/core/pfe-core/${ctx.params.splatPath}.ts`);
-      })
-
-  // Redirect `elements/pf-jazz-hands/*.js` to `elements/pf-jazz-hands/*.ts` for requests not previously handled
-      .get(`/${elementsDir}/:element/:splatPath*.js`, async ctx => {
-        const { element, splatPath } = ctx.params;
-        if (element.startsWith(tagPrefix) && !splatPath.includes('/')) {
-          ctx.redirect(`/${elementsDir}/${element}/${splatPath}.ts`);
-        }
       });
 
   return router.routes();

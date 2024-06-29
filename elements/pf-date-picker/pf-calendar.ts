@@ -54,15 +54,15 @@ export class KeyboardNavigationFocusEvent extends Event {
 export class PfCalendar extends LitElement {
   static readonly styles = [styles];
 
-  private currentDate: Date = new Date();
-  private weekdays: number[] = defaultWeekdays;
-  private weeks: number[] = defaultWeeks;
+  #currentDate = new Date();
+  #weekdays = defaultWeekdays;
+  #weeks = defaultWeeks;
 
   // Input properties from the parent
-  @property() currentYear: number = this.currentDate.getFullYear();
-  @property() currentMonth: number = this.currentDate.getMonth();
+  @property() currentYear: number = this.#currentDate.getFullYear();
+  @property() currentMonth: number = this.#currentDate.getMonth();
   @property() currentWeek = 0;
-  @property() selectedDay: number = this.currentDate.getDate();
+  @property() selectedDay: number = this.#currentDate.getDate();
   @property() focusRef!: HTMLButtonElement;
   @property() dayToBeFocused!: number;
   @property() focusedDateValues!: FocusedDateValues;
@@ -98,16 +98,16 @@ export class PfCalendar extends LitElement {
       new Date(this.currentYear, this.currentMonth, 0).getDate();
 
     // Get the number of weeks in a month
-    this.weeks = this.#getNoOfWeeks(this.currentYear, this.currentMonth);
+    this.#weeks = this.#getNoOfWeeks(this.currentYear, this.currentMonth);
 
     let day = 1;
     let nextMonthPointer = 0;
 
     return html`<div class="date-picker-table-tbody" id="calendarDatesList" @keydown=${this.#onCalendarKeydown}>
-    ${this.weeks.map((week: number) => {
+    ${this.#weeks.map((week: number) => {
       return html`
         <div class="date-picker-table-row">
-          ${this.weekdays.map((weekDay: number) => {
+          ${this.#weekdays.map((weekDay: number) => {
             let calendarDayTemplate: unknown;
             if (week === 0 && weekDay < firstDay) {
               // Add the last dates of the previous month
@@ -153,9 +153,9 @@ export class PfCalendar extends LitElement {
       && (value.year === this.focusedDateValues?.year));
 
     const selectedDate: Date = new Date(this.dateSelected);
-    const isToday: boolean = ((value.day === this.currentDate.getDate())
-      && (value.month === this.currentDate.getMonth())
-      && (value.year === this.currentDate.getFullYear()));
+    const isToday: boolean = ((value.day === this.#currentDate.getDate())
+      && (value.month === this.#currentDate.getMonth())
+      && (value.year === this.#currentDate.getFullYear()));
 
     const isSelectedDay: boolean = ((value.day === selectedDate?.getDate())
       && (value.month === selectedDate?.getMonth())

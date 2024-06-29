@@ -53,8 +53,8 @@ export class DateChangeEvent extends Event {
 export class PfDatePicker extends LitElement {
   static readonly styles = [styles];
 
-  private _currentDate: Date = new Date();
-  private errorMessages: ErrorMessages = {
+  #currentDate = new Date();
+  #errorMessages: ErrorMessages = {
     inValid: 'Invalid date',
     lessThanMinDate: 'Date is before the allowable range.',
     greaterThanMaxDate: 'Date is after the allowable range.',
@@ -130,16 +130,16 @@ export class PfDatePicker extends LitElement {
   // 'current' refers to the temporary values of Month and Year the user selected before day is selected
   // and the input box is updated
   @property() monthNames: string[] = getMonthNamesFromLocale(this.translationLanguageCode);
-  @property() currentMonthSelection: string = this.monthNames[this._currentDate.getMonth()];
-  @property() currentMonthIndex: number = this._currentDate.getMonth();
-  @property() currentYear: number = this._currentDate.getFullYear();
+  @property() currentMonthSelection: string = this.monthNames[this.#currentDate.getMonth()];
+  @property() currentMonthIndex: number = this.#currentDate.getMonth();
+  @property() currentYear: number = this.#currentDate.getFullYear();
 
   // 'selected' refers to the active selected values of day, Month and Year the user selected
   // which is updated in the input box
   @property() selectedDay!: number | null;
-  @property() selectedMonthIndex: number = this._currentDate.getMonth();
-  @property() selectedMonthSelection: string = this.monthNames[this._currentDate.getMonth()];
-  @property() selectedYear: number = this._currentDate.getFullYear();
+  @property() selectedMonthIndex: number = this.#currentDate.getMonth();
+  @property() selectedMonthSelection: string = this.monthNames[this.#currentDate.getMonth()];
+  @property() selectedYear: number = this.#currentDate.getFullYear();
   @property() formattedDate = ''; // The value which is updated in the date-picker input box
   @property() errorMessage!: string; // Handle the error message on invalid date
   @property() dateSelected!: Date; // The date selected by the user
@@ -150,8 +150,8 @@ export class PfDatePicker extends LitElement {
     getDatePatternFromLocale(this.localizationLanguageCode, this.dateFormatInput); // Date format
 
   @property() inputDate!: Date | null; // Handle and format date input value parent sends to the component
-  private minYear: number = new Date(this.minDate).getFullYear(); // Minimum Valid Year
-  private maxYear: number = new Date(this.maxDate).getFullYear(); // Maximum Valid Year
+  #minYear = new Date(this.minDate).getFullYear(); // Minimum Valid Year
+  #maxYear: number = new Date(this.maxDate).getFullYear(); // Maximum Valid Year
 
   constructor() {
     super();
@@ -349,11 +349,11 @@ export class PfDatePicker extends LitElement {
   // Function to clear date selected
   #clearDateSelection() {
     this.selectedDay = null;
-    this.currentMonthIndex = this._currentDate.getMonth();
+    this.currentMonthIndex = this.#currentDate.getMonth();
     this.currentMonthSelection = this.monthNames[this.currentMonthIndex];
-    this.currentYear = this._currentDate.getFullYear();
-    this.selectedMonthIndex = this._currentDate.getMonth();
-    this.selectedYear = this._currentDate.getFullYear();
+    this.currentYear = this.#currentDate.getFullYear();
+    this.selectedMonthIndex = this.#currentDate.getMonth();
+    this.selectedYear = this.#currentDate.getFullYear();
     this.selectedMonthSelection = this.monthNames[this.selectedMonthIndex];
     this.formattedDate = '';
   }
@@ -388,26 +388,26 @@ export class PfDatePicker extends LitElement {
 
   // Function to check if the year entered by the user is valid or not
   #validateYearInput(year: number) {
-    this.minYear = new Date(this.minDate).getFullYear();
-    this.maxYear = new Date(this.maxDate).getFullYear();
+    this.#minYear = new Date(this.minDate).getFullYear();
+    this.#maxYear = new Date(this.maxDate).getFullYear();
     const yearInput: number = year;
 
-    this.isValid = yearInput > this.minYear && yearInput < this.maxYear;
+    this.isValid = yearInput > this.#minYear && yearInput < this.#maxYear;
     if (this.isValid) {
       return yearInput;
-    } else if (yearInput < this.minYear) {
+    } else if (yearInput < this.#minYear) {
       let inputYear: number;
       const date: Date = new Date(year, this.currentMonthIndex, this.selectedDay ?
-        this.selectedDay : this._currentDate.getDate());
+        this.selectedDay : this.#currentDate.getDate());
 
-      if (date.getFullYear() >= this.minYear) {
+      if (date.getFullYear() >= this.#minYear) {
         inputYear = date.getFullYear();
       } else {
         inputYear = year;
       }
       return inputYear;
-    } else if (yearInput > this.maxYear) {
-      return this.maxYear;
+    } else if (yearInput > this.#maxYear) {
+      return this.#maxYear;
     } else {
       return this.currentYear;
     }
@@ -479,13 +479,13 @@ export class PfDatePicker extends LitElement {
         this.#getFormattedDate();
         this.firstDayToBeFocused = this.selectedDay;
       } else {
-        this.firstDayToBeFocused = this._currentDate.getDate();
+        this.firstDayToBeFocused = this.#currentDate.getDate();
       }
     } else {
-      this.currentMonthIndex = this._currentDate.getMonth();
-      this.currentYear = this._currentDate.getFullYear();
+      this.currentMonthIndex = this.#currentDate.getMonth();
+      this.currentYear = this.#currentDate.getFullYear();
       this.currentMonthSelection = this.monthNames[this.currentMonthIndex];
-      this.firstDayToBeFocused = this._currentDate.getDate();
+      this.firstDayToBeFocused = this.#currentDate.getDate();
       this.selectedDay = null;
     }
 
@@ -501,7 +501,7 @@ export class PfDatePicker extends LitElement {
     if (this.isDateValid && this.selectedDay) {
       this.dayToBeFocused = this.selectedDay <= totalDays ? this.selectedDay : totalDays;
     } else {
-      this.dayToBeFocused = this._currentDate.getDate();
+      this.dayToBeFocused = this.#currentDate.getDate();
     }
   }
 
@@ -532,11 +532,11 @@ export class PfDatePicker extends LitElement {
       this.#dispatchSelectedDate(event);
     } else if (this.isDateValid && value === '') {
       this.selectedDay = null;
-      this.currentMonthIndex = this._currentDate.getMonth();
+      this.currentMonthIndex = this.#currentDate.getMonth();
       this.currentMonthSelection = this.monthNames[this.currentMonthIndex];
-      this.currentYear = this._currentDate.getFullYear();
-      this.selectedMonthIndex = this._currentDate.getMonth();
-      this.selectedYear = this._currentDate.getFullYear();
+      this.currentYear = this.#currentDate.getFullYear();
+      this.selectedMonthIndex = this.#currentDate.getMonth();
+      this.selectedYear = this.#currentDate.getFullYear();
       this.selectedMonthSelection = this.monthNames[this.selectedMonthIndex];
       this.#dispatchSelectedDate(event);
     }
@@ -564,29 +564,29 @@ export class PfDatePicker extends LitElement {
       );
 
       if (date.toString() === 'Invalid Date') {
-        this.errorMessage = this.errorMessages.inValid;
+        this.errorMessage = this.#errorMessages.inValid;
         return false;
       }
       if (date < this.minDate) {
-        this.errorMessage = this.errorMessages.lessThanMinDate;
+        this.errorMessage = this.#errorMessages.lessThanMinDate;
         return false;
       }
       if (date > this.maxDate) {
-        this.errorMessage = this.errorMessages.greaterThanMaxDate;
+        this.errorMessage = this.#errorMessages.greaterThanMaxDate;
         return false;
       }
 
       // if (!dateString.match(regex)) { // Commented for reference
       if (!regex.test(dateString)) {
         isValid = false;
-        this.errorMessage = this.errorMessages.inValid;
+        this.errorMessage = this.#errorMessages.inValid;
         return isValid;
       }
 
       // Check the ranges of month and year
-      if (selectedYearInput < this.minYear || selectedYearInput > this.maxYear
+      if (selectedYearInput < this.#minYear || selectedYearInput > this.#maxYear
           || selectedMonthInput === 0 || selectedMonthInput > 12) {
-        this.errorMessage = this.errorMessages.inValid;
+        this.errorMessage = this.#errorMessages.inValid;
         return false;
       }
 
@@ -599,7 +599,7 @@ export class PfDatePicker extends LitElement {
       // Check the range of the day
       isValid = selectedDayInput > 0 && selectedDayInput <= monthLength[selectedMonthInput - 1];
       if (!isValid) {
-        this.errorMessage = this.errorMessages.inValid;
+        this.errorMessage = this.#errorMessages.inValid;
       }
     } else if (dateString === '') {
       isValid = true;
@@ -611,7 +611,7 @@ export class PfDatePicker extends LitElement {
   // Function to get the formatted date string according to date format selected in parent component
   #getFormattedDate() {
     const monthSelected: number = this.currentMonthIndex + 1; // Months start at 0!
-    const daySelected: number = this.selectedDay ? this.selectedDay : this._currentDate.getDate();
+    const daySelected: number = this.selectedDay ? this.selectedDay : this.#currentDate.getDate();
     const yearSelected: number = this.selectedYear;
     let dd: string = daySelected.toString();
     let mm: string = monthSelected.toString();

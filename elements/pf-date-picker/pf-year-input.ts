@@ -19,8 +19,8 @@ export class PfYearInput extends LitElement {
   @property() minDate!: Date;
   @property() maxDate!: Date;
 
-  private minYear: number = new Date(this.minDate).getFullYear();
-  private maxYear: number = new Date(this.maxDate).getFullYear();
+  #minYear = new Date(this.minDate).getFullYear();
+  #maxYear = new Date(this.maxDate).getFullYear();
 
   @query('#year-input') _numberInput!: HTMLInputElement;
 
@@ -31,8 +31,8 @@ export class PfYearInput extends LitElement {
           type="number"
           id="year-input"
           aria-label="Select year"
-          min=${this.minYear} 
-          max=${this.maxYear} 
+          min=${this.#minYear} 
+          max=${this.#maxYear} 
           @input=${this.#OnInput}
           @click=${this.#onChange}
           @keyup=${this.#onKeyUp}
@@ -65,7 +65,7 @@ export class PfYearInput extends LitElement {
     const options = {
       detail: this.currentYear,
       bubbles: true,
-      composed: true
+      composed: true,
     };
     this.dispatchEvent(new CustomEvent(eventName, options));
   }

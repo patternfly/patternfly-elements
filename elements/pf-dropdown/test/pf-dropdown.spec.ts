@@ -1,6 +1,7 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { sendKeys } from '@web/test-runner-commands';
+import { sendKeys, resetMouse } from '@web/test-runner-commands';
+import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 import { PfDropdown } from '@patternfly/elements/pf-dropdown/pf-dropdown.js';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
@@ -24,13 +25,13 @@ describe('<pf-dropdown>', function() {
       element = await createFixture<PfDropdown>(html`<pf-dropdown></pf-dropdown>`);
       const klass = customElements.get('pf-dropdown');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfDropdown);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfDropdown);
     });
   });
 
-  describe('with default trigger button', function() {
+  describe('with default toggle button', function() {
     beforeEach(async function() {
       element = await createFixture<PfDropdown>(html`
         <pf-dropdown>
@@ -47,7 +48,7 @@ describe('<pf-dropdown>', function() {
           'aria-allowed-attr',
           /** false positive: the menuitem is projected into a menu in another shadow root */
           'aria-required-parent',
-        ]
+        ],
       });
     });
 
@@ -110,7 +111,7 @@ describe('<pf-dropdown>', function() {
         await element.updateComplete;
       });
 
-      it('should disable trigger button', async function() {
+      it('should disable toggle button', async function() {
         const snapshot = await a11ySnapshot();
         expect(snapshot.children?.length).to.equal(1);
         expect(snapshot.children?.at(0)?.disabled).to.be.true;
@@ -122,9 +123,25 @@ describe('<pf-dropdown>', function() {
           await sendKeys({ press: 'Enter' });
         });
 
-        it('should not show menu', async function() {
+        it('should show menu', async function() {
           const snapshot = await a11ySnapshot();
-          expect(snapshot.children?.length).to.equal(1);
+          const menu = snapshot?.children?.find(x => x.role === 'menu');
+          expect(menu).to.be.ok;
+          expect(menu?.children?.length).to.equal(2);
+        });
+      });
+
+      describe('clicking toggle', function() {
+        beforeEach(async function() {
+          await clickElementAtCenter(element);
+          await resetMouse();
+        });
+
+        it('should show menu', async function() {
+          const snapshot = await a11ySnapshot();
+          const menu = snapshot?.children?.find(x => x.role === 'menu');
+          expect(menu).to.be.ok;
+          expect(menu?.children?.length).to.equal(2);
         });
       });
     });

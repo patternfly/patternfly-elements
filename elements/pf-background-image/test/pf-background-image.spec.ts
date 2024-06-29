@@ -41,9 +41,9 @@ describe('<pf-background-image>', function() {
       element = await createFixture<PfBackgroundImage>(html`<pf-background-image></pf-background-image>`);
       const klass = customElements.get('pf-background-image');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfBackgroundImage);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfBackgroundImage);
     });
 
     describe('adjusting window size', function() {

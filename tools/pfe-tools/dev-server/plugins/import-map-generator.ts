@@ -87,6 +87,7 @@ function generatorMiddleware(generator: Generator, options?: Partial<Options>): 
             esModuleShims: true,
           });
         } catch (e) {
+          // eslint-disable-next-line no-console
           console.error(e);
         }
       }

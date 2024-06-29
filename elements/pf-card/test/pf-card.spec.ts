@@ -1,4 +1,4 @@
-import { expect, html, aTimeout } from '@open-wc/testing';
+import { expect, html, aTimeout, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import '@patternfly/pfe-tools/test/stub-logger.js';
 
@@ -11,9 +11,9 @@ describe('<pf-card>', function() {
 
   it('should upgrade', async function() {
     expect(await createFixture<PfCard>(html`<pf-card></pf-card>`))
-      .to.be.an.instanceof(customElements.get('pf-card'))
-      .and
-      .to.be.an.instanceof(PfCard);
+        .to.be.an.instanceof(customElements.get('pf-card'))
+        .and
+        .to.be.an.instanceof(PfCard);
   });
 
   describe('with header and footer content', function() {
@@ -36,9 +36,13 @@ describe('<pf-card>', function() {
 
     describe('size', function() {
       describe('unset', function() {
+        beforeEach(() => element.updateComplete);
+        beforeEach(nextFrame);
         it('should have default sizing for card parts', function() {
-          expect(getComputedStyle(element.querySelector('p')!, 'body font-size').getPropertyValue('font-size')).to.equal('16px');
-          expect(getComputedStyle(element.querySelector('[slot=footer]')!, 'footer font-size').getPropertyValue('font-size')).to.equal('16px');
+          const pStyles = getComputedStyle(element.querySelector('p')!);
+          const footStyles = getComputedStyle(element.querySelector('[slot=footer]')!);
+          expect(pStyles.getPropertyValue('font-size'), 'body font-size').to.equal('16px');
+          expect(footStyles.getPropertyValue('font-size'), 'footer font-size').to.equal('16px');
         });
       });
 
@@ -59,10 +63,10 @@ describe('<pf-card>', function() {
         it('should have larger font sizes for body, footer, more padding for header', function() {
           const { height } = element.getBoundingClientRect();
           expect(origHeight, 'height').to.be.lessThan(height);
-          expect(getComputedStyle(element.querySelector('p')!, 'body font-size').getPropertyValue('font-size'))
-            .to.equal('16px');
-          expect(getComputedStyle(element.querySelector('[slot=footer]')!, 'footer font-size').getPropertyValue('font-size'))
-            .to.equal('16px');
+          const pStyles = getComputedStyle(element.querySelector('p')!);
+          const footStyles = getComputedStyle(element.querySelector('[slot=footer]')!);
+          expect(pStyles.getPropertyValue('font-size'), 'body font-size').to.equal('16px');
+          expect(footStyles.getPropertyValue('font-size'), 'footer font-size').to.equal('16px');
         });
       });
     });

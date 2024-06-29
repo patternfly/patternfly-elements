@@ -46,9 +46,7 @@ export class PopoverShownEvent extends ComposedEvent {
 
 /**
  * A **Popover** displays content in a non-modal dialog and adds contextual information or provides resources via text and links.
- *
  * @summary Toggle the visibility of helpful or contextual information.
- *
  * @slot -
  *         The default slot holds invoking element.
  *         Typically this would be an icon, button, or other small sized element.
@@ -62,7 +60,6 @@ export class PopoverShownEvent extends ComposedEvent {
  *       This slot renders the content that will be displayed inside of the body of the popover.
  * @slot footer
  *       This slot renders the content that will be displayed inside of the footer of the popover.
- *
  * @csspart container - The component wrapper
  * @csspart content - The content wrapper
  * @csspart header - The header element; only visible if both an icon annd heading are provided.
@@ -71,7 +68,6 @@ export class PopoverShownEvent extends ComposedEvent {
  * @csspart close-button - The close button
  * @csspart body - The container for the body content
  * @csspart footer - The container for the footer content
- *
  * @cssprop {<length>} --pf-c-popover__arrow--Height
  *          Height of the arrow
  *          {@default `1.5625rem`}
@@ -259,7 +255,11 @@ export class PfPopover extends LitElement {
   /**
    * The heading level to use for the popover's header. The default is `h6`.
    */
-  @property({ type: Number, reflect: true, attribute: 'heading-level' }) headingLevel?: HeadingLevel;
+  @property({
+    type: Number,
+    reflect: true,
+    attribute: 'heading-level',
+  }) headingLevel?: HeadingLevel;
 
   /**
    * Indicates which icon set to use for the header's icon.
@@ -286,7 +286,10 @@ export class PfPopover extends LitElement {
   /**
    * @deprecated do not use the color-palette attribute, which was added by mistake. use context-providing containers (e.g. rh-card) instead
    */
-  @deprecation({ alias: 'accessible-close-label', attribute: 'close-label' }) closeButtonLabel?: string;
+  @deprecation({
+    alias: 'accessible-close-label',
+    attribute: 'close-label',
+  }) closeButtonLabel?: string;
 
   /**
    * The text announced by the screen reader to indicate the popover's severity.
@@ -311,6 +314,9 @@ export class PfPopover extends LitElement {
   @query('#popover') private _popover!: HTMLDialogElement;
   @query('#trigger') private _slottedTrigger?: HTMLElement | null;
   @query('#arrow') private _arrow!: HTMLDivElement;
+
+  /** True before the show animation begins and after the hide animation ends */
+  #hideDialog = true;
 
   #referenceTrigger?: HTMLElement | null = null;
 
@@ -346,7 +352,9 @@ export class PfPopover extends LitElement {
       <slot id="heading" name="heading" part="heading" ?hidden=${!hasHeading}>${headingContent}</slot>
     `;
 
-    const headerIcon = this.icon ?? PfPopover.alertIcons.get(this.alertSeverity as AlertSeverity) ?? '';
+    const headerIcon = this.icon
+      ?? PfPopover.alertIcons.get(this.alertSeverity as AlertSeverity)
+      ?? '';
 
     return html`
       <div id="container"
@@ -357,6 +365,7 @@ export class PfPopover extends LitElement {
               @keydown="${this.#onKeydown}"
               @click="${this.toggle}"></slot>
         <dialog id="popover"
+                ?hidden="${this.#hideDialog}"
                 aria-labelledby="heading"
                 aria-describedby="body"
                 aria-label=${ifDefined(this.label)}>
@@ -462,6 +471,8 @@ export class PfPopover extends LitElement {
    * Opens the popover
    */
   @bound async show() {
+    this.#hideDialog = false;
+    this.requestUpdate();
     this.dispatchEvent(new PopoverShowEvent());
     await this.updateComplete;
     await this.#float.show({
@@ -484,6 +495,8 @@ export class PfPopover extends LitElement {
     this._popover?.close();
     this.dispatchEvent(new PopoverHiddenEvent());
     PfPopover.instances.delete(this);
+    this.#hideDialog = true;
+    this.requestUpdate();
   }
 }
 

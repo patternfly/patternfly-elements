@@ -10,7 +10,6 @@ import styles from './pf-text-input.css';
 
 /**
  * A **text input** is used to gather free-form text from a user.
- *
  * @cssprop --pf-c-form-control--Color - {@default var(--pf-global--Color--100, #151515)}
  * @cssprop --pf-c-form-control--FontSize - {@default var(--pf-global--FontSize--md, 1rem)}
  * @cssprop --pf-c-form-control--LineHeight - {@default var(--pf-global--LineHeight--md, 1.5)}
@@ -144,7 +143,10 @@ export class PfTextInput extends LitElement {
 
   static readonly formAssociated = true;
 
-  static override shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /** Trim text on left */
   @property({ type: Boolean, reflect: true, attribute: 'left-truncated' }) leftTruncated = false;
@@ -172,7 +174,18 @@ export class PfTextInput extends LitElement {
   @property({ type: Boolean, reflect: true }) plain = false;
 
   /** Type that the input accepts. */
-  @property({ reflect: true }) type?: 'text' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'search' | 'tel' | 'time' | 'url';
+  @property({ reflect: true }) type?:
+    | 'text'
+    | 'date'
+    | 'datetime-local'
+    | 'email'
+    | 'month'
+    | 'number'
+    | 'password'
+    | 'search'
+    | 'tel'
+    | 'time'
+    | 'url';
 
   /** Flag to show if the input is disabled. */
   @property({ type: Boolean, reflect: true }) disabled = false;

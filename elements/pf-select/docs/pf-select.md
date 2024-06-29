@@ -5,7 +5,8 @@ import '@patternfly/elements/pf-select/pf-select.js';
 </script>
 
 {% renderOverview %}
-  <pf-select placeholder="Select a value">
+  <pf-select accessible-label="Color"
+             placeholder="Select a value">
     <pf-option value="Blue">Blue</pf-option>
     <pf-option value="Green">Green</pf-option>
     <pf-option value="Magenta">Magenta</pf-option>
@@ -54,7 +55,7 @@ Multiple options can be selected. Any arrow keys work.
 Below are option variants:
 
 {% htmlexample %}
-  <pf-select>
+  <pf-select accessible-label="options">
     <pf-option value="Basic">Basic option</pf-option>
     <pf-option value="Description">
       <span>Option with description</span>

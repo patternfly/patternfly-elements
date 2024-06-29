@@ -4,22 +4,19 @@ import { state } from 'lit/decorators/state.js';
 import { consume } from '@lit/context';
 
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
+
 import { type PfTabsContext, context } from './context.js';
 
 import styles from './pf-tab-panel.css';
 
 /**
  * @slot - Tab panel content
- *
  * @cssprop {<color>} --pf-c-tab-content--m-light-300 {@default `#f0f0f0`}
- *
  * @csspart container - container for the panel content
  */
 @customElement('pf-tab-panel')
 export class PfTabPanel extends LitElement {
   static readonly styles = [styles];
-
-  #internals = this.attachInternals();
 
   @consume({ context, subscribe: true })
   @state() private ctx?: PfTabsContext;
@@ -34,7 +31,6 @@ export class PfTabPanel extends LitElement {
     super.connectedCallback();
     this.id ||= getRandomId('pf-tab-panel');
     this.hidden ??= true;
-    this.#internals.role = 'tabpanel';
 
     /*
      To make it easy for screen reader users to navigate from a tab

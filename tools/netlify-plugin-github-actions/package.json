@@ -1,6 +1,6 @@
 {
   "name": "netlify-plugin-github-actions",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "main": "index.js",
   "exports": "./index.js",
@@ -9,6 +9,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@octokit/core": "^6.0.1"
+    "@octokit/core": "^6.1.2"
   }
 }

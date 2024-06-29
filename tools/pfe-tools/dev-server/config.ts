@@ -1,6 +1,6 @@
 import type { Plugin } from '@web/dev-server-core';
 import type { DevServerConfig } from '@web/dev-server';
-import type { Context, Next } from 'koa';
+import type { Middleware, Context, Next } from 'koa';
 
 import { readdir, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -12,11 +12,13 @@ import { fromRollup } from '@web/dev-server-rollup';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 
 import { getPfeConfig, type PfeConfig } from '../config.js';
-import { importMapGeneratorPlugin, type Options as ImportMapOptions } from './plugins/import-map-generator.js';
+import {
+  importMapGeneratorPlugin,
+  type Options as ImportMapOptions,
+} from './plugins/import-map-generator.js';
 
 import { pfeDevServerPlugin } from './plugins/pfe-dev-server.js';
 
-// @ts-expect-error: looks like this was broken upstream. remove this expect-error directive when they fix it
 const replace = fromRollup(rollupReplace);
 
 type BaseConfig = DevServerConfig & PfeConfig;
@@ -45,9 +47,9 @@ function normalizeOptions(options?: PfeDevServerConfigOptions) {
    * Edge/Corner cases: all other cases must set the `rootDir` option themselves so as to avoid 404s
    */
   config.rootDir = options?.rootDir ?? fileURLToPath(new URL('../../..', import.meta.url))
-    .replace(/node_modules\/$/, '/')
-    .replace(/\/node_modules$/, '/')
-    .replace('//', '/');
+      .replace(/node_modules\/$/, '/')
+      .replace(/\/node_modules$/, '/')
+      .replace('//', '/');
   config.importMapOptions ??= {} as PfeDevServerConfigOptions['importMapOptions'];
   config.importMapOptions!.providers ??= {};
   config.site = { ...config.site, ...options?.site ?? {} };
@@ -55,7 +57,7 @@ function normalizeOptions(options?: PfeDevServerConfigOptions) {
   config.watchFiles ??= '{elements,core}/**/*.{css,html}';
   config.litcssOptions ??= {
     include: /\.css$/,
-    exclude: /(((fonts|demo)|(demo\/.*))\.css$)|(.*(-lightdom.css$))/
+    exclude: /(((fonts|demo)|(demo\/.*))\.css$)|(.*(-lightdom.css$))/,
   };
   return config as Required<PfeDevServerConfigOptions> & { site: Required<PfeConfig['site']> };
 }
@@ -78,6 +80,18 @@ async function cacheBusterMiddleware(ctx: Context, next: Next) {
   }
 }
 
+function liveReloadTsChangesMiddleware(
+  config: ReturnType<typeof normalizeOptions>,
+): Middleware {
+  return function(ctx, next) {
+    if (!ctx.path.includes('node_modules') && ctx.path.match(new RegExp(`/^${config?.elementsDir}\\/.*.js/`))) {
+      ctx.redirect(ctx.path.replace('.js', '.ts'));
+    } else {
+      return next();
+    }
+  };
+}
+
 /**
  * Creates a default config for PFE's dev server.
  */
@@ -94,6 +108,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
     middleware: [
       cors,
       cacheBusterMiddleware,
+      liveReloadTsChangesMiddleware(config),
       ...config?.middleware ?? [],
     ],
 
@@ -155,8 +170,8 @@ export async function getPatternflyIconNodemodulesImports(rootUrl: string) {
 
   const specs = await Promise.all(dirs.flatMap(dir =>
     readdir(new URL(`./node_modules/@patternfly/icons/${dir}`, rootUrl))
-      .then(files => files.filter(x => x.endsWith('.js')))
-      .then(icons => icons.flatMap(icon => `@patternfly/icons/${dir}/${icon}`))
+        .then(files => files.filter(x => x.endsWith('.js')))
+        .then(icons => icons.flatMap(icon => `@patternfly/icons/${dir}/${icon}`))
   ));
 
   return Object.fromEntries(specs.flat().map(spec => [spec, `./node_modules/${spec}`]));

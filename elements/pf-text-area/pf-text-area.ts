@@ -11,7 +11,6 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 /**
  * A **text area** component is used for entering a paragraph of text that is longer than one line.
- *
  * @cssprop --pf-c-form-control--Color - {@default var(--pf-global--Color--100, #151515)}
  * @cssprop --pf-c-form-control--FontSize - {@default var(--pf-global--FontSize--md, 1rem)}
  * @cssprop --pf-c-form-control--LineHeight - {@default var(--pf-global--LineHeight--md, 1.5)}
@@ -144,7 +143,10 @@ export class PfTextArea extends LitElement {
 
   static readonly formAssociated = true;
 
-  static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /** Accessible label for the input when no `<label>` element is provided. */
   @property({ reflect: true, attribute: 'accessible-label' }) accessibleLabel?: string;
@@ -177,8 +179,6 @@ export class PfTextArea extends LitElement {
 
   /** Flag to modify height based on contents. */
   @property({ type: Boolean, attribute: 'auto-resize' }) autoResize = false;
-
-  #style?: CSSStyleDeclaration;
 
   #logger = new Logger(this);
 

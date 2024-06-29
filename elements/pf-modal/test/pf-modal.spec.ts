@@ -40,9 +40,9 @@ describe('<pf-modal>', function() {
   it('should upgrade', async function() {
     const el = await createFixture<PfModal>(TEMPLATES.testElement);
     expect(el, 'pf-modal should be an instance of PfModal')
-      .to.be.an.instanceOf(customElements.get('pf-modal'))
-      .and
-      .to.be.an.instanceOf(PfModal);
+        .to.be.an.instanceOf(customElements.get('pf-modal'))
+        .and
+        .to.be.an.instanceOf(PfModal);
   });
 
   // Example test.
@@ -105,7 +105,7 @@ describe('<pf-modal>', function() {
         const el = await createFixture<PfModal>(TEMPLATES.smallModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('calc(100% - 32px)');
+            .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -114,7 +114,7 @@ describe('<pf-modal>', function() {
         const el = await createFixture<PfModal>(TEMPLATES.mediumModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('calc(100% - 32px)');
+            .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -123,7 +123,7 @@ describe('<pf-modal>', function() {
         const el = await createFixture<PfModal>(TEMPLATES.largeModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('calc(100% - 32px)');
+            .to.equal('calc(100% - 32px)');
       });
     });
   });
@@ -138,7 +138,7 @@ describe('<pf-modal>', function() {
         const el = await createFixture<PfModal>(TEMPLATES.smallModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('calc(100% - 32px)');
+            .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -147,7 +147,7 @@ describe('<pf-modal>', function() {
         const el = await createFixture<PfModal>(TEMPLATES.mediumModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('calc(100% - 32px)');
+            .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -156,7 +156,7 @@ describe('<pf-modal>', function() {
         const el = await createFixture<PfModal>(TEMPLATES.largeModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('calc(100% - 32px)');
+            .to.equal('calc(100% - 32px)');
       });
     });
   });
@@ -171,7 +171,7 @@ describe('<pf-modal>', function() {
         const el = await createFixture<PfModal>(TEMPLATES.smallModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('calc(100% - 32px)');
+            .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -180,7 +180,7 @@ describe('<pf-modal>', function() {
         const el = await createFixture<PfModal>(TEMPLATES.mediumModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('calc(100% - 32px)');
+            .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -189,7 +189,7 @@ describe('<pf-modal>', function() {
         const el = await createFixture<PfModal>(TEMPLATES.largeModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('calc(100% - 32px)');
+            .to.equal('calc(100% - 32px)');
       });
     });
   });
@@ -204,7 +204,7 @@ describe('<pf-modal>', function() {
         const el = await createFixture<PfModal>(TEMPLATES.smallModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('calc(100% - 32px)');
+            .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -213,7 +213,7 @@ describe('<pf-modal>', function() {
         const el = await createFixture<PfModal>(TEMPLATES.mediumModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('calc(100% - 32px)');
+            .to.equal('calc(100% - 32px)');
       });
     });
 
@@ -222,7 +222,7 @@ describe('<pf-modal>', function() {
         const el = await createFixture<PfModal>(TEMPLATES.largeModal);
         const modalWindow = el.shadowRoot!.querySelector('#dialog')!;
         expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-          .to.equal('calc(100% - 32px)');
+            .to.equal('calc(100% - 32px)');
       });
     });
   });

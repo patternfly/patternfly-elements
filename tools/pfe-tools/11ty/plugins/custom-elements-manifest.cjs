@@ -29,8 +29,8 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
     // 4. get demos per tagName
     // 5. generate demo record with tagName, slug, title, and filepath per demo
     return Manifest.getAll(options.rootDir)
-      .flatMap(manifest => manifest.getTagNames()
-        .flatMap(tagName => [...manifest.getDemoMetadata(tagName, options), ...extraDemos]));
+        .flatMap(manifest => manifest.getTagNames()
+            .flatMap(tagName => [...manifest.getDemoMetadata(tagName, options), ...extraDemos]));
   });
 
   eleventyConfig.addGlobalData('elements', async function elements() {
@@ -44,19 +44,19 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
     // 2. get manifests from packages, construct manifest objects, associate packages
     // 3. get all tag names from each manifest. construct docs page for tag names w/ associates manifest and package
     return Manifest.getAll(rootDir)
-      .flatMap(manifest =>
-        Array.from(manifest.declarations.values(), decl => {
-          const { tagName } = decl;
-          const elementsDir = options.elementsDir ?? 'elements';
-          const docsTemplatePath = join(process.cwd(), elementsDir, `${tagName}`, 'docs', `${tagName}.md`);
-          return new DocsPage(manifest, {
-            ...options,
-            tagName,
-            // only include the template if it exists
-            ...Object.fromEntries(Object.entries({ docsTemplatePath }).filter(([, path]) =>
-              existsSync(path)))
-          });
-        }));
+        .flatMap(manifest =>
+          Array.from(manifest.declarations.values(), decl => {
+            const { tagName } = decl;
+            const elementsDir = options.elementsDir ?? 'elements';
+            const docsTemplatePath = join(process.cwd(), elementsDir, `${tagName}`, 'docs', `${tagName}.md`);
+            return new DocsPage(manifest, {
+              ...options,
+              tagName,
+              // only include the template if it exists
+              ...Object.fromEntries(Object.entries({ docsTemplatePath }).filter(([, path]) =>
+                existsSync(path))),
+            });
+          }));
   });
 
   // Netlify tends to turn html files into directories with index.html,

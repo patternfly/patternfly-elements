@@ -18,12 +18,17 @@ export class PfeDemoPage {
   ) {
   }
 
-  async navigate({ selector }?: NavigateOptions): Promise<void>
-  async navigate(pathname?: string): Promise<void>
+  async navigate({ selector }?: NavigateOptions): Promise<void>;
+  async navigate(pathname?: string): Promise<void>;
   async navigate(pathnameOrOptions?: string | NavigateOptions): Promise<void> {
-    const selectorOverride = typeof pathnameOrOptions === 'string' ? undefined : pathnameOrOptions?.selector;
-    const pathname = typeof pathnameOrOptions === 'string' ? pathnameOrOptions : `${this.workspace}/${this.tagName.replace('pf-', '')}/demo`;
+    const selectorOverride =
+        typeof pathnameOrOptions === 'string' ? undefined
+      : pathnameOrOptions?.selector;
+    const pathname =
+        typeof pathnameOrOptions === 'string' ? pathnameOrOptions
+      : `${this.workspace}/${this.tagName.replace('pf-', '')}/demo`;
     const url = new URL(pathname, this.origin).toString();
+    // eslint-disable-next-line no-console
     console.log(`NAVIGATING to ${url}`);
     await this.page.goto(url, { waitUntil: 'networkidle' });
     while (await this.page.innerText('body') === 'Not Found') {
@@ -32,10 +37,10 @@ export class PfeDemoPage {
     await this.page.waitForLoadState('domcontentloaded');
     await this.page.$$eval('*', async els =>
       await Promise.all(Array.from(els)
-        .filter(x => x.localName.startsWith('pf-'))
-        .map(x => customElements.whenDefined(x.localName)
-          .then(() =>
-            (x as LitElement)?.updateComplete))));
+          .filter(x => x.localName.startsWith('pf-'))
+          .map(x => customElements.whenDefined(x.localName)
+              .then(() =>
+                (x as LitElement)?.updateComplete))));
     await this.updateComplete(selectorOverride);
     await this.page.waitForTimeout(100);
   }
@@ -60,6 +65,7 @@ export class PfeDemoPage {
       try {
         await this.page.$eval(selector, async (el: LitElement) => el.updateComplete);
       } catch {
+        // eslint-disable-next-line no-console
         console.log(await this.page.innerHTML('body'));
       }
     }

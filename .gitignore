@@ -70,6 +70,7 @@ tools/*/test/**/*.png
 !scripts/**/*.js
 
 !tools/eslint-plugin/index.js
+!tools/eslint-config/**/*.js
 
 *.tgz
 custom-elements.json

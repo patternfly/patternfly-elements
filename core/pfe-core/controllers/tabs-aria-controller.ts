@@ -13,7 +13,7 @@ export interface TabsAriaControllerOptions<Tab, Panel> {
 
 export class TabsAriaController<
   Tab extends HTMLElement = HTMLElement,
-  Panel extends HTMLElement = HTMLElement,
+  Panel extends HTMLElement = HTMLElement
 > implements ReactiveController {
   #logger: Logger;
 
@@ -55,7 +55,9 @@ export class TabsAriaController<
     } else {
       const element = options.getHTMLElement?.();
       if (!element) {
-        throw new Error('TabsController must be instantiated with an HTMLElement or a `getHTMLElement()` option');
+        throw new Error(
+          'TabsController must be instantiated with an HTMLElement or a `getHTMLElement()` option',
+        );
       }
       this.#element = element;
     }
@@ -92,8 +94,10 @@ export class TabsAriaController<
     for (const child of this.#element.children) {
       if (this.#options.isTab(child)) {
         tabs.push(child);
+        child.role ??= 'tab';
       } else if (this.#options.isPanel(child)) {
         panels.push(child);
+        child.role ??= 'tabpanel';
       }
     }
     if (tabs.length > panels.length) {

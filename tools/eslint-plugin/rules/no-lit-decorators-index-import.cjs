@@ -6,7 +6,7 @@ module.exports = {
   meta: {
     type: 'suggestion',
     docs: {
-      description: 'Warns users against importing Lit decorators from decorators.js, without manually tree-shaking',
+      description: `Warns users against importing Lit decorators from decorators.js, without manually tree-shaking`,
     },
     fixable: 'code',
   },
@@ -19,13 +19,13 @@ module.exports = {
             node,
             fix(fixer) {
               return fixer.replaceText(node, node
-                .specifiers
-                .map(({ local: { name } }) =>
-                  `import { ${name} } from 'lit/decorators/${ansiDash(name)}.js';`).join('\n'));
+                  .specifiers
+                  .map(({ local: { name } }) =>
+                    `import { ${name} } from 'lit/decorators/${ansiDash(name)}.js';`).join('\n'));
             },
           });
         }
-      }
+      },
     };
   },
 };

@@ -15,8 +15,8 @@ module.exports = function(eleventyConfig, config = {}) {
   prefix ??= '';
   formatter ??= function(element) {
     return prefix + eleventyConfig.javascriptFunctions
-      .slug(element.textContent)
-      .replace(/[&,+()$~%.'":*?!<>{}]/g, '');
+        .slug(element.textContent)
+        .replace(/[&,+()$~%.'":*?!<>{}]/g, '');
   };
 
   eleventyConfig.addTransform('ids', async function(rawContent, outputPath) {

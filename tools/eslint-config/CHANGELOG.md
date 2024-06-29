@@ -1,5 +1,23 @@
 # @patternfly/eslint-config-elements
 
+## 3.0.0
+
+### Major Changes
+
+- 65079fb: Provide ESLint flat config. Upgrade to ESLint 9.0 to use.
+
+### Patch Changes
+
+- Updated dependencies [65079fb]
+  - @patternfly/eslint-plugin-elements@2.0.0
+
+## 2.0.2
+
+### Patch Changes
+
+- e6ca914: Update dependencies
+- de4cfa4: Update ecmaVersion to 2022
+
 ## 2.0.1
 
 ### Patch Changes

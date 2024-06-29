@@ -13,7 +13,10 @@ import styles from './pf-dropdown-group.css';
 export class PfDropdownGroup extends LitElement {
   static readonly styles = [styles];
 
-  static override readonly shadowRootOptions: ShadowRootInit = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+  static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /**
    * The label for the group of dropdown items.

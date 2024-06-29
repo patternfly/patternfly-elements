@@ -1,7 +1,7 @@
 import type { SinonStub } from 'sinon';
 
 import {
-  Logger
+  Logger,
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: it's either this or break the whole monorepo
 } from '@patternfly/pfe-core/controllers/logger.js';

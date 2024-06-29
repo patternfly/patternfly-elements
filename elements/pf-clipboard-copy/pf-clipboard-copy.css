@@ -128,6 +128,10 @@ textarea {
   height: 100%;
 }
 
+#copy-button {
+  height: calc(100% - var(--pf-c-button--PaddingTop) - var(--pf-c-button--PaddingBottom));
+}
+
 .container:is(.compact, .inline) #input-group {
   display: contents;
 }

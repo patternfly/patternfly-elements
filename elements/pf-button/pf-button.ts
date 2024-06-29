@@ -5,6 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import '@patternfly/elements/pf-icon/pf-icon.js';
 import '@patternfly/elements/pf-spinner/pf-spinner.js';
@@ -29,18 +30,14 @@ export type ButtonVariant = (
  * process, or creating a new object. Buttons can also be used to take a user to a
  * new location, like another page inside of a web application, or an external site
  * such as help or documentation..
- *
  * @summary Allows users to perform an action when triggered
- *
  * @cssprop {<length>} --pf-c-button--FontSize   {@default `1rem`}
  * @cssprop            --pf-c-button--FontWeight {@default `400`}
  * @cssprop {<number>} --pf-c-button--LineHeight {@default `1.5`}
- *
  * @cssprop {<length>} --pf-c-button--PaddingTop    {@default `0.375rem`}
  * @cssprop {<length>} --pf-c-button--PaddingLeft   {@default `1rem`}
  * @cssprop {<length>} --pf-c-button--PaddingBottom {@default `0.375rem`}
  * @cssprop {<length>} --pf-c-button--PaddingRight  {@default `1rem`}
- *
  * @cssprop {<length>|<percentage>} --pf-c-button--BorderRadius  {@default `3px`}
  * @cssprop {<color>}  --pf-c-button--after--BorderColor         {@default `transparent`}
  * @cssprop {<length>} --pf-c-button--after--BorderRadius        {@default `3px`}
@@ -48,7 +45,6 @@ export type ButtonVariant = (
  * @cssprop {<length>} --pf-c-button--active--after--BorderWidth {@default `2px`}
  * @cssprop {<length>} --pf-c-button--hover--after--BorderWidth  {@default `2px`}
  * @cssprop {<length>} --pf-c-button--focus--after--BorderWidth  {@default `2px`}
- *
  * @cssprop {<color>}  --pf-c-button--m-primary--Color                   {@default `#fff`}
  * @cssprop {<color>}  --pf-c-button--m-primary--BackgroundColor         {@default `#06c`}
  * @cssprop {<color>}  --pf-c-button--m-primary--active--Color           {@default `#fff`}
@@ -57,7 +53,6 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--m-primary--focus--BackgroundColor  {@default `#004080`}
  * @cssprop {<color>}  --pf-c-button--m-primary--hover--Color            {@default `#fff`}
  * @cssprop {<color>}  --pf-c-button--m-primary--hover--BackgroundColor  {@default `#004080`}
- *
  * @cssprop {<color>}  --pf-c-button--m-secondary--Color                   {@default `#06c`}
  * @cssprop {<color>}  --pf-c-button--m-secondary--BackgroundColor         {@default `transparent`}
  * @cssprop {<color>}  --pf-c-button--m-secondary--active--Color           {@default `#06c`}
@@ -69,7 +64,6 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--m-secondary--hover--Color            {@default `#06c`}
  * @cssprop {<color>}  --pf-c-button--m-secondary--hover--BackgroundColor  {@default `transparent`}
  * @cssprop {<color>}  --pf-c-button--m-secondary--hover--BorderColor      {@default `#06c`}
- *
  * @cssprop {<color>}  --pf-c-button--m-tertiary--Color                   {@default `#151515`}
  * @cssprop {<color>}  --pf-c-button--m-tertiary--BackgroundColor         {@default `transparent`}
  * @cssprop {<color>}  --pf-c-button--m-tertiary--active--Color           {@default `#151515`}
@@ -81,7 +75,6 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--m-tertiary--hover--Color            {@default `#151515`}
  * @cssprop {<color>}  --pf-c-button--m-tertiary--hover--BackgroundColor  {@default `transparent`}
  * @cssprop {<color>}  --pf-c-button--m-tertiary--hover--BorderColor      {@default `#151515`}
- *
  * @cssprop {<color>}  --pf-c-button--m-danger--Color                   {@default `#fff`}
  * @cssprop {<color>}  --pf-c-button--m-danger--BackgroundColor         {@default `#c9190b`}
  * @cssprop {<color>}  --pf-c-button--m-danger--active--Color           {@default `#fff`}
@@ -90,7 +83,6 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--m-danger--focus--BackgroundColor  {@default `#a30000`}
  * @cssprop {<color>}  --pf-c-button--m-danger--hover--Color            {@default `#fff`}
  * @cssprop {<color>}  --pf-c-button--m-danger--hover--BackgroundColor  {@default `#a30000`}
- *
  * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--Color                   {@default `#c9190b`}
  * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--BackgroundColor         {@default `transparent`}
  * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--BorderColor             {@default `#c9190b`}
@@ -103,7 +95,6 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--hover--Color            {@default `#a30000`}
  * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--hover--BackgroundColor  {@default `transparent`}
  * @cssprop {<color>}  --pf-c-button--m-secondary--m-danger--hover--BorderColor      {@default `#c9190b`}
- *
  * @cssprop {<color>}  --pf-c-button--m-control--disabled--BackgroundColor        {@default `#f0f0f0`}
  * @cssprop {<length>} --pf-c-button--m-control--BorderRadius                     {@default `0`}
  * @cssprop {<length>} --pf-c-button--m-control--after--BorderWidth               {@default `1px`}
@@ -125,11 +116,9 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--m-control--hover--BackgroundColor           {@default `#fff`}
  * @cssprop {<color>}  --pf-c-button--m-control--hover--BorderBottomColor         {@default `#06c`}
  * @cssprop {<length>} --pf-c-button--m-control--hover--after--BorderBottomWidth  {@default `2px`}
- *
  * @cssprop {<color>}  --pf-c-button--disabled--Color              {@default `#6a6e73`}
  * @cssprop {<color>}  --pf-c-button--disabled--BackgroundColor    {@default `#d2d2d2`}
  * @cssprop {<color>}  --pf-c-button--disabled--after--BorderColor {@default `transparent`}
- *
  * @cssprop {<color>}  --pf-c-button--m-warning--Color                   {@default `#151515`}
  * @cssprop {<color>}  --pf-c-button--m-warning--BackgroundColor         {@default `#f0ab00`}
  * @cssprop {<color>}  --pf-c-button--m-warning--active--Color           {@default `#151515`}
@@ -138,7 +127,6 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--m-warning--focus--BackgroundColor  {@default `#c58c00`}
  * @cssprop {<color>}  --pf-c-button--m-warning--hover--Color            {@default `#151515`}
  * @cssprop {<color>}  --pf-c-button--m-warning--hover--BackgroundColor  {@default `#c58c00`}
- *
  * @cssprop {<color>}  --pf-c-button--m-plain--BackgroundColor         {@default `transparent`}
  * @cssprop {<color>}  --pf-c-button--m-plain--Color                   {@default `#6a6e73`}
  * @cssprop {<color>}  --pf-c-button--m-plain--hover--BackgroundColor  {@default `transparent`}
@@ -147,12 +135,9 @@ export type ButtonVariant = (
  * @cssprop {<color>}  --pf-c-button--m-plain--focus--Color            {@default `#151515`}
  * @cssprop {<color>}  --pf-c-button--m-plain--active--BackgroundColor {@default `transparent`}
  * @cssprop {<color>}  --pf-c-button--m-plain--active--Color           {@default `#151515`}
- *
  * @cssprop {<color>}  --pf-c-button--m-plain--disabled--Color           {@default `#d2d2d2`}
  * @cssprop {<color>}  --pf-c-button--m-plain--disabled--BackgroundColor {@default `transparent`}
- *
  * @attr {string} loading-label - ARIA label for the loading indicator {@default `'loading'`}
- *
  */
 @customElement('pf-button')
 export class PfButton extends LitElement {
@@ -219,6 +204,8 @@ export class PfButton extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'button' });
 
+  #slots = new SlotController(this, 'icon', null);
+
   get #disabled() {
     return this.disabled || this.#internals.formDisabled;
   }
@@ -236,7 +223,7 @@ export class PfButton extends LitElement {
   }
 
   protected override render() {
-    const hasIcon = !!this.icon || !!this.loading;
+    const hasIcon = !!this.icon || !!this.loading || this.#slots.hasSlotted('icon');
     const { warning, variant, danger, loading, plain, inline, block, size } = this;
     const disabled = this.#disabled;
     return html`
@@ -288,12 +275,20 @@ export class PfButton extends LitElement {
       case ' ':
         event.preventDefault();
         event.stopPropagation();
-        if (this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }))) {
+        if (this.dispatchEvent(new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+        }))) {
           this.#onClick();
         }
         break;
       case 'Enter':
-        if (this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }))) {
+        if (this.dispatchEvent(new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+        }))) {
           this.#onClick();
         }
     }

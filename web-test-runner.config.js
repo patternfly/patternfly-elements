@@ -8,6 +8,13 @@ export default pfeTestRunnerConfig({
   // uncomment to get default wtr reporter
   reporter: 'default',
   plugins: [
-    a11ySnapshotPlugin()
+    a11ySnapshotPlugin(),
+  ],
+  middleware: [
+    async function(ctx) {
+      if (ctx.path.match(/@patternfly\/icons\/.*\.js/)) {
+        ctx.redirect(`/node_modules/${ctx.path}`);
+      }
+    },
   ],
 });

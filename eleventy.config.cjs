@@ -9,7 +9,8 @@ const HTMLExamplePlugin = require('./docs/_plugins/html-example.cjs');
 const CEMRenderPlugin = require('./docs/_plugins/cem-render.cjs');
 
 const AnchorsPlugin = require('@patternfly/pfe-tools/11ty/plugins/anchors.cjs');
-const CustomElementsManifestPlugin = require('@patternfly/pfe-tools/11ty/plugins/custom-elements-manifest.cjs');
+const CustomElementsManifestPlugin =
+  require('@patternfly/pfe-tools/11ty/plugins/custom-elements-manifest.cjs');
 const OrderTagsPlugin = require('@patternfly/pfe-tools/11ty/plugins/order-tags.cjs');
 const TodosPlugin = require('@patternfly/pfe-tools/11ty/plugins/todos.cjs');
 const TocPlugin = require('@patternfly/pfe-tools/11ty/plugins/table-of-contents.cjs');
@@ -51,7 +52,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter('prettyDate', function(dateStr, options = {}) {
     const { dateStyle = 'medium' } = options;
     return new Intl.DateTimeFormat('en-US', { dateStyle })
-      .format(new Date(dateStr));
+        .format(new Date(dateStr));
   });
 
   /** fancy syntax highlighting with diff support */
@@ -78,15 +79,15 @@ module.exports = function(eleventyConfig) {
     exclude: /\/components\/.*\/demo\//,
     formatter($, existingids) {
       if (
-        !existingids.includes($.attr('id')) &&
-        $.attr('slot') &&
-        $.closest('pf-card')
+        !existingids.includes($.attr('id'))
+        && $.attr('slot')
+        && $.closest('pf-card')
       ) {
         return null;
       } else {
         return eleventyConfig.javascriptFunctions
-          .slug($.text())
-          .replace(/[&,+()$~%.'":*?!<>{}]/g, '');
+            .slug($.text())
+            .replace(/[&,+()$~%.'":*?!<>{}]/g, '');
       }
     },
   });

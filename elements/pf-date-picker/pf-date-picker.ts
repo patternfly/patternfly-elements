@@ -5,7 +5,6 @@ import { property } from 'lit/decorators/property.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 import '@patternfly/elements/pf-popover/pf-popover.js';
-import { ComposedEvent } from '@patternfly/pfe-core/core.js';
 import { PfPopover } from '@patternfly/elements/pf-popover/pf-popover.js';
 import { bound } from '@patternfly/pfe-core/decorators.js';
 import { query } from 'lit/decorators/query.js';
@@ -16,7 +15,7 @@ import {
   getDateValues,
   getDatePatternFromLocale,
   getRegexPattern,
-  getMonthNamesFromLocale
+  getMonthNamesFromLocale,
 } from './date-picker-helper.js';
 import styles from './pf-date-picker.css';
 import './pf-previous-button.js';
@@ -34,15 +33,15 @@ import { DayChangeEvent, FocusChangeEvent, KeyboardNavigationFocusEvent } from '
  * @slot - Place element content here
  */
 
-interface ErrorMessages{
+interface ErrorMessages {
   inValid: string;
   lessThanMinDate: string;
   greaterThanMaxDate: string;
 }
 
-export class DateChangeEvent extends ComposedEvent {
+export class DateChangeEvent extends Event {
   constructor(public event: Event, public value: Date | null ) {
-    super('selectedDate');
+    super('selectedDate', { bubbles: true, cancelable: true });
   }
 }
 
@@ -58,7 +57,7 @@ export class PfDatePicker extends LitElement {
   private errorMessages: ErrorMessages = {
     inValid: 'Invalid date',
     lessThanMinDate: 'Date is before the allowable range.',
-    greaterThanMaxDate: 'Date is after the allowable range.'
+    greaterThanMaxDate: 'Date is after the allowable range.',
   };
 
   @state() private isDateValid = true; // Checks if the date enetered by user in the input box is valid or not
@@ -68,26 +67,65 @@ export class PfDatePicker extends LitElement {
   @query('#date-input') _textInput!: HTMLInputElement; // Date picker input box reference
   @query('#popover') private _popover!: PfPopover; // Popover reference
 
+
   // ------------------------Input properties from parent-------------------------------//
   // -----------[***Only these properties can be used to pass data from parent***] ------------ //
-  @property({ reflect: true, attribute: 'min-date' }) minDate: Date = new Date(1900, 0, 1); // Default minimum valid date set as 1st January 1900
-  @property({ reflect: true, attribute: 'max-date' }) maxDate: Date = new Date(9999, 11, 31); // Default maximum valid date set as 31st December 9999
 
-  @property({ reflect: true, attribute: 'input-date' }) inputDateWithUniqueTimeStamp!: string; // Handle date value with a unique time stamp that parent sends to the component.
+  // Default minimum valid date set as 1st January 1900
+  @property({
+    reflect: true,
+    attribute: 'min-date',
+  }) minDate: Date = new Date(1900, 0, 1);
+
+  // Default maximum valid date set as 31st December 9999
+  @property({
+    reflect: true,
+    attribute: 'max-date',
+  }) maxDate: Date = new Date(9999, 11, 31);
+
+  // Handle date value with a unique time stamp that parent sends to the component.
+  @property({
+    reflect: true,
+    attribute: 'input-date',
+  }) inputDateWithUniqueTimeStamp!: string;
   // The format: inputDateWithUniqueTimeStamp =  (new Date(2024, 3, 2)).toDateString() +'#'+ (Date.now() + Math.random()) //
 
-  @property({ reflect: true, attribute: 'disabled' }) isDisabled = false; // Handles if the date picker is disabled or not
-  @property({ reflect: true, attribute: 'localization-language-code' }) localizationLanguageCode!: string; // Language code for date format based on localization
-  @property({ reflect: true, attribute: 'translation-language-code' }) translationLanguageCode!: string; // Language code for translation of date input and month names
-  @property({ reflect: true, attribute: 'date-format-input' }) dateFormatInput!: // Date format input from parent
-  'DD/MM/YYYY' | 'MM/DD/YYYY' | 'YYYY/MM/DD' | 'YYYY/DD/MM' | 'DD-MM-YYYY' | 'MM-DD-YYYY' | 'YYYY-MM-DD' |
+  // Handles if the date picker is disabled or not
+  @property({
+    reflect: true,
+    attribute: 'disabled',
+  }) isDisabled = false;
+
+  // Language code for date format based on localization
+  @property({
+    reflect: true,
+    attribute: 'localization-language-code',
+  }) localizationLanguageCode!: string;
+
+  // Language code for translation of date input and month names
+  @property({
+    reflect: true,
+    attribute: 'translation-language-code',
+  }) translationLanguageCode!: string;
+
+  // Date format input from parent
+  @property({
+    reflect: true,
+    attribute: 'date-format-input',
+  }) dateFormatInput!: 'MM-DD-YYYY' | 'YYYY-MM-DD' |
+  'DD/MM/YYYY' | 'MM/DD/YYYY' | 'YYYY/MM/DD' | 'YYYY/DD/MM' | 'DD-MM-YYYY' |
   'YYYY-DD-MM' | 'DD.MM.YYYY' | 'MM.DD.YYYY' | 'YYYY.MM.DD' | 'YYYY.DD.MM';
 
-  @property({ reflect: true, attribute: 'placeholder' }) placeholderTextWithUniqueCode!: string; // Placeholder from parent
+  // Placeholder from parent
+  @property({
+    reflect: true,
+    attribute: 'placeholder',
+  }) placeholderTextWithUniqueCode!: string;
   // The format: placeholderTextWithUniqueCode = 'placeholder-text' + '#' + Math.random();
 
   // ----------------------Input properties from parent ends--------------------------------- //
   // -------------------------------------------------------//
+
 
   // 'current' refers to the temporary values of Month and Year the user selected before day is selected
   // and the input box is updated
@@ -108,7 +146,9 @@ export class PfDatePicker extends LitElement {
   @property() dayToBeFocused!: number; // Handles the day that needs to be focused
   @property() dayToBeFocusedRef!: HTMLButtonElement | undefined; // Reference of the day that needs to be focused
   @property() firstDayToBeFocused!: number; // Handles the day to be focused on popover open
-  @property() dateFormat: string = getDatePatternFromLocale(this.localizationLanguageCode, this.dateFormatInput); // Date format
+  @property() dateFormat: string =
+    getDatePatternFromLocale(this.localizationLanguageCode, this.dateFormatInput); // Date format
+
   @property() inputDate!: Date | null; // Handle and format date input value parent sends to the component
   private minYear: number = new Date(this.minDate).getFullYear(); // Minimum Valid Year
   private maxYear: number = new Date(this.maxDate).getFullYear(); // Maximum Valid Year
@@ -125,7 +165,10 @@ export class PfDatePicker extends LitElement {
       this.monthNames = getMonthNamesFromLocale(this.translationLanguageCode);
     }
     if (this.dateFormatInput || this.localizationLanguageCode) {
-      this.dateFormat = getDatePatternFromLocale(this.localizationLanguageCode, this.dateFormatInput);
+      this.dateFormat = getDatePatternFromLocale(
+        this.localizationLanguageCode,
+        this.dateFormatInput
+      );
     }
   }
 
@@ -154,6 +197,7 @@ export class PfDatePicker extends LitElement {
     const invalidIconClasses = { isDateInvalid: !this.isDateValid, hidden: this.isDateValid };
     const invalidTextClasses = { showInvalidText: !this.isDateValid, hidden: this.isDateValid };
     const invalidInputClasses = { invalidDateInput: !this.isDateValid };
+
 
     return html`
       <div class="date-picker-container">
@@ -506,12 +550,18 @@ export class PfDatePicker extends LitElement {
       // const regex = /^[0-9./-]*$/g;  // Commented for reference
 
       // Parse the date parts to integers
-      const dateValues = getDateValues(dateString, this.localizationLanguageCode, this.dateFormatInput);
+      const dateValues = getDateValues(
+        dateString,
+        this.localizationLanguageCode,
+        this.dateFormatInput
+      );
       const selectedDayInput: number = dateValues.day;
       const selectedMonthInput: number = dateValues.month;
       const selectedYearInput: number = dateValues.year;
       const date: Date = new Date(selectedYearInput, selectedMonthInput - 1, selectedDayInput);
-      const regex = new RegExp(getRegexPattern(this.localizationLanguageCode, this.dateFormatInput));
+      const regex = new RegExp(
+        getRegexPattern(this.localizationLanguageCode, this.dateFormatInput)
+      );
 
       if (date.toString() === 'Invalid Date') {
         this.errorMessage = this.errorMessages.inValid;
@@ -534,14 +584,15 @@ export class PfDatePicker extends LitElement {
       }
 
       // Check the ranges of month and year
-      if (selectedYearInput < this.minYear || selectedYearInput > this.maxYear ||
-          selectedMonthInput === 0 || selectedMonthInput > 12) {
+      if (selectedYearInput < this.minYear || selectedYearInput > this.maxYear
+          || selectedMonthInput === 0 || selectedMonthInput > 12) {
         this.errorMessage = this.errorMessages.inValid;
         return false;
       }
 
       // Adjust for leap years
-      if (selectedYearInput % 400 === 0 || (selectedYearInput % 100 !== 0 && selectedYearInput % 4 === 0)) {
+      if (selectedYearInput % 400 === 0 || (
+        selectedYearInput % 100 !== 0 && selectedYearInput % 4 === 0)) {
         monthLength[1] = 29;
       }
 
@@ -573,7 +624,13 @@ export class PfDatePicker extends LitElement {
       mm = `0${mm}`;
     }
 
-    this.formattedDate = getDateFormat(dd, mm, yyyy, this.localizationLanguageCode, this.dateFormatInput);
+    this.formattedDate = getDateFormat(
+      dd,
+      mm,
+      yyyy,
+      this.localizationLanguageCode,
+      this.dateFormatInput
+    );
   }
 
   /* The functions #removePFPopoverDialogFromDOM() and #addPFPopoverDialogToDOM() are added in in order to prevent
@@ -584,11 +641,13 @@ export class PfDatePicker extends LitElement {
   horizontal scroll issues, particularly when the popover is positioned at the far right edge of the page. */
 
   #removePFPopoverDialogFromDOM() {
-    this._popover?.shadowRoot?.querySelector('dialog#popover')?.setAttribute('style', 'display:none');
+    this._popover?.shadowRoot?.querySelector('dialog#popover')?.
+        setAttribute('style', 'display:none');
   }
 
   #addPFPopoverDialogToDOM() {
-    this._popover?.shadowRoot?.querySelector('dialog#popover')?.setAttribute('style', 'display:block');
+    this._popover?.shadowRoot?.querySelector('dialog#popover')?.
+        setAttribute('style', 'display:block');
   }
 }
 

@@ -7,17 +7,16 @@ import styles from './pf-month-select.css';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { getMonthNamesFromLocale } from './date-picker-helper.js';
-import { ComposedEvent } from '@patternfly/pfe-core/core.js';
 
-export class MonthChangeEvent extends ComposedEvent {
+export class MonthChangeEvent extends Event {
   constructor(public event: Event, public name: string, public index: number) {
-    super('currentMonth');
+    super('currentMonth', { bubbles: true, cancelable: true });
   }
 }
 
-export class MonthPopupStateChangeEvent extends ComposedEvent {
+export class MonthPopupStateChangeEvent extends Event {
   constructor(public event: Event, public isExpanded: boolean) {
-    super('monthExpandState');
+    super('monthExpandState', { bubbles: true, cancelable: true });
   }
 }
 
@@ -111,7 +110,9 @@ export class PfMonthSelect extends LitElement {
     this.currentMonthIndex = monthIndex;
     if (monthName && (monthName.toString() !== this.currentMonthName)) {
       this.currentMonthName = monthName.toString();
-      this.dispatchEvent(new MonthChangeEvent(event, this.currentMonthName, this.currentMonthIndex));
+      this.dispatchEvent(
+        new MonthChangeEvent(event, this.currentMonthName, this.currentMonthIndex)
+      );
     }
     this.isMonthExpanded = !this.isMonthExpanded;
   }

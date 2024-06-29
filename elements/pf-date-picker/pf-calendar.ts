@@ -7,17 +7,16 @@ import {
   getFormattedDate,
   getMonthNamesFromLocale,
   defaultWeekdays,
-  defaultWeeks
+  defaultWeeks,
 } from './date-picker-helper.js';
-import { ComposedEvent } from '@patternfly/pfe-core/core.js';
 
-export interface FocusedDateValues{
+export interface FocusedDateValues {
   day: number;
   month: number;
   year: number;
 }
 
-export interface CalendarDateValues{
+export interface CalendarDateValues {
   day: number;
   month: number;
   year: number;
@@ -29,21 +28,21 @@ export interface CalendarDateValues{
  * @slot - Place element content here
  */
 
-export class DayChangeEvent extends ComposedEvent {
+export class DayChangeEvent extends Event {
   constructor(public event: Event, public day: number, public month: number, public year: number) {
-    super('daySelected');
+    super('daySelected', { bubbles: true, cancelable: true });
   }
 }
 
-export class FocusChangeEvent extends ComposedEvent {
+export class FocusChangeEvent extends Event {
   constructor(public dateToBeFocusedRef: HTMLButtonElement | undefined) {
-    super('setDateFocus');
+    super('setDateFocus', { bubbles: true, cancelable: true });
   }
 }
 
-export class KeyboardNavigationFocusEvent extends ComposedEvent {
+export class KeyboardNavigationFocusEvent extends Event {
   constructor(public event: Event, public day: number, public month: number, public year: number) {
-    super('onCalendarKeydown');
+    super('onCalendarKeydown', { bubbles: true, cancelable: true });
   }
 }
 
@@ -84,7 +83,9 @@ export class PfCalendar extends LitElement {
   }
 
   render() {
-    this.focusedDateValues = getFormattedDate(new Date(this.currentYear, this.currentMonth, this.dayToBeFocused));
+    this.focusedDateValues = getFormattedDate(
+      new Date(this.currentYear, this.currentMonth, this.dayToBeFocused)
+    );
 
     // Get the total number of days of the current month
     const totalDays: number = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
@@ -93,7 +94,8 @@ export class PfCalendar extends LitElement {
     const firstDay: number = new Date(this.currentYear, this.currentMonth, 1).getDay();
 
     // Get the last date of the previous month
-    const previousMonthLastDate: number = new Date(this.currentYear, this.currentMonth, 0).getDate();
+    const previousMonthLastDate: number =
+      new Date(this.currentYear, this.currentMonth, 0).getDate();
 
     // Get the number of weeks in a month
     this.weeks = this.#getNoOfWeeks(this.currentYear, this.currentMonth);
@@ -113,7 +115,7 @@ export class PfCalendar extends LitElement {
                 day: (previousMonthLastDate - (firstDay - 1) + weekDay),
                 month: this.currentMonth - 1,
                 year: this.currentYear,
-                isCurrentMonth: false
+                isCurrentMonth: false,
               };
               calendarDayTemplate = this.#renderCalendarDates(dateValue);
             } else if (day > totalDays) {
@@ -122,7 +124,7 @@ export class PfCalendar extends LitElement {
                 day: nextMonthPointer + 1,
                 month: this.currentMonth + 1,
                 year: this.currentYear,
-                isCurrentMonth: false
+                isCurrentMonth: false,
               };
               calendarDayTemplate = this.#renderCalendarDates(dateValue);
               nextMonthPointer++;
@@ -132,7 +134,7 @@ export class PfCalendar extends LitElement {
                 day: day,
                 month: this.currentMonth,
                 year: this.currentYear,
-                isCurrentMonth: true
+                isCurrentMonth: true,
               };
               calendarDayTemplate = this.#renderCalendarDates(dateValue);
               day++;
@@ -146,22 +148,24 @@ export class PfCalendar extends LitElement {
 
   // Function to render the days of the calendar
   #renderCalendarDates(value: CalendarDateValues) {
-    const isDayToBeFocused: boolean = ((value.day === this.dayToBeFocused) &&
-      (value.month === this.focusedDateValues?.month) &&
-      (value.year === this.focusedDateValues?.year));
+    const isDayToBeFocused: boolean = ((value.day === this.dayToBeFocused)
+      && (value.month === this.focusedDateValues?.month)
+      && (value.year === this.focusedDateValues?.year));
 
     const selectedDate: Date = new Date(this.dateSelected);
-    const isToday: boolean = ((value.day === this.currentDate.getDate()) &&
-      (value.month === this.currentDate.getMonth()) &&
-      (value.year === this.currentDate.getFullYear()));
+    const isToday: boolean = ((value.day === this.currentDate.getDate())
+      && (value.month === this.currentDate.getMonth())
+      && (value.year === this.currentDate.getFullYear()));
 
-    const isSelectedDay: boolean = ((value.day === selectedDate?.getDate()) &&
-      (value.month === selectedDate?.getMonth()) &&
-      (value.year === selectedDate?.getFullYear()));
+    const isSelectedDay: boolean = ((value.day === selectedDate?.getDate())
+      && (value.month === selectedDate?.getMonth())
+      && (value.year === selectedDate?.getFullYear()));
 
     const dateRendering = new Date(value.year, value.month, value.day);
     const isDateInvalid = dateRendering.toString() === 'Invalid Date';
-    const isDateDisabled: boolean = isDateInvalid || dateRendering < this.minDate || dateRendering > this.maxDate;
+    const isDateDisabled: boolean = isDateInvalid
+      || dateRendering < this.minDate || dateRendering > this.maxDate;
+
 
     const dateValue = html`<div class="date-picker-table-col">
                   <pf-button 
@@ -237,10 +241,20 @@ export class PfCalendar extends LitElement {
         break;
     }
 
-    if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    if (
+      event.key === 'ArrowUp'
+        || event.key === 'ArrowDown'
+        || event.key === 'ArrowLeft'
+        || event.key === 'ArrowRight'
+    ) {
       this.focusedDateValues = getFormattedDate(date);
-      this.dispatchEvent(new KeyboardNavigationFocusEvent(event,
-        this.focusedDateValues.day, this.focusedDateValues.month, this.focusedDateValues.year));
+      this.dispatchEvent(new KeyboardNavigationFocusEvent(
+        event,
+        this.focusedDateValues.day,
+        this.focusedDateValues.month,
+        this.focusedDateValues.year
+      )
+      );
     }
   }
 

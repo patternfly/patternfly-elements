@@ -1,13 +1,12 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { ComposedEvent } from '@patternfly/pfe-core/core.js';
 
 import styles from './pf-next-button.css';
 
-export class NextButtonClickEvent extends ComposedEvent {
+export class NextButtonClickEvent extends Event {
   constructor(public event: Event, public month: number, public year: number) {
-    super('nextMonthAndYear');
+    super('nextMonthAndYear', { bubbles: true, cancelable: true });
   }
 }
 

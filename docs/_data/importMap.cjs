@@ -62,16 +62,6 @@ const LIT_DEPS = [
   },
 ];
 
-const PWA_DEPS = [
-  {
-    target: `pwa-helpers@${PWA_HELPER_VERSION}`,
-    subpaths: [
-      '.',
-      './router.js',
-    ],
-  },
-];
-
 module.exports = async function() {
   const { Generator } = await import('@jspm/generator');
 
@@ -90,7 +80,6 @@ module.exports = async function() {
     'element-internals-polyfill',
     `fuse.js@${FUSE_VERSION}`,
     ...LIT_DEPS,
-    ...PWA_DEPS,
   ]);
 
   const map = generator.getMap();

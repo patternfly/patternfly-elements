@@ -16,7 +16,6 @@ function readPackageVersion(module) {
 const LIT_VERSION = readPackageVersion('lit');
 const FUSE_VERSION = readPackageVersion('fuse.js');
 const PRISM_VERSION = readPackageVersion('prismjs');
-const PWA_HELPER_VERSION = readPackageVersion('pwa-helpers');
 
 const LIT_DEPS = [
   {

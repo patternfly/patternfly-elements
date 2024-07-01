@@ -32,6 +32,7 @@
     "./11ty/plugins/table-of-contents.cjs": "./11ty/plugins/table-of-contents.cjs",
     "./11ty/plugins/todos.cjs": "./11ty/plugins/todos.cjs",
     "./react/generate-wrappers.js": "./react/generate-wrappers.js",
+    "./ssr/*": "./ssr/*",
     "./test/a11y-snapshot.js": "./test/a11y-snapshot.js",
     "./test/config.js": "./test/config.js",
     "./test/create-fixture.js": "./test/create-fixture.js",
@@ -40,7 +41,8 @@
     "./test/render-to-string.js": "./test/render-to-string.js",
     "./test/stub-logger.js": "./test/stub-logger.js",
     "./test/utils.js": "./test/utils.js",
-    "./typescript/transformers/css-imports.cjs": "./typescript/transformers/css-imports.cjs"
+    "./typescript/transformers/css-imports.cjs": "./typescript/transformers/css-imports.cjs",
+    "./typescript/transformers/static-version.cjs": "./typescript/transformers/static-version.cjs"
   },
   "contributors": [
     "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",
@@ -66,8 +68,9 @@
     "@custom-elements-manifest/analyzer": "^0.5.7",
     "@jspm/generator": "^2.0.1",
     "@koa/router": "^12.0.1",
+    "@lit-labs/ssr": "^3.2.2",
     "@open-wc/testing": "^4.0.0",
-    "@playwright/test": "^1.43.0",
+    "@playwright/test": "^1.44.0",
     "@rollup/plugin-replace": "^5.0.5",
     "@web/dev-server": "^0.4.4",
     "@web/dev-server-esbuild": "^1.0.2",

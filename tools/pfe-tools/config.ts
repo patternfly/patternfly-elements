@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import slugify from 'slugify';
 
-interface SiteOptions {
+export interface SiteOptions {
   /** The site's default page description */
   description?: string;
   /** URL to the site's favicon */

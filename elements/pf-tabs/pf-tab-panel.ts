@@ -11,9 +11,7 @@ import styles from './pf-tab-panel.css';
 
 /**
  * @slot - Tab panel content
- *
  * @cssprop {<color>} --pf-c-tab-content--m-light-300 {@default `#f0f0f0`}
- *
  * @csspart container - container for the panel content
  */
 @customElement('pf-tab-panel')

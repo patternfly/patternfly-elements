@@ -1,4 +1,4 @@
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import { isServer, type ReactiveController, type ReactiveControllerHost } from 'lit';
 
 export interface ListboxAccessibilityController<
   Item extends HTMLElement
@@ -56,7 +56,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     if (!constructingAllowed) {
       throw new Error('ListboxController must be constructed with `ListboxController.of()`');
     }
-    if (!(host instanceof HTMLElement) && typeof _options.getHTMLElement !== 'function') {
+    if (!isServer
+        && !(host instanceof HTMLElement)
+        && typeof _options.getHTMLElement !== 'function') {
       throw new Error(
         `ListboxController requires the host to be an HTMLElement, or for the initializer to include a \`getHTMLElement()\` function`,
       );

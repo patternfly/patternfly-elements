@@ -1,4 +1,9 @@
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import {
+  isServer,
+  type ReactiveController,
+  type ReactiveControllerHost,
+  type LitElement,
+} from 'lit';
 
 function isARIAMixinProp(key: string): key is keyof ARIAMixin {
   return key === 'role' || key.startsWith('aria');
@@ -130,23 +135,27 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaActiveDescendantElement: Element | null = null;
   /** WARNING: be careful of cross-root ARIA browser support */
-  @aria ariaControlsElements: Element | null = null;
+  @aria ariaControlsElements: Element[] | null = null;
   /** WARNING: be careful of cross-root ARIA browser support */
-  @aria ariaDescribedByElements: Element | null = null;
+  @aria ariaDescribedByElements: Element[] | null = null;
   /** WARNING: be careful of cross-root ARIA browser support */
-  @aria ariaDetailsElements: Element | null = null;
+  @aria ariaDetailsElements: Element[] | null = null;
   /** WARNING: be careful of cross-root ARIA browser support */
-  @aria ariaErrorMessageElements: Element | null = null;
+  @aria ariaErrorMessageElements: Element[] | null = null;
   /** WARNING: be careful of cross-root ARIA browser support */
-  @aria ariaFlowToElements: Element | null = null;
+  @aria ariaFlowToElements: Element[] | null = null;
   /** WARNING: be careful of cross-root ARIA browser support */
-  @aria ariaLabelledByElements: Element | null = null;
+  @aria ariaLabelledByElements: Element[] | null = null;
   /** WARNING: be careful of cross-root ARIA browser support */
-  @aria ariaOwnsElements: Element | null = null;
+  @aria ariaOwnsElements: Element[] | null = null;
 
   /** True when the control is disabled via it's containing fieldset element */
   get formDisabled() {
-    return this.element?.matches(':disabled') || this._formDisabled;
+    if (isServer) {
+      return this._formDisabled;
+    } else {
+      return this.element?.matches(':disabled') || this._formDisabled;
+    }
   }
 
   get labels() {
@@ -166,7 +175,13 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   }
 
   private get element() {
-    return this.host instanceof HTMLElement ? this.host : this.options?.getHTMLElement?.();
+    if (isServer) {
+      // FIXME(bennyp): a little white lie, which may break
+      // when the controller is applied to non-lit frameworks.
+      return this.host as LitElement;
+    } else {
+      return this.host instanceof HTMLElement ? this.host : this.options?.getHTMLElement?.();
+    }
   }
 
   private internals!: ElementInternals;

@@ -31,6 +31,17 @@
   </div>
 
   {% htmlexample %}
+  <style>
+    .visually-hidden-class {
+      clip: rect(0 0 0 0); 
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap; 
+      width: 1px;
+    }
+  </style>
   <pf-label color="red">
     Red <span class="visually-hidden-class">Warning</span>
   </pf-label>

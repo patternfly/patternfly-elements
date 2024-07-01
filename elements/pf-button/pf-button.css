@@ -1,5 +1,4 @@
 :host {
-  position: relative;
 	font-size: var(--pf-c-button--FontSize);
 	font-weight: var(--pf-c-button--FontWeight);
 	line-height: var(--pf-c-button--LineHeight);

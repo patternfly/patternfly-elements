@@ -24,6 +24,7 @@
     "🧪-TEST": "❓ Test packages",
     "test": "wireit",
     "test:ci": "wireit",
+    "test:ssr": "wireit",
     "test:watch": "wtr --watch",
     "e2e": "wireit",
     "e2e:update": "wireit",
@@ -31,7 +32,8 @@
     "leftover-check": "bash scripts/leftover-check.sh",
     "⚙️--UTIL": "❓ Manages the repo",
     "postinstall": "wireit",
-    "clean": "git clean -dfX -e node_modules -e .husky",
+    "clean": "git clean -dfx -e node_modules -e .husky -e .wireit",
+    "nuke": "git clean -dfx",
     "lint": "eslint",
     "patch": "patch-package",
     "husky": "husky"
@@ -88,7 +90,7 @@
       ]
     },
     "build:elements": {
-      "command": "tspc --build elements --pretty",
+      "command": "tspc --build elements/tsconfig.build.json --pretty",
       "dependencies": [
         "build:core"
       ],
@@ -257,6 +259,15 @@
         "build:core"
       ]
     },
+    "test:ssr": {
+      "command": "npx playwright test -g ssr --update-snapshots",
+      "dependencies": [
+        "clean",
+        "build:tools",
+        "build:core",
+        "build:elements"
+      ]
+    },
     "e2e": {
       "command": "PW_EXPERIMENTAL_TS_ESM=1 playwright test",
       "dependencies": [
@@ -291,7 +302,7 @@
     "@lit/react": "^1.0.4",
     "@octokit/core": "^6.1.1",
     "@patternfly/patternfly": "^4.224.2",
-    "@rhds/elements": "^1.3.1",
+    "@rhds/elements": "^1.4.5",
     "@types/koa__router": "^12.0.4",
     "@types/node": "^20.12.7",
     "@types/numeral": "^2.0.5",

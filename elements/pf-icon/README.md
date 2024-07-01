@@ -49,6 +49,7 @@ Icon comes with three built-in icon sets:
 
 1. `fas`: Font Awesome Free Solid icons (the default set)
 1. `far`: Font Awesome Free Regular icons
+1. `fab`: Font Awesome Free Bold icons
 1. `patternfly`: PatternFly icons
 
 Use the `set` attribute to pick an alternative icon set.
@@ -61,19 +62,31 @@ Use the `set` attribute to pick an alternative icon set.
 It is possible to add custom icon sets or override the default sets.
 Icon sets are defined in detail in [the docs][icon-sets].
 
-### Bundling
+### Bundling and custom loading behaviour
 
-When bundling PfIcon with other modules, the default icon imports will be
-relative to the bundle, not the source file, so be sure to either register all
-the icon sets you'll need, or override the default getter.
+When bundling `<pf-icon>` with other modules (e.g. using webpack, rollup,
+esbuild, vite, or similar tools), icon imports will be code-split into chunks,
+as they are imported from the `@patternfly/icons` package. Ensure that your
+bundler is configured to permit dynamic imports, or mark the `@patternfly/icons`
+package as "external" and apply an [import map][importmap] to your page instead.
+If you would like to
+customize the loading behaviour, override the `PfIcon.resolve()` static method.
+This methods takes two arguments: the icon set (a string) and the icon name
+(a string), and returns a promise of the icon contents, which is a DOM node, or
+[anything else that lit-html can render][renderable].
 
 ```js
-// Workaround for bundled pf-icon: make icon imports absolute, instead of 
-relative to the bundle
 import { PfIcon } from '/pfe.min.js';
-PfIcon.getIconUrl = (set, icon) =>
-  new URL(`/assets/icons/${set}/${icon}.js`, import.meta.url);
-  // default: new URL(`./icons/${set}/${icon}.js`, import.meta.url);
+PfIcon.resolve = async function(set, icon) {
+  try {
+    const { default: content } = await import(`/assets/icons/${set}/${icon}.js`);
+    if (content instanceof Node) {
+      return content.cloneNode(true);
+    }
+  } catch (e) {
+    return '';
+  }
+}
 ```
 
 ## Loading
@@ -84,3 +97,5 @@ see the [docs][docs] for more info.
 
 [docs]: https://patternflyelements.org/components/icon/
 [icon-sets]: https://patternflyelements.org/components/icon/#icon-sets
+[renderable]: https://lit.dev/docs/components/rendering/#renderable-values
+[importmap]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap

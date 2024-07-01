@@ -57,7 +57,7 @@ function normalizeOptions(options?: PfeDevServerConfigOptions) {
   config.watchFiles ??= '{elements,core}/**/*.{css,html}';
   config.litcssOptions ??= {
     include: /\.css$/,
-    exclude: /(((fonts|demo)|(demo\/.*))\.css$)|(.*(-lightdom.css$))/,
+    exclude: /(?:@patternfly\/pfe-tools\/dev-server\/(?:fonts|demo).css)|-lightdom(?:-shim)?\.css$/,
   };
   return config as Required<PfeDevServerConfigOptions> & { site: Required<PfeConfig['site']> };
 }

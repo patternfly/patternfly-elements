@@ -16,7 +16,6 @@ function readPackageVersion(module) {
 const LIT_VERSION = readPackageVersion('lit');
 const FUSE_VERSION = readPackageVersion('fuse.js');
 const PRISM_VERSION = readPackageVersion('prismjs');
-const PWA_HELPER_VERSION = readPackageVersion('pwa-helpers');
 
 const LIT_DEPS = [
   {
@@ -63,16 +62,6 @@ const LIT_DEPS = [
   },
 ];
 
-const PWA_DEPS = [
-  {
-    target: `pwa-helpers@${PWA_HELPER_VERSION}`,
-    subpaths: [
-      '.',
-      './router.js',
-    ],
-  },
-];
-
 module.exports = async function() {
   const { Generator } = await import('@jspm/generator');
 
@@ -91,7 +80,6 @@ module.exports = async function() {
     'element-internals-polyfill',
     `fuse.js@${FUSE_VERSION}`,
     ...LIT_DEPS,
-    ...PWA_DEPS,
   ]);
 
   const map = generator.getMap();

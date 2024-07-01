@@ -1,5 +1,12 @@
 # @patternfly/pfe-tools
 
+## 2.0.4
+
+### Patch Changes
+
+- 9d68f3d: **Dev Server**: load lightdom shim files
+- 9d68f3d: **Dev Server**: reload on typescript file changes
+
 ## 2.0.3
 
 ### Patch Changes

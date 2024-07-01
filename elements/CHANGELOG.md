@@ -1,5 +1,12 @@
 # @patternfly/elements
 
+## 3.0.3
+
+### Patch Changes
+
+- 3e9d785: `<pf-select>`: prevent bug when select is in a deeply nested in shadow root
+- 4995067: `<pf-back-to-top>`: fix hover color
+
 ## 3.0.2
 
 ### Patch Changes

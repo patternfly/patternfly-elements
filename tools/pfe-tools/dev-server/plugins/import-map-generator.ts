@@ -34,7 +34,7 @@ async function resolveMonorepoPackages() {
   const packages = new Map();
 
   for (const dir of ['.', ...potentialPackageDirs]) {
-    const pkgDir = join(cwd, dir)
+    const pkgDir = join(cwd, dir);
     const pkgJsonPath = join(pkgDir, 'package.json');
     if (await exists(pkgJsonPath)) {
       const { name } = JSON.parse(await readFile(pkgJsonPath, 'utf-8'));

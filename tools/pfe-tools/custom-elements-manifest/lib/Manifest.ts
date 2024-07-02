@@ -16,7 +16,7 @@ import type {
   Slot,
 } from 'custom-elements-manifest/schema';
 
-import { join } from 'node:path';
+import { join, normalize } from 'node:path';
 import { readFileSync } from 'node:fs';
 
 import { getAllPackages } from './get-all-packages.js';
@@ -158,7 +158,7 @@ export class Manifest {
   }: { package: PackageJSON; location: string }): Manifest {
     if (!Manifest.#instances.has(packageJson)) {
       const manifestPath = join(location, packageJson?.customElements ?? '');
-      const json = readJsonSync(manifestPath);
+      const json = readJsonSync(normalize(manifestPath));
       Manifest.#instances.set(packageJson, new Manifest(json as Package, packageJson, location));
     }
     return Manifest.#instances.get(packageJson) as Manifest;

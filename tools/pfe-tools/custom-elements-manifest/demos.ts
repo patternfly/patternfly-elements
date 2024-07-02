@@ -3,7 +3,7 @@ import type { PfeConfig } from '../config.js';
 
 import { isCustomElement } from './lib/Manifest.js';
 import { readdirSync, existsSync } from 'node:fs';
-import { join, sep } from 'node:path';
+import { join } from 'node:path';
 import { getPfeConfig } from '../config.js';
 import slugify from 'slugify';
 

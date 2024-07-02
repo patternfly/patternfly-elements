@@ -29,15 +29,15 @@ async function resolveMonorepoPackages() {
 
   const potentialPackageDirs =
     (await Promise.all((workspaces ?? []).map((x: string) =>
-      glob(join(cwd, x))))).flat();
+      glob(x, { cwd })))).flat();
 
   const packages = new Map();
 
-  for (const dir of [cwd, ...potentialPackageDirs]) {
-    const pkgPath = join(dir, 'package.json');
+  for (const dir of ['.', ...potentialPackageDirs]) {
+    const pkgPath = join(cwd, dir, 'package.json');
     if (await exists(pkgPath)) {
       const { name } = JSON.parse(await readFile(pkgPath, 'utf-8'));
-      packages.set(name, dir);
+      packages.set(name, join(cwd, dir));
     }
   }
 

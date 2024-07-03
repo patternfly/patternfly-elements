@@ -207,6 +207,7 @@ jobs:
           body: "It looks like the build is currently failing on the main branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."
   
   build-windows:
+    name: Verify that build runs on Windows
     runs-on: windows-latest
     steps:
       - name: Checkout repository

@@ -15,7 +15,7 @@ const entryPoints =
   (await glob('./pf-*/pf-*.ts', { cwd: resolveDir }))
       .map(x => x.replace('.ts', '.js'));
 
-const contents = entryPoints.map(x => `export * from './${x}';`).join('\n');
+const contents = entryPoints.map(x => `export * from './${x.replaceAll('\\', '/')}';`).join('\n');
 
 export async function bundle({ outfile = 'elements/pfe.min.js' } = {}) {
   await build({

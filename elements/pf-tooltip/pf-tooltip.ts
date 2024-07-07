@@ -162,6 +162,7 @@ export class PfTooltip extends LitElement {
   /**
    * Removes event listeners from the old trigger element and attaches
    * them to the new trigger element.
+   * @param changed changed properties
    */
   override willUpdate(changed: PropertyValues<this>) {
     if (changed.has('trigger')) {

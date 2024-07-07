@@ -45,20 +45,31 @@ export class PfeDemoPage {
     await this.page.waitForTimeout(100);
   }
 
-  /** Focus the first instance of the element, or a given selector, then wait for the element's updateComplete */
+  /**
+   * Focus the first instance of the element, or a given selector,
+   * then wait for the element's updateComplete
+   * @param [selector=this.tagName]
+   */
   async focus(selector = this.tagName) {
     await this.page.$eval(selector, el => el.focus());
     await this.updateComplete(selector);
   }
 
-  /** Click the first instance of the element, or a given selector, then wait for the element's updateComplete */
+  /**
+   * Click the first instance of the element, or a given selector,
+   * then wait for the element's updateComplete
+   * @param [selector=this.tagName]
+   */
   async click(selector = this.tagName) {
     await this.page.$eval(selector, (el: HTMLElement) => el.click());
     await this.updateComplete(selector);
   }
 
-  /** Wait for the element, or a given selector, to update */
-  async updateComplete(selector: string | null = this.tagName) {
+  /**
+   * Wait for the element, or a given selector, to update
+   * @param [selector=this.tagName]
+   */
+  async updateComplete(selector = this.tagName) {
     await this.page.waitForLoadState('domcontentloaded');
     await this.page.waitForLoadState('networkidle');
     if (selector) {
@@ -71,7 +82,10 @@ export class PfeDemoPage {
     }
   }
 
-  /** Take a snapshot and save it to disk */
+  /**
+   * Take a snapshot and save it to disk
+   * @param name optional snapshot name
+   */
   async snapshot(name?: string) {
     const snapshotName = `${this.tagName}${name ? `-${name}` : ''}`;
     expect(await this.page.screenshot({ fullPage: true })).toMatchSnapshot(`${snapshotName}.png`);

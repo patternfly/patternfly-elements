@@ -104,6 +104,7 @@ export class PfDropdownMenu extends LitElement {
   /**
    * handles focusing on an option:
    * updates roving tabindex and active descendant
+   * @param event the focus event
    */
   #onMenuitemFocusin(event: FocusEvent) {
     if (this.ctx?.disabled) {
@@ -119,6 +120,7 @@ export class PfDropdownMenu extends LitElement {
    * handles clicking on a menuitem:
    * which selects an item by default
    * or toggles selection if multiselectable
+   * @param event the click event
    */
   #onMenuitemClick(event: MouseEvent) {
     if (this.ctx?.disabled || isDisabledItemClick(event)) {

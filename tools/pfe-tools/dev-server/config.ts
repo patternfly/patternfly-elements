@@ -62,7 +62,11 @@ function normalizeOptions(options?: PfeDevServerConfigOptions) {
   return config as Required<PfeDevServerConfigOptions> & { site: Required<PfeConfig['site']> };
 }
 
-/** CORS middleware */
+/**
+ * CORS middleware
+ * @param ctx koa context
+ * @param next middleware
+ */
 function cors(ctx: Context, next: Next) {
   ctx.set('Access-Control-Allow-Origin', '*');
   return next();
@@ -94,6 +98,7 @@ function liveReloadTsChangesMiddleware(
 
 /**
  * Creates a default config for PFE's dev server.
+ * @param options dev server config
  */
 export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServerConfig {
   const config = normalizeOptions(options);
@@ -157,7 +162,11 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
   };
 }
 
-/** Returns an import map `imports` section containing the entire `@patternfly/icons` collection, pointing to node_modules */
+/**
+ * Returns an import map `imports` section containing the entire
+ * `@patternfly/icons` collection, pointing to node_modules
+ * @param rootUrl repository root
+ */
 export async function getPatternflyIconNodemodulesImports(rootUrl: string) {
   const files = await readdir(new URL('./node_modules/@patternfly/icons', rootUrl));
   const dirs = [];

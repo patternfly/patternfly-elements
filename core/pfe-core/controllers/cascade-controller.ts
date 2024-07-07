@@ -5,7 +5,7 @@ import { debounce } from '../functions/debounce.js';
 import { Logger } from './logger.js';
 
 /**
- * @deprecated: use context, especially via `@patternfly/pfe-core/functions/context.js`;
+ * @deprecated use context, especially via `@patternfly/pfe-core/functions/context.js`;
  */
 export interface Options<E extends ReactiveElement> {
   properties: Partial<Record<keyof E, string | string[]>>;
@@ -13,7 +13,7 @@ export interface Options<E extends ReactiveElement> {
 }
 
 /**
- * @deprecated: use context, especially via `@patternfly/pfe-core/functions/context.js`;
+ * @deprecated use context, especially via `@patternfly/pfe-core/functions/context.js`;
  */
 export class CascadeController<E extends ReactiveElement> implements ReactiveController {
   private class: typeof ReactiveElement;
@@ -54,6 +54,7 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
   /**
    * Handles the cascading of properties to nested components when new elements are added
    * Attribute updates/additions are handled by the attribute callback
+   * @param [nodeList=this.host.children]
    */
   cascadeProperties(nodeList: HTMLCollection | NodeList = this.host.children) {
     if (this.host.isConnected) {
@@ -89,6 +90,8 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
    * Gets the configured attribute name for the decorated property,
    * falling back to the lowercased property name, and caches the attribute name
    * with it's designated child selectors for value-propagation on change
+   * @param propName
+   * @param cascade
    */
   initProp(propName: string, cascade: string | string[]) {
     for (const nodeItem of [cascade].flat(Infinity).filter(Boolean) as string[]) {
@@ -122,6 +125,8 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
 
   /**
    * Copy the named attribute to a target element.
+   * @param name attr name
+   * @param el element
    */
   private async _copyAttribute(name: string, el: Element) {
     this.logger.log(`copying ${name} to ${el}`);

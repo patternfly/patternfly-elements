@@ -153,7 +153,10 @@ export class ScrollSpyController implements ReactiveController {
     this.#intersected = true;
   }
 
-  /** Explicitly set the active item */
+  /**
+   * Explicitly set the active item
+   * @param link usually an `<a>`
+   */
   public async setActive(link: EventTarget | null) {
     this.#force = true;
     this.#setActive(link);

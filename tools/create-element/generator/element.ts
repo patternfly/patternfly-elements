@@ -98,7 +98,11 @@ const getInterpolations =
     };
   });
 
-/** e.g. /Users/alj/Developer/jazz-elements/elements/pf-jazz-hands/pf-jazz-hands.ts */
+/**
+ * e.g. /home/alj/Developer/jazz-elements/elements/pf-jazz-hands/pf-jazz-hands.ts
+ * @param key file key e.g. component
+ * @param options element generator options
+ */
 const getOutputFilePath =
   (key: FileKey, options: GenerateElementOptions): string =>
     join(getComponentAbsPath(options), getFilePathsRelativeToPackageDir(options)[key]);
@@ -162,6 +166,7 @@ export class PackageJSONError extends Error {}
 
 /**
  * Generate an Element
+ * @param options element generator options
  */
 export async function generateElement(options: GenerateElementOptions): Promise<void> {
   // eslint-disable-next-line no-console

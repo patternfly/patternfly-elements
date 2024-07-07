@@ -167,7 +167,14 @@ export class FloatingDOMController implements ReactiveController {
     this.host.requestUpdate();
   }
 
-  /** Show the floating DOM */
+  /**
+   * Show the floating DOM
+   * @param [options={}]
+   * @param options.offset
+   * @param options.placement
+   * @param options.flip
+   * @param options.fallbackPlacements
+   * */
   async show({ offset, placement, flip, fallbackPlacements }: ShowOptions = {}) {
     const invoker = this.#invoker;
     const content = this.#content;

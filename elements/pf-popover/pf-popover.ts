@@ -459,6 +459,7 @@ export class PfPopover extends LitElement {
   /**
    * Removes event listeners from the old trigger element and attaches
    * them to the new trigger element.
+   * @param changed changed props
    */
   override willUpdate(changed: PropertyValues<this>) {
     if (changed.has('trigger')) {

@@ -1,7 +1,6 @@
 import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 
 import style from './pf-progress-stepper.css';
 

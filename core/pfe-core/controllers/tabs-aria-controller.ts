@@ -36,6 +36,8 @@ export class TabsAriaController<
   }
 
   /**
+   * @param host controller host
+   * @param options controller options
    * @example Usage in PfTab
    *          ```ts
    *          new TabsController(this, {

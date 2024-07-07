@@ -1,5 +1,3 @@
-import type { PfChipRemoveEvent } from '@patternfly/elements/pf-chip/pf-chip.js';
-
 import { LitElement, html, isServer, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
@@ -437,9 +435,11 @@ export class PfSelect extends LitElement {
 
   /**
    * handles chip's remove button clicking
-   * @param opt chip text to be removed from values
+   * @param event remove event
+   * @param opt pf-option
    */
-  #onChipRemove(opt: PfOption, event: PfChipRemoveEvent) {
+  #onChipRemove(opt: PfOption, event: Event) {
+    event; opt;
   //   if (event.chip) {
   //     opt.selected = false;
   //     this._input?.focus();

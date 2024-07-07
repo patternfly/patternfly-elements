@@ -217,60 +217,70 @@ export class Manifest {
   }
 
   /**
+   * @param tagName tag to get attributes for
    */
   getAttributes(tagName: string): undefined | Attribute[] {
     return this.#tag(tagName)?.attributes;
   }
 
   /**
+   * @param tagName tag to get css props for
    */
   getCssCustomProperties(tagName: string): undefined | CssCustomProperty[] {
     return this.#tag(tagName)?.cssCustomProperties;
   }
 
   /**
+   * @param tagName tag to get css parts for
    */
   getCssParts(tagName: string): undefined | CssPart[] {
     return this.#tag(tagName)?.cssParts;
   }
 
   /**
+   * @param tagName tag to get description for
    */
   getDescription(tagName: string): undefined | string {
     return this.#tag(tagName)?.description;
   }
 
   /**
+   * @param tagName tag to get events for
    */
   getEvents(tagName: string): undefined | Event[] {
     return this.#tag(tagName)?.events;
   }
 
   /**
+   * @param tagName tag to get methods for
    */
   getMethods(tagName: string): undefined | ClassMethod[] {
     return this.#tag(tagName)?.methods;
   }
 
   /**
+   * @param tagName tag to get properties for
    */
   getProperties(tagName: string): undefined | ClassField[] {
     return this.#tag(tagName)?.properties;
   }
 
   /**
+   * @param tagName tag to get summary for
    */
   getSummary(tagName: string): undefined | string {
     return this.#tag(tagName)?.summary;
   }
 
   /**
+   * @param tagName tag to get slots for
    */
   getSlots(tagName: string): undefined | Slot[] {
     return this.#tag(tagName)?.slots;
   }
 
   /**
+   * @param tagName tag to get demos for
    */
   getDemos(tagName: string): Demo[] {
     return this.#tag(tagName)?.demos ?? [];

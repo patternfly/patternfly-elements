@@ -20,7 +20,8 @@ type Options = Config
 
 /**
  * PFE Default custom-elements-manifest analyzer config
- * @deprecated
+ * @param options plugin options
+ * @deprecated this config relies on an old version of cem-a, roll your own
  */
 export function pfeCustomElementsManifestConfig(options?: Options): Config {
   // eslint-disable-next-line no-console

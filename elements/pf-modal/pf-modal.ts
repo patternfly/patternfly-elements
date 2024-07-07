@@ -307,6 +307,7 @@ export class PfModal extends LitElement implements HTMLDialogElement {
    * ```js
    * modal.close();
    * ```
+   * @param returnValue dialog return value
    */
   @bound close(returnValue?: string) {
     if (typeof returnValue === 'string') {

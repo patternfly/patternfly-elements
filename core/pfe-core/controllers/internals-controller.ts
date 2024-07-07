@@ -21,7 +21,11 @@ interface InternalsControllerOptions extends Partial<ARIAMixin> {
   getHTMLElement?(): HTMLElement;
 }
 
-/** reactively forward the internals object's aria mixin prototype */
+/**
+ * reactively forward the internals object's aria mixin prototype
+ * @param target
+ * @param key
+ */
 function aria(
   target: InternalsController,
   key: keyof InternalsController,

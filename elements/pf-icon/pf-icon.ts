@@ -1,4 +1,4 @@
-import { LitElement, html, isServer, type PropertyValues } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { state } from 'lit/decorators/state.js';
@@ -12,7 +12,10 @@ type Renderable = unknown;
 export type IconResolverFunction = (set: string, icon: string) =>
   Renderable | Promise<Renderable>;
 
-/** requestIdleCallback when available, requestAnimationFrame when not */
+/**
+ * requestIdleCallback when available, requestAnimationFrame when not
+ * @param f callback
+ */
 const ric: typeof globalThis.requestIdleCallback =
      globalThis.requestIdleCallback
   ?? globalThis.requestAnimationFrame

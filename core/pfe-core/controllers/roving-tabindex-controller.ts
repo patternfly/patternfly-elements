@@ -179,6 +179,7 @@ export class RovingTabindexController<
 
   /**
    * handles keyboard navigation
+   * @param event keydown event
    */
   #onKeydown = (event: Event) => {
     if (!(event instanceof KeyboardEvent)
@@ -250,6 +251,7 @@ export class RovingTabindexController<
 
   /**
    * Sets the active item and focuses it
+   * @param item tabindex item
    */
   setActiveItem(item?: Item): void {
     this.#activeItem = item;
@@ -264,6 +266,7 @@ export class RovingTabindexController<
 
   /**
    * Focuses next focusable item
+   * @param items tabindex items
    */
   updateItems(items: Item[] = this.#options.getItems?.() ?? []) {
     this.#items = items;
@@ -277,14 +280,19 @@ export class RovingTabindexController<
     this.setActiveItem(activeItem);
   }
 
-  /** @deprecated use setActiveItem */
+  /**
+   * @deprecated use setActiveItem
+   * @param item tabindex item
+   */
   focusOnItem(item?: Item): void {
     this.setActiveItem(item);
   }
 
   /**
    * from array of HTML items, and sets active items
-   * @deprecated: use getItems and getItemContainer option functions
+   * @deprecated use getItems and getItemContainer option functions
+   * @param items tabindex items
+   * @param itemsContainer
    */
   initItems(items: Item[], itemsContainer?: Element) {
     const element = itemsContainer

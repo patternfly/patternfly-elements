@@ -197,6 +197,7 @@ export class PfChipGroup extends LitElement {
 
   /**
    * handles a chip's `chip-remove` event
+   * @param event remove event
    */
   async #onChipRemoved(event: Event) {
     if (event instanceof PfChipRemoveEvent) {
@@ -216,6 +217,7 @@ export class PfChipGroup extends LitElement {
 
   /**
    * handles overflow chip's click event
+   * @param event click event
    */
   async #onMoreClick(event: Event) {
     event.stopPropagation();
@@ -259,6 +261,7 @@ export class PfChipGroup extends LitElement {
 
   /**
    * Activates the specified chip and sets focus on it
+   * @param chip pf-chip element
    */
   focusOnChip(chip: HTMLElement) {
     this.#tabindex.setActiveItem(chip);

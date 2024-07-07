@@ -3,6 +3,10 @@ import type { ReactiveElement } from 'lit';
 
 export type Position = [x: number, y: number];
 
+/**
+ * Get the center coords of an element.
+ * @param element get the center of this element's bounding box
+ */
 export function getElementCenterPosition(element: Element): Position {
   const { x, y, width, height } = element.getBoundingClientRect();
 
@@ -14,6 +18,7 @@ export function getElementCenterPosition(element: Element): Position {
 
 /**
  * Click an element at approximate center, using playwright's sendMouse command
+ * @param element to click at it's center
  */
 export async function clickElementAtCenter(element: Element): Promise<void> {
   const position = getElementCenterPosition(element);
@@ -21,7 +26,10 @@ export async function clickElementAtCenter(element: Element): Promise<void> {
 }
 
 /**
- * Click an element at an offset from it's top-left corner, using playwright's sendMouse command
+ * Click an element at an offset from it's top-left corner,
+ * using playwright's sendMouse command
+ * @param element to click
+ * @param relativeOffset x,y coords tuple
  */
 export async function clickElementAtOffset(
   element: Element,
@@ -47,6 +55,7 @@ export async function clickElementAtOffset(
 /**
  * Waits for an element to completely finish updating, or throws after 100 attempts
  * Will also throw if the element doesn't have an `updateComplete` promise
+ * @param element to wait on
  */
 export async function allUpdates(element: ReactiveElement) {
   if (!(element.updateComplete instanceof Promise)) {

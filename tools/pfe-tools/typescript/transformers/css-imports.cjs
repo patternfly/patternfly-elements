@@ -45,7 +45,7 @@ function createLitCssImportStatement(ctx, sourceFile) {
 
 /**
  * @param {ts.CoreTransformationContext} ctx
- * @param {ts.SourceFile} sourceFile
+ * @param {ts.SourceFile} stylesheet source file
  * @param {string} [name]
  */
 function createLitCssTaggedTemplateLiteral(ctx, stylesheet, name) {
@@ -198,13 +198,16 @@ module.exports = function(program, {
 
     return sourceFile => {
       const children = sourceFile.getChildren();
+
+      // eslint-disable-next-line
+      /** @type {ts.ImportDeclaration} */
       const litImportBindings =
-        (children.find(/** @returns {x is ts.ImportDeclaration} */x =>
+        (children.find(x =>
           !ts.isTypeOnlyImportOrExportDeclaration(x)
-          && !ts.isNamespaceImport(x)
-          && ts.isImportDeclaration(x)
-          && x.moduleSpecifier.getText() === 'lit'
-          && !!x.importClause?.namedBindings
+        && !ts.isNamespaceImport(x)
+        && ts.isImportDeclaration(x)
+        && x.moduleSpecifier.getText() === 'lit'
+        && x.importClause?.namedBindings
         ))?.importClause?.namedBindings;
 
       const hasStyleImports = children.find(x =>

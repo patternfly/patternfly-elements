@@ -28,13 +28,20 @@ function isExported(exports: CEM.Export[] | undefined) {
   };
 }
 
-/** Remove a prefix from a class name */
+/**
+ * Remove a prefix from a class name
+ * @param className ecmascript class name e.g. PfJazzHands
+ * @param prefix class name prefix e.g. Pf
+ */
 function getDeprefixedClassName(className: string, prefix: string) {
   const [fst, ...tail] = className.replace(prefix, '');
   return `${fst.toUpperCase()}${tail.join('')}`;
 }
 
-/** simple function to convert string from dash to camel case */
+/**
+ * simple function to convert string from dash to camel case
+ * @param str string to convert to camelcase
+ */
 function camel(str: string): string {
   return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
 }
@@ -78,6 +85,7 @@ const getReactWrapperData = (
       reactComponentName,
       eventsMap,
       eventsInterface,
+      elPrefix,
       tagName,
     };
   };
@@ -152,6 +160,15 @@ async function parseManifest(maybeManifest: unknown): Promise<CEM.Package> {
   }
 }
 
+/**
+ * Given a custom elements manifest (or a path to its file),
+ * generate a suite of react wrapper components
+ * @param customElementsManifestOrPathOrURL manifest object; or string or url path
+ * @param outDirPathOrURL directory to write wrapper components to
+ * @param packageName npm package name of the manifest
+ * @param elPrefix element tag prefix e.g. `pf`
+ * @param classPrefix e.g. `Pf`
+ */
 export async function generateReactWrappers(
   customElementsManifestOrPathOrURL: CEM.Package | string | URL,
   outDirPathOrURL: string | URL,

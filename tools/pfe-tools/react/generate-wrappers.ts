@@ -175,7 +175,7 @@ export async function generateReactWrappers(
   packageName = '@patternfly/elements',
   elPrefix = 'pf',
   classPrefix = `${elPrefix.charAt(0).toUpperCase()}${elPrefix.slice(1)}`,
-) {
+): Promise<void> {
   /* eslint-disable no-console */
   const manifest = await parseManifest(customElementsManifestOrPathOrURL);
   const written = [];

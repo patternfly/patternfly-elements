@@ -64,19 +64,19 @@ export class FloatingDOMController implements ReactiveController {
   }
 
   /** The crosswise alignment of the invoker on which to display the floating DOM */
-  get alignment() {
+  get alignment(): Alignment {
     return this.#alignment ?? 'center';
   }
 
   /** The side of the invoker on which to display the floating DOM */
-  get anchor() {
+  get anchor(): Anchor {
     return this.#anchor ?? '';
   }
 
   /**
    * When true, the floating DOM is visible
    */
-  get open() {
+  get open(): boolean {
     return this.#open;
   }
 
@@ -106,7 +106,7 @@ export class FloatingDOMController implements ReactiveController {
     };
   }
 
-  hostDisconnected() {
+  hostDisconnected(): void {
     this.#cleanup?.();
   }
 
@@ -175,7 +175,7 @@ export class FloatingDOMController implements ReactiveController {
    * @param options.flip
    * @param options.fallbackPlacements
    * */
-  async show({ offset, placement, flip, fallbackPlacements }: ShowOptions = {}) {
+  async show({ offset, placement, flip, fallbackPlacements }: ShowOptions = {}): Promise<void> {
     const invoker = this.#invoker;
     const content = this.#content;
     if (!invoker || !content) {
@@ -194,7 +194,7 @@ export class FloatingDOMController implements ReactiveController {
   }
 
   /** Hide the floating DOM */
-  async hide() {
+  async hide(): Promise<void> {
     await this.host.updateComplete;
     while (this.#opening && !this.open) {
       await new Promise(requestAnimationFrame);

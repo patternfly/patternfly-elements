@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -55,7 +55,7 @@ import style from './pf-jump-links.css';
  */
 @customElement('pf-jump-links')
 export class PfJumpLinks extends LitElement {
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
   /** Whether the element features a disclosure widget around the nav items */
   @property({ reflect: true, type: Boolean }) expandable = false;
@@ -90,13 +90,13 @@ export class PfJumpLinks extends LitElement {
     return here && ps.every(x => !!x);
   }
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('slotchange', this.#updateItems);
     this.addEventListener('select', this.#onSelect);
   }
 
-  override firstUpdated() {
+  override firstUpdated(): void {
     this.#tabindex = new RovingTabindexController<HTMLAnchorElement>(this, {
       getItems: () => {
         const items = Array.from(this.#kids)
@@ -113,13 +113,13 @@ export class PfJumpLinks extends LitElement {
     }
   }
 
-  override updated(changed: Map<string, unknown>) {
+  override updated(changed: Map<string, unknown>): void {
     if (changed.has('offset')) {
       this.#spy.rootMargin = `${this.offset ?? 0}px 0px 0px 0px`;
     }
   }
 
-  render() {
+  render(): TemplateResult<1> {
     return html`
       <nav id="container">${this.expandable ? html`
         <details ?open="${this.expanded}" @toggle="${this.#onToggle}">

@@ -57,7 +57,7 @@ export async function clickElementAtOffset(
  * Will also throw if the element doesn't have an `updateComplete` promise
  * @param element to wait on
  */
-export async function allUpdates(element: ReactiveElement) {
+export async function allUpdates(element: ReactiveElement): Promise<void> {
   if (!(element.updateComplete instanceof Promise)) {
     throw new Error(`${element.localName} does not appear to be a ReactiveElement`);
   }

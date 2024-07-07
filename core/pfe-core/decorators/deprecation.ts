@@ -18,11 +18,13 @@ export type DeprecationDeclaration<K extends PropertyKey> = PropertyDeclaration 
  *          @deprecation('colorPalette') color?: ColorPalette;
  *          ```
  */
-export function deprecation<K extends PropertyKey>(options: DeprecationDeclaration<K>) {
+export function deprecation<K extends PropertyKey>(
+  options: DeprecationDeclaration<K>,
+) {
   return function<T extends ReactiveElement, L extends PropertyKey>(
     proto: Partial<Record<K | L, T>>,
     key: string & keyof T
-  ) {
+  ): void {
     const { alias, ...deprecationOptions } = options;
     const klass = (proto.constructor as typeof ReactiveElement);
     const declaration = klass.getPropertyOptions(alias);

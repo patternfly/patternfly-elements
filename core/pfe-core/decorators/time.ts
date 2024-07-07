@@ -3,7 +3,11 @@
  * @param tag - short string to identify the method name
  */
 export function time(tag?: string) {
-  return function(_: unknown, key: string, descriptor: PropertyDescriptor) {
+  return function(
+    _: unknown,
+    key: string,
+    descriptor: PropertyDescriptor,
+  ): void {
     const { value: f } = descriptor ?? {};
 
     if (!(typeof f === 'function')) {

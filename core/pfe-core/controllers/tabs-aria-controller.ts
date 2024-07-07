@@ -70,12 +70,12 @@ export class TabsAriaController<
     }
   }
 
-  hostConnected() {
+  hostConnected(): void {
     this.#mo.observe(this.#element, { attributes: false, childList: true, subtree: false });
     this.#onSlotchange();
   }
 
-  hostUpdated() {
+  hostUpdated(): void {
     for (const [tab, panel] of this.#tabPanelMap) {
       panel.setAttribute('aria-labelledby', tab.id);
       tab.setAttribute('aria-controls', panel.id);

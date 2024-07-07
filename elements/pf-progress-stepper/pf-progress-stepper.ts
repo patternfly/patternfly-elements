@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -16,7 +16,7 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
 export class PfProgressStepper extends LitElement {
   protected static childTagName = 'pf-progress-step';
 
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
   static formAssociated = true;
 
@@ -36,7 +36,7 @@ export class PfProgressStepper extends LitElement {
 
   #mo = new MutationObserver(() => this.#onMutation());
 
-  get value() {
+  get value(): number {
     const { childTagName } = (this.constructor as typeof PfProgressStepper);
     const steps = this.querySelectorAll?.<PfProgressStep>(childTagName) ?? [];
     const current = this.querySelector?.(`${childTagName}[current]`);
@@ -53,13 +53,13 @@ export class PfProgressStepper extends LitElement {
     this.#internals.ariaValueNow = this.value.toString();
   }
 
-  render() {
+  render(): TemplateResult<1> {
     // TODO: add label prop
     // eslint-disable-next-line lit-a11y/accessible-name
     return html`<div role="listbox" style="display:contents;"><slot></slot></div>`;
   }
 
-  updated(changed: PropertyValues<this>) {
+  updated(changed: PropertyValues<this>): void {
     if (changed.has('compact')) {
       this.querySelectorAll?.('pf-progress-step').forEach(step => step.requestUpdate());
     }

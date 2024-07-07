@@ -6,6 +6,6 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 /**
  * @param input html partial
  */
-export async function ssr(input: string) {
+export async function ssr(input: string): Promise<string> {
   return collectResult(render(html`${unsafeHTML(input)}`));
 }

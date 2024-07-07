@@ -5,7 +5,10 @@
  * @param container haystack
  * @param node needle
  */
-export function containsDeep(container: Element, node: Node) {
+export function containsDeep(
+  container: Element,
+  node: Node,
+): boolean {
   if (container.contains(node)) {
     return true;
   } else {

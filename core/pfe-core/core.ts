@@ -25,14 +25,14 @@ function makeConverter<T>(
  * A LitElement property converter which represents a list of numbers as a comma separated string
  * @see https://lit.dev/docs/components/properties/#conversion-converter
  */
-export const NumberListConverter =
+export const NumberListConverter: ComplexAttributeConverter<number[] | null, unknown> =
   makeConverter(x => parseInt(x?.trim(), 10));
 
 /**
  * A LitElement property converter which represents a list of strings as a comma separated string
  * @see https://lit.dev/docs/components/properties/#conversion-converter
  */
-export const StringListConverter =
+export const StringListConverter: ComplexAttributeConverter<string[] | null, unknown> =
   makeConverter(x => x.trim());
 
 /**

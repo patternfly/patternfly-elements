@@ -8,7 +8,7 @@ import { join } from 'path';
  * e.g. the list of directories under `elements/`
  * @param [cwd=process.cwd()] cwd
  */
-export async function makeDemoEnv(cwd = process.cwd()): Promise<string> {
+export async function makeDemoEnv(cwd: string = process.cwd()): Promise<string> {
   const iconsDir = join(cwd, 'node_modules', '@patternfly', 'icons');
   const dirContents = await readdir(iconsDir);
   const dirNamesOrNulls = await Promise.all(dirContents.map(async x => {

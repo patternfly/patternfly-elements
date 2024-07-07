@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -44,9 +44,9 @@ const REMAINING_RE = /\$\{\s*remaining\s*\}/g;
  */
 @customElement('pf-chip-group')
 export class PfChipGroup extends LitElement {
-  static readonly styles = [shared, styles];
+  static readonly styles: CSSStyleSheet[] = [shared, styles];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -105,7 +105,7 @@ export class PfChipGroup extends LitElement {
     this.addEventListener('remove', this.#onChipRemoved);
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const empty = this.#chips.length <= 0;
     return html`
       <div id="outer"
@@ -141,7 +141,7 @@ export class PfChipGroup extends LitElement {
     `;
   }
 
-  override updated(changed: PropertyValues<this>) {
+  override updated(changed: PropertyValues<this>): void {
     if (changed.has('accessibleCloseLabel')
         || changed.has('numChips')
         || changed.has('closeable')
@@ -167,11 +167,11 @@ export class PfChipGroup extends LitElement {
   /**
    * whether or not group has a category
    */
-  get hasCategory() {
+  get hasCategory(): boolean {
     return (this._categorySlotted || []).length > 0;
   }
 
-  get remaining() {
+  get remaining(): number {
     return this.#chips.length - this.numChips;
   }
 
@@ -263,7 +263,7 @@ export class PfChipGroup extends LitElement {
    * Activates the specified chip and sets focus on it
    * @param chip pf-chip element
    */
-  focusOnChip(chip: HTMLElement) {
+  focusOnChip(chip: HTMLElement): void {
     this.#tabindex.setActiveItem(chip);
   }
 }

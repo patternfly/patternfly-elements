@@ -167,7 +167,9 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
  * `@patternfly/icons` collection, pointing to node_modules
  * @param rootUrl repository root
  */
-export async function getPatternflyIconNodemodulesImports(rootUrl: string) {
+export async function getPatternflyIconNodemodulesImports(
+  rootUrl: string,
+): Promise<Record<string, string>> {
   const files = await readdir(new URL('./node_modules/@patternfly/icons', rootUrl));
   const dirs = [];
 

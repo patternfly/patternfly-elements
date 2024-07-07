@@ -87,27 +87,27 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   disabled = false;
 
   /** Current active descendant in listbox */
-  get activeItem() {
+  get activeItem(): Item | undefined {
     return this.options.find(option =>
       option === this._options.a11yController.activeItem) || this._options.a11yController.firstItem;
   }
 
-  get nextItem() {
+  get nextItem(): Item | undefined {
     return this._options.a11yController.nextItem;
   }
 
-  get options() {
+  get options(): Item[] {
     return this.#items;
   }
 
   /**
    * array of options which are selected
    */
-  get selectedOptions() {
+  get selectedOptions(): Item[] {
     return this.options.filter(option => this._options.isSelected(option));
   }
 
-  get value() {
+  get value(): Item | Item[] {
     const [firstItem] = this.selectedOptions;
     return this._options.multi ? this.selectedOptions : firstItem;
   }
@@ -116,7 +116,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     return this._options.getHTMLElement();
   }
 
-  async hostConnected() {
+  async hostConnected(): Promise<void> {
     if (!this.#listening) {
       await this.host.updateComplete;
       this.element?.addEventListener('click', this.#onClick);
@@ -127,7 +127,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     }
   }
 
-  hostUpdated() {
+  hostUpdated(): void {
     this.element?.setAttribute('role', 'listbox');
     this.element?.setAttribute('aria-disabled', String(!!this.disabled));
     this.element?.setAttribute('aria-multi-selectable', String(!!this._options.multi));
@@ -140,7 +140,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     }
   }
 
-  hostDisconnected() {
+  hostDisconnected(): void {
     this.element?.removeEventListener('click', this.#onClick);
     this.element?.removeEventListener('focus', this.#onFocus);
     this.element?.removeEventListener('keydown', this.#onKeydown);
@@ -330,7 +330,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * sets the listbox value based on selected options
    * @param value item or items
    */
-  setValue(value: Item | Item[]) {
+  setValue(value: Item | Item[]): void {
     const selected = Array.isArray(value) ? value : [value];
     const [firstItem = null] = selected;
     for (const option of this.options) {
@@ -345,7 +345,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * register's the host's Item elements as listbox controller items
    * @param options items
    */
-  setOptions(options: Item[]) {
+  setOptions(options: Item[]): void {
     const oldOptions = [...this.#items];
     this.#items = options;
     this.#optionsChanged(oldOptions);

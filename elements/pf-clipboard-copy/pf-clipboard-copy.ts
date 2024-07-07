@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -27,9 +27,9 @@ export class PfClipboardCopyCopiedEvent extends Event {
  */
 @customElement('pf-clipboard-copy')
 export class PfClipboardCopy extends LitElement {
-  static readonly styles = [formControlStyles, styles];
+  static readonly styles: CSSStyleSheet[] = [formControlStyles, styles];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -80,7 +80,7 @@ export class PfClipboardCopy extends LitElement {
 
   #mo = new MutationObserver(() => this.#onMutation());
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
     this.#mo.observe(this, { characterData: true });
     this.#onMutation();
@@ -91,7 +91,7 @@ export class PfClipboardCopy extends LitElement {
    * This demonstrates the collapsed whitespace issue.
    * The extra space between the closing slot tag and the closing template literal results in a collapsed whitespace.
    */
-  render() {
+  render(): TemplateResult<1> {
     const { expanded, expandable, inline, compact, code, block, readonly } = this;
     return html`
       <div id="container" class="${classMap({ code, expanded, inline, compact, block })}">
@@ -158,7 +158,7 @@ export class PfClipboardCopy extends LitElement {
   /**
    * Copy the current value to the clipboard.
    */
-  async copy() {
+  async copy(): Promise<void> {
     await navigator.clipboard.writeText(this.value);
     this.dispatchEvent(new PfClipboardCopyCopiedEvent(this.value));
     await sleep(this.entryDelay);

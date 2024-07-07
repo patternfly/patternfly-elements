@@ -1,4 +1,4 @@
-import type { PropertyValues } from 'lit';
+import type { PropertyValues, TemplateResult } from 'lit';
 import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
@@ -105,7 +105,7 @@ const ExitEvents = ['focusout', 'blur', 'mouseleave'];
  */
 @customElement('pf-tooltip')
 export class PfTooltip extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   /** The position of the tooltip, relative to the invoking content */
   @property() position: Placement = 'top';
@@ -153,7 +153,7 @@ export class PfTooltip extends LitElement {
     },
   });
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.#invokerChanged();
     this.#updateTrigger();
@@ -164,13 +164,13 @@ export class PfTooltip extends LitElement {
    * them to the new trigger element.
    * @param changed changed properties
    */
-  override willUpdate(changed: PropertyValues<this>) {
+  override willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('trigger')) {
       this.#updateTrigger();
     }
   }
 
-  override render() {
+  override render(): TemplateResult<1> {
     const { alignment, anchor, open, styles } = this.#float;
 
     const blockInvoker =
@@ -234,7 +234,7 @@ export class PfTooltip extends LitElement {
     }
   }
 
-  @bound async show() {
+  @bound async show(): Promise<void> {
     await this.updateComplete;
     const placement = this.position;
     const offset =
@@ -248,7 +248,7 @@ export class PfTooltip extends LitElement {
     });
   }
 
-  @bound async hide() {
+  @bound async hide(): Promise<void> {
     await this.#float.hide();
   }
 }

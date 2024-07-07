@@ -13,11 +13,11 @@
     "**/test/*_e2e*"
   ],
   "compilerOptions": {
-    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "composite": true,
     "declaration": true,
+    "isolatedDeclarations": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "importHelpers": true,

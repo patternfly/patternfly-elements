@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -44,13 +44,13 @@ export type StackedSize = (
  */
 @customElement('pf-tile')
 export class PfTile extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   @property({ reflect: true, type: Boolean }) selected = false;
 
   @property({ reflect: true }) stacked?: StackedSize;
 
-  override render() {
+  override render(): TemplateResult<1> {
     return html`
       <div part="header">
         <div part="icon">

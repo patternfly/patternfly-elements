@@ -11,7 +11,7 @@ import { LightDOMController } from '../controllers/light-dom-controller.js';
  * @param  options        Set `observe` to `false` to skip mutation observer setup, or pass a MutationObserverInit as options
  */
 export function initializer<T extends ReactiveElement>(options?: Options) {
-  return function(proto: T, key: string) {
+  return function(proto: T, key: string): void {
     // @TODO: allow multiple initializers
     (proto.constructor as typeof ReactiveElement).addInitializer(instance => {
       const initializer = proto[key as keyof T] as unknown as () => void;

@@ -1,3 +1,4 @@
+import type { Context } from '@lit/context';
 import type { PfTab } from './pf-tab.js';
 
 import { createContextWithRoot } from '@patternfly/pfe-core/functions/context.js';
@@ -19,4 +20,5 @@ export class TabExpandEvent<Tab> extends Event {
   }
 }
 
-export const context = createContextWithRoot<PfTabsContext>(Symbol('pf-tabs-context'));
+export const context: Context<unknown, PfTabsContext> =
+  createContextWithRoot<PfTabsContext>(Symbol('pf-tabs-context'));

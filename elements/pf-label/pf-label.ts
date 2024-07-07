@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -81,9 +81,9 @@ export class LabelCloseEvent extends Event {
  */
 @customElement('pf-label')
 export class PfLabel extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -128,7 +128,7 @@ export class PfLabel extends LitElement {
   /** Represents the state of the anonymous and icon slots */
   #slots = new SlotController(this, null, 'icon');
 
-  override render() {
+  override render(): TemplateResult<1> {
     const { compact, truncated } = this;
     const { variant, color, icon } = this;
     const hasIcon = !!icon || this.#slots.hasSlotted('icon');

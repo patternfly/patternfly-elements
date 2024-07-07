@@ -50,9 +50,10 @@ const isSlot =
       : child.getAttribute('slot') === n;
 
 export class SlotController implements ReactiveController {
-  public static default = Symbol('default slot');
+  public static default = Symbol('default slot') satisfies symbol as symbol;
+
   /** @deprecated use `default` */
-  public static anonymous = this.default;
+  public static anonymous: symbol = this.default;
 
   #nodes = new Map<string | typeof SlotController.default, Slot>();
 
@@ -84,7 +85,7 @@ export class SlotController implements ReactiveController {
     host.addController(this);
   }
 
-  async hostConnected() {
+  async hostConnected(): Promise<void> {
     this.host.addEventListener('slotchange', this.#onSlotChange as EventListener);
     this.#firstUpdated = false;
     this.#mo.observe(this.host, { childList: true });
@@ -99,14 +100,14 @@ export class SlotController implements ReactiveController {
     this.host.requestUpdate();
   }
 
-  hostUpdated() {
+  hostUpdated(): void {
     if (!this.#firstUpdated) {
       this.#slotNames.forEach(this.#initSlot);
       this.#firstUpdated = true;
     }
   }
 
-  hostDisconnected() {
+  hostDisconnected(): void {
     this.#mo.disconnect();
   }
 

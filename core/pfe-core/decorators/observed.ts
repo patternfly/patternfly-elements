@@ -65,7 +65,7 @@ export function observeProperty<T extends ReactiveElement>(
   proto: T,
   key: string & keyof T,
   callbackOrMethod?: ChangeCallback<T>
-) {
+): void {
   const descriptor = Object.getOwnPropertyDescriptor(proto, key);
   Object.defineProperty(proto, key, {
     ...descriptor,

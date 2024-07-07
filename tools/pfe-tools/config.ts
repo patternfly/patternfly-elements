@@ -65,7 +65,7 @@ function tryJson(path: string) {
  * Get a normalized pfe config for the repo
  * @param [rootDir=process.cwd()] repo root
  */
-export function getPfeConfig(rootDir = process.cwd()): Required<PfeConfig> {
+export function getPfeConfig(rootDir: string = process.cwd()): Required<PfeConfig> {
   const jsonConfig = tryJson(join(rootDir, '.pfe.config.json'));
   return {
     ...DEFAULT_CONFIG,
@@ -97,7 +97,10 @@ function getSlugsMap(rootDir: string) {
  * @param slug element slug e.g. `jazz-hands` for `pf-jazz-hands`
  * @param [rootDir=process.cwd()] repo root
  */
-export function deslugify(slug: string, rootDir = process.cwd()): string {
+export function deslugify(
+  slug: string,
+  rootDir: string = process.cwd(),
+): string {
   const { slugs, config } = getSlugsMap(rootDir);
   const prefixedSlug = (slug.startsWith(`${config.tagPrefix}-`)) ? slug : `${config.tagPrefix}-${slug}`;
   return slugs.get(slug) ?? prefixedSlug;

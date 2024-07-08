@@ -1,79 +1,39 @@
 import type {
   Attribute,
   CustomElementDeclaration,
-  Declaration,
   Package,
   Slot,
 } from 'custom-elements-manifest';
 
-import { LitElement, css, html, type PropertyValues } from 'lit';
+import type {
+  AttributeRenderer,
+  AttributeKnobInfo,
+  ContentKnobInfo,
+  ContentRenderer,
+} from './lib/knobs.js';
+
+import { LitElement, html, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+
+import {
+  isCustomElementDecl,
+  isCheckable,
+  isValue,
+  isAttributelessProperty,
+  dedent,
+} from './lib/knobs.js';
 
 import 'zero-md';
 
 import './pft-html-editor.js';
 
-interface KnobInfo<E> {
-  element: E;
-  knobId: string;
-}
-
-interface AttributeKnobInfo<E> extends KnobInfo<E> {
-  isBoolean: boolean;
-  isEnum: boolean;
-  isNullable: boolean;
-  isNumber: boolean;
-  isOptional: boolean;
-  values: string[];
-}
-
-type ContentKnobInfo<E> = KnobInfo<E>;
-
-type KnobRenderer<T, E extends HTMLElement = HTMLElement> = (
-  this: PftElementKnobs<E>,
-  member: T,
-  info:
-    T extends Attribute ? AttributeKnobInfo<E>
-  : T extends Slot[] ? ContentKnobInfo<E>
-  : KnobInfo<E>,
-) => unknown;
-
-export type AttributeRenderer<E extends HTMLElement> = KnobRenderer<Attribute, E>;
-export type ContentRenderer<E extends HTMLElement> = KnobRenderer<Slot[], E>;
-
-const isCheckable = (el: HTMLElement): el is HTMLElement & { checked: boolean } =>
-  'checked' in el;
-
-const isValue = (el: HTMLElement): el is HTMLElement & { value: string } =>
-  'value' in el;
-
-const isCustomElementDecl = (decl: Declaration): decl is CustomElementDeclaration =>
-  'customElement' in decl;
+import style from './pft-element-knobs.css';
 
 @customElement('pft-element-knobs')
 export class PftElementKnobs<T extends HTMLElement> extends LitElement {
-  static styles = [
-    css`
-      #element {
-        padding: 1em;
-      }
-
-      #attributes,
-      dl#slot-descriptions {
-        display: grid;
-        gap: 8px;
-        grid-template-columns: max-content auto;
-        & dd {
-          margin-inline-start: 0;
-        }
-        & > h2 {
-          grid-column: -1/1;
-        }
-      }
-    `,
-  ];
+  static styles = [style];
 
   @property() tag?: string;
 
@@ -119,7 +79,7 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
       try {
         this.manifest = JSON.parse(script.textContent ?? '');
       } catch {
-        null;
+        void 0;
       }
     }
     if (this.#template && this.tag) {
@@ -165,7 +125,7 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
           <template>
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown-dark.min.css">
           </template>
-          <script type="text/markdown">${x}</script>
+          ${this.#renderMarkdown(x)}
         </zero-md>`)}
       </pf-tooltip>
       ${isBoolean ? html`
@@ -186,6 +146,12 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
     `;
   }
 
+  #renderMarkdown(md?: string) {
+    return !md ? '' : html`
+      <script type="text/markdown">${md}</script>
+    `;
+  }
+
   #renderContent(slots: Slot[], info: ContentKnobInfo<T>) {
     // todo : change listener is inflexible
     return html`
@@ -199,9 +165,11 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
           <zero-md><script type="text/markdown">${x.description ?? ''}</script></zero-md>
         </dd>`)}
       </dl>
-      <pft-html-editor id="${info.knobId}"
-                       @input="${this.#onKnobChangedContent}"
-                       .value="${info.element.innerHTML}"></pft-html-editor>
+      <pf-code-block>
+        <pft-html-editor id="${info.knobId}"
+                         @input="${this.#onKnobChangedContent}"
+                         .value="${dedent(info.element.innerHTML)}"></pft-html-editor>
+      </pf-code-block>
     `;
   }
 
@@ -209,9 +177,22 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
     const decl = this.#elementDecl;
     const { element, tag, manifest } = this;
     if (element && decl && tag && manifest) {
-      const { attributes, slots } = decl;
+      const {
+        summary,
+        description,
+        attributes,
+        members,
+        slots,
+      } = decl;
+
+      const properties = members?.filter(isAttributelessProperty) ?? [];
+
       return html`
-        <form @submit="${(e: Event) => e.preventDefault()}">
+        <hr>
+        <form id="knobs" @submit="${(e: Event) => e.preventDefault()}">
+          <h2><code>&lt;${tag}&gt;</code></h2>
+          <zero-md>${this.#renderMarkdown(summary)}</zero-md>
+          <zero-md>${this.#renderMarkdown(description)}</zero-md>
           ${!attributes ? '' : html`
           <section id="attributes"
                    @change="${this.#onKnobChangeAttribute}"

@@ -173,11 +173,11 @@ export class PfAccordion extends LitElement {
     return index > -1 ? headers.at(index) : undefined;
   }
 
-  get headers() {
+  get headers(): PfAccordionHeader[] {
     return this.#allHeaders();
   }
 
-  get panels() {
+  get panels(): PfAccordionPanel[] {
     return this.#allPanels();
   }
 

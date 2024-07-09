@@ -44,6 +44,11 @@ function deinlineDefault(
       dedent(existing.description?.replace(DEFAULT_RE, '') ?? '');
   }
 }
+
+/**
+ * cem analyzer plugin to add non-standard default inline tag
+ * @deprecated - replace with [name=default] syntax
+ */
 export function jsdocDescriptionDefaultPlugin(): Plugin {
   return {
     name: 'jsdoc-description-default-plugin',

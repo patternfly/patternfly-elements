@@ -1,5 +1,12 @@
 import { Octokit } from '@octokit/core';
 
+/**
+ * netlify plugin which posts a message to the associated github PR thread
+ * @param {object} opts
+ * @param {object} opts.netlifyConfig netlify project config
+ * @param {object} opts.inputs owner, repository, and workflowId
+ * @param {object} opts.utils octokit utils
+ */
 export async function onSuccess({ netlifyConfig, inputs, utils }) {
   const {
     BRANCH: branch,

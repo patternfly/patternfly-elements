@@ -12,33 +12,34 @@ import {
 
 type TypedFieldDecorator<T> = (proto: T, key: string | keyof T) => void ;
 
+// eslint-disable-next-line jsdoc/require-param
 /**
  * Calls a _fooChanged method on the instance when the value changes.
  * Works on any class field. When using on lit observed properties,
  * Make sure `@observed` is to the left (i.e. called after) the `@property`
  * or `@state` decorator.
  * @example observing a lit property
- * ```ts
- * @observed @property() foo = 'bar';
+ *          ```ts
+ *          @observed @property() foo = 'bar';
  *
- * protected _fooChanged(oldValue?: string, newValue?: string) {}
- * ```
+ *          protected _fooChanged(oldValue?: string, newValue?: string) {}
+ *          ```
  * @example using a custom callback
- * ```ts
- * @observed('_myCallback') size = 'lg';
+ *          ```ts
+ *          @observed('_myCallback') size = 'lg';
  *
- * _myCallback(_, size) {...}
- * ```
+ *          _myCallback(_, size) {...}
+ *          ```
  * @example using an arrow function
- * ```ts
- * @observed((oldVal, newVal) => console.log(`Size changed from ${oldVal} to ${newVal}`))
- * ```
+ *          ```ts
+ *          @observed((oldVal, newVal) => console.log(`Size changed from ${oldVal} to ${newVal}`))
+ *          ```
  */
 export function observed<T extends ReactiveElement>(methodName: string): TypedFieldDecorator<T>;
 export function observed<T extends ReactiveElement>(cb: ChangeCallback<T>): TypedFieldDecorator<T>;
 export function observed<T extends ReactiveElement>(proto: T, key: string): void;
+// eslint-disable-next-line jsdoc/require-jsdoc
 export function observed<T extends ReactiveElement>(...as: any[]): void | TypedFieldDecorator<T> {
-  /** @observed('_myCustomChangeCallback') */
   if (as.length === 1) {
     const [methodNameOrCallback] = as;
     return function(proto, key) {
@@ -54,11 +55,17 @@ export function observed<T extends ReactiveElement>(...as: any[]): void | TypedF
   }
 }
 
+/**
+ * Creates an observer on a field
+ * @param proto
+ * @param key
+ * @param callbackOrMethod
+ */
 export function observeProperty<T extends ReactiveElement>(
   proto: T,
   key: string & keyof T,
   callbackOrMethod?: ChangeCallback<T>
-) {
+): void {
   const descriptor = Object.getOwnPropertyDescriptor(proto, key);
   Object.defineProperty(proto, key, {
     ...descriptor,

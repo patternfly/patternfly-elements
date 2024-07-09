@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -20,9 +20,9 @@ import { observes } from '@patternfly/pfe-core/decorators/observes.js';
  */
 @customElement('pf-jump-links-item')
 export class PfJumpLinksItem extends LitElement {
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -37,7 +37,7 @@ export class PfJumpLinksItem extends LitElement {
     role: 'listitem',
   });
 
-  render() {
+  render(): TemplateResult<1> {
     return html`
       <a href="${ifDefined(this.href)}"
          @focus="${this.#onFocus}"
@@ -49,7 +49,7 @@ export class PfJumpLinksItem extends LitElement {
   }
 
   @observes('active')
-  protected activeChanged() {
+  protected activeChanged(): void {
     this.#internals.ariaCurrent = this.active ? 'location' : null;
   }
 

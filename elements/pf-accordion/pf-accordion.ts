@@ -1,5 +1,6 @@
-import { LitElement, html } from 'lit';
-import { listen, observes } from '@patternfly/pfe-core/decorators.js';
+import { LitElement, html, type TemplateResult } from 'lit';
+import { observes } from '@patternfly/pfe-core/decorators/observes.js';
+import { listen } from '@patternfly/pfe-core/decorators/listen.js';
 import { property } from 'lit/decorators/property.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 
@@ -105,7 +106,7 @@ export class PfAccordionCollapseEvent extends Event {
  */
 @customElement('pf-accordion')
 export class PfAccordion extends LitElement {
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
   /** When true, only one accordion panel may be expanded at a time */
   @property({ reflect: true, type: Boolean }) single = false;
@@ -131,7 +132,7 @@ export class PfAccordion extends LitElement {
     attribute: 'expanded-index',
     converter: NumberListConverter,
   })
-  get expandedIndex() {
+  get expandedIndex(): number[] {
     return this.#expandedIndex;
   }
 
@@ -162,7 +163,7 @@ export class PfAccordion extends LitElement {
 
   #expandedIndex: number[] = [];
 
-  protected expandedSets = new Set<number>();
+  protected expandedSets: Set<number> = new Set<number>();
 
   get #activeHeader() {
     const { headers } = this;
@@ -170,27 +171,27 @@ export class PfAccordion extends LitElement {
     return index > -1 ? headers.at(index) : undefined;
   }
 
-  get headers() {
+  get headers(): PfAccordionHeader[] {
     return this.#allHeaders();
   }
 
-  get panels() {
+  get panels(): PfAccordionPanel[] {
     return this.#allPanels();
   }
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
     this.#mo.observe(this, { childList: true });
     this.#init();
   }
 
-  render() {
+  render(): TemplateResult<1> {
     return html`
       <slot></slot>
     `;
   }
 
-  async firstUpdated() {
+  async firstUpdated(): Promise<void> {
     let lastExpandedIndex: number;
     const { headers, single } = this;
     const lastExpanded = headers.filter(x => x.hasAttribute('expanded')).pop();
@@ -218,7 +219,7 @@ export class PfAccordion extends LitElement {
   }
 
   @observes('large')
-  protected largeChanged() {
+  protected largeChanged(): void {
     for (const el of [...this.headers, ...this.panels]) {
       el.toggleAttribute('large', this.large);
     }
@@ -284,7 +285,7 @@ export class PfAccordion extends LitElement {
   }
 
   @listen('change')
-  protected onChange(event: PfAccordionHeaderChangeEvent) {
+  protected onChange(event: PfAccordionHeaderChangeEvent): void {
     if (event instanceof PfAccordionHeaderChangeEvent && event.accordion === this) {
       const index = this.#getIndex(event.target);
       if (event.expanded) {
@@ -319,7 +320,7 @@ export class PfAccordion extends LitElement {
     return -1;
   }
 
-  public updateAccessibility() {
+  public updateAccessibility(): void {
     this.#headerIndex.updateItems();
     const { headers } = this;
 
@@ -339,7 +340,7 @@ export class PfAccordion extends LitElement {
    * Accepts an optional parent accordion to search for headers and panels.
    * @param index index (0-based) of the panel to expand
    */
-  public async expand(index: number) {
+  public async expand(index: number): Promise<void> {
     if (index === -1) {
       return;
     }
@@ -376,7 +377,7 @@ export class PfAccordion extends LitElement {
    * Accepts a 0-based index value (integer) for the set of accordion items to collapse.
    * @param index index (0-based) of the panel to collapse
    */
-  public async collapse(index: number) {
+  public async collapse(index: number): Promise<void> {
     const header = this.headers.at(index);
     const panel = this.panels.at(index);
 
@@ -395,7 +396,7 @@ export class PfAccordion extends LitElement {
    * Accepts a 0-based index value (integer) for the set of accordion items to expand or collapse.
    * @param index index (0-based) of the panel to toggle
    */
-  public async toggle(index: number) {
+  public async toggle(index: number): Promise<void> {
     const { headers } = this;
     const header = headers[index];
 
@@ -409,7 +410,7 @@ export class PfAccordion extends LitElement {
   /**
    * Expands all accordion items.
    */
-  public async expandAll() {
+  public async expandAll(): Promise<void> {
     this.headers.forEach(header => this.#expandHeader(header));
     this.panels.forEach(panel => this.#expandPanel(panel));
     await this.updateComplete;
@@ -419,7 +420,7 @@ export class PfAccordion extends LitElement {
   /**
    * Collapses all accordion items.
    */
-  public async collapseAll() {
+  public async collapseAll(): Promise<void> {
     this.headers.forEach(header => this.#collapseHeader(header));
     this.panels.forEach(panel => this.#collapsePanel(panel));
     await this.updateComplete;

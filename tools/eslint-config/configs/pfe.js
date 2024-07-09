@@ -8,17 +8,41 @@ import stylistic from '@stylistic/eslint-plugin';
 
 import { States } from '../lib.js';
 
+const definedTags = [
+  'attr',
+  'attribute',
+  'cssprop',
+  'cssproperty',
+  'fires',
+  'slot',
+  'csspart',
+];
+
 export default [
   { name: 'eslint/recommended', ...js.configs.recommended },
   {
     name: 'jsdoc/flat/recommended-typescript',
-    files: ['**/*.ts'],
     ...jsdoc.configs['flat/recommended-typescript'],
+    files: ['**/*.ts'],
+    plugins: { jsdoc },
+    rules: {
+      'jsdoc/require-jsdoc': [States.WARNING, { publicOnly: true, enableFixer: false }],
+      'jsdoc/require-param': [States.WARNING, { enableFixer: true }],
+      'jsdoc/require-returns': [States.OFF, { enableFixer: true }],
+      'jsdoc/check-tag-names': [States.WARNING, { typed: true, enableFixer: false, definedTags }],
+    },
   },
   {
     name: 'jsdoc/flat/recommended-typescript-flavor',
-    files: ['**/*.js', '**/*.cjs', '**/*.mjs'],
     ...jsdoc.configs['flat/recommended-typescript-flavor'],
+    files: ['**/*.js', '**/*.cjs', '**/*.mjs'],
+    plugins: { jsdoc },
+    rules: {
+      'jsdoc/require-jsdoc': [States.WARNING, { publicOnly: true, enableFixer: false }],
+      'jsdoc/require-param': [States.WARNING, { enableFixer: true }],
+      'jsdoc/require-returns': [States.OFF, { enableFixer: true }],
+      'jsdoc/check-tag-names': [States.WARNING, { typed: false, enableFixer: false, definedTags }],
+    },
   },
   {
     name: '@patternfly/elements',

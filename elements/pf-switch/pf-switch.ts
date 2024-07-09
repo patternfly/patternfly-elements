@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -45,7 +45,7 @@ import styles from './pf-switch.css';
 
 @customElement('pf-switch')
 export class PfSwitch extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   static readonly formAssociated = true;
 
@@ -78,17 +78,17 @@ export class PfSwitch extends LitElement {
     this.#updateLabels();
   }
 
-  formDisabledCallback(disabled: boolean) {
+  formDisabledCallback(disabled: boolean): void {
     this.disabled = disabled;
     this.requestUpdate();
   }
 
-  override willUpdate() {
+  override willUpdate(): void {
     this.#internals.ariaChecked = String(!!this.checked);
     this.#internals.ariaDisabled = String(!!this.disabled);
   }
 
-  override render() {
+  override render(): TemplateResult<1> {
     return html`
       <div id="container">
         <svg id="toggle"

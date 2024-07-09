@@ -17,6 +17,10 @@ const entryPoints =
 
 const contents = entryPoints.map(x => `export * from './${x}';`).join('\n');
 
+/**
+ * @param {object} options
+ * @param {object} options.outfile file path to bundle to
+ */
 export async function bundle({ outfile = 'elements/pfe.min.js' } = {}) {
   await build({
     stdin: {

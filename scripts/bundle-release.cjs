@@ -1,13 +1,5 @@
 // @ts-check
 
-/**
- * @typedef {object} API
- * @property {import('@actions/core')} core
- * @property {import('@actions/exec')} exec
- * @property {import('@actions/glob')} glob
- * @property {import('@octokit/rest').Octokit} github
- */
-
 /** @param {number} ms */
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -47,7 +39,7 @@ async function execCommand(exec, command) {
  * @param {(...args: any[]) => T} fn async function to be backed off
  * @param {number} retries current count of retries
  * @param {number} max Max number of retries
- * @return {Promise<T>}
+ * @returns {Promise<T>}
  */
 async function backoff(fn, retries = 0, max = 10) {
   try {
@@ -66,9 +58,9 @@ async function backoff(fn, retries = 0, max = 10) {
 
 /**
  * @param {object} params
- * @param {API} params.api
+ * @param {*} params.api
  * @param {string} params.workspace
- * @return string filename
+ * @returns {Promise<string>} filename
  */
 async function getBundle({ api, workspace }) {
   const { basename } = require('path');
@@ -95,7 +87,6 @@ async function getBundle({ api, workspace }) {
   }
 }
 
-/** @typedef {Awaited<ReturnType<import('@octokit/rest').Octokit['repos']['getRelease']>>['data']} Release */
 
 /**
  * @param {object} params
@@ -127,7 +118,6 @@ async function uploadAssetOverwriting({ api, owner, repo, tag, workspace, releas
     repo,
     release_id: release.id,
     name,
-    // @ts-expect-error: seems to work tho
     data,
   });
 }
@@ -148,7 +138,6 @@ async function uploadAssetOverwriting({ api, owner, repo, tag, workspace, releas
 module.exports = async function bundle({ tags = '', workspace, ...api }) {
   await execCommand(api.exec, 'git config advice.detachedHead false');
 
-  /** @type {API} */
   api;
 
   const tagsList = tags.split(',').map(x => x.trim());

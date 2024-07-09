@@ -1,6 +1,6 @@
 import type { PfAccordion } from './pf-accordion.js';
 
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -96,9 +96,9 @@ export class PfAccordionHeaderChangeEvent extends Event {
  */
 @customElement('pf-accordion-header')
 export class PfAccordionHeader extends LitElement {
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -123,14 +123,14 @@ export class PfAccordionHeader extends LitElement {
 
   #slots = new SlotController(this, 'accents', null);
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.hidden = true;
     this.id ||= getRandomId(this.localName);
     this.#initHeader();
   }
 
-  override render() {
+  override render(): TemplateResult<1> {
     const headingText = this.headingText?.trim() ?? this.#header?.textContent?.trim();
     const content = html`
       <button id="button"

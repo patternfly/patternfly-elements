@@ -25,6 +25,8 @@ export default [
     rules: {
       '@stylistic/max-len': States.OFF,
       '@typescript-eslint/no-non-null-assertion': States.OFF,
+      '@typescript-eslint/no-unused-expressions': States.OFF,
+      'no-unused-expressions': States.OFF,
       'no-console': States.OFF,
       'no-invalid-this': States.OFF,
       'jsdoc/require-jsdoc': States.OFF,

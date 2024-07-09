@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -143,7 +143,7 @@ export type ButtonVariant = (
 export class PfButton extends LitElement {
   static readonly formAssociated = true;
 
-  static readonly styles = [
+  static readonly styles: CSSStyleSheet[] = [
     tokensStyles,
     iconStyles,
     styles,
@@ -224,12 +224,12 @@ export class PfButton extends LitElement {
     this.#internals.ariaDisabled = String(!!this.disabled);
   }
 
-  async formDisabledCallback() {
+  async formDisabledCallback(): Promise<void> {
     await this.updateComplete;
     this.requestUpdate();
   }
 
-  override render() {
+  override render(): TemplateResult<1> {
     const hasIcon = !!this.icon || !!this.loading || this.#slots.hasSlotted('icon');
     const { warning, variant, danger, loading, plain, inline, block, size } = this;
     const disabled = this.#disabled;

@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -34,7 +34,7 @@ function dedent(str: string): string {
 
 @customElement('pf-code-block')
 export class PfCodeBlock extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   /** Flag for whether the code block is expanded */
   @property({ type: Boolean, reflect: true }) expanded = false;
@@ -53,7 +53,7 @@ export class PfCodeBlock extends LitElement {
     }
   }
 
-  override render() {
+  override render(): TemplateResult<1> {
     const { expanded } = this;
     return html`
       <div id="header">

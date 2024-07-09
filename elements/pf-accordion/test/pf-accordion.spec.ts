@@ -1011,7 +1011,6 @@ describe('<pf-accordion>', function() {
   describe('with nested pf-accordion', function() {
     let topLevelHeaderOne: PfAccordionHeader;
     let topLevelHeaderTwo: PfAccordionHeader;
-    let topLevelHeaderThree: PfAccordionHeader;
 
     let topLevelPanelOne: PfAccordionPanel;
     let topLevelPanelTwo: PfAccordionPanel;
@@ -1077,7 +1076,6 @@ describe('<pf-accordion>', function() {
       `);
       topLevelHeaderOne = document.getElementById('header-1') as PfAccordionHeader;
       topLevelHeaderTwo = document.getElementById('header-2') as PfAccordionHeader;
-      topLevelHeaderThree = document.getElementById('header-3') as PfAccordionHeader;
 
       topLevelPanelOne = document.getElementById('panel-1') as PfAccordionPanel;
       topLevelPanelTwo = document.getElementById('panel-2') as PfAccordionPanel;
@@ -1355,7 +1353,6 @@ describe('<pf-accordion>', function() {
 
   describe('with a single expanded header and panel containing a checkbox and a switch', function() {
     let element: PfAccordion;
-    let headers: NodeListOf<PfAccordionHeader>;
     let panels: NodeListOf<PfAccordionPanel>;
     let checkbox: HTMLInputElement;
     let pfswitch: PfSwitch;
@@ -1371,7 +1368,6 @@ describe('<pf-accordion>', function() {
             </pf-accordion-panel>
           </pf-accordion>
         `);
-      headers = document.querySelectorAll('pf-accordion-header');
       panels = document.querySelectorAll('pf-accordion-panel');
       checkbox = element.querySelector('input')!;
       pfswitch = element.querySelector('pf-switch')!;

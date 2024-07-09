@@ -28,12 +28,13 @@ export class RovingTabindexController<
   static of<Item extends HTMLElement>(
     host: ReactiveControllerHost,
     options: RovingTabindexControllerOptions<Item> & { getItems(): Item[] },
-  ) {
+  ): RovingTabindexController<Item> {
     return new RovingTabindexController(host, options);
   }
 
   /** @internal */
-  static elements = new WeakMap<Element, RovingTabindexController>();
+  static elements: WeakMap<Element, RovingTabindexController<HTMLElement>> =
+    new WeakMap<Element, RovingTabindexController>();
 
   /** active focusable element */
   #activeItem?: Item;
@@ -79,14 +80,14 @@ export class RovingTabindexController<
   /**
    * all items from array
    */
-  get items() {
+  get items(): Item[] {
     return this.#items;
   }
 
   /**
    * all focusable items from array
    */
-  get focusableItems() {
+  get focusableItems(): Item[] {
     return this.#focusableItems;
   }
 
@@ -146,7 +147,7 @@ export class RovingTabindexController<
     this.updateItems();
   }
 
-  hostUpdated() {
+  hostUpdated(): void {
     const oldContainer = this.#itemsContainer;
     const newContainer = this.#options.getHTMLElement();
     if (oldContainer !== newContainer) {
@@ -162,7 +163,7 @@ export class RovingTabindexController<
   /**
    * removes event listeners from items container
    */
-  hostDisconnected() {
+  hostDisconnected(): void {
     this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
     this.#itemsContainer = undefined;
     this.#gainedInitialFocus = false;
@@ -179,6 +180,7 @@ export class RovingTabindexController<
 
   /**
    * handles keyboard navigation
+   * @param event keydown event
    */
   #onKeydown = (event: Event) => {
     if (!(event instanceof KeyboardEvent)
@@ -250,6 +252,7 @@ export class RovingTabindexController<
 
   /**
    * Sets the active item and focuses it
+   * @param item tabindex item
    */
   setActiveItem(item?: Item): void {
     this.#activeItem = item;
@@ -264,8 +267,9 @@ export class RovingTabindexController<
 
   /**
    * Focuses next focusable item
+   * @param items tabindex items
    */
-  updateItems(items: Item[] = this.#options.getItems?.() ?? []) {
+  updateItems(items: Item[] = this.#options.getItems?.() ?? []): void {
     this.#items = items;
     const sequence = [
       ...this.#items.slice(this.#itemIndex - 1),
@@ -277,16 +281,21 @@ export class RovingTabindexController<
     this.setActiveItem(activeItem);
   }
 
-  /** @deprecated use setActiveItem */
+  /**
+   * @deprecated use setActiveItem
+   * @param item tabindex item
+   */
   focusOnItem(item?: Item): void {
     this.setActiveItem(item);
   }
 
   /**
    * from array of HTML items, and sets active items
-   * @deprecated: use getItems and getItemContainer option functions
+   * @deprecated use getItems and getItemContainer option functions
+   * @param items tabindex items
+   * @param itemsContainer
    */
-  initItems(items: Item[], itemsContainer?: Element) {
+  initItems(items: Item[], itemsContainer?: Element): void {
     const element = itemsContainer
       ?? this.#options?.getItemContainer?.()
       ?? this.#options.getHTMLElement();

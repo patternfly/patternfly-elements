@@ -52,7 +52,7 @@ export class ScrollSpyController implements ReactiveController {
         .filter(this.#getHash);
   }
 
-  get root() {
+  get root(): Element | Document | null | undefined {
     return this.#root;
   }
 
@@ -62,7 +62,7 @@ export class ScrollSpyController implements ReactiveController {
     this.#initIo();
   }
 
-  get rootMargin() {
+  get rootMargin(): string | undefined {
     return this.#rootMargin;
   }
 
@@ -72,7 +72,7 @@ export class ScrollSpyController implements ReactiveController {
     this.#initIo();
   }
 
-  get threshold() {
+  get threshold(): number | number[] {
     return this.#threshold;
   }
 
@@ -96,7 +96,7 @@ export class ScrollSpyController implements ReactiveController {
     this.#getHash = options?.getHash ?? ((el: Element) => el.getAttribute('href'));
   }
 
-  hostConnected() {
+  hostConnected(): void {
     this.#initIo();
   }
 
@@ -153,8 +153,11 @@ export class ScrollSpyController implements ReactiveController {
     this.#intersected = true;
   }
 
-  /** Explicitly set the active item */
-  public async setActive(link: EventTarget | null) {
+  /**
+   * Explicitly set the active item
+   * @param link usually an `<a>`
+   */
+  public async setActive(link: EventTarget | null): Promise<void> {
     this.#force = true;
     this.#setActive(link);
     let sawActive = false;

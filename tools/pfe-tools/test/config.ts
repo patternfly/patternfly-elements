@@ -43,6 +43,9 @@ const exists = async (path: string | URL) => {
   }
 };
 
+/**
+ * @param opts test runner options
+ */
 export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunnerConfig {
   const { open, ...devServerConfig } = pfeDevServerConfig({ ...opts, loadDemo: false });
 
@@ -105,7 +108,11 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
       a11ySnapshotPlugin(),
     ],
     middleware: [
-      /** redirect `.js` to `.ts` when the typescript source exists */
+      /**
+       * redirect `.js` to `.ts` when the typescript source exists
+       * @param ctx koa context
+       * @param next next middleware
+       */
       async function(ctx, next) {
         if (ctx.path.endsWith('.js')
             && ctx.path.startsWith(`/${elementsDir}/${tagPrefix}-`)

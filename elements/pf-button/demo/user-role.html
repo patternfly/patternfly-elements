@@ -1,0 +1,70 @@
+<pf-card id="custom-tabs-card">
+  <h2 id="title" slot="header">Button Role Example</h2>
+  <div id="custom-tab-group"
+       slot="header"
+       role="tablist"
+       aria-labelledby="title">
+    <pf-button id="tab-html"
+               role="tab"
+               size="small"
+               aria-controls="panel-html"
+               aria-selected="true">HTML</pf-button>
+    <pf-button id="tab-css"
+               role="tab"
+               size="small"
+               aria-controls="panel-css"
+               aria-selected="false">CSS</pf-button>
+    <pf-button id="tab-js"
+               role="tab"
+               size="small"
+               aria-controls="panel-js"
+               aria-selected="false">JS</pf-button>
+  </div>
+
+  <div id="panel-html" role="tabpanel" aria-labelledby="tab-html">
+    <strong>HTML</strong> is the foundational language of the web.
+  </div>
+
+  <div id="panel-css" role="tabpanel" aria-labelledby="tab-css" hidden>
+    <strong>CSS</strong> is used to add presentation, for advanced
+    layouts, and for animations
+  </div>
+
+  <div id="panel-js" role="tabpanel" aria-labelledby="tab-js" hidden>
+    <strong>JavaScript</strong> should be used sparingly to add custom
+    interactions and to improve accessibility
+  </div>
+
+  <small slot="footer">
+    <strong>Note:</strong> the purpose of this demo is to show how custom
+    roles can be applied to <code>&lt;pf-button&gt;</code>.
+    However, we recommend always using <code>&lt;pf-tabs&gt;</code>, and avoiding custom
+    implementations of existing design system patterns
+  </small>
+</pf-card>
+
+<style>
+  #custom-tabs-card {
+    margin: 1em;
+    max-width: 500px;
+    & h2 {
+      margin-inline-end: auto;
+    }
+  }
+</style>
+
+<script type="module">
+  import '@patternfly/elements/pf-button/pf-button.js';
+  const tabs = document.getElementById('custom-tab-group');
+  const panels = document.querySelectorAll('[role=tabpanel]');
+  tabs.addEventListener('click', function(event) {
+    const ariaControls = event.target.getAttribute('aria-controls');
+    if (ariaControls) {
+      for (const panel of panels) {
+        const isSelected = ariaControls === panel.id
+        event.target.setAttribute('aria-selected', String(isSelected));
+        panel.hidden = !isSelected;
+      }
+    }
+  })
+</script>

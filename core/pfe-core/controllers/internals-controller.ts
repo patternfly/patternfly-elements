@@ -203,23 +203,28 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     this.attach();
     this.initializeOptions(options);
     InternalsController.instances.set(host, this);
-    this.#polyfillDisabledPseudo();
+    this.#patchFormDisabledCallback();
+  }
+
+  /**
+   * Update the custom element when form disabled state changes
+   */
+  #patchFormDisabledCallback() {
+    const orig = (this.element as FACE).formDisabledCallback;
+    (this.element as FACE).formDisabledCallback = disabled => {
+      this.#polyfillDisabledPseudo(disabled);
+      orig?.call(this.host, disabled);
+      this.host.requestUpdate();
+    };
   }
 
   /**
    * We need to polyfill :disabled
-   * see https://github.com/calebdwilliams/element-internals-polyfill/issues/88
+   * @see https://github.com/calebdwilliams/element-internals-polyfill/issues/88
+   * @param disabled the form / fieldset disabled state
    */
-  #polyfillDisabledPseudo() {
-    // START polyfill-disabled
-    // We need to polyfill :disabled
-    // see https://github.com/calebdwilliams/element-internals-polyfill/issues/88
-    const orig = (this.element as FACE).formDisabledCallback;
-    (this.element as FACE).formDisabledCallback = disabled => {
-      this._formDisabled = disabled;
-      orig?.call(this.host, disabled);
-    // END polyfill-disabled
-    };
+  #polyfillDisabledPseudo(disabled: boolean) {
+    this._formDisabled = disabled;
   }
 
   /**

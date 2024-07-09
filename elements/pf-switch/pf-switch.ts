@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
@@ -51,8 +52,6 @@ export class PfSwitch extends LitElement {
 
   declare shadowRoot: ShadowRoot;
 
-  #internals = InternalsController.of(this, { role: 'switch' });
-
   /** Accessible label text for the switch */
   @property({ reflect: true }) label?: string;
 
@@ -65,8 +64,14 @@ export class PfSwitch extends LitElement {
   /** Flag to show if the switch is disabled. */
   @property({ reflect: true, type: Boolean }) disabled = false;
 
+  #internals = InternalsController.of(this, { role: 'switch' });
+
   get labels(): NodeListOf<HTMLLabelElement> {
     return this.#internals.labels as NodeListOf<HTMLLabelElement>;
+  }
+
+  get #disabled() {
+    return this.disabled || this.#internals.formDisabled;
   }
 
   override connectedCallback(): void {
@@ -78,19 +83,15 @@ export class PfSwitch extends LitElement {
     this.#updateLabels();
   }
 
-  formDisabledCallback(disabled: boolean) {
-    this.disabled = disabled;
-    this.requestUpdate();
-  }
-
   override willUpdate() {
     this.#internals.ariaChecked = String(!!this.checked);
-    this.#internals.ariaDisabled = String(!!this.disabled);
+    this.#internals.ariaDisabled = String(!!this.#disabled);
   }
 
   override render() {
+    const disabled = this.#disabled;
     return html`
-      <div id="container">
+      <div id="container" class="${classMap({ disabled })}">
         <svg id="toggle"
              role="presentation"
              fill="currentColor"
@@ -135,7 +136,7 @@ export class PfSwitch extends LitElement {
   }
 
   #toggle() {
-    if (!this.disabled) {
+    if (!this.#disabled) {
       this.checked = !this.checked;
       this.#updateLabels();
       this.dispatchEvent(new Event('change', { bubbles: true }));

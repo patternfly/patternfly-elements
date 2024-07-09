@@ -300,11 +300,6 @@ export class PfTextInput extends LitElement {
   }
 
 
-  async formDisabledCallback() {
-    await this.updateComplete;
-    this.requestUpdate();
-  }
-
   setCustomValidity(message: string) {
     this.#internals.setValidity({}, message);
     this.requestUpdate();

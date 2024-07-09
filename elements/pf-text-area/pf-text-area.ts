@@ -248,11 +248,6 @@ export class PfTextArea extends LitElement {
     }
   }
 
-  async formDisabledCallback() {
-    await this.updateComplete;
-    this.requestUpdate();
-  }
-
   setCustomValidity(message: string) {
     this.#internals.setValidity({}, message);
   }

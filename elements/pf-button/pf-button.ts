@@ -224,11 +224,6 @@ export class PfButton extends LitElement {
     this.#internals.ariaDisabled = String(!!this.disabled);
   }
 
-  async formDisabledCallback() {
-    await this.updateComplete;
-    this.requestUpdate();
-  }
-
   override render() {
     const hasIcon = !!this.icon || !!this.loading || this.#slots.hasSlotted('icon');
     const { warning, variant, danger, loading, plain, inline, block, size } = this;

@@ -323,6 +323,10 @@
     "wireit": "^0.14.4",
     "zero-md": "^2.5.4"
   },
+  "optionalDependencies": {
+    "@esbuild/darwin-arm64": "^0.23.0",
+    "@rollup/rollup-darwin-arm64": "^4.18.1"
+  },
   "workspaces": [
     "./core/*",
     "./elements",

@@ -36,7 +36,7 @@ svg {
   cursor: not-allowed;
 }
 
-:host(:disabled) #container {
+#container.disabled {
   cursor: not-allowed;
 
   color: var(--pf-c-switch__input--disabled__label--Color,
@@ -45,17 +45,17 @@ svg {
     var(--pf-global--disabled-color--200, #d2d2d2));
 }
 
-:host(:disabled) #container::before {
+#container.disabled::before {
   background-color: var(--pf-c-switch__input--disabled__toggle--before--BackgroundColor,
     var(--pf-global--palette--black-150, #f5f5f5));
 }
 
-:host([checked]:disabled) #container::before {
+#container.checked.disabled::before {
   translate: var(--pf-c-switch__input--checked__toggle--before--TranslateX,
     calc(100% + var(--pf-c-switch__toggle-icon--Offset, 0.125rem)));
 }
 
-:host(:disabled:focus-within) #container {
+:host(:focus-within) #container.disabled {
   outline: none;
 }
 

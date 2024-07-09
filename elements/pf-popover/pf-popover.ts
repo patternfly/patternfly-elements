@@ -1,6 +1,6 @@
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
-import { LitElement, nothing, html, type PropertyValues, isServer } from 'lit';
+import { LitElement, nothing, html, type PropertyValues, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -17,9 +17,7 @@ import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-popover.css';
 
-const headingLevels = [2, 3, 4, 5, 6] as const;
-
-type HeadingLevel = (typeof headingLevels)[number];
+type HeadingLevel = 2 | 3 | 4 | 5 | 6;
 
 type AlertSeverity = 'default' | 'info' | 'warning' | 'success' | 'danger';
 
@@ -179,7 +177,7 @@ export class PopoverShownEvent extends ComposedEvent {
  */
 @customElement('pf-popover')
 export class PfPopover extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   private static instances = new Set<PfPopover>();
 
@@ -192,13 +190,15 @@ export class PfPopover extends LitElement {
   } satisfies Record<AlertSeverity, string>) as [AlertSeverity, string][]);
 
   static {
-    !isServer && document.addEventListener('click', function(event) {
-      for (const instance of PfPopover.instances) {
-        if (!instance.noOutsideClick) {
-          instance.#outsideClick(event);
+    if (!isServer) {
+      document.addEventListener('click', function(event) {
+        for (const instance of PfPopover.instances) {
+          if (!instance.noOutsideClick) {
+            instance.#outsideClick(event);
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   /**
@@ -333,10 +333,12 @@ export class PfPopover extends LitElement {
 
   constructor() {
     super();
-    !isServer && this.addEventListener('keydown', this.#onKeydown);
+    if (!isServer) {
+      this.addEventListener('keydown', this.#onKeydown);
+    }
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const { alignment, anchor, styles } = this.#float;
     const hasFooter = this.#slots.hasSlotted('footer') || !!this.footer;
     const hasHeading = this.#slots.hasSlotted('heading') || !!this.heading;
@@ -407,7 +409,7 @@ export class PfPopover extends LitElement {
     `;
   }
 
-  disconnectedCallback() {
+  disconnectedCallback(): void {
     super.disconnectedCallback();
     PfPopover.instances.delete(this);
     this.#referenceTrigger?.removeEventListener('click', this.toggle);
@@ -459,8 +461,9 @@ export class PfPopover extends LitElement {
   /**
    * Removes event listeners from the old trigger element and attaches
    * them to the new trigger element.
+   * @param changed changed props
    */
-  override willUpdate(changed: PropertyValues<this>) {
+  override willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('trigger')) {
       this.#triggerChanged();
     }
@@ -469,14 +472,18 @@ export class PfPopover extends LitElement {
   /**
    * Toggle the popover
    */
-  @bound async toggle() {
-    this.#float.open ? this.hide() : this.show();
+  @bound async toggle(): Promise<void> {
+    if (this.#float.open) {
+      this.hide();
+    } else {
+      this.show();
+    }
   }
 
   /**
    * Opens the popover
    */
-  @bound async show() {
+  @bound async show(): Promise<void> {
     this.#hideDialog = false;
     this.requestUpdate();
     this.dispatchEvent(new PopoverShowEvent());
@@ -495,7 +502,7 @@ export class PfPopover extends LitElement {
   /**
    * Closes the popover
    */
-  @bound async hide() {
+  @bound async hide(): Promise<void> {
     this.dispatchEvent(new PopoverHideEvent());
     await this.#float.hide();
     this._popover?.close();

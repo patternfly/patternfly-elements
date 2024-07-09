@@ -1,11 +1,9 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { query } from 'lit/decorators/query.js';
 import { consume } from '@lit/context';
-
-import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
 import { context, type PfDropdownContext } from './context.js';
 
@@ -55,9 +53,9 @@ export class DropdownItemChange extends Event {
  */
 @customElement('pf-dropdown-item')
 export class PfDropdownItem extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -100,7 +98,7 @@ export class PfDropdownItem extends LitElement {
     }
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const { disabled } = this.ctx ?? { disabled: false };
     const isDisabled = !!this.disabled || !!this.ctx?.disabled;
     return html`

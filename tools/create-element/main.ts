@@ -69,6 +69,9 @@ function banner() {
                    ${Chalk.bold(Chalk.blue('PatternFly Elements'))}`);
 }
 
+/**
+ * @param options the tag and package names, among others
+ */
 export async function promptForElementGeneratorOptions(
   options?: PromptOptions<GenerateElementOptions>
 ): Promise<GenerateElementOptions> {
@@ -97,6 +100,9 @@ async function getDefaultPackageName() {
          ?? (await readJsonOrVoid(join(process.cwd(), 'package.json')) as PackageJSON)?.name ?? '';
 }
 
+/**
+ * Prompt to generate an element definition
+ */
 export async function main(): Promise<void> {
   return Promise.resolve(
     (Yargs(process.argv) as Yargs.Argv<GenerateElementOptions>)

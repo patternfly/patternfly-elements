@@ -1,4 +1,4 @@
-import type { ComplexAttributeConverter, PropertyValues } from 'lit';
+import type { ComplexAttributeConverter, PropertyValues, TemplateResult } from 'lit';
 
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
@@ -22,7 +22,7 @@ const BooleanStringConverter: ComplexAttributeConverter = {
  */
 @customElement('pf-timestamp')
 export class PfTimestamp extends LitElement {
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
   @property({ reflect: true, attribute: 'date-format' }) dateFormat?: DateTimeFormat;
 
@@ -45,7 +45,7 @@ export class PfTimestamp extends LitElement {
   }) hour12?: boolean;
 
   @property({ reflect: true })
-  get date() {
+  get date(): string {
     return this.#timestamp.localeString;
   }
 
@@ -53,30 +53,30 @@ export class PfTimestamp extends LitElement {
     this.#timestamp.date = new Date(string);
   }
 
-  get isoString() {
+  get isoString(): string {
     return this.#timestamp.isoString;
   }
 
-  get time() {
+  get time(): string {
     return this.#timestamp.time;
   }
 
   #timestamp = new TimestampController(this);
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
     if (this.hasAttribute('date')) {
       this.#timestamp.date = new Date(this.getAttribute('date')!);
     }
   }
 
-  willUpdate(changedProperties: PropertyValues<this>) {
+  willUpdate(changedProperties: PropertyValues<this>): void {
     for (const [prop] of changedProperties) {
       this.#timestamp.set(prop, this[prop as keyof this]);
     }
   }
 
-  render() {
+  render(): TemplateResult<1> {
     return html`
       <time datetime="${this.#timestamp.isoString}">${this.#timestamp.time}</time>
     `;

@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { state } from 'lit/decorators/state.js';
 import { consume } from '@lit/context';
@@ -16,18 +16,18 @@ import styles from './pf-tab-panel.css';
  */
 @customElement('pf-tab-panel')
 export class PfTabPanel extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   @consume({ context, subscribe: true })
   @state() private ctx?: PfTabsContext;
 
-  render() {
+  render(): TemplateResult<1> {
     return html`
       <slot></slot>
     `;
   }
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.id ||= getRandomId('pf-tab-panel');
     this.hidden ??= true;
@@ -44,7 +44,7 @@ export class PfTabPanel extends LitElement {
     this.tabIndex = 0;
   }
 
-  override willUpdate() {
+  override willUpdate(): void {
     const { box, vertical } = this.ctx ?? {};
     this.toggleAttribute('vertical', vertical);
     if (box) {

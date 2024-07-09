@@ -1,4 +1,4 @@
-import { html, LitElement, type PropertyValues } from 'lit';
+import { html, LitElement, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -60,7 +60,7 @@ import styles from './pf-tabs.css';
  */
 @customElement('pf-tabs')
 export class PfTabs extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   protected static readonly scrollTimeoutDelay = 150;
 
@@ -141,7 +141,7 @@ export class PfTabs extends LitElement {
 
   #logger = new Logger(this);
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('expand', this.#onExpand);
     this.id ||= getRandomId(this.localName);
@@ -181,7 +181,7 @@ export class PfTabs extends LitElement {
     }
   }
 
-  render() {
+  render(): TemplateResult<1> {
     return html`
       <div part="container"
            class="${classMap({ overflow: this.#overflow.showScrollButtons })}">
@@ -245,7 +245,7 @@ export class PfTabs extends LitElement {
     }
   }
 
-  select(option: PfTab | number) {
+  select(option: PfTab | number): void {
     if (typeof option === 'number') {
       const item = this.tabs[option];
       this.#tabindex.setActiveItem(item);

@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
@@ -60,7 +60,7 @@ import styles from './pf-tab.css';
  */
 @customElement('pf-tab')
 export class PfTab extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private icons!: HTMLElement[];
@@ -77,7 +77,7 @@ export class PfTab extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'tab' });
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.id ||= getRandomId(this.localName);
     this.addEventListener('click', this.#onClick);
@@ -85,7 +85,7 @@ export class PfTab extends LitElement {
     this.addEventListener('focus', this.#onFocus);
   }
 
-  override willUpdate() {
+  override willUpdate(): void {
     const { borderBottom, box, fill, manual, vertical } = this.ctx ?? {};
     this.toggleAttribute('fill', fill);
     this.toggleAttribute('manual', manual);
@@ -102,7 +102,7 @@ export class PfTab extends LitElement {
     }
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const { active } = this;
     const { box, fill = false, vertical = false } = this.ctx ?? {};
     const light = box === 'light';

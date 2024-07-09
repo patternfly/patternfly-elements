@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -24,7 +24,7 @@ import styles from './pf-badge.css';
 
 @customElement('pf-badge')
 export class PfBadge extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   /**
    * Denotes the state-of-affairs this badge represents
@@ -46,7 +46,7 @@ export class PfBadge extends LitElement {
    */
   @property({ reflect: true, type: Number }) threshold?: number;
 
-  override render() {
+  override render(): TemplateResult<1> {
     const { threshold, number, textContent } = this;
     const displayText =
         (threshold && number && (threshold < number)) ? `${threshold.toString()}+`

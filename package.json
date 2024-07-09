@@ -319,8 +319,13 @@
     "nunjucks": "^3.2.4",
     "postcss-nesting": "^12.1.1",
     "prompts": "^2.4.2",
+    "typescript": "^5.5.3",
     "wireit": "^0.14.4",
     "zero-md": "^2.5.4"
+  },
+  "optionalDependencies": {
+    "@esbuild/darwin-arm64": "^0.23.0",
+    "@rollup/rollup-darwin-arm64": "^4.18.1"
   },
   "workspaces": [
     "./core/*",

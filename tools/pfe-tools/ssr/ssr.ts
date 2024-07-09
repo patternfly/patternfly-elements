@@ -3,6 +3,9 @@ import { collectResult } from '@lit-labs/ssr/lib/render-result.js';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
-export async function ssr(input: string) {
+/**
+ * @param input html partial
+ */
+export async function ssr(input: string): Promise<string> {
   return collectResult(render(html`${unsafeHTML(input)}`));
 }

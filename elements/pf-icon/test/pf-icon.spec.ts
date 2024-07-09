@@ -16,7 +16,7 @@ import api from './rh-icon-api.js';
 import atom from './rh-icon-atom.js';
 // @ts-ignore: don't want to include these
 import bike from './rh-icon-bike.js';
-import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+
 /* eslint-enable @typescript-eslint/ban-ts-comment */
 
 const TEST_ICONS = { aed, api, atom, bike };

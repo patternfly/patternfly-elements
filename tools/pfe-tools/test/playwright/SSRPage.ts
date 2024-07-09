@@ -85,7 +85,7 @@ export class SSRPage {
   /**
    * Creates visual regression snapshots for each demo in the server's `demoDir`
    */
-  async snapshots() {
+  async snapshots(): Promise<void> {
     try {
       await Promise.all([
         this.initServer(),

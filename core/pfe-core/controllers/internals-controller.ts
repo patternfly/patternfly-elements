@@ -21,7 +21,11 @@ interface InternalsControllerOptions extends Partial<ARIAMixin> {
   getHTMLElement?(): HTMLElement;
 }
 
-/** reactively forward the internals object's aria mixin prototype */
+/**
+ * reactively forward the internals object's aria mixin prototype
+ * @param target
+ * @param key
+ */
 function aria(
   target: InternalsController,
   key: keyof InternalsController,
@@ -94,6 +98,8 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   @aria ariaAtomic: string | null = null;
   @aria ariaAutoComplete: string | null = null;
   @aria ariaBusy: string | null = null;
+  @aria ariaBrailleLabel: string | null = null;
+  @aria ariaBrailleRoleDescription: string | null = null;
   @aria ariaChecked: string | null = null;
   @aria ariaColCount: string | null = null;
   @aria ariaColIndex: string | null = null;
@@ -150,7 +156,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   @aria ariaOwnsElements: Element[] | null = null;
 
   /** True when the control is disabled via it's containing fieldset element */
-  get formDisabled() {
+  get formDisabled(): boolean {
     if (isServer) {
       return this._formDisabled;
     } else {
@@ -158,16 +164,16 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     }
   }
 
-  get labels() {
+  get labels(): NodeList {
     return this.internals.labels;
   }
 
-  get validity() {
+  get validity(): ValidityState {
     return this.internals.validity;
   }
 
   /** A best-attempt based on observed behaviour in FireFox 115 on fedora 38 */
-  get computedLabelText() {
+  get computedLabelText(): string {
     return this.internals.ariaLabel
       || Array.from(this.internals.labels as NodeListOf<HTMLElement>)
           .reduce((acc, label) =>
@@ -249,27 +255,27 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   hostConnected?(): void;
 
-  setFormValue(...args: Parameters<ElementInternals['setFormValue']>) {
+  setFormValue(...args: Parameters<ElementInternals['setFormValue']>): void {
     return this.internals.setFormValue(...args);
   }
 
-  setValidity(...args: Parameters<ElementInternals['setValidity']>) {
+  setValidity(...args: Parameters<ElementInternals['setValidity']>): void {
     return this.internals.setValidity(...args);
   }
 
-  checkValidity(...args: Parameters<ElementInternals['checkValidity']>) {
+  checkValidity(...args: Parameters<ElementInternals['checkValidity']>): boolean {
     return this.internals.checkValidity(...args);
   }
 
-  reportValidity(...args: Parameters<ElementInternals['reportValidity']>) {
+  reportValidity(...args: Parameters<ElementInternals['reportValidity']>): boolean {
     return this.internals.reportValidity(...args);
   }
 
-  submit() {
+  submit(): void {
     this.internals.form?.requestSubmit();
   }
 
-  reset() {
+  reset(): void {
     this.internals.form?.reset();
   }
 }

@@ -5,7 +5,7 @@ import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js
 import { classMap } from 'lit/directives/class-map.js';
 import { consume } from '@lit/context';
 
-import { observed } from '@patternfly/pfe-core/decorators.js';
+import { observes } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
@@ -65,10 +65,8 @@ export class PfTab extends LitElement {
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private icons!: HTMLElement[];
 
-  @observed
   @property({ reflect: true, type: Boolean }) active = false;
 
-  @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
 
   @consume({ context, subscribe: true })
@@ -144,14 +142,16 @@ export class PfTab extends LitElement {
     return this.dispatchEvent(new TabExpandEvent(this));
   }
 
-  private _activeChanged(old: boolean) {
+  @observes('active')
+  protected activeChanged(old: boolean) {
     this.#internals.ariaSelected = String(!!this.active);
     if (this.active && !old) {
       this.#activate();
     }
   }
 
-  private _disabledChanged() {
+  @observes('disabled')
+  protected disabledChanged() {
     this.#internals.ariaDisabled = this.disabled ? 'true' : this.ariaDisabled ?? 'false';
   }
 }

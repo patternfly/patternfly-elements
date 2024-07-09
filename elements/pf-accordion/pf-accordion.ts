@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { observed } from '@patternfly/pfe-core/decorators.js';
+import { listen, observes } from '@patternfly/pfe-core/decorators.js';
 import { property } from 'lit/decorators/property.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 
@@ -114,9 +114,6 @@ export class PfAccordion extends LitElement {
   @property({ type: Boolean, reflect: true }) bordered = false;
 
   /** Whether to apply the `large` style variant */
-  @observed(function largeChanged(this: PfAccordion) {
-    [...this.headers, ...this.panels].forEach(el => el.toggleAttribute('large', this.large));
-  })
   @property({ type: Boolean, reflect: true }) large = false;
 
   @property({ type: Boolean, reflect: true }) fixed = false;
@@ -183,7 +180,6 @@ export class PfAccordion extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('change', this.#onChange as EventListener);
     this.#mo.observe(this, { childList: true });
     this.#init();
   }
@@ -219,6 +215,13 @@ export class PfAccordion extends LitElement {
       ...this.#allPanels().map(x => x.updateComplete),
     ]);
     return c && results.every(Boolean);
+  }
+
+  @observes('large')
+  protected largeChanged() {
+    for (const el of [...this.headers, ...this.panels]) {
+      el.toggleAttribute('large', this.large);
+    }
   }
 
   /**
@@ -280,7 +283,8 @@ export class PfAccordion extends LitElement {
     panel.hidden = true;
   }
 
-  #onChange(event: PfAccordionHeaderChangeEvent) {
+  @listen('change')
+  protected onChange(event: PfAccordionHeaderChangeEvent) {
     if (event instanceof PfAccordionHeaderChangeEvent && event.accordion === this) {
       const index = this.#getIndex(event.target);
       if (event.expanded) {
@@ -358,8 +362,8 @@ export class PfAccordion extends LitElement {
     }
 
     // If the header and panel exist, open both
-    this.#expandHeader(header, index),
-    this.#expandPanel(panel),
+    this.#expandHeader(header, index);
+    this.#expandPanel(panel);
 
     header.focus();
 

@@ -1,4 +1,4 @@
-<pf-card>
+<pf-card id="custom-tabs-card">
   <h2 id="title" slot="header">Button Role Example</h2>
   <div id="custom-tab-group"
        slot="header"
@@ -6,16 +6,19 @@
        aria-labelledby="title">
     <pf-button id="tab-html"
                role="tab"
+               size="small"
                aria-controls="panel-html"
                aria-selected="true">HTML</pf-button>
     <pf-button id="tab-css"
                role="tab"
+               size="small"
                aria-controls="panel-css"
                aria-selected="false">CSS</pf-button>
     <pf-button id="tab-js"
                role="tab"
+               size="small"
                aria-controls="panel-js"
-               aria-selected="false">JavaScript</pf-button>
+               aria-selected="false">JS</pf-button>
   </div>
 
   <div id="panel-html" role="tabpanel" aria-labelledby="tab-html">
@@ -41,8 +44,12 @@
 </pf-card>
 
 <style>
-  h2 {
-    margin-inline-end: auto;
+  #custom-tabs-card {
+    margin: 1em;
+    max-width: 500px;
+    & h2 {
+      margin-inline-end: auto;
+    }
   }
 </style>
 

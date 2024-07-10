@@ -22,7 +22,7 @@ import bike from './rh-icon-bike.js';
 const TEST_ICONS = { aed, api, atom, bike };
 
 async function expectIconsEqual(element: PfIcon, tpl: TemplateResult) {
-  await oneEvent(element, 'load', false);
+  await oneEvent(element, 'load');
   const rootNode = render(tpl, document.createDocumentFragment());
   const actual = element.shadowRoot?.querySelector('svg');
   const expected = (rootNode.parentNode as DocumentFragment).querySelector('svg');
@@ -98,7 +98,7 @@ describe('<pf-icon>', function() {
       it('should hide the fallback when it successfully upgrades', async function() {
         element.innerHTML = `<p>Icon failed to load.</p>`;
         element.icon = 'bike';
-        await oneEvent(element, 'load', false);
+        await oneEvent(element, 'load');
         expect(element.shadowRoot?.querySelector('[part=fallback]'))
             .to.have.attribute('hidden');
       });
@@ -107,7 +107,7 @@ describe('<pf-icon>', function() {
         const newColor = 'rgb(11, 12, 13)';
         element.style.setProperty('color', newColor);
         element.icon = 'atom';
-        await oneEvent(element, 'load', false);
+        await oneEvent(element, 'load');
         const color = getComputedStyle(element.shadowRoot!.querySelector('svg')!).getPropertyValue('color');
         expect(color).to.equal(newColor);
       });
@@ -140,7 +140,7 @@ describe('<pf-icon>', function() {
         PfIcon.addIconSet('asdfasdf', () =>
           import(`./rh-icon-${'bike'}.js`)
               .then(m => m.default));
-        await oneEvent(element, 'load', false);
+        await oneEvent(element, 'load');
       });
       it(`should render the icon`, function() {
         expectIconsEqual(element, bike);
@@ -155,7 +155,7 @@ describe('<pf-icon>', function() {
         <pf-icon icon="no-scrubs">
           <p>Image failed to load.</p>.
         </pf-icon>`);
-      await oneEvent(element, 'error', false);
+      await oneEvent(element, 'error');
     });
     it('should display the fallback', function() {
       expect(element.shadowRoot!.querySelector('svg')).to.not.be.ok;

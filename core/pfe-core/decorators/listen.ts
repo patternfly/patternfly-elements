@@ -10,16 +10,16 @@ export function listen(type: string, options?: EventListenerOptions) {
   return function(
     proto: LitElement,
     methodName: string,
-  ) {
+  ): void {
     const origConnected = proto.connectedCallback;
     const origDisconnected = proto.disconnectedCallback;
     const listener = (proto as any)[methodName] as EventListener;
     proto.connectedCallback = function() {
-      origConnected();
+      origConnected?.call(this);
       this.addEventListener(type, listener, options);
     };
     proto.disconnectedCallback = function() {
-      origDisconnected();
+      origDisconnected?.call(this);
       this.removeEventListener(type, listener, options);
     };
   };

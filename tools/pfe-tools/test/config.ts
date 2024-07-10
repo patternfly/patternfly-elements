@@ -77,7 +77,9 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
 
   return {
     ...devServerConfig,
-    nodeResolve: true,
+    nodeResolve: {
+      exportConditions: ['production'],
+    },
     files: [
       '**/*.spec.ts',
       '!**/*.e2e.ts',

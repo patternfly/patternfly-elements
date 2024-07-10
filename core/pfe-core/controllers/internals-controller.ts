@@ -45,11 +45,13 @@ function aria(
     configurable: false,
     get(this: InternalsController) {
       // @ts-expect-error: because i'm bad, i'm bad
-      return this.attach()[key];
+      const internals = this.attachOrRetrieveInternals();
+      return internals[key];
     },
     set(this: InternalsController, value: string | null) {
       // @ts-expect-error: shamone!
-      this.attach()[key] = value;
+      const internals = this.attachOrRetrieveInternals();
+      internals[key] = value;
       this.host.requestUpdate();
     },
   });
@@ -206,7 +208,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
         `InternalsController must be instantiated with an HTMLElement or a \`getHTMLElement\` function`,
       );
     }
-    this.attach();
+    this.attachOrRetrieveInternals();
     this.initializeOptions(options);
     InternalsController.instances.set(host, this);
     this.#polyfillDisabledPseudo();
@@ -237,7 +239,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
    * Because of that, `this.internals` may not be available in the decorator setter
    * so we cheat here with nullish coalescing assignment operator `??=`;
    */
-  private attach() {
+  private attachOrRetrieveInternals() {
     this.internals ??= this.element!.attachInternals();
     return this.internals;
   }

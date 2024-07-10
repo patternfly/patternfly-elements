@@ -1,30 +1,40 @@
 import type { ReactiveElement } from 'lit';
 
-import type { ChangeCallback } from '@patternfly/pfe-core/controllers/property-observer-controller.js';
+import {
+  PropertyObserverController,
+  type ChangeCallback,
+  type PropertyObserverOptions,
+} from '@patternfly/pfe-core/controllers/property-observer-controller.js';
 
 /**
  * Observes changes on the given property and calls the decorated method
- * with the old and new values when it changes.
+ * with the old and new values when it changes. In cases where the decorated method
+ * needs to access uninitialized class fields, You may need to wait for the element to connect
+ * before running your effects. In that case, you can optionally specify which
+ * lifecycle state to wait for. e.g.:
+ * - `waitFor: 'firstUpdate'` waits until the first update cycle has completed
+ * - `waitFor: 'updated'` waits until the next update cycle has completed
+ * - `waitFor: 'connected'` waits until the element connects
  * @param propertyName property to react to
+ * @param [options] options including lifecycle to wait on.
  */
-export function observes<T extends ReactiveElement>(propertyName: string & keyof T) {
-  return function(proto: T, methodName: string) {
-    const method = proto[methodName as keyof T] as ChangeCallback<T>;
-    if (typeof method !== 'function') {
+export function observes<T extends ReactiveElement>(
+  propertyName: string & keyof T,
+  options?: Partial<Pick<PropertyObserverOptions<T>, 'waitFor'>>,
+) {
+  return function(proto: T, methodName: string): void {
+    const callback = proto[methodName as keyof T] as ChangeCallback<T>;
+    if (typeof callback !== 'function') {
       throw new Error('@observes must decorate a class method');
     }
-    const descriptor = Object.getOwnPropertyDescriptor(proto, propertyName);
-    Object.defineProperty(proto, propertyName, {
-      ...descriptor,
-      configurable: true,
-      set(this: T, newVal: T[keyof T]) {
-        const oldVal = this[propertyName as keyof T];
-        // first, call any pre-existing setters, e.g. `@property`
-        descriptor?.set?.call(this, newVal);
-        method.call(this, oldVal, newVal);
-      },
+    const klass = proto.constructor as typeof ReactiveElement;
+    klass.addInitializer(instance => {
+      instance.addController(new PropertyObserverController(instance as T, {
+        ...options,
+        propertyName,
+        callback,
+      }));
     });
   };
 }
-
 

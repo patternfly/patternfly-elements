@@ -141,7 +141,6 @@ async function writeComponentFile(key: FileKey, options: GenerateElementOptions)
   await writeFile(PATH, OUTPUT, 'utf-8');
 
   if (!options.silent) {
-    // eslint-disable-next-line no-console
     console.log(`  ✏️  ${green(relative(options.directory, PATH))}`);
   }
 }
@@ -169,7 +168,6 @@ export class PackageJSONError extends Error {}
  * @param options element generator options
  */
 export async function generateElement(options: GenerateElementOptions): Promise<void> {
-  // eslint-disable-next-line no-console
   const log = (...args: unknown[]) => void (!options?.silent && console.log(...args));
   const start = performance.now();
   if (!options || !options.tagName) {

@@ -141,7 +141,7 @@
       ]
     },
     "build:bundle": {
-      "command": "scripts/bundle.js",
+      "command": "node scripts/bundle.js",
       "dependencies": [
         "build:core"
       ],

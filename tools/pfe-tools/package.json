@@ -46,7 +46,8 @@
   },
   "contributors": [
     "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",
-    "Benny Powers <bennyp@redhat.com>"
+    "Benny Powers <bennyp@redhat.com>",
+    "Arathy Kumar <ask6295@gmail.com>"
   ],
   "license": "MIT",
   "bugs": {

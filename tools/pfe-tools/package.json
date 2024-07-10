@@ -97,7 +97,7 @@
     "esbuild-plugin-lit-css": "^3.0.0",
     "esbuild-plugin-minify-html-literals": "^2.0.0",
     "eslint": "^9.0.0",
-    "execa": "^8.0.1",
+    "execa": "^9.3.0",
     "glob": "^10.3.12",
     "lit": "^3.1.2",
     "markdown-it-anchor": "^8.6.7",
@@ -117,11 +117,11 @@
     "@types/estree": "^1.0.5",
     "@types/glob": "^8.1.0",
     "@types/koa-send": "^4.1.6",
-    "@types/mocha": "^10.0.6",
-    "@types/node": "^20.12.7",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "^20.14.10",
     "@types/nunjucks": "^3.2.6",
     "@types/sinon": "^17.0.3",
     "@types/yargs": "^17.0.32",
-    "custom-elements-manifest": "^2.0.0"
+    "custom-elements-manifest": "^2.1.0"
   }
 }

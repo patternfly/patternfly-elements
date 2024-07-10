@@ -143,15 +143,15 @@ export class PfTab extends LitElement {
   }
 
   @observes('active')
-  protected activeChanged(old: boolean) {
-    this.#internals.ariaSelected = String(!!this.active);
-    if (this.active && !old) {
+  protected activeChanged(old: boolean, active: boolean): void {
+    this.#internals.ariaSelected = String(!!active);
+    if (active && !old) {
       this.#activate();
     }
   }
 
   @observes('disabled')
-  protected disabledChanged() {
+  protected disabledChanged(): void {
     this.#internals.ariaDisabled = this.disabled ? 'true' : this.ariaDisabled ?? 'false';
   }
 }

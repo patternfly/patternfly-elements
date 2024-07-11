@@ -16,6 +16,7 @@
     "./functions/*": "./functions/*",
     "./core.js": "./core.js",
     "./decorators.js": "./decorators.js",
+    "./controllers/activedescendant-controller.js": "./controllers/activedescendant-controller.js",
     "./controllers/cascade-controller.js": "./controllers/cascade-controller.js",
     "./controllers/css-variable-controller.js": "./controllers/css-variable-controller.js",
     "./controllers/floating-dom-controller.js": "./controllers/floating-dom-controller.js",

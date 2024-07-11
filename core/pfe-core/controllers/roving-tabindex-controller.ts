@@ -1,5 +1,6 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import type { RequireProps } from '../core.js';
+import type { ListboxAccessibilityController } from './listbox-controller.js';
 
 const isFocusableElement = (el: Element): el is HTMLElement =>
   !!el
@@ -22,8 +23,11 @@ export interface RovingTabindexControllerOptions<Item extends HTMLElement> {
  */
 export class RovingTabindexController<
   Item extends HTMLElement = HTMLElement
-> implements ReactiveController {
+> implements ReactiveController, ListboxAccessibilityController<Item> {
   private static hosts = new WeakMap<ReactiveControllerHost, RovingTabindexController>();
+
+  private static elements: WeakMap<Element, RovingTabindexController<HTMLElement>> =
+    new WeakMap<Element, RovingTabindexController>();
 
   static of<Item extends HTMLElement>(
     host: ReactiveControllerHost,
@@ -31,10 +35,6 @@ export class RovingTabindexController<
   ): RovingTabindexController<Item> {
     return new RovingTabindexController(host, options);
   }
-
-  /** @internal */
-  static elements: WeakMap<Element, RovingTabindexController<HTMLElement>> =
-    new WeakMap<Element, RovingTabindexController>();
 
   /** active focusable element */
   #activeItem?: Item;

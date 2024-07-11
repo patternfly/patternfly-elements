@@ -1,6 +1,9 @@
 type RGBTuple = [R: number, G: number, B: number, A?: number];
 
-/** Converts a hex value to RGBA */
+/**
+ * Converts a hex value to RGBA
+ * @param hex css hex value e.g. #c0f3f300
+ */
 export const hexToRgb = (hex: string): RGBTuple => {
   const [, r, g, b, a] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})?/.exec(hex) ?? [];
   const NOTHING = Symbol();
@@ -13,7 +16,11 @@ export const hexToRgb = (hex: string): RGBTuple => {
   return values.filter(x => x !== NOTHING) as RGBTuple;
 };
 
-// Gets the rgba value from an element
+/**
+ * Gets the rgba value from an element's css property
+ * @param el element to query
+ * @param prop css property on the element
+ */
 export const getColor = (el: Element, prop: string): RGBTuple => {
   const [, r, g, b] = (getComputedStyle(el, null)
       .getPropertyValue(prop)

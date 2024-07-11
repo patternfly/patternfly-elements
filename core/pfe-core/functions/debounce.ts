@@ -12,7 +12,7 @@ export function debounce(
   immediate = false
 ) {
   let timeout: number | null;
-  return function(this: unknown, ...args: any[]) {
+  return function(this: unknown, ...args: any[]): void {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this;
     const later = function() {

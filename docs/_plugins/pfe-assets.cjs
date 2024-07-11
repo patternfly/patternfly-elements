@@ -2,11 +2,6 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * @typedef {object} EleventyTransformContext
- * @property {string} outputPath path this file will be written to
- */
-
-/**
  * Generate a map of files per package which should be copied to the site dir
  * @param {object} [options]
  * @param {string} [options.prefix='pfe'] element prefix e.g. 'pfe' for 'pf-button'
@@ -55,7 +50,7 @@ const DEMO_PATHS_RE =
 
 /**
  * Replace paths in demo files from the dev SPA's format to 11ty's format
- * @this {EleventyTransformContext}
+ * @param {string} content demo file
  */
 function demoPaths(content) {
   if (this.outputPath.match(/(components|core|tools)\/.*\/demo\/index\.html$/)) {

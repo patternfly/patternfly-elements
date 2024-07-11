@@ -4,49 +4,34 @@ import tseslint from 'typescript-eslint';
 import pfe from '@patternfly/eslint-config-elements';
 import pfePlugin from '@patternfly/eslint-plugin-elements';
 
+import { includeIgnoreFile } from '@eslint/compat';
+
 export default tseslint.config(
   ...pfe,
+  includeIgnoreFile(new URL('.gitignore', import.meta.url).pathname),
   {
     name: 'local/ignores',
     ignores: [
-      '**/*.d.ts',
-      '**/*.(spec|e2e).js',
-      'elements/**/*.js',
-      'core/**/*.js',
-      '_site',
-      'docs/_data/todos.json',
-      'docs/demo.js',
-      'docs/pfe.min.js',
-      'docs/bundle.js',
-      'docs/core',
-      'docs/components',
+      'elements/pf-icon/demo/icons/**/*.js',
       'tools/create-element/templates/**/*',
-      'tools/pfe-tools/*.js',
-      'tools/pfe-tools/custom-elements-manifest/*.js',
-      'tools/pfe-tools/custom-elements-manifest/**/*.js',
-      'tools/pfe-tools/dev-server/*.js',
-      'tools/pfe-tools/dev-server/**/*.js',
-      'tools/pfe-tools/react/*.js',
-      'tools/pfe-tools/react/**/*.js',
-      'tools/pfe-tools/test/*.js',
-      'tools/pfe-tools/test/**/*.js',
+      'tools/create-element/**/*.js',
+      'tools/create-element/templates/**/*',
     ],
   },
-
   {
     name: 'local/elements/package.json',
     files: ['elements/package.json'],
     plugins: { '@patternfly/elements': pfePlugin },
     rules: {
       '@patternfly/elements/no-missing-package-exports': [States.ERROR, {
-        matches: ['elements/*/pf-*.js', 'elements/*/Base*.js'],
+        matches: ['elements/*/pf-*.js'],
       }],
     },
   },
   {
     name: 'local/tools/create-element',
     files: [
-      'tools/create-element/**/*.js',
+      'tools/create-element/**/*.ts',
     ],
     rules: {
       'no-console': States.OFF,

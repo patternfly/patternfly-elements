@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -139,11 +139,11 @@ import styles from './pf-text-input.css';
  */
 @customElement('pf-text-input')
 export class PfTextInput extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   static readonly formAssociated = true;
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -220,15 +220,19 @@ export class PfTextInput extends LitElement {
 
   #touched = false;
 
+  get #disabled() {
+    return (!isServer && this.matches(':disabled')) || this.disabled;
+  }
+
   get #input() {
     return this.shadowRoot?.getElementById('input') as HTMLInputElement ?? null;
   }
 
-  override willUpdate() {
+  override willUpdate(): void {
     this.#derivedLabel = this.accessibleLabel || this.#internals.computedLabelText;
   }
 
-  override render() {
+  override render(): TemplateResult<1> {
     const { valid } = this.#internals.validity;
     return html`
       <input id="input"
@@ -238,7 +242,7 @@ export class PfTextInput extends LitElement {
              @input="${this.#onInput}"
              @keydown="${this.#onKeydown}"
              @blur="${this.#onBlur}"
-             ?disabled="${this.matches(':disabled') || this.disabled}"
+             ?disabled="${this.#disabled}"
              ?readonly="${this.readonly}"
              ?required="${this.required}"
              aria-label="${this.#derivedLabel}"
@@ -285,7 +289,7 @@ export class PfTextInput extends LitElement {
     this.requestUpdate();
   }
 
-  async formStateRestoreCallback(state: string, mode: string) {
+  async formStateRestoreCallback(state: string, mode: string): Promise<void> {
     if (mode === 'restore') {
       const [controlMode, value] = state.split('/');
       this.value = value ?? controlMode;
@@ -296,24 +300,24 @@ export class PfTextInput extends LitElement {
   }
 
 
-  async formDisabledCallback() {
+  async formDisabledCallback(): Promise<void> {
     await this.updateComplete;
     this.requestUpdate();
   }
 
-  setCustomValidity(message: string) {
+  setCustomValidity(message: string): void {
     this.#internals.setValidity({}, message);
     this.requestUpdate();
   }
 
-  checkValidity() {
+  checkValidity(): boolean {
     this.#setValidityFromInput();
     const validity = this.#internals.checkValidity();
     this.requestUpdate();
     return validity;
   }
 
-  reportValidity() {
+  reportValidity(): boolean {
     this.#setValidityFromInput();
     return this.#internals.reportValidity();
   }

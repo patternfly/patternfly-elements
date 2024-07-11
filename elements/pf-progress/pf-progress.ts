@@ -1,4 +1,4 @@
-import type { PropertyValues } from 'lit';
+import type { PropertyValues, TemplateResult } from 'lit';
 import { LitElement, html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
@@ -77,7 +77,7 @@ const ICONS = new Map(Object.entries({
  */
 @customElement('pf-progress')
 export class PfProgress extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   #internals = this.attachInternals();
 
@@ -122,7 +122,7 @@ export class PfProgress extends LitElement {
     return ICONS.get(this.variant ?? '')?.icon;
   }
 
-  override willUpdate(changed: PropertyValues<this>) {
+  override willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('value') || changed.has('min') || changed.has('max')) {
       this.#internals.ariaValueNow = this.#calculatedPercentage.toString();
     }
@@ -134,7 +134,7 @@ export class PfProgress extends LitElement {
     }
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const { size, measureLocation, variant, description, descriptionTruncated } = this;
     const icon = this.#icon;
     const singleLine = description?.length === 0;

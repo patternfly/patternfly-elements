@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -11,9 +11,9 @@ import styles from './pf-dropdown-group.css';
  */
 @customElement('pf-dropdown-group')
 export class PfDropdownGroup extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -23,7 +23,7 @@ export class PfDropdownGroup extends LitElement {
    */
   @property({ reflect: true }) label?: string;
 
-  render() {
+  render(): TemplateResult<1> {
     return html`
       <p ?hidden="${!this.label}" role="presentation">${this.label}</p>
       <slot></slot>

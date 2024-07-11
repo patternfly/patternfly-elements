@@ -29,8 +29,8 @@ export default tseslint.config(
 
   ...PFE_CONFIG,
   ...NODE_CONFIG,
-  ...TEST_CONFIG,
   ...JSON_CONFIG,
   ...TYPESCRIPT_CONFIG,
+  ...TEST_CONFIG,
   ...HTML_CONFIG,
 );

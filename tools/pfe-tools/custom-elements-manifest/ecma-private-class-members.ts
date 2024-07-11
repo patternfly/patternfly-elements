@@ -1,6 +1,9 @@
 import type { CustomElement } from 'custom-elements-manifest/schema';
 import type { Plugin } from '@custom-elements-manifest/analyzer';
 
+/**
+ * cem plugin to mark ecma #private members as private
+ */
 export function ecmaPrivateClassMembersPlugin(): Plugin {
   return {
     name: 'ecma-private-class-members-plugin',

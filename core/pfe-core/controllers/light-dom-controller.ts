@@ -12,14 +12,18 @@ export class LightDOMController implements ReactiveController {
   private logger: Logger;
   private initializer: () => void;
 
-  constructor(private host: ReactiveElement, initializer: () => void, private options?: Options) {
+  constructor(
+    private host: ReactiveElement,
+    initializer: () => void,
+    private options?: Options | undefined,
+  ) {
     this.initializer = initializer.bind(host);
     this.mo = new MutationObserver(this.initializer);
     this.logger = new Logger(this.host);
     host.addController(this);
   }
 
-  hostConnected() {
+  hostConnected(): void {
     if (this.hasLightDOM()) {
       this.initializer();
     } else if (this.options?.emptyWarning) {
@@ -29,7 +33,7 @@ export class LightDOMController implements ReactiveController {
     this.initObserver();
   }
 
-  hostDisconnected() {
+  hostDisconnected(): void {
     this.mo.disconnect();
   }
 

@@ -5,7 +5,7 @@ import { debounce } from '../functions/debounce.js';
 import { Logger } from './logger.js';
 
 /**
- * @deprecated: use context, especially via `@patternfly/pfe-core/functions/context.js`;
+ * @deprecated use context, especially via `@patternfly/pfe-core/functions/context.js`;
  */
 export interface Options<E extends ReactiveElement> {
   properties: Partial<Record<keyof E, string | string[]>>;
@@ -13,20 +13,21 @@ export interface Options<E extends ReactiveElement> {
 }
 
 /**
- * @deprecated: use context, especially via `@patternfly/pfe-core/functions/context.js`;
+ * @deprecated use context, especially via `@patternfly/pfe-core/functions/context.js`;
  */
 export class CascadeController<E extends ReactiveElement> implements ReactiveController {
   private class: typeof ReactiveElement;
 
   private logger: Logger;
 
-  static instances = new WeakMap<ReactiveElement, CascadeController<ReactiveElement>>();
+  static instances: WeakMap<ReactiveElement, CascadeController<ReactiveElement>> =
+    new WeakMap<ReactiveElement, CascadeController<ReactiveElement>>();
 
-  mo = new MutationObserver(this.parse);
+  mo: MutationObserver = new MutationObserver(this.parse);
 
-  cache = new Map<string, string[]>();
+  cache: Map<string, string[]> = new Map<string, string[]>();
 
-  constructor(public host: E, public options?: Options<E>) {
+  constructor(public host: E, public options?: Options<E> | undefined) {
     this.class = host.constructor as typeof ReactiveElement;
     this.logger = new Logger(this.host);
     CascadeController.instances.set(host, this);
@@ -38,24 +39,25 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
     this.cascadeProperties = debounce(this.cascadeProperties, 1);
   }
 
-  hostUpdated() {
+  hostUpdated(): void {
     this.cascadeProperties();
   }
 
-  hostConnected() {
+  hostConnected(): void {
     this.mo.observe(this.host, { attributes: true, childList: true });
     this.cascadeProperties();
   }
 
-  hostDisconnected() {
+  hostDisconnected(): void {
     this.mo.disconnect();
   }
 
   /**
    * Handles the cascading of properties to nested components when new elements are added
    * Attribute updates/additions are handled by the attribute callback
+   * @param [nodeList=this.host.children]
    */
-  cascadeProperties(nodeList: HTMLCollection | NodeList = this.host.children) {
+  cascadeProperties(nodeList: HTMLCollection | NodeList = this.host.children): void {
     if (this.host.isConnected) {
       const selectors = this.cache.keys();
 
@@ -89,8 +91,10 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
    * Gets the configured attribute name for the decorated property,
    * falling back to the lowercased property name, and caches the attribute name
    * with it's designated child selectors for value-propagation on change
+   * @param propName
+   * @param cascade
    */
-  initProp(propName: string, cascade: string | string[]) {
+  initProp(propName: string, cascade: string | string[]): void {
     for (const nodeItem of [cascade].flat(Infinity).filter(Boolean) as string[]) {
       const { attribute } = this.class.getPropertyOptions(propName);
 
@@ -122,6 +126,8 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
 
   /**
    * Copy the named attribute to a target element.
+   * @param name attr name
+   * @param el element
    */
   private async _copyAttribute(name: string, el: Element) {
     this.logger.log(`copying ${name} to ${el}`);

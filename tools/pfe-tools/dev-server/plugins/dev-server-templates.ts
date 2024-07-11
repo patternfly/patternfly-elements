@@ -53,7 +53,7 @@ async function getTemplateContent(demo?: DemoRecord) {
  */
 export function pfeDevServerTemplateMiddleware(config: PfeDevServerInternalConfig) {
   const env = nunjucks.configure(join(dirname(fileURLToPath(import.meta.url)), 'templates'));
-  return async function(ctx: Context, next: Next) {
+  return async function(ctx: Context, next: Next): Promise<void> {
     const { method, path } = ctx;
     if (config.loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {
       const url = new URL(ctx.request.url, `http://${ctx.request.headers.host}`);

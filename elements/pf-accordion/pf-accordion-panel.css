@@ -1,4 +1,8 @@
 :host {
+  display: none;
+  position: relative;
+  overflow: hidden;
+  will-change: height;
   color: var(--pf-global--Color--100, #151515);
   background-color:
     var(
@@ -16,6 +20,11 @@
 }
 
 .body:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
   width: var(--pf-c-accordion__panel-body--before--Width, var(--pf-global--BorderWidth--lg, 3px));
   background-color: var(--pf-c-accordion__panel-body--before--BackgroundColor, transparent);
 }
@@ -46,7 +55,13 @@
 }
 
 :host([fixed]) {
+  overflow-y: auto;
   max-height: var(--pf-c-accordion__panel--m-fixed--MaxHeight, 9.375rem);
+}
+
+:host([expanded]) {
+  display: block;
+  position: relative;
 }
 
 .content[expanded],

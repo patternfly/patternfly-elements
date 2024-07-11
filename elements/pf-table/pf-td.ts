@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -11,7 +11,7 @@ import { RequestExpandEvent } from './pf-tr.js';
  */
 @customElement('pf-td')
 export class PfTd extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   @property({ attribute: 'compound-expand' }) compoundExpand?: string;
 
@@ -22,7 +22,7 @@ export class PfTd extends LitElement {
     this.setAttribute('role', 'cell');
   }
 
-  render() {
+  render(): TemplateResult<1> {
     return this.compoundExpand ? html`
       <button @click="${this.#onClick}">
         <slot></slot>

@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { consume } from '@lit/context';
 import { state } from 'lit/decorators/state.js';
@@ -26,9 +26,9 @@ function isDisabledItemClick(event: MouseEvent) {
  */
 @customElement('pf-dropdown-menu')
 export class PfDropdownMenu extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -46,14 +46,14 @@ export class PfDropdownMenu extends LitElement {
   /**
    * current active descendant in menu
    */
-  get activeItem() {
+  get activeItem(): HTMLElement | undefined {
     return this.#tabindex.activeItem ?? this.#tabindex.firstItem;
   }
 
   /**
    * index of current active descendant in menu
    */
-  get activeIndex() {
+  get activeIndex(): number {
     if (!this.#tabindex.activeItem) {
       return -1;
     } else {
@@ -65,7 +65,7 @@ export class PfDropdownMenu extends LitElement {
     return this.#getSlottedItems(this.shadowRoot?.querySelector('slot'));
   }
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('focusin', this.#onMenuitemFocusin);
     this.addEventListener('click', this.#onMenuitemClick);
@@ -75,7 +75,7 @@ export class PfDropdownMenu extends LitElement {
     this.#internals.ariaDisabled = String(!!this.ctx?.disabled);
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const { disabled = false } = this.ctx ?? {};
     return html`
       <slot class="${classMap({ disabled })}"
@@ -104,6 +104,7 @@ export class PfDropdownMenu extends LitElement {
   /**
    * handles focusing on an option:
    * updates roving tabindex and active descendant
+   * @param event the focus event
    */
   #onMenuitemFocusin(event: FocusEvent) {
     if (this.ctx?.disabled) {
@@ -119,6 +120,7 @@ export class PfDropdownMenu extends LitElement {
    * handles clicking on a menuitem:
    * which selects an item by default
    * or toggles selection if multiselectable
+   * @param event the click event
    */
   #onMenuitemClick(event: MouseEvent) {
     if (this.ctx?.disabled || isDisabledItemClick(event)) {

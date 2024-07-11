@@ -9,6 +9,5 @@ export default pfeCustomElementsManifestConfig({
   rootDir,
   globs: [
     './*/pf-*.ts',
-    './*/Base*.ts'
   ],
 });

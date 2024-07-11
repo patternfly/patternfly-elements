@@ -89,7 +89,9 @@ const demoSubresourceMiddleware: PfeMiddleware = config => (ctx, next) => {
  * Creates a router Koa middleware for PFE dev server
  * @param config Normalized dev server options
  */
-export function pfeDevServerRouterMiddleware(config: PfeDevServerInternalConfig) {
+export function pfeDevServerRouterMiddleware(
+  config: PfeDevServerInternalConfig,
+): Router.Middleware {
   const { elementsDir, site: { componentSubpath } } = config;
   const router = new Router();
   return router

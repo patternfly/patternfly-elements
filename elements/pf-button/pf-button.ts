@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -143,26 +143,34 @@ export type ButtonVariant = (
 export class PfButton extends LitElement {
   static readonly formAssociated = true;
 
-  static readonly styles = [
+  static readonly styles: CSSStyleSheet[] = [
     tokensStyles,
     iconStyles,
     styles,
   ];
 
+  @property({ reflect: true }) type?: 'button' | 'submit' | 'reset';
+
+  /** Accessible name for the button, use when the button does not have slotted text */
+  @property() label?: string;
+
+  /** Form value for the button */
+  @property() value?: string;
+
+  /** Form element name for the button */
+  @property() name?: string;
+
+  /** Disables the button */
+  @property({ reflect: true, type: Boolean }) disabled = false;
+
   /** Represents the state of a stateful button */
   @property({ type: Boolean, reflect: true }) loading = false;
-
-  /** Applies plain styles */
-  @property({ type: Boolean, reflect: true }) plain = false;
-
-  /** Not as urgent as danger */
-  @property({ type: Boolean, reflect: true }) warning = false;
 
   /** Changes the size of the button. */
   @property({ reflect: true }) size?: 'small' | 'large';
 
-  /** Icon set for the `icon` property */
-  @property({ attribute: 'icon-set' }) iconSet?: string;
+  /** Not as urgent as danger */
+  @property({ type: Boolean, reflect: true }) warning = false;
 
   /**
    * Use danger buttons for actions a user can take that are potentially
@@ -170,6 +178,9 @@ export class PfButton extends LitElement {
    * user data.
    */
   @property({ type: Boolean, reflect: true }) danger = false;
+
+  /** Applies plain styles */
+  @property({ type: Boolean, reflect: true }) plain = false;
 
   /**
    * Changes the style of the button.
@@ -187,20 +198,11 @@ export class PfButton extends LitElement {
 
   @property({ reflect: true, type: Boolean }) block = false;
 
-  /** Disables the button */
-  @property({ reflect: true, type: Boolean }) disabled = false;
-
-  @property({ reflect: true }) type?: 'button' | 'submit' | 'reset';
-
-  /** Accessible name for the button, use when the button does not have slotted text */
-  @property() label?: string;
-
-  @property() value?: string;
-
-  @property() name?: string;
-
   /** Shorthand for the `icon` slot, the value is icon name */
   @property() icon?: string;
+
+  /** Icon set for the `icon` property */
+  @property({ attribute: 'icon-set' }) iconSet?: string;
 
   #internals = InternalsController.of(this, { role: 'button' });
 
@@ -222,7 +224,12 @@ export class PfButton extends LitElement {
     this.#internals.ariaDisabled = String(!!this.disabled);
   }
 
-  protected override render() {
+  async formDisabledCallback(): Promise<void> {
+    await this.updateComplete;
+    this.requestUpdate();
+  }
+
+  override render(): TemplateResult<1> {
     const hasIcon = !!this.icon || !!this.loading || this.#slots.hasSlotted('icon');
     const { warning, variant, danger, loading, plain, inline, block, size } = this;
     const disabled = this.#disabled;
@@ -240,11 +247,14 @@ export class PfButton extends LitElement {
              plain,
              warning,
            })}">
-        <slot id="icon" part="icon" name="icon" ?hidden="${!hasIcon}">
+        <slot id="icon"
+              part="icon"
+              name="icon"
+              ?hidden="${!hasIcon}">
           <pf-icon role="presentation"
                    icon="${ifDefined(this.icon)}"
                    set="${ifDefined(this.iconSet)}"
-                   ?hidden="${!this.icon}"></pf-icon>
+                   ?hidden="${!this.icon || this.loading}"></pf-icon>
           <pf-spinner size="md"
                       ?hidden="${!this.loading}"
                       aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pf-spinner>
@@ -252,11 +262,6 @@ export class PfButton extends LitElement {
         <slot id="text"></slot>
       </div>
     `;
-  }
-
-  async formDisabledCallback() {
-    await this.updateComplete;
-    this.requestUpdate();
   }
 
   #onClick() {

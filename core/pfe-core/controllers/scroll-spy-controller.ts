@@ -44,7 +44,7 @@ export class ScrollSpyController implements ReactiveController {
   #rootMargin?: string;
   #threshold: number | number[];
 
-  #rootNode: Node;
+  #getRootNode: () => Node;
   #getHash: (el: Element) => string | null;
 
   get #linkChildren(): Element[] {
@@ -52,7 +52,7 @@ export class ScrollSpyController implements ReactiveController {
         .filter(this.#getHash);
   }
 
-  get root() {
+  get root(): Element | Document | null | undefined {
     return this.#root;
   }
 
@@ -62,7 +62,7 @@ export class ScrollSpyController implements ReactiveController {
     this.#initIo();
   }
 
-  get rootMargin() {
+  get rootMargin(): string | undefined {
     return this.#rootMargin;
   }
 
@@ -72,7 +72,7 @@ export class ScrollSpyController implements ReactiveController {
     this.#initIo();
   }
 
-  get threshold() {
+  get threshold(): number | number[] {
     return this.#threshold;
   }
 
@@ -92,16 +92,16 @@ export class ScrollSpyController implements ReactiveController {
     this.#rootMargin = options.rootMargin;
     this.#activeAttribute = options.activeAttribute ?? 'active';
     this.#threshold = options.threshold ?? 0.85;
-    this.#rootNode = options.rootNode ?? host.getRootNode();
+    this.#getRootNode = () => options.rootNode ?? host.getRootNode();
     this.#getHash = options?.getHash ?? ((el: Element) => el.getAttribute('href'));
   }
 
-  hostConnected() {
+  hostConnected(): void {
     this.#initIo();
   }
 
   #initIo() {
-    const rootNode = this.#rootNode;
+    const rootNode = this.#getRootNode();
     if (rootNode instanceof Document || rootNode instanceof ShadowRoot) {
       const { rootMargin, threshold, root } = this;
       this.#io = new IntersectionObserver(r => this.#onIo(r), { root, rootMargin, threshold });
@@ -153,8 +153,11 @@ export class ScrollSpyController implements ReactiveController {
     this.#intersected = true;
   }
 
-  /** Explicitly set the active item */
-  public async setActive(link: EventTarget | null) {
+  /**
+   * Explicitly set the active item
+   * @param link usually an `<a>`
+   */
+  public async setActive(link: EventTarget | null): Promise<void> {
     this.#force = true;
     this.#setActive(link);
     let sawActive = false;

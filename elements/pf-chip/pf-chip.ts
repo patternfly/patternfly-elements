@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -23,9 +23,9 @@ export class PfChipRemoveEvent extends Event {
  */
 @customElement('pf-chip')
 export class PfChip extends LitElement {
-  static readonly styles = [shared, styles];
+  static readonly styles: CSSStyleSheet[] = [shared, styles];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -45,7 +45,7 @@ export class PfChip extends LitElement {
    */
   @property({ attribute: 'overflow-chip', reflect: true, type: Boolean }) overflowChip = false;
 
-  render() {
+  render(): TemplateResult<1> {
     return this.overflowChip ? html`
       <button id="outer">
         <span part="text">

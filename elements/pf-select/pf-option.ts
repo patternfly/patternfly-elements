@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { property } from 'lit/decorators/property.js';
@@ -20,7 +20,7 @@ import styles from './pf-option.css';
  */
 @customElement('pf-option')
 export class PfOption extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   /** whether option is disabled */
   @property({ type: Boolean, reflect: true }) disabled = false;
@@ -83,12 +83,12 @@ export class PfOption extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'option' });
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.id ||= getRandomId();
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const { disabled, active } = this;
     return html`
       <div id="outer" class="${classMap({ active, disabled })}">
@@ -114,7 +114,7 @@ export class PfOption extends LitElement {
     `;
   }
 
-  willUpdate(changed: PropertyValues<this>) {
+  willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('selected')
       // don't fire on initialization
       && !(changed.get('selected') === undefined) && this.selected === false) {
@@ -128,7 +128,7 @@ export class PfOption extends LitElement {
   /**
    * text content within option (used for filtering)
    */
-  get optionText() {
+  get optionText(): string {
     return this._slottedText.map(node => node.textContent).join('').trim();
   }
 }

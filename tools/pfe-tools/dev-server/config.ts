@@ -62,7 +62,11 @@ function normalizeOptions(options?: PfeDevServerConfigOptions) {
   return config as Required<PfeDevServerConfigOptions> & { site: Required<PfeConfig['site']> };
 }
 
-/** CORS middleware */
+/**
+ * CORS middleware
+ * @param ctx koa context
+ * @param next middleware
+ */
 function cors(ctx: Context, next: Next) {
   ctx.set('Access-Control-Allow-Origin', '*');
   return next();
@@ -70,7 +74,7 @@ function cors(ctx: Context, next: Next) {
 
 async function cacheBusterMiddleware(ctx: Context, next: Next) {
   await next();
-  if (ctx.path.match(/elements\/[\w-]+\/[\w-]+.js$/)) {
+  if (ctx.path.match(/(elements|pfe-core)\/.*\.js$/)) {
     const lm = new Date().toString();
     const etag = Date.now().toString();
     ctx.response.set('Cache-Control', 'no-store, no-cache, must-revalidate');
@@ -83,8 +87,18 @@ async function cacheBusterMiddleware(ctx: Context, next: Next) {
 function liveReloadTsChangesMiddleware(
   config: ReturnType<typeof normalizeOptions>,
 ): Middleware {
+  /**
+   * capture group 1:
+   *   Either config.elementsDir or `pfe-core`
+   * `/`
+   * **ANY** (_>= 0x_)
+   * `.js`
+   */
+  const TYPESCRIPT_SOURCES_RE = new RegExp(`(${config.elementsDir}|pfe-core)/.*\\.js`);
+
   return function(ctx, next) {
-    if (!ctx.path.includes('node_modules') && ctx.path.match(new RegExp(`/^${config?.elementsDir}\\/.*.js/`))) {
+    if (!ctx.path.includes('node_modules') && ctx.path
+        .match(TYPESCRIPT_SOURCES_RE)) {
       ctx.redirect(ctx.path.replace('.js', '.ts'));
     } else {
       return next();
@@ -94,6 +108,7 @@ function liveReloadTsChangesMiddleware(
 
 /**
  * Creates a default config for PFE's dev server.
+ * @param options dev server config
  */
 export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServerConfig {
   const config = normalizeOptions(options);
@@ -157,8 +172,14 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
   };
 }
 
-/** Returns an import map `imports` section containing the entire `@patternfly/icons` collection, pointing to node_modules */
-export async function getPatternflyIconNodemodulesImports(rootUrl: string) {
+/**
+ * Returns an import map `imports` section containing the entire
+ * `@patternfly/icons` collection, pointing to node_modules
+ * @param rootUrl repository root
+ */
+export async function getPatternflyIconNodemodulesImports(
+  rootUrl: string,
+): Promise<Record<string, string>> {
   const files = await readdir(new URL('./node_modules/@patternfly/icons', rootUrl));
   const dirs = [];
 

@@ -101,7 +101,7 @@ export class PfOption extends LitElement {
         <slot name="icon"></slot>
         <span>
           <slot name="create"></slot>
-          <slot></slot>
+          <slot>${this.value}</slot>
         </span>
         <svg ?hidden="${!this.selected}"
              viewBox="0 0 512 512"

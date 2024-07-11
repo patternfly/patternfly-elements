@@ -74,7 +74,7 @@ function cors(ctx: Context, next: Next) {
 
 async function cacheBusterMiddleware(ctx: Context, next: Next) {
   await next();
-  if (ctx.path.match(/elements\/[\w-]+\/[\w-]+.js$/)) {
+  if (ctx.path.match(/(elements|pfe-core)\/.*\.js$/)) {
     const lm = new Date().toString();
     const etag = Date.now().toString();
     ctx.response.set('Cache-Control', 'no-store, no-cache, must-revalidate');
@@ -87,8 +87,18 @@ async function cacheBusterMiddleware(ctx: Context, next: Next) {
 function liveReloadTsChangesMiddleware(
   config: ReturnType<typeof normalizeOptions>,
 ): Middleware {
+  /**
+   * capture group 1:
+   *   Either config.elementsDir or `pfe-core`
+   * `/`
+   * **ANY** (_>= 0x_)
+   * `.js`
+   */
+  const TYPESCRIPT_SOURCES_RE = new RegExp(`(${config.elementsDir}|pfe-core)/.*\\.js`);
+
   return function(ctx, next) {
-    if (!ctx.path.includes('node_modules') && ctx.path.match(new RegExp(`/^${config?.elementsDir}\\/.*.js/`))) {
+    if (!ctx.path.includes('node_modules') && ctx.path
+        .match(TYPESCRIPT_SOURCES_RE)) {
       ctx.redirect(ctx.path.replace('.js', '.ts'));
     } else {
       return next();

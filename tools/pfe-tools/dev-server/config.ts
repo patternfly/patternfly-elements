@@ -1,6 +1,6 @@
 import type { Plugin } from '@web/dev-server-core';
 import type { DevServerConfig } from '@web/dev-server';
-import type { Context, Next } from 'koa';
+import type { Middleware, Context, Next } from 'koa';
 
 import { readdir, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -57,7 +57,7 @@ function normalizeOptions(options?: PfeDevServerConfigOptions) {
   config.watchFiles ??= '{elements,core}/**/*.{css,html}';
   config.litcssOptions ??= {
     include: /\.css$/,
-    exclude: /(((fonts|demo)|(demo\/.*))\.css$)|(.*(-lightdom.css$))/,
+    exclude: /(?:@patternfly\/pfe-tools\/dev-server\/(?:fonts|demo).css)|-lightdom(?:-shim)?\.css$/,
   };
   return config as Required<PfeDevServerConfigOptions> & { site: Required<PfeConfig['site']> };
 }
@@ -80,6 +80,18 @@ async function cacheBusterMiddleware(ctx: Context, next: Next) {
   }
 }
 
+function liveReloadTsChangesMiddleware(
+  config: ReturnType<typeof normalizeOptions>,
+): Middleware {
+  return function(ctx, next) {
+    if (!ctx.path.includes('node_modules') && ctx.path.match(new RegExp(`/^${config?.elementsDir}\\/.*.js/`))) {
+      ctx.redirect(ctx.path.replace('.js', '.ts'));
+    } else {
+      return next();
+    }
+  };
+}
+
 /**
  * Creates a default config for PFE's dev server.
  */
@@ -96,6 +108,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
     middleware: [
       cors,
       cacheBusterMiddleware,
+      liveReloadTsChangesMiddleware(config),
       ...config?.middleware ?? [],
     ],
 

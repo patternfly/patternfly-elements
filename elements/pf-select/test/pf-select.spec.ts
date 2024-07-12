@@ -529,6 +529,82 @@ describe('<pf-select>', function() {
     });
   });
 
+  describe('in a deep shadow root', function() {
+    let element: PfSelect;
+    const focus = () => element.focus();
+    const updateComplete = () => element.updateComplete;
+    beforeEach(async function() {
+      const fixture = await createFixture(html`
+        <shadow-root>
+          <template shadowrootmode="open">
+            <shadow-root>
+              <template shadowrootmode="open">
+                <pf-select variant="single"
+                  accessible-label="Choose a number"
+                  placeholder="Choose a number">
+                  <pf-option value="1">1</pf-option>
+                  <pf-option value="2">2</pf-option>
+                  <pf-option value="3">3</pf-option>
+                  <pf-option value="4">4</pf-option>
+                  <pf-option value="5">5</pf-option>
+                  <pf-option value="6">6</pf-option>
+                  <pf-option value="7">7</pf-option>
+                  <pf-option value="8">8</pf-option>
+                </pf-select>
+              </template>
+            </shadow-root>
+          </template>
+        </shadow-root>`);
+
+      function attachShadowRoots(root?: Document | ShadowRoot) {
+        root?.querySelectorAll<HTMLTemplateElement>('template[shadowrootmode]').forEach(template => {
+          const mode = template.getAttribute('shadowrootmode') as 'open' | 'closed';
+          const shadowRoot = template.parentElement?.attachShadow?.({ mode });
+          shadowRoot?.appendChild(template.content);
+          template.remove();
+          attachShadowRoots(shadowRoot);
+        });
+      }
+      attachShadowRoots(document);
+
+      const select = fixture.shadowRoot?.firstElementChild?.shadowRoot?.querySelector('pf-select');
+      if (select) {
+        element = select;
+        await element?.updateComplete;
+      } else {
+        throw new Error('no element!');
+      }
+    });
+    describe('expanding', function() {
+      beforeEach(focus);
+      beforeEach(press('Enter'));
+      describe('pressing ArrowDown', function() {
+        beforeEach(press('ArrowDown'));
+        beforeEach(updateComplete);
+        it('remains expanded', function() {
+          expect(element.expanded).to.be.true;
+        });
+        describe('pressing ArrowDown', function() {
+          beforeEach(press('ArrowDown'));
+          beforeEach(updateComplete);
+          it('remains expanded', function() {
+            expect(element.expanded).to.be.true;
+          });
+          describe('pressing Space', function() {
+            beforeEach(press(' '));
+            beforeEach(updateComplete);
+            it('closes', function() {
+              expect(element.expanded).to.be.false;
+            });
+            it('sets value', function() {
+              expect(element.value).to.equal('2');
+            });
+          });
+        });
+      });
+    });
+  });
+
   // try again when we implement activedescendant
   describe.skip('variant="typeahead"', function() {
     beforeEach(async function() {

@@ -23,3 +23,16 @@ dl#slot-descriptions {
   overflow: scroll;
   background-color: var(--pf-global--BackgroundColor--200, #f0f0f0);
 }
+
+header {
+  display: flex;
+  align-items: center;;
+  gap: 1em;
+  & pft-knobs-markdown {
+    display: inline;
+    & .markdown-body,
+    & p {
+      display: contents;
+    }
+  }
+}

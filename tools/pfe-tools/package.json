@@ -124,5 +124,9 @@
     "@types/sinon": "^17.0.3",
     "@types/yargs": "^17.0.32",
     "custom-elements-manifest": "^2.1.0"
+  },
+  "dependencies": {
+    "@codemirror/lang-html": "^6.4.9",
+    "codemirror": "^6.0.1"
   }
 }

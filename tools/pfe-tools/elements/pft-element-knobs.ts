@@ -1,5 +1,6 @@
 import type {
   Attribute,
+  ClassField,
   CustomElementDeclaration,
   Package,
   Slot,
@@ -8,6 +9,8 @@ import type {
 import type {
   AttributeRenderer,
   AttributeKnobInfo,
+  PropertyRenderer,
+  PropertyKnobInfo,
   ContentKnobInfo,
   ContentRenderer,
 } from './lib/knobs.js';
@@ -22,10 +25,9 @@ import {
   isCheckable,
   isValue,
   isAttributelessProperty,
+  isSerializable,
   dedent,
 } from './lib/knobs.js';
-
-import 'zero-md';
 
 import './pft-html-editor.js';
 
@@ -33,7 +35,7 @@ import style from './pft-element-knobs.css';
 
 @customElement('pft-element-knobs')
 export class PftElementKnobs<T extends HTMLElement> extends LitElement {
-  static styles = [style];
+  static styles: CSSStyleSheet[] = [style];
 
   @property() tag?: string;
 
@@ -41,9 +43,11 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
 
   @property({ attribute: false }) element: T | null = null;
 
-  @property({ attribute: false }) renderAttribute: AttributeRenderer<T> = this.#renderAttribute;
+  @property({ attribute: false }) renderAttribute?: AttributeRenderer<T> = this.#renderAttribute;
 
-  @property({ attribute: false }) renderContent: ContentRenderer<T> = this.#renderContent;
+  @property({ attribute: false }) renderContent?: ContentRenderer<T> = this.#renderContent;
+
+  @property({ attribute: false }) renderProperty?: PropertyRenderer<T> = this.#renderProperty;
 
   #mo = new MutationObserver(this.#loadTemplate);
 
@@ -112,6 +116,31 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
     };
   }
 
+  #getInfoForProperty(property: ClassField, element: T): PropertyKnobInfo<T> {
+    // NOTE: we assume typescript types
+    const type = property?.type?.text ?? '';
+    const isUnion = !!type.includes?.('|');
+    const types = type.split('|').map(x => x.trim());
+    const isNullable = types.includes('null');
+    const isOptional = types.includes('undefined');
+    const isNumber = types.includes('number');
+    const isBoolean = types.every(type => type.match(/null|undefined|boolean/));
+    const values = isUnion ? types.filter(x => x !== 'undefined' && x !== 'null') : [];
+    const isEnum = isUnion && values.length > 1;
+    const knobId = `knob-property-${property.name}`;
+    return {
+      knobId,
+      element,
+      isBoolean,
+      isEnum,
+      isNullable,
+      isNumber,
+      isOptional,
+      isSerializable: isSerializable(element[property.name as keyof T]),
+      values,
+    };
+  }
+
   #renderAttribute(attribute: Attribute, info: AttributeKnobInfo<T>) {
     const { knobId, element, isEnum, isBoolean, isNumber, values } = info;
     const QUOTE_RE = /^['"](.*)['"]$/;
@@ -121,12 +150,7 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
     return html`
       <pf-tooltip>
         <label for="${knobId}"><code>${attribute.name}</code></label>${[attribute.summary, attribute.description].filter(Boolean).map(x => html`
-        <zero-md slot="content">
-          <template>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown-dark.min.css">
-          </template>
-          ${this.#renderMarkdown(x)}
-        </zero-md>`)}
+        <pft-knobs-markdown no-shadow slot="content">${this.#renderMarkdown(x)}</pft-knobs-markdown>`)}
       </pf-tooltip>
       ${isBoolean ? html`
       <pf-switch id="${knobId}"
@@ -146,6 +170,35 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
     `;
   }
 
+  #renderProperty(property: ClassField, info: PropertyKnobInfo<T>) {
+    const { knobId, element, isEnum, isBoolean, isNumber, isSerializable, values } = info;
+    const QUOTE_RE = /^['"](.*)['"]$/;
+    const propertyValue = element[property.name as keyof T]
+      ?? property.default?.replace(QUOTE_RE, '$1');
+    return html`
+      <pf-tooltip>
+        <label for="${knobId}"><code>${property.name}</code></label>${[property.summary, property.description].filter(Boolean).map(x => html`
+        <pft-knobs-markdown no-shadow slot="content">${this.#renderMarkdown(x)}</pft-knobs-markdown>`)}
+      </pf-tooltip>
+      ${isBoolean ? html`
+      <pf-switch id="${knobId}"
+                 ?checked="${property.default === 'true'}"
+                 data-attribute="${property.name}"></pf-switch>` : isEnum ? html`
+      <pf-select id="${knobId}"
+                 placeholder="Select a value"
+                 data-attribute="${property.name}"
+                 value="${ifDefined(propertyValue)}">${values!.map(x => html`
+        <pf-option>${x.trim().replace(QUOTE_RE, '$1')}</pf-option>`)}
+      </pf-select>` : isSerializable ? html`
+      <pf-text-input id="${knobId}"
+                     value="${ifDefined(propertyValue)}"
+                     type="${ifDefined(isNumber ? 'number' : undefined)}"
+                     helper-text="${ifDefined(property.type?.text)}"
+                     data-attribute="${property.name}"></pf-text-input>` : html`
+      <code>Unserializable object</code>`}
+    `;
+  }
+
   #renderMarkdown(md?: string) {
     return !md ? '' : html`
       <script type="text/markdown">${md}</script>
@@ -161,8 +214,8 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
           <strong>Default slot</strong>`}
         </dt>
         <dd>
-          <zero-md><script type="text/markdown">${x.summary ?? ''}</script></zero-md>
-          <zero-md><script type="text/markdown">${x.description ?? ''}</script></zero-md>
+          <pft-knobs-markdown no-shadow><script type="text/markdown">${x.summary ?? ''}</script></pft-knobs-markdown>
+          <pft-knobs-markdown no-shadow><script type="text/markdown">${x.description ?? ''}</script></pft-knobs-markdown>
         </dd>`)}
       </dl>
       <pf-code-block>
@@ -190,20 +243,24 @@ export class PftElementKnobs<T extends HTMLElement> extends LitElement {
       return html`
         <hr>
         <form id="knobs" @submit="${(e: Event) => e.preventDefault()}">
-          <h2><code>&lt;${tag}&gt;</code></h2>
-          <zero-md>${this.#renderMarkdown(summary)}</zero-md>
-          <zero-md>${this.#renderMarkdown(description)}</zero-md>
+          <header>
+            <h2><code>&lt;${tag}&gt;</code></h2>
+            <pft-knobs-markdown no-shadow>${this.#renderMarkdown(summary)}</pft-knobs-markdown>
+          </header>
+          <pft-knobs-markdown no-shadow>${this.#renderMarkdown(description)}</pft-knobs-markdown>
           ${!attributes ? '' : html`
           <section id="attributes"
                    @change="${this.#onKnobChangeAttribute}"
                    @input="${this.#onKnobChangeAttribute}">
           <h2>Attributes</h2>
-          ${attributes.map(x => this.renderAttribute(x, this.#getInfoForAttribute(x, element)))}
-          </section>`}
-          ${!slots ? '' : html`
+          ${attributes.map(x => this.renderAttribute?.(x, this.#getInfoForAttribute(x, element)))}
+          </section>`}${!properties.length ? '' : html`
+          <h2>Properties</h2>
+          ${properties.map(x => this.renderProperty?.(x, this.#getInfoForProperty(x, element)))}
+          `}${!slots ? '' : html`
           <section>
             <h2>Slots</h2>
-            ${this.renderContent(slots, { knobId: 'knob-html-content', element })}
+            ${this.renderContent?.(slots, { knobId: 'knob-html-content', element })}
           </section>`}
         </form>
       `;

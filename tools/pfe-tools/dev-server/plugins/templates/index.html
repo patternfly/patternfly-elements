@@ -130,6 +130,15 @@
           import '@patternfly/elements/pf-switch/pf-switch.js';
           import '@patternfly/elements/pf-text-input/pf-text-input.js';
           import '@patternfly/elements/pf-text-area/pf-text-area.js';
+          // TODO: typescript couldn't tolerate importing this
+          // but in truth, it belongs in pft-element-knobs.ts
+          import ZeroMd from 'zero-md';
+          customElements.define('pft-knobs-markdown', class extends ZeroMd {
+            async load() {
+              await super.load()
+              this.template = ``;
+            }
+          });
         </script>
         <pft-element-knobs tag="{{ demo.tagName }}">
           <template>

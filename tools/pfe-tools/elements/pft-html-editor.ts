@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { EditorView, minimalSetup } from 'codemirror';
 import type { ViewUpdate } from '@codemirror/view';
@@ -11,7 +11,7 @@ export class PftHtmlEditor extends LitElement {
 
   @property() value = '<p></p>';
 
-  firstUpdated() {
+  protected override firstUpdated(): void {
     this.#view = new EditorView({
       doc: this.value,
       root: this.shadowRoot!,
@@ -26,24 +26,24 @@ export class PftHtmlEditor extends LitElement {
     this.#view.setRoot(this.shadowRoot!);
   }
 
-  render() {
+  protected override render(): TemplateResult<1> {
     return html`
       <div id="container"></div>
     `;
+  }
+
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    if (changed.has('value') && this.#view) {
+      const { value } = this;
+      const to = this.#view.state.doc.length;
+      this.#view.dispatch({ changes: { from: 0, to, insert: value } });
+    }
   }
 
   #onChange(update: ViewUpdate) {
     if (update.docChanged && update.transactions.some(x => x.isUserEvent)) {
       this.value = update.state.doc.toString();
       this.dispatchEvent(new Event('change', { bubbles: true }));
-    }
-  }
-
-  willUpdate(changed: PropertyValues<this>) {
-    if (changed.has('value') && this.#view) {
-      const { value } = this;
-      const to = this.#view.state.doc.length;
-      this.#view.dispatch({ changes: { from: 0, to, insert: value } });
     }
   }
 }

@@ -127,5 +127,9 @@
     "@types/yargs": "^17.0.33",
     "codemirror": "^6.0.1",
     "custom-elements-manifest": "^2.1.0"
+  },
+  "dependencies": {
+    "@codemirror/lang-html": "^6.4.9",
+    "codemirror": "^6.0.1"
   }
 }

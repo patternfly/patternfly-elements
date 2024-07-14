@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -7,8 +7,6 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
 import style from './pf-jump-links-item.css';
-
-import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 
 /**
  * @cssprop --pf-c-jump-links__link--PaddingTop -- padding around the link
@@ -20,15 +18,14 @@ import { observed } from '@patternfly/pfe-core/decorators/observed.js';
  */
 @customElement('pf-jump-links-item')
 export class PfJumpLinksItem extends LitElement {
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
   /** Whether this item is active. */
-  @observed('activeChanged')
   @property({ type: Boolean, reflect: true }) active = false;
 
   /** hypertext reference for this link */
@@ -36,12 +33,18 @@ export class PfJumpLinksItem extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'listitem' });
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
-    this.activeChanged();
+    this.#activeChanged();
   }
 
-  render() {
+  protected willUpdate(changed: PropertyValues<this>): void {
+    if (changed.has('active')) {
+      this.#activeChanged();
+    }
+  }
+
+  render(): TemplateResult<1> {
     return html`
       <a href="${ifDefined(this.href)}" @focus="${this.#onFocus}" @click="${this.#onClick}">
         <slot></slot>
@@ -50,7 +53,7 @@ export class PfJumpLinksItem extends LitElement {
     `;
   }
 
-  private activeChanged() {
+  #activeChanged() {
     this.#internals.ariaCurrent = this.active ? 'location' : null;
   }
 

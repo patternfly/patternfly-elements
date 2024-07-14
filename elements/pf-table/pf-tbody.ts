@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 
 import styles from './pf-tbody.css';
@@ -9,14 +9,14 @@ import styles from './pf-tbody.css';
  */
 @customElement('pf-tbody')
 export class PfTbody extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('role', 'rowgroup');
   }
 
-  render() {
+  render(): TemplateResult<1> {
     return html`
       <slot></slot>
     `;

@@ -1,4 +1,4 @@
-import { LitElement, html, isServer } from 'lit';
+import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -139,11 +139,11 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
  */
 @customElement('pf-text-area')
 export class PfTextArea extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   static readonly formAssociated = true;
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -194,11 +194,11 @@ export class PfTextArea extends LitElement {
     return this.shadowRoot?.getElementById('textarea') as HTMLTextAreaElement ?? null;
   }
 
-  override willUpdate() {
+  override willUpdate(): void {
     this.#derivedLabel = this.accessibleLabel || this.#internals.computedLabelText;
   }
 
-  override render() {
+  override render(): TemplateResult<1> {
     const classes = { [String(this.resize)]: !!this.resize };
 
     return html`
@@ -248,21 +248,21 @@ export class PfTextArea extends LitElement {
     }
   }
 
-  async formDisabledCallback() {
+  async formDisabledCallback(): Promise<void> {
     await this.updateComplete;
     this.requestUpdate();
   }
 
-  setCustomValidity(message: string) {
+  setCustomValidity(message: string): void {
     this.#internals.setValidity({}, message);
   }
 
-  checkValidity() {
+  checkValidity(): boolean {
     this.#setValidityFromInput();
     return this.#internals.checkValidity();
   }
 
-  reportValidity() {
+  reportValidity(): boolean {
     this.#setValidityFromInput();
     return this.#internals.reportValidity();
   }

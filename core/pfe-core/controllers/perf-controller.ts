@@ -22,13 +22,13 @@ export class PerfController implements ReactiveController {
     performance.mark(`${this.markId}-defined`);
   }
 
-  hostUpdate() {
+  hostUpdate(): void {
     if (!this.hasMeasured) {
       this.measure();
     }
   }
 
-  measure() {
+  measure(): void {
     this.hasMeasured = true;
 
     performance.mark(`${this.markId}-rendered`);

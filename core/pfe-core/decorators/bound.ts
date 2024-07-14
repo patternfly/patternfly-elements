@@ -2,7 +2,9 @@ const configurable = true;
 
 /**
  * Binds a class method to the instance
- *
+ * @param _
+ * @param key
+ * @param descriptor
  * @example Binding an event listener
  *     ```ts
  *     private mo = new MutationObserver(this.onMutation);

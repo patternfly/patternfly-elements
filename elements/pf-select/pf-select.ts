@@ -1,6 +1,4 @@
-import type { PfChipRemoveEvent } from '@patternfly/elements/pf-chip/pf-chip.js';
-
-import { LitElement, html, isServer, type PropertyValues } from 'lit';
+import { LitElement, html, isServer, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -51,9 +49,9 @@ export class PfSelectChangeEvent extends Event {
  */
 @customElement('pf-select')
 export class PfSelect extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -197,7 +195,7 @@ export class PfSelect extends LitElement {
     }
   }
 
-  override willUpdate(changed: PropertyValues<this>) {
+  override willUpdate(changed: PropertyValues<this>): void {
     if (this.variant === 'checkbox') {
       import('@patternfly/elements/pf-badge/pf-badge.js');
     }
@@ -216,7 +214,7 @@ export class PfSelect extends LitElement {
     // }
   }
 
-  override render() {
+  override render(): TemplateResult<1> {
     const { disabled, expanded, variant } = this;
     const { anchor = 'bottom', alignment = 'start', styles = {} } = this.#float;
     const { computedLabelText } = this.#internals;
@@ -305,7 +303,7 @@ export class PfSelect extends LitElement {
     `;
   }
 
-  override updated(changed: PropertyValues<this>) {
+  override updated(changed: PropertyValues<this>): void {
     if (changed.has('expanded')) {
       this.#expandedChanged();
     }
@@ -325,7 +323,7 @@ export class PfSelect extends LitElement {
     // }
   }
 
-  override firstUpdated() {
+  override firstUpdated(): void {
     // kick the renderer to that the placeholder gets picked up
     this.requestUpdate();
     // TODO: don't do filtering in the controller
@@ -437,9 +435,10 @@ export class PfSelect extends LitElement {
 
   /**
    * handles chip's remove button clicking
-   * @param opt chip text to be removed from values
+   * @param event remove event
+   * @param opt pf-option
    */
-  #onChipRemove(opt: PfOption, event: PfChipRemoveEvent) {
+  #onChipRemove(opt: PfOption, event: Event) {
   //   if (event.chip) {
   //     opt.selected = false;
   //     this._input?.focus();
@@ -472,7 +471,7 @@ export class PfSelect extends LitElement {
   /**
    * Opens the dropdown
    */
-  async show() {
+  async show(): Promise<void> {
     this.expanded = true;
     await this.updateComplete;
   }
@@ -480,7 +479,7 @@ export class PfSelect extends LitElement {
   /**
    * Closes listbox
    */
-  async hide() {
+  async hide(): Promise<void> {
     this.expanded = false;
     await this.updateComplete;
   }
@@ -488,7 +487,7 @@ export class PfSelect extends LitElement {
   /**
    * toggles popup based on current state
    */
-  async toggle() {
+  async toggle(): Promise<void> {
     this.expanded = !this.expanded;
     await this.updateComplete;
   }

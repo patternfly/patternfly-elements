@@ -17,9 +17,9 @@ export class Logger implements ReactiveController {
    * A boolean value that indicates if the logging should be printed to the console; used for debugging.
    * For use in a JS file or script tag; can also be added in the constructor of a component during development.
    * @example Logger.debugLog(true);
-   * @tags debug
+   * @param [preference=null]
    */
-  static debugLog(preference = null) {
+  static debugLog(preference = null): boolean {
     // wrap localStorage references in a try/catch; merely referencing it can
     // throw errors in some locked down environments
     try {
@@ -28,7 +28,7 @@ export class Logger implements ReactiveController {
         localStorage.pfeLog = !!preference;
       }
       return localStorage.pfeLog === 'true';
-    } catch (e) {
+    } catch {
       return Logger.logDebug;
     }
   }
@@ -38,8 +38,9 @@ export class Logger implements ReactiveController {
   /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    * @example Logger.debug("Hello");
+   * @param msgs console.log params
    */
-  static debug(...msgs: unknown[]) {
+  static debug(...msgs: unknown[]): void {
     if (Logger.debugLog()) {
       console.debug(...msgs);
     }
@@ -48,8 +49,9 @@ export class Logger implements ReactiveController {
   /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    * @example Logger.info("Hello");
+   * @param msgs console.log params
    */
-  static info(...msgs: unknown[]) {
+  static info(...msgs: unknown[]): void {
     if (Logger.debugLog()) {
       console.info(...msgs);
     }
@@ -58,8 +60,9 @@ export class Logger implements ReactiveController {
   /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    * @example Logger.log("Hello");
+   * @param msgs console.log params
    */
-  static log(...msgs: unknown[]) {
+  static log(...msgs: unknown[]): void {
     if (Logger.debugLog()) {
       console.log(...msgs);
     }
@@ -68,8 +71,9 @@ export class Logger implements ReactiveController {
   /**
    * A console warning wrapper which formats your output with useful debugging information.
    * @example Logger.warn("Hello");
+   * @param msgs console.log params
    */
-  static warn(...msgs: unknown[]) {
+  static warn(...msgs: unknown[]): void {
     console.warn(...msgs);
   }
 
@@ -77,8 +81,9 @@ export class Logger implements ReactiveController {
    * A console error wrapper which formats your output with useful debugging information.
    * For use inside a component's function.
    * @example Logger.error("Hello");
+   * @param msgs console.log params
    */
-  static error(...msgs: unknown[]) {
+  static error(...msgs: unknown[]): void {
     console.error([...msgs].join(' '));
   }
 
@@ -87,24 +92,27 @@ export class Logger implements ReactiveController {
   /**
    * Debug logging that outputs the tag name as a prefix automatically
    * @example this.logger.log("Hello");
+   * @param msgs console.log params
    */
-  debug(...msgs: unknown[]) {
+  debug(...msgs: unknown[]): void {
     Logger.debug(this.prefix, ...msgs);
   }
 
   /**
    * Info logging that outputs the tag name as a prefix automatically
    * @example this.logger.log("Hello");
+   * @param msgs console.log params
    */
-  info(...msgs: unknown[]) {
+  info(...msgs: unknown[]): void {
     Logger.info(this.prefix, ...msgs);
   }
 
   /**
    * Local logging that outputs the tag name as a prefix automatically
    * @example this.logger.log("Hello");
+   * @param msgs console.log params
    */
-  log(...msgs: unknown[]) {
+  log(...msgs: unknown[]): void {
     Logger.log(this.prefix, ...msgs);
   }
 
@@ -112,8 +120,9 @@ export class Logger implements ReactiveController {
    * Local warning wrapper that outputs the tag name as a prefix automatically.
    * For use inside a component's function.
    * @example this.logger.warn("Hello");
+   * @param msgs console.log params
    */
-  warn(...msgs: unknown[]) {
+  warn(...msgs: unknown[]): void {
     Logger.warn(this.prefix, ...msgs);
   }
 
@@ -121,8 +130,9 @@ export class Logger implements ReactiveController {
    * Local error wrapper that outputs the tag name as a prefix automatically.
    * For use inside a component's function.
    * @example this.logger.error("Hello");
+   * @param msgs console.log params
    */
-  error(...msgs: unknown[]) {
+  error(...msgs: unknown[]): void {
     Logger.error(this.prefix, ...msgs);
   }
 
@@ -135,7 +145,7 @@ export class Logger implements ReactiveController {
     Logger.instances.set(host, this);
   }
 
-  hostConnected() {
+  hostConnected(): void {
     this.debug('connected');
   }
 }

@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -55,7 +55,7 @@ import style from './pf-card.css';
  */
 @customElement('pf-card')
 export class PfCard extends LitElement {
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
   /**
    * Optionally provide a size for the card and the card contents.
@@ -82,7 +82,7 @@ export class PfCard extends LitElement {
 
   #slots = new SlotController(this, 'header', 'title', null, 'footer');
 
-  render() {
+  render(): TemplateResult<1> {
     return html`
       <article>
         <header id="header"

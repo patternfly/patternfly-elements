@@ -77,7 +77,7 @@ const StringOrBooleanConverter: ComplexAttributeConverter = {
  */
 @customElement('pf-tr')
 export class PfTr extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   @property({
     reflect: true,
@@ -94,7 +94,7 @@ export class PfTr extends LitElement {
     this.#expandableChanged();
   }
 
-  override willUpdate(changed: PropertyValues<this>) {
+  override willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('expandable')) {
       this.#expandableChanged();
     }
@@ -103,7 +103,7 @@ export class PfTr extends LitElement {
     }
   }
 
-  render() {
+  render(): (false | '' | import('lit-html').TemplateResult<1>)[] {
     return [
       this.expandable && this.expandable !== 'compound' && html`
         <pf-td id="toggle-cell">

@@ -3,7 +3,7 @@ import type { PfeConfig } from '../config.js';
 
 import { isCustomElement } from './lib/Manifest.js';
 import { readdirSync, existsSync } from 'node:fs';
-import { join, sep } from 'node:path';
+import { join } from 'node:path';
 import { getPfeConfig } from '../config.js';
 import slugify from 'slugify';
 
@@ -25,6 +25,7 @@ import slugify from 'slugify';
  * Any remaining demos will all be added to the primary element's list, e.g.
  * `/elements/pf-jazz-hands/demo/accessibility.html` would be associated with
  * `/elements/pf-jazz-hands/pf-jazz-hands.js`
+ * @param options pfe config
  */
 export function demosPlugin(options?: PfeConfig): Plugin {
   const fileOptions = getPfeConfig(options?.rootDir);
@@ -38,7 +39,7 @@ export function demosPlugin(options?: PfeConfig): Plugin {
         : x.declarations.flatMap(y => (y as { tagName: string }).tagName)).filter(Boolean);
 
       for (const moduleDoc of customElementsManifest.modules) {
-        const primaryElementName = moduleDoc.path.split(sep).find(x => x !== 'elements') ?? '';
+        const primaryElementName = moduleDoc.path.split('/').find(x => x !== 'elements') ?? '';
         let demoPath = join(rootDir, 'elements', primaryElementName, 'demo');
 
         if (!existsSync(demoPath)) {

@@ -1,9 +1,9 @@
 export class ObserverShim {
-  observe() {
+  observe(): void {
     void 0;
   }
 
-  disconnect() {
+  disconnect(): void {
     void 0;
   }
 }
@@ -19,10 +19,10 @@ globalThis.MutationObserver ??= ObserverShim;
 // @ts-expect-error: i'm shimmin' here!
 globalThis.getComputedStyle ??= function() {
   return {
-    getPropertyPriority() {
+    getPropertyPriority(): string {
       return '';
     },
-    getPropertyValue() {
+    getPropertyValue(): string {
       return '';
     },
   };

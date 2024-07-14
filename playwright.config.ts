@@ -1,4 +1,4 @@
-import { defineConfig, type ReporterDescription } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testMatch: 'elements/**/*.e2e.ts',

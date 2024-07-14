@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 
@@ -31,7 +31,7 @@ export class PfAvatarLoadEvent extends Event {
  */
 @customElement('pf-avatar')
 export class PfAvatar extends LitElement {
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
   /** The URL to the user's custom avatar image. */
   @property() src?: string;
@@ -48,7 +48,7 @@ export class PfAvatar extends LitElement {
   /** Whether or not the Avatar image is dark */
   @property({ type: Boolean, reflect: true }) dark = false;
 
-  render() {
+  render(): TemplateResult<1> {
     return this.src != null ? html`
       <img id="img"
            alt="${this.alt ?? ''}"

@@ -1,4 +1,4 @@
-import { LitElement, html, isServer, type PropertyValues } from 'lit';
+import { LitElement, html, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { state } from 'lit/decorators/state.js';
@@ -12,7 +12,10 @@ type Renderable = unknown;
 export type IconResolverFunction = (set: string, icon: string) =>
   Renderable | Promise<Renderable>;
 
-/** requestIdleCallback when available, requestAnimationFrame when not */
+/**
+ * requestIdleCallback when available, requestAnimationFrame when not
+ * @param f callback
+ */
 const ric: typeof globalThis.requestIdleCallback =
      globalThis.requestIdleCallback
   ?? globalThis.requestAnimationFrame
@@ -41,7 +44,7 @@ export class IconResolveError extends ErrorEvent {
  */
 @customElement('pf-icon')
 export class PfIcon extends LitElement {
-  public static readonly styles = [style];
+  public static readonly styles: CSSStyleSheet[] = [style];
 
   private static onIntersect: IntersectionObserverCallback = records =>
     records.forEach(({ isIntersecting, target }) => {
@@ -79,7 +82,7 @@ export class PfIcon extends LitElement {
    *            `/assets/icons/${set}/${icon}.js`);
    *          ```
    */
-  public static addIconSet(setName: string, resolver: IconResolverFunction) {
+  public static addIconSet(setName: string, resolver: IconResolverFunction): void {
     if (typeof setName !== 'string') {
       Logger.warn(`[${this.name}]: the first argument to addIconSet must be a string.`);
     } else if (typeof resolver !== 'function') {
@@ -93,7 +96,7 @@ export class PfIcon extends LitElement {
   }
 
   /** Removes all added icon sets and resets resolve function */
-  public static reset() {
+  public static reset(): void {
     this.resolvers.clear();
     this.resolve = this.defaultResolve;
   }
@@ -134,7 +137,7 @@ export class PfIcon extends LitElement {
    *              .then(node => node.content.cloneNode(true));
    *          ```
    */
-  public static resolve = PfIcon.defaultResolve;
+  public static resolve: IconResolverFunction = PfIcon.defaultResolve;
 
   /** Icon set */
   @property() set = 'fas';
@@ -180,24 +183,24 @@ export class PfIcon extends LitElement {
     this.dispatchEvent(new Event('load', { bubbles: true }));
   }
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
     PfIcon.instances.add(this);
   }
 
-  willUpdate(changed: PropertyValues<this>) {
+  willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('icon')) {
       this.#load();
     }
   }
 
-  disconnectedCallback() {
+  disconnectedCallback(): void {
     super.disconnectedCallback();
     PfIcon.io.unobserve(this);
     PfIcon.instances.delete(this);
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const content = this.content ?? '';
     return html`
       <div id="container" aria-hidden="true">${content}<span part="fallback"
@@ -207,7 +210,7 @@ export class PfIcon extends LitElement {
     `;
   }
 
-  protected async load() {
+  protected async load(): Promise<void> {
     const { set, icon } = this;
     const resolver = PfIcon.resolvers.get(set) ?? PfIcon.resolve;
     if (set && icon && typeof resolver === 'function') {

@@ -1,3 +1,9 @@
+/**
+ * formats commitlint action results
+ * @param {object} opts
+ * @param {*[]} opts.results
+ * @param {boolean} opts.titleGood is the PR title acceptable
+ */
 export function format({ results, titleGood }) {
   try {
     const totalErrors = results.reduce((a, r) => a + r.errors.length, 0);

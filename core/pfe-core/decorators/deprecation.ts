@@ -9,19 +9,22 @@ export type DeprecationDeclaration<K extends PropertyKey> = PropertyDeclaration 
 
 /**
  * Aliases the decorated field to an existing property, and logs a warning if it is used
+ * @param options alias is a drop in replacement
  * @example deprecating an attribute
- * ```ts
- * @property({ reflect: true, attribute: 'color-palette'})
- * colorPalette: ColorPalette = 'base';
+ *          ```ts
+ *          @property({ reflect: true, attribute: 'color-palette'})
+ *          colorPalette: ColorPalette = 'base';
  *
- * @deprecation('colorPalette') color?: ColorPalette;
- * ```
+ *          @deprecation('colorPalette') color?: ColorPalette;
+ *          ```
  */
-export function deprecation<K extends PropertyKey>(options: DeprecationDeclaration<K>) {
+export function deprecation<K extends PropertyKey>(
+  options: DeprecationDeclaration<K>,
+) {
   return function<T extends ReactiveElement, L extends PropertyKey>(
     proto: Partial<Record<K | L, T>>,
     key: string & keyof T
-  ) {
+  ): void {
     const { alias, ...deprecationOptions } = options;
     const klass = (proto.constructor as typeof ReactiveElement);
     const declaration = klass.getPropertyOptions(alias);

@@ -1,6 +1,6 @@
 import type { ReactiveController, ReactiveElement } from 'lit';
 
-export const observedController = Symbol('observed properties controller');
+export const observedController: unique symbol = Symbol('observed properties controller');
 
 export type ChangeCallback<T = ReactiveElement> = (
   this: T,
@@ -33,7 +33,7 @@ export class PropertyObserverController implements ReactiveController {
   }
 
   /** Set any cached valued accumulated between constructor and connectedCallback */
-  hostUpdate() {
+  hostUpdate(): void {
     for (const [key, [methodName, [oldVal, newVal]]] of this.values) {
       // @ts-expect-error: be cool, typescript
       this.host[methodName as keyof ReactiveElement]?.(oldVal, newVal);
@@ -42,11 +42,11 @@ export class PropertyObserverController implements ReactiveController {
   }
 
   /** Once the element has updated, we no longer need this controller, so we remove it */
-  hostUpdated() {
+  hostUpdated(): void {
     this.host.removeController(this);
   }
 
-  cache(key: string, methodName: string, ...vals: [unknown, unknown]) {
+  cache(key: string, methodName: string, ...vals: [unknown, unknown]): void {
     this.values.set(key, [methodName, vals]);
   }
 }

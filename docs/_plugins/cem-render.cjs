@@ -1,11 +1,20 @@
-/** quick and dirty dedent, also provides in-editor syntax highlighting */
+/**
+ * quick and dirty dedent, also provides in-editor syntax highlighting
+ * @param {string[]} args
+ */
 const html = (...args) =>
   String.raw(...args)
       .split('\n')
       .map(x => x.replace(/^ {6}/, ''))
       .join('\n');
 
-/** @typedef {import('@patternfly/pfe-tools/11ty/DocsPage').DocsPage} DocsPage */
+/**
+ * @import { UserConfig } from '@11ty/eleventy'
+ */
+
+/**
+ * @param {UserConfig} eleventyConfig
+ */
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPairedShortcode('renderCodeDocs',
                                     function renderCodeDocs(content, kwargs = {}) {
@@ -42,14 +51,7 @@ function renderBand(content, { level, header = '' } = {}) {
       </section>`;
 }
 
-/**
- * docs pages contain a #styling-hooks anchor as back compat for older versions of the page
- * to prevent this id from rendering more than once, we track the number of times each page
- * renders css custom properties.
- */
-const cssStylingHookIdTracker = new WeakSet();
-
-/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
+/** @param {UserConfig} eleventyConfig */
 module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter('innerMD', innerMD);
   eleventyConfig.addFilter('mdHeading', mdHeading);
@@ -74,7 +76,6 @@ module.exports = function(eleventyConfig) {
 };
 
 class Renderers {
-  /** @type{WeakMap<Page, Renderers>} */
   static renderers = new WeakMap();
   static forPage(page) {
     return new Renderers(page);
@@ -88,7 +89,6 @@ class Renderers {
      * NB: since the data for this shortcode is no a POJO,
      * but a DocsPage instance, 11ty assigns it to this.ctx._
      * @see https://github.com/11ty/eleventy/blob/bf7c0c0cce1b2cb01561f57fdd33db001df4cb7e/src/Plugins/RenderPlugin.js#L89-L93
-     * @type {DocsPage}
      */
     this.docsPage = page.ctx._;
     this.manifest = this.docsPage.manifest;
@@ -104,7 +104,10 @@ class Renderers {
     }
   }
 
-  /** Render the overview of a component page */
+  /**
+   * Render the overview of a component page
+   * @param {string} content
+   */
   renderOverview(content) {
     return html`
       <section class="band overview">
@@ -124,7 +127,13 @@ class Renderers {
       </section>`;
   }
 
-  /** Render the list of element attributes */
+  /**
+   * Render the list of element attributes
+   * @param {string} content inner md content
+   * @param {object} kwargs
+   * @param {string} kwargs.header
+   * @param {number} kwargs.level
+   */
   renderAttributes(content, { header = 'Attributes', level = 2, ...kwargs } = {}) {
     const _attrs = this.manifest.getAttributes(this.packageTagName(kwargs)) ?? [];
     const deprecated = _attrs.filter(x => x.deprecated);
@@ -169,7 +178,13 @@ class Renderers {
       </section>`;
   }
 
-  /** Render the list of element DOM properties */
+  /**
+   * Render the list of element DOM properties
+   * @param {string} content inner md content
+   * @param {object} kwargs
+   * @param {string} kwargs.header
+   * @param {number} kwargs.level
+   */
   renderProperties(content, { header = 'DOM Properties', level = 2, ...kwargs } = {}) {
     const allProperties = this.manifest.getProperties(this.packageTagName(kwargs)) ?? [];
     const deprecated = allProperties.filter(x => x.deprecated);
@@ -211,7 +226,13 @@ class Renderers {
       </section>`;
   }
 
-  /** Render a table of element CSS Custom Properties */
+  /**
+   * Render a table of element CSS Custom Properties
+   * @param {string} content inner md content
+   * @param {object} kwargs
+   * @param {string} kwargs.header
+   * @param {number} kwargs.level
+   */
   renderCssCustomProperties(content, {
     header = 'CSS Custom Properties',
     level = 2,
@@ -270,7 +291,13 @@ class Renderers {
       </section>`;
   }
 
-  /** Render the list of element CSS Shadow Parts */
+  /**
+   * Render the list of element CSS Shadow Parts
+   * @param {string} content inner md content
+   * @param {object} kwargs
+   * @param {string} kwargs.header
+   * @param {number} kwargs.level
+   */
   renderCssParts(content, { header = 'CSS Shadow Parts', level = 2, ...kwargs } = {}) {
     const allParts = this.manifest.getCssParts(this.packageTagName(kwargs)) ?? [];
     const parts = allParts.filter(x => !x.deprecated);
@@ -297,7 +324,13 @@ class Renderers {
       </section>`;
   }
 
-  /** Render the list of events for the element */
+  /**
+   * Render the list of events for the element
+   * @param {string} content inner md content
+   * @param {object} kwargs
+   * @param {string} kwargs.header
+   * @param {number} kwargs.level
+   */
   renderEvents(content, { header = 'Events', level = 2, ...kwargs } = {}) {
     const _events = this.manifest.getEvents(this.packageTagName(kwargs)) ?? [];
     const deprecated = _events.filter(x => x.deprecated);
@@ -330,7 +363,14 @@ class Renderers {
       </section>`;
   }
 
-  /** Render the installation instructions for the element */
+  /**
+   * Render the installation instructions for the element
+   * @param {string} content inner md content
+   * @param {object} kwargs
+   * @param {string} kwargs.header
+   * @param {number} kwargs.level
+   * @param {string} kwargs.tagName
+   */
   renderInstallation(content, {
     header = 'Installation',
     level = 2,
@@ -338,7 +378,7 @@ class Renderers {
   } = {}) {
     return html`
       <section class="band">
-        <h2>Installation</h2>
+        <h${level}>${header}</h${level}>
 
       We recommend loading elements via a CDN such as [JSPM][inst-jspm] and
       using an import map to manage your dependencies.
@@ -369,7 +409,13 @@ class Renderers {
       [inst-bms]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules`;
   }
 
-  /** Render the list of element methods */
+  /**
+   * Render the list of element methods
+   * @param {string} content inner md content
+   * @param {object} kwargs
+   * @param {string} kwargs.header
+   * @param {number} kwargs.level
+   */
   renderMethods(content, { header = 'Methods', level = 2, ...kwargs } = {}) {
     const allMethods = this.manifest.getMethods(this.packageTagName(kwargs)) ?? [];
     const deprecated = allMethods.filter(x => x.deprecated);
@@ -397,7 +443,13 @@ class Renderers {
       </section>`;
   }
 
-  /** Render the list of the element's slots */
+  /**
+   * Render the list of the element's slots
+   * @param {string} content inner md content
+   * @param {object} kwargs
+   * @param {string} kwargs.header
+   * @param {number} kwargs.level
+   */
   renderSlots(content, { header = 'Slots', level = 2, ...kwargs } = {}) {
     const allSlots = this.docsPage.manifest.getSlots(this.packageTagName(kwargs)) ?? [];
     const slots = allSlots.filter(x => !x.deprecated);

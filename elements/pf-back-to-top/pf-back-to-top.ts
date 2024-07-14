@@ -1,4 +1,4 @@
-import { LitElement, html, isServer, type PropertyValues } from 'lit';
+import { LitElement, html, isServer, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -33,7 +33,7 @@ import styles from './pf-back-to-top.css';
  */
 @customElement('pf-back-to-top')
 export class PfBackToTop extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   /** Shorthand for the `icon` slot, the value is icon name */
   @property({ reflect: true }) icon?: string;
@@ -103,7 +103,7 @@ export class PfBackToTop extends LitElement {
     }
   }
 
-  render() {
+  render(): TemplateResult<1> {
     // ensure href has a hash
     if (this.href && this.href.charAt(0) !== '#') {
       this.href = `#${this.href}`;

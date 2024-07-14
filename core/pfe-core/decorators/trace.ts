@@ -1,6 +1,13 @@
-/** Logs the result of a class method */
+/**
+ * Logs the result of a class method
+ * @param tag log tag, prepended to outputs
+ */
 export function trace(tag?: string) {
-  return function(_: unknown, key: string, descriptor: PropertyDescriptor) {
+  return function(
+    _: unknown,
+    key: string,
+    descriptor: PropertyDescriptor,
+  ): void {
     const { value: f } = descriptor;
     descriptor.value = function(...args: any[]) {
       const x = f.call(this, ...args);

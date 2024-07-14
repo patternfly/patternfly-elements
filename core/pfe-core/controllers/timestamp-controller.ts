@@ -35,11 +35,11 @@ export class TimestampController implements ReactiveController {
 
   #host: ReactiveControllerHost;
 
-  get localeString() {
+  get localeString(): string {
     return this.#date.toLocaleString(this.#options.locale);
   }
 
-  get date() {
+  get date(): Date {
     return this.#date;
   }
 
@@ -47,11 +47,11 @@ export class TimestampController implements ReactiveController {
     this.#date = new Date(string);
   }
 
-  get isoString() {
+  get isoString(): string {
     return this.#date.toISOString();
   }
 
-  get time() {
+  get time(): string {
     if (this.#options.relative) {
       return this.#getTimeRelative();
     } else {
@@ -127,7 +127,7 @@ export class TimestampController implements ReactiveController {
     return typeof (units) !== 'undefined' ? rtf.format(tense * qty, units) : 'just now';
   }
 
-  set(prop: PropertyKey, value: unknown) {
+  set(prop: PropertyKey, value: unknown): void {
     if (TimestampController.#isTimestampOptionKey(prop)) {
       // @ts-expect-error: seems typescript compiler isn't up to the task here
       this.#options[prop] = value;

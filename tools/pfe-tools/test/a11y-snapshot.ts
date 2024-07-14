@@ -18,6 +18,9 @@ export interface A11yTreeSnapshot {
   valuemax?: number;
 }
 
+/**
+ * @param payload e.g. { selector: 'pf-select' }
+ */
 export async function a11ySnapshot(
   payload?: Parameters<typeof snap>[0]
 ): Promise<A11yTreeSnapshot> {

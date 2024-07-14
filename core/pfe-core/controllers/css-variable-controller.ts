@@ -8,10 +8,10 @@ export class CssVariableController implements ReactiveController {
   }
 
   private parseProperty(name: string) {
-    return name.substr(0, 2) !== '--' ? `--${name}` : name;
+    return name.substring(0, 2) !== '--' ? `--${name}` : name;
   }
 
-  getVariable(name: string) {
+  getVariable(name: string): string | null {
     return this.style.getPropertyValue(this.parseProperty(name)).trim() || null;
   }
 

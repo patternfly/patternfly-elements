@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, type PropertyValues, type TemplateResult } from 'lit';
 
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
@@ -42,7 +42,7 @@ export type BannerVariant = (
  */
 @customElement('pf-banner')
 export class PfBanner extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   /** Changes the visual appearance of the banner. */
   @property({ reflect: true }) variant?: BannerVariant;
@@ -56,13 +56,13 @@ export class PfBanner extends LitElement {
   /** Represents the state of the anonymous and icon slots */
   #slots = new SlotController(this, null, 'icon');
 
-  override willUpdate(changed: PropertyValues<this>) {
+  override willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('icon') && this.icon) {
       import('@patternfly/elements/pf-icon/pf-icon.js');
     }
   }
 
-  override render() {
+  override render(): TemplateResult<1> {
     const { variant, icon } = this;
     const hasIcon = !!icon || this.#slots.hasSlotted('icon');
     return html`

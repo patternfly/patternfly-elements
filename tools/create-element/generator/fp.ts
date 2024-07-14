@@ -1,4 +1,7 @@
-/** Memoize an oft-called nary function */
+/**
+ * Memoize an oft-called nary function
+ * @param fn pure function to memoize
+ */
 export function memoize<T extends(...args: any[]) => unknown>(fn: T): T {
   if (!fn) {
     throw new Error('Trying to memoize non-function');

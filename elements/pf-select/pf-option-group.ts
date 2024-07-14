@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
@@ -14,7 +14,7 @@ import styles from './pf-option-group.css';
  */
 @customElement('pf-option-group')
 export class PfOptionGroup extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   /** Group description. Overridden by `label` slot. */
   @property() label?: string;
@@ -26,7 +26,7 @@ export class PfOptionGroup extends LitElement {
   // eslint-disable-next-line no-unused-private-class-members
   #internals = InternalsController.of(this, { role: 'group' });
 
-  render() {
+  render(): TemplateResult<1> {
     const { disabled } = this;
     return html`
       <div id="label-container"

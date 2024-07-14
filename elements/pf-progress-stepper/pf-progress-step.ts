@@ -1,4 +1,4 @@
-import type { PropertyValues } from 'lit';
+import type { PropertyValues, TemplateResult } from 'lit';
 import type { PfProgressStepper } from './pf-progress-stepper.js';
 
 import { LitElement, html } from 'lit';
@@ -31,7 +31,7 @@ const ICONS = new Map(Object.entries({
 export class PfProgressStep extends LitElement {
   protected static parentTagName = 'pf-progress-stepper';
 
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
   /** Optional extended description of the step */
   @property() description?: string;
@@ -52,7 +52,7 @@ export class PfProgressStep extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'listitem' });
 
-  render() {
+  render(): TemplateResult<1> {
     const hasDescription = !!(this.description ?? this.#slots.hasSlotted('description'));
     const icon = this.icon ?? ICONS.get(this.variant ?? 'default')?.icon;
     const set = this.iconSet ?? ICONS.get(this.variant ?? 'default')?.set;
@@ -73,7 +73,7 @@ export class PfProgressStep extends LitElement {
     `;
   }
 
-  updated(changed: PropertyValues<this>) {
+  updated(changed: PropertyValues<this>): void {
     if (changed.has('current')) {
       this.#internals.ariaCurrent = String(!!this.current);
     }

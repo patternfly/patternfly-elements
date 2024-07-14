@@ -33,17 +33,17 @@ let constructingAllowed = false;
  * ActiveDescendantController) to complete the implementation.
  */
 export class ListboxController<Item extends HTMLElement> implements ReactiveController {
-  private static instances = new WeakMap<ReactiveControllerHost, ListboxController<any>>();
+  private static instances = new WeakMap<ReactiveControllerHost, ListboxController<HTMLElement>>();
 
   public static of<Item extends HTMLElement>(
     host: ReactiveControllerHost,
     options: ListboxConfigOptions<Item>,
   ): ListboxController<Item> {
     constructingAllowed = true;
-    const instance: ListboxController<Item> =
+    const instance =
       ListboxController.instances.get(host) ?? new ListboxController<Item>(host, options);
     constructingAllowed = false;
-    return instance;
+    return instance as ListboxController<Item>;
   }
 
   private constructor(
@@ -87,27 +87,27 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   disabled = false;
 
   /** Current active descendant in listbox */
-  get activeItem() {
+  get activeItem(): Item | undefined {
     return this.options.find(option =>
       option === this._options.a11yController.activeItem) || this._options.a11yController.firstItem;
   }
 
-  get nextItem() {
+  get nextItem(): Item | undefined {
     return this._options.a11yController.nextItem;
   }
 
-  get options() {
+  get options(): Item[] {
     return this.#items;
   }
 
   /**
    * array of options which are selected
    */
-  get selectedOptions() {
+  get selectedOptions(): Item[] {
     return this.options.filter(option => this._options.isSelected(option));
   }
 
-  get value() {
+  get value(): Item | Item[] {
     const [firstItem] = this.selectedOptions;
     return this._options.multi ? this.selectedOptions : firstItem;
   }
@@ -116,7 +116,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     return this._options.getHTMLElement();
   }
 
-  async hostConnected() {
+  async hostConnected(): Promise<void> {
     if (!this.#listening) {
       await this.host.updateComplete;
       this.element?.addEventListener('click', this.#onClick);
@@ -127,7 +127,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     }
   }
 
-  hostUpdated() {
+  hostUpdated(): void {
     this.element?.setAttribute('role', 'listbox');
     this.element?.setAttribute('aria-disabled', String(!!this.disabled));
     this.element?.setAttribute('aria-multi-selectable', String(!!this._options.multi));
@@ -140,7 +140,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     }
   }
 
-  hostDisconnected() {
+  hostDisconnected(): void {
     this.element?.removeEventListener('click', this.#onClick);
     this.element?.removeEventListener('focus', this.#onFocus);
     this.element?.removeEventListener('keydown', this.#onKeydown);
@@ -162,6 +162,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   /**
    * handles focusing on an option:
    * updates roving tabindex and active descendant
+   * @param event focus event
    */
   #onFocus = (event: FocusEvent) => {
     const target = this.#getEventOption(event);
@@ -174,6 +175,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * handles clicking on a listbox option:
    * which selects an item by default
    * or toggles selection if multiselectable
+   * @param event click event
    */
   #onClick = (event: MouseEvent) => {
     const target = this.#getEventOption(event);
@@ -199,8 +201,8 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   };
 
   /**
-   * handles keyup:
    * track whether shift key is being used for multiselectable listbox
+   * @param event keyup event
    */
   #onKeyup = (event: KeyboardEvent) => {
     const target = this.#getEventOption(event);
@@ -215,9 +217,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   };
 
   /**
-   * handles keydown:
    * filters listbox by keyboard event when slotted option has focus,
    * or by external element such as a text field
+   * @param event keydown event
    */
   #onKeydown = (event: KeyboardEvent) => {
     const target = this.#getEventOption(event);
@@ -265,6 +267,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
   /**
    * handles change to options given previous options array
+   * @param oldOptions previous options list
    */
   #optionsChanged(oldOptions: Item[]) {
     const setSize = this.#items.length;
@@ -291,6 +294,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   /**
    * updates option selections for multiselectable listbox:
    * toggles all options between active descendant and target
+   * @param currentItem item being added
+   * @param referenceItem item already selected.
+   * @param ctrlA is ctrl-a held down?
    */
   #updateMultiselect(
     currentItem?: Item,
@@ -322,8 +328,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
   /**
    * sets the listbox value based on selected options
+   * @param value item or items
    */
-  setValue(value: Item | Item[]) {
+  setValue(value: Item | Item[]): void {
     const selected = Array.isArray(value) ? value : [value];
     const [firstItem = null] = selected;
     for (const option of this.options) {
@@ -336,8 +343,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
   /**
    * register's the host's Item elements as listbox controller items
+   * @param options items
    */
-  setOptions(options: Item[]) {
+  setOptions(options: Item[]): void {
     const oldOptions = [...this.#items];
     this.#items = options;
     this.#optionsChanged(oldOptions);

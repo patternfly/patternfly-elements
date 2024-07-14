@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 
 import style from './pf-jump-links-list.css';
@@ -10,9 +10,9 @@ import style from './pf-jump-links-list.css';
  */
 @customElement('pf-jump-links-list')
 export class PfJumpLinksList extends LitElement {
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
-  render() {
+  render(): TemplateResult<1> {
     // TODO: add label
     // eslint-disable-next-line lit-a11y/accessible-name
     return html`<div id="container" role="listbox"><slot></slot></div>`;

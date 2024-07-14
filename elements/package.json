@@ -31,6 +31,7 @@
     "./pf-dropdown/pf-dropdown-menu.js": "./pf-dropdown/pf-dropdown-menu.ts",
     "./pf-dropdown/pf-dropdown-item.js": "./pf-dropdown/pf-dropdown-item.ts",
     "./pf-icon/pf-icon.js": "./pf-icon/pf-icon.js",
+    "./pf-jazz-hands/pf-jazz-hands.js": "./pf-jazz-hands/pf-jazz-hands.js",
     "./pf-jump-links/pf-jump-links-item.js": "./pf-jump-links/pf-jump-links-item.js",
     "./pf-jump-links/pf-jump-links-list.js": "./pf-jump-links/pf-jump-links-list.js",
     "./pf-jump-links/pf-jump-links.js": "./pf-jump-links/pf-jump-links.js",
@@ -127,10 +128,10 @@
     "Ajinyka Shinde <sajinkya359@gmail.com>"
   ],
   "dependencies": {
-    "@lit/context": "^1.1.0",
+    "@lit/context": "^1.1.2",
     "@patternfly/icons": "^1.0.3",
     "@patternfly/pfe-core": "^3.0.0",
-    "lit": "^3.1.2",
-    "tslib": "^2.6.2"
+    "lit": "^3.1.4",
+    "tslib": "^2.6.3"
   }
 }

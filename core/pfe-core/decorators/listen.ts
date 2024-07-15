@@ -8,7 +8,7 @@ import type { LitElement } from 'lit';
  */
 export function listen<P extends LitElement>(
   type: keyof HTMLElementEventMap,
-  options?: EventListenerOptions,
+  options?: AddEventListenerOptions,
 ) {
   return function(
     proto: LitElement,

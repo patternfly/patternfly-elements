@@ -4,6 +4,7 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { observes } from '../decorators/observes.js';
 import { observed } from '../decorators/observed.js';
+import { listen } from '../decorators/listen.js';
 
 import { spy } from 'sinon';
 
@@ -111,6 +112,7 @@ describe('@observed(\'_myCallback\')', function() {
 describe('@observed(() => {...})', function() {
   let element: XObservedFunctionHost;
   const dump = spy();
+
   @customElement('x-observed-function-host')
   class XObservedFunctionHost extends LitElement {
     @observed(dump)
@@ -134,3 +136,33 @@ describe('@observed(() => {...})', function() {
     });
   });
 });
+
+@customElement('x-listen-host')
+class XListenHost extends LitElement {
+  public events: string[] = [];
+  @listen('click')
+  @listen('change', { once: true })
+  handler(event: Event) {
+    this.events.push(event.type);
+  }
+}
+
+describe('@listen', function() {
+  let element: XListenHost;
+  beforeEach(async function() {
+    element = await fixture(document.createElement('x-listen-host'));
+  });
+  it('listens for a given event on the host', function() {
+    element.dispatchEvent(new Event('change'));
+    expect(element.events).to.deep.equal(['change']);
+  });
+  it('composes to listen for a multiple events on the host', function() {
+    element.dispatchEvent(new Event('change'));
+    element.dispatchEvent(new Event('click'));
+    element.dispatchEvent(new Event('change'));
+    element.dispatchEvent(new Event('click'));
+    expect(element.events).to.deep.equal(['change', 'click']);
+  });
+});
+
+

@@ -18,6 +18,7 @@ import {
 } from './plugins/import-map-generator.js';
 
 import { pfeDevServerPlugin } from './plugins/pfe-dev-server.js';
+import { join } from 'node:path';
 
 const replace = fromRollup(rollupReplace);
 
@@ -75,11 +76,12 @@ function cors(ctx: Context, next: Next) {
 async function cacheBusterMiddleware(ctx: Context, next: Next) {
   await next();
   if (ctx.path.match(/(elements|pfe-core)\/.*\.js$/)) {
-    const lm = new Date().toString();
-    const etag = Date.now().toString();
+    const stats = await stat(join(process.cwd(), ctx.path));
+    const mtime = stats.mtime.getTime();
+    const etag = `modified-${mtime}`;
     ctx.response.set('Cache-Control', 'no-store, no-cache, must-revalidate');
     ctx.response.set('Pragma', 'no-cache');
-    ctx.response.set('Last-Modified', lm);
+    ctx.response.set('Last-Modified', mtime.toString());
     ctx.response.etag = etag;
   }
 }

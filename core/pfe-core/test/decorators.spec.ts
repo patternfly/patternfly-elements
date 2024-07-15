@@ -161,7 +161,11 @@ describe('@listen', function() {
     element.dispatchEvent(new Event('click'));
     element.dispatchEvent(new Event('change'));
     element.dispatchEvent(new Event('click'));
-    expect(element.events).to.deep.equal(['change', 'click']);
+    expect(element.events).to.deep.equal([
+      'change',
+      'click',
+      'click',
+    ]);
   });
 });
 

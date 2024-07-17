@@ -4,7 +4,6 @@ import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
 import styles from './pf-option.css';
@@ -82,11 +81,6 @@ export class PfOption extends LitElement {
   #value?: string;
 
   #internals = InternalsController.of(this, { role: 'option' });
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.id ||= getRandomId();
-  }
 
   render(): TemplateResult<1> {
     const { disabled, active } = this;

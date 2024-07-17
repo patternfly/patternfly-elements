@@ -92,7 +92,7 @@ export class ActivedescendantController<
    * finds focusable items from a group of items
    */
   get #activatableItems(): Item[] {
-    return this.#items.filter(isActivatableElement);
+    return this.items.filter(isActivatableElement);
   }
 
   /**
@@ -107,7 +107,7 @@ export class ActivedescendantController<
    * index of active item in array of items
    */
   get #itemIndex(): number {
-    return this.activeItem ? this.#items.indexOf(this.activeItem) : -1;
+    return this.activeItem ? this.items.indexOf(this.activeItem) : -1;
   }
 
   /**
@@ -167,6 +167,8 @@ export class ActivedescendantController<
 
   #options: ActivedescendantControllerOptions<Item>;
 
+  #cloneMap = new WeakMap();
+
   constructor(
     public host: ReactiveControllerHost,
     options: ActivedescendantControllerOptions<Item>,
@@ -185,11 +187,7 @@ export class ActivedescendantController<
     if (ActivedescendantController.canControlLightDom()) {
       return nothing;
     } else {
-      return this.items.map(item => {
-        const node = item.cloneNode(true) as Element;
-        node.id ??= getRandomId(item.localName);
-        return node;
-      });
+      return this.items;
     }
   }
 
@@ -297,17 +295,19 @@ export class ActivedescendantController<
    */
   setActiveItem(item?: Item): void {
     this.#activeItem = item;
-    if (this.#a11yContainerElement) {
+    this.#applyAriaRelationship(item);
+    this.host.requestUpdate();
+  }
+
+  #applyAriaRelationship(item?: Item) {
+    if (this.#a11yContainerElement && this.#a11yControllerElement) {
       if (ActivedescendantController.IDLAttrsSupported) {
-        // @ts-expect-error: waiting on tslib: https://w3c.github.io/aria/#ref-for-dom-ariamixin-ariaactivedescendantelement-1
-        this.#a11yControllerElement.ariaActiveDescendantElement =
-          item;
+        this.#a11yControllerElement.ariaActiveDescendantElement = item;
       } else {
         for (const el of [this.#a11yContainerElement, this.#a11yControllerElement]) {
           el?.setAttribute('aria-activedescendant', item?.id ?? '');
         }
       }
-      this.host.requestUpdate();
     }
   }
 
@@ -316,10 +316,26 @@ export class ActivedescendantController<
    * @param items tabindex items
    */
   updateItems(items: Item[] = this.#options.getItems?.() ?? []): void {
-    this.#items = items;
+    this.#items = ActivedescendantController.IDLAttrsSupported ? items : items.map(item => {
+      if (item.id && this.#a11yContainerElement?.querySelector(`#${item.id}`)) {
+        return nothing;
+      } else {
+        const clone = item.cloneNode(true) as Item;
+        this.#cloneMap.set(item, clone);
+        clone.id = getRandomId();
+        return clone;
+      }
+    }).filter(x => x !== nothing);
     const [first] = this.#activatableItems;
     const next = this.#activatableItems.find(((_, i) => i !== this.#itemIndex));
     const activeItem = next ?? first ?? this.firstItem;
     this.setActiveItem(activeItem);
+  }
+}
+
+declare global {
+  interface ARIAMixin {
+    /** @see https://w3c.github.io/aria/#ref-for-dom-ariamixin-ariaactivedescendantelement-1 */
+    ariaActiveDescendantElement?: Element;
   }
 }

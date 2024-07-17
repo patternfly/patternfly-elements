@@ -168,6 +168,7 @@ export class ActivedescendantController<
   #options: ActivedescendantControllerOptions<Item>;
 
   #cloneMap = new WeakMap();
+  #noCloneSet = new WeakSet();
 
   constructor(
     public host: ReactiveControllerHost,
@@ -187,7 +188,7 @@ export class ActivedescendantController<
     if (ActivedescendantController.canControlLightDom()) {
       return nothing;
     } else {
-      return this.items;
+      return this.items.filter(x => !this.#noCloneSet.has(x));
     }
   }
 
@@ -302,7 +303,7 @@ export class ActivedescendantController<
   #applyAriaRelationship(item?: Item) {
     if (this.#a11yContainerElement && this.#a11yControllerElement) {
       if (ActivedescendantController.IDLAttrsSupported) {
-        this.#a11yControllerElement.ariaActiveDescendantElement = item;
+        this.#a11yControllerElement.ariaActiveDescendantElement = item ?? null;
       } else {
         for (const el of [this.#a11yContainerElement, this.#a11yControllerElement]) {
           el?.setAttribute('aria-activedescendant', item?.id ?? '');
@@ -318,24 +319,17 @@ export class ActivedescendantController<
   updateItems(items: Item[] = this.#options.getItems?.() ?? []): void {
     this.#items = ActivedescendantController.IDLAttrsSupported ? items : items.map(item => {
       if (item.id && this.#a11yContainerElement?.querySelector(`#${item.id}`)) {
-        return nothing;
+        this.#noCloneSet.add(item);
       } else {
         const clone = item.cloneNode(true) as Item;
         this.#cloneMap.set(item, clone);
         clone.id = getRandomId();
         return clone;
       }
-    }).filter(x => x !== nothing);
+    }).filter(x => !!x);
     const [first] = this.#activatableItems;
     const next = this.#activatableItems.find(((_, i) => i !== this.#itemIndex));
     const activeItem = next ?? first ?? this.firstItem;
     this.setActiveItem(activeItem);
-  }
-}
-
-declare global {
-  interface ARIAMixin {
-    /** @see https://w3c.github.io/aria/#ref-for-dom-ariamixin-ariaactivedescendantelement-1 */
-    ariaActiveDescendantElement?: Element;
   }
 }

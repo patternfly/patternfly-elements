@@ -343,8 +343,13 @@ export class PfSelect extends LitElement {
     const getItems = () => this.options;
     const getHTMLElement = () => this.shadowRoot?.getElementById('listbox') ?? null;
     const isSelected = (option: PfOption) => option.selected;
-    const requestSelect = (option: PfOption, selected: boolean) =>
+    const requestSelect = (option: PfOption, selected: boolean) => {
       option.selected = !option.disabled && !!selected;
+      if (selected) {
+        this.selected = option;
+      }
+      return selected;
+    };
     switch (this.variant) {
       case 'typeahead':
       case 'typeaheadmulti': {
@@ -410,7 +415,6 @@ export class PfSelect extends LitElement {
         break;
       case 'typeahead':
         this._input!.value = this.value;
-        this.requestUpdate();
     }
     await this.updateComplete;
   }

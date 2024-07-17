@@ -49,8 +49,9 @@ function aria(
       return internals[key];
     },
     set(this: InternalsController, value: string | null) {
-      // @ts-expect-error: shamone!
+      // @ts-expect-error: ya know it!
       const internals = this.attachOrRetrieveInternals();
+      // @ts-expect-error: shamone!
       internals[key] = value;
       this.host.requestUpdate();
     },
@@ -250,7 +251,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     this.options.getHTMLElement ??= getHTMLElement;
     for (const [key, val] of Object.entries(aria)) {
       if (isARIAMixinProp(key)) {
-        this[key] = val;
+        this[key as keyof this] = val as this[keyof this];
       }
     }
   }
@@ -279,5 +280,12 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   reset(): void {
     this.internals.form?.reset();
+  }
+}
+
+declare global {
+  interface ARIAMixin {
+    /** @see https://w3c.github.io/aria/#ref-for-dom-ariamixin-ariaactivedescendantelement-1 */
+    ariaActiveDescendantElement: Element | null;
   }
 }

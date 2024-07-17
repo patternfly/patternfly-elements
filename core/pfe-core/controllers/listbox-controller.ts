@@ -140,7 +140,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       if (this._options.a11yController.activeItem === option) {
         option.setAttribute('aria-selected', 'true');
       } else {
-        option.removeAttribute('aria-selected');
+        option?.removeAttribute('aria-selected');
       }
     }
   }

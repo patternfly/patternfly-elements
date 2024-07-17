@@ -1,4 +1,6 @@
-import { isServer, type ReactiveController, type ReactiveControllerHost } from 'lit';
+import type { LitElement, ReactiveController, ReactiveControllerHost } from 'lit';
+
+import { isServer, nothing } from 'lit';
 
 export interface ListboxAccessibilityController<
   Item extends HTMLElement
@@ -11,7 +13,10 @@ export interface ListboxAccessibilityController<
   lastItem?: Item;
   updateItems(items: Item[]): void;
   setActiveItem(item: Item): void;
+  render?(): LitRenderable;
 }
+
+type LitRenderable = ReturnType<LitElement['render']>;
 
 /**
  * Filtering, multiselect, and orientation options for listbox
@@ -324,6 +329,11 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       // update starting item for other multiselect
       this.#shiftStartingItem = currentItem;
     }
+  }
+
+  public render(): LitRenderable {
+    const { a11yController } = this._options;
+    return a11yController.render?.() ?? nothing;
   }
 
   /**

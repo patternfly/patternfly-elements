@@ -1,5 +1,7 @@
 import type { ListboxAccessibilityController } from './listbox-controller.js';
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
+
+import { nothing } from 'lit';
 import { getRandomId } from '../functions/random.js';
 
 const isActivatableElement = (el: Element): el is HTMLElement =>
@@ -63,6 +65,10 @@ export class ActivedescendantController<
 
   private static IDLAttrsSupported = 'ariaActiveDescendantElement' in HTMLElement.prototype;
 
+  public static canControlLightDom(): boolean {
+    return this.IDLAttrsSupported;
+  }
+
   static of<Item extends HTMLElement>(
     host: ReactiveControllerHost,
     options: ActivedescendantControllerOptions<Item> & { getItems(): Item[] },
@@ -74,10 +80,10 @@ export class ActivedescendantController<
   #activeItem?: Item;
 
   /** accessibility container of items */
-  #ancestor?: Element;
+  #a11yContainerElement?: Element;
 
   /** accessibility controllers of items */
-  #controller?: Element;
+  #a11yControllerElement?: Element;
 
   /** array of all activatable elements */
   #items: Item[] = [];
@@ -175,21 +181,21 @@ export class ActivedescendantController<
     this.updateItems();
   }
 
-  #liftMO = new MutationObserver(this.#onMutation);
-
-  #liftOptions() {
-    if (this.#ancestor) {
-      this.#liftMO.observe(this.#ancestor);
+  public render(): typeof nothing | Node[] {
+    if (ActivedescendantController.canControlLightDom()) {
+      return nothing;
+    } else {
+      return this.items.map(item => {
+        const node = item.cloneNode(true) as Element;
+        node.id ??= getRandomId(item.localName);
+        return node;
+      });
     }
   }
 
-  #onMutation(/* records: MutationRecord[]*/) {
-    // todo: copy listbox items to shadowroot
-  }
-
   hostUpdated(): void {
-    const oldContainer = this.#ancestor;
-    const oldController = this.#controller;
+    const oldContainer = this.#a11yContainerElement;
+    const oldController = this.#a11yControllerElement;
     const container = this.#options.getItemContainer();
     const controller = this.#options.getControllingElement();
     if (container && controller && (
@@ -203,13 +209,13 @@ export class ActivedescendantController<
    * removes event listeners from items container
    */
   hostDisconnected(): void {
-    this.#ancestor?.removeEventListener('keydown', this.#onKeydown);
-    this.#ancestor = undefined;
+    this.#a11yContainerElement?.removeEventListener('keydown', this.#onKeydown);
+    this.#a11yContainerElement = undefined;
   }
 
   #initDOM(ancestor: HTMLElement, controller: HTMLElement) {
-    this.#ancestor = ancestor;
-    this.#controller = controller;
+    this.#a11yContainerElement = ancestor;
+    this.#a11yControllerElement = controller;
     controller.addEventListener('keydown', this.#onKeydown);
     this.updateItems();
   }
@@ -291,13 +297,13 @@ export class ActivedescendantController<
    */
   setActiveItem(item?: Item): void {
     this.#activeItem = item;
-    if (this.#ancestor) {
+    if (this.#a11yContainerElement) {
       if (ActivedescendantController.IDLAttrsSupported) {
         // @ts-expect-error: waiting on tslib: https://w3c.github.io/aria/#ref-for-dom-ariamixin-ariaactivedescendantelement-1
-        this.#controller.ariaActiveDescendantElement =
+        this.#a11yControllerElement.ariaActiveDescendantElement =
           item;
       } else {
-        for (const el of [this.#ancestor, this.#controller]) {
+        for (const el of [this.#a11yContainerElement, this.#a11yControllerElement]) {
           el?.setAttribute('aria-activedescendant', item?.id ?? '');
         }
       }
@@ -310,16 +316,6 @@ export class ActivedescendantController<
    * @param items tabindex items
    */
   updateItems(items: Item[] = this.#options.getItems?.() ?? []): void {
-    if (!ActivedescendantController.IDLAttrsSupported) {
-      for (const item of items) {
-        item.id ??= getRandomId(item.localName);
-      }
-    }
-
-    if (!ActivedescendantController.IDLAttrsSupported) {
-      this.#liftOptions();
-    }
-
     this.#items = items;
     const [first] = this.#activatableItems;
     const next = this.#activatableItems.find(((_, i) => i !== this.#itemIndex));

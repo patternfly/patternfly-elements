@@ -11,7 +11,10 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { ListboxController } from '@patternfly/pfe-core/controllers/listbox-controller.js';
+import {
+  type ListboxAccessibilityController,
+  ListboxController,
+} from '@patternfly/pfe-core/controllers/listbox-controller.js';
 import { ActivedescendantController } from '@patternfly/pfe-core/controllers/activedescendant-controller.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
@@ -297,7 +300,9 @@ export class PfSelect extends LitElement {
                        ?hidden="${!this.placeholder && !this.#slots.hasSlotted('placeholder')}">
               <slot name="placeholder">${this.placeholder}</slot>
             </pf-option>
-            <slot @slotchange="${this.#onListboxSlotchange}"></slot>
+            ${this.#listbox?.render()}
+            <slot @slotchange="${this.#onListboxSlotchange}"
+                  ?hidden=${typeahead && !ActivedescendantController.canControlLightDom()}></slot>
           </div>
         </div>
       </div>
@@ -331,34 +336,34 @@ export class PfSelect extends LitElement {
     // TODO: don't do filtering in the controller
   }
 
+  #a11yController?: ListboxAccessibilityController<PfOption>;
+
   #variantChanged() {
     this.#listbox?.hostDisconnected();
     const getItems = () => this.options;
     const getHTMLElement = () => this.shadowRoot?.getElementById('listbox') ?? null;
     const isSelected = (option: PfOption) => option.selected;
-    const requestSelect = (option: PfOption, selected: boolean) => {
-      this.selected = option;
+    const requestSelect = (option: PfOption, selected: boolean) =>
       option.selected = !option.disabled && !!selected;
-      return option.selected;
-    };
     switch (this.variant) {
       case 'typeahead':
-      case 'typeaheadmulti':
+      case 'typeaheadmulti': {
+        this.#a11yController = ActivedescendantController.of(this, {
+          getItems,
+          getControllingElement: () => this.shadowRoot?.getElementById('toggle-input') ?? null,
+          getItemContainer: () => this.shadowRoot?.getElementById('listbox') ?? null,
+        });
         return this.#listbox = ListboxController.of<PfOption>(this, {
-          a11yController: ActivedescendantController.of(this, {
-            getItems,
-            getControllingElement: () =>
-              this.shadowRoot?.getElementById('toggle-input') ?? null,
-            getItemContainer: () => this.shadowRoot?.getElementById('listbox') ?? null,
-          }),
+          a11yController: this.#a11yController,
           multi: this.variant === 'typeaheadmulti',
           getHTMLElement,
           isSelected,
           requestSelect,
         });
-      default:
+      } default:
+        this.#a11yController = RovingTabindexController.of(this, { getHTMLElement, getItems });
         return this.#listbox = ListboxController.of<PfOption>(this, {
-          a11yController: RovingTabindexController.of(this, { getHTMLElement, getItems }),
+          a11yController: this.#a11yController,
           multi: this.variant === 'checkbox',
           getHTMLElement,
           isSelected,

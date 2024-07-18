@@ -20,6 +20,7 @@ import { type PfTabsContext, TabExpandEvent, context } from './context.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
 
 import styles from './pf-tabs.css';
+import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 
 /**
  * **Tabs** allow users to navigate between views within the same page or context.
@@ -168,8 +169,9 @@ export class PfTabs extends LitElement {
     this.ctx = this.#ctx;
   }
 
-  protected override updated(changed: PropertyValues<this>): void {
-    if (changed.has('activeTab') && this.activeTab?.disabled) {
+  @observes('activeTab')
+  protected activeTabChanged(old?: PfTab, activeTab?: PfTab): void {
+    if (activeTab?.disabled) {
       this.#logger.warn('Active tab is disabled. Setting to first focusable tab');
       this.activeIndex = 0;
     }

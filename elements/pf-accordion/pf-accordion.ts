@@ -159,7 +159,7 @@ export class PfAccordion extends LitElement {
 
   #mo = new MutationObserver(() => this.#init());
 
-  #headerIndex = new RovingTabindexController<PfAccordionHeader>(this, {
+  #headerIndex = RovingTabindexController.of(this, {
     getItems: () => this.headers,
   });
 
@@ -236,7 +236,7 @@ export class PfAccordion extends LitElement {
 
   #updateActiveHeader() {
     if (this.#activeHeader !== this.#headerIndex.activeItem) {
-      this.#headerIndex.setActiveItem(this.#activeHeader);
+      this.#headerIndex.setATFocus(this.#activeHeader);
     }
   }
 

@@ -96,7 +96,7 @@ export class PfChipGroup extends LitElement {
 
   #buttons: HTMLElement[] = [];
 
-  #tabindex = new RovingTabindexController(this, {
+  #tabindex = RovingTabindexController.of(this, {
     getItems: () => this.#buttons.filter(x => !x.hidden),
   });
 
@@ -161,7 +161,7 @@ export class PfChipGroup extends LitElement {
 
   set activeChip(chip: HTMLElement) {
     const button = chip.shadowRoot?.querySelector('button') as HTMLElement;
-    this.#tabindex.setActiveItem(button);
+    this.#tabindex.setATFocus(button);
   }
 
   /**
@@ -203,7 +203,7 @@ export class PfChipGroup extends LitElement {
     if (event instanceof PfChipRemoveEvent) {
       await this.#updateChips();
       await this.updateComplete;
-      this.#tabindex.setActiveItem(this.#tabindex.activeItem);
+      this.#tabindex.setATFocus(this.#tabindex.activeItem);
     }
   }
 
@@ -264,7 +264,7 @@ export class PfChipGroup extends LitElement {
    * @param chip pf-chip element
    */
   focusOnChip(chip: HTMLElement): void {
-    this.#tabindex.setActiveItem(chip);
+    this.#tabindex.setATFocus(chip);
   }
 }
 

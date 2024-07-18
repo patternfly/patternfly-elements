@@ -77,7 +77,13 @@ export class PfJumpLinks extends LitElement {
 
   #kids = this.querySelectorAll?.<LitElement>(':is(pf-jump-links-item, pf-jump-links-list)');
 
-  #tabindex?: RovingTabindexController<HTMLAnchorElement>;
+  #tabindex = RovingTabindexController.of<HTMLAnchorElement>(this, {
+    getItems: () => Array.from(this.#kids)
+        .flatMap(i => [
+          ...i.shadowRoot?.querySelectorAll?.('a') ?? [],
+          ...i.querySelectorAll?.('a') ?? [],
+        ]),
+  });
 
   #spy = new ScrollSpyController(this, {
     rootMargin: `${this.offset}px 0px 0px 0px`,
@@ -97,16 +103,6 @@ export class PfJumpLinks extends LitElement {
   }
 
   override firstUpdated(): void {
-    this.#tabindex = new RovingTabindexController<HTMLAnchorElement>(this, {
-      getItems: () => {
-        const items = Array.from(this.#kids)
-            .flatMap(i => [
-              ...i.shadowRoot?.querySelectorAll?.('a') ?? [],
-              ...i.querySelectorAll?.('a') ?? [],
-            ]);
-        return items;
-      },
-    });
     const active = this.querySelector?.<PfJumpLinksItem>('pf-jump-links-item[active]');
     if (active) {
       this.#setActiveItem(active);
@@ -140,7 +136,7 @@ export class PfJumpLinks extends LitElement {
   }
 
   #updateItems() {
-    this.#tabindex?.updateItems();
+    this.#tabindex.updateItems();
   }
 
   #onSelect(event: Event) {
@@ -150,7 +146,7 @@ export class PfJumpLinks extends LitElement {
   }
 
   #setActiveItem(item: PfJumpLinksItem) {
-    this.#tabindex?.setActiveItem(item.shadowRoot?.querySelector?.('a') ?? undefined);
+    this.#tabindex.setATFocus(item.shadowRoot?.querySelector?.('a') ?? undefined);
     this.#spy.setActive(item);
   }
 

@@ -39,7 +39,7 @@ export class PfDropdownMenu extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'menu' });
 
-  #tabindex = new RovingTabindexController(this, {
+  #tabindex = RovingTabindexController.of(this, {
     getItems: () => this.items.map(x => x.menuItem),
   });
 
@@ -112,7 +112,7 @@ export class PfDropdownMenu extends LitElement {
       event.stopPropagation();
     } else if (event.target instanceof PfDropdownItem
         && event.target.menuItem !== this.#tabindex.activeItem) {
-      this.#tabindex.setActiveItem(event.target.menuItem);
+      this.#tabindex.setATFocus(event.target.menuItem);
     }
   }
 
@@ -128,7 +128,7 @@ export class PfDropdownMenu extends LitElement {
       event.stopPropagation();
     } else if (event.target instanceof PfDropdownItem
         && event.target.menuItem !== this.#tabindex.activeItem) {
-      this.#tabindex.setActiveItem(event.target.menuItem);
+      this.#tabindex.setATFocus(event.target.menuItem);
     }
   }
 

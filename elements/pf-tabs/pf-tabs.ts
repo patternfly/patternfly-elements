@@ -134,8 +134,8 @@ export class PfTabs extends LitElement {
     isActiveTab: x => x.active,
   });
 
-  #tabindex = new RovingTabindexController(this, {
-    getHTMLElement: () => this.shadowRoot?.getElementById('tabs') ?? null,
+  #tabindex = RovingTabindexController.of(this, {
+    getItemsContainer: () => this.tabsContainer ?? null,
     getItems: () => this.tabs ?? [],
   });
 
@@ -248,9 +248,9 @@ export class PfTabs extends LitElement {
   select(option: PfTab | number): void {
     if (typeof option === 'number') {
       const item = this.tabs[option];
-      this.#tabindex.setActiveItem(item);
+      this.#tabindex.setATFocus(item);
     } else {
-      this.#tabindex.setActiveItem(option);
+      this.#tabindex.setATFocus(option);
     }
     this.#updateActive({ force: true });
   }

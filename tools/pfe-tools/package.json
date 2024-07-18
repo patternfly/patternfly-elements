@@ -25,6 +25,7 @@
     "./dev-server/config.js": "./dev-server/config.js",
     "./dev-server/demo.js": "./dev-server/demo.js",
     "./environment.js": "./environment.js",
+    "./elements/": "./elements/",
     "./11ty/DocsPage.js": "./11ty/DocsPage.js",
     "./11ty/plugins/anchors.cjs": "./11ty/plugins/anchors.cjs",
     "./11ty/plugins/custom-elements-manifest.cjs": "./11ty/plugins/custom-elements-manifest.cjs",
@@ -123,5 +124,9 @@
     "@types/sinon": "^17.0.3",
     "@types/yargs": "^17.0.32",
     "custom-elements-manifest": "^2.1.0"
+  },
+  "dependencies": {
+    "@codemirror/lang-html": "^6.4.9",
+    "codemirror": "^6.0.1"
   }
 }

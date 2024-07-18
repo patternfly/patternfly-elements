@@ -53,16 +53,7 @@
       <a href="/" aria-label="{{ title }} Home">
         <img src="{{ options.site.logoUrl }}" alt="{{ title }}">
       </a>
-      <a id="source-control" href="{{
-            options.sourceControlURLPrefix.replace('tree/main/', '')
-          }}{{
-            (
-              'tree/main' +
-              manifest.path.replace(context.cwd, '')
-                .replace('/custom-elements.json', '/')
-            ) if manifest else ''
-          }}">
-
+      <a id="source-control" href="{{ manifest | getSourceControlUrl(sourceControlURLPrefix, context.cwd) }}">
         {% if options.sourceControlURLPrefix %}<span>Contribute on {{ repoHost }}</span>{% endif %}
         {% if repoHost === 'GitHub' %}
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
@@ -115,7 +106,40 @@
     </nav>
   </aside>
   <main>{% if templateContent %}
-    <div data-demo="{{ demo.tagName }}">{{ templateContent | safe }}</div>{% else %}
+    <div data-demo="{{ demo.tagName }}">
+      {#- if it's the primary demo -#}
+      {%- if demo.permalink.endsWith(demo.slug + '/demo/') -%}
+        <script type="module">
+          import '@patternfly/pfe-tools/elements/pft-element-knobs.ts';
+          // TODO: discriminate
+          import '@patternfly/elements/pf-tooltip/pf-tooltip.js';
+          import '@patternfly/elements/pf-select/pf-select.js';
+          import '@patternfly/elements/pf-switch/pf-switch.js';
+          import '@patternfly/elements/pf-text-input/pf-text-input.js';
+          import '@patternfly/elements/pf-text-area/pf-text-area.js';
+          // TODO: typescript couldn't tolerate importing this
+          // but in truth, it belongs in pft-element-knobs.ts
+          import ZeroMd from 'zero-md';
+          customElements.define('pft-knobs-markdown', class extends ZeroMd {
+            async load() {
+              await super.load()
+              this.template = ``;
+            }
+          });
+        </script>
+        <pft-element-knobs tag="{{ demo.tagName }}">
+          <template>
+            {{- templateContent | noModulesOrStyles | safe -}}
+          </template>
+            {{- templateContent | noElement(demo.tagName) | safe -}}
+          <script type="application/json" data-package="{{ manifest.packageJson.name }}">
+            {{ manifest.manifest | dump(2) | safe }}
+          </script>
+        </pft-element-knobs>
+      {%- else -%}
+      {{- templateContent | safe -}}
+      {%- endif -%}
+    </div>{% else %}
     <section id="components">
         {% for primary, group in groupeddemos %}
         {% set first = group['0'] %}

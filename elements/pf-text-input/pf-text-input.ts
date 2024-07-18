@@ -251,7 +251,7 @@ export class PfTextInput extends LitElement {
                backgroundImage: `url('${this.customIconUrl}')`,
                backgroundSize: this.customIconDimensions,
              }))}">
-        <span id="helper-text" ?hidden="${!this.helperText || valid}">${this.helperText}</span>
+        <span id="helper-text" ?hidden="${!this.helperText}">${this.helperText}</span>
         <span id="error-text" ?hidden="${valid}">${this.#internals.validationMessage}</span>
     `;
   }

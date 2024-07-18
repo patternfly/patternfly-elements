@@ -1,5 +1,6 @@
 import { LitElement, html, type TemplateResult } from 'lit';
-import { observed } from '@patternfly/pfe-core/decorators.js';
+import { observes } from '@patternfly/pfe-core/decorators/observes.js';
+import { listen } from '@patternfly/pfe-core/decorators/listen.js';
 import { property } from 'lit/decorators/property.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 
@@ -114,9 +115,6 @@ export class PfAccordion extends LitElement {
   @property({ type: Boolean, reflect: true }) bordered = false;
 
   /** Whether to apply the `large` style variant */
-  @observed(function largeChanged(this: PfAccordion) {
-    [...this.headers, ...this.panels].forEach(el => el.toggleAttribute('large', this.large));
-  })
   @property({ type: Boolean, reflect: true }) large = false;
 
   @property({ type: Boolean, reflect: true }) fixed = false;
@@ -183,7 +181,6 @@ export class PfAccordion extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener('change', this.#onChange as EventListener);
     this.#mo.observe(this, { childList: true });
     this.#init();
   }
@@ -221,6 +218,13 @@ export class PfAccordion extends LitElement {
     return c && results.every(Boolean);
   }
 
+  @observes('large')
+  protected largeChanged(): void {
+    for (const el of [...this.headers, ...this.panels]) {
+      el.toggleAttribute('large', this.large);
+    }
+  }
+
   /**
    * Initialize the accordion by connecting headers and panels
    * with aria controls and labels; set up the default disclosure
@@ -229,12 +233,13 @@ export class PfAccordion extends LitElement {
    */
   async #init() {
     this.#initialized ||= !!await this.updateComplete;
-    // Event listener to the accordion header after the accordion has been initialized to add the roving tabindex
-    this.addEventListener('focusin', this.#updateActiveHeader);
+    // Event listener to the accordion header after the accordion
+    // has been initialized to add the roving tabindex
     this.updateAccessibility();
   }
 
-  #updateActiveHeader() {
+  @listen('focusin')
+  protected updateActiveHeader(): void {
     if (this.#activeHeader !== this.#headerIndex.activeItem) {
       this.#headerIndex.setActiveItem(this.#activeHeader);
     }
@@ -280,7 +285,8 @@ export class PfAccordion extends LitElement {
     panel.hidden = true;
   }
 
-  #onChange(event: PfAccordionHeaderChangeEvent) {
+  @listen('change')
+  protected onChange(event: PfAccordionHeaderChangeEvent): void {
     if (event instanceof PfAccordionHeaderChangeEvent && event.accordion === this) {
       const index = this.#getIndex(event.target);
       if (event.expanded) {

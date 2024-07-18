@@ -8,6 +8,8 @@ import { InternalsController } from '@patternfly/pfe-core/controllers/internals-
 
 import style from './pf-jump-links-item.css';
 
+import { observes } from '@patternfly/pfe-core/decorators/observes.js';
+
 /**
  * @cssprop --pf-c-jump-links__link--PaddingTop -- padding around the link
  * @cssprop --pf-c-jump-links__link--PaddingRight
@@ -31,29 +33,23 @@ export class PfJumpLinksItem extends LitElement {
   /** hypertext reference for this link */
   @property({ reflect: true }) href?: string;
 
-  #internals = InternalsController.of(this, { role: 'listitem' });
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.#activeChanged();
-  }
-
-  protected willUpdate(changed: PropertyValues<this>): void {
-    if (changed.has('active')) {
-      this.#activeChanged();
-    }
-  }
+  #internals = InternalsController.of(this, {
+    role: 'listitem',
+  });
 
   render(): TemplateResult<1> {
     return html`
-      <a href="${ifDefined(this.href)}" @focus="${this.#onFocus}" @click="${this.#onClick}">
+      <a href="${ifDefined(this.href)}"
+         @focus="${this.#onFocus}"
+         @click="${this.#onClick}">
         <slot></slot>
       </a>
       <slot name="subsection"></slot>
     `;
   }
 
-  #activeChanged() {
+  @observes('active')
+  protected activeChanged(): void {
     this.#internals.ariaCurrent = this.active ? 'location' : null;
   }
 

@@ -6,7 +6,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
-import { bound, initializer, observed } from '@patternfly/pfe-core/decorators.js';
+import { bound, initializer, observes } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
@@ -88,11 +88,9 @@ export class PfModal extends LitElement implements HTMLDialogElement {
    */
   @property({ reflect: true }) position?: 'top';
 
-  @observed
   @property({ type: Boolean, reflect: true }) open = false;
 
   /** Optional ID of the trigger element */
-  @observed
   @property() trigger?: string;
 
   /** @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/returnValue */
@@ -190,7 +188,8 @@ export class PfModal extends LitElement implements HTMLDialogElement {
     }
   }
 
-  protected async _openChanged(oldValue?: boolean, newValue?: boolean): Promise<void> {
+  @observes('open')
+  protected async openChanged(oldValue?: boolean, newValue?: boolean): Promise<void> {
     // loosening types to prevent running these effects in unexpected circumstances
     // eslint-disable-next-line eqeqeq
     if (oldValue == null || newValue == null || oldValue == newValue) {
@@ -216,7 +215,8 @@ export class PfModal extends LitElement implements HTMLDialogElement {
     }
   }
 
-  protected _triggerChanged(): void {
+  @observes('trigger')
+  protected triggerChanged(): void {
     if (this.trigger) {
       this.#triggerElement = (this.getRootNode() as Document | ShadowRoot)
           .getElementById(this.trigger);

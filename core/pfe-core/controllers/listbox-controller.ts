@@ -1,6 +1,6 @@
-import type { LitElement, ReactiveController, ReactiveControllerHost } from 'lit';
+import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
-import { isServer, nothing } from 'lit';
+import { isServer } from 'lit';
 
 export interface ListboxAccessibilityController<
   Item extends HTMLElement
@@ -12,21 +12,18 @@ export interface ListboxAccessibilityController<
   firstItem?: Item;
   lastItem?: Item;
   updateItems(items: Item[]): void;
-  setActiveItem(item: Item): void;
-  render?(): LitRenderable;
+  setATFocus(item: Item): void;
 }
-
-type LitRenderable = ReturnType<LitElement['render']>;
 
 /**
  * Filtering, multiselect, and orientation options for listbox
  */
 export interface ListboxConfigOptions<T extends HTMLElement> {
   multi?: boolean;
-  a11yController: ListboxAccessibilityController<T>;
-  getHTMLElement(): HTMLElement | null;
+  getA11yController(): ListboxAccessibilityController<T>;
   requestSelect(option: T, force?: boolean): boolean;
   isSelected(option: T): boolean;
+  getItemsContainer?(): HTMLElement | null;
 }
 
 let constructingAllowed = false;
@@ -63,19 +60,22 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     }
     if (!isServer
         && !(host instanceof HTMLElement)
-        && typeof _options.getHTMLElement !== 'function') {
-      throw new Error(
-        `ListboxController requires the host to be an HTMLElement, or for the initializer to include a \`getHTMLElement()\` function`,
-      );
+        && typeof _options.getItemsContainer !== 'function') {
+      throw new Error([
+        'ListboxController requires the host to be an HTMLElement',
+        'or for the initializer to include a getItemsContainer() function',
+      ].join(' '));
     }
-    if (!_options.a11yController) {
-      throw new Error(
-        `ListboxController requires an additional keyboard accessibility controller. Provide either a RovingTabindexController or an ActiveDescendantController`,
-      );
+    if (!_options.getA11yController) {
+      throw new Error([
+        'ListboxController requires an additional keyboard accessibility controller.',
+        'Provide a getA11yController function which returns either a RovingTabindexController',
+        'or an ActiveDescendantController',
+      ].join(' '));
     }
     ListboxController.instances.set(host, this);
     this.host.addController(this);
-    if (this.element?.isConnected) {
+    if (this.#itemsContainer?.isConnected) {
       this.hostConnected();
     }
   }
@@ -91,14 +91,26 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   /** Whether listbox is disabled */
   disabled = false;
 
+  get #controller() {
+    return this._options.getA11yController();
+  }
+
+  get multi(): boolean {
+    return !!this._options.multi;
+  }
+
+  set multi(v: boolean) {
+    this._options.multi = v;
+  }
+
   /** Current active descendant in listbox */
   get activeItem(): Item | undefined {
-    return this.options.find(option =>
-      option === this._options.a11yController.activeItem) || this._options.a11yController.firstItem;
+    return this.options.find(option => option === this.#controller.activeItem)
+      || this.#controller.firstItem;
   }
 
   get nextItem(): Item | undefined {
-    return this._options.a11yController.nextItem;
+    return this.#controller.nextItem;
   }
 
   get options(): Item[] {
@@ -117,27 +129,27 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     return this._options.multi ? this.selectedOptions : firstItem;
   }
 
-  private get element() {
-    return this._options.getHTMLElement();
+  get #itemsContainer() {
+    return this._options.getItemsContainer?.() ?? this.host as unknown as HTMLElement;
   }
 
   async hostConnected(): Promise<void> {
     if (!this.#listening) {
       await this.host.updateComplete;
-      this.element?.addEventListener('click', this.#onClick);
-      this.element?.addEventListener('focus', this.#onFocus);
-      this.element?.addEventListener('keydown', this.#onKeydown);
-      this.element?.addEventListener('keyup', this.#onKeyup);
+      this.#itemsContainer?.addEventListener('click', this.#onClick);
+      this.#itemsContainer?.addEventListener('focus', this.#onFocus);
+      this.#itemsContainer?.addEventListener('keydown', this.#onKeydown);
+      this.#itemsContainer?.addEventListener('keyup', this.#onKeyup);
       this.#listening = true;
     }
   }
 
   hostUpdated(): void {
-    this.element?.setAttribute('role', 'listbox');
-    this.element?.setAttribute('aria-disabled', String(!!this.disabled));
-    this.element?.setAttribute('aria-multi-selectable', String(!!this._options.multi));
-    for (const option of this._options.a11yController.items) {
-      if (this._options.a11yController.activeItem === option) {
+    this.#itemsContainer?.setAttribute('role', 'listbox');
+    this.#itemsContainer?.setAttribute('aria-disabled', String(!!this.disabled));
+    this.#itemsContainer?.setAttribute('aria-multi-selectable', String(!!this._options.multi));
+    for (const option of this.#controller.items) {
+      if (this.#controller.activeItem === option) {
         option.setAttribute('aria-selected', 'true');
       } else {
         option?.removeAttribute('aria-selected');
@@ -146,10 +158,10 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   }
 
   hostDisconnected(): void {
-    this.element?.removeEventListener('click', this.#onClick);
-    this.element?.removeEventListener('focus', this.#onFocus);
-    this.element?.removeEventListener('keydown', this.#onKeydown);
-    this.element?.removeEventListener('keyup', this.#onKeyup);
+    this.#itemsContainer?.removeEventListener('click', this.#onClick);
+    this.#itemsContainer?.removeEventListener('focus', this.#onFocus);
+    this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
+    this.#itemsContainer?.removeEventListener('keyup', this.#onKeyup);
     this.#listening = false;
   }
 
@@ -171,8 +183,8 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    */
   #onFocus = (event: FocusEvent) => {
     const target = this.#getEventOption(event);
-    if (target && target !== this._options.a11yController.activeItem) {
-      this._options.a11yController.setActiveItem(target);
+    if (target && target !== this.#controller.activeItem) {
+      this.#controller.setATFocus(target);
     }
   };
 
@@ -196,8 +208,8 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         // select target and deselect all other options
         this.options.forEach(option => this._options.requestSelect(option, option === target));
       }
-      if (target !== this._options.a11yController.activeItem) {
-        this._options.a11yController.setActiveItem(target);
+      if (target !== this.#controller.activeItem) {
+        this.#controller.setATFocus(target);
       }
       if (oldValue !== this.value) {
         this.host.requestUpdate();
@@ -233,8 +245,8 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       return;
     }
 
-    const first = this._options.a11yController.firstItem;
-    const last = this._options.a11yController.lastItem;
+    const first = this.#controller.firstItem;
+    const last = this.#controller.lastItem;
 
     // need to set for keyboard support of multiselect
     if (event.key === 'Shift' && this._options.multi) {
@@ -278,7 +290,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     const setSize = this.#items.length;
     if (setSize !== oldOptions.length
      || !oldOptions.every((element, index) => element === this.#items[index])) {
-      this._options.a11yController.updateItems(this.options);
+      this.#controller.updateItems(this.options);
     }
   }
 
@@ -291,7 +303,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
           .forEach(option =>
             this._options.requestSelect(
               option,
-              option === this._options.a11yController.activeItem,
+              option === this.#controller.activeItem,
             ));
     }
   }
@@ -329,11 +341,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       // update starting item for other multiselect
       this.#shiftStartingItem = currentItem;
     }
-  }
-
-  public render(): LitRenderable {
-    const { a11yController } = this._options;
-    return a11yController.render?.() ?? nothing;
   }
 
   /**

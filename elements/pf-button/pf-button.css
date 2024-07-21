@@ -75,6 +75,11 @@ pf-icon,
   }
 }
 
+#button .anchor {
+  color: inherit;
+  text-decoration: none;
+}
+
 #text {
   display: inline;
   position: relative;

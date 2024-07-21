@@ -202,6 +202,12 @@ export class PfButton extends LitElement {
   /** Shorthand for the `icon` slot, the value is icon name */
   @property() icon?: string;
 
+  /** Store the URL Link */
+  @property({ reflect: true }) href?: string;
+
+  /**  Redirecting the URL Link to new Tab */
+  @property({ reflect: true }) target?: string;
+
   #internals = InternalsController.of(this, { role: 'button' });
 
   #slots = new SlotController(this, 'icon', null);
@@ -214,7 +220,6 @@ export class PfButton extends LitElement {
     super.connectedCallback();
     this.addEventListener('click', this.#onClick);
     this.addEventListener('keydown', this.#onKeydown);
-    this.tabIndex = 0;
   }
 
   protected override willUpdate(): void {
@@ -224,7 +229,11 @@ export class PfButton extends LitElement {
 
   protected override render() {
     const hasIcon = !!this.icon || !!this.loading || this.#slots.hasSlotted('icon');
-    const { warning, variant, danger, loading, plain, inline, block, size } = this;
+    const { warning, variant, danger, loading, plain, inline, block, size, href, target } = this;
+    if ( variant !== 'link' || ( variant === 'link' && !href ) ) {
+      this.tabIndex = 0;
+    }
+
     const disabled = this.#disabled;
     return html`
       <div id="button"
@@ -240,16 +249,39 @@ export class PfButton extends LitElement {
              plain,
              warning,
            })}">
-        <slot id="icon" part="icon" name="icon" ?hidden="${!hasIcon}">
-          <pf-icon role="presentation"
-                   icon="${ifDefined(this.icon)}"
-                   set="${ifDefined(this.iconSet)}"
-                   ?hidden="${!this.icon}"></pf-icon>
-          <pf-spinner size="md"
-                      ?hidden="${!this.loading}"
-                      aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pf-spinner>
-        </slot>
-        <slot id="text"></slot>
+        ${variant === 'link' && href ?
+            html`
+              <a href="${href}" class="anchor" target="${target === '_blank' ? '_blank' : '_self'}">
+                <slot id="icon" part="icon" name="icon" ?hidden="${!hasIcon}">
+                  <pf-icon 
+                    role="presentation"
+                    icon="${ifDefined(this.icon)}"
+                    set="${ifDefined(this.iconSet)}"
+                    ?hidden="${!this.icon}">
+                  </pf-icon>
+                  <pf-spinner 
+                    size="md"
+                    ?hidden="${!this.loading}"
+                    aria-label="${this.getAttribute('loading-label') ?? 'loading'}">
+                  </pf-spinner>
+                </slot>
+                <slot id="text"></slot>
+              </a>`
+            : html`
+              <slot id="icon" part="icon" name="icon" ?hidden="${!hasIcon}">
+                <pf-icon 
+                  role="presentation"
+                  icon="${ifDefined(this.icon)}"
+                  set="${ifDefined(this.iconSet)}"
+                  ?hidden="${!this.icon}">
+                </pf-icon>
+                <pf-spinner 
+                  size="md"
+                  ?hidden="${!this.loading}"
+                  aria-label="${this.getAttribute('loading-label') ?? 'loading'}">
+                </pf-spinner>
+              </slot>
+              <slot id="text"></slot>`}
       </div>
     `;
   }

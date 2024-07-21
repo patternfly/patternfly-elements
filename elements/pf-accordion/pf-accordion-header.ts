@@ -125,7 +125,6 @@ export class PfAccordionHeader extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.hidden = true;
     this.id ||= getRandomId(this.localName);
     this.#initHeader();
   }

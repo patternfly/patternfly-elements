@@ -233,15 +233,13 @@ export class PfAccordion extends LitElement {
    */
   async #init() {
     this.#initialized ||= !!await this.updateComplete;
-    // Event listener to the accordion header after the accordion
-    // has been initialized to add the roving tabindex
     this.updateAccessibility();
   }
 
   @listen('focusin')
   protected updateActiveHeader(): void {
-    if (this.#activeHeader !== this.#headerIndex.activeItem) {
-      this.#headerIndex.setATFocus(this.#activeHeader);
+    if (this.#activeHeader !== this.#headerIndex.atFocusedItem) {
+      this.#headerIndex.atFocusedItem = this.#activeHeader ?? null;
     }
   }
 
@@ -322,7 +320,6 @@ export class PfAccordion extends LitElement {
   }
 
   public updateAccessibility(): void {
-    this.#headerIndex.updateItems();
     const { headers } = this;
 
     // For each header in the accordion, attach the aria connections

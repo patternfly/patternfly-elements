@@ -1,20 +1,14 @@
-import type { ListboxAccessibilityController } from './listbox-controller.js';
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import type { ReactiveControllerHost } from 'lit';
+
+import { type ATFocusControllerOptions, ATFocusController } from './at-focus-controller.js';
 
 import { nothing } from 'lit';
 import { getRandomId } from '../functions/random.js';
 
-const isActivatableElement = (el: Element): el is HTMLElement =>
-  !!el
-  && !el.ariaHidden
-  && !el.hasAttribute('hidden');
-
-export interface ActivedescendantControllerOptions<Item extends HTMLElement> {
-  getOwningElement: () => HTMLElement | null;
-  getItems: () => Item[];
-  getItemsContainer?: () => HTMLElement | null;
-  // todo: maybe this needs to be "horizontal"| "vertical" | "undefined" | "grid"
-  getOrientation?(): 'horizontal' | 'vertical' | 'undefined';
+export interface ActivedescendantControllerOptions<
+  Item extends HTMLElement
+> extends ATFocusControllerOptions<Item> {
+  getItemsControlsElement: () => HTMLElement | null;
 }
 
 /**
@@ -62,10 +56,7 @@ export interface ActivedescendantControllerOptions<Item extends HTMLElement> {
  */
 export class ActivedescendantController<
   Item extends HTMLElement = HTMLElement
-> implements ReactiveController, ListboxAccessibilityController<Item> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private static hosts = new WeakMap<ReactiveControllerHost, ActivedescendantController<any>>();
-
+> extends ATFocusController<Item> {
   private static IDLAttrsSupported = 'ariaActiveDescendantElement' in HTMLElement.prototype;
 
   public static canControlLightDom(): boolean {
@@ -79,136 +70,41 @@ export class ActivedescendantController<
     return new ActivedescendantController(host, options);
   }
 
-  /** active element */
-  #activeItem?: Item;
+  /** Maps from original element to shadow DOM clone */
+  #cloneMap = new WeakMap<Item, Item>();
 
-  /** accessibility container of items */
-  #itemsContainerElement?: Element;
+  /** Set of item which should not be cloned */
+  #noCloneSet = new WeakSet<Item>();
 
-  /** accessibility controllers of items */
-  #ownerElement?: Element;
+  /** Element which controls the list i.e. combobox */
+  #itemsControlsElement: HTMLElement | null = null;
 
-  /** array of all activatable elements */
-  #items: Item[] = [];
-
-  /**
-   * finds focusable items from a group of items
-   */
-  get #activatableItems(): Item[] {
-    return this.items.filter(isActivatableElement);
-  }
-
-  /**
-   * index of active item in array of focusable items
-   */
-  get #activeIndex(): number {
-    return !!this.#activatableItems
-      && !!this.activeItem ? this.#activatableItems.indexOf(this.activeItem) : -1;
-  }
-
-  /**
-   * index of active item in array of items
-   */
-  get #itemIndex(): number {
-    return this.activeItem ? this.items.indexOf(this.activeItem) : -1;
-  }
-
-  /**
-   * active item of array of items
-   */
-  get activeItem(): Item | undefined {
-    return this.#activeItem;
-  }
-
-  /**
-   * all items from array
-   */
-  get items(): Item[] {
-    return this.#items;
-  }
-
-  /**
-   * all focusable items from array
-   */
-  get focusableItems(): Item[] {
-    return this.#activatableItems;
-  }
-
-  /**
-   * first item in array of focusable items
-   */
-  get firstItem(): Item | undefined {
-    return this.#activatableItems.at(0);
-  }
-
-  /**
-   * last item in array of focusable items
-   */
-  get lastItem(): Item | undefined {
-    return this.#activatableItems.at(-1);
-  }
-
-  /**
-   * next item  after active item in array of focusable items
-   */
-  get nextItem(): Item | undefined {
-    return (
-      this.#activeIndex >= this.#activatableItems.length - 1 ? this.firstItem
-        : this.#activatableItems[this.#activeIndex + 1]
-    );
-  }
-
-  /**
-   * previous item  after active item in array of focusable items
-   */
-  get prevItem(): Item | undefined {
-    return (
-      this.#activeIndex > 0 ? this.#activatableItems[this.#activeIndex - 1]
-        : this.lastItem
-    );
-  }
-
-  #options: Required<ActivedescendantControllerOptions<Item>>;
-
-  #cloneMap = new WeakMap();
-  #noCloneSet = new WeakSet();
+  #options: ActivedescendantControllerOptions<Item>;
 
   private constructor(
     public host: ReactiveControllerHost,
     options: ActivedescendantControllerOptions<Item>,
   ) {
-    this.#options = options as Required<ActivedescendantControllerOptions<Item>>;
-    this.#options.getItemsContainer ??= () => host instanceof HTMLElement ? host : null;
-    this.#options.getOrientation ??= () =>
-      this.#itemsContainerElement?.getAttribute('aria-orientation') as
-        'horizontal' | 'vertical' | 'undefined';
-    const instance = ActivedescendantController.hosts.get(host);
-    if (instance) {
-      return instance as unknown as ActivedescendantController<Item>;
-    }
-    ActivedescendantController.hosts.set(host, this);
-    this.host.addController(this);
-    this.updateItems();
+    super(host, options);
+    this.#options = options;
+    this.itemsControlsElement = this.#options.getItemsControlsElement();
   }
 
-  hostUpdated(): void {
-    const oldContainer = this.#itemsContainerElement;
-    const oldController = this.#ownerElement;
-    const container = this.#options.getItemsContainer();
-    const controller = this.#options.getOwningElement();
-    if (container && controller && (
-      container !== oldContainer
-      || controller !== oldController)) {
-      this.#initDOM(container, controller);
-    }
+  hostConnected(): void {
+    this.itemsControlsElement = this.#options.getItemsControlsElement();
   }
 
-  /**
-   * removes event listeners from items container
-   */
-  hostDisconnected(): void {
-    this.#itemsContainerElement?.removeEventListener('keydown', this.#onKeydown);
-    this.#itemsContainerElement = undefined;
+  get itemsControlsElement() {
+    return this.#itemsControlsElement ?? null;
+  }
+
+  set itemsControlsElement(element: HTMLElement | null) {
+    const oldController = this.#itemsControlsElement;
+    oldController?.removeEventListener('keydown', this.onKeydown);
+    this.#itemsControlsElement = element;
+    if (element && oldController !== element) {
+      element.addEventListener('keydown', this.onKeydown);
+    }
   }
 
   public renderItemsToShadowRoot(): typeof nothing | Node[] {
@@ -219,19 +115,16 @@ export class ActivedescendantController<
     }
   }
 
-  /**
-   * Sets the focus of assistive technology to the item
-   * In the case of Active Descendant, does not change the DOM Focus
-   * @param item item
-   */
-  public setATFocus(item?: Item): void {
-    this.#activeItem = item;
-    this.#applyAriaRelationship(item);
-    this.host.requestUpdate();
+  protected override isRelevantKeyboardEvent(event: Event): event is KeyboardEvent {
+    return !(!(event instanceof KeyboardEvent)
+      || event.ctrlKey
+      || event.altKey
+      || event.metaKey
+      || !this.atFocusableItems.length);
   }
 
   #registerItemsPriorToPossiblyCloning = (item: Item) => {
-    if (this.#itemsContainerElement?.contains(item)) {
+    if (this.itemsContainerElement?.contains(item)) {
       item.id ||= getRandomId();
       this.#noCloneSet.add(item);
       return item;
@@ -247,105 +140,37 @@ export class ActivedescendantController<
    * Sets the list of items and activates the next activatable item after the current one
    * @param items tabindex items
    */
-  public updateItems(items: Item[] = this.#options.getItems?.() ?? []): void {
-    this.#items = ActivedescendantController.IDLAttrsSupported ? items
+  override set items(items: Item[]) {
+    super.items = (ActivedescendantController.IDLAttrsSupported ? items
       : items
-          .map(this.#registerItemsPriorToPossiblyCloning)
-          .filter(x => !!x);
-    const [first] = this.#activatableItems;
-    const next = this.#activatableItems.find(((_, i) => i !== this.#itemIndex));
-    const activeItem = next ?? first ?? this.firstItem;
-    this.setATFocus(activeItem);
+          ?.map(this.#registerItemsPriorToPossiblyCloning)
+          ?.filter(x => !!x));
+    const [first] = this.atFocusableItems;
+    const atFocusedItemIndex = this.atFocusableItems.indexOf(this.atFocusedItem!);
+    const next = this.atFocusableItems.find(((_, i) => i !== atFocusedItemIndex));
+    const activeItem = next ?? first ?? this.firstATFocusableItem;
+    this.atFocusedItem = activeItem;
   }
 
-  #initDOM(container: HTMLElement, owner: HTMLElement) {
-    this.#itemsContainerElement = container;
-    this.#ownerElement = owner;
-    owner.addEventListener('keydown', this.#onKeydown);
-    this.updateItems();
-  }
-
-  #applyAriaRelationship(item?: Item) {
-    if (this.#itemsContainerElement && this.#ownerElement) {
+  /**
+   * Rather than setting DOM focus, applies the `aria-activedescendant` attribute,
+   * using AriaIDLAttributes for cross-root aria, if supported by the browser
+   * @param item item
+   */
+  override set atFocusedItem(item: Item | null) {
+    super.atFocusedItem = item;
+    if (this.itemsContainerElement && this.itemsControlsElement) {
       if (ActivedescendantController.IDLAttrsSupported) {
-        this.#ownerElement.ariaActiveDescendantElement = item ?? null;
+        this.itemsControlsElement.ariaActiveDescendantElement = item ?? null;
       } else {
         for (const el of [
-          this.#itemsContainerElement,
-          this.#ownerElement,
+          this.itemsContainerElement,
+          this.itemsControlsElement,
         ]) {
           el?.setAttribute('aria-activedescendant', item?.id ?? '');
         }
       }
     }
+    this.host.requestUpdate();
   }
-
-  /**
-   * handles keyboard activation of items
-   * @param event keydown event
-   */
-  #onKeydown = (event: Event) => {
-    if (!(event instanceof KeyboardEvent)
-        || event.ctrlKey
-        || event.altKey
-        || event.metaKey
-        || !this.#activatableItems.length) {
-      return;
-    }
-
-    const orientation = this.#options.getOrientation();
-    const verticalOnly = orientation === 'vertical';
-    const item = this.activeItem;
-    const horizontalOnly =
-        orientation === 'horizontal'
-     || item?.localName === 'select'
-     || item?.getAttribute('role') === 'spinbutton';
-
-    switch (event.key) {
-      case 'ArrowLeft':
-        if (verticalOnly) {
-          return;
-        }
-        this.setATFocus(this.prevItem);
-        event.stopPropagation();
-        event.preventDefault();
-        break;
-      case 'ArrowRight':
-        if (verticalOnly) {
-          return;
-        }
-        this.setATFocus(this.nextItem);
-        event.stopPropagation();
-        event.preventDefault();
-        break;
-      case 'ArrowUp':
-        if (horizontalOnly) {
-          return;
-        }
-        this.setATFocus(this.prevItem);
-        event.stopPropagation();
-        event.preventDefault();
-        break;
-      case 'ArrowDown':
-        if (horizontalOnly) {
-          return;
-        }
-        this.setATFocus(this.nextItem);
-        event.stopPropagation();
-        event.preventDefault();
-        break;
-      case 'Home':
-        this.setATFocus(this.firstItem);
-        event.stopPropagation();
-        event.preventDefault();
-        break;
-      case 'End':
-        this.setATFocus(this.lastItem);
-        event.stopPropagation();
-        event.preventDefault();
-        break;
-      default:
-        break;
-    }
-  };
 }

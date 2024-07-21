@@ -154,14 +154,14 @@ export class PfChipGroup extends LitElement {
    * active chip that receives focus when group receives focus
    */
   get activeChip() {
-    const button = this.#tabindex.activeItem as HTMLElement;
+    const button = this.#tabindex.atFocusedItem as HTMLElement;
     const shadow = button?.getRootNode() as ShadowRoot;
     return shadow?.host as PfChip;
   }
 
   set activeChip(chip: HTMLElement) {
     const button = chip.shadowRoot?.querySelector('button') as HTMLElement;
-    this.#tabindex.setATFocus(button);
+    this.#tabindex.atFocusedItem = button;
   }
 
   /**
@@ -189,7 +189,7 @@ export class PfChipGroup extends LitElement {
       ].filter((x): x is PfChip => !!x);
       if (oldButtons.length !== this.#buttons.length
           || !oldButtons.every((element, index) => element === this.#buttons[index])) {
-        this.#tabindex.updateItems();
+        this.#tabindex.items = (this.#chips);
       }
       this.#updateOverflow();
     }
@@ -203,7 +203,7 @@ export class PfChipGroup extends LitElement {
     if (event instanceof PfChipRemoveEvent) {
       await this.#updateChips();
       await this.updateComplete;
-      this.#tabindex.setATFocus(this.#tabindex.activeItem);
+      // this.#tabindex.setATFocus(this.#tabindex.atFocusedItem);
     }
   }
 
@@ -243,7 +243,7 @@ export class PfChipGroup extends LitElement {
     this.#chips = [...this.querySelectorAll<PfChip>('pf-chip:not([slot]):not([overflow-chip])')];
     this.requestUpdate();
     await this.updateComplete;
-    this.#tabindex.updateItems(this.#chips);
+    this.#tabindex.items = (this.#chips);
     this.#handleChipsChanged();
     return this.#chips;
   }
@@ -264,7 +264,7 @@ export class PfChipGroup extends LitElement {
    * @param chip pf-chip element
    */
   focusOnChip(chip: HTMLElement): void {
-    this.#tabindex.setATFocus(chip);
+    this.#tabindex.atFocusedItem = chip;
   }
 }
 

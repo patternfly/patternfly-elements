@@ -77,12 +77,16 @@ export class PfJumpLinks extends LitElement {
 
   #kids = this.querySelectorAll?.<LitElement>(':is(pf-jump-links-item, pf-jump-links-list)');
 
-  #tabindex = RovingTabindexController.of<HTMLAnchorElement>(this, {
-    getItems: () => Array.from(this.#kids)
+  get #items() {
+    return Array.from(this.#kids)
         .flatMap(i => [
           ...i.shadowRoot?.querySelectorAll?.('a') ?? [],
           ...i.querySelectorAll?.('a') ?? [],
-        ]),
+        ]);
+  }
+
+  #tabindex = RovingTabindexController.of<HTMLAnchorElement>(this, {
+    getItems: () => this.#items,
   });
 
   #spy = new ScrollSpyController(this, {
@@ -98,7 +102,7 @@ export class PfJumpLinks extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener('slotchange', this.#updateItems);
+    this.addEventListener('slotchange', this.#onSlotChange);
     this.addEventListener('select', this.#onSelect);
   }
 
@@ -135,8 +139,8 @@ export class PfJumpLinks extends LitElement {
     `;
   }
 
-  #updateItems() {
-    this.#tabindex.updateItems();
+  #onSlotChange() {
+    this.#tabindex.items = this.#items;
   }
 
   #onSelect(event: Event) {
@@ -146,7 +150,7 @@ export class PfJumpLinks extends LitElement {
   }
 
   #setActiveItem(item: PfJumpLinksItem) {
-    this.#tabindex.setATFocus(item.shadowRoot?.querySelector?.('a') ?? undefined);
+    this.#tabindex.atFocusedItem = item.shadowRoot?.querySelector?.('a') ?? null;
     this.#spy.setActive(item);
   }
 

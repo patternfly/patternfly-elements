@@ -45,6 +45,8 @@ pf-button + pf-button {
   <pf-button variant="link" icon-set="patternfly" icon="arrow" icon-position="right">Link</pf-button>
   <pf-button variant="link" inline>Inline Link</pf-button>
   <pf-button variant="link" danger>Danger Link</pf-button>
+  <pf-button variant="link" href="#link">Link</pf-button>
+  <pf-button variant="link" href="https://patternflyelements.org/" target="_blank" icon="location-arrow">Go to PatternFly</pf-button>
   {% endhtmlexample %}
 
   ### Plain button

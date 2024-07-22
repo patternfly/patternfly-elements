@@ -50,7 +50,7 @@ export class PfDropdownMenu extends LitElement {
   /**
    * current active descendant in menu
    */
-  get activeItem(): HTMLElement | undefined {
+  get activeItem(): HTMLElement | null {
     return this.#tabindex.atFocusedItem ?? this.#tabindex.firstATFocusableItem;
   }
 

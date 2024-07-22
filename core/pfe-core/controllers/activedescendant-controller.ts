@@ -8,7 +8,19 @@ import { getRandomId } from '../functions/random.js';
 export interface ActivedescendantControllerOptions<
   Item extends HTMLElement
 > extends ATFocusControllerOptions<Item> {
+  /**
+   * Function returning the DOM node which is the accessibility controller of the listbox
+   * e.g. the button element associated with the combobox.
+   */
   getItemsControlsElement: () => HTMLElement | null;
+  /**
+   * Optional callback to control the assistive technology focus behavior of items.
+   * By default, ActivedescendantController will not do anything special to items when they receive
+   * assistive technology focus, and will only set the `activedescendant` property on the container.
+   * If you provide this callback, ActivedescendantController will call it on your item with the
+   * active state. You may use this to set active styles.
+   */
+  setItemActive?(this: Item, active: boolean): void;
 }
 
 /**
@@ -79,19 +91,39 @@ export class ActivedescendantController<
   /** Element which controls the list i.e. combobox */
   #itemsControlsElement: HTMLElement | null = null;
 
-  #options: ActivedescendantControllerOptions<Item>;
+  #observing = false;
 
-  private constructor(
-    public host: ReactiveControllerHost,
-    options: ActivedescendantControllerOptions<Item>,
-  ) {
-    super(host, options);
-    this.#options = options;
-    this.itemsControlsElement = this.#options.getItemsControlsElement();
+  #mo = new MutationObserver(records => this.onMutation(records));
+
+  #atFocusedItem: Item | null = null;
+
+  get atFocusedItem(): Item | null {
+    return this.#atFocusedItem;
   }
 
-  hostConnected(): void {
-    this.itemsControlsElement = this.#options.getItemsControlsElement();
+  /**
+   * Rather than setting DOM focus, applies the `aria-activedescendant` attribute,
+   * using AriaIDLAttributes for cross-root aria, if supported by the browser
+   * @param item item
+   */
+  set atFocusedItem(item: Item | null) {
+    this.#atFocusedItem = item;
+    for (const i of this.items) {
+      this.options.setItemActive?.call(i, i === item);
+    }
+    if (this.itemsContainerElement && this.itemsControlsElement) {
+      if (ActivedescendantController.IDLAttrsSupported) {
+        this.itemsControlsElement.ariaActiveDescendantElement = item ?? null;
+      } else {
+        for (const el of [
+          this.itemsContainerElement,
+          this.itemsControlsElement, // necessary for ff mac voiceover
+        ]) {
+          el?.setAttribute('aria-activedescendant', item?.id ?? '');
+        }
+      }
+    }
+    this.host.requestUpdate();
   }
 
   get itemsControlsElement() {
@@ -107,12 +139,77 @@ export class ActivedescendantController<
     }
   }
 
-  public renderItemsToShadowRoot(): typeof nothing | Node[] {
-    if (ActivedescendantController.canControlLightDom()) {
-      return nothing;
-    } else {
-      return this.items.filter(x => !this.#noCloneSet.has(x));
+  get items() {
+    return this._items;
+  }
+
+  /**
+   * Sets the list of items and activates the next activatable item after the current one
+   * @param items tabindex items
+   */
+  override set items(items: Item[]) {
+    const container = this.ensureContainer();
+    this._items = (ActivedescendantController.IDLAttrsSupported ? items
+    : items
+        ?.map((item: Item) => {
+          item.removeAttribute('tabindex');
+          if (container.contains(item)) {
+            item.id ||= getRandomId();
+            this.#noCloneSet.add(item);
+            return item;
+          } else {
+            const clone = item.cloneNode(true) as Item;
+            this.#cloneMap.set(item, clone);
+            clone.id = getRandomId();
+            return clone;
+          }
+        })
+        ?.filter(x => !!x));
+    const [first] = this.atFocusableItems;
+    const atFocusedItemIndex = this.atFocusableItems.indexOf(this.atFocusedItem!);
+    const next = this.atFocusableItems.find(((_, i) => i !== atFocusedItemIndex));
+    const activeItem = next ?? first ?? this.firstATFocusableItem;
+    this.atFocusedItem = activeItem;
+  }
+
+  private constructor(
+    public host: ReactiveControllerHost,
+    protected options: ActivedescendantControllerOptions<Item>,
+  ) {
+    super(host, options);
+  }
+
+  private onMutation = (records: MutationRecord[]) => {
+    // todo: respond to attrs changing on lightdom nodes
+    for (const { removedNodes } of records) {
+      for (const removed of removedNodes as NodeListOf<Item>) {
+        this.#cloneMap.get(removed)?.remove();
+        this.#cloneMap.delete(removed);
+      }
     }
+  };
+
+  protected override initItems(): void {
+    super.initItems();
+    this.itemsControlsElement ??= this.options.getItemsControlsElement();
+    if (!this.#observing && this.itemsContainerElement && this.itemsContainerElement.isConnected) {
+      this.#mo.observe(this.itemsContainerElement, { attributes: true, childList: true });
+      this.#observing = true;
+    }
+  }
+
+  hostDisconnected(): void {
+    this.#observing = false;
+    this.#mo.disconnect();
+  }
+
+  private ensureContainer() {
+    const container = this.options.getItemsContainer?.() ?? this.host;
+    if (!(container instanceof HTMLElement)) {
+      throw new Error('items container must be an HTMLElement');
+    }
+    this.itemsContainerElement = container;
+    return container;
   }
 
   protected override isRelevantKeyboardEvent(event: Event): event is KeyboardEvent {
@@ -123,54 +220,12 @@ export class ActivedescendantController<
       || !this.atFocusableItems.length);
   }
 
-  #registerItemsPriorToPossiblyCloning = (item: Item) => {
-    if (this.itemsContainerElement?.contains(item)) {
-      item.id ||= getRandomId();
-      this.#noCloneSet.add(item);
-      return item;
+
+  public renderItemsToShadowRoot(): typeof nothing | Node[] {
+    if (ActivedescendantController.canControlLightDom()) {
+      return nothing;
     } else {
-      const clone = item.cloneNode(true) as Item;
-      this.#cloneMap.set(item, clone);
-      clone.id = getRandomId();
-      return clone;
+      return this.items?.filter(x => !this.#noCloneSet.has(x));
     }
-  };
-
-  /**
-   * Sets the list of items and activates the next activatable item after the current one
-   * @param items tabindex items
-   */
-  override set items(items: Item[]) {
-    super.items = (ActivedescendantController.IDLAttrsSupported ? items
-      : items
-          ?.map(this.#registerItemsPriorToPossiblyCloning)
-          ?.filter(x => !!x));
-    const [first] = this.atFocusableItems;
-    const atFocusedItemIndex = this.atFocusableItems.indexOf(this.atFocusedItem!);
-    const next = this.atFocusableItems.find(((_, i) => i !== atFocusedItemIndex));
-    const activeItem = next ?? first ?? this.firstATFocusableItem;
-    this.atFocusedItem = activeItem;
-  }
-
-  /**
-   * Rather than setting DOM focus, applies the `aria-activedescendant` attribute,
-   * using AriaIDLAttributes for cross-root aria, if supported by the browser
-   * @param item item
-   */
-  override set atFocusedItem(item: Item | null) {
-    super.atFocusedItem = item;
-    if (this.itemsContainerElement && this.itemsControlsElement) {
-      if (ActivedescendantController.IDLAttrsSupported) {
-        this.itemsControlsElement.ariaActiveDescendantElement = item ?? null;
-      } else {
-        for (const el of [
-          this.itemsContainerElement,
-          this.itemsControlsElement,
-        ]) {
-          el?.setAttribute('aria-activedescendant', item?.id ?? '');
-        }
-      }
-    }
-    this.host.requestUpdate();
   }
 }

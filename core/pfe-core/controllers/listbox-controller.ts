@@ -1,4 +1,3 @@
-import type { ATFocusController } from './at-focus-controller';
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
 import { isServer } from 'lit';
@@ -6,12 +5,39 @@ import { isServer } from 'lit';
 /**
  * Filtering, multiselect, and orientation options for listbox
  */
-export interface ListboxControllerOptions<T extends HTMLElement> {
+export interface ListboxControllerOptions<Item extends HTMLElement> {
+  /**
+   * Whether the listbox supports multiple selections.
+   */
   multi?: boolean;
-  getATFocusController(): ATFocusController<T>;
-  requestSelect(option: T, force?: boolean): boolean;
-  isSelected(option: T): boolean;
+  /**
+   * Optional callback to control the selection behavior of items. By default, ListboxController
+   * will set the `aria-selected` attribute. When overriding this option, it will call it on your
+   * element with the selected state.
+   * Callers **must** ensure that the correct ARIA state is set.
+   */
+  setItemSelected?(this: Item, selected: boolean): void;
+  /**
+   * Function returning the item which currently has assistive technology focus.
+   * In most cases, this should be the `atFocusedItem` of an ATFocusController
+   * i.e. RovingTabindexController or ActivedescendantController.
+   *
+   */
+  getATFocusedItem(): Item | null;
+  /**
+   * Function returning the DOM node which is the direct parent of the item elements
+   * Defaults to the controller host.
+   * If the controller host is not an HTMLElement, this *must* be set
+   */
   getItemsContainer?(): HTMLElement | null;
+}
+
+function setItemSelected<Item extends HTMLElement>(this: Item, selected: boolean) {
+  if (selected) {
+    this.setAttribute('aria-selected', 'true');
+  } else {
+    this?.removeAttribute('aria-selected');
+  }
 }
 
 let constructingAllowed = false;
@@ -58,7 +84,7 @@ let constructingAllowed = false;
 export class ListboxController<Item extends HTMLElement> implements ReactiveController {
   private static instances = new WeakMap<
     ReactiveControllerHost,
-    ListboxController<any>
+    ListboxController<HTMLElement>
   >();
 
   public static of<Item extends HTMLElement>(
@@ -71,58 +97,18 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     return instance as ListboxController<Item>;
   }
 
-  private constructor(
-    public host: ReactiveControllerHost,
-    options: ListboxControllerOptions<Item>,
-  ) {
-    this.#options = options;
-    if (!constructingAllowed) {
-      throw new Error('ListboxController must be constructed with `ListboxController.of()`');
-    }
-    if (!isServer
-        && !(host instanceof HTMLElement)
-        && typeof options.getItemsContainer !== 'function') {
-      throw new Error([
-        'ListboxController requires the host to be an HTMLElement',
-        'or for the initializer to include a getItemsContainer() function',
-      ].join(' '));
-    }
-    if (!this.#controller) {
-      throw new Error([
-        'ListboxController requires an additional keyboard accessibility controller.',
-        'Provide a getA11yController function which returns either a RovingTabindexController',
-        'or an ActiveDescendantController',
-      ].join(' '));
-    }
-    const instance = ListboxController.instances.get(host);
-    if (instance) {
-      return instance as ListboxController<Item>;
-    }
-    ListboxController.instances.set(host, this);
-    this.host.addController(this);
-    if (this.#itemsContainer?.isConnected) {
-      this.hostConnected();
-    }
-  }
-
   /** Current active descendant when shift key is pressed */
   #shiftStartingItem: Item | null = null;
 
   #options: ListboxControllerOptions<Item>;
 
-  /** All options that will not be hidden by a filter */
+  /** All items */
   #items: Item[] = [];
 
   #listening = false;
 
-  #lastATFocusedItem?: Item | null;
-
   get #itemsContainer() {
     return this.#options.getItemsContainer?.() ?? this.host as unknown as HTMLElement;
-  }
-
-  get #controller() {
-    return this.#options.getATFocusController();
   }
 
   /** Whether listbox is disabled */
@@ -148,16 +134,54 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     this.#items = items;
   }
 
+  #selectedItems = new Set<Item>;
+
+  /**
+   * sets the listbox value based on selected options
+   * @param selected item or items
+   */
+  set selected(selected: Item | Item[] | null) {
+    if (selected == null) {
+      this.#selectedItems = new Set;
+    } else {
+      this.#selectedItems = new Set(Array.isArray(selected) ? selected : [selected]);
+    }
+    this.host.requestUpdate();
+  }
+
   /**
    * array of options which are selected
    */
-  get selectedItems(): Item[] {
-    return this.items.filter(option => this.#options.isSelected(option));
+  get selected(): Item[] {
+    return [...this.#selectedItems];
   }
 
-  get value(): Item | Item[] {
-    const [firstItem] = this.selectedItems;
-    return this.#options.multi ? this.selectedItems : firstItem;
+  private constructor(
+    public host: ReactiveControllerHost,
+    options: ListboxControllerOptions<Item>,
+  ) {
+    this.#options = options;
+    if (!constructingAllowed) {
+      throw new Error('ListboxController must be constructed with `ListboxController.of()`');
+    }
+    if (!isServer
+        && !(host instanceof HTMLElement)
+        && typeof options.getItemsContainer !== 'function') {
+      throw new Error([
+        'ListboxController requires the host to be an HTMLElement',
+        'or for the initializer to include a getItemsContainer() function',
+      ].join(' '));
+    }
+    const instance = ListboxController.instances.get(host) as unknown as ListboxController<Item>;
+    if (instance) {
+      return instance as ListboxController<Item>;
+    }
+    this.#options.setItemSelected ??= setItemSelected;
+    ListboxController.instances.set(host, this as unknown as ListboxController<HTMLElement>);
+    this.host.addController(this);
+    if (this.#itemsContainer?.isConnected) {
+      this.hostConnected();
+    }
   }
 
   async hostConnected(): Promise<void> {
@@ -170,24 +194,12 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     }
   }
 
-  hostUpdate(): void {
-    const { atFocusedItem } = this.#controller;
-    if (atFocusedItem && atFocusedItem !== this.#lastATFocusedItem) {
-      this.#options.requestSelect(atFocusedItem);
-    }
-    this.#lastATFocusedItem = atFocusedItem;
-  }
-
   hostUpdated(): void {
     this.#itemsContainer?.setAttribute('role', 'listbox');
     this.#itemsContainer?.setAttribute('aria-disabled', String(!!this.disabled));
     this.#itemsContainer?.setAttribute('aria-multi-selectable', String(!!this.#options.multi));
-    for (const option of this.#controller.items) {
-      if (this.#controller.atFocusedItem === option) {
-        option.setAttribute('aria-selected', 'true');
-      } else {
-        option?.removeAttribute('aria-selected');
-      }
+    for (const item of this.items) {
+      this.#options.setItemSelected.call(item, this.isSelected(item));
     }
   }
 
@@ -196,6 +208,10 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
     this.#itemsContainer?.removeEventListener('keyup', this.#onKeyup);
     this.#listening = false;
+  }
+
+  public isSelected(item: Item): boolean {
+    return this.#selectedItems.has(item);
   }
 
   #isSelectableItem = (item: Item) => !item.ariaDisabled && !item.closest('[disabled]');
@@ -215,21 +231,19 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   #onClick = (event: MouseEvent) => {
     const target = this.#getItemFromEvent(event);
     if (target) {
-      const oldValue = this.value;
-      if (this.multi) {
-        if (!event.shiftKey) {
-          this.#options.requestSelect(target, !this.#options.isSelected(target));
-        } else if (this.#shiftStartingItem && target) {
-          this.#updateMultiselect(target, this.#shiftStartingItem);
-        }
-      } else {
+      if (!this.multi) {
         // select target and deselect all other options
-        this.items.forEach(option => this.#options.requestSelect(option, option === target));
-      }
-      if (oldValue !== this.value) {
-        this.host.requestUpdate();
+        this.selected = target;
+      } else if (!event.shiftKey) {
+        this.selected = this.items // todo: improve this intercalation
+            .map(item => item === target || this.isSelected(item) ? item : null)
+            .filter(x => !!x);
+      } else if (this.#shiftStartingItem && target) {
+        this.selected = this.#getMultiSelection(target, this.#shiftStartingItem);
+        this.#shiftStartingItem = target;
       }
     }
+    this.host.requestUpdate();
   };
 
   /**
@@ -240,7 +254,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     const target = this.#getItemFromEvent(event);
     if (target && event.shiftKey && this.multi) {
       if (this.#shiftStartingItem && target) {
-        this.#updateMultiselect(target, this.#shiftStartingItem);
+        this.selected = this.#getMultiSelection(target, this.#shiftStartingItem);
       }
       if (event.key === 'Shift') {
         this.#shiftStartingItem = null;
@@ -256,24 +270,26 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   #onKeydown = (event: KeyboardEvent) => {
     const target = this.#getItemFromEvent(event);
 
-    if (!target || event.altKey || event.metaKey || !this.items.includes(target)) {
+    if (this.disabled || !target || event.altKey || event.metaKey || !this.items.includes(target)) {
       return;
     }
 
-    const first = this.#controller.firstATFocusableItem;
-    const last = this.#controller.lastATFocusableItem;
-
     // need to set for keyboard support of multiselect
     if (event.key === 'Shift' && this.multi) {
-      this.#shiftStartingItem = this.#controller.atFocusedItem ?? null;
+      this.#shiftStartingItem = this.#options.getATFocusedItem() ?? null;
     }
 
     switch (event.key) {
+      // ctrl+A de/selects all options
       case 'a':
       case 'A':
+        // TODO: selectableItems
         if (event.ctrlKey) {
-          // ctrl+A selects all options
-          this.#updateMultiselect(first, last, true);
+          if (this.#selectedItems.size === this.items.filter(this.#isSelectableItem).length) {
+            this.#selectedItems = new Set(this.items);
+          } else {
+            this.#selectedItems = new Set;
+          }
           event.preventDefault();
         }
         break;
@@ -282,85 +298,42 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
         if (!this.multi) {
-          this.#updateSingleselect();
-        } else if (event.shiftKey) {
-          this.#updateMultiselect(target);
-        } else if (!this.disabled) {
-          this.#options.requestSelect(target, !this.#options.isSelected(target));
+          this.#selectedItems = new Set([target]);
+        } else if (this.multi && event.shiftKey) {
+          // update starting item for other multiselect
+          this.selected = this.#getMultiSelection(target, this.#options.getATFocusedItem());
+          this.#shiftStartingItem = target;
         }
         event.preventDefault();
         break;
       default:
         break;
     }
+    this.host.requestUpdate();
   };
-
-  /**
-   * updates option selections for single select listbox
-   */
-  #updateSingleselect() {
-    if (!this.multi && !this.disabled) {
-      this.items
-          .filter(this.#isSelectableItem)
-          .forEach(option =>
-            this.#options.requestSelect(
-              option,
-              option === this.#controller.atFocusedItem,
-            ));
-    }
-  }
 
   /**
    * updates option selections for multiselectable listbox:
    * toggles all options between active descendant and target
-   * @param currentItem item being added
-   * @param referenceItem item already selected.
-   * @param ctrlA is ctrl-a held down?
+   * @param to item being added
+   * @param from item already selected.
    */
-  #updateMultiselect(
-    currentItem?: Item,
-    referenceItem = this.#controller.atFocusedItem,
-    ctrlA = false,
-  ) {
-    if (referenceItem && this.#options.multi && !this.disabled && currentItem) {
-      // select all options between active descendant and target
-      const [start, end] = [
-        this.items.indexOf(referenceItem),
-        this.items.indexOf(currentItem),
-      ].sort();
-      const items = [...this.items].slice(start, end + 1);
-
-      // by default CTRL+A will select all options
-      // if all options are selected, CTRL+A will deselect all options
-      const allSelected = this.items
-          .filter(this.#isSelectableItem)
-          .filter(item => this.#isSelectableItem(item)
-                      && !this.#options.isSelected(item))
-          .length === 0;
-
+  #getMultiSelection(to?: Item, from = this.#options.getATFocusedItem()) {
+    if (from && to && this.#options.multi) {
       // whether options will be selected (true) or deselected (false)
-      const selected = ctrlA ? !allSelected : this.#options.isSelected(referenceItem);
-      for (const item of items.filter(this.#isSelectableItem)) {
-        this.#options.requestSelect(item, selected);
-      }
+      const selecting = this.isSelected(from);
 
-      // update starting item for other multiselect
-      this.#shiftStartingItem = currentItem;
-    }
-  }
-
-  /**
-   * sets the listbox value based on selected options
-   * @param value item or items
-   */
-  setValue(value: Item | Item[]): void {
-    const selected = Array.isArray(value) ? value : [value];
-    const [firstItem = null] = selected;
-    for (const item of this.items) {
-      this.#options.requestSelect(item, (
-          !!this.multi && Array.isArray(value) ? value?.includes(item)
-        : firstItem === item
-      ));
+      // select all options between active descendant and target
+      // todo: flatten loops here, but be careful of off-by-one errors
+      // maybe use the new set methods difference/union
+      const [start, end] = [this.items.indexOf(from), this.items.indexOf(to)].sort();
+      const itemsInRange = new Set(this.items
+          .slice(start, end + 1)
+          .filter(this.#isSelectableItem));
+      return this.items
+          .filter(item => selecting ? itemsInRange.has(item) : !itemsInRange.has(item));
+    } else {
+      return this.selected;
     }
   }
 }

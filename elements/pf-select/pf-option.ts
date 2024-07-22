@@ -1,10 +1,12 @@
-import { LitElement, html, type PropertyValues, type TemplateResult } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+
+import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 
 import styles from './pf-option.css';
 
@@ -35,7 +37,7 @@ export class PfOption extends LitElement {
   }
 
   /** whether option is selected */
-  @property({ type: Boolean }) selected = false;
+  @property({ type: Boolean, reflect: true }) selected = false;
 
   /** whether option is active descendant */
   @property({ type: Boolean }) active = false;
@@ -83,9 +85,9 @@ export class PfOption extends LitElement {
   #internals = InternalsController.of(this, { role: 'option' });
 
   render(): TemplateResult<1> {
-    const { disabled, active } = this;
+    const { disabled, active, selected } = this;
     return html`
-      <div id="outer" class="${classMap({ active, disabled })}">
+      <div id="outer" class="${classMap({ active, disabled, selected })}">
         <input type="checkbox"
                aria-hidden="true"
                role="presentation"
@@ -108,15 +110,14 @@ export class PfOption extends LitElement {
     `;
   }
 
-  willUpdate(changed: PropertyValues<this>): void {
-    if (changed.has('selected')
-      // don't fire on initialization
-      && !(changed.get('selected') === undefined) && this.selected === false) {
-      this.#internals.ariaSelected = this.selected ? 'true' : 'false';
-    }
-    if (changed.has('disabled')) {
-      this.#internals.ariaDisabled = String(!!this.disabled);
-    }
+  @observes('selected')
+  private selectedChanged() {
+    this.#internals.ariaSelected = String(!!this.selected);
+  }
+
+  @observes('disabled')
+  private disabledChanged() {
+    this.#internals.ariaDisabled = String(!!this.disabled);
   }
 
   /**

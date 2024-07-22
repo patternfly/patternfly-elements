@@ -20,14 +20,46 @@ export class RovingTabindexController<
     return new RovingTabindexController(host, options);
   }
 
-  /** Whether the host's element has gained focus at least once */
-  private gainedInitialFocus = false;
-
   override set itemsContainerElement(container: HTMLElement) {
     super.itemsContainerElement = container;
-    container?.addEventListener('focusin', () => {
-      this.gainedInitialFocus = true;
-    }, { once: true });
+  }
+
+  #atFocusedItem: Item | null = null;
+
+  get atFocusedItem(): Item | null {
+    return this.#atFocusedItem;
+  }
+
+  /**
+   * Sets the DOM Focus on the item with assistive technology focus
+   * @param item item
+   */
+  set atFocusedItem(item: Item | null) {
+    this.#atFocusedItem = item;
+    for (const focusable of this.atFocusableItems) {
+      focusable.tabIndex = item === focusable ? 0 : -1;
+    }
+    item?.focus();
+    this.host.requestUpdate();
+  }
+
+
+  get items() {
+    return this._items;
+  }
+
+  public set items(items: Item[]) {
+    this._items = items;
+    const pivot = this.atFocusableItems.indexOf(this.atFocusedItem!) - 1;
+    this.atFocusedItem =
+         this.atFocusableItems.at(0)
+      ?? this.items
+          .slice(pivot)
+          .concat(this.items.slice(0, pivot))
+          .find(item => this.atFocusableItems.includes(item))
+      ?? this.firstATFocusableItem
+      ?? null;
+    this.host.requestUpdate();
   }
 
   private constructor(
@@ -46,41 +78,5 @@ export class RovingTabindexController<
             && !!this.atFocusableItems.length
             && !!event.composedPath().some(x =>
               this.atFocusableItems.includes(x as Item)));
-  }
-
-  /** Resets initial focus */
-  hostDisconnected(): void {
-    this.gainedInitialFocus = false;
-  }
-
-  override get atFocusedItem() {
-    return super.atFocusedItem;
-  }
-
-  /**
-   * Sets the DOM Focus on the item with assistive technology focus
-   * @param item item
-   */
-  override set atFocusedItem(item: Item | null) {
-    for (const focusable of this.atFocusableItems) {
-      focusable.tabIndex = item === focusable ? 0 : -1;
-    }
-    if (this.gainedInitialFocus) {
-      item?.focus();
-    }
-    super.atFocusedItem = item;
-  }
-
-  public set items(items: Item[]) {
-    super.items = items;
-    const pivot = this.atFocusableItems.indexOf(this.atFocusedItem!) - 1;
-    this.atFocusedItem =
-         this.atFocusableItems.at(0)
-      ?? this.items
-          .slice(pivot)
-          .concat(this.items.slice(0, pivot))
-          .find(item => this.atFocusableItems.includes(item))
-      ?? this.firstATFocusableItem
-      ?? null;
   }
 }

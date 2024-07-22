@@ -13,41 +13,23 @@ export interface ATFocusControllerOptions<Item extends HTMLElement> {
 }
 
 export abstract class ATFocusController<Item extends HTMLElement> {
-  // funny name to prevent transpiled private access errors
-  #optionz: ATFocusControllerOptions<Item>;
-
   #itemsContainerElement: HTMLElement | null = null;
 
-  #atFocusedItem: Item | null = null;
-
-  #items: Item[] = [];
-
   get #atFocusedItemIndex() {
-    return this.atFocusableItems.indexOf(this.#atFocusedItem!);
+    return this.atFocusableItems.indexOf(this.atFocusedItem!);
   }
+
+  protected _items: Item[] = [];
 
   /** All items */
-  get items(): Item[] {
-    return this.#items;
-  }
+  abstract items: Item[];
 
-  set items(items: Item[]) {
-    this.#items = items;
-  }
+  /** Item which currently has assistive technology focus */
+  abstract atFocusedItem: Item | null;
 
   /** All items which are able to receive assistive technology focus */
   get atFocusableItems(): Item[] {
-    return this.#items.filter(isATFocusableItem);
-  }
-
-  /** Item which currently has assistive technology focus */
-  get atFocusedItem(): Item | null {
-    return this.#atFocusedItem;
-  }
-
-  set atFocusedItem(item: Item | null) {
-    this.#atFocusedItem = item;
-    this.host.requestUpdate();
+    return this.items.filter(isATFocusableItem);
   }
 
   /** First item which is able to receive assistive technology focus */
@@ -82,19 +64,23 @@ export abstract class ATFocusController<Item extends HTMLElement> {
 
   set itemsContainerElement(container: HTMLElement | null) {
     if (container !== this.#itemsContainerElement) {
-      this.#itemsContainerElement?.removeEventListener('keydown', this.#onKeydown);
+      this.#itemsContainerElement?.removeEventListener('keydown', this.onKeydown);
       this.#itemsContainerElement = container;
-      this.#itemsContainerElement?.addEventListener('keydown', this.#onKeydown);
-      this.items = this.#optionz.getItems();
+      this.#itemsContainerElement?.addEventListener('keydown', this.onKeydown);
       this.host.requestUpdate();
     }
   }
 
-  constructor(public host: ReactiveControllerHost, options: ATFocusControllerOptions<Item>) {
-    this.#optionz = options;
-    if (host instanceof HTMLElement && host.isConnected) {
-      this.hostConnected();
-    }
+  constructor(
+    public host: ReactiveControllerHost,
+    protected options: ATFocusControllerOptions<Item>,
+  ) {
+    this.host.updateComplete.then(() => this.initItems());
+  }
+
+  protected initItems(): void {
+    this.items = this.options.getItems();
+    this.itemsContainerElement ??= this.#initContainer();
   }
 
   hostConnected(): void {
@@ -103,21 +89,23 @@ export abstract class ATFocusController<Item extends HTMLElement> {
 
   hostUpdate(): void {
     this.atFocusedItem ??= this.firstATFocusableItem;
-    this.itemsContainerElement
-      ??= this.#optionz.getItemsContainer?.()
+    this.itemsContainerElement ??= this.#initContainer();
+  }
+
+  #initContainer() {
+    return this.options.getItemsContainer?.()
       ?? (this.host instanceof HTMLElement ? this.host : null);
   }
 
   protected abstract isRelevantKeyboardEvent(event: Event): event is KeyboardEvent;
 
-  /** DO NOT OVERRIDE */
-  protected onKeydown(event: Event): void {
-    this.#onKeydown(event);
-  }
-
-  #onKeydown = (event: Event) => {
+  /**
+   * DO NOT OVERRIDE
+   * @param event keyboard event
+   */
+  protected onKeydown = (event: Event): void => {
     if (this.isRelevantKeyboardEvent(event)) {
-      const orientation = this.#optionz.getOrientation?.() ?? this
+      const orientation = this.options.getOrientation?.() ?? this
           .#itemsContainerElement
           ?.getAttribute('aria-orientation') as
             'horizontal' | 'vertical' | 'grid' | 'undefined';
@@ -177,6 +165,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
         default:
           break;
       }
+      this.host.requestUpdate();
     }
   };
 }

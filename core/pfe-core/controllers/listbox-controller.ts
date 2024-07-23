@@ -1,4 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import type { RequireProps } from '../core.ts';
 
 import { isServer } from 'lit';
 
@@ -30,13 +31,22 @@ export interface ListboxControllerOptions<Item extends HTMLElement> {
    * If the controller host is not an HTMLElement, this *must* be set
    */
   getItemsContainer?(): HTMLElement | null;
+  /**
+   * Optional function returning an additional DOM node which controls the listbox, e.g.
+   * a combobox input.
+   */
+  getControlsElement?(): HTMLElement | HTMLElement[] | null;
 }
 
+/**
+ * This is the default method for setting the selected state on an item element
+ * @param selected is this item selected
+ */
 function setItemSelected<Item extends HTMLElement>(this: Item, selected: boolean) {
   if (selected) {
     this.setAttribute('aria-selected', 'true');
   } else {
-    this?.removeAttribute('aria-selected');
+    this.removeAttribute('aria-selected');
   }
 }
 
@@ -100,7 +110,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   /** Current active descendant when shift key is pressed */
   #shiftStartingItem: Item | null = null;
 
-  #options: ListboxControllerOptions<Item>;
+  #options: RequireProps<ListboxControllerOptions<Item>, 'setItemSelected'>;
 
   /** All items */
   #items: Item[] = [];
@@ -109,6 +119,11 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
   get #itemsContainer() {
     return this.#options.getItemsContainer?.() ?? this.host as unknown as HTMLElement;
+  }
+
+  get #controlsElements(): HTMLElement[] {
+    const elementOrElements = this.#options.getControlsElement?.();
+    return [elementOrElements].filter(x => !!x).flat();
   }
 
   /** Whether listbox is disabled */
@@ -160,7 +175,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     public host: ReactiveControllerHost,
     options: ListboxControllerOptions<Item>,
   ) {
-    this.#options = options;
+    this.#options = { setItemSelected, ...options };
     if (!constructingAllowed) {
       throw new Error('ListboxController must be constructed with `ListboxController.of()`');
     }
@@ -176,7 +191,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     if (instance) {
       return instance as ListboxController<Item>;
     }
-    this.#options.setItemSelected ??= setItemSelected;
     ListboxController.instances.set(host, this as unknown as ListboxController<HTMLElement>);
     this.host.addController(this);
     if (this.#itemsContainer?.isConnected) {
@@ -190,6 +204,8 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       this.#itemsContainer?.addEventListener('click', this.#onClick);
       this.#itemsContainer?.addEventListener('keydown', this.#onKeydown);
       this.#itemsContainer?.addEventListener('keyup', this.#onKeyup);
+      this.#controlsElements.forEach(el => el.addEventListener('keydown', this.#onKeydown));
+      this.#controlsElements.forEach(el => el.addEventListener('keyup', this.#onKeyup));
       this.#listening = true;
     }
   }
@@ -207,6 +223,8 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     this.#itemsContainer?.removeEventListener('click', this.#onClick);
     this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
     this.#itemsContainer?.removeEventListener('keyup', this.#onKeyup);
+    this.#controlsElements.forEach(el => el.removeEventListener('keydown', this.#onKeydown));
+    this.#controlsElements.forEach(el => el.removeEventListener('keyup', this.#onKeyup));
     this.#listening = false;
   }
 
@@ -251,15 +269,15 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * @param event keyup event
    */
   #onKeyup = (event: KeyboardEvent) => {
-    const target = this.#getItemFromEvent(event);
-    if (target && event.shiftKey && this.multi) {
-      if (this.#shiftStartingItem && target) {
-        this.selected = this.#getMultiSelection(target, this.#shiftStartingItem);
-      }
-      if (event.key === 'Shift') {
-        this.#shiftStartingItem = null;
-      }
+    // const target = this.#getItemFromEvent(event);
+    // if (target && event.shiftKey && this.multi) {
+    //  if (this.#shiftStartingItem && target) {
+    //    this.selected = this.#getMultiSelection(target, this.#shiftStartingItem);
+    //  }
+    if (event.key === 'Shift') {
+      this.#shiftStartingItem = null;
     }
+    // }
   };
 
   /**
@@ -269,8 +287,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    */
   #onKeydown = (event: KeyboardEvent) => {
     const target = this.#getItemFromEvent(event);
+    const item = target ?? this.#options.getATFocusedItem();
 
-    if (this.disabled || !target || event.altKey || event.metaKey || !this.items.includes(target)) {
+    if (this.disabled || !item || event.altKey || event.metaKey || !this.items.includes(item)) {
       return;
     }
 
@@ -283,7 +302,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       // ctrl+A de/selects all options
       case 'a':
       case 'A':
-        // TODO: selectableItems
         if (event.ctrlKey) {
           if (this.#selectedItems.size === this.items.filter(this.#isSelectableItem).length) {
             this.#selectedItems = new Set(this.items);
@@ -298,11 +316,11 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
         if (!this.multi) {
-          this.#selectedItems = new Set([target]);
+          this.#selectedItems = new Set([item]);
         } else if (this.multi && event.shiftKey) {
           // update starting item for other multiselect
-          this.selected = this.#getMultiSelection(target, this.#options.getATFocusedItem());
-          this.#shiftStartingItem = target;
+          this.selected = this.#getMultiSelection(item, this.#options.getATFocusedItem());
+          this.#shiftStartingItem = item;
         }
         event.preventDefault();
         break;

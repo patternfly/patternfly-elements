@@ -12,7 +12,7 @@ export interface ActivedescendantControllerOptions<
    * Function returning the DOM node which is the accessibility controller of the listbox
    * e.g. the button element associated with the combobox.
    */
-  getItemsControlsElement: () => HTMLElement | null;
+  getControlsElement: () => HTMLElement | null;
   /**
    * Optional callback to control the assistive technology focus behavior of items.
    * By default, ActivedescendantController will not do anything special to items when they receive
@@ -69,10 +69,8 @@ export interface ActivedescendantControllerOptions<
 export class ActivedescendantController<
   Item extends HTMLElement = HTMLElement
 > extends ATFocusController<Item> {
-  private static IDLAttrsSupported = 'ariaActiveDescendantElement' in HTMLElement.prototype;
-
-  public static canControlLightDom(): boolean {
-    return this.IDLAttrsSupported;
+  public static get canControlLightDom(): boolean {
+    return 'ariaActiveDescendantElement' in HTMLElement.prototype;
   }
 
   static of<Item extends HTMLElement>(
@@ -112,14 +110,14 @@ export class ActivedescendantController<
       this.options.setItemActive?.call(i, i === item);
     }
     if (this.itemsContainerElement && this.itemsControlsElement) {
-      if (ActivedescendantController.IDLAttrsSupported) {
-        this.itemsControlsElement.ariaActiveDescendantElement = item ?? null;
-      } else {
-        for (const el of [
-          this.itemsContainerElement,
-          this.itemsControlsElement, // necessary for ff mac voiceover
-        ]) {
+      for (const el of [
+        this.itemsContainerElement, // necessary for ff mac voiceover
+        this.itemsControlsElement,
+      ]) {
+        if (!ActivedescendantController.IDLAttrsSupported) {
           el?.setAttribute('aria-activedescendant', item?.id ?? '');
+        } else if (el) {
+          el.ariaActiveDescendantElement = item ?? null;
         }
       }
     }
@@ -149,22 +147,23 @@ export class ActivedescendantController<
    */
   override set items(items: Item[]) {
     const container = this.ensureContainer();
-    this._items = (ActivedescendantController.IDLAttrsSupported ? items
-    : items
-        ?.map((item: Item) => {
-          item.removeAttribute('tabindex');
-          if (container.contains(item)) {
-            item.id ||= getRandomId();
-            this.#noCloneSet.add(item);
-            return item;
-          } else {
-            const clone = item.cloneNode(true) as Item;
-            this.#cloneMap.set(item, clone);
-            clone.id = getRandomId();
-            return clone;
-          }
-        })
-        ?.filter(x => !!x));
+    this._items =
+        ActivedescendantController.canControlLightDom ? items
+      : items?.map((item: Item) => {
+        item.removeAttribute('tabindex');
+        if (container.contains(item)) {
+          item.id ||= getRandomId();
+          this.#noCloneSet.add(item);
+          this.#deCloneMap.set(item, item);
+          return item;
+        } else {
+          const clone = item.cloneNode(true) as Item;
+          this.#cloneMap.set(item, clone);
+          this.#deCloneMap.set(clone, item);
+          clone.id = getRandomId();
+          return clone;
+        }
+      });
     const [first] = this.atFocusableItems;
     const atFocusedItemIndex = this.atFocusableItems.indexOf(this.atFocusedItem!);
     const next = this.atFocusableItems.find(((_, i) => i !== atFocusedItemIndex));
@@ -191,7 +190,7 @@ export class ActivedescendantController<
 
   protected override initItems(): void {
     super.initItems();
-    this.itemsControlsElement ??= this.options.getItemsControlsElement();
+    this.itemsControlsElement ??= this.options.getControlsElement();
     if (!this.#observing && this.itemsContainerElement && this.itemsContainerElement.isConnected) {
       this.#mo.observe(this.itemsContainerElement, { attributes: true, childList: true });
       this.#observing = true;
@@ -222,7 +221,7 @@ export class ActivedescendantController<
 
 
   public renderItemsToShadowRoot(): typeof nothing | Node[] {
-    if (ActivedescendantController.canControlLightDom()) {
+    if (ActivedescendantController.canControlLightDom) {
       return nothing;
     } else {
       return this.items?.filter(x => !this.#noCloneSet.has(x));

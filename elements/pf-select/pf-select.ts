@@ -144,6 +144,7 @@ export class PfSelect extends LitElement {
   #listbox = ListboxController.of<PfOption>(this, {
     multi: this.variant === 'typeaheadmulti' || this.variant === 'checkbox',
     getItemsContainer: () => this._listbox ?? null,
+    getControlsElement: () => this._input ?? null,
     getATFocusedItem: () => this.#atFocusController.atFocusedItem,
     setItemSelected(selected) {
       this.selected = selected;
@@ -296,7 +297,7 @@ export class PfSelect extends LitElement {
             ${!(this.#atFocusController instanceof ActivedescendantController) ? nothing
               : this.#atFocusController.renderItemsToShadowRoot()}
             <slot @slotchange="${this.#onListboxSlotchange}"
-                  ?hidden=${typeahead && !ActivedescendantController.canControlLightDom()}></slot>
+                  ?hidden=${typeahead && !ActivedescendantController.canControlLightDom}></slot>
           </div>
         </div>
       </div>
@@ -306,17 +307,17 @@ export class PfSelect extends LitElement {
   #createATFocusController(): ATFocusController<PfOption> {
     const getItems = () => this.options;
     const getItemsContainer = () => this._listbox ?? null;
-    if (this.variant === 'typeahead' || this.variant === 'typeaheadmulti' ) {
+    if (this.variant !== 'typeahead' && this.variant !== 'typeaheadmulti' ) {
+      return RovingTabindexController.of(this, { getItems, getItemsContainer });
+    } else {
       return ActivedescendantController.of(this, {
         getItems,
         getItemsContainer,
-        getItemsControlsElement: () => this._input ?? null,
+        getControlsElement: () => this._input ?? null,
         setItemActive(active) {
           this.active = active;
         },
       });
-    } else {
-      return RovingTabindexController.of(this, { getItems, getItemsContainer });
     }
   }
 
@@ -327,18 +328,14 @@ export class PfSelect extends LitElement {
 
   @observes('expanded')
   private async expandedChanged(old: boolean, expanded: boolean) {
-    const will = this.expanded ? 'close' : 'open';
-    if (this.dispatchEvent(new Event(will))) {
+    if (this.dispatchEvent(new Event(this.expanded ? 'close' : 'open'))) {
       if (expanded) {
         await this.#float.show({ placement: this.position || 'bottom', flip: !!this.enableFlip });
         switch (this.variant) {
           case 'single':
-          case 'checkbox': {
-            const focusableItem =
-                 this.#atFocusController.atFocusedItem
-              ?? this.#atFocusController.nextATFocusableItem;
-            focusableItem?.focus();
-          }
+          case 'checkbox':
+            (this.#atFocusController.atFocusedItem
+          ?? this.#atFocusController.nextATFocusableItem)?.focus();
         }
       } else {
         await this.#float.hide();

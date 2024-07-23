@@ -133,18 +133,36 @@ export class PfSelect extends LitElement {
 
   #isNotPlaceholderOption = (option: PfOption) => option !== this._placeholder;
 
-  #atFocusController = this.#createATFocusController();
-
   #internals = InternalsController.of(this);
 
   #float = new FloatingDOMController(this, { content: () => this._listboxContainer });
 
   #slots = new SlotController(this, null, 'placeholder');
 
+  #atFocusController = this.#createATFocusController();
+
+  #createATFocusController(): ATFocusController<PfOption> {
+    const getItems = () => this.options;
+    const getItemsContainer = () => this._listbox ?? null;
+    const getControlsElements = () => [this._input, this._toggle].filter(x => !!x);
+    if (this.variant !== 'typeahead' && this.variant !== 'typeaheadmulti' ) {
+      return RovingTabindexController.of(this, { getItems, getItemsContainer });
+    } else {
+      return ActivedescendantController.of(this, {
+        getItems,
+        getItemsContainer,
+        getControlsElements,
+        setItemActive(active) {
+          this.active = active;
+        },
+      });
+    }
+  }
+
   #listbox = ListboxController.of<PfOption>(this, {
     multi: this.variant === 'typeaheadmulti' || this.variant === 'checkbox',
-    getItemsContainer: () => this._listbox ?? null,
-    getControlsElement: () => this._input ?? null,
+    getItemsContainer: () => this.#atFocusController.container,
+    getControlsElements: () => this.#atFocusController.controlsElements,
     getATFocusedItem: () => this.#atFocusController.atFocusedItem,
     setItemSelected(selected) {
       this.selected = selected;
@@ -302,23 +320,6 @@ export class PfSelect extends LitElement {
         </div>
       </div>
     `;
-  }
-
-  #createATFocusController(): ATFocusController<PfOption> {
-    const getItems = () => this.options;
-    const getItemsContainer = () => this._listbox ?? null;
-    if (this.variant !== 'typeahead' && this.variant !== 'typeaheadmulti' ) {
-      return RovingTabindexController.of(this, { getItems, getItemsContainer });
-    } else {
-      return ActivedescendantController.of(this, {
-        getItems,
-        getItemsContainer,
-        getControlsElement: () => this._input ?? null,
-        setItemActive(active) {
-          this.active = active;
-        },
-      });
-    }
   }
 
   @observes('disabled')

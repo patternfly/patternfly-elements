@@ -35,7 +35,7 @@ export interface ListboxControllerOptions<Item extends HTMLElement> {
    * Optional function returning an additional DOM node which controls the listbox, e.g.
    * a combobox input.
    */
-  getControlsElement?(): HTMLElement | HTMLElement[] | null;
+  getControlsElements?(): HTMLElement | HTMLElement[] | null;
 }
 
 /**
@@ -117,17 +117,17 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
   #listening = false;
 
-  get #itemsContainer() {
+  /** Whether listbox is disabled */
+  disabled = false;
+
+  get container(): HTMLElement {
     return this.#options.getItemsContainer?.() ?? this.host as unknown as HTMLElement;
   }
 
-  get #controlsElements(): HTMLElement[] {
-    const elementOrElements = this.#options.getControlsElement?.();
+  get controlsElements(): HTMLElement[] {
+    const elementOrElements = this.#options.getControlsElements?.();
     return [elementOrElements].filter(x => !!x).flat();
   }
-
-  /** Whether listbox is disabled */
-  disabled = false;
 
   get multi(): boolean {
     return !!this.#options.multi;
@@ -193,7 +193,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     }
     ListboxController.instances.set(host, this as unknown as ListboxController<HTMLElement>);
     this.host.addController(this);
-    if (this.#itemsContainer?.isConnected) {
+    if (this.container?.isConnected) {
       this.hostConnected();
     }
   }
@@ -201,30 +201,30 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   async hostConnected(): Promise<void> {
     if (!this.#listening) {
       await this.host.updateComplete;
-      this.#itemsContainer?.addEventListener('click', this.#onClick);
-      this.#itemsContainer?.addEventListener('keydown', this.#onKeydown);
-      this.#itemsContainer?.addEventListener('keyup', this.#onKeyup);
-      this.#controlsElements.forEach(el => el.addEventListener('keydown', this.#onKeydown));
-      this.#controlsElements.forEach(el => el.addEventListener('keyup', this.#onKeyup));
+      this.container?.addEventListener('click', this.#onClick);
+      this.container?.addEventListener('keydown', this.#onKeydown);
+      this.container?.addEventListener('keyup', this.#onKeyup);
+      this.controlsElements.forEach(el => el.addEventListener('keydown', this.#onKeydown));
+      this.controlsElements.forEach(el => el.addEventListener('keyup', this.#onKeyup));
       this.#listening = true;
     }
   }
 
   hostUpdated(): void {
-    this.#itemsContainer?.setAttribute('role', 'listbox');
-    this.#itemsContainer?.setAttribute('aria-disabled', String(!!this.disabled));
-    this.#itemsContainer?.setAttribute('aria-multi-selectable', String(!!this.#options.multi));
+    this.container?.setAttribute('role', 'listbox');
+    this.container?.setAttribute('aria-disabled', String(!!this.disabled));
+    this.container?.setAttribute('aria-multi-selectable', String(!!this.#options.multi));
     for (const item of this.items) {
       this.#options.setItemSelected.call(item, this.isSelected(item));
     }
   }
 
   hostDisconnected(): void {
-    this.#itemsContainer?.removeEventListener('click', this.#onClick);
-    this.#itemsContainer?.removeEventListener('keydown', this.#onKeydown);
-    this.#itemsContainer?.removeEventListener('keyup', this.#onKeyup);
-    this.#controlsElements.forEach(el => el.removeEventListener('keydown', this.#onKeydown));
-    this.#controlsElements.forEach(el => el.removeEventListener('keyup', this.#onKeyup));
+    this.container?.removeEventListener('click', this.#onClick);
+    this.container?.removeEventListener('keydown', this.#onKeydown);
+    this.container?.removeEventListener('keyup', this.#onKeyup);
+    this.controlsElements.forEach(el => el.removeEventListener('keydown', this.#onKeydown));
+    this.controlsElements.forEach(el => el.removeEventListener('keyup', this.#onKeyup));
     this.#listening = false;
   }
 
@@ -289,7 +289,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     const target = this.#getItemFromEvent(event);
     const item = target ?? this.#options.getATFocusedItem();
 
-    if (this.disabled || !item || event.altKey || event.metaKey || !this.items.includes(item)) {
+    if (this.disabled || !item || event.altKey || event.metaKey) {
       return;
     }
 

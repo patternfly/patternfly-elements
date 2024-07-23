@@ -10,6 +10,11 @@ export interface ATFocusControllerOptions<Item extends HTMLElement> {
   getItems(): Item[];
   getItemsContainer?(): HTMLElement | null;
   getOrientation?(): 'horizontal' | 'vertical' | 'grid' | 'undefined';
+  /**
+   * Function returning the DOM node which is the accessibility controller of item container
+   * e.g. the button element in the combobox which is associated with the listbox.
+   */
+  getControlsElements?(): HTMLElement[];
 }
 
 export abstract class ATFocusController<Item extends HTMLElement> {
@@ -26,6 +31,15 @@ export abstract class ATFocusController<Item extends HTMLElement> {
 
   /** Item which currently has assistive technology focus */
   abstract atFocusedItem: Item | null;
+
+  get container(): HTMLElement {
+    return this.options.getItemsContainer?.() ?? this.host as unknown as HTMLElement;
+  }
+
+  get controlsElements(): HTMLElement[] {
+    const elementOrElements = this.options.getControlsElements?.();
+    return [elementOrElements].filter(x => !!x).flat();
+  }
 
   /** All items which are able to receive assistive technology focus */
   get atFocusableItems(): Item[] {

@@ -9,11 +9,6 @@ export interface ActivedescendantControllerOptions<
   Item extends HTMLElement
 > extends ATFocusControllerOptions<Item> {
   /**
-   * Function returning the DOM node which is the accessibility controller of the listbox
-   * e.g. the button element associated with the combobox.
-   */
-  getControlsElement: () => HTMLElement | null;
-  /**
    * Optional callback to control the assistive technology focus behavior of items.
    * By default, ActivedescendantController will not do anything special to items when they receive
    * assistive technology focus, and will only set the `activedescendant` property on the container.
@@ -83,11 +78,14 @@ export class ActivedescendantController<
   /** Maps from original element to shadow DOM clone */
   #cloneMap = new WeakMap<Item, Item>();
 
+  /** Maps from shadow DOM clone to original element */
+  #deCloneMap = new WeakMap<Item, Item>();
+
   /** Set of item which should not be cloned */
   #noCloneSet = new WeakSet<Item>();
 
   /** Element which controls the list i.e. combobox */
-  #itemsControlsElement: HTMLElement | null = null;
+  #controlsElements: HTMLElement[] = [];
 
   #observing = false;
 
@@ -109,12 +107,9 @@ export class ActivedescendantController<
     for (const i of this.items) {
       this.options.setItemActive?.call(i, i === item);
     }
-    if (this.itemsContainerElement && this.itemsControlsElement) {
-      for (const el of [
-        this.itemsContainerElement, // necessary for ff mac voiceover
-        this.itemsControlsElement,
-      ]) {
-        if (!ActivedescendantController.IDLAttrsSupported) {
+    if (this.itemsContainerElement) {
+      for (const el of [this.itemsContainerElement, ...this.#controlsElements]) {
+        if (!ActivedescendantController.canControlLightDom) {
           el?.setAttribute('aria-activedescendant', item?.id ?? '');
         } else if (el) {
           el.ariaActiveDescendantElement = item ?? null;
@@ -124,15 +119,16 @@ export class ActivedescendantController<
     this.host.requestUpdate();
   }
 
-  get itemsControlsElement() {
-    return this.#itemsControlsElement ?? null;
+  get controlsElements(): HTMLElement[] {
+    return this.#controlsElements;
   }
 
-  set itemsControlsElement(element: HTMLElement | null) {
-    const oldController = this.#itemsControlsElement;
-    oldController?.removeEventListener('keydown', this.onKeydown);
-    this.#itemsControlsElement = element;
-    if (element && oldController !== element) {
+  set controlsElements(elements: HTMLElement[]) {
+    for (const old of this.#controlsElements) {
+      old?.removeEventListener('keydown', this.onKeydown);
+    }
+    this.#controlsElements = elements;
+    for (const element of this.#controlsElements) {
       element.addEventListener('keydown', this.onKeydown);
     }
   }
@@ -146,7 +142,11 @@ export class ActivedescendantController<
    * @param items tabindex items
    */
   override set items(items: Item[]) {
-    const container = this.ensureContainer();
+    const container = this.options.getItemsContainer?.() ?? this.host;
+    if (!(container instanceof HTMLElement)) {
+      throw new Error('items container must be an HTMLElement');
+    }
+    this.itemsContainerElement = container;
     this._items =
         ActivedescendantController.canControlLightDom ? items
       : items?.map((item: Item) => {
@@ -190,7 +190,7 @@ export class ActivedescendantController<
 
   protected override initItems(): void {
     super.initItems();
-    this.itemsControlsElement ??= this.options.getControlsElement();
+    this.controlsElements = this.options.getControlsElements?.() ?? [];
     if (!this.#observing && this.itemsContainerElement && this.itemsContainerElement.isConnected) {
       this.#mo.observe(this.itemsContainerElement, { attributes: true, childList: true });
       this.#observing = true;
@@ -200,15 +200,6 @@ export class ActivedescendantController<
   hostDisconnected(): void {
     this.#observing = false;
     this.#mo.disconnect();
-  }
-
-  private ensureContainer() {
-    const container = this.options.getItemsContainer?.() ?? this.host;
-    if (!(container instanceof HTMLElement)) {
-      throw new Error('items container must be an HTMLElement');
-    }
-    this.itemsContainerElement = container;
-    return container;
   }
 
   protected override isRelevantKeyboardEvent(event: Event): event is KeyboardEvent {

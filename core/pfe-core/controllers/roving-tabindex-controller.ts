@@ -24,18 +24,19 @@ export class RovingTabindexController<
     super.itemsContainerElement = container;
   }
 
-  #atFocusedItem: Item | null = null;
+  #atFocusedItemIndex = -1;
 
-  get atFocusedItem(): Item | null {
-    return this.#atFocusedItem;
+  get atFocusedItemIndex(): number {
+    return this.#atFocusedItemIndex;
   }
 
   /**
    * Sets the DOM Focus on the item with assistive technology focus
    * @param item item
    */
-  set atFocusedItem(item: Item | null) {
-    this.#atFocusedItem = item;
+  set atFocusedItemIndex(index: number) {
+    this.#atFocusedItemIndex = index;
+    const item = this.items.at(index);
     for (const focusable of this.atFocusableItems) {
       focusable.tabIndex = item === focusable ? 0 : -1;
     }
@@ -50,15 +51,13 @@ export class RovingTabindexController<
 
   public set items(items: Item[]) {
     this._items = items;
-    const pivot = this.atFocusableItems.indexOf(this.atFocusedItem!) - 1;
-    this.atFocusedItem =
-         this.atFocusableItems.at(0)
-      ?? this.items
-          .slice(pivot)
-          .concat(this.items.slice(0, pivot))
-          .find(item => this.atFocusableItems.includes(item))
-      ?? this.firstATFocusableItem
-      ?? null;
+    const pivot = this.atFocusedItemIndex;
+    const firstFocusableIndex = items.indexOf(this.atFocusableItems.at(0)!);
+    const pivotFocusableIndex = items.indexOf(this.items
+        .slice(pivot)
+        .concat(this.items.slice(0, pivot))
+        .find(item => this.atFocusableItems.includes(item))!);
+    this.atFocusedItemIndex = Math.max(firstFocusableIndex, pivotFocusableIndex);
     this.host.requestUpdate();
   }
 

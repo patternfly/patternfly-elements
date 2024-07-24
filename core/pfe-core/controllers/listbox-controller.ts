@@ -2,6 +2,7 @@ import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import type { RequireProps } from '../core.ts';
 
 import { isServer } from 'lit';
+import { arraysAreEquivalent } from '../functions/arraysAreEquivalent.js';
 
 /**
  * Filtering, multiselect, and orientation options for listbox
@@ -159,7 +160,10 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     if (selected == null) {
       this.#selectedItems = new Set;
     } else {
-      this.#selectedItems = new Set(Array.isArray(selected) ? selected : [selected]);
+      const possiblyClonedItemsArray = Array.isArray(selected) ? selected : [selected];
+      // this.#selectedItems = new Set(possiblyClonedItemsArray.map(item =>
+      //  this.#decloneMap.get(item)));
+      this.#selectedItems = new Set(possiblyClonedItemsArray);
     }
     this.host.requestUpdate();
   }
@@ -303,10 +307,10 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       case 'a':
       case 'A':
         if (event.ctrlKey) {
-          if (this.#selectedItems.size === this.items.filter(this.#isSelectableItem).length) {
-            this.#selectedItems = new Set(this.items);
+          if (!arraysAreEquivalent(this.selected, this.items.filter(this.#isSelectableItem))) {
+            this.selected = null;
           } else {
-            this.#selectedItems = new Set;
+            this.selected = this.items;
           }
           event.preventDefault();
         }
@@ -316,7 +320,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
         if (!this.multi) {
-          this.#selectedItems = new Set([item]);
+          this.selected = item;
         } else if (this.multi && event.shiftKey) {
           // update starting item for other multiselect
           this.selected = this.#getMultiSelection(item, this.#options.getATFocusedItem());

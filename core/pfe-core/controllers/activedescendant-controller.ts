@@ -76,10 +76,10 @@ export class ActivedescendantController<
   }
 
   /** Maps from original element to shadow DOM clone */
-  #cloneMap = new WeakMap<Item, Item>();
+  #lightToShadowMap = new WeakMap<Item, Item>();
 
   /** Maps from shadow DOM clone to original element */
-  #deCloneMap = new WeakMap<Item, Item>();
+  #shadowToLightMap = new WeakMap<Item, Item>();
 
   /** Set of item which should not be cloned */
   #noCloneSet = new WeakSet<Item>();
@@ -91,10 +91,38 @@ export class ActivedescendantController<
 
   #mo = new MutationObserver(records => this.onMutation(records));
 
-  #atFocusedItem: Item | null = null;
+  #attrMO = new MutationObserver(records => {
+    for (const { target, attributeName } of records) {
+      if (attributeName) {
+        if (this.#shadowToLightMap.has(target as Item)) {
+          const shadow = target as Item;
+          const light = this.#shadowToLightMap.get(shadow);
+          const newVal = shadow.getAttribute(attributeName);
+          const oldVal = light?.getAttribute(attributeName);
+          if (oldVal !== newVal) {
+            light?.setAttribute(attributeName, newVal!);
+          }
+        } else if (this.#lightToShadowMap.has(target as Item)) {
+          const light = target as Item;
+          const shadow = this.#lightToShadowMap.get(light);
+          const newVal = light.getAttribute(attributeName);
+          const oldVal = shadow?.getAttribute(attributeName);
+          if (oldVal !== newVal) {
+            shadow?.setAttribute(attributeName, newVal!);
+          }
+        }
+      }
+    }
+  });
 
-  get atFocusedItem(): Item | null {
-    return this.#atFocusedItem;
+  // #atFocusedItem: Item | null = null;
+
+  #atFocusedItemIndex = -1;
+
+  get atFocusedItemIndex(): number {
+    return this.#atFocusedItemIndex;
+    // return this.#shadowToLightMap.get(shadowItem!) ?? shadowItem;
+    // return this.#atFocusedItem;
   }
 
   /**
@@ -102,17 +130,31 @@ export class ActivedescendantController<
    * using AriaIDLAttributes for cross-root aria, if supported by the browser
    * @param item item
    */
-  set atFocusedItem(item: Item | null) {
-    this.#atFocusedItem = item;
-    for (const i of this.items) {
-      this.options.setItemActive?.call(i, i === item);
+  set atFocusedItemIndex(index: number) {
+    this.#atFocusedItemIndex = index;
+    let lightItem = this._items.at(index);
+    let shadowItem = this._items.at(index);
+    while (!shadowItem || !this.atFocusableItems.includes(shadowItem)) {
+      if (index < 0) {
+        index = this.items.length;
+      } else if (index >= this.items.length) {
+        index = 0;
+      } else {
+        index = index + 1;
+      }
+      this.#atFocusedItemIndex = index;
+      lightItem = this._items.at(index);
+      shadowItem = this._items.at(index);
+    }
+    for (const item of this.items) {
+      this.options.setItemActive?.call(item, item === lightItem || item === shadowItem);
     }
     if (this.itemsContainerElement) {
       for (const el of [this.itemsContainerElement, ...this.#controlsElements]) {
         if (!ActivedescendantController.canControlLightDom) {
-          el?.setAttribute('aria-activedescendant', item?.id ?? '');
+          el?.setAttribute('aria-activedescendant', shadowItem?.id ?? '');
         } else if (el) {
-          el.ariaActiveDescendantElement = item ?? null;
+          el.ariaActiveDescendantElement = lightItem ?? null;
         }
       }
     }
@@ -154,21 +196,22 @@ export class ActivedescendantController<
         if (container.contains(item)) {
           item.id ||= getRandomId();
           this.#noCloneSet.add(item);
-          this.#deCloneMap.set(item, item);
+          this.#shadowToLightMap.set(item, item);
           return item;
         } else {
           const clone = item.cloneNode(true) as Item;
-          this.#cloneMap.set(item, clone);
-          this.#deCloneMap.set(clone, item);
+          this.#lightToShadowMap.set(item, clone);
+          this.#shadowToLightMap.set(clone, item);
+          // QUESTION memory leak?
+          this.#attrMO.observe(clone, { attributes: true });
+          this.#attrMO.observe(item, { attributes: true });
           clone.id = getRandomId();
           return clone;
         }
       });
-    const [first] = this.atFocusableItems;
-    const atFocusedItemIndex = this.atFocusableItems.indexOf(this.atFocusedItem!);
-    const next = this.atFocusableItems.find(((_, i) => i !== atFocusedItemIndex));
-    const activeItem = next ?? first ?? this.firstATFocusableItem;
-    this.atFocusedItem = activeItem;
+    const next = this.atFocusableItems.find(((_, i) => i !== this.#atFocusedItemIndex));
+    const activeItem = next ?? this.firstATFocusableItem;
+    this.#atFocusedItemIndex = this._items.indexOf(activeItem!);
   }
 
   private constructor(
@@ -182,8 +225,8 @@ export class ActivedescendantController<
     // todo: respond to attrs changing on lightdom nodes
     for (const { removedNodes } of records) {
       for (const removed of removedNodes as NodeListOf<Item>) {
-        this.#cloneMap.get(removed)?.remove();
-        this.#cloneMap.delete(removed);
+        this.#lightToShadowMap.get(removed)?.remove();
+        this.#lightToShadowMap.delete(removed);
       }
     }
   };

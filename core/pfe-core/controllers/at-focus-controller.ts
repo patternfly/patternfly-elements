@@ -20,17 +20,13 @@ export interface ATFocusControllerOptions<Item extends HTMLElement> {
 export abstract class ATFocusController<Item extends HTMLElement> {
   #itemsContainerElement: HTMLElement | null = null;
 
-  get #atFocusedItemIndex() {
-    return this.atFocusableItems.indexOf(this.atFocusedItem!);
-  }
-
   protected _items: Item[] = [];
 
   /** All items */
   abstract items: Item[];
 
-  /** Item which currently has assistive technology focus */
-  abstract atFocusedItem: Item | null;
+  /** Index of the Item which currently has assistive technology focus */
+  abstract atFocusedItemIndex: number;
 
   get container(): HTMLElement {
     return this.options.getItemsContainer?.() ?? this.host as unknown as HTMLElement;
@@ -43,7 +39,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
 
   /** All items which are able to receive assistive technology focus */
   get atFocusableItems(): Item[] {
-    return this.items.filter(isATFocusableItem);
+    return this._items.filter(isATFocusableItem);
   }
 
   /** First item which is able to receive assistive technology focus */
@@ -58,7 +54,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
 
   /** Focusable item following the item which currently has assistive technology focus */
   get nextATFocusableItem(): Item | null {
-    const index = this.#atFocusedItemIndex;
+    const index = this.atFocusedItemIndex;
     const outOfBounds = index >= this.atFocusableItems.length - 1;
     return outOfBounds ? this.firstATFocusableItem
                        : this.atFocusableItems.at(index + 1) ?? null;
@@ -66,7 +62,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
 
   /** Focusable item preceding the item which currently has assistive technology focus */
   get previousATFocusableItem(): Item | null {
-    const index = this.#atFocusedItemIndex;
+    const index = this.atFocusedItemIndex;
     const outOfBounds = index > 0;
     return outOfBounds ? this.atFocusableItems.at(index - 1) ?? null
                        : this.lastATFocusableItem;
@@ -102,7 +98,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
   }
 
   hostUpdate(): void {
-    this.atFocusedItem ??= this.firstATFocusableItem;
+    // this.atFocusedItemIndex ??= this.firstATFocusableItem;
     this.itemsContainerElement ??= this.#initContainer();
   }
 
@@ -124,7 +120,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
           ?.getAttribute('aria-orientation') as
             'horizontal' | 'vertical' | 'grid' | 'undefined';
 
-      const item = this.atFocusedItem;
+      const item = this._items.at(this.atFocusedItemIndex);
 
       const horizontalOnly =
         orientation === 'horizontal'
@@ -138,7 +134,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
           if (verticalOnly) {
             return;
           }
-          this.atFocusedItem = this.previousATFocusableItem ?? null;
+          this.atFocusedItemIndex--;
           event.stopPropagation();
           event.preventDefault();
           break;
@@ -146,7 +142,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
           if (verticalOnly) {
             return;
           }
-          this.atFocusedItem = this.nextATFocusableItem ?? null;
+          this.atFocusedItemIndex++;
           event.stopPropagation();
           event.preventDefault();
           break;
@@ -154,7 +150,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
           if (horizontalOnly) {
             return;
           }
-          this.atFocusedItem = this.previousATFocusableItem ?? null;
+          this.atFocusedItemIndex--;
           event.stopPropagation();
           event.preventDefault();
           break;
@@ -162,17 +158,17 @@ export abstract class ATFocusController<Item extends HTMLElement> {
           if (horizontalOnly) {
             return;
           }
-          this.atFocusedItem = this.nextATFocusableItem ?? null;
+          this.atFocusedItemIndex++;
           event.stopPropagation();
           event.preventDefault();
           break;
         case 'Home':
-          this.atFocusedItem = this.firstATFocusableItem ?? null;
+          this.atFocusedItemIndex = 0;
           event.stopPropagation();
           event.preventDefault();
           break;
         case 'End':
-          this.atFocusedItem = this.lastATFocusableItem ?? null;
+          this.atFocusedItemIndex = this.items.length;
           event.stopPropagation();
           event.preventDefault();
           break;

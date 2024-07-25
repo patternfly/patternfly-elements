@@ -226,6 +226,7 @@ export class PfSelect extends LitElement {
     const offscreen = typeahead && 'offscreen';
     const badge = hasBadge && 'badge';
     const hasSelection = !!(Array.isArray(this.selected) ? this.selected.length : this.selected);
+    const hideLightDomItems = typeahead && !ActivedescendantController.canControlLightDom;
 
     return html`
       <div id="outer"
@@ -253,7 +254,6 @@ export class PfSelect extends LitElement {
                  aria-autocomplete="both"
                  aria-controls="listbox"
                  aria-expanded="${String(this.expanded) as 'true' | 'false'}"
-                 aria-haspopup="listbox"
                  ?disabled="${disabled}"
                  ?hidden="${!typeahead}"
                  placeholder="${buttonLabel}"
@@ -261,11 +261,9 @@ export class PfSelect extends LitElement {
                  @keyup="${this.#onKeyupInput}"
                  @keydown="${this.#onKeydownInput}">`}
           <button id="toggle-button"
-                  role="combobox"
-                  aria-label="${ifDefined(this.accessibleLabel || this.#internals.computedLabelText || undefined)}"
+                  aria-label="${this.accessibleLabel ?? (computedLabelText || buttonLabel)}"
                   aria-describedby="placeholder"
                   aria-controls="listbox"
-                  aria-haspopup="listbox"
                   aria-expanded="${String(this.expanded) as 'true' | 'false'}"
                   @keydown="${this.#onKeydownButton}"
                   @click="${this.toggle}"
@@ -303,8 +301,9 @@ export class PfSelect extends LitElement {
             ${!(this.#atFocusController instanceof ActivedescendantController) ? nothing
               // Abstraction leaks here
               : this.#atFocusController.renderItemsToShadowRoot()}
-            <slot @slotchange="${this.#onSlotchangeListbox}"
-                  ?hidden=${typeahead && !ActivedescendantController.canControlLightDom}></slot>
+            <div ?hidden=${hideLightDomItems} aria-hidden="${String(hideLightDomItems)}">
+              <slot @slotchange="${this.#onSlotchangeListbox}"></slot>
+            </div>
           </div>
         </div>
       </div>

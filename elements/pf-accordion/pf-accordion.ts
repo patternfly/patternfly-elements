@@ -238,8 +238,9 @@ export class PfAccordion extends LitElement {
 
   @listen('focusin')
   protected updateActiveHeader(): void {
-    if (this.#activeHeader !== this.#headerIndex.atFocusedItem) {
-      this.#headerIndex.atFocusedItem = this.#activeHeader ?? null;
+    if (this.#activeHeader
+        && this.#activeHeader !== this.headers.at(this.#headerIndex.atFocusedItemIndex)) {
+      this.#headerIndex.atFocusedItemIndex = this.headers.indexOf(this.#activeHeader);
     }
   }
 

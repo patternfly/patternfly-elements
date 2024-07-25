@@ -160,7 +160,7 @@ export class PfTabs extends LitElement {
   #lastTab: PfTab | null = null;
 
   protected override willUpdate(changed: PropertyValues<this>): void {
-    if (this.#lastTab !== this.#tabindex.atFocusedItem) {
+    if (this.#lastTab && this.tabs.indexOf(this.#lastTab) !== this.#tabindex.atFocusedItemIndex) {
       this.#tabChanged();
     } else if (changed.has('activeIndex')) {
       this.select(this.activeIndex);
@@ -234,11 +234,12 @@ export class PfTabs extends LitElement {
   }
 
   #tabChanged() {
-    this.#lastTab = this.#tabindex.atFocusedItem;
-    if (!this.#tabindex.atFocusedItem?.disabled) {
+    this.#lastTab = this.tabs.at(this.#tabindex.atFocusedItemIndex) ?? null;
+    const focusedTab = this.tabs.at(this.#tabindex.atFocusedItemIndex);
+    if (!focusedTab?.disabled) {
       this.tabs?.forEach((tab, i) => {
         if (!this.manual) {
-          const active = tab === this.#tabindex.atFocusedItem;
+          const active = tab === focusedTab;
           tab.active = active;
           if (active) {
             this.activeIndex = i;
@@ -250,12 +251,11 @@ export class PfTabs extends LitElement {
     }
   }
 
-  select(option: PfTab | number): void {
-    if (typeof option === 'number') {
-      const item = this.tabs[option];
-      this.#tabindex.atFocusedItem = item;
+  select(tab: PfTab | number): void {
+    if (typeof tab === 'number') {
+      this.#tabindex.atFocusedItemIndex = tab;
     } else {
-      this.#tabindex.atFocusedItem = option;
+      this.#tabindex.atFocusedItemIndex = this.tabs.indexOf(tab);
     }
   }
 }

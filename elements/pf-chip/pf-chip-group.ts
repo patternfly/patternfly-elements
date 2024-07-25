@@ -154,14 +154,14 @@ export class PfChipGroup extends LitElement {
    * active chip that receives focus when group receives focus
    */
   get activeChip() {
-    const button = this.#tabindex.atFocusedItem as HTMLElement;
+    const button = this.#tabindex.items.at(this.#tabindex.atFocusedItemIndex);
     const shadow = button?.getRootNode() as ShadowRoot;
     return shadow?.host as PfChip;
   }
 
   set activeChip(chip: HTMLElement) {
     const button = chip.shadowRoot?.querySelector('button') as HTMLElement;
-    this.#tabindex.atFocusedItem = button;
+    this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(button);
   }
 
   /**
@@ -264,7 +264,7 @@ export class PfChipGroup extends LitElement {
    * @param chip pf-chip element
    */
   focusOnChip(chip: HTMLElement): void {
-    this.#tabindex.atFocusedItem = chip;
+    this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(chip);
   }
 }
 

@@ -20,6 +20,14 @@ export interface ListboxControllerOptions<Item extends HTMLElement> {
    */
   setItemSelected?(this: Item, selected: boolean): void;
   /**
+   * Optional predicate to assertain whether a custom element item is disabled or not
+   * By default, if the item matches any of these conditions, it is considered disabled:
+   * 1. it has the `aria-disabled="true"` attribute
+   * 2. it has the `disabled` attribute present
+   * 3. it matches the `:disabled` pseudo selector
+   */
+  isItemDisabled?(this: Item): boolean;
+  /**
    * Function returning the item which currently has assistive technology focus.
    * In most cases, this should be the `atFocusedItem` of an ATFocusController
    * i.e. RovingTabindexController or ActivedescendantController.
@@ -49,6 +57,19 @@ function setItemSelected<Item extends HTMLElement>(this: Item, selected: boolean
   } else {
     this.removeAttribute('aria-selected');
   }
+}
+
+/**
+ * This is a fib. aria-disabled might not be present on an element that uses internals,
+ * and the `disabled` attribute may not accurately represent the disabled state.
+ * short of patching the `attachInternals` constructor, it may not be possible at
+ * runtime to know with certainty that an arbitrary custom element is disabled or not.
+ * @param item possibly disabled item
+ */
+function isItemDisabled<Item extends HTMLElement>(this: Item): boolean {
+  return this.getAttribute('aria-disabled') === 'true'
+      || this.hasAttribute('disabled')
+      || this.matches(':disabled');
 }
 
 let constructingAllowed = false;
@@ -93,10 +114,7 @@ let constructingAllowed = false;
  * > - The selected state must be visually distinct from the focus indicator.
  */
 export class ListboxController<Item extends HTMLElement> implements ReactiveController {
-  private static instances = new WeakMap<
-    ReactiveControllerHost,
-    ListboxController<HTMLElement>
-  >();
+  private static instances = new WeakMap<ReactiveControllerHost, ListboxController<HTMLElement>>();
 
   public static of<Item extends HTMLElement>(
     host: ReactiveControllerHost,
@@ -111,10 +129,12 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   /** Current active descendant when shift key is pressed */
   #shiftStartingItem: Item | null = null;
 
-  #options: RequireProps<ListboxControllerOptions<Item>, 'setItemSelected'>;
+  #options: RequireProps<ListboxControllerOptions<Item>, 'setItemSelected' | 'isItemDisabled'>;
 
   /** All items */
   #items: Item[] = [];
+
+  #selectedItems = new Set<Item>;
 
   #listening = false;
 
@@ -136,6 +156,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
   set multi(v: boolean) {
     this.#options.multi = v;
+    this.container?.setAttribute('aria-multi-selectable', String(!!this.#options.multi));
   }
 
   get items(): Item[] {
@@ -150,21 +171,14 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     this.#items = items;
   }
 
-  #selectedItems = new Set<Item>;
-
   /**
    * sets the listbox value based on selected options
    * @param selected item or items
    */
   set selected(selected: Item | Item[] | null) {
-    if (selected == null) {
-      this.#selectedItems = new Set;
-    } else {
-      const possiblyClonedItemsArray = Array.isArray(selected) ? selected : [selected];
-      // this.#selectedItems = new Set(possiblyClonedItemsArray.map(item =>
-      //  this.#decloneMap.get(item)));
-      this.#selectedItems = new Set(possiblyClonedItemsArray);
-    }
+    this.#selectedItems = new Set(selected == null ? selected
+                                : Array.isArray(selected) ? selected
+                                : [selected]);
     this.host.requestUpdate();
   }
 
@@ -179,7 +193,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     public host: ReactiveControllerHost,
     options: ListboxControllerOptions<Item>,
   ) {
-    this.#options = { setItemSelected, ...options };
+    this.#options = { setItemSelected, isItemDisabled, ...options };
     if (!constructingAllowed) {
       throw new Error('ListboxController must be constructed with `ListboxController.of()`');
     }
@@ -200,6 +214,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     if (this.container?.isConnected) {
       this.hostConnected();
     }
+    this.multi = this.#options.multi ?? false;
   }
 
   async hostConnected(): Promise<void> {
@@ -217,7 +232,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   hostUpdated(): void {
     this.container?.setAttribute('role', 'listbox');
     this.container?.setAttribute('aria-disabled', String(!!this.disabled));
-    this.container?.setAttribute('aria-multi-selectable', String(!!this.#options.multi));
     for (const item of this.items) {
       this.#options.setItemSelected.call(item, this.isSelected(item));
     }
@@ -235,8 +249,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   public isSelected(item: Item): boolean {
     return this.#selectedItems.has(item);
   }
-
-  #isSelectableItem = (item: Item) => !item.ariaDisabled && !item.closest('[disabled]');
 
   #getItemFromEvent(event: Event): Item | undefined {
     return event
@@ -273,15 +285,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * @param event keyup event
    */
   #onKeyup = (event: KeyboardEvent) => {
-    // const target = this.#getItemFromEvent(event);
-    // if (target && event.shiftKey && this.multi) {
-    //  if (this.#shiftStartingItem && target) {
-    //    this.selected = this.#getMultiSelection(target, this.#shiftStartingItem);
-    //  }
     if (event.key === 'Shift') {
       this.#shiftStartingItem = null;
     }
-    // }
   };
 
   /**
@@ -307,10 +313,12 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       case 'a':
       case 'A':
         if (event.ctrlKey) {
-          if (!arraysAreEquivalent(this.selected, this.items.filter(this.#isSelectableItem))) {
+          const selectableItems = this.items.filter(item =>
+            !this.#options.isItemDisabled.call(item));
+          if (!arraysAreEquivalent(this.selected, selectableItems)) {
             this.selected = null;
           } else {
-            this.selected = this.items;
+            this.selected = selectableItems;
           }
           event.preventDefault();
         }
@@ -319,7 +327,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       case ' ':
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
-        if (!this.multi) {
+        if (!this.multi && !this.#options.isItemDisabled.call(item)) {
           this.selected = item;
         } else if (this.multi && event.shiftKey) {
           // update starting item for other multiselect
@@ -351,7 +359,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       const [start, end] = [this.items.indexOf(from), this.items.indexOf(to)].sort();
       const itemsInRange = new Set(this.items
           .slice(start, end + 1)
-          .filter(this.#isSelectableItem));
+          .filter(item => !this.#options.isItemDisabled.call(item)));
       return this.items
           .filter(item => selecting ? itemsInRange.has(item) : !itemsInRange.has(item));
     } else {

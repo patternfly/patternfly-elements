@@ -51,18 +51,15 @@ export class PfDropdownMenu extends LitElement {
    * current active descendant in menu
    */
   get activeItem(): HTMLElement | null {
-    return this.#tabindex.atFocusedItem ?? this.#tabindex.firstATFocusableItem;
+    return this.#tabindex.items.at(this.#tabindex.atFocusedItemIndex)
+        ?? this.#tabindex.firstATFocusableItem;
   }
 
   /**
    * index of current active descendant in menu
    */
   get activeIndex(): number {
-    if (!this.#tabindex.atFocusedItem) {
-      return -1;
-    } else {
-      return this.#tabindex.items.indexOf(this.#tabindex.atFocusedItem);
-    }
+    return this.#tabindex.atFocusedItemIndex;
   }
 
   get items(): PfDropdownItem[] {
@@ -114,9 +111,8 @@ export class PfDropdownMenu extends LitElement {
     if (this.ctx?.disabled) {
       event.preventDefault();
       event.stopPropagation();
-    } else if (event.target instanceof PfDropdownItem
-        && event.target.menuItem !== this.#tabindex.atFocusedItem) {
-      this.#tabindex.atFocusedItem = event.target.menuItem;
+    } else if (event.target instanceof PfDropdownItem) {
+      this.#focusItem(event.target.menuItem);
     }
   }
 
@@ -130,9 +126,15 @@ export class PfDropdownMenu extends LitElement {
     if (this.ctx?.disabled || isDisabledItemClick(event)) {
       event.preventDefault();
       event.stopPropagation();
-    } else if (event.target instanceof PfDropdownItem
-        && event.target.menuItem !== this.#tabindex.atFocusedItem) {
-      this.#tabindex.atFocusedItem = event.target.menuItem;
+    } else if (event.target instanceof PfDropdownItem) {
+      this.#focusItem(event.target.menuItem);
+    }
+  }
+
+  #focusItem(item: HTMLElement) {
+    const itemIndex = this.#tabindex.items.indexOf(item);
+    if (itemIndex !== this.#tabindex.atFocusedItemIndex) {
+      this.#tabindex.atFocusedItemIndex = itemIndex;
     }
   }
 

@@ -89,40 +89,26 @@ export class ActivedescendantController<
 
   #observing = false;
 
-  #mo = new MutationObserver(records => this.onMutation(records));
+  #listMO = new MutationObserver(records => this.#onItemsDOMChange(records));
 
-  #attrMO = new MutationObserver(records => {
-    for (const { target, attributeName } of records) {
-      if (attributeName) {
-        if (this.#shadowToLightMap.has(target as Item)) {
-          const shadow = target as Item;
-          const light = this.#shadowToLightMap.get(shadow);
-          const newVal = shadow.getAttribute(attributeName);
-          const oldVal = light?.getAttribute(attributeName);
-          if (oldVal !== newVal) {
-            light?.setAttribute(attributeName, newVal!);
-          }
-        } else if (this.#lightToShadowMap.has(target as Item)) {
-          const light = target as Item;
-          const shadow = this.#lightToShadowMap.get(light);
-          const newVal = light.getAttribute(attributeName);
-          const oldVal = shadow?.getAttribute(attributeName);
-          if (oldVal !== newVal) {
-            shadow?.setAttribute(attributeName, newVal!);
-          }
-        }
-      }
+  #attrMO = new MutationObserver(records => this.#onItemAttributeChange(records));
+
+  #syncAttr(attributeName: string, fromNode: Item) {
+    const toNode = this.#shadowToLightMap.get(fromNode as Item)
+                ?? this.#lightToShadowMap.get(fromNode as Item);
+    const newVal = fromNode.getAttribute(attributeName);
+    const oldVal = toNode?.getAttribute(attributeName);
+    if (!fromNode.hasAttribute(attributeName)) {
+      toNode?.removeAttribute(attributeName);
+    } else if (oldVal !== newVal) {
+      toNode?.setAttribute(attributeName, newVal!);
     }
-  });
-
-  // #atFocusedItem: Item | null = null;
+  }
 
   #atFocusedItemIndex = -1;
 
   get atFocusedItemIndex(): number {
     return this.#atFocusedItemIndex;
-    // return this.#shadowToLightMap.get(shadowItem!) ?? shadowItem;
-    // return this.#atFocusedItem;
   }
 
   /**
@@ -131,30 +117,30 @@ export class ActivedescendantController<
    * @param item item
    */
   set atFocusedItemIndex(index: number) {
+    const direction = this.atFocusedItemIndex < index ? -1 : 1;
     this.#atFocusedItemIndex = index;
-    let lightItem = this._items.at(index);
-    let shadowItem = this._items.at(index);
-    while (!shadowItem || !this.atFocusableItems.includes(shadowItem)) {
+    let item = this._items.at(index);
+    while (!item || !this.atFocusableItems.includes(item)) {
       if (index < 0) {
-        index = this.items.length;
-      } else if (index >= this.items.length) {
+        index = this.items.indexOf(this.lastATFocusableItem!);
+      } else if (index >= this.items.length
+              || index === this.items.indexOf(this.lastATFocusableItem!)) {
         index = 0;
       } else {
-        index = index + 1;
+        index = index + direction;
       }
       this.#atFocusedItemIndex = index;
-      lightItem = this._items.at(index);
-      shadowItem = this._items.at(index);
+      item = this._items.at(index);
     }
-    for (const item of this.items) {
-      this.options.setItemActive?.call(item, item === lightItem || item === shadowItem);
+    for (const _item of this.items) {
+      this.options.setItemActive?.call(_item, _item === item);
     }
     if (this.itemsContainerElement) {
       for (const el of [this.itemsContainerElement, ...this.#controlsElements]) {
         if (!ActivedescendantController.canControlLightDom) {
-          el?.setAttribute('aria-activedescendant', shadowItem?.id ?? '');
+          el?.setAttribute('aria-activedescendant', item?.id ?? '');
         } else if (el) {
-          el.ariaActiveDescendantElement = lightItem ?? null;
+          el.ariaActiveDescendantElement = item ?? null;
         }
       }
     }
@@ -189,6 +175,7 @@ export class ActivedescendantController<
       throw new Error('items container must be an HTMLElement');
     }
     this.itemsContainerElement = container;
+    // this.#attrMO.disconnect();
     this._items =
         ActivedescendantController.canControlLightDom ? items
       : items?.map((item: Item) => {
@@ -200,12 +187,13 @@ export class ActivedescendantController<
           return item;
         } else {
           const clone = item.cloneNode(true) as Item;
+          clone.id = getRandomId();
           this.#lightToShadowMap.set(item, clone);
           this.#shadowToLightMap.set(clone, item);
-          // QUESTION memory leak?
+          // Though efforts were taken to disconnect
+          // this observer, it may still be a memory leak
           this.#attrMO.observe(clone, { attributes: true });
           this.#attrMO.observe(item, { attributes: true });
-          clone.id = getRandomId();
           return clone;
         }
       });
@@ -221,8 +209,7 @@ export class ActivedescendantController<
     super(host, options);
   }
 
-  private onMutation = (records: MutationRecord[]) => {
-    // todo: respond to attrs changing on lightdom nodes
+  #onItemsDOMChange(records: MutationRecord[]) {
     for (const { removedNodes } of records) {
       for (const removed of removedNodes as NodeListOf<Item>) {
         this.#lightToShadowMap.get(removed)?.remove();
@@ -231,18 +218,28 @@ export class ActivedescendantController<
     }
   };
 
+  #onItemAttributeChange(records: MutationRecord[]) {
+    for (const { target, attributeName } of records) {
+      if (attributeName) {
+        this.#syncAttr(attributeName, target as Item);
+      }
+    }
+  };
+
   protected override initItems(): void {
+    this.#attrMO.disconnect();
     super.initItems();
     this.controlsElements = this.options.getControlsElements?.() ?? [];
     if (!this.#observing && this.itemsContainerElement && this.itemsContainerElement.isConnected) {
-      this.#mo.observe(this.itemsContainerElement, { attributes: true, childList: true });
+      this.#listMO.observe(this.itemsContainerElement, { childList: true });
       this.#observing = true;
     }
   }
 
   hostDisconnected(): void {
     this.#observing = false;
-    this.#mo.disconnect();
+    this.#listMO.disconnect();
+    this.#attrMO.disconnect();
   }
 
   protected override isRelevantKeyboardEvent(event: Event): event is KeyboardEvent {
@@ -252,7 +249,6 @@ export class ActivedescendantController<
       || event.metaKey
       || !this.atFocusableItems.length);
   }
-
 
   public renderItemsToShadowRoot(): typeof nothing | Node[] {
     if (ActivedescendantController.canControlLightDom) {

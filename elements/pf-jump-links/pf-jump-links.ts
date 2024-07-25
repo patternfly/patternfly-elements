@@ -150,8 +150,11 @@ export class PfJumpLinks extends LitElement {
   }
 
   #setActiveItem(item: PfJumpLinksItem) {
-    this.#tabindex.atFocusedItem = item.shadowRoot?.querySelector?.('a') ?? null;
-    this.#spy.setActive(item);
+    const itemLink = item.shadowRoot?.querySelector?.('a') ?? null;
+    if (itemLink) {
+      this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(itemLink);
+      this.#spy.setActive(item);
+    }
   }
 
   #onToggle(event: Event) {

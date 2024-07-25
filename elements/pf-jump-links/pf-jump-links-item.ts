@@ -33,9 +33,7 @@ export class PfJumpLinksItem extends LitElement {
   /** hypertext reference for this link */
   @property({ reflect: true }) href?: string;
 
-  #internals = InternalsController.of(this, {
-    role: 'listitem',
-  });
+  #internals = InternalsController.of(this, { role: 'listitem' });
 
   render(): TemplateResult<1> {
     return html`

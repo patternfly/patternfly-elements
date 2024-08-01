@@ -237,6 +237,7 @@ export class ActivedescendantController<
   }
 
   hostDisconnected(): void {
+    this.controlsElements = [];
     this.#observing = false;
     this.#listMO.disconnect();
     this.#attrMO.disconnect();

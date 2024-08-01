@@ -1,9 +1,8 @@
 import type { PfChipGroup } from '../pf-chip/pf-chip-group.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import type { TemplateResult } from 'lit';
-import type { ATFocusController } from '@patternfly/pfe-core/controllers/at-focus-controller.js';
 
-import { LitElement, html, isServer, nothing } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -12,9 +11,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { ListboxController } from '@patternfly/pfe-core/controllers/listbox-controller.js';
-import { ActivedescendantController } from '@patternfly/pfe-core/controllers/activedescendant-controller.js';
-import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
+import { ComboboxController } from '@patternfly/pfe-core/controllers/combobox-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
@@ -107,9 +104,9 @@ export class PfSelect extends LitElement {
 
   @query('pf-chip-group') private _chipGroup?: PfChipGroup;
 
-  @query('#toggle-input') private _input?: HTMLInputElement;
+  @query('#toggle-input') private _toggleInput?: HTMLInputElement;
 
-  @query('#toggle-button') private _toggle?: HTMLButtonElement;
+  @query('#toggle-button') private _toggleButton?: HTMLButtonElement;
 
   @query('#listbox') private _listbox?: HTMLElement;
 
@@ -125,33 +122,23 @@ export class PfSelect extends LitElement {
 
   #slots = new SlotController(this, null, 'placeholder');
 
-  #atFocusController = this.#createATFocusController();
-
-  #preventListboxGainingFocus = false;
-
-  #createATFocusController(): ATFocusController<PfOption> {
-    const getItems = () => this.options;
-    const getItemsContainer = () => this._listbox ?? null;
-    const getControlsElements = () => [this._input, this._toggle].filter(x => !!x);
-    if (this.variant !== 'typeahead' && this.variant !== 'typeaheadmulti' ) {
-      return RovingTabindexController.of(this, { getItems, getItemsContainer });
-    } else {
-      return ActivedescendantController.of(this, {
-        getItems,
-        getItemsContainer,
-        getControlsElements,
-        setItemActive(active) {
-          this.active = active;
-        },
-      });
-    }
-  }
-
-  #listbox = ListboxController.of<PfOption>(this, {
+  #combobox = ComboboxController.of(this, {
     multi: this.variant === 'typeaheadmulti' || this.variant === 'checkbox',
-    getItemsContainer: () => this.#atFocusController.container,
-    getControlsElements: () => this.#atFocusController.controlsElements,
-    getATFocusedItem: () => this.options.at(this.#atFocusController.atFocusedItemIndex) ?? null,
+    getItems: () => this.options,
+    getFallbackLabel: () =>
+      this.accessibleLabel || this.#internals.computedLabelText || this.#buttonLabel,
+    getListboxElement: () => this._listbox ?? null,
+    getToggleButton: () => this._toggleButton ?? null,
+    getToggleInput: () => this._toggleInput ?? null,
+    isExpanded: () => this.expanded,
+    requestExpand: () => this.#doExpand(),
+    requestCollapse: () => this.#doCollapse(),
+    getItemValue() {
+      return this.value;
+    },
+    setItemActive(active) {
+      this.active = active;
+    },
     setItemSelected(selected) {
       this.selected = selected;
     },
@@ -162,17 +149,16 @@ export class PfSelect extends LitElement {
    * or array of select option values for multi select.
    */
   @property({ hasChanged: (a, b) => !arraysAreEquivalent(a, b) })
-  set selected(optionsList: PfOption | PfOption[]) {
-    this.#listbox.selected = optionsList;
+  set selected(selected: PfOption | PfOption[]) {
+    const list = Array.isArray(selected) ? selected : [selected];
+    this.#combobox.selected = list;
   }
 
   get selected(): PfOption[] {
-    return this.#listbox.selected;
+    return this.#combobox.selected;
   }
 
-  /**
-   * array of slotted options
-   */
+  /** List of options */
   get options(): PfOption[] {
     if (isServer) {
       return []; // TODO: expose a DOM property to allow setting options in SSR scenarios
@@ -186,16 +172,14 @@ export class PfSelect extends LitElement {
     }
   }
 
-  /**
-   * whether select has badge for number of selected items
-   */
+  /** Whether select has badge for number of selected items */
   get #hasBadge() {
     // NOTE: revisit this in v5
     return this.variant === 'checkbox' && !this.checkboxSelectionBadgeHidden;
   }
 
-  get #buttonLabel() {
-    const { selected } = this.#listbox;
+  get #buttonLabel(): string {
+    const { selected } = this.#combobox;
     switch (this.variant) {
       case 'typeaheadmulti':
         return `${selected?.length ?? 0} ${this.itemsSelectedText}`;
@@ -216,28 +200,20 @@ export class PfSelect extends LitElement {
   override render(): TemplateResult<1> {
     const { disabled, expanded, variant } = this;
     const { anchor = 'bottom', alignment = 'start', styles = {} } = this.#float;
-    const { computedLabelText } = this.#internals;
     const { height, width } = this.getBoundingClientRect?.() || {};
-    const buttonLabel = this.#buttonLabel;
     const hasBadge = this.#hasBadge;
-    const selectedOptions = this.#listbox.selected ?? [];
+    const selectedOptions = this.#combobox.selected ?? [];
     const typeahead = variant.startsWith('typeahead');
     const checkboxes = variant === 'checkbox';
     const offscreen = typeahead && 'offscreen';
     const badge = hasBadge && 'badge';
     const hasSelection = !!(Array.isArray(this.selected) ? this.selected.length : this.selected);
-    const hideLightDomItems = typeahead && !ActivedescendantController.canControlLightDom;
+    const hideLightDomItems = typeahead && !ComboboxController.canControlLightDom;
 
     return html`
       <div id="outer"
            style="${styleMap(styles)}"
-           class="${classMap({
-             disabled,
-             typeahead,
-             expanded,
-             [anchor]: !!anchor,
-             [alignment]: !!alignment,
-           })}">
+           class="${classMap({ disabled, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
         <div id="toggle">
           ${!(typeahead && selectedOptions.length < 1) ? '' : html`
           <pf-chip-group label="${this.accessibleCurrentSelectionsLabel}">
@@ -246,31 +222,15 @@ export class PfSelect extends LitElement {
                      .readonly="${this.disabled}"
                      @remove="${this.#onChipRemove.bind(this, opt)}">${opt.textContent}</pf-chip>`)}
           </pf-chip-group>`}
-          ${!typeahead ? '' : /* TODO: aria attrs */ html`
+          ${!typeahead ? '' : html`
           <input id="toggle-input"
-                 role="combobox"
-                 aria-label="${this.accessibleLabel ?? (computedLabelText || buttonLabel)}"
-                 aria-describedby="placeholder"
-                 aria-autocomplete="both"
-                 aria-controls="listbox"
-                 aria-expanded="${String(this.expanded) as 'true' | 'false'}"
                  ?disabled="${disabled}"
                  ?hidden="${!typeahead}"
-                 placeholder="${buttonLabel}"
-                 @click="${this.toggle}"
-                 @keyup="${this.#onKeyupInput}"
-                 @keydown="${this.#onKeydownInput}">`}
-          <button id="toggle-button"
-                  aria-label="${this.accessibleLabel ?? (computedLabelText || buttonLabel)}"
-                  aria-describedby="placeholder"
-                  aria-controls="listbox"
-                  aria-expanded="${String(this.expanded) as 'true' | 'false'}"
-                  @keydown="${this.#onKeydownButton}"
-                  @click="${this.toggle}"
-                  tabindex="${ifDefined(typeahead ? -1 : undefined)}">
+                 placeholder="${this.#buttonLabel}"`}
+          <button id="toggle-button">
             <span id="button-text" style="display: contents;">
               <span id="toggle-text"
-                    class="${classMap({ offscreen, badge })}">${buttonLabel}</span>${!hasBadge ? '' : html`
+                    class="${classMap({ offscreen, badge })}">${this.#buttonLabel}</span>${!hasBadge ? '' : html`
               <span id="toggle-badge">
                 <pf-badge number="${selectedOptions.length}">${selectedOptions.length}</pf-badge>
               </span>`}
@@ -288,19 +248,14 @@ export class PfSelect extends LitElement {
                marginTop: `${height || 0}px`,
                width: width ? `${width}px` : 'auto',
              })}">
-          <div id="listbox"
-               @focusout="${this.#onFocusoutListbox}"
-               @keydown="${this.#onKeydownListbox}"
-               class="${classMap({ checkboxes })}">
+          <div id="listbox" class="${classMap({ checkboxes })}">
             <pf-option id="placeholder"
                        disabled
                        aria-hidden="${ifDefined(hasSelection ? 'true' : undefined)}"
                        ?hidden="${!this.placeholder && !this.#slots.hasSlotted('placeholder')}">
               <slot name="placeholder">${this.placeholder}</slot>
             </pf-option>
-            ${!(this.#atFocusController instanceof ActivedescendantController) ? nothing
-              // Abstraction leaks here
-              : this.#atFocusController.renderItemsToShadowRoot()}
+            ${this.#combobox?.renderItemsToShadowRoot()}
             <div ?hidden=${hideLightDomItems} aria-hidden="${String(hideLightDomItems)}">
               <slot @slotchange="${this.#onSlotchangeListbox}"></slot>
             </div>
@@ -312,7 +267,7 @@ export class PfSelect extends LitElement {
 
   @observes('disabled')
   private disabledChanged() {
-    this.#listbox.disabled = this.disabled;
+    this.#combobox.disabled = this.disabled;
   }
 
   @observes('expanded')
@@ -333,20 +288,18 @@ export class PfSelect extends LitElement {
     switch (this.variant) {
       case 'single':
         this.hide();
-        this._toggle?.focus();
+        this._toggleButton?.focus();
         break;
       case 'typeahead':
-        this._input!.value = this.value;
+        this._toggleInput!.value = this.value;
     }
   }
 
   @observes('variant')
-  private variantChanged() {
-    const controller = this.#createATFocusController();
-    this.#atFocusController = controller;
-    this.#listbox.hostDisconnected();
-    this.#listbox.multi = this.variant === 'typeaheadmulti' || this.variant === 'checkbox';
-    this.#listbox.hostConnected();
+  private async variantChanged() {
+    this.#combobox.hostDisconnected();
+    this.#combobox.multi = this.variant === 'typeaheadmulti' || this.variant === 'checkbox';
+    this.#combobox.hostConnected();
     if (this.variant === 'checkbox') {
       import('@patternfly/elements/pf-badge/pf-badge.js');
     }
@@ -365,190 +318,39 @@ export class PfSelect extends LitElement {
     // NOTE: revisit this in v5
     // reset input if chip has been added
     const hasChips = this.variant === 'typeaheadmulti';
-    if (hasChips && this._input?.value) {
+    if (hasChips && this._toggleInput?.value) {
       const chip =
-        this.shadowRoot?.querySelector(`pf-chip#chip-${this._input?.value}`) as HTMLElement;
+        this.shadowRoot?.querySelector(`pf-chip#chip-${this._toggleInput?.value}`) as HTMLElement;
       if (chip && this._chipGroup) {
         this._chipGroup.focusOnChip(chip);
-        this._input.value = '';
+        this._toggleInput.value = '';
       }
     }
   }
 
   #onSlotchangeListbox() {
-    this.#listbox.items = this.options;
+    this.#combobox.items = this.options;
     this.options.forEach((option, index, options) => {
       option.setSize = options.length;
       option.posInSet = index;
     });
   }
 
-  #onFocusoutListbox(event: FocusEvent) {
-    switch (this.variant) {
-      case 'single':
-      case 'checkbox':
-        if (this.expanded) {
-          const root = this.getRootNode();
-          if ((root instanceof ShadowRoot || root instanceof Document)
-              && !this.options.includes(event.relatedTarget as PfOption)
-          ) {
-            this.hide();
-          }
-        }
-    }
-  }
-
-  #onKeydownButton(event: KeyboardEvent) {
-    switch (this.variant) {
-      case 'single':
-      case 'checkbox': return this.#onKeydownMenu(event);
-      case 'typeahead':
-      case 'typeaheadmulti': return this.#onKeydownInput(event);
-    }
-  }
-
-  #onKeydownListbox(event: KeyboardEvent) {
-    switch (this.variant) {
-      case 'single':
-      case 'checkbox':
-        switch (event.key) {
-          case 'Escape':
-            this.hide();
-            this._toggle?.focus();
-        }
-    }
-  }
-
-  #onKeydownMenu(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'ArrowDown':
-      case 'ArrowUp':
-        this.show();
-    }
-  }
-
-  /**
-   * Handle keypresses on the input
-   * @see https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list
-   * +-----------------------------------+-----------------------------------+
-   * | Key                               | Function                          |
-   * +===================================+===================================+
-   * | [Down Arrow]{.kbd}                | -   If the textbox is not empty   |
-   * |                                   |     and the listbox is displayed, |
-   * |                                   |     moves visual focus to the     |
-   * |                                   |     first suggested value.        |
-   * |                                   | -   If the textbox is empty and   |
-   * |                                   |     the listbox is not displayed, |
-   * |                                   |     opens the listbox and moves   |
-   * |                                   |     visual focus to the first     |
-   * |                                   |     option.                       |
-   * |                                   | -   In both cases DOM focus       |
-   * |                                   |     remains on the textbox.       |
-   * +-----------------------------------+-----------------------------------+
-   * | [Alt + Down Arrow]{.kbd}          | Opens the listbox without moving  |
-   * |                                   | focus or changing selection.      |
-   * +-----------------------------------+-----------------------------------+
-   * | [Up Arrow]{.kbd}                  | -   If the textbox is not empty   |
-   * |                                   |     and the listbox is displayed, |
-   * |                                   |     moves visual focus to the     |
-   * |                                   |     last suggested value.         |
-   * |                                   | -   If the textbox is empty,      |
-   * |                                   |     first opens the listbox if it |
-   * |                                   |     is not already displayed and  |
-   * |                                   |     then moves visual focus to    |
-   * |                                   |     the last option.              |
-   * |                                   | -   In both cases DOM focus       |
-   * |                                   |     remains on the textbox.       |
-   * +-----------------------------------+-----------------------------------+
-   * | [Enter]{.kbd}                     | Closes the listbox if it is       |
-   * |                                   | displayed.                        |
-   * +-----------------------------------+-----------------------------------+
-   * | [Escape]{.kbd}                    | -   If the listbox is displayed,  |
-   * |                                   |     closes it.                    |
-   * |                                   | -   If the listbox is not         |
-   * |                                   |     displayed, clears the         |
-   * |                                   |     textbox.                      |
-   * +-----------------------------------+-----------------------------------+
-   * | Standard single line text editing | -   Keys used for cursor movement |
-   * | keys                              |     and text manipulation, such   |
-   * |                                   |     as [Delete]{.kbd} and         |
-   * |                                   |     [Shift + Right Arrow]{.kbd}.  |
-   * |                                   | -   An HTML `input` with          |
-   * |                                   |     `type="text"` is used for the |
-   * |                                   |     textbox so the browser will   |
-   * |                                   |     provide platform-specific     |
-   * |                                   |     editing keys.                 |
-   * +-----------------------------------+-----------------------------------+
-   * @param event keydown event
-   */
-  #onKeydownInput(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'ArrowDown':
-      case 'ArrowUp':
-        this.#preventListboxGainingFocus = event.altKey;
-        this.show();
-        break;
-      case 'Enter':
-        this.hide();
-        break;
-      case 'Escape':
-        if (!this.expanded) {
-          this._input!.value = '';
-          this.requestUpdate();
-        }
-        this.hide();
-        break;
-      case 'Alt':
-      case 'AltGraph':
-      case 'Shift':
-      case 'Control':
-      case 'Fn':
-      case 'Symbol':
-      case 'Hyper':
-      case 'Super':
-      case 'Meta':
-      case 'CapsLock':
-      case 'FnLock':
-      case 'NumLock':
-      case 'ScrollLock':
-      case 'SymbolLock':
-        break;
-      default:
-        this.show();
-    }
-  }
-
-  #onKeyupInput() {
-    const { value } = this._input!;
-    for (const option of this.options) {
-      option.hidden =
-        !!this.expanded
-     && !!value
-     && !option.value
-         .toLowerCase()
-         .startsWith(value.toLowerCase());
-    }
-  }
-
   async #doExpand() {
-    await this.#float.show({ placement: this.position || 'bottom', flip: !!this.enableFlip });
-    switch (this.variant) {
-      case 'single':
-      case 'checkbox':
-        if (!this.#preventListboxGainingFocus) {
-          (this.#atFocusController.items.at(this.#atFocusController.atFocusedItemIndex)
-            ?? this.#atFocusController.nextATFocusableItem)?.focus();
-          this.#preventListboxGainingFocus = false;
-        }
+    try {
+      await this.#float.show({ placement: this.position || 'bottom', flip: !!this.enableFlip });
+      return true;
+    } catch {
+      return false;
     }
   }
 
   async #doCollapse() {
-    await this.#float.hide();
-    switch (this.variant) {
-      case 'single':
-      case 'checkbox':
-        this._toggle?.focus();
+    try {
+      await this.#float.hide();
+      return true;
+    } catch {
+      return false;
     }
   }
 
@@ -560,7 +362,7 @@ export class PfSelect extends LitElement {
   #onChipRemove(opt: PfOption, event: Event) {
     if (event instanceof PfChipRemoveEvent) {
       opt.selected = false;
-      this._input?.focus();
+      this._toggleInput?.focus();
     }
   }
 
@@ -570,7 +372,7 @@ export class PfSelect extends LitElement {
           ?.assignedNodes()
           ?.reduce((acc, node) => `${acc}${node.textContent}`, '')
           ?.trim()
-      || this.#listbox.items
+      || this.#combobox.items
           .filter(this.#isNotPlaceholderOption)
           .at(0)
           ?.value

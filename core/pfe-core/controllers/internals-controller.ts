@@ -79,6 +79,10 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   declare readonly willValidate: ElementInternals['willValidate'];
   declare readonly validationMessage: ElementInternals['validationMessage'];
 
+  public static getLabels(host: ReactiveControllerHost): Node[] {
+    return Array.from(this.instances.get(host)?.internals.labels ?? []);
+  }
+
   public static of(
     host: ReactiveControllerHost,
     options?: InternalsControllerOptions,
@@ -283,9 +287,16 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   }
 }
 
+/** @see https://w3c.github.io/aria/#ref-for-dom-ariamixin-ariaactivedescendantelement-1 */
 declare global {
   interface ARIAMixin {
-    /** @see https://w3c.github.io/aria/#ref-for-dom-ariamixin-ariaactivedescendantelement-1 */
     ariaActiveDescendantElement: Element | null;
+    ariaControlsElements: readonly Element[] | null;
+    ariaDescribedByElements: readonly Element[] | null;
+    ariaDetailsElements: readonly Element[] | null;
+    ariaErrorMessageElements: readonly Element[] | null;
+    ariaFlowToElements: readonly Element[] | null;
+    ariaLabelledByElements: readonly Element[] | null;
+    ariaOwnsElements: readonly Element[] | null;
   }
 }

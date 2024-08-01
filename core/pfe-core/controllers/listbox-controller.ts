@@ -44,7 +44,7 @@ export interface ListboxControllerOptions<Item extends HTMLElement> {
    * Optional function returning an additional DOM node which controls the listbox, e.g.
    * a combobox input.
    */
-  getControlsElements?(): HTMLElement | HTMLElement[] | null;
+  getControlsElements?(): HTMLElement[];
 }
 
 /**

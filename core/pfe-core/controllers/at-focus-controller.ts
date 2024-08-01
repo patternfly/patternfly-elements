@@ -97,6 +97,10 @@ export abstract class ATFocusController<Item extends HTMLElement> {
     this.hostUpdate();
   }
 
+  hostDisconnected(): void {
+    this.#itemsContainerElement?.removeEventListener('keydown', this.onKeydown);
+  }
+
   hostUpdate(): void {
     // this.atFocusedItemIndex ??= this.firstATFocusableItem;
     this.itemsContainerElement ??= this.#initContainer();

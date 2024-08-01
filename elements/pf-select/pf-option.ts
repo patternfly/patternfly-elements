@@ -40,7 +40,7 @@ export class PfOption extends LitElement {
   @property({ type: Boolean, reflect: true }) selected = false;
 
   /** whether option is active descendant */
-  @property({ type: Boolean }) active = false;
+  @property({ type: Boolean, reflect: true }) active = false;
 
   /** Optional option description; overridden by description slot. */
   @property() description = '';

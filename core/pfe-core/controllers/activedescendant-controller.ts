@@ -105,10 +105,8 @@ export class ActivedescendantController<
     }
   }
 
-  #atFocusedItemIndex = -1;
-
   get atFocusedItemIndex(): number {
-    return this.#atFocusedItemIndex;
+    return super.atFocusedItemIndex;
   }
 
   /**
@@ -117,21 +115,8 @@ export class ActivedescendantController<
    * @param item item
    */
   set atFocusedItemIndex(index: number) {
-    const direction = this.atFocusedItemIndex < index ? -1 : 1;
-    this.#atFocusedItemIndex = index;
-    let item = this._items.at(index);
-    while (!item || !this.atFocusableItems.includes(item)) {
-      if (index < 0) {
-        index = this.items.indexOf(this.lastATFocusableItem!);
-      } else if (index >= this.items.length
-              || index === this.items.indexOf(this.lastATFocusableItem!)) {
-        index = 0;
-      } else {
-        index = index + direction;
-      }
-      this.#atFocusedItemIndex = index;
-      item = this._items.at(index);
-    }
+    super.atFocusedItemIndex = index;
+    const item = this._items.at(this.atFocusedItemIndex);
     for (const _item of this.items) {
       this.options.setItemActive?.call(_item, _item === item);
     }
@@ -197,9 +182,9 @@ export class ActivedescendantController<
           return clone;
         }
       });
-    const next = this.atFocusableItems.find(((_, i) => i !== this.#atFocusedItemIndex));
+    const next = this.atFocusableItems.find(((_, i) => i !== this.atFocusedItemIndex));
     const activeItem = next ?? this.firstATFocusableItem;
-    this.#atFocusedItemIndex = this._items.indexOf(activeItem!);
+    this.atFocusedItemIndex = this._items.indexOf(activeItem!);
   }
 
   private constructor(

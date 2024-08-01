@@ -24,11 +24,6 @@ import { PfChipRemoveEvent } from '../pf-chip/pf-chip.js';
 
 import styles from './pf-select.css';
 
-export interface PfSelectUserOptions {
-  id: string;
-  value: string;
-}
-
 export class PfSelectChangeEvent extends Event {
   constructor() {
     super('change', { bubbles: true });
@@ -125,14 +120,15 @@ export class PfSelect extends LitElement {
   #combobox = ComboboxController.of(this, {
     multi: this.variant === 'typeaheadmulti' || this.variant === 'checkbox',
     getItems: () => this.options,
-    getFallbackLabel: () =>
-      this.accessibleLabel || this.#internals.computedLabelText || this.#buttonLabel,
+    getFallbackLabel: () => this.accessibleLabel
+                         || this.#internals.computedLabelText
+                         || this.#buttonLabel,
     getListboxElement: () => this._listbox ?? null,
     getToggleButton: () => this._toggleButton ?? null,
     getToggleInput: () => this._toggleInput ?? null,
     isExpanded: () => this.expanded,
-    requestExpand: () => this.#doExpand(),
-    requestCollapse: () => this.#doCollapse(),
+    requestExpand: () => this.expanded ||= true,
+    requestCollapse: () => ((this.expanded &&= false), true),
     getItemValue() {
       return this.value;
     },
@@ -224,9 +220,9 @@ export class PfSelect extends LitElement {
           </pf-chip-group>`}
           ${!typeahead ? '' : html`
           <input id="toggle-input"
-                 ?disabled="${disabled}"
                  ?hidden="${!typeahead}"
-                 placeholder="${this.#buttonLabel}"`}
+                 ?disabled="${disabled}"
+                 placeholder="${this.#buttonLabel}">`}
           <button id="toggle-button">
             <span id="button-text" style="display: contents;">
               <span id="toggle-text"

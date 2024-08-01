@@ -100,7 +100,7 @@ export class ComboboxController<
   }
 
   get #focusedItem() {
-    return this.items[this.#fc?.atFocusedItemIndex ?? -1] ?? null;
+    return this.#fc?.items.at(Math.max(this.#fc?.atFocusedItemIndex ?? -1, 0)) ?? null;
   }
 
   get #element() {
@@ -109,6 +109,11 @@ export class ComboboxController<
     } else if (this.options.getListboxElement() instanceof HTMLElement) {
       return this.options.getListboxElement();
     }
+  }
+
+  async hostConnected(): Promise<void> {
+    await this.host.updateComplete;
+    this.hostUpdated();
   }
 
   // hostUpdate(): void {
@@ -203,29 +208,31 @@ export class ComboboxController<
 
   #initController() {
     this.#fc?.hostDisconnected();
+    const getItems = () => this.items;
+    const getItemsContainer = () => this.#listbox;
     if (this.#isTypeahead) {
       this.#fc = ActivedescendantController.of(this.host, {
-        getItems: () => this.items,
+        getItems,
+        getItemsContainer,
         getControlsElements: () => [this.#button, this.#input].filter(x => !!x),
-        getItemsContainer: () => this.#listbox,
         setItemActive: this.options.setItemActive,
       });
     } else {
       this.#fc = RovingTabindexController.of(this.host, {
-        getItems: () => this.items,
-        getItemsContainer: () => this.#listbox,
+        getItems,
+        getItemsContainer,
         getControlsElements: () => [this.#button].filter(x => !!x),
       });
     }
   }
 
-  #onClickToggle() {
-    if (this.options.isExpanded()) {
-      this.options.requestExpand();
+  #onClickToggle = () =>{
+    if (!this.options.isExpanded()) {
+      this.show();
     } else {
-      this.options.requestCollapse();
+      this.hide();
     }
-  }
+  };
 
   /**
    * Handle keypresses on the input
@@ -281,7 +288,7 @@ export class ComboboxController<
    * +-----------------------------------+-----------------------------------+
    * @param event keydown event
    */
-  #onKeydownInput(event: KeyboardEvent) {
+  #onKeydownInput = (event: KeyboardEvent) => {
     switch (event.key) {
       case 'ArrowDown':
       case 'ArrowUp':
@@ -293,7 +300,7 @@ export class ComboboxController<
         break;
       case 'Escape':
         if (!this.options.isExpanded()) {
-          this.options.getToggleInput()!.value = '';
+          this.#input!.value = '';
           this.host.requestUpdate();
         }
         this.hide();
@@ -314,12 +321,14 @@ export class ComboboxController<
       case 'SymbolLock':
         break;
       default:
-        this.show();
+        if (!this.options.isExpanded()) {
+          this.show();
+        }
     }
-  }
+  };
 
-  #onKeyupInput() {
-    const { value } = this.options.getToggleInput();
+  #onKeyupInput = () => {
+    const { value } = this.#input!;
     for (const item of this.items) {
       item.hidden =
         !!this.options.isExpanded()
@@ -328,27 +337,27 @@ export class ComboboxController<
          .toLowerCase()
          .startsWith(value.toLowerCase());
     }
-  }
+  };
 
-  #onKeydownButton(event: KeyboardEvent) {
+  #onKeydownButton = (event: KeyboardEvent) => {
     if (this.#isTypeahead) {
       return this.#onKeydownMenu(event);
     } else {
       return this.#onKeydownInput(event);
     }
-  }
+  };
 
-  #onKeydownListbox(event: KeyboardEvent) {
+  #onKeydownListbox = (event: KeyboardEvent) => {
     if (!this.#isTypeahead && event.key === 'Escape') {
       this.hide();
-      this.options.getToggleButton()?.focus();
+      this.#button?.focus();
     }
-  }
+  };
 
-  #onFocusoutListbox(event: FocusEvent) {
+  #onFocusoutListbox = (event: FocusEvent) => {
     if (!this.#isTypeahead) {
       if (this.options.isExpanded()) {
-        const root = this.#element.getRootNode();
+        const root = this.#element?.getRootNode();
         if ((root instanceof ShadowRoot || root instanceof Document)
                 && !this.items.includes(event.relatedTarget as Item)
         ) {
@@ -356,15 +365,15 @@ export class ComboboxController<
         }
       }
     }
-  }
+  };
 
-  #onKeydownMenu(event: KeyboardEvent) {
+  #onKeydownMenu = (event: KeyboardEvent) => {
     switch (event.key) {
       case 'ArrowDown':
       case 'ArrowUp':
         this.show();
     }
-  }
+  };
 
   public async show(): Promise<void> {
     if (await this.options.requestExpand() && !this.#isTypeahead) {

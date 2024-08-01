@@ -20,14 +20,8 @@ export class RovingTabindexController<
     return new RovingTabindexController(host, options);
   }
 
-  override set itemsContainerElement(container: HTMLElement) {
-    super.itemsContainerElement = container;
-  }
-
-  #atFocusedItemIndex = -1;
-
   get atFocusedItemIndex(): number {
-    return this.#atFocusedItemIndex;
+    return super.atFocusedItemIndex;
   }
 
   /**
@@ -35,8 +29,8 @@ export class RovingTabindexController<
    * @param item item
    */
   set atFocusedItemIndex(index: number) {
-    this.#atFocusedItemIndex = index;
-    const item = this.items.at(index);
+    super.atFocusedItemIndex = index;
+    const item = this.items.at(this.atFocusedItemIndex);
     for (const focusable of this.atFocusableItems) {
       focusable.tabIndex = item === focusable ? 0 : -1;
     }
@@ -51,7 +45,7 @@ export class RovingTabindexController<
 
   public set items(items: Item[]) {
     this._items = items;
-    const pivot = this.atFocusedItemIndex;
+    const pivot = Math.max(0, this.atFocusedItemIndex);
     const firstFocusableIndex = items.indexOf(this.atFocusableItems.at(0)!);
     const pivotFocusableIndex = items.indexOf(this.items
         .slice(pivot)
@@ -75,7 +69,6 @@ export class RovingTabindexController<
             && !event.altKey
             && !event.metaKey
             && !!this.atFocusableItems.length
-            && !!event.composedPath().some(x =>
-              this.atFocusableItems.includes(x as Item)));
+            && !!event.composedPath().includes(this.itemsContainerElement!));
   }
 }

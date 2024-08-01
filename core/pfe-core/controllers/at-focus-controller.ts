@@ -20,13 +20,38 @@ export interface ATFocusControllerOptions<Item extends HTMLElement> {
 export abstract class ATFocusController<Item extends HTMLElement> {
   #itemsContainerElement: HTMLElement | null = null;
 
+  #atFocusedItemIndex = -1;
+
   protected _items: Item[] = [];
 
   /** All items */
   abstract items: Item[];
 
   /** Index of the Item which currently has assistive technology focus */
-  abstract atFocusedItemIndex: number;
+  get atFocusedItemIndex() {
+    return this.#atFocusedItemIndex;
+  }
+
+  set atFocusedItemIndex(index: number) {
+    const direction = this.atFocusedItemIndex < index ? -1 : 1;
+    const { items } = this;
+    let item = items.at(index);
+    if (items.length) {
+      while (!item || !this.atFocusableItems.includes(item)) {
+        if (index < 0) {
+          index = items.indexOf(this.lastATFocusableItem!);
+        } else if (index >= items.length
+              || index === items.indexOf(this.lastATFocusableItem!)) {
+          index = 0;
+        } else {
+          index = index + direction;
+        }
+        this.#atFocusedItemIndex = index;
+        item = items.at(index);
+      }
+    }
+    this.#atFocusedItemIndex = index;
+  }
 
   get container(): HTMLElement {
     return this.options.getItemsContainer?.() ?? this.host as unknown as HTMLElement;

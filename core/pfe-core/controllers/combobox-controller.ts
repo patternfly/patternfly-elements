@@ -292,8 +292,10 @@ export class ComboboxController<
     switch (event.key) {
       case 'ArrowDown':
       case 'ArrowUp':
-        this.#preventListboxGainingFocus = event.altKey;
-        this.show();
+        if (!this.options.isExpanded()) {
+          this.#preventListboxGainingFocus = event.altKey;
+          this.show();
+        }
         break;
       case 'Enter':
         this.hide();
@@ -317,6 +319,7 @@ export class ComboboxController<
       case 'CapsLock':
       case 'FnLock':
       case 'NumLock':
+      case 'Tab':
       case 'ScrollLock':
       case 'SymbolLock':
         break;

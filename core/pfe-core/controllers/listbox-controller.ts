@@ -156,7 +156,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
   set multi(v: boolean) {
     this.#options.multi = v;
-    this.container?.setAttribute('aria-multi-selectable', String(!!this.#options.multi));
+    this.host.requestUpdate();
   }
 
   get items(): Item[] {
@@ -175,10 +175,13 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * sets the listbox value based on selected options
    * @param selected item or items
    */
-  set selected(selected: Item | Item[] | null) {
+  set selected(selected: Item[]) {
     this.#selectedItems = new Set(selected == null ? selected
                                 : Array.isArray(selected) ? selected
                                 : [selected]);
+    for (const item of this.items) {
+      this.#options.setItemSelected.call(item, this.#selectedItems.has(item));
+    }
     this.host.requestUpdate();
   }
 
@@ -211,10 +214,10 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     }
     ListboxController.instances.set(host, this as unknown as ListboxController<HTMLElement>);
     this.host.addController(this);
+    this.multi = this.#options.multi ?? false;
     if (this.container?.isConnected) {
       this.hostConnected();
     }
-    this.multi = this.#options.multi ?? false;
   }
 
   async hostConnected(): Promise<void> {
@@ -232,9 +235,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   hostUpdated(): void {
     this.container?.setAttribute('role', 'listbox');
     this.container?.setAttribute('aria-disabled', String(!!this.disabled));
-    for (const item of this.items) {
-      this.#options.setItemSelected.call(item, this.isSelected(item));
-    }
+    this.container?.setAttribute('aria-multi-selectable', String(!!this.#options.multi));
   }
 
   hostDisconnected(): void {
@@ -267,7 +268,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     if (target) {
       if (!this.multi) {
         // select target and deselect all other options
-        this.selected = target;
+        this.selected = [target];
       } else if (!event.shiftKey) {
         this.selected = this.items // todo: improve this intercalation
             .map(item => item === target || this.isSelected(item) ? item : null)
@@ -316,7 +317,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
           const selectableItems = this.items.filter(item =>
             !this.#options.isItemDisabled.call(item));
           if (!arraysAreEquivalent(this.selected, selectableItems)) {
-            this.selected = null;
+            this.selected = [];
           } else {
             this.selected = selectableItems;
           }
@@ -328,7 +329,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
         if (!this.multi && !this.#options.isItemDisabled.call(item)) {
-          this.selected = item;
+          this.selected = [item];
         } else if (this.multi && event.shiftKey) {
           // update starting item for other multiselect
           this.selected = this.#getMultiSelection(item, this.#options.getATFocusedItem());

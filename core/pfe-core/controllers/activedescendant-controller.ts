@@ -9,6 +9,11 @@ export interface ActivedescendantControllerOptions<
   Item extends HTMLElement
 > extends ATFocusControllerOptions<Item> {
   /**
+   * Returns a reference to the element which acts as the assistive technology container for
+   * the items. In the case of a combobox, this is the input element.
+   */
+  getActiveDescendentContainer(): HTMLElement | null;
+  /**
    * Optional callback to control the assistive technology focus behavior of items.
    * By default, ActivedescendantController will not do anything special to items when they receive
    * assistive technology focus, and will only set the `activedescendant` property on the container.
@@ -115,19 +120,17 @@ export class ActivedescendantController<
    * @param item item
    */
   set atFocusedItemIndex(index: number) {
+    const { canControlLightDom } = ActivedescendantController;
     super.atFocusedItemIndex = index;
     const item = this._items.at(this.atFocusedItemIndex);
     for (const _item of this.items) {
       this.options.setItemActive?.call(_item, _item === item);
     }
-    if (this.itemsContainerElement) {
-      for (const el of [this.itemsContainerElement, ...this.#controlsElements]) {
-        if (!ActivedescendantController.canControlLightDom) {
-          el?.setAttribute('aria-activedescendant', item?.id ?? '');
-        } else if (el) {
-          el.ariaActiveDescendantElement = item ?? null;
-        }
-      }
+    const container = this.options.getActiveDescendentContainer();
+    if (!canControlLightDom) {
+      container?.setAttribute('aria-activedescendant', item?.id ?? '');
+    } else if (container) {
+      container.ariaActiveDescendantElement = item ?? null;
     }
     this.host.requestUpdate();
   }

@@ -197,7 +197,7 @@ export class ComboboxController<
                 ?? [];
     const label = this.options.getFallbackLabel();
 
-    for (const element of [this.#button, this.#input].filter(x => !!x)) {
+    for (const element of [this.#button, this.#listbox, this.#input].filter(x => !!x)) {
       if ('ariaLabelledByElements' in HTMLElement.prototype && labels.filter(x => !!x).length) {
         element.ariaLabelledByElements = [...labels ?? []] as readonly Element[];
       } else {
@@ -214,6 +214,7 @@ export class ComboboxController<
       this.#fc = ActivedescendantController.of(this.host, {
         getItems,
         getItemsContainer,
+        getActiveDescendentContainer: () => this.#input,
         getControlsElements: () => [this.#button, this.#input].filter(x => !!x),
         setItemActive: this.options.setItemActive,
       });
@@ -330,7 +331,7 @@ export class ComboboxController<
     }
   };
 
-  #onKeyupInput = () => {
+  #onKeyupInput = (event: KeyboardEvent) => {
     const { value } = this.#input!;
     for (const item of this.items) {
       item.hidden =
@@ -358,14 +359,12 @@ export class ComboboxController<
   };
 
   #onFocusoutListbox = (event: FocusEvent) => {
-    if (!this.#isTypeahead) {
-      if (this.options.isExpanded()) {
-        const root = this.#element?.getRootNode();
-        if ((root instanceof ShadowRoot || root instanceof Document)
-                && !this.items.includes(event.relatedTarget as Item)
-        ) {
-          this.hide();
-        }
+    if (!this.#isTypeahead && this.options.isExpanded()) {
+      const root = this.#element?.getRootNode();
+      if ((root instanceof ShadowRoot || root instanceof Document)
+          && !this.items.includes(event.relatedTarget as Item)
+      ) {
+        this.hide();
       }
     }
   };
@@ -374,7 +373,9 @@ export class ComboboxController<
     switch (event.key) {
       case 'ArrowDown':
       case 'ArrowUp':
-        this.show();
+        if (!this.options.isExpanded()) {
+          this.show();
+        }
     }
   };
 

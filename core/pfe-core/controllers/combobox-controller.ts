@@ -57,6 +57,7 @@ export class ComboboxController<
   ) {
     host.addController(this);
     this.#lb = ListboxController.of(host, {
+      isItem: options.isItem,
       getItemsContainer: options.getListboxElement,
       getControlsElements: () => [this.#button, this.#input].filter(x => !!x),
       getATFocusedItem: () => this.items[this.#fc?.atFocusedItemIndex ?? -1] ?? null,
@@ -152,12 +153,14 @@ export class ComboboxController<
   #initListbox() {
     this.#listbox?.removeEventListener('focusout', this.#onFocusoutListbox);
     this.#listbox?.removeEventListener('keydown', this.#onKeydownListbox);
+    this.#listbox?.removeEventListener('click', this.#onClickListbox);
     this.#listbox = this.options.getListboxElement();
     if (!this.#listbox) {
       throw new Error('ComboboxController getListboxElement() option must return an element');
     }
     this.#listbox.addEventListener('focusout', this.#onFocusoutListbox);
     this.#listbox.addEventListener('keydown', this.#onKeydownListbox);
+    this.#listbox.addEventListener('click', this.#onClickListbox);
     this.#listbox.id ??= getRandomId();
   }
 
@@ -230,10 +233,16 @@ export class ComboboxController<
     }
   }
 
-  #onClickToggle = () =>{
+  #onClickToggle = () => {
     if (!this.options.isExpanded()) {
       this.show();
     } else {
+      this.hide();
+    }
+  };
+
+  #onClickListbox = (event: MouseEvent) => {
+    if (event.composedPath().some(node => this.options.isItem(node as Item))) {
       this.hide();
     }
   };

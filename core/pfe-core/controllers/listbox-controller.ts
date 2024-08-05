@@ -28,6 +28,11 @@ export interface ListboxControllerOptions<Item extends HTMLElement> {
    */
   isItemDisabled?(this: Item): boolean;
   /**
+   * Predicate which determines if a child of the listbox is in fact an item
+   * and not, for example, a presentational divider.
+   */
+  isItem(item?: EventTarget | null): item is Item;
+  /**
    * Function returning the item which currently has assistive technology focus.
    * In most cases, this should be the `atFocusedItem` of an ATFocusController
    * i.e. RovingTabindexController or ActivedescendantController.
@@ -251,10 +256,65 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     return this.#selectedItems.has(item);
   }
 
-  #getItemFromEvent(event: Event): Item | undefined {
-    return event
-        .composedPath()
-        .find(node => this.#items.includes(node as Item)) as Item | undefined;
+  /**
+   * In the case where aria IDL attributes are not supported,
+   * we need to correlate the item in the event path (i.e. the shadow dom clone)
+   * with the item in listbox controller's root (i.e. the hidden light dom original)
+   * XXX: as long as there is no DOM preceeding the shadow root clones, this will work
+   * @param event click or keyboard event
+   */
+  #getItemFromEvent(event: Event): Item | null {
+    // NOTE(bennypowers): I am aware that this function *sucks*
+    // you're more than welcome to improve it.
+    // make sure there are unit tests first
+    const path = event.composedPath();
+    const tabindexed = this.items.some(x => x.hasAttribute('tabindex'));
+    if (tabindexed) {
+      const item = path.find(this.#options.isItem);
+      if (item) {
+        return item;
+      }
+    }
+    const element = event.target as HTMLElement;
+    const root = element.getRootNode() as ShadowRoot | Document;
+    const shadowRootListboxId = element?.getAttribute('aria-controls');
+    const shadowRootListboxElement =
+      shadowRootListboxId && root.getElementById(shadowRootListboxId ?? '');
+    const shadowRootHasActiveDescendantElement =
+      root.querySelector(`[aria-controls="${shadowRootListboxId}"][aria-activedescendant]`);
+    const adId = shadowRootHasActiveDescendantElement?.getAttribute('aria-activedescendant');
+    const shadowRootItem = adId && root.getElementById(adId ?? '') as Item | null;
+
+    if (shadowRootItem && shadowRootListboxElement) {
+      if (this.items.includes(shadowRootItem)) {
+        return shadowRootItem;
+      } else {
+        const index =
+          Array.from(shadowRootListboxElement?.children ?? [])
+              .filter(this.#options.isItem)
+              .indexOf(shadowRootItem);
+        return this.#items[index];
+      }
+    }
+
+    const itemFromEventContainer =
+      shadowRootListboxId ? shadowRootListboxElement
+    : path.find(x =>
+      x instanceof HTMLElement && x.role === 'listbox') as HTMLElement;
+
+    if (itemFromEventContainer) {
+      const possiblyShadowRootContainerItems = Array.from(itemFromEventContainer.children)
+          .filter(this.#options.isItem);
+
+      const index = possiblyShadowRootContainerItems
+          .findIndex(node => path.includes(node));
+
+      if (index >= 0) {
+        return this.items[index] ?? null;
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -297,8 +357,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * @param event keydown event
    */
   #onKeydown = (event: KeyboardEvent) => {
-    const target = this.#getItemFromEvent(event);
-    const item = target ?? this.#options.getATFocusedItem();
+    const item = this.#getItemFromEvent(event) ?? this.#options.getATFocusedItem();
 
     if (this.disabled || !item || event.altKey || event.metaKey) {
       return;
@@ -325,6 +384,14 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         }
         break;
       case 'Enter':
+        // enter and space are only applicable if a listbox option is clicked
+        // an external text input should not trigger multiselect
+        if (this.#options.isItem(event.target)
+        || (event.target as HTMLElement).getAttribute?.('aria-controls') === this.container.id) {
+          this.#selectItem(item, event.shiftKey);
+          event.preventDefault();
+        }
+        break;
       case ' ':
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect

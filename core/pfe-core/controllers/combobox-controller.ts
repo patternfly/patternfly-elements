@@ -215,6 +215,7 @@ export class ComboboxController<
       this.#fc = ActivedescendantController.of(this.host, {
         getItems,
         getItemsContainer,
+        getOrientation: () => 'vertical',
         getActiveDescendantContainer: () => this.#input,
         getControlsElements: () => [this.#button, this.#input].filter(x => !!x),
         setItemActive: this.options.setItemActive,
@@ -223,6 +224,7 @@ export class ComboboxController<
       this.#fc = RovingTabindexController.of(this.host, {
         getItems,
         getItemsContainer,
+        getOrientation: () => 'vertical',
         getControlsElements: () => [this.#button].filter(x => !!x),
       });
     }
@@ -291,6 +293,9 @@ export class ComboboxController<
    * @param event keydown event
    */
   #onKeydownInput = (event: KeyboardEvent) => {
+    if (event.ctrlKey || event.shiftKey) {
+      return;
+    }
     switch (event.key) {
       case 'ArrowDown':
       case 'ArrowUp':

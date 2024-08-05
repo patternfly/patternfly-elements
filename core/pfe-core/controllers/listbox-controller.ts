@@ -313,7 +313,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       // ctrl+A de/selects all options
       case 'a':
       case 'A':
-        if (event.ctrlKey) {
+        if (event.ctrlKey && event.target === this.container) {
           const selectableItems = this.items.filter(item =>
             !this.#options.isItemDisabled.call(item));
           if (!arraysAreEquivalent(this.selected, selectableItems)) {
@@ -328,20 +328,26 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       case ' ':
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
-        if (!this.multi && !this.#options.isItemDisabled.call(item)) {
-          this.selected = [item];
-        } else if (this.multi && event.shiftKey) {
-          // update starting item for other multiselect
-          this.selected = this.#getMultiSelection(item, this.#options.getATFocusedItem());
-          this.#shiftStartingItem = item;
+        if (event.target === this.container) {
+          this.#selectItem(item, event.shiftKey);
+          event.preventDefault();
         }
-        event.preventDefault();
         break;
       default:
         break;
     }
     this.host.requestUpdate();
   };
+
+  #selectItem(item: Item, multiSelection = false) {
+    if (!this.multi && !this.#options.isItemDisabled.call(item)) {
+      this.selected = [item];
+    } else if (this.multi && multiSelection) {
+      // update starting item for other multiselect
+      this.selected = this.#getMultiSelection(item, this.#options.getATFocusedItem());
+      this.#shiftStartingItem = item;
+    }
+  }
 
   /**
    * updates option selections for multiselectable listbox:

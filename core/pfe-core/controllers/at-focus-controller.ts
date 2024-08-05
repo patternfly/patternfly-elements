@@ -38,15 +38,13 @@ export abstract class ATFocusController<Item extends HTMLElement> {
     let item = items.at(index);
     if (items.length) {
       while (!item || !this.atFocusableItems.includes(item)) {
-        if (index < 0) {
+        if (index <= 0) {
           index = items.indexOf(this.lastATFocusableItem!);
-        } else if (index >= items.length
-              || index === items.indexOf(this.lastATFocusableItem!)) {
+        } else if (index >= items.indexOf(this.lastATFocusableItem!)) {
           index = 0;
         } else {
           index = index + direction;
         }
-        this.#atFocusedItemIndex = index;
         item = items.at(index);
       }
     }

@@ -18,13 +18,14 @@ export interface ComboboxControllerOptions<Item extends HTMLElement> extends
   Omit<AllOptions<Item>,
     | 'getATFocusedItem'
     | 'getControlsElements'
+    | 'getActiveDescendantContainer'
     | 'getItemsContainer'> {
   isExpanded(): boolean;
   requestExpand(): boolean | Promise<boolean>;
   requestCollapse(): boolean | Promise<boolean>;
   getListboxElement(): HTMLElement | null;
   getToggleButton(): HTMLElement | null;
-  getToggleInput(): HTMLElement & { value: string } | null;
+  getComboboxInput(): HTMLElement & { value: string } | null;
   getFallbackLabel(): string;
   getItemValue(this: Item): string;
 }
@@ -96,7 +97,7 @@ export class ComboboxController<
   }
 
   get #isTypeahead() {
-    return this.options.getToggleInput() && this.options.getToggleButton();
+    return this.options.getComboboxInput() && this.options.getToggleButton();
   }
 
   get #focusedItem() {
@@ -177,7 +178,7 @@ export class ComboboxController<
     this.#input?.removeEventListener('keyup', this.#onKeyupInput);
     this.#input?.removeEventListener('keydown', this.#onKeydownInput);
 
-    this.#input = this.options.getToggleInput();
+    this.#input = this.options.getComboboxInput();
     if (this.#input && !('value' in this.#input)) {
       throw new Error(`ComboboxController getToggleInput() option must return an element with a value property`);
     } else if (this.#input) {
@@ -214,7 +215,7 @@ export class ComboboxController<
       this.#fc = ActivedescendantController.of(this.host, {
         getItems,
         getItemsContainer,
-        getActiveDescendentContainer: () => this.#input,
+        getActiveDescendantContainer: () => this.#input,
         getControlsElements: () => [this.#button, this.#input].filter(x => !!x),
         setItemActive: this.options.setItemActive,
       });
@@ -332,14 +333,30 @@ export class ComboboxController<
   };
 
   #onKeyupInput = (event: KeyboardEvent) => {
-    const { value } = this.#input!;
-    for (const item of this.items) {
-      item.hidden =
-        !!this.options.isExpanded()
-     && !!value
-     && !this.options.getItemValue.call(item)
-         .toLowerCase()
-         .startsWith(value.toLowerCase());
+    switch (event.key) {
+      case 'ArrowUp':
+      case 'ArrowDown': {
+        const item = this.#focusedItem;
+        const container = this.options.getComboboxInput();
+        if (item && container
+          /**
+           * NOTE: breaks safari VoiceOver
+           * @see (https://bugs.webkit.org/show_bug.cgi?id=269026)
+           */
+          && !this.options.isItemDisabled?.call(item)) {
+          container.value = this.options.getItemValue?.call(item);
+        }
+        break;
+      }
+      default:
+        for (const item of this.items) {
+          item.hidden =
+          !!this.options.isExpanded()
+       && !!this.#input!.value
+       && !this.options.getItemValue.call(item)
+           .toLowerCase()
+           .startsWith(this.#input!.value.toLowerCase());
+        }
     }
   };
 

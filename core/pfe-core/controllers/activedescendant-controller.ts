@@ -12,7 +12,7 @@ export interface ActivedescendantControllerOptions<
    * Returns a reference to the element which acts as the assistive technology container for
    * the items. In the case of a combobox, this is the input element.
    */
-  getActiveDescendentContainer(): HTMLElement | null;
+  getActiveDescendantContainer(): HTMLElement | null;
   /**
    * Optional callback to control the assistive technology focus behavior of items.
    * By default, ActivedescendantController will not do anything special to items when they receive
@@ -21,6 +21,11 @@ export interface ActivedescendantControllerOptions<
    * active state. You may use this to set active styles.
    */
   setItemActive?(this: Item, active: boolean): void;
+  /**
+   * Optional callback to retrieve the value from an option element.
+   * By default, retrieves the `value` attribute, or the text content.
+   */
+  getItemValue?(this: Item): string;
 }
 
 /**
@@ -70,7 +75,8 @@ export class ActivedescendantController<
   Item extends HTMLElement = HTMLElement
 > extends ATFocusController<Item> {
   public static get canControlLightDom(): boolean {
-    return 'ariaActiveDescendantElement' in HTMLElement.prototype;
+    // return 'ariaActiveDescendantElement' in HTMLElement.prototype;
+    return !(true);
   }
 
   static of<Item extends HTMLElement>(
@@ -126,7 +132,7 @@ export class ActivedescendantController<
     for (const _item of this.items) {
       this.options.setItemActive?.call(_item, _item === item);
     }
-    const container = this.options.getActiveDescendentContainer();
+    const container = this.options.getActiveDescendantContainer();
     if (!canControlLightDom) {
       container?.setAttribute('aria-activedescendant', item?.id ?? '');
     } else if (container) {
@@ -195,6 +201,9 @@ export class ActivedescendantController<
     protected options: ActivedescendantControllerOptions<Item>,
   ) {
     super(host, options);
+    this.options.getItemValue ??= function(this: Item) {
+      return (this as unknown as HTMLOptionElement).value;
+    };
   }
 
   #onItemsDOMChange(records: MutationRecord[]) {

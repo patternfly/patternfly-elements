@@ -7,12 +7,21 @@ function isATFocusableItem(el: Element): el is HTMLElement {
 }
 
 export interface ATFocusControllerOptions<Item extends HTMLElement> {
-  getItems(): Item[];
-  getItemsContainer?(): HTMLElement | null;
-  getOrientation?(): 'horizontal' | 'vertical' | 'grid' | 'undefined';
   /**
-   * Function returning the DOM node which is the accessibility controller of item container
-   * e.g. the button element in the combobox which is associated with the listbox.
+   * Callback to return the list of items
+   */
+  getItems(): Item[];
+  /**
+   * Callback to return the listbox container element
+   */
+  getItemsContainer?(): HTMLElement | null;
+  /**
+   * Callback to return the direction of navigation in the list box.
+   */
+  getOrientation?(): 'horizontal' | 'vertical' | 'both' | 'undefined';
+  /**
+   * Function returning the DOM nodes which are accessibility controllers of item container
+   * e.g. the button toggle and combobox input which control a listbox.
    */
   getControlsElements?(): HTMLElement[];
 }
@@ -27,37 +36,41 @@ export abstract class ATFocusController<Item extends HTMLElement> {
   /** All items */
   abstract items: Item[];
 
-  /** Index of the Item which currently has assistive technology focus */
+  /**
+   * Index of the Item which currently has assistive technology focus
+   * Set this to change focus. Setting to an out-of-bounds value will
+   * wrap around to the other side of the list.
+   */
   get atFocusedItemIndex() {
     return this.#atFocusedItemIndex;
   }
 
   set atFocusedItemIndex(index: number) {
-    const direction = this.atFocusedItemIndex < index ? -1 : 1;
-    const { items } = this;
-    let item = items.at(index);
+    const previousIndex = this.#atFocusedItemIndex;
+    const direction = index > previousIndex ? 1 : -1;
+    const { items, atFocusableItems, lastATFocusableItem } = this;
+    const itemsIndexOfLastATFocusableItem = items.indexOf(lastATFocusableItem!);
+    let itemToGainFocus = items.at(index);
+    let itemToGainFocusIsFocusable = atFocusableItems.includes(itemToGainFocus!);
     if (items.length) {
-      while (!item || !this.atFocusableItems.includes(item)) {
-        if (index <= 0) {
-          index = items.indexOf(this.lastATFocusableItem!);
-        } else if (index >= items.indexOf(this.lastATFocusableItem!)) {
+      while (!itemToGainFocus || !itemToGainFocusIsFocusable) {
+        if (index < 0) {
+          index = itemsIndexOfLastATFocusableItem;
+        } else if (index >= itemsIndexOfLastATFocusableItem) {
           index = 0;
         } else {
           index = index + direction;
         }
-        item = items.at(index);
+        itemToGainFocus = items.at(index);
+        itemToGainFocusIsFocusable = atFocusableItems.includes(itemToGainFocus!);
       }
     }
     this.#atFocusedItemIndex = index;
   }
 
-  get container(): HTMLElement {
-    return this.options.getItemsContainer?.() ?? this.host as unknown as HTMLElement;
-  }
-
+  /** Elements which control the items container e.g. a combobox input */
   get controlsElements(): HTMLElement[] {
-    const elementOrElements = this.options.getControlsElements?.();
-    return [elementOrElements].filter(x => !!x).flat();
+    return this.options.getControlsElements?.() ?? [];
   }
 
   /** All items which are able to receive assistive technology focus */
@@ -91,6 +104,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
                        : this.lastATFocusableItem;
   }
 
+  /** The element containing focusable items, e.g. a listbox */
   get itemsContainerElement() {
     return this.#itemsContainerElement ?? null;
   }
@@ -111,6 +125,9 @@ export abstract class ATFocusController<Item extends HTMLElement> {
     this.host.updateComplete.then(() => this.initItems());
   }
 
+  /**
+   * Initialize the items and itemsContainerElement fields
+   */
   protected initItems(): void {
     this.items = this.options.getItems();
     this.itemsContainerElement ??= this.#initContainer();
@@ -125,7 +142,6 @@ export abstract class ATFocusController<Item extends HTMLElement> {
   }
 
   hostUpdate(): void {
-    // this.atFocusedItemIndex ??= this.firstATFocusableItem;
     this.itemsContainerElement ??= this.#initContainer();
   }
 
@@ -134,6 +150,11 @@ export abstract class ATFocusController<Item extends HTMLElement> {
       ?? (this.host instanceof HTMLElement ? this.host : null);
   }
 
+  /**
+   * Implement this predicate to filter out keyboard events
+   * which should not result in a focus change. If this predicate returns true, then
+   * a focus change should occur.
+   */
   protected abstract isRelevantKeyboardEvent(event: Event): event is KeyboardEvent;
 
   /**

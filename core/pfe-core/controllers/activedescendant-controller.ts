@@ -75,8 +75,7 @@ export class ActivedescendantController<
   Item extends HTMLElement = HTMLElement
 > extends ATFocusController<Item> {
   public static get canControlLightDom(): boolean {
-    // return 'ariaActiveDescendantElement' in HTMLElement.prototype;
-    return !(true);
+    return 'ariaActiveDescendantElement' in HTMLElement.prototype;
   }
 
   static of<Item extends HTMLElement>(
@@ -155,6 +154,7 @@ export class ActivedescendantController<
     }
   }
 
+  /** All items */
   get items() {
     return this._items;
   }
@@ -169,7 +169,6 @@ export class ActivedescendantController<
       throw new Error('items container must be an HTMLElement');
     }
     this.itemsContainerElement = container;
-    // this.#attrMO.disconnect();
     this._items =
         ActivedescendantController.canControlLightDom ? items
       : items?.map((item: Item) => {

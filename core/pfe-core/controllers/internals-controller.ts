@@ -79,8 +79,8 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   declare readonly willValidate: ElementInternals['willValidate'];
   declare readonly validationMessage: ElementInternals['validationMessage'];
 
-  public static getLabels(host: ReactiveControllerHost): Node[] {
-    return Array.from(this.instances.get(host)?.internals.labels ?? []);
+  public static getLabels(host: ReactiveControllerHost): Element[] {
+    return Array.from(this.instances.get(host)?.internals.labels ?? []) as Element[];
   }
 
   public static of(

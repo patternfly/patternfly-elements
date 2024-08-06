@@ -24,6 +24,7 @@ export interface ActivedescendantControllerOptions<
   /**
    * Optional callback to retrieve the value from an option element.
    * By default, retrieves the `value` attribute, or the text content.
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptionElement
    */
   getItemValue?(this: Item): string;
 }

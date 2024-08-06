@@ -2,17 +2,51 @@ import { nothing, type ReactiveController, type ReactiveControllerHost } from 'l
 import type { ActivedescendantControllerOptions } from './activedescendant-controller.js';
 import type { RovingTabindexControllerOptions } from './roving-tabindex-controller.js';
 import type { ATFocusController } from './at-focus-controller';
+import type { ListboxControllerOptions } from './listbox-controller.js';
 
-import { ListboxController, type ListboxControllerOptions } from './listbox-controller.js';
+import { ListboxController, isItemDisabled } from './listbox-controller.js';
 import { RovingTabindexController } from './roving-tabindex-controller.js';
 import { ActivedescendantController } from './activedescendant-controller.js';
 import { InternalsController } from './internals-controller.js';
 import { getRandomId } from '../functions/random.js';
+import type { RequireProps } from '../core.js';
 
 type AllOptions<Item extends HTMLElement> =
     ActivedescendantControllerOptions<Item>
   & ListboxControllerOptions<Item>
   & RovingTabindexControllerOptions<Item>;
+
+function getItemValue<Item extends HTMLElement>(this: Item): string {
+  if ('value' in this && typeof this.value === 'string') {
+    return this.value;
+  } else {
+    return '';
+  }
+}
+
+function filterItemOut<Item extends HTMLElement>(this: Item, value: string): boolean {
+  return !getItemValue.call(this)
+      .toLowerCase()
+      .startsWith(value.toLowerCase());
+}
+
+function setComboboxValue(this: HTMLElement, value: string): void {
+  if (!('value' in this)) {
+    // eslint-disable-next-line no-console
+    return console.warn(`Cannot set value on combobox element ${this.localName}`);
+  } else {
+    this.value = value;
+  }
+}
+
+function getComboboxValue(this: HTMLElement): string {
+  if ('value' in this && typeof this.value === 'string') {
+    return this.value;
+  } else {
+    // eslint-disable-next-line no-console
+    return console.warn(`Cannot get value from combobox element ${this.localName}`), '';
+  }
+}
 
 export interface ComboboxControllerOptions<Item extends HTMLElement> extends
   Omit<AllOptions<Item>,
@@ -47,7 +81,7 @@ export interface ComboboxControllerOptions<Item extends HTMLElement> extends
   /**
    * Returns the combobox input, if it exists
    */
-  getComboboxInput(): HTMLElement & { value: string } | null;
+  getComboboxInput(): HTMLElement | null;
   /**
    * Returns the label for the toggle button, combobox input, and listbox.
    * when `ariaLabelledByElements` is supported, the label elements associated with
@@ -55,9 +89,21 @@ export interface ComboboxControllerOptions<Item extends HTMLElement> extends
    */
   getFallbackLabel(): string;
   /**
-   * Called on an item to retrieve it's value string.
+   * Called on an item to retrieve it's value string. By default, returns the `value` property
+   * of the item, as if it implemented the `<option>` element's interface.
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptionElement
    */
-  getItemValue(this: Item): string;
+  getItemValue?(this: Item): string;
+  /**
+   * Optional callback, called on the combobox input element to set its value.
+   * by default, returns the element's `value` DOM property.
+   */
+  getComboboxValue?(this: HTMLElement): string;
+  /**
+   * Optional callback, called on the combobox input element to set its value.
+   * by default, sets the element's `value` DOM property.
+   */
+  setComboboxValue?(this: HTMLElement, value: string): void;
   /**
    * Called on each item, with the combobox input, to determine if the item should be shown in the
    * listbox or filtered out. Return false to hide the item. By default, checks whether the item's
@@ -85,7 +131,7 @@ export class ComboboxController<
   #lb: ListboxController<Item>;
   #fc?: ATFocusController<Item>;
   #preventListboxGainingFocus = false;
-  #input: HTMLElement & { value: string } | null = null;
+  #input: HTMLElement | null = null;
   #button: HTMLElement | null = null;
   #listbox: HTMLElement | null = null;
 
@@ -103,24 +149,37 @@ export class ComboboxController<
     return ActivedescendantController.canControlLightDom;
   }
 
+  private options: RequireProps<ComboboxControllerOptions<Item>,
+    | 'isItemDisabled'
+    | 'filterItemOut'
+    | 'getItemValue'
+    | 'getOrientation'
+    | 'getComboboxValue'
+    | 'setComboboxValue'
+  >;
+
   private constructor(
     public host: ReactiveControllerHost,
-    private options: ComboboxControllerOptions<Item>,
+    options: ComboboxControllerOptions<Item>,
   ) {
     host.addController(this);
+    this.options = {
+      getItemValue,
+      filterItemOut,
+      isItemDisabled,
+      getComboboxValue,
+      setComboboxValue,
+      getOrientation: () => 'vertical',
+      ...options,
+    };
     this.#lb = ListboxController.of(host, {
-      isItem: options.isItem,
-      getItemsContainer: options.getListboxElement,
+      isItem: this.options.isItem,
+      getItemsContainer: this.options.getListboxElement,
       getControlsElements: () => [this.#button, this.#input].filter(x => !!x),
       getATFocusedItem: () => this.items[this.#fc?.atFocusedItemIndex ?? -1] ?? null,
+      isItemDisabled: this.options.isItemDisabled,
       setItemSelected: this.options.setItemSelected,
     });
-    const { getItemValue } = options;
-    this.options.filterItemOut ??= function(this: Item, value: string) {
-      return !getItemValue.call(this)
-          .toLowerCase()
-          .startsWith(value.toLowerCase());
-    };
   }
 
   /** All items */
@@ -271,13 +330,14 @@ export class ComboboxController<
 
   #initController() {
     this.#fc?.hostDisconnected();
+    const { getOrientation } = this.options;
     const getItems = () => this.items;
     const getItemsContainer = () => this.#listbox;
     if (this.#isTypeahead) {
       this.#fc = ActivedescendantController.of(this.host, {
         getItems,
         getItemsContainer,
-        getOrientation: () => 'vertical',
+        getOrientation,
         getActiveDescendantContainer: () => this.#input,
         getControlsElements: () => [this.#button, this.#input].filter(x => !!x),
         setItemActive: this.options.setItemActive,
@@ -286,7 +346,7 @@ export class ComboboxController<
       this.#fc = RovingTabindexController.of(this.host, {
         getItems,
         getItemsContainer,
-        getOrientation: () => 'vertical',
+        getOrientation,
         getControlsElements: () => [this.#button].filter(x => !!x),
       });
     }
@@ -342,7 +402,7 @@ export class ComboboxController<
    * @param event keydown event
    */
   #onKeydownInput = (event: KeyboardEvent) => {
-    if (event.ctrlKey || event.shiftKey) {
+    if (event.ctrlKey || event.shiftKey || !this.#input) {
       return;
     }
     switch (event.key) {
@@ -358,7 +418,7 @@ export class ComboboxController<
         break;
       case 'Escape':
         if (!this.options.isExpanded()) {
-          this.#input!.value = '';
+          this.options.setComboboxValue.call(this.#input, '');
           this.host.requestUpdate();
         }
         this.#hide();
@@ -392,30 +452,37 @@ export class ComboboxController<
    * @param event keyup event
    */
   #onKeyupInput = (event: KeyboardEvent) => {
+    if (!this.#input) {
+      return;
+    }
     switch (event.key) {
       case 'ArrowUp':
       case 'ArrowDown': {
         const item = this.#focusedItem;
-        const container = this.options.getComboboxInput();
-        if (item && container
+        const combobox = this.options.getComboboxInput();
+        if (item && combobox
           /**
            * NOTE: Safari VoiceOver does not support aria-activedescendant, so Safari users
            * rely on the combobox input value being announced. It may be less-broken to avoid
            * announcing disabled items in that case.
            * @see (https://bugs.webkit.org/show_bug.cgi?id=269026)
            */
-          && !this.options.isItemDisabled?.call(item)) {
-          container.value = this.options.getItemValue?.call(item);
+          && !this.options.isItemDisabled.call(item)) {
+          const value = this.options.getItemValue?.call(item);
+          this.options.setComboboxValue.call(combobox, value);
         }
         break;
       }
-      default:
+      default: {
+        let value: string;
         for (const item of this.items) {
           item.hidden =
-          !!this.options.isExpanded()
-       && !!this.#input?.value
-       && this.options.filterItemOut?.call(item, this.#input.value) || false;
+              !!this.options.isExpanded()
+           && !!(value = this.options.getComboboxValue.call(this.#input))
+           && this.options.filterItemOut?.call(item, value)
+           || false;
         }
+      }
     }
   };
 

@@ -22,6 +22,7 @@ export interface ListboxControllerOptions<Item extends HTMLElement> {
   /**
    * Optional predicate to assertain whether a custom element item is disabled or not
    * By default, if the item matches any of these conditions, it is considered disabled:
+   * 1. it's `disabled` DOM property is `true`
    * 1. it has the `aria-disabled="true"` attribute
    * 2. it has the `disabled` attribute present
    * 3. it matches the `:disabled` pseudo selector
@@ -70,11 +71,16 @@ function setItemSelected<Item extends HTMLElement>(this: Item, selected: boolean
  * short of patching the `attachInternals` constructor, it may not be possible at
  * runtime to know with certainty that an arbitrary custom element is disabled or not.
  * @param item possibly disabled item
+ * @package do not import this outside of `@patternfly/pfe-core`, it is subject to change at any time
  */
-function isItemDisabled<Item extends HTMLElement>(this: Item): boolean {
-  return this.getAttribute('aria-disabled') === 'true'
-      || this.hasAttribute('disabled')
-      || this.matches(':disabled');
+export function isItemDisabled<Item extends HTMLElement>(this: Item): boolean {
+  if ('disabled' in this && typeof this.disabled === 'boolean') {
+    return this.disabled;
+  } else {
+    return this.getAttribute('aria-disabled') === 'true'
+        || this.hasAttribute('disabled')
+        || this.matches(':disabled');
+  }
 }
 
 let constructingAllowed = false;

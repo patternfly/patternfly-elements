@@ -60,7 +60,7 @@ export class RovingTabindexController<
     options: RovingTabindexControllerOptions<Item>,
   ) {
     super(host, options);
-    this.items = options.getItems();
+    this.initItems();
   }
 
   protected override isRelevantKeyboardEvent(event: Event): event is KeyboardEvent {

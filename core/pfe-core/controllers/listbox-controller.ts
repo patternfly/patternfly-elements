@@ -29,10 +29,18 @@ export interface ListboxControllerOptions<Item extends HTMLElement> {
    */
   isItemDisabled?(this: Item): boolean;
   /**
-   * Predicate which determines if a child of the listbox is in fact an item
-   * and not, for example, a presentational divider.
+   * Predicate which determines if a given element is in fact an item
+   * instead of e.g a presentational divider. By default, elements must meet the following criteria
+   * 1. element a child of a listbox role,
+   * 2. element does not have role="presentation"
+   * 2. element is not an `<hr>`
+   * **NB**: When overriding, you must avoid outside references. This predicate must
+   * only consider the element itself, without reference to the host element's items array.
+   * @example ```js
+   *          isItem: (item) => item instanceof MyCustomItem
+   *          ```
    */
-  isItem(item?: EventTarget | null): item is Item;
+  isItem?(item: EventTarget | null): item is Item;
   /**
    * Function returning the item which currently has assistive technology focus.
    * In most cases, this should be the `atFocusedItem` of an ATFocusController
@@ -63,6 +71,17 @@ function setItemSelected<Item extends HTMLElement>(this: Item, selected: boolean
   } else {
     this.removeAttribute('aria-selected');
   }
+}
+
+/**
+ * @param item possible disabled item
+ * @package do not import this outside of `@patternfly/pfe-core`, it is subject to change at any time
+ */
+export function isItem<Item extends HTMLElement>(item: EventTarget | null): item is Item {
+  return item instanceof Element
+    && item?.parentElement?.role === 'listbox'
+    && item?.role !== 'presentation'
+    && item?.localName !== 'hr';
 }
 
 /**
@@ -140,7 +159,11 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   /** Current active descendant when shift key is pressed */
   #shiftStartingItem: Item | null = null;
 
-  #options: RequireProps<ListboxControllerOptions<Item>, 'setItemSelected' | 'isItemDisabled'>;
+  #options: RequireProps<ListboxControllerOptions<Item>,
+    | 'setItemSelected'
+    | 'isItemDisabled'
+    | 'isItem'
+  >;
 
   /** All items */
   #items: Item[] = [];
@@ -207,7 +230,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     public host: ReactiveControllerHost,
     options: ListboxControllerOptions<Item>,
   ) {
-    this.#options = { setItemSelected, isItemDisabled, ...options };
+    this.#options = { setItemSelected, isItemDisabled, isItem, ...options };
     if (!constructingAllowed) {
       throw new Error('ListboxController must be constructed with `ListboxController.of()`');
     }

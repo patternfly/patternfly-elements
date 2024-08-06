@@ -4,7 +4,7 @@ import type { RovingTabindexControllerOptions } from './roving-tabindex-controll
 import type { ATFocusController } from './at-focus-controller';
 import type { ListboxControllerOptions } from './listbox-controller.js';
 
-import { ListboxController, isItemDisabled } from './listbox-controller.js';
+import { ListboxController, isItem, isItemDisabled } from './listbox-controller.js';
 import { RovingTabindexController } from './roving-tabindex-controller.js';
 import { ActivedescendantController } from './activedescendant-controller.js';
 import { InternalsController } from './internals-controller.js';
@@ -151,6 +151,7 @@ export class ComboboxController<
 
   private options: RequireProps<ComboboxControllerOptions<Item>,
     | 'isItemDisabled'
+    | 'isItem'
     | 'filterItemOut'
     | 'getItemValue'
     | 'getOrientation'
@@ -158,12 +159,15 @@ export class ComboboxController<
     | 'setComboboxValue'
   >;
 
+  #mo = new MutationObserver(() => this.#initItems());
+
   private constructor(
     public host: ReactiveControllerHost,
     options: ComboboxControllerOptions<Item>,
   ) {
     host.addController(this);
     this.options = {
+      isItem,
       getItemValue,
       filterItemOut,
       isItemDisabled,
@@ -263,6 +267,7 @@ export class ComboboxController<
    */
   #init() {
     this.#initListbox();
+    this.#initItems();
     this.#initButton();
     this.#initInput();
     this.#initLabels();
@@ -270,6 +275,7 @@ export class ComboboxController<
   }
 
   #initListbox() {
+    this.#mo.disconnect();
     this.#listbox?.removeEventListener('focusout', this.#onFocusoutListbox);
     this.#listbox?.removeEventListener('keydown', this.#onKeydownListbox);
     this.#listbox?.removeEventListener('click', this.#onClickListbox);
@@ -281,6 +287,7 @@ export class ComboboxController<
     this.#listbox.addEventListener('keydown', this.#onKeydownListbox);
     this.#listbox.addEventListener('click', this.#onClickListbox);
     this.#listbox.id ??= getRandomId();
+    this.#mo.observe(this.#listbox, { childList: true });
   }
 
   #initButton() {
@@ -335,19 +342,25 @@ export class ComboboxController<
     const getItemsContainer = () => this.#listbox;
     if (this.#isTypeahead) {
       this.#fc = ActivedescendantController.of(this.host, {
-        getItems,
-        getItemsContainer,
-        getOrientation,
+        getItems, getItemsContainer, getOrientation,
         getActiveDescendantContainer: () => this.#input,
         getControlsElements: () => [this.#button, this.#input].filter(x => !!x),
         setItemActive: this.options.setItemActive,
       });
     } else {
       this.#fc = RovingTabindexController.of(this.host, {
-        getItems,
-        getItemsContainer,
-        getOrientation,
+        getItems, getItemsContainer, getOrientation,
         getControlsElements: () => [this.#button].filter(x => !!x),
+      });
+    }
+  }
+
+  #initItems() {
+    if (this.#listbox) {
+      this.items = this.options.getItems();
+      this.items.forEach((item, index, options) => {
+        item.ariaSetSize = options.length.toString();
+        item.ariaPosInSet = index.toString();
       });
     }
   }
@@ -361,7 +374,7 @@ export class ComboboxController<
   };
 
   #onClickListbox = (event: MouseEvent) => {
-    if (event.composedPath().some(node => this.options.isItem(node as Item))) {
+    if (event.composedPath().some(this.options.isItem)) {
       this.#hide();
     }
   };

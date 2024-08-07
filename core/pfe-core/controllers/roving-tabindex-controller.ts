@@ -1,5 +1,6 @@
 import type { ReactiveControllerHost } from 'lit';
 import { ATFocusController, type ATFocusControllerOptions } from './at-focus-controller.js';
+import { Logger } from './logger.js';
 
 export type RovingTabindexControllerOptions<Item extends HTMLElement> =
   ATFocusControllerOptions<Item>;
@@ -20,6 +21,10 @@ export class RovingTabindexController<
     return new RovingTabindexController(host, options);
   }
 
+  #logger = new Logger(this.host);
+
+  #gainedInitialFocus = false;
+
   get atFocusedItemIndex(): number {
     return super.atFocusedItemIndex;
   }
@@ -34,7 +39,9 @@ export class RovingTabindexController<
     for (const i of this.items) {
       i.tabIndex = item === i ? 0 : -1;
     }
-    item?.focus();
+    if (this.#gainedInitialFocus) {
+      item?.focus();
+    }
     this.host.requestUpdate();
   }
 
@@ -60,6 +67,12 @@ export class RovingTabindexController<
   ) {
     super(host, options);
     this.initItems();
+    const container = options.getItemsContainer?.() ?? this.host;
+    if (container instanceof HTMLElement) {
+      container.addEventListener('focusin', () => this.#gainedInitialFocus = true, { once: true });
+    } else {
+      this.#logger.warn('RovingTabindexController requires a getItemsContainer function');
+    }
   }
 
   protected override isRelevantKeyboardEvent(event: Event): event is KeyboardEvent {

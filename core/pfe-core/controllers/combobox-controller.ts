@@ -62,12 +62,12 @@ export interface ComboboxControllerOptions<Item extends HTMLElement> extends
   isExpanded(): boolean;
   /**
    * Callback which the host must implement to change the expanded state to true.
-   * Return false to prevent the change.
+   * Return or resolve false to prevent the change.
    */
   requestShowListbox(): boolean | Promise<boolean>;
   /**
    * Callback which the host must implement to change the expanded to false.
-   * Return false to prevent the default.
+   * Return or resolve false to prevent the default.
    */
   requestHideListbox(): boolean | Promise<boolean>;
   /**
@@ -536,7 +536,8 @@ export class ComboboxController<
   };
 
   async #show(): Promise<void> {
-    if (await this.options.requestShowListbox() && !this.#isTypeahead) {
+    const success = await this.options.requestShowListbox();
+    if (success !== false && !this.#isTypeahead) {
       if (!this.#preventListboxGainingFocus) {
         (this.#focusedItem ?? this.#fc?.nextATFocusableItem)?.focus();
         this.#preventListboxGainingFocus = false;
@@ -545,7 +546,8 @@ export class ComboboxController<
   }
 
   async #hide(): Promise<void> {
-    if (await this.options.requestHideListbox() && !this.#isTypeahead) {
+    const success = await this.options.requestHideListbox();
+    if (success !== false && !this.#isTypeahead) {
       this.options.getToggleButton()?.focus();
     }
   }

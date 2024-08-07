@@ -210,13 +210,13 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * @param selected item or items
    */
   set selected(selected: Item[]) {
-    this.#selectedItems = new Set(selected == null ? selected
-                                : Array.isArray(selected) ? selected
-                                : [selected]);
-    for (const item of this.items) {
-      this.#options.setItemSelected.call(item, this.#selectedItems.has(item));
+    if (!arraysAreEquivalent(selected, Array.from(this.#selectedItems))) {
+      this.#selectedItems = new Set(selected);
+      for (const item of this.items) {
+        this.#options.setItemSelected.call(item, this.#selectedItems.has(item));
+      }
+      this.host.requestUpdate();
     }
-    this.host.requestUpdate();
   }
 
   /**

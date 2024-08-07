@@ -40,7 +40,6 @@ export class PfSelectChangeEvent extends Event {
  * @slot placeholder - placeholder text for the select. Overrides the `placeholder` attribute.
  * @fires open - when the menu toggles open
  * @fires close - when the menu toggles closed
- * @fires filter - when the filter value changes. used to perform custom filtering
  */
 @customElement('pf-select')
 export class PfSelect extends LitElement {
@@ -125,13 +124,11 @@ export class PfSelect extends LitElement {
                          || this.#buttonLabel,
     getListboxElement: () => this._listbox ?? null,
     getToggleButton: () => this._toggleButton ?? null,
-    getToggleInput: () => this._toggleInput ?? null,
+    getComboboxInput: () => this._toggleInput ?? null,
     isExpanded: () => this.expanded,
-    requestExpand: () => this.expanded ||= true,
-    requestCollapse: () => ((this.expanded &&= false), true),
-    getItemValue() {
-      return this.value;
-    },
+    requestShowListbox: () => this.expanded ||= true,
+    requestHideListbox: () => ((this.expanded &&= false), true),
+    isItem: item => item instanceof PfOption,
     setItemActive(active) {
       this.active = active;
     },
@@ -251,9 +248,9 @@ export class PfSelect extends LitElement {
                        ?hidden="${!this.placeholder && !this.#slots.hasSlotted('placeholder')}">
               <slot name="placeholder">${this.placeholder}</slot>
             </pf-option>
-            ${this.#combobox?.renderItemsToShadowRoot()}
-            <div ?hidden=${hideLightDomItems} aria-hidden="${String(hideLightDomItems)}">
-              <slot @slotchange="${this.#onSlotchangeListbox}"></slot>
+            ${this.#combobox.renderItemsToShadowRoot()}
+            <div ?hidden="${hideLightDomItems}">
+              <slot></slot>
             </div>
           </div>
         </div>
@@ -322,14 +319,6 @@ export class PfSelect extends LitElement {
         this._toggleInput.value = '';
       }
     }
-  }
-
-  #onSlotchangeListbox() {
-    this.#combobox.items = this.options;
-    this.options.forEach((option, index, options) => {
-      option.setSize = options.length;
-      option.posInSet = index;
-    });
   }
 
   async #doExpand() {

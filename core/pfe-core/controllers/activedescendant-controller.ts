@@ -75,6 +75,10 @@ export interface ActivedescendantControllerOptions<
 export class ActivedescendantController<
   Item extends HTMLElement = HTMLElement
 > extends ATFocusController<Item> {
+  /**
+   * When true, the browser supports cross-root ARIA such that the controller does not need
+   * to copy item nodes into the controlling nodes' root
+   */
   public static get canControlLightDom(): boolean {
     return 'ariaActiveDescendantElement' in HTMLElement.prototype;
   }
@@ -170,9 +174,14 @@ export class ActivedescendantController<
       throw new Error('items container must be an HTMLElement');
     }
     this.itemsContainerElement = container;
-    this._items =
-        ActivedescendantController.canControlLightDom ? items
-      : items?.map((item: Item) => {
+    if (ActivedescendantController.canControlLightDom
+        || [container] // all nodes are in the same root
+            .concat(this.controlsElements)
+            .concat(items)
+            .every((node, _, a) => node.getRootNode() === a[0].getRootNode())) {
+      this._items = items;
+    } else {
+      this._items = items?.map((item: Item) => {
         item.removeAttribute('tabindex');
         if (container.contains(item)) {
           item.id ||= getRandomId();
@@ -191,9 +200,10 @@ export class ActivedescendantController<
           return clone;
         }
       });
-    const next = this.atFocusableItems.find(((_, i) => i !== this.atFocusedItemIndex));
-    const activeItem = next ?? this.firstATFocusableItem;
-    this.atFocusedItemIndex = this._items.indexOf(activeItem!);
+      const next = this.atFocusableItems.find(((_, i) => i !== this.atFocusedItemIndex));
+      const activeItem = next ?? this.firstATFocusableItem;
+      this.atFocusedItemIndex = this._items.indexOf(activeItem!);
+    }
   }
 
   private constructor(

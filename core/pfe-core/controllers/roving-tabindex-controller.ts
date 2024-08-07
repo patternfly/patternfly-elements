@@ -31,13 +31,12 @@ export class RovingTabindexController<
   set atFocusedItemIndex(index: number) {
     super.atFocusedItemIndex = index;
     const item = this.items.at(this.atFocusedItemIndex);
-    for (const focusable of this.atFocusableItems) {
-      focusable.tabIndex = item === focusable ? 0 : -1;
+    for (const i of this.items) {
+      i.tabIndex = item === i ? 0 : -1;
     }
     item?.focus();
     this.host.requestUpdate();
   }
-
 
   get items() {
     return this._items;

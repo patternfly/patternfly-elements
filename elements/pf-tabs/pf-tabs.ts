@@ -106,10 +106,25 @@ export class PfTabs extends LitElement {
    */
   @property({ reflect: true, type: Boolean }) manual = false;
 
-  /**
-   * The index of the active tab
-   */
-  @property({ attribute: 'active-index', reflect: true, type: Number }) activeIndex = -1;
+  #activeIndex = -1;
+
+  /** The index of the active tab */
+  @property({ attribute: 'active-index', reflect: true, type: Number })
+  get activeIndex() {
+    return this.#activeIndex;
+  }
+
+  set activeIndex(v: number) {
+    this.#tabindex.atFocusedItemIndex = v;
+    this.#activeIndex = v;
+    this.activeTab = this.tabs[v];
+    for (const tab of this.tabs) {
+      if (!this.activeTab?.disabled) {
+        tab.active = tab === this.activeTab;
+      }
+      this.#tabs.panelFor(tab)?.toggleAttribute('hidden', !tab.active);
+    }
+  }
 
   @property({ attribute: false }) activeTab?: PfTab;
 
@@ -146,6 +161,7 @@ export class PfTabs extends LitElement {
     super.connectedCallback();
     this.addEventListener('expand', this.#onExpand);
     this.id ||= getRandomId(this.localName);
+    this.activeIndex = this.#tabindex.atFocusedItemIndex;
   }
 
   protected override async getUpdateComplete(): Promise<boolean> {
@@ -157,15 +173,9 @@ export class PfTabs extends LitElement {
     return here && ps.every(x => !!x);
   }
 
-  #lastTab: PfTab | null = null;
-
-  protected override willUpdate(changed: PropertyValues<this>): void {
-    if (this.#lastTab && this.tabs.indexOf(this.#lastTab) !== this.#tabindex.atFocusedItemIndex) {
-      this.#tabChanged();
-    } else if (changed.has('activeIndex')) {
-      this.select(this.activeIndex);
-    } else if (changed.has('activeTab') && this.activeTab) {
-      this.select(this.activeTab);
+  protected override willUpdate(): void {
+    if (!this.manual && this.activeIndex !== this.#tabindex.atFocusedItemIndex) {
+      this.activeIndex = this.#tabindex.atFocusedItemIndex;
     }
     this.#overflow.update();
     this.ctx = this.#ctx;
@@ -176,6 +186,8 @@ export class PfTabs extends LitElement {
     if (activeTab?.disabled) {
       this.#logger.warn('Active tab is disabled. Setting to first focusable tab');
       this.activeIndex = 0;
+    } if (activeTab) {
+      this.activeIndex = this.tabs.indexOf(activeTab);
     }
   }
 
@@ -233,29 +245,11 @@ export class PfTabs extends LitElement {
     }
   }
 
-  #tabChanged() {
-    this.#lastTab = this.tabs.at(this.#tabindex.atFocusedItemIndex) ?? null;
-    const focusedTab = this.tabs.at(this.#tabindex.atFocusedItemIndex);
-    if (!focusedTab?.disabled) {
-      this.tabs?.forEach((tab, i) => {
-        if (!this.manual) {
-          const active = tab === focusedTab;
-          tab.active = active;
-          if (active) {
-            this.activeIndex = i;
-            this.activeTab = tab;
-          }
-        }
-        this.#tabs.panelFor(tab)?.toggleAttribute('hidden', !tab.active);
-      });
-    }
-  }
-
   select(tab: PfTab | number): void {
     if (typeof tab === 'number') {
-      this.#tabindex.atFocusedItemIndex = tab;
+      this.activeIndex = tab;
     } else {
-      this.#tabindex.atFocusedItemIndex = this.tabs.indexOf(tab);
+      this.activeIndex = this.tabs.indexOf(tab);
     }
   }
 }

@@ -127,7 +127,8 @@ export class PfTab extends LitElement {
   #onKeydown(event: KeyboardEvent) {
     if (!this.disabled) {
       switch (event.key) {
-        case 'Enter': this.#activate();
+        case 'Enter':
+          this.#activate();
       }
     }
   }
@@ -138,8 +139,8 @@ export class PfTab extends LitElement {
     }
   }
 
-  #activate() {
-    return this.dispatchEvent(new TabExpandEvent(this));
+  async #activate() {
+    this.dispatchEvent(new TabExpandEvent(this));
   }
 
   @observes('active')

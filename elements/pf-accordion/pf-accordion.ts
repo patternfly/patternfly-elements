@@ -128,10 +128,7 @@ export class PfAccordion extends LitElement {
    * </pf-accordion>
    * ```
    */
-  @property({
-    attribute: 'expanded-index',
-    converter: NumberListConverter,
-  })
+  @property({ attribute: 'expanded-index', converter: NumberListConverter })
   get expandedIndex(): number[] {
     return this.#expandedIndex;
   }
@@ -139,6 +136,7 @@ export class PfAccordion extends LitElement {
   set expandedIndex(value) {
     const old = this.#expandedIndex;
     this.#expandedIndex = value;
+    this.#tabindex.atFocusedItemIndex = value.at(-1) ?? -1;
     if (JSON.stringify(old) !== JSON.stringify(value)) {
       this.requestUpdate('expandedIndex', old);
       this.collapseAll().then(async () => {
@@ -157,7 +155,7 @@ export class PfAccordion extends LitElement {
 
   #mo = new MutationObserver(() => this.#init());
 
-  #headerIndex = RovingTabindexController.of(this, {
+  #tabindex = RovingTabindexController.of(this, {
     getItems: () => this.headers,
   });
 
@@ -239,8 +237,8 @@ export class PfAccordion extends LitElement {
   @listen('focusin')
   protected updateActiveHeader(): void {
     if (this.#activeHeader
-        && this.#activeHeader !== this.headers.at(this.#headerIndex.atFocusedItemIndex)) {
-      this.#headerIndex.atFocusedItemIndex = this.headers.indexOf(this.#activeHeader);
+        && this.#activeHeader !== this.headers.at(this.#tabindex.atFocusedItemIndex)) {
+      this.#tabindex.atFocusedItemIndex = this.headers.indexOf(this.#activeHeader);
     }
   }
 
@@ -364,8 +362,6 @@ export class PfAccordion extends LitElement {
     // If the header and panel exist, open both
     this.#expandHeader(header, index);
     this.#expandPanel(panel);
-
-    header.focus();
 
     this.dispatchEvent(new PfAccordionExpandEvent(header, panel));
 

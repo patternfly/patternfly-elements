@@ -1,5 +1,4 @@
-import { expect, html, aTimeout, nextFrame } from '@open-wc/testing';
-import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
+import { expect, fixture, html, aTimeout, nextFrame } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 
 import { allUpdates, clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
@@ -64,6 +63,10 @@ describe('<pf-accordion>', function() {
     };
   }
 
+  async function getFocusedSnapshot() {
+    return querySnapshot(await a11ySnapshot(), { focused: true });
+  }
+
   it('imperatively instantiates', function() {
     expect(document.createElement('pf-accordion')).to.be.an.instanceof(PfAccordion);
     expect(document.createElement('pf-accordion-header')).to.be.an.instanceof(PfAccordionHeader);
@@ -71,7 +74,7 @@ describe('<pf-accordion>', function() {
   });
 
   it('simply instantiating', async function() {
-    element = await createFixture<PfAccordion>(html`<pf-accordion></pf-accordion>`);
+    element = await fixture<PfAccordion>(html`<pf-accordion></pf-accordion>`);
     expect(element, 'pf-accordion should be an instance of PfAccordion')
         .to.be.an.instanceof(customElements.get('pf-accordion'))
         .and
@@ -80,7 +83,7 @@ describe('<pf-accordion>', function() {
 
   describe('in typical usage', function() {
     beforeEach(async function() {
-      element = await createFixture<PfAccordion>(html`
+      element = await fixture<PfAccordion>(html`
         <pf-accordion>
           <pf-accordion-header id="header1" data-index="0">
             <h3>Consetetur sadipscing elitr?</h3>
@@ -130,8 +133,8 @@ describe('<pf-accordion>', function() {
 
       it('expands first pair', async function() {
         const snapshot = await a11ySnapshot();
-        const expanded = snapshot?.children?.find(x => x.expanded);
-        const focused = snapshot?.children?.find(x => x.focused);
+        const expanded = querySnapshot(snapshot, { expanded: true });
+        const focused = querySnapshot(snapshot, { focused: true });
         expect(expanded?.name).to.equal(header.textContent?.trim());
         expect(header.expanded).to.be.true;
         expect(panel.hasAttribute('expanded')).to.be.true;
@@ -330,6 +333,7 @@ describe('<pf-accordion>', function() {
       afterEach(async function() {
         [header1, header2, header3] = [] as PfAccordionHeader[];
         [panel1, panel2, panel3] = [] as PfAccordionPanel[];
+        await fixture('');
       });
 
       describe('with all panels closed', function() {
@@ -345,8 +349,8 @@ describe('<pf-accordion>', function() {
           for (const header of element.querySelectorAll('pf-accordion-header')) {
             await clickElementAtCenter(header);
           }
-          await nextFrame();
         });
+        beforeEach(nextFrame);
         it('removes hidden attribute from all panels', function() {
           expect(panel1.hidden, 'panel1').to.be.false;
           expect(panel2.hidden, 'panel2').to.be.false;
@@ -391,22 +395,24 @@ describe('<pf-accordion>', function() {
 
         describe('Tab', function() {
           beforeEach(press('Tab'));
-          it('moves focus to the body', function() {
-            expect(document.activeElement).to.equal(document.body);
+          it('blurs out of the accordion', async function() {
+            expect(await getFocusedSnapshot()).to.not.be.ok;
           });
         });
 
         describe('Shift+Tab', function() {
           beforeEach(press('Shift+Tab'));
-          it('moves focus to the body', function() {
-            expect(document.activeElement).to.equal(document.body);
+          it('blurs out of the accordion', async function() {
+            expect(await getFocusedSnapshot()).to.not.be.ok;
           });
         });
 
         describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
-          it('moves focus to the second header', function() {
-            expect(document.activeElement).to.equal(header2);
+          it('moves focus to the second header', async function() {
+            expect(await getFocusedSnapshot())
+                .to.have.property('name',
+                                  header2.textContent?.trim());
           });
           it('does not open panels', function() {
             expect(panel1.expanded).to.be.false;
@@ -417,8 +423,10 @@ describe('<pf-accordion>', function() {
 
         describe('ArrowUp', function() {
           beforeEach(press('ArrowUp'));
-          it('moves focus to the last header', function() {
-            expect(document.activeElement).to.equal(header3);
+          it('moves focus to the last header', async function() {
+            expect(await getFocusedSnapshot())
+                .to.have.property('name',
+                                  header3.textContent?.trim());
           });
           it('does not open panels', function() {
             expect(panel1.expanded).to.be.false;
@@ -429,8 +437,10 @@ describe('<pf-accordion>', function() {
 
         describe('Home', function() {
           beforeEach(press('Home'));
-          it('moves focus to the first header', function() {
-            expect(document.activeElement).to.equal(header1);
+          it('moves focus to the first header', async function() {
+            expect(await getFocusedSnapshot())
+                .to.have.property('name',
+                                  header1.textContent?.trim());
           });
           it('does not open panels', function() {
             expect(panel1.expanded).to.be.false;
@@ -441,8 +451,10 @@ describe('<pf-accordion>', function() {
 
         describe('End', function() {
           beforeEach(press('End'));
-          it('moves focus to the last header', function() {
-            expect(document.activeElement).to.equal(header3);
+          it('moves focus to the last header', async function() {
+            expect(await getFocusedSnapshot())
+                .to.have.property('name',
+                                  header3.textContent?.trim());
           });
           it('does not open panels', function() {
             expect(panel1.expanded).to.be.false;
@@ -455,8 +467,9 @@ describe('<pf-accordion>', function() {
       describe('when focus is on the middle header', function() {
         beforeEach(async function() {
           header2.focus();
-          await nextFrame();
         });
+
+        beforeEach(nextFrame);
 
         describe('Space', function() {
           beforeEach(press(' '));
@@ -478,37 +491,46 @@ describe('<pf-accordion>', function() {
 
         describe('Tab', function() {
           beforeEach(press('Tab'));
-          it('moves focus to the body', function() {
-            expect(document.activeElement).to.equal(document.body);
+          it('moves focus to the body', async function() {
+            expect(await getFocusedSnapshot())
+                .to.not.be.ok;
           });
         });
 
 
         describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
-          it('moves focus to the last header', function() {
-            expect(document.activeElement).to.equal(header3);
+          it('moves focus to the last header', async function() {
+            expect(await getFocusedSnapshot())
+                .to.have.property('name',
+                                  header3.textContent?.trim());
           });
         });
 
         describe('ArrowUp', function() {
           beforeEach(press('ArrowUp'));
-          it('moves focus to the first header', function() {
-            expect(document.activeElement).to.equal(header1);
+          it('moves focus to the first header', async function() {
+            expect(await getFocusedSnapshot())
+                .to.have.property('name',
+                                  header1.textContent?.trim());
           });
         });
 
         describe('Home', function() {
           beforeEach(press('Home'));
-          it('moves focus to the first header', function() {
-            expect(document.activeElement).to.equal(header1);
+          it('moves focus to the first header', async function() {
+            expect(await getFocusedSnapshot())
+                .to.have.property('name',
+                                  header1.textContent?.trim());
           });
         });
 
         describe('End', function() {
           beforeEach(press('End'));
-          it('moves focus to the last header', function() {
-            expect(document.activeElement).to.equal(header3);
+          it('moves focus to the last header', async function() {
+            expect(await getFocusedSnapshot())
+                .to.have.property('name',
+                                  header3.textContent?.trim());
           });
         });
       });
@@ -516,8 +538,9 @@ describe('<pf-accordion>', function() {
       describe('when focus is on the last header', function() {
         beforeEach(async function() {
           header3.focus();
-          await nextFrame();
         });
+
+        beforeEach(nextFrame);
 
         describe('Space', function() {
           beforeEach(press(' '));
@@ -555,37 +578,42 @@ describe('<pf-accordion>', function() {
 
         describe('Shift+Tab', function() {
           beforeEach(press('Shift+Tab'));
-          it('moves focus to the body', function() {
-            expect(document.activeElement).to.equal(document.body);
+          it('moves focus to the body', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(querySnapshot(snapshot, { focused: true })).to.not.be.ok;
           });
         });
 
 
         describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
-          it('moves focus to the first header', function() {
-            expect(document.activeElement).to.equal(header1);
+          it('moves focus to the first header', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(querySnapshot(snapshot, { focused: true })).to.have.property('name', 'header1');
           });
         });
 
         describe('ArrowUp', function() {
           beforeEach(press('ArrowUp'));
-          it('moves focus to the middle header', function() {
-            expect(document.activeElement).to.equal(header2);
+          it('moves focus to the middle header', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(querySnapshot(snapshot, { focused: true })).to.have.property('name', 'header2');
           });
         });
 
         describe('Home', function() {
           beforeEach(press('Home'));
-          it('moves focus to the first header', function() {
-            expect(document.activeElement).to.equal(header1);
+          it('moves focus to the first header', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(querySnapshot(snapshot, { focused: true })).to.have.property('name', 'header1');
           });
         });
 
         describe('End', function() {
           beforeEach(press('End'));
-          it('moves focus to the last header', function() {
-            expect(document.activeElement).to.equal(header3);
+          it('moves focus to the last header', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(querySnapshot(snapshot, { focused: true })).to.have.property('name', 'header3');
           });
         });
       });
@@ -622,8 +650,9 @@ describe('<pf-accordion>', function() {
             });
             describe('Tab', function() {
               beforeEach(press('Tab'));
-              it('moves focus to the body', function() {
-                expect(document.activeElement).to.equal(document.body);
+              it('moves focus to the body', async function() {
+                const snapshot = await a11ySnapshot();
+                expect(querySnapshot(snapshot, { focused: true })).to.not.be.ok;
               });
               describe('Shift+Tab', function() {
                 beforeEach(press('Shift+Tab'));
@@ -688,16 +717,18 @@ describe('<pf-accordion>', function() {
 
           describe('Shift+Tab', function() {
             beforeEach(press('Shift+Tab'));
-            it('moves focus to the body', function() {
-              expect(document.activeElement).to.equal(document.body);
+            it('moves focus to the body', async function() {
+              const snapshot = await a11ySnapshot();
+              expect(querySnapshot(snapshot, { focused: true })).to.not.be.ok;
             });
           });
 
           describe('ArrowDown', function() {
             beforeEach(press('ArrowDown'));
 
-            it('moves focus to the second header', function() {
-              expect(document.activeElement).to.equal(header2);
+            it('moves focus to the second header', async function() {
+              const snapshot = await a11ySnapshot();
+              expect(querySnapshot(snapshot, { focused: true })).to.have.property('name', 'header2');
             });
 
             it('does not open other panels', function() {
@@ -710,8 +741,9 @@ describe('<pf-accordion>', function() {
           describe('ArrowUp', function() {
             beforeEach(press('ArrowUp'));
 
-            it('moves focus to the last header', function() {
-              expect(document.activeElement).to.equal(header3);
+            it('moves focus to the last header', async function() {
+              const snapshot = await a11ySnapshot();
+              expect(querySnapshot(snapshot, { focused: true })).to.have.property('name', 'header3');
             });
 
             it('does not open other panels', function() {
@@ -723,8 +755,9 @@ describe('<pf-accordion>', function() {
 
           describe('Home', function() {
             beforeEach(press('Home'));
-            it('moves focus to the first header', function() {
-              expect(document.activeElement).to.equal(header1);
+            it('moves focus to the first header', async function() {
+              const snapshot = await a11ySnapshot();
+              expect(querySnapshot(snapshot, { focused: true })).to.have.property('name', 'header1');
             });
 
             it('does not open other panels', function() {
@@ -736,8 +769,9 @@ describe('<pf-accordion>', function() {
 
           describe('End', function() {
             beforeEach(press('End'));
-            it('moves focus to the last header', function() {
-              expect(document.activeElement).to.equal(header3);
+            it('moves focus to the last header', async function() {
+              const snapshot = await a11ySnapshot();
+              expect(querySnapshot(snapshot, { focused: true })).to.have.property('name', 'header3');
             });
             it('does not open other panels', function() {
               expect(panel1.expanded).to.be.true;
@@ -806,22 +840,25 @@ describe('<pf-accordion>', function() {
 
           describe('Shift+Tab', function() {
             beforeEach(press('Shift+Tab'));
-            it('moves focus to the body', function() {
-              expect(document.activeElement).to.equal(document.body);
+            it('moves focus to the body', async function() {
+              const snapshot = await a11ySnapshot();
+              expect(querySnapshot(snapshot, { focused: true })).to.not.be.ok;
             });
           });
 
           describe('ArrowUp', function() {
             beforeEach(press('ArrowUp'));
-            it('moves focus to the first header', function() {
-              expect(document.activeElement).to.equal(header1);
+            it('moves focus to the first header', async function() {
+              const snapshot = await a11ySnapshot();
+              expect(querySnapshot(snapshot, { focused: true })).to.have.property('name', 'header1');
             });
           });
 
           describe('ArrowDown', function() {
             beforeEach(press('ArrowDown'));
-            it('moves focus to the last header', function() {
-              expect(document.activeElement).to.equal(header3);
+            it('moves focus to the last header', async function() {
+              const snapshot = await a11ySnapshot();
+              expect(querySnapshot(snapshot, { focused: true })).to.have.property('name', 'header3');
             });
           });
         });
@@ -867,7 +904,7 @@ describe('<pf-accordion>', function() {
 
   describe('with single attribute', function() {
     beforeEach(async function() {
-      element = await createFixture<PfAccordion>(html`
+      element = await fixture<PfAccordion>(html`
         <pf-accordion single>
           <pf-accordion-header id="header1" data-index="0">
             <h3>Consetetur sadipscing elitr?</h3>
@@ -931,7 +968,7 @@ describe('<pf-accordion>', function() {
 
   describe('with expanded attribute on two headers', function() {
     beforeEach(async function() {
-      element = await createFixture<PfAccordion>(html`
+      element = await fixture<PfAccordion>(html`
         <pf-accordion>
           <pf-accordion-header data-index="0" expanded><h2>h</h2></pf-accordion-header>
           <pf-accordion-panel data-index="0"><p>p</p></pf-accordion-panel>
@@ -960,7 +997,7 @@ describe('<pf-accordion>', function() {
 
   describe('with single attribute and expanded attribute on two headers', function() {
     beforeEach(async function() {
-      element = await createFixture<PfAccordion>(html`
+      element = await fixture<PfAccordion>(html`
         <pf-accordion single>
           <pf-accordion-header data-index="0" expanded><h2>h</h2></pf-accordion-header>
           <pf-accordion-panel data-index="0"><p>p</p></pf-accordion-panel>
@@ -990,7 +1027,7 @@ describe('<pf-accordion>', function() {
 
   describe('with no h* tag in heading lightdom', function() {
     beforeEach(async function() {
-      element = await createFixture<PfAccordion>(html`
+      element = await fixture<PfAccordion>(html`
       <pf-accordion id="badHeader">
         <pf-accordion-header id="bad-header-element">
           Bad Header
@@ -1024,7 +1061,7 @@ describe('<pf-accordion>', function() {
     let nestedPanelThree: PfAccordionPanel;
 
     beforeEach(async function() {
-      element = await createFixture<PfAccordion>(html`
+      element = await fixture<PfAccordion>(html`
         <pf-accordion>
           <pf-accordion-header id="header-1" data-index="0">
             top-header-1
@@ -1189,8 +1226,9 @@ describe('<pf-accordion>', function() {
 
         describe('Tab', function() {
           beforeEach(press('Tab'));
-          it('moves focus to the body', function() {
-            expect(document.activeElement).to.equal(document.body);
+          it('moves focus to the body', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(querySnapshot(snapshot, { focused: true })).to.not.be.ok;
           });
         });
       });
@@ -1227,7 +1265,7 @@ describe('<pf-accordion>', function() {
 
             describe('ArrowUp', function() {
               beforeEach(press('ArrowUp'));
-              it('moves focus to the last header', function() {
+              it('moves focus to the last nested header', function() {
                 expect(document.activeElement).to.equal(nestedHeaderThree);
               });
             });
@@ -1255,8 +1293,9 @@ describe('<pf-accordion>', function() {
 
             describe('Tab', function() {
               beforeEach(press('Tab'));
-              it('should move focus back to the body', function() {
-                expect(document.activeElement).to.equal(document.body);
+              it('should move focus back to the body', async function() {
+                const snapshot = await a11ySnapshot();
+                expect(querySnapshot(snapshot, { focused: true })).to.not.be.ok;
               });
             });
           });
@@ -1275,7 +1314,7 @@ describe('<pf-accordion>', function() {
     let accordionTwoPanelOne: PfAccordionPanel;
 
     beforeEach(async function() {
-      multipleAccordionElements = await createFixture<HTMLElement>(html`
+      multipleAccordionElements = await fixture<HTMLElement>(html`
       <div>
         <pf-accordion>
           <pf-accordion-header id="header-1-1" data-index="0"></pf-accordion-header>
@@ -1359,7 +1398,7 @@ describe('<pf-accordion>', function() {
     let accordionPanelOne: PfAccordionPanel;
 
     beforeEach(async function() {
-      element = await createFixture<PfAccordion>(html`
+      element = await fixture<PfAccordion>(html`
           <pf-accordion>
             <pf-accordion-header expanded id="header-1-1" data-index="0"></pf-accordion-header>
             <pf-accordion-panel id="panel-1-1" data-index="0">

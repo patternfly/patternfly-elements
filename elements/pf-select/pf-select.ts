@@ -126,8 +126,10 @@ export class PfSelect extends LitElement {
     getToggleButton: () => this._toggleButton ?? null,
     getComboboxInput: () => this._toggleInput ?? null,
     isExpanded: () => this.expanded,
-    requestShowListbox: () => this.expanded ||= true,
-    requestHideListbox: () => ((this.expanded &&= false), true),
+    requestShowListbox: () =>
+      this.expanded ||= true,
+    requestHideListbox: () =>
+      ((this.expanded &&= false), true),
     isItem: item => item instanceof PfOption,
     setItemActive(active) {
       this.active = active;

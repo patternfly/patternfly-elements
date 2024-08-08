@@ -35,11 +35,12 @@ export async function a11ySnapshot(
   return snapshot;
 }
 
-type SnapshotQuery = Partial<Record<keyof A11yTreeSnapshot, unknown>>;
+type SnapshotQuery = Partial<Record<keyof A11yTreeSnapshot, string | boolean | number | RegExp>>;
 
 function matches(snapshot: A11yTreeSnapshot, query: SnapshotQuery) {
   return Object.entries(query).every(([key, value]) =>
-    JSON.stringify(snapshot[key as keyof typeof snapshot]) === JSON.stringify(value));
+      value instanceof RegExp ? value.test(snapshot[key as keyof typeof snapshot] as string)
+    : JSON.stringify(snapshot[key as keyof typeof snapshot]) === JSON.stringify(value));
 }
 
 function doQuery(

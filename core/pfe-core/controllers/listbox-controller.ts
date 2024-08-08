@@ -363,7 +363,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
             .map(item => item === target || this.isSelected(item) ? item : null)
             .filter(x => !!x);
       } else if (this.#shiftStartingItem && target) {
-        this.selected = this.#getMultiSelection(target, this.#shiftStartingItem);
+        this.selected = this.#getMultiSelection(target);
         this.#shiftStartingItem = target;
       }
     }
@@ -416,9 +416,28 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
         if (this.#options.isItem(event.target)
-        || (event.target as HTMLElement).getAttribute?.('aria-controls') === this.container.id) {
+        && !event.shiftKey
+        && (event.target as HTMLElement).getAttribute?.('aria-controls') !== this.container.id) {
           this.#selectItem(item, event.shiftKey);
           event.preventDefault();
+        }
+        break;
+      case 'ArrowUp':
+        if (this.multi && event.shiftKey && this.#options.isItem(event.target)) {
+          const item = event.target;
+          this.selected = this.items.filter((x, i) =>
+            this.#selectedItems.has(x)
+            || i === this.items.indexOf(item) - 1)
+              .filter(x => !this.#options.isItemDisabled.call(x));
+        }
+        break;
+      case 'ArrowDown':
+        if (this.multi && event.shiftKey && this.#options.isItem(event.target)) {
+          const item = event.target;
+          this.selected = this.items.filter((x, i) =>
+            this.#selectedItems.has(x)
+            || i === this.items.indexOf(item) + 1)
+              .filter(x => !this.#options.isItemDisabled.call(x));
         }
         break;
       case ' ':
@@ -435,13 +454,12 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     this.host.requestUpdate();
   };
 
-  #selectItem(item: Item, multiSelection = false) {
+  #selectItem(item: Item, shiftDown = false) {
     if (this.#options.isItemDisabled.call(item)) {
       return;
-    } else if (this.multi && multiSelection) {
+    } else if (this.multi && shiftDown) {
       // update starting item for other multiselect
-      this.selected = this.#getMultiSelection(item, this.#options.getATFocusedItem());
-      this.#shiftStartingItem = item;
+      this.selected = [...this.selected, item];
     } else if (this.multi && this.#selectedItems.has(item)) {
       this.selected = this.selected.filter(x => x !== item);
     } else if (this.multi) {
@@ -457,21 +475,26 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * @param to item being added
    * @param from item already selected.
    */
-  #getMultiSelection(to?: Item, from = this.#options.getATFocusedItem()) {
-    if (from && to && this.#options.multi) {
+  #getMultiSelection(to?: Item) {
+    const from = this.#shiftStartingItem;
+    if (to && this.#options.multi) {
       // whether options will be selected (true) or deselected (false)
-      const selecting = this.isSelected(from);
+      const selecting = from && this.isSelected(from);
 
       // select all options between active descendant and target
       // todo: flatten loops here, but be careful of off-by-one errors
       // maybe use the new set methods difference/union
-      const [start, end] = [this.items.indexOf(from), this.items.indexOf(to)].sort();
+      const [start, end] = [this.items.indexOf(from!), this.items.indexOf(to)]
+          .filter(x => x >= 0)
+          .sort();
       const itemsInRange = new Set(this.items
           .slice(start, end + 1)
           .filter(item => !this.#options.isItemDisabled.call(item)));
+      this.#shiftStartingItem = to;
       return this.items
           .filter(item => selecting ? itemsInRange.has(item) : !itemsInRange.has(item));
     } else {
+      this.#shiftStartingItem = to ?? null;
       return this.selected;
     }
   }

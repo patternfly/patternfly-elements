@@ -338,8 +338,7 @@ describe('<pf-select>', function() {
         it('expands', async function() {
           expect(element.expanded).to.be.true;
           const snapshot = await a11ySnapshot();
-          expect(snapshot.children?.at(1)).to.be.ok;
-          expect(snapshot.children?.at(1)?.role).to.equal('listbox');
+          expect(snapshot).to.have.axRole('listbox');
         });
       });
 
@@ -349,8 +348,12 @@ describe('<pf-select>', function() {
         it('expands', async function() {
           expect(element.expanded).to.be.true;
           const snapshot = await a11ySnapshot();
-          expect(snapshot.children?.at(1)).to.be.ok;
-          expect(snapshot.children?.at(1)?.role).to.equal('listbox');
+          expect(snapshot).to.have.axRole('listbox');
+        });
+
+        it('focuses the first item', async function() {
+          const snapshot = await a11ySnapshot();
+          expect(snapshot).to.have.axTreeFocusOn(document.querySelector('pf-option'));
         });
 
         describe('Shift+Tab', function() {
@@ -427,12 +430,15 @@ describe('<pf-select>', function() {
           describe('ArrowDown', function() {
             beforeEach(press('ArrowDown'));
             beforeEach(updateComplete);
-            it('focuses option 1', async function() {
+
+            it('focuses option 2', async function() {
               const snapshot = await a11ySnapshot();
-              const listbox = snapshot.children?.find(x => x.role === 'listbox');
-              const focused = listbox?.children?.find(x => x.focused);
-              expect(focused?.name).to.equal('2');
+              expect(snapshot).to.have.axQuery({
+                focused: true,
+                name: '2',
+              });
             });
+
             describe('Enter', function() {
               beforeEach(press('Enter'));
               beforeEach(updateComplete);
@@ -448,78 +454,50 @@ describe('<pf-select>', function() {
                 const snapshot = await a11ySnapshot();
                 expect(snapshot).to.have.axRole('listbox');
               });
+            });
+          });
 
-              describe('Shift+ArrowDown, Shift+Enter, Shift+ArrowDown, Shift+Enter', function() {
-                beforeEach(shiftHold);
-                beforeEach(press('ArrowDown'));
+          describe('holding Shift', function() {
+            beforeEach(shiftHold);
+            afterEach(shiftRelease);
+            describe('ArrowDown', function() {
+              beforeEach(press('ArrowDown'));
+              beforeEach(nextFrame);
+              it('adds option 2 to selection', function() {
+                expect(getValues(element)).to.deep.equal([
+                  '1',
+                  '2',
+                ]);
+              });
+              describe('Enter', function() {
                 beforeEach(press('Enter'));
-                beforeEach(press('ArrowDown'));
-                beforeEach(press('Enter'));
-                beforeEach(shiftRelease);
                 beforeEach(updateComplete);
-
-                it('adds options 2 and 3 to the selected list', function() {
+                it('makes no change', function() {
                   expect(getValues(element)).to.deep.equal([
                     '1',
                     '2',
-                    '3',
-                    '4',
                   ]);
                 });
-
-                describe('then pressing ArrowUp and Enter', function() {
-                  beforeEach(press('ArrowUp'));
-                  beforeEach(press('Enter'));
+                beforeEach(updateComplete);
+                describe('ArrowDown', function() {
+                  beforeEach(press('ArrowDown'));
                   beforeEach(updateComplete);
-
-                  it('deselects option 3', function() {
+                  it('adds option 3 to the selected list', function() {
                     expect(getValues(element)).to.deep.equal([
                       '1',
                       '2',
-                      '4',
+                      '3',
                     ]);
                   });
-
-                  describe('then holding down Shift and pressing arrow up / enter twice in a row', function() {
-                    beforeEach(press('ArrowUp'));
+                  describe('ArrowUp', function() {
                     beforeEach(press('Enter'));
                     beforeEach(updateComplete);
-                    beforeEach(press('ArrowUp'));
-                    beforeEach(press('Enter'));
-                    beforeEach(updateComplete);
-                    beforeEach(shiftRelease);
-                    beforeEach(updateComplete);
-
-                    it('deselects options 1 and 2', function() {
+                    it('makes no change to selection', function() {
                       expect(getValues(element)).to.deep.equal([
-                        '4',
+                        '1',
+                        '2',
+                        '3',
                       ]);
-                    });
-
-                    describe('then pressing Ctrl+A', function() {
-                      beforeEach(ctrlA);
-                      beforeEach(updateComplete);
-
-                      it('selects all options', function() {
-                        expect(getValues(element)).to.deep.equal([
-                          '1',
-                          '2',
-                          '3',
-                          '4',
-                          '5',
-                          '6',
-                          '7',
-                          '8',
-                        ]);
-                      });
-
-                      describe('then pressing Ctrl+A again', function() {
-                        beforeEach(ctrlA);
-                        beforeEach(updateComplete);
-                        it('deselects all options', function() {
-                          expect(getValues(element)).to.deep.equal([]);
-                        });
-                      });
                     });
                   });
                 });

@@ -26,7 +26,7 @@ describe('@observes', function() {
     element = await fixture(html`<x-observes-host></x-observes-host>`);
   });
   it('initializes with old and new values', function() {
-    expect(element.old, 'old').to.equal(undefined);
+    expect(element.old, 'old').to.equal(0);
     expect(element.current, 'current').to.equal(0);
   });
   describe('setting the observed prop', function() {
@@ -60,7 +60,7 @@ describe('@observed', function() {
     element = await fixture(html`<x-observed-bare-host></x-observed-bare-host>`);
   });
   it('initializes with old and new values', function() {
-    expect(element.old, 'old').to.equal(undefined);
+    expect(element.old, 'old').to.equal(0);
     expect(element.current, 'current').to.equal(0);
   });
   describe('setting the observed prop', function() {
@@ -94,7 +94,7 @@ describe('@observed(\'_myCallback\')', function() {
     element = await fixture(html`<x-observed-configured-host></x-observed-configured-host>`);
   });
   it('initializes with old and new values', function() {
-    expect(element.old, 'old').to.equal(undefined);
+    expect(element.old, 'old').to.equal(0);
     expect(element.current, 'current').to.equal(0);
   });
   describe('setting the observed prop', function() {
@@ -124,7 +124,7 @@ describe('@observed(() => {...})', function() {
   });
 
   it('initializes with old and new values', function() {
-    expect(dump).to.have.been.calledWith(undefined, 0);
+    expect(dump).to.have.been.calledWith(0, 0);
   });
   describe('setting the observed prop', function() {
     beforeEach(function() {

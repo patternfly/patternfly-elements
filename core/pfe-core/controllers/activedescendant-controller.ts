@@ -2,7 +2,7 @@ import type { ReactiveControllerHost } from 'lit';
 
 import { type ATFocusControllerOptions, ATFocusController } from './at-focus-controller.js';
 
-import { nothing } from 'lit';
+import { isServer, nothing } from 'lit';
 import { getRandomId } from '../functions/random.js';
 
 export interface ActivedescendantControllerOptions<
@@ -80,7 +80,7 @@ export class ActivedescendantController<
    * to copy item nodes into the controlling nodes' root
    */
   public static get canControlLightDom(): boolean {
-    return 'ariaActiveDescendantElement' in HTMLElement.prototype;
+    return !isServer && 'ariaActiveDescendantElement' in HTMLElement.prototype;
   }
 
   static of<Item extends HTMLElement>(

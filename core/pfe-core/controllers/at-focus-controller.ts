@@ -1,4 +1,4 @@
-import type { ReactiveControllerHost } from 'lit';
+import { isServer, type ReactiveControllerHost } from 'lit';
 
 function isATFocusableItem(el: Element): el is HTMLElement {
   return !!el
@@ -122,7 +122,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
     public host: ReactiveControllerHost,
     protected options: ATFocusControllerOptions<Item>,
   ) {
-    this.host.updateComplete.then(() => this.initItems());
+    this.host.updateComplete.then(() => isServer && this.initItems());
   }
 
   /**

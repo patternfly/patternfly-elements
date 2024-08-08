@@ -78,7 +78,7 @@ export class PfJumpLinks extends LitElement {
   #kids = this.querySelectorAll?.<LitElement>(':is(pf-jump-links-item, pf-jump-links-list)');
 
   get #items() {
-    return Array.from(this.#kids)
+    return Array.from(this.#kids ?? [])
         .flatMap(i => [
           ...i.shadowRoot?.querySelectorAll?.('a') ?? [],
           ...i.querySelectorAll?.('a') ?? [],

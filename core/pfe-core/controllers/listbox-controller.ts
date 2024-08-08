@@ -424,7 +424,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       case ' ':
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
-        if (event.target === this.container) {
+        if (event.target === this.container || this.#options.isItem(event.target)) {
           this.#selectItem(item, event.shiftKey);
           event.preventDefault();
         }
@@ -436,12 +436,18 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   };
 
   #selectItem(item: Item, multiSelection = false) {
-    if (!this.multi && !this.#options.isItemDisabled.call(item)) {
-      this.selected = [item];
+    if (this.#options.isItemDisabled.call(item)) {
+      return;
     } else if (this.multi && multiSelection) {
       // update starting item for other multiselect
       this.selected = this.#getMultiSelection(item, this.#options.getATFocusedItem());
       this.#shiftStartingItem = item;
+    } else if (this.multi && this.#selectedItems.has(item)) {
+      this.selected = this.selected.filter(x => x !== item);
+    } else if (this.multi) {
+      this.selected = this.selected.concat(item);
+    } else {
+      this.selected = [item];
     }
   }
 

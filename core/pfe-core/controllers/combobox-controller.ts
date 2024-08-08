@@ -291,19 +291,20 @@ export class ComboboxController<
   }
 
   #initButton() {
-    this.#button?.removeEventListener('click', this.#onClickToggle);
+    this.#button?.removeEventListener('click', this.#onClickButton);
     this.#button?.removeEventListener('keydown', this.#onKeydownButton);
     this.#button = this.options.getToggleButton();
     if (!this.#button) {
       throw new Error('ComboboxController getToggleButton() option must return an element');
     }
+    this.#button.role = 'combobox';
     this.#button.setAttribute('aria-controls', this.#listbox?.id ?? '');
-    this.#button.addEventListener('click', this.#onClickToggle);
+    this.#button.addEventListener('click', this.#onClickButton);
     this.#button.addEventListener('keydown', this.#onKeydownButton);
   }
 
   #initInput() {
-    this.#input?.removeEventListener('click', this.#onClickToggle);
+    this.#input?.removeEventListener('click', this.#onClickButton);
     this.#input?.removeEventListener('keyup', this.#onKeyupInput);
     this.#input?.removeEventListener('keydown', this.#onKeydownInput);
 
@@ -312,9 +313,10 @@ export class ComboboxController<
       throw new Error(`ComboboxController getToggleInput() option must return an element with a value property`);
     } else if (this.#input) {
       this.#input.role = 'combobox';
+      this.#button!.role = 'button';
       this.#input.setAttribute('aria-autocomplete', 'both');
       this.#input.setAttribute('aria-controls', this.#listbox?.id ?? '');
-      this.#input.addEventListener('click', this.#onClickToggle);
+      this.#input.addEventListener('click', this.#onClickButton);
       this.#input.addEventListener('keyup', this.#onKeyupInput);
       this.#input.addEventListener('keydown', this.#onKeydownInput);
     }
@@ -365,7 +367,7 @@ export class ComboboxController<
     }
   }
 
-  #onClickToggle = () => {
+  #onClickButton = () => {
     if (!this.options.isExpanded()) {
       this.#show();
     } else {
@@ -374,7 +376,7 @@ export class ComboboxController<
   };
 
   #onClickListbox = (event: MouseEvent) => {
-    if (event.composedPath().some(this.options.isItem)) {
+    if (!this.multi && event.composedPath().some(this.options.isItem)) {
       this.#hide();
     }
   };
@@ -427,7 +429,9 @@ export class ComboboxController<
         }
         break;
       case 'Enter':
-        this.#hide();
+        if (!this.multi) {
+          this.#hide();
+        }
         break;
       case 'Escape':
         if (!this.options.isExpanded()) {
@@ -501,14 +505,21 @@ export class ComboboxController<
 
   #onKeydownButton = (event: KeyboardEvent) => {
     if (this.#isTypeahead) {
-      return this.#onKeydownMenu(event);
-    } else {
       return this.#onKeydownInput(event);
+    } else {
+      return this.#onKeydownMenu(event);
     }
   };
 
   #onKeydownListbox = (event: KeyboardEvent) => {
-    if (!this.#isTypeahead && event.key === 'Escape') {
+    if (!this.#isTypeahead
+      && event.key === 'Escape'
+      || (!this.#isTypeahead
+          && (event.key === 'Enter' || event.key === ' ')
+          && event.composedPath().some(this.options.isItem)
+          && !this.multi
+      )
+    ) {
       this.#hide();
       this.#button?.focus();
     }
@@ -529,6 +540,8 @@ export class ComboboxController<
     switch (event.key) {
       case 'ArrowDown':
       case 'ArrowUp':
+      case 'Enter':
+      case ' ':
         if (!this.options.isExpanded()) {
           this.#show();
         }

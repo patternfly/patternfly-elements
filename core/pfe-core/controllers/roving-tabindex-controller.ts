@@ -25,6 +25,8 @@ export class RovingTabindexController<
 
   #gainedInitialFocus = false;
 
+  #itemsSet = new Set<Item>();
+
   get atFocusedItemIndex(): number {
     return super.atFocusedItemIndex;
   }
@@ -51,6 +53,7 @@ export class RovingTabindexController<
 
   public set items(items: Item[]) {
     this._items = items;
+    this.#itemsSet = new Set(items);
     const pivot = Math.max(0, this.atFocusedItemIndex);
     const firstFocusableIndex = items.indexOf(this.atFocusableItems.at(0)!);
     const pivotFocusableIndex = items.indexOf(this.items
@@ -81,6 +84,6 @@ export class RovingTabindexController<
             && !event.altKey
             && !event.metaKey
             && !!this.atFocusableItems.length
-            && !!event.composedPath().includes(this.itemsContainerElement!));
+            && !!event.composedPath().some(node => this.#itemsSet.has(node as Item)));
   }
 }

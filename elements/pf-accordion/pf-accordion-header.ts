@@ -143,10 +143,11 @@ export class PfAccordionHeader extends LitElement {
           <slot name="accents"></slot>
         </span>
         <pf-icon part="icon"
-                  icon="${this.icon ?? 'angle-right'}"
-                  set="${this.iconSet ?? 'fas'}"
-                  class="icon"
-                  size="lg"></pf-icon>
+                 class="icon"
+                 size="lg"
+                 set="${this.iconSet ?? 'fas'}"
+                 icon="${this.icon ?? 'angle-right'}"
+        ></pf-icon>
       </button>
     `;
     switch (this.headingTag) {

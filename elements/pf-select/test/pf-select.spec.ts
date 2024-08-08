@@ -2,7 +2,7 @@ import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfSelect } from '../pf-select.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { a11ySnapshot, querySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 async function shiftHold() {
   await sendKeys({ down: 'Shift' });
@@ -25,8 +25,8 @@ function press(key: string) {
   };
 }
 
-function getValues(element: PfSelect) {
-  return [element.selected].flat().filter(x => !!x).map(x => x!.value);
+function getValues(element: PfSelect): string[] {
+  return element.selected.filter(x => !!x).map(x => x!.value);
 }
 
 describe('<pf-select>', function() {
@@ -198,7 +198,7 @@ describe('<pf-select>', function() {
           });
         });
 
-        describe('then pressing Space', function() {
+        describe('Space', function() {
           beforeEach(press(' '));
           beforeEach(updateComplete);
 
@@ -208,14 +208,16 @@ describe('<pf-select>', function() {
 
           it('hides the listbox', async function() {
             const snapshot = await a11ySnapshot();
-            expect(snapshot.children?.find(x => x.role === 'listbox')).to.be.undefined;
+            expect(querySnapshot(snapshot, { role: 'listbox' })).to.not.be.ok;
           });
 
           it('focuses the button', async function() {
             const snapshot = await a11ySnapshot();
-            const focused = snapshot.children?.find(x => x.focused);
-            expect(focused?.role).to.equal('combobox');
-            expect(focused?.haspopup).to.equal('listbox');
+            const focused = querySnapshot(snapshot, {
+              focused: true,
+              role: 'combobox',
+            });
+            expect(focused).to.be.ok;
           });
 
           it('does not select anything', async function() {
@@ -306,13 +308,13 @@ describe('<pf-select>', function() {
       await expect(element).to.be.accessible();
     });
 
-    describe('calling focus())', function() {
+    describe('focus()', function() {
       beforeEach(function() {
         element.focus();
       });
 
       beforeEach(updateComplete);
-      describe('pressing Enter', function() {
+      describe('Enter', function() {
         beforeEach(press('Enter'));
         beforeEach(updateComplete);
 
@@ -330,7 +332,7 @@ describe('<pf-select>', function() {
         });
       });
 
-      describe('pressing Space', function() {
+      describe('Space', function() {
         beforeEach(press(' '));
         beforeEach(updateComplete);
         it('expands', async function() {
@@ -341,7 +343,7 @@ describe('<pf-select>', function() {
         });
       });
 
-      describe('pressing ArrowDown', function() {
+      describe('ArrowDown', function() {
         beforeEach(press('ArrowDown'));
         beforeEach(updateComplete);
         it('expands', async function() {
@@ -351,7 +353,7 @@ describe('<pf-select>', function() {
           expect(snapshot.children?.at(1)?.role).to.equal('listbox');
         });
 
-        describe('then pressing Shift+Tab', function() {
+        describe('Shift+Tab', function() {
           beforeEach(shiftHold);
           beforeEach(press('Tab'));
           beforeEach(shiftRelease);
@@ -373,7 +375,7 @@ describe('<pf-select>', function() {
           });
         });
 
-        describe('then pressing Tab', function() {
+        describe('Tab', function() {
           beforeEach(press('Tab'));
           beforeEach(nextFrame);
           beforeEach(updateComplete);
@@ -390,7 +392,7 @@ describe('<pf-select>', function() {
           });
         });
 
-        describe('then pressing Escape', function() {
+        describe('Escape', function() {
           beforeEach(press('Escape'));
           beforeEach(updateComplete);
           it('closes', function() {
@@ -402,12 +404,12 @@ describe('<pf-select>', function() {
           });
           it('focuses the button', async function() {
             const snapshot = await a11ySnapshot();
-            const focused = snapshot.children?.find(x => x.focused);
+            const focused = querySnapshot(snapshot, { focused: true });
             expect(focused?.role).to.equal('combobox');
           });
         });
 
-        describe('then pressing Space', function() {
+        describe('Space', function() {
           beforeEach(press(' '));
           beforeEach(updateComplete);
 
@@ -419,10 +421,10 @@ describe('<pf-select>', function() {
           it('remains expanded', async function() {
             expect(element.expanded).to.be.true;
             const snapshot = await a11ySnapshot();
-            expect(snapshot.children?.at(1)?.role).to.equal('listbox');
+            expect(snapshot).to.have.axRole('listbox');
           });
 
-          describe('then pressing ArrowDown', function() {
+          describe('ArrowDown', function() {
             beforeEach(press('ArrowDown'));
             beforeEach(updateComplete);
             it('focuses option 1', async function() {
@@ -431,7 +433,7 @@ describe('<pf-select>', function() {
               const focused = listbox?.children?.find(x => x.focused);
               expect(focused?.name).to.equal('2');
             });
-            describe('then pressing Enter', function() {
+            describe('Enter', function() {
               beforeEach(press('Enter'));
               beforeEach(updateComplete);
               it('adds option 2 to selection', function() {
@@ -444,10 +446,10 @@ describe('<pf-select>', function() {
               it('remains expanded', async function() {
                 expect(element.expanded).to.be.true;
                 const snapshot = await a11ySnapshot();
-                expect(snapshot.children?.at(1)?.role).to.equal('listbox');
+                expect(snapshot).to.have.axRole('listbox');
               });
 
-              describe('then holding Shift and pressing down arrow / enter twice in a row', function() {
+              describe('Shift+ArrowDown, Shift+Enter, Shift+ArrowDown, Shift+Enter', function() {
                 beforeEach(shiftHold);
                 beforeEach(press('ArrowDown'));
                 beforeEach(press('Enter'));

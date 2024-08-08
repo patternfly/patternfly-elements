@@ -194,7 +194,41 @@ function axTreeNodeWithName(
   );
 }
 
+function axRole(
+  this: Chai.AssertionPrototype,
+  role: string,
+  msg?: string
+) {
+  const snapshot = this._obj as A11yTreeSnapshot;
+  if (!isSnapshot(snapshot)) {
+    throw new Error(`axRole can only assert on A11yTreeSnapshots, got ${snapshot}`);
+  }
+  const needle = querySnapshot(snapshot, { role });
+  this.assert(!!needle,
+              `expected to find element with role ${role}${!msg ? '' : `(${msg})`}`,
+              `expected to not find element with role ${role}${!msg ? '' : `(${msg})`}`,
+              role, needle);
+}
+
+function axQuery(
+  this: Chai.AssertionPrototype,
+  query: SnapshotQuery,
+  msg?: string
+) {
+  const snapshot = this._obj as A11yTreeSnapshot;
+  if (!isSnapshot(snapshot)) {
+    throw new Error(`axQuery can only assert on A11yTreeSnapshots, got ${snapshot}`);
+  }
+  const needle = querySnapshot(snapshot, query);
+  this.assert(!!needle,
+              `expected to find element matching ${chai.util.inspect(query)}${!msg ? '' : `(${msg})`}`,
+              `expected to not find element with role ${chai.util.inspect(query)}${!msg ? '' : `(${msg})`}`,
+              query, needle);
+}
+
 chai.use(function(_chai) {
+  _chai.Assertion.addMethod('axRole', axRole);
+  _chai.Assertion.addMethod('axQuery', axQuery);
   _chai.Assertion.addMethod('axTreeFocusOn', axTreeFocusOn);
   _chai.Assertion.addMethod('axTreeNodeWithName', axTreeNodeWithName);
 });
@@ -205,6 +239,14 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Chai {
     interface Assertion {
+      /**
+       * Assert that a given role exists in the ax tree
+       */
+      axRole(role: string, msg?: string): void;
+      /**
+       * Assert that an AX Tree node that matches the query object exists in the tre
+       */
+      axQuery(query: SnapshotQuery, msg?: string): void;
       /**
        * Assert that the a11ySnapshot shows that a given element has focus.
        * This assertion ultimately matches on the accessible name of the given element,

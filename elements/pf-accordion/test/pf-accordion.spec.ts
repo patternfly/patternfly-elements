@@ -63,10 +63,6 @@ describe('<pf-accordion>', function() {
     };
   }
 
-  async function getFocusedSnapshot() {
-    return querySnapshot(await a11ySnapshot(), { focused: true });
-  }
-
   it('imperatively instantiates', function() {
     expect(document.createElement('pf-accordion')).to.be.an.instanceof(PfAccordion);
     expect(document.createElement('pf-accordion-header')).to.be.an.instanceof(PfAccordionHeader);
@@ -86,26 +82,26 @@ describe('<pf-accordion>', function() {
       element = await fixture<PfAccordion>(html`
         <pf-accordion>
           <pf-accordion-header id="header1" data-index="0">
-            <h3>Consetetur sadipscing elitr?</h3>
+            <h3>Header1 Consetetur sadipscing elitr?</h3>
           </pf-accordion-header>
           <pf-accordion-panel id="panel1" data-index="0">
-            <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+            <p>Panel1 <a href="#">Panel1 link Lorem ipsum dolor</a>, sit amet consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
               ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
               rebum.</p>
           </pf-accordion-panel>
           <pf-accordion-header data-index="1">
-            <h3>Labore et dolore magna aliquyam erat?</h3>
+            <h3>Header2 Labore et dolore magna aliquyam erat?</h3>
           </pf-accordion-header>
           <pf-accordion-panel data-index="1">
-            <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+            <p>Panel2 <a href="#">Panel2 link Lorem ipsum dolor</a> sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
               ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
               rebum.</p>
           </pf-accordion-panel>
           <pf-accordion-header data-index="2">
-            <h3>Incididunt in Lorem voluptate eiusmod dolor?</h3>
+            <h3>Header3 Incididunt in Lorem voluptate eiusmod dolor?</h3>
           </pf-accordion-header>
           <pf-accordion-panel data-index="2">
-            <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+            <p>Panel3<a href="#">Panel3 link Lorem ipsum dolor</a> sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
               ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
               rebum.</p>
           </pf-accordion-panel>
@@ -115,8 +111,9 @@ describe('<pf-accordion>', function() {
       panels = Array.from(element.querySelectorAll('pf-accordion-panel'));
       [header, secondHeader] = headers;
       [panel, secondPanel] = panels;
-      await allUpdates(element);
     });
+
+    beforeEach(() => allUpdates(element));
 
     it('randomly generates ids on children', function() {
       expect(secondHeader.id).to.match(/pf-/);
@@ -229,11 +226,11 @@ describe('<pf-accordion>', function() {
     /* ATTRIBUTE TESTS */
     describe('setting expanded-index attribute', function() {
       const indices = '1,2';
-      beforeEach(async function() {
+      beforeEach(function() {
         element.setAttribute('expanded-index', indices);
-        await allUpdates(element);
-        await nextFrame();
       });
+      beforeEach(() => allUpdates(element));
+      beforeEach(nextFrame);
 
       it('expands the pairs listed in the expanded-index attribute', function() {
         for (const idx of indices.split(',').map(x => parseInt(x))) {
@@ -248,7 +245,7 @@ describe('<pf-accordion>', function() {
     });
 
     describe('dynamically adding pairs', function() {
-      beforeEach(async function() {
+      beforeEach(function() {
         const newHeader = document.createElement('pf-accordion-header');
         newHeader.id = 'newHeader';
         newHeader.innerHTML = `<h2>New Header</h2>`;
@@ -259,9 +256,9 @@ describe('<pf-accordion>', function() {
 
         element.appendChild(newHeader);
         element.appendChild(newPanel);
-
-        await allUpdates(element);
       });
+
+      beforeEach(() => allUpdates(element));
 
       it('properly initializes new pairs', function() {
         const newHeader = headers.at(-1);
@@ -336,15 +333,13 @@ describe('<pf-accordion>', function() {
         await fixture('');
       });
 
-      describe('with all panels closed', function() {
-        it('applies hidden attribute to all panels', function() {
-          expect(panel1.hidden, 'panel1').to.be.true;
-          expect(panel2.hidden, 'panel2').to.be.true;
-          expect(panel3.hidden, 'panel3').to.be.true;
-        });
+      it('applies hidden attribute to all panels', function() {
+        expect(panel1.hidden, 'panel1').to.be.true;
+        expect(panel2.hidden, 'panel2').to.be.true;
+        expect(panel3.hidden, 'panel3').to.be.true;
       });
 
-      describe('with all panels open', function() {
+      describe('clicking every header', function() {
         beforeEach(async function() {
           for (const header of element.querySelectorAll('pf-accordion-header')) {
             await clickElementAtCenter(header);
@@ -358,7 +353,7 @@ describe('<pf-accordion>', function() {
         });
       });
 
-      describe('when focus is on the first header', function() {
+      describe('calling focus() on the first header', function() {
         beforeEach(function() {
           header1.focus();
         });
@@ -396,23 +391,21 @@ describe('<pf-accordion>', function() {
         describe('Tab', function() {
           beforeEach(press('Tab'));
           it('blurs out of the accordion', async function() {
-            expect(await getFocusedSnapshot()).to.not.be.ok;
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
           });
         });
 
         describe('Shift+Tab', function() {
           beforeEach(press('Shift+Tab'));
           it('blurs out of the accordion', async function() {
-            expect(await getFocusedSnapshot()).to.not.be.ok;
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
           });
         });
 
         describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
           it('moves focus to the second header', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  header2.textContent?.trim());
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(header2);
           });
           it('does not open panels', function() {
             expect(panel1.expanded).to.be.false;
@@ -424,9 +417,7 @@ describe('<pf-accordion>', function() {
         describe('ArrowUp', function() {
           beforeEach(press('ArrowUp'));
           it('moves focus to the last header', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  header3.textContent?.trim());
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(header3);
           });
           it('does not open panels', function() {
             expect(panel1.expanded).to.be.false;
@@ -438,9 +429,7 @@ describe('<pf-accordion>', function() {
         describe('Home', function() {
           beforeEach(press('Home'));
           it('moves focus to the first header', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  header1.textContent?.trim());
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(header1);
           });
           it('does not open panels', function() {
             expect(panel1.expanded).to.be.false;
@@ -452,9 +441,7 @@ describe('<pf-accordion>', function() {
         describe('End', function() {
           beforeEach(press('End'));
           it('moves focus to the last header', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  header3.textContent?.trim());
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(header3);
           });
           it('does not open panels', function() {
             expect(panel1.expanded).to.be.false;
@@ -464,8 +451,8 @@ describe('<pf-accordion>', function() {
         });
       });
 
-      describe('when focus is on the middle header', function() {
-        beforeEach(async function() {
+      describe('calling focus() on the middle header', function() {
+        beforeEach(function() {
           header2.focus();
         });
 
@@ -492,8 +479,7 @@ describe('<pf-accordion>', function() {
         describe('Tab', function() {
           beforeEach(press('Tab'));
           it('moves focus to the body', async function() {
-            expect(await getFocusedSnapshot())
-                .to.not.be.ok;
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
           });
         });
 
@@ -501,42 +487,34 @@ describe('<pf-accordion>', function() {
         describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
           it('moves focus to the last header', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  header3.textContent?.trim());
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(header3);
           });
         });
 
         describe('ArrowUp', function() {
           beforeEach(press('ArrowUp'));
           it('moves focus to the first header', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  header1.textContent?.trim());
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(header1);
           });
         });
 
         describe('Home', function() {
           beforeEach(press('Home'));
           it('moves focus to the first header', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  header1.textContent?.trim());
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(header1);
           });
         });
 
         describe('End', function() {
           beforeEach(press('End'));
           it('moves focus to the last header', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  header3.textContent?.trim());
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(header3);
           });
         });
       });
 
-      describe('when focus is on the last header', function() {
-        beforeEach(async function() {
+      describe('calling focus() on the last header', function() {
+        beforeEach(function() {
           header3.focus();
         });
 
@@ -579,58 +557,53 @@ describe('<pf-accordion>', function() {
         describe('Shift+Tab', function() {
           beforeEach(press('Shift+Tab'));
           it('moves focus to the body', async function() {
-            expect(await getFocusedSnapshot())
-                .to.not.be.ok;
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
           });
         });
-
 
         describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
           it('moves focus to the first header', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  header1.textContent?.trim());
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(header1);
           });
         });
 
         describe('ArrowUp', function() {
           beforeEach(press('ArrowUp'));
           it('moves focus to the middle header', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  header2.textContent?.trim());
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(header2);
           });
         });
 
         describe('Home', function() {
           beforeEach(press('Home'));
           it('moves focus to the first header', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  header1.textContent?.trim());
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(header1);
           });
         });
 
         describe('End', function() {
           beforeEach(press('End'));
           it('moves focus to the last header', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  header3.textContent?.trim());
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(header3);
           });
         });
       });
 
-      describe('when the first panel is expanded', function() {
-        beforeEach(async function() {
+      describe('expand(0)', function() {
+        beforeEach(function() {
           element.expand(0);
-          await aTimeout(500);
         });
 
-        describe('and focus is on the first header', function() {
+        beforeEach(nextFrame);
+
+        describe('calling focus() on the first header', function() {
+          beforeEach(function() {
+            header1.focus();
+          });
           describe('Space', function() {
             beforeEach(press(' '));
+            beforeEach(nextFrame);
             it('collapses the first panel', function() {
               expect(panel1.expanded).to.be.false;
               expect(panel2.expanded).to.be.false;
@@ -650,33 +623,28 @@ describe('<pf-accordion>', function() {
           describe('Tab', function() {
             beforeEach(press('Tab'));
             it('moves focus to the link in the first panel', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.have.property('name',
-                                    panel1.querySelector('a')?.textContent?.trim());
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(panel1.querySelector('a'));
             });
+
             describe('Tab', function() {
               beforeEach(press('Tab'));
               it('moves focus to the body', async function() {
-                expect(await getFocusedSnapshot())
-                    .to.not.be.ok;
+                expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
               });
               describe('Shift+Tab', function() {
                 beforeEach(press('Shift+Tab'));
                 it('keeps focus on the link in the first panel', async function() {
-                  expect(await getFocusedSnapshot())
-                      .to.have.property('name',
-                                        panel1.querySelector('a')?.textContent?.trim());
+                  expect(await a11ySnapshot()).to.have.axTreeFocusOn(panel1.querySelector('a'));
                 });
               });
             });
+
             describe('Space', function() {
               beforeEach(press(' '));
               describe('ArrowDown', function() {
                 beforeEach(press('ArrowDown'));
                 it('keeps focus on the link in the first panel', async function() {
-                  expect(await getFocusedSnapshot())
-                      .to.have.property('name',
-                                        panel1.querySelector('a')?.textContent?.trim());
+                  expect(await a11ySnapshot()).to.have.axTreeFocusOn(panel1.querySelector('a'));
                 });
                 it('does not open other panels', function() {
                   expect(panel1.expanded).to.be.true;
@@ -688,9 +656,7 @@ describe('<pf-accordion>', function() {
               describe('ArrowUp', function() {
                 beforeEach(press('ArrowUp'));
                 it('keeps focus on the link in the first panel', async function() {
-                  expect(await getFocusedSnapshot())
-                      .to.have.property('name',
-                                        panel1.querySelector('a')?.textContent?.trim());
+                  expect(await a11ySnapshot()).to.have.axTreeFocusOn(panel1.querySelector('a'));
                 });
                 it('does not open other panels', function() {
                   expect(panel1.expanded).to.be.true;
@@ -703,9 +669,7 @@ describe('<pf-accordion>', function() {
                 beforeEach(press('Home'));
 
                 it('keeps focus on the link in the first panel', async function() {
-                  expect(await getFocusedSnapshot())
-                      .to.have.property('name',
-                                        panel1.querySelector('a')?.textContent?.trim());
+                  expect(await a11ySnapshot()).to.have.axTreeFocusOn(panel1.querySelector('a'));
                 });
 
                 it('does not open other panels', function() {
@@ -718,9 +682,7 @@ describe('<pf-accordion>', function() {
               describe('End', function() {
                 beforeEach(press('End'));
                 it('keeps focus on the link in the first panel', async function() {
-                  expect(await getFocusedSnapshot())
-                      .to.have.property('name',
-                                        panel1.querySelector('a')?.textContent?.trim());
+                  expect(await a11ySnapshot()).to.have.axTreeFocusOn(panel1.querySelector('a'));
                 });
                 it('does not open other panels', function() {
                   expect(panel1.expanded).to.be.true;
@@ -743,8 +705,7 @@ describe('<pf-accordion>', function() {
             beforeEach(press('ArrowDown'));
 
             it('moves focus to the second header', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.not.be.ok;
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(header2);
             });
 
             it('does not open other panels', function() {
@@ -758,9 +719,7 @@ describe('<pf-accordion>', function() {
             beforeEach(press('ArrowUp'));
 
             it('moves focus to the last header', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.have.property('name',
-                                    header3?.textContent?.trim());
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(header3);
             });
 
             it('does not open other panels', function() {
@@ -773,9 +732,7 @@ describe('<pf-accordion>', function() {
           describe('Home', function() {
             beforeEach(press('Home'));
             it('moves focus to the first header', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.have.property('name',
-                                    header1?.textContent?.trim());
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(header1);
             });
 
             it('does not open other panels', function() {
@@ -788,9 +745,7 @@ describe('<pf-accordion>', function() {
           describe('End', function() {
             beforeEach(press('End'));
             it('moves focus to the last header', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.have.property('name',
-                                    header3?.textContent?.trim());
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(header3);
             });
             it('does not open other panels', function() {
               expect(panel1.expanded).to.be.true;
@@ -800,25 +755,29 @@ describe('<pf-accordion>', function() {
           });
         });
 
-        describe('and focus is on the middle header', function() {
-          beforeEach(press('Tab'));
-          beforeEach(press('Tab'));
+        describe('calling focus() on the middle header', function() {
+          beforeEach(function() {
+            header2.focus();
+          });
 
           describe('Shift+Tab', function() {
             beforeEach(press('Shift+Tab'));
+            beforeEach(nextFrame);
             it('moves focus to the link in first panel', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.have.property('name',
-                                    panel1.querySelector('a')?.textContent?.trim());
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(panel1.querySelector('a'));
             });
           });
         });
       });
 
-      describe('when the middle panel is expanded', function() {
-        beforeEach(async function() {
+      describe('expand(1)', function() {
+        beforeEach(function() {
           element.expand(1);
-          await nextFrame();
+        });
+
+        beforeEach(nextFrame);
+
+        it('sets the expanded property on the second panel', function() {
           expect(panel2.expanded).to.be.true;
         });
 
@@ -828,11 +787,12 @@ describe('<pf-accordion>', function() {
           expect(panel3.hidden, 'panel3').to.be.true;
         });
 
-        describe('and focus is on the middle header', function() {
-          beforeEach(async function() {
+        describe('calling focus() on the middle header', function() {
+          beforeEach(function() {
             header2.focus();
-            await nextFrame();
           });
+
+          beforeEach(nextFrame);
 
           describe('Space', function() {
             beforeEach(press(' '));
@@ -855,75 +815,70 @@ describe('<pf-accordion>', function() {
           describe('Tab', function() {
             beforeEach(press('Tab'));
             it('moves focus to the link in the second panel', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.have.property('name',
-                                    panel2.querySelector('a')?.textContent?.trim());
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(panel2.querySelector('a'));
             });
           });
 
           describe('Shift+Tab', function() {
             beforeEach(press('Shift+Tab'));
             it('moves focus to the body', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.not.be.ok;
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
             });
           });
 
           describe('ArrowUp', function() {
             beforeEach(press('ArrowUp'));
             it('moves focus to the first header', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.have.property('name',
-                                    header1?.textContent?.trim());
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(header1);
             });
           });
 
           describe('ArrowDown', function() {
             beforeEach(press('ArrowDown'));
             it('moves focus to the last header', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.have.property('name',
-                                    header3?.textContent?.trim());
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(header3);
             });
           });
         });
 
-        describe('and focus is on the last header', function() {
-          beforeEach(async function() {
+        describe('calling focus() on the last header', function() {
+          beforeEach(function() {
             header3.focus();
-            await nextFrame();
           });
+
+          beforeEach(nextFrame);
 
           describe('Shift+Tab', function() {
             beforeEach(press('Shift+Tab'));
             it('moves focus to the link in middle panel', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.have.property('name',
-                                    panel2.querySelector('a')?.textContent?.trim());
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(panel2.querySelector('a'));
             });
           });
         });
       });
 
-      describe('when the last panel is expanded', function() {
-        beforeEach(async function() {
+      describe('expand(2)', function() {
+        beforeEach(function() {
           element.expand(2);
-          await nextFrame();
+        });
+
+        beforeEach(nextFrame);
+
+        it('sets the expanded property on the last panel', function() {
           expect(panel3.expanded).to.be.true;
         });
 
-        describe('when focus is on the last header', function() {
-          beforeEach(async function() {
+        describe('calling focus() is on the last header', function() {
+          beforeEach(function() {
             header3.focus();
-            await nextFrame();
           });
+
+          beforeEach(nextFrame);
 
           describe('Tab', function() {
             beforeEach(press('Tab'));
             it('moves focus to the link in last panel', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.have.property('name',
-                                    panel3.querySelector('a')?.textContent?.trim());
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(panel3.querySelector('a'));
             });
           });
         });
@@ -1074,116 +1029,94 @@ describe('<pf-accordion>', function() {
     });
   });
 
-  describe('with nested pf-accordion', function() {
-    let topLevelHeaderOne: PfAccordionHeader;
-    let topLevelHeaderTwo: PfAccordionHeader;
+  describe('with nested <pf-accordion>', function() {
+    let topLevelHeader1: PfAccordionHeader;
+    let topLevelHeader2: PfAccordionHeader;
 
-    let topLevelPanelOne: PfAccordionPanel;
-    let topLevelPanelTwo: PfAccordionPanel;
+    let topLevelPanel1: PfAccordionPanel;
+    let topLevelPanel2: PfAccordionPanel;
 
     let nestedHeader1: PfAccordionHeader;
     let nestedHeader2: PfAccordionHeader;
     let nestedHeader3: PfAccordionHeader;
 
-    let nestedPanelOne: PfAccordionPanel;
-    let nestedPanelTwo: PfAccordionPanel;
-    let nestedPanelThree: PfAccordionPanel;
+    let nestedPanel1: PfAccordionPanel;
+    let nestedPanel2: PfAccordionPanel;
+    let nestedPanel3: PfAccordionPanel;
 
     beforeEach(async function() {
       element = await fixture<PfAccordion>(html`
         <pf-accordion>
-          <pf-accordion-header id="header-1" data-index="0">
-            top-header-1
-          </pf-accordion-header>
+          <pf-accordion-header id="header-1" data-index="0">top-header-1</pf-accordion-header>
           <pf-accordion-panel id="panel-1" data-index="0">
             top-panel-1
             <pf-accordion>
-              <pf-accordion-header id="header-1-1" data-index="0-1">
-                nest-1-header-1
-              </pf-accordion-header>
-              <pf-accordion-panel id="panel-1-1" data-index="0-1">
-                nest-1-panel-1
-              </pf-accordion-panel>
+              <pf-accordion-header id="header-1-1" data-index="0-1">nest-1-header-1</pf-accordion-header>
+              <pf-accordion-panel id="panel-1-1" data-index="0-1">nest-1-panel-1</pf-accordion-panel>
             </pf-accordion>
           </pf-accordion-panel>
-          <pf-accordion-header id="header-2" data-index="2">
-            top-header-2
-          </pf-accordion-header>
+          <pf-accordion-header id="header-2" data-index="2">top-header-2</pf-accordion-header>
           <pf-accordion-panel id="panel-2" data-panel="2">
             top-panel-2
             <pf-accordion single>
-              <pf-accordion-header id="header-2-1" data-index="1-0">
-                nest-2-header-1
-              </pf-accordion-header>
-              <pf-accordion-panel id="panel-2-1" data-index="1-0">
-                nest-2-header-1
-              </pf-accordion-panel>
-              <pf-accordion-header id="header-2-2" data-index="1-1">
-                nest-2-header-2
-              </pf-accordion-header>
-              <pf-accordion-panel id="panel-2-2" data-index="1-1">
-                nest-2-panel-2
-              </pf-accordion-panel>
-              <pf-accordion-header id="header-2-3" data-index="1-2">
-                nest-2-header-3
-              </pf-accordion-header>
-              <pf-accordion-panel id="panel-2-3" data-index="1-2">
-                nest-2-panel-3
-              </pf-accordion-panel>
+              <pf-accordion-header id="header-2-1" data-index="1-0">nest-2-header-1</pf-accordion-header>
+              <pf-accordion-panel id="panel-2-1" data-index="1-0">nest-2-header-1</pf-accordion-panel>
+              <pf-accordion-header id="header-2-2" data-index="1-1">nest-2-header-2</pf-accordion-header>
+              <pf-accordion-panel id="panel-2-2" data-index="1-1">nest-2-panel-2</pf-accordion-panel>
+              <pf-accordion-header id="header-2-3" data-index="1-2">nest-2-header-3</pf-accordion-header>
+              <pf-accordion-panel id="panel-2-3" data-index="1-2">nest-2-panel-3</pf-accordion-panel>
             </pf-accordion>
           </pf-accordion-panel>
-          <pf-accordion-header id="header-3" data-index="2">
-            top-header-3
-          </pf-accordion-header>
-          <pf-accordion-panel id="panel-3" data-index="2">
-            top-panel-3
-          </pf-accordion-panel>
+          <pf-accordion-header id="header-3" data-index="2">top-header-3</pf-accordion-header>
+          <pf-accordion-panel id="panel-3" data-index="2">top-panel-3</pf-accordion-panel>
         </pf-accordion>
       `);
-      topLevelHeaderOne = document.getElementById('header-1') as PfAccordionHeader;
-      topLevelHeaderTwo = document.getElementById('header-2') as PfAccordionHeader;
+      topLevelHeader1 = document.getElementById('header-1') as PfAccordionHeader;
+      topLevelHeader2 = document.getElementById('header-2') as PfAccordionHeader;
 
-      topLevelPanelOne = document.getElementById('panel-1') as PfAccordionPanel;
-      topLevelPanelTwo = document.getElementById('panel-2') as PfAccordionPanel;
+      topLevelPanel1 = document.getElementById('panel-1') as PfAccordionPanel;
+      topLevelPanel2 = document.getElementById('panel-2') as PfAccordionPanel;
 
       nestedHeader1 = document.getElementById('header-2-1') as PfAccordionHeader;
       nestedHeader2 = document.getElementById('header-2-2') as PfAccordionHeader;
       nestedHeader3 = document.getElementById('header-2-3') as PfAccordionHeader;
 
-      nestedPanelOne = document.getElementById('panel-2-1') as PfAccordionPanel;
-      nestedPanelTwo = document.getElementById('panel-2-2') as PfAccordionPanel;
-      nestedPanelThree = document.getElementById('panel-2-3') as PfAccordionPanel;
-
-      await allUpdates(element);
+      nestedPanel1 = document.getElementById('panel-2-1') as PfAccordionPanel;
+      nestedPanel2 = document.getElementById('panel-2-2') as PfAccordionPanel;
+      nestedPanel3 = document.getElementById('panel-2-3') as PfAccordionPanel;
     });
+
+    beforeEach(() => allUpdates(element));
 
     describe('clicking the first top-level heading', function() {
       beforeEach(async function() {
-        await clickElementAtCenter(topLevelHeaderOne);
-        await allUpdates(element);
+        await clickElementAtCenter(topLevelHeader1);
       });
+
+      beforeEach(() => allUpdates(element));
+
       describe('then clicking the second top-level heading', function() {
         beforeEach(async function() {
-          await clickElementAtCenter(topLevelHeaderTwo);
-          await allUpdates(element);
+          await clickElementAtCenter(topLevelHeader2);
         });
+        beforeEach(() => allUpdates(element));
         describe('then clicking the first nested heading', function() {
           beforeEach(async function() {
             await clickElementAtCenter(nestedHeader1);
-            await allUpdates(element);
           });
+          beforeEach(() => allUpdates(element));
           describe('then clicking the second nested heading', function() {
             beforeEach(async function() {
               await clickElementAtCenter(nestedHeader2);
-              await allUpdates(element);
             });
+            beforeEach(() => allUpdates(element));
             it('expands the first top-level pair', async function() {
               const snapshot = await a11ySnapshot();
               const expanded = snapshot?.children?.find(x => x.expanded);
-              expect(expanded?.name).to.equal(topLevelHeaderOne.textContent?.trim());
-              expect(topLevelHeaderOne.expanded).to.be.true;
-              expect(topLevelPanelOne.hasAttribute('expanded')).to.be.true;
-              expect(topLevelPanelOne.expanded).to.be.true;
+              expect(expanded?.name).to.equal(topLevelHeader1.textContent?.trim());
+              expect(topLevelHeader1.expanded).to.be.true;
+              expect(topLevelPanel1.hasAttribute('expanded')).to.be.true;
+              expect(topLevelPanel1.expanded).to.be.true;
             });
             it('collapses the second top-level pair', async function() {
               const snapshot = await a11ySnapshot();
@@ -1203,154 +1136,160 @@ describe('<pf-accordion>', function() {
       });
     });
 
-    describe('for assistive technology', function() {
-      describe('with all panels closed', function() {
-        it('applies hidden attribute to all panels', function() {
-          expect(topLevelPanelOne.hidden, 'panel-1').to.be.true;
-          expect(topLevelPanelTwo.hidden, 'panel-2').to.be.true;
-          expect(nestedPanelOne.hidden, 'panel-1-1').to.be.true;
-          expect(nestedPanelTwo.hidden, 'panel-2-2').to.be.true;
-          expect(nestedPanelThree.hidden, 'panel-2-3').to.be.true;
+    describe('with all panels closed', function() {
+      it('applies hidden attribute to all panels', function() {
+        expect(topLevelPanel1.hidden, 'panel-1').to.be.true;
+        expect(topLevelPanel2.hidden, 'panel-2').to.be.true;
+        expect(nestedPanel1.hidden, 'panel-1-1').to.be.true;
+        expect(nestedPanel2.hidden, 'panel-2-2').to.be.true;
+        expect(nestedPanel3.hidden, 'panel-2-3').to.be.true;
+      });
+    });
+
+    describe('calling expandAll() on all accordions', function() {
+      beforeEach(() => Promise.all(Array.from(document.querySelectorAll('pf-accordion'), a =>
+        a.expandAll())));
+
+      beforeEach(nextFrame);
+
+      it('removes hidden attribute from all panels', function() {
+        expect(topLevelPanel1.hidden, 'panel-1').to.be.false;
+        expect(topLevelPanel2.hidden, 'panel-2').to.be.false;
+        expect(nestedPanel1.hidden, 'panel-1-1').to.be.false;
+        expect(nestedPanel2.hidden, 'panel-2-2').to.be.false;
+        expect(nestedPanel3.hidden, 'panel-2-3').to.be.false;
+      });
+    });
+
+    describe('calling focus() on the first header of the parent accordion', function() {
+      beforeEach(function() {
+        topLevelHeader1.focus();
+      });
+
+      beforeEach(nextFrame);
+
+      describe('Space', function() {
+        beforeEach(press(' '));
+        it('expands the first panel', function() {
+          expect(topLevelPanel1.expanded).to.be.true;
+          expect(topLevelPanel2.expanded).to.be.false;
+          expect(nestedPanel1.expanded).to.be.false;
+          expect(nestedPanel2.expanded).to.be.false;
+        });
+        it('removes hidden attribute from the first panel', function() {
+          expect(topLevelPanel1.hidden, 'panel-1').to.be.false;
+          expect(topLevelPanel2.hidden, 'panel-2').to.be.true;
+          expect(nestedPanel1.hidden, 'panel-1-1').to.be.true;
+          expect(nestedPanel2.hidden, 'panel-2-2').to.be.true;
         });
       });
 
-      describe('with all panels open', function() {
-        beforeEach(async function() {
-          await Promise.all(Array.from(
-            document.querySelectorAll('pf-accordion'),
-            accordion => accordion.expandAll(),
-          ));
-          await nextFrame();
-        });
-        it('removes hidden attribute from all panels', function() {
-          expect(topLevelPanelOne.hidden, 'panel-1').to.be.false;
-          expect(topLevelPanelTwo.hidden, 'panel-2').to.be.false;
-          expect(nestedPanelOne.hidden, 'panel-1-1').to.be.false;
-          expect(nestedPanelTwo.hidden, 'panel-2-2').to.be.false;
-          expect(nestedPanelThree.hidden, 'panel-2-3').to.be.false;
+      describe('Tab', function() {
+        beforeEach(press('Tab'));
+        it('moves focus to the body', async function() {
+          expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
         });
       });
+    });
 
-      describe('when focus is on the first header of the parent accordion', function() {
-        beforeEach(async function() {
-          topLevelHeaderOne.focus();
-          await nextFrame();
+    describe('calling focus() on the second header of the parent accordion', function() {
+      beforeEach(function() {
+        topLevelHeader2.focus();
+      });
+
+      beforeEach(nextFrame);
+
+      describe('Space', function() {
+        beforeEach(press(' '));
+        beforeEach(nextFrame);
+        it('expands the panel containing the nested <pf-accordion>', async function() {
+          expect(await a11ySnapshot()).to.have.axTreeNodeWithName('nest-2-header-1');
         });
-
-        describe('Space', function() {
-          beforeEach(press(' '));
-          it('expands the first panel', function() {
-            expect(topLevelPanelOne.expanded).to.be.true;
-            expect(topLevelPanelTwo.expanded).to.be.false;
-            expect(nestedPanelOne.expanded).to.be.false;
-            expect(nestedPanelTwo.expanded).to.be.false;
-          });
-          it('removes hidden attribute from the first panel', function() {
-            expect(topLevelPanelOne.hidden, 'panel-1').to.be.false;
-            expect(topLevelPanelTwo.hidden, 'panel-2').to.be.true;
-            expect(nestedPanelOne.hidden, 'panel-1-1').to.be.true;
-            expect(nestedPanelTwo.hidden, 'panel-2-2').to.be.true;
-          });
-        });
-
         describe('Tab', function() {
           beforeEach(press('Tab'));
-          it('moves focus to the body', async function() {
-            expect(await getFocusedSnapshot())
-                .to.not.be.ok;
-          });
-        });
-      });
+          beforeEach(nextFrame);
 
-      describe('when focus is on the last header of the parent accordion', function() {
-        beforeEach(async function() {
-          topLevelHeaderTwo.focus();
-          await nextFrame();
-        });
-
-        describe('Space', function() {
-          beforeEach(press(' '));
-          it('expands the first panel', function() {
-            expect(topLevelPanelOne.expanded).to.be.false;
-            expect(topLevelPanelTwo.expanded).to.be.true;
-            expect(nestedPanelOne.expanded).to.be.false;
-            expect(nestedPanelTwo.expanded).to.be.false;
+          it('moves focus to the first nested header', async function() {
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(nestedHeader1);
           });
-          it('removes hidden attribute from the first panel', function() {
-            expect(topLevelPanelOne.hidden, 'panel-2').to.be.true;
-            expect(topLevelPanelTwo.hidden, 'panel-1').to.be.false;
-            expect(nestedPanelOne.hidden, 'panel-1-1').to.be.true;
-            expect(nestedPanelTwo.hidden, 'panel-2-2').to.be.true;
-          });
-        });
 
-        describe('Navigating from parent to child accordion', function() {
-          describe('Opening the panel containing the nested accordion and pressing TAB', function() {
-            beforeEach(press('Space'));
+          describe('ArrowUp', function() {
+            beforeEach(press('ArrowUp'));
+            beforeEach(nextFrame);
+            it('moves focus to the last nested header', async function() {
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(nestedHeader3);
+            });
+          });
+
+          describe('ArrowLeft', function() {
+            beforeEach(press('ArrowLeft'));
+            beforeEach(nextFrame);
+            it('moves focus to the last nested header', async function() {
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(nestedHeader3);
+            });
+          });
+
+          describe('ArrowDown', function() {
+            beforeEach(press('ArrowDown'));
+            beforeEach(nextFrame);
+            it('moves focus to the second nested header', async function() {
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(nestedHeader2);
+            });
+          });
+
+          describe('ArrowRight', function() {
+            beforeEach(press('ArrowRight'));
+            beforeEach(nextFrame);
+            it('moves focus to the second nested header', async function() {
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(nestedHeader2);
+            });
+          });
+
+          describe('Tab', function() {
             beforeEach(press('Tab'));
-            it('moves focus to the nested accordion header', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.have.property('name',
-                                    nestedHeader1?.textContent?.trim());
-            });
-
-            describe('ArrowUp', function() {
-              beforeEach(press('ArrowUp'));
-              it('moves focus to the last nested header', async function() {
-                expect(await getFocusedSnapshot())
-                    .to.have.property('name',
-                                      nestedHeader3?.textContent?.trim());
-              });
-            });
-
-            describe('ArrowLeft', function() {
-              beforeEach(press('ArrowLeft'));
-              it('moves focus to the last header', async function() {
-                expect(await getFocusedSnapshot())
-                    .to.have.property('name',
-                                      nestedHeader3?.textContent?.trim());
-              });
-            });
-
-            describe('ArrowDown', function() {
-              beforeEach(press('ArrowDown'));
-              it('moves focus to the second header', async function() {
-                expect(await getFocusedSnapshot())
-                    .to.have.property('name',
-                                      nestedHeader2?.textContent?.trim());
-              });
-            });
-
-            describe('ArrowRight', function() {
-              beforeEach(press('ArrowRight'));
-              it('moves focus to the second header', async function() {
-                expect(await getFocusedSnapshot())
-                    .to.have.property('name',
-                                      nestedHeader2?.textContent?.trim());
-              });
-            });
-
-            describe('Tab', function() {
-              beforeEach(press('Tab'));
-              it('should move focus back to the body', async function() {
-                expect(await getFocusedSnapshot())
-                    .to.not.be.ok;
-              });
+            beforeEach(nextFrame);
+            it('should move focus back to the body', async function() {
+              expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
             });
           });
         });
       });
     });
+
+    describe('calling focus() on the last header of the parent accordion', function() {
+      beforeEach(function() {
+        topLevelHeader2.focus();
+      });
+
+      beforeEach(nextFrame);
+
+      describe('Space', function() {
+        beforeEach(press(' '));
+        it('expands the first panel', function() {
+          expect(topLevelPanel1.expanded).to.be.false;
+          expect(topLevelPanel2.expanded).to.be.true;
+          expect(nestedPanel1.expanded).to.be.false;
+          expect(nestedPanel2.expanded).to.be.false;
+        });
+
+        it('removes hidden attribute from the first panel', function() {
+          expect(topLevelPanel1.hidden, 'panel-2').to.be.true;
+          expect(topLevelPanel2.hidden, 'panel-1').to.be.false;
+          expect(nestedPanel1.hidden, 'panel-1-1').to.be.true;
+          expect(nestedPanel2.hidden, 'panel-2-2').to.be.true;
+        });
+      });
+    });
   });
 
-  describe('with multiple pf-accordion', function() {
+  describe('with multiple <pf-accordion> elements', function() {
     let multipleAccordionElements: HTMLElement;
 
-    let accordionOneHeaderOne: PfAccordionHeader;
-    let accordionOnePanelOne: PfAccordionPanel;
+    let accordion1Header1: PfAccordionHeader;
+    let accordion1Panel1: PfAccordionPanel;
 
-    let accordionTwoHeaderOne: PfAccordionHeader;
-    let accordionTwoPanelOne: PfAccordionPanel;
+    let accordion2Header1: PfAccordionHeader;
+    let accordion2Panel1: PfAccordionPanel;
 
     beforeEach(async function() {
       multipleAccordionElements = await fixture<HTMLElement>(html`
@@ -1365,68 +1304,62 @@ describe('<pf-accordion>', function() {
         </pf-accordion>
       </div>
       `);
-      accordionOneHeaderOne = document.getElementById('header-1-1') as PfAccordionHeader;
+      accordion1Header1 = document.getElementById('header-1-1') as PfAccordionHeader;
 
-      accordionOnePanelOne = document.getElementById('panel-1-1') as PfAccordionPanel;
+      accordion1Panel1 = document.getElementById('panel-1-1') as PfAccordionPanel;
 
-      accordionTwoHeaderOne = document.getElementById('header-2-1') as PfAccordionHeader;
+      accordion2Header1 = document.getElementById('header-2-1') as PfAccordionHeader;
 
-      accordionTwoPanelOne = document.getElementById('panel-2-1') as PfAccordionPanel;
+      accordion2Panel1 = document.getElementById('panel-2-1') as PfAccordionPanel;
     });
 
-    describe('for assistive technology', function() {
-      describe('with all panels closed', function() {
-        it('applies hidden attribute to all panels', function() {
-          expect(accordionOnePanelOne.hidden, 'panel-1-1').to.be.true;
-          expect(accordionTwoPanelOne.hidden, 'panel-2-1').to.be.true;
+    it('applies hidden attribute to all panels', function() {
+      expect(accordion1Panel1.hidden, 'panel-1-1').to.be.true;
+      expect(accordion2Panel1.hidden, 'panel-2-1').to.be.true;
+    });
+
+    describe('clicking every header', function() {
+      beforeEach(async function() {
+        for (const header of multipleAccordionElements.querySelectorAll('pf-accordion-header')) {
+          await clickElementAtCenter(header);
+        }
+      });
+
+      beforeEach(nextFrame);
+
+      it('removes hidden attribute from all panels', function() {
+        expect(accordion1Panel1.hidden, 'panel-1-1').to.be.false;
+        expect(accordion2Panel1.hidden, 'panel-2-1').to.be.false;
+      });
+    });
+
+    describe('calling focus() on the first header of the first accordion', function() {
+      beforeEach(function() {
+        accordion1Header1.focus();
+      });
+      beforeEach(nextFrame);
+
+      describe('Space', function() {
+        beforeEach(press(' '));
+        it('expands the first panel', function() {
+          expect(accordion1Panel1.expanded).to.be.true;
+          expect(accordion2Panel1.expanded).to.be.false;
+        });
+        it('removes hidden attribute from the first panel', function() {
+          expect(accordion1Panel1.hidden, 'panel-1-1').to.be.false;
+          expect(accordion2Panel1.hidden, 'panel-1-1').to.be.true;
         });
       });
 
-      describe('with all panels open', function() {
-        beforeEach(async function() {
-          for (const header of multipleAccordionElements.querySelectorAll('pf-accordion-header')) {
-            await clickElementAtCenter(header);
-          }
-          await nextFrame();
+      describe('Tab', function() {
+        beforeEach(press('Tab'));
+        it('moves focus to the second accordion', async function() {
+          expect(await a11ySnapshot()).to.have.axTreeFocusOn(accordion2Header1);
         });
-        it('removes hidden attribute from all panels', function() {
-          expect(accordionOnePanelOne.hidden, 'panel-1-1').to.be.false;
-          expect(accordionTwoPanelOne.hidden, 'panel-2-1').to.be.false;
-        });
-      });
-
-      describe('when focus is on the first header of the first accordion', function() {
-        beforeEach(async function() {
-          accordionOneHeaderOne.focus();
-          await nextFrame();
-        });
-
-        describe('Space', function() {
-          beforeEach(press(' '));
-          it('expands the first panel', function() {
-            expect(accordionOnePanelOne.expanded).to.be.true;
-            expect(accordionTwoPanelOne.expanded).to.be.false;
-          });
-          it('removes hidden attribute from the first panel', function() {
-            expect(accordionOnePanelOne.hidden, 'panel-1-1').to.be.false;
-            expect(accordionTwoPanelOne.hidden, 'panel-1-1').to.be.true;
-          });
-        });
-
-        describe('Tab', function() {
-          beforeEach(press('Tab'));
-          it('moves focus to the second accordion', async function() {
-            expect(await getFocusedSnapshot())
-                .to.have.property('name',
-                                  accordionTwoHeaderOne?.textContent?.trim());
-          });
-          describe('Shift+Tab', function() {
-            beforeEach(press('Shift+Tab'));
-            it('moves focus back to the first accordion', async function() {
-              expect(await getFocusedSnapshot())
-                  .to.have.property('name',
-                                    accordionOneHeaderOne?.textContent?.trim());
-            });
+        describe('Shift+Tab', function() {
+          beforeEach(press('Shift+Tab'));
+          it('moves focus to the first accordion, first header', async function() {
+            expect(await a11ySnapshot()).to.have.axTreeFocusOn(accordion1Header1);
           });
         });
       });

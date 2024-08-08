@@ -122,7 +122,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
     public host: ReactiveControllerHost,
     protected options: ATFocusControllerOptions<Item>,
   ) {
-    this.host.updateComplete.then(() => isServer && this.initItems());
+    this.host.updateComplete.then(() => this.initItems());
   }
 
   /**
@@ -147,7 +147,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
 
   #initContainer() {
     return this.options.getItemsContainer?.()
-      ?? (this.host instanceof HTMLElement ? this.host : null);
+      ?? (!isServer && this.host instanceof HTMLElement ? this.host : null);
   }
 
   /**

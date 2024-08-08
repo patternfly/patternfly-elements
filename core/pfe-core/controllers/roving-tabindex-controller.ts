@@ -1,4 +1,4 @@
-import type { ReactiveControllerHost } from 'lit';
+import { isServer, type ReactiveControllerHost } from 'lit';
 import { ATFocusController, type ATFocusControllerOptions } from './at-focus-controller.js';
 import { Logger } from './logger.js';
 
@@ -71,10 +71,13 @@ export class RovingTabindexController<
     super(host, options);
     this.initItems();
     const container = options.getItemsContainer?.() ?? this.host;
-    if (container instanceof HTMLElement) {
-      container.addEventListener('focusin', () => this.#gainedInitialFocus = true, { once: true });
-    } else {
-      this.#logger.warn('RovingTabindexController requires a getItemsContainer function');
+    if (!isServer) {
+      if (container instanceof HTMLElement) {
+        container.addEventListener('focusin', () =>
+          this.#gainedInitialFocus = true, { once: true });
+      } else {
+        this.#logger.warn('RovingTabindexController requires a getItemsContainer function');
+      }
     }
   }
 

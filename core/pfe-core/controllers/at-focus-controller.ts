@@ -2,7 +2,7 @@ import { isServer, type ReactiveControllerHost } from 'lit';
 
 function isATFocusableItem(el: Element): el is HTMLElement {
   return !!el
-      && !el.ariaHidden
+      && el.ariaHidden !== 'true'
       && !el.hasAttribute('hidden');
 }
 
@@ -48,12 +48,13 @@ export abstract class ATFocusController<Item extends HTMLElement> {
   set atFocusedItemIndex(index: number) {
     const previousIndex = this.#atFocusedItemIndex;
     const direction = index > previousIndex ? 1 : -1;
-    const { items, atFocusableItems, lastATFocusableItem } = this;
-    const itemsIndexOfLastATFocusableItem = items.indexOf(lastATFocusableItem!);
+    const { items, atFocusableItems } = this;
+    const itemsIndexOfLastATFocusableItem = items.indexOf(this.atFocusableItems.at(-1)!);
     let itemToGainFocus = items.at(index);
     let itemToGainFocusIsFocusable = atFocusableItems.includes(itemToGainFocus!);
-    if (items.length) {
-      while (!itemToGainFocus || !itemToGainFocusIsFocusable) {
+    if (atFocusableItems.length) {
+      let count = 0;
+      while (!itemToGainFocus || !itemToGainFocusIsFocusable && count++ <= 1000) {
         if (index < 0) {
           index = itemsIndexOfLastATFocusableItem;
         } else if (index >= itemsIndexOfLastATFocusableItem) {
@@ -63,6 +64,14 @@ export abstract class ATFocusController<Item extends HTMLElement> {
         }
         itemToGainFocus = items.at(index);
         itemToGainFocusIsFocusable = atFocusableItems.includes(itemToGainFocus!);
+      }
+      if (count >= 1000) {
+        // console.log(items.map(el => ({
+        //  ariaHidden: el.ariaHidden,
+        //  hidden: el.hasAttribute('hidden'),
+        // })));
+        // console.log({ items, atFocusableItems, index });
+        throw new Error('Could not atFocusedItemIndex');
       }
     }
     this.#atFocusedItemIndex = index;
@@ -76,32 +85,6 @@ export abstract class ATFocusController<Item extends HTMLElement> {
   /** All items which are able to receive assistive technology focus */
   get atFocusableItems(): Item[] {
     return this._items.filter(isATFocusableItem);
-  }
-
-  /** First item which is able to receive assistive technology focus */
-  get firstATFocusableItem(): Item | null {
-    return this.atFocusableItems.at(0) ?? null;
-  }
-
-  /** Last item which is able to receive assistive technology focus */
-  get lastATFocusableItem(): Item | null {
-    return this.atFocusableItems.at(-1) ?? null;
-  }
-
-  /** Focusable item following the item which currently has assistive technology focus */
-  get nextATFocusableItem(): Item | null {
-    const index = this.atFocusedItemIndex;
-    const outOfBounds = index >= this.atFocusableItems.length - 1;
-    return outOfBounds ? this.firstATFocusableItem
-                       : this.atFocusableItems.at(index + 1) ?? null;
-  }
-
-  /** Focusable item preceding the item which currently has assistive technology focus */
-  get previousATFocusableItem(): Item | null {
-    const index = this.atFocusedItemIndex;
-    const outOfBounds = index > 0;
-    return outOfBounds ? this.atFocusableItems.at(index - 1) ?? null
-                       : this.lastATFocusableItem;
   }
 
   /** The element containing focusable items, e.g. a listbox */

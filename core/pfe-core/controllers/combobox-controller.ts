@@ -539,7 +539,7 @@ export class ComboboxController<
     const success = await this.options.requestShowListbox();
     if (success !== false && !this.#isTypeahead) {
       if (!this.#preventListboxGainingFocus) {
-        (this.#focusedItem ?? this.#fc?.nextATFocusableItem)?.focus();
+        (this.#focusedItem ?? this.#fc?.items.at(0))?.focus();
         this.#preventListboxGainingFocus = false;
       }
     }

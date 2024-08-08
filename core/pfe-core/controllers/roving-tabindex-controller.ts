@@ -55,7 +55,8 @@ export class RovingTabindexController<
     this._items = items;
     this.#itemsSet = new Set(items);
     const pivot = Math.max(0, this.atFocusedItemIndex);
-    const firstFocusableIndex = items.indexOf(this.atFocusableItems.at(0)!);
+    const [firstFocusable] = this.atFocusableItems;
+    const firstFocusableIndex = firstFocusable ? items.indexOf(firstFocusable) : -1;
     const pivotFocusableIndex = items.indexOf(this.items
         .slice(pivot)
         .concat(this.items.slice(0, pivot))

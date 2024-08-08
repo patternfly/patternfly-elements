@@ -201,7 +201,7 @@ export class ActivedescendantController<
         }
       });
       const next = this.atFocusableItems.find(((_, i) => i !== this.atFocusedItemIndex));
-      const activeItem = next ?? this.firstATFocusableItem;
+      const activeItem = next ?? this.atFocusableItems.at(0);
       this.atFocusedItemIndex = this._items.indexOf(activeItem!);
     }
   }

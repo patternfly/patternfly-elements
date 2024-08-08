@@ -216,7 +216,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
           event.preventDefault();
           break;
         case 'End':
-          this.atFocusedItemIndex = this.items.length;
+          this.atFocusedItemIndex = this.items.length - 1;
           event.stopPropagation();
           event.preventDefault();
           break;

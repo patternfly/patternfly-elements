@@ -120,8 +120,7 @@ export class PfSelect extends LitElement {
     multi: this.variant === 'typeaheadmulti' || this.variant === 'checkbox',
     getItems: () => this.options,
     getFallbackLabel: () => this.accessibleLabel
-                         || this.#internals.computedLabelText
-                         || this.#buttonLabel,
+                         || this.#internals.computedLabelText,
     getListboxElement: () => this._listbox ?? null,
     getToggleButton: () => this._toggleButton ?? null,
     getComboboxInput: () => this._toggleInput ?? null,

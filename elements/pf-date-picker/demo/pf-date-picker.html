@@ -1,0 +1,41 @@
+<div class="container">
+  <section>
+    <h2>Basic</h2>
+    <pre><code>&lt;pf-date-picker&gt;&lt;/pf-date-picker&gt;</code></pre>
+    <pf-date-picker></pf-date-picker>
+    <p>The basic date picker will use the user's locale to determine the date format. The default minimum valid date 
+      is <span>January 1, 1900</span>, and the default maximum valid date is <span>December 31, 9999</span>.</p>
+  </section>
+</div>
+
+
+<script type="module">
+  import '@patternfly/elements/pf-date-picker/pf-date-picker.js';
+</script>
+
+<style>
+  .container {
+    min-height: 25vh;
+    height: auto;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 40px;
+    flex-direction: column;
+  }
+
+  .container section {
+    margin-bottom: var(--rh-space-lg, 16px)
+  }
+
+  .container section p span {
+    color: var(--rh-color-text-secondary-on-light, #4d4d4d);
+    font-family: var(--rh-font-family-code, RedHatMono, "Red Hat Mono", "Courier New", Courier, monospace);
+  }
+
+  .container section pre {
+    padding-bottom: var(--rh-space-md, 8px)
+  }
+</style>
+

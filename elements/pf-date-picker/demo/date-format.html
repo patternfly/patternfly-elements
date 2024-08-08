@@ -1,0 +1,44 @@
+<div class="container">
+  <section>
+    <h2>Date Format</h2>
+    <pre><code>&lt;pf-date-picker date-format-input="YYYY-DD-MM"&gt;&lt;/pf-date-picker&gt;</code></pre>
+    <pf-date-picker date-format-input="YYYY-DD-MM"></pf-date-picker>
+    <p>The date picker supports the following 12 date formats:</p>
+    <p><span>'DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY/MM/DD', 'YYYY/DD/MM', 'DD-MM-YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD',
+       'YYYY-DD-MM', 'DD.MM.YYYY', 'MM.DD.YYYY', 'YYYY.MM.DD', 'YYYY.DD.MM'</span></p>
+    <p>The date format is set globally, independent of the user's locale. 
+      This means that all users will see the same date format, regardless of their language or region.</p>
+  </section>
+</div>
+
+
+<script type="module">
+  import '@patternfly/elements/pf-date-picker/pf-date-picker.js';
+</script>
+
+<style>
+  .container {
+    min-height: 25vh;
+    height: auto;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 40px;
+    flex-direction: column;
+  }
+
+  .container section {
+    margin-bottom: var(--rh-space-lg, 16px)
+  }
+
+  .container section p span {
+    color: var(--rh-color-text-secondary-on-light, #4d4d4d);
+    font-family: var(--rh-font-family-code, RedHatMono, "Red Hat Mono", "Courier New", Courier, monospace);
+  }
+
+  .container section pre {
+    padding-bottom: var(--rh-space-md, 8px)
+  }
+</style>
+

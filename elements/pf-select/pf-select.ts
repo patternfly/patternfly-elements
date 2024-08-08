@@ -20,7 +20,7 @@ import { arraysAreEquivalent } from '@patternfly/pfe-core/functions/arraysAreEqu
 import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 
 import { PfOption } from './pf-option.js';
-import { PfChipRemoveEvent } from '../pf-chip/pf-chip.js';
+import { type PfChip, PfChipRemoveEvent } from '../pf-chip/pf-chip.js';
 
 import styles from './pf-select.css';
 
@@ -315,7 +315,7 @@ export class PfSelect extends LitElement {
     const hasChips = this.variant === 'typeaheadmulti';
     if (hasChips && this._toggleInput?.value) {
       const chip =
-        this.shadowRoot?.querySelector(`pf-chip#chip-${this._toggleInput?.value}`) as HTMLElement;
+        this.shadowRoot?.querySelector(`pf-chip#chip-${this._toggleInput?.value}`) as PfChip;
       if (chip && this._chipGroup) {
         this._chipGroup.focusOnChip(chip);
         this._toggleInput.value = '';

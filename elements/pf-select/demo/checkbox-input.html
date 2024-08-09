@@ -1,14 +1,23 @@
-<pf-select variant="checkbox"
+<section id="checkbox-select-demo">
+  <pf-select variant="checkbox"
            accessible-label="Status"
            placeholder="Filter by status">
-  <pf-option description="This is a description">Active</pf-option>
-  <pf-option>Cancelled</pf-option>
-  <pf-option>Paused</pf-option>
-  <hr>
-  <pf-option>Warning</pf-option>
-  <pf-option>Restarted</pf-option>
-</pf-select>
+    <pf-option description="This is a description">Active</pf-option>
+    <pf-option>Cancelled</pf-option>
+    <pf-option>Paused</pf-option>
+    <hr>
+    <pf-option>Warning</pf-option>
+    <pf-option>Restarted</pf-option>
+  </pf-select>
+</section>
 
 <script type="module">
   import '@patternfly/elements/pf-select/pf-select.js';
 </script>
+
+<style>
+  #checkbox-select-demo {
+    padding: 1em;
+    max-width: 400px;
+  }
+</style>

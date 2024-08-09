@@ -805,7 +805,7 @@ describe('<pf-select>', function() {
         expect(input.role).to.equal('combobox');
       });
 
-      describe('pressing ArrowDown', function() {
+      describe('ArrowDown', function() {
         beforeEach(press('ArrowDown'));
         beforeEach(updateComplete);
 
@@ -824,7 +824,7 @@ describe('<pf-select>', function() {
           expect(listbox?.children?.find(x => x.focused)?.name).to.equal('Amethyst');
         });
 
-        describe('then pressing Shift+Tab', function() {
+        describe('Shift+Tab', function() {
           beforeEach(holdShift);
           beforeEach(press('Tab'));
           beforeEach(releaseShift);
@@ -845,7 +845,7 @@ describe('<pf-select>', function() {
             expect(focused?.haspopup).to.equal('listbox');
           });
 
-          describe('then pressing Shift+Tab', function() {
+          describe('Shift+Tab', function() {
             beforeEach(holdShift);
             beforeEach(press('Tab'));
             beforeEach(releaseShift);
@@ -859,10 +859,10 @@ describe('<pf-select>', function() {
           });
         });
 
-        describe('then pressing ArrowDown', function() {
+        describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
           beforeEach(updateComplete);
-          describe('then pressing Enter', function() {
+          describe('Enter', function() {
             beforeEach(press('Enter'));
             beforeEach(updateComplete);
             it('selects the second option', function() {
@@ -886,7 +886,7 @@ describe('<pf-select>', function() {
               expect(chip1close?.name).to.equal('Close');
               expect(chip1close?.description).to.equal('Beryl');
             });
-            describe('then pressing ArrowUp', function() {
+            describe('ArrowUp', function() {
               beforeEach(press('ArrowUp'));
               beforeEach(updateComplete);
               it('focuses the first option', async function() {
@@ -895,7 +895,7 @@ describe('<pf-select>', function() {
                 const focused = listbox?.children?.find(x => x.focused);
                 expect(focused?.name).to.equal('Amethyst');
               });
-              describe('then pressing Enter', function() {
+              describe('Enter', function() {
                 beforeEach(press('Enter'));
                 beforeEach(updateComplete);
                 it('adds second option to selected values', function() {
@@ -916,7 +916,7 @@ describe('<pf-select>', function() {
                   expect(chip2close?.name).to.equal('Close');
                   expect(chip2close?.description).to.equal('Beryl');
                 });
-                describe('then pressing Shift+Tab', function() {
+                describe('Shift+Tab', function() {
                   beforeEach(holdShift);
                   beforeEach(press('Tab'));
                   beforeEach(releaseShift);
@@ -927,7 +927,7 @@ describe('<pf-select>', function() {
                     expect(focused?.role).to.equal('button');
                     expect(focused?.haspopup).to.equal('listbox');
                   });
-                  describe('then pressing Shift+Tab', function() {
+                  describe('Shift+Tab', function() {
                     beforeEach(holdShift);
                     beforeEach(press('Tab'));
                     beforeEach(releaseShift);
@@ -937,7 +937,7 @@ describe('<pf-select>', function() {
                       const focused = snapshot.children?.find(x => x.focused);
                       expect(focused?.role).to.equal('combobox');
                     });
-                    describe('then pressing Shift+Tab', function() {
+                    describe('Shift+Tab', function() {
                       beforeEach(holdShift);
                       beforeEach(press('Tab'));
                       beforeEach(releaseShift);
@@ -949,7 +949,7 @@ describe('<pf-select>', function() {
                         expect(focused?.name).to.equal('Close');
                         expect(focused?.description).to.equal('Beryl');
                       });
-                      describe('then pressing Space', function() {
+                      describe('Space', function() {
                         beforeEach(updateComplete);
                         beforeEach(press(' '));
                         beforeEach(updateComplete);
@@ -970,7 +970,7 @@ describe('<pf-select>', function() {
                           const focused = snapshot.children?.find(x => x.focused);
                           expect(focused?.role).to.equal('combobox');
                         });
-                        describe('then pressing Shift+Tab', function() {
+                        describe('Shift+Tab', function() {
                           beforeEach(holdShift);
                           beforeEach(press('Tab'));
                           beforeEach(releaseShift);
@@ -981,7 +981,7 @@ describe('<pf-select>', function() {
                             expect(focused?.role).to.equal('button');
                             expect(focused?.description).to.equal('Amethyst');
                           });
-                          describe('then pressing Space', function() {
+                          describe('Space', function() {
                             beforeEach(press(' '));
                             beforeEach(updateComplete);
                             it('removes all chips', async function() {
@@ -1057,19 +1057,19 @@ describe('<pf-select>', function() {
     describe('expanding', function() {
       beforeEach(focus);
       beforeEach(press('Enter'));
-      describe('pressing ArrowDown', function() {
+      describe('ArrowDown', function() {
         beforeEach(press('ArrowDown'));
         beforeEach(updateComplete);
         it('remains expanded', function() {
           expect(element.expanded).to.be.true;
         });
-        describe('pressing ArrowDown', function() {
+        describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
           beforeEach(updateComplete);
           it('remains expanded', function() {
             expect(element.expanded).to.be.true;
           });
-          describe('pressing Space', function() {
+          describe('Space', function() {
             beforeEach(press(' '));
             beforeEach(updateComplete);
             it('closes', function() {

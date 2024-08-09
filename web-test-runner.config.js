@@ -7,6 +7,9 @@ export default pfeTestRunnerConfig({
   tsconfig: 'tsconfig.esbuild.json',
   files: ['!tools/create-element/templates/**/*'],
   // uncomment to get default wtr reporter
+  ...!process.env.CI && {
+    reporter: 'default',
+  },
   importMapOptions: {
     providers: {
       'zero-md': 'nodemodules',
@@ -22,7 +25,6 @@ export default pfeTestRunnerConfig({
       },
     },
   },
-  reporter: 'default',
   plugins: [
     a11ySnapshotPlugin(),
   ],

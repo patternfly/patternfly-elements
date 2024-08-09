@@ -11,7 +11,7 @@ import { getPfeConfig } from '../config.js';
 
 export interface PfeTestRunnerConfigOptions extends PfeDevServerConfigOptions {
   files?: string[];
-  reporter?: 'summary' | 'default';
+  reporter?: 'summary' | 'junit' | 'default';
 }
 
 const isWatchMode = process.argv.some(x => x.match(/-w|--watch/));
@@ -51,14 +51,14 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
 
   const { elementsDir, tagPrefix } = getPfeConfig();
 
-  const configuredReporter = opts.reporter ?? 'summary';
+  const configuredReporter = opts.reporter ?? 'default';
 
   const reporters = [];
   if (isWatchMode) {
     if (configuredReporter === 'summary') {
       reporters.push(
         summaryReporter({ flatten: false }),
-        defaultReporter({ reportTestResults: false, reportTestProgress: true }),
+        defaultReporter(),
       );
     } else {
       reporters.push(
@@ -68,10 +68,14 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
   } else {
     reporters.push(
       defaultReporter(),
+    );
+  }
+  if (process.env.CI) {
+    reporters.push(
       junitReporter({
         outputPath: './test-results/test-results.xml',
         reportLogs: true,
-      }),
+      })
     );
   }
 

@@ -354,19 +354,38 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    */
   #onClick = (event: MouseEvent) => {
     const target = this.#getItemFromEvent(event);
-    if (target) {
+    this.#shiftStartingItem ??= target;
+    if (target && !this.#options.isItemDisabled.call(target)) {
+      // Case: single select?
+      //       just reset the selected list.
       if (!this.multi) {
         // select target and deselect all other options
         this.selected = [target];
+      // Case: multi select, but no shift key
+      //       toggle target, keep all other previously selected
       } else if (!event.shiftKey) {
-        this.selected = this.items // todo: improve this intercalation
-            .map(item => item === target || this.isSelected(item) ? item : null)
-            .filter(x => !!x);
-      } else if (this.#shiftStartingItem && target) {
-        this.selected = this.#getMultiSelection(target);
-        this.#shiftStartingItem = target;
+        this.selected = this.items.filter(item =>
+          this.#selectedItems.has(item) ? item !== target : item === target);
+      // Case: multi select, with shift key
+      //       find all items between previously selected and target,
+      //       and select them (if reference item is selected) or deselect them (if reference item is deselected)
+      //       Do not wrap around from end to start, rather, only select withing the range of 0-end
+      } else {
+        const startingItem = this.#shiftStartingItem!;
+        // whether options will be selected (true) or deselected (false)
+        const selecting = this.#selectedItems.has(startingItem);
+        const [start, end] = [this.items.indexOf(startingItem), this.items.indexOf(target)].sort();
+        // de/select all options between active descendant and target
+        this.selected = this.items.filter((item, i) => {
+          if (i >= start && i <= end) {
+            return selecting;
+          } else {
+            return this.#selectedItems.has(item);
+          }
+        });
       }
     }
+    this.#shiftStartingItem = target;
     this.host.requestUpdate();
   };
 
@@ -394,17 +413,19 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
     // need to set for keyboard support of multiselect
     if (event.key === 'Shift' && this.multi) {
-      this.#shiftStartingItem = this.#options.getATFocusedItem() ?? null;
+      this.#shiftStartingItem ??= this.#options.getATFocusedItem() ?? null;
     }
 
     switch (event.key) {
       // ctrl+A de/selects all options
       case 'a':
       case 'A':
-        if (event.ctrlKey && event.target === this.container) {
+        if (event.ctrlKey
+            && (event.target === this.container
+                || this.#options.isItem(event.target))) {
           const selectableItems = this.items.filter(item =>
             !this.#options.isItemDisabled.call(item));
-          if (!arraysAreEquivalent(this.selected, selectableItems)) {
+          if (arraysAreEquivalent(this.selected, selectableItems)) {
             this.selected = [];
           } else {
             this.selected = selectableItems;
@@ -416,8 +437,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
         if (this.#options.isItem(event.target)
-        && !event.shiftKey
-        && (event.target as HTMLElement).getAttribute?.('aria-controls') !== this.container.id) {
+            || (event.target as HTMLElement).getAttribute?.('aria-controls') === this.container.id
+            && !event.shiftKey
+        ) {
           this.#selectItem(item, event.shiftKey);
           event.preventDefault();
         }
@@ -466,36 +488,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       this.selected = this.selected.concat(item);
     } else {
       this.selected = [item];
-    }
-  }
-
-  /**
-   * updates option selections for multiselectable listbox:
-   * toggles all options between active descendant and target
-   * @param to item being added
-   * @param from item already selected.
-   */
-  #getMultiSelection(to?: Item) {
-    const from = this.#shiftStartingItem;
-    if (to && this.#options.multi) {
-      // whether options will be selected (true) or deselected (false)
-      const selecting = from && this.isSelected(from);
-
-      // select all options between active descendant and target
-      // todo: flatten loops here, but be careful of off-by-one errors
-      // maybe use the new set methods difference/union
-      const [start, end] = [this.items.indexOf(from!), this.items.indexOf(to)]
-          .filter(x => x >= 0)
-          .sort();
-      const itemsInRange = new Set(this.items
-          .slice(start, end + 1)
-          .filter(item => !this.#options.isItemDisabled.call(item)));
-      this.#shiftStartingItem = to;
-      return this.items
-          .filter(item => selecting ? itemsInRange.has(item) : !itemsInRange.has(item));
-    } else {
-      this.#shiftStartingItem = to ?? null;
-      return this.selected;
     }
   }
 }

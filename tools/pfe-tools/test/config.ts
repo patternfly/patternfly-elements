@@ -53,23 +53,15 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
 
   const configuredReporter = opts.reporter ?? 'default';
 
-  const reporters = [];
-  if (isWatchMode) {
-    if (configuredReporter === 'summary') {
-      reporters.push(
-        summaryReporter({ flatten: false }),
-        defaultReporter(),
-      );
-    } else {
-      reporters.push(
-        defaultReporter(),
-      );
-    }
-  } else {
-    reporters.push(
-      defaultReporter(),
-    );
-  }
+  const reporters = configuredReporter === 'summary' && isWatchMode ? [
+    summaryReporter({ flatten: false }),
+    defaultReporter(),
+  ] : configuredReporter === 'summary' ? [
+    summaryReporter({ flatten: false }),
+  ] : [
+    defaultReporter(),
+  ];
+
   if (process.env.CI) {
     reporters.push(
       junitReporter({

@@ -6,10 +6,7 @@ export default pfeTestRunnerConfig({
   // workaround for https://github.com/evanw/esbuild/issues/3019
   tsconfig: 'tsconfig.esbuild.json',
   files: ['!tools/create-element/templates/**/*'],
-  // uncomment to get default wtr reporter
-  ...!process.env.CI && {
-    reporter: 'default',
-  },
+  reporter: process.env.CI ? 'summary' : 'default',
   importMapOptions: {
     providers: {
       'zero-md': 'nodemodules',

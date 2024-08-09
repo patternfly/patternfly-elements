@@ -1,6 +1,6 @@
-import { expect, html } from '@open-wc/testing';
+import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { a11ySnapshot, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { a11ySnapshot, querySnapshot, querySnapshotAll, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { PfChipGroup } from '../pf-chip-group.js';
 import { PfChip } from '../pf-chip.js';
 import { sendKeys } from '@web/test-runner-commands';
@@ -29,7 +29,7 @@ describe('<pf-chip-group>', async function() {
     });
   });
 
-  describe('with 3 chips', function() {
+  describe('with 4 chips', function() {
     let element: PfChipGroup;
     const updateComplete = () => element.updateComplete;
 
@@ -44,28 +44,46 @@ describe('<pf-chip-group>', async function() {
       `);
     });
 
-    it('only 3 chips and an overflow should be visible', async function() {
+    it('displays 3 chips and an overflow button', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children?.filter(x => x.name.startsWith('Chip'))?.length).to.equal(3);
-      expect(snapshot.children?.filter(x => x.role === 'button')?.length).to.equal(4);
+      expect(querySnapshotAll(snapshot, { name: /^Chip/ })).to.have.length(3);
+      expect(querySnapshotAll(snapshot, { role: 'button' })).to.have.length(4);
     });
 
-    describe('clicking overflow chip', function() {
-      beforeEach(() => element.focus());
-      beforeEach(press('ArrowLeft'));
-      beforeEach(press('Enter'));
-      beforeEach(updateComplete);
-      it('should show all chips', async function() {
+    describe('Tab', function() {
+      beforeEach(press('Tab'));
+      beforeEach(nextFrame);
+      it('focuses the first close button', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.filter(x => x.name.startsWith('Chip'))?.length).to.equal(4);
+        const focused = querySnapshot(snapshot, { focused: true });
+        expect(focused).to.have.property('name', 'Close');
+        expect(focused).to.have.property('description', 'Chip 1');
       });
-      it('should show collapse button', async function() {
-        const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.filter(x => x.role === 'button')?.length).to.equal(5);
-      });
-      it('should focus collapse button', async function() {
-        const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.find(x => x.focused)?.name).to.equal('show less');
+      describe('ArrowLeft', function() {
+        beforeEach(press('ArrowLeft'));
+        it('focuses the show less button', async function() {
+          const snapshot = await a11ySnapshot();
+          const focused = querySnapshot(snapshot, { focused: true });
+          expect(focused).to.have.property('name', '1 more');
+        });
+        describe('Enter', function() {
+          beforeEach(press('Enter'));
+          beforeEach(updateComplete);
+          it('should show all chips', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(snapshot.children?.filter(x => x.name.startsWith('Chip'))?.length).to.equal(4);
+          });
+          it('should show collapse button', async function() {
+            const snapshot = await a11ySnapshot();
+            const buttons = querySnapshotAll(snapshot, { role: 'button' });
+            expect(buttons).to.have.length(5);
+          });
+          it('should focus collapse button', async function() {
+            const snapshot = await a11ySnapshot();
+            expect(querySnapshot(snapshot, { focused: true }))
+                .to.have.property('name', 'show less');
+          });
+        });
       });
     });
   });
@@ -100,7 +118,7 @@ describe('<pf-chip-group>', async function() {
       beforeEach(updateComplete);
       it('should remove element', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children).to.be.undefined;
+        expect(snapshot.children).to.not.be.ok;
       });
     });
   });
@@ -205,7 +223,9 @@ describe('<pf-chip-group>', async function() {
 
       it('should focus on close button', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.find(x => x.focused)?.name).to.equal('Close');
+        expect(querySnapshot(snapshot, { focused: true }))
+            .to.be.ok
+            .and.have.property('name', 'Close');
       });
     });
   });

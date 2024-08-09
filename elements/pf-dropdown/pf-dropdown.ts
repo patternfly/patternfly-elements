@@ -63,7 +63,6 @@ export class PfDropdown extends LitElement {
     delegatesFocus: true,
   };
 
-
   /**
    * When disabled, the dropdown can still be toggled open and closed via keyboard, but menu items cannot be activated.
    */

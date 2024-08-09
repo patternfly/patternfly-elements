@@ -128,10 +128,7 @@ export class PfAccordion extends LitElement {
    * </pf-accordion>
    * ```
    */
-  @property({
-    attribute: 'expanded-index',
-    converter: NumberListConverter,
-  })
+  @property({ attribute: 'expanded-index', converter: NumberListConverter })
   get expandedIndex(): number[] {
     return this.#expandedIndex;
   }
@@ -139,6 +136,7 @@ export class PfAccordion extends LitElement {
   set expandedIndex(value) {
     const old = this.#expandedIndex;
     this.#expandedIndex = value;
+    this.#tabindex.atFocusedItemIndex = value.at(-1) ?? -1;
     if (JSON.stringify(old) !== JSON.stringify(value)) {
       this.requestUpdate('expandedIndex', old);
       this.collapseAll().then(async () => {
@@ -157,7 +155,7 @@ export class PfAccordion extends LitElement {
 
   #mo = new MutationObserver(() => this.#init());
 
-  #headerIndex = new RovingTabindexController<PfAccordionHeader>(this, {
+  #tabindex = RovingTabindexController.of(this, {
     getItems: () => this.headers,
   });
 
@@ -233,15 +231,14 @@ export class PfAccordion extends LitElement {
    */
   async #init() {
     this.#initialized ||= !!await this.updateComplete;
-    // Event listener to the accordion header after the accordion
-    // has been initialized to add the roving tabindex
     this.updateAccessibility();
   }
 
   @listen('focusin')
   protected updateActiveHeader(): void {
-    if (this.#activeHeader !== this.#headerIndex.activeItem) {
-      this.#headerIndex.setActiveItem(this.#activeHeader);
+    if (this.#activeHeader
+        && this.#activeHeader !== this.headers.at(this.#tabindex.atFocusedItemIndex)) {
+      this.#tabindex.atFocusedItemIndex = this.headers.indexOf(this.#activeHeader);
     }
   }
 
@@ -322,7 +319,6 @@ export class PfAccordion extends LitElement {
   }
 
   public updateAccessibility(): void {
-    this.#headerIndex.updateItems();
     const { headers } = this;
 
     // For each header in the accordion, attach the aria connections
@@ -366,8 +362,6 @@ export class PfAccordion extends LitElement {
     // If the header and panel exist, open both
     this.#expandHeader(header, index);
     this.#expandPanel(panel);
-
-    header.focus();
 
     this.dispatchEvent(new PfAccordionExpandEvent(header, panel));
 

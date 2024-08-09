@@ -7,5 +7,10 @@
     "declaration": true,
     "composite": true,
     "allowJs": false
-  }
+  },
+  "references": [
+    {
+      "path": "../../tools/pfe-tools"
+    }
+  ]
 }

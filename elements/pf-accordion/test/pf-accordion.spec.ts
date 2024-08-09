@@ -1203,7 +1203,7 @@ describe('<pf-accordion>', function() {
         beforeEach(press(' '));
         beforeEach(nextFrame);
         it('expands the panel containing the nested <pf-accordion>', async function() {
-          expect(await a11ySnapshot()).to.have.axTreeNodeWithName('nest-2-header-1');
+          expect(await a11ySnapshot()).to.have.axContainName('nest-2-header-1');
         });
         describe('Tab', function() {
           beforeEach(press('Tab'));

@@ -16,14 +16,15 @@ describe('<pf-accordion>', function() {
     beforeEach(clickFirstHeading);
     it('expands the first panel', async function() {
       expect(await a11ySnapshot())
-        .to.have.axTreeNodeWithName('panel-1');
+        .to.axContainName('panel-1');
     });
     it('focuses the first panel', async function() {
       expect(await a11ySnapshot())
         .to.have.axTreeFocusOn(document.getElementById('header1'));
     });
     it('shows the collapse all button', async function() {
-      expect(await a11ySnapshot()).to.have.axRole('button');
+      expect(await a11ySnapshot())
+        .to.axContainRole('button');
     });
   })
 })

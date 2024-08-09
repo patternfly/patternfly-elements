@@ -1,6 +1,12 @@
 import { chai } from '@open-wc/testing';
 import { a11ySnapshot as snap } from '@web/test-runner-commands';
 
+const {
+  Assertion,
+  AssertionError,
+  util,
+} = chai;
+
 export interface A11yTreeSnapshot {
   name: string;
   role: string;
@@ -136,9 +142,12 @@ function axTreeFocusOn(
   element: Element,
   msg?: string,
 ) {
+  util.flag(this, 'message', msg);
   const snapshot = this._obj as A11yTreeSnapshot;
   if (!isSnapshot(snapshot)) {
-    throw new Error(`axTreeFocusOn can only assert on A11yTreeSnapshots, got ${snapshot}`);
+    throw new AssertionError(`axTreeFocusOn can only assert on A11yTreeSnapshots`,
+                             undefined,
+                             util.flag(this, 'ssfi'));
   }
   if (element == null || element === document.body) {
     const focused = querySnapshot(snapshot, { focused: true });
@@ -154,14 +163,18 @@ function axTreeFocusOn(
     const actualAXName = getElementLabelText(element).trim();
     const [nodeSnapshotItem, ...others] = querySnapshotAll(snapshot, { name: actualAXName });
     if (others.length) {
-      throw new Error(`More than one ax tree node has name "${actualAXName}". axTreeFocusOn cannot produce a definitive assertion`);
+      throw new AssertionError(
+        `More than one ax tree node has name "${actualAXName}". axTreeFocusOn cannot produce a definitive assertion`,
+        undefined,
+        util.flag(this, 'ssfi')
+      );
     }
     const focusedAXName = focused?.name;
-    const printable = chai.util.inspect(element);
+    const printable = util.inspect(element);
     this.assert(
       focusedAXName?.trim() === actualAXName,
-      `expected ${msg && ' ' || ''}${printable} to have assistive technology focus`,
-      `expected ${msg && ' ' || ''}${printable} to not have assistive technology focus`,
+      `expected ${printable} to have assistive technology focus`,
+      `expected ${printable} to not have assistive technology focus`,
       focused,
       nodeSnapshotItem,
     );
@@ -175,38 +188,97 @@ function axTreeFocusOn(
   }
 }
 
+function axTreeFocusedNode(
+  this: Chai.AssertionPrototype,
+  msg?: string,
+) {
+  util.flag(this, 'message', msg);
+  const snapshot = util.flag(this, 'object') as A11yTreeSnapshot;
+  const focused = querySnapshot(snapshot, { focused: true });
+  this.assert(
+    focused != null,
+    `expected an element to have focus`,
+    `expected no element to have focus`,
+    null,
+    focused,
+  );
+  util.flag(this, 'object', focused);
+}
+
 function axTreeNodeWithName(
   this: Chai.AssertionPrototype,
   name: string,
   msg?: string
 ) {
+  util.flag(this, 'message', msg);
   const snapshot = this._obj as A11yTreeSnapshot;
   if (!isSnapshot(snapshot)) {
-    throw new Error(`axTreeFocusOn can only assert on A11yTreeSnapshots, got ${snapshot}`);
+    throw new AssertionError(
+      `${util.flag(this, 'message')}axTreeFocusNodeWithName can only assert on A11yTreeSnapshots`,
+      undefined,
+      util.flag(this, 'ssfi')
+    );
   }
   const named = querySnapshot(snapshot, { name });
   this.assert(
     !!named,
-    `expected to find element with assistive technology name ${name}${!msg ? '' : `(${msg})`}`,
-    `expected to not find element with assistive technology name ${name}${!msg ? '' : `(${msg})`}`,
+    `expected to find element with assistive technology name ${name}`,
+    `expected to not find element with assistive technology name ${name}`,
     name,
     named,
   );
 }
 
-function axRole(
+function makeAxPropCallback(
+  propName: keyof A11yTreeSnapshot,
+  testName: `ax${string}`,
+) {
+  return function(
+    this: Chai.AssertionPrototype,
+    value: A11yTreeSnapshot[keyof A11yTreeSnapshot],
+    msg?: string,
+  ) {
+    util.flag(this, 'message', msg);
+    const snapshot = this._obj as A11yTreeSnapshot;
+    if (!isSnapshot(snapshot)) {
+      throw new AssertionError(`${testName} can only assert on A11yTreeSnapshots`,
+                               undefined,
+                               util.flag(this, 'ssfi'));
+    }
+    this.assert(snapshot[propName] === value,
+                `expected element to have ${propName} "${value}"`,
+                `expected element to not have ${propName} "${value}"`,
+                value,
+                snapshot[propName],
+    );
+  };
+}
+
+function axProperty(
+  this: Chai.AssertionPrototype,
+  propName: keyof A11yTreeSnapshot,
+  value: A11yTreeSnapshot[keyof A11yTreeSnapshot],
+  msg?: string
+) {
+  makeAxPropCallback(propName, 'axProperty').call(this, value, msg);
+}
+
+function axRoleInTree(
   this: Chai.AssertionPrototype,
   role: string,
   msg?: string
 ) {
+  util.flag(this, 'message', msg);
   const snapshot = this._obj as A11yTreeSnapshot;
   if (!isSnapshot(snapshot)) {
-    throw new Error(`axRole can only assert on A11yTreeSnapshots, got ${snapshot}`);
+    throw new AssertionError(`axRoleInTree can only assert on A11yTreeSnapshots`,
+                             undefined,
+                             util.flag(this, 'ssfi'));
   }
   const needle = querySnapshot(snapshot, { role });
   this.assert(!!needle,
-              `expected to find element with role ${role}${!msg ? '' : `(${msg})`}`,
-              `expected to not find element with role ${role}${!msg ? '' : `(${msg})`}`,
+              `expected to find element with role "${role}"`,
+              `expected to not find element with role "${role}"`,
               role, needle);
 }
 
@@ -215,22 +287,29 @@ function axQuery(
   query: SnapshotQuery,
   msg?: string
 ) {
+  util.flag(this, 'message', msg);
   const snapshot = this._obj as A11yTreeSnapshot;
   if (!isSnapshot(snapshot)) {
-    throw new Error(`axQuery can only assert on A11yTreeSnapshots, got ${snapshot}`);
+    throw new AssertionError(`axQuery can only assert on A11yTreeSnapshots`,
+                             undefined,
+                             util.flag(this, 'ssfi'));
   }
   const needle = querySnapshot(snapshot, query);
   this.assert(!!needle,
-              `expected to find element matching ${chai.util.inspect(query)}${!msg ? '' : `(${msg})`}`,
-              `expected to not find element with role ${chai.util.inspect(query)}${!msg ? '' : `(${msg})`}`,
+              `expected to find element matching ${util.inspect(query)}`,
+              `expected to not find element with role ${util.inspect(query)}`,
               query, needle);
 }
 
-chai.use(function(_chai) {
-  _chai.Assertion.addMethod('axRole', axRole);
-  _chai.Assertion.addMethod('axQuery', axQuery);
-  _chai.Assertion.addMethod('axTreeFocusOn', axTreeFocusOn);
-  _chai.Assertion.addMethod('axTreeNodeWithName', axTreeNodeWithName);
+chai.use(function() {
+  Assertion.addMethod('axName', makeAxPropCallback('name', 'axName'));
+  Assertion.addMethod('axRole', makeAxPropCallback('role', 'axRole'));
+  Assertion.addMethod('axProperty', axProperty);
+  Assertion.addMethod('axRoleInTree', axRoleInTree);
+  Assertion.addMethod('axQuery', axQuery);
+  Assertion.addMethod('axTreeFocusOn', axTreeFocusOn);
+  Assertion.addProperty('axTreeFocusedNode', axTreeFocusedNode);
+  Assertion.addMethod('axTreeNodeWithName', axTreeNodeWithName);
 });
 
 
@@ -242,7 +321,7 @@ declare global {
       /**
        * Assert that a given role exists in the ax tree
        */
-      axRole(role: string, msg?: string): void;
+      axRoleInTree(role: string, msg?: string): Assertion;
       /**
        * Assert that an AX Tree node that matches the query object exists in the tre
        */
@@ -254,6 +333,23 @@ declare global {
        * (i.e. aria-label or textContent).
        */
       axTreeFocusOn(element?: Element | null, msg?: string): void;
+      /**
+       * Assert that the a11ySnapshot shows that a given element has focus.
+       * This assertion ultimately matches on the accessible name of the given element,
+       * so test authors must ensure that every element has a unique accessible name
+       * (i.e. aria-label or textContent).
+       */
+      axTreeFocusedNode: Assertion;
+      /** Assert that an AX Tree node has a given role */
+      axRole(role: string, msg?: string): Assertion;
+      /** Assert that an AX Tree node has a given name */
+      axName(role: string, msg?: string): Assertion;
+      /** Assert that an AX Tree node has a given property with a given value */
+      axProperty(
+        propName: keyof A11yTreeSnapshot,
+        value: A11yTreeSnapshot[keyof A11yTreeSnapshot],
+        msg?: string,
+      ): Assertion;
       /**
        * Assert that the a11ySnapshot contains a node with the given name
        */

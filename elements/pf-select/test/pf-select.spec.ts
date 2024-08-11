@@ -325,7 +325,9 @@ describe('<pf-select variant="single">', function() {
             beforeEach(updateComplete);
 
             it('selects option 2', function() {
-              expect(getValues(element)).to.deep.equal(['2']);
+              expect(getValues(element)).to.deep.equal([
+                '2',
+              ]);
             });
 
             it('hides the listbox', async function() {

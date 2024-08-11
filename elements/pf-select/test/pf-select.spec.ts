@@ -811,7 +811,7 @@ describe('<pf-select variant="typeahead">', function() {
       });
     });
 
-    describe('typing "r"', function() {
+    describe('"r"', function() {
       beforeEach(press('r'));
       beforeEach(updateComplete);
 
@@ -835,7 +835,7 @@ describe('<pf-select variant="typeahead">', function() {
       });
     });
 
-    describe('p', function() {
+    describe('"p"', function() {
       beforeEach(press('p'));
       beforeEach(updateComplete);
 
@@ -885,34 +885,41 @@ describe('<pf-select variant="typeahead">', function() {
       // pending a11y review
       // see https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/#kbd_label_listbox
       // in which home/end do not move listbox at focus
-      describe.skip('u', function() {
+      describe.skip('"u"', function() {
         beforeEach(press('u'));
         beforeEach(updateComplete);
+
         it('only shows the option "Purple"', function() {
           expect(getVisibleOptionValues()).to.deep.equal([
             'Purple',
           ]);
         });
+
         describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
           beforeEach(updateComplete);
+
           it('focuses the option "Purple"', function() {
             expect(getActiveOption()).to.have.text('Purple');
           });
+
           describe('Enter', function() {
             beforeEach(press('Enter'));
             beforeEach(updateComplete);
+
             it('selects the option "Purple"', function() {
               expect(getValues(element)).to.deep.equal([
                 'Purple',
               ]);
             });
+
             describe('Backspace (x5)', function() {
               beforeEach(press('Backspace'));
               beforeEach(press('Backspace'));
               beforeEach(press('Backspace'));
               beforeEach(press('Backspace'));
               beforeEach(press('Backspace'));
+
               it('shows the options starting with "P"', function() {
                 expect(getVisibleOptionValues()).to.deep.equal([
                   'Purple',
@@ -920,14 +927,17 @@ describe('<pf-select variant="typeahead">', function() {
                   'Pink',
                 ]);
               });
+
               describe('Home', function() {
                 beforeEach(press('Home'));
+
                 it('focuses the option "Purple"', function() {
                   expect(getActiveOption()).to.have.text('Purple');
                 });
               });
               describe('End', function() {
                 beforeEach(press('End'));
+
                 it('focuses the option "Pink"', function() {
                   expect(getActiveOption()).to.have.text('Pink');
                 });
@@ -941,36 +951,46 @@ describe('<pf-select variant="typeahead">', function() {
     describe('ArrowDown', function() {
       beforeEach(press('ArrowDown'));
       beforeEach(updateComplete);
+
       it('shows the listbox', async function() {
         expect(element.expanded).to.be.true;
         expect(await a11ySnapshot()).to.axContainRole('listbox');
       });
+
       it('focuses the first item', async function() {
         expect(await a11ySnapshot()).to.axContainRole('listbox');
         expect(getActiveOption()).to.have.value('Blue');
       });
+
       it('does not move keyboard focus', async function() {
         expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
       });
+
       describe('ArrowDown', function() {
         beforeEach(press('ArrowDown'));
         beforeEach(updateComplete);
+
         it('focuses the second option', function() {
           const [, item] = document.querySelectorAll('pf-option');
           expect(getActiveOption()).to.equal(item);
         });
+
         describe('Enter', function() {
           beforeEach(press('Enter'));
           beforeEach(updateComplete);
+
           it('selects the second option', function() {
             expect(getValues(element)).to.deep.equal(['Green']);
           });
+
           it('sets typeahead input to second option value', async function() {
             expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axProperty('value', 'Green');
           });
-          it('retains focuses on combobox input', async function() {
+
+          it('retains focus on combobox input', async function() {
             expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
           });
+
           it('hides the listbox', async function() {
             expect(await a11ySnapshot()).to.not.axContainRole('listbox');
           });

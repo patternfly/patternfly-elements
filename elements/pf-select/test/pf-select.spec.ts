@@ -776,42 +776,6 @@ describe('<pf-select variant="typeahead">', function() {
       </pf-select>`);
   });
 
-  describe.skip('custom filtering', function() {
-    beforeEach(function() {
-      // @ts-expect-error: we intend to implement this in the next release
-      element.customFilter = option =>
-        // @ts-expect-error: TODO add filter feature
-        new RegExp(element.filter).test(option.value);
-    });
-
-    beforeEach(focus);
-
-    beforeEach(updateComplete);
-
-    describe('r', function() {
-      beforeEach(press('r'));
-      beforeEach(updateComplete);
-      it('shows options that contain "r"', async function() {
-        expect(getVisibleOptionValues()).to.deep.equal([
-          'Green',
-          'Orange',
-          'Purple',
-        ]);
-      });
-    });
-
-    describe('typing "R"', function() {
-      beforeEach(press('R'));
-      beforeEach(nextFrame);
-      beforeEach(updateComplete);
-      it('shows options that start with "r"', async function() {
-        expect(getVisibleOptionValues()).to.deep.equal([
-          'Red',
-        ]);
-      });
-    });
-  });
-
   describe('focus()', function() {
     beforeEach(focus);
 
@@ -934,6 +898,42 @@ describe('<pf-select variant="typeahead">', function() {
             expect(await a11ySnapshot()).to.not.axContainRole('listbox');
           });
         });
+      });
+    });
+  });
+
+  describe.skip('custom filtering', function() {
+    beforeEach(function() {
+      // @ts-expect-error: we intend to implement this in the next release
+      element.customFilter = option =>
+        // @ts-expect-error: TODO add filter feature
+        new RegExp(element.filter).test(option.value);
+    });
+
+    beforeEach(focus);
+
+    beforeEach(updateComplete);
+
+    describe('r', function() {
+      beforeEach(press('r'));
+      beforeEach(updateComplete);
+      it('shows options that contain "r"', async function() {
+        expect(getVisibleOptionValues()).to.deep.equal([
+          'Green',
+          'Orange',
+          'Purple',
+        ]);
+      });
+    });
+
+    describe('typing "R"', function() {
+      beforeEach(press('R'));
+      beforeEach(nextFrame);
+      beforeEach(updateComplete);
+      it('shows options that start with "r"', async function() {
+        expect(getVisibleOptionValues()).to.deep.equal([
+          'Red',
+        ]);
       });
     });
   });

@@ -778,6 +778,7 @@ describe('<pf-select variant="typeahead">', function() {
         <pf-option value="Magenta">Magenta</pf-option>
         <pf-option value="Orange">Orange</pf-option>
         <pf-option value="Purple">Purple</pf-option>
+        <pf-option value="Periwinkle">Periwinkle</pf-option>
         <pf-option value="Pink">Pink</pf-option>
         <pf-option value="Red">Red</pf-option>
         <pf-option value="Yellow">Yellow</pf-option>
@@ -842,11 +843,12 @@ describe('<pf-select variant="typeahead">', function() {
       it('only shows listbox items starting with the letter p', function() {
         expect(getVisibleOptionValues()).to.deep.equal([
           'Purple',
+          'Periwinkle',
           'Pink',
         ]);
       });
 
-      describe('Backspace so input value is ""', function() {
+      describe('Backspace', function() {
         beforeEach(press('Backspace'));
         beforeEach(updateComplete);
 
@@ -865,10 +867,66 @@ describe('<pf-select variant="typeahead">', function() {
             'Magenta',
             'Orange',
             'Purple',
+            'Periwinkle',
             'Pink',
             'Red',
             'Yellow',
           ]);
+        });
+      });
+
+      // pending a11y review
+      // see https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/#kbd_label_listbox
+      // in which home/end do not move listbox at focus
+      describe.skip('u', function() {
+        beforeEach(press('u'));
+        beforeEach(updateComplete);
+        it('only shows the option "Purple"', function() {
+          expect(getVisibleOptionValues()).to.deep.equal([
+            'Purple',
+          ]);
+        });
+        describe('ArrowDown', function() {
+          beforeEach(press('ArrowDown'));
+          beforeEach(updateComplete);
+          it('focuses the option "Purple"', function() {
+            expect(getActiveOption()).to.have.text('Purple');
+          });
+          describe('Enter', function() {
+            beforeEach(press('Enter'));
+            beforeEach(updateComplete);
+            it('selects the option "Purple"', function() {
+              expect(getValues(element)).to.deep.equal([
+                'Purple',
+              ]);
+            });
+            describe('Backspace (x5)', function() {
+              beforeEach(press('Backspace'));
+              beforeEach(press('Backspace'));
+              beforeEach(press('Backspace'));
+              beforeEach(press('Backspace'));
+              beforeEach(press('Backspace'));
+              it('shows the options starting with "P"', function() {
+                expect(getVisibleOptionValues()).to.deep.equal([
+                  'Purple',
+                  'Periwinkle',
+                  'Pink',
+                ]);
+              });
+              describe('Home', function() {
+                beforeEach(press('Home'));
+                it('focuses the option "Purple"', function() {
+                  expect(getActiveOption()).to.have.text('Purple');
+                });
+              });
+              describe('End', function() {
+                beforeEach(press('End'));
+                it('focuses the option "Pink"', function() {
+                  expect(getActiveOption()).to.have.text('Pink');
+                });
+              });
+            });
+          });
         });
       });
     });

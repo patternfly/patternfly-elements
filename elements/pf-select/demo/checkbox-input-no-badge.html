@@ -1,13 +1,24 @@
-<pf-select variant="checkbox"
-           placeholder="Select Input"
-           accessible-label="Level"
-           checkbox-selection-badge-hidden>
-  <pf-option>Debug</pf-option>
-  <pf-option>Info</pf-option>
-  <pf-option>Warn</pf-option>
-  <pf-option>Error</pf-option>
-</pf-select>
+<section id="checkbox-input-demo">
+  <pf-select variant="checkbox"
+             placeholder="Select Input"
+             accessible-label="Level"
+             checkbox-selection-badge-hidden>
+    <pf-option>Debug</pf-option>
+    <pf-option>Info</pf-option>
+    <pf-option>Warn</pf-option>
+    <pf-option>Error</pf-option>
+  </pf-select>
+</section>
 
 <script type="module">
   import '@patternfly/elements/pf-select/pf-select.js';
 </script>
+
+<style>
+#checkbox-input-demo {
+  padding: 1em;
+  & pf-select {
+    max-width: 300px;
+  }
+}
+</style>

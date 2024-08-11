@@ -197,6 +197,30 @@ describe('<pf-select variant="single">', function() {
       });
     });
 
+    describe('click combobox button', function() {
+      beforeEach(() => clickElementAtCenter(element));
+      beforeEach(updateComplete);
+
+      it('expands the listbox', async function() {
+        expect(await a11ySnapshot()).to.axContainRole('listbox');
+      });
+
+      it('focuses on the placeholder', async function() {
+        expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('Choose a number');
+      });
+
+      describe('Tab', function() {
+        beforeEach(press('Tab'));
+        it('should not focus the combobox button', async function() {
+          expect(await a11ySnapshot())
+              .axTreeFocusedNode
+              .to.not.have.axRole('combobox')
+              .and
+              .to.not.have.axRole('button');
+        });
+      });
+    });
+
     describe('ArrowDown', function() {
       beforeEach(press('ArrowDown'));
       beforeEach(updateComplete);

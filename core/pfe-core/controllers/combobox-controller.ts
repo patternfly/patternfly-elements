@@ -223,8 +223,8 @@ export class ComboboxController<
     this.#lb.selected = value;
   }
 
-  get #isTypeahead() {
-    return this.options.getComboboxInput() && this.options.getToggleButton();
+  get #hasTextInput() {
+    return this.options.getComboboxInput();
   }
 
   get #focusedItem() {
@@ -251,7 +251,7 @@ export class ComboboxController<
     const expanded = this.options.isExpanded();
     this.#button?.setAttribute('aria-expanded', String(expanded));
     this.#input?.setAttribute('aria-expanded', String(expanded));
-    if (this.#isTypeahead) {
+    if (this.#hasTextInput) {
       this.#button?.setAttribute('tabindex', '-1');
     } else {
       this.#button?.removeAttribute('tabindex');
@@ -344,7 +344,7 @@ export class ComboboxController<
     const { getOrientation } = this.options;
     const getItems = () => this.items;
     const getItemsContainer = () => this.#listbox;
-    if (this.#isTypeahead) {
+    if (this.#hasTextInput) {
       this.#fc = ActivedescendantController.of(this.host, {
         getItems, getItemsContainer, getOrientation,
         getActiveDescendantContainer: () => this.#input,
@@ -453,6 +453,7 @@ export class ComboboxController<
       case 'Tab':
       case 'ScrollLock':
       case 'SymbolLock':
+      case ' ':
         break;
       default:
         if (!this.options.isExpanded()) {
@@ -502,7 +503,7 @@ export class ComboboxController<
   };
 
   #onKeydownButton = (event: KeyboardEvent) => {
-    if (this.#isTypeahead) {
+    if (this.#hasTextInput) {
       return this.#onKeydownInput(event);
     } else {
       return this.#onKeydownMenu(event);
@@ -510,9 +511,9 @@ export class ComboboxController<
   };
 
   #onKeydownListbox = (event: KeyboardEvent) => {
-    if (!this.#isTypeahead
+    if (!this.#hasTextInput
       && event.key === 'Escape'
-      || (!this.#isTypeahead
+      || (!this.#hasTextInput
           && (event.key === 'Enter' || event.key === ' ')
           && event.composedPath().some(this.options.isItem)
           && !this.multi
@@ -524,7 +525,7 @@ export class ComboboxController<
   };
 
   #onFocusoutListbox = (event: FocusEvent) => {
-    if (!this.#isTypeahead && this.options.isExpanded()) {
+    if (!this.#hasTextInput && this.options.isExpanded()) {
       const root = this.#element?.getRootNode();
       if ((root instanceof ShadowRoot || root instanceof Document)
           && !this.items.includes(event.relatedTarget as Item)
@@ -539,16 +540,24 @@ export class ComboboxController<
       case 'ArrowDown':
       case 'ArrowUp':
       case 'Enter':
-      case ' ':
         if (!this.options.isExpanded()) {
           this.#show();
+        }
+        break;
+      case ' ':
+        if (!this.#hasTextInput) {
+          // prevent scroll
+          event.preventDefault();
+          if (!this.options.isExpanded()) {
+            this.#show();
+          }
         }
     }
   };
 
   async #show(): Promise<void> {
     const success = await this.options.requestShowListbox();
-    if (success !== false && !this.#isTypeahead) {
+    if (success !== false && !this.#hasTextInput) {
       if (!this.#preventListboxGainingFocus) {
         (this.#focusedItem ?? this.#fc?.items.at(0))?.focus();
         this.#preventListboxGainingFocus = false;
@@ -558,7 +567,7 @@ export class ComboboxController<
 
   async #hide(): Promise<void> {
     const success = await this.options.requestHideListbox();
-    if (success !== false && !this.#isTypeahead) {
+    if (success !== false && !this.#hasTextInput) {
       this.options.getToggleButton()?.focus();
     }
   }

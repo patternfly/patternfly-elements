@@ -199,10 +199,15 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
   /**
    * register's the host's Item elements as listbox controller items
+   * sets aria-setsize and aria-posinset on items
    * @param items items
    */
   set items(items: Item[]) {
     this.#items = items;
+    this.#items.forEach((item, index, _items) => {
+      item.ariaSetSize = _items.length.toString();
+      item.ariaPosInSet = (index + 1).toString();
+    });
   }
 
   /**

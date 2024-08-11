@@ -362,10 +362,6 @@ export class ComboboxController<
   #initItems() {
     if (this.#listbox) {
       this.items = this.options.getItems();
-      this.items.forEach((item, index, options) => {
-        item.ariaSetSize = options.length.toString();
-        item.ariaPosInSet = index.toString();
-      });
     }
   }
 

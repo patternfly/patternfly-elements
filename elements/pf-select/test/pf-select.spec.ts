@@ -198,15 +198,11 @@ describe('<pf-select variant="single">', function() {
     });
 
     describe('Space', function() {
-      let scrollY: number;
       beforeEach(function() {
         document.body.style.height = '8000px';
       });
       afterEach(function() {
         document.body.style.height = 'initial';
-      });
-      beforeEach(function() {
-        ({ scrollY } = window);
       });
 
       beforeEach(press(' '));
@@ -222,7 +218,7 @@ describe('<pf-select variant="single">', function() {
       });
 
       it('does not scroll the screen', function() {
-        expect(scrollY).to.equal(window.scrollY);
+        expect(window.scrollY).to.equal(0);
       });
     });
 
@@ -836,10 +832,23 @@ describe('<pf-select variant="typeahead">', function() {
     });
 
     describe('Space', function() {
+      beforeEach(function() {
+        document.body.style.height = '8000px';
+      });
+      afterEach(function() {
+        document.body.style.height = 'initial';
+      });
+
       beforeEach(press(' '));
       beforeEach(updateComplete);
+      beforeEach(() => aTimeout(300));
+
       it('does not expand the listbox', async function() {
         expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+      });
+
+      it('does not scroll the screen', function() {
+        expect(window.scrollY).to.equal(0);
       });
     });
 

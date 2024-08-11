@@ -179,6 +179,26 @@ describe('<pf-select variant="single">', function() {
     });
   });
 
+  describe('click combobox button', function() {
+    beforeEach(() => clickElementAtCenter(element));
+    beforeEach(updateComplete);
+
+    it('expands the listbox', async function() {
+      expect(await a11ySnapshot()).to.axContainRole('listbox');
+    });
+
+    it('focuses on the placeholder', async function() {
+      expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('Choose a number');
+    });
+
+    describe('Tab', function() {
+      beforeEach(press('Tab'));
+      it('does not focus the combobox button', async function() {
+        expect(await a11ySnapshot()).to.not.have.axTreeFocusedNode;
+      });
+    });
+  });
+
   describe('focus()', function() {
     beforeEach(focus);
     beforeEach(updateComplete);
@@ -246,30 +266,6 @@ describe('<pf-select variant="single">', function() {
       it('focuses on the last item', async function() {
         expect(await a11ySnapshot())
             .to.have.axTreeFocusOn(items.at(-1));
-      });
-    });
-
-    describe('click combobox button', function() {
-      beforeEach(() => clickElementAtCenter(element));
-      beforeEach(updateComplete);
-
-      it('expands the listbox', async function() {
-        expect(await a11ySnapshot()).to.axContainRole('listbox');
-      });
-
-      it('focuses on the placeholder', async function() {
-        expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('Choose a number');
-      });
-
-      describe('Tab', function() {
-        beforeEach(press('Tab'));
-        it('should not focus the combobox button', async function() {
-          expect(await a11ySnapshot())
-              .axTreeFocusedNode
-              .to.not.have.axRole('combobox')
-              .and
-              .to.not.have.axRole('button');
-        });
       });
     });
 
@@ -407,11 +403,8 @@ describe('<pf-select variant="single">', function() {
           expect(element.expanded).to.be.false;
           expect(await a11ySnapshot()).to.not.axContainRole('listbox');
         });
-        it('focuses the button', async function() {
-          expect(await a11ySnapshot())
-              .axTreeFocusedNode
-              .to.have.axRole('combobox')
-              .and.to.have.axName('Choose a number');
+        it('does not focus on the combobox button', async function() {
+          expect(await a11ySnapshot()).to.not.have.axTreeFocusedNode;
         });
       });
 

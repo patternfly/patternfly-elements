@@ -158,6 +158,10 @@ describe('<pf-select variant="single">', function() {
     await expect(element).to.be.accessible();
   });
 
+  it('does not have redundant role', async function() {
+    expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
+  });
+
   describe('without accessible label', function() {
     beforeEach(function() {
       element.accessibleLabel = undefined;
@@ -470,6 +474,10 @@ describe('<pf-select variant="checkbox">', function() {
     await expect(element).to.be.accessible();
   });
 
+  it('does not have redundant role', async function() {
+    expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
+  });
+
   describe('focus()', function() {
     beforeEach(focus);
 
@@ -774,6 +782,10 @@ describe('<pf-select variant="typeahead">', function() {
         <pf-option value="Red">Red</pf-option>
         <pf-option value="Yellow">Yellow</pf-option>
       </pf-select>`);
+  });
+
+  it('does not have redundant role', async function() {
+    expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
   });
 
   describe('focus()', function() {

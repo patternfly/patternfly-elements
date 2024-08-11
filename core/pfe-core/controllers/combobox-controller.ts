@@ -134,6 +134,7 @@ export class ComboboxController<
   #input: HTMLElement | null = null;
   #button: HTMLElement | null = null;
   #listbox: HTMLElement | null = null;
+  #buttonInitialRole: string | null = null;
 
   public static of<T extends HTMLElement>(
     host: ReactiveControllerHost,
@@ -297,6 +298,7 @@ export class ComboboxController<
     if (!this.#button) {
       throw new Error('ComboboxController getToggleButton() option must return an element');
     }
+    this.#buttonInitialRole = this.#button.role;
     this.#button.role = 'combobox';
     this.#button.setAttribute('aria-controls', this.#listbox?.id ?? '');
     this.#button.addEventListener('click', this.#onClickButton);
@@ -313,7 +315,7 @@ export class ComboboxController<
       throw new Error(`ComboboxController getToggleInput() option must return an element with a value property`);
     } else if (this.#input) {
       this.#input.role = 'combobox';
-      this.#button!.role = 'button';
+      this.#button!.role = this.#buttonInitialRole;
       this.#input.setAttribute('aria-autocomplete', 'both');
       this.#input.setAttribute('aria-controls', this.#listbox?.id ?? '');
       this.#input.addEventListener('click', this.#onClickButton);

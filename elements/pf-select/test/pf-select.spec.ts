@@ -133,6 +133,7 @@ describe('<pf-select> in a deep shadow root', function() {
 
 describe('<pf-select variant="single">', function() {
   let element: PfSelect;
+  let items: PfOption[];
   const updateComplete = () => element.updateComplete;
   const focus = () => element.focus();
 
@@ -150,6 +151,7 @@ describe('<pf-select variant="single">', function() {
         <pf-option value="7">7</pf-option>
         <pf-option value="8">8</pf-option>
       </pf-select>`);
+    items = Array.from(element.querySelectorAll('pf-option'));
   });
 
   it('passes aXe audit', async function() {
@@ -194,6 +196,33 @@ describe('<pf-select variant="single">', function() {
 
       it('focuses on the placeholder', async function() {
         expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('Choose a number');
+      });
+    });
+
+    describe('Home', function() {
+      beforeEach(press('Home'));
+      beforeEach(updateComplete);
+
+      it('expands the listbox', async function() {
+        expect(await a11ySnapshot()).to.axContainRole('listbox');
+      });
+
+      it('focuses on the placeholder', async function() {
+        expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('Choose a number');
+      });
+    });
+
+    describe('End', function() {
+      beforeEach(press('End'));
+      beforeEach(updateComplete);
+
+      it('expands the listbox', async function() {
+        expect(await a11ySnapshot()).to.axContainRole('listbox');
+      });
+
+      it('focuses on the last item', async function() {
+        expect(await a11ySnapshot())
+            .to.have.axTreeFocusOn(items.at(-1));
       });
     });
 

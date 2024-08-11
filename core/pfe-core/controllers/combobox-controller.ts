@@ -566,10 +566,7 @@ export class ComboboxController<
   }
 
   async #hide(): Promise<void> {
-    const success = await this.options.requestHideListbox();
-    if (success !== false && !this.#hasTextInput) {
-      this.options.getToggleButton()?.focus();
-    }
+    await this.options.requestHideListbox();
   }
 
   /**

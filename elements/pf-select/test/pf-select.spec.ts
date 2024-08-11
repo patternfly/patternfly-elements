@@ -294,6 +294,56 @@ describe('<pf-select variant="single">', function() {
           });
         });
 
+        describe('ArrowDown', function() {
+          beforeEach(press('ArrowDown'));
+          beforeEach(updateComplete);
+          it('focuses on option 2', async function() {
+            expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('2');
+          });
+
+          describe('Enter', function() {
+            beforeEach(press('Enter'));
+            beforeEach(updateComplete);
+
+            it('selects option 2', function() {
+              expect(getValues(element)).to.deep.equal(['2']);
+            });
+
+            it('hides the listbox', async function() {
+              expect(element.expanded).to.be.false;
+              expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+            });
+
+            describe('ArrowDown', function() {
+              beforeEach(press('ArrowDown'));
+              beforeEach(updateComplete);
+
+              it('expands the listbox', async function() {
+                expect(element.expanded).to.be.true;
+                expect(await a11ySnapshot()).to.axContainRole('listbox');
+              });
+
+              describe('Home', function() {
+                beforeEach(press('Home'));
+                beforeEach(updateComplete);
+
+                it('focuses on option 1', async function() {
+                  expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('1');
+                });
+
+                describe('Home', function() {
+                  beforeEach(press('Home'));
+                  beforeEach(updateComplete);
+
+                  it('focuses on option 1', async function() {
+                    expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('1');
+                  });
+                });
+              });
+            });
+          });
+        });
+
         describe('Enter', function() {
           beforeEach(press('Enter'));
           beforeEach(updateComplete);

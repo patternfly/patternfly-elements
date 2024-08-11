@@ -1,4 +1,4 @@
-import { expect, html, nextFrame } from '@open-wc/testing';
+import { expect, html, aTimeout, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfSelect } from '../pf-select.js';
 import { sendKeys } from '@web/test-runner-commands';
@@ -187,8 +187,20 @@ describe('<pf-select variant="single">', function() {
     });
 
     describe('Space', function() {
+      let scrollY: number;
+      beforeEach(function() {
+        document.body.style.height = '8000px';
+      });
+      afterEach(function() {
+        document.body.style.height = 'initial';
+      });
+      beforeEach(function() {
+        ({ scrollY } = window);
+      });
+
       beforeEach(press(' '));
       beforeEach(updateComplete);
+      beforeEach(() => aTimeout(300));
 
       it('expands the listbox', async function() {
         expect(await a11ySnapshot()).to.axContainRole('listbox');
@@ -196,6 +208,10 @@ describe('<pf-select variant="single">', function() {
 
       it('focuses on the placeholder', async function() {
         expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('Choose a number');
+      });
+
+      it('does not scroll the screen', function() {
+        expect(scrollY).to.equal(window.scrollY);
       });
     });
 

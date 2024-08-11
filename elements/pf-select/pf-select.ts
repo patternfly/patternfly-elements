@@ -199,7 +199,6 @@ export class PfSelect extends LitElement {
     const selectedOptions = this.#combobox.selected ?? [];
     const typeahead = variant.startsWith('typeahead');
     const checkboxes = variant === 'checkbox';
-    const offscreen = typeahead && 'offscreen';
     const badge = hasBadge && 'badge';
     const hasSelection = !!(Array.isArray(this.selected) ? this.selected.length : this.selected);
     const hideLightDomItems = typeahead && !ComboboxController.canControlLightDom;
@@ -224,7 +223,7 @@ export class PfSelect extends LitElement {
           <button id="toggle-button">
             <span id="button-text" style="display: contents;">
               <span id="toggle-text"
-                    class="${classMap({ offscreen, badge })}">${this.#buttonLabel}</span>${!hasBadge ? '' : html`
+                    class="${classMap({ 'visually-hidden': !!typeahead, badge })}">${this.#buttonLabel}</span>${!hasBadge ? '' : html`
               <span id="toggle-badge">
                 <pf-badge number="${selectedOptions.length}">${selectedOptions.length}</pf-badge>
               </span>`}

@@ -147,7 +147,7 @@ export class PfChipGroup extends LitElement {
         <slot id="category"
               name="category-name"
               @slotchange="${this.#onSlotchange}">
-          <span class="offscreen"
+          <span class="visually-hidden"
                 ?hidden="${!this.accessibleLabel}">${this.accessibleLabel ?? ''}</span>
         </slot>
         <slot id="chips" @slotchange="${this.#onSlotchange}"></slot>

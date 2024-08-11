@@ -506,7 +506,7 @@ export class ComboboxController<
     if (this.#hasTextInput) {
       return this.#onKeydownInput(event);
     } else {
-      return this.#onKeydownMenu(event);
+      return this.#onKeydownToggleButton(event);
     }
   };
 
@@ -535,7 +535,7 @@ export class ComboboxController<
     }
   };
 
-  #onKeydownMenu = (event: KeyboardEvent) => {
+  #onKeydownToggleButton = (event: KeyboardEvent) => {
     switch (event.key) {
       case 'ArrowDown':
       case 'ArrowUp':
@@ -545,12 +545,10 @@ export class ComboboxController<
         }
         break;
       case ' ':
-        if (!this.#hasTextInput) {
-          // prevent scroll
-          event.preventDefault();
-          if (!this.options.isExpanded()) {
-            this.#show();
-          }
+        // prevent scroll
+        event.preventDefault();
+        if (!this.options.isExpanded()) {
+          this.#show();
         }
     }
   };

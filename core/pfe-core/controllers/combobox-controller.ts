@@ -521,6 +521,12 @@ export class ComboboxController<
     ) {
       this.#hide();
       this.#button?.focus();
+    } else if (!this.#hasTextInput) {
+      switch (event.key) {
+        case 'Home':
+        case 'End':
+          this.#onKeydownToggleButton(event);
+      }
     }
   };
 
@@ -535,13 +541,29 @@ export class ComboboxController<
     }
   };
 
-  #onKeydownToggleButton = (event: KeyboardEvent) => {
+  #onKeydownToggleButton = async (event: KeyboardEvent) => {
     switch (event.key) {
       case 'ArrowDown':
       case 'ArrowUp':
       case 'Enter':
         if (!this.options.isExpanded()) {
           this.#show();
+        }
+        break;
+      case 'Home':
+        if (!this.options.isExpanded()) {
+          await this.#show();
+        }
+        if (this.#fc) {
+          this.#fc.atFocusedItemIndex = 0;
+        }
+        break;
+      case 'End':
+        if (!this.options.isExpanded()) {
+          await this.#show();
+        }
+        if (this.#fc) {
+          this.#fc.atFocusedItemIndex = this.items.length - 1;
         }
         break;
       case ' ':

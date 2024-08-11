@@ -152,7 +152,7 @@ describe('<pf-select variant="single">', function() {
       </pf-select>`);
   });
 
-  it('is accessible', async function() {
+  it('passes aXe audit', async function() {
     await expect(element).to.be.accessible();
   });
 
@@ -161,7 +161,7 @@ describe('<pf-select variant="single">', function() {
       element.accessibleLabel = undefined;
     });
     beforeEach(updateComplete);
-    it('fails accessibility audit', async function() {
+    it('fails aXe audit', async function() {
       await expect(element).to.not.be.accessible();
     });
   });
@@ -351,7 +351,7 @@ describe('<pf-select variant="single">', function() {
 
 describe('<pf-select variant="checkbox">', function() {
   let element: PfSelect;
-  let items: NodeListOf<PfOption>;
+  let items: PfOption[];
   const updateComplete = () => element.updateComplete;
   const focus = () => element.focus();
   beforeEach(async function() {
@@ -368,7 +368,7 @@ describe('<pf-select variant="checkbox">', function() {
         <pf-option value="7">7</pf-option>
         <pf-option value="8">8</pf-option>
       </pf-select>`);
-    items = element.querySelectorAll('pf-option');
+    items = Array.from(element.querySelectorAll('pf-option'));
   });
 
   it('is accessible', async function() {
@@ -601,7 +601,7 @@ describe('<pf-select variant="checkbox">', function() {
       });
 
       describe('clicking the first item', function() {
-        beforeEach(() => clickElementAtCenter(items[0]));
+        beforeEach(() => clickElementAtCenter(items.at(0)!));
         beforeEach(updateComplete);
 
         it('selects option 1', function() {
@@ -618,7 +618,7 @@ describe('<pf-select variant="checkbox">', function() {
           beforeEach(holdShift);
           afterEach(releaseShift);
           describe('clicking the 7th item', function() {
-            beforeEach(() => clickElementAtCenter(items[6]));
+            beforeEach(() => clickElementAtCenter(items.at(6)!));
             it('remains expanded', async function() {
               expect(element.expanded).to.be.true;
               expect(await a11ySnapshot()).to.axContainRole('listbox');
@@ -639,14 +639,14 @@ describe('<pf-select variant="checkbox">', function() {
             describe('releasing Shift', function() {
               beforeEach(releaseShift);
               describe('clicking 6th item', function() {
-                beforeEach(() => clickElementAtCenter(items[5]));
+                beforeEach(() => clickElementAtCenter(items.at(5)!));
                 it('deselects item 6', function() {
                   expect(getValues(element)).to.not.contain('6');
                 });
                 describe('holding Shift', function() {
                   beforeEach(holdShift);
                   describe('clicking 2nd item', function() {
-                    beforeEach(() => clickElementAtCenter(items[1]));
+                    beforeEach(() => clickElementAtCenter(items.at(1)!));
                     it('deselects items 2-6', function() {
                       expect(getValues(element)).to.deep.equal(['1', '7']);
                     });

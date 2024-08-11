@@ -162,6 +162,13 @@ describe('<pf-select variant="single">', function() {
     expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
   });
 
+  it('sets aria-setsize and aria-posinset on items', function() {
+    expect(items.at(0)).to.have.attr('aria-setsize', '9');
+    expect(items.at(-1)).to.have.attr('aria-setsize', '9');
+    expect(items.at(0)).to.have.attr('aria-posinset', '2');
+    expect(items.at(-1)).to.have.attr('aria-posinset', '9');
+  });
+
   describe('without accessible label', function() {
     beforeEach(function() {
       element.accessibleLabel = undefined;

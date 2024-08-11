@@ -269,7 +269,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   hostUpdated(): void {
     this.container?.setAttribute('role', 'listbox');
     this.container?.setAttribute('aria-disabled', String(!!this.disabled));
-    this.container?.setAttribute('aria-multi-selectable', String(!!this.#options.multi));
+    this.container?.setAttribute('aria-multiselectable', String(!!this.#options.multi));
   }
 
   hostDisconnected(): void {

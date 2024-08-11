@@ -796,6 +796,19 @@ describe('<pf-select variant="typeahead">', function() {
     expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
   });
 
+  describe.skip('setting filter to "*"', function() {
+    beforeEach(function() {
+      // @ts-expect-error: todo: add filter feature
+      element.filter = '*';
+    });
+    beforeEach(updateComplete);
+    it('does not error', async function() {
+      const snapshot = await a11ySnapshot();
+      const [, , listbox] = snapshot.children ?? [];
+      expect(listbox?.children).to.not.be.ok;
+    });
+  });
+
   describe('focus()', function() {
     beforeEach(focus);
 
@@ -822,16 +835,11 @@ describe('<pf-select variant="typeahead">', function() {
       });
     });
 
-    describe.skip('setting filter to "*"', function() {
-      beforeEach(function() {
-        // @ts-expect-error: todo: add filter feature
-        element.filter = '*';
-      });
+    describe('Space', function() {
+      beforeEach(press(' '));
       beforeEach(updateComplete);
-      it('does not error', async function() {
-        const snapshot = await a11ySnapshot();
-        const [, , listbox] = snapshot.children ?? [];
-        expect(listbox?.children).to.not.be.ok;
+      it('does not expand the listbox', async function() {
+        expect(await a11ySnapshot()).to.not.axContainRole('listbox');
       });
     });
 

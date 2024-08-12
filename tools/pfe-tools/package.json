@@ -115,7 +115,7 @@
     "@types/glob": "^8.1.0",
     "@types/koa-send": "^4.1.6",
     "@types/mocha": "^10.0.6",
-    "@types/node": "^20.12.7",
+    "@types/node": "^22.2.0",
     "@types/nunjucks": "^3.2.6",
     "@types/sinon": "^17.0.3",
     "@types/yargs": "^17.0.32",

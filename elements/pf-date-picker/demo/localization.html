@@ -1,0 +1,43 @@
+<div class="container">
+  <section>
+    <h2>Localization</h2>
+    <pre><code>&lt;pf-date-picker localization-language-code="fi"&gt;&lt;/pf-date-picker&gt;</code></pre>
+    <pf-date-picker localization-language-code="fi"></pf-date-picker>
+    <p>The locale string can be passed to the date picker to set the date format.</p>
+    <p>In the above given example, the locale is set to <span>Finnish: fi</span></p>
+    <p>The date format is set globally, independent of the user's locale. 
+      This means that all users will see the same date format, regardless of their language or region.</p>
+  </section>
+</div>
+
+
+<script type="module">
+  import '@patternfly/elements/pf-date-picker/pf-date-picker.js';
+</script>
+
+<style>
+  .container {
+    min-height: 25vh;
+    height: auto;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 40px;
+    flex-direction: column;
+  }
+
+  .container section {
+    margin-bottom: var(--rh-space-lg, 16px)
+  }
+
+  .container section p span {
+    color: var(--rh-color-text-secondary-on-light, #4d4d4d);
+    font-family: var(--rh-font-family-code, RedHatMono, "Red Hat Mono", "Courier New", Courier, monospace);
+  }
+
+  .container section pre {
+    padding-bottom: var(--rh-space-md, 8px)
+  }
+</style>
+

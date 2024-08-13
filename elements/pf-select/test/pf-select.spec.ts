@@ -38,8 +38,8 @@ function getVisibleOptionValues() {
 }
 
 // a11yShapshot does not surface the options
-function getActiveOption() {
-  return document.querySelector<PfOption>('pf-option[active]');
+function getActiveOption(element: PfSelect) {
+  return element.options.find(x => x.active);
 }
 
 describe('<pf-select>', function() {
@@ -133,7 +133,6 @@ describe('<pf-select> in a deep shadow root', function() {
 
 describe('<pf-select variant="single">', function() {
   let element: PfSelect;
-  let items: PfOption[];
   const updateComplete = () => element.updateComplete;
   const focus = () => element.focus();
 
@@ -151,7 +150,6 @@ describe('<pf-select variant="single">', function() {
         <pf-option value="7">7</pf-option>
         <pf-option value="8">8</pf-option>
       </pf-select>`);
-    items = Array.from(element.querySelectorAll('pf-option'));
   });
 
   it('passes aXe audit', async function() {
@@ -163,10 +161,11 @@ describe('<pf-select variant="single">', function() {
   });
 
   it('sets aria-setsize and aria-posinset on items', function() {
-    expect(items.at(0)).to.have.attr('aria-setsize', '9');
-    expect(items.at(-1)).to.have.attr('aria-setsize', '9');
-    expect(items.at(0)).to.have.attr('aria-posinset', '2');
-    expect(items.at(-1)).to.have.attr('aria-posinset', '9');
+    expect(element.options.at(0)).to.have.attr('aria-setsize', '9');
+    expect(element.options.at(-1)).to.have.attr('aria-setsize', '9');
+    expect(element.options.at(0)).to.have.attr('aria-posinset', '1');
+    expect(element.querySelector('pf-option')).to.have.attr('aria-posinset', '2');
+    expect(element.options.at(-1)).to.have.attr('aria-posinset', '9');
   });
 
   describe('without accessible label', function() {
@@ -265,7 +264,7 @@ describe('<pf-select variant="single">', function() {
 
       it('focuses on the last item', async function() {
         expect(await a11ySnapshot())
-            .to.have.axTreeFocusOn(items.at(-1));
+            .to.have.axTreeFocusOn(element.options.at(-1));
       });
     });
 
@@ -783,26 +782,19 @@ describe('<pf-select variant="typeahead">', function() {
       </pf-select>`);
   });
 
+  beforeEach(() => aTimeout(100));
+
   it('does not have redundant role', async function() {
     expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
   });
 
-  describe.skip('setting filter to "*"', function() {
-    beforeEach(function() {
-      // @ts-expect-error: todo: add filter feature
-      element.filter = '*';
-    });
-    beforeEach(updateComplete);
-    it('does not error', async function() {
-      const snapshot = await a11ySnapshot();
-      const [, , listbox] = snapshot.children ?? [];
-      expect(listbox?.children).to.not.be.ok;
-    });
+  it('lists the placeholder in the options', function() {
+    const [placeholder] = element.options;
+    expect(placeholder).to.have.text('Select a color');
   });
 
   describe('focus()', function() {
     beforeEach(focus);
-
     beforeEach(updateComplete);
 
     it('focuses the combobox input', async function() {
@@ -912,7 +904,7 @@ describe('<pf-select variant="typeahead">', function() {
           beforeEach(updateComplete);
 
           it('focuses the option "Purple"', function() {
-            expect(getActiveOption()).to.have.text('Purple');
+            expect(getActiveOption(element)).to.have.text('Purple');
           });
 
           describe('Enter', function() {
@@ -944,17 +936,44 @@ describe('<pf-select variant="typeahead">', function() {
                 beforeEach(press('Home'));
 
                 it('focuses the option "Purple"', function() {
-                  expect(getActiveOption()).to.have.text('Purple');
+                  expect(getActiveOption(element)).to.have.text('Purple');
                 });
               });
               describe('End', function() {
                 beforeEach(press('End'));
 
                 it('focuses the option "Pink"', function() {
-                  expect(getActiveOption()).to.have.text('Pink');
+                  expect(getActiveOption(element)).to.have.text('Pink');
                 });
               });
             });
+          });
+        });
+      });
+    });
+
+    describe('removing the placeholder attribute', function() {
+      beforeEach(function() {
+        element.removeAttribute('placeholder');
+      });
+      beforeEach(updateComplete);
+
+      it('does not list the placeholder in the options', function() {
+        const [placeholder] = element.options;
+        expect(placeholder).to.not.have.text('Select a color');
+      });
+
+      describe('ArrowDown', function() {
+        beforeEach(press('ArrowDown'));
+        beforeEach(updateComplete);
+        it('focuses the first item', async function() {
+          expect(getActiveOption(element)).to.have.value('Blue');
+        });
+        describe('ArrowUp', function() {
+          beforeEach(press('ArrowUp'));
+          beforeEach(updateComplete);
+          it('focuses the last item', async function() {
+            expect(getActiveOption(element)).to.have.value('Yellow');
           });
         });
       });
@@ -971,7 +990,7 @@ describe('<pf-select variant="typeahead">', function() {
 
       it('focuses the first item', async function() {
         expect(await a11ySnapshot()).to.axContainRole('listbox');
-        expect(getActiveOption()).to.have.value('Blue');
+        expect(getActiveOption(element)).to.have.value('Blue');
       });
 
       it('does not move keyboard focus', async function() {
@@ -984,7 +1003,7 @@ describe('<pf-select variant="typeahead">', function() {
 
         it('focuses the second option', function() {
           const [, item] = document.querySelectorAll('pf-option');
-          expect(getActiveOption()).to.equal(item);
+          expect(getActiveOption(element)).to.equal(item);
         });
 
         describe('Enter', function() {
@@ -1008,6 +1027,19 @@ describe('<pf-select variant="typeahead">', function() {
           });
         });
       });
+    });
+  });
+
+  describe.skip('setting filter to "*"', function() {
+    beforeEach(function() {
+      // @ts-expect-error: todo: add filter feature
+      element.filter = '*';
+    });
+    beforeEach(updateComplete);
+    it('does not error', async function() {
+      const snapshot = await a11ySnapshot();
+      const [, , listbox] = snapshot.children ?? [];
+      expect(listbox?.children).to.not.be.ok;
     });
   });
 
@@ -1086,7 +1118,7 @@ describe.skip('<pf-select variant="typeaheadmulti">', function() {
       });
 
       it('focuses the first option', async function() {
-        expect(getActiveOption()).to.have.property('value', 'Amethyst');
+        expect(getActiveOption(element)).to.have.property('value', 'Amethyst');
       });
 
       describe('Shift+Tab', function() {
@@ -1130,7 +1162,7 @@ describe.skip('<pf-select variant="typeaheadmulti">', function() {
             expect(getValues(element)).to.deep.equal(['Beryl']);
           });
           it('focuses on second option', async function() {
-            expect(getActiveOption()).to.have.property('value', 'Beryl');
+            expect(getActiveOption(element)).to.have.property('value', 'Beryl');
           });
           it('remains expanded', async function() {
             expect(element.expanded).to.be.true;
@@ -1148,7 +1180,7 @@ describe.skip('<pf-select variant="typeaheadmulti">', function() {
             beforeEach(press('ArrowUp'));
             beforeEach(updateComplete);
             it('focuses the first option', async function() {
-              expect(getActiveOption()).to.equal('Amethyst');
+              expect(getActiveOption(element)).to.equal('Amethyst');
               expect(await a11ySnapshot())
                   .axTreeFocusedNode.to.have.axName('Amethyst');
             });

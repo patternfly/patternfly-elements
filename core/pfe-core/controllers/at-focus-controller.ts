@@ -66,11 +66,6 @@ export abstract class ATFocusController<Item extends HTMLElement> {
         itemToGainFocusIsFocusable = atFocusableItems.includes(itemToGainFocus!);
       }
       if (count >= 1000) {
-        // console.log(items.map(el => ({
-        //  ariaHidden: el.ariaHidden,
-        //  hidden: el.hasAttribute('hidden'),
-        // })));
-        // console.log({ items, atFocusableItems, index });
         throw new Error('Could not atFocusedItemIndex');
       }
     }

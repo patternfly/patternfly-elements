@@ -129,6 +129,11 @@ export class PfSelect extends LitElement {
       this.expanded ||= true,
     requestHideListbox: () =>
       ((this.expanded &&= false), true),
+    setItemHidden(hidden) {
+      if (this.id !== 'placeholder') {
+        this.hidden = hidden;
+      }
+    },
     isItem: item => item instanceof PfOption,
     setItemActive(active) {
       this.active = active;
@@ -157,12 +162,10 @@ export class PfSelect extends LitElement {
     if (isServer) {
       return []; // TODO: expose a DOM property to allow setting options in SSR scenarios
     } else {
-      const opts = Array.from(this.querySelectorAll('pf-option'));
-      if (this._placeholder) {
-        return [this._placeholder, ...opts];
-      } else {
-        return opts;
-      }
+      return [
+        this._placeholder,
+        ...Array.from(this.querySelectorAll('pf-option')),
+      ].filter((x): x is PfOption => !!x && !x.hidden);
     }
   }
 
@@ -192,7 +195,7 @@ export class PfSelect extends LitElement {
   }
 
   override render(): TemplateResult<1> {
-    const { disabled, expanded, variant } = this;
+    const { disabled, expanded, variant, placeholder } = this;
     const { anchor = 'bottom', alignment = 'start', styles = {} } = this.#float;
     const { height, width } = this.getBoundingClientRect?.() || {};
     const hasBadge = this.#hasBadge;
@@ -244,10 +247,9 @@ export class PfSelect extends LitElement {
           <div id="listbox" class="${classMap({ checkboxes })}">
             <pf-option id="placeholder"
                        disabled
-                       aria-hidden="${ifDefined(hasSelection ? 'true' : undefined)}"
-                       ?hidden="${!this.placeholder && !this.#slots.hasSlotted('placeholder')}">
-              <slot name="placeholder">${this.placeholder}</slot>
-            </pf-option>
+                       aria-hidden="${String(!!hasSelection)}"
+                       ?hidden="${!placeholder && this.#slots.isEmpty('placeholder')}"
+            ><slot name="placeholder">${placeholder ?? ''}</slot></pf-option>
             ${this.#combobox.renderItemsToShadowRoot()}
             <div ?hidden="${hideLightDomItems}">
               <slot></slot>

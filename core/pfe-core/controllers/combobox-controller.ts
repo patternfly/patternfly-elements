@@ -24,10 +24,14 @@ function getItemValue<Item extends HTMLElement>(this: Item): string {
   }
 }
 
-function filterItemOut<Item extends HTMLElement>(this: Item, value: string): boolean {
+function isItemFiltered<Item extends HTMLElement>(this: Item, value: string): boolean {
   return !getItemValue.call(this)
       .toLowerCase()
       .startsWith(value.toLowerCase());
+}
+
+function setItemHidden(this: HTMLElement, hidden: boolean) {
+  this.hidden = hidden;
 }
 
 function setComboboxValue(this: HTMLElement, value: string): void {
@@ -109,7 +113,12 @@ export interface ComboboxControllerOptions<Item extends HTMLElement> extends
    * listbox or filtered out. Return false to hide the item. By default, checks whether the item's
    * value starts with the input value (when both are lowercased).
    */
-  filterItemOut?(this: Item, value: string): boolean;
+  isItemFiltered?(this: Item, value: string): boolean;
+  /**
+   * Called on each item when the filter changes.
+   * By default, toggles the `hidden` attribute on the item
+   */
+  setItemHidden?(this: Item, hidden: boolean): void;
 }
 
 /**
@@ -153,11 +162,12 @@ export class ComboboxController<
   private options: RequireProps<ComboboxControllerOptions<Item>,
     | 'isItemDisabled'
     | 'isItem'
-    | 'filterItemOut'
+    | 'isItemFiltered'
     | 'getItemValue'
     | 'getOrientation'
     | 'getComboboxValue'
     | 'setComboboxValue'
+    | 'setItemHidden'
   >;
 
   #mo = new MutationObserver(() => this.#initItems());
@@ -170,10 +180,11 @@ export class ComboboxController<
     this.options = {
       isItem,
       getItemValue,
-      filterItemOut,
+      isItemFiltered,
       isItemDisabled,
       getComboboxValue,
       setComboboxValue,
+      setItemHidden,
       getOrientation: () => 'vertical',
       ...options,
     };
@@ -492,11 +503,12 @@ export class ComboboxController<
       default: {
         let value: string;
         for (const item of this.items) {
-          item.hidden =
+          const hidden =
               !!this.options.isExpanded()
            && !!(value = this.options.getComboboxValue.call(this.#input))
-           && this.options.filterItemOut?.call(item, value)
+           && this.options.isItemFiltered?.call(item, value)
            || false;
+          this.options.setItemHidden.call(item, hidden);
         }
       }
     }

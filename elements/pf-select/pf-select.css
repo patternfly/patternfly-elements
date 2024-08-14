@@ -278,6 +278,11 @@
   padding: var(--pf-global--spacer--sm, 0.5rem);
 }
 
+#toggle-button:focus:before {
+  border-bottom-color: var(--pf-c-select__toggle--focus--before--BorderBottomColor);
+  border-bottom-width: var(--pf-c-select__toggle--focus--before--BorderBottomWidth);
+}
+
 #outer.typeahead #toggle-button {
   flex: 0 0 auto;
 }

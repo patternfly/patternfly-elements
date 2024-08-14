@@ -9,7 +9,6 @@ import { query } from 'lit/decorators/query.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { ComboboxController } from '@patternfly/pfe-core/controllers/combobox-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
@@ -120,7 +119,9 @@ export class PfSelect extends LitElement {
     multi: this.variant === 'typeaheadmulti' || this.variant === 'checkbox',
     getItems: () => this.options,
     getFallbackLabel: () => this.accessibleLabel
-                         || this.#internals.computedLabelText,
+                         || this.#internals.computedLabelText
+                         || this.placeholder
+                         || this.#slots.getSlotted('placeholder').map(x => x.textContent).join(''),
     getListboxElement: () => this._listbox ?? null,
     getToggleButton: () => this._toggleButton ?? null,
     getComboboxInput: () => this._toggleInput ?? null,
@@ -247,7 +248,7 @@ export class PfSelect extends LitElement {
           <div id="listbox" class="${classMap({ checkboxes })}">
             <pf-option id="placeholder"
                        disabled
-                       aria-hidden="${String(!!hasSelection)}"
+                       aria-hidden="${String(!placeholder && this.#slots.isEmpty('placeholder') || !!hasSelection)}"
                        ?hidden="${!placeholder && this.#slots.isEmpty('placeholder')}"
             ><slot name="placeholder">${placeholder ?? ''}</slot></pf-option>
             ${this.#combobox.renderItemsToShadowRoot()}

@@ -326,8 +326,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         const index =
           Array.from(shadowRootListboxElement?.children ?? [])
               .filter(this.#options.isItem)
+              .filter(x => !x.hidden)
               .indexOf(shadowRootItem);
-        return this.#items[index];
+        return this.#items.filter(x => !x.hidden)[index];
       }
     }
 
@@ -410,9 +411,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * @param event keydown event
    */
   #onKeydown = (event: KeyboardEvent) => {
-    const item = this.#getItemFromEvent(event) ?? this.#options.getATFocusedItem();
+    const item = this.#getItemFromEvent(event);
 
-    if (this.disabled || !item || event.altKey || event.metaKey) {
+    if (this.disabled || event.altKey || event.metaKey) {
       return;
     }
 
@@ -441,10 +442,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       case 'Enter':
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
-        if (this.#options.isItem(event.target)
-            || (event.target as HTMLElement).getAttribute?.('aria-controls') === this.container.id
-            && !event.shiftKey
-        ) {
+        if (item && !event.shiftKey) {
           this.#selectItem(item, event.shiftKey);
           event.preventDefault();
         }
@@ -470,8 +468,11 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       case ' ':
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
-        if (event.target === this.container || this.#options.isItem(event.target)) {
+        if (item && event.target === this.container) {
           this.#selectItem(item, event.shiftKey);
+          event.preventDefault();
+        } else if (this.#options.isItem(event.target)) {
+          this.#selectItem(event.target, event.shiftKey);
           event.preventDefault();
         }
         break;

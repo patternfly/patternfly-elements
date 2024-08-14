@@ -189,14 +189,22 @@ export abstract class ATFocusController<Item extends HTMLElement> {
           event.preventDefault();
           break;
         case 'Home':
-          this.atFocusedItemIndex = 0;
-          event.stopPropagation();
-          event.preventDefault();
+          if (!(event.target instanceof HTMLElement
+            && (event.target.hasAttribute('aria-activedescendant')
+             || event.target.ariaActiveDescendantElement))) {
+            this.atFocusedItemIndex = 0;
+            event.stopPropagation();
+            event.preventDefault();
+          }
           break;
         case 'End':
-          this.atFocusedItemIndex = this.items.length - 1;
-          event.stopPropagation();
-          event.preventDefault();
+          if (!(event.target instanceof HTMLElement
+            && (event.target.hasAttribute('aria-activedescendant')
+             || event.target.ariaActiveDescendantElement))) {
+            this.atFocusedItemIndex = this.items.length - 1;
+            event.stopPropagation();
+            event.preventDefault();
+          }
           break;
         default:
           break;

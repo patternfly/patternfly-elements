@@ -339,7 +339,9 @@ export class ComboboxController<
     const labels = InternalsController.getLabels(this.host)
                 ?? this.#element?.ariaLabelledByElements
                 ?? [];
-    const label = this.options.getFallbackLabel();
+    const label = this.options.getFallbackLabel()
+                  || this.#element?.ariaLabelledByElements?.map(x => x.textContent).join('')
+                  || null;
 
     for (const element of [this.#button, this.#listbox, this.#input].filter(x => !!x)) {
       if ('ariaLabelledByElements' in HTMLElement.prototype && labels.filter(x => !!x).length) {
@@ -523,21 +525,28 @@ export class ComboboxController<
   };
 
   #onKeydownListbox = (event: KeyboardEvent) => {
-    if (!this.#hasTextInput
-      && event.key === 'Escape'
-      || (!this.#hasTextInput
-          && (event.key === 'Enter' || event.key === ' ')
-          && event.composedPath().some(this.options.isItem)
-          && !this.multi
-      )
-    ) {
-      this.#hide();
-      this.#button?.focus();
-    } else if (!this.#hasTextInput) {
+    if (!this.#hasTextInput) {
       switch (event.key) {
         case 'Home':
         case 'End':
           this.#onKeydownToggleButton(event);
+          break;
+        case 'Escape':
+          this.#hide();
+          this.#button?.focus();
+          break;
+        case 'Enter':
+        case ' ': {
+          const eventItem = event.composedPath().find(this.options.isItem);
+          if (eventItem
+              && !this.multi
+              && this.options.isExpanded()
+              && !this.options.isItemDisabled.call(eventItem)
+          ) {
+            this.#hide();
+            this.#button?.focus();
+          }
+        }
       }
     }
   };
@@ -557,7 +566,6 @@ export class ComboboxController<
     switch (event.key) {
       case 'ArrowDown':
       case 'ArrowUp':
-      case 'Enter':
         if (!this.options.isExpanded()) {
           this.#show();
         }
@@ -579,11 +587,15 @@ export class ComboboxController<
         }
         break;
       case ' ':
+      case 'Enter':
         // prevent scroll
         event.preventDefault();
+        await this.#toggle();
+        await this.host.updateComplete;
         if (!this.options.isExpanded()) {
-          this.#show();
+          this.#button?.focus();
         }
+        break;
     }
   };
 
@@ -599,6 +611,14 @@ export class ComboboxController<
 
   async #hide(): Promise<void> {
     await this.options.requestHideListbox();
+  }
+
+  async #toggle() {
+    if (this.options.isExpanded()) {
+      return this.#hide();
+    } else {
+      return this.#show();
+    }
   }
 
   /**

@@ -308,6 +308,12 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       if (item) {
         return item;
       }
+    } else if (this.#options.isItem(event.target)
+               && event.target.getRootNode() !== this.container.getRootNode()
+               && 'ariaActiveDescendantElement' in HTMLElement.prototype) {
+      return event.target;
+    } else if (event.target instanceof HTMLElement && event.target.ariaActiveDescendantElement) {
+      return event.target.ariaActiveDescendantElement as Item;
     } else if (event.type === 'click'
                && this.#options.isItem(event.target)
                && event.target.id) {
@@ -329,8 +335,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
           }
         }
       }
-    } else if (event.target instanceof HTMLElement && event.target.ariaActiveDescendantElement) {
-      return event.target.ariaActiveDescendantElement as Item;
     } else {
       // otherwise, query the root (e.g. shadow root) for the associated element
       const element = event.target as HTMLElement;

@@ -308,44 +308,51 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       if (item) {
         return item;
       }
-    }
-    const element = event.target as HTMLElement;
-    const root = element.getRootNode() as ShadowRoot | Document;
-    const shadowRootListboxId = element?.getAttribute('aria-controls');
-    const shadowRootListboxElement =
-      shadowRootListboxId && root.getElementById(shadowRootListboxId ?? '');
-    const shadowRootHasActiveDescendantElement =
-      root.querySelector(`[aria-controls="${shadowRootListboxId}"][aria-activedescendant]`);
-    const adId = shadowRootHasActiveDescendantElement?.getAttribute('aria-activedescendant');
-    const shadowRootItem = adId && root.getElementById(adId ?? '') as Item | null;
+    } else if (this.#options.isItem(event.target)) {
+      return event.target;
+    } else if (event.target instanceof HTMLElement && event.target.ariaActiveDescendantElement) {
+      return event.target.ariaActiveDescendantElement as Item;
+    } else {
+      // otherwise, query the root (e.g. shadow root) for the associated element
+      const element = event.target as HTMLElement;
+      const root = element.getRootNode() as ShadowRoot | Document;
+      const shadowRootListboxId = element?.getAttribute('aria-controls');
+      const shadowRootListboxElement =
+        shadowRootListboxId && root.getElementById(shadowRootListboxId ?? '');
+      const shadowRootHasActiveDescendantElement =
+        root.querySelector(`[aria-controls="${shadowRootListboxId}"][aria-activedescendant]`);
+      const adId = shadowRootHasActiveDescendantElement?.getAttribute('aria-activedescendant');
+      const shadowRootItem = adId && root.getElementById(adId ?? '') as Item | null;
 
-    if (shadowRootItem && shadowRootListboxElement) {
-      if (this.items.includes(shadowRootItem)) {
-        return shadowRootItem;
-      } else {
-        const index =
-          Array.from(shadowRootListboxElement?.children ?? [])
-              .filter(this.#options.isItem)
-              .filter(x => !x.hidden)
-              .indexOf(shadowRootItem);
-        return this.#items.filter(x => !x.hidden)[index];
+
+      if (shadowRootItem && shadowRootListboxElement) {
+        if (this.items.includes(shadowRootItem)) {
+          return shadowRootItem;
+        } else {
+          const index =
+            Array.from(shadowRootListboxElement?.children ?? [])
+                .filter(this.#options.isItem)
+                .filter(x => !x.hidden)
+                .indexOf(shadowRootItem);
+          return this.#items.filter(x => !x.hidden)[index];
+        }
       }
-    }
 
-    const itemFromEventContainer =
-      shadowRootListboxId ? shadowRootListboxElement
-    : path.find(x =>
-      x instanceof HTMLElement && x.role === 'listbox') as HTMLElement;
+      const itemFromEventContainer =
+        shadowRootListboxId ? shadowRootListboxElement
+      : path.find(x =>
+        x instanceof HTMLElement && x.role === 'listbox') as HTMLElement;
 
-    if (itemFromEventContainer) {
-      const possiblyShadowRootContainerItems = Array.from(itemFromEventContainer.children)
-          .filter(this.#options.isItem);
+      if (itemFromEventContainer) {
+        const possiblyShadowRootContainerItems = Array.from(itemFromEventContainer.children)
+            .filter(this.#options.isItem);
 
-      const index = possiblyShadowRootContainerItems
-          .findIndex(node => path.includes(node));
+        const index = possiblyShadowRootContainerItems
+            .findIndex(node => path.includes(node));
 
-      if (index >= 0) {
-        return this.items[index] ?? null;
+        if (index >= 0) {
+          return this.items[index] ?? null;
+        }
       }
     }
 
@@ -359,19 +366,21 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * @param event click event
    */
   #onClick = (event: MouseEvent) => {
-    const target = this.#getItemFromEvent(event);
-    this.#shiftStartingItem ??= target;
-    if (target && !this.#options.isItemDisabled.call(target)) {
+    const item =
+          this.#options.isItem(event.target) ? event.target
+        : this.#getItemFromEvent(event);
+    this.#shiftStartingItem ??= item;
+    if (item && !this.#options.isItemDisabled.call(item)) {
       // Case: single select?
       //       just reset the selected list.
       if (!this.multi) {
         // select target and deselect all other options
-        this.selected = [target];
+        this.selected = [item];
       // Case: multi select, but no shift key
       //       toggle target, keep all other previously selected
       } else if (!event.shiftKey) {
         this.selected = this.items.filter(item =>
-          this.#selectedItems.has(item) ? item !== target : item === target);
+          this.#selectedItems.has(item) ? item !== item : item === item);
       // Case: multi select, with shift key
       //       find all items between previously selected and target,
       //       and select them (if reference item is selected) or deselect them (if reference item is deselected)
@@ -380,7 +389,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         const startingItem = this.#shiftStartingItem!;
         // whether options will be selected (true) or deselected (false)
         const selecting = this.#selectedItems.has(startingItem);
-        const [start, end] = [this.items.indexOf(startingItem), this.items.indexOf(target)].sort();
+        const [start, end] = [this.items.indexOf(startingItem), this.items.indexOf(item)].sort();
         // de/select all options between active descendant and target
         this.selected = this.items.filter((item, i) => {
           if (i >= start && i <= end) {
@@ -391,7 +400,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         });
       }
     }
-    this.#shiftStartingItem = target;
+    this.#shiftStartingItem = item;
     this.host.requestUpdate();
   };
 
@@ -443,7 +452,8 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         // enter and space are only applicable if a listbox option is clicked
         // an external text input should not trigger multiselect
         if (item && !event.shiftKey) {
-          this.#selectItem(item, event.shiftKey);
+          const focused = item;
+          this.#selectItem(focused, event.shiftKey);
           event.preventDefault();
         }
         break;

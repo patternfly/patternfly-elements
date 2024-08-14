@@ -16,6 +16,8 @@ type AllOptions<Item extends HTMLElement> =
   & ListboxControllerOptions<Item>
   & RovingTabindexControllerOptions<Item>;
 
+type Lang = typeof ComboboxController['langs'][number];
+
 function getItemValue<Item extends HTMLElement>(this: Item): string {
   if ('value' in this && typeof this.value === 'string') {
     return this.value;
@@ -27,7 +29,9 @@ function getItemValue<Item extends HTMLElement>(this: Item): string {
 function deepClosest(element: Element | null, selector: string) {
   let closest = element?.closest(selector);
   let root = element?.getRootNode();
-  while (!closest && element) {
+  let count = 0;
+  while (count < 500 && !closest && element) {
+    count++;
     root = element.getRootNode();
     if (root instanceof ShadowRoot) {
       element = root.host;
@@ -154,14 +158,6 @@ export interface ComboboxControllerOptions<Item extends HTMLElement> extends
 export class ComboboxController<
   Item extends HTMLElement
 > implements ReactiveController {
-  #lb: ListboxController<Item>;
-  #fc?: ATFocusController<Item>;
-  #preventListboxGainingFocus = false;
-  #input: HTMLElement | null = null;
-  #button: HTMLElement | null = null;
-  #listbox: HTMLElement | null = null;
-  #buttonInitialRole: string | null = null;
-
   public static of<T extends HTMLElement>(
     host: ReactiveControllerHost,
     options: ComboboxControllerOptions<T>,
@@ -179,6 +175,18 @@ export class ComboboxController<
   static #alert?: HTMLElement;
 
   static #alertTemplate = document.createElement('template');
+
+  private static langs = [
+    'en',
+    'es',
+    'de',
+    'fr',
+    'it',
+    'ja',
+    'zh',
+  ] as const;
+
+  private static langsRE = new RegExp(ComboboxController.langs.join('|'));
 
   static {
     // apply visually-hidden styles
@@ -208,7 +216,43 @@ export class ComboboxController<
     | 'setItemHidden'
   >;
 
+  #lb: ListboxController<Item>;
+  #fc?: ATFocusController<Item>;
+  #preventListboxGainingFocus = false;
+  #input: HTMLElement | null = null;
+  #button: HTMLElement | null = null;
+  #listbox: HTMLElement | null = null;
+  #buttonInitialRole: string | null = null;
   #mo = new MutationObserver(() => this.#initItems());
+  #microcopy = new Map<string, Record<Lang, string>>(Object.entries({
+    dimmed: {
+      en: 'dimmed',
+      es: 'atenuada',
+      de: 'gedimmt',
+      it: 'oscurato',
+      fr: 'atténué',
+      ja: '暗くなった',
+      zh: '变暗',
+    },
+    selected: {
+      en: 'selected',
+      es: 'seleccionado',
+      de: 'ausgewählt',
+      fr: 'choisie',
+      it: 'selezionato',
+      ja: '選ばれた',
+      zh: '选',
+    },
+    of: {
+      en: 'of',
+      es: 'de',
+      de: 'von',
+      fr: 'sur',
+      it: 'di',
+      ja: '件目',
+      zh: '的',
+    },
+  }));
 
   private constructor(
     public host: ReactiveControllerHost,
@@ -416,53 +460,34 @@ export class ComboboxController<
     }
   }
 
-  private static langs = [
-    'en',
-    'es',
-    'de',
-    'fr',
-    'it',
-    'ja',
-    'zh',
-  ] as const;
+  async #show(): Promise<void> {
+    const success = await this.options.requestShowListbox();
+    if (success !== false && !this.#hasTextInput) {
+      if (!this.#preventListboxGainingFocus) {
+        (this.#focusedItem ?? this.#fc?.items.at(0))?.focus();
+        this.#preventListboxGainingFocus = false;
+      }
+    }
+  }
 
-  private static langsRE = new RegExp(ComboboxController.langs.join('|'));
+  async #hide(): Promise<void> {
+    await this.options.requestHideListbox();
+  }
 
-  #microcopy = new Map<string, Record<Lang, string>>(Object.entries({
-    dimmed: {
-      en: 'dimmed',
-      es: 'atenuada',
-      de: 'gedimmt',
-      it: 'oscurato',
-      fr: 'atténué',
-      ja: '暗くなった',
-      zh: '变暗',
-    },
-    selected: {
-      en: 'selected',
-      es: 'seleccionado',
-      de: 'ausgewählt',
-      fr: 'choisie',
-      it: 'selezionato',
-      ja: '選ばれた',
-      zh: '选',
-    },
-    of: {
-      en: 'of',
-      es: 'de',
-      de: 'von',
-      fr: 'sur',
-      it: 'di',
-      ja: '件目',
-      zh: '的',
-    },
-  }));
+  async #toggle() {
+    if (this.options.isExpanded()) {
+      return this.#hide();
+    } else {
+      return this.#show();
+    }
+  }
 
   #translate(key: string, lang: Lang) {
     const strings = this.#microcopy.get(key);
     return strings?.[lang] ?? key;
   }
 
+  // TODO(bennypowers): perhaps move this to ActivedescendantController
   #announce(item: Item) {
     const value = this.options.getItemValue.call(item);
     ComboboxController.#alert?.remove();
@@ -706,28 +731,6 @@ export class ComboboxController<
     }
   };
 
-  async #show(): Promise<void> {
-    const success = await this.options.requestShowListbox();
-    if (success !== false && !this.#hasTextInput) {
-      if (!this.#preventListboxGainingFocus) {
-        (this.#focusedItem ?? this.#fc?.items.at(0))?.focus();
-        this.#preventListboxGainingFocus = false;
-      }
-    }
-  }
-
-  async #hide(): Promise<void> {
-    await this.options.requestHideListbox();
-  }
-
-  async #toggle() {
-    if (this.options.isExpanded()) {
-      return this.#hide();
-    } else {
-      return this.#show();
-    }
-  }
-
   /**
    * For Browsers which do not support `ariaActiveDescendantElement`, we must clone
    * the listbox items into the same root as the combobox input
@@ -742,4 +745,3 @@ export class ComboboxController<
     }
   }
 }
-  type Lang = typeof ComboboxController['langs'][number];

@@ -24,6 +24,23 @@ function getItemValue<Item extends HTMLElement>(this: Item): string {
   }
 }
 
+function deepClosest(element: Element | null, selector: string) {
+  let closest = element?.closest(selector);
+  let root = element?.getRootNode();
+  while (!closest && element) {
+    root = element.getRootNode();
+    if (root instanceof ShadowRoot) {
+      element = root.host;
+    } else if (root instanceof Document) {
+      element = document.documentElement;
+    } else {
+      return null;
+    }
+    closest = element.closest(selector);
+  }
+  return closest;
+}
+
 function isItemFiltered<Item extends HTMLElement>(this: Item, value: string): boolean {
   return !getItemValue.call(this)
       .toLowerCase()
@@ -157,6 +174,27 @@ export class ComboboxController<
    */
   public static get canControlLightDom(): boolean {
     return ActivedescendantController.canControlLightDom;
+  }
+
+  static #alert?: HTMLElement;
+
+  static #alertTemplate = document.createElement('template');
+
+  static {
+    // apply visually-hidden styles
+    this.#alertTemplate.innerHTML = `
+      <div role="alert" style="
+         border: 0;
+         clip: rect(0, 0, 0, 0);
+         block-size: 1px;
+         margin: -1px;
+         overflow: hidden;
+         padding: 0;
+         position: absolute;
+         white-space: nowrap;
+         inline-size: 1px;
+        "></div>
+      `;
   }
 
   private options: RequireProps<ComboboxControllerOptions<Item>,
@@ -378,6 +416,79 @@ export class ComboboxController<
     }
   }
 
+  private static langs = [
+    'en',
+    'es',
+    'de',
+    'fr',
+    'it',
+    'ja',
+    'zh',
+  ] as const;
+
+  private static langsRE = new RegExp(ComboboxController.langs.join('|'));
+
+  #microcopy = new Map<string, Record<Lang, string>>(Object.entries({
+    dimmed: {
+      en: 'dimmed',
+      es: 'atenuada',
+      de: 'gedimmt',
+      it: 'oscurato',
+      fr: 'atténué',
+      ja: '暗くなった',
+      zh: '变暗',
+    },
+    selected: {
+      en: 'selected',
+      es: 'seleccionado',
+      de: 'ausgewählt',
+      fr: 'choisie',
+      it: 'selezionato',
+      ja: '選ばれた',
+      zh: '选',
+    },
+    of: {
+      en: 'of',
+      es: 'de',
+      de: 'von',
+      fr: 'sur',
+      it: 'di',
+      ja: '件目',
+      zh: '的',
+    },
+  }));
+
+  #translate(key: string, lang: Lang) {
+    const strings = this.#microcopy.get(key);
+    return strings?.[lang] ?? key;
+  }
+
+  #announce(item: Item) {
+    const value = this.options.getItemValue.call(item);
+    ComboboxController.#alert?.remove();
+    const fragment = ComboboxController.#alertTemplate.content.cloneNode(true) as DocumentFragment;
+    ComboboxController.#alert = fragment.firstElementChild as HTMLElement;
+    let text = value;
+    const lang = deepClosest(this.#listbox, '[lang]')?.getAttribute('lang') ?? 'en';
+    const langKey = lang?.match(ComboboxController.langsRE)?.at(0) as Lang ?? 'en';
+    if (this.options.isItemDisabled.call(item)) {
+      text += ` (${this.#translate('dimmed', langKey)})`;
+    }
+    if (this.#lb.isSelected(item)) {
+      text += `, (${this.#translate('selected', langKey)})`;
+    }
+    if (item.hasAttribute('aria-setsize') && item.hasAttribute('aria-posinset')) {
+      if (langKey === 'ja') {
+        text += `, (${item.getAttribute('aria-setsize')} 件中 ${item.getAttribute('aria-posinset')} 件目)`;
+      } else {
+        text += `, (${item.getAttribute('aria-posinset')} ${this.#translate('of', langKey)} ${item.getAttribute('aria-setsize')})`;
+      }
+    }
+    ComboboxController.#alert.lang = lang;
+    ComboboxController.#alert.innerText = text;
+    document.body.append(ComboboxController.#alert);
+  }
+
   #onClickButton = () => {
     if (!this.options.isExpanded()) {
       this.#show();
@@ -486,22 +597,18 @@ export class ComboboxController<
     }
     switch (event.key) {
       case 'ArrowUp':
-      case 'ArrowDown': {
-        const item = this.#focusedItem;
-        const combobox = this.options.getComboboxInput();
-        if (item && combobox
-          /**
-           * NOTE: Safari VoiceOver does not support aria-activedescendant, so Safari users
-           * rely on the combobox input value being announced. It may be less-broken to avoid
-           * announcing disabled items in that case.
-           * @see (https://bugs.webkit.org/show_bug.cgi?id=269026)
-           */
-          && !this.options.isItemDisabled.call(item)) {
-          const value = this.options.getItemValue?.call(item);
-          this.options.setComboboxValue.call(combobox, value);
+      case 'ArrowDown':
+        /**
+         * Safari VoiceOver does not support aria-activedescendant, so we must.
+         * approximate the correct behaviour by constructing a visually-hidden alert role
+         * @see (https://bugs.webkit.org/show_bug.cgi?id=269026)
+         */
+        if (this.#focusedItem
+            && this.options.getComboboxInput()
+            && navigator.userAgent.includes('AppleWebKit')) {
+          this.#announce(this.#focusedItem);
         }
         break;
-      }
       default: {
         let value: string;
         for (const item of this.items) {
@@ -635,3 +742,4 @@ export class ComboboxController<
     }
   }
 }
+  type Lang = typeof ComboboxController['langs'][number];

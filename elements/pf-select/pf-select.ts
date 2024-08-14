@@ -223,7 +223,7 @@ export class PfSelect extends LitElement {
           <input id="toggle-input"
                  ?hidden="${!typeahead}"
                  ?disabled="${disabled}"
-                 placeholder="${this.#buttonLabel}">`}
+                 placeholder="${placeholder || this.#buttonLabel}">`}
           <button id="toggle-button">
             <span id="button-text" style="display: contents;">
               <span id="toggle-text"
@@ -252,9 +252,7 @@ export class PfSelect extends LitElement {
                        ?hidden="${!placeholder && this.#slots.isEmpty('placeholder')}"
             ><slot name="placeholder">${placeholder ?? ''}</slot></pf-option>
             ${this.#combobox.renderItemsToShadowRoot()}
-            <div ?hidden="${hideLightDomItems}">
-              <slot></slot>
-            </div>
+            <slot ?hidden="${hideLightDomItems}"></slot>
           </div>
         </div>
       </div>

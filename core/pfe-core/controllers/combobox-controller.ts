@@ -514,7 +514,7 @@ export class ComboboxController<
     document.body.append(ComboboxController.#alert);
   }
 
-  #onClickButton = () => {
+  #onClickButton = (event: Event) => {
     if (!this.options.isExpanded()) {
       this.#show();
     } else {

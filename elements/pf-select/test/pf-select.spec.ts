@@ -47,6 +47,20 @@ function getActiveOption(element: PfSelect) {
   return element.options.find(x => x.active);
 }
 
+/**
+ * NOTE because of the copy-to-shadow-root shtick in ActivedescendantController,
+ * we can't just pick an option (from light dom);
+ */
+async function clickItemAtIndex(element, index: number) {
+  const itemHeight = 44;
+  await clickElementAtOffset(element, [
+    10,
+    element.offsetHeight + (itemHeight * (index + 1)) - itemHeight / 2,
+  ], {
+    allowOutOfBounds: true,
+  });
+}
+
 describe('<pf-select>', function() {
   it('imperatively instantiates', function() {
     expect(document.createElement('pf-select')).to.be.an.instanceof(PfSelect);
@@ -115,7 +129,7 @@ describe('<pf-select>', function() {
         describe('Space', function() {
           beforeEach(press(' '));
           beforeEach(updateComplete);
-          it('selects the first item', function() {
+          it('selects option 1', function() {
             expect(getSelectedOptionValues(element)).to.deep.equal([
               '1',
             ]);
@@ -284,7 +298,7 @@ describe('<pf-select>', function() {
         describe('Space', function() {
           beforeEach(press(' '));
           beforeEach(updateComplete);
-          it('selects the first item', function() {
+          it('selects option 1', function() {
             expect(getSelectedOptionValues(element)).to.deep.equal([
               '1',
             ]);
@@ -971,7 +985,9 @@ describe('<pf-select variant="checkbox">', function() {
 
         it('selects option 1', function() {
           // because the placeholder was focused
-          expect(getSelectedOptionValues(element)).to.deep.equal(['1']);
+          expect(getSelectedOptionValues(element)).to.deep.equal([
+            '1',
+          ]);
         });
 
         it('remains expanded', async function() {
@@ -1139,6 +1155,76 @@ describe('<pf-select variant="typeahead">', function() {
           role: 'listbox',
           name: 'placeholder',
         });
+      });
+    });
+  });
+
+  describe('clicking the toggle button', function() {
+    beforeEach(async function() {
+      await clickElementAtOffset(element, [-10, -10]);
+    });
+
+    it('shows the listbox', async function() {
+      expect(element.expanded).to.be.true;
+      expect(await a11ySnapshot()).to.axContainRole('listbox');
+    });
+
+    it('focuses the toggle button', async function() {
+      expect(element.expanded).to.be.true;
+      expect(await a11ySnapshot()).to.axContainQuery({
+        focused: true,
+        role: 'button',
+      });
+    });
+  });
+
+  describe('clicking the combobox input', function() {
+    beforeEach(async function() {
+      await clickElementAtOffset(element, [10, 10]);
+    });
+
+    it('shows the listbox', async function() {
+      expect(element.expanded).to.be.true;
+      expect(await a11ySnapshot()).to.axContainRole('listbox');
+    });
+
+    it('focuses the combobox', async function() {
+      expect(element.expanded).to.be.true;
+      expect(await a11ySnapshot()).to.axContainQuery({
+        focused: true,
+        role: 'combobox',
+      });
+    });
+
+    describe('clicking option 1', function() {
+      beforeEach(async function() {
+        await clickItemAtIndex(element, 0);
+      });
+
+      it('selects option 1', function() {
+        expect(getSelectedOptionValues(element)).to.deep.equal([
+          'Blue',
+        ]);
+      });
+
+      it('closes the listbox', async function() {
+        expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+      });
+    });
+
+    describe('clicking option 2', function() {
+      beforeEach(async function() {
+        await clickItemAtIndex(element, 1);
+      });
+
+      it('selects option 1', function() {
+        expect(getSelectedOptionValues(element)).to.deep.equal([
+          'Green',
+        ]);
+      });
+
+      it('closes the listbox', async function() {
+        expect(await a11ySnapshot()).to.not.axContainRole('listbox');
       });
     });
   });

@@ -369,7 +369,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     const item =
           this.#options.isItem(event.target) ? event.target
         : this.#getItemFromEvent(event);
-    this.#shiftStartingItem ??= item;
+    this.#shiftStartingItem ??= this.#getItemFromEvent(event);
     if (item && !this.#options.isItemDisabled.call(item)) {
       // Case: single select?
       //       just reset the selected list.
@@ -379,8 +379,9 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       // Case: multi select, but no shift key
       //       toggle target, keep all other previously selected
       } else if (!event.shiftKey) {
-        this.selected = this.items.filter(item =>
-          this.#selectedItems.has(item) ? item !== item : item === item);
+        this.selected = this.items.filter(possiblySelectedItem =>
+            this.#selectedItems.has(possiblySelectedItem) ? possiblySelectedItem !== item
+          : possiblySelectedItem === item);
       // Case: multi select, with shift key
       //       find all items between previously selected and target,
       //       and select them (if reference item is selected) or deselect them (if reference item is deselected)

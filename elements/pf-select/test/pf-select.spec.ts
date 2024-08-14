@@ -1032,6 +1032,7 @@ describe('<pf-select variant="typeahead">', function() {
   const placeholder = 'placeholder';
   const updateComplete = () => element.updateComplete;
   const focus = () => element.focus();
+
   beforeEach(async function() {
     element = await createFixture<PfSelect>(html`
       <pf-select variant="typeahead">
@@ -1048,6 +1049,17 @@ describe('<pf-select variant="typeahead">', function() {
   });
 
   beforeEach(nextFrame);
+
+  it('does not have redundant role', async function() {
+    expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
+  });
+
+  it('labels the combobox input with the first option', async function() {
+    expect(await a11ySnapshot()).to.axContainQuery({
+      role: 'combobox',
+      name: 'Blue',
+    });
+  });
 
   describe('with an `accessible-label` attribute', function() {
     beforeEach(function() {
@@ -1093,17 +1105,6 @@ describe('<pf-select variant="typeahead">', function() {
         role: 'button',
         name: placeholder,
       });
-    });
-  });
-
-  it('does not have redundant role', async function() {
-    expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
-  });
-
-  it('labels the combobox input with the first option', async function() {
-    expect(await a11ySnapshot()).to.axContainQuery({
-      role: 'combobox',
-      name: 'Blue',
     });
   });
 

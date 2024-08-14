@@ -296,7 +296,7 @@ function axContainQuery(
   this.assert(!!needle,
               `expected to find element matching query "${util.inspect(query)}"`,
               `expected to not find element matching query "${util.inspect(query)}"`,
-              query, needle);
+              query, snapshot);
 }
 
 function axQuery(

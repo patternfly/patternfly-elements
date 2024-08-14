@@ -30,10 +30,15 @@ export async function clickElementAtCenter(element: Element): Promise<void> {
  * using playwright's sendMouse command
  * @param element to click
  * @param relativeOffset x,y coords tuple
+ * @param [options] options
+ * @param [options.allowOutOfBounds] allow the browser to click outside of the element boundaries
  */
 export async function clickElementAtOffset(
   element: Element,
   relativeOffset: Position,
+  options?: {
+    allowOutOfBounds?: true;
+  }
 ): Promise<void> {
   const { x, y, right, bottom } = element.getBoundingClientRect();
   const [xOffset, yOffset] = relativeOffset;
@@ -43,11 +48,13 @@ export async function clickElementAtOffset(
   ] satisfies [number, number];
   const [xCoord, yCoord] = position;
   // NOTE: this may fail in RTL situations?
-  if (xCoord > right) {
-    throw new Error('X offset is outside element boundaries');
-  }
-  if (yCoord > bottom) {
-    throw new Error('Y offset is outside element boundaries');
+  if (!options?.allowOutOfBounds) {
+    if (xCoord > right) {
+      throw new Error('X offset is outside element boundaries');
+    }
+    if (yCoord > bottom) {
+      throw new Error('Y offset is outside element boundaries');
+    }
   }
   await sendMouse({ type: 'click', position });
 }

@@ -3,7 +3,7 @@ import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfSelect } from '../pf-select.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { a11ySnapshot, querySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
-import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
+import { clickElementAtCenter, clickElementAtOffset } from '@patternfly/pfe-tools/test/utils.js';
 import type { PfOption } from '../pf-option.js';
 
 async function holdShift() {
@@ -1066,19 +1066,36 @@ describe('<pf-select variant="typeahead">', function() {
       element.setAttribute('accessible-label', label);
     });
     beforeEach(nextFrame);
+
+    it('passes aXe audit', async function() {
+      await expect(element).to.be.accessible();
+    });
+
     it('does not have redundant role', async function() {
       expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
     });
+
     it('labels the combobox with the label', async function() {
       expect(await a11ySnapshot()).to.axContainQuery({
         role: 'combobox',
         name: label,
       });
     });
+
     it('labels the toggle button with the label', async function() {
       expect(await a11ySnapshot()).to.axContainQuery({
         role: 'button',
         name: label,
+      });
+    });
+
+    describe('show()', function() {
+      beforeEach(() => element.show());
+      it('labels the listbox with the placeholder attribute', async function() {
+        expect(await a11ySnapshot()).to.axContainQuery({
+          role: 'listbox',
+          name: 'label',
+        });
       });
     });
   });
@@ -1088,22 +1105,40 @@ describe('<pf-select variant="typeahead">', function() {
       element.setAttribute('placeholder', placeholder);
     });
     beforeEach(nextFrame);
+
+    it('passes aXe audit', async function() {
+      await expect(element).to.be.accessible();
+    });
+
     it('lists the placeholder as first among the options', function() {
       expect(element.options.at(0)).to.have.text(placeholder);
     });
+
     it('does not have redundant role', async function() {
       expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
     });
+
     it('labels the combobox with the placeholder', async function() {
       expect(await a11ySnapshot()).to.axContainQuery({
         role: 'combobox',
         name: placeholder,
       });
     });
+
     it('labels the toggle button with the placeholder', async function() {
       expect(await a11ySnapshot()).to.axContainQuery({
         role: 'button',
         name: placeholder,
+      });
+    });
+
+    describe('show()', function() {
+      beforeEach(() => element.show());
+      it('labels the listbox with the placeholder attribute', async function() {
+        expect(await a11ySnapshot()).to.axContainQuery({
+          role: 'listbox',
+          name: 'placeholder',
+        });
       });
     });
   });
@@ -1389,86 +1424,6 @@ describe('<pf-select variant="typeahead">', function() {
         expect(getVisibleOptionValues(element)).to.deep.equal([
           'Red',
         ]);
-      });
-    });
-  });
-});
-
-describe('<pf-select variant="typeahead" accessible-label="label">', function() {
-  let element: PfSelect;
-  beforeEach(async function() {
-    element = await createFixture<PfSelect>(html`
-      <pf-select variant="typeahead" accessible-label="label">
-        <pf-option value="1">1</pf-option>
-        <pf-option value="2">2</pf-option>
-        <pf-option value="3">3</pf-option>
-      </pf-select>`);
-  });
-
-  it('passes aXe audit', async function() {
-    await expect(element).to.be.accessible();
-  });
-
-  it('labels the combobox with the placeholder attribute', async function() {
-    expect(await a11ySnapshot()).to.axContainQuery({
-      role: 'combobox',
-      name: 'label',
-    });
-  });
-
-  it('labels the toggle button with the placeholder attribute', async function() {
-    expect(await a11ySnapshot()).to.axContainQuery({
-      role: 'button',
-      name: 'label',
-    });
-  });
-
-  describe('show()', function() {
-    beforeEach(() => element.show());
-    it('labels the listbox with the placeholder attribute', async function() {
-      expect(await a11ySnapshot()).to.axContainQuery({
-        role: 'listbox',
-        name: 'label',
-      });
-    });
-  });
-});
-
-describe('<pf-select variant="typeahead" placeholder="placeholder">', function() {
-  let element: PfSelect;
-  beforeEach(async function() {
-    element = await createFixture<PfSelect>(html`
-      <pf-select variant="typeahead" placeholder="placeholder">
-        <pf-option value="1">1</pf-option>
-        <pf-option value="2">2</pf-option>
-        <pf-option value="3">3</pf-option>
-      </pf-select>`);
-  });
-
-  it('passes aXe audit', async function() {
-    await expect(element).to.be.accessible();
-  });
-
-  it('labels the toggle button with the placeholder attribute', async function() {
-    expect(await a11ySnapshot()).to.axContainQuery({
-      role: 'button',
-      name: 'placeholder',
-    });
-  });
-
-  it('labels the combobox with the placeholder attribute', async function() {
-    expect(await a11ySnapshot()).to.axContainQuery({
-      role: 'combobox',
-      name: 'placeholder',
-    });
-  });
-
-  describe('show()', function() {
-    beforeEach(() => element.show());
-    it('labels the listbox with the placeholder attribute', async function() {
-      expect(await a11ySnapshot()).to.axContainQuery({
-        role: 'listbox',
-        name: 'placeholder',
       });
     });
   });

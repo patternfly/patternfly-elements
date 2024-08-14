@@ -89,7 +89,7 @@ export class PfOption extends LitElement {
     return html`
       <div id="outer" class="${classMap({ active, disabled, selected })}">
         <input type="checkbox"
-               aria-hidden="true"
+               inert
                role="presentation"
                tabindex="-1"
                ?checked="${this.selected}"

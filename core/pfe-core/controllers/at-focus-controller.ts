@@ -3,6 +3,7 @@ import { isServer, type ReactiveControllerHost } from 'lit';
 function isATFocusableItem(el: Element): el is HTMLElement {
   return !!el
       && el.ariaHidden !== 'true'
+      && !el.hasAttribute('inert')
       && !el.hasAttribute('hidden');
 }
 

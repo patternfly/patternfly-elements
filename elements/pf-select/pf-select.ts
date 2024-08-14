@@ -9,6 +9,7 @@ import { query } from 'lit/decorators/query.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { ComboboxController } from '@patternfly/pfe-core/controllers/combobox-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
@@ -206,6 +207,7 @@ export class PfSelect extends LitElement {
     const badge = hasBadge && 'badge';
     const hasSelection = !!(Array.isArray(this.selected) ? this.selected.length : this.selected);
     const hideLightDomItems = typeahead && !ComboboxController.canControlLightDom;
+    const placeholderIsInert = !placeholder && this.#slots.isEmpty('placeholder');
 
     return html`
       <div id="outer"
@@ -248,7 +250,8 @@ export class PfSelect extends LitElement {
           <div id="listbox" class="${classMap({ checkboxes })}">
             <pf-option id="placeholder"
                        disabled
-                       aria-hidden="${String(!placeholder && this.#slots.isEmpty('placeholder') || !!hasSelection)}"
+                       ?inert="${placeholderIsInert}"
+                       aria-hidden="${ifDefined(placeholderIsInert ? undefined : String(!!hasSelection))}"
                        ?hidden="${!placeholder && this.#slots.isEmpty('placeholder')}"
             ><slot name="placeholder">${placeholder ?? ''}</slot></pf-option>
             ${this.#combobox.renderItemsToShadowRoot()}

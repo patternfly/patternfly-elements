@@ -308,20 +308,47 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
       if (item) {
         return item;
       }
+    } else if (event.type === 'click'
+               && this.#options.isItem(event.target)
+               && event.target.id) {
+      const element = event.target;
+      const root = element.getRootNode();
+      if (root instanceof ShadowRoot && this.container.getRootNode() === root) {
+        const shadowRootListboxElement = this.container;
+        const shadowRootItem = element;
+        if (shadowRootItem && shadowRootListboxElement) {
+          if (this.items.includes(shadowRootItem)) {
+            return shadowRootItem;
+          } else {
+            const index =
+              Array.from(shadowRootListboxElement?.children ?? [])
+                  .filter(this.#options.isItem)
+                  .filter(x => !x.hidden)
+                  .indexOf(shadowRootItem);
+            return this.#items.filter(x => !x.hidden)[index];
+          }
+        }
+      }
     } else if (event.target instanceof HTMLElement && event.target.ariaActiveDescendantElement) {
       return event.target.ariaActiveDescendantElement as Item;
     } else {
       // otherwise, query the root (e.g. shadow root) for the associated element
       const element = event.target as HTMLElement;
+
       const root = element.getRootNode() as ShadowRoot | Document;
 
       const shadowRootListboxElement =
           this.#options.isItem(element) ? this.container
         : root.getElementById(element?.getAttribute('aria-controls') ?? '');
+
       const shadowRootHasActiveDescendantElement =
         root.querySelector(`[aria-controls="${shadowRootListboxElement?.id}"][aria-activedescendant]`);
-      const adId = shadowRootHasActiveDescendantElement?.getAttribute('aria-activedescendant');
-      const shadowRootItem = adId && root.getElementById(adId ?? '') as Item | null;
+
+      const shadowRootItemId =
+        shadowRootHasActiveDescendantElement?.getAttribute('aria-activedescendant');
+
+      const shadowRootItem =
+        shadowRootItemId && root.getElementById(shadowRootItemId) as Item | null;
 
       if (shadowRootItem && shadowRootListboxElement) {
         if (this.items.includes(shadowRootItem)) {
@@ -364,9 +391,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * @param event click event
    */
   #onClick = (event: MouseEvent) => {
-    const item =
-          this.#options.isItem(event.target) ? event.target
-        : this.#getItemFromEvent(event);
+    const item = this.#getItemFromEvent(event);
     this.#shiftStartingItem ??= this.#getItemFromEvent(event);
     if (item && !this.#options.isItemDisabled.call(item)) {
       // Case: single select?

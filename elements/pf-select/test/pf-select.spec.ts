@@ -33,8 +33,8 @@ function getValues(element: PfSelect): string[] {
 }
 
 // a11yShapshot does not surface the options
-function getVisibleOptionValues() {
-  return Array.from(document.querySelectorAll<PfOption>('pf-option:not([hidden])'), x => x.value);
+function getVisibleOptionValues(element: PfSelect): string[] {
+  return element.options.filter(x => !x.hidden).map(x => x.value);
 }
 
 // a11yShapshot does not surface the options
@@ -812,7 +812,7 @@ describe('<pf-select variant="typeahead">', function() {
       beforeEach(updateComplete);
 
       it('only shows options that start with "r" or "R"', async function() {
-        expect(getVisibleOptionValues()).to.deep.equal([
+        expect(getVisibleOptionValues(element)).to.deep.equal([
           'Red',
         ]);
       });
@@ -852,7 +852,7 @@ describe('<pf-select variant="typeahead">', function() {
       });
 
       it('only shows listbox items starting with the letter p', function() {
-        expect(getVisibleOptionValues()).to.deep.equal([
+        expect(getVisibleOptionValues(element)).to.deep.equal([
           'Purple',
           'Periwinkle',
           'Pink',
@@ -872,7 +872,7 @@ describe('<pf-select variant="typeahead">', function() {
         });
 
         it('all options are visible', async function() {
-          expect(getVisibleOptionValues()).to.deep.equal([
+          expect(getVisibleOptionValues(element)).to.deep.equal([
             'Blue',
             'Green',
             'Magenta',
@@ -894,7 +894,7 @@ describe('<pf-select variant="typeahead">', function() {
         beforeEach(updateComplete);
 
         it('only shows the option "Purple"', function() {
-          expect(getVisibleOptionValues()).to.deep.equal([
+          expect(getVisibleOptionValues(element)).to.deep.equal([
             'Purple',
           ]);
         });
@@ -925,7 +925,7 @@ describe('<pf-select variant="typeahead">', function() {
               beforeEach(press('Backspace'));
 
               it('shows the options starting with "P"', function() {
-                expect(getVisibleOptionValues()).to.deep.equal([
+                expect(getVisibleOptionValues(element)).to.deep.equal([
                   'Purple',
                   'Periwinkle',
                   'Pink',
@@ -1059,7 +1059,7 @@ describe('<pf-select variant="typeahead">', function() {
       beforeEach(press('r'));
       beforeEach(updateComplete);
       it('shows options that contain "r"', async function() {
-        expect(getVisibleOptionValues()).to.deep.equal([
+        expect(getVisibleOptionValues(element)).to.deep.equal([
           'Green',
           'Orange',
           'Purple',
@@ -1072,7 +1072,7 @@ describe('<pf-select variant="typeahead">', function() {
       beforeEach(nextFrame);
       beforeEach(updateComplete);
       it('shows options that start with "r"', async function() {
-        expect(getVisibleOptionValues()).to.deep.equal([
+        expect(getVisibleOptionValues(element)).to.deep.equal([
           'Red',
         ]);
       });

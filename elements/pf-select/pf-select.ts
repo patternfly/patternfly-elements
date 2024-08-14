@@ -183,11 +183,7 @@ export class PfSelect extends LitElement {
       case 'typeaheadmulti':
         return `${selected?.length ?? 0} ${this.itemsSelectedText}`;
       case 'checkbox':
-        return selected
-            .map(option => option.optionText || '')
-            .join(' ')
-            .trim()
-          || this.#computePlaceholderText()
+        return this.#computePlaceholderText()
           || 'Options';
       default:
         return (selected ? this.value : '')

@@ -34,7 +34,7 @@ function press(key: string) {
  * @returns a list of values of each selected option
  */
 function getSelectedOptionValues(element: PfSelect): string[] {
-  return element.selected.filter(x => !!x).map(x => x!.value);
+  return Array.from(element.querySelectorAll<PfOption>('[selected]'), x => x.value);
 }
 
 // a11yShapshot does not surface the options
@@ -50,8 +50,10 @@ function getActiveOption(element: PfSelect) {
 /**
  * NOTE because of the copy-to-shadow-root shtick in ActivedescendantController,
  * we can't just pick an option (from light dom);
+ * @param element pf-select
+ * @param index item index
  */
-async function clickItemAtIndex(element, index: number) {
+async function clickItemAtIndex(element: PfSelect, index: number) {
   const itemHeight = 44;
   await clickElementAtOffset(element, [
     10,

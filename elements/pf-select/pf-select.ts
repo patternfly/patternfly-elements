@@ -202,7 +202,7 @@ export class PfSelect extends LitElement {
     const checkboxes = variant === 'checkbox';
     const badge = hasBadge && 'badge';
     const hasSelection = !!(Array.isArray(this.selected) ? this.selected.length : this.selected);
-    const hideLightDomItems = typeahead && !ComboboxController.canControlLightDom;
+    const hideLightDomItems = typeahead && !ComboboxController.supportsCrossRootActiveDescendant;
     const placeholderIsInert = !placeholder && this.#slots.isEmpty('placeholder');
 
     return html`

@@ -79,7 +79,7 @@ export class ActivedescendantController<
    * When true, the browser supports cross-root ARIA such that the controller does not need
    * to copy item nodes into the controlling nodes' root
    */
-  public static get canControlLightDom(): boolean {
+  public static get supportsCrossRootActiveDescendant(): boolean {
     return !isServer && 'ariaActiveDescendantElement' in HTMLElement.prototype;
   }
 
@@ -130,14 +130,13 @@ export class ActivedescendantController<
    * @param item item
    */
   set atFocusedItemIndex(index: number) {
-    const { canControlLightDom } = ActivedescendantController;
     super.atFocusedItemIndex = index;
     const item = this._items.at(this.atFocusedItemIndex);
     for (const _item of this.items) {
       this.options.setItemActive?.call(_item, _item === item);
     }
     const container = this.options.getActiveDescendantContainer();
-    if (!canControlLightDom) {
+    if (!ActivedescendantController.supportsCrossRootActiveDescendant) {
       container?.setAttribute('aria-activedescendant', item?.id ?? '');
     } else if (container) {
       container.ariaActiveDescendantElement = item ?? null;
@@ -174,7 +173,8 @@ export class ActivedescendantController<
       throw new Error('items container must be an HTMLElement');
     }
     this.itemsContainerElement = container;
-    if (ActivedescendantController.canControlLightDom
+    const { supportsCrossRootActiveDescendant } = ActivedescendantController;
+    if (supportsCrossRootActiveDescendant
         || [container] // all nodes are in the same root
             .concat(this.controlsElements)
             .concat(items)
@@ -256,7 +256,7 @@ export class ActivedescendantController<
   }
 
   public renderItemsToShadowRoot(): typeof nothing | Node[] {
-    if (ActivedescendantController.canControlLightDom) {
+    if (ActivedescendantController.supportsCrossRootActiveDescendant) {
       return nothing;
     } else {
       return this.items?.filter(x => !this.#noCloneSet.has(x));

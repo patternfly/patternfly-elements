@@ -168,8 +168,8 @@ export class ComboboxController<
   /**
    * Whether the `ariaActiveDescendantElement` IDL attribute is supported for cross-root ARIA.
    */
-  public static get canControlLightDom(): boolean {
-    return ActivedescendantController.canControlLightDom;
+  public static get supportsCrossRootActiveDescendant(): boolean {
+    return ActivedescendantController.supportsCrossRootActiveDescendant;
   }
 
   static #alert?: HTMLElement;

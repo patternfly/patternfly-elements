@@ -4,7 +4,6 @@ import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 import { customElement } from 'lit/decorators/custom-element.js';
 import { query } from 'lit/decorators/query.js';
-import { state } from 'lit/decorators/state.js';
 import { ReactiveElement, html, render, type PropertyValues, type TemplateResult } from 'lit';
 
 import { ComboboxController } from '../combobox-controller.js';
@@ -18,14 +17,44 @@ function press(key: string) {
 abstract class TestCombobox extends ReactiveElement {
   declare static template: TemplateResult;
 
-  abstract controller: ComboboxController<HTMLOptionElement>;
+  static styles = new CSSStyleSheet();
+
+  static {
+    this.styles.replaceSync(/* css */`
+      option {
+        &.active {
+          outline: 1px solid black;
+        }
+        &[selected] {
+          background: lightblue;
+        }
+      }
+    `);
+  }
+
+  controller = ComboboxController.of(this, {
+    multi: false,
+    getItems: () => this.options,
+    isItem: item => item instanceof HTMLOptionElement,
+    getFallbackLabel: () => 'options',
+    getListboxElement: () => this.listbox ?? null,
+    getToggleButton: () => this.button ?? null,
+    getComboboxInput: () => this.combobox ?? null,
+    isExpanded: () => !this.listbox.hidden,
+    requestShowListbox: () => void (this.listbox.hidden = false),
+    requestHideListbox: () => void (this.listbox.hidden = true),
+    setItemActive(active) {
+      this.classList.toggle('active', active);
+    },
+    setItemSelected(selected) {
+      this.selected = selected;
+    },
+  });
 
   @query('#listbox') listbox!: HTMLElement;
   @query('#button') button!: HTMLButtonElement;
   @query('#combobox') combobox!: HTMLInputElement;
   @query('#placeholder') placeholder!: HTMLOptionElement;
-
-  @state() expanded = false;
 
   /** List of options */
   get options(): HTMLOptionElement[] {
@@ -50,9 +79,14 @@ abstract class TestCombobox extends ReactiveElement {
 
   override update(changed: PropertyValues<this>) {
     render(this.render(), this.renderRoot);
-    this.placeholder.inert = !!this.controller.selected.length;
-    this.listbox.hidden = !this.expanded;
     super.update(changed);
+    this.placeholder.inert = !!this.controller.selected.length;
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    const root = this.renderRoot.getRootNode() as Document | ShadowRoot;
+    root.adoptedStyleSheets = [...root.adoptedStyleSheets ?? [], TestCombobox.styles];
   }
 
   static async test() {
@@ -202,26 +236,6 @@ class XComboboxCrossRoot extends TestCombobox {
     ].filter(x => !!x);
   }
 
-
-  controller = ComboboxController.of(this, {
-    multi: false,
-    getItems: () => this.options,
-    isItem: item => item instanceof HTMLOptionElement,
-    getFallbackLabel: () => 'options',
-    getListboxElement: () => this.listbox ?? null,
-    getToggleButton: () => this.button ?? null,
-    getComboboxInput: () => this.combobox ?? null,
-    isExpanded: () => this.expanded,
-    requestShowListbox: () => this.expanded ||= true,
-    requestHideListbox: () => ((this.expanded &&= false), true),
-    setItemActive(active) {
-      this.classList.toggle('active', !!active);
-    },
-    setItemSelected(selected) {
-      this.selected = selected;
-    },
-  });
-
   render() {
     return html`
       <div id="toggle">
@@ -249,25 +263,6 @@ class XComboboxLight extends TestCombobox {
     return this;
   }
 
-  controller = ComboboxController.of(this, {
-    multi: false,
-    getItems: () => this.options,
-    isItem: item => item instanceof HTMLOptionElement,
-    getFallbackLabel: () => 'options',
-    getListboxElement: () => this.listbox ?? null,
-    getToggleButton: () => this.button ?? null,
-    getComboboxInput: () => this.combobox ?? null,
-    isExpanded: () => this.expanded,
-    requestShowListbox: () => this.expanded ||= true,
-    requestHideListbox: () => ((this.expanded &&= false), true),
-    setItemActive(active) {
-      this.classList.toggle('active', active);
-    },
-    setItemSelected(selected) {
-      this.selected = selected;
-    },
-  });
-
   render() {
     return html`
       <input id="combobox">
@@ -293,25 +288,6 @@ class XComboboxShadow extends TestCombobox {
   static template = html`
     <x-combobox-shadow></x-combobox-shadow>
   `;
-
-  controller = ComboboxController.of(this, {
-    multi: false,
-    getItems: () => this.options,
-    isItem: item => item instanceof HTMLOptionElement,
-    getFallbackLabel: () => 'options',
-    getListboxElement: () => this.listbox ?? null,
-    getToggleButton: () => this.button ?? null,
-    getComboboxInput: () => this.combobox ?? null,
-    isExpanded: () => this.expanded,
-    requestShowListbox: () => this.expanded ||= true,
-    requestHideListbox: () => ((this.expanded &&= false), true),
-    setItemActive(active) {
-      this.classList.toggle('active', active);
-    },
-    setItemSelected(selected) {
-      this.selected = selected;
-    },
-  });
 
   render() {
     return html`

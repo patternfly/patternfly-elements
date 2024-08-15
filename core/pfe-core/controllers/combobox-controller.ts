@@ -254,32 +254,6 @@ export class ComboboxController<
     },
   }));
 
-  private constructor(
-    public host: ReactiveControllerHost,
-    options: ComboboxControllerOptions<Item>,
-  ) {
-    host.addController(this);
-    this.options = {
-      isItem,
-      getItemValue,
-      isItemFiltered,
-      isItemDisabled,
-      getComboboxValue,
-      setComboboxValue,
-      setItemHidden,
-      getOrientation: () => 'vertical',
-      ...options,
-    };
-    this.#lb = ListboxController.of(host, {
-      isItem: this.options.isItem,
-      getItemsContainer: this.options.getListboxElement,
-      getControlsElements: () => [this.#button, this.#input].filter(x => !!x),
-      getATFocusedItem: () => this.items[this.#fc?.atFocusedItemIndex ?? -1] ?? null,
-      isItemDisabled: this.options.isItemDisabled,
-      setItemSelected: this.options.setItemSelected,
-    });
-  }
-
   /** All items */
   get items(): Item[] {
     return this.#lb.items;
@@ -332,6 +306,32 @@ export class ComboboxController<
     }
   }
 
+  private constructor(
+    public host: ReactiveControllerHost,
+    options: ComboboxControllerOptions<Item>,
+  ) {
+    host.addController(this);
+    this.options = {
+      isItem,
+      getItemValue,
+      isItemFiltered,
+      isItemDisabled,
+      getComboboxValue,
+      setComboboxValue,
+      setItemHidden,
+      getOrientation: () => 'vertical',
+      ...options,
+    };
+    this.#lb = ListboxController.of(host, {
+      isItem: this.options.isItem,
+      getItemsContainer: this.options.getListboxElement,
+      getControlsElements: () => [this.#button, this.#input].filter(x => !!x),
+      getATFocusedItem: () => this.items[this.#fc?.atFocusedItemIndex ?? -1] ?? null,
+      isItemDisabled: this.options.isItemDisabled,
+      setItemSelected: this.options.setItemSelected,
+    });
+  }
+
   async hostConnected(): Promise<void> {
     await this.host.updateComplete;
     this.hostUpdated();
@@ -359,7 +359,8 @@ export class ComboboxController<
   /**
    * Order of operations is important
    */
-  #init() {
+  async #init() {
+    await this.host.updateComplete;
     this.#initListbox();
     this.#initItems();
     this.#initButton();
@@ -462,6 +463,7 @@ export class ComboboxController<
 
   async #show(): Promise<void> {
     const success = await this.options.requestShowListbox();
+    this.#filterItems();
     if (success !== false && !this.#hasTextInput) {
       if (!this.#preventListboxGainingFocus) {
         (this.#focusedItem ?? this.#fc?.items.at(0))?.focus();
@@ -512,6 +514,20 @@ export class ComboboxController<
     ComboboxController.#alert.lang = lang;
     ComboboxController.#alert.innerText = text;
     document.body.append(ComboboxController.#alert);
+  }
+
+  #filterItems() {
+    if (this.#input) {
+      let value: string;
+      for (const item of this.items) {
+        const hidden =
+          !!this.options.isExpanded()
+            && !!(value = this.options.getComboboxValue.call(this.#input))
+            && this.options.isItemFiltered?.call(item, value)
+            || false;
+        this.options.setItemHidden.call(item, hidden);
+      }
+    }
   }
 
   #onClickButton = () => {
@@ -634,17 +650,8 @@ export class ComboboxController<
           this.#announce(this.#focusedItem);
         }
         break;
-      default: {
-        let value: string;
-        for (const item of this.items) {
-          const hidden =
-              !!this.options.isExpanded()
-           && !!(value = this.options.getComboboxValue.call(this.#input))
-           && this.options.isItemFiltered?.call(item, value)
-           || false;
-          this.options.setItemHidden.call(item, hidden);
-        }
-      }
+      default:
+        this.#filterItems();
     }
   };
 

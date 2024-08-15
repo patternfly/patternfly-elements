@@ -177,11 +177,6 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     return this.#options.getItemsContainer?.() ?? this.host as unknown as HTMLElement;
   }
 
-  get controlsElements(): HTMLElement[] {
-    const elementOrElements = this.#options.getControlsElements?.();
-    return [elementOrElements].filter(x => !!x).flat();
-  }
-
   get multi(): boolean {
     return !!this.#options.multi;
   }
@@ -258,18 +253,35 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   }
 
   async hostConnected(): Promise<void> {
-    if (!this.#listening) {
-      await this.host.updateComplete;
-      this.container?.addEventListener('click', this.#onClick);
-      this.container?.addEventListener('keydown', this.#onKeydown);
-      this.container?.addEventListener('keyup', this.#onKeyup);
-      this.controlsElements.forEach(el => el.addEventListener('keydown', this.#onKeydown));
-      this.controlsElements.forEach(el => el.addEventListener('keyup', this.#onKeyup));
-      this.#listening = true;
+    await this.host.updateComplete;
+    this.hostUpdated();
+  }
+
+  #controlsElements: HTMLElement[] = [];
+
+  #removeControlsListeners(els = this.#controlsElements) {
+    for (const el of els) {
+      el.removeEventListener('keydown', this.#onKeydown);
+      el.removeEventListener('keyup', this.#onKeyup);
     }
   }
 
   hostUpdated(): void {
+    const last = this.#controlsElements;
+    this.#controlsElements = this.#options.getControlsElements?.() ?? [];
+    if (!arraysAreEquivalent(last, this.#controlsElements)) {
+      this.#removeControlsListeners(last);
+      for (const el of this.#controlsElements) {
+        el.addEventListener('keydown', this.#onKeydown);
+        el.addEventListener('keyup', this.#onKeyup);
+      }
+    }
+    if (!this.#listening) {
+      this.container?.addEventListener('click', this.#onClick);
+      this.container?.addEventListener('keydown', this.#onKeydown, { capture: true });
+      this.container?.addEventListener('keyup', this.#onKeyup);
+      this.#listening = true;
+    }
     this.container?.setAttribute('role', 'listbox');
     this.container?.setAttribute('aria-disabled', String(!!this.disabled));
     this.container?.setAttribute('aria-multiselectable', String(!!this.#options.multi));
@@ -279,13 +291,17 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     this.container?.removeEventListener('click', this.#onClick);
     this.container?.removeEventListener('keydown', this.#onKeydown);
     this.container?.removeEventListener('keyup', this.#onKeyup);
-    this.controlsElements.forEach(el => el.removeEventListener('keydown', this.#onKeydown));
-    this.controlsElements.forEach(el => el.removeEventListener('keyup', this.#onKeyup));
+    this.#removeControlsListeners();
     this.#listening = false;
   }
 
   public isSelected(item: Item): boolean {
     return this.#selectedItems.has(item);
+  }
+
+  get #isExpanded() {
+    return !this.#controlsElements.length ? true
+      : this.#controlsElements.every(x => x.ariaExpanded === 'true');
   }
 
   /**
@@ -339,9 +355,11 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
       const root = element.getRootNode() as ShadowRoot | Document;
 
+      const controlsId = element?.getAttribute('aria-controls');
       const shadowRootListboxElement =
           this.#options.isItem(element) ? this.container
-        : root.getElementById(element?.getAttribute('aria-controls') ?? '');
+        : controlsId ? root.getElementById(controlsId)
+        : null;
 
       const shadowRootHasActiveDescendantElement =
         root.querySelector(`[aria-controls="${shadowRootListboxElement?.id}"][aria-activedescendant]`);
@@ -448,7 +466,10 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   #onKeydown = (event: KeyboardEvent) => {
     const item = this.#getItemFromEvent(event);
 
-    if (this.disabled || event.altKey || event.metaKey) {
+    if (this.disabled
+      || event.altKey
+      || event.metaKey
+      || !this.#isExpanded) {
       return;
     }
 

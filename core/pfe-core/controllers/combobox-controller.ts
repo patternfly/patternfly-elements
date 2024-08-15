@@ -630,7 +630,7 @@ export class ComboboxController<
          */
         if (this.#focusedItem
             && this.options.getComboboxInput()
-            && navigator.userAgent.includes('AppleWebKit')) {
+            && /^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
           this.#announce(this.#focusedItem);
         }
         break;

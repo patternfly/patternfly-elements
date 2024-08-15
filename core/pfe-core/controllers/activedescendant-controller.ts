@@ -21,13 +21,13 @@ export interface ActivedescendantControllerOptions<
    * If you provide this callback, ActivedescendantController will call it on your item with the
    * active state. You may use this to set active styles.
    */
-  setItemActive?(this: Item, active: boolean): void;
+  setItemActive?(item: Item, active: boolean): void;
   /**
    * Optional callback to retrieve the value from an option element.
    * By default, retrieves the `value` attribute, or the text content.
    * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptionElement
    */
-  getItemValue?(this: Item): string;
+  getItemValue?(item: Item): string;
 }
 
 /**
@@ -134,7 +134,7 @@ export class ActivedescendantController<
     super.atFocusedItemIndex = index;
     const item = this._items.at(this.atFocusedItemIndex);
     for (const _item of this.items) {
-      this.options.setItemActive?.call(_item, _item === item);
+      this.options.setItemActive?.(_item, _item === item);
     }
     const container = this.options.getActiveDescendantContainer();
     if (!ActivedescendantController.supportsCrossRootActiveDescendant) {

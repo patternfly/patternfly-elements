@@ -18,7 +18,7 @@ export interface ListboxControllerOptions<Item extends HTMLElement> {
    * element with the selected state.
    * Callers **must** ensure that the correct ARIA state is set.
    */
-  setItemSelected?(this: Item, selected: boolean): void;
+  setItemSelected?(item: Item, selected: boolean): void;
   /**
    * Optional predicate to ascertain whether a custom element item is disabled or not
    * By default, if the item matches any of these conditions, it is considered disabled:
@@ -27,7 +27,7 @@ export interface ListboxControllerOptions<Item extends HTMLElement> {
    * 2. it has the `disabled` attribute present
    * 3. it matches the `:disabled` pseudo selector
    */
-  isItemDisabled?(this: Item): boolean;
+  isItemDisabled?(item: Item): boolean;
   /**
    * Predicate which determines if a given element is in fact an item
    * instead of e.g a presentational divider. By default, elements must meet the following criteria
@@ -63,13 +63,14 @@ export interface ListboxControllerOptions<Item extends HTMLElement> {
 
 /**
  * This is the default method for setting the selected state on an item element
+ * @param item the item
  * @param selected is this item selected
  */
-function setItemSelected<Item extends HTMLElement>(this: Item, selected: boolean) {
+function setItemSelected<Item extends HTMLElement>(item: Item, selected: boolean) {
   if (selected) {
-    this.setAttribute('aria-selected', 'true');
+    item.setAttribute('aria-selected', 'true');
   } else {
-    this.removeAttribute('aria-selected');
+    item.removeAttribute('aria-selected');
   }
 }
 
@@ -92,12 +93,12 @@ export function isItem<Item extends HTMLElement>(item: EventTarget | null): item
  * @param item possibly disabled item
  * @package do not import this outside of `@patternfly/pfe-core`, it is subject to change at any time
  */
-export function isItemDisabled<Item extends HTMLElement>(this: Item): boolean {
-  return ('disabled' in this && typeof this.disabled === 'boolean' && this.disabled)
-      || this.getAttribute('aria-disabled') === 'true'
-      || this.hasAttribute('disabled')
-      || this.hasAttribute('inert')
-      || this.matches(':disabled');
+export function isItemDisabled<Item extends HTMLElement>(item: Item): boolean {
+  return ('disabled' in item && typeof item.disabled === 'boolean' && item.disabled)
+      || item.getAttribute('aria-disabled') === 'true'
+      || item.hasAttribute('disabled')
+      || item.hasAttribute('inert')
+      || item.matches(':disabled');
 }
 
 let constructingAllowed = false;
@@ -211,7 +212,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     if (!arraysAreEquivalent(selected, Array.from(this.#selectedItems))) {
       this.#selectedItems = new Set(selected);
       for (const item of this.items) {
-        this.#options.setItemSelected.call(item, this.#selectedItems.has(item));
+        this.#options.setItemSelected(item, this.#selectedItems.has(item));
       }
       this.host.requestUpdate();
     }
@@ -417,7 +418,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   #onClick = (event: MouseEvent) => {
     const item = this.#getItemFromEvent(event);
     this.#shiftStartingItem ??= this.#getItemFromEvent(event);
-    if (item && !this.#options.isItemDisabled.call(item)) {
+    if (item && !this.#options.isItemDisabled(item)) {
       // Case: single select?
       //       just reset the selected list.
       if (!this.multi) {
@@ -489,8 +490,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         if (event.ctrlKey
             && (event.target === this.container
                 || this.#options.isItem(event.target))) {
-          const selectableItems = this.items.filter(item =>
-            !this.#options.isItemDisabled.call(item));
+          const selectableItems = this.items.filter(item => !this.#options.isItemDisabled(item));
           if (arraysAreEquivalent(this.selected, selectableItems)) {
             this.selected = [];
           } else {
@@ -514,7 +514,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
           this.selected = this.items.filter((x, i) =>
             this.#selectedItems.has(x)
             || i === this.items.indexOf(item) - 1)
-              .filter(x => !this.#options.isItemDisabled.call(x));
+              .filter(x => !this.#options.isItemDisabled(x));
         }
         break;
       case 'ArrowDown':
@@ -523,7 +523,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
           this.selected = this.items.filter((x, i) =>
             this.#selectedItems.has(x)
             || i === this.items.indexOf(item) + 1)
-              .filter(x => !this.#options.isItemDisabled.call(x));
+              .filter(x => !this.#options.isItemDisabled(x));
         }
         break;
       case ' ':
@@ -544,7 +544,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   };
 
   #selectItem(item: Item, shiftDown = false) {
-    if (this.#options.isItemDisabled.call(item)) {
+    if (this.#options.isItemDisabled(item)) {
       return;
     } else if (this.multi && shiftDown) {
       // update starting item for other multiselect

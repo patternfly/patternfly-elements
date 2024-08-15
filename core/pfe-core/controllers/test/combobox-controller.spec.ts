@@ -43,12 +43,8 @@ abstract class TestCombobox extends ReactiveElement {
     isExpanded: () => !this.listbox.hidden,
     requestShowListbox: () => void (this.listbox.hidden = false),
     requestHideListbox: () => void (this.listbox.hidden = true),
-    setItemActive(active) {
-      this.classList.toggle('active', active);
-    },
-    setItemSelected(selected) {
-      this.selected = selected;
-    },
+    setItemActive: (item, active) => item.classList.toggle('active', active),
+    setItemSelected: (item, selected) => item.selected = selected,
   });
 
   @query('#listbox') listbox!: HTMLElement;

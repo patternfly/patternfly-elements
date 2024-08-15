@@ -18,14 +18,6 @@ type AllOptions<Item extends HTMLElement> =
 
 type Lang = typeof ComboboxController['langs'][number];
 
-function getItemValue<Item extends HTMLElement>(this: Item): string {
-  if ('value' in this && typeof this.value === 'string') {
-    return this.value;
-  } else {
-    return '';
-  }
-}
-
 function deepClosest(element: Element | null, selector: string) {
   let closest = element?.closest(selector);
   let root = element?.getRootNode();
@@ -45,31 +37,39 @@ function deepClosest(element: Element | null, selector: string) {
   return closest;
 }
 
-function isItemFiltered<Item extends HTMLElement>(this: Item, value: string): boolean {
-  return !getItemValue.call(this)
+function getItemValue<Item extends HTMLElement>(item: Item): string {
+  if ('value' in item && typeof item.value === 'string') {
+    return item.value;
+  } else {
+    return '';
+  }
+}
+
+function isItemFiltered<Item extends HTMLElement>(item: Item, value: string): boolean {
+  return !getItemValue(item)
       .toLowerCase()
       .startsWith(value.toLowerCase());
 }
 
-function setItemHidden(this: HTMLElement, hidden: boolean) {
-  this.hidden = hidden;
+function setItemHidden(item: HTMLElement, hidden: boolean) {
+  item.hidden = hidden;
 }
 
-function setComboboxValue(this: HTMLElement, value: string): void {
-  if (!('value' in this)) {
+function setComboboxValue(item: HTMLElement, value: string): void {
+  if (!('value' in item)) {
     // eslint-disable-next-line no-console
-    return console.warn(`Cannot set value on combobox element ${this.localName}`);
+    return console.warn(`Cannot set value on combobox element ${item.localName}`);
   } else {
-    this.value = value;
+    item.value = value;
   }
 }
 
-function getComboboxValue(this: HTMLElement): string {
-  if ('value' in this && typeof this.value === 'string') {
-    return this.value;
+function getComboboxValue(combobox: HTMLElement): string {
+  if ('value' in combobox && typeof combobox.value === 'string') {
+    return combobox.value;
   } else {
     // eslint-disable-next-line no-console
-    return console.warn(`Cannot get value from combobox element ${this.localName}`), '';
+    return console.warn(`Cannot get value from combobox element ${combobox.localName}`), '';
   }
 }
 
@@ -118,28 +118,28 @@ export interface ComboboxControllerOptions<Item extends HTMLElement> extends
    * of the item, as if it implemented the `<option>` element's interface.
    * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptionElement
    */
-  getItemValue?(this: Item): string;
+  getItemValue?(item: Item): string;
   /**
    * Optional callback, called on the combobox input element to set its value.
    * by default, returns the element's `value` DOM property.
    */
-  getComboboxValue?(this: HTMLElement): string;
+  getComboboxValue?(combobox: HTMLElement): string;
   /**
    * Optional callback, called on the combobox input element to set its value.
    * by default, sets the element's `value` DOM property.
    */
-  setComboboxValue?(this: HTMLElement, value: string): void;
+  setComboboxValue?(item: HTMLElement, value: string): void;
   /**
    * Called on each item, with the combobox input, to determine if the item should be shown in the
    * listbox or filtered out. Return false to hide the item. By default, checks whether the item's
    * value starts with the input value (when both are lowercased).
    */
-  isItemFiltered?(this: Item, value: string): boolean;
+  isItemFiltered?(item: Item, value: string): boolean;
   /**
    * Called on each item when the filter changes.
    * By default, toggles the `hidden` attribute on the item
    */
-  setItemHidden?(this: Item, hidden: boolean): void;
+  setItemHidden?(item: Item, hidden: boolean): void;
 }
 
 /**
@@ -499,14 +499,14 @@ export class ComboboxController<
 
   // TODO(bennypowers): perhaps move this to ActivedescendantController
   #announce(item: Item) {
-    const value = this.options.getItemValue.call(item);
+    const value = this.options.getItemValue(item);
     ComboboxController.#alert?.remove();
     const fragment = ComboboxController.#alertTemplate.content.cloneNode(true) as DocumentFragment;
     ComboboxController.#alert = fragment.firstElementChild as HTMLElement;
     let text = value;
     const lang = deepClosest(this.#listbox, '[lang]')?.getAttribute('lang') ?? 'en';
     const langKey = lang?.match(ComboboxController.langsRE)?.at(0) as Lang ?? 'en';
-    if (this.options.isItemDisabled.call(item)) {
+    if (this.options.isItemDisabled(item)) {
       text += ` (${this.#translate('dimmed', langKey)})`;
     }
     if (this.#lb.isSelected(item)) {
@@ -530,10 +530,10 @@ export class ComboboxController<
       for (const item of this.items) {
         const hidden =
           !!this.options.isExpanded()
-            && !!(value = this.options.getComboboxValue.call(this.#input))
-            && this.options.isItemFiltered?.call(item, value)
+            && !!(value = this.options.getComboboxValue(this.#input))
+            && this.options.isItemFiltered?.(item, value)
             || false;
-        this.options.setItemHidden.call(item, hidden);
+        this.options.setItemHidden(item, hidden);
       }
     }
   }
@@ -606,7 +606,7 @@ export class ComboboxController<
         break;
       case 'Escape':
         if (!this.options.isExpanded()) {
-          this.options.setComboboxValue.call(this.#input, '');
+          this.options.setComboboxValue(this.#input, '');
           this.host.requestUpdate();
         }
         this.#hide();
@@ -688,7 +688,7 @@ export class ComboboxController<
           if (eventItem
               && !this.multi
               && this.options.isExpanded()
-              && !this.options.isItemDisabled.call(eventItem)
+              && !this.options.isItemDisabled(eventItem)
           ) {
             this.#hide();
             this.#button?.focus();

@@ -127,22 +127,12 @@ export class PfSelect extends LitElement {
     getToggleButton: () => this._toggleButton ?? null,
     getComboboxInput: () => this._toggleInput ?? null,
     isExpanded: () => this.expanded,
-    requestShowListbox: () =>
-      this.expanded ||= true,
-    requestHideListbox: () =>
-      ((this.expanded &&= false), true),
-    setItemHidden(hidden) {
-      if (this.id !== 'placeholder') {
-        this.hidden = hidden;
-      }
-    },
+    requestShowListbox: () => void (this.expanded ||= true),
+    requestHideListbox: () => void (this.expanded &&= false),
+    setItemHidden: (item, hidden) => (item.id !== 'placeholder') && void (item.hidden = hidden),
     isItem: item => item instanceof PfOption,
-    setItemActive(active) {
-      this.active = active;
-    },
-    setItemSelected(selected) {
-      this.selected = selected;
-    },
+    setItemActive: (item, active) => item.active = active,
+    setItemSelected: (item, selected) => item.selected = selected,
   });
 
   /**

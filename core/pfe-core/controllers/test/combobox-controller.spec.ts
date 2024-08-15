@@ -1,4 +1,4 @@
-import { expect, fixture, nextFrame } from '@open-wc/testing';
+import { expect, fixture } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
@@ -32,9 +32,18 @@ abstract class TestCombobox extends ReactiveElement {
     return [
       ...new Set([
         this.placeholder,
+        ...this.querySelectorAll('option'),
         ...this.renderRoot.querySelectorAll('option'),
       ]),
     ].filter(x => !!x);
+  }
+
+  get selected() {
+    return this.options.filter(x => x.selected);
+  }
+
+  get activeOption() {
+    return this.options.find(x => x.classList.contains('active'));
   }
 
   abstract render(): TemplateResult;
@@ -61,14 +70,14 @@ abstract class TestCombobox extends ReactiveElement {
       element = await fixture<TestCombobox>(template);
     });
 
-    describe('tabbing to the combobox', function() {
+    describe('Tab', function() {
       beforeEach(press('Tab'));
 
       it('focuses the combobox', async function() {
         expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
       });
 
-      describe('tabbing out of the combobox', function() {
+      describe('Tab', function() {
         beforeEach(press('Tab'));
         it('does not focus the toggle button', async function() {
           expect(await a11ySnapshot()).to.not.axContainQuery({ focused: true });
@@ -91,7 +100,54 @@ abstract class TestCombobox extends ReactiveElement {
         });
 
         it('sets active state on the placeholder', function() {
-          expect(element.placeholder).to.have.class('active');
+          expect(element.activeOption).to.equal(element.placeholder);
+        });
+
+        describe('Enter', function() {
+          beforeEach(press('Enter'));
+          beforeEach(updateComplete);
+
+          it('maintains DOM focus on the combobox', async function() {
+            expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
+          });
+
+          it('selects nothing', function() {
+            expect(element.selected).to.have.length(0);
+          });
+        });
+
+        describe('ArrowDown', function() {
+          beforeEach(press('ArrowDown'));
+          beforeEach(updateComplete);
+
+          it('maintains DOM focus on the combobox', async function() {
+            expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
+          });
+
+          it('sets active state on the 1st option', function() {
+            expect(element.activeOption).to.have.text('1');
+          });
+
+          describe('Enter', function() {
+            beforeEach(press('Enter'));
+            beforeEach(updateComplete);
+
+            it('maintains DOM focus on the combobox', async function() {
+              expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
+            });
+
+            it('selects the first option', function() {
+              expect(element.selected).to.have.length(1);
+              expect(element.selected.at(0)).to.have.text('1');
+            });
+
+            it('collapses the listbox', async function() {
+              expect(await a11ySnapshot())
+                  .to.not.axContainRole('listbox')
+                  .and
+                  .to.axContainQuery({ role: 'combobox', expanded: false });
+            });
+          });
         });
 
         describe('Escape', function() {
@@ -117,7 +173,6 @@ abstract class TestCombobox extends ReactiveElement {
 class XComboboxCrossRoot extends TestCombobox {
   static template = html`
     <x-combobox-cross-root>
-      <option id="placeholder" aria-disabled="true">placeholder</option>
       <option>1</option>
       <option>2</option>
       <option>3</option>
@@ -131,6 +186,18 @@ class XComboboxCrossRoot extends TestCombobox {
     </x-combobox-cross-root>
   `;
 
+
+  /** List of options */
+  override get options(): HTMLOptionElement[] {
+    return [
+      ...new Set([
+        this.placeholder,
+        ...this.querySelectorAll('option'),
+      ]),
+    ].filter(x => !!x);
+  }
+
+
   controller = ComboboxController.of(this, {
     multi: false,
     getItems: () => this.options,
@@ -143,7 +210,7 @@ class XComboboxCrossRoot extends TestCombobox {
     requestShowListbox: () => this.expanded ||= true,
     requestHideListbox: () => ((this.expanded &&= false), true),
     setItemActive(active) {
-      this.classList.toggle('active', active);
+      this.classList.toggle('active', !!active);
     },
     setItemSelected(selected) {
       this.selected = selected;
@@ -156,10 +223,10 @@ class XComboboxCrossRoot extends TestCombobox {
         <input id="combobox">
         <button id="button">Show Options</button>
       </div>
-      <div id="listbox" ?hidden="${!this.expanded}">
+      <div id="listbox">
         <option id="placeholder" aria-disabled="true">Select an Option</option>
         ${this.controller.renderItemsToShadowRoot()}
-        <div ?hidden=${!ComboboxController.canControlLightDom}>
+        <div ?hidden=${!ComboboxController.supportsCrossRootActiveDescendant}>
           <slot></slot>
         </div>
       </div>

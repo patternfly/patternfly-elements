@@ -49,8 +49,9 @@ function aria(
       return internals[key];
     },
     set(this: InternalsController, value: string | null) {
-      // @ts-expect-error: shamone!
+      // @ts-expect-error: ya know it!
       const internals = this.attachOrRetrieveInternals();
+      // @ts-expect-error: shamone!
       internals[key] = value;
       this.host.requestUpdate();
     },
@@ -77,6 +78,10 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   declare readonly states: unknown;
   declare readonly willValidate: ElementInternals['willValidate'];
   declare readonly validationMessage: ElementInternals['validationMessage'];
+
+  public static getLabels(host: ReactiveControllerHost): Element[] {
+    return Array.from(this.instances.get(host)?.internals.labels ?? []) as Element[];
+  }
 
   public static of(
     host: ReactiveControllerHost,
@@ -250,7 +255,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     this.options.getHTMLElement ??= getHTMLElement;
     for (const [key, val] of Object.entries(aria)) {
       if (isARIAMixinProp(key)) {
-        this[key] = val;
+        this[key as keyof this] = val as this[keyof this];
       }
     }
   }
@@ -279,5 +284,19 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   reset(): void {
     this.internals.form?.reset();
+  }
+}
+
+/** @see https://w3c.github.io/aria/#ref-for-dom-ariamixin-ariaactivedescendantelement-1 */
+declare global {
+  interface ARIAMixin {
+    ariaActiveDescendantElement: Element | null;
+    ariaControlsElements: readonly Element[] | null;
+    ariaDescribedByElements: readonly Element[] | null;
+    ariaDetailsElements: readonly Element[] | null;
+    ariaErrorMessageElements: readonly Element[] | null;
+    ariaFlowToElements: readonly Element[] | null;
+    ariaLabelledByElements: readonly Element[] | null;
+    ariaOwnsElements: readonly Element[] | null;
   }
 }

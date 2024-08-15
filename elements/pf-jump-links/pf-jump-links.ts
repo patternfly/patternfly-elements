@@ -77,7 +77,17 @@ export class PfJumpLinks extends LitElement {
 
   #kids = this.querySelectorAll?.<LitElement>(':is(pf-jump-links-item, pf-jump-links-list)');
 
-  #tabindex?: RovingTabindexController<HTMLAnchorElement>;
+  get #items() {
+    return Array.from(this.#kids ?? [])
+        .flatMap(i => [
+          ...i.shadowRoot?.querySelectorAll?.('a') ?? [],
+          ...i.querySelectorAll?.('a') ?? [],
+        ]);
+  }
+
+  #tabindex = RovingTabindexController.of<HTMLAnchorElement>(this, {
+    getItems: () => this.#items,
+  });
 
   #spy = new ScrollSpyController(this, {
     rootMargin: `${this.offset}px 0px 0px 0px`,
@@ -92,21 +102,11 @@ export class PfJumpLinks extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener('slotchange', this.#updateItems);
+    this.addEventListener('slotchange', this.#onSlotChange);
     this.addEventListener('select', this.#onSelect);
   }
 
   override firstUpdated(): void {
-    this.#tabindex = new RovingTabindexController<HTMLAnchorElement>(this, {
-      getItems: () => {
-        const items = Array.from(this.#kids)
-            .flatMap(i => [
-              ...i.shadowRoot?.querySelectorAll?.('a') ?? [],
-              ...i.querySelectorAll?.('a') ?? [],
-            ]);
-        return items;
-      },
-    });
     const active = this.querySelector?.<PfJumpLinksItem>('pf-jump-links-item[active]');
     if (active) {
       this.#setActiveItem(active);
@@ -139,8 +139,8 @@ export class PfJumpLinks extends LitElement {
     `;
   }
 
-  #updateItems() {
-    this.#tabindex?.updateItems();
+  #onSlotChange() {
+    this.#tabindex.items = this.#items;
   }
 
   #onSelect(event: Event) {
@@ -150,8 +150,11 @@ export class PfJumpLinks extends LitElement {
   }
 
   #setActiveItem(item: PfJumpLinksItem) {
-    this.#tabindex?.setActiveItem(item.shadowRoot?.querySelector?.('a') ?? undefined);
-    this.#spy.setActive(item);
+    const itemLink = item.shadowRoot?.querySelector?.('a') ?? null;
+    if (itemLink) {
+      this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(itemLink);
+      this.#spy.setActive(item);
+    }
   }
 
   #onToggle(event: Event) {

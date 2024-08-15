@@ -20,7 +20,7 @@ import {
  */
 export function observes<T extends ReactiveElement>(
   propertyName: string & keyof T,
-  options?: Partial<Pick<PropertyObserverOptions<T>, 'waitFor'>>,
+  options?: Partial<Exclude<PropertyObserverOptions<T>, 'callback' | 'propertyName'>>,
 ) {
   return function(proto: T, methodName: string): void {
     const callback = proto[methodName as keyof T] as ChangeCallback<T>;

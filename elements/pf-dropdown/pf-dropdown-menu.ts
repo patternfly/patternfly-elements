@@ -39,26 +39,28 @@ export class PfDropdownMenu extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'menu' });
 
-  #tabindex = new RovingTabindexController(this, {
-    getItems: () => this.items.map(x => x.menuItem),
+  get #items() {
+    return this.items.map(x => x.menuItem);
+  }
+
+  #tabindex = RovingTabindexController.of(this, {
+    getItems: () => this.#items,
   });
 
   /**
    * current active descendant in menu
    */
-  get activeItem(): HTMLElement | undefined {
-    return this.#tabindex.activeItem ?? this.#tabindex.firstItem;
+  get activeItem(): HTMLElement | null {
+    return this.#tabindex.items.at(this.#tabindex.atFocusedItemIndex)
+        ?? this.#tabindex.atFocusableItems.at(0)
+        ?? null;
   }
 
   /**
    * index of current active descendant in menu
    */
   get activeIndex(): number {
-    if (!this.#tabindex.activeItem) {
-      return -1;
-    } else {
-      return this.#tabindex.items.indexOf(this.#tabindex.activeItem);
-    }
+    return this.#tabindex.atFocusedItemIndex;
   }
 
   get items(): PfDropdownItem[] {
@@ -90,7 +92,7 @@ export class PfDropdownMenu extends LitElement {
    */
   #onItemChange(event: Event) {
     if (event instanceof DropdownItemChange) {
-      this.#tabindex.updateItems();
+      this.#onSlotChange();
     }
   }
 
@@ -98,7 +100,7 @@ export class PfDropdownMenu extends LitElement {
    * handles slot change event
    */
   #onSlotChange() {
-    this.#tabindex.updateItems();
+    this.#tabindex.items = this.#items;
   }
 
   /**
@@ -110,9 +112,8 @@ export class PfDropdownMenu extends LitElement {
     if (this.ctx?.disabled) {
       event.preventDefault();
       event.stopPropagation();
-    } else if (event.target instanceof PfDropdownItem
-        && event.target.menuItem !== this.#tabindex.activeItem) {
-      this.#tabindex.setActiveItem(event.target.menuItem);
+    } else if (event.target instanceof PfDropdownItem) {
+      this.#focusItem(event.target.menuItem);
     }
   }
 
@@ -126,9 +127,15 @@ export class PfDropdownMenu extends LitElement {
     if (this.ctx?.disabled || isDisabledItemClick(event)) {
       event.preventDefault();
       event.stopPropagation();
-    } else if (event.target instanceof PfDropdownItem
-        && event.target.menuItem !== this.#tabindex.activeItem) {
-      this.#tabindex.setActiveItem(event.target.menuItem);
+    } else if (event.target instanceof PfDropdownItem) {
+      this.#focusItem(event.target.menuItem);
+    }
+  }
+
+  #focusItem(item: HTMLElement) {
+    const itemIndex = this.#tabindex.items.indexOf(item);
+    if (itemIndex !== this.#tabindex.atFocusedItemIndex) {
+      this.#tabindex.atFocusedItemIndex = itemIndex;
     }
   }
 

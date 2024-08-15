@@ -1,11 +1,12 @@
-import { LitElement, html, type PropertyValues, type TemplateResult } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+
+import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 
 import styles from './pf-option.css';
 
@@ -36,10 +37,10 @@ export class PfOption extends LitElement {
   }
 
   /** whether option is selected */
-  @property({ type: Boolean }) selected = false;
+  @property({ type: Boolean, reflect: true }) selected = false;
 
   /** whether option is active descendant */
-  @property({ type: Boolean }) active = false;
+  @property({ type: Boolean, reflect: true }) active = false;
 
   /** Optional option description; overridden by description slot. */
   @property() description = '';
@@ -83,17 +84,12 @@ export class PfOption extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'option' });
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.id ||= getRandomId();
-  }
-
   render(): TemplateResult<1> {
-    const { disabled, active } = this;
+    const { disabled, active, selected } = this;
     return html`
-      <div id="outer" class="${classMap({ active, disabled })}">
+      <div id="outer" class="${classMap({ active, disabled, selected })}">
         <input type="checkbox"
-               aria-hidden="true"
+               inert
                role="presentation"
                tabindex="-1"
                ?checked="${this.selected}"
@@ -101,7 +97,7 @@ export class PfOption extends LitElement {
         <slot name="icon"></slot>
         <span>
           <slot name="create"></slot>
-          <slot></slot>
+          <slot>${this.value}</slot>
         </span>
         <svg ?hidden="${!this.selected}"
              viewBox="0 0 512 512"
@@ -114,15 +110,14 @@ export class PfOption extends LitElement {
     `;
   }
 
-  willUpdate(changed: PropertyValues<this>): void {
-    if (changed.has('selected')
-      // don't fire on initialization
-      && !(changed.get('selected') === undefined) && this.selected === false) {
-      this.#internals.ariaSelected = this.selected ? 'true' : 'false';
-    }
-    if (changed.has('disabled')) {
-      this.#internals.ariaDisabled = String(!!this.disabled);
-    }
+  @observes('selected')
+  private selectedChanged() {
+    this.#internals.ariaSelected = String(!!this.selected);
+  }
+
+  @observes('disabled')
+  private disabledChanged() {
+    this.#internals.ariaDisabled = String(!!this.disabled);
   }
 
   /**

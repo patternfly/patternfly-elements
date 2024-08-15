@@ -180,7 +180,7 @@ export class PfIcon extends LitElement {
 
   async #contentChanged() {
     await this.updateComplete;
-    this.dispatchEvent(new Event('load', { bubbles: true }));
+    this.dispatchEvent?.(new Event('load', { bubbles: true }));
   }
 
   connectedCallback(): void {
@@ -219,7 +219,7 @@ export class PfIcon extends LitElement {
         this.#contentChanged();
       } catch (error: unknown) {
         this.#logger.error((error as IconResolveError).message);
-        this.dispatchEvent(new IconResolveError(set, icon, error as Error));
+        this.dispatchEvent?.(new IconResolveError(set, icon, error as Error));
       }
     }
   }

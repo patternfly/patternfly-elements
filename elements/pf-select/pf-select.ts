@@ -1,4 +1,8 @@
-import { LitElement, html, isServer, type PropertyValues, type TemplateResult } from 'lit';
+import type { PfChipGroup } from '../pf-chip/pf-chip-group.js';
+import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import type { TemplateResult } from 'lit';
+
+import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -7,34 +11,24 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { ListboxController } from '@patternfly/pfe-core/controllers/listbox-controller.js';
-import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
+import { ComboboxController } from '@patternfly/pfe-core/controllers/combobox-controller.js';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
-import {
-  FloatingDOMController,
-  type Placement,
-} from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
+
+import { arraysAreEquivalent } from '@patternfly/pfe-core/functions/arraysAreEquivalent.js';
+import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 
 import { PfOption } from './pf-option.js';
+import { type PfChip, PfChipRemoveEvent } from '../pf-chip/pf-chip.js';
 
 import styles from './pf-select.css';
-import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
-
-export interface PfSelectUserOptions {
-  id: string;
-  value: string;
-}
 
 export class PfSelectChangeEvent extends Event {
   constructor() {
     super('change', { bubbles: true });
   }
 }
-
-// NOTE: this file contains numerous // comments, which ordinarily would be deleted
-// They are here to save the work already done on typeahead, which has a much more complex
-// accessibility model, and which is planned for the next release
-// * @fires filter - when the filter value changes. used to perform custom filtering
 
 /**
  * A select list enables users to select one or more items from a list.
@@ -51,59 +45,37 @@ export class PfSelectChangeEvent extends Event {
 export class PfSelect extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
+  static readonly formAssociated = true;
+
   static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
-  static readonly formAssociated = true;
-
-  #internals = InternalsController.of(this);
-
-  #float = new FloatingDOMController(this, {
-    content: () => this.shadowRoot?.getElementById('listbox-container') ?? null,
-  });
-
-  #slots = new SlotController(this, null, 'placeholder');
-
-  #listbox?: ListboxController<PfOption>; /* | ListboxActiveDescendantController */
-
   /** Variant of rendered Select */
-  @property() variant: 'single' | 'checkbox' /* | 'typeahead' | 'typeaheadmulti' */ = 'single';
+  @property() variant: 'single' | 'checkbox' | 'typeahead' | 'typeaheadmulti' = 'single';
 
-  /**
-   * Accessible label for the select
-   */
+  /** Accessible label for the select */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
 
-  /**
-   * Accessible label for chip group used to describe chips
-   */
+  /** Accessible label for chip group used to describe chips */
   @property({
     attribute: 'accessible-current-selections-label',
   }) accessibleCurrentSelectionsLabel = 'Current selections';
 
-  /**
-   * multi listbox button text
-   */
+  /** Multi listbox button text */
   @property({ attribute: 'items-selected-text' }) itemsSelectedText = 'items selected';
 
-  /**
-   * whether select is disabled
-   */
+  /** Whether the select is disabled */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  /**
-   * Whether the select listbox is expanded
-   */
+  /** Whether the select listbox is expanded */
   @property({ type: Boolean, reflect: true }) expanded = false;
 
   /**
-   * enable to flip listbox when it reaches boundary
+   * Enable to flip listbox when it reaches boundary
    */
   @property({ attribute: 'enable-flip', type: Boolean }) enableFlip = false;
-
-  // @property() filter = '';
 
   /** Current form value */
   @property() value?: string;
@@ -124,120 +96,109 @@ export class PfSelect extends LitElement {
     type: Boolean,
   }) checkboxSelectionBadgeHidden = false;
 
-  // @property({ attribute: false }) customFilter?: (option: PfOption) => boolean;
+  @query('pf-chip-group') private _chipGroup?: PfChipGroup;
+
+  @query('#toggle-input') private _toggleInput?: HTMLInputElement;
+
+  @query('#toggle-button') private _toggleButton?: HTMLButtonElement;
+
+  @query('#listbox') private _listbox?: HTMLElement;
+
+  @query('#listbox-container') private _listboxContainer?: HTMLElement;
+
+  @query('#placeholder') private _placeholder?: PfOption;
+
+  #isNotPlaceholderOption = (option: PfOption) => option !== this._placeholder;
+
+  #internals = InternalsController.of(this);
+
+  #float = new FloatingDOMController(this, { content: () => this._listboxContainer });
+
+  #slots = new SlotController(this, null, 'placeholder');
+
+  #combobox = ComboboxController.of(this, {
+    multi: this.variant === 'typeaheadmulti' || this.variant === 'checkbox',
+    getItems: () => this.options,
+    getFallbackLabel: () => this.accessibleLabel
+                         || this.#internals.computedLabelText
+                         || this.placeholder
+                         || this.#slots.getSlotted('placeholder').map(x => x.textContent).join(''),
+    getListboxElement: () => this._listbox ?? null,
+    getToggleButton: () => this._toggleButton ?? null,
+    getComboboxInput: () => this._toggleInput ?? null,
+    isExpanded: () => this.expanded,
+    requestShowListbox: () => void (this.expanded ||= true),
+    requestHideListbox: () => void (this.expanded &&= false),
+    setItemHidden: (item, hidden) => (item.id !== 'placeholder') && void (item.hidden = hidden),
+    isItem: item => item instanceof PfOption,
+    setItemActive: (item, active) => item.active = active,
+    setItemSelected: (item, selected) => item.selected = selected,
+  });
 
   /**
    * Single select option value for single select menus,
    * or array of select option values for multi select.
    */
-  set selected(optionsList: PfOption | PfOption[]) {
-    this.#listbox?.setValue(optionsList);
+  @property({ hasChanged: (a, b) => !arraysAreEquivalent(a, b) })
+  set selected(selected: PfOption | PfOption[]) {
+    const list = Array.isArray(selected) ? selected : [selected];
+    this.#combobox.selected = list;
   }
 
-  get selected(): PfOption | PfOption[] | undefined {
-    return this.#listbox?.value;
+  get selected(): PfOption[] {
+    return this.#combobox.selected;
   }
 
-  /**
-   * array of slotted options
-   */
+  /** List of options */
   get options(): PfOption[] {
     if (isServer) {
       return []; // TODO: expose a DOM property to allow setting options in SSR scenarios
     } else {
-      const opts = Array.from(this.querySelectorAll('pf-option'));
-      const placeholder = this.shadowRoot?.getElementById('placeholder') as PfOption | null;
-      if (placeholder) {
-        return [placeholder, ...opts];
-      } else {
-        return opts;
-      }
+      return [
+        this._placeholder,
+        ...Array.from(this.querySelectorAll('pf-option')),
+      ].filter((x): x is PfOption => !!x && !x.hidden);
     }
   }
 
-  // @query('pf-chip-group') private _chipGroup?: PfChipGroup;
-
-  // @query('#toggle-input') private _input?: HTMLInputElement;
-
-  @query('#toggle-button') private _toggle?: HTMLButtonElement;
-
-  #lastSelected = this.selected;
-
-  get #listboxElement() {
-    return this.shadowRoot?.getElementById('listbox') ?? null;
-  }
-
-  /**
-   * whether select has badge for number of selected items
-   */
+  /** Whether select has badge for number of selected items */
   get #hasBadge() {
     // NOTE: revisit this in v5
     return this.variant === 'checkbox' && !this.checkboxSelectionBadgeHidden;
   }
 
-  get #buttonLabel() {
+  get #buttonLabel(): string {
+    const { selected } = this.#combobox;
     switch (this.variant) {
-      // TODO: implement typeaheadmulti with ActiveDescendantController
-      // case 'typeaheadmulti':
-      //   return `${this.#listbox?.selectedOptions?.length ?? 0} ${this.itemsSelectedText}`
+      case 'typeaheadmulti':
+        return `${selected?.length ?? 0} ${this.itemsSelectedText}`;
       case 'checkbox':
-        return this.#listbox
-            ?.selectedOptions
-            ?.map?.(option => option.optionText || '')
-            ?.join(' ')
-            ?.trim()
-          || this.#computePlaceholderText()
+        return this.#computePlaceholderText()
           || 'Options';
       default:
-        return (this.selected ? this.value : '')
+        return (selected ? this.value : '')
           || this.#computePlaceholderText()
           || 'Select a value';
     }
   }
 
-  override willUpdate(changed: PropertyValues<this>): void {
-    if (this.variant === 'checkbox') {
-      import('@patternfly/elements/pf-badge/pf-badge.js');
-    }
-    if (changed.has('variant')) {
-      this.#variantChanged();
-    }
-    if (changed.has('value')) {
-      this.#internals.setFormValue(this.value ?? '');
-    }
-    if (changed.has('disabled')) {
-      this.#listbox!.disabled = this.disabled;
-    }
-    // TODO: handle filtering in the element, not the controller
-    // if (changed.has('filter')) {
-    //   this.#listbox.filter = this.filter;
-    // }
-  }
-
   override render(): TemplateResult<1> {
-    const { disabled, expanded, variant } = this;
+    const { disabled, expanded, variant, placeholder } = this;
     const { anchor = 'bottom', alignment = 'start', styles = {} } = this.#float;
-    const { computedLabelText } = this.#internals;
     const { height, width } = this.getBoundingClientRect?.() || {};
-    const buttonLabel = this.#buttonLabel;
     const hasBadge = this.#hasBadge;
-    const selectedOptions = this.#listbox?.selectedOptions ?? [];
+    const selectedOptions = this.#combobox.selected ?? [];
     const typeahead = variant.startsWith('typeahead');
     const checkboxes = variant === 'checkbox';
-    const offscreen = typeahead && 'offscreen';
     const badge = hasBadge && 'badge';
     const hasSelection = !!(Array.isArray(this.selected) ? this.selected.length : this.selected);
+    const hideLightDomItems = typeahead && !ComboboxController.supportsCrossRootActiveDescendant;
+    const placeholderIsInert = !placeholder && this.#slots.isEmpty('placeholder');
 
     return html`
       <div id="outer"
            style="${styleMap(styles)}"
-           class="${classMap({
-             disabled,
-             typeahead,
-             expanded,
-             [anchor]: !!anchor,
-             [alignment]: !!alignment,
-           })}">
+           class="${classMap({ disabled, typeahead, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
         <div id="toggle">
           ${!(typeahead && selectedOptions.length < 1) ? '' : html`
           <pf-chip-group label="${this.accessibleCurrentSelectionsLabel}">
@@ -246,29 +207,15 @@ export class PfSelect extends LitElement {
                      .readonly="${this.disabled}"
                      @remove="${this.#onChipRemove.bind(this, opt)}">${opt.textContent}</pf-chip>`)}
           </pf-chip-group>`}
-          ${!typeahead ? '' : /* TODO: aria attrs */ html`
+          ${!typeahead ? '' : html`
           <input id="toggle-input"
-                 aria-label="${this.accessibleLabel ?? (computedLabelText || buttonLabel)}"
-                 aria-autocomplete="both"
-                 ?disabled="${disabled}"
                  ?hidden="${!typeahead}"
-                 placeholder="${buttonLabel}"
-                 @input="${this.#onTypeaheadInput}">
-          `}
-          <button id="toggle-button"
-                  role="combobox"
-                  aria-hidden="${typeahead.toString() as 'true' | 'false'}"
-                  aria-label="${ifDefined(this.accessibleLabel || this.#internals.computedLabelText || undefined)}"
-                  aria-describedby="placeholder"
-                  aria-controls="listbox"
-                  aria-haspopup="listbox"
-                  aria-expanded="${String(this.expanded) as 'true' | 'false'}"
-                  @keydown="${this.#onButtonKeydown}"
-                  @click="${() => !typeahead && this.toggle()}"
-                  tabindex="${ifDefined(typeahead ? -1 : undefined)}">
+                 ?disabled="${disabled}"
+                 placeholder="${placeholder || this.#buttonLabel}">`}
+          <button id="toggle-button">
             <span id="button-text" style="display: contents;">
               <span id="toggle-text"
-                    class="${classMap({ offscreen, badge })}">${buttonLabel}</span>${!hasBadge ? '' : html`
+                    class="${classMap({ 'visually-hidden': !!typeahead, badge })}">${this.#buttonLabel}</span>${!hasBadge ? '' : html`
               <span id="toggle-badge">
                 <pf-badge number="${selectedOptions.length}">${selectedOptions.length}</pf-badge>
               </span>`}
@@ -286,151 +233,100 @@ export class PfSelect extends LitElement {
                marginTop: `${height || 0}px`,
                width: width ? `${width}px` : 'auto',
              })}">
-          <div id="listbox"
-               @focusout="${this.#onListboxFocusout}"
-               @keydown="${this.#onListboxKeydown}"
-               class="${classMap({ checkboxes })}">
+          <div id="listbox" class="${classMap({ checkboxes })}">
             <pf-option id="placeholder"
                        disabled
-                       aria-hidden="${ifDefined(hasSelection ? 'true' : undefined)}"
-                       ?hidden="${!this.placeholder && !this.#slots.hasSlotted('placeholder')}">
-              <slot name="placeholder">${this.placeholder}</slot>
-            </pf-option>
-            <slot @slotchange="${this.#onListboxSlotchange}"></slot>
+                       ?inert="${placeholderIsInert}"
+                       aria-hidden="${ifDefined(placeholderIsInert ? undefined : String(!!hasSelection))}"
+                       ?hidden="${!placeholder && this.#slots.isEmpty('placeholder')}"
+            ><slot name="placeholder">${placeholder ?? ''}</slot></pf-option>
+            ${this.#combobox.renderItemsToShadowRoot()}
+            <slot ?hidden="${hideLightDomItems}"></slot>
           </div>
         </div>
       </div>
     `;
   }
 
-  override updated(changed: PropertyValues<this>): void {
-    if (changed.has('expanded')) {
-      this.#expandedChanged();
+  @observes('disabled')
+  private disabledChanged() {
+    this.#combobox.disabled = this.disabled;
+  }
+
+  @observes('expanded')
+  private async expandedChanged(old: boolean, expanded: boolean) {
+    if (this.dispatchEvent(new Event(this.expanded ? 'close' : 'open'))) {
+      if (expanded) {
+        this.#doExpand();
+      } else {
+        this.#doCollapse();
+      }
     }
-    if (changed.has('value')) {
-      this.dispatchEvent(new PfSelectChangeEvent());
+  }
+
+  @observes('selected')
+  private async selectedChanged(_: PfOption[], selected: PfOption[]) {
+    this.value = selected.map(x => x.value).join();
+    await this.updateComplete;
+    switch (this.variant) {
+      case 'single':
+        this.hide();
+        this._toggleButton?.focus();
+        break;
+      case 'typeahead':
+        this._toggleInput!.value = this.value;
     }
+  }
+
+  @observes('variant')
+  private async variantChanged() {
+    this.#combobox.hostDisconnected();
+    this.#combobox.multi = this.variant === 'typeaheadmulti' || this.variant === 'checkbox';
+    this.#combobox.hostConnected();
+    if (this.variant === 'checkbox') {
+      import('@patternfly/elements/pf-badge/pf-badge.js');
+    }
+  }
+
+  @observes('value')
+  private valueChanged() {
+    this.#internals.setFormValue(this.value ?? '');
+    this.dispatchEvent(new PfSelectChangeEvent());
+  }
+
+  @observes('variant')
+  @observes('value')
+  private focusChips(): void {
     // whether select has removable chips for selected items
     // NOTE: revisit this in v5
-    // const hasChips = this.variant === 'typeaheadmulti';
     // reset input if chip has been added
-    // if (this.hasChips && this._input?.value) {
-    //   const chip = this.shadowRoot?.querySelector(`pf-chip#chip-${this._input?.value}`) as HTMLElement;
-    //   if (chip && this._chipGroup) {
-    //     this._chipGroup.focusOnChip(chip);
-    //     this._input.value = '';
-    //   }
-    // }
-  }
-
-  override firstUpdated(): void {
-    // kick the renderer to that the placeholder gets picked up
-    this.requestUpdate();
-    // TODO: don't do filtering in the controller
-    // if (this.variant === 'typeaheadmulti') {
-    //   this.#listbox.filter = this.filter;
-    // }
-  }
-
-  #variantChanged() {
-    this.#listbox?.hostDisconnected();
-    const getHTMLElement = () => this.#listboxElement;
-    switch (this.variant) {
-      // TODO
-      // case 'typeahead':
-      // case 'typeaheadmulti':
-      //   this.#controller = new ListboxController.of<PfOption>(this, {
-      //     multi: this.variant==='typeaheadmulti',
-      //     a11yController: ActiveDescendantController.of(this)
-      //   });
-      //   break;
-      default:
-        this.#listbox = ListboxController.of<PfOption>(this, {
-          multi: this.variant === 'checkbox',
-          getHTMLElement,
-          isSelected: option => option.selected,
-          requestSelect: (option, selected) => {
-            this.#lastSelected = this.selected;
-            option.selected = !option.disabled && !!selected;
-            this.#selectedChanged();
-            return true;
-          },
-          a11yController: RovingTabindexController.of(this, {
-            getHTMLElement,
-            getItems: () => this.options,
-          }),
-        });
-        break;
+    const hasChips = this.variant === 'typeaheadmulti';
+    if (hasChips && this._toggleInput?.value) {
+      const chip =
+        this.shadowRoot?.querySelector(`pf-chip#chip-${this._toggleInput?.value}`) as PfChip;
+      if (chip && this._chipGroup) {
+        this._chipGroup.focusOnChip(chip);
+        this._toggleInput.value = '';
+      }
     }
   }
 
-  async #expandedChanged() {
-    const will = this.expanded ? 'close' : 'open';
-    this.dispatchEvent(new Event(will));
-    if (this.expanded) {
+  async #doExpand() {
+    try {
       await this.#float.show({ placement: this.position || 'bottom', flip: !!this.enableFlip });
-      const focusableItem = this.#listbox?.activeItem ?? this.#listbox?.nextItem;
-      focusableItem?.focus();
-    } else if (this.#lastSelected === this.selected) {
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  async #doCollapse() {
+    try {
       await this.#float.hide();
-      this._toggle?.focus();
+      return true;
+    } catch {
+      return false;
     }
-  }
-
-  async #selectedChanged() {
-    await this.updateComplete;
-    this.value = [this.selected]
-        .flat()
-        .filter(x => !!x)
-        .map(x => x!.value)
-        .join();
-    switch (this.variant) {
-      case 'single':
-        this.hide();
-        this._toggle?.focus();
-    }
-  }
-
-  #onListboxKeydown(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'Escape':
-        this.hide();
-        this._toggle?.focus();
-    }
-  }
-
-  #onListboxFocusout(event: FocusEvent) {
-    switch (this.variant) {
-      case 'single':
-      case 'checkbox':
-        if (this.expanded) {
-          const root = this.getRootNode();
-          if ((root instanceof ShadowRoot || root instanceof Document)
-              && !this.options.includes(event.relatedTarget as PfOption)
-          ) {
-            this.hide();
-          }
-        }
-    }
-  }
-
-  #onButtonKeydown(event: KeyboardEvent) {
-    switch (this.variant) {
-      case 'single':
-      case 'checkbox':
-        switch (event.key) {
-          case 'ArrowDown':
-            this.show();
-        }
-    }
-  }
-
-  #onListboxSlotchange() {
-    this.#listbox?.setOptions(this.options);
-    this.options.forEach((option, index, options) => {
-      option.setSize = options.length;
-      option.posInSet = index;
-    });
   }
 
   /**
@@ -439,32 +335,22 @@ export class PfSelect extends LitElement {
    * @param opt pf-option
    */
   #onChipRemove(opt: PfOption, event: Event) {
-  //   if (event.chip) {
-  //     opt.selected = false;
-  //     this._input?.focus();
-  //   }
-  }
-
-  /**
-   * handles typeahead combobox input event
-   */
-  #onTypeaheadInput() {
-    // update filter
-    // if (this.filter !== this._input?.value) {
-    //   this.filter = this._input?.value || '';
-    //   this.show();
-    // }
-    // TODO: handle hiding && aria hiding options
+    if (event instanceof PfChipRemoveEvent) {
+      opt.selected = false;
+      this._toggleInput?.focus();
+    }
   }
 
   #computePlaceholderText() {
     return this.placeholder
       || this.querySelector?.<HTMLSlotElement>('[slot=placeholder]')
           ?.assignedNodes()
-          ?.reduce((acc, node) => `${acc}${node.textContent}`, '')?.trim()
-      || this.#listbox?.options
-          ?.filter(x => x !== this.shadowRoot?.getElementById('placeholder'))
-          ?.at(0)?.value
+          ?.reduce((acc, node) => `${acc}${node.textContent}`, '')
+          ?.trim()
+      || this.#combobox.items
+          .filter(this.#isNotPlaceholderOption)
+          .at(0)
+          ?.value
       || '';
   }
 
@@ -488,8 +374,11 @@ export class PfSelect extends LitElement {
    * toggles popup based on current state
    */
   async toggle(): Promise<void> {
-    this.expanded = !this.expanded;
-    await this.updateComplete;
+    if (this.expanded) {
+      await this.hide();
+    } else {
+      await this.show();
+    }
   }
 }
 
@@ -498,3 +387,4 @@ declare global {
     'pf-select': PfSelect;
   }
 }
+

@@ -1,4 +1,4 @@
-import { Manifest } from './lib/Manifest';
+import { Manifest } from './lib/Manifest.js';
 
 /**
  * Get all package manifests in the working dir

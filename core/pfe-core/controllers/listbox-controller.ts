@@ -5,7 +5,7 @@ import { isServer } from 'lit';
 import { arraysAreEquivalent } from '../functions/arraysAreEquivalent.js';
 
 /**
- * Filtering, multiselect, and orientation options for listbox
+ * Options for listbox controller
  */
 export interface ListboxControllerOptions<Item extends HTMLElement> {
   /**
@@ -20,7 +20,7 @@ export interface ListboxControllerOptions<Item extends HTMLElement> {
    */
   setItemSelected?(this: Item, selected: boolean): void;
   /**
-   * Optional predicate to assertain whether a custom element item is disabled or not
+   * Optional predicate to ascertain whether a custom element item is disabled or not
    * By default, if the item matches any of these conditions, it is considered disabled:
    * 1. it's `disabled` DOM property is `true`
    * 1. it has the `aria-disabled="true"` attribute
@@ -93,13 +93,11 @@ export function isItem<Item extends HTMLElement>(item: EventTarget | null): item
  * @package do not import this outside of `@patternfly/pfe-core`, it is subject to change at any time
  */
 export function isItemDisabled<Item extends HTMLElement>(this: Item): boolean {
-  if ('disabled' in this && typeof this.disabled === 'boolean') {
-    return this.disabled;
-  } else {
-    return this.getAttribute('aria-disabled') === 'true'
-        || this.hasAttribute('disabled')
-        || this.matches(':disabled');
-  }
+  return ('disabled' in this && typeof this.disabled === 'boolean' && this.disabled)
+      || this.getAttribute('aria-disabled') === 'true'
+      || this.hasAttribute('disabled')
+      || this.hasAttribute('inert')
+      || this.matches(':disabled');
 }
 
 let constructingAllowed = false;

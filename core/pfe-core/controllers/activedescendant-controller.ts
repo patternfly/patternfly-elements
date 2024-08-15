@@ -179,7 +179,12 @@ export class ActivedescendantController<
             .concat(this.controlsElements)
             .concat(items)
             .every((node, _, a) => node.getRootNode() === a[0].getRootNode())) {
-      this._items = items;
+      this._items = items.map(x => {
+        if (!supportsCrossRootActiveDescendant) {
+          x.id ||= getRandomId();
+        }
+        return x;
+      });
     } else {
       this._items = items?.map((item: Item) => {
         item.removeAttribute('tabindex');

@@ -254,6 +254,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
 
   async hostConnected(): Promise<void> {
     await this.host.updateComplete;
+    this.hostUpdate();
     this.hostUpdated();
   }
 
@@ -266,7 +267,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     }
   }
 
-  hostUpdated(): void {
+  hostUpdate(): void {
     const last = this.#controlsElements;
     this.#controlsElements = this.#options.getControlsElements?.() ?? [];
     if (!arraysAreEquivalent(last, this.#controlsElements)) {
@@ -276,9 +277,12 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         el.addEventListener('keyup', this.#onKeyup);
       }
     }
+  }
+
+  hostUpdated(): void {
     if (!this.#listening) {
       this.container?.addEventListener('click', this.#onClick);
-      this.container?.addEventListener('keydown', this.#onKeydown, { capture: true });
+      this.container?.addEventListener('keydown', this.#onKeydown);
       this.container?.addEventListener('keyup', this.#onKeyup);
       this.#listening = true;
     }

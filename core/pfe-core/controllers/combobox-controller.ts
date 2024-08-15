@@ -89,12 +89,12 @@ export interface ComboboxControllerOptions<Item extends HTMLElement> extends
    * Callback which the host must implement to change the expanded state to true.
    * Return or resolve false to prevent the change.
    */
-  requestShowListbox(): boolean | Promise<boolean>;
+  requestShowListbox(): void | boolean | Promise<boolean> | Promise<void>;
   /**
    * Callback which the host must implement to change the expanded to false.
    * Return or resolve false to prevent the default.
    */
-  requestHideListbox(): boolean | Promise<boolean>;
+  requestHideListbox(): void | boolean | Promise<boolean> | Promise<void>;
   /**
    * Returns the listbox container element
    */
@@ -325,7 +325,10 @@ export class ComboboxController<
     this.#lb = ListboxController.of(host, {
       isItem: this.options.isItem,
       getItemsContainer: this.options.getListboxElement,
-      getControlsElements: () => [this.#button, this.#input].filter(x => !!x),
+      getControlsElements: () => [
+        this.options.getToggleButton(),
+        this.options.getComboboxInput(),
+      ].filter(x => !!x),
       getATFocusedItem: () => this.items[this.#fc?.atFocusedItemIndex ?? -1] ?? null,
       isItemDisabled: this.options.isItemDisabled,
       setItemSelected: this.options.setItemSelected,
@@ -444,13 +447,18 @@ export class ComboboxController<
       this.#fc = ActivedescendantController.of(this.host, {
         getItems, getItemsContainer, getOrientation,
         getActiveDescendantContainer: () => this.#input,
-        getControlsElements: () => [this.#button, this.#input].filter(x => !!x),
+        getControlsElements: () => [
+          this.options.getToggleButton(),
+          this.options.getComboboxInput(),
+        ].filter(x => !!x),
         setItemActive: this.options.setItemActive,
       });
     } else {
       this.#fc = RovingTabindexController.of(this.host, {
         getItems, getItemsContainer, getOrientation,
-        getControlsElements: () => [this.#button].filter(x => !!x),
+        getControlsElements: () => [
+          this.options.getToggleButton(),
+        ].filter(x => !!x),
       });
     }
   }

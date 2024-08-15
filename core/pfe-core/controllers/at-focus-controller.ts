@@ -74,7 +74,7 @@ export abstract class ATFocusController<Item extends HTMLElement> {
   }
 
   /** Elements which control the items container e.g. a combobox input */
-  get controlsElements(): HTMLElement[] {
+  protected get controlsElements(): HTMLElement[] {
     return this.options.getControlsElements?.() ?? [];
   }
 

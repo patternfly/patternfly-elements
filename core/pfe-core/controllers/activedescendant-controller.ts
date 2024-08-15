@@ -144,11 +144,11 @@ export class ActivedescendantController<
     this.host.requestUpdate();
   }
 
-  get controlsElements(): HTMLElement[] {
+  protected get controlsElements(): HTMLElement[] {
     return this.#controlsElements;
   }
 
-  set controlsElements(elements: HTMLElement[]) {
+  protected set controlsElements(elements: HTMLElement[]) {
     for (const old of this.#controlsElements) {
       old?.removeEventListener('keydown', this.onKeydown);
     }

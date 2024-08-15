@@ -1323,12 +1323,31 @@ describe('<pf-select variant="typeahead">', function() {
           it('hides the listbox', async function() {
             expect(await a11ySnapshot()).to.not.axContainRole('listbox');
           });
+
+          describe('focus()', function() {
+            beforeEach(focus);
+            describe('ArrowDown', function() {
+              beforeEach(press('ArrowDown'));
+              beforeEach(updateComplete);
+
+              it('focuses option 2', function() {
+                expect(getActiveOption(element)).to.have.text('Green');
+              });
+
+              it('only shows option 2', function() {
+                expect(getVisibleOptionValues(element)).to.deep.equal([
+                  'Green',
+                ]);
+              });
+            });
+          });
         });
       });
 
       describe('ArrowUp', function() {
         beforeEach(press('ArrowUp'));
         beforeEach(updateComplete);
+
         it('focuses the last item', async function() {
           expect(getActiveOption(element)).to.have.value('Yellow');
         });
@@ -1383,15 +1402,6 @@ describe('<pf-select variant="typeahead">', function() {
       });
 
       describe('"u"', function() {
-        let lastInputEvent: Event | undefined;
-        beforeEach(function() {
-          element.addEventListener('input', function(event) {
-            lastInputEvent = event;
-          });
-        });
-        afterEach(function() {
-          lastInputEvent = undefined;
-        });
         beforeEach(press('u'));
         beforeEach(updateComplete);
 

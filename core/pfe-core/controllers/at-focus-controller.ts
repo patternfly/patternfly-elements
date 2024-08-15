@@ -1,4 +1,5 @@
 import { isServer, type ReactiveControllerHost } from 'lit';
+import { bound } from '../decorators/bound.js';
 
 function isATFocusableItem(el: Element): el is HTMLElement {
   return !!el
@@ -130,87 +131,79 @@ export abstract class ATFocusController<Item extends HTMLElement> {
   }
 
   /**
-   * Implement this predicate to filter out keyboard events
-   * which should not result in a focus change. If this predicate returns true, then
-   * a focus change should occur.
-   */
-  protected abstract isRelevantKeyboardEvent(event: Event): event is KeyboardEvent;
-
-  /**
-   * DO NOT OVERRIDE
+   * Override and conditionally call `super.onKeydown` to filter out keyboard events
+   * which should not result in a focus change. Ensure that subclass' method is bound
    * @param event keyboard event
    */
-  protected onKeydown = (event: Event): void => {
-    if (this.isRelevantKeyboardEvent(event)) {
-      const orientation = this.options.getOrientation?.() ?? this
-          .#itemsContainerElement
-          ?.getAttribute('aria-orientation') as
+  protected onKeydown(event: KeyboardEvent): void {
+    const orientation = this.options.getOrientation?.() ?? this
+        .#itemsContainerElement
+        ?.getAttribute('aria-orientation') as
             'horizontal' | 'vertical' | 'grid' | 'undefined';
 
-      const item = this._items.at(this.atFocusedItemIndex);
+    const item = this._items.at(this.atFocusedItemIndex);
 
-      const horizontalOnly =
+    const horizontalOnly =
         orientation === 'horizontal'
         || item?.tagName === 'SELECT'
         || item?.getAttribute('role') === 'spinbutton';
 
-      const verticalOnly = orientation === 'vertical';
+    const verticalOnly = orientation === 'vertical';
 
-      switch (event.key) {
-        case 'ArrowLeft':
-          if (verticalOnly) {
-            return;
-          }
-          this.atFocusedItemIndex--;
-          event.stopPropagation();
-          event.preventDefault();
-          break;
-        case 'ArrowRight':
-          if (verticalOnly) {
-            return;
-          }
-          this.atFocusedItemIndex++;
-          event.stopPropagation();
-          event.preventDefault();
-          break;
-        case 'ArrowUp':
-          if (horizontalOnly) {
-            return;
-          }
-          this.atFocusedItemIndex--;
-          event.stopPropagation();
-          event.preventDefault();
-          break;
-        case 'ArrowDown':
-          if (horizontalOnly) {
-            return;
-          }
-          this.atFocusedItemIndex++;
-          event.stopPropagation();
-          event.preventDefault();
-          break;
-        case 'Home':
-          if (!(event.target instanceof HTMLElement
+    switch (event.key) {
+      case 'ArrowLeft':
+        if (verticalOnly) {
+          return;
+        }
+        this.atFocusedItemIndex--;
+        event.stopPropagation();
+        event.preventDefault();
+        break;
+      case 'ArrowRight':
+        if (verticalOnly) {
+          return;
+        }
+        this.atFocusedItemIndex++;
+        event.stopPropagation();
+        event.preventDefault();
+        break;
+      case 'ArrowUp':
+        if (horizontalOnly) {
+          return;
+        }
+        this.atFocusedItemIndex--;
+        event.stopPropagation();
+        event.preventDefault();
+        break;
+      case 'ArrowDown':
+        if (horizontalOnly) {
+          return;
+        }
+        this.atFocusedItemIndex++;
+        event.stopPropagation();
+        event.preventDefault();
+        break;
+      case 'Home':
+        if (!(event.target instanceof HTMLElement
             && (event.target.hasAttribute('aria-activedescendant')
              || event.target.ariaActiveDescendantElement))) {
-            this.atFocusedItemIndex = 0;
-            event.stopPropagation();
-            event.preventDefault();
-          }
-          break;
-        case 'End':
-          if (!(event.target instanceof HTMLElement
+          this.atFocusedItemIndex = 0;
+          event.stopPropagation();
+          event.preventDefault();
+        }
+        break;
+      case 'End':
+        if (!(event.target instanceof HTMLElement
             && (event.target.hasAttribute('aria-activedescendant')
              || event.target.ariaActiveDescendantElement))) {
-            this.atFocusedItemIndex = this.items.length - 1;
-            event.stopPropagation();
-            event.preventDefault();
-          }
-          break;
-        default:
-          break;
-      }
-      this.host.requestUpdate();
+          this.atFocusedItemIndex = this.items.length - 1;
+          event.stopPropagation();
+          event.preventDefault();
+        }
+        break;
+      default:
+        break;
     }
+    this.host.requestUpdate();
   };
 }

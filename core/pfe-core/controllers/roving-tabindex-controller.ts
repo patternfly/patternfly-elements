@@ -1,6 +1,7 @@
 import { isServer, type ReactiveControllerHost } from 'lit';
 import { ATFocusController, type ATFocusControllerOptions } from './at-focus-controller.js';
 import { Logger } from './logger.js';
+import { bound } from '../decorators/bound.js';
 
 export type RovingTabindexControllerOptions<Item extends HTMLElement> =
   ATFocusControllerOptions<Item>;
@@ -82,12 +83,14 @@ export class RovingTabindexController<
     }
   }
 
-  protected override isRelevantKeyboardEvent(event: Event): event is KeyboardEvent {
-    return ((event instanceof KeyboardEvent)
-            && !event.ctrlKey
-            && !event.altKey
-            && !event.metaKey
-            && !!this.atFocusableItems.length
-            && !!event.composedPath().some(node => this.#itemsSet.has(node as Item)));
+  @bound
+  protected override onKeydown(event: KeyboardEvent): void {
+    if (!event.ctrlKey
+        && !event.altKey
+        && !event.metaKey
+        && !!this.atFocusableItems.length
+        && !!event.composedPath().some(node => this.#itemsSet.has(node as Item))) {
+      super.onKeydown(event);
+    }
   }
 }

@@ -4,6 +4,7 @@ import { type ATFocusControllerOptions, ATFocusController } from './at-focus-con
 
 import { isServer, nothing } from 'lit';
 import { getRandomId } from '../functions/random.js';
+import { bound } from '../decorators/bound.js';
 
 export interface ActivedescendantControllerOptions<
   Item extends HTMLElement
@@ -252,12 +253,14 @@ export class ActivedescendantController<
     this.#attrMO.disconnect();
   }
 
-  protected override isRelevantKeyboardEvent(event: Event): event is KeyboardEvent {
-    return !(!(event instanceof KeyboardEvent)
-      || event.ctrlKey
-      || event.altKey
-      || event.metaKey
-      || !this.atFocusableItems.length);
+  @bound
+  protected override onKeydown(event: KeyboardEvent): void {
+    if (!event.ctrlKey
+        && !event.altKey
+        && !event.metaKey
+        && !!this.atFocusableItems.length) {
+      super.onKeydown(event);
+    };
   }
 
   public renderItemsToShadowRoot(): typeof nothing | Node[] {

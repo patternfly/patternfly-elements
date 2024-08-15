@@ -1,4 +1,4 @@
-import { expect, fixture } from '@open-wc/testing';
+import { expect, fixture, nextFrame } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
@@ -72,6 +72,7 @@ abstract class TestCombobox extends ReactiveElement {
 
     describe('Tab', function() {
       beforeEach(press('Tab'));
+      beforeEach(updateComplete);
 
       it('focuses the combobox', async function() {
         expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
@@ -79,6 +80,9 @@ abstract class TestCombobox extends ReactiveElement {
 
       describe('Tab', function() {
         beforeEach(press('Tab'));
+        beforeEach(updateComplete);
+        beforeEach(nextFrame);
+
         it('does not focus the toggle button', async function() {
           expect(await a11ySnapshot()).to.not.axContainQuery({ focused: true });
         });
@@ -152,6 +156,7 @@ abstract class TestCombobox extends ReactiveElement {
 
         describe('Escape', function() {
           beforeEach(press('Escape'));
+          beforeEach(updateComplete);
 
           it('collapses the listbox', async function() {
             expect(await a11ySnapshot())

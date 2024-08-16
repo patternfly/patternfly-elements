@@ -2,4 +2,4 @@
 "@patternfly/elements": major
 ---
 
-Added href attribute to pf-button Link variant
+Added `href` attribute to `<pf-button variant="link">`

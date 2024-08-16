@@ -1,5 +1,5 @@
 ---
-"@patternfly/elements": major
+"@patternfly/elements": minor
 ---
 
-Added `href` attribute to `<pf-button variant="link">`
+`<pf-button>`: Added `href` attribute to `<pf-button variant="link">`

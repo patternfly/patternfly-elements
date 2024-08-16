@@ -22,14 +22,14 @@ on:
 permissions:
   pull-requests: read
 
-env:
-  TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
 # Separate jobs can run concurrently
 jobs:
   prTitle:
     name: Validate conventional commit format for title
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -56,7 +56,6 @@ jobs:
       - id: comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           header: commitlint
           message: |
             ${{ steps.format.outputs.result }}

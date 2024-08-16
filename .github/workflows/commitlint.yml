@@ -42,29 +42,32 @@ jobs:
       - run: npm ci --prefer-offline
       - run: npm i @commitlint/load
 
-      - id: commitlint
+      - id: prlint
         uses: kevintyj/prlint@v2
-
-      - id: format
-        uses: actions/github-script@v6
-        env:
-          LINT_STATUS: ${{ steps.commitlint.outputs.lint-status }}
-          LINT_DETAILS: ${{ steps.commitlint.outputs.lint-details }}
-        with:
-          script: return `## ${process.env.LINT_STATUS}\n\n${process.env.LINT_DETAILS}`;
 
       - id: comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: commitlint
           message: |
-            ${{ steps.format.outputs.result }}
+            ## ${{ steps.prlint.outputs.lint-status }}
+
+            <details><summary>More Info</summary>
+
+            ```json
+            ${{ toJSON(fromJSON(steps.prlint.outputs.lint-details)) }}
+            ```
+
+            </details>
 
       - uses: actions/github-script@v7
         env:
-          LINT_STATUS: ${{ steps.commitlint.outputs.lint-status }}
+          PR_TITLE_VALID: ${{ fromJSON(steps.prlint.outputs.lint-details).valid }}
+          PR_LINT_STATUS: ${{ steps.prlint.outputs.lint-status }}
         with:
           script: |
-            if (process.env.LINT_STATUS.startsWith('❌'))
-              core.setFailed(process.env.LINT_STATUS)
+            const { PR_LINT_STATUS, PR_TITLE_VALID } = process.env;
+
+            if (PR_TITLE_VALID.toString() !== 'true')
+              core.setFailed(PR_LINT_STATUS);
 

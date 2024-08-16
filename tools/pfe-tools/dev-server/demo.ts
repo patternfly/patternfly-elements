@@ -1,16 +1,16 @@
-const hamburger = document.getElementById('hamburger');
-const sidebar = document.getElementById('sidebar');
-const list = matchMedia('(max-width: 640px)');
+const hamburger: HTMLElement = document.getElementById('hamburger')!;
+const sidebar: HTMLElement = document.getElementById('sidebar')!;
+const list: MediaQueryList = matchMedia('(max-width: 640px)');
 const LS_KEY = 'pfe-tools-dev-server-maximized';
 
-function toggleNav(force?: boolean) {
+function toggleNav(force?: boolean): void {
   const old = sidebar?.getAttribute('aria-expanded') === 'true';
   const next = force ?? !old;
   sidebar?.setAttribute('aria-expanded', String(next));
   document.body.classList.toggle('menu-open', next);
 }
 
-function attachShadowRoots(root: Document | ShadowRoot) {
+function attachShadowRoots(root: Document | ShadowRoot): void {
   root.querySelectorAll('template[shadowroot]').forEach(template => {
     if (template instanceof HTMLTemplateElement) {
       const mode = template.getAttribute('shadowroot') as 'open';
@@ -22,7 +22,7 @@ function attachShadowRoots(root: Document | ShadowRoot) {
   });
 }
 
-function onClick() {
+function onClick(): void {
   const next = sidebar?.getAttribute('aria-expanded') !== 'true';
   if (next) {
     localStorage.removeItem(LS_KEY);
@@ -32,7 +32,7 @@ function onClick() {
   toggleNav();
 }
 
-function onKeydown(event: KeyboardEvent) {
+function onKeydown(event: KeyboardEvent): void {
   if (sidebar?.getAttribute('aria-expanded') === 'true') {
     switch (event.key) {
       case 'Escape':
@@ -43,7 +43,7 @@ function onKeydown(event: KeyboardEvent) {
   }
 }
 
-function onMediaChange() {
+function onMediaChange(): void {
   toggleNav(!list.matches);
 }
 

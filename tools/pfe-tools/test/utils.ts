@@ -3,6 +3,10 @@ import type { ReactiveElement } from 'lit';
 
 export type Position = [x: number, y: number];
 
+/**
+ * Get the center coords of an element.
+ * @param element get the center of this element's bounding box
+ */
 export function getElementCenterPosition(element: Element): Position {
   const { x, y, width, height } = element.getBoundingClientRect();
 
@@ -14,6 +18,7 @@ export function getElementCenterPosition(element: Element): Position {
 
 /**
  * Click an element at approximate center, using playwright's sendMouse command
+ * @param element to click at it's center
  */
 export async function clickElementAtCenter(element: Element): Promise<void> {
   const position = getElementCenterPosition(element);
@@ -21,11 +26,19 @@ export async function clickElementAtCenter(element: Element): Promise<void> {
 }
 
 /**
- * Click an element at an offset from it's top-left corner, using playwright's sendMouse command
+ * Click an element at an offset from it's top-left corner,
+ * using playwright's sendMouse command
+ * @param element to click
+ * @param relativeOffset x,y coords tuple
+ * @param [options] options
+ * @param [options.allowOutOfBounds] allow the browser to click outside of the element boundaries
  */
 export async function clickElementAtOffset(
   element: Element,
   relativeOffset: Position,
+  options?: {
+    allowOutOfBounds?: true;
+  }
 ): Promise<void> {
   const { x, y, right, bottom } = element.getBoundingClientRect();
   const [xOffset, yOffset] = relativeOffset;
@@ -35,11 +48,13 @@ export async function clickElementAtOffset(
   ] satisfies [number, number];
   const [xCoord, yCoord] = position;
   // NOTE: this may fail in RTL situations?
-  if (xCoord > right) {
-    throw new Error('X offset is outside element boundaries');
-  }
-  if (yCoord > bottom) {
-    throw new Error('Y offset is outside element boundaries');
+  if (!options?.allowOutOfBounds) {
+    if (xCoord > right) {
+      throw new Error('X offset is outside element boundaries');
+    }
+    if (yCoord > bottom) {
+      throw new Error('Y offset is outside element boundaries');
+    }
   }
   await sendMouse({ type: 'click', position });
 }
@@ -47,8 +62,9 @@ export async function clickElementAtOffset(
 /**
  * Waits for an element to completely finish updating, or throws after 100 attempts
  * Will also throw if the element doesn't have an `updateComplete` promise
+ * @param element to wait on
  */
-export async function allUpdates(element: ReactiveElement) {
+export async function allUpdates(element: ReactiveElement): Promise<void> {
   if (!(element.updateComplete instanceof Promise)) {
     throw new Error(`${element.localName} does not appear to be a ReactiveElement`);
   }

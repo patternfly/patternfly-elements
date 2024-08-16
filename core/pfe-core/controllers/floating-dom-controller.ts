@@ -1,5 +1,5 @@
 import type { Placement } from '@floating-ui/dom';
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import type { LitElement, ReactiveController, ReactiveControllerHost } from 'lit';
 import type { StyleInfo } from 'lit/directives/style-map.js';
 import type { OffsetOptions as Offset } from '@floating-ui/core';
 
@@ -64,19 +64,19 @@ export class FloatingDOMController implements ReactiveController {
   }
 
   /** The crosswise alignment of the invoker on which to display the floating DOM */
-  get alignment() {
+  get alignment(): Alignment {
     return this.#alignment ?? 'center';
   }
 
   /** The side of the invoker on which to display the floating DOM */
-  get anchor() {
+  get anchor(): Anchor {
     return this.#anchor ?? '';
   }
 
   /**
    * When true, the floating DOM is visible
    */
-  get open() {
+  get open(): boolean {
     return this.#open;
   }
 
@@ -100,13 +100,13 @@ export class FloatingDOMController implements ReactiveController {
   ) {
     host.addController(this);
     this.#options = {
-      invoker: (host instanceof HTMLElement ? () => host : () => undefined),
+      invoker: (() => host as LitElement),
       shift: true,
       ...options,
     };
   }
 
-  hostDisconnected() {
+  hostDisconnected(): void {
     this.#cleanup?.();
   }
 
@@ -167,8 +167,15 @@ export class FloatingDOMController implements ReactiveController {
     this.host.requestUpdate();
   }
 
-  /** Show the floating DOM */
-  async show({ offset, placement, flip, fallbackPlacements }: ShowOptions = {}) {
+  /**
+   * Show the floating DOM
+   * @param [options={}]
+   * @param options.offset
+   * @param options.placement
+   * @param options.flip
+   * @param options.fallbackPlacements
+   * */
+  async show({ offset, placement, flip, fallbackPlacements }: ShowOptions = {}): Promise<void> {
     const invoker = this.#invoker;
     const content = this.#content;
     if (!invoker || !content) {
@@ -187,7 +194,7 @@ export class FloatingDOMController implements ReactiveController {
   }
 
   /** Hide the floating DOM */
-  async hide() {
+  async hide(): Promise<void> {
     await this.host.updateComplete;
     while (this.#opening && !this.open) {
       await new Promise(requestAnimationFrame);

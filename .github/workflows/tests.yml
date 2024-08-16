@@ -26,6 +26,7 @@ env:
   # Bring color into the GitHub terminal
   FORCE_COLOR: true
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  PLAYWRIGHT_REPORT_DIR: test-report
 
   # https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/
   ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
@@ -45,11 +46,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: npm
@@ -61,17 +62,16 @@ jobs:
         id: lint
         run: npm run lint
 
-
   test:
-    name: Run test suite (Web Test Runner)
+    name: Unit Tests (Web Test Runner)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: npm
@@ -91,6 +91,67 @@ jobs:
           report_paths: test-results/test-results.xml
           fail_on_failure: true # fail the actions run if the tests failed
 
+  ssr:
+    name: SSR Tests (Playwright)
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.45.1-jammy
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci --prefer-offline
+      - run: npm run build
+
+      - name: Run tests
+        run: npx playwright test -g ssr --update-snapshots
+        env:
+          HOME: /root
+
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: ${{ env.PLAYWRIGHT_REPORT_DIR }}
+          path: ${{ env.PLAYWRIGHT_REPORT_DIR }}/
+          retention-days: 30
+
+  publish_report:
+    name: Publish Playwright Report
+    # using always() is not ideal here, because it would also run if the workflow was cancelled
+    if: "success() || needs.ssr.result == 'failure'"
+    needs:
+      - ssr
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    env:
+      HTML_REPORT_URL_PATH: reports/${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download zipped HTML report
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.PLAYWRIGHT_REPORT_DIR }}
+          path: ${{ env.PLAYWRIGHT_REPORT_DIR }}/
+      - name: Upload to Github Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ${{ env.PLAYWRIGHT_REPORT_DIR }}
+          target-folder: ${{ env.HTML_REPORT_URL_PATH }}
+      - name: Add comment to PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ github.event.inputs.issueNumber }}
+          append: true
+          header: "${{ github.sha }}"
+          hide: true
+          hide_details: true
+          message: |
+            **SSR Test Run for ${{ github.sha }}**: [Report](https://patternfly.github.io/patternfly-elements/${{ env.HTML_REPORT_URL_PATH }})
+
+  # Validate the build to main was successful; open an issue if not
   build:
     name: Compile project
     runs-on: ubuntu-latest
@@ -116,13 +177,13 @@ jobs:
       )
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
           cache: npm
@@ -138,7 +199,6 @@ jobs:
         id: release-dry
         run: npm run prepublishOnly -ws --if-present
 
-  # Validate the build to main was successful; open an issue if not
   validate:
     name: Validate successful build on main
     needs:

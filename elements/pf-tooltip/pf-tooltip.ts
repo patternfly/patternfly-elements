@@ -1,5 +1,5 @@
-import type { PropertyValues } from 'lit';
-import { LitElement, html } from 'lit';
+import type { PropertyValues, TemplateResult } from 'lit';
+import { LitElement, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { styleMap } from 'lit/directives/style-map.js';
@@ -13,7 +13,6 @@ import {
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 
 import { StringListConverter } from '@patternfly/pfe-core';
-
 
 import styles from './pf-tooltip.css';
 
@@ -106,7 +105,7 @@ const ExitEvents = ['focusout', 'blur', 'mouseleave'];
  */
 @customElement('pf-tooltip')
 export class PfTooltip extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   /** The position of the tooltip, relative to the invoking content */
   @property() position: Placement = 'top';
@@ -154,7 +153,7 @@ export class PfTooltip extends LitElement {
     },
   });
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.#invokerChanged();
     this.#updateTrigger();
@@ -163,14 +162,15 @@ export class PfTooltip extends LitElement {
   /**
    * Removes event listeners from the old trigger element and attaches
    * them to the new trigger element.
+   * @param changed changed properties
    */
-  override willUpdate(changed: PropertyValues<this>) {
+  override willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('trigger')) {
       this.#updateTrigger();
     }
   }
 
-  override render() {
+  override render(): TemplateResult<1> {
     const { alignment, anchor, open, styles } = this.#float;
 
     const blockInvoker =
@@ -207,32 +207,34 @@ export class PfTooltip extends LitElement {
   }
 
   #updateTrigger() {
-    const oldReferenceTrigger = this.#referenceTrigger;
-    this.#referenceTrigger =
-        this.trigger instanceof HTMLElement ? this.trigger
-      : typeof this.trigger === 'string' ? this.#getReferenceTrigger()
-      : null;
-    for (const evt of EnterEvents) {
-      if (this.#referenceTrigger) {
-        this.removeEventListener(evt, this.show);
-        this.#referenceTrigger.addEventListener(evt, this.show);
-      } else {
-        oldReferenceTrigger?.removeEventListener(evt, this.show);
-        this.addEventListener(evt, this.show);
+    if (!isServer) {
+      const oldReferenceTrigger = this.#referenceTrigger;
+      this.#referenceTrigger =
+          this.trigger instanceof HTMLElement ? this.trigger
+        : typeof this.trigger === 'string' ? this.#getReferenceTrigger()
+        : null;
+      for (const evt of EnterEvents) {
+        if (this.#referenceTrigger) {
+          this.removeEventListener(evt, this.show);
+          this.#referenceTrigger.addEventListener(evt, this.show);
+        } else {
+          oldReferenceTrigger?.removeEventListener(evt, this.show);
+          this.addEventListener(evt, this.show);
+        }
       }
-    }
-    for (const evt of ExitEvents) {
-      if (this.#referenceTrigger) {
-        this.removeEventListener(evt, this.hide);
-        this.#referenceTrigger.addEventListener(evt, this.hide);
-      } else {
-        oldReferenceTrigger?.removeEventListener(evt, this.hide);
-        this.addEventListener(evt, this.hide);
+      for (const evt of ExitEvents) {
+        if (this.#referenceTrigger) {
+          this.removeEventListener(evt, this.hide);
+          this.#referenceTrigger.addEventListener(evt, this.hide);
+        } else {
+          oldReferenceTrigger?.removeEventListener(evt, this.hide);
+          this.addEventListener(evt, this.hide);
+        }
       }
     }
   }
 
-  @bound async show() {
+  @bound async show(): Promise<void> {
     await this.updateComplete;
     const placement = this.position;
     const offset =
@@ -246,7 +248,7 @@ export class PfTooltip extends LitElement {
     });
   }
 
-  @bound async hide() {
+  @bound async hide(): Promise<void> {
     await this.#float.hide();
   }
 }

@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, isServer, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -13,14 +13,11 @@ import styles from './pf-back-to-top.css';
 /**
  * The **back to top** component is a shortcut that allows users to quickly navigate to the top of a lengthy content page.
  * @summary A shortcut that allows users to quickly navigate to the top of a lengthy content page.
- *
  * @csspart trigger - The `<a>` or `<pf-button>` element
- *
  * @slot icon
  *       Contains the prefix icon to display before the link or button.
  * @slot
  *       Text to display inside the link or button.
- *
  * @cssprop {<length>} --pf-c-back-to-top--Right {@default `3rem``}
  * @cssprop {<length>} --pf-c-back-to-top--Bottom {@default `1.5rem``}
  * @cssprop --pf-c-back-to-top--c-button--BoxShadow {@default `0 0.75rem 0.75rem -0.5rem rgba(3, 3, 3, 0.18)`}
@@ -33,11 +30,10 @@ import styles from './pf-back-to-top.css';
  * @cssprop {<color>} --pf-c-button--m-primary--Color {@default `#fff`}
  * @cssprop {<color>} --pf-c-button--m-primary--BackgroundColor {@default `#06c`}
  * @cssprop {<length>} --pf-c-button__icon--m-end--MarginLeft {@default `0.25rem`}
- *
  */
 @customElement('pf-back-to-top')
 export class PfBackToTop extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   /** Shorthand for the `icon` slot, the value is icon name */
   @property({ reflect: true }) icon?: string;
@@ -70,9 +66,11 @@ export class PfBackToTop extends LitElement {
 
   #logger = new Logger(this);
 
-  get #rootNode(): Document | ShadowRoot {
-    const root = this.getRootNode();
-    if (root instanceof Document || root instanceof ShadowRoot) {
+  get #rootNode(): Document | ShadowRoot | null {
+    let root = null;
+    if (isServer) {
+      return null;
+    } else if ((root = this.getRootNode()) instanceof Document || root instanceof ShadowRoot) {
       return root;
     } else {
       return document;
@@ -105,7 +103,7 @@ export class PfBackToTop extends LitElement {
     }
   }
 
-  render() {
+  render(): TemplateResult<1> {
     // ensure href has a hash
     if (this.href && this.href.charAt(0) !== '#') {
       this.href = `#${this.href}`;
@@ -161,7 +159,7 @@ export class PfBackToTop extends LitElement {
 
     this.#scrollSpy = !!this.scrollableSelector;
     if (this.#scrollSpy && this.scrollableSelector) {
-      const scrollableElement = this.#rootNode.querySelector(this.scrollableSelector);
+      const scrollableElement = this.#rootNode?.querySelector?.(this.scrollableSelector);
       if (!scrollableElement) {
         this.#logger.error(`unable to find element with selector ${this.scrollableSelector}`);
         return;

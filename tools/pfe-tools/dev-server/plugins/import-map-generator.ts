@@ -97,6 +97,9 @@ function generatorMiddleware(generator: Generator, options?: Partial<Options>): 
   };
 }
 
+/**
+ * @param options plugin options
+ */
 export function importMapGeneratorPlugin(options?: Partial<Options>): Plugin {
   return {
     name: 'import-map-inject',

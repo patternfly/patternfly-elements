@@ -1,4 +1,4 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, type PropertyValues, type TemplateResult } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
@@ -56,13 +56,12 @@ export class PfDropdownSelectEvent extends Event {
  */
 @customElement('pf-dropdown')
 export class PfDropdown extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
-
 
   /**
    * When disabled, the dropdown can still be toggled open and closed via keyboard, but menu items cannot be activated.
@@ -96,14 +95,14 @@ export class PfDropdown extends LitElement {
     return ps.every(x=>!!x);
   }
 
-  willUpdate(changed: PropertyValues) {
+  willUpdate(changed: PropertyValues): void {
     if (changed.has('disabled')) {
       const { disabled } = this;
       this.ctx = { disabled };
     }
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const { expanded } = this;
     const { anchor, alignment, styles = {} } = this.#float;
     const { disabled } = this;
@@ -134,11 +133,11 @@ export class PfDropdown extends LitElement {
     </div>`;
   }
 
-  override firstUpdated() {
+  override firstUpdated(): void {
     this.#onSlotchange();
   }
 
-  updated(changed: PropertyValues<this>) {
+  updated(changed: PropertyValues<this>): void {
     if (changed.has('expanded')) {
       this.#expandedChanged();
     }
@@ -247,7 +246,7 @@ export class PfDropdown extends LitElement {
   /**
    * Opens the dropdown
    */
-  async show() {
+  async show(): Promise<void> {
     this.expanded = true;
     await this.updateComplete;
   }
@@ -255,12 +254,12 @@ export class PfDropdown extends LitElement {
   /**
    * Closes the dropdown
    */
-  async hide() {
+  async hide(): Promise<void> {
     this.expanded = false;
     await this.updateComplete;
   }
 
-  async toggle() {
+  async toggle(): Promise<void> {
     this.expanded = !this.expanded;
     await this.updateComplete;
   }

@@ -11,7 +11,7 @@ import { getPfeConfig } from '../config.js';
 
 export interface PfeTestRunnerConfigOptions extends PfeDevServerConfigOptions {
   files?: string[];
-  reporter?: 'summary' | 'default';
+  reporter?: 'summary' | 'junit' | 'default';
 }
 
 const isWatchMode = process.argv.some(x => x.match(/-w|--watch/));
@@ -43,38 +43,39 @@ const exists = async (path: string | URL) => {
   }
 };
 
+/**
+ * @param opts test runner options
+ */
 export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunnerConfig {
   const { open, ...devServerConfig } = pfeDevServerConfig({ ...opts, loadDemo: false });
 
   const { elementsDir, tagPrefix } = getPfeConfig();
 
-  const configuredReporter = opts.reporter ?? 'summary';
+  const configuredReporter = opts.reporter ?? 'default';
 
-  const reporters = [];
-  if (isWatchMode) {
-    if (configuredReporter === 'summary') {
-      reporters.push(
-        summaryReporter({ flatten: false }),
-        defaultReporter({ reportTestResults: false, reportTestProgress: true }),
-      );
-    } else {
-      reporters.push(
-        defaultReporter(),
-      );
-    }
-  } else {
+  const reporters = configuredReporter === 'summary' && isWatchMode ? [
+    summaryReporter({ flatten: !!process.env.CI }),
+    defaultReporter(),
+  ] : configuredReporter === 'summary' ? [
+    summaryReporter({ flatten: !!process.env.CI }),
+  ] : [
+    defaultReporter(),
+  ];
+
+  if (process.env.CI) {
     reporters.push(
-      defaultReporter(),
       junitReporter({
         outputPath: './test-results/test-results.xml',
         reportLogs: true,
-      }),
+      })
     );
   }
 
   return {
     ...devServerConfig,
-    nodeResolve: true,
+    nodeResolve: {
+      exportConditions: ['production'],
+    },
     files: [
       '**/*.spec.ts',
       '!**/*.e2e.ts',
@@ -105,7 +106,11 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
       a11ySnapshotPlugin(),
     ],
     middleware: [
-      /** redirect `.js` to `.ts` when the typescript source exists */
+      /**
+       * redirect `.js` to `.ts` when the typescript source exists
+       * @param ctx koa context
+       * @param next next middleware
+       */
       async function(ctx, next) {
         if (ctx.path.endsWith('.js')
             && ctx.path.startsWith(`/${elementsDir}/${tagPrefix}-`)

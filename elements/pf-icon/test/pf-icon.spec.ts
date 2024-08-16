@@ -1,5 +1,5 @@
 import { expect, fixture, oneEvent } from '@open-wc/testing';
-import { html, render } from 'lit';
+import { html, render, type TemplateResult } from 'lit';
 
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -7,22 +7,37 @@ import { PfIcon } from '@patternfly/elements/pf-icon/pf-icon.js';
 
 import '@patternfly/pfe-tools/test/stub-logger.js';
 
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-ignore: don't want to include these
+import aed from './rh-icon-aed.js';
+// @ts-ignore: don't want to include these
+import api from './rh-icon-api.js';
+// @ts-ignore: don't want to include these
+import atom from './rh-icon-atom.js';
+// @ts-ignore: don't want to include these
+import bike from './rh-icon-bike.js';
+
+/* eslint-enable @typescript-eslint/ban-ts-comment */
+
+const TEST_ICONS = { aed, api, atom, bike };
+
+async function expectIconsEqual(element: PfIcon, tpl: TemplateResult) {
+  await oneEvent(element, 'load');
+  const rootNode = render(tpl, document.createDocumentFragment());
+  const actual = element.shadowRoot?.querySelector('svg');
+  const expected = (rootNode.parentNode as DocumentFragment).querySelector('svg');
+  expect(actual?.outerHTML).to.equal(expected?.outerHTML);
+}
+
 describe('<pf-icon>', function() {
   let element: PfIcon;
 
-  async function expectIconsEqual(actualIconUrl: URL) {
-    await oneEvent(element, 'load', false);
-    const tpl = await import(actualIconUrl.pathname).then(x => x.default);
-    const rootNode = render(tpl, document.createDocumentFragment());
-    const actual = element.shadowRoot?.querySelector('svg');
-    const expected = (rootNode.parentNode as DocumentFragment).querySelector('svg');
-    expect(actual?.outerHTML).to.equal(expected?.outerHTML);
-  }
-
   beforeEach(async function() {
-    // @ts-expect-error: this is necessary to reset test state
-    PfIcon.getters = new Map(); PfIcon.io.disconnect();
     element = await fixture(html`<pf-icon></pf-icon>`);
+  });
+
+  afterEach(function() {
+    PfIcon.reset();
   });
 
   it('imperatively instantiates', function() {
@@ -36,62 +51,66 @@ describe('<pf-icon>', function() {
         .to.be.an.instanceOf(PfIcon);
   });
 
-  it('should warn if the 2nd argument to addIconSet is not a function', function() {
-    // @ts-expect-error: 3rd input is a string
-    PfIcon.addIconSet('test', './', 'rh-icon-aed.svg');
-    expect(Logger.warn).to.have.been.calledOnceWith(`[PfIcon.addIconSet(setName, getter)]: getter must be a function`);
-  });
-
-  it('should warn if there is no function provided to resolve the icon names', function() {
-    // @ts-expect-error: testing bad input
-    PfIcon.addIconSet('test', './');
-
-    expect(Logger.warn).to.have.been.calledOnceWith('[PfIcon.addIconSet(setName, getter)]: getter must be a function');
-  });
-
-  describe('with a custom icon set', function() {
-    const testIcons = ['aed', 'api', 'atom', 'bike'];
-
-    function getter(_: string, icon: string) {
-      return new URL(`./rh-icon-${icon}.js`, import.meta.url);
-    }
-
-    beforeEach(async function() {
-      // replace the default built-in icon set resolveIconName function
-      // with one that loads local icons.  we don't want tests dependent on
-      // prod servers.
-      PfIcon.addIconSet('rh', getter);
-      element.set = 'rh';
-    });
-
-    for (const iconName of testIcons) {
-      it('loads icons', async function() {
-        // wait for each test icon to be loaded, then move to the next one
-        element.icon = iconName;
-        await expectIconsEqual(getter('rh', iconName));
+  describe('addIconSet', function() {
+    describe('when 1st argument is not a string', function() {
+      beforeEach(function() {
+        PfIcon.addIconSet(
+          // @ts-expect-error: testing bad input
+          {},
+          () => void 0,
+        );
       });
-    }
-
-    it('should hide the fallback when it successfully upgrades', async function() {
-      element.innerHTML = `<p>Icon failed to load.</p>`;
-      // Check that the fallback is hidden when the icon is successfully loaded
-      element.icon = 'bike';
-      await oneEvent(element, 'load', false);
-      expect(element).shadowDom.to.equal(`
-      <div id="container" aria-hidden="true">
-        <span part="fallback" hidden>
-          <slot></slot>
-        </span>
-      </div>`);
+      it('should warn', function() {
+        expect(Logger.warn).to.have.been.calledOnceWith(`[PfIcon]: the first argument to addIconSet must be a string.`);
+      });
     });
 
-    it('should change color when pf-icon\'s color CSS property is changed', async function() {
-      const newColor = 'rgb(11, 12, 13)';
-      element.style.setProperty('color', newColor);
-      element.icon = 'atom';
-      await oneEvent(element, 'load', false);
-      const color = getComputedStyle(element.shadowRoot!.querySelector('svg')!).getPropertyValue('color');
-      expect(color).to.equal(newColor);
+    describe('when 2nd argument is not a function', function() {
+      beforeEach(function() {
+        PfIcon.addIconSet(
+          'rh',
+          // @ts-expect-error: testing bad input
+          'haha'
+        );
+      });
+      it('should warn', function() {
+        expect(Logger.warn).to.have.been.calledOnceWith(`[PfIcon]: the second argument to addIconSet must be a function.`);
+      });
+    });
+
+    describe('with a good resolve function', function() {
+      beforeEach(async function() {
+        // replace the default built-in icon set resolveIconName function
+        // with one that loads local icons.  we don't want tests dependent on
+        // prod servers.
+        PfIcon.addIconSet('rh', (_, icon: string) => TEST_ICONS[icon as keyof typeof TEST_ICONS]);
+        element.set = 'rh';
+      });
+
+      for (const [iconName, icon] of Object.entries(TEST_ICONS)) {
+        it('loads icons', async function() {
+          // wait for each test icon to be loaded, then move to the next one
+          element.icon = iconName;
+          await expectIconsEqual(element, icon);
+        });
+      }
+
+      it('should hide the fallback when it successfully upgrades', async function() {
+        element.innerHTML = `<p>Icon failed to load.</p>`;
+        element.icon = 'bike';
+        await oneEvent(element, 'load');
+        expect(element.shadowRoot?.querySelector('[part=fallback]'))
+            .to.have.attribute('hidden');
+      });
+
+      it('should change color when pf-icon\'s color CSS property is changed', async function() {
+        const newColor = 'rgb(11, 12, 13)';
+        element.style.setProperty('color', newColor);
+        element.icon = 'atom';
+        await oneEvent(element, 'load');
+        const color = getComputedStyle(element.shadowRoot!.querySelector('svg')!).getPropertyValue('color');
+        expect(color).to.equal(newColor);
+      });
     });
   });
 
@@ -111,40 +130,41 @@ describe('<pf-icon>', function() {
     }
   });
 
-  it(`should fetch an icon even when the icon set is registered after the element upgrades`, async function() {
-    const url = new URL('./rh-icon-bike.js', import.meta.url);
-    element.set = 'asdfasdf';
-    element.icon = 'foo';
-    await element.updateComplete;
-    PfIcon.addIconSet('asdfasdf', () => url);
-    await oneEvent(element, 'load', false);
-    await expectIconsEqual(url);
+  describe('when the icon has a custom set attribute', function() {
+    let element: PfIcon;
+    before(async function() {
+      element = await fixture(html`<pf-icon set="asdfasdf" icon="foo"></pf-icon>`);
+    });
+    describe('then the icon set is registered', function() {
+      beforeEach(async function() {
+        PfIcon.addIconSet('asdfasdf', () =>
+          import(`./rh-icon-${'bike'}.js`)
+              .then(m => m.default));
+        await oneEvent(element, 'load');
+      });
+      it(`should render the icon`, function() {
+        expectIconsEqual(element, bike);
+      });
+    });
   });
 
-  it(`should show fallback when given a valid icon set but invalid icon name, fallback provided`, async function() {
-    element.innerHTML = '<p>Image failed to load.</p>.';
-    element.icon = 'no-scrubs';
-    await oneEvent(element, 'error', false);
-    expect(element.shadowRoot!.querySelector('svg')).to.not.be.ok;
-    expect(element).shadowDom.to.equal(`
-      <div id="container" aria-hidden="true">
-        <span part="fallback">
-          <slot></slot>
-        </span>
-      </div>`);
-  });
-
-  it('should show fallback when given an invalid icon set, fallback provided', async function() {
-    element.innerHTML = '<p>Image failed to load.</p>.';
-    element.set = 'choopee-doopee-pie';
-    element.icon = 'bike';
-    await oneEvent(element, 'error', false);
-    expect(element.shadowRoot!.querySelector('svg')).to.not.be.ok;
-    expect(element).shadowDom.to.equal(`
-      <div id="container" aria-hidden="true">
-        <span part="fallback">
-          <slot></slot>
-        </span>
-      </div>`);
+  describe('when the icon has a fallback content', function() {
+    let element: PfIcon;
+    before(async function() {
+      element = await fixture(html`
+        <pf-icon icon="no-scrubs">
+          <p>Image failed to load.</p>.
+        </pf-icon>`);
+      await oneEvent(element, 'error');
+    });
+    it('should display the fallback', function() {
+      expect(element.shadowRoot!.querySelector('svg')).to.not.be.ok;
+      expect(element).shadowDom.to.equal(`
+        <div id="container" aria-hidden="true">
+          <span part="fallback">
+            <slot></slot>
+          </span>
+        </div>`);
+    });
   });
 });

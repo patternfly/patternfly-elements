@@ -1,11 +1,11 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { consume } from '@lit/context';
 
-import { observed } from '@patternfly/pfe-core/decorators.js';
+import { observes } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
@@ -60,15 +60,13 @@ import styles from './pf-tab.css';
  */
 @customElement('pf-tab')
 export class PfTab extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private icons!: HTMLElement[];
 
-  @observed
   @property({ reflect: true, type: Boolean }) active = false;
 
-  @observed
   @property({ reflect: true, type: Boolean }) disabled = false;
 
   @consume({ context, subscribe: true })
@@ -77,7 +75,7 @@ export class PfTab extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'tab' });
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.id ||= getRandomId(this.localName);
     this.addEventListener('click', this.#onClick);
@@ -85,7 +83,7 @@ export class PfTab extends LitElement {
     this.addEventListener('focus', this.#onFocus);
   }
 
-  override willUpdate() {
+  override willUpdate(): void {
     const { borderBottom, box, fill, manual, vertical } = this.ctx ?? {};
     this.toggleAttribute('fill', fill);
     this.toggleAttribute('manual', manual);
@@ -102,7 +100,7 @@ export class PfTab extends LitElement {
     }
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const { active } = this;
     const { box, fill = false, vertical = false } = this.ctx ?? {};
     const light = box === 'light';
@@ -129,7 +127,8 @@ export class PfTab extends LitElement {
   #onKeydown(event: KeyboardEvent) {
     if (!this.disabled) {
       switch (event.key) {
-        case 'Enter': this.#activate();
+        case 'Enter':
+          this.#activate();
       }
     }
   }
@@ -140,18 +139,20 @@ export class PfTab extends LitElement {
     }
   }
 
-  #activate() {
-    return this.dispatchEvent(new TabExpandEvent(this));
+  async #activate() {
+    this.dispatchEvent(new TabExpandEvent(this));
   }
 
-  private _activeChanged(old: boolean) {
-    this.#internals.ariaSelected = String(!!this.active);
-    if (this.active && !old) {
+  @observes('active')
+  protected activeChanged(old: boolean, active: boolean): void {
+    this.#internals.ariaSelected = String(!!active);
+    if (active && !old) {
       this.#activate();
     }
   }
 
-  private _disabledChanged() {
+  @observes('disabled')
+  protected disabledChanged(): void {
     this.#internals.ariaDisabled = this.disabled ? 'true' : this.ariaDisabled ?? 'false';
   }
 }

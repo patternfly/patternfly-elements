@@ -98,7 +98,11 @@ const getInterpolations =
     };
   });
 
-/** e.g. /Users/alj/Developer/jazz-elements/elements/pf-jazz-hands/pf-jazz-hands.ts */
+/**
+ * e.g. /home/alj/Developer/jazz-elements/elements/pf-jazz-hands/pf-jazz-hands.ts
+ * @param key file key e.g. component
+ * @param options element generator options
+ */
 const getOutputFilePath =
   (key: FileKey, options: GenerateElementOptions): string =>
     join(getComponentAbsPath(options), getFilePathsRelativeToPackageDir(options)[key]);
@@ -137,7 +141,6 @@ async function writeComponentFile(key: FileKey, options: GenerateElementOptions)
   await writeFile(PATH, OUTPUT, 'utf-8');
 
   if (!options.silent) {
-    // eslint-disable-next-line no-console
     console.log(`  ✏️  ${green(relative(options.directory, PATH))}`);
   }
 }
@@ -162,9 +165,9 @@ export class PackageJSONError extends Error {}
 
 /**
  * Generate an Element
+ * @param options element generator options
  */
 export async function generateElement(options: GenerateElementOptions): Promise<void> {
-  // eslint-disable-next-line no-console
   const log = (...args: unknown[]) => void (!options?.silent && console.log(...args));
   const start = performance.now();
   if (!options || !options.tagName) {

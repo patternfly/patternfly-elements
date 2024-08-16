@@ -32,11 +32,21 @@
 
 #heading {
   font-weight: var(--pf-c-accordion__toggle--FontWeight, var(--pf-global--FontWeight--normal, 400));
+  font-size: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+button,
+a {
+  cursor: pointer;
 }
 
 .toggle,
 .toggle:before,
 .toggle:after {
+  padding: 0;
+  margin: 0;
   background-color: var(--pf-c-accordion__toggle--BackgroundColor, transparent);
 }
 
@@ -45,6 +55,12 @@
 }
 
 .toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
   padding:
     var(--pf-c-accordion__toggle--PaddingTop, var(--pf-global--spacer--md, 0.5rem))
     var(--pf-c-accordion__toggle--PaddingRight, var(--pf-global--spacer--md, 1rem))
@@ -77,9 +93,16 @@
   top: var(--pf-c-accordion__toggle--before--Top, -1px);
   width: var(--pf-c-accordion__toggle--before--Width, var(--pf-global--BorderWidth--lg, 3px));
   background-color: var(--pf-c-accordion__toggle--after--BackgroundColor, transparent);
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   max-width: var(--pf-c-accordion__toggle-text--MaxWidth,
     calc(100% - var(--pf-global--spacer--lg, 1.5rem)));
 }

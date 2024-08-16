@@ -6,7 +6,7 @@ In particular, the `initItems(items: Item[])` and `setActiveItem(item: Item)` me
 were removed and replaced with the `getItems: () => Item[]` constructor option, and 
 the `atFocusedItemIndex` accessor.
 
-BEFORE:
+**Before**:
 
 ```ts
 #tabindex = new TabindexController(this);
@@ -22,7 +22,7 @@ updated(changed: PropertyValues<this>) {
 }
 ```
 
-AFTER:
+**After**:
 
 ```ts
 #tabindex = new TabindexController(this, {

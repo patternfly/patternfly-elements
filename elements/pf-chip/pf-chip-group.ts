@@ -1,10 +1,11 @@
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { classMap } from 'lit/directives/class-map.js';
 
+import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
 import { PfChip, PfChipRemoveEvent } from './pf-chip.js';
@@ -44,9 +45,9 @@ const REMAINING_RE = /\$\{\s*remaining\s*\}/g;
  */
 @customElement('pf-chip-group')
 export class PfChipGroup extends LitElement {
-  static readonly styles = [shared, styles];
+  static readonly styles: CSSStyleSheet[] = [shared, styles];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -86,26 +87,58 @@ export class PfChipGroup extends LitElement {
    */
   @property({ reflect: true, type: Boolean }) closeable = false;
 
-  @query('#overflow') private _overflowChip?: HTMLButtonElement;
+  @query('#overflow') private _overflowChip?: PfChip;
 
   @query('#close-button') private _button?: HTMLButtonElement;
 
   @queryAssignedNodes({ slot: 'category-name', flatten: true }) private _categorySlotted?: Node[];
 
-  #chips: PfChip[] = [];
+  get #chips(): NodeListOf<PfChip> {
+    return this.querySelectorAll<PfChip>('pf-chip:not([slot]):not([overflow-chip])');
+  }
 
-  #buttons: HTMLElement[] = [];
-
-  #tabindex = new RovingTabindexController(this, {
-    getItems: () => this.#buttons.filter(x => !x.hidden),
+  #tabindex = RovingTabindexController.of(this, {
+    getItems: () => [
+      ...Array.prototype.slice.call(this.#chips, 0, this.open ? this.#chips.length
+                            : Math.min(this.#chips.length, this.numChips)),
+      this._overflowChip,
+      this._button,
+    ].filter(x => !!x),
   });
+
+  /**
+   * active chip that receives focus when group receives focus
+   */
+  get activeChip() {
+    const button = this.#tabindex.items.at(this.#tabindex.atFocusedItemIndex);
+    const shadow = button?.getRootNode() as ShadowRoot;
+    return shadow?.host as PfChip;
+  }
+
+  set activeChip(chip: HTMLElement) {
+    const button = chip.shadowRoot?.querySelector('button');
+    if (button) {
+      this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(button);
+    }
+  }
+
+  /**
+   * whether or not group has a category
+   */
+  get hasCategory(): boolean {
+    return (this._categorySlotted || []).length > 0;
+  }
+
+  get remaining(): number {
+    return this.#chips.length - this.numChips;
+  }
 
   constructor() {
     super();
-    this.addEventListener('remove', this.#onChipRemoved);
+    this.addEventListener('remove', this.#onRemove);
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const empty = this.#chips.length <= 0;
     return html`
       <div id="outer"
@@ -114,13 +147,10 @@ export class PfChipGroup extends LitElement {
         <slot id="category"
               name="category-name"
               @slotchange="${this.#onSlotchange}">
-          <span class="offscreen"
+          <span class="visually-hidden"
                 ?hidden="${!this.accessibleLabel}">${this.accessibleLabel ?? ''}</span>
         </slot>
-        <slot id="chips"
-              @slotchange="${this.#onSlotchange}"
-              @remove="${this.#updateChips}"
-        ></slot>
+        <slot id="chips" @slotchange="${this.#onSlotchange}"></slot>
         <pf-chip id="overflow"
                  aria-controls="chips"
                  overflow-chip
@@ -141,69 +171,15 @@ export class PfChipGroup extends LitElement {
     `;
   }
 
-  override updated(changed: PropertyValues<this>) {
-    if (changed.has('accessibleCloseLabel')
-        || changed.has('numChips')
-        || changed.has('closeable')
-        || changed.has('open')) {
-      this.#handleChipsChanged();
-    }
-  }
-
-  /**
-   * active chip that receives focus when group receives focus
-   */
-  get activeChip() {
-    const button = this.#tabindex.activeItem as HTMLElement;
-    const shadow = button?.getRootNode() as ShadowRoot;
-    return shadow?.host as PfChip;
-  }
-
-  set activeChip(chip: HTMLElement) {
-    const button = chip.shadowRoot?.querySelector('button') as HTMLElement;
-    this.#tabindex.setActiveItem(button);
-  }
-
-  /**
-   * whether or not group has a category
-   */
-  get hasCategory() {
-    return (this._categorySlotted || []).length > 0;
-  }
-
-  get remaining() {
-    return this.#chips.length - this.numChips;
-  }
-
   /**
    * updates chips when they change
    */
-  #handleChipsChanged() {
-    if (this.#chips.length > 0) {
-      const oldButtons = [...(this.#tabindex.items || [])];
-      const max = this.open ? this.#chips.length : Math.min(this.#chips.length, this.numChips);
-      this.#buttons = [
-        ...this.#chips.slice(0, max),
-        this._overflowChip,
-        this._button,
-      ].filter((x): x is PfChip => !!x);
-      if (oldButtons.length !== this.#buttons.length
-          || !oldButtons.every((element, index) => element === this.#buttons[index])) {
-        this.#tabindex.updateItems();
-      }
-      this.#updateOverflow();
-    }
-  }
-
-  /**
-   * handles a chip's `chip-remove` event
-   */
-  async #onChipRemoved(event: Event) {
-    if (event instanceof PfChipRemoveEvent) {
-      await this.#updateChips();
-      await this.updateComplete;
-      this.#tabindex.setActiveItem(this.#tabindex.activeItem);
-    }
+  @observes('accessibleCloseLabel')
+  @observes('numChips')
+  @observes('closeable')
+  @observes('open')
+  private chipsChanged(): void {
+    this.#updateOverflow();
   }
 
   /**
@@ -211,17 +187,17 @@ export class PfChipGroup extends LitElement {
    */
   #onCloseClick() {
     this.dispatchEvent(new PfChipGroupRemoveEvent());
-    this.remove();
   }
 
   /**
    * handles overflow chip's click event
+   * @param event click event
    */
   async #onMoreClick(event: Event) {
     event.stopPropagation();
     this.open = !this.open;
     await this.updateComplete;
-    this.#handleChipsChanged();
+    this.chipsChanged();
     if (this._overflowChip) {
       this.focusOnChip(this._overflowChip);
     }
@@ -229,21 +205,18 @@ export class PfChipGroup extends LitElement {
   }
 
   #onSlotchange() {
-    this.#updateChips();
     this.requestUpdate();
   }
 
-  /**
-   * updates which chips variable
-   */
-  async #updateChips() {
-    await this.updateComplete;
-    this.#chips = [...this.querySelectorAll<PfChip>('pf-chip:not([slot]):not([overflow-chip])')];
-    this.requestUpdate();
-    await this.updateComplete;
-    this.#tabindex.updateItems(this.#chips);
-    this.#handleChipsChanged();
-    return this.#chips;
+  #onRemove(event: Event) {
+    if (event instanceof PfChipRemoveEvent) {
+      const index = this.#tabindex.atFocusedItemIndex;
+      if (event.chip) {
+        this.#tabindex.atFocusedItemIndex = index + 1;
+      }
+    } else if (event instanceof PfChipGroupRemoveEvent) {
+      this.remove();
+    }
   }
 
   /**
@@ -259,9 +232,10 @@ export class PfChipGroup extends LitElement {
 
   /**
    * Activates the specified chip and sets focus on it
+   * @param chip pf-chip element
    */
-  focusOnChip(chip: HTMLElement) {
-    this.#tabindex.setActiveItem(chip);
+  focusOnChip(chip: PfChip): void {
+    this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(chip);
   }
 }
 

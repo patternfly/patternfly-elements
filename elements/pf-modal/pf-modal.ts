@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -6,7 +6,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { ComposedEvent } from '@patternfly/pfe-core';
-import { bound, initializer, observed } from '@patternfly/pfe-core/decorators.js';
+import { bound, initializer, observes } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
@@ -67,12 +67,12 @@ export class ModalOpenEvent extends ComposedEvent {
  */
 @customElement('pf-modal')
 export class PfModal extends LitElement implements HTMLDialogElement {
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
   /** Should the dialog close when user clicks outside the dialog? */
   protected static closeOnOutsideClick = false;
@@ -88,11 +88,9 @@ export class PfModal extends LitElement implements HTMLDialogElement {
    */
   @property({ reflect: true }) position?: 'top';
 
-  @observed
   @property({ type: Boolean, reflect: true }) open = false;
 
   /** Optional ID of the trigger element */
-  @observed
   @property() trigger?: string;
 
   /** @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/returnValue */
@@ -111,13 +109,13 @@ export class PfModal extends LitElement implements HTMLDialogElement {
 
   #slots = new SlotController(this, null, 'header', 'description', 'footer');
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('keydown', this.onKeydown);
     this.addEventListener('click', this.onClick);
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const headerId = (this.#header || this.#headings.length) ? this.#headerId : undefined;
     const headerLabel = this.#triggerElement ? this.#triggerElement.innerText : undefined;
     const hasHeader = this.#slots.hasSlotted('header');
@@ -162,7 +160,7 @@ export class PfModal extends LitElement implements HTMLDialogElement {
     `;
   }
 
-  disconnectedCallback() {
+  disconnectedCallback(): void {
     super.disconnectedCallback();
 
     this.removeEventListener('keydown', this.onKeydown);
@@ -171,7 +169,7 @@ export class PfModal extends LitElement implements HTMLDialogElement {
   }
 
   @initializer()
-  protected async _init() {
+  protected async _init(): Promise<void> {
     await this.updateComplete;
     this.#header = this.querySelector(`[slot$="header"]`);
     this.#body = [...this.querySelectorAll(`*:not([slot])`)];
@@ -190,7 +188,8 @@ export class PfModal extends LitElement implements HTMLDialogElement {
     }
   }
 
-  protected async _openChanged(oldValue?: boolean, newValue?: boolean) {
+  @observes('open')
+  protected async openChanged(oldValue?: boolean, newValue?: boolean): Promise<void> {
     // loosening types to prevent running these effects in unexpected circumstances
     // eslint-disable-next-line eqeqeq
     if (oldValue == null || newValue == null || oldValue == newValue) {
@@ -216,7 +215,8 @@ export class PfModal extends LitElement implements HTMLDialogElement {
     }
   }
 
-  protected _triggerChanged() {
+  @observes('trigger')
+  protected triggerChanged(): void {
     if (this.trigger) {
       this.#triggerElement = (this.getRootNode() as Document | ShadowRoot)
           .getElementById(this.trigger);
@@ -272,7 +272,7 @@ export class PfModal extends LitElement implements HTMLDialogElement {
     this.#cancelling = false;
   }
 
-  setTrigger(element: HTMLElement) {
+  setTrigger(element: HTMLElement): void {
     this.#triggerElement = element;
     this.#triggerElement.addEventListener('click', this.onTriggerClick);
   }
@@ -283,7 +283,7 @@ export class PfModal extends LitElement implements HTMLDialogElement {
    * modal.toggle();
    * ```
    */
-  @bound toggle() {
+  @bound toggle(): void {
     this.open = !this.open;
   }
 
@@ -293,11 +293,11 @@ export class PfModal extends LitElement implements HTMLDialogElement {
    * modal.open();
    * ```
    */
-  @bound show() {
+  @bound show(): void {
     this.open = true;
   }
 
-  @bound showModal() {
+  @bound showModal(): void {
     // TODO: non-modal mode
     this.show();
   }
@@ -307,8 +307,9 @@ export class PfModal extends LitElement implements HTMLDialogElement {
    * ```js
    * modal.close();
    * ```
+   * @param returnValue dialog return value
    */
-  @bound close(returnValue?: string) {
+  @bound close(returnValue?: string): void {
     if (typeof returnValue === 'string') {
       this.returnValue = returnValue;
     }

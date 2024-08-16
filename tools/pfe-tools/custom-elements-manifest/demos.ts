@@ -25,6 +25,7 @@ import slugify from 'slugify';
  * Any remaining demos will all be added to the primary element's list, e.g.
  * `/elements/pf-jazz-hands/demo/accessibility.html` would be associated with
  * `/elements/pf-jazz-hands/pf-jazz-hands.js`
+ * @param options pfe config
  */
 export function demosPlugin(options?: PfeConfig): Plugin {
   const fileOptions = getPfeConfig(options?.rootDir);

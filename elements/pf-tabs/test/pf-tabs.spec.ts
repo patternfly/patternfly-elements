@@ -323,23 +323,22 @@ describe('<pf-tabs>', function() {
     beforeEach(async function() {
       element = await createFixture<PfTabs>(html`
         <pf-tabs>
-          <pf-tab slot="tab" disabled>Users</pf-tab>
-          <pf-tab-panel>Users</pf-tab-panel>
-          <pf-tab slot="tab">Containers</pf-tab>
-          <pf-tab-panel>Containers</pf-tab-panel>
-          <pf-tab slot="tab">Database</pf-tab>
-          <pf-tab-panel>Database</pf-tab-panel>
-          <pf-tab slot="tab" disabled>Disabled</pf-tab>
-          <pf-tab-panel>Disabled</pf-tab-panel>
-          <pf-tab slot="tab" aria-disabled="true">Aria Disabled</pf-tab>
-          <pf-tab-panel>Aria Disabled</pf-tab-panel>
+          <pf-tab id="tab1" slot="tab" disabled></pf-tab>
+          <pf-tab id="tab2" slot="tab"></pf-tab>
+          <pf-tab id="tab3" slot="tab"></pf-tab>
+          <pf-tab id="tab4" slot="tab" disabled></pf-tab>
+          <pf-tab id="tab5" slot="tab" aria-disabled="true"></pf-tab>
+          <pf-tab-panel></pf-tab-panel>
+          <pf-tab-panel></pf-tab-panel>
+          <pf-tab-panel></pf-tab-panel>
+          <pf-tab-panel></pf-tab-panel>
+          <pf-tab-panel></pf-tab-panel>
         </pf-tabs>
       `);
     });
 
     it('should activate the next focusable tab', function() {
-      const [, second] = element.querySelectorAll('pf-tab');
-      expect(second).to.have.attribute('active');
+      expect(element.activeTab).to.have.id('tab2');
     });
   });
 });

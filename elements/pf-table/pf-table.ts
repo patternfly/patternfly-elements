@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { state } from 'lit/decorators/state.js';
@@ -663,22 +663,22 @@ const rowQuery = [
  */
 @customElement('pf-table')
 export class PfTable extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
-  get rows() {
-    return this.querySelectorAll<PfTr>(rowQuery);
+  get rows(): NodeListOf<PfTr> {
+    return this.querySelectorAll?.<PfTr>(rowQuery);
   }
 
   @state() private columns = 0;
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('role', 'table');
     this.#onSlotchange();
   }
 
-  render() {
-    const hasExpandableRow = !!this.querySelector('pf-tr[expandable]');
+  render(): TemplateResult<1> {
+    const hasExpandableRow = !!this.querySelector?.('pf-tr[expandable]');
     const coeffRows = hasExpandableRow ? '1' : '0';
     return html`
       <slot @slotchange="${this.#onSlotchange}"

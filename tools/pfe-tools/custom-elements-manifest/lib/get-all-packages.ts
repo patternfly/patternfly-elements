@@ -40,6 +40,11 @@ function findPackages(packageSpecs: string[], rootDirectory: string): PackageRec
       .filter((x): x is PackageRecord => !!x.package?.name);
 }
 
+/**
+ * get all the package json manifests in a repo,
+ * whether a single package repo, or a monorepo.
+ * @param rootDir path to the root package of the monorepo, or the package
+ */
 export function getAllPackages(rootDir: string): PackageRecord[] {
   const rootPackagePath = join(rootDir, 'package.json');
   const rootPackage = readJsonSync(rootPackagePath);

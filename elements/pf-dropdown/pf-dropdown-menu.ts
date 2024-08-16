@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { consume } from '@lit/context';
 import { state } from 'lit/decorators/state.js';
@@ -26,9 +26,9 @@ function isDisabledItemClick(event: MouseEvent) {
  */
 @customElement('pf-dropdown-menu')
 export class PfDropdownMenu extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
-  static override readonly shadowRootOptions = {
+  static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
@@ -39,33 +39,35 @@ export class PfDropdownMenu extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'menu' });
 
-  #tabindex = new RovingTabindexController(this, {
-    getItems: () => this.items.map(x => x.menuItem),
+  get #items() {
+    return this.items.map(x => x.menuItem);
+  }
+
+  #tabindex = RovingTabindexController.of(this, {
+    getItems: () => this.#items,
   });
 
   /**
    * current active descendant in menu
    */
-  get activeItem() {
-    return this.#tabindex.activeItem ?? this.#tabindex.firstItem;
+  get activeItem(): HTMLElement | null {
+    return this.#tabindex.items.at(this.#tabindex.atFocusedItemIndex)
+        ?? this.#tabindex.atFocusableItems.at(0)
+        ?? null;
   }
 
   /**
    * index of current active descendant in menu
    */
-  get activeIndex() {
-    if (!this.#tabindex.activeItem) {
-      return -1;
-    } else {
-      return this.#tabindex.items.indexOf(this.#tabindex.activeItem);
-    }
+  get activeIndex(): number {
+    return this.#tabindex.atFocusedItemIndex;
   }
 
   get items(): PfDropdownItem[] {
     return this.#getSlottedItems(this.shadowRoot?.querySelector('slot'));
   }
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('focusin', this.#onMenuitemFocusin);
     this.addEventListener('click', this.#onMenuitemClick);
@@ -75,7 +77,7 @@ export class PfDropdownMenu extends LitElement {
     this.#internals.ariaDisabled = String(!!this.ctx?.disabled);
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const { disabled = false } = this.ctx ?? {};
     return html`
       <slot class="${classMap({ disabled })}"
@@ -90,7 +92,7 @@ export class PfDropdownMenu extends LitElement {
    */
   #onItemChange(event: Event) {
     if (event instanceof DropdownItemChange) {
-      this.#tabindex.updateItems();
+      this.#onSlotChange();
     }
   }
 
@@ -98,20 +100,20 @@ export class PfDropdownMenu extends LitElement {
    * handles slot change event
    */
   #onSlotChange() {
-    this.#tabindex.updateItems();
+    this.#tabindex.items = this.#items;
   }
 
   /**
    * handles focusing on an option:
    * updates roving tabindex and active descendant
+   * @param event the focus event
    */
   #onMenuitemFocusin(event: FocusEvent) {
     if (this.ctx?.disabled) {
       event.preventDefault();
       event.stopPropagation();
-    } else if (event.target instanceof PfDropdownItem
-        && event.target.menuItem !== this.#tabindex.activeItem) {
-      this.#tabindex.setActiveItem(event.target.menuItem);
+    } else if (event.target instanceof PfDropdownItem) {
+      this.#focusItem(event.target.menuItem);
     }
   }
 
@@ -119,14 +121,21 @@ export class PfDropdownMenu extends LitElement {
    * handles clicking on a menuitem:
    * which selects an item by default
    * or toggles selection if multiselectable
+   * @param event the click event
    */
   #onMenuitemClick(event: MouseEvent) {
     if (this.ctx?.disabled || isDisabledItemClick(event)) {
       event.preventDefault();
       event.stopPropagation();
-    } else if (event.target instanceof PfDropdownItem
-        && event.target.menuItem !== this.#tabindex.activeItem) {
-      this.#tabindex.setActiveItem(event.target.menuItem);
+    } else if (event.target instanceof PfDropdownItem) {
+      this.#focusItem(event.target.menuItem);
+    }
+  }
+
+  #focusItem(item: HTMLElement) {
+    const itemIndex = this.#tabindex.items.indexOf(item);
+    if (itemIndex !== this.#tabindex.atFocusedItemIndex) {
+      this.#tabindex.atFocusedItemIndex = itemIndex;
     }
   }
 

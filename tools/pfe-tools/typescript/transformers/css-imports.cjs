@@ -1,5 +1,4 @@
-// @ts-check
-const ts = require('typescript/lib/typescript');
+const ts = require('typescript');
 const fs = require('node:fs');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
@@ -7,8 +6,8 @@ const { pathToFileURL } = require('node:url');
 const SEEN_SOURCES = new WeakSet();
 
 /**
- * @param {import('typescript').CoreTransformationContext} ctx
- * @param {import('typescript').SourceFile} sourceFile
+ * @param {ts.CoreTransformationContext} ctx
+ * @param {ts.SourceFile} sourceFile
  */
 function createLitCssImportStatement(ctx, sourceFile) {
   if (SEEN_SOURCES.has(sourceFile)) {
@@ -45,8 +44,8 @@ function createLitCssImportStatement(ctx, sourceFile) {
 }
 
 /**
- * @param {import('typescript').CoreTransformationContext} ctx
- * @param {string} stylesheet
+ * @param {ts.CoreTransformationContext} ctx
+ * @param {ts.SourceFile} stylesheet source file
  * @param {string} [name]
  */
 function createLitCssTaggedTemplateLiteral(ctx, stylesheet, name) {
@@ -87,18 +86,14 @@ function minifyCss(stylesheet, filePath) {
   }
 }
 
-/**
- * @param node
- * @param{import('typescript').ImportDeclaration} node
- */
+/** @param {ts.ImportDeclaration} node */
 function getImportSpecifier(node) {
   return node.moduleSpecifier.getText().replace(/^'(.*)'$/, '$1');
 }
 
 /**
- * @param node
- * @param{import('typescript').Node} node
- * @returns {node is import('typescript').ImportDeclaration}
+ * @param {ts.Node} node
+ * @returns {node is ts.ImportDeclaration}
  */
 function isCssImportNode(node) {
   if (ts.isImportDeclaration(node) && !node.importClause?.isTypeOnly) {
@@ -115,11 +110,7 @@ const cssImportSpecImporterMap = new Map();
 /** map from (abspath to import spec) to (abspaths to manually written transformed module) */
 const cssImportFakeEmitMap = new Map();
 
-// abspath to file
-/**
- * @param node
- * @param{import('typescript').ImportDeclaration} node
- */
+/** @param {ts.ImportDeclaration} node */
 function getImportAbsPathOrBareSpec(node) {
   const specifier = getImportSpecifier(node);
   if (!specifier.startsWith('.')) {
@@ -131,9 +122,7 @@ function getImportAbsPathOrBareSpec(node) {
   }
 }
 
-/**
- * @param {import('typescript').SourceFile} sourceFile
- */
+/** @param {ts.SourceFile} sourceFile */
 function cacheCssImportSpecsAbsolute(sourceFile) {
   sourceFile.forEachChild(node => {
     if (isCssImportNode(node)) {
@@ -151,13 +140,16 @@ function cacheCssImportSpecsAbsolute(sourceFile) {
  * If the inline option is set, remove the import specifier and print the css
  * object in place, except if that module is imported elsewhere in the project,
  * in which case leave a `.css.js` import
- * @param {import('typescript').Program} program
- * @param root0
- * @param root0.inline
- * @param root0.minify
- * @returns {import('typescript').TransformerFactory<import('typescript').SourceFile>}
+ * @param {ts.Program} program
+ * @param opts
+ * @param {boolean} opts.inline
+ * @param {boolean} opts.minify
+ * @returns {ts.TransformerFactory<ts.SourceFile>}
  */
-module.exports = function(program, { inline = false, minify = false } = {}) {
+module.exports = function(program, {
+  inline = false,
+  minify = false,
+} = {}) {
   return ctx => {
     for (const sourceFileName of program.getRootFileNames()) {
       const sourceFile = program.getSourceFile(sourceFileName);
@@ -166,10 +158,7 @@ module.exports = function(program, { inline = false, minify = false } = {}) {
       }
     }
 
-    /**
-     * @param node
-     * @param{import('typescript').Node} node
-     */
+    /** @param {ts.Node} node */
     function rewriteOrInlineVisitor(node) {
       if (isCssImportNode(node)) {
         const { fileName } = node.getSourceFile();
@@ -209,8 +198,11 @@ module.exports = function(program, { inline = false, minify = false } = {}) {
 
     return sourceFile => {
       const children = sourceFile.getChildren();
+
+      // eslint-disable-next-line
+      /** @type {ts.ImportDeclaration} */
       const litImportBindings =
-        /** @type{import('typescript').ImportDeclaration}*/(children.find(x =>
+        (children.find(x =>
           !ts.isTypeOnlyImportOrExportDeclaration(x)
         && !ts.isNamespaceImport(x)
         && ts.isImportDeclaration(x)
@@ -223,8 +215,8 @@ module.exports = function(program, { inline = false, minify = false } = {}) {
 
       if (hasStyleImports) {
         if (litImportBindings
-            && ts.isNamedImports(litImportBindings)
-            && !litImportBindings.elements?.some(x => x.getText() === 'css')) {
+          && ts.isNamedImports(litImportBindings)
+          && !litImportBindings.elements?.some(x => x.getText() === 'css')) {
           ctx.factory.updateNamedImports(
             litImportBindings,
             [

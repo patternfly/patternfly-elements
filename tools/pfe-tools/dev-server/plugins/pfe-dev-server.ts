@@ -1,12 +1,12 @@
 import type { Plugin } from '@web/dev-server-core';
 import type { PfeDevServerConfigOptions } from '../config.js';
-import type { PfeConfig } from '../../config.js';
+import type { SiteOptions } from '../../config.js';
 
 import { pfeDevServerRouterMiddleware } from './dev-server-router.js';
 import { pfeDevServerTemplateMiddleware } from './dev-server-templates.js';
 
 export type PfeDevServerInternalConfig = Required<PfeDevServerConfigOptions> & {
-  site: Required<PfeConfig['site']>;
+  site: Required<SiteOptions>;
 };
 
 /**

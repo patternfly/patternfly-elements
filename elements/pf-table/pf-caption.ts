@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 
 import styles from './pf-caption.css';
@@ -9,9 +9,9 @@ import styles from './pf-caption.css';
  */
 @customElement('pf-caption')
 export class PfCaption extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
-  render() {
+  render(): TemplateResult<1> {
     return html`
       <slot></slot>
     `;

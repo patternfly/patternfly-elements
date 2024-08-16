@@ -13,11 +13,11 @@
     "**/test/*_e2e*"
   ],
   "compilerOptions": {
-    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "composite": true,
     "declaration": true,
+    "isolatedDeclarations": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -39,6 +39,9 @@
       {
         "transform": "@patternfly/pfe-tools/typescript/transformers/css-imports.cjs",
         "inline": true
+      },
+      {
+        "transform": "@patternfly/pfe-tools/typescript/transformers/static-version.cjs"
       },
       {
         "name": "typescript-lit-html-plugin"

@@ -45,20 +45,31 @@ export class PfeDemoPage {
     await this.page.waitForTimeout(100);
   }
 
-  /** Focus the first instance of the element, or a given selector, then wait for the element's updateComplete */
-  async focus(selector = this.tagName) {
+  /**
+   * Focus the first instance of the element, or a given selector,
+   * then wait for the element's updateComplete
+   * @param [selector=this.tagName]
+   */
+  async focus(selector: string = this.tagName): Promise<void> {
     await this.page.$eval(selector, el => el.focus());
     await this.updateComplete(selector);
   }
 
-  /** Click the first instance of the element, or a given selector, then wait for the element's updateComplete */
-  async click(selector = this.tagName) {
+  /**
+   * Click the first instance of the element, or a given selector,
+   * then wait for the element's updateComplete
+   * @param [selector=this.tagName]
+   */
+  async click(selector: string = this.tagName): Promise<void> {
     await this.page.$eval(selector, (el: HTMLElement) => el.click());
     await this.updateComplete(selector);
   }
 
-  /** Wait for the element, or a given selector, to update */
-  async updateComplete(selector: string | null = this.tagName) {
+  /**
+   * Wait for the element, or a given selector, to update
+   * @param [selector=this.tagName]
+   */
+  async updateComplete(selector: string = this.tagName): Promise<void> {
     await this.page.waitForLoadState('domcontentloaded');
     await this.page.waitForLoadState('networkidle');
     if (selector) {
@@ -71,8 +82,11 @@ export class PfeDemoPage {
     }
   }
 
-  /** Take a snapshot and save it to disk */
-  async snapshot(name?: string) {
+  /**
+   * Take a snapshot and save it to disk
+   * @param name optional snapshot name
+   */
+  async snapshot(name?: string): Promise<void> {
     const snapshotName = `${this.tagName}${name ? `-${name}` : ''}`;
     expect(await this.page.screenshot({ fullPage: true })).toMatchSnapshot(`${snapshotName}.png`);
   }

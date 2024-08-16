@@ -1,4 +1,4 @@
-import { LitElement, html, svg } from 'lit';
+import { LitElement, html, svg, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -33,7 +33,7 @@ const paths = new Map(Object.entries({
  */
 @customElement('pf-th')
 export class PfTh extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   @property({ type: Boolean, reflect: true }) sortable?: boolean = false;
 
@@ -46,7 +46,7 @@ export class PfTh extends LitElement {
 
   @property() key!: string;
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     const closestThead = this.closest('pf-thead');
     const closestTable = this.closest('pf-table');
@@ -55,7 +55,7 @@ export class PfTh extends LitElement {
     this.setAttribute('role', role);
   }
 
-  render() {
+  render(): TemplateResult<1> {
     const selected = !!this.selected;
     return this.sortable ?
       html`
@@ -82,7 +82,7 @@ export class PfTh extends LitElement {
     }
   }
 
-  sort() {
+  sort(): void {
     const next = DIRECTIONS[this.sortDirection ?? 'asc'];
     this.dispatchEvent(new RequestSortEvent(this.key, next));
   }

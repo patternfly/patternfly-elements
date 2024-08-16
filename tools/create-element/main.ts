@@ -38,7 +38,6 @@ interface PackageJSON {
 
 /** generated at https://dom111.github.io/image-to-ansi/ */
 function banner() {
-  // eslint-disable-next-line no-console
   console.log(`\x1b[49m                          \x1b[38;5;87;49m▄\x1b[38;5;87;48;5;87m▄\x1b[38;5;87;49m▄\x1b[49m                          \x1b[m
 \x1b[49m                        \x1b[38;5;81;49m▄\x1b[38;5;81;48;5;87m▄▄\x1b[49m \x1b[38;5;81;48;5;87m▄\x1b[38;5;87;48;5;87m▄\x1b[38;5;81;49m▄\x1b[49m                        \x1b[m
 \x1b[49m                      \x1b[38;5;81;49m▄\x1b[38;5;81;48;5;81m▄\x1b[49;38;5;81m▀\x1b[38;5;81;48;5;81m▄▄\x1b[49m \x1b[38;5;81;48;5;81m▄▄\x1b[49;38;5;81m▀\x1b[38;5;81;48;5;81m▄\x1b[38;5;81;49m▄\x1b[49m                      \x1b[m
@@ -69,6 +68,9 @@ function banner() {
                    ${Chalk.bold(Chalk.blue('PatternFly Elements'))}`);
 }
 
+/**
+ * @param options the tag and package names, among others
+ */
 export async function promptForElementGeneratorOptions(
   options?: PromptOptions<GenerateElementOptions>
 ): Promise<GenerateElementOptions> {
@@ -97,6 +99,9 @@ async function getDefaultPackageName() {
          ?? (await readJsonOrVoid(join(process.cwd(), 'package.json')) as PackageJSON)?.name ?? '';
 }
 
+/**
+ * Prompt to generate an element definition
+ */
 export async function main(): Promise<void> {
   return Promise.resolve(
     (Yargs(process.argv) as Yargs.Argv<GenerateElementOptions>)
@@ -147,7 +152,6 @@ export async function main(): Promise<void> {
       .then(generateElement)
       .catch(e => {
         if (e instanceof PackageJSONError) {
-          // eslint-disable-next-line no-console
           console.log(e.message);
           process.exit(1);
         } else {

@@ -80,12 +80,15 @@ svg {
   height: var(--pf-global--FontSize--sm, 14px);
 }
 
-.offscreen {
-  position: absolute;
-  left: -99999;
-  width: 0;
-  height: 0;
-  opacity: 0;
+.visually-hidden {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  block-size: 1px;
+  margin: -1px;
   overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  inline-size: 1px;
 }
 

@@ -278,6 +278,11 @@
   padding: var(--pf-global--spacer--sm, 0.5rem);
 }
 
+#toggle-button:focus:before {
+  border-bottom-color: var(--pf-c-select__toggle--focus--before--BorderBottomColor);
+  border-bottom-width: var(--pf-c-select__toggle--focus--before--BorderBottomWidth);
+}
+
 #outer.typeahead #toggle-button {
   flex: 0 0 auto;
 }
@@ -323,13 +328,16 @@ pf-badge {
   display: none !important;
 }
 
-.offscreen {
-  position: absolute;
-  left: -99999;
-  width: 0;
-  height: 0;
-  opacity: 0;
+.visually-hidden {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  block-size: 1px;
+  margin: -1px;
   overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  inline-size: 1px;
 }
 
 ::slotted(hr) {

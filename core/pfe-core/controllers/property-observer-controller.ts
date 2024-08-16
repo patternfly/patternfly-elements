@@ -1,52 +1,91 @@
 import type { ReactiveController, ReactiveElement } from 'lit';
 
-export const observedController = Symbol('observed properties controller');
+import { notEqual } from 'lit';
 
-export type ChangeCallback<T = ReactiveElement> = (
+export type ChangeCallback<T extends ReactiveElement, V = T[keyof T]> = (
   this: T,
-  old?: T[keyof T],
-  newV?: T[keyof T],
+  old?: V,
+  newV?: V,
 ) => void;
 
-export type ChangeCallbackName = `_${string}Changed`;
+export interface PropertyObserverOptions<T extends ReactiveElement> {
+  propertyName: string & keyof T;
+  callback: ChangeCallback<T>;
+  waitFor?: 'connected' | 'updated' | 'firstUpdated';
+}
 
-export type PropertyObserverHost<T> = T & Record<ChangeCallbackName, ChangeCallback<T>> & {
-  [observedController]: PropertyObserverController;
-};
+const UNINITIALIZED = Symbol('uninitialized');
 
-/** This controller holds a cache of observed property values which were set before the element updated */
-export class PropertyObserverController implements ReactiveController {
-  private static hosts = new WeakMap<HTMLElement, PropertyObserverController>();
+export class PropertyObserverController<
+  T extends ReactiveElement
+> implements ReactiveController {
+  private oldVal: T[keyof T] = UNINITIALIZED as T[keyof T];
 
-  private values = new Map<string, [methodName: string, values: [unknown, unknown]]>();
-
-  private delete(key: string) {
-    this.values.delete(key);
+  constructor(
+    private host: T,
+    private options: PropertyObserverOptions<T>
+  ) {
   }
 
-  constructor(private host: ReactiveElement) {
-    if (PropertyObserverController.hosts.get(host)) {
-      return PropertyObserverController.hosts.get(host) as PropertyObserverController;
+  #neverRan = true;
+
+  hostConnected(): void {
+    this.#init();
+  }
+
+  /**
+   * Because of how typescript transpiles private fields,
+   * the __accessPrivate helper might not be entirely initialized
+   * by the time this constructor runs (in `addInitializer`'s instance callback')
+   * Therefore, we pull this shtick.
+   *
+   * When browser support improves to the point we can ship decorated private fields,
+   * we'll be able to get rid of this.
+   */
+  #init() {
+    if (this.oldVal === UNINITIALIZED) {
+      this.oldVal = this.host[this.options.propertyName];
     }
-    host.addController(this);
-    (host as PropertyObserverHost<ReactiveElement>)[observedController] = this;
   }
 
   /** Set any cached valued accumulated between constructor and connectedCallback */
-  hostUpdate() {
-    for (const [key, [methodName, [oldVal, newVal]]] of this.values) {
-      // @ts-expect-error: be cool, typescript
-      this.host[methodName as keyof ReactiveElement]?.(oldVal, newVal);
-      this.delete(key);
+  async hostUpdate(): Promise<void> {
+    this.#init();
+    const { oldVal, options: { waitFor, propertyName, callback } } = this;
+    if (!callback) {
+      throw new Error(`no callback for ${propertyName}`);
     }
-  }
-
-  /** Once the element has updated, we no longer need this controller, so we remove it */
-  hostUpdated() {
-    this.host.removeController(this);
-  }
-
-  cache(key: string, methodName: string, ...vals: [unknown, unknown]) {
-    this.values.set(key, [methodName, vals]);
+    const newVal = this.host[propertyName];
+    this.oldVal = newVal;
+    if (newVal !== oldVal) {
+      switch (waitFor) {
+        case 'connected':
+          if (!this.host.isConnected) {
+            const origConnected = this.host.connectedCallback;
+            await new Promise<void>(resolve => {
+              this.host.connectedCallback = function() {
+                resolve(origConnected?.call(this));
+              };
+            });
+          }
+          break;
+        case 'firstUpdated':
+          if (!this.host.hasUpdated) {
+            await this.host.updateComplete;
+          }
+          break;
+        case 'updated':
+          await this.host.updateComplete;
+          break;
+      }
+    }
+    const Class = (this.host.constructor as typeof ReactiveElement);
+    const hasChanged = Class
+        .getPropertyOptions(this.options.propertyName)
+        .hasChanged ?? notEqual;
+    if (this.#neverRan || hasChanged(oldVal, newVal)) {
+      callback.call(this.host, oldVal as T[keyof T], newVal);
+      this.#neverRan = false;
+    }
   }
 }

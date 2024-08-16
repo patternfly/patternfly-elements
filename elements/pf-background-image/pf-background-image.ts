@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { property } from 'lit/decorators/property.js';
@@ -22,7 +22,7 @@ import styles from './pf-background-image.css';
  */
 @customElement('pf-background-image')
 export class PfBackgroundImage extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   /**
    * The URL for the image shown on mobile
@@ -60,7 +60,7 @@ export class PfBackgroundImage extends LitElement {
 
   #updated = false;
 
-  render() {
+  render(): TemplateResult<1> {
     const cssProps = {
       '--_background-image': this.src,
       '--_background-image-2x': this.src2x,

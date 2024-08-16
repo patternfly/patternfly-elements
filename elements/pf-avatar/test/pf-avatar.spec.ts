@@ -1,7 +1,6 @@
 import { html, expect, oneEvent, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { PfAvatar } from '@patternfly/elements/pf-avatar/pf-avatar.js';
-import { AvatarLoadEvent } from '../BaseAvatar';
+import { PfAvatar, PfAvatarLoadEvent } from '@patternfly/elements/pf-avatar/pf-avatar.js';
 
 describe('<pf-avatar>', function() {
   it('imperatively instantiates', function() {
@@ -32,14 +31,14 @@ describe('<pf-avatar>', function() {
     let element: PfAvatar;
     let loaded: string | undefined;
     const datauri = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAB0UlEQVR4Xu3UAQ0AAAyDsM+/6QspcwAh2zXawGj64K8A8AgKoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7ADyAB6SPAIFm19U7AAAAAElFTkSuQmCC';
-    const onLoad = (e: AvatarLoadEvent) => {
+    const onLoad = (e: PfAvatarLoadEvent) => {
       const paths = e.originalEvent.composedPath() as HTMLImageElement[];
       loaded = paths.find(x => x.localName === 'img')?.src;
     };
     beforeEach(async function() {
       element = await createFixture(html`<pf-avatar @load="${onLoad}"></pf-avatar>`);
       setTimeout(() => element.src = datauri);
-      await oneEvent(element, 'load', false);
+      await oneEvent(element, 'load');
     });
     it('loads the image', function() {
       expect(loaded).to.equal(datauri);

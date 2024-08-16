@@ -22,6 +22,7 @@
   "exports": {
     "./config.js": "./config.js",
     "./custom-elements-manifest/config.js": "./custom-elements-manifest/config.js",
+    "./custom-elements-manifest/custom-elements-manifest.js": "./custom-elements-manifest/custom-elements-manifest.js",
     "./dev-server/config.js": "./dev-server/config.js",
     "./dev-server/demo.js": "./dev-server/demo.js",
     "./environment.js": "./environment.js",
@@ -32,6 +33,7 @@
     "./11ty/plugins/table-of-contents.cjs": "./11ty/plugins/table-of-contents.cjs",
     "./11ty/plugins/todos.cjs": "./11ty/plugins/todos.cjs",
     "./react/generate-wrappers.js": "./react/generate-wrappers.js",
+    "./ssr/*": "./ssr/*",
     "./test/a11y-snapshot.js": "./test/a11y-snapshot.js",
     "./test/config.js": "./test/config.js",
     "./test/create-fixture.js": "./test/create-fixture.js",
@@ -40,7 +42,8 @@
     "./test/render-to-string.js": "./test/render-to-string.js",
     "./test/stub-logger.js": "./test/stub-logger.js",
     "./test/utils.js": "./test/utils.js",
-    "./typescript/transformers/css-imports.cjs": "./typescript/transformers/css-imports.cjs"
+    "./typescript/transformers/css-imports.cjs": "./typescript/transformers/css-imports.cjs",
+    "./typescript/transformers/static-version.cjs": "./typescript/transformers/static-version.cjs"
   },
   "contributors": [
     "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",
@@ -67,14 +70,15 @@
     "@custom-elements-manifest/analyzer": "^0.5.7",
     "@jspm/generator": "^2.0.1",
     "@koa/router": "^12.0.1",
+    "@lit-labs/ssr": "^3.2.2",
     "@open-wc/testing": "^4.0.0",
-    "@playwright/test": "^1.43.0",
+    "@playwright/test": "^1.44.0",
     "@rollup/plugin-replace": "^5.0.5",
     "@web/dev-server": "^0.4.4",
     "@web/dev-server-esbuild": "^1.0.2",
     "@web/dev-server-import-maps": "^0.2.0",
     "@web/dev-server-rollup": "^0.6.1",
-    "@web/test-runner": "^0.18.1",
+    "@web/test-runner": "^0.18.3",
     "@web/test-runner-commands": "^0.9.0",
     "@web/test-runner-junit-reporter": "^0.7.1",
     "@web/test-runner-playwright": "^0.11.0",
@@ -82,7 +86,7 @@
     "cem-plugin-readonly": "^0.0.5",
     "chalk": "^5.3.0",
     "clean-css": "^5.3.3",
-    "colorjs.io": "^0.5.0",
+    "colorjs.io": "^0.5.2",
     "compression": "^1.7.4",
     "construct-style-sheets-polyfill": "^3.1.0",
     "dedent": "^1.5.1",
@@ -94,7 +98,7 @@
     "esbuild-plugin-lit-css": "^3.0.0",
     "esbuild-plugin-minify-html-literals": "^2.0.0",
     "eslint": "^9.0.0",
-    "execa": "^8.0.1",
+    "execa": "^9.3.0",
     "glob": "^10.3.12",
     "lit": "^3.1.2",
     "markdown-it-anchor": "^8.6.7",
@@ -104,7 +108,7 @@
     "rollup-plugin-lit-css": "^5.0.0",
     "sinon": "^17.0.1",
     "ts-lit-plugin": "^2.0.2",
-    "ts-patch": "^3.1.2",
+    "ts-patch": "^3.2.1",
     "typescript": "^5.4.4",
     "urlpattern-polyfill": "^10.0.0",
     "web-dev-server-plugin-lit-css": "^3.0.0"
@@ -114,11 +118,11 @@
     "@types/estree": "^1.0.5",
     "@types/glob": "^8.1.0",
     "@types/koa-send": "^4.1.6",
-    "@types/mocha": "^10.0.6",
-    "@types/node": "^20.12.7",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "^20.14.10",
     "@types/nunjucks": "^3.2.6",
     "@types/sinon": "^17.0.3",
     "@types/yargs": "^17.0.32",
-    "custom-elements-manifest": "^2.0.0"
+    "custom-elements-manifest": "^2.1.0"
   }
 }

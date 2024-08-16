@@ -1,10 +1,16 @@
 :host {
+  display: block;
   background-color: var(--pf-c-code-block--BackgroundColor, #f0f0f0);
   font-size: var(--pf-c-code-block__pre--FontSize, 0.875rem);
   font-family: var(--pf-c-code-block__pre--FontFamily, "Liberation Mono", consolas, "SFMono-Regular", menlo, monaco, "Courier New", monospace);
 }
 
+[hidden] {
+  display: none !important;
+}
+
 #container {
+  margin: 0;
   padding-top: var(--pf-c-code-block__content--PaddingTop, 1rem);
   padding-right: var(--pf-c-code-block__content--PaddingRight, 1rem);
   padding-bottom: var(--pf-c-code-block__content--PaddingBottom, 1rem);
@@ -13,10 +19,6 @@
 
 #header {
   border-bottom: var(--pf-c-code-block__header--BorderBottomWidth, 1px) solid var(--pf-c-code-block__header--BorderBottomColor, #d2d2d2);
-}
-
-#container {
-  margin: 0;
 }
 
 pre {
@@ -46,6 +48,7 @@ button svg {
   color: #151515;
   margin-right: 12px;
   transition: .2s ease-in 0s;
+  vertical-align: -0.125em;
 }
 
 .expanded button svg {

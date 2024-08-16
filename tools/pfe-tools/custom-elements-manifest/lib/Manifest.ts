@@ -70,7 +70,10 @@ export const isPublicInstanceMethod: (x: ClassMember) => x is ClassMethod =
   ) as (x: ClassMember) => x is ClassMethod;
 
 export const isCustomElement = (x: Declaration): x is CustomElementDeclaration => 'tagName' in x;
-export const isTheField = (x: ClassField) => (y: Attribute) => y.fieldName === x.name;
+export const isTheField =
+  (x: ClassField): (y: Attribute) => boolean =>
+    (y: Attribute): boolean =>
+      y.fieldName === x.name;
 
 const readJsonSync = (path: string) => {
   try {
@@ -164,7 +167,7 @@ export class Manifest {
     return Manifest.#instances.get(packageJson) as Manifest;
   }
 
-  public static getAll(rootDir = process.cwd()): Manifest[] {
+  public static getAll(rootDir: string = process.cwd()): Manifest[] {
     return getAllPackages(rootDir).flatMap(x =>
       !x.package.customElements ? [] : [Manifest.from(x)]);
   }
@@ -172,13 +175,13 @@ export class Manifest {
   public static prettyTag = (
     tagName: string,
     aliases?: Record<string, string>,
-  ) => aliases?.[tagName] ?? tagName
+  ): string => aliases?.[tagName] ?? tagName
       .replace(/^\w+-/, '')
       .toLowerCase()
       .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
       .replace(/-/g, ' ');
 
-  declarations = new Map<string, ManifestCustomElement>();
+  declarations: Map<string, ManifestCustomElement> = new Map<string, ManifestCustomElement>();
 
   /** file path to the custom elements manifest */
   path = '';
@@ -217,60 +220,70 @@ export class Manifest {
   }
 
   /**
+   * @param tagName tag to get attributes for
    */
   getAttributes(tagName: string): undefined | Attribute[] {
     return this.#tag(tagName)?.attributes;
   }
 
   /**
+   * @param tagName tag to get css props for
    */
   getCssCustomProperties(tagName: string): undefined | CssCustomProperty[] {
     return this.#tag(tagName)?.cssCustomProperties;
   }
 
   /**
+   * @param tagName tag to get css parts for
    */
   getCssParts(tagName: string): undefined | CssPart[] {
     return this.#tag(tagName)?.cssParts;
   }
 
   /**
+   * @param tagName tag to get description for
    */
   getDescription(tagName: string): undefined | string {
     return this.#tag(tagName)?.description;
   }
 
   /**
+   * @param tagName tag to get events for
    */
   getEvents(tagName: string): undefined | Event[] {
     return this.#tag(tagName)?.events;
   }
 
   /**
+   * @param tagName tag to get methods for
    */
   getMethods(tagName: string): undefined | ClassMethod[] {
     return this.#tag(tagName)?.methods;
   }
 
   /**
+   * @param tagName tag to get properties for
    */
   getProperties(tagName: string): undefined | ClassField[] {
     return this.#tag(tagName)?.properties;
   }
 
   /**
+   * @param tagName tag to get summary for
    */
   getSummary(tagName: string): undefined | string {
     return this.#tag(tagName)?.summary;
   }
 
   /**
+   * @param tagName tag to get slots for
    */
   getSlots(tagName: string): undefined | Slot[] {
     return this.#tag(tagName)?.slots;
   }
 
   /**
+   * @param tagName tag to get demos for
    */
   getDemos(tagName: string): Demo[] {
     return this.#tag(tagName)?.demos ?? [];

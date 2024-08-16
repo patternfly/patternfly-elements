@@ -17,6 +17,9 @@ function isVersionStatic(member: ClassMember): member is ClassField {
   return !!member.static && member.name === 'version';
 }
 
+/**
+ * Add the static `version` field to custom element class declarations
+ */
 export function versionStaticFieldPlugin(): Plugin {
   return {
     name: 'version-static-field-plugin',

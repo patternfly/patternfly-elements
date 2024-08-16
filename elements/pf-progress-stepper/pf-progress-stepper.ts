@@ -1,7 +1,6 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { observed } from '@patternfly/pfe-core/decorators/observed.js';
 
 import style from './pf-progress-stepper.css';
 
@@ -17,7 +16,7 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
 export class PfProgressStepper extends LitElement {
   protected static childTagName = 'pf-progress-step';
 
-  static readonly styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
   static formAssociated = true;
 
@@ -28,9 +27,6 @@ export class PfProgressStepper extends LitElement {
   @property({ type: Boolean, reflect: true }) center = false;
 
   /** Whether to use the compact layout */
-  @observed(function(this: PfProgressStepper) {
-    this.querySelectorAll('pf-progress-step').forEach(step => step.requestUpdate());
-  })
   @property({ type: Boolean, reflect: true }) compact = false;
 
   #internals = InternalsController.of(this, {
@@ -40,10 +36,10 @@ export class PfProgressStepper extends LitElement {
 
   #mo = new MutationObserver(() => this.#onMutation());
 
-  get value() {
+  get value(): number {
     const { childTagName } = (this.constructor as typeof PfProgressStepper);
-    const steps = this.querySelectorAll<PfProgressStep>(childTagName);
-    const current = this.querySelector(`${childTagName}[current]`);
+    const steps = this.querySelectorAll?.<PfProgressStep>(childTagName) ?? [];
+    const current = this.querySelector?.(`${childTagName}[current]`);
     const n = Array.from(steps).indexOf(current as PfProgressStep) + 1;
     return (n / steps.length) * 100;
   }
@@ -57,10 +53,16 @@ export class PfProgressStepper extends LitElement {
     this.#internals.ariaValueNow = this.value.toString();
   }
 
-  render() {
+  render(): TemplateResult<1> {
     // TODO: add label prop
     // eslint-disable-next-line lit-a11y/accessible-name
     return html`<div role="listbox" style="display:contents;"><slot></slot></div>`;
+  }
+
+  updated(changed: PropertyValues<this>): void {
+    if (changed.has('compact')) {
+      this.querySelectorAll?.('pf-progress-step').forEach(step => step.requestUpdate());
+    }
   }
 }
 

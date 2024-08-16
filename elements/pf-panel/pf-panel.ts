@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -11,14 +11,13 @@ import styles from './pf-panel.css';
  * be used to house other components such as fields, forms, videos, buttons, and more.
  * The panel should not be confused with the [drawer](https://www.patternfly.org/v4/components/drawer/design-guidelines/)
  * component, which allows you to surface information via a collapsable container.
- *
  * @slot header - Place header content here
  * @slot - Place main content here
  * @slot footer - Place footer content here
  */
 @customElement('pf-panel')
 export class PfPanel extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   @property({ type: Boolean, reflect: true }) scrollable = false;
 
@@ -26,7 +25,7 @@ export class PfPanel extends LitElement {
 
   #slots = new SlotController(this, 'header', null, 'footer');
 
-  render() {
+  render(): TemplateResult<1> {
     const hasHeader = this.#slots.hasSlotted('header');
     const hasFooter = this.#slots.hasSlotted('footer');
     return html`

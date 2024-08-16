@@ -1,5 +1,5 @@
 import { expect, html, fixture, fixtureCleanup, nextFrame } from '@open-wc/testing';
-import { a11ySnapshot, type A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 import { sendKeys, resetMouse } from '@web/test-runner-commands';
 import { PfPopover } from '@patternfly/elements/pf-popover/pf-popover.js';
@@ -27,18 +27,6 @@ describe('<pf-popover>', function() {
   /** Asserts that an aXe audit on the page passes */
   async function expectA11yAxe() {
     await expect(element).to.be.accessible();
-  }
-
-  /**
-   * Assert that the accessibility tree reports the expected snapshot
-   * e.g. for a closed popover, does not announce popover child content
-   * e.g. for an opened popover, it does announce popover child content
-   * If the expected children snapshot is undefined, then assistive technology
-   * reports nothing at all, e.g. a popover element with no attrs and no children
-   */
-  async function expectA11ySnapshot(expected: A11yTreeSnapshot = { role: 'WebArea', name: '' }) {
-    const snapshot = await a11ySnapshot();
-    expect(snapshot).to.deep.equal(expected);
   }
 
   function resetElement() {

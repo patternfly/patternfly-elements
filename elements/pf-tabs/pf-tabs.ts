@@ -1,4 +1,4 @@
-import { html, LitElement, type PropertyValues } from 'lit';
+import { html, LitElement, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -20,6 +20,7 @@ import { type PfTabsContext, TabExpandEvent, context } from './context.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
 
 import styles from './pf-tabs.css';
+import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 
 /**
  * **Tabs** allow users to navigate between views within the same page or context.
@@ -60,7 +61,7 @@ import styles from './pf-tabs.css';
  */
 @customElement('pf-tabs')
 export class PfTabs extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   protected static readonly scrollTimeoutDelay = 150;
 
@@ -105,10 +106,25 @@ export class PfTabs extends LitElement {
    */
   @property({ reflect: true, type: Boolean }) manual = false;
 
-  /**
-   * The index of the active tab
-   */
-  @property({ attribute: 'active-index', reflect: true, type: Number }) activeIndex = -1;
+  #activeIndex = -1;
+
+  /** The index of the active tab */
+  @property({ attribute: 'active-index', reflect: true, type: Number })
+  get activeIndex() {
+    return this.#activeIndex;
+  }
+
+  set activeIndex(v: number) {
+    this.#tabindex.atFocusedItemIndex = v;
+    this.#activeIndex = v;
+    this.activeTab = this.tabs[v];
+    for (const tab of this.tabs) {
+      if (!this.activeTab?.disabled) {
+        tab.active = tab === this.activeTab;
+      }
+      this.#tabs.panelFor(tab)?.toggleAttribute('hidden', !tab.active);
+    }
+  }
 
   @property({ attribute: false }) activeTab?: PfTab;
 
@@ -134,17 +150,18 @@ export class PfTabs extends LitElement {
     isActiveTab: x => x.active,
   });
 
-  #tabindex = new RovingTabindexController(this, {
-    getHTMLElement: () => this.shadowRoot?.getElementById('tabs') ?? null,
+  #tabindex = RovingTabindexController.of(this, {
+    getItemsContainer: () => this.tabsContainer ?? null,
     getItems: () => this.tabs ?? [],
   });
 
   #logger = new Logger(this);
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('expand', this.#onExpand);
     this.id ||= getRandomId(this.localName);
+    this.activeIndex = this.#tabindex.atFocusedItemIndex;
   }
 
   protected override async getUpdateComplete(): Promise<boolean> {
@@ -156,22 +173,21 @@ export class PfTabs extends LitElement {
     return here && ps.every(x => !!x);
   }
 
-  override willUpdate(changed: PropertyValues<this>): void {
-    if (changed.has('activeIndex')) {
-      this.select(this.activeIndex);
-    } else if (changed.has('activeTab') && this.activeTab) {
-      this.select(this.activeTab);
-    } else {
-      this.#updateActive();
+  protected override willUpdate(): void {
+    if (!this.manual && this.activeIndex !== this.#tabindex.atFocusedItemIndex) {
+      this.activeIndex = this.#tabindex.atFocusedItemIndex;
     }
     this.#overflow.update();
     this.ctx = this.#ctx;
   }
 
-  protected override updated(changed: PropertyValues<this>): void {
-    if (changed.has('activeTab') && this.activeTab?.disabled) {
+  @observes('activeTab')
+  protected activeTabChanged(old?: PfTab, activeTab?: PfTab): void {
+    if (activeTab?.disabled) {
       this.#logger.warn('Active tab is disabled. Setting to first focusable tab');
       this.activeIndex = 0;
+    } if (activeTab) {
+      this.activeIndex = this.tabs.indexOf(activeTab);
     }
   }
 
@@ -181,7 +197,7 @@ export class PfTabs extends LitElement {
     }
   }
 
-  render() {
+  render(): TemplateResult<1> {
     return html`
       <div part="container"
            class="${classMap({ overflow: this.#overflow.showScrollButtons })}">
@@ -229,30 +245,12 @@ export class PfTabs extends LitElement {
     }
   }
 
-  #updateActive({ force = false } = {}) {
-    if (!this.#tabindex.activeItem?.disabled) {
-      this.tabs?.forEach((tab, i) => {
-        if (force || !this.manual) {
-          const active = tab === this.#tabindex.activeItem;
-          tab.active = active;
-          if (active) {
-            this.activeIndex = i;
-            this.activeTab = tab;
-          }
-        }
-        this.#tabs.panelFor(tab)?.toggleAttribute('hidden', !tab.active);
-      });
-    }
-  }
-
-  select(option: PfTab | number) {
-    if (typeof option === 'number') {
-      const item = this.tabs[option];
-      this.#tabindex.setActiveItem(item);
+  select(tab: PfTab | number): void {
+    if (typeof tab === 'number') {
+      this.activeIndex = tab;
     } else {
-      this.#tabindex.setActiveItem(option);
+      this.activeIndex = this.tabs.indexOf(tab);
     }
-    this.#updateActive({ force: true });
   }
 }
 

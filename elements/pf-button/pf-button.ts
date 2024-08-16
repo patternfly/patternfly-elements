@@ -227,6 +227,10 @@ export class PfButton extends LitElement {
     this.#internals.ariaDisabled = String(!!this.disabled);
     if (this.variant !== 'link' || (this.variant === 'link' && !this.href ) ) {
       this.tabIndex = 0;
+      this.#internals.role = 'button';
+    } else {
+      this.tabIndex = -1;
+      this.#internals.role = 'none';
     }
   }
 

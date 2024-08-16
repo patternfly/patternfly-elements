@@ -225,16 +225,34 @@ export class PfButton extends LitElement {
   protected override willUpdate(): void {
     this.#internals.ariaLabel = this.label || null;
     this.#internals.ariaDisabled = String(!!this.disabled);
+    if (this.variant !== 'link' || (this.variant === 'link' && !this.href ) ) {
+      this.tabIndex = 0;
+    }
   }
 
   protected override render() {
     const hasIcon = !!this.icon || !!this.loading || this.#slots.hasSlotted('icon');
     const { warning, variant, danger, loading, plain, inline, block, size, href, target } = this;
-    if ( variant !== 'link' || ( variant === 'link' && !href ) ) {
-      this.tabIndex = 0;
-    }
 
     const disabled = this.#disabled;
+
+    const content = html`
+      <slot id="icon" part="icon" name="icon" ?hidden="${!hasIcon}">
+        <pf-icon
+            role="presentation"
+            icon="${ifDefined(this.icon)}"
+            set="${ifDefined(this.iconSet)}"
+            ?hidden="${!this.icon}">
+        </pf-icon>
+        <pf-spinner
+            size="md"
+            ?hidden="${!this.loading}"
+            aria-label="${this.getAttribute('loading-label') ?? 'loading'}">
+        </pf-spinner>
+      </slot>
+      <slot id="text"></slot>
+    `;
+
     return html`
       <div id="button"
            class="${classMap({
@@ -248,40 +266,8 @@ export class PfButton extends LitElement {
              loading,
              plain,
              warning,
-           })}">
-        ${variant === 'link' && href ?
-            html`
-              <a href="${href}" class="anchor" target="${target === '_blank' ? '_blank' : '_self'}">
-                <slot id="icon" part="icon" name="icon" ?hidden="${!hasIcon}">
-                  <pf-icon 
-                    role="presentation"
-                    icon="${ifDefined(this.icon)}"
-                    set="${ifDefined(this.iconSet)}"
-                    ?hidden="${!this.icon}">
-                  </pf-icon>
-                  <pf-spinner 
-                    size="md"
-                    ?hidden="${!this.loading}"
-                    aria-label="${this.getAttribute('loading-label') ?? 'loading'}">
-                  </pf-spinner>
-                </slot>
-                <slot id="text"></slot>
-              </a>`
-            : html`
-              <slot id="icon" part="icon" name="icon" ?hidden="${!hasIcon}">
-                <pf-icon 
-                  role="presentation"
-                  icon="${ifDefined(this.icon)}"
-                  set="${ifDefined(this.iconSet)}"
-                  ?hidden="${!this.icon}">
-                </pf-icon>
-                <pf-spinner 
-                  size="md"
-                  ?hidden="${!this.loading}"
-                  aria-label="${this.getAttribute('loading-label') ?? 'loading'}">
-                </pf-spinner>
-              </slot>
-              <slot id="text"></slot>`}
+           })}">${!(variant === 'link' && href) ? content : html`
+        <a href="${href}" class="anchor" target="${ifDefined(target)}">${content}</a>`}
       </div>
     `;
   }

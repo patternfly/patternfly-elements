@@ -9,7 +9,7 @@ return a string from the `getIconUrl` method, or the second argument to
 `addIconSet`. Now, both of those functions must return a Node, or any lit-html
 renderable value, or a Promise thereof.
 
-BEFORE:
+**Before**:
 
 ```js
 PfIcon.addIconSet('local', (set, icon) =>
@@ -20,7 +20,7 @@ PfIcon.getIconUrl = (set, icon) =>
   new URL(`/assets/icons/${set}-${icon}.js`))
 ```
 
-AFTER
+**After**:
 ```js
 PfIcon.addIconSet('local', (set, icon) =>
   import(`/assets/icons/${set}-${icon}.js`))

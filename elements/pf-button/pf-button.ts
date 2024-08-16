@@ -208,7 +208,7 @@ export class PfButton extends LitElement {
   /**  Redirecting the URL Link to new Tab */
   @property({ reflect: true }) target?: string;
 
-  #internals = InternalsController.of(this, { role: 'button' });
+  #internals = InternalsController.of(this, { role: this.variant === 'link' ? 'none' : 'button' });
 
   #slots = new SlotController(this, 'icon', null);
 
@@ -225,12 +225,13 @@ export class PfButton extends LitElement {
   protected override willUpdate(): void {
     this.#internals.ariaLabel = this.label || null;
     this.#internals.ariaDisabled = String(!!this.disabled);
-    if (this.variant !== 'link' || (this.variant === 'link' && !this.href ) ) {
-      this.tabIndex = 0;
-      this.#internals.role = 'button';
-    } else {
+    const isLink = this.variant === 'link' && this.href;
+    if (isLink) {
       this.tabIndex = -1;
       this.#internals.role = 'none';
+    } else {
+      this.tabIndex = 0;
+      this.#internals.role = 'button';
     }
   }
 

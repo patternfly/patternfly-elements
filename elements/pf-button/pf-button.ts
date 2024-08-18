@@ -204,7 +204,13 @@ export class PfButton extends LitElement {
   /** Icon set for the `icon` property */
   @property({ attribute: 'icon-set' }) iconSet?: string;
 
-  #internals = InternalsController.of(this, { role: 'button' });
+  /** Store the URL Link */
+  @property({ reflect: true }) href?: string;
+
+  /**  Redirecting the URL Link to new Tab */
+  @property({ reflect: true }) target?: string;
+
+  #internals = InternalsController.of(this, { role: this.variant === 'link' ? 'none' : 'button' });
 
   #slots = new SlotController(this, 'icon', null);
 
@@ -216,12 +222,19 @@ export class PfButton extends LitElement {
     super.connectedCallback();
     this.addEventListener('click', this.#onClick);
     this.addEventListener('keydown', this.#onKeydown);
-    this.tabIndex = 0;
   }
 
   protected override willUpdate(): void {
     this.#internals.ariaLabel = this.label || null;
     this.#internals.ariaDisabled = String(!!this.disabled);
+    const isLink = this.variant === 'link' && this.href;
+    if (isLink) {
+      this.removeAttribute('tabindex');
+      this.#internals.role = 'none';
+    } else {
+      this.tabIndex = 0;
+      this.#internals.role = 'button';
+    }
   }
 
   async formDisabledCallback(): Promise<void> {
@@ -231,9 +244,46 @@ export class PfButton extends LitElement {
 
   override render(): TemplateResult<1> {
     const hasIcon = !!this.icon || !!this.loading || this.#slots.hasSlotted('icon');
-    const { warning, variant, danger, loading, plain, inline, block, size } = this;
+    const { warning, variant, danger, loading, plain, inline, block, size, href, target } = this;
+
     const disabled = this.#disabled;
-    return html`
+
+    const content = html`
+      <slot id="icon"
+            part="icon"
+            name="icon"
+            ?hidden="${!hasIcon}">
+        <pf-icon role="presentation"
+                 icon="${ifDefined(this.icon)}"
+                 set="${ifDefined(this.iconSet)}"
+                 ?hidden="${!this.icon || this.loading}"></pf-icon>
+        <pf-spinner size="md"
+                    ?hidden="${!this.loading}"
+                    aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pf-spinner>
+      </slot>
+      <slot id="text"></slot>
+    `;
+
+    if (variant === 'link' && href) {
+      return html`
+        <a id="button"
+           href="${href}"
+           target="${ifDefined(target)}"
+           class="${classMap({
+                        [variant]: true,
+                        [size ?? '']: !!size,
+                        anchor: true,
+                        inline,
+                        block,
+                        danger,
+                        disabled,
+                        hasIcon,
+                        loading,
+                        plain,
+                        warning,
+                      })}">${content}</a>`;
+    } else {
+      return html`
       <div id="button"
            class="${classMap({
              [variant]: true,
@@ -246,22 +296,8 @@ export class PfButton extends LitElement {
              loading,
              plain,
              warning,
-           })}">
-        <slot id="icon"
-              part="icon"
-              name="icon"
-              ?hidden="${!hasIcon}">
-          <pf-icon role="presentation"
-                   icon="${ifDefined(this.icon)}"
-                   set="${ifDefined(this.iconSet)}"
-                   ?hidden="${!this.icon || this.loading}"></pf-icon>
-          <pf-spinner size="md"
-                      ?hidden="${!this.loading}"
-                      aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pf-spinner>
-        </slot>
-        <slot id="text"></slot>
-      </div>
-    `;
+           })}">${content}</div>`;
+    }
   }
 
   #onClick() {

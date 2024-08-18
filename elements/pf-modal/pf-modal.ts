@@ -50,19 +50,19 @@ export class ModalOpenEvent extends ComposedEvent {
  * @csspart description - The container for the optional dialog description in the header
  * @csspart close-button - The modal's close button
  * @csspart footer - Actions footer container
- * @cssprop {<length>} --pf-c-modal-box--ZIndex {@default 500}
- * @cssprop {<length>} --pf-c-modal-box--Width - Width of the modal {@default calc(100% - 2rem)}
- * @cssprop {<length>} --pf-c-modal-box--MaxWidth - Max width of the modal {@default calc(100% - 2rem)}
- * @cssprop {<length>} --pf-c-modal-box--m-sm--sm--MaxWidth - Max width of the small variant modal {@default 35rem}
- * @cssprop {<length>} --pf-c-modal-box--m-md--MaxWidth - Max width of the small variant modal {@default 52.5rem}
- * @cssprop {<length>} --pf-c-modal-box--m-lg--lg--MaxWidth - Max width of the large variant modal {@default 70rem}
- * @cssprop {<length>} --pf-c-modal-box--MaxHeight - Max height of the modal {@default calc(100% - 3rem)}
- * @cssprop {<length>} --pf-c-modal-box--BoxShadow - {@default var(--pf-global--BoxShadow--xl)}
- * @cssprop {<length>} --pf-c-modal-box__title--FontSize - {@default 1.5rem}
- * @cssprop {<length>} --pf-c-modal-box--m-align-top--MarginTop - {@default 2rem}
+ * @cssprop {<length>} [--pf-c-modal-box--ZIndex=500]
+ * @cssprop {<length>} [--pf-c-modal-box--Width=calc(100 - 2rem)] - Width of the modal
+ * @cssprop {<length>} [--pf-c-modal-box--MaxWidth=calc(100 - 2rem)] - Max width of the modal
+ * @cssprop {<length>} [--pf-c-modal-box--m-sm--sm--MaxWidth=35rem] - Max width of the small variant modal
+ * @cssprop {<length>} [--pf-c-modal-box--m-md--MaxWidth=52.5rem] - Max width of the small variant modal
+ * @cssprop {<length>} [--pf-c-modal-box--m-lg--lg--MaxWidth=70rem] - Max width of the large variant modal
+ * @cssprop {<length>} [--pf-c-modal-box--MaxHeight=calc(100 - 3rem)] - Max height of the modal
+ * @cssprop {<length>} [--pf-c-modal-box--BoxShadow=var(--pf-global--BoxShadow--xl)] -
+ * @cssprop {<length>} [--pf-c-modal-box__title--FontSize=1.5rem] -
+ * @cssprop {<length>} [--pf-c-modal-box--m-align-top--MarginTop=2rem] -
  * @cssprop {<length>} --pf-c-modal-box--m-align-top--MaxWidth
  * @cssprop {<length>} --pf-c-modal-box--m-align-top--MaxHeight
- * @cssprop {<color>} --pf-c-modal-box--BackgroundColor - {@default #fff}
+ * @cssprop {<color>} [--pf-c-modal-box--BackgroundColor=#fff] -
  * @cssprop --pf-c-modal-box__title--FontFamily - default font family for header-slotted headings
  */
 @customElement('pf-modal')

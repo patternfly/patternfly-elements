@@ -23,24 +23,24 @@ export type StackedSize = (
  * @csspart body        - container for the body content
  * @attr {'boolean'} selected       - selected variant
  * @attr {'md'|'lg'|null} stacked   - stacked variant
- * @cssprop   {<length>} --pf-c-tile--PaddingTop      {@default `1.5rem`}
- * @cssprop   {<length>} --pf-c-tile--PaddingRight    {@default `1.5rem`}
- * @cssprop   {<length>} --pf-c-tile--PaddingBottom   {@default `1.5rem`}
- * @cssprop   {<length>} --pf-c-tile--PaddingLeft     {@default `1.5rem`}
- * @cssprop   {<color>} --pf-c-tile--BackgroundColor  {@default `#FFFFFF`}
- * @cssprop   --pf-c-tile--Transition {@default `none`}
- * @cssprop   --pf-c-tile--TranslateY {@default `0`}
- * @cssprop   {<length>} --pf-c-tile--before--BorderWidth {@default `1px`}
- * @cssprop   {<color>} --pf-c-tile--before--BorderColor  {@default `#444548`}
- * @cssprop   {<length>} --pf-c-tile--after--Height {@default `3px`}
- * @cssprop   {<color>} --pf-c-tile--after--BackgroundColor {@default `transparent`}
- * @cssprop   --pf-c-tile--after--Transition {@default `none`}
- * @cssprop   --pf-c-tile--after--ScaleY {@default `1`}
- * @cssprop   {<color>} --pf-c-tile__title--Color {@default `#06c`}
- * @cssprop   {<color>} --pf-c-tile__icon--Color {@default `#06c`}
- * @cssprop   {<length>} --pf-c-tile__icon--MarginRight {@default `0`}
- * @cssprop   {<length>} --pf-c-tile__icon--FontSize {@default `1.5rem`}
- * @cssprop   {<length>} --pf-c-tile__header--m-stacked__icon--MarginBottom {@default `0.25rem`}
+ * @cssprop   {<length>} [--pf-c-tile--PaddingTop=1.5rem]
+ * @cssprop   {<length>} [--pf-c-tile--PaddingRight=1.5rem]
+ * @cssprop   {<length>} [--pf-c-tile--PaddingBottom=1.5rem]
+ * @cssprop   {<length>} [--pf-c-tile--PaddingLeft=1.5rem]
+ * @cssprop   {<color>} [--pf-c-tile--BackgroundColor=#FFFFFF]
+ * @cssprop   [--pf-c-tile--Transition=none]
+ * @cssprop   [--pf-c-tile--TranslateY=0]
+ * @cssprop   {<length>} [--pf-c-tile--before--BorderWidth=1px]
+ * @cssprop   {<color>} [--pf-c-tile--before--BorderColor=#444548]
+ * @cssprop   {<length>} [--pf-c-tile--after--Height=3px]
+ * @cssprop   {<color>} [--pf-c-tile--after--BackgroundColor=transparent]
+ * @cssprop   [--pf-c-tile--after--Transition=none]
+ * @cssprop   [--pf-c-tile--after--ScaleY=1]
+ * @cssprop   {<color>} [--pf-c-tile__title--Color=#06c]
+ * @cssprop   {<color>} [--pf-c-tile__icon--Color=#06c]
+ * @cssprop   {<length>} [--pf-c-tile__icon--MarginRight=0]
+ * @cssprop   {<length>} [--pf-c-tile__icon--FontSize=1.5rem]
+ * @cssprop   {<length>} [--pf-c-tile__header--m-stacked__icon--MarginBottom=0.25rem]
  */
 @customElement('pf-tile')
 export class PfTile extends LitElement {

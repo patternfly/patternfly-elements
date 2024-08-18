@@ -69,111 +69,93 @@ export class PopoverShownEvent extends ComposedEvent {
  * @csspart close-button - The close button
  * @csspart body - The container for the body content
  * @csspart footer - The container for the footer content
- * @cssprop {<length>} --pf-c-popover__arrow--Height
- *          Height of the arrow
- *          {@default `1.5625rem`}
- * @cssprop {<length>} --pf-c-popover__arrow--Width
- *          Width of the arrow
- *          {@default `1.5625rem`}
- * @cssprop {<color>} --pf-c-popover__title-text--Color
- *          Heading font color
- *          {@default `inherit`}
- * @cssprop {<color>} --pf-c-popover__title-icon--Color
- *          Heading icon font color
- *          {@default `#151515`}
- * @cssprop {<color>} --pf-c-popover__arrow--BackgroundColor
- *          Arrow background color
- *          {@default `#fff`}
- * @cssprop --pf-c-popover__arrow--BoxShadow
- *          Arrow box shadow
- *          {@default `0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08)`}
- * @cssprop --pf-c-popover--BoxShadow
- *          Popover box shadow
- *          {@default `0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08)`}
- * @cssprop {<length>} --pf-c-tooltip__content--PaddingTop
- *          Popover top padding
- *          {@default `1rem`}
- * @cssprop {<length>} --pf-c-tooltip__content--PaddingRight
- *          Popover right padding
- *          {@default `1rem`}
- * @cssprop {<length>} --pf-c-tooltip__content--PaddingBottom
+ * @cssprop {<length>} [--pf-c-popover__arrow--Height=1.5625rem] Height of the arrow
+ * @cssprop {<length>} [--pf-c-popover__arrow--Width=1.5625rem] Width of the arrow
+ * @cssprop {<color>} [--pf-c-popover__title-text--Color=inherit] Heading font color
+ * @cssprop {<color>} [--pf-c-popover__title-icon--Color=#151515] Heading icon font color
+ * @cssprop {<color>} [--pf-c-popover__arrow--BackgroundColor=#fff] Arrow background color
+ * @cssprop [--pf-c-popover__arrow--BoxShadow=0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08)] Arrow box shadow
+ * @cssprop [--pf-c-popover--BoxShadow=0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08)] Popover box shadow
+ * @cssprop {<length>} [--pf-c-tooltip__content--PaddingTop=1rem] Popover top padding
+ * @cssprop {<length>} [--pf-c-tooltip__content--PaddingRight=1rem] Popover right padding
+ * @cssprop {<length>} [--pf-c-tooltip__content--PaddingBottom=1rem]
  *          Popover bottom padding
- *          {@default `1rem`}
- * @cssprop {<length>} --pf-c-tooltip__content--PaddingLeft
+ *
+ * @cssprop {<length>} [--pf-c-tooltip__content--PaddingLeft=1rem]
  *          Popover left padding
- *          {@default `1rem`}
- * @cssprop {<number>} --pf-c-popover--line-height
+ *
+ * @cssprop {<number>} [--pf-c-popover--line-height=1.5]
  *          Popover line height
- *          {@default `1.5`}
- * @cssprop {<length>} --pf-c-popover__content--FontSize
+ *
+ * @cssprop {<length>} [--pf-c-popover__content--FontSize=0.875rem]
  *          Popover font-size
- *          {@default `0.875rem`}
- * @cssprop {<color>} --pf-c-popover__content--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-popover__content--BackgroundColor=#fff]
  *          Popover background color
- *          {@default `#fff`}
- * @cssprop {<length>} --pf-c-popover--MaxWidth
+ *
+ * @cssprop {<length>} [--pf-c-popover--MaxWidth=20.75rem]
  *          Popover max-width
- *          {@default `20.75rem`}
- * @cssprop {<length>} --pf-c-popover--MinWidth
+ *
+ * @cssprop {<length>} [--pf-c-popover--MinWidth=20.75rem]
  *          Popover min-width
- *          {@default `20.75rem`}
- * @cssprop {<number>} --pf-c-popover--c-button--Right
+ *
+ * @cssprop {<number>} [--pf-c-popover--c-button--Right=`0]
  *          Close button right position
- *          {@default `0}
- * @cssprop {<number>} --pf-c-popover--c-button--Top
+ *
+ * @cssprop {<number>} [--pf-c-popover--c-button--Top=0]
  *          Close button top position
- *          {@default `0`}
- * @cssprop {<length>} --pf-c-popover--c-button--sibling--PaddingRight
+ *
+ * @cssprop {<length>} [--pf-c-popover--c-button--sibling--PaddingRight=3rem]
  *          Padding between close button and its immediate sibling
- *          {@default `3rem`}
- * @cssprop {<length>} --pf-c-popover__title-icon--MarginRight
+ *
+ * @cssprop {<length>} [--pf-c-popover__title-icon--MarginRight=0.5rem]
  *          Heading icon right margin
- *          {@default `0.5rem`}
- * @cssprop {<length>} --pf-c-popover__title--FontSize
+ *
+ * @cssprop {<length>} [--pf-c-popover__title--FontSize=1rem]
  *          Header font-size
- *          {@default `1rem`}
- * @cssprop {<length>} --pf-c-popover__title--MarginBottom
+ *
+ * @cssprop {<length>} [--pf-c-popover__title--MarginBottom=0.5rem]
  *          Header bottom margin
- *          {@default `0.5rem`}
- * @cssprop {<number>} --pf-c-popover__title--LineHeight
+ *
+ * @cssprop {<number>} [--pf-c-popover__title--LineHeight=1.5]
  *          Header line height
- *          {@default `1.5`}
- * @cssprop {<string>} --pf-c-popover__title--FontFamily
+ *
+ * @cssprop {<string>} [--pf-c-popover__title--FontFamily='RedHatDisplay', 'Overpass', overpass, helvetica, arial, sans-serif]
  *          Header font-family
- *          {@default `'RedHatDisplay', 'Overpass', overpass, helvetica, arial, sans-serif`}
- * @cssprop {<length>} --pf-c-popover__footer--MarginTop
+ *
+ * @cssprop {<length>} [--pf-c-popover__footer--MarginTop=1rem]
  *          Footer top margin
- *          {@default `1rem`}
- * @cssprop {<color>} --pf-c-popover--m-default__title-text--Color
+ *
+ * @cssprop {<color>} [--pf-c-popover--m-default__title-text--Color=#003737]
  *          Default alert heading color
- *          {@default `#003737`}
- * @cssprop {<color>} --pf-c-popover--m-default__title-icon--Color
+ *
+ * @cssprop {<color>} [--pf-c-popover--m-default__title-icon--Color=#009596]
  *          Default alert icon color
- *          {@default `#009596`}
- * @cssprop {<color>} --pf-c-popover--m-info__title-text--Color
+ *
+ * @cssprop {<color>} [--pf-c-popover--m-info__title-text--Color=#002952]
  *          Default alert heading color
- *          {@default `#002952`}
- * @cssprop {<color>} --pf-c-popover--m-info__title-icon--Color
+ *
+ * @cssprop {<color>} [--pf-c-popover--m-info__title-icon--Color=#2b9af3]
  *          Default alert icon color
- *          {@default `#2b9af3`}
- * @cssprop {<color>} --pf-c-popover--m-warning__title-text--Color
+ *
+ * @cssprop {<color>} [--pf-c-popover--m-warning__title-text--Color=#795600]
  *          Default alert heading color
- *          {@default `#795600`}
- * @cssprop {<color>} --pf-c-popover--m-warning__title-icon--Color
+ *
+ * @cssprop {<color>} [--pf-c-popover--m-warning__title-icon--Color=#f0ab00]
  *          Default alert icon color
- *          {@default `#f0ab00`}
- * @cssprop {<color>} --pf-c-popover--m-success__title-text--Color
+ *
+ * @cssprop {<color>} [--pf-c-popover--m-success__title-text--Color=#1e4f18]
  *          Default alert heading color
- *          {@default `#1e4f18`}
- * @cssprop {<color>} --pf-c-popover--m-success__title-icon--Color
+ *
+ * @cssprop {<color>} [--pf-c-popover--m-success__title-icon--Color=#3e8635]
  *          Default alert icon color
- *          {@default `#3e8635`}
- * @cssprop {<color>} --pf-c-popover--m-danger__title-text--Color
+ *
+ * @cssprop {<color>} [--pf-c-popover--m-danger__title-text--Color=#a30000]
  *          Default alert heading color
- *          {@default `#a30000`}
- * @cssprop {<color>} --pf-c-popover--m-danger__title-icon--Color
+ *
+ * @cssprop {<color>} [--pf-c-popover--m-danger__title-icon--Color=#c9190b]
  *          Default alert icon color
- *          {@default `#c9190b`}
+ *
  */
 @customElement('pf-popover')
 export class PfPopover extends LitElement {

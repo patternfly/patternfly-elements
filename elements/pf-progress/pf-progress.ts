@@ -17,63 +17,63 @@ const ICONS = new Map(Object.entries({
 /**
  * A progress bar gives the user a visual representation of their completion status of an ongoing process or task.
  * @summary Display completion status of ongoing process or task.
- * @cssprop {<length>} --pf-c-progress--GridGap
+ * @cssprop {<length>} [--pf-c-progress--GridGap=1rem]
  *          Gap between the sections of the progress bar.
- *          {@default `1rem`}
- * @cssprop {<color>} --pf-c-progress__bar--before--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-progress__bar--before--BackgroundColor=#06c]
  *          Color of the progress bar.
- *          {@default `#06c`}
- * @cssprop {<length>} --pf-c-progress__bar--Height
+ *
+ * @cssprop {<length>} [--pf-c-progress__bar--Height=1rem]
  *          Height of the progress bar.
- *          {@default `1rem`}
- * @cssprop {<color>} --pf-c-progress__bar--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-progress__bar--BackgroundColor=#ffffff]
  *          Background color of the progress bar.
- *          {@default `#ffffff`}
- * @cssprop {<color>} --pf-c-progress__status-icon--Color
+ *
+ * @cssprop {<color>} [--pf-c-progress__status-icon--Color=#151515]
  *          Color of the status icon.
- *          {@default `#151515`}
- * @cssprop {<length>} --pf-c-progress__status-icon--MarginLeft
+ *
+ * @cssprop {<length>} [--pf-c-progress__status-icon--MarginLeft=0.5rem]
  *          Margin left of the status icon.
- *          {@default `0.5rem`}
- * @cssprop {<length>} --pf-c-progress__indicator--Height
+ *
+ * @cssprop {<length>} [--pf-c-progress__indicator--Height=1rem]
  *          Height of the progress bar indicator.
- *          {@default `1rem`}
- * @cssprop {<color>} --pf-c-progress__indicator--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-progress__indicator--BackgroundColor=#ffffff]
  *          Background color of the progress bar indicator.
- *          {@default `#ffffff`}
- * @cssprop {<color>} --pf-c-progress--m-success__bar--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-progress--m-success__bar--BackgroundColor=#3e8635]
  *          Background color of the progress bar when variant is success.
- *          {@default `#3e8635`}
- * @cssprop {<color>} --pf-c-progress--m-warning__bar--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-progress--m-warning__bar--BackgroundColor=#f0ab00]
  *          Background color of the progress bar when variant is warning.
- *          {@default `#f0ab00`}
- * @cssprop {<color>} --pf-c-progress--m-danger__bar--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-progress--m-danger__bar--BackgroundColor=#c9190b]
  *          Background color of the progress bar when variant is danger.
- *          {@default `#c9190b`}
- * @cssprop {<color>} --pf-c-progress--m-success__status-icon--Color
+ *
+ * @cssprop {<color>} [--pf-c-progress--m-success__status-icon--Color=#3e8635]
  *          Color of the status icon when variant is success.
- *          {@default `#3e8635`}
- * @cssprop {<color>} --pf-c-progress--m-warning__status-icon--Color
+ *
+ * @cssprop {<color>} [--pf-c-progress--m-warning__status-icon--Color=#f0ab00]
  *          Color of the status icon when variant is warning.
- *          {@default `#f0ab00`}
- * @cssprop {<color>} --pf-c-progress--m-danger__status-icon--Color
+ *
+ * @cssprop {<color>} [--pf-c-progress--m-danger__status-icon--Color=#c9190b]
  *          Color of the status icon when variant is danger.
- *          {@default `#c9190b`}
- * @cssprop {<color>} --pf-c-progress--m-success--m-inside__measure--Color
+ *
+ * @cssprop {<color>} [--pf-c-progress--m-success--m-inside__measure--Color=#ffffff]
  *          Color of the progress bar measure when variant is success and measure location is inside.
- *          {@default `#ffffff`}
- * @cssprop {<length>} --pf-c-progress--m-outside__measure--FontSize
+ *
+ * @cssprop {<length>} [--pf-c-progress--m-outside__measure--FontSize=0.875rem]
  *          Font size of the progress bar measure when measure location is outside.
- *          {@default `0.875rem`}
- * @cssprop {<length>} --pf-c-progress--m-sm__bar--Height
+ *
+ * @cssprop {<length>} [--pf-c-progress--m-sm__bar--Height=0.5rem]
  *          Height of the progress bar when the size is small.
- *          {@default `0.5rem`}
- * @cssprop {<length>} --pf-c-progress--m-sm__description--FontSize
+ *
+ * @cssprop {<length>} [--pf-c-progress--m-sm__description--FontSize=0.875rem]
  *          Font size of the progress bar description when the size is small.
- *          {@default `0.875rem`}
- * @cssprop {<length>} --pf-c-progress--m-lg__bar--Height
+ *
+ * @cssprop {<length>} [--pf-c-progress--m-lg__bar--Height=1.5rem]
  *          Height of the progress bar when the size is large.
- *          {@default `1.5rem`}
+ *
  */
 @customElement('pf-progress')
 export class PfProgress extends LitElement {

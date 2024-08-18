@@ -27,639 +27,639 @@ const rowQuery = [
  * A **table** is used to display large data sets that can be easily laid out in a simple grid with column headers.
  * @slot
  *       The default slot can hold an optional `pf-caption` element and a combination of `pf-tr`, `pf-thead`, or `pf-tbody` elements.
- * @cssprop {<color>} --pf-c-table--BackgroundColor
+ * @cssprop {<color>} [--pf-c-table--BackgroundColor=#fff]
  *          Table background color
- *          {@default `#fff`}
- * @cssprop {<color>} --pf-c-table--BorderColor
+ *
+ * @cssprop {<color>} [--pf-c-table--BorderColor=#d2d2d2]
  *          Table border color
- *          {@default `#d2d2d2`}
- * @cssprop {<dimension>} --pf-c-table--border-width--base
+ *
+ * @cssprop {<dimension>} [--pf-c-table--border-width--base=1px]
  *          Table border base width
- *          {@default `1px`}
- * @cssprop {<dimension>} --pf-c-table-caption--FontSize
+ *
+ * @cssprop {<dimension>} [--pf-c-table-caption--FontSize=0.875rem]
  *          Table caption font size
- *          {@default `0.875rem`}
- * @cssprop {<color>} --pf-c-table-caption--Color
+ *
+ * @cssprop {<color>} [--pf-c-table-caption--Color=#6a6e73]
  *          Table caption color
- *          {@default `#6a6e73`}
- * @cssprop {<dimension>} --pf-c-table-caption--PaddingTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table-caption--PaddingTop=1rem]
  *          Table caption top padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table-caption--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table-caption--PaddingRight=1.5rem]
  *          Table caption right padding
- *          {@default `1.5rem`}
- * @cssprop {<dimension>} --pf-c-table-caption--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table-caption--PaddingBottom=1rem]
  *          Table caption bottom padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table-caption--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table-caption--PaddingLeft=1.5rem]
  *          Table caption left padding
- *          {@default `1.5rem`}
- * @cssprop {<length>} --pf-c-table-caption--xl--PaddingRight
+ *
+ * @cssprop {<length>} [--pf-c-table-caption--xl--PaddingRight=1rem]
  *          Table XL caption right padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table-caption--xl--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table-caption--xl--PaddingLeft=1rem]
  *          Table XL caption left padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--thead--cell--FontSize
+ *
+ * @cssprop {<dimension>} [--pf-c-table--thead--cell--FontSize=0.875rem]
  *          Table head cell font size
- *          {@default `0.875rem`}
- * @cssprop {<number>} --pf-c-table--thead--cell--FontWeight
+ *
+ * @cssprop {<number>} [--pf-c-table--thead--cell--FontWeight=700]
  *          Table head cell font weight
- *          {@default `700`}
- * @cssprop {<dimension>} --pf-c-table--tbody--cell--PaddingTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table--tbody--cell--PaddingTop=1.5rem]
  *          Table body cell padding top
- *          {@default `1.5rem`}
- * @cssprop {<dimension>} --pf-c-table--tbody--cell--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table--tbody--cell--PaddingBottom=1.5rem]
  *          Table body cell padding bottom
- *          {@default `1.5rem`}
- * @cssprop {<color>} --pf-c-table--tr--BoxShadow--top--base
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--BoxShadow--top--base=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)]
  *          Table row top base box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)`}
- * @cssprop {<dimension>} --pf-c-table--cell--Padding--base
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--Padding--base=1rem]
  *          Table cell base padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--cell--FontSize
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--FontSize=1rem]
  *          Table cell font size
- *          {@default `1rem`}
- * @cssprop {<number>} --pf-c-table--cell--FontWeight
+ *
+ * @cssprop {<number>} [--pf-c-table--cell--FontWeight=400]
  *          Table cell font weight
- *          {@default `400`}
- * @cssprop {<color>} --pf-c-table--cell--Color
+ *
+ * @cssprop {<color>} [--pf-c-table--cell--Color=#151515]
  *          Table cell color
- *          {@default `#151515`}
- * @cssprop {<dimension>} --pf-c-table--cell--PaddingTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--PaddingTop=1rem]
  *          Table cell top padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--cell--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--PaddingRight=1rem]
  *          Table cell right padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--cell--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--PaddingBottom=1rem]
  *          Table cell bottom padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--cell--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--PaddingLeft=1rem]
  *          Table cell left padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--cell--first-last-child--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--first-last-child--PaddingLeft=1rem]
  *          Table cell last child left padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--cell--first-last-child--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--first-last-child--PaddingRight=1rem]
  *          Table cell last child right padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--cell--first-last-child--xl--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--first-last-child--xl--PaddingLeft=1.5rem]
  *          Table XL cell last child left padding
- *          {@default `1.5rem`}
- * @cssprop {<dimension>} --pf-c-table--cell--first-last-child--xl--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--first-last-child--xl--PaddingRight=1.5rem]
  *          Table XL cell last child right padding
- *          {@default `1.5rem`}
- * @cssprop {<dimension>} --pf-c-table--tr--m-first-cell-offset-reset--cell--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table--tr--m-first-cell-offset-reset--cell--PaddingLeft=1rem]
  *          Table row first cell offset reset cell left padding
- *          {@default `1rem`}
- * @cssprop {<length>} --pf-c-table--cell--MinWidth
+ *
+ * @cssprop {<length>} [--pf-c-table--cell--MinWidth=0]
  *          Table cell min width
- *          {@default `0`}
- * @cssprop {<length>} --pf-c-table--cell--MaxWidth
+ *
+ * @cssprop {<length>} [--pf-c-table--cell--MaxWidth=none]
  *          Table cell max width
- *          {@default `none`}
- * @cssprop {<length>} --pf-c-table--cell--Width
+ *
+ * @cssprop {<length>} [--pf-c-table--cell--Width=auto]
  *          Table cell width
- *          {@default `auto`}
- * @cssprop {<overflow>} --pf-c-table--cell--Overflow
+ *
+ * @cssprop {<overflow>} [--pf-c-table--cell--Overflow=visible]
  *          Table cell overflow
- *          {@default `visible`}
- * @cssprop {<>} --pf-c-table--cell--TextOverflow
+ *
+ * @cssprop {<>} [--pf-c-table--cell--TextOverflow=clip]
  *          Table cell text overflow
- *          {@default `clip`}
- * @cssprop {<>} --pf-c-table--cell--WhiteSpace
+ *
+ * @cssprop {<>} [--pf-c-table--cell--WhiteSpace=normal]
  *          Table cell white space
- *          {@default `normal`}
- * @cssprop {<>} --pf-c-table--cell--WordBreak
+ *
+ * @cssprop {<>} [--pf-c-table--cell--WordBreak=normal]
  *          Table cell word break
- *          {@default `normal`}
- * @cssprop {<length>} --pf-c-table--cell--m-border-right--before--BorderRightWidth
+ *
+ * @cssprop {<length>} [--pf-c-table--cell--m-border-right--before--BorderRightWidth=1px]
  *          Table cell before right border width
- *          {@default `1px`}
- * @cssprop {<color>} --pf-c-table--cell--m-border-right--before--BorderRightColor
+ *
+ * @cssprop {<color>} [--pf-c-table--cell--m-border-right--before--BorderRightColor=#d2d2d2]
  *          Table cell before right border color
- *          {@default `#d2d2d2`}
- * @cssprop {<length>} --pf-c-table--cell--m-border-left--before--BorderLeftWidth
+ *
+ * @cssprop {<length>} [--pf-c-table--cell--m-border-left--before--BorderLeftWidth=1px]
  *          Table cell before left border width
- *          {@default `1px`}
- * @cssprop {<color>} --pf-c-table--cell--m-border-left--before--BorderLeftColor
+ *
+ * @cssprop {<color>} [--pf-c-table--cell--m-border-left--before--BorderLeftColor=#d2d2d2]
  *          Table cell before left border color
- *          {@default `#d2d2d2`}
- * @cssprop {<length>} --pf-c-table--cell--m-help--MinWidth
+ *
+ * @cssprop {<length>} [--pf-c-table--cell--m-help--MinWidth=11ch]
  *          Help cell minimum width
- *          {@default `11ch`}
- * @cssprop {<length>} --pf-c-table--m-truncate--cell--MaxWidth
+ *
+ * @cssprop {<length>} [--pf-c-table--m-truncate--cell--MaxWidth=1px]
  *          Help cell maximum width
- *          {@default `1px`}
- * @cssprop {<calc-sum>} --pf-c-table--m-truncate--cell--MinWidth
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table--m-truncate--cell--MinWidth=calc(5ch + 1rem + 1rem)]
  *          Truncated cell minimum width
- *          {@default `calc(5ch + 1rem + 1rem)`}
- * @cssprop {<>} --pf-c-table--cell--hidden-visible--Display
+ *
+ * @cssprop {<>} [--pf-c-table--cell--hidden-visible--Display=grid]
  *          Cell visible display
- *          {@default `grid`}
- * @cssprop {<calc-product>} --pf-c-table__toggle--c-button--MarginTop
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__toggle--c-button--MarginTop=calc(0.375rem * -1)]
  *          Toggle button top margin
- *          {@default `calc(0.375rem * -1)`}
- * @cssprop {<calc-product>} --pf-c-table__toggle--c-button--MarginBottom
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__toggle--c-button--MarginBottom=calc(0.375rem * -1)]
  *          Toggle button bottom margin
- *          {@default `calc(0.375rem * -1)`}
- * @cssprop {<>} --pf-c-table__toggle--c-button__toggle-icon--Rotate
+ *
+ * @cssprop {<>} [--pf-c-table__toggle--c-button__toggle-icon--Rotate=270deg]
  *          Toggle button icon rotation
- *          {@default `270deg`}
- * @cssprop {<>} --pf-c-table__toggle--c-button__toggle-icon--Transition
+ *
+ * @cssprop {<>} [--pf-c-table__toggle--c-button__toggle-icon--Transition=.2s ease-in 0s]
  *          Toggle button icon transition
- *          {@default `.2s ease-in 0s`}
- * @cssprop {<>} --pf-c-table__toggle--c-button--m-expanded__toggle-icon--Rotate
+ *
+ * @cssprop {<>} [--pf-c-table__toggle--c-button--m-expanded__toggle-icon--Rotate=360deg]
  *          Expanded toggle button icon rotation
- *          {@default `360deg`}
- * @cssprop {<color>} --pf-c-table__button--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-table__button--BackgroundColor=transparent]
  *          Button background color
- *          {@default `transparent`}
- * @cssprop {<color>} --pf-c-table__button--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__button--Color=#151515]
  *          Button color
- *          {@default `#151515`}
- * @cssprop {<color>} --pf-c-table__button--hover--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__button--hover--Color=#151515]
  *          Button hover color
- *          {@default `#151515`}
- * @cssprop {<color>} --pf-c-table__button--focus--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__button--focus--Color=#151515]
  *          Button focus color
- *          {@default `#151515`}
- * @cssprop {<color>} --pf-c-table__button--active--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__button--active--Color=#151515]
  *          Button active color
- *          {@default `#151515`}
- * @cssprop {<calc-sum>} --pf-c-table__button--OutlineOffset
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table__button--OutlineOffset=calc(3px * -1)]
  *          Button outline offset
- *          {@default `calc(3px * -1)`}
- * @cssprop {<dimension>} --pf-c-table--m-compact__toggle--PaddingTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact__toggle--PaddingTop=0]
  *          Compact toggle top padding
- *          {@default `0`}
- * @cssprop {<dimension>} --pf-c-table--m-compact__toggle--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact__toggle--PaddingBottom=0]
  *          Compacy toggle bottom padding
- *          {@default `0`}
- * @cssprop {<dimension>} --pf-c-table__check--input--MarginTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table__check--input--MarginTop=0.25rem]
  *          Check input top margin
- *          {@default `0.25rem`}
- * @cssprop {<dimension>} --pf-c-table__check--input--FontSize
+ *
+ * @cssprop {<dimension>} [--pf-c-table__check--input--FontSize=1rem]
  *          Check input font size
- *          {@default `1rem`}
- * @cssprop {<color>} --pf-c-table--cell--m-favorite--Color
+ *
+ * @cssprop {<color>} [--pf-c-table--cell--m-favorite--Color=#d2d2d2]
  *          Favorite cell color
- *          {@default `#d2d2d2`}
- * @cssprop {<color>} --pf-c-table__favorite--c-button--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__favorite--c-button--Color=#d2d2d2]
  *          Favorite button color
- *          {@default `#d2d2d2`}
- * @cssprop {<dimension>} --pf-c-table__favorite--c-button--FontSize
+ *
+ * @cssprop {<dimension>} [--pf-c-table__favorite--c-button--FontSize=0.875rem]
  *          Favorite button font size
- *          {@default `0.875rem`}
- * @cssprop {<calc-product>} --pf-c-table__favorite--c-button--MarginTop
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__favorite--c-button--MarginTop=calc(0.375rem * -1)]
  *          Favorite button top margin
- *          {@default `calc(0.375rem * -1)`}
- * @cssprop {<calc-product>} --pf-c-table__favorite--c-button--MarginRight
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__favorite--c-button--MarginRight=calc(1rem * -1)]
  *          Favorite button right margin
- *          {@default `calc(1rem * -1)`}
- * @cssprop {<calc-product>} --pf-c-table__favorite--c-button--MarginBottom
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__favorite--c-button--MarginBottom=calc(0.375rem * -1)]
  *          Favorite button bottom margin
- *          {@default `calc(0.375rem * -1)`}
- * @cssprop {<calc-product>} --pf-c-table__favorite--c-button--MarginLeft
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__favorite--c-button--MarginLeft=calc(1rem * -1)]
  *          Favorite button left margin
- *          {@default `calc(1rem * -1)`}
- * @cssprop {<color>} --pf-c-table__favorite--m-favorited--c-button--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__favorite--m-favorited--c-button--Color=#f0ab00]
  *          Favorited button color
- *          {@default `#f0ab00`}
- * @cssprop {<color>} --pf-c-table__sort--m-favorite__button__text--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort--m-favorite__button__text--Color=#6a6e73]
  *          Favorite sort button text color
- *          {@default `#6a6e73`}
- * @cssprop {<color>} --pf-c-table__sort--m-favorite__button--hover__text--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort--m-favorite__button--hover__text--Color=#151515]
  *          Favorite sort button hover text color
- *          {@default `#151515`}
- * @cssprop {<color>} --pf-c-table__sort--m-favorite__button--focus__text--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort--m-favorite__button--focus__text--Color=#151515]
  *          Favorite sort button focus text color
- *          {@default `#151515`}
- * @cssprop {<color>} --pf-c-table__sort--m-favorite__button--active__text--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort--m-favorite__button--active__text--Color=#151515]
  *          Favorite sort button active text color
- *          {@default `#151515`}
- * @cssprop {<calc-product>} --pf-c-table__draggable--c-button--MarginTop
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__draggable--c-button--MarginTop=calc(0.375rem * -1)]
  *          Draggable button top margin
- *          {@default `calc(0.375rem * -1)`}
- * @cssprop {<calc-product>} --pf-c-table__draggable--c-button--MarginRight
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__draggable--c-button--MarginRight=calc(1rem * -1)]
  *          Draggable button right margin
- *          {@default `calc(1rem * -1)`}
- * @cssprop {<calc-product>} --pf-c-table__draggable--c-button--MarginBottom
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__draggable--c-button--MarginBottom=calc(0.375rem * -1)]
  *          Draggable button bottom margin
- *          {@default `calc(0.375rem * -1)`}
- * @cssprop {<calc-product>} --pf-c-table__draggable--c-button--MarginLeft
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__draggable--c-button--MarginLeft=calc(1rem * -1)]
  *          Draggable button left margin
- *          {@default `calc(1rem * -1)`}
- * @cssprop {<dimension>} --pf-c-table__tr--m-ghost-row--Opacity
+ *
+ * @cssprop {<dimension>} [--pf-c-table__tr--m-ghost-row--Opacity=.4]
  *          Ghost row opacity
- *          {@default `.4`}
- * @cssprop {<color>} --pf-c-table__tr--m-ghost-row--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-table__tr--m-ghost-row--BackgroundColor=#fff]
  *          Ghost row background color
- *          {@default `#fff`}
- * @cssprop {<dimension>} --pf-c-table__action--PaddingTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table__action--PaddingTop=0]
  *          Action top padding
- *          {@default `0`}
- * @cssprop {<dimension>} --pf-c-table__action--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table__action--PaddingRight=0]
  *          Action right padding
- *          {@default `0`}
- * @cssprop {<dimension>} --pf-c-table__action--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table__action--PaddingBottom=0]
  *          Action bottom padding
- *          {@default `0`}
- * @cssprop {<dimension>} --pf-c-table__action--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table__action--PaddingLeft=0]
  *          Action left padding
- *          {@default `0`}
- * @cssprop {<dimension>} --pf-c-table__inline-edit-action--PaddingTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table__inline-edit-action--PaddingTop=0]
  *          Inline edit action top padding
- *          {@default `0`}
- * @cssprop {<dimension>} --pf-c-table__inline-edit-action--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table__inline-edit-action--PaddingRight=0]
  *          Inline edit action right padding
- *          {@default `0`}
- * @cssprop {<dimension>} --pf-c-table__inline-edit-action--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table__inline-edit-action--PaddingBottom=0]
  *          Inline edit action bottom padding
- *          {@default `0`}
- * @cssprop {<dimension>} --pf-c-table__inline-edit-action--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table__inline-edit-action--PaddingLeft=0]
  *          Inline edit action left padding
- *          {@default `0`}
- * @cssprop {<>} --pf-c-table__expandable-row--Transition
+ *
+ * @cssprop {<>} [--pf-c-table__expandable-row--Transition=all 250ms cubic-bezier(.42, 0, .58, 1)]
  *          Expandable row transition
- *          {@default `all 250ms cubic-bezier(.42, 0, .58, 1)`}
- * @cssprop {<length>} --pf-c-table__expandable-row--MaxHeight
+ *
+ * @cssprop {<length>} [--pf-c-table__expandable-row--MaxHeight=28.125rem]
  *          Expandable row max height
- *          {@default `28.125rem`}
- * @cssprop {<>} --pf-c-table__expandable-row-content--Transition
+ *
+ * @cssprop {<>} [--pf-c-table__expandable-row-content--Transition=all 250ms cubic-bezier(.42, 0, .58, 1)]
  *          Expandable row content transition
- *          {@default `all 250ms cubic-bezier(.42, 0, .58, 1)`}
- * @cssprop {<dimension>} --pf-c-table__expandable-row-content--PaddingTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table__expandable-row-content--PaddingTop=1.5rem]
  *          Expandable row content top padding
- *          {@default `1.5rem`}
- * @cssprop {<dimension>} --pf-c-table__expandable-row-content--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table__expandable-row-content--PaddingBottom=1.5rem]
  *          Expandable row content bottom padding
- *          {@default `1.5rem`}
- * @cssprop {<calc-product>} --pf-c-table__expandable-row--after--Top
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__expandable-row--after--Top=calc(1px * -1)]
  *          Expandable row after top
- *          {@default `calc(1px * -1)`}
- * @cssprop {<calc-product>} --pf-c-table__expandable-row--after--Bottom
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__expandable-row--after--Bottom=calc(1px * -1)]
  *          Expandable row after bottom
- *          {@default `calc(1px * -1)`}
- * @cssprop {<length>} --pf-c-table__expandable-row--after--border-width--base
+ *
+ * @cssprop {<length>} [--pf-c-table__expandable-row--after--border-width--base=3px]
  *          Expandable row after base border width
- *          {@default `3px`}
- * @cssprop {<length>} --pf-c-table__expandable-row--after--BorderLeftWidth
+ *
+ * @cssprop {<length>} [--pf-c-table__expandable-row--after--BorderLeftWidth=0]
  *          Expandable row after left border width
- *          {@default `0`}
- * @cssprop {<color>} --pf-c-table__expandable-row--after--BorderColor
+ *
+ * @cssprop {<color>} [--pf-c-table__expandable-row--after--BorderColor=#06c]
  *          Expandable row after border color
- *          {@default `#06c`}
- * @cssprop {<dimension>} --pf-c-table__icon-inline--MarginRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table__icon-inline--MarginRight=0.5rem]
  *          Inline icon right margin
- *          {@default `0.5rem`}
- * @cssprop {<calc-sum>} --pf-c-table__sort--MinWidth
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table__sort--MinWidth=calc(6ch + 1rem + 1rem + 1rem)]
  *          Sort button minimum width
- *          {@default `calc(6ch + 1rem + 1rem + 1rem)`}
- * @cssprop {<dimension>} --pf-c-table__sort__button--PaddingTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table__sort__button--PaddingTop=0.375rem]
  *          Sort button top padding
- *          {@default `0.375rem`}
- * @cssprop {<dimension>} --pf-c-table__sort__button--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table__sort__button--PaddingRight=0.5rem]
  *          Sort button right padding
- *          {@default `0.5rem`}
- * @cssprop {<dimension>} --pf-c-table__sort__button--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table__sort__button--PaddingBottom=0.375rem]
  *          Sort button bottom padding
- *          {@default `0.375rem`}
- * @cssprop {<dimension>} --pf-c-table__sort__button--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table__sort__button--PaddingLeft=0.5rem]
  *          Sort button left padding
- *          {@default `0.5rem`}
- * @cssprop {<calc-product>} --pf-c-table__sort__button--MarginTop
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__sort__button--MarginTop=calc(0.375rem * -1)]
  *          Sort button top margin
- *          {@default `calc(0.375rem * -1)`}
- * @cssprop {<calc-product>} --pf-c-table__sort__button--MarginBottom
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__sort__button--MarginBottom=calc(0.375rem * -1)]
  *          Sort button bottom margin
- *          {@default `calc(0.375rem * -1)`}
- * @cssprop {<calc-product>} --pf-c-table__sort__button--MarginLeft
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__sort__button--MarginLeft=calc(0.5rem * -1)]
  *          Sort button left margin
- *          {@default `calc(0.5rem * -1)`}
- * @cssprop {<color>} --pf-c-table__sort__button--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort__button--Color=#151515]
  *          Sort button color
- *          {@default `#151515`}
- * @cssprop {<color>} --pf-c-table__sort--m-selected__button--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort--m-selected__button--Color=#06c]
  *          Selected sort button color
- *          {@default `#06c`}
- * @cssprop {<length>} --pf-c-table__sort--m-help--MinWidth
+ *
+ * @cssprop {<length>} [--pf-c-table__sort--m-help--MinWidth=15ch]
  *          Help button minimum width
- *          {@default `15ch`}
- * @cssprop {<color>} --pf-c-table__sort__button__text--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort__button__text--Color=currentcolor]
  *          Sort button text color
- *          {@default `currentcolor`}
- * @cssprop {<color>} --pf-c-table__sort__button--hover__text--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort__button--hover__text--Color=currencolor]
  *          Sort button hover text color
- *          {@default `currencolor`}
- * @cssprop {<color>} --pf-c-table__sort__button--focus__text--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort__button--focus__text--Color=currentcolor]
  *          Sort button focus text color
- *          {@default `currentcolor`}
- * @cssprop {<color>} --pf-c-table__sort__button--active__text--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort__button--active__text--Color=currentcolor]
  *          Sort button active text color
- *          {@default `currentcolor`}
- * @cssprop {<color>} --pf-c-table__sort-indicator--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort-indicator--Color=#d2d2d2]
  *          Sort inidcator color
- *          {@default `#d2d2d2`}
- * @cssprop {<calc-sum>} --pf-c-table__sort-indicator--MarginLeft
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table__sort-indicator--MarginLeft=calc(6ch + 1rem + 1rem + 1rem)]
  *          Sort inidcator left margin
- *          {@default `calc(6ch + 1rem + 1rem + 1rem)`}
- * @cssprop {<color>} --pf-c-table__sort--m-selected__sort-indicator--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort--m-selected__sort-indicator--Color=#06c]
  *          Selected sort inidcator color
- *          {@default `#06c`}
- * @cssprop {<color>} --pf-c-table__sort__button--hover__sort-indicator--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort__button--hover__sort-indicator--Color=#151515]
  *          Sort button hover sort indicator color
- *          {@default `#151515`}
- * @cssprop {<color>} --pf-c-table__sort__button--active__sort-indicator--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort__button--active__sort-indicator--Color=#151515]
  *          Sort button hover active sort indicator color
- *          {@default `#151515`}
- * @cssprop {<color>} --pf-c-table__sort__button--focus__sort-indicator--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__sort__button--focus__sort-indicator--Color=#151515]
  *          Sort button hover focus sort indicator color
- *          {@default `#151515`}
- * @cssprop {<length>} --pf-c-table--th--m-help--MinWidth
+ *
+ * @cssprop {<length>} [--pf-c-table--th--m-help--MinWidth=11ch]
  *          Header cell help minimum width
- *          {@default `11ch`}
- * @cssprop {<dimension>} --pf-c-table__column-help--MarginLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table__column-help--MarginLeft=0.25rem]
  *          Help column left magin
- *          {@default `0.25rem`}
- * @cssprop {<dimension>} --pf-c-table__column-help--TranslateY
+ *
+ * @cssprop {<dimension>} [--pf-c-table__column-help--TranslateY=0.125rem]
  *          Help column translate y axis
- *          {@default `0.125rem`}
- * @cssprop {<calc-product>} --pf-c-table__column-help--c-button--MarginTop
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__column-help--c-button--MarginTop=calc(0.375rem * -1)]
  *          Help column button top margin
- *          {@default `calc(0.375rem * -1)`}
- * @cssprop {<calc-product>} --pf-c-table__column-help--c-button--MarginBottom
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__column-help--c-button--MarginBottom=calc(0.375rem * -1)]
  *          Help column button bottom margin
- *          {@default `calc(0.375rem * -1)`}
- * @cssprop {<dimension>} --pf-c-table__column-help--c-button--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table__column-help--c-button--PaddingRight=0.5rem]
  *          Help column button right padding
- *          {@default `0.5rem`}
- * @cssprop {<dimension>} --pf-c-table__column-help--c-button--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table__column-help--c-button--PaddingLeft=0.5rem]
  *          Help column button left margin
- *          {@default `0.5rem`}
- * @cssprop {<color>} --pf-c-table__compound-expansion-toggle__button--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__compound-expansion-toggle__button--Color=#06c]
  *          Compound expansion toggle button color
- *          {@default `#06c`}
- * @cssprop {<color>} --pf-c-table__compound-expansion-toggle__button--hover--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__compound-expansion-toggle__button--hover--Color=#004080]
  *          Compound expansion hover toggle button color
- *          {@default `#004080`}
- * @cssprop {<color>} --pf-c-table__compound-expansion-toggle__button--focus--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__compound-expansion-toggle__button--focus--Color=#004080]
  *          Compound expansion focus toggle button color
- *          {@default `#004080`}
- * @cssprop {<color>} --pf-c-table__compound-expansion-toggle__button--active--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__compound-expansion-toggle__button--active--Color=#004080]
  *          Compound expansion active toggle button color
- *          {@default `#004080`}
- * @cssprop {<length>} --pf-c-table__compound-expansion-toggle__button--before--border-width--base
+ *
+ * @cssprop {<length>} [--pf-c-table__compound-expansion-toggle__button--before--border-width--base=1px]
  *          Compound expansion toggle button before border width
- *          {@default `1px`}
- * @cssprop {<color>} --pf-c-table__compound-expansion-toggle__button--before--BorderColor
+ *
+ * @cssprop {<color>} [--pf-c-table__compound-expansion-toggle__button--before--BorderColor=#d2d2d2]
  *          Compound expansion toggle button before border color
- *          {@default `#d2d2d2`}
- * @cssprop {<length>} --pf-c-table__compound-expansion-toggle__button--before--BorderRightWidth
+ *
+ * @cssprop {<length>} [--pf-c-table__compound-expansion-toggle__button--before--BorderRightWidth=0]
  *          Compound expansion toggle button before right border width
- *          {@default `0`}
- * @cssprop {<length>} --pf-c-table__compound-expansion-toggle__button--before--BorderLeftWidth
+ *
+ * @cssprop {<length>} [--pf-c-table__compound-expansion-toggle__button--before--BorderLeftWidth=0]
  *          Compound expansion toggle button before left border width
- *          {@default `0`}
- * @cssprop {<calc-product>} --pf-c-table__compound-expansion-toggle__button--before--Bottom
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__compound-expansion-toggle__button--before--Bottom=calc(1px * -1)]
  *          Compound expansion toggle button before bottom
- *          {@default `calc(1px * -1)`}
- * @cssprop {<calc-product>} --pf-c-table__compound-expansion-toggle__button--before--Left
+ *
+ * @cssprop {<calc-product>} [--pf-c-table__compound-expansion-toggle__button--before--Left=calc(1px * -1)]
  *          Compound expansion toggle button before left
- *          {@default `calc(1px * -1)`}
- * @cssprop {<length>} --pf-c-table__compound-expansion-toggle__button--after--border-width--base
+ *
+ * @cssprop {<length>} [--pf-c-table__compound-expansion-toggle__button--after--border-width--base=3px]
  *          Compound expansion toggle button after base border width
- *          {@default `3px`}
- * @cssprop {<color>} --pf-c-table__compound-expansion-toggle__button--after--BorderColor
+ *
+ * @cssprop {<color>} [--pf-c-table__compound-expansion-toggle__button--after--BorderColor=#06c]
  *          Compound expansion toggle button after border color
- *          {@default `#06c`}
- * @cssprop {<length>} --pf-c-table__compound-expansion-toggle__button--after--BorderTopWidth
+ *
+ * @cssprop {<length>} [--pf-c-table__compound-expansion-toggle__button--after--BorderTopWidth=0]
  *          Compound expansion toggle button after top border width
- *          {@default `0`}
- * @cssprop {<calc-sum>} --pf-c-table__compound-expansion-toggle__button--after--Top
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table__compound-expansion-toggle__button--after--Top=calc(1px * -1)]
  *          Compound expansion toggle button after top
- *          {@default `calc(1px * -1)`}
- * @cssprop {<calc-sum>} --pf-c-table__compound-expansion-toggle__button--after--Left
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table__compound-expansion-toggle__button--after--Left=calc(1px * -1)]
  *          Compound expansion toggle button after left
- *          {@default `calc(1px * -1)`}
- * @cssprop {<calc-sum>} --pf-c-table--m-compact-th--PaddingTop
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table--m-compact-th--PaddingTop=calc(0.5rem + 0.25rem)]
  *          Compact header cell top padding
- *          {@default `calc(0.5rem + 0.25rem)`}
- * @cssprop {<dimension>} --pf-c-table--m-compact-th--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact-th--PaddingBottom=0.5rem]
  *          Compact header cell bottom padding
- *          {@default `0.5rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact--cell--PaddingTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact--cell--PaddingTop=0.5rem]
  *          Compact cell top padding
- *          {@default `0.5rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact--cell--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact--cell--PaddingRight=0.5rem]
  *          Compact cell right padding
- *          {@default `0.5rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact--cell--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact--cell--PaddingBottom=0.5rem]
  *          Compact cell bottom padding
- *          {@default `0.5rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact--cell--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact--cell--PaddingLeft=0.5rem]
  *          Compact cell left padding
- *          {@default `0.5rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact--cell--first-last-child--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact--cell--first-last-child--PaddingLeft=1rem]
  *          Compact cell first child left padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact--cell--first-last-child--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact--cell--first-last-child--PaddingRight=1rem]
  *          Compact XLcell first child right padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact--cell--first-last-child--xl--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact--cell--first-last-child--xl--PaddingLeft=1.5rem]
  *          Compact cell first child XL left padding
- *          {@default `1.5rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact--cell--first-last-child--xl--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact--cell--first-last-child--xl--PaddingRight=1.5rem]
  *          Compact cell first child XL right padding
- *          {@default `1.5rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact--FontSize
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact--FontSize=0.875rem]
  *          Compact font size
- *          {@default `0.875rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact__expandable-row-content--PaddingTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact__expandable-row-content--PaddingTop=1.5rem]
  *          Compact expandable row content top padding
- *          {@default `1.5rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact__expandable-row-content--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact__expandable-row-content--PaddingRight=1.5rem]
  *          Compact expandable row content right padding
- *          {@default `1.5rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact__expandable-row-content--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact__expandable-row-content--PaddingBottom=1.5rem]
  *          Compact expandable row content bottom padding
- *          {@default `1.5rem`}
- * @cssprop {<dimension>} --pf-c-table--m-compact__expandable-row-content--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table--m-compact__expandable-row-content--PaddingLeft=1.5rem]
  *          Compact expandable row content left padding
- *          {@default `1.5rem`}
- * @cssprop {<dimension>} --pf-c-table--nested--first-last-child--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table--nested--first-last-child--PaddingRight=1rem]
  *          Nested first child right padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--nested--first-last-child--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table--nested--first-last-child--PaddingLeft=1rem]
  *          Nested first child left padding
- *          {@default `1rem`}
- * @cssprop {<color>} --pf-c-table__expandable-row--m-expanded--BorderBottomColor
+ *
+ * @cssprop {<color>} [--pf-c-table__expandable-row--m-expanded--BorderBottomColor=#d2d2d2]
  *          Expandable row expanded bottom border color
- *          {@default `#d2d2d2`}
- * @cssprop {<color>} --pf-c-table--tr--m-hoverable--BoxShadow--top
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-hoverable--BoxShadow--top=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)]
  *          Hoverable table row top box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)`}
- * @cssprop {<dimension>} --pf-c-table--tr--m-hoverable--BackgroundColor
+ *
+ * @cssprop {<dimension>} [--pf-c-table--tr--m-hoverable--BackgroundColor=transparent]
  *          Hoverable table row background color
- *          {@default `transparent`}
- * @cssprop {<color>} --pf-c-table--tr--m-hoverable--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-hoverable--BoxShadow=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)]
  *          Hoverable table row box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)`}
- * @cssprop {<calc-sum>} --pf-c-table--tr--m-hoverable--OutlineOffset
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table--tr--m-hoverable--OutlineOffset=calc(-1 * 0.25rem)]
  *          Hoverable table row outline offset
- *          {@default `calc(-1 * 0.25rem)`}
- * @cssprop {<color>} --pf-c-table--tr--m-hoverable--hover--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-hoverable--hover--BoxShadow=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Hoverable table row hover box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tr--m-hoverable--hover--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-hoverable--hover--BackgroundColor=#fff]
  *          Hoverable table row hover background color
- *          {@default `#fff`}
- * @cssprop {<color>} --pf-c-table--tr--m-hoverable--focus--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-hoverable--focus--BoxShadow=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Hoverable table row focus box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tr--m-hoverable--focus--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-hoverable--focus--BackgroundColor=#fff]
  *          Hoverable table row focus background color
- *          {@default `#fff`}
- * @cssprop {<color>} --pf-c-table--tr--m-hoverable--active--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-hoverable--active--BoxShadow=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Hoverable table row active box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tr--m-hoverable--active--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-hoverable--active--BackgroundColor=#fff]
  *          Hoverable table row active background color
- *          {@default `#fff`}
- * @cssprop {<color>} --pf-c-table--tr--m-hoverable--m-selected--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-hoverable--m-selected--BoxShadow=0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16) inset, 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Hoverable table row selected box shadow
- *          {@default `0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16) inset, 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tr--m-selected--BoxShadow--top
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-selected--BoxShadow--top=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)]
  *          Selected table row top box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)`}
- * @cssprop {<color>} --pf-c-table--tr--m-selected--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-selected--BackgroundColor=#fff]
  *          Selected table row background color
- *          {@default `#fff`}
- * @cssprop {<color>} --pf-c-table--tr--m-selected--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-selected--BoxShadow=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)]
  *          Selected table row box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)`}
- * @cssprop {<calc-sum>} --pf-c-table--tr--m-selected--OutlineOffset
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table--tr--m-selected--OutlineOffset=calc(-1 * 0.25rem)]
  *          Selected table row outline offset
- *          {@default `calc(-1 * 0.25rem)`}
- * @cssprop {<length>} --pf-c-table--tr--m-selected--after--BorderLeftWidth
+ *
+ * @cssprop {<length>} [--pf-c-table--tr--m-selected--after--BorderLeftWidth=3px]
  *          Selected table row after left border width
- *          {@default `3px`}
- * @cssprop {<color>} --pf-c-table--tr--m-selected--after--BorderLeftColor
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-selected--after--BorderLeftColor=#06c]
  *          Selected table row after left border color
- *          {@default `#06c`}
- * @cssprop {<color>} --pf-c-table--tr--m-selected--m-selected--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-selected--m-selected--BoxShadow=0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Selected table row box shadow
- *          {@default `0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tr--m-selected--hover--m-selected--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-selected--hover--m-selected--BoxShadow=0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16) inset, 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Selected table row hover box shadow
- *          {@default `0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16) inset, 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tr--m-selected--tr--m-selected--hover--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tr--m-selected--tr--m-selected--hover--BoxShadow=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Selected table row hover box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tbody--m-hoverable--BoxShadow--top
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-hoverable--BoxShadow--top=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)]
  *          Hoverable table body top box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)`}
- * @cssprop {<color>} --pf-c-table--tbody--m-hoverable--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-hoverable--BoxShadow=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)]
  *          Hoverable table body box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)`}
- * @cssprop {<dimension>} --pf-c-table--tbody--m-hoverable--BackgroundColor
+ *
+ * @cssprop {<dimension>} [--pf-c-table--tbody--m-hoverable--BackgroundColor=transparent]
  *          Hoverable table body background color
- *          {@default `transparent`}
- * @cssprop {<calc-sum>} --pf-c-table--tbody--m-hoverable--OutlineOffset
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table--tbody--m-hoverable--OutlineOffset=calc(-1 * 0.25rem)]
  *          Hoverable table body outline offset
- *          {@default `calc(-1 * 0.25rem)`}
- * @cssprop {<color>} --pf-c-table--tbody--m-hoverable--hover--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-hoverable--hover--BoxShadow=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Hoverable table body hover box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tbody--m-hoverable--hover--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-hoverable--hover--BackgroundColor=#fff]
  *          Hoverable table body hover background color
- *          {@default `#fff`}
- * @cssprop {<color>} --pf-c-table--tbody--m-hoverable--focus--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-hoverable--focus--BoxShadow=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Hoverable table body focus box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tbody--m-hoverable--focus--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-hoverable--focus--BackgroundColor=#fff]
  *          Hoverable table body focus background color
- *          {@default `#fff`}
- * @cssprop {<color>} --pf-c-table--tbody--m-hoverable--active--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-hoverable--active--BoxShadow=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Hoverable table body active box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tbody--m-hoverable--active--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-hoverable--active--BackgroundColor=#fff]
  *          Hoverable table body active background color
- *          {@default `#fff`}
- * @cssprop {<color>} --pf-c-table--tbody--m-hoverable--m-expanded--BorderColor
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-hoverable--m-expanded--BorderColor=#73bcf7]
  *          Hoverable table body expanded border color
- *          {@default `#73bcf7`}
- * @cssprop {<color>} --pf-c-table--tbody--m-hoverable--m-selected--hover--tr--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-hoverable--m-selected--hover--tr--BoxShadow=0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16) inset, 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Hoverable table body selected table row box shadow
- *          {@default `0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16) inset, 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tbody--m-selected--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-selected--BackgroundColor=#fff]
  *          Selected table body background color
- *          {@default `#fff`}
- * @cssprop {<color>} --pf-c-table--tbody--m-selected--BoxShadow--top
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-selected--BoxShadow--top=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)]
  *          Selected table body top box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)`}
- * @cssprop {<color>} --pf-c-table--tbody--m-selected--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-selected--BoxShadow=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)]
  *          Selected table body box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08)`}
- * @cssprop {<calc-product>} --pf-c-table--tbody--m-selected--OutlineOffset
+ *
+ * @cssprop {<calc-product>} [--pf-c-table--tbody--m-selected--OutlineOffset=calc(-1 * 0.25rem)]
  *          Selected table body outline offset
- *          {@default `calc(-1 * 0.25rem)`}
- * @cssprop {<length>} --pf-c-table--tbody--m-selected--after--BorderLeftWidth
+ *
+ * @cssprop {<length>} [--pf-c-table--tbody--m-selected--after--BorderLeftWidth=3px]
  *          Selected table body after left border width
- *          {@default `3px`}
- * @cssprop {<color>} --pf-c-table--tbody--m-selected--after--BorderLeftColor
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-selected--after--BorderLeftColor=#06c]
  *          Selected table body after left border color
- *          {@default `#06c`}
- * @cssprop {<color>} --pf-c-table--tbody--m-selected--m-selected--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-selected--m-selected--BoxShadow=0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Selected table body selected box shadow
- *          {@default `0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tbody--m-selected--hover--tbody--m-selected--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-selected--hover--tbody--m-selected--BoxShadow=0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16) inset, 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Selected table body hover selected box shadow
- *          {@default `0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16) inset, 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<color>} --pf-c-table--tbody--m-selected--tbody--m-selected--hover--BoxShadow
+ *
+ * @cssprop {<color>} [--pf-c-table--tbody--m-selected--tbody--m-selected--hover--BoxShadow=0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)]
  *          Selected table body hover box shadow
- *          {@default `0 -0.1875rem 0.25rem -0.125rem rgba(3,3,3,.08), 0 0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16)`}
- * @cssprop {<dimension>} --pf-c-table--thead--m-nested-column-header--button--OutlineOffset
+ *
+ * @cssprop {<dimension>} [--pf-c-table--thead--m-nested-column-header--button--OutlineOffset=-0.1875rem]
  *          Table head nested column header button outline offset
- *          {@default `-0.1875rem`}
- * @cssprop {<dimension>} --pf-c-table--thead--m-nested-column-header--tr--PaddingTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table--thead--m-nested-column-header--tr--PaddingTop=0.25rem]
  *          Table head nested column header row top padding
- *          {@default `0.25rem`}
- * @cssprop {<dimension>} --pf-c-table--thead--m-nested-column-header--tr--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table--thead--m-nested-column-header--tr--PaddingBottom=0.25rem]
  *          Table head nested column header row bottom padding
- *          {@default `0.25rem`}
- * @cssprop {<color>} --pf-c-table__subhead--Color
+ *
+ * @cssprop {<color>} [--pf-c-table__subhead--Color=#6a6e73]
  *          Subhead color
- *          {@default `#6a6e73`}
- * @cssprop {<color>} --pf-c-table--m-striped__tr--BackgroundColor
+ *
+ * @cssprop {<color>} [--pf-c-table--m-striped__tr--BackgroundColor=#fafafa]
  *          Striped row background color
- *          {@default `#fafafa`}
- * @cssprop {<dimension>} --pf-c-table--cell--PaddingTop
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--PaddingTop=1rem]
  *          Cell top padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--cell--PaddingRight
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--PaddingRight=1rem]
  *          Cell right padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--cell--PaddingBottom
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--PaddingBottom=1rem]
  *          Cell bottom padding
- *          {@default `1rem`}
- * @cssprop {<dimension>} --pf-c-table--cell--PaddingLeft
+ *
+ * @cssprop {<dimension>} [--pf-c-table--cell--PaddingLeft=1rem]
  *          Cell left padding
- *          {@default `1rem`}
- * @cssprop {<calc-sum>} --pf-c-table__favorite--c-button--MarginTop
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table__favorite--c-button--MarginTop=calc(0.375rem * -1)]
  *          Favorite button top margin
- *          {@default `calc(0.375rem * -1)`}
- * @cssprop {<calc-sum>} --pf-c-table__favorite--c-button--MarginRight
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table__favorite--c-button--MarginRight=calc(1rem * -1)]
  *          Favorite button right margin
- *          {@default `calc(1rem * -1)`}
- * @cssprop {<calc-sum>} --pf-c-table__favorite--c-button--MarginBottom
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table__favorite--c-button--MarginBottom=calc(0.375rem * -1)]
  *          Favorite button bottom margin
- *          {@default `calc(0.375rem * -1)`}
- * @cssprop {<calc-sum>} --pf-c-table__favorite--c-button--MarginLeft
+ *
+ * @cssprop {<calc-sum>} [--pf-c-table__favorite--c-button--MarginLeft=calc(1rem * -1)]
  *          Favorite button left margin
- *          {@default `calc(1rem * -1)`}
+ *
  */
 @customElement('pf-table')
 export class PfTable extends LitElement {

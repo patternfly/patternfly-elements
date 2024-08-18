@@ -1,5 +1,5 @@
 ---
-"@patternfly/eslint-config": patch
+"@patternfly/eslint-config-elements": patch
 "@patternfly/create-element": patch
 "@patternfly/pfe-core": patch
 "@patternfly/pfe-tools": patch

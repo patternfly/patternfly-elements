@@ -264,7 +264,26 @@ export class PfButton extends LitElement {
       <slot id="text"></slot>
     `;
 
-    return html`
+    if (variant === 'link' && href) {
+      return html`
+        <a id="button"
+           href="${href}"
+           target="${ifDefined(target)}"
+           class="${classMap({
+                        [variant]: true,
+                        [size ?? '']: !!size,
+                        anchor: true,
+                        inline,
+                        block,
+                        danger,
+                        disabled,
+                        hasIcon,
+                        loading,
+                        plain,
+                        warning,
+                      })}">${content}</a>`;
+    } else {
+      return html`
       <div id="button"
            class="${classMap({
              [variant]: true,
@@ -277,10 +296,8 @@ export class PfButton extends LitElement {
              loading,
              plain,
              warning,
-           })}">${!(variant === 'link' && href) ? content : html`
-        <a href="${href}" class="anchor" target="${ifDefined(target)}">${content}</a>`}
-      </div>
-    `;
+           })}">${content}</div>`;
+    }
   }
 
   #onClick() {

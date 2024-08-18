@@ -229,7 +229,7 @@ export class PfButton extends LitElement {
     this.#internals.ariaDisabled = String(!!this.disabled);
     const isLink = this.variant === 'link' && this.href;
     if (isLink) {
-      this.tabIndex = -1;
+      this.removeAttribute('tabindex');
       this.#internals.role = 'none';
     } else {
       this.tabIndex = 0;

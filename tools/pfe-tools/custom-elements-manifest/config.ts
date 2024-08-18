@@ -2,7 +2,6 @@ import type { Config } from '@custom-elements-manifest/analyzer';
 
 import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
 import { readonlyPlugin } from 'cem-plugin-readonly';
-import { jsdocDescriptionDefaultPlugin } from './jsdoc-description-default.js';
 import { dedentDescriptionsPlugin } from './dedent-descriptions.js';
 import { demosPlugin } from './demos.js';
 import { deprecatedDescriptionInlineTagPlugin } from './deprecated-description-inline-tag.js';
@@ -40,7 +39,6 @@ export function pfeCustomElementsManifestConfig(options?: Options): Config {
     litelement: true,
     plugins: [
       readonlyPlugin(),
-      jsdocDescriptionDefaultPlugin(),
       moduleFileExtensionsPlugin(),
       moduleFileExtensionsPlugin({ from: 'src/', to: '' }),
       sanitizeEventsPlugin(),

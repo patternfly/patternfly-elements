@@ -1,7 +1,9 @@
 ---
-"@patternfly/pfe-core": minor
+"@patternfly/elements": minor
 ---
-✨ Added `<pf-select variant="typeahead>`
+✨ Added `<pf-select variant="typeahead">`
+
+A typeahead select is an inline-autocomplete combobox.
 
 ```html
 <label for="state">State</label>

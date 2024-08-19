@@ -24,6 +24,31 @@ export class PfClipboardCopyCopiedEvent extends Event {
  * @slot - Place content to copy here, or use the `value` attribute
  * @slot actions - Place additional action buttons here
  * @fires {PfClipboardCopyCopiedEvent} copy - when the text snippet is successfully copied.
+ * @cssprop [--pf-c-clipboard-copy__toggle-icon--Transition=.2s ease-in 0s]
+ * @cssprop [--pf-c-clipboard-copy--m-expanded__toggle-icon--Rotate=90deg]
+ * @cssprop [--pf-c-clipboard-copy__expandable-content--PaddingTop=var(--pf-global--spacer--md, 1rem)]
+ * @cssprop [--pf-c-clipboard-copy__expandable-content--PaddingRight=var(--pf-global--spacer--md, 1rem)]
+ * @cssprop [--pf-c-clipboard-copy__expandable-content--PaddingBottom=var(--pf-global--spacer--md, 1rem)]
+ * @cssprop [--pf-c-clipboard-copy__expandable-content--PaddingLeft=var(--pf-global--spacer--md, 1rem)]
+ * @cssprop [--pf-c-clipboard-copy__expandable-content--BackgroundColor=var(--pf-global--BackgroundColor--light-100, #fff)]
+ * @cssprop [--pf-c-clipboard-copy__expandable-content--BorderTopWidth=0]
+ * @cssprop [--pf-c-clipboard-copy__expandable-content--BorderRightWidth=var(--pf-global--BorderWidth--sm, 1px)]
+ * @cssprop [--pf-c-clipboard-copy__expandable-content--BorderBottomWidth=var(--pf-global--BorderWidth--sm, 1px)]
+ * @cssprop [--pf-c-clipboard-copy__expandable-content--BorderLeftWidth=var(--pf-global--BorderWidth--sm, 1px)]
+ * @cssprop [--pf-c-clipboard-copy__expandable-content--BorderColor=var(--pf-global--BorderColor--100, #d2d2d2)]
+ * @cssprop [--pf-c-clipboard-copy__expandable-content--OutlineOffset=calc(-1 * var(--pf-global--spacer--xs, 0.25rem))]
+ * @cssprop [--pf-c-clipboard-copy--m-inline--PaddingTop=0]
+ * @cssprop [--pf-c-clipboard-copy--m-inline--PaddingBottom=0]
+ * @cssprop [--pf-c-clipboard-copy--m-inline--PaddingLeft=var(--pf-global--spacer--xs, 0.25rem)]
+ * @cssprop [--pf-c-clipboard-copy--m-inline--BackgroundColor=var(--pf-global--BackgroundColor--200, #f0f0f0)]
+ * @cssprop [--pf-c-clipboard-copy__text--m-code--FontFamily=var(--pf-global--FontFamily--monospace, "Liberation Mono", consolas, "SFMono-Regular", menlo, monaco, "Courier New", monospace)]
+ * @cssprop [--pf-c-clipboard-copy__text--m-code--FontSize=var(--pf-global--FontSize--sm, 0.875rem)]
+ * @cssprop [--pf-c-clipboard-copy__actions-item--MarginTop=calc(-1 * var(--pf-global--spacer--form-element, 0.375rem))]
+ * @cssprop [--pf-c-clipboard-copy__actions-item--MarginBottom=calc(-1 * var(--pf-global--spacer--form-element, 0.375rem))]
+ * @cssprop [--pf-c-clipboard-copy__actions-item--button--PaddingTop=var(--pf-global--spacer--xs, 0.25rem)]
+ * @cssprop [--pf-c-clipboard-copy__actions-item--button--PaddingRight=var(--pf-global--spacer--sm, 0.5rem)]
+ * @cssprop [--pf-c-clipboard-copy__actions-item--button--PaddingBottom=var(--pf-global--spacer--xs, 0.25rem)]
+ * @cssprop [--pf-c-clipboard-copy__actions-item--button--PaddingLeft=var(--pf-global--spacer--sm, 0.5rem)]
  */
 @customElement('pf-clipboard-copy')
 export class PfClipboardCopy extends LitElement {

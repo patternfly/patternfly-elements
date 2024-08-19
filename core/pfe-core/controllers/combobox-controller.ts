@@ -654,7 +654,7 @@ export class ComboboxController<
          */
         if (this.#focusedItem
             && this.options.getComboboxInput()
-            && /^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+            && InternalsController.isSafari) {
           this.#announce(this.#focusedItem);
         }
         break;

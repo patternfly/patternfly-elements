@@ -83,6 +83,8 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     return Array.from(this.instances.get(host)?.internals.labels ?? []) as Element[];
   }
 
+  public static isSafari: boolean = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
   public static of(
     host: ReactiveControllerHost,
     options?: InternalsControllerOptions,

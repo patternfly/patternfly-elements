@@ -7,7 +7,7 @@ This controller implements the [WAI-ARIA activedescendant pattern][pattern]
 for keyboard and screen-reader accessibility.
 
 ```ts
-#activedescentant = ActivedescendantController.of(this, {
+#activedescendant = ActivedescendantController.of(this, {
   getItems: () => this.options,
   getItemsContainer: () => this.#listbox,
   getOrientation: () => 'vertical',

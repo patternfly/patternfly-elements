@@ -9,7 +9,7 @@ the `atFocusedItemIndex` accessor.
 **Before**:
 
 ```ts
-#tabindex = new TabindexController(this);
+#tabindex = new RovingTabindexController(this);
 
 firstUpdated() {
   this.#tabindex.initItems(this.items);
@@ -25,7 +25,7 @@ updated(changed: PropertyValues<this>) {
 **After**:
 
 ```ts
-#tabindex = new TabindexController(this, {
+#tabindex = RovingTabindexController.of(this, {
   getItems: () => this.items,
 });
 

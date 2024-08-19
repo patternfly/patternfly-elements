@@ -1,5 +1,197 @@
 # @patternfly/elements
 
+## 4.0.0
+
+### Major Changes
+
+- c9bd577: `<pf-icon>`: removed the `getIconUrl` static method, and replaced it with the
+  `resolve` static method
+
+  The steps for overriding icon loading behaviour have changed. Before, you had to
+  return a string from the `getIconUrl` method, or the second argument to
+  `addIconSet`. Now, both of those functions must return a Node, or any lit-html
+  renderable value, or a Promise thereof.
+
+  **Before**:
+
+  ```js
+  PfIcon.addIconSet('local', (set, icon) =>
+    new URL(`/assets/icons/${set}-${icon}.js`));
+
+  // or
+  PfIcon.getIconUrl = (set, icon) =>
+    new URL(`/assets/icons/${set}-${icon}.js`))
+  ```
+
+  **After**:
+
+  ```js
+  PfIcon.addIconSet('local', (set, icon) =>
+    import(`/assets/icons/${set}-${icon}.js`))
+      .then(mod => mod.default);
+
+  // or
+  PfIcon.resolve = (set, icon) =>
+    import(`/assets/icons/${set}-${icon}.js`))
+      .then(mod => mod.default);
+  ```
+
+- c9bd577: `<pf-icon>`: removed the `defaultIconSet` static field.
+- c9bd577: `<pf-accordion>`: Removed `BaseAccordion*` classes, as well as static `isPanel`, `isHeader`, and `isAccordion` methods. Removed the optional `parentAccordion` parameter to `PfAccordion#expand(index)`. Renamed accordion event classes by adding the `Pf` prefix:
+
+  **Before**:
+
+  ```js
+  import { AccordionHeaderChangeEvent } from "@patternfly/elements/pf-accordion/pf-accordion.js";
+
+  addEventListener("change", function (event) {
+    if (event instanceof AccordionHeaderChangeEvent) {
+      // ...
+    }
+  });
+  ```
+
+  **After**:
+
+  ```js
+  import { PfAccordionHeaderChangeEvent } from "@patternfly/elements/pf-accordion/pf-accordion.js";
+
+  addEventListener("change", function (event) {
+    if (event instanceof PfAccordionHeaderChangeEvent) {
+      // ...
+    }
+  });
+  ```
+
+- c9bd577: `<pf-icon>`: removed svg files, use `@patternfly/icons` instead
+- c9bd577: `<pf-label>`: when clicking close button, `close` event is fired.
+  Now, if that event is not cancelled, the label will remove itself from the document.
+
+  To restore previous behaviour:
+
+  ```js
+  import { LabelCloseEvent } from "@patternfly/elements/pf-label/pf-label.js";
+  label.addEventListener("close", function (event) {
+    if (event instanceof LabelCloseEvent) {
+      event.preventDefault();
+      return false;
+    }
+  });
+  ```
+
+- c9bd577: `<pf-clipboard-copy>`: Removed `BaseClipboardCopy` class.
+  Reimplement (recommended) or extend `PfClipboardCopy`.
+  Renames `AvatarLoadEvent` to `PfAvatarLoadEvent` and moves it to `pf-avatar.js`.
+
+  **Before**:
+
+  ```js
+  import { ClipboardCopyCopiedEvent } from "@patternfly/elements/pf-clipboard-copy/BaseClipboardCopy.js";
+
+  addEventListener("copy", function (event) {
+    if (event instanceof ClipboardCopyCopiedEvent) {
+      // ...
+    }
+  });
+  ```
+
+  **After**:
+
+  ```js
+  import { PfClipboardCopyCopiedEvent } from "@patternfly/elements/pf-clipboard-copy/pf-clipboard-copy.js";
+
+  addEventListener("copy", function (event) {
+    if (event instanceof PfClipboardCopyCopiedEvent) {
+      // ...
+    }
+  });
+  ```
+
+- c9bd577: `<pf-icon>`: Removed `BaseIcon` class. Reimplement (recommended) or extend `PfIcon`.
+- c9bd577: `<pf-label>`: Removed `BaseLabel` class. Reimplement (recommended) or extend `PfLabel`.
+- c9bd577: `<pf-switch>`: Removed `BaseSwitch` class. Reimplement (recommended) or extend `PfSwitch`.
+- c9bd577: `<pf-avatar>`: Removed `BaseAvatar` class. Reimplement (recommended) or extend `PfAvatar`.
+  Renames `AvatarLoadEvent` to `PfAvatarLoadEvent` and moves it to `pf-avatar.js`.
+
+  **Before**:
+
+  ```js
+  import { AvatarLoadEvent } from "@patternfly/elements/pf-avatar/BaseAvatar.js";
+
+  addEventListener("load", function (event) {
+    if (event instanceof AvatarLoadEvent) {
+      // ...
+    }
+  });
+  ```
+
+  **After**:
+
+  ```js
+  import { PfAvatarLoadEvent } from "@patternfly/elements/pf-avatar/pf-avatar.js";
+
+  addEventListener("load", function (event) {
+    if (event instanceof PfAvatarLoadEvent) {
+      // ...
+    }
+  });
+  ```
+
+- c9bd577: `<pf-badge>`: Removed `BaseBadge` class. Reimplement (recommended) or extend `PfBadge`.
+- c9bd577: `<pf-button>`: Removed `BaseButton` class. Reimplement (recommended) or extend `PfButton`.
+- c9bd577: `<pf-code-block>`: Removed `BaseCodeBlock` class. Reimplement (recommended) or extend `PfCodeBlock`.
+- c9bd577: `<pf-spinner>`: Removed `BaseSpinner` class. Reimplement (recommended) or extend `PfSpinner`.
+- c9bd577: `<pf-tabs>`: Remove `BaseTabs`. Use `TabsAriaController`, etc. to reimplement
+  your elements which extend it, or extend from `PfTabs` instead.
+- c9bd577: `<pf-tile>`: Removed `BaseTile` class. Reimplement (recommended) or extend `PfTile`.
+- c9bd577: `<pf-tooltip>`: Removed `BaseTooltip` class. Reimplement (recommended) or extend `PfTooltip`.
+- c9bd577: `<pf-card>`: Removes `BaseCard` base class. If your project extends `BaseCard`, we recommend extending `LitElement` instead and re-implementing card's properties. Alternately, extend from `PfCard`.
+
+### Minor Changes
+
+- c9bd577: `<pf-card>`: added `title` slot, for when the title is not inline with any slotted header actions
+- c9bd577: ✨ Added `<pf-select variant="typeahead">`
+
+  A typeahead select is an inline-autocomplete combobox.
+
+  ```html
+  <label for="state">State</label>
+  <pf-select id="state" variant="typeahead" placeholder="Select a state">
+    <pf-option value="Alabama" description="The heart of Dixie"></pf-option>
+    <pf-option
+      value="Florida"
+      description="The sunshine state"
+      disabled
+    ></pf-option>
+    <pf-option value="New Jersey"></pf-option>
+    <pf-option value="New York"></pf-option>
+    <pf-option value="New Mexico"></pf-option>
+    <pf-option value="North Carolina"></pf-option>
+  </pf-select>
+  ```
+
+- 587d957: `<pf-button>`: Added `href` attribute to `<pf-button variant="link">`
+
+### Patch Changes
+
+- c9bd577: updated dependencies
+- 3e9d785: `<pf-select>`: prevent bug when select is in a deeply nested in shadow root
+- 4995067: `<pf-back-to-top>`: fix hover color
+- Updated dependencies [c9bd577]
+- Updated dependencies [c9bd577]
+- Updated dependencies [c9bd577]
+- Updated dependencies [c9bd577]
+- Updated dependencies [6d9045e]
+- Updated dependencies [c9bd577]
+- Updated dependencies [c9bd577]
+- Updated dependencies [c9bd577]
+- Updated dependencies [c9bd577]
+- Updated dependencies [c9bd577]
+- Updated dependencies [c9bd577]
+- Updated dependencies [c9bd577]
+- Updated dependencies [c9bd577]
+  - @patternfly/pfe-core@4.0.0
+
 ## 3.0.2
 
 ### Patch Changes

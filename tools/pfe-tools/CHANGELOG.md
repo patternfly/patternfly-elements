@@ -1,5 +1,109 @@
 # @patternfly/pfe-tools
 
+## 3.0.0
+
+### Major Changes
+
+- 1ca3515: **Custom Elements Manifest**: Removed support for non-standard inline `{@default value}` JSDoc tags. Use standard syntax instead
+
+  **Before**:
+
+  ```js
+  /**
+   * @cssprop --foo {@default bar} Foo
+   */
+  ```
+
+  **After**:
+
+  ```js
+  /**
+   * @cssprop [--foo=bar] Foo
+   */
+  ```
+
+- c9bd577: **Custom Elements Manifest**: added `custom-elements-manifest.js`, which exports the function `getAllManifests`
+
+  ```js
+  import { getAllManifests } from "@patternfly/pfe-tools/custom-elements-manifest/custom-elements-manifest/.js";
+
+  for (const manifest of getAllManifests()) {
+    const packageName = manifest.packageJson?.name ?? "package";
+    console.log(
+      `Available Elements in ${packageName}`,
+      ...manifest.getTagNames()
+    );
+  }
+  ```
+
+### Minor Changes
+
+- c9bd577: `a11ySnapshot`: Added chai assertions for various accessibility-tree scenarios
+
+  Examples:
+
+  ```ts
+  describe("<pf-accordion>", function () {
+    beforeEach(() =>
+      fixture(html`
+        <pf-accordion>
+          <pf-accordion-header id="header1">header-1</pf-accordion-header>
+          <pf-accordion-panel>panel-1</pf-accordion-panel>
+        </pf-accordion>
+      `)
+    );
+    describe("clicking the first heading", function () {
+      beforeEach(clickFirstHeading);
+      it("expands the first panel", async function () {
+        expect(await a11ySnapshot()).to.axContainName("panel-1");
+      });
+      it("focuses the first panel", async function () {
+        expect(await a11ySnapshot()).to.have.axTreeFocusOn(
+          document.getElementById("header1")
+        );
+      });
+      it("shows the collapse all button", async function () {
+        expect(await a11ySnapshot()).to.axContainRole("button");
+      });
+    });
+  });
+  ```
+
+- c9bd577: Added `querySnapshot` accessibility testing helper
+
+  ```ts
+  describe("then clicking the toggle", function () {
+    beforeEach(async function () {
+      await clickElementAtCenter(toggle);
+    });
+    it("expands the disclosure panel", async function () {
+      const snapshot = await a11ySnapshot();
+      const expanded = querySnapshot(snapshot, { expanded: true });
+      expect(expanded).to.be.ok;
+    });
+  });
+  ```
+
+- c9bd577: **TypeScript**: Add static version transformer. This adds a runtime-only
+  static `version` field to custom element classes.
+
+  ```js
+  import "@patternfly/elements/pf-button/pf-button.js";
+  const PFE_VERSION = await customElements
+    .whenDefined("pf-button")
+    .then((PfButton) => PfButton.version);
+  ```
+
+### Patch Changes
+
+- c9bd577: updated dependencies
+- 9d68f3d: **Dev Server**: load lightdom shim files
+- 9d68f3d: **Dev Server**: reload on typescript file changes
+- f3f68c9: Windows compatibility for various tools packages
+- c9bd577: **Dev Server**: use last modified time for the dev server cache
+- c9bd577: **Test Runner Config**: import the production version of Lit for tests, reducing
+  console chatter during test runs
+
 ## 2.0.3
 
 ### Patch Changes

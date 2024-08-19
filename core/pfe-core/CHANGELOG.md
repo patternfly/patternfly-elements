@@ -1,5 +1,149 @@
 # @patternfly/pfe-core
 
+## 4.0.0
+
+### Major Changes
+
+- c9bd577: `RovingTabindexController`, `ListboxController`: constructor options were changed.
+  In particular, the `initItems(items: Item[])` and `setActiveItem(item: Item)` methods
+  were removed and replaced with the `getItems: () => Item[]` constructor option, and
+  the `atFocusedItemIndex` accessor.
+
+  **Before**:
+
+  ```ts
+  #tabindex = new RovingTabindexController(this);
+
+  firstUpdated() {
+    this.#tabindex.initItems(this.items);
+  }
+
+  updated(changed: PropertyValues<this>) {
+    if (changed.has('activeItem')) {
+      this.#tabindex.setActiveItem(this.activeItem);
+    }
+  }
+  ```
+
+  **After**:
+
+  ```ts
+  #tabindex = RovingTabindexController.of(this, {
+    getItems: () => this.items,
+  });
+
+  updated(changed: PropertyValues<this>) {
+    if (changed.has('activeItem')) {
+      this.#tabindex.atFocusedItemIndex = this.items.indexOf(this.activeItem);
+    }
+  }
+  ```
+
+  **For further migration guidance**, please see the [sources in `@patternfly/pfe-core`][sources],
+  especially:
+
+  - `ATFocusController.ts`,
+  - `RovingTabindexController.ts`, and
+  - `ListboxController.ts`.
+
+  [sources]: https://github.com/patternfly/patternfly-elements/tree/main/core/pfe-core/controllers/
+
+- c9bd577: Removed global `pfeLog` feature
+- c9bd577: Removed `window.PfeConfig` global config object
+- c9bd577: Removed global `auto-reveal` feature
+- c9bd577: **Decorators**: Added `@observes`. Use it to add property change callback by
+  decorating them with the name of the property to observe
+
+  ```ts
+  @customElement("custom-button")
+  class CustomButton extends LitElement {
+    #internals = this.attachInternals();
+
+    @property({ type: Boolean }) disabled = false;
+
+    @observes("disabled")
+    protected disabledChanged() {
+      this.#internals.ariaDisabled = this.disabled
+        ? "true"
+        : this.ariaDisabled ?? "false";
+    }
+  }
+  ```
+
+  Breaking change: This commit makes some changes to the internal APIs of the
+  pre-existing `@observed` observer, most notably it changes the constructor
+  signature of the `PropertyObserverController` and associated functions. Most
+  users should not have to make any changes, but if you directly import and use
+  those functions, check the commit log to see how to update your call sites.
+
+- c9bd577: Removed global `trackPerformance` feature
+
+### Minor Changes
+
+- c9bd577: ✨ Added `ActiveDescendantController`
+
+  This controller implements the [WAI-ARIA activedescendant pattern][pattern]
+  for keyboard and screen-reader accessibility.
+
+  ```ts
+  #activedescendant = ActivedescendantController.of(this, {
+    getItems: () => this.options,
+    getItemsContainer: () => this.#listbox,
+    getOrientation: () => "vertical",
+    getActiveDescendantContainer: () => this.#input,
+    getControlsElements: () => [this.#input, this.#button].filter((x) => !!x),
+    setItemActive: (item, active) => void (item.active = active),
+  });
+  ```
+
+  [pattern]: https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_focus_activedescendant
+
+- c9bd577: ✨ Added `ComboboxController`
+
+  This controller implements the [WAI-ARIA combobox pattern][pattern] for both
+  select-only and inline autocomplete comboboxes.
+
+  ```ts
+  #combobox = ComboboxController.of(this, {
+    multi: this.multi,
+    getItems: () => this.options,
+    getFallbackLabel: () => this.accessibleLabel,
+    getListboxElement: () => this._listbox ?? null,
+    getToggleButton: () => this._toggleButton ?? null,
+    getComboboxInput: () => this._toggleInput ?? null,
+    isExpanded: () => this.expanded,
+    requestShowListbox: () => void (this.expanded ||= true),
+    requestHideListbox: () => void (this.expanded &&= false),
+    setItemHidden: (item, hidden) => void (item.hidden = hidden),
+    isItem: (item) => item instanceof PfOption,
+    setItemActive: (item, active) => (item.active = active),
+    setItemSelected: (item, selected) => (item.selected = selected),
+  });
+  ```
+
+  [pattern]: https://www.w3.org/WAI/ARIA/apg/patterns/combobox/
+
+- 6d9045e: `InternalsController`: added static `isSafari` boolean flag
+- c9bd577: **Decorators**: Added `@listen`. Use it to attach element event listeners to
+  class methods.
+
+  ```ts
+  @customElement("custom-input")
+  class CustomInput extends LitElement {
+    @property({ type: Boolean }) dirty = false;
+    @listen("keyup", { once: true })
+    protected onKeyup() {
+      this.dirty = true;
+    }
+  }
+  ```
+
+### Patch Changes
+
+- c9bd577: updated dependencies
+- c9bd577: `InternalsController`: corrected the types for aria IDL list attributes
+- c9bd577: Context: `makeContextRoot` no longer crashes SSR processes
+
 ## 3.0.0
 
 ### Major Changes

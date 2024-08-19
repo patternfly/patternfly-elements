@@ -1,5 +1,12 @@
 # @patternfly/create-element
 
+## 1.0.3
+
+### Patch Changes
+
+- c9bd577: updated dependencies
+- 5604adb: Element generator now generates demo files with inlined script and styles
+
 ## 1.0.2
 
 ### Patch Changes

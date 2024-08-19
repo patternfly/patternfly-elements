@@ -1,5 +1,15 @@
 # @patternfly/eslint-config-elements
 
+## 4.0.0
+
+### Major Changes
+
+- c9bd577: Require `@typescript-eslint` ^8.0.0
+
+### Patch Changes
+
+- c9bd577: updated dependencies
+
 ## 3.0.0
 
 ### Major Changes

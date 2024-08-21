@@ -52,7 +52,7 @@ export class PfIcon extends LitElement {
       icon.#intersecting = isIntersecting;
       ric(() => {
         if (icon.#intersecting) {
-          icon.load();
+          icon.#load();
         }
       });
     });

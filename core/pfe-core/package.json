@@ -11,6 +11,11 @@
   "exports": {
     ".": "./core.js",
     "./*": "./*",
+    "./ssr-shims.js": {
+      "node": "./ssr-shims.js",
+      "import": "./core.js",
+      "default": "./core.js"
+    },
     "./controllers/*": "./controllers/*",
     "./decorators/*": "./decorators/*",
     "./functions/*": "./functions/*",

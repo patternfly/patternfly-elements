@@ -1,5 +1,13 @@
 # @patternfly/elements
 
+## 4.0.1
+
+### Patch Changes
+
+- bce98d2: `<pf-icon>`: fixed lazy icon lazy loading
+- Updated dependencies [43b97bf]
+  - @patternfly/pfe-core@4.0.1
+
 ## 4.0.0
 
 ### Major Changes

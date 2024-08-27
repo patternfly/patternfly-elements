@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 4.0.1
+
+### Patch Changes
+
+- 43b97bf: `InternalsController`: prevent Safari-detector from breaking SSR
+
 ## 4.0.0
 
 ### Major Changes

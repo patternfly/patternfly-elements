@@ -1,7 +1,7 @@
 {
   "name": "@patternfly/elements",
   "license": "MIT",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
@@ -130,7 +130,7 @@
   "dependencies": {
     "@lit/context": "^1.1.2",
     "@patternfly/icons": "^1.0.3",
-    "@patternfly/pfe-core": "^4.0.0",
+    "@patternfly/pfe-core": "^4.0.1",
     "lit": "^3.2.0",
     "tslib": "^2.6.3"
   }

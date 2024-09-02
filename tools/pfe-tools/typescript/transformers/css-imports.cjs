@@ -135,6 +135,20 @@ function cacheCssImportSpecsAbsolute(sourceFile) {
   });
 }
 
+function getStylesheetContent(specifier, fileName, minify) {
+  let content; let pathname;
+  if (specifier.startsWith('./')) {
+    const dir = pathToFileURL(fileName);
+    const url = new URL(specifier, dir);
+    ({ pathname } = url);
+    content = fs.readFileSync(url, 'utf-8');
+  } else {
+    pathname = require.resolve(specifier);
+    content = fs.readFileSync(pathname, 'utf-8');
+  }
+  return minify ? minifyCss(content, pathname) : content;
+}
+
 /**
  * Replace .css import specifiers with .css.js import specifiers
  * If the inline option is set, remove the import specifier and print the css
@@ -167,10 +181,7 @@ module.exports = function(program, {
         if (inline) {
           const cached = cssImportSpecImporterMap.get(specifierAbs);
           if (cached?.size === 1) {
-            const dir = pathToFileURL(fileName);
-            const url = new URL(specifier, dir);
-            const content = fs.readFileSync(url, 'utf-8');
-            const stylesheet = minify ? minifyCss(content, url.pathname) : content;
+            const stylesheet = getStylesheetContent(specifier, fileName, minify);
             return [
               createLitCssImportStatement(ctx, node.getSourceFile()),
               createLitCssTaggedTemplateLiteral(

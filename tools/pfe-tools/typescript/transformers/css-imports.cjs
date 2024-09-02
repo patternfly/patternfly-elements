@@ -137,7 +137,7 @@ function cacheCssImportSpecsAbsolute(sourceFile) {
 
 function getStylesheetContent(specifier, fileName, minify) {
   let content; let pathname;
-  if (specifier.startsWith('./')) {
+  if (specifier.startsWith('.')) {
     const dir = pathToFileURL(fileName);
     const url = new URL(specifier, dir);
     ({ pathname } = url);

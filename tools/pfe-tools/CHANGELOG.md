@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 3.0.1
+
+### Patch Changes
+
+- 921e5d5: TypeScript CSS Import Transforms: allow importing from bare specifiers
+
 ## 3.0.0
 
 ### Major Changes

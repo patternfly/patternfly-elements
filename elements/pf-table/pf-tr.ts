@@ -1,5 +1,5 @@
 import { LitElement, html, type ComplexAttributeConverter, type PropertyValues } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
+import { customElement } from '@patternfly/pfe-core/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
 import styles from './pf-tr.css';

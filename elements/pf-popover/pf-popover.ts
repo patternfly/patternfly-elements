@@ -1,7 +1,7 @@
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
 import { LitElement, nothing, html, type PropertyValues, isServer, type TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
+import { customElement } from '@patternfly/pfe-core/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { styleMap } from 'lit/directives/style-map.js';

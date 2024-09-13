@@ -42,6 +42,7 @@
     "./decorators/initializer.js": "./decorators/initializer.js",
     "./decorators/observed.js": "./decorators/observed.js",
     "./decorators/observes.js": "./decorators/observes.js",
+    "./decorators/custom-element.js": "./decorators/custom-element.js",
     "./decorators/time.js": "./decorators/time.js",
     "./decorators/trace.js": "./decorators/trace.js",
     "./functions/arraysAreEquivalent.js": "./functions/arraysAreEquivalent.js",

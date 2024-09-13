@@ -1,5 +1,5 @@
 import { html, LitElement, type TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
+import { customElement } from '@patternfly/pfe-core/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
 import { ifDefined } from 'lit/directives/if-defined.js';

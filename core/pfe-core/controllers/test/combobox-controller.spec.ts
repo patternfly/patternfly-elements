@@ -2,7 +2,7 @@ import { expect, fixture, nextFrame } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
-import { customElement } from 'lit/decorators/custom-element.js';
+import { customElement } from '@patternfly/pfe-core/decorators/custom-element.js';
 import { query } from 'lit/decorators/query.js';
 import { ReactiveElement, html, render, type PropertyValues, type TemplateResult } from 'lit';
 

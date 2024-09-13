@@ -3,7 +3,7 @@ import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-co
 import type { TemplateResult } from 'lit';
 
 import { LitElement, html, isServer } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
+import { customElement } from '@patternfly/pfe-core/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { repeat } from 'lit/directives/repeat.js';

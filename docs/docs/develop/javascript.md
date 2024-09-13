@@ -64,7 +64,7 @@ In TypeScript, lit observed properties are defined using either the `@property()
 or the `@state()` decorator (for private or internal properties). Add the property import statement.
 
 ```ts
-import { customElement } from 'lit/decorators/custom-element.js'
+import { customElement } from '@patternfly/pfe-core/decorators/custom-element.js'
 import { property } from 'lit/decorators/property.js'
 ```
 
@@ -190,7 +190,7 @@ For your reference, here's the final Javascript code for `pf-cool-element`:
 
 ```ts
 import { LitElement, html } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
+import { customElement } from '@patternfly/pfe-core/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { styleMap } from 'lit/directives/style-map.js';
 

@@ -2,7 +2,7 @@ import { LitElement, html, type TemplateResult } from 'lit';
 import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 import { listen } from '@patternfly/pfe-core/decorators/listen.js';
 import { property } from 'lit/decorators/property.js';
-import { customElement } from 'lit/decorators/custom-element.js';
+import { customElement } from '@patternfly/pfe-core/decorators/custom-element.js';
 
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 import { NumberListConverter } from '@patternfly/pfe-core';

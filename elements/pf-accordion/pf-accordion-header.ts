@@ -1,7 +1,7 @@
 import type { PfAccordion } from './pf-accordion.js';
 
 import { LitElement, html, type TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
+import { customElement } from '@patternfly/pfe-core/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';

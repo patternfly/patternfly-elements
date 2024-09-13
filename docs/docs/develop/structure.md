@@ -48,7 +48,7 @@ Let's take a look at the `pf-cool-element.ts` file to see what we have.
 
 ```ts
 import { LitElement, html } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
+import { customElement } from '@patternfly/pfe-core/decorators/custom-element.js';
 
 import styles from './pf-cool-element.css';
 

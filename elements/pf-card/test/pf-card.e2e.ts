@@ -37,6 +37,6 @@ test.describe(tagName, () => {
       `,
     });
     await fixture.updateCompleteFor('pf-card');
-    expect(fixture.page.locator('pf-card #title')).toHaveAttribute('hidden');
+    await expect(fixture.page.locator('pf-card #title')).toHaveAttribute('hidden');
   });
 });

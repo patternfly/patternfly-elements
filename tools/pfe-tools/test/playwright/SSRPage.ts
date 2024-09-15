@@ -82,6 +82,9 @@ export class SSRPage {
       javaScriptEnabled: false,
     }))
         .newPage();
+    if (this.config.demoContent) {
+      await this.page.goto(`${this.host}test.html`);
+    }
   }
 
   private async initServer() {
@@ -135,6 +138,8 @@ export class SSRPage {
   }
 
   async updateCompleteFor(tagName: string): Promise<void> {
+    await this.initServer();
+    await this.initPage();
     await this.page.$eval(tagName, el => (el as LitElement).updateComplete);
   }
 }

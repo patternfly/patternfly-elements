@@ -91,7 +91,7 @@ export class SSRPage {
     }
     const { address = 'localhost', port = 0 } = this.server.address() as AddressInfo;
     this.host ??= `http://${address.replace('::', 'localhost')}:${port}/`;
-    this.demoPaths ??= (await readdir(this.config.demoDir))
+    this.demoPaths ??= !this.config.demoDir ? [] : (await readdir(this.config.demoDir))
         .filter(x => x.endsWith('.html'))
         .map(x => new URL(x, this.host).href);
   }

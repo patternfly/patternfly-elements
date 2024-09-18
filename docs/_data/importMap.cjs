@@ -89,6 +89,7 @@ module.exports = async function() {
   map.imports['@patternfly/icons/'] = '/assets/@patternfly/icons/';
   map.imports['@patternfly/pfe-core/decorators.js'] = '/pfe.min.js';
   map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
+  map.imports['lit/'] = map.imports.lit.replace('index.js', '');
   map.scopes['https://cdn.jsdelivr.net/'].lit = map.imports.lit;
   map.scopes['https://cdn.jsdelivr.net/']['lit/'] = map.imports.lit.replace('index.js', '');
 

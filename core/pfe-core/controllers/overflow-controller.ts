@@ -44,11 +44,8 @@ export class OverflowController implements ReactiveController {
     }
   });
 
-  #ro = new ResizeObserver((entries: ResizeObserverEntry[]) => {
-    window.requestAnimationFrame((): void => {
-      if (!Array.isArray(entries) || !entries.length) {
-        return;
-      }
+  #ro = new ResizeObserver(() => {
+    requestAnimationFrame(() => {
       this.#setOverflowState();
     });
   });

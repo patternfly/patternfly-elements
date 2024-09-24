@@ -2,4 +2,4 @@
 "@patternfly/pfe-core": patch
 ---
 
-`OverflowController`: corrected sideeffects of resize event to occur after browser paint
+`OverflowController`: prevent browser from locking up in some scenarios

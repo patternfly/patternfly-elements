@@ -45,7 +45,9 @@ export class OverflowController implements ReactiveController {
   });
 
   #ro = new ResizeObserver(() => {
-    this.#setOverflowState();
+    requestAnimationFrame(() => {
+      this.#setOverflowState();
+    });
   });
 
   showScrollButtons = false;

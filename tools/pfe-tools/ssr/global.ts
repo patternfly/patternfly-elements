@@ -9,7 +9,7 @@ export async function renderGlobal(
   importSpecifiers: string[],
 ): Promise<string> {
   // avoid tsconfig problems
-  await import('@pfe-core' + '/ssr-shims.js');
+  await import(['@patternfly', 'pfe-core', 'ssr-shims.js'].join('/'));
   const { ssr } = await import('./ssr.js');
   await Promise.all(importSpecifiers.map(x => import(x)));
   return ssr(html);

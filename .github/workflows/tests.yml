@@ -73,7 +73,7 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Install dependencies
@@ -100,7 +100,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
           cache: npm
       - run: npm ci --prefer-offline
       - run: npm run build
@@ -110,7 +110,7 @@ jobs:
         env:
           HOME: /root
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: ${{ env.PLAYWRIGHT_REPORT_DIR }}
@@ -130,7 +130,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Download zipped HTML report
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: ${{ env.PLAYWRIGHT_REPORT_DIR }}
           path: ${{ env.PLAYWRIGHT_REPORT_DIR }}/

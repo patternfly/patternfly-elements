@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 4.0.3
+
+### Patch Changes
+
+- 7c855a6: `TabsARIAController`: improve SSR compatibility
+
 ## 4.0.2
 
 ### Patch Changes

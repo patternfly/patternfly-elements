@@ -1,4 +1,4 @@
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import { isServer, type ReactiveController, type ReactiveControllerHost } from 'lit';
 
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -19,7 +19,7 @@ export class TabsAriaController<
 
   #host: ReactiveControllerHost;
 
-  #element: HTMLElement;
+  #element!: HTMLElement;
 
   #tabPanelMap = new Map<Tab, Panel>();
 
@@ -52,6 +52,10 @@ export class TabsAriaController<
   ) {
     this.#options = options;
     this.#logger = new Logger(host);
+    (this.#host = host).addController(this);
+    if (isServer) {
+      return;
+    }
     if (host instanceof HTMLElement) {
       this.#element = host;
     } else {
@@ -63,7 +67,6 @@ export class TabsAriaController<
       }
       this.#element = element;
     }
-    (this.#host = host).addController(this);
     this.#element.addEventListener('slotchange', this.#onSlotchange);
     if (this.#element.isConnected) {
       this.hostConnected();
@@ -93,7 +96,7 @@ export class TabsAriaController<
     this.#tabPanelMap.clear();
     const tabs = [];
     const panels = [];
-    for (const child of this.#element.children) {
+    for (const child of this.#element?.children ?? []) {
       if (this.#options.isTab(child)) {
         tabs.push(child);
         child.role ??= 'tab';

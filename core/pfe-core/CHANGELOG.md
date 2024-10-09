@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 4.0.2
+
+### Patch Changes
+
+- 0ec7338: `OverflowController`: prevent browser from locking up in some scenarios
+
 ## 4.0.1
 
 ### Patch Changes

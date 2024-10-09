@@ -85,6 +85,13 @@ module.exports = async function() {
   const map = generator.getMap();
   map.imports['/docs/zero-md.js'] = '/zero-md.js';
   map.imports['@patternfly/elements'] = '/pfe.min.js';
+  map.imports['@patternfly/pfe-core'] = '/pfe.min.js';
+  map.imports['@patternfly/icons/'] = '/assets/@patternfly/icons/';
+  map.imports['@patternfly/pfe-core/decorators.js'] = '/pfe.min.js';
+  map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
+  map.imports['lit/'] = map.imports.lit.replace('index.js', '');
+  map.scopes['https://cdn.jsdelivr.net/'].lit = map.imports.lit;
+  map.scopes['https://cdn.jsdelivr.net/']['lit/'] = map.imports.lit.replace('index.js', '');
 
   // add imports for imports under pfe-core
   const pfeCoreImports = (await glob('./{functions,controllers,decorators}/*.ts', {
@@ -110,20 +117,5 @@ module.exports = async function() {
       }
     }
   }
-
-  map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
-
-
-  // add imports for all icon files in /node_modules/@patternfly/icons/{far, fas, fab, patternfly}/
-  const iconsImports = (await glob('./{far,fas,fab,patternfly}/*.js', {
-    cwd: path.join(__dirname, '../../node_modules/@patternfly/icons'),
-  }))
-      .filter(x => !x.endsWith('.d.ts'))
-      .map(x => x);
-
-  for (const icon of iconsImports) {
-    map.imports[`@patternfly/icons/${icon}`] = `/assets/@patternfly/icons/${icon}`;
-  }
-
   return map;
 };

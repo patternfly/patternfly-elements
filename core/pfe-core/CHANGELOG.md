@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 4.0.4
+
+### Patch Changes
+
+- 4a03ced: SSR: add shim for `ResizeObserver`
+
 ## 4.0.3
 
 ### Patch Changes

@@ -1,5 +1,4 @@
 // @ts-check
-const { EleventyRenderPlugin } = require('@11ty/eleventy');
 const { join } = require('node:path');
 const { existsSync } = require('node:fs');
 const { glob } = require('glob');
@@ -13,8 +12,6 @@ const isDir = dir => stat(dir).then(x => x.isDirectory, () => false);
  * @param {import('./types').PluginOptions} pluginOpts
  */
 module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
-  eleventyConfig.addPlugin(EleventyRenderPlugin);
-
   eleventyConfig.addGlobalData('env', () => process.env);
 
   eleventyConfig.addGlobalData('demos', async function demos() {

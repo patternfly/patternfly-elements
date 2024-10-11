@@ -1,5 +1,29 @@
 # @patternfly/pfe-tools
 
+## 4.0.0
+
+### Major Changes
+
+- f779095: Removes `EleventyRenderPlugin` from custom-elements-manifest 11ty plugin config. Ensure you add it yourself.
+
+  Before:
+
+  ```js
+  module.exports = function (eleventyConfig) {
+    eleventyConfig.addPlugin(CustomElementsManifestPlugin);
+  };
+  ```
+
+  After:
+
+  ```js
+  import { EleventyRenderPlugin } from "@11ty/eleventy"; // 3.0.0 only
+  export default function (eleventyConfig) {
+    eleventyConfig.addPlugin(CustomElementsManifestPlugin);
+    eleventyConfig.addPlugin(EleventyRenderPlugin);
+  }
+  ```
+
 ## 3.0.2
 
 ### Patch Changes

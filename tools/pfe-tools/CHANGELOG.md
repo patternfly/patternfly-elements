@@ -1,5 +1,11 @@
 # @patternfly/pfe-tools
 
+## 4.0.1
+
+### Patch Changes
+
+- d2cd76d: **Test Runner**: prevent config exception when lightdom shims are present
+
 ## 4.0.0
 
 ### Major Changes

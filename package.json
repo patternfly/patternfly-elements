@@ -324,7 +324,7 @@
     "zero-md": "^3.1.2"
   },
   "optionalDependencies": {
-    "@esbuild/darwin-arm64": "^0.23.1",
+    "@esbuild/darwin-arm64": "^0.24.0",
     "@esbuild/linux-x64": "^0.23.1",
     "@rollup/rollup-darwin-arm64": "^4.21.0"
   },

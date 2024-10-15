@@ -75,12 +75,12 @@ readers. This functions similarly to the `aria-disabled="true"` attribute.
 
 {% renderFile "./docs/_snippets/wai-aria-disabled.md" %}
 
-{# 
   ### Typeahead
-
   {% htmlexample %}
     {% renderFile "./elements/pf-select/demo/typeahead.html" %}
   {% endhtmlexample %}
+
+{# 
 
   #### Multiple
 

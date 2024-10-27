@@ -121,7 +121,7 @@ export class PfJumpLinks extends LitElement {
 
   render(): TemplateResult<1> {
     return html`
-      <nav id="container">${this.expandable ? html`
+      <nav id="container" aria-labelledby="label">${this.expandable ? html`
         <details ?open="${this.expanded}" @toggle="${this.#onToggle}">
           <summary>
             <pf-icon icon="chevron-right"></pf-icon>

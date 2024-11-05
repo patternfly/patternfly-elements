@@ -73,7 +73,7 @@ export class PfJumpLinks extends LitElement {
   @property({ type: Number }) offset = 0;
 
   /** Label to add to nav element. */
-  @property() label?: string;
+  @property({ reflect: true }) label = 'Jump links';
 
   #kids = this.querySelectorAll?.<LitElement>(':is(pf-jump-links-item, pf-jump-links-list)');
 

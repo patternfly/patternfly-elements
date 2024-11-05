@@ -72,8 +72,8 @@ export class PfJumpLinks extends LitElement {
   /** Offset to add to the scroll position, potentially for a masthead which content scrolls under. */
   @property({ type: Number }) offset = 0;
 
-  /** Label to add to nav element. */
-  @property({ reflect: true }) label = 'Jump links';
+  /** Label to add to nav element. Required for accessibility. */
+  @property({ reflect: true }) label = 'Jump to section';
 
   #kids = this.querySelectorAll?.<LitElement>(':is(pf-jump-links-item, pf-jump-links-list)');
 

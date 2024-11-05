@@ -125,7 +125,7 @@ export class PfJumpLinks extends LitElement {
         <details ?open="${this.expanded}" @toggle="${this.#onToggle}">
           <summary>
             <pf-icon icon="chevron-right"></pf-icon>
-            <span id="label">${this.label}</span>
+            <span part="label" id="label">${this.label}</span>
           </summary>
           <div role="listbox" aria-labelledby="label">
             <slot></slot>

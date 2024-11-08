@@ -12,3 +12,9 @@
   to = 'https://release-v2--patternfly-elements.netlify.app/:splat'
   status = 200
   force = true
+
+[[redirects]]
+  from = '/v3/*'
+  to = 'https://release-v3--patternfly-elements.netlify.app/:splat'
+  status = 200
+  force = true

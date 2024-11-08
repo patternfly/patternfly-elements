@@ -11,6 +11,9 @@
   ],
   "compilerOptions": {
     "outDir": ".",
+    "rootDir": ".",
+    "isolatedModules": true
+    "outDir": ".",
     "rootDir": "."
   },
   "references": [

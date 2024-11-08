@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, TemplateResult, CSSResultGroup } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 
 import styles from '<%= cssRelativePath %>';
@@ -9,9 +9,10 @@ import styles from '<%= cssRelativePath %>';
  */
 @customElement('<%= tagName %>')
 export class <%= className %> extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSResultGroup = [styles];
 
-  render() {
+  render(): TemplateResult {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return html`
       <slot></slot>
     `;

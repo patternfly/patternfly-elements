@@ -11,6 +11,9 @@
   "bin": {
     "create-app": "bin/main.js"
   },
+  "contributors": [
+    "Martin Pitt <mpitt@redhat.com>"
+  ],
   "keywords": [
     "custom elements",
     "custom-elements",

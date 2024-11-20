@@ -193,7 +193,8 @@ export class SlotController implements ReactiveController {
       ?? this.#getChildrenForSlot(name);
     const selector = slotName ? `slot[name="${slotName}"]` : 'slot:not([name])';
     const slot = this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
-    const hasContent = !!elements.length;
+    const nodes = slot?.assignedNodes?.();
+    const hasContent = !!elements.length || !!nodes?.filter(x => x.textContent?.trim()).length;
     this.#nodes.set(name, { elements, name: slotName ?? '', hasContent, slot });
     this.#logger.debug(slotName, hasContent);
   };

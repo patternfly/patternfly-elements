@@ -169,7 +169,7 @@ export class PfRadio extends LitElement {
 
   render(): TemplateResult<1> {
     return html`
-      <label for='input'>${this.label}</label>
+      <label for=${this.id}>${this.label}</label>
       <input
         @click=${this.#onRadioButtonClick}
         id=${this.id}

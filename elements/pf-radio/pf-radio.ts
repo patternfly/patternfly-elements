@@ -19,18 +19,28 @@ export class PfRadio extends LitElement {
 
   @property({
     type: Boolean,
-    // attribute: 'inline-filter',
+    attribute: 'checked',
     converter: {
       fromAttribute: value => value === 'true',
     },
     reflect: true,
-  })
-  checked = false;
+  }) checked = false;
 
-  @property({ reflect: true }) name = 'radio-test';
-  @property({ reflect: true }) label?: string;
-  @property({ reflect: true }) value = '';
-  @property({ reflect: true }) id = '';
+  @property({
+    type: Boolean,
+    attribute: 'disabled',
+    converter: {
+      fromAttribute: value => value === 'true',
+    },
+    reflect: true,
+  }) disabled = false;
+
+  @property({ attribute: 'name', reflect: true }) name = 'radio-test';
+  @property({ attribute: 'label', reflect: true }) label?: string;
+  @property({ attribute: 'value', reflect: true }) value = '';
+  @property({ attribute: 'id', reflect: true }) id = '';
+  @property({ attribute: 'tabindex', reflect: true }) tabIndex = -1;
+
 
   constructor() {
     super();
@@ -51,8 +61,10 @@ export class PfRadio extends LitElement {
         radioGroup.forEach(radio => {
           const element: HTMLElement = radio as HTMLElement;
           element?.removeAttribute('checked');
+          element.tabIndex = -1;
         });
         this.checked = true;
+        this.tabIndex = 0;
       }
     }
   }
@@ -60,50 +72,38 @@ export class PfRadio extends LitElement {
   #onKeyPress = (event: KeyboardEvent) => {
     const root: Node = this.getRootNode();
     let radioGroup: NodeListOf<PfRadio>;
+    let isRadioChecked = false;
     if (root instanceof Document || root instanceof ShadowRoot) {
       radioGroup = root.querySelectorAll('pf-radio');
-      if (!event.shiftKey && event.key === 'Tab') {
+      if (event.key === 'Tab') {
         radioGroup.forEach((radio, index) => {
-          const input = radio.shadowRoot?.querySelector('input') as HTMLInputElement;
-          // input.tabIndex = -1;
-          // if(radio.id === this.shadowRoot?.activeElement?.id){
-          //   //input.tabIndex = -1;
-          //   //event.preventDefault();
-          //   //root.focusOut()
-          // }else{
-          //   //input.tabIndex = 0;
-          // }
+          radio.tabIndex = -1;
           if (radio.checked === true) {
-            input.tabIndex = 0;
-          } else if (index === 0) {
-            input.tabIndex = 0;
-          } else {
-            input.tabIndex = -1;
+            radio.tabIndex = 0;
+            isRadioChecked = true;
           }
         });
-      }
-
-      if (event.shiftKey && event.key === 'Tab') {
-        radioGroup.forEach((radio, index) => {
-          const input = radio.shadowRoot?.querySelector('input') as HTMLInputElement;
-          // input.tabIndex = 0;
-          // input.tabIndex = 0;
-          // if(radio.id === this.shadowRoot?.activeElement?.id){
-          //   input.tabIndex = 0;
-          //   //event.preventDefault();
-          //   //root.focusOut()
-          // }else{
-          //   //input.tabIndex = 0;
-          // }
-          if (radio.checked === true) {
-            input.tabIndex = 0;
-            input.focus();
-          } else if (index === (radioGroup.length - 1)) {
-            input.tabIndex = 0;
-          } else {
-            input.tabIndex = -1;
+        if (!isRadioChecked) {
+          if (event.key === 'Tab') {
+            radioGroup.forEach((radio, index) => {
+              radio.tabIndex = -1;
+              if ( event.shiftKey ) {
+                if (index === (radioGroup.length - 1)) {
+                  radio.tabIndex = 0;
+                } else {
+                  radio.tabIndex = -1;
+                }
+              }
+              if (!event.shiftKey) {
+                if (index === 0) {
+                  radio.tabIndex = 0;
+                } else {
+                  radio.tabIndex = -1;
+                }
+              }
+            });
           }
-        });
+        }
       }
     }
   };
@@ -121,6 +121,7 @@ export class PfRadio extends LitElement {
           const element: HTMLElement = radio as HTMLElement;
           element?.removeAttribute('checked');
           this.checked = false;
+          radio.tabIndex = 0;
           if (radioGroup[index] === event.target ) {
             if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
               if ((radioGroup.length - 1) === index) {
@@ -174,6 +175,7 @@ export class PfRadio extends LitElement {
         id=${this.id}
         .name=${this.name}
         type='radio'
+        tabindex=${this.tabIndex}
         .checked='${this.checked}'
       />
     `;

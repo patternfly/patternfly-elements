@@ -24,7 +24,8 @@ export class PfRadio extends LitElement {
       fromAttribute: value => value === 'true',
     },
     reflect: true,
-  }) checked = false;
+  })
+  checked = false;
 
   @property({
     type: Boolean,
@@ -33,14 +34,14 @@ export class PfRadio extends LitElement {
       fromAttribute: value => value === 'true',
     },
     reflect: true,
-  }) disabled = false;
+  })
+  disabled = false;
 
-  @property({ attribute: 'name', reflect: true }) name = 'radio-test';
+  @property({ attribute: 'name', reflect: true }) name = '';
   @property({ attribute: 'label', reflect: true }) label?: string;
   @property({ attribute: 'value', reflect: true }) value = '';
   @property({ attribute: 'id', reflect: true }) id = '';
   @property({ attribute: 'tabindex', reflect: true }) tabIndex = -1;
-
 
   constructor() {
     super();
@@ -58,7 +59,7 @@ export class PfRadio extends LitElement {
       let radioGroup: NodeListOf<PfRadio>;
       if (root instanceof Document || root instanceof ShadowRoot) {
         radioGroup = root.querySelectorAll('pf-radio');
-        radioGroup.forEach(radio => {
+        radioGroup.forEach((radio: PfRadio) => {
           const element: HTMLElement = radio as HTMLElement;
           element?.removeAttribute('checked');
           element.tabIndex = -1;
@@ -69,103 +70,60 @@ export class PfRadio extends LitElement {
     }
   }
 
+  // Function to handle tab key navigation
   #onKeyPress = (event: KeyboardEvent) => {
     const root: Node = this.getRootNode();
-    let radioGroup: NodeListOf<PfRadio>;
-    let isRadioChecked = false;
     if (root instanceof Document || root instanceof ShadowRoot) {
-      radioGroup = root.querySelectorAll('pf-radio');
+      const radioGroup: NodeListOf<PfRadio> = root.querySelectorAll('pf-radio');
+      const isRadioChecked: boolean = Array.from(radioGroup).some(
+        (radio: PfRadio) => radio.checked
+      );
       if (event.key === 'Tab') {
-        radioGroup.forEach((radio, index) => {
-          radio.tabIndex = -1;
-          if (radio.checked === true) {
-            radio.tabIndex = 0;
-            isRadioChecked = true;
-          }
+        radioGroup.forEach((radio: PfRadio) => {
+          radio.tabIndex = radio.checked ? 0 : -1;
         });
         if (!isRadioChecked) {
-          if (event.key === 'Tab') {
-            radioGroup.forEach((radio, index) => {
-              radio.tabIndex = -1;
-              if ( event.shiftKey ) {
-                if (index === (radioGroup.length - 1)) {
-                  radio.tabIndex = 0;
-                } else {
-                  radio.tabIndex = -1;
-                }
+          radioGroup.forEach((radio: PfRadio, index: number) => {
+            radio.tabIndex = -1;
+            if (event.shiftKey) {
+              if (index === radioGroup.length - 1) {
+                radio.tabIndex = 0;
               }
-              if (!event.shiftKey) {
-                if (index === 0) {
-                  radio.tabIndex = 0;
-                } else {
-                  radio.tabIndex = -1;
-                }
-              }
-            });
-          }
+            } else if (index === 0) {
+              radio.tabIndex = 0;
+            }
+          });
         }
       }
     }
   };
 
+  // Function to handle keyboard navigation
   #onKeydown = (event: KeyboardEvent) => {
-    if (event.key === 'ArrowDown'
-      || event.key === 'ArrowRight'
-      || event.key === 'ArrowUp'
-      || event.key === 'ArrowLeft') {
+    const arrowKeys: string[] = ['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft'];
+    if (arrowKeys.includes(event.key)) {
       const root: Node = this.getRootNode();
-      let radioGroup: NodeListOf<PfRadio>;
       if (root instanceof Document || root instanceof ShadowRoot) {
-        radioGroup = root.querySelectorAll('pf-radio');
-        radioGroup.forEach((radio, index) => {
-          const element: HTMLElement = radio as HTMLElement;
-          element?.removeAttribute('checked');
+        const radioGroup: NodeListOf<PfRadio> = root.querySelectorAll('pf-radio');
+        radioGroup.forEach((radio: PfRadio, index: number) => {
           this.checked = false;
-          radio.tabIndex = 0;
-          if (radioGroup[index] === event.target ) {
-            if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-              if ((radioGroup.length - 1) === index) {
-                radioGroup[0].focus();
-                radioGroup[0].checked = true;
-              } else {
-                radioGroup[index + 1].focus();
-                radioGroup[index + 1].checked = true;
-              }
-            } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-              if (index === 0) {
-                radioGroup[radioGroup.length - 1].focus();
-                radioGroup[radioGroup.length - 1].checked = true;
-              } else {
-                radioGroup[index - 1].focus();
-                radioGroup[index - 1].checked = true;
-              }
+          this.tabIndex = 0;
+
+          if (radio === event.target) {
+            const isArrowDownOrRight: boolean = ['ArrowDown', 'ArrowRight'].includes(event.key);
+            const isArrowUpOrLeft: boolean = ['ArrowUp', 'ArrowLeft'].includes(event.key);
+            const direction: 1 | 0 | -1 = isArrowDownOrRight ? 1 : isArrowUpOrLeft ? -1 : 0;
+            if (direction === 0) {
+              return;
             }
+            const nextIndex: number = (index + direction + radioGroup.length) % radioGroup.length;
+            radioGroup[nextIndex].focus();
+            radioGroup[nextIndex].checked = true;
           }
         });
       }
     }
   };
-
-
-  // #onKeydown1 = (event: KeyboardEvent) => {
-  //   switch (event.key) {
-  //     case "ArrowDown":
-  //       //this.#onArrowDown(event);
-  //       // Do something for "down arrow" key press.
-  //       break;
-  //     case "ArrowUp":
-  //       // Do something for "up arrow" key press.
-  //       break;
-  //     case "ArrowLeft":
-  //       // Do something for "left arrow" key press.
-  //       break;
-  //     case "ArrowRight":
-  //       // Do something for "right arrow" key press.
-  //       break;
-  //       default:
-  //         return; // Quit when this doesn't handle the key event.
-  //   }
-  // };
 
   render(): TemplateResult<1> {
     return html`

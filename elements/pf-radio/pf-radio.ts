@@ -1,6 +1,5 @@
 import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
-
 import styles from './pf-radio.css';
 import { property } from 'lit/decorators/property.js';
 
@@ -127,15 +126,15 @@ export class PfRadio extends LitElement {
 
   render(): TemplateResult<1> {
     return html`
-      <label for=${this.id}>${this.label}</label>
       <input
         @click=${this.#onRadioButtonClick}
         id=${this.id}
         .name=${this.name}
         type='radio'
         tabindex=${this.tabIndex}
-        .checked='${this.checked}'
+        .checked=${this.checked}
       />
+      <label for=${this.id}>${this.label}</label>
     `;
   }
 }

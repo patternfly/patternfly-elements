@@ -3,6 +3,12 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import styles from './pf-radio.css';
 import { property } from 'lit/decorators/property.js';
 
+export class PfRadioChangeEvent extends Event {
+  constructor(public event: Event, public value: string) {
+    super('change', { bubbles: true });
+  }
+}
+
 /**
  * Radio
  * @slot - Place element content here
@@ -52,7 +58,7 @@ export class PfRadio extends LitElement {
     document.addEventListener('keydown', this.#onKeyPress);
   }
 
-  #onRadioButtonClick() {
+  #onRadioButtonClick(event: Event) {
     if (!this.checked) {
       const root: Node = this.getRootNode();
       let radioGroup: NodeListOf<PfRadio>;
@@ -65,6 +71,7 @@ export class PfRadio extends LitElement {
         });
         this.checked = true;
         this.tabIndex = 0;
+        this.dispatchEvent(new PfRadioChangeEvent(event, this.value));
       }
     }
   }
@@ -118,6 +125,7 @@ export class PfRadio extends LitElement {
             const nextIndex: number = (index + direction + radioGroup.length) % radioGroup.length;
             radioGroup[nextIndex].focus();
             radioGroup[nextIndex].checked = true;
+            this.dispatchEvent(new PfRadioChangeEvent(event, radioGroup[nextIndex].value));
           }
         });
       }
@@ -131,6 +139,7 @@ export class PfRadio extends LitElement {
         id=${this.id}
         .name=${this.name}
         type='radio'
+        value=${this.value}
         tabindex=${this.tabIndex}
         .checked=${this.checked}
       />

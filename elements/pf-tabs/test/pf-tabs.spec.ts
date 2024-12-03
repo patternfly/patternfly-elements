@@ -199,10 +199,9 @@ describe('<pf-tabs>', function() {
       });
 
       beforeEach(nextFrame);
-      beforeEach(updateComplete);
+      beforeEach(nextFrame);
       beforeEach(nextFrame);
       beforeEach(updateComplete);
-
 
       it('should have visible scroll buttons if overflowed', function() {
         // Note: overflow buttons are not included in the accessibility tree otherwise we'd test

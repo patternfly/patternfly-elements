@@ -94,18 +94,18 @@ export function pfeDevServerRouterMiddleware(
 ): Router.Middleware {
   const { elementsDir, site: { componentSubpath } } = config;
   const router = new Router();
+  const shim = lightdomShimMiddleware(config);
+  const demo = demoSubresourceMiddleware(config);
   return router
-      .get('/tools/pfe-tools/environment.js(.js)?',
-           environmentMiddleware(config))
-      .get(`/core/pfe-core/:splatPath*.js`,
-           coreMiddleware(config))
-      .get(`/${elementsDir}/:tagName/:splat.(css|html|js)`,
-           cacheBustingMiddleware(config))
-      .get(`/${componentSubpath}/:unprefixedElementSlug/:moduleName*.js`,
-           elementDeclarationTypeScriptMiddleware(config))
-      .get(`/${componentSubpath}/:unprefixedElementSlug/{demo/}?:sheetName-lightdom{:suffix}?.css`,
-           lightdomShimMiddleware(config))
-      .get(`/${componentSubpath}/:unprefixedElementSlug/demo/{:demoName/}?:fileName.:ext`,
-           demoSubresourceMiddleware(config))
+      .get('/tools/pfe-tools/environment.js(.js)?', environmentMiddleware(config))
+      .get(`/core/pfe-core/:splatPath*.js`, coreMiddleware(config))
+      .get(`/${elementsDir}/:tagName/:splat.(css|html|js)`, cacheBustingMiddleware(config))
+      .get(`/${componentSubpath}/:unprefixedElementSlug/:moduleName*.js`, elementDeclarationTypeScriptMiddleware(config))
+      .get(`/${componentSubpath}/:unprefixedElementSlug/demo/:sheetName-lightdom:suffix.css`, shim)
+      .get(`/${componentSubpath}/:unprefixedElementSlug/demo/:sheetName-lightdom.css`, shim)
+      .get(`/${componentSubpath}/:unprefixedElementSlug/:sheetName-lightdom:suffix.css`, shim)
+      .get(`/${componentSubpath}/:unprefixedElementSlug/:sheetName-lightdom.css`, shim)
+      .get(`/${componentSubpath}/:unprefixedElementSlug/demo/:demoName/:fileName.:ext`, demo)
+      .get(`/${componentSubpath}/:unprefixedElementSlug/demo/:fileName.:ext`, demo)
       .routes();
 }

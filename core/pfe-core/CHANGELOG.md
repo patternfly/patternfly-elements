@@ -1,5 +1,23 @@
 # @patternfly/pfe-core
 
+## 4.0.4
+
+### Patch Changes
+
+- 4a03ced: SSR: add shim for `ResizeObserver`
+
+## 4.0.3
+
+### Patch Changes
+
+- 7c855a6: `TabsARIAController`: improve SSR compatibility
+
+## 4.0.2
+
+### Patch Changes
+
+- 0ec7338: `OverflowController`: prevent browser from locking up in some scenarios
+
 ## 4.0.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-tools",
-  "version": "3.0.1",
+  "version": "4.0.1",
   "type": "module",
   "description": "Development and build tools for PatternFly Elements and related projects",
   "keywords": [
@@ -63,7 +63,7 @@
     "**/*.{js,cjs,d.ts,map}"
   ],
   "peerDependencies": {
-    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy": "^2.0.1 || ^3.0.0",
     "@11ty/eleventy-plugin-directory-output": "^1.0.1",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
     "@changesets/cli": "^2.27.1",

@@ -41,6 +41,8 @@ globalThis.IntersectionObserver ??= ObserverShim;
 // @ts-expect-error: this runs in node
 globalThis.MutationObserver ??= ObserverShim;
 // @ts-expect-error: this runs in node
+globalThis.ResizeObserver ??= ObserverShim;
+// @ts-expect-error: this runs in node
 globalThis.getComputedStyle ??= function() {
   return {
     getPropertyPriority() {

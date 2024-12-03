@@ -1,5 +1,11 @@
 # @patternfly/elements
 
+## 4.0.2
+
+### Patch Changes
+
+- 155911d: `<pf-jump-links>`: corrected a layout bug which occurred when the `centered` attribute applied
+
 ## 4.0.1
 
 ### Patch Changes

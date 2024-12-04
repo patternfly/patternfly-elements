@@ -44,18 +44,17 @@ export class PfRadio extends LitElement {
   /** Radio groups: instances.get(groupName).forEach(pfRadio => { ... }) */
   private static instances = new Map<string, Set<PfRadio>>();
   private static radioInstances = new Map<Node, Map<string, Set<PfRadio>>>();
-
   private static selected = new Map<Node, Map<string, PfRadio>>();
 
   static {
-    globalThis.addEventListener('keydown', e => {
+    globalThis.addEventListener('keydown', (e: KeyboardEvent) => {
       switch (e.key) {
         case 'Tab':
           this.radioInstances.forEach((radioGroup, parentNode) => {
             radioGroup.forEach((radioSet, groupName) => {
               const selectedNode = this.selected.get(parentNode);
               const selected = selectedNode?.get(groupName);
-              [...radioSet].forEach((radio, i, radios) => {
+              [...radioSet].forEach((radio: PfRadio, i: number, radios: PfRadio[]) => {
                 // the radio group has a selected element
                 // it should be the only focusable member of the group
                 radio.focusable = false;
@@ -87,21 +86,19 @@ export class PfRadio extends LitElement {
     let radioGroup: NodeListOf<PfRadio>;
     if (root instanceof Document || root instanceof ShadowRoot) {
       radioGroup = root.querySelectorAll('pf-radio');
-      // let radioGroupArray: any[] = [];
       radioGroup.forEach((radio: PfRadio) => {
-        if (radio.parentNode === this.parentNode && radio.name === this.name) {
-          // radioGroupArray.push(radio);
-          let map = PfRadio.radioInstances.get(this.parentNode as HTMLElement);
-          if (!map) {
-            map = new Map<string, Set<PfRadio>>();
-            PfRadio.radioInstances.set(this.parentNode as HTMLElement, map);
+        if (radio.parentNode && radio.parentNode === this.parentNode && radio.name === this.name) {
+          let radioGroupMap = PfRadio.radioInstances.get(radio.parentNode);
+          if (!radioGroupMap) {
+            radioGroupMap = new Map<string, Set<PfRadio>>();
+            PfRadio.radioInstances.set(radio.parentNode, radioGroupMap);
           }
-          let set = map.get(this.name);
-          if (!set) {
-            set = new Set<PfRadio>();
-            map.set(this.name, set);
+          let radioSet: Set<PfRadio> | undefined = radioGroupMap.get(this.name);
+          if (!radioSet) {
+            radioSet = new Set<PfRadio>();
+            radioGroupMap.set(this.name, radioSet);
           }
-          set.add(radio);
+          radioSet.add(radio);
         }
       });
     }
@@ -132,6 +129,12 @@ export class PfRadio extends LitElement {
 
   disconnectedCallback(): void {
     PfRadio.instances.get(this.name)?.delete(this);
+    if (this.parentNode) {
+      const parentNode = PfRadio.radioInstances.get(this.parentNode);
+      if (parentNode) {
+        PfRadio.radioInstances.delete(this.parentNode);
+      }
+    }
     super.disconnectedCallback();
   }
 
@@ -140,13 +143,13 @@ export class PfRadio extends LitElement {
       PfRadio.radioInstances.forEach((radioGroup, parentNode) => {
         if (parentNode === this.parentNode) {
           radioGroup.forEach((radioSet, groupName) => {
-            if (groupName === this.name) {
+            if (this.parentNode && groupName === this.name) {
               [...radioSet].forEach(radio => {
                 radio.checked = false;
               });
               this.checked = true;
               this.dispatchEvent(new PfRadioChangeEvent(event, this.value));
-              this.#updateSelected(this.parentNode as HTMLElement, this, this.name);
+              this.#updateSelected(this.parentNode, this, this.name);
             }
           });
         }
@@ -174,7 +177,7 @@ export class PfRadio extends LitElement {
             if (groupName === this.name) {
               this.checked = false;
               [...radioSet].forEach((radio: PfRadio, index: number, radios: PfRadio[]) => {
-                if (radio === event.target) {
+                if (this.parentNode && radio === event.target) {
                   const isArrowDownOrRight: boolean =
                     ['ArrowDown', 'ArrowRight'].includes(event.key);
                   const isArrowUpOrLeft: boolean = ['ArrowUp', 'ArrowLeft'].includes(event.key);
@@ -189,8 +192,7 @@ export class PfRadio extends LitElement {
                   // consider the api of this event.
                   // do we add the group to it? do we fire from every element on every change?
                   this.dispatchEvent(new PfRadioChangeEvent(event, radios[nextIndex].value));
-                  this.#updateSelected(this.parentNode as HTMLElement,
-                                       radios[nextIndex], radios[nextIndex].name);
+                  this.#updateSelected(this.parentNode, radios[nextIndex], radios[nextIndex].name);
                 }
               });
             }

@@ -113,14 +113,13 @@
       "files": [
         "tools/pfe-tools/*.ts",
         "tools/pfe-tools/**/*.ts",
-        "!tools/pfe-tools/*.d.ts",
-        "!tools/pfe-tools/**/*.d.ts"
+        "!tools/**/*.d.ts"
       ],
       "output": [
         "tools/pfe-tools/**/*.js",
         "tools/pfe-tools/**/*.map",
         "tools/pfe-tools/**/*.d.ts",
-        "tools/*.tsbuildinfo"
+        "tools/**/*.tsbuildinfo"
       ]
     },
     "build:core": {
@@ -130,14 +129,14 @@
       ],
       "files": [
         "core/**/*.ts",
-        "!core/**/*.d.ts",
-        "core/tsconfig.json"
+        "core/tsconfig.json",
+        "!core/**/*.d.ts"
       ],
       "output": [
         "core/**/*.js",
         "core/**/*.map",
         "core/**/*.d.ts",
-        "*.tsbuildinfo"
+        "core/**/*.tsbuildinfo"
       ]
     },
     "build:bundle": {

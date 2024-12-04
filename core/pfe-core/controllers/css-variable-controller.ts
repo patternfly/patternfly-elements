@@ -1,10 +1,12 @@
 import type { ReactiveElement, ReactiveController } from 'lit';
 
 export class CssVariableController implements ReactiveController {
-  style: CSSStyleDeclaration;
+  style?: CSSStyleDeclaration;
 
   constructor(public host: ReactiveElement) {
-    this.style = window.getComputedStyle(host);
+    if (this.host.isConnected) {
+      this.hostConnected();
+    }
   }
 
   private parseProperty(name: string) {
@@ -12,8 +14,10 @@ export class CssVariableController implements ReactiveController {
   }
 
   getVariable(name: string): string | null {
-    return this.style.getPropertyValue(this.parseProperty(name)).trim() || null;
+    return this.style?.getPropertyValue(this.parseProperty(name)).trim() || null;
   }
 
-  hostConnected?(): void;
+  hostConnected(): void {
+    this.style = window.getComputedStyle(this.host);
+  };
 }

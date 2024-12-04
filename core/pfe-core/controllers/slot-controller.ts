@@ -1,4 +1,4 @@
-import type { ReactiveController, ReactiveElement } from 'lit';
+import { isServer, type ReactiveController, type ReactiveElement } from 'lit';
 
 import { Logger } from './logger.js';
 
@@ -143,11 +143,19 @@ export class SlotController implements ReactiveController {
    * @example this.hasSlotted('header');
    */
   hasSlotted(...names: (string | null | undefined)[]): boolean {
-    const slotNames = Array.from(names, x => x == null ? SlotController.default : x);
-    if (!slotNames.length) {
-      slotNames.push(SlotController.default);
+    if (isServer) {
+      return this.host
+          .getAttribute('ssr-hint-has-slotted')
+          ?.split(',')
+          .map(name => name.trim())
+          .some(name => names.includes(name === 'default' ? null : name)) ?? false;
+    } else {
+      const slotNames = Array.from(names, x => x == null ? SlotController.default : x);
+      if (!slotNames.length) {
+        slotNames.push(SlotController.default);
+      }
+      return slotNames.some(x => this.#nodes.get(x)?.hasContent ?? false);
     }
-    return slotNames.some(x => this.#nodes.get(x)?.hasContent ?? false);
   }
 
   /**

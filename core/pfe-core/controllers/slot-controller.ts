@@ -1,4 +1,4 @@
-import type { ReactiveController, ReactiveElement } from 'lit';
+import { isServer, type ReactiveController, type ReactiveElement } from 'lit';
 
 import { Logger } from './logger.js';
 
@@ -143,11 +143,19 @@ export class SlotController implements ReactiveController {
    * @example this.hasSlotted('header');
    */
   hasSlotted(...names: (string | null | undefined)[]): boolean {
-    const slotNames = Array.from(names, x => x == null ? SlotController.default : x);
-    if (!slotNames.length) {
-      slotNames.push(SlotController.default);
+    if (isServer) {
+      return this.host
+          .getAttribute('ssr-hint-has-slotted')
+          ?.split(',')
+          .map(name => name.trim())
+          .some(name => names.includes(name === 'default' ? null : name)) ?? false;
+    } else {
+      const slotNames = Array.from(names, x => x == null ? SlotController.default : x);
+      if (!slotNames.length) {
+        slotNames.push(SlotController.default);
+      }
+      return slotNames.some(x => this.#nodes.get(x)?.hasContent ?? false);
     }
-    return slotNames.some(x => this.#nodes.get(x)?.hasContent ?? false);
   }
 
   /**
@@ -193,7 +201,8 @@ export class SlotController implements ReactiveController {
       ?? this.#getChildrenForSlot(name);
     const selector = slotName ? `slot[name="${slotName}"]` : 'slot:not([name])';
     const slot = this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
-    const hasContent = !!elements.length;
+    const nodes = slot?.assignedNodes?.();
+    const hasContent = !!elements.length || !!nodes?.filter(x => x.textContent?.trim()).length;
     this.#nodes.set(name, { elements, name: slotName ?? '', hasContent, slot });
     this.#logger.debug(slotName, hasContent);
   };

@@ -1,7 +1,7 @@
 import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { observes } from '@patternfly/pfe-core/decorators/observes.js';
+// import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 import { state } from 'lit/decorators/state.js';
 
 import styles from './pf-radio.css';
@@ -43,27 +43,34 @@ export class PfRadio extends LitElement {
 
   /** Radio groups: instances.get(groupName).forEach(pfRadio => { ... }) */
   private static instances = new Map<string, Set<PfRadio>>();
+  private static radioInstances = new Map<Node, Map<string, Set<PfRadio>>>();
 
-  private static selected = new Map<string, PfRadio>;
+  private static selected = new Map<Node, Map<string, PfRadio>>();
 
   static {
     globalThis.addEventListener('keydown', e => {
       switch (e.key) {
         case 'Tab':
-          this.instances.forEach((radioSet, groupName) => {
-            const selected = this.selected.get(groupName);
-            [...radioSet].forEach((radio, i, radios) => {
-              // the radio group has a selected element
-              // it should be the only focusable member of the group
-              if (selected) {
-                radio.focusable = radio === selected;
-              // when Shift-tabbing into a group, only the last member should be selected
-              } else if (e.shiftKey) {
-                radio.focusable = radio === radios.at(-1);
-              // otherwise, the first member must be focusable
-              } else {
-                radio.focusable = i === 0;
-              }
+          this.radioInstances.forEach((radioGroup, parentNode) => {
+            radioGroup.forEach((radioSet, groupName) => {
+              const selectedNode = this.selected.get(parentNode);
+              const selected = selectedNode?.get(groupName);
+              [...radioSet].forEach((radio, i, radios) => {
+                // the radio group has a selected element
+                // it should be the only focusable member of the group
+                radio.focusable = false;
+                if (groupName === radio.name) {
+                  if (selected) {
+                    radio.focusable = radio === selected;
+                    // when Shift-tabbing into a group, only the last member should be selected
+                  } else if (e.shiftKey) {
+                    radio.focusable = radio === radios.at(-1);
+                    // otherwise, the first member must be focusable
+                  } else {
+                    radio.focusable = i === 0;
+                  }
+                }
+              });
             });
           });
           break;
@@ -74,52 +81,86 @@ export class PfRadio extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('keydown', this.#onKeydown);
+
+    // Function to group radios based on parent node and name
+    const root: Node = this.getRootNode();
+    let radioGroup: NodeListOf<PfRadio>;
+    if (root instanceof Document || root instanceof ShadowRoot) {
+      radioGroup = root.querySelectorAll('pf-radio');
+      // let radioGroupArray: any[] = [];
+      radioGroup.forEach((radio: PfRadio) => {
+        if (radio.parentNode === this.parentNode && radio.name === this.name) {
+          // radioGroupArray.push(radio);
+          let map = PfRadio.radioInstances.get(this.parentNode as HTMLElement);
+          if (!map) {
+            map = new Map<string, Set<PfRadio>>();
+            PfRadio.radioInstances.set(this.parentNode as HTMLElement, map);
+          }
+          let set = map.get(this.name);
+          if (!set) {
+            set = new Set<PfRadio>();
+            map.set(this.name, set);
+          }
+          set.add(radio);
+        }
+      });
+    }
   }
 
-  @observes('checked')
-  protected checkedChanged(): void {
-    if (this.checked) {
-      PfRadio.selected.set(this.name, this);
-    }
-  }
+  // @observes('checked')
+  // protected checkedChanged(): void {
+  //   if (this.checked) {
+  //     PfRadio.selected.set(this.name, this);
+  //   }
+  // }
 
-  @observes('name')
-  protected nameChanged(oldName: string): void {
-    // reset the map of groupname to selected radio button
-    if (PfRadio.selected.get(oldName) === this) {
-      PfRadio.selected.delete(oldName);
-      PfRadio.selected.set(this.name, this);
-    }
-    if (typeof oldName === 'string') {
-      PfRadio.instances.get(oldName)?.delete(this);
-    }
-    if (!PfRadio.instances.has(this.name)) {
-      PfRadio.instances.set(this.name, new Set());
-    }
-    PfRadio.instances.get(this.name)?.add(this);
-  }
+  // @observes('name')
+  // protected nameChanged(oldName: string): void {
+  //   // reset the map of groupname to selected radio button
+  //   if (PfRadio.selected.get(oldName) === this) {
+  //     PfRadio.selected.delete(oldName);
+  //     PfRadio.selected.set(this.name, this);
+  //   }
+  //   if (typeof oldName === 'string') {
+  //     PfRadio.instances.get(oldName)?.delete(this);
+  //   }
+  //   if (!PfRadio.instances.has(this.name)) {
+  //     PfRadio.instances.set(this.name, new Set());
+  //   }
+  //   PfRadio.instances.get(this.name)?.add(this);
+  // }
 
   disconnectedCallback(): void {
     PfRadio.instances.get(this.name)?.delete(this);
     super.disconnectedCallback();
   }
 
-  #onRadioButtonClick(event: Event) {
+  #onChange(event: Event) {
     if (!this.checked) {
-      const root: Node = this.getRootNode();
-      let radioGroup: NodeListOf<PfRadio>;
-      if (root instanceof Document || root instanceof ShadowRoot) {
-        radioGroup = root.querySelectorAll('pf-radio');
-        radioGroup.forEach((radio: PfRadio) => {
-          const element: HTMLElement = radio as HTMLElement;
-          // avoid removeAttribute: set checked property instead
-          // even better: listen for `change` on the shadow input,
-          // and recalculate state from there.
-          element?.removeAttribute('checked');
-        });
-        this.checked = true;
-        this.dispatchEvent(new PfRadioChangeEvent(event, this.value));
-      }
+      PfRadio.radioInstances.forEach((radioGroup, parentNode) => {
+        if (parentNode === this.parentNode) {
+          radioGroup.forEach((radioSet, groupName) => {
+            if (groupName === this.name) {
+              [...radioSet].forEach(radio => {
+                radio.checked = false;
+              });
+              this.checked = true;
+              this.dispatchEvent(new PfRadioChangeEvent(event, this.value));
+              this.#updateSelected(this.parentNode as HTMLElement, this, this.name);
+            }
+          });
+        }
+      });
+    }
+  }
+
+  #updateSelected(parentNode: ParentNode, radio: PfRadio, name: string) {
+    if (!PfRadio.selected.has(parentNode)) {
+      PfRadio.selected.set(parentNode, new Map<string, PfRadio>());
+    }
+    const nodeMap = PfRadio.selected.get(parentNode);
+    if (nodeMap) {
+      PfRadio.selected.get(parentNode)?.set(name, radio);
     }
   }
 
@@ -127,42 +168,50 @@ export class PfRadio extends LitElement {
   #onKeydown = (event: KeyboardEvent) => {
     const arrowKeys: string[] = ['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft'];
     if (arrowKeys.includes(event.key)) {
-      const root: Node = this.getRootNode();
-      if (root instanceof Document || root instanceof ShadowRoot) {
-        const radioGroup: NodeListOf<PfRadio> = root.querySelectorAll('pf-radio');
-        radioGroup.forEach((radio: PfRadio, index: number) => {
-          this.checked = false;
-
-          if (radio === event.target) {
-            const isArrowDownOrRight: boolean = ['ArrowDown', 'ArrowRight'].includes(event.key);
-            const isArrowUpOrLeft: boolean = ['ArrowUp', 'ArrowLeft'].includes(event.key);
-            const direction: 1 | 0 | -1 = isArrowDownOrRight ? 1 : isArrowUpOrLeft ? -1 : 0;
-            if (direction === 0) {
-              return;
+      PfRadio.radioInstances.forEach((radioGroup, parentNode) => {
+        if (parentNode === this.parentNode) {
+          radioGroup.forEach((radioSet: Set<PfRadio>, groupName: string) => {
+            if (groupName === this.name) {
+              this.checked = false;
+              [...radioSet].forEach((radio: PfRadio, index: number, radios: PfRadio[]) => {
+                if (radio === event.target) {
+                  const isArrowDownOrRight: boolean =
+                    ['ArrowDown', 'ArrowRight'].includes(event.key);
+                  const isArrowUpOrLeft: boolean = ['ArrowUp', 'ArrowLeft'].includes(event.key);
+                  const direction: 1 | 0 | -1 = isArrowDownOrRight ? 1 : isArrowUpOrLeft ? -1 : 0;
+                  if (direction === 0) {
+                    return;
+                  }
+                  const nextIndex: number = (index + direction + radios.length) % radios.length;
+                  radios[nextIndex].focus();
+                  radios[nextIndex].checked = true;
+                  // TODO: move this to an @observes
+                  // consider the api of this event.
+                  // do we add the group to it? do we fire from every element on every change?
+                  this.dispatchEvent(new PfRadioChangeEvent(event, radios[nextIndex].value));
+                  this.#updateSelected(this.parentNode as HTMLElement,
+                                       radios[nextIndex], radios[nextIndex].name);
+                }
+              });
             }
-            const nextIndex: number = (index + direction + radioGroup.length) % radioGroup.length;
-            radioGroup[nextIndex].focus();
-            radioGroup[nextIndex].checked = true;
-            // TODO: move this to an @observes
-            // consider the api of this event.
-            // do we add the group to it? do we fire from every element on every change?
-            this.dispatchEvent(new PfRadioChangeEvent(event, radioGroup[nextIndex].value));
-          }
-        });
-      }
+          });
+        }
+      });
     }
   };
 
+
+  // Add a pf component and check if there is any change with the values.
   render(): TemplateResult<1> {
     return html`
       <input
         id="radio"
         type="radio"
-        @click=${this.#onRadioButtonClick}
+        @change=${this.#onChange}
         .name=${this.name}
         value=${this.value}
         tabindex=${this.focusable ? 0 : -1}
-        .checked=${this.checked}
+        .checked=${this.checked} 
       >
       <label for="radio">${this.label}</label>
     `;

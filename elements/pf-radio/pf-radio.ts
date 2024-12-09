@@ -144,7 +144,7 @@ export class PfRadio extends LitElement {
         if (parentNode === this.parentNode) {
           radioGroup.forEach((radioSet, groupName) => {
             if (this.parentNode && groupName === this.name) {
-              [...radioSet].forEach(radio => {
+              [...radioSet].forEach((radio: PfRadio) => {
                 radio.checked = false;
               });
               this.checked = true;

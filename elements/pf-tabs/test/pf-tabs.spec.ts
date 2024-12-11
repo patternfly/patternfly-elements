@@ -243,8 +243,7 @@ describe('<pf-tabs>', function() {
           });
 
           it('should specify the selected tab to assistive technology', async function() {
-            const snapshot = await a11ySnapshot();
-            expect(snapshot.children?.find(x => x.role === 'tabpanel')?.name).to.equal('tab-2');
+            expect(await a11ySnapshot()).to.axContainQuery({ role: 'tabpanel', name: 'tab-2' });
           });
         });
 
@@ -261,8 +260,7 @@ describe('<pf-tabs>', function() {
           });
 
           it('should specify the selected tab to assistive technology', async function() {
-            const snapshot = await a11ySnapshot();
-            expect(snapshot.children?.find(x => x.role === 'tabpanel')?.name).to.equal('tab-3');
+            expect(await a11ySnapshot()).to.axContainQuery({ role: 'tabpanel', name: 'tab-3' });
           });
 
           describe('then pressing ArrowRight', function() {
@@ -280,8 +278,7 @@ describe('<pf-tabs>', function() {
             });
 
             it('should specify the selected tab to assistive technology', async function() {
-              const snapshot = await a11ySnapshot();
-              expect(snapshot.children?.find(x => x.role === 'tabpanel')?.name).to.equal('tab-1');
+              expect(await a11ySnapshot()).to.axContainQuery({ role: 'tabpanel', name: 'tab-1' });
             });
           });
         });

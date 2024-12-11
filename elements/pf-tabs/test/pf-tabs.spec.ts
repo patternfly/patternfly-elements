@@ -241,6 +241,10 @@ describe('<pf-tabs>', function() {
             expect(second).to.have.attribute('active');
             expect(third).to.not.have.attribute('active');
           });
+
+          it('should specify the selected tab to assistive technology', async function() {
+            expect(await a11ySnapshot()).to.axContainQuery({ role: 'tabpanel', name: 'tab-2' });
+          });
         });
 
         describe('pressing ArrowLeft', function() {
@@ -254,6 +258,11 @@ describe('<pf-tabs>', function() {
             expect(second).to.not.have.attribute('active');
             expect(third).to.have.attribute('active');
           });
+
+          it('should specify the selected tab to assistive technology', async function() {
+            expect(await a11ySnapshot()).to.axContainQuery({ role: 'tabpanel', name: 'tab-3' });
+          });
+
           describe('then pressing ArrowRight', function() {
             beforeEach(async function() {
               await sendKeys({ down: 'ArrowRight' });
@@ -266,6 +275,10 @@ describe('<pf-tabs>', function() {
               expect(first).to.have.attribute('active');
               expect(second).to.not.have.attribute('active');
               expect(third).to.not.have.attribute('active');
+            });
+
+            it('should specify the selected tab to assistive technology', async function() {
+              expect(await a11ySnapshot()).to.axContainQuery({ role: 'tabpanel', name: 'tab-1' });
             });
           });
         });

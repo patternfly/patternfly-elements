@@ -117,6 +117,7 @@ export class PfRadio extends LitElement {
           radio.#internals.ariaLabel = radio.label ? radio.label : radio.value;
           radio.setAttribute('tabindex', (i === 0 ? 0 : -1).toString());
           radio.classList.add('pf-radio-input');
+          radio.style.outline = 'none';
         });
       });
     });
@@ -232,6 +233,7 @@ export class PfRadio extends LitElement {
           value=${this.value}
           .checked=${this.checked} 
           tabindex="-1"
+          part="radio"
         >
         <label for="radio">${this.label}</label>
       </div>

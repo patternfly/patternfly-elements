@@ -83,6 +83,15 @@ export class PfRadio extends LitElement {
     super.connectedCallback();
     this.addEventListener('keydown', this.#onKeydown);
 
+    const isChrome = (): boolean => {
+      const { userAgent } = navigator;
+      return /Chrome/.test(userAgent) && !/Edg/.test(userAgent) && !/OPR/.test(userAgent);
+    };
+
+    if (isChrome()) {
+      this.classList.add('pf-ch-radio');
+    }
+
     // Function to group radios based on parent node and name
     const root: Node = this.getRootNode();
     let radioGroup: NodeListOf<PfRadio>;
@@ -116,7 +125,6 @@ export class PfRadio extends LitElement {
           radio.#internals.ariaChecked = radio.checked.toString();
           radio.#internals.ariaLabel = radio.label ? radio.label : radio.value;
           radio.setAttribute('tabindex', (i === 0 ? 0 : -1).toString());
-          radio.classList.add('pf-radio-input');
           radio.style.outline = 'none';
         });
       });

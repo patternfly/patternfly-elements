@@ -21,11 +21,11 @@ export class PfRadio extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
   static formAssociated = true;
-
-  static shadowRootOptions: ShadowRootInit = {
-    ...LitElement.shadowRootOptions,
-    delegatesFocus: true,
-  };
+  #internals = this.attachInternals();
+  // static shadowRootOptions: ShadowRootInit = {
+  //   ...LitElement.shadowRootOptions,
+  //   delegatesFocus: true,
+  // };
 
   @property({ type: Boolean, reflect: true })
   checked = false;
@@ -58,6 +58,7 @@ export class PfRadio extends LitElement {
                 // the radio group has a selected element
                 // it should be the only focusable member of the group
                 radio.focusable = false;
+                radio.tabIndex = -1;
                 if (groupName === radio.name) {
                   if (selected) {
                     radio.focusable = radio === selected;
@@ -68,6 +69,7 @@ export class PfRadio extends LitElement {
                   } else {
                     radio.focusable = i === 0;
                   }
+                  radio.tabIndex = radio.focusable ? 0 : -1;
                 }
               });
             });
@@ -102,6 +104,22 @@ export class PfRadio extends LitElement {
         }
       });
     }
+
+    PfRadio.radioInstances.forEach((radioGroup, parentNode) => {
+      (parentNode as HTMLElement).setAttribute('role', 'radiogroup');
+      radioGroup.forEach((radioSet, groupName) => {
+        [...radioSet].forEach((radio: PfRadio, i: number, radios: PfRadio[]) => {
+          radio.#internals.ariaLabel = radio.label ? radio.label : radio.value;
+          radio.#internals.role = 'radio';
+          radio.#internals.ariaPosInSet = (i + 1).toString();
+          radio.#internals.ariaSetSize = (radios.length).toString();
+          radio.#internals.ariaChecked = radio.checked.toString();
+          radio.#internals.ariaLabel = radio.label ? radio.label : radio.value;
+          radio.setAttribute('tabindex', (i === 0 ? 0 : -1).toString());
+          radio.classList.add('pf-radio-input');
+        });
+      });
+    });
   }
 
   // @observes('checked')
@@ -202,20 +220,21 @@ export class PfRadio extends LitElement {
     }
   };
 
-
   // Add a pf component and check if there is any change with the values.
   render(): TemplateResult<1> {
     return html`
-      <input
-        id="radio"
-        type="radio"
-        @change=${this.#onChange}
-        .name=${this.name}
-        value=${this.value}
-        tabindex=${this.focusable ? 0 : -1}
-        .checked=${this.checked} 
-      >
-      <label for="radio">${this.label}</label>
+      <div aria-hidden="true" tabindex="-1">
+        <input
+          id="radio"
+          type="radio"
+          @change=${this.#onChange}
+          .name=${this.name}
+          value=${this.value}
+          .checked=${this.checked} 
+          tabindex="-1"
+        >
+        <label for="radio">${this.label}</label>
+      </div>
     `;
   }
 }

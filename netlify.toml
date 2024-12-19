@@ -18,3 +18,39 @@
   to = 'https://release-v3--patternfly-elements.netlify.app/:splat'
   status = 200
   force = true
+
+[[redirects]]
+  from = '/v4/*'
+  to = 'https://release-v4--patternfly-elements.netlify.app/:splat'
+  status = 200
+  force = true
+
+[[redirects]]
+  from = '/v5/*'
+  to = 'https://release-v5--patternfly-elements.netlify.app/:splat'
+  status = 200
+  force = true
+
+[[redirects]]
+  from = '/v6/*'
+  to = 'https://release-v6--patternfly-elements.netlify.app/:splat'
+  status = 200
+  force = true
+
+[[redirects]]
+  from = '/v7/*'
+  to = 'https://release-v7--patternfly-elements.netlify.app/:splat'
+  status = 200
+  force = true
+
+[[redirects]]
+  from = '/v8/*'
+  to = 'https://release-v8--patternfly-elements.netlify.app/:splat'
+  status = 200
+  force = true
+
+[[redirects]]
+  from = '/v9/*'
+  to = 'https://release-v9--patternfly-elements.netlify.app/:splat'
+  status = 200
+  force = true

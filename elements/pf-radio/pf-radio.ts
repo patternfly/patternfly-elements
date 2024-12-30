@@ -82,6 +82,7 @@ export class PfRadio extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('keydown', this.#onKeydown);
+    this.addEventListener('click', this.#onClick);
 
     const isChrome = (): boolean => {
       const { userAgent } = navigator;
@@ -165,7 +166,7 @@ export class PfRadio extends LitElement {
     super.disconnectedCallback();
   }
 
-  #onChange(event: Event) {
+  #onClick(event: MouseEvent) {
     if (!this.checked) {
       PfRadio.radioInstances.forEach((radioGroup, parentNode) => {
         if (parentNode === this.parentNode) {
@@ -232,11 +233,10 @@ export class PfRadio extends LitElement {
   // Add a pf component and check if there is any change with the values.
   render(): TemplateResult<1> {
     return html`
-      <div aria-hidden="true" tabindex="-1">
+      <div inert tabindex="-1">
         <input
           id="radio"
           type="radio"
-          @change=${this.#onChange}
           .name=${this.name}
           value=${this.value}
           .checked=${this.checked} 

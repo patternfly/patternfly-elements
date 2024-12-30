@@ -233,14 +233,13 @@ export class PfRadio extends LitElement {
   // Add a pf component and check if there is any change with the values.
   render(): TemplateResult<1> {
     return html`
-      <div inert tabindex="-1">
+      <div inert>
         <input
           id="radio"
           type="radio"
           .name=${this.name}
           value=${this.value}
-          .checked=${this.checked} 
-          tabindex="-1"
+          .checked=${this.checked}
           part="radio"
         >
         <label for="radio">${this.label}</label>

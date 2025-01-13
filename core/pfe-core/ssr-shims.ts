@@ -34,6 +34,8 @@ globalThis.window ??= globalThis;
 globalThis.document ??= new MiniDocument();
 // @ts-expect-error: this runs in node
 globalThis.navigator ??= { userAgent: '' };
+// @ts-expect-error: opt in to event support in ssr
+globalThis.litSsrCallConnectedCallback = true;
 // @ts-expect-error: this runs in node
 globalThis.ErrorEvent ??= Event;
 // @ts-expect-error: this runs in node
@@ -55,4 +57,3 @@ globalThis.getComputedStyle ??= function() {
 }
 
 ;
-

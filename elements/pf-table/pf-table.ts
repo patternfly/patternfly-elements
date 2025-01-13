@@ -708,7 +708,7 @@ export class PfTable extends LitElement {
   }
 
   #onSlotchange() {
-    this.columns = this.querySelector('pf-tr')?.querySelectorAll('pf-th')?.length ?? 0;
+    this.columns = this.querySelector?.('pf-tr')?.querySelectorAll('pf-th')?.length ?? 0;
     this.requestUpdate();
   }
 

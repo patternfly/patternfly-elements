@@ -70,7 +70,7 @@
     "@custom-elements-manifest/analyzer": "^0.5.7",
     "@jspm/generator": "^2.0.1",
     "@koa/router": "^12.0.1",
-    "@lit-labs/ssr": "^3.2.2",
+    "@lit-labs/ssr": "^3.3.0",
     "@open-wc/testing": "^4.0.0",
     "@playwright/test": "^1.44.0",
     "@rollup/plugin-replace": "^5.0.5",

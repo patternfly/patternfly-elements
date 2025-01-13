@@ -191,8 +191,12 @@ export class SlotController implements ReactiveController {
   #getChildrenForSlot<T extends Element = Element>(
     name: string | typeof SlotController.default,
   ): T[] {
-    const children = Array.from(this.host.children) as T[];
-    return children.filter(isSlot(name));
+    if (isServer) {
+      return [];
+    } else {
+      const children = Array.from(this.host.children) as T[];
+      return children.filter(isSlot(name));
+    }
   }
 
   #initSlot = (slotName: string | null) => {

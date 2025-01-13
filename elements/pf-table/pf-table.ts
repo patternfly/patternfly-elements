@@ -3,7 +3,11 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { state } from 'lit/decorators/state.js';
 
+import { provide } from '@lit/context';
+import { thRoleContext } from './context.js';
+
 import { PfTh, RequestSortEvent } from './pf-th.js';
+import { PfTd } from './pf-td.js';
 import { PfTr, RequestExpandEvent } from './pf-tr.js';
 
 export * from './pf-caption.js';
@@ -14,7 +18,6 @@ export * from './pf-th.js';
 export * from './pf-td.js';
 
 import styles from './pf-table.css';
-import { PfTd } from './pf-td.js';
 
 const rowQuery = [
   ':scope > pf-tbody:not([expandable]) > pf-tr',
@@ -670,6 +673,8 @@ export class PfTable extends LitElement {
   }
 
   @state() private columns = 0;
+
+  @provide({ context: thRoleContext }) private thRowContext = 'rowheader';
 
   override connectedCallback(): void {
     super.connectedCallback();

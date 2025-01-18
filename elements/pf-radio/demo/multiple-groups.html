@@ -1,4 +1,4 @@
-<section class="container">
+<fieldset class="container">
   <h1><code>&lt;pf-radio&gt;</code></h1>
 
   <p>Basic <code>&lt;pf-radio&gt;</code> group</p>
@@ -47,6 +47,16 @@
     </div>
   </div>
 
+  <p><code>&lt;pf-radio&gt;</code> group inside pf-banner component (component inside shadowroot)</p>
+  <pf-banner variant="info">
+    <div class="radio-group">
+      <p>Color: </p>
+      <pf-radio value="red"    name="color" label="Red"></pf-radio>
+      <pf-radio value="green"  name="color" label="Green"></pf-radio>
+      <pf-radio value="blue"   name="color" label="Blue"></pf-radio>
+    </div>
+  </pf-banner>
+
   <p><code>&lt;pf-radio&gt;</code> group inside pf-card component (component inside shadowroot)</p>
   <pf-card>
     <div class="radio-group">
@@ -57,13 +67,15 @@
       <pf-radio value="d" name="score" label="D"></pf-radio>
     </div>
   </pf-card>
+
   <pf-button> Submit</pf-button>
-</section>
+</fieldset>
 
 <script type="module">
   import '@patternfly/elements/pf-radio/pf-radio.js';
   import '@patternfly/elements/pf-button/pf-button.js';
   import '@patternfly/elements/pf-card/pf-card.js'
+  import '@patternfly/elements/pf-banner/pf-banner.js'
 </script>
 
 <style>

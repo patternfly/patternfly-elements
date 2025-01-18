@@ -99,11 +99,12 @@ export class PfRadio extends LitElement {
     if (root instanceof Document || root instanceof ShadowRoot) {
       radioGroup = root.querySelectorAll('pf-radio');
       radioGroup.forEach((radio: PfRadio) => {
-        if (radio.parentNode && radio.parentNode === this.parentNode && radio.name === this.name) {
-          let radioGroupMap = PfRadio.radioInstances.get(radio.parentNode);
+        if (radio.getRootNode() && radio.getRootNode() === this.getRootNode()
+          && radio.name === this.name) {
+          let radioGroupMap = PfRadio.radioInstances.get(radio.getRootNode());
           if (!radioGroupMap) {
             radioGroupMap = new Map<string, Set<PfRadio>>();
-            PfRadio.radioInstances.set(radio.parentNode, radioGroupMap);
+            PfRadio.radioInstances.set(radio.getRootNode(), radioGroupMap);
           }
           let radioSet: Set<PfRadio> | undefined = radioGroupMap.get(this.name);
           if (!radioSet) {
@@ -157,10 +158,10 @@ export class PfRadio extends LitElement {
 
   disconnectedCallback(): void {
     PfRadio.instances.get(this.name)?.delete(this);
-    if (this.parentNode) {
-      const parentNode = PfRadio.radioInstances.get(this.parentNode);
+    if (this.getRootNode()) {
+      const parentNode = PfRadio.radioInstances.get(this.getRootNode());
       if (parentNode) {
-        PfRadio.radioInstances.delete(this.parentNode);
+        PfRadio.radioInstances.delete(this.getRootNode());
       }
     }
     super.disconnectedCallback();
@@ -169,15 +170,15 @@ export class PfRadio extends LitElement {
   #onClick(event: MouseEvent) {
     if (!this.checked) {
       PfRadio.radioInstances.forEach((radioGroup, parentNode) => {
-        if (parentNode === this.parentNode) {
+        if (parentNode === this.getRootNode()) {
           radioGroup.forEach((radioSet, groupName) => {
-            if (this.parentNode && groupName === this.name) {
+            if (this.getRootNode() && groupName === this.name) {
               [...radioSet].forEach((radio: PfRadio) => {
                 radio.checked = false;
               });
               this.checked = true;
               this.dispatchEvent(new PfRadioChangeEvent(event, this.value));
-              this.#updateSelected(this.parentNode, this, this.name);
+              this.#updateSelected(this.getRootNode(), this, this.name);
             }
           });
         }
@@ -185,7 +186,7 @@ export class PfRadio extends LitElement {
     }
   }
 
-  #updateSelected(parentNode: ParentNode, radio: PfRadio, name: string) {
+  #updateSelected(parentNode: Node, radio: PfRadio, name: string) {
     if (!PfRadio.selected.has(parentNode)) {
       PfRadio.selected.set(parentNode, new Map<string, PfRadio>());
     }
@@ -200,12 +201,12 @@ export class PfRadio extends LitElement {
     const arrowKeys: string[] = ['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft'];
     if (arrowKeys.includes(event.key)) {
       PfRadio.radioInstances.forEach((radioGroup, parentNode) => {
-        if (parentNode === this.parentNode) {
+        if (parentNode === this.getRootNode()) {
           radioGroup.forEach((radioSet: Set<PfRadio>, groupName: string) => {
             if (groupName === this.name) {
               this.checked = false;
               [...radioSet].forEach((radio: PfRadio, index: number, radios: PfRadio[]) => {
-                if (this.parentNode && radio === event.target) {
+                if (this.getRootNode() && radio === event.target) {
                   const isArrowDownOrRight: boolean =
                     ['ArrowDown', 'ArrowRight'].includes(event.key);
                   const isArrowUpOrLeft: boolean = ['ArrowUp', 'ArrowLeft'].includes(event.key);
@@ -220,7 +221,8 @@ export class PfRadio extends LitElement {
                   // consider the api of this event.
                   // do we add the group to it? do we fire from every element on every change?
                   this.dispatchEvent(new PfRadioChangeEvent(event, radios[nextIndex].value));
-                  this.#updateSelected(this.parentNode, radios[nextIndex], radios[nextIndex].name);
+                  this.#updateSelected(this.getRootNode(), radios[nextIndex],
+                                       radios[nextIndex].name);
                 }
               });
             }

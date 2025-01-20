@@ -52,12 +52,13 @@ export class PfRadio extends LitElement {
     radioInput.value = value;
     radioInput.id = `radio${uniqueId}`; // Unique ID for the radio button
     radioInput.checked = checked;
+    radioInput.slot = 'input';
 
     // Create the label element
     const label = document.createElement('label');
     label.setAttribute('for', radioInput.id); // Link label to radio button
     label.textContent = labelText || ''; // Set label text (default to empty if not provided)
-
+    label.slot = 'label';
     // Append the input and label
     this.appendChild(radioInput);
     this.appendChild(label);
@@ -73,7 +74,8 @@ export class PfRadio extends LitElement {
 
   render(): TemplateResult<1> {
     return html`
-      <slot></slot>
+      <slot name="input"></slot>
+      <slot name="label"></slot>
     `;
   }
 }

@@ -36,7 +36,7 @@
     "./pf-jump-links/pf-jump-links-list.js": "./pf-jump-links/pf-jump-links-list.js",
     "./pf-jump-links/pf-jump-links.js": "./pf-jump-links/pf-jump-links.js",
     "./pf-label/pf-label.js": "./pf-label/pf-label.js",
-    "./pf-radio/pf-radio.js": "./pf-radio/pf-radio.js",
+    "./pf-radio-group/pf-radio-group.js": "./pf-radio-group/pf-radio-group.js",
     "./pf-select/pf-select.js": "./pf-select/pf-select.js",
     "./pf-select/pf-listbox.js": "./pf-select/pf-listbox.js",
     "./pf-select/pf-option-group.js": "./pf-select/pf-option-group.js",

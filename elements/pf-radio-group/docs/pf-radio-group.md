@@ -1,5 +1,5 @@
 {% renderOverview %}
-  <pf-radio></pf-radio>
+  <pf-radio-group></pf-radio-group>
 {% endrenderOverview %}
 
 {% band header="Usage" %}{% endband %}

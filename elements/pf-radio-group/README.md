@@ -5,7 +5,7 @@ Add a description of the component here.
 Describe how best to use this web component along with best practices.
 
 ```html
-<pf-radio>
+<pf-radio-group>
 
-</pf-radio>
+</pf-radio-group>
 ```

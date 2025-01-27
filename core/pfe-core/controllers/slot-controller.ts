@@ -152,7 +152,7 @@ export class SlotController implements ReactiveController {
     if (isServer) {
       return [];
     } else if (this.#nodes.has(name)) {
-      return this.#nodes.get(name)!.slot?.assignedElements?.() as T[];
+      return (this.#nodes.get(name)!.slot?.assignedElements?.() ?? []) as T[];
     } else {
       const children = Array.from(this.host.children) as T[];
       return children.filter(isSlot(name));

@@ -1,6 +1,30 @@
 <fieldset class="container">
   <h1><code>&lt;pf-radio-group&gt;</code></h1>
+  <p>Title: </p>
+  <pf-radio-group name='title'>
+    <pf-radio value="mr" label="Mr" checked></pf-radio>
+    <pf-radio value="mrs" label="Mrs"></pf-radio>
+  </pf-radio-group>
+  <p>Score: </p>
+  <pf-radio-group name='score'>
+    <pf-radio value="a" label="A" checked></pf-radio>
+    <pf-radio value="b" label="B"></pf-radio>
+    <pf-radio value="c" label="C"></pf-radio>
+    <p>Title: </p>
+    <pf-radio-group name='title'>
+      <pf-radio value="mr" label="Mr1" checked></pf-radio>
+      <pf-radio value="mrs" label="Mrs2"></pf-radio>
+    </pf-radio-group>
 
+  </pf-radio-group>
+
+  <script type="module">
+    import '@patternfly/elements/pf-radio-group/pf-radio-group.js';
+    import '@patternfly/elements/pf-radio-group/pf-radio.js';
+    import '@patternfly/elements/pf-button/pf-button.js';
+    import '@patternfly/elements/pf-card/pf-card.js'
+    import '@patternfly/elements/pf-banner/pf-banner.js'
+  </script>
   <!-- <p>Basic <code>&lt;pf-radio-group&gt;</code> group</p>
   <fieldset class="radio-group">
     <p>Salutation: </p>

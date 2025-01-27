@@ -4,13 +4,17 @@
 
   <p> Select a title </p>
   <div class="radio-group">
-    <pf-radio-group radio-group='[{ "value": "mr", "label": "Mr", "name": "title" }, { "value": "miss", "label": "Miss", "name": "title" }, { "value": "mrs", "label": "Mrs", "name": "title" }, { "value": "dr", "label": "Dr", "name": "title" }]'></pf-radio-group>
+    <pf-radio-group name="title">
+      <pf-radio value="mr"  name="title" label="Mr"></pf-radio>
+      <pf-radio value="mrs"  name="title" label="Mrs"></pf-radio>
+    </pf-radio-group>
   </div>
   <pf-button> Submit</pf-button>
 </section>
 
 <script type="module">
   import '@patternfly/elements/pf-radio-group/pf-radio-group.js';
+  import '@patternfly/elements/pf-radio-group/pf-radio.js';
   import '@patternfly/elements/pf-button/pf-button.js';
 
   const radioData = {

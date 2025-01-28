@@ -74,6 +74,7 @@ export class PfRadioGroup extends LitElement {
     const radioGroupId = `radioGroup${Math.random().toString(36).substring(2, 15)}`;
 
     return html`
+      <slot name="title"></slot>
       ${PfRadioGroup.radioGroup.map((group: any) => {
       if (group.name === this.name && group.node === this) {
         return html`
@@ -89,7 +90,7 @@ export class PfRadioGroup extends LitElement {
         `;
       }
     })}
-     <slot></slot>
+    <slot></slot>
     `;
   }
 }

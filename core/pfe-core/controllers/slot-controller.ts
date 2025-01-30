@@ -1,4 +1,4 @@
-import { isServer, type ReactiveController, type ReactiveElement } from 'lit';
+import type { ReactiveController, ReactiveElement } from 'lit';
 
 interface AnonymousSlot {
   hasContent: boolean;
@@ -110,8 +110,6 @@ export class SlotController implements SlotControllerPublicAPI {
 
   #slotNames: (string | null)[] = [];
 
-  #ssrHintHasSlotted: (string | null)[] = [];
-
   #deprecations: Record<string, string> = {};
 
   #mo = new MutationObserver(this.#initSlotMap.bind(this));
@@ -137,11 +135,6 @@ export class SlotController implements SlotControllerPublicAPI {
 
   async hostConnected(): Promise<void> {
     this.#mo.observe(this.host, { childList: true });
-    this.#ssrHintHasSlotted =
-      this.host
-      // @ts-expect-error: this is a ponyfill for ::has-slotted, is not intended as a public API
-          .ssrHintHasSlotted
-          ?? [];
     // Map the defined slots into an object that is easier to query
     this.#nodes.clear();
     this.#initSlotMap();
@@ -169,8 +162,7 @@ export class SlotController implements SlotControllerPublicAPI {
       const elements = this.#getChildrenForSlot(slotId);
       const slot = this.#getSlotElement(slotId);
       const hasContent =
-          isServer ? this.#ssrHintHasSlotted.includes(slotName)
-        : !!elements.length || !!slot?.assignedNodes?.()?.filter(x => x.textContent?.trim()).length;
+        !!elements.length || !!slot?.assignedNodes?.()?.filter(x => x.textContent?.trim()).length;
       this.#nodes.set(slotId, { elements, name, hasContent, slot });
     }
     this.host.requestUpdate();
@@ -178,21 +170,15 @@ export class SlotController implements SlotControllerPublicAPI {
   }
 
   #getSlotElement(slotId: string | symbol) {
-    if (isServer) {
-      return null;
-    } else {
-      const selector =
+    const selector =
       slotId === SlotController.default ? 'slot:not([name])' : `slot[name="${slotId as string}"]`;
-      return this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
-    }
+    return this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
   }
 
   #getChildrenForSlot<T extends Element = Element>(
     name: string | typeof SlotController.default,
   ): T[] {
-    if (isServer) {
-      return [];
-    } else if (this.#nodes.has(name)) {
+    if (this.#nodes.has(name)) {
       return (this.#nodes.get(name)!.slot?.assignedElements?.() ?? []) as T[];
     } else {
       const children = Array.from(this.host.children) as T[];

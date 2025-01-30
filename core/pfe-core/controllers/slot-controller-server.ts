@@ -14,7 +14,7 @@ export class SlotController implements SlotControllerPublicAPI {
 
   static attribute = 'ssr-hint-has-slotted' as const;
 
-  static anonymousAttribute = 'ssr-hint-has-slotted-anonymous' as const;
+  static anonymousAttribute = 'ssr-hint-has-default-slotted' as const;
 
   constructor(public host: ReactiveElement, ..._: SlotControllerArgs) {
     host.addController(this);

@@ -32,7 +32,11 @@
     "./controllers/property-observer-controller.js": "./controllers/property-observer-controller.js",
     "./controllers/roving-tabindex-controller.js": "./controllers/roving-tabindex-controller.js",
     "./controllers/scroll-spy-controller.js": "./controllers/scroll-spy-controller.js",
-    "./controllers/slot-controller.js": "./controllers/slot-controller.js",
+    "./controllers/slot-controller.js": {
+      "node": "./controllers/slot-controller-server.js",
+      "import": "./controllers/slot-controller.js",
+      "default": "./controllers/slot-controller.js"
+    },
     "./controllers/style-controller.js": "./controllers/style-controller.js",
     "./controllers/timestamp-controller.js": "./controllers/timestamp-controller.js",
     "./controllers/tabs-controller.js": "./controllers/tabs-controller.js",

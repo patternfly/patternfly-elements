@@ -1,4 +1,4 @@
-import { type ReactiveController, type ReactiveElement } from 'lit';
+import { isServer, type ReactiveController, type ReactiveElement } from 'lit';
 
 interface AnonymousSlot {
   hasContent: boolean;
@@ -113,7 +113,9 @@ export class SlotController implements ReactiveController {
       const elements = this.#getChildrenForSlot(slotId);
       const slot = this.#getSlotElement(slotId);
       const hasContent =
-        !!elements.length || !!slot?.assignedNodes?.()?.filter(x => x.textContent?.trim()).length;
+          !isServer
+          && !!elements.length
+          || !!slot?.assignedNodes?.()?.filter(x => x.textContent?.trim()).length;
       this.#nodes.set(slotId, { elements, name, hasContent, slot });
     }
     this.host.requestUpdate();
@@ -121,16 +123,22 @@ export class SlotController implements ReactiveController {
   }
 
   #getSlotElement(slotId: string | symbol) {
-    const selector =
+    if (isServer) {
+      return null;
+    } else {
+      const selector =
       slotId === SlotController.default ? 'slot:not([name])' : `slot[name="${slotId as string}"]`;
-    return this.host.shadowRoot?.querySelector<HTMLSlotElement>(selector) ?? null;
+      return this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
+    }
   }
 
   #getChildrenForSlot<T extends Element = Element>(
     name: string | typeof SlotController.default,
   ): T[] {
-    if (this.#nodes.has(name)) {
-      return (this.#nodes.get(name)!.slot?.assignedElements() ?? []) as T[];
+    if (isServer) {
+      return [];
+    } else if (this.#nodes.has(name)) {
+      return (this.#nodes.get(name)!.slot?.assignedElements?.() ?? []) as T[];
     } else {
       const children = Array.from(this.host.children) as T[];
       return children.filter(isSlot(name));

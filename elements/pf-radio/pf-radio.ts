@@ -31,51 +31,33 @@ export class PfRadio extends LitElement {
 
   @property({ reflect: true }) name = '';
 
-  @property({ reflect: true }) label?: string;
-
   @property({ reflect: true }) value = '';
 
-  connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener('click', this.#onClick);
-    this.#createRadioButton(this.name, this.value, this.checked, this.label);
+  @property({ reflect: true }) id = '';
+
+
+  createRenderRoot(): this {
+    return this; // Renders content into the light DOM
   }
 
-  #createRadioButton(name: string, value: string, checked: boolean, labelText?: string) {
-    // Generate a unique ID for the radio button
-    const uniqueId = Math.random().toString(36).substring(2, 15);
-
-    // Create the input (radio) element
-    const radioInput = document.createElement('input');
-    radioInput.type = 'radio';
-    radioInput.name = name;
-    radioInput.value = value;
-    radioInput.id = `radio${uniqueId}`; // Unique ID for the radio button
-    radioInput.checked = checked;
-    radioInput.slot = 'input';
-
-    // Create the label element
-    const label = document.createElement('label');
-    label.setAttribute('for', radioInput.id); // Link label to radio button
-    label.textContent = labelText || ''; // Set label text (default to empty if not provided)
-    label.slot = 'label';
-    // Append the input and label
-    this.appendChild(radioInput);
-    this.appendChild(label);
-  }
-
-  disconnectedCallback(): void {
-    super.disconnectedCallback();
-  }
-
-  #onClick(event: MouseEvent) {
+  #handleRadioChange(event: MouseEvent) {
     this.dispatchEvent(new PfRadioChangeEvent(event, this.value));
   }
 
   render(): TemplateResult<1> {
+    const uniqueId: string = Math.random().toString(36).substring(2, 15);
+    const inputId: string = this.id;
+    this.id = uniqueId;
+
     return html`
-      <slot name="input"></slot>
-      <slot name="label"></slot>
+      <input 
+        type="radio" 
+        name=${this.name}
+        value=${this.value} 
+        id=${inputId}
+        @change="${this.#handleRadioChange}" 
+        ?checked=${this.checked}
+      />
     `;
   }
 }

@@ -3,6 +3,19 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import styles from './pf-radio-group.css';
 
+interface RadioOption {
+  value: string;
+  label?: string;
+  checked?: boolean;
+  disabled?: boolean;
+};
+
+interface RadioGroup {
+  name: string;
+  node?: PfRadioGroup;
+  value: RadioOption[];
+};
+
 export class PfRadioGroupChangeEvent extends Event {
   constructor(public event: Event, public value: string) {
     super('change', { bubbles: true });
@@ -22,14 +35,14 @@ export class PfRadioGroup extends LitElement {
     delegatesFocus: true,
   };
 
-  static radioGroup: any = [];
+  static radioGroup: RadioGroup[] = [];
 
   @property({ reflect: true }) name = '';
   @property({ reflect: true }) label?: string;
   @property({ reflect: true }) value = '';
-  @property({ reflect: true }) groupNode = '';
-  @property({ reflect: true }) checked = '';
-  @property({ reflect: true }) disabled = '';
+  @property({ reflect: true }) groupNode?: PfRadioGroup;
+  @property({ reflect: true, type: Boolean }) checked = false;
+  @property({ reflect: true, type: Boolean }) disabled = false;
 
   constructor() {
     super();
@@ -46,7 +59,7 @@ export class PfRadioGroup extends LitElement {
   }
 
   #onClick(event: MouseEvent) {
-    // this.dispatchEvent(new PfRadioGroupChangeEvent(event, this.value));
+    this.dispatchEvent(new PfRadioGroupChangeEvent(event, this.value));
   }
 
   #renderRadioInput(event: any): void {
@@ -54,25 +67,37 @@ export class PfRadioGroup extends LitElement {
     this.label = event.detail.label;
     this.groupNode = event.detail.node;
     this.checked = event.detail.checked;
-    // this.disabled = event.detail.disabled;
+    this.disabled = event.detail.disabled;
 
     const group = PfRadioGroup.radioGroup.find((item: any) =>
       (item.name === this.name && item.node === this.groupNode));
     if (group) {
       // If found, just push the new radio input to the existing radio group
-      group.value.push({ value: this.value, label: this.label });
+      group.value.push(
+        {
+          value: this.value,
+          label: this.label,
+          checked: this.checked,
+          disabled: this.disabled,
+        }
+      );
     } else {
       // If not found, create a new radio group with the current input
       PfRadioGroup.radioGroup.push({
         name: this.name, node: this.groupNode,
-        value: [{ value: this.value, label: this.label, checked: this.checked }],
+        value: [
+          {
+            value: this.value,
+            label: this.label,
+            checked: this.checked,
+            disabled: this.disabled,
+          },
+        ],
       });
     }
   }
 
   render(): TemplateResult<1> | void {
-    const radioGroupId = `radioGroup${Math.random().toString(36).substring(2, 15)}`;
-
     return html`
       <slot name="title"></slot>
       ${PfRadioGroup.radioGroup.map((group: any) => {
@@ -80,11 +105,12 @@ export class PfRadioGroup extends LitElement {
         return html`
           <div>
             ${group.value.map((radio: any) => {
+          const radioGroupId = `radioGroup${Math.random().toString(36).substring(2, 15)}`;
           return html`
-                <input type="radio" id=${radioGroupId} name=${group.name} 
-                  value=${radio.value} checked=${radio.checked}/>
-                <label for=${radioGroupId}>${radio.label}</label>
-              `;
+            <input type="radio" id=${radioGroupId} name=${group.name} 
+              value=${radio.value} ?checked=${radio.checked} ?disabled=${radio.disabled}/>
+            <label for=${radioGroupId}>${radio.label}</label>
+          `;
         })}
           </div>
         `;

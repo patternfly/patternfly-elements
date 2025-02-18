@@ -1,4 +1,4 @@
-import type { ReactiveController, ReactiveElement } from 'lit';
+import { isServer, type ReactiveController, type ReactiveElement } from 'lit';
 
 import { Logger } from './logger.js';
 
@@ -52,9 +52,13 @@ export class LightDOMController implements ReactiveController {
    * Returns a boolean statement of whether or not this component contains any light DOM.
    */
   hasLightDOM(): boolean {
-    return !!(
-      this.host.children.length > 0
-      || (this.host.textContent ?? '').trim().length > 0
-    );
+    if (isServer) {
+      return false;
+    } else {
+      return !!(
+        this.host.children.length > 0
+        || (this.host.textContent ?? '').trim().length > 0
+      );
+    }
   }
 }

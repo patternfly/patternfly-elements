@@ -158,7 +158,9 @@ export class PfBackToTop extends LitElement {
     }
 
     this.#scrollSpy = !!this.scrollableSelector;
-    if (this.#scrollSpy && this.scrollableSelector) {
+    if (isServer) {
+      return;
+    } else if (this.#scrollSpy && this.scrollableSelector) {
       const scrollableElement = this.#rootNode?.querySelector?.(this.scrollableSelector);
       if (!scrollableElement) {
         this.#logger.error(`unable to find element with selector ${this.scrollableSelector}`);

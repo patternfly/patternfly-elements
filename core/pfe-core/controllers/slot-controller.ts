@@ -1,7 +1,5 @@
 import { isServer, type ReactiveController, type ReactiveElement } from 'lit';
 
-import { Logger } from './logger.js';
-
 interface AnonymousSlot {
   hasContent: boolean;
   elements: Element[];
@@ -15,8 +13,10 @@ interface NamedSlot extends AnonymousSlot {
 
 export type Slot = NamedSlot | AnonymousSlot;
 
+export type SlotName = string | null;
+
 export interface SlotsConfig {
-  slots: (string | null)[];
+  slots: SlotName[];
   /**
    * Object mapping new slot name keys to deprecated slot name values
    * @example `pf-modal--header` is deprecated in favour of `header`
@@ -32,9 +32,9 @@ export interface SlotsConfig {
   deprecations?: Record<string, string>;
 }
 
-function isObjectConfigSpread(
-  config: ([SlotsConfig] | (string | null)[]),
-): config is [SlotsConfig] {
+export type SlotControllerArgs = [SlotsConfig] | SlotName[];
+
+export function isObjectSpread(config: SlotControllerArgs): config is [SlotsConfig] {
   return config.length === 1 && typeof config[0] === 'object' && config[0] !== null;
 }
 
@@ -57,58 +57,92 @@ export class SlotController implements ReactiveController {
 
   #nodes = new Map<string | typeof SlotController.default, Slot>();
 
-  #logger: Logger;
+  #slotMapInitialized = false;
 
-  #firstUpdated = false;
-
-  #mo = new MutationObserver(records => this.#onMutation(records));
-
-  #slotNames: (string | null)[];
+  #slotNames: (string | null)[] = [];
 
   #deprecations: Record<string, string> = {};
 
-  constructor(public host: ReactiveElement, ...config: ([SlotsConfig] | (string | null)[])) {
-    this.#logger = new Logger(this.host);
+  #mo = new MutationObserver(this.#initSlotMap.bind(this));
 
-    if (isObjectConfigSpread(config)) {
+  constructor(public host: ReactiveElement, ...args: SlotControllerArgs) {
+    this.#initialize(...args);
+    host.addController(this);
+    if (!this.#slotNames.length) {
+      this.#slotNames = [null];
+    }
+  }
+
+  #initialize(...config: SlotControllerArgs) {
+    if (isObjectSpread(config)) {
       const [{ slots, deprecations }] = config;
       this.#slotNames = slots;
       this.#deprecations = deprecations ?? {};
     } else if (config.length >= 1) {
       this.#slotNames = config;
       this.#deprecations = {};
-    } else {
-      this.#slotNames = [null];
     }
-
-
-    host.addController(this);
   }
 
   async hostConnected(): Promise<void> {
-    this.host.addEventListener('slotchange', this.#onSlotChange as EventListener);
-    this.#firstUpdated = false;
     this.#mo.observe(this.host, { childList: true });
     // Map the defined slots into an object that is easier to query
     this.#nodes.clear();
-    // Loop over the properties provided by the schema
-    this.#slotNames.forEach(this.#initSlot);
-    Object.values(this.#deprecations).forEach(this.#initSlot);
-    this.host.requestUpdate();
+    this.#initSlotMap();
     // insurance for framework integrations
     await this.host.updateComplete;
     this.host.requestUpdate();
   }
 
+  hostDisconnected(): void {
+    this.#mo.disconnect();
+  }
+
   hostUpdated(): void {
-    if (!this.#firstUpdated) {
-      this.#slotNames.forEach(this.#initSlot);
-      this.#firstUpdated = true;
+    if (!this.#slotMapInitialized) {
+      this.#initSlotMap();
     }
   }
 
-  hostDisconnected(): void {
-    this.#mo.disconnect();
+  #initSlotMap() {
+    // Loop over the properties provided by the schema
+    for (const slotName of this.#slotNames
+        .concat(Object.values(this.#deprecations))) {
+      const slotId = slotName || SlotController.default;
+      const name = slotName ?? '';
+      const elements = this.#getChildrenForSlot(slotId);
+      const slot = this.#getSlotElement(slotId);
+      const hasContent =
+          !isServer
+          && !!elements.length
+          || !!slot?.assignedNodes?.()?.filter(x => x.textContent?.trim()).length;
+      this.#nodes.set(slotId, { elements, name, hasContent, slot });
+    }
+    this.host.requestUpdate();
+    this.#slotMapInitialized = true;
+  }
+
+  #getSlotElement(slotId: string | symbol) {
+    if (isServer) {
+      return null;
+    } else {
+      const selector =
+      slotId === SlotController.default ? 'slot:not([name])' : `slot[name="${slotId as string}"]`;
+      return this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
+    }
+  }
+
+  #getChildrenForSlot<T extends Element = Element>(
+    name: string | typeof SlotController.default,
+  ): T[] {
+    if (isServer) {
+      return [];
+    } else if (this.#nodes.has(name)) {
+      return (this.#nodes.get(name)!.slot?.assignedElements?.() ?? []) as T[];
+    } else {
+      const children = Array.from(this.host.children) as T[];
+      return children.filter(isSlot(name));
+    }
   }
 
   /**
@@ -143,19 +177,11 @@ export class SlotController implements ReactiveController {
    * @example this.hasSlotted('header');
    */
   hasSlotted(...names: (string | null | undefined)[]): boolean {
-    if (isServer) {
-      return this.host
-          .getAttribute('ssr-hint-has-slotted')
-          ?.split(',')
-          .map(name => name.trim())
-          .some(name => names.includes(name === 'default' ? null : name)) ?? false;
-    } else {
-      const slotNames = Array.from(names, x => x == null ? SlotController.default : x);
-      if (!slotNames.length) {
-        slotNames.push(SlotController.default);
-      }
-      return slotNames.some(x => this.#nodes.get(x)?.hasContent ?? false);
+    const slotNames = Array.from(names, x => x == null ? SlotController.default : x);
+    if (!slotNames.length) {
+      slotNames.push(SlotController.default);
     }
+    return slotNames.some(x => this.#nodes.get(x)?.hasContent ?? false);
   }
 
   /**
@@ -168,42 +194,4 @@ export class SlotController implements ReactiveController {
   isEmpty(...names: (string | null | undefined)[]): boolean {
     return !this.hasSlotted(...names);
   }
-
-  #onSlotChange = (event: Event & { target: HTMLSlotElement }) => {
-    const slotName = event.target.name;
-    this.#initSlot(slotName);
-    this.host.requestUpdate();
-  };
-
-  #onMutation = async (records: MutationRecord[]) => {
-    const changed = [];
-    for (const { addedNodes, removedNodes } of records) {
-      for (const node of [...addedNodes, ...removedNodes]) {
-        if (node instanceof HTMLElement && node.slot) {
-          this.#initSlot(node.slot);
-          changed.push(node.slot);
-        }
-      }
-    }
-    this.host.requestUpdate();
-  };
-
-  #getChildrenForSlot<T extends Element = Element>(
-    name: string | typeof SlotController.default,
-  ): T[] {
-    const children = Array.from(this.host.children) as T[];
-    return children.filter(isSlot(name));
-  }
-
-  #initSlot = (slotName: string | null) => {
-    const name = slotName || SlotController.default;
-    const elements = this.#nodes.get(name)?.slot?.assignedElements?.()
-      ?? this.#getChildrenForSlot(name);
-    const selector = slotName ? `slot[name="${slotName}"]` : 'slot:not([name])';
-    const slot = this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
-    const nodes = slot?.assignedNodes?.();
-    const hasContent = !!elements.length || !!nodes?.filter(x => x.textContent?.trim()).length;
-    this.#nodes.set(name, { elements, name: slotName ?? '', hasContent, slot });
-    this.#logger.debug(slotName, hasContent);
-  };
 }

@@ -51,7 +51,7 @@ export class PfTh extends LitElement {
     const closestThead = this.closest('pf-thead');
     const closestTable = this.closest('pf-table');
     const isChildOfThead = !!closestThead && !!closestTable?.contains(closestThead);
-    const role = isChildOfThead ? 'colheader' : 'rowheader';
+    const role = isChildOfThead ? 'columnheader' : 'rowheader';
     this.setAttribute('role', role);
   }
 

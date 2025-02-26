@@ -1,5 +1,10 @@
 # @patternfly/pfe-core
 
+## 4.0.5
+### Patch Changes
+
+- 0fb28b6: `SlotController`: `hasContent`/`isEmpty` now respects text nodes
+
 ## 4.0.4
 
 ### Patch Changes

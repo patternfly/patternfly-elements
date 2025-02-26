@@ -1,5 +1,10 @@
 # @patternfly/pfe-tools
 
+## 4.0.2
+### Patch Changes
+
+- 2910260: Update changesets version
+
 ## 4.0.1
 
 ### Patch Changes

@@ -29,7 +29,7 @@ test.describe(tagName, () => {
       browser,
       importSpecifiers: [`@patternfly/elements/${tagName}/${tagName}.js`],
       demoContent: /* html */ `
-        <pf-card ssr-hint-has-slotted="header,default,footer">
+        <pf-card ssr-hint-has-default-slotted ssr-hint-has-slotted="header,footer">
           <h2 slot="header">Header</h2>
           <span>Body</span>
           <span slot="footer">Footer</span>

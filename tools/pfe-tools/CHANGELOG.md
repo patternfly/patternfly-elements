@@ -1,5 +1,10 @@
 # @patternfly/pfe-tools
 
+## 4.0.3
+### Patch Changes
+
+- 9208bcf: Dev Server: pass `ignore` and `typeScript` options to import map generator plugin
+
 ## 4.0.2
 ### Patch Changes
 

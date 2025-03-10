@@ -1,4 +1,4 @@
-import { LitElement, html, type TemplateResult } from 'lit';
+import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
@@ -63,7 +63,7 @@ export class PfTab extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
   @queryAssignedElements({ slot: 'icon', flatten: true })
-  private icons!: HTMLElement[];
+  private icons?: HTMLElement[];
 
   @property({ reflect: true, type: Boolean }) active = false;
 
@@ -105,13 +105,14 @@ export class PfTab extends LitElement {
     const { box, fill = false, vertical = false } = this.ctx ?? {};
     const light = box === 'light';
     const dark = box === 'dark';
+    const icons = isServer ? [] : this.icons;
     return html`
       <div id="button"
            part="button"
            class="${classMap({ active, box: !!box, dark, light, fill, vertical })}">
         <slot name="icon"
               part="icon"
-              ?hidden="${!this.icons.length}"
+              ?hidden="${!icons?.length}"
               @slotchange="${() => this.requestUpdate()}"></slot>
         <slot part="text"></slot>
       </div>

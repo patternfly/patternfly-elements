@@ -1,4 +1,4 @@
-import { LitElement, html, type TemplateResult } from 'lit';
+import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -108,7 +108,9 @@ export class PfClipboardCopy extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     this.#mo.observe(this, { characterData: true });
-    this.#onMutation();
+    if (!isServer) {
+      this.#onMutation();
+    }
   }
 
   /**
@@ -167,7 +169,7 @@ export class PfClipboardCopy extends LitElement {
   }
 
   #onMutation() {
-    if (this.childNodes.length > 0) {
+    if (this.childNodes?.length > 0) {
       this.value = this.getAttribute('value') ?? this.#dedent(Array.from(this.childNodes, child =>
         (child instanceof Element || child instanceof Text) ? (child.textContent ?? '') : '')
           .join(''));

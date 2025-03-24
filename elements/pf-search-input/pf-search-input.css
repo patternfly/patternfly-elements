@@ -265,6 +265,7 @@
 #toggle-input {
   justify-content: space-between;
   padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem);
+	padding-left: 40px;
 }
 
 .disabled #toggle-input {
@@ -376,4 +377,13 @@ pf-badge {
   height: var(--pf-c-divider--after--Height, 1px);
   background-color: var(--pf-c-divider--after--BackgroundColor);
   flex: 1 0 100%;
+}
+
+div.search-icon{
+	position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
 }

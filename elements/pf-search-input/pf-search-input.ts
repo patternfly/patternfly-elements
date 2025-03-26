@@ -148,9 +148,11 @@ export class PfSearchInput extends LitElement {
     const hideLightDomItems =  !ComboboxController.supportsCrossRootActiveDescendant;
 
     return html`
-      <div id="outer"
-           style="${styleMap(styles)}"
-           class="${classMap({ disabled, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
+      <div 
+        id="outer"
+        style="${styleMap(styles)}"
+        class="${classMap({ disabled, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}"
+      >
         <div id="toggle">
           <div class="search-icon">
             <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512">
@@ -167,11 +169,19 @@ export class PfSearchInput extends LitElement {
               </path>
             </svg>
           </div>
-          <input id="toggle-input"
-                 ?disabled="${disabled}"
-                 placeholder="${placeholder || this.#buttonLabel}">
-          
-            <pf-button id="toggle-button" plain label="Close">
+          <input 
+            id="toggle-input"
+            ?disabled="${disabled}"
+            placeholder="${placeholder || this.#buttonLabel}"
+          >
+          <button style="width: 0px; height: 0px; padding: 0px; visibility: hidden;" id="toggle-button"></button>
+          <pf-button 
+            @click="${this.#OnClose}" 
+            ?hidden="${(!expanded && this._toggleInput?.value.trim() === "")}" 
+            id="close-button"  
+            plain 
+            label="Close"
+          >
             <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
               <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 
               0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 
@@ -181,17 +191,18 @@ export class PfSearchInput extends LitElement {
               12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 
               44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z">
               </path>
-          </svg>
-        </pf-button>
+            </svg>
+          </pf-button>
         </div>
-        <div id="listbox-container"
-             ?hidden="${!expanded}"
-             style="${styleMap({
-               marginTop: `${height || 0}px`,
-               width: width ? `${width}px` : 'auto',
-             })}">
+        <div 
+          id="listbox-container"
+          ?hidden="${!expanded}"
+          style="${styleMap({
+            marginTop: `${height || 0}px`,
+            width: width ? `${width}px` : 'auto',
+          })}"
+        >
           <div id="listbox">
-            
             ${this.#combobox.renderItemsToShadowRoot()}
             <slot ?hidden="${hideLightDomItems}"></slot>
           </div>
@@ -287,6 +298,14 @@ export class PfSearchInput extends LitElement {
     } else {
       await this.show();
     }
+  }
+
+  async #OnClose(){
+    if (this.expanded) {
+      await this.hide();
+    }
+    this.value = "";
+    this._toggleInput!.value = this.value;
   }
 }
 

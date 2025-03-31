@@ -23,6 +23,10 @@ export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
    * @default el => el.getAttribute('href');
    */
   getHash?: (el: Element) => string | null;
+  /**
+   * Optional callback for when an intersection occurs
+   */
+  onIntersection?(): void;
 }
 
 export class ScrollSpyController implements ReactiveController {
@@ -47,6 +51,7 @@ export class ScrollSpyController implements ReactiveController {
 
   #getRootNode: () => Node;
   #getHash: (el: Element) => string | null;
+  #onIntersection?: () => void;
 
   get #linkChildren(): Element[] {
     return Array.from(this.host.querySelectorAll(this.#tagNames.join(',')))
@@ -95,6 +100,7 @@ export class ScrollSpyController implements ReactiveController {
     this.#threshold = options.threshold ?? 0.85;
     this.#getRootNode = () => options.rootNode ?? host.getRootNode();
     this.#getHash = options?.getHash ?? ((el: Element) => el.getAttribute('href'));
+    this.#onIntersection = options?.onIntersection;
   }
 
   hostConnected(): void {
@@ -172,6 +178,7 @@ export class ScrollSpyController implements ReactiveController {
       }
       this.#initializing = false;
     }
+    this.#onIntersection?.();
   }
 
   /**

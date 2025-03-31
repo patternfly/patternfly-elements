@@ -43,6 +43,7 @@ export class ScrollSpyController implements ReactiveController {
   #root: ScrollSpyControllerOptions['root'];
   #rootMargin?: string;
   #threshold: number | number[];
+  #intersectingElements: Element[] = [];
 
   #getRootNode: () => Node;
   #getHash: (el: Element) => string | null;
@@ -100,7 +101,9 @@ export class ScrollSpyController implements ReactiveController {
     this.#initIo();
   }
 
-  #initIo() {
+  #initializing = true;
+
+  async #initIo() {
     const rootNode = this.#getRootNode();
     if (rootNode instanceof Document || rootNode instanceof ShadowRoot) {
       const { rootMargin, threshold, root } = this;
@@ -151,6 +154,24 @@ export class ScrollSpyController implements ReactiveController {
       this.#setActive(last ?? this.#linkChildren.at(0));
     }
     this.#intersected = true;
+    this.#intersectingElements =
+      entries
+          .filter(x => x.isIntersecting)
+          .map(x => x.target);
+    if (this.#initializing) {
+      const ints = entries?.filter(x => x.isIntersecting) ?? [];
+      if (this.#intersectingElements) {
+        const [{ target = null } = {}] = ints;
+        const { id } = target ?? {};
+        if (id) {
+          const link = this.#linkChildren.find(link => this.#getHash(link) === `#${id}`);
+          if (link) {
+            this.#setActive(link);
+          }
+        }
+      }
+      this.#initializing = false;
+    }
   }
 
   /**

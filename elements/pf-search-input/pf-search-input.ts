@@ -76,7 +76,7 @@ export class PfSearchInput extends LitElement {
 
   @query('#toggle-input') private _toggleInput?: HTMLInputElement;
 
-  @query('#toggle-button') private _toggleButton?: PfButton;
+  @query('#toggle-button') private _toggleButton?: HTMLDivElement;
 
   @query('#listbox') private _listbox?: HTMLElement;
 
@@ -174,7 +174,6 @@ export class PfSearchInput extends LitElement {
             ?disabled="${disabled}"
             placeholder="${placeholder || this.#buttonLabel}"
           >
-          <button style="width: 0px; height: 0px; padding: 0px; visibility: hidden;" id="toggle-button"></button>
           <pf-button 
             @click="${this.#OnClose}" 
             ?hidden="${(!expanded && this._toggleInput?.value.trim() === "")}" 
@@ -193,6 +192,7 @@ export class PfSearchInput extends LitElement {
               </path>
             </svg>
           </pf-button>
+          <div style="width: 0px; height: 0px; padding: 0px; visibility: hidden;" id="toggle-button"></div>
         </div>
         <div 
           id="listbox-container"

@@ -211,13 +211,13 @@
 
 #toggle {
   background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
+	/* align-items: center; */
 }
 
 #toggle,
 /* #toggle-button, */
 #toggle-input {
   display: flex;
-  align-items: center;
   font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
   font-size: var(--pf-global--FontSize--md, 16px);
   font-weight: var(--pf-global--FontWeight--normal, 400);
@@ -228,11 +228,18 @@
   border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
   border-bottom-color: var(--pf-theme--color--text, #151515);
   justify-content: space-between;
+	/* &:focus{
+		border-radius: 4px;
+		border-bottom: 2px solid #06c;
+	} */
 }
 
 .expanded #toggle {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--pf-theme--color--accent, #0066cc);
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-bottom: 2px solid #06c;
+  /* border-bottom-width: 2px;
+  border-bottom-color: var(--pf-theme--color--accent, #0066cc); */
 }
 
 .disabled #toggle {
@@ -249,6 +256,12 @@
   text-align: left;
   border-radius: 0;
   flex: 1 0 auto;
+	outline: none;
+	&:focus{
+		border: 2px solid #06c;
+		/* border-bottom: none; */
+		border-radius: 4px;
+	}
 }
 
 #toggle-input {
@@ -275,14 +288,18 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	border-radius: 0px;
+}
+
+#close-button svg{
 	position: relative;
 	top: 3px;
 }
 
 
 #toggle-button:focus:before {
-  border-bottom-color: var(--pf-c-search-input__toggle--focus--before--BorderBottomColor);
-  border-bottom-width: var(--pf-c-search-input__toggle--focus--before--BorderBottomWidth);
+  /* border-bottom-color: var(--pf-c-search-input__toggle--focus--before--BorderBottomColor);
+  border-bottom-width: var(--pf-c-search-input__toggle--focus--before--BorderBottomWidth); */
 }
 
 /* #outer.typeahead #toggle-button {
@@ -371,3 +388,9 @@ div.search-icon{
   display: flex;
   align-items: center;
 }
+
+.expanded #close-button{
+	/* border-bottom-width: 2px;
+  border-bottom-color: var(--pf-theme--color--accent, #0066cc); */
+}
+

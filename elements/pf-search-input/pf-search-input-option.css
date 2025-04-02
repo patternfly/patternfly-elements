@@ -13,8 +13,7 @@
 }
 
 :host(:focus) #outer,
-:host(:hover) #outer,
-#outer.selected {
+:host(:hover) #outer{
   background-color: #e0e0e0;
 }
 
@@ -37,10 +36,7 @@
 }
 
 input[type="checkbox"] {
-  margin-inline-end: 1em;
-  display: var(--_pf-option-checkboxes-display, none);
-  pointer-events: none;
-  flex: 0 0 auto;
+  display: none;
 }
 
 span {
@@ -48,14 +44,7 @@ span {
 }
 
 svg {
-  font-size: var(--pf-c-select__menu-item-icon--FontSize, var(--pf-global--icon--FontSize--sm, 0.675rem));
-  color: var(--_svg-color, var(--pf-theme--color--accent, #0066cc));
-  width: 1em;
-  height: 1em;
-  margin-inline-start: 1em;
-  text-align: right;
-  flex: 0 0 auto;
-  display: var(--_pf-option-svg-display, block);
+  display: none;
 }
 
 #description {

@@ -1,5 +1,10 @@
 # @patternfly/create-element
 
+## 1.0.4
+### Patch Changes
+
+- fe349ea: Fixed type errors in create-element template
+
 ## 1.0.3
 
 ### Patch Changes

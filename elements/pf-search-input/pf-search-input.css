@@ -179,11 +179,11 @@
 /* TODO(bennyp): see if we can get rid of this wrapping node, for perf reasons */
 #listbox-container {
   display: inline-flex;
-  border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
   position: absolute;
   background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
   opacity: 0;
-  --_active-descendant-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important
+  --_active-descendant-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+	box-shadow: 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06);
 }
 
 #outer.expanded #listbox-container {
@@ -208,14 +208,11 @@
   --_svg-color: var(--pf-c-list__item-icon--Color, #6a6e73) !important;
 }
 
-
 #toggle {
   background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
-	/* align-items: center; */
 }
 
 #toggle,
-/* #toggle-button, */
 #toggle-input {
   display: flex;
   font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
@@ -228,18 +225,6 @@
   border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
   border-bottom-color: var(--pf-theme--color--text, #151515);
   justify-content: space-between;
-	/* &:focus{
-		border-radius: 4px;
-		border-bottom: 2px solid #06c;
-	} */
-}
-
-.expanded #toggle {
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-	border-bottom: 2px solid #06c;
-  /* border-bottom-width: 2px;
-  border-bottom-color: var(--pf-theme--color--accent, #0066cc); */
 }
 
 .disabled #toggle {
@@ -256,21 +241,15 @@
   text-align: left;
   border-radius: 0;
   flex: 1 0 auto;
-	outline: none;
-	&:focus{
-		border: 2px solid #06c;
-		/* border-bottom: none; */
-		border-radius: 4px;
-	}
 }
 
 #toggle-input {
   justify-content: space-between;
   padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem);
-	padding-left: 40px;
+	padding-left: 2.5rem;
 	width: 90%;
 	box-sizing: border-box;
-	max-height: 36px;
+	max-height: 2.25rem;
 }
 
 .disabled #toggle-input {
@@ -282,8 +261,8 @@
   background-color: transparent;
   justify-content: flex-end;
   padding: var(--pf-global--spacer--sm, 0.5rem);
-	max-height: 36px;
-	max-width: 36px;
+	max-height: 2.25rem;
+	max-width: 2.25rem;
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
@@ -291,22 +270,10 @@
 	border-radius: 0px;
 }
 
-#close-button svg{
+#close-button svg {
 	position: relative;
 	top: 3px;
 }
-
-
-#toggle-button:focus:before {
-  /* border-bottom-color: var(--pf-c-search-input__toggle--focus--before--BorderBottomColor);
-  border-bottom-width: var(--pf-c-search-input__toggle--focus--before--BorderBottomWidth); */
-}
-
-/* #outer.typeahead #toggle-button {
-  flex: 0 0 auto;
-} */
-
-
 
 #toggle-text {
   flex: 1 1 auto;
@@ -318,16 +285,8 @@
 }
 
 #listbox.checkboxes {
-  --_pf-option-checkboxes-display: inline;
+  --_pf-option-checkboxes-display: none;
   --_pf-option-svg-display: none;
-}
-
-::slotted(pf-option-group + hr) {
-  display: none !important;
-}
-
-::slotted(hr:has(+ pf-option-group)) {
-  display: none !important;
 }
 
 .visually-hidden {
@@ -380,16 +339,24 @@
   flex: 1 0 100%;
 }
 
-div.search-icon{
+div.search-icon {
 	position: absolute;
   top: 50%;
-  left: 1rem;
+  left: var(--pf-global--spacer--md, 1rem);
   transform: translateY(-50%);
   display: flex;
   align-items: center;
 }
 
-.expanded #close-button{
-	/* border-bottom-width: 2px;
-  border-bottom-color: var(--pf-theme--color--accent, #0066cc); */
+#outer:focus-within {
+	#toggle {
+		border-top-left-radius:  var(--pf-global--spacer--sm, 0.5rem);
+		border-bottom-left-radius:  var(--pf-global--spacer--sm, 0.5rem);
+		border-bottom: var(--pf-global--spacer--xs, 0.25rem) solid transparent;
+	}
+	#close-button {
+		border-bottom-width: var(--pf-global--spacer--xs, 0.125rem);
+		border-bottom-color: var(--pf-theme--color--accent, #0066cc);
+		box-sizing: border-box;
+	}
 }

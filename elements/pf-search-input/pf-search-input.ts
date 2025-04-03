@@ -19,6 +19,7 @@ import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 import { PfSearchInputOption } from './pf-search-input-option.js';
 import styles from './pf-search-input.css';
 import type { PfButton } from '../pf-button/pf-button.js';
+import { PfOption } from '../pf-select/pf-option.js';
 import { bound } from '@patternfly/pfe-core/decorators.js';
 
 export class PfSelectChangeEvent extends Event {
@@ -83,11 +84,11 @@ export class PfSearchInput extends LitElement {
 
   @query('#listbox-container') private _listboxContainer?: HTMLElement;
 
-  @query('#placeholder') private _placeholder?: PfSearchInputOption;
+  @query('#placeholder') private _placeholder?: PfOption;
 
   @query('#outer') private _searchInputContainer!: HTMLElement;
 
-  #isNotPlaceholderOption = (option: PfSearchInputOption) => option !== this._placeholder;
+  #isNotPlaceholderOption = (option: PfOption) => option !== this._placeholder;
 
   #internals = InternalsController.of(this);
 
@@ -108,7 +109,7 @@ export class PfSearchInput extends LitElement {
     requestShowListbox: () => void (this.expanded ||= true),
     requestHideListbox: () => void (this.expanded &&= false),
     setItemHidden: (item, hidden) => (item.id !== 'placeholder') && void (item.hidden = hidden),
-    isItem: item => item instanceof PfSearchInputOption,
+    isItem: item => item instanceof PfOption,
     setItemActive: (item, active) => item.active = active,
     setItemSelected: (item, selected) => item.selected = selected,
   });
@@ -141,24 +142,24 @@ export class PfSearchInput extends LitElement {
    * or array of select option values for multi select.
    */
   @property({ hasChanged: (a, b) => !arraysAreEquivalent(a, b) })
-  set selected(selected: PfSearchInputOption | PfSearchInputOption[]) {
+  set selected(selected: PfOption | PfOption[]) {
     const list = Array.isArray(selected) ? selected : [selected];
     this.#combobox.selected = list;
   }
 
-  get selected(): PfSearchInputOption[] {
+  get selected(): PfOption[] {
     return this.#combobox.selected;
   }
 
   /** List of options */
-  get options(): PfSearchInputOption[] {
+  get options(): PfOption[] {
     if (isServer) {
       return []; // TODO: expose a DOM property to allow setting options in SSR scenarios
     } else {
       return [
         this._placeholder,
-        ...Array.from(this.querySelectorAll('pf-search-input-option')),
-      ].filter((x): x is PfSearchInputOption => !!x && !x.hidden);
+        ...Array.from(this.querySelectorAll('pf-option')),
+      ].filter((x): x is PfOption => !!x && !x.hidden);
     }
   }
 
@@ -254,7 +255,7 @@ export class PfSearchInput extends LitElement {
   }
 
   @observes('selected')
-  private async selectedChanged(_: PfSearchInputOption[], selected: PfSearchInputOption[]) {
+  private async selectedChanged(_: PfOption[], selected: PfOption[]) {
     this.value = selected.map(x => x.value).join();
     await this.updateComplete;
     this._toggleInput!.value = this.value;

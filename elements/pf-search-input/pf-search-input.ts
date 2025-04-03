@@ -19,6 +19,7 @@ import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 import { PfSearchInputOption } from './pf-search-input-option.js';
 import styles from './pf-search-input.css';
 import type { PfButton } from '../pf-button/pf-button.js';
+import { bound } from '@patternfly/pfe-core/decorators.js';
 
 export class PfSelectChangeEvent extends Event {
   constructor() {
@@ -84,6 +85,8 @@ export class PfSearchInput extends LitElement {
 
   @query('#placeholder') private _placeholder?: PfSearchInputOption;
 
+  @query('#outer') private _searchInputContainer!: HTMLElement;
+
   #isNotPlaceholderOption = (option: PfSearchInputOption) => option !== this._placeholder;
 
   #internals = InternalsController.of(this);
@@ -109,6 +112,29 @@ export class PfSearchInput extends LitElement {
     setItemActive: (item, active) => item.active = active,
     setItemSelected: (item, selected) => item.selected = selected,
   });
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    document.addEventListener('click', this._onOutsideClick);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    document.removeEventListener('click', this._onOutsideClick);
+  }
+
+
+  // Function to handle the closing of popover and month select popup on outside click
+  @bound private _onOutsideClick(event: MouseEvent) {
+    const path = event.composedPath();
+    if (!path.includes(this._searchInputContainer)) {
+      if (this.expanded) {
+        this.expanded = false;
+      } else {
+        //this._popover.hide();
+      }
+    }
+  }
 
   /**
    * Single select option value for single select menus,

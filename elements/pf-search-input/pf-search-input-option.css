@@ -13,7 +13,7 @@
 }
 
 :host(:focus) #outer,
-:host(:hover) #outer{
+:host(:hover) #outer {
   background-color: #e0e0e0;
 }
 

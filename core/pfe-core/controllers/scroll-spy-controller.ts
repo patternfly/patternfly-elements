@@ -30,6 +30,18 @@ export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
 }
 
 export class ScrollSpyController implements ReactiveController {
+  static #instances = new Set<ScrollSpyController>;
+
+  static {
+    addEventListener('scroll', () => {
+      if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+        this.#instances.forEach(ssc => {
+          ssc.#setActive(ssc.#linkChildren.at(-1));
+        });
+      }
+    }, { passive: true });
+  }
+
   #tagNames: string[];
   #activeAttribute: string;
 
@@ -104,7 +116,13 @@ export class ScrollSpyController implements ReactiveController {
   }
 
   hostConnected(): void {
+    ScrollSpyController.#instances.add(this);
     this.#initIo();
+  }
+
+  hostDisconnected(): void {
+    ScrollSpyController.#instances.delete(this);
+    this.#io?.disconnect();
   }
 
   #initializing = true;

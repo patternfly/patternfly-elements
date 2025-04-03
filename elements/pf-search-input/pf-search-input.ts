@@ -16,9 +16,7 @@ import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating
 import { arraysAreEquivalent } from '@patternfly/pfe-core/functions/arraysAreEquivalent.js';
 import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 
-import { PfSearchInputOption } from './pf-search-input-option.js';
 import styles from './pf-search-input.css';
-import type { PfButton } from '../pf-button/pf-button.js';
 import { PfOption } from '../pf-select/pf-option.js';
 import { bound } from '@patternfly/pfe-core/decorators.js';
 
@@ -43,10 +41,8 @@ export class PfSearchInput extends LitElement {
     delegatesFocus: true,
   };
 
-
   /** Accessible label for the select */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
-
 
   /** Multi listbox button text */
   @property({ attribute: 'items-selected-text' }) itemsSelectedText = 'items selected';
@@ -74,7 +70,6 @@ export class PfSearchInput extends LitElement {
    * Default is `bottom`.
    */
   @property({ reflect: true }) position: Placement = 'bottom';
-
 
   @query('#toggle-input') private _toggleInput?: HTMLInputElement;
 
@@ -124,15 +119,12 @@ export class PfSearchInput extends LitElement {
     document.removeEventListener('click', this._onOutsideClick);
   }
 
-
-  // Function to handle the closing of popover and month select popup on outside click
+  // Function to handle the closing of popover 
   @bound private _onOutsideClick(event: MouseEvent) {
     const path = event.composedPath();
     if (!path.includes(this._searchInputContainer)) {
       if (this.expanded) {
         this.expanded = false;
-      } else {
-        //this._popover.hide();
       }
     }
   }

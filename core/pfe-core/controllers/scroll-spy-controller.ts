@@ -61,7 +61,7 @@ export class ScrollSpyController implements ReactiveController {
   #threshold: number | number[];
   #intersectingElements: Element[] = [];
 
-  #getRootNode: () => Node;
+  #getRootNode: () => Node | null;
   #getHash: (el: Element) => string | null;
   #onIntersection?: () => void;
 
@@ -110,7 +110,7 @@ export class ScrollSpyController implements ReactiveController {
     this.#rootMargin = options.rootMargin;
     this.#activeAttribute = options.activeAttribute ?? 'active';
     this.#threshold = options.threshold ?? 0.85;
-    this.#getRootNode = () => options.rootNode ?? host.getRootNode();
+    this.#getRootNode = () => options.rootNode ?? host.getRootNode?.() ?? null;
     this.#getHash = options?.getHash ?? ((el: Element) => el.getAttribute('href'));
     this.#onIntersection = options?.onIntersection;
   }

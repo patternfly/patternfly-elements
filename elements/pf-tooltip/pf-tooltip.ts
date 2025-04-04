@@ -130,11 +130,11 @@ export class PfTooltip extends LitElement {
   }) flipBehavior?: Placement[];
 
   get #invoker(): HTMLSlotElement | null {
-    return this.shadowRoot?.querySelector('#invoker') ?? null;
+    return this.shadowRoot?.querySelector?.('#invoker') ?? null;
   }
 
   get #content(): HTMLElement | null {
-    return this.shadowRoot?.querySelector('#tooltip') ?? null;
+    return this.shadowRoot?.querySelector?.('#tooltip') ?? null;
   }
 
   #referenceTrigger?: HTMLElement | null;

@@ -1,5 +1,7 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
+import { isServer } from 'lit';
+
 export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
   /**
    * Tag names of legal link children.
@@ -33,13 +35,15 @@ export class ScrollSpyController implements ReactiveController {
   static #instances = new Set<ScrollSpyController>;
 
   static {
-    addEventListener('scroll', () => {
-      if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-        this.#instances.forEach(ssc => {
-          ssc.#setActive(ssc.#linkChildren.at(-1));
-        });
-      }
-    }, { passive: true });
+    if (!isServer) {
+      addEventListener('scroll', () => {
+        if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+          this.#instances.forEach(ssc => {
+            ssc.#setActive(ssc.#linkChildren.at(-1));
+          });
+        }
+      }, { passive: true });
+    }
   }
 
   #tagNames: string[];
@@ -61,7 +65,7 @@ export class ScrollSpyController implements ReactiveController {
   #threshold: number | number[];
   #intersectingElements: Element[] = [];
 
-  #getRootNode: () => Node;
+  #getRootNode: () => Node | null;
   #getHash: (el: Element) => string | null;
   #onIntersection?: () => void;
 
@@ -110,7 +114,7 @@ export class ScrollSpyController implements ReactiveController {
     this.#rootMargin = options.rootMargin;
     this.#activeAttribute = options.activeAttribute ?? 'active';
     this.#threshold = options.threshold ?? 0.85;
-    this.#getRootNode = () => options.rootNode ?? host.getRootNode();
+    this.#getRootNode = () => options.rootNode ?? host.getRootNode?.() ?? null;
     this.#getHash = options?.getHash ?? ((el: Element) => el.getAttribute('href'));
     this.#onIntersection = options?.onIntersection;
   }

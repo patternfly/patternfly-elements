@@ -3,6 +3,10 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 
+import { consume } from '@lit/context';
+
+import { thRoleContext } from './context.js';
+
 import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-th.css';
@@ -46,13 +50,12 @@ export class PfTh extends LitElement {
 
   @property() key!: string;
 
+  @consume({ context: thRoleContext })
+  private contextualRole: 'colheader' | 'rowheader' = 'rowheader';
+
   override connectedCallback(): void {
     super.connectedCallback();
-    const closestThead = this.closest('pf-thead');
-    const closestTable = this.closest('pf-table');
-    const isChildOfThead = !!closestThead && !!closestTable?.contains(closestThead);
-    const role = isChildOfThead ? 'colheader' : 'rowheader';
-    this.setAttribute('role', role);
+    this.setAttribute('role', this.contextualRole);
   }
 
   render(): TemplateResult<1> {

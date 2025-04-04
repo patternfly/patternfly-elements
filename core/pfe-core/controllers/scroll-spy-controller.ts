@@ -35,18 +35,20 @@ export class ScrollSpyController implements ReactiveController {
   static #instances = new Set<ScrollSpyController>;
 
   static {
-    addEventListener('scroll', () => {
-      if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+    if (isServer) {
+      addEventListener('scroll', () => {
+        if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+          this.#instances.forEach(ssc => {
+            ssc.#setActive(ssc.#linkChildren.at(-1));
+          });
+        }
+      }, { passive: true });
+      addEventListener('hashchange', () => {
         this.#instances.forEach(ssc => {
-          ssc.#setActive(ssc.#linkChildren.at(-1));
+          ssc.#activateHash();
         });
-      }
-    }, { passive: true });
-    addEventListener('hashchange', () => {
-      this.#instances.forEach(ssc => {
-        ssc.#activateHash();
       });
-    });
+    }
   }
 
   #tagNames: string[];

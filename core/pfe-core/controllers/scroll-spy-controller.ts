@@ -1,5 +1,7 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
+import { isServer } from 'lit';
+
 export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
   /**
    * Tag names of legal link children.
@@ -33,13 +35,15 @@ export class ScrollSpyController implements ReactiveController {
   static #instances = new Set<ScrollSpyController>;
 
   static {
-    addEventListener('scroll', () => {
-      if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-        this.#instances.forEach(ssc => {
-          ssc.#setActive(ssc.#linkChildren.at(-1));
-        });
-      }
-    }, { passive: true });
+    if (!isServer) {
+      addEventListener('scroll', () => {
+        if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+          this.#instances.forEach(ssc => {
+            ssc.#setActive(ssc.#linkChildren.at(-1));
+          });
+        }
+      }, { passive: true });
+    }
   }
 
   #tagNames: string[];

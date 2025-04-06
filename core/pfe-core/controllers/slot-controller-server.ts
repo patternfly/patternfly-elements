@@ -10,11 +10,9 @@ export class SlotController implements SlotControllerPublicAPI {
   /** @deprecated use `default` */
   public static anonymous: symbol = this.default;
 
-  static property = 'ssrHintHasSlotted' as const;
-
   static attribute = 'ssr-hint-has-slotted' as const;
 
-  static anonymousAttribute = 'ssr-hint-has-default-slotted' as const;
+  static anonymousAttribute = 'ssr-hint-has-slotted-default' as const;
 
   constructor(public host: ReactiveElement, ..._: SlotControllerArgs) {
     host.addController(this);

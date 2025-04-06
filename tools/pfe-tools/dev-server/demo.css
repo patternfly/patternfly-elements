@@ -597,3 +597,11 @@ footer ul {
     top: 2rem;
   }
 }
+
+strong.noscript {
+  background-color: var(--pf-global--danger-color--100, #c9190b);
+  color: white;
+  border-radius: 4px;
+  padding: 4px 12px;
+  display: inline-block;
+}

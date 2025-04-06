@@ -1,6 +1,7 @@
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
 const SyntaxHighlightPlugin = require('@11ty/eleventy-plugin-syntaxhighlight');
 const DirectoryOutputPlugin = require('@11ty/eleventy-plugin-directory-output');
+const LitSSRPlugin = require('@lit-labs/eleventy-plugin-lit');
 
 const PfeAssetsPlugin = require('./docs/_plugins/pfe-assets.cjs');
 const EmptyParagraphPlugin = require('./docs/_plugins/empty-p.cjs');
@@ -91,6 +92,14 @@ module.exports = function(eleventyConfig) {
       }
     },
   });
+
+  eleventyConfig.addPlugin(LitSSRPlugin, {
+    componentModules: [
+      'elements/pf-card/pf-card.js',
+      'elements/pf-jump-links/pf-jump-links.js',
+    ],
+  });
+
 
   if (!process.argv.some(arg =>
     arg.match(/--((w)(atch)?)|((s)(erve))?/))) {

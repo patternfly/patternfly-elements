@@ -1,7 +1,6 @@
 const { EleventyRenderPlugin } = require('@11ty/eleventy');
 const SyntaxHighlightPlugin = require('@11ty/eleventy-plugin-syntaxhighlight');
 const DirectoryOutputPlugin = require('@11ty/eleventy-plugin-directory-output');
-const LitSSRPlugin = require('@lit-labs/eleventy-plugin-lit');
 
 const PfeAssetsPlugin = require('./docs/_plugins/pfe-assets.cjs');
 const EmptyParagraphPlugin = require('./docs/_plugins/empty-p.cjs');
@@ -19,7 +18,7 @@ const TocPlugin = require('@patternfly/pfe-tools/11ty/plugins/table-of-contents.
 const markdownItAnchor = require('markdown-it-anchor');
 
 /** @param {import('@11ty/eleventy/src/UserConfig')} eleventyConfig */
-module.exports = function(eleventyConfig) {
+module.exports = function (eleventyConfig) {
   eleventyConfig.amendLibrary('md', md => md.use(markdownItAnchor));
 
   eleventyConfig.setQuietMode(true);
@@ -50,10 +49,10 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(TodosPlugin);
 
   /** format date strings */
-  eleventyConfig.addFilter('prettyDate', function(dateStr, options = {}) {
+  eleventyConfig.addFilter('prettyDate', function (dateStr, options = {}) {
     const { dateStyle = 'medium' } = options;
     return new Intl.DateTimeFormat('en-US', { dateStyle })
-        .format(new Date(dateStr));
+      .format(new Date(dateStr));
   });
 
   /** fancy syntax highlighting with diff support */
@@ -87,19 +86,11 @@ module.exports = function(eleventyConfig) {
         return null;
       } else {
         return eleventyConfig.javascriptFunctions
-            .slug($.text())
-            .replace(/[&,+()$~%.'":*?!<>{}]/g, '');
+          .slug($.text())
+          .replace(/[&,+()$~%.'":*?!<>{}]/g, '');
       }
     },
   });
-
-  eleventyConfig.addPlugin(LitSSRPlugin, {
-    componentModules: [
-      'elements/pf-card/pf-card.js',
-      'elements/pf-jump-links/pf-jump-links.js',
-    ],
-  });
-
 
   if (!process.argv.some(arg =>
     arg.match(/--((w)(atch)?)|((s)(erve))?/))) {

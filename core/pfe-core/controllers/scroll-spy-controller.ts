@@ -18,6 +18,7 @@ export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
    * @default the host's root node
    */
   rootNode?: Node;
+
   /**
    * function to call on link children to get their URL hash (i.e. id to scroll to)
    * @default el => el.getAttribute('href');

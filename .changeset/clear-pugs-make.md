@@ -14,17 +14,17 @@ Before:
 
 ```js
 connectedCallback() {
-super.connectedCallback();
-this.items = this.querySelectorAll('my-item');
+  super.connectedCallback();
+  this.items = [...this.querySelectorAll('my-item')];
 }
 ```
 
 After:
 ```js
 connectedCallback() {
-super.connectedCallback();
-if (!isServer) {
-this.items = this.querySelectorAll('my-item');
-}
+  super.connectedCallback();
+  if (!isServer) {
+    this.items = isServer ? [] : [...this.querySelectorAll('my-item')];
+  }
 }
 ```

@@ -314,7 +314,7 @@
     "fuse.js": "^7.0.0",
     "husky": "^9.1.4",
     "leasot": "^14.4.0",
-    "lit": "^3.2.0",
+    "lit": "^3.2.1",
     "nunjucks": "^3.2.4",
     "postcss-nesting": "^13.0.0",
     "prompts": "^2.4.2",

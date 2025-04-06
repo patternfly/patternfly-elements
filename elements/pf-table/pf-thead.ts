@@ -1,7 +1,10 @@
 import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 
+import { thRoleContext } from './context.js';
+
 import styles from './pf-thead.css';
+import { provide } from '@lit/context';
 
 /**
  * Table head
@@ -10,6 +13,8 @@ import styles from './pf-thead.css';
 @customElement('pf-thead')
 export class PfThead extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
+
+  @provide({ context: thRoleContext }) private thRowContext = 'colheader';
 
   connectedCallback(): void {
     super.connectedCallback();

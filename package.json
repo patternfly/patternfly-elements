@@ -298,6 +298,7 @@
     "@commitlint/cli": "^19.4.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@jspm/generator": "^2.1.3",
+    "@lit-labs/eleventy-plugin-lit": "^1.0.5",
     "@lit-labs/ssr": "^3.3.1",
     "@lit-labs/ssr-client": "^1.1.7",
     "@lit/react": "^1.0.5",

@@ -35,7 +35,7 @@ export class ScrollSpyController implements ReactiveController {
   static #instances = new Set<ScrollSpyController>;
 
   static {
-    if (isServer) {
+    if (!isServer) {
       addEventListener('scroll', () => {
         if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
           this.#instances.forEach(ssc => {

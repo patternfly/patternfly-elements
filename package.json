@@ -186,6 +186,7 @@
       ],
       "dependencies": [
         "build:core",
+        "build:elements",
         "analyze"
       ]
     },

@@ -1,4 +1,4 @@
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import { isServer, type ReactiveController, type ReactiveControllerHost } from 'lit';
 
 export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
   /**
@@ -18,11 +18,13 @@ export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
    * @default the host's root node
    */
   rootNode?: Node;
+
   /**
    * function to call on link children to get their URL hash (i.e. id to scroll to)
    * @default el => el.getAttribute('href');
    */
   getHash?: (el: Element) => string | null;
+
   /**
    * Optional callback for when an intersection occurs
    */
@@ -33,16 +35,24 @@ export class ScrollSpyController implements ReactiveController {
   static #instances = new Set<ScrollSpyController>;
 
   static {
-    addEventListener('scroll', () => {
-      if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+    if (!isServer) {
+      addEventListener('scroll', () => {
+        if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+          this.#instances.forEach(ssc => {
+            ssc.#setActive(ssc.#linkChildren.at(-1));
+          });
+        }
+      }, { passive: true });
+      addEventListener('hashchange', () => {
         this.#instances.forEach(ssc => {
-          ssc.#setActive(ssc.#linkChildren.at(-1));
+          ssc.#activateHash();
         });
-      }
-    }, { passive: true });
+      });
+    }
   }
 
   #tagNames: string[];
+
   #activeAttribute: string;
 
   #io?: IntersectionObserver;
@@ -57,17 +67,28 @@ export class ScrollSpyController implements ReactiveController {
   #intersected = false;
 
   #root: ScrollSpyControllerOptions['root'];
+
   #rootMargin?: string;
+
   #threshold: number | number[];
-  #intersectingElements: Element[] = [];
+
+  #intersectingTargets = new Set<Element>();
+
+  #linkTargetMap = new Map<Element, Element | null>();
 
   #getRootNode: () => Node | null;
+
   #getHash: (el: Element) => string | null;
+
   #onIntersection?: () => void;
 
   get #linkChildren(): Element[] {
-    return Array.from(this.host.querySelectorAll(this.#tagNames.join(',')))
-        .filter(this.#getHash);
+    if (isServer) {
+      return [];
+    } else {
+      return Array.from(this.host.querySelectorAll(this.#tagNames.join(',')))
+          .filter(this.#getHash);
+    }
   }
 
   get root(): Element | Document | null | undefined {
@@ -132,12 +153,16 @@ export class ScrollSpyController implements ReactiveController {
     if (rootNode instanceof Document || rootNode instanceof ShadowRoot) {
       const { rootMargin, threshold, root } = this;
       this.#io = new IntersectionObserver(r => this.#onIo(r), { root, rootMargin, threshold });
-      this.#linkChildren
-          .map(x => this.#getHash(x))
-          .filter((x): x is string => !!x)
-          .map(x => rootNode.getElementById(x.replace('#', '')))
-          .filter((x): x is HTMLElement => !!x)
-          .forEach(target => this.#io?.observe(target));
+      for (const link of this.#linkChildren) {
+        const id = this.#getHash(link)?.replace('#', '');
+        if (id) {
+          const target = document.getElementById(id);
+          if (target) {
+            this.#io?.observe(target);
+            this.#linkTargetMap.set(link, target);
+          }
+        }
+      }
     }
   }
 
@@ -152,6 +177,17 @@ export class ScrollSpyController implements ReactiveController {
   #setActive(link?: EventTarget | null) {
     for (const child of this.#linkChildren) {
       child.toggleAttribute(this.#activeAttribute, child === link);
+    }
+  }
+
+  async #activateHash() {
+    const links = this.#linkChildren;
+    const { hash } = location;
+    if (!hash) {
+      this.setActive(links.at(0) ?? null);
+    } else {
+      await this.#nextIntersection();
+      this.setActive(links.find(x => this.#getHash(x) === hash) ?? null);
     }
   }
 
@@ -178,13 +214,15 @@ export class ScrollSpyController implements ReactiveController {
       this.#setActive(last ?? this.#linkChildren.at(0));
     }
     this.#intersected = true;
-    this.#intersectingElements =
-      entries
-          .filter(x => x.isIntersecting)
-          .map(x => x.target);
+    this.#intersectingTargets.clear();
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        this.#intersectingTargets.add(entry.target);
+      }
+    }
     if (this.#initializing) {
       const ints = entries?.filter(x => x.isIntersecting) ?? [];
-      if (this.#intersectingElements) {
+      if (this.#intersectingTargets.size > 0) {
         const [{ target = null } = {}] = ints;
         const { id } = target ?? {};
         if (id) {

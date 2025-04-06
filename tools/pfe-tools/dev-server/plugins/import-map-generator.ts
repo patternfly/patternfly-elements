@@ -112,6 +112,8 @@ export function importMapGeneratorPlugin(options?: Partial<Options>): Plugin {
         inputMap: options?.inputMap,
         customProviders: { monorepotypescript },
         resolutions: options?.resolutions,
+        ignore: options?.ignore,
+        typeScript: options?.typeScript,
       }), options));
     },
   };

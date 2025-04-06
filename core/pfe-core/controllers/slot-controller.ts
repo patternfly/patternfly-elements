@@ -143,14 +143,14 @@ export class SlotController implements SlotControllerPublicAPI {
     this.host.requestUpdate();
   }
 
-  hostDisconnected(): void {
-    this.#mo.disconnect();
-  }
-
   hostUpdated(): void {
     if (!this.#slotMapInitialized) {
       this.#initSlotMap();
     }
+  }
+
+  hostDisconnected(): void {
+    this.#mo.disconnect();
   }
 
   #initSlotMap() {

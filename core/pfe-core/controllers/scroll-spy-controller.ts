@@ -23,9 +23,25 @@ export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
    * @default el => el.getAttribute('href');
    */
   getHash?: (el: Element) => string | null;
+  /**
+   * Optional callback for when an intersection occurs
+   */
+  onIntersection?(): void;
 }
 
 export class ScrollSpyController implements ReactiveController {
+  static #instances = new Set<ScrollSpyController>;
+
+  static {
+    addEventListener('scroll', () => {
+      if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+        this.#instances.forEach(ssc => {
+          ssc.#setActive(ssc.#linkChildren.at(-1));
+        });
+      }
+    }, { passive: true });
+  }
+
   #tagNames: string[];
   #activeAttribute: string;
 
@@ -43,9 +59,11 @@ export class ScrollSpyController implements ReactiveController {
   #root: ScrollSpyControllerOptions['root'];
   #rootMargin?: string;
   #threshold: number | number[];
+  #intersectingElements: Element[] = [];
 
   #getRootNode: () => Node | null;
   #getHash: (el: Element) => string | null;
+  #onIntersection?: () => void;
 
   get #linkChildren(): Element[] {
     return Array.from(this.host.querySelectorAll(this.#tagNames.join(',')))
@@ -94,13 +112,22 @@ export class ScrollSpyController implements ReactiveController {
     this.#threshold = options.threshold ?? 0.85;
     this.#getRootNode = () => options.rootNode ?? host.getRootNode?.() ?? null;
     this.#getHash = options?.getHash ?? ((el: Element) => el.getAttribute('href'));
+    this.#onIntersection = options?.onIntersection;
   }
 
   hostConnected(): void {
+    ScrollSpyController.#instances.add(this);
     this.#initIo();
   }
 
-  #initIo() {
+  hostDisconnected(): void {
+    ScrollSpyController.#instances.delete(this);
+    this.#io?.disconnect();
+  }
+
+  #initializing = true;
+
+  async #initIo() {
     const rootNode = this.#getRootNode();
     if (rootNode instanceof Document || rootNode instanceof ShadowRoot) {
       const { rootMargin, threshold, root } = this;
@@ -151,6 +178,25 @@ export class ScrollSpyController implements ReactiveController {
       this.#setActive(last ?? this.#linkChildren.at(0));
     }
     this.#intersected = true;
+    this.#intersectingElements =
+      entries
+          .filter(x => x.isIntersecting)
+          .map(x => x.target);
+    if (this.#initializing) {
+      const ints = entries?.filter(x => x.isIntersecting) ?? [];
+      if (this.#intersectingElements) {
+        const [{ target = null } = {}] = ints;
+        const { id } = target ?? {};
+        if (id) {
+          const link = this.#linkChildren.find(link => this.#getHash(link) === `#${id}`);
+          if (link) {
+            this.#setActive(link);
+          }
+        }
+      }
+      this.#initializing = false;
+    }
+    this.#onIntersection?.();
   }
 
   /**

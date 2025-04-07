@@ -1,6 +1,6 @@
 ---
 "@patternfly/pfe-core": minor
-"@patternfly/pfe-elements": minor
+"@patternfly/elements": minor
 ---
 **SSR**: added `ssr-hint-has-slotted` and `ssr-hint-has-slotted-default` attributes to elements that use slot controller.
 

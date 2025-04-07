@@ -1,4 +1,4 @@
-import { isServer, type ReactiveController, type ReactiveElement } from 'lit';
+import type { ReactiveController, ReactiveElement } from 'lit';
 
 interface AnonymousSlot {
   hasContent: boolean;
@@ -49,7 +49,56 @@ const isSlot =
         n === SlotController.default ? !child.hasAttribute('slot')
       : child.getAttribute('slot') === n;
 
-export class SlotController implements ReactiveController {
+export declare class SlotControllerPublicAPI implements ReactiveController {
+  static default: symbol;
+
+  public host: ReactiveElement;
+
+  constructor(host: ReactiveElement, ...args: SlotControllerArgs);
+
+  hostConnected?(): Promise<void>;
+
+  hostDisconnected?(): void;
+
+  hostUpdated?(): void;
+
+  /**
+   * Given a slot name or slot names, returns elements assigned to the requested slots as an array.
+   * If no value is provided, it returns all children not assigned to a slot (without a slot attribute).
+   * @param slotNames slots to query
+   * @example Get header-slotted elements
+   *          ```js
+   *          this.getSlotted('header')
+   *          ```
+   * @example Get header- and footer-slotted elements
+   *          ```js
+   *          this.getSlotted('header', 'footer')
+   *          ```
+   * @example Get default-slotted elements
+   *          ```js
+   *          this.getSlotted();
+   *          ```
+   */
+  getSlotted<T extends Element = Element>(...slotNames: string[]): T[];
+
+  /**
+   * Returns a boolean statement of whether or not any of those slots exists in the light DOM.
+   * @param names The slot names to check.
+   * @example this.hasSlotted('header');
+   */
+  hasSlotted(...names: (string | null | undefined)[]): boolean;
+
+  /**
+   * Whether or not all the requested slots are empty.
+   * @param  names The slot names to query.  If no value is provided, it returns the default slot.
+   * @example this.isEmpty('header', 'footer');
+   * @example this.isEmpty();
+   * @returns
+   */
+  isEmpty(...names: (string | null | undefined)[]): boolean;
+}
+
+export class SlotController implements SlotControllerPublicAPI {
   public static default = Symbol('default slot') satisfies symbol as symbol;
 
   /** @deprecated use `default` */
@@ -94,14 +143,14 @@ export class SlotController implements ReactiveController {
     this.host.requestUpdate();
   }
 
-  hostDisconnected(): void {
-    this.#mo.disconnect();
-  }
-
   hostUpdated(): void {
     if (!this.#slotMapInitialized) {
       this.#initSlotMap();
     }
+  }
+
+  hostDisconnected(): void {
+    this.#mo.disconnect();
   }
 
   #initSlotMap() {
@@ -113,9 +162,7 @@ export class SlotController implements ReactiveController {
       const elements = this.#getChildrenForSlot(slotId);
       const slot = this.#getSlotElement(slotId);
       const hasContent =
-          !isServer
-          && !!elements.length
-          || !!slot?.assignedNodes?.()?.filter(x => x.textContent?.trim()).length;
+        !!elements.length || !!slot?.assignedNodes?.()?.filter(x => x.textContent?.trim()).length;
       this.#nodes.set(slotId, { elements, name, hasContent, slot });
     }
     this.host.requestUpdate();
@@ -123,21 +170,15 @@ export class SlotController implements ReactiveController {
   }
 
   #getSlotElement(slotId: string | symbol) {
-    if (isServer) {
-      return null;
-    } else {
-      const selector =
+    const selector =
       slotId === SlotController.default ? 'slot:not([name])' : `slot[name="${slotId as string}"]`;
-      return this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
-    }
+    return this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
   }
 
   #getChildrenForSlot<T extends Element = Element>(
     name: string | typeof SlotController.default,
   ): T[] {
-    if (isServer) {
-      return [];
-    } else if (this.#nodes.has(name)) {
+    if (this.#nodes.has(name)) {
       return (this.#nodes.get(name)!.slot?.assignedElements?.() ?? []) as T[];
     } else {
       const children = Array.from(this.host.children) as T[];

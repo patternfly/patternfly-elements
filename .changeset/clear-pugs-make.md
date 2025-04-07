@@ -1,6 +1,5 @@
 ---
 "@patternfly/pfe-core": major
-"@patternfly/elements": patch
 ---
 Enable `connectedCallback()` and context protocol in SSR scenarios.
 
@@ -15,7 +14,7 @@ Before:
 ```js
 connectedCallback() {
   super.connectedCallback();
-  this.items = this.querySelectorAll('my-item');
+  this.items = [...this.querySelectorAll('my-item')];
 }
 ```
 
@@ -24,8 +23,7 @@ After:
 connectedCallback() {
   super.connectedCallback();
   if (!isServer) {
-    this.items = this.querySelectorAll('my-item');
+    this.items = isServer ? [] : [...this.querySelectorAll('my-item')];
   }
 }
 ```
-

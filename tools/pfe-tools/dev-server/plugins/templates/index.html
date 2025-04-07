@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" unresolved>
+
 {% set groupeddemos = demos | sort(false, false, 'permalink') | groupby('primaryElementName') %}
 {% if demo.title %}
   {% set title = demo.title + ' | ' + options.site.title %}
@@ -16,8 +19,6 @@
     {% set repoHost = '' %}
   {% endif %}
 {% endif %}
-<!DOCTYPE html>
-<html lang="en" dir="ltr" unresolved>
 
 <head>
   <meta charset="utf-8">
@@ -28,6 +29,7 @@
   <title>{{ title }}</title>
   <link rel="stylesheet" href="/node_modules/@patternfly/pfe-tools/dev-server/fonts.css">
   <link rel="stylesheet" href="/node_modules/@patternfly/pfe-tools/dev-server/demo.css">
+  <noscript><style>html[unresolved] { opacity: 1; }</style></noscript>
   {% for sheet in options.site.stylesheets %}
   <link rel="stylesheet" href="{{ sheet }}">
   {% endfor %}
@@ -43,16 +45,18 @@
 <body class="menu-open">
   <header id="main-header">
     <div class="logo-bar">
-      <pf-button
-        id="hamburger"
-        plain
-        aria-controls="sidebar"
-        label="Expand Main Navigation">
+      <pf-button id="hamburger"
+                 plain
+                 aria-controls="sidebar"
+                 label="Expand Main Navigation">
         <pf-icon icon="bars" size="lg"></pf-icon>
       </pf-button>
       <a href="/" aria-label="{{ title }} Home">
         <img src="{{ options.site.logoUrl }}" alt="{{ title }}">
       </a>
+
+      <noscript><strong class="noscript">JavaScript is disabled</strong></noscript>
+
       <a id="source-control" href="{{
             options.sourceControlURLPrefix.replace('tree/main/', '')
           }}{{

@@ -1,6 +1,5 @@
 ---
 "@patternfly/pfe-core": major
-"@patternfly/elements": patch
 ---
 Enable `connectedCallback()` and context protocol in SSR scenarios.
 

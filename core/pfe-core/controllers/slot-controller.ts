@@ -38,6 +38,17 @@ export function isObjectSpread(config: SlotControllerArgs): config is [SlotsConf
   return config.length === 1 && typeof config[0] === 'object' && config[0] !== null;
 }
 
+function isContent(node: Node) {
+  switch (node.nodeType) {
+    case Node.TEXT_NODE:
+      return !!node.textContent?.trim();
+    case Node.COMMENT_NODE:
+      return false;
+    default:
+      return true;
+  }
+}
+
 /**
  * If it's a named slot, return its children,
  * for the default slot, look for direct children not assigned to a slot
@@ -112,7 +123,27 @@ export class SlotController implements SlotControllerPublicAPI {
 
   #deprecations: Record<string, string> = {};
 
-  #mo = new MutationObserver(this.#initSlotMap.bind(this));
+  #initSlotMap = async () => {
+    const { host } = this;
+    await host.updateComplete;
+    const nodes = this.#nodes;
+    // Loop over the properties provided by the schema
+    for (const slotName of this.#slotNames
+        .concat(Object.values(this.#deprecations))) {
+      const slotId = slotName || SlotController.default;
+      const name = slotName ?? '';
+      const elements = this.#getChildrenForSlot(slotId);
+      const slot = this.#getSlotElement(slotId);
+      const hasContent =
+          slotId === SlotController.default ? !![...host.childNodes].some(isContent)
+        : !!slot?.assignedNodes?.().some(isContent);
+      nodes.set(slotId, { elements, name, hasContent, slot });
+    }
+    host.requestUpdate();
+    this.#slotMapInitialized = true;
+  };
+
+  #mo = new MutationObserver(this.#initSlotMap);
 
   constructor(public host: ReactiveElement, ...args: SlotControllerArgs) {
     this.#initialize(...args);
@@ -151,22 +182,6 @@ export class SlotController implements SlotControllerPublicAPI {
 
   hostDisconnected(): void {
     this.#mo.disconnect();
-  }
-
-  #initSlotMap() {
-    // Loop over the properties provided by the schema
-    for (const slotName of this.#slotNames
-        .concat(Object.values(this.#deprecations))) {
-      const slotId = slotName || SlotController.default;
-      const name = slotName ?? '';
-      const elements = this.#getChildrenForSlot(slotId);
-      const slot = this.#getSlotElement(slotId);
-      const hasContent =
-        !!elements.length || !!slot?.assignedNodes?.()?.filter(x => x.textContent?.trim()).length;
-      this.#nodes.set(slotId, { elements, name, hasContent, slot });
-    }
-    this.host.requestUpdate();
-    this.#slotMapInitialized = true;
   }
 
   #getSlotElement(slotId: string | symbol) {

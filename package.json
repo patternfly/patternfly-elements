@@ -319,7 +319,7 @@
     "postcss-nesting": "^13.0.0",
     "prompts": "^2.4.2",
     "typescript": "^5.5.4",
-    "wireit": "^0.14.7",
+    "wireit": "^0.14.12",
     "zero-md": "^3.1.2"
   },
   "optionalDependencies": {

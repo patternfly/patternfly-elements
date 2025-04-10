@@ -49,17 +49,6 @@ function isContent(node: Node) {
   }
 }
 
-/**
- * If it's a named slot, return its children,
- * for the default slot, look for direct children not assigned to a slot
- * @param n slot name
- */
-const isSlot =
-  <T extends Element = Element>(n: string | typeof SlotController.default) =>
-    (child: Element): child is T =>
-        n === SlotController.default ? !child.hasAttribute('slot')
-      : child.getAttribute('slot') === n;
-
 export declare class SlotControllerPublicAPI implements ReactiveController {
   static default: symbol;
 
@@ -109,45 +98,67 @@ export declare class SlotControllerPublicAPI implements ReactiveController {
   isEmpty(...names: (string | null | undefined)[]): boolean;
 }
 
+class SlotRecord {
+  constructor(
+    public slot: HTMLSlotElement,
+    public name: string | symbol,
+    private host: ReactiveElement,
+  ) {}
+
+  get elements() {
+    return this.slot?.assignedElements?.();
+  }
+
+  get hasContent() {
+    if (this.name === SlotController.default) {
+      return !!this.elements.length
+        || !![...this.host.childNodes]
+            .some(node => {
+              if (node instanceof Element) {
+                return !node.hasAttribute('slot');
+              } else {
+                return isContent(node);
+              }
+            });
+    } else {
+      return !!this.slot.assignedNodes()
+          .some(isContent);
+    }
+  }
+}
+
 export class SlotController implements SlotControllerPublicAPI {
   public static default = Symbol('default slot') satisfies symbol as symbol;
 
   /** @deprecated use `default` */
   public static anonymous: symbol = this.default;
 
-  #nodes = new Map<string | typeof SlotController.default, Slot>();
+  #slotRecords = new Map<string | typeof SlotController.default, SlotRecord>();
 
-  #slotMapInitialized = false;
-
-  #slotNames: (string | null)[] = [];
+  #slotNames: (string | symbol | null)[] = [];
 
   #deprecations: Record<string, string> = {};
 
   #initSlotMap = async () => {
     const { host } = this;
     await host.updateComplete;
-    const nodes = this.#nodes;
+    const slotRecords = this.#slotRecords;
     // Loop over the properties provided by the schema
-    for (const slotName of this.#slotNames
-        .concat(Object.values(this.#deprecations))) {
-      const slotId = slotName || SlotController.default;
-      const name = slotName ?? '';
-      const elements = this.#getChildrenForSlot(slotId);
-      const slot = this.#getSlotElement(slotId);
-      const hasContent =
-          slotId === SlotController.default ? !![...host.childNodes].some(isContent)
-        : !!slot?.assignedNodes?.().some(isContent);
-      nodes.set(slotId, { elements, name, hasContent, slot });
+    for (let slotName of this.#slotNames.concat(Object.values(this.#deprecations))) {
+      slotName ||= SlotController.default;
+      const slot = this.#getSlotElement(slotName);
+      if (slot) {
+        slotRecords.set(slotName, new SlotRecord(slot, slotName, host));
+      }
     }
     host.requestUpdate();
-    this.#slotMapInitialized = true;
   };
 
   #mo = new MutationObserver(this.#initSlotMap);
 
   constructor(public host: ReactiveElement, ...args: SlotControllerArgs) {
-    this.#initialize(...args);
     host.addController(this);
+    this.#initialize(...args);
     if (!this.#slotNames.length) {
       this.#slotNames = [null];
     }
@@ -164,41 +175,25 @@ export class SlotController implements SlotControllerPublicAPI {
     }
   }
 
-  async hostConnected(): Promise<void> {
-    this.#mo.observe(this.host, { childList: true });
-    // Map the defined slots into an object that is easier to query
-    this.#nodes.clear();
-    this.#initSlotMap();
-    // insurance for framework integrations
-    await this.host.updateComplete;
-    this.host.requestUpdate();
-  }
-
-  hostUpdated(): void {
-    if (!this.#slotMapInitialized) {
-      this.#initSlotMap();
-    }
-  }
-
-  hostDisconnected(): void {
-    this.#mo.disconnect();
-  }
-
   #getSlotElement(slotId: string | symbol) {
     const selector =
       slotId === SlotController.default ? 'slot:not([name])' : `slot[name="${slotId as string}"]`;
     return this.host.shadowRoot?.querySelector?.<HTMLSlotElement>(selector) ?? null;
   }
 
-  #getChildrenForSlot<T extends Element = Element>(
-    name: string | typeof SlotController.default,
-  ): T[] {
-    if (this.#nodes.has(name)) {
-      return (this.#nodes.get(name)!.slot?.assignedElements?.() ?? []) as T[];
-    } else {
-      const children = Array.from(this.host.children) as T[];
-      return children.filter(isSlot(name));
-    }
+  async hostConnected(): Promise<void> {
+    this.#mo.observe(this.host, { childList: true });
+    // Map the defined slots into an object that is easier to query
+    this.#slotRecords.clear();
+    await this.host.updateComplete;
+    this.#initSlotMap();
+    // insurance for framework integrations
+    await this.host.updateComplete;
+    this.host.requestUpdate();
+  }
+
+  hostDisconnected(): void {
+    this.#mo.disconnect();
   }
 
   /**
@@ -218,12 +213,12 @@ export class SlotController implements SlotControllerPublicAPI {
    *          this.getSlotted();
    *          ```
    */
-  getSlotted<T extends Element = Element>(...slotNames: string[]): T[] {
-    if (!slotNames.length) {
-      return (this.#nodes.get(SlotController.default)?.elements ?? []) as T[];
+  public getSlotted<T extends Element = Element>(...slotNames: string[] | [null]): T[] {
+    if (!slotNames.length || slotNames.length === 1 && slotNames.at(0) === null) {
+      return (this.#slotRecords.get(SlotController.default)?.elements ?? []) as T[];
     } else {
       return slotNames.flatMap(slotName =>
-        this.#nodes.get(slotName)?.elements ?? []) as T[];
+        this.#slotRecords.get(slotName ?? SlotController.default)?.elements ?? []) as T[];
     }
   }
 
@@ -232,12 +227,20 @@ export class SlotController implements SlotControllerPublicAPI {
    * @param names The slot names to check.
    * @example this.hasSlotted('header');
    */
-  hasSlotted(...names: (string | null | undefined)[]): boolean {
-    const slotNames = Array.from(names, x => x == null ? SlotController.default : x);
+  public hasSlotted(...names: (string | null | undefined)[]): boolean {
+    const slotNames = Array.from(names, x =>
+      x == null ? SlotController.default : x);
     if (!slotNames.length) {
       slotNames.push(SlotController.default);
     }
-    return slotNames.some(x => this.#nodes.get(x)?.hasContent ?? false);
+    return slotNames.some(slotName => {
+      const slot = this.#slotRecords.get(slotName);
+      if (!slot) {
+        return false;
+      } else {
+        return slot.hasContent;
+      }
+    });
   }
 
   /**
@@ -247,7 +250,7 @@ export class SlotController implements SlotControllerPublicAPI {
    * @example this.isEmpty();
    * @returns
    */
-  isEmpty(...names: (string | null | undefined)[]): boolean {
+  public isEmpty(...names: (string | null | undefined)[]): boolean {
     return !this.hasSlotted(...names);
   }
 }

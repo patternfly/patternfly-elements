@@ -1,5 +1,10 @@
 # @patternfly/pfe-core
 
+## 5.0.1
+### Patch Changes
+
+- fefd8bb: `SlotController`: correctly report slot content after updating
+
 ## 5.0.0
 ### Major Changes
 

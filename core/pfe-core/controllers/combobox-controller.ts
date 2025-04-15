@@ -525,18 +525,40 @@ export class ComboboxController<
   }
 
   #filterItems() {
-    if (this.#input) {
-      let value: string;
-      for (const item of this.items) {
-        const hidden =
-          !!this.options.isExpanded()
-            && !!(value = this.options.getComboboxValue(this.#input))
-            && this.options.isItemFiltered?.(item, value)
-            || false;
-        this.options.setItemHidden(item, hidden);
+    if (!this.#input) return;
+  
+    const value = this.options.getComboboxValue(this.#input);
+    let filteredOption = 0;
+  
+    for (const item of this.items) {
+      const isExpanded = this.options.isExpanded?.() ?? false;
+      const matchesFilter = this.options.isItemFiltered?.(item, value) ?? false;
+  
+      // Increment the filtered option list count by 1 to limit the no of options shown
+      if (!isExpanded || !matchesFilter) {
+        filteredOption++;
       }
+  
+      // Determine if the item should be hidden
+      const hidden = (isExpanded && matchesFilter) || filteredOption > 5;
+      this.options.setItemHidden(item, hidden);
     }
   }
+
+  // Commented the actual function for filter and will be uncommenting this
+  // #filterItems() {
+  //   if (this.#input) {
+  //     let value: string;
+  //     for (const item of this.items) {
+  //       const hidden =
+  //         !!this.options.isExpanded()
+  //           && !!(value = this.options.getComboboxValue(this.#input))
+  //           && this.options.isItemFiltered?.(item, value)
+  //           || false;
+  //       this.options.setItemHidden(item, hidden);
+  //     }
+  //   }
+  // }
 
   #onClickButton = () => {
     if (!this.options.isExpanded()) {

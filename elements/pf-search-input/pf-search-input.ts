@@ -416,6 +416,7 @@ export class PfSearchInput extends LitElement {
     }
     this.value = "";
     this._toggleInput!.value = this.value;
+    this.#combobox.selected = [];
   }
 
   addOptions(optionData: {
@@ -425,6 +426,8 @@ export class PfSearchInput extends LitElement {
     const options: PfOption[] = optionData.map(optionDetail => {
       const option: PfOption = document.createElement('pf-option');
       option.textContent = `${optionDetail.text}`;
+      option.value = `${optionDetail.text}`;
+      option.setAttribute('suggestion', '');
       return option;
     })
     this.append(...options);

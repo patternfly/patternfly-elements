@@ -351,7 +351,13 @@ div.search-icon {
 
 #outer:focus-within {
 	#toggle {
+		border-bottom: none;
+		border-bottom-left-radius: 4px;
+		#toggle-input {
+			border-bottom: var(--pf-global--spacer--xs, 0.125rem) solid var(--pf-theme--color--accent, #0066cc); 
+		}
+	}
+	#close-button {
 		border-bottom: var(--pf-global--spacer--xs, 0.125rem) solid var(--pf-theme--color--accent, #0066cc);
-		box-sizing: content-box;
 	}
 }

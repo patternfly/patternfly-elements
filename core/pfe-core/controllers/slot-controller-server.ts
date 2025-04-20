@@ -26,7 +26,7 @@ export class SlotController implements SlotControllerPublicAPI {
         .map(x => x.trim());
   }
 
-  getSlotted<T extends Element = Element>(..._: string[]): T[] {
+  getSlotted<T extends Element = Element>(..._: (string | null)[]): T[] {
     return [];
   }
 
@@ -34,6 +34,9 @@ export class SlotController implements SlotControllerPublicAPI {
     const attr = this.host.getAttribute(SlotController.attribute);
     const anon = this.host.hasAttribute(SlotController.anonymousAttribute);
     const hints = new Set(this.fromAttribute(attr));
+    if (!names.length) {
+      names.push(null);
+    }
     return names.every(x => x === null ? anon : hints.has(x));
   }
 

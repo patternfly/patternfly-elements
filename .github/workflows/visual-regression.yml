@@ -31,6 +31,10 @@ jobs:
         with:
           node-version: '20'
           cache: npm
+
+      # Set up GitHub Actions caching for Wireit.
+      - uses: google/wireit@setup-github-actions-caching/v2
+
       - run: npm ci --prefer-offline
 
       - name: Visual Regression Tests

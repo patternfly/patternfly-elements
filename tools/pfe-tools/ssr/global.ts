@@ -8,10 +8,10 @@ export async function renderGlobal(
   html: string,
   importSpecifiers: string[],
 ): Promise<string> {
-  // avoid tsconfig problems
-  await import(['@patternfly', 'pfe-core', 'ssr-shims.js'].join('/'));
+  // hack to avoid circular typescript project reference
+  const spec = '@patternfly/pfe-core/ssr-shims.js';
+  await import(spec);
   const { ssr } = await import('./ssr.js');
   await Promise.all(importSpecifiers.map(x => import(x)));
   return ssr(html);
 }
-

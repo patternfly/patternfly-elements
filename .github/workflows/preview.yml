@@ -22,6 +22,9 @@ jobs:
       - name: POP Debug Info
         run: curl https://cachefly.cachefly.net/CacheFlyDebug
 
+      # Set up GitHub Actions caching for Wireit.
+      - uses: google/wireit@setup-github-actions-caching/v2  
+
       - run: npm ci --prefer-offline
       - run: npm run docs
       - run: cat _site/components/icon/demo/custom-icon-sets/index.html

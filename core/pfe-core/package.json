@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-core",
-  "version": "4.0.5",
+  "version": "5.0.1",
   "license": "MIT",
   "description": "PatternFly Elements Core Library",
   "customElements": "custom-elements.json",
@@ -32,7 +32,11 @@
     "./controllers/property-observer-controller.js": "./controllers/property-observer-controller.js",
     "./controllers/roving-tabindex-controller.js": "./controllers/roving-tabindex-controller.js",
     "./controllers/scroll-spy-controller.js": "./controllers/scroll-spy-controller.js",
-    "./controllers/slot-controller.js": "./controllers/slot-controller.js",
+    "./controllers/slot-controller.js": {
+      "node": "./controllers/slot-controller-server.js",
+      "import": "./controllers/slot-controller.js",
+      "default": "./controllers/slot-controller.js"
+    },
     "./controllers/style-controller.js": "./controllers/style-controller.js",
     "./controllers/timestamp-controller.js": "./controllers/timestamp-controller.js",
     "./controllers/tabs-controller.js": "./controllers/tabs-controller.js",
@@ -62,8 +66,8 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.10",
-    "@lit/context": "^1.1.2",
-    "lit": "^3.2.0"
+    "@lit/context": "^1.1.3",
+    "lit": "^3.2.1"
   },
   "repository": {
     "type": "git",

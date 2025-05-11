@@ -1,5 +1,59 @@
 # @patternfly/pfe-core
 
+## 5.0.1
+### Patch Changes
+
+- fefd8bb: `SlotController`: correctly report slot content after updating
+
+## 5.0.0
+### Major Changes
+
+- 0277045: Enable `connectedCallback()` and context protocol in SSR scenarios.
+  
+  BREAKING CHANGE
+  This change affects any element which is expected to execute in node JS when
+  lit-ssr shims are present. By enabling the `connectedCallback()` to execute
+  server side. Elements must ensure that their connectedCallbacks do not try to
+  access the DOM.
+  
+  Before:
+  
+  ```js
+  connectedCallback() {
+    super.connectedCallback();
+    this.items = [...this.querySelectorAll('my-item')];
+  }
+  ```
+  
+  After:
+  ```js
+  connectedCallback() {
+    super.connectedCallback();
+    if (!isServer) {
+      this.items = isServer ? [] : [...this.querySelectorAll('my-item')];
+    }
+  }
+  ```
+
+### Minor Changes
+
+- 8b5b699: **SSR**: added `ssr-hint-has-slotted` and `ssr-hint-has-slotted-default` attributes to elements that use slot controller.
+  
+  When running SSR on elements with slots, add these attributes to ensure they render correctly.
+  
+  ```html
+  <pf-card ssr-hint-has-slotted-default
+           ssr-hint-has-slotted="header,footer">
+    <h2 slot="header">Header Content</h2>
+    <p>Default content</p>
+    <span slot="footer">Footer Content</span>
+  </pf-card>
+  ```
+
+### Patch Changes
+
+- a2f3254: `ScrollSpyController`: respond to hashchange events
+
 ## 4.0.5
 ### Patch Changes
 

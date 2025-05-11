@@ -45,99 +45,99 @@ export class PfSearchInput extends LitElement {
     text: string;
     value: string;
   }[] = [
-    {
-      "text": "London",
-      "value": "london"
-    },
-    {
-      "text": "Paris",
-      "value": "paris"
-    },
-    {
-      "text": "Tokyo",
-      "value": "tokyo"
-    },
-    {
-      "text": "New York",
-      "value": "york"
-    },
-    {
-      "text": "Rome",
-      "value": "rome"
-    },
-    {
-      "text": "Sydney",
-      "value": "sydney"
-    },
-    {
-      "text": "Beijing",
-      "value": "beijing"
-    },
-    {
-      "text": "Dubai",
-      "value": "dubai"
-    },
-    {
-      "text": "Rio de Janeiro",
-      "value": "de"
-    },
-    {
-      "text": "Barcelona",
-      "value": "barcelona"
-    },
-    {
-      "text": "Istanbul",
-      "value": "istanbul"
-    },
-    {
-      "text": "Cairo",
-      "value": "cairo"
-    },
-    {
-      "text": "Havana",
-      "value": "havana"
-    },
-    {
-      "text": "Machu Picchu",
-      "value": "picchu"
-    },
-    {
-      "text": "The Great Barrier Reef",
-      "value": "great"
-    },
-    {
-      "text": "The Grand Canyon",
-      "value": "grand"
-    },
-    {
-      "text": "The Amazon Rainforest",
-      "value": "amazon"
-    },
-    {
-      "text": "The Great Barrier Reef1",
-      "value": "great1"
-    },
-    {
-      "text": "The Grand Canyon1",
-      "value": "grand1"
-    },
-    {
-      "text": "The Amazon Rainforest1",
-      "value": "amazon1"
-    },
-    {
-      "text": "The Maldives",
-      "value": "maldives"
-    },
-    {
-      "text": "Iceland",
-      "value": "iceland"
-    },
-    {
-      "text": "Bora Bora",
-      "value": "bora"
-    }
-  ]
+      {
+        'text': 'London',
+        'value': 'london',
+      },
+      {
+        'text': 'Paris',
+        'value': 'paris',
+      },
+      {
+        'text': 'Tokyo',
+        'value': 'tokyo',
+      },
+      {
+        'text': 'New York',
+        'value': 'york',
+      },
+      {
+        'text': 'Rome',
+        'value': 'rome',
+      },
+      {
+        'text': 'Sydney',
+        'value': 'sydney',
+      },
+      {
+        'text': 'Beijing',
+        'value': 'beijing',
+      },
+      {
+        'text': 'Dubai',
+        'value': 'dubai',
+      },
+      {
+        'text': 'Rio de Janeiro',
+        'value': 'de',
+      },
+      {
+        'text': 'Barcelona',
+        'value': 'barcelona',
+      },
+      {
+        'text': 'Istanbul',
+        'value': 'istanbul',
+      },
+      {
+        'text': 'Cairo',
+        'value': 'cairo',
+      },
+      {
+        'text': 'Havana',
+        'value': 'havana',
+      },
+      {
+        'text': 'Machu Picchu',
+        'value': 'picchu',
+      },
+      {
+        'text': 'The Great Barrier Reef',
+        'value': 'great',
+      },
+      {
+        'text': 'The Grand Canyon',
+        'value': 'grand',
+      },
+      {
+        'text': 'The Amazon Rainforest',
+        'value': 'amazon',
+      },
+      {
+        'text': 'The Great Barrier Reef1',
+        'value': 'great1',
+      },
+      {
+        'text': 'The Grand Canyon1',
+        'value': 'grand1',
+      },
+      {
+        'text': 'The Amazon Rainforest1',
+        'value': 'amazon1',
+      },
+      {
+        'text': 'The Maldives',
+        'value': 'maldives',
+      },
+      {
+        'text': 'Iceland',
+        'value': 'iceland',
+      },
+      {
+        'text': 'Bora Bora',
+        'value': 'bora',
+      },
+    ];
 
   /** Accessible label for the select */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
@@ -181,7 +181,7 @@ export class PfSearchInput extends LitElement {
 
   @query('#outer') private _searchInputContainer!: HTMLElement;
 
-  #isNotPlaceholderOption = (option: PfOption) => option !== this._placeholder;
+  // #isNotPlaceholderOption = (option: PfOption) => option !== this._placeholder;
 
   #internals = InternalsController.of(this);
 
@@ -218,7 +218,7 @@ export class PfSearchInput extends LitElement {
     document.removeEventListener('click', this._onOutsideClick);
   }
 
-  // Function to handle the closing of popover 
+  // Function to handle the closing of popover
   @bound private _onOutsideClick(event: MouseEvent) {
     const path = event.composedPath();
     if (!path.includes(this._searchInputContainer)) {
@@ -263,7 +263,7 @@ export class PfSearchInput extends LitElement {
     const { disabled, expanded, placeholder } = this;
     const { anchor = 'bottom', alignment = 'start', styles = {} } = this.#float;
     const { height, width } = this.getBoundingClientRect?.() || {};
-    const hideLightDomItems =  !ComboboxController.supportsCrossRootActiveDescendant;
+    const hideLightDomItems = !ComboboxController.supportsCrossRootActiveDescendant;
 
     return html`
       <div 
@@ -286,7 +286,7 @@ export class PfSearchInput extends LitElement {
           >
           <pf-button 
             @click="${this.#OnClose}" 
-            ?hidden="${(!expanded && this._toggleInput?.value.trim() === "")}" 
+            ?hidden="${(!expanded && this._toggleInput?.value.trim() === '')}" 
             id="close-button"  
             plain 
             label="Close"
@@ -370,18 +370,18 @@ export class PfSearchInput extends LitElement {
     }
   }
 
-  #computePlaceholderText() {
-    return this.placeholder
-      || this.querySelector?.<HTMLSlotElement>('[slot=placeholder]')
-          ?.assignedNodes()
-          ?.reduce((acc, node) => `${acc}${node.textContent}`, '')
-          ?.trim()
-      || this.#combobox.items
-          .filter(this.#isNotPlaceholderOption)
-          .at(0)
-          ?.value
-      || '';
-  }
+  // #computePlaceholderText() {
+  //   return this.placeholder
+  //     || this.querySelector?.<HTMLSlotElement>('[slot=placeholder]')
+  //         ?.assignedNodes()
+  //         ?.reduce((acc, node) => `${acc}${node.textContent}`, '')
+  //         ?.trim()
+  //     || this.#combobox.items
+  //         .filter(this.#isNotPlaceholderOption)
+  //         .at(0)
+  //         ?.value
+  //     || '';
+  // }
 
   /**
    * Opens the dropdown
@@ -410,11 +410,11 @@ export class PfSearchInput extends LitElement {
     }
   }
 
-  async #OnClose(){
+  async #OnClose() {
     if (this.expanded) {
       await this.hide();
     }
-    this.value = "";
+    this.value = '';
     this._toggleInput!.value = this.value;
     this.#combobox.selected = [];
   }
@@ -429,7 +429,7 @@ export class PfSearchInput extends LitElement {
       option.value = `${optionDetail.text}`;
       option.setAttribute('suggestion', '');
       return option;
-    })
+    });
     this.append(...options);
   }
 }

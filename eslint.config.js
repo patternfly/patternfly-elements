@@ -6,9 +6,17 @@ import pfePlugin from '@patternfly/eslint-plugin-elements';
 
 import { includeIgnoreFile } from '@eslint/compat';
 
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const gitignorePath = path.resolve(__dirname, '.gitignore');
+
+
 export default tseslint.config(
   ...pfe,
-  includeIgnoreFile(new URL('.gitignore', import.meta.url).pathname),
+  includeIgnoreFile(gitignorePath),
   {
     name: 'local/ignores',
     ignores: [

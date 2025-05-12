@@ -72,3 +72,11 @@ slot[name="description"] {
   margin-inline-end: 0.5em;
 }
 
+:host([suggestion]) {
+  #outer.selected {
+    background-color: transparent;
+  }  
+  svg {
+    display: none;
+  }
+}

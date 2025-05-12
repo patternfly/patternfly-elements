@@ -3,20 +3,13 @@ import { States } from '@patternfly/eslint-config-elements';
 import tseslint from 'typescript-eslint';
 import pfe from '@patternfly/eslint-config-elements';
 import pfePlugin from '@patternfly/eslint-plugin-elements';
+import { fileURLToPath } from 'node:url';
 
 import { includeIgnoreFile } from '@eslint/compat';
 
-import { fileURLToPath } from 'url';
-import path from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const gitignorePath = path.resolve(__dirname, '.gitignore');
-
-
 export default tseslint.config(
   ...pfe,
-  includeIgnoreFile(gitignorePath),
+  includeIgnoreFile(fileURLToPath(new URL('.gitignore', import.meta.url))),
   {
     name: 'local/ignores',
     ignores: [

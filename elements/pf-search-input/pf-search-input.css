@@ -259,10 +259,13 @@
 }
 
 #close-button {
+	--pf-c-button--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
+	--pf-c-button--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
+	--pf-c-button--PaddingTop: var(--pf-global--spacer--xs, 0.25rem);
+	--pf-c-button--PaddingBottom: var(--pf-global--spacer--xs, 0.25rem);
+
   color: currentColor;
   background-color: transparent;
-  justify-content: flex-end;
-  padding: var(--pf-global--spacer--sm, 0.5rem);
 	max-height: 2.25rem;
 	max-width: 2.25rem;
 	box-sizing: border-box;
@@ -271,11 +274,11 @@
 	justify-content: center;
 	border-radius: 0px;
 	position: relative;
-}
 
-#close-button svg {
-	position: relative;
-	top: 3px;
+	pf-icon {
+		position: relative;
+		top: 3px;
+	}
 }
 
 #toggle-text {

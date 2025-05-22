@@ -41,104 +41,6 @@ export class PfSearchInput extends LitElement {
 
   static instances: Set<PfSearchInput> = new Set<PfSearchInput>();
 
-  optionDetails: {
-    text: string;
-    value: string;
-  }[] = [
-      {
-        'text': 'London',
-        'value': 'london',
-      },
-      {
-        'text': 'Paris',
-        'value': 'paris',
-      },
-      {
-        'text': 'Tokyo',
-        'value': 'tokyo',
-      },
-      {
-        'text': 'New York',
-        'value': 'york',
-      },
-      {
-        'text': 'Rome',
-        'value': 'rome',
-      },
-      {
-        'text': 'Sydney',
-        'value': 'sydney',
-      },
-      {
-        'text': 'Beijing',
-        'value': 'beijing',
-      },
-      {
-        'text': 'Dubai',
-        'value': 'dubai',
-      },
-      {
-        'text': 'Rio de Janeiro',
-        'value': 'de',
-      },
-      {
-        'text': 'Barcelona',
-        'value': 'barcelona',
-      },
-      {
-        'text': 'Istanbul',
-        'value': 'istanbul',
-      },
-      {
-        'text': 'Cairo',
-        'value': 'cairo',
-      },
-      {
-        'text': 'Havana',
-        'value': 'havana',
-      },
-      {
-        'text': 'Machu Picchu',
-        'value': 'picchu',
-      },
-      {
-        'text': 'The Great Barrier Reef',
-        'value': 'great',
-      },
-      {
-        'text': 'The Grand Canyon',
-        'value': 'grand',
-      },
-      {
-        'text': 'The Amazon Rainforest',
-        'value': 'amazon',
-      },
-      {
-        'text': 'The Great Barrier Reef1',
-        'value': 'great1',
-      },
-      {
-        'text': 'The Grand Canyon1',
-        'value': 'grand1',
-      },
-      {
-        'text': 'The Amazon Rainforest1',
-        'value': 'amazon1',
-      },
-      {
-        'text': 'The Maldives',
-        'value': 'maldives',
-      },
-      {
-        'text': 'Iceland',
-        'value': 'iceland',
-      },
-      {
-        'text': 'Bora Bora',
-        'value': 'bora',
-      },
-    ];
-
   /** Accessible label for the select */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
 
@@ -220,7 +122,6 @@ export class PfSearchInput extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     PfSearchInput.instances.add(this);
-    this.addOptions(this.optionDetails);
   }
 
   disconnectedCallback(): void {
@@ -427,20 +328,6 @@ export class PfSearchInput extends LitElement {
     this.value = '';
     this._toggleInput!.value = this.value;
     this.#combobox.selected = [];
-  }
-
-  addOptions(optionData: {
-    text: string;
-    value: string;
-  }[]): void {
-    const options: PfOption[] = optionData.map(optionDetail => {
-      const option: PfOption = document.createElement('pf-option');
-      option.textContent = `${optionDetail.text}`;
-      option.value = `${optionDetail.text}`;
-      option.setAttribute('suggestion', '');
-      return option;
-    });
-    this.append(...options);
   }
 }
 

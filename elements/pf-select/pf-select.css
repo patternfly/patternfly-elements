@@ -5,6 +5,7 @@
 	color: var(--pf-global--Color--100, #151515);
   --_pf-option-checkboxes-display: none;
   --_pf-option-svg-display: block;
+	--_pf-option-selected-background-color: var(--rh-color-gray-20, #e0e0e0);
 	--pf-c-select__toggle--PaddingTop: var(--pf-global--spacer--form-element, 0.375rem);
 	--pf-c-select__toggle--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
 	--pf-c-select__toggle--PaddingBottom: var(--pf-global--spacer--form-element, 0.375rem);

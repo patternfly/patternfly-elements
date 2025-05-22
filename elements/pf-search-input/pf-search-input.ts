@@ -213,7 +213,7 @@ export class PfSearchInput extends LitElement {
               </path>
             </svg>
           </pf-button>
-          <div style="width: 0px; height: 0px; padding: 0px; visibility: hidden;" id="toggle-button"></div>
+          <div class="visually-hidden" id="toggle-button"></div>
         </div>
         <div 
           id="listbox-container"

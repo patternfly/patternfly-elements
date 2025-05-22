@@ -363,3 +363,10 @@ div.search-icon {
 		border-bottom: var(--pf-global--spacer--xs, 0.125rem) solid var(--pf-theme--color--accent, #0066cc);
 	}
 }
+
+div.visually-hidden {
+  width: 0;
+  height: 0;
+  padding: 0;
+  visibility: hidden;
+}

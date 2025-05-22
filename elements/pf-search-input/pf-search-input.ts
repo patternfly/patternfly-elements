@@ -33,13 +33,13 @@ export class PfSelectChangeEvent extends Event {
 @customElement('pf-search-input')
 export class PfSearchInput extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
-
   static readonly formAssociated = true;
-
   static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
+
+  static instances: Set<PfSearchInput> = new Set<PfSearchInput>();
 
   optionDetails: {
     text: string;
@@ -207,15 +207,23 @@ export class PfSearchInput extends LitElement {
     setItemSelected: (item, selected) => item.selected = selected,
   });
 
+  static {
+    document.addEventListener('click', event => {
+      for (const instance of PfSearchInput.instances) {
+        instance._onOutsideClick(event);
+      }
+    });
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
-    document.addEventListener('click', this._onOutsideClick);
+    PfSearchInput.instances.add(this);
     this.addOptions(this.optionDetails);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-    document.removeEventListener('click', this._onOutsideClick);
+    PfSearchInput.instances.delete(this);
   }
 
   // Function to handle the closing of popover

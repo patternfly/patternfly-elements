@@ -197,7 +197,7 @@ export class PfSearchInput extends LitElement {
           >
           <pf-button 
             @click="${this.#OnClose}" 
-            ?hidden="${(!expanded && this._toggleInput?.value.trim() === '')}" 
+            ?hidden="${this.#hideCloseButton()}" 
             id="close-button"  
             plain 
             label="Close"
@@ -328,6 +328,13 @@ export class PfSearchInput extends LitElement {
     this.value = '';
     this._toggleInput!.value = this.value;
     this.#combobox.selected = [];
+  }
+
+  #hideCloseButton() {
+    if (!isServer) {
+      return !this.expanded && this._toggleInput?.value.trim() === ''; // SSR or server-side environment: don't hide the element
+    }
+    return false;
   }
 }
 

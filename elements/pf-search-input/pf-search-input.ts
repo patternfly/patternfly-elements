@@ -208,11 +208,13 @@ export class PfSearchInput extends LitElement {
   });
 
   static {
-    document.addEventListener('click', event => {
-      for (const instance of PfSearchInput.instances) {
-        instance._onOutsideClick(event);
-      }
-    });
+    if (!isServer) {
+      document.addEventListener('click', event => {
+        for (const instance of PfSearchInput.instances) {
+          instance._onOutsideClick(event);
+        }
+      });
+    }
   }
 
   connectedCallback(): void {

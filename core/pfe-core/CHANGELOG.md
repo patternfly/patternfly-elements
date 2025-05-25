@@ -1,5 +1,10 @@
 # @patternfly/pfe-core
 
+## 5.0.2
+### Patch Changes
+
+- ce5b27b: `SlotController`: correctly report the state of the default slot in `isEmpty()` calls with no arguments
+
 ## 5.0.1
 ### Patch Changes
 

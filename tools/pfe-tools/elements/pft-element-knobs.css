@@ -1,0 +1,38 @@
+#knobs,
+#element {
+  padding: 1em;
+}
+
+#attributes,
+dl#slot-descriptions {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: max-content auto;
+  & dd {
+    margin-inline-start: 0;
+  }
+  & > h2 {
+    grid-column: -1/1;
+  }
+}
+
+#knob-html-content {
+  display: block;
+  height: 200px;
+  resize: vertical;
+  overflow: scroll;
+  background-color: var(--pf-global--BackgroundColor--200, #f0f0f0);
+}
+
+header {
+  display: flex;
+  align-items: center;;
+  gap: 1em;
+  & pft-knobs-markdown {
+    display: inline;
+    & .markdown-body,
+    & p {
+      display: contents;
+    }
+  }
+}

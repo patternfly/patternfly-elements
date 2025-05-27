@@ -29,7 +29,9 @@ export type ButtonVariant = (
  * actions a user can take in an application, like submitting a form, canceling a
  * process, or creating a new object. Buttons can also be used to take a user to a
  * new location, like another page inside of a web application, or an external site
- * such as help or documentation..
+ * such as help or documentation.
+ * @slot - Button text label
+ * @slot icon - Button Icon, overrides `icon` attribute
  * @summary Allows users to perform an action when triggered
  * @cssprop {<length>} [--pf-c-button--FontSize=1rem]
  * @cssprop            [--pf-c-button--FontWeight=400]

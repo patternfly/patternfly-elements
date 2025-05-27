@@ -189,7 +189,7 @@ export class PfTooltip extends LitElement {
              aria-labelledby="tooltip">
           <slot id="invoker" @slotchange="${this.#invokerChanged}"></slot>
         </div>
-        <div aria-hidden="${String(!open) as 'true' | 'false'}">
+        <div ?inert="${!open}">
           <slot id="tooltip" name="content">${this.content}</slot>
         </div>
       </div>

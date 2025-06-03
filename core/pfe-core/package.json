@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-core",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "license": "MIT",
   "description": "PatternFly Elements Core Library",
   "customElements": "custom-elements.json",

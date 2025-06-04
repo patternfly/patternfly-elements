@@ -268,19 +268,6 @@ export class PfSearchInput extends LitElement {
     }
   }
 
-  // #computePlaceholderText() {
-  //   return this.placeholder
-  //     || this.querySelector?.<HTMLSlotElement>('[slot=placeholder]')
-  //         ?.assignedNodes()
-  //         ?.reduce((acc, node) => `${acc}${node.textContent}`, '')
-  //         ?.trim()
-  //     || this.#combobox.items
-  //         .filter(this.#isNotPlaceholderOption)
-  //         .at(0)
-  //         ?.value
-  //     || '';
-  // }
-
   /**
    * Opens the dropdown
    */

@@ -94,7 +94,7 @@ export class PfCard extends LitElement {
         <div id="body"
              part="body"
              class="${classMap({ empty: this.#slots.isEmpty(null) })}">
-          <slot></slot>
+          <slot @slotchange=${() => this.requestUpdate()}></slot>
         </div>
         <footer id="footer"
                 part="footer"

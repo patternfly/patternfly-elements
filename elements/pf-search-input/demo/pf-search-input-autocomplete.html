@@ -1,6 +1,6 @@
 <div class="container">
   <h1>Search with autocomplete</h1>
-  <pf-search-input placeholder="Search">
+  <pf-search-input id="search-input" placeholder="Search">
     <pf-option value="Alabama"> Alabama </pf-option>
     <pf-option value="New Jersey"> New Jersey </pf-option>
     <pf-option value="New York"> New York </pf-option>
@@ -26,6 +26,15 @@
 
 <script type="module">
   import '@patternfly/elements/pf-search-input/pf-search-input.js';
+
+  const searchInput = document.getElementById('search-input');
+
+  searchInput.addEventListener('change', (event) => {
+    /* eslint-disable no-console */
+    console.log('Selected:', event.target.value);
+    /* eslint-disable no-console */
+  });
+</script
 </script>
 
 <style>

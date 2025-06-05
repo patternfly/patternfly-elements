@@ -20,7 +20,7 @@ import styles from './pf-search-input.css';
 import { PfOption } from '../pf-select/pf-option.js';
 import { bound } from '@patternfly/pfe-core/decorators.js';
 
-export class PfSelectChangeEvent extends Event {
+export class PfSearchChangeEvent extends Event {
   constructor() {
     super('change', { bubbles: true });
   }
@@ -246,7 +246,7 @@ export class PfSearchInput extends LitElement {
   @observes('value')
   private valueChanged() {
     this.#internals.setFormValue(this.value ?? '');
-    this.dispatchEvent(new PfSelectChangeEvent());
+    this.dispatchEvent(new PfSearchChangeEvent());
   }
 
 

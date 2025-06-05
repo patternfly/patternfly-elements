@@ -242,14 +242,11 @@
   border: none;
   text-align: left;
   border-radius: 0;
-  flex: 1 0 auto;
 }
 
 #toggle-input {
   justify-content: space-between;
-  padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem);
-	padding-left: 2.5rem;
-	width: 90%;
+	min-width: calc(100% - 33px);
 	box-sizing: border-box;
 	max-height: 2.25rem;
 }
@@ -277,7 +274,7 @@
 
 	pf-icon {
 		position: relative;
-		top: 3px;
+		top: 5px;
 	}
 }
 
@@ -377,4 +374,16 @@ div.visually-hidden {
 ::slotted(pf-option[selected]) {
 	--_pf-option-svg-display: none;
 	--_pf-option-selected-background-color: var(--pf-global--BackgroundColor--100, #fff);
+}
+
+pf-text-input {
+	--pf-c-form-control--LineHeight: 36px;
+	--pf-c-form-control--PaddingTop: 0px;
+	--pf-c-form-control--PaddingBottom: 0px;
+	--pf-c-form-control--PaddingLeft: 2.5rem;
+	--pf-c-form-control--BorderWidth: 0px;
+	--pf-c-form-control--Width: 100%;
+
+	border: none;
+	box-sizing: border-box;
 }

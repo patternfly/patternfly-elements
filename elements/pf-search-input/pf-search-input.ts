@@ -15,10 +15,10 @@ import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating
 
 import { arraysAreEquivalent } from '@patternfly/pfe-core/functions/arraysAreEquivalent.js';
 import { observes } from '@patternfly/pfe-core/decorators/observes.js';
-
-import styles from './pf-search-input.css';
 import { PfOption } from '../pf-select/pf-option.js';
 import { bound } from '@patternfly/pfe-core/decorators.js';
+import '@patternfly/elements/pf-text-input/pf-text-input.js';
+import styles from './pf-search-input.css';
 
 export class PfSearchChangeEvent extends Event {
   constructor() {
@@ -186,11 +186,13 @@ export class PfSearchInput extends LitElement {
           <div class="search-icon">
             <pf-icon size="md" icon="search" set="fas">search</pf-icon>
           </div>
-          <input 
+          <pf-text-input 
+            icon="search" 
+            accessible-label="search" 
             id="toggle-input"
             ?disabled="${disabled}"
-            placeholder="${placeholder || this.#buttonLabel}"
-          >
+            placeholder="${placeholder || this.#buttonLabel}">
+          </pf-text-input>
           <pf-button 
             @click="${this.#OnClose}" 
             ?hidden="${this.#hideCloseButton()}" 

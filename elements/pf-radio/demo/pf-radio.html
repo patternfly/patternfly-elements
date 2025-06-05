@@ -1,0 +1,36 @@
+<section class="container">
+  <p> Select a title </p>
+  <div class="radio-group">
+    <pf-radio id="title-mr" value="mr" label="Mr" name="title"></pf-radio>
+    <pf-radio id="title-miss" value="miss" label="Miss" name="title"></pf-radio>
+    <pf-radio id="title-mrs" value="mrs" label="Mrs" name="title"></pf-radio>
+    <pf-radio id="title-ms" value="ms" label="Ms" name="title"></pf-radio>
+    <pf-radio id="title-dr" value="dr" label="Dr" name="title"></pf-radio>
+    <pf-radio id="title-other" value="other" label="Other" name="title"></pf-radio>
+  </div>
+  <pf-button> Submit</pf-button>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-radio/pf-radio.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+</script>
+
+<style>
+.container{
+  padding: 3rem;
+}
+.container p {
+  font-size: 1.5rem;
+  margin-block-end: 0.5rem;
+}
+.radio-group{
+  display: flex;
+  justify-content: flex-start;
+  padding-bottom: 1rem;
+}
+.radio-group pf-radio{
+  padding-right: 1rem;
+}
+</style>
+

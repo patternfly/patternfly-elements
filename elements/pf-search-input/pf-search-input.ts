@@ -191,6 +191,7 @@ export class PfSearchInput extends LitElement {
             accessible-label="search" 
             id="toggle-input"
             ?disabled="${disabled}"
+            @keydown=${this.#onSearchInput}
             placeholder="${placeholder || this.#buttonLabel}">
           </pf-text-input>
           <pf-button 
@@ -311,6 +312,14 @@ export class PfSearchInput extends LitElement {
       return !this.expanded && this._toggleInput?.value.trim() === ''; // SSR or server-side environment: don't hide the element
     }
     return false;
+  }
+
+  #onSearchInput(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.value = this._toggleInput?.value;
+      this.#internals.setFormValue(this.value ?? '');
+      this.dispatchEvent(new PfSearchChangeEvent());
+    }
   }
 }
 

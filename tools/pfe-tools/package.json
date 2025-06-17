@@ -79,8 +79,6 @@
     "@web/test-runner-commands": "^0.9.0",
     "@web/test-runner-junit-reporter": "^0.7.1",
     "@web/test-runner-playwright": "^0.11.0",
-    "cem-plugin-module-file-extensions": "^0.0.5",
-    "cem-plugin-readonly": "^0.0.5",
     "chalk": "^5.3.0",
     "clean-css": "^5.3.3",
     "colorjs.io": "^0.5.2",

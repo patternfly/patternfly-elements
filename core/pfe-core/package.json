@@ -61,7 +61,6 @@
   },
   "scripts": {
     "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
-    "analyze": "cem analyze",
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },
   "dependencies": {
@@ -84,7 +83,6 @@
     "**/*.d.ts",
     "**/*.js",
     "**/*.js.map",
-    "!custom-elements-manifest.config.js",
     "custom-elements.json",
     "!demo/*",
     "!docs/*",

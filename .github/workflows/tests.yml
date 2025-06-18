@@ -161,8 +161,8 @@ jobs:
     strategy:
       matrix:
         node:
-          - '20'
-          - '21'
+          - '22'
+          - '24'
     if: |
       github.event_name == 'workflow_dispatch'
       ||   github.event_name == 'push'

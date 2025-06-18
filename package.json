@@ -326,6 +326,10 @@
   "optionalDependencies": {
     "@esbuild/darwin-arm64": "^0.23.1",
     "@esbuild/linux-x64": "^0.23.1",
+    "@pwrs/cem-darwin-arm64": "^0.1.8",
+    "@pwrs/cem-darwin-x64": "^0.1.8",
+    "@pwrs/cem-linux-arm64": "^0.1.8",
+    "@pwrs/cem-linux-x64": "^0.1.8",
     "@rollup/rollup-darwin-arm64": "^4.21.0"
   },
   "workspaces": [

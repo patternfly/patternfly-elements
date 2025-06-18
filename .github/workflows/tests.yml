@@ -98,7 +98,7 @@ jobs:
     name: SSR Tests (Playwright)
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.46.1-jammy
+      image: mcr.microsoft.com/playwright:v1.53.0-noble
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

@@ -36,7 +36,7 @@ jobs:
       - uses: google/wireit@setup-github-actions-caching/v2
 
       - run: npm ci --prefer-offline
-
+      - run: npx playwright install
       - name: Visual Regression Tests
         run: npx playwright test
         env:

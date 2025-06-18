@@ -85,7 +85,7 @@ module.exports = function(eleventyConfig) {
       ) {
         return null;
       } else {
-        return eleventyConfig.javascriptFunctions
+        return eleventyConfig.javascript.functions
             .slug($.text())
             .replace(/[&,+()$~%.'":*?!<>{}]/g, '');
       }

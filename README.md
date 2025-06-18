@@ -71,12 +71,6 @@ npm run test:watch -- --files 'elements/pf-{select,card}/test/*.spec.ts'
 # Run all tests excluding react and vue tests.
 npm run test:watch
 
-# Run all tests using a React wrapper in watch mode.
-npm run test:react
-
-# Run all tests using a Vue wrapper in watch mode.
-npm run test:vue
-
 # Run all tests with and without React and Vue wrappers.
 # This is run on pull request within CI.
 npm run test:ci

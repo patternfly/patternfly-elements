@@ -71,7 +71,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "analyze": "cem generate 'elements/*/pf-*.ts' -e 'elements/*/*.d.ts' -o custom-elements.json",
+    "analyze": "cem generate './*/pf-*.ts' -e './**/*.d.ts' -o custom-elements.json",
     "build": "wireit",
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },

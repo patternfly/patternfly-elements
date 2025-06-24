@@ -286,6 +286,9 @@ jobs:
       - name: Install dependencies
         run: npm ci --prefer-offline --include=optional --verbose
 
+      - name: Explict install of optional dependency
+        run: npm install @pwrs/cem-win32-x64@^0.1.11
+
       - name: Build
         id: build
         run: npm run build

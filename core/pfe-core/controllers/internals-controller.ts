@@ -134,6 +134,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   @aria ariaPosInSet: string | null = null;
   @aria ariaPressed: string | null = null;
   @aria ariaReadOnly: string | null = null;
+  @aria ariaRelevant: string | null = null;
   @aria ariaRequired: string | null = null;
   @aria ariaRoleDescription: string | null = null;
   @aria ariaRowCount: string | null = null;

@@ -8,7 +8,6 @@
     "**/demo/*.js",
     "**/demo/*.d.ts",
     "**/_temp/**/*",
-    "**/custom-elements-manifest.config.js",
     "**/*.story.*",
     "**/test/*_e2e*"
   ],
@@ -28,6 +27,7 @@
     "verbatimModuleSyntax": true,
     "rootDir": ".",
     "sourceMap": true,
+    "skipLibCheck": true,
     "strict": true,
     "target": "es2020",
     "useDefineForClassFields": false,
@@ -62,12 +62,6 @@
       "ScriptHost"
     ],
     "paths": {
-      "@custom-elements-manifest/analyzer": [
-        "@types/custom-elements-manifest__analyzer"
-      ],
-      "@custom-elements-manifest/analyzer/*": [
-        "@types/custom-elements-manifest__analyzer/*"
-      ],
       "@patternfly/elements/*": [
         "./elements/*"
       ],

@@ -51,7 +51,7 @@
     "execa": "^9.3.1",
     "ncp": "^2.0.0",
     "prompts": "^2.4.2",
-    "tslib": "^2.6.3",
+    "tslib": "^2.8.1",
     "yargs": "^17.7.2"
   },
   "directories": {

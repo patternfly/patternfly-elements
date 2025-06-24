@@ -203,15 +203,7 @@
     },
     "watch:analyze": {
       "service": true,
-      "command": "npm run -ws --if-present analyze -- --watch",
-      "files": [
-        "elements/**/*.ts",
-        "core/**/*.ts",
-        "tools/**/*.ts"
-      ],
-      "dependencies": [
-        "build:tools"
-      ]
+      "command": "nodemon --quiet --watch elements/**/*.ts core/**/*.ts tools/**/*.ts --ext ts --ignore node_modules --exec 'npm run analyze'"
     },
     "serve": {
       "service": true,
@@ -301,7 +293,7 @@
     "@lit/react": "^1.0.5",
     "@octokit/core": "^6.1.2",
     "@patternfly/patternfly": "^4.224.5",
-    "@pwrs/cem": "^0.1.8",
+    "@pwrs/cem": "^0.1.11",
     "@rhds/elements": "^1.4.5",
     "@types/koa__router": "^12.0.4",
     "@types/node": "^22.15.32",
@@ -316,6 +308,7 @@
     "husky": "^9.1.4",
     "leasot": "^14.4.0",
     "lit": "^3.3.0",
+    "nodemon": "^3.1.10",
     "nunjucks": "^3.2.4",
     "postcss-nesting": "^13.0.0",
     "prompts": "^2.4.2",
@@ -326,10 +319,11 @@
   "optionalDependencies": {
     "@esbuild/darwin-arm64": "^0.23.1",
     "@esbuild/linux-x64": "^0.23.1",
-    "@pwrs/cem-darwin-arm64": "^0.1.8",
-    "@pwrs/cem-darwin-x64": "^0.1.8",
-    "@pwrs/cem-linux-arm64": "^0.1.8",
-    "@pwrs/cem-linux-x64": "^0.1.8",
+    "@pwrs/cem-darwin-arm64": "^0.1.11",
+    "@pwrs/cem-darwin-x64": "^0.1.11",
+    "@pwrs/cem-linux-arm64": "^0.1.11",
+    "@pwrs/cem-linux-x64": "^0.1.11",
+    "@pwrs/cem-win32-x64": "^0.1.11",
     "@rollup/rollup-darwin-arm64": "^4.21.0"
   },
   "workspaces": [

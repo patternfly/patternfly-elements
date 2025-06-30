@@ -364,13 +364,6 @@ div.search-icon {
 	}
 }
 
-div.visually-hidden {
-  width: 0;
-  height: 0;
-  padding: 0;
-  visibility: hidden;
-}
-
 ::slotted(pf-option[selected]) {
 	--_pf-option-svg-display: none;
 	--_pf-option-selected-background-color: var(--pf-global--BackgroundColor--100, #fff);

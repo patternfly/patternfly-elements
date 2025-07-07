@@ -112,37 +112,36 @@ describe('<pf-search-input>', function() {
       describe('focus()', function() {
         beforeEach(focus);
         beforeEach(updateComplete);
-        describe('ArrowDown', async function() {
+        describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
           beforeEach(updateComplete);
-          await aTimeout(30);
 
-          // it('labels the listbox with the accessible-label attribute', async function() {
-          //   const snap = await a11ySnapshot();
-          //   expect(snap).to.axContainQuery({
-          //     role: 'listbox',
-          //     name: 'label',
-          //   });
-          // });
+          it('labels the listbox with the accessible-label attribute', async function() {
+            const snap = await a11ySnapshot();
+            expect(snap).to.axContainQuery({
+              role: 'combobox',
+              name: 'label',
+            });
+          });
 
-          // it('focuses on the first item', async function() {
+          // it('focuses on the first item', async function() { // This will not work as the focus will still remain on the input
           //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('1');
           // });
 
-          describe('Space', function() {
-            beforeEach(press(' '));
-            beforeEach(updateComplete);
-            // it('selects option 1', function() {
-            //   expect(getSelectedOptionValue(element)).to.deep.equal(['1']);
-            // });
+          // describe('Space', function() { // the space key will be adding <space> in the search input
+          //   beforeEach(press(' '));
+          //   beforeEach(updateComplete);
+          //   // it('selects option 1', function() {
+          //   //   expect(getSelectedOptionValue(element)).to.deep.equal(['1']);
+          //   // });
 
-            // it('exposes selection to assistive technology', async function() {
-            //   expect(await a11ySnapshot()).to.axContainQuery({
-            //     role: 'combobox',
-            //     value: '1',
-            //   });
-            // });
-          });
+          //   // it('exposes selection to assistive technology', async function() {
+          //   //   expect(await a11ySnapshot()).to.axContainQuery({
+          //   //     role: 'combobox',
+          //   //     value: '1',
+          //   //   });
+          //   // });
+          // });
         });
       });
     });
@@ -187,36 +186,15 @@ describe('<pf-search-input>', function() {
       });
 
       describe('focus()', function() {
-        // beforeEach(() => aTimeout(3000));
         beforeEach(focus);
         beforeEach(updateComplete);
-        describe('ArrowDown', async function() {
+        describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
-          await aTimeout(30);
-          // it('labels the listbox with the label elements', async function() {
-          //   expect(await a11ySnapshot()).to.axContainQuery({
-          //     role: 'listbox',
-          //     name: 'label1label2',
-          //   });
-          // });
-
-          // it('focuses on the first item', async function() {
-          //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('1');
-          // });
-
-          describe('Space', function() {
-            beforeEach(press(' '));
-            beforeEach(updateComplete);
-            // it('selects option 1', function() {
-            //   expect(getSelectedOptionValue(element)).to.deep.equal('1');
-            // });
-
-            // it('exposes selection to assistive technology', async function() {
-            //   expect(await a11ySnapshot()).to.axContainQuery({
-            //     role: 'combobox',
-            //     value: '1',
-            //   });
-            // });
+          it('labels the listbox with the label elements', async function() {
+            expect(await a11ySnapshot()).to.axContainQuery({
+              role: 'combobox',
+              name: 'label1label2',
+            });
           });
         });
       });
@@ -284,16 +262,6 @@ describe('<pf-search-input>', function() {
             it('remains expanded', function() {
               expect(element.expanded).to.be.true;
             });
-            // describe('Space', function() {
-            //   beforeEach(press(' '));
-            //   beforeEach(updateComplete);
-            //   it('closes', function() {
-            //     expect(element.expanded).to.be.false;
-            //   });
-            //   it('sets value', function() {
-            //     expect(element.value).to.equal('2');
-            //   });
-            // });
           });
         });
       });
@@ -318,12 +286,7 @@ describe('<pf-search-input>', function() {
           </pf-search-input>`);
       });
 
-      beforeEach(updateComplete);
-      beforeEach(async () => {
-        await aTimeout(1000);
-      });
-
-      // it('does not pass aXe audit', async function() {
+      // it('does not pass aXe audit', async function() { // doubt
       //   await expect(element).to.not.be.accessible();
       // });
 
@@ -346,10 +309,6 @@ describe('<pf-search-input>', function() {
           expect(await a11ySnapshot()).to.axContainRole('listbox');
         });
 
-        // it('focuses on the first item', async function() {
-        //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('1');
-        // });
-
         describe('Tab', function() {
           beforeEach(press('Tab'));
           it('does not focus the combobox button', async function() {
@@ -362,28 +321,13 @@ describe('<pf-search-input>', function() {
         beforeEach(focus);
         beforeEach(updateComplete);
 
-        // it('focuses on the combobox button', async function() {
-        //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
-        // });
+        it('focuses on the combobox button', async function() {
+          expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
+        });
 
         it('does not expand the listbox', async function() {
           expect(element.expanded).to.be.false;
           expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-        });
-
-        describe('Enter', function() {
-          beforeEach(press('Enter'));
-          beforeEach(updateComplete);
-
-          // Enter will not expand the listbox
-          // it('expands the listbox', async function() {
-          //   expect(element.expanded).to.be.true;
-          //   expect(await a11ySnapshot()).to.axContainRole('listbox');
-          // });
-
-          // it('focuses on the first item', async function() {
-          //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('1');
-          // });
         });
 
         describe('Space', function() {
@@ -396,15 +340,6 @@ describe('<pf-search-input>', function() {
 
           beforeEach(press(' '));
           beforeEach(updateComplete);
-          beforeEach(() => aTimeout(300));
-
-          // it('expands the listbox', async function() {
-          //   expect(await a11ySnapshot()).to.axContainRole('listbox');
-          // });
-
-          // it('focuses on the first item', async function() {
-          //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('1');
-          // });
 
           it('does not scroll the screen', function() {
             expect(window.scrollY).to.equal(0);
@@ -418,10 +353,6 @@ describe('<pf-search-input>', function() {
           it('expands the listbox', async function() {
             expect(await a11ySnapshot()).to.axContainRole('listbox');
           });
-
-          // it('focuses on option 1', async function() {
-          //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('1');
-          // });
         });
 
         describe('End', function() {
@@ -431,10 +362,6 @@ describe('<pf-search-input>', function() {
           it('expands the listbox', async function() {
             expect(await a11ySnapshot()).to.axContainRole('listbox');
           });
-
-          // it('focuses on option 8', async function() {
-          //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('8');
-          // });
         });
 
         describe('ArrowDown', function() {
@@ -444,26 +371,6 @@ describe('<pf-search-input>', function() {
           it('expands the listbox', async function() {
             expect(element.expanded).to.be.true;
             expect(await a11ySnapshot()).to.axContainRole('listbox');
-          });
-
-          // it('focuses on the first item', async function() {
-          //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('1');
-          // });
-
-          describe('ArrowUp', function() {
-            beforeEach(press('ArrowUp'));
-            beforeEach(updateComplete);
-            // Last option will not be selected on arro-up
-            // it('focuses on the last option', async function() {
-            //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('8');
-            // });
-            describe('ArrowDown', function() {
-              beforeEach(press('ArrowDown'));
-              beforeEach(updateComplete);
-              // it('focuses on option 1', async function() {
-              //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('1');
-              // });
-            });
           });
 
           describe('ArrowDown', function() {
@@ -511,82 +418,8 @@ describe('<pf-search-input>', function() {
                   expect(element.expanded).to.be.false;
                   expect(await a11ySnapshot()).to.not.axContainRole('listbox');
                 });
-
-                describe('ArrowDown', function() {
-                  beforeEach(press('ArrowDown'));
-                  beforeEach(updateComplete);
-
-                  // it('expands the listbox', async function() {
-                  //   expect(element.expanded).to.be.true;
-                  //   expect(await a11ySnapshot()).to.axContainRole('listbox');
-                  // });
-
-                  describe('Home', function() {
-                    beforeEach(press('Home'));
-                    beforeEach(updateComplete);
-
-                    // it('focuses on option 1', async function() {
-                    //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('1');
-                    // });
-
-                    describe('Home', function() {
-                      beforeEach(press('Home'));
-                      beforeEach(updateComplete);
-
-                      // it('focuses on option 1', async function() {
-                      //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axName('1');
-                      // });
-                    });
-                  });
-                });
               });
             });
-
-            describe('Enter', async function() {
-              beforeEach(press('Enter'));
-              beforeEach(updateComplete);
-              await aTimeout(30);
-
-              // it('selects option 2', function() {
-              //   expect(getSelectedOptionValue(element)).to.deep.equal(['2']);
-              // });
-
-              // it('exposes selection to assistive technology', async function() {
-              //   expect(await a11ySnapshot()).to.axContainQuery({
-              //     role: 'combobox',
-              //     value: '2',
-              //   });
-              // });
-            });
-          });
-
-          describe('Space', function() {
-            beforeEach(press(' '));
-            beforeEach(updateComplete);
-
-            // it('hides the listbox', async function() {
-            //   expect(element.expanded).to.be.false;
-            //   expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-            // });
-
-            // it('focuses the combobox toggle', async function() {
-            //   expect(await a11ySnapshot())
-            //       .axTreeFocusedNode
-            //       .to.have.axRole('combobox');
-            // });
-
-            // it('selects option 1', function() {
-            //   expect(getSelectedOptionValue(element)).to.equal([
-            //     '1',
-            //   ]);
-            // });
-
-            // it('exposes selection to assistive technology', async function() {
-            //   expect(await a11ySnapshot()).to.axContainQuery({
-            //     role: 'combobox',
-            //     value: '1',
-            //   });
-            // });
           });
 
           // -- This functionality needs to be implement in search input
@@ -632,11 +465,11 @@ describe('<pf-search-input>', function() {
               expect(await a11ySnapshot()).to.not.axContainRole('listbox');
             });
 
-            // it('focuses the button', async function() {
-            //   expect(await a11ySnapshot())
-            //       .axTreeFocusedNode
-            //       .to.have.axRole('combobox');
-            // });
+            it('focuses the button', async function() {
+              expect(await a11ySnapshot())
+                  .axTreeFocusedNode
+                  .to.have.axRole('combobox');
+            });
           });
         });
       });
@@ -670,13 +503,6 @@ describe('<pf-search-input>', function() {
         expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
       });
 
-      // it('labels the combobox input with the first option', async function() {
-      //   expect(await a11ySnapshot()).to.axContainQuery({
-      //     role: 'combobox',
-      //     name: 'Blue',
-      //   });
-      // });
-
       describe('with an `accessible-label` attribute', function() {
         beforeEach(function() {
           element.setAttribute('accessible-label', label);
@@ -698,14 +524,6 @@ describe('<pf-search-input>', function() {
           });
         });
 
-        // will be removed
-        // it('labels the toggle button with the label', async function() {
-        //   expect(await a11ySnapshot()).to.axContainQuery({
-        //     role: 'button',
-        //     name: label,
-        //   });
-        // });
-
         describe('show()', function() {
           beforeEach(() => element.show());
           it('labels the listbox with the placeholder attribute', async function() {
@@ -716,49 +534,6 @@ describe('<pf-search-input>', function() {
           });
         });
       });
-
-      // describe('with a `placeholder` attribute', function() {
-      //   beforeEach(function() {
-      //     element.setAttribute('placeholder', placeholder);
-      //   });
-      //   beforeEach(nextFrame);
-
-      //   it('passes aXe audit', async function() {
-      //     await expect(element).to.be.accessible();
-      //   });
-
-      //   it('lists the placeholder as first among the options', function() {
-      //     expect(element.options.at(0)).to.have.text(placeholder);
-      //   });
-
-      //   it('does not have redundant role', async function() {
-      //     expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
-      //   });
-
-      //   it('labels the combobox with the placeholder', async function() {
-      //     expect(await a11ySnapshot()).to.axContainQuery({
-      //       role: 'combobox',
-      //       name: placeholder,
-      //     });
-      //   });
-
-      //   it('labels the toggle button with the placeholder', async function() {
-      //     expect(await a11ySnapshot()).to.axContainQuery({
-      //       role: 'button',
-      //       name: placeholder,
-      //     });
-      //   });
-
-      //   describe('show()', function() {
-      //     beforeEach(() => element.show());
-      //     it('labels the listbox with the placeholder attribute', async function() {
-      //       expect(await a11ySnapshot()).to.axContainQuery({
-      //         role: 'listbox',
-      //         name: 'placeholder',
-      //       });
-      //     });
-      //   });
-      // });
 
       // will be removed as there's no toggle button
       // describe('clicking the toggle button', function() {
@@ -790,13 +565,13 @@ describe('<pf-search-input>', function() {
           expect(await a11ySnapshot()).to.axContainRole('listbox');
         });
 
-        // it('focuses the combobox', async function() {
-        //   expect(element.expanded).to.be.true;
-        //   expect(await a11ySnapshot()).to.axContainQuery({
-        //     focused: true,
-        //     role: 'combobox',
-        //   });
-        // });
+        it('focuses the combobox', async function() {
+          expect(element.expanded).to.be.true;
+          expect(await a11ySnapshot()).to.axContainQuery({
+            focused: true,
+            role: 'combobox',
+          });
+        });
 
         describe('clicking option 1', function() {
           beforeEach(async function() {
@@ -889,9 +664,9 @@ describe('<pf-search-input>', function() {
             expect(getActiveOption(element)).to.have.value('Blue');
           });
 
-          // it('does not move keyboard focus', async function() {
-          //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
-          // });
+          it('does not move keyboard focus', async function() {
+            expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
+          });
 
           describe('ArrowDown', function() {
             beforeEach(press('ArrowDown'));
@@ -917,9 +692,9 @@ describe('<pf-search-input>', function() {
                     .to.have.axProperty('value', 'Green');
               });
 
-              // it('retains focus on combobox input', async function() {
-              //   expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
-              // });
+              it('retains focus on combobox input', async function() {
+                expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
+              });
 
               it('hides the listbox', async function() {
                 expect(await a11ySnapshot()).to.not.axContainRole('listbox');
@@ -959,13 +734,13 @@ describe('<pf-search-input>', function() {
           beforeEach(press('p'));
           beforeEach(updateComplete);
 
-          // it('shows the listbox and maintains focus', async function() {
-          //   expect(await a11ySnapshot())
-          //       .to.axContainRole('listbox')
-          //       .and.axTreeFocusedNode
-          //       .to.have.axRole('combobox')
-          //       .and.to.have.axProperty('value', 'p');
-          // });
+          it('shows the listbox and maintains focus', async function() {
+            expect(await a11ySnapshot())
+                .to.axContainRole('listbox')
+                .and.axTreeFocusedNode
+                .to.have.axRole('combobox')
+                .and.to.have.axProperty('value', 'p');
+          });
 
           it('only shows listbox items starting with the letter p', function() {
             expect(getVisibleOptionValues(element)).to.deep.equal([
@@ -979,13 +754,13 @@ describe('<pf-search-input>', function() {
             beforeEach(press('Backspace'));
             beforeEach(updateComplete);
 
-            // it('shows the listbox and maintains focus', async function() {
-            //   expect(await a11ySnapshot())
-            //       .to.axContainRole('listbox')
-            //       .and.axTreeFocusedNode
-            //       .to.have.axRole('combobox')
-            //       .and.to.not.have.axProperty('value', 'p');
-            // });
+            it('shows the listbox and maintains focus', async function() {
+              expect(await a11ySnapshot())
+                  .to.axContainRole('listbox')
+                  .and.axTreeFocusedNode
+                  .to.have.axRole('combobox')
+                  .and.to.not.have.axProperty('value', 'p');
+            });
 
             it('all options are visible', async function() {
               expect(getVisibleOptionValues(element)).to.deep.equal([
@@ -1052,11 +827,11 @@ describe('<pf-search-input>', function() {
                       expect(getActiveOption(element)).to.have.text('Purple');
                     });
 
-                    // it('moves cursor to start', function() {
-                    //   // WARNING: ties test to DOM structure
-                    //   const input = element.shadowRoot?.querySelector('input');
-                    //   expect(input?.selectionStart).to.equal(0);
-                    // });
+                    it('moves cursor to start', function() {
+                      // WARNING: ties test to DOM structure
+                      const input = element.shadowRoot?.querySelector('input');
+                      expect(input?.selectionStart).to.equal(0);
+                    });
                   });
                   describe('End', function() {
                     beforeEach(press('End'));
@@ -1065,11 +840,11 @@ describe('<pf-search-input>', function() {
                       expect(getActiveOption(element)).to.have.text('Purple');
                     });
 
-                    // it('moves cursor to start', function() {
-                    //   // WARNING: ties test to DOM structure
-                    //   const input = element.shadowRoot?.querySelector('input');
-                    //   expect(input?.selectionStart).to.equal(1);
-                    // });
+                    it('moves cursor to start', function() {
+                      // WARNING: ties test to DOM structure
+                      const input = element.shadowRoot?.querySelector('input');
+                      expect(input?.selectionStart).to.equal(1);
+                    });
                   });
                 });
               });

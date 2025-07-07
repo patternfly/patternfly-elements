@@ -186,13 +186,11 @@ export class PfSearchInput extends LitElement {
           <div class="search-icon">
             <pf-icon size="md" icon="search" set="fas">search</pf-icon>
           </div>
-          <pf-text-input 
-            icon="search" 
+          <input 
             id="toggle-input"
             ?disabled="${disabled}"
             @keydown=${this.#onSearchInput}
             placeholder="${placeholder || this.#buttonLabel}">
-          </pf-text-input>
           <pf-button 
             @click="${this.#OnClose}" 
             ?hidden="${this.#hideCloseButton()}" 

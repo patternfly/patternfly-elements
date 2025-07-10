@@ -165,11 +165,6 @@ export class PfSearchInput extends LitElement {
     }
   }
 
-  get #buttonLabel(): string {
-    const { selected } = this.#combobox;
-    return `${selected?.length ?? 0} ${this.itemsSelectedText}`;
-  }
-
   override render(): TemplateResult<1> {
     const { disabled, expanded, placeholder } = this;
     const { anchor = 'bottom', alignment = 'start', styles = {} } = this.#float;
@@ -190,7 +185,7 @@ export class PfSearchInput extends LitElement {
             id="toggle-input"
             ?disabled="${disabled}"
             @keydown=${this.#onSearchInput}
-            placeholder="${placeholder || this.#buttonLabel}">
+            placeholder="${placeholder}">
           <pf-button 
             @click="${this.#OnClose}" 
             ?hidden="${this.#hideCloseButton()}" 

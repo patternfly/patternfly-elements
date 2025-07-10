@@ -186,15 +186,17 @@ export class PfSearchInput extends LitElement {
             ?disabled="${disabled}"
             @keydown=${this.#onSearchInput}
             placeholder="${placeholder}">
-          <pf-button 
-            @click="${this.#OnClose}" 
-            ?hidden="${this.#hideCloseButton()}" 
-            id="close-button"  
-            plain 
-            label="Close"
-          >
-            <pf-icon size="md" icon="close" set="patternfly">close</pf-icon>
-          </pf-button>
+          <div class="close-button-container">
+            <pf-button 
+              @click="${this.#OnClose}" 
+              ?hidden="${this.#hideCloseButton()}" 
+              id="close-button"  
+              plain 
+              label="Close"
+              >
+              <pf-icon size="md" icon="close" set="patternfly">close</pf-icon>
+            </pf-button>
+          </div>
           <button aria-label="toggle button" inert class="visually-hidden" id="toggle-button"></button>
         </div>
         <div 

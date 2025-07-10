@@ -242,13 +242,14 @@
   border: none;
   text-align: left;
   border-radius: 0;
+	padding-left: 3rem; /*Change it to variable*/
 }
 
 #toggle-input {
   justify-content: space-between;
 	min-width: calc(100% - 33px);
 	box-sizing: border-box;
-	max-height: 2.25rem;
+	height: 2.25rem;
 }
 
 .disabled #toggle-input {
@@ -276,6 +277,11 @@
 		position: relative;
 		top: 5px;
 	}
+}
+
+.close-button-container{
+	height: 2.25rem;
+	width: 2.25rem;
 }
 
 #toggle-text {
@@ -359,8 +365,17 @@ div.search-icon {
 			border-bottom: var(--pf-global--spacer--xs, 0.125rem) solid var(--pf-theme--color--accent, #0066cc); 
 		}
 	}
-	#close-button {
-		border-bottom: var(--pf-global--spacer--xs, 0.125rem) solid var(--pf-theme--color--accent, #0066cc);
+	.close-button-container {
+		position: relative;
+		&::after{
+			content: '';
+			width: 2.25rem;
+			height:  var(--pf-global--spacer--xs, 0.125rem);
+			bottom: 0px;
+			left: -3px;
+			background-color: var(--pf-theme--color--accent, #0066cc);
+			position: absolute;
+		}
 	}
 }
 

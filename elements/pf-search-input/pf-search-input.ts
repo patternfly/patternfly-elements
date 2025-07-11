@@ -94,9 +94,9 @@ export class PfSearchInput extends LitElement {
   #combobox = ComboboxController.of(this, {
     getItems: () => this.options,
     getFallbackLabel: () => this.accessibleLabel
-                         || this.#internals.computedLabelText
-                         || this.placeholder
-                         || this.#slots.getSlotted('placeholder').map(x => x.textContent).join(''),
+      || this.#internals.computedLabelText
+      || this.placeholder
+      || this.#slots.getSlotted('placeholder').map(x => x.textContent).join(''),
     getListboxElement: () => this._listbox ?? null,
     getToggleButton: () => this._toggleButton ?? null,
     getComboboxInput: () => this._toggleInput ?? null,

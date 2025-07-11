@@ -1,0 +1,45 @@
+<div class="container">
+  <h1>Search with autocomplete</h1>
+  <pf-search-input variant="advanced" id="search-input" placeholder="Search">
+    <pf-button slot="submit" data-action="search"> Search</pf-button>
+    <pf-option value="Alabama"> Alabama </pf-option>
+    <pf-option value="New Jersey"> New Jersey </pf-option>
+    <pf-option value="New York"> New York </pf-option>
+    <pf-option value="New Mexico"> New Mexico </pf-option>
+    <pf-option value="North Carolina"> North Carolina </pf-option>
+    <pf-option value="Alabama1"> Alabama 1 </pf-option>
+    <pf-option value="New Jersey1"> New Jersey 1 </pf-option>
+    <pf-option value="New York1"> New York 1 </pf-option>
+    <pf-option value="New Mexico1"> New Mexico  1</pf-option>
+    <pf-option value="North Carolina1"> North Carolina 1</pf-option>
+    <pf-option value="Alabama2"> Alabama 2 </pf-option>
+    <pf-option value="New Jersey2"> New Jersey 2 </pf-option>
+    <pf-option value="New York2"> New York 2 </pf-option>
+    <pf-option value="New Mexico2"> New Mexico 2 </pf-option>
+    <pf-option value="North Carolina2"> North Carolina 2 </pf-option>
+    <pf-option value="Alabama3"> Alabama 3 </pf-option>
+    <pf-option value="New Jersey3"> New Jersey 3 </pf-option>
+    <pf-option value="New York3"> New York 3 </pf-option>
+    <pf-option value="New Mexico3"> New Mexico 3 </pf-option>
+    <pf-option value="North Carolina3"> North Carolina 3 </pf-option>
+  </pf-search-input>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-search-input/pf-search-input.js';
+
+  const searchInput = document.getElementById('search-input');
+
+  searchInput.addEventListener('change', (event) => {
+    /* eslint-disable no-console */
+    console.log('Selected:', event.target.value);
+    /* eslint-disable no-console */
+  });
+</script
+</script>
+
+<style>
+.container{
+  padding: 40px;
+}
+</style>

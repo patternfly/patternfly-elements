@@ -172,46 +172,51 @@ export class PfSearchInput extends LitElement {
     const hideLightDomItems = !ComboboxController.supportsCrossRootActiveDescendant;
 
     return html`
-      <div 
-        id="outer"
-        style="${styleMap(styles)}"
-        class="${classMap({ disabled, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}"
-      >
-        <div id="toggle">
-          <div class="search-icon">
-            <pf-icon size="md" icon="search" set="fas">search</pf-icon>
-          </div>
-          <input 
-            id="toggle-input"
-            ?disabled="${disabled}"
-            @keydown=${this.#onSearchInput}
-            placeholder="${placeholder}">
-          <div class="close-button-container">
-            <pf-button 
-              @click="${this.#OnClose}" 
-              ?hidden="${this.#hideCloseButton()}" 
-              id="close-button"  
-              plain 
-              label="Close"
-              >
-              <pf-icon size="md" icon="close" set="patternfly">close</pf-icon>
-            </pf-button>
-          </div>
-          <button aria-label="toggle button" inert class="visually-hidden" id="toggle-button"></button>
-        </div>
+      <div class="search-input-container" @click=${this.#onSubmit} 
+        @keydown=${this.#handleKeyDown}>
         <div 
-        
-          id="listbox-container"
-          ?hidden="${!expanded}"
-          style="${styleMap({
-            marginTop: `${height || 0}px`,
-            width: width ? `${width}px` : 'auto',
-          })}"
+          id="outer"
+          style="${styleMap(styles)}"
+          class="${classMap({ disabled, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}"
         >
-          <div id="listbox">
-            ${this.#combobox.renderItemsToShadowRoot()}
-            <slot ?hidden="${hideLightDomItems}"></slot>
+          <div id="toggle">
+            <div class="search-icon">
+              <pf-icon size="md" icon="search" set="fas">search</pf-icon>
+            </div>
+            <input 
+              id="toggle-input"
+              ?disabled="${disabled}"
+              @keydown=${this.#onSearchInput}
+              placeholder="${placeholder}">
+            <div class="close-button-container">
+              <pf-button 
+                @click="${this.#OnClose}" 
+                ?hidden="${this.#hideCloseButton()}" 
+                id="close-button"  
+                plain 
+                label="Close"
+                >
+                <pf-icon size="md" icon="close" set="patternfly">close</pf-icon>
+              </pf-button>
+            </div>
+            <button aria-label="toggle button" inert class="visually-hidden" id="toggle-button"></button>
           </div>
+          <div 
+            id="listbox-container"
+            ?hidden="${!expanded}"
+            style="${styleMap({
+              marginTop: `${height || 0}px`,
+              width: width ? `${width}px` : 'auto',
+            })}"
+          >
+            <div id="listbox">
+              ${this.#combobox.renderItemsToShadowRoot()}
+              <slot ?hidden="${hideLightDomItems}"></slot>
+            </div>
+          </div>
+        </div>
+        <div class="submit-button-container">
+          <slot name="submit"></slot>
         </div>
       </div>
     `;
@@ -314,6 +319,27 @@ export class PfSearchInput extends LitElement {
       this.value = this._toggleInput?.value;
       this.#internals.setFormValue(this.value ?? '');
       this.dispatchEvent(new PfSearchChangeEvent());
+    }
+  }
+
+  #onSubmit(event: MouseEvent | KeyboardEvent) {
+    const path = event.composedPath();
+    const slottedSearchButton = path.find(el =>
+      el instanceof HTMLElement
+      && el.tagName === 'PF-BUTTON'
+      && el.getAttribute('data-action') === 'search'
+    );
+
+    if (slottedSearchButton && this._toggleInput?.value) {
+      this.value = this._toggleInput?.value;
+      this.#internals.setFormValue(this.value ?? '');
+      this.dispatchEvent(new PfSearchChangeEvent());
+    }
+  }
+
+  #handleKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      this.#onSubmit(e);
     }
   }
 }

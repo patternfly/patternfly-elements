@@ -157,6 +157,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
+	width: fit-content;
 }
 
 :host([hidden]),
@@ -176,7 +177,6 @@
   position: relative;
 }
 
-/* TODO(bennyp): see if we can get rid of this wrapping node, for perf reasons */
 #listbox-container {
   display: inline-flex;
   position: absolute;
@@ -394,4 +394,17 @@ pf-text-input {
 
 	border: none;
 	box-sizing: border-box;
+}
+
+.search-input-container {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	position: relative;
+}
+
+.submit-button-container {
+	position: absolute;
+	top: 0;
+  right: -100px;
 }

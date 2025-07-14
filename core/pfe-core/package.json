@@ -61,7 +61,7 @@
   },
   "scripts": {
     "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
-    "analyze": "cem generate './**.*.ts' -e './**/*.d.ts' -o custom-elements.json",
+    "analyze": "cem generate './**/*.ts' -o custom-elements.json",
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },
   "dependencies": {

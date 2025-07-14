@@ -2,11 +2,10 @@ sourceControlRootUrl: https://github.com/patternfly/patternfly-elements/tree/mai
 generate:
   files:
     - elements/*/*.ts
-    - core/**/*.ts
   exclude:
     - '*.test.ts'
     - '*.spec.ts'
-  output: custom-elements.json
+  output: elements/custom-elements.json
   noDefaultExcludes: false
   demoDiscovery:
     fileGlob: elements/*/demo/*.html

@@ -172,8 +172,7 @@ export class PfSearchInput extends LitElement {
     const hideLightDomItems = !ComboboxController.supportsCrossRootActiveDescendant;
 
     return html`
-      <div class="search-input-container" @click=${this.#onSubmit} 
-        @keydown=${this.#handleKeyDown}>
+      <div class="search-input-container">
         <div 
           id="outer"
           style="${styleMap(styles)}"
@@ -215,7 +214,8 @@ export class PfSearchInput extends LitElement {
             </div>
           </div>
         </div>
-        <div class="submit-button-container">
+        <div @click=${this.#onSubmit} @keydown=${this.#handleKeyDown} 
+          class="submit-button-container">
           <slot name="submit"></slot>
         </div>
       </div>

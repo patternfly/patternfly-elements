@@ -98,7 +98,7 @@ export class PfSearchInput extends LitElement {
     getToggleButton: () => this._toggleButton ?? null,
     getComboboxInput: () => this._toggleInput ?? null,
     isExpanded: () => this.expanded,
-    requestShowListbox: () => void (this.expanded ||= true),
+    requestShowListbox: () => this.#showListbox(),
     requestHideListbox: () => void (this.expanded &&= false),
     setItemHidden: (item, hidden) => (item.id !== 'placeholder') && void (item.hidden = hidden),
     isItem: item => item instanceof PfOption,
@@ -181,7 +181,7 @@ export class PfSearchInput extends LitElement {
           <input 
             id="toggle-input"
             ?disabled="${disabled}"
-            @change=${this.#onChange}
+            @input=${this.#onChange}
             @keyup=${this.#onSubmit}
             placeholder="${placeholder}"
           >
@@ -242,6 +242,13 @@ export class PfSearchInput extends LitElement {
   private valueChanged() {
     this.#internals.setFormValue(this.value ?? '');
     this.dispatchEvent(new PfSearchChangeEvent());
+  }
+
+  @observes('value')
+  private collapseOnEmpty() {
+    if (this.value === '') {
+      this.expanded = false;
+    }
   }
 
   async #doExpand() {
@@ -314,6 +321,17 @@ export class PfSearchInput extends LitElement {
   #onSubmit(event: KeyboardEvent) {
     if (event.key === 'Enter' || event.key === ' ') {
       this.dispatchEvent(new PfSearchChangeEvent());
+    }
+  }
+
+  #delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async #showListbox() {
+    await this.#delay(10);
+    if (this.value !== '') {
+      this.expanded ||= true;
     }
   }
 }

@@ -190,8 +190,6 @@
 #outer.expanded #listbox-container {
 	opacity: 1;
 	z-index: 9999 !important;
-	max-height: 220px;
-	overflow: hidden;
 }
 
 #listbox {

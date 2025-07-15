@@ -70,9 +70,6 @@
       "output": [
         "elements/custom-elements.json",
         "core/pfe-core/custom-elements.json"
-      ],
-      "dependencies": [
-        "build:core"
       ]
     },
     "build:create": {

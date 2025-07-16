@@ -1,5 +1,10 @@
 # @patternfly/pfe-tools
 
+## 5.0.1
+### Patch Changes
+
+- 0b2d895: Restored `custom-elements-manifest/custom-elements-manifest.js` export, which was mistakenly removed
+
 ## 5.0.0
 ### Major Changes
 

@@ -21,6 +21,7 @@
   },
   "exports": {
     "./config.js": "./config.js",
+    "./custom-elements-manifest/custom-elements-manifest.js": "./custom-elements-manifest/custom-elements-manifest.js",
     "./dev-server/config.js": "./dev-server/config.js",
     "./dev-server/demo.js": "./dev-server/demo.js",
     "./environment.js": "./environment.js",

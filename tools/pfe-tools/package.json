@@ -37,6 +37,7 @@
     "./test/create-fixture.js": "./test/create-fixture.js",
     "./test/get-composed-text.js": "./test/get-composed-text.js",
     "./test/hex-to-rgb.js": "./test/hex-to-rgb.js",
+    "./test/playwright/PfeDemoPage.js": "./test/playwright/PfeDemoPage.js",
     "./test/render-to-string.js": "./test/render-to-string.js",
     "./test/stub-logger.js": "./test/stub-logger.js",
     "./test/utils.js": "./test/utils.js",

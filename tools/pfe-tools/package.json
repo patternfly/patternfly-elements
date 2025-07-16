@@ -21,8 +21,6 @@
   },
   "exports": {
     "./config.js": "./config.js",
-    "./custom-elements-manifest/config.js": "./custom-elements-manifest/config.js",
-    "./custom-elements-manifest/custom-elements-manifest.js": "./custom-elements-manifest/custom-elements-manifest.js",
     "./dev-server/config.js": "./dev-server/config.js",
     "./dev-server/demo.js": "./dev-server/demo.js",
     "./environment.js": "./environment.js",
@@ -67,7 +65,6 @@
     "@11ty/eleventy-plugin-directory-output": "^1.0.1",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
     "@changesets/cli": "^2.28.1",
-    "@custom-elements-manifest/analyzer": "^0.5.7",
     "@jspm/generator": "^2.0.1",
     "@koa/router": "^12.0.1",
     "@lit-labs/ssr": "^3.3.0",
@@ -82,8 +79,6 @@
     "@web/test-runner-commands": "^0.9.0",
     "@web/test-runner-junit-reporter": "^0.7.1",
     "@web/test-runner-playwright": "^0.11.0",
-    "cem-plugin-module-file-extensions": "^0.0.5",
-    "cem-plugin-readonly": "^0.0.5",
     "chalk": "^5.3.0",
     "clean-css": "^5.3.3",
     "colorjs.io": "^0.5.2",
@@ -115,13 +110,13 @@
   },
   "devDependencies": {
     "@types/dedent": "^0.7.2",
-    "@types/estree": "^1.0.5",
+    "@types/estree": "^1.0.8",
     "@types/glob": "^8.1.0",
     "@types/koa-send": "^4.1.6",
-    "@types/mocha": "^10.0.7",
-    "@types/node": "^22.4.1",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.15.32",
     "@types/nunjucks": "^3.2.6",
-    "@types/sinon": "^17.0.3",
+    "@types/sinon": "^17.0.4",
     "@types/yargs": "^17.0.33",
     "custom-elements-manifest": "^2.1.0"
   }

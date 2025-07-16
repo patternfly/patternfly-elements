@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@eslint/compat": "^1.1.1",
+    "@stylistic/eslint-plugin-js": "^4.4.1",
     "globals": "^15.9.0"
   }
 }

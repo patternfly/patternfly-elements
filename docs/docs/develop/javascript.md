@@ -84,7 +84,7 @@ export class PfCoolElement extends LitElement {
 Notice the block comment above the property declaration. This is called a JSDoc docblock,
 and it's contents will eventually end up in the custom elements manifest for this package.
 It's important to add a helpful description of every public property and method on your element's class.
-Learn more about [how to document components](https://custom-elements-manifest.open-wc.org/analyzer/getting-started/#documenting-your-components).
+Learn more about [how to document components](https://bennypowers.github.io/cem/).
 
 Now that we have declared the `follow` property, we can toggle it in our private `onClick` handler.
 

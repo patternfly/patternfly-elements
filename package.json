@@ -8,7 +8,7 @@
     "url": "github:patternfly/patternfly-elements"
   },
   "engines": {
-    "node": "^20"
+    "node": "^22"
   },
   "scripts": {
     "🐒-DEV": "❓ Development aids",
@@ -70,9 +70,6 @@
       "output": [
         "elements/custom-elements.json",
         "core/pfe-core/custom-elements.json"
-      ],
-      "dependencies": [
-        "build:core"
       ]
     },
     "build:create": {
@@ -203,15 +200,7 @@
     },
     "watch:analyze": {
       "service": true,
-      "command": "npm run -ws --if-present analyze -- --watch",
-      "files": [
-        "elements/**/*.ts",
-        "core/**/*.ts",
-        "tools/**/*.ts"
-      ],
-      "dependencies": [
-        "build:tools"
-      ]
+      "command": "nodemon --quiet --watch elements/**/*.ts core/**/*.ts tools/**/*.ts --ext ts --ignore node_modules --exec 'npm run analyze'"
     },
     "serve": {
       "service": true,
@@ -297,13 +286,14 @@
     "@actions/glob": "^0.5.0",
     "@commitlint/cli": "^19.4.0",
     "@commitlint/config-conventional": "^19.2.2",
-    "@jspm/generator": "^2.1.3",
+    "@jspm/generator": "^2.6.1",
     "@lit/react": "^1.0.5",
     "@octokit/core": "^6.1.2",
     "@patternfly/patternfly": "^4.224.5",
+    "@pwrs/cem": "^0.2.2",
     "@rhds/elements": "^1.4.5",
     "@types/koa__router": "^12.0.4",
-    "@types/node": "^22.4.1",
+    "@types/node": "^22.15.32",
     "@types/numeral": "^2.0.5",
     "@types/prismjs": "^1.26.4",
     "@types/prompts": "^2.4.9",
@@ -314,17 +304,22 @@
     "fuse.js": "^7.0.0",
     "husky": "^9.1.4",
     "leasot": "^14.4.0",
-    "lit": "^3.2.1",
+    "lit": "^3.3.0",
+    "nodemon": "^3.1.10",
     "nunjucks": "^3.2.4",
     "postcss-nesting": "^13.0.0",
     "prompts": "^2.4.2",
-    "typescript": "^5.5.4",
+    "typescript": "^5.8.3",
     "wireit": "^0.14.12",
     "zero-md": "^3.1.2"
   },
   "optionalDependencies": {
     "@esbuild/darwin-arm64": "^0.23.1",
     "@esbuild/linux-x64": "^0.23.1",
+    "@pwrs/cem-darwin-arm64": "^0.2.2",
+    "@pwrs/cem-darwin-x64": "^0.2.2",
+    "@pwrs/cem-linux-arm64": "^0.2.2",
+    "@pwrs/cem-linux-x64": "^0.2.2",
     "@rollup/rollup-darwin-arm64": "^4.21.0"
   },
   "workspaces": [

@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-tools",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "type": "module",
   "description": "Development and build tools for PatternFly Elements and related projects",
   "keywords": [

@@ -36,7 +36,8 @@ async function getDemos(config: PfeDevServerInternalConfig) {
         manifest
             .getTagNames()
             .flatMap(tagName =>
-              manifest.getDemoMetadata(tagName, config as PfeDevServerInternalConfig)));
+              manifest.getDemoMetadata(tagName, config as PfeDevServerInternalConfig)
+                  .filter(demo => demo.filePath?.includes(tagName))));
 }
 
 async function getTemplateContent(demo?: DemoRecord) {
@@ -76,5 +77,3 @@ export function pfeDevServerTemplateMiddleware(config: PfeDevServerInternalConfi
     return next();
   };
 }
-
-

@@ -290,7 +290,7 @@
     "@lit/react": "^1.0.5",
     "@octokit/core": "^6.1.2",
     "@patternfly/patternfly": "^4.224.5",
-    "@pwrs/cem": "^0.2.1",
+    "@pwrs/cem": "^0.2.2",
     "@rhds/elements": "^1.4.5",
     "@types/koa__router": "^12.0.4",
     "@types/node": "^22.15.32",
@@ -316,10 +316,10 @@
   "optionalDependencies": {
     "@esbuild/darwin-arm64": "^0.23.1",
     "@esbuild/linux-x64": "^0.23.1",
-    "@pwrs/cem-darwin-arm64": "^0.2.0",
-    "@pwrs/cem-darwin-x64": "^0.2.0",
-    "@pwrs/cem-linux-arm64": "^0.2.0",
-    "@pwrs/cem-linux-x64": "^0.2.0",
+    "@pwrs/cem-darwin-arm64": "^0.2.2",
+    "@pwrs/cem-darwin-x64": "^0.2.2",
+    "@pwrs/cem-linux-arm64": "^0.2.2",
+    "@pwrs/cem-linux-x64": "^0.2.2",
     "@rollup/rollup-darwin-arm64": "^4.21.0"
   },
   "workspaces": [

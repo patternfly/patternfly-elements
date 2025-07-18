@@ -1,5 +1,10 @@
 # @patternfly/pfe-tools
 
+## 5.0.2
+### Patch Changes
+
+- 9066f4a: Fix the manifest helper's demo `filePath` field.
+
 ## 5.0.1
 ### Patch Changes
 

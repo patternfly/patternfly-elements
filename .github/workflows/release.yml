@@ -43,10 +43,7 @@ jobs:
       - name: Transform Tags
         id: get-tags
         if: ${{ steps.changesets.outputs.published == 'true' }}
-        run: |
-          tags=$( echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -c 'map([.name,.version]) | map(join("@")) | join(", ")' )
-          echo "$tags"
-          echo "::set-output name=tags::$tags"
+        run: echo "tags=$( echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -c 'map([.name,.version]) | map(join("@")) | join(", ")' )" >> $GITHUB_OUTPUT
 
       - name: Bundle
         id: bundle

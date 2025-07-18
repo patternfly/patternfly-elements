@@ -9,6 +9,6 @@ generate:
   output: custom-elements.json
   noDefaultExcludes: false
   demoDiscovery:
-    fileGlob: ./*/demo/*.html
-    urlPattern: (?P<tag>[\\w-]+)/demo/(?P<demo>[\\w-]+).html
-    urlTemplate: https://patternflyelements.org/components/{tag}/{demo}/
+    fileGlob: '*/demo/*.html'
+    urlPattern: pf-(?P<tag>[\w-]+)/demo/(?P<demo>[\w-]+).html
+    urlTemplate: https://patternflyelements.org/components/{tag}/demo/{demo}/

@@ -26,9 +26,81 @@ export class PfSearchChangeEvent extends Event {
 }
 
 /**
- * Search Input
- * @slot - Place element content here
- */
+ * A search input lets users type in words to find specific items or information.
+ * As they type, it can show matching results to help them quickly find what they are looking for.
+ *
+ * A search input consists of a text field where users can type to find specific content or items.
+ * Unlike selects or dropdowns, which offer predefined options, a search input lets users enter
+ * their own keywords to filter or locate results. It includes a clear (×) button to easily
+ * remove the current input, allowing users to start a new search quickly.
+ * @slot - insert `pf-option` and/or `pf-option-groups` here
+ * @slot placeholder - placeholder text for the select. Overrides the `placeholder` attribute.
+ * @fires open - when the menu toggles open
+ * @fires close - when the menu toggles closed
+ * @cssprop [--pf-c-search-input__toggle--PaddingTop=var(--pf-global--spacer--form-element, 0.375rem)]
+ * @cssprop [--pf-c-search-input__toggle--PaddingRight=var(--pf-global--spacer--sm, 0.5rem)]
+ * @cssprop [--pf-c-search-input__toggle--PaddingBottom=var(--pf-global--spacer--form-element, 0.375rem)]
+ * @cssprop [--pf-c-search-input__toggle--PaddingLeft=var(--pf-global--spacer--sm, 0.5rem)]
+ * @cssprop [--pf-c-search-input__toggle--MinWidth=var(--pf-global--target-size--MinWidth, 44px)]
+ * @cssprop [--pf-c-search-input__toggle--FontSize=var(--pf-global--FontSize--md, 1rem)]
+ * @cssprop [--pf-c-search-input__toggle--FontWeight=var(--pf-global--FontWeight--normal, 400)]
+ * @cssprop [--pf-c-search-input__toggle--LineHeight=var(--pf-global--LineHeight--md, 1.5)]
+ * @cssprop [--pf-c-search-input__toggle--BackgroundColor=var(--pf-global--BackgroundColor--100, #fff)]
+ * @cssprop [--pf-c-search-input__toggle--before--BorderTopWidth=var(--pf-global--BorderWidth--sm, 1px)]
+ * @cssprop [--pf-c-search-input__toggle--before--BorderRightWidth=var(--pf-global--BorderWidth--sm, 1px)]
+ * @cssprop [--pf-c-search-input__toggle--before--BorderBottomWidth=var(--pf-global--BorderWidth--sm, 1px)]
+ * @cssprop [--pf-c-search-input__toggle--before--BorderLeftWidth=var(--pf-global--BorderWidth--sm, 1px)]
+ * @cssprop [--pf-c-search-input__toggle--before--BorderWidth=initial]
+ * @cssprop [--pf-c-search-input__toggle--before--BorderTopColor=var(--pf-global--BorderColor--300, #f0f0f0)]
+ * @cssprop [--pf-c-search-input__toggle--before--BorderRightColor=var(--pf-global--BorderColor--300, #f0f0f0)]
+ * @cssprop [--pf-c-search-input__toggle--before--BorderBottomColor=var(--pf-global--BorderColor--200, #8a8d90)]
+ * @cssprop [--pf-c-search-input__toggle--before--BorderLeftColor=var(--pf-global--BorderColor--300, #f0f0f0)]
+ * @cssprop [--pf-c-search-input__toggle--Color=var(--pf-global--Color--100, #151515)]
+ * @cssprop [--pf-c-search-input__toggle--hover--before--BorderBottomColor=var(--pf-global--active-color--100, #06c)]
+ * @cssprop [--pf-c-search-input__toggle--focus--before--BorderBottomColor=var(--pf-global--active-color--100, #06c)]
+ * @cssprop [--pf-c-search-input__toggle--focus--before--BorderBottomWidth=var(--pf-global--BorderWidth--md, 2px)]
+ * @cssprop [--pf-c-search-input__toggle--active--before--BorderBottomColor=var(--pf-global--active-color--100, #06c)]
+ * @cssprop [--pf-c-search-input__toggle--active--before--BorderBottomWidth=var(--pf-global--BorderWidth--md, 2px)]
+ * @cssprop [--pf-c-search-input__toggle--m-expanded--before--BorderBottomColor=var(--pf-global--active-color--100, #06c)]
+ * @cssprop [--pf-c-search-input__toggle--m-expanded--before--BorderBottomWidth=var(--pf-global--BorderWidth--md, 2px)]
+ * @cssprop [--pf-c-search-input__toggle--disabled--BackgroundColor=var(--pf-global--disabled-color--300, #f0f0f0)]
+ * @cssprop [--pf-c-search-input__toggle--m-plain--before--BorderColor=transparent]
+ * @cssprop [--pf-c-search-input__toggle--m-placeholder--Color=transparent]
+ * @cssprop [--pf-c-search-input--m-invalid__toggle--before--BorderBottomColor=var(--pf-global--danger-color--100, #c9190b)]
+ * @cssprop [--pf-c-search-input--m-invalid__toggle--before--BorderBottomWidth=var(--pf-global--BorderWidth--md, 2px)]
+ * @cssprop [--pf-c-search-input--m-invalid__toggle--hover--before--BorderBottomColor=var(--pf-global--danger-color--100, #c9190b)]
+ * @cssprop [--pf-c-search-input--m-invalid__toggle--focus--before--BorderBottomColor=var(--pf-global--danger-color--100, #c9190b)]
+ * @cssprop [--pf-c-search-input--m-invalid__toggle--active--before--BorderBottomColor=var(--pf-global--danger-color--100, #c9190b)]
+ * @cssprop [--pf-c-search-input--m-invalid__toggle--m-expanded--before--BorderBottomColor=var(--pf-global--danger-color--100, #c9190b)]
+ * @cssprop [--pf-c-search-input--m-invalid__toggle-status-icon--Color=var(--pf-global--danger-color--100, #c9190b)]
+ * @cssprop [--pf-c-search-input--m-success__toggle--before--BorderBottomColor=var(--pf-global--success-color--100, #3e8635)]
+ * @cssprop [--pf-c-search-input--m-success__toggle--before--BorderBottomWidth=var(--pf-global--BorderWidth--md, 2px)]
+ * @cssprop [--pf-c-search-input--m-success__toggle--hover--before--BorderBottomColor=var(--pf-global--success-color--100, #3e8635)]
+ * @cssprop [--pf-c-search-input--m-success__toggle--focus--before--BorderBottomColor=var(--pf-global--success-color--100, #3e8635)]
+ * @cssprop [--pf-c-search-input--m-success__toggle--active--before--BorderBottomColor=var(--pf-global--success-color--100, #3e8635)]
+ * @cssprop [--pf-c-search-input--m-success__toggle--m-expanded--before--BorderBottomColor=var(--pf-global--success-color--100, #3e8635)]
+ * @cssprop [--pf-c-search-input--m-success__toggle-status-icon--Color=var(--pf-global--success-color--100, #3e8635)]
+ * @cssprop [--pf-c-search-input--m-warning__toggle--before--BorderBottomColor=var(--pf-global--warning-color--100, #f0ab00)]
+ * @cssprop [--pf-c-search-input--m-warning__toggle--before--BorderBottomWidth=var(--pf-global--BorderWidth--md, 2px)]
+ * @cssprop [--pf-c-search-input--m-warning__toggle--hover--before--BorderBottomColor=var(--pf-global--warning-color--100, #f0ab00)]
+ * @cssprop [--pf-c-search-input--m-warning__toggle--focus--before--BorderBottomColor=var(--pf-global--warning-color--100, #f0ab00)]
+ * @cssprop [--pf-c-search-input--m-warning__toggle--active--before--BorderBottomColor=var(--pf-global--warning-color--100, #f0ab00)]
+ * @cssprop [--pf-c-search-input--m-warning__toggle--m-expanded--before--BorderBottomColor=var(--pf-global--warning-color--100, #f0ab00)]
+ * @cssprop [--pf-c-search-input--m-warning__toggle-status-icon--Color=var(--pf-global--warning-color--100, #f0ab00)]
+ * @cssprop [--pf-c-search-input__toggle-wrapper--not-last-child--MarginRight=var(--pf-global--spacer--xs, 0.25rem)]
+ * @cssprop [--pf-c-search-input__toggle-wrapper--MaxWidth=calc(100% - var(--pf-global--spacer--lg, 1.5rem))]
+ * @cssprop [--pf-c-search-input__toggle--m-placeholder__toggle-text--Color=var(--pf-global--Color--dark-200, #6a6e73)]
+ * @cssprop [--pf-c-search-input__toggle-icon--toggle-text--MarginLeft=var(--pf-global--spacer--xs, 0.25rem)]
+ * @cssprop [--pf-c-search-input__toggle-status-icon--MarginLeft=var(--pf-global--spacer--xs, 0.25rem)]
+ * @cssprop [--pf-c-search-input__toggle-status-icon--Color=var(--pf-global--Color--100, #151515)]
+ * @cssprop [--pf-c-search-input--m-plain__toggle-arrow--Color=var(--pf-global--Color--200, #6a6e73)]
+ * @cssprop [--pf-c-search-input--m-plain--hover__toggle-arrow--Color=var(--pf-global--Color--100, #151515)]
+ * @cssprop [--pf-c-search-input__toggle-clear--PaddingRight=var(--pf-global--spacer--sm, 0.5rem)]
+ * @cssprop [--pf-c-search-input__toggle-clear--PaddingLeft=var(--pf-global--spacer--md, 1rem)]
+ * @cssprop [--pf-c-search-input__toggle-clear--toggle-button--PaddingLeft=var(--pf-global--spacer--sm, 0.5rem)]
+ * @cssprop [--pf-c-search-input__toggle-button--Color=var(--pf-global--Color--100, #151515)]
+ * @cssprop [--pf-c-search-input__list-item--m-loading--PaddingTop=var(--pf-global--spacer--sm, 0.5rem)]
+ **/
 @customElement('pf-search-input')
 export class PfSearchInput extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];

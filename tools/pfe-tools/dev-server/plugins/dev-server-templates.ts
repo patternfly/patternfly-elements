@@ -39,10 +39,11 @@ async function getDemos(config: PfeDevServerInternalConfig) {
               manifest.getDemoMetadata(tagName, config as PfeDevServerInternalConfig)
                   .filter(demo => demo.filePath?.includes(tagName))
                   .map(demo => {
-                    if (demo.filePath?.endsWith(`${tagName}.html`) || demo.filePath?.endsWith('index.html')) {
+                    if (demo.filePath?.endsWith(`${tagName}.html`)
+                    || demo.filePath?.endsWith('/index.html')) {
                       return {
                         ...demo,
-                        permalink: dirname(demo.permalink),
+                        permalink: `${dirname(demo.permalink)}/`,
                       };
                     } else {
                       return demo;

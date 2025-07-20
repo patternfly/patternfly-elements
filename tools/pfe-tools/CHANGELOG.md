@@ -1,5 +1,10 @@
 # @patternfly/pfe-tools
 
+## 5.0.3
+### Patch Changes
+
+- b2747c0: Dev Server: trailing slashes for demo paths
+
 ## 5.0.2
 ### Patch Changes
 

@@ -174,8 +174,8 @@ export class PfSearchInput extends LitElement {
     requestHideListbox: () => void (this.expanded &&= false),
     setItemHidden: (item, hidden) => (item.id !== 'placeholder') && void (item.hidden = hidden),
     isItem: item => item instanceof PfOption,
-    setItemActive: (item, active) => item.active = active,
-    setItemSelected: (item, selected) => item.selected = selected,
+    setItemActive: (item, active) => this.#setItemActive(item, active),
+    setItemSelected: (item, selected) => this.#setItemSelected(item, selected),
   });
 
   static {
@@ -252,9 +252,10 @@ export class PfSearchInput extends LitElement {
           </div>
           <input 
             id="toggle-input"
-            ?disabled="${disabled}"
             @input=${this.#onChange}
             @keyup=${this.#onSubmit}
+            @keydown=${this.#onKeyDown}
+            aria-disabled="${disabled}"
             placeholder="${placeholder}"
           >
           <div class="close-button-container">
@@ -314,13 +315,6 @@ export class PfSearchInput extends LitElement {
   private valueChanged() {
     this.#internals.setFormValue(this.value ?? '');
     this.dispatchEvent(new PfSearchChangeEvent());
-  }
-
-  @observes('value')
-  private collapseOnEmpty() {
-    if (this.value === '') {
-      this.expanded = false;
-    }
   }
 
   async #doExpand() {
@@ -396,14 +390,39 @@ export class PfSearchInput extends LitElement {
     }
   }
 
+  #onKeyDown(event: KeyboardEvent) {
+    const target = event.target as HTMLElement;
+    if (target?.getAttribute('aria-disabled') === 'true') {
+      // Allow Tab and Shift+Tab to move focus
+      if (event.key === 'Tab') {
+        return;
+      }
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  }
+
   #delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   async #showListbox() {
     await this.#delay(10);
-    if (this.value !== '') {
+    if (!this.disabled) {
       this.expanded ||= true;
+    }
+  }
+
+  #setItemSelected(item: PfOption, selected: boolean) {
+    item.selected = selected;
+    this.#setItemActive(item, selected);
+  }
+
+  #setItemActive(item: PfOption, active: boolean) {
+    item.active = active;
+    if (this.expanded) {
+      const activeOption = this.querySelector('pf-option[active]');
+      activeOption?.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'nearest' });
     }
   }
 }

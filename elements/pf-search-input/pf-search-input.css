@@ -68,6 +68,11 @@
 	--pf-c-search-input__toggle-clear--toggle-button--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
 	--pf-c-search-input__toggle-button--Color: var(--pf-global--Color--100, #151515);
 	--pf-c-search-input__list-item--m-loading--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
+
+	/* --pf-c-search-input__toggle--FontSize: var(--pf-global--FontSize--md, 1rem);
+	--pf-c-search-input__toggle--FontWeight: var(--pf-global--FontWeight--normal, 400);
+	--pf-c-search-input__toggle--LineHeight: var(--pf-global--LineHeight--md, 1.5);
+	--pf-c-search-input__toggle--BackgroundColor: var(--pf-global--BackgroundColor--100, #fff); */
 }
 
 :host,
@@ -83,8 +88,9 @@
 	display: none !important;
 }
 
-:host([disabled]) {
+:host([aria-disabled="true"]) {
 	pointer-events: none !important;
+	cursor: not-allowed !important;
 }
 
 #outer.disabled {
@@ -107,6 +113,8 @@
 #outer.expanded #listbox-container {
 	opacity: 1;
 	z-index: 9999 !important;
+	max-height: 300px;
+	overflow: hidden;
 }
 
 #listbox {
@@ -122,22 +130,22 @@
 	border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
 	pointer-events: none;
 	cursor: not-allowed;
-	;
+	
 	--_active-descendant-color: transparent;
 	--_svg-color: var(--pf-c-list__item-icon--Color, #6a6e73) !important;
 }
 
 #toggle {
-	background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
+	background-color: var(--pf-c-search-input__toggle--BackgroundColor, #fff) !important;
 }
 
 #toggle,
 #toggle-input {
 	display: flex;
 	font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
-	font-size: var(--pf-global--FontSize--md, 16px);
-	font-weight: var(--pf-global--FontWeight--normal, 400);
-	line-height: 1.6;
+	font-size: var(--pf-c-search-input__toggle--FontSize, 1rem);
+	font-weight: var(	--pf-c-search-input__toggle--FontWeight, 400);
+	line-height: var(--pf-c-search-input__toggle--LineHeight, 1.5);
 }
 
 #toggle {
@@ -160,7 +168,6 @@
 	text-align: left;
 	border-radius: 0;
 	padding-left: 3rem;
-	/*Change it to variable*/
 }
 
 #toggle-input {
@@ -172,6 +179,7 @@
 
 .disabled #toggle-input {
 	pointer-events: none;
+	cursor: not-allowed;
 }
 
 #close-button {

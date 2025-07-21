@@ -1,0 +1,34 @@
+<form class="container">
+  <div class="search-input-container">
+    <pf-search-input disabled id="search-input" name="search" placeholder="Search">
+      <pf-option>Blue</pf-option>
+      <pf-option>Green</pf-option>
+      <pf-option>Magenta</pf-option>
+      <pf-option>Orange</pf-option>
+      <pf-option>Purple</pf-option>
+      <pf-option>Periwinkle</pf-option>
+      <pf-option>Pink</pf-option>
+      <pf-option>Red</pf-option>
+      <pf-option>Yellow</pf-option>
+    </pf-search-input>
+    <pf-button> Search</pf-button>
+  </div>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-search-input/pf-search-input.js';
+</script>
+
+<style>
+  .container {
+    padding: 40px;
+    .search-input-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      #search-input {
+        margin-right: 1rem;
+      }
+    }
+  }
+</style>

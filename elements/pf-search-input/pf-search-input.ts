@@ -287,6 +287,7 @@ export class PfSearchInput extends LitElement {
         <div 
           id="listbox-container"
           ?hidden="${!expanded}"
+          tabindex="-1"
           style="${styleMap({
             marginTop: `${height || 0}px`,
             width: width ? `${width}px` : 'auto',

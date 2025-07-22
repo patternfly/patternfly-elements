@@ -37,11 +37,14 @@ export class ScrollSpyController implements ReactiveController {
   static {
     if (!isServer) {
       addEventListener('scroll', () => {
-        if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-          this.#instances.forEach(ssc => {
-            ssc.#setActive(ssc.#linkChildren.at(-1));
-          });
-        }
+        this.#instances.forEach(ssc => {
+          ssc.#reconcile();
+        });
+      }, { passive: true });
+      addEventListener('scrollend', () => {
+        this.#instances.forEach(ssc => {
+          ssc.#reconcile();
+        });
       }, { passive: true });
       addEventListener('hashchange', () => {
         this.#instances.forEach(ssc => {
@@ -72,9 +75,10 @@ export class ScrollSpyController implements ReactiveController {
 
   #threshold: number | number[];
 
-  #intersectingTargets = new Set<Element>();
+  #intersectionEntries = new Set<IntersectionObserverEntry>();
 
   #linkTargetMap = new Map<Element, Element | null>();
+  #targetLinkMap = new Map<Element, Element | null>();
 
   #getRootNode: () => Node | null;
 
@@ -148,6 +152,24 @@ export class ScrollSpyController implements ReactiveController {
 
   #initializing = true;
 
+  #reconcile() {
+    const { scrollY, innerHeight } = window;
+    let link: Element | null | undefined = null;
+    if (scrollY === 0) {
+      link = this.#linkChildren.at(0);
+    } else if (Math.round(innerHeight + scrollY) >= document.body.scrollHeight) {
+      link = this.#linkChildren.at(-1);
+    } else {
+      const [entry] = [...this.#intersectionEntries].sort((a, b) => {
+        return b.boundingClientRect.y - a.boundingClientRect.y;
+      });
+      link = this.#targetLinkMap.get(entry.target);
+    }
+    if (link) {
+      this.#setActive(link);
+    }
+  }
+
   async #initIo() {
     const rootNode = this.#getRootNode();
     if (rootNode instanceof Document || rootNode instanceof ShadowRoot) {
@@ -160,6 +182,7 @@ export class ScrollSpyController implements ReactiveController {
           if (target) {
             this.#io?.observe(target);
             this.#linkTargetMap.set(link, target);
+            this.#targetLinkMap.set(target, link);
           }
         }
       }
@@ -209,32 +232,19 @@ export class ScrollSpyController implements ReactiveController {
           this.#markPassed(link, boundingClientRect.top < intersectionRect.top);
         }
       }
-      const link = [...this.#passedLinks];
-      const last = link.at(-1);
-      this.#setActive(last ?? this.#linkChildren.at(0));
     }
     this.#intersected = true;
-    this.#intersectingTargets.clear();
+    this.#intersectionEntries.clear();
     for (const entry of entries) {
       if (entry.isIntersecting) {
-        this.#intersectingTargets.add(entry.target);
+        this.#intersectionEntries.add(entry);
       }
     }
     if (this.#initializing) {
-      const ints = entries?.filter(x => x.isIntersecting) ?? [];
-      if (this.#intersectingTargets.size > 0) {
-        const [{ target = null } = {}] = ints;
-        const { id } = target ?? {};
-        if (id) {
-          const link = this.#linkChildren.find(link => this.#getHash(link) === `#${id}`);
-          if (link) {
-            this.#setActive(link);
-          }
-        }
-      }
       this.#initializing = false;
     }
     this.#onIntersection?.();
+    this.#reconcile();
   }
 
   /**

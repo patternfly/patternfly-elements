@@ -1,0 +1,14 @@
+sourceControlRootUrl: https://github.com/patternfly/patternfly-elements/tree/main/
+generate:
+  files:
+    - ./*/*.ts
+  exclude:
+    - './**/*.test.ts'
+    - './**/*.spec.ts'
+    - './**/*.e2e.ts'
+  output: custom-elements.json
+  noDefaultExcludes: false
+  demoDiscovery:
+    fileGlob: '*/demo/*.html'
+    urlPattern: pf-(?P<tag>[\w-]+)/demo/(?P<demo>[\w-]+).html
+    urlTemplate: https://patternflyelements.org/components/{tag}/demo/{demo}/

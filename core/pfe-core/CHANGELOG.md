@@ -1,5 +1,10 @@
 # @patternfly/pfe-core
 
+## 5.0.3
+### Patch Changes
+
+- 2cf37ca: `InternalsController`: add `ariaRelevant` property
+
 ## 5.0.2
 ### Patch Changes
 

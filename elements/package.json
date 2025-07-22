@@ -26,10 +26,11 @@
     "./pf-chip/pf-chip-group.js": "./pf-chip/pf-chip-group.js",
     "./pf-clipboard-copy/pf-clipboard-copy.js": "./pf-clipboard-copy/pf-clipboard-copy.js",
     "./pf-code-block/pf-code-block.js": "./pf-code-block/pf-code-block.js",
+    "./pf-dropdown/context.js": "./pf-dropdown/context.js",
+    "./pf-dropdown/pf-dropdown-group.js": "./pf-dropdown/pf-dropdown-group.js",
+    "./pf-dropdown/pf-dropdown-item.js": "./pf-dropdown/pf-dropdown-item.js",
+    "./pf-dropdown/pf-dropdown-menu.js": "./pf-dropdown/pf-dropdown-menu.js",
     "./pf-dropdown/pf-dropdown.js": "./pf-dropdown/pf-dropdown.js",
-    "./pf-dropdown/pf-dropdown-group.js": "./pf-dropdown/pf-dropdown-group.ts",
-    "./pf-dropdown/pf-dropdown-menu.js": "./pf-dropdown/pf-dropdown-menu.ts",
-    "./pf-dropdown/pf-dropdown-item.js": "./pf-dropdown/pf-dropdown-item.ts",
     "./pf-icon/pf-icon.js": "./pf-icon/pf-icon.js",
     "./pf-jazz-hands/pf-jazz-hands.js": "./pf-jazz-hands/pf-jazz-hands.js",
     "./pf-jump-links/pf-jump-links-item.js": "./pf-jump-links/pf-jump-links-item.js",
@@ -48,13 +49,15 @@
     "./pf-search-input/pf-search-input.js": "./pf-search-input/pf-search-input.js",
     "./pf-spinner/pf-spinner.js": "./pf-spinner/pf-spinner.js",
     "./pf-switch/pf-switch.js": "./pf-switch/pf-switch.js",
-    "./pf-table/pf-table.js": "./pf-table/pf-table.js",
-    "./pf-table/pf-thead.js": "./pf-table/pf-thead.js",
-    "./pf-table/pf-tbody.js": "./pf-table/pf-tbody.js",
-    "./pf-table/pf-tr.js": "./pf-table/pf-tr.js",
-    "./pf-table/pf-th.js": "./pf-table/pf-th.js",
-    "./pf-table/pf-td.js": "./pf-table/pf-td.js",
+    "./pf-table/context.js": "./pf-table/context.js",
     "./pf-table/pf-caption.js": "./pf-table/pf-caption.js",
+    "./pf-table/pf-table.js": "./pf-table/pf-table.js",
+    "./pf-table/pf-tbody.js": "./pf-table/pf-tbody.js",
+    "./pf-table/pf-td.js": "./pf-table/pf-td.js",
+    "./pf-table/pf-th.js": "./pf-table/pf-th.js",
+    "./pf-table/pf-thead.js": "./pf-table/pf-thead.js",
+    "./pf-table/pf-tr.js": "./pf-table/pf-tr.js",
+    "./pf-tabs/context.js": "./pf-tabs/context.js",
     "./pf-tabs/pf-tab-panel.js": "./pf-tabs/pf-tab-panel.js",
     "./pf-tabs/pf-tab.js": "./pf-tabs/pf-tab.js",
     "./pf-tabs/pf-tabs.js": "./pf-tabs/pf-tabs.js",
@@ -72,7 +75,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "analyze": "cem analyze",
+    "analyze": "cem generate",
     "build": "wireit",
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },
@@ -105,7 +108,6 @@
     "**/*.d.ts",
     "**/*.js",
     "**/*.js.map",
-    "!custom-elements-manifest.config.js",
     "!demo/*",
     "!docs/*",
     "!test/*"
@@ -129,10 +131,10 @@
     "Ajinyka Shinde <sajinkya359@gmail.com>"
   ],
   "dependencies": {
-    "@lit/context": "^1.1.2",
+    "@lit/context": "^1.1.5",
     "@patternfly/icons": "^1.0.3",
-    "@patternfly/pfe-core": "^5.0.0",
-    "lit": "^3.2.1",
-    "tslib": "^2.6.3"
+    "@patternfly/pfe-core": "^5.0.2",
+    "lit": "^3.3.0",
+    "tslib": "^2.8.1"
   }
 }

@@ -163,7 +163,7 @@ export class ScrollSpyController implements ReactiveController {
       const [entry] = [...this.#intersectionEntries].sort((a, b) => {
         return b.boundingClientRect.y - a.boundingClientRect.y;
       });
-      link = this.#targetLinkMap.get(entry.target);
+      link = this.#targetLinkMap.get(entry?.target);
     }
     if (link) {
       this.#setActive(link);

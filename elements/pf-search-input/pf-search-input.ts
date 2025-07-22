@@ -185,6 +185,11 @@ export class PfSearchInput extends LitElement {
           instance._onOutsideClick(event);
         }
       });
+      document.addEventListener('focusout', () => {
+        for (const instance of PfSearchInput.instances) {
+          instance._onFocusOut();
+        }
+      });
     }
   }
 
@@ -198,13 +203,20 @@ export class PfSearchInput extends LitElement {
     PfSearchInput.instances.delete(this);
   }
 
-  // Function to handle the closing of popover
+  // Function to handle the closing of popover on outside click
   @bound private _onOutsideClick(event: MouseEvent) {
     const path = event.composedPath();
     if (!path.includes(this._searchInputContainer)) {
       if (this.expanded) {
         this.expanded = false;
       }
+    }
+  }
+
+  // Function to handle the closing of popover on focus out
+  @bound private _onFocusOut() {
+    if (this.expanded) {
+      this.expanded = false;
     }
   }
 

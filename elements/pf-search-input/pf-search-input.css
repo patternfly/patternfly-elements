@@ -89,12 +89,12 @@
 }
 
 :host([aria-disabled="true"]) {
-	pointer-events: none !important;
-	cursor: not-allowed !important;
+	pointer-events: none;
+	cursor: not-allowed;
 }
 
 #outer.disabled {
-	color: var(--pf-global--Color--dark-200, #6a6e73) !important;
+	color: var(--pf-global--Color--dark-200, #6a6e73);
 }
 
 #outer {

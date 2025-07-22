@@ -76,7 +76,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-	width: 100%;
+	inline-size: 100%;
 }
 
 :host([hidden]),
@@ -109,15 +109,15 @@
 #outer.expanded #listbox-container {
 	opacity: 1;
 	z-index: 9999 !important;
-	max-height: var(--pf-c-search-input__menu-content--MaxHeight, 20rem);
-	overflow: hidden;
+	max-block-size: var(--pf-c-search-input__menu-content--MaxHeight, 20rem);
+	overflow-y: scroll;
 }
 
 #listbox {
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	width: 100%;
+	inline-size: 100%;
 }
 
 #listbox slot.disabled {
@@ -162,14 +162,14 @@
 	border: none;
 	text-align: left;
 	border-radius: 0;
-	padding-left: 3rem;
+	padding-inline-start: 3rem;
 }
 
 #toggle-input {
 	justify-content: space-between;
-	width: 100%;
+	inline-size: 100%;
 	box-sizing: border-box;
-	height: 2.25rem;
+	block-size: 2.25rem;
 }
 
 .disabled #toggle-input {
@@ -185,8 +185,8 @@
 
 	color: currentColor;
 	background-color: transparent;
-	max-height: 2.25rem;
-	max-width: 2.25rem;
+	max-block-size: 2.25rem;
+	max-inline-size: 2.25rem;
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
@@ -196,13 +196,13 @@
 
 	pf-icon {
 		position: relative;
-		top: 5px;
+		inset-block-start: 5px;
 	}
 }
 
 .close-button-container {
-	height: 2.25rem;
-	width: 2.25rem;
+	block-size: 2.25rem;
+	inline-size: 2.25rem;
 }
 
 #toggle-text {
@@ -256,23 +256,23 @@
 	display: var(--pf-c-divider--Display, flex);
 	flex-direction: var(--pf-c-divider--FlexDirection);
 	border: 0;
-	width: 100%;
+	inline-size: 100%;
 	margin-top: var(--pf-c-search-input-menu--c-divider--MarginTop);
 	margin-bottom: var(--pf-c-search-input-menu--c-divider--MarginBottom);
 }
 
 ::slotted(hr)::after {
 	content: '';
-	width: var(--pf-c-divider--after--Width, 100%) !important;
-	height: var(--pf-c-divider--after--Height, 1px);
+	inline-size: var(--pf-c-divider--after--Width, 100%) !important;
+	block-size: var(--pf-c-divider--after--Height, 1px);
 	background-color: var(--pf-c-divider--after--BackgroundColor);
 	flex: 1 0 100%;
 }
 
 div.search-icon {
 	position: absolute;
-	top: 50%;
-	left: var(--pf-global--spacer--md, 1rem);
+	inset-block-start: 50%;
+	inset-inline-start: var(--pf-global--spacer--md, 1rem);
 	transform: translateY(-50%);
 	display: flex;
 	align-items: center;
@@ -293,10 +293,10 @@ div.search-icon {
 
 		&::after {
 			content: '';
-			width: 36px;
-			height: var(--pf-global--spacer--xs, 0.125rem);
-			bottom: 0px;
-			left: 0px;
+			inline-size: 36px;
+			block-size: var(--pf-global--spacer--xs, 0.125rem);
+			inset-block-end: 0px;
+			inset-inline-start: 0px;
 			background-color: var(--pf-theme--color--accent, #0066cc);
 			position: absolute;
 		}

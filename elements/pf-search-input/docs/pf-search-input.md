@@ -77,17 +77,16 @@ Listbox options use the [APG's Roving tabindex](https://www.w3.org/WAI/ARIA/apg/
 
 {% endband %}
 
+{% renderSlots for="pf-search-input", header="Slots on `pf-search-input`" %}{% endrenderSlots %}
+{% renderAttributes for="pf-search-input", header="Attributes on `pf-search-input`" %}{% endrenderAttributes %}
+{% renderMethods for="pf-search-input", header="Methods on `pf-search-input`" %}{% endrenderMethods %}
+{% renderEvents for="pf-search-input", header="Events on `pf-search-input`" %}{% endrenderEvents %}
+{% renderCssCustomProperties for="pf-search-input", header="CSS Custom Properties on `pf-search-input`" %}{% endrenderCssCustomProperties %}
+{% renderCssParts for="pf-search-input", header="CSS Parts on `pf-search-input`" %}{% endrenderCssParts %}
 
-
-
-{% renderSlots %}{% endrenderSlots %}
-
-{% renderAttributes %}{% endrenderAttributes %}
-
-{% renderMethods %}{% endrenderMethods %}
-
-{% renderEvents %}{% endrenderEvents %}
-
-{% renderCssCustomProperties %}{% endrenderCssCustomProperties %}
-
-{% renderCssParts %}{% endrenderCssParts %}
+{% renderSlots for="pf-option", header="Slots on `pf-option`" %}{% endrenderSlots %}
+{% renderAttributes for="pf-option", header="Attributes on `pf-option`" %}{% endrenderAttributes %}
+{% renderMethods for="pf-option", header="Methods on `pf-option`" %}{% endrenderMethods %}
+{% renderEvents for="pf-option", header="Events on `pf-option`" %}{% endrenderEvents %}
+{% renderCssCustomProperties for="pf-option", header="CSS Custom Properties on `pf-option`" %}{% endrenderCssCustomProperties %}
+{% renderCssParts for="pf-option", header="CSS Parts on `pf-option`" %}{% endrenderCssParts %}

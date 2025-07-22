@@ -68,11 +68,7 @@
 	--pf-c-search-input__toggle-clear--toggle-button--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
 	--pf-c-search-input__toggle-button--Color: var(--pf-global--Color--100, #151515);
 	--pf-c-search-input__list-item--m-loading--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
-
-	/* --pf-c-search-input__toggle--FontSize: var(--pf-global--FontSize--md, 1rem);
-	--pf-c-search-input__toggle--FontWeight: var(--pf-global--FontWeight--normal, 400);
-	--pf-c-search-input__toggle--LineHeight: var(--pf-global--LineHeight--md, 1.5);
-	--pf-c-search-input__toggle--BackgroundColor: var(--pf-global--BackgroundColor--100, #fff); */
+	--pf-c-search-input__menu-content--MaxHeight: 20rem;
 }
 
 :host,
@@ -80,7 +76,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-	width: fit-content;
+	width: 100%;
 }
 
 :host([hidden]),
@@ -113,7 +109,7 @@
 #outer.expanded #listbox-container {
 	opacity: 1;
 	z-index: 9999 !important;
-	max-height: 300px;
+	max-height: var(--pf-c-search-input__menu-content--MaxHeight, 20rem);
 	overflow: hidden;
 }
 
@@ -158,10 +154,9 @@
 	color: var(--pf-global--Color--dark-200, #6a6e73) !important;
 	background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
 	border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+	caret-color: transparent;
 }
 
-
-/* #toggle-button, */
 #toggle-input {
 	background: transparent;
 	border: none;
@@ -172,7 +167,7 @@
 
 #toggle-input {
 	justify-content: space-between;
-	min-width: calc(100% - 33px);
+	width: 100%;
 	box-sizing: border-box;
 	height: 2.25rem;
 }
@@ -298,10 +293,10 @@ div.search-icon {
 
 		&::after {
 			content: '';
-			width: 2.25rem;
+			width: 36px;
 			height: var(--pf-global--spacer--xs, 0.125rem);
 			bottom: 0px;
-			left: -3px;
+			left: 0px;
 			background-color: var(--pf-theme--color--accent, #0066cc);
 			position: absolute;
 		}

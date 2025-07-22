@@ -100,6 +100,7 @@ export class PfSearchChangeEvent extends Event {
  * @cssprop [--pf-c-search-input__toggle-clear--toggle-button--PaddingLeft=var(--pf-global--spacer--sm, 0.5rem)]
  * @cssprop [--pf-c-search-input__toggle-button--Color=var(--pf-global--Color--100, #151515)]
  * @cssprop [--pf-c-search-input__list-item--m-loading--PaddingTop=var(--pf-global--spacer--sm, 0.5rem)]
+ * @cssprop [--pf-c-search-input__menu-content--MaxHeight=20rem;]
  **/
 @customElement('pf-search-input')
 export class PfSearchInput extends LitElement {
@@ -432,9 +433,8 @@ export class PfSearchInput extends LitElement {
 
   #setItemActive(item: PfOption, active: boolean) {
     item.active = active;
-    if (this.expanded) {
-      const activeOption = this.querySelector('pf-option[active]');
-      activeOption?.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'nearest' });
+    if (this.expanded && active) {
+      item?.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'nearest' });
     }
   }
 }

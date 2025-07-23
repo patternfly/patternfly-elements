@@ -222,13 +222,11 @@ export class PfSearchInput extends LitElement {
   }
 
   /**
-   * Single select option value for single select menus,
-   * or array of select option values for multi select.
+   * Set selected option
    */
   @property({ hasChanged: (a, b) => !arraysAreEquivalent(a, b) })
-  set selected(selected: PfOption | PfOption[]) {
-    const list = Array.isArray(selected) ? selected : [selected];
-    this.#combobox.selected = list;
+  set selected(selected: PfOption) {
+    this.#combobox.selected = [selected];
   }
 
   get selected(): PfOption[] {

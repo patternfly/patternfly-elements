@@ -122,7 +122,7 @@ export class PfSearchInput extends LitElement {
   /** Whether the select is disabled */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  /** Whether the select listbox is expanded */
+  /** Whether the search input's listbox is expanded */
   @property({ type: Boolean, reflect: true }) expanded = false;
 
   /**

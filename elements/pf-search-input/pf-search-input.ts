@@ -34,7 +34,7 @@ export class PfSearchChangeEvent extends Event {
  * their own keywords to filter or locate results. It includes a clear (×) button to easily
  * remove the current input, allowing users to start a new search quickly.
  * @slot - insert `pf-option` here
- * @slot placeholder - placeholder text for the select. Overrides the `placeholder` attribute.
+ * @slot placeholder - placeholder text for the search input. Overrides the `placeholder` attribute.
  * @fires open - when the menu toggles open
  * @fires close - when the menu toggles closed
  * @cssprop [--pf-c-search-input__toggle--PaddingTop=var(--pf-global--spacer--form-element, 0.375rem)]
@@ -113,16 +113,16 @@ export class PfSearchInput extends LitElement {
 
   static instances: Set<PfSearchInput> = new Set<PfSearchInput>();
 
-  /** Accessible label for the select */
+  /** Accessible label for the search input */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
 
   /** Multi listbox button text */
   @property({ attribute: 'items-selected-text' }) itemsSelectedText = 'items selected';
 
-  /** Whether the select is disabled */
+  /** Whether the search input is disabled */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  /** Whether the select listbox is expanded */
+  /** Whether the search input's listbox is expanded */
   @property({ type: Boolean, reflect: true }) expanded = false;
 
   /**

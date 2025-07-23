@@ -1,0 +1,40 @@
+diff --git a/node_modules/@jspm/generator/dist/generator-c35f6b68.js b/node_modules/@jspm/generator/dist/generator-c35f6b68.js
+index 58dba40..c41f755 100644
+--- a/node_modules/@jspm/generator/dist/generator-c35f6b68.js
++++ b/node_modules/@jspm/generator/dist/generator-c35f6b68.js
+@@ -3154,6 +3154,7 @@ provider) {
+             // and there's a corresponding import/export map entry in that package,
+             // then the resolution is standard and we can lock it:
+             if (exportSubpath) {
++
+                 // Package "imports" resolutions don't constrain versions.
+                 if (key[0] === '#') continue;
+                 // Otherwise we treat top-level package versions as a constraint.
+@@ -3174,6 +3175,9 @@ provider) {
+                 }
+                 if (installSubpath !== false) {
+                     setResolution(locks, parsedKey.pkgName, pkgUrl, null, installSubpath);
++                    if (key.endsWith('/')) {
++                      maps.imports[key] = map.imports[key]
++                    }
+                     continue;
+                 }
+             }
+@@ -3690,7 +3694,7 @@ function _define_property$2(obj, key, value) {
+     return obj;
+ }
+ function combineSubpaths(installSubpath, traceSubpath) {
+-    if (traceSubpath.endsWith('/')) throw new Error('Trailing slash subpaths unsupported');
++    if (traceSubpath.endsWith('/')) return traceSubpath
+     return installSubpath === null || installSubpath === '.' || traceSubpath === '.' ? installSubpath || traceSubpath : `${installSubpath}${traceSubpath.slice(1)}`;
+ }
+ class TraceMap {
+@@ -3732,7 +3736,7 @@ class TraceMap {
+         // very likely that the user has some CommonJS dependencies, but this is
+         // something that the user has to explicitly enable:
+         if (isBuiltinScheme(resolved)) return null;
+-        if (resolved.endsWith('/')) throw new JspmError(`Trailing "/" installs not supported installing ${resolved} for ${parentUrl}`);
++        if (resolved.endsWith('/')) return
+         try {
+             var entry = await this.resolver.analyze(resolved);
+         } catch (e) {

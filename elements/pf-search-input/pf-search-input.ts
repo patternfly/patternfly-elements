@@ -381,6 +381,7 @@ export class PfSearchInput extends LitElement {
     this.value = '';
     this._toggleInput!.value = this.value;
     this.#combobox.selected = [];
+    this._toggleInput?.focus();
   }
 
   #hideCloseButton() {

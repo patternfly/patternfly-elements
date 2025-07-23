@@ -119,7 +119,7 @@ export class PfSearchInput extends LitElement {
   /** Multi listbox button text */
   @property({ attribute: 'items-selected-text' }) itemsSelectedText = 'items selected';
 
-  /** Whether the select is disabled */
+  /** Whether the search input is disabled */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
   /** Whether the search input's listbox is expanded */

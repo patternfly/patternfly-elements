@@ -113,7 +113,7 @@ export class PfSearchInput extends LitElement {
 
   static instances: Set<PfSearchInput> = new Set<PfSearchInput>();
 
-  /** Accessible label for the select */
+  /** Accessible label for the search input */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
 
   /** Multi listbox button text */

@@ -69,8 +69,8 @@ Listbox options use the [APG's Roving tabindex](https://www.w3.org/WAI/ARIA/apg/
 | <kbd>Shift + Tab</kbd> | Moves focus to the toggle button and closes listbox.                                  |
 | <kbd>Up Arrow</kbd>    | Moves focus to the previous option, optionally wrapping from the first to the last.   |
 | <kbd>Down Arrow</kbd>  | Moves focus to the next option, optionally wrapping from the last to the first.       |
-| <kbd>Left Arrow</kbd>  | Moves focus to the previous option, optionally wrapping from the first to the last.   |
-| <kbd>Right Arrow</kbd> | Moves focus to the next option, optionally wrapping from the last to the first.       |
+| <kbd>Left Arrow</kbd>  | Returns focus to the combobox without closing the popup and moves the input cursor one character to the left. If the input cursor is on the left-most character, the cursor does not move.   |
+| <kbd>Right Arrow</kbd> | Returns focus to the combobox without closing the popup and moves the input cursor one character to the right. If the input cursor is on the right-most character, the cursor does not move.       |
 | <kbd>Home</kbd>        | Moves focus to the first option in the current listbox.                               |
 | <kbd>Escape</kbd>      | Close the listbox that contains focus and return focus to the toggle button.          |
 | <kbd>Any letter</kbd>  | Navigates to the next option that starts with the letter.                             |

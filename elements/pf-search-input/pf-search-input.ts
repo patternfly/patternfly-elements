@@ -33,7 +33,7 @@ export class PfSearchChangeEvent extends Event {
  * Unlike selects or dropdowns, which offer predefined options, a search input lets users enter
  * their own keywords to filter or locate results. It includes a clear (×) button to easily
  * remove the current input, allowing users to start a new search quickly.
- * @slot - insert `pf-option` and/or `pf-option-groups` here
+ * @slot - insert `pf-option` here
  * @slot placeholder - placeholder text for the select. Overrides the `placeholder` attribute.
  * @fires open - when the menu toggles open
  * @fires close - when the menu toggles closed

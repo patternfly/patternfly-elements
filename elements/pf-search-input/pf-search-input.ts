@@ -280,7 +280,7 @@ export class PfSearchInput extends LitElement {
               <pf-icon size="md" icon="close" set="patternfly">close</pf-icon>
             </pf-button>
           </div>
-          <button aria-label="toggle button" inert class="visually-hidden" id="toggle-button"></button>
+          <button type="button" aria-label="toggle button" inert class="visually-hidden" id="toggle-button"></button>
         </div>
         <div 
           id="listbox-container"

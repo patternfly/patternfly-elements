@@ -19,6 +19,7 @@ import { PfOption } from '../pf-select/pf-option.js';
 import { bound } from '@patternfly/pfe-core/decorators.js';
 import styles from './pf-search-input.css';
 
+/** Fired when a `<pf-search-input>` element's value changes */
 export class PfSearchChangeEvent extends Event {
   constructor() {
     super('change', { bubbles: true });
@@ -33,85 +34,39 @@ export class PfSearchChangeEvent extends Event {
  * Unlike selects or dropdowns, which offer predefined options, a search input lets users enter
  * their own keywords to filter or locate results. It includes a clear (×) button to easily
  * remove the current input, allowing users to start a new search quickly.
- * @slot - insert `pf-option` here
- * @slot placeholder - placeholder text for the search input. Overrides the `placeholder` attribute.
+ *
+ * @summary Allows users to search through a list for specific search terms
+ *
  * @fires open - when the menu toggles open
  * @fires close - when the menu toggles closed
- * @cssprop [--pf-c-search-input__toggle--PaddingTop=var(--pf-global--spacer--form-element, 0.375rem)]
- * @cssprop [--pf-c-search-input__toggle--PaddingRight=var(--pf-global--spacer--sm, 0.5rem)]
- * @cssprop [--pf-c-search-input__toggle--PaddingBottom=var(--pf-global--spacer--form-element, 0.375rem)]
- * @cssprop [--pf-c-search-input__toggle--PaddingLeft=var(--pf-global--spacer--sm, 0.5rem)]
- * @cssprop [--pf-c-search-input__toggle--MinWidth=var(--pf-global--target-size--MinWidth, 44px)]
- * @cssprop [--pf-c-search-input__toggle--FontSize=var(--pf-global--FontSize--md, 1rem)]
- * @cssprop [--pf-c-search-input__toggle--FontWeight=var(--pf-global--FontWeight--normal, 400)]
- * @cssprop [--pf-c-search-input__toggle--LineHeight=var(--pf-global--LineHeight--md, 1.5)]
- * @cssprop [--pf-c-search-input__toggle--BackgroundColor=var(--pf-global--BackgroundColor--100, #fff)]
- * @cssprop [--pf-c-search-input__toggle--before--BorderTopWidth=var(--pf-global--BorderWidth--sm, 1px)]
- * @cssprop [--pf-c-search-input__toggle--before--BorderRightWidth=var(--pf-global--BorderWidth--sm, 1px)]
- * @cssprop [--pf-c-search-input__toggle--before--BorderBottomWidth=var(--pf-global--BorderWidth--sm, 1px)]
- * @cssprop [--pf-c-search-input__toggle--before--BorderLeftWidth=var(--pf-global--BorderWidth--sm, 1px)]
- * @cssprop [--pf-c-search-input__toggle--before--BorderWidth=initial]
- * @cssprop [--pf-c-search-input__toggle--before--BorderTopColor=var(--pf-global--BorderColor--300, #f0f0f0)]
- * @cssprop [--pf-c-search-input__toggle--before--BorderRightColor=var(--pf-global--BorderColor--300, #f0f0f0)]
- * @cssprop [--pf-c-search-input__toggle--before--BorderBottomColor=var(--pf-global--BorderColor--200, #8a8d90)]
- * @cssprop [--pf-c-search-input__toggle--before--BorderLeftColor=var(--pf-global--BorderColor--300, #f0f0f0)]
- * @cssprop [--pf-c-search-input__toggle--Color=var(--pf-global--Color--100, #151515)]
- * @cssprop [--pf-c-search-input__toggle--hover--before--BorderBottomColor=var(--pf-global--active-color--100, #06c)]
- * @cssprop [--pf-c-search-input__toggle--focus--before--BorderBottomColor=var(--pf-global--active-color--100, #06c)]
- * @cssprop [--pf-c-search-input__toggle--focus--before--BorderBottomWidth=var(--pf-global--BorderWidth--md, 2px)]
- * @cssprop [--pf-c-search-input__toggle--active--before--BorderBottomColor=var(--pf-global--active-color--100, #06c)]
- * @cssprop [--pf-c-search-input__toggle--active--before--BorderBottomWidth=var(--pf-global--BorderWidth--md, 2px)]
- * @cssprop [--pf-c-search-input__toggle--m-expanded--before--BorderBottomColor=var(--pf-global--active-color--100, #06c)]
- * @cssprop [--pf-c-search-input__toggle--m-expanded--before--BorderBottomWidth=var(--pf-global--BorderWidth--md, 2px)]
- * @cssprop [--pf-c-search-input__toggle--disabled--BackgroundColor=var(--pf-global--disabled-color--300, #f0f0f0)]
- * @cssprop [--pf-c-search-input__toggle--m-plain--before--BorderColor=transparent]
- * @cssprop [--pf-c-search-input__toggle--m-placeholder--Color=transparent]
- * @cssprop [--pf-c-search-input--m-invalid__toggle--before--BorderBottomColor=var(--pf-global--danger-color--100, #c9190b)]
- * @cssprop [--pf-c-search-input--m-invalid__toggle--before--BorderBottomWidth=var(--pf-global--BorderWidth--md, 2px)]
- * @cssprop [--pf-c-search-input--m-invalid__toggle--hover--before--BorderBottomColor=var(--pf-global--danger-color--100, #c9190b)]
- * @cssprop [--pf-c-search-input--m-invalid__toggle--focus--before--BorderBottomColor=var(--pf-global--danger-color--100, #c9190b)]
- * @cssprop [--pf-c-search-input--m-invalid__toggle--active--before--BorderBottomColor=var(--pf-global--danger-color--100, #c9190b)]
- * @cssprop [--pf-c-search-input--m-invalid__toggle--m-expanded--before--BorderBottomColor=var(--pf-global--danger-color--100, #c9190b)]
- * @cssprop [--pf-c-search-input--m-invalid__toggle-status-icon--Color=var(--pf-global--danger-color--100, #c9190b)]
- * @cssprop [--pf-c-search-input--m-success__toggle--before--BorderBottomColor=var(--pf-global--success-color--100, #3e8635)]
- * @cssprop [--pf-c-search-input--m-success__toggle--before--BorderBottomWidth=var(--pf-global--BorderWidth--md, 2px)]
- * @cssprop [--pf-c-search-input--m-success__toggle--hover--before--BorderBottomColor=var(--pf-global--success-color--100, #3e8635)]
- * @cssprop [--pf-c-search-input--m-success__toggle--focus--before--BorderBottomColor=var(--pf-global--success-color--100, #3e8635)]
- * @cssprop [--pf-c-search-input--m-success__toggle--active--before--BorderBottomColor=var(--pf-global--success-color--100, #3e8635)]
- * @cssprop [--pf-c-search-input--m-success__toggle--m-expanded--before--BorderBottomColor=var(--pf-global--success-color--100, #3e8635)]
- * @cssprop [--pf-c-search-input--m-success__toggle-status-icon--Color=var(--pf-global--success-color--100, #3e8635)]
- * @cssprop [--pf-c-search-input--m-warning__toggle--before--BorderBottomColor=var(--pf-global--warning-color--100, #f0ab00)]
- * @cssprop [--pf-c-search-input--m-warning__toggle--before--BorderBottomWidth=var(--pf-global--BorderWidth--md, 2px)]
- * @cssprop [--pf-c-search-input--m-warning__toggle--hover--before--BorderBottomColor=var(--pf-global--warning-color--100, #f0ab00)]
- * @cssprop [--pf-c-search-input--m-warning__toggle--focus--before--BorderBottomColor=var(--pf-global--warning-color--100, #f0ab00)]
- * @cssprop [--pf-c-search-input--m-warning__toggle--active--before--BorderBottomColor=var(--pf-global--warning-color--100, #f0ab00)]
- * @cssprop [--pf-c-search-input--m-warning__toggle--m-expanded--before--BorderBottomColor=var(--pf-global--warning-color--100, #f0ab00)]
- * @cssprop [--pf-c-search-input--m-warning__toggle-status-icon--Color=var(--pf-global--warning-color--100, #f0ab00)]
- * @cssprop [--pf-c-search-input__toggle-wrapper--not-last-child--MarginRight=var(--pf-global--spacer--xs, 0.25rem)]
- * @cssprop [--pf-c-search-input__toggle-wrapper--MaxWidth=calc(100% - var(--pf-global--spacer--lg, 1.5rem))]
- * @cssprop [--pf-c-search-input__toggle--m-placeholder__toggle-text--Color=var(--pf-global--Color--dark-200, #6a6e73)]
- * @cssprop [--pf-c-search-input__toggle-icon--toggle-text--MarginLeft=var(--pf-global--spacer--xs, 0.25rem)]
- * @cssprop [--pf-c-search-input__toggle-status-icon--MarginLeft=var(--pf-global--spacer--xs, 0.25rem)]
- * @cssprop [--pf-c-search-input__toggle-status-icon--Color=var(--pf-global--Color--100, #151515)]
- * @cssprop [--pf-c-search-input--m-plain__toggle-arrow--Color=var(--pf-global--Color--200, #6a6e73)]
- * @cssprop [--pf-c-search-input--m-plain--hover__toggle-arrow--Color=var(--pf-global--Color--100, #151515)]
- * @cssprop [--pf-c-search-input__toggle-clear--PaddingRight=var(--pf-global--spacer--sm, 0.5rem)]
- * @cssprop [--pf-c-search-input__toggle-clear--PaddingLeft=var(--pf-global--spacer--md, 1rem)]
- * @cssprop [--pf-c-search-input__toggle-clear--toggle-button--PaddingLeft=var(--pf-global--spacer--sm, 0.5rem)]
- * @cssprop [--pf-c-search-input__toggle-button--Color=var(--pf-global--Color--100, #151515)]
- * @cssprop [--pf-c-search-input__list-item--m-loading--PaddingTop=var(--pf-global--spacer--sm, 0.5rem)]
- * @cssprop [--pf-c-search-input__menu-content--MaxHeight=20rem;]
- **/
+ */
 @customElement('pf-search-input')
 export class PfSearchInput extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
+
   static readonly formAssociated = true;
+
   static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
   static instances: Set<PfSearchInput> = new Set<PfSearchInput>();
+
+  static {
+    if (!isServer) {
+      document.addEventListener('click', event => {
+        for (const instance of PfSearchInput.instances) {
+          instance._onOutsideClick(event);
+        }
+      });
+      document.addEventListener('focusout', () => {
+        for (const instance of PfSearchInput.instances) {
+          instance._onFocusOut();
+        }
+      });
+    }
+  }
 
   /** Accessible label for the search input */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
@@ -179,21 +134,6 @@ export class PfSearchInput extends LitElement {
     setItemSelected: (item, selected) => this.#setItemSelected(item, selected),
   });
 
-  static {
-    if (!isServer) {
-      document.addEventListener('click', event => {
-        for (const instance of PfSearchInput.instances) {
-          instance._onOutsideClick(event);
-        }
-      });
-      document.addEventListener('focusout', () => {
-        for (const instance of PfSearchInput.instances) {
-          instance._onFocusOut();
-        }
-      });
-    }
-  }
-
   connectedCallback(): void {
     super.connectedCallback();
     PfSearchInput.instances.add(this);
@@ -249,50 +189,45 @@ export class PfSearchInput extends LitElement {
     const { disabled, expanded, placeholder } = this;
     const { anchor = 'bottom', alignment = 'start', styles = {} } = this.#float;
     const { height, width } = this.getBoundingClientRect?.() || {};
-    const hideLightDomItems = !ComboboxController.supportsCrossRootActiveDescendant;
 
     return html`
-      <div 
-        id="outer"
-        style="${styleMap(styles)}"
-        class="${classMap({ disabled, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}"
-      >
+      <div id="outer"
+           style="${styleMap(styles)}"
+           class="${classMap({ disabled, expanded, [anchor]: !!anchor, [alignment]: !!alignment })}">
         <div id="toggle">
           <div class="search-icon">
             <pf-icon size="md" icon="search" set="fas">search</pf-icon>
           </div>
-          <input 
-            id="toggle-input"
-            @input=${this.#onChange}
-            @keyup=${this.#onSubmit}
-            @keydown=${this.#onKeyDown}
-            aria-disabled="${disabled}"
-            placeholder="${placeholder}"
-          >
+          <input id="toggle-input"
+                 aria-disabled="${disabled}"
+                 placeholder="${placeholder}"
+                 @input="${this.#onChange}"
+                 @keyup="${this.#onSubmit}"
+                 @keydown="${this.#onKeyDown}">
           <div class="close-button-container">
-            <pf-button 
-              @click="${this.#OnClose}" 
-              ?hidden="${this.#hideCloseButton()}" 
-              id="close-button"  
-              plain 
-              label="Close"
-            >
-              <pf-icon size="md" icon="close" set="patternfly">close</pf-icon>
+            <pf-button id="close-button"
+                       plain
+                       label="Close"
+                       ?hidden="${this.#hideCloseButton()}"
+                       @click="${this.#onClose}">
+              <pf-icon size="md"
+                       icon="close"
+                       set="patternfly">close</pf-icon>
             </pf-button>
           </div>
           <button type="button" aria-label="toggle button" inert class="visually-hidden" id="toggle-button"></button>
         </div>
-        <div 
-          id="listbox-container"
-          ?hidden="${!expanded}"
-          tabindex="-1"
-          style="${styleMap({
-            marginTop: `${height || 0}px`,
-            width: width ? `${width}px` : 'auto',
-            })}">
+        <div id="listbox-container"
+             ?hidden="${!expanded}"
+             tabindex="-1"
+             style="${styleMap({
+               marginTop: `${height || 0}px`,
+               width: width ? `${width}px` : 'auto',
+             })}">
           <div id="listbox">
             ${this.#combobox.renderItemsToShadowRoot()}
-            <slot ?hidden="${hideLightDomItems}"></slot>
+            <!-- insert \`<pf-option>\` and/or \`<pf-option-groups>\` here -->
+            <slot ?hidden="${!ComboboxController.supportsCrossRootActiveDescendant}"></slot>
           </div>
         </div>
       </div>
@@ -374,7 +309,7 @@ export class PfSearchInput extends LitElement {
     }
   }
 
-  async #OnClose() {
+  async #onClose() {
     if (this.expanded) {
       await this.hide();
     }
@@ -391,7 +326,7 @@ export class PfSearchInput extends LitElement {
     return false;
   }
 
-  #onChange(event: Event) {
+  #onChange() {
     this.value = this._toggleInput?.value;
     this.#internals.setFormValue(this.value ?? '');
     this.dispatchEvent(new PfSearchChangeEvent());

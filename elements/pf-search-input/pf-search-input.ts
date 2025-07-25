@@ -71,9 +71,6 @@ export class PfSearchInput extends LitElement {
   /** Accessible label for the search input */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
 
-  /** Multi listbox button text */
-  @property({ attribute: 'items-selected-text' }) itemsSelectedText = 'items selected';
-
   /** Whether the search input is disabled */
   @property({ type: Boolean, reflect: true }) disabled = false;
 

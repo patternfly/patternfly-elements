@@ -1,0 +1,42 @@
+<div class="container">
+  <pf-search-input id="search-input" placeholder="Search">
+    <pf-option>What is Red Hat Enterprise Linux?</pf-option>
+    <pf-option>How does Red Hat OpenShift work?</pf-option>
+    <pf-option>Why use Red Hat Ansible for automation?</pf-option>
+    <pf-option>Where can Red Hat OpenShift be deployed?</pf-option>
+    <pf-option>When should you use Red Hat Enterprise Linux?</pf-option>
+    <pf-option>What is Red Hat Satellite?</pf-option>
+    <pf-option>How does Red Hat integrate with AWS and other clouds?</pf-option>
+    <pf-option>Why choose Red Hat over other Linux vendors?</pf-option>
+    <pf-option>Where can I learn Red Hat technologies?</pf-option>
+    <pf-option>When does support end for RHEL versions?</pf-option>
+    <pf-option>What are Red Hat certifications?</pf-option>
+    <pf-option>How do you secure a RHEL server?</pf-option>
+    <pf-option>Why use OpenShift instead of vanilla Kubernetes?</pf-option>
+    <pf-option>Where is Red Hat headquartered?</pf-option>
+    <pf-option>When should you use Red Hat CoreOS?</pf-option>
+    <pf-option>What is Red Hat Insights?</pf-option>
+    <pf-option>How do you manage Red Hat subscriptions?</pf-option>
+    <pf-option>Why is RHEL considered enterprise-grade?</pf-option>
+    <pf-option>Where can I download RHEL for testing?</pf-option>
+    <pf-option>When was Red Hat founded?</pf-option>
+  </pf-search-input>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-search-input/pf-search-input.js';
+
+  const searchInput = document.getElementById('search-input');
+
+  searchInput.addEventListener('change', (event) => {
+    /* eslint-disable no-console */
+    console.log('Selected:', event.target.value);
+    /* eslint-disable no-console */
+  });
+</script>
+
+<style>
+  .container {
+    padding: 40px;
+  }
+</style>

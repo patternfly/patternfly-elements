@@ -158,18 +158,6 @@ export class PfSearchInput extends LitElement {
     }
   }
 
-  /**
-   * Set selected option
-   */
-  @property({ hasChanged: (a, b) => !arraysAreEquivalent(a, b) })
-  set selected(selected: PfOption) {
-    this.#combobox.selected = [selected];
-  }
-
-  get selected(): PfOption[] {
-    return this.#combobox.selected;
-  }
-
   /** List of options */
   get options(): PfOption[] {
     if (isServer) {
@@ -247,14 +235,6 @@ export class PfSearchInput extends LitElement {
     }
   }
 
-  @observes('selected')
-  private async selectedChanged(_: PfOption[], selected: PfOption[]) {
-    this.value = selected.map(x => x.value).join();
-    await this.updateComplete;
-    this._toggleInput!.value = this.value;
-  }
-
-
   @observes('value')
   private valueChanged() {
     this.#internals.setFormValue(this.value ?? '');
@@ -325,6 +305,9 @@ export class PfSearchInput extends LitElement {
 
   #onChange() {
     this.value = this._toggleInput?.value;
+    if (this.value !== this.#combobox.selected[0]?.value) {
+      this.#combobox.selected = [];
+    }
     this.#internals.setFormValue(this.value ?? '');
     this.dispatchEvent(new PfSearchChangeEvent());
   }
@@ -360,7 +343,10 @@ export class PfSearchInput extends LitElement {
 
   #setItemSelected(item: PfOption, selected: boolean) {
     item.selected = selected;
-    this.#setItemActive(item, selected);
+    if (selected) {
+      this.value = item.value;
+      this._toggleInput!.value = this.value;
+    }
   }
 
   #setItemActive(item: PfOption, active: boolean) {

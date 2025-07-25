@@ -330,12 +330,8 @@ export class PfSearchInput extends LitElement {
     }
   }
 
-  #delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
   async #showListbox() {
-    await this.#delay(10);
+    await new Promise(requestAnimationFrame);
     if (!this.disabled) {
       this.expanded ||= true;
     }

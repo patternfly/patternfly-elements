@@ -26,8 +26,8 @@ export default pfeDevServerConfig({
     },
     inputMap: {
       imports: {
+        '@patternfly/icons/': './node_modules/@patternfly/icons/',
         '@patternfly/pfe-tools/environment.js': './_site/tools/environment.js',
-        ...await getPatternflyIconNodemodulesImports(import.meta.url),
       },
     },
   },

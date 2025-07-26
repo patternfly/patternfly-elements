@@ -14,9 +14,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
           cache: npm
-      
       # Set up GitHub Actions caching for Wireit.
       - uses: google/wireit@setup-github-actions-caching/v2
 
@@ -44,10 +43,7 @@ jobs:
       - name: Transform Tags
         id: get-tags
         if: ${{ steps.changesets.outputs.published == 'true' }}
-        run: |
-          tags=$( echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -c 'map([.name,.version]) | map(join("@")) | join(", ")' )
-          echo "$tags"
-          echo "::set-output name=tags::$tags"
+        run: echo "tags=$( echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -c 'map([.name,.version]) | map(join("@")) | join(", ")' )" >> $GITHUB_OUTPUT
 
       - name: Bundle
         id: bundle

@@ -23,6 +23,7 @@ import { join } from 'node:path';
 const replace = fromRollup(rollupReplace);
 
 type BaseConfig = DevServerConfig & PfeConfig;
+
 export interface PfeDevServerConfigOptions extends BaseConfig {
   hostname?: string;
   litcssOptions?: LitCSSOptions;

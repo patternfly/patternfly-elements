@@ -1,4 +1,4 @@
-import { nothing, type ReactiveController, type ReactiveControllerHost } from 'lit';
+import { isServer, nothing, type ReactiveController, type ReactiveControllerHost } from 'lit';
 import type { ActivedescendantControllerOptions } from './activedescendant-controller.js';
 import type { RovingTabindexControllerOptions } from './roving-tabindex-controller.js';
 import type { ATFocusController } from './at-focus-controller';
@@ -211,15 +211,17 @@ export class ComboboxController<
 
   // Hide listbox on focusout
   static {
-    document.addEventListener('focusout', event => {
-      const target = event.target as HTMLElement;
-      for (const host of ComboboxController.hosts) {
-        if (host instanceof Node && host.contains(target)) {
-          const instance = ComboboxController.instances.get(host);
-          instance?._onFocusoutElement();
+    if (!isServer) {
+      document.addEventListener('focusout', event => {
+        const target = event.target as HTMLElement;
+        for (const host of ComboboxController.hosts) {
+          if (host instanceof Node && host.contains(target)) {
+            const instance = ComboboxController.instances.get(host);
+            instance?._onFocusoutElement();
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   private options: RequireProps<ComboboxControllerOptions<Item>,

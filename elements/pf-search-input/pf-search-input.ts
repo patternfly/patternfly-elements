@@ -51,23 +51,6 @@ export class PfSearchInput extends LitElement {
     delegatesFocus: true,
   };
 
-  static instances: Set<PfSearchInput> = new Set<PfSearchInput>();
-
-  static {
-    if (!isServer) {
-      document.addEventListener('click', event => {
-        for (const instance of PfSearchInput.instances) {
-          instance._onOutsideClick(event);
-        }
-      });
-      document.addEventListener('focusout', () => {
-        for (const instance of PfSearchInput.instances) {
-          instance._onFocusOut();
-        }
-      });
-    }
-  }
-
   /** Accessible label for the search input */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
 
@@ -76,11 +59,6 @@ export class PfSearchInput extends LitElement {
 
   /** Whether the search input's listbox is expanded */
   @property({ type: Boolean, reflect: true }) expanded = false;
-
-  /**
-   * Enable to flip listbox when it reaches boundary
-   */
-  @property({ attribute: 'enable-flip', type: Boolean }) enableFlip = false;
 
   /** Current form value */
   @property() value?: string;
@@ -133,29 +111,10 @@ export class PfSearchInput extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    PfSearchInput.instances.add(this);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-    PfSearchInput.instances.delete(this);
-  }
-
-  // Function to handle the closing of popover on outside click
-  @bound private _onOutsideClick(event: MouseEvent) {
-    const path = event.composedPath();
-    if (!path.includes(this._searchInputContainer)) {
-      if (this.expanded) {
-        this.expanded = false;
-      }
-    }
-  }
-
-  // Function to handle the closing of popover on focus out
-  @bound private _onFocusOut() {
-    if (this.expanded) {
-      this.expanded = false;
-    }
   }
 
   /** List of options */
@@ -243,7 +202,7 @@ export class PfSearchInput extends LitElement {
 
   async #doExpand() {
     try {
-      await this.#float.show({ placement: this.position || 'bottom', flip: !!this.enableFlip });
+      await this.#float.show({ placement: this.position || 'bottom', flip: true });
       return true;
     } catch {
       return false;

@@ -1,5 +1,10 @@
 # @patternfly/elements
 
+## 4.1.1
+### Patch Changes
+
+- d36adee: `<pf-tooltip>`: hide content when copy/pasting tooltip elements
+
 ## 4.1.0
 ### Minor Changes
 

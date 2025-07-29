@@ -21,6 +21,7 @@
 #tooltip {
   --_timestamp-text-decoration: none;
   --_timestamp-text-underline-offset: initial;
+  user-select: none;
   display: block;
   opacity: 0;
   pointer-events: none;
@@ -70,6 +71,7 @@
 
 .open #tooltip {
   opacity: 1;
+  user-select: initial;
 }
 
 /* LEFT */

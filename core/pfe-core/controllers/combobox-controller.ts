@@ -368,11 +368,6 @@ export class ComboboxController<
     const expanded = this.options.isExpanded();
     this.#button?.setAttribute('aria-expanded', String(expanded));
     this.#input?.setAttribute('aria-expanded', String(expanded));
-    if (this.#hasTextInput) {
-      this.#button?.setAttribute('tabindex', '-1');
-    } else {
-      this.#button?.removeAttribute('tabindex');
-    }
     this.#initLabels();
   }
 

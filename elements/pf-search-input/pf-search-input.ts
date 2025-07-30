@@ -83,13 +83,14 @@ export class PfSearchInput extends LitElement {
 
   @query('#placeholder') private _placeholder?: PfOption;
 
-  @query('#outer') private _searchInputContainer!: HTMLElement;
-
   #internals = InternalsController.of(this);
 
   #float = new FloatingDOMController(this, { content: () => this._listboxContainer });
 
   #slots = new SlotController(this, null, 'placeholder');
+
+  /** True when the user just clicked the close button */
+  #clickedCloseButton = false;
 
   #combobox = ComboboxController.of(this, {
     getItems: () => this.options,
@@ -100,7 +101,7 @@ export class PfSearchInput extends LitElement {
     getListboxElement: () => this._listbox ?? null,
     getToggleButton: () => this._toggleButton ?? null,
     getComboboxInput: () => this._toggleInput ?? null,
-    isExpanded: () => this.expanded,
+    isExpanded: () => this.#setIsExpanded(),
     requestShowListbox: () => this.#showListbox(),
     requestHideListbox: () => void (this.expanded &&= false),
     setItemHidden: (item, hidden) => (item.id !== 'placeholder') && void (item.hidden = hidden),
@@ -149,17 +150,17 @@ export class PfSearchInput extends LitElement {
                  @keyup="${this.#onSubmit}"
                  @keydown="${this.#onKeyDown}">
           <div class="close-button-container">
-            <pf-button id="close-button"
+            <pf-button id="toggle-button"
+                       class="close-button"
                        plain
                        label="Close"
                        ?hidden="${this.#hideCloseButton()}"
-                       @click="${this.#onClose}">
+                       @click="${this.#onClickCloseButton}">
               <pf-icon size="md"
                        icon="close"
                        set="patternfly">close</pf-icon>
             </pf-button>
           </div>
-          <button type="button" aria-label="toggle button" inert class="visually-hidden" id="toggle-button"></button>
         </div>
         <div id="listbox-container"
              ?hidden="${!expanded}"
@@ -245,13 +246,9 @@ export class PfSearchInput extends LitElement {
     }
   }
 
-  async #onClose() {
-    if (this.expanded) {
-      await this.hide();
-    }
-    this.value = '';
-    this._toggleInput!.value = this.value;
-    this.#combobox.selected = [];
+  async #onClickCloseButton() {
+    this._toggleInput!.value = '';
+    this.#clickedCloseButton = true;
     this._toggleInput?.focus();
   }
 
@@ -309,6 +306,15 @@ export class PfSearchInput extends LitElement {
     if (this.expanded && active) {
       item?.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'nearest' });
     }
+  }
+
+  #setIsExpanded() {
+    if (this.#clickedCloseButton) {
+      this.#clickedCloseButton = false;
+      // prevent the listbox from showing when we only intend to clear the input
+      return true;
+    }
+    return this.expanded;
   }
 }
 

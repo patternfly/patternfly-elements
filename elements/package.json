@@ -74,7 +74,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "analyze": "cem generate",
+    "analyze": "cem generate && node ../scripts/cem-demo-index.ts",
     "build": "wireit",
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },

@@ -8,7 +8,7 @@ function isCustomElementDeclaration(decl: M.Declaration): decl is M.CustomElemen
   return !!(decl as M.CustomElementDeclaration).customElement;
 }
 
-const RE = /^https:\/\/patternflyelements\.com\/components\/(?<slug>[\w-]+)\//;
+const RE = /^https:\/\/patternflyelements\.org\/components\/(?<slug>[\w-]+)\//;
 
 const copy = structuredClone(manifest) as M.Package;
 
@@ -33,7 +33,7 @@ await writeFile('custom-elements.json', JSON.stringify({
     declarations: module.declarations?.map(decl => ({
       ...decl,
       demos:
-          !isCustomElementDeclaration(decl) ? decl
+          !isCustomElementDeclaration(decl) ? undefined
         : decl.demos?.map(demo => isMainDemo(demo) ? ({
           ...demo,
           url: `https://patternflyelements.com/components/${getSlug(demo)}/demo/`,

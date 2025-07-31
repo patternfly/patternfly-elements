@@ -13,10 +13,8 @@ import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 
-import { arraysAreEquivalent } from '@patternfly/pfe-core/functions/arraysAreEquivalent.js';
 import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 import { PfOption } from '../pf-select/pf-option.js';
-import { bound } from '@patternfly/pfe-core/decorators.js';
 import styles from './pf-search-input.css';
 
 /** Fired when a `<pf-search-input>` element's value changes */
@@ -248,6 +246,8 @@ export class PfSearchInput extends LitElement {
 
   async #onClickCloseButton() {
     this._toggleInput!.value = '';
+    this.#updateValue(this._toggleInput?.value ?? '');
+    this.#combobox.selected = [];
     this.#clickedCloseButton = true;
     this._toggleInput?.focus();
   }
@@ -260,18 +260,29 @@ export class PfSearchInput extends LitElement {
   }
 
   #onChange() {
-    this.value = this._toggleInput?.value;
+    this.#updateValue(this._toggleInput?.value ?? '');
     if (this.value !== this.#combobox.selected[0]?.value) {
       this.#combobox.selected = [];
     }
-    this.#internals.setFormValue(this.value ?? '');
-    this.dispatchEvent(new PfSearchChangeEvent());
+    // Will remove after review
+    // for (const item of this.#combobox.items){
+    //   if (item.hasAttribute('selected')) {
+    //     if(item.value !== this.value){
+    //       this.#setItemSelected(item, false);
+    //       this.requestUpdate();
+    //     }
+    //   }
+    // }
   }
 
   #onSubmit(event: KeyboardEvent) {
     if (event.key === 'Enter' || event.key === ' ') {
       this.dispatchEvent(new PfSearchChangeEvent());
     }
+  }
+
+  #updateValue(value: string) {
+    this.value = value;
   }
 
   #onKeyDown(event: KeyboardEvent) {
@@ -296,8 +307,8 @@ export class PfSearchInput extends LitElement {
   #setItemSelected(item: PfOption, selected: boolean) {
     item.selected = selected;
     if (selected) {
-      this.value = item.value;
-      this._toggleInput!.value = this.value;
+      this._toggleInput!.value = item.value;
+      this.#updateValue(this._toggleInput?.value ?? '');
     }
   }
 

@@ -15,9 +15,8 @@ const copy = structuredClone(manifest) as M.Package;
 const getSlug = (demo: M.Demo) =>
   demo.url.match(RE)?.groups?.slug ?? '';
 
-const isMainDemo = (demo: M.Demo): boolean =>
-  demo.url.endsWith(`${getSlug(demo)}/`)
-|| demo.url.endsWith('demo/');
+const isMainDemo = (tagName: string, demo: M.Demo): boolean =>
+  demo.url.endsWith(`demo/${tagName}/`);
 
 // replace all canonical demos with /
 // e.g.
@@ -34,11 +33,12 @@ await writeFile('custom-elements.json', JSON.stringify({
       ...decl,
       demos:
           !isCustomElementDeclaration(decl) ? undefined
-        : decl.demos?.map(demo => isMainDemo(demo) ? ({
+        : decl.demos?.map(demo => isMainDemo(decl.tagName!, demo) ? ({
           ...demo,
           url: `https://patternflyelements.com/components/${getSlug(demo)}/demo/`,
         }) : demo)
-            .sort((a, b) => isMainDemo(a) ? -1 : isMainDemo(b) ? 1 : 0),
+            .sort((a, b) =>
+          isMainDemo(decl.tagName!, a) ? -1 : isMainDemo(decl.tagName!, b) ? 1 : 0),
     })),
   })),
 }, null, 2), 'utf-8');

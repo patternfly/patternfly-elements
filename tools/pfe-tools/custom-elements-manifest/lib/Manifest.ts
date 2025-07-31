@@ -16,7 +16,7 @@ import type {
   Slot,
 } from 'custom-elements-manifest/schema';
 
-import { join, normalize } from 'node:path';
+import { dirname, join, normalize } from 'node:path';
 import { readFileSync } from 'node:fs';
 
 import { getAllPackages } from './get-all-packages.js';
@@ -301,7 +301,7 @@ export class Manifest {
     const manifest = this;
     const { prettyTag } = Manifest;
     return this.getDemos(tagName).map(demo => {
-      const permalink = demo.url.replace(options.demoURLPrefix, '/');
+      const permalink = new URL(demo.url).pathname;
 
       /**
        * `/components/`
@@ -328,6 +328,7 @@ export class Manifest {
           .replace('.html', '');
       return {
         tagName,
+        isMainElementDemo,
         primaryElementName,
         permalink,
         slug,

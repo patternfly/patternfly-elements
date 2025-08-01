@@ -1,4 +1,4 @@
-import { nothing, type ReactiveController, type ReactiveControllerHost } from 'lit';
+import { isServer, nothing, type ReactiveController, type ReactiveControllerHost } from 'lit';
 import type { ActivedescendantControllerOptions } from './activedescendant-controller.js';
 import type { RovingTabindexControllerOptions } from './roving-tabindex-controller.js';
 import type { ATFocusController } from './at-focus-controller';
@@ -188,6 +188,10 @@ export class ComboboxController<
 
   private static langsRE = new RegExp(ComboboxController.langs.join('|'));
 
+  private static instances = new WeakMap<ReactiveControllerHost, ComboboxController<HTMLElement>>();
+
+  private static hosts = new Set<ReactiveControllerHost>();
+
   static {
     // apply visually-hidden styles
     this.#alertTemplate.innerHTML = `
@@ -203,6 +207,21 @@ export class ComboboxController<
          inline-size: 1px;
         "></div>
       `;
+  }
+
+  // Hide listbox on focusout
+  static {
+    if (!isServer) {
+      document.addEventListener('focusout', event => {
+        const target = event.target as HTMLElement;
+        for (const host of ComboboxController.hosts) {
+          if (host instanceof Node && host.contains(target)) {
+            const instance = ComboboxController.instances.get(host);
+            instance?._onFocusoutElement();
+          }
+        }
+      });
+    }
   }
 
   private options: RequireProps<ComboboxControllerOptions<Item>,
@@ -333,6 +352,8 @@ export class ComboboxController<
       isItemDisabled: this.options.isItemDisabled,
       setItemSelected: this.options.setItemSelected,
     });
+    ComboboxController.instances.set(host, this);
+    ComboboxController.hosts.add(host);
   }
 
   async hostConnected(): Promise<void> {
@@ -347,16 +368,29 @@ export class ComboboxController<
     const expanded = this.options.isExpanded();
     this.#button?.setAttribute('aria-expanded', String(expanded));
     this.#input?.setAttribute('aria-expanded', String(expanded));
-    if (this.#hasTextInput) {
-      this.#button?.setAttribute('tabindex', '-1');
-    } else {
-      this.#button?.removeAttribute('tabindex');
-    }
     this.#initLabels();
   }
 
   hostDisconnected(): void {
     this.#fc?.hostDisconnected();
+  }
+
+  disconnect(): void {
+    ComboboxController.instances.delete(this.host);
+    ComboboxController.hosts.delete(this.host);
+  }
+
+  async _onFocusoutElement(): Promise<void> {
+    if (this.#hasTextInput && this.options.isExpanded()) {
+      const root = this.#element?.getRootNode();
+      await new Promise(requestAnimationFrame);
+      if (root instanceof ShadowRoot || root instanceof Document) {
+        const { activeElement } = root;
+        if (!this.#element?.contains(activeElement)) {
+          this.#hide();
+        }
+      }
+    }
   }
 
   /**

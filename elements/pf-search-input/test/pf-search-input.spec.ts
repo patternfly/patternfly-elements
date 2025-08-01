@@ -855,5 +855,58 @@ describe('<pf-search-input>', function() {
         });
       });
     });
+
+    describe('with `disabled` attribute', function() {
+      let element: PfSearchInput;
+      const updateComplete = () => element.updateComplete;
+      const focus = () => element.focus();
+
+      beforeEach(async function() {
+        element = await createFixture<PfSearchInput>(html`
+          <pf-search-input id="disabled-search" disabled>
+            <pf-option value="1">1</pf-option>
+            <pf-option value="2">2</pf-option>
+            <pf-option value="3">3</pf-option>
+          </pf-search-input>
+          <label for="disabled-search">Disabled</label>`);
+        await updateComplete();
+      });
+
+      it('passes aXe audit', async function() {
+        await expect(element).to.be.accessible();
+      });
+
+      it('is marked as disabled in accessibility tree', async function() {
+        expect(await a11ySnapshot()).to.axContainQuery({
+          role: 'combobox',
+          disabled: true,
+        });
+      });
+
+      describe('focus()', function() {
+        beforeEach(focus);
+        beforeEach(updateComplete);
+        describe('ArrowDown', function() {
+          beforeEach(press('ArrowDown'));
+          beforeEach(updateComplete);
+
+          it('does not open on focus and keyboard interaction', async function() {
+            // Should remain closed
+            expect(element.expanded).to.be.false;
+            expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+          });
+        });
+      });
+
+      describe('clicking the element', function() {
+        beforeEach(async function() {
+          await clickElementAtOffset(element, [10, 10]);
+        });
+        it('cannot be interacted with via click', async function() {
+          expect(element.expanded).to.be.false;
+          expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+        });
+      });
+    });
   });
 });

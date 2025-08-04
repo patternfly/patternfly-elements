@@ -89,6 +89,7 @@ export class PfSearchInput extends LitElement {
 
   /** True when the user just clicked the close button */
   #clickedCloseButton = false;
+  #setExpanded = false;
 
   #combobox = ComboboxController.of(this, {
     getItems: () => this.options,
@@ -299,7 +300,16 @@ export class PfSearchInput extends LitElement {
 
   async #showListbox() {
     await new Promise(requestAnimationFrame);
-    if (!this.disabled) {
+    if (this.disabled) {
+      return;
+    };
+
+    if (this.#setExpanded) {
+      // If expanded is set to true on clicking close button
+      // set expanded to false
+      this.#setExpanded = false;
+      this.expanded = false;
+    } else {
       this.expanded ||= true;
     }
   }
@@ -322,10 +332,7 @@ export class PfSearchInput extends LitElement {
   #setIsExpanded() {
     if (this.#clickedCloseButton) {
       this.#clickedCloseButton = false;
-      setTimeout(() =>{
-        this.hide();
-        // prevent the listbox from showing when we only intend to clear the input
-      }, 10);
+      this.#setExpanded = true;
       return true;
     }
     return this.expanded;

@@ -54,7 +54,7 @@ When focus is on the toggle, the following keyboard interactions apply:
 | Key                    | Function                                                                               |
 | ---------------------- | -------------------------------------------------------------------------------------- |
 | <kbd>Down Arrow</kbd>  | Opens the listbox and moves focus to the first listbox item.                           |
-| <kbd>Tab</kbd>         | Moves focus out of element onto the next focusable item and closes listbox.            |
+| <kbd>Tab</kbd>         | Moves focus to the close button if visible; otherwise, moves to the next focusable element, then closes the listbox.|
 | <kbd>Shift + Tab</kbd> | Moves focus out of element onto the previous focusable item and closes listbox.        |
 
 #### Listbox options

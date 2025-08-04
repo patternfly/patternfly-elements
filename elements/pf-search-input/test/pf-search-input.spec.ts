@@ -988,5 +988,133 @@ describe('<pf-search-input>', function() {
         });
       });
     });
+
+    describe('Outside click behavior', function() {
+      let element: PfSearchInput;
+      const updateComplete = () => element.updateComplete;
+      const focus = () => element.focus();
+      let outsideElement: HTMLElement;
+
+      beforeEach(async function() {
+        element = await createFixture<PfSearchInput>(html`
+          <pf-search-input>
+            <pf-option value="11">11</pf-option>
+            <pf-option value="12">12</pf-option>
+            <pf-option value="13">13</pf-option>
+            <pf-option value="21">21</pf-option>
+            <pf-option value="22">22</pf-option>
+            <pf-option value="23">23</pf-option>
+          </pf-search-input>
+        `);
+
+        // Create a dummy div to represent an "outside" area
+        outsideElement = document.createElement('div');
+        outsideElement.style.width = '200px';
+        outsideElement.style.height = '200px';
+        document.body.appendChild(outsideElement);
+      });
+
+      describe('focus()', function() {
+        beforeEach(focus);
+        beforeEach(updateComplete);
+
+        describe('"1"', function() {
+          beforeEach(press('1'));
+          beforeEach(() => aTimeout(300));
+          beforeEach(updateComplete);
+
+          it('should open the listbox when focused', function() {
+            expect(element.expanded).to.be.true;
+          });
+
+          it('only shows options that start with "1"', async function() {
+            expect(getVisibleOptionValues(element)).to.deep.equal([
+              '11',
+              '12',
+              '13',
+            ]);
+          });
+
+          describe('click outside the element', function() {
+            // Click outside element
+            beforeEach(() => clickElementAtCenter(outsideElement));
+            beforeEach(() => aTimeout(300));
+            beforeEach(updateComplete);
+
+            it('should close the listbox when clicking outside', async function() {
+              expect(element.expanded).to.be.false;
+            });
+
+            it('should keep the entered value after outside click', async function() {
+              const input = element.shadowRoot?.querySelector('input');
+              expect(input?.value).to.equal('1');
+            });
+          });
+        });
+      });
+    });
+
+    describe('on focus-out behavior', function() {
+      let element: PfSearchInput;
+      const updateComplete = () => element.updateComplete;
+      const focus = () => element.focus();
+
+      beforeEach(async function() {
+        element = await createFixture<PfSearchInput>(html`
+          <pf-search-input>
+            <pf-option value="11">11</pf-option>
+            <pf-option value="12">12</pf-option>
+            <pf-option value="13">13</pf-option>
+            <pf-option value="21">21</pf-option>
+            <pf-option value="22">22</pf-option>
+            <pf-option value="23">23</pf-option>
+          </pf-search-input>
+        `);
+
+        beforeEach(updateComplete);
+      });
+
+      describe('focus()', function() {
+        beforeEach(focus);
+        beforeEach(() => aTimeout(300));
+        beforeEach(updateComplete);
+
+        describe('"1"', function() {
+          beforeEach(press('1'));
+          beforeEach(() => aTimeout(300));
+          beforeEach(updateComplete);
+
+          it('should open the listbox when focused', function() {
+            expect(element.expanded).to.be.true;
+          });
+
+          it('only shows options that start with "1"', async function() {
+            expect(getVisibleOptionValues(element)).to.deep.equal([
+              '11',
+              '12',
+              '13',
+            ]);
+          });
+
+          describe('move the focus out of the element', function() {
+            beforeEach(press('Tab'));
+            beforeEach(() => aTimeout(300));
+            beforeEach(updateComplete);
+            beforeEach(press('Tab'));
+            beforeEach(() => aTimeout(300));
+            beforeEach(updateComplete);
+
+            it('should close the listbox when focused out', async function() {
+              expect(element.expanded).to.be.false;
+            });
+
+            it('should keep the entered value after focus out', async function() {
+              const input = element.shadowRoot?.querySelector('input');
+              expect(input?.value).to.equal('1');
+            });
+          });
+        });
+      });
+    });
   });
 });

@@ -657,28 +657,6 @@ describe('<pf-search-input>', function() {
           });
         });
 
-        describe('clicking the close button', function() {
-          beforeEach(async function() {
-            await clickElementAtOffset(element, [-10, 10]);
-          });
-
-          it('hides the listbox', async function() {
-            expect(element.expanded).not.to.be.true;
-            expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-          });
-
-          it('hides the close button', async function() {
-            expect(await a11ySnapshot()).not.to.axContainQuery({
-              name: 'close',
-              role: 'button',
-            });
-          });
-
-          it('removes the selected option value', async function() {
-            expect(getSelectedOptionValue(element)).to.deep.equal([]);
-          });
-        });
-
         describe('"p"', function() {
           beforeEach(press('p'));
           beforeEach(() => aTimeout(300));
@@ -896,6 +874,22 @@ describe('<pf-search-input>', function() {
             expect(await a11ySnapshot()).to.not.axContainRole('listbox');
           });
         });
+
+        describe('"1" when input is disabled', function() {
+          beforeEach(press('1'));
+          beforeEach(() => aTimeout(300));
+          beforeEach(updateComplete);
+
+          it('does not show any options', async function() {
+            expect(element.expanded).to.be.false;
+            expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+          });
+
+          it('does not add any value to the input', async function() {
+            const input = element.shadowRoot?.querySelector('input');
+            expect(input?.value).to.equal('');
+          });
+        });
       });
 
       describe('clicking the element', function() {
@@ -905,6 +899,92 @@ describe('<pf-search-input>', function() {
         it('cannot be interacted with via click', async function() {
           expect(element.expanded).to.be.false;
           expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+        });
+      });
+    });
+
+    describe('clicking the close button', function() {
+      let element: PfSearchInput;
+      const updateComplete = () => element.updateComplete;
+      const focus = () => element.focus();
+
+      beforeEach(async function() {
+        element = await createFixture<PfSearchInput>(html`
+          <pf-search-input id="disabled-search" disabled>
+            <pf-option value="1">1</pf-option>
+            <pf-option value="2">2</pf-option>
+            <pf-option value="3">3</pf-option>
+          </pf-search-input>
+          <label for="disabled-search">Disabled</label>`);
+        await updateComplete();
+      });
+
+      it('passes aXe audit', async function() {
+        await expect(element).to.be.accessible();
+      });
+
+      describe('clicking the close button when list box is open', function() {
+        beforeEach(async function() {
+          await clickElementAtOffset(element, [-10, 10]);
+        });
+
+        it('hides the listbox', async function() {
+          expect(element.expanded).not.to.be.true;
+          expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+        });
+
+        it('hides the close button', async function() {
+          expect(await a11ySnapshot()).not.to.axContainQuery({
+            name: 'close',
+            role: 'button',
+          });
+        });
+
+        it('removes the selected option value', async function() {
+          expect(getSelectedOptionValue(element)).to.deep.equal([]);
+        });
+
+        it('clears the input value', async function() {
+          const input = element.shadowRoot?.querySelector('input');
+          expect(input?.value).to.equal('');
+        });
+      });
+
+      describe('clicking the close button when list box is closed and input has value', function() {
+        describe('focus()', function() {
+          beforeEach(focus);
+          beforeEach(updateComplete);
+          describe(' press "z"', function() {
+            beforeEach(press('z'));
+            beforeEach(() => aTimeout(300));
+            beforeEach(updateComplete);
+
+            it('does not show any options', async function() {
+              expect(element.expanded).to.be.false;
+              expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+            });
+          });
+
+          beforeEach(async function() {
+            await clickElementAtOffset(element, [-10, 10]);
+          });
+
+          it('hides the listbox', async function() {
+            expect(element.expanded).not.to.be.true;
+            expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+          });
+
+          it('hides the close button', async function() {
+            expect(await a11ySnapshot()).not.to.axContainQuery({
+              name: 'close',
+              role: 'button',
+            });
+          });
+
+          it('clears the input value', async function() {
+            const input = element.shadowRoot?.querySelector('input');
+            expect(input?.value).to.equal('');
+          });
         });
       });
     });

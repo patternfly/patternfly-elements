@@ -244,7 +244,7 @@ export class PfSearchInput extends LitElement {
     }
   }
 
-  async #onClickCloseButton() {
+  #onClickCloseButton() {
     this._toggleInput!.value = '';
     this.#updateValue(this._toggleInput?.value ?? '');
     this.#combobox.selected = [];
@@ -322,7 +322,10 @@ export class PfSearchInput extends LitElement {
   #setIsExpanded() {
     if (this.#clickedCloseButton) {
       this.#clickedCloseButton = false;
-      // prevent the listbox from showing when we only intend to clear the input
+      setTimeout(() =>{
+        this.hide();
+        // prevent the listbox from showing when we only intend to clear the input
+      }, 10);
       return true;
     }
     return this.expanded;

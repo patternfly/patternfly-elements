@@ -265,15 +265,6 @@ export class PfSearchInput extends LitElement {
     if (this.value !== this.#combobox.selected[0]?.value) {
       this.#combobox.selected = [];
     }
-    // Will remove after review
-    // for (const item of this.#combobox.items){
-    //   if (item.hasAttribute('selected')) {
-    //     if(item.value !== this.value){
-    //       this.#setItemSelected(item, false);
-    //       this.requestUpdate();
-    //     }
-    //   }
-    // }
   }
 
   #onSubmit(event: KeyboardEvent) {

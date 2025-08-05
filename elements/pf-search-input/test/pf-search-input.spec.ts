@@ -1116,5 +1116,110 @@ describe('<pf-search-input>', function() {
         });
       });
     });
+
+    describe('form submission with pf-search-input', function() {
+      let form: HTMLFormElement;
+      let searchInput: PfSearchInput;
+      const updateComplete = () => searchInput.updateComplete;
+      const focus = () => searchInput.focus();
+      let submittedData: FormData | null;
+
+      beforeEach(async function() {
+        form = await createFixture<HTMLFormElement>(html`
+          <form>
+            <pf-search-input name="search">
+              <pf-option value="Alabama">Alabama</pf-option>
+              <pf-option value="New York">New York</pf-option>
+              <pf-option value="New Jersey">New Jersey</pf-option>
+            </pf-search-input>
+            <button type="submit">Submit</button>
+          </form>
+        `);
+
+        searchInput = form.querySelector('pf-search-input')!;
+        beforeEach(updateComplete);
+
+        form.addEventListener('submit', e => {
+          e.preventDefault();
+          submittedData = new FormData(form);
+        });
+      });
+
+      describe('when a user types and selects an option', function() {
+        describe('focus', function() {
+          beforeEach(focus);
+          beforeEach(() => aTimeout(300));
+          beforeEach(updateComplete);
+          describe('press `New`', function() {
+            beforeEach(updateComplete);
+            beforeEach(() => aTimeout(300));
+            beforeEach(press('N'));
+            beforeEach(() => aTimeout(300));
+            beforeEach(press('e'));
+            beforeEach(() => aTimeout(300));
+            beforeEach(press('w'));
+
+            describe('select the first option starting with `New` and submit the form', function() {
+              beforeEach(updateComplete);
+              beforeEach(() => aTimeout(300));
+              beforeEach(press('ArrowDown'));
+              beforeEach(() => aTimeout(300));
+              beforeEach(press('Enter'));
+              beforeEach(updateComplete);
+
+              it('should select the option', function() {
+                expect(getSelectedOptionValue(searchInput)).to.deep.equal([
+                  'New York',
+                ]);
+              });
+
+              it('should close the dropdown after selection', function() {
+                expect(searchInput.expanded).to.be.false;
+              });
+
+              it('should keep selected value in input after submission', function() {
+                const input = searchInput.shadowRoot?.querySelector('input');
+                expect(input?.value).to.equal('New York');
+              });
+
+              describe('on form submit event', function() {
+                it('should submit the selected value from pf-search-input', async function() {
+                  const event = new SubmitEvent('submit', {
+                    bubbles: true,
+                    cancelable: true,
+                  });
+
+                  form.dispatchEvent(event);
+                  expect(event.defaultPrevented).to.be.true;
+
+                  expect(submittedData).to.not.be.null;
+                  expect(submittedData?.get('search')).to.equal('New York');
+                });
+              });
+
+              describe('on submit button click', function() {
+                it('should submit the selected value', async function() {
+                  form.querySelector('button')?.click();
+                  beforeEach(() => aTimeout(300));
+
+                  expect(submittedData).to.not.be.null;
+                  expect(submittedData?.get('search')).to.equal('New York');
+                });
+              });
+
+              describe('form submit on clicking `enter` key', function() {
+                beforeEach(press('Enter'));
+                beforeEach(updateComplete);
+
+                it('should submit the selected value', function() {
+                  expect(submittedData).to.not.be.null;
+                  expect(submittedData?.get('search')).to.equal('New York');
+                });
+              });
+            });
+          });
+        });
+      });
+    });
   });
 });

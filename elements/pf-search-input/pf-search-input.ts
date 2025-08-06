@@ -248,7 +248,6 @@ export class PfSearchInput extends LitElement {
   #onClickCloseButton() {
     this._toggleInput!.value = '';
     this.#updateValue(this._toggleInput?.value ?? '');
-    this.#combobox.selected = [];
     this.#clickedCloseButton = true;
     this._toggleInput?.focus();
   }
@@ -262,9 +261,6 @@ export class PfSearchInput extends LitElement {
 
   #onChange() {
     this.#updateValue(this._toggleInput?.value ?? '');
-    if (this.value !== this.#combobox.selected[0]?.value) {
-      this.#combobox.selected = [];
-    }
   }
 
   #onSubmit(event: KeyboardEvent) {
@@ -275,6 +271,11 @@ export class PfSearchInput extends LitElement {
 
   #updateValue(value: string) {
     this.value = value;
+    // it's necessary to reset the 'selected' state of combobox
+    // since otherwise, combobox controller will attempt to prevent us from
+    // re-selecting the last-selected item, even though pf-search-input
+    // doesn't have a selected property
+    this.#combobox.selected = [];
   }
 
   #onKeyDown(event: KeyboardEvent) {

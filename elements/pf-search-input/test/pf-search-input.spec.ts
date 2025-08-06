@@ -4,23 +4,12 @@ import { PfSearchInput } from '../pf-search-input.js';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { clickElementAtCenter, clickElementAtOffset } from '@patternfly/pfe-tools/test/utils.js';
-import type { PfOption } from '../../pf-select/pf-option.js';
 
 function press(key: string) {
   return async function() {
     await sendKeys({ press: key });
   };
 }
-
-/**
- * Get the value of the first selected option
- * @param element pf-select
- * @returns the value of the selected option, or undefined if none selected
- */
-function getSelectedOptionValue(element: PfSearchInput): string[] {
-  return Array.from(element.querySelectorAll<PfOption>('[selected]'), x => x.value);
-}
-
 
 // a11yShapshot does not surface the options
 function getVisibleOptionValues(element: PfSearchInput): string[] {
@@ -385,9 +374,7 @@ describe('<pf-search-input>', function() {
               beforeEach(updateComplete);
 
               it('selects option 3', function() {
-                expect(getSelectedOptionValue(element)).to.deep.equal([
-                  '3',
-                ]);
+                expect(element.value).to.equal('3');
               });
 
               it('exposes selection to assistive technology', async function() {
@@ -425,7 +412,7 @@ describe('<pf-search-input>', function() {
     });
   });
 
-  describe('text input interaction', function() {
+  describe('with alphabetically sorted items', function() {
     let element: PfSearchInput;
     const label = 'label';
     const updateComplete = () => element.updateComplete;
@@ -508,9 +495,7 @@ describe('<pf-search-input>', function() {
         });
 
         it('selects option 1', function() {
-          expect(getSelectedOptionValue(element)).to.deep.equal([
-            'Blue',
-          ]);
+          expect(element.value).to.equal('Blue');
         });
 
         it('closes the listbox', async function() {
@@ -524,9 +509,7 @@ describe('<pf-search-input>', function() {
         });
 
         it('selects option 1', function() {
-          expect(getSelectedOptionValue(element)).to.deep.equal([
-            'Green',
-          ]);
+          expect(element.value).to.equal('Green');
         });
 
         it('closes the listbox', async function() {
@@ -612,9 +595,7 @@ describe('<pf-search-input>', function() {
             beforeEach(updateComplete);
 
             it('selects option 2', function() {
-              expect(getSelectedOptionValue(element)).to.deep.equal([
-                'Green',
-              ]);
+              expect(element.value).to.equal('Green');
             });
 
             it('sets typeahead input to second option value', async function() {
@@ -730,9 +711,7 @@ describe('<pf-search-input>', function() {
               beforeEach(updateComplete);
 
               it('selects the option "Purple"', function() {
-                expect(getSelectedOptionValue(element)).to.deep.equal([
-                  'Purple',
-                ]);
+                expect(element.value).to.equal('Purple');
               });
 
               describe('Backspace (x5)', function() {
@@ -942,7 +921,7 @@ describe('<pf-search-input>', function() {
       });
 
       it('removes the selected option value', async function() {
-        expect(getSelectedOptionValue(element)).to.deep.equal([]);
+        expect(element.value).to.be.undefined;
       });
 
       it('clears the input value', async function() {
@@ -1169,9 +1148,7 @@ describe('<pf-search-input>', function() {
             beforeEach(updateComplete);
 
             it('should select the option', function() {
-              expect(getSelectedOptionValue(searchInput)).to.deep.equal([
-                'New York',
-              ]);
+              expect(searchInput.value).to.equal('New York');
             });
 
             it('should close the dropdown after selection', function() {

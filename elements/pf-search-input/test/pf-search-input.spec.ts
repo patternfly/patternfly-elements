@@ -64,602 +64,623 @@ describe('<pf-search-input>', function() {
           .and
           .to.be.an.instanceOf(PfSearchInput);
     });
+  });
 
-    describe('with accessible-label attribute and 3 items', function() {
-      let element: PfSearchInput;
-      const updateComplete = () => element.updateComplete;
+  describe('with accessible-label attribute and 3 items', function() {
+    let element: PfSearchInput;
+    const updateComplete = () => element.updateComplete;
 
-      beforeEach(async function() {
-        element = await createFixture<PfSearchInput>(html`
-          <pf-search-input accessible-label="label">
-            <pf-option value="1">1</pf-option>
-            <pf-option value="2">2</pf-option>
-            <pf-option value="3">3</pf-option>
-          </pf-search-input>`);
+    beforeEach(async function() {
+      element = await createFixture<PfSearchInput>(html`
+        <pf-search-input accessible-label="label">
+          <pf-option value="1">1</pf-option>
+          <pf-option value="2">2</pf-option>
+          <pf-option value="3">3</pf-option>
+        </pf-search-input>`);
+    });
+
+    it('passes aXe audit', async function() {
+      await expect(element).to.be.accessible();
+    });
+
+    it('labels the combobox with the accessible-label attribuet', async function() {
+      expect(await a11ySnapshot()).to.axContainQuery({
+        role: 'combobox',
+        name: 'label',
       });
+    });
 
-      it('passes aXe audit', async function() {
-        await expect(element).to.be.accessible();
+    it('does not have redundant role', async function() {
+      expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
+    });
+
+    it('sets aria-setsize="3" and aria-posinset on items', function() {
+      element.options.forEach((option, i) => {
+        expect(option).to.have.attr('aria-setsize', '3');
+        expect(option).to.have.attr('aria-posinset', `${i + 1}`);
       });
+    });
 
-      it('labels the combobox with the accessible-label attribuet', async function() {
-        expect(await a11ySnapshot()).to.axContainQuery({
-          role: 'combobox',
-          name: 'label',
-        });
-      });
-
-      it('does not have redundant role', async function() {
-        expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
-      });
-
-      it('sets aria-setsize="3" and aria-posinset on items', function() {
-        element.options.forEach((option, i) => {
-          expect(option).to.have.attr('aria-setsize', '3');
-          expect(option).to.have.attr('aria-posinset', `${i + 1}`);
-        });
-      });
-
-      describe('focus()', function() {
-        beforeEach(press('Tab'));
+    describe('focus()', function() {
+      beforeEach(press('Tab'));
+      beforeEach(updateComplete);
+      describe('ArrowDown', function() {
+        beforeEach(press('ArrowDown'));
+        beforeEach(() => aTimeout(300));
         beforeEach(updateComplete);
-        describe('ArrowDown', function() {
-          beforeEach(press('ArrowDown'));
-          beforeEach(() => aTimeout(300));
-          beforeEach(updateComplete);
 
-          it('labels the listbox with the accessible-label attribute', async function() {
-            const snap = await a11ySnapshot();
-            expect(snap).to.axContainQuery({
-              role: 'listbox',
-              name: 'label',
-            });
+        it('labels the listbox with the accessible-label attribute', async function() {
+          const snap = await a11ySnapshot();
+          expect(snap).to.axContainQuery({
+            role: 'listbox',
+            name: 'label',
           });
+        });
 
-          it('focuses on the first item', async function() {
-            expect(getActiveOption(element)).to.have.value('1');
+        it('focuses on the first item', async function() {
+          expect(getActiveOption(element)).to.have.value('1');
+        });
+      });
+    });
+  });
+
+  describe('with 3 items and associated <label> elements', function() {
+    let element: PfSearchInput;
+    const updateComplete = () => element.updateComplete;
+
+    beforeEach(async function() {
+      element = await createFixture<PfSearchInput>(html`
+        <pf-search-input id="search">
+          <pf-option value="1">1</pf-option>
+          <pf-option value="2">2</pf-option>
+          <pf-option value="3">3</pf-option>
+        </pf-search-input>
+        <label for="search">label1</label>
+        <label for="search">label2</label>
+        `);
+    });
+
+    it('passes aXe audit', async function() {
+      await expect(element).to.be.accessible();
+    });
+
+    it('does not have redundant role', async function() {
+      expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
+    });
+
+    it('labels the combobox with the label elements', async function() {
+      expect(await a11ySnapshot()).to.axContainQuery({
+        role: 'combobox',
+        name: 'label1label2',
+      });
+    });
+
+    it('sets aria-setsize="3" and aria-posinset on items', function() {
+      element.options.forEach((option, i) => {
+        expect(option).to.have.attr('aria-setsize', '3');
+        expect(option).to.have.attr('aria-posinset', `${i + 1}`);
+      });
+    });
+
+    describe('focus()', function() {
+      beforeEach(press('Tab'));
+      beforeEach(updateComplete);
+      describe('ArrowDown', function() {
+        beforeEach(press('ArrowDown'));
+        beforeEach(() => aTimeout(300));
+        beforeEach(updateComplete);
+        it('labels the listbox with the label elements', async function() {
+          expect(await a11ySnapshot()).to.axContainQuery({
+            role: 'listbox',
+            name: 'label1label2',
           });
         });
       });
     });
+  });
 
-    describe('with 3 items and associated <label> elements', function() {
-      let element: PfSearchInput;
-      const updateComplete = () => element.updateComplete;
+  describe('in a deep shadow root', function() {
+    let element: PfSearchInput;
+    const focus = () => element.focus();
+    const updateComplete = () => element.updateComplete;
+    beforeEach(async function() {
+      const fixture = await createFixture(html`
+      <shadow-root>
+        <template shadowrootmode="open">
+          <shadow-root>
+            <template shadowrootmode="open">
+              <pf-search-input
+                         accessible-label="Search"
+                         placeholder="Search">
+                <pf-option value="1">1</pf-option>
+                <pf-option value="2">2</pf-option>
+                <pf-option value="3">3</pf-option>
+                <pf-option value="4">4</pf-option>
+                <pf-option value="5">5</pf-option>
+                <pf-option value="6">6</pf-option>
+                <pf-option value="7">7</pf-option>
+                <pf-option value="8">8</pf-option>
+              </pf-search-input>
+            </template>
+          </shadow-root>
+        </template>
+      </shadow-root>`);
 
-      beforeEach(async function() {
-        element = await createFixture<PfSearchInput>(html`
-          <pf-search-input id="search">
-            <pf-option value="1">1</pf-option>
-            <pf-option value="2">2</pf-option>
-            <pf-option value="3">3</pf-option>
-          </pf-search-input>
-          <label for="search">label1</label>
-          <label for="search">label2</label>
-          `);
-      });
-
-      it('passes aXe audit', async function() {
-        await expect(element).to.be.accessible();
-      });
-
-      it('does not have redundant role', async function() {
-        expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
-      });
-
-      it('labels the combobox with the label elements', async function() {
-        expect(await a11ySnapshot()).to.axContainQuery({
-          role: 'combobox',
-          name: 'label1label2',
+      function attachShadowRoots(root?: Document | ShadowRoot) {
+        root?.querySelectorAll<HTMLTemplateElement>('template[shadowrootmode]').forEach(template => {
+          const mode = template.getAttribute('shadowrootmode') as 'open' | 'closed';
+          const shadowRoot = template.parentElement?.attachShadow?.({ mode });
+          shadowRoot?.appendChild(template.content);
+          template.remove();
+          attachShadowRoots(shadowRoot);
         });
-      });
+      }
+      attachShadowRoots(document);
 
-      it('sets aria-setsize="3" and aria-posinset on items', function() {
-        element.options.forEach((option, i) => {
-          expect(option).to.have.attr('aria-setsize', '3');
-          expect(option).to.have.attr('aria-posinset', `${i + 1}`);
-        });
-      });
-
-      describe('focus()', function() {
-        beforeEach(press('Tab'));
-        beforeEach(updateComplete);
-        describe('ArrowDown', function() {
-          beforeEach(press('ArrowDown'));
-          beforeEach(() => aTimeout(300));
-          beforeEach(updateComplete);
-          it('labels the listbox with the label elements', async function() {
-            expect(await a11ySnapshot()).to.axContainQuery({
-              role: 'listbox',
-              name: 'label1label2',
-            });
-          });
-        });
-      });
+      const select = fixture.shadowRoot?.firstElementChild?.shadowRoot?.querySelector('pf-search-input');
+      if (select) {
+        element = select;
+        await element?.updateComplete;
+      } else {
+        throw new Error('no element!');
+      }
     });
 
-    describe('in a deep shadow root', function() {
-      let element: PfSearchInput;
-      const focus = () => element.focus();
-      const updateComplete = () => element.updateComplete;
-      beforeEach(async function() {
-        const fixture = await createFixture(html`
-        <shadow-root>
-          <template shadowrootmode="open">
-            <shadow-root>
-              <template shadowrootmode="open">
-                <pf-search-input
-                           accessible-label="Search"
-                           placeholder="Search">
-                  <pf-option value="1">1</pf-option>
-                  <pf-option value="2">2</pf-option>
-                  <pf-option value="3">3</pf-option>
-                  <pf-option value="4">4</pf-option>
-                  <pf-option value="5">5</pf-option>
-                  <pf-option value="6">6</pf-option>
-                  <pf-option value="7">7</pf-option>
-                  <pf-option value="8">8</pf-option>
-                </pf-search-input>
-              </template>
-            </shadow-root>
-          </template>
-        </shadow-root>`);
-
-        function attachShadowRoots(root?: Document | ShadowRoot) {
-          root?.querySelectorAll<HTMLTemplateElement>('template[shadowrootmode]').forEach(template => {
-            const mode = template.getAttribute('shadowrootmode') as 'open' | 'closed';
-            const shadowRoot = template.parentElement?.attachShadow?.({ mode });
-            shadowRoot?.appendChild(template.content);
-            template.remove();
-            attachShadowRoots(shadowRoot);
-          });
-        }
-        attachShadowRoots(document);
-
-        const select = fixture.shadowRoot?.firstElementChild?.shadowRoot?.querySelector('pf-search-input');
-        if (select) {
-          element = select;
-          await element?.updateComplete;
-        } else {
-          throw new Error('no element!');
-        }
-      });
-
-      describe('expanding', function() {
-        beforeEach(focus);
-        beforeEach(press('Enter'));
+    describe('expanding', function() {
+      beforeEach(focus);
+      beforeEach(press('Enter'));
+      describe('ArrowDown', function() {
+        beforeEach(press('ArrowDown'));
+        beforeEach(() => aTimeout(300));
+        beforeEach(updateComplete);
+        it('remains expanded', function() {
+          expect(element.expanded).to.be.true;
+        });
         describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
-          beforeEach(() => aTimeout(300));
           beforeEach(updateComplete);
           it('remains expanded', function() {
             expect(element.expanded).to.be.true;
           });
-          describe('ArrowDown', function() {
-            beforeEach(press('ArrowDown'));
-            beforeEach(updateComplete);
-            it('remains expanded', function() {
-              expect(element.expanded).to.be.true;
-            });
-          });
         });
       });
     });
+  });
 
-    describe('with 8 items', function() {
-      let element: PfSearchInput;
-      const updateComplete = () => element.updateComplete;
-      const focus = () => element.focus();
+  describe('with 8 items', function() {
+    let element: PfSearchInput;
+    const updateComplete = () => element.updateComplete;
+    const focus = () => element.focus();
 
-      beforeEach(async function() {
-        element = await createFixture<PfSearchInput>(html`
-          <pf-search-input>
-            <pf-option value="1">1</pf-option>
-            <pf-option value="2">2</pf-option>
-            <pf-option value="3">3</pf-option>
-            <pf-option value="4">4</pf-option>
-            <pf-option value="5">5</pf-option>
-            <pf-option value="6">6</pf-option>
-            <pf-option value="7">7</pf-option>
-            <pf-option value="8">8</pf-option>
-          </pf-search-input>`);
+    beforeEach(async function() {
+      element = await createFixture<PfSearchInput>(html`
+        <pf-search-input>
+          <pf-option value="1">1</pf-option>
+          <pf-option value="2">2</pf-option>
+          <pf-option value="3">3</pf-option>
+          <pf-option value="4">4</pf-option>
+          <pf-option value="5">5</pf-option>
+          <pf-option value="6">6</pf-option>
+          <pf-option value="7">7</pf-option>
+          <pf-option value="8">8</pf-option>
+        </pf-search-input>`);
+    });
+
+    it('does not pass aXe audit', async function() {
+      await expect(element).to.not.be.accessible();
+    });
+
+    it('sets aria-setsize and aria-posinset on items', function() {
+      element.options.forEach((option, i) => {
+        expect(option).to.have.attr('aria-setsize', '8');
+        expect(option).to.have.attr('aria-posinset', `${i + 1}`);
       });
+    });
+
+    describe('click combobox button', function() {
+      beforeEach(() => clickElementAtCenter(element));
+      beforeEach(() => aTimeout(300));
+      beforeEach(updateComplete);
 
       it('does not pass aXe audit', async function() {
         await expect(element).to.not.be.accessible();
       });
 
-      it('sets aria-setsize and aria-posinset on items', function() {
-        element.options.forEach((option, i) => {
-          expect(option).to.have.attr('aria-setsize', '8');
-          expect(option).to.have.attr('aria-posinset', `${i + 1}`);
-        });
+      it('expands the listbox', async function() {
+        expect(await a11ySnapshot()).to.axContainRole('listbox');
       });
 
-      describe('click combobox button', function() {
-        beforeEach(() => clickElementAtCenter(element));
-        beforeEach(() => aTimeout(300));
-        beforeEach(updateComplete);
-
-        it('does not pass aXe audit', async function() {
-          await expect(element).to.not.be.accessible();
-        });
-
-        it('expands the listbox', async function() {
-          expect(await a11ySnapshot()).to.axContainRole('listbox');
-        });
-
-        describe('Tab', function() {
-          beforeEach(press('Tab'));
-          it('does not focus the combobox button', async function() {
-            expect(await a11ySnapshot()).to.not.have.axTreeFocusedNode;
-          });
-        });
-      });
-
-      describe('focus()', function() {
-        beforeEach(focus);
-        beforeEach(updateComplete);
-
-        it('focuses on the combobox button', async function() {
-          expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
-        });
-
-        it('does not expand the listbox', async function() {
-          expect(element.expanded).to.be.false;
-          expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-        });
-
-        describe('Space', function() {
-          beforeEach(function() {
-            document.body.style.height = '8000px';
-          });
-          afterEach(function() {
-            document.body.style.height = 'initial';
-          });
-
-          beforeEach(press(' '));
-          beforeEach(updateComplete);
-
-          it('does not scroll the screen', function() {
-            expect(window.scrollY).to.equal(0);
-          });
-        });
-
-        describe('Home', function() {
-          beforeEach(press('Home'));
-          beforeEach(() => aTimeout(300));
-          beforeEach(updateComplete);
-
-          it('expands the listbox', async function() {
-            expect(await a11ySnapshot()).to.axContainRole('listbox');
-          });
-        });
-
-        describe('End', function() {
-          beforeEach(press('End'));
-          beforeEach(() => aTimeout(300));
-          beforeEach(updateComplete);
-
-          it('expands the listbox', async function() {
-            expect(await a11ySnapshot()).to.axContainRole('listbox');
-          });
-        });
-
-        describe('ArrowDown', function() {
-          beforeEach(press('ArrowDown'));
-          beforeEach(() => aTimeout(300));
-          beforeEach(updateComplete);
-
-          it('expands the listbox', async function() {
-            expect(element.expanded).to.be.true;
-            expect(await a11ySnapshot()).to.axContainRole('listbox');
-          });
-
-          describe('ArrowDown', function() {
-            beforeEach(press('ArrowDown'));
-            beforeEach(updateComplete);
-
-            it('focuses on option 2', async function() {
-              expect(getActiveOption(element)).to.have.value('2');
-            });
-
-            describe('ArrowUp', function() {
-              beforeEach(press('ArrowUp'));
-              beforeEach(updateComplete);
-              it('focuses on option 1', async function() {
-                expect(getActiveOption(element)).to.have.value('1');
-              });
-            });
-
-            describe('ArrowDown', async function() {
-              beforeEach(press('ArrowDown'));
-              beforeEach(updateComplete);
-              it('focuses on option 3', async function() {
-                expect(getActiveOption(element)).to.have.value('3');
-              });
-
-              describe('Enter', function() {
-                beforeEach(press('Enter'));
-                beforeEach(updateComplete);
-
-                it('selects option 3', function() {
-                  expect(getSelectedOptionValue(element)).to.deep.equal([
-                    '3',
-                  ]);
-                });
-
-                it('exposes selection to assistive technology', async function() {
-                  expect(await a11ySnapshot()).to.axContainQuery({
-                    role: 'combobox',
-                    value: '3',
-                  });
-                });
-
-                it('hides the listbox', async function() {
-                  expect(element.expanded).to.be.false;
-                  expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-                });
-              });
-            });
-          });
-
-          describe('Escape', function() {
-            beforeEach(press('Escape'));
-            beforeEach(nextFrame);
-            beforeEach(updateComplete);
-
-            it('hides the listbox', async function() {
-              expect(element.expanded).to.be.false;
-              expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-            });
-
-            it('focuses the button', async function() {
-              expect(await a11ySnapshot())
-                  .axTreeFocusedNode
-                  .to.have.axRole('combobox');
-            });
-          });
+      describe('Tab', function() {
+        beforeEach(press('Tab'));
+        it('does not focus the combobox button', async function() {
+          expect(await a11ySnapshot()).to.not.have.axTreeFocusedNode;
         });
       });
     });
 
-    describe('text input interaction', function() {
-      let element: PfSearchInput;
-      const label = 'label';
-      const updateComplete = () => element.updateComplete;
-      const focus = () => element.focus();
+    describe('focus()', function() {
+      beforeEach(focus);
+      beforeEach(updateComplete);
 
-      beforeEach(async function() {
-        element = await createFixture<PfSearchInput>(html`
-          <pf-search-input >
-            <pf-option>Blue</pf-option>
-            <pf-option>Green</pf-option>
-            <pf-option>Magenta</pf-option>
-            <pf-option>Orange</pf-option>
-            <pf-option>Purple</pf-option>
-            <pf-option>Periwinkle</pf-option>
-            <pf-option>Pink</pf-option>
-            <pf-option>Red</pf-option>
-            <pf-option>Yellow</pf-option>
-          </pf-search-input>`);
+      it('focuses on the combobox button', async function() {
+        expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
       });
 
-      beforeEach(nextFrame);
-
-      it('does not have redundant role', async function() {
-        expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
+      it('does not expand the listbox', async function() {
+        expect(element.expanded).to.be.false;
+        expect(await a11ySnapshot()).to.not.axContainRole('listbox');
       });
 
-      describe('with an `accessible-label` attribute', function() {
+      describe('Space', function() {
         beforeEach(function() {
-          element.setAttribute('accessible-label', label);
+          document.body.style.height = '8000px';
         });
-        beforeEach(nextFrame);
-
-        it('passes aXe audit', async function() {
-          await expect(element).to.be.accessible();
+        afterEach(function() {
+          document.body.style.height = 'initial';
         });
 
-        it('does not have redundant role', async function() {
-          expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
-        });
-
-        it('labels the combobox with the label', async function() {
-          expect(await a11ySnapshot()).to.axContainQuery({
-            role: 'combobox',
-            name: label,
-          });
-        });
-
-        describe('show()', function() {
-          beforeEach(() => element.show());
-          it('labels the listbox with the placeholder attribute', async function() {
-            expect(await a11ySnapshot()).to.axContainQuery({
-              role: 'listbox',
-              name: 'label',
-            });
-          });
-        });
-      });
-
-      describe('clicking the combobox input', function() {
-        beforeEach(async function() {
-          await clickElementAtOffset(element, [10, 10]);
-        });
-        beforeEach(() => aTimeout(300));
-        it('shows the listbox', async function() {
-          expect(element.expanded).to.be.true;
-          expect(await a11ySnapshot()).to.axContainRole('listbox');
-        });
-
-        it('focuses the combobox', async function() {
-          expect(element.expanded).to.be.true;
-          expect(await a11ySnapshot()).to.axContainQuery({
-            focused: true,
-            role: 'combobox',
-          });
-        });
-
-        describe('clicking option 1', function() {
-          beforeEach(async function() {
-            await clickItemAtIndex(element, 0);
-          });
-
-          it('selects option 1', function() {
-            expect(getSelectedOptionValue(element)).to.deep.equal([
-              'Blue',
-            ]);
-          });
-
-          it('closes the listbox', async function() {
-            expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-          });
-        });
-
-        describe('clicking option 2', function() {
-          beforeEach(async function() {
-            await clickItemAtIndex(element, 1);
-          });
-
-          it('selects option 1', function() {
-            expect(getSelectedOptionValue(element)).to.deep.equal([
-              'Green',
-            ]);
-          });
-
-          it('closes the listbox', async function() {
-            expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-          });
-        });
-      });
-
-      describe('focus()', function() {
-        beforeEach(press('Tab'));
+        beforeEach(press(' '));
         beforeEach(updateComplete);
 
-        describe('"r"', function() {
-          beforeEach(press('r'));
-          beforeEach(() => aTimeout(300));
-          beforeEach(updateComplete);
-
-          it('only shows options that start with "r" or "R"', async function() {
-            expect(getVisibleOptionValues(element)).to.deep.equal([
-              'Red',
-            ]);
-          });
+        it('does not scroll the screen', function() {
+          expect(window.scrollY).to.equal(0);
         });
+      });
 
-        describe('Space', function() {
-          beforeEach(function() {
-            document.body.style.height = '8000px';
-          });
-          afterEach(function() {
-            document.body.style.height = 'initial';
-          });
+      describe('Home', function() {
+        beforeEach(press('Home'));
+        beforeEach(() => aTimeout(300));
+        beforeEach(updateComplete);
 
-          beforeEach(press(' '));
-          beforeEach(updateComplete);
-          beforeEach(() => aTimeout(300));
+        it('expands the listbox', async function() {
+          expect(await a11ySnapshot()).to.axContainRole('listbox');
+        });
+      });
 
-          it('does not expand the listbox', async function() {
-            expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-          });
+      describe('End', function() {
+        beforeEach(press('End'));
+        beforeEach(() => aTimeout(300));
+        beforeEach(updateComplete);
 
-          it('does not scroll the screen', function() {
-            expect(window.scrollY).to.equal(0);
-          });
+        it('expands the listbox', async function() {
+          expect(await a11ySnapshot()).to.axContainRole('listbox');
+        });
+      });
+
+      describe('ArrowDown', function() {
+        beforeEach(press('ArrowDown'));
+        beforeEach(() => aTimeout(300));
+        beforeEach(updateComplete);
+
+        it('expands the listbox', async function() {
+          expect(element.expanded).to.be.true;
+          expect(await a11ySnapshot()).to.axContainRole('listbox');
         });
 
         describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
           beforeEach(updateComplete);
-          beforeEach(() => aTimeout(200));
 
-          it('shows the listbox', async function() {
-            expect(element.expanded).to.be.true;
-            expect(await a11ySnapshot()).to.axContainRole('listbox');
+          it('focuses on option 2', async function() {
+            expect(getActiveOption(element)).to.have.value('2');
           });
 
-          // Skipping the test case as the role is visible in the accessibility tree,
-          // and since the pf-button uses ElementInternals, the test case is unable to access the role.
-          it.skip('labels the close button with the label', async function() {
-            expect(await a11ySnapshot()).to.axContainQuery({
-              role: 'button',
-              name: 'close',
+          describe('ArrowUp', function() {
+            beforeEach(press('ArrowUp'));
+            beforeEach(updateComplete);
+            it('focuses on option 1', async function() {
+              expect(getActiveOption(element)).to.have.value('1');
             });
           });
 
-          it('focuses option 1', function() {
-            expect(getActiveOption(element)).to.have.value('Blue');
-          });
-
-          it('does not move keyboard focus', async function() {
-            expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
-          });
-
-          describe('ArrowDown', function() {
+          describe('ArrowDown', async function() {
             beforeEach(press('ArrowDown'));
             beforeEach(updateComplete);
-
-            it('focuses option 2', function() {
-              expect(getActiveOption(element)).to.have.text('Green');
+            it('focuses on option 3', async function() {
+              expect(getActiveOption(element)).to.have.value('3');
             });
 
             describe('Enter', function() {
               beforeEach(press('Enter'));
               beforeEach(updateComplete);
 
-              it('selects option 2', function() {
+              it('selects option 3', function() {
                 expect(getSelectedOptionValue(element)).to.deep.equal([
-                  'Green',
+                  '3',
                 ]);
               });
 
-              it('sets typeahead input to second option value', async function() {
-                expect(await a11ySnapshot())
-                    .axTreeFocusedNode
-                    .to.have.axProperty('value', 'Green');
-              });
-
-              it('retains focus on combobox input', async function() {
-                expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
+              it('exposes selection to assistive technology', async function() {
+                expect(await a11ySnapshot()).to.axContainQuery({
+                  role: 'combobox',
+                  value: '3',
+                });
               });
 
               it('hides the listbox', async function() {
+                expect(element.expanded).to.be.false;
                 expect(await a11ySnapshot()).to.not.axContainRole('listbox');
               });
-
-              describe('focus()', function() {
-                beforeEach(focus);
-                describe('ArrowDown', function() {
-                  beforeEach(press('ArrowDown'));
-                  beforeEach(() => aTimeout(300));
-                  beforeEach(updateComplete);
-
-                  it('only shows option 2', function() {
-                    expect(getVisibleOptionValues(element)).to.deep.equal([
-                      'Green',
-                    ]);
-                  });
-                });
-              });
-            });
-          });
-
-          describe('ArrowUp', function() {
-            beforeEach(press('ArrowUp'));
-            beforeEach(updateComplete);
-
-            it('focuses the last item', async function() {
-              expect(getActiveOption(element)).to.have.value('Yellow');
             });
           });
         });
 
-        describe('"p"', function() {
-          beforeEach(press('p'));
-          beforeEach(() => aTimeout(300));
+        describe('Escape', function() {
+          beforeEach(press('Escape'));
+          beforeEach(nextFrame);
+          beforeEach(updateComplete);
+
+          it('hides the listbox', async function() {
+            expect(element.expanded).to.be.false;
+            expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+          });
+
+          it('focuses the button', async function() {
+            expect(await a11ySnapshot())
+                .axTreeFocusedNode
+                .to.have.axRole('combobox');
+          });
+        });
+      });
+    });
+  });
+
+  describe('text input interaction', function() {
+    let element: PfSearchInput;
+    const label = 'label';
+    const updateComplete = () => element.updateComplete;
+    const focus = () => element.focus();
+
+    beforeEach(async function() {
+      element = await createFixture<PfSearchInput>(html`
+        <pf-search-input >
+          <pf-option>Blue</pf-option>
+          <pf-option>Green</pf-option>
+          <pf-option>Magenta</pf-option>
+          <pf-option>Orange</pf-option>
+          <pf-option>Purple</pf-option>
+          <pf-option>Periwinkle</pf-option>
+          <pf-option>Pink</pf-option>
+          <pf-option>Red</pf-option>
+          <pf-option>Yellow</pf-option>
+        </pf-search-input>`);
+    });
+
+    beforeEach(nextFrame);
+
+    it('does not have redundant role', async function() {
+      expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
+    });
+
+    describe('with an `accessible-label` attribute', function() {
+      beforeEach(function() {
+        element.setAttribute('accessible-label', label);
+      });
+      beforeEach(nextFrame);
+
+      it('passes aXe audit', async function() {
+        await expect(element).to.be.accessible();
+      });
+
+      it('does not have redundant role', async function() {
+        expect(element.shadowRoot?.firstElementChild).to.not.contain('[role="button"]');
+      });
+
+      it('labels the combobox with the label', async function() {
+        expect(await a11ySnapshot()).to.axContainQuery({
+          role: 'combobox',
+          name: label,
+        });
+      });
+
+      describe('show()', function() {
+        beforeEach(() => element.show());
+        it('labels the listbox with the placeholder attribute', async function() {
+          expect(await a11ySnapshot()).to.axContainQuery({
+            role: 'listbox',
+            name: 'label',
+          });
+        });
+      });
+    });
+
+    describe('clicking the combobox input', function() {
+      beforeEach(async function() {
+        await clickElementAtOffset(element, [10, 10]);
+      });
+      beforeEach(() => aTimeout(300));
+      it('shows the listbox', async function() {
+        expect(element.expanded).to.be.true;
+        expect(await a11ySnapshot()).to.axContainRole('listbox');
+      });
+
+      it('focuses the combobox', async function() {
+        expect(element.expanded).to.be.true;
+        expect(await a11ySnapshot()).to.axContainQuery({
+          focused: true,
+          role: 'combobox',
+        });
+      });
+
+      describe('clicking option 1', function() {
+        beforeEach(async function() {
+          await clickItemAtIndex(element, 0);
+        });
+
+        it('selects option 1', function() {
+          expect(getSelectedOptionValue(element)).to.deep.equal([
+            'Blue',
+          ]);
+        });
+
+        it('closes the listbox', async function() {
+          expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+        });
+      });
+
+      describe('clicking option 2', function() {
+        beforeEach(async function() {
+          await clickItemAtIndex(element, 1);
+        });
+
+        it('selects option 1', function() {
+          expect(getSelectedOptionValue(element)).to.deep.equal([
+            'Green',
+          ]);
+        });
+
+        it('closes the listbox', async function() {
+          expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+        });
+      });
+    });
+
+    describe('focus()', function() {
+      beforeEach(press('Tab'));
+      beforeEach(updateComplete);
+
+      describe('"r"', function() {
+        beforeEach(press('r'));
+        beforeEach(() => aTimeout(300));
+        beforeEach(updateComplete);
+
+        it('only shows options that start with "r" or "R"', async function() {
+          expect(getVisibleOptionValues(element)).to.deep.equal([
+            'Red',
+          ]);
+        });
+      });
+
+      describe('Space', function() {
+        beforeEach(function() {
+          document.body.style.height = '8000px';
+        });
+        afterEach(function() {
+          document.body.style.height = 'initial';
+        });
+
+        beforeEach(press(' '));
+        beforeEach(updateComplete);
+        beforeEach(() => aTimeout(300));
+
+        it('does not expand the listbox', async function() {
+          expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+        });
+
+        it('does not scroll the screen', function() {
+          expect(window.scrollY).to.equal(0);
+        });
+      });
+
+      describe('ArrowDown', function() {
+        beforeEach(press('ArrowDown'));
+        beforeEach(updateComplete);
+        beforeEach(() => aTimeout(200));
+
+        it('shows the listbox', async function() {
+          expect(element.expanded).to.be.true;
+          expect(await a11ySnapshot()).to.axContainRole('listbox');
+        });
+
+        // Skipping the test case as the role is visible in the accessibility tree,
+        // and since the pf-button uses ElementInternals, the test case is unable to access the role.
+        it.skip('labels the close button with the label', async function() {
+          expect(await a11ySnapshot()).to.axContainQuery({
+            role: 'button',
+            name: 'close',
+          });
+        });
+
+        it('focuses option 1', function() {
+          expect(getActiveOption(element)).to.have.value('Blue');
+        });
+
+        it('does not move keyboard focus', async function() {
+          expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
+        });
+
+        describe('ArrowDown', function() {
+          beforeEach(press('ArrowDown'));
+          beforeEach(updateComplete);
+
+          it('focuses option 2', function() {
+            expect(getActiveOption(element)).to.have.text('Green');
+          });
+
+          describe('Enter', function() {
+            beforeEach(press('Enter'));
+            beforeEach(updateComplete);
+
+            it('selects option 2', function() {
+              expect(getSelectedOptionValue(element)).to.deep.equal([
+                'Green',
+              ]);
+            });
+
+            it('sets typeahead input to second option value', async function() {
+              expect(await a11ySnapshot())
+                  .axTreeFocusedNode
+                  .to.have.axProperty('value', 'Green');
+            });
+
+            it('retains focus on combobox input', async function() {
+              expect(await a11ySnapshot()).axTreeFocusedNode.to.have.axRole('combobox');
+            });
+
+            it('hides the listbox', async function() {
+              expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+            });
+
+            describe('focus()', function() {
+              beforeEach(focus);
+              describe('ArrowDown', function() {
+                beforeEach(press('ArrowDown'));
+                beforeEach(() => aTimeout(300));
+                beforeEach(updateComplete);
+
+                it('only shows option 2', function() {
+                  expect(getVisibleOptionValues(element)).to.deep.equal([
+                    'Green',
+                  ]);
+                });
+              });
+            });
+          });
+        });
+
+        describe('ArrowUp', function() {
+          beforeEach(press('ArrowUp'));
+          beforeEach(updateComplete);
+
+          it('focuses the last item', async function() {
+            expect(getActiveOption(element)).to.have.value('Yellow');
+          });
+        });
+      });
+
+      describe('"p"', function() {
+        beforeEach(press('p'));
+        beforeEach(() => aTimeout(300));
+        beforeEach(updateComplete);
+
+        it('shows the listbox and maintains focus', async function() {
+          expect(await a11ySnapshot())
+              .to.axContainRole('listbox')
+              .and.axTreeFocusedNode
+              .to.have.axRole('combobox')
+              .and.to.have.axProperty('value', 'p');
+        });
+
+        it('only shows listbox items starting with the letter p', function() {
+          expect(getVisibleOptionValues(element)).to.deep.equal([
+            'Purple',
+            'Periwinkle',
+            'Pink',
+          ]);
+        });
+
+        describe('Backspace', function() {
+          beforeEach(press('Backspace'));
           beforeEach(updateComplete);
 
           it('shows the listbox and maintains focus', async function() {
@@ -667,216 +688,275 @@ describe('<pf-search-input>', function() {
                 .to.axContainRole('listbox')
                 .and.axTreeFocusedNode
                 .to.have.axRole('combobox')
-                .and.to.have.axProperty('value', 'p');
+                .and.to.not.have.axProperty('value', 'p');
           });
 
-          it('only shows listbox items starting with the letter p', function() {
+          it('all options are visible', async function() {
             expect(getVisibleOptionValues(element)).to.deep.equal([
+              'Blue',
+              'Green',
+              'Magenta',
+              'Orange',
               'Purple',
               'Periwinkle',
               'Pink',
+              'Red',
+              'Yellow',
             ]);
           });
-
-          describe('Backspace', function() {
-            beforeEach(press('Backspace'));
-            beforeEach(updateComplete);
-
-            it('shows the listbox and maintains focus', async function() {
-              expect(await a11ySnapshot())
-                  .to.axContainRole('listbox')
-                  .and.axTreeFocusedNode
-                  .to.have.axRole('combobox')
-                  .and.to.not.have.axProperty('value', 'p');
-            });
-
-            it('all options are visible', async function() {
-              expect(getVisibleOptionValues(element)).to.deep.equal([
-                'Blue',
-                'Green',
-                'Magenta',
-                'Orange',
-                'Purple',
-                'Periwinkle',
-                'Pink',
-                'Red',
-                'Yellow',
-              ]);
-            });
-          });
-
-          describe('"u"', function() {
-            beforeEach(press('u'));
-            beforeEach(updateComplete);
-
-            it('only shows the option "Purple"', function() {
-              expect(getVisibleOptionValues(element)).to.deep.equal([
-                'Purple',
-              ]);
-            });
-
-            describe('ArrowDown', function() {
-              beforeEach(press('ArrowDown'));
-              beforeEach(updateComplete);
-
-              it('focuses the option "Purple"', function() {
-                expect(getActiveOption(element)).to.have.text('Purple');
-              });
-
-              describe('Enter', function() {
-                beforeEach(press('Enter'));
-                beforeEach(() => aTimeout(300));
-                beforeEach(updateComplete);
-
-                it('selects the option "Purple"', function() {
-                  expect(getSelectedOptionValue(element)).to.deep.equal([
-                    'Purple',
-                  ]);
-                });
-
-                describe('Backspace (x5)', function() {
-                  beforeEach(press('Backspace'));
-                  beforeEach(press('Backspace'));
-                  beforeEach(press('Backspace'));
-                  beforeEach(press('Backspace'));
-                  beforeEach(press('Backspace'));
-                  beforeEach(() => aTimeout(300));
-                  beforeEach(updateComplete);
-
-                  it('shows the options starting with "P"', function() {
-                    expect(getVisibleOptionValues(element)).to.deep.equal([
-                      'Purple',
-                      'Periwinkle',
-                      'Pink',
-                    ]);
-                  });
-
-                  describe('Home', function() {
-                    beforeEach(press('Home'));
-
-                    it('retains focus on the option "Purple"', function() {
-                      expect(getActiveOption(element)).to.have.text('Purple');
-                    });
-
-                    it('moves cursor to start', function() {
-                      // WARNING: ties test to DOM structure
-                      const input = element.shadowRoot?.querySelector('input');
-                      expect(input?.selectionStart).to.equal(0);
-                    });
-                  });
-                  describe('End', function() {
-                    beforeEach(press('End'));
-
-                    it('retains focus on the option "Purple"', function() {
-                      expect(getActiveOption(element)).to.have.text('Purple');
-                    });
-
-                    it('moves cursor to start', function() {
-                      // WARNING: ties test to DOM structure
-                      const input = element.shadowRoot?.querySelector('input');
-                      expect(input?.selectionStart).to.equal(1);
-                    });
-                  });
-                });
-              });
-            });
-          });
-        });
-      });
-
-      describe.skip('setting filter to "*"', function() {
-        beforeEach(function() {
-          // @ts-expect-error: todo: add filter feature
-          element.filter = '*';
-        });
-        beforeEach(updateComplete);
-        it('does not error', async function() {
-          const snapshot = await a11ySnapshot();
-          const [, , listbox] = snapshot.children ?? [];
-          expect(listbox?.children).to.not.be.ok;
-        });
-      });
-
-      describe.skip('custom filtering', function() {
-        beforeEach(function() {
-          // @ts-expect-error: we intend to implement this in the next release
-          element.customFilter = option =>
-            // @ts-expect-error: TODO add filter feature
-            new RegExp(element.filter).test(option.value);
         });
 
-        beforeEach(focus);
-
-        beforeEach(updateComplete);
-
-        describe('r', function() {
-          beforeEach(press('r'));
+        describe('"u"', function() {
+          beforeEach(press('u'));
           beforeEach(updateComplete);
-          it('shows options that contain "r"', async function() {
+
+          it('only shows the option "Purple"', function() {
             expect(getVisibleOptionValues(element)).to.deep.equal([
-              'Green',
-              'Orange',
               'Purple',
             ]);
           });
-        });
 
-        describe('typing "R"', function() {
-          beforeEach(press('R'));
-          beforeEach(nextFrame);
-          beforeEach(updateComplete);
-          it('shows options that start with "r"', async function() {
-            expect(getVisibleOptionValues(element)).to.deep.equal([
-              'Red',
-            ]);
+          describe('ArrowDown', function() {
+            beforeEach(press('ArrowDown'));
+            beforeEach(updateComplete);
+
+            it('focuses the option "Purple"', function() {
+              expect(getActiveOption(element)).to.have.text('Purple');
+            });
+
+            describe('Enter', function() {
+              beforeEach(press('Enter'));
+              beforeEach(() => aTimeout(300));
+              beforeEach(updateComplete);
+
+              it('selects the option "Purple"', function() {
+                expect(getSelectedOptionValue(element)).to.deep.equal([
+                  'Purple',
+                ]);
+              });
+
+              describe('Backspace (x5)', function() {
+                beforeEach(press('Backspace'));
+                beforeEach(press('Backspace'));
+                beforeEach(press('Backspace'));
+                beforeEach(press('Backspace'));
+                beforeEach(press('Backspace'));
+                beforeEach(() => aTimeout(300));
+                beforeEach(updateComplete);
+
+                it('shows the options starting with "P"', function() {
+                  expect(getVisibleOptionValues(element)).to.deep.equal([
+                    'Purple',
+                    'Periwinkle',
+                    'Pink',
+                  ]);
+                });
+
+                describe('Home', function() {
+                  beforeEach(press('Home'));
+
+                  it('retains focus on the option "Purple"', function() {
+                    expect(getActiveOption(element)).to.have.text('Purple');
+                  });
+
+                  it('moves cursor to start', function() {
+                    // WARNING: ties test to DOM structure
+                    const input = element.shadowRoot?.querySelector('input');
+                    expect(input?.selectionStart).to.equal(0);
+                  });
+                });
+                describe('End', function() {
+                  beforeEach(press('End'));
+
+                  it('retains focus on the option "Purple"', function() {
+                    expect(getActiveOption(element)).to.have.text('Purple');
+                  });
+
+                  it('moves cursor to start', function() {
+                    // WARNING: ties test to DOM structure
+                    const input = element.shadowRoot?.querySelector('input');
+                    expect(input?.selectionStart).to.equal(1);
+                  });
+                });
+              });
+            });
           });
         });
       });
     });
 
-    describe('with `disabled` attribute', function() {
-      let element: PfSearchInput;
-      const updateComplete = () => element.updateComplete;
-      const focus = () => element.focus();
+    describe.skip('setting filter to "*"', function() {
+      beforeEach(function() {
+        // @ts-expect-error: todo: add filter feature
+        element.filter = '*';
+      });
+      beforeEach(updateComplete);
+      it('does not error', async function() {
+        const snapshot = await a11ySnapshot();
+        const [, , listbox] = snapshot.children ?? [];
+        expect(listbox?.children).to.not.be.ok;
+      });
+    });
 
-      beforeEach(async function() {
-        element = await createFixture<PfSearchInput>(html`
-          <pf-search-input id="disabled-search" disabled>
-            <pf-option value="1">1</pf-option>
-            <pf-option value="2">2</pf-option>
-            <pf-option value="3">3</pf-option>
-          </pf-search-input>
-          <label for="disabled-search">Disabled</label>`);
-        await updateComplete();
+    describe.skip('custom filtering', function() {
+      beforeEach(function() {
+        // @ts-expect-error: we intend to implement this in the next release
+        element.customFilter = option =>
+          // @ts-expect-error: TODO add filter feature
+          new RegExp(element.filter).test(option.value);
       });
 
-      it('passes aXe audit', async function() {
-        await expect(element).to.be.accessible();
-      });
+      beforeEach(focus);
 
-      it('is marked as disabled in accessibility tree', async function() {
-        expect(await a11ySnapshot()).to.axContainQuery({
-          role: 'combobox',
-          disabled: true,
+      beforeEach(updateComplete);
+
+      describe('r', function() {
+        beforeEach(press('r'));
+        beforeEach(updateComplete);
+        it('shows options that contain "r"', async function() {
+          expect(getVisibleOptionValues(element)).to.deep.equal([
+            'Green',
+            'Orange',
+            'Purple',
+          ]);
         });
       });
 
+      describe('typing "R"', function() {
+        beforeEach(press('R'));
+        beforeEach(nextFrame);
+        beforeEach(updateComplete);
+        it('shows options that start with "r"', async function() {
+          expect(getVisibleOptionValues(element)).to.deep.equal([
+            'Red',
+          ]);
+        });
+      });
+    });
+  });
+
+  describe('with `disabled` attribute', function() {
+    let element: PfSearchInput;
+    const updateComplete = () => element.updateComplete;
+    const focus = () => element.focus();
+
+    beforeEach(async function() {
+      element = await createFixture<PfSearchInput>(html`
+        <pf-search-input id="disabled-search" disabled>
+          <pf-option value="1">1</pf-option>
+          <pf-option value="2">2</pf-option>
+          <pf-option value="3">3</pf-option>
+        </pf-search-input>
+        <label for="disabled-search">Disabled</label>`);
+      await updateComplete();
+    });
+
+    it('passes aXe audit', async function() {
+      await expect(element).to.be.accessible();
+    });
+
+    it('is marked as disabled in accessibility tree', async function() {
+      expect(await a11ySnapshot()).to.axContainQuery({
+        role: 'combobox',
+        disabled: true,
+      });
+    });
+
+    describe('focus()', function() {
+      beforeEach(focus);
+      beforeEach(updateComplete);
+      describe('ArrowDown', function() {
+        beforeEach(press('ArrowDown'));
+        beforeEach(updateComplete);
+
+        it('does not open on focus and keyboard interaction', async function() {
+          // Should remain closed
+          expect(element.expanded).to.be.false;
+          expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+        });
+      });
+
+      describe('"1" when input is disabled', function() {
+        beforeEach(press('1'));
+        beforeEach(() => aTimeout(300));
+        beforeEach(updateComplete);
+
+        it('does not show any options', async function() {
+          expect(element.expanded).to.be.false;
+          expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+        });
+
+        it('does not add any value to the input', async function() {
+          const input = element.shadowRoot?.querySelector('input');
+          expect(input?.value).to.equal('');
+        });
+      });
+    });
+
+    describe('clicking the element', function() {
+      beforeEach(async function() {
+        await clickElementAtOffset(element, [10, 10]);
+      });
+      it('cannot be interacted with via click', async function() {
+        expect(element.expanded).to.be.false;
+        expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+      });
+    });
+  });
+
+  describe('clicking the close button', function() {
+    let element: PfSearchInput;
+    const updateComplete = () => element.updateComplete;
+    const focus = () => element.focus();
+
+    beforeEach(async function() {
+      element = await createFixture<PfSearchInput>(html`
+        <pf-search-input id="disabled-search" disabled>
+          <pf-option value="1">1</pf-option>
+          <pf-option value="2">2</pf-option>
+          <pf-option value="3">3</pf-option>
+        </pf-search-input>
+        <label for="disabled-search">Disabled</label>`);
+      await updateComplete();
+    });
+
+    it('passes aXe audit', async function() {
+      await expect(element).to.be.accessible();
+    });
+
+    describe('clicking the close button when list box is open', function() {
+      beforeEach(async function() {
+        await clickElementAtOffset(element, [-10, 10]);
+      });
+
+      it('hides the listbox', async function() {
+        expect(element.expanded).not.to.be.true;
+        expect(await a11ySnapshot()).to.not.axContainRole('listbox');
+      });
+
+      it('hides the close button', async function() {
+        expect(await a11ySnapshot()).not.to.axContainQuery({
+          name: 'close',
+          role: 'button',
+        });
+      });
+
+      it('removes the selected option value', async function() {
+        expect(getSelectedOptionValue(element)).to.deep.equal([]);
+      });
+
+      it('clears the input value', async function() {
+        const input = element.shadowRoot?.querySelector('input');
+        expect(input?.value).to.equal('');
+      });
+    });
+
+    describe('clicking the close button when list box is closed and input has value', function() {
       describe('focus()', function() {
         beforeEach(focus);
         beforeEach(updateComplete);
-        describe('ArrowDown', function() {
-          beforeEach(press('ArrowDown'));
-          beforeEach(updateComplete);
-
-          it('does not open on focus and keyboard interaction', async function() {
-            // Should remain closed
-            expect(element.expanded).to.be.false;
-            expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-          });
-        });
-
-        describe('"1" when input is disabled', function() {
-          beforeEach(press('1'));
+        describe(' press "z"', function() {
+          beforeEach(press('z'));
           beforeEach(() => aTimeout(300));
           beforeEach(updateComplete);
 
@@ -884,46 +964,8 @@ describe('<pf-search-input>', function() {
             expect(element.expanded).to.be.false;
             expect(await a11ySnapshot()).to.not.axContainRole('listbox');
           });
-
-          it('does not add any value to the input', async function() {
-            const input = element.shadowRoot?.querySelector('input');
-            expect(input?.value).to.equal('');
-          });
         });
-      });
 
-      describe('clicking the element', function() {
-        beforeEach(async function() {
-          await clickElementAtOffset(element, [10, 10]);
-        });
-        it('cannot be interacted with via click', async function() {
-          expect(element.expanded).to.be.false;
-          expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-        });
-      });
-    });
-
-    describe('clicking the close button', function() {
-      let element: PfSearchInput;
-      const updateComplete = () => element.updateComplete;
-      const focus = () => element.focus();
-
-      beforeEach(async function() {
-        element = await createFixture<PfSearchInput>(html`
-          <pf-search-input id="disabled-search" disabled>
-            <pf-option value="1">1</pf-option>
-            <pf-option value="2">2</pf-option>
-            <pf-option value="3">3</pf-option>
-          </pf-search-input>
-          <label for="disabled-search">Disabled</label>`);
-        await updateComplete();
-      });
-
-      it('passes aXe audit', async function() {
-        await expect(element).to.be.accessible();
-      });
-
-      describe('clicking the close button when list box is open', function() {
         beforeEach(async function() {
           await clickElementAtOffset(element, [-10, 10]);
         });
@@ -940,281 +982,239 @@ describe('<pf-search-input>', function() {
           });
         });
 
-        it('removes the selected option value', async function() {
-          expect(getSelectedOptionValue(element)).to.deep.equal([]);
-        });
-
         it('clears the input value', async function() {
           const input = element.shadowRoot?.querySelector('input');
           expect(input?.value).to.equal('');
         });
       });
+    });
+  });
 
-      describe('clicking the close button when list box is closed and input has value', function() {
-        describe('focus()', function() {
-          beforeEach(focus);
-          beforeEach(updateComplete);
-          describe(' press "z"', function() {
-            beforeEach(press('z'));
-            beforeEach(() => aTimeout(300));
-            beforeEach(updateComplete);
+  describe('Outside click behavior', function() {
+    let element: PfSearchInput;
+    const updateComplete = () => element.updateComplete;
+    const focus = () => element.focus();
+    let outsideElement: HTMLElement;
 
-            it('does not show any options', async function() {
-              expect(element.expanded).to.be.false;
-              expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-            });
-          });
+    beforeEach(async function() {
+      element = await createFixture<PfSearchInput>(html`
+        <pf-search-input>
+          <pf-option value="11">11</pf-option>
+          <pf-option value="12">12</pf-option>
+          <pf-option value="13">13</pf-option>
+          <pf-option value="21">21</pf-option>
+          <pf-option value="22">22</pf-option>
+          <pf-option value="23">23</pf-option>
+        </pf-search-input>
+      `);
 
-          beforeEach(async function() {
-            await clickElementAtOffset(element, [-10, 10]);
-          });
-
-          it('hides the listbox', async function() {
-            expect(element.expanded).not.to.be.true;
-            expect(await a11ySnapshot()).to.not.axContainRole('listbox');
-          });
-
-          it('hides the close button', async function() {
-            expect(await a11ySnapshot()).not.to.axContainQuery({
-              name: 'close',
-              role: 'button',
-            });
-          });
-
-          it('clears the input value', async function() {
-            const input = element.shadowRoot?.querySelector('input');
-            expect(input?.value).to.equal('');
-          });
-        });
-      });
+      // Create a dummy div to represent an "outside" area
+      outsideElement = document.createElement('div');
+      outsideElement.style.width = '200px';
+      outsideElement.style.height = '200px';
+      document.body.appendChild(outsideElement);
     });
 
-    describe('Outside click behavior', function() {
-      let element: PfSearchInput;
-      const updateComplete = () => element.updateComplete;
-      const focus = () => element.focus();
-      let outsideElement: HTMLElement;
+    describe('focus()', function() {
+      beforeEach(focus);
+      beforeEach(updateComplete);
 
-      beforeEach(async function() {
-        element = await createFixture<PfSearchInput>(html`
-          <pf-search-input>
-            <pf-option value="11">11</pf-option>
-            <pf-option value="12">12</pf-option>
-            <pf-option value="13">13</pf-option>
-            <pf-option value="21">21</pf-option>
-            <pf-option value="22">22</pf-option>
-            <pf-option value="23">23</pf-option>
-          </pf-search-input>
-        `);
-
-        // Create a dummy div to represent an "outside" area
-        outsideElement = document.createElement('div');
-        outsideElement.style.width = '200px';
-        outsideElement.style.height = '200px';
-        document.body.appendChild(outsideElement);
-      });
-
-      describe('focus()', function() {
-        beforeEach(focus);
-        beforeEach(updateComplete);
-
-        describe('"1"', function() {
-          beforeEach(press('1'));
-          beforeEach(() => aTimeout(300));
-          beforeEach(updateComplete);
-
-          it('should open the listbox when focused', function() {
-            expect(element.expanded).to.be.true;
-          });
-
-          it('only shows options that start with "1"', async function() {
-            expect(getVisibleOptionValues(element)).to.deep.equal([
-              '11',
-              '12',
-              '13',
-            ]);
-          });
-
-          describe('click outside the element', function() {
-            // Click outside element
-            beforeEach(() => clickElementAtCenter(outsideElement));
-            beforeEach(() => aTimeout(300));
-            beforeEach(updateComplete);
-
-            it('should close the listbox when clicking outside', async function() {
-              expect(element.expanded).to.be.false;
-            });
-
-            it('should keep the entered value after outside click', async function() {
-              const input = element.shadowRoot?.querySelector('input');
-              expect(input?.value).to.equal('1');
-            });
-          });
-        });
-      });
-    });
-
-    describe('on focus-out behavior', function() {
-      let element: PfSearchInput;
-      const updateComplete = () => element.updateComplete;
-      const focus = () => element.focus();
-
-      beforeEach(async function() {
-        element = await createFixture<PfSearchInput>(html`
-          <pf-search-input>
-            <pf-option value="11">11</pf-option>
-            <pf-option value="12">12</pf-option>
-            <pf-option value="13">13</pf-option>
-            <pf-option value="21">21</pf-option>
-            <pf-option value="22">22</pf-option>
-            <pf-option value="23">23</pf-option>
-          </pf-search-input>
-        `);
-
-        beforeEach(updateComplete);
-      });
-
-      describe('focus()', function() {
-        beforeEach(focus);
+      describe('"1"', function() {
+        beforeEach(press('1'));
         beforeEach(() => aTimeout(300));
         beforeEach(updateComplete);
 
-        describe('"1"', function() {
-          beforeEach(press('1'));
+        it('should open the listbox when focused', function() {
+          expect(element.expanded).to.be.true;
+        });
+
+        it('only shows options that start with "1"', async function() {
+          expect(getVisibleOptionValues(element)).to.deep.equal([
+            '11',
+            '12',
+            '13',
+          ]);
+        });
+
+        describe('click outside the element', function() {
+          // Click outside element
+          beforeEach(() => clickElementAtCenter(outsideElement));
           beforeEach(() => aTimeout(300));
           beforeEach(updateComplete);
 
-          it('should open the listbox when focused', function() {
-            expect(element.expanded).to.be.true;
+          it('should close the listbox when clicking outside', async function() {
+            expect(element.expanded).to.be.false;
           });
 
-          it('only shows options that start with "1"', async function() {
-            expect(getVisibleOptionValues(element)).to.deep.equal([
-              '11',
-              '12',
-              '13',
-            ]);
-          });
-
-          describe('move the focus out of the element', function() {
-            beforeEach(press('Tab'));
-            beforeEach(() => aTimeout(300));
-            beforeEach(updateComplete);
-            beforeEach(press('Tab'));
-            beforeEach(() => aTimeout(300));
-            beforeEach(updateComplete);
-
-            it('should close the listbox when focused out', async function() {
-              expect(element.expanded).to.be.false;
-            });
-
-            it('should keep the entered value after focus out', async function() {
-              const input = element.shadowRoot?.querySelector('input');
-              expect(input?.value).to.equal('1');
-            });
+          it('should keep the entered value after outside click', async function() {
+            const input = element.shadowRoot?.querySelector('input');
+            expect(input?.value).to.equal('1');
           });
         });
       });
     });
+  });
 
-    describe('form submission with pf-search-input', function() {
-      let form: HTMLFormElement;
-      let searchInput: PfSearchInput;
-      const updateComplete = () => searchInput.updateComplete;
-      const focus = () => searchInput.focus();
-      let submittedData: FormData | null;
+  describe('on focus-out behavior', function() {
+    let element: PfSearchInput;
+    const updateComplete = () => element.updateComplete;
+    const focus = () => element.focus();
 
-      beforeEach(async function() {
-        form = await createFixture<HTMLFormElement>(html`
-          <form>
-            <pf-search-input name="search">
-              <pf-option value="Alabama">Alabama</pf-option>
-              <pf-option value="New York">New York</pf-option>
-              <pf-option value="New Jersey">New Jersey</pf-option>
-            </pf-search-input>
-            <button type="submit">Submit</button>
-          </form>
-        `);
+    beforeEach(async function() {
+      element = await createFixture<PfSearchInput>(html`
+        <pf-search-input>
+          <pf-option value="11">11</pf-option>
+          <pf-option value="12">12</pf-option>
+          <pf-option value="13">13</pf-option>
+          <pf-option value="21">21</pf-option>
+          <pf-option value="22">22</pf-option>
+          <pf-option value="23">23</pf-option>
+        </pf-search-input>
+      `);
 
-        searchInput = form.querySelector('pf-search-input')!;
+      beforeEach(updateComplete);
+    });
+
+    describe('focus()', function() {
+      beforeEach(focus);
+      beforeEach(() => aTimeout(300));
+      beforeEach(updateComplete);
+
+      describe('"1"', function() {
+        beforeEach(press('1'));
+        beforeEach(() => aTimeout(300));
         beforeEach(updateComplete);
 
-        form.addEventListener('submit', e => {
-          e.preventDefault();
-          submittedData = new FormData(form);
+        it('should open the listbox when focused', function() {
+          expect(element.expanded).to.be.true;
         });
-      });
 
-      describe('when a user types and selects an option', function() {
-        describe('focus', function() {
-          beforeEach(focus);
+        it('only shows options that start with "1"', async function() {
+          expect(getVisibleOptionValues(element)).to.deep.equal([
+            '11',
+            '12',
+            '13',
+          ]);
+        });
+
+        describe('move the focus out of the element', function() {
+          beforeEach(press('Tab'));
           beforeEach(() => aTimeout(300));
           beforeEach(updateComplete);
-          describe('press `New`', function() {
+          beforeEach(press('Tab'));
+          beforeEach(() => aTimeout(300));
+          beforeEach(updateComplete);
+
+          it('should close the listbox when focused out', async function() {
+            expect(element.expanded).to.be.false;
+          });
+
+          it('should keep the entered value after focus out', async function() {
+            const input = element.shadowRoot?.querySelector('input');
+            expect(input?.value).to.equal('1');
+          });
+        });
+      });
+    });
+  });
+
+  describe('form submission with pf-search-input', function() {
+    let form: HTMLFormElement;
+    let searchInput: PfSearchInput;
+    const updateComplete = () => searchInput.updateComplete;
+    const focus = () => searchInput.focus();
+    let submittedData: FormData | null;
+
+    beforeEach(async function() {
+      form = await createFixture<HTMLFormElement>(html`
+        <form>
+          <pf-search-input name="search">
+            <pf-option value="Alabama">Alabama</pf-option>
+            <pf-option value="New York">New York</pf-option>
+            <pf-option value="New Jersey">New Jersey</pf-option>
+          </pf-search-input>
+          <button type="submit">Submit</button>
+        </form>
+      `);
+
+      searchInput = form.querySelector('pf-search-input')!;
+      beforeEach(updateComplete);
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        submittedData = new FormData(form);
+      });
+    });
+
+    describe('when a user types and selects an option', function() {
+      describe('focus', function() {
+        beforeEach(focus);
+        beforeEach(() => aTimeout(300));
+        beforeEach(updateComplete);
+        describe('press `New`', function() {
+          beforeEach(updateComplete);
+          beforeEach(() => aTimeout(300));
+          beforeEach(press('N'));
+          beforeEach(() => aTimeout(300));
+          beforeEach(press('e'));
+          beforeEach(() => aTimeout(300));
+          beforeEach(press('w'));
+
+          describe('select the first option starting with `New` and submit the form', function() {
             beforeEach(updateComplete);
             beforeEach(() => aTimeout(300));
-            beforeEach(press('N'));
+            beforeEach(press('ArrowDown'));
             beforeEach(() => aTimeout(300));
-            beforeEach(press('e'));
-            beforeEach(() => aTimeout(300));
-            beforeEach(press('w'));
+            beforeEach(press('Enter'));
+            beforeEach(updateComplete);
 
-            describe('select the first option starting with `New` and submit the form', function() {
-              beforeEach(updateComplete);
-              beforeEach(() => aTimeout(300));
-              beforeEach(press('ArrowDown'));
-              beforeEach(() => aTimeout(300));
+            it('should select the option', function() {
+              expect(getSelectedOptionValue(searchInput)).to.deep.equal([
+                'New York',
+              ]);
+            });
+
+            it('should close the dropdown after selection', function() {
+              expect(searchInput.expanded).to.be.false;
+            });
+
+            it('should keep selected value in input after submission', function() {
+              const input = searchInput.shadowRoot?.querySelector('input');
+              expect(input?.value).to.equal('New York');
+            });
+
+            describe('on form submit event', function() {
+              it('should submit the selected value from pf-search-input', async function() {
+                const event = new SubmitEvent('submit', {
+                  bubbles: true,
+                  cancelable: true,
+                });
+
+                form.dispatchEvent(event);
+                expect(event.defaultPrevented).to.be.true;
+
+                expect(submittedData).to.not.be.null;
+                expect(submittedData?.get('search')).to.equal('New York');
+              });
+            });
+
+            describe('on submit button click', function() {
+              it('should submit the selected value', async function() {
+                form.querySelector('button')?.click();
+                beforeEach(() => aTimeout(300));
+
+                expect(submittedData).to.not.be.null;
+                expect(submittedData?.get('search')).to.equal('New York');
+              });
+            });
+
+            describe('form submit on clicking `enter` key', function() {
               beforeEach(press('Enter'));
               beforeEach(updateComplete);
 
-              it('should select the option', function() {
-                expect(getSelectedOptionValue(searchInput)).to.deep.equal([
-                  'New York',
-                ]);
-              });
-
-              it('should close the dropdown after selection', function() {
-                expect(searchInput.expanded).to.be.false;
-              });
-
-              it('should keep selected value in input after submission', function() {
-                const input = searchInput.shadowRoot?.querySelector('input');
-                expect(input?.value).to.equal('New York');
-              });
-
-              describe('on form submit event', function() {
-                it('should submit the selected value from pf-search-input', async function() {
-                  const event = new SubmitEvent('submit', {
-                    bubbles: true,
-                    cancelable: true,
-                  });
-
-                  form.dispatchEvent(event);
-                  expect(event.defaultPrevented).to.be.true;
-
-                  expect(submittedData).to.not.be.null;
-                  expect(submittedData?.get('search')).to.equal('New York');
-                });
-              });
-
-              describe('on submit button click', function() {
-                it('should submit the selected value', async function() {
-                  form.querySelector('button')?.click();
-                  beforeEach(() => aTimeout(300));
-
-                  expect(submittedData).to.not.be.null;
-                  expect(submittedData?.get('search')).to.equal('New York');
-                });
-              });
-
-              describe('form submit on clicking `enter` key', function() {
-                beforeEach(press('Enter'));
-                beforeEach(updateComplete);
-
-                it('should submit the selected value', function() {
-                  expect(submittedData).to.not.be.null;
-                  expect(submittedData?.get('search')).to.equal('New York');
-                });
+              it('should submit the selected value', function() {
+                expect(submittedData).to.not.be.null;
+                expect(submittedData?.get('search')).to.equal('New York');
               });
             });
           });

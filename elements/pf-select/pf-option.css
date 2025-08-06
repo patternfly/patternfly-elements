@@ -15,7 +15,7 @@
 :host(:focus) #outer,
 :host(:hover) #outer,
 #outer.selected {
-  background-color: #e0e0e0;
+  background-color: var(--_pf-option-selected-background-color, var(--rh-color-gray-20, #e0e0e0));
 }
 
 #outer {
@@ -72,3 +72,11 @@ slot[name="description"] {
   margin-inline-end: 0.5em;
 }
 
+:host([suggestion]) {
+  #outer.selected {
+    background-color: transparent;
+  }  
+  svg {
+    display: none;
+  }
+}

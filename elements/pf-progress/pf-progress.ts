@@ -17,6 +17,7 @@ const ICONS = new Map(Object.entries({
 /**
  * A progress bar gives the user a visual representation of their completion status of an ongoing process or task.
  * @summary Display completion status of ongoing process or task.
+ * @alias Progress
  * @cssprop {<length>} [--pf-c-progress--GridGap=1rem]
  *          Gap between the sections of the progress bar.
  *

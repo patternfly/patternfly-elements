@@ -15,6 +15,7 @@ export class PfChipRemoveEvent extends Event {
 
 /**
  * A **chip** is used to communicate a value or a set of attribute-value pairs within workflows that involve filtering a set of objects.
+ * @alias Chip
  * @fires {ChipRemoveEvent} remove - Fires when chip is removed
  * @fires {Event} click - when close button is clicked
  * @slot

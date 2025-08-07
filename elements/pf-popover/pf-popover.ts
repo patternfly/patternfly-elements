@@ -48,6 +48,7 @@ export class PopoverShownEvent extends ComposedEvent {
 /**
  * A **Popover** displays content in a non-modal dialog and adds contextual information or provides resources via text and links.
  * @summary Toggle the visibility of helpful or contextual information.
+ * @alias Popover
  * @slot -
  *         The default slot holds invoking element.
  *         Typically this would be an icon, button, or other small sized element.

@@ -21,6 +21,7 @@ export class PfClipboardCopyCopiedEvent extends Event {
 
 /**
  * The **clipboard copy** component allows users to quickly and easily copy content to their clipboard.
+ * @alias Clipboard Copy
  * @slot - Place content to copy here, or use the `value` attribute
  * @slot actions - Place additional action buttons here
  * @fires {PfClipboardCopyCopiedEvent} copy - when the text snippet is successfully copied.

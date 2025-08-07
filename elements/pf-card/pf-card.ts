@@ -14,6 +14,7 @@ import style from './pf-card.css';
  * function as a preview of a detailed page. Cards may also be used in data displays
  * like card views, or for positioning content on a page.
  * @summary Gives a preview of information in a small layout
+ * @alias Card
  * @slot header
  *       When included, defines the contents of a card. Card headers can contain images as well as
  *       the title of a card and an actions menu represented by the right-aligned kebab.

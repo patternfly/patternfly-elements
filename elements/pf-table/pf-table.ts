@@ -28,6 +28,7 @@ const rowQuery = [
 
 /**
  * A **table** is used to display large data sets that can be easily laid out in a simple grid with column headers.
+ * @alias Table
  * @slot
  *       The default slot can hold an optional `pf-caption` element and a combination of `pf-tr`, `pf-thead`, or `pf-tbody` elements.
  * @cssprop {<color>} [--pf-c-table--BackgroundColor=#fff]

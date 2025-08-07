@@ -36,6 +36,7 @@ export class PfSelectChangeEvent extends Event {
  * A select component consists of a toggle control to open and close a menu of actions or links.
  * Selects differ from dropdowns in that they persist selection,
  * whereas dropdowns are typically used to present a list of actions or links.
+ * @alias Select
  * @slot - insert `pf-option` and/or `pf-option-groups` here
  * @slot placeholder - placeholder text for the select. Overrides the `placeholder` attribute.
  * @fires open - when the menu toggles open

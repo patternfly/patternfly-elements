@@ -31,6 +31,7 @@ export type ButtonVariant = (
  * new location, like another page inside of a web application, or an external site
  * such as help or documentation..
  * @summary Allows users to perform an action when triggered
+ * @alias Button
  * @cssprop {<length>} [--pf-c-button--FontSize=1rem]
  * @cssprop            [--pf-c-button--FontWeight=400]
  * @cssprop {<number>} [--pf-c-button--LineHeight=1.5]

@@ -10,6 +10,7 @@ import styles from './pf-switch.css';
  * A **switch** toggles the state of a setting (between on and off). Switches and
  * checkboxes can often be used interchangeably, but the switch provides a more
  * explicit, visible representation on a setting.
+ * @alias Switch
  * @fires {Event} change - Fires when the switch selection changes.
  * @cssprop [--pf-c-switch--FontSize=1rem]
  * @cssprop {<length>} [--pf-c-switch--ColumnGap=1rem]

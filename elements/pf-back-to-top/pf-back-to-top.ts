@@ -13,6 +13,7 @@ import styles from './pf-back-to-top.css';
 /**
  * The **back to top** component is a shortcut that allows users to quickly navigate to the top of a lengthy content page.
  * @summary A shortcut that allows users to quickly navigate to the top of a lengthy content page.
+ * @alias Back to Top
  * @csspart trigger - The `<a>` or `<pf-button>` element
  * @slot icon
  *       Contains the prefix icon to display before the link or button.

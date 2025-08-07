@@ -11,6 +11,7 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
 
 /**
  * A **progress stepper** displays a timeline of tasks in a workflow and tracks the user's current progress through this workflow.
+ * @alias Progress Stepper
  * @cssprop [--pf-c-progress-stepper--m-vertical--GridAutoFlow=row]
  * @cssprop [--pf-c-progress-stepper--m-vertical--GridTemplateColumns=auto 1fr]
  * @cssprop [--pf-c-progress-stepper--m-vertical__step-connector--before--Top=0]

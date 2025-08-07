@@ -6,6 +6,7 @@ import styles from './pf-code-block.css';
 
 /**
  * A **code block** is a component that contains 2 or more lines of read-only code. The code in a code block can be copied to the clipboard.
+ * @alias Code Block
  * @slot code
  *       The slot to put the code in
  * @slot expandable-code

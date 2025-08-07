@@ -24,6 +24,7 @@ import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 
 /**
  * **Tabs** allow users to navigate between views within the same page or context.
+ * @alias Tabs
  * @csspart container - outer container
  * @csspart tabs-container - tabs container
  * @csspart tabs - tablist

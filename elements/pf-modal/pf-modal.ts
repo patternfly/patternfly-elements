@@ -38,6 +38,7 @@ export class ModalOpenEvent extends ComposedEvent {
  * A **modal** displays important information to a user without requiring them to navigate
  * to a new page.
  * @summary Displays information or helps a user focus on a task
+ * @alias Modal
  * @slot - The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header.
  * @slot header - The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6).
  * @slot footer - Optional footer content. Good place to put action buttons.

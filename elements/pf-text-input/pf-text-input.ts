@@ -10,6 +10,7 @@ import styles from './pf-text-input.css';
 
 /**
  * A **text input** is used to gather free-form text from a user.
+ * @alias Text Input
  * @cssprop [--pf-c-form-control--Color=var(--pf-global--Color--100, #151515)] -
  * @cssprop [--pf-c-form-control--FontSize=var(--pf-global--FontSize--md, 1rem)] -
  * @cssprop [--pf-c-form-control--LineHeight=var(--pf-global--LineHeight--md, 1.5)] -

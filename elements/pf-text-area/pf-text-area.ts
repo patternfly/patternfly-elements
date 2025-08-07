@@ -11,6 +11,7 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 /**
  * A **text area** component is used for entering a paragraph of text that is longer than one line.
+ * @alias Text Area
  * @cssprop [--pf-c-form-control--Color=var(--pf-global--Color--100, #151515)] -
  * @cssprop [--pf-c-form-control--FontSize=var(--pf-global--FontSize--md, 1rem)] -
  * @cssprop [--pf-c-form-control--LineHeight=var(--pf-global--LineHeight--md, 1.5)] -

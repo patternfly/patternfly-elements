@@ -19,6 +19,7 @@ export class LabelCloseEvent extends Event {
  * The **label** component allows users to add specific element captions for user
  * clarity and convenience.
  * @summary Allows users to display meta data in a stylized form.
+ * @alias Label
  * @fires {LabelCloseEvent} close - when a removable label's close button is clicked
  * @cssprop {<length>} [--pf-c-label--FontSize=0.875em]
  * @cssprop {<length>} [--pf-c-label--PaddingTop=0.25rem]

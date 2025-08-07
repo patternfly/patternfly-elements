@@ -15,6 +15,7 @@ export type StackedSize = (
  * [selectable card](../card/). However, tiles are used specifically when the user is selecting
  * a static option, whereas a selectable card triggers an action or opens a quickstart
  * or sidebar to provide additional information.
+ * @alias Tile
  * @slot icon           - Icon expects a `<pf-icon>` or `<svg>`
  * @slot title          - the title of the tile should be a heading
  * @slot                - The content should be a paragraph

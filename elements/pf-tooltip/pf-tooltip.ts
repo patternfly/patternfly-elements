@@ -23,6 +23,7 @@ const ExitEvents = ['focusout', 'blur', 'mouseleave'];
  * A **tooltip** is in-app messaging used to identify elements on a page with short,
  * clarifying text.
  * @summary Toggle the visibility of helpful or contextual information.
+ * @alias Tooltip
  * @slot
  *       This slot wraps around the element that should be used to invoke the tooltip content to display.
  *       Typically this would be an icon, button, or other small sized element.

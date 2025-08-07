@@ -34,6 +34,7 @@ export class PfSearchChangeEvent extends Event {
  * remove the current input, allowing users to start a new search quickly.
  *
  * @summary Allows users to search through a list for specific search terms
+ * @alias Search Input
  *
  * @fires open - when the menu toggles open
  * @fires close - when the menu toggles closed

@@ -37,6 +37,7 @@ export class PfAccordionCollapseEvent extends Event {
 /**
  * An **accordion** is an interactive container that expands and collapses to hide or reveal nested content. It takes advantage of progressive disclosure to help reduce page scrolling, by allowing users to choose whether they want to show or hide more detailed information as needed.
  * @summary Toggle the visibility of sections of content
+ * @alias Accordion
  * @fires {AccordionExpandEvent} expand - when a panel expands
  * @fires {AccordionCollapseEvent} collapse - when a panel collapses
  * @slot

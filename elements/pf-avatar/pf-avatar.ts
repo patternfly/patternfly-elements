@@ -13,6 +13,7 @@ export class PfAvatarLoadEvent extends Event {
 /**
  * An **avatar** is a visual used to represent a user. It may contain an image or a placeholder graphic.
  * @summary For displaying a user's avatar image
+ * @alias Avatar
  * @fires {PfAvatarLoadEvent} load - when the avatar loads
  * @cssprop [--pf-c-avatar--Width=24px]
  * @cssprop [--pf-c-avatar--Height=24px]

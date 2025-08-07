@@ -6,6 +6,7 @@ import styles from './pf-badge.css';
 
 /**
  * A **badge** is used to annotate other information like a label or an object name.
+ * @alias Badge
  * @cssprop {<length>} [--pf-c-badge--BorderRadius=180em]
  * @cssprop {<length>} [--pf-c-badge--MinWidth=2rem]
  * @cssprop {<length>} [--pf-c-badge--PaddingLeft=0.5rem]

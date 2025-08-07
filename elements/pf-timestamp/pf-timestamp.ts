@@ -19,6 +19,7 @@ const BooleanStringConverter: ComplexAttributeConverter = {
 
 /**
  * A **timestamp** provides consistent formats for displaying date and time values.
+ * @alias Timestamp
  */
 @customElement('pf-timestamp')
 export class PfTimestamp extends LitElement {

@@ -36,6 +36,7 @@ export class IconResolveError extends ErrorEvent {
 /**
  * An **icon** component is a container that allows for icons of varying dimensions to
  * seamlessly replace each other without shifting surrounding content.
+ * @alias Icon
  * @slot - Slotted content is used as a fallback in case the icon doesn't load
  * @fires load - Fired when an icon is loaded and rendered
  * @fires error - Fired when an icon fails to load

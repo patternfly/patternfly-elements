@@ -31,6 +31,7 @@ export class PfDropdownSelectEvent extends Event {
 /**
  * A **dropdown** presents a menu of actions or links in a constrained space that
  * will trigger a process or navigate to a new location.
+ * @alias Dropdown
  * @slot - Must contain one or more `<pf-dropdown-item>` or `<pf-dropdown-group>`
  * @slot toggle - Custom toggle button
  * @slot menu - when using a custom toggle, you must slot a `<pf-dropdown-menu>` in alongside it

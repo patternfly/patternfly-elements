@@ -321,7 +321,7 @@ export class Manifest {
         ) ?? '';
       const [last = ''] = filePath.split('/').reverse();
       const filename = last.replace('.html', '');
-      const isMainElementDemo = this.getTagNames().includes(filename);
+      const isMainElementDemo = filename === 'index';
       const title = isMainElementDemo ? options.aliases[tagName] ?? prettyTag(tagName) : last
           .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
           .replace(/-/g, ' ')

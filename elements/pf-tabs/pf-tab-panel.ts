@@ -12,7 +12,6 @@ import styles from './pf-tab-panel.css';
 /**
  * @slot - Tab panel content
  * @cssprop {<color>} [--pf-c-tab-content--m-light-300=#f0f0f0]
- * @csspart container - container for the panel content
  */
 @customElement('pf-tab-panel')
 export class PfTabPanel extends LitElement {
@@ -23,7 +22,11 @@ export class PfTabPanel extends LitElement {
 
   render(): TemplateResult<1> {
     return html`
-      <slot></slot>
+      <!-- container for the panel content -->
+      <div part="container">
+        <!-- Tab panel content -->
+        <slot></slot>
+      </div>
     `;
   }
 

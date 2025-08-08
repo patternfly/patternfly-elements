@@ -39,7 +39,6 @@ export class IconResolveError extends ErrorEvent {
  * @alias Icon
  * @fires load - Fired when an icon is loaded and rendered
  * @fires error - Fired when an icon fails to load
- * @csspart fallback - Container for the fallback (i.e. slotted) content
  * @cssprop {<length>} --pf-icon--size - size of the icon
  */
 @customElement('pf-icon')
@@ -203,8 +202,13 @@ export class PfIcon extends LitElement {
   render(): TemplateResult<1> {
     const content = this.content ?? '';
     return html`
-      <div id="container" aria-hidden="true">${content}<span part="fallback"
-          ?hidden=${!!content}><!-- Slotted content is used as a fallback in case the icon doesn't load --><slot></slot>
+      <div id="container" aria-hidden="true">${content}<!--
+         summary: Container for the fallback (i.e. slotted) content
+        -->
+        <span part="fallback"
+          ?hidden=${!!content}><!--
+           summary: Slotted content is used as a fallback in case the icon doesn't load
+        --><slot></slot>
         </span>
       </div>
     `;

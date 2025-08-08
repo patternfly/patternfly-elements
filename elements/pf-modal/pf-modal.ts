@@ -41,13 +41,6 @@ export class ModalOpenEvent extends ComposedEvent {
  * @alias Modal
  * @fires {ModalOpenEvent} open - Fires when a user clicks on the trigger or manually opens a modal.
  * @fires {ModalCloseEvent} close - Fires when either a user clicks on either the close button or the overlay or manually closes a modal.
- * @csspart overlay - The modal overlay which lies under the dialog and above the page body
- * @csspart dialog - The dialog element
- * @csspart content - The container for the dialog content
- * @csspart header - The container for the optional dialog header
- * @csspart description - The container for the optional dialog description in the header
- * @csspart close-button - The modal's close button
- * @csspart footer - Actions footer container
  * @cssprop {<length>} [--pf-c-modal-box--ZIndex=500]
  * @cssprop {<length>} [--pf-c-modal-box--Width=calc(100 - 2rem)] - Width of the modal
  * @cssprop {<length>} [--pf-c-modal-box--MaxWidth=calc(100 - 2rem)] - Max width of the modal
@@ -122,7 +115,9 @@ export class PfModal extends LitElement implements HTMLDialogElement {
 
     return html`
       <section ?hidden=${!this.open}>
+        <!-- summary: The modal overlay which lies under the dialog and above the page body -->
         <div id="overlay" part="overlay" ?hidden=${!this.open}></div>
+        <!-- summary: The dialog element -->
         <div id="dialog"
             part="dialog"
             tabindex="0"
@@ -131,21 +126,34 @@ export class PfModal extends LitElement implements HTMLDialogElement {
             aria-label=${ifDefined(headerLabel)}
             ?hidden="${!this.open}">
           <div id="container">
+            <!-- summary: The container for the dialog content -->
             <div id="content" part="content" class=${classMap({ hasHeader, hasDescription, hasFooter })}>
+              <!-- summary: The container for the optional dialog header -->
               <header part="header">
-                <!-- The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6). -->
+                <!-- summary: Heading tag
+                     description: |
+                       The header is an optional slot that appears at the top of the modal window.
+                       It should be a heading tag (h2-h6). -->
                 <slot name="header"></slot>
+                <!-- summary: The container for the optional dialog description in the header -->
                 <div part="description" ?hidden=${!hasDescription}>
                   <slot name="description"></slot>
                 </div>
               </header>
-              <!-- The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header. -->
+              <!--
+                summary: Modal dialog content
+                description: |
+                  The default slot can contain any type of content. When the header is not present,
+                  this unnamed slot appear at the top of the modal window (to the left of the close
+                  button). Otherwise it will appear beneath the header. -->
               <slot></slot>
+              <!-- summary: Actions footer container -->
               <footer ?hidden=${!hasFooter} part="footer">
-                <!-- Optional footer content. Good place to put action buttons. -->
+                <!-- summary: Optional footer content. Good place to put action buttons. -->
                 <slot name="footer"></slot>
               </footer>
             </div>
+            <!-- summary: The modal's close button -->
             <button id="close-button"
                 part="close-button"
                 aria-label="Close dialog"

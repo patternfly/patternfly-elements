@@ -14,7 +14,6 @@ import styles from './pf-back-to-top.css';
  * The **back to top** component is a shortcut that allows users to quickly navigate to the top of a lengthy content page.
  * @summary A shortcut that allows users to quickly navigate to the top of a lengthy content page.
  * @alias Back to Top
- * @csspart trigger - The `<a>` or `<pf-button>` element
  * @cssprop {<length>} [--pf-c-back-to-top--Right=3rem`]
  * @cssprop {<length>} [--pf-c-back-to-top--Bottom=1.5rem`]
  * @cssprop [--pf-c-back-to-top--c-button--BoxShadow=0 0.75rem 0.75rem -0.5rem rgba(3, 3, 3, 0.18)]
@@ -109,7 +108,11 @@ export class PfBackToTop extends LitElement {
 
     if (this.href) {
       return html`
-        <a href="${this.href}" ?hidden="${!this.#visible}" part="trigger" aria-label="${ifDefined(this.#ariaLabel)}">
+        <!-- The \`<a>\` or \`<pf-button>\` element -->
+        <a href="${this.href}"
+           ?hidden="${!this.#visible}"
+           part="trigger"
+           aria-label="${ifDefined(this.#ariaLabel)}">
           <!-- Contains the prefix icon to display before the link or button. -->
           <slot name="icon"></slot>
           <!-- Text to display inside the link or button. -->
@@ -119,6 +122,7 @@ export class PfBackToTop extends LitElement {
       `;
     } else {
       return html`
+        <!-- The \`<a>\` or \`<pf-button>\` element -->
         <pf-button
             icon="${ifDefined(this.icon)}"
             icon-set="${ifDefined(this.iconSet)}"

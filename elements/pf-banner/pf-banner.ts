@@ -35,7 +35,6 @@ export type BannerVariant = (
  * @cssprop {<color>} [--pf-c-banner--m-warning--BackgroundColor=#f0ab00]
  * @cssprop [--pf-c-banner--m-sticky--ZIndex=300]
  * @cssprop [--pf-c-banner--m-sticky--BoxShadow=0 0.5rem 0.5rem -0.375rem rgba(3, 3, 3, 0.18)]
- * @csspart container - The container of the banner
  */
 @customElement('pf-banner')
 export class PfBanner extends LitElement {
@@ -63,6 +62,7 @@ export class PfBanner extends LitElement {
     const { variant, icon } = this;
     const hasIcon = !!icon || this.#slots.hasSlotted('icon');
     return html`
+      <!-- The container of the banner -->
       <div id="container" part="container"
             class=${classMap({ hasIcon, [variant ?? '']: !!variant })}>
         <!-- Contains the labels's icon, e.g. web-icon-alert-success. -->

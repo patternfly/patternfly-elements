@@ -25,10 +25,6 @@ import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 /**
  * **Tabs** allow users to navigate between views within the same page or context.
  * @alias Tabs
- * @csspart container - outer container
- * @csspart tabs-container - tabs container
- * @csspart tabs - tablist
- * @csspart panels - panels
  * @cssprop     {<length>} [--pf-c-tabs--Width=auto]
  * @cssprop     {<length>} [--pf-c-tabs--inset=0]
  * @cssprop     {<color>}   [--pf-c-tabs--before--BorderColor=#d2d2d2]
@@ -198,8 +194,10 @@ export class PfTabs extends LitElement {
 
   render(): TemplateResult<1> {
     return html`
+      <!-- outer container -->
       <div part="container"
            class="${classMap({ overflow: this.#overflow.showScrollButtons })}">
+        <!-- tabs container -->
         <div part="tabs-container">${!this.#overflow.showScrollButtons ? '' : html`
           <button id="previousTab" tabindex="-1"
               aria-label="${this.labelScrollLeft}"
@@ -207,6 +205,7 @@ export class PfTabs extends LitElement {
               @click="${this.#scrollLeft}">
             <pf-icon icon="angle-left" set="fas" loading="eager"></pf-icon>
           </button>`}
+          <!-- tablist -->
           <div id="tabs" part="tabs" role="tablist">
             <!-- Must contain one or more \`<pf-tab>\` -->
             <slot name="tab" @slotchange="${this.#onSlotChange}" @scroll="${this.#overflow.onScroll}"></slot>
@@ -219,7 +218,12 @@ export class PfTabs extends LitElement {
             <pf-icon icon="angle-right" set="fas" loading="eager"></pf-icon>
           </button>`}
         </div>
-        <!-- Must contain one or more \`<pf-panel>\` -->
+        <!--
+          slot:
+            summary: Must contain one or more \`<pf-panel>\`
+          part:
+            summary: panels
+        -->
         <slot part="panels"></slot>
       </div>
     `;

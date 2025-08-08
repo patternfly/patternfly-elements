@@ -32,7 +32,6 @@ export class PfDropdownSelectEvent extends Event {
  * A **dropdown** presents a menu of actions or links in a constrained space that
  * will trigger a process or navigate to a new location.
  * @alias Dropdown
- * @csspart menu - The dropdown menu wrapper
  * @cssprop {<length>} [--pf-c-dropdown__menu--PaddingTop=0.5rem] Dropdown top padding
  * @cssprop {<length>} [--pf-c-tooltip__content--PaddingRight=0.5rem] Dropdown right padding
  * @cssprop {<length>} [--pf-c-dropdown__menu--ZIndex=200] Dropdown z-index
@@ -116,6 +115,7 @@ export class PfDropdown extends LitElement {
             @focusout="${this.#onMenuFocusout}"
             @keydown="${this.#onMenuKeydown}"
             @click="${this.#onSelect}">
+        <!-- The dropdown menu wrapper -->
         <pf-dropdown-menu id="menu" part="menu" ?disabled="${disabled}">
           <!-- Must contain one or more \`<pf-dropdown-item>\` or \`<pf-dropdown-group>\` -->
           <slot></slot>

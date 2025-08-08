@@ -30,14 +30,6 @@ export class PfAccordionHeaderChangeEvent extends Event {
 
 /**
  * Accordion Header
- * @csspart text - inline element containing the heading text or slotted heading content
- * @csspart accents - container for accents within the header
- * @csspart icon - caret icon
- * @slot
- *       We expect the light DOM of the pf-accordion-header to be a heading level tag (h1, h2, h3, h4, h5, h6)
- * @slot accents
- *       These elements will appear inline with the accordion header, between the header and the chevron
- *       (or after the chevron and header in disclosure mode).
  * @fires {AccordionHeaderChangeEvent} change - when the open panels change
  * @cssprop     {<color>} [--pf-c-accordion__toggle--Color=var(--pf-global--Color--100, #151515)]
  *              Sets the font color for the accordion header.
@@ -136,12 +128,21 @@ export class PfAccordionHeader extends LitElement {
               class="toggle"
               @click="${this.#onClick}"
               aria-expanded="${String(!!this.expanded) as 'true' | 'false'}">
+        <!-- summary: inline element containing the heading text or slotted heading content -->
         <span part="text">${headingText ?? html`
+          <!-- summary: A heading level tag (h1, h2, h3, h4, h5, h6) -->
           <slot></slot>`}
         </span>
+        <!-- summary: container for accents within the header -->
         <span part="accents" ?hidden="${this.#slots.isEmpty('accents')}">
+          <!-- summary: Header accent elements like tag or icon
+               description: |
+                 These elements will appear inline with the accordion header,
+                 between the header and the chevron
+                 (or after the chevron and header in disclosure mode). -->
           <slot name="accents"></slot>
         </span>
+        <!-- summary: caret icon -->
         <pf-icon part="icon"
                  class="icon"
                  size="lg"

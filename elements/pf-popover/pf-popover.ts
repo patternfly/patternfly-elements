@@ -49,14 +49,6 @@ export class PopoverShownEvent extends ComposedEvent {
  * A **Popover** displays content in a non-modal dialog and adds contextual information or provides resources via text and links.
  * @summary Toggle the visibility of helpful or contextual information.
  * @alias Popover
- * @csspart container - The component wrapper
- * @csspart content - The content wrapper
- * @csspart header - The header element; only visible if both an icon annd heading are provided.
- * @csspart heading - The heading element
- * @csspart icon - The header icon
- * @csspart close-button - The close button
- * @csspart body - The container for the body content
- * @csspart footer - The container for the footer content
  * @cssprop {<length>} [--pf-c-popover__arrow--Height=1.5625rem] Height of the arrow
  * @cssprop {<length>} [--pf-c-popover__arrow--Width=1.5625rem] Width of the arrow
  * @cssprop {<color>} [--pf-c-popover__title-text--Color=inherit] Heading font color
@@ -324,7 +316,14 @@ export class PfPopover extends LitElement {
     }
 
     const headingSlotWithFallback = html`
-      <!-- This slot renders the content that will be displayed inside of the header of the popover. Typically this would be a heading element. -->
+      <!-- slot:
+             summary: Heading content.
+             description: |
+               This slot projects content into the header of the popover.
+               Typically this would be a heading (e.g. h2, h3, etc.) element.
+           part:
+             summary: The heading element
+      -->
       <slot id="heading" name="heading" part="heading" ?hidden=${!hasHeading}>${headingContent}</slot>
     `;
 
@@ -333,10 +332,13 @@ export class PfPopover extends LitElement {
       ?? '';
 
     return html`
+      <!-- The component wrapper -->
       <div id="container"
            style="${styleMap(styles)}"
-           class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}">
-        <!-- The default slot holds invoking element. Typically this would be an icon, button, or other small sized element. -->
+           class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}"
+           part="container">
+        <!-- The default slot holds invoking element.
+             Typically this would be an icon, button, or other small sized element. -->
         <slot id="trigger"
               @slotchange="${this.#triggerChanged}"
               @keydown="${this.#onKeydown}"
@@ -347,7 +349,9 @@ export class PfPopover extends LitElement {
                 aria-describedby="body"
                 aria-label=${ifDefined(this.label)}>
           <div id="arrow"></div>
+          <!-- The content wrapper -->
           <div id="content" part="content">
+            <!-- The close button -->
             <pf-button id="close-button"
                        part="close-button"
                        plain
@@ -360,9 +364,11 @@ export class PfPopover extends LitElement {
               </svg>
             </pf-button>
             ${!(hasHeading && hasIcon) ? headingSlotWithFallback : html`
+            <!-- The header element; only visible if both an icon annd heading are provided. -->
             <header part="header">
+              <!-- summary: Container for the header icon -->
               <span part="icon">
-                <!-- This slot renders the icon that will be displayed inside the header of the popover, before the heading. -->
+                <!-- summary: The icon in the header of the popover, before the heading. -->
                 <slot name="icon">
                   <pf-icon icon="${headerIcon}"
                            set="${ifDefined(this.iconSet)}"
@@ -372,10 +378,15 @@ export class PfPopover extends LitElement {
               <span class="visually-hidden">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>`}
               ${headingSlotWithFallback}
             </header>`}
-            <!-- This slot renders the content that will be displayed inside of the body of the popover. -->
+            <!-- slot:
+                   summary: body of the popover, which is hidden until the popover is activated.
+                 part:
+                   summary: The container for the body content
+            -->
             <slot id="body" part="body" name="body">${this.body ?? ''}</slot>
+            <!-- summary: The container for the footer content -->
             <footer part="footer" ?hidden=${!hasFooter}>
-              <!-- This slot renders the content that will be displayed inside of the footer of the popover. -->
+              <!-- summary: optional footer content of the popover. -->
               <slot name="footer">${this.footer}</slot>
             </footer>
           </div>

@@ -16,9 +16,6 @@ export type StackedSize = (
  * a static option, whereas a selectable card triggers an action or opens a quickstart
  * or sidebar to provide additional information.
  * @alias Tile
- * @csspart icon        - container for the icon
- * @csspart title       - container for the title
- * @csspart body        - container for the body content
  * @attr {'boolean'} selected       - selected variant
  * @attr {'md'|'lg'|null} stacked   - stacked variant
  * @cssprop   {<length>} [--pf-c-tile--PaddingTop=1.5rem]
@@ -51,15 +48,18 @@ export class PfTile extends LitElement {
   override render(): TemplateResult<1> {
     return html`
       <div part="header">
+        <!-- container for the icon -->
         <div part="icon">
           <!-- Icon expects a \`<pf-icon>\` or \`<svg>\` -->
           <slot id="icon" name="icon"></slot>
         </div>
+        <!-- container for the title -->
         <div part="title">
           <!-- the title of the tile should be a heading -->
           <slot id="title" name="title"></slot>
         </div>
       </div>
+      <!-- container for the body content -->
       <div part="body">
         <!-- The content should be a paragraph -->
         <slot id="body"></slot>

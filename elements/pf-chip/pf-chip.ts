@@ -18,7 +18,6 @@ export class PfChipRemoveEvent extends Event {
  * @alias Chip
  * @fires {ChipRemoveEvent} remove - Fires when chip is removed
  * @fires {Event} click - when close button is clicked
- * @csspart text - container for chip text
  * @cssprop [--pf-c-chip--PaddingTop=var(--pf-global--spacer--xs, 0.25rem)]
  * @cssprop [--pf-c-chip--PaddingRight=var(--pf-global--spacer--sm, 0.5rem)]
  * @cssprop [--pf-c-chip--PaddingBottom=var(--pf-global--spacer--xs, 0.25rem)]
@@ -64,6 +63,7 @@ export class PfChip extends LitElement {
   render(): TemplateResult<1> {
     return this.overflowChip ? html`
       <button id="outer">
+        <!-- container for chip text -->
         <span part="text">
           <!-- chip text -->
           <slot></slot>
@@ -71,6 +71,7 @@ export class PfChip extends LitElement {
       </button>
     ` : html`
       <div id="outer">
+        <!-- container for chip text -->
         <span id="chip-text" part="text">
           <!-- chip text -->
           <slot></slot>

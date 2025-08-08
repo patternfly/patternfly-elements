@@ -16,13 +16,6 @@ import styles from './pf-tab.css';
 
 /**
  * Tab
- * @slot icon
- *       Can contain an `<svg>` or `<pf-icon>`
- * @slot
- *       Tab title text
- * @csspart button - button element
- * @csspart icon - span container for the icon
- * @csspart text - span container for the title text
  * @cssprop     {<length>} [--pf-c-tabs--m-box__item--m-current--first-child__link--before--BorderLeftWidth=1px]
  * @cssprop     {<length>} [--pf-c-tabs--m-box__item--m-current--last-child__link--before--BorderRightWidth=1px]
  * @cssprop     {<color>} [--pf-c-tabs__link--BackgroundColor=#f0f0f0]
@@ -107,13 +100,23 @@ export class PfTab extends LitElement {
     const dark = box === 'dark';
     const icons = isServer ? [] : this.icons;
     return html`
+      <!-- button element -->
       <div id="button"
            part="button"
            class="${classMap({ active, box: !!box, dark, light, fill, vertical })}">
+        <!-- slot:
+               summary: Can contain an \`<svg>\` or \`<pf-icon>\`
+             part:
+               summary: container for the icon
+        -->
         <slot name="icon"
               part="icon"
               ?hidden="${!icons?.length}"
               @slotchange="${() => this.requestUpdate()}"></slot>
+        <!-- slot:
+               summary: Tab title text
+             part:
+               summary: container for the tab text -->
         <slot part="text"></slot>
       </div>
     `;

@@ -15,9 +15,6 @@ import style from './pf-card.css';
  * like card views, or for positioning content on a page.
  * @summary Gives a preview of information in a small layout
  * @alias Card
- * @csspart header - The container for *header* content
- * @csspart body - The container for *body* content
- * @csspart footer - The container for *footer* content
  * @cssprop {<color>} [--pf-c-card--BackgroundColor=#ffffff]
  * @cssprop {<color>} [--pf-c-card--BoxShadow=0 0.0625rem 0.125rem 0 rgba(3, 3, 3, 0.12), 0 0 0.125rem 0 rgba(3, 3, 3, 0.06)]
  * @cssprop {<color>} [--pf-c-card--size-compact__body--FontSize=.875rem]
@@ -74,24 +71,40 @@ export class PfCard extends LitElement {
   render(): TemplateResult<1> {
     return html`
       <article>
+        <!-- summary: The container for *header* content -->
         <header id="header"
                 part="header"
                 class="${classMap({ empty: this.#slots.isEmpty('header') })}">
-          <!-- When included, defines the contents of a card. Card headers can contain images as well as the title of a card and an actions menu represented by the right-aligned kebab. In most cases, your card should include a header. The only exceptions are when cards being used as a layout element to create a white background behind other content. -->
+          <!-- summary: When included, defines the contents of a card.
+               description: |
+                 Card headers can contain images as well as the title of a card and an actions menu
+                 represented by the right-aligned kebab. In most cases, your card should include a
+                 header. The only exceptions are when cards being used as a layout element to
+                 create a white background behind other content.
+          -->
           <slot name="header"></slot>
-          <!-- Communicates the title of a card if it's not included in the header. If a card will be utilized as a selectable and clickable card, the title needs to be made as a linked text to trigger action and indicate interaction. -->
+          <!-- summary: Communicates the title of a card if it's not included in the header.
+               description: |
+                 If a card will be utilized as a selectable and clickable card, the title
+                 needs to be made as a linked text to trigger action and indicate interaction.
+          -->
           <slot id="title" name="title" ?hidden="${this.#slots.isEmpty('title')}"></slot>
         </header>
+        <!-- summary: The container for *body* content -->
         <div id="body"
              part="body"
              class="${classMap({ empty: this.#slots.isEmpty(null) })}">
-          <!-- Body. Provides details about the item. A card body can include any combination of static text and/or active content. -->
+          <!-- summary: Body. Provides details about the item.
+               description: |
+                 A card body can include any combination of static text and/or active content.
+          -->
           <slot></slot>
         </div>
+        <!-- summary: The container for *footer* content -->
         <footer id="footer"
                 part="footer"
                 class="${classMap({ empty: this.#slots.isEmpty('footer') })}">
-          <!-- Contains external links, actions, or static text at the bottom of a card. -->
+          <!-- summary: Contains external links, actions, or static text at the bottom of a card. -->
           <slot name="footer"></slot>
         </footer>
       </article>

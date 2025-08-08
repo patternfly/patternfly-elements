@@ -15,29 +15,6 @@ import style from './pf-card.css';
  * like card views, or for positioning content on a page.
  * @summary Gives a preview of information in a small layout
  * @alias Card
- * @cssprop {<color>} [--pf-c-card--BackgroundColor=#ffffff]
- * @cssprop {<color>} [--pf-c-card--BoxShadow=0 0.0625rem 0.125rem 0 rgba(3, 3, 3, 0.12), 0 0 0.125rem 0 rgba(3, 3, 3, 0.06)]
- * @cssprop {<color>} [--pf-c-card--size-compact__body--FontSize=.875rem]
- * @cssprop {<color>} [--pf-c-card--size-compact__footer--FontSize=1rem]
- * @cssprop {<color>} [--pf-c-card--size-compact--first-child--PaddingTop=1.5rem]
- * @cssprop {<color>} [--pf-c-card--size-compact--child--PaddingRight=1rem]
- * @cssprop {<color>} [--pf-c-card--size-compact--child--PaddingBottom=1rem]
- * @cssprop {<color>} [--pf-c-card--size-compact--child--PaddingLeft=1rem]
- * @cssprop {<color>} [--pf-c-card--size-compact__title--not--last-child--PaddingBottom=.5rem]
- * @cssprop {<color>} [--pf-c-card--size-large__title--FontSize=1.25rem]
- * @cssprop {<color>} [--pf-c-card--size-large--first-child--PaddingTop=2rem]
- * @cssprop {<color>} [--pf-c-card--size-large--child--PaddingRight=2rem]
- * @cssprop {<color>} [--pf-c-card--size-large--child--PaddingBottom=2rem]
- * @cssprop {<color>} [--pf-c-card--size-large--child--PaddingLeft=2rem]
- * @cssprop {<color>} [--pf-c-card--size-large__title--not--last-child--PaddingBottom=1.5rem]
- * @cssprop {<color>} [--pf-c-card--m-flat--BorderWidth=1px solid #d2d2d2]
- * @cssprop {<color>} [--pf-c-card--m-plain--BoxShadow=none]
- * @cssprop {<color>} [--pf-c-card--m-plain--BackgroundColor=transparent]
- * @cssprop {<color>} [--pf-c-card--m-rounded--BorderRadius=3px]
- * @cssprop {<color>} [--pf-c-card--m-full-height--Height=100]
- * @cssprop {<color>} [--pf-c-card__title--FontFamily="RedHatDisplayUpdated", helvetica, arial, sans-serif]
- * @cssprop {<color>} [--pf-c-card__title--FontSize=1rem]
- * @cssprop {<color>} [--pf-c-card__title--FontWeight=700]
  */
 @customElement('pf-card')
 export class PfCard extends LitElement {

@@ -1,65 +1,127 @@
 :host {
+	/** BackgroundColor for the accordion */
 	--pf-c-accordion--BackgroundColor: var(--pf-global--BackgroundColor--100, #fff);
+	/** PaddingTop for the toggle */
 	--pf-c-accordion__toggle--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
+	/** PaddingRight for the toggle */
 	--pf-c-accordion__toggle--PaddingRight: var(--pf-global--spacer--md, 1rem);
+	/** PaddingBottom for the toggle */
 	--pf-c-accordion__toggle--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
+	/** PaddingLeft for the toggle */
 	--pf-c-accordion__toggle--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+	/** BackgroundColor for the toggle before element */
 	--pf-c-accordion__toggle--before--BackgroundColor: transparent;
+	/** Top position for the toggle before element */
 	--pf-c-accordion__toggle--before--Top: 0;
+	/** BackgroundColor for the toggle on hover */
 	--pf-c-accordion__toggle--hover--BackgroundColor: var(--pf-global--BackgroundColor--200, #f0f0f0);
+	/** BackgroundColor for the toggle on focus */
 	--pf-c-accordion__toggle--focus--BackgroundColor: var(--pf-global--BackgroundColor--200, #f0f0f0);
+	/** BackgroundColor for the toggle when active */
 	--pf-c-accordion__toggle--active--BackgroundColor: var(--pf-global--BackgroundColor--200, #f0f0f0);
+	/** Width for the toggle before element */
 	--pf-c-accordion__toggle--before--Width: var(--pf-global--BorderWidth--lg, 3px);
+	/** BackgroundColor for the toggle before element when expanded */
 	--pf-c-accordion__toggle--m-expanded--before--BackgroundColor: var(--pf-global--primary-color--100, #06c);
+	/** MaxWidth for the toggle text */
 	--pf-c-accordion__toggle-text--MaxWidth: calc(100% - var(--pf-global--spacer--lg, 1.5rem));
+	/** Color for the toggle text on hover */
 	--pf-c-accordion__toggle--hover__toggle-text--Color: var(--pf-global--link--Color, #06c);
+	/** Color for the toggle text when active */
 	--pf-c-accordion__toggle--active__toggle-text--Color: var(--pf-global--link--Color, #06c);
+	/** FontWeight for the toggle text when active */
 	--pf-c-accordion__toggle--active__toggle-text--FontWeight: var(--pf-global--FontWeight--semi-bold, 700);
+	/** Color for the toggle text on focus */
 	--pf-c-accordion__toggle--focus__toggle-text--Color: var(--pf-global--link--Color, #06c);
+	/** FontWeight for the toggle text on focus */
 	--pf-c-accordion__toggle--focus__toggle-text--FontWeight: var(--pf-global--FontWeight--semi-bold, 700);
+	/** Color for the toggle text when expanded */
 	--pf-c-accordion__toggle--m-expanded__toggle-text--Color: var(--pf-global--link--Color, #06c);
+	/** FontWeight for the toggle text when expanded */
 	--pf-c-accordion__toggle--m-expanded__toggle-text--FontWeight: var(--pf-global--FontWeight--semi-bold, 700);
+	/** Transition for the toggle icon */
 	--pf-c-accordion__toggle-icon--Transition: .2s ease-in 0s;
+	/** Rotate value for the toggle icon when expanded */
 	--pf-c-accordion__toggle--m-expanded__toggle-icon--Rotate: 90deg;
+	/** Color for the expanded content */
 	--pf-c-accordion__expanded-content--Color: var(--pf-global--Color--200, #6a6e73);
+	/** FontSize for the expanded content */
 	--pf-c-accordion__expanded-content--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+	/** BackgroundColor for the expanded content body before element when expanded */
 	--pf-c-accordion__expanded-content--m-expanded__expanded-content-body--before--BackgroundColor: var(--pf-global--primary-color--100, #06c);
+	/** MaxHeight for the expanded content when fixed */
 	--pf-c-accordion__expanded-content--m-fixed--MaxHeight: 9.375rem;
+	/** PaddingTop for the expanded content body */
 	--pf-c-accordion__expanded-content-body--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
+	/** PaddingRight for the expanded content body */
 	--pf-c-accordion__expanded-content-body--PaddingRight: var(--pf-global--spacer--md, 1rem);
+	/** PaddingBottom for the expanded content body */
 	--pf-c-accordion__expanded-content-body--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
+	/** PaddingLeft for the expanded content body */
 	--pf-c-accordion__expanded-content-body--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+	/** PaddingTop for nested expanded content body */
 	--pf-c-accordion__expanded-content-body--expanded-content-body--PaddingTop: 0;
+	/** BackgroundColor for the expanded content body before element */
 	--pf-c-accordion__expanded-content-body--before--BackgroundColor: transparent;
+	/** Width for the expanded content body before element */
 	--pf-c-accordion__expanded-content-body--before--Width: var(--pf-global--BorderWidth--lg, 3px);
+	/** Top position for the expanded content body before element */
 	--pf-c-accordion__expanded-content-body--before--Top: 0;
+	/** PaddingTop for the toggle in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--PaddingTop: var(--pf-global--spacer--md, 1rem);
+	/** PaddingRight for the toggle in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--PaddingRight: var(--pf-global--spacer--md, 1rem);
+	/** PaddingBottom for the toggle in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+	/** PaddingLeft for the toggle in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--PaddingLeft: var(--pf-global--spacer--lg, 1.5rem);
+	/** FontFamily for the toggle in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--FontFamily: var(--pf-global--FontFamily--heading--sans-serif, "RedHatDisplay", "Overpass", overpass, helvetica, arial, sans-serif);
+	/** FontSize for the toggle in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--FontSize: var(--pf-global--FontSize--xl, 1.25rem);
+	/** Color for the toggle text on hover in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--hover__toggle-text--Color: var(--pf-global--Color--100, #151515);
+	/** Color for the toggle text when active in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--active__toggle-text--Color: var(--pf-global--Color--100, #151515);
+	/** FontWeight for the toggle text when active in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--active__toggle-text--FontWeight: var(--pf-global--FontWeight--normal, 400);
+	/** Color for the toggle text on focus in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--focus__toggle-text--Color: var(--pf-global--Color--100, #151515);
+	/** FontWeight for the toggle text on focus in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--focus__toggle-text--FontWeight: var(--pf-global--FontWeight--normal, 400);
+	/** Color for the toggle text when expanded in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--m-expanded__toggle-text--Color: var(--pf-global--Color--100, #151515);
+	/** FontWeight for the toggle text when expanded in large display mode */
 	--pf-c-accordion--m-display-lg__toggle--m-expanded__toggle-text--FontWeight: var(--pf-global--FontWeight--normal, 400);
+	/** FontSize for the expanded content in large display mode */
 	--pf-c-accordion--m-display-lg__expanded-content--FontSize: var(--pf-global--FontSize--md, 1rem);
+	/** Color for the expanded content in large display mode */
 	--pf-c-accordion--m-display-lg__expanded-content--Color: var(--pf-global--Color--100, #151515);
+	/** PaddingTop for the expanded content body in large display mode */
 	--pf-c-accordion--m-display-lg__expanded-content-body--PaddingTop: 0;
+	/** PaddingRight for the expanded content body in large display mode */
 	--pf-c-accordion--m-display-lg__expanded-content-body--PaddingRight: var(--pf-global--spacer--md, 1rem);
+	/** PaddingBottom for the expanded content body in large display mode */
 	--pf-c-accordion--m-display-lg__expanded-content-body--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+	/** PaddingBottom for the last child of expanded content body in large display mode */
 	--pf-c-accordion--m-display-lg__expanded-content-body--last-child--PaddingBottom: var(--pf-global--spacer--lg, 1.5rem);
+	/** PaddingLeft for the expanded content body in large display mode */
 	--pf-c-accordion--m-display-lg__expanded-content-body--PaddingLeft: var(--pf-global--spacer--lg, 1.5rem);
+	/** BorderTopWidth for the bordered variant */
 	--pf-c-accordion--m-bordered--BorderTopWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** BorderTopColor for the bordered variant */
 	--pf-c-accordion--m-bordered--BorderTopColor: var(--pf-global--BorderColor--100, #d2d2d2);
+	/** Top position for the toggle before element in bordered variant */
 	--pf-c-accordion--m-bordered__toggle--before--Top: calc(-1 * var(--pf-global--BorderWidth--sm, 1px));
+	/** BorderColor for the toggle after element in bordered variant */
 	--pf-c-accordion--m-bordered__toggle--after--BorderColor: var(--pf-global--BorderColor--100, #d2d2d2);
+	/** BorderTopWidth for the toggle after element in bordered variant */
 	--pf-c-accordion--m-bordered__toggle--after--BorderTopWidth: 0;
+	/** BorderBottomWidth for the toggle after element in bordered variant */
 	--pf-c-accordion--m-bordered__toggle--after--BorderBottomWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** BorderBottomWidth for the last child after element in bordered expanded content */
 	--pf-c-accordion--m-bordered__expanded-content--m-expanded__expanded-content-body--last-child--after--BorderBottomWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** BorderBottomColor for the last child after element in bordered expanded content */
 	--pf-c-accordion--m-bordered__expanded-content--m-expanded__expanded-content-body--last-child--after--BorderBottomColor: var(--pf-global--BorderColor--100, #d2d2d2);
 	color: var(--pf-global--Color--100, #151515);
 	background-color: var(--pf-c-accordion--BackgroundColor);

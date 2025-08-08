@@ -8,24 +8,43 @@
   --_pf-c-progress--m-warning__bar--BackgroundColorWithOpacity: #f0ab0033;  /* WARNING: not a recognized token value */
   --_pf-c-progress--m-danger__bar--BackgroundColorWithOpacity: #c9190b33;  /* WARNING: not a recognized token value */
 
+  /** Gap between sections of progress bar */
   --pf-c-progress--GridGap: var(--pf-global--spacer--md, 1rem);
+  /** Color of progress bar */
   --pf-c-progress__bar--before--BackgroundColor: var(--pf-global--primary-color--100, #0066cc);
+  /** Height of progress bar */
   --pf-c-progress__bar--Height: var(--pf-global--spacer--md, 1rem);
+  /** Background color of progress bar */
   --pf-c-progress__bar--BackgroundColor: var(--pf-global--BackgroundColor--light-100, #ffffff);
+  /** Color of status icon */
   --pf-c-progress__status-icon--Color: var(--pf-global--Color--100, #151515);
+  /** Margin left of status icon */
   --pf-c-progress__status-icon--MarginLeft: var(--pf-global--spacer--sm, 0.5rem);
+  /** Height of progress bar indicator */
   --pf-c-progress__indicator--Height: var(--pf-c-progress__bar--Height);
+  /** Background color of progress bar indicator */
   --pf-c-progress__indicator--BackgroundColor: var(--pf-c-progress__bar--before--BackgroundColor);
+  /** Background color of progress bar when variant is success */
   --pf-c-progress--m-success__bar--BackgroundColor: var(--pf-global--success-color--100, #3e8635);
+  /** Background color of progress bar when variant is warning */
   --pf-c-progress--m-warning__bar--BackgroundColor: var(--pf-global--warning-color--100, #f0ab00);
+  /** Background color of progress bar when variant is danger */
   --pf-c-progress--m-danger__bar--BackgroundColor: var(--pf-global--danger-color--100, #c9190b);
+  /** Color of status icon when variant is success */
   --pf-c-progress--m-success__status-icon--Color: var(--pf-global--success-color--100, #3e8635);
+  /** Color of status icon when variant is warning */
   --pf-c-progress--m-warning__status-icon--Color: var(--pf-global--warning-color--100, #f0ab00);
+  /** Color of status icon when variant is danger */
   --pf-c-progress--m-danger__status-icon--Color: var(--pf-global--danger-color--100, #c9190b);
+  /** Color of progress bar measure when variant is success and measure location is inside */
   --pf-c-progress--m-success--m-inside__measure--Color: var(--pf-global--Color--light-100, #ffffff);
+  /** Font size of progress bar measure when measure location is outside */
   --pf-c-progress--m-outside__measure--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  /** Height of progress bar when size is small */
   --pf-c-progress--m-sm__bar--Height: var(--pf-global--spacer--sm, 0.5rem);
+  /** Font size of progress bar description when size is small */
   --pf-c-progress--m-sm__description--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  /** Height of progress bar when size is large */
   --pf-c-progress--m-lg__bar--Height: var(--pf-global--spacer--lg, 1.5rem);
   display: grid;
   align-items: end;

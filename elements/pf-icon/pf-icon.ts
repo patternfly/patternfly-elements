@@ -39,7 +39,6 @@ export class IconResolveError extends ErrorEvent {
  * @alias Icon
  * @fires load - Fired when an icon is loaded and rendered
  * @fires error - Fired when an icon fails to load
- * @cssprop {<length>} --pf-icon--size - size of the icon
  */
 @customElement('pf-icon')
 export class PfIcon extends LitElement {

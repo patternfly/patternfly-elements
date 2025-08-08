@@ -3,36 +3,49 @@
   white-space: nowrap;
   text-align: center;
   display: inline-block;
+  /** Border radius for badge */
   border-radius: var(--pf-c-badge--BorderRadius,
     var(--pf-global--BorderRadius--lg, 180em));
+  /** Minimum width for badge */
   min-width: var(--pf-c-badge--MinWidth,
     var(--pf-global--spacer--xl, 2rem));
+  /** Left padding for badge */
   padding-left: var(--pf-c-badge--PaddingLeft,
     var(--pf-global--spacer--sm, 0.5rem));
+  /** Right padding for badge */
   padding-right: var(--pf-c-badge--PaddingRight,
     var(--pf-global--spacer--sm, 0.5rem));
+  /** Font size for badge */
   font-size: var(--pf-c-badge--FontSize,
     var(--pf-theme--font-size, 0.75em));
+  /** Font weight for badge */
   font-weight: var(--pf-c-badge--FontWeight,
     var(--pf-theme--font-weight--bold, 700));
+  /** Line height for badge */
   line-height: var(--pf-c-badge--LineHeight,
     var(--pf-global--LineHeight--md, 1.5));
+  /** Color for badge */
   color: var(--pf-c-badge--Color,
     var(--pf-global--palette--black-900, #151515));
+  /** Background color for badge */
   background-color: var(--pf-c-badge--BackgroundColor,
     var(--pf-global--palette--black-200, #f0f0f0));
 }
 
 :host([state="read"]) {
+  /** Color for read badge */
   --pf-c-badge--Color: var(--pf-c-badge--m-read--Color,
     var(--pf-global--palette--black-900, #151515));
+  /** Background color for read badge */
   --pf-c-badge--BackgroundColor: var(--pf-c-badge--m-read--BackgroundColor,
     var(--pf-global--palette--black-200, #f0f0f0));
 }
 
 :host([state="unread"]) {
+  /** Color for unread badge */
   --pf-c-badge--Color: var(--pf-c-badge--m-unread--Color,
     var(--pf-global--palette--white, #fff));
+  /** Background color for unread badge */
   --pf-c-badge--BackgroundColor: var(--pf-c-badge--m-unread--BackgroundColor,
     var(--pf-global--palette--blue-400, #06c));
 }

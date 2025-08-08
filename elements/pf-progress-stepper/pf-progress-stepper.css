@@ -3,101 +3,197 @@
 }
 
 :host {
+  /** Grid auto flow for vertical layout */
   --pf-c-progress-stepper--m-vertical--GridAutoFlow: row;
+  /** Grid template columns for vertical layout */
   --pf-c-progress-stepper--m-vertical--GridTemplateColumns: auto 1fr;
+  /** Top position for vertical step connector pseudo-element */
   --pf-c-progress-stepper--m-vertical__step-connector--before--Top: 0;
+  /** Left position for vertical step connector pseudo-element */
   --pf-c-progress-stepper--m-vertical__step-connector--before--Left: calc(var(--pf-c-progress-stepper__step-icon--Width) / 2);
+  /** Width for vertical step connector pseudo-element */
   --pf-c-progress-stepper--m-vertical__step-connector--before--Width: auto;
+  /** Height for vertical step connector pseudo-element */
   --pf-c-progress-stepper--m-vertical__step-connector--before--Height: 100%;
+  /** Right border width for vertical step connector pseudo-element */
   --pf-c-progress-stepper--m-vertical__step-connector--before--BorderRightWidth: var(--pf-global--BorderWidth--md, 2px);
+  /** Right border color for vertical step connector pseudo-element */
   --pf-c-progress-stepper--m-vertical__step-connector--before--BorderRightColor: var(--pf-global--BorderColor--100, #d2d2d2);
+  /** Bottom border width for vertical step connector pseudo-element */
   --pf-c-progress-stepper--m-vertical__step-connector--before--BorderBottomWidth: 0;
+  /** Bottom border color for vertical step connector pseudo-element */
   --pf-c-progress-stepper--m-vertical__step-connector--before--BorderBottomColor: transparent;
+  /** Transform for vertical step connector pseudo-element */
   --pf-c-progress-stepper--m-vertical__step-connector--before--Transform: translateX(-50%);
+  /** Top margin for vertical step main content */
   --pf-c-progress-stepper--m-vertical__step-main--MarginTop: var(--pf-global--spacer--xs, 0.25rem);
+  /** Right margin for vertical step main content */
   --pf-c-progress-stepper--m-vertical__step-main--MarginRight: 0;
+  /** Bottom margin for vertical step main content */
   --pf-c-progress-stepper--m-vertical__step-main--MarginBottom: var(--pf-global--spacer--xl, 2rem);
+  /** Left margin for vertical step main content */
   --pf-c-progress-stepper--m-vertical__step-main--MarginLeft: var(--pf-global--spacer--xs, 0.25rem);
+  /** Grid template columns for vertical compact layout */
   --pf-c-progress-stepper--m-vertical--m-compact--GridTemplateColumns: 1fr;
+  /** Padding bottom for vertical compact step connector */
   --pf-c-progress-stepper--m-vertical--m-compact__step-connector--PaddingBottom: var(--pf-global--spacer--xs, 0.25rem);
+  /** Grid row for vertical compact step connector */
   --pf-c-progress-stepper--m-vertical--m-compact__step-connector--GridRow: auto;
+  /** Right margin for vertical compact step main content */
   --pf-c-progress-stepper--m-vertical--m-compact__step-main--MarginRight: 0;
+  /** Right margin for vertical centered step main content */
   --pf-c-progress-stepper--m-vertical--m-center__step-main--MarginRight: 0;
+  /** Left margin for vertical centered step main content */
   --pf-c-progress-stepper--m-vertical--m-center__step-main--MarginLeft: 0;
+  /** Grid auto flow for horizontal layout */
   --pf-c-progress-stepper--m-horizontal--GridAutoFlow: column;
+  /** Grid template columns for horizontal layout */
   --pf-c-progress-stepper--m-horizontal--GridTemplateColumns: initial;
+  /** Top position for horizontal step connector pseudo-element */
   --pf-c-progress-stepper--m-horizontal__step-connector--before--Top: calc(var(--pf-c-progress-stepper__step-icon--Height) / 2);
+  /** Left position for horizontal step connector pseudo-element */
   --pf-c-progress-stepper--m-horizontal__step-connector--before--Left: 0;
+  /** Width for horizontal step connector pseudo-element */
   --pf-c-progress-stepper--m-horizontal__step-connector--before--Width: 100%;
+  /** Height for horizontal step connector pseudo-element */
   --pf-c-progress-stepper--m-horizontal__step-connector--before--Height: auto;
+  /** Right border width for horizontal step connector pseudo-element */
   --pf-c-progress-stepper--m-horizontal__step-connector--before--BorderRightWidth: 0;
+  /** Right border color for horizontal step connector pseudo-element */
   --pf-c-progress-stepper--m-horizontal__step-connector--before--BorderRightColor: unset;
+  /** Bottom border width for horizontal step connector pseudo-element */
   --pf-c-progress-stepper--m-horizontal__step-connector--before--BorderBottomWidth: var(--pf-global--BorderWidth--md, 2px);
+  /** Bottom border color for horizontal step connector pseudo-element */
   --pf-c-progress-stepper--m-horizontal__step-connector--before--BorderBottomColor: var(--pf-global--BorderColor--100, #d2d2d2);
+  /** Transform for horizontal step connector pseudo-element */
   --pf-c-progress-stepper--m-horizontal__step-connector--before--Transform: translateY(-50%);
+  /** Top margin for horizontal step main content */
   --pf-c-progress-stepper--m-horizontal__step-main--MarginTop: var(--pf-global--spacer--xs, 0.25rem);
+  /** Right margin for horizontal step main content */
   --pf-c-progress-stepper--m-horizontal__step-main--MarginRight: var(--pf-global--spacer--xs, 0.25rem);
+  /** Bottom margin for horizontal step main content */
   --pf-c-progress-stepper--m-horizontal__step-main--MarginBottom: 0;
+  /** Left margin for horizontal step main content */
   --pf-c-progress-stepper--m-horizontal__step-main--MarginLeft: 0;
+  /** Grid template columns for horizontal compact layout */
   --pf-c-progress-stepper--m-horizontal--m-compact--GridTemplateColumns: repeat(auto-fill, 1.75rem);
+  /** Padding bottom for horizontal compact step connector */
   --pf-c-progress-stepper--m-horizontal--m-compact__step-connector--PaddingBottom: 0;
+  /** Grid row for horizontal compact step connector */
   --pf-c-progress-stepper--m-horizontal--m-compact__step-connector--GridRow: 2;
+  /** Grid auto flow for compact layout */
   --pf-c-progress-stepper--m-compact--GridAutoFlow: row;
+  /** Top margin for compact step main content */
   --pf-c-progress-stepper--m-compact__step-main--MarginTop: 0;
+  /** Bottom margin for compact step main content */
   --pf-c-progress-stepper--m-compact__step-main--MarginBottom: var(--pf-global--spacer--xs, 0.25rem);
+  /** Minimum width for compact step connector */
   --pf-c-progress-stepper--m-compact__step-connector--MinWidth: 1.75rem;
+  /** Width for compact step icon */
   --pf-c-progress-stepper--m-compact__step-icon--Width: 1.125rem;
+  /** Font size for compact step icon */
   --pf-c-progress-stepper--m-compact__step-icon--FontSize: var(--pf-global--icon--FontSize--sm, 0.625rem);
+  /** Font size for compact step title */
   --pf-c-progress-stepper--m-compact__step-title--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  /** Font weight for compact step title */
   --pf-c-progress-stepper--m-compact__step-title--FontWeight: var(--pf-global--FontWeight--normal, 400);
+  /** Top margin for compact pficon */
   --pf-c-progress-stepper--m-compact__pficon--MarginTop: 2px;
+  /** Top margin for compact exclamation triangle icon */
   --pf-c-progress-stepper--m-compact__fa-exclamation-triangle--MarginTop: -3px;
+  /** Left position for centered step connector pseudo-element */
   --pf-c-progress-stepper--m-center__step-connector--before--Left: 50%;
+  /** Grid template columns for centered layout */
   --pf-c-progress-stepper--m-center--GridTemplateColumns: 1fr;
+  /** Justify content for centered step connector */
   --pf-c-progress-stepper--m-center__step-connector--JustifyContent: center;
+  /** Right margin for centered step main content */
   --pf-c-progress-stepper--m-center__step-main--MarginRight: var(--pf-global--spacer--xs, 0.25rem);
+  /** Left margin for centered step main content */
   --pf-c-progress-stepper--m-center__step-main--MarginLeft: var(--pf-global--spacer--xs, 0.25rem);
+  /** Text alignment for centered step main content */
   --pf-c-progress-stepper--m-center__step-main--TextAlign: center;
+  /** Right margin for centered step description */
   --pf-c-progress-stepper--m-center__step-description--MarginRight: 0;
+  /** Left margin for centered step description */
   --pf-c-progress-stepper--m-center__step-description--MarginLeft: 0;
+  /** Grid template rows */
   --pf-c-progress-stepper--GridTemplateRows: auto 1fr;
+  /** Justify content for step connector */
   --pf-c-progress-stepper__step-connector--JustifyContent: start;
+  /** Z-index for step icon */
   --pf-c-progress-stepper__step-icon--ZIndex: var(--pf-global--ZIndex--xs, 100);
+  /** Width of the step icon */
   --pf-c-progress-stepper__step-icon--Width: 1.75rem;
+  /** Height of the step icon */
   --pf-c-progress-stepper__step-icon--Height: var(--pf-c-progress-stepper__step-icon--Width);
+  /** Font size of the step icon */
   --pf-c-progress-stepper__step-icon--FontSize: var(--pf-global--FontSize--md, 1rem);
+  /** Color of the step icon */
   --pf-c-progress-stepper__step-icon--Color: var(--pf-global--Color--100, #151515);
+  /** Background color of the step icon */
   --pf-c-progress-stepper__step-icon--BackgroundColor: var(--pf-global--BackgroundColor--light-200, #fafafa);
+  /** Border width of the step icon */
   --pf-c-progress-stepper__step-icon--BorderWidth: var(--pf-global--BorderWidth--md, 2px);
+  /** Border color of the step icon */
   --pf-c-progress-stepper__step-icon--BorderColor: var(--pf-global--BorderColor--100, #d2d2d2);
+  /** Top margin for pficon */
   --pf-c-progress-stepper__pficon--MarginTop: 3px;
+  /** Top margin for exclamation triangle icon */
   --pf-c-progress-stepper__fa-exclamation-triangle--MarginTop: -5px;
+  /** Color of the step title */
   --pf-c-progress-stepper__step-title--Color: var(--pf-global--Color--100, #151515);
+  /** Text alignment of the step title */
   --pf-c-progress-stepper__step-title--TextAlign: left;
+  /** Font size of the step title */
   --pf-c-progress-stepper__step-title--FontSize: var(--pf-global--FontSize--md, 1rem);
+  /** Font weight of the step title */
   --pf-c-progress-stepper__step-title--FontWeight: var(--pf-global--FontWeight--normal, 400);
+  /** Font weight for current step title */
   --pf-c-progress-stepper__step--m-current__step-title--FontWeight: var(--pf-global--FontWeight--bold, 700);
+  /** Color for current step title */
   --pf-c-progress-stepper__step--m-current__step-title--Color: var(--pf-global--Color--100, #151515);
+  /** Color for pending step title */
   --pf-c-progress-stepper__step--m-pending__step-title--Color: var(--pf-global--Color--200, #6a6e73);
+  /** Color for danger step title */
   --pf-c-progress-stepper__step--m-danger__step-title--Color: var(--pf-global--danger-color--100, #c9190b);
+  /** Text decoration color for help text step title */
   --pf-c-progress-stepper__step-title--m-help-text--TextDecorationColor: var(--pf-global--BorderColor--200, #8a8d90);
+  /** Text decoration thickness for help text step title */
   --pf-c-progress-stepper__step-title--m-help-text--TextDecorationThickness: var(--pf-global--BorderWidth--sm, 1px);
+  /** Text underline offset for help text step title */
   --pf-c-progress-stepper__step-title--m-help-text--TextUnderlineOffset: 0.25rem;
+  /** Text decoration color for help text step title on hover */
   --pf-c-progress-stepper__step-title--m-help-text--hover--TextDecorationColor: var(--pf-global--Color--100, #151515);
+  /** Text decoration color for help text step title on focus */
   --pf-c-progress-stepper__step-title--m-help-text--focus--TextDecorationColor: var(--pf-global--Color--100, #151515);
+  /** Color for help text step title on hover */
   --pf-c-progress-stepper__step-title--m-help-text--hover--Color: var(--pf-global--Color--100, #151515);
+  /** Color for help text step title on focus */
   --pf-c-progress-stepper__step-title--m-help-text--focus--Color: var(--pf-global--Color--100, #151515);
+  /** Color for danger help text step title on hover */
   --pf-c-progress-stepper__step--m-danger__step-title--m-help-text--hover--Color: var(--pf-global--danger-color--200, #a30000);
+  /** Color for danger help text step title on focus */
   --pf-c-progress-stepper__step--m-danger__step-title--m-help-text--focus--Color: var(--pf-global--danger-color--200, #a30000);
+  /** Text decoration color for danger help text step title */
   --pf-c-progress-stepper__step--m-danger__step-title--m-help-text--TextDecorationColor: var(--pf-global--danger-color--100, #c9190b);
+  /** Text decoration color for danger help text step title on hover */
   --pf-c-progress-stepper__step--m-danger__step-title--m-help-text--hover--TextDecorationColor: var(--pf-global--danger-color--200, #a30000);
+  /** Text decoration color for danger help text step title on focus */
   --pf-c-progress-stepper__step--m-danger__step-title--m-help-text--focus--TextDecoerationColor: var(--pf-global--danger-color--200, #a30000);
+  /** Top margin for step description */
   --pf-c-progress-stepper__step-description--MarginTop: var(--pf-global--spacer--xs, 0.25rem);
+  /** Font size of the step description */
   --pf-c-progress-stepper__step-description--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  /** Color of the step description */
   --pf-c-progress-stepper__step-description--Color: var(--pf-global--Color--200, #6a6e73);
+  /** Text alignment of the step description */
   --pf-c-progress-stepper__step-description--TextAlign: left;
+  /** Grid auto flow (defaults to vertical) */
   --pf-c-progress-stepper--GridAutoFlow: var(--pf-c-progress-stepper--m-vertical--GridAutoFlow);
+  /** Grid template columns (defaults to vertical) */
   --pf-c-progress-stepper--GridTemplateColumns: var(--pf-c-progress-stepper--m-vertical--GridTemplateColumns);
+  /** Top position for step connector pseudo-element (defaults to vertical) */
   --pf-c-progress-stepper__step-connector--before--Top: var(--pf-c-progress-stepper--m-vertical__step-connector--before--Top);
   --pf-c-progress-stepper__step-connector--before--Left: var(--pf-c-progress-stepper--m-vertical__step-connector--before--Left);
   --pf-c-progress-stepper__step-connector--before--Width: var(--pf-c-progress-stepper--m-vertical__step-connector--before--Width);

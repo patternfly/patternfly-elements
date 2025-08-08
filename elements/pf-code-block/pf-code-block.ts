@@ -9,15 +9,6 @@ import styles from './pf-code-block.css';
  * @alias Code Block
  * @attr {boolean} [expanded=false]
  *       Indicates if the code-block has been expanded
- * @cssprop {<color>} [--pf-c-code-block--BackgroundColor=#f0f0f0]
- * @cssprop {<length>} [--pf-c-code-block__header--BorderBottomWidth=1px]
- * @cssprop {<color>} [--pf-c-code-block__header--BorderBottomColor=#d2d2d2]
- * @cssprop {<length>} [--pf-c-code-block__content--PaddingTop=1rem]
- * @cssprop {<length>} [--pf-c-code-block__content--PaddingRight=1rem]
- * @cssprop {<length>} [--pf-c-code-block__content--PaddingBottom=1rem]
- * @cssprop {<length>} [--pf-c-code-block__content--PaddingLeft=1rem]
- * @cssprop {<length>} [--pf-c-code-block__pre--FontSize=0.875rem]
- * @cssprop {<string>} [--pf-c-code-block__pre--FontFamily="Liberation Mono", consolas, "SFMono-Regular", menlo, monaco, "Courier New", monospace]
  */
 
 function dedent(str: string): string {

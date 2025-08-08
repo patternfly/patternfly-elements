@@ -49,19 +49,6 @@ export class PopoverShownEvent extends ComposedEvent {
  * A **Popover** displays content in a non-modal dialog and adds contextual information or provides resources via text and links.
  * @summary Toggle the visibility of helpful or contextual information.
  * @alias Popover
- * @slot -
- *         The default slot holds invoking element.
- *         Typically this would be an icon, button, or other small sized element.
- * @slot heading
- *       This slot renders the content that will be displayed inside of the header of the popover.
- *       Typically this would be a heading element.
- * @slot icon
- *       This slot renders the icon that will be displayed inside the header of the popover,
- *       before the heading.
- * @slot body
- *       This slot renders the content that will be displayed inside of the body of the popover.
- * @slot footer
- *       This slot renders the content that will be displayed inside of the footer of the popover.
  * @csspart container - The component wrapper
  * @csspart content - The content wrapper
  * @csspart header - The header element; only visible if both an icon annd heading are provided.
@@ -337,6 +324,7 @@ export class PfPopover extends LitElement {
     }
 
     const headingSlotWithFallback = html`
+      <!-- This slot renders the content that will be displayed inside of the header of the popover. Typically this would be a heading element. -->
       <slot id="heading" name="heading" part="heading" ?hidden=${!hasHeading}>${headingContent}</slot>
     `;
 
@@ -348,6 +336,7 @@ export class PfPopover extends LitElement {
       <div id="container"
            style="${styleMap(styles)}"
            class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}">
+        <!-- The default slot holds invoking element. Typically this would be an icon, button, or other small sized element. -->
         <slot id="trigger"
               @slotchange="${this.#triggerChanged}"
               @keydown="${this.#onKeydown}"
@@ -373,6 +362,7 @@ export class PfPopover extends LitElement {
             ${!(hasHeading && hasIcon) ? headingSlotWithFallback : html`
             <header part="header">
               <span part="icon">
+                <!-- This slot renders the icon that will be displayed inside the header of the popover, before the heading. -->
                 <slot name="icon">
                   <pf-icon icon="${headerIcon}"
                            set="${ifDefined(this.iconSet)}"
@@ -382,8 +372,10 @@ export class PfPopover extends LitElement {
               <span class="visually-hidden">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>`}
               ${headingSlotWithFallback}
             </header>`}
+            <!-- This slot renders the content that will be displayed inside of the body of the popover. -->
             <slot id="body" part="body" name="body">${this.body ?? ''}</slot>
             <footer part="footer" ?hidden=${!hasFooter}>
+              <!-- This slot renders the content that will be displayed inside of the footer of the popover. -->
               <slot name="footer">${this.footer}</slot>
             </footer>
           </div>

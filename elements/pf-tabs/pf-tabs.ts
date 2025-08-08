@@ -29,8 +29,6 @@ import { observes } from '@patternfly/pfe-core/decorators/observes.js';
  * @csspart tabs-container - tabs container
  * @csspart tabs - tablist
  * @csspart panels - panels
- * @slot tab - Must contain one or more `<pf-tab>`
- * @slot - Must contain one or more `<pf-panel>`
  * @cssprop     {<length>} [--pf-c-tabs--Width=auto]
  * @cssprop     {<length>} [--pf-c-tabs--inset=0]
  * @cssprop     {<color>}   [--pf-c-tabs--before--BorderColor=#d2d2d2]
@@ -210,6 +208,7 @@ export class PfTabs extends LitElement {
             <pf-icon icon="angle-left" set="fas" loading="eager"></pf-icon>
           </button>`}
           <div id="tabs" part="tabs" role="tablist">
+            <!-- Must contain one or more \`<pf-tab>\` -->
             <slot name="tab" @slotchange="${this.#onSlotChange}" @scroll="${this.#overflow.onScroll}"></slot>
           </div>
           ${!this.#overflow.showScrollButtons ? '' : html`
@@ -220,6 +219,7 @@ export class PfTabs extends LitElement {
             <pf-icon icon="angle-right" set="fas" loading="eager"></pf-icon>
           </button>`}
         </div>
+        <!-- Must contain one or more \`<pf-panel>\` -->
         <slot part="panels"></slot>
       </div>
     `;

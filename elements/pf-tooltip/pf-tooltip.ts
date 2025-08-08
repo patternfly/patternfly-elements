@@ -24,12 +24,6 @@ const ExitEvents = ['focusout', 'blur', 'mouseleave'];
  * clarifying text.
  * @summary Toggle the visibility of helpful or contextual information.
  * @alias Tooltip
- * @slot
- *       This slot wraps around the element that should be used to invoke the tooltip content to display.
- *       Typically this would be an icon, button, or other small sized element.
- * @slot content
- *       This slot renders the content that will be displayed inside of the tooltip.
- *       Typically this would include a string of text without any additional elements.
  *       This element is wrapped with a div inside of the component to give it the stylings and background colors.
  * @cssprop     {<color>} [--pf-c-tooltip__content--BackgroundColor=#1b1d21]
  *              Sets the background color for the tooltip content.
@@ -188,9 +182,11 @@ export class PfTooltip extends LitElement {
         <div role="tooltip"
              style="${styleMap({ display })}"
              aria-labelledby="tooltip">
+          <!-- This slot wraps around the element that should be used to invoke the tooltip content to display. Typically this would be an icon, button, or other small sized element. -->
           <slot id="invoker" @slotchange="${this.#invokerChanged}"></slot>
         </div>
         <div ?inert="${!open}">
+          <!-- This slot renders the content that will be displayed inside of the tooltip. Typically this would include a string of text without any additional elements. -->
           <slot id="tooltip" name="content">${this.content}</slot>
         </div>
       </div>

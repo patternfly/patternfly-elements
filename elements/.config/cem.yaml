@@ -10,5 +10,5 @@ generate:
   noDefaultExcludes: false
   demoDiscovery:
     fileGlob: '*/demo/*.html'
-    urlPattern: :tag/demo/:demo.html
+    urlPattern: ':tag/demo/:demo.html'
     urlTemplate: https://patternflyelements.org/components/{{.tag | alias | slug}}/demo/{{.demo | slug}}/

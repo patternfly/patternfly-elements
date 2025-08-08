@@ -12,7 +12,6 @@ import styles from './pf-background-image.css';
  * A **background image** allows you to place an image in the background of your page or area of a page.
  * @summary Allows users to place an image in the background of your page or area of a page.
  * @alias Background Image
- * @slot filter - Overrides the default svg filter for the background image.
  * @cssprop {<color>} [--pf-c-background-image--BackgroundColor=#151515]
  * @cssprop [--pf-c-background-image--Filter=url("#image_overlay")]
  * @cssprop --pf-c-background-image--BackgroundImage
@@ -83,6 +82,7 @@ export class PfBackgroundImage extends LitElement {
     return html`
       <div id="container" part="container" style="${styleMap(cssProps)}">
         ${!this.filter ? html`` : html`
+          <!-- Overrides the default svg filter for the background image. -->
           <slot name="filter" @slotchange=${this.#onSlotChange}>
             ${(this.#svg && this.#updated) ? this.#svg : html`
               <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">

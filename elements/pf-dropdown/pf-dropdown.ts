@@ -32,9 +32,6 @@ export class PfDropdownSelectEvent extends Event {
  * A **dropdown** presents a menu of actions or links in a constrained space that
  * will trigger a process or navigate to a new location.
  * @alias Dropdown
- * @slot - Must contain one or more `<pf-dropdown-item>` or `<pf-dropdown-group>`
- * @slot toggle - Custom toggle button
- * @slot menu - when using a custom toggle, you must slot a `<pf-dropdown-menu>` in alongside it
  * @csspart menu - The dropdown menu wrapper
  * @cssprop {<length>} [--pf-c-dropdown__menu--PaddingTop=0.5rem] Dropdown top padding
  * @cssprop {<length>} [--pf-c-tooltip__content--PaddingRight=0.5rem] Dropdown right padding
@@ -104,6 +101,7 @@ export class PfDropdown extends LitElement {
                              [alignment ?? '']: !!alignment })}"
          style="${styleMap(styles)}"
          @slotchange="${this.#onSlotchange}">
+      <!-- Custom toggle button -->
       <slot name="toggle"
             @keydown="${this.#onButtonKeydown}"
             @click="${() => this.toggle()}">
@@ -112,12 +110,14 @@ export class PfDropdown extends LitElement {
           <pf-icon icon="caret-down" size="md"></pf-icon>
         </pf-button>
       </slot>
+      <!-- when using a custom toggle, you must slot a \`<pf-dropdown-menu>\` in alongside it -->
       <slot name="menu"
             ?hidden="${!this.expanded}"
             @focusout="${this.#onMenuFocusout}"
             @keydown="${this.#onMenuKeydown}"
             @click="${this.#onSelect}">
         <pf-dropdown-menu id="menu" part="menu" ?disabled="${disabled}">
+          <!-- Must contain one or more \`<pf-dropdown-item>\` or \`<pf-dropdown-group>\` -->
           <slot></slot>
         </pf-dropdown-menu>
       </slot>

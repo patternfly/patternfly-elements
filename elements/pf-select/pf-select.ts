@@ -37,8 +37,6 @@ export class PfSelectChangeEvent extends Event {
  * Selects differ from dropdowns in that they persist selection,
  * whereas dropdowns are typically used to present a list of actions or links.
  * @alias Select
- * @slot - insert `pf-option` and/or `pf-option-groups` here
- * @slot placeholder - placeholder text for the select. Overrides the `placeholder` attribute.
  * @fires open - when the menu toggles open
  * @fires close - when the menu toggles closed
  * @cssprop [--pf-c-select__toggle--PaddingTop=var(--pf-global--spacer--form-element, 0.375rem)]
@@ -396,8 +394,9 @@ export class PfSelect extends LitElement {
                        ?inert="${placeholderIsInert}"
                        aria-hidden="${ifDefined(placeholderIsInert ? undefined : String(!!hasSelection))}"
                        ?hidden="${!placeholder && this.#slots.isEmpty('placeholder')}"
-            ><slot name="placeholder">${placeholder ?? ''}</slot></pf-option>
+            ><!-- placeholder text for the select. Overrides the \`placeholder\` attribute. --><slot name="placeholder">${placeholder ?? ''}</slot></pf-option>
             ${this.#combobox.renderItemsToShadowRoot()}
+            <!-- insert \`pf-option\` and/or \`pf-option-groups\` here -->
             <slot ?hidden="${hideLightDomItems}"></slot>
           </div>
         </div>

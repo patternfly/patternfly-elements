@@ -12,9 +12,6 @@ import styles from './pf-panel.css';
  * The panel should not be confused with the [drawer](https://www.patternfly.org/v4/components/drawer/design-guidelines/)
  * component, which allows you to surface information via a collapsable container.
  * @alias Panel
- * @slot header - Place header content here
- * @slot - Place main content here
- * @slot footer - Place footer content here
  * @cssprop [--pf-c-panel--Width=auto]
  * @cssprop [--pf-c-panel--MinWidth=auto]
  * @cssprop [--pf-c-panel--MaxWidth=none]
@@ -60,11 +57,14 @@ export class PfPanel extends LitElement {
     const hasFooter = this.#slots.hasSlotted('footer');
     return html`
       <header>
+        <!-- Place header content here -->
         <slot name="header" ?hidden="${!hasHeader}"></slot>
       </header>
       <hr role="presentation" ?hidden="${!hasHeader}">
+      <!-- Place main content here -->
       <slot></slot>
       <footer>
+        <!-- Place footer content here -->
         <slot name="footer" ?hidden="${!hasFooter}"></slot>
       </footer>
     `;

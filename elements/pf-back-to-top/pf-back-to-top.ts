@@ -15,10 +15,6 @@ import styles from './pf-back-to-top.css';
  * @summary A shortcut that allows users to quickly navigate to the top of a lengthy content page.
  * @alias Back to Top
  * @csspart trigger - The `<a>` or `<pf-button>` element
- * @slot icon
- *       Contains the prefix icon to display before the link or button.
- * @slot
- *       Text to display inside the link or button.
  * @cssprop {<length>} [--pf-c-back-to-top--Right=3rem`]
  * @cssprop {<length>} [--pf-c-back-to-top--Bottom=1.5rem`]
  * @cssprop [--pf-c-back-to-top--c-button--BoxShadow=0 0.75rem 0.75rem -0.5rem rgba(3, 3, 3, 0.18)]
@@ -114,7 +110,9 @@ export class PfBackToTop extends LitElement {
     if (this.href) {
       return html`
         <a href="${this.href}" ?hidden="${!this.#visible}" part="trigger" aria-label="${ifDefined(this.#ariaLabel)}">
+          <!-- Contains the prefix icon to display before the link or button. -->
           <slot name="icon"></slot>
+          <!-- Text to display inside the link or button. -->
           <slot @slotchange="${this.#onSlotchange}"></slot>
           <pf-icon icon="angle-up" set="fas"></pf-icon>
         </a>
@@ -129,8 +127,10 @@ export class PfBackToTop extends LitElement {
             part="trigger"
             label="${ifDefined(this.#ariaLabel)}"
           >
+          <!-- Contains the prefix icon to display before the link or button. -->
           <slot name="icon" slot="icon"></slot>
           <span>
+            <!-- Text to display inside the link or button. -->
             <slot></slot>
             <pf-icon icon="angle-up" set="fas"></pf-icon>
           </span>

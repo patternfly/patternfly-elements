@@ -39,9 +39,6 @@ export class ModalOpenEvent extends ComposedEvent {
  * to a new page.
  * @summary Displays information or helps a user focus on a task
  * @alias Modal
- * @slot - The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header.
- * @slot header - The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6).
- * @slot footer - Optional footer content. Good place to put action buttons.
  * @fires {ModalOpenEvent} open - Fires when a user clicks on the trigger or manually opens a modal.
  * @fires {ModalCloseEvent} close - Fires when either a user clicks on either the close button or the overlay or manually closes a modal.
  * @csspart overlay - The modal overlay which lies under the dialog and above the page body
@@ -136,13 +133,16 @@ export class PfModal extends LitElement implements HTMLDialogElement {
           <div id="container">
             <div id="content" part="content" class=${classMap({ hasHeader, hasDescription, hasFooter })}>
               <header part="header">
+                <!-- The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6). -->
                 <slot name="header"></slot>
                 <div part="description" ?hidden=${!hasDescription}>
                   <slot name="description"></slot>
                 </div>
               </header>
+              <!-- The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header. -->
               <slot></slot>
               <footer ?hidden=${!hasFooter} part="footer">
+                <!-- Optional footer content. Good place to put action buttons. -->
                 <slot name="footer"></slot>
               </footer>
             </div>

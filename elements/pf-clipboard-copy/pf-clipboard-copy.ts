@@ -22,8 +22,6 @@ export class PfClipboardCopyCopiedEvent extends Event {
 /**
  * The **clipboard copy** component allows users to quickly and easily copy content to their clipboard.
  * @alias Clipboard Copy
- * @slot - Place content to copy here, or use the `value` attribute
- * @slot actions - Place additional action buttons here
  * @fires {PfClipboardCopyCopiedEvent} copy - when the text snippet is successfully copied.
  * @cssprop [--pf-c-clipboard-copy__toggle-icon--Transition=.2s ease-in 0s]
  * @cssprop [--pf-c-clipboard-copy--m-expanded__toggle-icon--Rotate=90deg]
@@ -149,6 +147,7 @@ export class PfClipboardCopy extends LitElement {
             </pf-button>
             <span slot="content">${this.#copied ? this.clickTip : this.hoverTip}</span>
           </pf-tooltip>
+          <!-- Place additional action buttons here -->
           <slot name="actions"></slot>
         </div>
         <textarea .value="${this.value}"

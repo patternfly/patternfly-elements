@@ -7,13 +7,6 @@ import styles from './pf-code-block.css';
 /**
  * A **code block** is a component that contains 2 or more lines of read-only code. The code in a code block can be copied to the clipboard.
  * @alias Code Block
- * @slot code
- *       The slot to put the code in
- * @slot expandable-code
- *       The slot to put the code in that should be revealed when the "Show more" button is
- *       clicked to expand the code-block
- * @slot actions
- *       Contains the actions for the code-block. For example, copy to clipboard.
  * @attr {boolean} [expanded=false]
  *       Indicates if the code-block has been expanded
  * @cssprop {<color>} [--pf-c-code-block--BackgroundColor=#f0f0f0]
@@ -59,6 +52,7 @@ export class PfCodeBlock extends LitElement {
     return html`
       <div id="header">
         <div id="actions">
+          <!-- Contains the actions for the code-block. For example, copy to clipboard. -->
           <slot name="actions"></slot>
         </div>
       </div>

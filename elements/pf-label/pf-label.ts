@@ -71,10 +71,6 @@ export class LabelCloseEvent extends Event {
  * @cssprop {<color>} [--pf-c-label--m-gold__icon--Color=#f0ab00]
  * @csspart icon - container for the label icon
  * @csspart close-button - container for removable labels' close button
- * @slot icon
- *       Contains the labels's icon, e.g. web-icon-alert-success.
- * @slot
- *       Must contain the text for the label.
  * @cssprop {<length>} [--pf-c-label--m-compact--PaddingTop=0]
  * @cssprop {<length>} [--pf-c-label--m-compact--PaddingRight=0.5rem]
  * @cssprop {<length>} [--pf-c-label--m-compact--PaddingBottom=0]
@@ -141,11 +137,13 @@ export class PfLabel extends LitElement {
               truncated,
               [variant ?? '']: !!variant,
               [color ?? '']: !!color })}">
+        <!-- Contains the labels's icon, e.g. web-icon-alert-success. -->
         <slot name="icon" part="icon">
           <pf-icon ?hidden="${!icon}"
                    size="sm"
                    .icon="${this.icon || undefined as unknown as string}"></pf-icon>
         </slot>
+        <!-- Must contain the text for the label. -->
         <slot id="text"></slot>
         <span part="close-button" ?hidden=${!this.removable}>
           <pf-button plain

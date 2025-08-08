@@ -40,8 +40,6 @@ export class PfAccordionCollapseEvent extends Event {
  * @alias Accordion
  * @fires {AccordionExpandEvent} expand - when a panel expands
  * @fires {AccordionCollapseEvent} collapse - when a panel collapses
- * @slot
- *       Place the `pf-accordion-header` and `pf-accordion-panel` elements here.
  * @cssprop [--pf-c-accordion--BackgroundColor=var(--pf-global--BackgroundColor--100, #fff)]
  * @cssprop [--pf-c-accordion__toggle--PaddingTop=var(--pf-global--spacer--sm, 0.5rem)]
  * @cssprop [--pf-c-accordion__toggle--PaddingRight=var(--pf-global--spacer--md, 1rem)]
@@ -186,6 +184,7 @@ export class PfAccordion extends LitElement {
 
   render(): TemplateResult<1> {
     return html`
+      <!-- Place the \`pf-accordion-header\` and \`pf-accordion-panel\` elements here. -->
       <slot></slot>
     `;
   }

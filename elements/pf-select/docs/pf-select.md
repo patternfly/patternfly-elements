@@ -26,7 +26,7 @@ Focus on options using arrow keys or
 by typing the first character of an option.
 
 {% htmlexample %}
-  {% renderFile "./elements/pf-select/demo/pf-select.html" %}
+  {% renderFile "./elements/pf-select/demo/index.html" %}
 {% endhtmlexample %}
 
 #### Single with description

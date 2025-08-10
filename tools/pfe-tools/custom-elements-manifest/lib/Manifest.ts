@@ -318,13 +318,14 @@ export class Manifest {
         path.posix.join(
           options.rootDir,
           options.elementsDir,
-          demo.source?.href.replace(options.sourceControlURLPrefix, '') ?? '',
+          decodeURIComponent(demo.source?.href.replace(options.sourceControlURLPrefix, '') ?? ''),
         ));
       console.log({
         filePath,
         rootDir: options.rootDir,
         elementsDir: options.elementsDir,
-        path: demo.source?.href.replace(options.sourceControlURLPrefix, ''),
+        path:
+          decodeURIComponent(demo.source?.href.replace(options.sourceControlURLPrefix, '') ?? ''),
       });
       const [last = ''] = filePath.split(path.sep).reverse();
       const filename = last.replace('.html', '');

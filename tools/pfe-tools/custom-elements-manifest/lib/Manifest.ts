@@ -314,12 +314,13 @@ export class Manifest {
       // strict removes all special characters from slug
       slug = slugify(slug, { strict: true, lower: true });
       const primaryElementName = deslugify(slug, options.rootDir);
-      const filePath =
+      const filePath = path.normalize(
         path.posix.join(
           options.rootDir,
           options.elementsDir,
           demo.source?.href.replace(options.sourceControlURLPrefix, '') ?? '',
-        );
+        ));
+      console.log({ filePath });
       const [last = ''] = filePath.split(path.sep).reverse();
       const filename = last.replace('.html', '');
       const isMainElementDemo = filename === 'index';

@@ -317,7 +317,7 @@ export class Manifest {
       const filePath =
         demo.source?.href.replace(
           options.sourceControlURLPrefix,
-          `${join(normalize(options.rootDir), normalize(options.elementsDir))}${path.sep}`,
+          `${join(normalize(options.rootDir), normalize(options.elementsDir))}/`,
         ) ?? '';
       const [last = ''] = filePath.split(path.sep).reverse();
       const filename = last.replace('.html', '');

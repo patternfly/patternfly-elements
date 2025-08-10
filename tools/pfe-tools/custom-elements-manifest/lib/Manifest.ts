@@ -16,7 +16,7 @@ import type {
   Slot,
 } from 'custom-elements-manifest/schema';
 
-import { join, normalize } from 'node:path';
+import path, { join, normalize } from 'node:path';
 import { readFileSync } from 'node:fs';
 
 import { getAllPackages } from './get-all-packages.js';
@@ -317,7 +317,7 @@ export class Manifest {
       const filePath =
         demo.source?.href.replace(
           options.sourceControlURLPrefix,
-          `${join(options.rootDir, options.elementsDir)}/`,
+          `${join(normalize(options.rootDir), normalize(options.elementsDir))}${path.sep}`,
         ) ?? '';
       const [last = ''] = filePath.split('/').reverse();
       const filename = last.replace('.html', '');

@@ -320,13 +320,6 @@ export class Manifest {
           options.elementsDir,
           decodeURIComponent(demo.source?.href.replace(options.sourceControlURLPrefix, '') ?? ''),
         ));
-      console.log({
-        filePath,
-        rootDir: options.rootDir,
-        elementsDir: options.elementsDir,
-        path:
-          decodeURIComponent(demo.source?.href.replace(options.sourceControlURLPrefix, '') ?? ''),
-      });
       const [last = ''] = filePath.split(path.sep).reverse();
       const filename = last.replace('.html', '');
       const isMainElementDemo = filename === 'index';

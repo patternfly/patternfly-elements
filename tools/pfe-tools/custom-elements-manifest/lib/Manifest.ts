@@ -315,8 +315,9 @@ export class Manifest {
       slug = slugify(slug, { strict: true, lower: true });
       const primaryElementName = deslugify(slug, options.rootDir);
       const filePath =
-        path.join(
-          `${join(options.rootDir, options.elementsDir).replaceAll('\\', '/')}/`,
+        path.posix.join(
+          options.rootDir,
+          options.elementsDir,
           demo.source?.href.replace(options.sourceControlURLPrefix, '') ?? '',
         );
       const [last = ''] = filePath.split(path.sep).reverse();

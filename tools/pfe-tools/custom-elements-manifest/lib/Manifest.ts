@@ -315,10 +315,10 @@ export class Manifest {
       slug = slugify(slug, { strict: true, lower: true });
       const primaryElementName = deslugify(slug, options.rootDir);
       const filePath =
-        demo.source?.href.replace(
-          options.sourceControlURLPrefix,
-          `${join(normalize(options.rootDir), normalize(options.elementsDir)).replaceAll(path.sep, '/')}/`,
-        ) ?? '';
+        path.join(
+          `${join(options.rootDir, options.elementsDir).replaceAll('\\', '/')}/`,
+          demo.source?.href.replace(options.sourceControlURLPrefix, '') ?? '',
+        );
       const [last = ''] = filePath.split(path.sep).reverse();
       const filename = last.replace('.html', '');
       const isMainElementDemo = filename === 'index';

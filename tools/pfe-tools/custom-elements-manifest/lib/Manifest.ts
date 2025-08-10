@@ -319,7 +319,7 @@ export class Manifest {
           options.sourceControlURLPrefix,
           `${join(normalize(options.rootDir), normalize(options.elementsDir))}${path.sep}`,
         ) ?? '';
-      const [last = ''] = filePath.split('/').reverse();
+      const [last = ''] = filePath.split(path.sep).reverse();
       const filename = last.replace('.html', '');
       const isMainElementDemo = filename === 'index';
       const title = isMainElementDemo ? options.aliases[tagName] ?? prettyTag(tagName) : last

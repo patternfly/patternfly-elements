@@ -2,7 +2,7 @@ import type { PfChipGroup } from '../pf-chip/pf-chip-group.js';
 import type { Placement } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import type { TemplateResult } from 'lit';
 
-import { LitElement, html, isServer } from 'lit';
+import { LitElement, html, isServer, nothing } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -368,7 +368,7 @@ export class PfSelect extends LitElement {
                  ?hidden="${!typeahead}"
                  ?disabled="${disabled}"
                  placeholder="${placeholder || this.#buttonLabel}">`}
-          <button id="toggle-button">
+          <button tabindex=${typeahead ? '-1' : nothing} id="toggle-button">
             <span id="button-text" style="display: contents;">
               <span id="toggle-text"
                     class="${classMap({ 'visually-hidden': !!typeahead, badge })}">${this.#buttonLabel}</span>${!hasBadge ? '' : html`

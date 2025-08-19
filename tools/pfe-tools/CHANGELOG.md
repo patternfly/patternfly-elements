@@ -1,5 +1,10 @@
 # @patternfly/pfe-tools
 
+## 5.0.4
+### Patch Changes
+
+- f35d4fa: Adjust dev server for new cem output
+
 ## 5.0.3
 ### Patch Changes
 

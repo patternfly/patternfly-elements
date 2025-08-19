@@ -1,28 +1,53 @@
 :host {
+	/** Transition for the toggle icon */
 	--pf-c-clipboard-copy__toggle-icon--Transition: .2s ease-in 0s;
+	/** Rotate value for the toggle icon when expanded */
 	--pf-c-clipboard-copy--m-expanded__toggle-icon--Rotate: 90deg;
+	/** PaddingTop for the expandable content */
 	--pf-c-clipboard-copy__expandable-content--PaddingTop: var(--pf-global--spacer--md, 1rem);
+	/** PaddingRight for the expandable content */
 	--pf-c-clipboard-copy__expandable-content--PaddingRight: var(--pf-global--spacer--md, 1rem);
+	/** PaddingBottom for the expandable content */
 	--pf-c-clipboard-copy__expandable-content--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+	/** PaddingLeft for the expandable content */
 	--pf-c-clipboard-copy__expandable-content--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+	/** BackgroundColor for the expandable content */
 	--pf-c-clipboard-copy__expandable-content--BackgroundColor: var(--pf-global--BackgroundColor--light-100, #fff);
+	/** BorderTopWidth for the expandable content */
 	--pf-c-clipboard-copy__expandable-content--BorderTopWidth: 0;
+	/** BorderRightWidth for the expandable content */
 	--pf-c-clipboard-copy__expandable-content--BorderRightWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** BorderBottomWidth for the expandable content */
 	--pf-c-clipboard-copy__expandable-content--BorderBottomWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** BorderLeftWidth for the expandable content */
 	--pf-c-clipboard-copy__expandable-content--BorderLeftWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** BorderColor for the expandable content */
 	--pf-c-clipboard-copy__expandable-content--BorderColor: var(--pf-global--BorderColor--100, #d2d2d2);
+	/** OutlineOffset for the expandable content */
 	--pf-c-clipboard-copy__expandable-content--OutlineOffset: calc(-1 * var(--pf-global--spacer--xs, 0.25rem));
+	/** PaddingTop for the inline variant */
 	--pf-c-clipboard-copy--m-inline--PaddingTop: 0;
+	/** PaddingBottom for the inline variant */
 	--pf-c-clipboard-copy--m-inline--PaddingBottom: 0;
+	/** PaddingLeft for the inline variant */
 	--pf-c-clipboard-copy--m-inline--PaddingLeft: var(--pf-global--spacer--xs, 0.25rem);
+	/** BackgroundColor for the inline variant */
 	--pf-c-clipboard-copy--m-inline--BackgroundColor: var(--pf-global--BackgroundColor--200, #f0f0f0);
+	/** FontFamily for the code text */
 	--pf-c-clipboard-copy__text--m-code--FontFamily: var(--pf-global--FontFamily--monospace, "Liberation Mono", consolas, "SFMono-Regular", menlo, monaco, "Courier New", monospace);
+	/** FontSize for the code text */
 	--pf-c-clipboard-copy__text--m-code--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+	/** MarginTop for actions item */
 	--pf-c-clipboard-copy__actions-item--MarginTop: calc(-1 * var(--pf-global--spacer--form-element, 0.375rem));
+	/** MarginBottom for actions item */
 	--pf-c-clipboard-copy__actions-item--MarginBottom: calc(-1 * var(--pf-global--spacer--form-element, 0.375rem));
+	/** PaddingTop for actions item button */
 	--pf-c-clipboard-copy__actions-item--button--PaddingTop: var(--pf-global--spacer--xs, 0.25rem);
+	/** PaddingRight for actions item button */
 	--pf-c-clipboard-copy__actions-item--button--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
+	/** PaddingBottom for actions item button */
 	--pf-c-clipboard-copy__actions-item--button--PaddingBottom: var(--pf-global--spacer--xs, 0.25rem);
+	/** PaddingLeft for actions item button */
 	--pf-c-clipboard-copy__actions-item--button--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
   --pf-icon--size: var(--pf-global--FontSize--md, 1rem);
 }

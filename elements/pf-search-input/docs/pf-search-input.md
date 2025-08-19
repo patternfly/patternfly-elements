@@ -26,7 +26,7 @@ import '@patternfly/elements/pf-search-input/pf-search-input.js';
 #### Search Input
 
 {% htmlexample %}
-  {% renderFile "./elements/pf-search-input/demo/pf-search-input.html" %}
+  {% renderFile "./elements/pf-search-input/demo/index.html" %}
 {% endhtmlexample %}
 
 #### Search Input Form

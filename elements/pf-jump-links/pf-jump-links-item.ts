@@ -10,14 +10,6 @@ import style from './pf-jump-links-item.css';
 
 import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 
-/**
- * @cssprop --pf-c-jump-links__link--PaddingTop -- padding around the link
- * @cssprop --pf-c-jump-links__link--PaddingRight
- * @cssprop --pf-c-jump-links__link--PaddingBottom
- * @cssprop --pf-c-jump-links__link--PaddingLeft
- * @cssprop --pf-c-jump-links__link--OutlineOffset
- * @cssprop --pf-c-jump-links__link-text--Color
- */
 @customElement('pf-jump-links-item')
 export class PfJumpLinksItem extends LitElement {
   static readonly styles: CSSStyleSheet[] = [style];

@@ -1,33 +1,62 @@
 :host {
   /* NB: upstream sets these on the container, which is why we do not use fallbacks here. */
+  /** Width of panel */
   --pf-c-panel--Width: auto;
+  /** Minimum width of panel */
   --pf-c-panel--MinWidth: auto;
+  /** Maximum width of panel */
   --pf-c-panel--MaxWidth: none;
+  /** Z-index of panel */
   --pf-c-panel--ZIndex: auto;
+  /** Background color of panel */
   --pf-c-panel--BackgroundColor: var(--pf-global--BackgroundColor--100, #fff);
+  /** Box shadow of panel */
   --pf-c-panel--BoxShadow: none;
+  /** Border width of panel before element */
   --pf-c-panel--before--BorderWidth: 0;
+  /** Border color of panel before element */
   --pf-c-panel--before--BorderColor: var(--pf-global--BorderColor--100, #d2d2d2);
+  /** Border width of bordered panel before element */
   --pf-c-panel--m-bordered--before--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
+  /** Box shadow of raised panel */
   --pf-c-panel--m-raised--BoxShadow: var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
+  /** Z-index of raised panel */
   --pf-c-panel--m-raised--ZIndex: var(--pf-global--ZIndex--sm, 200);
+  /** Top padding of panel header */
   --pf-c-panel__header--PaddingTop: var(--pf-global--spacer--md, 1rem);
+  /** Right padding of panel header */
   --pf-c-panel__header--PaddingRight: var(--pf-global--spacer--md, 1rem);
+  /** Bottom padding of panel header */
   --pf-c-panel__header--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+  /** Left padding of panel header */
   --pf-c-panel__header--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+  /** Maximum height of panel main */
   --pf-c-panel__main--MaxHeight: none;
+  /** Overflow of panel main */
   --pf-c-panel__main--Overflow: visible;
+  /** Top padding of panel main body */
   --pf-c-panel__main-body--PaddingTop: var(--pf-global--spacer--md, 1rem);
+  /** Right padding of panel main body */
   --pf-c-panel__main-body--PaddingRight: var(--pf-global--spacer--md, 1rem);
+  /** Bottom padding of panel main body */
   --pf-c-panel__main-body--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+  /** Left padding of panel main body */
   --pf-c-panel__main-body--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+  /** Top padding of panel footer */
   --pf-c-panel__footer--PaddingTop: var(--pf-global--spacer--md, 1rem);
+  /** Right padding of panel footer */
   --pf-c-panel__footer--PaddingRight: var(--pf-global--spacer--md, 1rem);
+  /** Bottom padding of panel footer */
   --pf-c-panel__footer--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+  /** Left padding of panel footer */
   --pf-c-panel__footer--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+  /** Box shadow of panel footer */
   --pf-c-panel__footer--BoxShadow: none;
+  /** Maximum height of scrollable panel main */
   --pf-c-panel--m-scrollable__main--MaxHeight: 18.75rem;
+  /** Overflow of scrollable panel main */
   --pf-c-panel--m-scrollable__main--Overflow: auto;
+  /** Box shadow of scrollable panel footer */
   --pf-c-panel--m-scrollable__footer--BoxShadow: 0 -0.3125rem 0.25rem -0.25rem rgba(3, 3, 3, 0.16);
   position: relative;
   z-index: var(--pf-c-panel--ZIndex);

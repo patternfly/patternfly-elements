@@ -11,15 +11,20 @@
 
 svg {
   overflow: hidden;
+  /** Width for spinner */
   width: var(--pf-c-spinner--Width,
+    /** Diameter for spinner */
     var(--pf-c-spinner--diameter,
       var(--pf-global--icon--FontSize--xl, 3.375rem)));
+  /** Height for spinner */
   height: var(--pf-c-spinner--Height,
     var(--pf-c-spinner--diameter,
       var(--pf-global--icon--FontSize--xl, 3.375rem)));
   animation:
     pf-c-spinner-animation-rotate
+    /** Animation duration for spinner */
     calc(var(--pf-c-spinner--AnimationDuration, 1.4s) * 2)
+    /** Animation timing function for spinner */
     var(--pf-c-spinner--AnimationTimingFunction, linear) infinite;
 }
 
@@ -30,30 +35,37 @@ circle {
   stroke-linecap: round;
   stroke-dasharray: 283;
   stroke-dashoffset: 280;
+  /** Color for spinner */
   stroke: var(--pf-c-spinner--Color, var(--pf-global--primary-color--100, #06c));
+  /** Stroke width for spinner */
   stroke-width: var(--pf-c-spinner--stroke-width, 10);
   animation:
     pf-c-spinner-animation-dash
     var(--pf-c-spinner--AnimationDuration, 1.4s)
+    /** Path animation timing function for spinner */
     var(--pf-c-spinner__path--AnimationTimingFunction, ease-in-out) infinite;
 }
 
 :host([size="sm"]) svg {
+  /** Diameter for small spinner */
   --pf-c-spinner--diameter: var(--pf-c-spinner--m-sm--diameter,
     var(--pf-global--icon--FontSize--sm, 0.625rem));
 }
 
 :host([size="md"]) svg {
+  /** Diameter for medium spinner */
   --pf-c-spinner--diameter: var(--pf-c-spinner--m-md--diameter,
     var(--pf-global--icon--FontSize--md, 1.125rem));
 }
 
 :host([size="lg"]) svg {
+  /** Diameter for large spinner */
   --pf-c-spinner--diameter: var(--pf-c-spinner--m-lg--diameter,
     var(--pf-global--icon--FontSize--lg, 1.5rem));
 }
 
 :host([size="xl"]) svg {
+  /** Diameter for extra large spinner */
   --pf-c-spinner--diameter: var(--pf-c-spinner--m-xl--diameter,
     var(--pf-global--icon--FontSize--xl, 3.375rem));
 }
@@ -73,6 +85,7 @@ circle {
     transform: rotate(0);
   }
   15% {
+    /** Path stroke width for spinner */
     stroke-width: calc(var(--pf-c-spinner__path--StrokeWidth, 10) - 4);
   }
   40% {

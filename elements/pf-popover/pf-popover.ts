@@ -48,114 +48,7 @@ export class PopoverShownEvent extends ComposedEvent {
 /**
  * A **Popover** displays content in a non-modal dialog and adds contextual information or provides resources via text and links.
  * @summary Toggle the visibility of helpful or contextual information.
- * @slot -
- *         The default slot holds invoking element.
- *         Typically this would be an icon, button, or other small sized element.
- * @slot heading
- *       This slot renders the content that will be displayed inside of the header of the popover.
- *       Typically this would be a heading element.
- * @slot icon
- *       This slot renders the icon that will be displayed inside the header of the popover,
- *       before the heading.
- * @slot body
- *       This slot renders the content that will be displayed inside of the body of the popover.
- * @slot footer
- *       This slot renders the content that will be displayed inside of the footer of the popover.
- * @csspart container - The component wrapper
- * @csspart content - The content wrapper
- * @csspart header - The header element; only visible if both an icon annd heading are provided.
- * @csspart heading - The heading element
- * @csspart icon - The header icon
- * @csspart close-button - The close button
- * @csspart body - The container for the body content
- * @csspart footer - The container for the footer content
- * @cssprop {<length>} [--pf-c-popover__arrow--Height=1.5625rem] Height of the arrow
- * @cssprop {<length>} [--pf-c-popover__arrow--Width=1.5625rem] Width of the arrow
- * @cssprop {<color>} [--pf-c-popover__title-text--Color=inherit] Heading font color
- * @cssprop {<color>} [--pf-c-popover__title-icon--Color=#151515] Heading icon font color
- * @cssprop {<color>} [--pf-c-popover__arrow--BackgroundColor=#fff] Arrow background color
- * @cssprop [--pf-c-popover__arrow--BoxShadow=0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08)] Arrow box shadow
- * @cssprop [--pf-c-popover--BoxShadow=0 0.5rem 1rem 0 rgba(3, 3, 3, 0.16), 0 0 0.375rem 0 rgba(3, 3, 3, 0.08)] Popover box shadow
- * @cssprop {<length>} [--pf-c-tooltip__content--PaddingTop=1rem] Popover top padding
- * @cssprop {<length>} [--pf-c-tooltip__content--PaddingRight=1rem] Popover right padding
- * @cssprop {<length>} [--pf-c-tooltip__content--PaddingBottom=1rem]
- *          Popover bottom padding
- *
- * @cssprop {<length>} [--pf-c-tooltip__content--PaddingLeft=1rem]
- *          Popover left padding
- *
- * @cssprop {<number>} [--pf-c-popover--line-height=1.5]
- *          Popover line height
- *
- * @cssprop {<length>} [--pf-c-popover__content--FontSize=0.875rem]
- *          Popover font-size
- *
- * @cssprop {<color>} [--pf-c-popover__content--BackgroundColor=#fff]
- *          Popover background color
- *
- * @cssprop {<length>} [--pf-c-popover--MaxWidth=20.75rem]
- *          Popover max-width
- *
- * @cssprop {<length>} [--pf-c-popover--MinWidth=20.75rem]
- *          Popover min-width
- *
- * @cssprop {<number>} [--pf-c-popover--c-button--Right=`0]
- *          Close button right position
- *
- * @cssprop {<number>} [--pf-c-popover--c-button--Top=0]
- *          Close button top position
- *
- * @cssprop {<length>} [--pf-c-popover--c-button--sibling--PaddingRight=3rem]
- *          Padding between close button and its immediate sibling
- *
- * @cssprop {<length>} [--pf-c-popover__title-icon--MarginRight=0.5rem]
- *          Heading icon right margin
- *
- * @cssprop {<length>} [--pf-c-popover__title--FontSize=1rem]
- *          Header font-size
- *
- * @cssprop {<length>} [--pf-c-popover__title--MarginBottom=0.5rem]
- *          Header bottom margin
- *
- * @cssprop {<number>} [--pf-c-popover__title--LineHeight=1.5]
- *          Header line height
- *
- * @cssprop {<string>} [--pf-c-popover__title--FontFamily='RedHatDisplay', 'Overpass', overpass, helvetica, arial, sans-serif]
- *          Header font-family
- *
- * @cssprop {<length>} [--pf-c-popover__footer--MarginTop=1rem]
- *          Footer top margin
- *
- * @cssprop {<color>} [--pf-c-popover--m-default__title-text--Color=#003737]
- *          Default alert heading color
- *
- * @cssprop {<color>} [--pf-c-popover--m-default__title-icon--Color=#009596]
- *          Default alert icon color
- *
- * @cssprop {<color>} [--pf-c-popover--m-info__title-text--Color=#002952]
- *          Default alert heading color
- *
- * @cssprop {<color>} [--pf-c-popover--m-info__title-icon--Color=#2b9af3]
- *          Default alert icon color
- *
- * @cssprop {<color>} [--pf-c-popover--m-warning__title-text--Color=#795600]
- *          Default alert heading color
- *
- * @cssprop {<color>} [--pf-c-popover--m-warning__title-icon--Color=#f0ab00]
- *          Default alert icon color
- *
- * @cssprop {<color>} [--pf-c-popover--m-success__title-text--Color=#1e4f18]
- *          Default alert heading color
- *
- * @cssprop {<color>} [--pf-c-popover--m-success__title-icon--Color=#3e8635]
- *          Default alert icon color
- *
- * @cssprop {<color>} [--pf-c-popover--m-danger__title-text--Color=#a30000]
- *          Default alert heading color
- *
- * @cssprop {<color>} [--pf-c-popover--m-danger__title-icon--Color=#c9190b]
- *          Default alert icon color
- *
+ * @alias Popover
  */
 @customElement('pf-popover')
 export class PfPopover extends LitElement {
@@ -336,6 +229,14 @@ export class PfPopover extends LitElement {
     }
 
     const headingSlotWithFallback = html`
+      <!-- slot:
+             summary: Heading content.
+             description: |
+               This slot projects content into the header of the popover.
+               Typically this would be a heading (e.g. h2, h3, etc.) element.
+           part:
+             summary: The heading element
+      -->
       <slot id="heading" name="heading" part="heading" ?hidden=${!hasHeading}>${headingContent}</slot>
     `;
 
@@ -344,9 +245,13 @@ export class PfPopover extends LitElement {
       ?? '';
 
     return html`
+      <!-- The component wrapper -->
       <div id="container"
            style="${styleMap(styles)}"
-           class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}">
+           class="${classMap({ [anchor]: !!anchor, [alignment]: !!alignment })}"
+           part="container">
+        <!-- The default slot holds invoking element.
+             Typically this would be an icon, button, or other small sized element. -->
         <slot id="trigger"
               @slotchange="${this.#triggerChanged}"
               @keydown="${this.#onKeydown}"
@@ -357,7 +262,9 @@ export class PfPopover extends LitElement {
                 aria-describedby="body"
                 aria-label=${ifDefined(this.label)}>
           <div id="arrow"></div>
+          <!-- The content wrapper -->
           <div id="content" part="content">
+            <!-- The close button -->
             <pf-button id="close-button"
                        part="close-button"
                        plain
@@ -370,8 +277,11 @@ export class PfPopover extends LitElement {
               </svg>
             </pf-button>
             ${!(hasHeading && hasIcon) ? headingSlotWithFallback : html`
+            <!-- The header element; only visible if both an icon annd heading are provided. -->
             <header part="header">
+              <!-- summary: Container for the header icon -->
               <span part="icon">
+                <!-- summary: The icon in the header of the popover, before the heading. -->
                 <slot name="icon">
                   <pf-icon icon="${headerIcon}"
                            set="${ifDefined(this.iconSet)}"
@@ -381,8 +291,15 @@ export class PfPopover extends LitElement {
               <span class="visually-hidden">${this.alertSeverityText ?? `${this.alertSeverity} alert:`}</span>`}
               ${headingSlotWithFallback}
             </header>`}
+            <!-- slot:
+                   summary: body of the popover, which is hidden until the popover is activated.
+                 part:
+                   summary: The container for the body content
+            -->
             <slot id="body" part="body" name="body">${this.body ?? ''}</slot>
+            <!-- summary: The container for the footer content -->
             <footer part="footer" ?hidden=${!hasFooter}>
+              <!-- summary: optional footer content of the popover. -->
               <slot name="footer">${this.footer}</slot>
             </footer>
           </div>

@@ -13,45 +13,8 @@ import style from './pf-jump-links.css';
 
 /**
  * **Jump links** allow users to navigate to sections within a page.
+ * @alias Jump Links
  * @fires toggle - when the `expanded` disclosure widget is toggled
- * @slot - Place pf-jump-links-items here
- * @cssprop --pf-c-jump-links__list--Display
- * @cssprop --pf-c-jump-links__list--FlexDirection
- * @cssprop --pf-c-jump-links__list--PaddingTop -- padding around the list of links
- * @cssprop --pf-c-jump-links__list--PaddingRight
- * @cssprop --pf-c-jump-links__list--PaddingBottom
- * @cssprop --pf-c-jump-links__list--PaddingLeft
- * @cssprop --pf-c-jump-links__list--Visibility
- * @cssprop --pf-c-jump-links__list--before--BorderColor
- * @cssprop --pf-c-jump-links__list--before--BorderTopWidth
- * @cssprop --pf-c-jump-links__list--before--BorderRightWidth
- * @cssprop --pf-c-jump-links__list--before--BorderBottomWidth
- * @cssprop --pf-c-jump-links__list--before--BorderLeftWidth
- * @cssprop --pf-c-jump-links__toggle--MarginBottom--base
- * @cssprop --pf-c-jump-links__toggle--MarginTop -- padding around the expandable jump links disclosure widget.
- * @cssprop --pf-c-jump-links__toggle--MarginBottom
- * @cssprop --pf-c-jump-links__toggle--MarginBottom--base
- * @cssprop --pf-c-jump-links__toggle--MarginLeft
- * @cssprop --pf-c-jump-links__toggle-text--Color
- * @cssprop --pf-c-button--PaddingTop -- padding around the expandable jump links disclosure widget.
- * @cssprop --pf-c-button--PaddingRight
- * @cssprop --pf-c-button--PaddingBottom
- * @cssprop --pf-c-button--PaddingLeft
- * @cssprop --pf-c-jump-links__toggle-icon--Rotate
- * @cssprop --pf-c-jump-links__toggle-icon--Transition
- * @cssprop --pf-c-jump-links__toggle-text--MarginLeft
- * @cssprop --pf-c-jump-links--m-expanded__toggle--MarginBottom
- * @cssprop --pf-c-jump-links--m-expanded__toggle-icon--Rotate
- * @cssprop --pf-c-jump-links--m-expanded__toggle-icon--Color
- * @cssprop --pf-c-jump-links--m-vertical__list--PaddingTop
- * @cssprop --pf-c-jump-links--m-vertical__list--PaddingRight
- * @cssprop --pf-c-jump-links--m-vertical__list--PaddingBottom
- * @cssprop --pf-c-jump-links--m-vertical__list--PaddingLeft
- * @cssprop --pf-c-jump-links--m-vertical__list--before--BorderTopWidth
- * @cssprop --pf-c-jump-links--m-vertical__list--before--BorderLeftWidth
- * @cssprop --pf-c-jump-links--m-vertical__item--m-current__link--before--BorderTopWidth
- * @cssprop --pf-c-jump-links--m-vertical__item--m-current__link--before--BorderLeftWidth
- * @cssprop --pf-c-jump-links--m-vertical__list--FlexDirection
  */
 @customElement('pf-jump-links')
 export class PfJumpLinks extends LitElement {
@@ -128,11 +91,13 @@ export class PfJumpLinks extends LitElement {
             <span id="label">${this.label}</span>
           </summary>
           <div role="listbox" aria-labelledby="label">
+            <!-- Place pf-jump-links-items here -->
             <slot></slot>
           </div>
         </details>` : html`
         <span id="label">${this.label}</span>
         <div role="listbox" aria-labelledby="label">
+          <!-- Place pf-jump-links-items here -->
           <slot></slot>
         </div>`}
       </nav>

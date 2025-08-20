@@ -314,12 +314,20 @@ export class Manifest {
       // strict removes all special characters from slug
       slug = slugify(slug, { strict: true, lower: true });
       const primaryElementName = deslugify(slug, options.rootDir);
-      const filePath = path.normalize(
-        path.posix.join(
-          options.rootDir,
-          options.elementsDir,
-          decodeURIComponent(demo.source?.href.replace(options.sourceControlURLPrefix, '') ?? ''),
-        ));
+      const demoSource =
+        decodeURIComponent(demo.source?.href.replace(options.sourceControlURLPrefix, '') ?? '');
+      // split the demoSource into an array of parts
+      const demoSourceParts = demoSource.split('/');
+      // if demoSourceParts contains options.elementsDir, then build the filePath from the rootDir and the demoSource
+      let filePath;
+      if (demoSourceParts.includes(options.elementsDir)) {
+        filePath =
+          path.normalize(path.posix.join(options.rootDir, demoSource));
+      // otherwise, build the filePath from the rootDir, options.elementsDir, and the demoSource
+      } else {
+        filePath =
+          path.normalize(path.posix.join(options.rootDir, options.elementsDir, demoSource));
+      }
       const [last = ''] = filePath.split(path.sep).reverse();
       const filename = last.replace('.html', '');
       const isMainElementDemo = filename === 'index';

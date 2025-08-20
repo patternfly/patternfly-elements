@@ -69,14 +69,7 @@ export function pfeDevServerTemplateMiddleware(config: PfeDevServerInternalConfi
     if (config.loadDemo && !(method !== 'HEAD' && method !== 'GET' || path.includes('.'))) {
       const url = new URL(ctx.request.url, `http://${ctx.request.headers.host}`);
       const demos = await getDemos(config);
-      // const demo = demos.find(x => x.permalink === url.pathname);
-      let demo = demos.find(x => x.permalink === url.pathname);
-      // Handle case where URL ends with /demo/ but permalink was shortened to just /
-      // e.g., request for /compoennts/jazz-hands/demo/ should match demo with permalink /components/jazz-hands/
-      if (!demo && url.pathname.endsWith('/demo/')) {
-        const alternativePathname = url.pathname.replace('/demo/', '/');
-        demo = demos.find(x => x.permalink === alternativePathname);
-      }
+      const demo = demos.find(x => x.permalink === url.pathname);
       const manifest = demo?.manifest;
       const templateContent = await getTemplateContent(demo);
       ctx.cwd = process.cwd();

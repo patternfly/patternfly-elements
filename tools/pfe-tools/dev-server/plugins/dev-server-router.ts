@@ -39,6 +39,62 @@ const cacheBustingMiddleware: PfeMiddleware = () => async function(ctx, next) {
 };
 
 /**
+ * Redirects both /elements and /elements/ to the root
+ * Handles both cases: /elements → / and /elements/ → /
+ */
+const elementsToRootRedirectMiddleware: PfeMiddleware = () => ctx => ctx.redirect('/');
+
+/**
+ * Ensures trailing slash for component URLs
+ * FROM: `/elements/footer`
+ *   TO: `/elements/footer/`
+ * @param config normalized PFE dev server config
+ */
+const ensureTrailingSlashMiddleware: PfeMiddleware = () => (ctx, next) => {
+  // Only add trailing slash if path doesn't already end with one
+  if (!ctx.path.endsWith('/')) {
+    return ctx.redirect(`${ctx.path}/`);
+  }
+  // If it already ends with slash, continue to next middleware
+  return next();
+};
+
+/**
+ * Handles lightdom CSS files that are missing the tag name in the path
+ * FROM: `elements/pf-jazz-hands-lightdom.css` or `elements/pf-jazz-hands-lightdom-shim.css`
+ *   TO: `elements/pf-jazz-hands/pf-jazz-hands-lightdom.css` or `elements/pf-jazz-hands/pf-jazz-hands-lightdom-shim.css`
+ * @param config normalized PFE dev server config
+ */
+const lightdomShortPathMiddleware: PfeMiddleware = config => (ctx, next) => {
+  const { sheetName, suffix } = ctx.params;
+  // Extract tag name from sheet name (e.g., "rh-footer-lightdom" -> "rh-footer")
+  const tagName = sheetName.replace(/-lightdom$/, '');
+  // Keep the full sheetName including -lightdom part for the redirect
+  const redirect = `/${config.elementsDir}/${tagName}/${tagName}-lightdom${suffix ?? ''}.css`;
+  if (ctx.path !== redirect) {
+    return ctx.redirect(redirect);
+  } else {
+    return next();
+  }
+};
+
+/**
+ * Handles lightdom CSS files accessed from demo directory
+ * FROM: `components/pf-jazz-hands/demo/pf-jazz-hands-lightdom.css`
+ *   TO: `elements/pf-jazz-hands/pf-jazz-hands-lightdom.css`
+ * @param config normalized PFE dev server config
+ */
+const demoLightdomMiddleware: PfeMiddleware = config => (ctx, next) => {
+  const { tagName, sheetName, suffix } = ctx.params;
+  const redirect = `/${config.elementsDir}/${tagName}/${sheetName}${suffix ?? ''}.css`;
+  if (ctx.path !== redirect) {
+    return ctx.redirect(redirect);
+  } else {
+    return next();
+  }
+};
+
+/**
  * Loads the typescript sources for element declaration source requests
  * This is useful when the typescript build runs in parallel.
  * FROM: `components/jazz-hands/*.js`
@@ -96,6 +152,10 @@ export function pfeDevServerRouterMiddleware(
   const router = new Router();
   const shim = lightdomShimMiddleware(config);
   const demo = demoSubresourceMiddleware(config);
+  const shortPath = lightdomShortPathMiddleware(config);
+  const demoLightdom = demoLightdomMiddleware(config);
+  const trailingSlash = ensureTrailingSlashMiddleware(config);
+  const elementsRedirect = elementsToRootRedirectMiddleware(config);
   return router
       .get('/tools/pfe-tools/environment.js(.js)?', environmentMiddleware(config))
       .get(`/core/pfe-core/:splatPath*.js`, coreMiddleware(config))
@@ -107,5 +167,13 @@ export function pfeDevServerRouterMiddleware(
       .get(`/${componentSubpath}/:unprefixedElementSlug/:sheetName-lightdom.css`, shim)
       .get(`/${componentSubpath}/:unprefixedElementSlug/demo/:demoName/:fileName.:ext`, demo)
       .get(`/${componentSubpath}/:unprefixedElementSlug/demo/:fileName.:ext`, demo)
+      .get(`/${componentSubpath}/:sheetName-lightdom:suffix.css`, shortPath)
+      .get(`/${componentSubpath}/:sheetName-lightdom.css`, shortPath)
+      .get(`/${elementsDir}/:tagName/demo/:sheetName-lightdom:suffix.css`, demoLightdom)
+      .get(`/${elementsDir}/:tagName/demo/:sheetName-lightdom.css`, demoLightdom)
+      .get(`/${componentSubpath}/:unprefixedElementSlug/demo`, trailingSlash)
+      .get(`/${componentSubpath}/:unprefixedElementSlug`, trailingSlash)
+      .get(`/${componentSubpath}`, elementsRedirect)
+      .get(`/${componentSubpath}/`, elementsRedirect)
       .routes();
 }

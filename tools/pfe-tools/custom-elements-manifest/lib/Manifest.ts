@@ -318,8 +318,8 @@ export class Manifest {
         decodeURIComponent(demo.source?.href.replace(options.sourceControlURLPrefix, '') ?? '');
       // split the demoSource into an array of parts
       const demoSourceParts = demoSource.split('/');
-      // if demoSourceParts contains options.elementsDir, then build the filePath from the rootDir and the demoSource
-      const filePath = demoSourceParts.includes(options.elementsDir) ?
+      // if first part of demoSourceParts contains options.elementsDir, then build the filePath from the rootDir and the demoSource
+      const filePath = (demoSourceParts.shift() === options.elementsDir) ?
             path.normalize(path.posix.join(options.rootDir, demoSource))
           : path.normalize(path.posix.join(options.rootDir, options.elementsDir, demoSource));
       const [last = ''] = filePath.split(path.sep).reverse();

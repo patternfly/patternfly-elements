@@ -82,7 +82,7 @@ async function cacheBusterMiddleware(ctx: Context, next: Next) {
     const etag = `modified-${mtime}`;
     ctx.response.set('Cache-Control', 'no-store, no-cache, must-revalidate');
     ctx.response.set('Pragma', 'no-cache');
-    ctx.response.set('Last-Modified', mtime.toString());
+    ctx.response.set('Last-Modified', stats.mtime.toUTCString());
     ctx.response.etag = etag;
   }
 }

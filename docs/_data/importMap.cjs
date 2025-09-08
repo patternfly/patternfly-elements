@@ -72,8 +72,6 @@ module.exports = async function() {
 
   await generator.install([
     'tslib',
-    '@floating-ui/dom',
-    '@floating-ui/core',
     '@rhds/elements',
     '@rhds/elements/rh-footer/rh-global-footer.js',
     `prismjs@${PRISM_VERSION}`,

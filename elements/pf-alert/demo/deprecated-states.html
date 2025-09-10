@@ -1,0 +1,39 @@
+<section id="alert-states">
+  <pf-alert state="danger">
+    <h3 slot="header">Error - alias of Danger</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
+      egestas, a sollicitudin mauris tincidunt.</p>
+    <pf-button slot="actions" variant="link" data-action="dismiss">Dismiss</pf-button>
+    <pf-button slot="actions" variant="link" data-action="confirm">Confirm</pf-button>
+  </pf-alert>
+
+  <pf-alert state="neutral">
+    <h3 slot="header">Default - alias of Neutral</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
+      egestas, a sollicitudin mauris tincidunt.</p>
+    <pf-button slot="actions" variant="link" data-action="dismiss">Dismiss</pf-button>
+    <pf-button slot="actions" variant="link" data-action="confirm">Confirm</pf-button>
+  </pf-alert>
+
+  <pf-alert state="info">
+    <h3 slot="header">Note - alias of Info</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
+      egestas, a sollicitudin mauris tincidunt.</p>
+    <pf-button slot="actions" variant="link" data-action="dismiss">Dismiss</pf-button>
+    <pf-button slot="actions" variant="link" data-action="confirm">Confirm</pf-button>
+  </pf-alert>
+</section>
+
+<style>
+  #alert-states {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, max(40vh, 40%)));
+    grid-auto-rows: min-content;
+    gap: var(--pf-global--spacer--lg, 16px); /* שימוש בטוקן PF */
+  }
+</style>
+
+<script type="module">
+  import '@patternfly/elements/pf-alert/pf-alert.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+</script>

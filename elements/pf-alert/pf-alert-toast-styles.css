@@ -1,0 +1,48 @@
+.pf-alert-toast-group {
+  position: fixed;
+  z-index: var(--pf-global--ZIndex--sm, 1000);
+  inset-block-start: var(--pf-global--spacer--lg, 16px);
+  inset-inline-end: var(--pf-global--spacer--lg, 16px);
+  padding-block-end: var(--pf-global--spacer--4xl, 64px);
+  display: grid;
+  justify-items: end;
+  justify-content: center;
+  gap: var(--pf-global--spacer--lg, 16px);
+
+  /* optimizations */
+  pointer-events: none;
+}
+
+.pf-alert-toast-group pf-alert-wrapper {
+  --_duration: 8s;
+  --_travel-distance: 0;
+
+  pointer-events: all;
+  will-change: transform;
+  animation:
+    fade-in 0.3s ease,
+    slide-in 0.3s ease,
+    fade-out 0.3s ease var(--_duration);
+}
+
+.pf-alert-toast-group pf-alert-wrapper.persistent {
+  animation: slide-in 0.3s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pf-alert-toast-group pf-alert-wrapper {
+    --_travel-distance: var(--pf-global--spacer--4xl, 64px);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+
+@keyframes slide-in {
+  from { transform: translateY(var(--_travel-distance, var(--pf-global--spacer--lg, 16px))); }
+}

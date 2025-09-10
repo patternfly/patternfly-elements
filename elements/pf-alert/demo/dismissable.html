@@ -1,0 +1,59 @@
+<section id="alert-dismissable">
+  <pf-alert dismissable>
+    <h3 slot="header">Default dismissable</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
+      egestas, a sollicitudin mauris tincidunt.</p>
+    <pf-button slot="actions" variant="secondary" data-action="confirm">Confirm</pf-button>
+    <pf-button slot="actions" variant="link" data-action="dismiss">Cancel</pf-button>
+  </pf-alert>
+
+  <pf-alert variant="alternate" dismissable>
+    <h3 slot="header">Inline dismissable</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
+      egestas, a sollicitudin mauris tincidunt.</p>
+    <pf-button slot="actions" variant="secondary" data-action="confirm">Confirm</pf-button>
+    <pf-button slot="actions" variant="link" data-action="dismiss">Cancel</pf-button>
+  </pf-alert>
+
+  <pf-alert toast dismissable>
+    <h3 slot="header">Toast dismissable</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
+      egestas, a sollicitudin mauris tincidunt.</p>
+    <pf-button slot="actions" variant="secondary" data-action="confirm">Confirm</pf-button>
+    <pf-button slot="actions" variant="link" data-action="dismiss">Cancel</pf-button>
+  </pf-alert>
+
+  <pf-alert dismissable data-on-close="prevent-default">
+    <h3 slot="header">Dismissable With Prevent Default</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
+      egestas, a sollicitudin mauris tincidunt.</p>
+    <pf-button slot="actions" variant="secondary" data-action="confirm">Confirm</pf-button>
+    <pf-button slot="actions" variant="link" data-action="dismiss">Cancel</pf-button>
+  </pf-alert>
+</section>
+
+<script type="module">
+  /* eslint-disable no-console */
+  import { AlertCloseEvent } from '@patternfly/elements/pf-alert/pf-alert.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+
+  document.body.addEventListener('close', event => {
+    if (event instanceof AlertCloseEvent) {
+      if (event.target.dataset.onClose === 'prevent-default') {
+        console.log('prevent default');
+        event.preventDefault();
+      } else {
+        return console.log('close');
+      }
+    }
+  });
+</script>
+
+<style>
+  #alert-dismissable {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, max(40vh, 40%)));
+    grid-auto-rows: min-content;
+    gap: var(--pf-global--spacer--lg, 16px); /* שימוש בטוקן PF */
+  }
+</style>

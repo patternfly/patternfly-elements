@@ -1,5 +1,8 @@
-// All type definitions for floating UI functionality
-// Types extracted from floating-utils.ts and floating-core.ts
+/*
+ * This is a recreation of the @floating-ui/dom package.
+ * Published under the MIT license.
+ * @see https://github.com/floating-ui/floating-ui/blob/master/LICENSE
+ */
 
 // Basic type definitions
 export type Alignment = 'start' | 'end';

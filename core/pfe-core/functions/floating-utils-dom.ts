@@ -1,3 +1,10 @@
+/*
+ * This is a recreation of the @floating-ui/dom package.
+ * Published under the MIT license.
+ * @see https://github.com/floating-ui/floating-ui/blob/master/LICENSE
+ */
+
+
 /**
  * Checks if the current environment has a window object.
  */

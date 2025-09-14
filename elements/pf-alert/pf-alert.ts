@@ -1,6 +1,6 @@
 // --- Lit core ---
 import { LitElement, html, render, isServer, type TemplateResult, type CSSResult } from 'lit';
-import { css, unsafeCSS } from 'lit';
+// import { css, unsafeCSS } from 'lit';
 
 // --- Lit decorators ---
 import { customElement } from 'lit/decorators/custom-element.js';
@@ -20,11 +20,10 @@ import '@patternfly/elements/pf-button/pf-button.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
 
 // --- CSS ---
-import alertCSS from './pf-alert.css';
+// import alertCSS from './pf-alert.css';
 import toastStyles from './pf-alert-toast-styles.css';
 
-// import { css, LitElement } from 'lit';
-const styles = css`${unsafeCSS(alertCSS)}`;
+// const styles = css`${unsafeCSS(alertCSS)}`;
 
 
 interface AlertAction {
@@ -61,7 +60,7 @@ const toasts = new Set<Required<ToastOptions>>();
 
 @customElement('pf-alert-wrapper')
 export class PfAlert extends LitElement {
-  static override styles: CSSResult[] = [styles];
+  // static override styles: CSSResult[] = [styles];
 
   @property({ reflect: true })
   state: 'danger' | 'warning' | 'caution' | 'neutral' | 'info' | 'success' = 'neutral';

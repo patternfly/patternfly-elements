@@ -1,15 +1,18 @@
-<pf-context-demo>
-  <pf-alert>
+<pf-alert dismissable>
     <h3 slot="header">Default</h3>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
       egestas, a sollicitudin mauris tincidunt.</p>
     <pf-button slot="actions" variant="secondary" data-action="confirm">Confirm</pf-button>
     <pf-button slot="actions" variant="link" data-action="dismiss">Cancel</pf-button>
   </pf-alert>
-</pf-context-demo>
-
 <script type="module">
-  import '@patternfly/elements/lib/elements/pf-context-demo/pf-context-demo.js';
-  import '@patternfly/elements/pf-alert/pf-alert.js';
+  import { AlertCloseEvent } from '@patternfly/elements/pf-alert/pf-alert.js';
   import '@patternfly/elements/pf-button/pf-button.js';
+    
+  document.body.addEventListener('close', event => {
+    if (event instanceof AlertCloseEvent) {
+      console.log('Alert closed:', event.target);
+    }
+  });
+  
 </script>

@@ -1,5 +1,5 @@
-<section id="alert-variant-alternate">
-  <pf-alert variant="alternate">
+<section  id="alert-variant-alternate">
+  <pf-alert  variant="alternate">
     <h3 slot="header">Neutral</h3>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
       egestas, a sollicitudin mauris tincidunt.</p>
@@ -25,7 +25,7 @@
 
   <pf-alert state="warning" variant="alternate">
     <h3 slot="header">Warning</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
       egestas, a sollicitudin mauris tincidunt.</p>
     <pf-button slot="actions" variant="secondary" data-action="confirm">Confirm</pf-button>
     <pf-button slot="actions" variant="link" data-action="dismiss">Cancel</pf-button>
@@ -33,7 +33,7 @@
 
   <pf-alert state="danger" variant="alternate">
     <h3 slot="header">Danger</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
+     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend elit sed est
       egestas, a sollicitudin mauris tincidunt.</p>
     <pf-button slot="actions" variant="secondary" data-action="confirm">Confirm</pf-button>
     <pf-button slot="actions" variant="link" data-action="dismiss">Cancel</pf-button>
@@ -47,18 +47,31 @@
     <pf-button slot="actions" variant="link" data-action="dismiss">Cancel</pf-button>
   </pf-alert>
 </section>
+<button id="prev-btn">Prev</button>
+<button id="next-btn">Next</button>
 
 <style>
   #alert-variant-alternate {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, max(40vh, 40%)));
     grid-auto-rows: min-content;
-    gap: var(--pf-global--spacer--lg, 16px); /* שימוש בטוקן של PF */
+    gap: var(--rh-space-lg, 16px);
   }
 </style>
 
 <script type="module">
-  import '@patternfly/elements/pf-alert/pf-alert.js';
-  import '@patternfly/elements/pf-button/pf-button.js';
+    import '@patternfly/elements/pf-alert/pf-alert.js';
+    import '@patternfly/elements/pf-button/pf-button.js';
+     
+  // customElements.whenDefined('pf-alert').then(() => {
+  //   const alerts = document.querySelectorAll('pf-alert');
+  //   alerts.forEach(alert => {
+  //     // trigger internal styling properly
+  //     alert.variant = alert.variant;
+  //     if (alert.state) {
+  //       alert.state = alert.state;
+  //     }
+  //   });
+  // });
+  
 </script>
-//hi

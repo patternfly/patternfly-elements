@@ -36,7 +36,7 @@
   /* eslint-disable no-console */
   import { AlertCloseEvent } from '@patternfly/elements/pf-alert/pf-alert.js';
   import '@patternfly/elements/pf-button/pf-button.js';
-
+  
   document.body.addEventListener('close', event => {
     if (event instanceof AlertCloseEvent) {
       if (event.target.dataset.onClose === 'prevent-default') {

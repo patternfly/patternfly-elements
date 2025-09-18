@@ -18,15 +18,17 @@
     <label><input type="radio" name="actions" value="primary">Single action</label>
     <label><input type="radio" name="actions" value="secondary">Secondary action</label>
   </fieldset>
-  <pf-button>Toast alert</pf-button>
+  <pf-button  id="alert-toast">Toast alert</pf-button>
 </form>
 
 <style>
   #alert-variant-toast {
-    display: grid;
     gap: var(--pf-space-lg, 16px);
     padding: var(--pf-space-lg, 16px);
     width: max-content;
+  }
+   #alert-toast {
+    margin-top: 0.45cm;
   }
 </style>
 
@@ -36,7 +38,6 @@
 
   let i = 0;
   document.addEventListener('close', e => console.log(e.action));
-
   document.getElementById('alert-variant-toast').addEventListener('submit', async function(event) {
     event.preventDefault();
     const data = new FormData(event.target);

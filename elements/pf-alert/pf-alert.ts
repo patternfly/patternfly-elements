@@ -110,12 +110,12 @@ export class PfAlert extends LitElement {
 
   @property({ reflect: true })
   state:
-  | 'neutral'
-  | 'info'
-  | 'success'
-  | 'caution'
   | 'warning'
-  | 'danger' = 'neutral';
+    | 'caution'
+    | 'neutral'
+    | 'info'
+    | 'success' =
+      'neutral';
 
   @property({ reflect: true }) variant?: 'alternate' | 'toast' | 'inline';
 
@@ -165,56 +165,52 @@ export class PfAlert extends LitElement {
     const state = this.#aliasState(this.state);
 
     // footer slot עם האקשנים
-    const footer = html`
-  <footer class="${classMap({ hasActions })}"
-            @click=${this.#onActionsClick}>
-               <!-- Provide actions that the user can take for the alert -->
-      <slot name="actions"></slot>
-    </footer>
-  `;
+   const footer = html`<footer class="${classMap({ hasActions })}"
+                  @click="${this.#onActionsClick}">
+            <!-- Provide actions that the user can take for the alert -->
+            <slot name="actions"></slot>
+          </footer>`;
     return html`
       <section id="container"
-             class=${classMap({
-               hasBody,
-               light: true,
-               [state]: true,
-               [variant]: !!variant,
+              class=${classMap({
+                hasBody,
+                light: true,
+                [state]: true,
+                [variant]: !!variant,
              })}
              role="alert"
              aria-hidden="false"
-            color-palette="lightest">
-      <div id="left-column">
+             color-palette="lightest">
+        <div id="left-column">
           <pf-icon 
-          id="icon"
-          set="fas" 
-          icon="${this.#icon}"  
-    style="--pf-c-icon--Color: var(--_icon-color);">
-          >
+            id="icon"
+            set="fas" 
+            icon="${this.#icon}"  
+            style="--pf-c-icon--Color: var(--_icon-color); font-size: 36px; height: 36px; width: 36px;">
           </pf-icon>
-      </div>
-
-      <div id="middle-column">
-        <header ?hidden="${!_isServer && this.#slots.isEmpty('header')}">
-          <div id="header">
-            <!-- Provide a header for the alert message. -->
-            <slot name="header"></slot>
-          </div>${!this.dismissable && this.variant !== 'toast' ? '' : html`
-          <div id="header-actions">
-             <pf-button id="close-button"
-                         variant="close"
-                         accessible-label="Close"
-                         confirm
-                         @click="${this.#onClose}">
-                         <pf-icon set="fas" icon="${ICONS.get('close')}"></pf-icon>
-                         </pf-button>
-            </div>`}
+        </div>
+        <div id="middle-column">
+          <header ?hidden="${!_isServer && this.#slots.isEmpty('header')}">
+            <div id="header">
+              <!-- Provide a header for the alert message. -->
+              <slot name="header"></slot>
+            </div>${!this.dismissable && this.variant !== 'toast' ? '' : html`
+            <div id="header-actions">
+                <pf-icon
+                  id="close-button"
+                  set="fas"
+                  icon="times"
+                  role="button"
+                  tabindex="0"
+                  aria-label="Close"
+                  @click="${this.#onClose}">
+                </pf-icon>
+              </div>`}
         </header>
-
         <div id="description">
-                    <!-- Provide a description for the alert message -->
+          <!-- Provide a description for the alert message -->
           <slot></slot>
         </div>
-
         ${footer}
       </div>
     </section>

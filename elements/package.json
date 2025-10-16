@@ -22,6 +22,7 @@
     "./pf-banner/pf-banner.js": "./pf-banner/pf-banner.js",
     "./pf-button/pf-button.js": "./pf-button/pf-button.js",
     "./pf-card/pf-card.js": "./pf-card/pf-card.js",
+    "./pf-checkbox/pf-checkbox.js": "./pf-checkbox/pf-checkbox.js",
     "./pf-chip/pf-chip.js": "./pf-chip/pf-chip.js",
     "./pf-chip/pf-chip-group.js": "./pf-chip/pf-chip-group.js",
     "./pf-clipboard-copy/pf-clipboard-copy.js": "./pf-clipboard-copy/pf-clipboard-copy.js",

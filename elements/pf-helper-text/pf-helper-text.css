@@ -1,0 +1,29 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.helper-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+:host([status="error"]) {
+  color: var(--pf-global--danger-color--100, #c9190b);
+}
+
+:host([status="warning"]) {
+  color: var(--pf-global--warning-color--100, #f0ab00);
+}
+
+:host([status="success"]) {
+  color: var(--pf-global--success-color--100, #3e8635);
+}
+
+:host([status="indeterminate"]) {
+  color: var(--pf-global--palette--black-600, #6a6e73);
+}

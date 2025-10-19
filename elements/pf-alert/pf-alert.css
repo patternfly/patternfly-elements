@@ -27,7 +27,7 @@ footer ::slotted([slot='actions']:not(pf-button[variant='link' i])) {
   padding: 0 !important;
   border: none !important;
   background-color: transparent !important;
-  color: var(--pf-global--link--Color, hsl(278, 75%, 81%)) !important;
+  color: var(--pf-global--palette--blue-400,#06c) !important;
   font-size: var(--pf-global--FontSize--sm, 0.875rem) !important;
   font-family: var(--pf-global--FontFamily--text, "RedHatText", Helvetica, Arial, sans-serif) !important;
 }
@@ -51,7 +51,7 @@ footer ::slotted(pf-button[variant='link' i]) {
   --_background-color: var(--pf-global--BackgroundColor--100, #daf2f2);
   --_border-color: var(--pf-global--BorderColor--100, #37a3a3);
   --_icon-color: var(--pf-global--icon--Color--light, #37a3a3);
-
+/* מסגרת */
   border-width: var(--pf-global--BorderWidth--md, 2px);
   border-style: solid;
   border-color: var(--_border-color);
@@ -65,20 +65,23 @@ footer ::slotted(pf-button[variant='link' i]) {
   grid-template-columns: min-content 1fr;
   gap: var(--pf-global--spacer--xs, 4px);
   font-family: var(--pf-global--FontFamily--text, RedHatText, 'Red Hat Text', Helvetica, Arial, sans-serif);
-  font-weight: var(--pf-global--FontWeight--regular, 400);
-  font-size: var(--pf-global--FontSize--sm, 0.875rem);
+  /* font-weight: var(--pf-global--FontWeight--regular, 4000); */
+  /* font-size: var(--pf-global--FontSize--sm, 0.875rem); */
   line-height: var(--pf-global--lineHeight--md, 1.5);
 
+  max-width: var(--_max-width, var(--pf-c-alert--MaxWidth, initial));
+  box-shadow: var(--_box-shadow, none);
+  /* כותרת */
   & header ::slotted(*) {
     font-family: var(--pf-global--FontFamily--text, RedHatText, 'Red Hat Text', Helvetica, Arial, sans-serif) !important;
-    font-weight: var(--pf-global--FontWeight--semiBold, 500) !important;
+    /* font-weight: var(--pf-global--FontWeight--semiBold, 500) !important; */
     font-size: var(--pf-global--FontSize--sm, 0.875rem) !important;
     line-height: var(--pf-global--lineHeight--md, 1.5) !important;
     margin: 0 !important;
   }
-
+/* מסדרים מרווח שניהם ביחד בין הכותרת לכיתוב */
   & header ::slotted(:is(h1,h2,h3,h4,h5,h6)) {
-    padding-block: 2px var(--pf-global--spacer--xs, 4px) !important; /* 2px is a non standard value */
+    padding-block: 2px var(--pf-global--spacer--xs, 4px) !important; 
   }
 
   & #description {
@@ -91,46 +94,64 @@ footer ::slotted(pf-button[variant='link' i]) {
 }
 
 #container.neutral {
-  --_border-color: var(--pf-c-alert__BorderColor--neutral, #4b4d50);
-  --_icon-color: var(--pf-c-alert__IconColor--neutral, #3c3f42);
-  --_background-color: var(--pf-c-alert__BackgroundColor--neutral, #f0f0f0);
+  --_border-color: var(--pf-global--palette--black-800,
+#3c3f42);
+  --_icon-color: var(--pf-global--palette--black-800,
+#3c3f42);
+  --_background-color: var(--pf-global--palette--black-200,
+#f0f0f0);
 }
 
 #container.info {
-  --_border-color: var(--pf-c-alert__BorderColor--info, #5e40be);
-  --_icon-color: var(--pf-c-alert__IconColor--info,#5e40be);
-  --_background-color: var(--pf-c-alert__BackgroundColor--info, #e1dbf3);
+  --_border-color: var(--pf-global--palette--purple-500,
+#6753ac);
+  --_icon-color: var(--pf-global--palette--purple-500,
+#6753ac);
+  --_background-color: var(--pf-global--palette--purple-50,
+#f2f0fc);
 }
 
 #container.success {
-
-  --_border-color: var(--pf-c-alert__BorderColor--success, #3b7317);
-  --_icon-color: var(--pf-c-alert__IconColor--success, #3b7317);
-  --_background-color: var(--pf-c-alert__BackgroundColor--success, #e7f9e4);
+  --_border-color: var(--pf-global--success-color--100,
+#3e8635);
+  --_icon-color: var(--pf-global--success-color--100,
+#3e8635);
+  --_background-color: var(--pf-global--palette--green-50,
+#f3faf2);
 }
 
 #container.warning{
-  --_border-color: var(--pf-c-alert__BorderColor--warning, #f0ab00);
-  --_icon-color: var(--pf-c-alert__IconColor--warning, #f0ab00);
-  --_background-color: var(--pf-c-alert__BackgroundColor--warning, #fef3d6);
+  --_border-color: var(--pf-global--warning-color--100,
+#f0ab00);
+  --_icon-color: var(--pf-global--warning-color--100,
+#f0ab00);
+  --_background-color: var(--pf-global--palette--gold-50,
+#fdf7e7);
 }
 #container.caution {
-  --_border-color: var(--pf-c-alert__BorderColor--warning, #d75324);
-  --_icon-color: var(--pf-c-alert__IconColor--warning,  #d75324);
-  --_background-color: var(--pf-c-alert__BackgroundColor--warning, #fadbb5);
+  --_border-color: var(--pf-global--palette--orange-400,
+#c46100);
+  --_icon-color: var(--pf-global--palette--orange-400,
+#c46100);
+  --_background-color: var(--pf-global--palette--orange-50,
+#fff6ec);
 }
 
 #container.danger {
-  --_border-color: var(--pf-c-alert__BorderColor--danger, #c9190b);
-  --_icon-color: var(--pf-c-alert__IconColor--danger, #c9190b);
-  --_background-color: var(--pf-c-alert__BackgroundColor--danger, #fddad6);
+  --_border-color: var(--pf-global--danger-color--200,
+#a30000);
+  --_icon-color: var(--pf-global--danger-color--200,
+#a30000);
+  --_background-color: var(--pf-global--palette--red-50,
+#faeae8);
 }
 
 
 #container.toast {
-  --_background-color: var(--pf-c-alert__BackgroundColor--toast, #ffffff);
+  --_background-color: var(--pf-global--BackgroundColor--100,#FFFFFF);
   --_max-width: var(--pf-c-alert--MaxWidth--toast, 550px);
-  --_box-shadow: var(--pf-c-alert__BoxShadow--toast, 0 8px 24px 3px rgba(21,21,21,0.35));
+  --_box-shadow: var(--pf-global--BackgroundColor--dark-100
+,#151515);
 }
 
 #container.alternate {
@@ -156,26 +177,16 @@ footer ::slotted(pf-button[variant='link' i]) {
 
 
 #header {
-  color: var(--pf-c-alert__TitleColor, #151515);
+  color: var(--pf-global--BackgroundColor--dark-100
+,#151515);
   flex: 1 1 auto;
 }
 
 #icon {
+  --pf-icon--size:16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2400px;
-  height: 2400px;
   color: var(--_icon-color);
-}
-
-#close-button {
-  color: var(--pf-c-alert__CloseColor, #484545); /* צבע האיקס */
- 
-}
-
-/* hover */
-#close-button:hover {
-  color: var(--pf-c-alert__CloseHoverColor, #484545); /* צבע האיקס בעת ריחוף */
 }
 

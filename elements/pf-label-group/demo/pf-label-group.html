@@ -1,7 +1,26 @@
-<pf-label-group></pf-label-group>
+<pf-label-group removable add-label>
+  <pf-label  icon="info-circle" removable>Gold icon</pf-label>
+ <pf-label  icon="info-circle" removable>Gold icon</pf-label>
+ <h2 slot="header">label group </h2>
+
+</pf-label-group>
 
 <script type="module">
   import '@patternfly/elements/pf-label-group/pf-label-group.js';
+  import '@patternfly/elements/pf-label/pf-label.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+
+  const container = document.querySelector('pf-label-group');
+  container.addEventListener('close', function(event) {
+    event.target.remove();
+  });
+   
+ 
+  container.addEventListener('add-label' , function(event) {
+   
+   
+    console.log('Add label button clicked');
+  } ); 
 </script>
 
 <style>
@@ -9,4 +28,3 @@ pf-label-group {
   /* insert demo styles */
 }
 </style>
-

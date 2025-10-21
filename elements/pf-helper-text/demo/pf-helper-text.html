@@ -1,68 +1,71 @@
 <script type="module">
   import '@patternfly/elements/pf-icon/pf-icon.js';
   import '@patternfly/elements/pf-helper-text/pf-helper-text.js';
-  PfIcon.addIconSet('fas', (set, icon) => {
 
+  // ייתכן שאין צורך בטעינה הזו אם נשתמש רק בסמלים הדיפולטיביים
+  // אבל נשאיר אותה אם נצטרך סמלי FontAwesome ספציפיים בעתיד.
+  PfIcon.addIconSet('fas', (set, icon) => {
     return new URL(`@fortawesome/fontawesome-free/svgs/solid/${icon}.svg`, import.meta.url);
   });
 </script>
 
-<pf-helper-text status="warning">
-  This is a warning helper text
+<pf-helper-text>
+  This is default helper text
 </pf-helper-text>
 
-<pf-helper-text status="error" icon="exclamation-triangle" icon-set="fas">
-  This is an error helper text with icon
+<pf-helper-text status="indeterminate" icon="minus" icon-set="fas">
+  This is indeterminate helper text
 </pf-helper-text>
 
-<pf-helper-text status="success">
-  <svg slot="icon" width="16" height="16" viewBox="0 0 16 16" fill="green" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 10.8L3.2 8 2 9.2l4 4 8-8-1.2-1.2L6 10.8z"/>
-  </svg>
-  This is a success helper text with slotted icon
+<pf-helper-text status="warning" icon="exclamation-triangle" icon-set="fas">
+  This is warning helper text
 </pf-helper-text>
 
-<pf-helper-text status="indeterminate">
-  This is an indeterminate helper text
+<pf-helper-text status="success" icon="check-circle" icon-set="fas">
+  This is success helper text
 </pf-helper-text>
 
-<pf-helper-text icon="arrow" icon-set="patternfly">
-  Custom Icon
+<pf-helper-text status="error" icon="exclamation-circle" icon-set="fas">
+  This is error helper text
 </pf-helper-text>
-
 
 
 <style>
+/* נשארים עם סגנונות בסיסיים, אך משנים את צבעי הסטטוסים להתאמה מדויקת לדמו המבוקש */
 pf-helper-text {
   display: block;
   margin: 1rem 0;
   font-family: var(--pf-global--FontFamily--sans-serif, Arial, sans-serif);
 }
 
-pf-helper-text .helper-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+/* סגנון כללי לטקסט הדיפולטיבי */
+pf-helper-text:not([status]) {
+  color: var(--pf-global--Color--100, #151515); /* צבע טקסט רגיל */
 }
 
-pf-helper-text .icon-container {
-  display: inline-flex;
-  align-items: center;
-}
-
-pf-helper-text[status="warning"] {
-  color: var(--pf-global--warning-color, #f0ab00);
-}
-
-pf-helper-text[status="error"] {
-  color: var(--pf-global--danger-color, #c9190b);
-}
-
-pf-helper-text[status="success"] {
-  color: var(--pf-global--success-color, #3e8635);
-}
-
+/* סגנון Indeterminate (שורה 2: קו אפור) */
 pf-helper-text[status="indeterminate"] {
-  color: var(--pf-global--info-color, #06c);
+  color: var(--pf-global--Color--200, #6a6e73); /* צבע אפור כהה יותר */
+}
+
+/* סגנון Warning (שורה 3: סמל צהוב) */
+pf-helper-text[status="warning"] {
+  color: var(--pf-global--warning-color--100, #f0ab00); /* צהוב */
+}
+
+/* סגנון Success (שורה 4: סמל ירוק) */
+pf-helper-text[status="success"] {
+  color: var(--pf-global--success-color--100, #3e8635); /* ירוק */
+}
+
+/* סגנון Error (שורה 5: סמל אדום) */
+pf-helper-text[status="error"] {
+  color: var(--pf-global--danger-color--100, #c9190b); /* אדום */
+}
+
+/* ודא שצבע הסמל משתנה יחד עם צבע הטקסט */
+pf-helper-text [slot="icon"],
+pf-icon {
+  fill: currentColor; /* צובע את הסמל בצבע הטקסט של ה-pf-helper-text */
 }
 </style>

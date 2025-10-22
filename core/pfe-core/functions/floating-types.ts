@@ -243,32 +243,6 @@ export interface ArrowOptions {
   padding?: Padding;
 }
 
-export interface AutoPlacementOptions extends DetectOverflowOptions {
-  /**
-   * The axis that runs along the alignment of the floating element. Determines
-   * whether to check for most space along this axis.
-   * @default false
-   */
-  crossAxis?: boolean;
-  /**
-   * Choose placements with a particular alignment.
-   * @default undefined
-   */
-  alignment?: Alignment | null;
-  /**
-   * Whether to choose placements with the opposite alignment if the preferred
-   * alignment does not fit.
-   * @default true
-   */
-  autoAlignment?: boolean;
-  /**
-   * Which placements are allowed to be chosen. Placements must be within the
-   * `alignment` option if explicitly set.
-   * @default allPlacements (variable)
-   */
-  allowedPlacements?: Placement[];
-}
-
 export interface FlipOptions extends DetectOverflowOptions {
   /**
    * The axis that runs along the side of the floating element. Determines
@@ -307,31 +281,6 @@ export interface FlipOptions extends DetectOverflowOptions {
    * @default true
    */
   flipAlignment?: boolean;
-}
-
-export interface HideOptions extends DetectOverflowOptions {
-  /**
-   * The strategy used to determine when to hide the floating element.
-   */
-  strategy?: 'referenceHidden' | 'escaped';
-}
-
-export interface InlineOptions {
-  /**
-   * Viewport-relative `x` coordinate to choose a `ClientRect`.
-   * @default undefined
-   */
-  x?: number;
-  /**
-   * Viewport-relative `y` coordinate to choose a `ClientRect`.
-   * @default undefined
-   */
-  y?: number;
-  /**
-   * Represents the padding around a disjoined rect when choosing it.
-   * @default 2
-   */
-  padding?: Padding;
 }
 
 export type OffsetValue = number | {
@@ -384,48 +333,4 @@ export interface ShiftOptions extends DetectOverflowOptions {
     fn: (state: MiddlewareState) => Coords;
     options?: any;
   };
-}
-
-type LimitShiftOffset = number | {
-  /**
-   * Offset the limiting of the axis that runs along the alignment of the
-   * floating element.
-   */
-  mainAxis?: number;
-  /**
-   * Offset the limiting of the axis that runs along the side of the
-   * floating element.
-   */
-  crossAxis?: number;
-};
-
-export interface LimitShiftOptions {
-  /**
-   * Offset when limiting starts. `0` will limit when the opposite edges of the
-   * reference and floating elements are aligned.
-   * - positive = start limiting earlier
-   * - negative = start limiting later
-   */
-  offset?: LimitShiftOffset | Derivable<LimitShiftOffset>;
-  /**
-   * Whether to limit the axis that runs along the alignment of the floating
-   * element.
-   */
-  mainAxis?: boolean;
-  /**
-   * Whether to limit the axis that runs along the side of the floating element.
-   */
-  crossAxis?: boolean;
-}
-
-export interface SizeOptions extends DetectOverflowOptions {
-  /**
-   * Function that is called to perform style mutations to the floating element
-   * to change its size.
-   * @default undefined
-   */
-  apply?(args: MiddlewareState & {
-    availableWidth: number;
-    availableHeight: number;
-  }): void | Promise<void>;
 }

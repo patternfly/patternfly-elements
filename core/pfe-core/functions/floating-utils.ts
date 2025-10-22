@@ -22,9 +22,6 @@ import type {
 
 // Constants
 export const sides: Side[] = ['top', 'right', 'bottom', 'left'];
-export const alignments: Alignment[] = ['start', 'end'];
-export const placements: Placement[] = sides.reduce((acc, side) =>
-  acc.concat(side, `${side}-${alignments[0]}`, `${side}-${alignments[1]}`), [] as Placement[]);
 
 // Math utilities
 // We can't use object destructuring here because we get in a loop with

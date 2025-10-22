@@ -523,20 +523,6 @@ function getAlignmentAxis(placement: Placement): Axis {
 }
 
 /**
- * Gets an array of alternative placements for fallback positioning.
- * @param placement - The initial placement to expand
- * @returns Array of alternative placements including opposite alignments
- */
-function getExpandedPlacements(placement: Placement): Placement[] {
-  const oppositePlacement = getOppositePlacement(placement);
-  return [
-    getOppositeAlignmentPlacement(placement),
-    oppositePlacement,
-    getOppositeAlignmentPlacement(oppositePlacement),
-  ];
-}
-
-/**
  * Flips the alignment portion of a placement (start ↔ end).
  * @param placement - The placement string to flip alignment for
  * @returns The placement with opposite alignment
@@ -557,34 +543,23 @@ function getOppositePlacement<T extends string>(placement: T): T {
 }
 
 /**
- * Expands a partial padding object to include all sides with defaults.
- * @param padding - The partial padding object
- * @returns Complete padding object with all sides
- */
-function expandPaddingObject(padding: Partial<SideObject>): SideObject {
-  return {
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    ...padding,
-  };
-}
-
-/**
  * Converts padding value to a complete side object.
  * @param padding - The padding value (number or partial side object)
  * @returns Complete side object with padding for all sides
  */
 function getPaddingObject(padding: Padding): SideObject {
-  return typeof padding !== 'number' ?
-    expandPaddingObject(padding)
-    : {
-      top: padding,
-      right: padding,
-      bottom: padding,
-      left: padding,
-    };
+  return typeof padding !== 'number' ? {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    ...padding,
+  } : {
+    top: padding,
+    right: padding,
+    bottom: padding,
+    left: padding,
+  };
 }
 
 /**
@@ -961,8 +936,6 @@ function computeCoordsFromPlacement(
  * Computes the `x` and `y` coordinates that will place the floating element
  * next to a given reference element.
  *
- * This is the core implementation without platform-specific caching.
- * Internal use only - external code should use the exported computePosition.
  * @param reference - The reference element
  * @param floating - The floating element
  * @param config - Configuration options
@@ -1089,7 +1062,14 @@ function calculatePosition(
         const placements = fallbackPlacements || (
           isBasePlacement ?
             [getOppositePlacement(initialPlacement)]
-            : getExpandedPlacements(initialPlacement)
+            : (() => {
+              const oppositePlacement = getOppositePlacement(initialPlacement);
+              return [
+                getOppositeAlignmentPlacement(initialPlacement),
+                oppositePlacement,
+                getOppositeAlignmentPlacement(oppositePlacement),
+              ];
+            })()
         );
         const allPlacements = [initialPlacement, ...placements];
         const nextIndex = resetCount + 1;

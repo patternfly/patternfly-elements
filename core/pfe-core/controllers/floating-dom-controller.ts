@@ -1,3 +1,4 @@
+import { isServer } from 'lit';
 import type { LitElement, ReactiveController, ReactiveControllerHost } from 'lit';
 import type { StyleInfo } from 'lit/directives/style-map.js';
 
@@ -13,7 +14,7 @@ interface FloatingDOMControllerOptions {
 }
 
 interface ShowOptions {
-  offset?: OffsetOptions;
+  offset?: OffsetValue;
   placement?: Placement;
   flip?: boolean;
   fallbackPlacements?: Placement[];
@@ -99,7 +100,7 @@ export class FloatingDOMController implements ReactiveController {
 
   async #update(
     placement: Placement = 'top',
-    offset?: OffsetOptions,
+    offset?: OffsetValue,
     flip = true,
     fallbackPlacements?: Placement[],
   ) {
@@ -111,24 +112,27 @@ export class FloatingDOMController implements ReactiveController {
     if (!invoker || !content) {
       return;
     }
+    const cache = new Map<Element, Element[]>();
     const {
       x,
       y,
       placement: _placement,
-      middlewareData,
-    } = computePosition(invoker, content, {
+      arrow: arrowData,
+    } = calculatePosition(invoker, content, {
       strategy: 'absolute',
       placement,
-      middleware: [
-        offsetMiddleware(offset),
-        shift && shiftMiddleware({ padding }),
-        arrow && arrowMiddleware({ element: arrow, padding: arrow.offsetHeight / 2 }),
-        flip && flipMiddleware({ padding, fallbackPlacements }),
-      ].filter(Boolean),
-    });
+      offset,
+      enableShift: shift,
+      shiftPadding: padding,
+      enableFlip: flip,
+      flipPadding: padding,
+      fallbackPlacements,
+      arrow: arrow ?? undefined,
+      arrowPadding: arrow ? arrow.offsetHeight / 2 : undefined,
+    }, cache);
 
     if (arrow) {
-      const { x: arrowX, y: arrowY } = middlewareData.arrow || {};
+      const { x: arrowX, y: arrowY } = arrowData || {};
 
       const staticSide = {
         top: 'bottom',
@@ -215,6 +219,7 @@ type Strategy = 'absolute' | 'fixed';
 
 // Derived types
 type AlignedPlacement = `${Side}-${'start' | 'end'}`;
+
 export type Placement = Side | AlignedPlacement;
 
 type Coords = Record<Axis, number>;
@@ -229,11 +234,6 @@ type ClientRectObject = Rect & SideObject;
 
 type Padding = number | Partial<SideObject>;
 
-interface ElementRects {
-  reference: Rect;
-  floating: Rect;
-}
-
 // Core floating UI types (browser-specific)
 type Boundary = Element | 'clippingAncestors';
 type ElementContext = 'reference' | 'floating';
@@ -241,74 +241,54 @@ type FloatingElement = HTMLElement;
 type ReferenceElement = Element;
 type RootBoundary = 'viewport' | 'document' | Rect;
 
-/**
- * Function option to derive middleware options from state.
- */
-type Derivable<T> = (state: MiddlewareState) => T;
+type OffsetValue = number | {
+  /**
+   * The axis that runs along the side of the floating element. Represents
+   * the distance (gutter or margin) between the reference and floating
+   * element.
+   * @default 0
+   */
+  mainAxis?: number;
+  /**
+   * The axis that runs along the alignment of the floating element.
+   * Represents the skidding between the reference and floating element.
+   * @default 0
+   */
+  crossAxis?: number;
+  /**
+   * The same axis as `crossAxis` but applies only to aligned placements
+   * and inverts the `end` alignment. When set to a number, it overrides the
+   * `crossAxis` value.
+   *
+   * A positive number will move the floating element in the direction of
+   * the opposite edge to the one that is aligned, while a negative number
+   * the reverse.
+   * @default null
+   */
+  alignmentAxis?: number | null;
+};
+
+// Helper objects
+type OverflowAncestors = (Element | Window | VisualViewport)[];
+
+interface ElementRects {
+  reference: Rect;
+  floating: Rect;
+}
 
 interface Elements {
   reference: ReferenceElement;
   floating: FloatingElement;
 }
 
-interface MiddlewareData {
-  [key: string]: any;
-  arrow?: Partial<Coords> & {
-    centerOffset: number;
-    alignmentOffset?: number;
-  };
-  flip?: {
-    index?: number;
-    overflows: {
-      placement: Placement;
-      overflows: number[];
-    }[];
-  };
-  offset?: Coords & {
-    placement: Placement;
-  };
-  shift?: Coords & {
-    enabled: Record<Axis, boolean>;
-  };
-}
-
-interface MiddlewareReturn extends Partial<Coords> {
-  data?: Record<string, any>;
-  reset?: boolean | {
-    placement?: Placement;
-    rects?: boolean | ElementRects;
-  };
-}
-
-interface MiddlewareState extends Coords {
-  initialPlacement: Placement;
+interface PositionState {
   placement: Placement;
-  strategy: Strategy;
-  middlewareData: MiddlewareData;
   elements: Elements;
   rects: ElementRects;
-}
-
-interface Middleware {
-  name: string;
-  options?: any;
-  fn: (state: MiddlewareState) => MiddlewareReturn;
-}
-
-interface ComputePositionConfig {
-  /**
-   * Where to place the floating element relative to the reference element.
-   */
-  placement?: Placement;
-  /**
-   * The strategy to use when positioning the floating element.
-   */
-  strategy?: Strategy;
-  /**
-   * Array of middleware objects to modify the positioning or provide data for
-   * rendering.
-   */
-  middleware?: (Middleware | null | undefined | false)[];
+  x: number;
+  y: number;
+  strategy: Strategy;
+  initialPlacement: Placement;
 }
 
 interface ComputePositionReturn extends Coords {
@@ -321,9 +301,11 @@ interface ComputePositionReturn extends Coords {
    */
   strategy: Strategy;
   /**
-   * Object containing data returned from all middleware, keyed by their name.
+   * Arrow positioning data (if arrow was provided).
    */
-  middlewareData: MiddlewareData;
+  arrow?: Partial<Coords> & {
+    centerOffset: number;
+  };
 }
 
 interface DetectOverflowOptions {
@@ -355,129 +337,101 @@ interface DetectOverflowOptions {
   padding?: Padding;
 }
 
-interface ArrowOptions {
-  /**
-   * The arrow element to be positioned.
-   * @default undefined
-   */
-  element: any;
-  /**
-   * The padding between the arrow element and the floating element edges.
-   * Useful when the floating element has rounded corners.
-   * @default 0
-   */
-  padding?: Padding;
-}
-
-interface FlipOptions extends DetectOverflowOptions {
-  /**
-   * The axis that runs along the side of the floating element. Determines
-   * whether overflow along this axis is checked to perform a flip.
-   * @default true
-   */
-  mainAxis?: boolean;
-  /**
-   * The axis that runs along the alignment of the floating element. Determines
-   * whether overflow along this axis is checked to perform a flip.
-   * - `true`: Whether to check cross axis overflow for both side and alignment flipping.
-   * - `false`: Whether to disable all cross axis overflow checking.
-   * - `'alignment'`: Whether to check cross axis overflow for alignment flipping only.
-   * @default true
-   */
-  crossAxis?: boolean | 'alignment';
-  /**
-   * Placements to try sequentially if the preferred `placement` does not fit.
-   * @default [oppositePlacement] (computed)
-   */
+/** calculatePosition args */
+interface PositionConfig {
+  placement?: Placement;
+  strategy?: 'absolute' | 'fixed';
+  offset?: OffsetValue;
+  enableShift?: boolean;
+  shiftPadding?: number;
+  enableFlip?: boolean;
+  flipPadding?: number;
   fallbackPlacements?: Placement[];
-  /**
-   * What strategy to use when no placements fit.
-   * @default 'bestFit'
-   */
-  fallbackStrategy?: 'bestFit' | 'initialPlacement';
-  /**
-   * Whether to allow fallback to the perpendicular axis of the preferred
-   * placement, and if so, which side direction along the axis to prefer.
-   * @default 'none' (disallow fallback)
-   */
-  fallbackAxisSideDirection?: 'none' | 'start' | 'end';
-  /**
-   * Whether to flip to placements with the opposite alignment if they fit
-   * better.
-   * @default true
-   */
-  flipAlignment?: boolean;
+  arrow?: HTMLElement;
+  arrowPadding?: number;
 }
 
-type OffsetValue = number | {
-  /**
-   * The axis that runs along the side of the floating element. Represents
-   * the distance (gutter or margin) between the reference and floating
-   * element.
-   * @default 0
-   */
-  mainAxis?: number;
-  /**
-   * The axis that runs along the alignment of the floating element.
-   * Represents the skidding between the reference and floating element.
-   * @default 0
-   */
-  crossAxis?: number;
-  /**
-   * The same axis as `crossAxis` but applies only to aligned placements
-   * and inverts the `end` alignment. When set to a number, it overrides the
-   * `crossAxis` value.
-   *
-   * A positive number will move the floating element in the direction of
-   * the opposite edge to the one that is aligned, while a negative number
-   * the reverse.
-   * @default null
-   */
-  alignmentAxis?: number | null;
-};
+/** getCssDimensions return type */
+interface CssDimensions {
+  width: number;
+  height: number;
+  $: boolean;
+}
 
-type OffsetOptions = OffsetValue | Derivable<OffsetValue>;
+/** getClippingRect args */
+interface ClippingRectArgs {
+  element: Element;
+  boundary: Boundary;
+  rootBoundary: RootBoundary;
+  strategy: Strategy;
+  cache: Map<Element, Element[]>;
+}
 
-interface ShiftOptions extends DetectOverflowOptions {
+/** autoUpdate args */
+interface AutoUpdateOptions {
   /**
-   * The axis that runs along the alignment of the floating element. Determines
-   * whether overflow along this axis is checked to perform shifting.
+   * Whether to update the position when an overflow ancestor scrolls.
    * @default true
    */
-  mainAxis?: boolean;
+  ancestorScroll?: boolean;
   /**
-   * The axis that runs along the side of the floating element. Determines
-   * whether overflow along this axis is checked to perform shifting.
+   * Whether to update the position when an overflow ancestor is resized.
+   * @default true
+   */
+  ancestorResize?: boolean;
+  /**
+   * Whether to update the position when either the reference or floating
+   * elements resized.
+   * @default true
+   */
+  elementResize?: boolean;
+  /**
+   * Whether to update the position when the reference element moved on the
+   * screen (covered by another element, clipped by an ancestor, or scrolled
+   * out of view).
+   * @default true
+   */
+  layoutShift?: boolean;
+  /**
+   * Whether to update on every animation frame if required.
    * @default false
    */
-  crossAxis?: boolean;
-  /**
-   * Accepts a function that limits the shifting done in order to prevent
-   * detachment.
-   */
-  limiter?: {
-    fn: (state: MiddlewareState) => Coords;
-    options?: any;
-  };
+  animationFrame?: boolean;
 }
 
-// =============================================================================
-// UTILITY FUNCTIONS
-// =============================================================================
+const absoluteOrFixed = new Set(['absolute', 'fixed']);
 
-// Math utilities
-// We can't use object destructuring here because we get in a loop with
-// Binding elements can't be exported directly with --isolatedDeclarations.
-// eslint-disable-next-line prefer-destructuring
-const min: (...values: number[]) => number = Math.min;
-// eslint-disable-next-line prefer-destructuring
-const max: (...values: number[]) => number = Math.max;
-// eslint-disable-next-line prefer-destructuring
-const round: (x: number) => number = Math.round;
-// eslint-disable-next-line prefer-destructuring
-const floor: (x: number) => number = Math.floor;
+const noOffsets = createCoords(0);
 
-// Helper objects
+const originSides = new Set(['left', 'top']);
+
+const lastTraversableNodeNames = new Set(['html', 'body', '#document']);
+
+const transformProperties = [
+  'transform',
+  'translate',
+  'scale',
+  'rotate',
+  'perspective',
+];
+
+const willChangeValues = [
+  'transform',
+  'translate',
+  'scale',
+  'rotate',
+  'perspective',
+  'filter',
+];
+
+const containValues = ['paint', 'layout', 'strict', 'content'];
+
+const invalidOverflowDisplayValues = new Set(['inline', 'contents']);
+
+const tableElements = new Set(['table', 'td', 'th']);
+
+const topLayerSelectors = [':popover-open', ':modal'];
+
 const oppositeSideMap: Record<Side, Side> = {
   left: 'right',
   right: 'left',
@@ -493,15 +447,15 @@ const oppositeAlignmentMap: Record<Exclude<Alignment, 'center'>, Exclude<Alignme
 const yAxisSides = new Set<Side>(['top', 'bottom']);
 
 // Utility functions
+
 /**
  * Creates a coordinate object with the same value for both x and y.
  * @param v - The value to use for both coordinates
  * @returns Coordinate object with x and y set to the same value
  */
-const createCoords = (v: number): Coords => ({
-  x: v,
-  y: v,
-});
+function createCoords(v: number): Coords {
+  return { x: v, y: v };
+};
 
 /**
  * Clamps a value between a minimum and maximum range.
@@ -511,17 +465,7 @@ const createCoords = (v: number): Coords => ({
  * @returns The clamped value
  */
 function clamp(start: number, value: number, end: number): number {
-  return max(start, min(value, end));
-}
-
-/**
- * Evaluates a value that can be either a static value or a function.
- * @param value - The value or function to evaluate
- * @param param - The parameter to pass to the function if value is a function
- * @returns The evaluated result
- */
-function evaluate<T, P>(value: T | ((param: P) => T), param: P): T {
-  return typeof value === 'function' ? (value as (param: P) => T)(param) : value;
+  return Math.max(start, Math.min(value, end));
 }
 
 /**
@@ -579,33 +523,6 @@ function getAlignmentAxis(placement: Placement): Axis {
 }
 
 /**
- * Gets the two sides that correspond to the alignment axis for overflow checking.
- * @param placement - The placement to get alignment sides for
- * @param rects - The reference and floating element rectangles
- * @param rtl - Whether the layout is right-to-left
- * @returns Tuple of main alignment side and its opposite
- */
-function getAlignmentSides(
-  placement: Placement,
-  rects: ElementRects,
-  rtl = false
-): [Side, Side] {
-  const alignment = getAlignment(placement);
-  const alignmentAxis = getAlignmentAxis(placement);
-  const length = getAxisLength(alignmentAxis);
-
-  let mainAlignmentSide: Side = alignmentAxis === 'x' ?
-    alignment === (rtl ? 'end' : 'start') ? 'right' : 'left'
-    : alignment === 'start' ? 'bottom' : 'top';
-
-  if (rects.reference[length] > rects.floating[length]) {
-    mainAlignmentSide = getOppositePlacement(mainAlignmentSide);
-  }
-
-  return [mainAlignmentSide, getOppositePlacement(mainAlignmentSide)];
-}
-
-/**
  * Gets an array of alternative placements for fallback positioning.
  * @param placement - The initial placement to expand
  * @returns Array of alternative placements including opposite alignments
@@ -627,62 +544,6 @@ function getExpandedPlacements(placement: Placement): Placement[] {
 function getOppositeAlignmentPlacement<T extends string>(placement: T): T {
   return placement.replace(/start|end/g, alignment =>
     oppositeAlignmentMap[alignment as Exclude<Alignment, 'center'>]) as T;
-}
-
-const lrPlacement: Side[] = ['left', 'right'];
-const rlPlacement: Side[] = ['right', 'left'];
-const tbPlacement: Side[] = ['top', 'bottom'];
-const btPlacement: Side[] = ['bottom', 'top'];
-
-/**
- * Gets a list of sides based on the starting side and direction.
- * @param side - The starting side
- * @param isStart - Whether to get start direction sides
- * @param rtl - Whether the layout is right-to-left
- * @returns Array of sides for the given direction
- */
-function getSideList(side: Side, isStart: boolean, rtl?: boolean): Side[] {
-  switch (side) {
-    case 'top':
-    case 'bottom':
-      if (rtl) {
-        return isStart ? rlPlacement : lrPlacement;
-      }
-      return isStart ? lrPlacement : rlPlacement;
-    case 'left':
-    case 'right':
-      return isStart ? tbPlacement : btPlacement;
-    default:
-      return [];
-  }
-}
-
-/**
- * Gets placements on the opposite axis for fallback positioning.
- * @param placement - The initial placement
- * @param flipAlignment - Whether to include opposite alignment variants
- * @param direction - The direction preference ('none', 'start', or 'end')
- * @param rtl - Whether the layout is right-to-left
- * @returns Array of placements on the opposite axis
- */
-function getOppositeAxisPlacements(
-  placement: Placement,
-  flipAlignment: boolean,
-  direction: 'none' | Exclude<Alignment, 'center'>,
-  rtl?: boolean
-): Placement[] {
-  const alignment = getAlignment(placement);
-  let list: Placement[] =
-    getSideList(getSide(placement), direction === 'start', rtl) as Placement[];
-
-  if (alignment) {
-    list = list.map(side => `${side}-${alignment}` as Placement);
-    if (flipAlignment) {
-      list = list.concat(list.map(getOppositeAlignmentPlacement));
-    }
-  }
-
-  return list;
 }
 
 /**
@@ -749,16 +610,6 @@ function rectToClientRect(rect: Rect): ClientRectObject {
 // DOM UTILITY FUNCTIONS
 // =============================================================================
 
-type OverflowAncestors = (Element | Window | VisualViewport)[];
-
-/**
- * Checks if the window object is available in the current environment.
- * @returns {boolean} True if window is defined, false otherwise
- */
-function hasWindow(): boolean {
-  return typeof window !== 'undefined';
-}
-
 /**
  * Gets the node name of a given node or window object.
  * @param {Node | Window} node - The node or window to get the name for
@@ -772,15 +623,6 @@ function getNodeName(node: Node | Window): string {
   // returning `#document` an infinite loop won't occur.
   // https://github.com/floating-ui/floating-ui/issues/2317
   return '#document';
-}
-
-/**
- * Gets the window object associated with a given node.
- * @param  node - The node to get the window for
- * @returns  The window object associated with the node, or the global window
- */
-function getWindow(node: Node | unknown): typeof window {
-  return !(node instanceof Node) ? window : node?.ownerDocument?.defaultView || window;
 }
 
 /**
@@ -800,11 +642,7 @@ function getDocumentElement(node: Node | Window): HTMLElement {
  * @returns  True if the value is a Node, false otherwise
  */
 function isNode(value: unknown): value is Node {
-  if (!hasWindow()) {
-    return false;
-  }
-
-  return value instanceof Node || value instanceof getWindow(value).Node;
+  return !isServer && value instanceof Node;
 }
 
 /**
@@ -813,11 +651,7 @@ function isNode(value: unknown): value is Node {
  * @returns  True if the value is an Element, false otherwise
  */
 function isElement(value: unknown): value is Element {
-  if (!hasWindow()) {
-    return false;
-  }
-
-  return value instanceof Element || value instanceof getWindow(value).Element;
+  return !isServer && value instanceof Element;
 }
 
 /**
@@ -826,14 +660,7 @@ function isElement(value: unknown): value is Element {
  * @returns  True if the value is an HTMLElement, false otherwise
  */
 function isHTMLElement(value: unknown): value is HTMLElement {
-  if (!hasWindow()) {
-    return false;
-  }
-
-  return (
-    value instanceof HTMLElement
-    || value instanceof getWindow(value).HTMLElement
-  );
+  return !isServer && value instanceof HTMLElement;
 }
 
 /**
@@ -842,16 +669,8 @@ function isHTMLElement(value: unknown): value is HTMLElement {
  * @returns  True if the value is a ShadowRoot, false otherwise
  */
 function isShadowRoot(value: unknown): value is ShadowRoot {
-  if (!hasWindow() || typeof ShadowRoot === 'undefined') {
-    return false;
-  }
-
-  return (
-    value instanceof ShadowRoot || value instanceof getWindow(value).ShadowRoot
-  );
+  return !isServer && typeof ShadowRoot !== 'undefined' && value instanceof ShadowRoot;
 }
-
-const invalidOverflowDisplayValues = new Set(['inline', 'contents']);
 
 /**
  * Checks if an element has overflow properties that create a scrolling context.
@@ -859,14 +678,12 @@ const invalidOverflowDisplayValues = new Set(['inline', 'contents']);
  * @returns  True if the element has overflow properties that create a scrolling context
  */
 function isOverflowElement(element: Element): boolean {
-  const { overflow, overflowX, overflowY, display } = getComputedStyle(element);
+  const { overflow, overflowX, overflowY, display } = window.getComputedStyle(element);
   return (
     /auto|scroll|overlay|hidden|clip/.test(overflow + overflowY + overflowX)
     && !invalidOverflowDisplayValues.has(display)
   );
 }
-
-const tableElements = new Set(['table', 'td', 'th']);
 
 /**
  * Checks if an element is a table-related element (table, td, th).
@@ -876,8 +693,6 @@ const tableElements = new Set(['table', 'td', 'th']);
 function isTableElement(element: Element): boolean {
   return tableElements.has(getNodeName(element));
 }
-
-const topLayerSelectors = [':popover-open', ':modal'];
 
 /**
  * Checks if an element is in the top layer (popover or modal).
@@ -894,25 +709,6 @@ function isTopLayer(element: Element): boolean {
   });
 }
 
-const transformProperties = [
-  'transform',
-  'translate',
-  'scale',
-  'rotate',
-  'perspective',
-];
-
-const willChangeValues = [
-  'transform',
-  'translate',
-  'scale',
-  'rotate',
-  'perspective',
-  'filter',
-];
-
-const containValues = ['paint', 'layout', 'strict', 'content'];
-
 /**
  * Checks if an element or CSS style declaration creates a containing block.
  * A containing block is the element relative to which positioned elements are positioned.
@@ -926,7 +722,7 @@ function isContainingBlock(
 ): boolean {
   const webkit = isWebKit();
   const css = isElement(elementOrCss) ?
-    getComputedStyle(elementOrCss)
+    window.getComputedStyle(elementOrCss)
     : elementOrCss;
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
@@ -978,8 +774,6 @@ function isWebKit(): boolean {
   return CSS.supports('-webkit-backdrop-filter', 'none');
 }
 
-const lastTraversableNodeNames = new Set(['html', 'body', '#document']);
-
 /**
  * Checks if a node is the last traversable node in the DOM tree.
  * @param {Node} node - The node to check
@@ -987,15 +781,6 @@ const lastTraversableNodeNames = new Set(['html', 'body', '#document']);
  */
 function isLastTraversableNode(node: Node): boolean {
   return lastTraversableNodeNames.has(getNodeName(node));
-}
-
-/**
- * Gets the computed style for an element.
- * @param {Element} element - The element to get computed styles for
- * @returns {CSSStyleDeclaration} The computed style declaration for the element
- */
-function getComputedStyle(element: Element): CSSStyleDeclaration {
-  return getWindow(element).getComputedStyle(element);
 }
 
 /**
@@ -1079,7 +864,7 @@ function getOverflowAncestors(
 ): OverflowAncestors {
   const scrollableAncestor = getNearestOverflowAncestor(node);
   const isBody = scrollableAncestor === node.ownerDocument?.body;
-  const win = getWindow(scrollableAncestor);
+  const win = window;
 
   if (isBody) {
     const frameElement = getFrameElement(win);
@@ -1181,82 +966,144 @@ function computeCoordsFromPlacement(
  * @param reference - The reference element
  * @param floating - The floating element
  * @param config - Configuration options
- * @param config.placement
- * @param config.strategy
- * @param config.middleware
+ * @param cache - Cache for clipping ancestor calculations
  */
-function computePositionCore(
+function calculatePosition(
   reference: Element,
   floating: HTMLElement,
-  config: {
-    placement?: Placement;
-    strategy?: 'absolute' | 'fixed';
-    middleware?: (Middleware | null | undefined | false)[];
-  }
+  config: PositionConfig,
+  cache: Map<Element, Element[]>
 ): ComputePositionReturn {
   const {
-    placement = 'bottom',
+    placement: initialPlacement = 'bottom',
     strategy = 'absolute',
-    middleware = [],
+    offset = 0,
+    enableShift = true,
+    shiftPadding,
+    enableFlip = true,
+    flipPadding,
+    fallbackPlacements,
+    arrow,
+    arrowPadding = 0,
   } = config;
-  const validMiddleware = middleware.filter(Boolean) as Middleware[];
-  const rtl = isRTL(floating);
-  let rects = getElementRects({
-    reference,
-    floating,
-    strategy,
-  });
-  let { x, y } = computeCoordsFromPlacement(rects, placement, rtl);
-  let statefulPlacement = placement;
-  let middlewareData: MiddlewareData = {};
-  let resetCount = 0;
 
-  for (let i = 0; i < validMiddleware.length; i++) {
-    const { name, fn } = validMiddleware[i];
-    const {
-      x: nextX,
-      y: nextY,
-      data,
-      reset,
-    } = fn({
-      x,
-      y,
-      initialPlacement: placement,
-      placement: statefulPlacement,
-      strategy,
-      middlewareData,
-      rects,
-      elements: {
-        reference,
-        floating,
-      },
-    });
-    x = nextX != null ? nextX : x;
-    y = nextY != null ? nextY : y;
-    middlewareData = {
-      ...middlewareData,
-      [name]: {
-        ...middlewareData[name],
-        ...data,
-      },
-    };
-    if (reset && resetCount <= 50) {
-      resetCount++;
-      if (typeof reset === 'object') {
-        if (reset.placement) {
-          statefulPlacement = reset.placement;
-        }
-        if (reset.rects) {
-          rects = reset.rects === true ? getElementRects({
-            reference,
-            floating,
-            strategy,
-          }) : reset.rects;
-        }
-        ({ x, y } = computeCoordsFromPlacement(rects, statefulPlacement, rtl));
-      }
-      i = -1;
+  const rtl = isRTL(floating);
+  const elements = { reference, floating };
+  let resetCount = 0;
+  let statefulPlacement = initialPlacement;
+  let arrowData: Partial<Coords> & { centerOffset: number } | undefined;
+  let x = 0;
+  let y = 0;
+
+  // Main positioning loop (handles flip resets)
+  while (resetCount < 50) {
+    const rects = getElementRects({ reference, floating, strategy });
+    const coords = computeCoordsFromPlacement(rects, statefulPlacement, rtl);
+    ({ x, y } = coords);
+
+    // 1. Apply offset
+    if (offset) {
+      const offsetCoords = convertValueToCoords(
+        { placement: statefulPlacement, elements, rects, x, y, strategy,
+          initialPlacement },
+        offset
+      );
+      x += offsetCoords.x;
+      y += offsetCoords.y;
     }
+
+    // 2. Apply shift (keep in viewport)
+    if (enableShift) {
+      const overflow = detectOverflow(
+        { x, y, placement: statefulPlacement, strategy, rects, elements,
+          initialPlacement },
+        { padding: shiftPadding },
+        cache
+      );
+      const side = getSideAxis(getSide(statefulPlacement));
+      const mainAxis = getOppositeAxis(side);
+
+      const minSide = mainAxis === 'y' ? 'top' : 'left';
+      const maxSide = mainAxis === 'y' ? 'bottom' : 'right';
+      const minCoord = (mainAxis === 'y' ? y : x) + overflow[minSide];
+      const maxCoord = (mainAxis === 'y' ? y : x) - overflow[maxSide];
+
+      if (mainAxis === 'y') {
+        y = clamp(minCoord, y, maxCoord);
+      } else {
+        x = clamp(minCoord, x, maxCoord);
+      }
+    }
+
+    // 3. Calculate arrow position (if arrow element provided)
+    if (arrow) {
+      const axis = getAlignmentAxis(statefulPlacement);
+      const length = getAxisLength(axis);
+      const arrowDimensions = getDimensions(arrow);
+      const isYAxis = axis === 'y';
+      const clientProp = isYAxis ? 'clientHeight' : 'clientWidth';
+
+      const arrowOffsetParent = getOffsetParent(arrow);
+      let clientSize = arrowOffsetParent ? (arrowOffsetParent as Element)[clientProp] : 0;
+      if (!clientSize || !isElement(arrowOffsetParent)) {
+        clientSize = (floating as Element)[clientProp] || rects.floating[length];
+      }
+
+      const endDiff = rects.reference[length] + rects.reference[axis]
+        - (axis === 'y' ? y : x) - rects.floating[length];
+      const startDiff = (axis === 'y' ? y : x) - rects.reference[axis];
+      const centerToReference = endDiff / 2 - startDiff / 2;
+
+      const paddingObject = getPaddingObject(arrowPadding);
+      const minProp = isYAxis ? 'top' : 'left';
+      const maxProp = isYAxis ? 'bottom' : 'right';
+      const largestPossiblePadding = clientSize / 2 - arrowDimensions[length] / 2 - 1;
+      const minPadding = Math.min(paddingObject[minProp], largestPossiblePadding);
+      const maxPadding = Math.min(paddingObject[maxProp], largestPossiblePadding);
+
+      const center = clientSize / 2 - arrowDimensions[length] / 2 + centerToReference;
+      const arrowOffset =
+        clamp(minPadding, center, clientSize - arrowDimensions[length] - maxPadding);
+
+      arrowData = {
+        [axis]: arrowOffset,
+        centerOffset: center - arrowOffset,
+      };
+    }
+
+    // 4. Check for flip
+    if (enableFlip) {
+      const overflow = detectOverflow(
+        { x, y, placement: statefulPlacement, strategy, rects, elements,
+          initialPlacement },
+        { padding: flipPadding },
+        cache
+      );
+
+      const side = getSide(statefulPlacement);
+      const isOverflowing = overflow[side] > 0;
+
+      if (isOverflowing) {
+        // Determine fallback placements
+        const isBasePlacement = getSide(initialPlacement) === initialPlacement;
+        const placements = fallbackPlacements || (
+          isBasePlacement ?
+            [getOppositePlacement(initialPlacement)]
+            : getExpandedPlacements(initialPlacement)
+        );
+        const allPlacements = [initialPlacement, ...placements];
+        const nextIndex = resetCount + 1;
+
+        if (nextIndex < allPlacements.length) {
+          statefulPlacement = allPlacements[nextIndex];
+          resetCount++;
+          continue; // Restart loop with new placement
+        }
+      }
+    }
+
+    // No reset needed, we're done
+    break;
   }
 
   return {
@@ -1264,10 +1111,9 @@ function computePositionCore(
     y,
     placement: statefulPlacement,
     strategy,
-    middlewareData,
+    arrow: arrowData,
   };
 }
-
 
 /**
  * Resolves with an object of overflow side offsets that determine how much the
@@ -1276,12 +1122,14 @@ function computePositionCore(
  * - negative = how many pixels left before it will overflow
  * - 0 = lies flush with the boundary
  * @see https://floating-ui.com/docs/detectOverflow
- * @param state - The middleware state
+ * @param state - The position state
  * @param options - Detection options
+ * @param cache - Cache for clipping ancestor calculations
  */
 function detectOverflow(
-  state: MiddlewareState,
-  options: DetectOverflowOptions | Derivable<DetectOverflowOptions> = {}
+  state: PositionState,
+  options: DetectOverflowOptions = {},
+  cache: Map<Element, Element[]>
 ): SideObject {
   const {
     x,
@@ -1296,7 +1144,7 @@ function detectOverflow(
     elementContext = 'floating',
     altBoundary = false,
     padding = 0,
-  } = evaluate(options, state);
+  } = options;
   const paddingObject = getPaddingObject(padding);
   const altContext = elementContext === 'floating' ? 'reference' : 'floating';
   const element = elements[altBoundary ? altContext : elementContext];
@@ -1307,6 +1155,7 @@ function detectOverflow(
     boundary,
     rootBoundary,
     strategy,
+    cache,
   }));
   const rect = elementContext === 'floating' ? {
     x,
@@ -1340,249 +1189,7 @@ function detectOverflow(
   };
 }
 
-
-/**
- * Provides data to position an inner element of the floating element so that it
- * appears centered to the reference element.
- * @see https://floating-ui.com/docs/arrow
- * @param options - Arrow options
- */
-const arrowMiddleware = (options: ArrowOptions | Derivable<ArrowOptions>): Middleware => ({
-  name: 'arrow',
-  options,
-  fn(state: MiddlewareState): MiddlewareReturn {
-    const {
-      x,
-      y,
-      placement,
-      rects,
-      elements,
-      middlewareData,
-    } = state;
-    // Since `element` is required, we don't Partial<> the type.
-    const {
-      element,
-      padding = 0,
-    } = evaluate(options, state) || {};
-    if (element == null) {
-      return {};
-    }
-    const paddingObject = getPaddingObject(padding);
-    const coords = { x, y };
-    const axis = getAlignmentAxis(placement);
-    const length = getAxisLength(axis);
-    const arrowDimensions = getDimensions(element);
-    const isYAxis = axis === 'y';
-    const minProp = isYAxis ? 'top' : 'left';
-    const maxProp = isYAxis ? 'bottom' : 'right';
-    const clientProp = isYAxis ? 'clientHeight' : 'clientWidth';
-    const endDiff = rects.reference[length] + rects.reference[axis]
-      - coords[axis] - rects.floating[length];
-    const startDiff = coords[axis] - rects.reference[axis];
-    const arrowOffsetParent = getOffsetParent(element);
-    let clientSize = arrowOffsetParent ? (arrowOffsetParent as any)[clientProp] : 0;
-
-    // DOM platform can return `window` as the `offsetParent`.
-    if (!clientSize || !isElement(arrowOffsetParent)) {
-      clientSize = (elements.floating as any)[clientProp] || rects.floating[length];
-    }
-    const centerToReference = endDiff / 2 - startDiff / 2;
-
-    // If the padding is large enough that it causes the arrow to no longer be
-    // centered, modify the padding so that it is centered.
-    const largestPossiblePadding = clientSize / 2 - arrowDimensions[length] / 2 - 1;
-    const minPadding = min(paddingObject[minProp], largestPossiblePadding);
-    const maxPadding = min(paddingObject[maxProp], largestPossiblePadding);
-
-    // Make sure the arrow doesn't overflow the floating element if the center
-    // point is outside the floating element's bounds.
-    const min$1 = minPadding;
-    const max$1 = clientSize - arrowDimensions[length] - maxPadding;
-    const center = clientSize / 2 - arrowDimensions[length] / 2 + centerToReference;
-    const offset = clamp(min$1, center, max$1);
-
-    // If the reference is small enough that the arrow's padding causes it to
-    // to point to nothing for an aligned placement, adjust the offset of the
-    // floating element itself. To ensure `shift()` continues to take action,
-    // a single reset is performed when this is true.
-    const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null
-      && center !== offset && rects.reference[length] / 2
-      - (center < min$1 ? minPadding : maxPadding) - arrowDimensions[length] / 2 < 0;
-    const alignmentOffset = shouldAddOffset ?
-      center < min$1 ? center - min$1 : center - max$1
-      : 0;
-    return {
-      [axis]: coords[axis] + alignmentOffset,
-      data: {
-        [axis]: offset,
-        centerOffset: center - offset - alignmentOffset,
-        ...(shouldAddOffset && {
-          alignmentOffset,
-        }),
-      },
-      reset: shouldAddOffset,
-    };
-  },
-});
-
-
-/**
- * Optimizes the visibility of the floating element by flipping the `placement`
- * in order to keep it in view when the preferred placement(s) will overflow the
- * clipping boundary. Alternative to `autoPlacement`.
- * @see https://floating-ui.com/docs/flip
- * @param options - Flip options
- */
-const flipMiddleware = (options: FlipOptions | Derivable<FlipOptions> = {}): Middleware => {
-  return {
-    name: 'flip',
-    options,
-    fn(state: MiddlewareState): MiddlewareReturn {
-      const {
-        placement,
-        middlewareData,
-        rects,
-        initialPlacement,
-        elements,
-      } = state;
-      const {
-        mainAxis: checkMainAxis = true,
-        crossAxis: checkCrossAxis = true,
-        fallbackPlacements: specifiedFallbackPlacements,
-        fallbackStrategy = 'bestFit',
-        fallbackAxisSideDirection = 'none',
-        flipAlignment = true,
-        ...detectOverflowOptions
-      } = evaluate(options, state);
-
-      // If a reset by the arrow was caused due to an alignment offset being
-      // added, we should skip any logic now since `flip()` has already done its
-      // work.
-      // https://github.com/floating-ui/floating-ui/issues/2549#issuecomment-1719601643
-      if (middlewareData.arrow?.alignmentOffset) {
-        return {};
-      }
-      const side = getSide(placement);
-      const initialSideAxis = getSideAxis(initialPlacement);
-      const isBasePlacement = getSide(initialPlacement) === initialPlacement;
-      const rtl = isRTL(elements.floating);
-      const fallbackPlacements = specifiedFallbackPlacements || (
-        isBasePlacement || !flipAlignment ?
-          [getOppositePlacement(initialPlacement)]
-          : getExpandedPlacements(initialPlacement)
-      );
-      const hasFallbackAxisSideDirection = fallbackAxisSideDirection !== 'none';
-      if (!specifiedFallbackPlacements && hasFallbackAxisSideDirection) {
-        fallbackPlacements.push(...getOppositeAxisPlacements(
-          initialPlacement,
-          flipAlignment,
-          fallbackAxisSideDirection,
-          rtl,
-        ));
-      }
-      const placements = [initialPlacement, ...fallbackPlacements];
-      const overflow = detectOverflow(state, detectOverflowOptions);
-      const overflows: number[] = [];
-      let overflowsData = middlewareData.flip?.overflows || [];
-      if (checkMainAxis) {
-        overflows.push(overflow[side]);
-      }
-      if (checkCrossAxis) {
-        const sides = getAlignmentSides(placement, rects, rtl);
-        overflows.push(overflow[sides[0]], overflow[sides[1]]);
-      }
-      overflowsData = [...overflowsData, {
-        placement,
-        overflows,
-      }];
-
-      // One or more sides is overflowing.
-      if (!overflows.every(side => side <= 0)) {
-        const nextIndex = (middlewareData.flip?.index || 0) + 1;
-        const nextPlacement = placements[nextIndex];
-        if (nextPlacement) {
-          const ignoreCrossAxisOverflow = checkCrossAxis === 'alignment' ?
-            initialSideAxis !== getSideAxis(nextPlacement)
-            : false;
-          if (!ignoreCrossAxisOverflow
-          // We leave the current main axis only if every placement on that axis
-          // overflows the main axis.
-          || overflowsData.every(d =>
-            d.overflows[0] > 0 && getSideAxis(d.placement) === initialSideAxis
-          )) {
-            // Try next placement and re-run the lifecycle.
-            return {
-              data: {
-                index: nextIndex,
-                overflows: overflowsData,
-              },
-              reset: {
-                placement: nextPlacement,
-              },
-            };
-          }
-        }
-
-        // First, find the candidates that fit on the mainAxis side of overflow,
-        // then find the placement that fits the best on the main crossAxis side.
-        let resetPlacement = overflowsData
-            .filter(d => d.overflows[0] <= 0)
-            .sort((a, b) => a.overflows[1] - b.overflows[1])[0]?.placement;
-
-        // Otherwise fallback.
-        if (!resetPlacement) {
-          switch (fallbackStrategy) {
-            case 'bestFit':
-            {
-              const placement = overflowsData.filter(d => {
-                if (hasFallbackAxisSideDirection) {
-                  const currentSideAxis = getSideAxis(d.placement);
-                  return currentSideAxis === initialSideAxis
-                    // Create a bias to the `y` side axis due to horizontal
-                    // reading directions favoring greater width.
-                    || currentSideAxis === 'y';
-                }
-                return true;
-              })
-                  .map(d => [
-                    d.placement,
-                    d.overflows
-                        .filter(overflow => overflow > 0)
-                        .reduce((acc, overflow) => acc + overflow, 0),
-                  ])
-                  .sort((a, b) => (a[1] as number) - (b[1] as number))[0]?.[0];
-              if (placement) {
-                resetPlacement = placement as Placement;
-              }
-              break;
-            }
-            case 'initialPlacement':
-              resetPlacement = initialPlacement;
-              break;
-          }
-        }
-        if (placement !== resetPlacement) {
-          return {
-            reset: {
-              placement: resetPlacement,
-            },
-          };
-        }
-      }
-      return {};
-    },
-  };
-};
-
-const originSides = new Set(['left', 'top']);
-
-// For type backwards-compatibility, the `OffsetOptions` type was also
-// Derivable.
-
-function convertValueToCoords(
-  state: MiddlewareState,
-  options: OffsetValue | Derivable<OffsetValue>
-): Coords {
+function convertValueToCoords(state: PositionState, options: OffsetValue): Coords {
   const {
     placement,
     elements,
@@ -1593,21 +1200,19 @@ function convertValueToCoords(
   const isVertical = getSideAxis(placement) === 'y';
   const mainAxisMulti = originSides.has(side) ? -1 : 1;
   const crossAxisMulti = rtl && isVertical ? -1 : 1;
-  const rawValue = evaluate(options, state);
-
 
   const {
     mainAxis,
     crossAxis: initialCrossAxis,
     alignmentAxis,
-  } = typeof rawValue === 'number' ? {
-    mainAxis: rawValue,
+  } = typeof options === 'number' ? {
+    mainAxis: options,
     crossAxis: 0,
     alignmentAxis: null,
   } : {
-    mainAxis: rawValue.mainAxis || 0,
-    crossAxis: rawValue.crossAxis || 0,
-    alignmentAxis: rawValue.alignmentAxis,
+    mainAxis: options.mainAxis || 0,
+    crossAxis: options.crossAxis || 0,
+    alignmentAxis: options.alignmentAxis,
   };
   const crossAxis = alignment && typeof alignmentAxis === 'number' ?
     alignment === 'end' ? alignmentAxis * -1 : alignmentAxis
@@ -1621,123 +1226,13 @@ function convertValueToCoords(
   };
 }
 
-
-/**
- * Modifies the placement by translating the floating element along the
- * specified axes.
- * A number (shorthand for `mainAxis` or distance), or an axes configuration
- * object may be passed.
- * @see https://floating-ui.com/docs/offset
- * @param options - Offset options
- */
-const offsetMiddleware = (options: OffsetOptions = 0): Middleware => {
-  return {
-    name: 'offset',
-    options,
-    fn(state: MiddlewareState): MiddlewareReturn {
-      const {
-        x,
-        y,
-        placement,
-        middlewareData,
-      } = state;
-      const diffCoords = convertValueToCoords(state, options);
-
-      // If the placement is the same and the arrow caused an alignment offset
-      // then we don't need to change the positioning coordinates.
-      if (placement === middlewareData.offset?.placement && middlewareData.arrow?.alignmentOffset) {
-        return {};
-      }
-      return {
-        x: x + diffCoords.x,
-        y: y + diffCoords.y,
-        data: {
-          ...diffCoords,
-          placement,
-        },
-      };
-    },
-  };
-};
-
-
-/**
- * Optimizes the visibility of the floating element by shifting it in order to
- * keep it in view when it will overflow the clipping boundary.
- * @see https://floating-ui.com/docs/shift
- * @param options - Shift options
- */
-const shiftMiddleware = (options: ShiftOptions | Derivable<ShiftOptions> = {}): Middleware => {
-  return {
-    name: 'shift',
-    options,
-    fn(state: MiddlewareState): MiddlewareReturn {
-      const { x, y, placement } = state;
-      const {
-        mainAxis: checkMainAxis = true,
-        crossAxis: checkCrossAxis = false,
-        limiter = {
-          fn: ({ x, y }: { x: number; y: number }) => ({ x, y }),
-        },
-        ...detectOverflowOptions
-      } = evaluate(options, state);
-      const coords = { x, y };
-      const overflow = detectOverflow(state, detectOverflowOptions);
-      const crossAxis = getSideAxis(getSide(placement));
-      const mainAxis = getOppositeAxis(crossAxis);
-      let mainAxisCoord = coords[mainAxis];
-      let crossAxisCoord = coords[crossAxis];
-      if (checkMainAxis) {
-        const minSide = mainAxis === 'y' ? 'top' : 'left';
-        const maxSide = mainAxis === 'y' ? 'bottom' : 'right';
-        const min = mainAxisCoord + overflow[minSide];
-        const max = mainAxisCoord - overflow[maxSide];
-        mainAxisCoord = clamp(min, mainAxisCoord, max);
-      }
-      if (checkCrossAxis) {
-        const minSide = crossAxis === 'y' ? 'top' : 'left';
-        const maxSide = crossAxis === 'y' ? 'bottom' : 'right';
-        const min = crossAxisCoord + overflow[minSide];
-        const max = crossAxisCoord - overflow[maxSide];
-        crossAxisCoord = clamp(min, crossAxisCoord, max);
-      }
-      const limitedCoords = limiter.fn({
-        ...state,
-        [mainAxis]: mainAxisCoord,
-        [crossAxis]: crossAxisCoord,
-      });
-      return {
-        ...limitedCoords,
-        data: {
-          x: limitedCoords.x - x,
-          y: limitedCoords.y - y,
-          enabled: {
-            [mainAxis]: checkMainAxis,
-            [crossAxis]: checkCrossAxis,
-          },
-        },
-      };
-    },
-  };
-};
-
-// =============================================================================
-// DOM PLATFORM & AUTO-UPDATE
-// =============================================================================
-
-interface CssDimensions {
-  width: number;
-  height: number;
-  $: boolean;
-}
-
 /**
  * Gets the CSS dimensions of an element, handling fallbacks for SVG elements.
  * @param element - The element to get dimensions for
  * @returns Object containing width, height, and fallback flag
  */
 function getCssDimensions(element: Element): CssDimensions {
-  const css = getComputedStyle(element);
+  const css = window.getComputedStyle(element);
   // In testing environments, the `width` and `height` properties are empty
   // strings for SVG elements, returning NaN. Fallback to `0` in this case.
   let width = parseFloat(css.width) || 0;
@@ -1745,7 +1240,7 @@ function getCssDimensions(element: Element): CssDimensions {
   const hasOffset = isHTMLElement(element);
   const offsetWidth = hasOffset ? element.offsetWidth : width;
   const offsetHeight = hasOffset ? element.offsetHeight : height;
-  const shouldFallback = round(width) !== offsetWidth || round(height) !== offsetHeight;
+  const shouldFallback = Math.round(width) !== offsetWidth || Math.round(height) !== offsetHeight;
   if (shouldFallback) {
     width = offsetWidth;
     height = offsetHeight;
@@ -1758,32 +1253,22 @@ function getCssDimensions(element: Element): CssDimensions {
 }
 
 /**
- * Unwraps an element from a virtual element wrapper if needed.
- * @param element - The element or virtual element to unwrap
- * @returns The unwrapped element
- */
-function unwrapElement(element: any): Element {
-  return !isElement(element) ? element.contextElement : element;
-}
-
-/**
  * Gets the scale factor of an element based on its bounding rect vs CSS dimensions.
  * @param element - The element to get scale for
  * @returns Coordinates object with x and y scale factors
  */
-function getScale(element: any): Coords {
-  const domElement = unwrapElement(element);
-  if (!isHTMLElement(domElement)) {
+function getScale(element: Element): Coords {
+  if (!isHTMLElement(element)) {
     return createCoords(1);
   }
-  const rect = domElement.getBoundingClientRect();
+  const rect = element.getBoundingClientRect();
   const {
     width,
     height,
     $,
-  } = getCssDimensions(domElement);
-  let x = ($ ? round(rect.width) : rect.width) / width;
-  let y = ($ ? round(rect.height) : rect.height) / height;
+  } = getCssDimensions(element);
+  let x = ($ ? Math.round(rect.width) : rect.width) / width;
+  let y = ($ ? Math.round(rect.height) : rect.height) / height;
 
   // 0, NaN, or Infinity should always fallback to 1.
 
@@ -1799,15 +1284,13 @@ function getScale(element: any): Coords {
   };
 }
 
-const noOffsets = createCoords(0);
-
 /**
  * Gets the visual viewport offsets for an element in WebKit browsers.
  * @param element - The element to get visual offsets for
  * @returns Coordinates object with x and y offsets
  */
-function getVisualOffsets(element: Element): Coords {
-  const win = getWindow(element);
+function getVisualOffsets(): Coords {
+  const win = window;
   if (!isWebKit() || !win.visualViewport) {
     return noOffsets;
   }
@@ -1825,11 +1308,10 @@ function getVisualOffsets(element: Element): Coords {
  * @returns True if visual offsets should be added
  */
 function shouldAddVisualOffsets(
-  element: Element,
   isFixed = false,
-  floatingOffsetParent?: any
+  floatingOffsetParent?: Element | Window
 ): boolean {
-  if (!floatingOffsetParent || (isFixed && floatingOffsetParent !== getWindow(element))) {
+  if (!floatingOffsetParent || (isFixed && floatingOffsetParent !== window)) {
     return false;
   }
   return isFixed;
@@ -1844,13 +1326,12 @@ function shouldAddVisualOffsets(
  * @returns Client rect object with position and dimensions
  */
 function getBoundingClientRect(
-  element: any,
+  element: Element,
   includeScale = false,
   isFixedStrategy = false,
-  offsetParent?: any
+  offsetParent?: Element | Window
 ): ClientRectObject {
   const clientRect = element.getBoundingClientRect();
-  const domElement = unwrapElement(element);
   let scale = createCoords(1);
   if (includeScale) {
     if (offsetParent) {
@@ -1861,23 +1342,23 @@ function getBoundingClientRect(
       scale = getScale(element);
     }
   }
-  const visualOffsets = shouldAddVisualOffsets(domElement, isFixedStrategy, offsetParent) ?
-    getVisualOffsets(domElement)
+  const visualOffsets = shouldAddVisualOffsets(isFixedStrategy, offsetParent) ?
+    getVisualOffsets()
     : createCoords(0);
   let x = (clientRect.left + visualOffsets.x) / scale.x;
   let y = (clientRect.top + visualOffsets.y) / scale.y;
   let width = clientRect.width / scale.x;
   let height = clientRect.height / scale.y;
-  if (domElement) {
-    const win = getWindow(domElement);
+  if (element) {
+    const win = window;
     const offsetWin = offsetParent
-      && isElement(offsetParent) ? getWindow(offsetParent) : offsetParent;
+      && isElement(offsetParent) ? window : offsetParent;
     let currentWin = win;
     let currentIFrame = getFrameElement(currentWin);
     while (currentIFrame && offsetParent && offsetWin !== currentWin) {
       const iframeScale = getScale(currentIFrame);
       const iframeRect = currentIFrame.getBoundingClientRect();
-      const css = getComputedStyle(currentIFrame);
+      const css = window.getComputedStyle(currentIFrame);
       const left = iframeRect.left
         + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
       const top = iframeRect.top
@@ -1888,7 +1369,7 @@ function getBoundingClientRect(
       height *= iframeScale.y;
       x += left;
       y += top;
-      currentWin = getWindow(currentIFrame);
+      currentWin = window;
       currentIFrame = getFrameElement(currentWin);
     }
   }
@@ -2001,13 +1482,15 @@ function convertOffsetParentRelativeRectToViewportRelativeRect(args: {
 function getDocumentRect(element: Element): Rect {
   const html = getDocumentElement(element)!;
   const scroll = getNodeScroll(element);
-  const { body } = (element as any).ownerDocument;
-  const width = max(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
-  const height = max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
+  const { body } = element.ownerDocument;
+  const width =
+    Math.max(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
+  const height =
+    Math.max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
   let x = -scroll.scrollLeft + getWindowScrollBarX(element);
   const y = -scroll.scrollTop;
-  if (getComputedStyle(body).direction === 'rtl') {
-    x += max(html.clientWidth, body.clientWidth) - width;
+  if (window.getComputedStyle(body).direction === 'rtl') {
+    x += Math.max(html.clientWidth, body.clientWidth) - width;
   }
   return {
     width,
@@ -2024,9 +1507,9 @@ function getDocumentRect(element: Element): Rect {
  * @returns Rect object with viewport dimensions and position
  */
 function getViewportRect(element: Element, strategy: Strategy): Rect {
-  const win = getWindow(element);
+  const win = window;
   const html = getDocumentElement(element)!;
-  const { visualViewport } = (win as any);
+  const { visualViewport } = win;
   const width = visualViewport ? visualViewport.width : html.clientWidth;
   const height = visualViewport ? visualViewport.height : html.clientHeight;
   let x = 0;
@@ -2045,8 +1528,6 @@ function getViewportRect(element: Element, strategy: Strategy): Rect {
     y,
   };
 }
-
-const absoluteOrFixed = new Set(['absolute', 'fixed']);
 
 /**
  * Returns the inner client rect, subtracting scrollbars if present.
@@ -2080,7 +1561,7 @@ function getInnerBoundingClientRect(element: Element, strategy: Strategy): Rect 
  */
 function getClientRectFromClippingAncestor(
   element: Element,
-  clippingAncestor: any,
+  clippingAncestor: Element | RootBoundary | 'viewport' | 'document',
   strategy: Strategy
 ): ClientRectObject {
   let rect: Rect;
@@ -2091,7 +1572,7 @@ function getClientRectFromClippingAncestor(
   } else if (isElement(clippingAncestor)) {
     rect = getInnerBoundingClientRect(clippingAncestor, strategy);
   } else {
-    const visualOffsets = getVisualOffsets(element);
+    const visualOffsets = getVisualOffsets();
     rect = {
       x: clippingAncestor.x - visualOffsets.x,
       y: clippingAncestor.y - visualOffsets.y,
@@ -2113,7 +1594,7 @@ function hasFixedPositionAncestor(element: Element, stopNode: Element): boolean 
   if (parentNode === stopNode || !isElement(parentNode) || isLastTraversableNode(parentNode)) {
     return false;
   }
-  return getComputedStyle(parentNode).position === 'fixed'
+  return window.getComputedStyle(parentNode).position === 'fixed'
     || hasFixedPositionAncestor(parentNode, stopNode);
 }
 
@@ -2134,12 +1615,12 @@ function getClippingElementAncestors(element: Element, cache: Map<Element, Eleme
     el => isElement(el) && getNodeName(el) !== 'body'
   ) as Element[];
   let currentContainingBlockComputedStyle: CSSStyleDeclaration | null = null;
-  const elementIsFixed = getComputedStyle(element).position === 'fixed';
+  const elementIsFixed = window.getComputedStyle(element).position === 'fixed';
   let currentNode: Node | null = elementIsFixed ? getParentNode(element) : element;
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
   while (isElement(currentNode) && !isLastTraversableNode(currentNode)) {
-    const computedStyle = getComputedStyle(currentNode);
+    const computedStyle = window.getComputedStyle(currentNode);
     const currentNodeIsContaining = isContainingBlock(currentNode);
     if (!currentNodeIsContaining && computedStyle.position === 'fixed') {
       currentContainingBlockComputedStyle = null;
@@ -2166,41 +1647,26 @@ function getClippingElementAncestors(element: Element, cache: Map<Element, Eleme
 }
 
 /**
- * Cache for expensive getClippingElementAncestors calls.
- * Set per computePosition call.
- */
-let clippingCache: Map<Element, Element[]>;
-
-/**
  * Gets the maximum area that the element is visible in due to any number of
  * clipping ancestors.
- * @param args - Object containing element, boundary, rootBoundary, and strategy
- * @param args.element
- * @param args.boundary
- * @param args.rootBoundary
- * @param args.strategy
+ * @param args - Object containing element, boundary, rootBoundary, strategy, and cache
  * @returns Rect object representing the clipping area
  */
-function getClippingRect(args: {
-  element: Element;
-  boundary: Boundary;
-  rootBoundary: RootBoundary;
-  strategy: Strategy;
-}): Rect {
-  const { element, boundary, rootBoundary, strategy } = args;
+function getClippingRect(args: ClippingRectArgs): Rect {
+  const { element, boundary, rootBoundary, strategy, cache } = args;
   const elementClippingAncestors = boundary === 'clippingAncestors' ?
     isTopLayer(element) ?
       []
-      : getClippingElementAncestors(element, clippingCache)
+      : getClippingElementAncestors(element, cache)
     : [boundary].flat();
   const clippingAncestors = [...elementClippingAncestors, rootBoundary];
   const [firstClippingAncestor] = clippingAncestors;
   const clippingRect = clippingAncestors.reduce((accRect: ClientRectObject, clippingAncestor) => {
     const rect = getClientRectFromClippingAncestor(element, clippingAncestor, strategy);
-    accRect.top = max(rect.top, accRect.top);
-    accRect.right = min(rect.right, accRect.right);
-    accRect.bottom = min(rect.bottom, accRect.bottom);
-    accRect.left = max(rect.left, accRect.left);
+    accRect.top = Math.max(rect.top, accRect.top);
+    accRect.right = Math.min(rect.right, accRect.right);
+    accRect.bottom = Math.min(rect.bottom, accRect.bottom);
+    accRect.left = Math.max(rect.left, accRect.left);
     return accRect;
   }, getClientRectFromClippingAncestor(element, firstClippingAncestor, strategy));
   return {
@@ -2233,7 +1699,7 @@ function getDimensions(element: Element): Dimensions {
  */
 function getRectRelativeToOffsetParent(
   element: Element,
-  offsetParent: any,
+  offsetParent: Element | Window,
   strategy: Strategy
 ): Rect {
   const isOffsetParentAnElement = isHTMLElement(offsetParent);
@@ -2285,7 +1751,7 @@ function getRectRelativeToOffsetParent(
  * @returns True if the element is statically positioned
  */
 function isStaticPositioned(element: Element): boolean {
-  return getComputedStyle(element).position === 'static';
+  return window.getComputedStyle(element).position === 'static';
 }
 
 /**
@@ -2300,7 +1766,7 @@ function isStaticPositioned(element: Element): boolean {
  */
 function getTrueOffsetParent(element: Element, polyfill?: (element: Element) =>
   Element | null): Element | null {
-  if (!isHTMLElement(element) || getComputedStyle(element).position === 'fixed') {
+  if (!isHTMLElement(element) || window.getComputedStyle(element).position === 'fixed') {
     return null;
   }
   if (polyfill) {
@@ -2322,7 +1788,7 @@ function getTrueOffsetParent(element: Element, polyfill?: (element: Element) =>
  */
 function getOffsetParent(element: Element, polyfill?: (element: Element) =>
   Element | null): Element | Window {
-  const win = getWindow(element);
+  const win = window;
   if (isTopLayer(element)) {
     return win;
   }
@@ -2382,7 +1848,7 @@ function getElementRects(data: {
  * @returns True if the element is in RTL context
  */
 function isRTL(element: Element): boolean {
-  return getComputedStyle(element).direction === 'rtl';
+  return window.getComputedStyle(element).direction === 'rtl';
 }
 
 /**
@@ -2421,14 +1887,14 @@ function observeMove(element: Element, onMove: () => void): () => void {
     if (!width || !height) {
       return;
     }
-    const insetTop = floor(top);
-    const insetRight = floor(root.clientWidth - (left + width));
-    const insetBottom = floor(root.clientHeight - (top + height));
-    const insetLeft = floor(left);
+    const insetTop = Math.floor(top);
+    const insetRight = Math.floor(root.clientWidth - (left + width));
+    const insetBottom = Math.floor(root.clientHeight - (top + height));
+    const insetLeft = Math.floor(left);
     const rootMargin = `${-insetTop}px ${-insetRight}px ${-insetBottom}px ${-insetLeft}px`;
     const options = {
       rootMargin,
-      threshold: max(0, min(1, threshold)) || 1,
+      threshold: Math.max(0, Math.min(1, threshold)) || 1,
     };
     let isFirstUpdate = true;
     function handleObserve(entries: IntersectionObserverEntry[]): void {
@@ -2478,42 +1944,11 @@ function observeMove(element: Element, onMove: () => void): () => void {
   return cleanup;
 }
 
-interface AutoUpdateOptions {
-  /**
-   * Whether to update the position when an overflow ancestor scrolls.
-   * @default true
-   */
-  ancestorScroll?: boolean;
-  /**
-   * Whether to update the position when an overflow ancestor is resized.
-   * @default true
-   */
-  ancestorResize?: boolean;
-  /**
-   * Whether to update the position when either the reference or floating
-   * elements resized.
-   * @default true
-   */
-  elementResize?: boolean;
-  /**
-   * Whether to update the position when the reference element moved on the
-   * screen (covered by another element, clipped by an ancestor, or scrolled
-   * out of view).
-   * @default true
-   */
-  layoutShift?: boolean;
-  /**
-   * Whether to update on every animation frame if required.
-   * @default false
-   */
-  animationFrame?: boolean;
-}
-
 /**
  * Automatically updates the position of the floating element when necessary.
  * Should only be called when the floating element is mounted on the DOM or
  * visible on the screen.
- * @param reference
+ * @param referenceEl
  * @param floating
  * @param update
  * @param options
@@ -2522,7 +1957,7 @@ interface AutoUpdateOptions {
  * @see https://floating-ui.com/docs/autoUpdate
  */
 function autoUpdate(
-  reference: Element,
+  referenceEl: Element,
   floating: HTMLElement,
   update: () => void,
   options: AutoUpdateOptions = {}
@@ -2534,7 +1969,6 @@ function autoUpdate(
     layoutShift = typeof IntersectionObserver === 'function',
     animationFrame = false,
   } = options;
-  const referenceEl = unwrapElement(reference);
   const ancestors = ancestorScroll || ancestorResize ?
     [...(referenceEl ? getOverflowAncestors(referenceEl) : []), ...getOverflowAncestors(floating)]
     : [];
@@ -2568,12 +2002,12 @@ function autoUpdate(
     resizeObserver.observe(floating);
   }
   let frameId: number;
-  let prevRefRect = animationFrame ? getBoundingClientRect(reference) : null;
+  let prevRefRect = animationFrame ? getBoundingClientRect(referenceEl) : null;
   if (animationFrame) {
     frameLoop();
   }
   function frameLoop(): void {
-    const nextRefRect = getBoundingClientRect(reference);
+    const nextRefRect = getBoundingClientRect(referenceEl);
     if (prevRefRect && !rectsAreEqual(prevRefRect, nextRefRect)) {
       update();
     }
@@ -2598,27 +2032,3 @@ function autoUpdate(
     }
   };
 }
-
-// Note: offset, shift, flip, arrow are already exported in the CORE MIDDLEWARES section above.
-
-/**
- * Computes the `x` and `y` coordinates that will place the floating element
- * next to a given reference element.
- *
- * This DOM-specific version adds platform caching for better performance.
- * @param reference - The reference element to position relative to
- * @param floating - The floating element to position
- * @param options - Optional configuration for positioning
- * @returns Promise resolving to computed position data
- */
-const computePosition = (
-  reference: Element,
-  floating: HTMLElement,
-  options?: Partial<ComputePositionConfig>
-): ComputePositionReturn => {
-  // This caches the expensive `getClippingElementAncestors` function so that
-  // multiple lifecycle resets re-use the same result. It only lives for a
-  // single call. If other functions become expensive, we can add them as well.
-  clippingCache = new Map();
-  return computePositionCore(reference, floating, options || {});
-};

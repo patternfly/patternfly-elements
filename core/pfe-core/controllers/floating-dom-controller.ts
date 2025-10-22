@@ -1,20 +1,17 @@
-import type { Placement } from '../functions/floating-types.js';
 import type { LitElement, ReactiveController, ReactiveControllerHost } from 'lit';
 import type { StyleInfo } from 'lit/directives/style-map.js';
-import type { OffsetOptions as Offset } from '../functions/floating-types.js';
+import type { Placement, OffsetOptions as Offset } from '../functions/floating.js';
 
 export type { Placement };
 
 import {
   autoUpdate,
   computePosition,
-} from '../functions/floating-dom.js';
-import {
   offset as offsetMiddleware,
   shift as shiftMiddleware,
   flip as flipMiddleware,
   arrow as arrowMiddleware,
-} from '../functions/floating-core.js';
+} from '../functions/floating.js';
 
 type Lazy<T> = T | (() => T | null | undefined);
 

@@ -12,6 +12,7 @@ import toastStyles from './pf-alert-toast-styles.css';
 import '@patternfly/elements/pf-icon/pf-icon.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 
+
 interface AlertAction {
   action: 'dismiss' | 'confirm' | string;
   text: string;
@@ -29,9 +30,11 @@ const ICONS = new Map(Object.entries({
   info: 'info-circle',
   success: 'check-circle',
   custom: 'bell',
+  cogear: 'cog',
   warning: 'exclamation-triangle',
   danger: 'exclamation-circle',
   close: 'times',
+
 }));
 
 export class AlertCloseEvent extends Event {
@@ -110,12 +113,13 @@ export class PfAlert extends LitElement {
 
   @property({ reflect: true })
   state:
-  | 'warning'
+    | 'warning'
     | 'custom'
     | 'neutral'
     | 'info'
-    | 'success' =
-      'neutral';
+    | 'success'
+    | 'danger'
+    | 'cogear' = 'neutral';
 
   @property({ reflect: true }) variant?: 'alternate' | 'toast' | 'inline';
 
@@ -125,7 +129,7 @@ export class PfAlert extends LitElement {
 
   #onClose() {
     if (this.dispatchEvent(new AlertCloseEvent('close'))) {
-      this.#close();
+      // this.#close();
     }
   }
 
@@ -143,6 +147,7 @@ export class PfAlert extends LitElement {
       case 'neutral':
       case 'info':
       case 'success':
+      case 'cogear':
         return state.toLowerCase() as this['state'];
       default:
         return 'neutral';
@@ -157,32 +162,47 @@ export class PfAlert extends LitElement {
   }
 
   render(): TemplateResult<1> {
+
     const _isServer = isServer && !this.hasUpdated;
     const hasActions = _isServer || this.#slots.hasSlotted('actions');
     const hasBody =
-    _isServer || this.#slots.hasSlotted(SlotController.default as unknown as string);
+      _isServer || this.#slots.hasSlotted(SlotController.default as unknown as string);
     const { variant = 'inline' } = this;
     const state = this.#aliasState(this.state);
+    const inDemo = this.closest('.demo-with-arrows') !== null;
+    const hasDescription = this.querySelector('p') !== null;
+    const showArrow = inDemo;
+    const arrowDirection = hasDescription ? 'angle-down' : 'angle-right';
 
+   
     // footer slot עם האקשנים
-   const footer = html`<footer class="${classMap({ hasActions })}"
+    const footer = html`<footer class="${classMap({ hasActions })}"
                   @click="${this.#onActionsClick}">
             <!-- Provide actions that the user can take for the alert -->
             <slot name="actions"></slot>
           </footer>`;
     return html`
       <section id="container"
+              part="container"
               class=
               ${classMap({
-                hasBody,
-                light: true,
-                [state]: true,
-                [variant]: !!variant,
-             })}
+      hasBody,
+      light: true,
+      [state]: true,
+      [variant]: !!variant,
+    })}
              role="alert"
              aria-hidden="false"
              color-palette="lightest">
-        <div id="left-column">
+        <div id="left-column" style="display: flex; align-items: center; gap: 0.5rem;">
+          ${showArrow ? html`
+          <pf-icon 
+            id="arrow-icon"
+            set="fas"
+            icon="${arrowDirection}"
+            class="alerts-page-only"
+            style="--pf-c-icon--Color: var(--_icon-color); font-size: 16px; height: 16px; width: 16px;">
+          </pf-icon>` : ''}
           <pf-icon 
             id="icon"
             set="fas" 
@@ -234,7 +254,7 @@ export class PfAlert extends LitElement {
       && this.dispatchEvent(
         new AlertCloseEvent(event.target?.dataset.action.toLowerCase()),
       )) {
-      this.#close();
+      // this.#close();
     }
   }
 }
@@ -284,9 +304,9 @@ function renderToasts() {
 
 function manageAlertAnimation(event: Event) {
   const alert =
-      event.target instanceof PfAlert ? event.target
-    : event.target instanceof Element ? event.target.closest('pf-alert')
-    : null;
+    event.target instanceof PfAlert ? event.target
+      : event.target instanceof Element ? event.target.closest('pf-alert')
+        : null;
   if (!alert) {
     return;
   }

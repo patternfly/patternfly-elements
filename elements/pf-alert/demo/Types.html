@@ -1,0 +1,46 @@
+<div class="demo-description">
+
+<section class="white-alerts-page">
+  <pf-alert state="custom">
+    <h3 slot="header">Default alert title</h3>
+  </pf-alert>
+
+  <pf-alert state="info">
+    <h3 slot="header">Info alert title</h3>
+  </pf-alert>
+
+  <pf-alert state="success">
+    <h3 slot="header">Success alert title</h3>
+  </pf-alert>
+
+  <pf-alert state="warning">
+    <h3 slot="header">Warning alert title</h3>
+  </pf-alert>
+
+  <pf-alert state="danger">
+    <h3 slot="header">Danger alert title</h3>
+  </pf-alert>
+</section>
+</div>
+
+
+
+<style>
+  .white-alerts-page pf-alert::part(container) {
+    background-color: #fff;
+    padding-top: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    
+  }
+   .demo-description{
+    padding: 1cm; /* שמירה על מרחק של ס"מ אחד מכל הצדדים */
+  }
+</style>
+
+<script type="module">
+  import '@patternfly/elements/pf-alert/pf-alert.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+</script>

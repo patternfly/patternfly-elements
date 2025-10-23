@@ -1,4 +1,4 @@
-.pf-alert-toast-group {
+/* .pf-alert-toast-group {
   position: fixed;
   z-index: 1000;
   inset-block-start: var(--pf-global--spacer--lg, 16px);
@@ -9,9 +9,8 @@
   justify-content: center;
   gap: var(--pf-global--spacer--lg, 16px);
 
-  /* optimizations */
   pointer-events: none;
-}
+} */
 
 .pf-alert-toast-group pf-alert {
   --_duration: 8s;

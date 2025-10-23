@@ -1,0 +1,39 @@
+<div class="demo-description">
+  <section class="alerts-page">
+    <pf-alert class="a" state="cogear">
+      <h3 slot="header">Success alert title</h3>
+    </pf-alert>
+    <pf-alert class="b" state="cogear">
+      <h3 slot="header">Success alert title</h3>
+    </pf-alert>
+  </section>
+</div>
+
+<style>
+  .alerts-page pf-alert::part(container) {
+    padding-top: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+  }
+
+  pf-alert.a::part(container) {
+    background-color: #fff;
+  }
+
+  /* צבע כחול ל-b */
+  pf-alert.b::part(container) {
+    background-color: #f3faf2;
+  }
+
+  .demo-description {
+    padding: 1cm;
+    /* שמירה על מרחק של ס"מ אחד מכל הצדדים */
+  }
+</style>
+<script type="module">
+  import '@patternfly/elements/pf-alert/pf-alert.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+</script>

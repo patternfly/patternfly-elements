@@ -27,6 +27,7 @@
     "./pf-chip/pf-chip-group.js": "./pf-chip/pf-chip-group.js",
     "./pf-clipboard-copy/pf-clipboard-copy.js": "./pf-clipboard-copy/pf-clipboard-copy.js",
     "./pf-code-block/pf-code-block.js": "./pf-code-block/pf-code-block.js",
+    "./pf-description-list/pf-description-list.js": "./pf-description-list/pf-description-list.js",
     "./pf-dropdown/context.js": "./pf-dropdown/context.js",
     "./pf-dropdown/pf-dropdown-group.js": "./pf-dropdown/pf-dropdown-group.js",
     "./pf-dropdown/pf-dropdown-item.js": "./pf-dropdown/pf-dropdown-item.js",

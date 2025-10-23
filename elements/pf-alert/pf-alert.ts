@@ -28,9 +28,9 @@ const ICONS = new Map(Object.entries({
   neutral: 'minus-circle',
   info: 'info-circle',
   success: 'check-circle',
-  caution: 'exclamation-circle',
+  custom: 'bell',
   warning: 'exclamation-triangle',
-  danger: 'ban',
+  danger: 'exclamation-circle',
   close: 'times',
 }));
 
@@ -111,7 +111,7 @@ export class PfAlert extends LitElement {
   @property({ reflect: true })
   state:
   | 'warning'
-    | 'caution'
+    | 'custom'
     | 'neutral'
     | 'info'
     | 'success' =
@@ -139,7 +139,7 @@ export class PfAlert extends LitElement {
       // the following are DPO-approved status names
       case 'danger':
       case 'warning':
-      case 'caution':
+      case 'custom':
       case 'neutral':
       case 'info':
       case 'success':
@@ -172,7 +172,8 @@ export class PfAlert extends LitElement {
           </footer>`;
     return html`
       <section id="container"
-              class=${classMap({
+              class=
+              ${classMap({
                 hasBody,
                 light: true,
                 [state]: true,

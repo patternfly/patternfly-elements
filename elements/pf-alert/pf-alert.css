@@ -22,23 +22,14 @@ header {
 
 #container {
   align-items: flex-start;
-
-  /* רקע וצל */
   background-color: var(--_background-color);
-
-  /* גבולות */
   border-width: var(--pf-global--BorderWidth--md);
   border-style: solid;
   border-color: var(--_border-color, var(--pf-global--default-color--200));
   border-inline-start-color: transparent;
   border-block-end-color: transparent;
   border-inline-end-color: transparent;
-
   margin-bottom: 1.5rem;
-
-
-
-  /* ריפוד ומרווחים */
   padding: var(--pf-global--spacer--md);
   display: grid;
   grid-template-columns: max-content 1fr max-content;
@@ -47,17 +38,12 @@ header {
     ". description description"
     ". actiongroup actiongroup";
   gap: var(--pf-global--spacer--xs);
-
-  /* טיפוגרפיה */
   font-family: var(--pf-global--FontFamily--text, RedHatText, 'Red Hat Text', Helvetica, Arial, sans-serif);
   font-size: var(--pf-global--FontSize--sm);
   line-height: var(--pf-global--lineHeight--md);
-
   max-width: var(--pf-c-alert--MaxWidth, initial);
   box-shadow: var(--_box-shadow);
 
-
-  /* כותרת */
   & header ::slotted(*) {
     font-family: var(--pf-global--FontFamily--text, RedHatText, 'Red Hat Text', Helvetica, Arial, sans-serif) !important;
     font-size: var(--pf-global--FontSize--sm) !important;
@@ -66,8 +52,6 @@ header {
   }
 
 }
-
-
 
 #container.info {
   --_border-color: var(--pf-global--palette--purple-500,
@@ -154,25 +138,23 @@ header {
   color: var(--_icon-color);
 }
 
-#header-actions #close-button {
+#left-column pf-icon#arrow-icon,
+#header-actions pf-icon#close-button {
   --pf-icon--size: 16px;
-  width: 16px;
-  height: 16px;
-  color: #6a6e73;
+  /* פתח/סגור עבור PatternFly: עדיף להגדיר גם את משתנה הצבע של ה־icon */
+  --pf-c-icon--Color: #6a6e73;
+  color: #6a6e73;        /* גיבוי למקרים ש־pf-icon משתמש ב־color ישיר */
+  cursor: pointer;
+  transition: color 0.2s ease, --pf-c-icon--Color 0.2s ease;
 }
 
-#left-column pf-icon#arrow-icon {
-  color: #6a6e73;
-  --pf-icon--size: 16px;
-  /* filter: drop-shadow(0 0 1px #6a6e73) drop-shadow(0 0 1px #6a6e73); */
-
-}
-
-/* בעת לחיצה */
-#left-column pf-icon#arrow-icon:active {
+/* מצבים: hover, active (בעת לחיצה), ומחלקת .active (שנוספה ב־JS) */
+#left-column pf-icon#arrow-icon:hover,
+#left-column pf-icon#arrow-icon:active,
+#left-column pf-icon#arrow-icon.active,
+#header-actions pf-icon#close-button:hover,
+#header-actions pf-icon#close-button:active,
+#header-actions pf-icon#close-button.active {
+  --pf-c-icon--Color: #000000;
   color: #000000;
-  /* משתנה לשחור בעת לחיצה */
-}
-#left-column pf-icon#arrow-icon:hover {
-    color: #000000;
 }

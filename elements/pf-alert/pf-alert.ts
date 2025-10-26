@@ -63,6 +63,30 @@ const toasts = new Set<Required<ToastOptions>>();
 export class PfAlert extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
+
+firstUpdated(): void {
+  const icons = this.renderRoot.querySelectorAll('#arrow-icon, #close-button');
+  icons.forEach(icon => {
+    icon.addEventListener('click', () => {
+      // הסרה של active מכל האיקונים של כל הרכיבים
+      document.querySelectorAll('pf-alert').forEach(alert => {
+        const innerIcons = alert.renderRoot?.querySelectorAll('#arrow-icon, #close-button');
+        innerIcons?.forEach(i => i.classList.remove('active'));
+      });
+      // הוספת active לאייקון הנוכחי
+      icon.classList.add('active');
+    });
+  });
+
+  // קליק בכל מקום אחר מחזיר למצב רגיל
+  document.addEventListener('click', (event) => {
+    const path = event.composedPath();
+    const clickedOnIcon = Array.from(icons).some(i => path.includes(i as EventTarget));
+    if (!clickedOnIcon) {
+      icons.forEach(i => i.classList.remove('active'));
+    }
+  });
+}
   /**
    * Toast a message with an rh-alert
    * @param options

@@ -69,3 +69,28 @@ pf-icon {
   fill: currentColor; /* צובע את הסמל בצבע הטקסט של ה-pf-helper-text */
 }
 </style>
+
+
+| Name      | Type                                                                | Default     | Description                                                                                               |
+| --------- | ------------------------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------- |
+| `status`  | `'default' \| 'success' \| 'warning' \| 'error' \| 'indeterminate'` | `'default'` | Defines the visual state of the helper text and determines which default icon (if any) will appear.       |
+| `icon`    | `string`                                                            | `undefined` | Custom icon name to display. Overrides the icon derived from `status`. Requires `pf-icon` to be imported. |
+| `iconSet` | `string`                                                            | `undefined` | Specifies the icon set to use when providing a custom `icon` (e.g. `'fas'`).                              |
+
+| Name        | Description                                                                                          |
+| ----------- | ---------------------------------------------------------------------------------------------------- |
+| `icon`      | Optional named slot for providing a custom icon. When present, it overrides the default status icon. |
+| *(default)* | Default unnamed slot for the helper text’s main content (text or other inline elements).             |
+
+| Event Name   | Description                                                                      |
+| ------------ | -------------------------------------------------------------------------------- |
+| `icon-load`  | Fired when a custom or default icon successfully loads.                          |
+| `icon-error` | Fired if the icon fails to load. The event’s `detail` contains the error object. |
+
+| Status          | Default Icon           |
+| --------------- | ---------------------- |
+| `success`       | `circle-check`         |
+| `warning`       | `exclamation-triangle` |
+| `error`         | `exclamation-circle`   |
+| `indeterminate` | `minus-circle`         |
+| `default`       | *(no icon)*            |

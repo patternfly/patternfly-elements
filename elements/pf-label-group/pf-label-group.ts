@@ -2,80 +2,174 @@
 import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { classMap } from 'lit/directives/class-map.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-label-group.css';
 
-export class GroupLabelCloseEvent extends Event {
+import { query } from 'lit/decorators/query.js';
+import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
+import { observes } from '@patternfly/pfe-core/decorators/observes.js';
+import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
+import { PfLabel } from '../pf-label/pf-label.js';
+
+export class PfLabelGroupExpandEvent extends Event {
   constructor() {
-    super('close', { bubbles: true, cancelable: true });
+    super('expand', { bubbles: true, cancelable: true });
   }
 }
 
-/**
- * Label Group
- * @slot - Place element content here
- */
+const REMAINING_RE = /\$\{\s*remaining\s*\}/g;
+
 @customElement('pf-label-group')
 export class PfLabelGroup extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
-
 
   static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
+  @property() orientation: 'horizontal' | 'vertical' = 'horizontal';
+  @property({ attribute: 'accessible-label', type: String }) accessibleLabel = '';
+  @property({ attribute: 'accessible-close-label', type: String }) accessibleCloseLabel = 'Close';
+  @property({ attribute: 'collapsed-text', type: String }) collapsedText = '${remaining} more';
+  @property({ attribute: 'expanded-text', type: String }) expandedText = 'show less';
+  @property({ attribute: 'num-labels', type: Number }) numLabels = 3;
+  @property({ reflect: true, type: Boolean }) open = false;
+  @property({ reflect: true, type: Boolean }) closeable = true;
 
-  @property({ type: String }) orientation: 'horizontal' | 'vertical' = 'horizontal';
+  @property() private _overflowText = '';
 
-  @property({ type: Boolean }) removable = false;
+  @query('#close-button') private _button?: HTMLButtonElement;
+  @queryAssignedNodes({
+    slot: 'category-name',
+    flatten: true,
+  })
+  private _categorySlotted?: HTMLElement[];
 
-  @property({ attribute: 'close-button-label' }) closeButtonLabel?: string;
 
-  @property({ type: String }) categoryName = 'Category Name';
+  get #labels(): NodeListOf<PfLabel> {
+    return this.querySelectorAll<PfLabel>('pf-label:not([slot]):not([overflow-label])');
+  }
 
-  @property({ attribute: 'add-label', type: Boolean }) addLabel = false;
-
+  #tabindex = RovingTabindexController.of(this, {
+    getItems: () => [
+      ...Array.prototype.slice.call(
+        this.#labels,
+        0,
+        this.open ? this.#labels.length : Math.min(this.#labels.length, this.numLabels)
+      ),
+      this._button,
+    ].filter(x => !!x),
+  });
 
   render(): TemplateResult<1> {
-    const { removable, orientation } = this;
-    return html`
-    <span   id="container" class="${classMap({
-      horizontal: orientation === 'horizontal',
-      vertical: orientation === 'vertical',
-      removable: removable,
-    })}">
-      <span part="close-button" ?hidden=${!this.removable}>
-        </span>
-         <slot name="header">${this.categoryName}</slot>
-      
+    const empty = this.#labels.length <= 0;
+    const hasCategory = (this._categorySlotted || []).length > 0;
 
-      <slot></slot>
-      
-       <!-- summary: container for removable label group' close button -->
-        <span part="close-button" ?hidden=${!this.removable}>
-          <pf-button plain
-                     @click="${this.#onClickClose}"
-                     label="${this.closeButtonLabel ?? 'remove'}">
-            <svg viewBox="0 0 352 512">
-              <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
-            </svg>
-          </pf-button>
-        </span>
+    return html`
+      <div id="outer" class="${classMap({ 'has-category': hasCategory, empty })}" role="toolbar">
+        <slot id="category" name="category-name" @slotchange="${this.#onCategorySlotChange}">
+          <span class="visually-hidden label-text" ?hidden="${!this.accessibleLabel}">
+            ${this.accessibleLabel ?? ''}
+          </span>
+        </slot>
+
+        <slot id="labels" @slotchange="${this.#onSlotchange}"></slot>
+
+        ${this._overflowText ?
+        html`<pf-label
+              id="overflow"
+              aria-controls="labels"
+              overflow-label
+              @click="${this.#onMoreClick}"
+            >
+              ${this._overflowText}
+            </pf-label>`
+        : ''}
+
+        ${this.closeable ?
+        html`<pf-button
+              id="close-button"
+              plain
+              icon="times-circle"
+              icon-set="fas"
+              label="${this.accessibleCloseLabel}"
+              aria-describedby="category"
+              @click="${this.#onCloseClick}"
+            ></pf-button>`
+        : ''}
+      </div>
     `;
   }
 
+  @observes('accessibleCloseLabel')
+  @observes('numLabels')
+  @observes('closeable')
+  @observes('open')
+  private labelsChanged(): void {
+    this.#updateOverflow();
+  }
 
-  #onClickClose() {
-    if (this.removable && this.dispatchEvent(new GroupLabelCloseEvent())) {
+  async #onSlotchange() {
+    await this.updateComplete;
+    this.labelsChanged();
+  }
+
+  /**
+   * Tooltip logic for truncated category title
+   */
+  async #onCategorySlotChange() {
+    await this.updateComplete;
+    const nodes = this._categorySlotted ?? [];
+    for (const node of nodes) {
+      if (!(node instanceof HTMLElement)) {
+        continue;
+      }
+      const isTruncated = node.scrollWidth > node.clientWidth;
+      node.title = isTruncated ? node.textContent?.trim() ?? '' : '';
+    }
+  }
+
+  async #onMoreClick(event: Event) {
+    event.stopPropagation();
+    this.open = !this.open;
+    await this.updateComplete;
+    this.labelsChanged();
+    const overflow = this.renderRoot.querySelector('#overflow') as PfLabel | null;
+    if (overflow) {
+      this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(overflow);
+    }
+    this.dispatchEvent(new PfLabelGroupExpandEvent());
+  }
+
+  #onCloseClick() {
+    if (this.isConnected) {
       this.remove();
     }
   }
-}
 
+  #updateOverflow() {
+    const labels = Array.from(this.#labels);
+    labels.forEach((label, i) => {
+      (label as any).accessibleCloseLabel = this.accessibleCloseLabel;
+      const overflowHidden = i >= this.numLabels && !this.open;
+      label.hidden = overflowHidden;
+    });
+
+    const rem = Math.max(0, labels.length - this.numLabels);
+    this._overflowText = rem < 1 ?
+      ''
+      : this.open ?
+        this.expandedText
+        : this.collapsedText.replace(REMAINING_RE, rem.toString());
+
+    if (rem < 1 && this.open) {
+      this.open = false;
+    }
+  }
+}
 
 declare global {
   interface HTMLElementTagNameMap {

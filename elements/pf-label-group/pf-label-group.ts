@@ -11,16 +11,41 @@ import { query } from 'lit/decorators/query.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
-import { PfLabel } from '../pf-label/pf-label.js';
+import type { PfLabel } from '@patternfly/elements/pf-label/pf-label.js';
 
+/**
+ * Event fired when the label group is expanded to show all labels.
+ */
 export class PfLabelGroupExpandEvent extends Event {
   constructor() {
     super('expand', { bubbles: true, cancelable: true });
   }
 }
 
+/**
+ * Regex used to replace the `${remaining}` variable in collapsed text.
+ */
 const REMAINING_RE = /\$\{\s*remaining\s*\}/g;
 
+/**
+ * A **label group** is a collection of labels that can be grouped by category
+ * and used to represent one or more values assigned to a single attribute.
+ * When the number of labels exceeds `numLabels`, additional labels will be hidden
+ * using an overflow label.
+ *
+ * @fires expand - Fired when label group is expanded to show all labels
+ *
+ * @slot category-name - Category name text for label group category. If supplied, label group will have category styling applied
+ * @slot - Default slot for `<pf-label>` elements
+ *
+ * @example
+ * <pf-label-group num-labels="2 ">
+ *   <span slot="category-name">Fruit Types</span>
+ *   <pf-label>Apple</pf-label>
+ *   <pf-label>Banana</pf-label>
+ *   <pf-label>Orange</pf-label>
+ * </pf-label-group>
+ */
 @customElement('pf-label-group')
 export class PfLabelGroup extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
@@ -30,24 +55,63 @@ export class PfLabelGroup extends LitElement {
     delegatesFocus: true,
   };
 
+  /**
+   * Orientation of the label group.
+   * @default 'horizontal'
+   */
   @property() orientation: 'horizontal' | 'vertical' = 'horizontal';
+
+  /**
+   * Accessible label for the label group when no category name is provided.
+   * @default ''
+   */
   @property({ attribute: 'accessible-label', type: String }) accessibleLabel = '';
+
+  /**
+   * Accessible label for the close button.
+   * @default 'Close'
+   */
   @property({ attribute: 'accessible-close-label', type: String }) accessibleCloseLabel = 'Close';
+
+  /**
+   * Text for collapsed overflow label. Use `${remaining}` to indicate number of hidden labels.
+   * @default '${remaining} more'
+   */
   @property({ attribute: 'collapsed-text', type: String }) collapsedText = '${remaining} more';
+
+  /**
+   * Text for expanded overflow label.
+   * @default 'show less'
+   */
   @property({ attribute: 'expanded-text', type: String }) expandedText = 'show less';
+
+  /**
+   * Number of labels to show before creating an overflow label.
+   * @default 3
+   */
   @property({ attribute: 'num-labels', type: Number }) numLabels = 3;
+
+  /**
+   * Whether the overflow labels are visible (expanded state).
+   * @default false
+   */
   @property({ reflect: true, type: Boolean }) open = false;
-  @property({ reflect: true, type: Boolean }) closeable = true;
+
+  /**
+   * Whether the label group can be closed.
+   * @default true
+   */
+  @property({ reflect: true, type: Boolean }) closeable = false;
 
   @property() private _overflowText = '';
 
   @query('#close-button') private _button?: HTMLButtonElement;
+
   @queryAssignedNodes({
     slot: 'category-name',
     flatten: true,
   })
   private _categorySlotted?: HTMLElement[];
-
 
   get #labels(): NodeListOf<PfLabel> {
     return this.querySelectorAll<PfLabel>('pf-label:not([slot]):not([overflow-label])');
@@ -79,7 +143,7 @@ export class PfLabelGroup extends LitElement {
         <slot id="labels" @slotchange="${this.#onSlotchange}"></slot>
 
         ${this._overflowText ?
-        html`<pf-label
+          html`<pf-label
               id="overflow"
               aria-controls="labels"
               overflow-label
@@ -87,10 +151,10 @@ export class PfLabelGroup extends LitElement {
             >
               ${this._overflowText}
             </pf-label>`
-        : ''}
+          : ''}
 
         ${this.closeable ?
-        html`<pf-button
+          html`<pf-button
               id="close-button"
               plain
               icon="times-circle"
@@ -99,11 +163,14 @@ export class PfLabelGroup extends LitElement {
               aria-describedby="category"
               @click="${this.#onCloseClick}"
             ></pf-button>`
-        : ''}
+          : ''}
       </div>
     `;
   }
 
+  /**
+   * Updates labels when relevant properties change
+   */
   @observes('accessibleCloseLabel')
   @observes('numLabels')
   @observes('closeable')
@@ -118,7 +185,7 @@ export class PfLabelGroup extends LitElement {
   }
 
   /**
-   * Tooltip logic for truncated category title
+   * Tooltip logic for truncated category title.
    */
   async #onCategorySlotChange() {
     await this.updateComplete;
@@ -132,6 +199,10 @@ export class PfLabelGroup extends LitElement {
     }
   }
 
+  /**
+   * Handles overflow label's click event.
+   * @param {Event} event - Click event
+   */
   async #onMoreClick(event: Event) {
     event.stopPropagation();
     this.open = !this.open;
@@ -144,12 +215,18 @@ export class PfLabelGroup extends LitElement {
     this.dispatchEvent(new PfLabelGroupExpandEvent());
   }
 
+  /**
+   * Handles label group close.
+   */
   #onCloseClick() {
     if (this.isConnected) {
       this.remove();
     }
   }
 
+  /**
+   * Updates which labels are hidden based on `numLabels` and `open`.
+   */
   #updateOverflow() {
     const labels = Array.from(this.#labels);
     labels.forEach((label, i) => {
@@ -162,8 +239,8 @@ export class PfLabelGroup extends LitElement {
     this._overflowText = rem < 1 ?
       ''
       : this.open ?
-        this.expandedText
-        : this.collapsedText.replace(REMAINING_RE, rem.toString());
+      this.expandedText
+      : this.collapsedText.replace(REMAINING_RE, rem.toString());
 
     if (rem < 1 && this.open) {
       this.open = false;

@@ -50,7 +50,10 @@ pf-button {
   border: 1px solid #d2d2d2;
   border-radius: 6px;
   background-color: #fff;
+
+  align-items: center;
 }
+
 
 :host([orientation="horizontal"]) #outer {
   flex-direction: row;
@@ -61,10 +64,9 @@ pf-button {
   align-items: flex-start;
 }
 
-/* הכותרת ב-slotted category-name */
 ::slotted([slot="category-name"]) {
   display: inline-block;
-  max-width: 16ch; /* מגביל את הרוחב כדי שיוכל להיחתך */
+  max-width: 16ch; 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -72,7 +74,5 @@ pf-button {
   cursor: default;
 }
 
-/* מאפשר להוסיף tooltip טבעי של הדפדפן */
 ::slotted([slot="category-name"][title]):hover {
-  /* אין צורך בסגנון נוסף – הדפדפן מציג tooltip לבד */
 }

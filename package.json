@@ -326,5 +326,8 @@
     "./core/*",
     "./elements",
     "./tools/*"
-  ]
+  ],
+  "dependencies": {
+    "@patternfly/icons": "^1.0.3"
+  }
 }

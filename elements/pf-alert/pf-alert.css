@@ -132,14 +132,12 @@ header {
 #left-column pf-icon#arrow-icon,
 #header-actions pf-icon#close-button {
   --pf-icon--size: 16px;
-  /* פתח/סגור עבור PatternFly: עדיף להגדיר גם את משתנה הצבע של ה־icon */
   --pf-c-icon--Color: #6a6e73;
-  color: #6a6e73;        /* גיבוי למקרים ש־pf-icon משתמש ב־color ישיר */
+  color: #6a6e73;      
   cursor: pointer;
   transition: color 0.2s ease, --pf-c-icon--Color 0.2s ease;
 }
 
-/* מצבים: hover, active (בעת לחיצה), ומחלקת .active (שנוספה ב־JS) */
 #left-column pf-icon#arrow-icon:hover,
 #left-column pf-icon#arrow-icon:active,
 #left-column pf-icon#arrow-icon.active,

@@ -1,5 +1,4 @@
 
-// ייבוא הרכיבים של PatternFly
 import { LitElement, type TemplateResult, html, isServer, render } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
@@ -67,17 +66,17 @@ export class PfAlert extends LitElement {
     const icons = this.renderRoot.querySelectorAll('#arrow-icon, #close-button');
     icons.forEach(icon => {
       icon.addEventListener('click', () => {
-      // הסרה של active מכל האיקונים של כל הרכיבים
+// Remove active from all icons of all components
         document.querySelectorAll('pf-alert').forEach(alert => {
           const innerIcons = alert.renderRoot?.querySelectorAll('#arrow-icon, #close-button');
           innerIcons?.forEach(i => i.classList.remove('active'));
         });
-        // הוספת active לאייקון הנוכחי
+// Add active to the current icon
         icon.classList.add('active');
       });
     });
 
-    // קליק בכל מקום אחר מחזיר למצב רגיל
+// Click anywhere else returns to normal mode
     document.addEventListener('click', event => {
       const path = event.composedPath();
       const clickedOnIcon = Array.from(icons).some(i => path.includes(i as EventTarget));
@@ -153,7 +152,6 @@ export class PfAlert extends LitElement {
 
   #onClose() {
     if (this.dispatchEvent(new AlertCloseEvent('close'))) {
-      // this.#close();
     }
   }
 
@@ -198,7 +196,6 @@ export class PfAlert extends LitElement {
     const arrowDirection = hasDescription ? 'angle-down' : 'angle-right';
 
 
-    // footer slot עם האקשנים
     const footer = html`<footer class="${classMap({ hasActions })}"
                   @click="${this.#onActionsClick}">
             <!-- Provide actions that the user can take for the alert -->
@@ -261,14 +258,6 @@ export class PfAlert extends LitElement {
   `;
   }
 
-  // async #close() {
-  //   await this.updateComplete;
-  //   await Promise.all(this.getAnimations().map(x => {
-  //     x.finish();
-  //     return x.finished;
-  //   }));
-  //   this.remove();
-  // }
 
   async #onActionsClick(event: MouseEvent) {
     if (event.target instanceof HTMLElement
@@ -277,7 +266,6 @@ export class PfAlert extends LitElement {
       && this.dispatchEvent(
         new AlertCloseEvent(event.target?.dataset.action.toLowerCase()),
       )) {
-      // this.#close();
     }
   }
 }

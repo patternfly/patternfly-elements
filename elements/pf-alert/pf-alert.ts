@@ -1,6 +1,6 @@
 
 // ייבוא הרכיבים של PatternFly
-import { type CSSResult, LitElement, type TemplateResult, html, isServer, render } from 'lit';
+import { LitElement, type TemplateResult, html, isServer, render } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { repeat } from 'lit/directives/repeat.js';
@@ -63,29 +63,30 @@ export class PfAlert extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
 
-firstUpdated(): void {
-  const icons = this.renderRoot.querySelectorAll('#arrow-icon, #close-button');
-  icons.forEach(icon => {
-    icon.addEventListener('click', () => {
+  firstUpdated(): void {
+    const icons = this.renderRoot.querySelectorAll('#arrow-icon, #close-button');
+    icons.forEach(icon => {
+      icon.addEventListener('click', () => {
       // הסרה של active מכל האיקונים של כל הרכיבים
-      document.querySelectorAll('pf-alert').forEach(alert => {
-        const innerIcons = alert.renderRoot?.querySelectorAll('#arrow-icon, #close-button');
-        innerIcons?.forEach(i => i.classList.remove('active'));
+        document.querySelectorAll('pf-alert').forEach(alert => {
+          const innerIcons = alert.renderRoot?.querySelectorAll('#arrow-icon, #close-button');
+          innerIcons?.forEach(i => i.classList.remove('active'));
+        });
+        // הוספת active לאייקון הנוכחי
+        icon.classList.add('active');
       });
-      // הוספת active לאייקון הנוכחי
-      icon.classList.add('active');
     });
-  });
 
-  // קליק בכל מקום אחר מחזיר למצב רגיל
-  document.addEventListener('click', (event) => {
-    const path = event.composedPath();
-    const clickedOnIcon = Array.from(icons).some(i => path.includes(i as EventTarget));
-    if (!clickedOnIcon) {
-      icons.forEach(i => i.classList.remove('active'));
-    }
-  });
-}
+    // קליק בכל מקום אחר מחזיר למצב רגיל
+    document.addEventListener('click', event => {
+      const path = event.composedPath();
+      const clickedOnIcon = Array.from(icons).some(i => path.includes(i as EventTarget));
+      if (!clickedOnIcon) {
+        icons.forEach(i => i.classList.remove('active'));
+      }
+    });
+  }
+
   /**
    * Toast a message with an rh-alert
    * @param options
@@ -185,7 +186,6 @@ firstUpdated(): void {
   }
 
   render(): TemplateResult<1> {
-
     const _isServer = isServer && !this.hasUpdated;
     const hasActions = _isServer || this.#slots.hasSlotted('actions');
     const hasBody =
@@ -197,7 +197,7 @@ firstUpdated(): void {
     const showArrow = inDemo;
     const arrowDirection = hasDescription ? 'angle-down' : 'angle-right';
 
-   
+
     // footer slot עם האקשנים
     const footer = html`<footer class="${classMap({ hasActions })}"
                   @click="${this.#onActionsClick}">

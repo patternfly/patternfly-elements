@@ -8,7 +8,6 @@ import { classMap } from 'lit/directives/class-map.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import styles from './pf-alert.css';
-import toastStyles from './pf-alert-toast-styles.css';
 import '@patternfly/elements/pf-icon/pf-icon.js';
 import '@patternfly/elements/pf-button/pf-button.js';
 
@@ -262,14 +261,14 @@ firstUpdated(): void {
   `;
   }
 
-  async #close() {
-    await this.updateComplete;
-    await Promise.all(this.getAnimations().map(x => {
-      x.finish();
-      return x.finished;
-    }));
-    this.remove();
-  }
+  // async #close() {
+  //   await this.updateComplete;
+  //   await Promise.all(this.getAnimations().map(x => {
+  //     x.finish();
+  //     return x.finished;
+  //   }));
+  //   this.remove();
+  // }
 
   async #onActionsClick(event: MouseEvent) {
     if (event.target instanceof HTMLElement
@@ -289,7 +288,6 @@ function initToaster() {
   node.classList.add('pf-alert-toast-group');
   document.adoptedStyleSheets = [
     ...document.adoptedStyleSheets ?? [],
-    (toastStyles as unknown as CSSResult).styleSheet!,
   ];
 
   document.body.append(node);

@@ -13,9 +13,9 @@ describe('<pf-description-list>', function() {
       element = await createFixture<PfDescriptionList>(html`<pf-description-list></pf-description-list>`);
       const klass = customElements.get('pf-description-list');
       expect(element)
-        .to.be.an.instanceOf(klass)
-        .and
-        .to.be.an.instanceOf(PfDescriptionList);
+          .to.be.an.instanceOf(klass)
+          .and
+          .to.be.an.instanceOf(PfDescriptionList);
     });
-  })
+  });
 });

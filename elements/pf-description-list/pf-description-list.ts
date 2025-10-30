@@ -13,7 +13,7 @@ export class PfDescriptionList extends LitElement {
 
   render(): TemplateResult<1> {
     return html`
-      <slot></slot>
+       <dl class="pf-c-description-list pf-m-grid-md"></dl>
     `;
   }
 }

@@ -35,66 +35,20 @@ const ICONS = new Map(Object.entries({
 
 }));
 
+
 export class AlertCloseEvent extends Event {
   constructor(public action: 'close' | 'confirm' | 'dismiss' | string) {
     super('close', { bubbles: true, cancelable: true });
   }
 }
-
 let toaster: HTMLElement;
 const toasts = new Set<Required<ToastOptions>>();
-
-/**
- * An alert is a banner used to notify a user about a change in status
- * or communicate other information. It can be generated with or without
- * a user triggering an action first.
- *
- * @summary Notifies a user without blocking their workflow
- *
- * @alias alert
- *
- * @fires {AlertCloseEvent} close - when the dismissable alert closes
- */
 
 
 @customElement('pf-alert')
 export class PfAlert extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
-
-  firstUpdated(): void {
-    const icons = this.renderRoot.querySelectorAll('#arrow-icon, #close-button');
-    icons.forEach(icon => {
-      icon.addEventListener('click', () => {
-// Remove active from all icons of all components
-        document.querySelectorAll('pf-alert').forEach(alert => {
-          const innerIcons = alert.renderRoot?.querySelectorAll('#arrow-icon, #close-button');
-          innerIcons?.forEach(i => i.classList.remove('active'));
-        });
-// Add active to the current icon
-        icon.classList.add('active');
-      });
-    });
-
-// Click anywhere else returns to normal mode
-    document.addEventListener('click', event => {
-      const path = event.composedPath();
-      const clickedOnIcon = Array.from(icons).some(i => path.includes(i as EventTarget));
-      if (!clickedOnIcon) {
-        icons.forEach(i => i.classList.remove('active'));
-      }
-    });
-  }
-
-  /**
-   * Toast a message with an rh-alert
-   * @param options
-   * @param options.message alert text
-   * @param [options.actions] optional array of actions
-   * @param [options.heading="Success"] alert heading
-   * @param [options.state="info"] `<rh-alert state="...">`
-   * @param [options.persistent=false] when true, toast remains on screen until dismissed
-   */
   public static async toast(options: Omit<ToastOptions, 'id'>): Promise<void> {
     const {
       message,
@@ -119,20 +73,8 @@ export class PfAlert extends LitElement {
       toasts.delete(toast);
     }
     renderToasts();
-  };
-
-  get #icon() {
-    const state = this.state.toLowerCase() as this['state'];
-    switch (state) {
-      // @ts-expect-error: support for deprecated props
-      case 'note': return ICONS.get('info');
-      // @ts-expect-error: support for deprecated props
-      case 'default': return ICONS.get('neutral');
-      // @ts-expect-error: support for deprecated props
-      case 'error': return ICONS.get('danger');
-      default: return ICONS.get(state);
-    }
   }
+
 
   @property({ reflect: true })
   state:
@@ -150,11 +92,18 @@ export class PfAlert extends LitElement {
 
   #slots = new SlotController(this, 'header', null, 'actions');
 
-  #onClose() {
-    if (this.dispatchEvent(new AlertCloseEvent('close'))) {
+  get #icon() {
+    const state = this.state.toLowerCase() as this['state'];
+    switch (state) {
+      // @ts-expect-error: support for deprecated props
+      case 'note': return ICONS.get('info');
+      // @ts-expect-error: support for deprecated props
+      case 'default': return ICONS.get('neutral');
+      // @ts-expect-error: support for deprecated props
+      case 'error': return ICONS.get('danger');
+      default: return ICONS.get(state);
     }
   }
-
 
   #aliasState(state: string) {
     switch (state.toLowerCase()) {
@@ -197,7 +146,6 @@ export class PfAlert extends LitElement {
 
 
     const footer = html`<footer class="${classMap({ hasActions })}"
-                  @click="${this.#onActionsClick}">
             <!-- Provide actions that the user can take for the alert -->
             <slot name="actions"></slot>
           </footer>`;
@@ -244,7 +192,6 @@ export class PfAlert extends LitElement {
                   role="button"
                   tabindex="0"
                   aria-label="Close"
-                  @click="${this.#onClose}">
                 </pf-icon>
               </div>`}
         </header>
@@ -259,14 +206,28 @@ export class PfAlert extends LitElement {
   }
 
 
-  async #onActionsClick(event: MouseEvent) {
-    if (event.target instanceof HTMLElement
-      && event.target?.slot === 'actions'
-      && typeof event.target.dataset.action === 'string'
-      && this.dispatchEvent(
-        new AlertCloseEvent(event.target?.dataset.action.toLowerCase()),
-      )) {
-    }
+  firstUpdated(): void {
+    const icons = this.renderRoot.querySelectorAll('#arrow-icon, #close-button');
+    icons.forEach(icon => {
+      icon.addEventListener('click', () => {
+        // Remove active from all icons of all components
+        document.querySelectorAll('pf-alert').forEach(alert => {
+          const innerIcons = alert.renderRoot?.querySelectorAll('#arrow-icon, #close-button');
+          innerIcons?.forEach(i => i.classList.remove('active'));
+        });
+        // Add active to the current icon
+        icon.classList.add('active');
+      });
+    });
+
+    // Click anywhere else returns to normal mode
+    document.addEventListener('click', event => {
+      const path = event.composedPath();
+      const clickedOnIcon = Array.from(icons).some(i => path.includes(i as EventTarget));
+      if (!clickedOnIcon) {
+        icons.forEach(i => i.classList.remove('active'));
+      }
+    });
   }
 }
 

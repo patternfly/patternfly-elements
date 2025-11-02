@@ -64,7 +64,7 @@ pf-button {
   align-items: flex-start;
 }
 
-::slotted([slot="category-name"]) {
+::slotted([slot="category"]) {
   display: inline-block;
   max-width: 16ch; 
   overflow: hidden;
@@ -74,5 +74,5 @@ pf-button {
   cursor: default;
 }
 
-::slotted([slot="category-name"][title]):hover {
+::slotted([slot="category"][title]):hover {
 }

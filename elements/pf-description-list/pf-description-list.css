@@ -1,0 +1,31 @@
+/* :host {
+  display: block;
+} */
+:host {
+      display: block;
+      background: var(--pf-global--BackgroundColor--100, #fff);
+      padding: 1.5rem;
+      border-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .pf-c-description-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .pf-c-description-list__term {
+      font-weight: 600;
+      color: var(--pf-global--Color--100, #151515);
+    }
+
+    .pf-c-description-list__text a {
+      color: var(--pf-global--link--Color, #06c);
+      text-decoration: none;
+      pointer-events: none; 
+    }
+
+    .pf-c-description-list__text button {
+      pointer-events: none; 
+    }

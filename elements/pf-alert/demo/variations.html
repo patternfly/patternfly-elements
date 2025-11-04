@@ -1,0 +1,71 @@
+<div class="demo-description">
+
+  <section class="white-alerts-page">
+    <pf-alert state="success" dismissable>
+      <h3 slot="header">Success alert title</h3>
+      <p>Success alert description. This should tell the user more information about the alert.</p>
+      <pf-button slot="actions" variant="link" data-action="confirm">View details</pf-button>
+      <pf-button slot="actions" variant="link" data-action="dismiss">lgnore</pf-button>
+    </pf-alert>
+
+    <pf-alert state="success" dismissable>
+      <h3 slot="header">Success alert title</h3>
+      <p>Success alert description. This should tell the user more information about the alert. This is a link.</p>
+    </pf-alert>
+
+    <pf-alert state="success" toast dismissable>
+      <h3 slot="header">Success alert title</h3>
+      <pf-button slot="actions" variant="link" data-action="confirm">View details</pf-button>
+      <pf-button slot="actions" variant="link" data-action="dismiss">lgnore</pf-button>
+    </pf-alert>
+
+    <pf-alert state="success" dismissable data-on-close="prevent-default">
+      <h3 slot="header">Success alert title</h3>
+    </pf-alert>
+
+    <pf-alert state="success">
+      <h3 slot="header">Success alert title</h3>
+    </pf-alert>
+
+
+    <pf-alert state="success">
+      <h3 slot="header">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque cursus
+        enim
+        fringilla...</h3>
+      <p>This example uses ".pf-m-truncate" to limit the title to a single line and truncate any overflow text with
+        ellipses.</p>
+    </pf-alert>
+
+
+    <pf-alert state="success">
+      <h3 slot="header">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque cursus
+        enim
+        fringilla tincidunt. Proin lobortis aliquam dictum. Nam vel ullamcorper nulla, nec blandit dolor. Vivamus
+        pellentesque...</h3>
+      <p>This example uses ".pf-m-truncate" and sets "--pf-c-alert__title--max-lines: 2" to limit title to two lines and
+        truncate any overflow text with ellipses.</p>
+    </pf-alert>
+  </section>
+</div>
+
+
+<script type="module">
+  import '@patternfly/elements/pf-alert/pf-alert.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+</script>
+
+<style>
+  .white-alerts-page pf-alert::part(container) {
+    background-color: var(--pf-global--BackgroundColor--100);
+    padding-top: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+  }
+
+  .demo-description {
+    padding: 1cm;
+  }
+</style>

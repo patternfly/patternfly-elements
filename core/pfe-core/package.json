@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-core",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "license": "MIT",
   "description": "PatternFly Elements Core Library",
   "customElements": "custom-elements.json",
@@ -65,7 +65,6 @@
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.6.10",
     "@lit/context": "^1.1.5",
     "@pwrs/cem": "^0.6.5",
     "lit": "^3.3.0"

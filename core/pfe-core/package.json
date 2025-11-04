@@ -66,6 +66,7 @@
   },
   "dependencies": {
     "@lit/context": "^1.1.5",
+    "@pwrs/cem": "^0.6.5",
     "lit": "^3.3.0"
   },
   "repository": {

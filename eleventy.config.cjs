@@ -17,6 +17,9 @@ const TocPlugin = require('@patternfly/pfe-tools/11ty/plugins/table-of-contents.
 
 const markdownItAnchor = require('markdown-it-anchor');
 
+const { $ } = require('execa');
+const path = require('node:path');
+
 /** @param {import('@11ty/eleventy/src/UserConfig')} eleventyConfig */
 module.exports = function(eleventyConfig) {
   eleventyConfig.amendLibrary('md', md => md.use(markdownItAnchor));
@@ -35,6 +38,13 @@ module.exports = function(eleventyConfig) {
 
   /** Generate and consume custom elements manifests */
   eleventyConfig.addPlugin(CustomElementsManifestPlugin);
+
+  eleventyConfig.on('eleventy.before', async function() {
+    const projectRoot = path.join(__dirname, '..', '..', '..', '..');
+    await $({ cwd: path.join(projectRoot, 'elements') })`cem generate`;
+    await $({ cwd: path.join(projectRoot, 'core', 'pfe-core') })`cem generate`;
+  });
+
 
   /** Render docs based on custom elements manifests */
   eleventyConfig.addPlugin(CEMRenderPlugin);

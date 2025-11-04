@@ -13,6 +13,7 @@
   "scripts": {
     "🐒-DEV": "❓ Development aids",
     "start": "wireit",
+    "serve": "wireit",
     "dev": "wireit",
     "🚧-BUILD": "❓ Make packages and artifacts",
     "build": "wireit",
@@ -206,9 +207,7 @@
       "service": true,
       "command": "eleventy --serve",
       "dependencies": [
-        "build:core",
-        "analyze",
-        "watch:analyze"
+        "build:core"
       ]
     },
     "start": {

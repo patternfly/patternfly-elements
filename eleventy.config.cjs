@@ -40,7 +40,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(CustomElementsManifestPlugin);
 
   eleventyConfig.on('eleventy.before', async function() {
-    const projectRoot = path.join(__dirname, '..', '..', '..', '..');
+    const projectRoot = path.join(__dirname);
     await $({ cwd: path.join(projectRoot, 'elements') })`cem generate`;
     await $({ cwd: path.join(projectRoot, 'core', 'pfe-core') })`cem generate`;
   });

@@ -201,40 +201,11 @@ export class PfAlert extends LitElement {
     </section>
     `;
   }
-
-  firstUpdated(): void {
-    const icons = this.renderRoot.querySelectorAll('#arrow-icon, #close-button');
-    icons.forEach(icon => {
-      icon.addEventListener('click', () => {
-        // Remove active from all icons of all components
-        document.querySelectorAll('pf-alert').forEach(alert => {
-          const innerIcons = alert.renderRoot?.querySelectorAll('#arrow-icon, #close-button');
-          innerIcons?.forEach(i => i.classList.remove('active'));
-        });
-        // Add active to the current icon
-        icon.classList.add('active');
-      });
-    });
-
-    // Click anywhere else returns to normal mode
-    document.addEventListener('click', event => {
-      const path = event.composedPath();
-      const clickedOnIcon = Array.from(icons).some(i => path.includes(i as EventTarget));
-      if (!clickedOnIcon) {
-        icons.forEach(i => i.classList.remove('active'));
-      }
-    });
-  }
 }
-
 
 function initToaster() {
   const node = document.createElement('section');
   node.classList.add('pf-alert-toast-group');
-  document.adoptedStyleSheets = [
-    ...document.adoptedStyleSheets ?? [],
-  ];
-
   document.body.append(node);
   return node;
 }

@@ -2,6 +2,7 @@ import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { isServer } from 'lit';
 import '@patternfly/elements/pf-button/pf-button.js';
 
 import styles from './pf-label-group.css';
@@ -109,13 +110,11 @@ export class PfLabelGroup extends LitElement {
   private _categorySlotted?: HTMLElement[];
 
   get #labels(): NodeListOf<PfLabel> | PfLabel[] {
-    const isServer = typeof window === 'undefined' || !('document' in globalThis);
     if (isServer) {
       return [] as PfLabel[];
     }
     return this.querySelectorAll<PfLabel>('pf-label:not([slot]):not([overflow-label])');
   }
-
 
   #tabindex = RovingTabindexController.of(this, {
     getItems: () => [

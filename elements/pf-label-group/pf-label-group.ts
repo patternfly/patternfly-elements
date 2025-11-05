@@ -1,4 +1,3 @@
-
 import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
@@ -23,10 +22,6 @@ export class PfLabelGroupExpandEvent extends Event {
   }
 }
 
-/**
- * Regex used to replace the `${remaining}` variable in collapsed text.
- */
-const REMAINING_RE = /\$\{\s*remaining\s*\}/g;
 
 /**
  * A **label group** is a collection of labels that can be grouped by category
@@ -236,14 +231,24 @@ export class PfLabelGroup extends LitElement {
     });
 
     const rem = Math.max(0, labels.length - this.numLabels);
-    this._overflowText = rem < 1 ?
-      ''
-      : this.open ?
-        this.expandedText
-        : this.collapsedText.replace(REMAINING_RE, rem.toString());
 
-    if (rem < 1 && this.open) {
-      this.open = false;
+    if (rem < 1) {
+      this._overflowText = '';
+      if (this.open) {
+        this.open = false;
+      }
+    } else {
+      const placeholderMatch = this.collapsedText.match(/\$\{.*?\}/);
+      if (placeholderMatch) {
+        const [placeholder] = placeholderMatch;
+        this._overflowText = this.collapsedText.replace(placeholder, rem.toString());
+      } else {
+        this._overflowText = this.collapsedText;
+      }
+
+      if (this.open) {
+        this._overflowText = this.expandedText;
+      }
     }
   }
 }

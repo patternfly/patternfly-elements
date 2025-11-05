@@ -1,4 +1,3 @@
-
 :host {
   display: flex;
   flex-direction: row;
@@ -13,10 +12,7 @@ pf-button {
   --pf-c-button--PaddingRight: var(--pf-c-label__c-button--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
   --pf-c-button--PaddingBottom: var(--pf-c-label__c-button--PaddingBottom, var(--pf-global--spacer--xs, 0.25rem));
   --pf-c-button--PaddingLeft: var(--pf-c-label__c-button--PaddingLeft, var(--pf-global--spacer--sm, 0.5rem));
-  margin: var(--pf-c-label__c-button--MarginTop, -0.5rem)
-          var(--pf-c-label__c-button--MarginRight, -0.5rem)
-          var(--pf-c-label__c-button--MarginBottom, -0.5rem)
-          var(--pf-c-label__c-button--MarginLeft, 0.25rem);
+  margin: var(--pf-c-label__c-button--MarginTop, -0.5rem) var(--pf-c-label__c-button--MarginRight, -0.5rem) var(--pf-c-label__c-button--MarginBottom, -0.5rem) var(--pf-c-label__c-button--MarginLeft, 0.25rem);
 }
 
 .compact {
@@ -50,10 +46,8 @@ pf-button {
   border: 1px solid #d2d2d2;
   border-radius: 6px;
   background-color: #fff;
-
   align-items: center;
 }
-
 
 :host([orientation="horizontal"]) #outer {
   flex-direction: row;
@@ -66,13 +60,10 @@ pf-button {
 
 ::slotted([slot="category"]) {
   display: inline-block;
-  max-width: 16ch; 
+  max-width: 16ch;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: middle;
   cursor: default;
-}
-
-::slotted([slot="category"][title]):hover {
 }

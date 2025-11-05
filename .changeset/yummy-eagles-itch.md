@@ -2,8 +2,18 @@
 "@patternfly/elements": minor
 ---
 
-Introduce `<pf-label-group>` element with:
-- Removable labels and option to remove entire group
-- Overflow handling for labels and title
-- Horizontal and vertical layout support
+✨ Introduced `<pf-label-group>`.
 
+A label group displays multiple labels together, helping users visualize related categories, filters, or items.  
+Each label can be removed individually, and the entire group can also be cleared at once.  
+The element automatically handles overflow for long lists of labels and supports both horizontal and vertical layouts.
+
+Use this when you need to show multiple tags, filters, or categorized items that users can remove or adjust dynamically.  
+Avoid using it for single, standalone labels — consider using `<pf-label>` instead.
+
+```html
+<pf-label-group label="Filters">
+  <pf-label removable>Security</pf-label>
+  <pf-label removable>Performance</pf-label>
+  <pf-label removable>Networking</pf-label>
+</pf-label-group>

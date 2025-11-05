@@ -103,11 +103,19 @@ export class PfLabelGroup extends LitElement {
 
   @query('#close-button') private _button?: HTMLButtonElement;
 
-  @queryAssignedNodes({
-    slot: 'category',
-    flatten: true,
-  })
-  private _categorySlotted?: HTMLElement[];
+  private get _categorySlotted(): HTMLElement[] {
+    const isServer = typeof window === 'undefined' || !('document' in globalThis);
+    if (isServer) {
+      return [];
+    }
+
+    const slot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="category"]');
+    if (!slot) {
+      return [];
+    }
+
+    return slot.assignedElements({ flatten: true }) as HTMLElement[];
+  }
 
   get #labels(): NodeListOf<PfLabel> | PfLabel[] {
     if (isServer) {
@@ -207,7 +215,7 @@ export class PfLabelGroup extends LitElement {
     this.open = !this.open;
     await this.updateComplete;
     this.labelsChanged();
-    const overflow = this.renderRoot.querySelector('#overflow') as PfLabel | null;
+    const overflow = isServer ? null : this.renderRoot.querySelector('#overflow') as PfLabel | null;
     if (overflow) {
       this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(overflow);
     }

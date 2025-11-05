@@ -108,9 +108,14 @@ export class PfLabelGroup extends LitElement {
   })
   private _categorySlotted?: HTMLElement[];
 
-  get #labels(): NodeListOf<PfLabel> {
+  get #labels(): NodeListOf<PfLabel> | PfLabel[] {
+    const isServer = typeof window === 'undefined' || !('document' in globalThis);
+    if (isServer) {
+      return [] as PfLabel[];
+    }
     return this.querySelectorAll<PfLabel>('pf-label:not([slot]):not([overflow-label])');
   }
+
 
   #tabindex = RovingTabindexController.of(this, {
     getItems: () => [

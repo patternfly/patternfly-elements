@@ -104,7 +104,6 @@ export class PfLabelGroup extends LitElement {
   @query('#close-button') private _button?: HTMLButtonElement;
 
   private get _categorySlotted(): HTMLElement[] {
-    const isServer = typeof window === 'undefined' || !('document' in globalThis);
     if (isServer) {
       return [];
     }

@@ -1,5 +1,5 @@
 ---
-"@patternfly/elements/pf-alert": minor
+"@patternfly/elements": minor
 ---
 
 ### Minor Changes

@@ -1,9 +1,7 @@
-import { LitElement, type TemplateResult, html, isServer, render } from 'lit';
+import { LitElement, type TemplateResult, html, isServer } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { repeat } from 'lit/directives/repeat.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import styles from './pf-alert.css';
 import '@patternfly/elements/pf-icon/pf-icon.js';
@@ -48,33 +46,6 @@ const toasts = new Set<Required<ToastOptions>>();
 export class PfAlert extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
-  public static async toast(options: Omit<ToastOptions, 'id'>): Promise<void> {
-    const {
-      message,
-      persistent = false,
-      heading = 'Success',
-      state = 'info',
-      actions = [],
-    } = options;
-    toaster ??= initToaster();
-    const id = getRandomId();
-    const toast = { actions, heading, message, state, id, persistent };
-    toasts.add(toast);
-    const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
-    renderToasts();
-    const alert = toaster.querySelector(`#${id}`);
-    if (toaster.children.length && motionOK) {
-      flip(toaster);
-    }
-    await Promise.all(toaster.getAnimations().map(x => x.finished));
-    if (!persistent && alert) {
-      await Promise.all(alert?.getAnimations().map(x => x.finished) ?? []);
-      toasts.delete(toast);
-    }
-    renderToasts();
-  }
-
-
   @property({ reflect: true })
   state:
     | 'warning'
@@ -85,7 +56,7 @@ export class PfAlert extends LitElement {
     | 'danger'
     | 'cogear' = 'neutral';
 
-  @property({ reflect: true }) variant?: 'alternate' | 'toast' | 'inline';
+  @property({ reflect: true }) variant?: 'alternate' | 'inline';
 
   @property({ reflect: true, type: Boolean }) dismissable = false;
 
@@ -147,7 +118,7 @@ export class PfAlert extends LitElement {
             <slot name="actions"></slot>
           </footer>`;
     return html`
-      <section id="container"
+      <div id="container"
               part="container"
               class=
               ${classMap({
@@ -180,7 +151,7 @@ export class PfAlert extends LitElement {
             <div id="header">
               <!-- Provide a header for the alert message. -->
               <slot name="header"></slot>
-            </div>${!this.dismissable && this.variant !== 'toast' ? '' : html`
+            </div>${!this.dismissable ? '' : html`
             <div id="header-actions">
                 <pf-icon
                   id="close-button"
@@ -198,88 +169,11 @@ export class PfAlert extends LitElement {
         </div>
         ${footer}
       </div>
-    </section>
+    </div>
     `;
   }
 }
 
-function initToaster() {
-  const node = document.createElement('section');
-  node.classList.add('pf-alert-toast-group');
-  document.body.append(node);
-  return node;
-}
-
-function renderToasts() {
-  render(repeat(toasts, t => t.id, ({
-    id, state, heading, message, actions, persistent }) => {
-    const [firstAction, secondAction] = actions ?? [];
-    return html`
-          <pf-alert id="${id}"
-                state="${state}" 
-                variant="toast"
-                class="${classMap({ persistent })}"
-                role="status"
-                aria-live="polite"
-                @focusin="${manageAlertAnimation}"
-                @focusout="${manageAlertAnimation}"
-                @mouseenter="${manageAlertAnimation}"
-                @mouseleave="${manageAlertAnimation}">
-        <h3 slot="header">${heading}</h3>
-      ${!message ? '' : typeof message !== 'string' ? message : html`
-      <p class="text" ?hidden="${!message}">${message}</p>`}
-      ${[firstAction, secondAction].filter(x => !!x).map(action => html`      
-            <pf-button slot="actions" 
-                    variant="${action.action === 'confirm' ? 'secondary' : 'link'}"
-                    data-action="${action.action}">${action.text}</pf-button>
-          `) ?? []}
-
-      </pf-alert>
-    `;
-  }), toaster);
-}
-
-
-function manageAlertAnimation(event: Event) {
-  const alert =
-    event.target instanceof PfAlert ? event.target
-      : event.target instanceof Element ? event.target.closest('pf-alert')
-        : null;
-  if (!alert) {
-    return;
-  }
-  for (const animation of alert.getAnimations() ?? []) {
-    switch (event.type) {
-      case 'focusin':
-      case 'mouseenter':
-        animation.pause();
-        break;
-      case 'focusout':
-      case 'mouseleave':
-        if (!alert.matches(':focus-within')) {
-          animation.play();
-        }
-        break;
-    }
-  }
-}
-/**
- * @see https://aerotwist.com/blog/flip-your-animations/
- * @param toaster container for toasted alerts
- */
-function flip(toaster: HTMLElement) {
-  const first = toaster.offsetHeight;
-  const last = toaster.offsetHeight;
-  const invert = last - first;
-  const animation = toaster.animate([
-    { transform: `translateY(${invert}px)` },
-    { transform: 'translateY(0)' },
-  ], {
-    duration: 150,
-    easing: 'ease-out',
-  });
-  animation.startTime = document.timeline.currentTime;
-}
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -70,22 +70,4 @@ describe('<pf-alert>', function() {
       expect(event.action).to.equal('dismiss');
     });
   });
-
-  describe('toast functionality', function() {
-    it('creates toast alerts via static method', async function() {
-      const toastPromise = PfAlert.toast({
-        heading: 'Test Toast',
-        message: 'Toast message',
-        state: 'info',
-      });
-
-      expect(toastPromise).to.be.instanceof(Promise);
-      await toastPromise;
-
-      const toast = document.querySelector('pf-alert[variant="toast"]');
-      expect(toast).to.exist;
-      expect(toast?.getAttribute('role')).to.equal('status');
-      expect(toast?.getAttribute('state')).to.equal('info');
-    });
-  });
 });

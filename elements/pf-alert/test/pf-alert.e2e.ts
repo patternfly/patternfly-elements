@@ -112,27 +112,6 @@ test.describe(tagName, () => {
     }
   });
 
-  test('toast functionality and stacking', async ({ page }) => {
-    // Create multiple toasts
-    await page.evaluate(async () => {
-      const { PfAlert } = await import('@patternfly/elements/pf-alert/pf-alert.js');
-      for (const state of ['success', 'warning', 'info']) {
-        await PfAlert.toast({
-          heading: `Test ${state}`,
-          message: `${state} message`,
-          state: state as any,
-        });
-      }
-    });
-
-    // Verify toasts exist with correct attributes
-    const toasts = await page.locator('pf-alert[variant="toast"]').all();
-    expect(toasts.length).toBeGreaterThanOrEqual(1);
-
-    // Check toast container structure
-    const toastContainer = await page.locator('.pf-alert-toast-group');
-    expect(await toastContainer.count()).toBe(1);
-  });
 
   test('visual states and variants', async ({ page }) => {
     // Test each state renders

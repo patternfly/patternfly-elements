@@ -13,17 +13,6 @@ import styles from './pf-hint.css';
  *
  * @summary Provides inline contextual help or information to users
  * @alias Hint
- *
- * @slot - Body content of the hint
- * @slot title - Optional title for the hint
- * @slot footer - Optional footer content, typically containing action links or buttons
- * @slot actions - Optional actions menu (e.g., kebab menu)
- *
- * @csspart container - The hint container element
- * @csspart title - The title element
- * @csspart body - The body element
- * @csspart footer - The footer element
- * @csspart actions - The actions element
  */
 @customElement('pf-hint')
 export class PfHint extends LitElement {
@@ -44,23 +33,27 @@ export class PfHint extends LitElement {
              part="actions"
              class="pf-c-hint__actions"
              ?hidden=${this.#slots.isEmpty('actions')}>
+          <!-- summary: Actions menu (e.g., kebab dropdown) -->
           <slot name="actions"></slot>
         </div>
         <div id="title"
              part="title"
              class="pf-c-hint__title"
              ?hidden=${this.#slots.isEmpty('title')}>
+          <!-- summary: Optional title for the hint -->
           <slot name="title"></slot>
         </div>
         <div id="body"
              part="body"
              class="pf-c-hint__body">
+          <!-- summary: Body content of the hint. Main informational text. -->
           <slot></slot>
         </div>
         <div id="footer"
              part="footer"
              class="pf-c-hint__footer"
              ?hidden=${this.#slots.isEmpty('footer')}>
+          <!-- summary: Optional footer content, typically containing action links or buttons -->
           <slot name="footer"></slot>
         </div>
       </div>

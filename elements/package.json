@@ -129,7 +129,8 @@
     "castastrophe (https://github.com/castastrophe)",
     "Wes Ruvalcaba",
     "Rohit Bharmal (https://github.com/Rohit2601)",
-    "Ajinyka Shinde <sajinkya359@gmail.com>"
+    "Ajinyka Shinde <sajinkya359@gmail.com>",
+    "Gili Greenberger (https://github.com/Gili-Greenberger)"
   ],
   "dependencies": {
     "@lit/context": "^1.1.5",

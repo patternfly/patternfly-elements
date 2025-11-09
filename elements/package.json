@@ -31,6 +31,7 @@
     "./pf-dropdown/pf-dropdown-item.js": "./pf-dropdown/pf-dropdown-item.js",
     "./pf-dropdown/pf-dropdown-menu.js": "./pf-dropdown/pf-dropdown-menu.js",
     "./pf-dropdown/pf-dropdown.js": "./pf-dropdown/pf-dropdown.js",
+    "./pf-hint/pf-hint.js": "./pf-hint/pf-hint.js",
     "./pf-icon/pf-icon.js": "./pf-icon/pf-icon.js",
     "./pf-jazz-hands/pf-jazz-hands.js": "./pf-jazz-hands/pf-jazz-hands.js",
     "./pf-jump-links/pf-jump-links-item.js": "./pf-jump-links/pf-jump-links-item.js",

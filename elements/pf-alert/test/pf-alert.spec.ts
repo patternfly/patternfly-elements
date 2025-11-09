@@ -25,7 +25,7 @@ describe('<pf-alert>', function() {
     it('reflects state attribute', async function() {
       const el = await createFixture<PfAlert>(html`<pf-alert state="success"></pf-alert>`);
       expect(el.getAttribute('state')).to.equal('success');
-      expect(el.state).to.equal('success');
+      expect(el.status).to.equal('success');
     });
 
     it('reflects variant attribute', async function() {

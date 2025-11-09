@@ -16,7 +16,7 @@ interface ToastOptions {
   id?: string;
   message: string | TemplateResult;
   heading?: string;
-  state?: PfAlert['state'];
+  state?: PfAlert['status'];
   persistent?: boolean;
   actions?: AlertAction[];
 }
@@ -47,7 +47,7 @@ export class PfAlert extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
   @property({ reflect: true })
-  state:
+  status:
     | 'warning'
     | 'custom'
     | 'neutral'
@@ -63,7 +63,7 @@ export class PfAlert extends LitElement {
   #slots = new SlotController(this, 'header', null, 'actions');
 
   get #icon() {
-    const state = this.state.toLowerCase() as this['state'];
+    const state = this.status.toLowerCase() as this['status'];
     switch (state) {
       // @ts-expect-error: support for deprecated props
       case 'note': return ICONS.get('info');
@@ -89,7 +89,7 @@ export class PfAlert extends LitElement {
       case 'info':
       case 'success':
       case 'cogear':
-        return state.toLowerCase() as this['state'];
+        return state.toLowerCase() as this['status'];
       default:
         return 'neutral';
     }
@@ -108,7 +108,7 @@ export class PfAlert extends LitElement {
     const hasBody =
       _isServer || this.#slots.hasSlotted(SlotController.default as unknown as string);
     const { variant = 'inline' } = this;
-    const state = this.#aliasState(this.state);
+    const state = this.#aliasState(this.status);
     const inDemo = this.closest('.demo-with-arrows') !== null;
     const hasDescription = this.querySelector('p') !== null;
     const showArrow = inDemo;
@@ -124,7 +124,7 @@ export class PfAlert extends LitElement {
               ${classMap({
       hasBody,
       light: true,
-      [state]: true,
+      [this.status as string]: true,
       [variant]: !!variant,
     })}
              role="alert"

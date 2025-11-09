@@ -1,33 +1,33 @@
-<div class="demo-description white-alerts-page">
+<div class="demo-description alerts-page">
 
-    <pf-alert state="success" dismissable>
+    <pf-alert status="success" dismissable>
       <h3 slot="header">Success alert title</h3>
       <p>Success alert description. This should tell the user more information about the alert.</p>
       <pf-button slot="actions" variant="link" data-action="confirm">View details</pf-button>
       <pf-button slot="actions" variant="link" data-action="dismiss">lgnore</pf-button>
     </pf-alert>
 
-    <pf-alert state="success" dismissable>
+    <pf-alert status="success" dismissable>
       <h3 slot="header">Success alert title</h3>
       <p>Success alert description. This should tell the user more information about the alert. This is a link.</p>
     </pf-alert>
 
-    <pf-alert state="success" toast dismissable>
+    <pf-alert status="success" toast dismissable>
       <h3 slot="header">Success alert title</h3>
       <pf-button slot="actions" variant="link" data-action="confirm">View details</pf-button>
       <pf-button slot="actions" variant="link" data-action="dismiss">lgnore</pf-button>
     </pf-alert>
 
-    <pf-alert state="success" dismissable data-on-close="prevent-default">
+    <pf-alert status="success" dismissable data-on-close="prevent-default">
       <h3 slot="header">Success alert title</h3>
     </pf-alert>
 
-    <pf-alert state="success">
+    <pf-alert status="success">
       <h3 slot="header">Success alert title</h3>
     </pf-alert>
 
 
-    <pf-alert state="success">
+    <pf-alert status="success">
       <h3 slot="header">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque cursus
         enim
         fringilla...</h3>
@@ -36,7 +36,7 @@
     </pf-alert>
 
 
-    <pf-alert variant="success">
+    <pf-alert status="success">
       <h3 slot="header">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque cursus
         enim
         fringilla tincidunt. Proin lobortis aliquam dictum. Nam vel ullamcorper nulla, nec blandit dolor. Vivamus
@@ -53,7 +53,7 @@
 </script>
 
 <style>
-  .white-alerts-page pf-alert::part(container) {
+  .alerts-page pf-alert::part(container) {
     background-color: var(--pf-global--BackgroundColor--100);
     padding: 0.5cm;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);

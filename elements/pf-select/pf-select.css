@@ -534,3 +534,39 @@ pf-badge {
   background-color: var(--pf-c-divider--after--BackgroundColor);
   flex: 1 0 100%;
 }
+
+
+@media (prefers-color-scheme: dark) {
+  :host {
+    color: var(--pf-global--Color--light-100, #f0f0f0);
+  }
+
+  #toggle {
+    background-color: var(--pf-global--BackgroundColor--dark-100, #151515) !important;
+    border-color: var(--pf-global--BorderColor--dark-200, #3c3f42);
+  }
+
+  #listbox-container {
+    background-color: var(--pf-global--BackgroundColor--dark-100, #151515) !important;
+    border-color: var(--pf-global--BorderColor--dark-200, #3c3f42);
+  }
+
+  #listbox slot.disabled {
+    background-color: var(--pf-global--BackgroundColor--dark-200, #212427) !important;
+    color: var(--pf-global--Color--light-200, #d2d2d2) !important;
+  }
+
+  #toggle-button,
+  #toggle-input {
+    color: var(--pf-global--Color--light-100, #f0f0f0);
+  }
+
+  #listbox {
+    color: var(--pf-global--Color--light-100, #f0f0f0);
+  }
+
+  #outer.disabled {
+    color: var(--pf-global--disabled-color--200, #6a6e73) !important;
+    background-color: var(--pf-global--BackgroundColor--dark-200, #212427) !important;
+  }
+}

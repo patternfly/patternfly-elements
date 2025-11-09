@@ -535,6 +535,7 @@ pf-badge {
   flex: 1 0 100%;
 }
 
+
 @media (prefers-color-scheme: dark) {
   :host {
     color: var(--pf-global--Color--light-100, #f0f0f0);

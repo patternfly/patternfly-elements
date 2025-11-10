@@ -53,8 +53,7 @@ export class PfAlert extends LitElement {
     | 'neutral'
     | 'info'
     | 'success'
-    | 'danger'
-    | 'cogear' = 'neutral';
+    | 'danger' = 'neutral';
 
   @property({ reflect: true }) variant?: 'alternate' | 'inline';
 
@@ -63,15 +62,18 @@ export class PfAlert extends LitElement {
   #slots = new SlotController(this, 'header', null, 'actions');
 
   get #icon() {
-    const state = this.status.toLowerCase() as this['status'];
-    switch (state) {
+  const internalStatus = this.closest('.demo-with-arrows') &&
+   this.status === 'neutral' && this.classList.contains('cogear-demo')
+    ? 'cogear'
+    : this.status;
+    switch (internalStatus) {
       // @ts-expect-error: support for deprecated props
       case 'note': return ICONS.get('info');
       // @ts-expect-error: support for deprecated props
       case 'default': return ICONS.get('neutral');
       // @ts-expect-error: support for deprecated props
       case 'error': return ICONS.get('danger');
-      default: return ICONS.get(state);
+      default: return ICONS.get(internalStatus);
     }
   }
 
@@ -108,10 +110,13 @@ export class PfAlert extends LitElement {
     const hasBody =
       _isServer || this.#slots.hasSlotted(SlotController.default as unknown as string);
     const { variant = 'inline' } = this;
-    const state = this.#aliasState(this.status);
+    // const state = this.#aliasState(this.status);
     const inDemo = this.closest('.demo-with-arrows') !== null;
     const hasDescription = this.querySelector('p') !== null;
     const showArrow = inDemo;
+    const internalStatus = (this.closest('.demo-with-arrows') && this.classList.contains('cogear-demo'))
+  ? 'cogear'
+  : this.status;
     const arrowDirection = hasDescription ? 'angle-down' : 'angle-right';
     const footer = html`<footer class="${classMap({ hasActions })}"
             <!-- Provide actions that the user can take for the alert -->
@@ -124,8 +129,8 @@ export class PfAlert extends LitElement {
               ${classMap({
       hasBody,
       light: true,
-      [this.status as string]: true,
-      [variant]: !!variant,
+      [internalStatus]: true,
+      [variant ?? 'inline']: !!variant,
     })}
              role="alert"
              aria-hidden="false"

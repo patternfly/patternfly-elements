@@ -10,7 +10,7 @@
   --pf-c-hint--BackgroundColor: var(--pf-global--palette--blue-50, #e7f1fa);
   --pf-c-hint--BorderColor: var(--pf-global--palette--blue-100, #bee1f4);
   --pf-c-hint--BorderWidth: 1px;
-  --pf-c-hint--BorderRadius: 0;
+  --pf-c-hint--BorderRadius: var(--pf-global--BorderRadius--sm, 3px);
   --pf-c-hint--BoxShadow: var(--pf-global--BoxShadow--sm, 0 0.0625rem 0.125rem 0 rgba(3, 3, 3, 0.12), 0 0 0.125rem 0 rgba(3, 3, 3, 0.06));
 
   /* Title */
@@ -38,6 +38,7 @@
 #container {
   position: relative;
   display: grid;
+  grid-template-columns: 1fr auto;
   gap: var(--pf-c-hint--GridRowGap);
   padding:
     var(--pf-c-hint--PaddingTop)
@@ -48,22 +49,24 @@
   border: var(--pf-c-hint--BorderWidth) solid var(--pf-c-hint--BorderColor);
   border-radius: var(--pf-c-hint--BorderRadius);
   box-shadow: var(--pf-c-hint--BoxShadow);
+  overflow: visible;
 }
 
-#container.has-actions {
-  padding-right: calc(var(--pf-c-hint--Padding) + var(--pf-global--spacer--xl, 2rem));
+#container > * {
+  grid-column: 1;
 }
 
 #actions {
-  position: absolute;
-  top: var(--pf-c-hint__actions--Top);
-  right: var(--pf-c-hint__actions--Right);
-  margin-left: var(--pf-c-hint__actions--MarginLeft);
+  grid-column: 2;
+  grid-row: 1 / -1;
+  align-self: start;
+  position: relative;
+  z-index: 1000;
 }
 
-#actions ::slotted(.pf-c-dropdown),
 #actions ::slotted(pf-dropdown) {
   margin-top: var(--pf-c-hint__actions--c-dropdown--MarginTop);
+  --pf-c-dropdown__menu--MinWidth: auto;
 }
 
 #title {

@@ -5,17 +5,26 @@
 </pf-hint>
 
 <pf-hint>
-  <button slot="actions" class="pf-c-dropdown__toggle pf-m-plain" aria-label="Actions">
-    <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 192 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;">
-      <path d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"></path>
-    </svg>
-  </button>
+  <pf-dropdown slot="actions">
+    <pf-button slot="toggle" plain icon="ellipsis-v" aria-label="Actions"></pf-button>
+    <pf-dropdown-menu slot="menu">
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item>Action</pf-dropdown-item>
+      <pf-dropdown-item disabled>Disabled Link</pf-dropdown-item>
+      <pf-dropdown-item disabled>Disabled Action</pf-dropdown-item>
+      <hr>
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item>Separated Action</pf-dropdown-item>
+    </pf-dropdown-menu>
+  </pf-dropdown>
   Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies.
   <a slot="footer" href="#">Try it for 90 days</a>
 </pf-hint>
 
 <script type="module">
   import '@patternfly/elements/pf-hint/pf-hint.js';
+  import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
 </script>
 
 <style>
@@ -34,19 +43,5 @@
     margin-block-start: 0;
   }
 
-  .pf-c-dropdown__toggle {
-    background: transparent;
-    border: none;
-    padding: 0.25rem 0.5rem;
-    cursor: pointer;
-    color: var(--pf-global--Color--100, #151515);
-  }
 
-  .pf-c-dropdown__toggle:hover {
-    background-color: var(--pf-global--BackgroundColor--200, #f0f0f0);
-  }
-
-  .pf-m-plain {
-    border: none;
-  }
 </style>

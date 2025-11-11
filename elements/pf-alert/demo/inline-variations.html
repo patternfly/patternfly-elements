@@ -1,0 +1,44 @@
+<div class="demo-description alerts-page">
+
+    <pf-alert  status="success" dismissable data-on-close="prevent-default">
+      <h3 slot="header">Success alert title</h3>
+      <p>Success alert description. This should tell the user more information about the alert.</p>
+      <pf-button slot="actions" variant="link" data-action="dismiss">View details</pf-button>
+      <pf-button slot="actions" variant="link" data-action="confirm">lgnore</pf-button>
+    </pf-alert>
+
+    <pf-alert  status="success" dismissable data-on-close="prevent-default">
+      <h3 slot="header">Success alert title</h3>
+      <p>Success alert description. This should tell the user more information about the alert.
+        <pf-button slot="actions" variant="link" style="text-decoration:none; color:#06c; font-size:0.875rem;">This is
+          a link.</pf-button>
+      </p>
+    </pf-alert>
+
+    <pf-alert status="success" dismissable data-on-close="prevent-default">
+      <h3 slot="header">Success alert title</h3>
+      <pf-button slot="actions" variant="link" data-action="dismiss">View details</pf-button>
+      <pf-button slot="actions" variant="link" data-action="confirm">lgnore</pf-button>
+    </pf-alert>
+
+    <pf-alert status="success" dismissable data-on-close="prevent-default">
+      <h3 slot="header">Success alert title</h3>
+    </pf-alert>
+</div>
+
+<style>
+
+  .alerts-page pf-alert::part(container) {
+    padding: 0.5cm;
+    box-shadow: 0 4px 12px #fff;
+  }
+
+  .demo-description {
+    padding: 1cm;
+  }
+</style>
+
+<script type="module">
+  import '@patternfly/elements/pf-alert/pf-alert.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+</script>

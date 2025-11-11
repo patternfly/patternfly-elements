@@ -113,12 +113,12 @@ test.describe(tagName, () => {
   });
 
 
-  test('visual states and variants', async ({ page }) => {
-    // Test each state renders
-    for (const state of ['success', 'warning', 'danger', 'info']) {
-      const alert = await page.locator(`pf-alert[state="${state}"]`).first();
+  test('visual statuses  and variants', async ({ page }) => {
+    // Test each status  renders
+    for (const status of ['success', 'warning', 'danger', 'info']) {
+      const alert = await page.locator(`pf-alert[status ="${status}"]`).first();
       if (await alert.count() > 0) {
-        // Verify icon exists for state
+        // Verify icon exists for status
         const icon = await alert.locator('#icon');
         expect(await icon.count()).toBe(1);
       }

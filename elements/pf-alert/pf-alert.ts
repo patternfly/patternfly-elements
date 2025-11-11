@@ -38,7 +38,7 @@ export class AlertCloseEvent extends Event {
     super('close', { bubbles: true, cancelable: true });
   }
 }
-let toaster: HTMLElement;
+// let toaster: HTMLElement;
 const toasts = new Set<Required<ToastOptions>>();
 
 
@@ -62,9 +62,9 @@ export class PfAlert extends LitElement {
   #slots = new SlotController(this, 'header', null, 'actions');
 
   get #icon() {
-  const internalStatus = this.closest('.demo-with-arrows') &&
-   this.status === 'neutral' && this.classList.contains('cogear-demo')
-    ? 'cogear'
+    const internalStatus = this.closest('.demo-with-arrows')
+   && this.status === 'neutral' && this.classList.contains('cogear-demo') ?
+    'cogear'
     : this.status;
     switch (internalStatus) {
       // @ts-expect-error: support for deprecated props
@@ -77,25 +77,25 @@ export class PfAlert extends LitElement {
     }
   }
 
-  #aliasState(state: string) {
-    switch (state.toLowerCase()) {
-      // the first three are deprecated pre-DPO status names
-      case 'note': return 'info';
-      case 'default': return 'neutral';
-      case 'error': return 'danger';
-      // the following are DPO-approved status names
-      case 'danger':
-      case 'warning':
-      case 'custom':
-      case 'neutral':
-      case 'info':
-      case 'success':
-      case 'cogear':
-        return state.toLowerCase() as this['status'];
-      default:
-        return 'neutral';
-    }
-  }
+  // #aliasState(state: string) {
+  //   switch (state.toLowerCase()) {
+  //     // the first three are deprecated pre-DPO status names
+  //     case 'note': return 'info';
+  //     case 'default': return 'neutral';
+  //     case 'error': return 'danger';
+  //     // the following are DPO-approved status names
+  //     case 'danger':
+  //     case 'warning':
+  //     case 'custom':
+  //     case 'neutral':
+  //     case 'info':
+  //     case 'success':
+  //     case 'cogear':
+  //       return state.toLowerCase() as this['status'];
+  //     default:
+  //       return 'neutral';
+  //   }
+  // }
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -114,8 +114,10 @@ export class PfAlert extends LitElement {
     const inDemo = this.closest('.demo-with-arrows') !== null;
     const hasDescription = this.querySelector('p') !== null;
     const showArrow = inDemo;
-    const internalStatus = (this.closest('.demo-with-arrows') && this.classList.contains('cogear-demo'))
-  ? 'cogear'
+    const internalStatus = (
+      this.closest('.demo-with-arrows')
+       && this.classList.contains('cogear-demo')) ?
+  'cogear'
   : this.status;
     const arrowDirection = hasDescription ? 'angle-down' : 'angle-right';
     const footer = html`<footer class="${classMap({ hasActions })}"

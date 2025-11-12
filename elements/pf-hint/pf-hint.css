@@ -67,6 +67,8 @@
 #actions ::slotted(pf-dropdown) {
   margin-top: var(--pf-c-hint__actions--c-dropdown--MarginTop);
   --pf-c-dropdown__menu--MinWidth: auto;
+  --pf-c-dropdown__menu--Left: auto;
+  --pf-c-dropdown__menu--Right: 0;
 }
 
 #title {

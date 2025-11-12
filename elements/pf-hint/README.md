@@ -65,7 +65,7 @@ Add a title to your hint to provide more context to the user.
 ```html
 <pf-hint>
   <pf-dropdown slot="actions">
-    <pf-button slot="trigger" plain aria-label="Actions">
+    <pf-button slot="toggle" plain aria-label="Actions">
       <pf-icon icon="ellipsis-v"></pf-icon>
     </pf-button>
     <pf-dropdown-menu>
@@ -84,31 +84,29 @@ Add a title to your hint to provide more context to the user.
 
 ## Slots
 
-| Slot      | Description                                                                |
-| --------- | -------------------------------------------------------------------------- |
-| (default) | Body content of the hint                                                   |
-| `title`   | Optional title for the hint                                                |
-| `footer`  | Optional footer content, typically containing action links or buttons      |
-| `actions` | Optional actions menu (e.g., kebab dropdown menu in the top-right corner)  |
+- `(default)` – Body content of the hint.
+- `title` – Optional title that appears above the body copy.
+- `footer` – Optional footer content, typically links or buttons.
+- `actions` – Optional actions menu (for example, a kebab dropdown in the top-right corner).
 
 ## CSS Custom Properties
 
-| Property                          | Description                          | Default                                        |
-| --------------------------------- | ------------------------------------ | ---------------------------------------------- |
-| `--pf-c-hint--BackgroundColor`    | Background color of the hint         | `var(--pf-global--BackgroundColor--light-300)` |
-| `--pf-c-hint--BorderRadius`       | Border radius of the hint container  | `var(--pf-global--BorderRadius--sm)`           |
-| `--pf-c-hint--Padding`            | Padding around the hint content      | `var(--pf-global--spacer--md)`                 |
-| `--pf-c-hint__title--FontSize`    | Font size of the title               | `var(--pf-global--FontSize--md)`               |
-| `--pf-c-hint__title--FontWeight`  | Font weight of the title             | `var(--pf-global--FontWeight--semi-bold)`      |
-| `--pf-c-hint__body--FontSize`     | Font size of the body text           | `var(--pf-global--FontSize--sm)`               |
-| `--pf-c-hint__body--Color`        | Color of the body text               | `var(--pf-global--Color--100)`                 |
+- `--pf-c-hint--BackgroundColor` – Background color (`var(--pf-global--palette--blue-50, #e7f1fa)`).
+- `--pf-c-hint--BorderColor` – Border color (`var(--pf-global--palette--blue-100, #bee1f4)`).
+- `--pf-c-hint--BorderWidth` – Border width (`1px`).
+- `--pf-c-hint--BorderRadius` – Border radius (`var(--pf-global--BorderRadius--sm, 3px)`).
+- `--pf-c-hint--PaddingTop/Right/Bottom/Left` – Padding around the container (`var(--pf-global--spacer--lg, 1.5rem)`).
+- `--pf-c-hint__title--FontSize` – Title font size (`1.125rem`).
+- `--pf-c-hint__title--FontWeight` – Title font weight (`var(--pf-global--FontWeight--semi-bold, 700)`).
+- `--pf-c-hint__body--FontSize` – Body font size (`1rem`).
+- `--pf-c-hint__body--Color` – Body text color (`var(--pf-global--Color--100, #151515)`).
+- `--pf-c-hint__footer--child--MarginRight` – Spacing between footer children (`1rem`).
+- `--pf-c-hint__actions--c-dropdown--MarginTop` – Offset for dropdown actions (`calc(0.375rem * -1)`).
 
 ## CSS Parts
 
-| Part        | Description              |
-| ----------- | ------------------------ |
-| `container` | The hint container       |
-| `title`     | The title element        |
-| `body`      | The body element         |
-| `footer`    | The footer element       |
-| `actions`   | The actions element      |
+- `container`
+- `title`
+- `body`
+- `footer`
+- `actions`

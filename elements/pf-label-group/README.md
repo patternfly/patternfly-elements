@@ -37,6 +37,26 @@ import '@patternfly/elements/pf-label-group/pf-label-group.js';
 
 Displays a group of labels, showing only the first two and an overflow label like “1 more” that expands on click.
 
+## Adding Labels
+
+`<pf-label-group>` supports adding new labels dynamically through the `addLabelMode` attribute:
+
+- `none` (default): No label addition.
+- `autoNoEdit`: Adds labels automatically without user editing.
+- `fromList`: Allows adding labels from a predefined list.
+- `customForm`: Lets users add custom labels via a form.
+
+Example:
+
+```html
+<pf-label-group add-label-mode="fromList">
+  <span slot="category">Filters</span>
+  <pf-label removable>Security</pf-label>
+  <pf-label removable>Performance</pf-label>
+</pf-label-group>
+
+Use this feature when you want users to dynamically add new tags or filters to the group.
+
 ---
 
 

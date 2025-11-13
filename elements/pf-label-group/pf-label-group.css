@@ -3,7 +3,6 @@
   flex-direction: row;
   position: relative;
   gap: 0.5rem;
-  border: 0;
 }
 
 pf-button {
@@ -12,41 +11,21 @@ pf-button {
   --pf-c-button--PaddingRight: var(--pf-c-label__c-button--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
   --pf-c-button--PaddingBottom: var(--pf-c-label__c-button--PaddingBottom, var(--pf-global--spacer--xs, 0.25rem));
   --pf-c-button--PaddingLeft: var(--pf-c-label__c-button--PaddingLeft, var(--pf-global--spacer--sm, 0.5rem));
-  margin: var(--pf-c-label__c-button--MarginTop, -0.5rem) var(--pf-c-label__c-button--MarginRight, -0.5rem) var(--pf-c-label__c-button--MarginBottom, -0.5rem) var(--pf-c-label__c-button--MarginLeft, 0.25rem);
-}
-
-.compact {
-  --pf-c-label--PaddingTop: var(--pf-c-label--m-compact--PaddingTop, 0);
-  --pf-c-label--PaddingRight: var(--pf-c-label--m-compact--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
-  --pf-c-label--PaddingBottom: var(--pf-c-label--m-compact--PaddingBottom, 0);
-  --pf-c-label--PaddingLeft: var(--pf-c-label--m-compact--PaddingLeft, var(--pf-global--spacer--sm, 0.5rem));
-  --pf-global--icon--FontSize--sm: 12px;
-}
-
-.add-label-btn {
-  background-color: #fff;
-  color: #0066cc;
-  border: 1px solid #d2d2d2;
-  border-radius: 9999px;
-  padding: 0px 2px;
-  font-size: 9px;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-.add-label-btn:hover {
-  background-color: #f5f5f5;
+  margin: var(--pf-c-label__c-button--MarginTop, -0.5rem)
+          var(--pf-c-label__c-button--MarginRight, -0.5rem)
+          var(--pf-c-label__c-button--MarginBottom, -0.5rem)
+          var(--pf-c-label__c-button--MarginLeft, 0.25rem);
 }
 
 #outer {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
+  align-items: center;
   padding: 0.5rem;
   border: 1px solid #d2d2d2;
   border-radius: 6px;
   background-color: #fff;
-  align-items: center;
 }
 
 :host([orientation="horizontal"]) #outer {
@@ -60,10 +39,118 @@ pf-button {
 
 ::slotted([slot="category"]) {
   display: inline-block;
-  max-width: 16ch;
+  max-width: 16ch; 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: middle;
-  cursor: default;
+}
+
+.add-label {
+  cursor: pointer;
+  align-items: center;
+  gap: 4px;
+  transition: border 0.2s ease;
+  border-radius: 0.99rem;
+}
+
+.add-label:hover {
+  box-shadow: 0 0 0 1px #ccc;
+}
+
+pf-modal#custom-label-modal {
+  --pf-c-modal--BoxShadow: 0 0 15px rgba(0,0,0,0.2);
+  --pf-c-modal-box--BorderRadius: 8px;
+  --pf-c-modal-box--Padding: 1rem;
+  width: 200px; 
+  font-size: 0.875rem;
+}
+
+pf-modal#custom-label-modal h2[slot="header"] {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+#add-label-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+#add-label-form input{
+  padding: 0.25rem 0.25rem;
+  font-size: 1rem;
+  border: 1px solid #d2d2d2;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#add-label-form .radio-group {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start; 
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+#add-label-form .radio-group > label {
+  display: inline-flex;     
+  flex-direction: row;      
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  width: auto;              
+}
+
+#add-label-form .radio-group > label input[type="radio"] {
+  margin: 0;
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  appearance: auto;
+}
+
+#add-label-form .radio-group > label input[type="radio"] {
+  accent-color: var(--pf-global--primary-color--100, #0066cc);
+}
+
+#add-label-form .radio-group > label .radio-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+pf-modal#custom-label-modal [slot="footer"] {
+  display: flex;
+  justify-content: flex-end; 
+  gap: 0.5rem;               
+  margin-top: 1rem;           
+  position: static; 
+}
+
+pf-modal#custom-label-modal pf-button {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+}
+
+#add-label-form label {
+  font-weight: bold;
+  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.05rem; 
+  margin-top: 0.15rem; 
+}
+
+#add-label-form pf-select {
+  display: inline-block;
+  width: fit-content;      
+}
+
+#color-select {
+  min-width: 7rem; 
+}
+
+#icon-select {
+  min-width: 9rem; 
 }

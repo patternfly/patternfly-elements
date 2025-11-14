@@ -1,4 +1,4 @@
-<div class="demo-description alerts-page">
+<!-- <div class="demo-description alerts-page">
 
     <pf-alert status="success" dismissable>
       <h3 slot="header">Success alert title</h3>
@@ -63,4 +63,39 @@
   .demo-description {
     padding: 1cm;
   }
-</style>
+</style> -->
+
+
+
+<div class="demo-container">
+  
+  <pf-alert variant="default">
+    <pf-icon icon="bell" slot="icon"></pf-icon>
+    <h3 slot="header">Default alert title</h3>
+    </pf-alert>
+
+  <pf-alert variant="info">
+    <pf-icon icon="info-circle" slot="icon"></pf-icon>
+    <h3 slot="header">Info alert title</h3>
+  </pf-alert>
+
+  <pf-alert variant="success">
+    <pf-icon icon="check-circle" slot="icon"></pf-icon>
+    <h3 slot="header">Success alert title</h3>
+  </pf-alert>
+
+  <pf-alert variant="warning">
+    <pf-icon icon="exclamation-triangle" slot="icon"></pf-icon>
+    <h3 slot="header">Warning alert title</h3>
+  </pf-alert>
+
+  <pf-alert variant="danger">
+    <pf-icon icon="exclamation-circle" slot="icon"></pf-icon>
+    <h3 slot="header">Danger alert title</h3>
+  </pf-alert>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-alert/pf-alert.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+</script>

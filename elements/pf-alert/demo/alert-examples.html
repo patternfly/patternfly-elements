@@ -1,0 +1,39 @@
+
+<div class="alerts-page">
+  
+  <pf-alert variant="default">
+    <pf-icon icon="bell" slot="icon"></pf-icon>
+    <h3 slot="title">Custom  alert title</h3>
+    </pf-alert>
+
+  <pf-alert variant="info">
+    <pf-icon icon="info-circle" slot="icon"></pf-icon>
+    <h3 slot="title">Info alert title</h3>
+  </pf-alert>
+
+  <pf-alert variant="success">
+    <pf-icon icon="check-circle" slot="icon"></pf-icon>
+    <h3 slot="title">Success alert title</h3>
+  </pf-alert>
+
+  <pf-alert variant="warning">
+    <pf-icon icon="exclamation-triangle" slot="icon"></pf-icon>
+    <h3 slot="title">Warning alert title</h3>
+  </pf-alert>
+
+  <pf-alert variant="danger">
+    <pf-icon icon="exclamation-circle" slot="icon"></pf-icon>
+    <h3 slot="title">Danger alert title</h3>
+  </pf-alert>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-alert/pf-alert.js';
+</script>
+<style>
+   .alerts-page pf-alert::part(container) {
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+</style> 
+

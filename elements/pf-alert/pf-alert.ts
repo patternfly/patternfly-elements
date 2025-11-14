@@ -1,12 +1,18 @@
-import { LitElement, type TemplateResult, html, isServer } from 'lit';
+import { LitElement, html, type TemplateResult, type PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
+import { state } from 'lit/decorators.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import styles from './pf-alert.css';
-import '@patternfly/elements/pf-icon/pf-icon.js';
-import '@patternfly/elements/pf-button/pf-button.js';
 
+export type AlertVariant = (
+  | 'default'
+  | 'info'
+  | 'warning'
+  | 'danger'
+  | 'success'
+);
 
 interface AlertAction {
   action: 'dismiss' | 'confirm' | string;
@@ -14,173 +20,171 @@ interface AlertAction {
 }
 interface ToastOptions {
   id?: string;
-  message: string | TemplateResult;
-  heading?: string;
-  state?: PfAlert['status'];
-  persistent?: boolean;
-  actions?: AlertAction[];
+  children: string | TemplateResult;
+  title?: string;
+  variant?: AlertVariant;
+  timeout?: number;
+  actionLinks?: AlertAction[];
 }
-const ICONS = new Map(Object.entries({
-  neutral: 'minus-circle',
-  info: 'info-circle',
-  success: 'check-circle',
-  custom: 'bell',
-  cogear: 'cog',
-  warning: 'exclamation-triangle',
-  danger: 'exclamation-circle',
-  close: 'times',
-
-}));
 
 
-export class AlertCloseEvent extends Event {
-  constructor(public action: 'close' | 'confirm' | 'dismiss' | string) {
-    super('close', { bubbles: true, cancelable: true });
-  }
-}
-// let toaster: HTMLElement;
+
 const toasts = new Set<Required<ToastOptions>>();
-
 
 @customElement('pf-alert')
 export class PfAlert extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
-  @property({ reflect: true })
-  status:
-    | 'warning'
-    | 'custom'
-    | 'neutral'
-    | 'info'
-    | 'success'
-    | 'danger' = 'neutral';
+  @property({ reflect: true }) variant?: AlertVariant;
 
-  @property({ reflect: true }) variant?: 'alternate' | 'inline';
+  @property() icon?: string;
 
-  @property({ reflect: true, type: Boolean }) dismissable = false;
+  #slots = new SlotController(this, null, 'icon', 'actionClose', 'title', 'actionLinks');
 
-  #slots = new SlotController(this, 'header', null, 'actions');
 
-  get #icon() {
-    const internalStatus = this.closest('.demo-with-arrows')
-   && this.status === 'neutral' && this.classList.contains('cogear-demo') ?
-    'cogear'
-    : this.status;
-    switch (internalStatus) {
-      // @ts-expect-error: support for deprecated props
-      case 'note': return ICONS.get('info');
-      // @ts-expect-error: support for deprecated props
-      case 'default': return ICONS.get('neutral');
-      // @ts-expect-error: support for deprecated props
-      case 'error': return ICONS.get('danger');
-      default: return ICONS.get(internalStatus);
+
+  private static readonly TIMEOUT_MS = 8000;
+  private static _toastContainer: HTMLElement | null = null;
+  private static _instanceCounter = 0;
+
+  public static async toast(options: ToastOptions): Promise<PfAlert> {
+    if (!PfAlert._toastContainer) {
+      PfAlert._toastContainer = document.getElementById('toast-alerts-container');
+      if (!PfAlert._toastContainer) {
+        throw new Error("Toast container '#toast-alerts-container' not found in DOM.");
+      }
+    }
+
+    const alertElement = document.createElement('pf-alert') as PfAlert;
+    PfAlert._instanceCounter++;
+    alertElement.variant = options.variant || 'default';
+    alertElement.icon = options.variant === 'default' ? 'bell' :
+     options.variant || 'bell';
+    if (options.title) {
+      const title = document.createElement('h3'); title.slot = 'title'; title.textContent = options.title;
+      alertElement.appendChild(title);
+    }
+    if (typeof options.children === 'string') {
+      const p = document.createElement('p'); p.textContent = options.children;
+      alertElement.appendChild(p);
+    }
+
+    if (options.actionLinks && options.actionLinks.length > 0) {
+      const actionsDiv = document.createElement('div'); actionsDiv.slot = 'actionLinks';
+      options.actionLinks.forEach(actionLinks => {
+        const button = document.createElement('pf-button'); button.setAttribute('variant', 'link');
+        button.textContent = actionLinks.text;
+        switch (actionLinks.text) {
+          case 'View details':
+            button.addEventListener('click', () => {
+              PfAlert._toastContainer!.innerHTML = '';
+            });
+            break;
+          case 'Ignore':
+            // button.addEventListener('click', () => {  });
+            break;
+          default:
+            button.addEventListener('click', () => { alertElement.remove(); });
+            break;
+        }
+        actionsDiv.appendChild(button);
+      });
+      alertElement.appendChild(actionsDiv);
+    }
+
+    PfAlert._toastContainer!.prepend(alertElement);
+
+
+    if (!options.timeout) {
+      let timer: number;
+      const startTimer = () => { timer = window.setTimeout(() => alertElement.remove(), PfAlert.TIMEOUT_MS); };
+      alertElement.addEventListener('mouseenter', () => window.clearTimeout(timer));
+      alertElement.addEventListener('mouseleave', startTimer);
+      startTimer();
+    }
+    return alertElement;
+  }
+
+
+
+
+  override willUpdate(changed: PropertyValues<this>): void {
+    if (changed.has('icon') && this.icon) {
+      import('@patternfly/elements/pf-icon/pf-icon.js');
     }
   }
 
-  // #aliasState(state: string) {
-  //   switch (state.toLowerCase()) {
-  //     // the first three are deprecated pre-DPO status names
-  //     case 'note': return 'info';
-  //     case 'default': return 'neutral';
-  //     case 'error': return 'danger';
-  //     // the following are DPO-approved status names
-  //     case 'danger':
-  //     case 'warning':
-  //     case 'custom':
-  //     case 'neutral':
-  //     case 'info':
-  //     case 'success':
-  //     case 'cogear':
-  //       return state.toLowerCase() as this['status'];
-  //     default:
-  //       return 'neutral';
-  //   }
-  // }
 
-  connectedCallback(): void {
-    super.connectedCallback();
-    if (!isServer) {
-      this.requestUpdate();
-    }
-  }
-
-  render(): TemplateResult<1> {
-    const _isServer = isServer && !this.hasUpdated;
-    const hasActions = _isServer || this.#slots.hasSlotted('actions');
-    const hasBody =
-      _isServer || this.#slots.hasSlotted(SlotController.default as unknown as string);
-    const { variant = 'inline' } = this;
-    // const state = this.#aliasState(this.status);
-    const inDemo = this.closest('.demo-with-arrows') !== null;
-    const hasDescription = this.querySelector('p') !== null;
-    const showArrow = inDemo;
-    const internalStatus = (
-      this.closest('.demo-with-arrows')
-       && this.classList.contains('cogear-demo')) ?
-  'cogear'
-  : this.status;
-    const arrowDirection = hasDescription ? 'angle-down' : 'angle-right';
-    const footer = html`<footer class="${classMap({ hasActions })}"
-            <!-- Provide actions that the user can take for the alert -->
-            <slot name="actions"></slot>
-          </footer>`;
+  override render(): TemplateResult<1> {
+    const { variant, icon } = this;
+    const hasIcon = !!icon || this.#slots.hasSlotted('icon');
     return html`
-      <div id="container"
-              part="container"
-              class=
-              ${classMap({
-      hasBody,
-      light: true,
-      [internalStatus]: true,
-      [variant ?? 'inline']: !!variant,
-    })}
-             role="alert"
-             aria-hidden="false"
-             color-palette="lightest">
-        <div id="left-column" style="display: flex; align-items: center; gap: 0.5rem;">
-          ${showArrow ? html`
-          <pf-icon 
-            id="arrow-icon"
-            set="fas"
-            icon="${arrowDirection}"
-            class="alerts-page-only"
-            style="--pf-c-icon--Color: var(--_icon-color); font-size: 16px; height: 16px; width: 16px;">
-          </pf-icon>` : ''}
-          <pf-icon 
-            id="icon"
-            set="fas" 
-            icon="${this.#icon}"  
-            style="--pf-c-icon--Color: var(--_icon-color); font-size: 36px; height: 36px; width: 36px;">
-          </pf-icon>
+      <div id="container" part="container"
+        class=${classMap({ hasIcon, [variant ?? '']: !!variant })}>
+
+        <div id="icon-container" part="icon-container">
+          <slot name="icon" part="icon">${!this.icon ? '' : html`
+            <pf-icon icon="${this.icon}"></pf-icon>`}
+          </slot>
         </div>
-        <div id="middle-column">
-          <header ?hidden="${!_isServer && this.#slots.isEmpty('header')}">
-            <div id="header">
-              <!-- Provide a header for the alert message. -->
-              <slot name="header"></slot>
-            </div>${!this.dismissable ? '' : html`
-            <div id="header-actions">
-                <pf-icon
-                  id="close-button"
-                  set="fas"
-                  icon="times"
-                  role="button"
-                  tabindex="0"
-                  aria-label="Close"
-                </pf-icon>
-              </div>`}
-        </header>
-        <div id="description">
-          <!-- Provide a description for the alert message -->
+
+        <div id="title-area" part="title-area">
+          <slot name="title"></slot>
+        </div>
+
+        <div id="close-action" part="close-action">
+          <slot name="actionClose"></slot> 
+        </div>
+
+        <div id="description" part="description">
           <slot></slot>
         </div>
-        ${footer}
+
+        <div id="action-links" part="action-links">
+          <slot name="actionLinks"></slot>
+        </div>
+
       </div>
-    </div>
     `;
   }
 }
+@customElement('alert-demo-page')
+export class AlertDemoPage extends LitElement {
 
+  @state() private alertCounter = 0;
+  private addToastAlert() {
+    this.alertCounter++;
+    const id = this.alertCounter;
+
+    PfAlert.toast({
+      variant: 'default',
+      title: `Default timeout Alert`,
+      children: `This alert will dismiss after 8 seconds.`,
+      actionLinks: [
+        { action: 'view', text: 'View details' },
+        { action: 'ignore', text: 'Ignore' },
+      ],
+    });
+  }
+  private removeAllToastAlerts() {
+    const container = document.getElementById('toast-alerts-container');
+    if (container) {
+      container.innerHTML = '';
+    }
+  }
+  override render(): TemplateResult {
+    return html`
+       <div class="demo-controls">
+         <pf-button variant="control" @click="${this.addToastAlert}">
+           Add alert
+         </pf-button>
+         <pf-button variant="control" @click="${this.removeAllToastAlerts}">
+           Remove all alerts
+         </pf-button>
+       </div>
+     `;
+  }
+}
 
 declare global {
   interface HTMLElementTagNameMap {

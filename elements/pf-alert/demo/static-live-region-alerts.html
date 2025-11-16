@@ -1,0 +1,33 @@
+<div class="alerts-page">
+  <pf-alert
+  variant="info"
+  aria-live="polite"
+  aria-relevant="additions text"
+  aria-atomic="true">
+  <h3 slot="title">Default live region configuration</h3>
+  <p>This alert uses the recommended <code>isLiveRegion</code> prop to automatically set ARIA attributes and CSS classes.</p>
+</pf-alert>
+
+<pf-alert
+  variant="info"
+  aria-live="assertive"
+  aria-relevant="additions text"
+  aria-atomic="true">
+  <h3 slot="title">Customized live region</h3>
+  <p>You can alternatively omit the <code>isLiveRegion</code> prop to specify ARIA attributes and CSS manually on the containing element.</p>
+</pf-alert>
+</div>
+
+
+
+<script type="module">
+    import '@patternfly/elements/pf-alert/pf-alert.js';
+    import '@patternfly/elements/pf-icon/pf-icon.js';
+
+</script>
+<style>
+  .alerts-page pf-alert::part(container) {
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+</style>

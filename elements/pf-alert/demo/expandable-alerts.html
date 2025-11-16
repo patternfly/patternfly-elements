@@ -1,27 +1,26 @@
-<pf-alert variant="success">
-  <pf-icon icon="check-circle" slot="icon"></pf-icon>
-  <h3 slot="title">Success alert title</h3>
-  <p>Success alert description. This should tell the user more information about the alert.</p>
-  <pf-icon icon="times" slot="actionClose"></pf-icon>
-</pf-alert>
+<div class="alerts-page">
+  <pf-alert  variant="success">
+    <h3 slot="title">Success alert title</h3>
+    <p>Success alert description. This should tell the user more information about the alert.</p>
+  </pf-alert>
+</div>
+
 
 <pf-alert variant="success">
-  <pf-icon icon="check-circle" slot="icon"></pf-icon>
   <h3 slot="title">Success alert title</h3>
   <p>Success alert description. This should tell the user more information about the alert.</p>
-  <div slot="actionLinks">
-    <pf-button variant="link" data-action="view-details">View details</pf-button>
-    <pf-button variant="link" data-action="ignore">Ignore</pf-button>
-  </div>
+  <pf-button variant="link" data-action="view-details">View details</pf-button>
+  <pf-button variant="link" data-action="ignore">Ignore</pf-button>
 </pf-alert>
 
 <script type="module">
   import '@patternfly/elements/pf-alert/pf-alert.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
 </script>
 
 <style>
-    .alerts-page pf-alert::part(container) {
-        background-color: #fff;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    }
+  .alerts-page pf-alert::part(container) {
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
 </style>

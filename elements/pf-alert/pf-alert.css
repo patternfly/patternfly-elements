@@ -241,7 +241,7 @@ header {
   --_background-color: var(--pf-v5-c-alert--m-inline--m-danger--BackgroundColor, #faeae8);
 }
 
-#container.default {
+#container.neutral {
   --_background-color: var(--pf-v5-global--BackgroundColor--100, #f2f9f9);
   --_border-color: var(--pf-v5-global--BorderColor--100, #009596);
   --_icon-color: var(--pf-v5-global--icon--Color--light, #009596);

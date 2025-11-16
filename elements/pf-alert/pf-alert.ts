@@ -7,25 +7,6 @@ import '@patternfly/elements/pf-icon/pf-icon.js';
 import styles from './pf-alert.css';
 
 
-const variantToIcon = (variant: PfAlert['variant']): string | undefined => {
-  switch (variant) {
-    case 'info':
-      return 'circle-info';
-    case 'success':
-      return 'circle-check';
-    case 'warning':
-      return 'triangle-exclamation';
-    case 'danger':
-      return 'circle-exclamation';
-    case 'neutral':
-      return 'bell';
-    case 'custom':
-    default:
-      return undefined;
-  }
-};
-
-
 @customElement('pf-alert')
 export class PfAlert extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
@@ -41,7 +22,7 @@ export class PfAlert extends LitElement {
 
   @property() icon?: string;
 
-  #slots = new SlotController(this, null, 'icon', 'actionClose', 'title', 'actionLinks');
+  #slots = new SlotController(this, null, 'icon', 'actionClose', 'title');
 
 
   override render(): TemplateResult<1> {
@@ -55,7 +36,7 @@ export class PfAlert extends LitElement {
 
         <div id="icon-container" part="icon-container">
           <slot name="icon" part="icon">${!calculatedIcon ? '' : html`
-            <pf-icon icon="circle-exclamation"></pf-icon>`
+            <pf-icon icon="${calculatedIcon}"></pf-icon>`
           }
           </slot>
         </div>
@@ -72,15 +53,29 @@ export class PfAlert extends LitElement {
           <slot></slot>
         </div>
 
-        <div id="action-links" part="action-links">
-          <slot name="actionLinks"></slot>
-        </div>
-
       </div>
     `;
   }
 }
 
+
+const variantToIcon = (variant: PfAlert['variant']): string | undefined => {
+  switch (variant) {
+    case 'info':
+      return 'info-circle';
+    case 'success':
+      return 'check-circle';
+    case 'warning':
+      return 'exclamation-triangle';
+    case 'danger':
+      return 'exclamation-circle';
+    case 'neutral':
+      return 'bell';
+    case 'custom':
+    default:
+      return undefined;
+  }
+};
 
 declare global {
   interface HTMLElementTagNameMap {

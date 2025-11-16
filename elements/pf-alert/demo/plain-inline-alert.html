@@ -1,0 +1,22 @@
+<div class="alerts-page">
+    <pf-alert variant="success">
+        <h3 slot="title">Success alert title</h3>
+        <p>Success alert description. This should tell the user more information about the alert.</p>
+    </pf-alert>
+</div>
+
+
+<script type="module">
+    import '@patternfly/elements/pf-alert/pf-alert.js';
+    import '@patternfly/elements/pf-icon/pf-icon.js';
+
+</script>
+<style>
+    .alerts-page pf-alert::part(container) {
+        background-color: #fff;
+        border-width: 0;
+        margin-bottom: 0;
+        padding-bottom: 0.5rem;
+        padding-top: 0.5rem;
+    }
+</style>

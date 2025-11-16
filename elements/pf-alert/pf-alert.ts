@@ -25,6 +25,7 @@ const variantToIcon = (variant: PfAlert['variant']): string | undefined => {
   }
 };
 
+
 @customElement('pf-alert')
 export class PfAlert extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
@@ -51,9 +52,11 @@ export class PfAlert extends LitElement {
       <div id="container" part="container"
         class=${classMap({ hasIcon, [variant ?? '']: !!variant })}>
 
+
         <div id="icon-container" part="icon-container">
           <slot name="icon" part="icon">${!calculatedIcon ? '' : html`
-            <pf-icon icon="${calculatedIcon}"></pf-icon>`}
+            <pf-icon icon="circle-exclamation"></pf-icon>`
+          }
           </slot>
         </div>
 

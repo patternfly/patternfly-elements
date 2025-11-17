@@ -4,6 +4,7 @@ import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import '@patternfly/elements/pf-icon/pf-icon.js';
+import '@patternfly/elements/pf-button/pf-button.js';
 import styles from './pf-alert.css';
 
 
@@ -22,8 +23,16 @@ export class PfAlert extends LitElement {
 
   @property() icon?: string;
 
+  @property({ reflect: true, type: Boolean }) onClose = false;
+
+
   #slots = new SlotController(this, null, 'icon', 'actionClose', 'title');
 
+  #onCloseClick() {
+    if (this.isConnected) {
+      this.remove();
+    }
+  }
 
   override render(): TemplateResult<1> {
     const { variant } = this;
@@ -52,6 +61,14 @@ export class PfAlert extends LitElement {
         <div id="description" part="description">
           <slot></slot>
         </div>
+
+        <pf-button id="close-button"
+                   plain
+                   icon="close"
+                   icon-set="patternfly"
+                   ?hidden="${!this.onClose}"
+                   @click="${this.#onCloseClick}">
+        </pf-button>
 
       </div>
     `;

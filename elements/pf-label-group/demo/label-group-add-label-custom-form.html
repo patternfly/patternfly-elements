@@ -1,14 +1,178 @@
-<pf-label-group add-label-mode="customForm">
+<pf-label-group id="label-group" closeable>
   <h2 slot="category">group name</h2>
   <pf-label color="red" icon="info-circle" removable>label-1</pf-label>
   <pf-label color="green" icon="info-circle" removable>label-2</pf-label>
   <pf-label color="blue" icon="info-circle" removable>label-3</pf-label>
+
+    <pf-label id="add-button" color="blue" variant="outline" dismissible="false" >
+    Add label </pf-label>
 </pf-label-group>
 
 <script type="module">
   import '@patternfly/elements/pf-label-group/pf-label-group.js';
   import '@patternfly/elements/pf-label/pf-label.js';
   import '@patternfly/elements/pf-button/pf-button.js';
-   import '@patternfly/elements/pf-modal/pf-modal.js';
-  import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
+  import '@patternfly/elements/pf-modal/pf-modal.js';
+
+  const group = document.getElementById('label-group');
+  const addButton = document.getElementById('add-button');
+  console.log('addButton', addButton);
+  
+
+  // create a modal element with form controls and buttons, return it
+  function createModal() {
+    const modal = document.createElement('pf-modal');
+    modal.setAttribute('aria-describedby', 'custom-label-modal-description');
+    console.log('modal is created');
+
+    modal.innerHTML = `
+      <h2 slot="header">Add a new label</h2>
+      <p slot="header" id="custom-label-modal-description">Fill in the details below to create your custom label.</p>
+
+      <form id="add-label-form">
+        <label>
+          Label text:
+          <input id="label-text" class="pf-c-form-control" value="New label" />
+        </label>
+
+        <label>
+          Color:
+          <select id="label-color" class="pf-c-form-control">
+            <option value="blue">Blue</option>
+            <option value="cyan">Cyan</option>
+            <option value="green">Green</option>
+            <option value="orange">Orange</option>
+            <option value="purple">Purple</option>
+            <option value="red">Red</option>
+            <option value="grey" selected>Grey</option>
+            <option value="gold">Gold</option>
+          </select>
+        </label>
+
+        <label>
+          Icon:
+          <select id="label-icon" class="pf-c-form-control">
+            <option value="">None</option>
+            <option value="info">Info</option>
+            <option value="check">Check</option>
+            <option value="exclamation">Exclamation</option>
+            <option value="star">Star</option>
+          </select>
+        </label>
+
+        <div>
+          <label>Dismissable:</label>
+          <div>
+            <label><input type="radio" name="dismissable" value="true" /> Yes</label>
+            <label><input type="radio" name="dismissable" value="false" checked /> No</label>
+          </div>
+        </div>
+
+        <div>
+          <label>Label type:</label>
+          <div>
+            <label><input type="radio" name="filled" value="true" checked /> Filled</label>
+            <label><input type="radio" name="filled" value="false" /> Outlined</label>
+          </div>
+        </div>
+      </form>
+
+      <div slot="footer" style="display:flex; justify-content:flex-end; gap:0.5rem;">
+        <pf-button id="modal-add" variant="primary">Save</pf-button>
+        <pf-button id="modal-cancel" variant="secondary">Cancel</pf-button>
+      </div>
+    `;
+console.log('modal innerHTML set');
+    return modal;
+  }
+
+  
+
+  function resetForm(form) {
+    const inputText = form.querySelector('#label-text');
+    const selectColor = form.querySelector('#label-color');
+    const selectIcon = form.querySelector('#label-icon');
+    if (inputText) inputText.value = 'New label';
+    if (selectColor) selectColor.value = 'grey';
+    if (selectIcon) selectIcon.value = '';
+    const dismissNo = form.querySelector('input[name="dismissable"][value="false"]');
+    const filledYes = form.querySelector('input[name="filled"][value="true"]');
+    if (dismissNo) dismissNo.checked = true;
+    if (filledYes) filledYes.checked = true;
+  }
+
+  function openModal() {
+    const modal = createModal();
+    document.body.appendChild(modal);
+
+    const form = modal.querySelector('#add-label-form');
+    const inputText = modal.querySelector('#label-text');
+    const selectColor = modal.querySelector('#label-color');
+    const selectIcon = modal.querySelector('#label-icon');
+    const modalAdd = modal.querySelector('#modal-add');
+    const modalCancel = modal.querySelector('#modal-cancel');
+
+    resetForm(form);
+
+    function cleanup() {
+      try { modal.remove(); } catch (e) {}
+      requestAnimationFrame(() => addButton.focus());
+    }
+
+    modal.addEventListener('close', cleanup, { once: true });
+
+    modalCancel.addEventListener('click', () => {
+      modal.open = false;
+    }, { once: true });
+
+    modalAdd.addEventListener('click', () => {
+      const text = (inputText.value || '').trim() || 'New label';
+      const color = selectColor.value;
+      const icon = selectIcon.value;
+      const dismissable = !!form.querySelector('input[name="dismissable"]:checked') &&
+        form.querySelector('input[name="dismissable"]:checked').value === 'true';
+      const filled = !!form.querySelector('input[name="filled"]:checked') &&
+        form.querySelector('input[name="filled"]:checked').value === 'true';
+
+      const newLabel = document.createElement('pf-label');
+      newLabel.textContent = text;
+      if (color) newLabel.setAttribute('color', color);
+      if (icon) newLabel.setAttribute('icon', icon);
+      if (dismissable) newLabel.setAttribute('removable', 'true');
+      if (!filled) newLabel.setAttribute('variant', 'outline');
+
+      const firstLabel = group.querySelector('pf-label:not([slot])');
+      if (firstLabel) group.insertBefore(newLabel, firstLabel);
+      else group.appendChild(newLabel);
+
+      group.dispatchEvent(new CustomEvent('label-added', { detail: { text, color, icon, dismissable, filled }, bubbles: true }));
+
+      modal.open = false;
+    }, { once: true });
+
+    // open and focus
+    modal.open = true;
+    requestAnimationFrame(() => {
+      const first = modal.querySelector('#label-text');
+      if (first) first.focus();
+    });
+  }
+
+  addButton.addEventListener('click', openModal);
 </script>
+<style>
+  #add-button {
+    cursor: pointer;
+  align-items: center;
+  gap: 4px;
+  transition: border 0.2s ease;
+  border-radius: 0.99rem;
+  }
+  pf-modal#custom-label-modal {
+  --pf-c-modal--BoxShadow: 0 0 15px rgba(0,0,0,0.2);
+  --pf-c-modal-box--BorderRadius: 8px;
+  --pf-c-modal-box--Padding: 1rem;
+  width: 200px; 
+  font-size: 0.875rem;
+}
+</style>

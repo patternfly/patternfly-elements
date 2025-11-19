@@ -23,6 +23,15 @@ export class PfLabelGroupExpandEvent extends Event {
 }
 
 /**
+ * Event fired when the label group is removed/closed.
+ */
+export class PfLabelGroupRemoveEvent extends Event {
+  constructor() {
+    super('remove', { bubbles: true, cancelable: true, composed: true });
+  }
+}
+
+/**
  * A **label group** is a collection of labels that can be grouped by category
  * and used to represent one or more values assigned to a single attribute.
  * When the number of labels exceeds `numLabels`, additional labels will be hidden
@@ -52,8 +61,8 @@ export class PfLabelGroup extends LitElement {
   };
 
   /**
- * Orientation of the label group.
- */
+   * Orientation of the label group.
+   */
   @property() orientation: 'horizontal' | 'vertical' = 'horizontal';
 
   /**
@@ -61,17 +70,16 @@ export class PfLabelGroup extends LitElement {
    * @default ''
    */
   @property({ attribute: 'accessible-label', type: String }) accessibleLabel = '';
-
   /**
-  * Accessible label for the close button.
-  * @default 'Close'
-  */
+   * Accessible label for the close button.
+   * @default 'Close'
+   */
   @property({ attribute: 'accessible-close-label', type: String }) accessibleCloseLabel = 'Close';
 
   /**
-  * Text for collapsed overflow label. Use `${remaining}` to indicate number of hidden labels.
-  * @default '${remaining} more'
-  */
+   * Text for collapsed overflow label. Use `${remaining}` to indicate number of hidden labels.
+   * @default '${remaining} more'
+   */
   @property({ attribute: 'collapsed-text', type: String }) collapsedText = '${remaining} more';
 
   /**
@@ -81,53 +89,53 @@ export class PfLabelGroup extends LitElement {
   @property({ attribute: 'expanded-text', type: String }) expandedText = 'show less';
 
   /**
-  * Number of labels to show before creating an overflow label.
-  * @default 3
-  */
+   * Number of labels to show before creating an overflow label.
+   * @default 3
+   */
   @property({ attribute: 'num-labels', type: Number }) numLabels = 3;
 
   /**
- * Whether the overflow labels are visible (expanded state).
- * @default false
- */
+   * Whether the overflow labels are visible (expanded state).
+   * @default false
+   */
   @property({ reflect: true, type: Boolean }) open = false;
 
   /**
- * Whether the label group can be closed.
- * @default true
- */
+   * Whether the label group can be closed.
+   * @default true
+   */
   @property({ reflect: true, type: Boolean }) closeable = false;
 
   /** --- ADD LABEL FUNCTIONALITY --- */
 
   /**
- * Mode controlling how labels can be added.
- * - `none`: No add label functionality
- * - `autoNoEdit`: Adds a default label automatically
- * - `fromList`: Allows choosing a label from a predefined list
- * - `customForm`: Opens a form for custom label creation
- */
+   * Mode controlling how labels can be added.
+   * - `none`: No add label functionality
+   * - `autoNoEdit`: Adds a default label automatically
+   * - `fromList`: Allows choosing a label from a predefined list
+   * - `customForm`: Opens a form for custom label creation
+   */
   @property({ type: String, reflect: true, attribute: 'add-label-mode' })
   addLabelMode: 'none' | 'autoNoEdit' | 'fromList' | 'customForm' = 'none';
 
   /**
- * Controls visibility of the label dropdown for `fromList` mode.
- */
+   * Controls visibility of the label dropdown for `fromList` mode.
+   */
   @state() showDropdown = false;
 
   /**
- * Controls visibility of the custom label form for `customForm` mode.
- */
+   * Controls visibility of the custom label form for `customForm` mode.
+   */
   @state() showCustomForm = false;
 
   /**
- * Text value for a new custom label.
- */
+   * Text value for a new custom label.
+   */
   @state() newLabelText = 'Text box';
 
   /**
- * Color value for a new custom label.
- */
+   * Color value for a new custom label.
+   */
   @state() newLabelColor = 'grey';
 
   /**
@@ -356,8 +364,8 @@ export class PfLabelGroup extends LitElement {
   }
 
   /**
-  * Handles overflow label's click event.
-  * @param {Event} event - Click event
+    * Handles overflow label's click event.
+    * @param {Event} event - Click event
   */
   async #onMoreClick(event: Event) {
     event.stopPropagation();
@@ -376,6 +384,7 @@ export class PfLabelGroup extends LitElement {
  */
   #onCloseClick() {
     if (this.isConnected) {
+      this.dispatchEvent(new PfLabelGroupRemoveEvent());
       this.remove();
     }
   }

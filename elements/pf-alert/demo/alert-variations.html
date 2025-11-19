@@ -3,8 +3,8 @@
     <pf-alert variant="success">
         <h3 slot="title">Success alert title</h3>
         <p>Success alert description. This should tell the user more information about the alert.</p>
-            <pf-button variant="link" data-action="view-details">View details</pf-button>
-            <pf-button variant="link" data-action="ignore">Ignore</pf-button>
+        <a href="#" slot="actionLinks">View details</a>
+        <a href="#" slot="actionLinks">Ignore</a>
     </pf-alert>
 
     <pf-alert variant="success">
@@ -15,17 +15,17 @@
         </p>
     </pf-alert>
 
-    <pf-alert variant="success">
+    <pf-alert variant="success" onClose>
         <h3 slot="title">Success alert title</h3>
         <p>Short alert description.</p>
     </pf-alert>
 
     <pf-alert variant="success">
-        <h3 slot="title">div success alert title</h3>
+        <div slot="title">div success alert title</div>
     </pf-alert>
 
     <pf-alert variant="success">
-        <h3 slot="title">h6 Success alert title</h3>
+        <h6 slot="title">h6 Success alert title</h6>
         <p>Short alert description.</p>
     </pf-alert>
 
@@ -40,5 +40,17 @@
     .alerts-page pf-alert::part(container) {
         background-color: #fff;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    pf-alert p a {
+        color: #06c;
+        text-decoration: none;
+    }
+
+    pf-alert p a:active,
+    pf-alert p a:hover {
+        text-decoration: underline;
+        color: #004080;
+
     }
 </style>

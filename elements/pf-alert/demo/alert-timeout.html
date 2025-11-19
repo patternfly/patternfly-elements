@@ -1,12 +1,64 @@
-<pf-button>Add alert</pf-button>
-<pf-button>Remove all alerts</pf-button>
+<pf-button variant="secondary" id="addAlertButton">Add alert</pf-button>
+<pf-button variant="secondary" id="removeAllAlertsButton">Remove all alerts</pf-button>
+
+<div id="alert-container" style="margin-top: 20px;">
+</div>
 
 <script type="module">
   import '@patternfly/elements/pf-alert/pf-alert.js';
   import '@patternfly/elements/pf-button/pf-button.js';
+
+  const addAlertButton = document.getElementById('addAlertButton');
+  const removeAllAlertsButton = document.getElementById('removeAllAlertsButton');
+  const alertContainer = document.getElementById('alert-container');
+
+  let alertCounter = 0;
+
+  function addTimeoutAlert() {
+    alertCounter++;
+    const timeoutMilliseconds = 8000;
+
+    const newAlert = document.createElement('pf-alert');
+    newAlert.setAttribute('variant', 'neutral');
+    newAlert.setAttribute('timeout', timeoutMilliseconds.toString());
+    newAlert.innerHTML = `
+                <h4 slot="title">Default timeout Alert</h4>
+                This alert will dismiss after ${timeoutMilliseconds/1000} seconds.
+                <a href="#" slot="actionLinks">View details</a>
+                <a href="#" slot="actionLinks" data-action="ignore">Ignore</a>
+            `;
+
+    alertContainer.prepend(newAlert);
+
+    newAlert.addEventListener('click', (event) => {
+      if (event.target.dataset.action === 'ignore') {
+        event.preventDefault();
+        newAlert.remove();
+      }
+    });
+  }
+
+  if (addAlertButton) {
+    addAlertButton.addEventListener('click', addTimeoutAlert);
+  }
+
+  if (removeAllAlertsButton) {
+    removeAllAlertsButton.addEventListener('click', () => {
+      if (alertContainer) {
+        alertContainer.innerHTML = '';
+      }
+    });
+  }
 </script>
 
+<style>
+  pf-alert::part(container) {
+    background-color: #fff !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 
+  }
 
-
-
+  #addAlertButton {
+    margin-inline-end: -0.25rem;
+  }
+</style>

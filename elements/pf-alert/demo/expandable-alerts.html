@@ -1,16 +1,16 @@
 <div class="alerts-page">
-  <pf-alert  variant="success">
+  <pf-alert variant="success" onClose **isExpandable**>
     <h3 slot="title">Success alert title</h3>
-    <p>Success alert description. This should tell the user more information about the alert.</p>
+    <p slot="isExpandable">Success alert description. This should tell the user more information about the alert.</p>
   </pf-alert>
 </div>
 
 
 <pf-alert variant="success">
   <h3 slot="title">Success alert title</h3>
-  <p>Success alert description. This should tell the user more information about the alert.</p>
-  <pf-button variant="link" data-action="view-details">View details</pf-button>
-  <pf-button variant="link" data-action="ignore">Ignore</pf-button>
+  <p slot="isExpandable">Success alert description. This should tell the user more information about the alert.</p>
+  <a href="#" slot="actionLinks">View details</a>
+  <a href="#" slot="actionLinks">Ignore</a>
 </pf-alert>
 
 <script type="module">

@@ -1,216 +1,31 @@
-/* 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-#left-column pf-icon#icon {
-  margin-right: 0.5rem;
-}
-
-
-#container {
-  align-items: flex-start;
-  background-color: var(--_background-color);
-  border-width: var(--pf-global--BorderWidth--md);
-  border-style: solid;
-  border-color: var(--_border-color, var(--pf-global--default-color--200));
-  border-inline-start-color: transparent;
-  border-block-end-color: transparent;
-  border-inline-end-color: transparent;
-  margin-bottom: 1.5rem;
-  padding: var(--pf-global--spacer--md);
-  display: grid;
-  grid-template-columns: max-content 1fr max-content;
-  grid-template-areas:
-    "icon title action"
-    ". description description"
-    ". actiongroup actiongroup";
-  gap: var(--pf-global--spacer--xs);
-  font-family: var(--pf-global--FontFamily--text, RedHatText, 'Red Hat Text', Helvetica, Arial, sans-serif);
-  font-size: var(--pf-global--FontSize--sm);
-  line-height: var(--pf-global--lineHeight--md);
-  max-width: var(--pf-c-alert--MaxWidth, initial);
-  box-shadow: var(--_box-shadow);
-
-  & header ::slotted(*) {
-    font-family: var(--pf-global--FontFamily--text, RedHatText, 'Red Hat Text', Helvetica, Arial, sans-serif) !important;
-    font-size: var(--pf-global--FontSize--sm) !important;
-    line-height: var(--pf-global--lineHeight--md) !important;
-    margin: 0 !important;
-  }
-
-}
-
-#container.info {
-  --_border-color: var(--pf-global--palette--purple-500,
-      #2b9af3);
-  --_icon-color: var(--pf-global--palette--purple-500,
-      #2b9af3);
-  --title--Color: var(--pf-global--palette--purple-500,
-      #002952);
-  --_background-color: var(--pf-global--palette--purple-50,
-      #e7f1fa);
-}
-
-#container.cogear {
-  --_border-color: var(--pf-global--success-color--100,
-      #3e8635);
-  --_icon-color: var(--pf-global--success-color--100,
-      #3e8635);
-  --title--Color: var(--pf-global--palette--purple-500,
-      #1e4f18);
-  --_background-color: var(--pf-global--palette--green-50,
-      #f3faf2);
-}
-
-#container.success {
-  --_border-color: var(--pf-global--success-color--100,
-      #3e8635);
-  --_icon-color: var(--pf-global--success-color--100,
-      #3e8635);
-  --title--Color: var(--pf-global--palette--purple-500,
-      #1e4f18);
-  --_background-color: var(--pf-global--palette--green-50,
-      #f3faf2);
-}
-
-#container.warning {
-  --_border-color: var(--pf-global--warning-color--100,
-      #f0ab00);
-  --_icon-color: var(--pf-global--warning-color--100,
-      #f0ab00);
-  --title--Color: var(--pf-global--palette--purple-500,
-      #795600);
-  --_background-color: var(--pf-global--palette--gold-50,
-      #fdf7e7);
-}
-
-#container.custom {
-  --_background-color: var(--pf-global--BackgroundColor--100,
-      #f2f9f9);
-  --_border-color: var(--pf-global--BorderColor--100,
-      #009596);
-  --_icon-color: var(--pf-global--icon--Color--light,
-      #009596);
-  --title--Color: var(--pf-global--palette--gold-50,
-      #003737);
-
-}
-
-#container.danger {
-  --_border-color: var(--pf-global--danger-color--200,
-      #c9190b);
-  --_icon-color: var(--pf-global--danger-color--200,
-      #c9190b);
-  --title--Color: var(--pf-global--palette--purple-500,
-      #a30000);
-  --_background-color: var(--pf-global--palette--red-50,
-      #faeae8);
-}
-#container header ::slotted(h3) {
-  font-weight: bold;          
-  color: var(--title--Color);  
-}
-
-
-
-#header {
-  flex: 1 1 auto;
-}
-
-#icon {
-  --pf-icon--size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--_icon-color);
-}
-
-#left-column pf-icon#arrow-icon,
-#header-actions pf-icon#close-button {
-  --pf-icon--size: 16px;
-  --pf-c-icon--Color: #6a6e73;
-  color: #6a6e73;      
-  cursor: pointer;
-  transition: color 0.2s ease, --pf-c-icon--Color 0.2s ease;
-}
-
-#left-column pf-icon#arrow-icon:hover,
-#left-column pf-icon#arrow-icon:active,
-#left-column pf-icon#arrow-icon.active,
-#header-actions pf-icon#close-button:hover,
-#header-actions pf-icon#close-button:active,
-#header-actions pf-icon#close-button.active {
-  --pf-c-icon--Color: #000000;
-  color: #000000;
-} */
-
-/* --- CSS כללי למבנה Alert --- */
-
 :host {
-    display: block;
+  display: block;
+  position: relative;
 }
 
-#container #title-area ::slotted(*) {
-  font-size: 90%;
-  margin: 0 !important;
-  color: var(--title--Color);
-
-}
-
+/* ---------------- */
+/* CONTAINER BASE   */
+/* ---------------- */
 #container {
-  align-items: flex-start;
   background-color: var(--_background-color);
-
-  border-width: var(--pf-alert--BorderTopWidth, 2px);
+  border-width: var(--pf-alert--BorderTopWidth, 1px);
   border-style: solid;
   border-color: var(--_border-color);
   border-inline-start-color: transparent;
   border-block-end-color: transparent;
   border-inline-end-color: transparent;
 
-  margin-bottom: 1rem;
-
-  display: grid;
   padding-top: 1rem;
-  padding-bottom: 0.7rem;
-  grid-template-areas:
-    "icon title action"
-    ". description description"
-    ". actiongroup actiongroup";
-  grid-template-columns: max-content 1fr max-content;
-  column-gap: var(--pf-global--spacer--sm, 1rem);
-  /* מרווח בין אייקון לכותרת */
-}
-
-#container #icon-container {
-
-  --pf-icon--size: var(--pf-alert__icon--FontSize, 1rem);
-  color: var(--_icon-color);
-  padding-inline-start: var(--pf-alert--PaddingLeft, 1rem);
-}
-
-
-#container #description {
-
-  grid-area: description;
-  /* ממקם את התיאור (description) באזור 'description' */
-}
-
-
-
-
-#container #action-links {
-  grid-area: actiongroup;
-  /* ממקם את קישורי הפעולה באזור 'actiongroup' */
-}
-
-/* הסגנון הבא יבטיח שהקישורים יופיעו אחד ליד השני בצורה נכונה */
-#container #action-links ::slotted(div) {
+  padding-left: 1rem;
+  margin-bottom: 1rem;
   display: flex;
+  flex-wrap: wrap;
 }
+
+
+/* ---------------- */
+/* VARIANTS         */
+/* ---------------- */
 
 #container.info {
   --_border-color: var(--pf-v5-c-alert--m-info--BorderTopColor, #2b9af3);
@@ -218,7 +33,6 @@ header {
   --title--Color: var(--pf-v5-c-alert--m-info__title--Color, #002952);
   --_background-color: var(--pf-v5-c-alert--m-inline--m-info--BackgroundColor, #e7f1fa);
 }
-
 
 #container.success {
   --_border-color: var(--pf-v5-c-alert--m-success--BorderTopColor, #3e8635);
@@ -248,69 +62,76 @@ header {
   --title--Color: var(--pf-v5-global--Color--100, #003737);
 }
 
+/* ---------------- */
+/* TITLE + ICON     */
+/* ---------------- */
 
-
-#container #close-action {
-  cursor: pointer;
-  /* מוסיפים מרווח חיצוני כדי שה-X לא יהיה צמוד מדי למסגרת */
-  padding-inline-end: var(--pf-alert--PaddingRight, 1rem);
-}
-
-#container #close-action ::slotted(pf-icon) {
-  --pf-icon--size: var(--pf-global--icon--FontSize--md, 1rem);
-  color: var(--pf-v5-global--Color--200, #6a6e73);
-}
-
-/* 3. אפקט במעבר עכבר (Hover) */
-#container #close-action ::slotted(pf-icon:hover) {
-  /* מחשיך את הצבע במעבר עכבר */
-  color: var(--pf-v5-global--Color--100, #151515);
+#icon-container {
+  --pf-icon--size: var(--pf-alert__icon--FontSize, 1rem);
+  color: var(--_icon-color);
+  padding-inline-end: 1rem;
 }
 
 
-
-
-
-
-#toast-alerts-container pf-alert {
-    width: 100%; /* ודא שהוא מתאים לרוחב המקסימלי של הקונטיינר */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* מוסיף אפקט "צף" */
+#title-area ::slotted(*) {
+  font-size: 90%;
+  margin: 0 !important;
+  color: var(--title--Color);
+  font-weight: bold;
 }
 
+/* ---------------- */
+/* CLOSE BUTTON     */
+/* ---------------- */
 
-
-
-.demo-controls {
-    display: flex;
-    flex-wrap: nowrap;
-    margin-bottom: 20px;
+#close-button {
+  position: absolute;
+  inset-inline-end: 1%;
+  top: 1rem;
 }
 
-/* מסיר מרווחים בין הכפתורים */
-.demo-controls pf-button {
-    margin: 0; 
+/* ---------------- */
+/* DESCRIPTION      */
+/* ---------------- */
+
+#description {
+  flex-basis: 100%;
+  padding-inline-start: 1rem;
 }
 
-/* הסרת רדיוס בפינה הפנימית של הכפתור הראשון */
-.demo-controls pf-button:first-child {
-    border-top-right-radius: 0; 
-    border-bottom-right-radius: 0;
-    margin-inline-end: -1px; /* למשוך את הגבול לתוך */
+/* ---------------- */
+/* TOGGLE AREA      */
+/* ---------------- */
+
+#toggle-container:not([hidden])~#action-links {
+  padding-inline-start: 4rem;
 }
 
-/* הסרת רדיוס בפינה הפנימית של הכפתור השני */
-.demo-controls pf-button:last-child {
-    border-top-left-radius: 0; 
-    border-bottom-left-radius: 0;
+#expandable-description {
+  flex-basis: 100%;
+  padding-inline-start: 5rem;
+
 }
 
+/* ---------------- */
+/* ACTION LINKS     */
+/* ---------------- */
 
+#action-links {
+  padding-inline-start: 2rem;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
 
-/* 
+}
 
-#container.cogear {
-  --_border-color: var(--pf-global--success-color--100, #3e8635);
-  --_icon-color: var(--pf-global--success-color--100, #3e8635);
-  --title--Color: var(--pf-global--palette--purple-500, #1e4f18);
-  --_background-color: var(--pf-global--palette--green-50, #f3faf2);
-} */
+#action-links ::slotted(a) {
+  text-decoration: none;
+  color: #06c;
+  margin-inline-end: 1rem;
+}
+
+#action-links ::slotted(a:hover),
+#action-links ::slotted(a:focus),
+#action-links ::slotted(a:active) {
+  color: #004080;
+}

@@ -1,73 +1,46 @@
-// import { expect, html } from '@open-wc/testing';
-// import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-// import { PfAlert, AlertCloseEvent } from '@patternfly/elements/pf-alert/pf-alert.js';
-// import { oneEvent } from '@open-wc/testing';
+import { html, fixture, expect } from '@open-wc/testing';
+import '../pf-alert.js';
 
-// describe('<pf-alert>', function() {
-//   describe('simply instantiating', function() {
-//     let element: PfAlert;
+describe('pf-alert Unit Tests', () => {
+  it('should create the component', async () => {
+    const el = await fixture(html`<pf-alert></pf-alert>`) as any;
+    expect(el).to.exist;
+    expect(el.variant).to.equal('neutral');
+  });
 
-//     it('imperatively instantiates', function() {
-//       expect(document.createElement('pf-alert')).to.be.an.instanceof(PfAlert);
-//     });
+  it('should render a title slot', async () => {
+    const el = await fixture(html`
+      <pf-alert><span slot="title">My Title</span></pf-alert>
+    `);
+    const titleSlot = el.shadowRoot!.querySelector('#title-area slot[name="title"]');
+    expect(titleSlot).to.exist;
+  });
 
-//     it('should upgrade', async function() {
-//       element = await createFixture<PfAlert>(html`<pf-alert></pf-alert>`);
-//       const klass = customElements.get('pf-alert');
-//       expect(element)
-//           .to.be.an.instanceOf(klass)
-//           .and
-//           .to.be.an.instanceOf(PfAlert);
-//     });
-//   });
+  it('close button should appear when onClose=true', async () => {
+    const el = await fixture(html`<pf-alert .onClose=${true}></pf-alert>`);
+    const btn = el.shadowRoot!.querySelector('#close-button')!;
+    expect(btn.hasAttribute('hidden')).to.be.false;
+  });
 
-//   describe('attributes and properties', function() {
-//     it('reflects state attribute', async function() {
-//       const el = await createFixture<PfAlert>(html`<pf-alert state="success"></pf-alert>`);
-//       expect(el.getAttribute('state')).to.equal('success');
-//       expect(el.status).to.equal('success');
-//     });
+  it('should remove itself after timeout', async () => {
+    const el = await fixture(html`<pf-alert .timeout=${50}></pf-alert>`);
+    const removed = new Promise<void>(resolve => el.addEventListener('pf-alert:timeout', () => resolve()));
+    await removed;
+    expect(document.body.contains(el)).to.be.false;
+  });
 
-//     it('reflects variant attribute', async function() {
-//       const el = await createFixture<PfAlert>(html`<pf-alert variant="inline"></pf-alert>`);
-//       expect(el.getAttribute('variant')).to.equal('inline');
-//       expect(el.variant).to.equal('inline');
-//     });
-//   });
-
-//   describe('slots and rendering', function() {
-//     it('renders header slot content', async function() {
-//       const el = await createFixture<PfAlert>(html`
-//         <pf-alert>
-//           <h3 slot="header">Alert Title</h3>
-//           <p>Alert content</p>
-//         </pf-alert>
-//       `);
-//       const header = el.querySelector('[slot="header"]');
-//       expect(header).to.exist;
-//       expect(header?.textContent?.trim()).to.equal('Alert Title');
-//     });
-
-//     it('renders action buttons with correct attributes', async function() {
-//       const el = await createFixture<PfAlert>(html`
-//         <pf-alert>
-//           <div slot="actions">
-//             <pf-button>Action</pf-button>
-//           </div>
-//         </pf-alert>
-//       `);
-//       const actionButton = el.querySelector('[slot="actions"] pf-button');
-//       expect(actionButton).to.exist;
-//     });
-//   });
-
-//   describe('events and interactions', function() {
-//     it('emits close event when close button clicked', async function() {
-//       const el = await createFixture<PfAlert>(html`<pf-alert dismissable></pf-alert>`);
-//       const closeButton = el.shadowRoot?.querySelector('#close-button');
-//       setTimeout(() => closeButton?.dispatchEvent(new MouseEvent('click')));
-//       const event = await oneEvent(el, 'close') as AlertCloseEvent;
-//       expect(event.action).to.equal('dismiss');
-//     });
-//   });
-// });
+  it('should toggle isExpandable when toggle button clicked', async () => {
+    const el = await fixture(html`
+      <pf-alert isExpandable><span slot="isExpandable">Content</span></pf-alert>
+    `) as any;
+    await el.updateComplete;
+    const toggle = el.shadowRoot!.querySelector('#toggle-button') as HTMLElement;
+    const initial = el.isExpandable;
+    toggle.click();
+    await el.updateComplete;
+    expect(el.isExpandable).to.equal(!initial);
+    toggle.click();
+    await el.updateComplete;
+    expect(el.isExpandable).to.equal(initial);
+  });
+});

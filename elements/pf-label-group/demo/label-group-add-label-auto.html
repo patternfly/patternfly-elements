@@ -21,8 +21,7 @@
     newLabel.setAttribute('color', 'grey');
     newLabel.setAttribute('icon', 'info-circle');
     newLabel.setAttribute('removable', 'true');
-    const count = labelGroup.querySelectorAll('pf-label:not([slot])').length;
-    newLabel.textContent = `label-${count}`;
+    newLabel.textContent = `new-label`;
     const firstLabel = labelGroup.querySelector('pf-label:not([slot])');
     if (firstLabel) labelGroup.insertBefore(newLabel, firstLabel);
     else labelGroup.appendChild(newLabel);

@@ -198,7 +198,12 @@ export class PfLabelGroup extends LitElement {
     if (isServer) {
       return [] as PfLabel[];
     }
-    return this.querySelectorAll<PfLabel>('pf-label:not([slot]):not([overflow-label])');
+    const selector =
+      'pf-label:not([slot])'
+      + ':not([overflow-label])'
+      + ':not([id="add-button"])';
+
+    return this.querySelectorAll<PfLabel>(selector);
   }
 
   #tabindex = RovingTabindexController.of(this, {

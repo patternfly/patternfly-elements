@@ -118,7 +118,10 @@ console.log('modal innerHTML set');
     resetForm(form);
 
     function cleanup() {
-      try { modal.remove(); } catch (e) {}
+      try { modal.remove(); } 
+      catch (e) {
+        console.error('Error removing modal:', e);
+      }
       requestAnimationFrame(() => addButton.focus());
     }
 

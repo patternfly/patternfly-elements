@@ -53,7 +53,10 @@
     if (firstLabel) group.insertBefore(newLabel, firstLabel);
     else group.appendChild(newLabel);
     // close the dropdown if it exposes an API
-    try { dropdown.hide?.(); } catch (e) {}
+    try { dropdown.hide?.(); }
+    catch (e) {
+      console.error('Error hiding dropdown:', e);
+    }
   });
 </script>
 
@@ -95,6 +98,4 @@
     line-height: normal !important;
     box-sizing: border-box !important;
   }
-
 </style>
-

@@ -48,7 +48,7 @@
       <pf-button slot="toggle" plain aria-label="Actions">
         <pf-icon icon="ellipsis-v"></pf-icon>
       </pf-button>
-      <pf-dropdown-menu>
+      <pf-dropdown-menu slot="menu">
         <pf-dropdown-item>
           <a href="#">Link</a>
         </pf-dropdown-item>
@@ -71,7 +71,7 @@
       <pf-button slot="toggle" plain aria-label="Actions">
         <pf-icon icon="ellipsis-v"></pf-icon>
       </pf-button>
-      <pf-dropdown-menu>
+      <pf-dropdown-menu slot="menu">
         <pf-dropdown-item>
           <a href="#">Link</a>
         </pf-dropdown-item>

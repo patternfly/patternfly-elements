@@ -1,6 +1,7 @@
 import { expect, html } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfHint } from '@patternfly/elements/pf-hint/pf-hint.js';
+import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 describe('<pf-hint>', function() {
   describe('simply instantiating', function() {
@@ -26,27 +27,11 @@ describe('<pf-hint>', function() {
       element = await createFixture<PfHint>(html`
         <pf-hint>Welcome to the new documentation experience.</pf-hint>
       `);
-      await element.updateComplete;
     });
 
-    it('should render body content', function() {
-      const body = element.shadowRoot!.querySelector('#body');
-      expect(body).to.exist;
-    });
-
-    it('should not render title when not provided', function() {
-      const title = element.shadowRoot!.querySelector('#title');
-      expect(title).to.not.exist;
-    });
-
-    it('should not render footer when not provided', function() {
-      const footer = element.shadowRoot!.querySelector('#footer');
-      expect(footer).to.not.exist;
-    });
-
-    it('should not render actions when not provided', function() {
-      const actions = element.shadowRoot!.querySelector('#actions');
-      expect(actions).to.not.exist;
+    it('should render body content, and not title footer, or actions', async function() {
+      const snap = await a11ySnapshot();
+      expect(snap.children?.length).to.equal(1);
     });
   });
 
@@ -62,14 +47,9 @@ describe('<pf-hint>', function() {
       await element.updateComplete;
     });
 
-    it('should render title', function() {
-      const title = element.shadowRoot!.querySelector('#title');
-      expect(title).to.exist;
-    });
-
-    it('should render body content', function() {
-      const body = element.shadowRoot!.querySelector('#body');
-      expect(body).to.exist;
+    it('should render title and body content', async function() {
+      const snap = await a11ySnapshot();
+      expect(snap.children?.length).to.equal(2);
     });
   });
 
@@ -105,14 +85,12 @@ describe('<pf-hint>', function() {
       await element.updateComplete;
     });
 
-    it('should render actions', function() {
-      const actions = element.shadowRoot!.querySelector('#actions');
-      expect(actions).to.exist;
-    });
-
-    it('should add has-actions class to container', function() {
-      const container = element.shadowRoot!.querySelector('#container');
-      expect(container?.classList.contains('has-actions')).to.be.true;
+    it('should render title, body, and actions', async function() {
+      const { children: [actions, title, body, ...rest] = [] } = await a11ySnapshot();
+      expect(actions.role).to.equal('button');
+      expect(title.role).to.equal('text');
+      expect(body.role).to.equal('text');
+      expect(rest.length).to.equal(0);
     });
   });
 });

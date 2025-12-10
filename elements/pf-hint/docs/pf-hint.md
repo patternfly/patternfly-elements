@@ -66,9 +66,7 @@
   {% htmlexample %}
   <pf-hint>
     <pf-dropdown slot="actions">
-      <pf-button slot="toggle" plain aria-label="Actions">
-        <pf-icon icon="ellipsis-v"></pf-icon>
-      </pf-button>
+      <pf-button slot="toggle" plain icon="ellipsis-v" aria-label="Actions"></pf-button>
       <pf-dropdown-menu slot="menu">
         <pf-dropdown-item>
           <a href="#">Link</a>

@@ -214,7 +214,14 @@ pf-dropdown-menu,
     --pf-c-dropdown__menu--Top,
     calc(100% + var(--pf-global--spacer--xs, 0.25rem))
   ) !important;
-  left: 0 !important;
+  left: var(
+    --pf-c-dropdown__menu--Left,
+    0
+  ) !important;
+  right: var(
+    --pf-c-dropdown__menu--Right,
+    auto
+  ) !important;
   z-index: var(
     --pf-c-dropdown__menu--ZIndex,
     var(--pf-global--ZIndex--sm, 200)

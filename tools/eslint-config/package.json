@@ -40,7 +40,7 @@
     "typescript-eslint": "^8.0.0-alpha.10 || ^8.0.0"
   },
   "dependencies": {
-    "@eslint/compat": "^1.1.1",
+    "@eslint/compat": "^2.0.0",
     "@stylistic/eslint-plugin-js": "^4.4.1",
     "globals": "^15.9.0"
   }

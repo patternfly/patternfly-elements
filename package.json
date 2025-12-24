@@ -321,6 +321,10 @@
     "@pwrs/cem-linux-x64": "^0.7.5",
     "@rollup/rollup-darwin-arm64": "^4.54.0"
   },
+  "overrides": {
+    "playwright": "~1.48.0",
+    "@playwright/test": "~1.48.0"
+  },
   "workspaces": [
     "./core/*",
     "./elements",

@@ -73,7 +73,7 @@ module.exports = async function() {
   await generator.install([
     'tslib',
     '@rhds/elements',
-    '@rhds/elements/rh-footer/rh-global-footer.js',
+    '@rhds/elements/rh-footer/rh-footer-universal.js',
     `prismjs@${PRISM_VERSION}`,
     'element-internals-polyfill',
     `fuse.js@${FUSE_VERSION}`,

@@ -2,7 +2,7 @@
 "@patternfly/elements": minor
 ---
 
-✨ Added `<pf-helper-text>` element
+✨ Added `<pf-helper-text>` component
 
 **Helper text** is an on-screen field guideline that helps provide context regarding field inputs.
 

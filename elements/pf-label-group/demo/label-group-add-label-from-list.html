@@ -1,0 +1,101 @@
+<pf-label-group id="label-group">
+  <h2 slot="category">group name</h2>
+  <pf-label color="red" icon="info-circle" removable>label-1</pf-label>
+  <pf-label color="green" icon="info-circle" removable>label-2</pf-label>
+  <pf-label color="blue" icon="info-circle" removable>label-3</pf-label>
+  <pf-label id="add-button" color="blue" variant="outline" dismissible="false">Add label</pf-label>
+</pf-label-group>
+
+<script type="module">
+  import '@patternfly/elements/pf-label-group/pf-label-group.js';
+  import '@patternfly/elements/pf-label/pf-label.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+  import '@patternfly/elements/pf-modal/pf-modal.js';
+  import '@patternfly/elements/pf-dropdown/pf-dropdown.js';
+
+  // Create a small dropdown control with a list of available labels to add
+  const group = document.getElementById('label-group');
+  const dropdown = document.createElement('pf-dropdown');
+  dropdown.id = 'add-dropdown';
+  dropdown.innerHTML = `
+    <pf-dropdown-item data-text="Label-text-1" data-color="grey" data-icon="">Label-text-1</pf-dropdown-item>
+    <pf-dropdown-item data-text="Label-text-2" data-color="blue" data-icon="info-circle">Label-text-2</pf-dropdown-item>
+    <pf-dropdown-item data-text="Label-text-3" data-color="green" data-icon="check-circle">Label-text-3</pf-dropdown-item>
+    <pf-dropdown-item data-text="Label-text-4" data-color="red" data-icon="exclamation-circle">Label-text-4</pf-dropdown-item>
+  `;
+
+  // place the dropdown inside the label group and use the existing add-button as the toggle
+
+
+  group.appendChild(dropdown);
+
+  const addButton = document.getElementById('add-button');
+  if (addButton) {
+    addButton.setAttribute('slot', 'toggle');
+    dropdown.appendChild(addButton);
+  }
+
+  // add handler: when an item is clicked, create and insert a new pf-label
+  dropdown.addEventListener('click', (event) => {
+    const item = event.target.closest('pf-dropdown-item');
+    if (!item) return;
+    const text = item.getAttribute('data-text') || item.textContent.trim();
+    const color = item.getAttribute('data-color') || '';
+    const icon = item.getAttribute('data-icon') || '';
+
+    const newLabel = document.createElement('pf-label');
+    newLabel.textContent = text;
+    if (color) newLabel.setAttribute('color', color);
+    if (icon) newLabel.setAttribute('icon', icon);
+    newLabel.setAttribute('removable', 'true');
+
+    const firstLabel = group.querySelector('pf-label:not([slot])');
+    if (firstLabel) group.insertBefore(newLabel, firstLabel);
+    else group.appendChild(newLabel);
+    // close the dropdown if it exposes an API
+    try { dropdown.hide?.(); }
+    catch (e) {
+      console.error('Error hiding dropdown:', e);
+    }
+  });
+</script>
+
+<style>
+  /* Make the add-button match the pf-label defaults so it looks identical */
+  #add-button {
+    --pf-c-label--PaddingTop: var(--pf-global--spacer--xs, 0.25rem);
+    --pf-c-label--PaddingBottom: var(--pf-global--spacer--xs, 0.25rem);
+    --pf-c-label--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
+    --pf-c-label--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
+    --pf-c-label--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+    --pf-c-label--BorderRadius: 30em;
+
+    /* Fallback explicit rules to ensure consistent rendering in demos */
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+    min-height: auto;
+    line-height: normal;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    box-sizing: border-box;
+  }
+
+  /* When the label is slotted into a pf-dropdown toggle, the dropdown
+     applies toggle padding/font-size — override those for this demo so
+     the add-button looks identical to other labels without changing
+     the element attributes. */
+  pf-dropdown ::slotted(#add-button) {
+    --pf-c-label--PaddingTop: var(--pf-global--spacer--xs, 0.25rem);
+    --pf-c-label--PaddingBottom: var(--pf-global--spacer--xs, 0.25rem);
+    --pf-c-label--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
+    --pf-c-label--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
+    --pf-c-label--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+    --pf-c-label--BorderRadius: 30em;
+
+    font-size: 0.875rem !important;
+    padding: 0.25rem 0.5rem !important;
+    line-height: normal !important;
+    box-sizing: border-box !important;
+  }
+</style>

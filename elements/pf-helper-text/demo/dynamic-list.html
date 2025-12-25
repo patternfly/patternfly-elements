@@ -1,40 +1,28 @@
-<!DOCTYPE html>
-<html lang="en" class="pf-m-redhat-font">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>pf-helper-text — Dynamic list</title>
-  <link rel="stylesheet" href="https://unpkg.com/@patternfly/patternfly/patternfly.css" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://unpkg.com/@patternfly/elements/pf-styles/demo.css" crossorigin="anonymous" />
-  <style>body{margin:0;background:var(--pf-global--BackgroundColor--100);color:var(--pf-global--Color--100);
-    font-family:var(--pf-global--FontFamily--text,"Red Hat Text",Arial,sans-serif);line-height:1.5}
-    pf-demo{display:block;padding:2rem;max-width:700px;margin-inline:auto}
-    h2{font-size:var(--pf-global--FontSize--xl);font-weight:var(--pf-global--FontWeight--bold);margin-bottom:1rem}
-  </style>
-</head>
-<body>
-  <pf-demo>
-    <h2>Dynamic list</h2>
-    <pf-helper-text component="ul" live role="list">
-      <pf-helper-text-item icon="check-circle" icon-set="fas" status="success" is-dynamic>
-        Must be at least 14 characters
-      </pf-helper-text-item>
-      <pf-helper-text-item icon="exclamation-circle" icon-set="fas" status="error" is-dynamic>
-        Cannot contain any variation of the word "redhat"
-      </pf-helper-text-item>
-      <pf-helper-text-item icon="check-circle" icon-set="fas" status="success" is-dynamic>
-        Must include at least 3 of the following: lowercase letter, uppercase letters, numbers, symbols
-      </pf-helper-text-item>
-    </pf-helper-text>
-  </pf-demo>
+<pf-helper-text component="ul"
+                live
+                role="list">
+  <pf-helper-text-item icon="check-circle"
+                       icon-set="fas"
+                       status="success"
+                       is-dynamic>
+    Must be at least 14 characters
+  </pf-helper-text-item>
+  <pf-helper-text-item icon="exclamation-circle"
+                       icon-set="fas"
+                       status="error"
+                       is-dynamic>
+    Cannot contain any variation of the word "redhat"
+  </pf-helper-text-item>
+  <pf-helper-text-item icon="check-circle"
+                       icon-set="fas"
+                       status="success"
+                       is-dynamic>
+    Must include at least 3 of the following: lowercase letter, uppercase letters, numbers, symbols
+  </pf-helper-text-item>
+</pf-helper-text>
 
-  <script type="module">
-    import '@patternfly/elements/pf-helper-text/pf-helper-text.js';
-    import '@patternfly/elements/pf-helper-text/pf-helper-text-item.js';
-    import '@patternfly/elements/pf-icon/pf-icon.js';
-    import { PfIcon } from '@patternfly/elements/pf-icon/pf-icon.js';
-    PfIcon.addIconSet('fas', (set, icon) =>
-      new URL('/node_modules/@fortawesome/fontawesome-free/svgs/solid/' + icon + '.svg', window.location.origin)
-    );
-  </script>
-</body>
-</html>
+<script type="module">
+  import '@patternfly/elements/pf-helper-text/pf-helper-text.js';
+  import '@patternfly/elements/pf-helper-text/pf-helper-text-item.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+</script>

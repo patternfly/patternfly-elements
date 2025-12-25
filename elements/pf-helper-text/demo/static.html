@@ -1,134 +1,77 @@
-<!DOCTYPE html>
-<html lang="en" class="pf-m-redhat-font">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>pf-helper-text — Static (no icons)</title>
+<pf-helper-text>
+  <pf-helper-text-item status="default">
+    This is default helper text
+  </pf-helper-text-item>
 
-    <!-- PatternFly core styles -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@patternfly/patternfly/patternfly.css"
-      crossorigin="anonymous"
-    />
+  <pf-helper-text-item status="indeterminate">
+    This is indeterminate helper text
+  </pf-helper-text-item>
 
-    <!-- PatternFly Elements demo layout -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@patternfly/elements/pf-styles/demo.css"
-      crossorigin="anonymous"
-    />
+  <pf-helper-text-item status="warning">
+    This is warning helper text
+  </pf-helper-text-item>
 
-    <style>
-      /* ====== Base layout ====== */
-      body {
-        margin: 0;
-        background-color: var(--pf-global--BackgroundColor--100);
-        color: var(--pf-global--Color--100);
-        font-family: var(--pf-global--FontFamily--text, "Red Hat Text", Arial, sans-serif);
-        line-height: 1.5;
-      }
+  <pf-helper-text-item status="success">
+    This is success helper text
+  </pf-helper-text-item>
 
-      pf-demo {
-        display: block;
-        padding: 2rem;
-        max-width: 700px;
-        margin-inline: auto;
-      }
+  <pf-helper-text-item status="error">
+    This is error helper text
+  </pf-helper-text-item>
+</pf-helper-text>
 
-      h2 {
-        font-size: var(--pf-global--FontSize--xl);
-        font-weight: var(--pf-global--FontWeight--bold);
-        margin-bottom: 1rem;
-      }
+<script type="module">
+  import '@patternfly/elements/pf-helper-text/pf-helper-text.js';
+  import '@patternfly/elements/pf-helper-text/pf-helper-text-item.js';
+</script>
 
-      /* ====== Helper text layout ====== */
-      pf-helper-text {
-        display: block;
-        margin-block: 0.25rem;
-      }
+<style>
+  pf-helper-text {
+    display: block;
+    margin-block: 0.25rem;
+  }
 
-      pf-helper-text-item {
-        display: flex;
-        align-items: center;
-        font-size: var(--pf-c-helper-text--FontSize, 0.875rem);
-        gap: var(--pf-c-helper-text--Gap, 0.25rem);
-      }
+  pf-helper-text-item {
+    display: flex;
+    align-items: center;
+    font-size: var(--pf-c-helper-text--FontSize, 0.875rem);
+    gap: var(--pf-c-helper-text--Gap, 0.25rem);
+  }
 
-      /* ====== Remove all PatternFly icons (mask, svg, pseudo) ====== */
-      .pf-c-helper-text__item,
-      .pf-c-helper-text__item::before,
-      .pf-c-helper-text__item-icon,
-      .pf-c-helper-text__item-icon::before,
-      .pf-c-helper-text__item-icon svg,
-      pf-helper-text-item::part(icon),
-      pf-helper-text-item [slot="icon"],
-      pf-helper-text-item svg {
-        content: none !important;
-        display: none !important;
-        visibility: hidden !important;
-        width: 0 !important;
-        height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        background: none !important;
-        mask: none !important;
-        -webkit-mask: none !important;
-      }
+  /* ====== Remove all PatternFly icons (mask, svg, pseudo) ====== */
+  pf-helper-text-item::part(icon),
+  pf-helper-text-item [slot="icon"],
+  pf-helper-text-item svg {
+    content: none !important;
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    mask: none !important;
+    -webkit-mask: none !important;
+  }
 
-      /* ====== Text color per status ====== */
-      pf-helper-text-item[status='default'] {
-        color: var(--pf-c-helper-text__item-text--Color, #151515);
-      }
+  /* ====== Text color per status ====== */
+  pf-helper-text-item[status='default'] {
+    color: var(--pf-c-helper-text__item-text--Color, #151515);
+  }
 
-      pf-helper-text-item[status='indeterminate'] {
-        color: var(--pf-c-helper-text__item-text--m-indeterminate--Color, #6a6e73);
-      }
+  pf-helper-text-item[status='indeterminate'] {
+    color: var(--pf-c-helper-text__item-text--m-indeterminate--Color, #6a6e73);
+  }
 
-      pf-helper-text-item[status='warning'] {
-        color: var(--pf-c-helper-text__item-text--m-warning--Color, #795600);
-      }
+  pf-helper-text-item[status='warning'] {
+    color: var(--pf-c-helper-text__item-text--m-warning--Color, #795600);
+  }
 
-      pf-helper-text-item[status='success'] {
-        color: var(--pf-c-helper-text__item-text--m-success--Color, #1e4f18);
-      }
+  pf-helper-text-item[status='success'] {
+    color: var(--pf-c-helper-text__item-text--m-success--Color, #1e4f18);
+  }
 
-      pf-helper-text-item[status='error'] {
-        color: var(--pf-c-helper-text__item-text--m-error--Color, #a30000);
-      }
-    </style>
-  </head>
-
-  <body>
-    <pf-demo>
-      <h2>Static helper text</h2>
-
-      <pf-helper-text>
-        <pf-helper-text-item status="default">
-          This is default helper text
-        </pf-helper-text-item>
-
-        <pf-helper-text-item status="indeterminate">
-          This is indeterminate helper text
-        </pf-helper-text-item>
-
-        <pf-helper-text-item status="warning">
-          This is warning helper text
-        </pf-helper-text-item>
-
-        <pf-helper-text-item status="success">
-          This is success helper text
-        </pf-helper-text-item>
-
-        <pf-helper-text-item status="error">
-          This is error helper text
-        </pf-helper-text-item>
-      </pf-helper-text>
-    </pf-demo>
-
-    <script type="module">
-      import '@patternfly/elements/pf-helper-text/pf-helper-text.js';
-      import '@patternfly/elements/pf-helper-text/pf-helper-text-item.js';
-    </script>
-  </body>
-</html>
+  pf-helper-text-item[status='error'] {
+    color: var(--pf-c-helper-text__item-text--m-error--Color, #a30000);
+  }
+</style>

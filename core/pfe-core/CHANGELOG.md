@@ -1,5 +1,10 @@
 # @patternfly/pfe-core
 
+## 5.0.5
+### Patch Changes
+
+- a13e259: Update dependencies
+
 ## 5.0.4
 ### Patch Changes
 

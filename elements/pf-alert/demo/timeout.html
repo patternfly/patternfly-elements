@@ -1,7 +1,9 @@
-<pf-button variant="secondary" id="addAlertButton">Add alert</pf-button>
-<pf-button variant="secondary" id="removeAllAlertsButton">Remove all alerts</pf-button>
+<pf-button id="addAlertButton"
+           variant="secondary">Add alert</pf-button>
+<pf-button id="removeAllAlertsButton"
+           variant="secondary">Remove all alerts</pf-button>
 
-<div id="alert-container" style="margin-top: 20px;">
+<div id="alert-container">
 </div>
 
 <script type="module">
@@ -12,10 +14,7 @@
   const removeAllAlertsButton = document.getElementById('removeAllAlertsButton');
   const alertContainer = document.getElementById('alert-container');
 
-  let alertCounter = 0;
-
   function addTimeoutAlert() {
-    alertCounter++;
     const timeoutMilliseconds = 8000;
 
     const newAlert = document.createElement('pf-alert');
@@ -52,13 +51,15 @@
 </script>
 
 <style>
-  pf-alert::part(container) {
-    background-color: #fff !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-
+  #alert-container {
+     margin-top: 20px;
   }
 
   #addAlertButton {
     margin-inline-end: -0.25rem;
+  }
+
+  pf-alert {
+    margin-block-end: 1em;
   }
 </style>

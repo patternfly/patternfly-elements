@@ -1,7 +1,6 @@
 import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { state } from 'lit/decorators/state.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -20,9 +19,9 @@ const VariantIconMap = new Map(Object.entries({
   neutral: 'bell',
 }));
 
-export class PfAlertTimeoutEvent extends Event {
-  constructor() {
-    super('timeout', { bubbles: true, cancelable: true });
+export class PfAlertCloseEvent extends Event {
+  constructor(public reason: 'closed' | 'timeout' = 'closed') {
+    super('close', { bubbles: true, cancelable: true });
   }
 }
 
@@ -30,8 +29,8 @@ export class PfAlertTimeoutEvent extends Event {
  * An **alert** is a notification that provides brief information to the user
  * without blocking their workflow.
  *
- * @fires timeout - When an alert has timed out. Cancel the event to prevent the
- *                  alert from being removed.
+ * @fires close - When an alert is closed e.g. when close button is clicked or when the alert times
+ *                out. Cancel the event to prevent the alert from being removed.
  */
 @customElement('pf-alert')
 export class PfAlert extends LitElement {
@@ -74,6 +73,19 @@ export class PfAlert extends LitElement {
   @property() icon?: string;
 
   /**
+   * Use inline alerts to display an alert inline with content. All alert
+   * variants may use the `inline` attribute to position alerts in content-heavy
+   * areas, such as within forms, wizards, or drawers.
+   */
+  @property({ type: Boolean, reflect: true }) inline = false;
+
+  /**
+   * Use the `plain` attribute to make any inline alert plain. Plain styling
+   * removes the colored background but keeps colored text and icons.
+   */
+  @property({ type: Boolean, reflect: true }) plain = false;
+
+  /**
    * An alert can contain additional, hidden information that is made visible
    * when users click a caret icon. This information can be expanded and
    * collapsed each time the icon is clicked.
@@ -88,9 +100,16 @@ export class PfAlert extends LitElement {
    */
   @property({ reflect: true, type: Boolean }) expandable = false;
 
-  @property({ reflect: true, type: Boolean }) dismissable = false;
+  /**
+   * True when an expandable alert is expanded
+   */
+  @property({ reflect: true, type: Boolean }) expanded = false;
 
-  @state() private expanded = false;
+  /**
+   * When true, the alert displays a close button
+   * Clicking the close button removes the alert
+   */
+  @property({ reflect: true, type: Boolean }) dismissable = false;
 
   #timeoutId?: number;
 
@@ -100,49 +119,46 @@ export class PfAlert extends LitElement {
   }
 
   override render(): TemplateResult<1> {
-    const { variant, expandable, expanded } = this;
+    const { expandable, expanded, variant } = this;
     const icon = this.icon ?? VariantIconMap.get(variant);
     return html`
-      <div id="container"
-           class=${classMap({ [variant ?? '']: !!variant, expandable })}>
-        <pf-button id="toggle-button"
-                   plain
-                   ?hidden="${!expandable}"
-                   icon="${expandable ? 'angle-down' : 'angle-right'}"
-                   icon-set="fas"
-                   @click="${this.#onToggleClick}"
-                   aria-controls="${ifDefined(expandable ? 'description' : undefined)}"
-                   aria-expanded="${ifDefined(expandable ? String(expanded) : undefined)}"
-                   aria-label="${expanded ? 'Collapse Alert' : 'Expand Alert'}">
-        </pf-button>
+      <pf-button id="toggle"
+                 plain
+                 ?hidden="${!expandable}"
+                 icon="${expandable ? 'angle-down' : 'angle-right'}"
+                 icon-set="fas"
+                 @click="${this.#onToggleClick}"
+                 aria-controls="${ifDefined(expandable ? 'description' : undefined)}"
+                 aria-expanded="${ifDefined(expandable ? String(expanded) : undefined)}"
+                 aria-label="${expanded ? 'Collapse Alert' : 'Expand Alert'}">
+      </pf-button>
 
-        <div id="icon-container">
-          <slot name="icon">
-            <pf-icon icon="${icon}"></pf-icon>
-          </slot>
-        </div>
-
-        <div id="title-area">
-          <slot name="title"></slot>
-        </div>
-
-        <div id="description"
-             ?hidden="${expandable && !expanded}">
-          <slot></slot>
-        </div>
-
-        <div id="action-links">
-          <slot name="actions"></slot>
-        </div>
-
-        <pf-button id="close-button"
-                   plain
-                   icon="close"
-                   icon-set="patternfly"
-                   ?hidden="${!this.dismissable}"
-                   @click="${this.#onCloseClick}">
-        </pf-button>
+      <div id="icon">
+        <slot name="icon">
+          <pf-icon icon="${icon}"></pf-icon>
+        </slot>
       </div>
+
+      <div id="title">
+        <slot name="title"></slot>
+      </div>
+
+      <div id="description"
+           ?hidden="${expandable && !expanded}">
+        <slot></slot>
+      </div>
+
+      <div id="actions">
+        <slot name="actions"></slot>
+      </div>
+
+      <pf-button id="close"
+                 plain
+                 icon="close"
+                 icon-set="patternfly"
+                 ?hidden="${!this.dismissable}"
+                 @click="${this.#onCloseClick}">
+      </pf-button>
     `;
   }
 
@@ -155,7 +171,7 @@ export class PfAlert extends LitElement {
     }
     if (timeout > 0) {
       this.#timeoutId = setTimeout(() => {
-        if (this.isConnected && this.dispatchEvent(new PfAlertTimeoutEvent())) {
+        if (this.isConnected && this.dispatchEvent(new PfAlertCloseEvent('timeout'))) {
           this.remove();
         }
       }, timeout) as unknown as number;
@@ -163,14 +179,14 @@ export class PfAlert extends LitElement {
   }
 
   #onCloseClick() {
-    if (this.isConnected) {
+    if (this.isConnected && this.dispatchEvent(new PfAlertCloseEvent())) {
       clearTimeout(this.#timeoutId);
       this.remove();
     }
   }
 
   #onToggleClick() {
-    this.expandable = !this.expandable;
+    this.expanded = !this.expanded;
   }
 }
 

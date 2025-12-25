@@ -50,7 +50,6 @@
     "./pf-progress-stepper/pf-progress-stepper.js": "./pf-progress-stepper/pf-progress-stepper.js",
     "./pf-progress/pf-progress.js": "./pf-progress/pf-progress.js",
     "./pf-search-input/pf-search-input.js": "./pf-search-input/pf-search-input.js",
-    "./pf-sidebar/pf-sidebar.js": "./pf-sidebar/pf-sidebar.js",
     "./pf-spinner/pf-spinner.js": "./pf-spinner/pf-spinner.js",
     "./pf-switch/pf-switch.js": "./pf-switch/pf-switch.js",
     "./pf-table/context.js": "./pf-table/context.js",

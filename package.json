@@ -18,7 +18,6 @@
     "🚧-BUILD": "❓ Make packages and artifacts",
     "build": "wireit",
     "build:create": "wireit",
-    "build:elements": "wireit",
     "analyze": "wireit",
     "docs": "wireit",
     "site": "npm run build",

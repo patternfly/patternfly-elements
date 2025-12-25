@@ -1106,7 +1106,7 @@ dl.member dd {
 }
 
 @media (min-width: 820px) {
-  rh-global-footer {
+  rh-footer-universal {
     width: calc(100vw - 17.5rem);
     transform: translate(17.5rem);
   }

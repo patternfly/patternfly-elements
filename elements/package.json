@@ -15,6 +15,7 @@
     "./pf-accordion/pf-accordion-header.js": "./pf-accordion/pf-accordion-header.js",
     "./pf-accordion/pf-accordion-panel.js": "./pf-accordion/pf-accordion-panel.js",
     "./pf-accordion/pf-accordion.js": "./pf-accordion/pf-accordion.js",
+    "./pf-alert/pf-alert.js": "./pf-alert/pf-alert.js",
     "./pf-avatar/pf-avatar.js": "./pf-avatar/pf-avatar.js",
     "./pf-back-to-top/pf-back-to-top.js": "./pf-back-to-top/pf-back-to-top.js",
     "./pf-background-image/pf-background-image.js": "./pf-background-image/pf-background-image.js",
@@ -114,9 +115,12 @@
     "!test/*"
   ],
   "contributors": [
+    "Ajinyka Shinde <sajinkya359@gmail.com>",
+    "Avigail Chubara (https://github.com/chubara62372)",
     "Benny Powers <bennyp@redhat.com>",
     "Daniel Faucette",
     "Diwanshi Pandey <diwanshipandey@gmail.com> (https://github.com/diwanshi)",
+    "Gili Greenberger (https://github.com/Gili-Greenberger)",
     "Ivana Rodriguez (https://github.com/eyevana)",
     "Kendall Totten",
     "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",
@@ -125,12 +129,10 @@
     "Michael Clayton <mclayton@redhat.com>",
     "Michael Potter",
     "Nikki Massaro Kauffman <nmassaro@redhat.com> (https://github.com/nikkimk)",
-    "Steven Spriggs <sspriggs@redhat.com",
-    "castastrophe (https://github.com/castastrophe)",
-    "Wes Ruvalcaba",
     "Rohit Bharmal (https://github.com/Rohit2601)",
-    "Ajinyka Shinde <sajinkya359@gmail.com>",
-    "Gili Greenberger (https://github.com/Gili-Greenberger)"
+    "Steven Spriggs <sspriggs@redhat.com",
+    "Wes Ruvalcaba",
+    "castastrophe (https://github.com/castastrophe)"
   ],
   "dependencies": {
     "@lit/context": "^1.1.6",

@@ -33,7 +33,6 @@
     "./pf-dropdown/pf-dropdown-menu.js": "./pf-dropdown/pf-dropdown-menu.js",
     "./pf-dropdown/pf-dropdown.js": "./pf-dropdown/pf-dropdown.js",
     "./pf-helper-text/pf-helper-text.js": "./pf-helper-text/pf-helper-text.js",
-    "./pf-helper-text/pf-helper-text-item.js": "./pf-helper-text/pf-helper-text-item.js",
     "./pf-hint/pf-hint.js": "./pf-hint/pf-hint.js",
     "./pf-icon/pf-icon.js": "./pf-icon/pf-icon.js",
     "./pf-jazz-hands/pf-jazz-hands.js": "./pf-jazz-hands/pf-jazz-hands.js",

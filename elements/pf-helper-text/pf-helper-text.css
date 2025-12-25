@@ -1,29 +1,35 @@
 :host {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 14px;
-  line-height: 1.5;
+  gap: var(--pf-c-helper-text--Gap, 0.25rem);
+  font-size: var(--pf-c-helper-text--FontSize, 0.875rem);
+  color: var(--pf-c-helper-text__item-text--Color, #151515);
+  line-height: 1.4;
 }
 
-.helper-container {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
+/* Color variants */
+:host([variant='indeterminate']) {
+  color: var(--pf-c-helper-text__item-text--m-indeterminate--Color, #6a6e73);
 }
 
-:host([status="error"]) {
-  color: var(--pf-global--danger-color--100, #c9190b);
+:host([variant='warning']) {
+  color: var(--pf-c-helper-text__item-text--m-warning--Color, #795600);
 }
 
-:host([status="warning"]) {
-  color: var(--pf-global--warning-color--100, #f0ab00);
+:host([variant='success']) {
+  color: var(--pf-c-helper-text__item-text--m-success--Color, #1e4f18);
 }
 
-:host([status="success"]) {
-  color: var(--pf-global--success-color--100, #3e8635);
+:host([variant='error']) {
+  color: var(--pf-c-helper-text__item-text--m-error--Color, #a30000);
 }
 
-:host([status="indeterminate"]) {
-  color: var(--pf-global--palette--black-600, #6a6e73);
+::slotted(ul) {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+pf-icon {
+  fill: currentColor;
 }

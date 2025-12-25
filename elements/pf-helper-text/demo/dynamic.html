@@ -1,43 +1,30 @@
-<pf-helper-text>
-  <pf-helper-text-item icon="minus"
-                       icon-set="fas"
-                       status="default"
-                       is-dynamic>
-    This is default helper text
-  </pf-helper-text-item>
+<pf-helper-text icon="minus"
+                variant="default">
+  This is default helper text
+</pf-helper-text>
 
-  <pf-helper-text-item icon="minus"
-                       icon-set="fas"
-                       status="indeterminate"
-                       is-dynamic>
-    This is indeterminate helper text
-  </pf-helper-text-item>
+<pf-helper-text icon="minus"
+                variant="indeterminate">
+  This is indeterminate helper text
+</pf-helper-text>
 
-  <pf-helper-text-item icon="exclamation-triangle"
-                       icon-set="fas"
-                       status="warning"
-                       is-dynamic>
-    This is warning helper text
-  </pf-helper-text-item>
+<pf-helper-text icon="exclamation-triangle"
+                variant="warning">
+  This is warning helper text
+</pf-helper-text>
 
-  <pf-helper-text-item icon="check-circle"
-                       icon-set="fas"
-                       status="success"
-                       is-dynamic>
-    This is success helper text
-  </pf-helper-text-item>
+<pf-helper-text icon="check-circle"
+                variant="success">
+  This is success helper text
+</pf-helper-text>
 
-  <pf-helper-text-item icon="exclamation-circle"
-                       icon-set="fas"
-                       status="error"
-                       is-dynamic>
-    This is error helper text
-  </pf-helper-text-item>
+<pf-helper-text icon="exclamation-circle"
+                variant="error">
+  This is error helper text
 </pf-helper-text>
 
 <script type="module">
   import '@patternfly/elements/pf-helper-text/pf-helper-text.js';
-  import '@patternfly/elements/pf-helper-text/pf-helper-text-item.js';
   import '@patternfly/elements/pf-icon/pf-icon.js';
 </script>
 
@@ -45,13 +32,6 @@
   pf-helper-text {
     display: block;
     margin-block: 0.25rem;
-  }
-
-  pf-helper-text-item {
-    display: flex;
-    align-items: center;
-    font-size: var(--pf-c-helper-text--FontSize, 0.875rem);
-    gap: var(--pf-c-helper-text--Gap, 0.25rem);
   }
 
   pf-icon {

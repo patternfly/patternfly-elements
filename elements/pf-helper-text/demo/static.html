@@ -1,77 +1,16 @@
-<pf-helper-text>
-  <pf-helper-text-item status="default">
-    This is default helper text
-  </pf-helper-text-item>
-
-  <pf-helper-text-item status="indeterminate">
-    This is indeterminate helper text
-  </pf-helper-text-item>
-
-  <pf-helper-text-item status="warning">
-    This is warning helper text
-  </pf-helper-text-item>
-
-  <pf-helper-text-item status="success">
-    This is success helper text
-  </pf-helper-text-item>
-
-  <pf-helper-text-item status="error">
-    This is error helper text
-  </pf-helper-text-item>
-</pf-helper-text>
+<pf-helper-text variant="default">This is default helper text</pf-helper-text>
+<pf-helper-text variant="indeterminate">This is indeterminate helper text</pf-helper-text>
+<pf-helper-text variant="warning">This is warning helper text</pf-helper-text>
+<pf-helper-text variant="success">This is success helper text</pf-helper-text>
+<pf-helper-text variant="error">This is error helper text</pf-helper-text>
 
 <script type="module">
   import '@patternfly/elements/pf-helper-text/pf-helper-text.js';
-  import '@patternfly/elements/pf-helper-text/pf-helper-text-item.js';
 </script>
 
 <style>
   pf-helper-text {
     display: block;
     margin-block: 0.25rem;
-  }
-
-  pf-helper-text-item {
-    display: flex;
-    align-items: center;
-    font-size: var(--pf-c-helper-text--FontSize, 0.875rem);
-    gap: var(--pf-c-helper-text--Gap, 0.25rem);
-  }
-
-  /* ====== Remove all PatternFly icons (mask, svg, pseudo) ====== */
-  pf-helper-text-item::part(icon),
-  pf-helper-text-item [slot="icon"],
-  pf-helper-text-item svg {
-    content: none !important;
-    display: none !important;
-    visibility: hidden !important;
-    width: 0 !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: none !important;
-    mask: none !important;
-    -webkit-mask: none !important;
-  }
-
-  /* ====== Text color per status ====== */
-  pf-helper-text-item[status='default'] {
-    color: var(--pf-c-helper-text__item-text--Color, #151515);
-  }
-
-  pf-helper-text-item[status='indeterminate'] {
-    color: var(--pf-c-helper-text__item-text--m-indeterminate--Color, #6a6e73);
-  }
-
-  pf-helper-text-item[status='warning'] {
-    color: var(--pf-c-helper-text__item-text--m-warning--Color, #795600);
-  }
-
-  pf-helper-text-item[status='success'] {
-    color: var(--pf-c-helper-text__item-text--m-success--Color, #1e4f18);
-  }
-
-  pf-helper-text-item[status='error'] {
-    color: var(--pf-c-helper-text__item-text--m-error--Color, #a30000);
   }
 </style>

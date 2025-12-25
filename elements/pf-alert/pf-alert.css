@@ -3,6 +3,10 @@
   position: relative;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 /* ---------------- */
 /* CONTAINER BASE   */
 /* ---------------- */
@@ -20,46 +24,45 @@
   margin-bottom: 1rem;
   display: flex;
   flex-wrap: wrap;
-}
 
+  /* ---------------- */
+  /* VARIANTS         */
+  /* ---------------- */
 
-/* ---------------- */
-/* VARIANTS         */
-/* ---------------- */
+  &.info {
+    --_border-color: var(--pf-v5-c-alert--m-info--BorderTopColor, #2b9af3);
+    --_icon-color: var(--pf-v5-c-alert--m-info__icon--Color, #2b9af3);
+    --_title-color: var(--pf-v5-c-alert--m-info__title--Color, #002952);
+    --_background-color: var(--pf-v5-c-alert--m-inline--m-info--BackgroundColor, #e7f1fa);
+  }
 
-#container.info {
-  --_border-color: var(--pf-v5-c-alert--m-info--BorderTopColor, #2b9af3);
-  --_icon-color: var(--pf-v5-c-alert--m-info__icon--Color, #2b9af3);
-  --title--Color: var(--pf-v5-c-alert--m-info__title--Color, #002952);
-  --_background-color: var(--pf-v5-c-alert--m-inline--m-info--BackgroundColor, #e7f1fa);
-}
+  &.success {
+    --_border-color: var(--pf-v5-c-alert--m-success--BorderTopColor, #3e8635);
+    --_icon-color: var(--pf-v5-c-alert--m-success__icon--Color, #3e8635);
+    --_title-color: var(--pf-v5-c-alert--m-success__title--Color, #1e4f18);
+    --_background-color: var(--pf-v5-c-alert--m-inline--m-success--BackgroundColor, #f3faf2);
+  }
 
-#container.success {
-  --_border-color: var(--pf-v5-c-alert--m-success--BorderTopColor, #3e8635);
-  --_icon-color: var(--pf-v5-c-alert--m-success__icon--Color, #3e8635);
-  --title--Color: var(--pf-v5-c-alert--m-success__title--Color, #1e4f18);
-  --_background-color: var(--pf-v5-c-alert--m-inline--m-success--BackgroundColor, #f3faf2);
-}
+  &.warning {
+    --_border-color: var(--pf-v5-c-alert--m-warning--BorderTopColor, #f0ab00);
+    --_icon-color: var(--pf-v5-c-alert--m-warning__icon--Color, #f0ab00);
+    --_title-color: var(--pf-v5-c-alert--m-warning__title--Color, #795600);
+    --_background-color: var(--pf-v5-c-alert--m-inline--m-warning--BackgroundColor, #fdf7e7);
+  }
 
-#container.warning {
-  --_border-color: var(--pf-v5-c-alert--m-warning--BorderTopColor, #f0ab00);
-  --_icon-color: var(--pf-v5-c-alert--m-warning__icon--Color, #f0ab00);
-  --title--Color: var(--pf-v5-c-alert--m-warning__title--Color, #795600);
-  --_background-color: var(--pf-v5-c-alert--m-inline--m-warning--BackgroundColor, #fdf7e7);
-}
+  &.danger {
+    --_border-color: var(--pf-v5-c-alert--m-danger--BorderTopColor, #c9190b);
+    --_icon-color: var(--pf-v5-c-alert--m-danger__icon--Color, #c9190b);
+    --_title-color: var(--pf-v5-c-alert--m-danger__title--Color, #a30000);
+    --_background-color: var(--pf-v5-c-alert--m-inline--m-danger--BackgroundColor, #faeae8);
+  }
 
-#container.danger {
-  --_border-color: var(--pf-v5-c-alert--m-danger--BorderTopColor, #c9190b);
-  --_icon-color: var(--pf-v5-c-alert--m-danger__icon--Color, #c9190b);
-  --title--Color: var(--pf-v5-c-alert--m-danger__title--Color, #a30000);
-  --_background-color: var(--pf-v5-c-alert--m-inline--m-danger--BackgroundColor, #faeae8);
-}
-
-#container.neutral {
-  --_background-color: var(--pf-v5-global--BackgroundColor--100, #f2f9f9);
-  --_border-color: var(--pf-v5-global--BorderColor--100, #009596);
-  --_icon-color: var(--pf-v5-global--icon--Color--light, #009596);
-  --title--Color: var(--pf-v5-global--Color--100, #003737);
+  &.neutral {
+    --_background-color: var(--pf-v5-global--BackgroundColor--100, #f2f9f9);
+    --_border-color: var(--pf-v5-global--BorderColor--100, #009596);
+    --_icon-color: var(--pf-v5-global--icon--Color--light, #009596);
+    --_title-color: var(--pf-v5-global--Color--100, #003737);
+  }
 }
 
 /* ---------------- */
@@ -76,7 +79,7 @@
 #title-area ::slotted(*) {
   font-size: 90%;
   margin: 0 !important;
-  color: var(--title--Color);
+  color: var(--_title-color);
   font-weight: bold;
 }
 
@@ -103,7 +106,7 @@
 /* TOGGLE AREA      */
 /* ---------------- */
 
-#toggle-container:not([hidden])~#action-links {
+#toggle-button:not([hidden])~#action-links {
   padding-inline-start: 4rem;
 }
 
@@ -122,16 +125,15 @@
   padding-bottom: 0.5rem;
   padding-top: 0.5rem;
 
-}
+  & ::slotted(a) {
+    text-decoration: none;
+    color: #06c;
+    margin-inline-end: 1rem;
+  }
 
-#action-links ::slotted(a) {
-  text-decoration: none;
-  color: #06c;
-  margin-inline-end: 1rem;
-}
-
-#action-links ::slotted(a:hover),
-#action-links ::slotted(a:focus),
-#action-links ::slotted(a:active) {
-  color: #004080;
+  & ::slotted(a:hover),
+  & ::slotted(a:focus),
+  & ::slotted(a:active) {
+    color: #004080;
+  }
 }

@@ -1,0 +1,66 @@
+<pf-button id="addAlertButton"
+           variant="secondary">Add alert</pf-button>
+<pf-button id="removeAllAlertsButton"
+           variant="secondary">Remove all alerts</pf-button>
+
+<div id="alert-container">
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-alert/pf-alert.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+
+  const addAlertButton = document.getElementById('addAlertButton');
+  const removeAllAlertsButton = document.getElementById('removeAllAlertsButton');
+  const alertContainer = document.getElementById('alert-container');
+
+  function addTimeoutAlert() {
+    const timeoutMilliseconds = 8000;
+
+    const newAlert = document.createElement('pf-alert');
+    newAlert.setAttribute('variant', 'neutral');
+    newAlert.setAttribute('timeout', timeoutMilliseconds.toString());
+    newAlert.titleText = 'Default timeout Alert';
+    newAlert.titleLevel = 4;
+    newAlert.innerHTML = `
+                This alert will dismiss after ${timeoutMilliseconds/1000} seconds.
+                <a href="#" slot="actions">View details</a>
+                <a href="#" slot="actions">Ignore</a>
+            `;
+
+    alertContainer.prepend(newAlert);
+
+    newAlert.addEventListener('click', (event) => {
+      if (event.target.dataset.action === 'ignore') {
+        event.preventDefault();
+        newAlert.remove();
+      }
+    });
+  }
+
+  if (addAlertButton) {
+    addAlertButton.addEventListener('click', addTimeoutAlert);
+  }
+
+  if (removeAllAlertsButton) {
+    removeAllAlertsButton.addEventListener('click', () => {
+      if (alertContainer) {
+        alertContainer.innerHTML = '';
+      }
+    });
+  }
+</script>
+
+<style>
+  #alert-container {
+     margin-top: 20px;
+  }
+
+  #addAlertButton {
+    margin-inline-end: -0.25rem;
+  }
+
+  pf-alert {
+    margin-block-end: 1em;
+  }
+</style>

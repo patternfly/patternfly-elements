@@ -14,7 +14,7 @@ on:
       - submitted
 
 permissions:
-  pull-requests: read
+  pull-requests: write
 
 # Separate jobs can run concurrently
 jobs:

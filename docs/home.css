@@ -44,7 +44,7 @@
   --pf-cta--Color: #06c;
 }
 
-#home-header a.cta.primary:hover, 
+#home-header a.cta.primary:hover,
 #home-header a.cta.primary:focus {
   --pf-cta--BackgroundColor: transparent;
 }
@@ -114,7 +114,7 @@
   margin: 0 auto;
 }
 
-rh-global-footer {
+rh-footer-universal {
   width: 100vw !important;
   translate: none !important;
   transform: none;

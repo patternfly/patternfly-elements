@@ -1,30 +1,28 @@
-<pf-alert variant="success">
-  <h3 slot="title">Success alert title</h3>
-  <p>Success alert description. This should tell the user more information about the alert.</p>
+<pf-alert variant="success"
+          title-text="Success alert title">
+  Success alert description. This should tell the user more information about the alert.
   <a href="#" slot="actionLinks">View details</a>
   <a href="#" slot="actionLinks">Ignore</a>
 </pf-alert>
 
-<pf-alert variant="success">
+<pf-alert variant="success"
+          title-text="Success alert title">
   <pf-icon icon="check-circle" slot="icon"></pf-icon>
-  <h3 slot="title">Success alert title</h3>
-  <p>Success alert description. This should tell the user more information about the alert.
-    <a href="#">This is a link.</a>
-  </p>
+  Success alert description.
+  This should tell the user more information about the alert.
+  <a href="#">This is a link.</a>
 </pf-alert>
 
-<pf-alert variant="success" onClose>
-  <h3 slot="title">Success alert title</h3>
-  <p>Short alert description.</p>
+<pf-alert variant="success"
+          dismissable
+          title-text="Success alert title">
+  Short alert description.
 </pf-alert>
 
-<pf-alert variant="success">
-  <div slot="title">div success alert title</div>
-</pf-alert>
-
-<pf-alert variant="success">
-  <h6 slot="title">h6 Success alert title</h6>
-  <p>Short alert description.</p>
+<pf-alert variant="success"
+          title-text="h6 Success alert title"
+          title-level="6">
+  Short alert description.
 </pf-alert>
 
 <script type="module">

@@ -1,5 +1,5 @@
 {% renderOverview %}
-  <pf-alert></pf-alert>
+  <pf-alert title-text="Success!" variant="success"></pf-alert>
 {% endrenderOverview %}
 
 {% band header="Usage" %}{% endband %}

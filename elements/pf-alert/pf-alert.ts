@@ -73,6 +73,17 @@ export class PfAlert extends LitElement {
   @property() icon?: string;
 
   /**
+   * The title of the alert. Overridden by the title slot.
+   */
+  @property({ attribute: 'title-text', reflect: true }) titleText?: string;
+
+  /**
+   * The heading level of the alert's title. Overridden by the title slot.
+   * Default: 3
+   */
+  @property({ attribute: 'title-level', reflect: true }) titleLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+
+  /**
    * Use inline alerts to display an alert inline with content. All alert
    * variants may use the `inline` attribute to position alerts in content-heavy
    * areas, such as within forms, wizards, or drawers.
@@ -140,7 +151,7 @@ export class PfAlert extends LitElement {
       </div>
 
       <div id="title">
-        <slot name="title"></slot>
+        <slot name="title">${this.#renderDefaultTitle()}</slot>
       </div>
 
       <div id="description"
@@ -175,6 +186,21 @@ export class PfAlert extends LitElement {
           this.remove();
         }
       }, timeout) as unknown as number;
+    }
+  }
+
+  #renderDefaultTitle() {
+    if (!this.titleText) {
+      return '';
+    }
+    switch (this.titleLevel ?? 3) {
+      case 1: return html`<h1>${this.titleText}</h1>`;
+      case 2: return html`<h2>${this.titleText}</h2>`;
+      case 4: return html`<h4>${this.titleText}</h4>`;
+      case 5: return html`<h5>${this.titleText}</h5>`;
+      case 6: return html`<h6>${this.titleText}</h6>`;
+      case 3:
+      default: return html`<h3>${this.titleText}</h3>`;
     }
   }
 

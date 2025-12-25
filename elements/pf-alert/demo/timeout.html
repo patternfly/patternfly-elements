@@ -20,11 +20,12 @@
     const newAlert = document.createElement('pf-alert');
     newAlert.setAttribute('variant', 'neutral');
     newAlert.setAttribute('timeout', timeoutMilliseconds.toString());
+    newAlert.titleText = 'Default timeout Alert';
+    newAlert.titleLevel = 4;
     newAlert.innerHTML = `
-                <h4 slot="title">Default timeout Alert</h4>
                 This alert will dismiss after ${timeoutMilliseconds/1000} seconds.
-                <a href="#" slot="actionLinks">View details</a>
-                <a href="#" slot="actionLinks" data-action="ignore">Ignore</a>
+                <a href="#" slot="actions">View details</a>
+                <a href="#" slot="actions">Ignore</a>
             `;
 
     alertContainer.prepend(newAlert);

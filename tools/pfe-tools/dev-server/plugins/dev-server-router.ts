@@ -1,11 +1,13 @@
 import type { PfeDevServerInternalConfig } from './pfe-dev-server.js';
 
-import Router, { type Middleware } from '@koa/router';
+import Router, { type RouterMiddleware } from '@koa/router';
+import type { DefaultState, DefaultContext, Middleware } from 'koa';
 
 import { makeDemoEnv } from '../../environment.js';
 import { deslugify } from '../../config.js';
 
-type PfeMiddleware = (config: PfeDevServerInternalConfig) => Middleware;
+type PfeMiddleware =
+  (config: PfeDevServerInternalConfig) => RouterMiddleware<DefaultState, DefaultContext>;
 
 /**
  * The environment file contains information from the serverside
@@ -91,11 +93,13 @@ const demoSubresourceMiddleware: PfeMiddleware = config => (ctx, next) => {
  */
 export function pfeDevServerRouterMiddleware(
   config: PfeDevServerInternalConfig,
-): Router.Middleware {
+): Middleware {
   const { elementsDir, site: { componentSubpath } } = config;
   const router = new Router();
   const shim = lightdomShimMiddleware(config);
   const demo = demoSubresourceMiddleware(config);
+  // RouterComposedMiddleware (from router.routes()) is compatible with Middleware at runtime
+  // but TypeScript can't infer this because RouterComposedMiddleware isn't exported
   return router
       .get('/tools/pfe-tools/environment.js(.js)?', environmentMiddleware(config))
       .get(`/core/pfe-core/:splatPath*.js`, coreMiddleware(config))
@@ -107,5 +111,5 @@ export function pfeDevServerRouterMiddleware(
       .get(`/${componentSubpath}/:unprefixedElementSlug/:sheetName-lightdom.css`, shim)
       .get(`/${componentSubpath}/:unprefixedElementSlug/demo/:demoName/:fileName.:ext`, demo)
       .get(`/${componentSubpath}/:unprefixedElementSlug/demo/:fileName.:ext`, demo)
-      .routes();
+      .routes() as Middleware;
 }

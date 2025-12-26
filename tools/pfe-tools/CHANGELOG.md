@@ -1,5 +1,10 @@
 # @patternfly/pfe-tools
 
+## 6.0.0
+### Major Changes
+
+- a4dee0c: Require node >= 22
+
 ## 5.0.5
 ### Patch Changes
 

@@ -1,8 +1,7 @@
 // @ts-check
 const { join, sep } = require('node:path');
 const { existsSync } = require('node:fs');
-const { glob } = require('glob');
-const { stat, rm } = require('node:fs/promises');
+const { glob, stat, rm } = require('node:fs/promises');
 
 const isDir = dir => stat(dir).then(x => x.isDirectory, () => false);
 
@@ -62,7 +61,7 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
     const { getPfeConfig } = await import('../../config.js');
     const options = { ...getPfeConfig(), ...pluginOpts };
     if (runMode === 'build') {
-      const files = await glob(`${dir.output}/${options.site.componentSubpath}/*/demo/*`);
+      const files = await Array.fromAsync(glob(`${dir.output}/${options.site.componentSubpath}/*/demo/*`));
       const htmls = files.filter(x => x.endsWith('.html') && !x.endsWith(`${sep}index.html`));
       for (const file of htmls) {
         const dir = file.replace(/\.html$/, '');

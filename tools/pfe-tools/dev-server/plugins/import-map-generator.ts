@@ -8,7 +8,7 @@ import { join } from 'node:path';
 
 import { Generator } from '@jspm/generator';
 
-import { glob } from 'glob';
+import { glob } from 'node:fs/promises';
 
 export interface Options extends GeneratorOptions {
   resolveHtmlUrl?: (fileUrl: string, rootUrl: string) => string;
@@ -22,15 +22,24 @@ const exists = async (path: string) => {
   }
 };
 
+async function getPotentialPackageDirs(cwd: string, workspaces: string[]) {
+  const potentialPackageDirs: string[] = [];
+  await Promise.all(
+    (workspaces ?? []).map(async (pattern: string) => {
+      for await (const dir of glob(pattern, { cwd })) {
+        potentialPackageDirs.push(dir);
+      }
+    })
+  );
+  return potentialPackageDirs;
+}
+
 async function resolveMonorepoPackages() {
   const cwd = process.cwd();
 
   const { workspaces } = JSON.parse(await readFile(join(cwd, 'package.json'), 'utf-8'));
 
-  const potentialPackageDirs =
-    (await Promise.all((workspaces ?? []).map((x: string) =>
-      glob(x, { cwd })))).flat();
-
+  const potentialPackageDirs = await getPotentialPackageDirs(cwd, workspaces);
   const packages = new Map();
 
   for (const dir of ['.', ...potentialPackageDirs]) {

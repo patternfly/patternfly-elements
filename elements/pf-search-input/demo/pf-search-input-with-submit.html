@@ -33,17 +33,17 @@
   const searchInput = document.getElementById('search-input');
 
   searchInput.addEventListener('change', (event) => {
-    /* eslint-disable no-console */
+     
     console.log('Selected:', event.target.value);
-    /* eslint-disable no-console */
+     
   });
 
   const form = document.querySelector('form.container');
   form.addEventListener('submit', (event) =>{
     event.preventDefault();
-    /* eslint-disable no-console */
+     
     console.log("Value:", form.elements.search?.value);
-    /* eslint-disable no-console */
+     
   })
 </script>
 

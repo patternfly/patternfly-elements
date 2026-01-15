@@ -159,9 +159,9 @@ describe('<pf-back-to-top>', function() {
         </div>
       `);
       element = container.querySelector('pf-back-to-top')!;
-      snapshot = await a11ySnapshot();
-
       await allUpdates(element);
+
+      snapshot = await a11ySnapshot({ selector: 'pf-back-to-top' });
     });
 
     it('should be hidden on init', function() {
@@ -173,13 +173,14 @@ describe('<pf-back-to-top>', function() {
       beforeEach(async function() {
         const scrollableElement = document.querySelector('#top')!;
         scrollableElement.scrollTo({ top: 401, behavior: 'instant' });
+        scrollableElement.dispatchEvent(new Event('scroll'));
         await nextFrame();
         await allUpdates(element);
         snapshot = await a11ySnapshot();
       });
 
       it('should be visible', function() {
-        expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+        expect(snapshot.children?.at(0)?.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
       });
     });
   });

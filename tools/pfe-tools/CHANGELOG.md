@@ -1,5 +1,20 @@
 # @patternfly/pfe-tools
 
+## 6.0.1
+### Patch Changes
+
+- 135ecf6: React Wrappers Generator: skip module that have no exports
+
+## 6.0.0
+### Major Changes
+
+- a4dee0c: Require node >= 22
+
+## 5.0.5
+### Patch Changes
+
+- a13e259: Update dependencies
+
 ## 5.0.4
 ### Patch Changes
 

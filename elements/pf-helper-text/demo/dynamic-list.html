@@ -1,0 +1,30 @@
+<pf-helper-text>
+  <ul>
+    <li class="success">
+      <pf-icon icon="check-circle"></pf-icon> Must be at least 14 characters
+    </li>
+    <li class="error">
+      <pf-icon icon="exclamation-circle"></pf-icon> Cannot contain any variation of the word "redhat"
+    </li>
+    <li class="success">
+      <pf-icon icon="check-circle"></pf-icon> Must include at least 3 of the following: lowercase letter, uppercase letters, numbers, symbols
+    </li>
+  </ul>
+</pf-helper-text>
+
+<script type="module">
+  import '@patternfly/elements/pf-helper-text/pf-helper-text.js';
+  import '@patternfly/elements/pf-icon/pf-icon.js';
+</script>
+
+<style>
+  li {
+    margin-block: 0.25rem;
+    &.success {
+      color: var(--pf-c-helper-text__item-text--m-success--Color, #1e4f18);
+    }
+    &.error {
+      color: var(--pf-c-helper-text__item-text--m-error--Color, #a30000);
+    }
+  }
+</style>

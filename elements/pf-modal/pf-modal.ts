@@ -43,7 +43,7 @@ export class ModalOpenEvent extends ComposedEvent {
  * @fires {ModalCloseEvent} close - Fires when either a user clicks on either the close button or the overlay or manually closes a modal.
  */
 @customElement('pf-modal')
-export class PfModal extends LitElement implements HTMLDialogElement {
+export class PfModal extends LitElement {
   static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,

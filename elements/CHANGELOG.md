@@ -1,5 +1,47 @@
 # @patternfly/elements
 
+## 4.3.0
+### Minor Changes
+
+- 280ef9b: ✨ Added `<pf-alert>` component
+  
+  An **alert** is a notification that provides brief information to the user without blocking their workflow.
+  
+  ```html
+  <pf-alert variant="warning"
+            title-text="Custom alert title"
+            dismissable>
+    This is the alert description.
+    <pf-button slot="actions">Ok</pf-button>
+    <pf-button slot="actions">Cancel</pf-button>
+  </pf-alert>
+- 1eea604: ✨ Added `<pf-helper-text>` component
+  
+  **Helper text** is an on-screen field guideline that helps provide context regarding field inputs.
+  
+  ```html
+  <pf-helper-text variant="error">You must include an email address</pf-helper-text>
+  ```
+- 26b1faa: ✨ Added `<pf-hint>` component
+  
+  A **hint** is in-app messaging that provides a one-step reminder, explanation,
+  or call to action for a page or modal. Hints provide information about an
+  interaction or prerequisite step that might not be immediately obvious to the
+  user.
+  
+  ```html
+  <pf-hint>
+    Welcome to the new documentation experience.
+    <a href="#">Learn more about the improved features</a>.
+  </pf-hint>
+  ```
+
+### Patch Changes
+
+- a13e259: Update dependencies
+- Updated dependencies [a13e259]
+  - @patternfly/pfe-core@5.0.5
+
 ## 4.2.0
 ### Minor Changes
 

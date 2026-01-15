@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/create-element",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Scaffold web components monorepos based on PatternFly Elements",
   "author": "Benny Powers <bennyp@redhat.com>",
   "license": "MIT",
@@ -47,8 +47,8 @@
   },
   "dependencies": {
     "case": "^1.6.3",
-    "chalk": "^5.3.0",
-    "execa": "^9.3.1",
+    "chalk": "^5.6.2",
+    "execa": "^9.6.1",
     "ncp": "^2.0.0",
     "prompts": "^2.4.2",
     "tslib": "^2.8.1",

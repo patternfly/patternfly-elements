@@ -1,0 +1,37 @@
+<pf-alert variant="success"
+          title-text="Success alert title">
+  Success alert description. This should tell the user more information about the alert.
+  <a href="#" slot="actionLinks">View details</a>
+  <a href="#" slot="actionLinks">Ignore</a>
+</pf-alert>
+
+<pf-alert variant="success"
+          title-text="Success alert title">
+  <pf-icon icon="check-circle" slot="icon"></pf-icon>
+  Success alert description.
+  This should tell the user more information about the alert.
+  <a href="#">This is a link.</a>
+</pf-alert>
+
+<pf-alert variant="success"
+          dismissable
+          title-text="Success alert title">
+  Short alert description.
+</pf-alert>
+
+<pf-alert variant="success"
+          title-text="h6 Success alert title"
+          title-level="6">
+  Short alert description.
+</pf-alert>
+
+<script type="module">
+  import '@patternfly/elements/pf-alert/pf-alert.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+</script>
+
+<style>
+  pf-alert {
+    margin-block-end: 1em;
+  }
+</style>

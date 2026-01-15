@@ -1,6 +1,5 @@
-const { readFile } = require('fs/promises');
+const { glob, readFile } = require('fs/promises');
 const { extname } = require('path');
-const { glob } = require('glob');
 
 const cache = new Map();
 
@@ -11,9 +10,9 @@ module.exports = function(eleventyConfig) {
 
     const todos = [];
 
-    const files = await glob('{elements,core,tools}/**/*.ts', {
+    const files = await Array.fromAsync(glob('{elements,core,tools}/**/*.ts', {
       ignore: ['**/node_modules/**/*', '*.spec.ts', '*.test.ts'],
-    });
+    }));
 
     const cacheKey = files.join('--');
     const cached = cache.get(cacheKey);

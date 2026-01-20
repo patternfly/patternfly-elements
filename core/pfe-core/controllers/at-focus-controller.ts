@@ -49,8 +49,13 @@ export abstract class ATFocusController<Item extends HTMLElement> {
 
   set atFocusedItemIndex(index: number) {
     const previousIndex = this.#atFocusedItemIndex;
-    const direction = index > previousIndex ? 1 : -1;
     const { items, atFocusableItems } = this;
+    // - Home (index=0): always search forward to find first focusable item
+    // - End (index=last): always search backward to find last focusable item
+    // - Other cases: use comparison to determine direction
+    const direction = index === 0 ? 1
+    : index >= items.length - 1 ? -1
+    : index > previousIndex ? 1 : -1;
     const itemsIndexOfLastATFocusableItem = items.indexOf(this.atFocusableItems.at(-1)!);
     let itemToGainFocus = items.at(index);
     let itemToGainFocusIsFocusable = atFocusableItems.includes(itemToGainFocus!);

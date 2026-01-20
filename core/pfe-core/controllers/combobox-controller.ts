@@ -735,9 +735,12 @@ export class ComboboxController<
   #onFocusoutListbox = (event: FocusEvent) => {
     if (!this.#hasTextInput && this.options.isExpanded()) {
       const root = this.#element?.getRootNode();
+      // Check if focus moved to the toggle button
+      // If so, let the click handler manage toggle
+      const isToggleButton = event.relatedTarget === this.#button;
       if ((root instanceof ShadowRoot || root instanceof Document)
           && !this.items.includes(event.relatedTarget as Item)
-      ) {
+          && !isToggleButton) {
         this.#hide();
       }
     }

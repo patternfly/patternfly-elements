@@ -242,6 +242,7 @@ export class ComboboxController<
   #button: HTMLElement | null = null;
   #listbox: HTMLElement | null = null;
   #buttonInitialRole: string | null = null;
+  #buttonHasMouseDown = false;
   #mo = new MutationObserver(() => this.#initItems());
   #microcopy = new Map<string, Record<Lang, string>>(Object.entries({
     dimmed: {
@@ -425,6 +426,8 @@ export class ComboboxController<
   #initButton() {
     this.#button?.removeEventListener('click', this.#onClickButton);
     this.#button?.removeEventListener('keydown', this.#onKeydownButton);
+    this.#button?.removeEventListener('mousedown', this.#onMousedownButton);
+    this.#button?.removeEventListener('mouseup', this.#onMouseupButton);
     this.#button = this.options.getToggleButton();
     if (!this.#button) {
       throw new Error('ComboboxController getToggleButton() option must return an element');
@@ -434,6 +437,8 @@ export class ComboboxController<
     this.#button.setAttribute('aria-controls', this.#listbox?.id ?? '');
     this.#button.addEventListener('click', this.#onClickButton);
     this.#button.addEventListener('keydown', this.#onKeydownButton);
+    this.#button.addEventListener('mousedown', this.#onMousedownButton);
+    this.#button.addEventListener('mouseup', this.#onMouseupButton);
   }
 
   #initInput() {
@@ -578,6 +583,17 @@ export class ComboboxController<
     } else {
       this.#hide();
     }
+  };
+
+  /**
+   * Distinguish click-to-toggle vs Tab/Shift+Tab
+  */
+  #onMousedownButton = () => {
+    this.#buttonHasMouseDown = true;
+  };
+
+  #onMouseupButton = () => {
+    this.#buttonHasMouseDown = false;
   };
 
   #onClickListbox = (event: MouseEvent) => {
@@ -735,12 +751,14 @@ export class ComboboxController<
   #onFocusoutListbox = (event: FocusEvent) => {
     if (!this.#hasTextInput && this.options.isExpanded()) {
       const root = this.#element?.getRootNode();
-      // Check if focus moved to the toggle button
-      // If so, let the click handler manage toggle
-      const isToggleButton = event.relatedTarget === this.#button;
+      // Check if focus moved to the toggle button via mouse click
+      // If so, let the click handler manage toggle (prevents double-toggle)
+      // But if focus moved via Shift+Tab (no mousedown), we should still hide
+      const isClickOnToggleButton =
+          event.relatedTarget === this.#button && this.#buttonHasMouseDown;
       if ((root instanceof ShadowRoot || root instanceof Document)
           && !this.items.includes(event.relatedTarget as Item)
-          && !isToggleButton) {
+          && !isClickOnToggleButton) {
         this.#hide();
       }
     }

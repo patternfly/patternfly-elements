@@ -66,42 +66,35 @@ export class PfLabelGroup extends LitElement {
 
   /**
    * Accessible label for the label group when no category name is provided.
-   * @default ''
    */
   @property({ attribute: 'accessible-label', type: String }) accessibleLabel = '';
   /**
    * Accessible label for the close button.
-   * @default 'Close'
    */
   @property({ attribute: 'accessible-close-label', type: String }) accessibleCloseLabel = 'Close';
 
   /**
    * Text for collapsed overflow label. Use `${remaining}` to indicate number of hidden labels.
-   * @default '${remaining} more'
    */
   @property({ attribute: 'collapsed-text', type: String }) collapsedText = '${remaining} more';
 
   /**
    * Text for expanded overflow label.
-   * @default 'show less'
    */
   @property({ attribute: 'expanded-text', type: String }) expandedText = 'show less';
 
   /**
    * Number of labels to show before creating an overflow label.
-   * @default 3
    */
   @property({ attribute: 'num-labels', type: Number }) numLabels = 3;
 
   /**
    * Whether the overflow labels are visible (expanded state).
-   * @default false
    */
   @property({ reflect: true, type: Boolean }) open = false;
 
   /**
    * Whether the label group can be closed.
-   * @default true
    */
   @property({ reflect: true, type: Boolean }) closeable = false;
 

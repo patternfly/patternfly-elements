@@ -140,17 +140,6 @@ export interface ComboboxControllerOptions<Item extends HTMLElement> extends
    * By default, toggles the `hidden` attribute on the item
    */
   setItemHidden?(item: Item, hidden: boolean): void;
-  /**
-   * Optional. When provided, passed to ListboxController so it does not set
-   * aria-setsize/aria-posinset on items.
-   */
-  setItems?(items: Item[]): void;
-  /**
-   * Optional. Returns position-in-set and set size for the focused item when
-   * building the Safari VoiceOver live-region announcement ("N of M").
-   * When not provided, the controller reads aria-posinset/aria-setsize from the item.
-   */
-  getItemPosition?(item: Item, items: Item[]): { posInSet: number; setSize: number } | null;
 }
 
 /**
@@ -363,7 +352,6 @@ export class ComboboxController<
       getATFocusedItem: () => this.items[this.#fc?.atFocusedItemIndex ?? -1] ?? null,
       isItemDisabled: this.options.isItemDisabled,
       setItemSelected: this.options.setItemSelected,
-      setItems: this.options.setItems,
     });
     ComboboxController.instances.set(host, this);
     ComboboxController.hosts.add(host);
@@ -563,21 +551,11 @@ export class ComboboxController<
     if (this.#lb.isSelected(item)) {
       text += `, (${this.#translate('selected', langKey)})`;
     }
-    const position =
-    typeof this.options.getItemPosition === 'function' ?
-      this.options.getItemPosition(item, this.items)
-      : null;
-    const posInSet =
-      position?.posInSet
-      ?? (item.hasAttribute('aria-posinset') ? item.getAttribute('aria-posinset') : null);
-    const setSize =
-      position?.setSize
-      ?? (item.hasAttribute('aria-setsize') ? item.getAttribute('aria-setsize') : null);
-    if (posInSet != null && setSize != null) {
+    if (item.hasAttribute('aria-setsize') && item.hasAttribute('aria-posinset')) {
       if (langKey === 'ja') {
-        text += `, (${setSize} 件中 ${posInSet} 件目)`;
+        text += `, (${item.getAttribute('aria-setsize')} 件中 ${item.getAttribute('aria-posinset')} 件目)`;
       } else {
-        text += `, (${posInSet} ${this.#translate('of', langKey)} ${setSize})`;
+        text += `, (${item.getAttribute('aria-posinset')} ${this.#translate('of', langKey)} ${item.getAttribute('aria-setsize')})`;
       }
     }
     ComboboxController.#alert.lang = lang;

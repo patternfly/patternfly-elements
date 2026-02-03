@@ -59,12 +59,6 @@ export interface ListboxControllerOptions<Item extends HTMLElement> {
    * a combobox input.
    */
   getControlsElements?(): HTMLElement[];
-  /**
-  * Optional callback when items are set. When provided, the controller does **not**
-  * set aria-setsize/aria-posinset on each item; the caller is responsible for list
-  * semantics (e.g. via ElementInternals).
-  */
-  setItems?(items: Item[]): void;
 }
 
 /**
@@ -198,22 +192,16 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   }
 
   /**
-   * Registers the host's Item elements as listbox controller items.
-   * If options provides a setItems function, that function is called with the items.
-   * Otherwise, sets aria-setsize and aria-posinset on each item.
-   * @param items - The Item elements to register
+   * register's the host's Item elements as listbox controller items
+   * sets aria-setsize and aria-posinset on items
+   * @param items items
    */
   set items(items: Item[]) {
     this.#items = items;
-    const { setItems } = this.#options;
-    if (typeof setItems === 'function') {
-      setItems(items);
-    } else {
-      this.#items.forEach((item, index, _items) => {
-        item.ariaSetSize = _items.length.toString();
-        item.ariaPosInSet = (index + 1).toString();
-      });
-    }
+    this.#items.forEach((item, index, _items) => {
+      item.ariaSetSize = _items.length.toString();
+      item.ariaPosInSet = (index + 1).toString();
+    });
   }
 
   /**

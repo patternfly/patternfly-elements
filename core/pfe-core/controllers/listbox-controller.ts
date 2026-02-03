@@ -3,6 +3,7 @@ import type { RequireProps } from '../core.ts';
 
 import { isServer } from 'lit';
 import { arraysAreEquivalent } from '../functions/arraysAreEquivalent.js';
+import { InternalsController } from './internals-controller.js';
 
 /**
  * Options for listbox controller
@@ -192,16 +193,11 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   }
 
   /**
-   * register's the host's Item elements as listbox controller items
-   * sets aria-setsize and aria-posinset on items
-   * @param items items
+   * Registers the host's item elements as listbox controller items.
+   * @param items - Array of listbox option elements.
    */
   set items(items: Item[]) {
     this.#items = items;
-    this.#items.forEach((item, index, _items) => {
-      item.ariaSetSize = _items.length.toString();
-      item.ariaPosInSet = (index + 1).toString();
-    });
   }
 
   /**
@@ -268,6 +264,10 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     }
   }
 
+  /**
+   * Called during host update; syncs control element listeners and
+   * applies aria-posinset/aria-setsize to each item via InternalsController.
+   */
   hostUpdate(): void {
     const last = this.#controlsElements;
     this.#controlsElements = this.#options.getControlsElements?.() ?? [];
@@ -278,6 +278,11 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         el.addEventListener('keyup', this.#onKeyup);
       }
     }
+    const items = this.#items;
+    items.forEach((item, index) => {
+      InternalsController.setAriaPosInSet(item, index + 1);
+      InternalsController.setAriaSetSize(item, items.length);
+    });
   }
 
   hostUpdated(): void {

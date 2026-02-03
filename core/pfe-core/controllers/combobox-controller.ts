@@ -536,26 +536,32 @@ export class ComboboxController<
     return strings?.[lang] ?? key;
   }
 
-  // TODO(bennypowers): perhaps move this to ActivedescendantController
-  #announce(item: Item) {
+  /**
+   * Announces the focused item to a live region (e.g. for Safari VoiceOver).
+   * @param item - The listbox option item to announce.
+   * TODO(bennypowers): perhaps move this to ActivedescendantController
+ */
+  #announce(item: Item): void {
     const value = this.options.getItemValue(item);
     ComboboxController.#alert?.remove();
     const fragment = ComboboxController.#alertTemplate.content.cloneNode(true) as DocumentFragment;
     ComboboxController.#alert = fragment.firstElementChild as HTMLElement;
     let text = value;
     const lang = deepClosest(this.#listbox, '[lang]')?.getAttribute('lang') ?? 'en';
-    const langKey = lang?.match(ComboboxController.langsRE)?.at(0) as Lang ?? 'en';
+    const langKey = (lang?.match(ComboboxController.langsRE)?.at(0) as Lang) ?? 'en';
     if (this.options.isItemDisabled(item)) {
       text += ` (${this.#translate('dimmed', langKey)})`;
     }
     if (this.#lb.isSelected(item)) {
       text += `, (${this.#translate('selected', langKey)})`;
     }
-    if (item.hasAttribute('aria-setsize') && item.hasAttribute('aria-posinset')) {
+    const posInSet = InternalsController.getAriaPosInSet(item);
+    const setSize = InternalsController.getAriaSetSize(item);
+    if (posInSet != null && setSize != null) {
       if (langKey === 'ja') {
-        text += `, (${item.getAttribute('aria-setsize')} 件中 ${item.getAttribute('aria-posinset')} 件目)`;
+        text += `, (${setSize} 件中 ${posInSet} 件目)`;
       } else {
-        text += `, (${item.getAttribute('aria-posinset')} ${this.#translate('of', langKey)} ${item.getAttribute('aria-setsize')})`;
+        text += `, (${posInSet} ${this.#translate('of', langKey)} ${setSize})`;
       }
     }
     ComboboxController.#alert.lang = lang;

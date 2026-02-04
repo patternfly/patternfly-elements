@@ -2,7 +2,6 @@ import {
   isServer,
   type ReactiveController,
   type ReactiveControllerHost,
-  type LitElement,
 } from 'lit';
 
 function isARIAMixinProp(key: string): key is keyof ARIAMixin {
@@ -59,8 +58,8 @@ function aria(
   protos.get(target).add(key);
 }
 
-function getLabelText(label: HTMLElement) {
-  if (label.hidden) {
+function getLabelText(label: Node) {
+  if (!(label instanceof HTMLElement) || label.hidden) {
     return '';
   } else {
     const ariaLabel = label.getAttribute?.('aria-label');
@@ -68,8 +67,10 @@ function getLabelText(label: HTMLElement) {
   }
 }
 
+type InternalsHost = ReactiveControllerHost & HTMLElement;
+
 export class InternalsController implements ReactiveController, ARIAMixin {
-  private static instances = new WeakMap<ReactiveControllerHost, InternalsController>();
+  private static instances = new WeakMap<HTMLElement, InternalsController>();
 
   declare readonly form: ElementInternals['form'];
   declare readonly shadowRoot: ElementInternals['shadowRoot'];
@@ -79,7 +80,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   declare readonly willValidate: ElementInternals['willValidate'];
   declare readonly validationMessage: ElementInternals['validationMessage'];
 
-  public static getLabels(host: ReactiveControllerHost): Element[] {
+  public static getLabels(host: InternalsHost): Element[] {
     return Array.from(this.instances.get(host)?.internals.labels ?? []) as Element[];
   }
 
@@ -89,8 +90,8 @@ export class InternalsController implements ReactiveController, ARIAMixin {
    * @param host - The listbox item element (option or option-like).
    * @param value - Position in set (1-based), or null to clear.
    */
-  public static setAriaPosInSet(host: Element, value: number | string | null): void {
-    const instance = this.instances.get(host as unknown as ReactiveControllerHost);
+  public static setAriaPosInSet(host: HTMLElement, value: number | string | null): void {
+    const instance = this.instances.get(host);
     if (instance) {
       instance.ariaPosInSet = value != null ? String(value) : null;
     } else if (value != null) {
@@ -106,8 +107,8 @@ export class InternalsController implements ReactiveController, ARIAMixin {
    * @param host - The listbox item element (option or option-like).
    * @param value - Total set size, or null to clear.
    */
-  public static setAriaSetSize(host: Element, value: number | string | null): void {
-    const instance = this.instances.get(host as unknown as ReactiveControllerHost);
+  public static setAriaSetSize(host: HTMLElement, value: number | string | null): void {
+    const instance = this.instances.get(host);
     if (instance) {
       instance.ariaSetSize = value != null ? String(value) : null;
     } else if (value != null) {
@@ -121,8 +122,8 @@ export class InternalsController implements ReactiveController, ARIAMixin {
    * Gets aria-posinset from a listbox item (internals or attribute).
    * @param host - The listbox item element.
    */
-  public static getAriaPosInSet(host: Element): string | null {
-    const instance = this.instances.get(host as unknown as ReactiveControllerHost);
+  public static getAriaPosInSet(host: HTMLElement): string | null {
+    const instance = this.instances.get(host);
     return instance != null ?
       instance.ariaPosInSet
       : host.getAttribute('aria-posinset');
@@ -132,21 +133,17 @@ export class InternalsController implements ReactiveController, ARIAMixin {
    * Gets aria-setsize from a listbox item (internals or attribute).
    * @param host - The listbox item element.
    */
-  public static getAriaSetSize(host: Element): string | null {
-    const instance = this.instances.get(host as unknown as ReactiveControllerHost);
+  public static getAriaSetSize(host: HTMLElement): string | null {
+    const instance = this.instances.get(host);
     return instance != null ?
       instance.ariaSetSize
       : host.getAttribute('aria-setsize');
   }
 
-
   public static isSafari: boolean =
     !isServer && /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-  public static of(
-    host: ReactiveControllerHost,
-    options?: InternalsControllerOptions,
-  ): InternalsController {
+  public static of(host: InternalsHost, options?: InternalsControllerOptions): InternalsController {
     constructingAllowed = true;
     // implement the singleton pattern
     // using a public static constructor method is much easier to manage,
@@ -206,21 +203,16 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   @aria ariaValueNow: string | null = null;
   @aria ariaValueText: string | null = null;
 
-  /** WARNING: be careful of cross-root ARIA browser support */
+  /** As of April 2025, the following are considered Baseline supported in evergreen browsers */
   @aria ariaActiveDescendantElement: Element | null = null;
-  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaControlsElements: Element[] | null = null;
-  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaDescribedByElements: Element[] | null = null;
-  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaDetailsElements: Element[] | null = null;
-  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaErrorMessageElements: Element[] | null = null;
-  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaFlowToElements: Element[] | null = null;
-  /** WARNING: be careful of cross-root ARIA browser support */
   @aria ariaLabelledByElements: Element[] | null = null;
-  /** WARNING: be careful of cross-root ARIA browser support */
+
+  /** As of February 2026, this is not supported in Chromium browsers */
   @aria ariaOwnsElements: Element[] | null = null;
 
   /** True when the control is disabled via it's containing fieldset element */
@@ -243,16 +235,14 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   /** A best-attempt based on observed behaviour in FireFox 115 on fedora 38 */
   get computedLabelText(): string {
     return this.internals.ariaLabel
-      || Array.from(this.internals.labels as NodeListOf<HTMLElement>)
+      || Array.from(this.internals.labels)
           .reduce((acc, label) =>
             `${acc}${getLabelText(label)}`, '');
   }
 
   private get element() {
     if (isServer) {
-      // FIXME(bennyp): a little white lie, which may break
-      // when the controller is applied to non-lit frameworks.
-      return this.host as LitElement;
+      return this.host;
     } else {
       return this.host instanceof HTMLElement ? this.host : this.options?.getHTMLElement?.();
     }
@@ -262,10 +252,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   private _formDisabled = false;
 
-  private constructor(
-    public host: ReactiveControllerHost,
-    private options?: InternalsControllerOptions,
-  ) {
+  private constructor(public host: InternalsHost, private options?: InternalsControllerOptions) {
     if (!constructingAllowed) {
       throw new Error('InternalsController must be constructed with `InternalsController.for()`');
     }

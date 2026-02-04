@@ -159,7 +159,7 @@ export class ComboboxController<
   Item extends HTMLElement
 > implements ReactiveController {
   public static of<T extends HTMLElement>(
-    host: ReactiveControllerHost,
+    host: ReactiveControllerHost & HTMLElement,
     options: ComboboxControllerOptions<T>,
   ): ComboboxController<T> {
     return new ComboboxController(host, options);
@@ -327,7 +327,7 @@ export class ComboboxController<
   }
 
   private constructor(
-    public host: ReactiveControllerHost,
+    public host: ReactiveControllerHost & HTMLElement,
     options: ComboboxControllerOptions<Item>,
   ) {
     host.addController(this);

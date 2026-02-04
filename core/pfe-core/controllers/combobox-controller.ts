@@ -281,6 +281,7 @@ export class ComboboxController<
 
   set items(value: Item[]) {
     this.#lb.items = value;
+    this.#fc?.refreshItems?.();
   }
 
   /** Whether the combobox is disabled */

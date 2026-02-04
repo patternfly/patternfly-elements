@@ -85,7 +85,17 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   }
 
   /**
-   * Sets aria-posinset on a listbox item. Uses ElementInternals when the host has
+   * Gets the ARIA posinset value from a listbox item (attribute takes precedence over internals).
+   * @param host - The listbox item element.
+   */
+  public static getAriaPosInSet(host: HTMLElement): string | null {
+    return host.getAttribute('aria-posinset')
+        ?? this.instances.get(host)?.ariaPosInSet
+        ?? null;
+  }
+
+  /**
+   * Sets the ARIA posinset on a listbox item. Uses ElementInternals when the host has
    * an InternalsController instance; otherwise sets/removes the host attribute.
    * @param host - The listbox item element (option or option-like).
    * @param value - Position in set (1-based), or null to clear.
@@ -102,7 +112,17 @@ export class InternalsController implements ReactiveController, ARIAMixin {
   }
 
   /**
-   * Sets aria-setsize on a listbox item. Uses ElementInternals when the host has
+   * Gets the ARIA setsize from a listbox item (aria attribute if set or defaulting to internals).
+   * @param host - The listbox item element.
+   */
+  public static getAriaSetSize(host: HTMLElement): string | null {
+    return host.getAttribute('aria-setsize')
+        ?? this.instances.get(host)?.ariaSetSize
+        ?? null;
+  }
+
+  /**
+   * Sets the ARIA setsize on a listbox item. Uses ElementInternals when the host has
    * an InternalsController instance; otherwise sets/removes the host attribute.
    * @param host - The listbox item element (option or option-like).
    * @param value - Total set size, or null to clear.
@@ -116,28 +136,6 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     } else {
       host.removeAttribute('aria-setsize');
     }
-  }
-
-  /**
-   * Gets aria-posinset from a listbox item (internals or attribute).
-   * @param host - The listbox item element.
-   */
-  public static getAriaPosInSet(host: HTMLElement): string | null {
-    const instance = this.instances.get(host);
-    return instance != null ?
-      instance.ariaPosInSet
-      : host.getAttribute('aria-posinset');
-  }
-
-  /**
-   * Gets aria-setsize from a listbox item (internals or attribute).
-   * @param host - The listbox item element.
-   */
-  public static getAriaSetSize(host: HTMLElement): string | null {
-    const instance = this.instances.get(host);
-    return instance != null ?
-      instance.ariaSetSize
-      : host.getAttribute('aria-setsize');
   }
 
   public static isSafari: boolean =

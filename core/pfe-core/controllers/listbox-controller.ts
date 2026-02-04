@@ -198,6 +198,7 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    */
   set items(items: Item[]) {
     this.#items = items;
+    this.host.requestUpdate();
   }
 
   /**

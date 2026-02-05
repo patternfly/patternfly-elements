@@ -53,10 +53,20 @@ export abstract class ATFocusController<Item extends HTMLElement> {
     // - Home (index=0): always search forward to find first focusable item
     // - End (index=last): always search backward to find last focusable item
     // - Other cases: use comparison to determine direction
-    const direction = index === 0 ? 1
-    : index >= items.length - 1 ? -1
-    : index > previousIndex ? 1 : -1;
+    const direction =
+      index === 0 ?
+        1
+      : index >= items.length - 1 ?
+        -1
+      : index > previousIndex ?
+        1
+      : -1;
     const itemsIndexOfLastATFocusableItem = items.indexOf(this.atFocusableItems.at(-1)!);
+    // Wrap to first focusable item (e.g. skip disabled placeholder at 0) so cycling works after selection.
+    const itemsIndexOfFirstATFocusableItem =
+      atFocusableItems.length ?
+        items.indexOf(this.atFocusableItems.at(0)!)
+      : 0;
     let itemToGainFocus = items.at(index);
     let itemToGainFocusIsFocusable = atFocusableItems.includes(itemToGainFocus!);
     if (atFocusableItems.length) {
@@ -65,7 +75,14 @@ export abstract class ATFocusController<Item extends HTMLElement> {
         if (index < 0) {
           index = itemsIndexOfLastATFocusableItem;
         } else if (index >= itemsIndexOfLastATFocusableItem) {
-          index = 0;
+          index = itemsIndexOfFirstATFocusableItem;
+        } else if (index < itemsIndexOfFirstATFocusableItem) {
+          // Before first focusable (index 0 when e.g. placeholder is not focusable).
+          // Home/End are handled in onKeydown by passing first/last focusable index, so the only
+          // time we see 0 here is Up from first focusable → wrap to last.
+          index = previousIndex === itemsIndexOfFirstATFocusableItem ?
+            itemsIndexOfLastATFocusableItem
+          : itemsIndexOfFirstATFocusableItem;
         } else {
           index = index + direction;
         }
@@ -196,24 +213,30 @@ export abstract class ATFocusController<Item extends HTMLElement> {
         event.stopPropagation();
         event.preventDefault();
         break;
-      case 'Home':
+      case 'Home': {
         if (!(event.target instanceof HTMLElement
             && (event.target.hasAttribute('aria-activedescendant')
              || event.target.ariaActiveDescendantElement))) {
-          this.atFocusedItemIndex = 0;
+          // Use first focusable index so the setter doesn't see 0 (reserved for Up-from-first wrap).
+          const first = this.atFocusableItems.at(0);
+          this.atFocusedItemIndex = first != null ? this.items.indexOf(first) : 0;
           event.stopPropagation();
           event.preventDefault();
         }
         break;
-      case 'End':
+      }
+      case 'End': {
         if (!(event.target instanceof HTMLElement
             && (event.target.hasAttribute('aria-activedescendant')
              || event.target.ariaActiveDescendantElement))) {
-          this.atFocusedItemIndex = this.items.length - 1;
+          // Use last focusable index for consistency with lists that have non-focusable items.
+          const last = this.atFocusableItems.at(-1);
+          this.atFocusedItemIndex = last != null ? this.items.indexOf(last) : this.items.length - 1;
           event.stopPropagation();
           event.preventDefault();
         }
         break;
+      }
       default:
         break;
     }

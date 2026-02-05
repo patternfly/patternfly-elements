@@ -197,8 +197,10 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
    * @param items - Array of listbox option elements.
    */
   set items(items: Item[]) {
-    this.#items = items;
-    this.host.requestUpdate();
+    if (!arraysAreEquivalent(items, this.#items)) {
+      this.#items = items;
+      this.host.requestUpdate();
+    }
   }
 
   /**
@@ -385,12 +387,15 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         if (this.items.includes(shadowRootItem)) {
           return shadowRootItem;
         } else {
-          const index =
-            Array.from(shadowRootListboxElement?.children ?? [])
-                .filter(this.#options.isItem)
-                .filter(x => !x.hidden)
-                .indexOf(shadowRootItem);
-          return this.#items.filter(x => !x.hidden)[index];
+          // Shadow clone needs to be mapped back to light DOM item.
+          // Match by value attribute or text content since index-based matching
+          // doesn't work when items are filtered (hidden state differs between clone and source)
+          const cloneValue = shadowRootItem.getAttribute('value')
+                          ?? shadowRootItem.textContent?.trim();
+          const sourceItem = this.#items.find(item =>
+            (item.getAttribute('value') ?? item.textContent?.trim()) === cloneValue
+          );
+          return sourceItem ?? null;
         }
       }
 

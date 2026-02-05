@@ -237,6 +237,7 @@ export class ComboboxController<
 
   #lb: ListboxController<Item>;
   #fc?: ATFocusController<Item>;
+  #initializing = false;
   #preventListboxGainingFocus = false;
   #input: HTMLElement | null = null;
   #button: HTMLElement | null = null;
@@ -364,7 +365,7 @@ export class ComboboxController<
   }
 
   hostUpdated(): void {
-    if (!this.#fc) {
+    if (!this.#fc && !this.#initializing) {
       this.#init();
     }
     const expanded = this.options.isExpanded();
@@ -382,7 +383,7 @@ export class ComboboxController<
     ComboboxController.hosts.delete(this.host);
   }
 
-  async _onFocusoutElement(): Promise<void> {
+  private async _onFocusoutElement(): Promise<void> {
     if (this.#hasTextInput && this.options.isExpanded()) {
       const root = this.#element?.getRootNode();
       await new Promise(requestAnimationFrame);
@@ -399,6 +400,7 @@ export class ComboboxController<
    * Order of operations is important
    */
   async #init() {
+    this.#initializing = true;
     await this.host.updateComplete;
     this.#initListbox();
     this.#initItems();
@@ -406,6 +408,7 @@ export class ComboboxController<
     this.#initInput();
     this.#initLabels();
     this.#initController();
+    this.#initializing = false;
   }
 
   #initListbox() {

@@ -513,6 +513,8 @@ export class ComboboxController<
   }
 
   async #show(): Promise<void> {
+    // Re-read items on open so slotted/dynamically added options are included:
+    this.#initItems();
     const success = await this.options.requestShowListbox();
     this.#filterItems();
     if (success !== false && !this.#hasTextInput) {

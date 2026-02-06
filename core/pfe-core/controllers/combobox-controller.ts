@@ -1,7 +1,7 @@
 import { isServer, nothing, type ReactiveController, type ReactiveControllerHost } from 'lit';
 import type { ActivedescendantControllerOptions } from './activedescendant-controller.js';
 import type { RovingTabindexControllerOptions } from './roving-tabindex-controller.js';
-import type { ATFocusController } from './at-focus-controller';
+import type { ATFocusController } from './at-focus-controller.js';
 import type { ListboxControllerOptions } from './listbox-controller.js';
 
 import { ListboxController, isItem, isItemDisabled } from './listbox-controller.js';

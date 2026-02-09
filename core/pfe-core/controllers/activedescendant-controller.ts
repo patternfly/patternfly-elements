@@ -267,7 +267,8 @@ export class ActivedescendantController<
     }
   };
 
-  protected override initItems(): void {
+  /** @internal */
+  override initItems(): void {
     this.#attrMO.disconnect();
     super.initItems();
     this.controlsElements = this.options.getControlsElements?.() ?? [];

@@ -126,19 +126,14 @@ export abstract class ATFocusController<Item extends HTMLElement> {
   }
 
   /**
-   * Initialize the items and itemsContainerElement fields
+   * Initialize the items and itemsContainerElement fields.
+   * Call this when the list of items has changed
+   * (e.g. when a parent controller sets items).
+   * @internal not for use by element authors
    */
-  protected initItems(): void {
+  initItems(): void {
     this.items = this.options.getItems();
     this.itemsContainerElement ??= this.#initContainer();
-  }
-
-  /**
-   * Refresh items from the getItems option. Call this when the list of items
-   * has changed (e.g. when a parent controller sets items).
-   */
-  refreshItems(): void {
-    this.initItems();
   }
 
   hostConnected(): void {

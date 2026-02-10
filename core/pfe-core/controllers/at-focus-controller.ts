@@ -47,31 +47,51 @@ export abstract class ATFocusController<Item extends HTMLElement> {
     return this.#atFocusedItemIndex;
   }
 
-  set atFocusedItemIndex(index: number) {
-    const previousIndex = this.#atFocusedItemIndex;
-    const direction = index > previousIndex ? 1 : -1;
+  set atFocusedItemIndex(requestedIndex: number) {
     const { items, atFocusableItems } = this;
-    const itemsIndexOfLastATFocusableItem = items.indexOf(this.atFocusableItems.at(-1)!);
-    let itemToGainFocus = items.at(index);
-    let itemToGainFocusIsFocusable = atFocusableItems.includes(itemToGainFocus!);
-    if (atFocusableItems.length) {
-      let count = 0;
-      while (!itemToGainFocus || !itemToGainFocusIsFocusable && count++ <= 1000) {
-        if (index < 0) {
-          index = itemsIndexOfLastATFocusableItem;
-        } else if (index >= itemsIndexOfLastATFocusableItem) {
-          index = 0;
-        } else {
-          index = index + direction;
-        }
-        itemToGainFocus = items.at(index);
-        itemToGainFocusIsFocusable = atFocusableItems.includes(itemToGainFocus!);
-      }
-      if (count >= 1000) {
-        throw new Error('Could not atFocusedItemIndex');
-      }
+
+    if (!atFocusableItems.length) {
+      this.#atFocusedItemIndex = requestedIndex;
+      return;
     }
-    this.#atFocusedItemIndex = index;
+
+    // Fast path: requested item is already focusable
+    if (requestedIndex >= 0
+      && requestedIndex < items.length
+      && atFocusableItems.includes(items[requestedIndex])) {
+      this.#atFocusedItemIndex = requestedIndex;
+      return;
+    }
+
+    const lastFocusableIndex = items.indexOf(atFocusableItems.at(-1)!);
+
+    // Navigated before start → wrap to last focusable
+    if (requestedIndex < 0) {
+      this.#atFocusedItemIndex = lastFocusableIndex;
+      return;
+    }
+
+    const firstFocusableIndex = items.indexOf(atFocusableItems[0]);
+
+    // Navigated past end or past last focusable → wrap to first focusable
+    if (requestedIndex >= items.length
+      || requestedIndex > lastFocusableIndex) {
+      this.#atFocusedItemIndex = firstFocusableIndex;
+      return;
+    }
+
+    // Before first focusable (e.g. disabled placeholder at index 0).
+    // ArrowUp from first focusable → wrap to last; otherwise snap to first.
+    if (requestedIndex < firstFocusableIndex) {
+      this.#atFocusedItemIndex =
+          this.#atFocusedItemIndex === firstFocusableIndex ? lastFocusableIndex
+        : firstFocusableIndex;
+      return;
+    }
+
+    // Mid-list non-focusable item: find nearest focusable in the navigation direction
+    this.#atFocusedItemIndex =
+      items.indexOf(this.#getNextFocusableItem(requestedIndex));
   }
 
   /** Elements which control the items container e.g. a combobox input */
@@ -106,9 +126,12 @@ export abstract class ATFocusController<Item extends HTMLElement> {
   }
 
   /**
-   * Initialize the items and itemsContainerElement fields
+   * Initialize the items and itemsContainerElement fields.
+   * Call this when the list of items has changed
+   * (e.g. when a parent controller sets items).
+   * @internal not for use by element authors
    */
-  protected initItems(): void {
+  initItems(): void {
     this.items = this.options.getItems();
     this.itemsContainerElement ??= this.#initContainer();
   }
@@ -128,6 +151,22 @@ export abstract class ATFocusController<Item extends HTMLElement> {
   #initContainer() {
     return this.options.getItemsContainer?.()
       ?? (!isServer && this.host instanceof HTMLElement ? this.host : null);
+  }
+
+  /**
+   * When setting atFocusedItemIndex, and the current focus is on a
+   * mid-list non-focusable item: find nearest focusable in the navigation direction.
+   * disabled items will be skipped, and out of bounds items will be wrapped
+   *
+   * @param requestedIndex the desired index
+   */
+  #getNextFocusableItem(requestedIndex: number) {
+    const { items, atFocusableItems } = this;
+    if (requestedIndex > this.#atFocusedItemIndex) {
+      return atFocusableItems.find(item => items.indexOf(item) > requestedIndex)!;
+    } else {
+      return atFocusableItems.findLast(item => items.indexOf(item) < requestedIndex)!;
+    }
   }
 
   /**
@@ -183,24 +222,30 @@ export abstract class ATFocusController<Item extends HTMLElement> {
         event.stopPropagation();
         event.preventDefault();
         break;
-      case 'Home':
+      case 'Home': {
         if (!(event.target instanceof HTMLElement
             && (event.target.hasAttribute('aria-activedescendant')
              || event.target.ariaActiveDescendantElement))) {
-          this.atFocusedItemIndex = 0;
+          // Use first focusable index so the setter doesn't see 0 (reserved for Up-from-first wrap).
+          const first = this.atFocusableItems.at(0);
+          this.atFocusedItemIndex = first != null ? this.items.indexOf(first) : 0;
           event.stopPropagation();
           event.preventDefault();
         }
         break;
-      case 'End':
+      }
+      case 'End': {
         if (!(event.target instanceof HTMLElement
             && (event.target.hasAttribute('aria-activedescendant')
              || event.target.ariaActiveDescendantElement))) {
-          this.atFocusedItemIndex = this.items.length - 1;
+          // Use last focusable index for consistency with lists that have non-focusable items.
+          const last = this.atFocusableItems.at(-1);
+          this.atFocusedItemIndex = last != null ? this.items.indexOf(last) : this.items.length - 1;
           event.stopPropagation();
           event.preventDefault();
         }
         break;
+      }
       default:
         break;
     }

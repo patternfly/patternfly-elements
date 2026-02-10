@@ -1,7 +1,7 @@
 import { isServer, nothing, type ReactiveController, type ReactiveControllerHost } from 'lit';
 import type { ActivedescendantControllerOptions } from './activedescendant-controller.js';
 import type { RovingTabindexControllerOptions } from './roving-tabindex-controller.js';
-import type { ATFocusController } from './at-focus-controller';
+import type { ATFocusController } from './at-focus-controller.js';
 import type { ListboxControllerOptions } from './listbox-controller.js';
 
 import { ListboxController, isItem, isItemDisabled } from './listbox-controller.js';
@@ -159,7 +159,7 @@ export class ComboboxController<
   Item extends HTMLElement
 > implements ReactiveController {
   public static of<T extends HTMLElement>(
-    host: ReactiveControllerHost,
+    host: ReactiveControllerHost & HTMLElement,
     options: ComboboxControllerOptions<T>,
   ): ComboboxController<T> {
     return new ComboboxController(host, options);
@@ -237,11 +237,13 @@ export class ComboboxController<
 
   #lb: ListboxController<Item>;
   #fc?: ATFocusController<Item>;
+  #initializing = false;
   #preventListboxGainingFocus = false;
   #input: HTMLElement | null = null;
   #button: HTMLElement | null = null;
   #listbox: HTMLElement | null = null;
   #buttonInitialRole: string | null = null;
+  #buttonHasMouseDown = false;
   #mo = new MutationObserver(() => this.#initItems());
   #microcopy = new Map<string, Record<Lang, string>>(Object.entries({
     dimmed: {
@@ -280,6 +282,7 @@ export class ComboboxController<
 
   set items(value: Item[]) {
     this.#lb.items = value;
+    this.#fc?.initItems();
   }
 
   /** Whether the combobox is disabled */
@@ -326,7 +329,7 @@ export class ComboboxController<
   }
 
   private constructor(
-    public host: ReactiveControllerHost,
+    public host: ReactiveControllerHost & HTMLElement,
     options: ComboboxControllerOptions<Item>,
   ) {
     host.addController(this);
@@ -362,7 +365,7 @@ export class ComboboxController<
   }
 
   hostUpdated(): void {
-    if (!this.#fc) {
+    if (!this.#fc && !this.#initializing) {
       this.#init();
     }
     const expanded = this.options.isExpanded();
@@ -380,7 +383,7 @@ export class ComboboxController<
     ComboboxController.hosts.delete(this.host);
   }
 
-  async _onFocusoutElement(): Promise<void> {
+  private async _onFocusoutElement(): Promise<void> {
     if (this.#hasTextInput && this.options.isExpanded()) {
       const root = this.#element?.getRootNode();
       await new Promise(requestAnimationFrame);
@@ -397,6 +400,7 @@ export class ComboboxController<
    * Order of operations is important
    */
   async #init() {
+    this.#initializing = true;
     await this.host.updateComplete;
     this.#initListbox();
     this.#initItems();
@@ -404,6 +408,7 @@ export class ComboboxController<
     this.#initInput();
     this.#initLabels();
     this.#initController();
+    this.#initializing = false;
   }
 
   #initListbox() {
@@ -425,6 +430,8 @@ export class ComboboxController<
   #initButton() {
     this.#button?.removeEventListener('click', this.#onClickButton);
     this.#button?.removeEventListener('keydown', this.#onKeydownButton);
+    this.#button?.removeEventListener('mousedown', this.#onMousedownButton);
+    this.#button?.removeEventListener('mouseup', this.#onMouseupButton);
     this.#button = this.options.getToggleButton();
     if (!this.#button) {
       throw new Error('ComboboxController getToggleButton() option must return an element');
@@ -434,6 +441,8 @@ export class ComboboxController<
     this.#button.setAttribute('aria-controls', this.#listbox?.id ?? '');
     this.#button.addEventListener('click', this.#onClickButton);
     this.#button.addEventListener('keydown', this.#onKeydownButton);
+    this.#button.addEventListener('mousedown', this.#onMousedownButton);
+    this.#button.addEventListener('mouseup', this.#onMouseupButton);
   }
 
   #initInput() {
@@ -504,6 +513,8 @@ export class ComboboxController<
   }
 
   async #show(): Promise<void> {
+    // Re-read items on open so slotted/dynamically added options are included:
+    this.#initItems();
     const success = await this.options.requestShowListbox();
     this.#filterItems();
     if (success !== false && !this.#hasTextInput) {
@@ -531,26 +542,32 @@ export class ComboboxController<
     return strings?.[lang] ?? key;
   }
 
-  // TODO(bennypowers): perhaps move this to ActivedescendantController
-  #announce(item: Item) {
+  /**
+   * Announces the focused item to a live region (e.g. for Safari VoiceOver).
+   * @param item - The listbox option item to announce.
+   * TODO(bennypowers): perhaps move this to ActivedescendantController
+ */
+  #announce(item: Item): void {
     const value = this.options.getItemValue(item);
     ComboboxController.#alert?.remove();
     const fragment = ComboboxController.#alertTemplate.content.cloneNode(true) as DocumentFragment;
     ComboboxController.#alert = fragment.firstElementChild as HTMLElement;
     let text = value;
     const lang = deepClosest(this.#listbox, '[lang]')?.getAttribute('lang') ?? 'en';
-    const langKey = lang?.match(ComboboxController.langsRE)?.at(0) as Lang ?? 'en';
+    const langKey = (lang?.match(ComboboxController.langsRE)?.at(0) as Lang) ?? 'en';
     if (this.options.isItemDisabled(item)) {
       text += ` (${this.#translate('dimmed', langKey)})`;
     }
     if (this.#lb.isSelected(item)) {
       text += `, (${this.#translate('selected', langKey)})`;
     }
-    if (item.hasAttribute('aria-setsize') && item.hasAttribute('aria-posinset')) {
+    const posInSet = InternalsController.getAriaPosInSet(item);
+    const setSize = InternalsController.getAriaSetSize(item);
+    if (posInSet != null && setSize != null) {
       if (langKey === 'ja') {
-        text += `, (${item.getAttribute('aria-setsize')} 件中 ${item.getAttribute('aria-posinset')} 件目)`;
+        text += `, (${setSize} 件中 ${posInSet} 件目)`;
       } else {
-        text += `, (${item.getAttribute('aria-posinset')} ${this.#translate('of', langKey)} ${item.getAttribute('aria-setsize')})`;
+        text += `, (${posInSet} ${this.#translate('of', langKey)} ${setSize})`;
       }
     }
     ComboboxController.#alert.lang = lang;
@@ -578,6 +595,17 @@ export class ComboboxController<
     } else {
       this.#hide();
     }
+  };
+
+  /**
+   * Distinguish click-to-toggle vs Tab/Shift+Tab
+  */
+  #onMousedownButton = () => {
+    this.#buttonHasMouseDown = true;
+  };
+
+  #onMouseupButton = () => {
+    this.#buttonHasMouseDown = false;
   };
 
   #onClickListbox = (event: MouseEvent) => {
@@ -735,9 +763,14 @@ export class ComboboxController<
   #onFocusoutListbox = (event: FocusEvent) => {
     if (!this.#hasTextInput && this.options.isExpanded()) {
       const root = this.#element?.getRootNode();
+      // Check if focus moved to the toggle button via mouse click
+      // If so, let the click handler manage toggle (prevents double-toggle)
+      // But if focus moved via Shift+Tab (no mousedown), we should still hide
+      const isClickOnToggleButton =
+          event.relatedTarget === this.#button && this.#buttonHasMouseDown;
       if ((root instanceof ShadowRoot || root instanceof Document)
           && !this.items.includes(event.relatedTarget as Item)
-      ) {
+          && !isClickOnToggleButton) {
         this.#hide();
       }
     }

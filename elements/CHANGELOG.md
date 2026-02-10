@@ -1,5 +1,12 @@
 # @patternfly/elements
 
+## 4.3.1
+### Patch Changes
+
+- ec6b358: `<pf-select>`: don't steal browser focus on page load, and improve keyboard accessibility of the listbox.
+- Updated dependencies [ec6b358]
+  - @patternfly/pfe-core@5.0.6
+
 ## 4.3.0
 ### Minor Changes
 

@@ -3,9 +3,61 @@
   <pf-label color="red" icon="info-circle" removable>label-1</pf-label>
   <pf-label color="green" icon="info-circle" removable>label-2</pf-label>
   <pf-label color="blue" icon="info-circle" removable>label-3</pf-label>
-  <pf-label id="add-button" class="add-button" color="blue" variant="outline" dismissible="false" >
+  <pf-label id="add-button" class="add-button" color="blue" variant="outline" dismissible="false">
     Add label </pf-label>
 </pf-label-group>
+<pf-modal id="custom-label-modal">
+  <h2 slot="header">Add label</h2>
+  <form id="add-label-form">
+    <label>
+      Label text:
+      <input id="label-text" class="pf-c-form-control" />
+    </label>
+
+    <label>
+      Color:
+      <pf-select id="color-select" class="pf-c-form-control">
+        <pf-option value="Grey" selected>Grey</pf-option>
+        <pf-option value="Blue">Blue</pf-option>
+        <pf-option value="Cyan">Cyan</pf-option>
+        <pf-option value="Green">Green</pf-option>
+        <pf-option value="Orange">Orange</pf-option>
+        <pf-option value="Purple">Purple</pf-option>
+        <pf-option value="Red">Red</pf-option>
+        <pf-option value="Gold">Gold</pf-option>
+      </pf-select>
+    </label>
+
+    <label>
+      Icon:
+      <pf-select id="icon-select" class="pf-c-form-control">
+        <pf-option value=""><span>No Icon</span></pf-option>
+        <pf-option value="info-circle"><pf-icon name="info-circle"></pf-icon>Info</pf-option>
+        <pf-option value="check-circle"><pf-icon name="check-circle"></pf-icon>Check</pf-option>
+        <pf-option value="exclamation-circle"><pf-icon name="exclamation-circle"></pf-icon>Warning</pf-option>
+      </pf-select>
+    </label>
+
+    <div class="radio-group">
+      <label>Dismissable:</label>
+      <div>
+        <label><input type="radio" name="dismissable" value="true"> Yes</label>
+        <label><input type="radio" name="dismissable" value="false" checked> No</label>
+      </div>
+    </div>
+
+    <div class="radio-group">
+      <label>Label type:</label>
+      <div>
+        <label><input type="radio" name="filled" value="true" checked> Filled</label>
+        <label><input type="radio" name="filled" value="false"> Outlined</label>
+      </div>
+    </div>
+  </form>
+
+  <pf-button id="modal-add" slot="footer" variant="primary">Save</pf-button>
+  <pf-button id="modal-cancel" slot="footer" variant="secondary">Cancel</pf-button>
+</pf-modal>
 
 <script type="module">
   import '@patternfly/elements/pf-label-group/pf-label-group.js';
@@ -15,83 +67,61 @@
   import '@patternfly/elements/pf-select/pf-select.js';
   import '@patternfly/elements/pf-icon/pf-icon.js';
 
-  const group = document.getElementById('label-group');
   const addButton = document.getElementById('add-button');
-  console.log('addButton', addButton);
-  
-  
+  const modal = document.getElementById('custom-label-modal');
+  const cancelBtn = document.getElementById('modal-cancel');
+  const modelAdd = document.getElementById('modal-add')
 
-  // create a modal element with form controls and buttons, return it
-  function createModal() {
-    const modal = document.createElement('pf-modal');
-    modal.id = 'custom-label-modal';
-    modal.setAttribute('variant', 'small');
-    modal.setAttribute('aria-describedby', 'custom-label-modal-description');
-    console.log('modal is created');
+  addButton.addEventListener('click', () => {
+    modal.open = true;
+    resetForm();
+    requestAnimationFrame(() => {
+      const first = modal.querySelector('#label-text');
+      if (first) first.focus();
+    });
 
-    modal.innerHTML = `
-      <h2 slot="header">Add label</h2>
-     
+  });
+  cancelBtn.addEventListener('click', () => {
+    modal.open = false;
+  }, { once: true });
 
-      <form id="add-label-form">
-        <label>
-          Label text:
-          <input id="label-text" class="pf-c-form-control" />
-        </label>
+  modelAdd.addEventListener('click', () => {
+    console.log("addButton")
+    const form = modal.querySelector('#add-label-form');
+    const group = document.getElementById('label-group');
 
-        <label>
-          Color:
-          <pf-select id="color-select" class="pf-c-form-control">
-            <pf-option value="Grey" selected>Grey</pf-option>
-            <pf-option value="Blue">Blue</pf-option>
-            <pf-option value="Cyan">Cyan</pf-option>
-            <pf-option value="Green">Green</pf-option>
-            <pf-option value="Orange">Orange</pf-option>
-            <pf-option value="Purple">Purple</pf-option>
-            <pf-option value="Red">Red</pf-option>
-            <pf-option value="Gold">Gold</pf-option>
-          </pf-select>
-        </label>
+    const inputText = modal.querySelector('#label-text');
+    const selectColor = modal.querySelector('#color-select');
+    const selectIcon = modal.querySelector('#icon-select');
+    const modalAdd = modal.querySelector('#modal-add');
+    const modalCancel = modal.querySelector('#modal-cancel');
 
-        <label>
-          Icon:
-          <pf-select id="icon-select" class="pf-c-form-control">
-            <pf-option value=""><span style="opacity:.7">No Icon</span></pf-option>
-            <pf-option value="info-circle"><pf-icon name="info-circle" style="width:1rem;height:1rem;vertical-align:middle;margin-right:0.5rem;"></pf-icon>Info</pf-option>
-            <pf-option value="check-circle"><pf-icon name="check-circle" style="width:1rem;height:1rem;vertical-align:middle;margin-right:0.5rem;"></pf-icon>Check</pf-option>
-            <pf-option value="exclamation-circle"><pf-icon name="exclamation-circle" style="width:1rem;height:1rem;vertical-align:middle;margin-right:0.5rem;"></pf-icon>Warning</pf-option>
-          </pf-select>
-        </label>
+    const text = (inputText.value || '').trim() || 'New label';
+    const color = selectColor.value.toLowerCase();
+    const icon = selectIcon.value;
+    const dismissable = !!form.querySelector('input[name="dismissable"]:checked') &&
+      form.querySelector('input[name="dismissable"]:checked').value === 'true';
+    const filled = !!form.querySelector('input[name="filled"]:checked') &&
+      form.querySelector('input[name="filled"]:checked').value === 'true';
 
-        <div class="radio-group">
-          <label>Dismissable:</label>
-          <div>
-            <label><input type="radio" name="dismissable" value="true" /> Yes</label>
-            <label><input type="radio" name="dismissable" value="false" checked /> No</label>
-          </div>
-        </div>
+    const newLabel = document.createElement('pf-label');
+    newLabel.textContent = text;
+    if (color) newLabel.setAttribute('color', color);
+    if (icon) newLabel.setAttribute('icon', icon);
+    if (dismissable) newLabel.setAttribute('removable', 'true');
+    if (!filled) newLabel.setAttribute('variant', 'outline');
 
-        <div class="radio-group">
-          <label>Label type:</label>
-          <div>
-            <label><input type="radio" name="filled" value="true" checked /> Filled</label>
-            <label><input type="radio" name="filled" value="false" /> Outlined</label>
-          </div>
-        </div>
-      </form>
+    const firstLabel = group.querySelector('pf-label:not([slot])');
+    if (firstLabel) group.insertBefore(newLabel, firstLabel);
+    else group.appendChild(newLabel);
 
-      <div slot="footer" style="display:flex; justify-content:flex-end; gap:0.5rem;">
-        <pf-button id="modal-add" variant="primary">Save</pf-button>
-        <pf-button id="modal-cancel" variant="secondary">Cancel</pf-button>
-      </div>
-    `;
-console.log('modal innerHTML set');
-    return modal;
-  }
+    group.dispatchEvent(new CustomEvent('label-added', { detail: { text, color, icon, dismissable, filled }, bubbles: true }));
 
-  
+    modal.open = false;
+  });
 
-  function resetForm(form) {
+  function resetForm() {
+    const form = modal.querySelector('#add-label-form');
     const inputText = form.querySelector('#label-text');
     const selectColor = form.querySelector('#color-select');
     const selectIcon = form.querySelector('#icon-select');
@@ -104,197 +134,130 @@ console.log('modal innerHTML set');
     if (filledYes) filledYes.checked = true;
   }
 
-  function openModal() {
-    const modal = createModal();
-    document.body.appendChild(modal);
-
-    const form = modal.querySelector('#add-label-form');
-    const inputText = modal.querySelector('#label-text');
-    const selectColor = modal.querySelector('#color-select');
-    const selectIcon = modal.querySelector('#icon-select');
-    const modalAdd = modal.querySelector('#modal-add');
-    const modalCancel = modal.querySelector('#modal-cancel');
-
-    resetForm(form);
-
-    function cleanup() {
-      try { modal.remove(); } 
-      catch (e) {
-        console.error('Error removing modal:', e);
-      }
-      requestAnimationFrame(() => addButton.focus());
-    }
-
-    modal.addEventListener('close', cleanup, { once: true });
-
-    modalCancel.addEventListener('click', () => {
-      modal.open = false;
-    }, { once: true });
-
-    modalAdd.addEventListener('click', () => {
-      const text = (inputText.value || '').trim() || 'New label';
-      const color = selectColor.value.toLowerCase();
-      const icon = selectIcon.value;
-      const dismissable = !!form.querySelector('input[name="dismissable"]:checked') &&
-        form.querySelector('input[name="dismissable"]:checked').value === 'true';
-      const filled = !!form.querySelector('input[name="filled"]:checked') &&
-        form.querySelector('input[name="filled"]:checked').value === 'true';
-
-      const newLabel = document.createElement('pf-label');
-      newLabel.textContent = text;
-      if (color) newLabel.setAttribute('color', color);
-      if (icon) newLabel.setAttribute('icon', icon);
-      if (dismissable) newLabel.setAttribute('removable', 'true');
-      if (!filled) newLabel.setAttribute('variant', 'outline');
-
-      const firstLabel = group.querySelector('pf-label:not([slot])');
-      if (firstLabel) group.insertBefore(newLabel, firstLabel);
-      else group.appendChild(newLabel);
-
-      group.dispatchEvent(new CustomEvent('label-added', { detail: { text, color, icon, dismissable, filled }, bubbles: true }));
-
-      modal.open = false;
-    }, { once: true });
-
-    // open and focus
-    modal.open = true;
-    requestAnimationFrame(() => {
-      const first = modal.querySelector('#label-text');
-      if (first) first.focus();
-    });
-  }
-
-  addButton.addEventListener('click', openModal);
 </script>
+
 <style>
   #add-button {
     cursor: pointer;
-  align-items: center;
-  gap: 4px;
-  transition: border 0.2s ease;
+    align-items: center;
+    gap: 4px;
+    transition: border 0.2s ease;
 
-  border-radius: 0.99rem;
+    border-radius: 0.99rem;
   }
+
   pf-modal#custom-label-modal {
-  --pf-c-modal--BoxShadow: 0 0 15px rgba(0,0,0,0.2);
-  --pf-c-modal-box--BorderRadius: 8px;
-  --pf-c-modal-box--Padding: 1rem;
+    --pf-c-modal--BoxShadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    --pf-c-modal-box--BorderRadius: 8px;
+    --pf-c-modal-box--Padding: 1rem;
 
-  font-size: 0.875rem;
-}
+    font-size: 0.875rem;
+  }
 
+  pf-modal#custom-label-modal h2[slot="header"] {
+    margin: 0;
+    font-size: 1.5rem;
+  }
 
-pf-modal#custom-label-modal h2[slot="header"] {
-  margin: 0;
-  font-size: 1.5rem;
-}
+  #add-label-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
 
-#add-label-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 0.5rem;
-}
-#label-text {
-  font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
-  font-size: var(--pf-global--FontSize--md, 16px);
-  font-weight: var(--pf-global--FontWeight--normal, 400);
-  line-height: 1.6;
-  color: var(--pf-global--Color--100, #151515);
+  #label-text {
+    font-family: var(--pf-global--FontFamily--sans-serif, "RedHatTextUpdated", "Overpass", overpass, helvetica, arial, sans-serif);
+    font-size: var(--pf-global--FontSize--md, 16px);
+    font-weight: var(--pf-global--FontWeight--normal, 400);
+    line-height: 1.6;
+    color: var(--pf-global--Color--100, #151515);
 
-  background-color: var(--pf-theme--color--surface--lightest, #fff);
-  border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
-  border-radius: 0.25rem;
-  box-shadow: 0 0 0 1px var(--pf-c-select__toggle--focus--before--BorderBottomColor, rgb(54, 57, 59));
-  padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem);
-  min-height: 44px;
-  min-width: 44px;
+    background-color: var(--pf-theme--color--surface--lightest, #fff);
+    border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0 1px var(--pf-c-select__toggle--focus--before--BorderBottomColor, rgb(54, 57, 59));
+    padding: var(--pf-global--spacer--xs, 0.25rem) var(--pf-global--spacer--sm, 0.5rem);
+    min-height: 44px;
+    min-width: 44px;
 
-  width: 100%;
-  box-sizing: border-box;
-}
-#label-text:focus {
-  outline: none;
-  border-bottom-color: var(--pf-c-select__toggle--focus--before--BorderBottomColor, #06c);
-  border-bottom-width: var(--pf-c-select__toggle--focus--before--BorderBottomWidth, 2px);
-  
-}
+    width: 100%;
+    box-sizing: border-box;
+  }
 
+  #label-text:focus {
+    outline: none;
+    border-bottom-color: var(--pf-c-select__toggle--focus--before--BorderBottomColor, #06c);
+    border-bottom-width: var(--pf-c-select__toggle--focus--before--BorderBottomWidth, 2px);
 
-#add-label-form input{
-  padding: 0.25rem 0.25rem;
-  font-size: 1rem;
-  border: 1px solid #d2d2d2;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
+  }
 
-#add-label-form .radio-group {
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
-  gap: 0.5rem;
-  margin-top: 0.25rem;
-}
+  #add-label-form input {
+    padding: 0.25rem 0.25rem;
+    font-size: 1rem;
+    border: 1px solid #d2d2d2;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
 
-#add-label-form .radio-group > label {
-  display: inline-flex;     
-  flex-direction: row;      
-  align-items: center;
-  gap: 0.25rem;
-  cursor: pointer;
-  width: auto;              
-}
+  #add-label-form .radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
 
-/* #add-label-form .radio-group > label input[type="radio"] {
-  margin: 0;
-  flex: 0 0 auto;
-  width: auto;
-  height: auto;
-  appearance: auto;
-} */
+  #add-label-form .radio-group>label {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+    cursor: pointer;
+    width: auto;
+  }
 
-#add-label-form .radio-group > label input[type="radio"] {
-  accent-color: var(--pf-global--primary-color--100, #0066cc);
-}
+  #add-label-form .radio-group>label input[type="radio"] {
+    accent-color: var(--pf-global--primary-color--100, #0066cc);
+  }
 
-#add-label-form .radio-group > label .radio-text {
-  display: inline-block;
-  white-space: nowrap;
-}
+  #add-label-form .radio-group>label .radio-text {
+    display: inline-block;
+    white-space: nowrap;
+  }
 
-pf-modal #custom-label-modal [slot="footer"] {
-  display: flex;
-  justify-content: flex-end; 
-  gap: 0.5rem;               
-  margin-top: 1rem;           
-  position: static; 
-}
+  pf-modal #custom-label-modal [slot="footer"] {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    position: static;
+  }
 
-pf-modal#custom-label-modal pf-button {
-  font-size: 0.85rem;
-  padding: 0.25rem 0.5rem;
-}
+  pf-modal#custom-label-modal pf-button {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+  }
 
-#add-label-form label {
-  font-weight: bold;
-  font-size: 0.875rem;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0.05rem; 
-  margin-top: 0.15rem; 
-}
+  #add-label-form label {
+    font-weight: bold;
+    font-size: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.05rem;
+    margin-top: 0.15rem;
+  }
 
-#add-label-form pf-select {
-  display: inline-block;
-  width: fit-content;      
-}
+  #add-label-form pf-select {
+    display: inline-block;
+    width: fit-content;
+  }
 
-#color-select {
-  min-width: 7rem; 
-}
+  #color-select {
+    min-width: 7rem;
+  }
 
-#icon-select {
-  min-width: 12rem; 
-}
+  #icon-select {
+    min-width: 12rem;
+  }
 </style>

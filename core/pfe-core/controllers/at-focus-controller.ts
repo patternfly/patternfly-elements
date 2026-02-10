@@ -1,5 +1,4 @@
 import { isServer, type ReactiveControllerHost } from 'lit';
-import { bound } from '../decorators/bound.js';
 
 function isATFocusableItem(el: Element): el is HTMLElement {
   return !!el

@@ -56,6 +56,7 @@
       "es2015.iterable",
       "es2020",
       "es2022",
+      "es2023",
       "ESNext.Disposable",
       "es5",
       "es6",

@@ -94,15 +94,20 @@
   --pf-c-dropdown--m-plain__toggle-icon--Color: var(--pf-global--Color--200, #6a6e73);
   --pf-c-dropdown--m-plain--hover__toggle-icon--Color: var(--pf-global--Color--100, #151515);
   --pf-c-dropdown__menu--BackgroundColor: var(--pf-global--BackgroundColor--light-100, #fff);
+  /** Dropdown box shadow */
   --pf-c-dropdown__menu--BoxShadow: var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
+  /** Dropdown top padding */
   --pf-c-dropdown__menu--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-dropdown__menu--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
+  /** Dropdown top position */
   --pf-c-dropdown__menu--Top: calc(100% + var(--pf-global--spacer--xs, 0.25rem));
+  /** Dropdown z-index */
   --pf-c-dropdown__menu--ZIndex: var(--pf-global--ZIndex--sm, 200);
   --pf-c-dropdown--m-top__menu--Top: 0;
   --pf-c-dropdown--m-top__menu--TranslateY: calc(-100% - var(--pf-global--spacer--xs, 0.25rem));
   --pf-c-dropdown__menu-item--BackgroundColor: transparent;
   --pf-c-dropdown__menu-item--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
+  /** Dropdown menu item right padding */
   --pf-c-dropdown__menu-item--PaddingRight: var(--pf-global--spacer--md, 1rem);
   --pf-c-dropdown__menu-item--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
   --pf-c-dropdown__menu-item--PaddingLeft: var(--pf-global--spacer--md, 1rem);
@@ -209,7 +214,14 @@ pf-dropdown-menu,
     --pf-c-dropdown__menu--Top,
     calc(100% + var(--pf-global--spacer--xs, 0.25rem))
   ) !important;
-  left: 0 !important;
+  left: var(
+    --pf-c-dropdown__menu--Left,
+    0
+  ) !important;
+  right: var(
+    --pf-c-dropdown__menu--Right,
+    auto
+  ) !important;
   z-index: var(
     --pf-c-dropdown__menu--ZIndex,
     var(--pf-global--ZIndex--sm, 200)

@@ -1,6 +1,7 @@
 :host {
   display: flex;
 
+  /** Background image for the element */
   --_background-image: var(--pf-c-background-image--BackgroundImage);
 }
 
@@ -23,8 +24,10 @@
   width: 100%;
   height: 100%;
   content: "";
+  /** Background color for the background image */
   background-color: var(--pf-c-background-image--BackgroundColor, var(--pf-global--BackgroundColor--dark-100, #151515));
   background-image: var(--_background-image);
+  /** SVG filter applied to the background image */
   filter: var(--pf-c-background-image--Filter, url("#image_overlay"));
   background-repeat:  no-repeat;
   background-size: cover;
@@ -43,24 +46,28 @@ slot[part="content"] {
 
 @media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #container::after {
+    /** Background image for 2x DPI screens */
     background-image: var(--pf-c-background-image--BackgroundImage-2x, var(--_background-image-2x, var(--_background-image)));
   }
 }
 
 @media screen and (min-width: 576px) {
   #container::after {
+    /** Background image for small screens */
     background-image: var(--pf-c-background-image--BackgroundImage--sm, var(--_background-image-sm, var(--_background-image)));
   }
 }
 
 @media screen and (min-width: 576px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 576px) and (min-resolution: 192dpi) {
   #container::after {
+    /** Background image for small screens with 2x DPI */
     background-image: var(--pf-c-background-image--BackgroundImage--sm-2x, var(--_background-image-sm-2x, var(--_background-image)));
   }
 }
 
 @media screen and (min-width: 992px) {
   #container::after {
+    /** Background image for large screens */
     background-image: var(--pf-c-background-image--BackgroundImage--lg, var(--_background-image-lg, var(--_background-image)));
   }
 }

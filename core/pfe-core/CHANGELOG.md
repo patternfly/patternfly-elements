@@ -1,5 +1,20 @@
 # @patternfly/pfe-core
 
+## 5.0.5
+### Patch Changes
+
+- a13e259: Update dependencies
+
+## 5.0.4
+### Patch Changes
+
+- 788a567: `FloatingDOMController`: improved performance by inling and removing the `@floating-ui/dom` dependency
+
+## 5.0.3
+### Patch Changes
+
+- 2cf37ca: `InternalsController`: add `ariaRelevant` property
+
 ## 5.0.2
 ### Patch Changes
 

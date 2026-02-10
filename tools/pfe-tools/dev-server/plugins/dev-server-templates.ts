@@ -3,7 +3,7 @@ import type { DemoRecord } from '../../custom-elements-manifest/lib/Manifest.js'
 import type { Context, Next } from 'koa';
 
 import { readFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
+import path, { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import nunjucks from 'nunjucks';
@@ -36,7 +36,18 @@ async function getDemos(config: PfeDevServerInternalConfig) {
         manifest
             .getTagNames()
             .flatMap(tagName =>
-              manifest.getDemoMetadata(tagName, config as PfeDevServerInternalConfig)));
+              manifest.getDemoMetadata(tagName, config as PfeDevServerInternalConfig)
+                  .filter(demo => demo.filePath?.includes(tagName))
+                  .map(demo => {
+                    if (demo.filePath?.endsWith(`${path.sep}index.html`)) {
+                      return {
+                        ...demo,
+                        permalink: `${dirname(demo.permalink)}/`,
+                      };
+                    } else {
+                      return demo;
+                    }
+                  })));
 }
 
 async function getTemplateContent(demo?: DemoRecord) {
@@ -76,5 +87,3 @@ export function pfeDevServerTemplateMiddleware(config: PfeDevServerInternalConfi
     return next();
   };
 }
-
-

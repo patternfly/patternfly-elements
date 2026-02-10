@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" unresolved>
 
-{% set groupeddemos = demos | sort(false, false, 'permalink') | groupby('primaryElementName') %}
+{% set groupeddemos = demos | groupby('primaryElementName') %}
 {% if demo.title %}
   {% set title = demo.title + ' | ' + options.site.title %}
 {% else %}
@@ -140,3 +140,4 @@
 </body>
 
 </html>
+

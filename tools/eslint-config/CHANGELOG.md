@@ -1,5 +1,10 @@
 # @patternfly/eslint-config-elements
 
+## 4.0.1
+### Patch Changes
+
+- a13e259: Update dependencies
+
 ## 4.0.0
 
 ### Major Changes

@@ -1,0 +1,41 @@
+diff --git a/node_modules/@jspm/generator/dist/generator-790b7aa7.js b/node_modules/@jspm/generator/dist/generator-790b7aa7.js
+index 269fffc..dc7527c 100644
+--- a/node_modules/@jspm/generator/dist/generator-790b7aa7.js
++++ b/node_modules/@jspm/generator/dist/generator-790b7aa7.js
+@@ -3314,6 +3314,9 @@ async function extractLockConstraintsAndMap(log, map, preloadUrls, mapUrl, rootU
+                     }
+                     if (installSubpath !== false) {
+                         setResolution(locks, parsedKey.pkgName, pkgUrl, null, installSubpath);
++                        if (key.endsWith('/')) {
++                            maps.imports[key] = map.imports[key]
++                        }
+                         return;
+                     }
+                 }
+@@ -3825,7 +3828,7 @@ function _define_property$2(obj, key, value) {
+     return obj;
+ }
+ function combineSubpaths(installSubpath, traceSubpath) {
+-    if (traceSubpath.endsWith('/')) throw new Error('Trailing slash subpaths unsupported');
++    if (traceSubpath.endsWith('/')) return traceSubpath;
+     return installSubpath === null || installSubpath === '.' || traceSubpath === '.' ? installSubpath || traceSubpath : `${installSubpath}${traceSubpath.slice(1)}`;
+ }
+ class TraceMap {
+@@ -3869,7 +3872,7 @@ class TraceMap {
+         // very likely that the user has some CommonJS dependencies, but this is
+         // something that the user has to explicitly enable:
+         if (isBuiltinScheme(resolved)) return null;
+-        if (resolved.endsWith('/')) throw new JspmError(`Trailing "/" installs not supported installing ${resolved} for ${parentUrl}`);
++        if (resolved.endsWith('/')) return;
+         try {
+             var entry = await this.resolver.analyze(resolved);
+         } catch (e) {
+@@ -5112,7 +5115,7 @@ function createFetchOptions(cache = true, fetchOptions = {}) {
+                 replacer.remove(existingComment.start, existingComment.end, true);
+             }
+         }
+-        replacer.replace(analysis.map.start, analysis.map.end, (comment ? '<!--' + comment + '-->' + newlineTab : '') + esms + '<script type="importmap">' + (whitespace ? newlineTab : '') + JSON.stringify(map, null, whitespace ? 2 : 0).replace(/\n/g, newlineTab) + (whitespace ? newlineTab : '') + '</script>' + preloads + (analysis.map.newScript ? newlineTab : ''));
++        replacer.replace(analysis.map.start, analysis.map.end, (comment ? '<!--' + comment + '-->' + newlineTab : '') + esms + '<script type="importmap">' + (whitespace ? newlineTab : '') + (JSON.stringify(map, null, whitespace ? 2 : 0)?.replace(/\n/g, newlineTab) ?? '') + (whitespace ? newlineTab : '') + '</script>' + preloads + (analysis.map.newScript ? newlineTab : ''));
+         return replacer.source;
+     }
+     async install(install, mode) {

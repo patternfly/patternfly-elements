@@ -1,5 +1,72 @@
 # @patternfly/elements
 
+## 4.3.0
+### Minor Changes
+
+- 280ef9b: ✨ Added `<pf-alert>` component
+  
+  An **alert** is a notification that provides brief information to the user without blocking their workflow.
+  
+  ```html
+  <pf-alert variant="warning"
+            title-text="Custom alert title"
+            dismissable>
+    This is the alert description.
+    <pf-button slot="actions">Ok</pf-button>
+    <pf-button slot="actions">Cancel</pf-button>
+  </pf-alert>
+- 1eea604: ✨ Added `<pf-helper-text>` component
+  
+  **Helper text** is an on-screen field guideline that helps provide context regarding field inputs.
+  
+  ```html
+  <pf-helper-text variant="error">You must include an email address</pf-helper-text>
+  ```
+- 26b1faa: ✨ Added `<pf-hint>` component
+  
+  A **hint** is in-app messaging that provides a one-step reminder, explanation,
+  or call to action for a page or modal. Hints provide information about an
+  interaction or prerequisite step that might not be immediately obvious to the
+  user.
+  
+  ```html
+  <pf-hint>
+    Welcome to the new documentation experience.
+    <a href="#">Learn more about the improved features</a>.
+  </pf-hint>
+  ```
+
+### Patch Changes
+
+- a13e259: Update dependencies
+- Updated dependencies [a13e259]
+  - @patternfly/pfe-core@5.0.5
+
+## 4.2.0
+### Minor Changes
+
+- bd40a73: ✨ Added `<pf-search-input>`.
+  
+  A search input consists of a text field where users can type to find specific content or items. Unlike selects or dropdowns, which offer predefined options, a search input lets users enter their own keywords to filter or locate results. It includes a clear (×) button to easily remove the current input, allowing users to start a new search quickly.
+  
+  Use this when users need to search freely using their own terms — ideal for large or frequently changing sets of content.
+  Do not use when the options are limited and known ahead of time — consider a dropdown or select instead
+  
+  ```html
+  <pf-search-input>
+    <pf-option value="Alabama"> Alabama </pf-option>
+    <pf-option value="New Jersey"> New Jersey </pf-option>
+    <pf-option value="New York"> New York </pf-option>
+    <pf-option value="New Mexico"> New Mexico </pf-option>
+    <pf-option value="North Carolina"> North Carolina </pf-option>
+  </pf-search-input>
+  ```
+
+### Patch Changes
+
+- f35d4fa: Use inline slot documentation instead of JSDoc
+- d36adee: `<pf-tooltip>`: hide content when copy/pasting tooltip elements
+
 ## 4.1.0
 ### Minor Changes
 

@@ -1,6 +1,5 @@
-import type { Plugin } from '@web/dev-server-core';
+import type { Plugin, Context, Middleware } from '@web/dev-server-core';
 import type { DevServerConfig } from '@web/dev-server';
-import type { Middleware, Context, Next } from 'koa';
 
 import { readdir, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -23,6 +22,7 @@ import { join } from 'node:path';
 const replace = fromRollup(rollupReplace);
 
 type BaseConfig = DevServerConfig & PfeConfig;
+
 export interface PfeDevServerConfigOptions extends BaseConfig {
   hostname?: string;
   litcssOptions?: LitCSSOptions;
@@ -68,12 +68,12 @@ function normalizeOptions(options?: PfeDevServerConfigOptions) {
  * @param ctx koa context
  * @param next middleware
  */
-function cors(ctx: Context, next: Next) {
+function cors(ctx: Context, next: () => Promise<any>) {
   ctx.set('Access-Control-Allow-Origin', '*');
   return next();
 }
 
-async function cacheBusterMiddleware(ctx: Context, next: Next) {
+async function cacheBusterMiddleware(ctx: Context, next: () => Promise<any>) {
   await next();
   if (ctx.path.match(/(elements|pfe-core)\/.*\.js$/)) {
     const stats = await stat(join(process.cwd(), ctx.path));

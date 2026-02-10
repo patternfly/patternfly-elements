@@ -13,21 +13,17 @@ jobs:
         uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
           cache: npm
-
-      - name: Verify JSPM URL
-        run: curl -I https://ga.jspm.io/npm:@floating-ui/core
 
       - name: POP Debug Info
         run: curl https://cachefly.cachefly.net/CacheFlyDebug
 
       # Set up GitHub Actions caching for Wireit.
-      - uses: google/wireit@setup-github-actions-caching/v2  
+      - uses: google/wireit@setup-github-actions-caching/v2
 
       - run: npm ci --prefer-offline
       - run: npm run docs
-      - run: cat _site/components/icon/demo/custom-icon-sets/index.html
 
       - name: Publish to Netlify
         env:

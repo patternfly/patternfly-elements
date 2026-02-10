@@ -41,21 +41,6 @@ const REMAINING_RE = /\$\{\s*remaining\s*\}/g;
  * @slot category-name
  *      Category name text for chip group category. If this prop is supplied chip group with have a label and category styling applied
  * @slot - `<pf-chip>` elements.
- * @cssprop [--pf-c-chip-group__list--MarginBottom=calc(var(--pf-global--spacer--xs, 0.25rem) * -1)]
- * @cssprop [--pf-c-chip-group__list--MarginRight=calc(var(--pf-global--spacer--xs, 0.25rem) * -1)]
- * @cssprop [--pf-c-chip-group--m-category--PaddingTop=var(--pf-global--spacer--xs, 0.25rem)]
- * @cssprop [--pf-c-chip-group--m-category--PaddingRight=var(--pf-global--spacer--xs, 0.25rem)]
- * @cssprop [--pf-c-chip-group--m-category--PaddingBottom=var(--pf-global--spacer--xs, 0.25rem)]
- * @cssprop [--pf-c-chip-group--m-category--PaddingLeft=var(--pf-global--spacer--sm, 0.5rem)]
- * @cssprop [--pf-c-chip-group--m-category--BorderRadius=var(--pf-global--BorderRadius--sm, 3px)]
- * @cssprop [--pf-c-chip-group--m-category--BackgroundColor=var(--pf-global--BackgroundColor--200, #f0f0f0)]
- * @cssprop [--pf-c-chip-group__label--MarginRight=var(--pf-global--spacer--sm, 0.5rem)]
- * @cssprop [--pf-c-chip-group__label--FontSize=var(--pf-global--FontSize--sm, 0.875rem)]
- * @cssprop [--pf-c-chip-group__label--MaxWidth=18ch]
- * @cssprop [--pf-c-chip-group__close--MarginTop=calc(var(--pf-global--spacer--xs, 0.25rem) * -1)]
- * @cssprop [--pf-c-chip-group__close--MarginBottom=calc(var(--pf-global--spacer--xs, 0.25rem) * -1)]
- * @cssprop [--pf-c-chip-group__list-item--MarginRight=var(--pf-global--spacer--xs, 0.25rem)]
- * @cssprop [--pf-c-chip-group__list-item--MarginBottom=var(--pf-global--spacer--xs, 0.25rem)]
  */
 @customElement('pf-chip-group')
 export class PfChipGroup extends LitElement {

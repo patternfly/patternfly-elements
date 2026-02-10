@@ -16,14 +16,21 @@
 
 slot {
   position: relative;
+  /** Controls the display type of the list container */
   display: var(--pf-c-jump-links__list--Display, flex);
+  /** Controls the direction of items in the list */
   flex-direction: var(--pf-c-jump-links__list--FlexDirection, row);
+  /** Padding around the list of links */
   padding-block-start: var(--pf-c-jump-links__list--PaddingTop, 0);
+  /** Right padding for the list */
   padding-inline-end: var(--pf-c-jump-links__list--PaddingRight,
     var(--pf-global--spacer--md, 1rem));
+  /** Bottom padding for the list */
   padding-block-end: var(--pf-c-jump-links__list--PaddingBottom, 0);
+  /** Left padding for the list */
   padding-inline-start: var(--pf-c-jump-links__list--PaddingLeft,
     var(--pf-global--spacer--md, 1rem));
+  /** Controls visibility of the list */
   visibility: var(--pf-c-jump-links__list--Visibility, visible);
 }
 
@@ -35,40 +42,54 @@ slot::before {
   left: 0;
   pointer-events: none;
   content: "";
+  /** Border color for the list pseudo-element */
   border: solid var(--pf-c-jump-links__list--before--BorderColor,
     var(--pf-global--BorderColor--100, #d2d2d2));
   border-width:
+    /** Top border width for the list pseudo-element */
     var(--pf-c-jump-links__list--before--BorderTopWidth,
       var(--pf-global--BorderWidth--sm, 1px))
+    /** Right border width for the list pseudo-element */
     var(--pf-c-jump-links__list--before--BorderRightWidth, 0)
+    /** Bottom border width for the list pseudo-element */
     var(--pf-c-jump-links__list--before--BorderBottomWidth, 0)
+    /** Left border width for the list pseudo-element */
     var(--pf-c-jump-links__list--before--BorderLeftWidth, 0);
 }
 
 :host([vertical]) #container {
+  /** Top padding for vertical layout */
   --pf-c-jump-links__list--PaddingTop:
     var(--pf-c-jump-links--m-vertical__list--PaddingTop,
       var(--pf-global--spacer--md, 1rem)
     );
+  /** Right padding for vertical layout */
   --pf-c-jump-links__list--PaddingRight:
     var(--pf-c-jump-links--m-vertical__list--PaddingRight,0);
+  /** Bottom padding for vertical layout */
   --pf-c-jump-links__list--PaddingBottom:
     var(--pf-c-jump-links--m-vertical__list--PaddingBottom,
       var(--pf-global--spacer--md, 1rem)
     );
+  /** Left padding for vertical layout */
   --pf-c-jump-links__list--PaddingLeft:
     var(--pf-c-jump-links--m-vertical__list--PaddingLeft, 0);
+  /** Top border width for vertical layout */
   --pf-c-jump-links__list--before--BorderTopWidth:
     var(--pf-c-jump-links--m-vertical__list--before--BorderTopWidth, 0);
+  /** Left border width for vertical layout */
   --pf-c-jump-links__list--before--BorderLeftWidth:
     var(--pf-c-jump-links--m-vertical__list--before--BorderLeftWidth,
     var(--pf-global--BorderWidth--sm, 1px));
+  /** Top border width for current item in vertical layout */
   --pf-c-jump-links__item--m-current__link--before--BorderTopWidth:
     var(--pf-c-jump-links--m-vertical__item--m-current__link--before--BorderTopWidth, 0);
+  /** Left border width for current item in vertical layout */
   --pf-c-jump-links__item--m-current__link--before--BorderLeftWidth:
     var(--pf-c-jump-links--m-vertical__item--m-current__link--before--BorderLeftWidth,
       var(--pf-global--BorderWidth--lg, 3px)
     );
+  /** Flex direction for vertical layout */
   --pf-c-jump-links__list--FlexDirection: var(--pf-c-jump-links--m-vertical__list--FlexDirection, column);
 }
 
@@ -88,6 +109,7 @@ slot::before {
 }
 
 :host([expandable]) {
+  /** Base margin for the toggle button */
   --pf-c-jump-links--m-expanded__toggle--MarginBottom:
     calc(var(--pf-c-jump-links__toggle--MarginBottom--base,
       calc(-1 * var(--pf-global--spacer--form-element, 0.375rem))
@@ -96,43 +118,57 @@ slot::before {
 
 summary {
   display: block;
+  /** Padding around the expandable jump links disclosure widget. */
   margin-block-start: var(--pf-c-jump-links__toggle--MarginTop,
     calc(-1 * var(--pf-global--spacer--form-element, 0.375rem)));
+  /** Bottom margin for the toggle */
   margin-block-end: var(--pf-c-jump-links__toggle--MarginBottom,
     var(--pf-c-jump-links__toggle--MarginBottom--base,
       calc(-1 * var(--pf-global--spacer--form-element, 0.375rem))));
+  /** Left margin for the toggle */
   margin-inline-start: var(--pf-c-jump-links__toggle--MarginLeft);
+  /** Color of the toggle text */
   color: var(--pf-c-jump-links__toggle-text--Color,
     var(--pf-global--Color--100, #151515));
+  /** Padding around the expandable jump links disclosure widget. */
   padding:
     var(--pf-c-button--PaddingTop,
       var(--pf-global--spacer--form-element, 0.375rem))
+    /** Right padding for the button */
     var(--pf-c-button--PaddingRight,
       var(--pf-global--spacer--md, 1rem))
+    /** Bottom padding for the button */
     var(--pf-c-button--PaddingBottom,
       var(--pf-global--spacer--form-element, 0.375rem))
+    /** Left padding for the button */
     var(--pf-c-button--PaddingLeft,
       var(--pf-global--spacer--md, 1rem));
 }
 
 summary pf-icon {
+  /** Rotation angle for the toggle icon */
   rotate: var(--pf-c-jump-links__toggle-icon--Rotate, 0);
+  /** Transition for the toggle icon */
   transition: var(--pf-c-jump-links__toggle-icon--Transition,
     var(--pf-global--Transition, all 250ms cubic-bezier(0.42, 0, 0.58, 1)));
 }
 
 summary span {
+  /** Left margin for the toggle text */
   margin-inline-start: var(--pf-c-jump-links__toggle-text--MarginLeft,
     var(--pf-global--spacer--md, 1rem));
 }
 
 :host([expanded]) #container {
+  /** Bottom margin for expanded toggle */
   --pf-c-jump-links__toggle--MarginBottom: var(--pf-c-jump-links--m-expanded__toggle--MarginBottom,
     calc(var(--pf-c-jump-links__toggle--MarginBottom--base,
       calc(-1 * var(--pf-global--spacer--form-element, 0.375rem))) +
       var(--pf-global--spacer--md, 1rem)));
+  /** Rotation for expanded toggle icon */
   --pf-c-jump-links__toggle-icon--Rotate: var(--pf-c-jump-links--m-expanded__toggle-icon--Rotate,
     90deg);
+  /** Color for expanded toggle icon */
   --pf-c-jump-links__toggle-icon--Color: var(--pf-c-jump-links--m-expanded__toggle-icon--Color,
     var(--pf-global--Color--100, #151515));
   --pf-c-jump-links__toggle-icon--Rotate: 90deg;

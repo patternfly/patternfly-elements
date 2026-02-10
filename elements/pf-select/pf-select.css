@@ -5,161 +5,318 @@
 	color: var(--pf-global--Color--100, #151515);
   --_pf-option-checkboxes-display: none;
   --_pf-option-svg-display: block;
+	--_pf-option-selected-background-color: var(--rh-color-gray-20, #e0e0e0);
+	/** Select toggle top padding */
 	--pf-c-select__toggle--PaddingTop: var(--pf-global--spacer--form-element, 0.375rem);
+	/** Select toggle right padding */
 	--pf-c-select__toggle--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select toggle bottom padding */
 	--pf-c-select__toggle--PaddingBottom: var(--pf-global--spacer--form-element, 0.375rem);
+	/** Select toggle left padding */
 	--pf-c-select__toggle--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select toggle minimum width */
 	--pf-c-select__toggle--MinWidth: var(--pf-global--target-size--MinWidth, 44px);
+	/** Select toggle font size */
 	--pf-c-select__toggle--FontSize: var(--pf-global--FontSize--md, 1rem);
+	/** Select toggle font weight */
 	--pf-c-select__toggle--FontWeight: var(--pf-global--FontWeight--normal, 400);
+	/** Select toggle line height */
 	--pf-c-select__toggle--LineHeight: var(--pf-global--LineHeight--md, 1.5);
+	/** Select toggle background color */
 	--pf-c-select__toggle--BackgroundColor: var(--pf-global--BackgroundColor--100, #fff);
+	/** Select toggle border top width */
 	--pf-c-select__toggle--before--BorderTopWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** Select toggle border right width */
 	--pf-c-select__toggle--before--BorderRightWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** Select toggle border bottom width */
 	--pf-c-select__toggle--before--BorderBottomWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** Select toggle border left width */
 	--pf-c-select__toggle--before--BorderLeftWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** Select toggle border width */
 	--pf-c-select__toggle--before--BorderWidth: initial;
+	/** Select toggle border top color */
 	--pf-c-select__toggle--before--BorderTopColor: var(--pf-global--BorderColor--300, #f0f0f0);
+	/** Select toggle border right color */
 	--pf-c-select__toggle--before--BorderRightColor: var(--pf-global--BorderColor--300, #f0f0f0);
+	/** Select toggle border bottom color */
 	--pf-c-select__toggle--before--BorderBottomColor: var(--pf-global--BorderColor--200, #8a8d90);
+	/** Select toggle border left color */
 	--pf-c-select__toggle--before--BorderLeftColor: var(--pf-global--BorderColor--300, #f0f0f0);
+	/** Select toggle text color */
 	--pf-c-select__toggle--Color: var(--pf-global--Color--100, #151515);
+	/** Select toggle hover border bottom color */
 	--pf-c-select__toggle--hover--before--BorderBottomColor: var(--pf-global--active-color--100, #06c);
+	/** Select toggle focus border bottom color */
 	--pf-c-select__toggle--focus--before--BorderBottomColor: var(--pf-global--active-color--100, #06c);
+	/** Select toggle focus border bottom width */
 	--pf-c-select__toggle--focus--before--BorderBottomWidth: var(--pf-global--BorderWidth--md, 2px);
+	/** Select toggle active border bottom color */
 	--pf-c-select__toggle--active--before--BorderBottomColor: var(--pf-global--active-color--100, #06c);
+	/** Select toggle active border bottom width */
 	--pf-c-select__toggle--active--before--BorderBottomWidth: var(--pf-global--BorderWidth--md, 2px);
+	/** Select toggle expanded border bottom color */
 	--pf-c-select__toggle--m-expanded--before--BorderBottomColor: var(--pf-global--active-color--100, #06c);
+	/** Select toggle expanded border bottom width */
 	--pf-c-select__toggle--m-expanded--before--BorderBottomWidth: var(--pf-global--BorderWidth--md, 2px);
+	/** Select toggle disabled background color */
 	--pf-c-select__toggle--disabled--BackgroundColor: var(--pf-global--disabled-color--300, #f0f0f0);
+	/** Select toggle plain border color */
 	--pf-c-select__toggle--m-plain--before--BorderColor: transparent;
+	/** Select toggle placeholder color */
 	--pf-c-select__toggle--m-placeholder--Color: transparent;
+	/** Select invalid state toggle border bottom color */
 	--pf-c-select--m-invalid__toggle--before--BorderBottomColor: var(--pf-global--danger-color--100, #c9190b);
+	/** Select invalid state toggle border bottom width */
 	--pf-c-select--m-invalid__toggle--before--BorderBottomWidth: var(--pf-global--BorderWidth--md, 2px);
+	/** Select invalid state toggle hover border bottom color */
 	--pf-c-select--m-invalid__toggle--hover--before--BorderBottomColor: var(--pf-global--danger-color--100, #c9190b);
+	/** Select invalid state toggle focus border bottom color */
 	--pf-c-select--m-invalid__toggle--focus--before--BorderBottomColor: var(--pf-global--danger-color--100, #c9190b);
+	/** Select invalid state toggle active border bottom color */
 	--pf-c-select--m-invalid__toggle--active--before--BorderBottomColor: var(--pf-global--danger-color--100, #c9190b);
+	/** Select invalid state toggle expanded border bottom color */
 	--pf-c-select--m-invalid__toggle--m-expanded--before--BorderBottomColor: var(--pf-global--danger-color--100, #c9190b);
+	/** Select invalid state toggle status icon color */
 	--pf-c-select--m-invalid__toggle-status-icon--Color: var(--pf-global--danger-color--100, #c9190b);
+	/** Select success state toggle border bottom color */
 	--pf-c-select--m-success__toggle--before--BorderBottomColor: var(--pf-global--success-color--100, #3e8635);
+	/** Select success state toggle border bottom width */
 	--pf-c-select--m-success__toggle--before--BorderBottomWidth: var(--pf-global--BorderWidth--md, 2px);
+	/** Select success state toggle hover border bottom color */
 	--pf-c-select--m-success__toggle--hover--before--BorderBottomColor: var(--pf-global--success-color--100, #3e8635);
+	/** Select success state toggle focus border bottom color */
 	--pf-c-select--m-success__toggle--focus--before--BorderBottomColor: var(--pf-global--success-color--100, #3e8635);
+	/** Select success state toggle active border bottom color */
 	--pf-c-select--m-success__toggle--active--before--BorderBottomColor: var(--pf-global--success-color--100, #3e8635);
+	/** Select success state toggle expanded border bottom color */
 	--pf-c-select--m-success__toggle--m-expanded--before--BorderBottomColor: var(--pf-global--success-color--100, #3e8635);
+	/** Select success state toggle status icon color */
 	--pf-c-select--m-success__toggle-status-icon--Color: var(--pf-global--success-color--100, #3e8635);
+	/** Select warning state toggle border bottom color */
 	--pf-c-select--m-warning__toggle--before--BorderBottomColor: var(--pf-global--warning-color--100, #f0ab00);
+	/** Select warning state toggle border bottom width */
 	--pf-c-select--m-warning__toggle--before--BorderBottomWidth: var(--pf-global--BorderWidth--md, 2px);
+	/** Select warning state toggle hover border bottom color */
 	--pf-c-select--m-warning__toggle--hover--before--BorderBottomColor: var(--pf-global--warning-color--100, #f0ab00);
+	/** Select warning state toggle focus border bottom color */
 	--pf-c-select--m-warning__toggle--focus--before--BorderBottomColor: var(--pf-global--warning-color--100, #f0ab00);
+	/** Select warning state toggle active border bottom color */
 	--pf-c-select--m-warning__toggle--active--before--BorderBottomColor: var(--pf-global--warning-color--100, #f0ab00);
+	/** Select warning state toggle expanded border bottom color */
 	--pf-c-select--m-warning__toggle--m-expanded--before--BorderBottomColor: var(--pf-global--warning-color--100, #f0ab00);
+	/** Select warning state toggle status icon color */
 	--pf-c-select--m-warning__toggle-status-icon--Color: var(--pf-global--warning-color--100, #f0ab00);
+	/** Select toggle wrapper not last child right margin */
 	--pf-c-select__toggle-wrapper--not-last-child--MarginRight: var(--pf-global--spacer--xs, 0.25rem);
+	/** Select toggle wrapper maximum width */
 	--pf-c-select__toggle-wrapper--MaxWidth: calc(100% - var(--pf-global--spacer--lg, 1.5rem));
+	/** Select toggle wrapper chip group top margin */
 	--pf-c-select__toggle-wrapper--c-chip-group--MarginTop: 0.3125rem;
+	/** Select toggle wrapper chip group bottom margin */
 	--pf-c-select__toggle-wrapper--c-chip-group--MarginBottom: 0.3125rem;
+	/** Select typeahead toggle flex basis */
 	--pf-c-select__toggle-typeahead--FlexBasis: 10em;
+	/** Select typeahead toggle background color */
 	--pf-c-select__toggle-typeahead--BackgroundColor: transparent;
+	/** Select typeahead toggle top border */
 	--pf-c-select__toggle-typeahead--BorderTop: var(--pf-global--BorderWidth--sm, 1px) solid transparent;
+	/** Select typeahead toggle right border */
 	--pf-c-select__toggle-typeahead--BorderRight: none;
+	/** Select typeahead toggle left border */
 	--pf-c-select__toggle-typeahead--BorderLeft: none;
+	/** Select typeahead toggle minimum width */
 	--pf-c-select__toggle-typeahead--MinWidth: 7.5rem;
+	/** Select typeahead toggle focus bottom padding */
 	--pf-c-select__toggle-typeahead--focus--PaddingBottom: calc(var(--pf-global--spacer--form-element, 0.375rem) - var(--pf-global--BorderWidth--md));
+	/** Select toggle placeholder text color */
 	--pf-c-select__toggle--m-placeholder__toggle-text--Color: var(--pf-global--Color--dark-200, #6a6e73);
+	/** Select toggle icon left margin */
 	--pf-c-select__toggle-icon--toggle-text--MarginLeft: var(--pf-global--spacer--xs, 0.25rem);
+	/** Select toggle badge left padding */
 	--pf-c-select__toggle-badge--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select toggle status icon left margin */
 	--pf-c-select__toggle-status-icon--MarginLeft: var(--pf-global--spacer--xs, 0.25rem);
+	/** Select toggle status icon color */
 	--pf-c-select__toggle-status-icon--Color: var(--pf-global--Color--100, #151515);
+	/** Select toggle arrow left margin */
 	--pf-c-select__toggle-arrow--MarginLeft: var(--pf-global--spacer--md, 1rem);
+	/** Select toggle arrow right margin */
 	--pf-c-select__toggle-arrow--MarginRight: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select toggle arrow with clear left margin */
 	--pf-c-select__toggle-arrow--with-clear--MarginLeft: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select toggle arrow top expanded rotation */
 	--pf-c-select__toggle-arrow--m-top--m-expanded__toggle-arrow--Rotate: 180deg;
+	/** Select plain toggle arrow color */
 	--pf-c-select--m-plain__toggle-arrow--Color: var(--pf-global--Color--200, #6a6e73);
+	/** Select plain hover toggle arrow color */
 	--pf-c-select--m-plain--hover__toggle-arrow--Color: var(--pf-global--Color--100, #151515);
+	/** Select toggle clear right padding */
 	--pf-c-select__toggle-clear--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select toggle clear left padding */
 	--pf-c-select__toggle-clear--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+	/** Select toggle clear button left padding */
 	--pf-c-select__toggle-clear--toggle-button--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select toggle button text color */
 	--pf-c-select__toggle-button--Color: var(--pf-global--Color--100, #151515);
+	/** Select menu background color */
 	--pf-c-select__menu--BackgroundColor: var(--pf-global--BackgroundColor--light-100, #fff);
+	/** Select menu box shadow */
 	--pf-c-select__menu--BoxShadow: var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06));
+	/** Select menu top padding */
 	--pf-c-select__menu--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select menu bottom padding */
 	--pf-c-select__menu--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select menu top position */
 	--pf-c-select__menu--Top: calc(100% + var(--pf-global--spacer--xs, 0.25rem));
+	/** Select menu z-index */
 	--pf-c-select__menu--ZIndex: var(--pf-global--ZIndex--sm, 200);
+	/** Select menu width */
 	--pf-c-select__menu--Width: auto;
+	/** Select menu minimum width */
 	--pf-c-select__menu--MinWidth: 100%;
+	/** Select menu top transform Y */
 	--pf-c-select__menu--m-top--TranslateY: calc(-100% - var(--pf-global--spacer--xs, 0.25rem));
+	/** Select list item loading top padding */
 	--pf-c-select__list-item--m-loading--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select menu item top padding */
 	--pf-c-select__menu-item--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select menu item right padding */
 	--pf-c-select__menu-item--PaddingRight: var(--pf-global--spacer--md, 1rem);
+	/** Select menu item selected right padding */
 	--pf-c-select__menu-item--m-selected--PaddingRight: var(--pf-global--spacer--2xl, 3rem);
+	/** Select menu item bottom padding */
 	--pf-c-select__menu-item--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select menu item left padding */
 	--pf-c-select__menu-item--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+	/** Select menu item font size */
 	--pf-c-select__menu-item--FontSize: var(--pf-global--FontSize--md, 1rem);
+	/** Select menu item font weight */
 	--pf-c-select__menu-item--FontWeight: var(--pf-global--FontWeight--normal, 400);
+	/** Select menu item line height */
 	--pf-c-select__menu-item--LineHeight: var(--pf-global--LineHeight--md, 1.5);
+	/** Select menu item text color */
 	--pf-c-select__menu-item--Color: var(--pf-global--Color--dark-100, #151515);
+	/** Select menu item disabled text color */
 	--pf-c-select__menu-item--disabled--Color: var(--pf-global--Color--dark-200, #6a6e73);
+	/** Select menu item width */
 	--pf-c-select__menu-item--Width: 100%;
+	/** Select menu item hover background color */
 	--pf-c-select__menu-item--hover--BackgroundColor: var(--pf-global--BackgroundColor--light-300, #f0f0f0);
+	/** Select menu item focus background color */
 	--pf-c-select__menu-item--focus--BackgroundColor: var(--pf-global--BackgroundColor--light-300, #f0f0f0);
+	/** Select menu item disabled background color */
 	--pf-c-select__menu-item--disabled--BackgroundColor: transparent;
+	/** Select menu item link width */
 	--pf-c-select__menu-item--m-link--Width: auto;
+	/** Select menu item link hover background color */
 	--pf-c-select__menu-item--m-link--hover--BackgroundColor: transparent;
+	/** Select menu item link focus background color */
 	--pf-c-select__menu-item--m-link--focus--BackgroundColor: transparent;
+	/** Select menu item action color */
 	--pf-c-select__menu-item--m-action--Color: var(--pf-global--Color--200, #6a6e73);
+	/** Select menu item action hover color */
 	--pf-c-select__menu-item--m-action--hover--Color: var(--pf-global--Color--100, #151515);
+	/** Select menu item action focus color */
 	--pf-c-select__menu-item--m-action--focus--Color: var(--pf-global--Color--100, #151515);
+	/** Select menu item action disabled color */
 	--pf-c-select__menu-item--m-action--disabled--Color: var(--pf-global--disabled-color--200, #d2d2d2);
+	/** Select menu item action width */
 	--pf-c-select__menu-item--m-action--Width: auto;
+	/** Select menu item action font size */
 	--pf-c-select__menu-item--m-action--FontSize: var(--pf-global--icon--FontSize--sm, 0.625rem);
+	/** Select menu item action hover background color */
 	--pf-c-select__menu-item--m-action--hover--BackgroundColor: transparent;
+	/** Select menu item action focus background color */
 	--pf-c-select__menu-item--m-action--focus--BackgroundColor: transparent;
+	/** Select menu item hover action color */
 	--pf-c-select__menu-item--hover__menu-item--m-action--Color: var(--pf-global--Color--200, #6a6e73);
+	/** Select menu item favorite action color */
 	--pf-c-select__menu-item--m-favorite-action--Color: var(--pf-global--Color--200, #6a6e73);
+	/** Select menu item favorite action hover color */
 	--pf-c-select__menu-item--m-favorite-action--hover--Color: var(--pf-global--Color--100, #151515);
+	/** Select menu item favorite action focus color */
 	--pf-c-select__menu-item--m-favorite-action--focus--Color: var(--pf-global--Color--100, #151515);
+	/** Select menu wrapper favorite action color */
 	--pf-c-select__menu-wrapper--m-favorite__menu-item--m-favorite-action--Color: var(--pf-global--palette--gold-400, #f0ab00);
+	/** Select menu wrapper favorite action hover color */
 	--pf-c-select__menu-wrapper--m-favorite__menu-item--m-favorite-action--hover--Color: var(--pf-global--palette--gold-500, #c58c00);
+	/** Select menu wrapper favorite action focus color */
 	--pf-c-select__menu-wrapper--m-favorite__menu-item--m-favorite-action--focus--Color: var(--pf-global--palette--gold-500, #c58c00);
+	/** Select menu item load color */
 	--pf-c-select__menu-item--m-load--Color: var(--pf-global--link--Color, #06c);
+	/** Select menu item icon color */
 	--pf-c-select__menu-item-icon--Color: var(--pf-global--active-color--100, #06c);
+	/** Select menu item icon font size */
 	--pf-c-select__menu-item-icon--FontSize: var(--pf-global--icon--FontSize--sm, 0.625rem);
+	/** Select menu item icon right position */
 	--pf-c-select__menu-item-icon--Right: var(--pf-global--spacer--md, 1rem);
+	/** Select menu item icon top position */
 	--pf-c-select__menu-item-icon--Top: 50%;
+	/** Select menu item icon transform Y */
 	--pf-c-select__menu-item-icon--TranslateY: -50%;
+	/** Select menu item action icon minimum height */
 	--pf-c-select__menu-item-action-icon--MinHeight: calc(var(--pf-c-select__menu-item--FontSize) * var(--pf-c-select__menu-item--LineHeight));
+	/** Select menu item match font weight */
 	--pf-c-select__menu-item--match--FontWeight: var(--pf-global--FontWeight--bold, 700);
+	/** Select menu search top padding */
 	--pf-c-select__menu-search--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select menu search right padding */
 	--pf-c-select__menu-search--PaddingRight: var(--pf-c-select__menu-item--PaddingRight);
+	/** Select menu search bottom padding */
 	--pf-c-select__menu-search--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+	/** Select menu search left padding */
 	--pf-c-select__menu-search--PaddingLeft: var(--pf-c-select__menu-item--PaddingLeft);
+	/** Select menu group top padding */
 	--pf-c-select__menu-group--menu-group--PaddingTop: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select menu group title top padding */
 	--pf-c-select__menu-group-title--PaddingTop: var(--pf-c-select__menu-item--PaddingTop);
+	/** Select menu group title right padding */
 	--pf-c-select__menu-group-title--PaddingRight: var(--pf-c-select__menu-item--PaddingRight);
+	/** Select menu group title bottom padding */
 	--pf-c-select__menu-group-title--PaddingBottom: var(--pf-c-select__menu-item--PaddingBottom);
+	/** Select menu group title left padding */
 	--pf-c-select__menu-group-title--PaddingLeft: var(--pf-c-select__menu-item--PaddingLeft);
+	/** Select menu group title font size */
 	--pf-c-select__menu-group-title--FontSize: var(--pf-global--FontSize--xs, 0.75rem);
+	/** Select menu group title font weight */
 	--pf-c-select__menu-group-title--FontWeight: var(--pf-global--FontWeight--normal, 400);
+	/** Select menu group title color */
 	--pf-c-select__menu-group-title--Color: var(--pf-global--Color--dark-200, #6a6e73);
+	/** Select menu item count left margin */
 	--pf-c-select__menu-item-count--MarginLeft: var(--pf-global--spacer--md, 1rem);
+	/** Select menu item count font size */
 	--pf-c-select__menu-item-count--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+	/** Select menu item count color */
 	--pf-c-select__menu-item-count--Color: var(--pf-global--Color--200, #6a6e73);
+	/** Select menu item disabled count color */
 	--pf-c-select__menu-item--disabled__menu-item-count--Color: var(--pf-global--Color--dark-200, #6a6e73);
+	/** Select menu item description font size */
 	--pf-c-select__menu-item-description--FontSize: var(--pf-global--FontSize--xs, 0.75rem);
+	/** Select menu item description color */
 	--pf-c-select__menu-item-description--Color: var(--pf-global--Color--200, #6a6e73);
+	/** Select menu item description right padding */
 	--pf-c-select__menu-item-description--PaddingRight: var(--pf-c-select__menu-item--PaddingRight);
+	/** Select menu item main right padding */
 	--pf-c-select__menu-item-main--PaddingRight: var(--pf-c-select__menu-item--PaddingRight);
+	/** Select menu item selected main right padding */
 	--pf-c-select__menu-item--m-selected__menu-item-main--PaddingRight: var(--pf-c-select__menu-item--m-selected--PaddingRight);
+	/** Select menu footer box shadow */
 	--pf-c-select__menu-footer--BoxShadow: var(--pf-global--BoxShadow--sm-top, 0 -0.125rem 0.25rem -0.0625rem rgba(3, 3, 3, 0.16));
+	/** Select menu footer top padding */
 	--pf-c-select__menu-footer--PaddingTop: var(--pf-global--spacer--md, 1rem);
+	/** Select menu footer right padding */
 	--pf-c-select__menu-footer--PaddingRight: var(--pf-global--spacer--md, 1rem);
+	/** Select menu footer bottom padding */
 	--pf-c-select__menu-footer--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+	/** Select menu footer left padding */
 	--pf-c-select__menu-footer--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+	/** Select menu footer top margin */
 	--pf-c-select__menu-footer--MarginTop: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select menu footer bottom margin */
 	--pf-c-select__menu-footer--MarginBottom: calc(var(--pf-global--spacer--sm, 0.5rem) * -1);
+	/** Select menu divider top margin */
 	--pf-c-select-menu--c-divider--MarginTop: var(--pf-global--spacer--sm, 0.5rem);
+	/** Select menu divider bottom margin */
 	--pf-c-select-menu--c-divider--MarginBottom: var(--pf-global--spacer--sm, 0.5rem);
 }
 

@@ -1,20 +1,34 @@
 :host {
   display: inline-block;
+	/** Border color for avatar */
 	--pf-c-avatar--BorderColor: transparent;
+	/** Border width for avatar */
 	--pf-c-avatar--BorderWidth: 0;
+	/** Border radius for avatar */
 	--pf-c-avatar--BorderRadius: var(--pf-global--BorderRadius--lg, 30em);
+	/** Width for avatar */
 	--pf-c-avatar--Width: 2.25rem;
+	/** Height for avatar */
 	--pf-c-avatar--Height: 2.25rem;
+	/** Width for small avatar */
 	--pf-c-avatar--m-sm--Width: 1.5rem;
+	/** Height for small avatar */
 	--pf-c-avatar--m-sm--Height: 1.5rem;
+	/** Width for medium avatar */
 	--pf-c-avatar--m-md--Width: 2.25rem;
+	/** Height for medium avatar */
 	--pf-c-avatar--m-md--Height: 2.25rem;
+	/** Width for large avatar */
 	--pf-c-avatar--m-lg--Width: 4.5rem;
+	/** Height for large avatar */
 	--pf-c-avatar--m-lg--Height: 4.5rem;
+	/** Width for extra large avatar */
 	--pf-c-avatar--m-xl--Width: 8rem;
+	/** Height for extra large avatar */
 	--pf-c-avatar--m-xl--Height: 8rem;
 	--pf-c-avatar--m-light--BorderColor: var(--pf-global--BorderColor--dark-100, #d2d2d2);
 	--pf-c-avatar--m-light--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** Border color for dark avatar */
 	--pf-c-avatar--m-dark--BorderColor: var(--pf-global--palette--black-700, #4f5255);
 	--pf-c-avatar--m-dark--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
 	width: var(--pf-c-avatar--Width);

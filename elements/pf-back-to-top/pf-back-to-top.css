@@ -1,18 +1,27 @@
 :host {
   display: inline-block;
   position: absolute;
+  /** Right position for back to top */
   right: var(--pf-c-back-to-top--Right, var(--pf-global--spacer--2xl, 3rem));
+  /** Bottom position for back to top */
   bottom: var(--pf-c-back-to-top--Bottom, var(--pf-global--spacer--lg, 1.5rem));
 }
 
 [part="trigger"] {
+  /** Box shadow for back to top button */
   box-shadow: var(--pf-c-back-to-top--c-button--BoxShadow, var(--pf-global--BoxShadow--lg-bottom, 0 0.75rem 0.75rem -0.5rem rgba(3, 3, 3, 0.18)));
 
+  /** Font size for back to top button */
   --pf-c-button--FontSize: var(--pf-c-back-to-top--c-button--FontSize, var(--pf-global--FontSize--xs, 0.75rem));
+  /** Border radius for back to top button */
   --pf-c-button--BorderRadius: var(--pf-c-back-to-top--c-button--BorderRadius,  var(--pf-global--BorderRadius--lg, 30em));
+  /** Top padding for back to top button */
   --pf-c-button--PaddingTop: var(--pf-c-back-to-top--c-button--PaddingTop, var(--pf-global--spacer--xs, 0.25rem));
+  /** Right padding for back to top button */
   --pf-c-button--PaddingRight: var(--pf-c-back-to-top--c-button--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
+  /** Bottom padding for back to top button */
   --pf-c-button--PaddingBottom: var(--pf-c-back-to-top--c-button--PaddingBottom, var(--pf-global--spacer--xs, 0.25rem));
+  /** Left padding for back to top button */
   --pf-c-button--PaddingLeft: var(--pf-c-back-to-top--c-button--PaddingLeft, var(--pf-global--spacer--sm, 0.5rem));
 }
 
@@ -20,12 +29,15 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /** Primary color for back to top button */
   color: var(--pf-c-button--m-primary--Color, var(--pf-global--Color--light-100, #fff));
+  /** Primary background color for back to top button */
   background-color: var(--pf-c-button--m-primary--BackgroundColor, var(--pf-global--primary-color--100, #06c));
   text-decoration: none;
   font-size: var(--pf-c-button--FontSize);
   padding: var(--pf-c-button--PaddingTop) var(--pf-c-button--PaddingRight) var(--pf-c-button--PaddingBottom) var(--pf-c-button--PaddingLeft);
   border-radius: var(--pf-c-button--BorderRadius);
+  /** End icon margin left for back to top button */
   gap: var(--pf-c-button__icon--m-end--MarginLeft, var(--pf-global--spacer--xs, 0.25rem));
 }
 

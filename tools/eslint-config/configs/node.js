@@ -14,7 +14,6 @@ export default [
       'rollup.config.?([cm])js',
       'web-*.config.?([cm])js',
       'workbox-config.?([cm])js',
-      'custom-elements-manifest.config.js',
       'scripts/build.js',
     ],
     languageOptions: {

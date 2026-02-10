@@ -5,6 +5,5 @@ module.exports = {
     data: 'demos',
     alias: 'demo',
     size: 1,
-    before: xs => xs.filter(x => x.permalink),
   },
 };

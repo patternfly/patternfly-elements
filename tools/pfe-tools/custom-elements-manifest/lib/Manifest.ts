@@ -16,7 +16,7 @@ import type {
   Slot,
 } from 'custom-elements-manifest/schema';
 
-import { join, normalize } from 'node:path';
+import path, { join, normalize } from 'node:path';
 import { readFileSync } from 'node:fs';
 
 import { getAllPackages } from './get-all-packages.js';
@@ -314,10 +314,15 @@ export class Manifest {
       // strict removes all special characters from slug
       slug = slugify(slug, { strict: true, lower: true });
       const primaryElementName = deslugify(slug, options.rootDir);
-      const filePath = demo.source?.href.replace(options.sourceControlURLPrefix, `${options.rootDir}/`) ?? '';
-      const [last = ''] = filePath.split('/').reverse();
+      const filePath = path.normalize(
+        path.posix.join(
+          options.rootDir,
+          options.elementsDir,
+          decodeURIComponent(demo.source?.href.replace(options.sourceControlURLPrefix, '') ?? ''),
+        ));
+      const [last = ''] = filePath.split(path.sep).reverse();
       const filename = last.replace('.html', '');
-      const isMainElementDemo = this.getTagNames().includes(filename);
+      const isMainElementDemo = filename === 'index';
       const title = isMainElementDemo ? options.aliases[tagName] ?? prettyTag(tagName) : last
           .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
           .replace(/-/g, ' ')

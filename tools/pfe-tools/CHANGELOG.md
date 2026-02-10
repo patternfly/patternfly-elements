@@ -1,5 +1,45 @@
 # @patternfly/pfe-tools
 
+## 6.0.1
+### Patch Changes
+
+- 135ecf6: React Wrappers Generator: skip module that have no exports
+
+## 6.0.0
+### Major Changes
+
+- a4dee0c: Require node >= 22
+
+## 5.0.5
+### Patch Changes
+
+- a13e259: Update dependencies
+
+## 5.0.4
+### Patch Changes
+
+- f35d4fa: Adjust dev server for new cem output
+
+## 5.0.3
+### Patch Changes
+
+- b2747c0: Dev Server: trailing slashes for demo paths
+
+## 5.0.2
+### Patch Changes
+
+- 9066f4a: Fix the manifest helper's demo `filePath` field.
+
+## 5.0.1
+### Patch Changes
+
+- 0b2d895: Restored `custom-elements-manifest/custom-elements-manifest.js` export, which was mistakenly removed
+
+## 5.0.0
+### Major Changes
+
+- 2cf37ca: Removes the (previously deprecated) `@custom-elements-manifest/analyzer` config. Instead, use [`@pwrs/cem`](https://bennypowers.dev/cem). See PR [#2912](https://github.com/patternfly/patternfly-elements/pull/2912/files) for an example of how to migrate an npm monorepo.
+
 ## 4.0.3
 ### Patch Changes
 

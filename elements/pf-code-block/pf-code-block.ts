@@ -6,24 +6,9 @@ import styles from './pf-code-block.css';
 
 /**
  * A **code block** is a component that contains 2 or more lines of read-only code. The code in a code block can be copied to the clipboard.
- * @slot code
- *       The slot to put the code in
- * @slot expandable-code
- *       The slot to put the code in that should be revealed when the "Show more" button is
- *       clicked to expand the code-block
- * @slot actions
- *       Contains the actions for the code-block. For example, copy to clipboard.
+ * @alias Code Block
  * @attr {boolean} [expanded=false]
  *       Indicates if the code-block has been expanded
- * @cssprop {<color>} [--pf-c-code-block--BackgroundColor=#f0f0f0]
- * @cssprop {<length>} [--pf-c-code-block__header--BorderBottomWidth=1px]
- * @cssprop {<color>} [--pf-c-code-block__header--BorderBottomColor=#d2d2d2]
- * @cssprop {<length>} [--pf-c-code-block__content--PaddingTop=1rem]
- * @cssprop {<length>} [--pf-c-code-block__content--PaddingRight=1rem]
- * @cssprop {<length>} [--pf-c-code-block__content--PaddingBottom=1rem]
- * @cssprop {<length>} [--pf-c-code-block__content--PaddingLeft=1rem]
- * @cssprop {<length>} [--pf-c-code-block__pre--FontSize=0.875rem]
- * @cssprop {<string>} [--pf-c-code-block__pre--FontFamily="Liberation Mono", consolas, "SFMono-Regular", menlo, monaco, "Courier New", monospace]
  */
 
 function dedent(str: string): string {
@@ -58,6 +43,7 @@ export class PfCodeBlock extends LitElement {
     return html`
       <div id="header">
         <div id="actions">
+          <!-- Contains the actions for the code-block. For example, copy to clipboard. -->
           <slot name="actions"></slot>
         </div>
       </div>

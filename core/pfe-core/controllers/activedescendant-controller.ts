@@ -134,7 +134,10 @@ export class ActivedescendantController<
     super.atFocusedItemIndex = index;
     const item = this._items.at(this.atFocusedItemIndex);
     for (const _item of this.items) {
-      this.options.setItemActive?.(_item, _item === item);
+      const isActive = _item === item;
+      // Map clone back to original item for setItemActive callback
+      const originalItem = this.#shadowToLightMap.get(_item) ?? _item;
+      this.options.setItemActive?.(originalItem, isActive);
     }
     const container = this.options.getActiveDescendantContainer();
     if (!ActivedescendantController.supportsCrossRootActiveDescendant) {
@@ -150,6 +153,12 @@ export class ActivedescendantController<
   }
 
   protected set controlsElements(elements: HTMLElement[]) {
+    // Avoid removing/re-adding listeners if elements haven't changed
+    // This prevents breaking event listeners during active event dispatch
+    if (elements.length === this.#controlsElements.length
+        && elements.every((el, i) => el === this.#controlsElements[i])) {
+      return;
+    }
     for (const old of this.#controlsElements) {
       old?.removeEventListener('keydown', this.onKeydown);
     }
@@ -157,6 +166,22 @@ export class ActivedescendantController<
     for (const element of this.#controlsElements) {
       element.addEventListener('keydown', this.onKeydown);
     }
+  }
+
+  /**
+   * Check the source item's focusable state, not the clone's.
+   * This is needed because filtering sets `hidden` on the light DOM item,
+   * and the MutationObserver sync to clones is asynchronous.
+   */
+  override get atFocusableItems(): Item[] {
+    return this._items.filter(item => {
+      // Map clone to source item to check actual hidden state
+      const sourceItem = this.#shadowToLightMap.get(item) ?? item;
+      return !!sourceItem
+          && sourceItem.ariaHidden !== 'true'
+          && !sourceItem.hasAttribute('inert')
+          && !sourceItem.hasAttribute('hidden');
+    });
   }
 
   /** All items */
@@ -195,6 +220,11 @@ export class ActivedescendantController<
           this.#shadowToLightMap.set(item, item);
           return item;
         } else {
+          // Reuse existing clone if available to maintain stable IDs
+          const existingClone = this.#lightToShadowMap.get(item);
+          if (existingClone) {
+            return existingClone;
+          }
           const clone = item.cloneNode(true) as Item;
           clone.id = getRandomId();
           this.#lightToShadowMap.set(item, clone);
@@ -214,6 +244,7 @@ export class ActivedescendantController<
     protected options: ActivedescendantControllerOptions<Item>,
   ) {
     super(host, options);
+    this.initItems();
     this.options.getItemValue ??= function(this: Item) {
       return (this as unknown as HTMLOptionElement).value;
     };
@@ -236,7 +267,8 @@ export class ActivedescendantController<
     }
   };
 
-  protected override initItems(): void {
+  /** @internal */
+  override initItems(): void {
     this.#attrMO.disconnect();
     super.initItems();
     this.controlsElements = this.options.getControlsElements?.() ?? [];

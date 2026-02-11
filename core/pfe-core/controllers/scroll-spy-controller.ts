@@ -66,6 +66,8 @@ export class ScrollSpyController implements ReactiveController {
   /** Has the intersection observer found an element? */
   #intersected = false;
 
+  #destinationTarget: Element | null = null;
+
   #root: ScrollSpyControllerOptions['root'];
 
   #rootMargin?: string;
@@ -201,6 +203,12 @@ export class ScrollSpyController implements ReactiveController {
   }
 
   async #onIo(entries: IntersectionObserverEntry[]) {
+    if (this.#force && this.#destinationTarget) {
+      if (entries.some(e => e.target === this.#destinationTarget && e.isIntersecting)) {
+        this.#force = false;
+        this.#destinationTarget = null;
+      }
+    }
     if (!this.#force) {
       for (const { target, boundingClientRect, intersectionRect } of entries) {
         const selector = `:is(${this.#tagNames.join(',')})[href="#${target.id}"]`;
@@ -244,6 +252,7 @@ export class ScrollSpyController implements ReactiveController {
   public async setActive(link: EventTarget | null): Promise<void> {
     this.#force = true;
     this.#setActive(link);
+    this.#destinationTarget = this.#linkTargetMap.get(link as Element) ?? null;
     let sawActive = false;
     for (const child of this.#linkChildren) {
       this.#markPassed(child, !sawActive);
@@ -251,7 +260,5 @@ export class ScrollSpyController implements ReactiveController {
         sawActive = true;
       }
     }
-    await this.#nextIntersection();
-    this.#force = false;
   }
 }

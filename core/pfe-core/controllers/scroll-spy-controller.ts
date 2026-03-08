@@ -63,6 +63,12 @@ export class ScrollSpyController implements ReactiveController {
   /** Ignore intersections? */
   #force = false;
 
+  /** AbortController to cancel previous force-release listeners */
+  #forceAbort?: AbortController;
+
+  /** Timeout handle for force-release safety valve */
+  #forceTimeout?: ReturnType<typeof setTimeout>;
+
   /** Has the intersection observer found an element? */
   #intersected = false;
 
@@ -144,9 +150,22 @@ export class ScrollSpyController implements ReactiveController {
   hostDisconnected(): void {
     ScrollSpyController.#instances.delete(this);
     this.#io?.disconnect();
+    this.#releaseForce();
   }
 
   #initializing = true;
+
+  /** Cancel force mode and clean up associated listeners */
+  #releaseForce() {
+    if (!this.#force) {
+      return;
+    }
+    this.#force = false;
+    this.#forceAbort?.abort();
+    this.#forceAbort = undefined;
+    clearTimeout(this.#forceTimeout);
+    this.#forceTimeout = undefined;
+  }
 
   async #initIo() {
     const rootNode = this.#getRootNode();
@@ -193,8 +212,8 @@ export class ScrollSpyController implements ReactiveController {
 
   async #nextIntersection() {
     this.#intersected = false;
-    // safeguard the loop
-    setTimeout(() => this.#intersected = false, 3000);
+    // safeguard: break the loop after 3s even if no intersection fires
+    setTimeout(() => this.#intersected = true, 3000);
     while (!this.#intersected) {
       await new Promise(requestAnimationFrame);
     }
@@ -202,16 +221,24 @@ export class ScrollSpyController implements ReactiveController {
 
   async #onIo(entries: IntersectionObserverEntry[]) {
     if (!this.#force) {
-      for (const { target, boundingClientRect, intersectionRect } of entries) {
+      for (const entry of entries) {
+        const { target, boundingClientRect } = entry;
         const selector = `:is(${this.#tagNames.join(',')})[href="#${target.id}"]`;
         const link = this.host.querySelector(selector);
         if (link) {
-          this.#markPassed(link, boundingClientRect.top < intersectionRect.top);
+          // Mark as passed if the element's top has reached the root's top edge.
+          // Using rootBounds (not intersectionRect) so that elements exactly AT the
+          // viewport top are correctly considered "passed" (the current section).
+          const rootTop = entry.rootBounds?.top ?? 0;
+          this.#markPassed(link, boundingClientRect.top <= rootTop + 2);
         }
       }
-      const link = [...this.#passedLinks];
-      const last = link.at(-1);
-      this.#setActive(last ?? this.#linkChildren.at(0));
+      // Sort passed links by DOM order rather than Set insertion order
+      const linkOrder = this.#linkChildren;
+      const passed = [...this.#passedLinks]
+          .sort((a, b) => linkOrder.indexOf(a) - linkOrder.indexOf(b));
+      const last = passed.at(-1);
+      this.#setActive(last ?? linkOrder.at(0));
     }
     this.#intersected = true;
     this.#intersectingTargets.clear();
@@ -242,8 +269,13 @@ export class ScrollSpyController implements ReactiveController {
    * @param link usually an `<a>`
    */
   public async setActive(link: EventTarget | null): Promise<void> {
+    // Cancel any previous programmatic scroll's force state
+    this.#forceAbort?.abort();
+    clearTimeout(this.#forceTimeout);
+
     this.#force = true;
     this.#setActive(link);
+
     let sawActive = false;
     for (const child of this.#linkChildren) {
       this.#markPassed(child, !sawActive);
@@ -251,7 +283,12 @@ export class ScrollSpyController implements ReactiveController {
         sawActive = true;
       }
     }
-    await this.#nextIntersection();
-    this.#force = false;
+
+    // Force is released when the scroll completes (scrollend event),
+    // or after a 3-second safety timeout
+    this.#forceAbort = new AbortController();
+    const { signal } = this.#forceAbort;
+    addEventListener('scrollend', () => this.#releaseForce(), { once: true, signal });
+    this.#forceTimeout = setTimeout(() => this.#releaseForce(), 3000);
   }
 }

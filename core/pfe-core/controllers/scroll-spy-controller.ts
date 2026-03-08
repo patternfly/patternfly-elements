@@ -213,10 +213,11 @@ export class ScrollSpyController implements ReactiveController {
   async #nextIntersection() {
     this.#intersected = false;
     // safeguard: break the loop after 3s even if no intersection fires
-    setTimeout(() => this.#intersected = true, 3000);
+    const timer = setTimeout(() => this.#intersected = true, 3000);
     while (!this.#intersected) {
       await new Promise(requestAnimationFrame);
     }
+    clearTimeout(timer);
   }
 
   async #onIo(entries: IntersectionObserverEntry[]) {

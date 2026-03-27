@@ -8,6 +8,8 @@ import { classMap } from 'lit/directives/class-map.js';
 import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
+import { isServer } from 'lit';
+
 import { PfLabel } from '../pf-label/pf-label.js';
 
 import styles from './pf-label-group.css';
@@ -91,7 +93,10 @@ export class PfLabelGroup extends LitElement {
 
   @queryAssignedNodes({ slot: 'category', flatten: true }) private _categorySlotted?: Node[];
 
-  get #labels(): NodeListOf<PfLabel> {
+  get #labels(): NodeListOf<PfLabel> | PfLabel[] {
+    if (isServer) {
+      return [] as PfLabel[];
+    }
     return this.querySelectorAll<PfLabel>('pf-label:not([slot]):not([overflow-label])');
   }
 

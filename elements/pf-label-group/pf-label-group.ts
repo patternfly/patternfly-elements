@@ -1,14 +1,13 @@
-import { LitElement, html, type TemplateResult } from 'lit';
+import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { state } from 'lit/decorators/state.js';
 import { query } from 'lit/decorators/query.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
-
-import { isServer } from 'lit';
 
 import { PfLabel } from '../pf-label/pf-label.js';
 
@@ -87,6 +86,9 @@ export class PfLabelGroup extends LitElement {
   /** Whether the label group can be closed. */
   @property({ reflect: true, type: Boolean }) closeable = false;
 
+  /** Label count tracked during SSR via child events. */
+  @state() private _ssrLabelCount = 0;
+
   @query('#overflow') private _overflowLabel?: PfLabel;
 
   @query('#close-button') private _button?: HTMLButtonElement;
@@ -100,12 +102,19 @@ export class PfLabelGroup extends LitElement {
     return this.querySelectorAll<PfLabel>('pf-label:not([slot]):not([overflow-label])');
   }
 
+  get #labelCount(): number {
+    if (isServer) {
+      return this._ssrLabelCount;
+    }
+    return this.#labels.length;
+  }
+
   get #hasCategory(): boolean {
     return (this._categorySlotted ?? []).length > 0;
   }
 
   get #remaining(): number {
-    return this.#labels.length - this.numLabels;
+    return this.#labelCount - this.numLabels;
   }
 
   #tabindex = RovingTabindexController.of(this, {
@@ -123,10 +132,11 @@ export class PfLabelGroup extends LitElement {
   constructor() {
     super();
     this.addEventListener('remove', this.#onRemove);
+    this.addEventListener('ssr:label', this.#onSsrLabel);
   }
 
   override render(): TemplateResult<1> {
-    const empty = this.#labels.length <= 0;
+    const empty = this.#labelCount <= 0;
     return html`
       <div id="outer"
            class="${classMap({ 'has-category': this.#hasCategory, empty })}"
@@ -189,6 +199,10 @@ export class PfLabelGroup extends LitElement {
     if (event instanceof PfLabelGroupRemoveEvent) {
       this.remove();
     }
+  }
+
+  #onSsrLabel() {
+    this._ssrLabelCount++;
   }
 
   #updateOverflow() {

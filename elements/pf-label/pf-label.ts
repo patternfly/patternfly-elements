@@ -1,4 +1,4 @@
-import { LitElement, html, type TemplateResult } from 'lit';
+import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -70,6 +70,13 @@ export class PfLabel extends LitElement {
 
   /** Represents the state of the anonymous and icon slots */
   #slots = new SlotController(this, null, 'icon');
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    if (isServer) {
+      this.dispatchEvent(new Event('ssr:label', { bubbles: true }));
+    }
+  }
 
   override render(): TemplateResult<1> {
     const { compact, truncated } = this;

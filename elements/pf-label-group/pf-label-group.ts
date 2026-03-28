@@ -2,7 +2,6 @@ import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { state } from 'lit/decorators/state.js';
-import { query } from 'lit/decorators/query.js';
 import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { classMap } from 'lit/directives/class-map.js';
 
@@ -89,9 +88,13 @@ export class PfLabelGroup extends LitElement {
   /** Label count tracked during SSR via child events. */
   @state() private _ssrLabelCount = 0;
 
-  @query('#overflow') private _overflowLabel?: PfLabel;
+  get #overflowLabel(): PfLabel | null {
+    return this.renderRoot?.querySelector<PfLabel>('#overflow') ?? null;
+  }
 
-  @query('#close-button') private _button?: HTMLButtonElement;
+  get #closeButton(): HTMLButtonElement | null {
+    return this.renderRoot?.querySelector<HTMLButtonElement>('#close-button') ?? null;
+  }
 
   @queryAssignedNodes({ slot: 'category', flatten: true }) private _categorySlotted?: Node[];
 
@@ -124,8 +127,8 @@ export class PfLabelGroup extends LitElement {
         0,
         this.open ? this.#labels.length : Math.min(this.#labels.length, this.numLabels),
       ),
-      this._overflowLabel,
-      this._button,
+      this.#overflowLabel,
+      this.#closeButton,
     ].filter(x => !!x),
   });
 
@@ -185,8 +188,8 @@ export class PfLabelGroup extends LitElement {
     this.open = !this.open;
     await this.updateComplete;
     this.labelsChanged();
-    if (this._overflowLabel) {
-      this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(this._overflowLabel);
+    if (this.#overflowLabel) {
+      this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(this.#overflowLabel);
     }
     this.dispatchEvent(new PfLabelGroupExpandEvent());
   }

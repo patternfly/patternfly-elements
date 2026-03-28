@@ -1,7 +1,6 @@
 import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { state } from 'lit/decorators/state.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { observes } from '@patternfly/pfe-core/decorators/observes.js';
@@ -85,7 +84,7 @@ export class PfLabelGroup extends LitElement {
   @property({ reflect: true, type: Boolean }) closeable = false;
 
   /** Label count tracked during SSR via child events. */
-  @state() private _ssrLabelCount = 0;
+  _ssrLabelCount = 0;
 
   get #overflowLabel(): PfLabel | null {
     return this.renderRoot?.querySelector?.<PfLabel>('#overflow') ?? null;
@@ -138,7 +137,7 @@ export class PfLabelGroup extends LitElement {
   constructor() {
     super();
     this.addEventListener('remove', this.#onRemove);
-    this.addEventListener('ssr:label', this.#onSsrLabel);
+    this.addEventListener('ssr:label', () => this._ssrLabelCount++);
   }
 
   override render(): TemplateResult<1> {
@@ -205,10 +204,6 @@ export class PfLabelGroup extends LitElement {
     if (event instanceof PfLabelGroupRemoveEvent) {
       this.remove();
     }
-  }
-
-  #onSsrLabel() {
-    this._ssrLabelCount++;
   }
 
   #updateOverflow() {

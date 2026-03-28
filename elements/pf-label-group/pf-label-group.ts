@@ -2,7 +2,6 @@ import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { state } from 'lit/decorators/state.js';
-import { queryAssignedNodes } from 'lit/decorators/query-assigned-nodes.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { observes } from '@patternfly/pfe-core/decorators/observes.js';
@@ -89,14 +88,18 @@ export class PfLabelGroup extends LitElement {
   @state() private _ssrLabelCount = 0;
 
   get #overflowLabel(): PfLabel | null {
-    return this.renderRoot?.querySelector<PfLabel>('#overflow') ?? null;
+    return this.renderRoot?.querySelector?.<PfLabel>('#overflow') ?? null;
   }
 
   get #closeButton(): HTMLButtonElement | null {
-    return this.renderRoot?.querySelector<HTMLButtonElement>('#close-button') ?? null;
+    return this.renderRoot?.querySelector?.<HTMLButtonElement>('#close-button') ?? null;
   }
 
-  @queryAssignedNodes({ slot: 'category', flatten: true }) private _categorySlotted?: Node[];
+  get #categorySlotted(): Node[] {
+    const slot = this.renderRoot
+        ?.querySelector?.<HTMLSlotElement>('slot[name="category"]');
+    return slot?.assignedNodes({ flatten: true }) ?? [];
+  }
 
   get #labels(): NodeListOf<PfLabel> | PfLabel[] {
     if (isServer) {
@@ -113,7 +116,7 @@ export class PfLabelGroup extends LitElement {
   }
 
   get #hasCategory(): boolean {
-    return (this._categorySlotted ?? []).length > 0;
+    return this.#categorySlotted.length > 0;
   }
 
   get #remaining(): number {

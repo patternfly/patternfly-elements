@@ -14,7 +14,7 @@ import { provide } from '@lit/context';
 export class PfThead extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
-  @provide({ context: thRoleContext }) private thRowContext = 'colheader';
+  @provide({ context: thRoleContext }) private thRowContext = 'columnheader';
 
   connectedCallback(): void {
     super.connectedCallback();

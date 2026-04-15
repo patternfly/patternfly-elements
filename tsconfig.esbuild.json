@@ -9,7 +9,16 @@
     "**/demo/*.d.ts",
     "**/_temp/**/*",
     "**/*.story.*",
-    "**/test/*_e2e*"
+    "**/test/*_e2e*",
+    "elements/**/*.js",
+    "elements/**/*.d.ts",
+    "elements/**/*.js.map",
+    "core/**/*.js",
+    "core/**/*.d.ts",
+    "core/**/*.js.map",
+    "tools/**/*.js",
+    "tools/**/*.d.ts",
+    "tools/**/*.js.map"
   ],
   "compilerOptions": {
     "allowJs": true,

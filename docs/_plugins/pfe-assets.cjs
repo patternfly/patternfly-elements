@@ -85,6 +85,5 @@ module.exports = {
     // The demo files are written primarily for the dev SPA (`npm start`),
     // so here we transform the paths found in those files to match the docs site's file structure
     eleventyConfig.addTransform('demo-paths', demoPaths);
-
   },
 };

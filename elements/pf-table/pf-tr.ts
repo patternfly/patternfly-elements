@@ -109,7 +109,9 @@ export class PfTr extends LitElement {
         <pf-td id="toggle-cell">
           <pf-button id="toggle-button"
                      aria-expanded=${String(this.expanded) as 'true' | 'false'}
+                     aria-controls=${ifDefined(this.expanded ? 'expansion' : undefined)}
                      plain
+                     label="Details"
                      @click=${this.#onClick}>
             <pf-icon id="toggle-icon"
                      icon="angle-right"

@@ -1,0 +1,4 @@
+# Override .gitignore so that compiled .js and .d.ts files
+# are included in the published package via the "files" field
+# in package.json. Without this, newer npm versions apply
+# .gitignore patterns as a filter even when "files" is set.

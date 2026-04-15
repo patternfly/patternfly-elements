@@ -7,8 +7,6 @@ import {
 export class SlotController implements SlotControllerPublicAPI {
   public static default = Symbol('default slot') satisfies symbol as symbol;
 
-  /** @deprecated use `default` */
-  public static anonymous: symbol = this.default;
 
   static attribute = 'ssr-hint-has-slotted' as const;
 

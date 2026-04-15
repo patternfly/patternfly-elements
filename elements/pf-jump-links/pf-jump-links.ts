@@ -35,8 +35,8 @@ export class PfJumpLinks extends LitElement {
   /** Offset to add to the scroll position, potentially for a masthead which content scrolls under. */
   @property({ type: Number }) offset = 0;
 
-  /** Label to add to nav element. */
-  @property() label?: string;
+  /** Label to add to nav element. Required for accessibility. */
+  @property({ reflect: true }) label = 'Jump to section';
 
   #kids = this.querySelectorAll?.<LitElement>(':is(pf-jump-links-item, pf-jump-links-list)');
 
@@ -84,11 +84,11 @@ export class PfJumpLinks extends LitElement {
 
   render(): TemplateResult<1> {
     return html`
-      <nav id="container">${this.expandable ? html`
+      <nav id="container" aria-labelledby="label">${this.expandable ? html`
         <details ?open="${this.expanded}" @toggle="${this.#onToggle}">
           <summary>
             <pf-icon icon="chevron-right"></pf-icon>
-            <span id="label">${this.label}</span>
+            <span part="label" id="label">${this.label}</span>
           </summary>
           <div role="listbox" aria-labelledby="label">
             <!-- Place pf-jump-links-items here -->

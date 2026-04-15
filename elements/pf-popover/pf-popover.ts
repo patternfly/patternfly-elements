@@ -351,6 +351,9 @@ export class PfPopover extends LitElement {
   };
 
   #outsideClick(event: MouseEvent) {
+    if (this.#hideDialog) {
+      return;
+    }
     const path = event.composedPath();
     if (!path.includes(this) && !path.includes(this.#referenceTrigger as HTMLElement)) {
       this.hide();

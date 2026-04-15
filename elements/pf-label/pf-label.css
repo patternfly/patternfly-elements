@@ -240,6 +240,23 @@ pf-button {
     margin-left: var(--pf-c-label__c-button--MarginLeft, 0.25rem);
 }
 
+#link {
+  color: inherit;
+  text-decoration: underline;
+}
+
+#link:hover {
+  text-decoration: none;
+}
+
+.link {
+  /** link label background color */
+  --pf-c-label--BackgroundColor: transparent;
+  /** link label border width */
+  --pf-c-label__content--before--BorderWidth: 0;
+  cursor: pointer;
+}
+
 svg {
   vertical-align:-0.125em;
   fill: currentColor;

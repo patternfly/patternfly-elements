@@ -43,6 +43,27 @@ describe('<pf-switch>', function() {
     });
   });
 
+  describe('with accessible-label attribute', function() {
+    let element: PfSwitch;
+    let snapshot: A11yTreeSnapshot;
+    beforeEach(async function() {
+      element = await createFixture<PfSwitch>(html`
+        <pf-switch accessible-label="Dark Mode"></pf-switch>
+      `);
+      snapshot = await a11ySnapshot({ selector: 'pf-switch' });
+    });
+    it('has an accessible name from accessible-label', function() {
+      expect(snapshot.name).to.equal('Dark Mode');
+    });
+    it('keeps the same accessible name regardless of checked state', async function() {
+      element.click();
+      await element.updateComplete;
+      await nextFrame();
+      snapshot = await a11ySnapshot({ selector: 'pf-switch' });
+      expect(snapshot.name).to.equal('Dark Mode');
+    });
+  });
+
   describe('with labels for on and off state', function() {
     let element: PfSwitch;
     let snapshot: A11yTreeSnapshot;

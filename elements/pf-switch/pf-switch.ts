@@ -24,8 +24,8 @@ export class PfSwitch extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'switch' });
 
-  /** Accessible label text for the switch */
-  @property({ reflect: true }) label?: string;
+  /** Accessible label for the switch when there is no associated `<label>` element. */
+  @property({ reflect: true, attribute: 'accessible-label' }) accessibleLabel?: string;
 
   /** Flag to show if the switch has a check icon. */
   @property({ reflect: true, type: Boolean, attribute: 'show-check-icon' }) showCheckIcon = false;
@@ -57,6 +57,7 @@ export class PfSwitch extends LitElement {
   override willUpdate(): void {
     this.#internals.ariaChecked = String(!!this.checked);
     this.#internals.ariaDisabled = String(!!this.disabled);
+    this.#internals.ariaLabel = this.accessibleLabel || null;
   }
 
   override render(): TemplateResult<1> {

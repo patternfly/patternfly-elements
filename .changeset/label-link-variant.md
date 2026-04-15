@@ -2,4 +2,6 @@
 "@patternfly/elements": minor
 ---
 
-`<pf-label>`: added the `href` attribute to render the label as a clickable link.
+`pf-label`: added link variant. Set the `href` attribute to render the
+label text as a clickable link. On hover, the label border thickens
+and changes color to indicate interactivity.

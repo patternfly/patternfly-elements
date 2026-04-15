@@ -242,19 +242,21 @@ pf-button {
 
 #link {
   color: inherit;
-  text-decoration: underline;
-}
-
-#link:hover {
   text-decoration: none;
+  cursor: pointer;
 }
 
-.link {
-  /** link label background color */
-  --pf-c-label--BackgroundColor: transparent;
-  /** link label border width */
-  --pf-c-label__content--before--BorderWidth: 0;
+:host(:hover) #link ~ *,
+:host(:focus-within) #link ~ *,
+#link:hover,
+#link:focus {
   cursor: pointer;
+}
+
+:host(:hover) #container:has(#link)::before,
+:host(:focus-within) #container:has(#link)::before {
+  border-width: var(--pf-c-label__content--link--hover--before--BorderWidth, 2px);
+  border-color: var(--pf-c-label__content--link--hover--before--BorderColor, var(--pf-global--primary-color--100, #06c));
 }
 
 svg {

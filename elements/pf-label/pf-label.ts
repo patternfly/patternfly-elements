@@ -93,7 +93,6 @@ export class PfLabel extends LitElement {
               hasIcon,
               compact,
               truncated,
-              link: isLink,
               [variant ?? '']: !!variant,
               [color ?? '']: !!color })}">
         <!-- slot:

@@ -162,11 +162,6 @@ describe('<pf-label>', function() {
       expect(link.href).to.equal('https://example.com/');
     });
 
-    it('should have a transparent background', function() {
-      const container = element.shadowRoot!.querySelector('#container')!;
-      expect(getComputedStyle(container).getPropertyValue('background-color')).to.equal('rgba(0, 0, 0, 0)');
-    });
-
     it('should not render an anchor when href is not set', async function() {
       const el = await createFixture<PfLabel>(example);
       await el.updateComplete;

@@ -1,13 +1,18 @@
 :host {
+	/** BackgroundColor for the card */
 	--pf-c-card--BackgroundColor: var(--pf-global--BackgroundColor--100, #fff);
+	/** BoxShadow for the card */
 	--pf-c-card--BoxShadow: var(--pf-global--BoxShadow--sm, 0 0.0625rem 0.125rem 0 rgba(3, 3, 3, 0.12), 0 0 0.125rem 0 rgba(3, 3, 3, 0.06));
 	--pf-c-card--first-child--PaddingTop: var(--pf-global--spacer--lg, 1.5rem);
 	--pf-c-card--child--PaddingRight: var(--pf-global--spacer--lg, 1.5rem);
 	--pf-c-card--child--PaddingBottom: var(--pf-global--spacer--lg, 1.5rem);
 	--pf-c-card--child--PaddingLeft: var(--pf-global--spacer--lg, 1.5rem);
 	--pf-c-card--c-divider--child--PaddingTop: var(--pf-global--spacer--lg, 1.5rem);
+	/** FontFamily for the card title */
 	--pf-c-card__title--FontFamily: var(--pf-global--FontFamily--heading--sans-serif, "RedHatDisplay", "Overpass", overpass, helvetica, arial, sans-serif);
+	/** FontSize for the card title */
 	--pf-c-card__title--FontSize: var(--pf-global--FontSize--md, 1rem);
+	/** FontWeight for the card title */
 	--pf-c-card__title--FontWeight: var(--pf-global--FontWeight--bold, 700);
 	--pf-c-card__title--not--last-child--PaddingBottom: var(--pf-global--spacer--md, 1rem);
 	--pf-c-card__body--FontSize: var(--pf-global--FontSize--md, 1rem);
@@ -61,26 +66,45 @@
 	--pf-c-card--m-non-selectable-raised--before--BackgroundColor: var(--pf-global--disabled-color--200, #d2d2d2);
 	--pf-c-card--m-non-selectable-raised--before--ScaleY: 2;
 	--pf-c-card--m-flat--m-non-selectable-raised--before--BorderColor: var(--pf-global--disabled-color--200, #d2d2d2);
+	/** FontSize for the card body in compact size */
 	--pf-c-card--m-compact__body--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+	/** FontSize for the card footer in compact size */
 	--pf-c-card--m-compact__footer--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+	/** PaddingTop for the first child in compact size */
 	--pf-c-card--m-compact--first-child--PaddingTop: var(--pf-global--spacer--md, 1rem);
+	/** PaddingRight for children in compact size */
 	--pf-c-card--m-compact--child--PaddingRight: var(--pf-global--spacer--md, 1rem);
+	/** PaddingBottom for children in compact size */
 	--pf-c-card--m-compact--child--PaddingBottom: var(--pf-global--spacer--md, 1rem);
+	/** PaddingLeft for children in compact size */
 	--pf-c-card--m-compact--child--PaddingLeft: var(--pf-global--spacer--md, 1rem);
 	--pf-c-card--m-compact--c-divider--child--PaddingTop: var(--pf-global--spacer--md, 1rem);
+	/** PaddingBottom for the title when not last child in compact size */
 	--pf-c-card--m-compact__title--not--last-child--PaddingBottom: var(--pf-global--spacer--sm, 0.5rem);
+	/** FontSize for the title in large size */
 	--pf-c-card--m-display-lg__title--FontSize: var(--pf-global--FontSize--xl, 1.25rem);
+	/** PaddingTop for the first child in large size */
 	--pf-c-card--m-display-lg--first-child--PaddingTop: var(--pf-global--spacer--xl, 2rem);
+	/** PaddingRight for children in large size */
 	--pf-c-card--m-display-lg--child--PaddingRight: var(--pf-global--spacer--xl, 2rem);
+	/** PaddingBottom for children in large size */
 	--pf-c-card--m-display-lg--child--PaddingBottom: var(--pf-global--spacer--xl, 2rem);
+	/** PaddingLeft for children in large size */
 	--pf-c-card--m-display-lg--child--PaddingLeft: var(--pf-global--spacer--xl, 2rem);
 	--pf-c-card--m-display-lg--c-divider--child--PaddingTop: var(--pf-global--spacer--xl, 2rem);
+	/** PaddingBottom for the title when not last child in large size */
 	--pf-c-card--m-display-lg__title--not--last-child--PaddingBottom: var(--pf-global--spacer--lg, 1.5rem);
+	/** BorderWidth for the flat variant */
 	--pf-c-card--m-flat--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** BorderColor for the flat variant */
 	--pf-c-card--m-flat--BorderColor: var(--pf-global--BorderColor--100, #d2d2d2);
+	/** BorderRadius for the rounded variant */
 	--pf-c-card--m-rounded--BorderRadius: var(--pf-global--BorderRadius--sm, 3px);
+	/** Height for the full height variant */
 	--pf-c-card--m-full-height--Height: 100%;
+	/** BoxShadow for the plain variant */
 	--pf-c-card--m-plain--BoxShadow: none;
+	/** BackgroundColor for the plain variant */
 	--pf-c-card--m-plain--BackgroundColor: transparent;
 	--pf-c-card__header--m-toggle-right--toggle--MarginRight: calc(var(--pf-global--spacer--form-element, 0.375rem) * -1);
 	--pf-c-card__header--m-toggle-right--toggle--MarginLeft: var(--pf-global--spacer--xs, 0.25rem);

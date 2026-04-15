@@ -1,8 +1,7 @@
 // @ts-check
-const { join } = require('node:path');
+const { join, sep } = require('node:path');
 const { existsSync } = require('node:fs');
-const { glob } = require('glob');
-const { stat, rm } = require('node:fs/promises');
+const { glob, stat, rm } = require('node:fs/promises');
 
 const isDir = dir => stat(dir).then(x => x.isDirectory, () => false);
 
@@ -62,8 +61,8 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
     const { getPfeConfig } = await import('../../config.js');
     const options = { ...getPfeConfig(), ...pluginOpts };
     if (runMode === 'build') {
-      const files = await glob(`${dir.output}/${options.site.componentSubpath}/*/demo/*`);
-      const htmls = files.filter(x => x.endsWith('.html') && !x.endsWith('/index.html'));
+      const files = await Array.fromAsync(glob(`${dir.output}/${options.site.componentSubpath}/*/demo/*`));
+      const htmls = files.filter(x => x.endsWith('.html') && !x.endsWith(`${sep}index.html`));
       for (const file of htmls) {
         const dir = file.replace(/\.html$/, '');
         if (await isDir(dir)) {
@@ -77,7 +76,7 @@ module.exports = function configFunction(eleventyConfig, pluginOpts = {}) {
   //            components/jazz-hands/demo/special-name/index.html
   // Here, we rewrite the subresource links so they point to the right files.
   eleventyConfig.addTransform('reroute-special-demo-subresources', function(content) {
-    if (this.inputPath.endsWith('/demos.html')) {
+    if (this.inputPath.endsWith(`${sep}demos.html`)) {
       const [, one, , three, four] = this.outputPath.split('/');
       if (one === 'components' && three === 'demo' && four !== 'index.html') {
         const cheerio = require('cheerio');

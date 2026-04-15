@@ -12,21 +12,26 @@ svg {
 }
 
 :host([checked]) #container {
+  /** Color of the label when switch is checked */
   color: var(--pf-c-switch__input--checked__label--Color,
     var(--pf-global--Color--dark-100, #151515));
+  /** Background color of the toggle when switch is checked */
   background-color: var(--pf-c-switch__input--checked__toggle--BackgroundColor,
     var(--pf-global--primary-color--100, #06c));
 }
 
 :host([checked]) #container::before {
+  /** Translation of the toggle knob when checked */
   translate: var(--pf-c-switch__input--checked__toggle--before--TranslateX,
     calc(100% + var(--pf-c-switch__toggle-icon--Offset, 0.125rem)));
 }
 
 :host(:is(:focus,:focus-within)) #container {
+  /** Focus outline width */
   outline: var(--pf-c-switch__input--focus__toggle--OutlineWidth,
     var(--pf-global--BorderWidth--md, 2px)) solid var(--pf-c-switch__input--focus__toggle--OutlineColor,
       var(--pf-global--primary-color--100, #06c));
+  /** Focus outline offset */
   outline-offset: var(--pf-c-switch__input--focus__toggle--OutlineOffset,
     var(--pf-global--spacer--sm, 0.5rem));
 }
@@ -39,13 +44,16 @@ svg {
 :host(:disabled) #container {
   cursor: not-allowed;
 
+  /** Color of the label when switch is disabled */
   color: var(--pf-c-switch__input--disabled__label--Color,
     var(--pf-global--disabled-color--100, #6a6e73));
+  /** Background color when switch is disabled */
   background-color: var(--pf-c-switch__input--disabled__toggle--BackgroundColor,
     var(--pf-global--disabled-color--200, #d2d2d2));
 }
 
 :host(:disabled) #container::before {
+  /** Background color of the toggle knob when disabled */
   background-color: var(--pf-c-switch__input--disabled__toggle--before--BackgroundColor,
     var(--pf-global--palette--black-150, #f5f5f5));
 }
@@ -63,6 +71,7 @@ svg {
   position: relative;
   display: inline-flex;
   align-items: center;
+  /** Width of the toggle */
   width: var(--pf-c-switch__toggle--Width,
     calc(var(--pf-c-switch__toggle--Height,
       calc(var(--pf-c-switch--FontSize,
@@ -74,8 +83,10 @@ svg {
     calc(var(--pf-c-switch--FontSize,
       var(--pf-global--FontSize--md, 1rem)) * var(--pf-c-switch--LineHeight,
         var(--pf-global--LineHeight--md, 1.5))));
+  /** Background color of the toggle */
   background-color: var(--pf-c-switch__toggle--BackgroundColor,
     var(--pf-global--palette--black-500, #8a8d90));
+  /** Border radius of the toggle */
   border-radius: var(--pf-c-switch__toggle--BorderRadius,
     var(--pf-c-switch__toggle--Height, calc(var(--pf-c-switch--FontSize,
       var(--pf-global--FontSize--md, 1rem)) * var(--pf-c-switch--LineHeight,
@@ -86,6 +97,7 @@ svg {
   position: absolute;
   display: block;
   content: "";
+  /** Top position of the toggle knob */
   top: var(--pf-c-switch__toggle--before--Top,
     calc((var(--pf-c-switch__toggle--Height,
       calc(var(--pf-c-switch--FontSize,
@@ -94,6 +106,7 @@ svg {
             var(--pf-c-switch__toggle--before--Width,
               calc(var(--pf-c-switch--FontSize,
                 var(--pf-global--FontSize--md, 1rem)) - var(--pf-c-switch__toggle-icon--Offset, 0.125rem))))) / 2));
+  /** Left position of the toggle knob */
   left: var(--pf-c-switch__toggle--before--Left,
     var(--pf-c-switch__toggle--before--Top,
       calc((var(--pf-c-switch__toggle--Height,
@@ -103,30 +116,39 @@ svg {
               var(--pf-c-switch__toggle--before--Width,
                 calc(var(--pf-c-switch--FontSize,
                   var(--pf-global--FontSize--md, 1rem)) - var(--pf-c-switch__toggle-icon--Offset, 0.125rem))))) / 2)));
+  /** Width of the toggle knob */
   width: var(--pf-c-switch__toggle--before--Width,
     calc(var(--pf-c-switch--FontSize,
       var(--pf-global--FontSize--md, 1rem)) - var(--pf-c-switch__toggle-icon--Offset, 0.125rem)));
+  /** Height of the toggle knob */
   height: var(--pf-c-switch__toggle--before--Height,
     var(--pf-c-switch__toggle--before--Width,
       calc(var(--pf-c-switch--FontSize,
         var(--pf-global--FontSize--md, 1rem)) - var(--pf-c-switch__toggle-icon--Offset, 0.125rem))));
+  /** Background color of the toggle knob */
   background-color: var(--pf-c-switch__toggle--before--backgroundcolor,
     var(--pf-global--backgroundcolor--100, #fff));
+  /** Border radius of the toggle knob */
   border-radius: var(--pf-c-switch__toggle--before--BorderRadius,
     var(--pf-global--BorderRadius--lg, 30em));
+  /** Box shadow of the toggle knob */
   box-shadow: var(--pf-c-switch__toggle--before--BoxShadow,
     var(--pf-global--BoxShadow--md, 0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06)));
+  /** Transition of the toggle knob */
   transition: var(--pf-c-switch__toggle--before--Transition,
     var(--pf-c-switch__toggle--before--Transition, translate .25s ease 0s));
 }
 
 svg {
+  /** Horizontal margin of the toggle icon */
   margin-inline: var(--pf-c-switch__toggle-icon--Left,
     calc(var(--pf-c-switch--FontSize,
       var(--pf-global--FontSize--md, 1rem)) * .4));
+  /** Font size of the toggle icon */
   font-size: var(--pf-c-switch__toggle-icon--FontSize,
     calc(var(--pf-c-switch--FontSize,
       var(--pf-global--FontSize--md, 1rem)) * .625));
+  /** Color of the toggle icon */
   color: var(--pf-c-switch__toggle-icon--Color,
     var(--pf-global--Color--light-100, #fff));
 }

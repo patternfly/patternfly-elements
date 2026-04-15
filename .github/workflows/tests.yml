@@ -52,8 +52,11 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
           cache: npm
+
+      # Set up GitHub Actions caching for Wireit.
+      - uses: google/wireit@setup-github-actions-caching/v2
 
       - name: Install dependencies
         run: npm ci --prefer-offline
@@ -95,7 +98,7 @@ jobs:
     name: SSR Tests (Playwright)
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.46.1-jammy
+      image: mcr.microsoft.com/playwright:v1.48.2-noble
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -158,8 +161,8 @@ jobs:
     strategy:
       matrix:
         node:
-          - '20'
-          - '21'
+          - '22'
+          - '24'
     if: |
       github.event_name == 'workflow_dispatch'
       ||   github.event_name == 'push'
@@ -265,7 +268,7 @@ jobs:
           close-previous: true
           title: "🧪 Tests are failing on main"
           body: "It looks like the build is currently failing on the main branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."
-  
+
   build-windows:
     name: Verify that build runs on Windows
     runs-on: windows-latest
@@ -275,13 +278,13 @@ jobs:
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install dependencies
-        run: npm ci --prefer-offline
+        run: npm ci --prefer-offline --include=optional --verbose
 
       - name: Build
         id: build

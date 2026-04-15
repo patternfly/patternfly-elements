@@ -1,0 +1,50 @@
+<pf-card ssr-hint-has-slotted-default
+         ssr-hint-has-slotted="header,footer">
+  <h2 slot="header">Header</h2>
+  <p>Body</p>
+  <span slot="footer">Footer</span>
+</pf-card>
+
+<pf-card ssr-hint-has-slotted-defaul>
+  <p>Body</p>
+</pf-card>
+
+<pf-card ssr-hint-has-slotted="header">
+  <h2 slot="header">Header</h2>
+</pf-card>
+
+<pf-card ssr-hint-has-slotted-default
+         ssr-hint-has-slotted="header">
+  <h2 slot="header">Header</h2>
+  <p>Body</p>
+</pf-card>
+
+<pf-card ssr-hint-has-slotted="header,footer">
+  <h2 slot="header">Header</h2>
+  <span slot="footer">Footer</span>
+</pf-card>
+
+<pf-card ssr-hint-has-slotted-default
+         ssr-hint-has-slotted="footer">
+  <p>Body</p>
+  <span slot="footer">Footer</span>
+</pf-card>
+
+<pf-card ssr-hint-has-slotted="footer">
+  <span slot="footer">Footer</span>
+</pf-card>
+
+<style>
+  main {
+    padding: 2em;
+    background: #eeeeee;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content 1fr;
+    gap: 1em;
+  }
+
+  [data-demo] {
+    display: contents;
+  }
+</style>

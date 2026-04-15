@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: var(--pf-c-helper-text--Gap, 0.25rem);
+  font-size: var(--pf-c-helper-text--FontSize, 0.875rem);
+  color: var(--pf-c-helper-text__item-text--Color, #151515);
+  line-height: 1.4;
+}
+
+/* Color variants */
+:host([variant='indeterminate']) {
+  color: var(--pf-c-helper-text__item-text--m-indeterminate--Color, #6a6e73);
+}
+
+:host([variant='warning']) {
+  color: var(--pf-c-helper-text__item-text--m-warning--Color, #795600);
+}
+
+:host([variant='success']) {
+  color: var(--pf-c-helper-text__item-text--m-success--Color, #1e4f18);
+}
+
+:host([variant='error']) {
+  color: var(--pf-c-helper-text__item-text--m-error--Color, #a30000);
+}
+
+::slotted(ul) {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+pf-icon {
+  fill: currentColor;
+}

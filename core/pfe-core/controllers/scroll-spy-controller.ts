@@ -1,4 +1,4 @@
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
+import { isServer, type ReactiveController, type ReactiveControllerHost } from 'lit';
 
 export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
   /**
@@ -18,15 +18,41 @@ export interface ScrollSpyControllerOptions extends IntersectionObserverInit {
    * @default the host's root node
    */
   rootNode?: Node;
+
   /**
    * function to call on link children to get their URL hash (i.e. id to scroll to)
    * @default el => el.getAttribute('href');
    */
   getHash?: (el: Element) => string | null;
+
+  /**
+   * Optional callback for when an intersection occurs
+   */
+  onIntersection?(): void;
 }
 
 export class ScrollSpyController implements ReactiveController {
+  static #instances = new Set<ScrollSpyController>;
+
+  static {
+    if (!isServer) {
+      addEventListener('scroll', () => {
+        if (Math.round(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+          this.#instances.forEach(ssc => {
+            ssc.#setActive(ssc.#linkChildren.at(-1));
+          });
+        }
+      }, { passive: true });
+      addEventListener('hashchange', () => {
+        this.#instances.forEach(ssc => {
+          ssc.#activateHash();
+        });
+      });
+    }
+  }
+
   #tagNames: string[];
+
   #activeAttribute: string;
 
   #io?: IntersectionObserver;
@@ -37,19 +63,38 @@ export class ScrollSpyController implements ReactiveController {
   /** Ignore intersections? */
   #force = false;
 
+  /** AbortController to cancel previous force-release listeners */
+  #forceAbort?: AbortController;
+
+  /** Timeout handle for force-release safety valve */
+  #forceTimeout?: ReturnType<typeof setTimeout>;
+
   /** Has the intersection observer found an element? */
   #intersected = false;
 
   #root: ScrollSpyControllerOptions['root'];
+
   #rootMargin?: string;
+
   #threshold: number | number[];
 
-  #getRootNode: () => Node;
+  #intersectingTargets = new Set<Element>();
+
+  #linkTargetMap = new Map<Element, Element | null>();
+
+  #getRootNode: () => Node | null;
+
   #getHash: (el: Element) => string | null;
 
+  #onIntersection?: () => void;
+
   get #linkChildren(): Element[] {
-    return Array.from(this.host.querySelectorAll(this.#tagNames.join(',')))
-        .filter(this.#getHash);
+    if (isServer) {
+      return [];
+    } else {
+      return Array.from(this.host.querySelectorAll(this.#tagNames.join(',')))
+          .filter(this.#getHash);
+    }
   }
 
   get root(): Element | Document | null | undefined {
@@ -92,25 +137,51 @@ export class ScrollSpyController implements ReactiveController {
     this.#rootMargin = options.rootMargin;
     this.#activeAttribute = options.activeAttribute ?? 'active';
     this.#threshold = options.threshold ?? 0.85;
-    this.#getRootNode = () => options.rootNode ?? host.getRootNode();
+    this.#getRootNode = () => options.rootNode ?? host.getRootNode?.() ?? null;
     this.#getHash = options?.getHash ?? ((el: Element) => el.getAttribute('href'));
+    this.#onIntersection = options?.onIntersection;
   }
 
   hostConnected(): void {
+    ScrollSpyController.#instances.add(this);
     this.#initIo();
   }
 
-  #initIo() {
+  hostDisconnected(): void {
+    ScrollSpyController.#instances.delete(this);
+    this.#io?.disconnect();
+    this.#releaseForce();
+  }
+
+  #initializing = true;
+
+  /** Cancel force mode and clean up associated listeners */
+  #releaseForce() {
+    if (!this.#force) {
+      return;
+    }
+    this.#force = false;
+    this.#forceAbort?.abort();
+    this.#forceAbort = undefined;
+    clearTimeout(this.#forceTimeout);
+    this.#forceTimeout = undefined;
+  }
+
+  async #initIo() {
     const rootNode = this.#getRootNode();
     if (rootNode instanceof Document || rootNode instanceof ShadowRoot) {
       const { rootMargin, threshold, root } = this;
       this.#io = new IntersectionObserver(r => this.#onIo(r), { root, rootMargin, threshold });
-      this.#linkChildren
-          .map(x => this.#getHash(x))
-          .filter((x): x is string => !!x)
-          .map(x => rootNode.getElementById(x.replace('#', '')))
-          .filter((x): x is HTMLElement => !!x)
-          .forEach(target => this.#io?.observe(target));
+      for (const link of this.#linkChildren) {
+        const id = this.#getHash(link)?.replace('#', '');
+        if (id) {
+          const target = document.getElementById(id);
+          if (target) {
+            this.#io?.observe(target);
+            this.#linkTargetMap.set(link, target);
+          }
+        }
+      }
     }
   }
 
@@ -128,29 +199,70 @@ export class ScrollSpyController implements ReactiveController {
     }
   }
 
+  async #activateHash() {
+    const links = this.#linkChildren;
+    const { hash } = location;
+    if (!hash) {
+      this.setActive(links.at(0) ?? null);
+    } else {
+      await this.#nextIntersection();
+      this.setActive(links.find(x => this.#getHash(x) === hash) ?? null);
+    }
+  }
+
   async #nextIntersection() {
     this.#intersected = false;
-    // safeguard the loop
-    setTimeout(() => this.#intersected = false, 3000);
+    // safeguard: break the loop after 3s even if no intersection fires
+    const timer = setTimeout(() => this.#intersected = true, 3000);
     while (!this.#intersected) {
       await new Promise(requestAnimationFrame);
     }
+    clearTimeout(timer);
   }
 
   async #onIo(entries: IntersectionObserverEntry[]) {
     if (!this.#force) {
-      for (const { target, boundingClientRect, intersectionRect } of entries) {
+      for (const entry of entries) {
+        const { target, boundingClientRect } = entry;
         const selector = `:is(${this.#tagNames.join(',')})[href="#${target.id}"]`;
         const link = this.host.querySelector(selector);
         if (link) {
-          this.#markPassed(link, boundingClientRect.top < intersectionRect.top);
+          // Mark as passed if the element's top has reached the root's top edge.
+          // Using rootBounds (not intersectionRect) so that elements exactly AT the
+          // viewport top are correctly considered "passed" (the current section).
+          const rootTop = entry.rootBounds?.top ?? 0;
+          this.#markPassed(link, boundingClientRect.top <= rootTop + 2);
         }
       }
-      const link = [...this.#passedLinks];
-      const last = link.at(-1);
-      this.#setActive(last ?? this.#linkChildren.at(0));
+      // Sort passed links by DOM order rather than Set insertion order
+      const linkOrder = this.#linkChildren;
+      const passed = [...this.#passedLinks]
+          .sort((a, b) => linkOrder.indexOf(a) - linkOrder.indexOf(b));
+      const last = passed.at(-1);
+      this.#setActive(last ?? linkOrder.at(0));
     }
     this.#intersected = true;
+    this.#intersectingTargets.clear();
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        this.#intersectingTargets.add(entry.target);
+      }
+    }
+    if (this.#initializing) {
+      const ints = entries?.filter(x => x.isIntersecting) ?? [];
+      if (this.#intersectingTargets.size > 0) {
+        const [{ target = null } = {}] = ints;
+        const { id } = target ?? {};
+        if (id) {
+          const link = this.#linkChildren.find(link => this.#getHash(link) === `#${id}`);
+          if (link) {
+            this.#setActive(link);
+          }
+        }
+      }
+      this.#initializing = false;
+    }
+    this.#onIntersection?.();
   }
 
   /**
@@ -158,8 +270,13 @@ export class ScrollSpyController implements ReactiveController {
    * @param link usually an `<a>`
    */
   public async setActive(link: EventTarget | null): Promise<void> {
+    // Cancel any previous programmatic scroll's force state
+    this.#forceAbort?.abort();
+    clearTimeout(this.#forceTimeout);
+
     this.#force = true;
     this.#setActive(link);
+
     let sawActive = false;
     for (const child of this.#linkChildren) {
       this.#markPassed(child, !sawActive);
@@ -167,7 +284,12 @@ export class ScrollSpyController implements ReactiveController {
         sawActive = true;
       }
     }
-    await this.#nextIntersection();
-    this.#force = false;
+
+    // Force is released when the scroll completes (scrollend event),
+    // or after a 3-second safety timeout
+    this.#forceAbort = new AbortController();
+    const { signal } = this.#forceAbort;
+    addEventListener('scrollend', () => this.#releaseForce(), { once: true, signal });
+    this.#forceTimeout = setTimeout(() => this.#releaseForce(), 3000);
   }
 }

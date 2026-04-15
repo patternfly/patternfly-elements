@@ -19,7 +19,7 @@
 
   Simple table using composable components
 
-  {% htmlexample src="../demo/pf-table.html" %}{% endhtmlexample %}
+  {% htmlexample src="../demo/index.html" %}{% endhtmlexample %}
 
   ### Sortable
 

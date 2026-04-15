@@ -43,7 +43,7 @@ function getDeprefixedClassName(className: string, prefix: string) {
  * @param str string to convert to camelcase
  */
 function camel(str: string): string {
-  return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+  return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase());
 }
 
 function getEventReactPropName(event: CEM.Event) {
@@ -183,7 +183,7 @@ export async function generateReactWrappers(
   try {
     for (const module of manifest.modules) {
       if (!module.exports) {
-        throw new Error(`module has no exports: ${module.path}`);
+        continue;
       }
       const { js, ts, tagNames } = genWrapperModules(module, packageName, elPrefix, classPrefix);
       written.push(await writeReactWrappers(js, ts, tagNames, module.path, outDirPathOrURL));

@@ -7,18 +7,13 @@
  * @param b second array
  */
 export function arraysAreEquivalent(a: unknown, b: unknown): boolean {
-  if (!Array.isArray(a) || !Array.isArray(b)) {
+  if (!Array.isArray(a) || !Array.isArray(b)) { // one or both are not an array
     return a === b;
   } else if (a.length !== b.length) { // lengths are different
     return false;
   } else if (!a.length && !b.length) { // both are empty
     return true;
   } else { // multi and length of both is equal
-    for (const [i, element] of a.entries()) {
-      if (element !== b[i]) {
-        return false;
-      }
-    }
-    return true;
+    return a.every((v, i) => b[i] === v);
   }
 }

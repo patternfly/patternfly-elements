@@ -1,5 +1,106 @@
 # @patternfly/pfe-core
 
+## 5.0.7
+### Patch Changes
+
+- ca65338: `ScrollSpyController`: fix race conditions on rapid and smooth scroll navigation
+  
+  - Fix rapid clicks leaving stale force-release listeners that caused the active
+    state to fall "one click behind"
+  - Release force on `scrollend` instead of first IntersectionObserver callback,
+    preventing intermediate sections from stealing active state during smooth scroll
+  - Sort passed links by DOM order instead of Set insertion order, fixing incorrect
+    active state with non-contiguous content sections
+
+## 5.0.6
+### Patch Changes
+
+- ec6b358: `ATFocusController`: fix keyboard focus wrapping and dynamic item support
+  
+  - Fix arrow up/down focus wrapping when a non-focusable placeholder occupies
+    index 0 (e.g. a disabled "Select a value" option)
+  - Fix dynamically added options not receiving keyboard focus until the listbox
+    is reopened
+
+## 5.0.5
+### Patch Changes
+
+- a13e259: Update dependencies
+
+## 5.0.4
+### Patch Changes
+
+- 788a567: `FloatingDOMController`: improved performance by inling and removing the `@floating-ui/dom` dependency
+
+## 5.0.3
+### Patch Changes
+
+- 2cf37ca: `InternalsController`: add `ariaRelevant` property
+
+## 5.0.2
+### Patch Changes
+
+- ce5b27b: `SlotController`: correctly report the state of the default slot in `isEmpty()` calls with no arguments
+
+## 5.0.1
+### Patch Changes
+
+- fefd8bb: `SlotController`: correctly report slot content after updating
+
+## 5.0.0
+### Major Changes
+
+- 0277045: Enable `connectedCallback()` and context protocol in SSR scenarios.
+  
+  BREAKING CHANGE
+  This change affects any element which is expected to execute in node JS when
+  lit-ssr shims are present. By enabling the `connectedCallback()` to execute
+  server side. Elements must ensure that their connectedCallbacks do not try to
+  access the DOM.
+  
+  Before:
+  
+  ```js
+  connectedCallback() {
+    super.connectedCallback();
+    this.items = [...this.querySelectorAll('my-item')];
+  }
+  ```
+  
+  After:
+  ```js
+  connectedCallback() {
+    super.connectedCallback();
+    if (!isServer) {
+      this.items = isServer ? [] : [...this.querySelectorAll('my-item')];
+    }
+  }
+  ```
+
+### Minor Changes
+
+- 8b5b699: **SSR**: added `ssr-hint-has-slotted` and `ssr-hint-has-slotted-default` attributes to elements that use slot controller.
+  
+  When running SSR on elements with slots, add these attributes to ensure they render correctly.
+  
+  ```html
+  <pf-card ssr-hint-has-slotted-default
+           ssr-hint-has-slotted="header,footer">
+    <h2 slot="header">Header Content</h2>
+    <p>Default content</p>
+    <span slot="footer">Footer Content</span>
+  </pf-card>
+  ```
+
+### Patch Changes
+
+- a2f3254: `ScrollSpyController`: respond to hashchange events
+
+## 4.0.5
+### Patch Changes
+
+- 0fb28b6: `SlotController`: `hasContent`/`isEmpty` now respects text nodes
+
 ## 4.0.4
 
 ### Patch Changes

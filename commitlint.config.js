@@ -1,7 +1,8 @@
 import { readdir } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 
 const normalizeWorkspace = async x => {
-  const ents = await readdir(new URL(x, import.meta.url).pathname, { withFileTypes: true });
+  const ents = await readdir(fileURLToPath(new URL(x, import.meta.url)), { withFileTypes: true });
   return ents
       .filter(ent => ent.isDirectory())
       .map(ent => ent.name.replace('pf-', ''));

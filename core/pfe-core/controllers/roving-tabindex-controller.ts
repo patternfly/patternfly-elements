@@ -77,6 +77,21 @@ export class RovingTabindexController<
       if (container instanceof HTMLElement) {
         container.addEventListener('focusin', () =>
           this.#gainedInitialFocus = true, { once: true });
+        // Sync atFocusedItemIndex when an item receives DOM focus (e.g., via mouse click)
+        // This ensures keyboard navigation starts from the correct position
+        container.addEventListener('focusin', (event: FocusEvent) => {
+          const target = event.target as Item;
+          const index = this.items.indexOf(target);
+          // Only update if the target is a valid item and index differs
+          if (index >= 0 && index !== this.atFocusedItemIndex) {
+            // Update index via setter, but avoid the focus() call by temporarily
+            // clearing #gainedInitialFocus to prevent redundant focus
+            const hadInitialFocus = this.#gainedInitialFocus;
+            this.#gainedInitialFocus = false;
+            this.atFocusedItemIndex = index;
+            this.#gainedInitialFocus = hadInitialFocus;
+          }
+        });
       } else {
         this.#logger.warn('RovingTabindexController requires a getItemsContainer function');
       }

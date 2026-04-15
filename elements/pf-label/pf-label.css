@@ -20,15 +20,25 @@ pf-icon, ::slotted(pf-icon) {
   text-overflow: ellipsis;
   white-space: nowrap;
   border-width: 0;
+  /** label top padding */
   padding-top: var(--pf-c-label--PaddingTop, var(--pf-global--spacer--xs, 0.25rem));
+  /** label left padding */
   padding-left: var(--pf-c-label--PaddingLeft, var(--pf-global--spacer--sm, 0.5rem));
+  /** label bottom padding */
   padding-bottom: var(--pf-c-label--PaddingBottom, var(--pf-global--spacer--xs, 0.25rem));
+  /** label right padding */
   padding-right: var(--pf-c-label--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
+  /** label font size */
   font-size: var(--pf-c-label--FontSize, var(--pf-global--FontSize--sm, 0.875rem));
+  /** label text color */
   color: var(--pf-c-label--Color, var(--pf-global--Color--100, #151515));
+  /** label background color */
   background-color: var(--pf-c-label--BackgroundColor, var(--pf-global--palette--black-150, #f5f5f5));
+  /** label border radius */
   border-radius: var(--pf-c-label--BorderRadius, 30em);
+  /** label content max width */
   max-width: var(--pf-c-label__content--MaxWidth, 100%);
+  /** label content text color */
   color: var(--pf-c-label__content--Color, var(--pf-global--Color--100, #151515));
 
   --pf-global--icon--FontSize--sm: 14px;
@@ -43,6 +53,7 @@ pf-icon, ::slotted(pf-icon) {
   pointer-events: none;
   content: "";
   border-radius: var(--pf-c-label--BorderRadius, 30em);
+  /** label content border width and color */
   border: var(--pf-c-label__content--before--BorderWidth, 1px) solid var(--pf-c-label__content--before--BorderColor, var(--pf-global--palette--black-300, #d2d2d2));
 }
 
@@ -57,85 +68,117 @@ pf-icon, ::slotted(pf-icon) {
 }
 
 .compact {
+  /** compact label top padding */
   --pf-c-label--PaddingTop: var(--pf-c-label--m-compact--PaddingTop, 0);
+  /** compact label right padding */
   --pf-c-label--PaddingRight: var(--pf-c-label--m-compact--PaddingRight, var(--pf-global--spacer--sm, 0.5rem));
+  /** compact label bottom padding */
   --pf-c-label--PaddingBottom: var(--pf-c-label--m-compact--PaddingBottom, 0);
+  /** compact label left padding */
   --pf-c-label--PaddingLeft: var(--pf-c-label--m-compact--PaddingLeft, var(--pf-global--spacer--sm, 0.5rem));
   --pf-global--icon--FontSize--sm: 12px;
 }
 
 .blue {
+  /** blue label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-blue__content--Color, var(--pf-global--info-color--200, #002952));
+  /** blue label background color */
   --pf-c-label--BackgroundColor: var(--pf-c-label--m-blue--BackgroundColor, var(--pf-global--palette--blue-50, #e7f1fa));
+  /** blue label content border color */
   --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-blue__content--before--BorderColor, var(--pf-global--palette--blue-100, #bee1f4));
 }
 
 .blue.outline {
+  /** outline blue label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-blue__content--Color, var(--pf-global--primary-color--100, #06c)));
 }
 
 .cyan {
+  /** cyan label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-cyan__content--Color, var(--pf-global--default-color--300, #003737));
+  /** cyan label background color */
   --pf-c-label--BackgroundColor: var(--pf-c-label--m-cyan--BackgroundColor, var(--pf-global--palette--cyan-50, #f2f9f9));
+  /** cyan label content border color */
   --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-cyan__content--before--BorderColor, var(--pf-global--palette--cyan-100, #a2d9d9));
 }
 
 .cyan.outline {
+  /** outline cyan label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-cyan__content--Color, var(--pf-global--palette--cyan-400, #005f60)))
 }
 
 .green {
+  /** green label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-green__content--Color,var(--pf-global--success-color--200, #1e4f18));
+  /** green label background color */
   --pf-c-label--BackgroundColor: var(--pf-c-label--m-green--BackgroundColor, var(--pf-global--palette--green-50, #f3faf2));
+  /** green label content border color */
   --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-green__content--before--BorderColor, var(--pf-global--palette--green-100, #bde5b8));
 }
 
 .green.outline{
+  /** outline green label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-green__content--Color, var(--pf-global--success-color--100, #3e8635)))
 }
 
 .orange {
+  /** orange label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-orange__content--Color, var(--pf-global--palette--orange-700, #3b1f00));
+  /** orange label background color */
   --pf-c-label--BackgroundColor: var(--pf-c-label--m-orange--BackgroundColor, var(--pf-global--palette--orange-50, #fff6ec));
+  /** orange label content border color */
   --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-orange__content--before--BorderColor, var(--pf-global--palette--orange-100, #f4b678));
 }
 
 .orange.outline {
+  /** outline orange label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-orange__content--Color, var(--pf-global--palette--orange-500, #8f4700)))
 }
 
 .purple {
+  /** purple label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-purple__content--Color, var(--pf-global--palette--purple-700, #1f0066));
+  /** purple label background color */
   --pf-c-label--BackgroundColor: var(--pf-c-label--m-purple--BackgroundColor, var(--pf-global--palette--purple-50, #f2f0fc));
+  /** purple label content border color */
   --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-purple__content--before--BorderColor, var(--pf-global--palette--purple-100, #cbc1ff));
 }
 
 .purple.outline {
-  --pf-c-label__content--Color: var(--pf-c-label--m-purple__content--Color, var(--pf-global--palette--purple-500, #6753ac));
+  /** outline purple label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-purple__content--Color, var(--pf-global--palette--purple-500, #6753ac)))
 }
 
 .red {
+  /** red label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-red__content--Color, var(--pf-global--palette--red-300, #7d1007));
+  /** red label background color */
   --pf-c-label--BackgroundColor: var(--pf-c-label--m-red--BackgroundColor, var(--pf-global--palette--red-50, #faeae8));
+  /** red label content border color */
   --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-red__content--before--BorderColor, var(--pf-global--palette--red-100, #c9190b));
 }
 
 .red.outline {
+  /** outline red label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-red__content--Color, var(--pf-global--danger-color--100, #c9190b)))
 }
 
 .gold {
+  /** gold label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-gold__content--Color, var(--pf-global--palette--gold-700, #3d2c00));
+  /** gold label background color */
   --pf-c-label--BackgroundColor: var(--pf-c-label--m-gold--BackgroundColor, var(--pf-global--palette--gold-50, #fdf7e7));
+  /** gold label content border color */
   --pf-c-label__content--before--BorderColor: var(--pf-c-label--m-gold__content--before--BorderColor, var(--pf-global--palette--gold-100, #f9e0a2));
 }
 
 .gold.outline {
+  /** outline gold label content text color */
   --pf-c-label__content--Color: var(--pf-c-label--m-outline__content--Color, var(--pf-c-label--m-outline--m-gold__content--Color, var(--pf-global--palette--gold-600, #795600)))
 }
 
 .outline {
+  /** outline label background color */
   --pf-c-label--BackgroundColor: var(--pf-c-label--m-outline--BackgroundColor, #ffffff);
   --pf-c-label__content--before--BorderColor: var(--pf-global--palette--black-300, #d2d2d2);
 }
@@ -146,30 +189,37 @@ pf-icon, ::slotted(pf-icon) {
 }
 
 .blue .hasIcon [part=icon] {
+  /** blue label icon color */
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-blue__icon--Color, var(--pf-global--primary-color--100, #06c)));
 }
 
 .cyan .hasIcon [part=icon] {
+  /** cyan label icon color */
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-cyan__icon--Color, var(--pf-global--default-color--200, #009596)));
 }
 
 .green .hasIcon [part=icon] {
+  /** green label icon color */
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-green__icon--Color, var(--pf-global--success-color--100, #3e8635)));
 }
 
 .orange .hasIcon [part=icon] {
+  /** orange label icon color */
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-orange__icon--Color, var(--pf-global--palette--orange-300, #ec7a08)));
 }
 
 .purple .hasIcon [part=icon] {
+  /** purple label icon color */
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-purple__icon--Color, var(--pf-global--palette--purple-500, #6753ac)));
 }
 
 .red .hasIcon [part=icon] {
+  /** red label icon color */
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-red__icon--Color, var(--pf-global--danger-color--100, #c9190b)));
 }
 
 .gold .hasIcon [part=icon] {
+  /** gold label icon color */
   color: var(--pf-c-label__icon--Color, var(--pf-c-label--m-gold__icon--Color, var(--pf-global--palette--gold-400, #f0ab00)));
 }
 

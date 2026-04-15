@@ -31,15 +31,7 @@ export class PfDropdownSelectEvent extends Event {
 /**
  * A **dropdown** presents a menu of actions or links in a constrained space that
  * will trigger a process or navigate to a new location.
- * @slot - Must contain one or more `<pf-dropdown-item>` or `<pf-dropdown-group>`
- * @slot toggle - Custom toggle button
- * @slot menu - when using a custom toggle, you must slot a `<pf-dropdown-menu>` in alongside it
- * @csspart menu - The dropdown menu wrapper
- * @cssprop {<length>} [--pf-c-dropdown__menu--PaddingTop=0.5rem] Dropdown top padding
- * @cssprop {<length>} [--pf-c-tooltip__content--PaddingRight=0.5rem] Dropdown right padding
- * @cssprop {<length>} [--pf-c-dropdown__menu--ZIndex=200] Dropdown z-index
- * @cssprop [--pf-c-dropdown__menu--BoxShadow=0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12), 0 0 0.25rem 0 rgba(3, 3, 3, 0.06)] Dropdown box shadow
- * @cssprop {<length>} [--pf-c-dropdown__menu--Top=100% + 0.25rem] Dropdown top
+ * @alias Dropdown
  * @fires {PfDropdownSelectEvent} select - when a user select dropdown value
  * @fires open - when the dropdown toggles open
  * @fires close - when the dropdown toggles closed
@@ -103,6 +95,7 @@ export class PfDropdown extends LitElement {
                              [alignment ?? '']: !!alignment })}"
          style="${styleMap(styles)}"
          @slotchange="${this.#onSlotchange}">
+      <!-- Custom toggle button -->
       <slot name="toggle"
             @keydown="${this.#onButtonKeydown}"
             @click="${() => this.toggle()}">
@@ -111,12 +104,15 @@ export class PfDropdown extends LitElement {
           <pf-icon icon="caret-down" size="md"></pf-icon>
         </pf-button>
       </slot>
+      <!-- when using a custom toggle, you must slot a \`<pf-dropdown-menu>\` in alongside it -->
       <slot name="menu"
             ?hidden="${!this.expanded}"
             @focusout="${this.#onMenuFocusout}"
             @keydown="${this.#onMenuKeydown}"
             @click="${this.#onSelect}">
+        <!-- The dropdown menu wrapper -->
         <pf-dropdown-menu id="menu" part="menu" ?disabled="${disabled}">
+          <!-- Must contain one or more \`<pf-dropdown-item>\` or \`<pf-dropdown-group>\` -->
           <slot></slot>
         </pf-dropdown-menu>
       </slot>

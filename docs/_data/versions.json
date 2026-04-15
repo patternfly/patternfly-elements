@@ -1,9 +1,15 @@
 [
   {
+    "version": "v4.0.0",
+    "slug": "v4",
+    "label": "v4",
+    "current": true
+  },
+  {
     "version": "v3.0.0",
     "slug": "v3",
     "label": "v3",
-    "current": true
+    "current": false
   },
   {
     "version": "v2.0.0",

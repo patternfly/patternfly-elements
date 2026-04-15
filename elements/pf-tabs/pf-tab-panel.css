@@ -7,5 +7,6 @@
 }
 
 :host([box="light"]) {
+  /** Background color for light tab content */
   background-color: var(--pf-c-tab-content--m-light-300, var(--pf-global--BackgroundColor--light-300, #f0f0f0));
 }

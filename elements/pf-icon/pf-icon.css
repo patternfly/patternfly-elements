@@ -26,6 +26,7 @@ svg {
 :host([size=xl]) #container { --_size: var(--pf-global--icon--FontSize--xl, 54px); }
 
 #container, svg {
+  /** size of the icon */
   width: var(--pf-icon--size, var(--_size));
   height: var(--pf-icon--size, var(--_size));
   min-width: var(--pf-icon--size, var(--_size));

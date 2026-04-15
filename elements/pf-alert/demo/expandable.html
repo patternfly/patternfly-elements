@@ -1,0 +1,27 @@
+<pf-alert variant="success"
+          dismissable
+          expandable
+          title-text="Success alert title">
+  <p>Success alert description. This should tell the user more information about the alert.</p>
+</pf-alert>
+
+<pf-alert variant="success"
+          dismissable
+          expandable
+          expanded
+          title-text="Success alert title">
+  <p>Success alert description. This should tell the user more information about the alert.</p>
+  <a href="#" slot="actions">View details</a>
+  <a href="#" slot="actions">Ignore</a>
+</pf-alert>
+
+<script type="module">
+  import '@patternfly/elements/pf-alert/pf-alert.js';
+  import '@patternfly/elements/pf-button/pf-button.js';
+</script>
+
+<style>
+  pf-alert {
+    margin-block-end: 1em;
+  }
+</style>

@@ -8,19 +8,13 @@ on:
       - edited
       - synchronize
       - reopened
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - synchronize
-      - reopened
 
   pull_request_review:
     types:
       - submitted
 
 permissions:
-  pull-requests: read
+  pull-requests: write
 
 # Separate jobs can run concurrently
 jobs:
@@ -37,7 +31,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: '.nvmrc'
           cache: npm
       - run: npm ci --prefer-offline
       - run: npm i @commitlint/load

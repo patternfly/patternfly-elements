@@ -1,39 +1,75 @@
 :host {
+	/** PaddingTop for the button */
 	--pf-c-button--PaddingTop: var(--pf-global--spacer--form-element, 0.375rem);
+	/** PaddingRight for the button */
 	--pf-c-button--PaddingRight: var(--pf-global--spacer--md, 1rem);
+	/** PaddingBottom for the button */
 	--pf-c-button--PaddingBottom: var(--pf-global--spacer--form-element, 0.375rem);
+	/** PaddingLeft for the button */
 	--pf-c-button--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+	/** LineHeight for the button */
 	--pf-c-button--LineHeight: var(--pf-global--LineHeight--md, 1.5);
+	/** FontWeight for the button */
 	--pf-c-button--FontWeight: var(--pf-global--FontWeight--normal, 400);
+	/** FontSize for the button */
 	--pf-c-button--FontSize: var(--pf-global--FontSize--md, 1rem);
+	/** BackgroundColor for the button */
 	--pf-c-button--BackgroundColor: transparent;
+	/** BorderRadius for the button */
 	--pf-c-button--BorderRadius: var(--pf-global--BorderRadius--sm, 3px);
+	/** BorderRadius for the button after element */
 	--pf-c-button--after--BorderRadius: var(--pf-global--BorderRadius--sm, 3px);
+	/** BorderColor for the button after element */
 	--pf-c-button--after--BorderColor: transparent;
+	/** BorderWidth for the button after element */
 	--pf-c-button--after--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** BorderWidth for the button after element on hover */
 	--pf-c-button--hover--after--BorderWidth: var(--pf-global--BorderWidth--md, 2px);
+	/** BorderWidth for the button after element on focus */
 	--pf-c-button--focus--after--BorderWidth: var(--pf-global--BorderWidth--md, 2px);
+	/** BorderWidth for the button after element when active */
 	--pf-c-button--active--after--BorderWidth: var(--pf-global--BorderWidth--md, 2px);
+	/** Color for the button when disabled */
 	--pf-c-button--disabled--Color: var(--pf-global--disabled-color--100, #6a6e73);
+	/** BackgroundColor for the button when disabled */
 	--pf-c-button--disabled--BackgroundColor: var(--pf-global--disabled-color--200, #d2d2d2);
+	/** BorderColor for the button after element when disabled */
 	--pf-c-button--disabled--after--BorderColor: transparent;
+	/** BackgroundColor for the primary button variant */
 	--pf-c-button--m-primary--BackgroundColor: var(--pf-global--primary-color--100, #06c);
+	/** Color for the primary button variant */
 	--pf-c-button--m-primary--Color: var(--pf-global--Color--light-100, #fff);
+	/** BackgroundColor for the primary button variant on hover */
 	--pf-c-button--m-primary--hover--BackgroundColor: var(--pf-global--primary-color--200, #004080);
+	/** Color for the primary button variant on hover */
 	--pf-c-button--m-primary--hover--Color: var(--pf-global--Color--light-100, #fff);
+	/** BackgroundColor for the primary button variant on focus */
 	--pf-c-button--m-primary--focus--BackgroundColor: var(--pf-global--primary-color--200, #004080);
+	/** Color for the primary button variant on focus */
 	--pf-c-button--m-primary--focus--Color: var(--pf-global--Color--light-100, #fff);
+	/** BackgroundColor for the primary button variant when active */
 	--pf-c-button--m-primary--active--BackgroundColor: var(--pf-global--primary-color--200, #004080);
+	/** Color for the primary button variant when active */
 	--pf-c-button--m-primary--active--Color: var(--pf-global--Color--light-100, #fff);
+	/** BackgroundColor for the secondary button variant */
 	--pf-c-button--m-secondary--BackgroundColor: transparent;
+	/** BorderColor for the secondary button variant after element */
 	--pf-c-button--m-secondary--after--BorderColor: var(--pf-global--primary-color--100, #06c);
+	/** Color for the secondary button variant */
 	--pf-c-button--m-secondary--Color: var(--pf-global--primary-color--100, #06c);
+	/** BackgroundColor for the secondary button variant on hover */
 	--pf-c-button--m-secondary--hover--BackgroundColor: transparent;
+	/** BorderColor for the secondary button variant after element on hover */
 	--pf-c-button--m-secondary--hover--after--BorderColor: var(--pf-global--primary-color--100, #06c);
+	/** Color for the secondary button variant on hover */
 	--pf-c-button--m-secondary--hover--Color: var(--pf-global--primary-color--100, #06c);
+	/** BackgroundColor for the secondary button variant on focus */
 	--pf-c-button--m-secondary--focus--BackgroundColor: transparent;
+	/** BorderColor for the secondary button variant after element on focus */
 	--pf-c-button--m-secondary--focus--after--BorderColor: var(--pf-global--primary-color--100, #06c);
+	/** Color for the secondary button variant on focus */
 	--pf-c-button--m-secondary--focus--Color: var(--pf-global--primary-color--100, #06c);
+	/** BackgroundColor for the secondary button variant when active */
 	--pf-c-button--m-secondary--active--BackgroundColor: transparent;
 	--pf-c-button--m-secondary--active--after--BorderColor: var(--pf-global--primary-color--100, #06c);
 	--pf-c-button--m-secondary--active--Color: var(--pf-global--primary-color--100, #06c);
@@ -168,6 +204,8 @@
 	--pf-c-button--m-primary__c-badge--BorderColor: var(--pf-global--BorderColor--300, #f0f0f0);
 	--pf-c-button--m-primary__c-badge--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
 
+  /** Internal button color property */
   --_button-color: var(--pf-c-button--m-primary--Color);
+  /** Internal button background color property */
   --_button-background-color: var(--pf-c-button--m-primary--BackgroundColor);
 }

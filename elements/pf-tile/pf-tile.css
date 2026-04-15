@@ -1,18 +1,26 @@
 :host {
   position: relative;
   display: inline-grid;
-  padding: var(--pf-c-tile--PaddingTop, var(--pf-global--spacer--lg, 1.5rem))
-          var(--pf-c-tile--PaddingRight, var(--pf-global--spacer--lg, 1.5rem))
-          var(--pf-c-tile--PaddingBottom, var(--pf-global--spacer--lg, 1.5rem))
-          var(--pf-c-tile--PaddingLeft, var(--pf-global--spacer--lg, 1.5rem));
+  padding: 
+    /** Top padding for tile */
+    var(--pf-c-tile--PaddingTop, var(--pf-global--spacer--lg, 1.5rem))
+    /** Right padding for tile */
+    var(--pf-c-tile--PaddingRight, var(--pf-global--spacer--lg, 1.5rem))
+    /** Bottom padding for tile */
+    var(--pf-c-tile--PaddingBottom, var(--pf-global--spacer--lg, 1.5rem))
+    /** Left padding for tile */
+    var(--pf-c-tile--PaddingLeft, var(--pf-global--spacer--lg, 1.5rem));
   text-align: center;
   cursor: pointer;
+  /** Background color for tile */
   background-color: var(--pf-c-tile--BackgroundColor,
                     var(--pf-global--BackgroundColor--100,
                     var(--pf-global--BackgroundColor--light-100), #ffffff));
   grid-template-rows: -webkit-min-content;
   grid-template-rows: min-content;
+  /** Transition animation for tile */
   transition: var(--pf-c-tile--Transition, none);
+  /** Vertical translation for tile */
   transform: translateY(var(--pf-c-tile--TranslateY, 0));
 }
 
@@ -28,18 +36,25 @@
   right: 0;
   bottom: 0;
   left: 0;
-  border: var(--pf-c-tile--before--BorderWidth, var(--pf-global--BorderWidth--sm, 1px))
-          solid
-          var(--pf-c-tile--before--BorderColor, var(--pf-global--BorderColor--100, #d2d2d2));
+  border: 
+    /** Border width for tile */
+    var(--pf-c-tile--before--BorderWidth, var(--pf-global--BorderWidth--sm, 1px))
+    solid
+    /** Border color for tile */
+    var(--pf-c-tile--before--BorderColor, var(--pf-global--BorderColor--100, #d2d2d2));
 }
 
 :host::after {
   right: 0;
   bottom: 0;
   left: 0;
+  /** Height of tile bottom accent */
   height: var(--pf-c-tile--after--Height, var(--pf-global--BorderWidth--lg, 3px));
+  /** Background color of tile bottom accent */
   background-color: var(--pf-c-tile--after--BackgroundColor, transparent);
+  /** Transition animation for tile bottom accent */
   transition: var(--pf-c-tile--after--Transition, none);
+  /** Scale Y and translate Y transform for tile bottom accent */
   transform: scaleY(var(--pf-c-tile--after--ScaleY, 1)) translateY(var(--pf-c-tile--after--TranslateY, 0));
 }
 
@@ -87,6 +102,7 @@
 }
 
 [part="title"] {
+  /** Color for tile title */
   color: var(--pf-c-tile__title--Color, var(--pf-global--Color--100, var(--pf-global--Color--dark-100, #151515)));
 }
 
@@ -96,10 +112,13 @@
 }
 
 [part="icon"] {
-  --_icon-size: var(--pf-c-tile__icon--FontSize: var(--pf-global--icon--FontSize--md, 1.125rem));
+  /** Font size for tile icon */
+  --_icon-size: var(--pf-c-tile__icon--FontSize, var(--pf-global--icon--FontSize--md, 1.125rem));
   --pf-icon--size: var(--_icon-size);
+  /** Right margin for tile icon */
   margin-right: var(--pf-c-tile__icon--MarginRight, var(--pf-global--spacer--sm, 0.5rem));
   font-size: var(--_icon-size);
+  /** Color for tile icon */
   color: var(--pf-c-tile__icon--Color, var(--pf-global--Color--100, #151515));
 }
 
@@ -118,6 +137,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /** Bottom margin for stacked tile icon */
   margin-bottom: var(--pf-c-tile__header--m-stacked__icon--MarginBottom, var(--pf-global--spacer--xs, 0.25rem));
 }
 

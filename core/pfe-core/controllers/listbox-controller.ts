@@ -3,6 +3,7 @@ import type { RequireProps } from '../core.ts';
 
 import { isServer } from 'lit';
 import { arraysAreEquivalent } from '../functions/arraysAreEquivalent.js';
+import { InternalsController } from './internals-controller.js';
 
 /**
  * Options for listbox controller
@@ -192,16 +193,14 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
   }
 
   /**
-   * register's the host's Item elements as listbox controller items
-   * sets aria-setsize and aria-posinset on items
-   * @param items items
+   * Registers the host's item elements as listbox controller items.
+   * @param items - Array of listbox option elements.
    */
   set items(items: Item[]) {
-    this.#items = items;
-    this.#items.forEach((item, index, _items) => {
-      item.ariaSetSize = _items.length.toString();
-      item.ariaPosInSet = (index + 1).toString();
-    });
+    if (!arraysAreEquivalent(items, this.#items)) {
+      this.#items = items;
+      this.host.requestUpdate();
+    }
   }
 
   /**
@@ -268,6 +267,10 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
     }
   }
 
+  /**
+   * Called during host update; syncs control element listeners and
+   * applies aria-posinset/aria-setsize to each item via InternalsController.
+   */
   hostUpdate(): void {
     const last = this.#controlsElements;
     this.#controlsElements = this.#options.getControlsElements?.() ?? [];
@@ -278,6 +281,11 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         el.addEventListener('keyup', this.#onKeyup);
       }
     }
+    const items = this.#items;
+    items.forEach((item, index) => {
+      InternalsController.setAriaPosInSet(item, index + 1);
+      InternalsController.setAriaSetSize(item, items.length);
+    });
   }
 
   hostUpdated(): void {
@@ -379,12 +387,15 @@ export class ListboxController<Item extends HTMLElement> implements ReactiveCont
         if (this.items.includes(shadowRootItem)) {
           return shadowRootItem;
         } else {
-          const index =
-            Array.from(shadowRootListboxElement?.children ?? [])
-                .filter(this.#options.isItem)
-                .filter(x => !x.hidden)
-                .indexOf(shadowRootItem);
-          return this.#items.filter(x => !x.hidden)[index];
+          // Shadow clone needs to be mapped back to light DOM item.
+          // Match by value attribute or text content since index-based matching
+          // doesn't work when items are filtered (hidden state differs between clone and source)
+          const cloneValue = shadowRootItem.getAttribute('value')
+                          ?? shadowRootItem.textContent?.trim();
+          const sourceItem = this.#items.find(item =>
+            (item.getAttribute('value') ?? item.textContent?.trim()) === cloneValue
+          );
+          return sourceItem ?? null;
         }
       }
 

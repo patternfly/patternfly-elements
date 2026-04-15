@@ -1,5 +1,6 @@
-import { html, LitElement, type PropertyValues, type TemplateResult } from 'lit';
+import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
+import { eventOptions } from 'lit/decorators/event-options.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { provide } from '@lit/context';
@@ -24,40 +25,7 @@ import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 
 /**
  * **Tabs** allow users to navigate between views within the same page or context.
- * @csspart container - outer container
- * @csspart tabs-container - tabs container
- * @csspart tabs - tablist
- * @csspart panels - panels
- * @slot tab - Must contain one or more `<pf-tab>`
- * @slot - Must contain one or more `<pf-panel>`
- * @cssprop     {<length>} [--pf-c-tabs--Width=auto]
- * @cssprop     {<length>} [--pf-c-tabs--inset=0]
- * @cssprop     {<color>}   [--pf-c-tabs--before--BorderColor=#d2d2d2]
- * @cssprop     {<length>}  [--pf-c-tabs--before--BorderTopWidth=0]
- * @cssprop     {<length>}  [--pf-c-tabs--before--BorderRightWidth=0]
- * @cssprop     {<length>}  [--pf-c-tabs--before--BorderBottomWidth=1px]
- * @cssprop     {<length>}  [--pf-c-tabs--before---BorderLeftWidth=0]
- * @cssprop     {<length>}  [--pf-c-tabs--m-vertical--MaxWidth=15.625rem]
- * @cssprop     {<color>}   [--pf-c-tabs--m-vertical__list--before--BorderColor=#d2d2d2]
- * @cssprop     {<length>}  [--pf-c-tabs--m-vertical__list--before--BorderTopWidth=0]
- * @cssprop     {<length>}  [--pf-c-tabs--m-vertical__list--before--BorderRightWidth=0]
- * @cssprop     {<length>}  [--pf-c-tabs--m-vertical__list--before--BorderBottomWidth=0]
- * @cssprop     {<length>}  [--pf-c-tabs--m-vertical__list--before--BorderLeftWidth=1px]
- * @cssprop     {<length>}  [--pf-c-tabs--m-vertical--m-box--inset=2rem]
- * @cssprop     {<display>} [--pf-c-tabs__list--Display=flex]
- * @cssprop     {<length>}  [--pf-c-tabs__scroll-button--Width=3rem]
- * @cssprop     {<color>}   [--pf-c-tabs__scroll-button--Color=#151515]
- * @cssprop     {<color>}   [--pf-c-tabs__scroll-button--BackgroundColor=#ffffff]
- * @cssprop     {<length>}  [--pf-c-tabs__scroll-button--OutlineOffset=-0.25rem]
- * @cssprop     {<time>}    [--pf-c-tabs__scroll-button--TransitionDuration--margin=.125s]
- * @cssprop     {<time>}    [--pf-c-tabs__scroll-button--TransitionDuration--transform=.125s]
- * @cssprop     {<color>}   [--pf-c-tabs__scroll-button--hover--Color=#06c]
- * @cssprop     {<color>}   [--pf-c-tabs__scroll-button--before--BorderColor=#d2d2d2]
- * @cssprop     {<length>}  [--pf-c-tabs__scroll-button--before--BorderRightWidth=0]
- * @cssprop     {<length>}  [--pf-c-tabs__scroll-button--before--BorderBottomWidth=1px]
- * @cssprop     {<length>}  [--pf-c-tabs__scroll-button--before--BorderLeftWidth=0]
- * @cssprop     {<length>}  [--pf-c-tabs__scroll-button--before--border-width--base=1px]
- * @cssprop     {<color>} [--pf-c-tabs__scroll-button--disabled--Color=#d2d2d2]
+ * @alias Tabs
  */
 @customElement('pf-tabs')
 export class PfTabs extends LitElement {
@@ -199,8 +167,10 @@ export class PfTabs extends LitElement {
 
   render(): TemplateResult<1> {
     return html`
+      <!-- outer container -->
       <div part="container"
            class="${classMap({ overflow: this.#overflow.showScrollButtons })}">
+        <!-- tabs container -->
         <div part="tabs-container">${!this.#overflow.showScrollButtons ? '' : html`
           <button id="previousTab" tabindex="-1"
               aria-label="${this.labelScrollLeft}"
@@ -208,8 +178,10 @@ export class PfTabs extends LitElement {
               @click="${this.#scrollLeft}">
             <pf-icon icon="angle-left" set="fas" loading="eager"></pf-icon>
           </button>`}
+          <!-- tablist -->
           <div id="tabs" part="tabs" role="tablist">
-            <slot name="tab" @slotchange="${this.#onSlotChange}" @scroll="${this.#overflow.onScroll}"></slot>
+            <!-- Must contain one or more \`<pf-tab>\` -->
+            <slot name="tab" @slotchange="${this.#onSlotChange}" @scroll="${this.onScroll}"></slot>
           </div>
           ${!this.#overflow.showScrollButtons ? '' : html`
           <button id="nextTab" tabindex="-1"
@@ -219,9 +191,20 @@ export class PfTabs extends LitElement {
             <pf-icon icon="angle-right" set="fas" loading="eager"></pf-icon>
           </button>`}
         </div>
+        <!--
+          slot:
+            summary: Must contain one or more \`<pf-panel>\`
+          part:
+            summary: panels
+        -->
         <slot part="panels"></slot>
       </div>
     `;
+  }
+
+  @eventOptions({ passive: true })
+  private onScroll() {
+    this.#overflow.onScroll();
   }
 
   #scrollLeft() {

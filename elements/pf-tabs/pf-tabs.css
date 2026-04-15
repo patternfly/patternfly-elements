@@ -86,16 +86,24 @@ button:disabled {
 }
 
 [part="tabs-container"] {
+  /** Width of the tabs container */
   width: var(--pf-c-tabs--Width, auto);
+  /** Inset spacing for tabs */
   padding-inline-end: var(--pf-c-tabs--inset, 0);
+  /** Inset spacing for tabs */
   padding-inline-start: var(--pf-c-tabs--inset, 0);
 }
 
 [part="tabs-container"]::before {
+  /** Border color for tabs container pseudo-element */
   border-color: var(--pf-c-tabs--before--BorderColor, var(--pf-global--BorderColor--100, #d2d2d2));
+  /** Top border width */
   border-block-start-width: var(--pf-c-tabs--before--BorderTopWidth, 0);
+  /** Right border width */
   border-inline-end-width: var(--pf-c-tabs--before--BorderRightWidth, 0);
+  /** Bottom border width */
   border-block-end-width:  var(--pf-c-tabs--before--BorderBottomWidth, var(--pf-c-tabs--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
+  /** Left border width */
   border-inline-start-width: var(--pf-c-tabs--before--BorderLeftWidth, 0);
 }
 
@@ -150,6 +158,7 @@ button:disabled {
   position: relative;
   flex-direction: column;
   flex-grow: 1;
+  /** Maximum width for vertical tabs */
   max-width: var(--pf-c-tabs--m-vertical--MaxWidth, 15.625rem);
 }
 
@@ -158,9 +167,13 @@ button:disabled {
   right: auto;
   border-style: solid;
   border-color: var(--pf-c-tabs--m-vertical__list--before--BorderColor, var(--pf-c-tabs--before--BorderColor, var(--pf-global--BorderColor--100, #d2d2d2)));
+  /** Top border width for vertical tabs */
   border-block-start-width: var(--pf-c-tabs--m-vertical__list--before--BorderTopWidth, 0);
+  /** Right border width for vertical tabs */
   border-inline-end-width: var(--pf-c-tabs--m-vertical__list--before--BorderRightWidth, 0);
+  /** Bottom border width for vertical tabs */
   border-block-end-width: var(--pf-c-tabs--m-vertical__list--before--BorderBottomWidth, 0);
+  /** Left border width for vertical tabs */
   border-inline-start-width: var(--pf-c-tabs--m-vertical__list--before--BorderLeftWidth, var(--pf-c-tabs--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
 }
 
@@ -202,28 +215,40 @@ button:disabled {
 }
 
 [part="tabs"] {
+  /** Display type for the tabs list */
   display: var(--pf-c-tabs__list--Display, flex);
 }
 
 button {
+  /** Width of the scroll buttons */
   width: var(--pf-c-tabs__scroll-button--Width, var(--pf-global--spacer--2xl, 3rem));
+  /** Color of the scroll buttons */
   color: var(--pf-c-tabs__scroll-button--Color, var(--pf-global--Color--100, #151515));
+  /** Background color of the scroll buttons */
   background-color: var(--pf-c-tabs__scroll-button--BackgroundColor, var(--pf-global--BackgroundColor--100, #ffffff));
+  /** Outline offset for scroll buttons */
   outline-offset: var(--pf-c-tabs__scroll-button--OutlineOffset, calc(-1 * var(--pf-global--spacer--xs, 0.25rem)));
   transition:
+    /** Transition duration for margin changes */
     margin var(--pf-c-tabs__scroll-button--TransitionDuration--margin, .125s),
+    /** Transition duration for transform changes */
     translate var(--pf-c-tabs__scroll-button--TransitionDuration--transform, .125s), opacity var(--pf-c-tabs__scroll-button--TransitionDuration--opacity, .125s);
   --pf-icon--size: 16px;
 }
 
 button:hover {
+  /** Hover color for scroll buttons */
   --pf-c-tabs__scroll-button--Color: var(--pf-c-tabs__scroll-button--hover--Color, var(--pf-global--active-color--100, #06c));
 }
 
 button::before {
+  /** Border color for scroll button pseudo-elements */
   border-color: var(--pf-c-tabs__scroll-button--before--BorderColor, var(--pf-c-tabs--before--BorderColor, var(--pf-global--BorderColor--100, #d2d2d2)));
+  /** Right border width for scroll button pseudo-elements */
   border-inline-end-width: var(--pf-c-tabs__scroll-button--before--BorderRightWidth, 0);
+  /** Bottom border width for scroll button pseudo-elements */
   border-block-end-width: var(--pf-c-tabs__scroll-button--before--BorderBottomWidth, var(--pf-c-tabs__scroll-button--before--border-width--base, var(--pf-global--BorderWidth--sm, 1px)));
+  /** Left border width for scroll button pseudo-elements */
   border-inline-start-width: var(--pf-c-tabs__scroll-button--before--BorderLeftWidth, 0);
 }
 
@@ -238,6 +263,7 @@ button:nth-of-type(2) {
 }
 
 button:disabled {
+  /** Color for disabled scroll buttons */
   --pf-c-tabs__scroll-button--Color: var(--pf-c-tabs__scroll-button--disabled--Color, var(--pf-global--disabled-color--200, #d2d2d2));
 }
 

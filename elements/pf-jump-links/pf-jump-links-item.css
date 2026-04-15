@@ -17,17 +17,23 @@ a {
   display: flex;
   cursor: pointer;
   flex: 1;
+  /** Top padding around the link */
   padding-block-start: var(--pf-c-jump-links__link--PaddingTop,
     var(--pf-global--spacer--md, 1rem));
+  /** Right padding around the link */
   padding-inline-end: var(--pf-c-jump-links__link--PaddingRight,
     var(--pf-global--spacer--md, 1rem));
+  /** Bottom padding around the link */
   padding-block-end: var(--pf-c-jump-links__link--PaddingBottom,
     var(--pf-global--spacer--md, 1rem));
+  /** Left padding around the link */
   padding-inline-start: var(--pf-c-jump-links__link--PaddingLeft,
     var(--pf-global--spacer--md, 1rem));
   text-decoration: none;
+  /** Outline offset for jump links link */
   outline-offset: var(--pf-c-jump-links__link--OutlineOffset,
     calc(-1 * var(--pf-global--spacer--sm, 0.5rem)));
+  /** Color for jump links link text */
   color: var(--pf-c-jump-links__link-text--Color,
     var(--pf-global--Color--200, #6a6e73));
 }
@@ -65,5 +71,5 @@ a:focus {
   --pf-c-jump-links__link--before--BorderColor: var(--pf-c-jump-links__item--m-current__link--before--BorderColor,
     var(--pf-global--primary-color--100, #06c));
   --pf-c-jump-links__link-text--Color: var(--pf-c-jump-links__item--m-current__link-text--Color,
-    pfvar(--pf-global--Color--100, #151515));
+    var(--pf-global--Color--100, #151515));
 }

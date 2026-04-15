@@ -49,7 +49,7 @@ render() {
 }
 ```
 
-We'll also need to update `/demo/pf-cool-element.html`
+We'll also need to update `/demo/index.html`
 so that the user's name is passed into the slot that we added in `pf-cool-element.ts`:
 
 ```html

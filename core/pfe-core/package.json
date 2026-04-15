@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-core",
-  "version": "4.0.4",
+  "version": "5.0.7",
   "license": "MIT",
   "description": "PatternFly Elements Core Library",
   "customElements": "custom-elements.json",
@@ -32,7 +32,11 @@
     "./controllers/property-observer-controller.js": "./controllers/property-observer-controller.js",
     "./controllers/roving-tabindex-controller.js": "./controllers/roving-tabindex-controller.js",
     "./controllers/scroll-spy-controller.js": "./controllers/scroll-spy-controller.js",
-    "./controllers/slot-controller.js": "./controllers/slot-controller.js",
+    "./controllers/slot-controller.js": {
+      "node": "./controllers/slot-controller-server.js",
+      "import": "./controllers/slot-controller.js",
+      "default": "./controllers/slot-controller.js"
+    },
     "./controllers/style-controller.js": "./controllers/style-controller.js",
     "./controllers/timestamp-controller.js": "./controllers/timestamp-controller.js",
     "./controllers/tabs-controller.js": "./controllers/tabs-controller.js",
@@ -57,13 +61,12 @@
   },
   "scripts": {
     "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
-    "analyze": "cem analyze",
+    "analyze": "cem generate",
     "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.6.10",
-    "@lit/context": "^1.1.2",
-    "lit": "^3.2.0"
+    "@lit/context": "^1.1.6",
+    "lit": "^3.3.2"
   },
   "repository": {
     "type": "git",
@@ -80,7 +83,6 @@
     "**/*.d.ts",
     "**/*.js",
     "**/*.js.map",
-    "!custom-elements-manifest.config.js",
     "custom-elements.json",
     "!demo/*",
     "!docs/*",

@@ -19,6 +19,7 @@ section {
   left: 0;
   align-items: center;
   justify-content: center;
+  /** Z-index for modal box */
   z-index: var(--pf-c-modal-box--ZIndex,
     var(--pf-global--ZIndex--xl,
       500));
@@ -44,20 +45,25 @@ section {
   position: relative;
   margin: 0 auto;
 
+  /** Width of modal */
   width: var(--pf-c-modal-box--Width,
     calc(100% - var(--pf-global--spacer--xl,2rem)));
 
+  /** Max width of modal */
   max-width: var(--pf-c-modal-box--MaxWidth,
     calc(100% - var(--pf-global--spacer--xl,2rem)));
 
+  /** Max height of modal */
   max-height: var(--pf-c-modal-box--MaxHeight,
     calc(100% - var(--pf-global--spacer--2xl,3rem)));
 
+  /** Box shadow for modal */
   box-shadow: var(--pf-c-modal-box--BoxShadow,
     var(--pf-global--BoxShadow--xl,
       0 1rem 2rem 0 rgba(3, 3, 3, 0.16),
       0 0 0.5rem 0 rgba(3, 3, 3, 0.1)));
 
+	/** Background color for modal */
 	background-color: var(--pf-c-modal-box--BackgroundColor,
     var(--pf-global--BackgroundColor--100,
       var(--pf-global--BackgroundColor--100, #fff)));
@@ -73,16 +79,19 @@ section {
 
 :host([width="small"]) [part=dialog],
 :host([variant="small"]) [part=dialog] {
+  /** Max width for small modal */
   --pf-c-modal-box--Width: var(--pf-c-modal-box--m-sm--sm--MaxWidth, 35rem);
 }
 
 :host([width="medium"]) [part=dialog],
 :host([variant="medium"]) [part=dialog] {
+  /** Max width for medium modal */
   --pf-c-modal-box--Width: var(--pf-c-modal-box--m-md--Width, 52.5rem);
 }
 
 :host([width="large"]) [part=dialog],
 :host([variant="large"]) [part=dialog] {
+  /** Max width for large modal */
   --pf-c-modal-box--Width: var(--pf-c-modal-box--m-lg--lg--MaxWidth, 70rem);
 }
 
@@ -111,10 +120,12 @@ header {
 }
 
 header ::slotted(:is(h1,h2,h3,h4,h5,h6)[slot="header"]) {
+  /** Font size for modal title */
   font-size: var(--pf-c-modal-box__title--FontSize,
     var(--pf-global--FontSize--2xl,
       1.5rem));
   font-weight: var(--pf-global--FontWeight--normal, 400);
+  /** Font family for modal title */
   font-family: var(--pf-c-modal-box__title--FontFamily,
     var(--pf-global--FontFamily--heading--sans-serif,
       var(--pf-global--FontFamily--redhat-updated--heading--sans-serif,

@@ -1,25 +1,46 @@
 :host {
   display: block;
+  /** Top padding for banner */
   --pf-c-banner--PaddingTop: var(--pf-global--spacer--xs, 0.25rem);
+  /** Right padding for banner */
   --pf-c-banner--PaddingRight: var(--pf-global--spacer--md, 1rem);
+  /** Right padding for banner on medium screens */
   --pf-c-banner--md--PaddingRight: var(--pf-global--spacer--lg, 1.5rem);
+  /** Bottom padding for banner */
   --pf-c-banner--PaddingBottom: var(--pf-global--spacer--xs, 0.25rem);
+  /** Left padding for banner */
   --pf-c-banner--PaddingLeft: var(--pf-global--spacer--md, 1rem);
+  /** Left padding for banner on medium screens */
   --pf-c-banner--md--PaddingLeft: var(--pf-global--spacer--lg, 1.5rem);
+  /** Font size for banner */
   --pf-c-banner--FontSize: var(--pf-global--FontSize--sm, 0.875rem);
+  /** Text color for banner */
   --pf-c-banner--Color: var(--pf-global--Color--100, #151515);
+  /** Background color for banner */
   --pf-c-banner--BackgroundColor: var(--pf-global--BackgroundColor--dark-400, #4f5255);
+  /** Link color for banner (references banner color) */
   --pf-c-banner--link--Color: var(--pf-c-banner--Color);
+  /** Link text decoration for banner */
   --pf-c-banner--link--TextDecoration: underline;
+  /** Link hover color for banner (references banner color) */
   --pf-c-banner--link--hover--Color: var(--pf-c-banner--Color);
+  /** Link hover font weight for banner */
   --pf-c-banner--link--hover--FontWeight: var(--pf-global--FontWeight--semi-bold, 700);
+  /** Disabled link color for banner (references banner color) */
   --pf-c-banner--link--disabled--Color: var(--pf-c-banner--Color);
+  /** Disabled link text decoration for banner */
   --pf-c-banner--link--disabled--TextDecoration: none;
+  /** Background color for info banner */
   --pf-c-banner--m-info--BackgroundColor: var(--pf-global--palette--blue-200, #73bcf7);
+  /** Background color for danger banner */
   --pf-c-banner--m-danger--BackgroundColor: var(--pf-global--danger-color--100, #c9190b);
+  /** Background color for success banner */
   --pf-c-banner--m-success--BackgroundColor: var(--pf-global--success-color--100, #3e8635);
+  /** Background color for warning banner */
   --pf-c-banner--m-warning--BackgroundColor: var(--pf-global--warning-color--100, #f0ab00);
+  /** Z-index for sticky banner */
   --pf-c-banner--m-sticky--ZIndex: var(--pf-global--ZIndex--md, 300);
+  /** Box shadow for sticky banner */
   --pf-c-banner--m-sticky--BoxShadow: var(--pf-global--BoxShadow--md-bottom);
 }
 

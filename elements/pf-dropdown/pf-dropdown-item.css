@@ -5,22 +5,27 @@
   white-space: nowrap;
   border: none;
   cursor: pointer;
+  /** Dropdown item font size */
   font-size: var(
     --pf-c-dropdown__menu-item--FontSize,
     var(--pf-global--FontSize--md, 1rem)
   );
+  /** Dropdown item font weight */
   font-weight: var(
     --pf-c-dropdown__menu-item--FontWeight,
     var(--pf-global--FontWeight--normal, 400)
   );
+  /** Dropdown item line height */
   line-height: var(
     --pf-c-dropdown__menu-item--LineHeight,
     var(--pf-global--LineHeight--md, 1.5)
   );
+  /** Dropdown item color */
   color: var(
     --pf-c-dropdown__menu-item--Color,
     var(--pf-global--Color--dark-100, #151515)
   );
+  /** Dropdown item background color */
   background-color: var(
     --pf-c-dropdown__menu-item--BackgroundColor,
     transparent
@@ -73,19 +78,24 @@
   align-items: stretch;
   justify-content: space-between;
   flex-wrap: wrap;
+  /** Dropdown item padding */
   padding: var(
+      /** Dropdown item padding top */
       --pf-c-dropdown__menu-item--PaddingTop,
       var(--pf-global--spacer--sm, 0.5rem)
     )
     var(
+      /** Dropdown item padding right */
       --pf-c-dropdown__menu-item--PaddingRight,
       var(--pf-global--spacer--md, 1rem)
     )
     var(
+      /** Dropdown item padding bottom */
       --pf-c-dropdown__menu-item--PaddingBottom,
       var(--pf-global--spacer--sm, 0.5rem)
     )
     var(
+      /** Dropdown item padding left */
       --pf-c-dropdown__menu-item--PaddingLeft,
       var(--pf-global--spacer--md, 1rem)
     );

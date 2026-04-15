@@ -8,9 +8,17 @@
     "**/demo/*.js",
     "**/demo/*.d.ts",
     "**/_temp/**/*",
-    "**/custom-elements-manifest.config.js",
     "**/*.story.*",
-    "**/test/*_e2e*"
+    "**/test/*_e2e*",
+    "elements/**/*.js",
+    "elements/**/*.d.ts",
+    "elements/**/*.js.map",
+    "core/**/*.js",
+    "core/**/*.d.ts",
+    "core/**/*.js.map",
+    "tools/**/*.js",
+    "tools/**/*.d.ts",
+    "tools/**/*.js.map"
   ],
   "compilerOptions": {
     "allowJs": true,
@@ -64,12 +72,6 @@
       "ScriptHost"
     ],
     "paths": {
-      "@custom-elements-manifest/analyzer": [
-        "@types/custom-elements-manifest__analyzer"
-      ],
-      "@custom-elements-manifest/analyzer/*": [
-        "@types/custom-elements-manifest__analyzer/*"
-      ],
       "@patternfly/elements/*": [
         "./elements/*"
       ],

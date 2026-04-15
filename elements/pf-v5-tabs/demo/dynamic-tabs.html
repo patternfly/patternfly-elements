@@ -1,0 +1,72 @@
+<section>
+<form>
+  <pf-v5-button id="add">
+    <pf-v5-icon icon="circle-plus"></pf-v5-icon> Add Tab
+  </pf-v5-button>
+
+  <pf-v5-button id="delete" danger>
+    <pf-v5-icon icon="delete-left"></pf-v5-icon>
+    Delete Tab
+  </pf-v5-button>
+</form>
+
+<pf-v5-tabs>
+  <pf-v5-tab id="users" slot="tab">Users</pf-v5-tab>
+  <pf-v5-tab-panel>Users</pf-v5-tab-panel>
+  <pf-v5-tab slot="tab">Containers</pf-v5-tab>
+  <pf-v5-tab-panel>Containers <a href="#">Focusable element</a></pf-v5-tab-panel>
+  <pf-v5-tab slot="tab">Database</pf-v5-tab>
+  <pf-v5-tab-panel>Database</pf-v5-tab-panel>
+  <pf-v5-tab slot="tab" disabled>Disabled</pf-v5-tab>
+  <pf-v5-tab-panel>Disabled</pf-v5-tab-panel>
+</pf-v5-tabs>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
+  import '@patternfly/elements/pf-v5-tabs/pf-v5-tabs.js';
+  const addButton = document.getElementById('add');
+  const removeButton = document.getElementById('delete');
+  const tabs = document.querySelector('pf-v5-tabs');
+
+  let count = 0;
+
+  function makePair(count) {
+    const tab = document.createElement('pf-v5-tab');
+          tab.textContent = `New Tab ${count}`;
+          tab.slot = 'tab';
+    const panel = document.createElement('pf-v5-tab-panel');
+          panel.textContent = `New Panel ${count}`;
+    return [tab, panel];
+  }
+  document.querySelector('form').addEventListener('submit', e => e.preventDefault());
+
+  addButton.addEventListener('click', function() {
+    tabs.append(...makePair(++count));
+  });
+
+  removeButton.addEventListener('click', function() {
+    tabs.querySelector('pf-v5-tab:last-of-type').remove();
+    tabs.querySelector('pf-v5-tab-panel:last-of-type').remove();
+  });
+
+</script>
+
+<style>
+  main {
+    display: block;
+    overflow-x: unset;
+  }
+
+  section {
+    margin: 0 auto;
+    padding: 0 16px 32px;
+    width: 100%;
+    max-width: 1008px;
+    @media (min-width: 768px) {
+      padding: 0 32px 32px;
+    }
+  }
+</style>
+

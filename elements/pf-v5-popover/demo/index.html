@@ -1,0 +1,91 @@
+<form id="basic">
+  <fieldset>
+    <legend>Triggered by reference</legend>
+    <pf-v5-popover trigger="my-trigger"
+                heading="Popover heading"
+                body="Popovers are triggered by click rather than hover."
+                footer="Popover footer"
+                style="height: 0;">
+    </pf-v5-popover>
+    <pf-v5-button id="my-trigger">Toggle popover</pf-v5-button>
+  </fieldset>
+
+  <fieldset>
+    <legend>No hide on outside click</legend>
+    <pf-v5-popover heading="Popover heading"
+                body="Popovers are triggered by click rather than hover."
+                footer="Popover footer"
+                no-outside-click>
+      <pf-v5-button>Toggle popover</pf-v5-button>
+    </pf-v5-popover>
+  </fieldset>
+
+  <fieldset>
+    <legend>Close popover from content</legend>
+    <pf-v5-popover>
+      <h3 slot="heading">Popover heading</h3>
+      <div slot="body">Popovers are triggered by click rather than hover.</div>
+      <span slot="footer">
+        <pf-v5-button id="close-button" variant="link" size="sm" inline>Close popover</pf-v5-button>
+      </span>
+      <pf-v5-button>Toggle popover</pf-v5-button>
+    </pf-v5-popover>
+  </fieldset>
+
+  <fieldset>
+    <legend>Without header, footer, or close</legend>
+    <pf-v5-popover hide-close>
+      <div slot="body">
+        This popover has no padding and is intended for use with content that has its own spacing and should touch the
+        edges of the popover container.
+      </div>
+      <pf-v5-button>Toggle popover</pf-v5-button>
+    </pf-v5-popover>
+  </fieldset>
+
+  <fieldset>
+    <legend>Width auto</legend>
+    <pf-v5-popover position="bottom">
+      <div slot="body">Removes fixed-width and allows width to be defined by contents.</div>
+      <pf-v5-button>Toggle popover</pf-v5-button>
+    </pf-v5-popover>
+  </fieldset>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-popover/pf-v5-popover.js';
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
+
+  // Close popover from content
+  const closeButton = document.getElementById('close-button');
+  closeButton?.addEventListener('click', event => event.target.closest('pf-v5-popover').hide());
+
+  document.addEventListener('submit', function(event) {
+    event.preventDefault();
+  });
+</script>
+
+<style>
+  form {
+    padding: 0 2rem;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 8px;
+    & h2 {
+      width: 100%;
+    }
+  }
+
+  #no-padding pf-v5-popover::part(content) {
+    --pf-v5-c-popover__content--PaddingTop: 0px;
+    --pf-v5-c-popover__content--PaddingRight: 0px;
+    --pf-v5-c-popover__content--PaddingBottom: 0px;
+    --pf-v5-c-popover__content--PaddingLeft: 0px;
+  }
+
+  #auto-width pf-v5-popover::part(content) {
+    --pf-v5-c-popover--MaxWidth: none;
+    --pf-v5-c-popover--MinWidth: auto;
+  }
+</style>

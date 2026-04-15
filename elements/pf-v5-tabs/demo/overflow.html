@@ -1,0 +1,55 @@
+<section>
+  <pf-v5-tabs id="overflow">
+    <pf-v5-tab slot="tab">Users</pf-v5-tab>
+    <pf-v5-tab-panel>Users</pf-v5-tab-panel>
+    <pf-v5-tab slot="tab">Containers</pf-v5-tab>
+    <pf-v5-tab-panel>Containers</pf-v5-tab-panel>
+    <pf-v5-tab slot="tab">Database</pf-v5-tab>
+    <pf-v5-tab-panel>Database</pf-v5-tab-panel>
+    <pf-v5-tab slot="tab" active>Server</pf-v5-tab>
+    <pf-v5-tab-panel>Server</pf-v5-tab-panel>
+    <pf-v5-tab slot="tab">System</pf-v5-tab>
+    <pf-v5-tab-panel>System</pf-v5-tab-panel>
+    <pf-v5-tab slot="tab">Network</pf-v5-tab>
+    <pf-v5-tab-panel>Network</pf-v5-tab-panel>
+  </pf-v5-tabs>
+
+  <form>
+    Box variant:
+    <label for="toggle-resize" data-state="on">Dark</label>
+    <label for="toggle-resize" data-state="off">None</label>
+    <pf-v5-switch id="toggle-resize"></pf-v5-switch>
+  </form>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
+  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  import '@patternfly/elements/pf-v5-tabs/pf-v5-tabs.js';
+  const tabs = document.getElementById('overflow');
+  const toggle = document.getElementById('toggle-resize');
+  toggle.addEventListener('change', function() {
+    if (toggle.checked) {
+      tabs.setAttribute('box', 'dark');
+    } else {
+      tabs.removeAttribute('box');
+    }
+  });
+</script>
+
+<style>
+  main {
+    display: block;
+    overflow-x: unset;
+  }
+
+  section {
+    margin: 0 auto;
+    padding: 0 16px 32px;
+    width: 100%;
+    max-width: 1008px;
+    @media (min-width: 768px) {
+      padding: 0 32px 32px;
+    }
+  }
+</style>

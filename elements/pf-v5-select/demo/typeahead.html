@@ -1,0 +1,29 @@
+<section id="typeahead-demo">
+  <label for="state">State</label>
+  <pf-v5-select id="state"
+             variant="typeahead"
+             placeholder="Select a state">
+    <pf-v5-option value="Alabama"
+               description="The heart of Dixie"></pf-v5-option>
+    <pf-v5-option value="Florida"
+               description="The sunshine state"
+               disabled></pf-v5-option>
+    <pf-v5-option value="New Jersey"></pf-v5-option>
+    <pf-v5-option value="New York"></pf-v5-option>
+    <pf-v5-option value="New Mexico"></pf-v5-option>
+    <pf-v5-option value="North Carolina"></pf-v5-option>
+  </pf-v5-select>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-select/pf-v5-select.js';
+</script>
+
+<style>
+#typeahead-demo {
+  padding: 1em;
+  & pf-v5-select {
+    max-width: 300px;
+  }
+}
+</style>

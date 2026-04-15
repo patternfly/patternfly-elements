@@ -1,0 +1,28 @@
+<section>
+  <pf-v5-button size="small">Primary small</pf-v5-button>
+  <pf-v5-button size="small" variant="secondary">Secondary small</pf-v5-button>
+  <pf-v5-button size="small" variant="secondary" danger>Danger secondary small</pf-v5-button>
+  <pf-v5-button size="small" variant="tertiary">Tertiary small</pf-v5-button>
+  <pf-v5-button size="small" danger>Danger small</pf-v5-button>
+  <pf-v5-button size="small" warning>Warning small</pf-v5-button>
+
+  <pf-v5-button size="large">Primary large</pf-v5-button>
+  <pf-v5-button size="large" variant="secondary">Secondary large</pf-v5-button>
+  <pf-v5-button size="large" variant="secondary" danger>Danger secondary large</pf-v5-button>
+  <pf-v5-button size="large" variant="tertiary">Tertiary large</pf-v5-button>
+  <pf-v5-button size="large" danger>Danger large</pf-v5-button>
+  <pf-v5-button size="large" warning>Warning large</pf-v5-button>
+</section>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  for (const button of document.querySelectorAll('pf-v5-button')) {
+    button.addEventListener('click', console.log);
+  }
+</script>
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

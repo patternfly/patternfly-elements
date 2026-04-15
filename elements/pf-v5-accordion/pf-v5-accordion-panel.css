@@ -1,0 +1,85 @@
+:host {
+  display: none;
+  position: relative;
+  overflow: hidden;
+  will-change: height;
+  color: var(--pf-global--Color--100, #151515);
+  /** Background color for accordion panel */
+  background-color:
+    var(
+      --pf-v5-c-accordion--BackgroundColor,
+      var(--pf-global--BackgroundColor--light-100, #ffffff)
+    );
+}
+
+.body {
+  /** Padding for accordion panel body */
+  padding:
+    /** Top padding for panel content */
+    var(--pf-v5-c-accordion__panel-body--PaddingTop, var(--pf-global--spacer--sm, 0.5rem))
+    /** Right padding for panel content */
+    var(--pf-v5-c-accordion__panel-body--PaddingRight, var(--pf-global--spacer--md, 1rem))
+    /** Bottom padding for panel content */
+    var(--pf-v5-c-accordion__panel-body--PaddingBottom, var(--pf-global--spacer--sm, 0.5rem))
+    /** Left padding for panel content */
+    var(--pf-v5-c-accordion__panel-body--PaddingLeft, var(--pf-global--spacer--md, 1rem));
+}
+
+.body:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  /** Before width for panel content */
+  width: var(--pf-v5-c-accordion__panel-body--before--Width, var(--pf-global--BorderWidth--lg, 3px));
+  /** Background color for panel content before element */
+  background-color: var(--pf-v5-c-accordion__panel-body--before--BackgroundColor, transparent);
+}
+
+:host([large]) {
+  --pf-v5-c-accordion__panel-body--PaddingTop:
+    var(--pf-v5-c-accordion--m-display-lg__expanded-content-body--PaddingTop, 0);
+  --pf-v5-c-accordion__panel-body--PaddingRight:
+    var(--pf-v5-c-accordion--m-display-lg__expanded-content-body--PaddingRight, 1rem);
+  --pf-v5-c-accordion__panel-body--PaddingBottom:
+    var(--pf-v5-c-accordion--m-display-lg__expanded-content-body--PaddingBottom, 1.5rem);
+  --pf-v5-c-accordion__panel-body--PaddingLeft:
+    var(--pf-v5-c-accordion--m-display-lg__expanded-content-body--PaddingLeft, 1.5rem);
+  --pf-v5-c-accordion__panel--FontSize:
+    var(--pf-v5-c-accordion--m-display-lg__expanded-content--FontSize, 1rem);
+  --pf-v5-c-accordion__panel--Color:
+    var(--pf-v5-c-accordion--m-display-lg__expanded-content--Color, #151515);
+}
+
+:host([large]) .body:last-child {
+  --pf-v5-c-accordion__panel-body--PaddingBottom:
+    var(--pf-v5-c-accordion--m-display-lg__expanded-content-body--last-child--PaddingBottom, 1.5rem);
+}
+
+.content {
+  /** Font color for panel content */
+  color: var(--pf-v5-c-accordion__panel--Color, var(--pf-global--Color--dark-200, #6a6e73));
+  /** Font size for panel content */
+  font-size: var(--pf-v5-c-accordion__panel--FontSize, var(--pf-global--FontSize--sm, 0.875rem));
+}
+
+:host([fixed]) {
+  overflow-y: auto;
+  /** Maximum height for panel content when fixed */
+  max-height: var(--pf-v5-c-accordion__panel--m-fixed--MaxHeight, 9.375rem);
+}
+
+:host([expanded]) {
+  display: block;
+  position: relative;
+}
+
+.content[expanded],
+:host([expanded]) .content {
+  /** Sidebar color for panel when expanded */
+  --pf-v5-c-accordion__panel-body--before--BackgroundColor:
+    var(
+      --pf-v5-c-accordion__panel--content-body--before--BackgroundColor,
+      var(--pf-global--primary-color--100, #0066cc));
+}

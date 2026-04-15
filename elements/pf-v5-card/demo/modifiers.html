@@ -1,0 +1,107 @@
+<section>
+  <form id="card-settings">
+    <pf-v5-switch id="flat" data-attribute="flat"></pf-v5-switch>
+    <label for="flat">Flat</label>
+
+    <pf-v5-switch id="rounded" data-attribute="rounded"></pf-v5-switch>
+    <label for="rounded">Rounded</label>
+
+    <pf-v5-switch id="plain" data-attribute="plain"></pf-v5-switch>
+    <label for="plain">Plain</label>
+
+    <pf-v5-switch id="full-height" data-attribute="full-height"></pf-v5-switch>
+    <label for="full-height">Full Height</label>
+
+    <pf-v5-switch id="size-compact" data-attribute="size" data-value="compact"></pf-v5-switch>
+    <label for="size-compact">Compact</label>
+
+    <pf-v5-switch id="size-large" data-attribute="size" data-value="large"></pf-v5-switch>
+    <label for="size-large">Large</label>
+  </form>
+
+  <div id="card-container">
+    <pf-v5-card>
+      <h2 slot="header">Lightest card</h2>
+      <p>This is the lightest pf-v5-card and <a href="#">a link</a>, and <a href=".">a visited link</a> with <code>border</code>.</p>
+      <pf-v5-button slot="footer">Try</pf-v5-button>
+      <pf-v5-button slot="footer">Buy</pf-v5-button>
+    </pf-v5-card>
+  </div>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-card/pf-v5-card.js';
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+
+  const form = document.getElementById('card-settings');
+  const card = document.querySelector('pf-v5-card');
+
+  form.addEventListener('change', async function(event) {
+    await Promise.all(Array.from(document.querySelectorAll('pf-v5-switch'), x => x.updateComplete));
+    const { checked } = event.target;
+    const { attribute, value } = event.target.dataset;
+    switch (attribute) {
+      case 'flat':
+      case 'rounded':
+      case 'plain':
+      case 'full-height':
+        card.toggleAttribute(attribute, checked);
+        break;
+      case 'size':
+        if (checked) {
+          card.setAttribute('size', value);
+        } else if (!checked && form.querySelector('[data-attribute="size"][checked]')) {
+          card.setAttribute('size', form.querySelector('[data-attribute="size"][checked]').dataset.value);
+        } else if(!checked) {
+          card.removeAttribute('size');
+        }
+        break;
+    }
+  });
+
+</script>
+
+<style>
+  [data-demo="pf-v5-card"] { display: contents; }
+
+  section {
+    padding: 2em;
+    background: #eeeeee;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content 1fr;
+    height: 100%;
+    position: relative;
+    @media (min-width: 800px) {
+      grid-template-columns: 1fr 4fr;
+      grid-template-rows: 1fr;
+    }
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: max-content auto;
+    grid-auto-rows: max-content;
+    gap: 1em;
+  }
+
+  pf-v5-card {
+    max-width: 50%;
+    margin: 0 auto;
+  }
+
+  #card-container {
+    padding: 2em;
+    /* resize: vertical; */
+    /* overflow: auto; */
+    /* min-height: 40vh; */
+    background: repeating-linear-gradient(
+      45deg,
+      #fff,
+      #fff 10px,
+      #eee 10px,
+      #eee 20px
+    );
+  }
+</style>

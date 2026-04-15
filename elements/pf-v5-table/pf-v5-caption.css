@@ -1,0 +1,9 @@
+:host {
+  display: table-caption;
+  /* stylelint-disable-next-line max-line-length */
+  padding: var(--pf-v5-c-table-caption--PaddingTop, var(--pf-global--spacer--md, 1rem)) var(--pf-v5-c-table-caption--PaddingRight, var(--pf-global--spacer--lg, 1.5rem)) var(--pf-v5-c-table-caption--PaddingBottom, var(--pf-global--spacer--md, 1rem)) var(--pf-v5-c-table-caption--PaddingLeft, var(--pf-global--spacer--lg, 1.5rem));
+  font-size: var(--pf-v5-c-table-caption--FontSize, var(--pf-global--FontSize--sm, 0.875rem));
+  color: var(--pf-v5-c-table-caption--Color, var(--pf-global--Color--200, #6a6e73));
+  text-align: left;
+  background-color: var(--pf-v5-c-table--BackgroundColor);
+}

@@ -1,0 +1,70 @@
+<header>
+  <h2>Toggle Container Width</h2>
+  <pf-v5-switch id="width-toggle"></pf-v5-switch>
+  <label for="width-toggle" data-state="off">Full width</label>
+  <label for="width-toggle" data-state="on">Narrow</label>
+</header>
+
+<section id="placement">
+  <p>
+    Tooltips can be anchored to the left:
+    <pf-v5-tooltip position="left" content="Left Tooltip" tabindex="0"><samp>Left</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="left-start" content="Left Start Tooltip" tabindex="0"><samp>Left Start</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="left-end" content="Left End Tooltip" tabindex="0"><samp>Left End</samp></pf-v5-tooltip>.
+    They can be anchored to the right:
+    <pf-v5-tooltip position="right" content="Right Tooltip" tabindex="0"><samp>Right</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="right-start" content="Right Start Tooltip" tabindex="0"><samp>Right Start</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="right-end" content="Right End Tooltip" tabindex="0"><samp>Right End</samp></pf-v5-tooltip>.
+    They can be anchored to the top:
+    <pf-v5-tooltip position="top" content="Top Tooltip" tabindex="0"><samp>Top</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="top-start" content="Top Start Tooltip" tabindex="0"><samp>Top Start</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="top-end" content="Top End Tooltip" tabindex="0"><samp>Top End</samp></pf-v5-tooltip>.
+    They can be anchored to the bottom:
+    <pf-v5-tooltip position="bottom" content="Bottom Tooltip" tabindex="0"><samp>Bottom</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="bottom-start" content="Bottom Start Tooltip" tabindex="0"><samp>Bottom Start</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="bottom-end" content="Bottom End Tooltip" tabindex="0"><samp>Bottom End</samp></pf-v5-tooltip>.
+  </p>
+  <p>
+    Tooltips can have content which wraps lines, but this is discouraged,
+    because tooltips are meant to contain as little content as possible.
+    When tooltips have lengthy content anchored to the left, it looks like this:
+    <pf-v5-tooltip position="left" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Left</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="left-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Left Start</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="left-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Left End</samp></pf-v5-tooltip>.
+    When tooltips have lengthy content anchored to the right, it looks like this:
+    <pf-v5-tooltip position="right" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Right</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="right-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Right Start</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="right-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Right End</samp></pf-v5-tooltip>.
+    When tooltips have lengthy content anchored to the top, it looks like this:
+    <pf-v5-tooltip position="top" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Top</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="top-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Top Start</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="top-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Top End</samp></pf-v5-tooltip>.
+    When tooltips have lengthy content anchored to the bottom, it looks like this:
+    <pf-v5-tooltip position="bottom" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Bottom</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="bottom-start" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Bottom Start</samp></pf-v5-tooltip>,
+    <pf-v5-tooltip position="bottom-end" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi eget mauris pharetra et ultrices." tabindex="0"><samp>Bottom End</samp></pf-v5-tooltip>.
+  </p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
+  document.getElementById('width-toggle').addEventListener('change', function(event) {
+    document.querySelector('[data-demo]').classList.toggle('narrow', event.target.checked);
+  });
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+
+  .narrow :is(p, ul) {
+    max-width: 400px;
+    margin-inline: auto;
+  }
+
+  samp {
+    font-weight: bold;
+  }
+</style>

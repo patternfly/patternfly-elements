@@ -1,0 +1,26 @@
+<section id="select-demo">
+  <pf-v5-select placeholder="Select a title"
+             accessible-label="Title">
+    <pf-v5-option>Mr</pf-v5-option>
+    <pf-v5-option>Miss</pf-v5-option>
+    <pf-v5-option>Mrs</pf-v5-option>
+    <pf-v5-option>Ms</pf-v5-option>
+    <hr>
+    <pf-v5-option>Dr</pf-v5-option>
+    <pf-v5-option>Other</pf-v5-option>
+  </pf-v5-select>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-select/pf-v5-select.js';
+</script>
+
+
+<style>
+#select-demo {
+  padding: 1em;
+  & pf-v5-select {
+    max-width: 300px;
+  }
+}
+</style>

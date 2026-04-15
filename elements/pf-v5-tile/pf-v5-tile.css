@@ -1,0 +1,148 @@
+:host {
+  position: relative;
+  display: inline-grid;
+  padding: 
+    /** Top padding for tile */
+    var(--pf-v5-c-tile--PaddingTop, var(--pf-global--spacer--lg, 1.5rem))
+    /** Right padding for tile */
+    var(--pf-v5-c-tile--PaddingRight, var(--pf-global--spacer--lg, 1.5rem))
+    /** Bottom padding for tile */
+    var(--pf-v5-c-tile--PaddingBottom, var(--pf-global--spacer--lg, 1.5rem))
+    /** Left padding for tile */
+    var(--pf-v5-c-tile--PaddingLeft, var(--pf-global--spacer--lg, 1.5rem));
+  text-align: center;
+  cursor: pointer;
+  /** Background color for tile */
+  background-color: var(--pf-v5-c-tile--BackgroundColor,
+                    var(--pf-global--BackgroundColor--100,
+                    var(--pf-global--BackgroundColor--light-100), #ffffff));
+  grid-template-rows: -webkit-min-content;
+  grid-template-rows: min-content;
+  /** Transition animation for tile */
+  transition: var(--pf-v5-c-tile--Transition, none);
+  /** Vertical translation for tile */
+  transform: translateY(var(--pf-v5-c-tile--TranslateY, 0));
+}
+
+:host::before,
+:host::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
+}
+
+:host::before {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: 
+    /** Border width for tile */
+    var(--pf-v5-c-tile--before--BorderWidth, var(--pf-global--BorderWidth--sm, 1px))
+    solid
+    /** Border color for tile */
+    var(--pf-v5-c-tile--before--BorderColor, var(--pf-global--BorderColor--100, #d2d2d2));
+}
+
+:host::after {
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /** Height of tile bottom accent */
+  height: var(--pf-v5-c-tile--after--Height, var(--pf-global--BorderWidth--lg, 3px));
+  /** Background color of tile bottom accent */
+  background-color: var(--pf-v5-c-tile--after--BackgroundColor, transparent);
+  /** Transition animation for tile bottom accent */
+  transition: var(--pf-v5-c-tile--after--Transition, none);
+  /** Scale Y and translate Y transform for tile bottom accent */
+  transform: scaleY(var(--pf-v5-c-tile--after--ScaleY, 1)) translateY(var(--pf-v5-c-tile--after--TranslateY, 0));
+}
+
+:host(:hover) {
+  --pf-v5-c-tile__title--Color: var(--pf-v5-c-tile--hover__title--Color, var(--pf-global--primary-color--100, #06c));
+  --pf-v5-c-tile__icon--Color: var(--pf-v5-c-tile--hover__icon--Color, var(--pf-global--primary-color--100, #06c));
+  --pf-v5-c-tile--after--BackgroundColor: var(--pf-v5-c-tile--hover--after--BackgroundColor, var(--pf-global--active-color--400, #73bcf7));
+}
+
+:host(:focus) {
+  --pf-v5-c-tile__title--Color: var(--pf-v5-c-tile--focus__title--Color, var(--pf-global--primary-color--100, #06c));
+  --pf-v5-c-tile__icon--Color: var(--pf-v5-c-tile--focus__icon--Color, var(--pf-global--primary-color--100, #06c));
+  --pf-v5-c-tile--after--BackgroundColor: var(--pf-v5-c-tile--focus--after--BackgroundColor, var(--pf-global--active-color--400, #73bcf7));
+}
+
+:host(:active),
+:host([selected]) {
+  --pf-v5-c-tile__title--Color: var(--pf-v5-c-tile--m-selected__title--Color, var(--pf-global--primary-color--100, #06c));
+  --pf-v5-c-tile__icon--Color: var(--pf-v5-c-tile--m-selected__icon--Color, var(--pf-global--primary-color--100, #06c));
+  --pf-v5-c-tile--TranslateY: var(--pf-v5-c-tile--m-selected--TranslateY,
+                            calc(-1 * var(--pf-v5-c-tile--m-selected--after--ScaleY, 2) * var(--pf-v5-c-tile--m-selected--after--Height,
+                            var(--pf-global--BorderWidth--lg, 3px))));
+  --pf-v5-c-tile--Transition: var(--pf-v5-c-tile--m-selected--Transition,
+                          var(--pf-global--Transition, all 250ms cubic-bezier(0.42, 0, 0.58, 1)));
+  --pf-v5-c-tile--after--Height: var(--pf-v5-c-tile--m-selected--after--Height, var(--pf-global--BorderWidth--lg, 3px));
+  --pf-v5-c-tile--after--BackgroundColor: var(--pf-v5-c-tile--m-selected--after--BackgroundColor, var(--pf-global--active-color--100, #06c));
+  --pf-v5-c-tile--after--Transition: var(--pf-v5-c-tile--m-selected--after--Transition,
+                          var(--pf-global--Transition, all 250ms cubic-bezier(0.42, 0, 0.58, 1)));
+  --pf-v5-c-tile--after--ScaleY: var(--pf-v5-c-tile--m-selected--after--ScaleY, 2);
+}
+
+:host([disabled]) {
+  --pf-v5-c-tile--BackgroundColor: var(--pf-v5-c-tile--m-disabled--BackgroundColor, var( --pf-global--disabled-color--300, #f0f0f0));
+  --pf-v5-c-tile__title--Color: var(--pf-v5-c-tile--m-disabled__title--Color, var(--pf-global--disabled-color--100, #6a6e73));
+  --pf-v5-c-tile__body--Color: var(--pf-v5-c-tile--m-disabled__body--Color,  var(--pf-global--disabled-color--100, #6a6e73));
+  --pf-v5-c-tile--before--BorderWidth: 0;
+  --pf-v5-c-tile__icon--Color: var(--pf-v5-c-tile--m-disabled__icon--Color, var(--pf-global--disabled-color--100, #6a6e73));
+  pointer-events: none;
+}
+
+[part="header"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[part="title"] {
+  /** Color for tile title */
+  color: var(--pf-v5-c-tile__title--Color, var(--pf-global--Color--100, var(--pf-global--Color--dark-100, #151515)));
+}
+
+[part="body"] {
+  font-size: var(--pf-v5-c-tile__body--FontSize, var(--pf-global--FontSize--xs, 0.75rem));
+  color: var(--pf-v5-c-tile__body--Color, var(--pf-global--Color--100, #151515));
+}
+
+[part="icon"] {
+  /** Font size for tile icon */
+  --_icon-size: var(--pf-v5-c-tile__icon--FontSize, var(--pf-global--icon--FontSize--md, 1.125rem));
+  --pf-v5-icon--size: var(--_icon-size);
+  /** Right margin for tile icon */
+  margin-right: var(--pf-v5-c-tile__icon--MarginRight, var(--pf-global--spacer--sm, 0.5rem));
+  font-size: var(--_icon-size);
+  /** Color for tile icon */
+  color: var(--pf-v5-c-tile__icon--Color, var(--pf-global--Color--100, #151515));
+}
+
+:host([stacked]) [part="header"] {
+  --pf-v5-c-tile__icon--MarginRight: 0;
+  --_icon-size: var(--pf-v5-c-tile__icon--FontSize, var(--pf-v5-c-tile__header--m-stacked__icon--FontSize, var(--pf-global--icon--FontSize--lg, 1.5rem)));
+  flex-direction: column;
+  justify-content: initial;
+}
+
+:host([stacked="lg"]) [part="icon"] {
+  --_icon-size: var(--pf-v5-c-tile__icon--FontSize, var(--pf-v5-c-tile--m-display-lg__header--m-stacked__icon--FontSize, var(--pf-global--icon--FontSize--xl, 3.375rem)));
+}
+
+:host([stacked]) [part="icon"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /** Bottom margin for stacked tile icon */
+  margin-bottom: var(--pf-v5-c-tile__header--m-stacked__icon--MarginBottom, var(--pf-global--spacer--xs, 0.25rem));
+}
+
+#body::slotted(:is(h1,h2,h3,h4,h5,h6,p)),
+#title::slotted(:is(h1,h2,h3,h4,h5,h6,p)) {
+  margin-block: 0;
+}
+

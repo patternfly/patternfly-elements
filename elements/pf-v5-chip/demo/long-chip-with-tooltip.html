@@ -1,0 +1,21 @@
+<pf-v5-tooltip>
+  <pf-v5-chip id="longchip">Really long chip that goes on and on</pf-v5-chip>
+  <span slot="content">Really long chip that goes on and on</span>
+</pf-v5-tooltip>
+
+<style>
+  #longchip::part(text) {
+    max-width: 10em;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    text-wrap: nowrap;
+  }
+</style>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-chip/pf-v5-chip.js';
+  import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
+</script>
+

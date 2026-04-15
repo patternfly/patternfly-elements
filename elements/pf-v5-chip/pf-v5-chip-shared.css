@@ -1,0 +1,11 @@
+:host {
+  --pf-v5-c-chip__c-button--PaddingTop: var(--pf-global--spacer--xs, 0.25rem);
+  --pf-v5-c-chip__c-button--PaddingRight: var(--pf-global--spacer--sm, 0.5rem);
+  --pf-v5-c-chip__c-button--PaddingBottom: var(--pf-global--spacer--xs, 0.25rem);
+  --pf-v5-c-chip__c-button--PaddingLeft: var(--pf-global--spacer--sm, 0.5rem);
+  --pf-v5-c-chip__c-button--MarginTop: calc(var(--pf-v5-c-chip--PaddingTop) * -1);
+  --pf-v5-c-chip__c-button--MarginRight: calc(var(--pf-v5-c-chip--PaddingRight) / 2 * -1);
+  --pf-v5-c-chip__c-button--MarginBottom: calc(var(--pf-v5-c-chip--PaddingBottom) * -1);
+  --pf-v5-c-chip__c-button--FontSize: var(--pf-global--FontSize--xs, 0.75rem);
+  --pf-v5-c-chip__c-badge--MarginLeft: var(--pf-global--spacer--xs, 0.25rem);
+}

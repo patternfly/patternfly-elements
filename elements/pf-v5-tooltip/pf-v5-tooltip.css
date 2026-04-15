@@ -1,0 +1,108 @@
+:host {
+  --_timestamp-text-decoration: underline dashed 1px;
+  --_timestamp-text-underline-offset: 4px;
+  display: inline;
+}
+
+* { box-sizing: border-box; }
+
+#container {
+  display: inline-flex;
+  position: relative;
+  max-width: 100%;
+  /** Tooltip arrow width */
+  --_floating-arrow-size: var(--pf-v5-c-tooltip__arrow--Width, 0.5rem);
+}
+
+#tooltip,
+#tooltip::after {
+  position: absolute;
+}
+
+#tooltip {
+  --_timestamp-text-decoration: none;
+  --_timestamp-text-underline-offset: initial;
+  user-select: none;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10000;
+  transition: opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s;
+  text-align: center;
+  word-break: break-word;
+  translate: var(--_floating-content-translate);
+  max-width: calc(100vw - 10px);
+  width: max-content;
+  top: 0;
+  left: 0;
+  will-change: opacity;
+  /** Sets the font color for the tooltip content */
+  line-height: var(--pf-v5-c-tooltip--line-height, 1.5);
+  /** Maximum width for the tooltip */
+  max-width: var(--pf-v5-c-tooltip--MaxWidth, 18.75rem);
+  /** Box shadow for the tooltip */
+  box-shadow: var(--pf-v5-c-tooltip--BoxShadow,
+    var(--pf-global--BoxShadow--md,
+      0 0.25rem 0.5rem 0rem rgba(3, 3, 3, 0.12),
+      0 0 0.25rem 0 rgba(3, 3, 3, 0.06)));
+  /** Tooltip padding (top, right, bottom, left) */
+  padding:
+    var(--pf-v5-c-tooltip__content--PaddingTop,
+      var(--pf-global--spacer--sm, 0.5rem))
+    var(--pf-v5-c-tooltip__content--PaddingRight,
+      var(--pf-global--spacer--sm, 0.5rem))
+    var(--pf-v5-c-tooltip__content--PaddingBottom,
+      var(--pf-global--spacer--sm, 0.5rem))
+    var(--pf-v5-c-tooltip__content--PaddingLeft,
+      var(--pf-global--spacer--sm, 0.5rem));
+  /** Font size for the tooltip content */
+  font-size: var(--pf-v5-c-tooltip__content--FontSize,
+    var(--pf-global--FontSize--sm, 0.875rem));
+  /** Sets the font color for the tooltip content */
+  color: var(--pf-v5-c-tooltip__content--Color,
+    var(--pf-global--Color--light-100, #ffffff));
+  /** Sets the background color for the tooltip content */
+  background-color: var(--pf-v5-c-tooltip__content--BackgroundColor,
+    var(--pf-global--BackgroundColor--dark-100, #151515));
+}
+
+#tooltip::after {
+  display: block;
+  content: '';
+  rotate: 45deg;
+  width: var(--_floating-arrow-size);
+  height: var(--_floating-arrow-size);
+  will-change: left top right bottom;
+  background-color: var(--pf-v5-c-tooltip__content--BackgroundColor,
+    var(--pf-global--BackgroundColor--dark-100, #151515));
+}
+
+.open #tooltip {
+  opacity: 1;
+  user-select: initial;
+}
+
+/* LEFT */
+.left #tooltip::after          { right: calc(-0.5 * var(--_floating-arrow-size)); }
+.left.center #tooltip::after   { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.left.start #tooltip::after    { top: var(--_floating-arrow-size); }
+.left.end #tooltip::after      { bottom: var(--_floating-arrow-size); }
+
+/* TOP */
+.top #tooltip::after           { top: calc(100% - 0.5 * var(--_floating-arrow-size)); }
+.top.center #tooltip::after    { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.top.start #tooltip::after     { left: var(--_floating-arrow-size); }
+.top.end #tooltip::after       { right: var(--_floating-arrow-size); }
+
+/* RIGHT */
+.right #tooltip::after         { right: calc(100% - 0.5 * var(--_floating-arrow-size)); }
+.right.center #tooltip::after  { top: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.right.start #tooltip::after   { top: var(--_floating-arrow-size); }
+.right.end #tooltip::after     { bottom: var(--_floating-arrow-size); }
+
+/* BOTTOM */
+.bottom #tooltip::after        { bottom: calc(100% - 0.5 * var(--_floating-arrow-size)); }
+.bottom.center #tooltip::after { right: calc(50% - 0.5 * var(--_floating-arrow-size)); }
+.bottom.start #tooltip::after  { left: var(--_floating-arrow-size); }
+.bottom.end #tooltip::after    { right: var(--_floating-arrow-size); }
+

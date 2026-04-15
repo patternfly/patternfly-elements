@@ -1,0 +1,131 @@
+<p>
+  <small>
+    <em>Note:</em> When using a custom toggle, you must slot in a <code>pf-v5-dropdown-menu</code>.
+  </small>
+  <span id="switch-group">
+    <pf-v5-switch id="disable-all"></pf-v5-switch>
+    <label for="disable-all"><span data-state="on">Enable</span><span data-state="off">Disable</span> all dropdowns</label>
+  </span>
+</p>
+
+<pf-v5-dropdown id="control">
+  <pf-v5-button variant="control" slot="toggle">
+    Control toggle
+    <pf-v5-icon size="md" icon="caret-down"></pf-v5-icon>
+  </pf-v5-button>
+  <pf-v5-dropdown-menu slot="menu">
+    <pf-v5-dropdown-item>item4</pf-v5-dropdown-item>
+    <hr>
+    <pf-v5-dropdown-group label="Group 1">
+      <pf-v5-dropdown-item>item1</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item2</pf-v5-dropdown-item>
+      <hr>
+      <pf-v5-dropdown-item>item3</pf-v5-dropdown-item>
+    </pf-v5-dropdown-group>
+    <pf-v5-dropdown-group label="Group 2">
+      <pf-v5-dropdown-item>item1</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item2</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item3</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item disabled>disabled</pf-v5-dropdown-item>
+    </pf-v5-dropdown-group>
+  </pf-v5-dropdown-menu>
+</pf-v5-dropdown>
+
+<pf-v5-dropdown id="primary">
+  <pf-v5-button variant="primary" slot="toggle">Primary toggle</pf-v5-button>
+  <pf-v5-dropdown-menu slot="menu">
+    <pf-v5-dropdown-item>item4</pf-v5-dropdown-item>
+    <hr>
+    <pf-v5-dropdown-group label="Group 1">
+      <pf-v5-dropdown-item>item1</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item2</pf-v5-dropdown-item>
+      <hr>
+      <pf-v5-dropdown-item>item3</pf-v5-dropdown-item>
+    </pf-v5-dropdown-group>
+    <pf-v5-dropdown-group label="Group 2">
+      <pf-v5-dropdown-item>item1</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item2</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item3</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item disabled>disabled</pf-v5-dropdown-item>
+    </pf-v5-dropdown-group>
+  </pf-v5-dropdown-menu>
+</pf-v5-dropdown>
+
+<pf-v5-dropdown id="secondary">
+  <pf-v5-button variant="secondary" slot="toggle">Secondary toggle</pf-v5-button>
+  <pf-v5-dropdown-menu slot="menu">
+    <pf-v5-dropdown-item>item4</pf-v5-dropdown-item>
+    <hr>
+    <pf-v5-dropdown-group label="Group 1">
+      <pf-v5-dropdown-item>item1</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item2</pf-v5-dropdown-item>
+      <hr>
+      <pf-v5-dropdown-item>item3</pf-v5-dropdown-item>
+    </pf-v5-dropdown-group>
+    <pf-v5-dropdown-group label="Group 2">
+      <pf-v5-dropdown-item>item1</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item2</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item3</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item disabled>disabled</pf-v5-dropdown-item>
+    </pf-v5-dropdown-group>
+  </pf-v5-dropdown-menu>
+</pf-v5-dropdown>
+
+<pf-v5-dropdown id="plain">
+  <pf-v5-button plain slot="toggle">Plain toggle</pf-v5-button>
+  <pf-v5-dropdown-menu slot="menu">
+    <pf-v5-dropdown-item>item4</pf-v5-dropdown-item>
+    <hr>
+    <pf-v5-dropdown-group label="Group 1">
+      <pf-v5-dropdown-item>item1</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item2</pf-v5-dropdown-item>
+      <hr>
+      <pf-v5-dropdown-item>item3</pf-v5-dropdown-item>
+    </pf-v5-dropdown-group>
+    <pf-v5-dropdown-group label="Group 2">
+      <pf-v5-dropdown-item>item1</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item2</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item3</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item disabled>disabled</pf-v5-dropdown-item>
+    </pf-v5-dropdown-group>
+  </pf-v5-dropdown-menu>
+</pf-v5-dropdown>
+
+<pf-v5-dropdown id="icon">
+  <pf-v5-button plain slot="toggle" icon="ellipsis-v" label="Icon toggle"></pf-v5-button>
+  <pf-v5-dropdown-menu slot="menu">
+    <pf-v5-dropdown-item>item4</pf-v5-dropdown-item>
+    <hr>
+    <pf-v5-dropdown-group label="Group 1">
+      <pf-v5-dropdown-item>item1</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item2</pf-v5-dropdown-item>
+      <hr>
+      <pf-v5-dropdown-item>item3</pf-v5-dropdown-item>
+    </pf-v5-dropdown-group>
+    <pf-v5-dropdown-group label="Group 2">
+      <pf-v5-dropdown-item>item1</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item2</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>item3</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item disabled>disabled</pf-v5-dropdown-item>
+    </pf-v5-dropdown-group>
+  </pf-v5-dropdown-menu>
+</pf-v5-dropdown>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-dropdown/pf-v5-dropdown.js';
+  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  const sw = document.getElementById('disable-all')
+  sw.addEventListener('click', function() {
+    document.querySelectorAll('main pf-v5-dropdown').forEach(x => x.disabled = sw.checked);
+  })
+</script>
+
+
+<style>
+#switch-group {
+  display: inline-flex;
+  justify-content: center;
+  vertical-align: middle;
+  gap: 8px;
+}
+</style>

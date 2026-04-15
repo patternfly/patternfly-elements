@@ -1,0 +1,32 @@
+<fieldset>
+  <legend>Disabled</legend>
+  <pf-v5-text-input disabled value="disabled text input example"></pf-v5-text-input>
+</fieldset>
+
+<fieldset id="disablable-fieldset" disabled>
+  <legend>Disabled by fieldset</legend>
+  <pf-v5-text-input value="disabled by a fieldset example"></pf-v5-text-input>
+</fieldset>
+
+<label>Disable the fieldset
+  <pf-v5-switch id="disabled-fieldset-switch" checked></pf-v5-switch>
+</label>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-text-input/pf-v5-text-input.js';
+  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  document.getElementById('disabled-fieldset-switch')
+    .addEventListener('change', function() {
+      document.getElementById('disablable-fieldset').disabled = this.checked;
+    });
+</script>
+
+<link rel="stylesheet" href="demo.css">
+
+<style>
+  label {
+    display: flex;
+    gap: 1em;
+    margin-block: 1em;
+  }
+</style>

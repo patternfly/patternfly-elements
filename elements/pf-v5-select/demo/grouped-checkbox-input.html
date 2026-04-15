@@ -1,0 +1,31 @@
+<section id="checkbox-input-demo">
+  <pf-v5-select variant="checkbox" accessible-label="Status">
+    <pf-v5-option-group label="Status" key="group1">
+      <pf-v5-option value="0">Running</pf-v5-option>
+      <pf-v5-option value="1">Stopped</pf-v5-option>
+      <pf-v5-option value="2">Down</pf-v5-option>
+      <pf-v5-option value="3">Degraded</pf-v5-option>
+      <pf-v5-option value="4">Needs maintenance</pf-v5-option>
+    </pf-v5-option-group>
+    <hr>
+    <pf-v5-option-group label="Vendor names" key="group2">
+      <pf-v5-option value="5">Dell</pf-v5-option>
+      <pf-v5-option value="6" disabled>Samsung</pf-v5-option>
+      <pf-v5-option value="7">Hewlett-Packard</pf-v5-option>
+    </pf-v5-option-group>
+  </pf-v5-select>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-select/pf-v5-select.js';
+</script>
+
+
+<style>
+#checkbox-input-demo {
+  padding: 1em;
+  & pf-v5-select {
+    max-width: 300px;
+  }
+}
+</style>

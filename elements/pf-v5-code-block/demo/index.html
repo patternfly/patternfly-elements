@@ -1,0 +1,25 @@
+<article>
+  <pf-v5-code-block id="code">
+    <script type="application/openshift">
+      apiVersion: helm.openshift.io/v1beta1/
+      kind: HelmChartRepository
+      metadata:
+      name: azure-sample-repo0oooo00ooo
+      spec:
+      connectionConfig:
+      url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
+    </script>
+    <pf-v5-clipboard-copy slot="actions" copy-from="#code"></pf-v5-clipboard-copy>
+  </pf-v5-code-block>
+</article>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-code-block/pf-v5-code-block.js';
+  import '@patternfly/elements/pf-v5-clipboard-copy/pf-v5-clipboard-copy.js';
+</script>
+
+<style>
+article {
+  margin-inline: 4em;
+}
+</style>

@@ -2,4 +2,4 @@
 "@patternfly/elements": patch
 ---
 
-`pf-back-to-top`: background color now changes on hover and focus.
+`<pf-back-to-top>`: fixed background color during hover and focus.

@@ -21,7 +21,7 @@ pf-icon, ::slotted(pf-icon) {
 
 #container {
   overflow: clip;
-  overflow-clip-margin: 3px;
+  overflow-clip-margin: 6px;
   text-overflow: ellipsis;
   white-space: nowrap;
   border-width: 0;

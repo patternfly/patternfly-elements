@@ -305,15 +305,8 @@ pf-button {
   cursor: pointer;
 }
 
-:host(:hover) #link ~ *,
-:host(:focus-within) #link ~ *,
-#link:hover,
-#link:focus {
-  cursor: pointer;
-}
-
-:host(:hover) #container:has(#link)::before,
-:host(:focus-within) #container:has(#link)::before {
+#container:has(#link:hover)::before,
+#container:has(#link:focus)::before {
   border-width: var(--pf-c-label__content--link--hover--before--BorderWidth, 2px);
   border-color: var(--_label-link-hover-border-color);
 }

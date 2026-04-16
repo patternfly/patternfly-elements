@@ -1,5 +1,43 @@
 # @patternfly/elements
 
+## 4.4.0
+### Minor Changes
+
+- c3cef09: `pf-label`: added link variant. Set the `href` attribute to render the
+  label text as a clickable link. On hover, the label border thickens
+  and changes color to indicate interactivity.
+- 1377f14: Added `<pf-label-group>`.
+  
+  A **label group** is a collection of labels that can be grouped by category
+  and used to represent one or more values assigned to a single attribute.
+  When the number of labels exceeds the configured limit, additional labels
+  are hidden under an overflow indicator.
+  
+  ```html
+  <pf-label-group>
+    <span slot="category">Filters</span>
+    <pf-label removable>Security</pf-label>
+    <pf-label removable>Performance</pf-label>
+    <pf-label removable>Networking</pf-label>
+  </pf-label-group>
+  ```
+
+### Patch Changes
+
+- cc84a12: `<pf-back-to-top>`: fixed background color during hover and focus.
+- a060b8b: `<pf-popover>`: clicking outside a popover no longer fires spurious
+  hide events on other closed popovers.
+- 2d894f1: `<pf-select>`: replaced Red Hat Design System color tokens with PatternFly v4 global tokens.
+- b057f87: `npm run start` no longer fails when TypeScript build artifacts
+  are present in the working tree.
+- 2a45088: `<pf-switch>`: the switch now has a proper static accessible label
+  independent of its on/off state text.
+- 783686a: `<pf-table>`: fix accessibility features: column header role, accessible label for row toggle button, etc.
+- 6b3031b: `<pf-jump-links>`: improve screen reader accessibility by labeling the navigation landmark element
+- 6614695: `<pf-tabs>`: scroll event listeners are now passive for better performance.
+- Updated dependencies [7e31427]
+  - @patternfly/pfe-core@5.0.8
+
 ## 4.3.1
 ### Patch Changes
 

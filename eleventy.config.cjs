@@ -19,6 +19,7 @@ const markdownItAnchor = require('markdown-it-anchor');
 
 const { $ } = require('execa');
 const path = require('node:path');
+const slugify = require('@sindresorhus/slugify');
 
 /** @param {import('@11ty/eleventy/src/UserConfig')} eleventyConfig */
 module.exports = function(eleventyConfig) {
@@ -34,7 +35,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(TocPlugin, { tags: ['h2', 'h3', 'h4'] });
 
   /** Copy and manage site assets from the monorepo */
-  eleventyConfig.addPlugin(PfeAssetsPlugin);
+  eleventyConfig.addPlugin(PfeAssetsPlugin, { prefix: 'pf-v5' });
 
   /** Generate and consume custom elements manifests */
   eleventyConfig.addPlugin(CustomElementsManifestPlugin);
@@ -91,12 +92,11 @@ module.exports = function(eleventyConfig) {
       if (
         !existingids.includes($.attr('id'))
         && $.attr('slot')
-        && $.closest('pf-card')
+        && $.closest('pf-v5-card')
       ) {
         return null;
       } else {
-        return eleventyConfig.javascript.functions
-            .slug($.text())
+        return slugify($.text(), { decamelize: false })
             .replace(/[&,+()$~%.'":*?!<>{}]/g, '');
       }
     },

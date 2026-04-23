@@ -40,11 +40,16 @@ production.
       font-family: "Red Hat Display";
     }
   </style> 
-  {% generateImportMap %}
+  <script type="importmap">
+  {
+    "imports": {
+      "@patternfly/elements": "https://ga.jspm.io/npm:@patternfly/elements/"
+    }
+  }
+  </script>
   <script type="module">
     import '@patternfly/elements';
   </script>
-  {% endgenerateImportMap %}
 </head>
 <body>
   <header>

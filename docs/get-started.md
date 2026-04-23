@@ -47,11 +47,16 @@ title: Get started
   In this example, we load the [card](/components/card/) modules using an importmap from JSPM.
 
   ```html
-  {% generateImportMap %}
+  <script type="importmap">
+  {
+    "imports": {
+      "@patternfly/elements/": "https://ga.jspm.io/npm:@patternfly/elements/"
+    }
+  }
+  </script>
   <script type="module">
     import "@patternfly/elements/pf-v5-card/pf-v5-card.js";
   </script>
-  {% endgenerateImportMap %}
   ```
 
   To learn more about how to create importmaps, read our [creating an import map](/docs/develop/import-maps/) section, and go into more detail at [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) or the [import map specification](https://html.spec.whatwg.org/multipage/webappapis.html#import-maps). 

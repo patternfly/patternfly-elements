@@ -82,6 +82,33 @@ npm run test:ci
 npm run start
 ```
 
+## LGTM Tradition
+
+On this team, PR approvals come with a creative twist — reviewers leave a **backronym** for LGTM (four words starting with L, G, T, M). See [lgtms.md](lgtms.md) for the full collection.
+
+### Top 10 Leaderboard
+
+| Author | Count |
+|--------|-------|
+| @kylebuch8 | 193 |
+| @mwcz | 85 |
+| @starryeyez024 | 61 |
+| @zeroedin | 23 |
+| @Djfaucette | 18 |
+| @markcaron | 15 |
+| @nikkimk | 14 |
+| @bennypowers | 13 |
+| @adamjohnson | 12 |
+| @brianferry | 9 |
+
+### Hall of Fame
+
+- **"Lilliputians: Gulliver's Tiny Mates"** — @kylebuch8
+- **"Lonely Graves Time Misrecollects"** — @zeroedin
+- **"Lemongrass Ginger Tofu Marinade"** — @zeroedin
+- **"Lousy Guitarist, Terrific Mandolinist"** — @mwcz
+- **"Loki Grabs Thor's Mjolnir"** — @markcaron
+
 ## Support
 
 Though we have tested and verified general usability within these frameworks, PatternFly Elements makes no guarantees about compatibility within specific sites and applications. Please test accordingly.

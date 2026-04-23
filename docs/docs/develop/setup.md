@@ -59,14 +59,14 @@ tags:
 | --------------------- | ------------------------------------------ | --------------------------------------------------------------- |
 | `--directory`         | Output directory                           | string [default: "/path/to/patternfly-elements"] |
 | `--silent`            | Do not log anything to stdout              | boolean [default: false]                                        |
-| `-n`, `--tagName`     | Custom element tag name. e.g. `pf-button`  | string                                                          |
+| `-n`, `--tagName`     | Custom element tag name. e.g. `pf-v5-button`  | string                                                          |
 | `-p`, `--packageName` | NPM package scope. e.g. `@patternfly/elements`| string                                                   |
 | `--overwrite`         | Overwrite files without prompting          | boolean [default: false]                                        |
 | `--help`              | Show help                                  | boolean                                                         |
 
 Example
 ```bash
-npm run new -- --tagName pf-cool-element
+npm run new -- --tagName pf-v5-cool-element
 ```
 
 
@@ -83,11 +83,11 @@ npm run new -- --tagName pf-cool-element
   - A file to write your unit tests
   - An HTML demo where you can show off your element and add examples for your development workflow
 
-  You may also add light DOM styles which can be loaded prior to [element defined](https://developer.mozilla.org/en-US/docs/Web/CSS/:defined) `pf-cool-element:not(:defined){...}`. An example use case would be to avoid above the fold layout shift.  
+  You may also add light DOM styles which can be loaded prior to [element defined](https://developer.mozilla.org/en-US/docs/Web/CSS/:defined) `pf-v5-cool-element:not(:defined){...}`. An example use case would be to avoid above the fold layout shift.  
 
   The light DOM CSS file uses a standard naming convention of: 
   `{scope}-{component-name}--lightdom.css` 
-  Example: `pf-cool-element--lightdom.css`.
+  Example: `pf-v5-cool-element--lightdom.css`.
 {% endband %}
 
 <a id="compile-watch-and-preview"></a>
@@ -107,7 +107,7 @@ npm run new -- --tagName pf-cool-element
   Running that command launches the demo app in a new browser tab, and refreshes the page on save.
 
   From there you can navigate to the demo page of the element you're working on.
-  For example, if you want to preview the `pf-card` component, then navigate in the browser to `http://localhost:8000/demo/pf-card/`.
+  For example, if you want to preview the `pf-v5-card` component, then navigate in the browser to `http://localhost:8000/demo/pf-v5-card/`.
 {% endband %}
 
 {% band header="Testing" %}
@@ -123,10 +123,10 @@ npm run new -- --tagName pf-cool-element
 
   ```bash
   # Run a single test in watch mode.
-  npm run test:watch --files "./elements/pf-button/test/pf-button.spec.ts"
+  npm run test:watch --files "./elements/pf-v5-button/test/pf-v5-button.spec.ts"
 
   # Or multiple:
-  npm run test:watch --files "./elements/pf-{avatar,card,tabs}/test/*.spec.ts"
+  npm run test:watch --files "./elements/pf-v5-{avatar,card,tabs}/test/*.spec.ts"
   ```
 
   You can also run tests with a specific framework wrapper using:

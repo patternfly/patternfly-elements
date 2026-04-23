@@ -44,20 +44,20 @@ Assuming the `npm run start` command started a server on port 8080, navigate to 
 
 You're off to a good start! You have a new custom element that extends the base LitElement class.
 
-Let's take a look at the `pf-cool-element.ts` file to see what we have.
+Let's take a look at the `pf-v5-cool-element.ts` file to see what we have.
 
 ```ts
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 
-import styles from './pf-cool-element.css';
+import styles from './pf-v5-cool-element.css';
 
 /**
  * Cool Element
  * @slot - Place element content here
  */
-@customElement('pf-cool-element')
-export class PfCoolElement extends LitElement {
+@customElement('pf-v5-cool-element')
+export class PfV5CoolElement extends LitElement {
   static readonly styles = [styles];
 
   render() {
@@ -69,7 +69,7 @@ export class PfCoolElement extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-cool-element': PfCoolElement;
+    'pf-v5-cool-element': PfV5CoolElement;
   }
 }
 ```
@@ -90,7 +90,7 @@ Unlike PFE 1.0's `PFElement` base class, Lit template updates (i.e. renders) are
 For example, with `PFElement` we could handle the side-effects of our actions immediately:
 
 ```js
-const element = document.querySelector('pf-tabs');
+const element = document.querySelector('pf-v5-tabs');
 // Select the 2nd Tab
 element.selectIndex(1);
 // Side effects happen immediately,
@@ -102,7 +102,7 @@ const active = element.querySelector('[aria-selected="true"]');
 With `LitElement`, we must wait for our changes to apply before continuing:
 
 ```diff-js
-  const element = document.querySelector('pf-tabs');
+  const element = document.querySelector('pf-v5-tabs');
   // Select the 2nd Tab
   element.selectIndex(1);
 - // Side effects happen immediately,
@@ -125,13 +125,13 @@ Decorators are a [proposed JavaScript language feature](https://github.com/tc39/
 TypeScript implements an experimental version of the decorator language feature with a slightly different internal API.
 
 ```ts
-@customElement('pf-cool-element')
+@customElement('pf-v5-cool-element')
 ```
 
 Third, we import an use our component's CSS styles
 
 ```ts
-import styles from './pf-cool-element.css';
+import styles from './pf-v5-cool-element.css';
 ```
 
 ```ts

@@ -31,14 +31,14 @@ Example:
 <script type="importmap">
 {
   "imports": {
-    "@patternfly/elements/pf-card/pf-card.js": "path/to/pf-card.js"
+    "@patternfly/elements/pf-v5-card/pf-v5-card.js": "path/to/pf-card.js"
   }
 }
 </script>
 
 <!-- //  Bare module import specifier -->
 <script type="module">
-import '@patternfly/elements/pf-card/pf-card.js';
+import '@patternfly/elements/pf-v5-card/pf-v5-card.js';
 </script>
 ```
 
@@ -65,7 +65,7 @@ Once you've generated your import map and added it to your project, you can use 
 <script type="importmap">
 {
   "imports": {
-    "@patternfly/elements/pf-card/pf-card.js": "https://ga.jspm.io/npm:@patternfly/elements@2.5.0/pf-card/pf-card.js"
+    "@patternfly/elements/pf-v5-card/pf-v5-card.js": "https://ga.jspm.io/npm:@patternfly/elements@2.5.0/pf-card/pf-card.js"
   },
   "scopes": {
     "https://ga.jspm.io/": {
@@ -87,7 +87,7 @@ Once you've generated your import map and added it to your project, you can use 
 ```javascript
 <script type="module">
   // resolves to https://ga.jspm.io/npm:@patternfly/elements@2.5.0/pf-card/pf-card.js
-  import '@patternfly/elements/pf-card/pf-card.js';
+  import '@patternfly/elements/pf-v5-card/pf-v5-card.js';
 </script>
 ```
 

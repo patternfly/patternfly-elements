@@ -35,8 +35,8 @@ tags:
     * Your element's name should be lowercase and needs to contain at least 
       one hyphen. For rules on naming custom elements, refer to the W3C 
       [Custom Elements Working Draft](https://html.spec.whatwg.org/multipage/custom-elements.html#valid-custom-element-name).
-    * As an example, we'll create `pf-cool-element`.  
-    * PatternFly Elements should be prefixed with `pf-`. However, prefix your 
+    * As an example, we'll create `pf-v5-cool-element`.  
+    * PatternFly Elements should be prefixed with `pf-v5-`. However, prefix your 
       elements with whatever fits your project if you are using the generator outside of this project.
 
 
@@ -45,18 +45,18 @@ tags:
   After answering, your new component will be created and bootstrapped in the repository.
 
   Once that's done, switch directories to the element you just created. We'll 
-  `cd` into the `pf-cool-element` directory.
+  `cd` into the `pf-v5-cool-element` directory.
 
   ```bash
-  cd elements/pf-cool-element
+  cd elements/pf-v5-cool-element
   ```
 
   Open your code editor to view the structure of the element.
   The element's source files are located directly in it's package root, in our 
   case:
 
-  * `pf-cool-element.ts` - The element class declaration
-  * `pf-cool-element.css` - The element's CSS style module
+  * `pf-v5-cool-element.ts` - The element class declaration
+  * `pf-v5-cool-element.css` - The element's CSS style module
 
   The `demo` directory contains an HTML partial that you can edit to provide an 
   interactive demo of your element.

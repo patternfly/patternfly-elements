@@ -41,8 +41,8 @@ tags:
 {% band header="Adding PatternFly Elements" %}
   With the setup complete, let’s add a couple of PatternFly Elements web 
   components to our application to make sure everything is hooked up properly. 
-  We’re going to add a card ([pf-card](/components/card)). Later, we’ll add an 
-  accordion ([pf-accordion](/components/accordion)) and some CSS to help with 
+  We’re going to add a card ([pf-v5-card](/components/card)). Later, we’ll add an 
+  accordion ([pf-v5-accordion](/components/accordion)) and some CSS to help with 
   our layout.
 
   Once again, if we were building this app locally, we’d install our 
@@ -60,7 +60,7 @@ tags:
 
   ```html
   <script>
-    import "@patternfly/elements/pf-card/pf-card.js";
+    import "@patternfly/elements/pf-v5-card/pf-v5-card.js";
     export default {
       name: "HelloWorld",
       props: {
@@ -71,16 +71,16 @@ tags:
   ```
 
   Let’s add some simple markup in the `template` section of the 
-  `HellowWorld.vue` file to see that our pf-card is working.
+  `HellowWorld.vue` file to see that our pf-v5-card is working.
 
   ```html
   <template>
     <div>
       <h1>PatternFly Elements with Vue</h1>
-      <pf-card>
+      <pf-v5-card>
         <img alt="From https://picsum.photos/" src="https://picsum.photos/id/1019/300/200">
         <p>
-          This is the light pf-card and
+          This is the light pf-v5-card and
           <a href="#">a link</a>.
         </p>
         <p>
@@ -93,8 +93,8 @@ tags:
           Organically grow the holistic world view of disruptive
           innovation via workplace diversity and empowerment.
         </p>
-        <pf-button slot="footer" variant="link" href="#">Learn more</pf-button>
-      </pf-card>
+        <pf-v5-button slot="footer" variant="link" href="#">Learn more</pf-v5-button>
+      </pf-v5-card>
     </div>
   </template>
   ```

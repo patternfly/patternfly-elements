@@ -80,8 +80,8 @@
 #lightw > a { grid-area: link; }
 #lightw > h2 { grid-area: h; }
 #lightw > p:not(.subtitle) { grid-area: p; }
-#lightw > pf-card { grid-area: card; }
-#lightw > pf-progress-stepper { grid-area: step; }
+#lightw > pf-v5-card { grid-area: card; }
+#lightw > pf-v5-progress-stepper { grid-area: step; }
 #lightw > pre { grid-area: snip; margin-block: 0; }
 
 #lightw,

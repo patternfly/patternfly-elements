@@ -52,6 +52,16 @@ describe('<pf-v5-tabs>', function() {
 
     beforeEach(updateComplete);
 
+    it('should show the first tab as selected in the accessibility tree', async function() {
+      const snapshot = await a11ySnapshot();
+      const tabs = snapshot.children?.filter(x => x.role === 'tab') ?? [];
+      const [first, ...rest] = tabs;
+      expect(first).to.have.property('selected', true);
+      for (const tab of rest) {
+        expect(tab).to.not.have.property('selected', true);
+      }
+    });
+
     it('should apply aria attributes on initialization', function() {
       const tabs = element.querySelectorAll('pf-v5-tab');
       const panels = element.querySelectorAll('pf-v5-tab-panel');
@@ -120,6 +130,15 @@ describe('<pf-v5-tabs>', function() {
 
       it('should hide previously active panel', function() {
         expect(element.querySelector('pf-v5-tab-panel')).to.have.attribute('hidden');
+      });
+
+      it('should show the second tab as selected in the accessibility tree', async function() {
+        const snapshot = await a11ySnapshot();
+        const tabs = snapshot.children?.filter(x => x.role === 'tab') ?? [];
+        const [first, second, third] = tabs;
+        expect(first).to.not.have.property('selected', true);
+        expect(second).to.have.property('selected', true);
+        expect(third).to.not.have.property('selected', true);
       });
     });
 

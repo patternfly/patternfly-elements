@@ -26,6 +26,10 @@ const exampleWithCompactAttribute = html`
   <pf-v5-label compact>Default Compact</pf-v5-label>
 `;
 
+const exampleWithHref = html`
+  <pf-v5-label href="https://example.com">Link Label</pf-v5-label>
+`;
+
 
 describe('<pf-v5-label>', function() {
   before(function() {
@@ -139,5 +143,30 @@ describe('<pf-v5-label>', function() {
     expect(containerStyles.getPropertyValue('padding-right')).to.equal('8px'); // 0.5rem = 8px @ 16px browser default
     expect(containerStyles.getPropertyValue('padding-bottom')).to.equal('0px');
     expect(containerStyles.getPropertyValue('padding-left')).to.equal('8px'); // 0.5rem = 8px @ 16px browser default
+  });
+
+  describe('with href attribute', function() {
+    let element: PfV5Label;
+    beforeEach(async function() {
+      element = await createFixture<PfV5Label>(exampleWithHref);
+      await element.updateComplete;
+    });
+
+    it('should render an anchor element', function() {
+      const link = element.shadowRoot!.querySelector('#link');
+      expect(link).to.be.an.instanceOf(HTMLAnchorElement);
+    });
+
+    it('should set the href on the anchor', function() {
+      const link = element.shadowRoot!.querySelector('#link') as HTMLAnchorElement;
+      expect(link.href).to.equal('https://example.com/');
+    });
+
+    it('should not render an anchor when href is not set', async function() {
+      const el = await createFixture<PfV5Label>(example);
+      await el.updateComplete;
+      const link = el.shadowRoot!.querySelector('#link');
+      expect(link).to.be.null;
+    });
   });
 });

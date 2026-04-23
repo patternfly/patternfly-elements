@@ -1,5 +1,6 @@
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
+import { eventOptions } from 'lit/decorators/event-options.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { provide } from '@lit/context';
@@ -180,7 +181,7 @@ export class PfV5Tabs extends LitElement {
           <!-- tablist -->
           <div id="tabs" part="tabs" role="tablist">
             <!-- Must contain one or more \`<pf-v5-tab>\` -->
-            <slot name="tab" @slotchange="${this.#onSlotChange}" @scroll="${this.#overflow.onScroll}"></slot>
+            <slot name="tab" @slotchange="${this.#onSlotChange}" @scroll="${this.onScroll}"></slot>
           </div>
           ${!this.#overflow.showScrollButtons ? '' : html`
           <button id="nextTab" tabindex="-1"
@@ -199,6 +200,11 @@ export class PfV5Tabs extends LitElement {
         <slot part="panels"></slot>
       </div>
     `;
+  }
+
+  @eventOptions({ passive: true })
+  private onScroll() {
+    this.#overflow.onScroll();
   }
 
   #scrollLeft() {

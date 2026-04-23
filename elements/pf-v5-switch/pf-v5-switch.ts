@@ -24,8 +24,15 @@ export class PfV5Switch extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'switch' });
 
-  /** Accessible label text for the switch */
+  /** @deprecated use `accessible-label` instead */
   @property({ reflect: true }) label?: string;
+
+  /**
+   * Accessible label for the switch when there is no associated `<label>` element.
+   * Update this value based on the checked state to communicate the meaning of
+   * each state to assistive technology users, e.g. "Wi-Fi on" / "Wi-Fi off".
+   */
+  @property({ reflect: true, attribute: 'accessible-label' }) accessibleLabel?: string;
 
   /** Flag to show if the switch has a check icon. */
   @property({ reflect: true, type: Boolean, attribute: 'show-check-icon' }) showCheckIcon = false;
@@ -57,6 +64,7 @@ export class PfV5Switch extends LitElement {
   override willUpdate(): void {
     this.#internals.ariaChecked = String(!!this.checked);
     this.#internals.ariaDisabled = String(!!this.disabled);
+    this.#internals.ariaLabel = this.accessibleLabel || this.label || null;
   }
 
   override render(): TemplateResult<1> {

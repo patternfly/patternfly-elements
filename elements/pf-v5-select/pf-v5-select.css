@@ -5,7 +5,7 @@
 	color: var(--pf-global--Color--100, #151515);
   --_pf-option-checkboxes-display: none;
   --_pf-option-svg-display: block;
-	--_pf-option-selected-background-color: var(--rh-color-gray-20, #e0e0e0);
+	--_pf-option-selected-background-color: var(--pf-global--BackgroundColor--200, #e0e0e0);
 	/** Select toggle top padding */
 	--pf-v5-c-select__toggle--PaddingTop: var(--pf-global--spacer--form-element, 0.375rem);
 	/** Select toggle right padding */
@@ -348,9 +348,9 @@
   display: inline-flex;
   border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
   position: absolute;
-  background-color: var(--pf-v5-theme--color--surface--lightest, #fff) !important;
+  background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
   opacity: 0;
-  --_active-descendant-color: var(--pf-v5-theme--color--surface--lighter, #f0f0f0) !important
+  --_active-descendant-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important
 }
 
 #outer.expanded #listbox-container {
@@ -367,8 +367,8 @@
 
 #listbox slot.disabled {
   color: var(--pf-v5-c-list__item-icon--Color, #6a6e73) !important;
-  background-color: var(--pf-v5-theme--color--surface--lighter, #f0f0f0) !important;
-  border-color: var(--pf-v5-theme--color--surface--lighter, #f0f0f0) !important;
+  background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+  border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
   pointer-events: none;
   cursor: not-allowed;;
   --_active-descendant-color: transparent;
@@ -377,7 +377,7 @@
 
 
 #toggle {
-  background-color: var(--pf-v5-theme--color--surface--lightest, #fff) !important;
+  background-color: var(--pf-theme--color--surface--lightest, #fff) !important;
 }
 
 #toggle,
@@ -393,19 +393,19 @@
 
 #toggle {
   border: 1px solid var(--pf-global--BorderColor--100, #d2d2d2);
-  border-bottom-color: var(--pf-v5-theme--color--text, #151515);
+  border-bottom-color: var(--pf-theme--color--text, #151515);
   justify-content: space-between;
 }
 
 .expanded #toggle {
   border-bottom-width: 2px;
-  border-bottom-color: var(--pf-v5-theme--color--accent, #0066cc);
+  border-bottom-color: var(--pf-theme--color--accent, #0066cc);
 }
 
 .disabled #toggle {
   color: var(--pf-global--Color--dark-200, #6a6e73) !important;
-  background-color: var(--pf-v5-theme--color--surface--lighter, #f0f0f0) !important;
-  border-color: var(--pf-v5-theme--color--surface--lighter, #f0f0f0) !important;
+  background-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
+  border-color: var(--pf-theme--color--surface--lighter, #f0f0f0) !important;
 }
 
 #toggle-input,
@@ -514,7 +514,7 @@ pf-v5-badge {
   --pf-v5-c-divider--m-vertical--FlexDirection: column;
   --pf-v5-c-divider--m-vertical--after--Height: auto;
   --pf-v5-c-divider--m-vertical--after--Width: var(--pf-v5-c-divider--BorderWidth--base);
-  --pf-v5-hidden-visible--visible--Display: var(--pf-v5-c-divider--Display);
+  --pf-hidden-visible--visible--Display: var(--pf-v5-c-divider--Display);
   --pf-v5-c-divider--Display: var(--pf-v5-c-divider--m-horizontal--Display);
   --pf-v5-c-divider--FlexDirection: var(--pf-v5-c-divider--m-horizontal--FlexDirection);
   --pf-v5-c-divider--after--Width: var(--pf-v5-c-divider--m-horizontal--after--Width);

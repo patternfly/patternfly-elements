@@ -51,7 +51,7 @@ export class PfV5Th extends LitElement {
   @property() key!: string;
 
   @consume({ context: thRoleContext })
-  private contextualRole: 'colheader' | 'rowheader' = 'rowheader';
+  private contextualRole: 'columnheader' | 'rowheader' = 'rowheader';
 
   override connectedCallback(): void {
     super.connectedCallback();

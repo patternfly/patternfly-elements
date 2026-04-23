@@ -263,6 +263,10 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     this.initializeOptions(options);
     InternalsController.instances.set(host, this);
     this.#polyfillDisabledPseudo();
+    // Expose internals to aXe Core
+    // https://github.com/webcomponents-cg/community-protocols/pull/75
+    globalThis._elementInternals ??= new WeakMap<Element, ElementInternals>();
+    globalThis._elementInternasl.set(this.host, this.internals);
   }
 
   /**

@@ -63,18 +63,10 @@ function demoPaths(content) {
   }
 }
 
-/** Generate a single-file bundle of all the repo's components and their dependencies */
-async function bundle() {
-  const { bundle } = await import('../../scripts/bundle.js');
-  await bundle();
-}
-
 module.exports = {
   configFunction(eleventyConfig, options) {
     eleventyConfig.addPassthroughCopy('docs/images/favicon.ico');
     eleventyConfig.addPassthroughCopy('docs/bundle.{js,map,ts}');
-    eleventyConfig.addPassthroughCopy('docs/pfe.min.{map,css}');
-    eleventyConfig.addPassthroughCopy({ 'elements/pfe.min.*': '/' } );
     eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/main.mjs');
     eleventyConfig.addPassthroughCopy({
@@ -93,8 +85,5 @@ module.exports = {
     // The demo files are written primarily for the dev SPA (`npm start`),
     // so here we transform the paths found in those files to match the docs site's file structure
     eleventyConfig.addTransform('demo-paths', demoPaths);
-
-    // create /docs/pfe.min.js
-    eleventyConfig.on('eleventy.before', () => bundle(options));
   },
 };

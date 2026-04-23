@@ -55,7 +55,7 @@
         "build:lightdom",
         "build:elements",
         "build:create",
-        "build:bundle",
+
         "build:react"
       ]
     },
@@ -135,21 +135,6 @@
         "core/**/*.map",
         "core/**/*.d.ts",
         "core/**/*.tsbuildinfo"
-      ]
-    },
-    "build:bundle": {
-      "command": "node scripts/bundle.js",
-      "dependencies": [
-        "build:core"
-      ],
-      "files": [
-        "elements/**/*.ts",
-        "elements/**/*.css",
-        "core/**/*.ts",
-        "scripts/bundle.js"
-      ],
-      "output": [
-        "elements/pfe.min.js"
       ]
     },
     "build:react": {

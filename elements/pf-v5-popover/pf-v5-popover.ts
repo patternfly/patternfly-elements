@@ -9,7 +9,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { FloatingDOMController } from '@patternfly/pfe-core/controllers/floating-dom-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
-import { deprecation } from '@patternfly/pfe-core/decorators/deprecation.js';
+
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent, StringListConverter } from '@patternfly/pfe-core/core.js';
 
@@ -161,13 +161,6 @@ export class PfV5Popover extends LitElement {
    */
   @property({ reflect: true, attribute: 'accessible-close-label' }) accessibleCloseLabel?: string;
 
-  /**
-   * @deprecated do not use the color-palette attribute, which was added by mistake. use context-providing containers (e.g. rh-card) instead
-   */
-  @deprecation({
-    alias: 'accessible-close-label',
-    attribute: 'close-label',
-  }) closeButtonLabel?: string;
 
   /**
    * The text announced by the screen reader to indicate the popover's severity.
@@ -268,7 +261,7 @@ export class PfV5Popover extends LitElement {
             <pf-v5-button id="close-button"
                        part="close-button"
                        plain
-                       label="${this.accessibleCloseLabel ?? this.closeButtonLabel ?? 'Close popover'}"
+                       label="${this.accessibleCloseLabel ?? 'Close popover'}"
                        @click="${this.hide}"
                        @keydown="${this.#onKeydown}"
                        ?hidden="${this.hideClose}">

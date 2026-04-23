@@ -7,7 +7,7 @@ import { makeDemoEnv } from '../../environment.js';
 import { deslugify } from '../../config.js';
 
 type PfeMiddleware =
-  (config: PfeDevServerInternalConfig) => Router.Middleware<DefaultState, DefaultContext>;
+  (config: PfeDevServerInternalConfig) => Middleware<DefaultState, DefaultContext>;
 
 /**
  * The environment file contains information from the serverside

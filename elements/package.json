@@ -5,11 +5,9 @@
   "description": "PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
-  "main": "./pfe.min.js",
   "module": "./pfe.js",
   "types": "./pfe.d.ts",
   "exports": {
-    ".": "./pfe.min.js",
     "./form-control.css": "./form-control.css",
     "./form-control.css.js": "./form-control.css.js",
     "./pf-accordion/pf-accordion-header.js": "./pf-accordion/pf-accordion-header.js",

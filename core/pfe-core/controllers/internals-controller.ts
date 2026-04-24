@@ -264,9 +264,8 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     InternalsController.instances.set(host, this);
     this.#polyfillDisabledPseudo();
     // Expose internals to aXe Core
-    // https://github.com/webcomponents-cg/community-protocols/pull/75
     globalThis._elementInternals ??= new WeakMap<Element, ElementInternals>();
-    globalThis._elementInternasl.set(this.host, this.internals);
+    globalThis._elementInternals.set(this.host, this.internals);
   }
 
   /**
@@ -339,6 +338,8 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
 /** @see https://w3c.github.io/aria/#ref-for-dom-ariamixin-ariaactivedescendantelement-1 */
 declare global {
+  // https://github.com/webcomponents-cg/community-protocols/pull/75
+  var _elementInternals: WeakMap<Element, ElementInternals>; // eslint-disable-line no-var
   interface ARIAMixin {
     ariaActiveDescendantElement: Element | null;
     ariaControlsElements: readonly Element[] | null;

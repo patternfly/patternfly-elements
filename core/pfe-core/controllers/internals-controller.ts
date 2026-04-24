@@ -4,20 +4,22 @@ import {
   type ReactiveControllerHost,
 } from 'lit';
 
-function isARIAMixinProp(key: string): key is keyof ARIAMixin {
-  return key === 'role' || key.startsWith('aria');
-}
-
 type FACE = HTMLElement & {
   formDisabledCallback?(disabled: boolean): void;
 };
+
+interface InternalsControllerOptions extends Partial<ARIAMixin> {
+  getHTMLElement?(): HTMLElement;
+}
 
 const protos = new WeakMap();
 
 let constructingAllowed = false;
 
-interface InternalsControllerOptions extends Partial<ARIAMixin> {
-  getHTMLElement?(): HTMLElement;
+globalThis._elementInternals ??= new WeakMap<Element, ElementInternals>();
+
+function isARIAMixinProp(key: string): key is keyof ARIAMixin {
+  return key === 'role' || key.startsWith('aria');
 }
 
 /**
@@ -264,7 +266,6 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     InternalsController.instances.set(host, this);
     this.#polyfillDisabledPseudo();
     // Expose internals to aXe Core
-    globalThis._elementInternals ??= new WeakMap<Element, ElementInternals>();
     globalThis._elementInternals.set(this.host, this.internals);
   }
 

@@ -19,7 +19,8 @@ const markdownItAnchor = require('markdown-it-anchor');
 
 const { $ } = require('execa');
 const path = require('node:path');
-const slugify = require('@sindresorhus/slugify');
+const _slugify = require('@sindresorhus/slugify');
+const slugify = _slugify.default ?? _slugify;
 
 /** @param {import('@11ty/eleventy/src/UserConfig')} eleventyConfig */
 module.exports = function(eleventyConfig) {

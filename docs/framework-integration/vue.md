@@ -52,7 +52,7 @@ tags:
   npm install --save @patternfly/elements
   ```
 
-  But if you’re using CodeSandbox, just search for “@patternfly/pf-card”
+  But if you’re using CodeSandbox, just search for “@patternfly/elements”
 
   In our `HelloWorld.vue` file in the `/src/components/` directory, let’s add 
   the import statements for our components to the top of the `<script>` tag in 

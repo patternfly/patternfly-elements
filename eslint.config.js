@@ -13,7 +13,7 @@ export default tseslint.config(
   {
     name: 'local/ignores',
     ignores: [
-      'elements/pf-icon/demo/icons/**/*.js',
+      'elements/pf-v5-icon/demo/icons/**/*.js',
       'tools/create-element/templates/**/*',
       'tools/create-element/**/*.js',
       'tools/create-element/templates/**/*',

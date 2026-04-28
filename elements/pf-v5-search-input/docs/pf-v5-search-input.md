@@ -31,7 +31,7 @@ import '@patternfly/elements/pf-v5-search-input/pf-v5-search-input.js';
 
 #### Search Input Form
 {% htmlexample %}
-  {% renderFile "./elements/pf-v5-search-input/demo/pf-v5-search-input-with-submit.html" %}
+  {% renderFile "./elements/pf-v5-search-input/demo/pf-search-input-with-submit.html" %}
 {% endhtmlexample %}
 
 #### Disabled

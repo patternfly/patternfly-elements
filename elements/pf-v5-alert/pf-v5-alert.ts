@@ -29,6 +29,7 @@ export class PfV5AlertCloseEvent extends Event {
  * An **alert** is a notification that provides brief information to the user
  * without blocking their workflow.
  *
+ * @alias Alert
  * @fires close - When an alert is closed e.g. when close button is clicked or when the alert times
  *                out. Cancel the event to prevent the alert from being removed.
  */

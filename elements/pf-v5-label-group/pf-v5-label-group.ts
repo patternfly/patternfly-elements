@@ -37,6 +37,7 @@ const REMAINING_RE = /\$\{\s*remaining\s*\}/g;
  * When the number of labels exceeds `numLabels`, additional labels will be
  * hidden using an overflow label.
  *
+ * @alias Label Group
  * @summary Groups multiple labels with overflow, category, and close support.
  *
  * @fires {PfV5LabelGroupExpandEvent} expand - Fires when label group is expanded to show all labels

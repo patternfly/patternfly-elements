@@ -4,19 +4,16 @@ import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 import styles from './pf-v5-code-block.css';
 
-/**
- * A **code block** is a component that contains 2 or more lines of read-only code. The code in a code block can be copied to the clipboard.
- * @alias Code Block
- * @attr {boolean} [expanded=false]
- *       Indicates if the code-block has been expanded
- */
-
 function dedent(str: string): string {
   const stripped = str.replace(/^\n/, '');
   const match = stripped.match(/^\s+/);
   return match ? stripped.replace(new RegExp(`^${match[0]}`, 'gm'), '') : str;
 }
 
+/**
+ * A **code block** is a component that contains 2 or more lines of read-only code. The code in a code block can be copied to the clipboard.
+ * @alias Code Block
+ */
 @customElement('pf-v5-code-block')
 export class PfV5CodeBlock extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];

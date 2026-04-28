@@ -1,5 +1,11 @@
 # @patternfly/create-element
 
+## 1.0.6
+### Patch Changes
+
+- 3935154: Fixed missing files in published package that prevented `npm run new` from working
+- 5e1764b: Fixed missing entry point in published package.
+
 ## 1.0.5
 ### Patch Changes
 

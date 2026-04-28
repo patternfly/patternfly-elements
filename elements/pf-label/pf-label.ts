@@ -2,6 +2,7 @@ import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
@@ -68,6 +69,9 @@ export class PfLabel extends LitElement {
   /** Text label for a removable label's close button */
   @property({ attribute: 'close-button-label' }) closeButtonLabel?: string;
 
+  /** When set, the label becomes a link. The label text renders inside an anchor element. */
+  @property({ reflect: true }) href?: string;
+
   /** Represents the state of the anonymous and icon slots */
   #slots = new SlotController(this, null, 'icon');
 
@@ -79,9 +83,10 @@ export class PfLabel extends LitElement {
   }
 
   override render(): TemplateResult<1> {
-    const { compact, truncated } = this;
+    const { compact, truncated, href } = this;
     const { variant, color, icon } = this;
     const hasIcon = !!icon || this.#slots.hasSlotted('icon');
+    const isLink = !!href;
     return html`
       <span id="container"
             class="${classMap({
@@ -101,7 +106,11 @@ export class PfLabel extends LitElement {
                    .icon="${this.icon || undefined as unknown as string}"></pf-icon>
         </slot>
         <!-- summary: Must contain the text for the label. -->
+        ${isLink ? html`
+        <a id="link" href="${ifDefined(href)}"><slot id="text"></slot></a>
+        ` : html`
         <slot id="text"></slot>
+        `}
         <!-- summary: container for removable labels' close button -->
         <span part="close-button" ?hidden=${!this.removable}>
           <pf-button plain

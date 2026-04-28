@@ -1,5 +1,11 @@
 # @patternfly/pfe-core
 
+## 5.0.8
+### Patch Changes
+
+- 7e31427: `SlotController`: fixed `getSlotted()` returning empty arrays in
+  certain timing scenarios.
+
 ## 5.0.7
 ### Patch Changes
 

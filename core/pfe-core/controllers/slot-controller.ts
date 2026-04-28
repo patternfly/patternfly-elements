@@ -213,11 +213,24 @@ export class SlotController implements SlotControllerPublicAPI {
    */
   public getSlotted<T extends Element = Element>(...slotNames: string[] | [null]): T[] {
     if (!slotNames.length || slotNames.length === 1 && slotNames.at(0) === null) {
-      return (this.#slotRecords.get(SlotController.default)?.elements ?? []) as T[];
+      return (this.#getAssignedElements(SlotController.default)) as T[];
     } else {
       return slotNames.flatMap(slotName =>
-        this.#slotRecords.get(slotName ?? SlotController.default)?.elements ?? []) as T[];
+        this.#getAssignedElements(slotName ?? SlotController.default)) as T[];
     }
+  }
+
+  /**
+   * Returns the assigned elements for a given slot name, falling back to
+   * querying the slot element directly if the slot record hasn't been
+   * initialized yet.
+   */
+  #getAssignedElements(slotId: string | symbol): Element[] {
+    const record = this.#slotRecords.get(slotId);
+    if (record) {
+      return record.elements;
+    }
+    return this.#getSlotElement(slotId)?.assignedElements?.() ?? [];
   }
 
   /**

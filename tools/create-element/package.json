@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/create-element",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Scaffold web components monorepos based on PatternFly Elements",
   "author": "Benny Powers <bennyp@redhat.com>",
   "license": "MIT",
@@ -34,6 +34,7 @@
     "templates/**/*"
   ],
   "scripts": {
+    "prepack": "tsc -b .",
     "test": "echo 'unit tests for PFE generator not written yet'"
   },
   "bugs": {

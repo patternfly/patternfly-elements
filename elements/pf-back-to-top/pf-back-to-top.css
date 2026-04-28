@@ -41,14 +41,16 @@ a {
   gap: var(--pf-c-button__icon--m-end--MarginLeft, var(--pf-global--spacer--xs, 0.25rem));
 }
 
-a:hover {
+a:hover,
+a:focus {
   --pf-c-button--m-primary--Color: var(--pf-c-button--m-primary--hover--Color, var(--pf-global--Color--light-100, #fff));
   --pf-c-button--m-primary--BackgroundColor: var(--pf-c-button--m-primary--hover--BackgroundColor, var(--pf-global--primary-color--200, #004080));
 }
 
-a:focus {
-  --pf-c-button--m-primary--Color: var(--pf-c-button--m-primary--hover--Color, var(--pf-global--Color--light-100,#fff));
+[part="trigger"]:is(pf-button):hover,
+[part="trigger"]:is(pf-button):focus-within {
   --pf-c-button--m-primary--BackgroundColor: var(--pf-c-button--m-primary--hover--BackgroundColor, var(--pf-global--primary-color--200, #004080));
+  --pf-c-button--m-primary--Color: var(--pf-c-button--m-primary--hover--Color, var(--pf-global--Color--light-100, #fff));
 }
 
 [part="trigger"][hidden] {

@@ -72,16 +72,29 @@ module.exports = {
     });
     eleventyConfig.addPassthroughCopy('brand/**/*');
 
-    // Copy only screenshot.png from each element's docs/ folder to the site.
-    // Markdown docs are handled by 11ty templates; screenshots are the only static asset.
+    // Copy static assets (screenshots, demo images/css/js) from element folders
+    // to the site with the tag prefix stripped from the directory name.
+    // Markdown and HTML are handled by 11ty templates; this covers everything else.
     const prefix = `${(options?.prefix ?? 'pf').replace(/-$/, '')}-`;
     for (const dir of fs.readdirSync(path.join(process.cwd(), 'elements'))) {
+      const slug = dir.replace(prefix, '');
       const screenshot = path.join('elements', dir, 'docs', 'screenshot.png');
       if (fs.existsSync(screenshot)) {
-        const slug = dir.replace(prefix, '');
         eleventyConfig.addPassthroughCopy({
           [screenshot]: `/components/${slug}/docs/screenshot.png`,
         });
+      }
+      const demoDir = path.join(process.cwd(), 'elements', dir, 'demo');
+      if (fs.existsSync(demoDir)) {
+        const assets =
+          fs.readdirSync(demoDir, { recursive: true })
+              .filter(f => !String(f).endsWith('.html'));
+        for (const asset of assets) {
+          const src = path.join('elements', dir, 'demo', String(asset));
+          eleventyConfig.addPassthroughCopy({
+            [src]: `/components/${slug}/demo/${asset}`,
+          });
+        }
       }
     }
 

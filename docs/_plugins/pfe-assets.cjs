@@ -71,6 +71,20 @@ module.exports = {
       'tools/pfe-tools': '/assets/@patternfly/pfe-tools',
     });
     eleventyConfig.addPassthroughCopy('brand/**/*');
+
+    // Copy only screenshot.png from each element's docs/ folder to the site.
+    // Markdown docs are handled by 11ty templates; screenshots are the only static asset.
+    const prefix = `${(options?.prefix ?? 'pf').replace(/-$/, '')}-`;
+    for (const dir of fs.readdirSync(path.join(process.cwd(), 'elements'))) {
+      const screenshot = path.join('elements', dir, 'docs', 'screenshot.png');
+      if (fs.existsSync(screenshot)) {
+        const slug = dir.replace(prefix, '');
+        eleventyConfig.addPassthroughCopy({
+          [screenshot]: `/components/${slug}/docs/screenshot.png`,
+        });
+      }
+    }
+
     const filesToCopy = getFilesToCopy(options);
 
     if (filesToCopy) {

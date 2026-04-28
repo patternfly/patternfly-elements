@@ -1,0 +1,80 @@
+:host {
+  display: inline-block;
+	/** Border color for avatar */
+	--pf-v5-c-avatar--BorderColor: transparent;
+	/** Border width for avatar */
+	--pf-v5-c-avatar--BorderWidth: 0;
+	/** Border radius for avatar */
+	--pf-v5-c-avatar--BorderRadius: var(--pf-global--BorderRadius--lg, 30em);
+	/** Width for avatar */
+	--pf-v5-c-avatar--Width: 2.25rem;
+	/** Height for avatar */
+	--pf-v5-c-avatar--Height: 2.25rem;
+	/** Width for small avatar */
+	--pf-v5-c-avatar--m-sm--Width: 1.5rem;
+	/** Height for small avatar */
+	--pf-v5-c-avatar--m-sm--Height: 1.5rem;
+	/** Width for medium avatar */
+	--pf-v5-c-avatar--m-md--Width: 2.25rem;
+	/** Height for medium avatar */
+	--pf-v5-c-avatar--m-md--Height: 2.25rem;
+	/** Width for large avatar */
+	--pf-v5-c-avatar--m-lg--Width: 4.5rem;
+	/** Height for large avatar */
+	--pf-v5-c-avatar--m-lg--Height: 4.5rem;
+	/** Width for extra large avatar */
+	--pf-v5-c-avatar--m-xl--Width: 8rem;
+	/** Height for extra large avatar */
+	--pf-v5-c-avatar--m-xl--Height: 8rem;
+	--pf-v5-c-avatar--m-light--BorderColor: var(--pf-global--BorderColor--dark-100, #d2d2d2);
+	--pf-v5-c-avatar--m-light--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
+	/** Border color for dark avatar */
+	--pf-v5-c-avatar--m-dark--BorderColor: var(--pf-global--palette--black-700, #4f5255);
+	--pf-v5-c-avatar--m-dark--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
+	width: var(--pf-v5-c-avatar--Width);
+	height: var(--pf-v5-c-avatar--Height);
+	border-radius: var(--pf-v5-c-avatar--BorderRadius);
+}
+
+:host([hidden]),
+[hidden] {
+  display: none !important;
+}
+
+svg,
+img {
+  display: inline;
+  object-fit: cover;
+  width: var(--pf-v5-c-avatar--Width);
+  height: var(--pf-v5-c-avatar--Height);
+  border-radius: var(--pf-v5-c-avatar--BorderRadius);
+  border: var(--pf-v5-c-avatar--BorderWidth) solid var(--pf-v5-c-avatar--BorderColor);
+}
+
+:host([border]) {
+  --pf-v5-c-avatar--BorderWidth: var(--pf-global--BorderWidth--sm, 1px);
+}
+
+:host([border="dark"]) {
+  --pf-v5-c-avatar--BorderColor: var(--pf-v5-c-avatar--m-dark--BorderColor);
+}
+
+:host([size="sm"]) {
+  --pf-v5-c-avatar--Width: var(--pf-v5-c-avatar--m-sm--Width);
+  --pf-v5-c-avatar--Height: var(--pf-v5-c-avatar--m-sm--Height);
+}
+
+:host([size="md"]) {
+  --pf-v5-c-avatar--Width: var(--pf-v5-c-avatar--m-md--Width);
+  --pf-v5-c-avatar--Height: var(--pf-v5-c-avatar--m-md--Height);
+}
+
+:host([size="lg"]) {
+  --pf-v5-c-avatar--Width: var(--pf-v5-c-avatar--m-lg--Width);
+  --pf-v5-c-avatar--Height: var(--pf-v5-c-avatar--m-lg--Height);
+}
+
+:host([size="xl"]) {
+  --pf-v5-c-avatar--Width: var(--pf-v5-c-avatar--m-xl--Width);
+  --pf-v5-c-avatar--Height: var(--pf-v5-c-avatar--m-xl--Height);
+}

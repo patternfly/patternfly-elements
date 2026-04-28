@@ -9,7 +9,7 @@ layout: layout-base.njk
 
   <div class="posts">
     {% for post in collections.blog | reverse %}
-      <pf-card>
+      <pf-v5-card>
         <h2 slot="header">{{ post.data.title }}</h2>
         {% if post.data.tagline %}
           <p class="tagline"><a href="{{ post.data.page.url }}">{{ post.data.tagline }}</a></p>{% endif %}
@@ -18,7 +18,7 @@ layout: layout-base.njk
         {% endif %}
         <a slot="footer" class="cta" href="{{ post.data.page.url }}">Read Post</a>
         <time slot="footer" datetime="{{ post.data.page.date }}">{{ post.data.page.date | prettyDate }}</time>
-      </pf-card>
+      </pf-v5-card>
     {% endfor %}
   </div>
 </main>
@@ -34,7 +34,7 @@ layout: layout-base.njk
     gap: 2rem;
   }
 
-  pf-card::part(footer) {
+  pf-v5-card::part(footer) {
     justify-content: space-between;
     align-items: center;
   }

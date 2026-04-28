@@ -1,0 +1,63 @@
+<section>
+  <h2>Performance</h2>
+  <p>This demo measures the time needed to render 10000 tooltip elements then toggle the first tooltip.</p>
+  <form>
+    <pf-v5-button type="submit">Render</pf-v5-button>
+    <pf-v5-button type="reset" danger>Reset</pf-v5-button>
+    <output name="output"></output>
+    <div id="target"></div>
+  </form>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
+
+  const $ = x => document.querySelector(x);
+  const $$ = x => document.querySelectorAll(x);
+
+  import { html, render } from 'lit';
+
+  const submit = $('form pf-v5-button');
+  const target = $('#target');
+
+  const getTooltip = (_, i) =>
+    html`<pf-v5-tooltip content="Content for ${i + 1}">${i + 1}</pf-v5-tooltip>`;
+
+  async function measure(start) {
+    submit.loading = true;
+    submit.textContent = 'Rendering...';
+    await submit.updateComplete;
+    await new Promise(requestAnimationFrame);
+    render(Array.from({ length: 10000 }, getTooltip), target);
+    const tooltips = $$('pf-v5-tooltip');
+    const [first] = tooltips;
+    first.show();
+    await Promise.all(Array.from(tooltips, x => x.updateComplete));
+    await first.hide();
+    return performance.now() - start;
+  }
+
+  $('form').addEventListener('submit', /** @this {HTMLFormElement} */async function(event) {
+    event.preventDefault();
+    const elapsed = await measure(performance.now());
+    this.output.value = `Render took ${(elapsed) / 1000} seconds`;
+    submit.loading = false;
+    submit.textContent = 'Rerender';
+  });
+
+
+  $('form').addEventListener('reset', /** @this {HTMLFormElement} */async function(event) {
+    event.preventDefault();
+    render('', target);
+    this.output.value = '';
+    submit.loading = false;
+    submit.textContent = 'Render';
+  });
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

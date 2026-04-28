@@ -1,0 +1,59 @@
+<form>
+  <h2>Nothing disabled</h2>
+  <fieldset>
+    <pf-v5-button>Ok</pf-v5-button>
+  </fieldset>
+  <label>Fieldset Disabled <pf-v5-switch name="fieldset"></pf-v5-switch> </label>
+  <label>Button Disabled <pf-v5-switch name="button"></pf-v5-switch> </label>
+</form>
+
+<form>
+  <h2>fieldset disabled</h2>
+  <fieldset disabled>
+    <pf-v5-button>Ok</pf-v5-button>
+  </fieldset>
+  <label>Fieldset Disabled <pf-v5-switch name="fieldset" checked></pf-v5-switch> </label>
+  <label>Button Disabled <pf-v5-switch name="button"></pf-v5-switch> </label>
+</form>
+
+<form>
+  <h2>Button disabled</h2>
+  <fieldset>
+    <pf-v5-button disabled>Ok</pf-v5-button>
+  </fieldset>
+  <label>Fieldset Disabled <pf-v5-switch name="fieldset"></pf-v5-switch> </label>
+  <label>Button Disabled <pf-v5-switch name="button" checked></pf-v5-switch> </label>
+</form>
+
+<form>
+  <h2>Both disabled</h2>
+  <fieldset disabled>
+    <pf-v5-button disabled>Ok</pf-v5-button>
+  </fieldset>
+  <label>Fieldset Disabled <pf-v5-switch name="fieldset" checked></pf-v5-switch> </label>
+  <label>Button Disabled <pf-v5-switch name="button" checked></pf-v5-switch> </label>
+</form>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+
+  for (const form of document.querySelectorAll('form')) {
+    form.addEventListener('submit', e=>e.preventDefault());
+    form.addEventListener('change', sync);
+    sync.call(form);
+  }
+
+  /** @this{HTMLFormElement}*/
+  function sync() {
+    this.querySelector('fieldset').disabled = this.fieldset.checked;
+    this.querySelector('pf-v5-button').disabled = this.button.checked;
+  }
+</script>
+
+<style>
+form {
+  padding: 1em;
+}
+</style>

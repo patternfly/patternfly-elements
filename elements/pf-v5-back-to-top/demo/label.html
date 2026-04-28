@@ -1,0 +1,41 @@
+<div class="outer-container" id="top">
+  <div class="scroll-indicator padded">
+    <h2>Default</h2>
+    <p><a href="#focusable-element-top">Focusable element (top)</a></p>
+    <pf-v5-icon icon="arrow-down"></pf-v5-icon> Scroll down to end of cyan box, 400px (default).
+  </div>
+</div>
+<a href="#focusable-element-bottom">Focusable element (bottom)</a>
+
+<pf-v5-back-to-top scrollable-selector="main" href="#top" label="Top"></pf-v5-back-to-top>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-back-to-top/pf-v5-back-to-top.js';
+</script>
+
+<style>
+  :root {
+    --_scroll-distance: 400px;
+  }
+
+  main {
+    scroll-behavior: smooth;
+  }
+
+  .scroll-distance {
+    --_scroll-distance: 200px;
+  }
+
+  .outer-container {
+    height: calc(100vh - var(--pf-v5-demo-header-height) + var(--_scroll-distance));
+  }
+
+  .padded {
+    padding: var(--pf-global--spacer--md, 1rem);
+  }
+
+  .scroll-indicator {
+    height: var(--_scroll-distance);
+    background-color: var(--pf-global--palette--cyan-50, #f2f9f9) !important;
+  }
+</style>

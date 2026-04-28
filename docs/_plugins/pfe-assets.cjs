@@ -4,7 +4,7 @@ const path = require('path');
 /**
  * Generate a map of files per package which should be copied to the site dir
  * @param {object} [options]
- * @param {string} [options.prefix='pfe'] element prefix e.g. 'pfe' for 'pf-button'
+ * @param {string} [options.prefix='pf-v5'] element prefix e.g. 'pf-v5' for 'pf-v5-button'
  */
 function getFilesToCopy(options) {
   const cwd = process.cwd();
@@ -46,7 +46,7 @@ function getFilesToCopy(options) {
 
 const DEMO_PATHS_RE =
   // eslint-disable-next-line @stylistic/max-len
-  /(?<attr>href|src)="\/(?<workspace>elements|core)\/pf-(?<unprefixed>.*)\/(?<filename>.*)\.(?<extension>[.\w]+)"/g;
+  /(?<attr>href|src)="\/(?<workspace>elements|core)\/pf-v5-(?<unprefixed>.*)\/(?<filename>.*)\.(?<extension>[.\w]+)"/g;
 
 /**
  * Replace paths in demo files from the dev SPA's format to 11ty's format

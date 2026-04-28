@@ -1,0 +1,46 @@
+import { test, expect } from '@playwright/test';
+import { PfeDemoPage } from '@patternfly/pfe-tools/test/playwright/PfeDemoPage.js';
+import { SSRPage } from '@patternfly/pfe-tools/test/playwright/SSRPage.js';
+
+const tagName = 'pf-v5-card';
+
+const html = String.raw;
+
+test.describe(tagName, () => {
+  test('snapshot', async ({ page }) => {
+    const componentPage = new PfeDemoPage(page, tagName);
+    await componentPage.navigate();
+    await componentPage.snapshot();
+  });
+
+  test('ssr', async ({ browser }) => {
+    const fixture = new SSRPage({
+      tagName,
+      browser,
+      demoDir: new URL('../demo/', import.meta.url),
+      importSpecifiers: [
+        `@patternfly/elements/${tagName}/${tagName}.js`,
+      ],
+    });
+    await fixture.snapshots();
+  });
+
+  test('ssr hints', async ({ browser }) => {
+    const fixture = new SSRPage({
+      tagName,
+      browser,
+      importSpecifiers: [`@patternfly/elements/${tagName}/${tagName}.js`],
+      demoContent: html`
+        <pf-v5-card ssr-hint-has-slotted-default
+                 ssr-hint-has-slotted="header,footer">
+          <h2 slot="header">Header</h2>
+          <span>Body</span>
+          <span slot="footer">Footer</span>
+        </pf-v5-card>
+      `,
+    });
+    await fixture.updateCompleteFor('pf-v5-card');
+    await expect(fixture.page.locator('pf-v5-card #title')).toHaveAttribute('hidden');
+    await expect(fixture.page.locator('pf-v5-card #header')).not.toHaveAttribute('hidden');
+  });
+});

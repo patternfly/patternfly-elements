@@ -28,13 +28,13 @@ layout: layout-base.njk
     {{ content | safe }}
   </section>
 
-  <pf-back-to-top id="back-to-top-link">Back to Top</pf-back-to-top>
+  <pf-v5-back-to-top id="back-to-top-link">Back to Top</pf-v5-back-to-top>
 </main>
 
 {% include '_foot.njk' %}
 
 <script type="module">
-  import '@patternfly/elements/pf-back-to-top/pf-back-to-top.js';
+  import '@patternfly/elements/pf-v5-back-to-top/pf-v5-back-to-top.js';
   const allTocLinks = document.querySelectorAll('nav.toc [href^="#"]')
 
   const activeLinks = document.querySelectorAll('nav.toc li.active');

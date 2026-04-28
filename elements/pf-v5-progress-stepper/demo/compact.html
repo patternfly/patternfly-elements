@@ -1,0 +1,38 @@
+<form id="compact">
+  <h2>Compact</h2>
+  <label><pf-v5-switch name="vertical"></pf-v5-switch> Vertical alignment</label>
+  <label><pf-v5-switch name="center"></pf-v5-switch> Center alignment</label>
+  <pf-v5-progress-stepper name="progress" compact>
+    <pf-v5-progress-step variant="success">First Step</pf-v5-progress-step>
+    <pf-v5-progress-step variant="info" current>Second Step</pf-v5-progress-step>
+    <pf-v5-progress-step variant="pending">Third Step</pf-v5-progress-step>
+  </pf-v5-progress-stepper>
+</form>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  import '@patternfly/elements/pf-v5-progress-stepper/pf-v5-progress-stepper.js';
+
+  document.querySelector('form').addEventListener('change', /** @this{HTMLFormElement}*/ function onChange() {
+    this.elements.progress.vertical = this.elements.vertical.checked;
+    this.elements.progress.center = this.elements.center.checked;
+  });
+</script>
+
+<style>
+  form,
+  label pf-v5-switch {
+    padding-inline: .5rem;
+  }
+
+  form,
+  label {
+    display: block;
+    padding-block: .5rem;
+  }
+
+  section {
+    padding: 1em;
+  }
+</style>

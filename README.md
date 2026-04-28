@@ -63,10 +63,10 @@ npm start
 npm run test:watch
 
 # Run a single test in watch mode.
-npm run test:watch -- --files elements/pf-accordion/test/pf-accordion.spec.ts
+npm run test:watch -- --files elements/pf-v5-accordion/test/pf-v5-accordion.spec.ts
 
 # Or multiple:
-npm run test:watch -- --files 'elements/pf-{select,card}/test/*.spec.ts'
+npm run test:watch -- --files 'elements/pf-v5-{select,card}/test/*.spec.ts'
 
 # Run all tests excluding react and vue tests.
 npm run test:watch

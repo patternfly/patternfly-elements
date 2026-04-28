@@ -48,7 +48,7 @@ Please note the TypeScript `#` character before the handlers' method name.
 This signals to the custom elements manifest analyzer to list this method as private,
 and marks it as such in the element's TypeScript definition file.
 This helps users of your element know which of its features are safe to use with confidence,
-and which are likely to change without notice. For example, a user of `<pf-cool-element>` would think twice about directly calling it's
+and which are likely to change without notice. For example, a user of `<pf-v5-cool-element>` would think twice about directly calling it's
 `onClick()` method if it was marked as private.
 
 After saving your files, the demo page will refresh and you'll notice the start of your button interactivity.
@@ -71,7 +71,7 @@ import { property } from 'lit/decorators/property.js'
 Then define the `following` boolean attribute on the element.
 
 ```ts
-export class PfCoolElement extends LitElement {
+export class PfV5CoolElement extends LitElement {
   static readonly styles = [style];
 
   /** Whether the user follows this profile */
@@ -168,13 +168,13 @@ render() {
 Finally, we'll need to update our demo page (`/demo/index.html`) to include the `photo-url` attribute. Pass in an image URL to see that it's working.
 
 ```html
-<pf-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
+<pf-v5-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
   Kyle Buchanan
-</pf-cool-element>
+</pf-v5-cool-element>
 ```
 
-We can also modify `pf-cool-element.css` to adjust the background-size property 
-on `.pf-cool-element__profile`.
+We can also modify `pf-v5-cool-element.css` to adjust the background-size property 
+on `.pf-v5-cool-element__profile`.
 
 The final result should look like this:
 
@@ -186,7 +186,7 @@ That's all it takes, folks!
 To summarize, we built a web component that extends LitElement, then added an HTML template, custom styles, and interactivity.
 What's cool is that we've only scratched the surface of what's possible with custom elements and Lit.
 
-For your reference, here's the final Javascript code for `pf-cool-element`:
+For your reference, here's the final Javascript code for `pf-v5-cool-element`:
 
 ```ts
 import { LitElement, html } from 'lit';
@@ -194,14 +194,14 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import styles from './pf-cool-element.css';
+import styles from './pf-v5-cool-element.css';
 
 /**
  * Cool Element
  * @slot - Place element content here
  */
-@customElement('pf-cool-element')
-export class PfCoolElement extends LitElement {
+@customElement('pf-v5-cool-element')
+export class PfV5CoolElement extends LitElement {
   static readonly styles = [styles];
 
   /** Whether the user follows this profile */
@@ -230,7 +230,7 @@ export class PfCoolElement extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'pf-cool-element': PfCoolElement;
+    'pf-v5-cool-element': PfV5CoolElement;
   }
 }
 ```

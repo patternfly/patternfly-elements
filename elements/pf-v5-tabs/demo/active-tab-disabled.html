@@ -1,0 +1,36 @@
+<section>
+  <pf-v5-tabs id="disabledExample">
+    <pf-v5-tab slot="tab">Users</pf-v5-tab>
+    <pf-v5-tab-panel>Users</pf-v5-tab-panel>
+    <pf-v5-tab slot="tab">Containers</pf-v5-tab>
+    <pf-v5-tab-panel>Containers</pf-v5-tab-panel>
+    <pf-v5-tab slot="tab">Database</pf-v5-tab>
+    <pf-v5-tab-panel>Database</pf-v5-tab-panel>
+    <pf-v5-tab slot="tab" disabled active>Disabled</pf-v5-tab>
+    <pf-v5-tab-panel>Disabled</pf-v5-tab-panel>
+  </pf-v5-tabs>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-tabs/pf-v5-tabs.js';
+</script>
+
+<style>
+  main {
+    display: block;
+    overflow-x: unset;
+  }
+
+  section {
+    margin: 0 auto;
+    padding: 0 16px 32px;
+    width: 100%;
+    max-width: 1008px;
+    @media (min-width: 768px) {
+      padding: 0 32px 32px;
+    }
+  }
+</style>
+
+
+

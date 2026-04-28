@@ -1,0 +1,20 @@
+<pf-v5-button id="button">
+  Primary
+  <pf-v5-badge number="0" hidden></pf-v5-badge>
+</pf-v5-button>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  document.getElementById('button').addEventListener('click', async function() {
+    await import('@patternfly/elements/pf-v5-badge/pf-v5-badge.js');
+    this.querySelector('pf-v5-badge').hidden = false
+    this.querySelector('pf-v5-badge').number += 1
+  })
+</script>
+
+<style>
+  pf-v5-button {
+    margin: 1em;
+  }
+</style>

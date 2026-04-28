@@ -291,24 +291,24 @@ header.band h1 {
   color: var(--pf-theme--color--white, #fff);
 }
 
-.example-preview.pf-background-image pf-background-image {
+.example-preview.pf-background-image pf-v5-background-image {
   position: absolute;
   z-index: -1;
   top: 0;
   left: 0;
 }
 
-.example-preview.pf-background-image pf-background-image::part(container) {
+.example-preview.pf-background-image pf-v5-background-image::part(container) {
   position: relative;
 }
 
-.example-preview.pf-background-image pf-background-image,
-.example-preview.pf-background-image pf-background-image::part(container) {
+.example-preview.pf-background-image pf-v5-background-image,
+.example-preview.pf-background-image pf-v5-background-image::part(container) {
   height: 100%;
   width: 100%;
 }
 
-.example-preview.pf-background-image pf-background-image::part(container)::after {
+.example-preview.pf-background-image pf-v5-background-image::part(container)::after {
   position: absolute;
   background-size: cover;
 }
@@ -612,7 +612,7 @@ main.blog {
   border-right: .0625rem solid #d2d2d2;
 }
 
-.site-navigation > pf-dropdown {
+.site-navigation > pf-v5-dropdown {
   --pf-dropdown--MinWidth: 100%;
   width: var(--pf-dropdown--MinWidth);
 }
@@ -813,7 +813,7 @@ code {
   min-width: 0;
 }
 
-pf-card > h3 {
+pf-v5-card > h3 {
   margin-top: 0;
 }
 

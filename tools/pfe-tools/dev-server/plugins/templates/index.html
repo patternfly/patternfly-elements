@@ -36,8 +36,8 @@
   <script type="module">
     import 'construct-style-sheets-polyfill';
     import 'element-internals-polyfill';
-    import '@patternfly/elements/pf-button/pf-button.js';
-    import '@patternfly/elements/pf-card/pf-card.js';
+    import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+    import '@patternfly/elements/pf-v5-card/pf-v5-card.js';
     import '@patternfly/pfe-tools/dev-server/demo.js';
   </script>
 </head>
@@ -45,12 +45,12 @@
 <body class="menu-open">
   <header id="main-header">
     <div class="logo-bar">
-      <pf-button id="hamburger"
+      <pf-v5-button id="hamburger"
                  plain
                  aria-controls="sidebar"
                  label="Expand Main Navigation">
-        <pf-icon icon="bars" size="lg"></pf-icon>
-      </pf-button>
+        <pf-v5-icon icon="bars" size="lg"></pf-v5-icon>
+      </pf-v5-button>
       <a href="/" aria-label="{{ title }} Home">
         <img src="{{ options.site.logoUrl }}" alt="{{ title }}">
       </a>
@@ -123,7 +123,7 @@
     <section id="components">
         {% for primary, group in groupeddemos %}
         {% set first = group['0'] %}
-        <pf-card rounded compact>
+        <pf-v5-card rounded compact>
           <h2 slot="header">{{ first.title }}</h2>
           <a href="{{ first.permalink | replace(demoURLPrefix, '/') }}">
             <img src="/elements/{{ primary }}/docs/screenshot.png" alt="{{ primary }}">
@@ -133,7 +133,7 @@
               <a href="{{ d.permalink | replace(demoURLPrefix, '/') }}">{{ d.title }}</a>
             </li>{% endif %}{% endfor %}
           </ul>
-        </pf-card>{% endfor %}
+        </pf-v5-card>{% endfor %}
     </section>
     {% endif %}
   </main>

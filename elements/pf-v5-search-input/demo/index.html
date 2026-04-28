@@ -1,0 +1,42 @@
+<div class="container">
+  <pf-v5-search-input id="search-input" placeholder="Search">
+    <pf-v5-option>What is Red Hat Enterprise Linux?</pf-v5-option>
+    <pf-v5-option>How does Red Hat OpenShift work?</pf-v5-option>
+    <pf-v5-option>Why use Red Hat Ansible for automation?</pf-v5-option>
+    <pf-v5-option>Where can Red Hat OpenShift be deployed?</pf-v5-option>
+    <pf-v5-option>When should you use Red Hat Enterprise Linux?</pf-v5-option>
+    <pf-v5-option>What is Red Hat Satellite?</pf-v5-option>
+    <pf-v5-option>How does Red Hat integrate with AWS and other clouds?</pf-v5-option>
+    <pf-v5-option>Why choose Red Hat over other Linux vendors?</pf-v5-option>
+    <pf-v5-option>Where can I learn Red Hat technologies?</pf-v5-option>
+    <pf-v5-option>When does support end for RHEL versions?</pf-v5-option>
+    <pf-v5-option>What are Red Hat certifications?</pf-v5-option>
+    <pf-v5-option>How do you secure a RHEL server?</pf-v5-option>
+    <pf-v5-option>Why use OpenShift instead of vanilla Kubernetes?</pf-v5-option>
+    <pf-v5-option>Where is Red Hat headquartered?</pf-v5-option>
+    <pf-v5-option>When should you use Red Hat CoreOS?</pf-v5-option>
+    <pf-v5-option>What is Red Hat Insights?</pf-v5-option>
+    <pf-v5-option>How do you manage Red Hat subscriptions?</pf-v5-option>
+    <pf-v5-option>Why is RHEL considered enterprise-grade?</pf-v5-option>
+    <pf-v5-option>Where can I download RHEL for testing?</pf-v5-option>
+    <pf-v5-option>When was Red Hat founded?</pf-v5-option>
+  </pf-v5-search-input>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-search-input/pf-v5-search-input.js';
+
+  const searchInput = document.getElementById('search-input');
+
+  searchInput.addEventListener('change', (event) => {
+    /* eslint-disable no-console */
+    console.log('Selected:', event.target.value);
+    /* eslint-disable no-console */
+  });
+</script>
+
+<style>
+  .container {
+    padding: 40px;
+  }
+</style>

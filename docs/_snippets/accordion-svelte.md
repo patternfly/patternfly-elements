@@ -1,18 +1,18 @@
 {%raw%}
 ```html
-<pf-accordion>
+<pf-v5-accordion>
   {#each data as item}
-  <pf-accordion-header>
+  <pf-v5-accordion-header>
     <h3>{item.header}</h3>
-  </pf-accordion-header>
-  <pf-accordion-panel>
+  </pf-v5-accordion-header>
+  <pf-v5-accordion-panel>
     <p>{item.panel}</p>
-  </pf-accordion-panel>
+  </pf-v5-accordion-panel>
   {/each}
-</pf-accordion>
+</pf-v5-accordion>
 
 <script>
-  import "@patternfly/elements/pf-accordion/pf-accordion.js";
+  import "@patternfly/elements/pf-v5-accordion/pf-v5-accordion.js";
 	let data = [
     { header: 'Heading 1', panel: 'Here is some content' },
     { header: 'Heading 2', panel: 'Here is some more content' },

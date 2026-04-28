@@ -1,0 +1,24 @@
+<section id="checkbox-input-demo">
+  <pf-v5-select variant="checkbox"
+             placeholder="Select Input"
+             accessible-label="Level"
+             checkbox-selection-badge-hidden>
+    <pf-v5-option>Debug</pf-v5-option>
+    <pf-v5-option>Info</pf-v5-option>
+    <pf-v5-option>Warn</pf-v5-option>
+    <pf-v5-option>Error</pf-v5-option>
+  </pf-v5-select>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-select/pf-v5-select.js';
+</script>
+
+<style>
+#checkbox-input-demo {
+  padding: 1em;
+  & pf-v5-select {
+    max-width: 300px;
+  }
+}
+</style>

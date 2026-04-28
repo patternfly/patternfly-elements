@@ -1,0 +1,32 @@
+<section>
+  <pf-v5-label color="blue">Blue</pf-v5-label>
+  <pf-v5-label color="green">Green</pf-v5-label>
+  <pf-v5-label color="orange">Orange</pf-v5-label>
+  <pf-v5-label color="red"><span>Red <span class="visually-hidden-class">Hat</span></span></pf-v5-label>
+  <pf-v5-label color="purple">Purple</pf-v5-label>
+  <pf-v5-label color="cyan">Cyan</pf-v5-label>
+  <pf-v5-label color="gold">Gold</pf-v5-label>
+  <pf-v5-label>Grey</pf-v5-label>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-label/pf-v5-label.js';
+</script>
+
+<style>
+  .visually-hidden-class {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  section {
+    padding: 1em;
+  }
+</style>

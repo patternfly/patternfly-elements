@@ -1,22 +1,22 @@
 {%raw%}
 ```ts
-import "@patternfly/elements/pf-accordion/pf-accordion.js";
+import "@patternfly/elements/pf-v5-accordion/pf-v5-accordion.js";
 
 import { Component } from "@angular/core";
 
 @Component({
   selector: "app-root",
   template: `
-    <pf-accordion>
+    <pf-v5-accordion>
       <ng-template ngFor let-item [ngForOf]="data">
-        <pf-accordion-header>
+        <pf-v5-accordion-header>
           <h3>{{ item.header }}</h3>
-        </pf-accordion-header>
-        <pf-accordion-panel>
+        </pf-v5-accordion-header>
+        <pf-v5-accordion-panel>
           <p>{{ item.panel }}</p>
-        </pf-accordion-panel>
+        </pf-v5-accordion-panel>
       </ng-template>
-    </pf-accordion>
+    </pf-v5-accordion>
   `,
 })
 export class AppComponent {

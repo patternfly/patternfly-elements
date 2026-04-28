@@ -1,0 +1,19 @@
+:host {
+  --pf-v5-c-table--cell--MinWidth: var(--pf-v5-c-table--m-truncate--cell--MinWidth);
+  --pf-v5-c-table--cell--MaxWidth: var(--pf-v5-c-table--m-truncate--cell--MaxWidth);
+  --pf-v5-c-table--cell--Overflow: hidden;
+  --pf-v5-c-table--cell--TextOverflow: ellipsis;
+  --pf-v5-c-table--cell--WhiteSpace: nowrap;
+  --pf-v5-c-table--cell--FontSize: var(--pf-v5-c-table--thead--cell--FontSize, var(--pf-global--FontSize--sm, 0.875rem));
+  --pf-v5-c-table--cell--FontWeight: var(--pf-v5-c-table--thead--cell--FontWeight, var(--pf-global--FontWeight--bold, 700));
+  vertical-align: bottom;
+  display: grid;
+  visibility: visible;
+}
+
+@media (max-width: 768px) {
+  :host {
+    display: none;
+    visibility: hidden;
+  }
+}

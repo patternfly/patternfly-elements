@@ -1,0 +1,72 @@
+<pf-v5-table>
+  <pf-v5-thead>
+    <pf-v5-tr>
+      <pf-v5-th>Repositories</pf-v5-th>
+      <pf-v5-th>Branches</pf-v5-th>
+      <pf-v5-th>Pull requests</pf-v5-th>
+      <pf-v5-th>Workspaces</pf-v5-th>
+      <pf-v5-th>Last commit</pf-v5-th>
+      <pf-v5-th></pf-v5-th>
+    </pf-v5-tr>
+  </pf-v5-thead>
+
+  <pf-v5-tr expandable="compound">
+    <pf-v5-td>
+      <a href="#">siemur/test-space</a>
+    </pf-v5-td>
+    <pf-v5-td compound-expand="branches">
+      <pf-v5-icon set="fas" icon="code-branch"></pf-v5-icon>
+      10
+    </pf-v5-td>
+    <p slot="branches">Branches...</p>
+    <pf-v5-td compound-expand="pull-requests">
+      <pf-v5-icon set="fas" icon="code-branch"></pf-v5-icon>
+      4
+    </pf-v5-td>
+    <p slot="pull-requests">Pull requests...</p>
+    <pf-v5-td compound-expand="workspaces">
+      <pf-v5-icon set="fas" icon="cube"></pf-v5-icon>
+      4
+    </pf-v5-td>
+    <p slot="workspaces">Workspaces</p>
+    <pf-v5-td>
+      <time>20 minutes ago</time>
+    </pf-v5-td>
+    <pf-v5-td>
+      <a href="#">Open in GitHub</a>
+    </pf-v5-td>
+  </pf-v5-tr>
+
+  <pf-v5-tr expandable="compound">
+    <pf-v5-td>
+      <a href="#">siemur/test-space-2</a>
+    </pf-v5-td>
+    <pf-v5-td compound-expand="branches">
+      <pf-v5-icon set="fas" icon="code-branch"></pf-v5-icon>
+      3
+    </pf-v5-td>
+    <p slot="branches">Branches...</p>
+    <pf-v5-td compound-expand="pull-requests">
+      <pf-v5-icon set="fas" icon="code-branch"></pf-v5-icon>
+      4
+    </pf-v5-td>
+    <p slot="pull-requests">Pull requests...</p>
+    <pf-v5-td compound-expand="workspaces">
+      <pf-v5-icon set="fas" icon="cube"></pf-v5-icon>
+      4
+    </pf-v5-td>
+    <p slot="workspaces">Workspaces</p>
+    <pf-v5-td>
+      <time>20 minutes ago</time>
+    </pf-v5-td>
+    <pf-v5-td>
+      <a href="#">Open in GitHub</a>
+    </pf-v5-td>
+  </pf-v5-tr>
+
+</pf-v5-table>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-table/pf-v5-table.js';
+  import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
+</script>

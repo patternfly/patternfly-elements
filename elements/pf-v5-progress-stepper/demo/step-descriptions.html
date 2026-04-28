@@ -1,0 +1,18 @@
+<section id="descriptions">
+  <pf-v5-progress-stepper>
+    <pf-v5-progress-step description="This is the first thing to happen" variant="success">First Step</pf-v5-progress-step>
+    <pf-v5-progress-step description="This is the second thing to happen" variant="info" current>Second Step</pf-v5-progress-step>
+    <pf-v5-progress-step description="This is the last thing to happen" variant="pending">Third Step</pf-v5-progress-step>
+  </pf-v5-progress-stepper>
+</section>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-v5-progress-stepper/pf-v5-progress-stepper.js';
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

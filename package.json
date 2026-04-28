@@ -192,7 +192,8 @@
       "service": true,
       "command": "eleventy --serve",
       "dependencies": [
-        "build:core"
+        "build:core",
+        "build:elements"
       ]
     },
     "start": {

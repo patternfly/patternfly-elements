@@ -10,10 +10,9 @@ function getFilesToCopy(options) {
   const cwd = process.cwd();
   const prefix = `${(options?.prefix ?? 'pf').replace(/-$/, '')}-`;
 
-  const hasElements = fs.existsSync(path.join(cwd, 'elements'));
   const hasCore = fs.existsSync(path.join(cwd, 'core'));
 
-  if (!hasElements && !hasCore) {
+  if (!hasCore) {
     return null;
   }
 
@@ -21,25 +20,12 @@ function getFilesToCopy(options) {
     [path.join(cwd, 'node_modules/element-internals-polyfill')]: 'element-internals-polyfill',
   };
 
-  const tagNames = fs.readdirSync(path.join(cwd, 'elements'));
   const corePkgs = fs.readdirSync(path.join(cwd, 'core'));
 
-  // Copy all component and core files to _site
-  if (hasElements) {
-    Object.assign(files, Object.fromEntries(tagNames
-        .filter(x => !x.match(/node_modules|tsconfig|README\.md|(?:\.ts$)|(?:config\.js$)/))
-        .map(dir => [
-          `elements/${dir}`,
-          `components/${dir.replace(prefix, '')}`,
-        ])));
-  }
-
-  if (hasCore) {
-    Object.assign(files, Object.fromEntries(corePkgs.map(dir => [
-      `core/${dir}`,
-      `core/${dir.replace(prefix, '')}`,
-    ])));
-  }
+  Object.assign(files, Object.fromEntries(corePkgs.map(dir => [
+    `core/${dir}`,
+    `core/${dir.replace(prefix, '')}`,
+  ])));
 
   return files;
 }
@@ -74,6 +60,15 @@ module.exports = {
     });
     eleventyConfig.addPassthroughCopy({
       'node_modules/@patternfly/icons/': '/assets/@patternfly/icons/',
+    });
+    eleventyConfig.addPassthroughCopy({
+      'elements': '/assets/@patternfly/elements',
+    });
+    eleventyConfig.addPassthroughCopy({
+      './core/pfe-core': '/assets/@patternfly/pfe-core',
+    });
+    eleventyConfig.addPassthroughCopy({
+      'tools/pfe-tools': '/assets/@patternfly/pfe-tools',
     });
     eleventyConfig.addPassthroughCopy('brand/**/*');
     const filesToCopy = getFilesToCopy(options);

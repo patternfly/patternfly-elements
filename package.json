@@ -55,7 +55,6 @@
         "build:lightdom",
         "build:elements",
         "build:create",
-
         "build:react"
       ]
     },
@@ -272,11 +271,11 @@
     "@actions/glob": "^0.5.0",
     "@commitlint/cli": "^19.4.0",
     "@commitlint/config-conventional": "^19.2.2",
-    "@jspm/generator": "~2.7.6",
     "@lit/react": "^1.0.8",
     "@octokit/core": "^6.1.2",
     "@patternfly/patternfly": "^4.224.5",
     "@pwrs/cem": "^0.7.5",
+    "@pwrs/mappa": "^0.0.4",
     "@rhds/elements": "^4.0.1",
     "@types/koa__router": "^12.0.5",
     "@types/node": "^22.19.0",

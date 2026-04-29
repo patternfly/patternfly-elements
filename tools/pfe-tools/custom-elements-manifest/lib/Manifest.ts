@@ -175,11 +175,12 @@ export class Manifest {
   public static prettyTag = (
     tagName: string,
     aliases?: Record<string, string>,
-  ): string => aliases?.[tagName] ?? tagName
-      .replace(/^\w+-/, '')
-      .toLowerCase()
-      .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
-      .replace(/-/g, ' ');
+    prefix?: string,
+  ): string => aliases?.[tagName]
+      ?? (prefix ? tagName.replace(prefix, '') : tagName.replace(/^\w+-/, ''))
+          .toLowerCase()
+          .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
+          .replace(/-/g, ' ');
 
   declarations: Map<string, ManifestCustomElement> = new Map<string, ManifestCustomElement>();
 
@@ -323,10 +324,12 @@ export class Manifest {
       const [last = ''] = filePath.split(path.sep).reverse();
       const filename = last.replace('.html', '');
       const isMainElementDemo = filename === 'index';
-      const title = isMainElementDemo ? options.aliases[tagName] ?? prettyTag(tagName) : last
-          .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
-          .replace(/-/g, ' ')
-          .replace('.html', '');
+      const prefix = `${options.tagPrefix.replace(/-$/, '')}-`;
+      const title = isMainElementDemo ? prettyTag(tagName, options.aliases, prefix)
+        : last
+            .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())
+            .replace(/-/g, ' ')
+            .replace('.html', '');
       return {
         tagName,
         primaryElementName,

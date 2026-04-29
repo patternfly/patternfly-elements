@@ -23,12 +23,12 @@ export class DocsPage {
   constructor(public manifest: Manifest, options?: DocsPageOptions) {
     const config = getPfeConfig(options?.rootDir);
     this.tagName = options?.tagName ?? '';
-    this.title = options?.title ?? Manifest.prettyTag(this.tagName);
     this.docsTemplatePath = options?.docsTemplatePath;
     this.summary = this.manifest.getSummary(this.tagName);
     this.description = this.manifest.getDescription(this.tagName);
     const prefix = `${config.tagPrefix.replace(/-$/, '')}-`;
     const aliased = config.aliases[this.tagName] ?? this.tagName.replace(prefix, '');
+    this.title = options?.title ?? Manifest.prettyTag(this.tagName, config.aliases, prefix);
     this.slug = slugify(aliased, { strict: true, lower: true });
   }
 }

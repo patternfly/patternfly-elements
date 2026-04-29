@@ -4,12 +4,11 @@ module.exports = function(eleventyConfig) {
 
     const deps = {};
     const specifierRe = /['"]([^'"]+)['"]/g;
-    for (const match of content.matchAll(specifierRe)) {
-      const spec = match[1];
+    for (const [, spec] of content.matchAll(specifierRe)) {
       if (!spec.startsWith('.') && !spec.startsWith('/')) {
-        const name = spec.startsWith('@')
-          ? spec.split('/').slice(0, 2).join('/')
-          : spec.split('/')[0];
+        const name = spec.startsWith('@') ?
+          spec.split('/').slice(0, 2).join('/') :
+          spec.split('/')[0];
         deps[name] = '*';
       }
     }

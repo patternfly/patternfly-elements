@@ -7,8 +7,8 @@ module.exports = function(eleventyConfig) {
     for (const [, spec] of content.matchAll(specifierRe)) {
       if (!spec.startsWith('.') && !spec.startsWith('/')) {
         const name = spec.startsWith('@') ?
-          spec.split('/').slice(0, 2).join('/') :
-          spec.split('/')[0];
+          spec.split('/').slice(0, 2).join('/')
+          : spec.split('/')[0];
         deps[name] = '*';
       }
     }

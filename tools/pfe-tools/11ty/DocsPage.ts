@@ -1,4 +1,5 @@
 import type { PfeConfig } from '../config.js';
+import { getPfeConfig } from '../config.js';
 import { Manifest } from '../custom-elements-manifest/lib/Manifest.js';
 
 import slugify from 'slugify';
@@ -20,12 +21,14 @@ export class DocsPage {
   summary?: string | null;
   docsTemplatePath?: string;
   constructor(public manifest: Manifest, options?: DocsPageOptions) {
+    const config = getPfeConfig(options?.rootDir);
     this.tagName = options?.tagName ?? '';
     this.title = options?.title ?? Manifest.prettyTag(this.tagName);
     this.docsTemplatePath = options?.docsTemplatePath;
     this.summary = this.manifest.getSummary(this.tagName);
     this.description = this.manifest.getDescription(this.tagName);
-    const aliased = options?.aliases?.[this.tagName] ?? this.tagName.replace(/^\w+-/, '');
+    const prefix = `${config.tagPrefix.replace(/-$/, '')}-`;
+    const aliased = config.aliases[this.tagName] ?? this.tagName.replace(prefix, '');
     this.slug = slugify(aliased, { strict: true, lower: true });
   }
 }

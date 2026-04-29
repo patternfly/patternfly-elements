@@ -20,6 +20,7 @@ const StatusIconMap = {
 /**
  * Displays contextual feedback for form fields with optional icon and status color.
  *
+ * @alias Helper Text
  * @slot icon - Optional custom icon to override the default icon.
  * @slot - Default slot for the helper text content.
  *

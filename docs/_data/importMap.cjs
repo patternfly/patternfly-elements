@@ -1,6 +1,5 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { glob } = require('glob');
 
 const packageLock = JSON.parse(fs.readFileSync(path.join(
   __dirname,
@@ -82,38 +81,14 @@ module.exports = async function() {
 
   const map = generator.getMap();
   map.imports['/docs/zero-md.js'] = '/zero-md.js';
-  map.imports['@patternfly/elements'] = '/pfe.min.js';
-  map.imports['@patternfly/pfe-core'] = '/pfe.min.js';
+  map.imports['@patternfly/elements/'] = '/assets/@patternfly/elements/';
+  map.imports['@patternfly/pfe-core/'] = '/assets/@patternfly/pfe-core/';
+  map.imports['@patternfly/pfe-core'] = '/assets/@patternfly/pfe-core/core.js';
+  map.imports['@patternfly/pfe-tools/'] = '/assets/@patternfly/pfe-tools/';
   map.imports['@patternfly/icons/'] = '/assets/@patternfly/icons/';
-  map.imports['@patternfly/pfe-core/decorators.js'] = '/pfe.min.js';
-  map.imports['@patternfly/pfe-tools/environment.js'] = '/tools/environment.js';
+  map.imports['@lit/context'] = map.scopes['https://cdn.jsdelivr.net/']['@lit/context'];
   map.imports['lit/'] = map.imports.lit.replace('index.js', '');
   map.scopes['https://cdn.jsdelivr.net/'].lit = map.imports.lit;
   map.scopes['https://cdn.jsdelivr.net/']['lit/'] = map.imports.lit.replace('index.js', '');
-
-  // add imports for imports under pfe-core
-  const pfeCoreImports = (await glob('./{functions,controllers,decorators}/*.ts', {
-    cwd: path.join(__dirname, '../../core/pfe-core'),
-  }))
-      .filter(x => !x.endsWith('.d.ts'))
-      .map(x => x.replace('.ts', '.js'));
-  for (const file of pfeCoreImports) {
-    map.imports[path.join('@patternfly/pfe-core', file)] = '/pfe.min.js';
-  }
-
-  map.imports['@patternfly/pfe-core/decorators.js'] = '/pfe.min.js';
-  map.imports['@patternfly/pfe-core'] = '/pfe.min.js';
-
-  const elementsPath = path.join(__dirname, '..', '..', 'elements');
-  for (const tagName of fs.readdirSync(elementsPath)) {
-    const elementPath = path.join(elementsPath, tagName);
-    if (fs.statSync(elementPath).isDirectory()) {
-      for (const fileName of fs.readdirSync(elementPath)) {
-        if (fileName.endsWith('.ts') && !fileName.endsWith('.d.ts')) {
-          map.imports[`@patternfly/elements/${tagName}/${fileName.replace('.ts', '')}.js`] = `/pfe.min.js`;
-        }
-      }
-    }
-  }
   return map;
 };

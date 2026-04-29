@@ -1,0 +1,16 @@
+:host {
+  --pf-v5-c-table--cell--PaddingTop: var(--pf-v5-c-table--tbody--cell--PaddingTop);
+  --pf-v5-c-table--cell--PaddingBottom: var(--pf-v5-c-table--tbody--cell--PaddingBottom);
+  display: grid;
+}
+
+@media (max-width: 768px) {
+  :host {
+    position: relative;
+  }
+  
+  :host:first-of-type {
+    border-bottom: var(--pf-v5-c-table--border-width--base) solid var(--pf-v5-c-table--BorderColor);
+  }
+}
+

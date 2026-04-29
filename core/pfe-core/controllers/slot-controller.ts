@@ -130,8 +130,6 @@ class SlotRecord {
 export class SlotController implements SlotControllerPublicAPI {
   public static default = Symbol('default slot') satisfies symbol as symbol;
 
-  /** @deprecated use `default` */
-  public static anonymous: symbol = this.default;
 
   #slotRecords = new Map<string | typeof SlotController.default, SlotRecord>();
 

@@ -1,21 +1,21 @@
 {%raw%}
 ```html
 <template>
-  <pf-accordion>
+  <pf-v5-accordion>
     <template v-for="{ header, panel } in data">
-      <pf-accordion-header>
+      <pf-v5-accordion-header>
         <h3>{{ header }}</h3>
-      </pf-accordion-header>
-      <pf-accordion-panel>
+      </pf-v5-accordion-header>
+      <pf-v5-accordion-panel>
         <p>{{ panel }}</p>
-      </pf-accordion-panel>
+      </pf-v5-accordion-panel>
     </template>
-  </pf-accordion>
+  </pf-v5-accordion>
 </template>
 {%endraw%}
 
 <script>
-import "@patternfly/elements/pf-accordion/pf-accordion.js";
+import "@patternfly/elements/pf-v5-accordion/pf-v5-accordion.js";
 export default {
   name: 'App',
   data() {

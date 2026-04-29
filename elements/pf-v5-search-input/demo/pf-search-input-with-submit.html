@@ -1,0 +1,62 @@
+<form class="container">
+  <div class="search-input-container">
+    <pf-v5-search-input id="search-input" name="search" placeholder="Search">
+      <pf-v5-option value="Alabama"> Alabama </pf-v5-option>
+      <pf-v5-option value="New Jersey"> New Jersey </pf-v5-option>
+      <pf-v5-option value="New York"> New York </pf-v5-option>
+      <pf-v5-option value="New Mexico"> New Mexico </pf-v5-option>
+      <pf-v5-option value="North Carolina"> North Carolina </pf-v5-option>
+      <pf-v5-option value="Alabama1"> Alabama 1 </pf-v5-option>
+      <pf-v5-option value="New Jersey1"> New Jersey 1 </pf-v5-option>
+      <pf-v5-option value="New York1"> New York 1 </pf-v5-option>
+      <pf-v5-option value="New Mexico1"> New Mexico 1</pf-v5-option>
+      <pf-v5-option value="North Carolina1"> North Carolina 1</pf-v5-option>
+      <pf-v5-option value="Alabama2"> Alabama 2 </pf-v5-option>
+      <pf-v5-option value="New Jersey2"> New Jersey 2 </pf-v5-option>
+      <pf-v5-option value="New York2"> New York 2 </pf-v5-option>
+      <pf-v5-option value="New Mexico2"> New Mexico 2 </pf-v5-option>
+      <pf-v5-option value="North Carolina2"> North Carolina 2 </pf-v5-option>
+      <pf-v5-option value="Alabama3"> Alabama 3 </pf-v5-option>
+      <pf-v5-option value="New Jersey3"> New Jersey 3 </pf-v5-option>
+      <pf-v5-option value="New York3"> New York 3 </pf-v5-option>
+      <pf-v5-option value="New Mexico3"> New Mexico 3 </pf-v5-option>
+      <pf-v5-option value="North Carolina3"> North Carolina 3 </pf-v5-option>
+    </pf-v5-search-input>
+    <pf-v5-button> Search</pf-v5-button>
+  </div>
+</form>
+
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-search-input/pf-v5-search-input.js';
+
+  const searchInput = document.getElementById('search-input');
+
+  searchInput.addEventListener('change', (event) => {
+    /* eslint-disable no-console */
+    console.log('Selected:', event.target.value);
+    /* eslint-disable no-console */
+  });
+
+  const form = document.querySelector('form.container');
+  form.addEventListener('submit', (event) =>{
+    event.preventDefault();
+    /* eslint-disable no-console */
+    console.log("Value:", form.elements.search?.value);
+    /* eslint-disable no-console */
+  })
+</script>
+
+<style>
+  .container {
+    padding: 40px;
+    .search-input-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      #search-input {
+        margin-right: 1rem;
+      }
+    }
+  }
+</style>

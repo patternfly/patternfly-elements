@@ -1,0 +1,25 @@
+<section id="description-demo">
+  <pf-v5-select accessible-label="Title">
+    <pf-v5-option description="This is a description">Mr</pf-v5-option>
+    <pf-v5-option description="This is a description">Miss</pf-v5-option>
+    <pf-v5-option description="This is a description">Mrs</pf-v5-option>
+    <pf-v5-option description="This is a description">Ms</pf-v5-option>
+    <pf-v5-option>Dr
+      <span slot="description">Descriptions can <em>also</em> be HTML</span>
+    </pf-v5-option>
+    <pf-v5-option description="This is a description">Other</pf-v5-option>
+  </pf-v5-select>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-select/pf-v5-select.js';
+</script>
+
+<style>
+#description-demo {
+  padding: 1em;
+  & pf-v5-select {
+    max-width: 300px;
+  }
+}
+</style>

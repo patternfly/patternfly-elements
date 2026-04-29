@@ -1,0 +1,59 @@
+<h2>Hint with title</h2>
+
+<pf-v5-hint>
+  <pf-v5-dropdown slot="actions">
+    <pf-v5-button slot="toggle" plain icon="ellipsis-v" aria-label="Actions"></pf-v5-button>
+    <pf-v5-dropdown-menu slot="menu">
+      <pf-v5-dropdown-item>Link</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>Action</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item disabled>Disabled Link</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item disabled>Disabled Action</pf-v5-dropdown-item>
+      <hr>
+      <pf-v5-dropdown-item>Separated Link</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>Separated Action</pf-v5-dropdown-item>
+    </pf-v5-dropdown-menu>
+  </pf-v5-dropdown>
+  <span slot="title">Do more with Find it Fix it capabilities</span>
+  Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies.
+</pf-v5-hint>
+
+<pf-v5-hint>
+  <pf-v5-dropdown slot="actions">
+    <pf-v5-button slot="toggle" plain icon="ellipsis-v" aria-label="Actions"></pf-v5-button>
+    <pf-v5-dropdown-menu slot="menu">
+      <pf-v5-dropdown-item>Link</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>Action</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item disabled>Disabled Link</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item disabled>Disabled Action</pf-v5-dropdown-item>
+      <hr>
+      <pf-v5-dropdown-item>Separated Link</pf-v5-dropdown-item>
+      <pf-v5-dropdown-item>Separated Action</pf-v5-dropdown-item>
+    </pf-v5-dropdown-menu>
+  </pf-v5-dropdown>
+  <span slot="title">Do more with Find it Fix it capabilities</span>
+  Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies.
+  <a slot="footer" href="#">Try it for 90 days</a>
+</pf-v5-hint>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-hint/pf-v5-hint.js';
+  import '@patternfly/elements/pf-v5-dropdown/pf-v5-dropdown.js';
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+</script>
+
+<style>
+  pf-v5-hint {
+    margin-block-end: 2rem;
+  }
+
+  h2 {
+    margin-block-start: 2rem;
+    margin-block-end: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  h2:first-child {
+    margin-block-start: 0;
+  }
+</style>

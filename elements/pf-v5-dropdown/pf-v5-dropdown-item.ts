@@ -1,0 +1,97 @@
+import { LitElement, html, type PropertyValues, type TemplateResult } from 'lit';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { query } from 'lit/decorators/query.js';
+import { consume } from '@lit/context';
+
+import { context, type PfV5DropdownContext } from './context.js';
+
+import styles from './pf-v5-dropdown-item.css';
+
+export class DropdownItemChange extends Event {
+  constructor() {
+    super('change', { bubbles: true, cancelable: true });
+  }
+}
+
+/**
+ * Represents an item for a dropdown component.
+ * @slot icon
+ *      Optional slot for an icon
+ * @slot description
+ *      Optional slot for item description
+ * @slot -
+ *      Content for the dropdown item
+ */
+@customElement('pf-v5-dropdown-item')
+export class PfV5DropdownItem extends LitElement {
+  static readonly styles: CSSStyleSheet[] = [styles];
+
+  static override readonly shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+
+  /**
+   * The value associated with the dropdown item.
+   * This value can be used to identify the selected item
+   */
+  @property({ reflect: true }) value?: string;
+
+  /**
+   * href for link dropdown items
+   */
+  @property({ attribute: 'href' }) href?: string;
+
+  /**
+   * Flag indicating whether the item is active
+   */
+  @property({ type: Boolean, reflect: true }) active = false;
+
+  /**
+   * Indicates whether the dropdown item is disabled.
+   * A disabled item cannot be selected.
+   */
+  @property({ type: Boolean, reflect: true }) disabled = false;
+
+  /** Item description; overridden by `description` slot */
+  @property() description?: string;
+
+  @consume({ context, subscribe: true })
+  @property({ attribute: false })
+  private ctx?: PfV5DropdownContext;
+
+  /** @internal */
+  @query('#item') menuItem!: HTMLElement;
+
+  protected override updated(changed: PropertyValues<this>): void {
+    if (changed.has('href')) {
+      this.dispatchEvent(new DropdownItemChange());
+    }
+  }
+
+  render(): TemplateResult<1> {
+    const { disabled } = this.ctx ?? { disabled: false };
+    const isDisabled = !!this.disabled || !!this.ctx?.disabled;
+    return html`
+      <div id="menuitem" role="none" class="${classMap({ disabled })}">${this.href ? html`
+        <a id="item" role="menuitem" href="${this.href}" aria-disabled="${isDisabled}">
+          <slot name="icon"></slot>
+          <slot></slot>
+        </a>
+        ` : html`
+        <div id="item" role="menuitem" aria-disabled="${isDisabled}">
+          <slot name="icon"></slot>
+          <slot></slot>
+        </div>`}
+        <slot id="description" name="description">${this.description ?? ''}</slot>
+      </div>`;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'pf-v5-dropdown-item': PfV5DropdownItem;
+  }
+}

@@ -4,16 +4,15 @@ const path = require('path');
 /**
  * Generate a map of files per package which should be copied to the site dir
  * @param {object} [options]
- * @param {string} [options.prefix='pfe'] element prefix e.g. 'pfe' for 'pf-button'
+ * @param {string} [options.prefix='pf-v5'] element prefix e.g. 'pf-v5' for 'pf-v5-button'
  */
 function getFilesToCopy(options) {
   const cwd = process.cwd();
   const prefix = `${(options?.prefix ?? 'pf').replace(/-$/, '')}-`;
 
-  const hasElements = fs.existsSync(path.join(cwd, 'elements'));
   const hasCore = fs.existsSync(path.join(cwd, 'core'));
 
-  if (!hasElements && !hasCore) {
+  if (!hasCore) {
     return null;
   }
 
@@ -21,32 +20,19 @@ function getFilesToCopy(options) {
     [path.join(cwd, 'node_modules/element-internals-polyfill')]: 'element-internals-polyfill',
   };
 
-  const tagNames = fs.readdirSync(path.join(cwd, 'elements'));
   const corePkgs = fs.readdirSync(path.join(cwd, 'core'));
 
-  // Copy all component and core files to _site
-  if (hasElements) {
-    Object.assign(files, Object.fromEntries(tagNames
-        .filter(x => !x.match(/node_modules|tsconfig|README\.md|(?:\.ts$)|(?:config\.js$)/))
-        .map(dir => [
-          `elements/${dir}`,
-          `components/${dir.replace(prefix, '')}`,
-        ])));
-  }
-
-  if (hasCore) {
-    Object.assign(files, Object.fromEntries(corePkgs.map(dir => [
-      `core/${dir}`,
-      `core/${dir.replace(prefix, '')}`,
-    ])));
-  }
+  Object.assign(files, Object.fromEntries(corePkgs.map(dir => [
+    `core/${dir}`,
+    `core/${dir.replace(prefix, '')}`,
+  ])));
 
   return files;
 }
 
 const DEMO_PATHS_RE =
   // eslint-disable-next-line @stylistic/max-len
-  /(?<attr>href|src)="\/(?<workspace>elements|core)\/pf-(?<unprefixed>.*)\/(?<filename>.*)\.(?<extension>[.\w]+)"/g;
+  /(?<attr>href|src)="\/(?<workspace>elements|core)\/pf-v5-(?<unprefixed>.*)\/(?<filename>.*)\.(?<extension>[.\w]+)"/g;
 
 /**
  * Replace paths in demo files from the dev SPA's format to 11ty's format
@@ -63,18 +49,10 @@ function demoPaths(content) {
   }
 }
 
-/** Generate a single-file bundle of all the repo's components and their dependencies */
-async function bundle() {
-  const { bundle } = await import('../../scripts/bundle.js');
-  await bundle();
-}
-
 module.exports = {
   configFunction(eleventyConfig, options) {
     eleventyConfig.addPassthroughCopy('docs/images/favicon.ico');
     eleventyConfig.addPassthroughCopy('docs/bundle.{js,map,ts}');
-    eleventyConfig.addPassthroughCopy('docs/pfe.min.{map,css}');
-    eleventyConfig.addPassthroughCopy({ 'elements/pfe.min.*': '/' } );
     eleventyConfig.addPassthroughCopy('docs/demo.{js,map,ts}');
     eleventyConfig.addPassthroughCopy('docs/main.mjs');
     eleventyConfig.addPassthroughCopy({
@@ -83,7 +61,43 @@ module.exports = {
     eleventyConfig.addPassthroughCopy({
       'node_modules/@patternfly/icons/': '/assets/@patternfly/icons/',
     });
+    eleventyConfig.addPassthroughCopy({
+      'elements': '/assets/@patternfly/elements',
+    });
+    eleventyConfig.addPassthroughCopy({
+      './core/pfe-core': '/assets/@patternfly/pfe-core',
+    });
+    eleventyConfig.addPassthroughCopy({
+      'tools/pfe-tools': '/assets/@patternfly/pfe-tools',
+    });
     eleventyConfig.addPassthroughCopy('brand/**/*');
+
+    // Copy static assets (screenshots, demo images/css/js) from element folders
+    // to the site with the tag prefix stripped from the directory name.
+    // Markdown and HTML are handled by 11ty templates; this covers everything else.
+    const prefix = `${(options?.prefix ?? 'pf').replace(/-$/, '')}-`;
+    for (const dir of fs.readdirSync(path.join(process.cwd(), 'elements'))) {
+      const slug = dir.replace(prefix, '');
+      const screenshot = path.join('elements', dir, 'docs', 'screenshot.png');
+      if (fs.existsSync(screenshot)) {
+        eleventyConfig.addPassthroughCopy({
+          [screenshot]: `/components/${slug}/docs/screenshot.png`,
+        });
+      }
+      const demoDir = path.join(process.cwd(), 'elements', dir, 'demo');
+      if (fs.existsSync(demoDir)) {
+        const assets =
+          fs.readdirSync(demoDir, { recursive: true })
+              .filter(f => !String(f).endsWith('.html'));
+        for (const asset of assets) {
+          const src = path.join('elements', dir, 'demo', String(asset));
+          eleventyConfig.addPassthroughCopy({
+            [src]: `/components/${slug}/demo/${asset}`,
+          });
+        }
+      }
+    }
+
     const filesToCopy = getFilesToCopy(options);
 
     if (filesToCopy) {
@@ -93,8 +107,5 @@ module.exports = {
     // The demo files are written primarily for the dev SPA (`npm start`),
     // so here we transform the paths found in those files to match the docs site's file structure
     eleventyConfig.addTransform('demo-paths', demoPaths);
-
-    // create /docs/pfe.min.js
-    eleventyConfig.on('eleventy.before', () => bundle(options));
   },
 };

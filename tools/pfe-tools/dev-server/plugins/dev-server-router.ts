@@ -1,13 +1,13 @@
 import type { PfeDevServerInternalConfig } from './pfe-dev-server.js';
 
-import Router, { type RouterMiddleware } from '@koa/router';
+import Router from '@koa/router';
 import type { DefaultState, DefaultContext, Middleware } from 'koa';
 
 import { makeDemoEnv } from '../../environment.js';
 import { deslugify } from '../../config.js';
 
 type PfeMiddleware =
-  (config: PfeDevServerInternalConfig) => RouterMiddleware<DefaultState, DefaultContext>;
+  (config: PfeDevServerInternalConfig) => Middleware<DefaultState, DefaultContext>;
 
 /**
  * The environment file contains information from the serverside

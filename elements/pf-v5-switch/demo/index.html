@@ -1,0 +1,81 @@
+<section>
+  <p>A switch toggles the state of a setting (between on and off). Switches provide a more explicit, visible representation on a setting.</p>
+  <form>
+    <fieldset id="fieldset-a">
+      <legend>Option A</legend>
+      <pf-v5-switch id="a" checked></pf-v5-switch>
+      <label for="a">
+        <span data-state="on">Message when on</span>
+        <span data-state="off" hidden>Message when off</span>
+      </label>
+    </fieldset>
+
+    <fieldset id="fieldset-b">
+      <legend>Option B (no explicit label)</legend>
+      <pf-v5-switch id="b" checked></pf-v5-switch>
+    </fieldset>
+
+    <fieldset id="form-disabled">
+      <legend>Form Disabled State</legend>
+      <pf-v5-switch id="disable-a" aria-controls="fieldset-a"></pf-v5-switch>
+      <label for="disable-a">
+        <span data-state="on">Fieldset A is disabled</span>
+        <span data-state="off" hidden>Fieldset A is enabled</span>
+      </label>
+
+      <pf-v5-switch id="disable-a-switch" aria-controls="a"></pf-v5-switch>
+      <label for="disable-a-switch">
+        <span data-state="on">Fieldset A is disabled</span>
+        <span data-state="off" hidden>Fieldset A is enabled</span>
+      </label>
+
+      <pf-v5-switch id="disable-b" aria-controls="fieldset-b"></pf-v5-switch>
+      <label for="disable-b">
+        <span data-state="on">Fieldset B is disabled</span>
+        <span data-state="off" hidden>Fieldset B is enabled</span>
+      </label>
+
+      <pf-v5-switch id="disable-b-switch" aria-controls="b"></pf-v5-switch>
+      <label for="disable-b-switch">
+        <span data-state="on">Switch B is disabled</span>
+        <span data-state="off" hidden>Switch B is enabled</span>
+      </label>
+    </fieldset>
+  </form>
+</section>
+
+<script type="module">
+  import 'element-internals-polyfill';
+  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+
+  document.getElementById('form-disabled').addEventListener('change', /** @this{HTMLFieldsetElement}*/function(event) {
+    const controls = document.getElementById(event.target.getAttribute('aria-controls'));
+    controls.toggleAttribute('disabled', event.target.checked);
+  });
+</script>
+
+<style>
+  section {
+    margin: 2rem;
+  }
+
+  fieldset {
+    display: grid;
+    grid-template-columns: min-content max-content;
+    gap: var(--pf-v5-c-switch--ColumnGap, var(--pf-v5-c-switch__label--PaddingLeft, 1rem));
+  }
+
+  fieldset:has(#reversed) {
+    grid-template-columns: max-content min-content;
+  }
+
+  label {
+    color: var(--pf-v5-c-switch__label--Color, var(--pf-global--Color--dark-100, #151515));
+  }
+
+  pf-v5-switch:not([checked]) ~ label,
+  label:has(~ pf-v5-switch:not([checked])) {
+    color: var(--pf-v5-c-switch__input--not-checked__label--Color, var(--pf-global--disabled-color--100, #6a6e73));
+  }
+</style>

@@ -52,7 +52,6 @@ function normalizeOptions(options?: PfeDevServerConfigOptions) {
       .replace(/\/node_modules$/, '/')
       .replace('//', '/');
   config.importMapOptions ??= {} as PfeDevServerConfigOptions['importMapOptions'];
-  config.importMapOptions!.providers ??= {};
   config.site = { ...config.site, ...options?.site ?? {} };
   config.loadDemo ??= true;
   config.watchFiles ??= '{elements,core}/**/*.{css,html}';
@@ -147,26 +146,7 @@ export function pfeDevServerConfig(options?: PfeDevServerConfigOptions): DevServ
       // load .css files as lit CSSResult modules
       litCss(config.litcssOptions),
 
-      importMapGeneratorPlugin({
-        ...config.importMapOptions,
-        providers: {
-          'construct-style-sheets-polyfill': 'nodemodules',
-          'element-internals-polyfill': 'nodemodules',
-          'lit-html': 'nodemodules',
-          'lit': 'nodemodules',
-          '@lit/reactive-element': 'nodemodules',
-          '@lit/context': 'nodemodules',
-          ...config.importMapOptions?.providers,
-        },
-        resolveHtmlUrl(fileUrl, rootUrl) {
-          const override = config.importMapOptions.resolveHtmlUrl?.(fileUrl, rootUrl);
-          if (override) {
-            return override;
-          } else {
-            return fileUrl.replace('/components/', '/elements/pf-');
-          }
-        },
-      }),
+      importMapGeneratorPlugin(config.importMapOptions),
 
       ...config?.plugins ?? [],
 

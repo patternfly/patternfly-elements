@@ -1,0 +1,65 @@
+<form id="basic">
+  <fieldset>
+    <legend>Content attributes</legend>
+    <pf-v5-popover heading="Popover heading"
+                body="Popovers are triggered by click rather than hover."
+                footer="Popover footer">
+      <pf-v5-button>Toggle popover</pf-v5-button>
+    </pf-v5-popover>
+  </fieldset>
+
+  <fieldset>
+    <legend>Content slots</legend>
+    <pf-v5-popover>
+      <h4 slot="heading">Popover heading</h4>
+      <div slot="body">
+        Popovers are triggered by click rather than hover.
+      </div>
+      <span slot="footer">Popover footer</span>
+      <pf-v5-button>Toggle popover</pf-v5-button>
+    </pf-v5-popover>
+  </fieldset>
+
+  <fieldset>
+    <legend>Custom Heading Level</legend>
+    <pf-v5-popover heading="Popover heading"
+                body="Popovers are triggered by click rather than hover."
+                footer="Popover footer"
+                heading-level="3">
+      <pf-v5-button>Toggle popover</pf-v5-button>
+    </pf-v5-popover>
+  </fieldset>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-popover/pf-v5-popover.js';
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
+
+  document.addEventListener('submit', function(event) {
+    event.preventDefault();
+  });
+</script>
+
+<style>
+  form {
+    padding: 0 2rem;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 8px;
+    & h2 {
+      width: 100%;
+    }
+
+    & label {
+      display: flex;
+      flex-direction: column;
+    }
+
+    & fieldset label {
+      display: grid;
+      align-content: center;
+      display: contents;
+    }
+  }
+</style>

@@ -15,24 +15,24 @@
           </picture>
         </a>
       </div>
-      <pf-dropdown id="docs-versions-dropdown">
-        <pf-button slot="toggle"
+      <pf-v5-dropdown id="docs-versions-dropdown">
+        <pf-v5-button slot="toggle"
                    variant="control"
                    icon="caret-down"
-                   icon-set="fas">Versions</pf-button>
-        <pf-dropdown-menu slot="menu">
+                   icon-set="fas">Versions</pf-v5-button>
+        <pf-v5-dropdown-menu slot="menu">
           {% for version in versions %}
           {%- if version.current -%}
             {%- set prefix = '' -%}
           {%- else -%}
             {%- set prefix = '/' + version.slug -%}
           {%- endif %}
-          <pf-dropdown-item href="{{ prefix }}{{ page.url }}" {{ 'disabled' if version.current }}>
+          <pf-v5-dropdown-item href="{{ prefix }}{{ page.url }}" {{ 'disabled' if version.current }}>
             {{ version.label }}
-          </pf-dropdown-item>
+          </pf-v5-dropdown-item>
           {% endfor %}
-        </pf-dropdown-menu>
-      </pf-dropdown>
+        </pf-v5-dropdown-menu>
+      </pf-v5-dropdown>
     </div>
   </div>
 

@@ -37,7 +37,7 @@ title: Get started
   [bare module specifiers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#importing_modules_as_bare_names) to import the components.
 
   ```javascript
-  import '@patternfly/elements/pf-card/pf-card.js';
+  import '@patternfly/elements/pf-v5-card/pf-v5-card.js';
   ```
 
   ### In HTML
@@ -47,11 +47,16 @@ title: Get started
   In this example, we load the [card](/components/card/) modules using an importmap from JSPM.
 
   ```html
-  {% generateImportMap %}
-  <script type="module">
-    import "@patternfly/elements/pf-card/pf-card.js";
+  <script type="importmap">
+  {
+    "imports": {
+      "@patternfly/elements/": "https://ga.jspm.io/npm:@patternfly/elements/"
+    }
+  }
   </script>
-  {% endgenerateImportMap %}
+  <script type="module">
+    import "@patternfly/elements/pf-v5-card/pf-v5-card.js";
+  </script>
   ```
 
   To learn more about how to create importmaps, read our [creating an import map](/docs/develop/import-maps/) section, and go into more detail at [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) or the [import map specification](https://html.spec.whatwg.org/multipage/webappapis.html#import-maps). 
@@ -60,18 +65,18 @@ title: Get started
   When you have the import map script loaded on the page, you can add a [card component](/components/card) using html.
 
   ```html
-  <pf-card>
+  <pf-v5-card>
     <h3 slot="header">Card header</h3>
-    <p>This is the pf-card body.</p>
-    <pf-button slot="footer">OK</pf-button>
-  </pf-card>
+    <p>This is the pf-v5-card body.</p>
+    <pf-v5-button slot="footer">OK</pf-v5-button>
+  </pf-v5-card>
   ```
 
-  <pf-card>
+  <pf-v5-card>
     <h3 slot="header">Card header</h3>
-    <p>This is the pf-card body.</p>
-    <pf-button slot="footer">OK</pf-button>
-  </pf-card>
+    <p>This is the pf-v5-card body.</p>
+    <pf-v5-button slot="footer">OK</pf-v5-button>
+  </pf-v5-card>
 
 ### Importmap and Markup
 
@@ -86,18 +91,18 @@ Altogether your import map code could look something like this [Lit Playground D
   component to see which attributes are available.
 
   ```html
-  <pf-card rounded>
+  <pf-v5-card rounded>
     <h3 slot="header">Card header</h3>
-    <p>This is the pf-card body.</p>
-    <pf-button slot="footer">OK</pf-button>
-  </pf-card>
+    <p>This is the pf-v5-card body.</p>
+    <pf-v5-button slot="footer">OK</pf-v5-button>
+  </pf-v5-card>
   ```
 
-  <pf-card rounded>
+  <pf-v5-card rounded>
     <h3 slot="header">Card header</h3>
-    <p>This is the pf-card body.</p>
-    <pf-button slot="footer">OK</pf-button>
-  </pf-card>
+    <p>This is the pf-v5-card body.</p>
+    <pf-v5-button slot="footer">OK</pf-v5-button>
+  </pf-v5-card>
 {% endband %}
 
 {% band header="Use CSS variables to customize or theme your components" %}
@@ -111,14 +116,14 @@ Altogether your import map code could look something like this [Lit Playground D
   ```css
   /* your-page.css */
   :root {
-    --pf-c-card--BackgroundColor: var(--pf-global--active-color--200, #bee1f4);
+    --pf-v5-c-card--BackgroundColor: var(--pf-global--active-color--200, #bee1f4);
   }
   ```
-  <pf-card flat rounded style="--pf-c-card--BackgroundColor: var(--pf-global--active-color--200, #bee1f4);">
+  <pf-v5-card flat rounded style="--pf-v5-c-card--BackgroundColor: var(--pf-global--active-color--200, #bee1f4);">
     <h3 slot="header">Card header</h3>
-    <p>This is the pf-card body.</p>
-    <pf-button slot="footer">OK</pf-button>
-  </pf-card>
+    <p>This is the pf-v5-card body.</p>
+    <pf-v5-button slot="footer">OK</pf-v5-button>
+  </pf-v5-card>
 {% endband %}
 
 {% band header="Avoiding the flash of unstyled content (FOUC)" %}
@@ -143,12 +148,12 @@ Altogether your import map code could look something like this [Lit Playground D
         --reveal-duration: 0.2s;
       }
 
-      pf-card {
+      pf-v5-card {
         opacity: 1;
         transition: opacity var(--reveal-duration) ease var(--reveal-delay);
       }
 
-      pf-card:not(:defined) {
+      pf-v5-card:not(:defined) {
         opacity: 0;
       }
     </style>
@@ -156,18 +161,18 @@ Altogether your import map code could look something like this [Lit Playground D
     <!-- Add noscript styles to immediately reveal content when JavaScript is disabled -->
     <noscript>
       <style>
-        pf-card:not(:defined) {
+        pf-v5-card:not(:defined) {
           opacity: 1;
         }
       </style>
     </noscript>
-    <script type="module" src="https://jspm.dev/@patternfly/elements/pf-card/pf-card.js"></script>
+    <script type="module" src="https://jspm.dev/@patternfly/elements/pf-v5-card/pf-v5-card.js"></script>
   </head>
   <body>
-    <pf-card>
+    <pf-v5-card>
       <h1 slot="header">No FOUC</h1>
       <p>Content will remain hidden until component definitions are loaded.</p>
-    </pf-card>
+    </pf-v5-card>
   </body>
   </html>
   ```

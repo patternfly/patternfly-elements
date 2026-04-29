@@ -128,16 +128,16 @@ tags:
   ```js
   import { useState } from "react";
 
-  import { Button } from "@patternfly/elements/react/pf-button/pf-button.js";
-  import { Card } from "@patternfly/elements/react/pf-card/pf-card.js";
-  import { Switch } from "@patternfly/elements/react/pf-switch/pf-switch.js";
-  import { Popover } from "@patternfly/elements/react/pf-popover/pf-popover.js";
-  import { Tooltip } from "@patternfly/elements/react/pf-tooltip/pf-tooltip.js";
+  import { Button } from "@patternfly/elements/react/pf-v5-button/pf-v5-button.js";
+  import { Card } from "@patternfly/elements/react/pf-v5-card/pf-v5-card.js";
+  import { Switch } from "@patternfly/elements/react/pf-v5-switch/pf-v5-switch.js";
+  import { Popover } from "@patternfly/elements/react/pf-v5-popover/pf-v5-popover.js";
+  import { Tooltip } from "@patternfly/elements/react/pf-v5-tooltip/pf-v5-tooltip.js";
 
   import "./App.css";
   ```
 
-  Let’s use [`pf-button`][pf-button] and [`pf-card`][pf-card] component in the 
+  Let’s use [`pf-v5-button`][pf-v5-button] and [`pf-v5-card`][pf-v5-card] component in the 
   `App` function in the `App.tsx` file to see that our Card and Button are 
   working. We are updating the local state and showing it in the UI after 
   clicking the button.
@@ -160,7 +160,7 @@ tags:
 
   ### Switch
 
-  Now we have a card and a button component, let's add [`pf-switch`][pf-switch] 
+  Now we have a card and a button component, let's add [`pf-v5-switch`][pf-v5-switch] 
   web component in our app. We will enable/disable the decrement button by 
   clicking on the Switch button.
 
@@ -208,7 +208,7 @@ tags:
   ### Tooltip
 
   Now we have a card, button, and switch component, let's add 
-  [`pf-tooltip`][pf-tooltip] web component in our app. We will show the tooltip 
+  [`pf-v5-tooltip`][pf-v5-tooltip] web component in our app. We will show the tooltip 
   text on mouseover.
 
   ```js
@@ -245,10 +245,10 @@ tags:
 <section class="band">
 
   ## Interacting with web components' APIs
-  Now we will add the [`pf-popover`][pf-popover] web component and open the 
+  Now we will add the [`pf-v5-popover`][pf-v5-popover] web component and open the 
   popover on the mouse over of the button. We will programmatically use the 
   `show()` and `hide()` popover methods to show and hide the popover. **Note**
-  that these are methods on the `<pf-popover>` DOM object. Because React apps do
+  that these are methods on the `<pf-v5-popover>` DOM object. Because React apps do
   not interact directly with the DOM, we will need to store a ref for the popover 
   element, and call our methods on it's current element.
 
@@ -353,10 +353,10 @@ tags:
 [ce-lifecycle]: https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements#custom_element_lifecycle_callbacks
 [react-lifecycle]: https://legacy.reactjs.org/docs/state-and-lifecycle.html
 [vite]: https://vitejs.dev/guide/#scaffolding-your-first-vite-project
-[pf-button]: https://patternflyelements.org/components/button/
-[pf-card]: https://patternflyelements.org/components/card/
-[pf-switch]: https://patternflyelements.org/components/switch/
-[pf-tooltip]: https://patternflyelements.org/components/tooltip/
-[pf-popover]: https://patternflyelements.org/components/popover/
+[pf-v5-button]: https://patternflyelements.org/components/button/
+[pf-v5-card]: https://patternflyelements.org/components/card/
+[pf-v5-switch]: https://patternflyelements.org/components/switch/
+[pf-v5-tooltip]: https://patternflyelements.org/components/tooltip/
+[pf-v5-popover]: https://patternflyelements.org/components/popover/
 [inng]: https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-angular-app-4b18b1c9c363
 [invue]: https://patternflyelements.org/framework-integration/vue/

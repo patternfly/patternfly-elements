@@ -74,6 +74,9 @@
       ],
       "@patternfly/pfe-tools/*": [
         "./tools/pfe-tools/*"
+      ],
+      "@pwrs/mappa": [
+        "./node_modules/@pwrs/mappa/dist/mappa.d.ts"
       ]
     }
   }

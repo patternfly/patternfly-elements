@@ -1,21 +1,23 @@
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPairedAsyncShortcode('generateImportMap', async content => {
-    const { Generator } = await import('@jspm/generator');
+    const { generate } = await import('@pwrs/mappa');
 
-    const generator = new Generator({
-      defaultProvider: 'jspm.io',
-      env: ['production', 'browser', 'module'],
-    });
+    const deps = {};
+    const specifierRe = /['"]([^'"]+)['"]/g;
+    for (const match of content.matchAll(specifierRe)) {
+      const spec = match[1];
+      if (!spec.startsWith('.') && !spec.startsWith('/')) {
+        const name = spec.startsWith('@')
+          ? spec.split('/').slice(0, 2).join('/')
+          : spec.split('/')[0];
+        deps[name] = '*';
+      }
+    }
 
-    const pins = await generator.addMappings(content);
+    const map = await generate({ dependencies: deps }, { cdn: 'esm.sh' });
 
-    const html = await generator.htmlInject(content, {
-      pins,
-      esModuleShims: true,
-      whitespace: true,
-    });
-
-    return html;
+    const script = `<script type="importmap">\n${JSON.stringify(map, null, 2)}\n</script>`;
+    return content.replace(/<script\b[^>]*type=["']module["'][^>]*>[\s\S]*?<\/script>/g, found =>
+      `${script}\n${found}`);
   });
 };
-

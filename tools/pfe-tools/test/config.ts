@@ -1,7 +1,8 @@
 import type { TestRunnerConfig } from '@web/test-runner';
 
 import { stat } from 'node:fs/promises';
-import { playwrightLauncher } from '@web/test-runner-playwright';
+import { chromeLauncher } from '@web/test-runner-chrome';
+import puppeteer from 'puppeteer';
 import { summaryReporter, defaultReporter } from '@web/test-runner';
 import { junitReporter } from '@web/test-runner-junit-reporter';
 import { a11ySnapshotPlugin } from '@web/test-runner-commands/plugins';
@@ -84,11 +85,14 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
       '!**/_site/**/*',
     ],
     browsers: [
-      playwrightLauncher({
+      chromeLauncher({
+        puppeteer: puppeteer as never,
         createBrowserContext: async ({ browser }) => {
-          const context = await browser.newContext();
-          // grant permissions to access the users clipboard
-          await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+          const context = await browser.defaultBrowserContext();
+          await context.overridePermissions('http://localhost', [
+            'clipboard-read',
+            'clipboard-write',
+          ]);
           return context;
         },
       }),

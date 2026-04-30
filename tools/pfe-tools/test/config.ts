@@ -87,6 +87,9 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
     browsers: [
       chromeLauncher({
         puppeteer: puppeteer as never,
+        launchOptions: {
+          args: process.env.CI ? ['--no-sandbox'] : [],
+        },
         createBrowserContext: async ({ browser }) => {
           const context = await browser.defaultBrowserContext();
           await context.overridePermissions('http://localhost', [
